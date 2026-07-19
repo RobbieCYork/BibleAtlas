@@ -1,0 +1,838 @@
+.app-shell {
+  display: flex;
+  flex-direction: column;
+  height: 100svh;
+}
+
+.app-header {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  padding: 14px 20px;
+  border-bottom: 1px solid var(--border);
+  background: var(--panel-bg);
+  z-index: 10;
+}
+
+.app-header h1 {
+  font-size: 19px;
+  white-space: nowrap;
+}
+
+.app-body {
+  flex: 1;
+  display: flex;
+  min-height: 0;
+}
+
+.map-area {
+  position: relative;
+  flex: 1;
+  min-width: 160px;
+}
+
+/* --- Resize handles --- */
+
+.resize-handle {
+  flex-shrink: 0;
+  width: 6px;
+  cursor: col-resize;
+  background: transparent;
+  position: relative;
+  z-index: 15;
+}
+
+.resize-handle::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 2px;
+  width: 2px;
+  background: var(--border);
+}
+
+.resize-handle:hover::after,
+body.resizing-panels .resize-handle::after {
+  background: var(--accent);
+}
+
+body.resizing-panels {
+  cursor: col-resize;
+  user-select: none;
+}
+
+.map-container {
+  width: 100%;
+  height: 100%;
+}
+
+/* --- Search --- */
+
+.search-bar {
+  position: relative;
+  flex: 1;
+  max-width: 480px;
+}
+
+.search-bar input {
+  width: 100%;
+  padding: 9px 14px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  font-size: 14px;
+  background: var(--bg);
+  color: var(--text);
+}
+
+.search-bar input:focus {
+  outline: 2px solid var(--accent);
+  outline-offset: -1px;
+}
+
+.search-results {
+  position: absolute;
+  top: calc(100% + 4px);
+  left: 0;
+  right: 0;
+  background: var(--panel-bg);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  list-style: none;
+  margin: 0;
+  padding: 4px;
+  max-height: 320px;
+  overflow-y: auto;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+  z-index: 20;
+}
+
+.search-results li {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 10px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.search-results li:hover {
+  background: var(--accent-bg);
+}
+
+.search-result-name {
+  font-weight: 500;
+  color: var(--text-h);
+}
+
+.search-result-category {
+  font-size: 12px;
+  color: var(--text-muted);
+  text-transform: capitalize;
+}
+
+/* --- Map pins (modern flat teardrop markers) --- */
+
+.map-pin {
+  width: 28px;
+  height: 36px;
+  cursor: pointer;
+  transform-origin: 50% 94.4%; /* the pin's tip, where it meets the coordinate */
+  transition: transform 0.15s ease;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.35));
+}
+
+.map-pin .pin-body {
+  fill: var(--accent);
+}
+
+.map-pin .pin-dot {
+  fill: #ffffff;
+}
+
+.map-pin:hover {
+  transform: scale(1.15);
+}
+
+.map-pin-active {
+  transform: scale(1.3);
+  animation: pin-pop 0.25s ease;
+}
+
+.map-pin-active .pin-body {
+  fill: #e0392b;
+}
+
+/* --- POI pins (secondary archaeological sites) --- */
+
+.poi-pin {
+  width: 18px;
+  height: 18px;
+  cursor: pointer;
+  transform-origin: 50% 50%;
+  transition: transform 0.15s ease;
+  filter: drop-shadow(0 1px 3px rgba(0, 0, 0, 0.35));
+}
+
+.poi-pin .poi-pin-body {
+  fill: #d97706;
+  stroke: #ffffff;
+  stroke-width: 2;
+}
+
+.poi-pin:hover {
+  transform: scale(1.25);
+}
+
+.poi-pin-active {
+  transform: scale(1.4);
+  animation: pin-pop 0.25s ease;
+}
+
+.poi-pin-active .poi-pin-body {
+  fill: #e0392b;
+}
+
+@keyframes pin-pop {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.45);
+  }
+  100% {
+    transform: scale(1.3);
+  }
+}
+
+/* --- Layer controls --- */
+
+.layer-controls {
+  position: absolute;
+  bottom: 20px;
+  left: 12px;
+  background: var(--panel-bg);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 12px 14px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+  z-index: 5;
+  min-width: 190px;
+}
+
+.layer-controls h3 {
+  font-size: 13px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--text-muted);
+  margin-bottom: 8px;
+}
+
+.layer-toggle {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  padding: 4px 0;
+  cursor: pointer;
+}
+
+.layer-toggle-poi {
+  margin-top: 6px;
+  padding-top: 10px;
+  border-top: 1px solid var(--border);
+}
+
+/* --- Location panel --- */
+
+.location-panel {
+  width: 380px;
+  flex-shrink: 0;
+  overflow-y: auto;
+  border-left: 1px solid var(--border);
+  background: var(--panel-bg);
+  padding: 22px;
+  position: relative;
+}
+
+.location-panel-empty {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  color: var(--text-muted);
+  padding: 40px;
+}
+
+.panel-close {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  background: none;
+  border: none;
+  font-size: 22px;
+  line-height: 1;
+  color: var(--text-muted);
+  cursor: pointer;
+  padding: 4px 8px;
+  border-radius: 6px;
+}
+
+.panel-close:hover {
+  background: var(--accent-bg);
+  color: var(--text-h);
+}
+
+.poi-badge {
+  color: #d97706;
+  background: rgba(217, 119, 6, 0.1);
+}
+
+.category-badge {
+  display: inline-block;
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--accent);
+  background: var(--accent-bg);
+  padding: 3px 9px;
+  border-radius: 100px;
+  margin-bottom: 8px;
+}
+
+.location-panel h2 {
+  font-size: 24px;
+  margin-bottom: 6px;
+}
+
+.pronunciation,
+.alt-names,
+.modern-name {
+  font-size: 13px;
+  color: var(--text-muted);
+  margin-top: 2px;
+}
+
+.pronunciation {
+  font-style: italic;
+}
+
+.modern-map-link {
+  display: inline-block;
+  margin-top: 10px;
+  font-size: 13px;
+  font-weight: 500;
+  text-decoration: none;
+}
+
+.modern-map-link:hover {
+  color: var(--accent-hover);
+}
+
+.history-section {
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.history-field h4 {
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--text-muted);
+  margin-bottom: 4px;
+}
+
+.history-field p,
+.history-field ul {
+  font-size: 14px;
+  color: var(--text);
+}
+
+.history-field ul {
+  margin: 0;
+  padding-left: 18px;
+}
+
+.history-field li {
+  margin-bottom: 4px;
+}
+
+.ruler-period {
+  color: var(--text-muted);
+  font-size: 13px;
+}
+
+.verse-list {
+  margin-top: 22px;
+  border-top: 1px solid var(--border);
+  padding-top: 16px;
+}
+
+.verse-list h4 {
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--text-muted);
+  margin-bottom: 8px;
+}
+
+.verse-list ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.verse-list li {
+  font-size: 13px;
+}
+
+.verse-ref-button {
+  width: 100%;
+  text-align: left;
+  padding: 6px 10px;
+  background: var(--bg);
+  border: none;
+  border-radius: 6px;
+  font: inherit;
+  color: inherit;
+  cursor: pointer;
+}
+
+.verse-ref-button:not(:disabled):hover {
+  background: var(--accent-bg);
+}
+
+.verse-ref-button:disabled {
+  cursor: default;
+}
+
+.verse-ref {
+  font-weight: 600;
+  color: var(--text-h);
+}
+
+.verse-note {
+  color: var(--text-muted);
+}
+
+/* --- Archaeology section --- */
+
+.archaeology-section {
+  margin-top: 20px;
+  border-top: 1px solid var(--border);
+  padding-top: 16px;
+}
+
+.archaeology-section h4 {
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--text-muted);
+  margin-bottom: 8px;
+}
+
+.archaeology-note {
+  font-size: 14px;
+  color: var(--text);
+  margin-bottom: 12px;
+}
+
+.archaeology-photos {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+.archaeology-photo {
+  display: block;
+  border-radius: 8px;
+  overflow: hidden;
+  text-decoration: none;
+  border: 1px solid var(--border);
+}
+
+.archaeology-photo img {
+  width: 100%;
+  height: 90px;
+  object-fit: cover;
+  display: block;
+  background: var(--bg);
+}
+
+.archaeology-caption {
+  display: block;
+  font-size: 11px;
+  color: var(--text-muted);
+  padding: 6px 8px;
+  line-height: 1.3;
+}
+
+/* --- Sources section --- */
+
+.sources-section {
+  margin-top: 20px;
+  border-top: 1px solid var(--border);
+  padding-top: 16px;
+}
+
+.sources-section h4 {
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--text-muted);
+  margin-bottom: 8px;
+}
+
+.sources-section ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.sources-section li {
+  font-size: 12px;
+}
+
+.sources-section a {
+  color: var(--accent);
+  text-decoration: none;
+}
+
+.sources-section a:hover {
+  text-decoration: underline;
+}
+
+/* --- Then & Now toggle --- */
+
+.then-now-toggle {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  background: var(--panel-bg);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 10px 12px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+  z-index: 5;
+}
+
+.clear-selection-button {
+  position: absolute;
+  top: 12px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 6;
+  background: var(--accent);
+  color: #fff;
+  border: none;
+  border-radius: 100px;
+  padding: 9px 16px;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+}
+
+.clear-selection-button:hover {
+  background: var(--accent-hover);
+}
+
+.then-now-label {
+  display: block;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--text-muted);
+  margin-bottom: 6px;
+}
+
+.then-now-buttons {
+  display: flex;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.then-now-buttons button {
+  border: none;
+  background: var(--bg);
+  color: var(--text);
+  font-size: 13px;
+  padding: 6px 12px;
+  cursor: pointer;
+}
+
+.then-now-buttons button.active {
+  background: var(--accent);
+  color: #fff;
+}
+
+/* --- Panel menu (hamburger) --- */
+
+.panel-menu {
+  position: relative;
+}
+
+.panel-menu-button {
+  border: 1px solid var(--border);
+  background: var(--bg);
+  color: var(--text);
+  font-size: 16px;
+  width: 38px;
+  height: 38px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.panel-menu-button:hover {
+  background: var(--accent-bg);
+}
+
+.panel-menu-dropdown {
+  position: absolute;
+  top: calc(100% + 6px);
+  left: 0;
+  background: var(--panel-bg);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 8px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+  z-index: 30;
+  min-width: 180px;
+}
+
+.panel-menu-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  padding: 7px 8px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.panel-menu-item:hover {
+  background: var(--accent-bg);
+}
+
+/* --- Expandable side panels (when the map is closed) --- */
+
+.panel-expand {
+  flex: 1;
+  width: auto;
+  max-width: 720px;
+}
+
+/* --- All panels closed --- */
+
+.all-closed-message {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-muted);
+  font-size: 15px;
+}
+
+/* --- Bible panel --- */
+
+.bible-panel {
+  width: 340px;
+  flex-shrink: 0;
+  overflow-y: auto;
+  border-right: 1px solid var(--border);
+  background: var(--panel-bg);
+  padding: 18px;
+}
+
+.bible-panel-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12px;
+}
+
+.bible-panel-header h3 {
+  font-size: 16px;
+}
+
+.bible-search {
+  display: flex;
+  gap: 6px;
+  margin-bottom: 10px;
+}
+
+.bible-search input {
+  flex: 1;
+  padding: 8px 10px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  font-size: 13px;
+  background: var(--bg);
+  color: var(--text);
+}
+
+.bible-search button {
+  border: 1px solid var(--accent);
+  background: var(--accent);
+  color: #fff;
+  border-radius: 8px;
+  padding: 8px 14px;
+  font-size: 13px;
+  cursor: pointer;
+}
+
+.bible-translation-select {
+  width: 100%;
+  padding: 6px 8px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--bg);
+  color: var(--text);
+  font-size: 13px;
+  margin-bottom: 6px;
+}
+
+.bible-translation-note {
+  font-size: 11px;
+  color: var(--text-muted);
+  margin-bottom: 16px;
+  line-height: 1.4;
+}
+
+.bible-status {
+  font-size: 13px;
+  color: var(--text-muted);
+}
+
+.bible-error {
+  color: #e0392b;
+}
+
+.bible-passage h4 {
+  font-size: 16px;
+}
+
+.bible-passage-header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.bible-passage-header h4 {
+  margin-bottom: 0;
+  text-align: center;
+}
+
+.bible-chapter-nav-small {
+  flex-shrink: 0;
+  width: 26px;
+  height: 26px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--accent);
+  background: var(--accent-bg);
+  color: var(--accent);
+  border-radius: 50%;
+  font-size: 16px;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.bible-chapter-nav-small:hover:not(:disabled) {
+  background: var(--accent);
+  color: #fff;
+}
+
+.bible-chapter-nav-small:disabled {
+  opacity: 0.4;
+  cursor: default;
+  border-color: var(--border);
+  color: var(--text-muted);
+  background: transparent;
+}
+
+.bible-verses p {
+  font-size: 14px;
+  line-height: 1.6;
+  margin-bottom: 8px;
+}
+
+.bible-verse-num {
+  font-weight: 700;
+  color: var(--accent);
+  font-size: 11px;
+  vertical-align: super;
+  margin-right: 4px;
+}
+
+.verse-location-link {
+  display: inline;
+  padding: 0;
+  border: none;
+  background: none;
+  font: inherit;
+  color: var(--accent);
+  text-decoration: underline;
+  text-decoration-style: dotted;
+  text-underline-offset: 2px;
+  cursor: pointer;
+}
+
+.verse-location-link:hover {
+  color: var(--accent-hover);
+}
+
+.bible-translation-credit {
+  font-size: 11px;
+  color: var(--text-muted);
+  margin-top: 12px;
+  border-top: 1px solid var(--border);
+  padding-top: 10px;
+}
+
+.bible-chapter-nav {
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+  margin-top: 18px;
+  padding-top: 14px;
+  border-top: 1px solid var(--border);
+}
+
+.bible-chapter-nav button {
+  flex: 1;
+  border: 1px solid var(--accent);
+  background: var(--accent-bg);
+  color: var(--accent);
+  border-radius: 8px;
+  padding: 8px 10px;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.bible-chapter-nav button:hover:not(:disabled) {
+  background: var(--accent);
+  color: #fff;
+}
+
+.bible-chapter-nav button:disabled {
+  opacity: 0.4;
+  cursor: default;
+  border-color: var(--border);
+  color: var(--text-muted);
+  background: transparent;
+}
