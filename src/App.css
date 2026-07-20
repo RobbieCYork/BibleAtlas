@@ -220,12 +220,59 @@ body.resizing-panels {
   min-width: 190px;
 }
 
+.layer-controls-minimized {
+  padding: 8px 10px;
+  min-width: 0;
+}
+
+.layer-controls-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
 .layer-controls h3 {
   font-size: 13px;
   text-transform: uppercase;
   letter-spacing: 0.04em;
   color: var(--text-muted);
   margin-bottom: 8px;
+}
+
+.layer-controls-minimized .layer-controls-header {
+  margin-bottom: 0;
+}
+
+.layer-controls-minimized h3 {
+  margin-bottom: 0;
+}
+
+.layer-controls-minimize {
+  flex-shrink: 0;
+  width: 20px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--border);
+  background: transparent;
+  color: var(--text-muted);
+  border-radius: 50%;
+  font-size: 13px;
+  line-height: 1;
+  cursor: pointer;
+  margin-bottom: 8px;
+}
+
+.layer-controls-minimize:hover {
+  background: var(--accent-bg);
+  color: var(--accent);
+  border-color: var(--accent);
+}
+
+.layer-controls-minimized .layer-controls-minimize {
+  margin-bottom: 0;
 }
 
 .layer-toggle {

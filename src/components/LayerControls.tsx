@@ -91,6 +91,7 @@ export default function LayerControls({
 }: LayerControlsProps) {
   const [groups, setGroups] = useState<Record<LayerCategory, string[]>>(EMPTY_GROUPS);
   const [visible, setVisible] = useState<Record<LayerCategory, boolean>>(DEFAULT_VISIBLE);
+  const [minimized, setMinimized] = useState(false);
   const visibleRef = useRef(visible);
   visibleRef.current = visible;
 
@@ -146,36 +147,51 @@ export default function LayerControls({
   };
 
   return (
-    <div className="layer-controls">
-      <h3>Options</h3>
-      {CATEGORY_ORDER.map((category) => (
-        <label key={category} className="layer-toggle">
-          <input
-            type="checkbox"
-            checked={visible[category]}
-            disabled={groups[category].length === 0}
-            onChange={() => toggle(category)}
-          />
-          {CATEGORY_LABELS[category]}
-        </label>
-      ))}
-      <label className="layer-toggle layer-toggle-poi">
-        <input
-          type="checkbox"
-          checked={locationsVisible}
-          onChange={onToggleLocations}
-        />
-        Geographical Locations
-      </label>
-      <label className="layer-toggle">
-        <input
-          type="checkbox"
-          checked={poisVisible}
-          disabled={poiCount === 0}
-          onChange={onTogglePois}
-        />
-        Points of Interest
-      </label>
+    <div className={`layer-controls ${minimized ? "layer-controls-minimized" : ""}`}>
+      <div className="layer-controls-header">
+        <h3>Options</h3>
+        <button
+          type="button"
+          className="layer-controls-minimize"
+          onClick={() => setMinimized((m) => !m)}
+          aria-label={minimized ? "Expand options" : "Minimize options"}
+          title={minimized ? "Expand options" : "Minimize options"}
+        >
+          {minimized ? "+" : "−"}
+        </button>
+      </div>
+      {!minimized && (
+        <>
+          {CATEGORY_ORDER.map((category) => (
+            <label key={category} className="layer-toggle">
+              <input
+                type="checkbox"
+                checked={visible[category]}
+                disabled={groups[category].length === 0}
+                onChange={() => toggle(category)}
+              />
+              {CATEGORY_LABELS[category]}
+            </label>
+          ))}
+          <label className="layer-toggle layer-toggle-poi">
+            <input
+              type="checkbox"
+              checked={locationsVisible}
+              onChange={onToggleLocations}
+            />
+            Geographical Locations
+          </label>
+          <label className="layer-toggle">
+            <input
+              type="checkbox"
+              checked={poisVisible}
+              disabled={poiCount === 0}
+              onChange={onTogglePois}
+            />
+            Points of Interest
+          </label>
+        </>
+      )}
     </div>
   );
 }

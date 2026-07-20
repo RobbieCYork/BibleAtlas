@@ -65,7 +65,10 @@ function App() {
     openPanel("bible");
   };
 
-  const noPanelsOpen = !panels.bible && !panels.map && !panels.details;
+  // The details panel has nothing to show without a selection — hiding it lets the map expand
+  // instead of leaving a blank panel visible (e.g. right after "Show All Pins" clears the selection).
+  const showDetails = panels.details && hasSelection;
+  const noPanelsOpen = !panels.bible && !panels.map && !showDetails;
   const sideExpand = !panels.map;
 
   return (
@@ -125,7 +128,7 @@ function App() {
             )}
           </div>
         )}
-        {panels.map && panels.details && (
+        {panels.map && showDetails && (
           <ResizeHandle
             width={detailsWidth}
             minWidth={MIN_PANEL_WIDTH}
@@ -134,17 +137,18 @@ function App() {
             onWidthChange={setDetailsWidth}
           />
         )}
-        {panels.details && selectedPoi && (
+        {showDetails && selectedPoi && (
           <PoiPanel
             poi={selectedPoi}
             onClose={() => closePanel("details")}
             onSelectLocation={handleSelect}
             onSelectPoi={handleSelectPoi}
+            onSelectVerse={openVerse}
             expand={sideExpand}
             style={{ width: detailsWidth }}
           />
         )}
-        {panels.details && !selectedPoi && (
+        {showDetails && !selectedPoi && (
           <LocationPanel
             location={selectedLocation}
             onClose={() => closePanel("details")}

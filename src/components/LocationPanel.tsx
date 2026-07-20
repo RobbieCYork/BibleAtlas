@@ -64,6 +64,8 @@ export default function LocationPanel({
         View modern location on Google Maps ↗
       </a>
 
+      <VerseList verses={location.verses} onSelectVerse={onSelectVerse} />
+
       <div className="history-section">
         {history.founded && (
           <div className="history-field">
@@ -73,6 +75,7 @@ export default function LocationPanel({
                 text={history.founded}
                 onSelectLocation={onSelectLocation}
                 onSelectPoi={onSelectPoi}
+                onSelectVerse={onSelectVerse}
                 excludeId={location.id}
               />
             </p>
@@ -86,6 +89,7 @@ export default function LocationPanel({
                 text={history.population}
                 onSelectLocation={onSelectLocation}
                 onSelectPoi={onSelectPoi}
+                onSelectVerse={onSelectVerse}
                 excludeId={location.id}
               />
             </p>
@@ -111,6 +115,7 @@ export default function LocationPanel({
                 text={history.industry}
                 onSelectLocation={onSelectLocation}
                 onSelectPoi={onSelectPoi}
+                onSelectVerse={onSelectVerse}
                 excludeId={location.id}
               />
             </p>
@@ -126,6 +131,7 @@ export default function LocationPanel({
                     text={fact}
                     onSelectLocation={onSelectLocation}
                     onSelectPoi={onSelectPoi}
+                    onSelectVerse={onSelectVerse}
                     excludeId={location.id}
                   />
                 </li>
@@ -143,6 +149,7 @@ export default function LocationPanel({
               text={archaeology.note}
               onSelectLocation={onSelectLocation}
               onSelectPoi={onSelectPoi}
+              onSelectVerse={onSelectVerse}
               excludeId={location.id}
             />
           </p>
