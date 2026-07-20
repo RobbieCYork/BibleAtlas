@@ -1525,6 +1525,7 @@ export const pois: PointOfInterest[] = [
     tag: "Traditional Site",
     modernName: "At-Tur, Mount of Olives, East Jerusalem",
     coordinates: [35.24505, 31.7789],
+    modernMapUrl: mapsUrl(31.7789, 35.24505),
     description: "This small domed edicule on the summit of the Mount of Olives marks the traditional spot where Jesus ascended to heaven forty days after the Resurrection, witnessed by the apostles as \"a cloud took him out of their sight\" (Acts 1:9-12). The tradition, dating to the 4th century, centers on a limestone slab inside the shrine venerated as bearing an impression of Christ's footprint. Uniquely among Jerusalem's holy sites, it is administered by the Islamic Waqf, and Christians of all denominations are granted access, especially to celebrate the Feast of the Ascension.",
     archaeology: {
       note: "The first church on this site, called the Imbomon (\"on the hill\"), was built around 390 CE by the Roman noblewoman Poimenia, replacing an earlier open-air gathering spot described by the pilgrim Egeria in 384 CE. That octagonal Byzantine structure was destroyed by the Persians in 614, rebuilt, and later reconstructed by the Crusaders around 1150 into the current small octagonal edicule. After Saladin's conquest in 1187 it was converted into a mosque, adding the stone dome and exterior walls seen today. A 1995 salvage excavation outside the mosque's south wall uncovered a Byzantine-period underground crypt linked to the site, but the precise location of Poimenia's original church remains a matter of scholarly reconstruction, and the \"footprint\" relic is devotional tradition, not an archaeological find.",
@@ -1549,6 +1550,7 @@ export const pois: PointOfInterest[] = [
     tag: "Traditional Site",
     modernName: "Mount of Olives, East Jerusalem",
     coordinates: [35.2449, 31.778],
+    modernMapUrl: mapsUrl(31.778, 35.2449),
     description: "Part of a Carmelite convent on the Mount of Olives, this church stands over a grotto where, by patristic-era tradition rather than direct Gospel narrative, Jesus taught his disciples the Lord's Prayer (compare Luke 11:1-4 and Matthew 6:9-13). Its cloister and church walls are covered with ceramic plaques bearing the prayer in more than 140 languages, making it one of the most visually striking sites on the Mount. The site was originally known as Eleona (\"of the olives\") and, in early tradition recorded by pilgrims like Egeria, was also associated with Jesus's private teaching to the disciples, including the Olivet Discourse (Matthew 24-25; Mark 13).",
     archaeology: {
       note: "The original Eleona basilica was commissioned in the early 4th century, traditionally under the patronage of Constantine's mother Helena, and measured roughly 35 by 19 meters; it was destroyed by the Sasanian Persian invasion in 614 CE. Crusaders built an oratory on the ruins in 1106 and a fuller church in 1152. The Byzantine basilica's foundations were rediscovered in 1910 by French archaeologists, partially underlying the present 19th-century Carmelite cloister; a full reconstruction begun in 1915 was never completed. The identification of the specific grotto with the Lord's Prayer teaching is a medieval devotional overlay on an earlier, broader tradition about the site — it is not attested in the New Testament text itself.",
@@ -1573,6 +1575,7 @@ export const pois: PointOfInterest[] = [
     tag: "Traditional Site",
     modernName: "Kidron Valley, East Jerusalem",
     coordinates: [35.2394, 31.78013],
+    modernMapUrl: mapsUrl(31.78013, 35.2394),
     description: "This rock-cut tomb and subterranean church in the Kidron Valley, at the foot of the Mount of Olives, is venerated by Byzantine-era tradition as the burial place of Mary, mother of Jesus, following her Dormition. The tradition is entirely extra-biblical — the New Testament records no account of Mary's death or burial — but the site has been a major pilgrimage destination since at least the 5th century. A long staircase descends into a crypt shared today, under a long-standing arrangement, by the Greek Orthodox and Armenian Apostolic churches, with a Muslim prayer niche also present.",
     archaeology: {
       note: "A small octagonal upper church was built over the tomb in the 5th century under Patriarch Juvenal; it was destroyed in the 614 CE Persian invasion. Crusaders rebuilt the church in 1130, establishing the Benedictine Abbey of St. Mary of the Valley of Jehoshaphat; Saladin demolished the upper structure in 1187, though the lower crypt survived. In 1972 Franciscan archaeologist Bellarmino Bagatti excavated the site and reported evidence of a 1st-century Jewish rock-cut cemetery beneath the later church; his findings have not been subjected to full independent peer review, so the identification of any specific chamber as Mary's actual burial site remains a matter of tradition rather than established archaeological fact.",
@@ -1596,6 +1599,7 @@ export const pois: PointOfInterest[] = [
     tag: "Traditional Site",
     modernName: "Mount Zion, Jerusalem, Israel",
     coordinates: [35.2289, 31.7722],
+    modernMapUrl: mapsUrl(31.7722, 35.2289),
     description: "The Dormition Abbey (Hagia Maria Sion Abbey) is a Benedictine church and monastery on Mount Zion just outside Jerusalem's Old City walls, marking the traditional site where the Virgin Mary \"fell asleep\" (died) at the end of her earthly life. This tradition is not recorded in the New Testament itself — the closest biblical anchor is John 19:26-27, where the dying Jesus entrusts Mary to the care of \"the disciple whom he loved\" — and instead derives from later apocryphal texts (roughly 4th-6th centuries), venerated by both Catholic and Orthodox tradition with differing theological conclusions (Catholic \"Assumption\" vs. Orthodox \"Dormition\").",
     archaeology: {
       note: "A Byzantine basilica called Hagia Sion was built on this rise in the early 5th century under Bishop John II of Jerusalem, but it was destroyed in the Sasanian sack of Jerusalem in 614 CE. A Crusader-era monastic church rose on the ruins in the 12th century, destroyed again in the 13th. The foundations were rediscovered in 1899, and the present neo-Romanesque abbey was constructed 1900-1910 after Kaiser Wilhelm II purchased the land. The specific location of Mary's death is a matter of tradition, not archaeological verification — there is no physical evidence tying the crypt itself to the event beyond continuous veneration since at least the Byzantine period.",
@@ -1620,6 +1624,7 @@ export const pois: PointOfInterest[] = [
     tag: "Traditional Site",
     modernName: "Via Dolorosa, Old City, Jerusalem, Israel",
     coordinates: [35.2334, 31.7804],
+    modernMapUrl: mapsUrl(31.7804, 35.2334),
     description: "The Ecce Homo Arch is a Roman monumental archway spanning the Via Dolorosa in Jerusalem's Old City, traditionally venerated as the spot where Pontius Pilate presented the scourged Jesus to the crowd with the words \"Behold the man!\" (John 19:5, Latin: \"Ecce Homo\"). Modern archaeology has established that this arch was NOT standing at the time of Jesus's trial: excavations since the late 1970s show it was built by the emperor Hadrian around 135 CE as a gateway into the eastern forum of Aelia Capitolina — nearly a century after the crucifixion — with no verified connection to Herod's Antonia Fortress or Pilate's Praetorium. The traditional identification is a later Christian devotional association, not a historically supported one.",
     archaeology: {
       note: "The visible arch is the central span of what was originally a Hadrianic triple gateway (c. 135 CE) marking the entrance to Aelia Capitolina's eastern forum. One of the flanking arches survives inside the Basilica of the Ecce Homo, within the Convent of the Sisters of Zion (built 1857). Beneath the convent lies the Struthion Pool and a large rock-cut pavement once mistakenly associated with the biblical \"Gabbatha\" or Stone Pavement of John 19:13; that pavement is now also dated to Hadrian's era, not the Second Temple period. No archaeological material at the site predates the 2nd century CE, so nothing here can be physically linked to the Gospel trial narrative.",
@@ -1644,6 +1649,7 @@ export const pois: PointOfInterest[] = [
     tag: "Traditional Site",
     modernName: "Bethlehem, West Bank, Palestinian Territories",
     coordinates: [35.208778, 31.703444],
+    modernMapUrl: mapsUrl(31.703444, 35.208778),
     description: "The Chapel of the Milk Grotto is a small limestone cave-shrine in Bethlehem traditionally identified as a stopping point for the Holy Family as they prepared to flee to Egypt to escape Herod's massacre of infants (Matthew 2:13-15). According to a tradition traceable to at least the 6th century, while nursing the infant Jesus in this cave, a drop of the Virgin Mary's milk fell to the ground and turned the reddish local rock chalky white. The site has no explicit textual basis in the Gospel account itself, making the specific location purely a matter of extra-biblical popular tradition, though it has been continuously venerated by both Christian and Muslim women as a pilgrimage site.",
     archaeology: {
       note: "A Byzantine-era church stood on the site from around the 5th century, of which only fragments of a geometric mosaic floor survive on the grotto's terrace; relics associated with the Milk Grotto were already circulating in Europe and the East by the 6th century, indicating the tradition's antiquity even though it cannot be independently verified. The current Franciscan-run chapel dates only to 1872, built atop the earlier remains. As with most cave-shrine traditions in the Bethlehem area, the identification rests on continuous local memory and pilgrim veneration rather than any archaeological evidence directly confirming a Holy Family visit.",
@@ -1668,6 +1674,7 @@ export const pois: PointOfInterest[] = [
     tag: "Religious Site",
     modernName: "Nazareth, Israel",
     coordinates: [35.29778, 32.70222],
+    modernMapUrl: mapsUrl(32.70222, 35.29778),
     description: "The largest Christian church in the Middle East, the Basilica of the Annunciation marks the Roman Catholic tradition's site of the Annunciation, where the angel Gabriel told Mary she would conceive Jesus (Luke 1:26-38). The lower church encloses the Grotto of the Annunciation, venerated since at least the Byzantine period as the remains of Mary's childhood home. The current two-story basilica, designed by Italian architect Giovanni Muzio, was built 1960-1969 over the ruins of Crusader and Byzantine churches on the same spot.",
     archaeology: {
       note: "Extensive excavations by Franciscan archaeologists (led by Bellarmino Bagatti) between 1955 and 1968 uncovered a Byzantine church (4th-5th century) with mosaic floors, a Crusader-era church built by Tancred after 1102, and evidence of a small Iron Age/early Roman village with cave dwellings, cisterns, and silos — consistent with 1st-century Nazareth being a modest agricultural hamlet. No inscription or artifact confirms this specific cave as Mary's home; the identification rests on continuous local tradition traceable to at least the 4th century. In 2009 the Israel Antiquities Authority separately uncovered a 1st-century two-room house on an adjacent property, supporting that Nazareth was inhabited at the time, though not tied specifically to this site.",
@@ -1696,6 +1703,7 @@ export const pois: PointOfInterest[] = [
     tag: "Traditional Site",
     modernName: "Nazareth, Israel",
     coordinates: [35.30156, 32.70671],
+    modernMapUrl: mapsUrl(32.70671, 35.30156),
     description: "The Greek Orthodox counter-tradition to the Basilica of the Annunciation, this site holds that Gabriel first appeared to Mary while she was drawing water from Nazareth's ancient spring — an episode from the apocryphal 2nd-century Protoevangelium of James, not found in the canonical Luke 1:26-38 account, which names no location. The Church of St. Gabriel was built directly over the spring's source, with the water still flowing through the crypt beneath the altar. A separate public well structure in the plaza, fed by the same spring, served as Nazareth's only water source for centuries.",
     archaeology: {
       note: "Israel Antiquities Authority excavations in 1997-98 documented rock-cut water channels dating to the Roman period (2nd-4th century CE) beneath and around the site, showing the spring was in continuous use for a very long span — plausibly including the 1st century, when Nazareth was a small village. That confirms the spring itself is ancient and was almost certainly Nazareth's communal water source in Jesus's era, but it cannot verify the Annunciation narrative detail from the apocryphal source; the present church structure dates only to a mid-18th-century (1750) Ottoman-period rebuilding after Crusader and Mamluk-destroyed predecessors.",
@@ -1719,6 +1727,7 @@ export const pois: PointOfInterest[] = [
     tag: "Traditional Site",
     modernName: "Kafr Kanna, Israel",
     coordinates: [35.3386, 32.7467],
+    modernMapUrl: mapsUrl(32.7467, 35.3386),
     description: "This Franciscan Catholic church in Kafr Kanna is the traditional site of Jesus's first recorded miracle, turning water into wine at a wedding feast (John 2:1-11). Built circa 1881 and expanded 1897-1905 by the Franciscan Custody of the Holy Land, the current church stands over the remains of earlier Byzantine and Jewish structures. Thousands of couples still visit each year to renew their wedding vows here.",
     archaeology: {
       note: "Excavations beneath the church uncovered remains of a Byzantine-era church with Aramaic-inscribed mosaics, plus fragments possibly belonging to a 1st-century Jewish house and later 4th-6th century synagogue remains. However, Kafr Kanna's identification as biblical Cana is a Byzantine-period tradition, not a 1st-century one; no pre-8th-century source names Kafr Kanna specifically. Most current archaeologists instead favor Khirbet Qana, an unexcavated-until-recently ruin about 13 km northwest of Nazareth, where ongoing digs have found a thriving 1st-century Jewish village with mikvaot and winepresses. The traditional site remains the enduring pilgrimage destination, but the historical-geographic identification is genuinely contested among scholars.",
@@ -1747,6 +1756,7 @@ export const pois: PointOfInterest[] = [
     tag: "Historic Street",
     modernName: "Medhat Pasha Street / Bab Sharqi Street, Damascus, Syria",
     coordinates: [36.3114, 33.5092],
+    modernMapUrl: mapsUrl(33.5092, 36.3114),
     description: "The old Roman decumanus maximus of Damascus, running roughly 1,500 meters east-west through the Old City. In Acts 9:11, the Lord tells Ananias to go to \"the street called Straight\" to find Saul of Tarsus, praying in the house of Judas, so that his sight could be restored. Today the western half is called Midhat Pasha Street and the eastern half Bab Sharqi Street, and it remains a functioning market street.",
     archaeology: {
       note: "The Roman street's colonnaded plan and monumental arch (partially reconstructed near the Bab Sharqi end) have been documented since 19th-century surveys and confirmed by 20th-century excavation of column bases beneath the modern street level. The Roman-era alignment and width are well established archaeologically; the specific house of Judas mentioned in Acts is not archaeologically identifiable and its location is a matter of tradition rather than excavation.",
@@ -1770,6 +1780,7 @@ export const pois: PointOfInterest[] = [
     tag: "Traditional Site",
     modernName: "Bab Sharqi Quarter, Old City of Damascus, Syria",
     coordinates: [36.3175, 33.5114],
+    modernMapUrl: mapsUrl(33.5114, 36.3175),
     description: "A subterranean chapel near the eastern end of the Street Called Straight, venerated as the traditional site of the home of Ananias, the disciple who was sent by the Lord in a vision to lay hands on the blinded Saul, restore his sight, and baptize him (Acts 9:10-19). It is one of the oldest continuously venerated Christian sites in Damascus.",
     archaeology: {
       note: "Excavations in 1921 under the modern chapel uncovered remains of a Byzantine-era church dated to the 5th or 6th century, indicating the site was venerated by Christians well before the modern structure. The Franciscan Custody rebuilt the house into its present chapel form in 1820, with further renovation in 1973. The identification of this specific underground room as Ananias's actual house rests on continuous local tradition rather than any inscription or artifact naming him.",
@@ -1792,6 +1803,7 @@ export const pois: PointOfInterest[] = [
     tag: "Traditional Site",
     modernName: "Southeastern Old City Wall, Damascus, Syria",
     coordinates: [36.3153, 33.5064],
+    modernMapUrl: mapsUrl(33.5064, 36.3153),
     description: "One of the seven ancient gates of Damascus, in the southeastern city wall, near where early Christian tradition places the window through which Paul's disciples lowered him in a basket by night to escape a plot to kill him (Acts 9:23-25; 2 Corinthians 11:32-33). A modern Melkite Greek Catholic chapel, the Chapel of St. Paul, now stands incorporating stonework from the old Roman-era gate and wall.",
     archaeology: {
       note: "The Roman city wall and the gate's foundational masonry in this area date to the Roman period, and portions of ancient wall fabric are visible incorporated into the modern chapel built in 1939. No inscription or archaeological find ties this exact spot to Paul's escape — the association rests on an early but undatable Christian tradition, and the original Bab Kisan gate itself was largely walled up and altered over centuries of Byzantine, Islamic, and Ottoman rebuilding.",
@@ -1815,6 +1827,7 @@ export const pois: PointOfInterest[] = [
     tag: "UNESCO World Heritage Site",
     modernName: "Between Chora and Skala, Patmos, Greece",
     coordinates: [26.5447, 37.3144],
+    modernMapUrl: mapsUrl(37.3144, 26.5447),
     description: "A grotto on a hillside on the Aegean island of Patmos, venerated since antiquity as the place where the apostle John, exiled \"on the island called Patmos because of the word of God,\" received the visions he recorded in the Book of Revelation (Revelation 1:9-11). Tradition holds that John dictated the text to his disciple Prochorus here. The site, together with the nearby Monastery of Saint John the Theologian, was inscribed as a UNESCO World Heritage Site in 1999.",
     archaeology: {
       note: "The cave itself is a natural rock formation that has been continuously venerated and built around since at least the Byzantine period, with the surrounding Chapel of Saint Anne and monastic structures added over centuries; the earliest surviving built fabric on the site dates to after the 11th-century founding of the neighboring monastery. There is no archaeological evidence that can independently confirm John's presence in this specific cave — the identification rests entirely on a long, unbroken monastic and pilgrimage tradition rather than excavation.",
@@ -1838,6 +1851,7 @@ export const pois: PointOfInterest[] = [
     tag: "Archaeological Site",
     modernName: "Yarkon-Tel Afek National Park, near Rosh HaAyin, Israel",
     coordinates: [34.9304, 32.105],
+    modernMapUrl: mapsUrl(32.105, 34.9304),
     description: "A city founded by Herod the Great around 9 BC and named for his father Antipater, built at the headwaters of the Yarkon River astride the ancient Via Maris. In Acts 23:31, Roman soldiers escorting Paul from Jerusalem to Caesarea by night bring him as far as Antipatris before handing him off to a smaller mounted escort for the rest of the journey.",
     archaeology: {
       note: "Tel Afek has been excavated across multiple expeditions since the 1970s, revealing a stratified mound with occupation spanning the Chalcolithic through Ottoman periods, including Canaanite, Egyptian, Philistine, Hellenistic, and Roman remains. The Herodian and Roman-period city is archaeologically well attested through pottery, road remains, and structural fragments, though the precise building Paul's escort would have stopped at is not individually identifiable; the visible Ottoman fortress (Binar Bashi, 1571-1574) sits atop and postdates the New Testament-era city.",
@@ -1861,6 +1875,7 @@ export const pois: PointOfInterest[] = [
     tag: "Traditional Site",
     modernName: "Al-Eizariya, West Bank",
     coordinates: [35.2559, 31.7717],
+    modernMapUrl: mapsUrl(31.7717, 35.2559),
     description: "A rock-cut tomb in Al-Eizariya (whose Arabic name derives from \"Lazarus\"), on the southeastern slope of the Mount of Olives, venerated since at least the 4th century as the tomb of Lazarus of Bethany, whom Jesus raised from the dead four days after his burial (John 11:1-44). The site has been a Christian pilgrimage destination continuously since antiquity, described by the pilgrim Egeria around AD 410.",
     archaeology: {
       note: "A church (the \"Lazarium\") is attested at this location by Jerome in AD 390, and the burial chamber's original vestibule-and-chamber form is consistent with typical Second Temple-period Jewish rock-cut tombs. Because the site has been continuously built over — a Byzantine church, then Crusader-era rebuilding, then the 16th-century Ottoman al-Uzair Mosque, and a modern Franciscan-cut entrance from the 1560s-70s — the tomb's original first-century context has been substantially altered, and its identification as Lazarus's specific tomb rests on a very early but still traditional chain of pilgrim testimony rather than an inscription or artifact.",
@@ -1884,6 +1899,7 @@ export const pois: PointOfInterest[] = [
     tag: "Inscription",
     modernName: "Ancient Corinth, Corinthia, Greece",
     coordinates: [22.8781, 37.9066],
+    modernMapUrl: mapsUrl(37.9066, 22.8781),
     description: "A 1st-century Latin paving-stone inscription reading ERASTVS PRO AEDILITATE S P STRAVIT (\"Erastus, in return for his aedileship, paved this at his own expense\"). Many scholars connect this Erastus with the Erastus named in Romans 16:23, whom Paul calls \"the city's director of public works,\" though the Latin office of aedile is not a precise equivalent of that Greek title, so the identification — while widely cited — remains a scholarly inference rather than a certainty.",
     archaeology: {
       note: "Discovered in 1929 by excavators from the American School of Classical Studies at Athens, set into a limestone pavement near the north edge of the Roman theater at ancient Corinth, where it remains in situ today. The lettering style and the use of the formula sua pecunia (\"with his own money\") point to a mid-1st-century date, consistent with Paul's residence in Corinth (c. 50-52 CE). Debate continues among scholars over whether this Erastus is the same figure named in Romans, since holding an aedileship sits awkwardly with the lesser financial-officer role Paul describes.",
@@ -1907,6 +1923,7 @@ export const pois: PointOfInterest[] = [
     tag: "Monument",
     modernName: "Ancient Corinth, Corinthia, Greece",
     coordinates: [22.8803, 37.9051],
+    modernMapUrl: mapsUrl(37.9051, 22.8803),
     description: "A large raised stone platform (the Latin rostra, Greek bema) standing near the center of Corinth's Roman forum, rising roughly 7.5 feet above the pavement and originally faced in marble. This is traditionally identified as the site where \"the Jews made a united attack on Paul and brought him before the judgment seat (bema)\" before the proconsul Gallio, who dismissed the charges as an internal Jewish religious dispute (Acts 18:12-17).",
     archaeology: {
       note: "Excavated by the American School of Classical Studies at Athens as part of its ongoing work in the Corinth forum. The platform's identification as the specific bema of Acts 18 rests on its prominent, central position in the forum and the known Roman practice of provincial governors holding court in a city's main public square — not on an inscription naming it, so the precise identification, while very plausible, is an inference from location and function rather than an epigraphic certainty.",
@@ -1934,6 +1951,7 @@ export const pois: PointOfInterest[] = [
     tag: "Ancient Temple",
     modernName: "Ancient Corinth, Corinthia, Greece",
     coordinates: [22.8794, 37.9061],
+    modernMapUrl: mapsUrl(37.9061, 22.8794),
     description: "The best-preserved Archaic temple at Corinth, built around 560 BCE of local limestone atop a hill overlooking the forum, with seven of its original monolithic Doric columns still standing. As the most visually dominant pagan shrine in the city Paul knew, it exemplifies the temple culture and meat-market economy tied to idol worship that Paul addresses directly in 1 Corinthians 8 and 10, where he counsels believers on eating food previously sacrificed to such gods.",
     archaeology: {
       note: "Excavated by the American School of Classical Studies at Athens, whose work at Corinth began in 1896. The temple's date is fixed by its architecture — its unusually long, narrow plan, oversized monolithic column shafts, and squat, flaring Doric capitals, all hallmarks of Archaic construction. Scholars debate whether the temple was dedicated to Apollo at all in its original phase, since the identification rests on later literary testimony (Pausanias) rather than an inscription found on-site.",
@@ -1957,6 +1975,7 @@ export const pois: PointOfInterest[] = [
     tag: "Inscription",
     modernName: "Delphi Archaeological Museum, Delphi, Greece",
     coordinates: [22.5013, 38.4824],
+    modernMapUrl: mapsUrl(38.4824, 22.5013),
     description: "A fragmentary Greek inscription (nine pieces) recording a letter of the emperor Claudius that names \"Lucius Junius Gallio, my friend, and proconsul of Achaia\" (Acts 18:12). Because Claudius's imperial acclamation count in the letter can be dated to around 51-52 CE, and Roman proconsuls typically served one-year terms beginning in early summer, the inscription is the single most important anchor point for dating Paul's roughly 18-month stay in Corinth (Acts 18:11).",
     archaeology: {
       note: "The fragments were discovered near the Temple of Apollo at Delphi in 1905 (with further pieces identified through 1908-1910) and are now held in the Delphi Archaeological Museum. Because the text survives only in pieces and part of the emperor's titulature had to be reconstructed by scholars, some uncertainty remains over the exact month of Gallio's term, but a range of roughly summer 51 to summer 52 CE is broadly accepted.",
@@ -1979,6 +1998,7 @@ export const pois: PointOfInterest[] = [
     tag: "Ancient Site",
     modernName: "Athens, Attica, Greece",
     coordinates: [23.7238, 37.9715],
+    modernMapUrl: mapsUrl(37.9715, 23.7238),
     description: "A rocky limestone outcropping immediately below the western slope of the Acropolis, named for Ares (Roman: Mars) and traditionally the meeting place of the Areopagus council, Athens's ancient judicial and aristocratic body. Tradition places Paul's famous sermon to the philosophers of Athens here (Acts 17:19-34), delivered in response to the altar he had seen inscribed \"TO AN UNKNOWN GOD\" (Acts 17:23) — though Acts itself does not specify the rock outcropping by name, only \"the Areopagus,\" which could refer either to the hill or to the council/court that bore its name.",
     archaeology: {
       note: "The hill has been studied since the 19th century alongside the adjacent Acropolis and Agora excavations, though little of any structure used by the council survives above the bare rock itself; a worn staircase cut into the stone still leads to the summit. Because the biblical text is ambiguous between the physical hill and the judicial council as an institution, some scholars argue Paul's speech was more likely delivered in the Agora below, making the hilltop identification a strong tradition rather than a settled fact.",
@@ -2006,6 +2026,7 @@ export const pois: PointOfInterest[] = [
     tag: "Ancient Site",
     modernName: "Athens, Attica, Greece",
     coordinates: [23.7229, 37.975],
+    modernMapUrl: mapsUrl(37.975, 23.7229),
     description: "The principal civic and commercial marketplace of ancient Athens, northwest of the Acropolis, filled by the 1st century CE with temples, altars, statues, and colonnaded stoas. Acts 17:17 records that Paul \"reasoned in the synagogue with the Jews and the God-fearing Greeks, as well as in the marketplace day by day with those who happened to be there\" — the daily philosophical and religious debate that eventually led the Stoic and Epicurean philosophers to bring him before the Areopagus.",
     archaeology: {
       note: "Systematically excavated by the American School of Classical Studies at Athens beginning in 1931; the reconstructed 2nd-century-BCE Stoa of Attalos now serves as the Ancient Agora Museum. By Paul's time the square had become an open-air museum of altars and statues collected over centuries — the same religious density that likely included the \"altar to an unknown god\" he references in his Areopagus speech (Acts 17:23), though that specific altar has never been recovered archaeologically.",
@@ -2028,6 +2049,7 @@ export const pois: PointOfInterest[] = [
     tag: "Ancient Wonder / Temple Ruins",
     modernName: "Selçuk, İzmir Province, Turkey",
     coordinates: [27.36389, 37.94972],
+    modernMapUrl: mapsUrl(37.94972, 27.36389),
     description: "One of the Seven Wonders of the Ancient World, the Temple of Artemis was the great pagan shrine whose cult and lucrative silver-shrine trade form the backdrop to the Ephesian riot in Acts 19:23-41, where the crowd chanted \"Great is Artemis of the Ephesians!\" (Acts 19:28, 19:34) after the silversmith Demetrius accused Paul's preaching of threatening the goddess's worship and his trade. By Paul's time this was the massive Hellenistic-era reconstruction (begun 323 BC), roughly four times the size of the Parthenon. Only a single reconstructed column and scattered foundation stones remain on the site today.",
     archaeology: {
       note: "The temple had at least three major building phases: an 8th-century BC peripteral shrine, the mid-6th-century BC Archaic temple funded by Croesus of Lydia (burned in 356 BC), and the Hellenistic rebuild begun in 323 BC that stood in Paul's day. The site was rediscovered in 1869 by John Turtle Wood in a British Museum-sponsored search; excavations continued to 1874, with further work by David George Hogarth (1904-06) and re-excavations in 1987-88. Little survives above foundation level — most sculptural fragments were removed to the British Museum.",
@@ -2051,6 +2073,7 @@ export const pois: PointOfInterest[] = [
     tag: "Ancient Theatre",
     modernName: "Selçuk, İzmir Province, Turkey",
     coordinates: [27.3254604, 37.9415382],
+    modernMapUrl: mapsUrl(37.9415382, 27.3254604),
     description: "This roughly 25,000-seat theater, carved into the western slope of Mount Pion (Panayırdağ), is traditionally identified as the site of the Ephesian riot in Acts 19:29, where the crowd \"rushed together into the theatre\" dragging Paul's traveling companions Gaius and Aristarchus after the silversmith Demetrius stirred up opposition to Paul's preaching. Paul himself was restrained by disciples and city officials from entering the theatre (Acts 19:30-31). Built in the Hellenistic period (3rd century BC) under Lysimachus and enlarged under Claudius and Nero, it remains one of the largest surviving ancient theatres in Asia Minor.",
     archaeology: {
       note: "Construction began around 200 BC under Lysimachus's Hellenistic city plan; the cavea and stage building were substantially rebuilt and enlarged in the Roman period, with a two-story stage added under Nero and a third story completed by the mid-2nd century AD. Austrian Archaeological Institute excavations have documented the structure's building phases in detail. The identification of this theatre as the Acts 19 riot site is treated as historically secure by most scholars, since Ephesus had only one large public theatre matching the narrative's description.",
@@ -2074,6 +2097,7 @@ export const pois: PointOfInterest[] = [
     tag: "Rock-Cut Chapel",
     modernName: "Bülbüldağ, Selçuk, İzmir Province, Turkey",
     coordinates: [27.329, 37.938],
+    modernMapUrl: mapsUrl(37.938, 27.329),
     description: "A narrow rock-cut chapel on the slope of Bülbüldağ (Nightingale Mountain) above the Great Theatre, venerated since at least the 4th-6th century AD as a place associated with the apostle Paul's time in Ephesus (cf. Acts 19-20; 1 Corinthians 16:8). Its walls preserve the only known ancient depiction of Paul at Ephesus, showing him seated with a book alongside Thecla and her mother Theocleia — a scene drawn from the 2nd-century apocryphal Acts of Paul and Thecla rather than from the canonical New Testament text itself. Coordinates given are approximate — the site is not open to the public and lacks a precisely published GPS location.",
     archaeology: {
       note: "The grotto's principal fresco was uncovered under later plaster layers and dated by Dr. Renate Pillinger (University of Vienna) to the late 5th or early 6th century AD; additional paintings and over 500 graffiti/inscriptions span the 4th through 12th-13th centuries. Because the fresco illustrates the non-canonical Acts of Paul and Thecla rather than an episode from Acts of the Apostles, its NT connection is devotional/traditional rather than a direct excavated confirmation of a specific biblical event. The cave remains closed to the general public to protect the fragile paintings.",
@@ -2097,6 +2121,7 @@ export const pois: PointOfInterest[] = [
     tag: "Council Basilica",
     modernName: "Ephesus archaeological site, near Selçuk, İzmir Province, Turkey",
     coordinates: [27.33948, 37.94502],
+    modernMapUrl: mapsUrl(37.94502, 27.33948),
     description: "Built in the early 5th century over an earlier Roman civic hall (the \"Hall of the Muses\") near the harbor of Ephesus, this basilica hosted the Council of Ephesus in AD 431, the third Ecumenical Council, which affirmed Mary as \"Theotokos\" (God-bearer) against Nestorius. It is traditionally called the first church built in Mary's name, later the \"Double Church\" after its western domed hall and eastern basilica were rebuilt in separate phases. The council itself is not narrated in the New Testament, but its central question — the nature of Christ born of Mary — draws directly on passages such as Luke 1:31-35 and John 1:14.",
     archaeology: {
       note: "Austrian Archaeological Institute excavations identified the structure beneath the church as a large late-Roman hall, abandoned in the 3rd century and converted into a church between roughly 400 and 431 — likely finished in time to host the 431 council. Around 500 the building was enlarged into a monumental domed cathedral, whose apse and piers still stand; scholars debate the precise phasing and whether the 431 sessions used the western hall, the eastern basilica, or both. It is one of the few New Testament-era Ephesian sites with a firm, non-legendary historical anchor.",
@@ -2120,6 +2145,7 @@ export const pois: PointOfInterest[] = [
     tag: "Modern Pilgrimage Site",
     modernName: "Meryemana, Mt. Koressos, ~7 km from Selçuk, İzmir Province, Turkey",
     coordinates: [27.3342, 37.9117],
+    modernMapUrl: mapsUrl(37.9117, 27.3342),
     description: "A small stone house on a hillside above Ephesus venerated by Catholic and, separately, Muslim pilgrims as the place where the Virgin Mary lived out her final years under the care of the Apostle John. The tradition rests on John 19:26-27, where the dying Jesus entrusts Mary to John's household, combined with the separately attested tradition that John later ministered in Ephesus. IMPORTANT: this specific house was not identified by archaeology or continuous historical memory — it was located in 1881 by a French priest using descriptions from the 19th-century visions of a German nun, Anne Catherine Emmerich, who never traveled to Turkey.",
     archaeology: {
       note: "The site was pinpointed in 1881 by Abbé Julien Gouyet and confirmed by Lazarist missionaries in 1891, working entirely from visionary descriptions published after Emmerich's death — not from any prior local tradition or excavation trail pointing to this exact structure. Investigators found foundations consistent with a 1st-century building beneath a later chapel, but this only shows a house existed there in antiquity, not that it was Mary's. The Catholic Church has deliberately never ruled on the site's authenticity \"for lack of scientifically acceptable evidence,\" even as it has supported pilgrimage there since Pope Leo XIII in 1896.",
@@ -2143,6 +2169,7 @@ export const pois: PointOfInterest[] = [
     tag: "Traditional Martyrdom Site",
     modernName: "Panayır Dağı (Mt. Pion), Ephesus archaeological site, near Selçuk, Turkey",
     coordinates: [27.3467, 37.942],
+    modernMapUrl: mapsUrl(37.942, 27.3467),
     description: "Timothy, Paul's close companion and the recipient of 1 & 2 Timothy, is honored by tradition as the first bishop of Ephesus, echoing Paul's charge to him to \"remain at Ephesus\" and oversee sound teaching there (1 Timothy 1:3). Later apocryphal tradition holds that around AD 97 the elderly Timothy was mortally beaten by a crowd on Mount Pion while protesting a pagan festival procession, making the hillside his traditional place of martyrdom. His name appears repeatedly in Acts (16:1-3, 19:22) and Paul's letters documenting his long partnership with Paul, including time spent together in Ephesus.",
     archaeology: {
       note: "No tomb, shrine, or inscription for Timothy has ever been excavated on Panayır Dağı. What is historically documented is the later fate of relics venerated as his: sources record they were translated from Ephesus to Constantinople's Church of the Holy Apostles in the 4th century, then reportedly moved to Italy around 1239 and rediscovered at Termoli Cathedral in 1945. This entry represents a traditional/commemorative location tied to a real New Testament figure, not a verified archaeological find.",
@@ -2165,6 +2192,7 @@ export const pois: PointOfInterest[] = [
     tag: "Ancient Theatre",
     modernName: "Balat (Milet), Aydın Province, Turkey",
     coordinates: [27.27837, 37.53023],
+    modernMapUrl: mapsUrl(37.53023, 27.27837),
     description: "This massive Greco-Roman theatre, seating roughly 15,000, stood at the heart of Miletus when Paul summoned the elders of the Ephesian church to meet him there rather than travel to Ephesus himself, delivering his emotional farewell address before sailing for Jerusalem (Acts 20:17-38). The book of Acts does not name the theatre specifically as the meeting site, but it remains the most prominent surviving structure from the Miletus Paul would have known.",
     archaeology: {
       note: "First excavated in 1873 by French archaeologist Olivier Rayet, with systematic German-led excavations beginning in 1899. The earliest phase of the cavea dates to the Hellenistic period (4th-3rd century BC), with major Roman-era rebuilding under Trajan giving the stage building its three-story, 22-meter-high facade; the structure was later converted into a Byzantine fortress. No inscription or artifact ties the theatre directly to Paul's visit — its NT association is topographical and traditional.",
@@ -2188,6 +2216,7 @@ export const pois: PointOfInterest[] = [
     tag: "Traditional Site",
     modernName: "Kızılmurat neighborhood, Tarsus, Mersin Province, Turkey",
     coordinates: [34.89361, 36.91917],
+    modernMapUrl: mapsUrl(36.91917, 34.89361),
     description: "Paul described himself as \"a Jew, born in Tarsus of Cilicia\" (Acts 22:3), and this stone-lined well — roughly 38 meters deep — sits in a courtyard local tradition identifies as the site of Paul's family home. The well itself dates archaeologically to the Roman period, consistent with Paul's lifetime, but its specific identification as Paul's birthplace is a long-standing pilgrimage tradition rather than a verified excavation finding.",
     archaeology: {
       note: "The well and surrounding house ruins were uncovered during a rescue excavation in 1999, revealing Roman, Byzantine, and Ottoman-period occupation layers at the site. It is jointly listed with the nearby Saint Paul's Church on Turkey's UNESCO World Heritage Tentative List. Scholars are honest that while the well's Roman-era date fits the traditional story, the association with Paul's actual household is tradition passed down through local Christian veneration rather than something archaeology can independently confirm.",
@@ -2210,6 +2239,7 @@ export const pois: PointOfInterest[] = [
     tag: "Religious Site",
     modernName: "Sart, Salihli, Manisa Province, Turkey",
     coordinates: [28.04028, 38.48833],
+    modernMapUrl: mapsUrl(38.48833, 28.04028),
     description: "This vast synagogue — the largest known from the ancient world, with a main hall over 50 meters long that could hold nearly 1,000 worshippers — was part of the same Jewish community that formed the backdrop to Christ's letter to the church in Sardis, which rebukes the congregation for being spiritually \"dead\" despite its reputation (Revelation 3:1-6). While the surviving structure was renovated into its grand basilical form in the late 3rd-4th century AD (after the NT period), it stands on a site occupied by Sardis's Jewish community for centuries before, including in the 1st century.",
     archaeology: {
       note: "Discovered in 1962 during Harvard-Cornell excavations led by George Hanfmann and Henry Detweiler, the synagogue occupies a wing of the city's bath-gymnasium complex. Excavation has yielded over 80 Greek and 7 Hebrew inscriptions and roughly 1,400 square meters of mosaic flooring, with donor inscriptions showing some congregants held civic titles — evidence the Jewish community was highly integrated into Roman civic life. Excavations at Sardis continue annually.",
@@ -2232,6 +2262,7 @@ export const pois: PointOfInterest[] = [
     tag: "Historical Site",
     modernName: "İzmir, Turkey",
     coordinates: [27.1456, 38.4141],
+    modernMapUrl: mapsUrl(38.4141, 27.1456),
     description: "Polycarp, bishop of Smyrna and a disciple of the Apostle John, was burned and then stabbed to death in this city's Roman stadium around AD 155-156, according to the Martyrdom of Polycarp, one of the earliest and most detailed martyrdom accounts outside the New Testament. Smyrna is one of the seven churches addressed in Revelation 2:8-11, where the risen Christ warns the congregation of coming tribulation and promises \"the crown of life\" to those faithful unto death — words later Christians read as a direct foreshadowing of Polycarp's fate.",
     archaeology: {
       note: "The Roman stadium of Smyrna stood on the southwest slope of Mount Pagos (modern Kadifekale) but was progressively dismantled, most severely by an Ottoman vizier in 1675, and is now entirely built over by the modern city; no visible remains survive. Its approximate location is established from 19th- and early 20th-century travelers' accounts and old maps rather than modern excavation.",
@@ -2254,6 +2285,7 @@ export const pois: PointOfInterest[] = [
     tag: "Historical Site",
     modernName: "İznik, Turkey",
     coordinates: [29.7211, 40.4286],
+    modernMapUrl: mapsUrl(40.4286, 29.7211),
     description: "In AD 325, Emperor Constantine I convened the First Ecumenical Council in the city of Nicaea, gathering roughly 250-318 bishops from across the Christian world to resolve the Arian controversy over the nature of Christ. The council produced the original Nicene Creed, the first empire-wide doctrinal statement of the Christian church, and addressed the dating of Easter and other matters of church order.",
     archaeology: {
       note: "The council almost certainly met in an imperial palace complex whose precise location within ancient Nicaea has not been definitively excavated. In 2014, archaeologists discovered a submerged late-4th/early-5th-century basilica in Lake İznik; some scholars have proposed it was built to commemorate the council, but this connection remains speculative. The Hagia Sophia standing in İznik's town center today was rebuilt after the 1065 earthquake atop an earlier basilica and hosted the Second Council of Nicaea in 787 — a related but distinct site.",
@@ -2276,6 +2308,7 @@ export const pois: PointOfInterest[] = [
     tag: "Religious Site",
     modernName: "Antakya, Hatay Province, Turkey",
     coordinates: [36.1782, 36.2094],
+    modernMapUrl: mapsUrl(36.2094, 36.1782),
     description: "According to long-standing local tradition, this rock-cut cave on the slope of Mount Starius (Habib-i Neccar Mountain) was used as a meeting and worship place by the earliest Christian community of Antioch, the city where \"the disciples were first called Christians\" (Acts 11:26). Antioch was the base from which Paul and Barnabas launched their missionary journeys (Acts 13:1-3) and a leading center of the early church alongside Jerusalem and Rome.",
     archaeology: {
       note: "The cave itself is a natural/rock-cut grotto with a rear tunnel traditionally said to have served as an escape route during persecution; none of this can be independently dated to the apostolic era, and the identification with Peter rests on tradition rather than excavation. The structure's visible façade was built by Crusaders during their occupation of Antioch (1098-1268) and substantially rebuilt in 1863 under Capuchin friars. The site suffered damage in the February 2023 earthquakes.",
@@ -2298,6 +2331,7 @@ export const pois: PointOfInterest[] = [
     tag: "Historical Site",
     modernName: "Rome, Italy",
     coordinates: [12.4853, 41.8925],
+    modernMapUrl: mapsUrl(41.8925, 12.4853),
     description: "Known in antiquity as the Tullianum or Carcer, the Mamertine Prison at the foot of the Capitoline Hill was ancient Rome's principal state prison, used for detaining and executing enemies of Rome. Christian tradition, though not attested in the New Testament itself, holds that both Peter and Paul were held here in the final days before their martyrdoms under Nero in the 60s AD.",
     archaeology: {
       note: "The lower chamber is a genuinely ancient structure, with masonry dated by archaeologists to as early as the 7th-6th century BC, making it one of the oldest structures in Rome; a natural spring inside it is central to the later legend that Peter used its water to baptize fellow prisoners. There is no first-century documentary or archaeological evidence specifically placing Peter or Paul in this cell — the association is a devotional tradition first attested centuries after the apostolic period.",
@@ -2320,6 +2354,7 @@ export const pois: PointOfInterest[] = [
     tag: "Religious Site",
     modernName: "Rome, Italy",
     coordinates: [12.4767, 41.8581],
+    modernMapUrl: mapsUrl(41.8581, 12.4767),
     description: "This basilica stands on the traditional burial site of the Apostle Paul, martyred in Rome under Nero around AD 64-67. First built by Constantine in the 4th century over an earlier funerary monument, greatly enlarged under Theodosius I, the basilica has been venerated as Paul's tomb continuously since antiquity, making it one of the four papal major basilicas of Rome.",
     archaeology: {
       note: "A Vatican-sponsored excavation conducted between 2002 and 2006 uncovered an intact white marble sarcophagus directly beneath the high altar, inscribed \"Paulo Apostolo Mart\" (\"to Paul, apostle and martyr\"). The sarcophagus has been dated to at least the late 4th century, consistent with Constantine's original shrine. In 2009, Pope Benedict XVI announced that a probe inserted into the sarcophagus had detected bone fragments carbon-dated to the 1st or 2nd century — findings consistent with, but not proof of, the traditional identification of the remains as Paul's.",
@@ -2342,6 +2377,7 @@ export const pois: PointOfInterest[] = [
     tag: "Historical Site",
     modernName: "Vatican City / Rome, Italy",
     coordinates: [12.4539, 41.9022],
+    modernMapUrl: mapsUrl(41.9022, 12.4539),
     description: "Built by Caligula and expanded by Nero in the gardens on the Vatican Hill, this circus was the site of Rome's first state-sponsored, mass persecution of Christians. After the Great Fire of Rome in AD 64, the historian Tacitus records that Nero, to deflect blame from himself, had Christians arrested and executed here in brutal spectacles (Annals 15.44). Tradition holds that the Apostle Peter was martyred, reportedly crucified upside down, on or near this site around AD 64-67.",
     archaeology: {
       note: "Tacitus's account of the persecution is considered strong, near-contemporary historical evidence, but no archaeological remains of the circus's superstructure survive above ground today — it lay in the area now occupied by St. Peter's Square and the southern flank of the basilica. The Egyptian granite obelisk that stood in the circus's spina survives and was relocated by Pope Sixtus V in 1586 to the center of St. Peter's Square.",
@@ -2364,6 +2400,7 @@ export const pois: PointOfInterest[] = [
     tag: "Catacomb",
     modernName: "Vatican City",
     coordinates: [12.4533, 41.9023],
+    modernMapUrl: mapsUrl(41.9023, 12.4533),
     description: "Beneath St. Peter's Basilica lies a Roman-era necropolis dating to the 1st-4th centuries AD, at the center of which a small 2nd-century shrine (\"the Trophy of Gaius\") was long venerated as marking the burial place of the Apostle Peter. Constantine chose to build the original St. Peter's Basilica directly over this shrine in the 4th century, despite the enormous engineering effort of leveling the hillside cemetery — a choice widely read as evidence of the site's early and firmly held significance to Roman Christians.",
     archaeology: {
       note: "Systematic excavations were carried out beneath the basilica from 1940 to 1949 under Pope Pius XII's direction. In 1950 Pius XII announced that Peter's tomb had probably been found but that identifiable bones could not be confirmed. Further work led Pope Paul VI to announce in 1968 that bones recovered from a repository near the shrine — belonging to a robustly built male around 60-70 years old — were, in the Vatican investigators' judgment, likely Peter's. The identification remains debated among scholars, as the bones were moved between locations during the dig.",
@@ -2386,6 +2423,7 @@ export const pois: PointOfInterest[] = [
     tag: "Catacomb",
     modernName: "Rome, Italy (Via Salaria)",
     coordinates: [12.5087, 41.9297],
+    modernMapUrl: mapsUrl(41.9297, 12.5087),
     description: "One of the oldest Christian catacombs in Rome, the Catacomb of Priscilla began as a set of underground quarries and burial chambers along the Via Salaria, likely on the estate of a Christian noble family, and grew into a vast Christian cemetery used from the late 2nd century onward. Several early popes and many martyrs were buried here, earning it the title \"Regina Catacumbarum\" (\"Queen of the Catacombs\").",
     archaeology: {
       note: "The catacomb's Greek Chapel preserves 3rd-century frescoes generally interpreted as Old and New Testament scenes, including a fresco of the \"fractio panis\" (breaking of bread) widely read as an early eucharistic image. A separate fresco, dated by most scholars to the mid-to-late 3rd century, depicts a seated woman nursing an infant beside a robed male figure pointing to a star, and is frequently identified as the earliest surviving image of the Virgin Mary and Christ child — though this identification is debated among art historians.",
@@ -2408,6 +2446,7 @@ export const pois: PointOfInterest[] = [
     tag: "Catacomb",
     modernName: "Rome, Italy (Via Appia Antica)",
     coordinates: [12.5106, 41.8586],
+    modernMapUrl: mapsUrl(41.8586, 12.5106),
     description: "The largest of Rome's underground Christian cemeteries, the Catacomb of Callixtus became the official burial ground of the Roman church in the early 3rd century, after Pope Zephyrinus placed the future Pope Callixtus I, then a deacon, in charge of enlarging and administering it. Its \"Crypt of the Popes\" became the principal burial chamber for the bishops of Rome for much of the 3rd century, reflecting the young church's growing institutional organization within a generation or two of the last apostles.",
     archaeology: {
       note: "Excavation and identification of the site is credited to the 19th-century archaeologist Giovanni Battista de Rossi, who in 1854 rediscovered the long-lost Crypt of the Popes and confirmed, through inscriptions, the burial there of nine popes and several bishops who served between roughly AD 230 and 283. The catacomb complex spans four levels and roughly 15-20 kilometers of galleries. Relics were largely translated to churches within the city walls by the 9th century, after which the catacombs were abandoned until de Rossi's rediscovery.",
@@ -2430,6 +2469,7 @@ export const pois: PointOfInterest[] = [
     tag: "Ancient Roman Road / Legendary Site",
     modernName: "Via Appia Antica, Rome, Italy",
     coordinates: [12.521, 41.8459],
+    modernMapUrl: mapsUrl(41.8459, 12.521),
     description: "The Via Appia (Appian Way), begun in 312 BC by censor Appius Claudius Caecus, was ancient Rome's principal highway south. About 800m outside Porta San Sebastiano stands the small Church of Domine Quo Vadis, built on the spot where later Christian tradition, drawn from the apocryphal Acts of Peter, holds that the Apostle Peter, fleeing Rome to escape persecution, encountered a vision of the risen Christ. Peter reportedly asked \"Domine, quo vadis?\" (\"Lord, where are you going?\"), and Christ answered that he was going to Rome to be crucified again — prompting Peter's shamed return to the city and eventual martyrdom.",
     archaeology: {
       note: "The Appian Way itself is extensively excavated and preserved, forming the Appia Antica Archaeological Park; in July 2024 the road was inscribed as a UNESCO World Heritage Site. The Quo Vadis legend, by contrast, is not attested in the New Testament and rests solely on the apocryphal Acts of Peter — scholars regard it as pious legend, not history. The current chapel dates only to 1637, though a sanctuary has stood on the site since at least the 9th century.",
@@ -2458,6 +2498,7 @@ export const pois: PointOfInterest[] = [
     tag: "Waypoints on the Appian Way",
     modernName: "Near Borgo Faiti / Cisterna di Latina, Lazio, Italy",
     coordinates: [13.07, 41.53],
+    modernMapUrl: mapsUrl(41.53, 13.07),
     description: "These were two Roman waystations on the Via Appia south of Rome — Forum Appii roughly 43 Roman miles from Rome, Three Taverns about 10 miles closer. Acts 28:15 records that when believers in Rome heard Paul was approaching, they traveled out to meet him at these two points; seeing them, Paul \"thanked God and took courage.\"",
     archaeology: {
       note: "There are no specific, pinpointed excavated ruins definitively marking either site today — this is a general regional identification only. Forum Appii is placed near modern Borgo Faiti in the reclaimed Pontine Marshes, with only scattered traces surviving. Three Taverns' exact location is even less certain. Both sites are attested by classical writers (Cicero, Horace) as established stopping points, but modern coordinates for either are approximate.",
@@ -2474,6 +2515,7 @@ export const pois: PointOfInterest[] = [
     tag: "Ancient Port City",
     modernName: "Reggio Calabria, Calabria, Italy",
     coordinates: [15.65, 38.1147],
+    modernMapUrl: mapsUrl(38.1147, 15.65),
     description: "Rhegium, founded c. 720 BC by Greek colonists from Chalcis, sat on the Strait of Messina opposite Sicily. Acts 28:13 records it as a stop on Paul's voyage to Rome as a prisoner: after three days in Syracuse, the ship \"weighed anchor and came to Rhegium,\" waiting there for a favorable south wind before sailing to Puteoli.",
     archaeology: {
       note: "Rhegium's Greek origins are well documented archaeologically — remains of the Hippodamian grid city plan, fragments of ancient Greek walls, an acropolis, and Roman-era baths have been excavated in the city center; finds are housed in the Museo Nazionale della Magna Grecia. There is no specific excavated site tied to Paul's brief stopover — Acts records only a short layover awaiting wind.",
@@ -2496,6 +2538,7 @@ export const pois: PointOfInterest[] = [
     tag: "Ancient Greek/Roman City",
     modernName: "Syracuse (Siracusa), Sicily, Italy",
     coordinates: [15.2866, 37.0755],
+    modernMapUrl: mapsUrl(37.0755, 15.2866),
     description: "Founded by Corinthian settlers in 733 BC, Syracuse became one of the greatest cities of Magna Graecia. Acts 28:12 records that the ship carrying Paul to Rome, after leaving Malta, \"put in at Syracuse, and stayed there three days\" before continuing toward Rhegium and Puteoli.",
     archaeology: {
       note: "Syracuse is one of the best-preserved ancient cities in the Mediterranean, containing the 5th-century BC Greek Theatre, a Roman amphitheater, the Latomie quarries, and remains on the island of Ortigia. The site is UNESCO-listed. No specific ruin is tied to Paul's three-day stop — the biblical account records only a brief stopover.",
@@ -2518,6 +2561,7 @@ export const pois: PointOfInterest[] = [
     tag: "Ancient Port",
     modernName: "Kavala, Greece",
     coordinates: [24.4, 40.933],
+    modernMapUrl: mapsUrl(40.933, 24.4),
     description: "Neapolis was the harbor town where Paul, Silas, Timothy, and Luke landed after sailing from Troas via Samothrace — the first recorded step of the gospel onto European soil (Acts 16:11-12). From this port they walked roughly 10 miles inland along the Via Egnatia to Philippi.",
     archaeology: {
       note: "Founded in the late 7th century BC as a colony of Thasos, Neapolis kept its own identity and coinage before becoming Kavala. Because the modern city continuously occupies the same peninsula, excavation of the 1st-century port is limited; visible remains include a Roman-era aqueduct, acropolis/castle fortifications, and Ionic temple fragments in the Archaeological Museum of Kavala. The Kavala/Neapolis identification is not seriously disputed.",
@@ -2540,6 +2584,7 @@ export const pois: PointOfInterest[] = [
     tag: "Ancient City",
     modernName: "Amfipoli, Serres, Greece",
     coordinates: [23.84, 40.818],
+    modernMapUrl: mapsUrl(40.818, 23.84),
     description: "Amphipolis was a major Macedonian city on the Via Egnatia that Paul, Silas, and Timothy passed through — without stopping to preach — on their way from Philippi to Thessalonica (Acts 17:1), likely because it had no synagogue.",
     archaeology: {
       note: "Founded as an Athenian colony in 437 BC, later Macedonian and then a Roman provincial capital. Post-WWII excavations uncovered city walls, a necropolis, basilicas, and the acropolis. The famous Lion of Amphipolis (a 4th-century BC tomb monument, reassembled in 1937) and the separately excavated, much-debated Kasta Tomb mound are the site's best-known features.",
@@ -2562,6 +2607,7 @@ export const pois: PointOfInterest[] = [
     tag: "Traditional Site (Location Uncertain)",
     modernName: "Near Nea Apollonia, Thessaloniki region, Greece",
     coordinates: [23.4697, 40.6237],
+    modernMapUrl: mapsUrl(40.6237, 23.4697),
     description: "Apollonia was the second waypoint Paul, Silas, and Timothy passed through between Philippi and Thessalonica (Acts 17:1), again without stopping to preach. No other New Testament passage mentions Apollonia.",
     archaeology: {
       note: "The exact site Luke meant is not certain among scholars. Ancient itineraries place a Via Egnatia station named Apollonia between Amphipolis and Thessalonica; most modern atlases associate it with a site near modern Nea Apollonia, based mainly on itinerary distances rather than definitive inscriptional proof. No major ruins are open to visitors today, and the village's \"Bema of the Apostle Paul\" monument is a modern marker, not an ancient structure.",
@@ -2584,6 +2630,7 @@ export const pois: PointOfInterest[] = [
     tag: "Traditional Site",
     modernName: "San Pawl il-Baħar, Malta",
     coordinates: [14.4017, 35.9483],
+    modernMapUrl: mapsUrl(35.9483, 14.4017),
     description: "St. Paul's Bay is the traditional site where the ship carrying Paul as a prisoner ran aground during a storm, after which he and all 276 aboard reached shore safely (Acts 27:39-28:1). Paul then spent three months on Malta, surviving a viper bite and healing Publius's father (Acts 28:1-10).",
     archaeology: {
       note: "The identification with this bay has been local tradition for roughly 500 years, but no archaeological evidence — wreck timbers, anchors, or 1st-century artifacts tied specifically to the event — has ever been confirmed here despite searching. Some researchers argue the geography in Acts fits other locations better, such as St. Thomas Bay, making this a genuinely open question. A statue of St. Paul was erected on the small island at the bay's mouth (Selmunett) in 1845.",
@@ -2606,6 +2653,7 @@ export const pois: PointOfInterest[] = [
     tag: "Early Christian Prayer Hall",
     modernName: "Megiddo Prison, near Tel Megiddo, Israel",
     coordinates: [35.191306, 32.571167],
+    modernMapUrl: mapsUrl(32.571167, 35.191306),
     description: "In 2005, prisoners doing salvage excavation ahead of a Megiddo Prison expansion (at ancient Kfar Othnay/Legio) uncovered the floor of one of the world's oldest known Christian prayer halls, dated to roughly AD 230. A mosaic bears a Greek inscription stating that \"the God-loving Akeptous has offered the table to God Jesus Christ as a memorial\" — one of the earliest surviving inscriptions to explicitly call Jesus \"God,\" predating Constantine's legalization of Christianity by nearly a century.",
     archaeology: {
       note: "Excavated in 2005 by Yotam Tepper (Tel Aviv University/Israel Antiquities Authority). The c. 230 AD date rests on associated pottery, coins, and lettering style; the room appears deliberately covered around 305 AD, plausibly to hide it during the Diocletianic persecution. Some scholars argue the structure may be a later conversion of an earlier building rather than purpose-built — the early date is well-supported but not universally uncontested.",
@@ -2628,6 +2676,7 @@ export const pois: PointOfInterest[] = [
     tag: "Earliest Known Christian House-Church",
     modernName: "Dura-Europos (Salhiyé), near Deir ez-Zor, Syria",
     coordinates: [40.727958, 34.745829],
+    modernMapUrl: mapsUrl(34.745829, 40.727958),
     description: "An ordinary Roman-era house at the frontier city of Dura-Europos was converted around AD 240/241 into a dedicated Christian meeting place (domus ecclesiae) with a small baptistery — the earliest archaeologically identified Christian building anywhere, predating Constantine's legalization of Christianity by nearly a century. The baptistery's wall paintings, including the Good Shepherd and Christ walking on water, are the oldest surviving depictions of Jesus Christ yet found.",
     archaeology: {
       note: "Excavated in 1931-1932 by a joint French-Yale team led by Clark Hopkins and Michael Rostovtzeff. The city was abandoned after a Persian siege in AD 256 and buried under a Roman defensive earthen ramp, which inadvertently preserved the building. The wall paintings and font were removed to Yale, where the reconstructed baptistery is displayed at the Yale University Art Gallery; the original site in Syria has suffered looting and conflict-related damage during the Syrian Civil War.",
@@ -2655,6 +2704,7 @@ export const pois: PointOfInterest[] = [
     tag: "Narrative Site — General Region",
     modernName: "Ruins of Alexandria Troas, near Dalyan/Ezine, Çanakkale Province, Turkey",
     coordinates: [26.15861, 39.75167],
+    modernMapUrl: mapsUrl(39.75167, 26.15861),
     description: "Acts 20:7-12 recounts that during Paul's farewell visit to Troas, a young man named Eutychus fell asleep during Paul's long, late-night sermon, fell from a third-story window, and was found apparently dead — after which Paul embraced him and he was restored. The text places the event in an upper room of a house in Troas, but no specific building has ever been identified. This entry marks the broad site of ancient Alexandria Troas, not any pinpointed structure.",
     archaeology: {
       note: "Alexandria Troas was a major Roman-era port city; its ruins today include a bath complex, an odeon, a theatre, a gymnasium, and a stadium uncovered by German-led excavations in the early 2000s. No archaeological work has identified a specific house or \"upper room\" connected to the Eutychus narrative — the biblical account gives no address-level detail.",
@@ -2677,6 +2727,7 @@ export const pois: PointOfInterest[] = [
     tag: "Ecumenical Council Site",
     modernName: "Kadıköy (ancient Chalcedon), Istanbul, Turkey",
     coordinates: [29.0186, 40.9962],
+    modernMapUrl: mapsUrl(40.9962, 29.0186),
     description: "The Fourth Ecumenical Council convened at Chalcedon October 8-November 1, AD 451, meeting in the Church of St. Euphemia, across the Bosphorus from Constantinople. The council produced the Chalcedonian Definition, affirming Christ \"in two natures\" (fully God, fully man) united in one person — accepted by Rome, Byzantium, and most churches, but rejected by the Oriental Orthodox churches, a split persisting today.",
     archaeology: {
       note: "No physical remains of the Church of St. Euphemia survive above ground; historians generally place its foundations near the Haydarpaşa railway station complex on the Kadıköy waterfront, inferred from historical topography rather than confirmed excavation. Chalcedon's urban fabric has been almost entirely built over by modern Istanbul, so this entry marks the traditional, historically-attested area rather than an excavated council chamber.",

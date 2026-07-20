@@ -1,6 +1,7 @@
 import { useEffect, useRef } from "react";
 import maplibregl from "maplibre-gl";
 import "maplibre-gl/dist/maplibre-gl.css";
+import type { Feature, FeatureCollection, Geometry, LineString, Polygon } from "geojson";
 import type { Location, PointOfInterest } from "../data/types";
 import type { MapMode } from "./ThenNowToggle";
 
@@ -82,7 +83,7 @@ const HIGHLIGHT_SOURCE_ID = "region-highlight";
 const HIGHLIGHT_FILL_LAYER_ID = "region-highlight-fill";
 const HIGHLIGHT_OUTLINE_LAYER_ID = "region-highlight-outline";
 const HIGHLIGHT_CATEGORIES = new Set(["region", "province", "nation"]);
-const EMPTY_FEATURE_COLLECTION: GeoJSON.FeatureCollection = { type: "FeatureCollection", features: [] };
+const EMPTY_FEATURE_COLLECTION: FeatureCollection = { type: "FeatureCollection", features: [] };
 
 /** Default highlight radius (km) by category, used when a location doesn't specify its own. */
 const DEFAULT_HIGHLIGHT_RADIUS_KM: Record<string, number> = {
@@ -92,7 +93,7 @@ const DEFAULT_HIGHLIGHT_RADIUS_KM: Record<string, number> = {
 };
 
 /** Approximates a circle of the given radius (km) around a [lng, lat] center as a GeoJSON polygon. */
-function createCircleFeature(center: [number, number], radiusKm: number): GeoJSON.Feature<GeoJSON.Polygon> {
+function createCircleFeature(center: [number, number], radiusKm: number): Feature<Polygon> {
   const points = 64;
   const distanceX = radiusKm / (111.32 * Math.cos((center[1] * Math.PI) / 180));
   const distanceY = radiusKm / 110.574;
@@ -200,7 +201,7 @@ function setHighlightedLocation(map: maplibregl.Map, location: Location | undefi
 }
 
 /** Pulls every LineString/MultiLineString segment out of a (Multi)LineString feature into one flat coordinate list. */
-function flattenLineCoords(geometry: GeoJSON.Geometry): [number, number][] {
+function flattenLineCoords(geometry: Geometry): [number, number][] {
   if (geometry.type === "LineString") return geometry.coordinates as [number, number][];
   if (geometry.type === "MultiLineString") return (geometry.coordinates as [number, number][][]).flat();
   return [];
@@ -223,7 +224,7 @@ function highlightRealRiverGeometry(map: maplibregl.Map, riverName: string) {
     });
     if (features.length === 0) return false;
 
-    const lines: GeoJSON.Feature<GeoJSON.LineString>[] = [];
+    const lines: Feature<LineString>[] = [];
     features.forEach((f) => {
       const coords = flattenLineCoords(f.geometry);
       if (coords.length > 1) lines.push({ type: "Feature", properties: {}, geometry: { type: "LineString", coordinates: coords } });
