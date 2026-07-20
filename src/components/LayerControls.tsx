@@ -8,6 +8,8 @@ interface LayerControlsProps {
   poiCount: number;
   locationsVisible: boolean;
   onToggleLocations: () => void;
+  /** Start collapsed — used on mobile so the checkbox list doesn't cover most of the map on load. */
+  defaultMinimized?: boolean;
 }
 
 type LayerCategory = "roads" | "places" | "regions" | "boundaries";
@@ -88,10 +90,11 @@ export default function LayerControls({
   poiCount,
   locationsVisible,
   onToggleLocations,
+  defaultMinimized = false,
 }: LayerControlsProps) {
   const [groups, setGroups] = useState<Record<LayerCategory, string[]>>(EMPTY_GROUPS);
   const [visible, setVisible] = useState<Record<LayerCategory, boolean>>(DEFAULT_VISIBLE);
-  const [minimized, setMinimized] = useState(false);
+  const [minimized, setMinimized] = useState(defaultMinimized);
   const visibleRef = useRef(visible);
   visibleRef.current = visible;
 

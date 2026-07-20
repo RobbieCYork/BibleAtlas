@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import type maplibregl from "maplibre-gl";
 import MapView from "./components/MapView";
 import LayerControls from "./components/LayerControls";
@@ -8,6 +8,7 @@ import PoiPanel from "./components/PoiPanel";
 import BiblePanel from "./components/BiblePanel";
 import ThenNowToggle, { type MapMode } from "./components/ThenNowToggle";
 import PanelMenu, { type PanelKey } from "./components/PanelMenu";
+import MobileTabBar from "./components/MobileTabBar";
 import ResizeHandle from "./components/ResizeHandle";
 import { locations } from "./data/locations";
 import { pois } from "./data/pois";
@@ -15,6 +16,7 @@ import "./App.css";
 
 const MIN_PANEL_WIDTH = 240;
 const MAX_PANEL_WIDTH = 800;
+const MOBILE_QUERY = "(max-width: 768px)";
 
 function App() {
   const [selectedId, setSelectedId] = useState<string | null>(null);
@@ -24,11 +26,12 @@ function App() {
   const [map, setMap] = useState<maplibregl.Map | null>(null);
   const [mapMode, setMapMode] = useState<MapMode>("satellite");
   const [bibleReference, setBibleReference] = useState<string | null>(null);
-  const [panels, setPanels] = useState<Record<PanelKey, boolean>>({
-    map: true,
-    details: false,
-    bible: true,
-  });
+  const [isMobile, setIsMobile] = useState(() => window.matchMedia(MOBILE_QUERY).matches);
+  // On mobile, exactly one panel is shown at a time (driven by the bottom tab bar), so
+  // start collapsed to just the map instead of the desktop map+bible default.
+  const [panels, setPanels] = useState<Record<PanelKey, boolean>>(() =>
+    isMobile ? { map: true, details: false, bible: false } : { map: true, details: false, bible: true }
+  );
   const [bibleWidth, setBibleWidth] = useState(340);
   const [detailsWidth, setDetailsWidth] = useState(380);
 
@@ -38,43 +41,92 @@ function App() {
   const togglePanel = (key: PanelKey) => setPanels((p) => ({ ...p, [key]: !p[key] }));
   const openPanel = (key: PanelKey) => setPanels((p) => ({ ...p, [key]: true }));
   const closePanel = (key: PanelKey) => setPanels((p) => ({ ...p, [key]: false }));
+  // Mobile has exactly one active panel at a time, switched via the bottom tab bar.
+  const setMobileActivePanel = (key: PanelKey) =>
+    setPanels({ map: key === "map", bible: key === "bible", details: key === "details" });
+  // On mobile, closing the only-ever-open panel via its "×" would leave nothing open (with no
+  // hamburger left to reopen one) — send the user back to the map instead of just closing.
+  const handleClosePanel = (key: PanelKey) => (isMobile ? setMobileActivePanel("map") : closePanel(key));
+
+  // Keep isMobile in sync with live resizes/rotations.
+  useEffect(() => {
+    const mq = window.matchMedia(MOBILE_QUERY);
+    const handleChange = (e: MediaQueryListEvent) => setIsMobile(e.matches);
+    mq.addEventListener("change", handleChange);
+    return () => mq.removeEventListener("change", handleChange);
+  }, []);
+
+  // Whenever the viewport crosses into mobile width (e.g. a desktop window shrunk down),
+  // collapse back to a single active panel.
+  useEffect(() => {
+    if (isMobile) setMobileActivePanel("map");
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isMobile]);
+
+  // On mobile the map stays mounted at all times (see mapMounted below) and is just hidden via
+  // CSS while another tab is active, so switching back doesn't reload tiles/pins from scratch.
+  // MapLibre measures its container in pixels, though, so a container that was `display: none`
+  // needs an explicit resize() once it's visible again or it renders stale/blank.
+  useEffect(() => {
+    if (isMobile && panels.map) map?.resize();
+  }, [isMobile, panels.map, map]);
 
   const handleSelect = (id: string) => {
     setSelectedId(id);
     setSelectedPoiId(null);
     setLocationsVisible(true);
-    openPanel("details");
-    openPanel("map");
+    if (isMobile) {
+      setMobileActivePanel("details");
+    } else {
+      openPanel("details");
+      openPanel("map");
+    }
   };
 
   const handleSelectPoi = (id: string) => {
     setSelectedPoiId(id);
     setSelectedId(null);
-    openPanel("details");
-    openPanel("map");
+    if (isMobile) {
+      setMobileActivePanel("details");
+    } else {
+      openPanel("details");
+      openPanel("map");
+    }
   };
 
   const hasSelection = selectedId !== null || selectedPoiId !== null;
   const clearSelection = () => {
     setSelectedId(null);
     setSelectedPoiId(null);
+    if (isMobile) setMobileActivePanel("map");
   };
 
   const openVerse = (reference: string) => {
     setBibleReference(reference);
-    openPanel("bible");
+    if (isMobile) {
+      setMobileActivePanel("bible");
+    } else {
+      openPanel("bible");
+    }
   };
 
-  // The details panel has nothing to show without a selection — hiding it lets the map expand
-  // instead of leaving a blank panel visible (e.g. right after "Show All Pins" clears the selection).
-  const showDetails = panels.details && hasSelection;
+  // The details panel has nothing to show without a selection on desktop — hiding it lets the
+  // map expand instead of leaving a blank panel visible. On mobile it always renders (as its own
+  // full-screen tab) so the empty state ("search or click a pin") shows instead of a blank tab.
+  const showDetails = panels.details && (hasSelection || isMobile);
   const noPanelsOpen = !panels.bible && !panels.map && !showDetails;
   const sideExpand = !panels.map;
+  const activeMobilePanel: PanelKey = panels.bible ? "bible" : panels.details ? "details" : "map";
+  // On mobile, keep the map mounted even while another tab is active (hidden via CSS below)
+  // instead of unmounting it, so MapLibre/tiles/pins survive tab switches.
+  const mapMounted = panels.map || isMobile;
+  const mapHiddenOnMobile = isMobile && !panels.map;
 
   return (
     <div className="app-shell">
       <header className="app-header">
         <PanelMenu panels={panels} onToggle={togglePanel} />
+        <img src="/favicon.svg" className="app-logo" alt="" aria-hidden="true" />
         <h1>New Testament Biblical Atlas</h1>
         <SearchBar locations={locations} onSelect={handleSelect} />
       </header>
@@ -82,7 +134,7 @@ function App() {
         {panels.bible && (
           <BiblePanel
             reference={bibleReference}
-            onClose={() => closePanel("bible")}
+            onClose={() => handleClosePanel("bible")}
             onSelectLocation={handleSelect}
             onSelectPoi={handleSelectPoi}
             expand={sideExpand}
@@ -98,8 +150,8 @@ function App() {
             onWidthChange={setBibleWidth}
           />
         )}
-        {panels.map && (
-          <div className="map-area">
+        {mapMounted && (
+          <div className={`map-area${mapHiddenOnMobile ? " map-area-hidden" : ""}`}>
             <MapView
               locations={locations}
               selectedId={selectedId}
@@ -119,6 +171,7 @@ function App() {
               poiCount={pois.length}
               locationsVisible={locationsVisible}
               onToggleLocations={() => setLocationsVisible((v) => !v)}
+              defaultMinimized={isMobile}
             />
             <ThenNowToggle mode={mapMode} onChange={setMapMode} />
             {hasSelection && (
@@ -140,7 +193,7 @@ function App() {
         {showDetails && selectedPoi && (
           <PoiPanel
             poi={selectedPoi}
-            onClose={() => closePanel("details")}
+            onClose={() => handleClosePanel("details")}
             onSelectLocation={handleSelect}
             onSelectPoi={handleSelectPoi}
             onSelectVerse={openVerse}
@@ -151,7 +204,7 @@ function App() {
         {showDetails && !selectedPoi && (
           <LocationPanel
             location={selectedLocation}
-            onClose={() => closePanel("details")}
+            onClose={() => handleClosePanel("details")}
             onSelectVerse={openVerse}
             onSelectLocation={handleSelect}
             onSelectPoi={handleSelectPoi}
@@ -165,6 +218,9 @@ function App() {
           </div>
         )}
       </div>
+      {isMobile && (
+        <MobileTabBar active={activeMobilePanel} hasSelection={hasSelection} onSelect={setMobileActivePanel} />
+      )}
     </div>
   );
 }
