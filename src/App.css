@@ -896,9 +896,21 @@ body.resizing-panels {
   position: relative;
   width: 340px;
   flex-shrink: 0;
-  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
   border-right: 1px solid var(--border);
   background: var(--panel-bg);
+}
+
+/* Scrolling lives here, one level in from .bible-panel, so the verse-action sheet (a sibling of this,
+ * not a child) can sit at a fixed position within the panel's own box instead of the scrollable
+ * content's box — position:absolute + bottom:0 anchors to the latter when they're the same element,
+ * which made the sheet drift with scroll instead of staying pinned to the visible bottom edge. */
+.bible-panel-scroll {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
   padding: 18px;
 }
 

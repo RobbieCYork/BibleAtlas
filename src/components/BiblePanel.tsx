@@ -289,23 +289,36 @@ export default function BiblePanel({
   // reacting to selectionchange events caused by the user actually changing their selection.
   const suppressSelectionClearRef = useRef(false);
 
-  // Drives the action sheet from native drag-selection (long-press-and-drag on touch, click-and-drag
-  // with a mouse) — this fires continuously while the selection is being made, on both input types.
+  // Closes the action sheet if the selection is cleared (e.g. tapping/clicking elsewhere). Deliberately
+  // does NOT show the sheet while a selection is still growing — showing it live, mid-drag, put a large
+  // DOM element right where the next verse would be, which blocked the browser's own drag-to-extend
+  // gesture from ever reaching it (you'd drag onto the sheet instead of onto verse text). The sheet only
+  // appears once the gesture finishes (see the mouseup/touchend handlers below), well clear of the drag.
   useEffect(() => {
     const handleSelectionChange = () => {
-      const result = readSelectionRange();
-      if (!result) {
-        if (suppressSelectionClearRef.current) {
-          suppressSelectionClearRef.current = false;
-          return;
-        }
-        setPopup((p) => (p?.kind === "selection" ? null : p));
+      const sel = window.getSelection();
+      if (sel && !sel.isCollapsed && sel.rangeCount > 0) return;
+      if (suppressSelectionClearRef.current) {
+        suppressSelectionClearRef.current = false;
         return;
       }
-      setPopup({ kind: "selection", ...result });
+      setPopup((p) => (p?.kind === "selection" ? null : p));
     };
     document.addEventListener("selectionchange", handleSelectionChange);
     return () => document.removeEventListener("selectionchange", handleSelectionChange);
+  }, []);
+
+  // Mouse drag-selection path (desktop): show the sheet once the drag finishes, not while it's ongoing
+  // (same reasoning as the touch path below — and mirrors how the browser's own selection UI behaves,
+  // only settling once you release the mouse button).
+  useEffect(() => {
+    const handleMouseUp = () => {
+      const result = readSelectionRange();
+      if (!result) return;
+      setPopup({ kind: "selection", ...result });
+    };
+    document.addEventListener("mouseup", handleMouseUp);
+    return () => document.removeEventListener("mouseup", handleMouseUp);
   }, []);
 
   // The instant a touch ends, clear whatever native selection exists and swap in our own preview mark
@@ -564,6 +577,7 @@ export default function BiblePanel({
       className={`bible-panel ${expand ? "panel-expand" : ""} ${hidden ? "bible-panel-hidden" : ""}`}
       style={expand ? undefined : style}
     >
+      <div className="bible-panel-scroll">
       <div className="bible-panel-header">
         <h3>Bible</h3>
         <button className="panel-close" onClick={onClose} aria-label="Close Bible panel">
@@ -802,6 +816,7 @@ export default function BiblePanel({
           <p className="bible-translation-credit">{passage.translationName}, Public Domain</p>
         </div>
       )}
+      </div>
 
       {popup && (
         <div className="verse-sheet">
