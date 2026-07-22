@@ -112,13 +112,18 @@ export default function AuthButton({ session }: AuthButtonProps) {
 
   return (
     <div className="auth-button" ref={containerRef}>
-      <button type="button" className="auth-trigger" onClick={() => setOpen((o) => !o)} aria-label="Log in or sign up">
+      <button type="button" className="auth-trigger auth-trigger-loggedout" onClick={() => setOpen((o) => !o)} aria-label="Log in or sign up">
         <span className="auth-avatar" aria-hidden="true">
           👤
         </span>
+        <span className="auth-trigger-label">Log In</span>
       </button>
       {open && (
         <div className="auth-dropdown">
+          <p className="auth-benefits">
+            Create a free account to sync your notes, highlights, and tags — and pick up right where you left off on any
+            device.
+          </p>
           <div className="auth-mode-toggle">
             <button
               type="button"

@@ -846,6 +846,45 @@ body.resizing-panels {
   background: transparent;
 }
 
+.auth-trigger-loggedout {
+  width: auto;
+  height: auto;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 5px 14px 5px 5px;
+  border-radius: 100px;
+  background: var(--accent);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+
+.auth-trigger-loggedout:hover {
+  background: var(--accent-hover);
+}
+
+.auth-trigger-loggedout .auth-avatar {
+  width: 28px;
+  height: 28px;
+  background: rgba(255, 255, 255, 0.2);
+  font-size: 13px;
+}
+
+.auth-trigger-label {
+  color: #fff;
+  font-size: 13px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.auth-benefits {
+  font-size: 12px;
+  color: var(--text-muted);
+  line-height: 1.4;
+  margin-bottom: 12px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--border);
+}
+
 .auth-avatar {
   display: flex;
   align-items: center;
