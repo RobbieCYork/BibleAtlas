@@ -269,6 +269,10 @@ export default function BiblePanel({
         </button>
       </div>
 
+      {!passage && !loading && !error && !searchResults && (
+        <p className="bible-status">Pick a book below, or search for a word or phrase.</p>
+      )}
+
       <div className="bible-nav">
         <select
           className="bible-nav-select"
@@ -376,10 +380,6 @@ export default function BiblePanel({
         </div>
       )}
 
-      <p className="bible-translation-note">
-        NIV isn't freely licensed for embedding, so these public-domain translations are used instead.
-      </p>
-
       {loading && <p className="bible-status">Loading…</p>}
       {error && <p className="bible-status bible-error">{error}</p>}
 
@@ -438,10 +438,6 @@ export default function BiblePanel({
 
           <p className="bible-translation-credit">{passage.translationName}, Public Domain</p>
         </div>
-      )}
-
-      {!passage && !loading && !error && !searchResults && (
-        <p className="bible-status">Pick a book above, or search for a word or phrase.</p>
       )}
     </div>
   );

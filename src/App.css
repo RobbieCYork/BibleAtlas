@@ -1017,13 +1017,6 @@ body.resizing-panels {
   margin-bottom: 6px;
 }
 
-.bible-translation-note {
-  font-size: 11px;
-  color: var(--text-muted);
-  margin-bottom: 16px;
-  line-height: 1.4;
-}
-
 .bible-status {
   font-size: 13px;
   color: var(--text-muted);
