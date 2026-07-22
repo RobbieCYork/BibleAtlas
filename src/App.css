@@ -1895,17 +1895,6 @@ body.resizing-panels {
   }
 }
 
-/* On touch devices, native text selection (and its Copy/Look Up callout) is disabled on Bible verse
- * text — selection is handled entirely by our own tap-and-drag gesture instead, so there's nothing
- * for the OS to show a menu over. Mouse/trackpad (fine pointer) keeps native drag-selection. */
-@media (pointer: coarse) {
-  .bible-verses {
-    -webkit-user-select: none;
-    user-select: none;
-    -webkit-touch-callout: none;
-  }
-}
-
 .verse-selection-preview {
   background: var(--accent-bg);
   border-bottom: 2px solid var(--accent);

@@ -15,26 +15,3 @@ export function clipRangeForVerse(
   if (verseNum === endVerse) return { start: 0, end: endOffset };
   return { start: 0, end: textLength };
 }
-
-const WORD_CHAR = /[\p{L}\p{N}']/u;
-
-/** Expands a raw tap offset out to the boundaries of the word it landed in/next to — so a single tap
- * selects a whole word instead of a zero-width point. */
-export function expandToWord(text: string, offset: number): { start: number; end: number } {
-  const clamped = Math.max(0, Math.min(text.length, offset));
-  let start = clamped;
-  let end = clamped;
-  while (end < text.length && WORD_CHAR.test(text[end])) end++;
-  while (start > 0 && WORD_CHAR.test(text[start - 1])) start--;
-  if (start === end) {
-    if (clamped > 0 && WORD_CHAR.test(text[clamped - 1])) {
-      end = clamped;
-      start = clamped;
-      while (start > 0 && WORD_CHAR.test(text[start - 1])) start--;
-    } else {
-      start = clamped;
-      end = Math.min(text.length, clamped + 1);
-    }
-  }
-  return { start, end };
-}

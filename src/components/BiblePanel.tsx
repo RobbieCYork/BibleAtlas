@@ -4,7 +4,7 @@ import type { ClippedHighlight } from "./VerseText";
 import { BOOKS } from "../data/bibleBooks";
 import { supabase, HIGHLIGHT_COLORS, type HighlightColor, type Highlight, type Note, type Tag, type VerseTag } from "../lib/supabase";
 import { getTextOffsetInRoot } from "../lib/domTextOffset";
-import { clipRangeForVerse, expandToWord } from "../lib/verseRange";
+import { clipRangeForVerse } from "../lib/verseRange";
 
 interface BiblePanelProps {
   reference: string | null;
@@ -58,9 +58,10 @@ type PopupState =
       startOffset: number;
       endVerse: number;
       endOffset: number;
-      /** True only for the custom touch-drag gesture, which has no native selection to show it visually —
-       * mouse-driven selections must NOT render a preview mark, since mutating the DOM under an active
-       * native selection causes the browser to reset/corrupt it (see the touch-gesture effect below). */
+      /** True once we've cleared the native selection on touchend (so iOS has nothing left to show its
+       * Copy/Look Up menu over) and swapped in our own preview mark in its place. Must stay false/absent
+       * while a native selection is still live — mutating the DOM under an active native selection
+       * causes the browser to reset/corrupt it (see the touchend handler below). */
       viaTouch?: boolean;
     }
   | { kind: "note-editor"; startVerse: number; endVerse: number; quotedText: string }
@@ -79,7 +80,6 @@ const FONT_SCALE_MIN = 0.8;
 const FONT_SCALE_MAX = 1.8;
 const FONT_SCALE_STEP = 0.15;
 const BASE_VERSE_FONT_PX = 14;
-const TAP_MOVE_THRESHOLD_PX = 10;
 
 function findBookIndex(name: string): number {
   return BOOKS.findIndex((b) => b.name.toLowerCase() === name.toLowerCase());
@@ -125,7 +125,6 @@ export default function BiblePanel({
   const [pendingScrollVerse, setPendingScrollVerse] = useState<number | null>(null);
   const verseRefs = useRef<Record<number, HTMLParagraphElement | null>>({});
   const textRefs = useRef<Record<number, HTMLSpanElement | null>>({});
-  const versesContainerRef = useRef<HTMLDivElement | null>(null);
 
   const [fontScale, setFontScale] = useState<number>(() => {
     const saved = Number(localStorage.getItem("bible-font-scale"));
@@ -264,141 +263,67 @@ export default function BiblePanel({
     }
   }, [passage, pendingScrollVerse]);
 
-  // Mouse drag-selection path (desktop). Native text selection is disabled on coarse (touch) pointers
-  // via CSS, so this effect naturally goes dormant there instead of fighting the custom touch gesture below.
+  /** Reads the current native selection, if it's a valid non-empty range entirely within verse text,
+   * as a normalized (start before end) start/end verse+offset pair. */
+  const readSelectionRange = (): { startVerse: number; startOffset: number; endVerse: number; endOffset: number } | null => {
+    const sel = window.getSelection();
+    if (!sel || sel.isCollapsed || sel.rangeCount === 0) return null;
+    const range = sel.getRangeAt(0);
+    const startEntry = Object.entries(textRefs.current).find(([, el]) => el && el.contains(range.startContainer));
+    const endEntry = Object.entries(textRefs.current).find(([, el]) => el && el.contains(range.endContainer));
+    if (!startEntry || !startEntry[1] || !endEntry || !endEntry[1]) return null;
+    let startVerse = Number(startEntry[0]);
+    let endVerse = Number(endEntry[0]);
+    let startOffset = getTextOffsetInRoot(startEntry[1], range.startContainer, range.startOffset);
+    let endOffset = getTextOffsetInRoot(endEntry[1], range.endContainer, range.endOffset);
+    if (startVerse > endVerse || (startVerse === endVerse && startOffset > endOffset)) {
+      [startVerse, endVerse] = [endVerse, startVerse];
+      [startOffset, endOffset] = [endOffset, startOffset];
+    }
+    if (startVerse === endVerse && startOffset === endOffset) return null;
+    return { startVerse, startOffset, endVerse, endOffset };
+  };
+
+  // Calling removeAllRanges() ourselves (below) asynchronously fires its own selectionchange event —
+  // this flag tells that self-inflicted event to skip nulling the popup we just set, instead of only
+  // reacting to selectionchange events caused by the user actually changing their selection.
+  const suppressSelectionClearRef = useRef(false);
+
+  // Drives the action sheet from native drag-selection (long-press-and-drag on touch, click-and-drag
+  // with a mouse) — this fires continuously while the selection is being made, on both input types.
   useEffect(() => {
     const handleSelectionChange = () => {
-      const sel = window.getSelection();
-      if (!sel || sel.isCollapsed || sel.rangeCount === 0) {
+      const result = readSelectionRange();
+      if (!result) {
+        if (suppressSelectionClearRef.current) {
+          suppressSelectionClearRef.current = false;
+          return;
+        }
         setPopup((p) => (p?.kind === "selection" ? null : p));
         return;
       }
-      const range = sel.getRangeAt(0);
-      const startEntry = Object.entries(textRefs.current).find(([, el]) => el && el.contains(range.startContainer));
-      const endEntry = Object.entries(textRefs.current).find(([, el]) => el && el.contains(range.endContainer));
-      if (!startEntry || !startEntry[1] || !endEntry || !endEntry[1]) {
-        setPopup((p) => (p?.kind === "selection" ? null : p));
-        return;
-      }
-      let startVerse = Number(startEntry[0]);
-      let endVerse = Number(endEntry[0]);
-      let startOffset = getTextOffsetInRoot(startEntry[1], range.startContainer, range.startOffset);
-      let endOffset = getTextOffsetInRoot(endEntry[1], range.endContainer, range.endOffset);
-      if (startVerse > endVerse || (startVerse === endVerse && startOffset > endOffset)) {
-        [startVerse, endVerse] = [endVerse, startVerse];
-        [startOffset, endOffset] = [endOffset, startOffset];
-      }
-      if (startVerse === endVerse && startOffset === endOffset) return;
-      setPopup({ kind: "selection", startVerse, startOffset, endVerse, endOffset });
+      setPopup({ kind: "selection", ...result });
     };
     document.addEventListener("selectionchange", handleSelectionChange);
     return () => document.removeEventListener("selectionchange", handleSelectionChange);
   }, []);
 
-  // Touch drag-selection path (mobile). Native selection/callout is disabled on coarse pointers, so we
-  // do our own hit-testing: tap a word to select it (and set the drag anchor), then drag from anywhere
-  // to extend the selection — this never touches window.getSelection(), so iOS has nothing to show a
-  // Copy/Look Up menu over.
+  // The instant a touch ends, clear whatever native selection exists and swap in our own preview mark
+  // in its place — iOS only shows its Copy/Look Up menu once a selection has "settled," so clearing it
+  // immediately on lift-off leaves nothing for that menu to attach to. Doing this only on touchend (not
+  // during the drag) lets the normal long-press-and-drag gesture work exactly like it does everywhere
+  // else; this listener never fires from mouse input, so desktop is unaffected.
   useEffect(() => {
-    const container = versesContainerRef.current;
-    if (!container) return;
-
-    const dragAnchorRef = { current: null as { verse: number; offset: number } | null };
-    const touchStartRef = { current: null as { x: number; y: number } | null };
-    const touchMovedRef = { current: false };
-
-    const isInteractiveTarget = (target: EventTarget | null): boolean =>
-      target instanceof Element && !!target.closest(".verse-location-link, .verse-note-indicator, .verse-tag-indicator, mark.verse-highlight");
-
-    const resolveCaretPosition = (x: number, y: number): { verse: number; offset: number } | null => {
-      const docAny = document as Document & {
-        caretRangeFromPoint?: (x: number, y: number) => Range | null;
-        caretPositionFromPoint?: (x: number, y: number) => { offsetNode: Node; offset: number } | null;
-      };
-      let range: Range | null = null;
-      if (docAny.caretRangeFromPoint) {
-        range = docAny.caretRangeFromPoint(x, y);
-      } else if (docAny.caretPositionFromPoint) {
-        const pos = docAny.caretPositionFromPoint(x, y);
-        if (pos) {
-          range = document.createRange();
-          range.setStart(pos.offsetNode, pos.offset);
-        }
-      }
-      if (!range) return null;
-      const entry = Object.entries(textRefs.current).find(([, el]) => el && el.contains(range!.startContainer));
-      if (!entry || !entry[1]) return null;
-      const verse = Number(entry[0]);
-      const offset = getTextOffsetInRoot(entry[1], range.startContainer, range.startOffset);
-      return { verse, offset };
+    const handleTouchEnd = () => {
+      const result = readSelectionRange();
+      if (!result) return;
+      suppressSelectionClearRef.current = true;
+      window.getSelection()?.removeAllRanges();
+      setPopup({ kind: "selection", ...result, viaTouch: true });
     };
-
-    const onTouchStart = (e: TouchEvent) => {
-      const t = e.touches[0];
-      touchStartRef.current = { x: t.clientX, y: t.clientY };
-      touchMovedRef.current = false;
-    };
-
-    const onTouchMove = (e: TouchEvent) => {
-      const t = e.touches[0];
-      const start = touchStartRef.current;
-      if (start && Math.hypot(t.clientX - start.x, t.clientY - start.y) > TAP_MOVE_THRESHOLD_PX) {
-        touchMovedRef.current = true;
-      }
-      if (dragAnchorRef.current && touchMovedRef.current) {
-        e.preventDefault();
-        const pos = resolveCaretPosition(t.clientX, t.clientY);
-        if (!pos) return;
-        const anchor = dragAnchorRef.current;
-        let startVerse = anchor.verse;
-        let startOffset = anchor.offset;
-        let endVerse = pos.verse;
-        let endOffset = pos.offset;
-        if (startVerse > endVerse || (startVerse === endVerse && startOffset > endOffset)) {
-          [startVerse, endVerse] = [endVerse, startVerse];
-          [startOffset, endOffset] = [endOffset, startOffset];
-        }
-        setPopup({ kind: "selection", startVerse, startOffset, endVerse, endOffset, viaTouch: true });
-      }
-    };
-
-    const onTouchEnd = (e: TouchEvent) => {
-      if (isInteractiveTarget(e.target)) {
-        touchStartRef.current = null;
-        touchMovedRef.current = false;
-        return;
-      }
-      const t = e.changedTouches[0];
-      if (!touchMovedRef.current) {
-        const pos = resolveCaretPosition(t.clientX, t.clientY);
-        if (!pos) {
-          dragAnchorRef.current = null;
-          setPopup((p) => (p?.kind === "selection" ? null : p));
-        } else {
-          dragAnchorRef.current = pos;
-          const verseData = passage?.verses.find((v) => v.verse === pos.verse);
-          const text = verseData ? verseData.text.trim() : "";
-          const { start, end } = expandToWord(text, pos.offset);
-          setPopup({ kind: "selection", startVerse: pos.verse, startOffset: start, endVerse: pos.verse, endOffset: end, viaTouch: true });
-        }
-      } else {
-        // Drag ended — popup already reflects the live range. Clear the anchor so a future plain
-        // tap starts a fresh selection instead of continuing to extend this one.
-        dragAnchorRef.current = null;
-      }
-      touchStartRef.current = null;
-      touchMovedRef.current = false;
-    };
-
-    container.addEventListener("touchstart", onTouchStart, { passive: true });
-    container.addEventListener("touchmove", onTouchMove, { passive: false });
-    container.addEventListener("touchend", onTouchEnd, { passive: true });
-    return () => {
-      container.removeEventListener("touchstart", onTouchStart);
-      container.removeEventListener("touchmove", onTouchMove);
-      container.removeEventListener("touchend", onTouchEnd);
-    };
-  }, [passage]);
+    document.addEventListener("touchend", handleTouchEnd);
+    return () => document.removeEventListener("touchend", handleTouchEnd);
+  }, []);
 
   const closePopup = () => {
     window.getSelection()?.removeAllRanges();
@@ -803,7 +728,7 @@ export default function BiblePanel({
             </button>
           </div>
 
-          <div className="bible-verses" ref={versesContainerRef} style={{ fontSize: `${BASE_VERSE_FONT_PX * fontScale}px` }}>
+          <div className="bible-verses" style={{ fontSize: `${BASE_VERSE_FONT_PX * fontScale}px` }}>
             {passage.verses.map((v) => {
               const text = v.text.trim();
               const verseNotes = notesForVerse(v.verse);
