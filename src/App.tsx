@@ -1,5 +1,6 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import type maplibregl from "maplibre-gl";
+import type { Session } from "@supabase/supabase-js";
 import MapView from "./components/MapView";
 import LayerControls from "./components/LayerControls";
 import SearchBar from "./components/SearchBar";
@@ -10,6 +11,8 @@ import ThenNowToggle, { type MapMode } from "./components/ThenNowToggle";
 import PanelMenu, { type PanelKey } from "./components/PanelMenu";
 import MobileTabBar from "./components/MobileTabBar";
 import ResizeHandle from "./components/ResizeHandle";
+import AuthButton from "./components/AuthButton";
+import { supabase } from "./lib/supabase";
 import { locations } from "./data/locations";
 import { pois } from "./data/pois";
 import "./App.css";
@@ -34,6 +37,11 @@ function App() {
   );
   const [bibleWidth, setBibleWidth] = useState(340);
   const [detailsWidth, setDetailsWidth] = useState(380);
+  const [session, setSession] = useState<Session | null>(null);
+  const [restoreTranslation, setRestoreTranslation] = useState<string | undefined>(undefined);
+  // Avoids re-yanking the reader back to their saved spot on every token refresh — only restore
+  // once per signed-in user per app load.
+  const restoredForUserId = useRef<string | null>(null);
 
   const selectedLocation = locations.find((l) => l.id === selectedId) ?? null;
   const selectedPoi = pois.find((p) => p.id === selectedPoiId) ?? null;
@@ -71,6 +79,34 @@ function App() {
     if (isMobile && panels.map) map?.resize();
   }, [isMobile, panels.map, map]);
 
+  // Track the logged-in (or guest) session.
+  useEffect(() => {
+    supabase.auth.getSession().then(({ data }) => setSession(data.session));
+    const { data: listener } = supabase.auth.onAuthStateChange((_event, newSession) => {
+      setSession(newSession);
+    });
+    return () => listener.subscription.unsubscribe();
+  }, []);
+
+  // Once per signed-in user, fetch their saved reading position and jump the Bible panel there.
+  useEffect(() => {
+    if (!session || restoredForUserId.current === session.user.id) return;
+    restoredForUserId.current = session.user.id;
+    supabase
+      .from("reading_progress")
+      .select("book,chapter,translation")
+      .eq("user_id", session.user.id)
+      .maybeSingle()
+      .then(({ data }) => {
+        if (!data) return;
+        setBibleReference(`${data.book} ${data.chapter}`);
+        setRestoreTranslation(data.translation);
+        if (isMobile) setMobileActivePanel("bible");
+        else openPanel("bible");
+      });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [session]);
+
   const handleSelect = (id: string) => {
     setSelectedId(id);
     setSelectedPoiId(null);
@@ -92,6 +128,23 @@ function App() {
       openPanel("details");
       openPanel("map");
     }
+  };
+
+  // Clicking a location/POI link inside the Bible text should just show it on the map — not jump
+  // to the Details panel the way clicking a pin or a search result does.
+  const handleSelectFromBible = (id: string) => {
+    setSelectedId(id);
+    setSelectedPoiId(null);
+    setLocationsVisible(true);
+    if (isMobile) setMobileActivePanel("map");
+    else openPanel("map");
+  };
+
+  const handleSelectPoiFromBible = (id: string) => {
+    setSelectedPoiId(id);
+    setSelectedId(null);
+    if (isMobile) setMobileActivePanel("map");
+    else openPanel("map");
   };
 
   const hasSelection = selectedId !== null || selectedPoiId !== null;
@@ -129,16 +182,19 @@ function App() {
         <img src="/favicon.svg" className="app-logo" alt="" aria-hidden="true" />
         <h1>New Testament Biblical Atlas</h1>
         <SearchBar locations={locations} onSelect={handleSelect} />
+        <AuthButton session={session} />
       </header>
       <div className="app-body">
         {panels.bible && (
           <BiblePanel
             reference={bibleReference}
             onClose={() => handleClosePanel("bible")}
-            onSelectLocation={handleSelect}
-            onSelectPoi={handleSelectPoi}
+            onSelectLocation={handleSelectFromBible}
+            onSelectPoi={handleSelectPoiFromBible}
             expand={sideExpand}
             style={{ width: bibleWidth }}
+            userId={session?.user.id}
+            restoreTranslation={restoreTranslation}
           />
         )}
         {panels.bible && panels.map && (
