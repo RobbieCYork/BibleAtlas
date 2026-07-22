@@ -19,6 +19,13 @@
   white-space: nowrap;
 }
 
+/* The logo stays at the far left (its natural flex position) and the account button always sits at
+ * the far right — margin-left:auto pushes it there whether or not the search bar (flex:1, normally
+ * fills this same gap) is present. */
+.app-header .auth-button {
+  margin-left: auto;
+}
+
 .app-body {
   flex: 1;
   display: flex;
@@ -37,8 +44,13 @@
   display: none;
 }
 
-/* Same treatment for the Bible panel — see bibleMounted/bibleHiddenOnMobile in App.tsx. */
-.bible-panel-hidden {
+/* Same treatment for the Bible panel — see bibleMounted/bibleHiddenOnMobile in App.tsx.
+ * Compound selectors (not just `.bible-panel-hidden`) are deliberate: `.bible-panel` declares its own
+ * `display` further down the file, and on equal specificity the later-declared rule wins regardless of
+ * which class a human expects to "win" — the exact bug that broke mobile tab switching once already
+ * (see the .panel-expand fix below). Compound selectors make this robust to source order. */
+.bible-panel.bible-panel-hidden,
+.my-notes-panel.bible-panel-hidden {
   display: none;
 }
 
@@ -1283,12 +1295,6 @@ body.resizing-panels {
 
   .app-logo {
     display: block;
-  }
-
-  /* Without the search bar (which normally has flex:1 and fills the middle), the logo and auth
-   * button would otherwise collapse to the left with a big empty gap — push them to the right instead. */
-  .app-header-compact .app-logo {
-    margin-left: auto;
   }
 
   .panel-menu {
