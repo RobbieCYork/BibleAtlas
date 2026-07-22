@@ -269,9 +269,7 @@ export default function BiblePanel({
         </button>
       </div>
 
-      {!passage && !loading && !error && !searchResults && (
-        <p className="bible-status">Pick a book below, or search for a word or phrase.</p>
-      )}
+      <p className="bible-status">Pick a book below, or search for a word or phrase.</p>
 
       <div className="bible-nav">
         <select
