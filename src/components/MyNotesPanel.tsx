@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { supabase, type Note, type Tag, type VerseTag } from "../lib/supabase";
 import { BOOKS } from "../data/bibleBooks";
 
@@ -42,6 +42,19 @@ export default function MyNotesPanel({ userId, onClose, onGoToVerse, expand, sty
   const [loading, setLoading] = useState(false);
   const [bookFilter, setBookFilter] = useState("");
   const [tagFilter, setTagFilter] = useState("");
+  const [exportMenuOpen, setExportMenuOpen] = useState(false);
+  const exportMenuRef = useRef<HTMLDivElement | null>(null);
+
+  useEffect(() => {
+    if (!exportMenuOpen) return;
+    const handleClick = (e: MouseEvent) => {
+      if (exportMenuRef.current && !exportMenuRef.current.contains(e.target as Node)) {
+        setExportMenuOpen(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClick);
+    return () => document.removeEventListener("mousedown", handleClick);
+  }, [exportMenuOpen]);
 
   const fetchAll = async () => {
     if (!userId) {
@@ -119,9 +132,13 @@ export default function MyNotesPanel({ userId, onClose, onGoToVerse, expand, sty
     setVerseTags((prev) => prev.filter((vt) => vt.id !== verseTagId));
   };
 
-  const handlePrint = () => window.print();
+  const handlePrint = () => {
+    setExportMenuOpen(false);
+    window.print();
+  };
 
   const handleExportWord = () => {
+    setExportMenuOpen(false);
     const filterLabel = [tagFilter && tagsById[tagFilter]?.name, bookFilter].filter(Boolean).join(" — ");
     const title = `My Notes${filterLabel ? ` (${filterLabel})` : ""}`;
     const bodyHtml = groups
@@ -187,13 +204,20 @@ export default function MyNotesPanel({ userId, onClose, onGoToVerse, expand, sty
             </select>
           </div>
 
-          <div className="my-notes-export no-print">
-            <button type="button" onClick={handlePrint}>
-              🖨️ Print / Save as PDF
+          <div className="my-notes-export no-print" ref={exportMenuRef}>
+            <button type="button" className="my-notes-export-button" onClick={() => setExportMenuOpen((o) => !o)}>
+              Export ▾
             </button>
-            <button type="button" onClick={handleExportWord}>
-              📄 Export to Word
-            </button>
+            {exportMenuOpen && (
+              <div className="my-notes-export-dropdown">
+                <button type="button" onClick={handlePrint}>
+                  🖨️ Print / Save as PDF
+                </button>
+                <button type="button" onClick={handleExportWord}>
+                  📄 Export to Word
+                </button>
+              </div>
+            )}
           </div>
 
           {loading && <p className="bible-status no-print">Loading…</p>}

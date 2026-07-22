@@ -201,6 +201,9 @@ function App() {
   const bibleHiddenOnMobile = isMobile && !panels.bible;
   const notesMounted = panels.notes || isMobile;
   const notesHiddenOnMobile = isMobile && !panels.notes;
+  // The location search bar only makes sense while looking at the map (it flies the map to a result) —
+  // hide it everywhere else so the header doesn't crowd the Bible/Details/Notes views.
+  const showSearchBar = isMobile ? activeMobilePanel === "map" : panels.map;
 
   return (
     <div className="app-shell">
@@ -208,7 +211,7 @@ function App() {
         <PanelMenu panels={panels} onToggle={togglePanel} />
         <img src="/favicon.svg" className="app-logo" alt="" aria-hidden="true" />
         <h1>New Testament Biblical Atlas</h1>
-        <SearchBar locations={locations} onSelect={handleSelect} />
+        {showSearchBar && <SearchBar locations={locations} onSelect={handleSelect} />}
         <AuthButton session={session} />
       </header>
       <div className="app-body">
