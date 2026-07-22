@@ -1,8 +1,10 @@
 import { useEffect, useRef, useState } from "react";
 import VerseText from "./VerseText";
+import type { ClippedHighlight } from "./VerseText";
 import { BOOKS } from "../data/bibleBooks";
-import { supabase, HIGHLIGHT_COLORS, type HighlightColor, type Highlight, type Note } from "../lib/supabase";
+import { supabase, HIGHLIGHT_COLORS, type HighlightColor, type Highlight, type Note, type Tag, type VerseTag } from "../lib/supabase";
 import { getTextOffsetInRoot } from "../lib/domTextOffset";
+import { clipRangeForVerse, expandToWord } from "../lib/verseRange";
 
 interface BiblePanelProps {
   reference: string | null;
@@ -22,7 +24,8 @@ interface BiblePanelProps {
   /** Kept mounted but visually hidden (rather than unmounted) so book/chapter/search state survives
    * switching to another mobile tab and back. */
   hidden?: boolean;
-  /** Called after a note is saved or deleted, so the My Notes panel (which fetches once on mount) knows to refetch. */
+  /** Called after a note, tag, or verse-tag is saved/deleted, so the My Notes panel (which fetches
+   * once on mount) knows to refetch. */
   onNotesChanged?: () => void;
 }
 
@@ -46,12 +49,24 @@ interface SearchHit {
   text: string;
 }
 
-/** Everything the floating verse-action popup can be showing at once. */
+/** Everything the bottom action sheet can be showing at once. A selection/note/tag can span more
+ * than one verse (start_verse..end_verse) — offsets are relative to their own verse's text. */
 type PopupState =
-  | { kind: "selection"; verse: number; start: number; end: number; rect: DOMRect }
-  | { kind: "note-editor"; verse: number; quotedText: string; rect: DOMRect }
-  | { kind: "highlight-actions"; highlight: Highlight; rect: DOMRect }
-  | { kind: "verse-notes"; verse: number; rect: DOMRect };
+  | {
+      kind: "selection";
+      startVerse: number;
+      startOffset: number;
+      endVerse: number;
+      endOffset: number;
+      /** True only for the custom touch-drag gesture, which has no native selection to show it visually —
+       * mouse-driven selections must NOT render a preview mark, since mutating the DOM under an active
+       * native selection causes the browser to reset/corrupt it (see the touch-gesture effect below). */
+      viaTouch?: boolean;
+    }
+  | { kind: "note-editor"; startVerse: number; endVerse: number; quotedText: string }
+  | { kind: "highlight-actions"; highlight: Highlight }
+  | { kind: "verse-notes"; verse: number }
+  | { kind: "tag-picker"; startVerse: number; endVerse: number };
 
 const TRANSLATIONS = [
   { id: "web", label: "World English Bible (WEB)" },
@@ -62,8 +77,9 @@ const TRANSLATIONS = [
 const MAX_SEARCH_RESULTS = 30;
 const FONT_SCALE_MIN = 0.8;
 const FONT_SCALE_MAX = 1.8;
-const FONT_SCALE_STEP = 0.1;
+const FONT_SCALE_STEP = 0.15;
 const BASE_VERSE_FONT_PX = 14;
+const TAP_MOVE_THRESHOLD_PX = 10;
 
 function findBookIndex(name: string): number {
   return BOOKS.findIndex((b) => b.name.toLowerCase() === name.toLowerCase());
@@ -109,6 +125,7 @@ export default function BiblePanel({
   const [pendingScrollVerse, setPendingScrollVerse] = useState<number | null>(null);
   const verseRefs = useRef<Record<number, HTMLParagraphElement | null>>({});
   const textRefs = useRef<Record<number, HTMLSpanElement | null>>({});
+  const versesContainerRef = useRef<HTMLDivElement | null>(null);
 
   const [fontScale, setFontScale] = useState<number>(() => {
     const saved = Number(localStorage.getItem("bible-font-scale"));
@@ -116,9 +133,12 @@ export default function BiblePanel({
   });
 
   const [highlights, setHighlights] = useState<Highlight[]>([]);
-  const [notesByVerse, setNotesByVerse] = useState<Record<number, Note[]>>({});
+  const [notes, setNotes] = useState<Note[]>([]);
+  const [tags, setTags] = useState<Tag[]>([]);
+  const [verseTags, setVerseTags] = useState<VerseTag[]>([]);
   const [popup, setPopup] = useState<PopupState | null>(null);
   const [noteDraft, setNoteDraft] = useState("");
+  const [newTagName, setNewTagName] = useState("");
 
   useEffect(() => {
     localStorage.setItem("bible-font-scale", String(fontScale));
@@ -140,27 +160,37 @@ export default function BiblePanel({
   };
 
   /** Loads this account's highlights (translation-specific — offsets only make sense for the exact
-   * text they were made against) and notes (shown regardless of translation) for one chapter. */
+   * text they were made against), notes, and verse tags (both shown regardless of translation) for one chapter. */
   const fetchAnnotations = async (book: string, chapter: number, translationId: string) => {
     if (!userId) {
       setHighlights([]);
-      setNotesByVerse({});
+      setNotes([]);
+      setVerseTags([]);
       return;
     }
-    const [hlRes, notesRes] = await Promise.all([
+    const [hlRes, notesRes, verseTagsRes] = await Promise.all([
       supabase.from("highlights").select("*").eq("user_id", userId).eq("book", book).eq("chapter", chapter).eq("translation", translationId),
       supabase.from("notes").select("*").eq("user_id", userId).eq("book", book).eq("chapter", chapter),
+      supabase.from("verse_tags").select("*").eq("user_id", userId).eq("book", book).eq("chapter", chapter),
     ]);
     setHighlights((hlRes.data as Highlight[] | null) ?? []);
-    const grouped: Record<number, Note[]> = {};
-    ((notesRes.data as Note[] | null) ?? []).forEach((n) => {
-      (grouped[n.verse] ??= []).push(n);
-    });
-    setNotesByVerse(grouped);
+    setNotes((notesRes.data as Note[] | null) ?? []);
+    setVerseTags((verseTagsRes.data as VerseTag[] | null) ?? []);
   };
 
-  // Re-fetch highlights/notes for the current chapter when login state changes (e.g. after signing in).
+  /** Loads this account's full custom-tag list — not chapter-scoped, so it's fetched once per login state. */
+  const fetchTags = async () => {
+    if (!userId) {
+      setTags([]);
+      return;
+    }
+    const { data } = await supabase.from("tags").select("*").eq("user_id", userId).order("name");
+    setTags((data as Tag[] | null) ?? []);
+  };
+
+  // Re-fetch highlights/notes/tags for the current chapter when login state changes (e.g. after signing in).
   useEffect(() => {
+    fetchTags();
     if (currentBook && currentChapter !== null) fetchAnnotations(currentBook, currentChapter, translation);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userId]);
@@ -234,8 +264,8 @@ export default function BiblePanel({
     }
   }, [passage, pendingScrollVerse]);
 
-  // Captures native text selection (touch-drag or mouse-drag) inside any verse's text and — if it's
-  // entirely within one verse — opens the highlight/note action popup anchored to it.
+  // Mouse drag-selection path (desktop). Native text selection is disabled on coarse (touch) pointers
+  // via CSS, so this effect naturally goes dormant there instead of fighting the custom touch gesture below.
   useEffect(() => {
     const handleSelectionChange = () => {
       const sel = window.getSelection();
@@ -244,43 +274,153 @@ export default function BiblePanel({
         return;
       }
       const range = sel.getRangeAt(0);
-      const entry = Object.entries(textRefs.current).find(([, el]) => el && el.contains(range.commonAncestorContainer));
-      if (!entry || !entry[1]) {
+      const startEntry = Object.entries(textRefs.current).find(([, el]) => el && el.contains(range.startContainer));
+      const endEntry = Object.entries(textRefs.current).find(([, el]) => el && el.contains(range.endContainer));
+      if (!startEntry || !startEntry[1] || !endEntry || !endEntry[1]) {
         setPopup((p) => (p?.kind === "selection" ? null : p));
         return;
       }
-      const verse = Number(entry[0]);
-      const el = entry[1];
-      const a = getTextOffsetInRoot(el, range.startContainer, range.startOffset);
-      const b = getTextOffsetInRoot(el, range.endContainer, range.endOffset);
-      const start = Math.min(a, b);
-      const end = Math.max(a, b);
-      if (start === end) return;
-      setPopup({ kind: "selection", verse, start, end, rect: range.getBoundingClientRect() });
+      let startVerse = Number(startEntry[0]);
+      let endVerse = Number(endEntry[0]);
+      let startOffset = getTextOffsetInRoot(startEntry[1], range.startContainer, range.startOffset);
+      let endOffset = getTextOffsetInRoot(endEntry[1], range.endContainer, range.endOffset);
+      if (startVerse > endVerse || (startVerse === endVerse && startOffset > endOffset)) {
+        [startVerse, endVerse] = [endVerse, startVerse];
+        [startOffset, endOffset] = [endOffset, startOffset];
+      }
+      if (startVerse === endVerse && startOffset === endOffset) return;
+      setPopup({ kind: "selection", startVerse, startOffset, endVerse, endOffset });
     };
     document.addEventListener("selectionchange", handleSelectionChange);
     return () => document.removeEventListener("selectionchange", handleSelectionChange);
   }, []);
 
+  // Touch drag-selection path (mobile). Native selection/callout is disabled on coarse pointers, so we
+  // do our own hit-testing: tap a word to select it (and set the drag anchor), then drag from anywhere
+  // to extend the selection — this never touches window.getSelection(), so iOS has nothing to show a
+  // Copy/Look Up menu over.
+  useEffect(() => {
+    const container = versesContainerRef.current;
+    if (!container) return;
+
+    const dragAnchorRef = { current: null as { verse: number; offset: number } | null };
+    const touchStartRef = { current: null as { x: number; y: number } | null };
+    const touchMovedRef = { current: false };
+
+    const isInteractiveTarget = (target: EventTarget | null): boolean =>
+      target instanceof Element && !!target.closest(".verse-location-link, .verse-note-indicator, .verse-tag-indicator, mark.verse-highlight");
+
+    const resolveCaretPosition = (x: number, y: number): { verse: number; offset: number } | null => {
+      const docAny = document as Document & {
+        caretRangeFromPoint?: (x: number, y: number) => Range | null;
+        caretPositionFromPoint?: (x: number, y: number) => { offsetNode: Node; offset: number } | null;
+      };
+      let range: Range | null = null;
+      if (docAny.caretRangeFromPoint) {
+        range = docAny.caretRangeFromPoint(x, y);
+      } else if (docAny.caretPositionFromPoint) {
+        const pos = docAny.caretPositionFromPoint(x, y);
+        if (pos) {
+          range = document.createRange();
+          range.setStart(pos.offsetNode, pos.offset);
+        }
+      }
+      if (!range) return null;
+      const entry = Object.entries(textRefs.current).find(([, el]) => el && el.contains(range!.startContainer));
+      if (!entry || !entry[1]) return null;
+      const verse = Number(entry[0]);
+      const offset = getTextOffsetInRoot(entry[1], range.startContainer, range.startOffset);
+      return { verse, offset };
+    };
+
+    const onTouchStart = (e: TouchEvent) => {
+      const t = e.touches[0];
+      touchStartRef.current = { x: t.clientX, y: t.clientY };
+      touchMovedRef.current = false;
+    };
+
+    const onTouchMove = (e: TouchEvent) => {
+      const t = e.touches[0];
+      const start = touchStartRef.current;
+      if (start && Math.hypot(t.clientX - start.x, t.clientY - start.y) > TAP_MOVE_THRESHOLD_PX) {
+        touchMovedRef.current = true;
+      }
+      if (dragAnchorRef.current && touchMovedRef.current) {
+        e.preventDefault();
+        const pos = resolveCaretPosition(t.clientX, t.clientY);
+        if (!pos) return;
+        const anchor = dragAnchorRef.current;
+        let startVerse = anchor.verse;
+        let startOffset = anchor.offset;
+        let endVerse = pos.verse;
+        let endOffset = pos.offset;
+        if (startVerse > endVerse || (startVerse === endVerse && startOffset > endOffset)) {
+          [startVerse, endVerse] = [endVerse, startVerse];
+          [startOffset, endOffset] = [endOffset, startOffset];
+        }
+        setPopup({ kind: "selection", startVerse, startOffset, endVerse, endOffset, viaTouch: true });
+      }
+    };
+
+    const onTouchEnd = (e: TouchEvent) => {
+      if (isInteractiveTarget(e.target)) {
+        touchStartRef.current = null;
+        touchMovedRef.current = false;
+        return;
+      }
+      const t = e.changedTouches[0];
+      if (!touchMovedRef.current) {
+        const pos = resolveCaretPosition(t.clientX, t.clientY);
+        if (!pos) {
+          dragAnchorRef.current = null;
+          setPopup((p) => (p?.kind === "selection" ? null : p));
+        } else {
+          dragAnchorRef.current = pos;
+          const verseData = passage?.verses.find((v) => v.verse === pos.verse);
+          const text = verseData ? verseData.text.trim() : "";
+          const { start, end } = expandToWord(text, pos.offset);
+          setPopup({ kind: "selection", startVerse: pos.verse, startOffset: start, endVerse: pos.verse, endOffset: end, viaTouch: true });
+        }
+      } else {
+        // Drag ended — popup already reflects the live range. Clear the anchor so a future plain
+        // tap starts a fresh selection instead of continuing to extend this one.
+        dragAnchorRef.current = null;
+      }
+      touchStartRef.current = null;
+      touchMovedRef.current = false;
+    };
+
+    container.addEventListener("touchstart", onTouchStart, { passive: true });
+    container.addEventListener("touchmove", onTouchMove, { passive: false });
+    container.addEventListener("touchend", onTouchEnd, { passive: true });
+    return () => {
+      container.removeEventListener("touchstart", onTouchStart);
+      container.removeEventListener("touchmove", onTouchMove);
+      container.removeEventListener("touchend", onTouchEnd);
+    };
+  }, [passage]);
+
   const closePopup = () => {
     window.getSelection()?.removeAllRanges();
     setNoteDraft("");
+    setNewTagName("");
     setPopup(null);
   };
 
   const handleCreateHighlight = async (color: HighlightColor) => {
     if (!popup || popup.kind !== "selection" || !userId || !currentBook || currentChapter === null) return;
-    const { verse, start, end } = popup;
+    const { startVerse, startOffset, endVerse, endOffset } = popup;
     const { data, error: hlError } = await supabase
       .from("highlights")
       .insert({
         user_id: userId,
         book: currentBook,
         chapter: currentChapter,
-        verse,
+        start_verse: startVerse,
+        end_verse: endVerse,
         translation,
-        start_offset: start,
-        end_offset: end,
+        start_offset: startOffset,
+        end_offset: endOffset,
         color,
       })
       .select()
@@ -289,12 +429,25 @@ export default function BiblePanel({
     closePopup();
   };
 
+  /** Reconstructs the exact quoted text for a (possibly multi-verse) selection from the loaded passage. */
+  const buildQuotedText = (startVerse: number, startOffset: number, endVerse: number, endOffset: number): string => {
+    if (!passage) return "";
+    return passage.verses
+      .filter((v) => v.verse >= startVerse && v.verse <= endVerse)
+      .map((v) => {
+        const text = v.text.trim();
+        const from = v.verse === startVerse ? startOffset : 0;
+        const to = v.verse === endVerse ? endOffset : text.length;
+        return text.slice(from, to);
+      })
+      .join(" ");
+  };
+
   const handleOpenNoteEditor = () => {
     if (!popup || popup.kind !== "selection") return;
-    const el = textRefs.current[popup.verse];
-    const quotedText = el?.textContent?.slice(popup.start, popup.end) ?? "";
+    const quotedText = buildQuotedText(popup.startVerse, popup.startOffset, popup.endVerse, popup.endOffset);
     setNoteDraft("");
-    setPopup({ kind: "note-editor", verse: popup.verse, quotedText, rect: popup.rect });
+    setPopup({ kind: "note-editor", startVerse: popup.startVerse, endVerse: popup.endVerse, quotedText });
   };
 
   const handleSaveNote = async () => {
@@ -307,7 +460,8 @@ export default function BiblePanel({
         user_id: userId,
         book: currentBook,
         chapter: currentChapter,
-        verse: popup.verse,
+        start_verse: popup.startVerse,
+        end_verse: popup.endVerse,
         translation,
         quoted_text: popup.quotedText || null,
         note_text: text,
@@ -315,8 +469,7 @@ export default function BiblePanel({
       .select()
       .single();
     if (!noteError && data) {
-      const note = data as Note;
-      setNotesByVerse((prev) => ({ ...prev, [note.verse]: [...(prev[note.verse] ?? []), note] }));
+      setNotes((prev) => [...prev, data as Note]);
       onNotesChanged?.();
     }
     closePopup();
@@ -330,10 +483,54 @@ export default function BiblePanel({
     setPopup(null);
   };
 
-  const handleDeleteNote = async (noteId: string, verse: number) => {
+  const handleDeleteNote = async (noteId: string) => {
     await supabase.from("notes").delete().eq("id", noteId);
-    setNotesByVerse((prev) => ({ ...prev, [verse]: (prev[verse] ?? []).filter((n) => n.id !== noteId) }));
+    setNotes((prev) => prev.filter((n) => n.id !== noteId));
     onNotesChanged?.();
+  };
+
+  const notesForVerse = (verse: number) => notes.filter((n) => n.start_verse <= verse && verse <= n.end_verse);
+  const tagsForVerse = (verse: number) => verseTags.filter((vt) => vt.start_verse <= verse && verse <= vt.end_verse);
+
+  /** True if some verse_tags row for this tag overlaps the given range at all — used to show a tag chip as active. */
+  const isRangeTagged = (startVerse: number, endVerse: number, tagId: string) =>
+    verseTags.some((vt) => vt.tag_id === tagId && vt.start_verse <= endVerse && vt.end_verse >= startVerse);
+
+  /** Toggles one existing tag on/off the popup's verse range. Turning off an overlapping multi-verse
+   * tag removes that whole span — tags can't be partially detached from just one verse of a range. */
+  const handleToggleVerseTag = async (tagId: string) => {
+    if (!popup || popup.kind !== "tag-picker" || !userId || !currentBook || currentChapter === null) return;
+    const { startVerse, endVerse } = popup;
+    const existing = verseTags.find((vt) => vt.tag_id === tagId && vt.start_verse <= endVerse && vt.end_verse >= startVerse);
+    if (existing) {
+      await supabase.from("verse_tags").delete().eq("id", existing.id);
+      setVerseTags((prev) => prev.filter((vt) => vt.id !== existing.id));
+    } else {
+      const { data, error: vtError } = await supabase
+        .from("verse_tags")
+        .insert({ user_id: userId, book: currentBook, chapter: currentChapter, start_verse: startVerse, end_verse: endVerse, translation, tag_id: tagId })
+        .select()
+        .single();
+      if (!vtError && data) setVerseTags((prev) => [...prev, data as VerseTag]);
+    }
+    onNotesChanged?.();
+  };
+
+  /** Creates a new custom tag (reusing an existing one of the same name if it already exists) and applies it to the popup's verse range. */
+  const handleAddNewTag = async () => {
+    if (!popup || popup.kind !== "tag-picker" || !userId) return;
+    const name = newTagName.trim();
+    if (!name) return;
+    setNewTagName("");
+    const existingTag = tags.find((t) => t.name.toLowerCase() === name.toLowerCase());
+    let tag = existingTag;
+    if (!tag) {
+      const { data, error: tagError } = await supabase.from("tags").insert({ user_id: userId, name }).select().single();
+      if (tagError || !data) return;
+      tag = data as Tag;
+      setTags((prev) => [...prev, tag!].sort((a, b) => a.name.localeCompare(b.name)));
+    }
+    if (!isRangeTagged(popup.startVerse, popup.endVerse, tag.id)) await handleToggleVerseTag(tag.id);
   };
 
   const handleTranslationChange = async (next: string) => {
@@ -606,9 +803,19 @@ export default function BiblePanel({
             </button>
           </div>
 
-          <div className="bible-verses" style={{ fontSize: `${BASE_VERSE_FONT_PX * fontScale}px` }}>
+          <div className="bible-verses" ref={versesContainerRef} style={{ fontSize: `${BASE_VERSE_FONT_PX * fontScale}px` }}>
             {passage.verses.map((v) => {
-              const verseNotes = notesByVerse[v.verse] ?? [];
+              const text = v.text.trim();
+              const verseNotes = notesForVerse(v.verse);
+              const verseTagList = tagsForVerse(v.verse);
+              const clippedHighlights: ClippedHighlight[] = highlights.flatMap((h) => {
+                const clip = clipRangeForVerse(h.start_verse, h.start_offset, h.end_verse, h.end_offset, v.verse, text.length);
+                return clip ? [{ highlight: h, startOffset: clip.start, endOffset: clip.end }] : [];
+              });
+              const previewRange =
+                popup?.kind === "selection" && popup.viaTouch
+                  ? clipRangeForVerse(popup.startVerse, popup.startOffset, popup.endVerse, popup.endOffset, v.verse, text.length)
+                  : null;
               return (
                 <p
                   key={`${v.chapter}:${v.verse}`}
@@ -618,11 +825,12 @@ export default function BiblePanel({
                 >
                   <span className="bible-verse-num">{v.verse}</span>
                   <VerseText
-                    text={v.text.trim()}
+                    text={text}
                     onSelectLocation={onSelectLocation}
                     onSelectPoi={onSelectPoi}
-                    highlights={highlights.filter((h) => h.verse === v.verse)}
-                    onHighlightClick={(highlight, rect) => setPopup({ kind: "highlight-actions", highlight, rect })}
+                    highlights={clippedHighlights}
+                    onHighlightClick={(highlight) => setPopup({ kind: "highlight-actions", highlight })}
+                    previewRange={previewRange}
                     textRef={(el) => {
                       textRefs.current[v.verse] = el;
                     }}
@@ -632,11 +840,19 @@ export default function BiblePanel({
                       type="button"
                       className="verse-note-indicator"
                       aria-label={`View ${verseNotes.length === 1 ? "note" : "notes"} on this verse`}
-                      onClick={(e) =>
-                        setPopup({ kind: "verse-notes", verse: v.verse, rect: (e.currentTarget as HTMLElement).getBoundingClientRect() })
-                      }
+                      onClick={() => setPopup({ kind: "verse-notes", verse: v.verse })}
                     >
                       📝
+                    </button>
+                  )}
+                  {verseTagList.length > 0 && (
+                    <button
+                      type="button"
+                      className="verse-tag-indicator"
+                      aria-label={`View ${verseTagList.length === 1 ? "tag" : "tags"} on this verse`}
+                      onClick={() => setPopup({ kind: "tag-picker", startVerse: v.verse, endVerse: v.verse })}
+                    >
+                      🏷️
                     </button>
                   )}
                 </p>
@@ -663,9 +879,9 @@ export default function BiblePanel({
       )}
 
       {popup && (
-        <div className="verse-popup" style={{ top: popup.rect.top, left: popup.rect.left + popup.rect.width / 2 }}>
+        <div className="verse-sheet">
           {popup.kind === "selection" && (
-            <div className="verse-popup-actions">
+            <div className="verse-sheet-actions">
               {userId ? (
                 <>
                   {HIGHLIGHT_COLORS.map((color) => (
@@ -679,6 +895,13 @@ export default function BiblePanel({
                   ))}
                   <button type="button" className="verse-popup-note-btn" onClick={handleOpenNoteEditor}>
                     📝 Note
+                  </button>
+                  <button
+                    type="button"
+                    className="verse-popup-tag-btn"
+                    onClick={() => setPopup({ kind: "tag-picker", startVerse: popup.startVerse, endVerse: popup.endVerse })}
+                  >
+                    🏷️ Tag
                   </button>
                 </>
               ) : (
@@ -711,7 +934,7 @@ export default function BiblePanel({
           )}
 
           {popup.kind === "highlight-actions" && (
-            <div className="verse-popup-actions">
+            <div className="verse-sheet-actions">
               <button type="button" className="verse-popup-remove" onClick={handleRemoveHighlight}>
                 Remove Highlight
               </button>
@@ -721,13 +944,56 @@ export default function BiblePanel({
             </div>
           )}
 
+          {popup.kind === "tag-picker" && (
+            <div className="verse-popup-tag-picker">
+              {tags.length > 0 && (
+                <div className="verse-popup-tag-chips">
+                  {tags.map((tag) => {
+                    const active = isRangeTagged(popup.startVerse, popup.endVerse, tag.id);
+                    return (
+                      <button
+                        key={tag.id}
+                        type="button"
+                        className={`verse-popup-tag-chip ${active ? "verse-popup-tag-chip-active" : ""}`}
+                        onClick={() => handleToggleVerseTag(tag.id)}
+                      >
+                        {active ? "✓ " : ""}
+                        {tag.name}
+                      </button>
+                    );
+                  })}
+                </div>
+              )}
+              <div className="verse-popup-tag-new">
+                <input
+                  type="text"
+                  value={newTagName}
+                  onChange={(e) => setNewTagName(e.target.value)}
+                  onKeyDown={(e) => {
+                    if (e.key === "Enter") {
+                      e.preventDefault();
+                      handleAddNewTag();
+                    }
+                  }}
+                  placeholder="New tag name…"
+                />
+                <button type="button" onClick={handleAddNewTag} disabled={!newTagName.trim()}>
+                  + Add
+                </button>
+              </div>
+              <button type="button" className="verse-popup-close-full" onClick={() => setPopup(null)}>
+                Close
+              </button>
+            </div>
+          )}
+
           {popup.kind === "verse-notes" && (
             <div className="verse-popup-notes-list">
-              {(notesByVerse[popup.verse] ?? []).map((n) => (
+              {notesForVerse(popup.verse).map((n) => (
                 <div key={n.id} className="verse-popup-note-item">
                   {n.quoted_text && <p className="verse-popup-quoted">"{n.quoted_text}"</p>}
                   <p>{n.note_text}</p>
-                  <button type="button" onClick={() => handleDeleteNote(n.id, popup.verse)}>
+                  <button type="button" onClick={() => handleDeleteNote(n.id)}>
                     Delete
                   </button>
                 </div>
