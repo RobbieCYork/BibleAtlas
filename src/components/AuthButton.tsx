@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import type { Session } from "@supabase/supabase-js";
-import { supabase } from "../lib/supabase";
+import { supabase, setRememberMe } from "../lib/supabase";
 
 interface AuthButtonProps {
   session: Session | null;
@@ -13,6 +13,7 @@ export default function AuthButton({ session }: AuthButtonProps) {
   const [mode, setMode] = useState<Mode>("login");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [rememberMe, setRememberMeChecked] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [info, setInfo] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
@@ -41,12 +42,14 @@ export default function AuthButton({ session }: AuthButtonProps) {
     setLoading(true);
     try {
       if (mode === "login") {
+        setRememberMe(rememberMe);
         const { error: err } = await supabase.auth.signInWithPassword({ email, password });
         if (err) throw err;
         setOpen(false);
         setEmail("");
         setPassword("");
       } else {
+        setRememberMe(true);
         const { error: err } = await supabase.auth.signUp({ email, password });
         if (err) throw err;
         setInfo("Account created! Check your email to confirm, then log in.");
@@ -63,6 +66,7 @@ export default function AuthButton({ session }: AuthButtonProps) {
     setInfo(null);
     setLoading(true);
     try {
+      setRememberMe(true);
       const { error: err } = await supabase.auth.signInAnonymously();
       if (err) throw err;
       setOpen(false);
@@ -151,6 +155,12 @@ export default function AuthButton({ session }: AuthButtonProps) {
               minLength={6}
               autoComplete={mode === "login" ? "current-password" : "new-password"}
             />
+            {mode === "login" && (
+              <label className="auth-remember-me">
+                <input type="checkbox" checked={rememberMe} onChange={(e) => setRememberMeChecked(e.target.checked)} />
+                Remember me
+              </label>
+            )}
             <button type="submit" disabled={loading}>
               {loading ? "…" : mode === "login" ? "Log In" : "Sign Up"}
             </button>

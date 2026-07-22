@@ -798,6 +798,15 @@ body.resizing-panels {
   color: var(--text);
 }
 
+.auth-remember-me {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  color: var(--text-muted);
+  cursor: pointer;
+}
+
 .auth-form button[type="submit"] {
   border: 1px solid var(--accent);
   background: var(--accent);
