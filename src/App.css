@@ -37,6 +37,11 @@
   display: none;
 }
 
+/* Same treatment for the Bible panel — see bibleMounted/bibleHiddenOnMobile in App.tsx. */
+.bible-panel-hidden {
+  display: none;
+}
+
 /* --- Resize handles --- */
 
 .resize-handle {
@@ -209,6 +214,23 @@ body.resizing-panels {
   100% {
     transform: scale(1.3);
   }
+}
+
+/* --- Selected-pin name label (floating above the active pin) --- */
+
+.map-name-popup .maplibregl-popup-tip {
+  display: none;
+}
+
+.map-name-popup .maplibregl-popup-content {
+  padding: 6px 14px;
+  border-radius: 100px;
+  background: var(--accent);
+  color: #fff;
+  font-size: 13px;
+  font-weight: 600;
+  white-space: nowrap;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.3);
 }
 
 /* --- Layer controls --- */

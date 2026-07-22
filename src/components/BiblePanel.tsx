@@ -14,6 +14,9 @@ interface BiblePanelProps {
   userId?: string | null;
   /** One-shot translation to apply the next time `reference` changes — used to restore a saved position. */
   restoreTranslation?: string;
+  /** Kept mounted but visually hidden (rather than unmounted) so book/chapter/search state survives
+   * switching to another mobile tab and back. */
+  hidden?: boolean;
 }
 
 interface VerseData {
@@ -69,6 +72,7 @@ export default function BiblePanel({
   style,
   userId,
   restoreTranslation,
+  hidden,
 }: BiblePanelProps) {
   const [translation, setTranslation] = useState("asv");
   const [passage, setPassage] = useState<PassageResult | null>(null);
@@ -261,7 +265,10 @@ export default function BiblePanel({
   const currentBookInfo = currentBook ? BOOKS.find((b) => b.name === currentBook) : undefined;
 
   return (
-    <div className={`bible-panel ${expand ? "panel-expand" : ""}`} style={expand ? undefined : style}>
+    <div
+      className={`bible-panel ${expand ? "panel-expand" : ""} ${hidden ? "bible-panel-hidden" : ""}`}
+      style={expand ? undefined : style}
+    >
       <div className="bible-panel-header">
         <h3>Bible</h3>
         <button className="panel-close" onClick={onClose} aria-label="Close Bible panel">

@@ -174,6 +174,10 @@ function App() {
   // instead of unmounting it, so MapLibre/tiles/pins survive tab switches.
   const mapMounted = panels.map || isMobile;
   const mapHiddenOnMobile = isMobile && !panels.map;
+  // Same reasoning for the Bible panel — it holds its own book/chapter/search state locally, which
+  // would otherwise reset every time the reader switched to another tab and back.
+  const bibleMounted = panels.bible || isMobile;
+  const bibleHiddenOnMobile = isMobile && !panels.bible;
 
   return (
     <div className="app-shell">
@@ -185,7 +189,7 @@ function App() {
         <AuthButton session={session} />
       </header>
       <div className="app-body">
-        {panels.bible && (
+        {bibleMounted && (
           <BiblePanel
             reference={bibleReference}
             onClose={() => handleClosePanel("bible")}
@@ -195,6 +199,7 @@ function App() {
             style={{ width: bibleWidth }}
             userId={session?.user.id}
             restoreTranslation={restoreTranslation}
+            hidden={bibleHiddenOnMobile}
           />
         )}
         {panels.bible && panels.map && (

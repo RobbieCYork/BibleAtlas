@@ -294,6 +294,7 @@ export default function MapView({
   const mapRef = useRef<maplibregl.Map | null>(null);
   const markersRef = useRef<Record<string, maplibregl.Marker>>({});
   const poiMarkersRef = useRef<Record<string, maplibregl.Marker>>({});
+  const namePopupRef = useRef<maplibregl.Popup | null>(null);
 
   useEffect(() => {
     if (!containerRef.current) return;
@@ -351,6 +352,8 @@ export default function MapView({
       markersRef.current = {};
       Object.values(poiMarkersRef.current).forEach((m) => m.remove());
       poiMarkersRef.current = {};
+      namePopupRef.current?.remove();
+      namePopupRef.current = null;
       map.remove();
       mapRef.current = null;
     };
@@ -386,6 +389,30 @@ export default function MapView({
       mapRef.current.flyTo({ center: poi.coordinates, zoom: SELECTED_ZOOM, duration: 1200 });
     }
   }, [selectedPoiId, pois]);
+
+  // Shows the selected pin's name in a floating label — without this, flying to an obscure
+  // ancient place name (e.g. "Sychar") gives no on-map indication of what's being shown, since
+  // the base map's own labels are modern place names and rarely include it.
+  useEffect(() => {
+    namePopupRef.current?.remove();
+    namePopupRef.current = null;
+    if (!mapRef.current) return;
+
+    const loc = locations.find((l) => l.id === selectedId);
+    const poi = pois.find((p) => p.id === selectedPoiId);
+    const target = loc ?? poi;
+    if (!target) return;
+
+    namePopupRef.current = new maplibregl.Popup({
+      closeButton: false,
+      closeOnClick: false,
+      offset: loc ? 40 : 22,
+      className: "map-name-popup",
+    })
+      .setLngLat(target.coordinates)
+      .setText(target.name)
+      .addTo(mapRef.current);
+  }, [selectedId, selectedPoiId, locations, pois]);
 
   // Selecting any location/POI isolates the map to just that pin; clearing the selection
   // (or toggling a layer) restores the normal locationsVisible/poisVisible state.
