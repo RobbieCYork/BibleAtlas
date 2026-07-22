@@ -7,8 +7,8 @@ interface MobileTabBarProps {
 }
 
 const TABS: { key: PanelKey; label: string; icon: string }[] = [
-  { key: "map", label: "Map", icon: "🗺️" },
   { key: "bible", label: "Bible", icon: "📖" },
+  { key: "map", label: "Map", icon: "🗺️" },
   { key: "details", label: "Details", icon: "📍" },
 ];
 

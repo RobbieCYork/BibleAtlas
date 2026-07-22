@@ -27,10 +27,10 @@ function App() {
   const [mapMode, setMapMode] = useState<MapMode>("satellite");
   const [bibleReference, setBibleReference] = useState<string | null>(null);
   const [isMobile, setIsMobile] = useState(() => window.matchMedia(MOBILE_QUERY).matches);
-  // On mobile, exactly one panel is shown at a time (driven by the bottom tab bar), so
-  // start collapsed to just the map instead of the desktop map+bible default.
+  // On mobile, exactly one panel is shown at a time (driven by the bottom tab bar) — default to
+  // Bible. Desktop shows Bible+Map together by default.
   const [panels, setPanels] = useState<Record<PanelKey, boolean>>(() =>
-    isMobile ? { map: true, details: false, bible: false } : { map: true, details: false, bible: true }
+    isMobile ? { map: false, details: false, bible: true } : { map: true, details: false, bible: true }
   );
   const [bibleWidth, setBibleWidth] = useState(340);
   const [detailsWidth, setDetailsWidth] = useState(380);
@@ -57,9 +57,9 @@ function App() {
   }, []);
 
   // Whenever the viewport crosses into mobile width (e.g. a desktop window shrunk down),
-  // collapse back to a single active panel.
+  // collapse back to a single active panel, defaulting to Bible.
   useEffect(() => {
-    if (isMobile) setMobileActivePanel("map");
+    if (isMobile) setMobileActivePanel("bible");
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isMobile]);
 
