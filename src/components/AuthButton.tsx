@@ -50,7 +50,11 @@ export default function AuthButton({ session }: AuthButtonProps) {
         setPassword("");
       } else {
         setRememberMe(true);
-        const { error: err } = await supabase.auth.signUp({ email, password });
+        const { error: err } = await supabase.auth.signUp({
+          email,
+          password,
+          options: { emailRedirectTo: window.location.origin },
+        });
         if (err) throw err;
         setInfo("Account created! Check your email to confirm, then log in.");
       }

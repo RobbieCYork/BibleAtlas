@@ -288,6 +288,7 @@ function App() {
                 × Show All Pins
               </button>
             )}
+            <div className="map-hint">Click a pin for more details</div>
           </div>
         )}
         {panels.map && showDetails && (
