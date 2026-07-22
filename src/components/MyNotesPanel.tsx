@@ -23,6 +23,13 @@ interface Entry {
   verseTags: VerseTag[];
 }
 
+const TRANSLATION_LABELS: Record<string, string> = { web: "WEB", kjv: "KJV", asv: "ASV" };
+
+function translationLabel(id: string | undefined): string {
+  if (!id) return "";
+  return TRANSLATION_LABELS[id] ?? id.toUpperCase();
+}
+
 function bookOrder(book: string): number {
   const idx = BOOKS.findIndex((b) => b.name === book);
   return idx === -1 ? BOOKS.length : idx;
@@ -188,7 +195,7 @@ export default function MyNotesPanel({ userId, onClose, onGoToVerse, expand, sty
       await supabase.from("verse_tags").delete().eq("id", existing.id);
       setVerseTags((prev) => prev.filter((vt) => vt.id !== existing.id));
     } else {
-      const translation = entry.note?.translation ?? entry.verseTags[0]?.translation ?? "asv";
+      const translation = entry.note?.translation ?? entry.verseTags[0]?.translation ?? "web";
       const { data, error } = await supabase
         .from("verse_tags")
         .insert({ user_id: userId, book: entry.book, chapter: entry.chapter, start_verse: entry.startVerse, end_verse: entry.endVerse, translation, tag_id: tagId })
@@ -233,7 +240,7 @@ export default function MyNotesPanel({ userId, onClose, onGoToVerse, expand, sty
           const tagNames = e.verseTags.map((vt) => tagsById[vt.tag_id]?.name).filter(Boolean);
           return `
         <p><strong>${escapeHtml(refLabel(e))}</strong></p>
-        ${e.note?.quoted_text ? `<p><em>"${escapeHtml(e.note.quoted_text)}"</em></p>` : ""}
+        ${e.note?.quoted_text ? `<p><em>"${escapeHtml(e.note.quoted_text)}"${e.note.translation ? ` (${escapeHtml(translationLabel(e.note.translation))})` : ""}</em></p>` : ""}
         ${e.note ? `<p>${escapeHtml(e.note.note_text)}</p>` : `<p><em>(tagged verse, no note)</em></p>`}
         ${tagNames.length ? `<p>Tags: ${tagNames.map(escapeHtml).join(", ")}</p>` : ""}
         <hr/>
@@ -329,7 +336,12 @@ export default function MyNotesPanel({ userId, onClose, onGoToVerse, expand, sty
                       {refLabel(e)}
                     </button>
                     <strong className="my-notes-ref-print">{refLabel(e)}</strong>
-                    {e.note?.quoted_text && <p className="verse-popup-quoted">"{e.note.quoted_text}"</p>}
+                    {e.note?.quoted_text && (
+                      <p className="verse-popup-quoted">
+                        "{e.note.quoted_text}"
+                        {e.note.translation && <span className="my-notes-translation-tag"> ({translationLabel(e.note.translation)})</span>}
+                      </p>
+                    )}
                     {e.note && <p className="my-notes-text">{e.note.note_text}</p>}
                     {!e.note && <p className="my-notes-text my-notes-text-muted">(tagged verse, no note)</p>}
                     {e.verseTags.length > 0 && (

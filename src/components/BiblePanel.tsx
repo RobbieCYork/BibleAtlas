@@ -113,7 +113,7 @@ export default function BiblePanel({
   hidden,
   onNotesChanged,
 }: BiblePanelProps) {
-  const [translation, setTranslation] = useState("asv");
+  const [translation, setTranslation] = useState("web");
   const [passage, setPassage] = useState<PassageResult | null>(null);
   const [currentBook, setCurrentBook] = useState<string | null>(null);
   const [currentChapter, setCurrentChapter] = useState<number | null>(null);

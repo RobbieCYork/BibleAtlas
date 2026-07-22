@@ -1738,6 +1738,12 @@ body.resizing-panels {
   line-height: 1.4;
 }
 
+.my-notes-translation-tag {
+  font-style: normal;
+  font-weight: 600;
+  opacity: 0.75;
+}
+
 .verse-popup-note-editor textarea {
   width: 100%;
   min-height: 72px;
