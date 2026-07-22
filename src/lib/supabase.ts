@@ -37,6 +37,11 @@ export interface Note {
   end_verse: number;
   translation: string;
   quoted_text: string | null;
+  /** Exact character offsets the quoted text was captured from (start_offset relative to start_verse's
+   * text, end_offset relative to end_verse's text — same coordinate system as Highlight). Null for
+   * notes saved before this was tracked, which can't be one-tap highlighted from My Notes. */
+  quoted_start_offset: number | null;
+  quoted_end_offset: number | null;
   note_text: string;
   created_at: string;
   updated_at: string;

@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
-import { supabase, type Note, type Tag, type VerseTag } from "../lib/supabase";
+import { supabase, HIGHLIGHT_COLORS, type Highlight, type HighlightColor, type Note, type Tag, type VerseTag } from "../lib/supabase";
 import { BOOKS } from "../data/bibleBooks";
+import TagPicker from "./TagPicker";
 
 interface MyNotesPanelProps {
   userId: string | null | undefined;
@@ -39,11 +40,14 @@ export default function MyNotesPanel({ userId, onClose, onGoToVerse, expand, sty
   const [notes, setNotes] = useState<Note[]>([]);
   const [tags, setTags] = useState<Tag[]>([]);
   const [verseTags, setVerseTags] = useState<VerseTag[]>([]);
+  const [highlights, setHighlights] = useState<Highlight[]>([]);
   const [loading, setLoading] = useState(false);
   const [bookFilter, setBookFilter] = useState("");
   const [tagFilter, setTagFilter] = useState("");
   const [exportMenuOpen, setExportMenuOpen] = useState(false);
   const exportMenuRef = useRef<HTMLDivElement | null>(null);
+  const [openTagPickerKey, setOpenTagPickerKey] = useState<string | null>(null);
+  const [newTagName, setNewTagName] = useState("");
 
   useEffect(() => {
     if (!exportMenuOpen) return;
@@ -61,17 +65,20 @@ export default function MyNotesPanel({ userId, onClose, onGoToVerse, expand, sty
       setNotes([]);
       setTags([]);
       setVerseTags([]);
+      setHighlights([]);
       return;
     }
     setLoading(true);
-    const [notesRes, tagsRes, verseTagsRes] = await Promise.all([
+    const [notesRes, tagsRes, verseTagsRes, highlightsRes] = await Promise.all([
       supabase.from("notes").select("*").eq("user_id", userId),
       supabase.from("tags").select("*").eq("user_id", userId).order("name"),
       supabase.from("verse_tags").select("*").eq("user_id", userId),
+      supabase.from("highlights").select("*").eq("user_id", userId),
     ]);
     setNotes((notesRes.data as Note[] | null) ?? []);
     setTags((tagsRes.data as Tag[] | null) ?? []);
     setVerseTags((verseTagsRes.data as VerseTag[] | null) ?? []);
+    setHighlights((highlightsRes.data as Highlight[] | null) ?? []);
     setLoading(false);
   };
 
@@ -82,18 +89,26 @@ export default function MyNotesPanel({ userId, onClose, onGoToVerse, expand, sty
 
   const tagsById = Object.fromEntries(tags.map((t) => [t.id, t]));
 
-  // Merge notes and verse tags sharing the exact same verse range into one entry, so a range with
-  // only a tag (no note) still shows up, and a note tagged via the same selection shows both together.
+  // Every note gets its own entry (keyed by note id, not range) — two notes can share the exact same
+  // verse range without one silently hiding the other. Verse tags attach to every note-entry sharing
+  // their range; a range with only a tag (no note at all) still gets its own standalone entry.
   const entriesByKey = new Map<string, Entry>();
   notes.forEach((n) => {
-    const key = `${n.book}|${n.chapter}|${n.start_verse}|${n.end_verse}`;
+    const key = `note:${n.id}`;
     entriesByKey.set(key, { key, book: n.book, chapter: n.chapter, startVerse: n.start_verse, endVerse: n.end_verse, note: n, verseTags: [] });
   });
   verseTags.forEach((vt) => {
-    const key = `${vt.book}|${vt.chapter}|${vt.start_verse}|${vt.end_verse}`;
-    const existing = entriesByKey.get(key);
+    const matchingNoteEntries = [...entriesByKey.values()].filter(
+      (e) => e.note && e.book === vt.book && e.chapter === vt.chapter && e.startVerse === vt.start_verse && e.endVerse === vt.end_verse
+    );
+    if (matchingNoteEntries.length > 0) {
+      matchingNoteEntries.forEach((e) => e.verseTags.push(vt));
+      return;
+    }
+    const rangeKey = `range:${vt.book}|${vt.chapter}|${vt.start_verse}|${vt.end_verse}`;
+    const existing = entriesByKey.get(rangeKey);
     if (existing) existing.verseTags.push(vt);
-    else entriesByKey.set(key, { key, book: vt.book, chapter: vt.chapter, startVerse: vt.start_verse, endVerse: vt.end_verse, verseTags: [vt] });
+    else entriesByKey.set(rangeKey, { key: rangeKey, book: vt.book, chapter: vt.chapter, startVerse: vt.start_verse, endVerse: vt.end_verse, verseTags: [vt] });
   });
 
   const allEntries = [...entriesByKey.values()].sort((a, b) => {
@@ -130,6 +145,74 @@ export default function MyNotesPanel({ userId, onClose, onGoToVerse, expand, sty
   const handleRemoveTag = async (verseTagId: string) => {
     await supabase.from("verse_tags").delete().eq("id", verseTagId);
     setVerseTags((prev) => prev.filter((vt) => vt.id !== verseTagId));
+  };
+
+  const highlightsForEntry = (e: Entry) =>
+    highlights.filter((h) => h.book === e.book && h.chapter === e.chapter && h.start_verse === e.startVerse && h.end_verse === e.endVerse);
+
+  /** Highlights the exact quoted-text span this note was captured from — only possible for notes saved
+   * after quoted_start_offset/quoted_end_offset started being tracked. */
+  const handleCreateEntryHighlight = async (entry: Entry, color: HighlightColor) => {
+    if (!userId || !entry.note || entry.note.quoted_start_offset == null || entry.note.quoted_end_offset == null) return;
+    const { data, error } = await supabase
+      .from("highlights")
+      .insert({
+        user_id: userId,
+        book: entry.book,
+        chapter: entry.chapter,
+        start_verse: entry.note.start_verse,
+        end_verse: entry.note.end_verse,
+        translation: entry.note.translation,
+        start_offset: entry.note.quoted_start_offset,
+        end_offset: entry.note.quoted_end_offset,
+        color,
+      })
+      .select()
+      .single();
+    if (!error && data) setHighlights((prev) => [...prev, data as Highlight]);
+  };
+
+  const handleRemoveEntryHighlight = async (highlightId: string) => {
+    await supabase.from("highlights").delete().eq("id", highlightId);
+    setHighlights((prev) => prev.filter((h) => h.id !== highlightId));
+  };
+
+  const isEntryTagged = (entry: Entry, tagId: string) => entry.verseTags.some((vt) => vt.tag_id === tagId);
+
+  const handleToggleEntryTag = async (entry: Entry, tagId: string) => {
+    if (!userId) return;
+    const existing = verseTags.find(
+      (vt) => vt.tag_id === tagId && vt.book === entry.book && vt.chapter === entry.chapter && vt.start_verse === entry.startVerse && vt.end_verse === entry.endVerse
+    );
+    if (existing) {
+      await supabase.from("verse_tags").delete().eq("id", existing.id);
+      setVerseTags((prev) => prev.filter((vt) => vt.id !== existing.id));
+    } else {
+      const translation = entry.note?.translation ?? entry.verseTags[0]?.translation ?? "asv";
+      const { data, error } = await supabase
+        .from("verse_tags")
+        .insert({ user_id: userId, book: entry.book, chapter: entry.chapter, start_verse: entry.startVerse, end_verse: entry.endVerse, translation, tag_id: tagId })
+        .select()
+        .single();
+      if (!error && data) setVerseTags((prev) => [...prev, data as VerseTag]);
+    }
+  };
+
+  /** Creates a new custom tag (reusing an existing one of the same name if it already exists) and applies it to this entry. */
+  const handleAddNewTagToEntry = async (entry: Entry) => {
+    if (!userId) return;
+    const name = newTagName.trim();
+    if (!name) return;
+    setNewTagName("");
+    const existingTag = tags.find((t) => t.name.toLowerCase() === name.toLowerCase());
+    let tag = existingTag;
+    if (!tag) {
+      const { data, error } = await supabase.from("tags").insert({ user_id: userId, name }).select().single();
+      if (error || !data) return;
+      tag = data as Tag;
+      setTags((prev) => [...prev, tag!].sort((a, b) => a.name.localeCompare(b.name)));
+    }
+    if (!isEntryTagged(entry, tag.id)) await handleToggleEntryTag(entry, tag.id);
   };
 
   const handlePrint = () => {
@@ -264,6 +347,49 @@ export default function MyNotesPanel({ userId, onClose, onGoToVerse, expand, sty
                           );
                         })}
                       </div>
+                    )}
+                    {(highlightsForEntry(e).length > 0 || (e.note?.quoted_start_offset != null && e.note?.quoted_end_offset != null)) && (
+                      <div className="my-notes-highlight-row no-print">
+                        {e.note?.quoted_start_offset != null &&
+                          e.note?.quoted_end_offset != null &&
+                          HIGHLIGHT_COLORS.map((color) => (
+                            <button
+                              key={color}
+                              type="button"
+                              className={`verse-popup-color verse-popup-color-${color}`}
+                              aria-label={`Highlight ${color}`}
+                              onClick={() => handleCreateEntryHighlight(e, color)}
+                            />
+                          ))}
+                        {highlightsForEntry(e).map((h) => (
+                          <span key={h.id} className={`my-notes-highlight-chip my-notes-highlight-chip-${h.color}`}>
+                            <button type="button" aria-label={`Remove ${h.color} highlight`} onClick={() => handleRemoveEntryHighlight(h.id)}>
+                              ×
+                            </button>
+                          </span>
+                        ))}
+                      </div>
+                    )}
+                    <div className="my-notes-tag-toggle no-print">
+                      <button
+                        type="button"
+                        onClick={() => {
+                          setOpenTagPickerKey((k) => (k === e.key ? null : e.key));
+                          setNewTagName("");
+                        }}
+                      >
+                        {openTagPickerKey === e.key ? "Close tags" : "+ Tag"}
+                      </button>
+                    </div>
+                    {openTagPickerKey === e.key && (
+                      <TagPicker
+                        tags={tags}
+                        isActive={(tagId) => isEntryTagged(e, tagId)}
+                        onToggle={(tagId) => handleToggleEntryTag(e, tagId)}
+                        newTagName={newTagName}
+                        onNewTagNameChange={setNewTagName}
+                        onAddNewTag={() => handleAddNewTagToEntry(e)}
+                      />
                     )}
                     {e.note && (
                       <button type="button" className="my-notes-delete no-print" onClick={() => handleDeleteNote(e.note!.id)}>

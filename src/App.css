@@ -1285,6 +1285,12 @@ body.resizing-panels {
     display: block;
   }
 
+  /* Without the search bar (which normally has flex:1 and fills the middle), the logo and auth
+   * button would otherwise collapse to the left with a big empty gap — push them to the right instead. */
+  .app-header-compact .app-logo {
+    margin-left: auto;
+  }
+
   .panel-menu {
     display: none;
   }
@@ -1703,14 +1709,19 @@ body.resizing-panels {
   width: 100%;
 }
 
-.verse-popup-tag-chips {
+/* --- TagPicker (shared between the Bible reader's tag sheet and My Notes) --- */
+
+.tag-picker-chips {
   display: flex;
   flex-wrap: wrap;
+  align-content: flex-start;
   gap: 6px;
+  max-height: 160px;
+  overflow-y: auto;
   margin-bottom: 8px;
 }
 
-.verse-popup-tag-chip {
+.tag-picker-chip {
   border: 1px solid var(--border);
   background: var(--bg);
   color: var(--text);
@@ -1721,18 +1732,18 @@ body.resizing-panels {
   cursor: pointer;
 }
 
-.verse-popup-tag-chip-active {
+.tag-picker-chip-active {
   border-color: var(--accent);
   background: var(--accent);
   color: #fff;
 }
 
-.verse-popup-tag-new {
+.tag-picker-new {
   display: flex;
   gap: 6px;
 }
 
-.verse-popup-tag-new input {
+.tag-picker-new input {
   flex: 1;
   min-width: 0;
   padding: 6px 8px;
@@ -1744,7 +1755,7 @@ body.resizing-panels {
   color: var(--text);
 }
 
-.verse-popup-tag-new button {
+.tag-picker-new button {
   border: 1px solid var(--border);
   background: var(--bg);
   color: var(--text);
@@ -1756,7 +1767,7 @@ body.resizing-panels {
   flex-shrink: 0;
 }
 
-.verse-popup-tag-new button:disabled {
+.tag-picker-new button:disabled {
   opacity: 0.5;
   cursor: default;
 }
@@ -1915,6 +1926,71 @@ body.resizing-panels {
 
 .my-notes-tag-chip button:hover {
   opacity: 1;
+}
+
+.my-notes-highlight-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 6px;
+}
+
+.my-notes-highlight-chip {
+  display: inline-flex;
+  align-items: center;
+  border-radius: 999px;
+  width: 22px;
+  height: 22px;
+}
+
+.my-notes-highlight-chip button {
+  width: 100%;
+  height: 100%;
+  border: none;
+  border-radius: 999px;
+  color: #1a1a1a;
+  font-size: 13px;
+  line-height: 1;
+  cursor: pointer;
+  opacity: 0.85;
+}
+
+.my-notes-highlight-chip button:hover {
+  opacity: 1;
+}
+
+.my-notes-highlight-chip-yellow button {
+  background: #fde047;
+}
+
+.my-notes-highlight-chip-green button {
+  background: #86efac;
+}
+
+.my-notes-highlight-chip-blue button {
+  background: #93c5fd;
+}
+
+.my-notes-highlight-chip-pink button {
+  background: #f9a8d4;
+}
+
+.my-notes-tag-toggle {
+  margin-bottom: 6px;
+}
+
+.my-notes-tag-toggle button {
+  border: none;
+  background: none;
+  color: var(--accent);
+  font-size: 12px;
+  padding: 0;
+  cursor: pointer;
+}
+
+.my-notes-item .tag-picker {
+  margin-bottom: 8px;
 }
 
 .my-notes-text-muted {

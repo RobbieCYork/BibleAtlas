@@ -207,7 +207,7 @@ function App() {
 
   return (
     <div className="app-shell">
-      <header className="app-header">
+      <header className={`app-header ${!showSearchBar ? "app-header-compact" : ""}`}>
         <PanelMenu panels={panels} onToggle={togglePanel} />
         <img src="/favicon.svg" className="app-logo" alt="" aria-hidden="true" />
         <h1>New Testament Biblical Atlas</h1>

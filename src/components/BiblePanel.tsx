@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import VerseText from "./VerseText";
 import type { ClippedHighlight } from "./VerseText";
+import TagPicker from "./TagPicker";
 import { BOOKS } from "../data/bibleBooks";
 import { supabase, HIGHLIGHT_COLORS, type HighlightColor, type Highlight, type Note, type Tag, type VerseTag } from "../lib/supabase";
 import { getTextOffsetInRoot } from "../lib/domTextOffset";
@@ -64,7 +65,7 @@ type PopupState =
        * causes the browser to reset/corrupt it (see the touchend handler below). */
       viaTouch?: boolean;
     }
-  | { kind: "note-editor"; startVerse: number; endVerse: number; quotedText: string }
+  | { kind: "note-editor"; startVerse: number; startOffset: number; endVerse: number; endOffset: number; quotedText: string }
   | { kind: "highlight-actions"; highlight: Highlight }
   | { kind: "verse-notes"; verse: number }
   | { kind: "tag-picker"; startVerse: number; endVerse: number };
@@ -385,7 +386,14 @@ export default function BiblePanel({
     if (!popup || popup.kind !== "selection") return;
     const quotedText = buildQuotedText(popup.startVerse, popup.startOffset, popup.endVerse, popup.endOffset);
     setNoteDraft("");
-    setPopup({ kind: "note-editor", startVerse: popup.startVerse, endVerse: popup.endVerse, quotedText });
+    setPopup({
+      kind: "note-editor",
+      startVerse: popup.startVerse,
+      startOffset: popup.startOffset,
+      endVerse: popup.endVerse,
+      endOffset: popup.endOffset,
+      quotedText,
+    });
   };
 
   const handleSaveNote = async () => {
@@ -402,6 +410,8 @@ export default function BiblePanel({
         end_verse: popup.endVerse,
         translation,
         quoted_text: popup.quotedText || null,
+        quoted_start_offset: popup.startOffset,
+        quoted_end_offset: popup.endOffset,
         note_text: text,
       })
       .select()
@@ -886,41 +896,14 @@ export default function BiblePanel({
 
           {popup.kind === "tag-picker" && (
             <div className="verse-popup-tag-picker">
-              {tags.length > 0 && (
-                <div className="verse-popup-tag-chips">
-                  {tags.map((tag) => {
-                    const active = isRangeTagged(popup.startVerse, popup.endVerse, tag.id);
-                    return (
-                      <button
-                        key={tag.id}
-                        type="button"
-                        className={`verse-popup-tag-chip ${active ? "verse-popup-tag-chip-active" : ""}`}
-                        onClick={() => handleToggleVerseTag(tag.id)}
-                      >
-                        {active ? "✓ " : ""}
-                        {tag.name}
-                      </button>
-                    );
-                  })}
-                </div>
-              )}
-              <div className="verse-popup-tag-new">
-                <input
-                  type="text"
-                  value={newTagName}
-                  onChange={(e) => setNewTagName(e.target.value)}
-                  onKeyDown={(e) => {
-                    if (e.key === "Enter") {
-                      e.preventDefault();
-                      handleAddNewTag();
-                    }
-                  }}
-                  placeholder="New tag name…"
-                />
-                <button type="button" onClick={handleAddNewTag} disabled={!newTagName.trim()}>
-                  + Add
-                </button>
-              </div>
+              <TagPicker
+                tags={tags}
+                isActive={(tagId) => isRangeTagged(popup.startVerse, popup.endVerse, tagId)}
+                onToggle={handleToggleVerseTag}
+                newTagName={newTagName}
+                onNewTagNameChange={setNewTagName}
+                onAddNewTag={handleAddNewTag}
+              />
               <button type="button" className="verse-popup-close-full" onClick={() => setPopup(null)}>
                 Close
               </button>
