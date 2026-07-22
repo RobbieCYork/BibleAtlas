@@ -6,6 +6,7 @@ interface PoiPanelProps {
   onClose: () => void;
   onSelectLocation: (id: string) => void;
   onSelectPoi: (id: string) => void;
+  onSelectPerson: (id: string) => void;
   onSelectVerse?: (reference: string) => void;
   expand?: boolean;
   style?: React.CSSProperties;
@@ -16,6 +17,7 @@ export default function PoiPanel({
   onClose,
   onSelectLocation,
   onSelectPoi,
+  onSelectPerson,
   onSelectVerse,
   expand,
   style,
@@ -42,6 +44,7 @@ export default function PoiPanel({
               text={poi.description}
               onSelectLocation={onSelectLocation}
               onSelectPoi={onSelectPoi}
+              onSelectPerson={onSelectPerson}
               onSelectVerse={onSelectVerse}
               excludeId={poi.id}
             />
@@ -56,6 +59,7 @@ export default function PoiPanel({
             text={poi.archaeology.note}
             onSelectLocation={onSelectLocation}
             onSelectPoi={onSelectPoi}
+            onSelectPerson={onSelectPerson}
             onSelectVerse={onSelectVerse}
             excludeId={poi.id}
           />

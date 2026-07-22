@@ -8,6 +8,7 @@ interface LocationPanelProps {
   onSelectVerse?: (reference: string) => void;
   onSelectLocation: (id: string) => void;
   onSelectPoi: (id: string) => void;
+  onSelectPerson: (id: string) => void;
   expand?: boolean;
   style?: React.CSSProperties;
 }
@@ -29,6 +30,7 @@ export default function LocationPanel({
   onSelectVerse,
   onSelectLocation,
   onSelectPoi,
+  onSelectPerson,
   expand,
   style,
 }: LocationPanelProps) {
@@ -75,6 +77,7 @@ export default function LocationPanel({
                 text={history.founded}
                 onSelectLocation={onSelectLocation}
                 onSelectPoi={onSelectPoi}
+                onSelectPerson={onSelectPerson}
                 onSelectVerse={onSelectVerse}
                 excludeId={location.id}
               />
@@ -89,6 +92,7 @@ export default function LocationPanel({
                 text={history.population}
                 onSelectLocation={onSelectLocation}
                 onSelectPoi={onSelectPoi}
+                onSelectPerson={onSelectPerson}
                 onSelectVerse={onSelectVerse}
                 excludeId={location.id}
               />
@@ -115,6 +119,7 @@ export default function LocationPanel({
                 text={history.industry}
                 onSelectLocation={onSelectLocation}
                 onSelectPoi={onSelectPoi}
+                onSelectPerson={onSelectPerson}
                 onSelectVerse={onSelectVerse}
                 excludeId={location.id}
               />
@@ -131,6 +136,7 @@ export default function LocationPanel({
                     text={fact}
                     onSelectLocation={onSelectLocation}
                     onSelectPoi={onSelectPoi}
+                    onSelectPerson={onSelectPerson}
                     onSelectVerse={onSelectVerse}
                     excludeId={location.id}
                   />
@@ -149,6 +155,7 @@ export default function LocationPanel({
               text={archaeology.note}
               onSelectLocation={onSelectLocation}
               onSelectPoi={onSelectPoi}
+              onSelectPerson={onSelectPerson}
               onSelectVerse={onSelectVerse}
               excludeId={location.id}
             />

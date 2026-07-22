@@ -6,6 +6,7 @@ import LayerControls from "./components/LayerControls";
 import SearchBar from "./components/SearchBar";
 import LocationPanel from "./components/LocationPanel";
 import PoiPanel from "./components/PoiPanel";
+import PersonPanel from "./components/PersonPanel";
 import BiblePanel from "./components/BiblePanel";
 import MyNotesPanel from "./components/MyNotesPanel";
 import ThenNowToggle, { type MapMode } from "./components/ThenNowToggle";
@@ -16,6 +17,7 @@ import AuthButton from "./components/AuthButton";
 import { supabase } from "./lib/supabase";
 import { locations } from "./data/locations";
 import { pois } from "./data/pois";
+import { people } from "./data/people";
 import "./App.css";
 
 const MIN_PANEL_WIDTH = 240;
@@ -25,6 +27,7 @@ const MOBILE_QUERY = "(max-width: 768px)";
 function App() {
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const [selectedPoiId, setSelectedPoiId] = useState<string | null>(null);
+  const [selectedPersonId, setSelectedPersonId] = useState<string | null>(null);
   const [poisVisible, setPoisVisible] = useState(true);
   const [locationsVisible, setLocationsVisible] = useState(true);
   const [map, setMap] = useState<maplibregl.Map | null>(null);
@@ -60,6 +63,7 @@ function App() {
 
   const selectedLocation = locations.find((l) => l.id === selectedId) ?? null;
   const selectedPoi = pois.find((p) => p.id === selectedPoiId) ?? null;
+  const selectedPerson = people.find((p) => p.id === selectedPersonId) ?? null;
 
   const togglePanel = (key: PanelKey) => setPanels((p) => ({ ...p, [key]: !p[key] }));
   const openPanel = (key: PanelKey) => setPanels((p) => ({ ...p, [key]: true }));
@@ -125,6 +129,7 @@ function App() {
   const handleSelect = (id: string) => {
     setSelectedId(id);
     setSelectedPoiId(null);
+    setSelectedPersonId(null);
     setLocationsVisible(true);
     if (isMobile) {
       setMobileActivePanel("details");
@@ -137,6 +142,7 @@ function App() {
   const handleSelectPoi = (id: string) => {
     setSelectedPoiId(id);
     setSelectedId(null);
+    setSelectedPersonId(null);
     if (isMobile) {
       setMobileActivePanel("details");
     } else {
@@ -145,11 +151,22 @@ function App() {
     }
   };
 
+  // People don't have a map presence — selecting one (from Bible text, search, or a cross-link in
+  // another detail panel) just opens the Details panel, without touching the map at all.
+  const handleSelectPerson = (id: string) => {
+    setSelectedPersonId(id);
+    setSelectedId(null);
+    setSelectedPoiId(null);
+    if (isMobile) setMobileActivePanel("details");
+    else openPanel("details");
+  };
+
   // Clicking a location/POI link inside the Bible text should just show it on the map — not jump
   // to the Details panel the way clicking a pin or a search result does.
   const handleSelectFromBible = (id: string) => {
     setSelectedId(id);
     setSelectedPoiId(null);
+    setSelectedPersonId(null);
     setLocationsVisible(true);
     if (isMobile) setMobileActivePanel("map");
     else openPanel("map");
@@ -158,14 +175,16 @@ function App() {
   const handleSelectPoiFromBible = (id: string) => {
     setSelectedPoiId(id);
     setSelectedId(null);
+    setSelectedPersonId(null);
     if (isMobile) setMobileActivePanel("map");
     else openPanel("map");
   };
 
-  const hasSelection = selectedId !== null || selectedPoiId !== null;
+  const hasSelection = selectedId !== null || selectedPoiId !== null || selectedPersonId !== null;
   const clearSelection = () => {
     setSelectedId(null);
     setSelectedPoiId(null);
+    setSelectedPersonId(null);
     if (isMobile) setMobileActivePanel("map");
   };
 
@@ -222,6 +241,7 @@ function App() {
             onClose={() => handleClosePanel("bible")}
             onSelectLocation={handleSelectFromBible}
             onSelectPoi={handleSelectPoiFromBible}
+            onSelectPerson={handleSelectPerson}
             expand={sideExpand}
             style={{ width: bibleWidth }}
             userId={session?.user.id}
@@ -279,24 +299,38 @@ function App() {
             onWidthChange={setDetailsWidth}
           />
         )}
-        {showDetails && selectedPoi && (
+        {showDetails && selectedPerson && (
+          <PersonPanel
+            person={selectedPerson}
+            onClose={() => handleClosePanel("details")}
+            onSelectVerse={openVerse}
+            onSelectLocation={handleSelect}
+            onSelectPoi={handleSelectPoi}
+            onSelectPerson={handleSelectPerson}
+            expand={sideExpand}
+            style={{ width: detailsWidth }}
+          />
+        )}
+        {showDetails && !selectedPerson && selectedPoi && (
           <PoiPanel
             poi={selectedPoi}
             onClose={() => handleClosePanel("details")}
             onSelectLocation={handleSelect}
             onSelectPoi={handleSelectPoi}
+            onSelectPerson={handleSelectPerson}
             onSelectVerse={openVerse}
             expand={sideExpand}
             style={{ width: detailsWidth }}
           />
         )}
-        {showDetails && !selectedPoi && (
+        {showDetails && !selectedPerson && !selectedPoi && (
           <LocationPanel
             location={selectedLocation}
             onClose={() => handleClosePanel("details")}
             onSelectVerse={openVerse}
             onSelectLocation={handleSelect}
             onSelectPoi={handleSelectPoi}
+            onSelectPerson={handleSelectPerson}
             expand={sideExpand}
             style={{ width: detailsWidth }}
           />

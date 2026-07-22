@@ -448,6 +448,10 @@ body.resizing-panels {
   color: var(--text);
 }
 
+.history-field p + p {
+  margin-top: 10px;
+}
+
 .history-field ul {
   margin: 0;
   padding-left: 18px;
@@ -568,6 +572,89 @@ body.resizing-panels {
   color: var(--text-muted);
   padding: 6px 8px;
   line-height: 1.3;
+}
+
+/* --- Person panel --- */
+
+
+.person-summary {
+  font-size: 14px;
+  color: var(--text);
+  margin-top: 8px;
+  line-height: 1.5;
+}
+
+.person-tier-tag {
+  display: inline-block;
+  margin-top: 8px;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--text-muted);
+  border: 1px solid var(--border);
+  border-radius: 100px;
+  padding: 2px 8px;
+}
+
+.extra-biblical-section {
+  margin-top: 20px;
+  border-top: 1px solid var(--border);
+  padding-top: 16px;
+}
+
+.extra-biblical-section h4 {
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--text-muted);
+  margin-bottom: 8px;
+}
+
+.extra-biblical-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.extra-biblical-item {
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 10px 12px;
+}
+
+.extra-biblical-source {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-h);
+  margin-bottom: 4px;
+}
+
+.extra-biblical-citation {
+  font-weight: 400;
+  color: var(--text-muted);
+}
+
+.extra-biblical-summary {
+  font-size: 13px;
+  color: var(--text);
+  line-height: 1.5;
+  margin-bottom: 6px;
+}
+
+.extra-biblical-reliability {
+  font-size: 12px;
+  font-style: italic;
+  color: var(--text-muted);
+}
+
+.extra-biblical-none {
+  font-size: 13px;
+  font-style: italic;
+  color: var(--text-muted);
 }
 
 /* --- Sources section --- */

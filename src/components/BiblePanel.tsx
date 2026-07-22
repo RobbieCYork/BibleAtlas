@@ -15,6 +15,7 @@ interface BiblePanelProps {
   onClose: () => void;
   onSelectLocation: (id: string) => void;
   onSelectPoi: (id: string) => void;
+  onSelectPerson: (id: string) => void;
   expand?: boolean;
   style?: React.CSSProperties;
   /** Signed-in (or guest) user id — when set, every chapter load is saved as their reading position,
@@ -104,6 +105,7 @@ export default function BiblePanel({
   onClose,
   onSelectLocation,
   onSelectPoi,
+  onSelectPerson,
   expand,
   style,
   userId,
@@ -794,6 +796,7 @@ export default function BiblePanel({
                     text={text}
                     onSelectLocation={onSelectLocation}
                     onSelectPoi={onSelectPoi}
+                    onSelectPerson={onSelectPerson}
                     highlights={clippedHighlights}
                     onHighlightClick={(highlight) => setPopup({ kind: "highlight-actions", highlight })}
                     previewRange={previewRange}

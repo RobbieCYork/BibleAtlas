@@ -68,6 +68,48 @@ export interface Location {
   sources?: SourceCitation[];
 }
 
+/** Drives article depth/prominence: major figures get the longest treatment, notable figures the shortest. */
+export type PersonTier = "major" | "significant" | "notable";
+
+export interface ExtraBiblicalReference {
+  /** e.g. "Josephus, Antiquities of the Jews" or "Tacitus, Annals". */
+  source: string;
+  /** e.g. "18.5.2 (116–119)" — book/chapter/section, and line numbers where standard. */
+  citation: string;
+  /** What the source actually says, paraphrased or quoted — not just "he is mentioned." */
+  summary: string;
+  /** How much weight this carries, e.g. "Contemporary Roman administrative record" vs.
+   * "Later church tradition (3rd century+) — not a contemporary historical source." Required so
+   * legendary/traditional material is never presented with the same confidence as a contemporary record. */
+  reliability: string;
+}
+
+export interface Person {
+  id: string;
+  name: string;
+  /** Phonetic respelling, e.g. "SIGH-mun PEE-ter", shown next to the name. */
+  pronunciation?: string;
+  /** Other names/titles this person is called by in the text, e.g. "Simon Peter", "Cephas", "Simon". */
+  alternateNames?: string[];
+  tier: PersonTier;
+  /** Short tag, e.g. "Apostle", "Roman Governor of Judea", "Prophetess". */
+  role: string;
+  /** One or two sentences — the hook shown right under the name. */
+  summary: string;
+  /** Main narrative — accomplishments, what they did and why it mattered. One paragraph per array entry. */
+  lifeStory: string[];
+  controversies?: string[];
+  occupation?: string;
+  /** Free text naming where they lived/were from/traveled to — location names here get auto-linked. */
+  placesLived?: string;
+  extraBiblicalReferences?: ExtraBiblicalReference[];
+  /** Explicit note shown when no extra-biblical record exists, instead of the section being silently absent. */
+  noExtraBiblicalRecordNote?: string;
+  verses: VerseRef[];
+  /** Citations backing the historical claims — general further reading, e.g. a reputable encyclopedia entry. */
+  sources?: SourceCitation[];
+}
+
 /**
  * A secondary archaeological/biblical site of interest — lighter-weight than a full Location
  * (no rulers/population/verse list), toggleable as its own "Points of Interest" map layer.

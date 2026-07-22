@@ -1,23 +1,31 @@
 import { locations } from "../data/locations";
 import { pois } from "../data/pois";
+import { people } from "../data/people";
 import { BOOKS } from "../data/bibleBooks";
 
 export interface LinkAnnotation {
   start: number;
   end: number;
   text: string;
-  kind: "location" | "poi" | "verse";
-  /** Location/POI id — present for kind "location" | "poi". */
+  kind: "location" | "poi" | "person" | "verse";
+  /** Location/POI/person id — present for kind "location" | "poi" | "person". */
   id?: string;
 }
 
 interface NameEntry {
   name: string;
   id: string;
-  kind: "location" | "poi";
+  kind: "location" | "poi" | "person";
 }
 
-/** Every location's (any category) primary + alternate name, plus every POI's name — longest first so multi-word names win over their substrings. */
+/** Every location's (any category) primary + alternate name, every POI's name, and every person's
+ * name — longest first so multi-word names win over their substrings. Where a name is shared (e.g.
+ * "James" is both a book of the Bible's traditional author-adjacent name and several different NT
+ * people), whichever entry is pushed LAST for that exact lowercase name wins the lookup map below —
+ * people are pushed after locations/POIs so a place name never accidentally shadows a person's name
+ * sharing it, and within `people` the most prominent bearer of an ambiguous bare name (added first in
+ * the array) is deliberately overwritten by later, more-specific entries only when their name strings
+ * differ (e.g. "James son of Alphaeus" is its own distinct string, not a collision with plain "James"). */
 const NAME_ENTRIES: NameEntry[] = (() => {
   const entries: NameEntry[] = [];
   locations.forEach((loc) => {
@@ -27,6 +35,10 @@ const NAME_ENTRIES: NameEntry[] = (() => {
   pois.forEach((poi) => {
     entries.push({ name: poi.name, id: poi.id, kind: "poi" });
     (poi.alternateNames ?? []).forEach((alt) => entries.push({ name: alt, id: poi.id, kind: "poi" }));
+  });
+  people.forEach((person) => {
+    entries.push({ name: person.name, id: person.id, kind: "person" });
+    (person.alternateNames ?? []).forEach((alt) => entries.push({ name: alt, id: person.id, kind: "person" }));
   });
   return entries.sort((a, b) => b.name.length - a.name.length);
 })();
@@ -53,7 +65,7 @@ const NAME_PATTERN =
       )
     : null;
 
-/** Finds every location/POI/verse-reference mention in `text`, as character-offset annotations. */
+/** Finds every location/POI/person/verse-reference mention in `text`, as character-offset annotations. */
 export function computeLinkAnnotations(text: string, excludeId?: string): LinkAnnotation[] {
   if (!NAME_PATTERN) return [];
   const annotations: LinkAnnotation[] = [];

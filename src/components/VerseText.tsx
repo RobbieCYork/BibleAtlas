@@ -14,6 +14,7 @@ interface VerseTextProps {
   text: string;
   onSelectLocation: (id: string) => void;
   onSelectPoi: (id: string) => void;
+  onSelectPerson: (id: string) => void;
   onSelectVerse?: (reference: string) => void;
   /** This verse's highlight coverage only (caller clips by verse). */
   highlights: ClippedHighlight[];
@@ -74,6 +75,7 @@ export default function VerseText({
   text,
   onSelectLocation,
   onSelectPoi,
+  onSelectPerson,
   onSelectVerse,
   highlights,
   onHighlightClick,
@@ -123,7 +125,11 @@ export default function VerseText({
               key={i}
               type="button"
               className="verse-location-link"
-              onClick={() => (ann.kind === "location" ? onSelectLocation(ann.id!) : onSelectPoi(ann.id!))}
+              onClick={() => {
+                if (ann.kind === "location") onSelectLocation(ann.id!);
+                else if (ann.kind === "poi") onSelectPoi(ann.id!);
+                else onSelectPerson(ann.id!);
+              }}
             >
               {seg.text}
             </button>
