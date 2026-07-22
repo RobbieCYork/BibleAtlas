@@ -264,19 +264,36 @@ export default function BiblePanel({
     }
   }, [passage, pendingScrollVerse]);
 
+  /** Locates which verse a selection boundary point falls in and its character offset within that
+   * verse's text. A point can land either inside the verse's own text span (the common case) or inside
+   * the verse-number superscript that precedes it (e.g. a drag that starts right at the start of a
+   * line easily catches the number first) — the latter isn't part of any textRefs entry, so it's
+   * treated as offset 0 of that same verse's text, the natural interpretation of "started here." */
+  const findVerseAndOffset = (node: Node, offset: number): { verse: number; offset: number } | null => {
+    const textEntry = Object.entries(textRefs.current).find(([, el]) => el && el.contains(node));
+    if (textEntry && textEntry[1]) {
+      return { verse: Number(textEntry[0]), offset: getTextOffsetInRoot(textEntry[1], node, offset) };
+    }
+    const pEntry = Object.entries(verseRefs.current).find(([, el]) => el && el.contains(node));
+    if (pEntry && pEntry[1]) {
+      return { verse: Number(pEntry[0]), offset: 0 };
+    }
+    return null;
+  };
+
   /** Reads the current native selection, if it's a valid non-empty range entirely within verse text,
    * as a normalized (start before end) start/end verse+offset pair. */
   const readSelectionRange = (): { startVerse: number; startOffset: number; endVerse: number; endOffset: number } | null => {
     const sel = window.getSelection();
     if (!sel || sel.isCollapsed || sel.rangeCount === 0) return null;
     const range = sel.getRangeAt(0);
-    const startEntry = Object.entries(textRefs.current).find(([, el]) => el && el.contains(range.startContainer));
-    const endEntry = Object.entries(textRefs.current).find(([, el]) => el && el.contains(range.endContainer));
-    if (!startEntry || !startEntry[1] || !endEntry || !endEntry[1]) return null;
-    let startVerse = Number(startEntry[0]);
-    let endVerse = Number(endEntry[0]);
-    let startOffset = getTextOffsetInRoot(startEntry[1], range.startContainer, range.startOffset);
-    let endOffset = getTextOffsetInRoot(endEntry[1], range.endContainer, range.endOffset);
+    const start = findVerseAndOffset(range.startContainer, range.startOffset);
+    const end = findVerseAndOffset(range.endContainer, range.endOffset);
+    if (!start || !end) return null;
+    let startVerse = start.verse;
+    let endVerse = end.verse;
+    let startOffset = start.offset;
+    let endOffset = end.offset;
     if (startVerse > endVerse || (startVerse === endVerse && startOffset > endOffset)) {
       [startVerse, endVerse] = [endVerse, startVerse];
       [startOffset, endOffset] = [endOffset, startOffset];
