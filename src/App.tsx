@@ -7,6 +7,7 @@ import SearchBar from "./components/SearchBar";
 import LocationPanel from "./components/LocationPanel";
 import PoiPanel from "./components/PoiPanel";
 import BiblePanel from "./components/BiblePanel";
+import MyNotesPanel from "./components/MyNotesPanel";
 import ThenNowToggle, { type MapMode } from "./components/ThenNowToggle";
 import PanelMenu, { type PanelKey } from "./components/PanelMenu";
 import MobileTabBar from "./components/MobileTabBar";
@@ -29,14 +30,28 @@ function App() {
   const [map, setMap] = useState<maplibregl.Map | null>(null);
   const [mapMode, setMapMode] = useState<MapMode>("satellite");
   const [bibleReference, setBibleReference] = useState<string | null>(null);
+  // Bumped on every "go to this reference" call so BiblePanel's load effect re-fires even when the
+  // reference string repeats a value already in state (e.g. re-clicking a note whose verse matches
+  // the currently-restored position) — React skips effects when a same-value setState is a no-op.
+  const [referenceNonce, setReferenceNonce] = useState(0);
+  const goToReference = (ref: string) => {
+    setBibleReference(ref);
+    setReferenceNonce((n) => n + 1);
+  };
+  // Bumped whenever BiblePanel saves or deletes a note, so MyNotesPanel (which stays mounted on
+  // mobile and only fetches on userId change) knows to refetch instead of showing stale data.
+  const [notesVersion, setNotesVersion] = useState(0);
   const [isMobile, setIsMobile] = useState(() => window.matchMedia(MOBILE_QUERY).matches);
   // On mobile, exactly one panel is shown at a time (driven by the bottom tab bar) — default to
   // Bible. Desktop shows Bible+Map together by default.
   const [panels, setPanels] = useState<Record<PanelKey, boolean>>(() =>
-    isMobile ? { map: false, details: false, bible: true } : { map: true, details: false, bible: true }
+    isMobile
+      ? { map: false, details: false, bible: true, notes: false }
+      : { map: true, details: false, bible: true, notes: false }
   );
   const [bibleWidth, setBibleWidth] = useState(340);
   const [detailsWidth, setDetailsWidth] = useState(380);
+  const [notesWidth] = useState(380);
   const [session, setSession] = useState<Session | null>(null);
   const [restoreTranslation, setRestoreTranslation] = useState<string | undefined>(undefined);
   // Avoids re-yanking the reader back to their saved spot on every token refresh — only restore
@@ -51,7 +66,7 @@ function App() {
   const closePanel = (key: PanelKey) => setPanels((p) => ({ ...p, [key]: false }));
   // Mobile has exactly one active panel at a time, switched via the bottom tab bar.
   const setMobileActivePanel = (key: PanelKey) =>
-    setPanels({ map: key === "map", bible: key === "bible", details: key === "details" });
+    setPanels({ map: key === "map", bible: key === "bible", details: key === "details", notes: key === "notes" });
   // On mobile, closing the only-ever-open panel via its "×" would leave nothing open (with no
   // hamburger left to reopen one) — send the user back to the map instead of just closing.
   const handleClosePanel = (key: PanelKey) => (isMobile ? setMobileActivePanel("map") : closePanel(key));
@@ -99,7 +114,7 @@ function App() {
       .maybeSingle()
       .then(({ data }) => {
         if (!data) return;
-        setBibleReference(`${data.book} ${data.chapter}`);
+        goToReference(`${data.book} ${data.chapter}`);
         setRestoreTranslation(data.translation);
         if (isMobile) setMobileActivePanel("bible");
         else openPanel("bible");
@@ -155,7 +170,7 @@ function App() {
   };
 
   const openVerse = (reference: string) => {
-    setBibleReference(reference);
+    goToReference(reference);
     if (isMobile) {
       setMobileActivePanel("bible");
     } else {
@@ -167,9 +182,15 @@ function App() {
   // map expand instead of leaving a blank panel visible. On mobile it always renders (as its own
   // full-screen tab) so the empty state ("search or click a pin") shows instead of a blank tab.
   const showDetails = panels.details && (hasSelection || isMobile);
-  const noPanelsOpen = !panels.bible && !panels.map && !showDetails;
+  const noPanelsOpen = !panels.bible && !panels.map && !panels.notes && !showDetails;
   const sideExpand = !panels.map;
-  const activeMobilePanel: PanelKey = panels.bible ? "bible" : panels.details ? "details" : "map";
+  const activeMobilePanel: PanelKey = panels.bible
+    ? "bible"
+    : panels.details
+      ? "details"
+      : panels.notes
+        ? "notes"
+        : "map";
   // On mobile, keep the map mounted even while another tab is active (hidden via CSS below)
   // instead of unmounting it, so MapLibre/tiles/pins survive tab switches.
   const mapMounted = panels.map || isMobile;
@@ -178,6 +199,8 @@ function App() {
   // would otherwise reset every time the reader switched to another tab and back.
   const bibleMounted = panels.bible || isMobile;
   const bibleHiddenOnMobile = isMobile && !panels.bible;
+  const notesMounted = panels.notes || isMobile;
+  const notesHiddenOnMobile = isMobile && !panels.notes;
 
   return (
     <div className="app-shell">
@@ -192,6 +215,7 @@ function App() {
         {bibleMounted && (
           <BiblePanel
             reference={bibleReference}
+            referenceNonce={referenceNonce}
             onClose={() => handleClosePanel("bible")}
             onSelectLocation={handleSelectFromBible}
             onSelectPoi={handleSelectPoiFromBible}
@@ -200,6 +224,7 @@ function App() {
             userId={session?.user.id}
             restoreTranslation={restoreTranslation}
             hidden={bibleHiddenOnMobile}
+            onNotesChanged={() => setNotesVersion((n) => n + 1)}
           />
         )}
         {panels.bible && panels.map && (
@@ -271,6 +296,17 @@ function App() {
             onSelectPoi={handleSelectPoi}
             expand={sideExpand}
             style={{ width: detailsWidth }}
+          />
+        )}
+        {notesMounted && (
+          <MyNotesPanel
+            userId={session?.user.id}
+            onClose={() => handleClosePanel("notes")}
+            onGoToVerse={openVerse}
+            expand={sideExpand}
+            style={{ width: notesWidth }}
+            hidden={notesHiddenOnMobile}
+            refreshKey={notesVersion}
           />
         )}
         {noPanelsOpen && (

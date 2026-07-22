@@ -330,6 +330,16 @@ body.resizing-panels {
   position: relative;
 }
 
+.my-notes-panel {
+  width: 380px;
+  flex-shrink: 0;
+  overflow-y: auto;
+  border-left: 1px solid var(--border);
+  background: var(--panel-bg);
+  padding: 22px;
+  position: relative;
+}
+
 .location-panel-empty {
   display: flex;
   align-items: center;
@@ -1186,7 +1196,8 @@ body.resizing-panels {
  * always "expanded" there) but fixes the same bug on desktop when the map is closed.
  */
 .bible-panel.panel-expand,
-.location-panel.panel-expand {
+.location-panel.panel-expand,
+.my-notes-panel.panel-expand {
   width: auto;
   flex: 1;
   max-width: 720px;
@@ -1281,7 +1292,8 @@ body.resizing-panels {
   /* Panels are always full-screen (one at a time, via the tab bar) — drop the desktop
      720px expand cap and the drag-to-resize handles that only make sense side-by-side. */
   .bible-panel.panel-expand,
-  .location-panel.panel-expand {
+  .location-panel.panel-expand,
+  .my-notes-panel.panel-expand {
     max-width: none;
   }
 
@@ -1360,5 +1372,355 @@ body.resizing-panels {
   .poi-pin svg {
     width: 100%;
     height: 100%;
+  }
+}
+
+/* --- Bible text size control --- */
+
+.bible-font-size {
+  display: flex;
+  justify-content: flex-end;
+  gap: 6px;
+  margin-bottom: 10px;
+}
+
+.bible-font-size button {
+  border: 1px solid var(--border);
+  background: var(--bg);
+  color: var(--text);
+  border-radius: 6px;
+  padding: 4px 9px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.bible-font-size button:hover:not(:disabled) {
+  background: var(--accent-bg);
+}
+
+.bible-font-size button:disabled {
+  opacity: 0.4;
+  cursor: default;
+}
+
+/* --- Verse highlights (Kindle-style drag-to-select) --- */
+/* Text color is forced dark on every color so highlights stay legible in both light and dark theme. */
+
+.verse-highlight {
+  cursor: pointer;
+  border-radius: 2px;
+  color: #1a1a1a;
+  padding: 0 1px;
+}
+
+.verse-highlight-yellow {
+  background: #fde047;
+}
+
+.verse-highlight-green {
+  background: #86efac;
+}
+
+.verse-highlight-blue {
+  background: #93c5fd;
+}
+
+.verse-highlight-pink {
+  background: #f9a8d4;
+}
+
+/* --- Note indicator (small icon after a verse that has a note) --- */
+
+.verse-note-indicator {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  background: none;
+  padding: 0 0 0 4px;
+  margin: 0;
+  font-size: 12px;
+  line-height: 1;
+  cursor: pointer;
+  vertical-align: middle;
+  opacity: 0.85;
+}
+
+.verse-note-indicator:hover {
+  opacity: 1;
+}
+
+/* --- Floating verse-action popup (selection actions, note editor, highlight actions, note viewer) --- */
+
+.verse-popup {
+  position: fixed;
+  transform: translate(-50%, calc(-100% - 10px));
+  z-index: 40;
+  background: var(--panel-bg);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.28);
+  padding: 8px;
+  max-width: min(320px, 90vw);
+}
+
+.verse-popup-actions {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.verse-popup-color {
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  border: 2px solid var(--panel-bg);
+  box-shadow: 0 0 0 1px var(--border);
+  cursor: pointer;
+  padding: 0;
+  flex-shrink: 0;
+}
+
+.verse-popup-color-yellow {
+  background: #fde047;
+}
+
+.verse-popup-color-green {
+  background: #86efac;
+}
+
+.verse-popup-color-blue {
+  background: #93c5fd;
+}
+
+.verse-popup-color-pink {
+  background: #f9a8d4;
+}
+
+.verse-popup-note-btn {
+  border: 1px solid var(--border);
+  background: var(--bg);
+  color: var(--text);
+  border-radius: 8px;
+  padding: 5px 10px;
+  font-size: 13px;
+  white-space: nowrap;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+.verse-popup-note-btn:hover {
+  background: var(--accent-bg);
+}
+
+.verse-popup-signin-note {
+  font-size: 12px;
+  color: var(--text-muted);
+  padding: 0 4px;
+  white-space: nowrap;
+}
+
+.verse-popup-remove {
+  border: 1px solid #e0392b;
+  background: rgba(224, 57, 43, 0.08);
+  color: #e0392b;
+  border-radius: 8px;
+  padding: 5px 10px;
+  font-size: 13px;
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+.verse-popup-close {
+  flex-shrink: 0;
+  width: 22px;
+  height: 22px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  background: none;
+  color: var(--text-muted);
+  font-size: 16px;
+  line-height: 1;
+  cursor: pointer;
+  border-radius: 50%;
+}
+
+.verse-popup-close:hover {
+  background: var(--accent-bg);
+  color: var(--text-h);
+}
+
+.verse-popup-close-full {
+  width: 100%;
+  margin-top: 4px;
+  border: 1px solid var(--border);
+  background: var(--bg);
+  color: var(--text);
+  border-radius: 8px;
+  padding: 7px 10px;
+  font-size: 13px;
+  cursor: pointer;
+}
+
+.verse-popup-note-editor {
+  width: 260px;
+  max-width: 100%;
+}
+
+.verse-popup-quoted {
+  font-size: 12px;
+  font-style: italic;
+  color: var(--text-muted);
+  margin-bottom: 6px;
+  line-height: 1.4;
+}
+
+.verse-popup-note-editor textarea {
+  width: 100%;
+  min-height: 72px;
+  padding: 8px 10px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  font: inherit;
+  font-size: 13px;
+  background: var(--bg);
+  color: var(--text);
+  resize: vertical;
+}
+
+.verse-popup-note-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+  margin-top: 8px;
+}
+
+.verse-popup-note-actions button {
+  border: 1px solid var(--border);
+  background: var(--bg);
+  color: var(--text);
+  border-radius: 8px;
+  padding: 6px 12px;
+  font-size: 13px;
+  cursor: pointer;
+}
+
+.verse-popup-note-actions .verse-popup-save {
+  border-color: var(--accent);
+  background: var(--accent);
+  color: #fff;
+}
+
+.verse-popup-note-actions .verse-popup-save:disabled {
+  opacity: 0.5;
+  cursor: default;
+}
+
+.verse-popup-notes-list {
+  width: 260px;
+  max-width: 100%;
+  max-height: 320px;
+  overflow-y: auto;
+}
+
+.verse-popup-note-item {
+  padding: 8px 0;
+}
+
+.verse-popup-note-item + .verse-popup-note-item {
+  border-top: 1px solid var(--border);
+}
+
+.verse-popup-note-item p {
+  font-size: 13px;
+  color: var(--text);
+  line-height: 1.4;
+  margin-bottom: 6px;
+}
+
+.verse-popup-note-item button {
+  border: none;
+  background: none;
+  color: #e0392b;
+  font-size: 12px;
+  padding: 0;
+  cursor: pointer;
+}
+
+/* --- My Notes panel --- */
+
+.my-notes-list {
+  margin-top: 16px;
+}
+
+.my-notes-book-group {
+  margin-bottom: 18px;
+}
+
+.my-notes-book-heading {
+  font-size: 13px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--accent);
+  border-bottom: 1px solid var(--border);
+  padding-bottom: 6px;
+  margin-bottom: 10px;
+}
+
+.my-notes-item {
+  padding: 10px 0;
+}
+
+.my-notes-item + .my-notes-item {
+  border-top: 1px solid var(--border);
+}
+
+.my-notes-ref {
+  display: block;
+  border: none;
+  background: none;
+  padding: 0;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--accent);
+  text-decoration: underline;
+  text-decoration-style: dotted;
+  text-underline-offset: 2px;
+  cursor: pointer;
+  margin-bottom: 6px;
+}
+
+.my-notes-text {
+  font-size: 14px;
+  color: var(--text);
+  line-height: 1.5;
+  margin-bottom: 6px;
+}
+
+.my-notes-delete {
+  border: none;
+  background: none;
+  color: #e0392b;
+  font-size: 12px;
+  padding: 0;
+  cursor: pointer;
+}
+
+@media (max-width: 768px) {
+  .verse-popup {
+    max-width: 92vw;
+  }
+
+  .verse-popup-note-editor,
+  .verse-popup-notes-list {
+    width: 100%;
+  }
+
+  .verse-popup-color {
+    width: 30px;
+    height: 30px;
   }
 }

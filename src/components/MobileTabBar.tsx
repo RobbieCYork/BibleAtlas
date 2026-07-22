@@ -10,6 +10,7 @@ const TABS: { key: PanelKey; label: string; icon: string }[] = [
   { key: "bible", label: "Bible", icon: "📖" },
   { key: "map", label: "Map", icon: "🗺️" },
   { key: "details", label: "Details", icon: "📍" },
+  { key: "notes", label: "Notes", icon: "📝" },
 ];
 
 export default function MobileTabBar({ active, hasSelection, onSelect }: MobileTabBarProps) {
