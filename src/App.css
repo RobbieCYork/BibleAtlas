@@ -2011,9 +2011,11 @@ body.resizing-panels {
 }
 
 .verse-selection-preview {
-  background: var(--accent-bg);
+  /* Underline only, no fill — <mark>'s UA default forces black text, which combined with a background
+   * tint went dark/unreadable in dark mode. Explicit color below overrides that default. */
+  background: none;
+  color: var(--text);
   border-bottom: 2px solid var(--accent);
-  border-radius: 2px;
 }
 
 /* --- Print (My Notes export) --- */

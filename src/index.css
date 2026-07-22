@@ -36,6 +36,13 @@
   box-sizing: border-box;
 }
 
+/* Some browsers' default text-selection color forces black text regardless of theme, which goes
+ * unreadable against a dark background — set it explicitly so it follows light/dark mode instead. */
+::selection {
+  background: var(--accent-bg);
+  color: var(--text);
+}
+
 body {
   margin: 0;
   min-height: 100svh;
