@@ -132,8 +132,11 @@ function DisplayNameControl({ userId, onSaved }: { userId: string; onSaved: (nam
   );
 }
 
+type MenuView = "menu" | "settings";
+
 export default function AuthButton({ session }: AuthButtonProps) {
   const [open, setOpen] = useState(false);
+  const [menuView, setMenuView] = useState<MenuView>("menu");
   const [mode, setMode] = useState<Mode>("login");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -244,13 +247,47 @@ export default function AuthButton({ session }: AuthButtonProps) {
     const label = session.user.is_anonymous ? "Guest" : savedDisplayName ?? session.user.email ?? "Account";
     return (
       <div className="auth-button" ref={containerRef}>
-        <button type="button" className="auth-trigger" onClick={() => setOpen((o) => !o)} aria-label="Settings and account">
+        <button
+          type="button"
+          className="auth-trigger"
+          onClick={() => {
+            setOpen((o) => !o);
+            setMenuView("menu");
+          }}
+          aria-label="Settings and account"
+        >
           <span className="auth-avatar" aria-hidden="true">
             {session.user.is_anonymous ? "👤" : label.charAt(0).toUpperCase()}
           </span>
         </button>
-        {open && (
+        {open && menuView === "menu" && (
           <div className="auth-dropdown">
+            <div className="auth-identity">
+              <span className="auth-avatar auth-avatar-lg" aria-hidden="true">
+                {session.user.is_anonymous ? "👤" : label.charAt(0).toUpperCase()}
+              </span>
+              <div>
+                <p className="auth-current-user">{label}</p>
+                {!session.user.is_anonymous && session.user.email && savedDisplayName && (
+                  <p className="auth-guest-note">{session.user.email}</p>
+                )}
+                {session.user.is_anonymous && <p className="auth-guest-note">Browsing as a guest</p>}
+              </div>
+            </div>
+            <div className="auth-settings-divider" />
+            <button type="button" className="auth-menu-item" onClick={() => setMenuView("settings")}>
+              ⚙️ Settings
+            </button>
+            <button type="button" className="auth-menu-item auth-signout" onClick={handleSignOut}>
+              Log Out
+            </button>
+          </div>
+        )}
+        {open && menuView === "settings" && (
+          <div className="auth-dropdown">
+            <button type="button" className="auth-back-link" onClick={() => setMenuView("menu")}>
+              ← Back
+            </button>
             <TextSizeControl />
             {!session.user.is_anonymous && (
               <>
@@ -260,17 +297,6 @@ export default function AuthButton({ session }: AuthButtonProps) {
                 <PhoneNumberControl userId={session.user.id} />
               </>
             )}
-            <div className="auth-settings-divider" />
-            <p className="auth-current-user">{label}</p>
-            {!session.user.is_anonymous && session.user.email && savedDisplayName && (
-              <p className="auth-guest-note">{session.user.email}</p>
-            )}
-            {session.user.is_anonymous && (
-              <p className="auth-guest-note">Browsing as a guest — your reading spot is saved, but only in this browser.</p>
-            )}
-            <button type="button" className="auth-signout" onClick={handleSignOut}>
-              Log Out
-            </button>
           </div>
         )}
       </div>

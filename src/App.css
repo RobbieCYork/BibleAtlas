@@ -1093,8 +1093,10 @@ body.resizing-panels {
 }
 
 .auth-back-link {
+  display: block;
   align-self: flex-start;
   margin-bottom: 10px;
+  font-weight: 600;
 }
 
 .auth-form button[type="submit"] {
@@ -1175,6 +1177,47 @@ body.resizing-panels {
 }
 
 .auth-signout:hover {
+  background: var(--accent-bg);
+}
+
+.auth-identity {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 12px;
+}
+
+.auth-avatar-lg {
+  width: 44px;
+  height: 44px;
+  font-size: 17px;
+  flex-shrink: 0;
+}
+
+.auth-identity .auth-current-user,
+.auth-identity .auth-guest-note {
+  margin-bottom: 0;
+}
+
+.auth-menu-item {
+  display: block;
+  width: 100%;
+  text-align: left;
+  border: 1px solid var(--border);
+  background: var(--bg);
+  color: var(--text);
+  border-radius: 8px;
+  padding: 10px 12px;
+  font-size: 14px;
+  cursor: pointer;
+  margin-bottom: 8px;
+}
+
+.auth-menu-item:last-child {
+  margin-bottom: 0;
+}
+
+.auth-menu-item:hover {
   background: var(--accent-bg);
 }
 
