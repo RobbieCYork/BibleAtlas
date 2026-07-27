@@ -108,8 +108,12 @@ function DisplayNameControl({ userId, onSaved }: { userId: string; onSaved: (nam
     setSaved(null);
     const { error } = await supabase.from("profiles").update({ display_name: trimmed }).eq("id", userId);
     setSaving(false);
-    setSaved(error ? "Couldn't save — try again." : "Saved!");
-    if (!error) onSaved(trimmed);
+    if (error) {
+      setSaved(error.code === "23505" ? "That name is taken — try another." : "Couldn't save — try again.");
+      return;
+    }
+    setSaved("Saved!");
+    onSaved(trimmed);
   };
 
   if (!loaded) return null;
@@ -187,11 +191,17 @@ export default function AuthButton({ session }: AuthButtonProps) {
         setEmail("");
         setPassword("");
       } else {
+        const trimmedName = displayName.trim();
+        const { data: available } = await supabase.rpc("is_display_name_available", { p_name: trimmedName });
+        if (available === false) {
+          setError("That display name is taken — try another.");
+          return;
+        }
         setRememberMe(true);
         const { error: err } = await supabase.auth.signUp({
           email,
           password,
-          options: { emailRedirectTo: window.location.origin, data: { display_name: displayName.trim() } },
+          options: { emailRedirectTo: window.location.origin, data: { display_name: trimmedName } },
         });
         if (err) throw err;
         setInfo("Account created! Check your email to confirm, then log in.");

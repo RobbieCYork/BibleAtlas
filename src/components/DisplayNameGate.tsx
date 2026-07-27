@@ -23,7 +23,7 @@ export default function DisplayNameGate({ userId, onSaved }: DisplayNameGateProp
     const { error: err } = await supabase.from("profiles").update({ display_name: trimmed }).eq("id", userId);
     setSaving(false);
     if (err) {
-      setError("Couldn't save — try again.");
+      setError(err.code === "23505" ? "That name is taken — try another." : "Couldn't save — try again.");
       return;
     }
     onSaved();
