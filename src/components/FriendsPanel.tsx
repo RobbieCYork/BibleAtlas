@@ -2,29 +2,58 @@ import { useEffect, useRef, useState } from "react";
 import type { Session } from "@supabase/supabase-js";
 import { supabase, type FriendRequest, type Message, type Profile } from "../lib/supabase";
 
+type FriendsView = "friends" | "messages";
+
+interface ConversationSummary {
+  friendId: string;
+  lastMessage: Message | null;
+  unreadCount: number;
+}
+
+/** Falls back to email for the small number of accounts that existed before display names did and
+ * haven't logged in yet to set one (see DisplayNameGate) — display_name is otherwise required. */
+function displayFor(profile: Profile): string {
+  return profile.display_name ?? profile.email;
+}
+
 interface FriendsPanelProps {
   session: Session | null;
   onClose: () => void;
   expand?: boolean;
   style?: React.CSSProperties;
   hidden?: boolean;
+  /** Which top-level list to show — set by the mobile "More" sheet's Friends vs Messages entries. */
+  openView?: FriendsView;
+  /** Increments every time the panel is (re-)opened from the nav, so re-tapping the same entry while
+   * this panel is already open still jumps back to that view's list instead of a no-op. */
+  openViewNonce?: number;
 }
 
-export default function FriendsPanel({ session, onClose, expand, style, hidden }: FriendsPanelProps) {
+export default function FriendsPanel({ session, onClose, expand, style, hidden, openView, openViewNonce }: FriendsPanelProps) {
   const userId = session?.user.id;
   const canUseFriends = !!session && !session.user.is_anonymous;
 
+  const [view, setView] = useState<FriendsView>("friends");
   const [requests, setRequests] = useState<FriendRequest[]>([]);
   const [profiles, setProfiles] = useState<Record<string, Profile>>({});
+  const [conversations, setConversations] = useState<ConversationSummary[]>([]);
   const [loading, setLoading] = useState(false);
-  const [addEmail, setAddEmail] = useState("");
+  const [addContact, setAddContact] = useState("");
   const [addStatus, setAddStatus] = useState<string | null>(null);
   const [adding, setAdding] = useState(false);
+  const [inviteStatus, setInviteStatus] = useState<string | null>(null);
   const [activeFriendId, setActiveFriendId] = useState<string | null>(null);
   const [messages, setMessages] = useState<Message[]>([]);
   const [messageBody, setMessageBody] = useState("");
   const [sending, setSending] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement | null>(null);
+
+  useEffect(() => {
+    if (openViewNonce === undefined) return;
+    setView(openView ?? "friends");
+    setActiveFriendId(null);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [openViewNonce]);
 
   const fetchRequestsAndProfiles = async () => {
     if (!userId) return;
@@ -75,35 +104,108 @@ export default function FriendsPanel({ session, onClose, expand, style, hidden }
 
   const friendIdFor = (r: FriendRequest) => (r.sender_id === userId ? r.receiver_id : r.sender_id);
 
-  const handleAddFriend = async (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!userId || !addEmail.trim()) return;
-    setAdding(true);
-    setAddStatus(null);
-    const { data: foundId, error: lookupErr } = await supabase.rpc("find_user_id_by_email", {
-      lookup_email: addEmail.trim(),
+  /** One row per friend with any message history — most recent message and how many are unread.
+   * Friends with no messages yet aren't included here; the Messages list adds them in separately so
+   * a brand-new friend still shows up as a place to start a conversation. */
+  const fetchConversations = async () => {
+    if (!userId) return;
+    const { data } = await supabase
+      .from("messages")
+      .select("*")
+      .or(`sender_id.eq.${userId},receiver_id.eq.${userId}`)
+      .order("created_at", { ascending: true });
+    const msgs = (data as Message[] | null) ?? [];
+    const byFriend = new Map<string, ConversationSummary>();
+    msgs.forEach((m) => {
+      const friendId = m.sender_id === userId ? m.receiver_id : m.sender_id;
+      const entry = byFriend.get(friendId) ?? { friendId, lastMessage: null, unreadCount: 0 };
+      entry.lastMessage = m; // fetched oldest-first, so the last one written wins as "most recent"
+      if (m.receiver_id === userId && !m.read_at) entry.unreadCount += 1;
+      byFriend.set(friendId, entry);
     });
-    if (lookupErr || !foundId) {
-      setAddStatus("No account found with that email.");
-      setAdding(false);
-      return;
-    }
-    if (foundId === userId) {
-      setAddStatus("That's your own email.");
-      setAdding(false);
-      return;
-    }
+    setConversations([...byFriend.values()]);
+  };
+
+  useEffect(() => {
+    fetchConversations();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [userId]);
+
+  // Live updates for the Messages overview list — a new message (from either side) or a read-receipt
+  // update should reorder/re-badge the list without needing to reopen the panel.
+  useEffect(() => {
+    if (!userId) return;
+    const channel = supabase
+      .channel(`messages-overview-${userId}`)
+      .on("postgres_changes", { event: "*", schema: "public", table: "messages" }, () => {
+        fetchConversations();
+      })
+      .subscribe();
+    return () => {
+      supabase.removeChannel(channel);
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [userId]);
+
+  /** Every friend, each paired with their conversation summary if one exists, sorted so unread
+   * conversations come first, then by most recent activity, with never-messaged friends at the end. */
+  const conversationList: ConversationSummary[] = friends
+    .map((r) => {
+      const friendId = friendIdFor(r);
+      const existing = conversations.find((c) => c.friendId === friendId);
+      return existing ?? { friendId, lastMessage: null, unreadCount: 0 };
+    })
+    .sort((a, b) => {
+      if (a.unreadCount > 0 !== b.unreadCount > 0) return a.unreadCount > 0 ? -1 : 1;
+      if (a.lastMessage && b.lastMessage) return b.lastMessage.created_at.localeCompare(a.lastMessage.created_at);
+      if (a.lastMessage) return -1;
+      if (b.lastMessage) return 1;
+      return 0;
+    });
+
+  /** Sends a friend request to `foundId`, sharing the not-found/self/duplicate handling between the
+   * manual email-or-phone form and an auto-applied invite link. */
+  const sendRequestTo = async (foundId: string): Promise<string> => {
+    if (foundId === userId) return "That's your own contact info.";
     const { error: insertErr } = await supabase
       .from("friend_requests")
       .insert({ sender_id: userId, receiver_id: foundId, status: "pending" });
-    setAdding(false);
-    if (insertErr) {
-      setAddStatus("You already have a pending or accepted connection with this person.");
+    if (insertErr) return "You already have a pending or accepted connection with this person.";
+    fetchRequestsAndProfiles();
+    return "Friend request sent!";
+  };
+
+  const handleAddFriend = async (e: React.FormEvent) => {
+    e.preventDefault();
+    const query = addContact.trim();
+    if (!userId || !query) return;
+    setAdding(true);
+    setAddStatus(null);
+    // Emails and phone numbers are looked up separately (rather than one combined query) so a phone
+    // search normalizes to digits-only first, matching how phone numbers are stored.
+    const isEmail = query.includes("@");
+    const { data: foundId, error: lookupErr } = isEmail
+      ? await supabase.rpc("find_user_id_by_email", { lookup_email: query })
+      : await supabase.rpc("find_user_by_contact", { query: query.replace(/\D/g, "") });
+    if (lookupErr || !foundId) {
+      setAddStatus(isEmail ? "No account found with that email." : "No account found with that phone number.");
+      setAdding(false);
       return;
     }
-    setAddStatus("Friend request sent!");
-    setAddEmail("");
-    fetchRequestsAndProfiles();
+    setAddStatus(await sendRequestTo(foundId));
+    setAdding(false);
+    setAddContact("");
+  };
+
+  const handleCopyInviteLink = async () => {
+    if (!userId) return;
+    const link = `${window.location.origin}${window.location.pathname}?invite=${userId}`;
+    try {
+      await navigator.clipboard.writeText(link);
+      setInviteStatus("Invite link copied — send it however you like (text, email, anything).");
+    } catch {
+      setInviteStatus(link);
+    }
   };
 
   const handleRespond = async (requestId: string, status: "accepted" | "declined") => {
@@ -191,7 +293,7 @@ export default function FriendsPanel({ session, onClose, expand, style, hidden }
           <button type="button" className="friends-back" onClick={() => setActiveFriendId(null)} aria-label="Back to friends list">
             ← Back
           </button>
-          <h3>{friendProfile?.email ?? "Conversation"}</h3>
+          <h3>{friendProfile ? displayFor(friendProfile) : "Conversation"}</h3>
           <button className="panel-close" onClick={onClose} aria-label="Close Friends panel">
             ×
           </button>
@@ -224,7 +326,7 @@ export default function FriendsPanel({ session, onClose, expand, style, hidden }
   return (
     <div className={`friends-panel ${expand ? "panel-expand" : ""} ${hidden ? "bible-panel-hidden" : ""}`} style={expand ? undefined : style}>
       <div className="bible-panel-header no-print">
-        <h3>Friends</h3>
+        <h3>{view === "messages" ? "Messages" : "Friends"}</h3>
         <button className="panel-close" onClick={onClose} aria-label="Close Friends panel">
           ×
         </button>
@@ -236,21 +338,57 @@ export default function FriendsPanel({ session, onClose, expand, style, hidden }
         </p>
       )}
 
-      {canUseFriends && (
+      {canUseFriends && view === "messages" && (
+        <div className="friends-section">
+          {conversationList.length === 0 && (
+            <p className="comment-status">No conversations yet — add a friend, then say hello.</p>
+          )}
+          <ul className="friends-list">
+            {conversationList.map((c) => (
+              <li
+                key={c.friendId}
+                className="friends-list-item friends-list-item-clickable"
+                onClick={() => setActiveFriendId(c.friendId)}
+              >
+                <div className="message-preview">
+                  <span className="message-preview-name">{profiles[c.friendId] ? displayFor(profiles[c.friendId]) : "Friend"}</span>
+                  <span className="message-preview-text">
+                    {c.lastMessage
+                      ? `${c.lastMessage.sender_id === userId ? "You: " : ""}${c.lastMessage.body}`
+                      : "No messages yet — say hello!"}
+                  </span>
+                </div>
+                {c.unreadCount > 0 && <span className="friends-list-item-badge">{c.unreadCount}</span>}
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
+
+      {canUseFriends && view === "friends" && (
         <>
           <form className="friends-add-form" onSubmit={handleAddFriend}>
             <input
-              type="email"
-              value={addEmail}
-              onChange={(e) => setAddEmail(e.target.value)}
-              placeholder="Friend's email"
+              type="text"
+              value={addContact}
+              onChange={(e) => setAddContact(e.target.value)}
+              placeholder="Friend's email or phone number"
               required
             />
-            <button type="submit" disabled={adding || !addEmail.trim()}>
+            <button type="submit" disabled={adding || !addContact.trim()}>
               {adding ? "…" : "Add"}
             </button>
           </form>
           {addStatus && <p className="comment-status">{addStatus}</p>}
+
+          <button type="button" className="friends-invite-link-button" onClick={handleCopyInviteLink}>
+            🔗 Copy invite link
+          </button>
+          {inviteStatus && <p className="comment-status">{inviteStatus}</p>}
+          <p className="friends-invite-hint">
+            Not on the app yet? Send them your invite link instead — opening it and logging in connects you
+            automatically.
+          </p>
 
           {loading && <p className="comment-status">Loading…</p>}
 
@@ -260,7 +398,7 @@ export default function FriendsPanel({ session, onClose, expand, style, hidden }
               <ul className="friends-list">
                 {incomingPending.map((r) => (
                   <li key={r.id} className="friends-list-item">
-                    <span>{profiles[r.sender_id]?.email ?? "Someone"}</span>
+                    <span>{profiles[r.sender_id] ? displayFor(profiles[r.sender_id]) : "Someone"}</span>
                     <div className="friends-request-actions">
                       <button type="button" onClick={() => handleRespond(r.id, "accepted")}>
                         Accept
@@ -281,7 +419,7 @@ export default function FriendsPanel({ session, onClose, expand, style, hidden }
               <ul className="friends-list">
                 {outgoingPending.map((r) => (
                   <li key={r.id} className="friends-list-item">
-                    <span>{profiles[r.receiver_id]?.email ?? "Someone"}</span>
+                    <span>{profiles[r.receiver_id] ? displayFor(profiles[r.receiver_id]) : "Someone"}</span>
                     <button type="button" className="friends-decline" onClick={() => handleCancelOrRemove(r.id)}>
                       Cancel
                     </button>
@@ -293,13 +431,13 @@ export default function FriendsPanel({ session, onClose, expand, style, hidden }
 
           <div className="friends-section">
             <h4>Friends</h4>
-            {friends.length === 0 && <p className="comment-status">No friends yet — add one by email above.</p>}
+            {friends.length === 0 && <p className="comment-status">No friends yet — add one above, or send an invite link.</p>}
             <ul className="friends-list">
               {friends.map((r) => {
                 const fid = friendIdFor(r);
                 return (
                   <li key={r.id} className="friends-list-item friends-list-item-clickable" onClick={() => setActiveFriendId(fid)}>
-                    <span>{profiles[fid]?.email ?? "Friend"}</span>
+                    <span>{profiles[fid] ? displayFor(profiles[fid]) : "Friend"}</span>
                     <span className="friends-message-hint">Message →</span>
                   </li>
                 );

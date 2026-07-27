@@ -15,6 +15,7 @@ import PanelMenu, { type PanelKey } from "./components/PanelMenu";
 import MobileTabBar from "./components/MobileTabBar";
 import ResizeHandle from "./components/ResizeHandle";
 import AuthButton from "./components/AuthButton";
+import DisplayNameGate from "./components/DisplayNameGate";
 import { supabase } from "./lib/supabase";
 import { locations } from "./data/locations";
 import { pois } from "./data/pois";
@@ -125,6 +126,39 @@ function App() {
     return () => listener.subscription.unsubscribe();
   }, []);
 
+  // A friend's "Copy invite link" produces a URL like "?invite=<their user id>". Save it to
+  // localStorage (not just read from the URL) because a brand-new visitor has to sign up and click
+  // an email confirmation link before they have a real session — and that confirmation redirect goes
+  // to the bare site origin, dropping any query string along the way. Persisting it here means the
+  // invite still applies once they finally do get a session, however many steps later that is.
+  useEffect(() => {
+    const inviterId = new URLSearchParams(window.location.search).get("invite");
+    if (inviterId) {
+      localStorage.setItem("pending-invite-from", inviterId);
+      const url = new URL(window.location.href);
+      url.searchParams.delete("invite");
+      window.history.replaceState({}, "", url.pathname + url.search);
+    }
+  }, []);
+
+  // Once a real (non-guest) session exists, apply any pending invite — sending a friend request from
+  // the inviter rather than requiring the new user to manually look them up. Silently no-ops if
+  // they're already connected (e.g. the invite link was opened more than once).
+  useEffect(() => {
+    if (!session || session.user.is_anonymous) return;
+    const inviterId = localStorage.getItem("pending-invite-from");
+    if (!inviterId || inviterId === session.user.id) {
+      if (inviterId) localStorage.removeItem("pending-invite-from");
+      return;
+    }
+    supabase
+      .from("friend_requests")
+      .insert({ sender_id: inviterId, receiver_id: session.user.id, status: "pending" })
+      .then(() => {
+        localStorage.removeItem("pending-invite-from");
+      });
+  }, [session]);
+
   // Pending incoming friend requests — badges the Friends entry point (mobile "More" tab, desktop
   // panel menu) so a new request is noticeable without opening the Friends panel first. Refetches
   // live via Realtime rather than polling, since friend_requests changes are rare.
@@ -151,6 +185,60 @@ function App() {
     return () => {
       supabase.removeChannel(channel);
     };
+  }, [session]);
+
+  // Unread messages — same badging approach as pendingFriendRequests above, shown on the Messages
+  // entry point specifically (friend requests and unread messages are counted separately so each
+  // entry point's badge reflects only what it leads to).
+  const [unreadMessages, setUnreadMessages] = useState(0);
+  useEffect(() => {
+    if (!session || session.user.is_anonymous) {
+      setUnreadMessages(0);
+      return;
+    }
+    const userId = session.user.id;
+    const fetchCount = () => {
+      supabase
+        .from("messages")
+        .select("id", { count: "exact", head: true })
+        .eq("receiver_id", userId)
+        .is("read_at", null)
+        .then(({ count }) => setUnreadMessages(count ?? 0));
+    };
+    fetchCount();
+    const channel = supabase
+      .channel(`messages-badge-${userId}`)
+      .on("postgres_changes", { event: "*", schema: "public", table: "messages" }, fetchCount)
+      .subscribe();
+    return () => {
+      supabase.removeChannel(channel);
+    };
+  }, [session]);
+
+  // Which top-level view the Friends panel should jump to when opened from the mobile "More" sheet
+  // (Friends vs Messages) — nonce increments on every tap so re-selecting the same view while the
+  // panel is already open still resets it to that view's list (rather than a no-op if it's unchanged).
+  const [friendsView, setFriendsView] = useState<"friends" | "messages">("friends");
+  const [friendsViewNonce, setFriendsViewNonce] = useState(0);
+
+  // Every real account needs a display name (new signups set one in the form itself). This catches
+  // accounts created before that field existed and blocks the app with DisplayNameGate until they
+  // set one — checked once per session, not re-fetched after DisplayNameGate reports success (it
+  // updates this state directly instead).
+  const [needsDisplayName, setNeedsDisplayName] = useState(false);
+  useEffect(() => {
+    if (!session || session.user.is_anonymous) {
+      setNeedsDisplayName(false);
+      return;
+    }
+    supabase
+      .from("profiles")
+      .select("display_name")
+      .eq("id", session.user.id)
+      .single()
+      .then(({ data }) => {
+        setNeedsDisplayName(!(data as { display_name: string | null } | null)?.display_name);
+      });
   }, [session]);
 
   // Once per signed-in user, fetch their saved reading position and jump the Bible panel there.
@@ -276,8 +364,11 @@ function App() {
 
   return (
     <div className="app-shell">
+      {needsDisplayName && session && (
+        <DisplayNameGate userId={session.user.id} onSaved={() => setNeedsDisplayName(false)} />
+      )}
       <header className="app-header">
-        <PanelMenu panels={panels} onToggle={togglePanel} friendsBadgeCount={pendingFriendRequests} />
+        <PanelMenu panels={panels} onToggle={togglePanel} friendsBadgeCount={pendingFriendRequests + unreadMessages} />
         <img src="/favicon.svg" className="app-logo" alt="" aria-hidden="true" />
         <h1>New Testament Biblical Atlas</h1>
         {showSearchBar && <SearchBar locations={locations} onSelect={handleSelect} />}
@@ -404,6 +495,8 @@ function App() {
             expand={sideExpand}
             style={{ width: friendsWidth }}
             hidden={friendsHiddenOnMobile}
+            openView={friendsView}
+            openViewNonce={friendsViewNonce}
           />
         )}
         {noPanelsOpen && (
@@ -416,8 +509,15 @@ function App() {
         <MobileTabBar
           active={activeMobilePanel}
           hasSelection={hasSelection}
-          onSelect={setMobileActivePanel}
+          onSelect={(key, view) => {
+            if (key === "friends" && view) {
+              setFriendsView(view);
+              setFriendsViewNonce((n) => n + 1);
+            }
+            setMobileActivePanel(key);
+          }}
           friendsBadgeCount={pendingFriendRequests}
+          messagesBadgeCount={unreadMessages}
         />
       )}
     </div>

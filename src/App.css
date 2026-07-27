@@ -928,6 +928,43 @@ body.resizing-panels {
   font-weight: 600;
 }
 
+.auth-settings-section-stacked {
+  flex-direction: column;
+  align-items: stretch;
+  gap: 6px;
+}
+
+.auth-phone-row {
+  display: flex;
+  gap: 6px;
+}
+
+.auth-phone-row input {
+  flex: 1;
+  min-width: 0;
+  padding: 7px 9px;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  font-size: 13px;
+  background: var(--bg);
+  color: var(--text);
+}
+
+.auth-phone-row button {
+  border: 1px solid var(--accent);
+  background: var(--accent);
+  color: #fff;
+  border-radius: 6px;
+  padding: 7px 12px;
+  font-size: 13px;
+  cursor: pointer;
+}
+
+.auth-phone-row button:disabled {
+  opacity: 0.6;
+  cursor: default;
+}
+
 .auth-text-size {
   display: flex;
   align-items: center;
@@ -1515,6 +1552,12 @@ body.resizing-panels {
   position: relative;
   font-size: 20px;
   line-height: 1;
+}
+
+/* The ☰ glyph renders visually smaller/thinner than the colorful emoji used for the other tabs at
+   the same font-size — bumped up specifically so "More" reads as the same visual weight. */
+.mobile-tab-icon-more {
+  font-size: 26px;
 }
 
 .mobile-tab-label {
@@ -2407,6 +2450,29 @@ body.resizing-panels {
   margin-bottom: 10px;
 }
 
+.friends-invite-link-button {
+  width: 100%;
+  border: 1px dashed var(--border);
+  background: transparent;
+  color: var(--accent);
+  border-radius: 8px;
+  padding: 8px 10px;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  margin-bottom: 4px;
+}
+
+.friends-invite-link-button:hover {
+  background: var(--accent-bg);
+}
+
+.friends-invite-hint {
+  font-size: 12px;
+  color: var(--text-muted);
+  margin-bottom: 14px;
+}
+
 .friends-add-form input {
   flex: 1;
   min-width: 0;
@@ -2483,6 +2549,36 @@ body.resizing-panels {
   white-space: nowrap;
 }
 
+.message-preview {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.message-preview-name {
+  font-weight: 600;
+}
+
+.message-preview-text {
+  color: var(--text-muted);
+  font-size: 12px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.friends-list-item-badge {
+  flex-shrink: 0;
+  background: #e0392b;
+  color: #fff;
+  font-size: 11px;
+  font-weight: 600;
+  line-height: 1;
+  padding: 3px 7px;
+  border-radius: 999px;
+}
+
 .friends-request-actions {
   display: flex;
   gap: 6px;
@@ -2553,4 +2649,70 @@ body.resizing-panels {
   flex-shrink: 0;
   border-top: 1px solid var(--border);
   padding-top: 12px;
+}
+
+/* --- Display name gate (blocks pre-existing accounts until they set a display name) --- */
+
+.display-name-gate-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+.display-name-gate-card {
+  background: var(--panel-bg);
+  border-radius: 12px;
+  padding: 24px;
+  max-width: 360px;
+  width: 100%;
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.3);
+}
+
+.display-name-gate-card h3 {
+  margin: 0 0 8px;
+  font-size: 18px;
+}
+
+.display-name-gate-card p {
+  margin: 0 0 16px;
+  font-size: 13px;
+  color: var(--text-muted);
+  line-height: 1.4;
+}
+
+.display-name-gate-card form {
+  display: flex;
+  gap: 8px;
+}
+
+.display-name-gate-card input {
+  flex: 1;
+  min-width: 0;
+  padding: 9px 12px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  font-size: 14px;
+  background: var(--bg);
+  color: var(--text);
+}
+
+.display-name-gate-card button {
+  border: 1px solid var(--accent);
+  background: var(--accent);
+  color: #fff;
+  border-radius: 8px;
+  padding: 9px 16px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.display-name-gate-card button:disabled {
+  opacity: 0.6;
+  cursor: default;
 }

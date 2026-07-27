@@ -1,13 +1,19 @@
 import { useEffect, useRef, useState } from "react";
 import type { PanelKey } from "./PanelMenu";
 
+type FriendsView = "friends" | "messages";
+
 interface MobileTabBarProps {
   active: PanelKey;
   hasSelection: boolean;
-  onSelect: (key: PanelKey) => void;
+  /** `view` is only meaningful for the "friends" key — it tells the panel which of its two
+   * top-level lists (friend requests/management vs. conversations) to jump to. */
+  onSelect: (key: PanelKey, view?: FriendsView) => void;
   /** Pending incoming friend requests — badges the "More" tab and the Friends row inside it, so a
    * new request is noticeable without opening the sheet (and then the Friends panel) first. */
   friendsBadgeCount?: number;
+  /** Unread messages — badges the "More" tab and the Messages row the same way. */
+  messagesBadgeCount?: number;
 }
 
 const PINNED_TABS: { key: PanelKey; label: string; icon: string }[] = [
@@ -18,13 +24,24 @@ const PINNED_TABS: { key: PanelKey; label: string; icon: string }[] = [
 ];
 
 /** Panels that don't get their own pinned bottom-bar slot — reachable through the "More" tab
- * instead, so the bar doesn't have to grow every time a new panel is added. */
-const OVERFLOW_TABS: { key: PanelKey; label: string; icon: string }[] = [{ key: "friends", label: "Friends", icon: "👥" }];
+ * instead, so the bar doesn't have to grow every time a new panel is added. Friends and Messages
+ * both open the same underlying "friends" panel, just defaulted to a different internal view. */
+const OVERFLOW_TABS: { key: PanelKey; view?: FriendsView; label: string; icon: string }[] = [
+  { key: "friends", view: "friends", label: "Friends", icon: "👥" },
+  { key: "friends", view: "messages", label: "Messages", icon: "💬" },
+];
 
-export default function MobileTabBar({ active, hasSelection, onSelect, friendsBadgeCount = 0 }: MobileTabBarProps) {
+export default function MobileTabBar({
+  active,
+  hasSelection,
+  onSelect,
+  friendsBadgeCount = 0,
+  messagesBadgeCount = 0,
+}: MobileTabBarProps) {
   const [moreOpen, setMoreOpen] = useState(false);
   const moreRef = useRef<HTMLDivElement | null>(null);
   const isOverflowActive = OVERFLOW_TABS.some((t) => t.key === active);
+  const totalBadgeCount = friendsBadgeCount + messagesBadgeCount;
 
   useEffect(() => {
     if (!moreOpen) return;
@@ -62,23 +79,24 @@ export default function MobileTabBar({ active, hasSelection, onSelect, friendsBa
       <div className="mobile-tab-more" ref={moreRef}>
         {moreOpen && (
           <div className="mobile-more-sheet">
-            {OVERFLOW_TABS.map((tab) => (
-              <button
-                key={tab.key}
-                type="button"
-                className={`mobile-more-item ${active === tab.key ? "active" : ""}`}
-                onClick={() => {
-                  setMoreOpen(false);
-                  onSelect(tab.key);
-                }}
-              >
-                <span aria-hidden="true">{tab.icon}</span>
-                {tab.label}
-                {tab.key === "friends" && friendsBadgeCount > 0 && (
-                  <span className="mobile-more-item-badge">{friendsBadgeCount}</span>
-                )}
-              </button>
-            ))}
+            {OVERFLOW_TABS.map((tab) => {
+              const badgeCount = tab.view === "messages" ? messagesBadgeCount : friendsBadgeCount;
+              return (
+                <button
+                  key={tab.label}
+                  type="button"
+                  className={`mobile-more-item ${active === tab.key ? "active" : ""}`}
+                  onClick={() => {
+                    setMoreOpen(false);
+                    onSelect(tab.key, tab.view);
+                  }}
+                >
+                  <span aria-hidden="true">{tab.icon}</span>
+                  {tab.label}
+                  {badgeCount > 0 && <span className="mobile-more-item-badge">{badgeCount}</span>}
+                </button>
+              );
+            })}
           </div>
         )}
         <button
@@ -88,9 +106,9 @@ export default function MobileTabBar({ active, hasSelection, onSelect, friendsBa
           aria-label="More panels"
           aria-expanded={moreOpen}
         >
-          <span className="mobile-tab-icon" aria-hidden="true">
+          <span className="mobile-tab-icon mobile-tab-icon-more" aria-hidden="true">
             ☰
-            {friendsBadgeCount > 0 && <span className="mobile-tab-dot" />}
+            {totalBadgeCount > 0 && <span className="mobile-tab-dot" />}
           </span>
           <span className="mobile-tab-label">More</span>
         </button>

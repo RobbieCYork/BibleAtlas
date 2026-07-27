@@ -95,6 +95,13 @@ export interface VerseTag {
 export interface Profile {
   id: string;
   email: string;
+  /** Required for every account going forward — shown instead of raw email everywhere a friend's
+   * identity appears. Nullable at the DB level only because accounts created before this existed
+   * don't have one yet; the app prompts those users to set one on their next login. */
+  display_name: string | null;
+  /** Digits-only (no spaces/dashes/parens/plus) — normalized client-side before saving and before
+   * searching, so lookups don't depend on how a phone number was typed. */
+  phone: string | null;
   created_at: string;
 }
 
