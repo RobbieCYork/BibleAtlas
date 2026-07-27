@@ -91,3 +91,29 @@ export interface VerseTag {
   tag_id: string;
   created_at: string;
 }
+
+export interface Profile {
+  id: string;
+  email: string;
+  created_at: string;
+}
+
+export type FriendRequestStatus = "pending" | "accepted" | "declined";
+
+export interface FriendRequest {
+  id: string;
+  sender_id: string;
+  receiver_id: string;
+  status: FriendRequestStatus;
+  created_at: string;
+  responded_at: string | null;
+}
+
+export interface Message {
+  id: string;
+  sender_id: string;
+  receiver_id: string;
+  body: string;
+  created_at: string;
+  read_at: string | null;
+}

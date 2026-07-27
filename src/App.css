@@ -50,7 +50,8 @@
  * which class a human expects to "win" — the exact bug that broke mobile tab switching once already
  * (see the .panel-expand fix below). Compound selectors make this robust to source order. */
 .bible-panel.bible-panel-hidden,
-.my-notes-panel.bible-panel-hidden {
+.my-notes-panel.bible-panel-hidden,
+.friends-panel.bible-panel-hidden {
   display: none;
 }
 
@@ -342,7 +343,8 @@ body.resizing-panels {
   position: relative;
 }
 
-.my-notes-panel {
+.my-notes-panel,
+.friends-panel {
   width: 380px;
   flex-shrink: 0;
   overflow-y: auto;
@@ -350,6 +352,11 @@ body.resizing-panels {
   background: var(--panel-bg);
   padding: 22px;
   position: relative;
+}
+
+.friends-panel {
+  display: flex;
+  flex-direction: column;
 }
 
 .location-panel-empty {
@@ -1381,7 +1388,8 @@ body.resizing-panels {
  */
 .bible-panel.panel-expand,
 .location-panel.panel-expand,
-.my-notes-panel.panel-expand {
+.my-notes-panel.panel-expand,
+.friends-panel.panel-expand {
   width: auto;
   flex: 1;
   max-width: 720px;
@@ -1439,6 +1447,51 @@ body.resizing-panels {
   border: 1.5px solid var(--panel-bg);
 }
 
+.mobile-tab-more {
+  position: relative;
+  flex: 1;
+  display: flex;
+}
+
+.mobile-tab-more .mobile-tab {
+  flex: 1;
+}
+
+.mobile-more-sheet {
+  position: absolute;
+  bottom: calc(100% + 8px);
+  right: 4px;
+  background: var(--panel-bg);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.18);
+  padding: 6px;
+  min-width: 160px;
+  z-index: 25;
+}
+
+.mobile-more-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  border: none;
+  background: none;
+  color: var(--text);
+  font: inherit;
+  font-size: 14px;
+  padding: 10px 10px;
+  border-radius: 6px;
+  cursor: pointer;
+  text-align: left;
+}
+
+.mobile-more-item:hover,
+.mobile-more-item.active {
+  background: var(--accent-bg);
+  color: var(--accent);
+}
+
 /* --- Mobile layout --- */
 
 @media (max-width: 768px) {
@@ -1477,7 +1530,8 @@ body.resizing-panels {
      720px expand cap and the drag-to-resize handles that only make sense side-by-side. */
   .bible-panel.panel-expand,
   .location-panel.panel-expand,
-  .my-notes-panel.panel-expand {
+  .my-notes-panel.panel-expand,
+  .friends-panel.panel-expand {
     max-width: none;
   }
 
@@ -2241,4 +2295,171 @@ body.resizing-panels {
     background: none;
     color: #000;
   }
+}
+
+/* --- Friends & Messages panel --- */
+
+.friends-back {
+  border: none;
+  background: none;
+  color: var(--accent);
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  padding: 0;
+  white-space: nowrap;
+}
+
+.friends-add-form {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 10px;
+}
+
+.friends-add-form input {
+  flex: 1;
+  min-width: 0;
+  padding: 8px 10px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  font-size: 13px;
+  background: var(--bg);
+  color: var(--text);
+}
+
+.friends-add-form button {
+  border: 1px solid var(--accent);
+  background: var(--accent);
+  color: #fff;
+  border-radius: 8px;
+  padding: 8px 14px;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.friends-add-form button:disabled {
+  opacity: 0.6;
+  cursor: default;
+}
+
+.friends-section {
+  margin-top: 18px;
+}
+
+.friends-section h4 {
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--text-muted);
+  margin-bottom: 8px;
+}
+
+.friends-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.friends-list-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 9px 12px;
+  font-size: 13px;
+}
+
+.friends-list-item-clickable {
+  cursor: pointer;
+}
+
+.friends-list-item-clickable:hover {
+  background: var(--accent-bg);
+}
+
+.friends-message-hint {
+  color: var(--accent);
+  font-size: 12px;
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+.friends-request-actions {
+  display: flex;
+  gap: 6px;
+}
+
+.friends-request-actions button {
+  border: 1px solid var(--accent);
+  background: var(--accent);
+  color: #fff;
+  border-radius: 6px;
+  padding: 5px 10px;
+  font-size: 12px;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.friends-decline {
+  border: 1px solid var(--border) !important;
+  background: none !important;
+  color: var(--text-muted) !important;
+}
+
+.friends-decline:hover {
+  color: #e0392b !important;
+  border-color: #e0392b !important;
+}
+
+/* --- Conversation view --- */
+
+.message-list {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 4px 0 12px;
+}
+
+.message-bubble-row {
+  display: flex;
+  justify-content: flex-start;
+}
+
+.message-bubble-row.message-own {
+  justify-content: flex-end;
+}
+
+.message-bubble {
+  max-width: 78%;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 8px 12px;
+  font-size: 13px;
+  line-height: 1.4;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+.message-own .message-bubble {
+  background: var(--accent);
+  color: #fff;
+  border-color: var(--accent);
+}
+
+.message-form {
+  flex-shrink: 0;
+  border-top: 1px solid var(--border);
+  padding-top: 12px;
 }

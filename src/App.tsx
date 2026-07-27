@@ -9,6 +9,7 @@ import PoiPanel from "./components/PoiPanel";
 import PersonPanel from "./components/PersonPanel";
 import BiblePanel from "./components/BiblePanel";
 import MyNotesPanel from "./components/MyNotesPanel";
+import FriendsPanel from "./components/FriendsPanel";
 import ThenNowToggle, { type MapMode } from "./components/ThenNowToggle";
 import PanelMenu, { type PanelKey } from "./components/PanelMenu";
 import MobileTabBar from "./components/MobileTabBar";
@@ -49,12 +50,13 @@ function App() {
   // Bible. Desktop shows Bible+Map together by default.
   const [panels, setPanels] = useState<Record<PanelKey, boolean>>(() =>
     isMobile
-      ? { map: false, details: false, bible: true, notes: false }
-      : { map: true, details: false, bible: true, notes: false }
+      ? { map: false, details: false, bible: true, notes: false, friends: false }
+      : { map: true, details: false, bible: true, notes: false, friends: false }
   );
   const [bibleWidth, setBibleWidth] = useState(340);
   const [detailsWidth, setDetailsWidth] = useState(380);
   const [notesWidth] = useState(380);
+  const [friendsWidth] = useState(380);
   const [session, setSession] = useState<Session | null>(null);
   const [restoreTranslation, setRestoreTranslation] = useState<string | undefined>(undefined);
   // Avoids re-yanking the reader back to their saved spot on every token refresh — only restore
@@ -70,7 +72,13 @@ function App() {
   const closePanel = (key: PanelKey) => setPanels((p) => ({ ...p, [key]: false }));
   // Mobile has exactly one active panel at a time, switched via the bottom tab bar.
   const setMobileActivePanel = (key: PanelKey) =>
-    setPanels({ map: key === "map", bible: key === "bible", details: key === "details", notes: key === "notes" });
+    setPanels({
+      map: key === "map",
+      bible: key === "bible",
+      details: key === "details",
+      notes: key === "notes",
+      friends: key === "friends",
+    });
   // On mobile, closing the only-ever-open panel via its "×" would leave nothing open (with no
   // hamburger left to reopen one) — send the user back to the map instead of just closing.
   const handleClosePanel = (key: PanelKey) => (isMobile ? setMobileActivePanel("map") : closePanel(key));
@@ -201,7 +209,7 @@ function App() {
   // map expand instead of leaving a blank panel visible. On mobile it always renders (as its own
   // full-screen tab) so the empty state ("search or click a pin") shows instead of a blank tab.
   const showDetails = panels.details && (hasSelection || isMobile);
-  const noPanelsOpen = !panels.bible && !panels.map && !panels.notes && !showDetails;
+  const noPanelsOpen = !panels.bible && !panels.map && !panels.notes && !panels.friends && !showDetails;
   const sideExpand = !panels.map;
   const activeMobilePanel: PanelKey = panels.bible
     ? "bible"
@@ -209,7 +217,9 @@ function App() {
       ? "details"
       : panels.notes
         ? "notes"
-        : "map";
+        : panels.friends
+          ? "friends"
+          : "map";
   // On mobile, keep the map mounted even while another tab is active (hidden via CSS below)
   // instead of unmounting it, so MapLibre/tiles/pins survive tab switches.
   const mapMounted = panels.map || isMobile;
@@ -220,6 +230,8 @@ function App() {
   const bibleHiddenOnMobile = isMobile && !panels.bible;
   const notesMounted = panels.notes || isMobile;
   const notesHiddenOnMobile = isMobile && !panels.notes;
+  const friendsMounted = panels.friends || isMobile;
+  const friendsHiddenOnMobile = isMobile && !panels.friends;
   // The location search bar only makes sense while looking at the map (it flies the map to a result) —
   // hide it everywhere else so the header doesn't crowd the Bible/Details/Notes views.
   const showSearchBar = isMobile ? activeMobilePanel === "map" : panels.map;
@@ -345,6 +357,15 @@ function App() {
             style={{ width: notesWidth }}
             hidden={notesHiddenOnMobile}
             refreshKey={notesVersion}
+          />
+        )}
+        {friendsMounted && (
+          <FriendsPanel
+            session={session}
+            onClose={() => handleClosePanel("friends")}
+            expand={sideExpand}
+            style={{ width: friendsWidth }}
+            hidden={friendsHiddenOnMobile}
           />
         )}
         {noPanelsOpen && (

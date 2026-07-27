@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 
-export type PanelKey = "map" | "details" | "bible" | "notes";
+export type PanelKey = "map" | "details" | "bible" | "notes" | "friends";
 
 interface PanelMenuProps {
   panels: Record<PanelKey, boolean>;
@@ -12,9 +12,10 @@ const PANEL_LABELS: Record<PanelKey, string> = {
   map: "Map",
   details: "Location Details",
   notes: "My Notes",
+  friends: "Friends",
 };
 
-const PANEL_ORDER: PanelKey[] = ["bible", "map", "details", "notes"];
+const PANEL_ORDER: PanelKey[] = ["bible", "map", "details", "notes", "friends"];
 
 export default function PanelMenu({ panels, onToggle }: PanelMenuProps) {
   const [open, setOpen] = useState(false);
