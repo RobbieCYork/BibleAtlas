@@ -45,6 +45,22 @@ const NAME_ENTRIES: NameEntry[] = (() => {
 
 const NAME_TO_ENTRY = new Map(NAME_ENTRIES.map((e) => [e.name.toLowerCase(), e]));
 
+/** Some bare names are genuinely ambiguous between two prominent, frequently-recurring people, and
+ * whichever one "owns" the name globally (see the comments in people.ts) will be wrong within a
+ * specific book. Rather than trying to disambiguate at the individual-verse level (which would need
+ * per-verse annotation data we don't have), this overrides the resolved person id when the mention
+ * falls within a named book where the OTHER bearer is essentially always the one meant.
+ * - "Joseph": Genesis's Joseph (son of Jacob) is the global default (vastly more frequent bare
+ *   mentions), but every "Joseph" in Matthew or Luke is Mary's husband — neither book ever names the
+ *   Genesis Joseph in running text, so this override has no false positives within those books.
+ * - "John": John the Baptist is the global default, but in Acts nearly every solo "John" is the
+ *   Apostle (paired with Peter). Not perfect — Acts 4:6 names an unrelated minor "John" of the high
+ *   priest's family — but a large net improvement over zero disambiguation. */
+const BOOK_NAME_OVERRIDES: Record<string, Record<string, string>> = {
+  joseph: { Matthew: "joseph-husband-of-mary", Luke: "joseph-husband-of-mary" },
+  john: { Acts: "john-the-apostle" },
+};
+
 function escapeRegExp(s: string): string {
   return s.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
 }
@@ -65,8 +81,11 @@ const NAME_PATTERN =
       )
     : null;
 
-/** Finds every location/POI/person/verse-reference mention in `text`, as character-offset annotations. */
-export function computeLinkAnnotations(text: string, excludeId?: string): LinkAnnotation[] {
+/** Finds every location/POI/person/verse-reference mention in `text`, as character-offset annotations.
+ * `book` (e.g. "Matthew") is optional context used to resolve a handful of ambiguous bare names via
+ * BOOK_NAME_OVERRIDES above — omit it (as the verse-list views in person/location/POI panels do) and
+ * ambiguous names just resolve to their global default owner. */
+export function computeLinkAnnotations(text: string, excludeId?: string, book?: string): LinkAnnotation[] {
   if (!NAME_PATTERN) return [];
   const annotations: LinkAnnotation[] = [];
   NAME_PATTERN.lastIndex = 0;
@@ -80,8 +99,12 @@ export function computeLinkAnnotations(text: string, excludeId?: string): LinkAn
       annotations.push({ start, end, text: name, kind: "verse" });
     } else {
       const entry = NAME_TO_ENTRY.get(name.toLowerCase());
-      if (entry && entry.id !== excludeId) {
-        annotations.push({ start, end, text: name, kind: entry.kind, id: entry.id });
+      if (entry) {
+        const overrideId = book ? BOOK_NAME_OVERRIDES[name.toLowerCase()]?.[book] : undefined;
+        const id = overrideId ?? entry.id;
+        if (id !== excludeId) {
+          annotations.push({ start, end, text: name, kind: entry.kind, id });
+        }
       }
     }
   }

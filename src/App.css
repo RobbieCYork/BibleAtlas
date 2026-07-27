@@ -892,6 +892,54 @@ body.resizing-panels {
   border-bottom: 1px solid var(--border);
 }
 
+.auth-settings-section {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.auth-settings-label {
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.auth-text-size {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.auth-text-size button {
+  width: 26px;
+  height: 26px;
+  border-radius: 6px;
+  border: 1px solid var(--border);
+  background: transparent;
+  cursor: pointer;
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 1;
+}
+
+.auth-text-size button:disabled {
+  opacity: 0.4;
+  cursor: default;
+}
+
+.auth-text-size-value {
+  font-size: 11px;
+  color: var(--text-muted);
+  min-width: 32px;
+  text-align: center;
+}
+
+.auth-settings-divider {
+  height: 1px;
+  background: var(--border);
+  margin: 12px 0;
+}
+
 .auth-avatar {
   display: flex;
   align-items: center;
@@ -1067,6 +1115,17 @@ body.resizing-panels {
   justify-content: center;
   color: var(--text-muted);
   font-size: 15px;
+}
+
+/* --- Global text size (Settings menu) ---
+   Applies to every reading/writing panel — Bible, Details, Notes, Friends/Messages — via `zoom` on
+   each panel's root class, deliberately excluding the map. `zoom` (not font-size) is used so spacing/
+   padding scale along with the text instead of type overflowing fixed-size containers. */
+.bible-panel,
+.location-panel,
+.my-notes-panel,
+.friends-panel {
+  zoom: var(--text-scale, 1);
 }
 
 /* --- Bible panel --- */

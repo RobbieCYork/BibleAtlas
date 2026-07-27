@@ -389,6 +389,7 @@ export const locations: Location[] = [
     id: "jordan-river",
     name: "Jordan River",
     pronunciation: "JOR-dun",
+    alternateNames: ["the Jordan", "the river Jordan"],
     category: "river",
     modernName: "Jordan River, Israel/Jordan/West Bank border",
     coordinates: [35.571, 32.717],

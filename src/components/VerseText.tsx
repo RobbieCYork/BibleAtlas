@@ -12,6 +12,9 @@ export interface ClippedHighlight {
 
 interface VerseTextProps {
   text: string;
+  /** Current book name (e.g. "Matthew"), used to resolve a handful of ambiguous bare names — see
+   * BOOK_NAME_OVERRIDES in verseAnnotations.ts. */
+  book?: string;
   onSelectLocation: (id: string) => void;
   onSelectPoi: (id: string) => void;
   onSelectPerson: (id: string) => void;
@@ -73,6 +76,7 @@ function buildSegments(
 
 export default function VerseText({
   text,
+  book,
   onSelectLocation,
   onSelectPoi,
   onSelectPerson,
@@ -82,7 +86,7 @@ export default function VerseText({
   previewRange,
   textRef,
 }: VerseTextProps) {
-  const links = computeLinkAnnotations(text);
+  const links = computeLinkAnnotations(text, undefined, book);
   const segments = buildSegments(text, links, highlights, previewRange);
 
   return (

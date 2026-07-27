@@ -1,12 +1,33 @@
 import { useEffect, useRef, useState } from "react";
 import type { Session } from "@supabase/supabase-js";
 import { supabase, setRememberMe } from "../lib/supabase";
+import { useTextSize } from "../lib/textSize";
 
 interface AuthButtonProps {
   session: Session | null;
 }
 
 type Mode = "login" | "signup";
+
+/** Shared with both the logged-in and logged-out dropdown states — text size is a setting, not an
+ * account action, so it lives in this menu but isn't gated on being signed in. */
+function TextSizeControl() {
+  const { scale, increase, decrease, canIncrease, canDecrease } = useTextSize();
+  return (
+    <div className="auth-settings-section">
+      <span className="auth-settings-label">Text Size</span>
+      <div className="auth-text-size">
+        <button type="button" onClick={decrease} disabled={!canDecrease} aria-label="Decrease text size">
+          A⁻
+        </button>
+        <span className="auth-text-size-value">{Math.round(scale * 100)}%</span>
+        <button type="button" onClick={increase} disabled={!canIncrease} aria-label="Increase text size">
+          A⁺
+        </button>
+      </div>
+    </div>
+  );
+}
 
 export default function AuthButton({ session }: AuthButtonProps) {
   const [open, setOpen] = useState(false);
@@ -90,13 +111,15 @@ export default function AuthButton({ session }: AuthButtonProps) {
     const label = session.user.is_anonymous ? "Guest" : session.user.email ?? "Account";
     return (
       <div className="auth-button" ref={containerRef}>
-        <button type="button" className="auth-trigger" onClick={() => setOpen((o) => !o)}>
+        <button type="button" className="auth-trigger" onClick={() => setOpen((o) => !o)} aria-label="Settings and account">
           <span className="auth-avatar" aria-hidden="true">
             {session.user.is_anonymous ? "👤" : label.charAt(0).toUpperCase()}
           </span>
         </button>
         {open && (
           <div className="auth-dropdown">
+            <TextSizeControl />
+            <div className="auth-settings-divider" />
             <p className="auth-current-user">{label}</p>
             {session.user.is_anonymous && (
               <p className="auth-guest-note">Browsing as a guest — your reading spot is saved, but only in this browser.</p>
@@ -112,7 +135,7 @@ export default function AuthButton({ session }: AuthButtonProps) {
 
   return (
     <div className="auth-button" ref={containerRef}>
-      <button type="button" className="auth-trigger auth-trigger-loggedout" onClick={() => setOpen((o) => !o)} aria-label="Log in or sign up">
+      <button type="button" className="auth-trigger auth-trigger-loggedout" onClick={() => setOpen((o) => !o)} aria-label="Settings, log in, or sign up">
         <span className="auth-avatar" aria-hidden="true">
           👤
         </span>
@@ -120,6 +143,8 @@ export default function AuthButton({ session }: AuthButtonProps) {
       </button>
       {open && (
         <div className="auth-dropdown">
+          <TextSizeControl />
+          <div className="auth-settings-divider" />
           <p className="auth-benefits">
             Create a free account to sync your notes, highlights, and tags — and pick up right where you left off on any
             device.

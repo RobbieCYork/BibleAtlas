@@ -78,10 +78,6 @@ const TRANSLATIONS = [
 ];
 
 const MAX_SEARCH_RESULTS = 30;
-const FONT_SCALE_MIN = 0.8;
-const FONT_SCALE_MAX = 1.8;
-const FONT_SCALE_STEP = 0.15;
-const BASE_VERSE_FONT_PX = 14;
 
 function findBookIndex(name: string): number {
   return BOOKS.findIndex((b) => b.name.toLowerCase() === name.toLowerCase());
@@ -129,11 +125,6 @@ export default function BiblePanel({
   const verseRefs = useRef<Record<number, HTMLParagraphElement | null>>({});
   const textRefs = useRef<Record<number, HTMLSpanElement | null>>({});
 
-  const [fontScale, setFontScale] = useState<number>(() => {
-    const saved = Number(localStorage.getItem("bible-font-scale"));
-    return saved >= FONT_SCALE_MIN && saved <= FONT_SCALE_MAX ? saved : 1;
-  });
-
   const [highlights, setHighlights] = useState<Highlight[]>([]);
   const [notes, setNotes] = useState<Note[]>([]);
   const [tags, setTags] = useState<Tag[]>([]);
@@ -141,14 +132,6 @@ export default function BiblePanel({
   const [popup, setPopup] = useState<PopupState | null>(null);
   const [noteDraft, setNoteDraft] = useState("");
   const [newTagName, setNewTagName] = useState("");
-
-  useEffect(() => {
-    localStorage.setItem("bible-font-scale", String(fontScale));
-  }, [fontScale]);
-
-  const changeFontScale = (delta: number) => {
-    setFontScale((s) => Math.round(Math.min(FONT_SCALE_MAX, Math.max(FONT_SCALE_MIN, s + delta)) * 10) / 10);
-  };
 
   /** Fire-and-forget save of the current reading position — failures are logged, not surfaced (saving shouldn't interrupt reading). */
   const saveProgress = (book: string, chapter: number, translationId: string) => {
@@ -752,26 +735,7 @@ export default function BiblePanel({
             </button>
           </div>
 
-          <div className="bible-font-size">
-            <button
-              type="button"
-              onClick={() => changeFontScale(-FONT_SCALE_STEP)}
-              disabled={fontScale <= FONT_SCALE_MIN}
-              aria-label="Decrease text size"
-            >
-              A⁻
-            </button>
-            <button
-              type="button"
-              onClick={() => changeFontScale(FONT_SCALE_STEP)}
-              disabled={fontScale >= FONT_SCALE_MAX}
-              aria-label="Increase text size"
-            >
-              A⁺
-            </button>
-          </div>
-
-          <div className="bible-verses" style={{ fontSize: `${BASE_VERSE_FONT_PX * fontScale}px` }}>
+          <div className="bible-verses">
             {passage.verses.map((v) => {
               const text = v.text.trim();
               const verseNotes = notesForVerse(v.verse);
@@ -794,6 +758,7 @@ export default function BiblePanel({
                   <span className="bible-verse-num">{v.verse}</span>
                   <VerseText
                     text={text}
+                    book={currentBook ?? undefined}
                     onSelectLocation={onSelectLocation}
                     onSelectPoi={onSelectPoi}
                     onSelectPerson={onSelectPerson}

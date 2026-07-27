@@ -122,7 +122,7 @@ export const people: Person[] = [
     id: "jesus-of-nazareth",
     name: "Jesus of Nazareth",
     pronunciation: "JEE-zus of NAZ-uh-reth",
-    alternateNames: ["Jesus Christ", "Jesus of Galilee", "the Nazarene", "Yeshua"],
+    alternateNames: ["Jesus", "Jesus Christ", "Christ Jesus", "Jesus of Galilee", "the Nazarene", "Yeshua"],
     tier: "major",
     role: "Teacher, Healer, and central figure of Christianity",
     summary: "A Jewish teacher and healer from Galilee whose short public ministry, execution by Roman crucifixion, and reported resurrection became the founding events of Christianity.",
@@ -297,7 +297,13 @@ export const people: Person[] = [
     id: "john-the-baptist",
     name: "John the Baptist",
     pronunciation: "jon thee BAP-tist",
-    alternateNames: ["John the Baptizer"],
+    // Bare "John" is claimed here rather than by John the Apostle: John the Baptist is referred to
+    // by the solo name "John" far more often across the Gospels (dozens of narrative mentions of his
+    // preaching, baptizing, and death) than the Apostle ever is (mostly paired as "James and John," or
+    // unnamed as "the disciple whom Jesus loved"). See the book-scoped override in verseAnnotations.ts,
+    // which redirects "John" to the Apostle specifically within Acts, where nearly every solo mention
+    // ("Peter and John") is him.
+    alternateNames: ["John the Baptizer", "John"],
     tier: "major",
     role: "Prophet and forerunner of Jesus",
     summary: "A wilderness prophet who called Israel to repentance and baptized Jesus, seen by Christians as the last of the Old Testament-style prophets and the forerunner who prepared the way for Jesus's ministry.",

@@ -106,8 +106,18 @@ function App() {
     if (isMobile && panels.map) map?.resize();
   }, [isMobile, panels.map, map]);
 
-  // Track the logged-in (or guest) session.
+  // Track the logged-in (or guest) session. Supabase's confirmation/magic-link/reset emails use the
+  // PKCE flow, which lands back here with a `?code=...` query param rather than the older `#access_
+  // token=...` hash — the client only auto-detects the hash style, so a `code` param has to be
+  // exchanged for a session explicitly or the link silently does nothing (looks "logged out" even
+  // though the email really was confirmed on Supabase's side).
   useEffect(() => {
+    const code = new URLSearchParams(window.location.search).get("code");
+    if (code) {
+      supabase.auth.exchangeCodeForSession(window.location.href).finally(() => {
+        window.history.replaceState({}, "", window.location.pathname);
+      });
+    }
     supabase.auth.getSession().then(({ data }) => setSession(data.session));
     const { data: listener } = supabase.auth.onAuthStateChange((_event, newSession) => {
       setSession(newSession);
