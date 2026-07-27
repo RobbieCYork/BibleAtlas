@@ -125,6 +125,34 @@ function App() {
     return () => listener.subscription.unsubscribe();
   }, []);
 
+  // Pending incoming friend requests — badges the Friends entry point (mobile "More" tab, desktop
+  // panel menu) so a new request is noticeable without opening the Friends panel first. Refetches
+  // live via Realtime rather than polling, since friend_requests changes are rare.
+  const [pendingFriendRequests, setPendingFriendRequests] = useState(0);
+  useEffect(() => {
+    if (!session || session.user.is_anonymous) {
+      setPendingFriendRequests(0);
+      return;
+    }
+    const userId = session.user.id;
+    const fetchCount = () => {
+      supabase
+        .from("friend_requests")
+        .select("id", { count: "exact", head: true })
+        .eq("receiver_id", userId)
+        .eq("status", "pending")
+        .then(({ count }) => setPendingFriendRequests(count ?? 0));
+    };
+    fetchCount();
+    const channel = supabase
+      .channel(`friend-requests-badge-${userId}`)
+      .on("postgres_changes", { event: "*", schema: "public", table: "friend_requests" }, fetchCount)
+      .subscribe();
+    return () => {
+      supabase.removeChannel(channel);
+    };
+  }, [session]);
+
   // Once per signed-in user, fetch their saved reading position and jump the Bible panel there.
   useEffect(() => {
     if (!session || restoredForUserId.current === session.user.id) return;
@@ -249,7 +277,7 @@ function App() {
   return (
     <div className="app-shell">
       <header className="app-header">
-        <PanelMenu panels={panels} onToggle={togglePanel} />
+        <PanelMenu panels={panels} onToggle={togglePanel} friendsBadgeCount={pendingFriendRequests} />
         <img src="/favicon.svg" className="app-logo" alt="" aria-hidden="true" />
         <h1>New Testament Biblical Atlas</h1>
         {showSearchBar && <SearchBar locations={locations} onSelect={handleSelect} />}
@@ -385,7 +413,12 @@ function App() {
         )}
       </div>
       {isMobile && (
-        <MobileTabBar active={activeMobilePanel} hasSelection={hasSelection} onSelect={setMobileActivePanel} />
+        <MobileTabBar
+          active={activeMobilePanel}
+          hasSelection={hasSelection}
+          onSelect={setMobileActivePanel}
+          friendsBadgeCount={pendingFriendRequests}
+        />
       )}
     </div>
   );

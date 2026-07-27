@@ -5,6 +5,9 @@ interface MobileTabBarProps {
   active: PanelKey;
   hasSelection: boolean;
   onSelect: (key: PanelKey) => void;
+  /** Pending incoming friend requests — badges the "More" tab and the Friends row inside it, so a
+   * new request is noticeable without opening the sheet (and then the Friends panel) first. */
+  friendsBadgeCount?: number;
 }
 
 const PINNED_TABS: { key: PanelKey; label: string; icon: string }[] = [
@@ -18,7 +21,7 @@ const PINNED_TABS: { key: PanelKey; label: string; icon: string }[] = [
  * instead, so the bar doesn't have to grow every time a new panel is added. */
 const OVERFLOW_TABS: { key: PanelKey; label: string; icon: string }[] = [{ key: "friends", label: "Friends", icon: "👥" }];
 
-export default function MobileTabBar({ active, hasSelection, onSelect }: MobileTabBarProps) {
+export default function MobileTabBar({ active, hasSelection, onSelect, friendsBadgeCount = 0 }: MobileTabBarProps) {
   const [moreOpen, setMoreOpen] = useState(false);
   const moreRef = useRef<HTMLDivElement | null>(null);
   const isOverflowActive = OVERFLOW_TABS.some((t) => t.key === active);
@@ -71,6 +74,9 @@ export default function MobileTabBar({ active, hasSelection, onSelect }: MobileT
               >
                 <span aria-hidden="true">{tab.icon}</span>
                 {tab.label}
+                {tab.key === "friends" && friendsBadgeCount > 0 && (
+                  <span className="mobile-more-item-badge">{friendsBadgeCount}</span>
+                )}
               </button>
             ))}
           </div>
@@ -84,6 +90,7 @@ export default function MobileTabBar({ active, hasSelection, onSelect }: MobileT
         >
           <span className="mobile-tab-icon" aria-hidden="true">
             ☰
+            {friendsBadgeCount > 0 && <span className="mobile-tab-dot" />}
           </span>
           <span className="mobile-tab-label">More</span>
         </button>

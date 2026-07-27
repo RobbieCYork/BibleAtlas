@@ -799,6 +799,7 @@ body.resizing-panels {
 }
 
 .panel-menu-button {
+  position: relative;
   border: 1px solid var(--border);
   background: var(--bg);
   color: var(--text);
@@ -807,6 +808,29 @@ body.resizing-panels {
   height: 38px;
   border-radius: 8px;
   cursor: pointer;
+}
+
+.panel-menu-badge {
+  position: absolute;
+  top: 2px;
+  right: 2px;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #e0392b;
+  border: 1.5px solid var(--panel-bg);
+}
+
+.panel-menu-item-badge,
+.mobile-more-item-badge {
+  margin-left: auto;
+  background: #e0392b;
+  color: #fff;
+  font-size: 11px;
+  font-weight: 600;
+  line-height: 1;
+  padding: 2px 6px;
+  border-radius: 999px;
 }
 
 .panel-menu-button:hover {

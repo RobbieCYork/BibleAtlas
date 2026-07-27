@@ -52,6 +52,23 @@ export default function FriendsPanel({ session, onClose, expand, style, hidden }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userId]);
 
+  // Live updates so a new incoming request (or the other side accepting/declining one you sent)
+  // shows up immediately — the panel stays mounted in the background (see App.tsx), so without this
+  // it could otherwise sit stale until something else happened to trigger a refetch.
+  useEffect(() => {
+    if (!userId) return;
+    const channel = supabase
+      .channel(`friend-requests-${userId}`)
+      .on("postgres_changes", { event: "*", schema: "public", table: "friend_requests" }, () => {
+        fetchRequestsAndProfiles();
+      })
+      .subscribe();
+    return () => {
+      supabase.removeChannel(channel);
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [userId]);
+
   const incomingPending = requests.filter((r) => r.receiver_id === userId && r.status === "pending");
   const outgoingPending = requests.filter((r) => r.sender_id === userId && r.status === "pending");
   const friends = requests.filter((r) => r.status === "accepted");
