@@ -7,7 +7,7 @@ interface AuthButtonProps {
   session: Session | null;
 }
 
-type Mode = "login" | "signup";
+type Mode = "login" | "signup" | "reset";
 
 /** Shared with both the logged-in and logged-out dropdown states — text size is a setting, not an
  * account action, so it lives in this menu but isn't gated on being signed in. */
@@ -183,7 +183,13 @@ export default function AuthButton({ session }: AuthButtonProps) {
     setInfo(null);
     setLoading(true);
     try {
-      if (mode === "login") {
+      if (mode === "reset") {
+        const { error: err } = await supabase.auth.resetPasswordForEmail(email, {
+          redirectTo: window.location.origin,
+        });
+        if (err) throw err;
+        setInfo("Check your email for a link to reset your password.");
+      } else if (mode === "login") {
         setRememberMe(rememberMe);
         const { error: err } = await supabase.auth.signInWithPassword({ email, password });
         if (err) throw err;
@@ -287,28 +293,42 @@ export default function AuthButton({ session }: AuthButtonProps) {
             Create a free account to sync your notes, highlights, and tags — and pick up right where you left off on any
             device.
           </p>
-          <div className="auth-mode-toggle">
+          {mode !== "reset" && (
+            <div className="auth-mode-toggle">
+              <button
+                type="button"
+                className={mode === "login" ? "active" : ""}
+                onClick={() => {
+                  setMode("login");
+                  resetForm();
+                }}
+              >
+                Log In
+              </button>
+              <button
+                type="button"
+                className={mode === "signup" ? "active" : ""}
+                onClick={() => {
+                  setMode("signup");
+                  resetForm();
+                }}
+              >
+                Sign Up
+              </button>
+            </div>
+          )}
+          {mode === "reset" && (
             <button
               type="button"
-              className={mode === "login" ? "active" : ""}
+              className="auth-back-link"
               onClick={() => {
                 setMode("login");
                 resetForm();
               }}
             >
-              Log In
+              ← Back to Log In
             </button>
-            <button
-              type="button"
-              className={mode === "signup" ? "active" : ""}
-              onClick={() => {
-                setMode("signup");
-                resetForm();
-              }}
-            >
-              Sign Up
-            </button>
-          </div>
+          )}
           <form className="auth-form" onSubmit={handleSubmit}>
             {mode === "signup" && (
               <input
@@ -328,23 +348,37 @@ export default function AuthButton({ session }: AuthButtonProps) {
               required
               autoComplete="email"
             />
-            <input
-              type="password"
-              placeholder="Password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              required
-              minLength={6}
-              autoComplete={mode === "login" ? "current-password" : "new-password"}
-            />
+            {mode !== "reset" && (
+              <input
+                type="password"
+                placeholder="Password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                required
+                minLength={6}
+                autoComplete={mode === "login" ? "current-password" : "new-password"}
+              />
+            )}
             {mode === "login" && (
-              <label className="auth-remember-me">
-                <input type="checkbox" checked={rememberMe} onChange={(e) => setRememberMeChecked(e.target.checked)} />
-                Remember me
-              </label>
+              <div className="auth-form-extras">
+                <label className="auth-remember-me">
+                  <input type="checkbox" checked={rememberMe} onChange={(e) => setRememberMeChecked(e.target.checked)} />
+                  Remember me
+                </label>
+                <button
+                  type="button"
+                  className="auth-forgot-link"
+                  onClick={() => {
+                    setMode("reset");
+                    resetForm();
+                  }}
+                >
+                  Forgot password?
+                </button>
+              </div>
             )}
             <button type="submit" disabled={loading}>
-              {loading ? "…" : mode === "login" ? "Log In" : "Sign Up"}
+              {loading ? "…" : mode === "login" ? "Log In" : mode === "signup" ? "Sign Up" : "Send Reset Link"}
             </button>
           </form>
           {error && <p className="auth-status auth-error">{error}</p>}

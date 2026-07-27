@@ -1075,6 +1075,28 @@ body.resizing-panels {
   cursor: pointer;
 }
 
+.auth-form-extras {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.auth-forgot-link,
+.auth-back-link {
+  border: none;
+  background: none;
+  color: var(--accent);
+  font-size: 12px;
+  cursor: pointer;
+  padding: 0;
+}
+
+.auth-back-link {
+  align-self: flex-start;
+  margin-bottom: 10px;
+}
+
 .auth-form button[type="submit"] {
   border: 1px solid var(--accent);
   background: var(--accent);

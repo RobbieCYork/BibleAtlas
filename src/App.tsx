@@ -16,6 +16,7 @@ import MobileTabBar from "./components/MobileTabBar";
 import ResizeHandle from "./components/ResizeHandle";
 import AuthButton from "./components/AuthButton";
 import DisplayNameGate from "./components/DisplayNameGate";
+import ResetPasswordGate from "./components/ResetPasswordGate";
 import { supabase } from "./lib/supabase";
 import { locations } from "./data/locations";
 import { pois } from "./data/pois";
@@ -59,6 +60,7 @@ function App() {
   const [notesWidth] = useState(380);
   const [friendsWidth] = useState(380);
   const [session, setSession] = useState<Session | null>(null);
+  const [passwordRecovery, setPasswordRecovery] = useState(false);
   const [restoreTranslation, setRestoreTranslation] = useState<string | undefined>(undefined);
   // Avoids re-yanking the reader back to their saved spot on every token refresh — only restore
   // once per signed-in user per app load.
@@ -120,8 +122,9 @@ function App() {
       });
     }
     supabase.auth.getSession().then(({ data }) => setSession(data.session));
-    const { data: listener } = supabase.auth.onAuthStateChange((_event, newSession) => {
+    const { data: listener } = supabase.auth.onAuthStateChange((event, newSession) => {
       setSession(newSession);
+      if (event === "PASSWORD_RECOVERY") setPasswordRecovery(true);
     });
     return () => listener.subscription.unsubscribe();
   }, []);
@@ -420,7 +423,8 @@ function App() {
 
   return (
     <div className="app-shell">
-      {needsDisplayName && session && (
+      {passwordRecovery && session && <ResetPasswordGate onDone={() => setPasswordRecovery(false)} />}
+      {!passwordRecovery && needsDisplayName && session && (
         <DisplayNameGate userId={session.user.id} onSaved={() => setNeedsDisplayName(false)} />
       )}
       <header className="app-header">
