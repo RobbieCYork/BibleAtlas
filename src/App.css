@@ -2,6 +2,7 @@
   display: flex;
   flex-direction: column;
   height: 100svh;
+  height: var(--app-height, 100svh);
 }
 
 .app-header {
@@ -2648,11 +2649,12 @@ body.resizing-panels {
 }
 
 .message-bubble {
+  position: relative;
   max-width: 78%;
   background: var(--bg);
   border: 1px solid var(--border);
   border-radius: 14px;
-  padding: 8px 12px;
+  padding: 8px 28px 8px 12px;
   font-size: 13px;
   line-height: 1.4;
   white-space: pre-wrap;
@@ -2663,6 +2665,65 @@ body.resizing-panels {
   background: var(--accent);
   color: #fff;
   border-color: var(--accent);
+}
+
+/* Always faintly visible (not hover-only) so it's discoverable on touch devices, not just desktop. */
+.message-pin-toggle {
+  position: absolute;
+  top: 4px;
+  right: 4px;
+  border: none;
+  background: none;
+  padding: 2px;
+  font-size: 11px;
+  line-height: 1;
+  cursor: pointer;
+  opacity: 0.35;
+  filter: grayscale(1);
+}
+
+.message-pin-toggle:hover {
+  opacity: 0.8;
+}
+
+.message-pin-toggle-active {
+  opacity: 1;
+  filter: none;
+}
+
+.pinned-message-banner {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 12px;
+  background: var(--bg);
+  border-bottom: 1px solid var(--border);
+  font-size: 12px;
+}
+
+.pinned-message-icon {
+  flex-shrink: 0;
+}
+
+.pinned-message-text {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  color: var(--text-muted);
+}
+
+.pinned-message-banner button {
+  flex-shrink: 0;
+  border: none;
+  background: none;
+  color: var(--accent);
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  padding: 2px 4px;
 }
 
 .message-form {

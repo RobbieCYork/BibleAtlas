@@ -301,6 +301,18 @@ export default function FriendsPanel({
     }
   };
 
+  /** Pinning is one-per-conversation server-side (pin_message unpins whatever else was pinned), so
+   * the optimistic update mirrors that by clearing every other message's pinned flag locally too. */
+  const handleTogglePin = async (message: Message) => {
+    if (message.pinned) {
+      await supabase.rpc("unpin_message", { p_message_id: message.id });
+      setMessages((prev) => prev.map((m) => (m.id === message.id ? { ...m, pinned: false } : m)));
+    } else {
+      await supabase.rpc("pin_message", { p_message_id: message.id });
+      setMessages((prev) => prev.map((m) => ({ ...m, pinned: m.id === message.id })));
+    }
+  };
+
   if (view === "groups") {
     return (
       <GroupsPanel
@@ -320,6 +332,7 @@ export default function FriendsPanel({
 
   if (activeFriendId) {
     const friendProfile = profiles[activeFriendId];
+    const pinnedMessage = messages.find((m) => m.pinned);
     return (
       <div className={`friends-panel ${expand ? "panel-expand" : ""} ${hidden ? "bible-panel-hidden" : ""}`} style={expand ? undefined : style}>
         <div className="bible-panel-header no-print">
@@ -331,11 +344,31 @@ export default function FriendsPanel({
             ×
           </button>
         </div>
+        {pinnedMessage && (
+          <div className="pinned-message-banner">
+            <span className="pinned-message-icon" aria-hidden="true">📌</span>
+            <span className="pinned-message-text">{pinnedMessage.body}</span>
+            <button type="button" onClick={() => handleTogglePin(pinnedMessage)} aria-label="Unpin message">
+              Unpin
+            </button>
+          </div>
+        )}
         <div className="message-list">
           {messages.length === 0 && <p className="comment-status">No messages yet — say hello!</p>}
           {messages.map((m) => (
             <div key={m.id} className={`message-bubble-row ${m.sender_id === userId ? "message-own" : ""}`}>
-              <div className="message-bubble">{m.body}</div>
+              <div className="message-bubble">
+                {m.body}
+                <button
+                  type="button"
+                  className={`message-pin-toggle ${m.pinned ? "message-pin-toggle-active" : ""}`}
+                  onClick={() => handleTogglePin(m)}
+                  aria-label={m.pinned ? "Unpin message" : "Pin message"}
+                  title={m.pinned ? "Unpin message" : "Pin message"}
+                >
+                  📌
+                </button>
+              </div>
             </div>
           ))}
           <div ref={messagesEndRef} />

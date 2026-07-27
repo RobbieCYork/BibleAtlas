@@ -134,6 +134,7 @@ export interface Message {
   body: string;
   created_at: string;
   read_at: string | null;
+  pinned: boolean;
 }
 
 export type GroupRole = "owner" | "admin" | "member";
@@ -151,6 +152,7 @@ export interface GroupMessage {
   sender_id: string;
   body: string;
   created_at: string;
+  pinned: boolean;
 }
 
 export type GroupJoinRequestStatus = "pending" | "approved" | "declined";

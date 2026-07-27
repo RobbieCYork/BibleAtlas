@@ -225,6 +225,17 @@ export default function GroupsPanel({
     }
   };
 
+  /** Same one-pin-per-conversation mirroring as FriendsPanel's handleTogglePin. */
+  const handleToggleGroupPin = async (message: GroupMessage) => {
+    if (message.pinned) {
+      await supabase.rpc("unpin_group_message", { p_message_id: message.id });
+      setGroupMessages((prev) => prev.map((m) => (m.id === message.id ? { ...m, pinned: false } : m)));
+    } else {
+      await supabase.rpc("pin_group_message", { p_message_id: message.id });
+      setGroupMessages((prev) => prev.map((m) => ({ ...m, pinned: m.id === message.id })));
+    }
+  };
+
   const fetchFriendOptions = async () => {
     if (!userId) return;
     const { data } = await supabase
@@ -416,6 +427,23 @@ export default function GroupsPanel({
 
         {detailTab === "chat" && (
           <>
+            {(() => {
+              const pinnedMessage = groupMessages.find((m) => m.pinned);
+              if (!pinnedMessage) return null;
+              const pinnedSender = profiles[pinnedMessage.sender_id];
+              return (
+                <div className="pinned-message-banner">
+                  <span className="pinned-message-icon" aria-hidden="true">📌</span>
+                  <span className="pinned-message-text">
+                    {pinnedMessage.sender_id !== userId && pinnedSender && `${displayFor(pinnedSender)}: `}
+                    {pinnedMessage.body}
+                  </span>
+                  <button type="button" onClick={() => handleToggleGroupPin(pinnedMessage)} aria-label="Unpin message">
+                    Unpin
+                  </button>
+                </div>
+              );
+            })()}
             <div className="message-list">
               {groupMessages.length === 0 && <p className="comment-status">No messages yet — say hello!</p>}
               {groupMessages.map((m) => {
@@ -425,7 +453,18 @@ export default function GroupsPanel({
                   <div key={m.id} className={`message-bubble-row ${own ? "message-own" : ""}`}>
                     <div className="group-message-stack">
                       {!own && <span className="group-message-sender">{senderProfile ? displayFor(senderProfile) : "Someone"}</span>}
-                      <div className="message-bubble">{m.body}</div>
+                      <div className="message-bubble">
+                        {m.body}
+                        <button
+                          type="button"
+                          className={`message-pin-toggle ${m.pinned ? "message-pin-toggle-active" : ""}`}
+                          onClick={() => handleToggleGroupPin(m)}
+                          aria-label={m.pinned ? "Unpin message" : "Pin message"}
+                          title={m.pinned ? "Unpin message" : "Pin message"}
+                        >
+                          📌
+                        </button>
+                      </div>
                     </div>
                   </div>
                 );
