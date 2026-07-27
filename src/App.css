@@ -1217,11 +1217,17 @@ body.resizing-panels {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  gap: 8px;
   margin-bottom: 12px;
 }
 
 .bible-panel-header h3 {
   font-size: 16px;
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 /* --- Book / chapter / verse navigation --- */
@@ -2542,6 +2548,17 @@ body.resizing-panels {
   background: var(--accent-bg);
 }
 
+/* The name/email span in friend-request and friends-list rows — truncates instead of overflowing
+   past its neighboring Accept/Decline buttons or "Message →" hint, which becomes a real problem at
+   larger text sizes with a long email address (display names are usually short enough not to need it,
+   but there's no guarantee, and pre-display-name accounts still show raw email here). */
+.friends-list-item > span:first-child {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
 .friends-message-hint {
   color: var(--accent);
   font-size: 12px;
@@ -2558,6 +2575,9 @@ body.resizing-panels {
 
 .message-preview-name {
   font-weight: 600;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .message-preview-text {
