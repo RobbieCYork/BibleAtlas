@@ -763,15 +763,6 @@ body.resizing-panels {
   }
 }
 
-.then-now-label {
-  display: block;
-  font-size: 11px;
-  text-transform: uppercase;
-  letter-spacing: 0.04em;
-  color: var(--text-muted);
-  margin-bottom: 6px;
-}
-
 .then-now-buttons {
   display: flex;
   border: 1px solid var(--border);
@@ -1320,6 +1311,96 @@ body.resizing-panels {
   flex: 1;
 }
 
+/* --- Inline picker (custom dropdown standing in for a native <select> — see InlinePicker.tsx for
+   why: it lets a selection here open the NEXT picker in a chain, e.g. Book -> Chapter -> Verse) --- */
+
+.inline-picker {
+  position: relative;
+  min-width: 0;
+}
+
+.bible-nav-picker {
+  flex: 2;
+}
+
+.bible-nav-picker-narrow {
+  flex: 1;
+}
+
+.inline-picker-trigger {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 6px;
+  padding: 8px 8px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  font-size: 13px;
+  background: var(--bg);
+  color: var(--text);
+  cursor: pointer;
+  text-align: left;
+}
+
+.inline-picker-trigger:disabled {
+  opacity: 0.5;
+  cursor: default;
+}
+
+.inline-picker-trigger span:first-child {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.inline-picker-placeholder {
+  color: var(--text-muted);
+}
+
+.inline-picker-caret {
+  flex-shrink: 0;
+  font-size: 10px;
+  color: var(--text-muted);
+}
+
+.inline-picker-list {
+  position: absolute;
+  top: calc(100% + 4px);
+  left: 0;
+  right: 0;
+  z-index: 20;
+  max-height: 260px;
+  overflow-y: auto;
+  background: var(--panel-bg);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.18);
+  padding: 4px;
+}
+
+.inline-picker-list li button {
+  display: block;
+  width: 100%;
+  text-align: left;
+  padding: 8px 10px;
+  border: none;
+  background: none;
+  color: var(--text);
+  font-size: 13px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.inline-picker-list li button:hover {
+  background: var(--accent-bg);
+}
+
+.inline-picker-list li button.active {
+  background: var(--accent);
+  color: #fff;
+}
+
 /* --- Keyword search --- */
 
 .bible-keyword-search {
@@ -1460,6 +1541,100 @@ body.resizing-panels {
 .bible-passage-header h4 {
   margin-bottom: 0;
   text-align: center;
+}
+
+/* --- Book introduction (shown from the chapter picker's "Introduction" entry) --- */
+
+.book-intro h4 {
+  font-size: 16px;
+  text-align: center;
+  margin-bottom: 14px;
+}
+
+.book-intro h5 {
+  font-size: 13px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--text-muted);
+  margin: 18px 0 8px;
+}
+
+.book-intro p {
+  font-size: 14px;
+  line-height: 1.6;
+  margin-bottom: 10px;
+}
+
+.book-intro-facts {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 10px 12px;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  margin-bottom: 8px;
+}
+
+.book-intro-fact {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+.book-intro-fact-label {
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--accent);
+}
+
+.book-intro-key-passages {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.book-intro-key-passages button {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  width: 100%;
+  text-align: left;
+  padding: 8px 10px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--bg);
+  color: var(--text);
+  font-size: 13px;
+  cursor: pointer;
+}
+
+.book-intro-key-passages button:hover {
+  background: var(--accent-bg);
+  border-color: var(--accent);
+}
+
+.book-intro-key-passage-ref {
+  flex-shrink: 0;
+  color: var(--accent);
+  font-weight: 600;
+  font-size: 12px;
+}
+
+.book-intro-manuscripts {
+  padding-left: 18px;
+  margin: 0;
+}
+
+.book-intro-manuscripts li {
+  font-size: 13px;
+  line-height: 1.6;
+  margin-bottom: 8px;
 }
 
 .bible-chapter-nav-small {
@@ -1753,10 +1928,6 @@ body.resizing-panels {
     right: 12px;
     bottom: 16px;
     padding: 8px 10px;
-  }
-
-  .then-now-label {
-    display: none;
   }
 
   .then-now-buttons button {

@@ -2,6 +2,8 @@ import { useEffect, useRef, useState } from "react";
 import VerseText from "./VerseText";
 import type { ClippedHighlight } from "./VerseText";
 import TagPicker from "./TagPicker";
+import InlinePicker, { type PickerHandle } from "./InlinePicker";
+import BookIntroView from "./BookIntroView";
 import { BOOKS } from "../data/bibleBooks";
 import { supabase, HIGHLIGHT_COLORS, type HighlightColor, type Highlight, type Note, type Tag, type VerseTag } from "../lib/supabase";
 import { getTextOffsetInRoot } from "../lib/domTextOffset";
@@ -116,6 +118,12 @@ export default function BiblePanel({
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [boundaryMessage, setBoundaryMessage] = useState<string | null>(null);
+  /** True while showing the selected book's Introduction (an entry in the chapter picker) instead
+   * of a loaded chapter. currentChapter/passage are left untouched while true, so leaving the intro
+   * (picking a real chapter, or a key-passage link) can resume exactly where reading left off. */
+  const [showIntro, setShowIntro] = useState(false);
+  const chapterPickerRef = useRef<PickerHandle>(null);
+  const versePickerRef = useRef<PickerHandle>(null);
 
   const [searchQuery, setSearchQuery] = useState("");
   const [searchResults, setSearchResults] = useState<SearchHit[] | null>(null);
@@ -220,6 +228,7 @@ export default function BiblePanel({
   const loadReference = async (rawRef: string, translationId: string) => {
     const trimmed = rawRef.trim();
     if (!trimmed) return;
+    setShowIntro(false);
     setError(null);
     setBoundaryMessage(null);
     const parsed = parseBookChapter(trimmed);
@@ -491,14 +500,38 @@ export default function BiblePanel({
     }
   };
 
-  const handleBookChange = (bookName: string) => {
+  /** Picking a book jumps straight to chapter 1 (existing behavior) and immediately opens the
+   * chapter picker so the user can pick a different chapter right away without an extra tap —
+   * setting currentBook synchronously here (loadChapter will redundantly set it again once its
+   * fetch resolves) is what lets the chapter picker's option list be correct before that fetch
+   * finishes, instead of still showing the previous book's chapter count. */
+  const handleBookSelect = (bookName: string) => {
     if (!bookName) return;
+    setCurrentBook(bookName);
+    setShowIntro(false);
     loadChapter(bookName, 1, translation);
+    chapterPickerRef.current?.open();
   };
 
-  const handleChapterChange = (chapterNum: number) => {
+  /** Picking "Introduction" shows the book intro instead of loading a chapter. Picking a real
+   * chapter loads it and, once loaded, opens the verse picker (chained the same way as the book
+   * picker above) — this has to wait for the fetch since verse counts aren't known until then. */
+  const handleChapterSelect = async (value: string) => {
+    if (value === "intro") {
+      setShowIntro(true);
+      return;
+    }
     if (!currentBook) return;
-    loadChapter(currentBook, chapterNum, translation);
+    setShowIntro(false);
+    const ok = await loadChapter(currentBook, Number(value), translation);
+    if (ok) versePickerRef.current?.open();
+  };
+
+  const handleIntroJumpToChapter = async (chapter: number, verse?: number) => {
+    if (!currentBook) return;
+    setShowIntro(false);
+    const ok = await loadChapter(currentBook, chapter, translation);
+    if (ok && verse) setPendingScrollVerse(verse);
   };
 
   const handleVerseJump = (verseNum: number) => {
@@ -600,57 +633,44 @@ export default function BiblePanel({
       <p className="bible-status">Pick a book below, or search for a word or phrase.</p>
 
       <div className="bible-nav">
-        <select
-          className="bible-nav-select"
-          aria-label="Book"
+        <InlinePicker
+          ariaLabel="Book"
+          placeholder="Book…"
           value={currentBook ?? ""}
-          onChange={(e) => handleBookChange(e.target.value)}
-        >
-          <option value="" disabled>
-            Book…
-          </option>
-          {BOOKS.map((b) => (
-            <option key={b.name} value={b.name}>
-              {b.name}
-            </option>
-          ))}
-        </select>
-        <select
-          className="bible-nav-select bible-nav-select-narrow"
-          aria-label="Chapter"
-          value={currentChapter ?? ""}
-          onChange={(e) => handleChapterChange(Number(e.target.value))}
+          onSelect={handleBookSelect}
+          options={BOOKS.map((b) => ({ value: b.name, label: b.name }))}
+          className="bible-nav-picker"
+        />
+        <InlinePicker
+          ref={chapterPickerRef}
+          ariaLabel="Chapter"
+          placeholder="Ch."
+          value={showIntro ? "intro" : currentChapter !== null ? String(currentChapter) : ""}
+          onSelect={handleChapterSelect}
           disabled={!currentBookInfo}
-        >
-          <option value="" disabled>
-            Ch.
-          </option>
-          {currentBookInfo &&
-            Array.from({ length: currentBookInfo.chapters }, (_, i) => i + 1).map((n) => (
-              <option key={n} value={n}>
-                {n}
-              </option>
-            ))}
-        </select>
-        <select
-          key={currentChapter ?? "no-chapter"}
-          className="bible-nav-select bible-nav-select-narrow"
-          aria-label="Jump to verse"
-          defaultValue=""
-          onChange={(e) => {
-            if (e.target.value) handleVerseJump(Number(e.target.value));
-          }}
+          className="bible-nav-picker bible-nav-picker-narrow"
+          options={
+            currentBookInfo
+              ? [
+                  { value: "intro", label: "📖 Introduction" },
+                  ...Array.from({ length: currentBookInfo.chapters }, (_, i) => ({
+                    value: String(i + 1),
+                    label: String(i + 1),
+                  })),
+                ]
+              : []
+          }
+        />
+        <InlinePicker
+          ref={versePickerRef}
+          ariaLabel="Jump to verse"
+          placeholder="Verse…"
+          value=""
+          onSelect={(v) => handleVerseJump(Number(v))}
           disabled={!passage}
-        >
-          <option value="" disabled>
-            Verse…
-          </option>
-          {passage?.verses.map((v) => (
-            <option key={v.verse} value={v.verse}>
-              {v.verse}
-            </option>
-          ))}
-        </select>
+          className="bible-nav-picker bible-nav-picker-narrow"
+          options={passage?.verses.map((v) => ({ value: String(v.verse), label: String(v.verse) })) ?? []}
+        />
       </div>
 
       <select
@@ -709,7 +729,11 @@ export default function BiblePanel({
       {loading && <p className="bible-status">Loading…</p>}
       {error && <p className="bible-status bible-error">{error}</p>}
 
-      {passage && !loading && !error && !searchResults && (
+      {showIntro && currentBook && !searchResults && (
+        <BookIntroView book={currentBook} onJumpToChapter={handleIntroJumpToChapter} />
+      )}
+
+      {!showIntro && passage && !loading && !error && !searchResults && (
         <div className="bible-passage">
           <div className="bible-passage-header">
             <button

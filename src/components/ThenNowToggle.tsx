@@ -13,7 +13,6 @@ const MODES: { id: MapMode; label: string }[] = [
 export default function ThenNowToggle({ mode, onChange }: ThenNowToggleProps) {
   return (
     <div className="then-now-toggle">
-      <span className="then-now-label">Then &amp; Now</span>
       <div className="then-now-buttons">
         {MODES.map((m) => (
           <button
