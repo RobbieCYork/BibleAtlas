@@ -2736,3 +2736,228 @@ body.resizing-panels {
   opacity: 0.6;
   cursor: default;
 }
+
+/* --- Friends/Messages/Groups view switcher --- */
+
+.friends-view-switcher {
+  display: flex;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  overflow: hidden;
+  margin-bottom: 14px;
+}
+
+.friends-view-switcher button {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  border: none;
+  background: none;
+  color: var(--text-muted);
+  font: inherit;
+  font-size: 12px;
+  font-weight: 600;
+  padding: 8px 4px;
+  cursor: pointer;
+  border-right: 1px solid var(--border);
+}
+
+.friends-view-switcher button:last-child {
+  border-right: none;
+}
+
+.friends-view-switcher button.active {
+  background: var(--accent);
+  color: #fff;
+}
+
+.friends-view-switcher-badge {
+  background: #e0392b;
+  color: #fff;
+  font-size: 10px;
+  font-weight: 700;
+  line-height: 1;
+  padding: 2px 5px;
+  border-radius: 999px;
+}
+
+/* --- Groups --- */
+
+.group-detail-tabs {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.group-detail-tabs button {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  border: 1px solid var(--border);
+  background: var(--bg);
+  color: var(--text);
+  border-radius: 8px;
+  padding: 8px;
+  font: inherit;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.group-detail-tabs button.active {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #fff;
+}
+
+.group-message-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  max-width: 78%;
+}
+
+.message-own .group-message-stack {
+  align-items: flex-end;
+}
+
+.group-message-stack .message-bubble {
+  max-width: none;
+}
+
+.group-message-sender {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--text-muted);
+  padding: 0 4px;
+}
+
+.group-members-scroll {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+}
+
+.group-info-display {
+  margin-bottom: 14px;
+}
+
+.group-description {
+  font-size: 13px;
+  color: var(--text-muted);
+  line-height: 1.4;
+  margin: 0 0 10px;
+}
+
+.group-info-edit-form {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 14px;
+}
+
+.group-info-edit-form input,
+.group-info-edit-form textarea {
+  padding: 8px 10px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  font: inherit;
+  font-size: 13px;
+  background: var(--bg);
+  color: var(--text);
+  resize: vertical;
+}
+
+.group-info-edit-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.group-info-edit-actions button {
+  border: 1px solid var(--accent);
+  background: var(--accent);
+  color: #fff;
+  border-radius: 8px;
+  padding: 7px 14px;
+  font-size: 13px;
+  cursor: pointer;
+}
+
+.group-role-badge {
+  margin-left: 8px;
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  color: var(--accent);
+  border: 1px solid var(--accent);
+  border-radius: 999px;
+  padding: 1px 6px;
+}
+
+.group-member-item {
+  align-items: flex-start;
+}
+
+.group-danger-zone {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 16px;
+  padding-top: 14px;
+  border-top: 1px solid var(--border);
+}
+
+.group-danger-zone button {
+  width: 100%;
+}
+
+.group-create-form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.group-create-form input,
+.group-create-form textarea {
+  padding: 9px 12px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  font: inherit;
+  font-size: 14px;
+  background: var(--bg);
+  color: var(--text);
+  resize: vertical;
+}
+
+.group-create-form > button[type="submit"] {
+  border: 1px solid var(--accent);
+  background: var(--accent);
+  color: #fff;
+  border-radius: 8px;
+  padding: 10px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.group-create-form > button[type="submit"]:disabled {
+  opacity: 0.6;
+  cursor: default;
+}
+
+.group-friend-picker li {
+  cursor: pointer;
+}
+
+.group-friend-picker label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  width: 100%;
+}

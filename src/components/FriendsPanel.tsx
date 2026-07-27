@@ -1,19 +1,13 @@
 import { useEffect, useRef, useState } from "react";
 import type { Session } from "@supabase/supabase-js";
-import { supabase, type FriendRequest, type Message, type Profile } from "../lib/supabase";
-
-type FriendsView = "friends" | "messages";
+import { supabase, displayFor, type FriendRequest, type Message, type Profile } from "../lib/supabase";
+import GroupsPanel from "./GroupsPanel";
+import ViewSwitcher, { type FriendsView } from "./ViewSwitcher";
 
 interface ConversationSummary {
   friendId: string;
   lastMessage: Message | null;
   unreadCount: number;
-}
-
-/** Falls back to email for the small number of accounts that existed before display names did and
- * haven't logged in yet to set one (see DisplayNameGate) — display_name is otherwise required. */
-function displayFor(profile: Profile): string {
-  return profile.display_name ?? profile.email;
 }
 
 interface FriendsPanelProps {
@@ -22,14 +16,36 @@ interface FriendsPanelProps {
   expand?: boolean;
   style?: React.CSSProperties;
   hidden?: boolean;
-  /** Which top-level list to show — set by the mobile "More" sheet's Friends vs Messages entries. */
+  /** Which top-level list to show — set by the mobile "More" sheet's Friends/Messages/Groups entries. */
   openView?: FriendsView;
   /** Increments every time the panel is (re-)opened from the nav, so re-tapping the same entry while
    * this panel is already open still jumps back to that view's list instead of a no-op. */
   openViewNonce?: number;
+  /** Requests a view change from the parent — the in-panel switcher (rendered here and in
+   * GroupsPanel) calls this so Messages/Groups are reachable on desktop too, where there's no mobile
+   * "More" sheet to navigate from. Routes back through the parent (rather than a local setView) so
+   * openView/openViewNonce stay the single source of truth either way it was triggered. */
+  onSelectView?: (view: FriendsView) => void;
+  /** Badge counts for the in-panel view switcher — same numbers the mobile "More" sheet shows,
+   * passed down from App.tsx so both surfaces agree. */
+  friendsBadgeCount?: number;
+  messagesBadgeCount?: number;
+  groupsBadgeCount?: number;
 }
 
-export default function FriendsPanel({ session, onClose, expand, style, hidden, openView, openViewNonce }: FriendsPanelProps) {
+export default function FriendsPanel({
+  session,
+  onClose,
+  expand,
+  style,
+  hidden,
+  openView,
+  openViewNonce,
+  onSelectView,
+  friendsBadgeCount,
+  messagesBadgeCount,
+  groupsBadgeCount,
+}: FriendsPanelProps) {
   const userId = session?.user.id;
   const canUseFriends = !!session && !session.user.is_anonymous;
 
@@ -285,6 +301,23 @@ export default function FriendsPanel({ session, onClose, expand, style, hidden, 
     }
   };
 
+  if (view === "groups") {
+    return (
+      <GroupsPanel
+        session={session}
+        onClose={onClose}
+        expand={expand}
+        style={style}
+        hidden={hidden}
+        openViewNonce={openViewNonce}
+        onSelectView={onSelectView}
+        friendsBadgeCount={friendsBadgeCount}
+        messagesBadgeCount={messagesBadgeCount}
+        groupsBadgeCount={groupsBadgeCount}
+      />
+    );
+  }
+
   if (activeFriendId) {
     const friendProfile = profiles[activeFriendId];
     return (
@@ -331,6 +364,13 @@ export default function FriendsPanel({ session, onClose, expand, style, hidden, 
           ×
         </button>
       </div>
+      <ViewSwitcher
+        active={view}
+        onSelectView={onSelectView}
+        friendsBadge={friendsBadgeCount}
+        messagesBadge={messagesBadgeCount}
+        groupsBadge={groupsBadgeCount}
+      />
 
       {!canUseFriends && (
         <p className="bible-status no-print">

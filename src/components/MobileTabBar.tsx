@@ -1,19 +1,22 @@
 import { useEffect, useRef, useState } from "react";
 import type { PanelKey } from "./PanelMenu";
 
-type FriendsView = "friends" | "messages";
+type FriendsView = "friends" | "messages" | "groups";
 
 interface MobileTabBarProps {
   active: PanelKey;
   hasSelection: boolean;
-  /** `view` is only meaningful for the "friends" key — it tells the panel which of its two
-   * top-level lists (friend requests/management vs. conversations) to jump to. */
+  /** `view` is only meaningful for the "friends" key — it tells the panel which of its three
+   * top-level lists (friend requests/management, 1:1 conversations, or groups) to jump to. */
   onSelect: (key: PanelKey, view?: FriendsView) => void;
   /** Pending incoming friend requests — badges the "More" tab and the Friends row inside it, so a
    * new request is noticeable without opening the sheet (and then the Friends panel) first. */
   friendsBadgeCount?: number;
-  /** Unread messages — badges the "More" tab and the Messages row the same way. */
+  /** Unread 1:1 messages — badges the "More" tab and the Messages row the same way. */
   messagesBadgeCount?: number;
+  /** Unread group messages + pending join requests you can approve — badges the "More" tab and the
+   * Groups row. */
+  groupsBadgeCount?: number;
 }
 
 const PINNED_TABS: { key: PanelKey; label: string; icon: string }[] = [
@@ -24,11 +27,12 @@ const PINNED_TABS: { key: PanelKey; label: string; icon: string }[] = [
 ];
 
 /** Panels that don't get their own pinned bottom-bar slot — reachable through the "More" tab
- * instead, so the bar doesn't have to grow every time a new panel is added. Friends and Messages
- * both open the same underlying "friends" panel, just defaulted to a different internal view. */
+ * instead, so the bar doesn't have to grow every time a new panel is added. Friends, Messages, and
+ * Groups all open the same underlying "friends" panel, just defaulted to a different internal view. */
 const OVERFLOW_TABS: { key: PanelKey; view?: FriendsView; label: string; icon: string }[] = [
   { key: "friends", view: "friends", label: "Friends", icon: "👥" },
   { key: "friends", view: "messages", label: "Messages", icon: "💬" },
+  { key: "friends", view: "groups", label: "Groups", icon: "👪" },
 ];
 
 export default function MobileTabBar({
@@ -37,11 +41,12 @@ export default function MobileTabBar({
   onSelect,
   friendsBadgeCount = 0,
   messagesBadgeCount = 0,
+  groupsBadgeCount = 0,
 }: MobileTabBarProps) {
   const [moreOpen, setMoreOpen] = useState(false);
   const moreRef = useRef<HTMLDivElement | null>(null);
   const isOverflowActive = OVERFLOW_TABS.some((t) => t.key === active);
-  const totalBadgeCount = friendsBadgeCount + messagesBadgeCount;
+  const totalBadgeCount = friendsBadgeCount + messagesBadgeCount + groupsBadgeCount;
 
   useEffect(() => {
     if (!moreOpen) return;
@@ -51,6 +56,12 @@ export default function MobileTabBar({
     document.addEventListener("mousedown", handleClick);
     return () => document.removeEventListener("mousedown", handleClick);
   }, [moreOpen]);
+
+  const badgeFor = (view?: FriendsView) => {
+    if (view === "messages") return messagesBadgeCount;
+    if (view === "groups") return groupsBadgeCount;
+    return friendsBadgeCount;
+  };
 
   return (
     <nav className="mobile-tab-bar">
@@ -80,7 +91,7 @@ export default function MobileTabBar({
         {moreOpen && (
           <div className="mobile-more-sheet">
             {OVERFLOW_TABS.map((tab) => {
-              const badgeCount = tab.view === "messages" ? messagesBadgeCount : friendsBadgeCount;
+              const badgeCount = badgeFor(tab.view);
               return (
                 <button
                   key={tab.label}

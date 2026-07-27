@@ -159,6 +159,29 @@ function App() {
       });
   }, [session]);
 
+  // Same pending-through-signup persistence as the friend invite link above, for a group's "Copy
+  // invite link" (?joinGroup=<group id>) — except this always creates a pending join_request rather
+  // than membership outright, since a group invite link might get forwarded around and shouldn't let
+  // just anyone in without an admin's OK.
+  useEffect(() => {
+    const groupId = new URLSearchParams(window.location.search).get("joinGroup");
+    if (groupId) {
+      localStorage.setItem("pending-join-group", groupId);
+      const url = new URL(window.location.href);
+      url.searchParams.delete("joinGroup");
+      window.history.replaceState({}, "", url.pathname + url.search);
+    }
+  }, []);
+
+  useEffect(() => {
+    if (!session || session.user.is_anonymous) return;
+    const groupId = localStorage.getItem("pending-join-group");
+    if (!groupId) return;
+    supabase.rpc("request_to_join_group", { p_group_id: groupId }).then(() => {
+      localStorage.removeItem("pending-join-group");
+    });
+  }, [session]);
+
   // Pending incoming friend requests — badges the Friends entry point (mobile "More" tab, desktop
   // panel menu) so a new request is noticeable without opening the Friends panel first. Refetches
   // live via Realtime rather than polling, since friend_requests changes are rare.
@@ -215,11 +238,44 @@ function App() {
     };
   }, [session]);
 
+  // Unread group messages plus pending join requests you can approve — same badging approach again,
+  // combined into one number since both are "something in Groups needs your attention" the same way
+  // an unread message and an incoming friend request both mean "something in Friends needs you."
+  const [groupsBadgeCount, setGroupsBadgeCount] = useState(0);
+  useEffect(() => {
+    if (!session || session.user.is_anonymous) {
+      setGroupsBadgeCount(0);
+      return;
+    }
+    const userId = session.user.id;
+    const fetchCount = () => {
+      Promise.all([supabase.rpc("count_unread_group_messages"), supabase.rpc("count_pending_group_join_requests")]).then(
+        ([unread, pending]) => setGroupsBadgeCount((unread.data ?? 0) + (pending.data ?? 0))
+      );
+    };
+    fetchCount();
+    const channel = supabase
+      .channel(`groups-badge-${userId}`)
+      .on("postgres_changes", { event: "*", schema: "public", table: "group_messages" }, fetchCount)
+      .on("postgres_changes", { event: "*", schema: "public", table: "group_members" }, fetchCount)
+      .on("postgres_changes", { event: "*", schema: "public", table: "group_join_requests" }, fetchCount)
+      .subscribe();
+    return () => {
+      supabase.removeChannel(channel);
+    };
+  }, [session]);
+
   // Which top-level view the Friends panel should jump to when opened from the mobile "More" sheet
-  // (Friends vs Messages) — nonce increments on every tap so re-selecting the same view while the
-  // panel is already open still resets it to that view's list (rather than a no-op if it's unchanged).
-  const [friendsView, setFriendsView] = useState<"friends" | "messages">("friends");
+  // (Friends, Messages, or Groups) — nonce increments on every tap so re-selecting the same view
+  // while the panel is already open still resets it to that view's list (rather than a no-op).
+  const [friendsView, setFriendsView] = useState<"friends" | "messages" | "groups">("friends");
   const [friendsViewNonce, setFriendsViewNonce] = useState(0);
+  /** Shared by the mobile "More" sheet and the in-panel view switcher (so it works on desktop too,
+   * where there's no "More" sheet to reach Messages/Groups from otherwise). */
+  const handleSelectFriendsView = (targetView: "friends" | "messages" | "groups") => {
+    setFriendsView(targetView);
+    setFriendsViewNonce((n) => n + 1);
+  };
 
   // Every real account needs a display name (new signups set one in the form itself). This catches
   // accounts created before that field existed and blocks the app with DisplayNameGate until they
@@ -368,7 +424,7 @@ function App() {
         <DisplayNameGate userId={session.user.id} onSaved={() => setNeedsDisplayName(false)} />
       )}
       <header className="app-header">
-        <PanelMenu panels={panels} onToggle={togglePanel} friendsBadgeCount={pendingFriendRequests + unreadMessages} />
+        <PanelMenu panels={panels} onToggle={togglePanel} friendsBadgeCount={pendingFriendRequests + unreadMessages + groupsBadgeCount} />
         <img src="/favicon.svg" className="app-logo" alt="" aria-hidden="true" />
         <h1>New Testament Biblical Atlas</h1>
         {showSearchBar && <SearchBar locations={locations} onSelect={handleSelect} />}
@@ -497,6 +553,10 @@ function App() {
             hidden={friendsHiddenOnMobile}
             openView={friendsView}
             openViewNonce={friendsViewNonce}
+            onSelectView={handleSelectFriendsView}
+            friendsBadgeCount={pendingFriendRequests}
+            messagesBadgeCount={unreadMessages}
+            groupsBadgeCount={groupsBadgeCount}
           />
         )}
         {noPanelsOpen && (
@@ -510,14 +570,12 @@ function App() {
           active={activeMobilePanel}
           hasSelection={hasSelection}
           onSelect={(key, view) => {
-            if (key === "friends" && view) {
-              setFriendsView(view);
-              setFriendsViewNonce((n) => n + 1);
-            }
+            if (key === "friends" && view) handleSelectFriendsView(view);
             setMobileActivePanel(key);
           }}
           friendsBadgeCount={pendingFriendRequests}
           messagesBadgeCount={unreadMessages}
+          groupsBadgeCount={groupsBadgeCount}
         />
       )}
     </div>

@@ -92,6 +92,17 @@ export interface VerseTag {
   created_at: string;
 }
 
+export interface ProfileLike {
+  email: string;
+  display_name: string | null;
+}
+
+/** Falls back to email for the small number of accounts that existed before display names did and
+ * haven't logged in yet to set one (see DisplayNameGate) — display_name is otherwise required. */
+export function displayFor(profile: ProfileLike): string {
+  return profile.display_name ?? profile.email;
+}
+
 export interface Profile {
   id: string;
   email: string;
@@ -123,4 +134,45 @@ export interface Message {
   body: string;
   created_at: string;
   read_at: string | null;
+}
+
+export type GroupRole = "owner" | "admin" | "member";
+
+export interface GroupMember {
+  group_id: string;
+  user_id: string;
+  role: GroupRole;
+  joined_at: string;
+}
+
+export interface GroupMessage {
+  id: string;
+  group_id: string;
+  sender_id: string;
+  body: string;
+  created_at: string;
+}
+
+export type GroupJoinRequestStatus = "pending" | "approved" | "declined";
+
+export interface GroupJoinRequest {
+  id: string;
+  group_id: string;
+  user_id: string;
+  status: GroupJoinRequestStatus;
+  created_at: string;
+  responded_at: string | null;
+}
+
+/** One row per group the caller is in — the return shape of the list_my_groups() RPC, which
+ * pre-joins the last message and unread count server-side instead of N+1 client queries. */
+export interface GroupSummary {
+  group_id: string;
+  name: string;
+  description: string | null;
+  last_message: string | null;
+  last_message_at: string | null;
+  last_sender_id: string | null;
+  unread_count: number;
+  my_role: GroupRole;
 }
