@@ -1167,6 +1167,7 @@ body.resizing-panels {
 
 .bible-nav {
   display: flex;
+  flex-wrap: wrap;
   gap: 6px;
   margin-bottom: 8px;
 }
@@ -1190,12 +1191,14 @@ body.resizing-panels {
 
 .bible-keyword-search {
   display: flex;
+  flex-wrap: wrap;
   gap: 6px;
   margin-bottom: 10px;
 }
 
 .bible-keyword-search input {
   flex: 1;
+  min-width: 0;
   padding: 8px 10px;
   border: 1px solid var(--border);
   border-radius: 8px;
@@ -1586,12 +1589,17 @@ body.resizing-panels {
   }
 
   /* Panels are always full-screen (one at a time, via the tab bar) — drop the desktop
-     720px expand cap and the drag-to-resize handles that only make sense side-by-side. */
+     720px expand cap and the drag-to-resize handles that only make sense side-by-side.
+     Width is explicitly compensated for `zoom` (see the global text-size rule at the top of this
+     file): `zoom` scales the rendered box AFTER layout, so a plain 100%-wide panel would render
+     wider than the screen at any text size above 100%, forcing horizontal scrolling. Sizing to
+     100% / scale first means the zoomed result lands back at exactly 100% of the screen. */
   .bible-panel.panel-expand,
   .location-panel.panel-expand,
   .my-notes-panel.panel-expand,
   .friends-panel.panel-expand {
     max-width: none;
+    width: calc(100% / var(--text-scale, 1));
   }
 
   .resize-handle {
