@@ -9,6 +9,7 @@ import {
   supabase,
   chapterReadCutoff,
   flushReadingTimeReliably,
+  formatReadingTime,
   HIGHLIGHT_COLORS,
   type HighlightColor,
   type Highlight,
@@ -157,16 +158,15 @@ export default function BiblePanel({
   const [newTagName, setNewTagName] = useState("");
 
   // Whether the currently-loaded chapter is marked read by this account, and this account's total
-  // minutes read so far this calendar month (both visible to friends too — see chapter_reads/
+  // seconds read so far this calendar month (both visible to friends too — see chapter_reads/
   // reading_time_daily RLS). Both are chapter/account-scoped, so they're refetched on either change.
+  // Kept as raw seconds (not pre-divided minutes) so a session under a minute still shows real
+  // progress instead of a flat "0" — see formatReadingTime for the display formatting.
   const [chapterMarkedRead, setChapterMarkedRead] = useState(false);
-  const [minutesThisMonth, setMinutesThisMonth] = useState<number | null>(null);
+  const [secondsThisMonth, setSecondsThisMonth] = useState<number | null>(null);
   /** This account's chapter_read_reset setting (see Settings) — fetched once per login, used to decide
    * whether an old chapter_reads row still counts as "read" for the checkbox above. */
   const [chapterReadReset, setChapterReadReset] = useState<Profile["chapter_read_reset"]>("never");
-  // Seconds of foreground reading time accrued since the last heartbeat flush to the server — reset
-  // to 0 on every flush; kept in a ref (not state) since it doesn't need to trigger a re-render itself.
-  const readingSecondsRef = useRef(0);
 
   /** Fire-and-forget save of the current reading position — failures are logged, not surfaced (saving shouldn't interrupt reading). */
   const saveProgress = (book: string, chapter: number, translationId: string) => {
@@ -265,14 +265,14 @@ export default function BiblePanel({
     }
   };
 
-  const fetchMinutesThisMonth = async (forUserId: string) => {
-    const { data } = await supabase.rpc("reading_minutes_this_month", { p_user_id: forUserId });
-    setMinutesThisMonth(typeof data === "number" ? data : 0);
+  const fetchSecondsThisMonth = async (forUserId: string) => {
+    const { data } = await supabase.rpc("reading_seconds_this_month", { p_user_id: forUserId });
+    setSecondsThisMonth(typeof data === "number" ? data : 0);
   };
 
   useEffect(() => {
-    if (userId) fetchMinutesThisMonth(userId);
-    else setMinutesThisMonth(null);
+    if (userId) fetchSecondsThisMonth(userId);
+    else setSecondsThisMonth(null);
   }, [userId]);
 
   // Reading-time heartbeat — tracks real elapsed foreground time via Date.now() deltas (not fixed-size
@@ -288,13 +288,7 @@ export default function BiblePanel({
     let visibleSince = document.visibilityState === "visible" ? Date.now() : null;
 
     const applyToDisplay = (wholeSeconds: number) => {
-      setMinutesThisMonth((m) => {
-        readingSecondsRef.current += wholeSeconds;
-        if (readingSecondsRef.current < 60) return m;
-        const wholeMinutes = Math.floor(readingSecondsRef.current / 60);
-        readingSecondsRef.current -= wholeMinutes * 60;
-        return (m ?? 0) + wholeMinutes;
-      });
+      setSecondsThisMonth((s) => (s ?? 0) + wholeSeconds);
     };
 
     const flush = (reliable: boolean) => {
@@ -774,10 +768,8 @@ export default function BiblePanel({
     >
       <div className="bible-panel-scroll">
 
-      {minutesThisMonth !== null && (
-        <p className="bible-minutes-this-month no-print">
-          📖 {minutesThisMonth} min{minutesThisMonth === 1 ? "" : "s"} read this month
-        </p>
+      {secondsThisMonth !== null && (
+        <p className="bible-minutes-this-month no-print">📖 {formatReadingTime(secondsThisMonth)} read this month</p>
       )}
 
       <div className="bible-nav">

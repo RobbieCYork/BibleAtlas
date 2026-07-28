@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { supabase, chapterReadCutoff, type Profile } from "../lib/supabase";
+import { supabase, chapterReadCutoff, formatReadingTime, type Profile } from "../lib/supabase";
 import { BOOKS } from "../data/bibleBooks";
 
 interface ReadingProgressGridProps {
@@ -21,13 +21,13 @@ const RESET_WINDOW_LABEL: Record<Profile["chapter_read_reset"], string> = {
  * (owner or an accepted friend) decides whether the caller can actually see the data either way. */
 export default function ReadingProgressGrid({ userId, displayName, isOwn }: ReadingProgressGridProps) {
   const [readSet, setReadSet] = useState<Set<string> | null>(null);
-  const [minutes, setMinutes] = useState<number | null>(null);
+  const [seconds, setSeconds] = useState<number | null>(null);
   const [resetSetting, setResetSetting] = useState<Profile["chapter_read_reset"]>("never");
 
   useEffect(() => {
     let cancelled = false;
     setReadSet(null);
-    setMinutes(null);
+    setSeconds(null);
     (async () => {
       const { data: profileRow } = await supabase.from("profiles").select("chapter_read_reset").eq("id", userId).single();
       const reset = (profileRow as { chapter_read_reset: Profile["chapter_read_reset"] } | null)?.chapter_read_reset ?? "never";
@@ -40,9 +40,9 @@ export default function ReadingProgressGrid({ userId, displayName, isOwn }: Read
       if (!cancelled) setReadSet(new Set((data as { book: string; chapter: number }[] | null ?? []).map((r) => `${r.book}:${r.chapter}`)));
     })();
     supabase
-      .rpc("reading_minutes_this_month", { p_user_id: userId })
+      .rpc("reading_seconds_this_month", { p_user_id: userId })
       .then(({ data }) => {
-        if (!cancelled) setMinutes(typeof data === "number" ? data : 0);
+        if (!cancelled) setSeconds(typeof data === "number" ? data : 0);
       });
     return () => {
       cancelled = true;
@@ -63,7 +63,7 @@ export default function ReadingProgressGrid({ userId, displayName, isOwn }: Read
           <strong>{readSet.size}</strong> / {totalChapters} chapters read
         </span>
         <span>
-          <strong>{minutes ?? "…"}</strong> min{minutes === 1 ? "" : "s"} {isOwn ? "read this month" : "this month"}
+          <strong>{seconds !== null ? formatReadingTime(seconds) : "…"}</strong> {isOwn ? "read this month" : "this month"}
         </span>
       </div>
       <div className="reading-progress-books">

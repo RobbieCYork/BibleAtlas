@@ -212,6 +212,14 @@ export function formatJoinDate(createdAt: string): string {
   return new Date(createdAt).toLocaleDateString(undefined, { month: "long", year: "numeric" });
 }
 
+/** "42 sec" below a minute, "3 min" at or above one — so a reading session shorter than a minute still
+ * shows real progress instead of floor-dividing to a flat, misleadingly-looking-broken "0 mins". */
+export function formatReadingTime(totalSeconds: number): string {
+  if (totalSeconds < 60) return `${totalSeconds} sec`;
+  const minutes = Math.floor(totalSeconds / 60);
+  return `${minutes} min${minutes === 1 ? "" : "s"}`;
+}
+
 export type FriendRequestStatus = "pending" | "accepted" | "declined";
 
 export interface FriendRequest {
