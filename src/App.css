@@ -2785,6 +2785,55 @@ body.resizing-panels {
   background: var(--accent-bg);
 }
 
+/* A friend row that also offers "Add to Group" — the clickable name/message part becomes its own
+   inner row so the toggle button and expandable group menu below it aren't inside the same click
+   target (which would otherwise open the conversation every time). */
+.friends-list-item-stack {
+  flex-direction: column;
+  align-items: stretch;
+}
+
+.friends-list-item-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.friends-add-to-group-toggle {
+  align-self: flex-start;
+  margin-top: 6px;
+  border: none;
+  background: none;
+  color: var(--accent);
+  font-size: 12px;
+  font-weight: 500;
+  cursor: pointer;
+  padding: 0;
+}
+
+.friends-add-to-group-menu {
+  margin-top: 6px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.friends-add-to-group-menu button {
+  text-align: left;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  background: var(--panel-bg);
+  color: var(--text);
+  font-size: 12px;
+  padding: 6px 8px;
+  cursor: pointer;
+}
+
+.friends-add-to-group-menu button:hover {
+  background: var(--accent-bg);
+}
+
 /* The name/email span in friend-request and friends-list rows — truncates instead of overflowing
    past its neighboring Accept/Decline buttons or "Message →" hint, which becomes a real problem at
    larger text sizes with a long email address (display names are usually short enough not to need it,
@@ -3257,4 +3306,47 @@ body.resizing-panels {
   gap: 8px;
   cursor: pointer;
   width: 100%;
+}
+
+/* Quick-add list on an existing group's Members tab — lets an admin add a friend with one tap
+   instead of typing their email/phone, without replacing that form (a friend who hasn't accepted
+   yet, or someone who isn't a friend at all, still needs it). */
+.group-friend-add-list {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin-bottom: 4px;
+}
+
+.group-friend-add-list-label {
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--text-muted);
+  margin-bottom: 2px;
+}
+
+.group-friend-add-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--bg);
+  color: var(--text);
+  font-size: 13px;
+  padding: 8px 10px;
+  cursor: pointer;
+}
+
+.group-friend-add-row:hover {
+  background: var(--accent-bg);
+  border-color: var(--accent);
+}
+
+.group-friend-add-row:disabled {
+  opacity: 0.6;
+  cursor: default;
 }

@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import type { Session } from "@supabase/supabase-js";
-import { supabase, displayFor, type FriendRequest, type Message, type Profile } from "../lib/supabase";
+import { supabase, displayFor, type FriendRequest, type GroupSummary, type Message, type Profile } from "../lib/supabase";
 import GroupsPanel from "./GroupsPanel";
 import ViewSwitcher, { type FriendsView } from "./ViewSwitcher";
 
@@ -63,6 +63,12 @@ export default function FriendsPanel({
   const [messageBody, setMessageBody] = useState("");
   const [sending, setSending] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement | null>(null);
+
+  /** Groups the "Add to Group" menu can offer — only ones this account can add members to (owner or
+   * admin). Fetched lazily on first use, not on mount, since most sessions never open the menu. */
+  const [adminGroups, setAdminGroups] = useState<GroupSummary[] | null>(null);
+  const [addToGroupOpenFor, setAddToGroupOpenFor] = useState<string | null>(null);
+  const [addToGroupStatus, setAddToGroupStatus] = useState<Record<string, string>>({});
 
   useEffect(() => {
     if (openViewNonce === undefined) return;
@@ -222,6 +228,28 @@ export default function FriendsPanel({
     } catch {
       setInviteStatus(link);
     }
+  };
+
+  const handleToggleAddToGroup = async (friendId: string) => {
+    if (addToGroupOpenFor === friendId) {
+      setAddToGroupOpenFor(null);
+      return;
+    }
+    setAddToGroupOpenFor(friendId);
+    if (adminGroups === null) {
+      const { data } = await supabase.rpc("list_my_groups");
+      const rows = (data as GroupSummary[] | null) ?? [];
+      setAdminGroups(rows.filter((g) => g.my_role === "owner" || g.my_role === "admin"));
+    }
+  };
+
+  const handleAddFriendToGroup = async (friendId: string, groupId: string, groupName: string) => {
+    const { error } = await supabase.rpc("add_group_member", { p_group_id: groupId, p_member_id: friendId });
+    setAddToGroupStatus((prev) => ({
+      ...prev,
+      [friendId]: error ? "Couldn't add — they may already be a member." : `Added to ${groupName}!`,
+    }));
+    if (!error) setAddToGroupOpenFor(null);
   };
 
   const handleRespond = async (requestId: string, status: "accepted" | "declined") => {
@@ -509,9 +537,32 @@ export default function FriendsPanel({
               {friends.map((r) => {
                 const fid = friendIdFor(r);
                 return (
-                  <li key={r.id} className="friends-list-item friends-list-item-clickable" onClick={() => setActiveFriendId(fid)}>
-                    <span>{profiles[fid] ? displayFor(profiles[fid]) : "Friend"}</span>
-                    <span className="friends-message-hint">Message →</span>
+                  <li key={r.id} className="friends-list-item friends-list-item-stack">
+                    <div className="friends-list-item-row friends-list-item-clickable" onClick={() => setActiveFriendId(fid)}>
+                      <span>{profiles[fid] ? displayFor(profiles[fid]) : "Friend"}</span>
+                      <span className="friends-message-hint">Message →</span>
+                    </div>
+                    <button
+                      type="button"
+                      className="friends-add-to-group-toggle"
+                      onClick={() => handleToggleAddToGroup(fid)}
+                    >
+                      ＋ Add to Group
+                    </button>
+                    {addToGroupOpenFor === fid && (
+                      <div className="friends-add-to-group-menu">
+                        {adminGroups === null && <p className="comment-status">Loading…</p>}
+                        {adminGroups?.length === 0 && (
+                          <p className="comment-status">You're not an admin of any group yet.</p>
+                        )}
+                        {adminGroups?.map((g) => (
+                          <button type="button" key={g.group_id} onClick={() => handleAddFriendToGroup(fid, g.group_id, g.name)}>
+                            {g.name}
+                          </button>
+                        ))}
+                      </div>
+                    )}
+                    {addToGroupStatus[fid] && <p className="comment-status">{addToGroupStatus[fid]}</p>}
                   </li>
                 );
               })}

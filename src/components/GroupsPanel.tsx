@@ -176,6 +176,7 @@ export default function GroupsPanel({
     const g = groups.find((x) => x.group_id === groupId);
     fetchGroupDetail(groupId, g?.my_role === "owner" || g?.my_role === "admin");
     fetchGroupMessages(groupId);
+    fetchFriendOptions();
   };
 
   // Live updates for the open group's chat, member list, and (for admins) join requests.
@@ -324,6 +325,22 @@ export default function GroupsPanel({
     }
     setAddMemberStatus("Added!");
     setAddMemberContact("");
+    fetchGroupDetail(activeGroupId, true);
+  };
+
+  /** Same as handleAddMember but for the friend-picker list, which already has the user's id and
+   * doesn't need the email/phone lookup step. */
+  const handleAddFriendAsMember = async (friendId: string) => {
+    if (!activeGroupId) return;
+    setAddingMember(true);
+    setAddMemberStatus(null);
+    const { error: addErr } = await supabase.rpc("add_group_member", { p_group_id: activeGroupId, p_member_id: friendId });
+    setAddingMember(false);
+    if (addErr) {
+      setAddMemberStatus("Couldn't add them — they may already be a member.");
+      return;
+    }
+    setAddMemberStatus("Added!");
     fetchGroupDetail(activeGroupId, true);
   };
 
@@ -524,6 +541,29 @@ export default function GroupsPanel({
                   🔗 Copy invite link
                 </button>
                 {inviteStatus && <p className="comment-status">{inviteStatus}</p>}
+
+                {(() => {
+                  const memberIds = new Set(members.map((m) => m.user_id));
+                  const addableFriends = friendOptions.filter((f) => !memberIds.has(f.id));
+                  if (addableFriends.length === 0) return null;
+                  return (
+                    <div className="group-friend-add-list">
+                      <span className="group-friend-add-list-label">Add from friends</span>
+                      {addableFriends.map((f) => (
+                        <button
+                          type="button"
+                          key={f.id}
+                          className="group-friend-add-row"
+                          disabled={addingMember}
+                          onClick={() => handleAddFriendAsMember(f.id)}
+                        >
+                          <span>{displayFor(f)}</span>
+                          <span aria-hidden="true">＋</span>
+                        </button>
+                      ))}
+                    </div>
+                  );
+                })()}
 
                 <form className="friends-add-form" onSubmit={handleAddMember}>
                   <input
