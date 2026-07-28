@@ -29,9 +29,43 @@ const rememberAwareStorage = {
   },
 };
 
-export const supabase = createClient(import.meta.env.VITE_SUPABASE_URL, import.meta.env.VITE_SUPABASE_ANON_KEY, {
+const SUPABASE_URL = import.meta.env.VITE_SUPABASE_URL;
+const SUPABASE_ANON_KEY = import.meta.env.VITE_SUPABASE_ANON_KEY;
+
+export const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY, {
   auth: { storage: rememberAwareStorage },
 });
+
+// Kept in sync with the current session so flushReadingTimeReliably (below) can fire synchronously
+// during page teardown, when there's no time to await supabase.auth.getSession().
+let cachedAccessToken: string | null = null;
+supabase.auth.onAuthStateChange((_event, session) => {
+  cachedAccessToken = session?.access_token ?? null;
+});
+supabase.auth.getSession().then(({ data }) => {
+  cachedAccessToken = data.session?.access_token ?? null;
+});
+
+/** Reports reading-time seconds via a raw `fetch(..., { keepalive: true })` instead of the normal
+ * supabase-js client — used only when the page might be unloading (tab closing, a hard reload, a PWA
+ * update swapping in a new build) since an ordinary fetch can be silently cancelled mid-flight during
+ * teardown, but a keepalive one is guaranteed to still be sent. Silently no-ops without a cached
+ * token (e.g. auth hasn't finished loading yet) — losing a few seconds here is an acceptable tradeoff
+ * for never throwing or blocking while the page is closing. */
+export function flushReadingTimeReliably(seconds: number) {
+  const whole = Math.round(seconds);
+  if (whole <= 0 || !cachedAccessToken) return;
+  fetch(`${SUPABASE_URL}/rest/v1/rpc/increment_reading_time`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      apikey: SUPABASE_ANON_KEY,
+      Authorization: `Bearer ${cachedAccessToken}`,
+    },
+    body: JSON.stringify({ p_seconds: whole }),
+    keepalive: true,
+  }).catch(() => {});
+}
 
 export interface ReadingProgress {
   book: string;

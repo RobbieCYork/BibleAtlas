@@ -7,9 +7,10 @@ import AvatarCropModal from "./AvatarCropModal";
 
 interface AuthButtonProps {
   session: Session | null;
-  /** Bumped by the mobile "More" sheet's "My Profile" entry — pops this menu open straight to
-   * Settings. Undefined until first triggered, so mounting doesn't pop the menu open unprompted. */
-  openSettingsNonce?: number;
+  /** Bumped by the mobile "More" sheet's "My Profile" entry — pops this menu open straight to the
+   * My Profile page. Undefined until first triggered, so mounting doesn't pop the menu open
+   * unprompted. Falls back to Settings for guests, who have no profile page to show. */
+  openProfileNonce?: number;
 }
 
 type Mode = "login" | "signup" | "reset";
@@ -34,124 +35,30 @@ function TextSizeControl() {
   );
 }
 
-/** Optional — lets friends find this account by phone instead of email. Only shown for real
- * (non-anonymous) accounts, since guests don't have a profile row to attach it to. */
-function PhoneNumberControl({ userId }: { userId: string }) {
-  const [phone, setPhone] = useState("");
-  const [loaded, setLoaded] = useState(false);
-  const [saving, setSaving] = useState(false);
-  const [saved, setSaved] = useState<string | null>(null);
-
-  useEffect(() => {
-    supabase
-      .from("profiles")
-      .select("phone")
-      .eq("id", userId)
-      .single()
-      .then(({ data }) => {
-        setPhone((data as { phone: string | null } | null)?.phone ?? "");
-        setLoaded(true);
-      });
-  }, [userId]);
-
-  const handleSave = async () => {
-    setSaving(true);
-    setSaved(null);
-    const normalized = phone.replace(/\D/g, "");
-    const { error } = await supabase.from("profiles").update({ phone: normalized || null }).eq("id", userId);
-    setSaving(false);
-    setSaved(error ? "Couldn't save — try again." : "Saved!");
-    if (!error) setPhone(normalized);
-  };
-
-  if (!loaded) return null;
-
-  return (
-    <div className="auth-settings-section auth-settings-section-stacked">
-      <span className="auth-settings-label">Phone Number</span>
-      <div className="auth-phone-row">
-        <input
-          type="tel"
-          value={phone}
-          onChange={(e) => setPhone(e.target.value)}
-          placeholder="So friends can find you by phone"
-        />
-        <button type="button" onClick={handleSave} disabled={saving}>
-          {saving ? "…" : "Save"}
-        </button>
-      </div>
-      {saved && <p className="auth-status">{saved}</p>}
-    </div>
-  );
-}
-
-/** Same pattern as PhoneNumberControl — lets an account change its display name later. Separate from
- * the required-at-signup flow and the app-root gate that catches accounts created before this field
- * existed (see DisplayNameGate). */
-function DisplayNameControl({ userId, onSaved }: { userId: string; onSaved: (name: string) => void }) {
-  const [name, setName] = useState("");
-  const [loaded, setLoaded] = useState(false);
-  const [saving, setSaving] = useState(false);
-  const [saved, setSaved] = useState<string | null>(null);
-
-  useEffect(() => {
-    supabase
-      .from("profiles")
-      .select("display_name")
-      .eq("id", userId)
-      .single()
-      .then(({ data }) => {
-        setName((data as { display_name: string | null } | null)?.display_name ?? "");
-        setLoaded(true);
-      });
-  }, [userId]);
-
-  const handleSave = async () => {
-    const trimmed = name.trim();
-    if (!trimmed) return;
-    setSaving(true);
-    setSaved(null);
-    const { error } = await supabase.from("profiles").update({ display_name: trimmed }).eq("id", userId);
-    setSaving(false);
-    if (error) {
-      setSaved(error.code === "23505" ? "That name is taken — try another." : "Couldn't save — try again.");
-      return;
-    }
-    setSaved("Saved!");
-    onSaved(trimmed);
-  };
-
-  if (!loaded) return null;
-
-  return (
-    <div className="auth-settings-section auth-settings-section-stacked">
-      <span className="auth-settings-label">Display Name</span>
-      <div className="auth-phone-row">
-        <input type="text" value={name} onChange={(e) => setName(e.target.value)} placeholder="What friends see" />
-        <button type="button" onClick={handleSave} disabled={saving || !name.trim()}>
-          {saving ? "…" : "Save"}
-        </button>
-      </div>
-      {saved && <p className="auth-status">{saved}</p>}
-    </div>
-  );
-}
-
 interface ProfileFields {
+  displayName: string;
+  phone: string;
   avatarUrl: string | null;
   church: string;
   favoriteVerse: string;
   bio: string;
 }
 
-const EMPTY_PROFILE_FIELDS: ProfileFields = { avatarUrl: null, church: "", favoriteVerse: "", bio: "" };
+const EMPTY_PROFILE_FIELDS: ProfileFields = {
+  displayName: "",
+  phone: "",
+  avatarUrl: null,
+  church: "",
+  favoriteVerse: "",
+  bio: "",
+};
 
-/** The optional "profile page" fields shown when a friend clicks your name — photo, church,
- * favorite verse, and a short bio. Grouped into one control (one fetch, one save) since they're all
- * part of the same picture, unlike Display Name/Phone which have their own identity-lookup purpose.
- * Read-only by default with a single Edit button — editing a field-at-a-time with its own Save button
- * (the old layout) looked like a form even when you only wanted to glance at your own info. */
-function ProfileDetailsControl({ userId }: { userId: string }) {
+/** The whole "My Profile" page — display name, phone, photo, church, favorite verse, and bio — behind
+ * one shared Edit button instead of a separate Save per field (the old layout looked like a form even
+ * when you only wanted to glance at your own info). Display name has a uniqueness constraint at the DB
+ * level (surfaced via the "23505" error code below, same as the old dedicated control did); phone is
+ * digits-only, normalized on save. */
+function MyProfileControl({ userId, onDisplayNameSaved }: { userId: string; onDisplayNameSaved: (name: string) => void }) {
   const [saved, setSavedFields] = useState<ProfileFields>(EMPTY_PROFILE_FIELDS);
   const [draft, setDraft] = useState<ProfileFields>(EMPTY_PROFILE_FIELDS);
   const [joinedAt, setJoinedAt] = useState<string | null>(null);
@@ -166,14 +73,24 @@ function ProfileDetailsControl({ userId }: { userId: string }) {
   const fetchProfile = () =>
     supabase
       .from("profiles")
-      .select("avatar_url, church, favorite_verse, bio, created_at")
+      .select("display_name, phone, avatar_url, church, favorite_verse, bio, created_at")
       .eq("id", userId)
       .single()
       .then(({ data }) => {
         const row = data as
-          | { avatar_url: string | null; church: string | null; favorite_verse: string | null; bio: string | null; created_at: string }
+          | {
+              display_name: string | null;
+              phone: string | null;
+              avatar_url: string | null;
+              church: string | null;
+              favorite_verse: string | null;
+              bio: string | null;
+              created_at: string;
+            }
           | null;
         const fields: ProfileFields = {
+          displayName: row?.display_name ?? "",
+          phone: row?.phone ?? "",
           avatarUrl: row?.avatar_url ?? null,
           church: row?.church ?? "",
           favoriteVerse: row?.favorite_verse ?? "",
@@ -218,11 +135,19 @@ function ProfileDetailsControl({ userId }: { userId: string }) {
   };
 
   const handleSave = async () => {
+    const trimmedName = draft.displayName.trim();
+    if (!trimmedName) {
+      setStatus("Display name can't be empty.");
+      return;
+    }
     setSaving(true);
     setStatus(null);
+    const normalizedPhone = draft.phone.replace(/\D/g, "");
     const { error } = await supabase
       .from("profiles")
       .update({
+        display_name: trimmedName,
+        phone: normalizedPhone || null,
         church: draft.church.trim() || null,
         favorite_verse: draft.favoriteVerse.trim() || null,
         bio: draft.bio.trim() || null,
@@ -230,10 +155,13 @@ function ProfileDetailsControl({ userId }: { userId: string }) {
       .eq("id", userId);
     setSaving(false);
     if (error) {
-      setStatus("Couldn't save — try again.");
+      setStatus(error.code === "23505" ? "That display name is taken — try another." : "Couldn't save — try again.");
       return;
     }
-    setSavedFields(draft);
+    const nextSaved = { ...draft, displayName: trimmedName, phone: normalizedPhone };
+    setSavedFields(nextSaved);
+    setDraft(nextSaved);
+    onDisplayNameSaved(trimmedName);
     setEditing(false);
   };
 
@@ -247,7 +175,10 @@ function ProfileDetailsControl({ userId }: { userId: string }) {
 
   return (
     <div className="auth-settings-section auth-settings-section-stacked">
-      <span className="auth-settings-label">My Profile</span>
+      <div className="profile-page-header">
+        <span className="auth-settings-label">My Profile</span>
+        {joinedAt && <span className="profile-joined-inline">(Joined {formatJoinDate(joinedAt)})</span>}
+      </div>
 
       {!editing ? (
         <div className="profile-view">
@@ -255,10 +186,9 @@ function ProfileDetailsControl({ userId }: { userId: string }) {
             <span className="auth-avatar auth-avatar-lg" aria-hidden="true">
               {saved.avatarUrl ? <img src={saved.avatarUrl} alt="" /> : "👤"}
             </span>
-            <div>
-              {joinedAt && <p className="friend-profile-joined">Joined {formatJoinDate(joinedAt)}</p>}
-            </div>
+            <p className="friend-profile-name">{saved.displayName}</p>
           </div>
+          {saved.phone && <p className="profile-view-field">📱 {saved.phone}</p>}
           {saved.church && <p className="profile-view-field">{saved.church}</p>}
           {saved.favoriteVerse && (
             <p className="profile-view-field">
@@ -281,6 +211,18 @@ function ProfileDetailsControl({ userId }: { userId: string }) {
             </button>
             <input ref={fileInputRef} type="file" accept="image/*" hidden onChange={handlePhotoSelected} />
           </div>
+          <input
+            type="text"
+            value={draft.displayName}
+            onChange={(e) => setDraft((f) => ({ ...f, displayName: e.target.value }))}
+            placeholder="What friends see"
+          />
+          <input
+            type="tel"
+            value={draft.phone}
+            onChange={(e) => setDraft((f) => ({ ...f, phone: e.target.value }))}
+            placeholder="So friends can find you by phone (optional)"
+          />
           <input
             type="text"
             value={draft.church}
@@ -431,17 +373,18 @@ function DataExportControl({ userId }: { userId: string }) {
   );
 }
 
-type MenuView = "menu" | "settings";
+type MenuView = "menu" | "settings" | "profile";
 
-export default function AuthButton({ session, openSettingsNonce }: AuthButtonProps) {
+export default function AuthButton({ session, openProfileNonce }: AuthButtonProps) {
   const [open, setOpen] = useState(false);
   const [menuView, setMenuView] = useState<MenuView>("menu");
 
   useEffect(() => {
-    if (openSettingsNonce === undefined) return;
+    if (openProfileNonce === undefined) return;
     setOpen(true);
-    setMenuView("settings");
-  }, [openSettingsNonce]);
+    setMenuView(session && !session.user.is_anonymous ? "profile" : "settings");
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [openProfileNonce]);
   const [mode, setMode] = useState<Mode>("login");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -580,6 +523,11 @@ export default function AuthButton({ session, openSettingsNonce }: AuthButtonPro
               </div>
             </div>
             <div className="auth-settings-divider" />
+            {!session.user.is_anonymous && (
+              <button type="button" className="auth-menu-item" onClick={() => setMenuView("profile")}>
+                👤 My Profile
+              </button>
+            )}
             <button type="button" className="auth-menu-item" onClick={() => setMenuView("settings")}>
               ⚙️ Settings
             </button>
@@ -597,22 +545,24 @@ export default function AuthButton({ session, openSettingsNonce }: AuthButtonPro
             {!session.user.is_anonymous && (
               <>
                 <div className="auth-settings-divider" />
-                <DisplayNameControl userId={session.user.id} onSaved={setSavedDisplayName} />
-                <div className="auth-settings-divider" />
-                <PhoneNumberControl userId={session.user.id} />
-                <div className="auth-settings-divider" />
-                <ProfileDetailsControl userId={session.user.id} />
-                <div className="auth-settings-divider" />
-                <div className="auth-settings-section auth-settings-section-stacked">
-                  <span className="auth-settings-label">My Reading</span>
-                  <ReadingProgressGrid userId={session.user.id} isOwn />
-                </div>
-                <div className="auth-settings-divider" />
                 <ReadingResetControl userId={session.user.id} />
-                <div className="auth-settings-divider" />
-                <DataExportControl userId={session.user.id} />
               </>
             )}
+          </div>
+        )}
+        {open && menuView === "profile" && !session.user.is_anonymous && (
+          <div className="auth-dropdown">
+            <button type="button" className="auth-back-link" onClick={() => setMenuView("menu")}>
+              ← Back
+            </button>
+            <MyProfileControl userId={session.user.id} onDisplayNameSaved={setSavedDisplayName} />
+            <div className="auth-settings-divider" />
+            <div className="auth-settings-section auth-settings-section-stacked">
+              <span className="auth-settings-label">My Reading</span>
+              <ReadingProgressGrid userId={session.user.id} isOwn />
+            </div>
+            <div className="auth-settings-divider" />
+            <DataExportControl userId={session.user.id} />
           </div>
         )}
       </div>

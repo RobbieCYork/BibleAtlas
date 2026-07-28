@@ -369,32 +369,16 @@ body.resizing-panels {
   padding: 40px;
 }
 
-.panel-close {
-  position: absolute;
-  top: 14px;
-  right: 14px;
-  background: none;
-  border: none;
-  font-size: 22px;
-  line-height: 1;
-  color: var(--text-muted);
-  cursor: pointer;
-  padding: 4px 8px;
-  border-radius: 6px;
-}
-
-.panel-close:hover {
-  background: var(--accent-bg);
-  color: var(--text-h);
-}
-
 .panel-back {
-  position: absolute;
-  top: 14px;
-  left: 14px;
+  /* Normal document flow, not absolutely positioned — it used to sit at top-left to pair with a
+   * top-right "×" close button, but that close button is gone (panel visibility is controlled by the
+   * panel menu/tab bar instead), and overlapping it on top of the category badge below made both
+   * unreadable. Sitting in flow as its own row above the badge needs no coordination with anything else. */
   display: flex;
+  width: fit-content;
   align-items: center;
   gap: 3px;
+  margin: -6px 0 8px -8px;
   background: none;
   border: none;
   font-size: 13px;
@@ -1029,35 +1013,17 @@ body.resizing-panels {
   background: var(--accent);
 }
 
-.auth-phone-row {
+.profile-page-header {
   display: flex;
-  gap: 6px;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 8px;
 }
 
-.auth-phone-row input {
-  flex: 1;
-  min-width: 0;
-  padding: 7px 9px;
-  border: 1px solid var(--border);
-  border-radius: 6px;
-  font-size: 13px;
-  background: var(--bg);
-  color: var(--text);
-}
-
-.auth-phone-row button {
-  border: 1px solid var(--accent);
-  background: var(--accent);
-  color: #fff;
-  border-radius: 6px;
-  padding: 7px 12px;
-  font-size: 13px;
-  cursor: pointer;
-}
-
-.auth-phone-row button:disabled {
-  opacity: 0.6;
-  cursor: default;
+.profile-joined-inline {
+  font-size: 12px;
+  color: var(--text-muted);
+  white-space: nowrap;
 }
 
 .auth-text-size {

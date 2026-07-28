@@ -8,6 +8,7 @@ import { BOOKS } from "../data/bibleBooks";
 import {
   supabase,
   chapterReadCutoff,
+  flushReadingTimeReliably,
   HIGHLIGHT_COLORS,
   type HighlightColor,
   type Highlight,
@@ -274,25 +275,60 @@ export default function BiblePanel({
     else setMinutesThisMonth(null);
   }, [userId]);
 
-  // Reading-time heartbeat — every 20s of foreground reading (chapter loaded, tab/panel actually
-  // visible) reports 20s to the server via an additive RPC, then nudges the displayed monthly total
-  // optimistically rather than re-fetching on every tick. A visibility check keeps a backgrounded or
-  // switched-away tab from silently racking up minutes nobody spent looking at the page.
+  // Reading-time heartbeat — tracks real elapsed foreground time via Date.now() deltas (not fixed-size
+  // ticks), so a reading session shorter than one flush interval still gets credited instead of being
+  // silently lost. Flushes periodically through the normal Supabase client while the tab stays open,
+  // and immediately through a keepalive-fetch fallback (flushReadingTimeReliably) whenever the page
+  // might be about to close or reload — a tab switch, the app backgrounding, or a PWA update swapping
+  // in a new build — since a plain fetch can be cancelled mid-flight during teardown but a keepalive
+  // one is guaranteed to still be sent.
   useEffect(() => {
     if (!userId || !passage || hidden) return;
-    const HEARTBEAT_SECONDS = 20;
-    const interval = window.setInterval(() => {
-      if (document.visibilityState !== "visible") return;
-      supabase.rpc("increment_reading_time", { p_seconds: HEARTBEAT_SECONDS });
+    const FLUSH_INTERVAL_MS = 15000;
+    let visibleSince = document.visibilityState === "visible" ? Date.now() : null;
+
+    const applyToDisplay = (wholeSeconds: number) => {
       setMinutesThisMonth((m) => {
-        readingSecondsRef.current += HEARTBEAT_SECONDS;
+        readingSecondsRef.current += wholeSeconds;
         if (readingSecondsRef.current < 60) return m;
         const wholeMinutes = Math.floor(readingSecondsRef.current / 60);
         readingSecondsRef.current -= wholeMinutes * 60;
         return (m ?? 0) + wholeMinutes;
       });
-    }, HEARTBEAT_SECONDS * 1000);
-    return () => window.clearInterval(interval);
+    };
+
+    const flush = (reliable: boolean) => {
+      if (visibleSince === null) return;
+      const elapsed = Math.round((Date.now() - visibleSince) / 1000);
+      visibleSince = Date.now();
+      if (elapsed < 1) return;
+      if (reliable) flushReadingTimeReliably(elapsed);
+      else supabase.rpc("increment_reading_time", { p_seconds: elapsed });
+      applyToDisplay(elapsed);
+    };
+
+    const interval = window.setInterval(() => flush(false), FLUSH_INTERVAL_MS);
+    const handleVisibilityChange = () => {
+      if (document.visibilityState === "hidden") {
+        flush(true);
+        visibleSince = null;
+      } else {
+        visibleSince = Date.now();
+      }
+    };
+    const handlePageHide = () => flush(true);
+
+    document.addEventListener("visibilitychange", handleVisibilityChange);
+    window.addEventListener("pagehide", handlePageHide);
+    window.addEventListener("beforeunload", handlePageHide);
+
+    return () => {
+      window.clearInterval(interval);
+      document.removeEventListener("visibilitychange", handleVisibilityChange);
+      window.removeEventListener("pagehide", handlePageHide);
+      window.removeEventListener("beforeunload", handlePageHide);
+      flush(true); // e.g. navigating to a different chapter — shouldn't lose whatever had accrued
+    };
   }, [userId, passage, hidden]);
 
   // A stray popup from the previous chapter/tab makes no sense once either changes.

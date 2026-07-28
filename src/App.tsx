@@ -555,7 +555,7 @@ function App() {
         {searchMode === "notes" && (
           <HeaderTextSearch placeholder="Search My Notes" value={notesSearchQuery} onChange={setNotesSearchQuery} />
         )}
-        <AuthButton session={session} openSettingsNonce={openProfileNonce} />
+        <AuthButton session={session} openProfileNonce={openProfileNonce} />
       </header>
       <div className="app-body">
         {bibleMounted && (
