@@ -2,6 +2,9 @@ import { useEffect, useRef, useState } from "react";
 import { supabase, HIGHLIGHT_COLORS, type Highlight, type HighlightColor, type Note, type Tag, type VerseTag } from "../lib/supabase";
 import { BOOKS } from "../data/bibleBooks";
 import TagPicker from "./TagPicker";
+import SermonNotesView from "./SermonNotesView";
+
+type NotesTab = "verse" | "sermon";
 
 interface MyNotesPanelProps {
   userId: string | null | undefined;
@@ -47,6 +50,7 @@ function escapeHtml(text: string): string {
 }
 
 export default function MyNotesPanel({ userId, onClose, onGoToVerse, expand, style, hidden, refreshKey, searchQuery }: MyNotesPanelProps) {
+  const [tab, setTab] = useState<NotesTab>("verse");
   const [notes, setNotes] = useState<Note[]>([]);
   const [tags, setTags] = useState<Tag[]>([]);
   const [verseTags, setVerseTags] = useState<VerseTag[]>([]);
@@ -279,9 +283,22 @@ export default function MyNotesPanel({ userId, onClose, onGoToVerse, expand, sty
         </button>
       </div>
 
-      {!userId && <p className="bible-status no-print">Log in (or continue as guest) to write and see notes.</p>}
+      <div className="notes-tab-switcher no-print">
+        <button type="button" className={tab === "verse" ? "active" : ""} onClick={() => setTab("verse")}>
+          My Notes
+        </button>
+        <button type="button" className={tab === "sermon" ? "active" : ""} onClick={() => setTab("sermon")}>
+          Sermon Notes
+        </button>
+      </div>
 
-      {userId && (
+      {tab === "sermon" && <SermonNotesView userId={userId} />}
+
+      {tab === "verse" && !userId && (
+        <p className="bible-status no-print">Log in (or continue as guest) to write and see notes.</p>
+      )}
+
+      {tab === "verse" && userId && (
         <>
           <div className="my-notes-filters no-print">
             <select className="bible-nav-select" aria-label="Filter by book" value={bookFilter} onChange={(e) => setBookFilter(e.target.value)}>

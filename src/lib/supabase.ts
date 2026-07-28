@@ -81,6 +81,19 @@ export interface Tag {
   created_at: string;
 }
 
+/** A standalone saved document (unlike Note, not anchored to a specific verse) — one per sermon,
+ * browsable as a list, each started fresh rather than appended to an ongoing one. */
+export interface SermonNote {
+  id: string;
+  user_id: string;
+  title: string;
+  speaker: string | null;
+  scripture_ref: string | null;
+  body: string;
+  created_at: string;
+  updated_at: string;
+}
+
 export interface VerseTag {
   id: string;
   book: string;
