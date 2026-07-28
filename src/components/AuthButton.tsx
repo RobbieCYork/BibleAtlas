@@ -3,6 +3,7 @@ import type { Session } from "@supabase/supabase-js";
 import { supabase, setRememberMe, formatJoinDate, type Profile } from "../lib/supabase";
 import { useTextSize } from "../lib/textSize";
 import ReadingProgressGrid from "./ReadingProgressGrid";
+import AvatarCropModal from "./AvatarCropModal";
 
 interface AuthButtonProps {
   session: Session | null;
@@ -136,22 +137,33 @@ function DisplayNameControl({ userId, onSaved }: { userId: string; onSaved: (nam
   );
 }
 
+interface ProfileFields {
+  avatarUrl: string | null;
+  church: string;
+  favoriteVerse: string;
+  bio: string;
+}
+
+const EMPTY_PROFILE_FIELDS: ProfileFields = { avatarUrl: null, church: "", favoriteVerse: "", bio: "" };
+
 /** The optional "profile page" fields shown when a friend clicks your name — photo, church,
  * favorite verse, and a short bio. Grouped into one control (one fetch, one save) since they're all
- * part of the same picture, unlike Display Name/Phone which have their own identity-lookup purpose. */
+ * part of the same picture, unlike Display Name/Phone which have their own identity-lookup purpose.
+ * Read-only by default with a single Edit button — editing a field-at-a-time with its own Save button
+ * (the old layout) looked like a form even when you only wanted to glance at your own info. */
 function ProfileDetailsControl({ userId }: { userId: string }) {
-  const [avatarUrl, setAvatarUrl] = useState<string | null>(null);
-  const [church, setChurch] = useState("");
-  const [favoriteVerse, setFavoriteVerse] = useState("");
-  const [bio, setBio] = useState("");
+  const [saved, setSavedFields] = useState<ProfileFields>(EMPTY_PROFILE_FIELDS);
+  const [draft, setDraft] = useState<ProfileFields>(EMPTY_PROFILE_FIELDS);
   const [joinedAt, setJoinedAt] = useState<string | null>(null);
   const [loaded, setLoaded] = useState(false);
+  const [editing, setEditing] = useState(false);
+  const [cropSrc, setCropSrc] = useState<string | null>(null);
   const [uploading, setUploading] = useState(false);
   const [saving, setSaving] = useState(false);
-  const [saved, setSaved] = useState<string | null>(null);
+  const [status, setStatus] = useState<string | null>(null);
   const fileInputRef = useRef<HTMLInputElement | null>(null);
 
-  useEffect(() => {
+  const fetchProfile = () =>
     supabase
       .from("profiles")
       .select("avatar_url, church, favorite_verse, bio, created_at")
@@ -161,45 +173,74 @@ function ProfileDetailsControl({ userId }: { userId: string }) {
         const row = data as
           | { avatar_url: string | null; church: string | null; favorite_verse: string | null; bio: string | null; created_at: string }
           | null;
-        setAvatarUrl(row?.avatar_url ?? null);
-        setChurch(row?.church ?? "");
-        setFavoriteVerse(row?.favorite_verse ?? "");
-        setBio(row?.bio ?? "");
+        const fields: ProfileFields = {
+          avatarUrl: row?.avatar_url ?? null,
+          church: row?.church ?? "",
+          favoriteVerse: row?.favorite_verse ?? "",
+          bio: row?.bio ?? "",
+        };
+        setSavedFields(fields);
+        setDraft(fields);
         setJoinedAt(row?.created_at ?? null);
         setLoaded(true);
       });
+
+  useEffect(() => {
+    fetchProfile();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userId]);
 
-  const handleAvatarChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handlePhotoSelected = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
+    e.target.value = ""; // lets picking the same file again re-fire onChange
     if (!file) return;
+    setCropSrc(URL.createObjectURL(file));
+  };
+
+  const handleCropped = async (blob: Blob) => {
+    if (cropSrc) URL.revokeObjectURL(cropSrc);
+    setCropSrc(null);
     setUploading(true);
-    setSaved(null);
-    const ext = file.name.split(".").pop() || "jpg";
-    const path = `${userId}/avatar.${ext}`;
-    const { error: uploadError } = await supabase.storage.from("avatars").upload(path, file, { upsert: true });
+    setStatus(null);
+    const path = `${userId}/avatar.jpg`;
+    const { error: uploadError } = await supabase.storage.from("avatars").upload(path, blob, { upsert: true, contentType: "image/jpeg" });
     if (uploadError) {
       setUploading(false);
-      setSaved("Couldn't upload photo — try again.");
+      setStatus("Couldn't upload photo — try again.");
       return;
     }
     const { data: urlData } = supabase.storage.from("avatars").getPublicUrl(path);
     const publicUrl = `${urlData.publicUrl}?t=${Date.now()}`;
     await supabase.from("profiles").update({ avatar_url: publicUrl }).eq("id", userId);
-    setAvatarUrl(publicUrl);
+    setSavedFields((f) => ({ ...f, avatarUrl: publicUrl }));
+    setDraft((f) => ({ ...f, avatarUrl: publicUrl }));
     setUploading(false);
-    setSaved("Saved!");
   };
 
   const handleSave = async () => {
     setSaving(true);
-    setSaved(null);
+    setStatus(null);
     const { error } = await supabase
       .from("profiles")
-      .update({ church: church.trim() || null, favorite_verse: favoriteVerse.trim() || null, bio: bio.trim() || null })
+      .update({
+        church: draft.church.trim() || null,
+        favorite_verse: draft.favoriteVerse.trim() || null,
+        bio: draft.bio.trim() || null,
+      })
       .eq("id", userId);
     setSaving(false);
-    setSaved(error ? "Couldn't save — try again." : "Saved!");
+    if (error) {
+      setStatus("Couldn't save — try again.");
+      return;
+    }
+    setSavedFields(draft);
+    setEditing(false);
+  };
+
+  const handleCancel = () => {
+    setDraft(saved);
+    setStatus(null);
+    setEditing(false);
   };
 
   if (!loaded) return null;
@@ -207,28 +248,79 @@ function ProfileDetailsControl({ userId }: { userId: string }) {
   return (
     <div className="auth-settings-section auth-settings-section-stacked">
       <span className="auth-settings-label">My Profile</span>
-      <div className="auth-avatar-upload-row">
-        <span className="auth-avatar auth-avatar-lg" aria-hidden="true">
-          {avatarUrl ? <img src={avatarUrl} alt="" /> : "👤"}
-        </span>
-        <button type="button" onClick={() => fileInputRef.current?.click()} disabled={uploading}>
-          {uploading ? "Uploading…" : "Change Photo"}
-        </button>
-        <input ref={fileInputRef} type="file" accept="image/*" hidden onChange={handleAvatarChange} />
-      </div>
-      {joinedAt && <p className="friend-profile-joined">Joined {formatJoinDate(joinedAt)}</p>}
-      <input type="text" value={church} onChange={(e) => setChurch(e.target.value)} placeholder="Church you attend (optional)" />
-      <input
-        type="text"
-        value={favoriteVerse}
-        onChange={(e) => setFavoriteVerse(e.target.value)}
-        placeholder="Favorite Bible verse (optional)"
-      />
-      <textarea value={bio} onChange={(e) => setBio(e.target.value)} placeholder="A little about you (optional)" rows={3} />
-      <button type="button" onClick={handleSave} disabled={saving}>
-        {saving ? "…" : "Save"}
-      </button>
-      {saved && <p className="auth-status">{saved}</p>}
+
+      {!editing ? (
+        <div className="profile-view">
+          <div className="friend-profile-header">
+            <span className="auth-avatar auth-avatar-lg" aria-hidden="true">
+              {saved.avatarUrl ? <img src={saved.avatarUrl} alt="" /> : "👤"}
+            </span>
+            <div>
+              {joinedAt && <p className="friend-profile-joined">Joined {formatJoinDate(joinedAt)}</p>}
+            </div>
+          </div>
+          {saved.church && <p className="profile-view-field">{saved.church}</p>}
+          {saved.favoriteVerse && (
+            <p className="profile-view-field">
+              <span aria-hidden="true">📖</span> {saved.favoriteVerse}
+            </p>
+          )}
+          {saved.bio && <p className="profile-view-field">{saved.bio}</p>}
+          <button type="button" onClick={() => setEditing(true)}>
+            ✏️ Edit
+          </button>
+        </div>
+      ) : (
+        <>
+          <div className="auth-avatar-upload-row">
+            <span className="auth-avatar auth-avatar-lg" aria-hidden="true">
+              {draft.avatarUrl ? <img src={draft.avatarUrl} alt="" /> : "👤"}
+            </span>
+            <button type="button" onClick={() => fileInputRef.current?.click()} disabled={uploading}>
+              {uploading ? "Uploading…" : "Change Photo"}
+            </button>
+            <input ref={fileInputRef} type="file" accept="image/*" hidden onChange={handlePhotoSelected} />
+          </div>
+          <input
+            type="text"
+            value={draft.church}
+            onChange={(e) => setDraft((f) => ({ ...f, church: e.target.value }))}
+            placeholder="Church you attend (optional)"
+          />
+          <input
+            type="text"
+            value={draft.favoriteVerse}
+            onChange={(e) => setDraft((f) => ({ ...f, favoriteVerse: e.target.value }))}
+            placeholder="Favorite Bible verse (optional)"
+          />
+          <textarea
+            value={draft.bio}
+            onChange={(e) => setDraft((f) => ({ ...f, bio: e.target.value }))}
+            placeholder="A little about you (optional)"
+            rows={3}
+          />
+          <div className="profile-edit-actions">
+            <button type="button" onClick={handleCancel} disabled={saving}>
+              Cancel
+            </button>
+            <button type="button" onClick={handleSave} disabled={saving}>
+              {saving ? "…" : "Save"}
+            </button>
+          </div>
+        </>
+      )}
+      {status && <p className="auth-status auth-error">{status}</p>}
+
+      {cropSrc && (
+        <AvatarCropModal
+          imageSrc={cropSrc}
+          onCancel={() => {
+            URL.revokeObjectURL(cropSrc);
+            setCropSrc(null);
+          }}
+          onCropped={handleCropped}
+        />
+      )}
     </div>
   );
 }
