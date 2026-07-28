@@ -388,6 +388,7 @@ export default function AuthButton({ session, openProfileNonce }: AuthButtonProp
   const [mode, setMode] = useState<Mode>("login");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
   const [displayName, setDisplayName] = useState("");
   const [savedDisplayName, setSavedDisplayName] = useState<string | null>(null);
   const [rememberMe, setRememberMeChecked] = useState(true);
@@ -641,15 +642,25 @@ export default function AuthButton({ session, openProfileNonce }: AuthButtonProp
               autoComplete="email"
             />
             {mode !== "reset" && (
-              <input
-                type="password"
-                placeholder="Password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                required
-                minLength={6}
-                autoComplete={mode === "login" ? "current-password" : "new-password"}
-              />
+              <div className="auth-password-field">
+                <input
+                  type={showPassword ? "text" : "password"}
+                  placeholder="Password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  required
+                  minLength={6}
+                  autoComplete={mode === "login" ? "current-password" : "new-password"}
+                />
+                <button
+                  type="button"
+                  className="auth-password-toggle"
+                  onClick={() => setShowPassword((v) => !v)}
+                  aria-label={showPassword ? "Hide password" : "Show password"}
+                >
+                  {showPassword ? "🙈" : "👁️"}
+                </button>
+              </div>
             )}
             {mode === "login" && (
               <div className="auth-form-extras">

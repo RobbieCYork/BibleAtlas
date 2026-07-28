@@ -3607,6 +3607,39 @@ body.resizing-panels {
   cursor: default;
 }
 
+/* Wraps a password input with a show/hide toggle — used in both the auth-form (column layout) and
+   the display-name-gate-card form (row layout), so it takes over the flex sizing those layouts used
+   to apply directly to the input (flex: 1 in the row case, stretch-to-fill in the column case). */
+.auth-password-field {
+  position: relative;
+  flex: 1;
+  min-width: 0;
+}
+
+.auth-password-field input {
+  width: 100%;
+  padding-right: 38px;
+}
+
+.auth-password-field .auth-password-toggle {
+  position: absolute;
+  right: 4px;
+  top: 50%;
+  transform: translateY(-50%);
+  border: none;
+  background: none;
+  padding: 4px 6px;
+  font-size: 15px;
+  line-height: 1;
+  cursor: pointer;
+  border-radius: 6px;
+  color: inherit;
+}
+
+.auth-password-field .auth-password-toggle:hover {
+  background: var(--border);
+}
+
 /* --- Friends/Messages/Groups view switcher --- */
 
 .friends-view-switcher {

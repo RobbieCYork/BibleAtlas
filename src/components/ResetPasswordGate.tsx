@@ -11,6 +11,7 @@ interface ResetPasswordGateProps {
 export default function ResetPasswordGate({ onDone }: ResetPasswordGateProps) {
   const [password, setPassword] = useState("");
   const [confirm, setConfirm] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -41,25 +42,45 @@ export default function ResetPasswordGate({ onDone }: ResetPasswordGateProps) {
         <h3>Set a new password</h3>
         <p>Choose a new password for your account.</p>
         <form onSubmit={handleSubmit}>
-          <input
-            type="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            placeholder="New Password"
-            autoFocus
-            required
-            minLength={6}
-            autoComplete="new-password"
-          />
-          <input
-            type="password"
-            value={confirm}
-            onChange={(e) => setConfirm(e.target.value)}
-            placeholder="Confirm Password"
-            required
-            minLength={6}
-            autoComplete="new-password"
-          />
+          <div className="auth-password-field">
+            <input
+              type={showPassword ? "text" : "password"}
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              placeholder="New Password"
+              autoFocus
+              required
+              minLength={6}
+              autoComplete="new-password"
+            />
+            <button
+              type="button"
+              className="auth-password-toggle"
+              onClick={() => setShowPassword((v) => !v)}
+              aria-label={showPassword ? "Hide password" : "Show password"}
+            >
+              {showPassword ? "🙈" : "👁️"}
+            </button>
+          </div>
+          <div className="auth-password-field">
+            <input
+              type={showPassword ? "text" : "password"}
+              value={confirm}
+              onChange={(e) => setConfirm(e.target.value)}
+              placeholder="Confirm Password"
+              required
+              minLength={6}
+              autoComplete="new-password"
+            />
+            <button
+              type="button"
+              className="auth-password-toggle"
+              onClick={() => setShowPassword((v) => !v)}
+              aria-label={showPassword ? "Hide password" : "Show password"}
+            >
+              {showPassword ? "🙈" : "👁️"}
+            </button>
+          </div>
           <button type="submit" disabled={saving || !password || !confirm}>
             {saving ? "…" : "Update Password"}
           </button>
