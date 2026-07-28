@@ -45,6 +45,18 @@ const NAME_ENTRIES: NameEntry[] = (() => {
 
 const NAME_TO_ENTRY = new Map(NAME_ENTRIES.map((e) => [e.name.toLowerCase(), e]));
 
+/** id -> kind, so a BOOK_NAME_OVERRIDES redirect can report the *target's* kind — every override so far
+ * happens to redirect person-to-person, but the Edom fix below redirects location-to-person, and a
+ * stale kind (e.g. still "location" for a person id) sends the click to the wrong handler entirely. */
+const ID_TO_KIND = new Map(NAME_ENTRIES.map((e) => [e.id, e.kind]));
+
+// "Edom" is the one case where the general "people win over locations" default (see the comment on
+// NAME_ENTRIES above) picks the wrong global owner: Esau's personal nickname (Genesis 36's "Esau is
+// Edom") is vastly outnumbered by "Edom" the nation/region throughout the rest of the Old Testament.
+// Force the location to be the default here; BOOK_NAME_OVERRIDES below recovers Esau within Genesis.
+const edomLocationEntry = NAME_ENTRIES.find((e) => e.kind === "location" && e.name.toLowerCase() === "edom");
+if (edomLocationEntry) NAME_TO_ENTRY.set("edom", edomLocationEntry);
+
 /** Some bare names are genuinely ambiguous between two prominent, frequently-recurring people, and
  * whichever one "owns" the name globally (see the comments in people.ts) will be wrong within a
  * specific book. Rather than trying to disambiguate at the individual-verse level (which would need
@@ -59,6 +71,21 @@ const NAME_TO_ENTRY = new Map(NAME_ENTRIES.map((e) => [e.name.toLowerCase(), e])
 const BOOK_NAME_OVERRIDES: Record<string, Record<string, string>> = {
   joseph: { Matthew: "joseph-husband-of-mary", Luke: "joseph-husband-of-mary" },
   john: { Acts: "john-the-apostle" },
+  // Default owner is the Edom location (see edomLocationEntry above) — Genesis is the one book where
+  // "Edom" means Esau himself.
+  edom: { Genesis: "esau" },
+};
+
+/** Names where, unlike the overrides above, there's no good redirect target outside a short list of
+ * books — the bare name resolves to a person entry that owns it globally, but every OTHER mention
+ * refers to someone/something this app has no entry for, so the least-wrong move is no link at all
+ * rather than a confidently wrong one.
+ * - "Manasseh": the only entry with this alternate name is Manasseh, King of Judah (2 Kings 21/2
+ *   Chronicles 33/Matthew 1:10 — see his own `verses`), but "Manasseh" appears far more often in
+ *   Genesis/Numbers/Deuteronomy/Joshua/Judges/1 Chronicles/Ezekiel/Revelation naming the tribe
+ *   descended from Joseph's son — a distinct figure roughly 700 years earlier with no entry here. */
+const BOOK_NAME_ALLOWLIST: Record<string, string[]> = {
+  manasseh: ["2 Kings", "2 Chronicles", "Matthew"],
 };
 
 function escapeRegExp(s: string): string {
@@ -100,10 +127,15 @@ export function computeLinkAnnotations(text: string, excludeId?: string, book?: 
     } else {
       const entry = NAME_TO_ENTRY.get(name.toLowerCase());
       if (entry) {
-        const overrideId = book ? BOOK_NAME_OVERRIDES[name.toLowerCase()]?.[book] : undefined;
-        const id = overrideId ?? entry.id;
-        if (id !== excludeId) {
-          annotations.push({ start, end, text: name, kind: entry.kind, id });
+        const allowlist = BOOK_NAME_ALLOWLIST[name.toLowerCase()];
+        const suppressed = !!allowlist && !!book && !allowlist.includes(book);
+        if (!suppressed) {
+          const overrideId = book ? BOOK_NAME_OVERRIDES[name.toLowerCase()]?.[book] : undefined;
+          const id = overrideId ?? entry.id;
+          const kind = overrideId ? (ID_TO_KIND.get(overrideId) ?? entry.kind) : entry.kind;
+          if (id !== excludeId) {
+            annotations.push({ start, end, text: name, kind, id });
+          }
         }
       }
     }

@@ -6,6 +6,9 @@ import ReadingProgressGrid from "./ReadingProgressGrid";
 
 interface AuthButtonProps {
   session: Session | null;
+  /** Bumped by the mobile "More" sheet's "My Profile" entry — pops this menu open straight to
+   * Settings. Undefined until first triggered, so mounting doesn't pop the menu open unprompted. */
+  openSettingsNonce?: number;
 }
 
 type Mode = "login" | "signup" | "reset";
@@ -338,9 +341,15 @@ function DataExportControl({ userId }: { userId: string }) {
 
 type MenuView = "menu" | "settings";
 
-export default function AuthButton({ session }: AuthButtonProps) {
+export default function AuthButton({ session, openSettingsNonce }: AuthButtonProps) {
   const [open, setOpen] = useState(false);
   const [menuView, setMenuView] = useState<MenuView>("menu");
+
+  useEffect(() => {
+    if (openSettingsNonce === undefined) return;
+    setOpen(true);
+    setMenuView("settings");
+  }, [openSettingsNonce]);
   const [mode, setMode] = useState<Mode>("login");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");

@@ -316,6 +316,10 @@ function App() {
   // while the panel is already open still resets it to that view's list (rather than a no-op).
   const [friendsView, setFriendsView] = useState<"friends" | "messages" | "groups">("friends");
   const [friendsViewNonce, setFriendsViewNonce] = useState(0);
+  // Lets the mobile "More" sheet's "My Profile" entry pop open the account menu's Settings view —
+  // stays undefined until first triggered so AuthButton's effect doesn't fire (and pop the menu open)
+  // on initial mount.
+  const [openProfileNonce, setOpenProfileNonce] = useState<number | undefined>(undefined);
   /** Shared by the mobile "More" sheet and the in-panel view switcher (so it works on desktop too,
    * where there's no "More" sheet to reach Messages/Groups from otherwise). */
   const handleSelectFriendsView = (targetView: "friends" | "messages" | "groups") => {
@@ -551,7 +555,7 @@ function App() {
         {searchMode === "notes" && (
           <HeaderTextSearch placeholder="Search My Notes" value={notesSearchQuery} onChange={setNotesSearchQuery} />
         )}
-        <AuthButton session={session} />
+        <AuthButton session={session} openSettingsNonce={openProfileNonce} />
       </header>
       <div className="app-body">
         {bibleMounted && (
@@ -699,6 +703,7 @@ function App() {
           friendsBadgeCount={pendingFriendRequests}
           messagesBadgeCount={unreadMessages}
           groupsBadgeCount={groupsBadgeCount}
+          onOpenProfile={() => setOpenProfileNonce((n) => (n ?? 0) + 1)}
         />
       )}
     </div>

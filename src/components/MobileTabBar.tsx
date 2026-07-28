@@ -17,6 +17,9 @@ interface MobileTabBarProps {
   /** Unread group messages + pending join requests you can approve — badges the "More" tab and the
    * Groups row. */
   groupsBadgeCount?: number;
+  /** "My Profile" in the sheet doesn't select a panel like the others — it pops open the account
+   * menu (top-right avatar) straight to Settings instead. */
+  onOpenProfile: () => void;
 }
 
 const PINNED_TABS: { key: PanelKey; label: string; icon: string }[] = [
@@ -42,6 +45,7 @@ export default function MobileTabBar({
   friendsBadgeCount = 0,
   messagesBadgeCount = 0,
   groupsBadgeCount = 0,
+  onOpenProfile,
 }: MobileTabBarProps) {
   const [moreOpen, setMoreOpen] = useState(false);
   const moreRef = useRef<HTMLDivElement | null>(null);
@@ -108,6 +112,17 @@ export default function MobileTabBar({
                 </button>
               );
             })}
+            <button
+              type="button"
+              className="mobile-more-item"
+              onClick={() => {
+                setMoreOpen(false);
+                onOpenProfile();
+              }}
+            >
+              <span aria-hidden="true">👤</span>
+              My Profile
+            </button>
           </div>
         )}
         <button
