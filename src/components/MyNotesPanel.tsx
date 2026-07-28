@@ -11,6 +11,9 @@ interface MyNotesPanelProps {
   style?: React.CSSProperties;
   hidden?: boolean;
   refreshKey?: number;
+  /** Free-text filter from the header search bar (only shown while Notes is the active panel) —
+   * matched live against each entry's note/quote text, no submit needed. */
+  searchQuery?: string;
 }
 
 interface Entry {
@@ -43,7 +46,7 @@ function escapeHtml(text: string): string {
   return text.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
 }
 
-export default function MyNotesPanel({ userId, onClose, onGoToVerse, expand, style, hidden, refreshKey }: MyNotesPanelProps) {
+export default function MyNotesPanel({ userId, onClose, onGoToVerse, expand, style, hidden, refreshKey, searchQuery }: MyNotesPanelProps) {
   const [notes, setNotes] = useState<Note[]>([]);
   const [tags, setTags] = useState<Tag[]>([]);
   const [verseTags, setVerseTags] = useState<VerseTag[]>([]);
@@ -130,9 +133,15 @@ export default function MyNotesPanel({ userId, onClose, onGoToVerse, expand, sty
     tags.map((t) => [t.id, allEntries.filter((e) => e.verseTags.some((vt) => vt.tag_id === t.id)).length])
   );
 
+  const trimmedSearch = searchQuery?.trim().toLowerCase() ?? "";
+
   const visibleEntries = allEntries.filter((e) => {
     if (bookFilter && e.book !== bookFilter) return false;
     if (tagFilter && !e.verseTags.some((vt) => vt.tag_id === tagFilter)) return false;
+    if (trimmedSearch) {
+      const haystack = `${e.note?.note_text ?? ""} ${e.note?.quoted_text ?? ""} ${refLabel(e)}`.toLowerCase();
+      if (!haystack.includes(trimmedSearch)) return false;
+    }
     return true;
   });
 
@@ -264,8 +273,7 @@ export default function MyNotesPanel({ userId, onClose, onGoToVerse, expand, sty
 
   return (
     <div className={`my-notes-panel ${expand ? "panel-expand" : ""} ${hidden ? "bible-panel-hidden" : ""}`} style={expand ? undefined : style}>
-      <div className="bible-panel-header no-print">
-        <h3>My Notes</h3>
+      <div className="bible-panel-header bible-panel-header-minimal no-print">
         <button className="panel-close" onClick={onClose} aria-label="Close My Notes panel">
           ×
         </button>

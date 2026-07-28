@@ -31,6 +31,11 @@ interface BiblePanelProps {
   /** Called after a note, tag, or verse-tag is saved/deleted, so the My Notes panel (which fetches
    * once on mount) knows to refetch. */
   onNotesChanged?: () => void;
+  /** Word/phrase search now lives in the app header (only shown while Bible is the active panel) —
+   * these mirror the reference/referenceNonce pattern so submitting there (Enter key) runs a search
+   * here without duplicating the search UI inside the panel itself. */
+  externalSearchQuery?: string;
+  externalSearchNonce?: number;
 }
 
 interface VerseData {
@@ -110,6 +115,8 @@ export default function BiblePanel({
   restoreTranslation,
   hidden,
   onNotesChanged,
+  externalSearchQuery,
+  externalSearchNonce,
 }: BiblePanelProps) {
   const [translation, setTranslation] = useState("web");
   const [passage, setPassage] = useState<PassageResult | null>(null);
@@ -125,7 +132,6 @@ export default function BiblePanel({
   const chapterPickerRef = useRef<PickerHandle>(null);
   const versePickerRef = useRef<PickerHandle>(null);
 
-  const [searchQuery, setSearchQuery] = useState("");
   const [searchResults, setSearchResults] = useState<SearchHit[] | null>(null);
   const [searching, setSearching] = useState(false);
   const [searchError, setSearchError] = useState<string | null>(null);
@@ -538,9 +544,8 @@ export default function BiblePanel({
     verseRefs.current[verseNum]?.scrollIntoView({ behavior: "smooth", block: "center" });
   };
 
-  const handleSearch = async (e: React.FormEvent) => {
-    e.preventDefault();
-    const q = searchQuery.trim();
+  const runSearch = async (rawQuery: string) => {
+    const q = rawQuery.trim();
     if (!q) return;
     setSearching(true);
     setSearchError(null);
@@ -558,6 +563,15 @@ export default function BiblePanel({
     }
   };
 
+  // Search input lives in the app header now (see externalSearchQuery/externalSearchNonce) —
+  // submitting there (Enter key) bumps the nonce, which is the only thing this effect keys off so a
+  // repeated identical search still re-runs.
+  useEffect(() => {
+    if (externalSearchNonce === undefined) return;
+    if (externalSearchQuery) runSearch(externalSearchQuery);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [externalSearchNonce]);
+
   const handleSearchResultClick = async (hit: SearchHit) => {
     const bookName = BOOKS[hit.book - 1]?.name;
     if (!bookName) return;
@@ -565,7 +579,6 @@ export default function BiblePanel({
     if (ok) {
       setPendingScrollVerse(hit.verse);
       setSearchResults(null);
-      setSearchQuery("");
     }
   };
 
@@ -623,14 +636,11 @@ export default function BiblePanel({
       style={expand ? undefined : style}
     >
       <div className="bible-panel-scroll">
-      <div className="bible-panel-header">
-        <h3>Bible</h3>
+      <div className="bible-panel-header bible-panel-header-minimal">
         <button className="panel-close" onClick={onClose} aria-label="Close Bible panel">
           ×
         </button>
       </div>
-
-      <p className="bible-status">Pick a book below, or search for a word or phrase.</p>
 
       <div className="bible-nav">
         <InlinePicker
@@ -685,18 +695,7 @@ export default function BiblePanel({
         ))}
       </select>
 
-      <form className="bible-keyword-search" onSubmit={handleSearch}>
-        <input
-          type="text"
-          value={searchQuery}
-          onChange={(e) => setSearchQuery(e.target.value)}
-          placeholder="Search Scripture for a word or phrase…"
-        />
-        <button type="submit" disabled={searching}>
-          {searching ? "…" : "Search"}
-        </button>
-      </form>
-
+      {searching && <p className="bible-status">Searching…</p>}
       {searchError && <p className="bible-status bible-error">{searchError}</p>}
 
       {searchResults && (

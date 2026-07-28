@@ -4,6 +4,7 @@ import type { Session } from "@supabase/supabase-js";
 import MapView from "./components/MapView";
 import LayerControls from "./components/LayerControls";
 import SearchBar from "./components/SearchBar";
+import HeaderTextSearch from "./components/HeaderTextSearch";
 import LocationPanel from "./components/LocationPanel";
 import PoiPanel from "./components/PoiPanel";
 import PersonPanel from "./components/PersonPanel";
@@ -47,6 +48,12 @@ function App() {
   // Bumped whenever BiblePanel saves or deletes a note, so MyNotesPanel (which stays mounted on
   // mobile and only fetches on userId change) knows to refetch instead of showing stale data.
   const [notesVersion, setNotesVersion] = useState(0);
+  // The header search bar swaps behavior by active panel — Map keeps its own autocomplete
+  // component, Bible and Notes drive these instead (see the reference/referenceNonce comment above
+  // for why Bible needs a nonce: it hits an external API on Enter, not on every keystroke).
+  const [bibleSearchQuery, setBibleSearchQuery] = useState("");
+  const [bibleSearchNonce, setBibleSearchNonce] = useState(0);
+  const [notesSearchQuery, setNotesSearchQuery] = useState("");
   const [isMobile, setIsMobile] = useState(() => window.matchMedia(MOBILE_QUERY).matches);
   // On mobile, exactly one panel is shown at a time (driven by the bottom tab bar) — default to
   // Bible. Desktop shows Bible+Map together by default.
@@ -417,9 +424,26 @@ function App() {
   const notesHiddenOnMobile = isMobile && !panels.notes;
   const friendsMounted = panels.friends || isMobile;
   const friendsHiddenOnMobile = isMobile && !panels.friends;
-  // The location search bar only makes sense while looking at the map (it flies the map to a result) —
-  // hide it everywhere else so the header doesn't crowd the Bible/Details/Notes views.
-  const showSearchBar = isMobile ? activeMobilePanel === "map" : panels.map;
+  // Which panel the header search bar serves — each panel gets its own search behavior (Map flies to
+  // a location, Bible runs a word/phrase search, Notes filters live) rather than one generic bar, so
+  // only one can be "active" at a time. On desktop, where Bible+Map are often open together, Map
+  // wins ties (unchanged from the original map-only behavior) since it's the more common case.
+  const searchMode: "map" | "bible" | "notes" | null = isMobile
+    ? activeMobilePanel === "map" || activeMobilePanel === "bible" || activeMobilePanel === "notes"
+      ? activeMobilePanel
+      : null
+    : panels.map
+      ? "map"
+      : panels.bible
+        ? "bible"
+        : panels.notes
+          ? "notes"
+          : null;
+
+  const goHome = () => {
+    if (isMobile) setMobileActivePanel("bible");
+    else openPanel("bible");
+  };
 
   return (
     <div className="app-shell">
@@ -429,9 +453,22 @@ function App() {
       )}
       <header className="app-header">
         <PanelMenu panels={panels} onToggle={togglePanel} friendsBadgeCount={pendingFriendRequests + unreadMessages + groupsBadgeCount} />
-        <img src="/favicon.svg" className="app-logo" alt="" aria-hidden="true" />
+        <button type="button" className="app-logo-button" onClick={goHome} aria-label="Go to Bible">
+          <img src="/favicon.svg" className="app-logo" alt="" aria-hidden="true" />
+        </button>
         <h1>New Testament Biblical Atlas</h1>
-        {showSearchBar && <SearchBar locations={locations} onSelect={handleSelect} />}
+        {searchMode === "map" && <SearchBar locations={locations} onSelect={handleSelect} />}
+        {searchMode === "bible" && (
+          <HeaderTextSearch
+            placeholder="Search the Bible"
+            value={bibleSearchQuery}
+            onChange={setBibleSearchQuery}
+            onSubmit={() => setBibleSearchNonce((n) => n + 1)}
+          />
+        )}
+        {searchMode === "notes" && (
+          <HeaderTextSearch placeholder="Search My Notes" value={notesSearchQuery} onChange={setNotesSearchQuery} />
+        )}
         <AuthButton session={session} />
       </header>
       <div className="app-body">
@@ -449,6 +486,8 @@ function App() {
             restoreTranslation={restoreTranslation}
             hidden={bibleHiddenOnMobile}
             onNotesChanged={() => setNotesVersion((n) => n + 1)}
+            externalSearchQuery={bibleSearchQuery}
+            externalSearchNonce={bibleSearchNonce}
           />
         )}
         {panels.bible && panels.map && (
@@ -546,6 +585,7 @@ function App() {
             style={{ width: notesWidth }}
             hidden={notesHiddenOnMobile}
             refreshKey={notesVersion}
+            searchQuery={notesSearchQuery}
           />
         )}
         {friendsMounted && (

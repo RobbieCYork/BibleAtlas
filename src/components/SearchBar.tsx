@@ -32,7 +32,7 @@ export default function SearchBar({ locations, onSelect }: SearchBarProps) {
     <div className="search-bar">
       <input
         type="text"
-        placeholder="Search a New Testament location (e.g. Capernaum, Galilee)…"
+        placeholder="Search the Map"
         value={query}
         onChange={(e) => {
           setQuery(e.target.value);

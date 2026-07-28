@@ -1278,6 +1278,12 @@ body.resizing-panels {
   margin-bottom: 12px;
 }
 
+/* No title left in the header (Bible/My Notes — redundant with the tab bar label below) — just the
+   close button, pinned to the right where it always was. */
+.bible-panel-header-minimal {
+  justify-content: flex-end;
+}
+
 .bible-panel-header h3 {
   font-size: 16px;
   flex: 1;
@@ -1745,6 +1751,15 @@ body.resizing-panels {
   width: 30px;
   height: 30px;
   border-radius: 8px;
+  flex-shrink: 0;
+}
+
+.app-logo-button {
+  border: none;
+  background: none;
+  padding: 0;
+  cursor: pointer;
+  line-height: 0;
   flex-shrink: 0;
 }
 
