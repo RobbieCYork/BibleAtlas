@@ -82,6 +82,10 @@ export interface ExtraBiblicalReference {
    * "Later church tradition (3rd century+) — not a contemporary historical source." Required so
    * legendary/traditional material is never presented with the same confidence as a contemporary record. */
   reliability: string;
+  /** Link to a free public-domain full-text translation of the cited passage (Perseus, LacusCurtius,
+   * Sefaria, etc.) — omitted when the citation is too vague to point at a specific passage, or when no
+   * free public-domain English text of the work exists online. */
+  url?: string;
 }
 
 export interface Person {

@@ -29,6 +29,7 @@ export const people: Person[] = [
       {
         source: "Clement of Rome, First Epistle to the Corinthians",
         citation: "5.4",
+        url: "https://www.newadvent.org/fathers/1010.htm",
         summary:
           "Written from Rome around AD 96, this early letter lists Peter among those who \"bore witness\" and suffered, generally read as an early allusion to his death in Rome, though it does not narrate the crucifixion story or name a location explicitly.",
         reliability:
@@ -37,6 +38,7 @@ export const people: Person[] = [
       {
         source: "Eusebius of Caesarea, Church History",
         citation: "2.25",
+        url: "https://www.newadvent.org/fathers/250102.htm",
         summary:
           "Writing in the early 4th century, Eusebius records the tradition that Peter was crucified upside down in Rome under Nero, citing the earlier writer Origen as his source for that detail.",
         reliability:
@@ -87,6 +89,7 @@ export const people: Person[] = [
       {
         source: "Josephus, Antiquities of the Jews",
         citation: "18.3.1-2 (55-64) and 18.4.1-2 (85-89)",
+        url: "https://www.perseus.tufts.edu/hopper/text?doc=J.+AJ+18.3.1",
         summary:
           "Describes Pilate provoking riots by bringing military standards into Jerusalem and by using temple funds for an aqueduct, and records the Mount Gerizim incident that led to Pilate being recalled to Rome.",
         reliability: "Near-contemporary Jewish historical record, written within living memory of the events.",
@@ -94,6 +97,7 @@ export const people: Person[] = [
       {
         source: "Philo of Alexandria, On the Embassy to Gaius",
         citation: "38 (299-305)",
+        url: "https://www.earlychristianwritings.com/yonge/book40.html",
         summary:
           "Quotes a letter describing Pilate as inflexible, corrupt, and guilty of \"briberies, insults, robberies, outrages,\" and needless executions — a harsher assessment than Josephus's, though Philo had his own polemical reasons for depicting Pilate negatively.",
         reliability: "Near-contemporary but explicitly one-sided source, hostile to Pilate.",
@@ -101,6 +105,7 @@ export const people: Person[] = [
       {
         source: "Tacitus, Annals",
         citation: "15.44",
+        url: "https://penelope.uchicago.edu/Thayer/E/Roman/Texts/Tacitus/Annals/15B*.html#44",
         summary:
           "Writing about Nero's persecution of Christians in Rome (AD 64), Tacitus notes in passing that \"Christus\" had been executed \"at the hands of one of our procurators, Pontius Pilatus, in the reign of Tiberius\" — confirming the crucifixion and Pilate's role from a Roman, non-Christian source.",
         reliability: "Independent Roman historical source, though written roughly 80 years after the event.",
@@ -148,24 +153,28 @@ export const people: Person[] = [
       {
         source: "Josephus, Antiquities of the Jews",
         citation: "18.3.3 (63-64), the \"Testimonium Flavianum\"",
+        url: "https://www.perseus.tufts.edu/hopper/text?doc=J.+AJ+18.3.3",
         summary: "Writing around AD 93-94, the Jewish historian Josephus describes \"Jesus, a wise man,\" who performed surprising works, taught many Jews and Greeks, was condemned to crucifixion by Pilate on the accusation of Jewish leaders, and whose followers continued after his death.",
         reliability: "A near-contemporary non-Christian source, but the surviving text shows clear signs of later Christian editing (it calls Jesus \"the Christ\" and affirms the resurrection in ways unlikely from a non-Christian Jewish writer); most scholars believe Josephus wrote a shorter, more neutral original core that was later expanded by Christian copyists.",
       },
       {
         source: "Josephus, Antiquities of the Jews",
         citation: "20.9.1 (200)",
+        url: "https://www.perseus.tufts.edu/hopper/text?doc=J.+AJ+20.9.1",
         summary: "In a passage about the high priest Ananus, Josephus refers in passing to \"the brother of Jesus, who was called Christ, whose name was James,\" describing James's execution around AD 62.",
         reliability: "Widely regarded by scholars as far more likely to be authentic and unaltered than the Testimonium Flavianum, since it is a brief, incidental mention rather than a stand-alone endorsement.",
       },
       {
         source: "Tacitus, Annals",
         citation: "15.44",
+        url: "https://penelope.uchicago.edu/Thayer/E/Roman/Texts/Tacitus/Annals/15B*.html#44",
         summary: "The Roman historian Tacitus, writing around AD 116, reports that \"Christus, from whom the name [Christian] had its origin, suffered the extreme penalty during the reign of Tiberius at the hands of one of our procurators, Pontius Pilatus,\" while describing Nero's persecution of Christians after the fire of Rome.",
         reliability: "A hostile, non-Christian Roman source writing about 80 years after the crucifixion — valuable independent confirmation that Jesus existed and was executed under Pilate, though brief and not an eyewitness account.",
       },
       {
         source: "Pliny the Younger, Letters to Trajan",
         citation: "10.96",
+        url: "https://www.attalus.org/old/pliny10b.html#96",
         summary: "Writing around AD 112 as a Roman governor asking the emperor Trajan how to handle Christians, Pliny describes Christians gathering before dawn to \"sing a hymn to Christ as to a god\" — indirect evidence of how early believers already regarded Jesus within a few generations of his death.",
         reliability: "Contemporary Roman administrative correspondence — does not discuss Jesus's life directly, but is solid evidence for how quickly and widely devotion to him had spread across the empire.",
       },
@@ -243,6 +252,7 @@ export const people: Person[] = [
       {
         source: "Clement of Rome, First Epistle to the Corinthians",
         citation: "5.5-7",
+        url: "https://www.newadvent.org/fathers/1010.htm",
         summary: "Writing from Rome around AD 96, Clement describes Paul as having \"reached the limits of the West\" after enduring imprisonment, exile, and persecution, and suffering as a martyr — generally read as an early allusion to Paul's death in Rome under Nero.",
         reliability: "Very early (within about three decades of Paul's death) and from the church at Rome itself, but brief and allusive rather than a detailed independent narrative.",
       },
@@ -322,6 +332,7 @@ export const people: Person[] = [
       {
         source: "Josephus, Antiquities of the Jews",
         citation: "18.5.2 (116-119)",
+        url: "https://www.perseus.tufts.edu/hopper/text?doc=J.+AJ+18.5.2",
         summary: "Josephus describes John as \"a good man\" who urged the Jews to live righteously and be baptized, and says Herod Antipas had him executed at the fortress of Machaerus out of fear that John's influence over the crowds might lead to an uprising — a political motive, distinct from the Gospels' account centered on Herodias's grudge over John's condemnation of her marriage.",
         reliability: "An independent, near-contemporary non-Christian source (Josephus wrote around AD 93-94, within living memory of John's death), making it one of the strongest outside confirmations of any figure in the New Testament, though it reflects Josephus's own political framing rather than a neutral transcript of events.",
       },
@@ -421,12 +432,14 @@ export const people: Person[] = [
       {
         source: "Josephus, Antiquities of the Jews",
         citation: "Books 15-17",
+        url: "https://www.perseus.tufts.edu/hopper/text?doc=J.+AJ+15",
         summary: "Josephus provides an extensive, detailed political history of Herod's reign, including his rise to power, building projects, and the executions of his wife Mariamne and several of his sons over suspected plots against him.",
         reliability: "Written roughly a century after Herod's death, but Josephus drew heavily on the lost memoirs of Nicolaus of Damascus, who served as Herod's own courtier and advisor and wrote during Herod's lifetime — giving the account strong, if not fully neutral, grounding in contemporary sources.",
       },
       {
         source: "Josephus, The Jewish War",
         citation: "Book 1",
+        url: "https://www.perseus.tufts.edu/hopper/text?doc=J.+BJ+1",
         summary: "Josephus's earlier work covers much of the same ground as the Antiquities, detailing Herod's military campaigns, building projects, and domestic violence within his own family.",
         reliability: "Same underlying sourcing concerns as the Antiquities — a later but well-informed account drawing on court records and Nicolaus of Damascus's contemporary writing.",
       },
@@ -465,12 +478,14 @@ export const people: Person[] = [
       {
         source: "Josephus, Antiquities of the Jews",
         citation: "20.9.1 (200)",
+        url: "https://www.perseus.tufts.edu/hopper/text?doc=J.+AJ+20.9.1",
         summary: "Josephus reports that the high priest Ananus convened the Sanhedrin, charged James — \"the brother of Jesus, who was called Christ\" — and some companions with breaking the law, and had them stoned to death, an act that scandalized fair-minded Jerusalemites and led to Ananus's removal as high priest.",
         reliability: "Contemporary 1st-century Jewish historical record, written within decades of the event by a non-Christian source — widely regarded by historians as authentic and reliable.",
       },
       {
         source: "Eusebius of Caesarea, Church History (quoting Hegesippus)",
         citation: "2.23",
+        url: "https://www.newadvent.org/fathers/250102.htm",
         summary: "Eusebius preserves an earlier account from Hegesippus describing James as revered for his piety, and gives a more elaborate (and different) death narrative — thrown from the temple's pinnacle, then clubbed to death.",
         reliability: "Later church tradition (2nd–4th century, well over a century after the event) — valuable for how the early church remembered James, but not a contemporary historical record like Josephus.",
       },
@@ -742,6 +757,7 @@ export const people: Person[] = [
       {
         source: "Papias of Hierapolis, as quoted in Eusebius, Church History",
         citation: "3.39.15",
+        url: "https://www.newadvent.org/fathers/250103.htm",
         summary: "Papias, writing in the early 2nd century, reports that Mark, as Peter's interpreter, accurately wrote down what he remembered of Peter's preaching about Jesus, though not in strict chronological order.",
         reliability: "Early church tradition preserved secondhand by Eusebius (4th century) quoting Papias (early 2nd century) — not a contemporary eyewitness record, but among the earliest and most-cited traditions about a Gospel's origin.",
       },
@@ -888,6 +904,7 @@ export const people: Person[] = [
       {
         source: "Suetonius, Life of Claudius",
         citation: "25.4",
+        url: "https://penelope.uchicago.edu/Thayer/E/Roman/Texts/Suetonius/12Caesars/Claudius*.html#25",
         summary: "Suetonius records that the emperor Claudius 'expelled the Jews from Rome, since they were constantly making disturbances because of the instigator Chrestus.' Most historians read 'Chrestus' as a garbled reference to Christ, meaning the expulsion likely arose from disputes within Rome's Jewish community over the emerging Christian movement.",
         reliability: "Contemporary Roman historical writing (Suetonius wrote in the early 2nd century, drawing on earlier records) — independent, non-Christian confirmation of the expulsion event that Acts 18:2 also describes, though the 'Chrestus' identification with Christ is a scholarly inference, not stated outright.",
       },
@@ -1068,6 +1085,7 @@ export const people: Person[] = [
       {
         source: "Josephus, Jewish Antiquities",
         citation: "Antiquities 18.2.2 (33-35)",
+        url: "https://www.perseus.tufts.edu/hopper/text?doc=J.+AJ+18.2.2",
         summary: "Josephus records that the Roman prefect Valerius Gratus appointed 'Joseph, who was also called Caiaphas' as high priest, and that he was later removed from office by the proconsul Vitellius around AD 36-37.",
         reliability: "Independent first-century historical account confirming Caiaphas's appointment, long tenure, and eventual removal.",
       },
@@ -1101,6 +1119,7 @@ export const people: Person[] = [
       {
         source: "Josephus, Jewish Antiquities",
         citation: "Antiquities 18.5.1-2 (109-119)",
+        url: "https://www.perseus.tufts.edu/hopper/text?doc=J.+AJ+18.5.1",
         summary: "Josephus describes Antipas's marriage to Herodias (his brother's wife) as scandalous, and separately explains that Antipas had John the Baptist arrested and executed at the fortress of Machaerus out of fear that John's influence over the crowds could lead to rebellion — a political rather than personal motive.",
         reliability: "Independent first-century Jewish historical source, though Josephus's own political framing and priorities shape his account.",
       },
@@ -1134,6 +1153,7 @@ export const people: Person[] = [
       {
         source: "Josephus, Jewish Antiquities",
         citation: "Antiquities 19.8.2 (343-350)",
+        url: "https://www.perseus.tufts.edu/hopper/text?doc=J.+AJ+19.8.2",
         summary: "Josephus describes Agrippa I appearing in Caesarea in a glittering silver robe, being hailed by the crowd as a god, and then being struck with sudden severe abdominal pain, dying five days later — independently corroborating the core scene in Acts 12:20-23, with a differently described cause of death.",
         reliability: "Independent first-century historical account; strong corroboration of the biblical narrative's core events, though the two sources differ on the specific description of his fatal illness.",
       },
@@ -1190,6 +1210,7 @@ export const people: Person[] = [
       {
         source: "Tacitus, Histories",
         citation: "Histories 5.9",
+        url: "https://penelope.uchicago.edu/Thayer/E/Roman/Texts/Tacitus/Histories/5A*.html#9",
         summary: "Tacitus writes that Felix practiced 'the power of a king with the mind of a slave' (\"per omnem saevitiam ac libidinem ius regium servili ingenio exercuit\"), and elsewhere Roman sources including Suetonius and Josephus describe his governorship as marked by corruption and brutal suppression of unrest in Judea.",
         reliability: "Independent Roman historical assessment from a source with no connection to the Christian tradition; broadly consistent with the corruption implied in Acts 24:26.",
       },
@@ -1219,6 +1240,7 @@ export const people: Person[] = [
       {
         source: "Josephus, Jewish Antiquities",
         citation: "Antiquities 20.8.9-11 (182-196)",
+        url: "https://www.perseus.tufts.edu/hopper/text?doc=J.+AJ+20.8.9",
         summary: "Josephus describes Festus's governorship as comparatively energetic and effective, particularly in moving against bandits ('sicarii') and unrest in Judea, contrasting him somewhat favorably with the governors before and after him, though his tenure was cut short by his death in office.",
         reliability: "Independent first-century Jewish historical source, broadly corroborating that Festus governed Judea in this period, though it does not mention Paul's case.",
       },
@@ -1471,6 +1493,7 @@ export const people: Person[] = [
       {
         source: "Justin Martyr, First Apology 26; Irenaeus, Against Heresies 1.23",
         citation: "Justin Martyr, First Apology 26; Irenaeus, Against Heresies 1.23",
+        url: "https://www.newadvent.org/fathers/0103123.htm",
         summary: "Later 2nd-century Christian writers describe a 'Simon Magus' active in Rome and venerated as the founder of Gnosticism, allegedly traveling with a companion named Helena whom he presented as a divine emanation.",
         reliability: "Disputed and later tradition, not confirmed fact. Scholars are divided on whether this Roman Gnostic teacher is the same Simon from Acts 8 or a later legendary elaboration that absorbed his name; Justin's claim of a statue honoring Simon in Rome is widely thought to be a misreading of an inscription to an unrelated Roman god.",
       },
@@ -1497,6 +1520,7 @@ export const people: Person[] = [
       {
         source: "Mishnah (e.g., Sotah 9:15; tractate Gittin)",
         citation: "Mishnah, Sotah 9:15",
+        url: "https://www.sefaria.org/Mishnah_Sotah.9.15",
         summary: "Jewish tradition independently and extensively documents Gamaliel (often called 'Gamaliel the Elder') as the grandson of the great sage Hillel and one of the most revered figures in early rabbinic Judaism, credited with rulings that shaped Jewish legal practice.",
         reliability: "Solid historical record. This is a well-established figure in Jewish sources outside the New Testament, though the Mishnah's portrait comes from a rabbinic rather than Christian perspective and predates the Gospels' final form by only decades.",
       },
@@ -1616,6 +1640,7 @@ export const people: Person[] = [
       {
         source: "Later church tradition (e.g., referenced by Irenaeus and Eusebius)",
         citation: "Irenaeus, Against Heresies 3.12; Eusebius, Ecclesiastical History 2.1",
+        url: "https://www.newadvent.org/fathers/0103312.htm",
         summary: "Some later church writers credit this eunuch with carrying Christianity back to Ethiopia and founding the faith there.",
         reliability: "Later tradition, not stated or confirmed in the Acts account itself, which says nothing about what he did after the encounter. Treat as pious tradition rather than history.",
       },
@@ -1669,6 +1694,7 @@ export const people: Person[] = [
       {
         source: "Josephus, Antiquities of the Jews 20.7.1-2 (20.141-144)",
         citation: "Josephus, Antiquities 20.7.1-2",
+        url: "https://www.perseus.tufts.edu/hopper/text?doc=J.+AJ+20.7.1",
         summary: "Josephus independently records Drusilla's marriage to Felix, noting it was Felix's second marriage and that Drusilla abandoned her first husband, Azizus, king of Emesa, to marry him — a union Josephus frames as scandalous.",
         reliability: "Strong independent corroboration. Josephus was a contemporary Jewish historian with detailed knowledge of the Herodian family, and his account lines up with and supplements the brief mention in Acts.",
       },
@@ -1697,12 +1723,14 @@ export const people: Person[] = [
       {
         source: "Josephus",
         citation: "Antiquities of the Jews 20.7.3",
+        url: "https://www.perseus.tufts.edu/hopper/text?doc=J.+AJ+20.7.3",
         summary: "Discusses Bernice's marriages and her residence with her brother Agrippa II, including the rumors of an incestuous relationship between them.",
         reliability: "Primary first-century Jewish historical source, generally considered reliable for court politics of the Herodian family, though Josephus had his own biases and axes to grind.",
       },
       {
         source: "Tacitus and Suetonius",
         citation: "Tacitus, Histories 2.2; Suetonius, Life of Titus 7",
+        url: "https://penelope.uchicago.edu/Thayer/E/Roman/Texts/Tacitus/Histories/2A*.html#2",
         summary: "Roman historians record Bernice's relationship with Titus, including her presence in Rome and the scandal it caused before Titus sent her away.",
         reliability: "Independent Roman sources writing within decades of the events; considered credible for high-profile political and court affairs.",
       },
@@ -4541,12 +4569,14 @@ export const people: Person[] = [
       {
         source: "Josephus, Antiquities of the Jews",
         citation: "17.9.3 (213-218); 17.11.4 (317-320); 17.13.1-2 (339-344)",
+        url: "https://www.perseus.tufts.edu/hopper/text?doc=J.+AJ+17.9.3",
         summary: "Josephus narrates Archelaus's violent start to his reign, his trip to Rome to contest the succession against a Jewish delegation, Augustus's decision to grant him the ethnarchy rather than full kingship, and his eventual deposition and exile to Gaul in AD 6 after joint Jewish-Samaritan complaints about his misrule.",
         reliability: "The principal near-contemporary historical source for Archelaus's reign; Josephus had access to Herodian court records and is broadly considered reliable on the political outline of these events, even where his tone toward the Herodians varies.",
       },
       {
         source: "Josephus, The Jewish War",
         citation: "2.1.3-3.1 (8-13); 2.6.1-3 (80-100); 2.7.3 (111-113)",
+        url: "https://www.perseus.tufts.edu/hopper/text?doc=J.+BJ+2.1.3",
         summary: "A parallel, somewhat more compressed account covering the same events — the Passover massacre, the Roman hearing over the succession, and the deposition — written earlier in Josephus's career than the Antiquities.",
         reliability: "An independent narrative from Josephus's own earlier work, useful for cross-checking details against the Antiquities account.",
       },
@@ -4581,12 +4611,14 @@ export const people: Person[] = [
       {
         source: "Suetonius, The Twelve Caesars (Divus Augustus)",
         citation: "Life of Augustus, throughout",
+        url: "https://penelope.uchicago.edu/Thayer/E/Roman/Texts/Suetonius/12Caesars/Augustus*.html",
         summary: "A biography written roughly a century after Augustus's death, covering his rise to power, reforms, personal habits, and administration, including his interest in accurate census and property records across the provinces.",
         reliability: "A widely used ancient biography; written well after Augustus's lifetime and mixing documented fact with anecdote, but a standard historical source for his reign.",
       },
       {
         source: "Tacitus, Annals",
         citation: "1.1-15",
+        url: "https://penelope.uchicago.edu/Thayer/E/Roman/Texts/Tacitus/Annals/1A*.html#1",
         summary: "Tacitus opens his Annals with a summary assessment of Augustus's consolidation of power and the transformation of the Republic into what was effectively one-man rule under the appearance of restored constitutional government.",
         reliability: "An independent, somewhat critical senatorial-class historian writing about a century later; valuable for a perspective distinct from Augustus's own self-presentation.",
       },
@@ -4614,6 +4646,7 @@ export const people: Person[] = [
       {
         source: "Josephus, Antiquities of the Jews",
         citation: "18.1.1 (1-10); 17.13.5 (355)",
+        url: "https://www.perseus.tufts.edu/hopper/text?doc=J.+AJ+18.1.1",
         summary: "Josephus describes Quirinius's arrival in Syria around AD 6 to assess and tax the newly annexed province of Judea following Archelaus's deposition, and the resulting census and tax registration that provoked the revolt of Judas of Galilee.",
         reliability: "The primary ancient source establishing Quirinius's documented governorship and census in Judea, though its date does not align with Luke's placement of a census during Herod the Great's reign, which is the source of the scholarly puzzle described above.",
       },
@@ -4648,12 +4681,14 @@ export const people: Person[] = [
       {
         source: "Tacitus, Annals",
         citation: "15.44",
+        url: "https://penelope.uchicago.edu/Thayer/E/Roman/Texts/Tacitus/Annals/15B*.html#44",
         summary: "In recounting Nero's persecution of Christians after the fire of Rome, Tacitus notes that the name 'Christian' derived from 'Christus, who, during the reign of Tiberius, was put to death by the procurator Pontius Pilatus,' explicitly tying Jesus's execution to Tiberius's reign.",
         reliability: "An independent, non-Christian Roman source writing about 80 years after the events, corroborating both the timeframe and the basic fact of Jesus's execution under Pilate during Tiberius's reign.",
       },
       {
         source: "Suetonius, The Twelve Caesars (Tiberius)",
         citation: "Life of Tiberius, throughout, esp. 39-42 on his withdrawal to Capri",
+        url: "https://penelope.uchicago.edu/Thayer/E/Roman/Texts/Suetonius/12Caesars/Tiberius*.html#39",
         summary: "A biography detailing Tiberius's rise as Augustus's adopted heir, his administration of the empire, and his increasingly reclusive later years on Capri.",
         reliability: "A standard ancient biographical source, written roughly a century after Tiberius's reign and mixing documented administrative history with court gossip and scandal.",
       },
@@ -4682,18 +4717,21 @@ export const people: Person[] = [
       {
         source: "Suetonius, The Twelve Caesars (Claudius)",
         citation: "Life of Claudius, 25.4",
+        url: "https://penelope.uchicago.edu/Thayer/E/Roman/Texts/Suetonius/12Caesars/Claudius*.html#25",
         summary: "Suetonius writes that Claudius 'expelled the Jews from Rome, who were constantly making disturbances at the instigation of Chrestus' (Iudaeos impulsore Chresto assidue tumultuantis Roma expulit) — widely, though not universally, understood as a garbled reference to disputes over Christ.",
         reliability: "An independent Roman source corroborating the expulsion described in Acts 18:2, though the identity of 'Chrestus' and the exact date of the expulsion remain genuinely debated among historians.",
       },
       {
         source: "Josephus, Antiquities of the Jews",
         citation: "20.2.5 (51-53); 20.5.2 (101)",
+        url: "https://www.perseus.tufts.edu/hopper/text?doc=J.+AJ+20.2.5",
         summary: "Josephus describes a severe famine affecting Judea during the tenure of the procurators Cuspius Fadus and Tiberius Alexander, in the reign of Claudius, relieved in part by grain purchased by Queen Helena of Adiabene.",
         reliability: "An independent corroboration of a major famine in Judea under Claudius, generally identified by historians with the famine predicted by Agabus in Acts 11:28.",
       },
       {
         source: "Cassius Dio, Roman History",
         citation: "60.6.6",
+        url: "https://penelope.uchicago.edu/Thayer/E/Roman/Texts/Cassius_Dio/60*.html#6",
         summary: "Dio states that early in his reign Claudius did not expel the Jews from Rome outright (given their numbers) but restricted their right of assembly — a detail sometimes read as describing an earlier, lesser measure distinct from the fuller expulsion Suetonius and Acts describe later in the reign.",
         reliability: "A useful but complicating independent source; historians differ on how to reconcile Dio's account with Suetonius's, which adds to the genuine uncertainty around the expulsion's exact date and scope.",
       },
@@ -4722,6 +4760,7 @@ export const people: Person[] = [
       {
         source: "Josephus, Antiquities of the Jews",
         citation: "18.4.6 (106-108); 18.2.1 (28); 18.5.4 (136-137)",
+        url: "https://www.perseus.tufts.edu/hopper/text?doc=J.+AJ+18.4.6",
         summary: "Josephus describes Philip's roughly forty-year reign as fair and moderate, his founding of Caesarea Philippi and rebuilding of Bethsaida-Julias, his marriage to Salome (daughter of Herodias), and, at his death without an heir, the absorption of his tetrarchy into the Roman province of Syria before later being granted to Agrippa II.",
         reliability: "The principal near-contemporary historical source for Philip's reign, generally regarded as reliable on the outline of his rule and territorial administration.",
       },
@@ -4755,6 +4794,7 @@ export const people: Person[] = [
       {
         source: "Josephus, Antiquities of the Jews",
         citation: "19.5.1 (275); 20.7.1 (138)",
+        url: "https://www.perseus.tufts.edu/hopper/text?doc=J.+AJ+19.5.1",
         summary: "Josephus refers to 'Abila of Lysanias' as a distinct territorial unit later granted by Rome to Herod Agrippa I and then Agrippa II, implying an association between a Lysanias and Abilene separate from his earlier account of Lysanias, king of Chalcis.",
         reliability: "Independent corroboration that a territory called after a 'Lysanias' existed around Abilene in the Roman administrative record, consistent with (though less explicit than) the Abila inscription.",
       },
@@ -4788,6 +4828,7 @@ export const people: Person[] = [
       {
         source: "Seneca the Younger, various works and letters",
         citation: "e.g., dedications of De Ira and De Vita Beata; Natural Questions 4a, preface",
+        url: "https://en.wikisource.org/wiki/Author:Lucius_Annaeus_Seneca",
         summary: "Seneca dedicated two of his philosophical works to his brother Gallio and, in the preface to the fourth book of his Natural Questions, describes Gallio's illness in Achaia and his good-natured personality ('no mortal is so pleasant to any one person as Gallio is to everybody').",
         reliability: "Independent corroboration from Gallio's own brother that he was a real, well-known Roman official of the mid-first century, though these references do not independently date his Achaian proconsulship the way the Delphi inscription does.",
       },
@@ -4822,18 +4863,21 @@ export const people: Person[] = [
             {
                 source: "Josephus, Antiquities of the Jews",
                 citation: "13.5.9 (171-173)",
+                url: "https://www.perseus.tufts.edu/hopper/text?doc=J.+AJ+13.5.9",
                 summary: "In a survey of the three main Jewish 'philosophies,' Josephus describes the Pharisees as holding that some but not all events are governed by fate, with room left for human free will — distinguishing them from the Essenes (who ascribe everything to fate) and the Sadducees (who deny fate altogether).",
                 reliability: "Josephus is the single most important extra-biblical source on the Pharisees as an organized party; he writes as a contemporary with direct personal exposure to the movement, though as a Roman-sponsored writer with his own apologetic aims regarding the Jewish people.",
             },
             {
                 source: "Josephus, Antiquities of the Jews",
                 citation: "18.1.3 (12-15)",
+                url: "https://www.perseus.tufts.edu/hopper/text?doc=J.+AJ+18.1.3",
                 summary: "Describes the Pharisees as living simply, valued highly by the common people, and skilled interpreters of the law who believe the soul survives death and that souls of the virtuous pass into other bodies, while the wicked are punished — a belief roughly corresponding to bodily resurrection.",
                 reliability: "A later, more detailed restatement of Pharisaic belief in Josephus's overview of the Jewish 'schools of thought,' consistent with his earlier account in Antiquities 13; generally treated by historians as reliable in outline, if colored by Josephus casting Jewish groups in terms a Greco-Roman readership would recognize as philosophical schools.",
             },
             {
                 source: "Josephus, The Jewish War",
                 citation: "2.8.14 (162-166)",
+                url: "https://www.perseus.tufts.edu/hopper/text?doc=J.+BJ+2.8.14",
                 summary: "Contrasts the Pharisees, who attribute events to both fate and human choice and affirm the immortality of the soul and resurrection, with the Sadducees, who deny fate's role entirely and reject any survival of the soul after death.",
                 reliability: "Josephus's earlier work (written before Antiquities) and generally considered a solid independent confirmation of the beliefs he later restates in Antiquities 18, though again filtered through his habit of framing Jewish sects as Greek-style philosophical schools for a Roman audience.",
             },
@@ -4876,18 +4920,21 @@ export const people: Person[] = [
             {
                 source: "Josephus, Antiquities of the Jews",
                 citation: "13.10.6 (293-298)",
+                url: "https://www.perseus.tufts.edu/hopper/text?doc=J.+AJ+13.10.6",
                 summary: "Recounts the historical break between the Hasmonean ruler John Hyrcanus and the Pharisees, after which Hyrcanus adopted Sadducean positions and abolished Pharisaic legal regulations — an early, concrete example of the two parties' rival political fortunes.",
                 reliability: "One of the few narrative episodes in Josephus that shows Pharisee-Sadducee rivalry playing out in an actual political event rather than as abstract doctrinal description; widely cited by historians as evidence the split was real and consequential well before the New Testament period.",
             },
             {
                 source: "Josephus, Antiquities of the Jews",
                 citation: "18.1.4 (16-17)",
+                url: "https://www.perseus.tufts.edu/hopper/text?doc=J.+AJ+18.1.4",
                 summary: "States that the Sadducees deny fate altogether, hold that the soul perishes with the body, and reject the oral traditions the Pharisees observe, accepting only what is written in the Law.",
                 reliability: "Josephus's clearest single statement of Sadducean theology; treated as broadly reliable since it is corroborated independently by Acts 23:8, though again filtered through his framing of Jewish sects in terms of Greek philosophical schools.",
             },
             {
                 source: "Josephus, The Jewish War",
                 citation: "2.8.14 (164-166)",
+                url: "https://www.perseus.tufts.edu/hopper/text?doc=J.+BJ+2.8.14",
                 summary: "Notes that the Sadducees are able to persuade only the wealthy, not the common people, and that officeholders from the party must submit to Pharisaic positions once in office because ordinary people would not otherwise accept their rulings.",
                 reliability: "A useful independent confirmation of the Sadducees' narrow, elite social base as distinct from the Pharisees' popular support; consistent with the Gospels' and Acts' portrayal of the Sadducees as the establishment party.",
             },
@@ -4929,18 +4976,21 @@ export const people: Person[] = [
             {
                 source: "Herodotus, Histories",
                 citation: "1.101",
+                url: "https://topostext.org/work/22#1.101",
                 summary: "Lists the Magoi as one of six tribes making up the Median people, establishing 'magi' as a real ethnic/priestly designation within the Median-Persian world well before the New Testament period.",
                 reliability: "Herodotus is the earliest and most-cited Greek source naming the magi as a specific group; modern historians treat him as broadly reliable on the magi's existence and general priestly function, while noting he wrote as a Greek outsider describing Persian customs and occasionally simplified or generalized what he observed.",
             },
             {
                 source: "Herodotus, Histories",
                 citation: "1.132; 1.140",
+                url: "https://topostext.org/work/22#1.132",
                 summary: "Describes magi performing sacrifices and religious rites for the Persian kings, including officiating at ceremonies no Persian sacrifice could reportedly be made without a magus present, and details their distinctive burial customs.",
                 reliability: "Widely used by historians as the earliest detailed outside description of magi functioning as an official priestly class in the Achaemenid Persian court, though again filtered through a Greek ethnographic lens rather than an insider Persian account.",
             },
             {
                 source: "Herodotus, Histories",
                 citation: "7.19; 7.37; 7.113",
+                url: "https://topostext.org/work/22#7.19",
                 summary: "Records magi interpreting dreams and omens for King Xerxes and accompanying the Persian army on its campaign against Greece, performing sacrifices at river crossings.",
                 reliability: "Consistent with Herodotus's earlier description of the magi's priestly-divinatory role; treated as reliable evidence that magi served as court diviners and ritual specialists attached to Persian royal power, the same general function Matthew's narrative assumes.",
             },

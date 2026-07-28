@@ -28,10 +28,18 @@ const MIN_PANEL_WIDTH = 240;
 const MAX_PANEL_WIDTH = 800;
 const MOBILE_QUERY = "(max-width: 768px)";
 
+/** One entry in the details "back" trail — enough to restore a prior selection without re-deriving it. */
+type DetailsSelection = { kind: "location"; id: string } | { kind: "poi"; id: string } | { kind: "person"; id: string };
+
 function App() {
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const [selectedPoiId, setSelectedPoiId] = useState<string | null>(null);
   const [selectedPersonId, setSelectedPersonId] = useState<string | null>(null);
+  // Tracks where the reader came from when they follow a cross-link *inside* the details panel (e.g.
+  // Jesus's bio links to Nazareth) so a "Back" button can return them there. Only pushed to from those
+  // in-panel cross-links — a fresh selection from the map, search, or Bible text clears the trail
+  // instead, since that's a new starting point, not a continuation of the link chain.
+  const [detailsHistory, setDetailsHistory] = useState<DetailsSelection[]>([]);
   const [poisVisible, setPoisVisible] = useState(true);
   const [locationsVisible, setLocationsVisible] = useState(true);
   const [map, setMap] = useState<maplibregl.Map | null>(null);
@@ -76,10 +84,41 @@ function App() {
   const selectedLocation = locations.find((l) => l.id === selectedId) ?? null;
   const selectedPoi = pois.find((p) => p.id === selectedPoiId) ?? null;
   const selectedPerson = people.find((p) => p.id === selectedPersonId) ?? null;
+  // Mirrors the precedence used below when deciding which detail panel to render (person > POI > location).
+  const currentDetailsSelection: DetailsSelection | null = selectedPersonId
+    ? { kind: "person", id: selectedPersonId }
+    : selectedPoiId
+      ? { kind: "poi", id: selectedPoiId }
+      : selectedId
+        ? { kind: "location", id: selectedId }
+        : null;
 
-  const togglePanel = (key: PanelKey) => setPanels((p) => ({ ...p, [key]: !p[key] }));
-  const openPanel = (key: PanelKey) => setPanels((p) => ({ ...p, [key]: true }));
-  const closePanel = (key: PanelKey) => setPanels((p) => ({ ...p, [key]: false }));
+  // Desktop panels are opened/closed solely via the hamburger checklist now (no more per-panel "×")
+  // — with up to 5 panels available, letting them all pile up open at once gets cramped fast, so
+  // opening a 4th auto-closes whichever open panel has gone longest without being opened or reselected.
+  // Recency order, most-recently-opened/touched last; mobile never consults this (it's always exactly
+  // one panel via the tab bar) so it only needs to track truth for desktop.
+  const MAX_OPEN_PANELS = 3;
+  const panelOrderRef = useRef<PanelKey[]>(["map", "bible"]);
+  const touchPanelOrder = (key: PanelKey) => {
+    panelOrderRef.current = [...panelOrderRef.current.filter((k) => k !== key), key];
+  };
+
+  const openPanel = (key: PanelKey) => {
+    touchPanelOrder(key);
+    setPanels((p) => {
+      if (p[key]) return p;
+      const openKeys = (Object.keys(p) as PanelKey[]).filter((k) => p[k]);
+      if (openKeys.length < MAX_OPEN_PANELS) return { ...p, [key]: true };
+      const lru = panelOrderRef.current.find((k) => k !== key && openKeys.includes(k));
+      return lru ? { ...p, [key]: true, [lru]: false } : { ...p, [key]: true };
+    });
+  };
+  const closePanel = (key: PanelKey) => {
+    panelOrderRef.current = panelOrderRef.current.filter((k) => k !== key);
+    setPanels((p) => ({ ...p, [key]: false }));
+  };
+  const togglePanel = (key: PanelKey) => (panels[key] ? closePanel(key) : openPanel(key));
   // Mobile has exactly one active panel at a time, switched via the bottom tab bar.
   const setMobileActivePanel = (key: PanelKey) =>
     setPanels({
@@ -89,9 +128,6 @@ function App() {
       notes: key === "notes",
       friends: key === "friends",
     });
-  // On mobile, closing the only-ever-open panel via its "×" would leave nothing open (with no
-  // hamburger left to reopen one) — send the user back to the map instead of just closing.
-  const handleClosePanel = (key: PanelKey) => (isMobile ? setMobileActivePanel("map") : closePanel(key));
 
   // Keep isMobile in sync with live resizes/rotations.
   useEffect(() => {
@@ -361,9 +397,11 @@ function App() {
     else openPanel("details");
   };
 
-  // Clicking a location/POI link inside the Bible text should just show it on the map — not jump
-  // to the Details panel the way clicking a pin or a search result does.
-  const handleSelectFromBible = (id: string) => {
+  // Shows a location on the map without opening the Details panel — used for the Bible text's
+  // location links and the map search bar, where the reader wants to see *where* a place is first;
+  // clicking the pin itself (handleSelectFromMap) is what opens the full write-up.
+  const focusLocationOnMap = (id: string) => {
+    setDetailsHistory([]);
     setSelectedId(id);
     setSelectedPoiId(null);
     setSelectedPersonId(null);
@@ -373,6 +411,7 @@ function App() {
   };
 
   const handleSelectPoiFromBible = (id: string) => {
+    setDetailsHistory([]);
     setSelectedPoiId(id);
     setSelectedId(null);
     setSelectedPersonId(null);
@@ -380,11 +419,54 @@ function App() {
     else openPanel("map");
   };
 
+  // A person link inside the Bible text does jump to the Details panel (people have no map presence
+  // to show instead) — still a fresh starting point, so it clears the back trail like the two above.
+  const handleSelectPersonFromBible = (id: string) => {
+    setDetailsHistory([]);
+    handleSelectPerson(id);
+  };
+
+  // Map pins and search results are also fresh starting points, not a continuation of an in-panel
+  // link chain — clear the back trail so a stale "Back" button doesn't linger.
+  const handleSelectFromMap = (id: string) => {
+    setDetailsHistory([]);
+    handleSelect(id);
+  };
+  const handleSelectPoiFromMap = (id: string) => {
+    setDetailsHistory([]);
+    handleSelectPoi(id);
+  };
+
+  // Cross-links *inside* a details panel (e.g. a person's bio linking to where they lived) push the
+  // selection being left behind onto the back trail before switching, so "Back" can return to it.
+  const handleSelectLocationFromDetails = (id: string) => {
+    if (currentDetailsSelection) setDetailsHistory((h) => [...h, currentDetailsSelection]);
+    handleSelect(id);
+  };
+  const handleSelectPoiFromDetails = (id: string) => {
+    if (currentDetailsSelection) setDetailsHistory((h) => [...h, currentDetailsSelection]);
+    handleSelectPoi(id);
+  };
+  const handleSelectPersonFromDetails = (id: string) => {
+    if (currentDetailsSelection) setDetailsHistory((h) => [...h, currentDetailsSelection]);
+    handleSelectPerson(id);
+  };
+
+  const goBackInDetails = () => {
+    if (detailsHistory.length === 0) return;
+    const prev = detailsHistory[detailsHistory.length - 1];
+    setDetailsHistory((h) => h.slice(0, -1));
+    if (prev.kind === "location") handleSelect(prev.id);
+    else if (prev.kind === "poi") handleSelectPoi(prev.id);
+    else handleSelectPerson(prev.id);
+  };
+
   const hasSelection = selectedId !== null || selectedPoiId !== null || selectedPersonId !== null;
   const clearSelection = () => {
     setSelectedId(null);
     setSelectedPoiId(null);
     setSelectedPersonId(null);
+    setDetailsHistory([]);
     if (isMobile) setMobileActivePanel("map");
   };
 
@@ -457,7 +539,7 @@ function App() {
           <img src="/favicon.svg" className="app-logo" alt="" aria-hidden="true" />
         </button>
         <h1>New Testament Biblical Atlas</h1>
-        {searchMode === "map" && <SearchBar locations={locations} onSelect={handleSelect} />}
+        {searchMode === "map" && <SearchBar locations={locations} onSelect={focusLocationOnMap} />}
         {searchMode === "bible" && (
           <HeaderTextSearch
             placeholder="Search the Bible"
@@ -476,10 +558,9 @@ function App() {
           <BiblePanel
             reference={bibleReference}
             referenceNonce={referenceNonce}
-            onClose={() => handleClosePanel("bible")}
-            onSelectLocation={handleSelectFromBible}
+            onSelectLocation={focusLocationOnMap}
             onSelectPoi={handleSelectPoiFromBible}
-            onSelectPerson={handleSelectPerson}
+            onSelectPerson={handleSelectPersonFromBible}
             expand={sideExpand}
             style={{ width: bibleWidth }}
             userId={session?.user.id}
@@ -504,14 +585,14 @@ function App() {
             <MapView
               locations={locations}
               selectedId={selectedId}
-              onSelect={handleSelect}
+              onSelect={handleSelectFromMap}
               onMapLoad={setMap}
               mapMode={mapMode}
               locationsVisible={locationsVisible}
               pois={pois}
               poisVisible={poisVisible}
               selectedPoiId={selectedPoiId}
-              onSelectPoi={handleSelectPoi}
+              onSelectPoi={handleSelectPoiFromMap}
             />
             <LayerControls
               map={map}
@@ -543,11 +624,11 @@ function App() {
         {showDetails && selectedPerson && (
           <PersonPanel
             person={selectedPerson}
-            onClose={() => handleClosePanel("details")}
+            onBack={detailsHistory.length > 0 ? goBackInDetails : undefined}
             onSelectVerse={openVerse}
-            onSelectLocation={handleSelect}
-            onSelectPoi={handleSelectPoi}
-            onSelectPerson={handleSelectPerson}
+            onSelectLocation={handleSelectLocationFromDetails}
+            onSelectPoi={handleSelectPoiFromDetails}
+            onSelectPerson={handleSelectPersonFromDetails}
             expand={sideExpand}
             style={{ width: detailsWidth }}
           />
@@ -555,10 +636,10 @@ function App() {
         {showDetails && !selectedPerson && selectedPoi && (
           <PoiPanel
             poi={selectedPoi}
-            onClose={() => handleClosePanel("details")}
-            onSelectLocation={handleSelect}
-            onSelectPoi={handleSelectPoi}
-            onSelectPerson={handleSelectPerson}
+            onBack={detailsHistory.length > 0 ? goBackInDetails : undefined}
+            onSelectLocation={handleSelectLocationFromDetails}
+            onSelectPoi={handleSelectPoiFromDetails}
+            onSelectPerson={handleSelectPersonFromDetails}
             onSelectVerse={openVerse}
             expand={sideExpand}
             style={{ width: detailsWidth }}
@@ -567,11 +648,11 @@ function App() {
         {showDetails && !selectedPerson && !selectedPoi && (
           <LocationPanel
             location={selectedLocation}
-            onClose={() => handleClosePanel("details")}
+            onBack={detailsHistory.length > 0 ? goBackInDetails : undefined}
             onSelectVerse={openVerse}
-            onSelectLocation={handleSelect}
-            onSelectPoi={handleSelectPoi}
-            onSelectPerson={handleSelectPerson}
+            onSelectLocation={handleSelectLocationFromDetails}
+            onSelectPoi={handleSelectPoiFromDetails}
+            onSelectPerson={handleSelectPersonFromDetails}
             expand={sideExpand}
             style={{ width: detailsWidth }}
           />
@@ -579,7 +660,6 @@ function App() {
         {notesMounted && (
           <MyNotesPanel
             userId={session?.user.id}
-            onClose={() => handleClosePanel("notes")}
             onGoToVerse={openVerse}
             expand={sideExpand}
             style={{ width: notesWidth }}
@@ -591,7 +671,6 @@ function App() {
         {friendsMounted && (
           <FriendsPanel
             session={session}
-            onClose={() => handleClosePanel("friends")}
             expand={sideExpand}
             style={{ width: friendsWidth }}
             hidden={friendsHiddenOnMobile}

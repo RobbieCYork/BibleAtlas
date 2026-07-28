@@ -4,7 +4,9 @@ import LinkedVerseText from "./LinkedVerseText";
 
 interface LocationPanelProps {
   location: Location | null;
-  onClose: () => void;
+  /** Present only when there's somewhere to go back to (i.e. this panel was reached by clicking a
+   * cross-link from another person/place's details) — renders a "Back" button when set. */
+  onBack?: () => void;
   onSelectVerse?: (reference: string) => void;
   onSelectLocation: (id: string) => void;
   onSelectPoi: (id: string) => void;
@@ -26,7 +28,7 @@ const CATEGORY_LABELS: Record<LocationCategory, string> = {
 
 export default function LocationPanel({
   location,
-  onClose,
+  onBack,
   onSelectVerse,
   onSelectLocation,
   onSelectPoi,
@@ -40,9 +42,6 @@ export default function LocationPanel({
         className={`location-panel location-panel-empty ${expand ? "panel-expand" : ""}`}
         style={expand ? undefined : style}
       >
-        <button className="panel-close" onClick={onClose} aria-label="Close">
-          ×
-        </button>
         <p>Search or click a pin on the map to see its history and Bible references.</p>
       </div>
     );
@@ -52,9 +51,11 @@ export default function LocationPanel({
 
   return (
     <div className={`location-panel ${expand ? "panel-expand" : ""}`} style={expand ? undefined : style}>
-      <button className="panel-close" onClick={onClose} aria-label="Close">
-        ×
-      </button>
+      {onBack && (
+        <button className="panel-back" onClick={onBack} aria-label="Back">
+          ‹ Back
+        </button>
+      )}
       <span className="category-badge">{CATEGORY_LABELS[location.category]}</span>
       <h2>{location.name}</h2>
       {location.pronunciation && <p className="pronunciation">Pronounced: {location.pronunciation}</p>}

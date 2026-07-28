@@ -39,6 +39,15 @@ export interface ReadingProgress {
   translation: string;
 }
 
+/** One completed chapter, toggled from the "Mark chapter as read" control in the Bible panel.
+ * Distinct from ReadingProgress above, which tracks only the single most-recent position, not history. */
+export interface ChapterRead {
+  user_id: string;
+  book: string;
+  chapter: number;
+  read_at: string;
+}
+
 export const HIGHLIGHT_COLORS = ["yellow", "green", "blue", "pink"] as const;
 export type HighlightColor = (typeof HIGHLIGHT_COLORS)[number];
 
@@ -73,6 +82,17 @@ export interface Note {
   note_text: string;
   created_at: string;
   updated_at: string;
+  /** When true, this note shows as a post on the owner's profile and friends can comment on it —
+   * defaults to false so notes stay private unless the reader deliberately shares one. */
+  is_public: boolean;
+}
+
+export interface NoteComment {
+  id: string;
+  note_id: string;
+  author_id: string;
+  body: string;
+  created_at: string;
 }
 
 export interface Tag {
@@ -127,6 +147,35 @@ export interface Profile {
    * searching, so lookups don't depend on how a phone number was typed. */
   phone: string | null;
   created_at: string;
+  /** Public URL of an uploaded profile photo (avatars storage bucket) — null shows the initial-letter
+   * avatar circle used everywhere else in the app. */
+  avatar_url: string | null;
+  church: string | null;
+  /** Free text, not a structured verse reference — shown as-is on the profile, only parsed if the
+   * viewer clicks it to jump to the Bible (best-effort; not every string a person types is a valid
+   * "Book Chapter:Verse" the Bible panel can resolve). */
+  favorite_verse: string | null;
+  bio: string | null;
+  /** How long a "mark chapter as read" checkmark sticks before it silently stops counting as read —
+   * lets an account re-read the Bible on a yearly (or monthly) cycle without manually clearing last
+   * cycle's marks. Enforced at query time (a cutoff on chapter_reads.read_at), not by deleting rows. */
+  chapter_read_reset: "never" | "monthly" | "yearly";
+}
+
+/** ISO timestamp before which a chapter_reads row no longer counts as "read", per an account's
+ * chapter_read_reset setting — null means no cutoff (marks never expire). Purely a query-time filter;
+ * nothing deletes the underlying row, so switching back to "Never" instantly un-hides old marks. */
+export function chapterReadCutoff(reset: Profile["chapter_read_reset"]): string | null {
+  if (reset === "never") return null;
+  const cutoff = new Date();
+  if (reset === "monthly") cutoff.setMonth(cutoff.getMonth() - 1);
+  else cutoff.setFullYear(cutoff.getFullYear() - 1);
+  return cutoff.toISOString();
+}
+
+/** "March 2026" style — shown on a profile as "Joined {this}", from Profile.created_at. */
+export function formatJoinDate(createdAt: string): string {
+  return new Date(createdAt).toLocaleDateString(undefined, { month: "long", year: "numeric" });
 }
 
 export type FriendRequestStatus = "pending" | "accepted" | "declined";

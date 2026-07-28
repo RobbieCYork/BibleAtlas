@@ -1,7 +1,8 @@
 import { useEffect, useRef, useState } from "react";
 import type { Session } from "@supabase/supabase-js";
-import { supabase, setRememberMe } from "../lib/supabase";
+import { supabase, setRememberMe, formatJoinDate, type Profile } from "../lib/supabase";
 import { useTextSize } from "../lib/textSize";
+import ReadingProgressGrid from "./ReadingProgressGrid";
 
 interface AuthButtonProps {
   session: Session | null;
@@ -128,6 +129,209 @@ function DisplayNameControl({ userId, onSaved }: { userId: string; onSaved: (nam
         </button>
       </div>
       {saved && <p className="auth-status">{saved}</p>}
+    </div>
+  );
+}
+
+/** The optional "profile page" fields shown when a friend clicks your name — photo, church,
+ * favorite verse, and a short bio. Grouped into one control (one fetch, one save) since they're all
+ * part of the same picture, unlike Display Name/Phone which have their own identity-lookup purpose. */
+function ProfileDetailsControl({ userId }: { userId: string }) {
+  const [avatarUrl, setAvatarUrl] = useState<string | null>(null);
+  const [church, setChurch] = useState("");
+  const [favoriteVerse, setFavoriteVerse] = useState("");
+  const [bio, setBio] = useState("");
+  const [joinedAt, setJoinedAt] = useState<string | null>(null);
+  const [loaded, setLoaded] = useState(false);
+  const [uploading, setUploading] = useState(false);
+  const [saving, setSaving] = useState(false);
+  const [saved, setSaved] = useState<string | null>(null);
+  const fileInputRef = useRef<HTMLInputElement | null>(null);
+
+  useEffect(() => {
+    supabase
+      .from("profiles")
+      .select("avatar_url, church, favorite_verse, bio, created_at")
+      .eq("id", userId)
+      .single()
+      .then(({ data }) => {
+        const row = data as
+          | { avatar_url: string | null; church: string | null; favorite_verse: string | null; bio: string | null; created_at: string }
+          | null;
+        setAvatarUrl(row?.avatar_url ?? null);
+        setChurch(row?.church ?? "");
+        setFavoriteVerse(row?.favorite_verse ?? "");
+        setBio(row?.bio ?? "");
+        setJoinedAt(row?.created_at ?? null);
+        setLoaded(true);
+      });
+  }, [userId]);
+
+  const handleAvatarChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    setUploading(true);
+    setSaved(null);
+    const ext = file.name.split(".").pop() || "jpg";
+    const path = `${userId}/avatar.${ext}`;
+    const { error: uploadError } = await supabase.storage.from("avatars").upload(path, file, { upsert: true });
+    if (uploadError) {
+      setUploading(false);
+      setSaved("Couldn't upload photo — try again.");
+      return;
+    }
+    const { data: urlData } = supabase.storage.from("avatars").getPublicUrl(path);
+    const publicUrl = `${urlData.publicUrl}?t=${Date.now()}`;
+    await supabase.from("profiles").update({ avatar_url: publicUrl }).eq("id", userId);
+    setAvatarUrl(publicUrl);
+    setUploading(false);
+    setSaved("Saved!");
+  };
+
+  const handleSave = async () => {
+    setSaving(true);
+    setSaved(null);
+    const { error } = await supabase
+      .from("profiles")
+      .update({ church: church.trim() || null, favorite_verse: favoriteVerse.trim() || null, bio: bio.trim() || null })
+      .eq("id", userId);
+    setSaving(false);
+    setSaved(error ? "Couldn't save — try again." : "Saved!");
+  };
+
+  if (!loaded) return null;
+
+  return (
+    <div className="auth-settings-section auth-settings-section-stacked">
+      <span className="auth-settings-label">My Profile</span>
+      <div className="auth-avatar-upload-row">
+        <span className="auth-avatar auth-avatar-lg" aria-hidden="true">
+          {avatarUrl ? <img src={avatarUrl} alt="" /> : "👤"}
+        </span>
+        <button type="button" onClick={() => fileInputRef.current?.click()} disabled={uploading}>
+          {uploading ? "Uploading…" : "Change Photo"}
+        </button>
+        <input ref={fileInputRef} type="file" accept="image/*" hidden onChange={handleAvatarChange} />
+      </div>
+      {joinedAt && <p className="friend-profile-joined">Joined {formatJoinDate(joinedAt)}</p>}
+      <input type="text" value={church} onChange={(e) => setChurch(e.target.value)} placeholder="Church you attend (optional)" />
+      <input
+        type="text"
+        value={favoriteVerse}
+        onChange={(e) => setFavoriteVerse(e.target.value)}
+        placeholder="Favorite Bible verse (optional)"
+      />
+      <textarea value={bio} onChange={(e) => setBio(e.target.value)} placeholder="A little about you (optional)" rows={3} />
+      <button type="button" onClick={handleSave} disabled={saving}>
+        {saving ? "…" : "Save"}
+      </button>
+      {saved && <p className="auth-status">{saved}</p>}
+    </div>
+  );
+}
+
+/** Lets an account choose how long a "mark chapter as read" checkmark sticks before it silently stops
+ * counting — e.g. reset every year to re-read the Bible on an annual cycle without clearing old marks
+ * by hand. Purely a query-time filter (see chapterReadCutoff) — switching back to Never instantly
+ * un-hides everything, nothing was ever deleted. */
+function ReadingResetControl({ userId }: { userId: string }) {
+  const [reset, setReset] = useState<Profile["chapter_read_reset"]>("never");
+  const [loaded, setLoaded] = useState(false);
+  const [saving, setSaving] = useState(false);
+  const [saved, setSaved] = useState<string | null>(null);
+
+  useEffect(() => {
+    supabase
+      .from("profiles")
+      .select("chapter_read_reset")
+      .eq("id", userId)
+      .single()
+      .then(({ data }) => {
+        setReset((data as { chapter_read_reset: Profile["chapter_read_reset"] } | null)?.chapter_read_reset ?? "never");
+        setLoaded(true);
+      });
+  }, [userId]);
+
+  const handleChange = async (value: Profile["chapter_read_reset"]) => {
+    setReset(value);
+    setSaving(true);
+    setSaved(null);
+    const { error } = await supabase.from("profiles").update({ chapter_read_reset: value }).eq("id", userId);
+    setSaving(false);
+    setSaved(error ? "Couldn't save — try again." : "Saved!");
+  };
+
+  if (!loaded) return null;
+
+  return (
+    <div className="auth-settings-section auth-settings-section-stacked">
+      <span className="auth-settings-label">Reset "Read" Marks</span>
+      <p className="auth-benefits">
+        Automatically stop counting a chapter as read after this long — handy for reading through the Bible on a
+        yearly cycle.
+      </p>
+      <select value={reset} onChange={(e) => handleChange(e.target.value as Profile["chapter_read_reset"])} disabled={saving}>
+        <option value="never">Never</option>
+        <option value="monthly">1 month after reading</option>
+        <option value="yearly">1 year after reading</option>
+      </select>
+      {saved && <p className="auth-status">{saved}</p>}
+    </div>
+  );
+}
+
+/** Tables that hold this account's own content — every row is scoped by user_id (profiles by its
+ * primary key `id` instead). Friend requests/messages/groups are deliberately left out: those rows
+ * belong jointly to more than one account, so they don't fit a single-user backup. */
+const BACKUP_TABLES = ["notes", "highlights", "tags", "verse_tags", "sermon_notes", "reading_progress"] as const;
+
+/** Lets an account download everything it owns — profile fields plus every note/highlight/tag/sermon
+ * note/reading position — as a JSON file, so a person's own Bible-study content can never be lost even
+ * if something goes wrong on the server side. Not a full account restore tool, just a personal copy. */
+function DataExportControl({ userId }: { userId: string }) {
+  const [exporting, setExporting] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+
+  const handleExport = async () => {
+    setExporting(true);
+    setError(null);
+    try {
+      const [profileRes, ...tableResults] = await Promise.all([
+        supabase.from("profiles").select("*").eq("id", userId).single(),
+        ...BACKUP_TABLES.map((table) => supabase.from(table).select("*").eq("user_id", userId)),
+      ]);
+      if (profileRes.error) throw profileRes.error;
+      const backup: Record<string, unknown> = { exported_at: new Date().toISOString(), profile: profileRes.data };
+      BACKUP_TABLES.forEach((table, i) => {
+        const res = tableResults[i];
+        if (res.error) throw res.error;
+        backup[table] = res.data;
+      });
+      const blob = new Blob([JSON.stringify(backup, null, 2)], { type: "application/json" });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = `biblical-atlas-backup-${new Date().toISOString().slice(0, 10)}.json`;
+      a.click();
+      URL.revokeObjectURL(url);
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Couldn't export — try again.");
+    } finally {
+      setExporting(false);
+    }
+  };
+
+  return (
+    <div className="auth-settings-section auth-settings-section-stacked">
+      <span className="auth-settings-label">Back Up My Data</span>
+      <p className="auth-benefits">
+        Download your profile, notes, highlights, tags, sermon notes, and reading position as a JSON file you keep
+        yourself.
+      </p>
+      <button type="button" onClick={handleExport} disabled={exporting}>
+        {exporting ? "Preparing…" : "Download Backup"}
+      </button>
+      {error && <p className="auth-status auth-error">{error}</p>}
     </div>
   );
 }
@@ -295,6 +499,17 @@ export default function AuthButton({ session }: AuthButtonProps) {
                 <DisplayNameControl userId={session.user.id} onSaved={setSavedDisplayName} />
                 <div className="auth-settings-divider" />
                 <PhoneNumberControl userId={session.user.id} />
+                <div className="auth-settings-divider" />
+                <ProfileDetailsControl userId={session.user.id} />
+                <div className="auth-settings-divider" />
+                <div className="auth-settings-section auth-settings-section-stacked">
+                  <span className="auth-settings-label">My Reading</span>
+                  <ReadingProgressGrid userId={session.user.id} isOwn />
+                </div>
+                <div className="auth-settings-divider" />
+                <ReadingResetControl userId={session.user.id} />
+                <div className="auth-settings-divider" />
+                <DataExportControl userId={session.user.id} />
               </>
             )}
           </div>

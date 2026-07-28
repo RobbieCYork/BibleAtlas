@@ -388,6 +388,29 @@ body.resizing-panels {
   color: var(--text-h);
 }
 
+.panel-back {
+  position: absolute;
+  top: 14px;
+  left: 14px;
+  display: flex;
+  align-items: center;
+  gap: 3px;
+  background: none;
+  border: none;
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 1;
+  color: var(--text-muted);
+  cursor: pointer;
+  padding: 6px 8px;
+  border-radius: 6px;
+}
+
+.panel-back:hover {
+  background: var(--accent-bg);
+  color: var(--text-h);
+}
+
 .poi-badge {
   color: #d97706;
   background: rgba(217, 119, 6, 0.1);
@@ -644,6 +667,19 @@ body.resizing-panels {
 .extra-biblical-citation {
   font-weight: 400;
   color: var(--text-muted);
+}
+
+.extra-biblical-link {
+  display: block;
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--accent);
+  margin-top: 2px;
+}
+
+.extra-biblical-link:hover {
+  color: var(--accent-hover);
+  text-decoration: underline;
 }
 
 .extra-biblical-summary {
@@ -926,6 +962,73 @@ body.resizing-panels {
   gap: 6px;
 }
 
+.reading-progress {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.reading-progress-subtitle {
+  font-size: 12px;
+  color: var(--text-muted);
+  margin: -4px 0 0;
+}
+
+.reading-progress-summary {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  font-size: 12px;
+  color: var(--text-muted);
+}
+
+.reading-progress-summary strong {
+  color: var(--text-h);
+  font-size: 14px;
+}
+
+.reading-progress-books {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  max-height: 320px;
+  overflow-y: auto;
+  padding-right: 4px;
+}
+
+.reading-progress-book-header {
+  display: flex;
+  justify-content: space-between;
+  font-size: 11px;
+  margin-bottom: 3px;
+}
+
+.reading-progress-book-name {
+  font-weight: 600;
+  color: var(--text-h);
+}
+
+.reading-progress-book-count {
+  color: var(--text-muted);
+}
+
+.reading-progress-chapters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2px;
+}
+
+.reading-progress-cell {
+  width: 8px;
+  height: 8px;
+  border-radius: 2px;
+  background: var(--border);
+}
+
+.reading-progress-cell-read {
+  background: var(--accent);
+}
+
 .auth-phone-row {
   display: flex;
   gap: 6px;
@@ -1004,6 +1107,30 @@ body.resizing-panels {
   color: #fff;
   font-size: 15px;
   font-weight: 600;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.auth-avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.auth-avatar-upload-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.auth-avatar-upload-row button {
+  border: 1px solid var(--border);
+  background: var(--bg);
+  color: var(--text);
+  border-radius: 6px;
+  padding: 6px 10px;
+  font-size: 12px;
+  cursor: pointer;
 }
 
 .auth-dropdown {
@@ -1278,12 +1405,6 @@ body.resizing-panels {
   margin-bottom: 12px;
 }
 
-/* No title left in the header (Bible/My Notes — redundant with the tab bar label below) — just the
-   close button, pinned to the right where it always was. */
-.bible-panel-header-minimal {
-  justify-content: flex-end;
-}
-
 .bible-panel-header h3 {
   font-size: 16px;
   flex: 1;
@@ -1528,6 +1649,24 @@ body.resizing-panels {
   color: var(--text-muted);
 }
 
+.bible-minutes-this-month {
+  font-size: 12px;
+  color: var(--text-muted);
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+.bible-mark-read {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  font-size: 13px;
+  color: var(--text-muted);
+  cursor: pointer;
+  margin: 14px 0;
+}
+
 .bible-error {
   color: #e0392b;
 }
@@ -1547,6 +1686,93 @@ body.resizing-panels {
 .bible-passage-header h4 {
   margin-bottom: 0;
   text-align: center;
+}
+
+.bible-listen-controls {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.bible-listen-controls button {
+  border: 1px solid var(--border);
+  background: var(--bg);
+  color: var(--text);
+  border-radius: 100px;
+  padding: 7px 14px;
+  font-size: 12px;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.bible-listen-controls button:hover {
+  background: var(--accent-bg);
+  border-color: var(--accent);
+}
+
+.bible-listen-controls button:disabled {
+  opacity: 0.4;
+  cursor: default;
+}
+
+.bible-listen-settings-toggle {
+  padding: 7px 10px !important;
+}
+
+.bible-listen-settings {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  max-width: 360px;
+  margin: 0 auto 14px;
+  padding: 10px 12px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: var(--panel-bg);
+}
+
+.bible-listen-settings label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+  color: var(--text-muted);
+}
+
+.bible-listen-settings select {
+  flex: 1;
+  min-width: 0;
+  border: 1px solid var(--border);
+  background: var(--bg);
+  color: var(--text);
+  border-radius: 6px;
+  padding: 5px 6px;
+  font-size: 12px;
+}
+
+.bible-listen-settings input[type="range"] {
+  flex: 1;
+}
+
+.bible-listen-rate-value {
+  min-width: 34px;
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+.bible-listen-dramatic-toggle {
+  cursor: pointer;
+}
+
+.bible-verse-speaking {
+  background: var(--accent-bg);
+  border-radius: 6px;
+  margin-left: -6px;
+  margin-right: -6px;
+  padding-left: 6px;
+  padding-right: 6px;
+  scroll-margin: 80px;
 }
 
 /* --- Book introduction (shown from the chapter picker's "Introduction" entry) --- */
@@ -2449,6 +2675,23 @@ body.resizing-panels {
   cursor: pointer;
 }
 
+.my-notes-actions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin-top: 6px;
+}
+
+.my-notes-public-toggle {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  color: var(--text-muted);
+  cursor: pointer;
+}
+
 .notes-tab-switcher {
   display: flex;
   border: 1px solid var(--border);
@@ -2973,13 +3216,34 @@ body.resizing-panels {
 .friends-list-item-row {
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: flex-start;
   gap: 8px;
 }
 
+.friends-list-item-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 8px;
+}
+
+.friends-message-button {
+  border: 1px solid var(--border);
+  background: var(--panel-bg);
+  color: var(--text);
+  border-radius: 6px;
+  padding: 5px 10px;
+  font-size: 12px;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.friends-message-button:hover {
+  background: var(--accent-bg);
+  border-color: var(--accent);
+}
+
 .friends-add-to-group-toggle {
-  align-self: flex-start;
-  margin-top: 6px;
   border: none;
   background: none;
   color: var(--accent);
@@ -3022,13 +3286,6 @@ body.resizing-panels {
   white-space: nowrap;
 }
 
-.friends-message-hint {
-  color: var(--accent);
-  font-size: 12px;
-  font-weight: 500;
-  white-space: nowrap;
-}
-
 .message-preview {
   display: flex;
   flex-direction: column;
@@ -3060,6 +3317,137 @@ body.resizing-panels {
   line-height: 1;
   padding: 3px 7px;
   border-radius: 999px;
+}
+
+.friend-profile-body {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 14px;
+  overflow-y: auto;
+}
+
+.friend-profile-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.friend-profile-name {
+  font-weight: 600;
+  font-size: 15px;
+  color: var(--text-h);
+}
+
+.friend-profile-church,
+.friend-profile-joined {
+  font-size: 12px;
+  color: var(--text-muted);
+}
+
+.friend-profile-verse,
+.friend-profile-bio {
+  font-size: 13px;
+  color: var(--text);
+  line-height: 1.5;
+}
+
+.friend-profile-message-button {
+  align-self: flex-start;
+  border: 1px solid var(--border);
+  background: var(--panel-bg);
+  color: var(--text);
+  border-radius: 8px;
+  padding: 8px 14px;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.friend-profile-message-button:hover {
+  background: var(--accent-bg);
+  border-color: var(--accent);
+}
+
+.friend-profile-section h4 {
+  font-size: 13px;
+  margin-bottom: 8px;
+}
+
+.friend-posts {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.friend-post {
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 10px 12px;
+  background: var(--bg);
+}
+
+.friend-post-ref {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-h);
+  margin-bottom: 4px;
+}
+
+.friend-post-text {
+  font-size: 13px;
+  color: var(--text);
+  line-height: 1.5;
+  margin-bottom: 6px;
+}
+
+.friend-post-comments {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding-top: 6px;
+  border-top: 1px solid var(--border);
+  margin-bottom: 6px;
+}
+
+.friend-post-comment {
+  font-size: 12px;
+  color: var(--text);
+}
+
+.friend-post-comment strong {
+  color: var(--text-h);
+}
+
+.friend-post-comment-form {
+  display: flex;
+  gap: 6px;
+}
+
+.friend-post-comment-form input {
+  flex: 1;
+  min-width: 0;
+  border: 1px solid var(--border);
+  background: var(--panel-bg);
+  color: var(--text);
+  border-radius: 6px;
+  padding: 6px 8px;
+  font-size: 12px;
+}
+
+.friend-post-comment-form button {
+  border: 1px solid var(--border);
+  background: var(--panel-bg);
+  color: var(--text);
+  border-radius: 6px;
+  padding: 6px 10px;
+  font-size: 12px;
+  cursor: pointer;
+}
+
+.friend-post-comment-form button:disabled {
+  opacity: 0.5;
+  cursor: default;
 }
 
 .friends-request-actions {

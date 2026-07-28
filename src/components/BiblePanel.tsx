@@ -5,7 +5,17 @@ import TagPicker from "./TagPicker";
 import InlinePicker, { type PickerHandle } from "./InlinePicker";
 import BookIntroView from "./BookIntroView";
 import { BOOKS } from "../data/bibleBooks";
-import { supabase, HIGHLIGHT_COLORS, type HighlightColor, type Highlight, type Note, type Tag, type VerseTag } from "../lib/supabase";
+import {
+  supabase,
+  chapterReadCutoff,
+  HIGHLIGHT_COLORS,
+  type HighlightColor,
+  type Highlight,
+  type Note,
+  type Tag,
+  type VerseTag,
+  type Profile,
+} from "../lib/supabase";
 import { getTextOffsetInRoot } from "../lib/domTextOffset";
 import { clipRangeForVerse } from "../lib/verseRange";
 
@@ -14,7 +24,6 @@ interface BiblePanelProps {
   /** Bumped by the caller on every "go to this reference" request — the load effect keys off this
    * (in addition to `reference`) so re-navigating to the same reference string still triggers a load. */
   referenceNonce?: number;
-  onClose: () => void;
   onSelectLocation: (id: string) => void;
   onSelectPoi: (id: string) => void;
   onSelectPerson: (id: string) => void;
@@ -102,10 +111,103 @@ function cleanSearchText(raw: string): string {
   return raw.replace(/<S>\d+<\/S>/g, "").replace(/<\/?mark>/g, "");
 }
 
+/** One chunk of a verse to be spoken as its own utterance — `speaker` is null for narration. */
+interface SpeechSegment {
+  text: string;
+  speaker: string | null;
+}
+
+const DIALOGUE_QUOTE_RE = /["“]([^"”]+)["”]/g;
+const SPEECH_VERBS = "said|answered|replied|asked|cried|responded|declared|continued|added|shouted|exclaimed|spoke|says|whispered|called|prayed|commanded";
+/** Optional indirect object after the verb — "said **to her**,", "answered **unto the Pharisees**," —
+ * by far the most common Biblical dialogue tag, so skipping it would miss most attributions. */
+const SPEECH_OBJECT = "(?:\\s+(?:to|unto)\\s+[a-zA-Z]+(?:\\s+[a-zA-Z]+){0,2})?";
+/** Matches e.g. "...Jesus said" or "...Jesus said to her," right before a quote. */
+const ATTRIB_BEFORE_RE = new RegExp(`([A-Z][a-zA-Z']+(?:\\s[A-Z][a-zA-Z']+)?)\\s+(?:${SPEECH_VERBS})${SPEECH_OBJECT}\\s*[:,]?\\s*$`);
+/** Matches e.g. ", Jesus said..." or " Jesus answered" right after a quote. */
+const ATTRIB_AFTER_RE = new RegExp(`^[,.]?\\s*(?:and\\s+)?([A-Z][a-zA-Z']+(?:\\s[A-Z][a-zA-Z']+)?)\\s+(?:${SPEECH_VERBS})${SPEECH_OBJECT}\\b`);
+
+/** Best-effort guess at who's speaking a quoted span, from the words immediately around it (e.g.
+ * "Jesus said, "..."" or ""..." said Peter"). Scripture text rarely tags dialogue explicitly, so this
+ * is a heuristic for the "dramatic reading" feature, not a reliable speaker-attribution parser — when
+ * it can't find a name it returns null and the segment reads in the narrator's voice. */
+function guessSpeaker(fullText: string, quoteStart: number, quoteEnd: number): string | null {
+  const before = fullText.slice(Math.max(0, quoteStart - 60), quoteStart);
+  const beforeMatch = before.match(ATTRIB_BEFORE_RE);
+  if (beforeMatch) return beforeMatch[1];
+  const after = fullText.slice(quoteEnd, quoteEnd + 60);
+  const afterMatch = after.match(ATTRIB_AFTER_RE);
+  if (afterMatch) return afterMatch[1];
+  return null;
+}
+
+/** Splits one verse's text into alternating narration/dialogue segments. Verses with no quotes come
+ * back as a single narration segment. */
+function splitDialogue(text: string): SpeechSegment[] {
+  const segments: SpeechSegment[] = [];
+  let lastIndex = 0;
+  DIALOGUE_QUOTE_RE.lastIndex = 0;
+  let match: RegExpExecArray | null;
+  while ((match = DIALOGUE_QUOTE_RE.exec(text))) {
+    if (match.index > lastIndex) segments.push({ text: text.slice(lastIndex, match.index), speaker: null });
+    segments.push({ text: match[1], speaker: guessSpeaker(text, match.index, match.index + match[0].length) });
+    lastIndex = match.index + match[0].length;
+  }
+  if (lastIndex < text.length) segments.push({ text: text.slice(lastIndex), speaker: null });
+  return segments.filter((s) => s.text.trim().length > 0);
+}
+
+/** Returns the voice to use for a segment, assigning each newly-seen speaker the next free voice from
+ * `pool` (and remembering it in `speakerVoices` so the same character keeps the same voice for the rest
+ * of the chapter). Narration (`speaker === null`) always uses the reader's chosen main voice. */
+function getVoiceForSpeaker(
+  speaker: string | null,
+  mainVoice: SpeechSynthesisVoice | undefined,
+  pool: SpeechSynthesisVoice[],
+  speakerVoices: Map<string, SpeechSynthesisVoice>
+): SpeechSynthesisVoice | undefined {
+  if (!speaker || pool.length === 0) return mainVoice;
+  const key = speaker.toLowerCase();
+  const existing = speakerVoices.get(key);
+  if (existing) return existing;
+  const voice = pool[speakerVoices.size % pool.length];
+  speakerVoices.set(key, voice);
+  return voice;
+}
+
+/** One queued utterance: which verse it belongs to (for highlighting) and which voice reads it. */
+interface SpeechItem {
+  text: string;
+  verse: number;
+  voice: SpeechSynthesisVoice | undefined;
+}
+
+/** Builds the full read-aloud queue for a chapter up front, so multi-voice dialogue can assign voices
+ * consistently per speaker across the whole chapter rather than verse-by-verse. */
+function buildSpeechQueue(
+  verses: VerseData[],
+  dramaticMode: boolean,
+  mainVoice: SpeechSynthesisVoice | undefined,
+  dialoguePool: SpeechSynthesisVoice[],
+  speakerVoices: Map<string, SpeechSynthesisVoice>
+): SpeechItem[] {
+  const queue: SpeechItem[] = [];
+  for (const v of verses) {
+    const text = v.text.trim();
+    if (!text) continue;
+    const segments = dramaticMode ? splitDialogue(text) : [{ text, speaker: null }];
+    for (const seg of segments) {
+      const trimmed = seg.text.trim();
+      if (!trimmed) continue;
+      queue.push({ text: trimmed, verse: v.verse, voice: getVoiceForSpeaker(seg.speaker, mainVoice, dialoguePool, speakerVoices) });
+    }
+  }
+  return queue;
+}
+
 export default function BiblePanel({
   reference,
   referenceNonce,
-  onClose,
   onSelectLocation,
   onSelectPoi,
   onSelectPerson,
@@ -137,6 +239,23 @@ export default function BiblePanel({
   const [searchError, setSearchError] = useState<string | null>(null);
   const [pendingScrollVerse, setPendingScrollVerse] = useState<number | null>(null);
   const verseRefs = useRef<Record<number, HTMLParagraphElement | null>>({});
+
+  // "Listen" — reads the current chapter aloud with the browser's built-in text-to-speech (no
+  // external audio API/licensing needed). Verses are queued one at a time (rather than one utterance
+  // for the whole chapter) so the currently-read verse can be highlighted and so pause/resume/stop
+  // work cleanly.
+  const [speaking, setSpeaking] = useState(false);
+  const [speechPaused, setSpeechPaused] = useState(false);
+  const [speakingVerse, setSpeakingVerse] = useState<number | null>(null);
+  const [showSpeechSettings, setShowSpeechSettings] = useState(false);
+  const [voices, setVoices] = useState<SpeechSynthesisVoice[]>([]);
+  /** "" means "let the browser pick its default voice." Persisted so a reader's pick sticks across visits. */
+  const [voiceURI, setVoiceURI] = useState(() => localStorage.getItem("bible-tts-voice") ?? "");
+  const [speechRate, setSpeechRate] = useState(() => Number(localStorage.getItem("bible-tts-rate") ?? "1"));
+  const [dramaticMode, setDramaticMode] = useState(() => localStorage.getItem("bible-tts-dramatic") === "true");
+  /** Which voice each guessed speaker name has been assigned, for the chapter currently being read —
+   * reset at the start of every startSpeaking() call so voice assignments don't bleed between chapters. */
+  const speakerVoicesRef = useRef<Map<string, SpeechSynthesisVoice>>(new Map());
   const textRefs = useRef<Record<number, HTMLSpanElement | null>>({});
 
   const [highlights, setHighlights] = useState<Highlight[]>([]);
@@ -146,6 +265,18 @@ export default function BiblePanel({
   const [popup, setPopup] = useState<PopupState | null>(null);
   const [noteDraft, setNoteDraft] = useState("");
   const [newTagName, setNewTagName] = useState("");
+
+  // Whether the currently-loaded chapter is marked read by this account, and this account's total
+  // minutes read so far this calendar month (both visible to friends too — see chapter_reads/
+  // reading_time_daily RLS). Both are chapter/account-scoped, so they're refetched on either change.
+  const [chapterMarkedRead, setChapterMarkedRead] = useState(false);
+  const [minutesThisMonth, setMinutesThisMonth] = useState<number | null>(null);
+  /** This account's chapter_read_reset setting (see Settings) — fetched once per login, used to decide
+   * whether an old chapter_reads row still counts as "read" for the checkbox above. */
+  const [chapterReadReset, setChapterReadReset] = useState<Profile["chapter_read_reset"]>("never");
+  // Seconds of foreground reading time accrued since the last heartbeat flush to the server — reset
+  // to 0 on every flush; kept in a ref (not state) since it doesn't need to trigger a re-render itself.
+  const readingSecondsRef = useRef(0);
 
   /** Fire-and-forget save of the current reading position — failures are logged, not surfaced (saving shouldn't interrupt reading). */
   const saveProgress = (book: string, chapter: number, translationId: string) => {
@@ -193,6 +324,87 @@ export default function BiblePanel({
     if (currentBook && currentChapter !== null) fetchAnnotations(currentBook, currentChapter, translation);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userId]);
+
+  // Fetched once per login — governs whether an old chapter_reads row still counts below.
+  useEffect(() => {
+    if (!userId) {
+      setChapterReadReset("never");
+      return;
+    }
+    supabase
+      .from("profiles")
+      .select("chapter_read_reset")
+      .eq("id", userId)
+      .single()
+      .then(({ data }) => {
+        setChapterReadReset((data as { chapter_read_reset: Profile["chapter_read_reset"] } | null)?.chapter_read_reset ?? "never");
+      });
+  }, [userId]);
+
+  /** Whether this exact chapter has already been marked read (and not yet aged past this account's
+   * reset window), for the "Mark chapter as read" checkbox. */
+  const fetchChapterReadState = async (book: string, chapter: number) => {
+    if (!userId) {
+      setChapterMarkedRead(false);
+      return;
+    }
+    let query = supabase.from("chapter_reads").select("book").eq("user_id", userId).eq("book", book).eq("chapter", chapter);
+    const cutoff = chapterReadCutoff(chapterReadReset);
+    if (cutoff) query = query.gte("read_at", cutoff);
+    const { data } = await query.maybeSingle();
+    setChapterMarkedRead(!!data);
+  };
+
+  useEffect(() => {
+    if (currentBook && currentChapter !== null) fetchChapterReadState(currentBook, currentChapter);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [userId, currentBook, currentChapter, chapterReadReset]);
+
+  const handleToggleChapterRead = async () => {
+    if (!userId || !currentBook || currentChapter === null) return;
+    const next = !chapterMarkedRead;
+    setChapterMarkedRead(next); // optimistic — this is a personal checklist, not worth a loading state
+    if (next) {
+      // Upsert, not insert — re-checking a chapter that's already read but aged past the reset window
+      // (row still exists, just too old to count) must refresh read_at rather than hit a duplicate key.
+      await supabase
+        .from("chapter_reads")
+        .upsert({ user_id: userId, book: currentBook, chapter: currentChapter, read_at: new Date().toISOString() });
+    } else {
+      await supabase.from("chapter_reads").delete().eq("user_id", userId).eq("book", currentBook).eq("chapter", currentChapter);
+    }
+  };
+
+  const fetchMinutesThisMonth = async (forUserId: string) => {
+    const { data } = await supabase.rpc("reading_minutes_this_month", { p_user_id: forUserId });
+    setMinutesThisMonth(typeof data === "number" ? data : 0);
+  };
+
+  useEffect(() => {
+    if (userId) fetchMinutesThisMonth(userId);
+    else setMinutesThisMonth(null);
+  }, [userId]);
+
+  // Reading-time heartbeat — every 20s of foreground reading (chapter loaded, tab/panel actually
+  // visible) reports 20s to the server via an additive RPC, then nudges the displayed monthly total
+  // optimistically rather than re-fetching on every tick. A visibility check keeps a backgrounded or
+  // switched-away tab from silently racking up minutes nobody spent looking at the page.
+  useEffect(() => {
+    if (!userId || !passage || hidden) return;
+    const HEARTBEAT_SECONDS = 20;
+    const interval = window.setInterval(() => {
+      if (document.visibilityState !== "visible") return;
+      supabase.rpc("increment_reading_time", { p_seconds: HEARTBEAT_SECONDS });
+      setMinutesThisMonth((m) => {
+        readingSecondsRef.current += HEARTBEAT_SECONDS;
+        if (readingSecondsRef.current < 60) return m;
+        const wholeMinutes = Math.floor(readingSecondsRef.current / 60);
+        readingSecondsRef.current -= wholeMinutes * 60;
+        return (m ?? 0) + wholeMinutes;
+      });
+    }, HEARTBEAT_SECONDS * 1000);
+    return () => window.clearInterval(interval);
+  }, [userId, passage, hidden]);
 
   // A stray popup from the previous chapter/tab makes no sense once either changes.
   useEffect(() => {
@@ -544,6 +756,90 @@ export default function BiblePanel({
     verseRefs.current[verseNum]?.scrollIntoView({ behavior: "smooth", block: "center" });
   };
 
+  // Voices load async on some browsers (notably Chrome) — getVoices() can return [] until
+  // "voiceschanged" fires, sometimes more than once as different voice packs finish registering.
+  useEffect(() => {
+    const loadVoices = () => setVoices(window.speechSynthesis.getVoices());
+    loadVoices();
+    window.speechSynthesis.addEventListener("voiceschanged", loadVoices);
+    return () => window.speechSynthesis.removeEventListener("voiceschanged", loadVoices);
+  }, []);
+
+  useEffect(() => localStorage.setItem("bible-tts-voice", voiceURI), [voiceURI]);
+  useEffect(() => localStorage.setItem("bible-tts-rate", String(speechRate)), [speechRate]);
+  useEffect(() => localStorage.setItem("bible-tts-dramatic", String(dramaticMode)), [dramaticMode]);
+
+  const stopSpeaking = () => {
+    window.speechSynthesis.cancel();
+    setSpeaking(false);
+    setSpeechPaused(false);
+    setSpeakingVerse(null);
+  };
+
+  const startSpeaking = () => {
+    if (!passage) return;
+    window.speechSynthesis.cancel();
+    const mainVoice = voiceURI ? voices.find((v) => v.voiceURI === voiceURI) : undefined;
+    // Dialogue voices are drawn from the same language as the narrator (falling back to the page's
+    // language, then to every voice on the system) so character lines stay intelligible — an accent
+    // switch is fun, a language switch mid-verse isn't.
+    const langPrefix = (mainVoice?.lang ?? navigator.language ?? "en").slice(0, 2).toLowerCase();
+    const sameLanguage = voices.filter((v) => v !== mainVoice && v.lang.toLowerCase().startsWith(langPrefix));
+    const dialoguePool = sameLanguage.length > 0 ? sameLanguage : voices.filter((v) => v !== mainVoice);
+    speakerVoicesRef.current = new Map();
+    const queue = buildSpeechQueue(passage.verses, dramaticMode, mainVoice, dialoguePool, speakerVoicesRef.current);
+    let i = 0;
+    const speakNext = () => {
+      if (i >= queue.length) {
+        setSpeaking(false);
+        setSpeakingVerse(null);
+        return;
+      }
+      const item = queue[i];
+      const utterance = new SpeechSynthesisUtterance(item.text);
+      if (item.voice) utterance.voice = item.voice;
+      utterance.rate = speechRate;
+      utterance.onstart = () => {
+        setSpeakingVerse(item.verse);
+        verseRefs.current[item.verse]?.scrollIntoView({ behavior: "smooth", block: "center" });
+      };
+      utterance.onend = () => {
+        i += 1;
+        speakNext();
+      };
+      // A cancelled utterance (stop/navigating away) also fires "error" — treat it the same as
+      // ending naturally rather than trying to advance to the next verse.
+      utterance.onerror = () => {
+        setSpeaking(false);
+        setSpeakingVerse(null);
+      };
+      window.speechSynthesis.speak(utterance);
+    };
+    setSpeaking(true);
+    setSpeechPaused(false);
+    speakNext();
+  };
+
+  const toggleSpeechPause = () => {
+    if (speechPaused) {
+      window.speechSynthesis.resume();
+      setSpeechPaused(false);
+    } else {
+      window.speechSynthesis.pause();
+      setSpeechPaused(true);
+    }
+  };
+
+  // Stop reading if the reader navigates to a different chapter/book, and always stop when the
+  // panel unmounts — otherwise speech would keep going over content no longer on screen.
+  useEffect(() => {
+    return () => window.speechSynthesis.cancel();
+  }, []);
+  useEffect(() => {
+    stopSpeaking();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [currentBook, currentChapter]);
+
   const runSearch = async (rawQuery: string) => {
     const q = rawQuery.trim();
     if (!q) return;
@@ -636,11 +932,12 @@ export default function BiblePanel({
       style={expand ? undefined : style}
     >
       <div className="bible-panel-scroll">
-      <div className="bible-panel-header bible-panel-header-minimal">
-        <button className="panel-close" onClick={onClose} aria-label="Close Bible panel">
-          ×
-        </button>
-      </div>
+
+      {minutesThisMonth !== null && (
+        <p className="bible-minutes-this-month no-print">
+          📖 {minutesThisMonth} min{minutesThisMonth === 1 ? "" : "s"} read this month
+        </p>
+      )}
 
       <div className="bible-nav">
         <InlinePicker
@@ -758,6 +1055,71 @@ export default function BiblePanel({
             </button>
           </div>
 
+          <div className="bible-listen-controls no-print">
+            {!speaking ? (
+              <button type="button" onClick={startSpeaking}>
+                🔊 Listen to this chapter
+              </button>
+            ) : (
+              <>
+                <button type="button" onClick={toggleSpeechPause}>
+                  {speechPaused ? "▶ Resume" : "⏸ Pause"}
+                </button>
+                <button type="button" onClick={stopSpeaking}>
+                  ⏹ Stop
+                </button>
+              </>
+            )}
+            <button
+              type="button"
+              className="bible-listen-settings-toggle"
+              onClick={() => setShowSpeechSettings((s) => !s)}
+              disabled={speaking}
+              title={speaking ? "Stop to change voice/speed settings" : "Voice & speed settings"}
+              aria-label="Voice and speed settings"
+              aria-expanded={showSpeechSettings}
+            >
+              ⚙️
+            </button>
+          </div>
+
+          {showSpeechSettings && !speaking && (
+            <div className="bible-listen-settings no-print">
+              <label>
+                Voice
+                <select value={voiceURI} onChange={(e) => setVoiceURI(e.target.value)}>
+                  <option value="">System default</option>
+                  {voices.map((v) => (
+                    <option key={v.voiceURI} value={v.voiceURI}>
+                      {v.name} ({v.lang})
+                    </option>
+                  ))}
+                </select>
+              </label>
+              <label>
+                Speed
+                <input
+                  type="range"
+                  min={0.5}
+                  max={2}
+                  step={0.1}
+                  value={speechRate}
+                  onChange={(e) => setSpeechRate(Number(e.target.value))}
+                />
+                <span className="bible-listen-rate-value">{speechRate.toFixed(1)}x</span>
+              </label>
+              <label className="bible-listen-dramatic-toggle" title={voices.length < 2 ? "Needs at least 2 voices installed on this device" : undefined}>
+                <input
+                  type="checkbox"
+                  checked={dramaticMode}
+                  disabled={voices.length < 2}
+                  onChange={(e) => setDramaticMode(e.target.checked)}
+                />
+                🎭 Dramatic reading (different voices for dialogue)
+              </label>
+            </div>
+          )}
+
           <div className="bible-verses">
             {passage.verses.map((v) => {
               const text = v.text.trim();
@@ -777,6 +1139,7 @@ export default function BiblePanel({
                   ref={(el) => {
                     verseRefs.current[v.verse] = el;
                   }}
+                  className={speakingVerse === v.verse ? "bible-verse-speaking" : undefined}
                 >
                   <span className="bible-verse-num">{v.verse}</span>
                   <VerseText
@@ -816,6 +1179,13 @@ export default function BiblePanel({
               );
             })}
           </div>
+
+          {userId && (
+            <label className="bible-mark-read no-print">
+              <input type="checkbox" checked={chapterMarkedRead} onChange={handleToggleChapterRead} />
+              Mark {passage.reference} as read
+            </label>
+          )}
 
           <div className="bible-chapter-nav">
             <button

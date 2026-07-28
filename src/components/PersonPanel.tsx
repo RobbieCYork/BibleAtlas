@@ -4,7 +4,9 @@ import LinkedVerseText from "./LinkedVerseText";
 
 interface PersonPanelProps {
   person: Person | null;
-  onClose: () => void;
+  /** Present only when there's somewhere to go back to (i.e. this panel was reached by clicking a
+   * cross-link from another person/place's details) — renders a "Back" button when set. */
+  onBack?: () => void;
   onSelectVerse?: (reference: string) => void;
   onSelectLocation: (id: string) => void;
   onSelectPoi: (id: string) => void;
@@ -21,7 +23,7 @@ const TIER_LABELS: Record<PersonTier, string> = {
 
 export default function PersonPanel({
   person,
-  onClose,
+  onBack,
   onSelectVerse,
   onSelectLocation,
   onSelectPoi,
@@ -33,9 +35,11 @@ export default function PersonPanel({
 
   return (
     <div className={`location-panel person-panel ${expand ? "panel-expand" : ""}`} style={expand ? undefined : style}>
-      <button className="panel-close" onClick={onClose} aria-label="Close">
-        ×
-      </button>
+      {onBack && (
+        <button className="panel-back" onClick={onBack} aria-label="Back">
+          ‹ Back
+        </button>
+      )}
       <span className="category-badge person-badge">{person.role}</span>
       <h2>{person.name}</h2>
       {person.pronunciation && <p className="pronunciation">Pronounced: {person.pronunciation}</p>}
@@ -116,6 +120,11 @@ export default function PersonPanel({
               <li key={i} className="extra-biblical-item">
                 <p className="extra-biblical-source">
                   {ref.source} <span className="extra-biblical-citation">({ref.citation})</span>
+                  {ref.url && (
+                    <a href={ref.url} target="_blank" rel="noopener noreferrer" className="extra-biblical-link">
+                      Read the source ↗
+                    </a>
+                  )}
                 </p>
                 <p className="extra-biblical-summary">{ref.summary}</p>
                 <p className="extra-biblical-reliability">{ref.reliability}</p>

@@ -3,7 +3,9 @@ import LinkedVerseText from "./LinkedVerseText";
 
 interface PoiPanelProps {
   poi: PointOfInterest | null;
-  onClose: () => void;
+  /** Present only when there's somewhere to go back to (i.e. this panel was reached by clicking a
+   * cross-link from another person/place's details) — renders a "Back" button when set. */
+  onBack?: () => void;
   onSelectLocation: (id: string) => void;
   onSelectPoi: (id: string) => void;
   onSelectPerson: (id: string) => void;
@@ -14,7 +16,7 @@ interface PoiPanelProps {
 
 export default function PoiPanel({
   poi,
-  onClose,
+  onBack,
   onSelectLocation,
   onSelectPoi,
   onSelectPerson,
@@ -26,9 +28,11 @@ export default function PoiPanel({
 
   return (
     <div className={`location-panel ${expand ? "panel-expand" : ""}`} style={expand ? undefined : style}>
-      <button className="panel-close" onClick={onClose} aria-label="Close">
-        ×
-      </button>
+      {onBack && (
+        <button className="panel-back" onClick={onBack} aria-label="Back">
+          ‹ Back
+        </button>
+      )}
       <span className="category-badge poi-badge">{poi.tag}</span>
       <h2>{poi.name}</h2>
       {poi.pronunciation && <p className="pronunciation">Pronounced: {poi.pronunciation}</p>}

@@ -17,7 +17,6 @@ type DetailTab = "chat" | "members";
 
 interface GroupsPanelProps {
   session: Session | null;
-  onClose: () => void;
   expand?: boolean;
   style?: React.CSSProperties;
   hidden?: boolean;
@@ -33,7 +32,6 @@ interface GroupsPanelProps {
 
 export default function GroupsPanel({
   session,
-  onClose,
   expand,
   style,
   hidden,
@@ -427,9 +425,6 @@ export default function GroupsPanel({
             ← Back
           </button>
           <h3>{activeGroup.name}</h3>
-          <button className="panel-close" onClick={onClose} aria-label="Close Friends panel">
-            ×
-          </button>
         </div>
 
         <div className="group-detail-tabs">
@@ -665,9 +660,6 @@ export default function GroupsPanel({
             ← Back
           </button>
           <h3>New Group</h3>
-          <button className="panel-close" onClick={onClose} aria-label="Close Friends panel">
-            ×
-          </button>
         </div>
         <form className="group-create-form" onSubmit={handleCreateGroup}>
           <input type="text" value={newName} onChange={(e) => setNewName(e.target.value)} placeholder="Group name" required maxLength={80} autoFocus />
@@ -707,9 +699,6 @@ export default function GroupsPanel({
     <div className={`friends-panel ${expand ? "panel-expand" : ""} ${hidden ? "bible-panel-hidden" : ""}`} style={expand ? undefined : style}>
       <div className="bible-panel-header no-print">
         <h3>Groups</h3>
-        <button className="panel-close" onClick={onClose} aria-label="Close Friends panel">
-          ×
-        </button>
       </div>
       <ViewSwitcher
         active="groups"

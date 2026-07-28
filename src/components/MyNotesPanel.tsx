@@ -8,7 +8,6 @@ type NotesTab = "verse" | "sermon";
 
 interface MyNotesPanelProps {
   userId: string | null | undefined;
-  onClose: () => void;
   onGoToVerse: (reference: string) => void;
   expand?: boolean;
   style?: React.CSSProperties;
@@ -49,7 +48,7 @@ function escapeHtml(text: string): string {
   return text.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
 }
 
-export default function MyNotesPanel({ userId, onClose, onGoToVerse, expand, style, hidden, refreshKey, searchQuery }: MyNotesPanelProps) {
+export default function MyNotesPanel({ userId, onGoToVerse, expand, style, hidden, refreshKey, searchQuery }: MyNotesPanelProps) {
   const [tab, setTab] = useState<NotesTab>("verse");
   const [notes, setNotes] = useState<Note[]>([]);
   const [tags, setTags] = useState<Tag[]>([]);
@@ -160,6 +159,13 @@ export default function MyNotesPanel({ userId, onClose, onGoToVerse, expand, sty
   const handleDeleteNote = async (id: string) => {
     await supabase.from("notes").delete().eq("id", id);
     setNotes((prev) => prev.filter((n) => n.id !== id));
+  };
+
+  /** Public notes show as a post on this account's profile and friends can comment on them. */
+  const handleToggleNotePublic = async (note: Note) => {
+    const nextPublic = !note.is_public;
+    setNotes((prev) => prev.map((n) => (n.id === note.id ? { ...n, is_public: nextPublic } : n)));
+    await supabase.from("notes").update({ is_public: nextPublic }).eq("id", note.id);
   };
 
   const handleRemoveTag = async (verseTagId: string) => {
@@ -277,12 +283,6 @@ export default function MyNotesPanel({ userId, onClose, onGoToVerse, expand, sty
 
   return (
     <div className={`my-notes-panel ${expand ? "panel-expand" : ""} ${hidden ? "bible-panel-hidden" : ""}`} style={expand ? undefined : style}>
-      <div className="bible-panel-header bible-panel-header-minimal no-print">
-        <button className="panel-close" onClick={onClose} aria-label="Close My Notes panel">
-          ×
-        </button>
-      </div>
-
       <div className="notes-tab-switcher no-print">
         <button type="button" className={tab === "verse" ? "active" : ""} onClick={() => setTab("verse")}>
           My Notes
@@ -429,9 +429,19 @@ export default function MyNotesPanel({ userId, onClose, onGoToVerse, expand, sty
                       />
                     )}
                     {e.note && (
-                      <button type="button" className="my-notes-delete no-print" onClick={() => handleDeleteNote(e.note!.id)}>
-                        Delete note
-                      </button>
+                      <div className="my-notes-actions no-print">
+                        <label className="my-notes-public-toggle">
+                          <input
+                            type="checkbox"
+                            checked={e.note.is_public}
+                            onChange={() => handleToggleNotePublic(e.note!)}
+                          />
+                          {e.note.is_public ? "🌐 Public — shows on your profile" : "🔒 Private"}
+                        </label>
+                        <button type="button" className="my-notes-delete" onClick={() => handleDeleteNote(e.note!.id)}>
+                          Delete note
+                        </button>
+                      </div>
                     )}
                   </div>
                 ))}

@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import type { Session } from "@supabase/supabase-js";
 import { supabase, displayFor, type FriendRequest, type GroupSummary, type Message, type Profile } from "../lib/supabase";
 import GroupsPanel from "./GroupsPanel";
+import FriendProfileView from "./FriendProfileView";
 import ViewSwitcher, { type FriendsView } from "./ViewSwitcher";
 
 interface ConversationSummary {
@@ -12,7 +13,6 @@ interface ConversationSummary {
 
 interface FriendsPanelProps {
   session: Session | null;
-  onClose: () => void;
   expand?: boolean;
   style?: React.CSSProperties;
   hidden?: boolean;
@@ -35,7 +35,6 @@ interface FriendsPanelProps {
 
 export default function FriendsPanel({
   session,
-  onClose,
   expand,
   style,
   hidden,
@@ -59,6 +58,9 @@ export default function FriendsPanel({
   const [adding, setAdding] = useState(false);
   const [inviteStatus, setInviteStatus] = useState<string | null>(null);
   const [activeFriendId, setActiveFriendId] = useState<string | null>(null);
+  // Separate from activeFriendId (which opens the message thread) — set from a friend row's "View
+  // Profile" action, so profile-viewing and messaging are two distinct destinations from the same list.
+  const [activeProfileFriendId, setActiveProfileFriendId] = useState<string | null>(null);
   const [messages, setMessages] = useState<Message[]>([]);
   const [messageBody, setMessageBody] = useState("");
   const [sending, setSending] = useState(false);
@@ -74,6 +76,7 @@ export default function FriendsPanel({
     if (openViewNonce === undefined) return;
     setView(openView ?? "friends");
     setActiveFriendId(null);
+    setActiveProfileFriendId(null);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [openViewNonce]);
 
@@ -345,7 +348,6 @@ export default function FriendsPanel({
     return (
       <GroupsPanel
         session={session}
-        onClose={onClose}
         expand={expand}
         style={style}
         hidden={hidden}
@@ -354,6 +356,24 @@ export default function FriendsPanel({
         friendsBadgeCount={friendsBadgeCount}
         messagesBadgeCount={messagesBadgeCount}
         groupsBadgeCount={groupsBadgeCount}
+      />
+    );
+  }
+
+  if (activeProfileFriendId) {
+    return (
+      <FriendProfileView
+        friendId={activeProfileFriendId}
+        viewerId={userId}
+        onBack={() => setActiveProfileFriendId(null)}
+        onMessage={() => {
+          const fid = activeProfileFriendId;
+          setActiveProfileFriendId(null);
+          setActiveFriendId(fid);
+        }}
+        expand={expand}
+        style={style}
+        hidden={hidden}
       />
     );
   }
@@ -368,9 +388,6 @@ export default function FriendsPanel({
             ← Back
           </button>
           <h3>{friendProfile ? displayFor(friendProfile) : "Conversation"}</h3>
-          <button className="panel-close" onClick={onClose} aria-label="Close Friends panel">
-            ×
-          </button>
         </div>
         {pinnedMessage && (
           <div className="pinned-message-banner">
@@ -421,9 +438,6 @@ export default function FriendsPanel({
     <div className={`friends-panel ${expand ? "panel-expand" : ""} ${hidden ? "bible-panel-hidden" : ""}`} style={expand ? undefined : style}>
       <div className="bible-panel-header no-print">
         <h3>{view === "messages" ? "Messages" : "Friends"}</h3>
-        <button className="panel-close" onClick={onClose} aria-label="Close Friends panel">
-          ×
-        </button>
       </div>
       <ViewSwitcher
         active={view}
@@ -538,17 +552,30 @@ export default function FriendsPanel({
                 const fid = friendIdFor(r);
                 return (
                   <li key={r.id} className="friends-list-item friends-list-item-stack">
-                    <div className="friends-list-item-row friends-list-item-clickable" onClick={() => setActiveFriendId(fid)}>
+                    <div className="friends-list-item-row friends-list-item-clickable" onClick={() => setActiveProfileFriendId(fid)}>
+                      <span className="auth-avatar" aria-hidden="true">
+                        {profiles[fid]?.avatar_url ? (
+                          <img src={profiles[fid].avatar_url} alt="" />
+                        ) : profiles[fid] ? (
+                          displayFor(profiles[fid]).charAt(0).toUpperCase()
+                        ) : (
+                          "?"
+                        )}
+                      </span>
                       <span>{profiles[fid] ? displayFor(profiles[fid]) : "Friend"}</span>
-                      <span className="friends-message-hint">Message →</span>
                     </div>
-                    <button
-                      type="button"
-                      className="friends-add-to-group-toggle"
-                      onClick={() => handleToggleAddToGroup(fid)}
-                    >
-                      ＋ Add to Group
-                    </button>
+                    <div className="friends-list-item-actions">
+                      <button type="button" className="friends-message-button" onClick={() => setActiveFriendId(fid)}>
+                        💬 Message
+                      </button>
+                      <button
+                        type="button"
+                        className="friends-add-to-group-toggle"
+                        onClick={() => handleToggleAddToGroup(fid)}
+                      >
+                        ＋ Group
+                      </button>
+                    </div>
                     {addToGroupOpenFor === fid && (
                       <div className="friends-add-to-group-menu">
                         {adminGroups === null && <p className="comment-status">Loading…</p>}
