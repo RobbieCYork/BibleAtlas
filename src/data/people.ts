@@ -413,7 +413,10 @@ export const people: Person[] = [
     id: "herod-the-great",
     name: "Herod the Great",
     pronunciation: "HAIR-ud",
-    alternateNames: ["Herod I", "King Herod"],
+    // "King Herod" deliberately isn't listed — it's a title several different Herodian rulers are
+    // called bare in the text (e.g. Herod Antipas in Mark 6:14, Herod Agrippa I in Acts 12:1), so it
+    // carries no real disambiguating value and would mislink to whichever Herod happens to be here.
+    alternateNames: ["Herod I"],
     tier: "major",
     role: "King of Judea (Roman client king)",
     summary: "A shrewd and ruthless Roman client king who transformed Judea with massive building projects, including expanding the Jerusalem temple, while becoming infamous for paranoid violence against his own family and, according to Matthew's Gospel, against the infants of Bethlehem.",
@@ -2414,7 +2417,9 @@ export const people: Person[] = [
     id: "jacob",
     name: "Jacob",
     pronunciation: "JAY-kub",
-    alternateNames: ["Israel"],
+    // "Israel" deliberately isn't listed as an alternate name — bare "Israel" overwhelmingly means the
+    // nation throughout the OT (and even within Genesis it's frequently the nation-to-be, not the man),
+    // with no clean book-level split, so auto-linking it would mislink far more than it would help.
     tier: "major",
     role: "Patriarch of Israel; father of the twelve tribes",
     summary: "The younger twin of Isaac's sons who wrestled his way — first with his brother, then with God — into becoming Israel, the patriarch whose twelve sons became the twelve tribes of the nation that bears his renamed identity.",
@@ -4955,7 +4960,9 @@ export const people: Person[] = [
         id: "magi",
         name: "Magi",
         pronunciation: "MAY-jye",
-        alternateNames: ["Wise Men", "The Three Kings"],
+        // "Wise Men" deliberately isn't listed — it's a generic English phrase (Daniel's Babylonian
+        // court astrologers are also "wise men," e.g. Daniel 2:12) rather than a distinguishing name.
+        alternateNames: ["The Three Kings"],
         tier: "significant",
         role: "Foreign priestly-astrologer visitors (Zoroastrian/Persian or Babylonian tradition)",
         summary: "Unnamed foreign 'magi from the East' appear in a single passage of Matthew's Gospel, following a star to Jerusalem and then Bethlehem to pay homage to the newborn 'king of the Jews' with gifts of gold, frankincense, and myrrh. Their visit to Herod's court sets off the paranoid king's massacre of Bethlehem's infant boys. Historically, 'magi' was a real and specific term for a priestly caste associated with ancient Media, Persia, and Zoroastrian religious practice, later broadened in Greek and Roman usage to cover astrologers and diviners generally — long before it became shorthand for the exotic 'Three Kings' of later Christian tradition.",
