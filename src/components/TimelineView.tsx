@@ -5,6 +5,8 @@ import { bookWritingWindows } from "../data/bookWritingWindows";
 import type { BookWritingWindow } from "../data/bookWritingWindows";
 import { people } from "../data/people";
 import type { Person, TimelineEvent, TimelineEventCategory } from "../data/types";
+import TimelineLaneMenu, { TIMELINE_LANE_ORDER } from "./TimelineLaneMenu";
+import type { TimelineLaneKey } from "./TimelineLaneMenu";
 import "./TimelineView.css";
 
 /* ============================================================================
@@ -24,6 +26,13 @@ import "./TimelineView.css";
  *   4. World History lane       — slate
  *   5. Other Religions lane     — amber
  *   6. Year axis
+ *
+ * Any of the five lanes above the axis can be hidden via the "Lanes" button in the header
+ * (TimelineLaneMenu) — the choice persists in localStorage. Hidden lanes are skipped entirely
+ * (no clustering/label math computed for them — see the `geom`/`bookPack`/`lifePack`/`eventsLayer`
+ * memos below), and the vertical space that would've gone to them is redistributed among whatever
+ * lanes remain checked. Checking more lanes than comfortably fit switches the lane stack to fixed
+ * minimum-height lanes inside a vertically scrollable container instead of squeezing everyone thin.
  *
  * Interactions: vertical wheel/trackpad = zoom-to-cursor · horizontal trackpad
  * swipe = pan · drag (mouse or touch) = pan, with momentum on release · pinch =
@@ -96,6 +105,43 @@ const LANES: { cat: TimelineEventCategory; label: string; cssVar: string }[] = [
   { cat: "world", label: "World History", cssVar: "var(--tl-world)" },
   { cat: "religion", label: "Other Religions", cssVar: "var(--tl-religion)" },
 ];
+
+/* ------------------------------------------------------- lane visibility */
+
+/** Reasonable minimum heights (px) per lane type when the lane stack has more checked lanes than
+ * comfortably fit and switches to scroll mode — event lanes carry the actual markers/clusters/bars
+ * people click on, so they need more room than the naturally slimmer books band or lifespans lane. */
+const MIN_BOOKS_H = 56;
+const MIN_LIFE_H = 46;
+const MIN_EVENT_LANE_H = 88;
+
+const LANE_VISIBILITY_STORAGE_KEY = "timeline-visible-lanes";
+
+const DEFAULT_VISIBLE_LANES: Record<TimelineLaneKey, boolean> = {
+  books: true,
+  lifespans: true,
+  biblical: true,
+  world: true,
+  religion: true,
+};
+
+/** Same defensive localStorage-read pattern used elsewhere in the app (see
+ * readLocalPlanProgress in lib/supabase.ts) — a corrupt or missing value just falls back to
+ * "show everything," which is also today's fixed behavior for anyone who's never opened the menu. */
+function loadVisibleLanes(): Record<TimelineLaneKey, boolean> {
+  try {
+    const raw = localStorage.getItem(LANE_VISIBILITY_STORAGE_KEY);
+    if (!raw) return DEFAULT_VISIBLE_LANES;
+    const parsed = JSON.parse(raw) as Partial<Record<TimelineLaneKey, boolean>>;
+    const next = { ...DEFAULT_VISIBLE_LANES };
+    for (const key of TIMELINE_LANE_ORDER) {
+      if (typeof parsed[key] === "boolean") next[key] = parsed[key] as boolean;
+    }
+    return next;
+  } catch {
+    return DEFAULT_VISIBLE_LANES;
+  }
+}
 
 /* ---------------------------------------------------------------- helpers */
 
@@ -194,11 +240,32 @@ export default function TimelineView({
   events = DEFAULT_EVENTS,
   lifespans = DEFAULT_LIFESPANS,
 }: TimelineViewProps) {
+  /* viewportRef: the outer, scrollable window (vertical scroll only, when the checked lane set needs
+   * more height than fits) — this is what's measured for available layout height/width. canvasRef:
+   * the inner gesture surface (pointer/wheel handlers, horizontal-only pan/zoom) — its own height is
+   * set explicitly from `geom` below, growing past the viewport's height only in scroll mode. */
+  const viewportRef = useRef<HTMLDivElement | null>(null);
   const canvasRef = useRef<HTMLDivElement | null>(null);
   const [size, setSize] = useState({ w: 0, h: 0 });
   const [view, setView] = useState<View | null>(null);
   const [tooltip, setTooltip] = useState<TooltipState | null>(null);
   const [dragging, setDragging] = useState(false);
+
+  /* ----- lane visibility (persisted) ----- */
+
+  const [visibleLanes, setVisibleLanes] = useState<Record<TimelineLaneKey, boolean>>(loadVisibleLanes);
+
+  useEffect(() => {
+    try {
+      localStorage.setItem(LANE_VISIBILITY_STORAGE_KEY, JSON.stringify(visibleLanes));
+    } catch {
+      // Storage full/blocked — losing the lane-visibility preference isn't worth surfacing an error.
+    }
+  }, [visibleLanes]);
+
+  const toggleLane = useCallback((key: TimelineLaneKey) => {
+    setVisibleLanes((v) => ({ ...v, [key]: !v[key] }));
+  }, []);
 
   /* ----- world bounds (from whatever data is present) ----- */
 
@@ -247,7 +314,7 @@ export default function TimelineView({
   /* ----- measure the canvas ----- */
 
   useEffect(() => {
-    const el = canvasRef.current;
+    const el = viewportRef.current;
     if (!el) return;
     const ro = new ResizeObserver((entries) => {
       const r = entries[0].contentRect;
@@ -736,36 +803,110 @@ export default function TimelineView({
 
   /* ----- vertical geometry ----- */
 
+  // Hidden lanes skip their row-packing entirely — no point computing interval placement for
+  // content that won't render (this is the "hidden lanes don't need clustering/label math" perf win).
   const bookPack = useMemo(
-    () => packRows(BOOK_WINDOWS, (w) => w.startYear, (w) => w.endYear),
-    [],
+    () =>
+      visibleLanes.books
+        ? packRows(BOOK_WINDOWS, (w) => w.startYear, (w) => w.endYear)
+        : { placed: [], rowCount: 0 },
+    [visibleLanes.books],
   );
 
   const lifePack = useMemo(
-    () => packRows(lifespans, (l) => l.bornYear, (l) => lifespanEnd(l)),
-    [lifespans],
+    () =>
+      visibleLanes.lifespans
+        ? packRows(lifespans, (l) => l.bornYear, (l) => lifespanEnd(l))
+        : { placed: [], rowCount: 0 },
+    [visibleLanes.lifespans, lifespans],
   );
 
   const geom = useMemo(() => {
     const h = size.h;
     if (h <= 0) return null;
     const avail = h - AXIS_H;
+
+    const showBooks = visibleLanes.books;
+    const showLife = visibleLanes.lifespans && lifePack.rowCount > 0;
+    const visibleEventLanes = LANES.filter((lane) => visibleLanes[lane.cat]);
+    const nEvent = visibleEventLanes.length;
+    const visibleCount = (showBooks ? 1 : 0) + (showLife ? 1 : 0) + nEvent;
+
+    if (visibleCount === 0) {
+      return { empty: true as const, axisTop: avail, totalH: h, needsScroll: false };
+    }
+
     const bookRows = Math.max(bookPack.rowCount, 1);
+    const booksContentH = showBooks ? Math.max(bookRows * 9 + 20, MIN_BOOKS_H) : 0;
     const lifeRows = lifePack.rowCount;
-    const booksH = clamp(bookRows * 9 + 20, 56, Math.max(72, avail * 0.3));
-    const lifeH = lifeRows > 0 ? clamp(lifeRows * 24 + 20, 46, avail * 0.22) : 0;
-    const lanesTop = booksH + lifeH;
-    const laneH = Math.max((avail - lanesTop) / LANES.length, 46);
+    const lifeContentH = showLife ? Math.max(lifeRows * 24 + 20, MIN_LIFE_H) : 0;
+
+    // Feasibility check, not a hardcoded lane count: can the checked lanes fill the viewport at
+    // comfortable (content-driven books/life, minimum event lane) heights, or would that squeeze an
+    // event lane thinner than its reasonable minimum? Using the actual content-driven books/life
+    // heights here (not just their floors) matters — a books band with many rows can itself eat
+    // enough of `avail` to push event lanes below the minimum even when only 2-3 lanes are checked,
+    // and conversely a roomy viewport can comfortably fill even 4-5 lanes without scrolling at all.
+    // Robbie's "~2-3 lanes fit comfortably, 4-5 need to scroll" guidance describes the typical
+    // outcome of this math at typical viewport heights — it's not baked in as a fixed count.
+    const requiredMin = booksContentH + lifeContentH + nEvent * MIN_EVENT_LANE_H;
+    const needsScroll = requiredMin > avail;
+
+    let booksH: number;
+    let lifeH: number;
+    let laneH: number;
+    let contentH: number;
+
+    if (!needsScroll) {
+      // Comfortable mode: the checked lanes fill the full viewport height exactly (no scroll),
+      // each getting MORE room than the old fixed 5-lane split since hidden lanes contribute nothing.
+      booksH = booksContentH;
+      lifeH = lifeContentH;
+      const remaining = Math.max(avail - booksH - lifeH, 0);
+      if (nEvent > 0) {
+        laneH = remaining / nEvent;
+      } else {
+        // Only the books band and/or lifespans lane are checked — let them stretch into the
+        // freed-up space rather than sit at their minimum content height.
+        laneH = 0;
+        const stretchers = (showBooks ? 1 : 0) + (showLife ? 1 : 0);
+        if (stretchers > 0 && remaining > 0) {
+          const extra = remaining / stretchers;
+          if (showBooks) booksH += extra;
+          if (showLife) lifeH += extra;
+        }
+      }
+      contentH = avail;
+    } else {
+      // Scroll mode: books/lifespans keep their content-driven height, event lanes get a flat
+      // reasonable minimum, and the lane stack's total height can exceed the viewport — the
+      // viewport wrapper (.tl-canvas-viewport) scrolls vertically to reach whatever's checked.
+      booksH = booksContentH;
+      lifeH = lifeContentH;
+      laneH = MIN_EVENT_LANE_H;
+      contentH = booksH + lifeH + nEvent * laneH;
+    }
+
+    const laneTop = new Map<TimelineEventCategory, number>();
+    let cursor = booksH + lifeH;
+    for (const lane of visibleEventLanes) {
+      laneTop.set(lane.cat, cursor);
+      cursor += laneH;
+    }
+
     return {
+      empty: false as const,
       booksTop: 0,
       booksH,
       lifeTop: booksH,
       lifeH,
-      laneTops: LANES.map((_, i) => lanesTop + i * laneH),
+      laneTop,
       laneH,
-      axisTop: avail,
+      axisTop: contentH,
+      totalH: contentH + AXIS_H,
+      needsScroll,
     };
-  }, [size.h, bookPack.rowCount, lifePack.rowCount]);
+  }, [size.h, bookPack.rowCount, lifePack.rowCount, visibleLanes]);
 
   const pxPerYear = view?.pxPerYear ?? 0;
 
@@ -775,7 +916,7 @@ export default function TimelineView({
    * is near-free while panning. They rebuild only when zoom changes. */
 
   const booksLayer = useMemo<ReactNode>(() => {
-    if (!geom || pxPerYear <= 0) return null;
+    if (!geom || geom.empty || geom.booksH <= 0 || pxPerYear <= 0) return null;
     const rowH = (geom.booksH - 22) / Math.max(bookPack.rowCount, 1);
     const barH = clamp(rowH - 1.5, 3.5, 13);
 
@@ -834,7 +975,7 @@ export default function TimelineView({
   }, [geom, pxPerYear, bookPack, minYear, onSelectBook, showTip, hideTip]);
 
   const lifespansLayer = useMemo<ReactNode>(() => {
-    if (!geom || geom.lifeH <= 0 || pxPerYear <= 0) return null;
+    if (!geom || geom.empty || geom.lifeH <= 0 || pxPerYear <= 0) return null;
     const rowH = (geom.lifeH - 22) / Math.max(lifePack.rowCount, 1);
     const barH = clamp(rowH - 3, 8, 16);
 
@@ -895,15 +1036,20 @@ export default function TimelineView({
   }, [geom, pxPerYear, lifePack, minYear, onSelectPerson, showTip, hideTip, focusedLifeId]);
 
   const eventsLayer = useMemo<ReactNode>(() => {
-    if (!geom || pxPerYear <= 0) return null;
+    if (!geom || geom.empty || pxPerYear <= 0) return null;
+
     const nodes: ReactNode[] = [];
 
-    for (let li = 0; li < LANES.length; li++) {
-      const { cat } = LANES[li];
+    for (const lane of LANES) {
+      const { cat } = lane;
+      // Hidden lane: geom never allocated it a top offset — skip clustering/label math for it
+      // entirely rather than computing work for something that won't render.
+      const laneTop = geom.laneTop.get(cat);
+      if (laneTop === undefined) continue;
       const laneEvents = events
         .filter((e) => e.category === cat)
         .sort((a, b) => a.startYear - b.startYear);
-      const centerY = geom.laneTops[li] + geom.laneH / 2;
+      const centerY = laneTop + geom.laneH / 2;
 
       // Fixed-width pixel buckets in world space (pan-invariant at a given zoom).
       const buckets = new Map<number, TimelineEvent[]>();
@@ -1063,7 +1209,7 @@ export default function TimelineView({
   const translateX = view ? -(view.startYear - minYear) * view.pxPerYear : 0;
   const visibleFrom = view ? Math.round(view.startYear) : 0;
   const visibleTo = view ? Math.round(view.startYear + size.w / view.pxPerYear) : 0;
-  const hasLifespans = geom !== null && geom.lifeH > 0;
+  const hasLifespans = geom !== null && !geom.empty && geom.lifeH > 0;
 
   return (
     <section className="tl-root" aria-label="Historical timeline">
@@ -1090,6 +1236,7 @@ export default function TimelineView({
         </div>
         <div className="tl-header-spacer" />
         <div className="tl-zoom-controls">
+          <TimelineLaneMenu visible={visibleLanes} onToggle={toggleLane} />
           <button
             type="button"
             className="tl-zoom-btn"
@@ -1117,125 +1264,148 @@ export default function TimelineView({
         </div>
       </header>
 
-      <div
-        ref={canvasRef}
-        className={`tl-canvas${dragging ? " tl-dragging" : ""}`}
-        role="application"
-        aria-label="Zoomable timeline — scroll to zoom, drag to pan, arrow keys to move"
-        tabIndex={0}
-        onPointerDown={onPointerDown}
-        onPointerMove={onPointerMove}
-        onPointerUp={endPointer}
-        onPointerCancel={endPointer}
-        onClickCapture={onClickCapture}
-        onDoubleClick={onDoubleClick}
-        onKeyDown={onKeyDown}
-      >
-        {geom && view && (
-          <>
-            {/* Pinned lane tints + separators (do not pan). */}
-            <div
-              className="tl-lane-underlay tl-band-books"
-              style={{ top: geom.booksTop, height: geom.booksH }}
-            />
-            {hasLifespans && (
-              <div
-                className="tl-lane-underlay tl-band-life"
-                style={{ top: geom.lifeTop, height: geom.lifeH }}
-              />
-            )}
-            {LANES.map((lane, i) => (
-              <div
-                key={lane.cat}
-                className={`tl-lane-underlay tl-lane-${lane.cat}`}
-                style={{ top: geom.laneTops[i], height: geom.laneH }}
-              />
-            ))}
-
-            {/* Pinned lane name chips. */}
-            <span className="tl-lane-label" style={{ top: geom.booksTop + 5 }}>
-              Books of the Bible
-            </span>
-            {hasLifespans && (
-              <span className="tl-lane-label" style={{ top: geom.lifeTop + 5 }}>
-                <span
-                  className="tl-lane-label-dot"
-                  style={{ background: "var(--tl-life)" }}
-                  aria-hidden="true"
-                />
-                Lifespans
-              </span>
-            )}
-            {LANES.map((lane, i) => (
-              <span key={lane.cat} className="tl-lane-label" style={{ top: geom.laneTops[i] + 5 }}>
-                <span
-                  className="tl-lane-label-dot"
-                  style={{ background: lane.cssVar }}
-                  aria-hidden="true"
-                />
-                {lane.label}
-              </span>
-            ))}
-
-            {/* The panning world surface — a single GPU-composited transform, never scaled.
-             * translate3d (vs. translateX) explicitly promotes this to its own compositor
-             * layer, which keeps large numbers of absolutely-positioned children smooth
-             * during momentum glides and trackpad panning. */}
-            <div className="tl-scroller" style={{ transform: `translate3d(${translateX}px, 0, 0)` }}>
-              {ticks.map((y) => (
+      {/* Outer scrollable window: vertical-only scroll (native scrollbar / touch), horizontal
+       * overflow stays clipped here so a taller-than-viewport lane stack (scroll mode, see geom
+       * above) doesn't widen the page. This is what's measured for available layout height/width —
+       * the inner .tl-canvas below is sized explicitly from `geom` and can grow past it. */}
+      <div ref={viewportRef} className="tl-canvas-viewport">
+        <div
+          ref={canvasRef}
+          className={`tl-canvas${dragging ? " tl-dragging" : ""}${geom && !geom.empty && geom.needsScroll ? " tl-canvas-scroll-y" : ""}`}
+          style={{ height: geom && !geom.empty ? geom.totalH : "100%" }}
+          role="application"
+          aria-label="Zoomable timeline — scroll to zoom, drag to pan, arrow keys to move"
+          tabIndex={0}
+          onPointerDown={onPointerDown}
+          onPointerMove={onPointerMove}
+          onPointerUp={endPointer}
+          onPointerCancel={endPointer}
+          onClickCapture={onClickCapture}
+          onDoubleClick={onDoubleClick}
+          onKeyDown={onKeyDown}
+        >
+          {geom && geom.empty && (
+            <div className="tl-empty-state">
+              No lanes selected — pick at least one from the Lanes menu above.
+            </div>
+          )}
+          {geom && !geom.empty && view && (
+            <>
+              {/* Pinned lane tints + separators (do not pan). Hidden lanes get 0 height from
+               * geom, or (books) simply aren't rendered when unchecked. */}
+              {geom.booksH > 0 && (
                 <div
-                  key={`g${y}`}
-                  className={`tl-gridline${y === 0 ? " tl-gridline-epoch" : ""}`}
-                  style={{ left: (y - minYear) * view.pxPerYear, height: geom.axisTop }}
+                  className="tl-lane-underlay tl-band-books"
+                  style={{ top: geom.booksTop, height: geom.booksH }}
+                />
+              )}
+              {hasLifespans && (
+                <div
+                  className="tl-lane-underlay tl-band-life"
+                  style={{ top: geom.lifeTop, height: geom.lifeH }}
+                />
+              )}
+              {LANES.filter((lane) => geom.laneTop.has(lane.cat)).map((lane) => (
+                <div
+                  key={lane.cat}
+                  className={`tl-lane-underlay tl-lane-${lane.cat}`}
+                  style={{ top: geom.laneTop.get(lane.cat), height: geom.laneH }}
                 />
               ))}
-              {booksLayer}
-              {lifespansLayer}
-              {eventsLayer}
-              <div className="tl-axis-strip" style={{ top: geom.axisTop, height: AXIS_H }} />
-              {ticks.map((y) => (
+
+              {/* Pinned lane name chips. */}
+              {geom.booksH > 0 && (
+                <span className="tl-lane-label" style={{ top: geom.booksTop + 5 }}>
+                  Books of the Bible
+                </span>
+              )}
+              {hasLifespans && (
+                <span className="tl-lane-label" style={{ top: geom.lifeTop + 5 }}>
+                  <span
+                    className="tl-lane-label-dot"
+                    style={{ background: "var(--tl-life)" }}
+                    aria-hidden="true"
+                  />
+                  Lifespans
+                </span>
+              )}
+              {LANES.filter((lane) => geom.laneTop.has(lane.cat)).map((lane) => (
                 <span
-                  key={`t${y}`}
-                  className={`tl-axis-label${y === 0 ? " tl-axis-epoch" : ""}`}
-                  style={{
-                    left: (y - minYear) * view.pxPerYear,
-                    top: geom.axisTop,
-                    height: AXIS_H,
-                    lineHeight: `${AXIS_H}px`,
-                    zIndex: 6,
-                  }}
+                  key={lane.cat}
+                  className="tl-lane-label"
+                  style={{ top: (geom.laneTop.get(lane.cat) as number) + 5 }}
                 >
-                  {y === 0 ? "BC · AD" : formatYear(y)}
+                  <span
+                    className="tl-lane-label-dot"
+                    style={{ background: lane.cssVar }}
+                    aria-hidden="true"
+                  />
+                  {lane.label}
                 </span>
               ))}
-            </div>
 
-            {tooltip && (
-              <div className="tl-tooltip" style={{ left: tooltip.x, top: tooltip.y }}>
-                <div className="tl-tooltip-title">{tooltip.title}</div>
-                {tooltip.sub && <div className="tl-tooltip-sub">{tooltip.sub}</div>}
-                {tooltip.badge && <div className="tl-tooltip-badge">{tooltip.badge}</div>}
+              {/* The panning world surface — a single GPU-composited transform, never scaled.
+               * translate3d (vs. translateX) explicitly promotes this to its own compositor
+               * layer, which keeps large numbers of absolutely-positioned children smooth
+               * during momentum glides and trackpad panning. */}
+              <div className="tl-scroller" style={{ transform: `translate3d(${translateX}px, 0, 0)` }}>
+                {ticks.map((y) => (
+                  <div
+                    key={`g${y}`}
+                    className={`tl-gridline${y === 0 ? " tl-gridline-epoch" : ""}`}
+                    style={{ left: (y - minYear) * view.pxPerYear, height: geom.axisTop }}
+                  />
+                ))}
+                {booksLayer}
+                {lifespansLayer}
+                {eventsLayer}
+                <div className="tl-axis-strip" style={{ top: geom.axisTop, height: AXIS_H }} />
+                {ticks.map((y) => (
+                  <span
+                    key={`t${y}`}
+                    className={`tl-axis-label${y === 0 ? " tl-axis-epoch" : ""}`}
+                    style={{
+                      left: (y - minYear) * view.pxPerYear,
+                      top: geom.axisTop,
+                      height: AXIS_H,
+                      lineHeight: `${AXIS_H}px`,
+                      zIndex: 6,
+                    }}
+                  >
+                    {y === 0 ? "BC · AD" : formatYear(y)}
+                  </span>
+                ))}
               </div>
-            )}
-          </>
-        )}
+
+              {tooltip && (
+                <div className="tl-tooltip" style={{ left: tooltip.x, top: tooltip.y }}>
+                  <div className="tl-tooltip-title">{tooltip.title}</div>
+                  {tooltip.sub && <div className="tl-tooltip-sub">{tooltip.sub}</div>}
+                  {tooltip.badge && <div className="tl-tooltip-badge">{tooltip.badge}</div>}
+                </div>
+              )}
+            </>
+          )}
+        </div>
       </div>
 
       <footer className="tl-legend">
-        {LANES.map((lane) => (
+        {LANES.filter((lane) => visibleLanes[lane.cat]).map((lane) => (
           <span key={lane.cat} className="tl-legend-item">
             <span className="tl-legend-dot" style={{ background: lane.cssVar }} aria-hidden="true" />
             {lane.label}
           </span>
         ))}
-        <span className="tl-legend-item">
-          <span
-            className="tl-legend-swatch"
-            style={{ background: "rgba(var(--tl-book-rgb), 0.3)", border: "1px solid rgba(var(--tl-book-rgb), 0.45)" }}
-            aria-hidden="true"
-          />
-          Book writing windows
-        </span>
+        {visibleLanes.books && (
+          <span className="tl-legend-item">
+            <span
+              className="tl-legend-swatch"
+              style={{ background: "rgba(var(--tl-book-rgb), 0.3)", border: "1px solid rgba(var(--tl-book-rgb), 0.45)" }}
+              aria-hidden="true"
+            />
+            Book writing windows
+          </span>
+        )}
         {hasLifespans && (
           <span className="tl-legend-item">
             <span
