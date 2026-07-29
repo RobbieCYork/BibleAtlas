@@ -8,6 +8,7 @@ export const pois: PointOfInterest[] = [
   {
     id: "caesarea-maritima",
     name: "Caesarea Maritima",
+    pronunciation: "sess-uh-REE-uh mar-ih-TEE-muh",
     alternateNames: ["Caesarea"],
     tag: "Roman Port City",
     modernName: "Caesarea, Israel",
@@ -40,6 +41,7 @@ export const pois: PointOfInterest[] = [
   {
     id: "masada",
     name: "Masada",
+    pronunciation: "muh-SAH-duh",
     tag: "Fortress",
     modernName: "Masada, Israel",
     coordinates: [35.35389, 31.31556],
@@ -70,6 +72,7 @@ export const pois: PointOfInterest[] = [
   {
     id: "herodium",
     name: "Herodium",
+    pronunciation: "heh-ROH-dee-um",
     tag: "Fortress",
     modernName: "Herodium, West Bank",
     coordinates: [35.241389, 31.665806],
@@ -101,6 +104,7 @@ export const pois: PointOfInterest[] = [
   {
     id: "qumran",
     name: "Qumran",
+    pronunciation: "KOOM-rahn",
     tag: "Ancient Settlement",
     modernName: "Qumran, West Bank",
     coordinates: [35.45861, 31.74083],
@@ -131,6 +135,7 @@ export const pois: PointOfInterest[] = [
   {
     id: "bethsaida",
     name: "Bethsaida",
+    pronunciation: "beth-SAY-ih-duh",
     tag: "Fishing Village",
     modernName: "Tel Bethsaida (et-Tell), Israel",
     coordinates: [35.6306, 32.9103],
@@ -162,6 +167,7 @@ export const pois: PointOfInterest[] = [
   {
     id: "chorazin",
     name: "Chorazin",
+    pronunciation: "koh-RAY-zin",
     tag: "Ancient Town",
     modernName: "Korazim National Park, Israel",
     coordinates: [35.56278, 32.91111],
@@ -192,6 +198,7 @@ export const pois: PointOfInterest[] = [
   {
     id: "sepphoris",
     name: "Sepphoris",
+    pronunciation: "SEFF-uh-riss",
     tag: "Roman City",
     modernName: "Tzippori National Park, Israel",
     coordinates: [35.27861, 32.74556],
@@ -221,6 +228,7 @@ export const pois: PointOfInterest[] = [
   {
     id: "beth-shean",
     name: "Beth Shean",
+    pronunciation: "beth-SHEE-un",
     tag: "Decapolis City",
     modernName: "Beit She'an National Park, Israel",
     coordinates: [35.5008, 32.5008],
@@ -251,6 +259,7 @@ export const pois: PointOfInterest[] = [
   {
     id: "caesarea-philippi",
     name: "Caesarea Philippi",
+    pronunciation: "sess-uh-REE-uh fih-LIP-eye",
     tag: "Pagan Cult Site",
     modernName: "Banias Nature Reserve, Golan Heights",
     coordinates: [35.69444, 33.24861],
@@ -281,6 +290,7 @@ export const pois: PointOfInterest[] = [
   {
     id: "jericho",
     name: "Jericho",
+    pronunciation: "JAIR-ih-koh",
     tag: "Ancient City",
     modernName: "Tell es-Sultan, Jericho, West Bank",
     coordinates: [35.44389, 31.87111],
@@ -311,6 +321,7 @@ export const pois: PointOfInterest[] = [
   {
     id: "bethel",
     name: "Bethel",
+    pronunciation: "BETH-el",
     tag: "Patriarchal Site",
     modernName: "Beitin, West Bank",
     coordinates: [35.23833, 31.92833],
@@ -342,6 +353,7 @@ export const pois: PointOfInterest[] = [
   {
     id: "shiloh",
     name: "Shiloh",
+    pronunciation: "SHY-loh",
     tag: "Tabernacle Site",
     modernName: "Tel Shiloh (Khirbet Seilun), West Bank",
     coordinates: [35.289528, 32.055556],
@@ -373,6 +385,7 @@ export const pois: PointOfInterest[] = [
   {
     id: "hebron",
     name: "Hebron",
+    pronunciation: "HEE-bron",
     tag: "Patriarchal Site",
     modernName: "Tel Rumeida, Hebron, West Bank",
     coordinates: [35.104, 31.524],
@@ -404,6 +417,7 @@ export const pois: PointOfInterest[] = [
   {
     id: "beersheba",
     name: "Beersheba",
+    pronunciation: "beer-SHEE-buh",
     tag: "Patriarchal Site",
     modernName: "Tel Be'er Sheva, Israel",
     coordinates: [34.84083, 31.24472],
@@ -435,6 +449,7 @@ export const pois: PointOfInterest[] = [
   {
     id: "megiddo",
     name: "Megiddo",
+    pronunciation: "meh-GID-oh",
     alternateNames: ["Armageddon"],
     tag: "Fortress City",
     modernName: "Tel Megiddo, Israel",
@@ -467,6 +482,7 @@ export const pois: PointOfInterest[] = [
   {
     id: "mount-sinai",
     name: "Mount Sinai",
+    pronunciation: "SY-nye",
     tag: "Sacred Mountain",
     modernName: "Jebel Musa (St. Catherine), South Sinai, Egypt",
     coordinates: [33.9752, 28.5391],
@@ -498,6 +514,7 @@ export const pois: PointOfInterest[] = [
   {
     id: "shechem",
     name: "Shechem",
+    pronunciation: "SHEH-kem",
     alternateNames: ["Sychem"],
     tag: "Patriarchal Site",
     modernName: "Tell Balata, Nablus, West Bank",
@@ -530,6 +547,7 @@ export const pois: PointOfInterest[] = [
   {
     id: "gethsemane",
     name: "Gethsemane",
+    pronunciation: "geth-SEM-uh-nee",
     tag: "Religious Site",
     modernName: "Church of All Nations, Mount of Olives, Jerusalem",
     coordinates: [35.2396, 31.7792],
@@ -561,6 +579,7 @@ export const pois: PointOfInterest[] = [
   {
     id: "golgotha",
     name: "Golgotha",
+    pronunciation: "GOL-guh-thuh",
     tag: "Religious Site",
     modernName: "Church of the Holy Sepulchre, Old City, Jerusalem",
     coordinates: [35.2295, 31.7784],
@@ -592,6 +611,7 @@ export const pois: PointOfInterest[] = [
   {
     id: "emmaus",
     name: "Emmaus",
+    pronunciation: "eh-MAY-us",
     tag: "Religious Site",
     modernName: "Emmaus Nicopolis, Canada Park, Israel",
     coordinates: [34.987, 31.8369],
@@ -623,6 +643,7 @@ export const pois: PointOfInterest[] = [
   {
     id: "city-of-david",
     name: "City of David",
+    pronunciation: "SIT-ee of DAY-vid",
     tag: "Ancient Settlement",
     modernName: "City of David, Jerusalem, Israel",
     coordinates: [35.2356, 31.7736],
@@ -654,6 +675,7 @@ export const pois: PointOfInterest[] = [
   {
     id: "machaerus",
     name: "Machaerus",
+    pronunciation: "muh-KEER-us",
     tag: "Fortress",
     modernName: "Mukawir, Madaba Governorate, Jordan",
     coordinates: [35.6242, 31.5672],
@@ -685,6 +707,7 @@ export const pois: PointOfInterest[] = [
   {
     id: "mount-precipice",
     name: "Mount Precipice",
+    pronunciation: "MOWNT PRESS-ih-piss",
     tag: "Traditional Site",
     modernName: "Mount Precipice, Nazareth, Israel",
     coordinates: [35.2986, 32.6828],
@@ -716,6 +739,7 @@ export const pois: PointOfInterest[] = [
   {
     id: "kursi",
     name: "Kursi",
+    pronunciation: "KUR-see",
     tag: "Traditional Site",
     modernName: "Kursi National Park, Golan Heights",
     coordinates: [35.6504, 32.8261],
@@ -746,6 +770,7 @@ export const pois: PointOfInterest[] = [
   {
     id: "tabgha",
     name: "Tabgha",
+    pronunciation: "TAHB-guh",
     tag: "Traditional Site",
     modernName: "Tabgha, Sea of Galilee, Israel",
     coordinates: [35.5436, 32.8694],
@@ -777,6 +802,7 @@ export const pois: PointOfInterest[] = [
   {
     id: "mount-of-beatitudes",
     name: "Mount of Beatitudes",
+    pronunciation: "MOWNT of bee-AT-ih-toods",
     tag: "Traditional Site",
     modernName: "Mount of Beatitudes, Israel",
     coordinates: [35.5552, 32.8822],
@@ -807,6 +833,7 @@ export const pois: PointOfInterest[] = [
   {
     id: "al-maghtas",
     name: "Bethany Beyond the Jordan",
+    pronunciation: "BETH-uh-nee bee-YOND the JOR-dun",
     alternateNames: ["Bethabara"],
     tag: "Traditional Site",
     modernName: "Al-Maghtas, Balqa Governorate, Jordan",
@@ -838,6 +865,7 @@ export const pois: PointOfInterest[] = [
   {
     id: "ein-karem",
     name: "Ein Karem",
+    pronunciation: "ayn KAH-rem",
     tag: "Traditional Site",
     modernName: "Ein Karem, Jerusalem, Israel",
     coordinates: [35.1622, 31.7681],
@@ -868,6 +896,7 @@ export const pois: PointOfInterest[] = [
   {
     id: "shepherds-field",
     name: "Shepherds' Field",
+    pronunciation: "SHEP-erdz FEELD",
     tag: "Traditional Site",
     modernName: "Shepherds' Field, Beit Sahour, West Bank",
     coordinates: [35.2301, 31.7073],
@@ -898,6 +927,7 @@ export const pois: PointOfInterest[] = [
   {
     id: "perga",
     name: "Perga",
+    pronunciation: "PUR-guh",
     tag: "Ancient City",
     modernName: "Perge (Aksu), Antalya Province, Turkey",
     coordinates: [30.8539, 36.9614],
@@ -929,6 +959,7 @@ export const pois: PointOfInterest[] = [
   {
     id: "magdala",
     name: "Magdala",
+    pronunciation: "MAG-duh-luh",
     tag: "Ancient Town",
     modernName: "Migdal, Israel",
     coordinates: [35.5156, 32.825],
@@ -960,6 +991,7 @@ export const pois: PointOfInterest[] = [
   {
     id: "pool-of-bethesda",
     name: "Pool of Bethesda",
+    pronunciation: "POOL of buh-THEZ-duh",
     alternateNames: ["Bethesda"],
     tag: "Religious Site",
     modernName: "Church of St. Anne, Jerusalem, Israel",
@@ -991,6 +1023,7 @@ export const pois: PointOfInterest[] = [
   {
     id: "pool-of-siloam",
     name: "Pool of Siloam",
+    pronunciation: "POOL of sy-LOH-um",
     alternateNames: ["Siloam"],
     tag: "Religious Site",
     modernName: "City of David / Silwan, Jerusalem, Israel",
@@ -1022,6 +1055,7 @@ export const pois: PointOfInterest[] = [
   {
     id: "garden-tomb",
     name: "Garden Tomb",
+    pronunciation: "GAR-den TOOM",
     tag: "Religious Site",
     modernName: "Garden Tomb, East Jerusalem",
     coordinates: [35.23, 31.7839],
@@ -1047,6 +1081,7 @@ export const pois: PointOfInterest[] = [
   {
     id: "western-wall",
     name: "Western Wall",
+    pronunciation: "WES-tern WAWL",
     tag: "Religious Site",
     modernName: "Western Wall, Old City, Jerusalem, Israel",
     coordinates: [35.2345, 31.7767],
@@ -1077,6 +1112,7 @@ export const pois: PointOfInterest[] = [
   {
     id: "salamis",
     name: "Salamis",
+    pronunciation: "SAL-uh-miss",
     tag: "Ancient City",
     modernName: "Salamis, near Famagusta, Cyprus",
     coordinates: [33.9, 35.183],
@@ -1107,6 +1143,7 @@ export const pois: PointOfInterest[] = [
   {
     id: "paphos",
     name: "Paphos",
+    pronunciation: "PAY-foss",
     tag: "Ancient City",
     modernName: "Kato Paphos Archaeological Park, Cyprus",
     coordinates: [32.4061, 34.7582],
@@ -1133,6 +1170,7 @@ export const pois: PointOfInterest[] = [
   {
     id: "basilica-st-john",
     name: "Basilica of St. John",
+    pronunciation: "buh-SIL-ih-kuh of saint JON",
     tag: "Religious Site",
     modernName: "Ayasuluk Hill, Selçuk, Turkey",
     coordinates: [27.3678, 37.9525],
@@ -1162,13 +1200,14 @@ export const pois: PointOfInterest[] = [
   {
     id: "patara",
     name: "Patara",
+    pronunciation: "PAT-uh-ruh",
     tag: "Ancient City",
     modernName: "Patara, near Gelemiş, Antalya Province, Turkey",
     coordinates: [29.3172, 36.2662],
     description:
       "Patara was the chief port of Lycia. Acts 21:1-2 records that Paul changed ships here at the end of his third missionary journey, boarding a Phoenician vessel bound for Tyre.",
     archaeology: {
-      note: "Excavations since 1988 uncovered a well-preserved bouleuterion (assembly hall of the Lycian League), a colonnaded main street, and a theatre. The Patara lighthouse, built under Nero in AD 64, is considered the oldest known surviving lighthouse in the world and has been restored; excavation of the harbor and residential quarters continues.",
+      note: "Excavations since 1988 uncovered a well-preserved bouleuterion (assembly hall of the Lycian League), a colonnaded main street, and a theatre. The Patara lighthouse, securely dated by its dedicatory inscription to the reign of Nero (AD 64), is one of the oldest and best-documented lighthouses known from the ancient world; toppled by earthquake and tsunami, it has been re-erected from its recovered original blocks. It is often described as the world's oldest surviving lighthouse, though that superlative is disputed — the Roman Pharos at Dover, England (c. AD 46-50) is conventionally dated somewhat earlier, and the Tower of Hercules at A Coruña, Spain, is the oldest lighthouse still in operation. Excavation of the harbor and residential quarters continues.",
       photos: [
         {
           url: "https://upload.wikimedia.org/wikipedia/commons/7/70/Patara_-_the_lighthouse_-_panoramio.jpg",
@@ -1193,6 +1232,7 @@ export const pois: PointOfInterest[] = [
   {
     id: "assos",
     name: "Assos",
+    pronunciation: "AS-oss",
     tag: "Ancient City",
     modernName: "Assos (Behramkale), Çanakkale Province, Turkey",
     coordinates: [26.3369, 39.4878],
@@ -1223,6 +1263,7 @@ export const pois: PointOfInterest[] = [
   {
     id: "hierapolis",
     name: "Hierapolis",
+    pronunciation: "hy-uh-RAP-uh-liss",
     tag: "Ancient City",
     modernName: "Pamukkale, Denizli Province, Turkey",
     coordinates: [29.1258, 37.925],
@@ -1254,6 +1295,7 @@ export const pois: PointOfInterest[] = [
   {
     id: "acrocorinth",
     name: "Acrocorinth",
+    pronunciation: "ak-roh-KOR-inth",
     tag: "Ancient City",
     modernName: "Ancient Corinth, Greece",
     coordinates: [22.8725, 37.8906],
@@ -1285,6 +1327,7 @@ export const pois: PointOfInterest[] = [
   {
     id: "nazareth-synagogue-church",
     name: "Nazareth Synagogue Church",
+    pronunciation: "NAZ-uh-reth SIN-uh-gog CHURCH",
     tag: "Religious Site",
     modernName: "Nazareth, Israel",
     coordinates: [35.2967, 32.7033],
@@ -1310,6 +1353,7 @@ export const pois: PointOfInterest[] = [
   {
     id: "upper-room",
     name: "Upper Room",
+    pronunciation: "UP-er ROOM",
     tag: "Religious Site",
     modernName: "The Cenacle, Mount Zion, Jerusalem",
     coordinates: [35.229, 31.7718],
@@ -1341,6 +1385,7 @@ export const pois: PointOfInterest[] = [
   {
     id: "antonia-fortress",
     name: "Antonia Fortress",
+    pronunciation: "an-TOH-nee-uh FOR-tress",
     tag: "Roman Garrison",
     modernName: "Temple Mount / Haram al-Sharif, Jerusalem",
     coordinates: [35.2362, 31.776],
@@ -1372,6 +1417,7 @@ export const pois: PointOfInterest[] = [
   {
     id: "dominus-flevit",
     name: "Dominus Flevit",
+    pronunciation: "DOH-mih-nus FLEH-vit",
     tag: "Religious Site",
     modernName: "Mount of Olives, East Jerusalem",
     coordinates: [35.2418, 31.778],
@@ -1402,6 +1448,7 @@ export const pois: PointOfInterest[] = [
   {
     id: "st-peter-gallicantu",
     name: "St. Peter in Gallicantu",
+    pronunciation: "saint PEE-ter in gal-ih-KAHN-too",
     tag: "Religious Site",
     modernName: "Mount Zion, Jerusalem",
     coordinates: [35.2319, 31.7714],
@@ -1432,6 +1479,7 @@ export const pois: PointOfInterest[] = [
   {
     id: "herod-winter-palace-jericho",
     name: "Herod's Winter Palace",
+    pronunciation: "HAIR-udz WIN-ter PAL-iss",
     tag: "Palace",
     modernName: "Tulul Abu el-Alayiq, near Jericho, West Bank",
     coordinates: [35.4337, 31.8537],
@@ -1462,6 +1510,7 @@ export const pois: PointOfInterest[] = [
   {
     id: "lechaion",
     name: "Lechaion",
+    pronunciation: "leh-KAY-on",
     tag: "Ancient Port",
     modernName: "Lechaio, near Corinth, Greece",
     coordinates: [22.8875, 37.9327],
@@ -1492,11 +1541,12 @@ export const pois: PointOfInterest[] = [
   {
     id: "tower-of-david",
     name: "Tower of David",
+    pronunciation: "TOW-er of DAY-vid",
     tag: "Fortress",
     modernName: "Jerusalem Citadel, near Jaffa Gate, Old City of Jerusalem",
     coordinates: [35.2278, 31.7761],
     description:
-      "Herod the Great fortified this corner of Jerusalem's Upper City (c. 37-34 BC) with a royal palace complex and three massive defensive towers, named Phasael, Hippicus, and Mariamne. Josephus describes these towers as key elements of Jerusalem's defenses during the First Jewish-Roman War.",
+      "Later in his reign, during his great building program (c. 23 BC), Herod the Great fortified this corner of Jerusalem's Upper City with a royal palace complex and three massive defensive towers. Josephus (Jewish War 5.4.3) says he named them for the people dearest to him, all by then dead: his brother Phasael, his friend Hippicus, and his wife Mariamne, whom he himself had executed in 29 BC. He also describes these towers as key elements of Jerusalem's defenses during the First Jewish-Roman War.",
     archaeology: {
       note: "Excavations have exposed roughly 16 courses of massive Herodian-period ashlar stones at the base of the citadel, identified as the remains of one of Herod's towers, along with earlier Hasmonean-period wall sections beneath it. The name \"Tower of David\" is not ancient — it originated in the Byzantine period when Christian tradition mistakenly identified this part of the Upper City hill as biblical Mount Zion and presumed the ruins to be King David's palace; archaeologically there is no evidence connecting the structure to David.",
       photos: [
@@ -1522,6 +1572,7 @@ export const pois: PointOfInterest[] = [
   {
     id: "chapel-of-ascension",
     name: "Chapel of the Ascension",
+    pronunciation: "CHAP-el of the uh-SEN-shun",
     tag: "Traditional Site",
     modernName: "At-Tur, Mount of Olives, East Jerusalem",
     coordinates: [35.24505, 31.7789],
@@ -1547,6 +1598,7 @@ export const pois: PointOfInterest[] = [
   {
     id: "church-of-pater-noster",
     name: "Church of the Pater Noster",
+    pronunciation: "PAH-ter NOSS-ter",
     tag: "Traditional Site",
     modernName: "Mount of Olives, East Jerusalem",
     coordinates: [35.2449, 31.778],
@@ -1572,6 +1624,7 @@ export const pois: PointOfInterest[] = [
   {
     id: "tomb-of-virgin-mary-kidron",
     name: "Tomb of the Virgin Mary",
+    pronunciation: "TOOM of the VUR-jin MAIR-ee",
     tag: "Traditional Site",
     modernName: "Kidron Valley, East Jerusalem",
     coordinates: [35.2394, 31.78013],
@@ -1596,6 +1649,7 @@ export const pois: PointOfInterest[] = [
   {
     id: "dormition-abbey",
     name: "Dormition Abbey",
+    pronunciation: "dor-MISH-un AB-ee",
     tag: "Traditional Site",
     modernName: "Mount Zion, Jerusalem, Israel",
     coordinates: [35.2289, 31.7722],
@@ -1621,6 +1675,7 @@ export const pois: PointOfInterest[] = [
   {
     id: "ecce-homo-arch",
     name: "Ecce Homo Arch",
+    pronunciation: "ECH-ay HOH-moh ARCH",
     tag: "Traditional Site",
     modernName: "Via Dolorosa, Old City, Jerusalem, Israel",
     coordinates: [35.2334, 31.7804],
@@ -1646,6 +1701,7 @@ export const pois: PointOfInterest[] = [
   {
     id: "milk-grotto-bethlehem",
     name: "Milk Grotto",
+    pronunciation: "MILK GROT-oh",
     tag: "Traditional Site",
     modernName: "Bethlehem, West Bank, Palestinian Territories",
     coordinates: [35.208778, 31.703444],
@@ -1671,6 +1727,7 @@ export const pois: PointOfInterest[] = [
   {
     id: "basilica-of-annunciation-nazareth",
     name: "Basilica of the Annunciation",
+    pronunciation: "buh-SIL-ih-kuh of the uh-nun-see-AY-shun",
     tag: "Religious Site",
     modernName: "Nazareth, Israel",
     coordinates: [35.29778, 32.70222],
@@ -1700,6 +1757,7 @@ export const pois: PointOfInterest[] = [
   {
     id: "marys-well-nazareth",
     name: "Mary's Well / Church of St. Gabriel",
+    pronunciation: "MAIR-eez WELL / church of saint GAY-bree-ul",
     tag: "Traditional Site",
     modernName: "Nazareth, Israel",
     coordinates: [35.30156, 32.70671],
@@ -1724,6 +1782,7 @@ export const pois: PointOfInterest[] = [
   {
     id: "wedding-church-cana",
     name: "Wedding Church of Cana",
+    pronunciation: "WED-ing CHURCH of KAY-nuh",
     tag: "Traditional Site",
     modernName: "Kafr Kanna, Israel",
     coordinates: [35.3386, 32.7467],
@@ -1753,6 +1812,7 @@ export const pois: PointOfInterest[] = [
   {
     id: "straight-street-damascus",
     name: "Street Called Straight (Via Recta)",
+    pronunciation: "VEE-uh REK-tuh",
     tag: "Historic Street",
     modernName: "Medhat Pasha Street / Bab Sharqi Street, Damascus, Syria",
     coordinates: [36.3114, 33.5092],
@@ -1777,6 +1837,7 @@ export const pois: PointOfInterest[] = [
   {
     id: "house-of-ananias-damascus",
     name: "House (Chapel) of Ananias",
+    pronunciation: "HOWSS of an-uh-NYE-us",
     tag: "Traditional Site",
     modernName: "Bab Sharqi Quarter, Old City of Damascus, Syria",
     coordinates: [36.3175, 33.5114],
@@ -1800,6 +1861,7 @@ export const pois: PointOfInterest[] = [
   {
     id: "bab-kisan-damascus",
     name: "Bab Kisan (St. Paul's Window)",
+    pronunciation: "bahb kee-SAHN",
     tag: "Traditional Site",
     modernName: "Southeastern Old City Wall, Damascus, Syria",
     coordinates: [36.3153, 33.5064],
@@ -1824,6 +1886,7 @@ export const pois: PointOfInterest[] = [
   {
     id: "cave-of-apocalypse-patmos",
     name: "Cave of the Apocalypse",
+    pronunciation: "KAYV of the uh-POK-uh-lips",
     tag: "UNESCO World Heritage Site",
     modernName: "Between Chora and Skala, Patmos, Greece",
     coordinates: [26.5447, 37.3144],
@@ -1848,6 +1911,7 @@ export const pois: PointOfInterest[] = [
   {
     id: "antipatris",
     name: "Antipatris (Tel Afek)",
+    pronunciation: "an-TIP-uh-triss",
     tag: "Archaeological Site",
     modernName: "Yarkon-Tel Afek National Park, near Rosh HaAyin, Israel",
     coordinates: [34.9304, 32.105],
@@ -1872,6 +1936,7 @@ export const pois: PointOfInterest[] = [
   {
     id: "tomb-of-lazarus-bethany",
     name: "Tomb of Lazarus",
+    pronunciation: "TOOM of LAZ-uh-rus",
     tag: "Traditional Site",
     modernName: "Al-Eizariya, West Bank",
     coordinates: [35.2559, 31.7717],
@@ -1896,6 +1961,7 @@ export const pois: PointOfInterest[] = [
   {
     id: "erastus-inscription-corinth",
     name: "Erastus Inscription",
+    pronunciation: "ee-RAS-tus in-SKRIP-shun",
     tag: "Inscription",
     modernName: "Ancient Corinth, Corinthia, Greece",
     coordinates: [22.8781, 37.9066],
@@ -1920,6 +1986,7 @@ export const pois: PointOfInterest[] = [
   {
     id: "bema-of-corinth",
     name: "Bema of Corinth (Judgment Seat)",
+    pronunciation: "BEE-muh of KOR-inth",
     tag: "Monument",
     modernName: "Ancient Corinth, Corinthia, Greece",
     coordinates: [22.8803, 37.9051],
@@ -1948,6 +2015,7 @@ export const pois: PointOfInterest[] = [
   {
     id: "temple-of-apollo-corinth",
     name: "Temple of Apollo, Corinth",
+    pronunciation: "TEM-pul of uh-POL-oh",
     tag: "Ancient Temple",
     modernName: "Ancient Corinth, Corinthia, Greece",
     coordinates: [22.8794, 37.9061],
@@ -1972,6 +2040,7 @@ export const pois: PointOfInterest[] = [
   {
     id: "gallio-inscription-delphi",
     name: "Gallio Inscription",
+    pronunciation: "GAL-ee-oh in-SKRIP-shun",
     tag: "Inscription",
     modernName: "Delphi Archaeological Museum, Delphi, Greece",
     coordinates: [22.5013, 38.4824],
@@ -1995,6 +2064,7 @@ export const pois: PointOfInterest[] = [
   {
     id: "areopagus-athens",
     name: "Areopagus (Mars Hill)",
+    pronunciation: "air-ee-OP-uh-gus",
     tag: "Ancient Site",
     modernName: "Athens, Attica, Greece",
     coordinates: [23.7238, 37.9715],
@@ -2023,6 +2093,7 @@ export const pois: PointOfInterest[] = [
   {
     id: "ancient-agora-athens",
     name: "Ancient Agora of Athens",
+    pronunciation: "AYN-shunt AG-uh-ruh of ATH-inz",
     tag: "Ancient Site",
     modernName: "Athens, Attica, Greece",
     coordinates: [23.7229, 37.975],
@@ -2046,6 +2117,7 @@ export const pois: PointOfInterest[] = [
   {
     id: "temple-of-artemis-ephesus",
     name: "Temple of Artemis, Ephesus",
+    pronunciation: "TEM-pul of AR-tuh-miss",
     tag: "Ancient Wonder / Temple Ruins",
     modernName: "Selçuk, İzmir Province, Turkey",
     coordinates: [27.36389, 37.94972],
@@ -2070,6 +2142,7 @@ export const pois: PointOfInterest[] = [
   {
     id: "great-theatre-ephesus",
     name: "Great Theatre of Ephesus",
+    pronunciation: "GRAYT THEE-uh-ter of EFF-uh-sus",
     tag: "Ancient Theatre",
     modernName: "Selçuk, İzmir Province, Turkey",
     coordinates: [27.3254604, 37.9415382],
@@ -2094,6 +2167,7 @@ export const pois: PointOfInterest[] = [
   {
     id: "grotto-of-st-paul-ephesus",
     name: "Grotto (Cave) of St. Paul, Ephesus",
+    pronunciation: "GROT-oh of saint PAWL",
     tag: "Rock-Cut Chapel",
     modernName: "Bülbüldağ, Selçuk, İzmir Province, Turkey",
     coordinates: [27.329, 37.938],
@@ -2118,6 +2192,7 @@ export const pois: PointOfInterest[] = [
   {
     id: "church-of-mary-ephesus",
     name: "Church of Mary (Double Church)",
+    pronunciation: "CHURCH of MAIR-ee",
     tag: "Council Basilica",
     modernName: "Ephesus archaeological site, near Selçuk, İzmir Province, Turkey",
     coordinates: [27.33948, 37.94502],
@@ -2142,6 +2217,7 @@ export const pois: PointOfInterest[] = [
   {
     id: "house-of-virgin-mary-ephesus",
     name: "House of the Virgin Mary",
+    pronunciation: "HOWSS of the VUR-jin MAIR-ee",
     tag: "Modern Pilgrimage Site",
     modernName: "Meryemana, Mt. Koressos, ~7 km from Selçuk, İzmir Province, Turkey",
     coordinates: [27.3342, 37.9117],
@@ -2166,6 +2242,7 @@ export const pois: PointOfInterest[] = [
   {
     id: "tomb-of-timothy-ephesus",
     name: "Tomb / Memorial of St. Timothy",
+    pronunciation: "TOOM of saint TIM-uh-thee",
     tag: "Traditional Martyrdom Site",
     modernName: "Panayır Dağı (Mt. Pion), Ephesus archaeological site, near Selçuk, Turkey",
     coordinates: [27.3467, 37.942],
@@ -2189,6 +2266,7 @@ export const pois: PointOfInterest[] = [
   {
     id: "theatre-of-miletus",
     name: "Theatre of Miletus",
+    pronunciation: "THEE-uh-ter of my-LEE-tus",
     tag: "Ancient Theatre",
     modernName: "Balat (Milet), Aydın Province, Turkey",
     coordinates: [27.27837, 37.53023],
@@ -2213,6 +2291,7 @@ export const pois: PointOfInterest[] = [
   {
     id: "well-of-st-paul-tarsus",
     name: "Well of St. Paul, Tarsus",
+    pronunciation: "WELL of saint PAWL in TAR-sus",
     tag: "Traditional Site",
     modernName: "Kızılmurat neighborhood, Tarsus, Mersin Province, Turkey",
     coordinates: [34.89361, 36.91917],
@@ -2236,6 +2315,7 @@ export const pois: PointOfInterest[] = [
   {
     id: "sardis-synagogue",
     name: "Sardis Synagogue",
+    pronunciation: "SAR-diss SIN-uh-gog",
     tag: "Religious Site",
     modernName: "Sart, Salihli, Manisa Province, Turkey",
     coordinates: [28.04028, 38.48833],
@@ -2259,6 +2339,7 @@ export const pois: PointOfInterest[] = [
   {
     id: "martyrdom-site-polycarp-smyrna",
     name: "Martyrdom Site of Polycarp, Smyrna",
+    pronunciation: "POL-ee-karp of SMUR-nuh",
     tag: "Historical Site",
     modernName: "İzmir, Turkey",
     coordinates: [27.1456, 38.4141],
@@ -2282,6 +2363,7 @@ export const pois: PointOfInterest[] = [
   {
     id: "nicaea-council-site",
     name: "Council of Nicaea Site",
+    pronunciation: "COWN-sil of ny-SEE-uh",
     tag: "Historical Site",
     modernName: "İznik, Turkey",
     coordinates: [29.7211, 40.4286],
@@ -2305,6 +2387,7 @@ export const pois: PointOfInterest[] = [
   {
     id: "cave-church-st-peter-antioch",
     name: "Cave Church of St. Peter",
+    pronunciation: "KAYV CHURCH of saint PEE-ter",
     tag: "Religious Site",
     modernName: "Antakya, Hatay Province, Turkey",
     coordinates: [36.1782, 36.2094],
@@ -2328,13 +2411,14 @@ export const pois: PointOfInterest[] = [
   {
     id: "mamertine-prison-rome",
     name: "Mamertine Prison",
+    pronunciation: "MAM-er-teen PRIZ-un",
     tag: "Historical Site",
     modernName: "Rome, Italy",
     coordinates: [12.4853, 41.8925],
     modernMapUrl: mapsUrl(41.8925, 12.4853),
     description: "Known in antiquity as the Tullianum or Carcer, the Mamertine Prison at the foot of the Capitoline Hill was ancient Rome's principal state prison, used for detaining and executing enemies of Rome. Christian tradition, though not attested in the New Testament itself, holds that both Peter and Paul were held here in the final days before their martyrdoms under Nero in the 60s AD.",
     archaeology: {
-      note: "The lower chamber is a genuinely ancient structure, with masonry dated by archaeologists to as early as the 7th-6th century BC, making it one of the oldest structures in Rome; a natural spring inside it is central to the later legend that Peter used its water to baptize fellow prisoners. There is no first-century documentary or archaeological evidence specifically placing Peter or Paul in this cell — the association is a devotional tradition first attested centuries after the apostolic period.",
+      note: "The oldest part of the complex is the lower chamber, the Tullianum — a trapezoidal room of tufa blocks built over a natural spring, later central to the legend that Peter used its water to baptize fellow prisoners. Roman tradition credited the chamber's construction to the early kings, Ancus Marcius (c. 640-616 BC) and Servius Tullius, and that regal-period date is still widely repeated — but it is tradition rather than a settled archaeological finding. Excavations have recovered archaic material in the surrounding deposits — habitation debris, burials, and votive offerings from roughly the 8th-6th centuries BC — indicating the spring was a place of cult long before it served as a prison, while the date of the standing masonry itself is debated: many scholars since Tenney Frank have argued that the regular blockwork points to a mid-Republican construction (3rd-2nd century BC), the oldest floor level currently exposed by the ongoing Roma Capitale excavations dates to about the 5th century BC, and the chronology remains an active area of research. What is not in question is that the Carcer was functioning as Rome's state prison well before the first century AD — Sallust describes the Catilinarian conspirators being executed in the Tullianum in 63 BC. There is no first-century documentary or archaeological evidence specifically placing Peter or Paul in this cell — the association is a devotional tradition first attested centuries after the apostolic period.",
       photos: [
         {
           url: "https://upload.wikimedia.org/wikipedia/commons/9/95/San_Giuseppe_dei_Falegnami_%28Roma%29_-_Facciata_%28Mamertinum%29.jpg",
@@ -2351,6 +2435,7 @@ export const pois: PointOfInterest[] = [
   {
     id: "basilica-st-paul-outside-walls-rome",
     name: "Basilica of St. Paul Outside the Walls",
+    pronunciation: "buh-SIL-ih-kuh of saint PAWL owt-SIDE the WAWLZ",
     tag: "Religious Site",
     modernName: "Rome, Italy",
     coordinates: [12.4767, 41.8581],
@@ -2374,6 +2459,7 @@ export const pois: PointOfInterest[] = [
   {
     id: "circus-of-nero-rome",
     name: "Circus of Nero / Vatican Hill",
+    pronunciation: "SUR-kus of NEE-roh",
     tag: "Historical Site",
     modernName: "Vatican City / Rome, Italy",
     coordinates: [12.4539, 41.9022],
@@ -2397,6 +2483,7 @@ export const pois: PointOfInterest[] = [
   {
     id: "vatican-necropolis-rome",
     name: "Vatican Necropolis",
+    pronunciation: "VAT-ih-kun neh-KROP-uh-liss",
     tag: "Catacomb",
     modernName: "Vatican City",
     coordinates: [12.4533, 41.9023],
@@ -2420,6 +2507,7 @@ export const pois: PointOfInterest[] = [
   {
     id: "catacombs-of-priscilla-rome",
     name: "Catacombs of Priscilla",
+    pronunciation: "KAT-uh-koomz of prih-SIL-uh",
     tag: "Catacomb",
     modernName: "Rome, Italy (Via Salaria)",
     coordinates: [12.5087, 41.9297],
@@ -2443,6 +2531,7 @@ export const pois: PointOfInterest[] = [
   {
     id: "catacombs-of-callixtus-rome",
     name: "Catacombs of San Callisto (Callixtus)",
+    pronunciation: "KAT-uh-koomz of san kah-LEES-toh",
     tag: "Catacomb",
     modernName: "Rome, Italy (Via Appia Antica)",
     coordinates: [12.5106, 41.8586],
@@ -2466,6 +2555,7 @@ export const pois: PointOfInterest[] = [
   {
     id: "appian-way-quo-vadis-rome",
     name: "Appian Way / Church of Quo Vadis",
+    pronunciation: "AP-ee-un WAY / kwoh VAH-diss",
     tag: "Ancient Roman Road / Legendary Site",
     modernName: "Via Appia Antica, Rome, Italy",
     coordinates: [12.521, 41.8459],
@@ -2495,10 +2585,11 @@ export const pois: PointOfInterest[] = [
   {
     id: "forum-of-appius-three-taverns",
     name: "Forum of Appius & Three Taverns",
+    pronunciation: "FOR-um of AP-ee-us",
     tag: "Waypoints on the Appian Way",
     modernName: "Near Borgo Faiti / Cisterna di Latina, Lazio, Italy",
-    coordinates: [13.07, 41.53],
-    modernMapUrl: mapsUrl(41.53, 13.07),
+    coordinates: [12.912, 41.529],
+    modernMapUrl: mapsUrl(41.529, 12.912),
     description: "These were two Roman waystations on the Via Appia south of Rome — Forum Appii roughly 43 Roman miles from Rome, Three Taverns about 10 miles closer. Acts 28:15 records that when believers in Rome heard Paul was approaching, they traveled out to meet him at these two points; seeing them, Paul \"thanked God and took courage.\"",
     archaeology: {
       note: "There are no specific, pinpointed excavated ruins definitively marking either site today — this is a general regional identification only. Forum Appii is placed near modern Borgo Faiti in the reclaimed Pontine Marshes, with only scattered traces surviving. Three Taverns' exact location is even less certain. Both sites are attested by classical writers (Cicero, Horace) as established stopping points, but modern coordinates for either are approximate.",
@@ -2512,6 +2603,7 @@ export const pois: PointOfInterest[] = [
   {
     id: "rhegium",
     name: "Rhegium",
+    pronunciation: "REE-jee-um",
     tag: "Ancient Port City",
     modernName: "Reggio Calabria, Calabria, Italy",
     coordinates: [15.65, 38.1147],
@@ -2535,6 +2627,7 @@ export const pois: PointOfInterest[] = [
   {
     id: "syracuse",
     name: "Syracuse",
+    pronunciation: "SIR-uh-kyooz",
     tag: "Ancient Greek/Roman City",
     modernName: "Syracuse (Siracusa), Sicily, Italy",
     coordinates: [15.2866, 37.0755],
@@ -2558,6 +2651,7 @@ export const pois: PointOfInterest[] = [
   {
     id: "neapolis-philippi-port",
     name: "Neapolis (Philippi's Port)",
+    pronunciation: "nee-AP-uh-liss",
     tag: "Ancient Port",
     modernName: "Kavala, Greece",
     coordinates: [24.4, 40.933],
@@ -2581,6 +2675,7 @@ export const pois: PointOfInterest[] = [
   {
     id: "amphipolis",
     name: "Amphipolis",
+    pronunciation: "am-FIP-uh-liss",
     tag: "Ancient City",
     modernName: "Amfipoli, Serres, Greece",
     coordinates: [23.84, 40.818],
@@ -2604,6 +2699,7 @@ export const pois: PointOfInterest[] = [
   {
     id: "apollonia-macedonia",
     name: "Apollonia",
+    pronunciation: "ap-uh-LOH-nee-uh",
     tag: "Traditional Site (Location Uncertain)",
     modernName: "Near Nea Apollonia, Thessaloniki region, Greece",
     coordinates: [23.4697, 40.6237],
@@ -2627,6 +2723,7 @@ export const pois: PointOfInterest[] = [
   {
     id: "st-pauls-bay-malta",
     name: "St. Paul's Bay",
+    pronunciation: "saint PAWLZ BAY",
     tag: "Traditional Site",
     modernName: "San Pawl il-Baħar, Malta",
     coordinates: [14.4017, 35.9483],
@@ -2650,11 +2747,12 @@ export const pois: PointOfInterest[] = [
   {
     id: "megiddo-church",
     name: "Megiddo Church (Christian Prayer Hall)",
+    pronunciation: "meh-GID-oh CHURCH",
     tag: "Early Christian Prayer Hall",
     modernName: "Megiddo Prison, near Tel Megiddo, Israel",
     coordinates: [35.191306, 32.571167],
     modernMapUrl: mapsUrl(32.571167, 35.191306),
-    description: "In 2005, prisoners doing salvage excavation ahead of a Megiddo Prison expansion (at ancient Kfar Othnay/Legio) uncovered the floor of one of the world's oldest known Christian prayer halls, dated to roughly AD 230. A mosaic bears a Greek inscription stating that \"the God-loving Akeptous has offered the table to God Jesus Christ as a memorial\" — one of the earliest surviving inscriptions to explicitly call Jesus \"God,\" predating Constantine's legalization of Christianity by nearly a century.",
+    description: "In 2005, prisoners doing salvage excavation ahead of a Megiddo Prison expansion (at ancient Kfar Othnay/Legio) uncovered the floor of one of the world's oldest known Christian prayer halls, commonly dated to roughly AD 230 on the basis of pottery, coins, and the style of its inscriptions — though some scholars argue for a later conversion in the late third or early fourth century. If the earlier date holds, it is the earliest identified Christian prayer hall yet excavated, predating the Dura-Europos house church (converted c. AD 240/241); it differs from Dura in being a room within a larger secular building associated with the Roman legionary settlement rather than a building dedicated wholly to Christian worship. A mosaic bears a Greek inscription stating that \"the God-loving Akeptous has offered the table to God Jesus Christ as a memorial\" — one of the earliest surviving inscriptions to explicitly call Jesus \"God,\" predating Constantine's legalization of Christianity by nearly a century.",
     archaeology: {
       note: "Excavated in 2005 by Yotam Tepper (Tel Aviv University/Israel Antiquities Authority). The c. 230 AD date rests on associated pottery, coins, and lettering style; the room appears deliberately covered around 305 AD, plausibly to hide it during the Diocletianic persecution. Some scholars argue the structure may be a later conversion of an earlier building rather than purpose-built — the early date is well-supported but not universally uncontested.",
       photos: [
@@ -2673,11 +2771,12 @@ export const pois: PointOfInterest[] = [
   {
     id: "dura-europos-house-church",
     name: "Dura-Europos House Church",
+    pronunciation: "DOOR-uh yoo-ROH-poss",
     tag: "Earliest Known Christian House-Church",
     modernName: "Dura-Europos (Salhiyé), near Deir ez-Zor, Syria",
     coordinates: [40.727958, 34.745829],
     modernMapUrl: mapsUrl(34.745829, 40.727958),
-    description: "An ordinary Roman-era house at the frontier city of Dura-Europos was converted around AD 240/241 into a dedicated Christian meeting place (domus ecclesiae) with a small baptistery — the earliest archaeologically identified Christian building anywhere, predating Constantine's legalization of Christianity by nearly a century. The baptistery's wall paintings, including the Good Shepherd and Christ walking on water, are the oldest surviving depictions of Jesus Christ yet found.",
+    description: "An ordinary Roman-era house at the frontier city of Dura-Europos was remodeled around AD 240/241 into a dedicated Christian meeting place (domus ecclesiae) — the earliest archaeologically identified building given over entirely to Christian use, and the best-preserved Christian worship space surviving from before Constantine. It preserves the earliest identified Christian baptistery, whose wall paintings, including the Good Shepherd and Christ walking on water, are the oldest surviving depictions of Jesus Christ yet found. An earlier Christian prayer hall — a room within a larger Roman-period complex near Legio (Megiddo), often dated to roughly AD 230 — may predate it, though that is a room inside a secular building rather than a dedicated Christian structure, and its date is debated.",
     archaeology: {
       note: "Excavated in 1931-1932 by a joint French-Yale team led by Clark Hopkins and Michael Rostovtzeff. The city was abandoned after a Persian siege in AD 256 and buried under a Roman defensive earthen ramp, which inadvertently preserved the building. The wall paintings and font were removed to Yale, where the reconstructed baptistery is displayed at the Yale University Art Gallery; the original site in Syria has suffered looting and conflict-related damage during the Syrian Civil War.",
       photos: [
@@ -2701,6 +2800,7 @@ export const pois: PointOfInterest[] = [
   {
     id: "eutychus-site-troas",
     name: "Traditional Site of Eutychus's Fall",
+    pronunciation: "YOO-tih-kus",
     tag: "Narrative Site — General Region",
     modernName: "Ruins of Alexandria Troas, near Dalyan/Ezine, Çanakkale Province, Turkey",
     coordinates: [26.15861, 39.75167],
@@ -2724,6 +2824,7 @@ export const pois: PointOfInterest[] = [
   {
     id: "chalcedon-council-site",
     name: "Council of Chalcedon Site",
+    pronunciation: "COWN-sil of kal-SEE-dun",
     tag: "Ecumenical Council Site",
     modernName: "Kadıköy (ancient Chalcedon), Istanbul, Turkey",
     coordinates: [29.0186, 40.9962],

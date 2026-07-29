@@ -562,7 +562,7 @@ export const locations: Location[] = [
     alternateNames: ["Antioch on the Orontes", "Syrian Antioch"],
     category: "city",
     modernName: "Antakya, Turkey",
-    coordinates: [36.2023, 36.1600],
+    coordinates: [36.1600, 36.2023],
     history: {
       founded: "Founded c. 300 BC by Seleucus I Nicator, named for his father Antiochus",
       population: "One of the largest cities in the Roman Empire, estimated 200,000–500,000 — the third largest city after Rome and Alexandria",
@@ -585,7 +585,7 @@ export const locations: Location[] = [
       { reference: "Acts 15:35" },
       { reference: "Galatians 2:11" },
     ],
-    modernMapUrl: mapsUrl(36.1600, 36.2023),
+    modernMapUrl: mapsUrl(36.2023, 36.1600),
     archaeology: {
       note: "Excavations by the Committee for the Excavation of Antioch (1932–1939) uncovered over 300 Roman-era mosaic floors from Antioch's wealthy villas, roughly half now displayed in the Hatay Archaeology Museum in Antakya, illustrating the sophistication of the city where believers were \"first called Christians\" (Acts 11:26). The Church of Saint Peter, a cave carved into the mountainside outside the city with a Crusader-era facade, has been venerated by tradition since at least the Byzantine period as a meeting place of the nascent Antiochene church, though this use by the earliest Christian community cannot be archaeologically confirmed. Most of Roman Antioch itself lies buried under modern Antakya, limiting excavation mainly to the mosaics and a few structural remains.",
       photos: [
@@ -1385,7 +1385,7 @@ export const locations: Location[] = [
     history: {
       founded: "Founded by Seleucid colonists, later refounded as a Roman colonia by Augustus",
       population: "Estimated 10,000–15,000 residents within the city proper in the 1st century AD, with the wider territory reaching toward 100,000",
-      rulers: [{ name: "Roman colonia, capital-region of Galatia province", period: "1st century AD" }],
+      rulers: [{ name: "Roman colonia (Colonia Caesarea Antiochia), refounded by Augustus c. 25 BC and the leading city of southern Galatia province — the provincial capital was Ancyra (modern Ankara)", period: "1st century AD" }],
       notableFacts: [
         "Where Paul delivered a major synagogue sermon on his first missionary journey, his first recorded sermon in Acts (Acts 13:14-41)",
         "Paul and Barnabas were expelled from the region after the sermon stirred controversy, so they \"shook the dust off their feet\" (Acts 13:50-51)",
@@ -2015,7 +2015,7 @@ export const locations: Location[] = [
     verses: [{ reference: "Matthew 27:32" }, { reference: "Acts 2:10" }, { reference: "Acts 11:20" }, { reference: "Acts 13:1" }],
     modernMapUrl: mapsUrl(32.825, 21.8581),
     archaeology: {
-      note: "A UNESCO World Heritage Site with an active excavation history since 1860. The Temple of Zeus and the Sanctuary of Apollo are the site's major standing monuments. In 2005 archaeologists uncovered 76 intact Roman statues believed to have been buried and preserved by an earthquake around AD 375.",
+      note: "A UNESCO World Heritage Site with an active excavation history since 1860. The Temple of Zeus and the Sanctuary of Apollo are the site's major standing monuments. In 2005 Italian archaeologists from the University of Urbino uncovered 76 intact Roman statues (mostly 2nd century AD) near Cyrene's Sanctuary of Apollo. A temple retaining wall toppled onto them in a late 4th-century earthquake — most likely the great quake and tsunami of 21 July AD 365 that also devastated Crete and Alexandria — sealing them under rubble and earth for over 1,600 years.",
       photos: [
         {
           url: "https://upload.wikimedia.org/wikipedia/commons/5/54/Temple_of_Apollo%2C_Cyrene.jpg",
@@ -2213,13 +2213,13 @@ export const locations: Location[] = [
       population: "Estimated 5,000–10,000 residents in the 1st century AD",
       notableFacts: [
         "Traditional site of Jesus casting demons out of a possessed man into a herd of pigs, which then rushed into the lake (Mark 5:1-20 and parallels)",
-        "The Gospel manuscripts themselves vary between \"Gerasenes,\" \"Gadarenes,\" and \"Gergesenes\" for this region, so the precise location has long been debated",
+        "The Gospel manuscripts themselves vary between \"Gerasenes,\" \"Gadarenes,\" and \"Gergesenes\" for this region — Gadara and Gerasa have the stronger manuscript support, but Gergesa (modern Kursi), directly on the Sea of Galilee's eastern shore beneath a steep hillside, is regarded by many geographers as the best topographical match for the account",
       ],
     },
     verses: [{ reference: "Mark 5:1-20" }, { reference: "Matthew 8:28-34" }, { reference: "Luke 8:26-39" }],
     modernMapUrl: mapsUrl(32.6547, 35.6817),
     archaeology: {
-      note: "Excavations at Umm Qais have uncovered a colonnaded main street, a Roman theater, baths, and a Byzantine church. The exact site of the Gospel healing (Gadara vs. Gerasa vs. Gergesa) remains scholarly-debated, but Gadara's tombs cut into the surrounding hillside match the Gospel detail of a demoniac living among tombs.",
+      note: "Excavations at Umm Qais have uncovered a colonnaded main street, a Roman theater, baths, and a Byzantine church. The exact site of the Gospel healing (Gadara vs. Gerasa vs. Gergesa) remains debated. Gadara's rock-cut hillside tombs match the Gospel detail of a demoniac living among tombs, but the city sits on a hilltop roughly 10 km from the Sea of Galilee — difficult to square with the pigs rushing down a steep bank straight into the lake. Gergesa (modern Kursi), directly on the lake's eastern shore at the base of a steep slope, is widely regarded as the best topographical fit, and excavated Byzantine-era remains there — a monastic complex — mark the traditional site of the miracle.",
       photos: [
         {
           url: "https://upload.wikimedia.org/wikipedia/commons/4/44/Umm_Qais_wlm_44.jpg",
@@ -2250,7 +2250,7 @@ export const locations: Location[] = [
     highlightRadiusKm: 250,
     history: {
       founded: "One of the ancient world's oldest civilizations, a Roman province by the NT era",
-      population: "Estimated 4–7 million residents in Roman Egypt in the 1st century AD, including a Jewish diaspora community of roughly 1 million",
+      population: "Estimated 4–7 million residents in Roman Egypt in the 1st century AD, including a substantial Jewish diaspora community — Philo put it at 'no fewer than a million' (In Flaccum 43), though many historians consider that figure inflated and the actual number is uncertain",
       notableFacts: [
         "Where Joseph, Mary, and the infant Jesus fled to escape Herod's massacre, fulfilling the prophecy \"out of Egypt I called my son\" (Matthew 2:13-15)",
         "Egyptian Jews and God-fearers were among the diverse crowd present at Pentecost (Acts 2:10)",
@@ -2861,12 +2861,13 @@ export const locations: Location[] = [
     name: "Sodom",
     pronunciation: "SOD-um",
     category: "city",
-    modernName: "Uncertain/disputed — leading candidates include Tall el-Hammam (Jordan Valley) or a site near the southeastern shore of the Dead Sea",
-    coordinates: [35.6167, 31.8386],
+    modernName: "Uncertain/disputed — mapped here at Bab edh-Dhra near the southeastern Dead Sea (the traditional southern-theory candidate); Tall el-Hammam in the eastern Jordan Valley is a competing, actively disputed northern candidate",
+    coordinates: [35.5800, 31.2800],
     history: {
       notableFacts: [
         "Genesis 19 recounts God's destruction of Sodom and Gomorrah by 'sulfur and fire' due to the cities' wickedness, sparing only Lot and his daughters",
-        "The exact location of Sodom is genuinely unresolved among archaeologists — the two leading hypotheses place it either in the southern Dead Sea plain (Bab edh-Dhra or Numeira, associated with an early Bronze Age destruction) or at Tall el-Hammam in the eastern Jordan Valley near the northern Dead Sea, whose excavators claim a dramatic mid-Bronze-Age destruction event, though this identification remains contested by other scholars",
+        "The exact location of Sodom is genuinely unresolved among archaeologists — the two leading hypotheses place it either in the southern Dead Sea plain (Bab edh-Dhra or Numeira, associated with an early Bronze Age destruction), historically the more widely favored identification, or at Tall el-Hammam in the eastern Jordan Valley near the northern Dead Sea, whose excavators claim a dramatic mid-Bronze-Age destruction event, though this more recent identification remains contested by other scholars",
+        "The map pin for this entry follows the southern hypothesis (Bab edh-Dhra) so that Sodom and Gomorrah — neighboring 'cities of the plain' — are plotted under the same theory as the paired Gomorrah entry at nearby Numeira; under the northern theory, both cities would instead lie in the Jordan Valley northeast of the Dead Sea",
         "The 'cities of the plain' (Sodom, Gomorrah, Admah, Zeboiim, and Zoar/Bela) are described as being in the fertile Jordan Valley 'like the garden of the LORD' before their destruction (Genesis 13:10)",
         "Sodom became a lasting biblical byword for wickedness and divine judgment, referenced by later prophets and New Testament writers alike",
       ],
@@ -2880,7 +2881,7 @@ export const locations: Location[] = [
       { reference: "Isaiah 1:9-10", note: "Judah compared to Sodom" },
       { reference: "Jeremiah 49:18", note: "Overthrow of Sodom and Gomorrah as a comparison" },
     ],
-    modernMapUrl: mapsUrl(31.8386, 35.6167),
+    modernMapUrl: mapsUrl(31.2800, 35.5800),
     sources: [
       { label: "Sodom and Gomorrah - Wikipedia", url: "https://en.wikipedia.org/wiki/Sodom_and_Gomorrah" },
     ],
@@ -2896,6 +2897,7 @@ export const locations: Location[] = [
       notableFacts: [
         "Gomorrah is consistently paired with Sodom throughout Scripture as one of the 'cities of the plain' destroyed for their wickedness (Genesis 19)",
         "No site has been definitively confirmed as Gomorrah; proposed early Bronze Age candidates south of the Dead Sea (such as Numeira, near Bab edh-Dhra) show real destruction-by-fire layers, but linking any specific tell to the biblical name remains speculative",
+        "The map pin follows the southern Dead Sea theory (Numeira), matching the paired Sodom entry at nearby Bab edh-Dhra so both pins reflect a single hypothesis; under the competing northern theory — which places Sodom at Tall el-Hammam in the Jordan Valley — Gomorrah's counterpart candidates would be nearby sites such as Tall Nimrin or Tall Kafrayn",
         "Like Sodom, Gomorrah's destruction became a fixed prophetic and New Testament metaphor for catastrophic divine judgment on sin",
         "The pairing 'Sodom and Gomorrah' appears more than 20 times across the Old and New Testaments, making it one of the Bible's most repeated place-name formulas",
       ],
@@ -3275,6 +3277,7 @@ export const locations: Location[] = [
   {
     id: "red-sea",
     name: "Red Sea",
+    pronunciation: "RED SEE",
     alternateNames: ["Yam Suph", "Sea of Reeds"],
     category: "sea",
     modernName: "Red Sea / Gulf of Suez region, Egypt",
@@ -3340,7 +3343,7 @@ export const locations: Location[] = [
     coordinates: [35.7000, 32.1500],
     history: {
       founded: "A fortified town by the period of the Judges and monarchy; its precise identification among the twin mounds of Tulul edh-Dhahab near the Jabbok is not fully settled by archaeologists",
-      rulers: [{ name: "Refortified by Jeroboam I as an early capital of the northern kingdom", period: "c. late 10th century BC" }],
+      rulers: [{ name: "Rebuilt by Jeroboam I as a fortified royal residence and administrative outpost securing his territory east of the Jordan (1 Kings 12:25); Shechem, and later Tirzah, served as the seat of the northern kingdom", period: "c. late 10th century BC" }],
       notableFacts: [
         "Jacob named the site Peniel ('face of God'), saying, 'I have seen God face to face, and yet my life has been preserved' (Genesis 32:30), after wrestling through the night at the nearby Jabbok ford",
         "The town of Penuel refused to help Gideon's exhausted men during his pursuit of the Midianite kings Zebah and Zalmunna; Gideon returned afterward and tore down its tower and killed the men of the city (Judges 8:4-17)",
@@ -3368,7 +3371,7 @@ export const locations: Location[] = [
     modernName: "Tell el-Maskhuta, Wadi Tumilat, Egypt (Exodus site); Tell Deir 'Alla, Jordan Valley (Jacob's Succoth, a separate location)",
     coordinates: [31.9833, 30.5500],
     history: {
-      founded: "The Egyptian Succoth (likely Tell el-Maskhuta) shows occupation layers from the Hyksos period through the New Kingdom and later Persian era",
+      founded: "The Egyptian Succoth is widely connected with the Egyptian toponym Tjeku, which texts such as Papyrus Anastasi VI use for the Wadi Tumilat region east of the Delta rather than for a single town. Tell el-Maskhuta, identified as Pithom/Succoth by Edouard Naville in 1883, proved more complicated under controlled excavation: the University of Toronto Wadi Tumilat Project (1978-1985) found a substantial Hyksos-era settlement, then no New Kingdom occupation levels and a roughly eleven-century gap before the site was resettled and fortified around the time of Necho II's canal works (c. 610-595 BC), continuing through the Persian period — a recognized problem for identifying it with the Exodus-era Succoth. Tell el-Retaba, about 13 km west in the same wadi, shows occupation from the Hyksos period through the seventh century BC with fortifications beginning in the early Nineteenth Dynasty, leading Egyptologists such as Kenneth Kitchen and James Hoffmeier to place the Ramesside Pithom/Tjeku there, with the name later migrating east to Maskhuta",
       notableFacts: [
         "There are two distinct biblical places called Succoth, sharing a name that means 'booths/shelters': one in the eastern Nile Delta of Egypt (Exodus 12-13), and one east of the Jordan River in Israel's territory (Genesis 33; Joshua 13; Judges 8), and this entry focuses primarily on the Egyptian Exodus site",
         "Succoth in Egypt was Israel's first stop after leaving Rameses at the start of the Exodus, where the mixed multitude gathered before heading toward the wilderness (Exodus 12:37; 13:20)",
@@ -3646,7 +3649,8 @@ export const locations: Location[] = [
         "William F. Albright's excavations at Tell el-Ful identified a fortress structure he dated to the Iron Age I and associated with Saul, though later reanalysis of the site's dating and layout has been debated among archaeologists",
         "The horrific account in Judges 19 — the abuse and death of the Levite's concubine at Gibeah — triggers a civil war that nearly annihilates the tribe of Benjamin (Judges 20-21)",
         "Gibeah was Saul's hometown and became his base of operations as Israel's first king, giving it the epithet 'Gibeah of Saul'",
-        "Isaiah and Hosea both invoke Gibeah's history of outrage as a byword for Israel's moral corruption",
+        "Hosea turns Gibeah into a byword for national depravity, twice reaching back to the Judges 19-20 outrage: 'They have deeply corrupted themselves as in the days of Gibeah' (Hosea 9:9) and 'From the days of Gibeah, you have sinned, O Israel' (Hosea 10:9) — for Hosea, Gibeah marks the beginning of a corruption never repented of",
+        "Isaiah 10:29 mentions Gibeah for a different reason: the prophet traces the Assyrian army's advance on Jerusalem through the Benjaminite plateau — Aiath, Migron, Michmash, Geba, Ramah, Gibeah of Saul, Nob — noting that 'Gibeah of Saul has fled'; the reference is geographic and military, marking a stop on the invasion route rather than alluding to the town's moral history",
       ],
     },
     verses: [
@@ -3785,7 +3789,8 @@ export const locations: Location[] = [
       notableFacts: [
         "David hid from Saul among the strongholds and caves of En Gedi, and in one of them famously cut off a corner of Saul's robe rather than kill him (1 Samuel 24)",
         "The oasis was renowned in the ancient world for its balsam groves, a rare and costly perfume ingredient; Song of Solomon 1:14 refers to its henna blossoms",
-        "A Chalcolithic-period temple excavated at Tel Goren near the spring, dated to roughly 4000 BC, is among the oldest cultic structures found in the region",
+        "A monumental Chalcolithic (Ghassulian) temple enclosure, dated to roughly 3500 BC, sits on a terrace above the oasis between the Ein Gedi spring and the spring in Nahal David — discovered by Yohanan Aharoni in a 1956 survey and excavated in 1962 by a Hebrew University expedition (Benjamin Mazar directing, with David Ussishkin publishing the final report), it stands apart from any settlement and has been linked by some scholars to the copper hoard from the nearby Nahal Mishmar 'Cave of the Treasure'",
+        "Tel Goren (Tell el-Jurn), a separate mound roughly a half-kilometer south of the temple terrace, was excavated 1961-65 by Benjamin Mazar, Trude Dothan, and Immanuel Dunayevsky; its earliest settlement dates to the Iron Age (mid-7th century BC), and it is generally identified with the En-Gedi of the Hebrew Bible, with occupation continuing through the Persian, Hellenistic, Roman, and Byzantine periods",
         "Today En Gedi is a nature reserve fed by four springs with waterfalls, recognized for its unique desert-oasis ecosystem",
       ],
     },
@@ -3998,6 +4003,7 @@ export const locations: Location[] = [
   {
     id: "dead-sea",
     name: "Dead Sea",
+    pronunciation: "DED SEE",
     alternateNames: ["Salt Sea", "Sea of the Arabah", "Eastern Sea"],
     category: "sea",
     modernName: "Dead Sea (Israel/Jordan/West Bank border)",
