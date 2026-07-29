@@ -188,7 +188,11 @@ function MyProfileControl({
             </span>
             <p className="friend-profile-name">{saved.displayName}</p>
           </div>
-          {saved.church && <p className="profile-view-field">{saved.church}</p>}
+          {saved.church && (
+            <p className="profile-view-field">
+              <span aria-hidden="true">⛪</span> Church: {saved.church}
+            </p>
+          )}
           {saved.favoriteVerse && (
             <div className="profile-view-field profile-favorite-verse">
               <span aria-hidden="true">📖</span> Favorite verse:{" "}

@@ -172,7 +172,7 @@ export default function LinkChoicePopup({
       </button>
       <button type="button" role="menuitem" className="link-choice-option" onClick={onViewTimeline}>
         <span className="link-choice-icon" aria-hidden="true">
-          🕐
+          ⏳
         </span>
         View in Timeline
       </button>

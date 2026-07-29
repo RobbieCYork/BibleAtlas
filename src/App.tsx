@@ -1294,11 +1294,10 @@ function App() {
             aria-pressed={showTimeline}
           >
             <svg width="15" height="15" viewBox="0 0 16 16" fill="none" aria-hidden="true">
-              <circle cx="8" cy="8" r="6.4" stroke="currentColor" strokeWidth="1.5" />
               <path
-                d="M8 4.6V8l2.4 1.6"
+                d="M4 2.2h8M4 13.8h8M4.6 2.2c0 2.6 0 3.5 3.4 5.8 3.4-2.3 3.4-3.2 3.4-5.8M4.6 13.8c0-2.6 0-3.5 3.4-5.8 3.4 2.3 3.4 3.2 3.4 5.8"
                 stroke="currentColor"
-                strokeWidth="1.5"
+                strokeWidth="1.4"
                 strokeLinecap="round"
                 strokeLinejoin="round"
               />
@@ -1318,9 +1317,11 @@ function App() {
           active={activeMobilePanel}
           hasSelection={hasSelection}
           onSelect={(key, view) => {
-            // Picking any panel tab leaves Timeline mode — on mobile the tab bar stays visible
-            // under the timeline, so tabs keep working as the way out.
+            // Picking any panel tab leaves Timeline mode or My Profile — on mobile the tab bar
+            // stays visible underneath both full-screen takeovers, so tabs must keep working as
+            // the way out of either one.
             closeTimeline();
+            closeMyProfile();
             if (key === "friends" && view) handleSelectFriendsView(view);
             setMobileActivePanel(key);
           }}

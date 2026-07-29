@@ -25,9 +25,10 @@ import "./TimelineView.css";
  *   5. Other Religions lane     — amber
  *   6. Year axis
  *
- * Interactions: wheel = zoom-to-cursor · drag = pan · pinch = zoom (touch) ·
- * +/−/Fit buttons · double-click = zoom in at point · cluster badge click =
- * animated zoom into that bucket's year range.
+ * Interactions: vertical wheel/trackpad = zoom-to-cursor · horizontal trackpad
+ * swipe = pan · drag (mouse or touch) = pan, with momentum on release · pinch =
+ * zoom (touch) · +/−/Fit buttons · double-click = zoom in at point · cluster
+ * badge click = animated zoom into that bucket's year range.
  * ========================================================================== */
 
 /* ------------------------------------------------------------- data intake */
@@ -81,6 +82,14 @@ const CLUSTER_BUCKET_PX = 24;
 const AXIS_H = 30;
 /** Gap (px) a singleton marker needs on both sides before its title is drawn. */
 const LABEL_GAP_PX = 88;
+
+/** Momentum/inertia panning tuning for pointer (mouse + touch) drag release.
+ * Trackpad wheel-panning doesn't need this: the OS/browser already emits a
+ * naturally decaying stream of wheel events during its own momentum phase. */
+const MOMENTUM_MIN_VX = 0.05; // px/ms — below this, a released drag just stops (no glide)
+const MOMENTUM_STOP_VX = 0.015; // px/ms — glide ends once decayed velocity drops below this
+const MOMENTUM_FRICTION = 0.0028; // per-ms exponential decay rate (~250ms velocity half-life)
+const MOMENTUM_MAX_VX = 3.5; // px/ms safety cap on captured fling speed
 
 const LANES: { cat: TimelineEventCategory; label: string; cssVar: string }[] = [
   { cat: "biblical", label: "Biblical", cssVar: "var(--tl-biblical)" },
@@ -272,9 +281,23 @@ export default function TimelineView({
     }
   }, []);
 
+  // Momentum-glide cancellation lives here (ahead of animateTo/gesture handlers below)
+  // so any of them can stop an in-flight glide the instant a new interaction starts.
+  // (startMomentum itself is defined further down, next to the drag-release logic
+  // that's its only caller, but shares this same ref.)
+  const momentumRef = useRef(0);
+
+  const cancelMomentum = useCallback(() => {
+    if (momentumRef.current) {
+      cancelAnimationFrame(momentumRef.current);
+      momentumRef.current = 0;
+    }
+  }, []);
+
   const animateTo = useCallback(
     (target: View) => {
       cancelAnim();
+      cancelMomentum();
       // A cluster badge (or any other marker) can unmount mid-zoom, so its mouseleave never
       // fires — clear any lingering tooltip up front rather than leaving it stuck on screen.
       setTooltip(null);
@@ -287,7 +310,10 @@ export default function TimelineView({
       const fromLog = Math.log(from.pxPerYear);
       const toLog = Math.log(clamped.pxPerYear);
       const t0 = performance.now();
-      const DURATION = 260;
+      // Eased eye-catching "fly-to" transition for button zoom, cluster-click zoom, and
+      // Fit/reset. 380ms sits in the natural range for this kind of UI motion — long
+      // enough to read as smooth, short enough not to feel sluggish.
+      const DURATION = 380;
       const step = (now: number) => {
         const p = clamp((now - t0) / DURATION, 0, 1);
         const e = easeOutCubic(p);
@@ -298,10 +324,11 @@ export default function TimelineView({
       };
       animRef.current = requestAnimationFrame(step);
     },
-    [cancelAnim, clampView],
+    [cancelAnim, cancelMomentum, clampView],
   );
 
   useEffect(() => cancelAnim, [cancelAnim]);
+  useEffect(() => cancelMomentum, [cancelMomentum]);
 
   /* ----- entity focus (opened via "View in Timeline") ----- */
 
@@ -371,8 +398,11 @@ export default function TimelineView({
     suppressClick: false,
     captured: false,
     pinch: null as null | { dist: number; anchorYear: number; pxy: number; rectLeft: number },
+    // Rolling buffer of recent (time, x) samples for the active single-pointer drag,
+    // used to compute release velocity for momentum panning. Trimmed to a short window.
+    velSamples: [] as { t: number; x: number }[],
   });
-  const pendingRef = useRef({ dx: 0, wheel: 0, wheelClientX: 0 });
+  const pendingRef = useRef({ dx: 0, panDx: 0, wheel: 0, wheelClientX: 0 });
   const rafRef = useRef(0);
 
   const flushGesture = useCallback(() => {
@@ -405,6 +435,12 @@ export default function TimelineView({
       startYear -= pending.dx / pxPerYear;
       pending.dx = 0;
     }
+    if (pending.panDx !== 0) {
+      // Trackpad two-finger swipe: matches native `scrollLeft += deltaX` convention
+      // (opposite sign from direct pointer-drag, which follows the finger 1:1).
+      startYear += pending.panDx / pxPerYear;
+      pending.panDx = 0;
+    }
     if (pending.wheel !== 0) {
       const rect = canvasRef.current?.getBoundingClientRect();
       const cursorX = rect ? pending.wheelClientX - rect.left : sizeRef.current.w / 2;
@@ -433,6 +469,42 @@ export default function TimelineView({
     };
   }, []);
 
+  /* ----- momentum/inertia panning (pointer + touch drag release) -----
+   * momentumRef/cancelMomentum are declared earlier (with cancelAnim) so animateTo
+   * and the gesture handlers below can all cancel a glide the moment they start. */
+
+  const startMomentum = useCallback(
+    (initialVx: number) => {
+      cancelMomentum();
+      setTooltip(null);
+      let vx = clamp(initialVx, -MOMENTUM_MAX_VX, MOMENTUM_MAX_VX);
+      let lastT = performance.now();
+      const step = (now: number) => {
+        const dt = Math.min(Math.max(now - lastT, 0), 48); // clamp dt spikes (tab throttling, etc.)
+        lastT = now;
+        vx *= Math.exp(-MOMENTUM_FRICTION * dt);
+        const v = viewRef.current;
+        if (!v || Math.abs(vx) < MOMENTUM_STOP_VX) {
+          momentumRef.current = 0;
+          return;
+        }
+        // Same sign convention as pointer-drag: positive vx (finger/pointer moved right)
+        // decreases startYear, so content keeps sliding the way the fling was headed.
+        const desiredStart = v.startYear - (vx * dt) / v.pxPerYear;
+        const clamped = clampView(v.pxPerYear, desiredStart);
+        setView(clamped);
+        if (clamped.startYear !== desiredStart) {
+          // Hit a world-bounds edge — stop rather than fake an elastic bounce.
+          momentumRef.current = 0;
+          return;
+        }
+        momentumRef.current = requestAnimationFrame(step);
+      };
+      momentumRef.current = requestAnimationFrame(step);
+    },
+    [cancelMomentum, clampView],
+  );
+
   // Wheel must be a non-passive native listener so preventDefault sticks.
   useEffect(() => {
     const el = canvasRef.current;
@@ -440,14 +512,26 @@ export default function TimelineView({
     const onWheel = (e: WheelEvent) => {
       e.preventDefault();
       cancelAnim();
+      cancelMomentum();
       const scale = e.deltaMode === 1 ? 33 : e.deltaMode === 2 ? 120 : 1;
-      pendingRef.current.wheel += e.deltaY * scale;
-      pendingRef.current.wheelClientX = e.clientX;
+      const dx = e.deltaX * scale;
+      const dy = e.deltaY * scale;
+      // Trackpad pinch-to-zoom always carries ctrlKey/metaKey true in every browser.
+      // Otherwise, whichever axis dominates the gesture decides pan vs. zoom: a
+      // horizontal-dominant two-finger swipe pans, a vertical-dominant wheel/swipe zooms
+      // (matching plain mouse-wheel behavior, which only ever has a deltaY component).
+      const isZoomGesture = e.ctrlKey || e.metaKey || Math.abs(dy) >= Math.abs(dx);
+      if (isZoomGesture) {
+        pendingRef.current.wheel += dy;
+        pendingRef.current.wheelClientX = e.clientX;
+      } else {
+        pendingRef.current.panDx += dx;
+      }
       scheduleFlush();
     };
     el.addEventListener("wheel", onWheel, { passive: false });
     return () => el.removeEventListener("wheel", onWheel);
-  }, [cancelAnim, scheduleFlush]);
+  }, [cancelAnim, cancelMomentum, scheduleFlush]);
 
   const onPointerDown = useCallback(
     (e: React.PointerEvent<HTMLDivElement>) => {
@@ -457,11 +541,13 @@ export default function TimelineView({
       // Capture starts lazily in onPointerMove once a real drag begins.
       g.pointers.set(e.pointerId, { x: e.clientX, y: e.clientY });
       cancelAnim();
+      cancelMomentum();
       if (g.pointers.size === 1) {
         g.lastX = e.clientX;
         g.moved = 0;
         g.suppressClick = false;
         g.captured = false;
+        g.velSamples = [{ t: performance.now(), x: e.clientX }];
         setDragging(true);
       } else if (g.pointers.size === 2 && viewRef.current) {
         const pts = [...g.pointers.values()];
@@ -475,9 +561,12 @@ export default function TimelineView({
           anchorYear: viewRef.current.startYear + midX / viewRef.current.pxPerYear,
           rectLeft,
         };
+        // Two fingers down means this isn't a single-pointer fling — drop any
+        // velocity history so a stray sample from before the pinch can't leak in.
+        g.velSamples = [];
       }
     },
-    [cancelAnim],
+    [cancelAnim, cancelMomentum],
   );
 
   const onPointerMove = useCallback(
@@ -502,25 +591,47 @@ export default function TimelineView({
           g.captured = true;
         }
         pendingRef.current.dx += dx;
+        // Track a short rolling window of (time, x) samples so release velocity
+        // reflects the recent motion, not one noisy last-instant delta.
+        const now = performance.now();
+        g.velSamples.push({ t: now, x: e.clientX });
+        const cutoff = now - 120;
+        while (g.velSamples.length > 2 && g.velSamples[0].t < cutoff) g.velSamples.shift();
         scheduleFlush();
       }
     },
     [scheduleFlush],
   );
 
-  const endPointer = useCallback((e: React.PointerEvent<HTMLDivElement>) => {
-    const g = gestureRef.current;
-    g.pointers.delete(e.pointerId);
-    if (g.pointers.size < 2) g.pinch = null;
-    if (g.pointers.size === 1) {
-      // Hand-off from pinch back to one-finger pan without a jump.
-      g.lastX = [...g.pointers.values()][0].x;
-    }
-    if (g.pointers.size === 0) {
-      setDragging(false);
-      g.suppressClick = g.moved > 6;
-    }
-  }, []);
+  const endPointer = useCallback(
+    (e: React.PointerEvent<HTMLDivElement>) => {
+      const g = gestureRef.current;
+      g.pointers.delete(e.pointerId);
+      if (g.pointers.size < 2) g.pinch = null;
+      if (g.pointers.size === 1) {
+        // Hand-off from pinch back to one-finger pan without a jump.
+        g.lastX = [...g.pointers.values()][0].x;
+        g.velSamples = [{ t: performance.now(), x: g.lastX }];
+      }
+      if (g.pointers.size === 0) {
+        setDragging(false);
+        g.suppressClick = g.moved > 6;
+        // A real drag (not a click) that was still moving when released gets a
+        // decelerating glide, using velocity from the recent sample window.
+        if (g.moved > 6 && g.velSamples.length >= 2) {
+          const first = g.velSamples[0];
+          const last = g.velSamples[g.velSamples.length - 1];
+          const dt = last.t - first.t;
+          if (dt > 4) {
+            const vx = (last.x - first.x) / dt; // px per ms
+            if (Math.abs(vx) > MOMENTUM_MIN_VX) startMomentum(vx);
+          }
+        }
+        g.velSamples = [];
+      }
+    },
+    [startMomentum],
+  );
 
   // A real drag must not fire the click handler of whatever marker it ended on.
   const onClickCapture = useCallback((e: React.MouseEvent) => {
@@ -551,8 +662,12 @@ export default function TimelineView({
       const w = Math.max(sizeRef.current.w, 1);
       const panYears = (w * 0.12) / v.pxPerYear;
       if (e.key === "ArrowLeft") {
+        cancelAnim();
+        cancelMomentum();
         setView(clampView(v.pxPerYear, v.startYear - panYears));
       } else if (e.key === "ArrowRight") {
+        cancelAnim();
+        cancelMomentum();
         setView(clampView(v.pxPerYear, v.startYear + panYears));
       } else if (e.key === "+" || e.key === "=") {
         zoomByFactor(1.5);
@@ -566,7 +681,7 @@ export default function TimelineView({
       e.preventDefault();
       // eslint-disable-next-line react-hooks/exhaustive-deps
     },
-    [clampView, animateTo, fitView],
+    [clampView, animateTo, fitView, cancelAnim, cancelMomentum],
   );
 
   /* ----- button zooms ----- */
@@ -661,28 +776,59 @@ export default function TimelineView({
     if (!geom || pxPerYear <= 0) return null;
     const rowH = (geom.booksH - 22) / Math.max(bookPack.rowCount, 1);
     const barH = clamp(rowH - 1.5, 3.5, 13);
-    return bookPack.placed.map(({ item, row }) => {
-      const x = (item.startYear - minYear) * pxPerYear;
-      const w = Math.max((item.endYear - item.startYear) * pxPerYear, 3.5);
-      const y = geom.booksTop + 18 + row * rowH;
-      const range = formatYearRange(item.startYear, item.endYear);
-      return (
-        <button
-          key={item.book}
-          type="button"
-          className={`tl-book-bar${item.disputed ? " tl-book-disputed" : ""}`}
-          style={{ left: x, top: y, width: w, height: barH }}
-          onClick={() => onSelectBook?.(item.book)}
-          onMouseEnter={(e) =>
-            showTip(e, item.book, `Written ${range}`, item.disputed ? "Dating disputed" : undefined)
-          }
-          onMouseLeave={hideTip}
-          aria-label={`${item.book}, written ${range}`}
-        >
-          {w > 58 && barH >= 9 && <span className="tl-book-bar-label">{item.book}</span>}
-        </button>
-      );
-    });
+
+    // Group placements by row — same approach the lifespans lane uses: packRows processes items
+    // pre-sorted by start year, so each row's own subsequence is already in increasing x order,
+    // letting label crowding be judged against same-row neighbors only (see lifespansLayer below).
+    const byRow = new Map<number, { item: BookWritingWindow; row: number }[]>();
+    for (const p of bookPack.placed) {
+      const list = byRow.get(p.row);
+      if (list) list.push(p);
+      else byRow.set(p.row, [p]);
+    }
+
+    const nodes: ReactNode[] = [];
+    for (const rowItems of byRow.values()) {
+      for (let i = 0; i < rowItems.length; i++) {
+        const { item, row } = rowItems[i];
+        const x = (item.startYear - minYear) * pxPerYear;
+        const w = Math.max((item.endYear - item.startYear) * pxPerYear, 3.5);
+        const y = geom.booksTop + 18 + row * rowH;
+        const range = formatYearRange(item.startYear, item.endYear);
+        const inside = w > 58 && barH >= 9;
+
+        // Same label-gap guard the lifespans lane uses: skip the book name if a same-row
+        // neighbor doesn't leave enough clear horizontal space on either side.
+        const prevX = i > 0 ? (rowItems[i - 1].item.startYear - minYear) * pxPerYear : -Infinity;
+        const nextX =
+          i < rowItems.length - 1
+            ? (rowItems[i + 1].item.startYear - minYear) * pxPerYear
+            : Infinity;
+        const hasGap = x - prevX > LABEL_GAP_PX && nextX - x > LABEL_GAP_PX;
+
+        nodes.push(
+          <button
+            key={item.book}
+            type="button"
+            className={`tl-book-bar${item.disputed ? " tl-book-disputed" : ""}`}
+            style={{ left: x, top: y, width: w, height: barH }}
+            onClick={() => onSelectBook?.(item.book)}
+            onMouseEnter={(e) =>
+              showTip(e, item.book, `Written ${range}`, item.disputed ? "Dating disputed" : undefined)
+            }
+            onMouseLeave={hideTip}
+            aria-label={`${item.book}, written ${range}`}
+          >
+            {hasGap && (
+              <span className={`tl-book-bar-label${inside ? "" : " tl-book-bar-label-outside"}`}>
+                {item.book}
+              </span>
+            )}
+          </button>,
+        );
+      }
+    }
+    return nodes;
   }, [geom, pxPerYear, bookPack, minYear, onSelectBook, showTip, hideTip]);
 
   const lifespansLayer = useMemo<ReactNode>(() => {
@@ -806,6 +952,28 @@ export default function TimelineView({
 
       items.sort((a, b) => a.x - b.x);
 
+      // Range-bar events get their own label-gap check, scoped to just the bars in this lane —
+      // a bar's title only competes for space with other bar titles, not with the marker dots or
+      // cluster badges that may sit right next to it. Same neighbor-gap heuristic the lifespans
+      // lane uses (see lifespansLayer above / the books band above that), just scoped to bars.
+      const barIds: string[] = [];
+      const barXs: number[] = [];
+      for (const it of items) {
+        if (it.kind === "single" && typeof it.e.endYear === "number" && it.e.endYear > it.e.startYear) {
+          barIds.push(it.e.id);
+          barXs.push(it.x);
+        }
+      }
+      const barHasGap = new Map<string, boolean>();
+      for (let bi = 0; bi < barIds.length; bi++) {
+        const prevBarX = bi > 0 ? barXs[bi - 1] : -Infinity;
+        const nextBarX = bi < barXs.length - 1 ? barXs[bi + 1] : Infinity;
+        barHasGap.set(
+          barIds[bi],
+          barXs[bi] - prevBarX > LABEL_GAP_PX && nextBarX - barXs[bi] > LABEL_GAP_PX,
+        );
+      }
+
       for (let i = 0; i < items.length; i++) {
         const it = items[i];
         const prevX = i > 0 ? items[i - 1].x : -Infinity;
@@ -839,6 +1007,7 @@ export default function TimelineView({
 
         if (hasRange) {
           const barW = Math.max((e.endYear! - e.startYear) * pxPerYear, 12);
+          const hasBarLabelGap = barHasGap.get(e.id) ?? false;
           nodes.push(
             <button
               key={e.id}
@@ -850,7 +1019,7 @@ export default function TimelineView({
               onMouseLeave={hideTip}
               aria-label={`${e.title}, ${e.dateLabel}`}
             >
-              {showTitle && barW > 46 && <span className="tl-marker-title">{e.title}</span>}
+              {hasBarLabelGap && <span className="tl-range-bar-label">{e.title}</span>}
             </button>,
           );
         } else {
@@ -1006,8 +1175,11 @@ export default function TimelineView({
               </span>
             ))}
 
-            {/* The panning world surface — translateX only, never scaled. */}
-            <div className="tl-scroller" style={{ transform: `translateX(${translateX}px)` }}>
+            {/* The panning world surface — a single GPU-composited transform, never scaled.
+             * translate3d (vs. translateX) explicitly promotes this to its own compositor
+             * layer, which keeps large numbers of absolutely-positioned children smooth
+             * during momentum glides and trackpad panning. */}
+            <div className="tl-scroller" style={{ transform: `translate3d(${translateX}px, 0, 0)` }}>
               {ticks.map((y) => (
                 <div
                   key={`g${y}`}

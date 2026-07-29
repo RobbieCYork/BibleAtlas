@@ -318,6 +318,17 @@
   transform: translateY(-50%);
 }
 
+/* Same "outside" idea as the lifespan lane: when a book's own bar is too narrow to hold its name,
+ * the label sits just to the right of the bar instead of being skipped — the label-gap check
+ * (same heuristic as lifespans) already guarantees there's clear room there. */
+.tl-book-bar-label.tl-book-bar-label-outside {
+  position: absolute;
+  left: 100%;
+  padding: 0 0 0 5px;
+  overflow: visible;
+  color: var(--text-muted);
+}
+
 /* -------------------------------------------------------- lifespans lane */
 
 .tl-life-bar {
@@ -447,11 +458,26 @@
   text-align: center;
 }
 
-.tl-range-bar .tl-marker-title {
-  transform: none;
-  left: 0;
-  text-align: left;
-  margin-top: 7px;
+/* Label for range-bar events (Biblical/World/Religion lanes). Range bars are a fixed 8px tall —
+ * too short to hold text inside legibly the way a life/book bar can — so every range-bar label
+ * uses the lifespan lane's "outside" convention: same font-size/weight as the lifespan label,
+ * muted like its outside variant, sitting just past the bar's right edge. Shown only when the
+ * same neighbor-gap heuristic the lifespans lane uses finds room (see barHasGap above). */
+.tl-range-bar-label {
+  position: absolute;
+  left: 100%;
+  top: 50%;
+  transform: translateY(-50%);
+  margin-left: 6px;
+  font-size: 10px;
+  font-weight: 600;
+  line-height: 1;
+  color: var(--text-muted);
+  white-space: nowrap;
+  max-width: 150px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  pointer-events: none;
 }
 
 /* Cluster badges — same visual concept as the map's numbered pin clusters. */

@@ -38,6 +38,10 @@ const PINNED_TABS: { key: PanelKey; label: string; icon: string }[] = [
   { key: "notes", label: "Notes", icon: "📝" },
 ];
 
+/** Index within PINNED_TABS after which the Timeline tab is inserted — Bible, Map, [Timeline],
+ * Details, Notes, so Timeline sits right after Map rather than tacked onto the end of the row. */
+const TIMELINE_SPLIT_INDEX = 2;
+
 /** Panels that don't get their own pinned bottom-bar slot — reachable through the "More" tab
  * instead, so the bar doesn't have to grow every time a new panel is added. Friends, Messages, and
  * Groups all open the same underlying "friends" panel, just defaulted to a different internal view. */
@@ -79,32 +83,34 @@ export default function MobileTabBar({
     return friendsBadgeCount;
   };
 
+  const renderPinnedTab = (tab: (typeof PINNED_TABS)[number]) => {
+    const showDot = tab.key === "details" && hasSelection && active !== "details";
+    // While Timeline mode is open it is the active destination — the underlying panel's tab
+    // shouldn't also read as active.
+    const isActive = active === tab.key && !timelineActive;
+    return (
+      <button
+        key={tab.key}
+        type="button"
+        className={`mobile-tab ${isActive ? "active" : ""}`}
+        onClick={() => {
+          setMoreOpen(false);
+          onSelect(tab.key);
+        }}
+        aria-current={isActive ? "page" : undefined}
+      >
+        <span className="mobile-tab-icon" aria-hidden="true">
+          {tab.icon}
+          {showDot && <span className="mobile-tab-dot" />}
+        </span>
+        <span className="mobile-tab-label">{tab.label}</span>
+      </button>
+    );
+  };
+
   return (
     <nav className="mobile-tab-bar">
-      {PINNED_TABS.map((tab) => {
-        const showDot = tab.key === "details" && hasSelection && active !== "details";
-        // While Timeline mode is open it is the active destination — the underlying panel's tab
-        // shouldn't also read as active.
-        const isActive = active === tab.key && !timelineActive;
-        return (
-          <button
-            key={tab.key}
-            type="button"
-            className={`mobile-tab ${isActive ? "active" : ""}`}
-            onClick={() => {
-              setMoreOpen(false);
-              onSelect(tab.key);
-            }}
-            aria-current={isActive ? "page" : undefined}
-          >
-            <span className="mobile-tab-icon" aria-hidden="true">
-              {tab.icon}
-              {showDot && <span className="mobile-tab-dot" />}
-            </span>
-            <span className="mobile-tab-label">{tab.label}</span>
-          </button>
-        );
-      })}
+      {PINNED_TABS.slice(0, TIMELINE_SPLIT_INDEX).map(renderPinnedTab)}
 
       <button
         type="button"
@@ -116,10 +122,12 @@ export default function MobileTabBar({
         aria-current={timelineActive ? "page" : undefined}
       >
         <span className="mobile-tab-icon" aria-hidden="true">
-          🕐
+          ⏳
         </span>
         <span className="mobile-tab-label">Timeline</span>
       </button>
+
+      {PINNED_TABS.slice(TIMELINE_SPLIT_INDEX).map(renderPinnedTab)}
 
 
       <div className="mobile-tab-more" ref={moreRef}>
