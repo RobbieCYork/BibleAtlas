@@ -23,6 +23,12 @@ interface MobileTabBarProps {
   /** "Reading Plans" in the sheet, same shape as onOpenProfile above — switches to the Bible tab
    * and pops it straight to the Reading Plans view (see BiblePanel's openReadingPlansRequest). */
   onOpenReadingPlans: () => void;
+  /** The Timeline tab — opens full-screen Timeline mode rather than selecting a panel. Pinned as
+   * its own tab (not tucked into "More") because the timeline is a flagship destination: six slots
+   * at 375px still gives each tab a ~62px touch target, comfortably above tap-size guidance. */
+  onOpenTimeline: () => void;
+  /** Whether Timeline mode is currently open, for the tab's active styling. */
+  timelineActive: boolean;
 }
 
 const PINNED_TABS: { key: PanelKey; label: string; icon: string }[] = [
@@ -50,6 +56,8 @@ export default function MobileTabBar({
   groupsBadgeCount = 0,
   onOpenProfile,
   onOpenReadingPlans,
+  onOpenTimeline,
+  timelineActive,
 }: MobileTabBarProps) {
   const [moreOpen, setMoreOpen] = useState(false);
   const moreRef = useRef<HTMLDivElement | null>(null);
@@ -75,16 +83,19 @@ export default function MobileTabBar({
     <nav className="mobile-tab-bar">
       {PINNED_TABS.map((tab) => {
         const showDot = tab.key === "details" && hasSelection && active !== "details";
+        // While Timeline mode is open it is the active destination — the underlying panel's tab
+        // shouldn't also read as active.
+        const isActive = active === tab.key && !timelineActive;
         return (
           <button
             key={tab.key}
             type="button"
-            className={`mobile-tab ${active === tab.key ? "active" : ""}`}
+            className={`mobile-tab ${isActive ? "active" : ""}`}
             onClick={() => {
               setMoreOpen(false);
               onSelect(tab.key);
             }}
-            aria-current={active === tab.key ? "page" : undefined}
+            aria-current={isActive ? "page" : undefined}
           >
             <span className="mobile-tab-icon" aria-hidden="true">
               {tab.icon}
@@ -94,6 +105,22 @@ export default function MobileTabBar({
           </button>
         );
       })}
+
+      <button
+        type="button"
+        className={`mobile-tab ${timelineActive ? "active" : ""}`}
+        onClick={() => {
+          setMoreOpen(false);
+          onOpenTimeline();
+        }}
+        aria-current={timelineActive ? "page" : undefined}
+      >
+        <span className="mobile-tab-icon" aria-hidden="true">
+          🕐
+        </span>
+        <span className="mobile-tab-label">Timeline</span>
+      </button>
+
 
       <div className="mobile-tab-more" ref={moreRef}>
         {moreOpen && (

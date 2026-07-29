@@ -2,21 +2,22 @@ import { locations } from "../data/locations";
 import { pois } from "../data/pois";
 import { people } from "../data/people";
 import { topics } from "../data/topics";
+import { timelineEvents } from "../data/timelineEvents";
 import { BOOKS } from "../data/bibleBooks";
 
 export interface LinkAnnotation {
   start: number;
   end: number;
   text: string;
-  kind: "location" | "poi" | "person" | "topic" | "verse";
-  /** Location/POI/person/topic id — present for kind "location" | "poi" | "person" | "topic". */
+  kind: "location" | "poi" | "person" | "topic" | "timeline" | "verse";
+  /** Location/POI/person/topic/timeline-event id — present for every kind except "verse". */
   id?: string;
 }
 
 interface NameEntry {
   name: string;
   id: string;
-  kind: "location" | "poi" | "person" | "topic";
+  kind: "location" | "poi" | "person" | "topic" | "timeline";
 }
 
 /** Every location's (any category) primary + alternate name, every POI's name, and every person's
@@ -44,6 +45,12 @@ const NAME_ENTRIES: NameEntry[] = (() => {
   topics.forEach((topic) => {
     entries.push({ name: topic.name, id: topic.id, kind: "topic" });
     (topic.alternateNames ?? []).forEach((alt) => entries.push({ name: alt, id: topic.id, kind: "topic" }));
+  });
+  // Timeline events (no alternateNames field) — pushed last, so an event title would win a collision
+  // with any earlier entry's name; titles are deliberately long, distinctive phrases ("Fall of
+  // Jerusalem to Babylon"), so in practice they only match when the full title is written out.
+  timelineEvents.forEach((event) => {
+    entries.push({ name: event.title, id: event.id, kind: "timeline" });
   });
   return entries.sort((a, b) => b.name.length - a.name.length);
 })();
@@ -296,7 +303,8 @@ const NAME_PATTERN =
       )
     : null;
 
-/** Finds every location/POI/person/verse-reference mention in `text`, as character-offset annotations.
+/** Finds every location/POI/person/topic/timeline-event/verse-reference mention in `text`, as
+ * character-offset annotations.
  * `book` (e.g. "Matthew") is optional context used to resolve a handful of ambiguous bare names via
  * BOOK_NAME_OVERRIDES/VERSE_NAME_OVERRIDES above. `chapter`/`verse` narrow further to VERSE_NAME_OVERRIDES
  * (exact chapter:verse) when all three are supplied — the Bible reader passes all three per-verse; the

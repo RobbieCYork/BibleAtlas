@@ -4,6 +4,7 @@ import LinkedVerseText from "./LinkedVerseText";
 import ReflectionPrompt from "./ReflectionPrompt";
 import ShareCardButton from "./ShareCardButton";
 import ProfileAudioPlayer from "./ProfileAudioPlayer";
+import PronunciationAudioButton from "./PronunciationAudioButton";
 import { generatePlaceCard, shareFilename } from "../lib/shareCard";
 
 interface LocationPanelProps {
@@ -66,12 +67,17 @@ export default function LocationPanel({
           ‹ Back
         </button>
       )}
-      <div className="panel-share-row">
+      <div className="panel-header-row">
+        <span className="category-badge">{CATEGORY_LABELS[location.category]}</span>
         <ShareCardButton getBlob={() => generatePlaceCard(location)} filename={shareFilename(location.name)} />
       </div>
-      <span className="category-badge">{CATEGORY_LABELS[location.category]}</span>
       <h2>{location.name}</h2>
-      {location.pronunciation && <p className="pronunciation">Pronounced: {location.pronunciation}</p>}
+      {location.pronunciation && (
+        <p className="pronunciation">
+          Pronounced: {location.pronunciation}
+          <PronunciationAudioButton kind="location" id={location.id} />
+        </p>
+      )}
       {location.alternateNames && location.alternateNames.length > 0 && (
         <p className="alt-names">Also known as: {location.alternateNames.join(", ")}</p>
       )}

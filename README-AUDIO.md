@@ -52,3 +52,31 @@ there is nothing to install. It always prints the estimate and refuses to spend 
 **ElevenLabs alternative**: for a more premium voice, subscribe to ElevenLabs for one cheap
 month, batch-generate everything into `public/audio/profiles/` with the same filenames, then
 cancel — the app only cares that the MP3s exist at the right paths.
+
+## 3. Audio atlas — pronunciation clips (player live, files generated on demand)
+
+Location/POI/person panels show a small inline **🔊** button right next to the "Pronounced:
+..." line whenever a short pronunciation clip exists at
+`public/audio/pronunciation/{kind}-{id}.mp3` (kind = `location` | `poi` | `person`, e.g.
+`location-jerusalem.mp3`). No file → no button; nothing else to configure. Unlike the profile
+narration pill above, this is a single compact icon button (see
+`src/components/PronunciationAudioButton.tsx`) — it just plays the clip, no expandable player,
+since the audio is only a few words long.
+
+### Generating the files
+
+```sh
+# Dry run — prints the entry count, character count, and cost estimate, generates nothing:
+OPENAI_API_KEY=sk-... node scripts/generate-pronunciation-audio.mjs
+
+# Generate (skips files that already exist; --limit=3 for a small test batch first):
+OPENAI_API_KEY=sk-... node scripts/generate-pronunciation-audio.mjs --yes
+# Options: --model=gpt-4o-mini-tts|tts-1|tts-1-hd   --voice=onyx|alloy|nova|...   --limit=N
+```
+
+Same conventions as the profile-narration script above (which it shares its OpenAI-calling,
+pricing, and arg-parsing code with, via `scripts/lib/ttsCommon.mjs`): imports `src/data/*.ts`
+directly via Node's type-stripping, skips existing files, always prints the estimate first, and
+refuses to spend without `--yes`. Because each clip is only the entry's name plus its
+`pronunciation` field (a few words), the total cost for the whole catalog is expected to be well
+under a dollar — run the dry run to see the exact number before spending anything.

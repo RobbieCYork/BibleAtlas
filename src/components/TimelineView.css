@@ -1,0 +1,660 @@
+/* ============================================================================
+ * TimelineView — full-area zoomable/pannable historical timeline.
+ *
+ * Self-contained stylesheet (imported by TimelineView.tsx) so the timeline can
+ * evolve without touching App.css. Uses the app's global theme variables
+ * (--bg, --panel-bg, --text, --accent, ...) from index.css, plus its own lane
+ * palette defined below with light/dark variants.
+ * ========================================================================== */
+
+.tl-root {
+  /* Lane palette. Biblical rides the app accent; the others are deliberately
+   * distinct hues so the three streams read apart at a glance. */
+  --tl-biblical: var(--accent);
+  --tl-biblical-rgb: 124, 58, 237;
+  --tl-world: #64748b;
+  --tl-world-rgb: 100, 116, 139;
+  --tl-religion: #d97706;
+  --tl-religion-rgb: 217, 119, 6;
+  --tl-life: #0d9488;
+  --tl-life-rgb: 13, 148, 136;
+  --tl-book-rgb: 124, 58, 237;
+  --tl-grid: color-mix(in srgb, var(--border) 72%, transparent);
+  --tl-lane-tint: color-mix(in srgb, var(--panel-bg) 55%, transparent);
+
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  min-height: 0;
+  background: var(--bg);
+  color: var(--text);
+  overflow: hidden;
+}
+
+@media (prefers-color-scheme: dark) {
+  .tl-root {
+    --tl-biblical-rgb: 167, 139, 250;
+    --tl-world: #94a3b8;
+    --tl-world-rgb: 148, 163, 184;
+    --tl-religion: #f59e0b;
+    --tl-religion-rgb: 245, 158, 11;
+    --tl-life: #2dd4bf;
+    --tl-life-rgb: 45, 212, 191;
+    --tl-book-rgb: 167, 139, 250;
+  }
+}
+
+/* ---------------------------------------------------------------- header */
+
+.tl-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 16px;
+  border-bottom: 1px solid var(--border);
+  background: var(--panel-bg);
+  flex-shrink: 0;
+  min-height: 54px;
+}
+
+.tl-back-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  border: 1px solid var(--border);
+  background: transparent;
+  color: var(--text);
+  font: inherit;
+  font-size: 13px;
+  padding: 6px 12px 6px 9px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.15s ease, border-color 0.15s ease;
+}
+
+.tl-back-btn:hover {
+  background: var(--accent-bg);
+  border-color: var(--accent);
+}
+
+.tl-title-block {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.tl-title {
+  font-size: 17px;
+  line-height: 1.25;
+  white-space: nowrap;
+}
+
+.tl-range-readout {
+  font-size: 12px;
+  color: var(--text-muted);
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.tl-header-spacer {
+  flex: 1;
+}
+
+.tl-zoom-controls {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.tl-zoom-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border: 1px solid var(--border);
+  background: var(--panel-bg);
+  color: var(--text-h);
+  border-radius: 8px;
+  font-size: 16px;
+  line-height: 1;
+  cursor: pointer;
+  transition: background 0.15s ease, border-color 0.15s ease;
+}
+
+.tl-zoom-btn.tl-zoom-reset {
+  width: auto;
+  padding: 0 10px;
+  font-size: 12px;
+}
+
+.tl-zoom-btn:hover {
+  background: var(--accent-bg);
+  border-color: var(--accent);
+}
+
+.tl-zoom-btn:active {
+  transform: translateY(1px);
+}
+
+/* ---------------------------------------------------------------- canvas */
+
+.tl-canvas {
+  position: relative;
+  flex: 1;
+  min-height: 0;
+  overflow: hidden;
+  cursor: grab;
+  touch-action: none;
+  user-select: none;
+  -webkit-user-select: none;
+  outline: none;
+}
+
+.tl-canvas.tl-dragging {
+  cursor: grabbing;
+}
+
+.tl-canvas:focus-visible {
+  box-shadow: inset 0 0 0 2px var(--accent);
+}
+
+/* Non-panning underlay: per-lane background tints + separators. */
+.tl-lane-underlay {
+  position: absolute;
+  left: 0;
+  right: 0;
+  pointer-events: none;
+}
+
+.tl-lane-underlay.tl-band-books {
+  background: color-mix(in srgb, rgba(var(--tl-book-rgb), 0.05) 100%, transparent);
+  border-bottom: 1px solid var(--tl-grid);
+}
+
+.tl-lane-underlay.tl-band-life {
+  background: rgba(var(--tl-life-rgb), 0.04);
+  border-bottom: 1px solid var(--tl-grid);
+}
+
+.tl-lane-underlay.tl-lane-biblical {
+  background: rgba(var(--tl-biblical-rgb), 0.035);
+  border-bottom: 1px solid var(--tl-grid);
+}
+
+.tl-lane-underlay.tl-lane-world {
+  background: rgba(var(--tl-world-rgb), 0.045);
+  border-bottom: 1px solid var(--tl-grid);
+}
+
+.tl-lane-underlay.tl-lane-religion {
+  background: rgba(var(--tl-religion-rgb), 0.045);
+  border-bottom: 1px solid var(--tl-grid);
+}
+
+/* Pinned lane name chips (don't pan with content). */
+.tl-lane-label {
+  position: absolute;
+  left: 10px;
+  z-index: 6;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  background: color-mix(in srgb, var(--bg) 82%, transparent);
+  border: 1px solid var(--tl-grid);
+  padding: 2px 7px;
+  border-radius: 100px;
+  pointer-events: none;
+  backdrop-filter: blur(2px);
+  -webkit-backdrop-filter: blur(2px);
+  white-space: nowrap;
+}
+
+.tl-lane-label-dot {
+  display: inline-block;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  margin-right: 5px;
+  vertical-align: 0;
+}
+
+/* The panning surface. translateX only — content x-positions are recomputed
+ * in JS when pixels-per-year changes; never CSS-scaled. */
+.tl-scroller {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  will-change: transform;
+}
+
+/* ------------------------------------------------------------------ axis */
+
+.tl-gridline {
+  position: absolute;
+  top: 0;
+  width: 1px;
+  background: var(--tl-grid);
+  pointer-events: none;
+}
+
+.tl-gridline.tl-gridline-epoch {
+  background: color-mix(in srgb, var(--accent) 42%, transparent);
+  width: 1px;
+}
+
+.tl-axis-strip {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  border-top: 1px solid var(--border);
+  background: color-mix(in srgb, var(--panel-bg) 88%, transparent);
+  pointer-events: none;
+  z-index: 5;
+}
+
+.tl-axis-label {
+  position: absolute;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 11px;
+  color: var(--text-muted);
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+  pointer-events: none;
+}
+
+.tl-axis-label.tl-axis-epoch {
+  color: var(--accent);
+  font-weight: 600;
+}
+
+/* ----------------------------------------------------------- books band */
+
+.tl-book-bar {
+  position: absolute;
+  border-radius: 3px;
+  background: rgba(var(--tl-book-rgb), 0.3);
+  border: 1px solid rgba(var(--tl-book-rgb), 0.42);
+  cursor: pointer;
+  transition: background 0.12s ease, box-shadow 0.12s ease;
+  overflow: hidden;
+  padding: 0;
+  font: inherit;
+  color: inherit;
+  text-align: left;
+}
+
+.tl-book-bar.tl-book-disputed {
+  background: rgba(var(--tl-book-rgb), 0.16);
+  border-style: dashed;
+}
+
+.tl-book-bar:hover,
+.tl-book-bar:focus-visible {
+  background: rgba(var(--tl-book-rgb), 0.5);
+  box-shadow: 0 0 0 1px rgba(var(--tl-book-rgb), 0.65);
+  z-index: 4;
+}
+
+.tl-book-bar-label {
+  display: block;
+  font-size: 9px;
+  line-height: 1;
+  padding: 0 4px;
+  color: var(--text-h);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  pointer-events: none;
+  position: relative;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+/* -------------------------------------------------------- lifespans lane */
+
+.tl-life-bar {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  border-radius: 100px;
+  background: rgba(var(--tl-life-rgb), 0.22);
+  border: 1px solid rgba(var(--tl-life-rgb), 0.55);
+  cursor: pointer;
+  padding: 0;
+  font: inherit;
+  color: inherit;
+  transition: background 0.12s ease, box-shadow 0.12s ease;
+}
+
+.tl-life-bar:hover,
+.tl-life-bar:focus-visible {
+  background: rgba(var(--tl-life-rgb), 0.4);
+  box-shadow: 0 0 0 1px rgba(var(--tl-life-rgb), 0.8);
+  z-index: 4;
+}
+
+.tl-life-label {
+  font-size: 10px;
+  font-weight: 600;
+  line-height: 1;
+  color: var(--text-h);
+  padding: 0 7px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  pointer-events: none;
+}
+
+.tl-life-label.tl-life-label-outside {
+  position: absolute;
+  left: 100%;
+  padding: 0 0 0 5px;
+  overflow: visible;
+  color: var(--text-muted);
+}
+
+/* ------------------------------------------------------------ event lanes */
+
+.tl-marker {
+  position: absolute;
+  width: 13px;
+  height: 13px;
+  border-radius: 50%;
+  border: 2px solid var(--panel-bg);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.28);
+  cursor: pointer;
+  padding: 0;
+  transform: translate(-50%, -50%);
+  transition: transform 0.14s ease, box-shadow 0.14s ease;
+  z-index: 2;
+}
+
+.tl-marker:hover,
+.tl-marker:focus-visible {
+  transform: translate(-50%, -50%) scale(1.45);
+  z-index: 5;
+  box-shadow: 0 2px 7px rgba(0, 0, 0, 0.4);
+}
+
+.tl-marker.tl-cat-biblical {
+  background: var(--tl-biblical);
+}
+
+.tl-marker.tl-cat-world {
+  background: var(--tl-world);
+}
+
+.tl-marker.tl-cat-religion {
+  background: var(--tl-religion);
+}
+
+/* Ranged events (reigns, exiles, wars): thin bar instead of a dot. */
+.tl-range-bar {
+  position: absolute;
+  height: 8px;
+  border-radius: 100px;
+  transform: translateY(-50%);
+  cursor: pointer;
+  padding: 0;
+  border: none;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.22);
+  transition: transform 0.14s ease, box-shadow 0.14s ease, filter 0.14s ease;
+  z-index: 2;
+}
+
+.tl-range-bar:hover,
+.tl-range-bar:focus-visible {
+  transform: translateY(-50%) scaleY(1.35);
+  filter: brightness(1.12);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.35);
+  z-index: 5;
+}
+
+.tl-range-bar.tl-cat-biblical {
+  background: linear-gradient(to right, var(--tl-biblical), rgba(var(--tl-biblical-rgb), 0.45));
+}
+
+.tl-range-bar.tl-cat-world {
+  background: linear-gradient(to right, var(--tl-world), rgba(var(--tl-world-rgb), 0.45));
+}
+
+.tl-range-bar.tl-cat-religion {
+  background: linear-gradient(to right, var(--tl-religion), rgba(var(--tl-religion-rgb), 0.45));
+}
+
+/* Titles shown beside uncrowded markers. */
+.tl-marker-title {
+  position: absolute;
+  top: 100%;
+  margin-top: 9px;
+  transform: translateX(-50%);
+  font-size: 10px;
+  line-height: 1.2;
+  color: var(--text-muted);
+  max-width: 130px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  pointer-events: none;
+  text-align: center;
+}
+
+.tl-range-bar .tl-marker-title {
+  transform: none;
+  left: 0;
+  text-align: left;
+  margin-top: 7px;
+}
+
+/* Cluster badges — same visual concept as the map's numbered pin clusters. */
+.tl-cluster {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 24px;
+  height: 24px;
+  padding: 0 7px;
+  border-radius: 100px;
+  color: #fff;
+  font-size: 12px;
+  font-weight: 600;
+  border: 2px solid var(--panel-bg);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+  cursor: zoom-in;
+  transform: translate(-50%, -50%);
+  transition: transform 0.14s ease;
+  z-index: 3;
+  font-variant-numeric: tabular-nums;
+}
+
+.tl-cluster:hover,
+.tl-cluster:focus-visible {
+  transform: translate(-50%, -50%) scale(1.16);
+  z-index: 5;
+}
+
+.tl-cluster.tl-cat-biblical {
+  background: var(--tl-biblical);
+}
+
+.tl-cluster.tl-cat-world {
+  background: var(--tl-world);
+}
+
+.tl-cluster.tl-cat-religion {
+  background: var(--tl-religion);
+}
+
+/* Buttons used as markers/bars need their native chrome stripped. */
+.tl-canvas button {
+  appearance: none;
+  -webkit-appearance: none;
+  outline: none;
+}
+
+/* ---------------------------------------------------------------- tooltip */
+
+.tl-tooltip {
+  position: absolute;
+  z-index: 20;
+  transform: translate(-50%, calc(-100% - 12px));
+  background: var(--panel-bg);
+  color: var(--text);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.22);
+  padding: 7px 10px;
+  max-width: 260px;
+  pointer-events: none;
+  animation: tl-tip-in 0.12s ease;
+}
+
+@keyframes tl-tip-in {
+  from {
+    opacity: 0;
+    transform: translate(-50%, calc(-100% - 6px));
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, calc(-100% - 12px));
+  }
+}
+
+.tl-tooltip-title {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-h);
+  line-height: 1.3;
+}
+
+.tl-tooltip-sub {
+  font-size: 11px;
+  color: var(--text-muted);
+  line-height: 1.35;
+  margin-top: 1px;
+}
+
+.tl-tooltip-badge {
+  display: inline-block;
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--tl-religion);
+  margin-top: 3px;
+}
+
+/* ---------------------------------------------------------------- legend */
+
+.tl-legend {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 6px 16px;
+  padding: 8px 16px;
+  border-top: 1px solid var(--border);
+  background: var(--panel-bg);
+  flex-shrink: 0;
+  font-size: 12px;
+  color: var(--text-muted);
+}
+
+.tl-legend-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  white-space: nowrap;
+}
+
+.tl-legend-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.tl-legend-swatch {
+  width: 18px;
+  height: 8px;
+  border-radius: 3px;
+  flex-shrink: 0;
+}
+
+.tl-legend-note {
+  font-size: 11px;
+  color: var(--text-muted);
+  opacity: 0.85;
+}
+
+.tl-legend-hint {
+  margin-left: auto;
+  font-size: 11px;
+  opacity: 0.8;
+  white-space: nowrap;
+}
+
+@media (max-width: 720px) {
+  .tl-header {
+    padding: 8px 10px;
+    gap: 8px;
+  }
+
+  .tl-title {
+    font-size: 15px;
+  }
+
+  .tl-range-readout {
+    font-size: 11px;
+  }
+
+  .tl-back-label,
+  .tl-legend-hint {
+    display: none;
+  }
+
+  .tl-legend {
+    gap: 4px 12px;
+    padding: 7px 10px;
+    font-size: 11px;
+  }
+
+  .tl-lane-label {
+    font-size: 9px;
+    padding: 2px 6px;
+  }
+}
+
+/* ------------------------------------------------- entity focus highlight */
+
+/* Applied briefly to the focused entity's markers/bars after "View in Timeline"
+ * zooms to them — a pulsing accent ring that draws the eye, then fades away
+ * when the class is removed (see focusHighlightOn in TimelineView.tsx). */
+.tl-marker.tl-focused,
+.tl-range-bar.tl-focused,
+.tl-life-bar.tl-focused {
+  z-index: 5;
+  animation: tl-focus-pulse 1.25s ease-in-out infinite;
+}
+
+@keyframes tl-focus-pulse {
+  0%,
+  100% {
+    box-shadow:
+      0 0 0 3px color-mix(in srgb, var(--accent) 65%, transparent),
+      0 0 14px 4px color-mix(in srgb, var(--accent) 40%, transparent);
+  }
+  50% {
+    box-shadow:
+      0 0 0 6px color-mix(in srgb, var(--accent) 35%, transparent),
+      0 0 22px 8px color-mix(in srgb, var(--accent) 22%, transparent);
+  }
+}

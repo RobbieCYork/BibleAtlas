@@ -70,6 +70,10 @@ interface BiblePanelProps {
    * view, resuming whichever plan was last open. Undefined until first triggered so mounting doesn't
    * switch away from whatever's currently being read. */
   openReadingPlansRequest?: number;
+  /** True while App is still resolving the session and (for a signed-in user) any saved reading
+   * position — holds back the cold-start welcome screen below so a returning reader doesn't see it
+   * flash before their restored chapter lands. See App's bibleInitializing. */
+  initializing?: boolean;
 }
 
 interface VerseData {
@@ -176,6 +180,7 @@ export default function BiblePanel({
   externalSearchNonce,
   journalRequest,
   openReadingPlansRequest,
+  initializing,
 }: BiblePanelProps) {
   const [translation, setTranslation] = useState("web");
   const [passage, setPassage] = useState<PassageResult | null>(null);
@@ -1165,28 +1170,35 @@ export default function BiblePanel({
       {error && <p className="bible-status bible-error">{error}</p>}
 
       {/* Cold-start welcome — nothing else renders here until a book is picked, and a silently
-          blank column reads as broken rather than waiting for input. */}
+          blank column reads as broken rather than waiting for input. Held back while `initializing`
+          (App is still resolving the session and any saved reading position) so a returning
+          signed-in reader doesn't see this flash before their restored chapter lands instead — see
+          App's bibleInitializing. A plain loading line stands in for that brief window. */}
       {!showPlans && !currentBook && !showIntro && !passage && !loading && !error && !searching && !searchResults && (
-        <div className="bible-welcome">
-          <p className="bible-welcome-title">Select a book to start reading</p>
-          <p className="bible-welcome-text">
-            Pick a book and chapter above — places and people in the text link to the interactive map and their full histories.
-          </p>
-          <div className="bible-welcome-plans">
-            <p className="bible-welcome-plans-title">Or follow a guided reading plan</p>
-            {READING_PLANS.map((plan) => (
-              <button
-                key={plan.id}
-                type="button"
-                className="bible-welcome-plan-link"
-                onClick={() => openPlansView(plan.id)}
-              >
-                <span>{plan.title}</span>
-                <span className="bible-welcome-plan-days">{plan.days.length} days</span>
-              </button>
-            ))}
+        initializing ? (
+          <p className="bible-status">Loading…</p>
+        ) : (
+          <div className="bible-welcome">
+            <p className="bible-welcome-title">Select a book to start reading</p>
+            <p className="bible-welcome-text">
+              Pick a book and chapter above — places and people in the text link to the interactive map and their full histories.
+            </p>
+            <div className="bible-welcome-plans">
+              <p className="bible-welcome-plans-title">Or follow a guided reading plan</p>
+              {READING_PLANS.map((plan) => (
+                <button
+                  key={plan.id}
+                  type="button"
+                  className="bible-welcome-plan-link"
+                  onClick={() => openPlansView(plan.id)}
+                >
+                  <span>{plan.title}</span>
+                  <span className="bible-welcome-plan-days">{plan.days.length} days</span>
+                </button>
+              ))}
+            </div>
           </div>
-        </div>
+        )
       )}
 
       {showPlans && !searchResults && (

@@ -46,10 +46,6 @@ interface MapViewProps {
   poisVisible: boolean;
   selectedPoiId: string | null;
   onSelectPoi: (id: string) => void;
-  /** Bumped by App only when "× Show All Pins" is clicked — drives the refit-around-everything
-   * flight. An explicit signal rather than watching the selection ids go null, because selecting
-   * a person also nulls both ids (people have no map presence) and must not move the camera. */
-  showAllNonce: number;
   /** [lng, lat] waypoints of the active seasonal walk, in stop order — drawn as a dashed route
    * line while a walk is open; null clears it. Memoized by App so identity only changes when the
    * walk actually opens/closes (this keys the draw-and-refit effect below). */
@@ -394,7 +390,6 @@ export default function MapView({
   poisVisible,
   selectedPoiId,
   onSelectPoi,
-  showAllNonce,
   walkRoute,
 }: MapViewProps) {
   const containerRef = useRef<HTMLDivElement | null>(null);
@@ -696,21 +691,6 @@ export default function MapView({
     updateClusterView(map);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedId, selectedPoiId, locationsVisible, poisVisible]);
-
-  // "× Show All Pins" should do what it says — refit the viewport around every currently-visible
-  // pin instead of staying at the tight selected-pin zoom where only a pin or two remains in view.
-  // Keyed on App's explicit nonce (see MapViewProps) so only that button triggers the flight.
-  useEffect(() => {
-    const map = mapRef.current;
-    if (showAllNonce === 0 || !map) return; // 0 = initial mount, nothing was clicked
-    const points: [number, number][] = [
-      ...(locationsVisible ? locations.map((l) => l.coordinates) : []),
-      ...(poisVisible ? pois.map((p) => p.coordinates) : []),
-    ];
-    if (points.length > 1) map.fitBounds(boundsOf(points), { padding: 60, duration: 1200 });
-    else map.flyTo({ center: DEFAULT_CENTER, zoom: DEFAULT_ZOOM, duration: 1200 });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [showAllNonce]);
 
   return (
     <>

@@ -98,6 +98,25 @@ export interface Person {
   pronunciation?: string;
   /** Other names/titles this person is called by in the text, e.g. "Simon Peter", "Cephas", "Simon". */
   alternateNames?: string[];
+  /** Signed birth year: negative = BC, positive = AD (e.g. -586 = 586 BC, 5 = AD 5). There is no year 0.
+   * Omitted when Scripture and tradition give no basis for even an approximate year. */
+  bornYear?: number;
+  /** Signed death year, same sign convention as bornYear. Omitted when unrecorded — e.g. a bodily
+   * translation like Enoch's, or Scripture simply never stating it. */
+  diedYear?: number;
+  /** Human-readable lifespan/date range shown in the panel, e.g. "c. 4004-3074 BC" or "d. AD 44 (reigned
+   * c. 1050-1010 BC)" — may describe a reign, a floruit ("fl."), or a birth-only/death-only date when the
+   * other endpoint isn't recorded. */
+  lifespanLabel?: string;
+  /** How firmly the lifespan dates are established — same scale and philosophy as
+   * TimelineEvent.dateCertainty: "firm" (independently anchored, e.g. by extra-biblical records),
+   * "traditional" (the standard scholarly/religious dating, plausible but not independently anchored),
+   * "disputed" (two or more seriously-defended date schemes exist), or "legendary" (the date rests on
+   * late/apocryphal sources rather than an early historical record). */
+  lifespanCertainty?: "firm" | "traditional" | "disputed" | "legendary";
+  /** How the lifespan dates were derived, including caveats, textual variants, or competing chronologies
+   * — rendered as its own "Dating" section, same convention as TimelineEvent.datingNotes. */
+  lifespanDatingNotes?: string;
   tier: PersonTier;
   /** Short tag, e.g. "Apostle", "Roman Governor of Judea", "Prophetess". */
   role: string;
@@ -151,6 +170,57 @@ export interface Topic {
   sources?: SourceCitation[];
   /** Optional journaling question tied to this topic, same convention as Person/Location. */
   reflectionPrompt?: string;
+}
+
+/** Which historical stream a timeline event belongs to — drives its lane/color on the zoomable
+ * timeline and the category tag in its details panel. */
+export type TimelineEventCategory = "biblical" | "world" | "religion";
+
+/** How firmly an event's date is established. Anything other than "firm" surfaces a small badge
+ * next to the dateLabel in the details panel, so traditional/legendary material is never presented
+ * with the same confidence as an anchored historical date (same philosophy as
+ * ExtraBiblicalReference.reliability above).
+ * - "firm": anchored by contemporary records/astronomy to within a year or so (e.g. 586 BC, AD 70).
+ * - "traditional": the conventional scholarly/religious date, plausible but not independently anchored.
+ * - "disputed": two or more seriously-defended dates exist — datingNotes should lay out the debate.
+ * - "legendary": the event itself is legend/tradition rather than established history; the date is a
+ *   later convention (e.g. Varro's 753 BC for the founding of Rome). */
+export type TimelineDateCertainty = "firm" | "traditional" | "disputed" | "legendary";
+
+/**
+ * One event on the zoomable historical timeline — biblical history, surrounding world history, and
+ * milestones of other world religions side by side. No map presence (like Topic); rendered in the
+ * details panel by TimelineEventPanel and auto-linked from text as kind "timeline".
+ */
+export interface TimelineEvent {
+  id: string;
+  title: string;
+  category: TimelineEventCategory;
+  /** Free-text era grouping shown on the timeline, e.g. "United Monarchy", "Life of Christ". */
+  era: string;
+  /** Signed year: negative = BC, positive = AD (e.g. -586 = 586 BC, 70 = AD 70). There is no year 0.
+   * For disputed dates this is the single "best/most conventional" year used to position the event. */
+  startYear: number;
+  /** Present only for events spanning years (reigns, exiles, wars) — same sign convention. */
+  endYear?: number;
+  /** Human-readable date shown in the panel header, e.g. "c. 1446 BC (early date) or c. 1260 BC (late date)". */
+  dateLabel: string;
+  dateCertainty: TimelineDateCertainty;
+  /** One or two sentences — the hook shown right under the title. */
+  summary: string;
+  /** Main narrative. Paragraphs separated by blank lines ("\n\n") — person/location/POI/topic names
+   * here get auto-linked, same convention as Person.lifeStory / TopicSection.paragraphs. */
+  article: string;
+  /** How we know (or don't know) when this happened — rendered as its own "Dating" section.
+   * Required in spirit whenever dateCertainty is "disputed" or "legendary". */
+  datingNotes?: string;
+  /** Bible references, e.g. "2 Kings 25:8-21" — rendered as clickable verse links in References. */
+  scriptureRefs?: string[];
+  /** Non-biblical sources/witnesses, e.g. "Josephus, The Jewish War 6.249-270" or a URL. */
+  externalRefs?: string[];
+  /** Ids of the people/locations/POIs/topics most central to this event — for future "show related
+   * entries" affordances; not required for the auto-linker, which matches on names in the text. */
+  primaryEntityIds?: string[];
 }
 
 /**

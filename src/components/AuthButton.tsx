@@ -1,21 +1,26 @@
 import { useEffect, useRef, useState } from "react";
 import type { Session } from "@supabase/supabase-js";
-import { supabase, setRememberMe, formatJoinDate, type Profile } from "../lib/supabase";
+import { supabase, setRememberMe, type Profile } from "../lib/supabase";
 import { useTextSize } from "../lib/textSize";
-import ReadingProgressGrid from "./ReadingProgressGrid";
-import PostsFeed from "./PostsFeed";
-import AvatarCropModal from "./AvatarCropModal";
 
 interface AuthButtonProps {
   session: Session | null;
-  /** Bumped by the mobile "More" sheet's "My Profile" entry — pops this menu open straight to the
-   * My Profile page. Undefined until first triggered, so mounting doesn't pop the menu open
-   * unprompted. Falls back to Settings for guests, who have no profile page to show. */
+  /** Bumped by the mobile "More" sheet's "My Profile" entry — opens the full-screen My Profile view
+   * straight away for a real account. Undefined until first triggered, so mounting doesn't pop
+   * anything open unprompted. Falls back to this menu's Settings view for guests, who have no
+   * profile page to show. */
   openProfileNonce?: number;
   /** Desktop's entry point for Reading Plans, now that the in-reader toolbar chip is gone — mirrors
    * the mobile "More" sheet's "Reading Plans" entry (see MobileTabBar/App/BiblePanel). Closes this
    * menu and hands off to the Bible panel, which isn't rendered inside this dropdown. */
   onOpenReadingPlans?: () => void;
+  /** Opens the full-screen My Profile view (see MyProfileView/App) — replaces the old in-menu
+   * "profile" flyout view. Closes this menu itself before handing off, same as onOpenReadingPlans. */
+  onOpenMyProfile?: () => void;
+  /** Bumped by App whenever MyProfileView saves a display-name change, so the fetch below (keyed on
+   * session alone otherwise) refreshes the label shown on the trigger button/menu without needing a
+   * full session change. */
+  profileVersion?: number;
 }
 
 type Mode = "login" | "signup" | "reset";
@@ -36,238 +41,6 @@ function TextSizeControl() {
           A⁺
         </button>
       </div>
-    </div>
-  );
-}
-
-interface ProfileFields {
-  displayName: string;
-  phone: string;
-  avatarUrl: string | null;
-  church: string;
-  favoriteVerse: string;
-  bio: string;
-}
-
-const EMPTY_PROFILE_FIELDS: ProfileFields = {
-  displayName: "",
-  phone: "",
-  avatarUrl: null,
-  church: "",
-  favoriteVerse: "",
-  bio: "",
-};
-
-/** The whole "My Profile" page — display name, phone, photo, church, favorite verse, and bio — behind
- * one shared Edit button instead of a separate Save per field (the old layout looked like a form even
- * when you only wanted to glance at your own info). Display name has a uniqueness constraint at the DB
- * level (surfaced via the "23505" error code below, same as the old dedicated control did); phone is
- * digits-only, normalized on save. */
-function MyProfileControl({ userId, onDisplayNameSaved }: { userId: string; onDisplayNameSaved: (name: string) => void }) {
-  const [saved, setSavedFields] = useState<ProfileFields>(EMPTY_PROFILE_FIELDS);
-  const [draft, setDraft] = useState<ProfileFields>(EMPTY_PROFILE_FIELDS);
-  const [joinedAt, setJoinedAt] = useState<string | null>(null);
-  const [loaded, setLoaded] = useState(false);
-  const [editing, setEditing] = useState(false);
-  const [cropSrc, setCropSrc] = useState<string | null>(null);
-  const [uploading, setUploading] = useState(false);
-  const [saving, setSaving] = useState(false);
-  const [status, setStatus] = useState<string | null>(null);
-  const fileInputRef = useRef<HTMLInputElement | null>(null);
-
-  const fetchProfile = () =>
-    supabase
-      .from("profiles")
-      .select("display_name, phone, avatar_url, church, favorite_verse, bio, created_at")
-      .eq("id", userId)
-      .single()
-      .then(({ data }) => {
-        const row = data as
-          | {
-              display_name: string | null;
-              phone: string | null;
-              avatar_url: string | null;
-              church: string | null;
-              favorite_verse: string | null;
-              bio: string | null;
-              created_at: string;
-            }
-          | null;
-        const fields: ProfileFields = {
-          displayName: row?.display_name ?? "",
-          phone: row?.phone ?? "",
-          avatarUrl: row?.avatar_url ?? null,
-          church: row?.church ?? "",
-          favoriteVerse: row?.favorite_verse ?? "",
-          bio: row?.bio ?? "",
-        };
-        setSavedFields(fields);
-        setDraft(fields);
-        setJoinedAt(row?.created_at ?? null);
-        setLoaded(true);
-      });
-
-  useEffect(() => {
-    fetchProfile();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [userId]);
-
-  const handlePhotoSelected = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    e.target.value = ""; // lets picking the same file again re-fire onChange
-    if (!file) return;
-    setCropSrc(URL.createObjectURL(file));
-  };
-
-  const handleCropped = async (blob: Blob) => {
-    if (cropSrc) URL.revokeObjectURL(cropSrc);
-    setCropSrc(null);
-    setUploading(true);
-    setStatus(null);
-    const path = `${userId}/avatar.jpg`;
-    const { error: uploadError } = await supabase.storage.from("avatars").upload(path, blob, { upsert: true, contentType: "image/jpeg" });
-    if (uploadError) {
-      setUploading(false);
-      setStatus("Couldn't upload photo — try again.");
-      return;
-    }
-    const { data: urlData } = supabase.storage.from("avatars").getPublicUrl(path);
-    const publicUrl = `${urlData.publicUrl}?t=${Date.now()}`;
-    await supabase.from("profiles").update({ avatar_url: publicUrl }).eq("id", userId);
-    setSavedFields((f) => ({ ...f, avatarUrl: publicUrl }));
-    setDraft((f) => ({ ...f, avatarUrl: publicUrl }));
-    setUploading(false);
-  };
-
-  const handleSave = async () => {
-    const trimmedName = draft.displayName.trim();
-    if (!trimmedName) {
-      setStatus("Display name can't be empty.");
-      return;
-    }
-    setSaving(true);
-    setStatus(null);
-    const normalizedPhone = draft.phone.replace(/\D/g, "");
-    const { error } = await supabase
-      .from("profiles")
-      .update({
-        display_name: trimmedName,
-        phone: normalizedPhone || null,
-        church: draft.church.trim() || null,
-        favorite_verse: draft.favoriteVerse.trim() || null,
-        bio: draft.bio.trim() || null,
-      })
-      .eq("id", userId);
-    setSaving(false);
-    if (error) {
-      setStatus(error.code === "23505" ? "That display name is taken — try another." : "Couldn't save — try again.");
-      return;
-    }
-    const nextSaved = { ...draft, displayName: trimmedName, phone: normalizedPhone };
-    setSavedFields(nextSaved);
-    setDraft(nextSaved);
-    onDisplayNameSaved(trimmedName);
-    setEditing(false);
-  };
-
-  const handleCancel = () => {
-    setDraft(saved);
-    setStatus(null);
-    setEditing(false);
-  };
-
-  if (!loaded) return null;
-
-  return (
-    <div className="auth-settings-section auth-settings-section-stacked">
-      <div className="profile-page-header">
-        <span className="auth-settings-label">My Profile</span>
-        {joinedAt && <span className="profile-joined-inline">(Joined {formatJoinDate(joinedAt)})</span>}
-      </div>
-
-      {!editing ? (
-        <div className="profile-view">
-          <div className="friend-profile-header">
-            <span className="auth-avatar auth-avatar-lg" aria-hidden="true">
-              {saved.avatarUrl ? <img src={saved.avatarUrl} alt="" /> : "👤"}
-            </span>
-            <p className="friend-profile-name">{saved.displayName}</p>
-          </div>
-          {saved.phone && <p className="profile-view-field">📱 {saved.phone}</p>}
-          {saved.church && <p className="profile-view-field">{saved.church}</p>}
-          {saved.favoriteVerse && (
-            <p className="profile-view-field">
-              <span aria-hidden="true">📖</span> {saved.favoriteVerse}
-            </p>
-          )}
-          {saved.bio && <p className="profile-view-field">{saved.bio}</p>}
-          <button type="button" onClick={() => setEditing(true)}>
-            ✏️ Edit
-          </button>
-        </div>
-      ) : (
-        <>
-          <div className="auth-avatar-upload-row">
-            <span className="auth-avatar auth-avatar-lg" aria-hidden="true">
-              {draft.avatarUrl ? <img src={draft.avatarUrl} alt="" /> : "👤"}
-            </span>
-            <button type="button" onClick={() => fileInputRef.current?.click()} disabled={uploading}>
-              {uploading ? "Uploading…" : "Change Photo"}
-            </button>
-            <input ref={fileInputRef} type="file" accept="image/*" hidden onChange={handlePhotoSelected} />
-          </div>
-          <input
-            type="text"
-            value={draft.displayName}
-            onChange={(e) => setDraft((f) => ({ ...f, displayName: e.target.value }))}
-            placeholder="What friends see"
-          />
-          <input
-            type="tel"
-            value={draft.phone}
-            onChange={(e) => setDraft((f) => ({ ...f, phone: e.target.value }))}
-            placeholder="So friends can find you by phone (optional)"
-          />
-          <input
-            type="text"
-            value={draft.church}
-            onChange={(e) => setDraft((f) => ({ ...f, church: e.target.value }))}
-            placeholder="Church you attend (optional)"
-          />
-          <input
-            type="text"
-            value={draft.favoriteVerse}
-            onChange={(e) => setDraft((f) => ({ ...f, favoriteVerse: e.target.value }))}
-            placeholder="Favorite Bible verse (optional)"
-          />
-          <textarea
-            value={draft.bio}
-            onChange={(e) => setDraft((f) => ({ ...f, bio: e.target.value }))}
-            placeholder="A little about you (optional)"
-            rows={3}
-          />
-          <div className="profile-edit-actions">
-            <button type="button" onClick={handleCancel} disabled={saving}>
-              Cancel
-            </button>
-            <button type="button" onClick={handleSave} disabled={saving}>
-              {saving ? "…" : "Save"}
-            </button>
-          </div>
-        </>
-      )}
-      {status && <p className="auth-status auth-error">{status}</p>}
-
-      {cropSrc && (
-        <AvatarCropModal
-          imageSrc={cropSrc}
-          onCancel={() => {
-            URL.revokeObjectURL(cropSrc);
-            setCropSrc(null);
-          }}
-          onCropped={handleCropped}
-        />
-      )}
     </div>
   );
 }
@@ -322,72 +95,22 @@ function ReadingResetControl({ userId }: { userId: string }) {
   );
 }
 
-/** Tables that hold this account's own content — every row is scoped by user_id (profiles by its
- * primary key `id` instead). Friend requests/messages/groups are deliberately left out: those rows
- * belong jointly to more than one account, so they don't fit a single-user backup. */
-const BACKUP_TABLES = ["notes", "highlights", "tags", "verse_tags", "sermon_notes", "reading_progress"] as const;
+type MenuView = "menu" | "settings";
 
-/** Lets an account download everything it owns — profile fields plus every note/highlight/tag/sermon
- * note/reading position — as a JSON file, so a person's own Bible-study content can never be lost even
- * if something goes wrong on the server side. Not a full account restore tool, just a personal copy. */
-function DataExportControl({ userId }: { userId: string }) {
-  const [exporting, setExporting] = useState(false);
-  const [error, setError] = useState<string | null>(null);
-
-  const handleExport = async () => {
-    setExporting(true);
-    setError(null);
-    try {
-      const [profileRes, ...tableResults] = await Promise.all([
-        supabase.from("profiles").select("*").eq("id", userId).single(),
-        ...BACKUP_TABLES.map((table) => supabase.from(table).select("*").eq("user_id", userId)),
-      ]);
-      if (profileRes.error) throw profileRes.error;
-      const backup: Record<string, unknown> = { exported_at: new Date().toISOString(), profile: profileRes.data };
-      BACKUP_TABLES.forEach((table, i) => {
-        const res = tableResults[i];
-        if (res.error) throw res.error;
-        backup[table] = res.data;
-      });
-      const blob = new Blob([JSON.stringify(backup, null, 2)], { type: "application/json" });
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement("a");
-      a.href = url;
-      a.download = `biblical-atlas-backup-${new Date().toISOString().slice(0, 10)}.json`;
-      a.click();
-      URL.revokeObjectURL(url);
-    } catch (err) {
-      setError(err instanceof Error ? err.message : "Couldn't export — try again.");
-    } finally {
-      setExporting(false);
-    }
-  };
-
-  return (
-    <div className="auth-settings-section auth-settings-section-stacked">
-      <span className="auth-settings-label">Back Up My Data</span>
-      <p className="auth-benefits">
-        Download your profile, notes, highlights, tags, sermon notes, and reading position as a JSON file you keep
-        yourself.
-      </p>
-      <button type="button" onClick={handleExport} disabled={exporting}>
-        {exporting ? "Preparing…" : "Download Backup"}
-      </button>
-      {error && <p className="auth-status auth-error">{error}</p>}
-    </div>
-  );
-}
-
-type MenuView = "menu" | "settings" | "profile";
-
-export default function AuthButton({ session, openProfileNonce, onOpenReadingPlans }: AuthButtonProps) {
+export default function AuthButton({ session, openProfileNonce, onOpenReadingPlans, onOpenMyProfile, profileVersion }: AuthButtonProps) {
   const [open, setOpen] = useState(false);
   const [menuView, setMenuView] = useState<MenuView>("menu");
 
   useEffect(() => {
     if (openProfileNonce === undefined) return;
+    // A real account jumps straight to the full-screen My Profile view; guests have no profile page,
+    // so they still get this menu's Settings view instead.
+    if (session && !session.user.is_anonymous) {
+      onOpenMyProfile?.();
+      return;
+    }
     setOpen(true);
-    setMenuView(session && !session.user.is_anonymous ? "profile" : "settings");
+    setMenuView("settings");
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [openProfileNonce]);
   const [mode, setMode] = useState<Mode>("login");
@@ -402,7 +125,10 @@ export default function AuthButton({ session, openProfileNonce, onOpenReadingPla
   const [loading, setLoading] = useState(false);
   const containerRef = useRef<HTMLDivElement | null>(null);
 
-  // Fetched once per real session so the avatar/label can show it instead of the raw email.
+  // Fetched once per real session so the avatar/label can show it instead of the raw email. Also
+  // re-fetched whenever profileVersion bumps (MyProfileView saved a display-name change) — that view
+  // no longer lives inside this dropdown, so this is the only way this button's own label learns
+  // about an edit without waiting for the next session change.
   useEffect(() => {
     if (!session || session.user.is_anonymous) {
       setSavedDisplayName(null);
@@ -416,7 +142,7 @@ export default function AuthButton({ session, openProfileNonce, onOpenReadingPla
       .then(({ data }) => {
         setSavedDisplayName((data as { display_name: string | null } | null)?.display_name ?? null);
       });
-  }, [session]);
+  }, [session, profileVersion]);
 
   useEffect(() => {
     if (!open) return;
@@ -529,8 +255,15 @@ export default function AuthButton({ session, openProfileNonce, onOpenReadingPla
               </div>
             </div>
             <div className="auth-settings-divider" />
-            {!session.user.is_anonymous && (
-              <button type="button" className="auth-menu-item" onClick={() => setMenuView("profile")}>
+            {!session.user.is_anonymous && onOpenMyProfile && (
+              <button
+                type="button"
+                className="auth-menu-item"
+                onClick={() => {
+                  setOpen(false);
+                  onOpenMyProfile();
+                }}
+              >
                 👤 My Profile
               </button>
             )}
@@ -566,26 +299,6 @@ export default function AuthButton({ session, openProfileNonce, onOpenReadingPla
                 <ReadingResetControl userId={session.user.id} />
               </>
             )}
-          </div>
-        )}
-        {open && menuView === "profile" && !session.user.is_anonymous && (
-          <div className="auth-dropdown auth-dropdown-wide">
-            <button type="button" className="auth-back-link" onClick={() => setMenuView("menu")}>
-              ← Back
-            </button>
-            <MyProfileControl userId={session.user.id} onDisplayNameSaved={setSavedDisplayName} />
-            <div className="auth-settings-divider" />
-            <div className="auth-settings-section auth-settings-section-stacked">
-              <span className="auth-settings-label">My Reading</span>
-              <ReadingProgressGrid userId={session.user.id} isOwn />
-            </div>
-            <div className="auth-settings-divider" />
-            <div className="auth-settings-section auth-settings-section-stacked">
-              <span className="auth-settings-label">My Posts</span>
-              <PostsFeed userId={session.user.id} viewerId={session.user.id} isOwn />
-            </div>
-            <div className="auth-settings-divider" />
-            <DataExportControl userId={session.user.id} />
           </div>
         )}
       </div>

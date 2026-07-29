@@ -9,6 +9,10 @@ import LocationPanel from "./components/LocationPanel";
 import PoiPanel from "./components/PoiPanel";
 import PersonPanel from "./components/PersonPanel";
 import TopicPanel from "./components/TopicPanel";
+import TimelineEventPanel from "./components/TimelineEventPanel";
+import TimelineView from "./components/TimelineView";
+import { TimelineLinkContext } from "./components/LinkChoicePopup";
+import type { TimelineLinkHandlers } from "./components/LinkChoicePopup";
 import BiblePanel from "./components/BiblePanel";
 import MyNotesPanel from "./components/MyNotesPanel";
 import FriendsPanel from "./components/FriendsPanel";
@@ -17,6 +21,7 @@ import PanelMenu, { type PanelKey } from "./components/PanelMenu";
 import MobileTabBar from "./components/MobileTabBar";
 import ResizeHandle from "./components/ResizeHandle";
 import AuthButton from "./components/AuthButton";
+import MyProfileView from "./components/MyProfileView";
 import DisplayNameGate from "./components/DisplayNameGate";
 import ResetPasswordGate from "./components/ResetPasswordGate";
 import { supabase } from "./lib/supabase";
@@ -24,6 +29,7 @@ import { locations } from "./data/locations";
 import { pois } from "./data/pois";
 import { people } from "./data/people";
 import { topics } from "./data/topics";
+import { timelineEvents } from "./data/timelineEvents";
 import { DAILY_VERSE_DISMISSED_KEY, formatDailyReference, getDailyVerse, getLocalDayKey } from "./data/dailyVerse";
 import { formatWalkStopReference, getActiveSeasonalWalk, getWalkDismissKey } from "./data/seasonalWalks";
 import SeasonalWalkPanel from "./components/SeasonalWalkPanel";
@@ -38,13 +44,15 @@ type DetailsSelection =
   | { kind: "location"; id: string }
   | { kind: "poi"; id: string }
   | { kind: "person"; id: string }
-  | { kind: "topic"; id: string };
+  | { kind: "topic"; id: string }
+  | { kind: "timelineEvent"; id: string };
 
 function App() {
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const [selectedPoiId, setSelectedPoiId] = useState<string | null>(null);
   const [selectedPersonId, setSelectedPersonId] = useState<string | null>(null);
   const [selectedTopicId, setSelectedTopicId] = useState<string | null>(null);
+  const [selectedTimelineEventId, setSelectedTimelineEventId] = useState<string | null>(null);
   // Tracks where the reader came from when they follow a cross-link *inside* the details panel (e.g.
   // Jesus's bio links to Nazareth) so a "Back" button can return them there. Only pushed to from those
   // in-panel cross-links — a fresh selection from the map, search, or Bible text clears the trail
@@ -87,26 +95,37 @@ function App() {
   const [notesWidth] = useState(380);
   const [friendsWidth] = useState(380);
   const [session, setSession] = useState<Session | null>(null);
+  // True once the initial supabase.auth.getSession() call has settled (whether or not it found a
+  // session) — `session` alone can't tell "haven't checked yet" apart from "genuinely logged out",
+  // and BiblePanel's cold-start welcome screen needs that distinction (see bibleInitializing below).
+  const [authResolved, setAuthResolved] = useState(false);
   const [passwordRecovery, setPasswordRecovery] = useState(false);
   const [restoreTranslation, setRestoreTranslation] = useState<string | undefined>(undefined);
   // Avoids re-yanking the reader back to their saved spot on every token refresh — only restore
   // once per signed-in user per app load.
   const restoredForUserId = useRef<string | null>(null);
+  // True once the saved-reading-position lookup below has settled for the current session (or
+  // immediately, if there's no session to look one up for) — see bibleInitializing.
+  const [restoreChecked, setRestoreChecked] = useState(false);
 
   const selectedLocation = locations.find((l) => l.id === selectedId) ?? null;
   const selectedPoi = pois.find((p) => p.id === selectedPoiId) ?? null;
   const selectedPerson = people.find((p) => p.id === selectedPersonId) ?? null;
   const selectedTopic = topics.find((t) => t.id === selectedTopicId) ?? null;
-  // Mirrors the precedence used below when deciding which detail panel to render (person > POI > topic > location).
+  const selectedTimelineEvent = timelineEvents.find((e) => e.id === selectedTimelineEventId) ?? null;
+  // Mirrors the precedence used below when deciding which detail panel to render
+  // (person > POI > topic > timeline event > location).
   const currentDetailsSelection: DetailsSelection | null = selectedPersonId
     ? { kind: "person", id: selectedPersonId }
     : selectedPoiId
       ? { kind: "poi", id: selectedPoiId }
       : selectedTopicId
         ? { kind: "topic", id: selectedTopicId }
-        : selectedId
-          ? { kind: "location", id: selectedId }
-          : null;
+        : selectedTimelineEventId
+          ? { kind: "timelineEvent", id: selectedTimelineEventId }
+          : selectedId
+            ? { kind: "location", id: selectedId }
+            : null;
 
   // Desktop panels are opened/closed solely via the hamburger checklist now (no more per-panel "×")
   // — with up to 5 panels available, letting them all pile up open at once gets cramped fast, so
@@ -213,7 +232,10 @@ function App() {
         window.history.replaceState({}, "", window.location.pathname);
       });
     }
-    supabase.auth.getSession().then(({ data }) => setSession(data.session));
+    supabase.auth.getSession().then(({ data }) => {
+      setSession(data.session);
+      setAuthResolved(true);
+    });
     const { data: listener } = supabase.auth.onAuthStateChange((event, newSession) => {
       setSession(newSession);
       if (event === "PASSWORD_RECOVERY") setPasswordRecovery(true);
@@ -365,9 +387,9 @@ function App() {
   // while the panel is already open still resets it to that view's list (rather than a no-op).
   const [friendsView, setFriendsView] = useState<"friends" | "messages" | "groups">("friends");
   const [friendsViewNonce, setFriendsViewNonce] = useState(0);
-  // Lets the mobile "More" sheet's "My Profile" entry pop open the account menu's Settings view —
-  // stays undefined until first triggered so AuthButton's effect doesn't fire (and pop the menu open)
-  // on initial mount.
+  // Lets the mobile "More" sheet's "My Profile" entry pop open the full-screen My Profile view (or,
+  // for a guest with no profile page, the account menu's Settings view instead — see AuthButton's
+  // effect) — stays undefined until first triggered so mounting doesn't pop anything open unprompted.
   const [openProfileNonce, setOpenProfileNonce] = useState<number | undefined>(undefined);
   // Lets the mobile "More" sheet's "Reading Plans" entry and the desktop account-menu equivalent
   // pop the Bible panel straight to its Reading Plans view — stays undefined until first triggered,
@@ -377,6 +399,18 @@ function App() {
     if (isMobile) setMobileActivePanel("bible");
     setOpenReadingPlansNonce((n) => (n ?? 0) + 1);
   };
+
+  // --- My Profile mode ----------------------------------------------------------------------------
+  // Full-screen "My Profile" (MyProfileView), same top-level takeover pattern as Timeline mode below:
+  // a boolean here renders it over the whole app-body, with its own header and Back button, entered
+  // from the desktop account menu or the mobile "More" sheet's "My Profile" entry (both via AuthButton)
+  // and left via its own Back button — replaces the small anchored dropdown this used to be.
+  const [showMyProfile, setShowMyProfile] = useState(false);
+  const openMyProfile = () => setShowMyProfile(true);
+  const closeMyProfile = () => setShowMyProfile(false);
+  // Bumped whenever MyProfileView saves a display-name change, so AuthButton's own fetch (which only
+  // otherwise re-runs on a session change) knows to refresh the label it shows.
+  const [profileVersion, setProfileVersion] = useState(0);
   /** Shared by the mobile "More" sheet and the in-panel view switcher (so it works on desktop too,
    * where there's no "More" sheet to reach Messages/Groups from otherwise). */
   const handleSelectFriendsView = (targetView: "friends" | "messages" | "groups") => {
@@ -405,8 +439,15 @@ function App() {
   }, [session]);
 
   // Once per signed-in user, fetch their saved reading position and jump the Bible panel there.
+  // Gated on authResolved so this doesn't fire (and mark restoreChecked) against the transient
+  // `session === null` App starts with before the initial getSession() call has actually settled.
   useEffect(() => {
-    if (!session || restoredForUserId.current === session.user.id) return;
+    if (!authResolved) return;
+    if (!session) {
+      setRestoreChecked(true);
+      return;
+    }
+    if (restoredForUserId.current === session.user.id) return;
     restoredForUserId.current = session.user.id;
     supabase
       .from("reading_progress")
@@ -414,20 +455,30 @@ function App() {
       .eq("user_id", session.user.id)
       .maybeSingle()
       .then(({ data }) => {
-        if (!data) return;
-        goToReference(`${data.book} ${data.chapter}`);
-        setRestoreTranslation(data.translation);
-        if (isMobile) setMobileActivePanel("bible");
-        else openPanel("bible");
+        if (data) {
+          goToReference(`${data.book} ${data.chapter}`);
+          setRestoreTranslation(data.translation);
+          if (isMobile) setMobileActivePanel("bible");
+          else openPanel("bible");
+        }
+        setRestoreChecked(true);
       });
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [session]);
+  }, [session, authResolved]);
+
+  // Gates BiblePanel's cold-start welcome screen (see the `initializing` prop passed to it below)
+  // until we actually know whether there's a saved reading position to jump to — otherwise a
+  // returning signed-in reader briefly sees the welcome screen (with its reading-plan cards) flash
+  // before the restored chapter replaces it. Resolves near-instantly for a logged-out/guest visitor
+  // (no reading_progress lookup to wait on), so this doesn't add a perceptible delay for them.
+  const bibleInitializing = !authResolved || (!!session && !restoreChecked);
 
   const handleSelect = (id: string) => {
     setSelectedId(id);
     setSelectedPoiId(null);
     setSelectedPersonId(null);
     setSelectedTopicId(null);
+    setSelectedTimelineEventId(null);
     setLocationsVisible(true);
     if (isMobile) {
       setMobileActivePanel("details");
@@ -442,6 +493,7 @@ function App() {
     setSelectedId(null);
     setSelectedPersonId(null);
     setSelectedTopicId(null);
+    setSelectedTimelineEventId(null);
     if (isMobile) {
       setMobileActivePanel("details");
     } else {
@@ -457,6 +509,7 @@ function App() {
     setSelectedId(null);
     setSelectedPoiId(null);
     setSelectedTopicId(null);
+    setSelectedTimelineEventId(null);
     if (isMobile) setMobileActivePanel("details");
     else openPanel("details");
   };
@@ -468,6 +521,19 @@ function App() {
     setSelectedId(null);
     setSelectedPoiId(null);
     setSelectedPersonId(null);
+    setSelectedTimelineEventId(null);
+    if (isMobile) setMobileActivePanel("details");
+    else openPanel("details");
+  };
+
+  // Timeline events have no map presence either — same pattern as people and topics: selecting one
+  // just opens the Details panel.
+  const handleSelectTimelineEvent = (id: string) => {
+    setSelectedTimelineEventId(id);
+    setSelectedId(null);
+    setSelectedPoiId(null);
+    setSelectedPersonId(null);
+    setSelectedTopicId(null);
     if (isMobile) setMobileActivePanel("details");
     else openPanel("details");
   };
@@ -481,6 +547,7 @@ function App() {
     setSelectedPoiId(null);
     setSelectedPersonId(null);
     setSelectedTopicId(null);
+    setSelectedTimelineEventId(null);
     setLocationsVisible(true);
     if (isMobile) setMobileActivePanel("map");
     else openPanel("map");
@@ -492,6 +559,7 @@ function App() {
     setSelectedId(null);
     setSelectedPersonId(null);
     setSelectedTopicId(null);
+    setSelectedTimelineEventId(null);
     if (isMobile) setMobileActivePanel("map");
     else openPanel("map");
   };
@@ -550,6 +618,66 @@ function App() {
     if (currentDetailsSelection) setDetailsHistory((h) => [...h, currentDetailsSelection]);
     handleSelectTopic(id);
   };
+  const handleSelectTimelineEventFromDetails = (id: string) => {
+    if (currentDetailsSelection) setDetailsHistory((h) => [...h, currentDetailsSelection]);
+    handleSelectTimelineEvent(id);
+  };
+
+  // --- Timeline mode -----------------------------------------------------------------------------
+  // Full-screen zoomable timeline (TimelineView) rendered over the normal map/bible/panels layout.
+  // Entered from the desktop footer strip, the mobile Timeline tab, or a link-choice popup's "View
+  // in Timeline"; left via the view's Back button (or, on mobile, by picking another tab).
+  const [showTimeline, setShowTimeline] = useState(false);
+  // When Timeline mode was opened for a specific entity (link-choice popup), the view opens zoomed
+  // to that entity's events/lifespan with a brief highlight. Null for plain entries.
+  const [timelineFocusEntityId, setTimelineFocusEntityId] = useState<string | null>(null);
+  // Event selected *inside* Timeline mode — its TimelineEventPanel slides in as an overlay on top
+  // of the timeline (not the normal Details panel, which sits underneath the mode).
+  const [timelineOverlayEventId, setTimelineOverlayEventId] = useState<string | null>(null);
+  const timelineOverlayEvent = timelineEvents.find((e) => e.id === timelineOverlayEventId) ?? null;
+
+  const openTimeline = () => {
+    setTimelineFocusEntityId(null);
+    setTimelineOverlayEventId(null);
+    setShowTimeline(true);
+  };
+  const closeTimeline = () => {
+    setShowTimeline(false);
+    setTimelineOverlayEventId(null);
+    setTimelineFocusEntityId(null);
+  };
+  // showTimeline mirrored in a ref so the stable link-choice handlers below always see the live
+  // value without needing to be recreated per render.
+  const showTimelineRef = useRef(showTimeline);
+  showTimelineRef.current = showTimeline;
+
+  /** Handlers for the link-choice popup (VerseText/LinkedVerseText via TimelineLinkContext) — only
+   * consulted when a clicked name has a timeline association; every other click never reaches these. */
+  const timelineLinkHandlers: TimelineLinkHandlers = {
+    onSelectTimelineEvent: (id: string) => {
+      if (showTimelineRef.current) {
+        // Already inside Timeline mode — show the article as the in-mode overlay instead of
+        // silently changing the details panel hidden underneath.
+        setTimelineOverlayEventId(id);
+        return;
+      }
+      setDetailsHistory([]);
+      handleSelectTimelineEvent(id);
+    },
+    onOpenTimelineForEntity: (entityId: string) => {
+      setTimelineFocusEntityId(entityId);
+      setTimelineOverlayEventId(null);
+      setShowTimeline(true);
+    },
+  };
+
+  /** Leave Timeline mode and run a normal navigation — used by every cross-link inside the
+   * in-mode TimelineEventPanel overlay, so following a person/place link lands the reader back in
+   * the regular app on that entity's page. */
+  const exitTimelineThen = (navigate: () => void) => {
+    closeTimeline();
+    navigate();
+  };
 
   const goBackInDetails = () => {
     if (detailsHistory.length === 0) return;
@@ -558,27 +686,30 @@ function App() {
     if (prev.kind === "location") handleSelect(prev.id);
     else if (prev.kind === "poi") handleSelectPoi(prev.id);
     else if (prev.kind === "topic") handleSelectTopic(prev.id);
+    else if (prev.kind === "timelineEvent") handleSelectTimelineEvent(prev.id);
     else handleSelectPerson(prev.id);
   };
 
   const hasSelection =
-    selectedId !== null || selectedPoiId !== null || selectedPersonId !== null || selectedTopicId !== null;
-  // Bumped only here (the explicit "× Show All Pins" action) so MapView refits around every pin on
-  // this and nothing else — inferring "show all" from the selection ids going null would also catch
-  // selecting a person (which nulls both map ids but should leave the camera alone).
-  const [showAllNonce, setShowAllNonce] = useState(0);
+    selectedId !== null ||
+    selectedPoiId !== null ||
+    selectedPersonId !== null ||
+    selectedTopicId !== null ||
+    selectedTimelineEventId !== null;
+  // Clears the pin-selection filter so every pin reappears — deliberately leaves the camera where
+  // it is (MapView's selectedId/selectedPoiId effect rebuilds the pin set; nothing refits/flies).
   const clearSelection = () => {
     setSelectedId(null);
     setSelectedPoiId(null);
     setSelectedPersonId(null);
     setSelectedTopicId(null);
+    setSelectedTimelineEventId(null);
     setDetailsHistory([]);
     if (isMobile) setMobileActivePanel("map");
     // On desktop the Details panel can't render without a selection (showDetails goes false), so
     // close it in state too — otherwise the invisible panel keeps holding one of the LRU slots
     // while the menu's disabled Details row leaves no way to free it.
     else closePanel("details");
-    setShowAllNonce((n) => n + 1);
   };
 
   const openVerse = (reference: string) => {
@@ -639,10 +770,13 @@ function App() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  // A signed-in reader's written response to the daily prompt — posted as a public note (the same
-  // mechanism behind "My Notes" -> Public and the profile Posts feed) rather than a new table, so it
-  // shows up on their own profile exactly like any other shared note would.
+  // A signed-in reader's written response to the daily prompt — posted as a note (the same
+  // mechanism behind "My Notes" -> Public and the profile Posts feed) rather than a new table, so a
+  // public response shows up on their own profile exactly like any other shared note would. Public by
+  // default (most people posting here want it on their profile), but the form below lets them choose
+  // private instead before submitting — same public/private idiom as MyNotesPanel/PostsFeed.
   const [dailyVerseResponse, setDailyVerseResponse] = useState("");
+  const [dailyVerseResponsePublic, setDailyVerseResponsePublic] = useState(true);
   const [dailyVerseResponseStatus, setDailyVerseResponseStatus] = useState<"idle" | "saving" | "saved">("idle");
   const postDailyVerseResponse = async () => {
     const text = dailyVerseResponse.trim();
@@ -657,7 +791,7 @@ function App() {
       translation: "web",
       quoted_text: dailyVerseText,
       note_text: text,
-      is_public: true,
+      is_public: dailyVerseResponsePublic,
     });
     if (postError) {
       setDailyVerseResponseStatus("idle");
@@ -767,6 +901,7 @@ function App() {
   };
 
   return (
+    <TimelineLinkContext.Provider value={timelineLinkHandlers}>
     <div className="app-shell">
       {passwordRecovery && session && <ResetPasswordGate onDone={() => setPasswordRecovery(false)} />}
       {!passwordRecovery && needsDisplayName && session && (
@@ -793,7 +928,11 @@ function App() {
             <p className="daily-verse-prompt">{dailyVerse.prompt}</p>
             {session ? (
               dailyVerseResponseStatus === "saved" ? (
-                <p className="daily-verse-response-saved">Posted to your profile. Thanks for sharing.</p>
+                <p className="daily-verse-response-saved">
+                  {dailyVerseResponsePublic
+                    ? "Posted to your profile. Thanks for sharing."
+                    : "Saved privately to your notes."}
+                </p>
               ) : (
                 <form
                   className="daily-verse-response-form"
@@ -810,12 +949,20 @@ function App() {
                     rows={3}
                     maxLength={2000}
                   />
+                  <label className="my-notes-public-toggle">
+                    <input
+                      type="checkbox"
+                      checked={dailyVerseResponsePublic}
+                      onChange={(e) => setDailyVerseResponsePublic(e.target.checked)}
+                    />
+                    {dailyVerseResponsePublic ? "🌐 Share publicly on my profile" : "🔒 Keep private"}
+                  </label>
                   <button
                     type="submit"
                     className="daily-verse-response-submit"
                     disabled={!dailyVerseResponse.trim() || dailyVerseResponseStatus === "saving"}
                   >
-                    {dailyVerseResponseStatus === "saving" ? "Posting…" : "Post to my profile"}
+                    {dailyVerseResponseStatus === "saving" ? "Posting…" : dailyVerseResponsePublic ? "Post to my profile" : "Save privately"}
                   </button>
                 </form>
               )
@@ -871,7 +1018,13 @@ function App() {
             onChange={setNotesSearchQuery}
           />
         )}
-        <AuthButton session={session} openProfileNonce={openProfileNonce} onOpenReadingPlans={openReadingPlans} />
+        <AuthButton
+          session={session}
+          openProfileNonce={openProfileNonce}
+          onOpenReadingPlans={openReadingPlans}
+          onOpenMyProfile={openMyProfile}
+          profileVersion={profileVersion}
+        />
       </header>
       {/* Seasonal walk banner — a slim pill strip under the header (not a modal; see the walk state
           block above). Hidden while the walk view itself is open to avoid saying it twice. */}
@@ -913,6 +1066,7 @@ function App() {
             externalSearchNonce={bibleSearchNonce}
             journalRequest={journalRequest}
             openReadingPlansRequest={openReadingPlansNonce}
+            initializing={bibleInitializing}
           />
         )}
         {panels.bible && panels.map && (
@@ -937,7 +1091,6 @@ function App() {
               poisVisible={poisVisible}
               selectedPoiId={selectedPoiId}
               onSelectPoi={handleSelectPoiFromMap}
-              showAllNonce={showAllNonce}
               walkRoute={walkRouteCoordinates}
             />
             <LayerControls
@@ -1008,7 +1161,21 @@ function App() {
             style={{ width: detailsWidth }}
           />
         )}
-        {showDetails && !selectedPerson && !selectedPoi && !selectedTopic && (
+        {showDetails && !selectedPerson && !selectedPoi && !selectedTopic && selectedTimelineEvent && (
+          <TimelineEventPanel
+            event={selectedTimelineEvent}
+            onBack={detailsHistory.length > 0 ? goBackInDetails : undefined}
+            onSelectVerse={openVerse}
+            onSelectLocation={handleSelectLocationFromDetails}
+            onSelectPoi={handleSelectPoiFromDetails}
+            onSelectPerson={handleSelectPersonFromDetails}
+            onSelectTopic={handleSelectTopicFromDetails}
+            onSelectTimelineEvent={handleSelectTimelineEventFromDetails}
+            expand={sideExpand}
+            style={{ width: detailsWidth }}
+          />
+        )}
+        {showDetails && !selectedPerson && !selectedPoi && !selectedTopic && !selectedTimelineEvent && (
           <LocationPanel
             location={selectedLocation}
             onBack={detailsHistory.length > 0 ? goBackInDetails : undefined}
@@ -1057,7 +1224,90 @@ function App() {
             Everything's closed — reopen a panel from the ☰ menu.
           </div>
         )}
+        {/* Timeline mode — covers the whole map/bible/panels area (the layout stays mounted
+            underneath so map/Bible state survives the visit). The header, desktop footer, and
+            mobile tab bar remain, so the entry point that opened it also closes it. */}
+        {showTimeline && (
+          <div className="timeline-mode">
+            <TimelineView
+              onClose={closeTimeline}
+              onSelectTimelineEvent={setTimelineOverlayEventId}
+              onSelectPerson={(id) => exitTimelineThen(() => handleSelectPersonFromBible(id))}
+              onSelectBook={(book) => exitTimelineThen(() => openVerse(`${book} 1`))}
+              focusEntityId={timelineFocusEntityId ?? undefined}
+            />
+            {/* Selecting an event opens its article as a slide-in overlay on top of the timeline —
+                same panel component the Details column uses, so it feels native. Back returns to
+                the timeline; any cross-link exits the mode into the normal app. */}
+            {timelineOverlayEvent && (
+              <div className="timeline-event-overlay">
+                <TimelineEventPanel
+                  event={timelineOverlayEvent}
+                  onBack={() => setTimelineOverlayEventId(null)}
+                  onSelectVerse={(ref) => exitTimelineThen(() => openVerse(ref))}
+                  onSelectLocation={(id) =>
+                    exitTimelineThen(() => {
+                      setDetailsHistory([]);
+                      handleSelect(id);
+                    })
+                  }
+                  onSelectPoi={(id) =>
+                    exitTimelineThen(() => {
+                      setDetailsHistory([]);
+                      handleSelectPoi(id);
+                    })
+                  }
+                  onSelectPerson={(id) => exitTimelineThen(() => handleSelectPersonFromBible(id))}
+                  onSelectTopic={(id) => exitTimelineThen(() => handleSelectTopicFromBible(id))}
+                  onSelectTimelineEvent={setTimelineOverlayEventId}
+                  expand
+                />
+              </div>
+            )}
+          </div>
+        )}
+        {/* My Profile mode — same full-area takeover as Timeline mode above (the layout underneath
+            stays mounted so map/Bible state survives the visit). Only meaningful for a real account;
+            guests are routed to the account menu's Settings view instead (see AuthButton). */}
+        {showMyProfile && session && !session.user.is_anonymous && (
+          <div className="myprofile-mode">
+            <MyProfileView
+              userId={session.user.id}
+              onDisplayNameSaved={() => setProfileVersion((v) => v + 1)}
+              onClose={closeMyProfile}
+              onGoToVerse={(reference) => {
+                closeMyProfile();
+                openVerse(reference);
+              }}
+            />
+          </div>
+        )}
       </div>
+      {/* Slim always-visible footer strip — the desktop entry point to Timeline mode (mobile gets
+          its own tab in the bottom bar instead). Clicking it again closes the mode. */}
+      {!isMobile && (
+        <footer className="app-footer">
+          <button
+            type="button"
+            className={`app-footer-timeline${showTimeline ? " active" : ""}`}
+            onClick={showTimeline ? closeTimeline : openTimeline}
+            aria-pressed={showTimeline}
+          >
+            <svg width="15" height="15" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+              <circle cx="8" cy="8" r="6.4" stroke="currentColor" strokeWidth="1.5" />
+              <path
+                d="M8 4.6V8l2.4 1.6"
+                stroke="currentColor"
+                strokeWidth="1.5"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
+            </svg>
+            <span className="app-footer-timeline-label">Timeline</span>
+            <span className="app-footer-timeline-tagline">— journey through biblical &amp; world history</span>
+          </button>
+        </footer>
+      )}
       {/* Fixed-position overlay (styled in App.css), not a child of map-area — on mobile it stays
           reachable while the reader flips to the Bible tab to read a stop's passage. */}
       {walkOpen && activeWalk && (
@@ -1068,6 +1318,9 @@ function App() {
           active={activeMobilePanel}
           hasSelection={hasSelection}
           onSelect={(key, view) => {
+            // Picking any panel tab leaves Timeline mode — on mobile the tab bar stays visible
+            // under the timeline, so tabs keep working as the way out.
+            closeTimeline();
             if (key === "friends" && view) handleSelectFriendsView(view);
             setMobileActivePanel(key);
           }}
@@ -1081,9 +1334,12 @@ function App() {
             if (isMobile) setOpenProfileNonce((n) => (n ?? 0) + 1);
           }}
           onOpenReadingPlans={openReadingPlans}
+          onOpenTimeline={openTimeline}
+          timelineActive={showTimeline}
         />
       )}
     </div>
+    </TimelineLinkContext.Provider>
   );
 }
 

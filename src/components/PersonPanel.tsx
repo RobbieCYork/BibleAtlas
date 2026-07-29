@@ -4,6 +4,7 @@ import LinkedVerseText from "./LinkedVerseText";
 import ReflectionPrompt from "./ReflectionPrompt";
 import ShareCardButton from "./ShareCardButton";
 import ProfileAudioPlayer from "./ProfileAudioPlayer";
+import PronunciationAudioButton from "./PronunciationAudioButton";
 import { generatePersonCard, shareFilename } from "../lib/shareCard";
 
 interface PersonPanelProps {
@@ -29,6 +30,16 @@ const TIER_LABELS: Record<PersonTier, string> = {
   notable: "Notable Figure",
 };
 
+/** Small badge shown beside the lifespan whenever it isn't firmly established — same scale and
+ * convention as TimelineEventPanel's CERTAINTY_BADGES: "firm" gets no badge, so anchored dates
+ * read plainly and everything else is visibly qualified. */
+const LIFESPAN_CERTAINTY_BADGES: Record<NonNullable<Person["lifespanCertainty"]>, string | null> = {
+  firm: null,
+  traditional: "traditional date",
+  disputed: "date disputed — see note",
+  legendary: "legendary — see note",
+};
+
 export default function PersonPanel({
   person,
   onBack,
@@ -43,6 +54,8 @@ export default function PersonPanel({
 }: PersonPanelProps) {
   if (!person) return null;
 
+  const lifespanBadge = person.lifespanCertainty ? LIFESPAN_CERTAINTY_BADGES[person.lifespanCertainty] : null;
+
   return (
     <div className={`location-panel person-panel ${expand ? "panel-expand" : ""}`} style={expand ? undefined : style}>
       {onBack && (
@@ -50,12 +63,23 @@ export default function PersonPanel({
           ‹ Back
         </button>
       )}
-      <div className="panel-share-row">
+      <div className="panel-header-row">
+        <span className="category-badge person-badge">{person.role}</span>
         <ShareCardButton getBlob={() => generatePersonCard(person)} filename={shareFilename(person.name)} />
       </div>
-      <span className="category-badge person-badge">{person.role}</span>
       <h2>{person.name}</h2>
-      {person.pronunciation && <p className="pronunciation">Pronounced: {person.pronunciation}</p>}
+      {person.pronunciation && (
+        <p className="pronunciation">
+          Pronounced: {person.pronunciation}
+          <PronunciationAudioButton kind="person" id={person.id} />
+        </p>
+      )}
+      {person.lifespanLabel && (
+        <p className="alt-names">
+          {person.lifespanLabel}
+          {lifespanBadge && <span className="person-tier-tag">{lifespanBadge}</span>}
+        </p>
+      )}
       {person.alternateNames && person.alternateNames.length > 0 && (
         <p className="alt-names">Also called: {person.alternateNames.join(", ")}</p>
       )}
@@ -134,6 +158,23 @@ export default function PersonPanel({
                 </li>
               ))}
             </ul>
+          </div>
+        )}
+
+        {person.lifespanDatingNotes && (
+          <div className="history-field">
+            <h4>Dating</h4>
+            <p>
+              <LinkedVerseText
+                text={person.lifespanDatingNotes}
+                onSelectLocation={onSelectLocation}
+                onSelectPoi={onSelectPoi}
+                onSelectPerson={onSelectPerson}
+                onSelectTopic={onSelectTopic}
+                onSelectVerse={onSelectVerse}
+                excludeId={person.id}
+              />
+            </p>
           </div>
         )}
       </div>

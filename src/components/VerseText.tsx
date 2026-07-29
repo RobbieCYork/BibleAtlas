@@ -1,5 +1,6 @@
 import { computeLinkAnnotations, type LinkAnnotation } from "../lib/verseAnnotations";
 import type { Highlight } from "../lib/supabase";
+import { useLinkChoice } from "./LinkChoicePopup";
 
 /** One highlight's coverage within this specific verse — offsets are already clipped to this verse's
  * text (a highlight spanning multiple verses covers 0..length in every verse strictly between its
@@ -94,6 +95,9 @@ export default function VerseText({
   previewRange,
   textRef,
 }: VerseTextProps) {
+  // Intercepts clicks on names with a timeline association to offer "View in Timeline"; every
+  // other click (the overwhelming majority) runs its direct callback unchanged. See LinkChoicePopup.
+  const { interceptLinkClick, linkChoicePopup } = useLinkChoice();
   const links = computeLinkAnnotations(text, undefined, book, chapter, verse);
   const segments = buildSegments(text, links, highlights, previewRange);
 
@@ -132,17 +136,22 @@ export default function VerseText({
               </button>
             );
           }
+          // The Bible reader has no timeline-event handler (yet) — render such mentions as plain
+          // text rather than letting the else-chain below misroute the click to onSelectPerson.
+          if (ann.kind === "timeline") return <span key={i}>{seg.text}</span>;
           return (
             <button
               key={i}
               type="button"
               className="verse-location-link"
-              onClick={() => {
-                if (ann.kind === "location") onSelectLocation(ann.id!);
-                else if (ann.kind === "poi") onSelectPoi(ann.id!);
-                else if (ann.kind === "topic") onSelectTopic(ann.id!);
-                else onSelectPerson(ann.id!);
-              }}
+              onClick={(e) =>
+                interceptLinkClick(e, ann, () => {
+                  if (ann.kind === "location") onSelectLocation(ann.id!);
+                  else if (ann.kind === "poi") onSelectPoi(ann.id!);
+                  else if (ann.kind === "topic") onSelectTopic(ann.id!);
+                  else onSelectPerson(ann.id!);
+                })
+              }
             >
               {seg.text}
             </button>
@@ -150,6 +159,7 @@ export default function VerseText({
         }
         return <span key={i}>{seg.text}</span>;
       })}
+      {linkChoicePopup}
     </span>
   );
 }

@@ -31,12 +31,19 @@
   flex: 1;
   display: flex;
   min-height: 0;
+  /* Anchors the full-area Timeline mode overlay (see .timeline-mode). */
+  position: relative;
 }
 
 .map-area {
   position: relative;
   flex: 1;
   min-width: 160px;
+  /* Named query container so overlays can respond to the MAP's width, not the viewport's — a
+     desktop viewport with the Bible + Details panels open can leave the map as narrow as a phone
+     (see the .map-hint container query below). Inline-size containment is safe here: the width
+     comes from flex, never from the children. */
+  container: map-area / inline-size;
 }
 
 /* Mobile keeps the map mounted (so MapLibre/tiles/pins survive tab switches) but hides it
@@ -570,14 +577,25 @@ body.resizing-panels {
   color: var(--text-h);
 }
 
-/* Share-card button pinned to the panel header's top-right corner (the panel is the positioning
- * context). It scrolls away with the header content — it belongs to the header area, and the panels
- * are their own scroll containers, so a fixed-feeling pin isn't possible without restructuring. */
-.panel-share-row {
-  position: absolute;
-  top: 16px;
-  right: 16px;
-  z-index: 2;
+/* Header row pairing the category/role badge with the Share button. Flex (not absolute
+ * positioning) so the row's height simply grows to fit however many lines the badge wraps to —
+ * the button lives in its own column and top-aligns, so it can never overlap wrapped badge text
+ * the way a `position: absolute` pin over the flow content used to. */
+.panel-header-row {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 8px;
+}
+
+.panel-header-row .category-badge {
+  margin-bottom: 0;
+  min-width: 0;
+}
+
+.panel-header-row .share-card-wrap {
+  flex-shrink: 0;
 }
 
 .share-card-wrap {
@@ -655,6 +673,27 @@ body.resizing-panels {
 
 .pronunciation {
   font-style: italic;
+}
+
+.pronunciation-audio-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-left: 6px;
+  padding: 0;
+  width: 20px;
+  height: 20px;
+  border: none;
+  background: none;
+  font-size: 13px;
+  line-height: 1;
+  cursor: pointer;
+  vertical-align: middle;
+  opacity: 0.8;
+}
+
+.pronunciation-audio-button:hover {
+  opacity: 1;
 }
 
 .modern-map-link {
@@ -1052,6 +1091,18 @@ body.resizing-panels {
   }
 }
 
+/* On a narrow map — a phone, or a desktop viewport squeezed by the Bible/Details panels — the
+   bottom-centered hint slides underneath the Options panel (bottom-left, z-index 5) and the
+   relocated Map/Satellite toggle (bottom-right on <=768px, z-index 5), reading as clipped text
+   on both sides. There's no room to reposition it clear of both, so hide it: clicking/tapping
+   a pin is self-evident at these sizes. Keyed to the map-area container (see .map-area), not
+   the viewport, so the desktop-with-panels-open case is caught too. */
+@container map-area (max-width: 520px) {
+  .map-hint {
+    display: none;
+  }
+}
+
 .then-now-buttons {
   display: flex;
   border: 1px solid var(--border);
@@ -1422,6 +1473,14 @@ body.resizing-panels {
   line-height: 1.5;
 }
 
+/* Favorite verse: the reference link sits on the same line as this field's own text (inherited
+ * above), and its fetched verse text (reusing .verse-popup-quoted, the same quoted-text idiom as My
+ * Notes/Posts) sits just below it — this rule adds the top spacing that idiom otherwise skips, since
+ * it's normally the first line of a note rather than a line following a reference link. */
+.profile-favorite-verse .verse-popup-quoted {
+  margin-top: 4px;
+}
+
 .profile-view > button {
   border: 1px solid var(--border);
   background: var(--bg);
@@ -1504,10 +1563,6 @@ body.resizing-panels {
   overflow-y: auto;
 }
 
-/* Profile page of the account menu — posts need more room to read than the 240px menu column. */
-.auth-dropdown-wide {
-  width: min(320px, calc(100vw - 24px));
-}
 
 .auth-mode-toggle {
   display: flex;
@@ -2642,6 +2697,9 @@ body.resizing-panels {
 
 .mobile-tab {
   flex: 1;
+  /* Six slots (Bible/Map/Details/Notes/Timeline/More) must split a 375px screen evenly — without
+     this, a wider label could make its tab hog width from the others. */
+  min-width: 0;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -5457,4 +5515,204 @@ body.resizing-panels {
   display: block;
   width: 100%;
   height: 36px;
+}
+
+/* --- Timeline mode (full-screen zoomable timeline) --- */
+
+/* Covers the entire map/bible/panels area while leaving the header, desktop footer, and mobile tab
+ * bar in place — the layout underneath stays mounted, so map/Bible state survives the visit. */
+.timeline-mode {
+  position: absolute;
+  inset: 0;
+  z-index: 60;
+  background: var(--bg);
+  display: flex;
+}
+
+/* An event's article, slid in over the timeline — reuses the same details-panel component and the
+ * app's slide-in idiom (cf. the Details column), anchored to the right edge. z-index must clear
+ * every timeline-internal layer (lane-label chips at 6, tooltip at 20) or the pinned chips bleed
+ * through the article on mobile, where the panel spans the full width. */
+.timeline-event-overlay {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: min(440px, 100%);
+  display: flex;
+  z-index: 30;
+  box-shadow: -8px 0 28px rgba(0, 0, 0, 0.22);
+  animation: timeline-event-slide-in 0.22s ease-out;
+}
+
+@keyframes timeline-event-slide-in {
+  from {
+    transform: translateX(28px);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+/* --- My Profile mode (full-screen takeover, same pattern as Timeline mode above) --- */
+
+/* Covers the entire map/bible/panels area while leaving the header, desktop footer, and mobile tab
+ * bar in place — same treatment as .timeline-mode, so the entry point that opened it also closes it. */
+.myprofile-mode {
+  position: absolute;
+  inset: 0;
+  z-index: 60;
+  background: var(--bg);
+  display: flex;
+}
+
+.myprofile-root {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  min-height: 0;
+  background: var(--bg);
+  color: var(--text);
+}
+
+.myprofile-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 16px;
+  border-bottom: 1px solid var(--border);
+  background: var(--panel-bg);
+  flex-shrink: 0;
+  min-height: 54px;
+}
+
+.myprofile-back-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  border: 1px solid var(--border);
+  background: transparent;
+  color: var(--text);
+  font: inherit;
+  font-size: 13px;
+  padding: 6px 12px 6px 9px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.15s ease, border-color 0.15s ease;
+}
+
+.myprofile-back-btn:hover {
+  background: var(--accent-bg);
+  border-color: var(--accent);
+}
+
+.myprofile-title {
+  font-size: 17px;
+  line-height: 1.25;
+}
+
+.myprofile-body {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  padding: 20px;
+}
+
+/* Keeps the form/content column readable on a wide desktop viewport instead of stretching edge to
+ * edge — same reasoning as most single-column settings pages. */
+.myprofile-body-inner {
+  width: min(560px, 100%);
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+}
+
+/* --- Desktop footer strip (Timeline entry point) --- */
+
+/* Slim, always-visible strip pinned to the very bottom of the screen in every panel state —
+ * the flagship entry point into Timeline mode (mobile gets its own tab in the bottom bar). */
+.app-footer {
+  flex-shrink: 0;
+  display: flex;
+  justify-content: center;
+  border-top: 1px solid var(--border);
+  background: var(--panel-bg);
+  z-index: 10;
+}
+
+.app-footer-timeline {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  border: none;
+  background: none;
+  color: var(--accent);
+  font: inherit;
+  font-size: 13px;
+  font-weight: 600;
+  padding: 7px 18px;
+  cursor: pointer;
+}
+
+.app-footer-timeline:hover .app-footer-timeline-label,
+.app-footer-timeline.active .app-footer-timeline-label {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.app-footer-timeline-tagline {
+  color: var(--text-muted);
+  font-weight: 400;
+}
+
+@media (max-width: 980px) {
+  .app-footer-timeline-tagline {
+    display: none;
+  }
+}
+
+/* --- Link-choice popup ("View X" / "View in Timeline") --- */
+
+/* Small chooser anchored under a clicked auto-linked name — appears ONLY when the entity has a
+ * timeline association (see LinkChoicePopup.tsx); ordinary links never show it. */
+.link-choice-popup {
+  position: fixed;
+  z-index: 120; /* above the timeline mode and the account gates' backdrop siblings */
+  background: var(--panel-bg);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.22);
+  padding: 5px;
+  min-width: 170px;
+  max-width: 260px;
+}
+
+.link-choice-option {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  border: none;
+  background: none;
+  color: var(--text);
+  font: inherit;
+  font-size: 13.5px;
+  padding: 8px 10px;
+  border-radius: 7px;
+  cursor: pointer;
+  text-align: left;
+}
+
+.link-choice-option:hover,
+.link-choice-option:focus-visible {
+  background: var(--accent-bg);
+  color: var(--accent);
+}
+
+.link-choice-icon {
+  font-size: 14px;
+  line-height: 1;
 }

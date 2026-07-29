@@ -26,32 +26,19 @@
 import { mkdirSync, existsSync, writeFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 import path from "node:path";
+import { requireTypeStrippingNode, parseArgs, PRICE_PER_MILLION_CHARS, synthesize } from "./lib/ttsCommon.mjs";
 
-const [major, minor] = process.versions.node.split(".").map(Number);
-if (major < 23 || (major === 23 && minor < 6)) {
-  console.error(`Node ${process.versions.node} can't import the .ts data files directly.`);
-  console.error("Use Node >= 23.6, or re-run with: node --experimental-strip-types scripts/generate-profile-audio.mjs");
-  process.exit(1);
-}
+requireTypeStrippingNode();
 
 const { locations } = await import(new URL("../src/data/locations.ts", import.meta.url));
 const { pois } = await import(new URL("../src/data/pois.ts", import.meta.url));
 const { people } = await import(new URL("../src/data/people.ts", import.meta.url));
 
-const args = Object.fromEntries(
-  process.argv.slice(2).map((a) => {
-    const m = a.match(/^--([^=]+)(?:=(.*))?$/);
-    return m ? [m[1], m[2] ?? true] : [a, true];
-  })
-);
+const args = parseArgs(process.argv.slice(2));
 
 const MODEL = typeof args.model === "string" ? args.model : "gpt-4o-mini-tts";
 const VOICE = typeof args.voice === "string" ? args.voice : "onyx";
 const LIMIT = typeof args.limit === "string" ? parseInt(args.limit, 10) : Infinity;
-
-/** Rough $/1M input characters (chars/1M * price, per spec). tts-1(-hd) is priced per char;
- * gpt-4o-mini-tts is priced per token+audio-minute, which works out to roughly this per char. */
-const PRICE_PER_MILLION_CHARS = { "gpt-4o-mini-tts": 12, "tts-1": 15, "tts-1-hd": 30 };
 const price = PRICE_PER_MILLION_CHARS[MODEL] ?? 15;
 
 const OUT_DIR = path.join(path.dirname(fileURLToPath(import.meta.url)), "..", "public", "audio", "profiles");
@@ -79,40 +66,6 @@ function narrationText(kind, entry) {
     parts.push(...(entry.lifeStory ?? []));
   }
   return parts.join("\n\n").replace(/\s+\n/g, "\n").trim();
-}
-
-/** Splits text into chunks under the API's 4096-char limit, preferring paragraph then sentence breaks. */
-function chunkText(text, max = 4000) {
-  if (text.length <= max) return [text];
-  const chunks = [];
-  let rest = text;
-  while (rest.length > max) {
-    const slice = rest.slice(0, max);
-    let cut = slice.lastIndexOf("\n\n");
-    if (cut < max * 0.5) cut = slice.lastIndexOf(". ") + 1;
-    if (cut < max * 0.5) cut = max;
-    chunks.push(rest.slice(0, cut).trim());
-    rest = rest.slice(cut).trim();
-  }
-  if (rest) chunks.push(rest);
-  return chunks;
-}
-
-async function synthesize(text) {
-  const buffers = [];
-  for (const chunk of chunkText(text)) {
-    const res = await fetch("https://api.openai.com/v1/audio/speech", {
-      method: "POST",
-      headers: {
-        Authorization: `Bearer ${process.env.OPENAI_API_KEY}`,
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ model: MODEL, voice: VOICE, input: chunk, response_format: "mp3" }),
-    });
-    if (!res.ok) throw new Error(`OpenAI TTS HTTP ${res.status}: ${(await res.text()).slice(0, 300)}`);
-    buffers.push(Buffer.from(await res.arrayBuffer()));
-  }
-  return Buffer.concat(buffers);
 }
 
 // --- Plan: everything not yet on disk ---
@@ -151,7 +104,7 @@ let done = 0;
 for (const job of limited) {
   process.stdout.write(`[${++done}/${limited.length}] ${job.kind}-${job.id} (${job.text.length} chars)… `);
   try {
-    const mp3 = await synthesize(job.text);
+    const mp3 = await synthesize(job.text, { model: MODEL, voice: VOICE });
     writeFileSync(job.file, mp3);
     console.log(`ok (${(mp3.length / 1024).toFixed(0)} KB)`);
   } catch (err) {

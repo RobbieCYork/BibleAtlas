@@ -3,6 +3,7 @@ import LinkedVerseText from "./LinkedVerseText";
 import ReflectionPrompt from "./ReflectionPrompt";
 import ShareCardButton from "./ShareCardButton";
 import ProfileAudioPlayer from "./ProfileAudioPlayer";
+import PronunciationAudioButton from "./PronunciationAudioButton";
 import { generatePlaceCard, shareFilename } from "../lib/shareCard";
 
 interface PoiPanelProps {
@@ -39,12 +40,17 @@ export default function PoiPanel({
           ‹ Back
         </button>
       )}
-      <div className="panel-share-row">
+      <div className="panel-header-row">
+        <span className="category-badge poi-badge">{poi.tag}</span>
         <ShareCardButton getBlob={() => generatePlaceCard(poi)} filename={shareFilename(poi.name)} />
       </div>
-      <span className="category-badge poi-badge">{poi.tag}</span>
       <h2>{poi.name}</h2>
-      {poi.pronunciation && <p className="pronunciation">Pronounced: {poi.pronunciation}</p>}
+      {poi.pronunciation && (
+        <p className="pronunciation">
+          Pronounced: {poi.pronunciation}
+          <PronunciationAudioButton kind="poi" id={poi.id} />
+        </p>
+      )}
       {poi.modernName && <p className="modern-name">Modern location: {poi.modernName}</p>}
       <a className="modern-map-link" href={poi.modernMapUrl} target="_blank" rel="noopener noreferrer">
         View modern location on Google Maps ↗
