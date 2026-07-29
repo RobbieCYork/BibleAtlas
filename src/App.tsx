@@ -369,6 +369,14 @@ function App() {
   // stays undefined until first triggered so AuthButton's effect doesn't fire (and pop the menu open)
   // on initial mount.
   const [openProfileNonce, setOpenProfileNonce] = useState<number | undefined>(undefined);
+  // Lets the mobile "More" sheet's "Reading Plans" entry and the desktop account-menu equivalent
+  // pop the Bible panel straight to its Reading Plans view — stays undefined until first triggered,
+  // same reasoning as openProfileNonce above.
+  const [openReadingPlansNonce, setOpenReadingPlansNonce] = useState<number | undefined>(undefined);
+  const openReadingPlans = () => {
+    if (isMobile) setMobileActivePanel("bible");
+    setOpenReadingPlansNonce((n) => (n ?? 0) + 1);
+  };
   /** Shared by the mobile "More" sheet and the in-panel view switcher (so it works on desktop too,
    * where there's no "More" sheet to reach Messages/Groups from otherwise). */
   const handleSelectFriendsView = (targetView: "friends" | "messages" | "groups") => {
@@ -863,7 +871,7 @@ function App() {
             onChange={setNotesSearchQuery}
           />
         )}
-        <AuthButton session={session} openProfileNonce={openProfileNonce} />
+        <AuthButton session={session} openProfileNonce={openProfileNonce} onOpenReadingPlans={openReadingPlans} />
       </header>
       {/* Seasonal walk banner — a slim pill strip under the header (not a modal; see the walk state
           block above). Hidden while the walk view itself is open to avoid saying it twice. */}
@@ -904,6 +912,7 @@ function App() {
             externalSearchQuery={bibleSearchQuery}
             externalSearchNonce={bibleSearchNonce}
             journalRequest={journalRequest}
+            openReadingPlansRequest={openReadingPlansNonce}
           />
         )}
         {panels.bible && panels.map && (
@@ -1071,6 +1080,7 @@ function App() {
             // guard on isMobile so no desktop path (e.g. a resize mid-tap) can ever route through.
             if (isMobile) setOpenProfileNonce((n) => (n ?? 0) + 1);
           }}
+          onOpenReadingPlans={openReadingPlans}
         />
       )}
     </div>

@@ -20,6 +20,9 @@ interface MobileTabBarProps {
   /** "My Profile" in the sheet doesn't select a panel like the others — it pops open the account
    * menu (top-right avatar) straight to Settings instead. */
   onOpenProfile: () => void;
+  /** "Reading Plans" in the sheet, same shape as onOpenProfile above — switches to the Bible tab
+   * and pops it straight to the Reading Plans view (see BiblePanel's openReadingPlansRequest). */
+  onOpenReadingPlans: () => void;
 }
 
 const PINNED_TABS: { key: PanelKey; label: string; icon: string }[] = [
@@ -46,6 +49,7 @@ export default function MobileTabBar({
   messagesBadgeCount = 0,
   groupsBadgeCount = 0,
   onOpenProfile,
+  onOpenReadingPlans,
 }: MobileTabBarProps) {
   const [moreOpen, setMoreOpen] = useState(false);
   const moreRef = useRef<HTMLDivElement | null>(null);
@@ -112,6 +116,17 @@ export default function MobileTabBar({
                 </button>
               );
             })}
+            <button
+              type="button"
+              className="mobile-more-item"
+              onClick={() => {
+                setMoreOpen(false);
+                onOpenReadingPlans();
+              }}
+            >
+              <span aria-hidden="true">🗓️</span>
+              Reading Plans
+            </button>
             <button
               type="button"
               className="mobile-more-item"

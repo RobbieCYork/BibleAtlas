@@ -9,17 +9,26 @@ interface ReadingPlansViewProps {
   /** Reader tapped a day — load its passage (and focus its place on the map when it has one). */
   onSelectDay: (plan: ReadingPlan, day: ReadingPlanDay) => void;
   onToggleDay: (planId: string, dayNumber: number) => void;
+  /** Closes the Reading Plans view, returning to whatever chapter/intro was showing before — the
+   * only way back at the top (plan-cards) level, since Reading Plans no longer has its own toolbar
+   * toggle chip (see BiblePanel/MobileTabBar/AuthButton for where it's opened from instead). */
+  onClose: () => void;
 }
 
 /** The "Reading Plans" view inside the Bible panel — a state-driven swap like the book intro (see
  * showPlans in BiblePanel): plan cards with progress bars, then each plan's tappable day list. */
-export default function ReadingPlansView({ openPlanId, onOpenPlan, progress, onSelectDay, onToggleDay }: ReadingPlansViewProps) {
+export default function ReadingPlansView({ openPlanId, onOpenPlan, progress, onSelectDay, onToggleDay, onClose }: ReadingPlansViewProps) {
   const openPlan = openPlanId ? READING_PLANS.find((p) => p.id === openPlanId) : undefined;
 
   if (!openPlan) {
     return (
       <div className="bible-plans">
-        <h4 className="bible-plans-heading">Reading Plans</h4>
+        <div className="bible-plans-header-row">
+          <h4 className="bible-plans-heading">Reading Plans</h4>
+          <button type="button" className="bible-plans-close" onClick={onClose} aria-label="Close Reading Plans">
+            ×
+          </button>
+        </div>
         <p className="bible-plans-subtitle">Guided journeys through Scripture, tied to the places on the map.</p>
         {READING_PLANS.map((plan) => {
           const doneCount = (progress[plan.id] ?? []).filter((d) => plan.days.some((day) => day.day === d)).length;

@@ -12,6 +12,10 @@ interface AuthButtonProps {
    * My Profile page. Undefined until first triggered, so mounting doesn't pop the menu open
    * unprompted. Falls back to Settings for guests, who have no profile page to show. */
   openProfileNonce?: number;
+  /** Desktop's entry point for Reading Plans, now that the in-reader toolbar chip is gone — mirrors
+   * the mobile "More" sheet's "Reading Plans" entry (see MobileTabBar/App/BiblePanel). Closes this
+   * menu and hands off to the Bible panel, which isn't rendered inside this dropdown. */
+  onOpenReadingPlans?: () => void;
 }
 
 type Mode = "login" | "signup" | "reset";
@@ -376,7 +380,7 @@ function DataExportControl({ userId }: { userId: string }) {
 
 type MenuView = "menu" | "settings" | "profile";
 
-export default function AuthButton({ session, openProfileNonce }: AuthButtonProps) {
+export default function AuthButton({ session, openProfileNonce, onOpenReadingPlans }: AuthButtonProps) {
   const [open, setOpen] = useState(false);
   const [menuView, setMenuView] = useState<MenuView>("menu");
 
@@ -533,6 +537,18 @@ export default function AuthButton({ session, openProfileNonce }: AuthButtonProp
             <button type="button" className="auth-menu-item" onClick={() => setMenuView("settings")}>
               ⚙️ Settings
             </button>
+            {onOpenReadingPlans && (
+              <button
+                type="button"
+                className="auth-menu-item"
+                onClick={() => {
+                  setOpen(false);
+                  onOpenReadingPlans();
+                }}
+              >
+                🗓️ Reading Plans
+              </button>
+            )}
             <button type="button" className="auth-menu-item auth-signout" onClick={handleSignOut}>
               Log Out
             </button>

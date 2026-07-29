@@ -30,6 +30,10 @@ export default function PostsFeed({ userId, viewerId, isOwn }: PostsFeedProps) {
   const [authorProfiles, setAuthorProfiles] = useState<Record<string, Profile>>({});
   const [commentDrafts, setCommentDrafts] = useState<Record<string, string>>({});
   const [commentErrors, setCommentErrors] = useState<Record<string, string>>({});
+  // isOwn only: notes just flipped to private. Kept around briefly (instead of removed immediately)
+  // so the user sees a "moved to private" confirmation before the post leaves the list.
+  const [leavingNoteIds, setLeavingNoteIds] = useState<Record<string, boolean>>({});
+  const [visibilityErrors, setVisibilityErrors] = useState<Record<string, string>>({});
 
   const fetchPosts = async () => {
     const { data: notesData } = await supabase
@@ -82,6 +86,28 @@ export default function PostsFeed({ userId, viewerId, isOwn }: PostsFeedProps) {
     fetchPosts();
   };
 
+  /** isOwn only: the same notes.is_public toggle MyNotesPanel's handleToggleNotePublic uses. Since
+   * this feed only ever fetches is_public=true notes, the only direction a post can flip here is to
+   * private — which means it stops being a "post" at all. Show a brief confirmation, then drop it
+   * from the list, rather than yanking it away instantly. */
+  const handleMakePrivate = async (note: Note) => {
+    setVisibilityErrors((e) => ({ ...e, [note.id]: "" }));
+    setLeavingNoteIds((l) => ({ ...l, [note.id]: true }));
+    const { error } = await supabase.from("notes").update({ is_public: false }).eq("id", note.id);
+    if (error) {
+      setLeavingNoteIds((l) => ({ ...l, [note.id]: false }));
+      setVisibilityErrors((e) => ({ ...e, [note.id]: "Couldn't update — try again." }));
+      return;
+    }
+    setTimeout(() => {
+      setPosts((prev) => (prev ? prev.filter((p) => p.note.id !== note.id) : prev));
+      setLeavingNoteIds((l) => {
+        const { [note.id]: _removed, ...rest } = l;
+        return rest;
+      });
+    }, 1800);
+  };
+
   if (posts === null) return <p className="comment-status">Loading posts…</p>;
   if (posts.length === 0)
     return (
@@ -97,6 +123,19 @@ export default function PostsFeed({ userId, viewerId, isOwn }: PostsFeedProps) {
           <p className="friend-post-ref">{refLabel(note)}</p>
           {note.quoted_text && <p className="verse-popup-quoted">"{note.quoted_text}"</p>}
           <p className="friend-post-text">{note.note_text}</p>
+          {isOwn && (
+            <div className="my-notes-actions friend-post-visibility">
+              {leavingNoteIds[note.id] ? (
+                <p className="comment-status">Moved to private — find it in My Notes.</p>
+              ) : (
+                <label className="my-notes-public-toggle">
+                  <input type="checkbox" checked={note.is_public} onChange={() => handleMakePrivate(note)} />
+                  🌐 Public — shows on your profile
+                </label>
+              )}
+              {visibilityErrors[note.id] && <p className="comment-status">{visibilityErrors[note.id]}</p>}
+            </div>
+          )}
           {comments.length > 0 && (
             <div className="friend-post-comments">
               {comments.map((c) => (

@@ -26,7 +26,6 @@ import {
 import { getTextOffsetInRoot } from "../lib/domTextOffset";
 import { CHAPTER_AUDIO_CREDIT, chapterAudioUrl, fallbackChapterAudioUrl } from "../lib/chapterAudio";
 import { clipRangeForVerse } from "../lib/verseRange";
-import { useTextSize } from "../lib/textSize";
 import { deliverCard, generateVerseCard, shareFilename } from "../lib/shareCard";
 
 interface BiblePanelProps {
@@ -66,6 +65,11 @@ interface BiblePanelProps {
    * reference's first verse with the prompt quoted into the draft. The nonce makes journaling the
    * same prompt twice still re-trigger. */
   journalRequest?: { reference: string; prompt: string; nonce: number } | null;
+  /** Bumped by the mobile "More" sheet's "Reading Plans" entry and the desktop account-menu
+   * equivalent (see App/MobileTabBar/AuthButton) — pops this panel straight to the Reading Plans
+   * view, resuming whichever plan was last open. Undefined until first triggered so mounting doesn't
+   * switch away from whatever's currently being read. */
+  openReadingPlansRequest?: number;
 }
 
 interface VerseData {
@@ -171,11 +175,9 @@ export default function BiblePanel({
   externalSearchQuery,
   externalSearchNonce,
   journalRequest,
+  openReadingPlansRequest,
 }: BiblePanelProps) {
   const [translation, setTranslation] = useState("web");
-  // Same global scale as the Account-menu Text Size setting — surfaced here too because readers
-  // adjusting text size are almost always in this panel, not hunting through the login dropdown.
-  const textSize = useTextSize();
   const [passage, setPassage] = useState<PassageResult | null>(null);
   const [currentBook, setCurrentBook] = useState<string | null>(null);
   const [currentChapter, setCurrentChapter] = useState<number | null>(null);
@@ -332,6 +334,14 @@ export default function BiblePanel({
     setShowPlans(true);
     setShowIntro(false);
   };
+
+  // External request to open Reading Plans (mobile "More" sheet, desktop account menu) — resumes
+  // whichever plan was last open, same as re-tapping the old toolbar chip.
+  useEffect(() => {
+    if (openReadingPlansRequest === undefined) return;
+    openPlansView(openPlanId);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [openReadingPlansRequest]);
 
   // Fetched once per login — governs whether an old chapter_reads row still counts below.
   useEffect(() => {
@@ -1107,26 +1117,6 @@ export default function BiblePanel({
             </option>
           ))}
         </select>
-        <div className="bible-text-size" role="group" aria-label="Text size">
-          <button
-            type="button"
-            onClick={textSize.decrease}
-            disabled={!textSize.canDecrease}
-            aria-label="Decrease text size"
-            title="Decrease text size"
-          >
-            A⁻
-          </button>
-          <button
-            type="button"
-            onClick={textSize.increase}
-            disabled={!textSize.canIncrease}
-            aria-label="Increase text size"
-            title="Increase text size"
-          >
-            A⁺
-          </button>
-        </div>
         {audioEligible && (
           <button
             type="button"
@@ -1139,16 +1129,6 @@ export default function BiblePanel({
             🔊 Listen
           </button>
         )}
-        <button
-          type="button"
-          className={`bible-plans-chip${showPlans ? " bible-plans-chip-active" : ""}`}
-          onClick={() => (showPlans ? setShowPlans(false) : openPlansView(openPlanId))}
-          aria-pressed={showPlans}
-          aria-label="Reading plans"
-          title="Reading plans"
-        >
-          🗓️ Plans
-        </button>
       </div>
 
       {searching && <p className="bible-status">Searching…</p>}
@@ -1216,6 +1196,7 @@ export default function BiblePanel({
           progress={planProgress}
           onSelectDay={handleSelectPlanDay}
           onToggleDay={handleTogglePlanDay}
+          onClose={() => setShowPlans(false)}
         />
       )}
 
