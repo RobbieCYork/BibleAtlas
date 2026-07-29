@@ -1337,6 +1337,10 @@ function App() {
           onOpenReadingPlans={openReadingPlans}
           onOpenTimeline={openTimeline}
           timelineActive={showTimeline}
+          onOpenMore={() => {
+            closeTimeline();
+            closeMyProfile();
+          }}
         />
       )}
     </div>

@@ -29,6 +29,11 @@ interface MobileTabBarProps {
   onOpenTimeline: () => void;
   /** Whether Timeline mode is currently open, for the tab's active styling. */
   timelineActive: boolean;
+  /** Fired whenever the "More" tab itself is tapped (open or close) — lets App.tsx leave any
+   * full-screen takeover (Timeline, My Profile) first, since those sit at a higher z-index than
+   * this bar and would otherwise silently swallow the sheet underneath them, making "More" look
+   * completely unresponsive while one of those modes is active. */
+  onOpenMore?: () => void;
 }
 
 const PINNED_TABS: { key: PanelKey; label: string; icon: string }[] = [
@@ -62,6 +67,7 @@ export default function MobileTabBar({
   onOpenReadingPlans,
   onOpenTimeline,
   timelineActive,
+  onOpenMore,
 }: MobileTabBarProps) {
   const [moreOpen, setMoreOpen] = useState(false);
   const moreRef = useRef<HTMLDivElement | null>(null);
@@ -178,7 +184,10 @@ export default function MobileTabBar({
         <button
           type="button"
           className={`mobile-tab ${isOverflowActive ? "active" : ""}`}
-          onClick={() => setMoreOpen((o) => !o)}
+          onClick={() => {
+            onOpenMore?.();
+            setMoreOpen((o) => !o);
+          }}
           aria-label="More panels"
           aria-expanded={moreOpen}
         >
