@@ -22,6 +22,7 @@ import { supabase } from "./lib/supabase";
 import { locations } from "./data/locations";
 import { pois } from "./data/pois";
 import { people } from "./data/people";
+import { DAILY_VERSE_DISMISSED_KEY, formatDailyReference, getDailyVerse, getLocalDayKey } from "./data/dailyVerse";
 import "./App.css";
 
 const MIN_PANEL_WIDTH = 240;
@@ -43,7 +44,9 @@ function App() {
   const [poisVisible, setPoisVisible] = useState(true);
   const [locationsVisible, setLocationsVisible] = useState(true);
   const [map, setMap] = useState<maplibregl.Map | null>(null);
-  const [mapMode, setMapMode] = useState<MapMode>("satellite");
+  // Default to the street "Map" (vector) style — a cold load straight into Satellite shows a
+  // blank pane until imagery arrives, which reads as broken rather than loading.
+  const [mapMode, setMapMode] = useState<MapMode>("vector");
   const [bibleReference, setBibleReference] = useState<string | null>(null);
   // Bumped on every "go to this reference" call so BiblePanel's load effect re-fires even when the
   // reference string repeats a value already in state (e.g. re-clicking a note whose verse matches
@@ -103,25 +106,40 @@ function App() {
   const touchPanelOrder = (key: PanelKey) => {
     panelOrderRef.current = [...panelOrderRef.current.filter((k) => k !== key), key];
   };
+  // Mirrors `panels` so chained open/close calls inside one event handler (e.g. handleSelect opening
+  // details then map) each see the previous call's result — and so openPanel knows *synchronously*
+  // which panel the LRU cap evicted, to surface it in the hamburger menu instead of a silent flip.
+  // Every write to `panels` must go through applyPanels to keep the mirror honest.
+  const panelsRef = useRef(panels);
+  const applyPanels = (next: Record<PanelKey, boolean>) => {
+    panelsRef.current = next;
+    setPanels(next);
+  };
+  // The panel most recently auto-closed by the LRU cap — PanelMenu briefly names it in its caption,
+  // so a checkbox flipping off on its own reads as "made room," not a misclick. The nonce makes
+  // back-to-back evictions of the same panel still restart PanelMenu's notice timer.
+  const [lastAutoClosed, setLastAutoClosed] = useState<{ key: PanelKey; nonce: number } | null>(null);
 
   const openPanel = (key: PanelKey) => {
     touchPanelOrder(key);
-    setPanels((p) => {
-      if (p[key]) return p;
-      const openKeys = (Object.keys(p) as PanelKey[]).filter((k) => p[k]);
-      if (openKeys.length < MAX_OPEN_PANELS) return { ...p, [key]: true };
-      const lru = panelOrderRef.current.find((k) => k !== key && openKeys.includes(k));
-      return lru ? { ...p, [key]: true, [lru]: false } : { ...p, [key]: true };
-    });
+    const p = panelsRef.current;
+    if (p[key]) return;
+    const openKeys = (Object.keys(p) as PanelKey[]).filter((k) => p[k]);
+    if (openKeys.length < MAX_OPEN_PANELS) {
+      applyPanels({ ...p, [key]: true });
+      return;
+    }
+    const lru = panelOrderRef.current.find((k) => k !== key && openKeys.includes(k));
+    applyPanels(lru ? { ...p, [key]: true, [lru]: false } : { ...p, [key]: true });
+    if (lru) setLastAutoClosed((prev) => ({ key: lru, nonce: (prev?.nonce ?? 0) + 1 }));
   };
   const closePanel = (key: PanelKey) => {
     panelOrderRef.current = panelOrderRef.current.filter((k) => k !== key);
-    setPanels((p) => ({ ...p, [key]: false }));
+    applyPanels({ ...panelsRef.current, [key]: false });
   };
-  const togglePanel = (key: PanelKey) => (panels[key] ? closePanel(key) : openPanel(key));
   // Mobile has exactly one active panel at a time, switched via the bottom tab bar.
   const setMobileActivePanel = (key: PanelKey) =>
-    setPanels({
+    applyPanels({
       map: key === "map",
       bible: key === "bible",
       details: key === "details",
@@ -138,9 +156,28 @@ function App() {
   }, []);
 
   // Whenever the viewport crosses into mobile width (e.g. a desktop window shrunk down),
-  // collapse back to a single active panel, defaulting to Bible.
+  // collapse back to a single active panel, defaulting to Bible. Crossing back out of mobile
+  // must restore the desktop default pair (plus whichever panel mobile had active) — without
+  // this the Map panel stays closed forever after a mobile→desktop transition.
   useEffect(() => {
-    if (isMobile) setMobileActivePanel("bible");
+    if (isMobile) {
+      setMobileActivePanel("bible");
+      return;
+    }
+    const p = panelsRef.current;
+    const active = (Object.keys(p) as PanelKey[]).find((k) => p[k]);
+    const next: Record<PanelKey, boolean> = {
+      map: true,
+      bible: true,
+      details: false,
+      notes: false,
+      friends: false,
+    };
+    // Details only renders on desktop with a live selection; leaving it closed here avoids an
+    // invisible panel holding an LRU slot (it reopens on the next selection anyway).
+    if (active && active !== "details") next[active] = true;
+    panelOrderRef.current = (Object.keys(next) as PanelKey[]).filter((k) => next[k]);
+    applyPanels(next);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isMobile]);
 
@@ -466,12 +503,21 @@ function App() {
   };
 
   const hasSelection = selectedId !== null || selectedPoiId !== null || selectedPersonId !== null;
+  // Bumped only here (the explicit "× Show All Pins" action) so MapView refits around every pin on
+  // this and nothing else — inferring "show all" from the selection ids going null would also catch
+  // selecting a person (which nulls both map ids but should leave the camera alone).
+  const [showAllNonce, setShowAllNonce] = useState(0);
   const clearSelection = () => {
     setSelectedId(null);
     setSelectedPoiId(null);
     setSelectedPersonId(null);
     setDetailsHistory([]);
     if (isMobile) setMobileActivePanel("map");
+    // On desktop the Details panel can't render without a selection (showDetails goes false), so
+    // close it in state too — otherwise the invisible panel keeps holding one of the LRU slots
+    // while the menu's disabled Details row leaves no way to free it.
+    else closePanel("details");
+    setShowAllNonce((n) => n + 1);
   };
 
   const openVerse = (reference: string) => {
@@ -483,11 +529,42 @@ function App() {
     }
   };
 
+  // --- Verse & Place of the Day ---------------------------------------------------------------
+  // Deterministic daily rotation (see dailyVerse.ts) pairing a passage with its place on the map —
+  // shown to everyone (signed in or not) as an inviting entry point instead of blank pickers.
+  // Computed once per app load; any close persists today's day-key so the card stays gone until
+  // tomorrow, when a fresh key (and a fresh entry) brings it back.
+  const [dailyVerse] = useState(() => getDailyVerse());
+  const [dailyVerseOpen, setDailyVerseOpen] = useState(
+    () => localStorage.getItem(DAILY_VERSE_DISMISSED_KEY) !== getLocalDayKey()
+  );
+  const dismissDailyVerse = () => {
+    localStorage.setItem(DAILY_VERSE_DISMISSED_KEY, getLocalDayKey());
+    setDailyVerseOpen(false);
+  };
+  const dailyVerseReference = formatDailyReference(dailyVerse);
+  const dailyVersePlace = locations.find((l) => l.id === dailyVerse.locationId) ?? null;
+  const readDailyVerse = () => {
+    dismissDailyVerse();
+    // openVerse drives the existing go-to-reference path: BiblePanel loads the chapter, then
+    // scrolls to and flashes the specific verse because the reference names one.
+    openVerse(dailyVerseReference);
+  };
+  const viewDailyVerseOnMap = () => {
+    dismissDailyVerse();
+    focusLocationOnMap(dailyVerse.locationId);
+  };
+
   // The details panel has nothing to show without a selection on desktop — hiding it lets the
   // map expand instead of leaving a blank panel visible. On mobile it always renders (as its own
   // full-screen tab) so the empty state ("search or click a pin") shows instead of a blank tab.
   const showDetails = panels.details && (hasSelection || isMobile);
   const noPanelsOpen = !panels.bible && !panels.map && !panels.notes && !panels.friends && !showDetails;
+  // The hamburger checklist mirrors what's actually on screen: its Details row tracks showDetails
+  // rather than raw panels.details, which can be "open" in state while nothing renders (desktop with
+  // no selection) — a checked box next to an invisible panel reads as a broken toggle.
+  const menuPanels: Record<PanelKey, boolean> = { ...panels, details: showDetails };
+  const toggleMenuPanel = (key: PanelKey) => (menuPanels[key] ? closePanel(key) : openPanel(key));
   const sideExpand = !panels.map;
   const activeMobilePanel: PanelKey = panels.bible
     ? "bible"
@@ -537,23 +614,75 @@ function App() {
       {!passwordRecovery && needsDisplayName && session && (
         <DisplayNameGate userId={session.user.id} onSaved={() => setNeedsDisplayName(false)} />
       )}
+      {/* Verse & Place of the Day — never over the account gates, which must be dealt with first.
+          Clicking the backdrop counts as a dismissal (persisted for the day) like the × does. */}
+      {dailyVerseOpen && !passwordRecovery && !needsDisplayName && (
+        <div className="daily-verse-overlay" onClick={dismissDailyVerse}>
+          <div
+            className="daily-verse-card"
+            role="dialog"
+            aria-label="Verse and Place of the Day"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <button type="button" className="daily-verse-close" onClick={dismissDailyVerse} aria-label="Dismiss for today">
+              ×
+            </button>
+            <div className="daily-verse-eyebrow">Verse &amp; Place of the Day</div>
+            <h2 className="daily-verse-reference">{dailyVerseReference}</h2>
+            {dailyVersePlace && <div className="daily-verse-place">📍 {dailyVersePlace.name}</div>}
+            <p className="daily-verse-hook">{dailyVerse.hook}</p>
+            <p className="daily-verse-prompt">{dailyVerse.prompt}</p>
+            <div className="daily-verse-actions">
+              <button type="button" className="daily-verse-read" onClick={readDailyVerse}>
+                Read this passage
+              </button>
+              <button type="button" className="daily-verse-map" onClick={viewDailyVerseOnMap}>
+                View on the map
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
       <header className="app-header">
-        <PanelMenu panels={panels} onToggle={togglePanel} friendsBadgeCount={pendingFriendRequests + unreadMessages + groupsBadgeCount} />
+        <PanelMenu
+          panels={menuPanels}
+          onToggle={toggleMenuPanel}
+          lastAutoClosed={lastAutoClosed}
+          disabled={
+            // Mirrors showDetails: on desktop with nothing selected the Details panel can't render,
+            // so its row is dimmed instead of letting a click evict a visible panel for nothing.
+            // (Mobile always renders Details' empty state, but the menu is hidden there anyway.)
+            hasSelection || isMobile ? undefined : { details: "Select a place on the map or in the text first" }
+          }
+          friendsBadgeCount={pendingFriendRequests + unreadMessages + groupsBadgeCount}
+        />
         <button type="button" className="app-logo-button" onClick={goHome} aria-label="Go to Bible">
           <img src="/favicon.svg" className="app-logo" alt="" aria-hidden="true" />
         </button>
-        <h1>New Testament Biblical Atlas</h1>
-        {searchMode === "map" && <SearchBar locations={locations} onSelect={focusLocationOnMap} />}
+        <h1>Biblical Atlas</h1>
+        {searchMode === "map" && (
+          <SearchBar
+            locations={locations}
+            onSelect={focusLocationOnMap}
+            selectedLocationName={selectedLocation?.name ?? null}
+          />
+        )}
         {searchMode === "bible" && (
           <HeaderTextSearch
-            placeholder="Search the Bible"
+            placeholder="Search Scripture…"
+            icon="📖"
             value={bibleSearchQuery}
             onChange={setBibleSearchQuery}
             onSubmit={() => setBibleSearchNonce((n) => n + 1)}
           />
         )}
         {searchMode === "notes" && (
-          <HeaderTextSearch placeholder="Search My Notes" value={notesSearchQuery} onChange={setNotesSearchQuery} />
+          <HeaderTextSearch
+            placeholder="Search My Notes"
+            icon="📝"
+            value={notesSearchQuery}
+            onChange={setNotesSearchQuery}
+          />
         )}
         <AuthButton session={session} openProfileNonce={openProfileNonce} />
       </header>
@@ -597,6 +726,7 @@ function App() {
               poisVisible={poisVisible}
               selectedPoiId={selectedPoiId}
               onSelectPoi={handleSelectPoiFromMap}
+              showAllNonce={showAllNonce}
             />
             <LayerControls
               map={map}
@@ -605,7 +735,7 @@ function App() {
               poiCount={pois.length}
               locationsVisible={locationsVisible}
               onToggleLocations={() => setLocationsVisible((v) => !v)}
-              defaultMinimized={isMobile}
+              defaultMinimized
             />
             <ThenNowToggle mode={mapMode} onChange={setMapMode} />
             {hasSelection && (
@@ -703,7 +833,12 @@ function App() {
           friendsBadgeCount={pendingFriendRequests}
           messagesBadgeCount={unreadMessages}
           groupsBadgeCount={groupsBadgeCount}
-          onOpenProfile={() => setOpenProfileNonce((n) => (n ?? 0) + 1)}
+          onOpenProfile={() => {
+            // Bumping this nonce pops the account flyout open (see AuthButton's effect), which must
+            // only ever happen from a deliberate tap on "My Profile" in the mobile More sheet —
+            // guard on isMobile so no desktop path (e.g. a resize mid-tap) can ever route through.
+            if (isMobile) setOpenProfileNonce((n) => (n ?? 0) + 1);
+          }}
         />
       )}
     </div>

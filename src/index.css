@@ -8,6 +8,9 @@
   --accent: #7c3aed;
   --accent-hover: #6d28d9;
   --accent-bg: rgba(124, 58, 237, 0.08);
+  /* Stronger accent wash than --accent-bg — used for the one-shot verse "landed here" flash,
+   * which has to read clearly at a glance before fading. */
+  --verse-flash-bg: rgba(124, 58, 237, 0.2);
 
   --sans: system-ui, "Segoe UI", Roboto, sans-serif;
   color-scheme: light dark;
@@ -29,6 +32,7 @@
     --accent: #a78bfa;
     --accent-hover: #c4b5fd;
     --accent-bg: rgba(167, 139, 250, 0.14);
+    --verse-flash-bg: rgba(167, 139, 250, 0.26);
   }
 }
 

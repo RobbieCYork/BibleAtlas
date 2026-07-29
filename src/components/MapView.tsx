@@ -1,11 +1,15 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import maplibregl from "maplibre-gl";
 import "maplibre-gl/dist/maplibre-gl.css";
-import type { Feature, FeatureCollection, Geometry, LineString, Polygon } from "geojson";
-import type { Location, PointOfInterest } from "../data/types";
+import type { Feature, FeatureCollection, Geometry, LineString, Point, Polygon } from "geojson";
+import type { Location, LocationCategory, PointOfInterest } from "../data/types";
 import type { MapMode } from "./ThenNowToggle";
 
 const STYLE_URL = "https://tiles.openfreemap.org/styles/liberty";
+
+/** Initial whole-region overview camera — also where "Show All Pins" falls back to if no pins are visible. */
+const DEFAULT_CENTER: [number, number] = [30, 36];
+const DEFAULT_ZOOM = 4.2;
 
 /** Zoom level used when flying to a selected location/POI — loose enough to keep surrounding context visible. */
 const SELECTED_ZOOM = 8.5;
@@ -42,6 +46,10 @@ interface MapViewProps {
   poisVisible: boolean;
   selectedPoiId: string | null;
   onSelectPoi: (id: string) => void;
+  /** Bumped by App only when "× Show All Pins" is clicked — drives the refit-around-everything
+   * flight. An explicit signal rather than watching the selection ids go null, because selecting
+   * a person also nulls both ids (people have no map presence) and must not move the camera. */
+  showAllNonce: number;
 }
 
 const SATELLITE_SOURCE_ID = "satellite-imagery";
@@ -250,10 +258,53 @@ function boundsOf(points: [number, number][]): [[number, number], [number, numbe
   ];
 }
 
+const CLUSTER_SOURCE_ID = "pin-clusters";
+const CLUSTER_ANCHOR_LAYER_ID = "pin-clusters-anchor";
+
+/**
+ * Invisible GeoJSON source + layer pair used purely as the clustering engine for the DOM pin
+ * markers. MapLibre only loads (and clusters) a source's data when some layer consumes it, so a
+ * zero-size, fully transparent circle layer keeps the source active without drawing anything —
+ * the visible cluster badges are DOM markers (see updateClusterView) so they share the app's
+ * CSS/theme instead of depending on the base style's glyph fonts.
+ */
+function ensureClusterSource(map: maplibregl.Map) {
+  if (map.getSource(CLUSTER_SOURCE_ID)) return;
+
+  map.addSource(CLUSTER_SOURCE_ID, {
+    type: "geojson",
+    data: EMPTY_FEATURE_COLLECTION,
+    cluster: true,
+    // Past ~z13 even the dense Jerusalem group spreads out enough to read as individual pins.
+    clusterMaxZoom: 13,
+    clusterRadius: 42,
+  });
+  map.addLayer({
+    id: CLUSTER_ANCHOR_LAYER_ID,
+    type: "circle",
+    source: CLUSTER_SOURCE_ID,
+    paint: { "circle-radius": 0, "circle-opacity": 0 },
+  });
+}
+
+/** Category → pin color class. Cities keep the default accent purple; the rest group into
+ * regions/provinces/nations, water features, and terrain so the map is scannable at a glance
+ * (mirrored by the Legend in LayerControls via the shared --pin-* variables in App.css). */
+const CATEGORY_PIN_CLASS: Record<LocationCategory, string> = {
+  city: "map-pin-cat-city",
+  region: "map-pin-cat-region",
+  province: "map-pin-cat-region",
+  nation: "map-pin-cat-region",
+  sea: "map-pin-cat-water",
+  river: "map-pin-cat-water",
+  mountain: "map-pin-cat-terrain",
+  island: "map-pin-cat-terrain",
+};
+
 /** A modern flat teardrop pin. Anchored at its tip (14, 34) in the 28x36 box. */
-function createFlagElement(): HTMLDivElement {
+function createFlagElement(category: LocationCategory): HTMLDivElement {
   const el = document.createElement("div");
-  el.className = "map-pin";
+  el.className = `map-pin ${CATEGORY_PIN_CLASS[category]}`;
   el.innerHTML = `
     <svg width="28" height="36" viewBox="0 0 28 36" xmlns="http://www.w3.org/2000/svg">
       <path class="pin-body" d="M14 34C14 34 4 20 4 12C4 6.5 8.5 2 14 2C19.5 2 24 6.5 24 12C24 20 14 34 14 34Z" />
@@ -289,12 +340,139 @@ export default function MapView({
   poisVisible,
   selectedPoiId,
   onSelectPoi,
+  showAllNonce,
 }: MapViewProps) {
   const containerRef = useRef<HTMLDivElement | null>(null);
   const mapRef = useRef<maplibregl.Map | null>(null);
   const markersRef = useRef<Record<string, maplibregl.Marker>>({});
   const poiMarkersRef = useRef<Record<string, maplibregl.Marker>>({});
+  const clusterMarkersRef = useRef<Record<string, maplibregl.Marker>>({});
+  // Current-generation info per cluster id, read by badge click handlers at *click* time. The
+  // source re-clusters on every setData and can hand a surviving numeric id to a completely
+  // different cluster — a handler that closed over its creation-time coordinates would then fly
+  // the camera somewhere unrelated to the badge the user clicked (markers are reused across passes).
+  const clusterInfoRef = useRef<Record<string, { coordinates: [number, number]; count: number }>>({});
   const namePopupRef = useRef<maplibregl.Popup | null>(null);
+  // Flips true at the map "load" event — drives the loading overlay below, so the blank pre-style
+  // window reads as "loading" instead of "broken."
+  const [styleReady, setStyleReady] = useState(false);
+  // Flips true when the style/source fails before "load" fires (offline, blocked CDN) — without
+  // it the overlay spins forever, since styleReady is only ever set in the "load" handler.
+  const [styleError, setStyleError] = useState(false);
+  // Read by the "error" handler (wired once at mount) to ignore post-load tile errors — the
+  // closure's styleReady would be permanently stale at its mount-time false.
+  const styleReadyRef = useRef(false);
+
+  // The map "load" handler and its event listeners are wired once (on mount) but need the *current*
+  // props — a stale closure here is exactly what caused the Satellite/Map toggle race (the load
+  // handler re-applied the mount-time mapMode over a toggle made before the style finished loading,
+  // and re-clicking the already-selected mode is a same-value setState that never re-runs the effect).
+  const viewStateRef = useRef({ locationsVisible, poisVisible, selectedId, selectedPoiId });
+  viewStateRef.current = { locationsVisible, poisVisible, selectedId, selectedPoiId };
+  const mapModeRef = useRef(mapMode);
+  mapModeRef.current = mapMode;
+
+  /** Rebuilds the cluster source's data from the currently-visible pin set (empty while a selection
+   * isolates the map to a single pin, so no cluster badges compete with it). */
+  const refreshClusterData = (map: maplibregl.Map) => {
+    const source = map.getSource(CLUSTER_SOURCE_ID) as maplibregl.GeoJSONSource | undefined;
+    if (!source) return;
+    const { locationsVisible: locsOn, poisVisible: poisOn, selectedId: selLoc, selectedPoiId: selPoi } = viewStateRef.current;
+    const features: Feature<Point>[] = [];
+    if (selLoc === null && selPoi === null) {
+      if (locsOn) {
+        locations.forEach((loc) => {
+          // "loc:"/"poi:" prefixes keep the two datasets in separate namespaces — several ids
+          // (e.g. "jericho", "hebron") exist in both, and a shared namespace let one dataset's
+          // clustered point pass the other's unclustered check in updateClusterView.
+          features.push({ type: "Feature", properties: { id: `loc:${loc.id}` }, geometry: { type: "Point", coordinates: loc.coordinates } });
+        });
+      }
+      if (poisOn) {
+        pois.forEach((poi) => {
+          features.push({ type: "Feature", properties: { id: `poi:${poi.id}` }, geometry: { type: "Point", coordinates: poi.coordinates } });
+        });
+      }
+    }
+    source.setData({ type: "FeatureCollection", features });
+  };
+
+  /** Syncs what's shown against the source's current clustering: numbered badge markers for
+   * clusters, individual pin markers only for points the source reports as unclustered. */
+  const updateClusterView = (map: maplibregl.Map) => {
+    const { locationsVisible: locsOn, poisVisible: poisOn, selectedId: selLoc, selectedPoiId: selPoi } = viewStateRef.current;
+    const isolated = selLoc !== null || selPoi !== null;
+
+    const clusters = new Map<number, { coordinates: [number, number]; count: number }>();
+    // Per-type sets (prefixes stripped) — see the namespace comment in refreshClusterData.
+    const unclusteredLocIds = new Set<string>();
+    const unclusteredPoiIds = new Set<string>();
+    if (!isolated && map.getSource(CLUSTER_SOURCE_ID)) {
+      map.querySourceFeatures(CLUSTER_SOURCE_ID).forEach((feature) => {
+        const props = feature.properties ?? {};
+        if (props.cluster) {
+          // The same cluster can appear once per tile it straddles — keep the first occurrence.
+          if (!clusters.has(props.cluster_id)) {
+            clusters.set(props.cluster_id, {
+              coordinates: (feature.geometry as Point).coordinates as [number, number],
+              count: props.point_count,
+            });
+          }
+        } else if (typeof props.id === "string") {
+          if (props.id.startsWith("loc:")) unclusteredLocIds.add(props.id.slice(4));
+          else if (props.id.startsWith("poi:")) unclusteredPoiIds.add(props.id.slice(4));
+        }
+      });
+    }
+
+    // Individual pins: an isolated selection shows only itself; otherwise a pin shows when its
+    // layer toggle is on and the source reports it unclustered in the current view.
+    Object.entries(markersRef.current).forEach(([id, marker]) => {
+      const visible = isolated ? id === selLoc : locsOn && unclusteredLocIds.has(id);
+      marker.getElement().style.display = visible ? "" : "none";
+    });
+    Object.entries(poiMarkersRef.current).forEach(([id, marker]) => {
+      const visible = isolated ? id === selPoi : poisOn && unclusteredPoiIds.has(id);
+      marker.getElement().style.display = visible ? "" : "none";
+    });
+
+    // Cluster badges: drop stale ones, then add/refresh the rest.
+    Object.entries(clusterMarkersRef.current).forEach(([key, marker]) => {
+      if (!clusters.has(Number(key))) {
+        marker.remove();
+        delete clusterMarkersRef.current[key];
+        delete clusterInfoRef.current[key];
+      }
+    });
+    clusters.forEach((info, clusterId) => {
+      const key = String(clusterId);
+      clusterInfoRef.current[key] = info;
+      const existing = clusterMarkersRef.current[key];
+      if (existing) {
+        existing.setLngLat(info.coordinates);
+        const el = existing.getElement();
+        el.textContent = String(info.count);
+        el.title = `${info.count} places — click to zoom in`;
+        return;
+      }
+      const el = document.createElement("div");
+      el.className = "cluster-marker";
+      el.textContent = String(info.count);
+      el.title = `${info.count} places — click to zoom in`;
+      el.addEventListener("click", () => {
+        // Read from clusterInfoRef, not the creation-time `info` closure — see the ref's comment.
+        const current = clusterInfoRef.current[key];
+        if (!current) return;
+        const source = map.getSource(CLUSTER_SOURCE_ID) as maplibregl.GeoJSONSource | undefined;
+        source?.getClusterExpansionZoom(clusterId).then((zoom) => {
+          map.easeTo({ center: current.coordinates, zoom, duration: 600 });
+        });
+      });
+      clusterMarkersRef.current[key] = new maplibregl.Marker({ element: el, anchor: "center" })
+        .setLngLat(info.coordinates)
+        .addTo(map);
+    });
+  };
 
   useEffect(() => {
     if (!containerRef.current) return;
@@ -302,24 +480,29 @@ export default function MapView({
     const map = new maplibregl.Map({
       container: containerRef.current,
       style: STYLE_URL,
-      center: [30, 36],
-      zoom: 4.2,
+      center: DEFAULT_CENTER,
+      zoom: DEFAULT_ZOOM,
     });
     map.addControl(new maplibregl.NavigationControl(), "top-right");
     mapRef.current = map;
 
     map.on("styledata", () => forceEnglishLabels(map));
 
+    map.on("error", () => {
+      if (!styleReadyRef.current) setStyleError(true);
+    });
+
     map.on("load", () => {
       forceEnglishLabels(map);
       ensureSatelliteLayer(map);
       ensureHighlightLayer(map);
       ensureRiverHighlightLayer(map);
-      applyMapMode(map, mapMode);
+      applyMapMode(map, mapModeRef.current);
       locations.forEach((loc) => {
-        const el = createFlagElement();
+        const el = createFlagElement(loc.category);
         el.title = loc.name;
-        el.style.display = locationsVisible ? "" : "none";
+        // Hidden until the cluster source reports it unclustered (updateClusterView).
+        el.style.display = "none";
         el.addEventListener("click", () => onSelect(loc.id));
 
         const marker = new maplibregl.Marker({
@@ -333,7 +516,7 @@ export default function MapView({
       pois.forEach((poi) => {
         const el = createPoiElement();
         el.title = poi.name;
-        el.style.display = poisVisible ? "" : "none";
+        el.style.display = "none";
         el.addEventListener("click", () => onSelectPoi(poi.id));
 
         const marker = new maplibregl.Marker({
@@ -344,6 +527,17 @@ export default function MapView({
           .addTo(map);
         poiMarkersRef.current[poi.id] = marker;
       });
+      ensureClusterSource(map);
+      refreshClusterData(map);
+      updateClusterView(map);
+      // Clustering changes with the camera (clusters are computed per zoom level) and whenever the
+      // source's data (re)loads — both funnel through the same sync.
+      map.on("moveend", () => updateClusterView(map));
+      map.on("sourcedata", (e) => {
+        if (e.sourceId === CLUSTER_SOURCE_ID && e.isSourceLoaded) updateClusterView(map);
+      });
+      styleReadyRef.current = true;
+      setStyleReady(true);
       onMapLoad(map);
     });
 
@@ -352,6 +546,9 @@ export default function MapView({
       markersRef.current = {};
       Object.values(poiMarkersRef.current).forEach((m) => m.remove());
       poiMarkersRef.current = {};
+      Object.values(clusterMarkersRef.current).forEach((m) => m.remove());
+      clusterMarkersRef.current = {};
+      clusterInfoRef.current = {};
       namePopupRef.current?.remove();
       namePopupRef.current = null;
       map.remove();
@@ -414,19 +611,42 @@ export default function MapView({
       .addTo(mapRef.current);
   }, [selectedId, selectedPoiId, locations, pois]);
 
-  // Selecting any location/POI isolates the map to just that pin; clearing the selection
-  // (or toggling a layer) restores the normal locationsVisible/poisVisible state.
+  // Selecting any location/POI isolates the map to just that pin; clearing the selection (or
+  // toggling a layer) rebuilds the clustered pin set from the normal locationsVisible/poisVisible state.
   useEffect(() => {
-    const isolated = selectedId !== null || selectedPoiId !== null;
-    Object.entries(markersRef.current).forEach(([id, marker]) => {
-      const visible = isolated ? id === selectedId : locationsVisible;
-      marker.getElement().style.display = visible ? "" : "none";
-    });
-    Object.entries(poiMarkersRef.current).forEach(([id, marker]) => {
-      const visible = isolated ? id === selectedPoiId : poisVisible;
-      marker.getElement().style.display = visible ? "" : "none";
-    });
+    const map = mapRef.current;
+    if (!map || !map.getSource(CLUSTER_SOURCE_ID)) return; // pre-"load" — the load handler seeds this
+    refreshClusterData(map);
+    updateClusterView(map);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedId, selectedPoiId, locationsVisible, poisVisible]);
 
-  return <div ref={containerRef} className="map-container" />;
+  // "× Show All Pins" should do what it says — refit the viewport around every currently-visible
+  // pin instead of staying at the tight selected-pin zoom where only a pin or two remains in view.
+  // Keyed on App's explicit nonce (see MapViewProps) so only that button triggers the flight.
+  useEffect(() => {
+    const map = mapRef.current;
+    if (showAllNonce === 0 || !map) return; // 0 = initial mount, nothing was clicked
+    const points: [number, number][] = [
+      ...(locationsVisible ? locations.map((l) => l.coordinates) : []),
+      ...(poisVisible ? pois.map((p) => p.coordinates) : []),
+    ];
+    if (points.length > 1) map.fitBounds(boundsOf(points), { padding: 60, duration: 1200 });
+    else map.flyTo({ center: DEFAULT_CENTER, zoom: DEFAULT_ZOOM, duration: 1200 });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [showAllNonce]);
+
+  return (
+    <>
+      <div ref={containerRef} className="map-container" />
+      {!styleReady && (
+        <div className="map-loading-overlay" role="status">
+          <div className="map-loading-pill">
+            {!styleError && <span className="map-loading-spinner" aria-hidden="true" />}
+            {styleError ? "Map failed to load — check your connection" : "Loading map…"}
+          </div>
+        </div>
+      )}
+    </>
+  );
 }

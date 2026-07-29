@@ -92,6 +92,46 @@ body.resizing-panels {
   height: 100%;
 }
 
+/* --- Map loading overlay (shown until the base style finishes initializing) --- */
+
+.map-loading-overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 6;
+  pointer-events: none;
+}
+
+.map-loading-pill {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--panel-bg);
+  border: 1px solid var(--border);
+  border-radius: 100px;
+  padding: 8px 16px;
+  font-size: 13px;
+  color: var(--text-muted);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+}
+
+.map-loading-spinner {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  border: 2px solid var(--border);
+  border-top-color: var(--accent);
+  animation: map-spinner 0.8s linear infinite;
+}
+
+@keyframes map-spinner {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
 /* --- Search --- */
 
 .search-bar {
@@ -102,12 +142,24 @@ body.resizing-panels {
 
 .search-bar input {
   width: 100%;
-  padding: 9px 14px;
+  padding: 9px 14px 9px 36px;
   border: 1px solid var(--border);
   border-radius: 8px;
   font-size: 14px;
   background: var(--bg);
   color: var(--text);
+}
+
+/* Mode icon inside the input's left edge — tells apart what the header search currently targets
+   (🗺️ places, 📖 Scripture, 📝 notes), since the same bar serves whichever panel is active. */
+.search-bar-icon {
+  position: absolute;
+  left: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 13px;
+  line-height: 1;
+  pointer-events: none;
 }
 
 .search-bar input:focus {
@@ -156,7 +208,30 @@ body.resizing-panels {
   text-transform: capitalize;
 }
 
+/* Non-interactive empty-state row — shown when a query matches nothing, so the reader can tell
+   the search ran and came up empty rather than silently rendering no dropdown at all. */
+.search-results li.search-results-empty {
+  cursor: default;
+  color: var(--text-muted);
+  font-size: 13px;
+}
+
+.search-results li.search-results-empty:hover {
+  background: none;
+}
+
 /* --- Map pins (modern flat teardrop markers) --- */
+
+/* Shared pin category colors — used by both the map markers (MapView) and the Legend (LayerControls),
+ * so the legend can never drift out of sync with what's actually drawn. */
+:root {
+  --pin-city: var(--accent);
+  --pin-region: #0d9488;
+  --pin-water: #0284c7;
+  --pin-terrain: #8d6e63;
+  --pin-poi: #d97706;
+  --pin-selected: #e0392b;
+}
 
 .map-pin {
   width: 28px;
@@ -168,7 +243,21 @@ body.resizing-panels {
 }
 
 .map-pin .pin-body {
-  fill: var(--accent);
+  fill: var(--pin-city);
+}
+
+/* Category tints (classes assigned in MapView's CATEGORY_PIN_CLASS) — keep these BEFORE the
+ * .map-pin-active rule below so the selected red still wins on equal specificity. */
+.map-pin-cat-region .pin-body {
+  fill: var(--pin-region);
+}
+
+.map-pin-cat-water .pin-body {
+  fill: var(--pin-water);
+}
+
+.map-pin-cat-terrain .pin-body {
+  fill: var(--pin-terrain);
 }
 
 .map-pin .pin-dot {
@@ -185,7 +274,7 @@ body.resizing-panels {
 }
 
 .map-pin-active .pin-body {
-  fill: #e0392b;
+  fill: var(--pin-selected);
 }
 
 /* --- POI pins (secondary archaeological sites) --- */
@@ -200,7 +289,7 @@ body.resizing-panels {
 }
 
 .poi-pin .poi-pin-body {
-  fill: #d97706;
+  fill: var(--pin-poi);
   stroke: #ffffff;
   stroke-width: 2;
 }
@@ -215,7 +304,31 @@ body.resizing-panels {
 }
 
 .poi-pin-active .poi-pin-body {
-  fill: #e0392b;
+  fill: var(--pin-selected);
+}
+
+/* --- Cluster badges (numbered circles standing in for overlapping pins at wide zooms) --- */
+
+.cluster-marker {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 32px;
+  height: 32px;
+  padding: 0 8px;
+  border-radius: 100px;
+  background: var(--accent);
+  color: #fff;
+  font-size: 13px;
+  font-weight: 600;
+  border: 2px solid #ffffff;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.35);
+  cursor: pointer;
+  transition: transform 0.15s ease;
+}
+
+.cluster-marker:hover {
+  transform: scale(1.12);
 }
 
 @keyframes pin-pop {
@@ -330,6 +443,68 @@ body.resizing-panels {
   margin-top: 6px;
   padding-top: 10px;
   border-top: 1px solid var(--border);
+}
+
+.layer-controls-loading {
+  font-size: 12px;
+  color: var(--text-muted);
+  padding: 2px 0 4px;
+}
+
+/* --- Map legend (collapsible section at the bottom of the Options panel) --- */
+
+.legend-toggle {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  width: 100%;
+  margin-top: 6px;
+  padding: 8px 0 2px;
+  border: none;
+  border-top: 1px solid var(--border);
+  background: none;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text-muted);
+  cursor: pointer;
+}
+
+.legend-toggle:hover {
+  color: var(--accent);
+}
+
+.map-legend {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding-top: 6px;
+}
+
+.map-legend-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+  color: var(--text-muted);
+}
+
+.map-legend-swatch {
+  flex-shrink: 0;
+}
+
+.map-legend-cluster {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: var(--accent);
+  color: #fff;
+  font-size: 10px;
+  font-weight: 600;
+  border: 1.5px solid #ffffff;
 }
 
 /* --- Location panel --- */
@@ -872,6 +1047,28 @@ body.resizing-panels {
   cursor: pointer;
 }
 
+.panel-menu-item-disabled {
+  opacity: 0.5;
+  cursor: default;
+}
+
+.panel-menu-separator {
+  height: 1px;
+  background: var(--border);
+  margin: 6px 2px;
+}
+
+/* Reserves two lines of height so the caption's text swap (the LRU "closed to make room" notice vs.
+   the standing "up to 3 panels" hint) can't resize the dropdown and shift the checkbox rows. */
+.panel-menu-caption {
+  margin: 6px 0 0;
+  padding: 0 8px;
+  font-size: 11px;
+  line-height: 1.35;
+  min-height: 2.7em;
+  color: var(--text-muted);
+}
+
 /* --- Auth --- */
 
 .auth-button {
@@ -1389,6 +1586,10 @@ body.resizing-panels {
   background: var(--accent-bg);
 }
 
+.panel-menu-item-disabled:hover {
+  background: none;
+}
+
 /* --- Expandable side panels (when the map is closed) --- */
 
 .panel-expand {
@@ -1690,9 +1891,69 @@ body.resizing-panels {
   margin-bottom: 6px;
 }
 
+/* Translation picker + compact A⁻/A⁺ pair on one row — same global scale as the Account-menu
+   Text Size setting (see useTextSize), surfaced here where readers actually adjust it. */
+.bible-toolbar {
+  display: flex;
+  align-items: stretch;
+  gap: 6px;
+  margin-bottom: 6px;
+}
+
+.bible-toolbar .bible-translation-select {
+  flex: 1;
+  min-width: 0;
+  margin-bottom: 0;
+}
+
+.bible-text-size {
+  display: flex;
+  align-items: stretch;
+  gap: 4px;
+  flex-shrink: 0;
+}
+
+.bible-text-size button {
+  width: 30px;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  background: var(--bg);
+  color: var(--text);
+  cursor: pointer;
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 1;
+}
+
+.bible-text-size button:disabled {
+  opacity: 0.4;
+  cursor: default;
+}
+
 .bible-status {
   font-size: 13px;
   color: var(--text-muted);
+}
+
+/* Cold-start welcome shown in place of the (otherwise empty) reader before a book is picked. */
+.bible-welcome {
+  margin-top: 18px;
+  padding: 20px 16px;
+  border: 1px dashed var(--border);
+  border-radius: 10px;
+  text-align: center;
+}
+
+.bible-welcome-title {
+  font-weight: 600;
+  color: var(--text-h);
+  margin-bottom: 6px;
+}
+
+.bible-welcome-text {
+  font-size: 13px;
+  color: var(--text-muted);
+  line-height: 1.5;
 }
 
 .bible-minutes-this-month {
@@ -1860,6 +2121,23 @@ body.resizing-panels {
 .bible-verses p {
   line-height: 1.6;
   margin-bottom: 8px;
+}
+
+/* One-shot background flash on the verse a deep link or search result landed on, so the eye goes
+   straight to it instead of hunting through the chapter (see flashVerse in BiblePanel.tsx). */
+.bible-verses p.verse-flash {
+  border-radius: 6px;
+  animation: verse-flash 1.8s ease-out;
+}
+
+@keyframes verse-flash {
+  0%,
+  35% {
+    background: var(--verse-flash-bg);
+  }
+  100% {
+    background: transparent;
+  }
 }
 
 .bible-verse-num {
@@ -3906,4 +4184,133 @@ body.resizing-panels {
 .group-friend-add-row:disabled {
   opacity: 0.6;
   cursor: default;
+}
+
+/* --- Verse & Place of the Day (daily devotional card — see src/data/dailyVerse.ts) --- */
+
+.daily-verse-overlay {
+  position: fixed;
+  inset: 0;
+  /* Below the account gates (z-index 100) — password reset / display name must win if both are up. */
+  z-index: 90;
+  background: rgba(0, 0, 0, 0.45);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+.daily-verse-card {
+  position: relative;
+  background: var(--panel-bg);
+  /* Soft accent wash fading from the top so it reads as an invitation, not a system dialog. */
+  background-image: linear-gradient(180deg, var(--accent-bg), transparent 45%);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 26px 26px 24px;
+  max-width: 430px;
+  width: 100%;
+  /* Cap to the viewport (minus the overlay's 20px padding on each side) and scroll — on short
+     viewports (phone landscape) the centered card otherwise clips top and bottom, putting the
+     action buttons out of reach. vh fallback first for browsers without dvh. */
+  max-height: calc(100vh - 40px);
+  max-height: calc(100dvh - 40px);
+  overflow-y: auto;
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.3);
+}
+
+.daily-verse-close {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  border: none;
+  background: none;
+  color: var(--text-muted);
+  font-size: 22px;
+  line-height: 1;
+  padding: 6px 10px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.daily-verse-close:hover {
+  background: var(--border);
+  color: var(--text-h);
+}
+
+.daily-verse-eyebrow {
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--accent);
+  margin-bottom: 12px;
+}
+
+.daily-verse-reference {
+  font-size: 24px;
+  margin: 0 0 2px;
+}
+
+.daily-verse-place {
+  font-size: 14px;
+  color: var(--text-muted);
+  margin-bottom: 14px;
+}
+
+.daily-verse-hook {
+  font-size: 14px;
+  line-height: 1.55;
+  margin: 0 0 12px;
+}
+
+/* The reflective prompt gets the same accent-quote treatment as a pull quote — it's the devotional
+ * heart of the card, not fine print. */
+.daily-verse-prompt {
+  font-size: 14px;
+  font-style: italic;
+  color: var(--text-h);
+  line-height: 1.5;
+  border-left: 3px solid var(--accent);
+  background: var(--accent-bg);
+  border-radius: 0 8px 8px 0;
+  padding: 10px 12px;
+  margin: 0 0 18px;
+}
+
+.daily-verse-actions {
+  display: flex;
+  gap: 10px;
+}
+
+.daily-verse-actions button {
+  flex: 1;
+  font: inherit;
+  font-size: 14px;
+  font-weight: 600;
+  border-radius: 8px;
+  padding: 10px 12px;
+  cursor: pointer;
+}
+
+.daily-verse-read {
+  border: 1px solid var(--accent);
+  background: var(--accent);
+  color: #fff;
+}
+
+.daily-verse-read:hover {
+  background: var(--accent-hover);
+  border-color: var(--accent-hover);
+}
+
+.daily-verse-map {
+  border: 1px solid var(--border);
+  background: var(--bg);
+  color: var(--text);
+}
+
+.daily-verse-map:hover {
+  background: var(--accent-bg);
+  border-color: var(--accent);
 }

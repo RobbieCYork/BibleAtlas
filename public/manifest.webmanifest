@@ -1,6 +1,6 @@
 {
-  "name": "New Testament Biblical Atlas",
-  "short_name": "NT Atlas",
+  "name": "Biblical Atlas",
+  "short_name": "Bible Atlas",
   "start_url": "/",
   "display": "standalone",
   "background_color": "#7c3aed",

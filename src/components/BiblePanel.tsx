@@ -20,6 +20,7 @@ import {
 } from "../lib/supabase";
 import { getTextOffsetInRoot } from "../lib/domTextOffset";
 import { clipRangeForVerse } from "../lib/verseRange";
+import { useTextSize } from "../lib/textSize";
 
 interface BiblePanelProps {
   reference: string | null;
@@ -101,11 +102,16 @@ function findBookIndex(name: string): number {
   return BOOKS.findIndex((b) => b.name.toLowerCase() === name.toLowerCase());
 }
 
-/** Pulls the book name and chapter number out of any verse reference, e.g. "1 Corinthians 13:4-7" -> {book: "1 Corinthians", chapter: 13}. */
-function parseBookChapter(ref: string): { book: string; chapter: number } | null {
-  const match = ref.trim().match(/^(.*?)\s+(\d+)(?::\d+(?:-\d+)?)?$/);
+/** Pulls the book name, chapter number, and (when present) first verse number out of any verse
+ * reference, e.g. "1 Corinthians 13:4-7" -> {book: "1 Corinthians", chapter: 13, verse: 4}. */
+function parseBookChapter(ref: string): { book: string; chapter: number; verse?: number } | null {
+  const match = ref.trim().match(/^(.*?)\s+(\d+)(?::(\d+)(?:-\d+)?)?$/);
   if (!match) return null;
-  return { book: match[1].trim(), chapter: parseInt(match[2], 10) };
+  return {
+    book: match[1].trim(),
+    chapter: parseInt(match[2], 10),
+    verse: match[3] ? parseInt(match[3], 10) : undefined,
+  };
 }
 
 /** Strips the Strong's-number and match-highlight markup bolls.life embeds in search result text. */
@@ -129,6 +135,9 @@ export default function BiblePanel({
   externalSearchNonce,
 }: BiblePanelProps) {
   const [translation, setTranslation] = useState("web");
+  // Same global scale as the Account-menu Text Size setting — surfaced here too because readers
+  // adjusting text size are almost always in this panel, not hunting through the login dropdown.
+  const textSize = useTextSize();
   const [passage, setPassage] = useState<PassageResult | null>(null);
   const [currentBook, setCurrentBook] = useState<string | null>(null);
   const [currentChapter, setCurrentChapter] = useState<number | null>(null);
@@ -146,6 +155,9 @@ export default function BiblePanel({
   const [searching, setSearching] = useState(false);
   const [searchError, setSearchError] = useState<string | null>(null);
   const [pendingScrollVerse, setPendingScrollVerse] = useState<number | null>(null);
+  /** Verse currently wearing the temporary "you landed here" background flash — set alongside the
+   * pending scroll so a deep link lands the eye on the exact verse, cleared once the flash ends. */
+  const [flashVerse, setFlashVerse] = useState<number | null>(null);
   const verseRefs = useRef<Record<number, HTMLParagraphElement | null>>({});
   const textRefs = useRef<Record<number, HTMLSpanElement | null>>({});
 
@@ -361,7 +373,8 @@ export default function BiblePanel({
     }
   };
 
-  /** Loads the full chapter containing any reference typed elsewhere in the app (e.g. a verse link). */
+  /** Loads the full chapter containing any reference typed elsewhere in the app (e.g. a verse link),
+   * then scrolls to the specific verse when the reference names one (e.g. "Matthew 21:10"). */
   const loadReference = async (rawRef: string, translationId: string) => {
     const trimmed = rawRef.trim();
     if (!trimmed) return;
@@ -372,6 +385,8 @@ export default function BiblePanel({
     const ok = parsed ? await loadChapter(parsed.book, parsed.chapter, translationId) : false;
     if (!ok) {
       setError('Couldn\'t load that passage. Try a format like "John 3:16" or "Acts 18".');
+    } else if (parsed?.verse) {
+      setPendingScrollVerse(parsed.verse);
     }
   };
 
@@ -386,14 +401,24 @@ export default function BiblePanel({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [reference, referenceNonce, restoreTranslation]);
 
-  // Scroll to a verse once its chapter has finished loading and rendering (used after jumping
-  // in from a keyword search result, which lands on a specific verse within a whole new chapter).
+  // Scroll to a verse once its chapter has finished loading and rendering (used after jumping in
+  // from a keyword search result or a "Book 3:16"-style reference, which lands on a specific verse
+  // within a whole new chapter), and flash that verse so the eye finds it without hunting.
   useEffect(() => {
     if (pendingScrollVerse !== null && passage) {
       verseRefs.current[pendingScrollVerse]?.scrollIntoView({ behavior: "smooth", block: "center" });
+      setFlashVerse(pendingScrollVerse);
       setPendingScrollVerse(null);
     }
   }, [passage, pendingScrollVerse]);
+
+  // The flash is one-shot — drop the class once the CSS animation has had time to finish, so a
+  // later unrelated re-render doesn't replay it.
+  useEffect(() => {
+    if (flashVerse === null) return;
+    const timeout = window.setTimeout(() => setFlashVerse(null), 2000);
+    return () => window.clearTimeout(timeout);
+  }, [flashVerse]);
 
   /** Locates which verse a selection boundary point falls in and its character offset within that
    * verse's text. A point can land either inside the verse's own text span (the common case) or inside
@@ -813,17 +838,39 @@ export default function BiblePanel({
         />
       </div>
 
-      <select
-        className="bible-translation-select"
-        value={translation}
-        onChange={(e) => handleTranslationChange(e.target.value)}
-      >
-        {TRANSLATIONS.map((t) => (
-          <option key={t.id} value={t.id}>
-            {t.label}
-          </option>
-        ))}
-      </select>
+      <div className="bible-toolbar">
+        <select
+          className="bible-translation-select"
+          value={translation}
+          onChange={(e) => handleTranslationChange(e.target.value)}
+        >
+          {TRANSLATIONS.map((t) => (
+            <option key={t.id} value={t.id}>
+              {t.label}
+            </option>
+          ))}
+        </select>
+        <div className="bible-text-size" role="group" aria-label="Text size">
+          <button
+            type="button"
+            onClick={textSize.decrease}
+            disabled={!textSize.canDecrease}
+            aria-label="Decrease text size"
+            title="Decrease text size"
+          >
+            A⁻
+          </button>
+          <button
+            type="button"
+            onClick={textSize.increase}
+            disabled={!textSize.canIncrease}
+            aria-label="Increase text size"
+            title="Increase text size"
+          >
+            A⁺
+          </button>
+        </div>
+      </div>
 
       {searching && <p className="bible-status">Searching…</p>}
       {searchError && <p className="bible-status bible-error">{searchError}</p>}
@@ -857,6 +904,17 @@ export default function BiblePanel({
 
       {loading && <p className="bible-status">Loading…</p>}
       {error && <p className="bible-status bible-error">{error}</p>}
+
+      {/* Cold-start welcome — nothing else renders here until a book is picked, and a silently
+          blank column reads as broken rather than waiting for input. */}
+      {!currentBook && !showIntro && !passage && !loading && !error && !searching && !searchResults && (
+        <div className="bible-welcome">
+          <p className="bible-welcome-title">Select a book to start reading</p>
+          <p className="bible-welcome-text">
+            Pick a book and chapter above — places and people in the text link to the interactive map and their full histories.
+          </p>
+        </div>
+      )}
 
       {showIntro && currentBook && !searchResults && (
         <BookIntroView book={currentBook} onJumpToChapter={handleIntroJumpToChapter} />
@@ -904,6 +962,7 @@ export default function BiblePanel({
               return (
                 <p
                   key={`${v.chapter}:${v.verse}`}
+                  className={flashVerse === v.verse ? "verse-flash" : undefined}
                   ref={(el) => {
                     verseRefs.current[v.verse] = el;
                   }}

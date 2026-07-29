@@ -1,5 +1,8 @@
 interface HeaderTextSearchProps {
   placeholder: string;
+  /** Mode icon shown inside the input's left edge — matches the tab-bar icon of the panel this
+   * search serves (📖 Bible, 📝 Notes), so it's visually distinct from the map's place search. */
+  icon: string;
   value: string;
   onChange: (value: string) => void;
   /** Only Bible search needs this — it hits an external API, so it waits for Enter instead of
@@ -9,9 +12,12 @@ interface HeaderTextSearchProps {
 
 /** Simple text input reusing `.search-bar`'s styling (no autocomplete dropdown) — the header's
  * stand-in for SearchBar (which is Map-specific) while Bible or Notes is the active panel. */
-export default function HeaderTextSearch({ placeholder, value, onChange, onSubmit }: HeaderTextSearchProps) {
+export default function HeaderTextSearch({ placeholder, icon, value, onChange, onSubmit }: HeaderTextSearchProps) {
   return (
     <div className="search-bar">
+      <span className="search-bar-icon" aria-hidden="true">
+        {icon}
+      </span>
       <input
         type="text"
         placeholder={placeholder}

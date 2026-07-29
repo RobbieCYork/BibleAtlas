@@ -8,7 +8,8 @@ interface LayerControlsProps {
   poiCount: number;
   locationsVisible: boolean;
   onToggleLocations: () => void;
-  /** Start collapsed — used on mobile so the checkbox list doesn't cover most of the map on load. */
+  /** Start collapsed — the expanded checklist covers a fair chunk of the bottom-left map (and any
+   * pins/labels under it), so both mobile and desktop now open with just the pill. */
   defaultMinimized?: boolean;
 }
 
@@ -83,6 +84,19 @@ const EMPTY_GROUPS: Record<LayerCategory, string[]> = {
   boundaries: [],
 };
 
+/** Miniature of MapView's teardrop pin SVG, tinted via the shared --pin-* color variables (App.css). */
+function LegendPin({ colorVar }: { colorVar: string }) {
+  return (
+    <svg className="map-legend-swatch" width="14" height="18" viewBox="0 0 28 36" aria-hidden="true">
+      <path
+        d="M14 34C14 34 4 20 4 12C4 6.5 8.5 2 14 2C19.5 2 24 6.5 24 12C24 20 14 34 14 34Z"
+        fill={`var(${colorVar})`}
+      />
+      <circle cx="14" cy="12" r="4.5" fill="#ffffff" />
+    </svg>
+  );
+}
+
 export default function LayerControls({
   map,
   poisVisible,
@@ -95,6 +109,7 @@ export default function LayerControls({
   const [groups, setGroups] = useState<Record<LayerCategory, string[]>>(EMPTY_GROUPS);
   const [visible, setVisible] = useState<Record<LayerCategory, boolean>>(DEFAULT_VISIBLE);
   const [minimized, setMinimized] = useState(defaultMinimized);
+  const [legendOpen, setLegendOpen] = useState(false);
   const visibleRef = useRef(visible);
   visibleRef.current = visible;
 
@@ -165,6 +180,9 @@ export default function LayerControls({
       </div>
       {!minimized && (
         <>
+          {CATEGORY_ORDER.every((category) => groups[category].length === 0) && (
+            <p className="layer-controls-loading">Loading map layers…</p>
+          )}
           {CATEGORY_ORDER.map((category) => (
             <label key={category} className="layer-toggle">
               <input
@@ -193,6 +211,50 @@ export default function LayerControls({
             />
             Points of Interest
           </label>
+          <button
+            type="button"
+            className="legend-toggle"
+            onClick={() => setLegendOpen((o) => !o)}
+            aria-expanded={legendOpen}
+          >
+            {legendOpen ? "▾" : "▸"} Legend
+          </button>
+          {legendOpen && (
+            <div className="map-legend">
+              <div className="map-legend-row">
+                <LegendPin colorVar="--pin-city" />
+                <span>City or town</span>
+              </div>
+              <div className="map-legend-row">
+                <LegendPin colorVar="--pin-region" />
+                <span>Region, province, or nation</span>
+              </div>
+              <div className="map-legend-row">
+                <LegendPin colorVar="--pin-water" />
+                <span>Sea or river</span>
+              </div>
+              <div className="map-legend-row">
+                <LegendPin colorVar="--pin-terrain" />
+                <span>Mountain or island</span>
+              </div>
+              <div className="map-legend-row">
+                <svg className="map-legend-swatch" width="14" height="14" viewBox="0 0 18 18" aria-hidden="true">
+                  <circle cx="9" cy="9" r="6.5" fill="var(--pin-poi)" stroke="#ffffff" strokeWidth="2" />
+                </svg>
+                <span>Point of interest (archaeological site)</span>
+              </div>
+              <div className="map-legend-row">
+                <LegendPin colorVar="--pin-selected" />
+                <span>Selected place</span>
+              </div>
+              <div className="map-legend-row">
+                <span className="map-legend-cluster" aria-hidden="true">
+                  5
+                </span>
+                <span>Several places — click to zoom in</span>
+              </div>
+            </div>
+          )}
         </>
       )}
     </div>
