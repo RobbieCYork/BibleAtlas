@@ -333,13 +333,15 @@ export default function TimelineView({
   /* ----- entity focus (opened via "View in Timeline") ----- */
 
   // Everything on the timeline belonging to the focused entity: its associated events
-  // (primaryEntityIds match) and its lifespan bar, plus the year range they collectively span.
+  // (primaryEntityIds match, or the event itself when a search result's own id is passed in as the
+  // focus target — see TimelineSearchBar/App.tsx) and its lifespan bar, plus the year range they
+  // collectively span.
   const focusInfo = useMemo(() => {
     if (!focusEntityId) return null;
     const eventIds = new Set<string>();
     const ys: number[] = [];
     for (const e of events) {
-      if (e.primaryEntityIds?.includes(focusEntityId)) {
+      if (e.id === focusEntityId || e.primaryEntityIds?.includes(focusEntityId)) {
         eventIds.add(e.id);
         ys.push(e.startYear);
         if (typeof e.endYear === "number") ys.push(e.endYear);

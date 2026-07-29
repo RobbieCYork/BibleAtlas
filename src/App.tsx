@@ -5,6 +5,7 @@ import MapView from "./components/MapView";
 import LayerControls from "./components/LayerControls";
 import SearchBar from "./components/SearchBar";
 import HeaderTextSearch from "./components/HeaderTextSearch";
+import TimelineSearchBar from "./components/TimelineSearchBar";
 import LocationPanel from "./components/LocationPanel";
 import PoiPanel from "./components/PoiPanel";
 import PersonPanel from "./components/PersonPanel";
@@ -636,6 +637,16 @@ function App() {
   const [timelineOverlayEventId, setTimelineOverlayEventId] = useState<string | null>(null);
   const timelineOverlayEvent = timelineEvents.find((e) => e.id === timelineOverlayEventId) ?? null;
 
+  /** Picking a result from the header's Timeline search (see TimelineSearchBar/searchMode below) —
+   * stays inside Timeline mode (unlike the cross-links inside the article overlay, which exit it),
+   * both flying the view to the event's own year range (via focusEntityId — TimelineView's focus
+   * matcher accepts an event's own id, not just a person/place id) and opening its article overlay,
+   * mirroring how a Map search result focuses the map and a Bible search result jumps to the passage. */
+  const handleSelectTimelineSearchResult = (id: string) => {
+    setTimelineFocusEntityId(id);
+    setTimelineOverlayEventId(id);
+  };
+
   const openTimeline = () => {
     setTimelineFocusEntityId(null);
     setTimelineOverlayEventId(null);
@@ -880,20 +891,30 @@ function App() {
   const friendsMounted = panels.friends || isMobile;
   const friendsHiddenOnMobile = isMobile && !panels.friends;
   // Which panel the header search bar serves — each panel gets its own search behavior (Map flies to
-  // a location, Bible runs a word/phrase search, Notes filters live) rather than one generic bar, so
-  // only one can be "active" at a time. On desktop, where Bible+Map are often open together, Map
-  // wins ties (unchanged from the original map-only behavior) since it's the more common case.
-  const searchMode: "map" | "bible" | "notes" | null = isMobile
-    ? activeMobilePanel === "map" || activeMobilePanel === "bible" || activeMobilePanel === "notes"
-      ? activeMobilePanel
-      : null
-    : panels.map
-      ? "map"
-      : panels.bible
-        ? "bible"
-        : panels.notes
-          ? "notes"
-          : null;
+  // a location, Bible runs a word/phrase search, Notes filters live, Timeline searches timeline
+  // events) rather than one generic bar, so only one can be "active" at a time. On desktop, where
+  // Bible+Map are often open together, Map wins ties (unchanged from the original map-only behavior)
+  // since it's the more common case.
+  //
+  // Timeline mode is checked FIRST, ahead of the panel/mobile-tab logic below: `showTimeline` is a
+  // separate top-level takeover, not one of the PanelKey values those branches switch on, and the
+  // panels underneath stay mounted (with their own panels.bible/panels.map truthy) the whole time
+  // Timeline is open. Without this early case, opening Timeline while Bible (or Map) was last active
+  // fell through to that stale panel state and kept showing Bible's/Map's search bar and behavior on
+  // top of Timeline — the bug this early-out fixes.
+  const searchMode: "map" | "bible" | "notes" | "timeline" | null = showTimeline
+    ? "timeline"
+    : isMobile
+      ? activeMobilePanel === "map" || activeMobilePanel === "bible" || activeMobilePanel === "notes"
+        ? activeMobilePanel
+        : null
+      : panels.map
+        ? "map"
+        : panels.bible
+          ? "bible"
+          : panels.notes
+            ? "notes"
+            : null;
 
   const goHome = () => {
     if (isMobile) setMobileActivePanel("bible");
@@ -1017,6 +1038,9 @@ function App() {
             value={notesSearchQuery}
             onChange={setNotesSearchQuery}
           />
+        )}
+        {searchMode === "timeline" && (
+          <TimelineSearchBar events={timelineEvents} onSelect={handleSelectTimelineSearchResult} />
         )}
         <AuthButton
           session={session}

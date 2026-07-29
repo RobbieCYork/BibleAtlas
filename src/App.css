@@ -12,7 +12,14 @@
   padding: 14px 20px;
   border-bottom: 1px solid var(--border);
   background: var(--panel-bg);
-  z-index: 10;
+  /* Must clear the full-area mode takeovers (.timeline-mode / .myprofile-mode, both z-index 60):
+     the header's own search dropdown (.search-results, e.g. TimelineSearchBar's results list while
+     Timeline mode is open) is an absolutely-positioned child that extends below the header's own
+     box into the area those takeovers occupy — without this, the takeover's z-index would win that
+     overlap and the dropdown would be present in the DOM but invisible, painted underneath it.
+     Still below the account gates (90/100) and the link-choice popup (120), which must win over
+     everything including the header. */
+  z-index: 65;
 }
 
 .app-header h1 {
