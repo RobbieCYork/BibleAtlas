@@ -570,6 +570,58 @@ body.resizing-panels {
   color: var(--text-h);
 }
 
+/* Share-card button pinned to the panel header's top-right corner (the panel is the positioning
+ * context). It scrolls away with the header content — it belongs to the header area, and the panels
+ * are their own scroll containers, so a fixed-feeling pin isn't possible without restructuring. */
+.panel-share-row {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  z-index: 2;
+}
+
+.share-card-wrap {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* Transient "Saved image" feedback pill next to the button — same inline-status idiom as the
+ * Friends/Groups invite-link copy confirmation. */
+.share-card-status {
+  font-size: 12px;
+  color: var(--text-muted);
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 100px;
+  padding: 3px 10px;
+  white-space: nowrap;
+}
+
+.panel-share {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  border: 1px solid var(--border);
+  background: var(--bg);
+  color: var(--text);
+  border-radius: 8px;
+  padding: 5px 10px;
+  font-size: 13px;
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+.panel-share:hover {
+  background: var(--accent-bg);
+  color: var(--text-h);
+}
+
+.panel-share:disabled {
+  opacity: 0.6;
+  cursor: default;
+}
+
 .poi-badge {
   color: #d97706;
   background: rgba(217, 119, 6, 0.1);
@@ -710,6 +762,48 @@ body.resizing-panels {
 
 .verse-note {
   color: var(--text-muted);
+}
+
+/* --- Reflection prompt (journaling) --- */
+
+.reflection-prompt {
+  margin-top: 20px;
+  padding: 12px 14px;
+  background: var(--accent-bg);
+  border-left: 3px solid var(--accent);
+  border-radius: 0 8px 8px 0;
+}
+
+.reflection-prompt h4 {
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--accent);
+  margin-bottom: 6px;
+}
+
+.reflection-prompt-text {
+  font-size: 14px;
+  font-style: italic;
+  color: var(--text);
+}
+
+.reflection-prompt-journal {
+  margin-top: 10px;
+  padding: 6px 12px;
+  font: inherit;
+  font-size: 13px;
+  font-weight: 600;
+  color: #fff;
+  border: 1px solid var(--accent);
+  background: var(--accent);
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.reflection-prompt-journal:hover {
+  background: var(--accent-hover);
+  border-color: var(--accent-hover);
 }
 
 /* --- Archaeology section --- */
@@ -1168,6 +1262,25 @@ body.resizing-panels {
   font-size: 14px;
 }
 
+.reading-progress-toggle {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  width: 100%;
+  padding: 6px 0 2px;
+  border: none;
+  border-top: 1px solid var(--border);
+  background: none;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text-muted);
+  cursor: pointer;
+}
+
+.reading-progress-toggle:hover {
+  color: var(--accent);
+}
+
 .reading-progress-books {
   display: flex;
   flex-direction: column;
@@ -1387,6 +1500,13 @@ body.resizing-panels {
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
   z-index: 30;
   width: 240px;
+  max-height: min(70vh, 640px);
+  overflow-y: auto;
+}
+
+/* Profile page of the account menu — posts need more room to read than the 240px menu column. */
+.auth-dropdown-wide {
+  width: min(320px, calc(100vw - 24px));
 }
 
 .auth-mode-toggle {
@@ -1954,6 +2074,268 @@ body.resizing-panels {
   font-size: 13px;
   color: var(--text-muted);
   line-height: 1.5;
+}
+
+/* --- Reading plans (welcome-area entry links, toolbar chip, and the in-panel plans view) --- */
+
+.bible-welcome-plans {
+  margin-top: 16px;
+  padding-top: 14px;
+  border-top: 1px dashed var(--border);
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.bible-welcome-plans-title {
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--text-muted);
+  margin-bottom: 2px;
+}
+
+.bible-welcome-plan-link {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 8px 10px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--bg);
+  color: var(--text);
+  font: inherit;
+  font-size: 13px;
+  font-weight: 500;
+  text-align: left;
+  cursor: pointer;
+}
+
+.bible-welcome-plan-link:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+.bible-welcome-plan-days {
+  flex-shrink: 0;
+  font-size: 11px;
+  font-weight: 400;
+  color: var(--text-muted);
+}
+
+/* Toolbar chip that opens the plans view — sized to sit beside the A⁻/A⁺ pair. */
+.bible-plans-chip {
+  flex-shrink: 0;
+  padding: 0 8px;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  background: var(--bg);
+  color: var(--text);
+  cursor: pointer;
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 1;
+  white-space: nowrap;
+}
+
+.bible-plans-chip-active {
+  border-color: var(--accent);
+  color: var(--accent);
+  background: var(--accent-bg);
+}
+
+.bible-plans {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding-top: 6px;
+}
+
+.bible-plans-heading {
+  font-size: 16px;
+  text-align: center;
+}
+
+.bible-plans-subtitle {
+  font-size: 13px;
+  color: var(--text-muted);
+  line-height: 1.5;
+  text-align: center;
+}
+
+.bible-plans-count {
+  font-size: 12px;
+  color: var(--text-muted);
+  text-align: center;
+}
+
+.bible-plans-back {
+  align-self: flex-start;
+  border: none;
+  background: none;
+  padding: 2px 0;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--accent);
+  cursor: pointer;
+}
+
+.bible-plan-card {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 12px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: var(--bg);
+  color: var(--text);
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
+.bible-plan-card:hover {
+  border-color: var(--accent);
+}
+
+.bible-plan-card-title {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-h);
+}
+
+.bible-plan-card-tagline {
+  font-size: 12px;
+  color: var(--text-muted);
+  line-height: 1.5;
+}
+
+.bible-plan-card-meta {
+  font-size: 11px;
+  color: var(--text-muted);
+}
+
+.bible-plan-progress-track {
+  display: block;
+  height: 5px;
+  border-radius: 100px;
+  background: var(--accent-bg);
+  overflow: hidden;
+  margin-top: 2px;
+}
+
+.bible-plan-progress-fill {
+  display: block;
+  height: 100%;
+  border-radius: 100px;
+  background: var(--accent);
+  transition: width 0.25s ease;
+}
+
+.bible-plan-days {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.bible-plan-day {
+  display: flex;
+  align-items: stretch;
+  gap: 8px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: var(--bg);
+  padding: 8px 10px;
+}
+
+.bible-plan-day-done {
+  background: var(--accent-bg);
+}
+
+.bible-plan-day-check {
+  flex-shrink: 0;
+  align-self: center;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  border: 1.5px solid var(--border);
+  background: var(--panel-bg);
+  color: var(--accent);
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 1;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+}
+
+.bible-plan-day-check:hover {
+  border-color: var(--accent);
+}
+
+.bible-plan-day-done .bible-plan-day-check {
+  border-color: var(--accent);
+  background: var(--panel-bg);
+}
+
+.bible-plan-day-main {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  border: none;
+  background: none;
+  padding: 0;
+  font: inherit;
+  color: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
+.bible-plan-day-top {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.bible-plan-day-num {
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--text-muted);
+}
+
+.bible-plan-day-done .bible-plan-day-num {
+  color: var(--accent);
+}
+
+.bible-plan-day-ref {
+  flex-shrink: 0;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--accent);
+}
+
+.bible-plan-day-title {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-h);
+}
+
+.bible-plan-day-note {
+  font-size: 12px;
+  color: var(--text-muted);
+  line-height: 1.45;
 }
 
 .bible-minutes-this-month {
@@ -2652,6 +3034,42 @@ body.resizing-panels {
   font-size: 12px;
   color: var(--text-muted);
   padding: 0 4px;
+  white-space: nowrap;
+}
+
+/* Same look as the Note/Tag buttons beside it. */
+.verse-popup-share-btn {
+  border: 1px solid var(--border);
+  background: var(--bg);
+  color: var(--text);
+  border-radius: 8px;
+  padding: 5px 10px;
+  font-size: 13px;
+  white-space: nowrap;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+.verse-popup-share-btn:hover {
+  background: var(--accent-bg);
+}
+
+/* Floating share feedback pill — lives at panel level (not in the sheet) so it survives the sheet
+ * closing when the click collapses the selection on desktop. */
+.bible-share-toast {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  bottom: 18px;
+  z-index: 45;
+  background: var(--panel-bg);
+  border: 1px solid var(--border);
+  color: var(--text);
+  border-radius: 100px;
+  padding: 7px 14px;
+  font-size: 13px;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.15);
+  pointer-events: none;
   white-space: nowrap;
 }
 
@@ -4186,6 +4604,359 @@ body.resizing-panels {
   cursor: default;
 }
 
+/* --- Group study trips (Study Trips tab inside a group — see GroupsPanel's StudyTripsTab) --- */
+
+/* Quiet notice while the trip tables haven't been migrated yet — informational, not an error. */
+.trip-unavailable {
+  font-size: 13px;
+  color: var(--text-muted);
+  text-align: center;
+  padding: 24px 12px;
+  line-height: 1.5;
+}
+
+.trip-back {
+  display: block;
+  margin-bottom: 10px;
+}
+
+.trip-list-meta {
+  font-size: 11px;
+  color: var(--text-muted);
+}
+
+.trip-detail-header {
+  margin-bottom: 14px;
+}
+
+.trip-detail-title {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--text-h);
+  margin: 0 0 4px;
+}
+
+.trip-detail-admin-actions {
+  display: flex;
+  gap: 8px;
+  margin-top: 8px;
+}
+
+.trip-stop-list {
+  list-style: none;
+  margin: 0 0 12px;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.trip-stop {
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 10px 12px;
+}
+
+.trip-stop-header {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+}
+
+/* Numbered circle marking the stop's order — the ordering is the point of a trip. */
+.trip-stop-position {
+  flex-shrink: 0;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: var(--accent);
+  color: #fff;
+  font-size: 11px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 1px;
+}
+
+.trip-stop-titles {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  min-width: 0;
+}
+
+.trip-stop-name {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-h);
+  overflow-wrap: anywhere;
+}
+
+.trip-stop-place,
+.trip-stop-ref {
+  font-size: 12px;
+  color: var(--text-muted);
+}
+
+.trip-stop-desc {
+  font-size: 13px;
+  color: var(--text);
+  line-height: 1.5;
+  margin: 8px 0 0;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+
+.trip-stop-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 8px;
+}
+
+/* Same compact secondary-button look as .friends-message-button. */
+.trip-action-button {
+  border: 1px solid var(--border);
+  background: var(--panel-bg);
+  color: var(--text);
+  border-radius: 6px;
+  padding: 5px 10px;
+  font-size: 12px;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.trip-action-button:hover:not(:disabled) {
+  background: var(--accent-bg);
+  border-color: var(--accent);
+}
+
+.trip-action-button:disabled {
+  opacity: 0.5;
+  cursor: default;
+}
+
+.trip-action-danger {
+  color: #e0392b;
+}
+
+/* Shared per-stop note thread — deliberately lighter-weight than chat bubbles: these are study
+   annotations pinned to a place, not a conversation. */
+.trip-stop-notes {
+  margin-top: 10px;
+  padding-top: 8px;
+  border-top: 1px dashed var(--border);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.trip-note {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.trip-note-author {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--text-muted);
+}
+
+.trip-note-body {
+  font-size: 13px;
+  color: var(--text);
+  line-height: 1.45;
+  margin: 0;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+
+.trip-note textarea {
+  padding: 6px 8px;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  font: inherit;
+  font-size: 13px;
+  background: var(--panel-bg);
+  color: var(--text);
+  resize: vertical;
+}
+
+.trip-note-actions {
+  display: flex;
+  gap: 10px;
+}
+
+.trip-note-actions button {
+  border: none;
+  background: none;
+  color: var(--accent);
+  font-size: 12px;
+  font-weight: 500;
+  cursor: pointer;
+  padding: 0;
+}
+
+.trip-note-actions button:disabled {
+  opacity: 0.5;
+  cursor: default;
+}
+
+.trip-note-form {
+  display: flex;
+  align-items: flex-end;
+  gap: 8px;
+}
+
+.trip-note-form textarea {
+  flex: 1;
+  min-width: 0;
+  padding: 7px 9px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  font: inherit;
+  font-size: 13px;
+  background: var(--panel-bg);
+  color: var(--text);
+  resize: vertical;
+}
+
+.trip-note-form button {
+  border: 1px solid var(--accent);
+  background: var(--accent);
+  color: #fff;
+  border-radius: 8px;
+  padding: 7px 12px;
+  font-size: 12px;
+  font-weight: 500;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.trip-note-form button:disabled {
+  opacity: 0.6;
+  cursor: default;
+}
+
+/* Leader-only stop add/edit form. */
+.trip-stop-form {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 8px;
+}
+
+.trip-add-stop-form {
+  background: var(--bg);
+  border: 1px dashed var(--border);
+  border-radius: 8px;
+  padding: 10px 12px;
+  margin-bottom: 12px;
+}
+
+.trip-stop-form input,
+.trip-stop-form textarea {
+  padding: 8px 10px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  font: inherit;
+  font-size: 13px;
+  background: var(--panel-bg);
+  color: var(--text);
+  resize: vertical;
+}
+
+.trip-ref-warning {
+  font-size: 11px;
+  color: var(--text-muted);
+  margin: -2px 0 0;
+  line-height: 1.4;
+}
+
+/* Place picker inside the add-stop form — same dropdown idiom as the header SearchBar, but
+   positioned within the panel flow rather than the app header. */
+.trip-stop-search {
+  position: relative;
+}
+
+.trip-stop-search input {
+  width: 100%;
+  padding: 8px 10px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  font: inherit;
+  font-size: 13px;
+  background: var(--panel-bg);
+  color: var(--text);
+}
+
+.trip-search-results {
+  position: absolute;
+  top: calc(100% + 4px);
+  left: 0;
+  right: 0;
+  z-index: 20;
+  list-style: none;
+  margin: 0;
+  padding: 4px;
+  background: var(--panel-bg);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.18);
+  max-height: 240px;
+  overflow-y: auto;
+}
+
+.trip-search-results li {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 7px 9px;
+  border-radius: 6px;
+  font-size: 13px;
+  cursor: pointer;
+}
+
+.trip-search-results li:hover {
+  background: var(--accent-bg);
+}
+
+.trip-search-results li.trip-search-results-empty {
+  color: var(--text-muted);
+  cursor: default;
+}
+
+.trip-search-results li.trip-search-results-empty:hover {
+  background: none;
+}
+
+.trip-picked-place {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--panel-bg);
+  padding: 8px 10px;
+  font-size: 13px;
+  color: var(--text);
+}
+
+.trip-picked-place button {
+  border: none;
+  background: none;
+  color: var(--accent);
+  font-size: 12px;
+  font-weight: 500;
+  cursor: pointer;
+  padding: 0;
+}
+
 /* --- Verse & Place of the Day (daily devotional card — see src/data/dailyVerse.ts) --- */
 
 .daily-verse-overlay {
@@ -4258,7 +5029,16 @@ body.resizing-panels {
   margin-bottom: 14px;
 }
 
-.daily-verse-hook {
+/* The verse's own text — set apart as a quote so it's clearly Scripture, not the note below it. */
+.daily-verse-text {
+  font-size: 15px;
+  font-style: italic;
+  line-height: 1.55;
+  color: var(--text-h);
+  margin: 0 0 12px;
+}
+
+.daily-verse-note {
   font-size: 14px;
   line-height: 1.55;
   margin: 0 0 12px;
@@ -4278,6 +5058,55 @@ body.resizing-panels {
   margin: 0 0 18px;
 }
 
+.daily-verse-response-form {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin: 0 0 18px;
+}
+
+.daily-verse-response-input {
+  font: inherit;
+  font-size: 14px;
+  line-height: 1.5;
+  padding: 10px 12px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--bg);
+  color: var(--text);
+  resize: vertical;
+}
+
+.daily-verse-response-submit {
+  align-self: flex-end;
+  font: inherit;
+  font-size: 14px;
+  font-weight: 600;
+  border-radius: 8px;
+  padding: 8px 14px;
+  cursor: pointer;
+  border: 1px solid var(--accent);
+  background: var(--accent);
+  color: #fff;
+}
+
+.daily-verse-response-submit:hover:not(:disabled) {
+  background: var(--accent-hover);
+  border-color: var(--accent-hover);
+}
+
+.daily-verse-response-submit:disabled {
+  opacity: 0.6;
+  cursor: default;
+}
+
+.daily-verse-response-saved,
+.daily-verse-response-signed-out {
+  font-size: 13px;
+  color: var(--text-muted);
+  margin: 0 0 18px;
+}
+
 .daily-verse-actions {
   display: flex;
   gap: 10px;
@@ -4293,17 +5122,6 @@ body.resizing-panels {
   cursor: pointer;
 }
 
-.daily-verse-read {
-  border: 1px solid var(--accent);
-  background: var(--accent);
-  color: #fff;
-}
-
-.daily-verse-read:hover {
-  background: var(--accent-hover);
-  border-color: var(--accent-hover);
-}
-
 .daily-verse-map {
   border: 1px solid var(--border);
   background: var(--bg);
@@ -4313,4 +5131,321 @@ body.resizing-panels {
 .daily-verse-map:hover {
   background: var(--accent-bg);
   border-color: var(--accent);
+}
+
+/* --- Seasonal walks (Holy Week / Advent) --- */
+
+/* Slim strip under the header — an invitation pill, deliberately not a modal (the daily verse
+ * card owns that moment). */
+.walk-banner {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  padding: 6px 12px;
+  background: var(--accent-bg);
+  border-bottom: 1px solid var(--border);
+}
+
+.walk-banner-pill {
+  border: none;
+  background: none;
+  font: inherit;
+  font-size: 13px;
+  color: var(--text);
+  cursor: pointer;
+  padding: 3px 8px;
+  border-radius: 100px;
+  min-width: 0;
+  /* Keep the pill to one tidy line on narrow phones — the walk view has the full wording. */
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.walk-banner-pill strong {
+  color: var(--accent);
+}
+
+.walk-banner-pill:hover {
+  background: var(--panel-bg);
+}
+
+.walk-banner-tagline {
+  color: var(--text-muted);
+}
+
+.walk-banner-dismiss {
+  flex-shrink: 0;
+  border: none;
+  background: none;
+  color: var(--text-muted);
+  font-size: 18px;
+  line-height: 1;
+  padding: 3px 8px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.walk-banner-dismiss:hover {
+  background: var(--border);
+  color: var(--text-h);
+}
+
+/* The step-through card floats above the map (fixed, bottom-right) rather than joining the
+ * LRU-managed side panels — same visual language as the daily verse card, at layer-controls scale. */
+.walk-panel {
+  position: fixed;
+  right: 16px;
+  bottom: 20px;
+  width: 320px;
+  max-width: calc(100vw - 32px);
+  max-height: calc(100dvh - 120px);
+  overflow-y: auto;
+  background: var(--panel-bg);
+  background-image: linear-gradient(180deg, var(--accent-bg), transparent 40%);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 14px 16px;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.25);
+  z-index: 50;
+}
+
+.walk-panel-header {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+}
+
+.walk-panel-heading {
+  flex: 1;
+  min-width: 0;
+}
+
+.walk-panel-eyebrow {
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--accent);
+}
+
+.walk-panel-progress {
+  font-size: 12px;
+  color: var(--text-muted);
+  margin-top: 2px;
+}
+
+.walk-panel-close {
+  flex-shrink: 0;
+  border: none;
+  background: none;
+  color: var(--text-muted);
+  font-size: 20px;
+  line-height: 1;
+  padding: 2px 8px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.walk-panel-close:hover {
+  background: var(--border);
+  color: var(--text-h);
+}
+
+.walk-stop-label {
+  font-size: 16px;
+  margin: 10px 0 2px;
+}
+
+.walk-stop-reference {
+  font-size: 13px;
+  color: var(--text-muted);
+  margin-bottom: 8px;
+}
+
+.walk-stop-blurb {
+  font-size: 13px;
+  line-height: 1.55;
+  margin: 0 0 12px;
+}
+
+.walk-panel-nav {
+  display: flex;
+  gap: 8px;
+}
+
+.walk-nav-button {
+  flex: 1;
+  font: inherit;
+  font-size: 13px;
+  font-weight: 600;
+  border: 1px solid var(--border);
+  background: var(--bg);
+  color: var(--text);
+  border-radius: 8px;
+  padding: 8px 10px;
+  cursor: pointer;
+}
+
+.walk-nav-button:hover:not(:disabled) {
+  background: var(--accent-bg);
+  border-color: var(--accent);
+}
+
+.walk-nav-button:disabled {
+  opacity: 0.45;
+  cursor: default;
+}
+
+.walk-nav-next {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #fff;
+}
+
+.walk-nav-next:hover:not(:disabled) {
+  background: var(--accent-hover);
+  border-color: var(--accent-hover);
+}
+
+/* The collapsible stop list reuses .legend-toggle (LayerControls' Legend idiom) as its opener. */
+.walk-stop-list {
+  list-style: none;
+  margin: 6px 0 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.walk-stop-list-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  text-align: left;
+  border: none;
+  background: none;
+  font: inherit;
+  font-size: 13px;
+  color: var(--text);
+  padding: 6px 8px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.walk-stop-list-item:hover {
+  background: var(--accent-bg);
+}
+
+.walk-stop-list-item-active {
+  background: var(--accent-bg);
+  color: var(--text-h);
+  font-weight: 600;
+}
+
+.walk-stop-list-num {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: var(--accent);
+  color: #fff;
+  font-size: 11px;
+  font-weight: 600;
+}
+
+@media (max-width: 768px) {
+  /* Stretch across the bottom, clearing the tab bar (56px tabs + border + safe area). */
+  .walk-panel {
+    left: 10px;
+    right: 10px;
+    width: auto;
+    max-width: none;
+    bottom: calc(67px + env(safe-area-inset-bottom, 0px));
+    max-height: 55dvh;
+  }
+}
+
+/* --- Chapter audio bar (human-narrated WEB recording — see src/lib/chapterAudio.ts) ---
+ * Sticks to the top of .bible-panel-scroll so the controls stay reachable while reading along.
+ * Everything themes through the shared CSS variables, so light/dark both come for free;
+ * color-scheme on :root already makes the native <audio> controls follow the theme too. */
+
+.bible-audio-bar {
+  position: sticky;
+  top: 0;
+  z-index: 5;
+  margin-bottom: 10px;
+  padding: 8px 8px 6px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: var(--panel-bg);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.bible-audio-player {
+  display: block;
+  width: 100%;
+  height: 36px;
+}
+
+.bible-audio-credit {
+  margin-top: 4px;
+  font-size: 11px;
+  color: var(--text-muted);
+  line-height: 1.4;
+}
+
+.bible-audio-error {
+  font-size: 12px;
+  color: var(--text-muted);
+}
+
+/* --- Audio-atlas profile narration pill (LocationPanel / PersonPanel / PoiPanel) ---
+ * Only rendered when a pre-generated /audio/profiles/{kind}-{id}.mp3 exists — see
+ * src/lib/profileAudio.ts and ProfileAudioPlayer. */
+
+.profile-audio {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin: 10px 0 2px;
+}
+
+.profile-audio-pill {
+  align-self: flex-start;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  border: 1px solid var(--border);
+  border-radius: 100px;
+  background: var(--bg);
+  color: var(--text);
+  font: inherit;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.profile-audio-pill:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+.profile-audio-pill-active {
+  border-color: var(--accent);
+  color: var(--accent);
+  background: var(--accent-bg);
+}
+
+.profile-audio-player {
+  display: block;
+  width: 100%;
+  height: 36px;
 }

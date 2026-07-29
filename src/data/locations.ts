@@ -68,6 +68,8 @@ export const locations: Location[] = [
       { label: "Pool of Bethesda - Wikipedia (twin pools, St. Anne's, John 5)", url: "https://en.wikipedia.org/wiki/Pool_of_Bethesda" },
       { label: "John 2:13 / Acts 2:5 / Revelation 21:2 - Bible Gateway", url: "https://www.biblegateway.com/passage/?search=Acts%202%3A5" },
     ],
+    reflectionPrompt:
+      "Jesus wept over Jerusalem even as its crowds welcomed him — what do you love deeply enough to grieve over?",
   },
   {
     id: "bethlehem",
@@ -120,6 +122,8 @@ export const locations: Location[] = [
       { label: "Micah 5:2 - Bible Gateway", url: "https://www.biblegateway.com/passage/?search=Micah%205%3A2" },
       { label: "Bethlehem - Britannica", url: "https://www.britannica.com/place/Bethlehem" },
     ],
+    reflectionPrompt:
+      "God chose a small town and a feeding trough for his greatest arrival — where might something small in your life matter more than it looks?",
   },
   {
     id: "nazareth",
@@ -171,6 +175,8 @@ export const locations: Location[] = [
       { label: "Nazareth Village archaeological farm / winepress", url: "https://nazarethvillage.com/" },
       { label: "John 1:46 - Bible Gateway", url: "https://www.biblegateway.com/passage/?search=John%201%3A46" },
     ],
+    reflectionPrompt:
+      "People asked whether anything good could come from Nazareth — where have you written someone or somewhere off too quickly?",
   },
   {
     id: "capernaum",
@@ -224,6 +230,8 @@ export const locations: Location[] = [
       { label: "Franciscan Custody of the Holy Land - Capernaum excavations", url: "https://www.custodia.org/en/sanctuaries/capernaum" },
       { label: "Matthew 8:5 (centurion) / 9:1 - Bible Gateway", url: "https://www.biblegateway.com/passage/?search=Matthew%208%3A5" },
     ],
+    reflectionPrompt:
+      "Capernaum's ordinary streets became Jesus's home base — what would it look like to welcome him into your everyday routines?",
   },
   {
     id: "galilee",
@@ -276,6 +284,8 @@ export const locations: Location[] = [
       { label: "Galilee - Britannica (Galilee of the Gentiles, Hellenistic mix)", url: "https://www.britannica.com/place/Galilee-region-Israel" },
       { label: "Matthew 4:15 / Matthew 26:73 - Bible Gateway", url: "https://www.biblegateway.com/passage/?search=Matthew%204%3A15" },
     ],
+    reflectionPrompt:
+      "Jesus began his work among fishermen in an overlooked region — who around you is doing quiet work worth honoring?",
   },
   {
     id: "judea",
@@ -336,6 +346,8 @@ export const locations: Location[] = [
       { label: "Herodium - Wikipedia / Masada - UNESCO", url: "https://en.wikipedia.org/wiki/Herodium" },
       { label: "First Jewish-Roman War - Britannica", url: "https://www.britannica.com/event/First-Jewish-Revolt" },
     ],
+    reflectionPrompt:
+      "Judea held both the crowded temple courts and the empty wilderness — do you tend to meet God in the crowd or in the quiet?",
   },
   {
     id: "samaria",
@@ -384,6 +396,8 @@ export const locations: Location[] = [
       { label: "Herod's Temple at Sebaste - BiblePlaces.com", url: "https://www.bibleplaces.com/blog/2009/09/herods-temple-at-sebaste-then-and-now/" },
       { label: "John 4 (Samaritan woman) - Bible Gateway", url: "https://www.biblegateway.com/passage/?search=John%204" },
     ],
+    reflectionPrompt:
+      "Jesus walked straight through Samaria when others went around it — what place or people are you avoiding?",
   },
   {
     id: "jordan-river",
@@ -451,6 +465,8 @@ export const locations: Location[] = [
       { label: "Jordan River - Britannica", url: "https://www.britannica.com/place/Jordan-River" },
       { label: "John 1:28 / Matthew 3:13 - Bible Gateway", url: "https://www.biblegateway.com/passage/?search=John%201%3A28" },
     ],
+    reflectionPrompt:
+      "Jesus stepped into the same muddy river as everyone else to be baptized — where do you need to simply begin, without waiting for something grander?",
   },
   {
     id: "sea-of-galilee",
@@ -502,6 +518,8 @@ export const locations: Location[] = [
       { label: "Magdala stone - Wikipedia", url: "https://en.wikipedia.org/wiki/Magdala_stone" },
       { label: "Luke 5:1-11 / John 21:1-14 - Bible Gateway", url: "https://www.biblegateway.com/passage/?search=Luke%205%3A1-11" },
     ],
+    reflectionPrompt:
+      "Storms rise fast on this lake, and Jesus slept through one — what storm are you in that could use his kind of calm?",
   },
   {
     id: "damascus",
@@ -554,6 +572,8 @@ export const locations: Location[] = [
       { label: "Street Called Straight - Wikipedia", url: "https://en.wikipedia.org/wiki/Straight_Street" },
       { label: "2 Corinthians 11:32-33 - Bible Gateway", url: "https://www.biblegateway.com/passage/?search=2%20Corinthians%2011%3A32-33&version=NIV" },
     ],
+    reflectionPrompt:
+      "Paul's whole direction changed on the road to Damascus — when has an interruption turned out to be a redirection?",
   },
   {
     id: "antioch-syria",
@@ -612,6 +632,8 @@ export const locations: Location[] = [
       { label: "Antioch | Britannica", url: "https://www.britannica.com/place/Antioch-modern-and-ancient-city-south-central-Turkey" },
       { label: "Committee for the Excavation of Antioch (Princeton) - Antioch Mosaics overview", url: "https://artmuseum.princeton.edu/collections/objects-antioch" },
     ],
+    reflectionPrompt:
+      "Believers were first called 'Christians' at Antioch, named for how they lived — what would people name you after watching your week?",
   },
   {
     id: "tarsus",
@@ -662,6 +684,8 @@ export const locations: Location[] = [
       { label: "Cleopatra's Gate - Wikipedia", url: "https://en.wikipedia.org/wiki/Cleopatra%27s_Gate" },
       { label: "Acts 22:3 - Bible Gateway", url: "https://www.biblegateway.com/passage/?search=Acts%2022%3A3&version=NIV" },
     ],
+    reflectionPrompt:
+      "Paul spent quiet years back home in Tarsus before Barnabas came looking for him — what waiting season of yours might really be preparation?",
   },
   {
     id: "cyprus",
@@ -763,6 +787,7 @@ export const locations: Location[] = [
       { label: "Archaeological Site of Philippi - UNESCO World Heritage", url: "https://whc.unesco.org/en/list/1517/" },
       { label: "Philippians 1:1 - Bible Gateway", url: "https://www.biblegateway.com/passage/?search=Philippians%201%3A1&version=NIV" },
     ],
+    reflectionPrompt: "Where do you need to sing in a hard circumstance, like Paul and Silas at midnight?",
   },
   {
     id: "thessalonica",
@@ -814,6 +839,8 @@ export const locations: Location[] = [
       { label: "Politarchs (Acts 17:6, 8): Luke gets it right - HolyLandPhotos Blog", url: "https://holylandphotos.wordpress.com/2016/05/03/politarchs-acts-176-8-luke-gets-it-right-as-usual/" },
       { label: "Politarch inscription block - British Museum collection", url: "https://www.britishmuseum.org/collection/object/G_1877-0511-1" },
     ],
+    reflectionPrompt:
+      "In Thessalonica, Paul's companions were accused of turning the world upside down — what settled thing in your life might need overturning?",
   },
   {
     id: "athens",
@@ -863,6 +890,8 @@ export const locations: Location[] = [
       { label: "Areopagus - Wikipedia", url: "https://en.wikipedia.org/wiki/Areopagus" },
       { label: "Ancient Agora of Athens - American School of Classical Studies", url: "https://www.agathe.gr/" },
     ],
+    reflectionPrompt:
+      "In Athens, Paul began with what his hearers already honored and built from there — how do you meet people where they genuinely are?",
   },
   {
     id: "corinth",
@@ -914,6 +943,8 @@ export const locations: Location[] = [
       { label: "Erastus of Corinth - Wikipedia", url: "https://en.wikipedia.org/wiki/Erastus_of_Corinth" },
       { label: "Romans 16:23 - Bible Gateway", url: "https://www.biblegateway.com/passage/?search=Romans%2016%3A23&version=NIV" },
     ],
+    reflectionPrompt:
+      "In messy, divided Corinth, Paul was told, 'I have many people in this city' — where do you assume God isn't at work?",
   },
   {
     id: "ephesus",
@@ -971,6 +1002,8 @@ export const locations: Location[] = [
       { label: "Temple of Artemis - Wikipedia", url: "https://en.wikipedia.org/wiki/Temple_of_Artemis" },
       { label: "Library of Celsus - Wikipedia", url: "https://en.wikipedia.org/wiki/Library_of_Celsus" },
     ],
+    reflectionPrompt:
+      "In Ephesus, changed lives eventually spoke louder than the famous temple — what quiet change in you might others be noticing?",
   },
   {
     id: "rome",
@@ -1023,6 +1056,8 @@ export const locations: Location[] = [
       { label: "Mamertine Prison - Wikipedia", url: "https://en.wikipedia.org/wiki/Mamertine_Prison" },
       { label: "Catacombs of Callixtus - Wikipedia", url: "https://en.wikipedia.org/wiki/Catacombs_of_Callixtus" },
     ],
+    reflectionPrompt:
+      "Paul kept welcoming visitors and writing letters while under guard in Rome — what limitation are you living with that could still bear fruit?",
   },
   {
     id: "patmos",
@@ -1060,6 +1095,8 @@ export const locations: Location[] = [
       { label: "Patmos - Wikipedia", url: "https://en.wikipedia.org/wiki/Patmos" },
       { label: "Monastery of Saint John the Theologian and the Cave of the Apocalypse - UNESCO World Heritage", url: "https://whc.unesco.org/en/list/942/" },
     ],
+    reflectionPrompt:
+      "John received his great vision in exile on a small island — what might God want to show you in an isolated season?",
   },
   {
     id: "bethany",
@@ -1101,6 +1138,8 @@ export const locations: Location[] = [
       { label: "Excavations at Bethany (1949-1953), Sylvester J. Saller - Studium Biblicum Franciscanum", url: "https://sbf.custodia.org/en/publications/collectio-maior/excavations-at-bethany" },
       { label: "Tomb of Lazarus - Wikipedia", url: "https://en.wikipedia.org/wiki/Tomb_of_Lazarus" },
     ],
+    reflectionPrompt:
+      "Jesus kept returning to Bethany, the home of his friends — who gives you that kind of resting place, and who receives it from you?",
   },
   {
     id: "bethphage",
@@ -1176,6 +1215,8 @@ export const locations: Location[] = [
       { label: "Khirbet Qana - Wikipedia", url: "https://en.wikipedia.org/wiki/Khirbet_Qana" },
       { label: "Khirbet Qana Bibliography - University of Puget Sound excavation project", url: "https://linear.ups.edu/archaeology/bibliographyQana/index.html" },
     ],
+    reflectionPrompt:
+      "At Cana, Mary simply told the servants, 'Do whatever he tells you' — what is the next simple thing you sense you should do?",
   },
   {
     id: "nain",
@@ -1246,6 +1287,8 @@ export const locations: Location[] = [
       { label: "Jacob's Well - Wikipedia", url: "https://en.wikipedia.org/wiki/Jacob%27s_Well" },
       { label: "Sychar - Wikipedia", url: "https://en.wikipedia.org/wiki/Sychar" },
     ],
+    reflectionPrompt:
+      "At Sychar's well, Jesus opened a life-changing conversation with a simple request for water — what honest conversation are you overdue to have?",
   },
   {
     id: "tiberias",
@@ -1334,6 +1377,8 @@ export const locations: Location[] = [
       { label: "Jaffa - Britannica", url: "https://www.britannica.com/place/Jaffa" },
       { label: "Jaffa (Old Jaffa) - BibleWalks", url: "https://www.biblewalks.com/jaffa/" },
     ],
+    reflectionPrompt:
+      "In Joppa, Peter's rooftop vision stretched him past lifelong boundaries — which of your certainties might God want to loosen?",
   },
   {
     id: "lydda",
@@ -1577,6 +1622,8 @@ export const locations: Location[] = [
       { label: "Beroea - Wikipedia", url: "https://en.wikipedia.org/wiki/Beroea" },
       { label: "The Bema of Apostle Paul, Veria - background on the 1961 monument", url: "https://ingreece.wiki/veria/the-bema-of-apostle-paul/" },
     ],
+    reflectionPrompt:
+      "The Bereans welcomed Paul's message eagerly yet still examined the Scriptures daily — how do you test what you're told?",
   },
   {
     id: "cenchreae",
@@ -2076,6 +2123,8 @@ export const locations: Location[] = [
       { label: "Tyre, Lebanon — UNESCO World Heritage", url: "https://whc.unesco.org/en/list/299" },
       { label: "Tyre — Wikipedia", url: "https://en.wikipedia.org/wiki/Tyre,_Lebanon" },
     ],
+    reflectionPrompt:
+      "In the region of Tyre, a foreign mother refused to stop asking — what do you want badly enough to keep asking for?",
   },
   {
     id: "sidon",
@@ -2116,6 +2165,8 @@ export const locations: Location[] = [
       { label: "Sidon Sea Castle — Wikipedia", url: "https://en.wikipedia.org/wiki/Sidon_Sea_Castle" },
       { label: "Sidon — Wikipedia", url: "https://en.wikipedia.org/wiki/Sidon" },
     ],
+    reflectionPrompt:
+      "Near Sidon, Elijah was fed by a widow who had almost nothing — when has help reached you from the place you least expected?",
   },
   {
     id: "crete",
@@ -2198,6 +2249,8 @@ export const locations: Location[] = [
       { label: "Saint Paul's shipwreck on Malta — Wikipedia", url: "https://en.wikipedia.org/wiki/Paul_the_Apostle_in_Malta" },
       { label: "San Pawl Milqi — Heritage Malta", url: "https://heritagemalta.mt/explore/san-pawl-milqi/" },
     ],
+    reflectionPrompt:
+      "Shipwrecked on Malta, Paul was met with unusual kindness from strangers — whose kindness carried you through a wreck, and who needs yours?",
   },
   {
     id: "gadara",
@@ -2274,6 +2327,8 @@ export const locations: Location[] = [
       { label: "Roman Egypt — Wikipedia", url: "https://en.wikipedia.org/wiki/Roman_Egypt" },
       { label: "Catacombs of Kom El Shoqafa — Wikipedia", url: "https://en.wikipedia.org/wiki/Catacombs_of_Kom_El_Shoqafa" },
     ],
+    reflectionPrompt:
+      "Egypt sheltered Jacob's family before it enslaved their children — is any comfort in your life slowly becoming a captivity?",
   },
   {
     id: "ethiopia",
@@ -2355,6 +2410,8 @@ export const locations: Location[] = [
       { label: "Mount of Olives — Wikipedia", url: "https://en.wikipedia.org/wiki/Mount_of_Olives" },
       { label: "Tomb of Absalom — Wikipedia", url: "https://en.wikipedia.org/wiki/Tomb_of_Absalom" },
     ],
+    reflectionPrompt:
+      "On this hillside Jesus prayed, 'not my will, but yours' — what would praying that honestly cost you today?",
   },
   {
     id: "cilicia",
@@ -2697,6 +2754,8 @@ export const locations: Location[] = [
     sources: [
       { label: "Garden of Eden - Wikipedia", url: "https://en.wikipedia.org/wiki/Garden_of_Eden" },
     ],
+    reflectionPrompt:
+      "In Eden, the first question after everything broke was God's: 'Where are you?' — how would you answer that today?",
   },
   {
     id: "babylon",
@@ -2745,6 +2804,8 @@ export const locations: Location[] = [
     sources: [
       { label: "Babylon - Wikipedia", url: "https://en.wikipedia.org/wiki/Babylon" },
     ],
+    reflectionPrompt:
+      "The exiles were told to seek the good of Babylon, the very city that had captured them — how do you live faithfully somewhere you didn't choose?",
   },
   {
     id: "ur",
@@ -2785,6 +2846,8 @@ export const locations: Location[] = [
     sources: [
       { label: "Ur - Wikipedia", url: "https://en.wikipedia.org/wiki/Ur" },
     ],
+    reflectionPrompt:
+      "Abraham left the great city of Ur with no map, only a promise — what would you leave behind if you were sure God was leading?",
   },
   {
     id: "haran",
@@ -2828,6 +2891,8 @@ export const locations: Location[] = [
     sources: [
       { label: "Harran - Wikipedia", url: "https://en.wikipedia.org/wiki/Harran" },
     ],
+    reflectionPrompt:
+      "Abraham's family settled in Haran, halfway to where they were headed — where have you stopped halfway toward something you once felt called to?",
   },
   {
     id: "mount-ararat",
@@ -2855,6 +2920,8 @@ export const locations: Location[] = [
     sources: [
       { label: "Mount Ararat - Wikipedia", url: "https://en.wikipedia.org/wiki/Mount_Ararat" },
     ],
+    reflectionPrompt:
+      "Noah's first act on the dry ground near Ararat was worship and gratitude — when your last hard season ended, what did you do first?",
   },
   {
     id: "sodom",
@@ -2885,6 +2952,8 @@ export const locations: Location[] = [
     sources: [
       { label: "Sodom and Gomorrah - Wikipedia", url: "https://en.wikipedia.org/wiki/Sodom_and_Gomorrah" },
     ],
+    reflectionPrompt:
+      "Abraham bargained boldly with God over Sodom for the sake of a few — who do you care about enough to plead for?",
   },
   {
     id: "gomorrah",
@@ -2954,6 +3023,8 @@ export const locations: Location[] = [
     sources: [
       { label: "Temple Mount - Wikipedia", url: "https://en.wikipedia.org/wiki/Temple_Mount" },
     ],
+    reflectionPrompt:
+      "On Moriah, Abraham had to trust God with what he loved most — what would be hardest for you to lay down?",
   },
   {
     id: "beersheba",
@@ -2994,6 +3065,8 @@ export const locations: Location[] = [
       { label: "Beersheba - Wikipedia", url: "https://en.wikipedia.org/wiki/Beersheba" },
       { label: "Tel Be'er Sheva - UNESCO", url: "https://whc.unesco.org/en/list/1108/" },
     ],
+    reflectionPrompt:
+      "Near Beersheba, an exhausted Elijah was met first with food and sleep, not a lecture — what does your soul actually need right now?",
   },
   {
     id: "hebron",
@@ -3038,7 +3111,10 @@ export const locations: Location[] = [
       { label: "Hebron - Wikipedia", url: "https://en.wikipedia.org/wiki/Hebron" },
       { label: "Cave of the Patriarchs - Wikipedia", url: "https://en.wikipedia.org/wiki/Cave_of_the_Patriarchs" },
     ],
-  },{
+    reflectionPrompt:
+      "Caleb claimed Hebron's hill country at eighty-five, still eager for a challenge — what do you assume you're too old, or too late, for?",
+  },
+  {
     id: "shechem",
     name: "Shechem",
     pronunciation: "SHEH-kem",
@@ -3084,6 +3160,8 @@ export const locations: Location[] = [
       { label: "Shechem - Wikipedia", url: "https://en.wikipedia.org/wiki/Shechem" },
       { label: "Tell Balata - Wikipedia", url: "https://en.wikipedia.org/wiki/Tell_Balata" },
     ],
+    reflectionPrompt:
+      "At Shechem, Joshua told the people, 'Choose this day whom you will serve' — what choice have you been postponing?",
   },
   {
     id: "bethel",
@@ -3123,6 +3201,8 @@ export const locations: Location[] = [
     sources: [
       { label: "Bethel (ancient city) - Wikipedia", url: "https://en.wikipedia.org/wiki/Bethel_(ancient_city)" },
     ],
+    reflectionPrompt:
+      "Jacob met God in an ordinary place he called 'the gate of heaven' — where has God surprised you lately?",
   },
   {
     id: "mount-sinai",
@@ -3166,6 +3246,8 @@ export const locations: Location[] = [
       { label: "Mount Sinai - Wikipedia", url: "https://en.wikipedia.org/wiki/Mount_Sinai" },
       { label: "Saint Catherine's Monastery - Wikipedia", url: "https://en.wikipedia.org/wiki/Saint_Catherine%27s_Monastery" },
     ],
+    reflectionPrompt:
+      "Israel waited at the foot of Sinai while Moses met God in the cloud — how do you handle seasons when God feels hidden?",
   },
   {
     id: "kadesh-barnea",
@@ -3240,6 +3322,8 @@ export const locations: Location[] = [
     sources: [
       { label: "Mount Nebo - Wikipedia", url: "https://en.wikipedia.org/wiki/Mount_Nebo,_Jordan" },
     ],
+    reflectionPrompt:
+      "Moses saw the promised land from Nebo but never entered it — can you make peace with work you won't see finished?",
   },
   {
     id: "goshen",
@@ -3273,6 +3357,8 @@ export const locations: Location[] = [
     sources: [
       { label: "Goshen (Bible) - Wikipedia", url: "https://en.wikipedia.org/wiki/Goshen_(Bible)" },
     ],
+    reflectionPrompt:
+      "In Goshen, Jacob's family put down roots and flourished in a foreign land — where are you being asked to grow somewhere unfamiliar?",
   },
   {
     id: "red-sea",
@@ -3304,6 +3390,8 @@ export const locations: Location[] = [
     sources: [
       { label: "Crossing the Red Sea - Wikipedia", url: "https://en.wikipedia.org/wiki/Crossing_the_Red_Sea" },
     ],
+    reflectionPrompt:
+      "Israel stood trapped between the sea and an army until the path appeared — where are you waiting on a way through that hasn't opened yet?",
   },
   {
     id: "jabbok-river",
@@ -3332,6 +3420,8 @@ export const locations: Location[] = [
     sources: [
       { label: "Jabbok - Wikipedia", url: "https://en.wikipedia.org/wiki/Jabbok" },
     ],
+    reflectionPrompt:
+      "Jacob wrestled through the night at the Jabbok and refused to let go without a blessing — what struggle of yours is worth holding onto that long?",
   },
   {
     id: "peniel",
@@ -3361,6 +3451,8 @@ export const locations: Location[] = [
     sources: [
       { label: "Penuel (Bible) - Wikipedia", url: "https://en.wikipedia.org/wiki/Penuel_(Bible)" },
     ],
+    reflectionPrompt:
+      "Jacob left Peniel both blessed and limping — what lasting mark has your hardest struggle left on you?",
   },
   {
     id: "succoth",
@@ -3394,7 +3486,8 @@ export const locations: Location[] = [
       { label: "Succoth (Bible) - Wikipedia", url: "https://en.wikipedia.org/wiki/Succoth_(Bible)" },
       { label: "Tell Deir 'Alla - Wikipedia", url: "https://en.wikipedia.org/wiki/Deir_Alla" },
     ],
-  },{
+  },
+  {
     id: "jericho",
     name: "Jericho",
     pronunciation: "JAIR-ih-koh",
@@ -3438,6 +3531,8 @@ export const locations: Location[] = [
       { label: "Jericho - Wikipedia", url: "https://en.wikipedia.org/wiki/Jericho" },
       { label: "Tell es-Sultan - Wikipedia", url: "https://en.wikipedia.org/wiki/Tell_es-Sultan" },
     ],
+    reflectionPrompt:
+      "Jericho's walls fell after days of silent, obedient walking — where might steady, unspectacular faithfulness matter more than a dramatic push?",
   },
   {
     id: "gilgal",
@@ -3471,6 +3566,8 @@ export const locations: Location[] = [
     sources: [
       { label: "Gilgal - Wikipedia", url: "https://en.wikipedia.org/wiki/Gilgal" },
     ],
+    reflectionPrompt:
+      "At Gilgal, Israel stacked twelve stones so their children would ask what happened — how do you mark and remember what God has done for you?",
   },
   {
     id: "shiloh",
@@ -3504,6 +3601,8 @@ export const locations: Location[] = [
     sources: [
       { label: "Shiloh (biblical city) - Wikipedia", url: "https://en.wikipedia.org/wiki/Shiloh_(biblical_city)" },
     ],
+    reflectionPrompt:
+      "At Shiloh, Hannah prayed so honestly that Eli mistook her for drunk — how honest are your prayers, really?",
   },
   {
     id: "ai",
@@ -3565,6 +3664,8 @@ export const locations: Location[] = [
     sources: [
       { label: "Gibeon (ancient city) - Wikipedia", url: "https://en.wikipedia.org/wiki/Gibeon_(ancient_city)" },
     ],
+    reflectionPrompt:
+      "At Gibeon, God invited Solomon to ask for anything, and he asked for a listening heart — what would your honest request be?",
   },
   {
     id: "mizpah",
@@ -3632,6 +3733,8 @@ export const locations: Location[] = [
     sources: [
       { label: "Ramah (Benjamin) - Wikipedia", url: "https://en.wikipedia.org/wiki/Ramah_(Benjamin)" },
     ],
+    reflectionPrompt:
+      "Samuel always circled back home to Ramah, where he had built an altar — what rhythm keeps bringing you back to center?",
   },
   {
     id: "gibeah",
@@ -3713,6 +3816,8 @@ export const locations: Location[] = [
       { label: "Dan (ancient city) - Wikipedia", url: "https://en.wikipedia.org/wiki/Dan_(ancient_city)" },
       { label: "Tel Dan stele - Wikipedia", url: "https://en.wikipedia.org/wiki/Tel_Dan_stele" },
     ],
+    reflectionPrompt:
+      "At Dan, a king set up worship made convenient — where are you tempted to trade the real thing for the easy version?",
   },
   {
     id: "shunem",
@@ -3773,6 +3878,8 @@ export const locations: Location[] = [
     ],
     modernMapUrl: mapsUrl(31.57, 34.75),
     sources: [{ label: "Ziklag - Wikipedia", url: "https://en.wikipedia.org/wiki/Ziklag" }],
+    reflectionPrompt:
+      "At Ziklag, David lost everything and strengthened himself in the LORD before doing anything else — where do you turn first when things fall apart?",
   },
   {
     id: "en-gedi",
@@ -3804,6 +3911,8 @@ export const locations: Location[] = [
     ],
     modernMapUrl: mapsUrl(31.4618, 35.3894),
     sources: [{ label: "Ein Gedi - Wikipedia", url: "https://en.wikipedia.org/wiki/Ein_Gedi" }],
+    reflectionPrompt:
+      "In a cave at En-gedi, David spared the man who was hunting him — is there someone you have the power to hurt and the chance to spare?",
   },
   {
     id: "mount-carmel",
@@ -3832,6 +3941,8 @@ export const locations: Location[] = [
     ],
     modernMapUrl: mapsUrl(32.7317, 35.0500),
     sources: [{ label: "Mount Carmel - Wikipedia", url: "https://en.wikipedia.org/wiki/Mount_Carmel" }],
+    reflectionPrompt:
+      "On Carmel, Elijah asked how long the people would waver between two opinions — where are you living undecided?",
   },
   {
     id: "jezreel",
@@ -3865,6 +3976,8 @@ export const locations: Location[] = [
     ],
     modernMapUrl: mapsUrl(32.5678, 35.3253),
     sources: [{ label: "Jezreel (city) - Wikipedia", url: "https://en.wikipedia.org/wiki/Jezreel_(city)" }],
+    reflectionPrompt:
+      "At Jezreel, a king seized a vineyard simply because he wanted it — how do you handle wanting what isn't yours?",
   },
   {
     id: "mount-gilboa",
@@ -3891,6 +4004,8 @@ export const locations: Location[] = [
     ],
     modernMapUrl: mapsUrl(32.5000, 35.4167),
     sources: [{ label: "Mount Gilboa - Wikipedia", url: "https://en.wikipedia.org/wiki/Mount_Gilboa" }],
+    reflectionPrompt:
+      "After Gilboa, David publicly mourned the king who had hunted him — can you grieve honestly for someone who hurt you?",
   },
   {
     id: "megiddo",
@@ -3934,6 +4049,8 @@ export const locations: Location[] = [
       { label: "Megiddo, Israel - Wikipedia", url: "https://en.wikipedia.org/wiki/Megiddo,_Israel" },
       { label: "Tel Megiddo - Wikipedia", url: "https://en.wikipedia.org/wiki/Tel_Megiddo" },
     ],
+    reflectionPrompt:
+      "Armies contested Megiddo's crossroads for three thousand years — which of your current battles are actually worth fighting?",
   },
   {
     id: "tekoa",
@@ -4028,6 +4145,8 @@ export const locations: Location[] = [
     ],
     modernMapUrl: mapsUrl(31.5000, 35.5000),
     sources: [{ label: "Dead Sea - Wikipedia", url: "https://en.wikipedia.org/wiki/Dead_Sea" }],
+    reflectionPrompt:
+      "The Dead Sea receives water but has no outlet, and almost nothing lives in it — what flows into your life that never flows out to anyone else?",
   },
   {
     id: "rabbah",
@@ -4064,7 +4183,8 @@ export const locations: Location[] = [
     ],
     modernMapUrl: mapsUrl(31.9539, 35.9284),
     sources: [{ label: "Rabbah - Wikipedia", url: "https://en.wikipedia.org/wiki/Rabbah" }],
-  },{
+  },
+  {
     id: "ashkelon",
     name: "Ashkelon",
     pronunciation: "ASH-kuh-lon",
@@ -4191,6 +4311,8 @@ export const locations: Location[] = [
     sources: [
       { label: "Gaza City - Wikipedia", url: "https://en.wikipedia.org/wiki/Gaza_City" },
     ],
+    reflectionPrompt:
+      "In Gaza, blinded and humiliated, Samson prayed one more time — how easy is it for you to pray after failure?",
   },
   {
     id: "gath",
@@ -4317,6 +4439,8 @@ export const locations: Location[] = [
     sources: [
       { label: "Nineveh - Wikipedia", url: "https://en.wikipedia.org/wiki/Nineveh" },
     ],
+    reflectionPrompt:
+      "Jonah resented that Nineveh, his enemy's capital, received mercy — is there anyone you would secretly rather see judged than forgiven?",
   },
   {
     id: "susa",
@@ -4364,6 +4488,8 @@ export const locations: Location[] = [
     sources: [
       { label: "Susa - Wikipedia", url: "https://en.wikipedia.org/wiki/Susa" },
     ],
+    reflectionPrompt:
+      "In Susa's palace, Esther heard that she had come to her position 'for such a time as this' — what position are you in right now, and for whom?",
   },
   {
     id: "edom",

@@ -23,6 +23,7 @@ export default function ReadingProgressGrid({ userId, displayName, isOwn }: Read
   const [readSet, setReadSet] = useState<Set<string> | null>(null);
   const [seconds, setSeconds] = useState<number | null>(null);
   const [resetSetting, setResetSetting] = useState<Profile["chapter_read_reset"]>("never");
+  const [booksOpen, setBooksOpen] = useState(false);
 
   useEffect(() => {
     let cancelled = false;
@@ -66,31 +67,41 @@ export default function ReadingProgressGrid({ userId, displayName, isOwn }: Read
           <strong>{seconds !== null ? formatReadingTime(seconds) : "…"}</strong> {isOwn ? "read this month" : "this month"}
         </span>
       </div>
-      <div className="reading-progress-books">
-        {BOOKS.map((book) => {
-          const chapters = Array.from({ length: book.chapters }, (_, i) => i + 1);
-          const readInBook = chapters.filter((c) => readSet.has(`${book.name}:${c}`)).length;
-          return (
-            <div key={book.name} className="reading-progress-book">
-              <div className="reading-progress-book-header">
-                <span className="reading-progress-book-name">{book.name}</span>
-                <span className="reading-progress-book-count">
-                  {readInBook}/{book.chapters}
-                </span>
+      <button
+        type="button"
+        className="reading-progress-toggle"
+        onClick={() => setBooksOpen((o) => !o)}
+        aria-expanded={booksOpen}
+      >
+        {booksOpen ? "▾ Hide" : "▸ Show"} book-by-book progress
+      </button>
+      {booksOpen && (
+        <div className="reading-progress-books">
+          {BOOKS.map((book) => {
+            const chapters = Array.from({ length: book.chapters }, (_, i) => i + 1);
+            const readInBook = chapters.filter((c) => readSet.has(`${book.name}:${c}`)).length;
+            return (
+              <div key={book.name} className="reading-progress-book">
+                <div className="reading-progress-book-header">
+                  <span className="reading-progress-book-name">{book.name}</span>
+                  <span className="reading-progress-book-count">
+                    {readInBook}/{book.chapters}
+                  </span>
+                </div>
+                <div className="reading-progress-chapters">
+                  {chapters.map((c) => (
+                    <span
+                      key={c}
+                      className={`reading-progress-cell${readSet.has(`${book.name}:${c}`) ? " reading-progress-cell-read" : ""}`}
+                      title={`${book.name} ${c}`}
+                    />
+                  ))}
+                </div>
               </div>
-              <div className="reading-progress-chapters">
-                {chapters.map((c) => (
-                  <span
-                    key={c}
-                    className={`reading-progress-cell${readSet.has(`${book.name}:${c}`) ? " reading-progress-cell-read" : ""}`}
-                    title={`${book.name} ${c}`}
-                  />
-                ))}
-              </div>
-            </div>
-          );
-        })}
-      </div>
+            );
+          })}
+        </div>
+      )}
     </div>
   );
 }

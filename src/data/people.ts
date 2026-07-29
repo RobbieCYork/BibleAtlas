@@ -55,6 +55,8 @@ export const people: Person[] = [
       { reference: "Galatians 2:11-14", note: "Confronted by Paul at Antioch" },
     ],
     sources: [{ label: "Encyclopaedia Britannica: Saint Peter the Apostle", url: "https://www.britannica.com/biography/Saint-Peter-the-Apostle" }],
+    reflectionPrompt:
+      "Peter's worst failure wasn't the end of his story — Jesus restored him three times over. Where might you be treating a failure as final that God sees as a turning point?",
   },
   {
     id: "pontius-pilate",
@@ -122,6 +124,8 @@ export const people: Person[] = [
       { label: "Encyclopaedia Britannica: Pontius Pilate", url: "https://www.britannica.com/biography/Pontius-Pilate" },
       { label: "Israel Museum: The Pilate Stone", url: "https://www.imj.org.il/en/collections/378846" },
     ],
+    reflectionPrompt:
+      "Pilate asked 'What is truth?' and then washed his hands of the answer — where are you tempted to stay neutral on something that demands a decision?",
   },
   {
     id: "jesus-of-nazareth",
@@ -133,7 +137,7 @@ export const people: Person[] = [
     summary: "A Jewish teacher and healer from Galilee whose short public ministry, execution by Roman crucifixion, and reported resurrection became the founding events of Christianity.",
     lifeStory: [
       "Jesus was born, according to Matthew and Luke, in Bethlehem in Judea near the end of the reign of Herod the Great, to Mary, a young woman betrothed to a carpenter named Joseph, and was raised in the Galilean village of Nazareth. Luke records shepherds visited by an angel on the night of his birth (Luke 2:8-20), while Matthew records magi from the East arriving with gifts after following a star, prompting Herod's massacre of infant boys in Bethlehem and the family's flight to Egypt (Matthew 2:1-18). Little else is recorded of his childhood beyond a single episode at age twelve, when he was found in the Jerusalem temple discussing questions with the religious teachers (Luke 2:41-51).",
-      "Jesus began his public ministry around age thirty, after being baptized by his relative John the Baptist in the Jordan River, an event all four Gospels describe as accompanied by a voice from heaven and the Spirit descending like a dove (Matthew 3:13-17). He then spent forty days fasting in the wilderness, where he was tempted by Satan before beginning to preach (Matthew 4:1-11). He gathered twelve close followers, called apostles, drawn mostly from working Galilean fishermen and tradesmen, along with a wider circle of disciples that included women who supported his ministry financially (Luke 8:1-3).",
+      "Jesus began his public ministry around age thirty, after being baptized by his relative John the Baptist in the Jordan River, an event all four Gospels describe as accompanied by a voice from heaven and the Spirit descending like a dove (Matthew 3:13-17) — one of the New Testament's clearest scenes of the Trinity, with the Son baptized, the Spirit descending on him, and the Father's voice speaking from heaven together. He then spent forty days fasting in the wilderness, where he was tempted by Satan before beginning to preach (Matthew 4:1-11). He gathered twelve close followers, called apostles, drawn mostly from working Galilean fishermen and tradesmen, along with a wider circle of disciples that included women who supported his ministry financially (Luke 8:1-3).",
       "His central message centered on the arrival of \"the kingdom of God\" — a reordering of human life around God's rule, love of neighbor, and reversal of worldly status, in which the poor, the mourning, and the persecuted are called blessed (Matthew 5:1-12). He taught largely in parables — short, vivid stories drawn from everyday life like sowing seed, lost sheep, and a prodigal son — that invited reflection rather than simply issuing rules (Matthew 13; Luke 15:11-32). The Sermon on the Mount (Matthew 5-7) is the fullest single collection of his ethical teaching, covering topics from anger and lust to prayer, wealth, and judging others, and consistently pressed beyond outward observance of religious law toward inward transformation.",
       "The Gospels report Jesus performing numerous miracles: healing the blind, lame, and leprous, casting out what the texts describe as demonic spirits, calming a storm on the Sea of Galilee (Mark 4:35-41), feeding a crowd of five thousand from a few loaves and fish (Mark 6:30-44), and raising the dead, most dramatically his friend Lazarus after four days in the tomb (John 11:1-44). These acts, along with his teaching, drew large crowds but also mounting scrutiny from religious authorities.",
       "Jesus repeatedly clashed with the Pharisees and other religious leaders, particularly over his treatment of the Sabbath, his willingness to eat with tax collectors and other social outcasts, and his claims to forgive sins and speak with an authority that seemed to place him above the Jewish law itself. His cleansing of the temple courts, driving out money changers just before his final Passover, appears in all four Gospels and directly confronted the temple leadership on their own turf (Matthew 21:12-13; John 2:13-16). By this point the Gospel of John records that the chief priests and Pharisees had already resolved that he must be put to death (John 11:47-53).",
@@ -195,6 +199,8 @@ export const people: Person[] = [
       { label: "Encyclopaedia Britannica: Jesus Christ", url: "https://www.britannica.com/biography/Jesus-Christ" },
       { label: "PBS Frontline: From Jesus to Christ — The First Christians", url: "https://www.pbs.org/wgbh/pages/frontline/shows/religion/" },
     ],
+    reflectionPrompt:
+      "Jesus asked his closest friends, 'Who do you say that I am?' — how would you answer him today, in your own words?",
   },
   {
     id: "mary-mother-of-jesus",
@@ -225,6 +231,8 @@ export const people: Person[] = [
       { reference: "Acts 1:14", note: "With the apostles after the ascension" },
     ],
     sources: [{ label: "Encyclopaedia Britannica: Saint Mary", url: "https://www.britannica.com/biography/Saint-Mary-mother-of-Jesus" }],
+    reflectionPrompt:
+      "Mary answered a life-upending calling with 'let it be to me according to your word' — what would saying yes like that mean for you?",
   },
   {
     id: "paul-of-tarsus",
@@ -268,6 +276,8 @@ export const people: Person[] = [
       { reference: "Acts 28:16-31", note: "Under house arrest in Rome" },
     ],
     sources: [{ label: "Encyclopaedia Britannica: Saint Paul the Apostle", url: "https://www.britannica.com/biography/Saint-Paul-the-Apostle" }],
+    reflectionPrompt:
+      "Paul called himself the least likely candidate for the work he was given — where might your past be preparation rather than disqualification?",
   },
   {
     id: "john-the-apostle",
@@ -302,6 +312,8 @@ export const people: Person[] = [
       { reference: "Revelation 1:9", note: "Exiled on the island of Patmos" },
     ],
     sources: [{ label: "Encyclopaedia Britannica: Saint John the Apostle", url: "https://www.britannica.com/biography/Saint-John-the-Apostle" }],
+    reflectionPrompt:
+      "John spent his later years repeating one theme: love one another — if your life kept repeating one message, what would it be?",
   },
   {
     id: "john-the-baptist",
@@ -347,6 +359,8 @@ export const people: Person[] = [
       { reference: "Mark 6:14-29", note: "Imprisonment and execution" },
     ],
     sources: [{ label: "Encyclopaedia Britannica: Saint John the Baptist", url: "https://www.britannica.com/biography/Saint-John-the-Baptist" }],
+    reflectionPrompt:
+      "John said of Jesus, 'He must increase, but I must decrease' — where is it hardest for you to step out of the spotlight?",
   },
   {
     id: "judas-iscariot",
@@ -380,6 +394,8 @@ export const people: Person[] = [
       { reference: "Acts 1:16-19", note: "Alternate account of his death and the Field of Blood" },
     ],
     sources: [{ label: "Encyclopaedia Britannica: Judas Iscariot", url: "https://www.britannica.com/biography/Judas-Iscariot" }],
+    reflectionPrompt:
+      "Judas walked beside Jesus for years while drifting from him inside — where do your outer life and inner life not match?",
   },
   {
     id: "mary-magdalene",
@@ -408,6 +424,8 @@ export const people: Person[] = [
       { reference: "John 20:11-18", note: "First to see and speak with the risen Jesus" },
     ],
     sources: [{ label: "Encyclopaedia Britannica: Saint Mary Magdalene", url: "https://www.britannica.com/biography/Saint-Mary-Magdalene" }],
+    reflectionPrompt:
+      "Mary Magdalene stayed at the tomb after everyone else left, and so was the first to see — what has staying, when leaving was easier, given you?",
   },
   {
     id: "herod-the-great",
@@ -460,6 +478,8 @@ export const people: Person[] = [
       { reference: "Matthew 2:19-23", note: "His death and the division of his kingdom" },
     ],
     sources: [{ label: "Encyclopaedia Britannica: Herod", url: "https://www.britannica.com/biography/Herod-king-of-Judaea" }],
+    reflectionPrompt:
+      "Herod built wonders yet was ruled by the fear of losing power — what fear quietly drives your decisions?",
   },
   {
     id: "james-brother-of-jesus",
@@ -500,6 +520,8 @@ export const people: Person[] = [
       { reference: "Acts 15:13-21", note: "Delivers the judgment at the Jerusalem Council" },
     ],
     sources: [{ label: "Encyclopaedia Britannica: Saint James", url: "https://www.britannica.com/biography/Saint-James-brother-of-Jesus" }],
+    reflectionPrompt:
+      "James grew from skeptical brother to steady leader — who have you underestimated because you knew them too well?",
   },
   {
     id: "barnabas",
@@ -528,6 +550,8 @@ export const people: Person[] = [
       { reference: "Acts 15:36-41", note: "Splits from Paul over John Mark" },
     ],
     sources: [{ label: "Encyclopaedia Britannica: Saint Barnabas", url: "https://www.britannica.com/biography/Saint-Barnabas" }],
+    reflectionPrompt:
+      "Barnabas vouched for Saul when everyone else was afraid of him — who needs you to take a chance on them?",
   },
   {
     id: "andrew-apostle",
@@ -550,6 +574,8 @@ export const people: Person[] = [
       { reference: "John 6:8-9", note: "Points out the boy with loaves and fish" },
     ],
     sources: [{ label: "Encyclopaedia Britannica: Saint Andrew the Apostle", url: "https://www.britannica.com/biography/Saint-Andrew-the-Apostle" }],
+    reflectionPrompt:
+      "Andrew's habit was simply bringing people to Jesus, starting with his own brother — who first brought you, and who could you bring?",
   },
   {
     id: "james-son-of-zebedee",
@@ -579,6 +605,7 @@ export const people: Person[] = [
     id: "philip-the-apostle",
     name: "Philip the Apostle",
     pronunciation: "FIL-ip",
+    alternateNames: ["Philip"],
     tier: "significant",
     role: "Apostle",
     summary: "A Galilean apostle from Bethsaida who brought Nathanael to Jesus, and whom John's Gospel repeatedly singles out for pointed conversations with Jesus — including the blunt request, 'Show us the Father.'",
@@ -653,6 +680,8 @@ export const people: Person[] = [
       { reference: "John 20:24-29", note: "Doubts the resurrection, then confesses 'My Lord and my God'" },
     ],
     sources: [{ label: "Encyclopaedia Britannica: Saint Thomas the Apostle", url: "https://www.britannica.com/biography/Saint-Thomas-the-Apostle" }],
+    reflectionPrompt:
+      "Thomas voiced the doubt the others were hiding, and Jesus met him in it — what doubt do you need to say out loud?",
   },
   {
     id: "james-son-of-alphaeus",
@@ -740,12 +769,14 @@ export const people: Person[] = [
       { reference: "Matthew 10:3", note: "Listed among the twelve apostles" },
     ],
     sources: [{ label: "Encyclopaedia Britannica: Saint Matthew the Apostle", url: "https://www.britannica.com/biography/Saint-Matthew-the-Apostle" }],
+    reflectionPrompt:
+      "Matthew's first move after following Jesus was hosting a dinner for his old friends — how could your table become a meeting place?",
   },
   {
     id: "john-mark",
     name: "Mark (John Mark)",
     pronunciation: "MARK",
-    alternateNames: ["John Mark"],
+    alternateNames: ["John Mark", "Mark"],
     tier: "significant",
     role: "Missionary companion, traditional Gospel author",
     summary: "A younger companion of Paul and Barnabas whose early departure from a missionary journey caused a sharp falling-out between them, but who later reconciled with Paul and, by strong early tradition, wrote the Gospel of Mark based on Peter's preaching.",
@@ -773,6 +804,8 @@ export const people: Person[] = [
       { reference: "1 Peter 5:13", note: "Peter calls him 'my son Mark'" },
     ],
     sources: [{ label: "Encyclopaedia Britannica: Saint Mark the Evangelist", url: "https://www.britannica.com/biography/Saint-Mark-the-Evangelist" }],
+    reflectionPrompt:
+      "Mark quit the first journey but later became someone worth sending for — who deserves a second chance from you, or do you need one yourself?",
   },
   {
     id: "luke-evangelist",
@@ -796,6 +829,8 @@ export const people: Person[] = [
       { reference: "2 Timothy 4:11", note: "Paul notes Luke alone remains with him" },
     ],
     sources: [{ label: "Encyclopaedia Britannica: Saint Luke", url: "https://www.britannica.com/biography/Saint-Luke" }],
+    reflectionPrompt:
+      "Luke investigated everything carefully and noticed the people others overlooked — whose story around you deserves that kind of attention?",
   },
   {
     id: "timothy",
@@ -819,6 +854,8 @@ export const people: Person[] = [
       { reference: "1 Timothy 4:12", note: "Told not to let anyone look down on his youth" },
     ],
     sources: [{ label: "Encyclopaedia Britannica: Saint Timothy", url: "https://www.britannica.com/biography/Saint-Timothy" }],
+    reflectionPrompt:
+      "Paul told young, timid Timothy not to let anyone despise his youth — where do you hold back because you feel unqualified?",
   },
   {
     id: "titus",
@@ -865,6 +902,8 @@ export const people: Person[] = [
       { reference: "1 Peter 5:12", note: "Helps Peter write his first letter, as 'Silas'" },
     ],
     sources: [{ label: "Encyclopaedia Britannica: Saint Silas", url: "https://www.britannica.com/biography/Saint-Silas" }],
+    reflectionPrompt:
+      "Silas sang with Paul at midnight in the Philippian jail — who is the companion who steadies you in hard places?",
   },
   {
     id: "priscilla",
@@ -888,6 +927,8 @@ export const people: Person[] = [
       { reference: "1 Corinthians 16:19", note: "A church meets in their house" },
     ],
     sources: [{ label: "Encyclopaedia Britannica: Priscilla and Aquila", url: "https://www.britannica.com/biography/Priscilla-and-Aquila" }],
+    reflectionPrompt:
+      "Priscilla corrected a gifted speaker privately and kindly — how do you handle correcting, and being corrected?",
   },
   {
     id: "aquila",
@@ -944,6 +985,8 @@ export const people: Person[] = [
       { reference: "1 Corinthians 3:4-6", note: "Paul frames Apollos as his partner, not rival" },
     ],
     sources: [{ label: "Encyclopaedia Britannica: Apollos", url: "https://www.britannica.com/biography/Apollos" }],
+    reflectionPrompt:
+      "Apollos was eloquent and still teachable — which is harder for you: speaking well or being taught?",
   },
   {
     id: "nicodemus",
@@ -973,6 +1016,8 @@ export const people: Person[] = [
       { reference: "John 19:39-40", note: "Helps prepare and bury Jesus's body" },
     ],
     sources: [{ label: "Encyclopaedia Britannica: Nicodemus", url: "https://www.britannica.com/biography/Nicodemus-biblical-figure" }],
+    reflectionPrompt:
+      "Nicodemus came with questions by night and later defended Jesus in daylight — which of your convictions is ready to go public?",
   },
   {
     id: "joseph-of-arimathea",
@@ -996,11 +1041,14 @@ export const people: Person[] = [
       { reference: "John 19:38-42", note: "Secret disciple, joined by Nicodemus for the burial" },
     ],
     sources: [{ label: "Encyclopaedia Britannica: Saint Joseph of Arimathea", url: "https://www.britannica.com/biography/Saint-Joseph-of-Arimathea" }],
+    reflectionPrompt:
+      "Joseph of Arimathea stayed a quiet disciple until the costliest moment, then stepped forward — what would move you to stop being quiet?",
   },
   {
     id: "martha-of-bethany",
     name: "Martha of Bethany",
     pronunciation: "MAR-thuh",
+    alternateNames: ["Martha"],
     tier: "significant",
     role: "Sister of Mary and Lazarus; host and friend of Jesus",
     summary: "A practical, hospitable woman from Bethany, often remembered for being 'distracted with much serving,' who also delivered one of the boldest confessions of faith in the Gospels at her brother's tomb.",
@@ -1018,11 +1066,14 @@ export const people: Person[] = [
       { reference: "John 12:1-2", note: "Serves at a dinner in Bethany before Jesus's death" },
     ],
     sources: [{ label: "Encyclopaedia Britannica: Saint Martha", url: "https://www.britannica.com/biography/Saint-Martha" }],
+    reflectionPrompt:
+      "Martha was busy serving while Mary sat listening, and Jesus gently named her worry — what busyness is crowding out your attention?",
   },
   {
     id: "lazarus-of-bethany",
     name: "Lazarus of Bethany",
     pronunciation: "LAZ-uh-rus",
+    alternateNames: ["Lazarus"],
     tier: "significant",
     role: "Man raised from the dead by Jesus after four days in the tomb",
     summary: "The brother of Martha and Mary whose death and resurrection in John's Gospel is presented as the climactic sign that provokes the religious leaders into finally moving to kill Jesus.",
@@ -1042,6 +1093,8 @@ export const people: Person[] = [
       { reference: "John 12:9-11", note: "Chief priests plot to kill him because of his resurrection" },
     ],
     sources: [{ label: "Encyclopaedia Britannica: Saint Lazarus of Bethany", url: "https://www.britannica.com/biography/Saint-Lazarus-of-Bethany" }],
+    reflectionPrompt:
+      "Jesus delayed two days before coming to Lazarus, and the delay wasn't absence — where does God's timing feel painfully slow to you right now?",
   },
   {
     id: "zacchaeus",
@@ -1062,6 +1115,8 @@ export const people: Person[] = [
       { reference: "Luke 19:1-10", note: "Climbs a tree to see Jesus and pledges restitution to those he defrauded" },
     ],
     sources: [{ label: "Encyclopaedia Britannica: Zacchaeus", url: "https://www.britannica.com/biography/Zacchaeus" }],
+    reflectionPrompt:
+      "Zacchaeus repaid fourfold what he had taken — is there anything you need to make right, not just feel sorry about?",
   },
   {
     id: "caiaphas",
@@ -1322,6 +1377,8 @@ export const people: Person[] = [
       { reference: "Matthew 2:13-23", note: "Flight to Egypt and return" },
       { reference: "Luke 2:41-51", note: "Jesus lost and found in the temple" },
     ],
+    reflectionPrompt:
+      "Joseph obeyed quietly, with not one recorded word in Scripture — what would faithfulness without recognition look like in your life?",
   },
   {
     id: "simeon-at-the-temple",
@@ -1366,6 +1423,8 @@ export const people: Person[] = [
       { reference: "Acts 7:54-60", note: "His stoning and death" },
       { reference: "Acts 8:1", note: "Saul's approval of the killing" },
     ],
+    reflectionPrompt:
+      "Stephen prayed for the people throwing the stones — who tests the limits of your forgiveness?",
   },
   {
     id: "mary-of-bethany",
@@ -1389,6 +1448,8 @@ export const people: Person[] = [
       { reference: "John 11:1-35", note: "The death of Lazarus" },
       { reference: "John 12:1-8", note: "Anointing Jesus's feet with perfume" },
     ],
+    reflectionPrompt:
+      "Mary poured out a year's wages of perfume in one extravagant act — when did you last give without calculating?",
   },
   {
     id: "anna-the-prophetess",
@@ -1437,6 +1498,8 @@ export const people: Person[] = [
       { reference: "Acts 10:34-48", note: "Peter preaches and Cornelius's household is baptized" },
       { reference: "Acts 11:1-18", note: "Peter defends the episode in Jerusalem" },
     ],
+    reflectionPrompt:
+      "Cornelius was told his prayers and gifts had been noticed by God — what quiet faithfulness of yours feels unnoticed?",
   },
   {
     id: "ananias-of-damascus",
@@ -1456,11 +1519,17 @@ export const people: Person[] = [
       { reference: "Acts 9:10-19", note: "Ananias restores Saul's sight and baptizes him" },
       { reference: "Acts 22:12-16", note: "Paul recounts Ananias's role in his testimony" },
     ],
+    reflectionPrompt:
+      "Ananias was asked to go help the man who had come to arrest him — what is the most uncomfortable thing you sense you're supposed to do?",
   },
   {
     id: "ananias-and-sapphira",
     name: "Ananias and Sapphira",
     pronunciation: "an-uh-NYE-us and suh-FY-ruh",
+    // Bare "Ananias" defaults here (the best-known of the three Ananiases in Acts) — see
+    // VERSE_NAME_OVERRIDES in verseAnnotations.ts for the redirects to Ananias of Damascus (Acts 9, 22)
+    // and Ananias the high priest (Acts 23-24).
+    alternateNames: ["Ananias"],
     tier: "notable",
     role: "Married couple in the early Jerusalem church",
     summary: "A husband and wife in the early Jerusalem church who sold property, secretly withheld part of the proceeds while claiming to give the whole amount, and both died after being confronted by Peter — a stark cautionary story about deception within the community.",
@@ -1474,6 +1543,34 @@ export const people: Person[] = [
     verses: [
       { reference: "Acts 5:1-11", note: "The deception and deaths of Ananias and Sapphira" },
     ],
+  },
+  {
+    id: "ananias-the-high-priest",
+    name: "Ananias the High Priest",
+    pronunciation: "an-uh-NYE-us",
+    tier: "notable",
+    role: "High Priest Who Prosecuted Paul",
+    summary: "The Jewish high priest who had Paul struck on the mouth during his trial before the Sanhedrin and later traveled to Caesarea to press charges against him before the Roman governor Felix.",
+    lifeStory: [
+      "Ananias served as high priest during Paul's final arrest and trials in Jerusalem, a position he held (per Josephus) from roughly AD 47 to 59. When Paul, standing trial before the Jewish council, declared he had 'lived before God in all good conscience,' Ananias 'commanded those who stood by him to strike him on the mouth' — an act Paul, apparently unaware this was the high priest, sharply rebuked as unlawful before backing down once he learned the man's office (Acts 23:1-5).",
+      "When Paul was transferred to Roman custody in Caesarea, Ananias personally traveled there with elders and a hired orator, Tertullus, to press formal charges against Paul before the governor Felix, accusing him of being 'a plague, an instigator of insurrections' (Acts 24:1-9). Josephus separately records that Ananias was notorious for corruption and violence, was eventually assassinated by nationalist rebels near the outbreak of the Jewish revolt in AD 66, and had earlier been sent to Rome in chains over an unrelated conflict, though he was released — an independently attested reputation for high-handedness consistent with his treatment of Paul in Acts.",
+    ],
+    occupation: "High Priest, c. AD 47-59",
+    placesLived: "Jerusalem",
+    extraBiblicalReferences: [
+      {
+        source: "Josephus, Antiquities of the Jews",
+        citation: "20.9.2-4 (205-213); 20.5.2 (103)",
+        url: "https://www.perseus.tufts.edu/hopper/text?doc=J.+AJ+20.9.2",
+        summary: "Josephus describes Ananias son of Nedebaeus as high priest, notes his reputation for greed and violence (including servants who seized priestly tithes by force), and records his eventual assassination by rebels early in the Jewish revolt.",
+        reliability: "An independent, detailed historical source corroborating Ananias's tenure and reputation, from a writer close to these events in time and place.",
+      },
+    ],
+    verses: [
+      { reference: "Acts 23:1-5", note: "Orders Paul struck on the mouth during his trial" },
+      { reference: "Acts 24:1-9", note: "Travels to Caesarea to prosecute Paul before Felix" },
+    ],
+    sources: [{ label: "Encyclopaedia Britannica: Ananias (high priest)", url: "https://www.britannica.com/topic/Ananias" }],
   },
   {
     id: "simon-magus",
@@ -1551,6 +1648,8 @@ export const people: Person[] = [
       { reference: "Philemon 1:10-19", note: "Paul appeals for Onesimus's reconciliation with Philemon" },
       { reference: "Colossians 4:9", note: "Paul commends him as a faithful and beloved brother" },
     ],
+    reflectionPrompt:
+      "Onesimus went back to face the man he had wronged, letter in hand — is there a hard return trip you've been avoiding?",
   },
   {
     id: "philemon",
@@ -1606,6 +1705,8 @@ export const people: Person[] = [
       { reference: "Acts 16:13-15", note: "Converts and is baptized with her household" },
       { reference: "Acts 16:40", note: "Hosts Paul and Silas after their release from prison" },
     ],
+    reflectionPrompt:
+      "Lydia listened, believed, and immediately opened her home — how quickly does what you believe become what you do?",
   },
   {
     id: "dorcas-tabitha",
@@ -1626,6 +1727,37 @@ export const people: Person[] = [
       { reference: "Acts 9:36-39", note: "Known for good works and charity; dies in Joppa" },
       { reference: "Acts 9:40-42", note: "Raised from the dead by Peter" },
     ],
+    reflectionPrompt:
+      "Dorcas was mourned with armfuls of clothes she had sewn for others — what tangible things will people hold that you made or gave?",
+  },
+  {
+    id: "philip-the-evangelist",
+    name: "Philip the Evangelist",
+    pronunciation: "FIL-ip",
+    tier: "notable",
+    role: "One of the seven deacons; evangelist to Samaria and the Ethiopian eunuch",
+    summary: "One of the seven men chosen to serve the early Jerusalem church's widows, who went on to preach Christ in Samaria with great effect and to lead the Ethiopian treasury official to faith and baptism on the road to Gaza — distinct from Philip the Apostle, one of the Twelve.",
+    lifeStory: [
+      "Philip was one of seven men — 'full of the Spirit and of wisdom' — chosen by the Jerusalem church to oversee the daily distribution of food to widows, freeing the apostles to focus on prayer and teaching the word (Acts 6:1-6). Scripture nowhere calls these seven 'deacons' by title, but the role and the qualifications Luke describes are why the office has traditionally been read that way.",
+      "When persecution scattered the Jerusalem church following Stephen's martyrdom, Philip went down to a city in Samaria and proclaimed Christ there. Crowds paid attention as he cast out unclean spirits and healed the paralyzed and lame, and 'there was great joy in that city' — including the conversion of Simon the sorcerer, who had previously amazed the Samaritans with magic (Acts 8:4-13).",
+      "An angel then directed Philip to the desert road from Jerusalem to Gaza, where he met an Ethiopian court official — the treasurer of the Ethiopian queen — reading aloud from Isaiah's suffering-servant passage without understanding it. Philip explained that the passage pointed to Jesus, and when the road passed some water the official asked to be baptized on the spot; the Spirit then carried Philip away to Azotus, from where he kept preaching the gospel through the towns up the coast to Caesarea (Acts 8:26-40).",
+      "Philip settled in Caesarea, where Luke records he was still living years later — the book of Acts calls him 'Philip the evangelist, who was one of the seven' and notes he had four unmarried daughters who prophesied, when Paul and his companions stayed with him on the way to Jerusalem (Acts 21:8-9).",
+    ],
+    controversies: [
+      "Because both men share the same first-century name, Philip the Evangelist is easily confused with Philip the Apostle, one of the Twelve — but Acts 6 and 8 consistently distinguish the seven Spirit-filled men chosen for practical service from the apostles who appointed them (Acts 6:2-6), and Acts 21:8 explicitly labels him 'the evangelist... one of the seven' to avoid exactly this confusion.",
+    ],
+    occupation: "One of the seven chosen to serve the Jerusalem church; evangelist",
+    placesLived: "Jerusalem; Samaria; the Gaza road; Azotus and the coastal towns to Caesarea, where he later settled.",
+    noExtraBiblicalRecordNote: "No extra-biblical first-century source mentions Philip the Evangelist; later church tradition (from the 2nd century onward, via writers like Papias and Eusebius) associates him and his prophesying daughters with Hierapolis in Asia Minor, but this is post-biblical tradition, not the New Testament text itself.",
+    verses: [
+      { reference: "Acts 6:1-6", note: "Chosen as one of the seven to serve the Jerusalem church" },
+      { reference: "Acts 8:4-13", note: "Preaches Christ in Samaria; Simon the sorcerer believes" },
+      { reference: "Acts 8:26-40", note: "Leads the Ethiopian eunuch to faith and baptizes him" },
+      { reference: "Acts 21:8-9", note: "Hosts Paul in Caesarea; his four daughters prophesy" },
+    ],
+    sources: [{ label: "Encyclopaedia Britannica: Saint Philip the Evangelist", url: "https://www.britannica.com/biography/Saint-Philip-the-Evangelist" }],
+    reflectionPrompt:
+      "Philip left a thriving city ministry for an empty desert road, and it mattered — would you recognize a calling that looks like a downgrade?",
   },
   {
     id: "ethiopian-eunuch",
@@ -1651,6 +1783,8 @@ export const people: Person[] = [
     verses: [
       { reference: "Acts 8:26-39", note: "Converted and baptized by Philip on the road to Gaza" },
     ],
+    reflectionPrompt:
+      "The Ethiopian asked, 'How can I understand unless someone guides me?' — who guides you, and who are you guiding?",
   },
   {
     id: "sergius-paulus",
@@ -2090,6 +2224,8 @@ export const people: Person[] = [
       { label: "Encyclopaedia Britannica: Adam and Eve", url: "https://www.britannica.com/biography/Adam-and-Eve" },
       { label: "Bible Odyssey: Adam", url: "https://www.bibleodyssey.org/people/related-articles/adam" },
     ],
+    reflectionPrompt:
+      "Adam's first job was tending a garden he didn't plant — how do you care for the good things you've been handed?",
   },
   {
     id: "eve",
@@ -2121,6 +2257,8 @@ export const people: Person[] = [
       { label: "Encyclopaedia Britannica: Adam and Eve", url: "https://www.britannica.com/biography/Adam-and-Eve" },
       { label: "Bible Odyssey: Eve", url: "https://www.bibleodyssey.org/people/related-articles/eve" },
     ],
+    reflectionPrompt:
+      "Eve's temptation began with doubting what God had actually said — where do you notice truth getting subtly rewritten in your own thinking?",
   },
   {
     id: "cain",
@@ -2152,6 +2290,8 @@ export const people: Person[] = [
     sources: [
       { label: "Encyclopaedia Britannica: Cain and Abel", url: "https://www.britannica.com/biography/Cain-and-Abel" },
     ],
+    reflectionPrompt:
+      "God warned Cain that sin was crouching at his door, but that he could master it — what is crouching at yours?",
   },
   {
     id: "abel",
@@ -2178,6 +2318,8 @@ export const people: Person[] = [
     sources: [
       { label: "Encyclopaedia Britannica: Cain and Abel", url: "https://www.britannica.com/biography/Cain-and-Abel" },
     ],
+    reflectionPrompt:
+      "Abel gave the first and best of what he had — where do the first and best of your time and resources go now?",
   },
   {
     id: "noah",
@@ -2230,6 +2372,8 @@ export const people: Person[] = [
       { label: "Encyclopaedia Britannica: Noah", url: "https://www.britannica.com/biography/Noah-biblical-figure" },
       { label: "British Museum: The Flood Tablet", url: "https://www.britishmuseum.org/collection/object/W_K-3375" },
     ],
+    reflectionPrompt:
+      "Noah built for decades with no rain in sight — what are you being asked to keep building without visible results?",
   },
   {
     id: "abraham",
@@ -2287,6 +2431,8 @@ export const people: Person[] = [
       { label: "Encyclopaedia Britannica: Abraham", url: "https://www.britannica.com/biography/Abraham-Hebrew-patriarch" },
       { label: "Bible Odyssey: Abraham", url: "https://www.bibleodyssey.org/people/related-articles/abraham" },
     ],
+    reflectionPrompt:
+      "Abraham went out not knowing where he was going — could you obey a first step without seeing the whole path?",
   },
   {
     id: "sarah",
@@ -2324,6 +2470,8 @@ export const people: Person[] = [
       { label: "Encyclopaedia Britannica: Sarah", url: "https://www.britannica.com/biography/Sarah-Hebrew-matriarch" },
       { label: "Bible Odyssey: Sarah", url: "https://www.bibleodyssey.org/people/related-articles/sarah" },
     ],
+    reflectionPrompt:
+      "Sarah laughed at a promise that seemed too late, then named her son 'laughter' — what hope have you quietly given up on?",
   },
   {
     id: "hagar",
@@ -2355,6 +2503,8 @@ export const people: Person[] = [
     sources: [
       { label: "Encyclopaedia Britannica: Hagar", url: "https://www.britannica.com/biography/Hagar-biblical-figure" },
     ],
+    reflectionPrompt:
+      "Hagar, alone in the wilderness, named God 'the One who sees me' — where do you most need to know you are seen?",
   },
   {
     id: "isaac",
@@ -2386,6 +2536,8 @@ export const people: Person[] = [
     sources: [
       { label: "Encyclopaedia Britannica: Isaac", url: "https://www.britannica.com/biography/Isaac-patriarch" },
     ],
+    reflectionPrompt:
+      "Isaac's quiet work was reopening the wells his father had dug — what good inheritance are you responsible for keeping open?",
   },
   {
     id: "rebekah",
@@ -2413,7 +2565,56 @@ export const people: Person[] = [
     sources: [
       { label: "Encyclopaedia Britannica: Rebekah", url: "https://www.britannica.com/biography/Rebekah" },
     ],
-  },{
+    reflectionPrompt:
+      "Rebekah watered ten camels for a stranger without being asked — when did you last go far beyond what was required?",
+  },
+  {
+    id: "melchizedek",
+    name: "Melchizedek",
+    pronunciation: "mel-KIZ-uh-dek",
+    tier: "notable",
+    role: "King of Salem and Priest of God Most High",
+    summary: "A mysterious king-priest who blessed Abram after his victory over four kings, later invoked as the prophetic pattern for an eternal priesthood fulfilled in Christ.",
+    lifeStory: [
+      "Melchizedek appears without introduction or explanation in Genesis, immediately after Abram's rescue of Lot and his defeat of the invading kings who had taken him captive. As king of Salem (widely understood as an early name for Jerusalem) and 'priest of God Most High,' Melchizedek brought out bread and wine to Abram and blessed him: 'Blessed be Abram of God Most High, possessor of heaven and earth, and blessed be God Most High, who has delivered your enemies into your hand.' Abram responded by giving him a tenth of everything he had recovered (Genesis 14:18-20) — the first tithe recorded in Scripture.",
+      "Melchizedek is not mentioned again by name until Psalm 110, a royal psalm in which the LORD declares to David's greater son, 'You are a priest forever in the order of Melchizedek' (Psalm 110:4) — pairing kingship and priesthood in one figure centuries before either office existed as Israel later knew them, and setting up an eternal priesthood distinct from the Levitical line that would not yet exist for another four centuries.",
+      "The book of Hebrews devotes an extended argument to Melchizedek (Hebrews 5:6, 10; 6:20; 7:1-17), reading Genesis's silence about his birth, death, or genealogy as itself significant: 'without father, without mother, without genealogy, having neither beginning of days nor end of life, but made like the Son of God, [he] remains a priest continually' (Hebrews 7:3). The author's point is not that Melchizedek was literally eternal, but that Genesis's silence about his origin and end makes him a fitting type of Christ's own priesthood — one that does not depend on Levitical descent, and one that (unlike Aaron's, which required constant renewal through death and succession) needs no successor. Hebrews further notes that Abraham, and so Levi still 'in the loins' of his ancestor, paid tithes to Melchizedek — meaning the Melchizedekian priesthood, in the author's reasoning, is greater than the Levitical priesthood that would later receive Israel's tithes (Hebrews 7:4-10).",
+    ],
+    occupation: "King of Salem; priest of God Most High",
+    placesLived: "Salem, widely identified with the site that became Jerusalem.",
+    noExtraBiblicalRecordNote: "No extra-biblical historical record of Melchizedek survives; he is known only from Genesis, Psalm 110, and Hebrews. Later Jewish and Christian traditions that speculate about his identity (some ancient interpreters even proposed he was Shem) go well beyond anything the biblical text itself claims.",
+    verses: [
+      { reference: "Genesis 14:18-20", note: "Blesses Abram and receives a tenth of the spoils" },
+      { reference: "Psalm 110:4", note: "Prophesied pattern for an eternal priest-king" },
+      { reference: "Hebrews 7:1-17", note: "Extended argument for Christ's priesthood 'after the order of Melchizedek'" },
+    ],
+    sources: [{ label: "Encyclopaedia Britannica: Melchizedek", url: "https://www.britannica.com/topic/Melchizedek" }],
+  },
+  {
+    id: "enoch",
+    name: "Enoch",
+    pronunciation: "EE-nuk",
+    tier: "notable",
+    role: "Antediluvian Patriarch Who Did Not Die",
+    summary: "A pre-flood descendant of Seth who 'walked with God' and, uniquely among the patriarchs listed in Genesis 5, did not die but was simply taken by God.",
+    lifeStory: [
+      "Enoch appears in the genealogy of Genesis 5, the line of Seth leading toward Noah. Where every other name in that chapter closes with the same somber refrain — the patriarch lived a stated number of years, 'and he died' — Enoch's entry breaks the pattern entirely: 'Enoch walked with God, and he was not found, for God took him' (Genesis 5:21-24). At 365 years he had the shortest lifespan of any patriarch listed, yet Genesis frames his end not as an early death but as the opposite: he simply did not experience death at all.",
+      "Hebrews cites Enoch as a model of faith on exactly this point: 'By faith, Enoch was taken away, so that he wouldn't see death... For he has had testimony given to him that before his translation he had been well pleasing to God' (Hebrews 11:5) — reading Genesis's 'walked with God' as a life of faith that pleased God, for which his unique removal from death was the reward.",
+      "Jude's short letter quotes a prophecy attributed to Enoch, calling him 'the seventh from Adam' (matching his position in the Genesis 5 genealogy) and citing his words about the Lord coming with 'ten thousands of his holy ones' to judge the ungodly (Jude 1:14-15). This quotation comes from 1 Enoch, a Jewish text from the centuries before Christ that expands enormously on the few verses Genesis gives him — but 1 Enoch itself is not part of the biblical canon Protestants recognize as Scripture; Jude's inspired letter quoting one line from it no more canonizes the whole book than Paul quoting pagan Greek poets in Acts 17:28 canonizes their writings. What Genesis, Hebrews, and Jude together affirm about Enoch is limited to: he walked with God, was taken rather than dying, and prophesied coming judgment.",
+    ],
+    controversies: [
+      "Genesis names a second, unrelated Enoch just one chapter earlier — Cain's son, after whom Cain named a city (Genesis 4:17-18). The two are distinct individuals from different family lines; only the patriarch of Genesis 5, Seth's line, is the 'Enoch' referred to in Hebrews and Jude.",
+    ],
+    placesLived: "Not stated in the text beyond being part of the antediluvian (pre-flood) world.",
+    noExtraBiblicalRecordNote: "No contemporary extra-biblical record of Enoch survives (unsurprising for a pre-flood figure by the Bible's own chronology). The much later pseudepigraphal book of 1 Enoch (roughly 3rd century BC onward) is an extensive Jewish text attributed to him, quoted once in Jude, but it is not canonical Scripture and its content goes well beyond anything Genesis itself records.",
+    verses: [
+      { reference: "Genesis 5:21-24", note: "Walks with God and is taken without dying" },
+      { reference: "Hebrews 11:5", note: "Commended for faith; taken so he would not see death" },
+      { reference: "Jude 1:14-15", note: "His prophecy of coming judgment quoted" },
+    ],
+    sources: [{ label: "Encyclopaedia Britannica: Enoch", url: "https://www.britannica.com/biography/Enoch-biblical-figure" }],
+  },
+  {
     id: "jacob",
     name: "Jacob",
     pronunciation: "JAY-kub",
@@ -2469,6 +2670,8 @@ export const people: Person[] = [
       { label: "Encyclopaedia Britannica: Jacob", url: "https://www.britannica.com/biography/Jacob-Hebrew-patriarch" },
       { label: "Jewish Virtual Library: Jacob", url: "https://www.jewishvirtuallibrary.org/jacob" },
     ],
+    reflectionPrompt:
+      "Jacob spent years grasping for blessing before learning to receive it wounded — what are you still trying to win by your own maneuvering?",
   },
   {
     id: "esau",
@@ -2503,6 +2706,8 @@ export const people: Person[] = [
     sources: [
       { label: "Encyclopaedia Britannica: Esau", url: "https://www.britannica.com/biography/Esau" },
     ],
+    reflectionPrompt:
+      "Esau traded his birthright for one meal because he was hungry now — what long-term good are you tempted to trade for short-term relief?",
   },
   {
     id: "rachel",
@@ -2531,6 +2736,8 @@ export const people: Person[] = [
     sources: [
       { label: "Jewish Women's Archive: Rachel", url: "https://jwa.org/encyclopedia/article/rachel-bible" },
     ],
+    reflectionPrompt:
+      "Rachel was deeply loved yet ached for years over what she couldn't have — how do you carry a longing that hasn't been answered?",
   },
   {
     id: "leah",
@@ -2556,6 +2763,8 @@ export const people: Person[] = [
     sources: [
       { label: "Jewish Women's Archive: Leah", url: "https://jwa.org/encyclopedia/article/leah-bible" },
     ],
+    reflectionPrompt:
+      "Unloved Leah named her fourth son 'praise' — what could praise look like from inside your disappointment?",
   },
   {
     id: "joseph-son-of-jacob",
@@ -2606,6 +2815,8 @@ export const people: Person[] = [
       { label: "Encyclopaedia Britannica: Joseph", url: "https://www.britannica.com/biography/Joseph-Hebrew-patriarch" },
       { label: "Biblical Archaeology Society: Joseph in Egypt", url: "https://www.biblicalarchaeology.org/daily/people-cultures-in-the-bible/people-in-the-bible/joseph-in-egypt/" },
     ],
+    reflectionPrompt:
+      "Joseph told his brothers, 'You meant evil against me, but God meant it for good' — can you see any good being worked through what hurt you?",
   },
   {
     id: "judah-son-of-jacob",
@@ -2639,6 +2850,8 @@ export const people: Person[] = [
     sources: [
       { label: "Encyclopaedia Britannica: Judah", url: "https://www.britannica.com/biography/Judah-Israelite-patriarch" },
     ],
+    reflectionPrompt:
+      "Judah, who once sold his brother, later offered himself in Benjamin's place — what would show the people you've hurt that you have changed?",
   },
   {
     id: "tamar-daughter-in-law-of-judah",
@@ -2725,6 +2938,8 @@ export const people: Person[] = [
       { label: "Encyclopaedia Britannica: Moses", url: "https://www.britannica.com/biography/Moses-Hebrew-prophet" },
       { label: "Biblical Archaeology Society: The Merneptah Stele", url: "https://www.biblicalarchaeology.org/daily/biblical-artifacts/inscriptions/the-israel-stele/" },
     ],
+    reflectionPrompt:
+      "Moses argued that he wasn't a good speaker, and God sent him anyway — what excuse do you keep offering?",
   },
   {
     id: "aaron",
@@ -2759,6 +2974,8 @@ export const people: Person[] = [
     sources: [
       { label: "Encyclopaedia Britannica: Aaron", url: "https://www.britannica.com/biography/Aaron-Hebrew-priest" },
     ],
+    reflectionPrompt:
+      "Aaron, the confident speaker, caved to the crowd at the golden calf — when does pleasing people override your convictions?",
   },
   {
     id: "miriam",
@@ -2784,7 +3001,10 @@ export const people: Person[] = [
     sources: [
       { label: "Jewish Women's Archive: Miriam", url: "https://jwa.org/encyclopedia/article/miriam-midrash-and-aggadah" },
     ],
-  },{
+    reflectionPrompt:
+      "Miriam led the singing on the far side of the sea — what deliverance in your life still deserves a celebration?",
+  },
+  {
     id: "joshua",
     name: "Joshua",
     pronunciation: "JOSH-oo-uh",
@@ -2830,6 +3050,8 @@ export const people: Person[] = [
       { label: "Encyclopaedia Britannica: Joshua", url: "https://www.britannica.com/biography/Joshua-Hebrew-leader" },
       { label: "Bryant Wood, \"Did the Israelites Conquer Jericho?\", Biblical Archaeology Review", url: "https://www.baslibrary.org/biblical-archaeology-review/16/2/2" },
     ],
+    reflectionPrompt:
+      "Joshua was told again and again in one charge: be strong and courageous — where do you need to hear that today?",
   },
   {
     id: "caleb",
@@ -2854,6 +3076,8 @@ export const people: Person[] = [
     sources: [
       { label: "Encyclopaedia Britannica: Caleb", url: "https://www.britannica.com/biography/Caleb" },
     ],
+    reflectionPrompt:
+      "At eighty-five, Caleb still said, 'Give me this hill country' — what challenge do you still want to take on?",
   },
   {
     id: "balaam",
@@ -2920,6 +3144,8 @@ export const people: Person[] = [
     sources: [
       { label: "Encyclopaedia Britannica: Rahab", url: "https://www.britannica.com/topic/Rahab-biblical-figure" },
     ],
+    reflectionPrompt:
+      "Rahab acted on the little she knew about God, and it rerouted her whole story — are you waiting to know more before acting on what you already know?",
   },
   {
     id: "deborah",
@@ -2944,6 +3170,8 @@ export const people: Person[] = [
     sources: [
       { label: "Encyclopaedia Britannica: Deborah", url: "https://www.britannica.com/biography/Deborah-Old-Testament-figure" },
     ],
+    reflectionPrompt:
+      "Deborah sat under a palm tree settling disputes long before the battle came — what daily faithfulness might be preparing you for a bigger moment?",
   },
   {
     id: "gideon",
@@ -2975,6 +3203,8 @@ export const people: Person[] = [
     sources: [
       { label: "Encyclopaedia Britannica: Gideon", url: "https://www.britannica.com/biography/Gideon-Old-Testament-figure" },
     ],
+    reflectionPrompt:
+      "God's messenger called Gideon a 'mighty man of valor' while he was hiding in a winepress — what does God see in you that you don't?",
   },
   {
     id: "samson",
@@ -3009,6 +3239,8 @@ export const people: Person[] = [
     sources: [
       { label: "Encyclopaedia Britannica: Samson", url: "https://www.britannica.com/biography/Samson" },
     ],
+    reflectionPrompt:
+      "Samson treated his gifts as if they could never be lost — what strength are you taking for granted?",
   },
   {
     id: "delilah",
@@ -3058,6 +3290,8 @@ export const people: Person[] = [
     sources: [
       { label: "Encyclopaedia Britannica: Ruth", url: "https://www.britannica.com/topic/Ruth-Old-Testament-figure" },
     ],
+    reflectionPrompt:
+      "Ruth bound herself to Naomi with 'where you go I will go' — who have you committed to that deeply, for better or worse?",
   },
   {
     id: "naomi",
@@ -3082,7 +3316,10 @@ export const people: Person[] = [
     sources: [
       { label: "Encyclopaedia Britannica: Naomi", url: "https://www.britannica.com/topic/Naomi-Old-Testament-figure" },
     ],
-  },{
+    reflectionPrompt:
+      "Naomi came home calling herself 'Bitter,' yet her story wasn't over — have you renamed yourself after a loss?",
+  },
+  {
     id: "boaz",
     name: "Boaz",
     pronunciation: "BOH-az",
@@ -3107,6 +3344,8 @@ export const people: Person[] = [
     sources: [
       { label: "Encyclopaedia Britannica: Boaz", url: "https://www.britannica.com/topic/Boaz-biblical-figure" },
     ],
+    reflectionPrompt:
+      "Boaz noticed a foreign widow gleaning at the field's edge and went out of his way for her — who is at the edge of your field?",
   },
   {
     id: "samuel",
@@ -3136,6 +3375,8 @@ export const people: Person[] = [
     sources: [
       { label: "Encyclopaedia Britannica: Samuel", url: "https://www.britannica.com/biography/Samuel-Hebrew-prophet" },
     ],
+    reflectionPrompt:
+      "Samuel learned to answer, 'Speak, for your servant hears' — what would it take for you to listen that way?",
   },
   {
     id: "saul-king-of-israel",
@@ -3165,6 +3406,8 @@ export const people: Person[] = [
     sources: [
       { label: "Encyclopaedia Britannica: Saul", url: "https://www.britannica.com/biography/Saul-king-of-Israel" },
     ],
+    reflectionPrompt:
+      "Saul kept one eye on the crowd's approval until it cost him everything — whose approval are you performing for?",
   },
   {
     id: "david",
@@ -3220,6 +3463,8 @@ export const people: Person[] = [
       { label: "Encyclopaedia Britannica: David", url: "https://www.britannica.com/biography/David-king-of-Israel" },
       { label: "Biblical Archaeology Society: The Tel Dan Inscription", url: "https://www.biblicalarchaeology.org/daily/people-cultures-in-the-bible/people-in-the-bible/the-tel-dan-inscription-the-first-historical-evidence-of-the-king-david-bible-story/" },
     ],
+    reflectionPrompt:
+      "David was called a man after God's own heart not because he never fell but because he kept returning — how quickly do you return?",
   },
   {
     id: "bathsheba",
@@ -3246,6 +3491,8 @@ export const people: Person[] = [
     sources: [
       { label: "Encyclopaedia Britannica: Bathsheba", url: "https://www.britannica.com/biography/Bathsheba" },
     ],
+    reflectionPrompt:
+      "Bathsheba endured losses she never chose and later spoke up to secure her son's future — where do you need to find your voice?",
   },
   {
     id: "nathan-the-prophet",
@@ -3270,6 +3517,8 @@ export const people: Person[] = [
     sources: [
       { label: "Encyclopaedia Britannica: Nathan", url: "https://www.britannica.com/biography/Nathan-Hebrew-prophet" },
     ],
+    reflectionPrompt:
+      "Nathan told the king a story that let the truth land before defenses went up — how do you speak hard truth to someone with power over you?",
   },
   {
     id: "solomon",
@@ -3304,6 +3553,8 @@ export const people: Person[] = [
     sources: [
       { label: "Encyclopaedia Britannica: Solomon", url: "https://www.britannica.com/biography/Solomon-king-of-Israel" },
     ],
+    reflectionPrompt:
+      "Solomon asked for wisdom, received everything else, and still drifted — what keeps you steady when life gets comfortable?",
   },
   {
     id: "elijah",
@@ -3336,6 +3587,8 @@ export const people: Person[] = [
     sources: [
       { label: "Encyclopaedia Britannica: Elijah", url: "https://www.britannica.com/biography/Elijah-Hebrew-prophet" },
     ],
+    reflectionPrompt:
+      "Right after his greatest victory, Elijah despaired under a broom tree, and God sent food and sleep — do you let yourself be human after big efforts?",
   },
   {
     id: "elisha",
@@ -3362,6 +3615,8 @@ export const people: Person[] = [
     sources: [
       { label: "Encyclopaedia Britannica: Elisha", url: "https://www.britannica.com/biography/Elisha" },
     ],
+    reflectionPrompt:
+      "Elisha asked for a double portion of his mentor's spirit — who are you learning from that closely, and who is learning from you?",
   },
   {
     id: "jezebel",
@@ -3392,7 +3647,10 @@ export const people: Person[] = [
     sources: [
       { label: "Encyclopaedia Britannica: Jezebel", url: "https://www.britannica.com/biography/Jezebel-queen-of-Israel" },
     ],
-  },{
+    reflectionPrompt:
+      "Jezebel used real power to silence every voice she disliked — how do you use whatever power you hold over others?",
+  },
+  {
     id: "hezekiah",
     name: "Hezekiah",
     pronunciation: "hez-eh-KY-uh",
@@ -3441,6 +3699,8 @@ export const people: Person[] = [
       { label: "Encyclopaedia Britannica: Hezekiah", url: "https://www.britannica.com/biography/Hezekiah" },
       { label: "The Israel Museum: The Siloam Inscription", url: "https://www.imj.org.il/en" },
     ],
+    reflectionPrompt:
+      "When the threatening letter came, Hezekiah spread it out before God — what worry could you literally lay out in prayer today?",
   },
   {
     id: "isaiah",
@@ -3485,6 +3745,8 @@ export const people: Person[] = [
     sources: [
       { label: "Encyclopaedia Britannica: Isaiah", url: "https://www.britannica.com/biography/Isaiah-Hebrew-prophet" },
     ],
+    reflectionPrompt:
+      "Isaiah answered, 'Here am I, send me' before hearing the assignment — could you volunteer before knowing the details?",
   },
   {
     id: "jeremiah",
@@ -3528,6 +3790,8 @@ export const people: Person[] = [
     sources: [
       { label: "Encyclopaedia Britannica: Jeremiah", url: "https://www.britannica.com/biography/Jeremiah-Hebrew-prophet" },
     ],
+    reflectionPrompt:
+      "Jeremiah kept speaking for decades with almost no one listening — what right thing would you keep doing even without results?",
   },
   {
     id: "ezekiel",
@@ -3553,6 +3817,8 @@ export const people: Person[] = [
     sources: [
       { label: "Encyclopaedia Britannica: Ezekiel", url: "https://www.britannica.com/biography/Ezekiel-Hebrew-prophet" },
     ],
+    reflectionPrompt:
+      "Ezekiel was asked, 'Can these dry bones live?' and answered, 'You know' — what in your life looks too far gone for renewal?",
   },
   {
     id: "daniel",
@@ -3595,6 +3861,8 @@ export const people: Person[] = [
       { label: "Encyclopaedia Britannica: Daniel", url: "https://www.britannica.com/biography/Daniel-Hebrew-prophet" },
       { label: "The British Museum: Nabonidus Cylinder", url: "https://www.britishmuseum.org/collection" },
     ],
+    reflectionPrompt:
+      "Daniel kept his windows open and prayed as he always had, law or no law — what habit anchors you when the pressure rises?",
   },
   {
     id: "esther",
@@ -3622,6 +3890,8 @@ export const people: Person[] = [
     sources: [
       { label: "Encyclopaedia Britannica: Esther", url: "https://www.britannica.com/biography/Esther" },
     ],
+    reflectionPrompt:
+      "Esther fasted first, then walked into the throne room uninvited — what risk needs both preparation and courage from you right now?",
   },
   {
     id: "mordecai",
@@ -3646,6 +3916,8 @@ export const people: Person[] = [
     sources: [
       { label: "Encyclopaedia Britannica: Mordecai", url: "https://www.britannica.com/topic/Mordecai-Old-Testament-figure" },
     ],
+    reflectionPrompt:
+      "Mordecai refused to bow, then refused to let Esther stay silent — who needs you to speak up on their behalf?",
   },
   {
     id: "nehemiah",
@@ -3683,6 +3955,8 @@ export const people: Person[] = [
     sources: [
       { label: "Encyclopaedia Britannica: Nehemiah", url: "https://www.britannica.com/biography/Nehemiah" },
     ],
+    reflectionPrompt:
+      "Nehemiah prayed for months before he ever spoke to the king — what burden are you carrying that hasn't yet become a plan?",
   },
   {
     id: "ezra",
@@ -3708,6 +3982,8 @@ export const people: Person[] = [
     sources: [
       { label: "Encyclopaedia Britannica: Ezra", url: "https://www.britannica.com/biography/Ezra-Hebrew-priest" },
     ],
+    reflectionPrompt:
+      "Ezra set his heart to study, then to do, then to teach — in that order — which of those three do you skip?",
   },
   {
     id: "job",
@@ -3738,11 +4014,43 @@ export const people: Person[] = [
     sources: [
       { label: "Encyclopaedia Britannica: Job", url: "https://www.britannica.com/topic/Job-biblical-figure" },
     ],
-  },{
+    reflectionPrompt:
+      "Job never got the answers he asked for, but he met God and said it was enough — could presence without explanation be enough for you?",
+  },
+  {
+    id: "god-the-father",
+    name: "God the Father",
+    pronunciation: "GOD thuh FAH-ther",
+    alternateNames: ["Father in heaven", "heavenly Father", "Abba, Father", "Abba! Father!"],
+    tier: "major",
+    role: "First Person of the Trinity",
+    summary:
+      "The first person of the Trinity, whom Jesus addressed intimately as 'Father' and taught his disciples to call 'Our Father in heaven' — the eternal source to whom the Son and the Spirit are, in classical Christian understanding, fully equal in nature yet distinct in person.",
+    lifeStory: [
+      "Throughout the Old Testament, God relates to Israel corporately as a father to a son (Deuteronomy 32:6; Isaiah 63:16; Hosea 11:1), but it is Jesus who makes Fatherhood the defining, personal way of addressing God — teaching his disciples to pray 'Our Father in heaven, may your name be kept holy' (Matthew 6:9), and repeatedly calling God 'my Father' in a manner so intimate that his Jewish hearers understood it as a claim to deity, provoking accusations that he was 'making himself equal with God' (John 5:18). In the garden of Gethsemane, facing the cross, Jesus cries out using the Aramaic term of a child's trust, 'Abba, Father, all things are possible to you' (Mark 14:36) — a term of address so personal that Paul later says believers themselves receive 'the Spirit of adoption, by whom we cry, \"Abba! Father!\"' (Romans 8:15; Galatians 4:6), extending the same filial relationship to all who are in Christ.",
+      "The Father is presented throughout the New Testament as sending the Son (John 3:16-17), being glorified by the Son's obedience even to death (Philippians 2:8-11), and raising Jesus from the dead (Romans 6:4; Galatians 1:1). At Jesus's baptism, all three persons of the Trinity appear together in a single scene: the Son is baptized, the Spirit descends on him 'as a dove,' and the Father's voice from heaven declares, 'This is my beloved Son, in whom I am well pleased' (Matthew 3:16-17) — one of the New Testament's clearest joint appearances of Father, Son, and Spirit. Jesus closes the Great Commission by instructing baptism 'in the name of the Father and of the Son and of the Holy Spirit' (Matthew 28:19), naming all three under a single 'name,' not three.",
+      "Classical Christian doctrine, worked out over the church's first several centuries and articulated in creeds like Nicaea (AD 325), holds that the Father is not a different, lesser, or earlier God than the Son or the Spirit, but one of three co-equal, co-eternal persons within the one God — a teaching the New Testament assumes and displays (in scenes like the baptism above) more than it defines in a single formula — see the Trinity for the doctrine's fuller development and the range of Scripture that undergirds it.",
+    ],
+    noExtraBiblicalRecordNote:
+      "As with the Holy Spirit, questions of 'extra-biblical historical record' don't apply in the way they do to a human figure — the New Testament's testimony to the Father, and the church's doctrinal reflection on that testimony (councils, creeds, and confessions), is the relevant historical record.",
+    verses: [
+      { reference: "Matthew 6:9-13", note: "The Lord's Prayer: 'Our Father in heaven'" },
+      { reference: "Matthew 3:16-17", note: "The Father's voice at Jesus's baptism, alongside the Son and the Spirit" },
+      { reference: "John 5:18", note: "Jesus's claim to call God his own Father provokes accusations of blasphemy" },
+      { reference: "Mark 14:36", note: "Jesus in Gethsemane: 'Abba, Father, all things are possible to you'" },
+      { reference: "Romans 8:15", note: "Believers receive 'the Spirit of adoption,' crying 'Abba! Father!'" },
+      { reference: "Matthew 28:19", note: "Baptism 'in the name of the Father and of the Son and of the Holy Spirit'" },
+    ],
+    sources: [
+      { label: "Encyclopaedia Britannica: God the Father", url: "https://www.britannica.com/topic/God-the-Father" },
+      { label: "Got Questions: Who is God the Father?", url: "https://www.gotquestions.org/God-the-Father.html" },
+    ],
+  },
+  {
     id: "holy-spirit",
     name: "The Holy Spirit",
     pronunciation: "HOH-lee SPIR-it",
-    alternateNames: ["Holy Ghost", "Spirit of God", "Spirit of the Lord", "Spirit of Truth", "The Comforter"],
+    alternateNames: ["Holy Ghost", "Spirit of God", "Spirit of the Lord", "Spirit of Truth", "The Comforter", "Counselor", "The Counselor"],
     tier: "major",
     role: "The Spirit of God, present and active from creation through the present day",
     summary: "The Spirit of God, active from the very first verses of Genesis through the closing words of Revelation — hovering over creation, empowering judges and prophets, conceiving Jesus, descending at Pentecost, and indwelling believers in the New Testament church.",
@@ -3778,6 +4086,46 @@ export const people: Person[] = [
     sources: [
       { label: "Encyclopaedia Britannica: Holy Spirit", url: "https://www.britannica.com/topic/Holy-Spirit" },
     ],
+  },
+  {
+    id: "michael-archangel",
+    name: "Michael",
+    alternateNames: ["Michael the Archangel"],
+    tier: "notable",
+    role: "Archangel; Israel's Guardian Prince",
+    summary: "The only angel Scripture explicitly calls an archangel, described as Israel's protecting 'prince' in Daniel and shown leading heaven's armies against Satan in Revelation.",
+    lifeStory: [
+      "Michael appears first in Daniel's visions as a heavenly figure engaged in what reads as spiritual warfare behind the scenes of earthly politics. An angelic messenger tells Daniel that 'the prince of the kingdom of Persia withstood me twenty-one days,' until 'Michael, one of the chief princes, came to help me' (Daniel 10:13), and later names Michael specifically as 'your prince' — Israel's own angelic protector, standing against the angelic 'princes' the vision associates with rival earthly kingdoms (Daniel 10:21). Daniel's climactic vision of the end times begins, 'At that time Michael will stand up, the great prince who stands for the children of your people' during 'a time of trouble, such as never was' (Daniel 12:1), tying Michael directly to Israel's ultimate deliverance.",
+      "Jude's brief letter records a striking scene not found elsewhere in Scripture: 'Michael the archangel, when contending with the devil and arguing about the body of Moses, dared not bring against him an abusive judgment, but said, \"May the Lord rebuke you!\"' (Jude 1:9) — the only time the New Testament calls any angel an 'archangel' by name, and a scene depicting even this powerful being deferring to God's own authority rather than confronting Satan directly on his own terms.",
+      "Revelation's vision of heavenly conflict gives Michael his most dramatic role: 'There was war in the sky. Michael and his angels made war on the dragon. The dragon and his angels made war' — a battle ending in Satan ('the dragon') being 'thrown down' out of heaven entirely (Revelation 12:7-9). Across all these appearances, Michael functions consistently as a warrior-protector figure, engaged in conflict on God's people's behalf rather than delivering messages the way Gabriel does.",
+    ],
+    noExtraBiblicalRecordNote: "No extra-biblical historical record applies to an angelic being in the way it would to a human figure; Jewish apocalyptic literature outside the Bible (such as 1 Enoch) expands considerably on Michael's role, but this later material is not part of the biblical canon and goes well beyond what Daniel, Jude, and Revelation themselves state.",
+    verses: [
+      { reference: "Daniel 10:13, 21", note: "Named as Israel's protecting 'prince'" },
+      { reference: "Daniel 12:1", note: "Stands for Israel in the final time of trouble" },
+      { reference: "Jude 1:9", note: "Called 'the archangel'; disputes with the devil over Moses's body" },
+      { reference: "Revelation 12:7-9", note: "Leads heaven's armies against the dragon" },
+    ],
+    sources: [{ label: "Encyclopaedia Britannica: Michael", url: "https://www.britannica.com/topic/Michael-archangel" }],
+  },
+  {
+    id: "gabriel-archangel",
+    name: "Gabriel",
+    tier: "notable",
+    role: "Angel Who Delivers God's Most Significant Announcements",
+    summary: "The angel who explained Daniel's visions of the coming Messiah and, centuries later, personally announced the births of both John the Baptist and Jesus.",
+    lifeStory: [
+      "Gabriel first appears in Daniel's visions as an interpreter sent to explain what Daniel has seen: a heavenly voice instructs, 'Gabriel, make this man understand the vision' (Daniel 8:16), and Gabriel himself later describes being 'caused to fly swiftly' to reach Daniel while he was still praying (Daniel 9:21) — arriving to deliver the detailed 'seventy weeks' prophecy concerning the Messiah's coming (Daniel 9:24-27), one of the most theologically significant messages any angel delivers in Scripture.",
+      "Gabriel does not appear again until Luke's Gospel, where he announces the births of both John the Baptist and Jesus. To the priest Zechariah, doubting that his elderly wife Elizabeth could bear a son, the angel identifies himself directly: 'I am Gabriel, who stands in the presence of God. I was sent to speak to you, and to bring you this good news' (Luke 1:19) — and when Zechariah doubts anyway, Gabriel strikes him mute until the birth (Luke 1:20). Six months later, 'the angel Gabriel was sent from God to a city of Galilee, named Nazareth,' to a virgin named Mary, announcing that she would conceive Jesus by the Holy Spirit (Luke 1:26-38) — the single most significant angelic announcement in Scripture, delivered by the same angel who once explained the Messiah's coming to Daniel centuries earlier.",
+    ],
+    noExtraBiblicalRecordNote: "No extra-biblical historical record applies to an angelic being in the way it would to a human figure; Gabriel is known only from Daniel and Luke.",
+    verses: [
+      { reference: "Daniel 8:15-17", note: "Sent to help Daniel understand his vision" },
+      { reference: "Daniel 9:20-27", note: "Delivers the 'seventy weeks' prophecy of the coming Messiah" },
+      { reference: "Luke 1:11-20", note: "Announces John the Baptist's birth to Zechariah" },
+      { reference: "Luke 1:26-38", note: "Announces Jesus's birth to Mary" },
+    ],
+    sources: [{ label: "Encyclopaedia Britannica: Gabriel", url: "https://www.britannica.com/topic/Gabriel-angel" }],
   },
   {
     id: "satan",
@@ -4333,6 +4681,8 @@ export const people: Person[] = [
       { reference: "Matthew 1:10-11", note: "Named in Jesus's genealogy" },
     ],
     sources: [{ label: "Encyclopaedia Britannica: Josiah", url: "https://www.britannica.com/biography/Josiah" }],
+    reflectionPrompt:
+      "Josiah began seeking God at sixteen and rebuilt a nation's faith from a rediscovered book — what forgotten thing might be worth recovering in your life?",
   },
   {
     id: "jeconiah",
@@ -4671,7 +5021,9 @@ export const people: Person[] = [
     id: "tiberius-caesar",
     name: "Tiberius Caesar",
     pronunciation: "ty-BEER-ee-us SEE-zer",
-    alternateNames: ["Tiberius"],
+    // Bare "Caesar" defaults here — see VERSE_NAME_OVERRIDES/BOOK_NAME_OVERRIDES in verseAnnotations.ts
+    // for the book/verse-level redirects to Augustus, Claudius, and Nero where "Caesar" means them instead.
+    alternateNames: ["Tiberius", "Caesar"],
     tier: "significant",
     role: "Roman Emperor",
     summary: "The second Roman emperor, whose fifteenth regnal year Luke uses to date the beginning of John the Baptist's ministry, and during whose reign Jesus was crucified under Pontius Pilate.",
@@ -4746,6 +5098,43 @@ export const people: Person[] = [
       { reference: "Acts 18:1-2", note: "His expulsion of Jews from Rome is why Paul finds Aquila and Priscilla in Corinth" },
     ],
     sources: [{ label: "Encyclopaedia Britannica: Claudius", url: "https://www.britannica.com/biography/Claudius-Roman-emperor" }],
+  },
+  {
+    id: "nero-caesar",
+    name: "Nero Caesar",
+    pronunciation: "NEER-oh SEE-zer",
+    alternateNames: ["Nero"],
+    tier: "significant",
+    role: "Roman Emperor",
+    summary: "The emperor to whom Paul appealed his case as a Roman citizen and under whose reign, by strong early church tradition, both Paul and Peter were martyred in Rome.",
+    lifeStory: [
+      "Nero became emperor in AD 54 at age sixteen following the death of his adoptive father Claudius, ruling until his own death by suicide in AD 68 amid a military revolt. His early reign, guided by advisors including the philosopher Seneca, was relatively stable, but it grew increasingly erratic, tyrannical, and violent in its later years, including the murder of his own mother and, ancient sources report, his wife.",
+      "Nero never appears by name in the New Testament, but he is the unnamed 'Caesar' Paul repeatedly invokes near the end of Acts. Facing trumped-up charges before the governor Festus in Caesarea, Paul exercises his right as a Roman citizen to appeal directly to the emperor: 'I appeal to Caesar!' Festus replies, 'You have appealed to Caesar. To Caesar you shall go' (Acts 25:10-12), setting up Paul's eventful voyage to Rome (Acts 27) to stand trial before Nero's court. Philippians 4:22, written from Paul's Roman imprisonment, sends greetings from believers 'of Caesar's household' — evidence the gospel had reached even into Nero's own domestic staff.",
+      "Acts ends before recording the outcome of Paul's appeal, but later church tradition (not the New Testament itself) holds that Paul was martyred in Rome under Nero, traditionally by beheading, and that Peter was crucified there as well, traditionally upside down at his own request. The Roman historian Tacitus, writing decades later, independently corroborates that Nero blamed and brutally persecuted Christians in Rome after the great fire of AD 64, describing torments inflicted on 'an immense multitude' — the same general period church tradition places both apostles' deaths in, though Tacitus does not name Paul or Peter specifically.",
+    ],
+    occupation: "Fifth Roman emperor, AD 54-68",
+    placesLived: "Rome",
+    extraBiblicalReferences: [
+      {
+        source: "Tacitus, Annals",
+        citation: "15.44",
+        url: "https://penelope.uchicago.edu/Thayer/E/Roman/Texts/Tacitus/Annals/15B*.html#44",
+        summary: "Tacitus describes Nero blaming Christians for the great fire of Rome (AD 64) and subjecting 'an immense multitude' to brutal executions, independently corroborating a severe Neronian persecution of the church in Rome.",
+        reliability: "An independent, non-Christian Roman source writing about 50 years later — strong corroboration of the persecution's scale, though Tacitus does not name Paul or Peter specifically.",
+      },
+      {
+        source: "Eusebius of Caesarea, Church History",
+        citation: "2.25",
+        url: "https://www.newadvent.org/fathers/250102.htm",
+        summary: "Eusebius records the early tradition that both Paul (by beheading) and Peter (by crucifixion) were martyred in Rome under Nero, citing earlier writers as his source.",
+        reliability: "Later church tradition (Eusebius wrote in the early 4th century, roughly 250 years after the events) — valuable for showing what the early church believed, but not a contemporary historical record.",
+      },
+    ],
+    verses: [
+      { reference: "Acts 25:10-12", note: "Paul appeals his case to Caesar (Nero)" },
+      { reference: "Philippians 4:22", note: "Greetings from believers 'of Caesar's household'" },
+    ],
+    sources: [{ label: "Encyclopaedia Britannica: Nero", url: "https://www.britannica.com/biography/Nero-Roman-emperor" }],
   },
   {
     id: "philip-the-tetrarch",

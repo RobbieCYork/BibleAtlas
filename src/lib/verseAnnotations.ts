@@ -1,21 +1,22 @@
 import { locations } from "../data/locations";
 import { pois } from "../data/pois";
 import { people } from "../data/people";
+import { topics } from "../data/topics";
 import { BOOKS } from "../data/bibleBooks";
 
 export interface LinkAnnotation {
   start: number;
   end: number;
   text: string;
-  kind: "location" | "poi" | "person" | "verse";
-  /** Location/POI/person id — present for kind "location" | "poi" | "person". */
+  kind: "location" | "poi" | "person" | "topic" | "verse";
+  /** Location/POI/person/topic id — present for kind "location" | "poi" | "person" | "topic". */
   id?: string;
 }
 
 interface NameEntry {
   name: string;
   id: string;
-  kind: "location" | "poi" | "person";
+  kind: "location" | "poi" | "person" | "topic";
 }
 
 /** Every location's (any category) primary + alternate name, every POI's name, and every person's
@@ -39,6 +40,10 @@ const NAME_ENTRIES: NameEntry[] = (() => {
   people.forEach((person) => {
     entries.push({ name: person.name, id: person.id, kind: "person" });
     (person.alternateNames ?? []).forEach((alt) => entries.push({ name: alt, id: person.id, kind: "person" }));
+  });
+  topics.forEach((topic) => {
+    entries.push({ name: topic.name, id: topic.id, kind: "topic" });
+    (topic.alternateNames ?? []).forEach((alt) => entries.push({ name: alt, id: topic.id, kind: "topic" }));
   });
   return entries.sort((a, b) => b.name.length - a.name.length);
 })();
@@ -92,6 +97,12 @@ const BOOK_NAME_OVERRIDES: Record<string, Record<string, string>> = {
   james: { Galatians: "james-brother-of-jesus", "1 Corinthians": "james-brother-of-jesus", Acts: "james-brother-of-jesus" },
   saul: { "1 Samuel": "saul-king-of-israel", "2 Samuel": "saul-king-of-israel", "1 Chronicles": "saul-king-of-israel" },
   edom: { Genesis: "esau" },
+  // "Caesar": Tiberius (the global default — see his alternateNames) is correct for every bare
+  // mention in the four Gospels, since Jesus's entire ministry and death fell within his reign. Acts'
+  // bare "Caesar" mentions are almost all Nero (Paul's appeal, Acts 25:8 onward) except one much
+  // earlier exception (Acts 17:7, Claudius's reign) handled by VERSE_NAME_OVERRIDES below. Philippians
+  // was written from Paul's Roman imprisonment under Nero (Philippians 4:22, "Caesar's household").
+  caesar: { Acts: "nero-caesar", Philippians: "nero-caesar" },
 };
 
 /** Names where, unlike the overrides above, there's no good redirect target outside a short list of
@@ -148,6 +159,97 @@ const BOOK_NAME_OVERRIDES: Record<string, Record<string, string>> = {
  *   the original Hebrew name of Abednego, one of Daniel's three companions — a well-known, unrelated
  *   figure. (Restricting this key only affects the "Azariah" alternate name — "Uzziah" itself is
  *   unambiguous and still links everywhere.) */
+/** Finest-grained override: some bare names are ambiguous even within a single book (BOOK_NAME_OVERRIDES
+ * can't help — two+ legitimate bearers' mentions overlap in the SAME book). Keyed by lowercase bare name
+ * -> book -> "chapter:verse" -> target person id, or `null` to suppress the link entirely (the mention is
+ * a real, different person this app has no entry for, so the least-wrong move is no link — same
+ * philosophy as BOOK_NAME_ALLOWLIST above). Every entry below independently confirmed against the WEB
+ * translation text. Takes precedence over BOOK_NAME_ALLOWLIST/BOOK_NAME_OVERRIDES when present.
+ * - "Mary": the default owner (mary-mother-of-jesus) is correct for the large majority of bare mentions,
+ *   but is wrong at every verse listed under `mary` below — Mary of Bethany (Luke 10, John 11-12), Mary
+ *   Magdalene (Luke 8:2, John 20:11/16), and Mary "the mother of James/Joses" (Matthew 27:56/61, 28:1;
+ *   Mark 15:40/47, 16:1; Luke 24:10) all get bare "Mary" mentions in the same books as the mother of
+ *   Jesus. Acts 12:12's "Mary, the mother of John [Mark]" is a fourth, distinct Mary with no entry here.
+ * - "Philip": Philip the Apostle (the default) is correct except Luke 3:1, which names Philip the
+ *   Tetrarch, and Acts 6:5/8:5-40/21:8, which name Philip the Evangelist (one of the seven, distinct
+ *   from both — see his own lifeStory note). Mark 6:17/Matthew 14:3's "his brother Philip" is a third,
+ *   different Herodian half-brother (see the note in philip-the-tetrarch's lifeStory) with no entry —
+ *   suppressed rather than mislinked.
+ * - "Simon": Simon Peter (the default) is correct except John 6:71/12:4/13:2/13:26, where "Simon('s
+ *   son)/Simon Iscariot" names Judas Iscariot's father — a distinct person with no entry — suppressed. */
+const VERSE_NAME_OVERRIDES: Record<string, Record<string, Record<string, string | null>>> = {
+  mary: {
+    Matthew: { "27:56": "mary-mother-of-james-the-less", "27:61": "mary-mother-of-james-the-less", "28:1": "mary-mother-of-james-the-less" },
+    Mark: { "15:40": "mary-mother-of-james-the-less", "15:47": "mary-mother-of-james-the-less", "16:1": "mary-mother-of-james-the-less" },
+    Luke: { "8:2": "mary-magdalene", "10:39": "mary-of-bethany", "10:42": "mary-of-bethany", "24:10": "mary-mother-of-james-the-less" },
+    John: {
+      "11:1": "mary-of-bethany",
+      "11:2": "mary-of-bethany",
+      "11:19": "mary-of-bethany",
+      "11:20": "mary-of-bethany",
+      "11:28": "mary-of-bethany",
+      "11:31": "mary-of-bethany",
+      "11:32": "mary-of-bethany",
+      "11:45": "mary-of-bethany",
+      "12:3": "mary-of-bethany",
+      "20:11": "mary-magdalene",
+      "20:16": "mary-magdalene",
+    },
+    Acts: { "12:12": null },
+  },
+  philip: {
+    Luke: { "3:1": "philip-the-tetrarch" },
+    Mark: { "6:17": null },
+    Matthew: { "14:3": null },
+    Acts: {
+      "6:5": "philip-the-evangelist",
+      "8:5": "philip-the-evangelist",
+      "8:6": "philip-the-evangelist",
+      "8:12": "philip-the-evangelist",
+      "8:13": "philip-the-evangelist",
+      "8:26": "philip-the-evangelist",
+      "8:29": "philip-the-evangelist",
+      "8:30": "philip-the-evangelist",
+      "8:31": "philip-the-evangelist",
+      "8:34": "philip-the-evangelist",
+      "8:35": "philip-the-evangelist",
+      "8:38": "philip-the-evangelist",
+      "8:39": "philip-the-evangelist",
+      "8:40": "philip-the-evangelist",
+      "21:8": "philip-the-evangelist",
+    },
+  },
+  simon: {
+    John: { "6:71": null, "12:4": null, "13:2": null, "13:26": null },
+  },
+  // "Enoch": the patriarch (Genesis 5, Hebrews 11:5, Jude 1:14-15) is the default owner of bare
+  // "Enoch," but Genesis 4:17-18, one chapter earlier, names a completely different Enoch — Cain's
+  // son, after whom Cain named a city — so those two verses are suppressed rather than mislinked.
+  enoch: {
+    Genesis: { "4:17": null, "4:18": null },
+  },
+  // "Caesar" in Acts is Nero almost everywhere (BOOK_NAME_OVERRIDES above), except Acts 17:7 —
+  // Paul's very early ministry in Thessalonica, which falls within Claudius's reign (compare Acts
+  // 18:2's mention of Claudius's expulsion edict, not long after).
+  caesar: {
+    Acts: { "17:7": "claudius-caesar" },
+  },
+  // "Ananias": ananias-and-sapphira (the best-known of the three) is the default owner of bare
+  // "Ananias," but Acts 9/22 name a different Ananias — the Damascus disciple who restores Saul's
+  // sight — and Acts 23-24 name a third, the high priest who prosecutes Paul.
+  ananias: {
+    Acts: {
+      "9:10": "ananias-of-damascus",
+      "9:12": "ananias-of-damascus",
+      "9:13": "ananias-of-damascus",
+      "9:17": "ananias-of-damascus",
+      "22:12": "ananias-of-damascus",
+      "23:2": "ananias-the-high-priest",
+      "24:1": "ananias-the-high-priest",
+    },
+  },
+};
+
 const BOOK_NAME_ALLOWLIST: Record<string, string[]> = {
   manasseh: ["2 Kings", "2 Chronicles", "Matthew"],
   levi: ["Matthew", "Mark"],
@@ -196,9 +298,17 @@ const NAME_PATTERN =
 
 /** Finds every location/POI/person/verse-reference mention in `text`, as character-offset annotations.
  * `book` (e.g. "Matthew") is optional context used to resolve a handful of ambiguous bare names via
- * BOOK_NAME_OVERRIDES above — omit it (as the verse-list views in person/location/POI panels do) and
- * ambiguous names just resolve to their global default owner. */
-export function computeLinkAnnotations(text: string, excludeId?: string, book?: string): LinkAnnotation[] {
+ * BOOK_NAME_OVERRIDES/VERSE_NAME_OVERRIDES above. `chapter`/`verse` narrow further to VERSE_NAME_OVERRIDES
+ * (exact chapter:verse) when all three are supplied — the Bible reader passes all three per-verse; the
+ * verse-list views in person/location/POI panels pass none, so ambiguous names there just resolve to
+ * their global default owner. */
+export function computeLinkAnnotations(
+  text: string,
+  excludeId?: string,
+  book?: string,
+  chapter?: number,
+  verse?: number
+): LinkAnnotation[] {
   if (!NAME_PATTERN) return [];
   const annotations: LinkAnnotation[] = [];
   NAME_PATTERN.lastIndex = 0;
@@ -211,16 +321,29 @@ export function computeLinkAnnotations(text: string, excludeId?: string, book?: 
       // Any match containing a digit is a Bible verse reference (no location/POI name does).
       annotations.push({ start, end, text: name, kind: "verse" });
     } else {
-      const entry = NAME_TO_ENTRY.get(name.toLowerCase());
+      const nameLower = name.toLowerCase();
+      const entry = NAME_TO_ENTRY.get(nameLower);
       if (entry) {
-        const allowlist = BOOK_NAME_ALLOWLIST[name.toLowerCase()];
-        const suppressed = !!allowlist && !!book && !allowlist.includes(book);
-        if (!suppressed) {
-          const overrideId = book ? BOOK_NAME_OVERRIDES[name.toLowerCase()]?.[book] : undefined;
-          const id = overrideId ?? entry.id;
-          const kind = overrideId ? (ID_TO_KIND.get(overrideId) ?? entry.kind) : entry.kind;
-          if (id !== excludeId) {
-            annotations.push({ start, end, text: name, kind, id });
+        const verseKey = chapter != null && verse != null ? `${chapter}:${verse}` : undefined;
+        const verseOverrides = book && verseKey ? VERSE_NAME_OVERRIDES[nameLower]?.[book] : undefined;
+        const hasVerseOverride = !!verseOverrides && Object.prototype.hasOwnProperty.call(verseOverrides, verseKey!);
+
+        if (hasVerseOverride) {
+          const verseId = verseOverrides![verseKey!];
+          if (verseId !== null && verseId !== excludeId) {
+            annotations.push({ start, end, text: name, kind: ID_TO_KIND.get(verseId) ?? entry.kind, id: verseId });
+          }
+          // verseId === null means this exact mention is a different, unrepresented person — no link.
+        } else {
+          const allowlist = BOOK_NAME_ALLOWLIST[nameLower];
+          const suppressed = !!allowlist && !!book && !allowlist.includes(book);
+          if (!suppressed) {
+            const overrideId = book ? BOOK_NAME_OVERRIDES[nameLower]?.[book] : undefined;
+            const id = overrideId ?? entry.id;
+            const kind = overrideId ? (ID_TO_KIND.get(overrideId) ?? entry.kind) : entry.kind;
+            if (id !== excludeId) {
+              annotations.push({ start, end, text: name, kind, id });
+            }
           }
         }
       }

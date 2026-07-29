@@ -15,9 +15,14 @@ interface VerseTextProps {
   /** Current book name (e.g. "Matthew"), used to resolve a handful of ambiguous bare names — see
    * BOOK_NAME_OVERRIDES in verseAnnotations.ts. */
   book?: string;
+  /** This verse's chapter/verse number — together with `book`, resolves names ambiguous even within
+   * the same book via VERSE_NAME_OVERRIDES in verseAnnotations.ts. */
+  chapter?: number;
+  verse?: number;
   onSelectLocation: (id: string) => void;
   onSelectPoi: (id: string) => void;
   onSelectPerson: (id: string) => void;
+  onSelectTopic: (id: string) => void;
   onSelectVerse?: (reference: string) => void;
   /** This verse's highlight coverage only (caller clips by verse). */
   highlights: ClippedHighlight[];
@@ -77,16 +82,19 @@ function buildSegments(
 export default function VerseText({
   text,
   book,
+  chapter,
+  verse,
   onSelectLocation,
   onSelectPoi,
   onSelectPerson,
+  onSelectTopic,
   onSelectVerse,
   highlights,
   onHighlightClick,
   previewRange,
   textRef,
 }: VerseTextProps) {
-  const links = computeLinkAnnotations(text, undefined, book);
+  const links = computeLinkAnnotations(text, undefined, book, chapter, verse);
   const segments = buildSegments(text, links, highlights, previewRange);
 
   return (
@@ -132,6 +140,7 @@ export default function VerseText({
               onClick={() => {
                 if (ann.kind === "location") onSelectLocation(ann.id!);
                 else if (ann.kind === "poi") onSelectPoi(ann.id!);
+                else if (ann.kind === "topic") onSelectTopic(ann.id!);
                 else onSelectPerson(ann.id!);
               }}
             >

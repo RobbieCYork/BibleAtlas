@@ -4,12 +4,17 @@ import type { ClippedHighlight } from "./VerseText";
 import TagPicker from "./TagPicker";
 import InlinePicker, { type PickerHandle } from "./InlinePicker";
 import BookIntroView from "./BookIntroView";
+import ReadingPlansView from "./ReadingPlansView";
 import { BOOKS } from "../data/bibleBooks";
+import { READING_PLANS, formatPlanDayReference, type ReadingPlan, type ReadingPlanDay } from "../data/readingPlans";
 import {
   supabase,
   chapterReadCutoff,
+  fetchPlanProgress,
   flushReadingTimeReliably,
   formatReadingTime,
+  mergeLocalPlanProgress,
+  setPlanDayDone,
   HIGHLIGHT_COLORS,
   type HighlightColor,
   type Highlight,
@@ -19,8 +24,10 @@ import {
   type Profile,
 } from "../lib/supabase";
 import { getTextOffsetInRoot } from "../lib/domTextOffset";
+import { CHAPTER_AUDIO_CREDIT, chapterAudioUrl, fallbackChapterAudioUrl } from "../lib/chapterAudio";
 import { clipRangeForVerse } from "../lib/verseRange";
 import { useTextSize } from "../lib/textSize";
+import { deliverCard, generateVerseCard, shareFilename } from "../lib/shareCard";
 
 interface BiblePanelProps {
   reference: string | null;
@@ -29,7 +36,13 @@ interface BiblePanelProps {
   referenceNonce?: number;
   onSelectLocation: (id: string) => void;
   onSelectPoi: (id: string) => void;
+  /** Plan-day variants of the two map-focus callbacks above: same pin focus, but on mobile the
+   * reader stays on the Bible tab — the tap's primary intent is reading the day's passage, so the
+   * map focus happens silently in the background. */
+  onPlanDaySelectLocation: (id: string) => void;
+  onPlanDaySelectPoi: (id: string) => void;
   onSelectPerson: (id: string) => void;
+  onSelectTopic: (id: string) => void;
   expand?: boolean;
   style?: React.CSSProperties;
   /** Signed-in (or guest) user id — when set, every chapter load is saved as their reading position,
@@ -48,6 +61,11 @@ interface BiblePanelProps {
    * here without duplicating the search UI inside the panel itself. */
   externalSearchQuery?: string;
   externalSearchNonce?: number;
+  /** One-shot request from a details-panel reflection prompt's "Journal this" (see App): once the
+   * request's reference has loaded as the current chapter, open the note composer anchored to that
+   * reference's first verse with the prompt quoted into the draft. The nonce makes journaling the
+   * same prompt twice still re-trigger. */
+  journalRequest?: { reference: string; prompt: string; nonce: number } | null;
 }
 
 interface VerseData {
@@ -90,6 +108,18 @@ type PopupState =
   | { kind: "verse-notes"; verse: number }
   | { kind: "tag-picker"; startVerse: number; endVerse: number };
 
+/** bible-api.com's reference parser treats "<Book> 1" as verse 1 (not "chapter 1, every verse") for
+ * every book that has only a single chapter — since "1" alone is genuinely ambiguous between chapter
+ * and verse there. Requesting an explicit verse range sidesteps it; each book's last verse number is
+ * listed here (confirmed against the API itself: the number requested is valid, N+1 is not). */
+const SINGLE_CHAPTER_BOOK_LAST_VERSE: Record<string, number> = {
+  Obadiah: 21,
+  Philemon: 25,
+  "2 John": 13,
+  "3 John": 14,
+  Jude: 25,
+};
+
 const TRANSLATIONS = [
   { id: "web", label: "World English Bible (WEB)" },
   { id: "kjv", label: "King James Version (KJV)" },
@@ -97,6 +127,10 @@ const TRANSLATIONS = [
 ];
 
 const MAX_SEARCH_RESULTS = 30;
+
+/** Whether the chapter-audio bar was left open — restored on load so a listener's setup survives
+ * a refresh (restoring never autoplays; playback always waits for a fresh press of play). */
+const AUDIO_BAR_OPEN_KEY = "bible-audio-bar-open";
 
 function findBookIndex(name: string): number {
   return BOOKS.findIndex((b) => b.name.toLowerCase() === name.toLowerCase());
@@ -124,7 +158,10 @@ export default function BiblePanel({
   referenceNonce,
   onSelectLocation,
   onSelectPoi,
+  onPlanDaySelectLocation,
+  onPlanDaySelectPoi,
   onSelectPerson,
+  onSelectTopic,
   expand,
   style,
   userId,
@@ -133,6 +170,7 @@ export default function BiblePanel({
   onNotesChanged,
   externalSearchQuery,
   externalSearchNonce,
+  journalRequest,
 }: BiblePanelProps) {
   const [translation, setTranslation] = useState("web");
   // Same global scale as the Account-menu Text Size setting — surfaced here too because readers
@@ -148,6 +186,15 @@ export default function BiblePanel({
    * of a loaded chapter. currentChapter/passage are left untouched while true, so leaving the intro
    * (picking a real chapter, or a key-passage link) can resume exactly where reading left off. */
   const [showIntro, setShowIntro] = useState(false);
+  /** True while showing the Reading Plans view instead of a loaded chapter — same state-driven view
+   * swap as showIntro above, so leaving the plans (loading any chapter) resumes reading in place. */
+  const [showPlans, setShowPlans] = useState(false);
+  /** Which plan's day list the plans view has open (null = the plan cards). Kept here, not in
+   * ReadingPlansView, so jumping out to read a day and coming back lands on the same plan. */
+  const [openPlanId, setOpenPlanId] = useState<string | null>(null);
+  /** Completed day numbers per plan id — localStorage for guests, Supabase (with a silent
+   * localStorage fallback while the table doesn't exist) once logged in. */
+  const [planProgress, setPlanProgress] = useState<Record<string, number[]>>({});
   const chapterPickerRef = useRef<PickerHandle>(null);
   const versePickerRef = useRef<PickerHandle>(null);
 
@@ -168,6 +215,22 @@ export default function BiblePanel({
   const [popup, setPopup] = useState<PopupState | null>(null);
   const [noteDraft, setNoteDraft] = useState("");
   const [newTagName, setNewTagName] = useState("");
+  /** Brief share-card feedback ("Saved image") — rendered as a floating pill at panel level, not
+   * inside the action sheet, because on desktop the sheet closes the moment the click collapses the
+   * native selection (see the selectionchange handler) and would take its feedback with it. */
+  const [shareToast, setShareToast] = useState<string | null>(null);
+  const shareToastTimerRef = useRef<number | null>(null);
+  useEffect(
+    () => () => {
+      if (shareToastTimerRef.current !== null) window.clearTimeout(shareToastTimerRef.current);
+    },
+    []
+  );
+  const flashShareToast = (message: string) => {
+    if (shareToastTimerRef.current !== null) window.clearTimeout(shareToastTimerRef.current);
+    setShareToast(message);
+    shareToastTimerRef.current = window.setTimeout(() => setShareToast(null), 2400);
+  };
 
   // Whether the currently-loaded chapter is marked read by this account, and this account's total
   // seconds read so far this calendar month (both visible to friends too — see chapter_reads/
@@ -226,6 +289,49 @@ export default function BiblePanel({
     if (currentBook && currentChapter !== null) fetchAnnotations(currentBook, currentChapter, translation);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userId]);
+
+  // Reading-plan progress, refetched on login state changes. On login, any days checked off while
+  // logged out are first merged into Supabase (best-effort) so they follow the account.
+  useEffect(() => {
+    let cancelled = false;
+    (async () => {
+      if (userId) await mergeLocalPlanProgress(userId, READING_PLANS.map((p) => p.id));
+      const entries = await Promise.all(
+        READING_PLANS.map(async (p) => [p.id, await fetchPlanProgress(userId, p.id)] as const)
+      );
+      if (!cancelled) setPlanProgress(Object.fromEntries(entries));
+    })();
+    return () => {
+      cancelled = true;
+    };
+  }, [userId]);
+
+  /** Optimistic toggle of one plan day's checkmark — the persistence layer (localStorage always,
+   * Supabase when logged in) is fire-and-forget, same as saveProgress above. */
+  const handleTogglePlanDay = (planId: string, dayNumber: number) => {
+    const wasDone = (planProgress[planId] ?? []).includes(dayNumber);
+    setPlanProgress((prev) => {
+      const days = prev[planId] ?? [];
+      return { ...prev, [planId]: wasDone ? days.filter((d) => d !== dayNumber) : [...days, dayNumber] };
+    });
+    setPlanDayDone(userId, planId, dayNumber, !wasDone);
+  };
+
+  /** Opening a plan day drives the normal go-to-reference path (chapter load + verse scroll/flash),
+   * and focuses the day's place on the map when the plan ties one to it — via the plan-day variants,
+   * which on mobile keep the reader on the Bible tab so the passage (the tap's primary intent) shows. */
+  const handleSelectPlanDay = (_plan: ReadingPlan, day: ReadingPlanDay) => {
+    setShowPlans(false);
+    loadReference(formatPlanDayReference(day), translation);
+    if (day.locationId) onPlanDaySelectLocation(day.locationId);
+    else if (day.poiId) onPlanDaySelectPoi(day.poiId);
+  };
+
+  const openPlansView = (planId: string | null) => {
+    setOpenPlanId(planId);
+    setShowPlans(true);
+    setShowIntro(false);
+  };
 
   // Fetched once per login — governs whether an old chapter_reads row still counts below.
   useEffect(() => {
@@ -342,12 +448,103 @@ export default function BiblePanel({
     setPopup(null);
   }, [currentBook, currentChapter, hidden]);
 
+  // --- Chapter audio (human-narrated WEB recording — see src/lib/chapterAudio.ts) ---
+
+  /** Whether the sticky audio bar is open. Restored from localStorage so the preference survives
+   * reloads; audio itself only ever starts from an explicit press of play (or auto-advance). */
+  const [audioOpen, setAudioOpen] = useState(() => localStorage.getItem(AUDIO_BAR_OPEN_KEY) === "1");
+  const [audioSrc, setAudioSrc] = useState<string | null>(null);
+  const [audioError, setAudioError] = useState<string | null>(null);
+  const audioElRef = useRef<HTMLAudioElement | null>(null);
+  /** True while the reader is actually listening (play/pause events) — a chapter change mid-
+   * playback (manual nav or auto-advance) then continues seamlessly into the new chapter, while
+   * navigating with the player paused stays paused. */
+  const isPlayingRef = useRef(false);
+  /** One-shot autoplay intents: pressing "Listen" open, and auto-advance after a chapter ends. */
+  const shouldAutoplayRef = useRef(false);
+  /** Guards the error handler so the eBible.org fallback is tried at most once per chapter. */
+  const triedFallbackRef = useRef(false);
+  /** Mirrors the chapter currently shown, for async audio callbacks to detect navigation —
+   * comparing against the book/chapter state captured in the same closure is always true. */
+  const audioChapterRef = useRef<{ book: string; chapter: number } | null>(null);
+  useEffect(() => {
+    audioChapterRef.current =
+      currentBook !== null && currentChapter !== null ? { book: currentBook, chapter: currentChapter } : null;
+  }, [currentBook, currentChapter]);
+
+  const audioEligible = translation === "web" && !!passage && !!currentBook && currentChapter !== null;
+
+  // Point the player at the current chapter's primary URL whenever the bar is open. The bar (and
+  // the <audio> element with it) unmounts when closed or when the translation isn't WEB, which is
+  // also what stops playback.
+  useEffect(() => {
+    if (!audioOpen || !audioEligible || !currentBook || currentChapter === null) {
+      setAudioSrc(null);
+      setAudioError(null);
+      isPlayingRef.current = false;
+      return;
+    }
+    triedFallbackRef.current = false;
+    setAudioError(null);
+    setAudioSrc(chapterAudioUrl(currentBook, currentChapter));
+  }, [audioOpen, audioEligible, currentBook, currentChapter]);
+
+  // Continue playback across a src swap when the reader was (or asked to be) listening.
+  useEffect(() => {
+    if (!audioSrc) return;
+    if (shouldAutoplayRef.current || isPlayingRef.current) {
+      shouldAutoplayRef.current = false;
+      audioElRef.current?.play().catch(() => {
+        // Autoplay was blocked (e.g. no user activation yet) — the bar's own controls still work.
+      });
+    }
+  }, [audioSrc]);
+
+  const toggleAudioBar = () => {
+    const next = !audioOpen;
+    setAudioOpen(next);
+    localStorage.setItem(AUDIO_BAR_OPEN_KEY, next ? "1" : "0");
+    shouldAutoplayRef.current = next; // opening the bar IS the intent to listen
+  };
+
+  /** Primary URL failed — swap in the pre-scraped eBible.org fallback once, then give up gently. */
+  const handleAudioError = () => {
+    if (!audioSrc || !currentBook || currentChapter === null) return;
+    if (triedFallbackRef.current) {
+      setAudioError("Couldn't load audio for this chapter — try again later.");
+      return;
+    }
+    triedFallbackRef.current = true;
+    const book = currentBook;
+    const chapter = currentChapter;
+    // Keep the listening intent across the swap: the error stopped playback, but isPlayingRef
+    // still reflects the pre-error state, so the src-change effect above resumes automatically.
+    fallbackChapterAudioUrl(book, chapter).then((url) => {
+      // The reader may have navigated while the manifest loaded — the ref (unlike the state this
+      // closure captured) reflects the chapter shown *now*, so bail out when it has moved on.
+      const shown = audioChapterRef.current;
+      if (!shown || shown.book !== book || shown.chapter !== chapter) return;
+      if (url) setAudioSrc(url);
+      else setAudioError("Couldn't load audio for this chapter — try again later.");
+    });
+  };
+
+  /** Auto-advance: a finished chapter rolls into the next one, navigating the reader with it
+   * (same path as the Next Chapter button, so progress saving etc. all still apply). */
+  const handleAudioEnded = () => {
+    isPlayingRef.current = false;
+    if (atBibleEnd()) return;
+    shouldAutoplayRef.current = true;
+    goToChapter(1);
+  };
+
   /** Loads a whole chapter. Returns whether it succeeded, without touching `error` — callers decide how to surface a failure. */
   const loadChapter = async (book: string, chapter: number, translationId: string): Promise<boolean> => {
     if (chapter < 1) return false;
     setLoading(true);
     try {
-      const ref = `${book} ${chapter}`;
+      const lastVerse = chapter === 1 ? SINGLE_CHAPTER_BOOK_LAST_VERSE[book] : undefined;
+      const ref = lastVerse ? `${book} 1:1-${lastVerse}` : `${book} ${chapter}`;
       const url = `https://bible-api.com/${encodeURIComponent(ref)}?translation=${translationId}`;
       const res = await fetch(url);
       const data = await res.json();
@@ -355,7 +552,9 @@ export default function BiblePanel({
         throw new Error(data.error ?? "Chapter not found");
       }
       setPassage({
-        reference: data.reference,
+        // The explicit "1:1-25" verse-range workaround above makes the API echo back a verbose
+        // reference (e.g. "Philemon 1:1-25") — show the plain "Philemon 1" chapter heading instead.
+        reference: lastVerse ? `${book} ${chapter}` : data.reference,
         verses: data.verses,
         translationName: data.translation_name ?? translationId.toUpperCase(),
       });
@@ -379,6 +578,7 @@ export default function BiblePanel({
     const trimmed = rawRef.trim();
     if (!trimmed) return;
     setShowIntro(false);
+    setShowPlans(false);
     setError(null);
     setBoundaryMessage(null);
     const parsed = parseBookChapter(trimmed);
@@ -555,6 +755,25 @@ export default function BiblePanel({
       .join(" ");
   };
 
+  /** Generates a share-card PNG for the current selection and hands it off (Web Share sheet on
+   * mobile, PNG download elsewhere). Selection values are read up front — on desktop the click
+   * itself collapses the selection and closes the sheet, so nothing here re-reads `popup` after
+   * the first await. Works signed out too: sharing needs no account. */
+  const handleShareVerseCard = async () => {
+    if (!popup || popup.kind !== "selection" || !currentBook || currentChapter === null) return;
+    const { startVerse, startOffset, endVerse, endOffset } = popup;
+    const text = buildQuotedText(startVerse, startOffset, endVerse, endOffset);
+    const reference = `${currentBook} ${currentChapter}:${startVerse}${endVerse !== startVerse ? `-${endVerse}` : ""}`;
+    try {
+      const blob = await generateVerseCard(reference, text);
+      const outcome = await deliverCard(blob, shareFilename(reference));
+      if (outcome === "saved") flashShareToast("Saved image");
+    } catch (err) {
+      console.error("Verse share card failed:", err);
+      flashShareToast("Couldn't create image");
+    }
+  };
+
   const handleOpenNoteEditor = () => {
     if (!popup || popup.kind !== "selection") return;
     const quotedText = buildQuotedText(popup.startVerse, popup.startOffset, popup.endVerse, popup.endOffset);
@@ -568,6 +787,39 @@ export default function BiblePanel({
       quotedText,
     });
   };
+
+  // A journal request arrives together with (or just before) the chapter load it triggered, so it's
+  // remembered here until that chapter is actually the one on screen — the composer can only anchor
+  // to verses of the currently-loaded passage.
+  const pendingJournalRef = useRef<{ reference: string; prompt: string } | null>(null);
+  useEffect(() => {
+    if (journalRequest) pendingJournalRef.current = { reference: journalRequest.reference, prompt: journalRequest.prompt };
+  }, [journalRequest]);
+
+  // Opens the note composer for a pending journal request once its chapter has landed — anchored to
+  // the reference's first verse (or the chapter's first when the reference names none), exactly as
+  // if that whole verse had been selected and "📝 Note" tapped, with the prompt quoted into the
+  // draft. Declared after the chapter-change popup-clearing effect above so that in the commit where
+  // the requested chapter arrives, the clear runs first and this open wins.
+  useEffect(() => {
+    const pending = pendingJournalRef.current;
+    if (!pending || !passage || !currentBook || currentChapter === null || loading || !userId) return;
+    const parsed = parseBookChapter(pending.reference);
+    if (!parsed || parsed.book.toLowerCase() !== currentBook.toLowerCase() || parsed.chapter !== currentChapter) return;
+    pendingJournalRef.current = null;
+    const verseNum = parsed.verse ?? passage.verses[0]?.verse ?? 1;
+    const verseText = passage.verses.find((v) => v.verse === verseNum)?.text.trim() ?? "";
+    setNoteDraft(`Prompt: ${pending.prompt}\n\n`);
+    setPopup({
+      kind: "note-editor",
+      startVerse: verseNum,
+      startOffset: 0,
+      endVerse: verseNum,
+      endOffset: verseText.length,
+      quotedText: verseText,
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [passage, currentBook, currentChapter, loading, userId]);
 
   const handleSaveNote = async () => {
     if (!popup || popup.kind !== "note-editor" || !userId || !currentBook || currentChapter === null) return;
@@ -671,6 +923,7 @@ export default function BiblePanel({
     if (!bookName) return;
     setCurrentBook(bookName);
     setShowIntro(false);
+    setShowPlans(false);
     loadChapter(bookName, 1, translation);
     chapterPickerRef.current?.open();
   };
@@ -681,10 +934,12 @@ export default function BiblePanel({
   const handleChapterSelect = async (value: string) => {
     if (value === "intro") {
       setShowIntro(true);
+      setShowPlans(false);
       return;
     }
     if (!currentBook) return;
     setShowIntro(false);
+    setShowPlans(false);
     const ok = await loadChapter(currentBook, Number(value), translation);
     if (ok) versePickerRef.current?.open();
   };
@@ -692,6 +947,7 @@ export default function BiblePanel({
   const handleIntroJumpToChapter = async (chapter: number, verse?: number) => {
     if (!currentBook) return;
     setShowIntro(false);
+    setShowPlans(false);
     const ok = await loadChapter(currentBook, chapter, translation);
     if (ok && verse) setPendingScrollVerse(verse);
   };
@@ -735,6 +991,7 @@ export default function BiblePanel({
     if (ok) {
       setPendingScrollVerse(hit.verse);
       setSearchResults(null);
+      setShowPlans(false);
     }
   };
 
@@ -870,6 +1127,28 @@ export default function BiblePanel({
             A⁺
           </button>
         </div>
+        {audioEligible && (
+          <button
+            type="button"
+            className={`bible-plans-chip${audioOpen ? " bible-plans-chip-active" : ""}`}
+            onClick={toggleAudioBar}
+            aria-pressed={audioOpen}
+            aria-label="Listen to this chapter"
+            title={CHAPTER_AUDIO_CREDIT}
+          >
+            🔊 Listen
+          </button>
+        )}
+        <button
+          type="button"
+          className={`bible-plans-chip${showPlans ? " bible-plans-chip-active" : ""}`}
+          onClick={() => (showPlans ? setShowPlans(false) : openPlansView(openPlanId))}
+          aria-pressed={showPlans}
+          aria-label="Reading plans"
+          title="Reading plans"
+        >
+          🗓️ Plans
+        </button>
       </div>
 
       {searching && <p className="bible-status">Searching…</p>}
@@ -907,21 +1186,68 @@ export default function BiblePanel({
 
       {/* Cold-start welcome — nothing else renders here until a book is picked, and a silently
           blank column reads as broken rather than waiting for input. */}
-      {!currentBook && !showIntro && !passage && !loading && !error && !searching && !searchResults && (
+      {!showPlans && !currentBook && !showIntro && !passage && !loading && !error && !searching && !searchResults && (
         <div className="bible-welcome">
           <p className="bible-welcome-title">Select a book to start reading</p>
           <p className="bible-welcome-text">
             Pick a book and chapter above — places and people in the text link to the interactive map and their full histories.
           </p>
+          <div className="bible-welcome-plans">
+            <p className="bible-welcome-plans-title">Or follow a guided reading plan</p>
+            {READING_PLANS.map((plan) => (
+              <button
+                key={plan.id}
+                type="button"
+                className="bible-welcome-plan-link"
+                onClick={() => openPlansView(plan.id)}
+              >
+                <span>{plan.title}</span>
+                <span className="bible-welcome-plan-days">{plan.days.length} days</span>
+              </button>
+            ))}
+          </div>
         </div>
       )}
 
-      {showIntro && currentBook && !searchResults && (
+      {showPlans && !searchResults && (
+        <ReadingPlansView
+          openPlanId={openPlanId}
+          onOpenPlan={setOpenPlanId}
+          progress={planProgress}
+          onSelectDay={handleSelectPlanDay}
+          onToggleDay={handleTogglePlanDay}
+        />
+      )}
+
+      {!showPlans && showIntro && currentBook && !searchResults && (
         <BookIntroView book={currentBook} onJumpToChapter={handleIntroJumpToChapter} />
       )}
 
-      {!showIntro && passage && !loading && !error && !searchResults && (
+      {!showPlans && !showIntro && passage && !loading && !error && !searchResults && (
         <div className="bible-passage">
+          {audioOpen && audioEligible && (
+            <div className="bible-audio-bar no-print">
+              {audioSrc && !audioError && (
+                <audio
+                  ref={audioElRef}
+                  className="bible-audio-player"
+                  controls
+                  preload="metadata"
+                  src={audioSrc}
+                  onPlay={() => {
+                    isPlayingRef.current = true;
+                  }}
+                  onPause={() => {
+                    isPlayingRef.current = false;
+                  }}
+                  onEnded={handleAudioEnded}
+                  onError={handleAudioError}
+                />
+              )}
+              {audioError && <p className="bible-audio-error">{audioError}</p>}
+              <p className="bible-audio-credit">{CHAPTER_AUDIO_CREDIT}</p>
+            </div>
+          )}
           <div className="bible-passage-header">
             <button
               type="button"
@@ -971,9 +1297,12 @@ export default function BiblePanel({
                   <VerseText
                     text={text}
                     book={currentBook ?? undefined}
+                    chapter={v.chapter}
+                    verse={v.verse}
                     onSelectLocation={onSelectLocation}
                     onSelectPoi={onSelectPoi}
                     onSelectPerson={onSelectPerson}
+                    onSelectTopic={onSelectTopic}
                     highlights={clippedHighlights}
                     onHighlightClick={(highlight) => setPopup({ kind: "highlight-actions", highlight })}
                     previewRange={previewRange}
@@ -1032,6 +1361,12 @@ export default function BiblePanel({
       )}
       </div>
 
+      {shareToast && (
+        <div className="bible-share-toast" role="status">
+          {shareToast}
+        </div>
+      )}
+
       {popup && (
         <div className="verse-sheet">
           {popup.kind === "selection" && (
@@ -1061,6 +1396,9 @@ export default function BiblePanel({
               ) : (
                 <span className="verse-popup-signin-note">Log in to highlight or add notes</span>
               )}
+              <button type="button" className="verse-popup-share-btn" onClick={handleShareVerseCard}>
+                📤 Share card
+              </button>
               <button type="button" className="verse-popup-close" onClick={closePopup} aria-label="Close">
                 ×
               </button>

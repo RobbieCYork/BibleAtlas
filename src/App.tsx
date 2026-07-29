@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import type maplibregl from "maplibre-gl";
 import type { Session } from "@supabase/supabase-js";
 import MapView from "./components/MapView";
@@ -8,6 +8,7 @@ import HeaderTextSearch from "./components/HeaderTextSearch";
 import LocationPanel from "./components/LocationPanel";
 import PoiPanel from "./components/PoiPanel";
 import PersonPanel from "./components/PersonPanel";
+import TopicPanel from "./components/TopicPanel";
 import BiblePanel from "./components/BiblePanel";
 import MyNotesPanel from "./components/MyNotesPanel";
 import FriendsPanel from "./components/FriendsPanel";
@@ -22,7 +23,10 @@ import { supabase } from "./lib/supabase";
 import { locations } from "./data/locations";
 import { pois } from "./data/pois";
 import { people } from "./data/people";
+import { topics } from "./data/topics";
 import { DAILY_VERSE_DISMISSED_KEY, formatDailyReference, getDailyVerse, getLocalDayKey } from "./data/dailyVerse";
+import { formatWalkStopReference, getActiveSeasonalWalk, getWalkDismissKey } from "./data/seasonalWalks";
+import SeasonalWalkPanel from "./components/SeasonalWalkPanel";
 import "./App.css";
 
 const MIN_PANEL_WIDTH = 240;
@@ -30,12 +34,17 @@ const MAX_PANEL_WIDTH = 800;
 const MOBILE_QUERY = "(max-width: 768px)";
 
 /** One entry in the details "back" trail — enough to restore a prior selection without re-deriving it. */
-type DetailsSelection = { kind: "location"; id: string } | { kind: "poi"; id: string } | { kind: "person"; id: string };
+type DetailsSelection =
+  | { kind: "location"; id: string }
+  | { kind: "poi"; id: string }
+  | { kind: "person"; id: string }
+  | { kind: "topic"; id: string };
 
 function App() {
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const [selectedPoiId, setSelectedPoiId] = useState<string | null>(null);
   const [selectedPersonId, setSelectedPersonId] = useState<string | null>(null);
+  const [selectedTopicId, setSelectedTopicId] = useState<string | null>(null);
   // Tracks where the reader came from when they follow a cross-link *inside* the details panel (e.g.
   // Jesus's bio links to Nazareth) so a "Back" button can return them there. Only pushed to from those
   // in-panel cross-links — a fresh selection from the map, search, or Bible text clears the trail
@@ -87,14 +96,17 @@ function App() {
   const selectedLocation = locations.find((l) => l.id === selectedId) ?? null;
   const selectedPoi = pois.find((p) => p.id === selectedPoiId) ?? null;
   const selectedPerson = people.find((p) => p.id === selectedPersonId) ?? null;
-  // Mirrors the precedence used below when deciding which detail panel to render (person > POI > location).
+  const selectedTopic = topics.find((t) => t.id === selectedTopicId) ?? null;
+  // Mirrors the precedence used below when deciding which detail panel to render (person > POI > topic > location).
   const currentDetailsSelection: DetailsSelection | null = selectedPersonId
     ? { kind: "person", id: selectedPersonId }
     : selectedPoiId
       ? { kind: "poi", id: selectedPoiId }
-      : selectedId
-        ? { kind: "location", id: selectedId }
-        : null;
+      : selectedTopicId
+        ? { kind: "topic", id: selectedTopicId }
+        : selectedId
+          ? { kind: "location", id: selectedId }
+          : null;
 
   // Desktop panels are opened/closed solely via the hamburger checklist now (no more per-panel "×")
   // — with up to 5 panels available, letting them all pile up open at once gets cramped fast, so
@@ -407,6 +419,7 @@ function App() {
     setSelectedId(id);
     setSelectedPoiId(null);
     setSelectedPersonId(null);
+    setSelectedTopicId(null);
     setLocationsVisible(true);
     if (isMobile) {
       setMobileActivePanel("details");
@@ -420,6 +433,7 @@ function App() {
     setSelectedPoiId(id);
     setSelectedId(null);
     setSelectedPersonId(null);
+    setSelectedTopicId(null);
     if (isMobile) {
       setMobileActivePanel("details");
     } else {
@@ -434,6 +448,18 @@ function App() {
     setSelectedPersonId(id);
     setSelectedId(null);
     setSelectedPoiId(null);
+    setSelectedTopicId(null);
+    if (isMobile) setMobileActivePanel("details");
+    else openPanel("details");
+  };
+
+  // Topics (practices, doctrines, people groups) have no map presence, same as people — selecting one
+  // just opens the Details panel.
+  const handleSelectTopic = (id: string) => {
+    setSelectedTopicId(id);
+    setSelectedId(null);
+    setSelectedPoiId(null);
+    setSelectedPersonId(null);
     if (isMobile) setMobileActivePanel("details");
     else openPanel("details");
   };
@@ -446,6 +472,7 @@ function App() {
     setSelectedId(id);
     setSelectedPoiId(null);
     setSelectedPersonId(null);
+    setSelectedTopicId(null);
     setLocationsVisible(true);
     if (isMobile) setMobileActivePanel("map");
     else openPanel("map");
@@ -456,8 +483,21 @@ function App() {
     setSelectedPoiId(id);
     setSelectedId(null);
     setSelectedPersonId(null);
+    setSelectedTopicId(null);
     if (isMobile) setMobileActivePanel("map");
     else openPanel("map");
+  };
+
+  // A reading-plan day's map focus happens silently behind the passage: on mobile the Bible tab
+  // must stay active (the tap's primary intent is reading the day's passage — switching to the map
+  // buried it behind a manual tab tap), while desktop keeps opening the map panel alongside the text.
+  const focusPlanDayLocation = (id: string) => {
+    focusLocationOnMap(id);
+    if (isMobile) setMobileActivePanel("bible");
+  };
+  const focusPlanDayPoi = (id: string) => {
+    handleSelectPoiFromBible(id);
+    if (isMobile) setMobileActivePanel("bible");
   };
 
   // A person link inside the Bible text does jump to the Details panel (people have no map presence
@@ -465,6 +505,12 @@ function App() {
   const handleSelectPersonFromBible = (id: string) => {
     setDetailsHistory([]);
     handleSelectPerson(id);
+  };
+
+  // A topic link inside the Bible text — same pattern as person: no map presence, fresh starting point.
+  const handleSelectTopicFromBible = (id: string) => {
+    setDetailsHistory([]);
+    handleSelectTopic(id);
   };
 
   // Map pins and search results are also fresh starting points, not a continuation of an in-panel
@@ -492,6 +538,10 @@ function App() {
     if (currentDetailsSelection) setDetailsHistory((h) => [...h, currentDetailsSelection]);
     handleSelectPerson(id);
   };
+  const handleSelectTopicFromDetails = (id: string) => {
+    if (currentDetailsSelection) setDetailsHistory((h) => [...h, currentDetailsSelection]);
+    handleSelectTopic(id);
+  };
 
   const goBackInDetails = () => {
     if (detailsHistory.length === 0) return;
@@ -499,10 +549,12 @@ function App() {
     setDetailsHistory((h) => h.slice(0, -1));
     if (prev.kind === "location") handleSelect(prev.id);
     else if (prev.kind === "poi") handleSelectPoi(prev.id);
+    else if (prev.kind === "topic") handleSelectTopic(prev.id);
     else handleSelectPerson(prev.id);
   };
 
-  const hasSelection = selectedId !== null || selectedPoiId !== null || selectedPersonId !== null;
+  const hasSelection =
+    selectedId !== null || selectedPoiId !== null || selectedPersonId !== null || selectedTopicId !== null;
   // Bumped only here (the explicit "× Show All Pins" action) so MapView refits around every pin on
   // this and nothing else — inferring "show all" from the selection ids going null would also catch
   // selecting a person (which nulls both map ids but should leave the camera alone).
@@ -511,6 +563,7 @@ function App() {
     setSelectedId(null);
     setSelectedPoiId(null);
     setSelectedPersonId(null);
+    setSelectedTopicId(null);
     setDetailsHistory([]);
     if (isMobile) setMobileActivePanel("map");
     // On desktop the Details panel can't render without a selection (showDetails goes false), so
@@ -529,6 +582,18 @@ function App() {
     }
   };
 
+  // A details-panel reflection prompt's "Journal this": jump the reader to the prompt's primary
+  // reference (the normal openVerse path) and hand BiblePanel a one-shot request to open the note
+  // composer prefilled with the prompt once that chapter lands. Nonce for the same reason as
+  // referenceNonce above — journaling the same prompt twice must still re-open the composer.
+  const [journalRequest, setJournalRequest] = useState<{ reference: string; prompt: string; nonce: number } | null>(
+    null
+  );
+  const handleJournalPrompt = (reference: string, prompt: string) => {
+    setJournalRequest((prev) => ({ reference, prompt, nonce: (prev?.nonce ?? 0) + 1 }));
+    openVerse(reference);
+  };
+
   // --- Verse & Place of the Day ---------------------------------------------------------------
   // Deterministic daily rotation (see dailyVerse.ts) pairing a passage with its place on the map —
   // shown to everyone (signed in or not) as an inviting entry point instead of blank pickers.
@@ -544,16 +609,101 @@ function App() {
   };
   const dailyVerseReference = formatDailyReference(dailyVerse);
   const dailyVersePlace = locations.find((l) => l.id === dailyVerse.locationId) ?? null;
-  const readDailyVerse = () => {
-    dismissDailyVerse();
-    // openVerse drives the existing go-to-reference path: BiblePanel loads the chapter, then
-    // scrolls to and flashes the specific verse because the reference names one.
-    openVerse(dailyVerseReference);
-  };
   const viewDailyVerseOnMap = () => {
     dismissDailyVerse();
     focusLocationOnMap(dailyVerse.locationId);
   };
+
+  // The card shows the verse's own text inline (not just its reference) — fetched once per app
+  // load the same way BiblePanel loads a chapter, since the text isn't duplicated into this file.
+  const [dailyVerseText, setDailyVerseText] = useState<string | null>(null);
+  useEffect(() => {
+    let cancelled = false;
+    fetch(`https://bible-api.com/${encodeURIComponent(dailyVerseReference)}?translation=web`)
+      .then((res) => res.json())
+      .then((data) => {
+        if (!cancelled && data?.text) setDailyVerseText(data.text.trim());
+      })
+      .catch(() => {});
+    return () => {
+      cancelled = true;
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  // A signed-in reader's written response to the daily prompt — posted as a public note (the same
+  // mechanism behind "My Notes" -> Public and the profile Posts feed) rather than a new table, so it
+  // shows up on their own profile exactly like any other shared note would.
+  const [dailyVerseResponse, setDailyVerseResponse] = useState("");
+  const [dailyVerseResponseStatus, setDailyVerseResponseStatus] = useState<"idle" | "saving" | "saved">("idle");
+  const postDailyVerseResponse = async () => {
+    const text = dailyVerseResponse.trim();
+    if (!text || !session) return;
+    setDailyVerseResponseStatus("saving");
+    const { error: postError } = await supabase.from("notes").insert({
+      user_id: session.user.id,
+      book: dailyVerse.reference.book,
+      chapter: dailyVerse.reference.chapter,
+      start_verse: dailyVerse.reference.verse,
+      end_verse: dailyVerse.reference.verse,
+      translation: "web",
+      quoted_text: dailyVerseText,
+      note_text: text,
+      is_public: true,
+    });
+    if (postError) {
+      setDailyVerseResponseStatus("idle");
+      return;
+    }
+    setDailyVerseResponseStatus("saved");
+    setNotesVersion((n) => n + 1);
+  };
+
+  // --- Seasonal walks (Holy Week, Advent) ------------------------------------------------------
+  // A dismissible banner pill under the header — deliberately NOT another modal, since the daily
+  // verse card already owns that moment — shown only while today falls in a walk's season window.
+  // Computed once per app load like dailyVerse; dismissal persists per season occurrence (see
+  // getWalkDismissKey), so one × keeps it gone until that season comes around next year.
+  const [activeWalk] = useState(() => getActiveSeasonalWalk());
+  const [walkBannerDismissed, setWalkBannerDismissed] = useState(() =>
+    activeWalk ? localStorage.getItem(getWalkDismissKey(activeWalk)) === "1" : true
+  );
+  const dismissWalkBanner = () => {
+    if (activeWalk) localStorage.setItem(getWalkDismissKey(activeWalk), "1");
+    setWalkBannerDismissed(true);
+  };
+  const [walkOpen, setWalkOpen] = useState(false);
+  const [walkStopIndex, setWalkStopIndex] = useState(0);
+  /** Focuses a stop on the map (locations and POIs live in separate datasets, so resolve against
+   * locations first — none of the walk stops use an id that exists in both) and loads its passage
+   * into the Bible panel without stealing the mobile tab away from the map. */
+  const goToWalkStop = (index: number) => {
+    if (!activeWalk) return;
+    const stop = activeWalk.stops[index];
+    if (!stop) return;
+    setWalkStopIndex(index);
+    if (locations.some((l) => l.id === stop.locationId)) focusLocationOnMap(stop.locationId);
+    else if (pois.some((p) => p.id === stop.locationId)) handleSelectPoiFromBible(stop.locationId);
+    goToReference(formatWalkStopReference(stop));
+  };
+  const openWalk = () => {
+    setWalkOpen(true);
+    goToWalkStop(0);
+  };
+  const closeWalk = () => setWalkOpen(false);
+  // [lng, lat] waypoints for the active walk's route line, in stop order — memoized so MapView's
+  // route effect (keyed on this array's identity) doesn't redraw/refit on every App render. Null
+  // whenever the walk view is closed, which empties the map's route source.
+  const walkRouteCoordinates = useMemo<[number, number][] | null>(() => {
+    if (!walkOpen || !activeWalk) return null;
+    const coords: [number, number][] = [];
+    activeWalk.stops.forEach((stop) => {
+      const target =
+        locations.find((l) => l.id === stop.locationId) ?? pois.find((p) => p.id === stop.locationId);
+      if (target) coords.push(target.coordinates);
+    });
+    return coords;
+  }, [walkOpen, activeWalk]);
 
   // The details panel has nothing to show without a selection on desktop — hiding it lets the
   // map expand instead of leaving a blank panel visible. On mobile it always renders (as its own
@@ -630,14 +780,43 @@ function App() {
             <div className="daily-verse-eyebrow">Verse &amp; Place of the Day</div>
             <h2 className="daily-verse-reference">{dailyVerseReference}</h2>
             {dailyVersePlace && <div className="daily-verse-place">📍 {dailyVersePlace.name}</div>}
-            <p className="daily-verse-hook">{dailyVerse.hook}</p>
+            {dailyVerseText && <p className="daily-verse-text">"{dailyVerseText}"</p>}
+            <p className="daily-verse-note">{dailyVerse.verseNote}</p>
             <p className="daily-verse-prompt">{dailyVerse.prompt}</p>
+            {session ? (
+              dailyVerseResponseStatus === "saved" ? (
+                <p className="daily-verse-response-saved">Posted to your profile. Thanks for sharing.</p>
+              ) : (
+                <form
+                  className="daily-verse-response-form"
+                  onSubmit={(e) => {
+                    e.preventDefault();
+                    postDailyVerseResponse();
+                  }}
+                >
+                  <textarea
+                    className="daily-verse-response-input"
+                    value={dailyVerseResponse}
+                    onChange={(e) => setDailyVerseResponse(e.target.value)}
+                    placeholder="Write your response…"
+                    rows={3}
+                    maxLength={2000}
+                  />
+                  <button
+                    type="submit"
+                    className="daily-verse-response-submit"
+                    disabled={!dailyVerseResponse.trim() || dailyVerseResponseStatus === "saving"}
+                  >
+                    {dailyVerseResponseStatus === "saving" ? "Posting…" : "Post to my profile"}
+                  </button>
+                </form>
+              )
+            ) : (
+              <p className="daily-verse-response-signed-out">Log in to write and share a response.</p>
+            )}
             <div className="daily-verse-actions">
-              <button type="button" className="daily-verse-read" onClick={readDailyVerse}>
-                Read this passage
-              </button>
               <button type="button" className="daily-verse-map" onClick={viewDailyVerseOnMap}>
-                View on the map
+                View Location
               </button>
             </div>
           </div>
@@ -686,6 +865,25 @@ function App() {
         )}
         <AuthButton session={session} openProfileNonce={openProfileNonce} />
       </header>
+      {/* Seasonal walk banner — a slim pill strip under the header (not a modal; see the walk state
+          block above). Hidden while the walk view itself is open to avoid saying it twice. */}
+      {activeWalk && !walkBannerDismissed && !walkOpen && (
+        <div className="walk-banner">
+          <button type="button" className="walk-banner-pill" onClick={openWalk}>
+            {activeWalk.emoji} <strong>{activeWalk.title}</strong>
+            <span className="walk-banner-tagline"> — {activeWalk.tagline.toLowerCase()}</span>
+          </button>
+          <button
+            type="button"
+            className="walk-banner-dismiss"
+            onClick={dismissWalkBanner}
+            aria-label="Dismiss for this season"
+            title="Dismiss for this season"
+          >
+            ×
+          </button>
+        </div>
+      )}
       <div className="app-body">
         {bibleMounted && (
           <BiblePanel
@@ -693,7 +891,10 @@ function App() {
             referenceNonce={referenceNonce}
             onSelectLocation={focusLocationOnMap}
             onSelectPoi={handleSelectPoiFromBible}
+            onPlanDaySelectLocation={focusPlanDayLocation}
+            onPlanDaySelectPoi={focusPlanDayPoi}
             onSelectPerson={handleSelectPersonFromBible}
+            onSelectTopic={handleSelectTopicFromBible}
             expand={sideExpand}
             style={{ width: bibleWidth }}
             userId={session?.user.id}
@@ -702,6 +903,7 @@ function App() {
             onNotesChanged={() => setNotesVersion((n) => n + 1)}
             externalSearchQuery={bibleSearchQuery}
             externalSearchNonce={bibleSearchNonce}
+            journalRequest={journalRequest}
           />
         )}
         {panels.bible && panels.map && (
@@ -727,6 +929,7 @@ function App() {
               selectedPoiId={selectedPoiId}
               onSelectPoi={handleSelectPoiFromMap}
               showAllNonce={showAllNonce}
+              walkRoute={walkRouteCoordinates}
             />
             <LayerControls
               map={map}
@@ -763,6 +966,8 @@ function App() {
             onSelectLocation={handleSelectLocationFromDetails}
             onSelectPoi={handleSelectPoiFromDetails}
             onSelectPerson={handleSelectPersonFromDetails}
+            onSelectTopic={handleSelectTopicFromDetails}
+            onJournalPrompt={session ? handleJournalPrompt : undefined}
             expand={sideExpand}
             style={{ width: detailsWidth }}
           />
@@ -774,12 +979,27 @@ function App() {
             onSelectLocation={handleSelectLocationFromDetails}
             onSelectPoi={handleSelectPoiFromDetails}
             onSelectPerson={handleSelectPersonFromDetails}
+            onSelectTopic={handleSelectTopicFromDetails}
             onSelectVerse={openVerse}
             expand={sideExpand}
             style={{ width: detailsWidth }}
           />
         )}
-        {showDetails && !selectedPerson && !selectedPoi && (
+        {showDetails && !selectedPerson && !selectedPoi && selectedTopic && (
+          <TopicPanel
+            topic={selectedTopic}
+            onBack={detailsHistory.length > 0 ? goBackInDetails : undefined}
+            onSelectVerse={openVerse}
+            onSelectLocation={handleSelectLocationFromDetails}
+            onSelectPoi={handleSelectPoiFromDetails}
+            onSelectPerson={handleSelectPersonFromDetails}
+            onSelectTopic={handleSelectTopicFromDetails}
+            onJournalPrompt={session ? handleJournalPrompt : undefined}
+            expand={sideExpand}
+            style={{ width: detailsWidth }}
+          />
+        )}
+        {showDetails && !selectedPerson && !selectedPoi && !selectedTopic && (
           <LocationPanel
             location={selectedLocation}
             onBack={detailsHistory.length > 0 ? goBackInDetails : undefined}
@@ -787,6 +1007,8 @@ function App() {
             onSelectLocation={handleSelectLocationFromDetails}
             onSelectPoi={handleSelectPoiFromDetails}
             onSelectPerson={handleSelectPersonFromDetails}
+            onSelectTopic={handleSelectTopicFromDetails}
+            onJournalPrompt={session ? handleJournalPrompt : undefined}
             expand={sideExpand}
             style={{ width: detailsWidth }}
           />
@@ -814,6 +1036,11 @@ function App() {
             friendsBadgeCount={pendingFriendRequests}
             messagesBadgeCount={unreadMessages}
             groupsBadgeCount={groupsBadgeCount}
+            // Study-trip stop actions — the same paths the Bible panel's place links use (focus a
+            // location/POI on the map without opening Details) and openVerse (load a passage).
+            onSelectLocation={focusLocationOnMap}
+            onSelectPoi={handleSelectPoiFromBible}
+            onGoToReference={openVerse}
           />
         )}
         {noPanelsOpen && (
@@ -822,6 +1049,11 @@ function App() {
           </div>
         )}
       </div>
+      {/* Fixed-position overlay (styled in App.css), not a child of map-area — on mobile it stays
+          reachable while the reader flips to the Bible tab to read a stop's passage. */}
+      {walkOpen && activeWalk && (
+        <SeasonalWalkPanel walk={activeWalk} stopIndex={walkStopIndex} onGoToStop={goToWalkStop} onClose={closeWalk} />
+      )}
       {isMobile && (
         <MobileTabBar
           active={activeMobilePanel}

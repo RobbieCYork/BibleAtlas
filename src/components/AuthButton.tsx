@@ -3,6 +3,7 @@ import type { Session } from "@supabase/supabase-js";
 import { supabase, setRememberMe, formatJoinDate, type Profile } from "../lib/supabase";
 import { useTextSize } from "../lib/textSize";
 import ReadingProgressGrid from "./ReadingProgressGrid";
+import PostsFeed from "./PostsFeed";
 import AvatarCropModal from "./AvatarCropModal";
 
 interface AuthButtonProps {
@@ -552,7 +553,7 @@ export default function AuthButton({ session, openProfileNonce }: AuthButtonProp
           </div>
         )}
         {open && menuView === "profile" && !session.user.is_anonymous && (
-          <div className="auth-dropdown">
+          <div className="auth-dropdown auth-dropdown-wide">
             <button type="button" className="auth-back-link" onClick={() => setMenuView("menu")}>
               ← Back
             </button>
@@ -561,6 +562,11 @@ export default function AuthButton({ session, openProfileNonce }: AuthButtonProp
             <div className="auth-settings-section auth-settings-section-stacked">
               <span className="auth-settings-label">My Reading</span>
               <ReadingProgressGrid userId={session.user.id} isOwn />
+            </div>
+            <div className="auth-settings-divider" />
+            <div className="auth-settings-section auth-settings-section-stacked">
+              <span className="auth-settings-label">My Posts</span>
+              <PostsFeed userId={session.user.id} viewerId={session.user.id} isOwn />
             </div>
             <div className="auth-settings-divider" />
             <DataExportControl userId={session.user.id} />

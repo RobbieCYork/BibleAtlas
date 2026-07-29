@@ -220,6 +220,125 @@ export function formatReadingTime(totalSeconds: number): string {
   return `${minutes} min${minutes === 1 ? "" : "s"}`;
 }
 
+/** One completed reading-plan day (see data/readingPlans.ts). PK is (user_id, plan_id, day_number),
+ * so marking a day done twice is an upsert, not a duplicate. */
+export interface ReadingPlanProgress {
+  user_id: string;
+  plan_id: string;
+  day_number: number;
+  completed_at: string;
+}
+
+/** localStorage mirror of plan progress — the only store for logged-out readers, and the silent
+ * fallback when the reading_plan_progress table hasn't been created in this environment yet. */
+const planProgressStorageKey = (planId: string) => `plan-progress:${planId}`;
+
+export function readLocalPlanProgress(planId: string): number[] {
+  try {
+    const raw = localStorage.getItem(planProgressStorageKey(planId));
+    const parsed = raw ? JSON.parse(raw) : [];
+    return Array.isArray(parsed) ? parsed.filter((d): d is number => typeof d === "number") : [];
+  } catch {
+    return [];
+  }
+}
+
+function writeLocalPlanProgress(planId: string, days: number[]) {
+  try {
+    localStorage.setItem(planProgressStorageKey(planId), JSON.stringify([...days].sort((a, b) => a - b)));
+  } catch {
+    // Storage full/blocked — losing a checkmark is not worth surfacing an error over.
+  }
+}
+
+/** True when an error means the reading_plan_progress table doesn't exist in this database yet —
+ * either Postgres's own undefined_table (42P01) or PostgREST's schema-cache miss (PGRST205 /
+ * "Could not find the table..."). Those degrade silently to localStorage rather than surfacing. */
+function isMissingPlanTableError(error: { code?: string; message?: string } | null | undefined): boolean {
+  if (!error) return false;
+  if (error.code === "42P01" || error.code === "PGRST205") return true;
+  const msg = error.message ?? "";
+  return msg.includes("reading_plan_progress") && /does not exist|could not find|schema cache/i.test(msg);
+}
+
+/** Day numbers this user has completed for one plan — Supabase when logged in (falling back to the
+ * localStorage mirror if the table is missing or the query fails), localStorage otherwise. */
+export async function fetchPlanProgress(userId: string | null | undefined, planId: string): Promise<number[]> {
+  if (!userId) return readLocalPlanProgress(planId);
+  try {
+    const { data, error } = await supabase
+      .from("reading_plan_progress")
+      .select("day_number")
+      .eq("user_id", userId)
+      .eq("plan_id", planId);
+    if (error) {
+      if (!isMissingPlanTableError(error)) console.error("Failed to load plan progress:", error.message);
+      return readLocalPlanProgress(planId);
+    }
+    return ((data as { day_number: number }[] | null) ?? []).map((r) => r.day_number);
+  } catch {
+    return readLocalPlanProgress(planId);
+  }
+}
+
+/** Marks/unmarks one plan day done. Always writes the localStorage mirror (guest store + warm
+ * fallback), then best-effort syncs Supabase for logged-in users — a missing table is silently
+ * tolerated, so this environment works before the migration lands. */
+export async function setPlanDayDone(
+  userId: string | null | undefined,
+  planId: string,
+  dayNumber: number,
+  done: boolean
+): Promise<void> {
+  const local = readLocalPlanProgress(planId);
+  writeLocalPlanProgress(planId, done ? [...new Set([...local, dayNumber])] : local.filter((d) => d !== dayNumber));
+  if (!userId) return;
+  try {
+    if (done) {
+      const { error } = await supabase
+        .from("reading_plan_progress")
+        .upsert(
+          { user_id: userId, plan_id: planId, day_number: dayNumber, completed_at: new Date().toISOString() },
+          { onConflict: "user_id,plan_id,day_number" }
+        );
+      if (error && !isMissingPlanTableError(error)) console.error("Failed to save plan progress:", error.message);
+    } else {
+      const { error } = await supabase
+        .from("reading_plan_progress")
+        .delete()
+        .eq("user_id", userId)
+        .eq("plan_id", planId)
+        .eq("day_number", dayNumber);
+      if (error && !isMissingPlanTableError(error)) console.error("Failed to remove plan progress:", error.message);
+    }
+  } catch {
+    // Network hiccup — the localStorage mirror already holds the change.
+  }
+}
+
+/** Best-effort one-way merge of any locally-tracked plan progress into Supabase on login, so days a
+ * reader checked off before signing in aren't lost. ignoreDuplicates keeps the server's original
+ * completed_at for days that were already synced. The local mirror is deliberately left in place. */
+export async function mergeLocalPlanProgress(userId: string, planIds: string[]): Promise<void> {
+  try {
+    const now = new Date().toISOString();
+    const rows = planIds.flatMap((planId) =>
+      readLocalPlanProgress(planId).map((day) => ({
+        user_id: userId,
+        plan_id: planId,
+        day_number: day,
+        completed_at: now,
+      }))
+    );
+    if (rows.length === 0) return;
+    await supabase
+      .from("reading_plan_progress")
+      .upsert(rows, { onConflict: "user_id,plan_id,day_number", ignoreDuplicates: true });
+  } catch {
+    // Best-effort only — the local copy still exists, and the next login retries.
+  }
+}
+
 export type FriendRequestStatus = "pending" | "accepted" | "declined";
 
 export interface FriendRequest {
@@ -268,6 +387,60 @@ export interface GroupJoinRequest {
   status: GroupJoinRequestStatus;
   created_at: string;
   responded_at: string | null;
+}
+
+/** A leader-authored, ordered walk through places tied to a passage series — the group-study
+ * counterpart of the seasonal walks, except stops live in the database so each group curates its
+ * own. Only the group's owner/admins can create or edit trips (enforced by RLS). */
+export interface GroupStudyTrip {
+  id: string;
+  group_id: string;
+  created_by: string;
+  title: string;
+  description: string | null;
+  /** Optional link to a named study series — free-form text, not a foreign key. */
+  series_id: string | null;
+  created_at: string;
+  updated_at: string;
+}
+
+/** One ordered stop on a study trip. location_id is a raw id from either static dataset
+ * (locations OR pois, no prefix) — resolve against both, locations first, same as the seasonal
+ * walk stops do. position is 1-based and unique within a trip. */
+export interface GroupStudyTripStop {
+  id: string;
+  trip_id: string;
+  position: number;
+  location_id: string;
+  label: string | null;
+  /** e.g. "Acts 16:12" — plain text; only drives the "Read" button when it parses as a real reference. */
+  scripture_ref: string | null;
+  description: string | null;
+  created_at: string;
+}
+
+/** A shared note under one stop — visible to the whole group; any member can add one
+ * (edit/delete own; admins can delete any). */
+export interface GroupStudyTripStopNote {
+  id: string;
+  stop_id: string;
+  author_id: string;
+  body: string;
+  created_at: string;
+  updated_at: string;
+}
+
+/** True when an error means the group study trip tables haven't been created in this database yet —
+ * the migration is written but not applied, so the UI degrades to a quiet "coming soon" notice
+ * instead of crashing or spamming errors. Same shape as isMissingPlanTableError above: Postgres's
+ * undefined_table (42P01) or PostgREST's schema-cache miss (PGRST205 / "Could not find the table"). */
+export function isMissingStudyTripTableError(
+  error: { code?: string; message?: string } | null | undefined
+): boolean {
+  if (!error) return false;
+  if (error.code === "42P01" || error.code === "PGRST205") return true;
+  const msg = error.message ?? "";
+  return msg.includes("group_study_trip") && /does not exist|could not find|schema cache/i.test(msg);
 }
 
 /** One row per group the caller is in — the return shape of the list_my_groups() RPC, which

@@ -66,6 +66,9 @@ export interface Location {
   riverName?: string;
   /** Citations backing the historical/archaeological claims above. */
   sources?: SourceCitation[];
+  /** Optional journaling question tied to this place — shown as a "Reflect" card in the details
+   * panel, with a "Journal this" button that anchors a note to the first entry in `verses`. */
+  reflectionPrompt?: string;
 }
 
 /** Drives article depth/prominence: major figures get the longest treatment, notable figures the shortest. */
@@ -112,6 +115,42 @@ export interface Person {
   verses: VerseRef[];
   /** Citations backing the historical claims — general further reading, e.g. a reputable encyclopedia entry. */
   sources?: SourceCitation[];
+  /** Optional journaling question tied to this person — shown as a "Reflect" card in the details
+   * panel, with a "Journal this" button that anchors a note to the first entry in `verses`. */
+  reflectionPrompt?: string;
+}
+
+/** Drives which icon/badge a Topic gets — not map-related (topics have no coordinates). */
+export type TopicCategory = "practice" | "doctrine" | "people-group" | "concept";
+
+export interface TopicSection {
+  heading: string;
+  /** One paragraph per array entry, same convention as Person.lifeStory — location/POI/person names
+   * here get auto-linked. */
+  paragraphs: string[];
+}
+
+/**
+ * A non-place, non-person subject auto-linked from Bible text — a practice (Passover, casting lots),
+ * a doctrine (the Trinity), a people group (Samaritans, Pharisees), or a broader concept (the Torah,
+ * the synagogue). No coordinates/map presence, unlike Location/PointOfInterest.
+ */
+export interface Topic {
+  id: string;
+  name: string;
+  alternateNames?: string[];
+  category: TopicCategory;
+  /** Short tag, e.g. "Old Testament Practice", "Trinitarian Doctrine", "People Group". */
+  role: string;
+  /** One or two sentences — the hook shown right under the name. */
+  summary: string;
+  /** Main body, one heading + paragraphs per major sub-topic (e.g. "Old Testament Background",
+   * "Fulfillment in the New Testament") — flexible since topics don't share a person's biographical shape. */
+  sections: TopicSection[];
+  verses: VerseRef[];
+  sources?: SourceCitation[];
+  /** Optional journaling question tied to this topic, same convention as Person/Location. */
+  reflectionPrompt?: string;
 }
 
 /**
@@ -135,4 +174,7 @@ export interface PointOfInterest {
   modernMapUrl: string;
   /** Citations backing the historical/archaeological claims above. */
   sources?: SourceCitation[];
+  /** Optional journaling question tied to this site — shown as a "Reflect" card in the details
+   * panel. POIs carry no verse list, so the card renders prompt-only (no "Journal this" anchor). */
+  reflectionPrompt?: string;
 }

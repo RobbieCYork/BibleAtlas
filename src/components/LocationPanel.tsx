@@ -1,6 +1,10 @@
 import type { Location, LocationCategory } from "../data/types";
 import VerseList from "./VerseList";
 import LinkedVerseText from "./LinkedVerseText";
+import ReflectionPrompt from "./ReflectionPrompt";
+import ShareCardButton from "./ShareCardButton";
+import ProfileAudioPlayer from "./ProfileAudioPlayer";
+import { generatePlaceCard, shareFilename } from "../lib/shareCard";
 
 interface LocationPanelProps {
   location: Location | null;
@@ -11,6 +15,10 @@ interface LocationPanelProps {
   onSelectLocation: (id: string) => void;
   onSelectPoi: (id: string) => void;
   onSelectPerson: (id: string) => void;
+  onSelectTopic: (id: string) => void;
+  /** Present only for signed-in readers — its absence hides the "Journal this" button on the
+   * reflection-prompt card (the prompt itself still shows). */
+  onJournalPrompt?: (reference: string, prompt: string) => void;
   expand?: boolean;
   style?: React.CSSProperties;
 }
@@ -33,6 +41,8 @@ export default function LocationPanel({
   onSelectLocation,
   onSelectPoi,
   onSelectPerson,
+  onSelectTopic,
+  onJournalPrompt,
   expand,
   style,
 }: LocationPanelProps) {
@@ -56,6 +66,9 @@ export default function LocationPanel({
           ‹ Back
         </button>
       )}
+      <div className="panel-share-row">
+        <ShareCardButton getBlob={() => generatePlaceCard(location)} filename={shareFilename(location.name)} />
+      </div>
       <span className="category-badge">{CATEGORY_LABELS[location.category]}</span>
       <h2>{location.name}</h2>
       {location.pronunciation && <p className="pronunciation">Pronounced: {location.pronunciation}</p>}
@@ -67,7 +80,17 @@ export default function LocationPanel({
         View modern location on Google Maps ↗
       </a>
 
+      <ProfileAudioPlayer kind="location" id={location.id} />
+
       <VerseList verses={location.verses} onSelectVerse={onSelectVerse} />
+
+      {location.reflectionPrompt && (
+        <ReflectionPrompt
+          prompt={location.reflectionPrompt}
+          reference={location.verses[0]?.reference}
+          onJournal={onJournalPrompt}
+        />
+      )}
 
       <div className="history-section">
         {history.founded && (
@@ -79,6 +102,7 @@ export default function LocationPanel({
                 onSelectLocation={onSelectLocation}
                 onSelectPoi={onSelectPoi}
                 onSelectPerson={onSelectPerson}
+                onSelectTopic={onSelectTopic}
                 onSelectVerse={onSelectVerse}
                 excludeId={location.id}
               />
@@ -94,6 +118,7 @@ export default function LocationPanel({
                 onSelectLocation={onSelectLocation}
                 onSelectPoi={onSelectPoi}
                 onSelectPerson={onSelectPerson}
+                onSelectTopic={onSelectTopic}
                 onSelectVerse={onSelectVerse}
                 excludeId={location.id}
               />
@@ -121,6 +146,7 @@ export default function LocationPanel({
                 onSelectLocation={onSelectLocation}
                 onSelectPoi={onSelectPoi}
                 onSelectPerson={onSelectPerson}
+                onSelectTopic={onSelectTopic}
                 onSelectVerse={onSelectVerse}
                 excludeId={location.id}
               />
@@ -138,6 +164,7 @@ export default function LocationPanel({
                     onSelectLocation={onSelectLocation}
                     onSelectPoi={onSelectPoi}
                     onSelectPerson={onSelectPerson}
+                    onSelectTopic={onSelectTopic}
                     onSelectVerse={onSelectVerse}
                     excludeId={location.id}
                   />
@@ -157,6 +184,7 @@ export default function LocationPanel({
               onSelectLocation={onSelectLocation}
               onSelectPoi={onSelectPoi}
               onSelectPerson={onSelectPerson}
+              onSelectTopic={onSelectTopic}
               onSelectVerse={onSelectVerse}
               excludeId={location.id}
             />

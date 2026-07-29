@@ -1,6 +1,10 @@
 import type { Person, PersonTier } from "../data/types";
 import VerseList from "./VerseList";
 import LinkedVerseText from "./LinkedVerseText";
+import ReflectionPrompt from "./ReflectionPrompt";
+import ShareCardButton from "./ShareCardButton";
+import ProfileAudioPlayer from "./ProfileAudioPlayer";
+import { generatePersonCard, shareFilename } from "../lib/shareCard";
 
 interface PersonPanelProps {
   person: Person | null;
@@ -11,6 +15,10 @@ interface PersonPanelProps {
   onSelectLocation: (id: string) => void;
   onSelectPoi: (id: string) => void;
   onSelectPerson: (id: string) => void;
+  onSelectTopic: (id: string) => void;
+  /** Present only for signed-in readers — its absence hides the "Journal this" button on the
+   * reflection-prompt card (the prompt itself still shows). */
+  onJournalPrompt?: (reference: string, prompt: string) => void;
   expand?: boolean;
   style?: React.CSSProperties;
 }
@@ -28,6 +36,8 @@ export default function PersonPanel({
   onSelectLocation,
   onSelectPoi,
   onSelectPerson,
+  onSelectTopic,
+  onJournalPrompt,
   expand,
   style,
 }: PersonPanelProps) {
@@ -40,6 +50,9 @@ export default function PersonPanel({
           ‹ Back
         </button>
       )}
+      <div className="panel-share-row">
+        <ShareCardButton getBlob={() => generatePersonCard(person)} filename={shareFilename(person.name)} />
+      </div>
       <span className="category-badge person-badge">{person.role}</span>
       <h2>{person.name}</h2>
       {person.pronunciation && <p className="pronunciation">Pronounced: {person.pronunciation}</p>}
@@ -49,7 +62,17 @@ export default function PersonPanel({
       <p className="person-summary">{person.summary}</p>
       <span className="person-tier-tag">{TIER_LABELS[person.tier]}</span>
 
+      <ProfileAudioPlayer kind="person" id={person.id} />
+
       <VerseList verses={person.verses} onSelectVerse={onSelectVerse} />
+
+      {person.reflectionPrompt && (
+        <ReflectionPrompt
+          prompt={person.reflectionPrompt}
+          reference={person.verses[0]?.reference}
+          onJournal={onJournalPrompt}
+        />
+      )}
 
       <div className="history-section">
         <div className="history-field">
@@ -61,6 +84,7 @@ export default function PersonPanel({
                 onSelectLocation={onSelectLocation}
                 onSelectPoi={onSelectPoi}
                 onSelectPerson={onSelectPerson}
+                onSelectTopic={onSelectTopic}
                 onSelectVerse={onSelectVerse}
                 excludeId={person.id}
               />
@@ -84,6 +108,7 @@ export default function PersonPanel({
                 onSelectLocation={onSelectLocation}
                 onSelectPoi={onSelectPoi}
                 onSelectPerson={onSelectPerson}
+                onSelectTopic={onSelectTopic}
                 onSelectVerse={onSelectVerse}
                 excludeId={person.id}
               />
@@ -102,6 +127,7 @@ export default function PersonPanel({
                     onSelectLocation={onSelectLocation}
                     onSelectPoi={onSelectPoi}
                     onSelectPerson={onSelectPerson}
+                    onSelectTopic={onSelectTopic}
                     onSelectVerse={onSelectVerse}
                     excludeId={person.id}
                   />

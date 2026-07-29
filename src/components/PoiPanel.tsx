@@ -1,5 +1,9 @@
 import type { PointOfInterest } from "../data/types";
 import LinkedVerseText from "./LinkedVerseText";
+import ReflectionPrompt from "./ReflectionPrompt";
+import ShareCardButton from "./ShareCardButton";
+import ProfileAudioPlayer from "./ProfileAudioPlayer";
+import { generatePlaceCard, shareFilename } from "../lib/shareCard";
 
 interface PoiPanelProps {
   poi: PointOfInterest | null;
@@ -9,6 +13,7 @@ interface PoiPanelProps {
   onSelectLocation: (id: string) => void;
   onSelectPoi: (id: string) => void;
   onSelectPerson: (id: string) => void;
+  onSelectTopic: (id: string) => void;
   onSelectVerse?: (reference: string) => void;
   expand?: boolean;
   style?: React.CSSProperties;
@@ -20,6 +25,7 @@ export default function PoiPanel({
   onSelectLocation,
   onSelectPoi,
   onSelectPerson,
+  onSelectTopic,
   onSelectVerse,
   expand,
   style,
@@ -33,6 +39,9 @@ export default function PoiPanel({
           ‹ Back
         </button>
       )}
+      <div className="panel-share-row">
+        <ShareCardButton getBlob={() => generatePlaceCard(poi)} filename={shareFilename(poi.name)} />
+      </div>
       <span className="category-badge poi-badge">{poi.tag}</span>
       <h2>{poi.name}</h2>
       {poi.pronunciation && <p className="pronunciation">Pronounced: {poi.pronunciation}</p>}
@@ -40,6 +49,8 @@ export default function PoiPanel({
       <a className="modern-map-link" href={poi.modernMapUrl} target="_blank" rel="noopener noreferrer">
         View modern location on Google Maps ↗
       </a>
+
+      <ProfileAudioPlayer kind="poi" id={poi.id} />
 
       <div className="history-section">
         <div className="history-field">
@@ -49,12 +60,16 @@ export default function PoiPanel({
               onSelectLocation={onSelectLocation}
               onSelectPoi={onSelectPoi}
               onSelectPerson={onSelectPerson}
+              onSelectTopic={onSelectTopic}
               onSelectVerse={onSelectVerse}
               excludeId={poi.id}
             />
           </p>
         </div>
       </div>
+
+      {/* POIs carry no verse list to anchor a journal note to, so the card is prompt-only here. */}
+      {poi.reflectionPrompt && <ReflectionPrompt prompt={poi.reflectionPrompt} />}
 
       <div className="archaeology-section">
         <h4>Archaeology</h4>
@@ -64,6 +79,7 @@ export default function PoiPanel({
             onSelectLocation={onSelectLocation}
             onSelectPoi={onSelectPoi}
             onSelectPerson={onSelectPerson}
+            onSelectTopic={onSelectTopic}
             onSelectVerse={onSelectVerse}
             excludeId={poi.id}
           />

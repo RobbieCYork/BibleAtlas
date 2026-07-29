@@ -50,6 +50,10 @@ interface MapViewProps {
    * flight. An explicit signal rather than watching the selection ids go null, because selecting
    * a person also nulls both ids (people have no map presence) and must not move the camera. */
   showAllNonce: number;
+  /** [lng, lat] waypoints of the active seasonal walk, in stop order — drawn as a dashed route
+   * line while a walk is open; null clears it. Memoized by App so identity only changes when the
+   * walk actually opens/closes (this keys the draw-and-refit effect below). */
+  walkRoute: [number, number][] | null;
 }
 
 const SATELLITE_SOURCE_ID = "satellite-imagery";
@@ -179,6 +183,56 @@ function ensureRiverHighlightLayer(map: maplibregl.Map) {
     },
     beforeLayer?.id
   );
+}
+
+const WALK_ROUTE_SOURCE_ID = "walk-route";
+const WALK_ROUTE_LAYER_ID = "walk-route-line";
+const WALK_ROUTE_CASING_LAYER_ID = "walk-route-line-casing";
+
+/** Adds the (initially empty) dashed line layer tracing an active seasonal walk's route between its
+ * stops. Fully isolated from the cluster system — its own GeoJSON source, emptied (not removed)
+ * when the walk closes, mirroring how the region/river highlight sources are managed. */
+function ensureWalkRouteLayer(map: maplibregl.Map) {
+  if (map.getSource(WALK_ROUTE_SOURCE_ID)) return;
+
+  map.addSource(WALK_ROUTE_SOURCE_ID, { type: "geojson", data: EMPTY_FEATURE_COLLECTION });
+
+  const layers = map.getStyle()?.layers ?? [];
+  const beforeLayer = layers.find((l) => l.type === "line" && /tunnel|road|bridge/.test(l.id));
+
+  // Fixed hex colors like the other highlight layers — map paint can't read the app's CSS
+  // variables, and the base map's canvas doesn't change with the app theme anyway.
+  map.addLayer(
+    {
+      id: WALK_ROUTE_CASING_LAYER_ID,
+      type: "line",
+      source: WALK_ROUTE_SOURCE_ID,
+      layout: { "line-cap": "round", "line-join": "round" },
+      paint: { "line-color": "#f5f3ff", "line-width": 7, "line-opacity": 0.55 },
+    },
+    beforeLayer?.id
+  );
+  map.addLayer(
+    {
+      id: WALK_ROUTE_LAYER_ID,
+      type: "line",
+      source: WALK_ROUTE_SOURCE_ID,
+      layout: { "line-cap": "round", "line-join": "round" },
+      paint: { "line-color": "#7c3aed", "line-width": 3, "line-opacity": 0.9, "line-dasharray": [2, 1.6] },
+    },
+    beforeLayer?.id
+  );
+}
+
+/** Draws (or, with null, clears) the walk route polyline. */
+function setWalkRouteData(map: maplibregl.Map, coordinates: [number, number][] | null) {
+  const source = map.getSource(WALK_ROUTE_SOURCE_ID) as maplibregl.GeoJSONSource | undefined;
+  if (!source) return;
+  if (!coordinates || coordinates.length < 2) {
+    source.setData(EMPTY_FEATURE_COLLECTION);
+    return;
+  }
+  source.setData({ type: "Feature", properties: {}, geometry: { type: "LineString", coordinates } });
 }
 
 function setHighlightedLocation(map: maplibregl.Map, location: Location | undefined) {
@@ -341,6 +395,7 @@ export default function MapView({
   selectedPoiId,
   onSelectPoi,
   showAllNonce,
+  walkRoute,
 }: MapViewProps) {
   const containerRef = useRef<HTMLDivElement | null>(null);
   const mapRef = useRef<maplibregl.Map | null>(null);
@@ -371,6 +426,10 @@ export default function MapView({
   viewStateRef.current = { locationsVisible, poisVisible, selectedId, selectedPoiId };
   const mapModeRef = useRef(mapMode);
   mapModeRef.current = mapMode;
+  // Same current-value-at-load pattern as mapModeRef: if the map (re)mounts mid-walk (e.g. the Map
+  // panel was closed and reopened on desktop), the load handler redraws the route from this ref.
+  const walkRouteRef = useRef(walkRoute);
+  walkRouteRef.current = walkRoute;
 
   /** Rebuilds the cluster source's data from the currently-visible pin set (empty while a selection
    * isolates the map to a single pin, so no cluster badges compete with it). */
@@ -497,6 +556,8 @@ export default function MapView({
       ensureSatelliteLayer(map);
       ensureHighlightLayer(map);
       ensureRiverHighlightLayer(map);
+      ensureWalkRouteLayer(map);
+      setWalkRouteData(map, walkRouteRef.current);
       applyMapMode(map, mapModeRef.current);
       locations.forEach((loc) => {
         const el = createFlagElement(loc.category);
@@ -586,6 +647,21 @@ export default function MapView({
       mapRef.current.flyTo({ center: poi.coordinates, zoom: SELECTED_ZOOM, duration: 1200 });
     }
   }, [selectedPoiId, pois]);
+
+  // Seasonal walk route: draw/clear the dashed line, and on open refit the camera around the whole
+  // route as an overview beat. Deliberately placed AFTER the selection effects above — opening a
+  // walk both selects its first stop and sets the route in the same commit, and running last lets
+  // this overview fitBounds win over that stop's flyTo (stepping afterwards only changes the
+  // selection, so the per-stop flights behave normally from then on). Pre-"load" the source doesn't
+  // exist yet and setWalkRouteData no-ops; the load handler draws from walkRouteRef instead.
+  useEffect(() => {
+    const map = mapRef.current;
+    if (!map) return;
+    setWalkRouteData(map, walkRoute);
+    if (walkRoute && walkRoute.length > 1 && map.getSource(WALK_ROUTE_SOURCE_ID)) {
+      map.fitBounds(boundsOf(walkRoute), { padding: 70, duration: 1200 });
+    }
+  }, [walkRoute]);
 
   // Shows the selected pin's name in a floating label — without this, flying to an obscure
   // ancient place name (e.g. "Sychar") gives no on-map indication of what's being shown, since

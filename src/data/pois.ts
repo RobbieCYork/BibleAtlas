@@ -37,6 +37,8 @@ export const pois: PointOfInterest[] = [
       { label: "Acts 24 (Paul before Felix), Bible Gateway NIV", url: "https://www.biblegateway.com/passage/?search=Acts%2024&version=NIV" },
       { label: "Acts 10 (Cornelius), Bible Gateway NIV", url: "https://www.biblegateway.com/passage/?search=Acts%2010&version=NIV" },
     ],
+    reflectionPrompt:
+      "Here Peter crossed a deep cultural line to reach Cornelius. Who feels like an outsider to you — and what would crossing that line look like this week?",
   },
   {
     id: "masada",
@@ -68,6 +70,8 @@ export const pois: PointOfInterest[] = [
       { label: "Masada - UNESCO World Heritage listing", url: "https://whc.unesco.org/en/list/1040/" },
       { label: "Masada ostraca and Yadin excavations, Biblical Archaeology Society", url: "https://www.biblicalarchaeology.org/daily/biblical-sites-places/biblical-archaeology-sites/masada-the-dead-sea-fortress-that-still-inspires-controversy/" },
     ],
+    reflectionPrompt:
+      "Masada was the fortress of last resort — where do you retreat when everything feels under siege?",
   },
   {
     id: "herodium",
@@ -100,6 +104,8 @@ export const pois: PointOfInterest[] = [
       { label: "Finding King Herod's Tomb - Smithsonian Magazine", url: "https://www.smithsonianmag.com/history/finding-king-herods-tomb-34296862/" },
       { label: "Matthew 2, Bible Gateway NIV", url: "https://www.biblegateway.com/passage/?search=Matthew%202&version=NIV" },
     ],
+    reflectionPrompt:
+      "Herod moved a hill to build a monument to himself, and it stands today as a ruin — what are you building, and how long will it matter?",
   },
   {
     id: "qumran",
@@ -131,6 +137,8 @@ export const pois: PointOfInterest[] = [
       { label: "Roland de Vaux's Qumran excavations, Orion Center bibliography", url: "https://orion-bibliography.huji.ac.il/node/81730" },
       { label: "Dead Sea Scrolls - Wikipedia", url: "https://en.wikipedia.org/wiki/Dead_Sea_Scrolls" },
     ],
+    reflectionPrompt:
+      "The Qumran community withdrew to the desert to copy and guard the Scriptures — what would you preserve at any cost?",
   },
   {
     id: "bethsaida",
@@ -163,6 +171,8 @@ export const pois: PointOfInterest[] = [
       { label: "John 1, Bible Gateway NIV", url: "https://www.biblegateway.com/passage/?search=John%201&version=NIV" },
       { label: "Mark 8, Bible Gateway NIV", url: "https://www.biblegateway.com/passage/?search=Mark%208&version=NIV" },
     ],
+    reflectionPrompt:
+      "At Bethsaida, Jesus healed a blind man in stages, sight coming gradually — where is clarity coming slowly for you?",
   },
   {
     id: "chorazin",
@@ -194,6 +204,8 @@ export const pois: PointOfInterest[] = [
       { label: "Matthew 23, Bible Gateway NIV", url: "https://www.biblegateway.com/passage/?search=Matthew%2023&version=NIV" },
       { label: "Digging Through Time at Chorazin, Biblical Archaeology Society", url: "https://www.biblicalarchaeology.org/daily/biblical-sites-places/biblical-archaeology-sites/digging-through-time-at-chorazin/" },
     ],
+    reflectionPrompt:
+      "Chorazin saw miracles and stayed unmoved — what good things have you seen so often they no longer move you?",
   },
   {
     id: "sepphoris",
@@ -224,6 +236,8 @@ export const pois: PointOfInterest[] = [
       { label: "Sepphoris - Wikipedia", url: "https://en.wikipedia.org/wiki/Sepphoris" },
       { label: "Tzippori National Park, Israel Nature and Parks Authority", url: "https://en.parks.org.il/reserve-park/zippori-national-park/" },
     ],
+    reflectionPrompt:
+      "Jesus may have worked in this booming city an hour's walk from Nazareth during his hidden years — what is being built in your hidden seasons?",
   },
   {
     id: "beth-shean",
@@ -255,6 +269,8 @@ export const pois: PointOfInterest[] = [
       { label: "1 Samuel 31, Bible Gateway NIV", url: "https://www.biblegateway.com/passage/?search=1%20Samuel%2031&version=NIV" },
       { label: "Decapolis - Wikipedia", url: "https://en.wikipedia.org/wiki/Decapolis" },
     ],
+    reflectionPrompt:
+      "The men of Jabesh-gilead risked everything to honor Saul's body at Beth-shean, repaying an old rescue — what debt of gratitude would you take a risk to repay?",
   },
   {
     id: "caesarea-philippi",
@@ -286,6 +302,8 @@ export const pois: PointOfInterest[] = [
       { label: "Matthew 16, Bible Gateway NIV", url: "https://www.biblegateway.com/passage/?search=Matthew%2016&version=NIV" },
       { label: "Omrit Excavation Project", url: "https://www.omritexcavations.org/" },
     ],
+    reflectionPrompt:
+      "At Caesarea Philippi, surrounded by shrines to other gods, Peter made his great confession — where is it costliest for you to say what you believe?",
   },
   {
     id: "jericho",
@@ -317,6 +335,8 @@ export const pois: PointOfInterest[] = [
       { label: "Joshua 6, Bible Gateway NIV", url: "https://www.biblegateway.com/passage/?search=Joshua%206&version=NIV" },
       { label: "Kathleen Kenyon - Britannica", url: "https://www.britannica.com/biography/Kathleen-Kenyon" },
     ],
+    reflectionPrompt:
+      "Jericho's mound holds thousands of years of people starting over on the same ground — what in your life is ready to be rebuilt?",
   },
   {
     id: "bethel",
@@ -349,6 +369,8 @@ export const pois: PointOfInterest[] = [
       { label: "Bethel - Wikipedia", url: "https://en.wikipedia.org/wiki/Bethel" },
       { label: "The Excavation of Bethel (1934-1960), Albright/Kelso - Google Books", url: "https://books.google.com/books/about/The_Excavation_of_Bethel_1934_1960.html?id=a7VVAAAAYAAJ" },
     ],
+    reflectionPrompt:
+      "At Bethel, Jacob woke and said, 'Surely the LORD is in this place, and I did not know it' — where might that be true for you?",
   },
   {
     id: "shiloh",
@@ -381,6 +403,8 @@ export const pois: PointOfInterest[] = [
       { label: "Finkelstein, Excavations at Shiloh 1981-1984: Preliminary Report, Tel Aviv 12(2)", url: "https://www.academia.edu/40779456/I_Finkelstein_ed_Excavations_at_Shiloh_1981_1984_Preliminary_Report_Tel_Aviv_12_1985_pp_123_180" },
       { label: "Associates for Biblical Research - The Shiloh Excavations", url: "https://biblearchaeology.org/staffdig/50-the-shiloh-excavations" },
     ],
+    reflectionPrompt:
+      "The tabernacle rested at Shiloh for centuries before the ark moved on — how do you handle it when a familiar season of God's presence changes?",
   },
   {
     id: "hebron",
@@ -413,6 +437,8 @@ export const pois: PointOfInterest[] = [
       { label: "Tel Rumeida - Wikipedia", url: "https://en.wikipedia.org/wiki/Tel_Rumeida" },
       { label: "Emek Shaveh - Tel Rumeida, Hebron's Archaeological Park", url: "https://emekshaveh.org/en/tel-rumeida-hebrons-archaeological-park/" },
     ],
+    reflectionPrompt:
+      "David reigned seven years in Hebron before Jerusalem — what smaller assignment are you tempted to rush past?",
   },
   {
     id: "beersheba",
@@ -445,6 +471,8 @@ export const pois: PointOfInterest[] = [
       { label: "Tel Be'er Sheva - UNESCO / Biblical Tels excavation summary", url: "https://whc.unesco.org/en/list/1108/" },
       { label: "Tel Be'er Sheva altar - Israel Museum / archaeology overview", url: "https://en.wikipedia.org/wiki/Tel_Be%27er_Sheva" },
     ],
+    reflectionPrompt:
+      "Hagar, Abraham, Isaac, and Jacob all met God around Beersheba on the way to somewhere else — how do you meet God in transitional places?",
   },
   {
     id: "megiddo",
@@ -478,6 +506,8 @@ export const pois: PointOfInterest[] = [
       { label: "Tel Megiddo - Wikipedia", url: "https://en.wikipedia.org/wiki/Tel_Megiddo" },
       { label: "Tel Aviv University - The Megiddo Expedition, Past Excavations", url: "https://www.themegiddoexpedition.com/past-excavations" },
     ],
+    reflectionPrompt:
+      "More than twenty layers of cities lie stacked beneath Megiddo — which layers of your own history are worth digging into?",
   },
   {
     id: "mount-sinai",
@@ -510,6 +540,8 @@ export const pois: PointOfInterest[] = [
       { label: "Saint Catherine's Monastery - Wikipedia", url: "https://en.wikipedia.org/wiki/Saint_Catherine%27s_Monastery" },
       { label: "Kalopissi-Verti & Panayotidi, Excavations on the Holy Summit (Jebel Musa) at Mount Sinai", url: "https://www.academia.edu/5275614/S_Kalopissi_Verti_M_Panayotidi_Excavations_on_the_Holy_Summit_Jebel_Musa_at_Mount_Sinai_Preliminary_remarks_on_the_Justinianic_Basilica_" },
     ],
+    reflectionPrompt:
+      "Tradition places God's meeting with Moses on this remote peak — do you have a place you go specifically to listen?",
   },
   {
     id: "shechem",
@@ -543,6 +575,8 @@ export const pois: PointOfInterest[] = [
       { label: "Shechem - Wikipedia", url: "https://en.wikipedia.org/wiki/Shechem" },
       { label: "Tell Balata Archaeological Park - UNESCO/Palestinian Dept. of Antiquities project page", url: "https://en.unesco.org/silkroad/content/tell-balata-archaeological-park" },
     ],
+    reflectionPrompt:
+      "At Shechem, Joseph's bones were finally buried in the land promised generations earlier — what long story are you part of that began before you?",
   },
   {
     id: "gethsemane",
@@ -575,6 +609,8 @@ export const pois: PointOfInterest[] = [
       { label: "Cherubini et al., \"The age of the olive trees in the Garden of Gethsemane\" (Journal of Archaeological Science, 2014) - ResearchGate", url: "https://www.researchgate.net/publication/268752097_The_age_of_the_olive_trees_in_the_Garden_of_Gethsemane" },
       { label: "BiblePlaces.com summary of the 2012 olive tree dating study", url: "https://www.bibleplaces.com/blog/2012/10/the-date-of-olive-trees-in-garden-of/" },
     ],
+    reflectionPrompt:
+      "In Gethsemane, Jesus asked his friends simply to stay awake with him — who needs your presence more than your solutions right now?",
   },
   {
     id: "golgotha",
@@ -607,6 +643,8 @@ export const pois: PointOfInterest[] = [
       { label: "Times of Israel - Traces of ancient garden found under Church of Holy Sepulchre (Sapienza University excavation)", url: "https://www.timesofisrael.com/echoing-gospel-account-traces-of-ancient-garden-found-under-church-of-holy-sepulchre/" },
       { label: "Garden Tomb - Wikipedia", url: "https://en.wikipedia.org/wiki/Garden_Tomb" },
     ],
+    reflectionPrompt:
+      "From the cross Jesus prayed, 'Father, forgive them' — who is hardest for you to pray that about?",
   },
   {
     id: "emmaus",
@@ -639,6 +677,8 @@ export const pois: PointOfInterest[] = [
       { label: "Emmaus-Nicopolis official project site - Rediscovery of Emmaus / FAQ on manuscript distance variants", url: "https://www.emmaus-nicopolis.org/english/rediscovery-of-emmaus" },
       { label: "The Text of the Gospels - Luke 24:13 manuscript variant (60 vs 160 stadia)", url: "https://www.thetextofthegospels.com/2018/08/luke-2413-do-you-know-way-to-emmaus.html" },
     ],
+    reflectionPrompt:
+      "The Emmaus disciples recognized Jesus only when he broke the bread — looking back, where was God present in a moment you only understood later?",
   },
   {
     id: "city-of-david",
@@ -671,6 +711,8 @@ export const pois: PointOfInterest[] = [
       { label: "Eilat Mazar - Wikipedia", url: "https://en.wikipedia.org/wiki/Eilat_Mazar" },
       { label: "2 Samuel 5:6-9 (David captures Jerusalem) - Bible Gateway", url: "https://www.biblegateway.com/passage/?search=2+Samuel+5%3A6-9" },
     ],
+    reflectionPrompt:
+      "Beneath modern streets, the City of David preserves the small ridge where the great city began — how do you stay connected to your own beginnings?",
   },
   {
     id: "machaerus",
@@ -703,6 +745,8 @@ export const pois: PointOfInterest[] = [
       { label: "Mark 6:14-29 - Bible Gateway", url: "https://www.biblegateway.com/passage/?search=Mark+6%3A14-29" },
       { label: "Matthew 14:1-12 - Bible Gateway", url: "https://www.biblegateway.com/passage/?search=Matthew+14%3A1-12" },
     ],
+    reflectionPrompt:
+      "From Machaerus's dungeon, John sent Jesus his honest question: 'Are you the one?' — can you bring your doubts to God that directly?",
   },
   {
     id: "mount-precipice",
@@ -766,6 +810,8 @@ export const pois: PointOfInterest[] = [
       { label: "New Archaeological Finds from Kursi-Gergesa (Tzaferis 2014), Atiqot", url: "https://publications.iaa.org.il/atiqot/vol79/iss1/9/" },
       { label: "Mark 5:1-20 - Bible Gateway", url: "https://www.biblegateway.com/passage/?search=Mark+5%3A1-20" },
     ],
+    reflectionPrompt:
+      "At Kursi, Jesus crossed the lake for one tormented man everyone else avoided — who is the one person worth crossing for?",
   },
   {
     id: "tabgha",
@@ -798,6 +844,8 @@ export const pois: PointOfInterest[] = [
       { label: "The Rediscovered Byzantine Church at Tabgha - Biblical Archaeology Society", url: "https://library.biblicalarchaeology.org/sidebar/the-rediscovered-byzantine-church-at-tabgha/" },
       { label: "Matthew 14:13-21 - Bible Gateway", url: "https://www.biblegateway.com/passage/?search=Matthew+14%3A13-21" },
     ],
+    reflectionPrompt:
+      "On Tabgha's shore, breakfast was already cooking when the disciples landed after a failed night of fishing — where has provision met you after failure?",
   },
   {
     id: "mount-of-beatitudes",
@@ -829,6 +877,8 @@ export const pois: PointOfInterest[] = [
       { label: "Mount of Beatitudes - seetheholyland.net", url: "https://www.seetheholyland.net/mount-of-beatitudes/" },
       { label: "Matthew 5-7 (Sermon on the Mount) - Bible Gateway", url: "https://www.biblegateway.com/passage/?search=Matthew+5-7" },
     ],
+    reflectionPrompt:
+      "On this hillside Jesus called the poor in spirit, the mourners, and the meek 'blessed' — which beatitude is hardest for you to believe?",
   },
   {
     id: "al-maghtas",
@@ -861,6 +911,8 @@ export const pois: PointOfInterest[] = [
       { label: "Al-Maghtas - UNESCO World Heritage Centre", url: "https://whc.unesco.org/en/list/1446/" },
       { label: "John 1:28 - Bible Gateway", url: "https://www.biblegateway.com/passage/?search=John+1%3A28" },
     ],
+    reflectionPrompt:
+      "Crowds walked far into the wilderness to hear John at this river crossing — how far out of your routine will you go for renewal?",
   },
   {
     id: "ein-karem",
@@ -892,6 +944,8 @@ export const pois: PointOfInterest[] = [
       { label: "Church of Saint John the Baptist, Ein Karem - Custodia di Terra Santa", url: "https://www.custodia.org/en/sanctuaries/ain-karem-saint-john-the-baptist/" },
       { label: "Luke 1:39-56 - Bible Gateway", url: "https://www.biblegateway.com/passage/?search=Luke+1%3A39-56" },
     ],
+    reflectionPrompt:
+      "In Ein Karem, Mary and Elizabeth strengthened each other's improbable hopes — who does that for you?",
   },
   {
     id: "shepherds-field",
@@ -923,6 +977,8 @@ export const pois: PointOfInterest[] = [
       { label: "Bethlehem - The Shepherds' Field and Grotto - Custodia di Terra Santa", url: "https://www.custodia.org/en/sanctuaries/bethlehem-the-shepherds-field-and-grotto/" },
       { label: "Luke 2:8-20 - Bible Gateway", url: "https://www.biblegateway.com/passage/?search=Luke+2%3A8-20" },
     ],
+    reflectionPrompt:
+      "The angels' announcement came to shepherds on the night shift — where might good news be looking for you in your ordinary work?",
   },
   {
     id: "perga",
@@ -987,6 +1043,8 @@ export const pois: PointOfInterest[] = [
       { label: "Biblical Archaeology Society - The Magdala Stone", url: "https://www.biblicalarchaeology.org/daily/ancient-cultures/ancient-israel/the-magdala-stone/" },
       { label: "Bible Gateway - John 20 (Mary Magdalene at the tomb)", url: "https://www.biblegateway.com/passage/?search=John+20&version=NIV" },
     ],
+    reflectionPrompt:
+      "Jesus likely taught in Magdala's small-town synagogue, uncovered only in 2009 — what holy things might be hiding in your ordinary places?",
   },
   {
     id: "pool-of-bethesda",
@@ -1019,6 +1077,8 @@ export const pois: PointOfInterest[] = [
       { label: "Bible Gateway - John 5", url: "https://www.biblegateway.com/passage/?search=John+5&version=NIV" },
       { label: "Biblical Archaeology Society - The Bethesda Pool, Site of One of Jesus' Miracles", url: "https://www.biblicalarchaeology.org/daily/biblical-sites-places/jerusalem/the-bethesda-pool-site-of-one-of-jesus-miracles/" },
     ],
+    reflectionPrompt:
+      "At Bethesda, Jesus asked a man ill for thirty-eight years, 'Do you want to be healed?' — what would your honest answer be about your own stuck places?",
   },
   {
     id: "pool-of-siloam",
@@ -1051,6 +1111,8 @@ export const pois: PointOfInterest[] = [
       { label: "Bible Gateway - John 9", url: "https://www.biblegateway.com/passage/?search=John+9&version=NIV" },
       { label: "Biblical Archaeology Society - The Siloam Pool: Where Jesus Healed the Blind Man", url: "https://www.biblicalarchaeology.org/daily/biblical-sites-places/biblical-archaeology-sites/the-siloam-pool-where-jesus-healed-the-blind-man/" },
     ],
+    reflectionPrompt:
+      "The blind man was healed only after walking to Siloam still blind — what step are you asked to take before you can see the result?",
   },
   {
     id: "garden-tomb",
@@ -1077,6 +1139,8 @@ export const pois: PointOfInterest[] = [
       { label: "Wikipedia - Church of the Holy Sepulchre", url: "https://en.wikipedia.org/wiki/Church_of_the_Holy_Sepulchre" },
       { label: "RSC BYU - Revisiting Golgotha and the Garden Tomb", url: "https://rsc.byu.edu/vol-4-no-1-2003/revisiting-golgotha-garden-tomb" },
     ],
+    reflectionPrompt:
+      "Whatever the exact spot, the tomb was empty — how would you live differently this week if you fully believed that?",
   },
   {
     id: "western-wall",
@@ -1108,6 +1172,8 @@ export const pois: PointOfInterest[] = [
       { label: "Biblical Archaeology Society - Jerusalem's Temple Mount Not Completed by King Herod", url: "https://www.biblicalarchaeology.org/daily/news/jerusalems-temple-mount-not-completed-by-king-herod/" },
       { label: "Wikipedia - Western Wall Tunnel", url: "https://en.wikipedia.org/wiki/Western_Wall_Tunnel" },
     ],
+    reflectionPrompt:
+      "Prayers written on slips of paper fill the Western Wall's cracks — if you wrote one line to leave in the wall, what would it say?",
   },
   {
     id: "salamis",
@@ -1381,11 +1447,14 @@ export const pois: PointOfInterest[] = [
       { label: "Acts 2:1-4 - Bible Gateway", url: "https://www.biblegateway.com/passage/?search=Acts%202%3A1-4" },
       { label: "The Cenacle - See The Holy Land", url: "https://www.seetheholyland.net/cenacle/" },
     ],
+    reflectionPrompt:
+      "In the upper room, Jesus washed feet — the task nobody volunteered for — what is the unwanted task in front of you?",
   },
   {
     id: "antonia-fortress",
     name: "Antonia Fortress",
     pronunciation: "an-TOH-nee-uh FOR-tress",
+    alternateNames: ["Praetorium", "the Praetorium"],
     tag: "Roman Garrison",
     modernName: "Temple Mount / Haram al-Sharif, Jerusalem",
     coordinates: [35.2362, 31.776],
@@ -1413,6 +1482,8 @@ export const pois: PointOfInterest[] = [
       { label: "Behold The Man: Where Did Pilate Sentence Jesus? - Bible Archaeology Report", url: "https://biblearchaeologyreport.com/2022/04/14/behold-the-man-where-did-pilate-sentence-jesus/" },
       { label: "Pilate's court - Wikipedia", url: "https://en.wikipedia.org/wiki/Pilate%27s_court" },
     ],
+    reflectionPrompt:
+      "From the fortress steps, Paul told his own story to a hostile crowd — could you tell the story of your faith clearly if suddenly asked?",
   },
   {
     id: "dominus-flevit",
@@ -1444,6 +1515,8 @@ export const pois: PointOfInterest[] = [
       { label: "Luke 19:41-44 - Bible Gateway", url: "https://www.biblegateway.com/passage/?search=Luke%2019%3A41-44" },
       { label: "Church of Dominus Flevit - See The Holy Land", url: "https://www.seetheholyland.net/church-of-dominus-flevit/" },
     ],
+    reflectionPrompt:
+      "The chapel here is shaped like a teardrop, remembering Jesus weeping over the city — what would a place built around one of your tears remember?",
   },
   {
     id: "st-peter-gallicantu",
@@ -1475,6 +1548,8 @@ export const pois: PointOfInterest[] = [
       { label: "Matthew 26:69-75 - Bible Gateway", url: "https://www.biblegateway.com/passage/?search=Matthew%2026%3A69-75" },
       { label: "House of Caiaphas: Church of St. Gallicantu - HolyLandSite.com", url: "https://www.holylandsite.com/house-of-caiaphas" },
     ],
+    reflectionPrompt:
+      "The church of the cock-crow remembers Peter's denial rather than hiding it — how do you treat the memory of your failures?",
   },
   {
     id: "herod-winter-palace-jericho",
@@ -1808,6 +1883,8 @@ export const pois: PointOfInterest[] = [
       { label: "Khirbet Qana — Wikipedia", url: "https://en.wikipedia.org/wiki/Khirbet_Qana" },
       { label: "John 2:1-11 — Bible Gateway", url: "https://www.biblegateway.com/passage/?search=John%202%3A1-11" },
     ],
+    reflectionPrompt:
+      "At Cana, the servants filled the jars to the brim before any miracle appeared — what would doing your part 'to the brim' look like while you wait?",
   },
   {
     id: "straight-street-damascus",
@@ -1833,6 +1910,8 @@ export const pois: PointOfInterest[] = [
       { label: "Acts 9:11 — Bible Gateway", url: "https://www.biblegateway.com/passage/?search=Acts%209%3A11" },
       { label: "Wikipedia: Old city of Damascus", url: "https://en.wikipedia.org/wiki/Old_city_of_Damascus" },
     ],
+    reflectionPrompt:
+      "Paul waited blind for three days on Straight Street, praying — what has a season of forced waiting shown you?",
   },
   {
     id: "house-of-ananias-damascus",
@@ -1857,6 +1936,8 @@ export const pois: PointOfInterest[] = [
       { label: "Wikipedia: Saint Ananias House", url: "https://en.wikipedia.org/wiki/Saint_Ananias_House" },
       { label: "Acts 9:10-19 — Bible Gateway", url: "https://www.biblegateway.com/passage/?search=Acts%209%3A10-19" },
     ],
+    reflectionPrompt:
+      "In this house, tradition says, Ananias greeted his former enemy as 'Brother Saul' — who would be hardest for you to greet as family?",
   },
   {
     id: "bab-kisan-damascus",
@@ -1907,6 +1988,8 @@ export const pois: PointOfInterest[] = [
       { label: "Wikipedia: Cave of the Apocalypse", url: "https://en.wikipedia.org/wiki/Cave_of_the_Apocalypse" },
       { label: "Revelation 1:9-11 — Bible Gateway", url: "https://www.biblegateway.com/passage/?search=Revelation%201%3A9-11" },
     ],
+    reflectionPrompt:
+      "In a cave on a prison island, John heard, 'Behold, I am making all things new' — where do you most need to hear that now?",
   },
   {
     id: "antipatris",
@@ -1957,6 +2040,8 @@ export const pois: PointOfInterest[] = [
       { label: "John 11:1-44 — Bible Gateway", url: "https://www.biblegateway.com/passage/?search=John%2011%3A1-44" },
       { label: "Wikipedia: Church of Saint Lazarus, Al-Eizariya", url: "https://en.wikipedia.org/wiki/Church_of_Saint_Lazarus,_Al-Eizariya" },
     ],
+    reflectionPrompt:
+      "At Lazarus's tomb, Jesus wept even knowing what he was about to do — do you let yourself grieve, even when you have hope?",
   },
   {
     id: "erastus-inscription-corinth",
@@ -1982,6 +2067,8 @@ export const pois: PointOfInterest[] = [
       { label: "Romans 16:23 — Bible Gateway", url: "https://www.biblegateway.com/passage/?search=Romans%2016%3A23" },
       { label: "Erastus, Gallio, and Paul — Bible Odyssey", url: "https://www.bibleodyssey.org/articles/erastus-gallio-and-paul/" },
     ],
+    reflectionPrompt:
+      "A pavement inscription may name the same Erastus Paul greeted as a fellow worker — what do you want your name associated with?",
   },
   {
     id: "bema-of-corinth",
@@ -2011,6 +2098,8 @@ export const pois: PointOfInterest[] = [
       { label: "Acts 18:12-17 — Bible Gateway", url: "https://www.biblegateway.com/passage/?search=Acts%2018%3A12-17" },
       { label: "Picture of the Week: The Bema at Corinth — BiblePlaces.com", url: "https://www.bibleplaces.com/blog/2013/08/picture-of-week-bema-at-corinth/" },
     ],
+    reflectionPrompt:
+      "At this platform, the case against Paul was dismissed and the work went on — what opposition have you been bracing for that may never land?",
   },
   {
     id: "temple-of-apollo-corinth",
@@ -2089,6 +2178,8 @@ export const pois: PointOfInterest[] = [
       { label: "Acts 17:19-34 — Bible Gateway", url: "https://www.biblegateway.com/passage/?search=Acts%2017%3A19-34" },
       { label: "Areopagus sermon — Wikipedia", url: "https://en.wikipedia.org/wiki/Areopagus_sermon" },
     ],
+    reflectionPrompt:
+      "On the Areopagus, Paul quoted Athens's own poets to reach his hearers — whose language do you need to learn to be understood?",
   },
   {
     id: "ancient-agora-athens",
@@ -2138,6 +2229,8 @@ export const pois: PointOfInterest[] = [
       { label: "Bible Gateway: Acts 19", url: "https://www.biblegateway.com/passage/?search=Acts%2019" },
       { label: "Biblical Archaeology Society: Biblical Riot at Ephesus", url: "https://www.biblicalarchaeology.org/daily/biblical-sites-places/biblical-archaeology-places/biblical-riot-at-ephesus/" },
     ],
+    reflectionPrompt:
+      "The Temple of Artemis was a wonder of the world; a single column stands today — which impressive things around you will actually last?",
   },
   {
     id: "great-theatre-ephesus",
@@ -2163,6 +2256,8 @@ export const pois: PointOfInterest[] = [
       { label: "Bible Gateway: Acts 19", url: "https://www.biblegateway.com/passage/?search=Acts%2019" },
       { label: "Turkish Archaeological News: Great Theatre in Ephesus", url: "https://turkisharchaeonews.net/object/great-theatre-ephesus" },
     ],
+    reflectionPrompt:
+      "In this theater a crowd shouted for two hours to drown out the message — what noise makes it hardest for you to hear what's true?",
   },
   {
     id: "grotto-of-st-paul-ephesus",
@@ -2431,6 +2526,8 @@ export const pois: PointOfInterest[] = [
       { label: "Wikipedia — Mamertine Prison", url: "https://en.wikipedia.org/wiki/Mamertine_Prison" },
       { label: "BiblePlaces.com — Mamertine Prison", url: "https://www.bibleplaces.com/mamertine-prison/" },
     ],
+    reflectionPrompt:
+      "Tradition holds Paul wrote his last letter from a cell like this one: 'I have kept the faith' — what do you hope to be able to say at the end?",
   },
   {
     id: "basilica-st-paul-outside-walls-rome",
@@ -2581,6 +2678,8 @@ export const pois: PointOfInterest[] = [
       { label: "Wikipedia — Domine, quo vadis?", url: "https://en.wikipedia.org/wiki/Domine,_quo_vadis%3F" },
       { label: "UNESCO World Heritage Centre — Via Appia. Regina Viarum", url: "https://whc.unesco.org/en/list/1708/" },
     ],
+    reflectionPrompt:
+      "The Quo Vadis story pictures Peter turning back toward the danger he was fleeing — where are you running from something you're meant to face?",
   },
   {
     id: "forum-of-appius-three-taverns",
@@ -2743,6 +2842,8 @@ export const pois: PointOfInterest[] = [
       { label: "Wikipedia: St. Paul's Bay", url: "https://en.wikipedia.org/wiki/St._Paul's_Bay" },
       { label: "Acts 27:39-28:10 — Bible Gateway", url: "https://www.biblegateway.com/passage/?search=Acts%2027%3A39-28%3A10" },
     ],
+    reflectionPrompt:
+      "After the shipwreck, Paul gathered firewood — small usefulness in a disaster — what small helpful thing can you do inside a situation you can't fix?",
   },
   {
     id: "megiddo-church",
@@ -2796,6 +2897,8 @@ export const pois: PointOfInterest[] = [
       { label: "Wikipedia — Dura-Europos church", url: "https://en.wikipedia.org/wiki/Dura-Europos_church" },
       { label: "Biblical Archaeology Society — Dura-Europos House Church", url: "https://www.biblicalarchaeology.org/daily/ancient-cultures/ancient-rome/dura-europos-house-church/" },
     ],
+    reflectionPrompt:
+      "The earliest known dedicated church building was an ordinary house with a remodeled room — what would church in your living room look like?",
   },
   {
     id: "eutychus-site-troas",
@@ -2820,6 +2923,8 @@ export const pois: PointOfInterest[] = [
       { label: "Wikipedia — Alexandria Troas", url: "https://en.wikipedia.org/wiki/Alexandria_Troas" },
       { label: "Bible Gateway — Acts 20:7-12", url: "https://www.biblegateway.com/passage/?search=Acts%2020%3A7-12" },
     ],
+    reflectionPrompt:
+      "The believers at Troas stayed up all night because their time together was short — who would you stay up all night with, talking about what matters?",
   },
   {
     id: "chalcedon-council-site",
