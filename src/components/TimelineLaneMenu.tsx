@@ -26,11 +26,6 @@ export const TIMELINE_LANE_LABELS: Record<TimelineLaneKey, string> = {
   religion: "Other Religions",
 };
 
-/** Rough rule of thumb for the caption hint below: at typical viewport heights, this is about how
- * many lanes fill the view with generous room before TimelineView's actual (size-based, not
- * count-based) feasibility check falls back to fixed minimum heights inside a scrollable stack. */
-export const TIMELINE_COMFORTABLE_LANE_COUNT = 3;
-
 interface TimelineLaneMenuProps {
   visible: Record<TimelineLaneKey, boolean>;
   onToggle: (key: TimelineLaneKey) => void;
@@ -80,9 +75,8 @@ export default function TimelineLaneMenu({ visible, onToggle }: TimelineLaneMenu
             </label>
           ))}
           <p className="tl-lane-menu-caption">
-            {visibleCount > TIMELINE_COMFORTABLE_LANE_COUNT
-              ? "Checking more lanes may make the stack scroll to fit them all."
-              : "Fewer lanes checked means more room for each."}
+            Each checked lane gets its own generous height — checking more means more scrolling to
+            reach them all.
           </p>
         </div>
       )}

@@ -221,8 +221,9 @@
 /* ---------------------------------------------------------------- canvas */
 
 /* Outer scrollable window. Vertical-only: horizontal overflow from the panning .tl-scroller
- * (a child of .tl-canvas below) is clipped here, while a lane stack taller than the viewport
- * (scroll mode — see geom.needsScroll in TimelineView.tsx) scrolls vertically via the native
+ * (a child of .tl-canvas below) is clipped here, while a lane stack taller than the viewport —
+ * routinely true now that each visible lane gets its own fixed, generous height (see geom in
+ * TimelineView.tsx) rather than being squeezed to fit — scrolls vertically via the native
  * scrollbar/touch, independent of the horizontal drag/zoom gestures .tl-canvas still owns. */
 .tl-canvas-viewport {
   position: relative;
@@ -234,9 +235,9 @@
 }
 
 /* Inner gesture surface: pointer/wheel handlers for horizontal pan/zoom live here. Its height is
- * set explicitly from `geom` in TimelineView.tsx — exactly the viewport's height when the checked
- * lanes fit comfortably (today's fill-the-view behavior), or taller in scroll mode, which is what
- * gives .tl-canvas-viewport above something to scroll. */
+ * set explicitly from `geom` in TimelineView.tsx as the sum of each checked lane's own fixed,
+ * generous height — routinely taller than the viewport, which is what gives .tl-canvas-viewport
+ * above something to scroll. */
 .tl-canvas {
   position: relative;
   width: 100%;
@@ -247,10 +248,11 @@
   outline: none;
 }
 
-/* Scroll mode: let a single-finger vertical swipe reach the browser's native vertical scroll on
- * .tl-canvas-viewport (touch-action permits only the "pan-y" native gesture) while a horizontal
+/* When the lane stack exceeds the viewport (the normal case now — see needsScroll in
+ * TimelineView.tsx), let a single-finger vertical swipe reach the browser's native vertical scroll
+ * on .tl-canvas-viewport (touch-action permits only the "pan-y" native gesture) while a horizontal
  * drag — not a native action under pan-y — still reaches the JS pointer handlers for panning,
- * exactly as it does when touch-action is "none" outside scroll mode. */
+ * exactly as it does when touch-action is "none" for a lane stack that fits without scrolling. */
 .tl-canvas.tl-canvas-scroll-y {
   touch-action: pan-y;
 }
@@ -451,12 +453,16 @@
  * bar instead of being skipped — the label-gap check (same heuristic as lifespans) already
  * guarantees there's clear room there. IMPORTANT: this only works because .tl-book-bar (above)
  * does not clip its overflow — a label rendered past the bar's own right edge would otherwise be
- * cropped away entirely, which is exactly what was happening before this fix. */
+ * cropped away entirely, which is exactly what was happening before this fix. The label's own
+ * max-width + ellipsis below bounds it to a predictable footprint (rather than the unbounded width
+ * a long book name would otherwise take), which is what makes the neighbor-gap check in
+ * TimelineView.tsx (LABEL_GAP_PX) a reliable guarantee against overlapping the next bar. */
 .tl-book-bar-label.tl-book-bar-label-outside {
   left: 100%;
   margin-left: 5px;
-  max-width: none;
-  overflow: visible;
+  max-width: 130px;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 /* -------------------------------------------------------- lifespans lane */
@@ -494,11 +500,17 @@
   pointer-events: none;
 }
 
+/* Bounded the same way as .tl-book-bar-label-outside above — max-width + ellipsis gives this label
+ * a predictable footprint so the neighbor-gap check (LABEL_GAP_PX in TimelineView.tsx) can actually
+ * guarantee it won't run into whatever bar comes next, instead of growing unbounded with a long
+ * name (e.g. "Nebuchadnezzar II"). */
 .tl-life-label.tl-life-label-outside {
   position: absolute;
   left: 100%;
   padding: 0 0 0 5px;
-  overflow: visible;
+  max-width: 130px;
+  overflow: hidden;
+  text-overflow: ellipsis;
   color: var(--text-muted);
 }
 
@@ -590,12 +602,14 @@
 
 /* Label for range-bar events (Biblical/World/Religion lanes). Range bars are a fixed 8px tall —
  * too short to hold text inside legibly the way a life/book bar can — so the label sits just past
- * the bar's right edge, shown only when the neighbor-gap heuristic finds room (see barHasGap
- * above). That gap check only compares bar START positions, so a wide bar's label can still land
- * on top of the very next bar in a busy lane (Other Religions bars often run back-to-back) — plain
- * muted text was frequently unreadable sitting directly on a bar's own solid color. A small
- * near-opaque pill behind the text (same idiom as .tl-lane-label below) fixes legibility
- * regardless of what ends up underneath, without touching the show/hide gap logic itself. */
+ * the bar's right edge, shown only when the neighbor-gap heuristic finds room (see barHasGap in
+ * TimelineView.tsx, which measures the gap between THIS bar's own end and the NEXT bar's start —
+ * not bar-to-bar start deltas, which used to undercount the room after a long-running bar and let
+ * its label land on top of the very next bar in a busy lane like Other Religions). Bounding this
+ * label's own width below (max-width + ellipsis) is what makes that gap check a reliable guarantee
+ * rather than an approximation. Plain muted text was also frequently unreadable sitting directly on
+ * a bar's own solid color, so a small near-opaque pill behind the text (same idiom as .tl-lane-label
+ * below) fixes legibility regardless of what ends up underneath. */
 .tl-range-bar-label {
   position: absolute;
   left: 100%;
@@ -612,7 +626,7 @@
   border-radius: 4px;
   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.14);
   white-space: nowrap;
-  max-width: 150px;
+  max-width: 100px;
   overflow: hidden;
   text-overflow: ellipsis;
   pointer-events: none;
@@ -717,55 +731,6 @@
   margin-top: 3px;
 }
 
-/* ---------------------------------------------------------------- legend */
-
-.tl-legend {
-  display: flex;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: 6px 16px;
-  padding: 8px 16px;
-  border-top: 1px solid var(--border);
-  background: var(--panel-bg);
-  flex-shrink: 0;
-  font-size: 12px;
-  color: var(--text-muted);
-}
-
-.tl-legend-item {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  white-space: nowrap;
-}
-
-.tl-legend-dot {
-  width: 10px;
-  height: 10px;
-  border-radius: 50%;
-  flex-shrink: 0;
-}
-
-.tl-legend-swatch {
-  width: 18px;
-  height: 8px;
-  border-radius: 3px;
-  flex-shrink: 0;
-}
-
-.tl-legend-note {
-  font-size: 11px;
-  color: var(--text-muted);
-  opacity: 0.85;
-}
-
-.tl-legend-hint {
-  margin-left: auto;
-  font-size: 11px;
-  opacity: 0.8;
-  white-space: nowrap;
-}
-
 @media (max-width: 720px) {
   .tl-header {
     padding: 8px 10px;
@@ -780,15 +745,8 @@
     font-size: 11px;
   }
 
-  .tl-back-label,
-  .tl-legend-hint {
+  .tl-back-label {
     display: none;
-  }
-
-  .tl-legend {
-    gap: 4px 12px;
-    padding: 7px 10px;
-    font-size: 11px;
   }
 
   .tl-lane-label {

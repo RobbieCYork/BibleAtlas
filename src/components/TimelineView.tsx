@@ -28,11 +28,13 @@ import "./TimelineView.css";
  *   6. Year axis
  *
  * Any of the five lanes above the axis can be hidden via the "Lanes" button in the header
- * (TimelineLaneMenu) — the choice persists in localStorage. Hidden lanes are skipped entirely
- * (no clustering/label math computed for them — see the `geom`/`bookPack`/`lifePack`/`eventsLayer`
- * memos below), and the vertical space that would've gone to them is redistributed among whatever
- * lanes remain checked. Checking more lanes than comfortably fit switches the lane stack to fixed
- * minimum-height lanes inside a vertically scrollable container instead of squeezing everyone thin.
+ * (TimelineLaneMenu) — the choice persists in localStorage. Hidden lanes are skipped entirely (no
+ * clustering/label math computed for them — see the `geom`/`bookPack`/`lifePack`/`eventsLayer`
+ * memos below). Each visible lane gets its own generous, FIXED height (see `geom` below) — lanes
+ * are never stretched to exactly fill the viewport and never squeezed thinner to cram more lanes
+ * above the fold. The lane stack's total height is just the sum of whatever's checked, and the
+ * outer viewport (.tl-canvas-viewport) scrolls vertically to reach anything below the fold — that's
+ * the normal case, not an edge case reserved for checking many lanes at once.
  *
  * Interactions: vertical wheel/trackpad = zoom-to-cursor · horizontal trackpad
  * swipe = pan · drag (mouse or touch) = pan, with momentum on release · pinch =
@@ -89,8 +91,13 @@ function lifespanEnd(l: LifespanEntry): number {
 const MAX_PX_PER_YEAR = 48;
 const CLUSTER_BUCKET_PX = 24;
 const AXIS_H = 30;
-/** Gap (px) a singleton marker needs on both sides before its title is drawn. */
-const LABEL_GAP_PX = 88;
+/** Gap (px) an item needs before a neighboring label is drawn — used for a marker's title on both
+ * sides (it's centered under the dot), a book/lifespan bar's "outside" name on the one side it
+ * extends past its own bar, and a range-bar's title on the one side it extends past the bar's own
+ * end. All of those labels are capped to a bounded max-width with ellipsis truncation (see
+ * .tl-book-bar-label-outside / .tl-life-label-outside / .tl-range-bar-label in TimelineView.css),
+ * so this gap only has to comfortably clear that bounded width, not an arbitrarily long name. */
+const LABEL_GAP_PX = 120;
 
 /** Momentum/inertia panning tuning for pointer (mouse + touch) drag release.
  * Trackpad wheel-panning doesn't need this: the OS/browser already emits a
@@ -108,12 +115,25 @@ const LANES: { cat: TimelineEventCategory; label: string; cssVar: string }[] = [
 
 /* ------------------------------------------------------- lane visibility */
 
-/** Reasonable minimum heights (px) per lane type when the lane stack has more checked lanes than
- * comfortably fit and switches to scroll mode — event lanes carry the actual markers/clusters/bars
- * people click on, so they need more room than the naturally slimmer books band or lifespans lane. */
-const MIN_BOOKS_H = 56;
-const MIN_LIFE_H = 46;
-const MIN_EVENT_LANE_H = 88;
+/** Generous, FIXED per-lane heights (px). Each visible lane gets exactly this much room — it is
+ * never stretched to fill the viewport and never squeezed to fit more lanes above the fold. The
+ * event lanes (Biblical/World/Religion) carry the actual markers/clusters/range-bars people click
+ * on, plus fanned-out same-year markers and cluster badges, so they get the most room. The books
+ * band and lifespans lane are inherently less dense (translucent bars, no clustering) so they stay
+ * proportionally slimmer, but still comfortable — never smooshed even with several overlapping rows.
+ * EVENT_LANE_H is a flat constant (not divided across however many event lanes are checked): the
+ * total stack height is just the sum of whatever's visible, and the outer viewport scrolls
+ * vertically to reach anything below the fold. That's the normal case now, not an edge case. */
+const EVENT_LANE_H = 170;
+/** Per-row height for the Books-of-the-Bible band (a book bar's own row) and the padding added
+ * above/below the row stack so top/bottom labels never crowd the lane's tint separator. */
+const BOOK_ROW_H = 20;
+const BOOK_ROW_PAD = 26;
+const MIN_BOOKS_H = 76;
+/** Per-row height for the Lifespans lane, same idea as the books band above. */
+const LIFE_ROW_H = 34;
+const LIFE_ROW_PAD = 26;
+const MIN_LIFE_H = 84;
 
 const LANE_VISIBILITY_STORAGE_KEY = "timeline-visible-lanes";
 
@@ -240,10 +260,11 @@ export default function TimelineView({
   events = DEFAULT_EVENTS,
   lifespans = DEFAULT_LIFESPANS,
 }: TimelineViewProps) {
-  /* viewportRef: the outer, scrollable window (vertical scroll only, when the checked lane set needs
-   * more height than fits) — this is what's measured for available layout height/width. canvasRef:
-   * the inner gesture surface (pointer/wheel handlers, horizontal-only pan/zoom) — its own height is
-   * set explicitly from `geom` below, growing past the viewport's height only in scroll mode. */
+  /* viewportRef: the outer, scrollable window (vertical scroll, whenever the checked lanes' fixed
+   * generous heights add up to more than fits — the normal case) — this is what's measured for
+   * available layout height/width. canvasRef: the inner gesture surface (pointer/wheel handlers,
+   * horizontal-only pan/zoom) — its own height is set explicitly from `geom` below, and routinely
+   * grows past the viewport's height since lanes are no longer squeezed to fit inside it. */
   const viewportRef = useRef<HTMLDivElement | null>(null);
   const canvasRef = useRef<HTMLDivElement | null>(null);
   const [size, setSize] = useState({ w: 0, h: 0 });
@@ -836,56 +857,26 @@ export default function TimelineView({
       return { empty: true as const, axisTop: avail, totalH: h, needsScroll: false };
     }
 
+    // Fixed, generous per-lane heights — each visible lane simply gets its own comfortable height,
+    // never stretched to exactly fill the viewport and never squeezed thinner to let more lanes fit
+    // above the fold. Books/lifespans still grow with their own row count (more overlapping bars
+    // legitimately need more room), but that growth is additive, not a fight over shared space with
+    // the event lanes. The event lanes always get the same flat EVENT_LANE_H regardless of how many
+    // are checked. Total stack height is just the sum of what's visible (see contentH below); the
+    // outer .tl-canvas-viewport scrolls vertically whenever that sum exceeds the viewport, which is
+    // now the normal case rather than something the layout tries to avoid.
     const bookRows = Math.max(bookPack.rowCount, 1);
-    const booksContentH = showBooks ? Math.max(bookRows * 9 + 20, MIN_BOOKS_H) : 0;
+    const booksH = showBooks ? Math.max(bookRows * BOOK_ROW_H + BOOK_ROW_PAD, MIN_BOOKS_H) : 0;
     const lifeRows = lifePack.rowCount;
-    const lifeContentH = showLife ? Math.max(lifeRows * 24 + 20, MIN_LIFE_H) : 0;
+    const lifeH = showLife ? Math.max(lifeRows * LIFE_ROW_H + LIFE_ROW_PAD, MIN_LIFE_H) : 0;
+    const laneH = EVENT_LANE_H;
+    const contentH = booksH + lifeH + nEvent * laneH;
 
-    // Feasibility check, not a hardcoded lane count: can the checked lanes fill the viewport at
-    // comfortable (content-driven books/life, minimum event lane) heights, or would that squeeze an
-    // event lane thinner than its reasonable minimum? Using the actual content-driven books/life
-    // heights here (not just their floors) matters — a books band with many rows can itself eat
-    // enough of `avail` to push event lanes below the minimum even when only 2-3 lanes are checked,
-    // and conversely a roomy viewport can comfortably fill even 4-5 lanes without scrolling at all.
-    // Robbie's "~2-3 lanes fit comfortably, 4-5 need to scroll" guidance describes the typical
-    // outcome of this math at typical viewport heights — it's not baked in as a fixed count.
-    const requiredMin = booksContentH + lifeContentH + nEvent * MIN_EVENT_LANE_H;
-    const needsScroll = requiredMin > avail;
-
-    let booksH: number;
-    let lifeH: number;
-    let laneH: number;
-    let contentH: number;
-
-    if (!needsScroll) {
-      // Comfortable mode: the checked lanes fill the full viewport height exactly (no scroll),
-      // each getting MORE room than the old fixed 5-lane split since hidden lanes contribute nothing.
-      booksH = booksContentH;
-      lifeH = lifeContentH;
-      const remaining = Math.max(avail - booksH - lifeH, 0);
-      if (nEvent > 0) {
-        laneH = remaining / nEvent;
-      } else {
-        // Only the books band and/or lifespans lane are checked — let them stretch into the
-        // freed-up space rather than sit at their minimum content height.
-        laneH = 0;
-        const stretchers = (showBooks ? 1 : 0) + (showLife ? 1 : 0);
-        if (stretchers > 0 && remaining > 0) {
-          const extra = remaining / stretchers;
-          if (showBooks) booksH += extra;
-          if (showLife) lifeH += extra;
-        }
-      }
-      contentH = avail;
-    } else {
-      // Scroll mode: books/lifespans keep their content-driven height, event lanes get a flat
-      // reasonable minimum, and the lane stack's total height can exceed the viewport — the
-      // viewport wrapper (.tl-canvas-viewport) scrolls vertically to reach whatever's checked.
-      booksH = booksContentH;
-      lifeH = lifeContentH;
-      laneH = MIN_EVENT_LANE_H;
-      contentH = booksH + lifeH + nEvent * laneH;
-    }
+    // Purely descriptive now (drives the touch-action CSS class below) — no longer a feasibility
+    // gate that changes how tall any lane is. With generous fixed heights this will be true for
+    // most non-trivial lane selections, which matches Robbie's ask: scrolling below the fold is the
+    // expected default, not an edge case.
+    const needsScroll = contentH > avail;
 
     const laneTop = new Map<TimelineEventCategory, number>();
     let cursor = booksH + lifeH;
@@ -917,8 +908,9 @@ export default function TimelineView({
 
   const booksLayer = useMemo<ReactNode>(() => {
     if (!geom || geom.empty || geom.booksH <= 0 || pxPerYear <= 0) return null;
-    const rowH = (geom.booksH - 22) / Math.max(bookPack.rowCount, 1);
-    const barH = clamp(rowH - 1.5, 3.5, 13);
+    const rowH = (geom.booksH - BOOK_ROW_PAD) / Math.max(bookPack.rowCount, 1);
+    const topPad = BOOK_ROW_PAD / 2;
+    const barH = clamp(rowH - 1.5, 3.5, 16);
 
     // Group placements by row — same approach the lifespans lane uses: packRows processes items
     // pre-sorted by start year, so each row's own subsequence is already in increasing x order,
@@ -936,18 +928,23 @@ export default function TimelineView({
         const { item, row } = rowItems[i];
         const x = (item.startYear - minYear) * pxPerYear;
         const w = Math.max((item.endYear - item.startYear) * pxPerYear, 3.5);
-        const y = geom.booksTop + 18 + row * rowH;
+        const y = geom.booksTop + topPad + row * rowH;
         const range = formatYearRange(item.startYear, item.endYear);
         const inside = w > 58 && barH >= 9;
 
         // Same label-gap guard the lifespans lane uses: skip the book name if a same-row
-        // neighbor doesn't leave enough clear horizontal space on either side.
+        // neighbor doesn't leave enough clear horizontal space on either side. This guard only
+        // matters for an "outside" label (rendered past the bar's own right edge, where it can
+        // collide with whatever's next) — an "inside" label is bounded by its own bar's width
+        // (max-width + ellipsis, see .tl-book-bar-label CSS), so a nearby neighbor can't make it
+        // overlap and hiding it in that case would just needlessly blank out a label that fits fine.
         const prevX = i > 0 ? (rowItems[i - 1].item.startYear - minYear) * pxPerYear : -Infinity;
         const nextX =
           i < rowItems.length - 1
             ? (rowItems[i + 1].item.startYear - minYear) * pxPerYear
             : Infinity;
         const hasGap = x - prevX > LABEL_GAP_PX && nextX - x > LABEL_GAP_PX;
+        const showLabel = inside || hasGap;
 
         nodes.push(
           <button
@@ -962,7 +959,7 @@ export default function TimelineView({
             onMouseLeave={hideTip}
             aria-label={`${item.book}, written ${range}`}
           >
-            {hasGap && (
+            {showLabel && (
               <span className={`tl-book-bar-label${inside ? "" : " tl-book-bar-label-outside"}`}>
                 {item.book}
               </span>
@@ -976,8 +973,9 @@ export default function TimelineView({
 
   const lifespansLayer = useMemo<ReactNode>(() => {
     if (!geom || geom.empty || geom.lifeH <= 0 || pxPerYear <= 0) return null;
-    const rowH = (geom.lifeH - 22) / Math.max(lifePack.rowCount, 1);
-    const barH = clamp(rowH - 3, 8, 16);
+    const rowH = (geom.lifeH - LIFE_ROW_PAD) / Math.max(lifePack.rowCount, 1);
+    const topPad = LIFE_ROW_PAD / 2;
+    const barH = clamp(rowH - 3, 8, 22);
 
     // Group placements by row — packRows processes items pre-sorted by start year, so each
     // row's own subsequence is already in increasing x order — so label crowding can be judged
@@ -996,7 +994,7 @@ export default function TimelineView({
         const end = lifespanEnd(item);
         const x = (item.bornYear - minYear) * pxPerYear;
         const w = Math.max((end - item.bornYear) * pxPerYear, 6);
-        const y = geom.lifeTop + 18 + row * rowH + (rowH - barH) / 2;
+        const y = geom.lifeTop + topPad + row * rowH + (rowH - barH) / 2;
         const label =
           item.lifespanLabel ??
           (typeof item.diedYear === "number"
@@ -1006,11 +1004,15 @@ export default function TimelineView({
 
         // Same label-gap guard the events lane uses: skip the name if a same-row neighbor
         // doesn't leave enough clear horizontal space on either side, so labels don't pile up
-        // into an unreadable smear at full zoom-out on narrow viewports.
+        // into an unreadable smear at full zoom-out on narrow viewports. As with the books band
+        // above, this guard only matters for an "outside" label — an "inside" one is bounded by
+        // its own bar's width (max-width + ellipsis, see .tl-life-label CSS) so it can't collide
+        // with a neighbor regardless of how close that neighbor sits.
         const prevX = i > 0 ? (rowItems[i - 1].item.bornYear - minYear) * pxPerYear : -Infinity;
         const nextX =
           i < rowItems.length - 1 ? (rowItems[i + 1].item.bornYear - minYear) * pxPerYear : Infinity;
         const hasGap = x - prevX > LABEL_GAP_PX && nextX - x > LABEL_GAP_PX;
+        const showLabel = barH >= 10 && (inside || hasGap);
 
         nodes.push(
           <button
@@ -1023,7 +1025,7 @@ export default function TimelineView({
             onMouseLeave={hideTip}
             aria-label={`${item.name}, ${label}`}
           >
-            {barH >= 10 && hasGap && (
+            {showLabel && (
               <span className={`tl-life-label${inside ? "" : " tl-life-label-outside"}`}>
                 {item.name}
               </span>
@@ -1100,26 +1102,30 @@ export default function TimelineView({
 
       items.sort((a, b) => a.x - b.x);
 
-      // Range-bar events get their own label-gap check, scoped to just the bars in this lane —
-      // a bar's title only competes for space with other bar titles, not with the marker dots or
-      // cluster badges that may sit right next to it. Same neighbor-gap heuristic the lifespans
-      // lane uses (see lifespansLayer above / the books band above that), just scoped to bars.
-      const barIds: string[] = [];
-      const barXs: number[] = [];
-      for (const it of items) {
-        if (it.kind === "single" && typeof it.e.endYear === "number" && it.e.endYear > it.e.startYear) {
-          barIds.push(it.e.id);
-          barXs.push(it.x);
-        }
-      }
+      // Range-bar events get their own label-gap check — a bar's label sits just past its own
+      // right edge (see .tl-range-bar-label CSS), so what matters is whether the very NEXT item
+      // rendered in this lane — regardless of what kind it is — leaves enough clear room after this
+      // bar's end. This used to only compare against neighboring bars, on the theory a label
+      // wouldn't reach a marker dot or cluster badge sitting nearby; in practice a wide bar's label
+      // routinely ran into the very next cluster badge instead (confirmed visually — a bar's title
+      // pill overlapping the next cluster's circle), so every item's own occupied left edge is
+      // accounted for, not just other bars'.
+      const occupiedLeftEdge = (it: Renderable): number => {
+        if (it.kind === "cluster") return it.x - 14; // ~28px badge, centered on it.x
+        if (typeof it.e.endYear === "number" && it.e.endYear > it.e.startYear) return it.x; // bar's own start
+        return it.x - 7; // marker dot, ~13px, centered on it.x
+      };
       const barHasGap = new Map<string, boolean>();
-      for (let bi = 0; bi < barIds.length; bi++) {
-        const prevBarX = bi > 0 ? barXs[bi - 1] : -Infinity;
-        const nextBarX = bi < barXs.length - 1 ? barXs[bi + 1] : Infinity;
-        barHasGap.set(
-          barIds[bi],
-          barXs[bi] - prevBarX > LABEL_GAP_PX && nextBarX - barXs[bi] > LABEL_GAP_PX,
-        );
+      for (let i = 0; i < items.length; i++) {
+        const it = items[i];
+        if (it.kind !== "single" || typeof it.e.endYear !== "number" || it.e.endYear <= it.e.startYear) {
+          continue;
+        }
+        const barW = Math.max((it.e.endYear - it.e.startYear) * pxPerYear, 12);
+        const barEnd = it.x + barW;
+        const next = items[i + 1];
+        const nextLeft = next ? occupiedLeftEdge(next) : Infinity;
+        barHasGap.set(it.e.id, nextLeft - barEnd > LABEL_GAP_PX);
       }
 
       for (let i = 0; i < items.length; i++) {
@@ -1265,9 +1271,10 @@ export default function TimelineView({
       </header>
 
       {/* Outer scrollable window: vertical-only scroll (native scrollbar / touch), horizontal
-       * overflow stays clipped here so a taller-than-viewport lane stack (scroll mode, see geom
-       * above) doesn't widen the page. This is what's measured for available layout height/width —
-       * the inner .tl-canvas below is sized explicitly from `geom` and can grow past it. */}
+       * overflow stays clipped here so the lane stack's fixed, generous per-lane heights (see geom
+       * above) — routinely taller than the viewport now that lanes aren't squeezed to fit — don't
+       * widen the page. This is what's measured for available layout height/width — the inner
+       * .tl-canvas below is sized explicitly from `geom` and commonly grows past it. */}
       <div ref={viewportRef} className="tl-canvas-viewport">
         <div
           ref={canvasRef}
@@ -1388,44 +1395,6 @@ export default function TimelineView({
           )}
         </div>
       </div>
-
-      <footer className="tl-legend">
-        {LANES.filter((lane) => visibleLanes[lane.cat]).map((lane) => (
-          <span key={lane.cat} className="tl-legend-item">
-            <span className="tl-legend-dot" style={{ background: lane.cssVar }} aria-hidden="true" />
-            {lane.label}
-          </span>
-        ))}
-        {visibleLanes.books && (
-          <span className="tl-legend-item">
-            <span
-              className="tl-legend-swatch"
-              style={{ background: "rgba(var(--tl-book-rgb), 0.3)", border: "1px solid rgba(var(--tl-book-rgb), 0.45)" }}
-              aria-hidden="true"
-            />
-            Book writing windows
-          </span>
-        )}
-        {hasLifespans && (
-          <span className="tl-legend-item">
-            <span
-              className="tl-legend-swatch"
-              style={{
-                background: "rgba(var(--tl-life-rgb), 0.25)",
-                border: "1px solid rgba(var(--tl-life-rgb), 0.6)",
-                borderRadius: 100,
-              }}
-              aria-hidden="true"
-            />
-            Lifespans
-          </span>
-        )}
-        <span className="tl-legend-note">
-          Book bands{hasLifespans ? " and lifespan bars" : ""} are separate layers above the three
-          event lanes.
-        </span>
-        <span className="tl-legend-hint">Scroll to zoom · drag to pan · click a dot for details</span>
-      </footer>
     </section>
   );
 }
