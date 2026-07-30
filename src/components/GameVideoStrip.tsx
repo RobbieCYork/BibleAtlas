@@ -23,6 +23,10 @@ interface GameVideoStripProps {
   /** Live per-question state, for the answered/correct badges — omitted in the lobby, where there's
    * no question in play yet. */
   round?: RoundState;
+  /** Solo game — no one to video-chat with, so the mic/camera toggles (which control a stream that
+   * was never acquired; see BibleTriviaView's isSolo gate on useGameWebRTC) are hidden. The tile
+   * itself still shows, since it's also the score display. */
+  isSolo?: boolean;
 }
 
 function ScoreDeltaPop({ value, popKey }: { value: number; popKey: number }) {
@@ -108,6 +112,7 @@ export default function GameVideoStrip({
   onLeave,
   onKick,
   round,
+  isSolo,
 }: GameVideoStripProps) {
   const prevScoresRef = useRef<Record<string, number>>({});
   const [deltas, setDeltas] = useState<Record<string, { value: number; nonce: number }>>({});
@@ -176,12 +181,16 @@ export default function GameVideoStrip({
           ))}
       </div>
       <div className="game-video-controls">
-        <button type="button" className={`game-video-toggle${micOn ? "" : " game-video-toggle-off"}`} onClick={onToggleMic}>
-          {micOn ? "🎙️" : "🔇"}
-        </button>
-        <button type="button" className={`game-video-toggle${cameraOn ? "" : " game-video-toggle-off"}`} onClick={onToggleCamera}>
-          {cameraOn ? "📷" : "📷🚫"}
-        </button>
+        {!isSolo && (
+          <>
+            <button type="button" className={`game-video-toggle${micOn ? "" : " game-video-toggle-off"}`} onClick={onToggleMic}>
+              {micOn ? "🎙️" : "🔇"}
+            </button>
+            <button type="button" className={`game-video-toggle${cameraOn ? "" : " game-video-toggle-off"}`} onClick={onToggleCamera}>
+              {cameraOn ? "📷" : "📷🚫"}
+            </button>
+          </>
+        )}
         <button type="button" className="game-video-toggle game-video-leave" onClick={onLeave}>
           🚪 Leave
         </button>

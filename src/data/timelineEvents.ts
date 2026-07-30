@@ -5632,44 +5632,6 @@ More importantly, Aten was not the personal, covenant-keeping God of Abraham, Is
     primaryEntityIds: ["egypt"],
   },
   {
-    id: "rel-ane-canaanite-religion-conquest",
-    title: "Canaanite Religion at the Time of the Conquest (c. 1400–1200 BC)",
-    category: "religion",
-    era: "Conquest & Judges",
-    startYear: -1400,
-    endYear: -1200,
-    dateLabel: "c. 1400–1200 BC",
-    dateCertainty: "traditional",
-    summary: `Israel entered Canaan to find a land devoted to Baal and Asherah worship at hilltop high places, the recurring rival for Israel's covenant loyalty throughout the Old Testament.`,
-    article: `When Israel entered Canaan under Joshua, they encountered a religious landscape organized around a pantheon headed nominally by the aged creator-god El, but functionally dominated in daily worship by the storm-and-fertility god Baal (whose name simply means 'lord' or 'master' — a title as much as a name, which is why Scripture speaks of 'the Baals' in the plural for the many local variations of his cult) and the mother-goddess Asherah, often his consort, worshiped through wooden cult poles set beside altars. Canaanite religion tied these gods directly to the land's agricultural fertility: Baal was believed to bring the seasonal rains that made crops grow, which is precisely why Israel's temptation to worship him was, at root, a temptation to trust a fertility-storm-god instead of the Lord for their harvest and their survival in the land.
-
-Canaanite worship characteristically took place at 'high places' — open-air hilltop shrines with an altar, a standing stone, and an Asherah pole — which is why Deuteronomy commands Israel so emphatically to tear down Canaanite altars, smash their sacred pillars, and cut down their Asherah poles rather than simply avoiding them (Deuteronomy 12:2-3). The instruction wasn't only about doctrine; Canaanite fertility worship was bound up with practices Scripture condemns in the strongest terms, including cult prostitution and, in some contexts, child sacrifice.
-
-Judges records with painful repetition how quickly Israel drifted toward exactly this syncretism once settled in the land: 'the people of Israel did what was evil in the sight of the Lord and served the Baals' (Judges 2:11), and Gideon's own father kept a Baal altar and Asherah pole in Ophrah before Gideon tore them down (Judges 6:25). Far from being background noise, Canaanite religion is one of the central antagonists of the entire Old Testament narrative — the recurring rival for Israel's heart that the prophets would spend centuries confronting.`,
-    datingNotes: `The exact date of Israel's conquest of Canaan is debated among evangelicals between an early date (c. 1406 BC, following 1 Kings 6:1) and a late date (c. 1230s BC). Canaanite religious practice described here was broadly stable across this whole window and beyond, so the dating question does not affect the picture of the religion Israel encountered.`,
-    scriptureRefs: ["Deuteronomy 12:2-3", "Judges 2:11-13", "Judges 6:25"],
-    externalRefs: ["Baal Cycle (Ugarit)"],
-  },
-  {
-    id: "rel-ane-ugarit-tablets-discovered",
-    title: "Ugarit's Tablets Rediscovered at Ras Shamra (1929 AD)",
-    category: "religion",
-    era: "Modern Discovery",
-    startYear: 1929,
-    endYear: 1939,
-    dateLabel: "Discovered 1929 AD (excavation continued through the 1930s)",
-    dateCertainty: "firm",
-    summary: `The 1929 discovery of Ugarit's religious tablets gave scholars the Canaanites' own mythological texts, confirming in vivid detail the Baal and Asherah worship Scripture describes.`,
-    article: `In 1929, French archaeologist Claude Schaeffer began excavating a mound at Ras Shamra on the Syrian coast, uncovering the ruins of the ancient city of Ugarit and, with them, an enormous archive of clay tablets written in a previously unknown cuneiform alphabet. Deciphered within just a few years, these Ugaritic texts turned out to be one of the single most important discoveries for understanding the Canaanite religion Israel encountered in the Promised Land, because for the first time scholars had the Canaanites' own religious texts in their own words, rather than only the outside descriptions found in the Old Testament.
-
-Among the Ugaritic tablets is the 'Baal Cycle,' a lengthy mythological poem describing Baal's battles against the sea-god Yam and the death-god Mot, his seasonal death and return to life (understood to correspond to the dry and rainy agricultural seasons), and his relationships with the goddesses Anat and Asherah. These texts confirm in vivid detail exactly the picture Scripture already gave: Baal as storm-and-fertility lord, Asherah as a prominent goddess with her own priesthood and cult symbol, and a pantheon headed nominally by El but practically centered on Baal's worship — the same gods named specifically in Judges, 1 Kings, and the prophets.
-
-For Bible readers, Ugarit is a wonderful confirmation rather than any kind of challenge: it shows that the biblical writers were not inventing a caricature of paganism to knock down, but were accurately naming and confronting the actual gods, rites, and texts their Canaanite neighbors genuinely worshiped and revered. Elijah's contest with the prophets of Baal on Mount Carmel reads with even more clarity once we know, from Ugarit, exactly which god's storm-bringing reputation was on the line that day.`,
-    datingNotes: `The site came to light in spring 1928, when a Syrian farmer's plow struck a flagstone tomb at Minet el-Beida; Claude Schaeffer's excavations began in April 1929, and the first cuneiform tablets were unearthed at the nearby tell of Ras Shamra on May 14, 1929. The previously unknown alphabetic cuneiform script was deciphered within about a year, and excavation continued through the 1930s. The 1929 date for the tablets themselves is firm.`,
-    scriptureRefs: ["Judges 2:11-13", "1 Kings 18:19"],
-    externalRefs: ["Ras Shamra excavation (Claude F.A. Schaeffer)", "Ugaritic Baal Cycle (KTU 1.1-1.6)"],
-  },
-  {
     id: "rel-ane-elijah-mount-carmel-baal",
     title: "Elijah's Contest with the Prophets of Baal (c. 855 BC)",
     category: "religion",
@@ -5687,46 +5649,6 @@ The people's response captures the whole point of the account: 'The Lord, he is 
     scriptureRefs: ["1 Kings 16:31-33", "1 Kings 18:16-46"],
     externalRefs: ["Kurkh Monolith (Battle of Qarqar)"],
     primaryEntityIds: ["elijah", "mount-carmel"],
-  },
-  {
-    id: "rel-ane-asherah-worship-divided-kingdom",
-    title: "Asherah Worship Entrenched in the Divided Kingdom (c. 930–640 BC)",
-    category: "religion",
-    era: "Divided Kingdom: Judah & the Classical Prophets",
-    startYear: -930,
-    endYear: -622,
-    dateLabel: "c. 930–622 BC",
-    dateCertainty: "traditional",
-    summary: `Asherah worship proved one of Israel and Judah's most persistent besetting sins, infiltrating even Solomon's temple under Manasseh before Josiah's reforms tore it out.`,
-    article: `Baal was not the only Canaanite deity that persistently seduced Israel and Judah; the goddess Asherah proved even harder to root out. Almost as soon as the kingdom divided, Scripture records that Judah 'built for themselves high places and pillars and Asherim on every high hill' (1 Kings 14:23) under Rehoboam, Solomon's own son, meaning the compromise took hold within a single generation of the kingdom's founding. Wooden Asherah poles, set up beside altars as a symbol of the goddess's presence, became a recurring fixture that faithful kings tore down and unfaithful kings rebuilt, generation after generation.
-
-The low point came under King Manasseh of Judah, who went so far as to carve an Asherah image and set it up inside the Lord's own temple in Jerusalem (2 Kings 21:7), the very sanctuary built for the exclusive worship of the God of Israel, now housing a Canaanite fertility goddess. It took Manasseh's grandson Josiah, in his sweeping reforms, to remove that image, tear down the houses connected to the temple's Asherah worship, and burn the pole itself at the Kidron valley (2 Kings 23:4-7).
-
-Modern archaeology has only deepened our sense of how entrenched this was: inscriptions discovered at sites like Kuntillet Ajrud and Khirbet el-Qom, dating to roughly the ninth and eighth centuries BC, mention blessings 'by Yahweh and his Asherah' — striking evidence that popular Israelite religion, in practice, often blurred exactly the line the prophets fought so hard to keep clear. Far from undermining Scripture, these finds confirm precisely what Kings and the prophets already say plainly: Israel's besetting sin throughout this era was mixing true worship of the Lord with the fertility cult of her Canaanite neighbors, a syncretism the prophets never stopped condemning.`,
-    datingNotes: `This entry spans the divided-kingdom period from Rehoboam's accession (c. 930 BC), under whom Asherim multiplied (1 Kings 14:23), through Manasseh's placement of a carved Asherah image in the temple itself (2 Kings 21:7). The terminus is Josiah's reform in his eighteenth year (622 BC), when the Asherah was removed from the temple and burned (2 Kings 23:6) — not his accession in 640 BC. Regnal dates follow the standard evangelical chronology derived from the biblical regnal data, cross-checked against Assyrian records. Extra-biblical inscriptions from Kuntillet Ajrud and Khirbet el-Qom (c. 800 BC) invoking 'Yahweh and his Asherah' independently confirm how entrenched this syncretism had become.`,
-    scriptureRefs: ["1 Kings 14:23", "2 Kings 21:7", "2 Kings 23:4-7"],
-    externalRefs: ["Kuntillet Ajrud inscriptions", "Khirbet el-Qom inscription"],
-    primaryEntityIds: ["jerusalem"],
-  },
-  {
-    id: "rel-ane-neo-babylonian-astrology",
-    title: "Astrology and Omens in Neo-Babylonian Religion (c. 600 BC)",
-    category: "religion",
-    era: "Babylonian Exile",
-    startYear: -626,
-    endYear: -539,
-    dateLabel: "c. 626–539 BC",
-    dateCertainty: "firm",
-    summary: `Babylonian religion's elaborate astrology and omen-reading formed the very court culture Daniel was trained in and, through God-given wisdom rather than stargazing, ultimately outshone.`,
-    article: `By the time of Judah's exile, Babylonian religion had developed an extraordinarily sophisticated system for reading the will of the gods in the movements of the stars, planets, and moon. Generations of careful nighttime observation, recorded in astronomical diaries and organized into omen collections like the Enuma Anu Enlil, let Babylonian scholar-priests correlate celestial events with predictions about the king's health, harvests, war, and the fate of the nation. These men — Scripture calls them 'Chaldeans,' along with 'magicians,' 'enchanters,' and 'sorcerers' (Daniel 2:2) — formed an elite professional class attached directly to the royal court.
-
-This is the world Daniel and his three friends were thrust into as young exiles, trained 'in all the literature and wisdom of the Chaldeans' (Daniel 1:4) alongside Babylon's own students. It is a testimony to God's providence that Daniel excelled in this environment while never adopting its methods: when Nebuchadnezzar's dream stumped every Babylonian astrologer and diviner, it was Daniel's God-given ability to reveal 'mysteries' (Daniel 2:28-29), not stargazing, that succeeded where the whole apparatus of Babylonian astrology failed. Isaiah had already mocked precisely this system decades earlier, taunting Babylon to 'let your astrologers, your stargazers who predict by the new moons, stand up and save you' from the judgment coming upon her (Isaiah 47:13).
-
-Babylonian astrology's basic premise — that the stars and planets are themselves divine beings whose movements govern human affairs — stands in direct contradiction to Genesis 1:14-18, where the sun, moon, and stars are simply objects God created 'for signs and for seasons,' useful markers of time with no independent will or divinity of their own. Daniel's success in Babylon's own court, achieved entirely apart from its astrological arts, was itself a quiet but total vindication of that biblical claim.`,
-    datingNotes: `The Neo-Babylonian period itself (Nabopolassar's accession in 626 BC to Cyrus's capture of Babylon in 539 BC) is firmly fixed by the Babylonian chronicles and astronomical records. Note, however, that Babylonian celestial-omen divination (the Enuma Anu Enlil series) is many centuries older, reaching back to the Old Babylonian period — this entry marks its imperial heyday, the world of the 'Chaldeans' and diviners of Daniel, not its origin. Conversely, the twelve-sign zodiac and personal horoscopes are slightly later developments, first attested in the Persian period (late fifth century BC).`,
-    scriptureRefs: ["Daniel 1:20", "Daniel 2:2", "Isaiah 47:13"],
-    externalRefs: ["Enuma Anu Enlil (omen series)", "Babylonian astronomical diaries"],
-    primaryEntityIds: ["babylon", "daniel"],
   },
   {
     id: "rel-ane-nebuchadnezzar-marduk-cult",
@@ -5786,44 +5708,6 @@ This is the imperial world of Esther, Ezra, Nehemiah, and the later chapters of 
     externalRefs: ["Cyrus Cylinder", "Behistun Inscription"],
   },
   {
-    id: "rel-ane-persian-influence-jewish-thought",
-    title: "Persian-Era Influence on Jewish Thought? A Careful Look (c. 539–400 BC)",
-    category: "religion",
-    era: "Persian Period",
-    startYear: -539,
-    endYear: -400,
-    dateLabel: "c. 539–400 BC",
-    dateCertainty: "disputed",
-    summary: `Some scholars propose Persian Zoroastrianism shaped later Jewish teaching on angels and last things, but the Old Testament's own trajectory on these themes predates and outruns any such borrowing.`,
-    article: `Because the Jewish people spent two full centuries living inside the Persian Empire — from Cyrus's decree in 539 BC until Alexander's conquest ended Persian rule in 331 BC — and because Persia's state religion at least honored Zoroaster's god Ahura Mazda, some scholars have proposed that Jewish thinking about angels, a personal evil adversary, and final judgment developed or sharpened during this period under Zoroastrian influence. It is a claim worth engaging honestly rather than dismissing out of hand or accepting uncritically, because it touches genuinely important doctrines.
-
-The evidence for direct borrowing, however, is considerably thinner than is often assumed. Every concept supposedly 'borrowed' from Zoroastrianism already has clear roots earlier in the Old Testament, well before the Persian period: an accusing adversary appears in Job (Job 1:6-12) and in Zechariah's vision (Zechariah 3:1-2), both plausibly pre-exilic or early exilic texts; angelic beings appear from Genesis onward; and hints of bodily resurrection and final judgment appear as early as Isaiah 26:19 and Job 19:25-27. What does grow more explicit during and after the exile — a clearer resurrection hope in Daniel 12:2, more detailed angelic ministry in Daniel 10 — is better explained as God's own progressive revelation to his people, unfolding truth he had always intended to disclose more fully in later Scripture, rather than as borrowed Persian theology. The direction of dependence, where any could even be shown between two contemporary cultures, is also far from settled; some scholars have argued influence could just as easily have run the other way, given the size and antiquity of the Jewish community living within the Persian world.
-
-For readers of this app, the confident and conservative position is the right one: Scripture presents its teaching on angels, on the spiritual adversary, and on final judgment and resurrection as truth revealed by God to his prophets, not as ideas assembled by comparing notes with the neighbors. Living inside the Persian Empire undoubtedly exposed the Jewish community to Zoroastrian ideas as part of daily life, that much is simply historical fact, but exposure to an idea is not the same thing as dependence on it for one's own doctrine, and the Old Testament's internal development of these themes has a clear trajectory of its own that long predates the Persian period. Daniel, living at the very center of that Persian world, is presented in Scripture as a man who resisted assimilation, not one who absorbed Babylon's or Persia's theology — a fitting model for how to weigh this whole question.`,
-    datingNotes: `The chronological window of the Persian period itself (539–331 BC) is firmly dated; what is disputed is the modern critical claim that features of later Old Testament books (developed angelology, a personal cosmic adversary, resurrection and final-judgment themes) were borrowed from Persian Zoroastrianism in this era. That thesis, popular in nineteenth- and twentieth-century critical scholarship, faces a serious chronological objection even on its own terms: the Zoroastrian texts attesting these developed doctrines are late — the Younger Avesta is of uncertain date, and key Pahlavi sources such as the Bundahishn were compiled in the ninth century AD — so the direction of influence cannot be demonstrated. Biblical seeds of these themes also predate the Persian period (Isaiah 26:19; Ezekiel 37; Job 1–2). The question is treated here with appropriate caution rather than assumed.`,
-    scriptureRefs: ["Job 1:6-12", "Zechariah 3:1-2", "Daniel 12:2"],
-    externalRefs: [],
-  },
-  {
-    id: "rel-east-indo-aryan-migration",
-    title: "Indo-Aryan Migration into the Indian Subcontinent",
-    category: "religion",
-    era: "Egyptian Sojourn",
-    startYear: -1900,
-    endYear: -1500,
-    dateLabel: "c. 1900–1500 BC (dating widely disputed)",
-    dateCertainty: "disputed",
-    summary: `Indo-Aryan-speaking peoples entered the Indian subcontinent from the northwest sometime in the mid-second millennium BC, bringing the language, gods, and sacrificial religion that became the seedbed of later Hinduism.`,
-    article: `Long before Israel's judges or her kings, a wave of migration was quietly reshaping the religious landscape of South Asia. Sometime in the centuries surrounding 1500 BC, Indo-Aryan-speaking peoples—distant linguistic cousins of the Persians, Greeks, and eventually the peoples of Europe—moved into the Punjab region of what is now Pakistan and northwest India. They brought with them a pantheon of sky and storm gods, a sacred fire cult centered on the god Agni, and hymns composed in an early form of Sanskrit that would eventually be gathered into the Rigveda.
-
-This is not an event the Bible narrates, but it unfolded on the same stage of ancient history that Genesis and Exodus describe. While Israel's ancestors were sojourning in Egypt and, in time, receiving the law at Sinai, peoples on the far side of the ancient world were forming their own religious traditions—evidence, as Paul would later put it, that God 'has not left himself without witness' anywhere among the nations, even where His covenant name was not yet known (Acts 14:17). The instinct to worship, to offer sacrifice, and to seek the divine through fire and hymn shows up independently across cultures, which Scripture attributes to the fact that all people bear God's image and retain some awareness of Him (Romans 1:19–20), however distorted that awareness becomes apart from special revelation.
-
-Historians and Hindu tradition itself disagree sharply about how to date this period, since no contemporary inscriptions or king lists survive from second-millennium-BC India the way they do from Egypt or Mesopotamia. What can be said with confidence is that the religious world these migrations produced—polytheistic, ritual-centered, oriented around fire sacrifice and cosmic order—would develop over the following thousand years into the sprawling tradition the world now calls Hinduism.`,
-    datingNotes: `Mainstream linguistic and archaeological scholarship places the Indo-Aryan migrations into the Punjab region sometime in the mid-second millennium BC, though the process was gradual and left no contemporary written records. Some Hindu traditionalist scholars reject a migration model altogether, arguing for an indigenous origin and pushing the associated culture's roots much earlier. Because no fixed calendar or king list survives from this period in South Asia, precision much beyond 'sometime in the second millennium BC' isn't really available to any school of thought.`,
-    scriptureRefs: ["Acts 14:17", "Romans 1:19-20"],
-    externalRefs: [],
-  },
-  {
     id: "rel-east-rigveda-composed",
     title: "The Rigveda Is Composed",
     category: "religion",
@@ -5840,25 +5724,6 @@ The hymns give a window into a young, vigorous, sacrifice-centered religion: pra
 The Rigveda would go on to anchor the entire Vedic corpus—the Samaveda, Yajurveda, and Atharvaveda, along with the later Brahmanas and Upanishads—and it remains foundational to Hindu worship, scholarship, and identity to this day.`,
     datingNotes: `Western philology generally dates the core hymns of the Rigveda to roughly 1500–1200 BC based on the archaic form of its Sanskrit and comparison with related Indo-European languages. Traditional Hindu chronology places the text vastly earlier, in some reckonings tens of thousands of years ago, as part of a cyclical view of cosmic time (yugas) very different from the Bible's linear history. 'Composed' here refers to the oral origin of the hymns; the text was preserved by memory for many centuries before ever being written down.`,
     scriptureRefs: ["Isaiah 45:5-6"],
-    externalRefs: [],
-  },
-  {
-    id: "rel-east-vedic-ritual-religion",
-    title: "Vedic Ritual Religion and the Brahmanas Develop",
-    category: "religion",
-    era: "Divided Kingdom: Judah & the Classical Prophets",
-    startYear: -900,
-    endYear: -700,
-    dateLabel: "c. 900–700 BC (approximate)",
-    dateCertainty: "disputed",
-    summary: `In the centuries after the Rigveda's hymns were fixed, Vedic religion grew into an elaborate system of priestly sacrifice, governed by a specialist Brahmin class and explained in a body of ritual commentary called the Brahmanas.`,
-    article: `As the centuries passed, Vedic religion did not stand still. What had begun as hymns of praise and petition to the gods developed, roughly in the era of Israel's divided kingdom, into an increasingly intricate system of sacrificial ritual overseen by a specialist priestly class, the Brahmins. Getting a sacrifice exactly right—the words, the fire, the offerings, the timing—came to be seen as essential to maintaining cosmic order itself, and a body of prose literature called the Brahmanas arose to explain and codify these rites in painstaking detail.
-
-This period cemented the social and religious structure that would define Hinduism for millennia afterward: a caste system with Brahmin priests at its head, a sacrificial economy in which correct ritual performance carried immense spiritual weight, and a growing philosophical undercurrent asking what, if anything, lay behind the sacrifice and the gods it served. That undercurrent would soon surface explicitly in the Upanishads.
-
-It is worth noting, from a biblical vantage point, how much energy this world devoted to getting ritual precisely right in hopes of securing divine favor or cosmic stability—a concern not unlike the meticulous sacrificial system God gave Israel through Moses, though aimed at entirely different gods and grounded in a different understanding of the universe. Scripture teaches that no amount of ritual precision can, by itself, close the distance between a holy God and sinful people; only the sacrifice God Himself provides can do that (Hebrews 10:1–4).`,
-    datingNotes: `Dates for the Brahmana literature and the priestly ritual system they describe are approximate, reconstructed from the linguistic development of Vedic Sanskrit rather than from any external chronology. Some scholars place portions of this material somewhat earlier or later.`,
-    scriptureRefs: ["Hebrews 10:1-4"],
     externalRefs: [],
   },
   {
@@ -5933,25 +5798,6 @@ He was born into a China fractured by the decline of Zhou dynasty authority, a p
 This is remarkable ground to be standing on at almost exactly the same moment Judah's exiles were sitting by the rivers of Babylon (Psalm 137:1), wrestling with their own national catastrophe and asking what had gone wrong and how a right order could be restored. Confucius's answer—look backward to the sages, cultivate virtue in ruler and subject alike, honor one's parents and elders—reflects a genuinely serious moral seriousness common to fallen humanity everywhere, even without the covenant and prophetic word God was giving Israel through figures like Ezekiel and Daniel in that very generation.`,
     datingNotes: `Confucius's birth year is unusually well attested for an ancient figure outside the biblical record. It rests on the Gongyang and Guliang commentaries to the Spring and Autumn Annals and on Sima Qian's Records of the Grand Historian (c. 100 BC); the early sources differ by a single year, giving either 552 or 551 BC, and 551 BC is the year most commonly accepted by scholars. (His death, not his birth, is what the Zuo Zhuan chronicle attests.) Within that one-year margin the date is considered secure.`,
     scriptureRefs: ["Psalm 137:1"],
-    externalRefs: [],
-  },
-  {
-    id: "rel-east-confucius-teaching-career",
-    title: "Confucius's Government Service and Travels Among the States",
-    category: "religion",
-    era: "Second Temple Period",
-    startYear: -501,
-    endYear: -484,
-    dateLabel: "c. 501–484 BC (traditional)",
-    dateCertainty: "traditional",
-    summary: `In his fifties, Confucius briefly held government office in his home state of Lu, then spent some fourteen years traveling from state to state with a band of disciples, seeking a ruler who would put his teaching on virtuous government into practice.`,
-    article: `In 501 BC, after decades spent studying, teaching privately, and building a reputation for learning and integrity, Confucius entered government service in his native state of Lu, eventually rising to a position roughly equivalent to a minister of justice. For a brief window, tradition holds, he had the chance to put his ideas about virtuous, ritually grounded government into practice at the state level. It did not last. Political intrigue and the jealousy of rival factions—by tradition, engineered by a neighboring state threatened by Lu's improved governance—pushed Confucius out of office around 497 BC.
-
-What followed was one of the most famous journeys in Chinese history: some fourteen years spent traveling from state to state across a fractured China with a devoted band of disciples, seeking a ruler wise enough to adopt his vision of government by virtue rather than by force. Again and again he was heard politely, sometimes even honored, and then set aside—rulers found his standards for good government more demanding than they wanted to live up to. Confucius returned home to Lu around 484 BC, his political ambitions largely disappointed, and spent his final years teaching a growing circle of students and, by tradition, editing several of the Chinese classics.
-
-It is a very human story—brilliance and integrity that the world was not quite ready to embrace, a teacher who kept teaching anyway. Scripture, too, tells of righteous figures whose wisdom went unheeded by the powers of their day (Ecclesiastes 9:15–16), and it takes seriously both the dignity of moral wisdom wherever it appears and its insufficiency, on its own, to save a nation or a soul apart from the grace and revelation God supplies.`,
-    datingNotes: `The precise years of Confucius's government service and subsequent travels vary slightly among traditional sources, but the general sequence and rough dates (entry into office around 501 BC, return to Lu around 484 BC) are widely accepted within the traditional chronology derived from Sima Qian.`,
-    scriptureRefs: ["Ecclesiastes 9:15-16"],
     externalRefs: [],
   },
   {

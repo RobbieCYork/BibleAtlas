@@ -1232,7 +1232,15 @@ export default function BiblePanel({
       )}
 
       {!showPlans && showIntro && currentBook && !searchResults && (
-        <BookIntroView book={currentBook} onJumpToChapter={handleIntroJumpToChapter} onBack={onBookIntroBack} />
+        <BookIntroView
+          book={currentBook}
+          onJumpToChapter={handleIntroJumpToChapter}
+          onBack={onBookIntroBack}
+          onSelectLocation={onSelectLocation}
+          onSelectPoi={onSelectPoi}
+          onSelectPerson={onSelectPerson}
+          onSelectTopic={onSelectTopic}
+        />
       )}
 
       {!showPlans && !showIntro && passage && !loading && !error && !searchResults && (

@@ -969,7 +969,7 @@ export default function TimelineView({
     const visibleCount = (showBooks ? 1 : 0) + (showLife ? 1 : 0) + nEvent;
 
     if (visibleCount === 0) {
-      return { empty: true as const, axisTop: avail, sectionBottoms: [] as number[], totalH: h, needsScroll: false };
+      return { empty: true as const, sectionBottoms: [] as number[], totalH: h, needsScroll: false };
     }
 
     // Generous per-lane heights — each visible lane simply gets its own comfortable height, never
@@ -990,13 +990,28 @@ export default function TimelineView({
     // The bottom edge of every visible section (Books, Lifespans, then each event lane, in stacking
     // order) — a year-axis row gets repeated at each of these, not just the very last one, so
     // scrolling to any section still shows its own date labels rather than only the bottommost lane's.
+    // Each section is followed by a genuine AXIS_H-tall gap (not just an overlay into the next
+    // section's own content) so the repeated date labels never sit on top of real event content —
+    // `cursor` advances past both the section's content AND that gap before the next section starts.
     const sectionBottoms: number[] = [];
-    if (showBooks) sectionBottoms.push(booksH);
-    if (showLife) sectionBottoms.push(booksH + lifeH);
+    let cursor = 0;
+    let booksTop = 0;
+    let lifeTop = 0;
+    if (showBooks) {
+      booksTop = cursor;
+      cursor += booksH;
+      sectionBottoms.push(cursor);
+      cursor += AXIS_H;
+    }
+    if (showLife) {
+      lifeTop = cursor;
+      cursor += lifeH;
+      sectionBottoms.push(cursor);
+      cursor += AXIS_H;
+    }
 
     const laneTop = new Map<TimelineEventCategory, number>();
     const laneHeights = new Map<TimelineEventCategory, number>();
-    let cursor = booksH + lifeH;
     for (const lane of visibleEventLanes) {
       const pack = eventPacks.get(lane.cat);
       const laneH =
@@ -1007,8 +1022,12 @@ export default function TimelineView({
       laneHeights.set(lane.cat, laneH);
       cursor += laneH;
       sectionBottoms.push(cursor);
+      cursor += AXIS_H;
     }
-    const contentH = cursor;
+    // `cursor` already includes one AXIS_H gap after the very last section (added in the loop above),
+    // so it IS the total height — no separate "+ AXIS_H" tacked on afterward like before.
+    const totalH = cursor;
+    const contentH = totalH - AXIS_H;
 
     // Purely descriptive now (drives the touch-action CSS class below) — no longer a feasibility
     // gate that changes how tall any lane is. With generous heights this will be true for most
@@ -1018,15 +1037,14 @@ export default function TimelineView({
 
     return {
       empty: false as const,
-      booksTop: 0,
+      booksTop,
       booksH,
-      lifeTop: booksH,
+      lifeTop,
       lifeH,
       laneTop,
       laneHeights,
-      axisTop: contentH,
       sectionBottoms,
-      totalH: contentH + AXIS_H,
+      totalH,
       needsScroll,
     };
   }, [size.h, bookPack.rowCount, lifePack.rowCount, visibleLanes, eventPacks]);
@@ -1573,7 +1591,7 @@ export default function TimelineView({
                   <div
                     key={`g${y}`}
                     className={`tl-gridline${y === 0 ? " tl-gridline-epoch" : ""}`}
-                    style={{ left: (y - minYear) * view.pxPerYear, height: geom.axisTop }}
+                    style={{ left: (y - minYear) * view.pxPerYear, height: geom.totalH }}
                   />
                 ))}
                 {booksLayer}
@@ -1582,15 +1600,11 @@ export default function TimelineView({
                 {/* A date-axis row at the bottom of EVERY section (Books, Lifespans, each event
                  * lane), not just the very last one — otherwise only whichever lane happens to be
                  * bottommost (previously "Other Religions") ever showed date labels, leaving every
-                 * other section's dates a long scroll away. Every section but the last one overlays
-                 * its own row into its last AXIS_H px (there's no gap reserved between lanes to hold
-                 * one without changing every lane's height/hit-testing math) — the translucent
-                 * .tl-axis-strip background keeps it legible over whatever content sits underneath.
-                 * The last section keeps its own dedicated, non-overlapping space below all content,
-                 * exactly as before. */}
-                {geom.sectionBottoms.map((boundary, i) => {
-                  const isLast = i === geom.sectionBottoms.length - 1;
-                  const top = isLast ? boundary : boundary - AXIS_H;
+                 * other section's dates a long scroll away. Each section is followed by its own
+                 * dedicated AXIS_H-tall gap (see the geom useMemo above), so this never overlaps real
+                 * event content the way an overlay-into-existing-space approach would. */}
+                {geom.sectionBottoms.map((boundary) => {
+                  const top = boundary;
                   return (
                     <div key={`axis-${boundary}`}>
                       <div className="tl-axis-strip" style={{ top, height: AXIS_H }} />

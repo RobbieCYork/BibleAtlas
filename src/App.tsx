@@ -428,11 +428,19 @@ function App() {
   // Full-screen multiplayer trivia (GameView), same top-level takeover pattern as Timeline/My Profile
   // above — video tiles and the buzzer UI need real screen space, not a squeezed 240–800px side panel.
   const [showGame, setShowGame] = useState(false);
+  // Bumped whenever the Games entry point is tapped while Games mode is ALREADY showing — GameView
+  // treats that as "take me back to Game Center" (see its own gameCenterNonce prop), the same way
+  // tapping an already-active tab in many apps returns to that tab's root instead of doing nothing.
+  // Tapping the entry point when Games *isn't* showing yet just resumes wherever the player left off
+  // (GameView's own sessionStorage-backed state), same as before.
+  const [gameCenterNonce, setGameCenterNonce] = useState(0);
   const openGame = () => {
     // See the matching comment in openTimeline below — same same-z-index takeover, same fix.
+    const wasAlreadyShowing = showGame;
     closeTimeline();
     closeMyProfile();
     setShowGame(true);
+    if (wasAlreadyShowing) setGameCenterNonce((n) => n + 1);
   };
   const closeGame = () => setShowGame(false);
   /** Shared by the mobile "More" sheet and the in-panel view switcher (so it works on desktop too,
@@ -1373,7 +1381,7 @@ function App() {
         {showGame && (
           <div className="game-mode">
             {session ? (
-              <GameView session={session} onClose={closeGame} />
+              <GameView session={session} onClose={closeGame} gameCenterNonce={gameCenterNonce} />
             ) : (
               <div className="game-signin-prompt">
                 <button type="button" className="game-back-btn" onClick={closeGame} aria-label="Close Games">
@@ -1420,7 +1428,7 @@ function App() {
           <button
             type="button"
             className={`app-footer-timeline app-footer-game${showGame ? " active" : ""}`}
-            onClick={showGame ? closeGame : openGame}
+            onClick={openGame}
             aria-pressed={showGame}
           >
             <span aria-hidden="true">🎮</span>

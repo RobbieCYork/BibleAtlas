@@ -18,7 +18,10 @@ interface GameRoomPlayProps {
 /** Server-side round window — see check_and_advance() in sql/005_everyone_answers.sql. Kept in sync
  * with that function's own `interval '15 seconds'` guard. */
 const ROUND_SECONDS = 15;
-const REVEAL_DELAY_MS = 3_000;
+// Short — just long enough to register "correct/wrong" before moving on, not a dramatic pause. Once
+// everyone's answered there's nothing left to wait for, so the question should change quickly rather
+// than sitting on the reveal.
+const REVEAL_DELAY_MS = 900;
 const ADVANCE_RETRY_MS = 2_000;
 /** How long a round can sit revealed before the manual "Continue" fallback appears — well past what
  * the retry loop below should ever need, so it's a rarely-seen safety net, not the normal path. */

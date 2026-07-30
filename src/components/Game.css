@@ -275,28 +275,22 @@
   width: 100%;
 }
 
-.games-topic-pills {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-}
-
-.games-topic-pill {
+.games-topic-select {
+  width: 100%;
   border: 1px solid var(--border);
+  border-radius: 8px;
   background: var(--bg);
   color: var(--text);
-  border-radius: 999px;
-  padding: 7px 14px;
   font: inherit;
-  font-size: 13px;
+  font-size: 15px;
+  font-weight: 600;
+  padding: 10px 12px;
   cursor: pointer;
 }
 
-.games-topic-pill-active {
-  border-color: var(--accent);
-  background: var(--accent-bg);
-  color: var(--accent);
-  font-weight: 700;
+.games-topic-description {
+  color: var(--text-muted);
+  font-size: 13px;
 }
 
 .games-topic-custom {

@@ -1,4 +1,5 @@
 import { bookIntros } from "../data/bookIntros";
+import LinkedVerseText from "./LinkedVerseText";
 
 interface BookIntroViewProps {
   book: string;
@@ -7,9 +8,16 @@ interface BookIntroViewProps {
    * (its only entry point today) — renders a "Back to Timeline" affordance that restores the
    * Timeline view the reader left, via App's detailsHistory back-trail (see goBackInDetails). */
   onBack?: () => void;
+  /** Same auto-linking callbacks PersonPanel/TopicPanel/TimelineEventPanel already use — book intro
+   * prose (e.g. Genesis's mentions Abraham, Moses, Egypt) links the same way theirs does. */
+  onSelectLocation: (id: string) => void;
+  onSelectPoi: (id: string) => void;
+  onSelectPerson: (id: string) => void;
+  onSelectTopic: (id: string) => void;
 }
 
-export default function BookIntroView({ book, onJumpToChapter, onBack }: BookIntroViewProps) {
+export default function BookIntroView({ book, onJumpToChapter, onBack, onSelectLocation, onSelectPoi, onSelectPerson, onSelectTopic }: BookIntroViewProps) {
+  const linkHandlers = { onSelectLocation, onSelectPoi, onSelectPerson, onSelectTopic };
   const intro = bookIntros.find((b) => b.book === book);
 
   if (!intro) {
@@ -47,11 +55,15 @@ export default function BookIntroView({ book, onJumpToChapter, onBack }: BookInt
       </div>
 
       <h5>Why It Was Written</h5>
-      <p>{intro.whyWritten}</p>
+      <p>
+        <LinkedVerseText text={intro.whyWritten} {...linkHandlers} />
+      </p>
 
       <h5>Summary</h5>
       {intro.summary.map((paragraph, i) => (
-        <p key={i}>{paragraph}</p>
+        <p key={i}>
+          <LinkedVerseText text={paragraph} {...linkHandlers} />
+        </p>
       ))}
 
       {intro.keyPassages.length > 0 && (
@@ -74,7 +86,9 @@ export default function BookIntroView({ book, onJumpToChapter, onBack }: BookInt
       <h5>Manuscripts &amp; Archaeological Evidence</h5>
       <ul className="book-intro-manuscripts">
         {intro.manuscripts.map((m, i) => (
-          <li key={i}>{m}</li>
+          <li key={i}>
+            <LinkedVerseText text={m} {...linkHandlers} />
+          </li>
         ))}
       </ul>
     </div>

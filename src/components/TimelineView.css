@@ -466,6 +466,16 @@
   max-width: 130px;
   overflow: hidden;
   text-overflow: ellipsis;
+  /* Overrides the base .tl-book-bar-label rule's pointer-events: none — that's fine for the "inside"
+   * case (the label just sits visually atop its own already-clickable parent button), but this
+   * variant renders past the button's own box, so without this the click falls through to the pan
+   * surface behind it instead of reaching the button at all. */
+  pointer-events: auto;
+  cursor: pointer;
+  /* Same reasoning as .tl-marker-title/.tl-range-bar-label above: this label overflows into the next
+   * bar's row space, and without an explicit z-index a later-DOM-order sibling .tl-book-bar (which
+   * has z-index:auto in its default state) paints on top of that overflow and swallows the click. */
+  z-index: 3;
 }
 
 /* -------------------------------------------------------- lifespans lane */
@@ -517,7 +527,13 @@
   max-width: 130px;
   overflow: hidden;
   text-overflow: ellipsis;
+  /* Same override as .tl-book-bar-label-outside above, same reason. */
+  pointer-events: auto;
+  cursor: pointer;
   color: var(--text-muted);
+  /* Same reasoning as .tl-book-bar-label-outside/.tl-marker-title above: without this, a later-DOM
+   * sibling .tl-life-bar overlapping this label's overflow region paints on top and eats the click. */
+  z-index: 3;
 }
 
 /* ------------------------------------------------------------ event lanes */
@@ -623,7 +639,21 @@
   max-width: 132px;
   overflow: hidden;
   text-overflow: ellipsis;
-  pointer-events: none;
+  /* Unlike the book/lifespan labels below, this one is ALWAYS positioned past its own button's right
+   * edge (never "inside") — so unlike those, there's no inside case worth preserving pointer-events:
+   * none for; the label needs to be clickable itself (see .tl-marker/.tl-range-bar's onClick, which
+   * this click bubbles up to) or every event's title+year chip is dead. */
+  pointer-events: auto;
+  cursor: pointer;
+  /* This label renders past its own marker/bar's box, into the horizontal space of whatever comes
+   * next in the same row — a later sibling marker/range-bar (z-index:auto, so stacked purely by DOM
+   * order among the un-hovered default) would otherwise paint on top of that overflow region and
+   * silently eat clicks meant for the label beneath it. Since this rule already gives the label its
+   * own stacking context (position + z-index, with no z-index set on its un-hovered parent), this
+   * z-index is compared directly against sibling .tl-marker/.tl-range-bar buttons rather than being
+   * confined inside its own parent — so it reliably wins that hit-test. Kept below the hover/focus
+   * bump (4/5) so a genuinely moused-over neighbor can still draw in front as expected. */
+  z-index: 3;
 }
 
 .tl-event-label-name {

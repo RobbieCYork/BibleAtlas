@@ -65,12 +65,44 @@ function seededShuffle<T>(items: T[], rand: () => number): T[] {
 // looping over leftovers until a full pass places nothing new (a word skipped early sometimes fits
 // once more letters exist to cross). A word that never finds a valid crossing is simply left out of
 // the puzzle — the picker below oversamples the word bank so this never leaves too few words placed.
+//
+// Scoring prioritizes COMPACTNESS over raw crossing count: a placement that barely grows (or shrinks
+// inside) the puzzle's current bounding box beats one that adds more crossings but flings the word
+// out into empty space, which is what used to leave real crosswords looking mostly black — a
+// bounding box stretched by a few long, barely-touching arms, with huge dead rows/columns in between.
+// Real newspaper-style crosswords stay dense because every word is chosen to hug what's already
+// there; this is the cheapest way to get that same effect without a full constraint-based compiler.
 // ------------------------------------------------------------------------------------------------
 
 interface Placement {
   row: number;
   col: number;
   dir: CrosswordDirection;
+}
+
+interface BBox {
+  minR: number;
+  maxR: number;
+  minC: number;
+  maxC: number;
+}
+
+function bboxArea(b: BBox): number {
+  if (b.minR > b.maxR) return 0;
+  return (b.maxR - b.minR + 1) * (b.maxC - b.minC + 1);
+}
+
+function growBBox(b: BBox, row: number, col: number, dir: CrosswordDirection, length: number): BBox {
+  const dr = dir === "down" ? 1 : 0;
+  const dc = dir === "across" ? 1 : 0;
+  const endRow = row + dr * (length - 1);
+  const endCol = col + dc * (length - 1);
+  return {
+    minR: Math.min(b.minR, row, endRow),
+    maxR: Math.max(b.maxR, row, endRow),
+    minC: Math.min(b.minC, col, endCol),
+    maxC: Math.max(b.maxC, col, endCol),
+  };
 }
 
 function canPlace(occupied: Map<string, string>, word: string, row: number, col: number, dir: CrosswordDirection): boolean {
@@ -109,8 +141,14 @@ function countCrossings(occupied: Map<string, string>, word: string, row: number
   return count;
 }
 
-function findBestPlacement(occupied: Map<string, string>, word: string): Placement | null {
-  let best: (Placement & { crossings: number }) | null = null;
+/** How heavily a unit of bounding-box growth outweighs one extra crossing — large enough that
+ * compactness always wins the comparison first, with crossings only breaking ties between equally
+ * compact candidates (rather than the reverse, which is what produced sprawling, mostly-black grids). */
+const COMPACTNESS_WEIGHT = 1000;
+
+function findBestPlacement(occupied: Map<string, string>, word: string, bbox: BBox): Placement | null {
+  let best: (Placement & { score: number }) | null = null;
+  const currentArea = bboxArea(bbox);
   for (const [key, letter] of occupied) {
     const [rStr, cStr] = key.split(",");
     const r = Number(rStr);
@@ -121,13 +159,17 @@ function findBestPlacement(occupied: Map<string, string>, word: string): Placeme
       const acrossCol = c - i;
       if (canPlace(occupied, word, acrossRow, acrossCol, "across")) {
         const crossings = countCrossings(occupied, word, acrossRow, acrossCol, "across");
-        if (!best || crossings > best.crossings) best = { row: acrossRow, col: acrossCol, dir: "across", crossings };
+        const bboxDelta = bboxArea(growBBox(bbox, acrossRow, acrossCol, "across", word.length)) - currentArea;
+        const score = crossings - bboxDelta * COMPACTNESS_WEIGHT;
+        if (!best || score > best.score) best = { row: acrossRow, col: acrossCol, dir: "across", score };
       }
       const downRow = r - i;
       const downCol = c;
       if (canPlace(occupied, word, downRow, downCol, "down")) {
         const crossings = countCrossings(occupied, word, downRow, downCol, "down");
-        if (!best || crossings > best.crossings) best = { row: downRow, col: downCol, dir: "down", crossings };
+        const bboxDelta = bboxArea(growBBox(bbox, downRow, downCol, "down", word.length)) - currentArea;
+        const score = crossings - bboxDelta * COMPACTNESS_WEIGHT;
+        if (!best || score > best.score) best = { row: downRow, col: downCol, dir: "down", score };
       }
     }
   }
@@ -149,6 +191,7 @@ function layoutWords(candidates: CrosswordWordEntry[]): PlacedWord[] {
   if (!first) return placed;
   for (let i = 0; i < first.word.length; i++) occupied.set(`0,${i}`, first.word[i]);
   placed.push({ word: first.word, clue: first.clue, row: 0, col: 0, dir: "across" });
+  let bbox: BBox = { minR: 0, maxR: 0, minC: 0, maxC: first.word.length - 1 };
 
   // Keep sweeping the leftovers until a full pass places nothing new — a word skipped early can fit
   // once a later word has opened up a fresh shared letter.
@@ -157,7 +200,7 @@ function layoutWords(candidates: CrosswordWordEntry[]): PlacedWord[] {
     progress = false;
     const stillRemaining: CrosswordWordEntry[] = [];
     for (const cand of remaining) {
-      const placement = findBestPlacement(occupied, cand.word);
+      const placement = findBestPlacement(occupied, cand.word, bbox);
       if (!placement) {
         stillRemaining.push(cand);
         continue;
@@ -166,6 +209,7 @@ function layoutWords(candidates: CrosswordWordEntry[]): PlacedWord[] {
       const dc = placement.dir === "across" ? 1 : 0;
       for (let i = 0; i < cand.word.length; i++) occupied.set(`${placement.row + dr * i},${placement.col + dc * i}`, cand.word[i]);
       placed.push({ word: cand.word, clue: cand.clue, row: placement.row, col: placement.col, dir: placement.dir });
+      bbox = growBBox(bbox, placement.row, placement.col, placement.dir, cand.word.length);
       progress = true;
     }
     remaining = stillRemaining;
@@ -194,14 +238,58 @@ export function buildCrosswordFromWords(candidates: CrosswordWordEntry[], level:
     minC = Math.min(minC, p.col, endCol);
     maxC = Math.max(maxC, p.col, endCol);
   }
-  const height = maxR - minR + 1;
-  const width = maxC - minC + 1;
-  const grid: (string | null)[][] = Array.from({ length: height }, () => Array(width).fill(null));
-  const normalized = placed.map((p) => ({ ...p, row: p.row - minR, col: p.col - minC }));
+  let height = maxR - minR + 1;
+  let width = maxC - minC + 1;
+  let grid: (string | null)[][] = Array.from({ length: height }, () => Array(width).fill(null));
+  let normalized = placed.map((p) => ({ ...p, row: p.row - minR, col: p.col - minC }));
   for (const p of normalized) {
     const dr = p.dir === "down" ? 1 : 0;
     const dc = p.dir === "across" ? 1 : 0;
     for (let i = 0; i < p.word.length; i++) grid[p.row + dr * i][p.col + dc * i] = p.word[i];
+  }
+
+  // Belt-and-suspenders on top of the compactness scoring above: drop any row/column that ended up
+  // entirely black anyway (can still happen — e.g. the very first word's own span before anything
+  // else crossed it), closing the gap rather than leaving a dead band running across the whole grid.
+  // A row/column is only safe to drop if it's black EVERYWHERE *and* never sits as the one-cell gap
+  // between two separate word-ends on the same line — removing that gap would visually weld two
+  // distinct words into what reads as one continuous run with no divider.
+  {
+    const canRemoveCol = (c: number) =>
+      grid.every((row) => {
+        if (row[c] !== null) return false;
+        const left = c > 0 ? row[c - 1] : null;
+        const right = c < width - 1 ? row[c + 1] : null;
+        return !(left !== null && right !== null);
+      });
+    const canRemoveRow = (r: number) =>
+      grid[r].every((cell, c) => {
+        if (cell !== null) return false;
+        const above = r > 0 ? grid[r - 1][c] : null;
+        const below = r < height - 1 ? grid[r + 1][c] : null;
+        return !(above !== null && below !== null);
+      });
+
+    const rowMap = new Map<number, number>();
+    let nextRow = 0;
+    for (let r = 0; r < height; r++) {
+      if (!canRemoveRow(r)) rowMap.set(r, nextRow++);
+    }
+    const colMap = new Map<number, number>();
+    let nextCol = 0;
+    for (let c = 0; c < width; c++) {
+      if (!canRemoveCol(c)) colMap.set(c, nextCol++);
+    }
+
+    height = nextRow;
+    width = nextCol;
+    grid = Array.from({ length: height }, () => Array(width).fill(null));
+    normalized = normalized.map((p) => ({ ...p, row: rowMap.get(p.row)!, col: colMap.get(p.col)! }));
+    for (const p of normalized) {
+      const dr = p.dir === "down" ? 1 : 0;
+      const dc = p.dir === "across" ? 1 : 0;
+      for (let i = 0; i < p.word.length; i++) grid[p.row + dr * i][p.col + dc * i] = p.word[i];
+    }
   }
 
   // Standard crossword numbering: scan row-major, a cell gets the next number if it starts an across

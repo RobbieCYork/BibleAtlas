@@ -10,7 +10,7 @@ export interface GameDef {
 export const GAMES: GameDef[] = [
   {
     key: "bible-trivia",
-    icon: "🎮",
+    icon: "📖",
     title: "Bible Trivia",
     tagline: "Live multiplayer trivia with video chat — every player answers, first correct doubles.",
   },
@@ -33,7 +33,7 @@ export default function GameCenter({ onSelectGame }: GameCenterProps) {
   return (
     <div className="game-center">
       <div className="games-panel-intro">
-        <h2>🎮 Game Center</h2>
+        <h2>Game Center</h2>
         <p>Pick a game to play with friends.</p>
       </div>
       <div className="game-center-list">

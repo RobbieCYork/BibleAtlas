@@ -78,37 +78,35 @@ export default function GamesPanel({ onRoomReady }: GamesPanelProps) {
   return (
     <div className="games-panel">
       <div className="games-panel-intro">
-        <h2>🎮 Bible Trivia</h2>
+        <h2>📖 Bible Trivia</h2>
         <p>Play solo or live with friends — every player answers, wrong answers cost you, first correct doubles. First to 50 wins.</p>
       </div>
 
       <div className="games-panel-card games-topic-card">
         <h3>Choose a topic</h3>
-        <div className="games-topic-pills">
+        <select
+          className="games-topic-select"
+          value={customMode ? "custom" : preset}
+          onChange={(e) => {
+            if (e.target.value === "custom") {
+              setCustomMode(true);
+            } else {
+              setCustomMode(false);
+              setPreset(e.target.value as QuizTopicPreset);
+            }
+          }}
+          disabled={busy}
+        >
           {TOPIC_PRESETS.map((p) => (
-            <button
-              key={p.key}
-              type="button"
-              className={`games-topic-pill${!customMode && preset === p.key ? " games-topic-pill-active" : ""}`}
-              onClick={() => {
-                setCustomMode(false);
-                setPreset(p.key);
-              }}
-              title={p.description}
-              disabled={busy}
-            >
+            <option key={p.key} value={p.key}>
               {p.label}
-            </button>
+            </option>
           ))}
-          <button
-            type="button"
-            className={`games-topic-pill${customMode ? " games-topic-pill-active" : ""}`}
-            onClick={() => setCustomMode(true)}
-            disabled={busy}
-          >
-            ✏️ Custom…
-          </button>
-        </div>
+          <option value="custom">✏️ Custom…</option>
+        </select>
+        <p className="games-topic-description">
+          {customMode ? "Type your own focus below." : TOPIC_PRESETS.find((p) => p.key === preset)?.description}
+        </p>
         {customMode && (
           <div className="games-topic-custom">
             <input

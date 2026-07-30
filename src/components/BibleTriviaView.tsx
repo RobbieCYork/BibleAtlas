@@ -83,9 +83,15 @@ export default function BibleTriviaView({ session, onBack }: BibleTriviaViewProp
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [roomId]);
 
+  // Solo play has no one to video-chat with — <= 1 rather than === 1 so this also covers the moment
+  // right after a room's created, before its player list has loaded, avoiding a camera-permission
+  // flash for a solo game that would otherwise briefly look like it needed video for an instant.
+  const isSolo = players.length <= 1;
+
   // Video chat spans the whole room lifetime (lobby through results) so players don't have to
   // re-grant camera/mic permission when the game starts — only torn down once there's no active room.
-  const webrtc = useGameWebRTC(roomId, userId);
+  // Passing null instead of roomId when solo means the hook never requests camera/mic access at all.
+  const webrtc = useGameWebRTC(isSolo ? null : roomId, userId);
 
   const handleStart = async () => {
     if (!room) return;
@@ -143,6 +149,7 @@ export default function BibleTriviaView({ session, onBack }: BibleTriviaViewProp
         onLeave={handleLeave}
         onKick={handleKick}
         round={round}
+        isSolo={isSolo}
       />
     ) : null;
 
@@ -152,7 +159,7 @@ export default function BibleTriviaView({ session, onBack }: BibleTriviaViewProp
         <button type="button" className="game-back-btn" onClick={handleBack} aria-label="Back to Game Center">
           ← Back
         </button>
-        <h2>🎮 Bible Trivia</h2>
+        <h2>📖 Bible Trivia</h2>
       </header>
       <div className="game-body">
         {loadError && <p className="games-error">{loadError}</p>}

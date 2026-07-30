@@ -168,10 +168,13 @@
   border: 1px solid var(--border);
 }
 
+/* Unused squares blend into the grid box's own background instead of rendering as a solid black
+ * block — with a small curated word list (not a full dictionary), the layout genuinely can't reach a
+ * traditional newspaper crossword's tight, mostly-white density, so leaning into a wall of black just
+ * emphasizes that. Making the gaps invisible instead reads as clean floating word shapes. */
 .crossword-cell-block {
-  background: var(--text-h);
-  opacity: 0.85;
-  border-color: var(--text-h);
+  background: transparent;
+  border-color: transparent;
 }
 
 .crossword-cell-active {
