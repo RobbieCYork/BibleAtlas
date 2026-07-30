@@ -212,6 +212,12 @@ export function formatJoinDate(createdAt: string): string {
   return new Date(createdAt).toLocaleDateString(undefined, { month: "long", year: "numeric" });
 }
 
+/** "Jan 5, 2026" style — shown under every post (Newsfeed, My Posts, daily-verse responses) so a
+ * reader can tell when something was written, not just what it says. */
+export function formatPostDate(createdAt: string): string {
+  return new Date(createdAt).toLocaleDateString(undefined, { month: "short", day: "numeric", year: "numeric" });
+}
+
 /** "42 sec" below a minute, "3 min" at or above one — so a reading session shorter than a minute still
  * shows real progress instead of floor-dividing to a flat, misleadingly-looking-broken "0 mins". */
 export function formatReadingTime(totalSeconds: number): string {

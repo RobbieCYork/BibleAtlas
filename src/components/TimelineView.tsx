@@ -7,6 +7,7 @@ import { people } from "../data/people";
 import type { Person, TimelineEvent, TimelineEventCategory } from "../data/types";
 import TimelineLaneMenu, { TIMELINE_LANE_ORDER } from "./TimelineLaneMenu";
 import type { TimelineLaneKey } from "./TimelineLaneMenu";
+import BackButton from "./BackButton";
 import "./TimelineView.css";
 
 /* ============================================================================
@@ -1451,18 +1452,7 @@ export default function TimelineView({
   return (
     <section className="tl-root" aria-label="Historical timeline">
       <header className="tl-header">
-        <button type="button" className="tl-back-btn" onClick={onClose} aria-label="Close timeline">
-          <svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true">
-            <path
-              d="M10.5 3 5.5 8l5 5"
-              stroke="currentColor"
-              strokeWidth="1.8"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            />
-          </svg>
-          <span className="tl-back-label">Back</span>
-        </button>
+        <BackButton onClick={onClose} ariaLabel="Close timeline" />
         <div className="tl-title-block">
           <h2 className="tl-title">Historical Timeline</h2>
           {view && (

@@ -5,6 +5,7 @@ import GameLobby from "./GameLobby";
 import GameRoomPlay from "./GameRoomPlay";
 import GameResults from "./GameResults";
 import GameVideoStrip from "./GameVideoStrip";
+import BackButton from "./BackButton";
 import { useGameWebRTC } from "../hooks/useGameWebRTC";
 import {
   fetchRoom,
@@ -156,9 +157,7 @@ export default function BibleTriviaView({ session, onBack }: BibleTriviaViewProp
   return (
     <div className="game-root">
       <header className="game-header">
-        <button type="button" className="game-back-btn" onClick={handleBack} aria-label="Back to Game Center">
-          ← Back
-        </button>
+        <BackButton onClick={handleBack} ariaLabel="Back to Game Center" />
         <h2>📖 Bible Trivia</h2>
       </header>
       <div className="game-body">

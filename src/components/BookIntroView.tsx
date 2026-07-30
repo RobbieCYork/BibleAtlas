@@ -1,5 +1,6 @@
 import { bookIntros } from "../data/bookIntros";
 import LinkedVerseText from "./LinkedVerseText";
+import BackButton from "./BackButton";
 
 interface BookIntroViewProps {
   book: string;
@@ -24,9 +25,9 @@ export default function BookIntroView({ book, onJumpToChapter, onBack, onSelectL
     return (
       <div className="book-intro">
         {onBack && (
-          <button type="button" className="panel-back" onClick={onBack} aria-label="Back to Timeline">
-            ← Back to Timeline
-          </button>
+          <div className="panel-back-row">
+            <BackButton onClick={onBack} label="Back to Timeline" />
+          </div>
         )}
         <h4>{book} — Introduction</h4>
         <p className="bible-status">No introduction available for this book yet.</p>
@@ -37,9 +38,9 @@ export default function BookIntroView({ book, onJumpToChapter, onBack, onSelectL
   return (
     <div className="book-intro">
       {onBack && (
-        <button type="button" className="panel-back" onClick={onBack} aria-label="Back to Timeline">
-          ← Back to Timeline
-        </button>
+        <div className="panel-back-row">
+          <BackButton onClick={onBack} label="Back to Timeline" />
+        </div>
       )}
       <h4>{intro.book} — Introduction</h4>
 

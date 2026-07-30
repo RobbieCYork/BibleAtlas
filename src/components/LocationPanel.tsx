@@ -5,6 +5,7 @@ import ReflectionPrompt from "./ReflectionPrompt";
 import ShareCardButton from "./ShareCardButton";
 import ProfileAudioPlayer from "./ProfileAudioPlayer";
 import PronunciationAudioButton from "./PronunciationAudioButton";
+import BackButton from "./BackButton";
 import { generatePlaceCard, shareFilename } from "../lib/shareCard";
 
 interface LocationPanelProps {
@@ -63,9 +64,9 @@ export default function LocationPanel({
   return (
     <div className={`location-panel ${expand ? "panel-expand" : ""}`} style={expand ? undefined : style}>
       {onBack && (
-        <button className="panel-back" onClick={onBack} aria-label="Back">
-          ‹ Back
-        </button>
+        <div className="panel-back-row">
+          <BackButton onClick={onBack} />
+        </div>
       )}
       <div className="panel-header-row">
         <span className="category-badge">{CATEGORY_LABELS[location.category]}</span>

@@ -5,6 +5,7 @@ import PostsFeed from "./PostsFeed";
 import Newsfeed from "./Newsfeed";
 import AvatarCropModal from "./AvatarCropModal";
 import LinkedVerseText from "./LinkedVerseText";
+import BackButton from "./BackButton";
 
 interface ProfileFields {
   displayName: string;
@@ -358,18 +359,7 @@ export default function MyProfileView({ userId, onDisplayNameSaved, onClose, onG
   return (
     <section className="myprofile-root" aria-label="My Profile">
       <header className="myprofile-header">
-        <button type="button" className="myprofile-back-btn" onClick={onClose} aria-label="Close My Profile">
-          <svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true">
-            <path
-              d="M10.5 3 5.5 8l5 5"
-              stroke="currentColor"
-              strokeWidth="1.8"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            />
-          </svg>
-          <span>Back</span>
-        </button>
+        <BackButton onClick={onClose} ariaLabel="Close My Profile" />
         <h2 className="myprofile-title">My Profile</h2>
       </header>
       <div className="myprofile-body">

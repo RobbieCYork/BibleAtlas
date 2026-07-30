@@ -1,5 +1,6 @@
 import type { TimelineEvent, TimelineEventCategory, TimelineDateCertainty } from "../data/types";
 import LinkedVerseText from "./LinkedVerseText";
+import BackButton from "./BackButton";
 
 interface TimelineEventPanelProps {
   event: TimelineEvent | null;
@@ -67,9 +68,9 @@ export default function TimelineEventPanel({
   return (
     <div className={`location-panel person-panel ${expand ? "panel-expand" : ""}`} style={expand ? undefined : style}>
       {onBack && (
-        <button className="panel-back" onClick={onBack} aria-label="Back">
-          ‹ Back
-        </button>
+        <div className="panel-back-row">
+          <BackButton onClick={onBack} />
+        </div>
       )}
       <span className="category-badge person-badge">{event.era}</span>
       <h2>{event.title}</h2>

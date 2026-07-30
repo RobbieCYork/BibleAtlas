@@ -25,15 +25,7 @@
   font-size: 17px;
 }
 
-.game-back-btn {
-  border: none;
-  background: none;
-  color: var(--accent);
-  font: inherit;
-  font-weight: 600;
-  cursor: pointer;
-  padding: 6px 4px;
-}
+/* Game screens' header back button is the shared .back-btn (BackButton.tsx, styled in App.css). */
 
 .game-body {
   flex: 1;
@@ -68,7 +60,7 @@
   padding: 20px;
 }
 
-.game-signin-prompt .game-back-btn {
+.game-signin-prompt .back-btn {
   position: absolute;
   top: 14px;
   left: 16px;

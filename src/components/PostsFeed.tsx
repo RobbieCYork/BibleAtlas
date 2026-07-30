@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { supabase, displayFor, type Profile, type Note, type NoteComment } from "../lib/supabase";
+import { supabase, displayFor, formatPostDate, type Profile, type Note, type NoteComment } from "../lib/supabase";
 
 interface PostsFeedProps {
   /** Whose public notes to show. */
@@ -120,7 +120,10 @@ export default function PostsFeed({ userId, viewerId, isOwn }: PostsFeedProps) {
     <div className="friend-posts">
       {posts.map(({ note, comments }) => (
         <div key={note.id} className="friend-post">
-          <p className="friend-post-ref">{refLabel(note)}</p>
+          <div className="friend-post-meta">
+            <p className="friend-post-ref">{refLabel(note)}</p>
+            <span className="friend-post-date">{formatPostDate(note.created_at)}</span>
+          </div>
           {note.quoted_text && <p className="verse-popup-quoted">"{note.quoted_text}"</p>}
           <p className="friend-post-text">{note.note_text}</p>
           {isOwn && (

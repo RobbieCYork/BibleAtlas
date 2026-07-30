@@ -24,6 +24,7 @@ import ResizeHandle from "./components/ResizeHandle";
 import AuthButton from "./components/AuthButton";
 import MyProfileView from "./components/MyProfileView";
 import GameView from "./components/GameView";
+import BackButton from "./components/BackButton";
 import DisplayNameGate from "./components/DisplayNameGate";
 import ResetPasswordGate from "./components/ResetPasswordGate";
 import { supabase, setRememberMe } from "./lib/supabase";
@@ -1429,9 +1430,7 @@ function App() {
               <GameView session={session} onClose={closeGame} gameCenterNonce={gameCenterNonce} />
             ) : (
               <div className="game-signin-prompt">
-                <button type="button" className="game-back-btn" onClick={closeGame} aria-label="Close Games">
-                  ← Back
-                </button>
+                <BackButton onClick={closeGame} ariaLabel="Close Games" />
                 <p>Sign in (or continue as a guest) to play multiplayer trivia.</p>
                 <button
                   type="button"

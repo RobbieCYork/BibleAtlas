@@ -2,6 +2,7 @@ import { useMemo, useRef, useState } from "react";
 import { CROSSWORD_LEVELS, type CrosswordLevel } from "../data/crosswordWords";
 import { getCrosswordPuzzle, pickRandomPuzzleIndex, type CrosswordEntry, type CrosswordPuzzle } from "../data/generateCrossword";
 import { backgroundFor } from "../data/crosswordBackgrounds";
+import BackButton from "./BackButton";
 import "./Crossword.css";
 
 /** A scenic Holy Land photo behind the screen, tinted with a theme-aware scrim (see .crossword-scenic
@@ -206,9 +207,7 @@ export default function CrosswordView({ onBack }: CrosswordViewProps) {
     return (
       <div className="game-root">
         <header className="game-header">
-          <button type="button" className="game-back-btn" onClick={onBack} aria-label="Back to Game Center">
-            ← Back
-          </button>
+          <BackButton onClick={onBack} ariaLabel="Back to Game Center" />
           <h2>🧩 Bible Crossword</h2>
         </header>
         <div className="game-body crossword-scenic" style={scenicStyle("crossword-picker")}>
@@ -248,9 +247,7 @@ export default function CrosswordView({ onBack }: CrosswordViewProps) {
   return (
     <div className="game-root">
       <header className="game-header">
-        <button type="button" className="game-back-btn" onClick={backToLevelPicker} aria-label="Back to level picker">
-          ← Back
-        </button>
+        <BackButton onClick={backToLevelPicker} ariaLabel="Back to level picker" />
         <h2>
           {levelDef?.icon} Crossword — {levelLabel}
         </h2>

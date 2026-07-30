@@ -2,6 +2,7 @@ import type { Topic, TopicCategory } from "../data/types";
 import VerseList from "./VerseList";
 import LinkedVerseText from "./LinkedVerseText";
 import ReflectionPrompt from "./ReflectionPrompt";
+import BackButton from "./BackButton";
 
 interface TopicPanelProps {
   topic: Topic | null;
@@ -42,9 +43,9 @@ export default function TopicPanel({
   return (
     <div className={`location-panel person-panel ${expand ? "panel-expand" : ""}`} style={expand ? undefined : style}>
       {onBack && (
-        <button className="panel-back" onClick={onBack} aria-label="Back">
-          ‹ Back
-        </button>
+        <div className="panel-back-row">
+          <BackButton onClick={onBack} />
+        </div>
       )}
       <span className="category-badge person-badge">{topic.role}</span>
       <h2>{topic.name}</h2>

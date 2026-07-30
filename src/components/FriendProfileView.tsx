@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { supabase, displayFor, formatJoinDate, type Profile } from "../lib/supabase";
 import ReadingProgressGrid from "./ReadingProgressGrid";
 import PostsFeed from "./PostsFeed";
+import BackButton from "./BackButton";
 
 interface FriendProfileViewProps {
   friendId: string;
@@ -37,9 +38,7 @@ export default function FriendProfileView({ friendId, viewerId, onBack, onMessag
   return (
     <div className={`friends-panel ${expand ? "panel-expand" : ""} ${hidden ? "bible-panel-hidden" : ""}`} style={expand ? undefined : style}>
       <div className="bible-panel-header no-print">
-        <button type="button" className="friends-back" onClick={onBack} aria-label="Back to friends list">
-          ← Back
-        </button>
+        <BackButton onClick={onBack} ariaLabel="Back to friends list" />
         <h3>{profile ? displayFor(profile) : "Profile"}</h3>
       </div>
 

@@ -58,25 +58,7 @@
   min-height: 54px;
 }
 
-.tl-back-btn {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  border: 1px solid var(--border);
-  background: transparent;
-  color: var(--text);
-  font: inherit;
-  font-size: 13px;
-  padding: 6px 12px 6px 9px;
-  border-radius: 8px;
-  cursor: pointer;
-  transition: background 0.15s ease, border-color 0.15s ease;
-}
-
-.tl-back-btn:hover {
-  background: var(--accent-bg);
-  border-color: var(--accent);
-}
+/* Timeline's header back button is the shared .back-btn (BackButton.tsx, styled in App.css). */
 
 .tl-title-block {
   display: flex;
@@ -781,7 +763,7 @@
     font-size: 11px;
   }
 
-  .tl-back-label {
+  .tl-header .back-btn span {
     display: none;
   }
 

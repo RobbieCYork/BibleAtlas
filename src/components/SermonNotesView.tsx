@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { supabase, type SermonNote } from "../lib/supabase";
+import BackButton from "./BackButton";
 
 interface SermonNotesViewProps {
   userId: string | null | undefined;
@@ -171,9 +172,7 @@ export default function SermonNotesView({ userId }: SermonNotesViewProps) {
   return (
     <div className="sermon-notes-editor">
       <div className="sermon-notes-editor-toolbar">
-        <button type="button" className="friends-back" onClick={backToList}>
-          ← Back
-        </button>
+        <BackButton onClick={backToList} />
         <span className="sermon-notes-save-status">
           {saveStatus === "saving" ? "Saving…" : saveStatus === "saved" ? "Saved" : ""}
         </span>

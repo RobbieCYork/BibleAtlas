@@ -558,30 +558,10 @@ body.resizing-panels {
   padding: 40px;
 }
 
-.panel-back {
-  /* Normal document flow, not absolutely positioned — it used to sit at top-left to pair with a
-   * top-right "×" close button, but that close button is gone (panel visibility is controlled by the
-   * panel menu/tab bar instead), and overlapping it on top of the category badge below made both
-   * unreadable. Sitting in flow as its own row above the badge needs no coordination with anything else. */
-  display: flex;
-  width: fit-content;
-  align-items: center;
-  gap: 3px;
-  margin: -6px 0 8px -8px;
-  background: none;
-  border: none;
-  font-size: 13px;
-  font-weight: 500;
-  line-height: 1;
-  color: var(--text-muted);
-  cursor: pointer;
-  padding: 6px 8px;
-  border-radius: 6px;
-}
-
-.panel-back:hover {
-  background: var(--accent-bg);
-  color: var(--text-h);
+/* Details articles use the shared .back-btn (BackButton.tsx) instead of a bespoke style — it sits
+ * in normal document flow as its own row above the category badge, same spot this used to occupy. */
+.panel-back-row {
+  margin: -6px 0 8px -1px;
 }
 
 /* Header row pairing the category/role badge with the Share button. Flex (not absolute
@@ -4115,11 +4095,25 @@ body.resizing-panels {
   background: var(--bg);
 }
 
+.friend-post-meta {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 8px;
+  margin-bottom: 4px;
+}
+
 .friend-post-ref {
   font-size: 12px;
   font-weight: 600;
   color: var(--text-h);
-  margin-bottom: 4px;
+  margin-bottom: 0;
+}
+
+.friend-post-date {
+  font-size: 11px;
+  color: var(--text-muted);
+  white-space: nowrap;
 }
 
 .friend-post-text {
@@ -4239,6 +4233,15 @@ body.resizing-panels {
 
 .newsfeed-daily-verse-ref:hover {
   color: var(--accent);
+}
+
+.newsfeed-daily-verse .daily-verse-response-form,
+.newsfeed-daily-verse-response {
+  margin-top: 8px;
+}
+
+.newsfeed-daily-verse-response .friend-post-text {
+  margin-bottom: 4px;
 }
 
 .friends-request-actions {
@@ -5671,7 +5674,10 @@ body.resizing-panels {
   min-height: 54px;
 }
 
-.myprofile-back-btn {
+/* --- Shared "Back" button (BackButton.tsx) --- every details article, My Profile, Timeline,
+ * Friends/Groups sub-screens, Sermon Notes, and every Games screen renders this exact button in
+ * the top-left of its header, so "Back" looks and sits the same everywhere it appears. */
+.back-btn {
   display: inline-flex;
   align-items: center;
   gap: 6px;
@@ -5684,9 +5690,10 @@ body.resizing-panels {
   border-radius: 8px;
   cursor: pointer;
   transition: background 0.15s ease, border-color 0.15s ease;
+  flex-shrink: 0;
 }
 
-.myprofile-back-btn:hover {
+.back-btn:hover {
   background: var(--accent-bg);
   border-color: var(--accent);
 }

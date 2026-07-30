@@ -3,6 +3,7 @@ import type { Session } from "@supabase/supabase-js";
 import GameCenter from "./GameCenter";
 import BibleTriviaView from "./BibleTriviaView";
 import CrosswordView from "./CrosswordView";
+import BackButton from "./BackButton";
 import "./Game.css";
 
 const ACTIVE_GAME_KEY = "bible-atlas-active-game-key";
@@ -53,9 +54,7 @@ export default function GameView({ session, onClose, gameCenterNonce }: GameView
   return (
     <div className="game-root">
       <header className="game-header">
-        <button type="button" className="game-back-btn" onClick={onClose} aria-label="Close Games">
-          ← Back
-        </button>
+        <BackButton onClick={onClose} ariaLabel="Close Games" />
         <h2>Game Center</h2>
       </header>
       <div className="game-body">

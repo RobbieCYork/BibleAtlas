@@ -15,6 +15,7 @@ import {
   type Profile,
 } from "../lib/supabase";
 import ViewSwitcher, { type FriendsView } from "./ViewSwitcher";
+import BackButton from "./BackButton";
 import { locations } from "../data/locations";
 import { pois } from "../data/pois";
 import { BOOKS } from "../data/bibleBooks";
@@ -453,17 +454,13 @@ export default function GroupsPanel({
     return (
       <div className={`friends-panel ${expand ? "panel-expand" : ""} ${hidden ? "bible-panel-hidden" : ""}`} style={expand ? undefined : style}>
         <div className="bible-panel-header no-print">
-          <button
-            type="button"
-            className="friends-back"
+          <BackButton
             onClick={() => {
               setScreen("list");
               setActiveGroupId(null);
             }}
-            aria-label="Back to groups list"
-          >
-            ← Back
-          </button>
+            ariaLabel="Back to groups list"
+          />
           <h3>{activeGroup.name}</h3>
         </div>
 
@@ -713,9 +710,7 @@ export default function GroupsPanel({
     return (
       <div className={`friends-panel ${expand ? "panel-expand" : ""} ${hidden ? "bible-panel-hidden" : ""}`} style={expand ? undefined : style}>
         <div className="bible-panel-header no-print">
-          <button type="button" className="friends-back" onClick={() => setScreen("list")} aria-label="Back to groups list">
-            ← Back
-          </button>
+          <BackButton onClick={() => setScreen("list")} ariaLabel="Back to groups list" />
           <h3>New Group</h3>
         </div>
         <form className="group-create-form" onSubmit={handleCreateGroup}>

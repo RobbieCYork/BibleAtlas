@@ -4,6 +4,7 @@ import { supabase, displayFor, type FriendRequest, type GroupSummary, type Messa
 import GroupsPanel from "./GroupsPanel";
 import FriendProfileView from "./FriendProfileView";
 import ViewSwitcher, { type FriendsView } from "./ViewSwitcher";
+import BackButton from "./BackButton";
 
 interface ConversationSummary {
   friendId: string;
@@ -395,9 +396,7 @@ export default function FriendsPanel({
     return (
       <div className={`friends-panel ${expand ? "panel-expand" : ""} ${hidden ? "bible-panel-hidden" : ""}`} style={expand ? undefined : style}>
         <div className="bible-panel-header no-print">
-          <button type="button" className="friends-back" onClick={() => setActiveFriendId(null)} aria-label="Back to friends list">
-            ← Back
-          </button>
+          <BackButton onClick={() => setActiveFriendId(null)} ariaLabel="Back to friends list" />
           <h3>{friendProfile ? displayFor(friendProfile) : "Conversation"}</h3>
         </div>
         {pinnedMessage && (
