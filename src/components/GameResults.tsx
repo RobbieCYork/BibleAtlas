@@ -8,7 +8,7 @@ interface GameResultsProps {
 }
 
 /** End-of-game screen — winner banner, final scores, and the Top 5 board (refetched here since
- * this game's own result may have just landed a new entry on it via resolve_question/force_advance). */
+ * this game's own result may have just landed a new entry on it via check_and_advance()). */
 export default function GameResults({ room, players, onPlayAgain }: GameResultsProps) {
   const [highScores, setHighScores] = useState<GameHighScore[] | null>(null);
   const ranked = [...players].sort((a, b) => b.score - a.score);

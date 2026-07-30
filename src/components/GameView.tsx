@@ -6,7 +6,16 @@ import GameRoomPlay from "./GameRoomPlay";
 import GameResults from "./GameResults";
 import GameVideoStrip from "./GameVideoStrip";
 import { useGameWebRTC } from "../hooks/useGameWebRTC";
-import { fetchRoom, fetchPlayers, startGameRoom, subscribeToRoom, type GameRoom, type GamePlayer } from "../lib/gameSupabase";
+import {
+  fetchRoom,
+  fetchPlayers,
+  startGameRoom,
+  leaveGameRoom,
+  kickPlayer,
+  subscribeToRoom,
+  type GameRoom,
+  type GamePlayer,
+} from "../lib/gameSupabase";
 import "./Game.css";
 
 const ACTIVE_ROOM_KEY = "bible-atlas-active-game-room";
@@ -25,7 +34,7 @@ export default function GameView({ session, onClose }: GameViewProps) {
   const [roomId, setRoomId] = useState<string | null>(() => sessionStorage.getItem(ACTIVE_ROOM_KEY));
   const [room, setRoom] = useState<GameRoom | null>(null);
   const [players, setPlayers] = useState<GamePlayer[]>([]);
-  const [buzzVersion, setBuzzVersion] = useState(0);
+  const [answersVersion, setAnswersVersion] = useState(0);
   const [starting, setStarting] = useState(false);
   const [loadError, setLoadError] = useState<string | null>(null);
 
@@ -40,7 +49,8 @@ export default function GameView({ session, onClose }: GameViewProps) {
     fetchRoom(roomId)
       .then((r) => {
         if (!r) {
-          // Room vanished (shouldn't normally happen) — bounce back to the entry screen.
+          // Room vanished (host left an empty lobby, or it was otherwise cleaned up server-side) —
+          // bounce back to the entry screen instead of showing a room that no longer exists.
           setActiveRoom(null);
           setRoom(null);
           return;
@@ -66,7 +76,7 @@ export default function GameView({ session, onClose }: GameViewProps) {
     const unsubscribe = subscribeToRoom(roomId, {
       onRoomChange: refetchRoom,
       onPlayersChange: refetchPlayers,
-      onBuzzChange: () => setBuzzVersion((v) => v + 1),
+      onAnswersChange: () => setAnswersVersion((v) => v + 1),
     });
     return unsubscribe;
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -88,24 +98,44 @@ export default function GameView({ session, onClose }: GameViewProps) {
     }
   };
 
-  const leaveRoom = () => {
+  const returnToEntry = () => {
     setActiveRoom(null);
     setRoom(null);
     setPlayers([]);
   };
 
-  const videoStrip = roomId ? (
-    <GameVideoStrip
-      players={players}
-      userId={userId}
-      localStream={webrtc.localStream}
-      remoteStreams={webrtc.remoteStreams}
-      micOn={webrtc.micOn}
-      cameraOn={webrtc.cameraOn}
-      onToggleMic={webrtc.toggleMic}
-      onToggleCamera={webrtc.toggleCamera}
-    />
-  ) : null;
+  const handleLeave = async () => {
+    const leavingRoomId = roomId;
+    returnToEntry(); // Leave feels instant; the RPC below cleans up server-side in the background.
+    if (leavingRoomId) await leaveGameRoom(leavingRoomId).catch(() => {});
+  };
+
+  const handleKick = async (targetUserId: string) => {
+    if (!roomId) return;
+    try {
+      await kickPlayer(roomId, targetUserId);
+    } catch (err) {
+      setLoadError(err instanceof Error ? err.message : "Couldn't remove that player.");
+    }
+  };
+
+  const renderVideoStrip = (round?: { answeredUserIds: Set<string>; revealed: boolean; correctUserIds: Set<string> }) =>
+    room ? (
+      <GameVideoStrip
+        players={players}
+        userId={userId}
+        hostId={room.host_id}
+        localStream={webrtc.localStream}
+        remoteStreams={webrtc.remoteStreams}
+        micOn={webrtc.micOn}
+        cameraOn={webrtc.cameraOn}
+        onToggleMic={webrtc.toggleMic}
+        onToggleCamera={webrtc.toggleCamera}
+        onLeave={handleLeave}
+        onKick={handleKick}
+        round={round}
+      />
+    ) : null;
 
   return (
     <div className="game-root">
@@ -120,11 +150,20 @@ export default function GameView({ session, onClose }: GameViewProps) {
         {!roomId || !room ? (
           <GamesPanel onRoomReady={setActiveRoom} />
         ) : room.status === "lobby" ? (
-          <GameLobby room={room} players={players} userId={userId} onStart={handleStart} onLeave={leaveRoom} starting={starting} videoStrip={videoStrip} />
+          <GameLobby
+            room={room}
+            players={players}
+            userId={userId}
+            onStart={handleStart}
+            onLeave={handleLeave}
+            onKick={handleKick}
+            starting={starting}
+            videoStrip={renderVideoStrip()}
+          />
         ) : room.status === "active" ? (
-          <GameRoomPlay room={room} players={players} userId={userId} buzzVersion={buzzVersion} videoStrip={videoStrip} />
+          <GameRoomPlay room={room} players={players} userId={userId} answersVersion={answersVersion} renderVideoStrip={renderVideoStrip} />
         ) : (
-          <GameResults room={room} players={players} onPlayAgain={leaveRoom} />
+          <GameResults room={room} players={players} onPlayAgain={handleLeave} />
         )}
       </div>
     </div>

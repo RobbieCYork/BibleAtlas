@@ -5,7 +5,6 @@ type FriendsView = "friends" | "messages" | "groups";
 
 interface MobileTabBarProps {
   active: PanelKey;
-  hasSelection: boolean;
   /** `view` is only meaningful for the "friends" key — it tells the panel which of its three
    * top-level lists (friend requests/management, 1:1 conversations, or groups) to jump to. */
   onSelect: (key: PanelKey, view?: FriendsView) => void;
@@ -21,7 +20,7 @@ interface MobileTabBarProps {
    * menu (top-right avatar) straight to Settings instead. */
   onOpenProfile: () => void;
   /** The Timeline tab — opens full-screen Timeline mode rather than selecting a panel. Pinned as
-   * its own tab (not tucked into "Social") because the timeline is a flagship destination: seven
+   * its own tab (not tucked into "Social") because the timeline is a flagship destination: six
    * slots at 375px still gives each tab a comfortable touch target, above tap-size guidance. */
   onOpenTimeline: () => void;
   /** Whether Timeline mode is currently open, for the tab's active styling. */
@@ -41,15 +40,18 @@ interface MobileTabBarProps {
   onOpenSocial?: () => void;
 }
 
+/** No dedicated "Details" tab — a location/person/topic/event's details panel is reached by tapping
+ * a hyperlink in the Bible text, a map pin, or a search result, not by navigating to it directly, so
+ * it doesn't need its own icon here. App.tsx's setMobileActivePanel("details") still switches to it
+ * from any of those entry points; only its bottom-bar button is gone. */
 const PINNED_TABS: { key: PanelKey; label: string; icon: string }[] = [
   { key: "bible", label: "Bible", icon: "📖" },
   { key: "map", label: "Map", icon: "🗺️" },
-  { key: "details", label: "Details", icon: "📍" },
   { key: "notes", label: "Notes", icon: "📝" },
 ];
 
 /** Index within PINNED_TABS after which the Timeline tab is inserted — Bible, Map, [Timeline],
- * Details, Notes, so Timeline sits right after Map rather than tacked onto the end of the row. */
+ * Notes, so Timeline sits right after Map rather than tacked onto the end of the row. */
 const TIMELINE_SPLIT_INDEX = 2;
 
 /** Panels that don't get their own pinned bottom-bar slot — reachable through the "Social" tab
@@ -65,7 +67,6 @@ const OVERFLOW_TABS: { key: PanelKey; view?: FriendsView; label: string; icon: s
 
 export default function MobileTabBar({
   active,
-  hasSelection,
   onSelect,
   friendsBadgeCount = 0,
   messagesBadgeCount = 0,
@@ -99,7 +100,6 @@ export default function MobileTabBar({
   };
 
   const renderPinnedTab = (tab: (typeof PINNED_TABS)[number]) => {
-    const showDot = tab.key === "details" && hasSelection && active !== "details";
     // While Timeline or Games mode is open it is the active destination — the underlying panel's
     // tab shouldn't also read as active.
     const isActive = active === tab.key && !timelineActive && !gameActive;
@@ -116,7 +116,6 @@ export default function MobileTabBar({
       >
         <span className="mobile-tab-icon" aria-hidden="true">
           {tab.icon}
-          {showDot && <span className="mobile-tab-dot" />}
         </span>
         <span className="mobile-tab-label">{tab.label}</span>
       </button>

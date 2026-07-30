@@ -1,5 +1,5 @@
 import { supabase } from "./supabase";
-import { buildQuestionSequence } from "../data/gameQuestions";
+import { buildQuestionSequence, type QuizTopicPreset } from "../data/gameQuestions";
 
 export type GameRoomStatus = "lobby" | "active" | "finished";
 
@@ -42,15 +42,20 @@ export interface GameHighScore {
   achieved_at: string;
 }
 
-/** Postgres's unique_violation code — thrown by a submitBuzz() call that lost the race for a
- * question someone else already buzzed on. Not an error worth surfacing; the caller just learns
- * they were too slow. */
+/** Postgres's unique_violation code — thrown by a submitAnswer() call for a question this player
+ * already answered (their own client should already have disabled the buttons after one tap; this is
+ * just the server-side backstop). Not an error worth surfacing. */
 const UNIQUE_VIOLATION = "23505";
 
-/** Creates a room, picks its question sequence up front (see buildQuestionSequence), and seats the
- * caller as host + first player — all atomically inside the create_game_room() RPC. */
-export async function createGameRoom(targetScore = 50, questionCount = 24): Promise<GameRoom> {
-  const questionIds = buildQuestionSequence(questionCount);
+/** Creates a room, picks its question sequence up front (see buildQuestionSequence — narrowed by
+ * `preset` or `customQuery` if given), and seats the caller as host + first player — all atomically
+ * inside the create_game_room() RPC. */
+export async function createGameRoom(
+  targetScore = 50,
+  questionCount = 24,
+  topic: { preset?: QuizTopicPreset; customQuery?: string } = {}
+): Promise<GameRoom> {
+  const questionIds = buildQuestionSequence(questionCount, topic);
   const { data, error } = await supabase.rpc("create_game_room", {
     p_target_score: targetScore,
     p_question_ids: questionIds,
@@ -74,47 +79,55 @@ export async function startGameRoom(roomId: string): Promise<GameRoom> {
   return data as GameRoom;
 }
 
-/** Records the caller's buzz-in for the current question. `error?.code === UNIQUE_VIOLATION` means
- * someone else's buzz already landed first for this question — not a real failure, just "too slow." */
-export async function submitBuzz(
+/** Submits — and immediately scores — the caller's own answer to the current question. Every player
+ * gets exactly one shot per question: wrong subtracts `points` (no floor — a player's total can go
+ * negative), correct adds `points` — doubled if this was the first correct answer among everyone at
+ * the table (decided server-side from answer-arrival order, not something this call controls or can
+ * see coming; see submit_answer() in sql/005_everyone_answers.sql). Pass the question's plain,
+ * unsigned point value as `points`. `alreadyAnswered: true` means this player already answered this
+ * question (their own client should already have disabled the buttons after their first tap; this is
+ * just the server-side backstop) — not a real failure. */
+export async function submitAnswer(
   roomId: string,
   questionIndex: number,
-  userId: string,
-  answerIndex: number
-): Promise<{ wonBuzz: boolean }> {
-  const { error } = await supabase
-    .from("game_buzzes")
-    .insert({ room_id: roomId, question_index: questionIndex, user_id: userId, answer_index: answerIndex });
-  if (!error) return { wonBuzz: true };
-  if (error.code === UNIQUE_VIOLATION) return { wonBuzz: false };
-  throw error;
-}
-
-/** Called by the client that owns the winning buzz for a question — awards points if correct, checks
- * the win condition, and advances the room to the next question. Safe to call more than once (the
- * RPC no-ops if the room already moved past this question). */
-export async function resolveQuestion(
-  roomId: string,
-  questionIndex: number,
+  answerIndex: number,
   correct: boolean,
   points: number
-): Promise<GameRoom> {
-  const { data, error } = await supabase.rpc("resolve_question", {
+): Promise<{ alreadyAnswered: false; player: GamePlayer } | { alreadyAnswered: true }> {
+  const { data, error } = await supabase.rpc("submit_answer", {
     p_room_id: roomId,
     p_question_index: questionIndex,
+    p_answer_index: answerIndex,
     p_correct: correct,
     p_points: points,
   });
+  if (!error) return { alreadyAnswered: false, player: data as GamePlayer };
+  if (error.code === UNIQUE_VIOLATION) return { alreadyAnswered: true };
+  throw error;
+}
+
+/** Ends the current round (once its time window has elapsed, or everyone's answered) and advances to
+ * the next question, or ends the game — see check_and_advance() in sql/005_everyone_answers.sql. Safe
+ * to call redundantly from multiple clients; throws "Question still in progress" if called too early,
+ * which callers should just swallow (it means someone else will/did call it once it's actually time). */
+export async function checkAndAdvance(roomId: string, questionIndex: number): Promise<GameRoom> {
+  const { data, error } = await supabase.rpc("check_and_advance", { p_room_id: roomId, p_question_index: questionIndex });
   if (error) throw error;
   return data as GameRoom;
 }
 
-/** Safety valve — any seated player can force a stuck question (buzz winner's tab vanished) past its
- * 20-second grace period without awarding points. */
-export async function forceAdvance(roomId: string, questionIndex: number): Promise<GameRoom> {
-  const { data, error } = await supabase.rpc("force_advance", { p_room_id: roomId, p_question_index: questionIndex });
+/** Removes the caller from a room — safe to call from the lobby, mid-game, or after it's finished.
+ * If that empties the room, the room itself is deleted; if the caller was host, the room hands
+ * itself to the earliest-joined remaining player. See leave_game_room() in sql/005. */
+export async function leaveGameRoom(roomId: string): Promise<void> {
+  const { error } = await supabase.rpc("leave_game_room", { p_room_id: roomId });
   if (error) throw error;
-  return data as GameRoom;
+}
+
+/** Host-only — removes another seated player from the room. */
+export async function kickPlayer(roomId: string, targetUserId: string): Promise<void> {
+  const { error } = await supabase.rpc("kick_player", { p_room_id: roomId, p_target_user_id: targetUserId });
+  if (error) throw error;
 }
 
 export async function fetchRoom(roomId: string): Promise<GameRoom | null> {
@@ -129,15 +142,16 @@ export async function fetchPlayers(roomId: string): Promise<GamePlayer[]> {
   return (data ?? []) as GamePlayer[];
 }
 
-export async function fetchBuzzForQuestion(roomId: string, questionIndex: number): Promise<GameBuzz | null> {
+/** Every player's answer (if any) to one question — unlike the old single-buzz-winner model, this is
+ * now one row per player who's answered so far, not at most one row total. */
+export async function fetchAnswersForQuestion(roomId: string, questionIndex: number): Promise<GameBuzz[]> {
   const { data, error } = await supabase
     .from("game_buzzes")
     .select("*")
     .eq("room_id", roomId)
-    .eq("question_index", questionIndex)
-    .maybeSingle();
+    .eq("question_index", questionIndex);
   if (error) throw error;
-  return data as GameBuzz | null;
+  return (data ?? []) as GameBuzz[];
 }
 
 export async function fetchTopHighScores(limit = 5): Promise<GameHighScore[]> {
@@ -146,12 +160,12 @@ export async function fetchTopHighScores(limit = 5): Promise<GameHighScore[]> {
   return (data ?? []) as GameHighScore[];
 }
 
-/** One realtime channel covering every table a room's UI needs to react to — players joining/scoring,
- * the room advancing to the next question or finishing, and buzzes landing. Mirrors the
+/** One realtime channel covering every table a room's UI needs to react to — players joining/leaving/
+ * scoring, the room advancing to the next question or finishing, and answers landing. Mirrors the
  * one-effect-per-subscription, refetch-on-change pattern used throughout FriendsPanel/GroupsPanel. */
 export function subscribeToRoom(
   roomId: string,
-  handlers: { onRoomChange?: () => void; onPlayersChange?: () => void; onBuzzChange?: () => void }
+  handlers: { onRoomChange?: () => void; onPlayersChange?: () => void; onAnswersChange?: () => void }
 ) {
   const channel = supabase
     .channel(`game-room-db-${roomId}`)
@@ -162,7 +176,7 @@ export function subscribeToRoom(
       handlers.onPlayersChange?.();
     })
     .on("postgres_changes", { event: "*", schema: "public", table: "game_buzzes", filter: `room_id=eq.${roomId}` }, () => {
-      handlers.onBuzzChange?.();
+      handlers.onAnswersChange?.();
     })
     .subscribe();
   return () => {

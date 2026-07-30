@@ -428,7 +428,12 @@ function App() {
   // Full-screen multiplayer trivia (GameView), same top-level takeover pattern as Timeline/My Profile
   // above — video tiles and the buzzer UI need real screen space, not a squeezed 240–800px side panel.
   const [showGame, setShowGame] = useState(false);
-  const openGame = () => setShowGame(true);
+  const openGame = () => {
+    // See the matching comment in openTimeline below — same same-z-index takeover, same fix.
+    closeTimeline();
+    closeMyProfile();
+    setShowGame(true);
+  };
   const closeGame = () => setShowGame(false);
   /** Shared by the mobile "More" sheet and the in-panel view switcher (so it works on desktop too,
    * where there's no "More" sheet to reach Messages/Groups from otherwise). */
@@ -678,6 +683,11 @@ function App() {
   };
 
   const openTimeline = () => {
+    // Timeline and Games are both full-area takeovers at the same z-index (see .timeline-mode/
+    // .game-mode in App.css) — leaving one mounted while opening the other means it silently paints
+    // underneath, so its own entry point looks unresponsive. Always close the others first.
+    closeGame();
+    closeMyProfile();
     setTimelineFocusEntityId(null);
     setTimelineOverlayEventId(null);
     setShowTimeline(true);
@@ -1427,7 +1437,6 @@ function App() {
       {isMobile && (
         <MobileTabBar
           active={activeMobilePanel}
-          hasSelection={hasSelection}
           onSelect={(key, view) => {
             // Picking any panel tab leaves Timeline mode, Games mode, or My Profile — on mobile the
             // tab bar stays visible underneath all three full-screen takeovers, so tabs must keep

@@ -1,14 +1,20 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { createGameRoom, joinGameRoom, fetchTopHighScores, type GameHighScore } from "../lib/gameSupabase";
+import { TOPIC_PRESETS, countAvailableQuestions, type QuizTopicPreset } from "../data/gameQuestions";
 
 interface GamesPanelProps {
   onRoomReady: (roomId: string) => void;
 }
 
-/** The Games entry screen — create a room or join one by code, plus the standing Top 5 leaderboard.
- * Mirrors the create/join split every other room-based flow in this app doesn't have yet, so its
- * error handling is local rather than following an existing panel's pattern one-for-one. */
+const GAME_QUESTION_COUNT = 24;
+
+/** The Games entry screen — pick a topic, create a room (or join one by code), plus the standing Top
+ * 5 leaderboard. Mirrors the create/join split every other room-based flow in this app doesn't have
+ * yet, so its error handling is local rather than following an existing panel's pattern one-for-one. */
 export default function GamesPanel({ onRoomReady }: GamesPanelProps) {
+  const [preset, setPreset] = useState<QuizTopicPreset>("all");
+  const [customMode, setCustomMode] = useState(false);
+  const [customQuery, setCustomQuery] = useState("");
   const [joinCode, setJoinCode] = useState("");
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -20,11 +26,16 @@ export default function GamesPanel({ onRoomReady }: GamesPanelProps) {
       .catch(() => setHighScores([]));
   }, []);
 
+  const topic = customMode ? { customQuery } : { preset };
+  // Cheap to recompute on every keystroke — it's an in-memory scan of ~1,000 questions, no network
+  // round trip — but useMemo keeps it from re-running on unrelated re-renders (e.g. the join-code field).
+  const availableCount = useMemo(() => countAvailableQuestions(topic), [customMode, preset, customQuery]); // eslint-disable-line react-hooks/exhaustive-deps
+
   const handleCreate = async () => {
     setBusy(true);
     setError(null);
     try {
-      const room = await createGameRoom(50);
+      const room = await createGameRoom(50, GAME_QUESTION_COUNT, topic);
       onRoomReady(room.id);
     } catch (err) {
       setError(err instanceof Error ? err.message : "Couldn't create a game — try again.");
@@ -51,8 +62,59 @@ export default function GamesPanel({ onRoomReady }: GamesPanelProps) {
     <div className="games-panel">
       <div className="games-panel-intro">
         <h2>🎮 Bible Trivia</h2>
-        <p>
-          Play live with friends — people, places, and Bible history questions worth 1 to 10 points. First to 50 wins.
+        <p>Play live with friends — every player answers, wrong answers cost you, first correct doubles. First to 50 wins.</p>
+      </div>
+
+      <div className="games-panel-card games-topic-card">
+        <h3>Choose a topic</h3>
+        <div className="games-topic-pills">
+          {TOPIC_PRESETS.map((p) => (
+            <button
+              key={p.key}
+              type="button"
+              className={`games-topic-pill${!customMode && preset === p.key ? " games-topic-pill-active" : ""}`}
+              onClick={() => {
+                setCustomMode(false);
+                setPreset(p.key);
+              }}
+              title={p.description}
+              disabled={busy}
+            >
+              {p.label}
+            </button>
+          ))}
+          <button
+            type="button"
+            className={`games-topic-pill${customMode ? " games-topic-pill-active" : ""}`}
+            onClick={() => setCustomMode(true)}
+            disabled={busy}
+          >
+            ✏️ Custom…
+          </button>
+        </div>
+        {customMode && (
+          <div className="games-topic-custom">
+            <input
+              type="text"
+              className="games-topic-custom-input"
+              placeholder="e.g. Paul's missionary journeys, kings of Israel, miracles of Jesus…"
+              value={customQuery}
+              onChange={(e) => setCustomQuery(e.target.value)}
+              disabled={busy}
+            />
+            <p className="games-topic-custom-note">
+              Searches this app's own library of {"~1,000"} generated questions for your focus — not a live AI call, so a very
+              narrow or unusual phrase may come up short (the rest of the game gets filled in from a general mix so it's
+              never too short to play).
+            </p>
+          </div>
+        )}
+        <p className="games-topic-count">
+          {customMode && customQuery.trim()
+            ? availableCount > 0
+              ? `🎯 ${availableCount} question${availableCount === 1 ? "" : "s"} matched your topic`
+              : "No matches yet — the game will use a general mix instead"
+            : `🎯 ${availableCount} questions available in this topic`}
         </p>
       </div>
 

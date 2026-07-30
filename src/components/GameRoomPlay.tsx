@@ -1,166 +1,139 @@
 import { useEffect, useRef, useState, type ReactNode } from "react";
 import { getQuestionById } from "../data/gameQuestions";
-import { fetchBuzzForQuestion, resolveQuestion, forceAdvance, submitBuzz, type GameRoom, type GamePlayer, type GameBuzz } from "../lib/gameSupabase";
+import { fetchAnswersForQuestion, checkAndAdvance, submitAnswer, type GameRoom, type GamePlayer, type GameBuzz } from "../lib/gameSupabase";
 
 interface GameRoomPlayProps {
   room: GameRoom;
   players: GamePlayer[];
   userId: string;
   /** Bumped by GameView every time a game_buzzes row changes for this room — the trigger to refetch
-   * the current question's buzz (buzzes aren't otherwise part of GameView's own state). */
-  buzzVersion: number;
-  videoStrip: ReactNode;
+   * the current question's answers (answers aren't otherwise part of GameView's own state). */
+  answersVersion: number;
+  /** Renders GameVideoStrip — GameRoomPlay just feeds it this question's live round state (who's
+   * answered, and once revealed, who got it right) so the score/answered badges overlay the tiles
+   * instead of a separate scoreboard competing for vertical space. */
+  renderVideoStrip: (round: { answeredUserIds: Set<string>; revealed: boolean; correctUserIds: Set<string> }) => ReactNode;
 }
 
-const NO_ANSWER_TIMEOUT_MS = 15_000;
-// Comfortably past resolve_question()'s server-side grace period (see force_advance() in
-// sql/001_game.sql) so a normal in-flight resolution never races this fallback.
-const STALL_FALLBACK_MS = 22_000;
+/** Server-side round window — see check_and_advance() in sql/005_everyone_answers.sql. Kept in sync
+ * with that function's own `interval '15 seconds'` guard. */
+const ROUND_SECONDS = 15;
+const REVEAL_DELAY_MS = 3_000;
 
-/** Live buzzer gameplay for one question at a time. Every client independently derives the same
- * "reveal" (correct/incorrect + who buzzed) the instant a game_buzzes row appears — the buzzing
- * player's own client is then the one that calls resolveQuestion() after a short reveal delay, which
- * is what actually awards points and advances the room. Everyone else is just watching that same
- * state arrive over realtime. See sql/001_game.sql's resolve_question() for why only the buzz's own
- * owner is trusted to report correctness. */
-export default function GameRoomPlay({ room, players, userId, buzzVersion, videoStrip }: GameRoomPlayProps) {
+/** Live "everyone answers" gameplay for one question at a time. Every seated player gets one shot at
+ * each question — submitAnswer() scores their own answer immediately (no separate reveal-then-resolve
+ * step; there's no single "buzz winner" to wait on anymore). Once the round's time window elapses (or
+ * everyone's answered, whichever's first — computed identically on every client from the same
+ * room.current_question_started_at + local answer count, no extra signaling needed), every client
+ * shows the same reveal and one of them calls checkAndAdvance() to move the room on; redundant calls
+ * from other clients are harmless no-ops. */
+export default function GameRoomPlay({ room, players, userId, answersVersion, renderVideoStrip }: GameRoomPlayProps) {
   const index = room.current_question_index;
   const question = getQuestionById(room.question_ids[index] ?? "");
-  const [buzz, setBuzz] = useState<GameBuzz | null>(null);
-  const [myAttemptChoice, setMyAttemptChoice] = useState<number | null>(null);
-  const [buzzing, setBuzzing] = useState(false);
+  const [answers, setAnswers] = useState<GameBuzz[]>([]);
+  const [myChoice, setMyChoice] = useState<number | null>(null);
+  const [submitting, setSubmitting] = useState(false);
+  const [now, setNow] = useState(() => Date.now());
+  // The actual points awarded for my own answer, straight from submit_answer()'s returned score
+  // (new score minus what it was right before submitting) — not guessed client-side, so it correctly
+  // reflects the first-correct 2x bonus (or its absence) without this component needing to know
+  // whether it actually won that race.
+  const [myAwardedDelta, setMyAwardedDelta] = useState<number | null>(null);
 
-  const resolvedIndexRef = useRef<number>(-1);
-  const timeoutFiredRef = useRef<number>(-1);
-  const stallFiredRef = useRef<number>(-1);
+  const advancedIndexRef = useRef<number>(-1);
 
   // Reset per-question local state whenever the room moves to a new question.
   useEffect(() => {
-    setBuzz(null);
-    setMyAttemptChoice(null);
-    setBuzzing(false);
+    setAnswers([]);
+    setMyChoice(null);
+    setSubmitting(false);
+    setMyAwardedDelta(null);
   }, [index]);
 
   useEffect(() => {
-    fetchBuzzForQuestion(room.id, index)
-      .then(setBuzz)
+    fetchAnswersForQuestion(room.id, index)
+      .then(setAnswers)
       .catch(() => {});
-  }, [room.id, index, buzzVersion]);
+  }, [room.id, index, answersVersion]);
 
-  const playerByUserId = new Map(players.map((p) => [p.user_id, p]));
-
-  // Happy path: the player who buzzed correctly resolves the question themselves, after a short
-  // delay so everyone sees the reveal before the next question replaces it.
+  // Drives the countdown display and the elapsed-time half of "round over."
   useEffect(() => {
-    if (!question || !buzz || buzz.user_id !== userId) return;
-    if (resolvedIndexRef.current === index) return;
-    resolvedIndexRef.current = index;
-    const correct = buzz.answer_index === question.correctIndex;
+    const timer = setInterval(() => setNow(Date.now()), 250);
+    return () => clearInterval(timer);
+  }, []);
+
+  const startedAt = room.current_question_started_at ? new Date(room.current_question_started_at).getTime() : now;
+  const elapsedMs = now - startedAt;
+  const secondsLeft = Math.max(0, Math.ceil((ROUND_SECONDS * 1000 - elapsedMs) / 1000));
+  const everyoneAnswered = players.length > 0 && answers.length >= players.length;
+  const roundOver = everyoneAnswered || elapsedMs >= ROUND_SECONDS * 1000;
+
+  // Once the round's over, every client (independently, from the same shared state above) shows the
+  // reveal; after a short pause to let it land, one call to checkAndAdvance() moves the room on. A
+  // ref per index means only the FIRST client-side effect firing schedules the call — but every
+  // client still fires that effect, so it's not reliant on any single "host" being present.
+  useEffect(() => {
+    if (!question || !roundOver) return;
+    if (advancedIndexRef.current === index) return;
+    advancedIndexRef.current = index;
     const timer = setTimeout(() => {
-      resolveQuestion(room.id, index, correct, question.points).catch(() => {
-        resolvedIndexRef.current = -1; // Let a retry (e.g. the stall fallback below) try again.
-      });
-    }, 2500);
+      checkAndAdvance(room.id, index).catch(() => {});
+    }, REVEAL_DELAY_MS);
     return () => clearTimeout(timer);
-  }, [buzz, question, room.id, index, userId]);
-
-  // Nobody buzzed in time — any client can report that (resolveQuestion no-ops harmlessly if two
-  // clients' timers fire close together, since it's guarded on current_question_index).
-  useEffect(() => {
-    if (!question || buzz) return;
-    if (timeoutFiredRef.current === index) return;
-    const startedAt = room.current_question_started_at ? new Date(room.current_question_started_at).getTime() : Date.now();
-    const remaining = startedAt + NO_ANSWER_TIMEOUT_MS - Date.now();
-    const timer = setTimeout(
-      () => {
-        timeoutFiredRef.current = index;
-        resolveQuestion(room.id, index, false, 0).catch(() => {});
-      },
-      Math.max(0, remaining)
-    );
-    return () => clearTimeout(timer);
-  }, [buzz, question, room.id, index, room.current_question_started_at]);
-
-  // Safety net: someone buzzed but their client never resolved (tab closed) — force the room past
-  // it once the server's own grace period has definitely elapsed.
-  useEffect(() => {
-    if (!question) return;
-    if (stallFiredRef.current === index) return;
-    const startedAt = room.current_question_started_at ? new Date(room.current_question_started_at).getTime() : Date.now();
-    const remaining = startedAt + STALL_FALLBACK_MS - Date.now();
-    const timer = setTimeout(
-      () => {
-        stallFiredRef.current = index;
-        forceAdvance(room.id, index).catch(() => {});
-      },
-      Math.max(0, remaining)
-    );
-    return () => clearTimeout(timer);
-  }, [question, room.id, index, room.current_question_started_at]);
+  }, [question, roundOver, room.id, index]);
 
   if (!question) {
     return <p className="games-error">This game's questions couldn't be loaded.</p>;
   }
 
-  const locked = buzz !== null || buzzing;
-  const revealed = buzz !== null;
-  const buzzerName = buzz ? playerByUserId.get(buzz.user_id)?.display_name ?? "Someone" : null;
-  const buzzerCorrect = buzz ? buzz.answer_index === question.correctIndex : false;
+  const myAnswer = answers.find((a) => a.user_id === userId) ?? null;
+  const locked = myAnswer !== null || submitting;
+  const answeredUserIds = new Set(answers.map((a) => a.user_id));
+  const correctUserIds = new Set(answers.filter((a) => a.answer_index === question.correctIndex).map((a) => a.user_id));
 
   const handleAnswer = async (choiceIndex: number) => {
     if (locked) return;
-    setBuzzing(true);
-    setMyAttemptChoice(choiceIndex);
+    setSubmitting(true);
+    setMyChoice(choiceIndex);
+    const correct = choiceIndex === question.correctIndex;
+    const scoreBefore = players.find((p) => p.user_id === userId)?.score ?? 0;
     try {
-      const { wonBuzz } = await submitBuzz(room.id, index, userId, choiceIndex);
-      if (!wonBuzz) {
-        // Someone else's buzz landed first — the realtime subscription will bring their row in
-        // shortly; nothing else to do here.
-      }
+      const result = await submitAnswer(room.id, index, choiceIndex, correct, question.points);
+      if (!result.alreadyAnswered) setMyAwardedDelta(result.player.score - scoreBefore);
     } catch {
-      setBuzzing(false);
-      setMyAttemptChoice(null);
+      setSubmitting(false);
+      setMyChoice(null);
     }
   };
 
   return (
     <div className="game-room-play">
-      {videoStrip}
-
-      <div className="game-scoreboard">
-        {[...players]
-          .sort((a, b) => b.score - a.score)
-          .map((p) => (
-            <div key={p.user_id} className={`game-scoreboard-row${p.user_id === userId ? " game-scoreboard-you" : ""}`}>
-              <span className="game-scoreboard-name">{p.display_name}</span>
-              <div className="game-scoreboard-bar-track">
-                <div className="game-scoreboard-bar-fill" style={{ width: `${Math.min(100, (p.score / room.target_score) * 100)}%` }} />
-              </div>
-              <span className="game-scoreboard-score">{p.score}</span>
-            </div>
-          ))}
-      </div>
+      {renderVideoStrip({ answeredUserIds, revealed: roundOver, correctUserIds })}
 
       <div className="game-question-card">
         <div className="game-question-meta">
           <span className={`game-difficulty-badge game-difficulty-${question.difficulty}`}>
-            {question.difficulty === "impossible" ? "Nearly Impossible" : question.difficulty} · {question.points} pt
+            {question.difficulty === "impossible" ? "Nearly Impossible" : question.difficulty} · ±{question.points} pt
             {question.points === 1 ? "" : "s"}
           </span>
           <span className="game-question-index">
             Question {index + 1} of {room.question_ids.length}
           </span>
+          {!roundOver && <span className="game-question-timer">⏱ {secondsLeft}s</span>}
+          <span className="game-question-answered-count">
+            {answeredUserIds.size}/{players.length} answered
+          </span>
+          <span className="game-question-bonus-hint">🥇 First correct = 2×</span>
         </div>
         <p className="game-question-prompt">{question.prompt}</p>
         <div className="game-question-choices">
           {question.choices.map((choice, i) => {
             const isCorrectChoice = i === question.correctIndex;
-            const isMyChoice = i === myAttemptChoice;
-            const isBuzzChoice = buzz && i === buzz.answer_index;
+            const isMyChoice = i === myChoice;
             let stateClass = "";
-            if (revealed) {
+            if (roundOver) {
               if (isCorrectChoice) stateClass = " game-choice-correct";
-              else if (isBuzzChoice) stateClass = " game-choice-wrong";
+              else if (isMyChoice) stateClass = " game-choice-wrong";
             } else if (isMyChoice) {
               stateClass = " game-choice-pending";
             }
@@ -170,18 +143,26 @@ export default function GameRoomPlay({ room, players, userId, buzzVersion, video
                 type="button"
                 className={`game-choice-button${stateClass}`}
                 onClick={() => handleAnswer(i)}
-                disabled={locked}
+                disabled={locked || roundOver}
               >
                 {choice}
               </button>
             );
           })}
         </div>
-        {revealed && (
+        {roundOver ? (
           <p className="game-question-reveal">
-            {buzzerCorrect ? `✅ ${buzzerName} answered first and got it right! +${question.points}` : `❌ ${buzzerName} answered first but got it wrong.`}
+            {myAnswer
+              ? correctUserIds.has(userId)
+                ? myAwardedDelta && myAwardedDelta > question.points
+                  ? `✅ First correct answer — double points! +${myAwardedDelta}`
+                  : `✅ Correct! +${myAwardedDelta ?? question.points}`
+                : `❌ Not quite — that's ${myAwardedDelta ?? -question.points}. The answer was "${question.choices[question.correctIndex]}."`
+              : `⏱ Time's up. The answer was "${question.choices[question.correctIndex]}."`}
           </p>
-        )}
+        ) : locked ? (
+          <p className="game-question-reveal">Answer locked in — waiting on the rest of the table…</p>
+        ) : null}
       </div>
     </div>
   );

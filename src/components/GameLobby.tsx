@@ -7,14 +7,15 @@ interface GameLobbyProps {
   userId: string;
   onStart: () => void;
   onLeave: () => void;
+  onKick: (targetUserId: string) => void;
   starting: boolean;
   videoStrip: ReactNode;
 }
 
 /** The waiting room — room code to share, live roster (via GameView's realtime subscription), video
- * previews, and the host's Start button. Needs at least 2 players since a solo "race to buzz in" game
- * isn't a race. */
-export default function GameLobby({ room, players, userId, onStart, onLeave, starting, videoStrip }: GameLobbyProps) {
+ * previews, and the host's Start button. Needs at least 2 players since a solo "everyone answers" game
+ * isn't a game. */
+export default function GameLobby({ room, players, userId, onStart, onLeave, onKick, starting, videoStrip }: GameLobbyProps) {
   const isHost = room.host_id === userId;
 
   return (
@@ -32,9 +33,16 @@ export default function GameLobby({ room, players, userId, onStart, onLeave, sta
         <ul>
           {players.map((p) => (
             <li key={p.user_id} className={p.user_id === userId ? "game-lobby-player-you" : ""}>
-              {p.display_name}
-              {p.user_id === room.host_id && <span title="Host"> 👑</span>}
-              {p.user_id === userId && " (you)"}
+              <span>
+                {p.display_name}
+                {p.user_id === room.host_id && <span title="Host"> 👑</span>}
+                {p.user_id === userId && " (you)"}
+              </span>
+              {isHost && p.user_id !== userId && (
+                <button type="button" className="game-lobby-kick" onClick={() => onKick(p.user_id)} aria-label={`Remove ${p.display_name}`}>
+                  Remove
+                </button>
+              )}
             </li>
           ))}
         </ul>

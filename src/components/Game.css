@@ -201,6 +201,63 @@
   color: var(--accent);
 }
 
+/* --- Topic selection (GamesPanel) --- */
+
+.games-topic-card {
+  width: 100%;
+}
+
+.games-topic-pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.games-topic-pill {
+  border: 1px solid var(--border);
+  background: var(--bg);
+  color: var(--text);
+  border-radius: 999px;
+  padding: 7px 14px;
+  font: inherit;
+  font-size: 13px;
+  cursor: pointer;
+}
+
+.games-topic-pill-active {
+  border-color: var(--accent);
+  background: var(--accent-bg);
+  color: var(--accent);
+  font-weight: 700;
+}
+
+.games-topic-custom {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.games-topic-custom-input {
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--bg);
+  color: var(--text);
+  font: inherit;
+  font-size: 14px;
+  padding: 10px 12px;
+}
+
+.games-topic-custom-note {
+  color: var(--text-muted);
+  font-size: 12px;
+}
+
+.games-topic-count {
+  color: var(--text-muted);
+  font-size: 13px;
+  font-weight: 600;
+}
+
 /* --- Lobby (GameLobby) --- */
 
 .game-lobby {
@@ -250,6 +307,22 @@
   border-radius: 8px;
   padding: 8px 12px;
   background: var(--panel-bg);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.game-lobby-kick {
+  border: 1px solid var(--border);
+  background: none;
+  color: #db284e;
+  border-radius: 6px;
+  padding: 3px 10px;
+  font: inherit;
+  font-size: 12px;
+  cursor: pointer;
+  flex-shrink: 0;
 }
 
 .game-lobby-player-you {
@@ -278,49 +351,6 @@
   gap: 16px;
 }
 
-.game-scoreboard {
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-}
-
-.game-scoreboard-row {
-  display: grid;
-  grid-template-columns: 100px 1fr 32px;
-  align-items: center;
-  gap: 10px;
-  font-size: 13px;
-}
-
-.game-scoreboard-you .game-scoreboard-name {
-  color: var(--accent);
-  font-weight: 700;
-}
-
-.game-scoreboard-name {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-
-.game-scoreboard-bar-track {
-  height: 8px;
-  border-radius: 4px;
-  background: var(--border);
-  overflow: hidden;
-}
-
-.game-scoreboard-bar-fill {
-  height: 100%;
-  background: var(--accent);
-  transition: width 0.3s ease;
-}
-
-.game-scoreboard-score {
-  text-align: right;
-  font-weight: 700;
-}
-
 .game-question-card {
   border: 1px solid var(--border);
   background: var(--panel-bg);
@@ -333,9 +363,23 @@
 
 .game-question-meta {
   display: flex;
-  justify-content: space-between;
+  flex-wrap: wrap;
   align-items: center;
+  gap: 8px 14px;
   font-size: 12px;
+  color: var(--text-muted);
+}
+
+.game-question-index {
+  margin-right: auto;
+}
+
+.game-question-timer {
+  font-weight: 700;
+  color: var(--accent);
+}
+
+.game-question-bonus-hint {
   color: var(--text-muted);
 }
 
@@ -474,31 +518,45 @@
 }
 
 /* --- Video chat (GameVideoStrip) --- */
+/* A single non-wrapping, horizontally-scrollable row — deliberately never grows to a second row (that
+ * would eat vertical space the question card and answer buttons need), even with all 8 possible
+ * players present. Doubles as the scoreboard: each tile carries its own score badge, "answered ✓"
+ * indicator, and a floating point-delta pop, so there's no separate scoreboard list to fit as well. */
 
 .game-video-strip {
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 8px;
 }
 
 .game-video-tiles {
   display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-  justify-content: center;
+  gap: 8px;
+  overflow-x: auto;
+  padding-bottom: 2px;
 }
 
 .game-video-tile {
   position: relative;
-  width: 120px;
-  height: 90px;
+  flex: 0 0 auto;
+  width: 84px;
+  height: 84px;
   border-radius: 10px;
   overflow: hidden;
   background: var(--panel-bg);
-  border: 1px solid var(--border);
+  border: 2px solid var(--border);
   display: flex;
   align-items: center;
   justify-content: center;
+  transition: border-color 0.2s ease;
+}
+
+.game-video-tile-correct {
+  border-color: #2ea043;
+}
+
+.game-video-tile-wrong {
+  border-color: #db284e;
 }
 
 .game-video-el {
@@ -508,27 +566,116 @@
 }
 
 .game-video-fallback {
-  font-size: 22px;
+  font-size: 20px;
 }
 
 .game-video-label {
   position: absolute;
-  left: 4px;
-  bottom: 3px;
-  font-size: 10px;
+  left: 3px;
+  bottom: 2px;
+  font-size: 9px;
   color: #fff;
-  background: rgba(0, 0, 0, 0.5);
+  background: rgba(0, 0, 0, 0.55);
   border-radius: 4px;
-  padding: 1px 5px;
-  max-width: calc(100% - 8px);
+  padding: 1px 4px;
+  max-width: calc(100% - 6px);
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
 }
 
+.game-video-score-badge {
+  position: absolute;
+  top: 3px;
+  right: 3px;
+  font-size: 11px;
+  font-weight: 800;
+  color: #fff;
+  background: rgba(0, 0, 0, 0.55);
+  border-radius: 999px;
+  min-width: 18px;
+  text-align: center;
+  padding: 1px 5px;
+}
+
+.game-video-score-negative {
+  color: #ff9a90;
+}
+
+.game-video-answered-badge {
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: rgba(46, 160, 67, 0.9);
+  color: #fff;
+  font-size: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.game-video-kick {
+  position: absolute;
+  bottom: 2px;
+  right: 2px;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  border: none;
+  background: rgba(219, 40, 78, 0.85);
+  color: #fff;
+  font-size: 9px;
+  line-height: 1;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+}
+
+.game-video-delta-pop {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  font-weight: 800;
+  color: #6ee787;
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.7);
+  pointer-events: none;
+  animation: game-video-delta-pop 1.6s ease-out forwards;
+}
+
+.game-video-delta-pop-negative {
+  color: #ff8a80;
+}
+
+@keyframes game-video-delta-pop {
+  0% {
+    opacity: 0;
+    transform: translateY(6px) scale(0.8);
+  }
+  15% {
+    opacity: 1;
+    transform: translateY(-4px) scale(1.2);
+  }
+  70% {
+    opacity: 1;
+    transform: translateY(-14px) scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-22px) scale(1);
+  }
+}
+
 .game-video-controls {
   display: flex;
-  gap: 10px;
+  gap: 8px;
   justify-content: center;
 }
 
@@ -537,14 +684,21 @@
   background: var(--panel-bg);
   color: var(--text);
   border-radius: 999px;
-  padding: 6px 14px;
+  padding: 6px 12px;
   font: inherit;
-  font-size: 12px;
+  font-size: 14px;
   cursor: pointer;
 }
 
 .game-video-toggle-off {
   opacity: 0.55;
+}
+
+.game-video-leave {
+  color: #db284e;
+  border-color: #db284e;
+  font-size: 12px;
+  font-weight: 600;
 }
 
 /* --- Desktop footer's Games button (App.css defines .app-footer-timeline it reuses) --- */
