@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import type { Session } from "@supabase/supabase-js";
+import GameCenter from "./GameCenter";
 import GamesPanel from "./GamesPanel";
 import GameLobby from "./GameLobby";
 import GameRoomPlay from "./GameRoomPlay";
@@ -19,6 +20,7 @@ import {
 import "./Game.css";
 
 const ACTIVE_ROOM_KEY = "bible-atlas-active-game-room";
+const ACTIVE_GAME_KEY = "bible-atlas-active-game-key";
 
 interface GameViewProps {
   session: Session;
@@ -26,11 +28,16 @@ interface GameViewProps {
 }
 
 /** Full-screen "Games" takeover — same pattern as TimelineView/MyProfileView (a boolean in App.tsx
- * renders this over the whole app body; the map/Bible layout underneath stays mounted). Owns which
- * room the player is currently in and drives it through lobby -> active -> finished by watching
- * game_rooms/game_players/game_buzzes over one shared realtime channel (see subscribeToRoom). */
+ * renders this over the whole app body; the map/Bible layout underneath stays mounted). Landing view
+ * is GameCenter (a list of games — one today, Bible Trivia); selecting one hands off to that game's
+ * own flow below. Owns which room the player is currently in and drives it through lobby -> active ->
+ * finished by watching game_rooms/game_players/game_buzzes over one shared realtime channel (see
+ * subscribeToRoom). */
 export default function GameView({ session, onClose }: GameViewProps) {
   const userId = session.user.id;
+  // Which game's flow is showing — null means GameCenter itself. Persisted the same way roomId is, so
+  // a page refresh mid-game doesn't strand the player on GameCenter while their room lives on.
+  const [activeGame, setActiveGame] = useState<string | null>(() => sessionStorage.getItem(ACTIVE_GAME_KEY));
   const [roomId, setRoomId] = useState<string | null>(() => sessionStorage.getItem(ACTIVE_ROOM_KEY));
   const [room, setRoom] = useState<GameRoom | null>(null);
   const [players, setPlayers] = useState<GamePlayer[]>([]);
@@ -110,6 +117,25 @@ export default function GameView({ session, onClose }: GameViewProps) {
     if (leavingRoomId) await leaveGameRoom(leavingRoomId).catch(() => {});
   };
 
+  const selectGame = (key: string) => {
+    setActiveGame(key);
+    sessionStorage.setItem(ACTIVE_GAME_KEY, key);
+  };
+
+  /** The header's "← Back" button. Mid-room it leaves first (so the player doesn't linger in the
+   * roster after their screen has already moved on) and always lands on GameCenter — from GameCenter
+   * itself, Back exits Games mode entirely, back to the main app. */
+  const handleBack = async () => {
+    if (activeGame === null) {
+      onClose();
+      return;
+    }
+    if (roomId) await handleLeave();
+    else returnToEntry();
+    setActiveGame(null);
+    sessionStorage.removeItem(ACTIVE_GAME_KEY);
+  };
+
   const handleKick = async (targetUserId: string) => {
     if (!roomId) return;
     try {
@@ -140,14 +166,16 @@ export default function GameView({ session, onClose }: GameViewProps) {
   return (
     <div className="game-root">
       <header className="game-header">
-        <button type="button" className="game-back-btn" onClick={onClose} aria-label="Close Games">
+        <button type="button" className="game-back-btn" onClick={handleBack} aria-label={activeGame === null ? "Close Games" : "Back to Game Center"}>
           ← Back
         </button>
-        <h2>🎮 Bible Trivia</h2>
+        <h2>{activeGame === null ? "🎮 Game Center" : "🎮 Bible Trivia"}</h2>
       </header>
       <div className="game-body">
         {loadError && <p className="games-error">{loadError}</p>}
-        {!roomId || !room ? (
+        {activeGame === null ? (
+          <GameCenter onSelectGame={selectGame} />
+        ) : !roomId || !room ? (
           <GamesPanel onRoomReady={setActiveRoom} />
         ) : room.status === "lobby" ? (
           <GameLobby
