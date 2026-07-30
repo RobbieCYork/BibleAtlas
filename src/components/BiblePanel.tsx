@@ -74,6 +74,10 @@ interface BiblePanelProps {
    * Introduction (see handleBookSelect/handleChapterSelect below for the same setCurrentBook +
    * setShowIntro pair, triggered here for a book that may not currently be selected at all). */
   openBookIntroRequest?: { book: string; nonce: number } | null;
+  /** Set only while the currently-open Book Introduction was reached via the Timeline's
+   * Books-of-the-Bible band (App gates this on its detailsHistory back-trail) — passed straight
+   * through to BookIntroView as its "Back to Timeline" affordance. */
+  onBookIntroBack?: () => void;
   /** True while App is still resolving the session and (for a signed-in user) any saved reading
    * position — holds back the cold-start welcome screen below so a returning reader doesn't see it
    * flash before their restored chapter lands. See App's bibleInitializing. */
@@ -185,6 +189,7 @@ export default function BiblePanel({
   journalRequest,
   openReadingPlansRequest,
   openBookIntroRequest,
+  onBookIntroBack,
   initializing,
 }: BiblePanelProps) {
   const [translation, setTranslation] = useState("web");
@@ -1227,7 +1232,7 @@ export default function BiblePanel({
       )}
 
       {!showPlans && showIntro && currentBook && !searchResults && (
-        <BookIntroView book={currentBook} onJumpToChapter={handleIntroJumpToChapter} />
+        <BookIntroView book={currentBook} onJumpToChapter={handleIntroJumpToChapter} onBack={onBookIntroBack} />
       )}
 
       {!showPlans && !showIntro && passage && !loading && !error && !searchResults && (

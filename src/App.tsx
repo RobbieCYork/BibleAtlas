@@ -11,7 +11,7 @@ import PoiPanel from "./components/PoiPanel";
 import PersonPanel from "./components/PersonPanel";
 import TopicPanel from "./components/TopicPanel";
 import TimelineEventPanel from "./components/TimelineEventPanel";
-import TimelineView from "./components/TimelineView";
+import TimelineView, { type View as TimelineViewState } from "./components/TimelineView";
 import { TimelineLinkContext } from "./components/LinkChoicePopup";
 import type { TimelineLinkHandlers } from "./components/LinkChoicePopup";
 import BiblePanel from "./components/BiblePanel";
@@ -41,13 +41,17 @@ const MIN_PANEL_WIDTH = 240;
 const MAX_PANEL_WIDTH = 800;
 const MOBILE_QUERY = "(max-width: 768px)";
 
-/** One entry in the details "back" trail — enough to restore a prior selection without re-deriving it. */
+/** One entry in the details "back" trail — enough to restore a prior selection without re-deriving it.
+ * The "timeline" variant is different from the rest: it doesn't restore a *selection*, it restores
+ * Timeline mode itself (the full-screen takeover) at the exact pan/zoom view the reader left behind
+ * when they followed a cross-link out of it (event article, Lifespans bar, or Books band). */
 type DetailsSelection =
   | { kind: "location"; id: string }
   | { kind: "poi"; id: string }
   | { kind: "person"; id: string }
   | { kind: "topic"; id: string }
-  | { kind: "timelineEvent"; id: string };
+  | { kind: "timelineEvent"; id: string }
+  | { kind: "timeline"; view: TimelineViewState };
 
 function App() {
   const [selectedId, setSelectedId] = useState<string | null>(null);
@@ -593,14 +597,19 @@ function App() {
 
   // A person link inside the Bible text does jump to the Details panel (people have no map presence
   // to show instead) — still a fresh starting point, so it clears the back trail like the two above.
-  const handleSelectPersonFromBible = (id: string) => {
-    setDetailsHistory([]);
+  // `preserveHistory` is set when this is reached via a Timeline cross-link (a Lifespans-bar click, or
+  // a person link inside the in-mode TimelineEventPanel article overlay) — exitTimelineThen has
+  // already pushed the timeline view being left onto detailsHistory, and unconditionally clearing it
+  // here would wipe that entry before "Back" ever gets a chance to use it.
+  const handleSelectPersonFromBible = (id: string, opts?: { preserveHistory?: boolean }) => {
+    if (!opts?.preserveHistory) setDetailsHistory([]);
     handleSelectPerson(id);
   };
 
-  // A topic link inside the Bible text — same pattern as person: no map presence, fresh starting point.
-  const handleSelectTopicFromBible = (id: string) => {
-    setDetailsHistory([]);
+  // A topic link inside the Bible text — same pattern as person: no map presence, fresh starting
+  // point, except when arriving via a Timeline cross-link (see handleSelectPersonFromBible above).
+  const handleSelectTopicFromBible = (id: string, opts?: { preserveHistory?: boolean }) => {
+    if (!opts?.preserveHistory) setDetailsHistory([]);
     handleSelectTopic(id);
   };
 
@@ -643,6 +652,13 @@ function App() {
   // Entered from the desktop footer strip, the mobile Timeline tab, or a link-choice popup's "View
   // in Timeline"; left via the view's Back button (or, on mobile, by picking another tab).
   const [showTimeline, setShowTimeline] = useState(false);
+  // The live pan/zoom view inside Timeline mode, lifted up here so it survives Timeline unmounting —
+  // TimelineView reports every change via onViewChange, and reads it back via initialView so
+  // reopening (however it's reached) resumes the last view instead of resetting to the cold-start
+  // default. Also what gets snapshotted into a `{ kind: "timeline" }` detailsHistory entry (see
+  // exitTimelineThen/goBackInDetails below) so a cross-link away from Timeline can restore this exact
+  // view later via "Back", rather than wherever Timeline happens to be when it's reopened.
+  const [savedTimelineView, setSavedTimelineView] = useState<TimelineViewState | null>(null);
   // When Timeline mode was opened for a specific entity (link-choice popup), the view opens zoomed
   // to that entity's events/lifespan with a brief highlight. Null for plain entries.
   const [timelineFocusEntityId, setTimelineFocusEntityId] = useState<string | null>(null);
@@ -696,10 +712,17 @@ function App() {
     },
   };
 
-  /** Leave Timeline mode and run a normal navigation — used by every cross-link inside the
-   * in-mode TimelineEventPanel overlay, so following a person/place link lands the reader back in
-   * the regular app on that entity's page. */
+  /** Leave Timeline mode and run a normal navigation — used by every cross-link reachable while
+   * Timeline mode is open (the Lifespans bar, the Books band, and every cross-link inside the
+   * in-mode TimelineEventPanel article overlay), so following a person/place/book link lands the
+   * reader back in the regular app on that entity's page. Before closing, it snapshots the exact
+   * pan/zoom view being left onto detailsHistory as a `{ kind: "timeline" }` entry (skipped if
+   * there's no view yet to snapshot — practically never, since the cold-start/default view lands
+   * within one render of mount) — see goBackInDetails for the other half of this round trip. */
   const exitTimelineThen = (navigate: () => void) => {
+    if (savedTimelineView) {
+      setDetailsHistory((h) => [...h, { kind: "timeline", view: savedTimelineView }]);
+    }
     closeTimeline();
     navigate();
   };
@@ -712,7 +735,12 @@ function App() {
     else if (prev.kind === "poi") handleSelectPoi(prev.id);
     else if (prev.kind === "topic") handleSelectTopic(prev.id);
     else if (prev.kind === "timelineEvent") handleSelectTimelineEvent(prev.id);
-    else handleSelectPerson(prev.id);
+    else if (prev.kind === "timeline") {
+      // Restore Timeline mode at the exact view it was left at, rather than wherever openTimeline()
+      // would otherwise land (the resumed/cold-start default) or the full-dataset Fit view.
+      setSavedTimelineView(prev.view);
+      openTimeline();
+    } else handleSelectPerson(prev.id);
   };
 
   const hasSelection =
@@ -1105,6 +1133,7 @@ function App() {
             journalRequest={journalRequest}
             openReadingPlansRequest={openReadingPlansNonce}
             openBookIntroRequest={openBookIntroRequest}
+            onBookIntroBack={detailsHistory.length > 0 ? goBackInDetails : undefined}
             initializing={bibleInitializing}
           />
         )}
@@ -1271,7 +1300,9 @@ function App() {
             <TimelineView
               onClose={closeTimeline}
               onSelectTimelineEvent={setTimelineOverlayEventId}
-              onSelectPerson={(id) => exitTimelineThen(() => handleSelectPersonFromBible(id))}
+              onSelectPerson={(id) =>
+                exitTimelineThen(() => handleSelectPersonFromBible(id, { preserveHistory: true }))
+              }
               onSelectBook={(book) =>
                 exitTimelineThen(() => {
                   if (isMobile) setMobileActivePanel("bible");
@@ -1279,30 +1310,29 @@ function App() {
                 })
               }
               focusEntityId={timelineFocusEntityId ?? undefined}
+              initialView={savedTimelineView}
+              onViewChange={setSavedTimelineView}
             />
             {/* Selecting an event opens its article as a slide-in overlay on top of the timeline —
                 same panel component the Details column uses, so it feels native. Back returns to
-                the timeline; any cross-link exits the mode into the normal app. */}
+                the timeline (Timeline itself never unmounts for this case, so its pan/zoom view is
+                untouched underneath); any cross-link inside the article exits the mode into the
+                normal app, first snapshotting the live view via exitTimelineThen so "Back" from
+                wherever the cross-link lands can restore this exact timeline view later. */}
             {timelineOverlayEvent && (
               <div className="timeline-event-overlay">
                 <TimelineEventPanel
                   event={timelineOverlayEvent}
                   onBack={() => setTimelineOverlayEventId(null)}
                   onSelectVerse={(ref) => exitTimelineThen(() => openVerse(ref))}
-                  onSelectLocation={(id) =>
-                    exitTimelineThen(() => {
-                      setDetailsHistory([]);
-                      handleSelect(id);
-                    })
+                  onSelectLocation={(id) => exitTimelineThen(() => handleSelect(id))}
+                  onSelectPoi={(id) => exitTimelineThen(() => handleSelectPoi(id))}
+                  onSelectPerson={(id) =>
+                    exitTimelineThen(() => handleSelectPersonFromBible(id, { preserveHistory: true }))
                   }
-                  onSelectPoi={(id) =>
-                    exitTimelineThen(() => {
-                      setDetailsHistory([]);
-                      handleSelectPoi(id);
-                    })
+                  onSelectTopic={(id) =>
+                    exitTimelineThen(() => handleSelectTopicFromBible(id, { preserveHistory: true }))
                   }
-                  onSelectPerson={(id) => exitTimelineThen(() => handleSelectPersonFromBible(id))}
-                  onSelectTopic={(id) => exitTimelineThen(() => handleSelectTopicFromBible(id))}
                   onSelectTimelineEvent={setTimelineOverlayEventId}
                   expand
                 />

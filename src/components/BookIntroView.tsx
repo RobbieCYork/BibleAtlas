@@ -3,14 +3,23 @@ import { bookIntros } from "../data/bookIntros";
 interface BookIntroViewProps {
   book: string;
   onJumpToChapter: (chapter: number, verse?: number) => void;
+  /** Set only when this book's Introduction was opened from the Timeline's Books-of-the-Bible band
+   * (its only entry point today) — renders a "Back to Timeline" affordance that restores the
+   * Timeline view the reader left, via App's detailsHistory back-trail (see goBackInDetails). */
+  onBack?: () => void;
 }
 
-export default function BookIntroView({ book, onJumpToChapter }: BookIntroViewProps) {
+export default function BookIntroView({ book, onJumpToChapter, onBack }: BookIntroViewProps) {
   const intro = bookIntros.find((b) => b.book === book);
 
   if (!intro) {
     return (
       <div className="book-intro">
+        {onBack && (
+          <button type="button" className="panel-back" onClick={onBack} aria-label="Back to Timeline">
+            ← Back to Timeline
+          </button>
+        )}
         <h4>{book} — Introduction</h4>
         <p className="bible-status">No introduction available for this book yet.</p>
       </div>
@@ -19,6 +28,11 @@ export default function BookIntroView({ book, onJumpToChapter }: BookIntroViewPr
 
   return (
     <div className="book-intro">
+      {onBack && (
+        <button type="button" className="panel-back" onClick={onBack} aria-label="Back to Timeline">
+          ← Back to Timeline
+        </button>
+      )}
       <h4>{intro.book} — Introduction</h4>
 
       <div className="book-intro-facts">

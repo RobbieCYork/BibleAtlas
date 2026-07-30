@@ -91,6 +91,12 @@ function lifespanEnd(l: LifespanEntry): number {
 const MAX_PX_PER_YEAR = 48;
 const CLUSTER_BUCKET_PX = 24;
 const AXIS_H = 30;
+/** Cold-start default window (no prior view, and the caller passed no `initialView`): roughly
+ * Christ's life through the apostolic era and Revelation. This is ONLY the very first view a fresh
+ * mount opens to — the Fit/reset-view button and the "0" key both keep zooming out to the FULL
+ * dataset range via fitView() below, unchanged. */
+const DEFAULT_VIEW_START_YEAR = -20;
+const DEFAULT_VIEW_END_YEAR = 100;
 /** Gap (px) an item needs before a neighboring label is drawn — used for a marker's title on both
  * sides (it's centered under the dot), a book/lifespan bar's "outside" name on the one side it
  * extends past its own bar, and a range-bar's title on the one side it extends past the bar's own
@@ -245,7 +251,7 @@ function easeOutCubic(t: number): number {
 
 /* ------------------------------------------------------------------ types */
 
-interface View {
+export interface View {
   /** Zoom: horizontal pixels per year. */
   pxPerYear: number;
   /** Year at the viewport's left edge. */
@@ -272,6 +278,14 @@ export interface TimelineViewProps {
   /** Dataset overrides for tests/dev harnesses — default to the app's real data. */
   events?: TimelineEvent[];
   lifespans?: LifespanEntry[];
+  /** Resume a previously-saved pan/zoom view instead of the cold-start default — used when the
+   * caller (App) reopens Timeline mode after the reader followed a cross-link away from it (event,
+   * person, or book) and then hit Back. When set, this is used for the FIRST view on mount only;
+   * once mounted, further changes to this prop are ignored (the component owns `view` after that). */
+  initialView?: View | null;
+  /** Fired whenever the pan/zoom view changes (pan, zoom, animated fly-to, or the cold-start/resize
+   * clamp) — lets the caller remember the live view so it can be restored later via `initialView`. */
+  onViewChange?: (view: View) => void;
 }
 
 /* -------------------------------------------------------------- component */
@@ -284,6 +298,8 @@ export default function TimelineView({
   focusEntityId,
   events = DEFAULT_EVENTS,
   lifespans = DEFAULT_LIFESPANS,
+  initialView,
+  onViewChange,
 }: TimelineViewProps) {
   /* viewportRef: the outer, scrollable window (vertical scroll, whenever the checked lanes' fixed
    * generous heights add up to more than fits — the normal case) — this is what's measured for
@@ -293,7 +309,10 @@ export default function TimelineView({
   const viewportRef = useRef<HTMLDivElement | null>(null);
   const canvasRef = useRef<HTMLDivElement | null>(null);
   const [size, setSize] = useState({ w: 0, h: 0 });
-  const [view, setView] = useState<View | null>(null);
+  // Seeded from `initialView` when the caller supplies one (resuming a saved view after a back-nav
+  // round trip) — only consulted for this very first state value; the component owns `view` from
+  // here on, so later changes to the `initialView` prop are never re-applied.
+  const [view, setView] = useState<View | null>(initialView ?? null);
   const [tooltip, setTooltip] = useState<TooltipState | null>(null);
   const [dragging, setDragging] = useState(false);
 
@@ -357,6 +376,18 @@ export default function TimelineView({
     return { pxPerYear: w / (maxYear - minYear), startYear: minYear };
   }, [minYear, maxYear]);
 
+  /** Cold-start default (no `initialView` prop and no prior view yet): roughly 20 BC – AD 100,
+   * covering Christ's life, the apostolic era, and Revelation — a far more useful landing point than
+   * fitView()'s full 4272 BC–AD 2207 sweep. Built the same way fitView() is (pxPerYear from the
+   * measured width, run through clampView so it can never fall outside the dataset's own bounds or
+   * MAX_PX_PER_YEAR), just for a fixed ~120-year window instead of the dataset's computed min/max.
+   * Fit/reset-view and the "0" key both keep calling fitView() above, unchanged. */
+  const defaultView = useCallback((): View => {
+    const w = Math.max(sizeRef.current.w, 1);
+    const span = DEFAULT_VIEW_END_YEAR - DEFAULT_VIEW_START_YEAR;
+    return clampView(w / span, DEFAULT_VIEW_START_YEAR);
+  }, [clampView]);
+
   /* ----- measure the canvas ----- */
 
   useEffect(() => {
@@ -370,10 +401,18 @@ export default function TimelineView({
     return () => ro.disconnect();
   }, []);
 
-  // First measurement → open fitted to the whole sweep of history.
+  // First measurement → open to the cold-start default window (or, if the caller passed an
+  // `initialView`, `view` was already seeded with it at mount and viewRef.current is non-null here,
+  // so this never overwrites a resumed view with the default).
   useEffect(() => {
-    if (size.w > 0 && !viewRef.current) setView(fitView());
-  }, [size.w, fitView]);
+    if (size.w > 0 && !viewRef.current) setView(defaultView());
+  }, [size.w, defaultView]);
+
+  // Let the caller (App) remember the live view as it changes, so it can hand it back in via
+  // `initialView` after a round trip away from Timeline mode (event/person/book cross-link + Back).
+  useEffect(() => {
+    if (view) onViewChange?.(view);
+  }, [view, onViewChange]);
 
   // Keep the view valid when the window resizes.
   useEffect(() => {
