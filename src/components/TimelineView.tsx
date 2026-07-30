@@ -969,7 +969,7 @@ export default function TimelineView({
     const visibleCount = (showBooks ? 1 : 0) + (showLife ? 1 : 0) + nEvent;
 
     if (visibleCount === 0) {
-      return { empty: true as const, axisTop: avail, totalH: h, needsScroll: false };
+      return { empty: true as const, axisTop: avail, sectionBottoms: [] as number[], totalH: h, needsScroll: false };
     }
 
     // Generous per-lane heights — each visible lane simply gets its own comfortable height, never
@@ -987,6 +987,13 @@ export default function TimelineView({
     const lifeRows = lifePack.rowCount;
     const lifeH = showLife ? Math.max(lifeRows * LIFE_ROW_H + LIFE_ROW_PAD, MIN_LIFE_H) : 0;
 
+    // The bottom edge of every visible section (Books, Lifespans, then each event lane, in stacking
+    // order) — a year-axis row gets repeated at each of these, not just the very last one, so
+    // scrolling to any section still shows its own date labels rather than only the bottommost lane's.
+    const sectionBottoms: number[] = [];
+    if (showBooks) sectionBottoms.push(booksH);
+    if (showLife) sectionBottoms.push(booksH + lifeH);
+
     const laneTop = new Map<TimelineEventCategory, number>();
     const laneHeights = new Map<TimelineEventCategory, number>();
     let cursor = booksH + lifeH;
@@ -999,6 +1006,7 @@ export default function TimelineView({
       laneTop.set(lane.cat, cursor);
       laneHeights.set(lane.cat, laneH);
       cursor += laneH;
+      sectionBottoms.push(cursor);
     }
     const contentH = cursor;
 
@@ -1017,6 +1025,7 @@ export default function TimelineView({
       laneTop,
       laneHeights,
       axisTop: contentH,
+      sectionBottoms,
       totalH: contentH + AXIS_H,
       needsScroll,
     };
@@ -1570,22 +1579,39 @@ export default function TimelineView({
                 {booksLayer}
                 {lifespansLayer}
                 {eventsLayer}
-                <div className="tl-axis-strip" style={{ top: geom.axisTop, height: AXIS_H }} />
-                {ticks.map((y) => (
-                  <span
-                    key={`t${y}`}
-                    className={`tl-axis-label${y === 0 ? " tl-axis-epoch" : ""}`}
-                    style={{
-                      left: (y - minYear) * view.pxPerYear,
-                      top: geom.axisTop,
-                      height: AXIS_H,
-                      lineHeight: `${AXIS_H}px`,
-                      zIndex: 6,
-                    }}
-                  >
-                    {y === 0 ? "BC · AD" : formatYear(y)}
-                  </span>
-                ))}
+                {/* A date-axis row at the bottom of EVERY section (Books, Lifespans, each event
+                 * lane), not just the very last one — otherwise only whichever lane happens to be
+                 * bottommost (previously "Other Religions") ever showed date labels, leaving every
+                 * other section's dates a long scroll away. Every section but the last one overlays
+                 * its own row into its last AXIS_H px (there's no gap reserved between lanes to hold
+                 * one without changing every lane's height/hit-testing math) — the translucent
+                 * .tl-axis-strip background keeps it legible over whatever content sits underneath.
+                 * The last section keeps its own dedicated, non-overlapping space below all content,
+                 * exactly as before. */}
+                {geom.sectionBottoms.map((boundary, i) => {
+                  const isLast = i === geom.sectionBottoms.length - 1;
+                  const top = isLast ? boundary : boundary - AXIS_H;
+                  return (
+                    <div key={`axis-${boundary}`}>
+                      <div className="tl-axis-strip" style={{ top, height: AXIS_H }} />
+                      {ticks.map((y) => (
+                        <span
+                          key={`t${boundary}-${y}`}
+                          className={`tl-axis-label${y === 0 ? " tl-axis-epoch" : ""}`}
+                          style={{
+                            left: (y - minYear) * view.pxPerYear,
+                            top,
+                            height: AXIS_H,
+                            lineHeight: `${AXIS_H}px`,
+                            zIndex: 6,
+                          }}
+                        >
+                          {y === 0 ? "BC · AD" : formatYear(y)}
+                        </span>
+                      ))}
+                    </div>
+                  );
+                })}
               </div>
 
               {tooltip && (
