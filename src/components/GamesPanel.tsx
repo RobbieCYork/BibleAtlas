@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
-import { createGameRoom, joinGameRoom, fetchTopHighScores, type GameHighScore } from "../lib/gameSupabase";
+import { createGameRoom, joinGameRoom, startGameRoom, fetchTopHighScores, type GameHighScore } from "../lib/gameSupabase";
 import { TOPIC_PRESETS, countAvailableQuestions, type QuizTopicPreset } from "../data/gameQuestions";
 
 interface GamesPanelProps {
@@ -44,6 +44,23 @@ export default function GamesPanel({ onRoomReady }: GamesPanelProps) {
     }
   };
 
+  /** Creates a room and starts it immediately, skipping the lobby's room-code/roster screen entirely
+   * — that screen has nothing useful to offer a solo player. The scoring model (everyone answers,
+   * first correct doubles, race to the target score) already works fine with just one player. */
+  const handlePlaySolo = async () => {
+    setBusy(true);
+    setError(null);
+    try {
+      const room = await createGameRoom(50, GAME_QUESTION_COUNT, topic);
+      await startGameRoom(room.id);
+      onRoomReady(room.id);
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Couldn't start a solo game — try again.");
+    } finally {
+      setBusy(false);
+    }
+  };
+
   const handleJoin = async () => {
     if (!joinCode.trim()) return;
     setBusy(true);
@@ -62,7 +79,7 @@ export default function GamesPanel({ onRoomReady }: GamesPanelProps) {
     <div className="games-panel">
       <div className="games-panel-intro">
         <h2>🎮 Bible Trivia</h2>
-        <p>Play live with friends — every player answers, wrong answers cost you, first correct doubles. First to 50 wins.</p>
+        <p>Play solo or live with friends — every player answers, wrong answers cost you, first correct doubles. First to 50 wins.</p>
       </div>
 
       <div className="games-panel-card games-topic-card">
@@ -120,10 +137,13 @@ export default function GamesPanel({ onRoomReady }: GamesPanelProps) {
 
       <div className="games-panel-actions">
         <div className="games-panel-card">
-          <h3>Start a new game</h3>
-          <p>You'll get a short code to share with the others.</p>
-          <button type="button" className="games-primary-button" onClick={handleCreate} disabled={busy}>
-            {busy ? "Creating…" : "Create Game"}
+          <h3>Play now</h3>
+          <p>Solo practice, or start a room and share the code with others.</p>
+          <button type="button" className="games-primary-button" onClick={handlePlaySolo} disabled={busy}>
+            {busy ? "Starting…" : "🧑 Play Solo"}
+          </button>
+          <button type="button" className="games-secondary-button" onClick={handleCreate} disabled={busy}>
+            {busy ? "Creating…" : "👥 Create Multiplayer Game"}
           </button>
         </div>
 

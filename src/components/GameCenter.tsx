@@ -5,14 +5,20 @@ export interface GameDef {
   tagline: string;
 }
 
-/** The list of playable games — one entry today (Bible Trivia), structured as a list from the start
- * so a second game later is just another array entry, not a redesign. */
+/** The list of playable games — structured as a list from the start so adding another is just
+ * another array entry, not a redesign. */
 export const GAMES: GameDef[] = [
   {
     key: "bible-trivia",
     icon: "🎮",
     title: "Bible Trivia",
     tagline: "Live multiplayer trivia with video chat — every player answers, first correct doubles.",
+  },
+  {
+    key: "crossword",
+    icon: "🧩",
+    title: "Bible Crossword",
+    tagline: "Solo crossword puzzles from Beginner (little ones) to Expert (pastors & Bible students).",
   },
 ];
 

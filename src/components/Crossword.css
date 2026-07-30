@@ -1,0 +1,266 @@
+/* --- Scenic backdrop (both the level picker and the puzzle screen use this) --- */
+/* A Holy Land photo (see src/data/crosswordBackgrounds.ts) behind the whole screen, tinted with a
+ * theme-aware scrim mixed right into the same background-image stack — no extra DOM layer needed —
+ * so it reads as atmosphere around the edges while every actual content panel (grid, clues, cards)
+ * keeps its own fully-opaque background and stays perfectly legible. */
+.crossword-scenic {
+  --xw-scrim: rgba(250, 249, 252, 0.88);
+  background-image: linear-gradient(var(--xw-scrim), var(--xw-scrim)), var(--xw-photo);
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+@media (prefers-color-scheme: dark) {
+  .crossword-scenic {
+    --xw-scrim: rgba(19, 18, 23, 0.88);
+  }
+}
+
+.crossword-photo-credit {
+  align-self: center;
+  color: var(--text-muted);
+  font-size: 11px;
+  text-decoration: none;
+  opacity: 0.75;
+}
+
+.crossword-photo-credit:hover {
+  opacity: 1;
+  text-decoration: underline;
+}
+
+/* --- Level picker --- */
+
+.crossword-level-picker {
+  width: 100%;
+  max-width: 640px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.crossword-level-card {
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
+  transition:
+    transform 0.15s ease,
+    box-shadow 0.15s ease;
+}
+
+.crossword-level-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.14);
+}
+
+.crossword-level-card .game-center-card-icon {
+  font-size: 30px;
+}
+
+/* --- Puzzle screen --- */
+
+.crossword-body {
+  align-items: stretch;
+  max-width: 1100px;
+  width: 100%;
+  gap: 16px;
+}
+
+.crossword-toolbar {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.crossword-toolbar .games-secondary-button {
+  background: var(--panel-bg);
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
+}
+
+.crossword-zoom-controls {
+  display: flex;
+  gap: 4px;
+}
+
+.crossword-zoom-controls .games-secondary-button {
+  padding: 10px 14px;
+  min-width: 40px;
+  text-align: center;
+}
+
+.crossword-scroll-hint {
+  margin: -8px 0 0;
+  text-align: center;
+  color: var(--text-muted);
+  font-size: 12px;
+}
+
+.crossword-solved-banner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  border: 1px solid #2ea043;
+  background: rgba(46, 160, 67, 0.24);
+  backdrop-filter: blur(8px);
+  border-radius: 12px;
+  padding: 14px;
+  text-align: center;
+  font-weight: 700;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
+}
+
+.crossword-solved-banner p {
+  margin: 0;
+  font-size: 16px;
+}
+
+.crossword-layout {
+  display: flex;
+  gap: 20px;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  justify-content: center;
+  /* .game-body uses align-items: center (not stretch), so without an explicit width this box sizes
+   * to its own preferred content width — which for a big crossword can be wider than the viewport —
+   * instead of being constrained to the space actually available. That left the grid rendered at full
+   * width, centered, with both edges equally inaccessible instead of scrolling within its own box. */
+  width: 100%;
+}
+
+/* --- Grid --- */
+
+.crossword-grid-scroll {
+  overflow: auto;
+  /* A flex item (child of .crossword-layout) defaults to min-width: auto, which lets it grow to its
+   * content's full intrinsic width regardless of max-width — on a puzzle wider than the viewport,
+   * that pushed the whole PAGE wide instead of scrolling just this box internally. min-width: 0 lets
+   * it actually shrink to the space available, which is what makes max-width/overflow do anything. */
+  min-width: 0;
+  max-width: 100%;
+  max-height: 70vh;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--panel-bg);
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.1);
+  padding: 4px;
+  /* Larger puzzles (Intermediate and up) routinely run wider/taller than the viewport — this is a
+   * genuine pan-able surface, not an overflow accident, so make touch panning (swipe) as smooth as
+   * possible and keep an over-scroll at the grid's edge from bubbling up into the page behind it. */
+  touch-action: pan-x pan-y;
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior: contain;
+}
+
+.crossword-grid {
+  /* Overridden inline per-puzzle/zoom-level by CrosswordView (see defaultCellSizeFor/cellSize) — this
+   * is just a pre-JS fallback. */
+  --xw-cell: 30px;
+  display: grid;
+}
+
+.crossword-cell {
+  position: relative;
+  width: var(--xw-cell);
+  height: var(--xw-cell);
+  box-sizing: border-box;
+  border: 1px solid var(--border);
+}
+
+.crossword-cell-block {
+  background: var(--text-h);
+  opacity: 0.85;
+  border-color: var(--text-h);
+}
+
+.crossword-cell-active {
+  background: var(--accent-bg);
+}
+
+.crossword-cell-number {
+  position: absolute;
+  top: 0;
+  left: 1px;
+  font-size: 8px;
+  color: var(--text-muted);
+  line-height: 1;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.crossword-cell-input {
+  width: 100%;
+  height: 100%;
+  border: none;
+  background: transparent;
+  text-align: center;
+  font: inherit;
+  font-weight: 700;
+  font-size: calc(var(--xw-cell) * 0.5);
+  color: var(--text-h);
+  text-transform: uppercase;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.crossword-cell-input:focus {
+  outline: none;
+}
+
+.crossword-cell-selected {
+  background: color-mix(in srgb, var(--accent) 30%, transparent);
+}
+
+/* --- Clue lists --- */
+
+.crossword-clues {
+  display: flex;
+  gap: 24px;
+  flex-wrap: wrap;
+  min-width: 240px;
+  max-height: 70vh;
+  overflow-y: auto;
+  background: var(--panel-bg);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.1);
+  padding: 14px 16px;
+}
+
+.crossword-clue-column h3 {
+  font-size: 14px;
+  margin-bottom: 8px;
+  color: var(--text-h);
+}
+
+.crossword-clue-column ul {
+  list-style: none;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.crossword-clue-column button {
+  border: none;
+  background: none;
+  color: var(--text);
+  font: inherit;
+  font-size: 13px;
+  text-align: left;
+  padding: 4px 6px;
+  border-radius: 6px;
+  cursor: pointer;
+  width: 100%;
+}
+
+.crossword-clue-column button:hover {
+  background: var(--bg);
+}
+
+.crossword-clue-active button {
+  background: var(--accent-bg);
+  color: var(--accent);
+  font-weight: 700;
+}

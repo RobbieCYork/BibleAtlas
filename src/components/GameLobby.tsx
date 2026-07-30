@@ -13,8 +13,9 @@ interface GameLobbyProps {
 }
 
 /** The waiting room — room code to share, live roster (via GameView's realtime subscription), video
- * previews, and the host's Start button. Needs at least 2 players since a solo "everyone answers" game
- * isn't a game. */
+ * previews, and the host's Start button. Works solo too (practice/one-player mode) — the scoring model
+ * (everyone answers, first correct doubles, reach the target score) holds up fine with just one
+ * player; the room-code/roster UI is simply irrelevant to them in that case. */
 export default function GameLobby({ room, players, userId, onStart, onLeave, onKick, starting, videoStrip }: GameLobbyProps) {
   const isHost = room.host_id === userId;
 
@@ -50,8 +51,8 @@ export default function GameLobby({ room, players, userId, onStart, onLeave, onK
 
       <div className="game-lobby-actions">
         {isHost ? (
-          <button type="button" className="games-primary-button" onClick={onStart} disabled={starting || players.length < 2}>
-            {starting ? "Starting…" : players.length < 2 ? "Waiting for more players…" : "Start Game"}
+          <button type="button" className="games-primary-button" onClick={onStart} disabled={starting}>
+            {starting ? "Starting…" : players.length < 2 ? "Start Solo Game" : "Start Game"}
           </button>
         ) : (
           <p className="game-lobby-waiting">Waiting for the host to start the game…</p>

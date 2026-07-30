@@ -39,6 +39,11 @@
   flex: 1;
   min-height: 0;
   overflow-y: auto;
+  /* Explicit, not just "not set" — leaving overflow-x unset makes it compute to auto (not visible)
+   * per the CSS Overflow spec once overflow-y is non-visible, which let this become a second,
+   * unintended horizontal scroll container wrapping whatever wide content sits inside it (e.g. a
+   * large crossword grid) instead of that content scrolling within its own box. */
+  overflow-x: hidden;
   padding: 20px;
   display: flex;
   flex-direction: column;
