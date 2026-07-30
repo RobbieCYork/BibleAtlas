@@ -1043,7 +1043,8 @@ export default function TimelineView({
           >
             {showLabel && (
               <span className={`tl-book-bar-label${inside ? "" : " tl-book-bar-label-outside"}`}>
-                {item.book}
+                <span className="tl-event-label-name">{item.book}</span>
+                <span className="tl-event-label-year">{range}</span>
               </span>
             )}
           </button>,
@@ -1109,7 +1110,8 @@ export default function TimelineView({
           >
             {showLabel && (
               <span className={`tl-life-label${inside ? "" : " tl-life-label-outside"}`}>
-                {item.name}
+                <span className="tl-event-label-name">{item.name}</span>
+                <span className="tl-event-label-year">{label}</span>
               </span>
             )}
           </button>,

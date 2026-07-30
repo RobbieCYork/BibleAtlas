@@ -70,6 +70,10 @@ interface BiblePanelProps {
    * view, resuming whichever plan was last open. Undefined until first triggered so mounting doesn't
    * switch away from whatever's currently being read. */
   openReadingPlansRequest?: number;
+  /** One-shot request from the Timeline's Books-of-the-Bible band — opens straight to that book's
+   * Introduction (see handleBookSelect/handleChapterSelect below for the same setCurrentBook +
+   * setShowIntro pair, triggered here for a book that may not currently be selected at all). */
+  openBookIntroRequest?: { book: string; nonce: number } | null;
   /** True while App is still resolving the session and (for a signed-in user) any saved reading
    * position — holds back the cold-start welcome screen below so a returning reader doesn't see it
    * flash before their restored chapter lands. See App's bibleInitializing. */
@@ -180,6 +184,7 @@ export default function BiblePanel({
   externalSearchNonce,
   journalRequest,
   openReadingPlansRequest,
+  openBookIntroRequest,
   initializing,
 }: BiblePanelProps) {
   const [translation, setTranslation] = useState("web");
@@ -347,6 +352,15 @@ export default function BiblePanel({
     openPlansView(openPlanId);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [openReadingPlansRequest]);
+
+  // External request to open a specific book's Introduction (Timeline's Books-of-the-Bible band).
+  useEffect(() => {
+    if (!openBookIntroRequest) return;
+    setCurrentBook(openBookIntroRequest.book);
+    setShowIntro(true);
+    setShowPlans(false);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [openBookIntroRequest]);
 
   // Fetched once per login — governs whether an old chapter_reads row still counts below.
   useEffect(() => {

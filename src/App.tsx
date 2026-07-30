@@ -401,6 +401,12 @@ function App() {
     if (isMobile) setMobileActivePanel("bible");
     setOpenReadingPlansNonce((n) => (n ?? 0) + 1);
   };
+  // Lets the Timeline's Books-of-the-Bible band jump straight to a book's Introduction (instead of
+  // its chapter 1) — same one-shot-request shape as journalRequest, carrying which book since that
+  // varies per click, not just a bare nonce.
+  const [openBookIntroRequest, setOpenBookIntroRequest] = useState<{ book: string; nonce: number } | null>(
+    null,
+  );
 
   // --- My Profile mode ----------------------------------------------------------------------------
   // Full-screen "My Profile" (MyProfileView), same top-level takeover pattern as Timeline mode below:
@@ -1098,6 +1104,7 @@ function App() {
             externalSearchNonce={bibleSearchNonce}
             journalRequest={journalRequest}
             openReadingPlansRequest={openReadingPlansNonce}
+            openBookIntroRequest={openBookIntroRequest}
             initializing={bibleInitializing}
           />
         )}
@@ -1265,7 +1272,12 @@ function App() {
               onClose={closeTimeline}
               onSelectTimelineEvent={setTimelineOverlayEventId}
               onSelectPerson={(id) => exitTimelineThen(() => handleSelectPersonFromBible(id))}
-              onSelectBook={(book) => exitTimelineThen(() => openVerse(`${book} 1`))}
+              onSelectBook={(book) =>
+                exitTimelineThen(() => {
+                  if (isMobile) setMobileActivePanel("bible");
+                  setOpenBookIntroRequest((r) => ({ book, nonce: (r?.nonce ?? 0) + 1 }));
+                })
+              }
               focusEntityId={timelineFocusEntityId ?? undefined}
             />
             {/* Selecting an event opens its article as a slide-in overlay on top of the timeline —
