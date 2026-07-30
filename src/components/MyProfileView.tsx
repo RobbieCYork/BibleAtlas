@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { supabase, formatJoinDate } from "../lib/supabase";
 import ReadingProgressGrid from "./ReadingProgressGrid";
 import PostsFeed from "./PostsFeed";
+import Newsfeed from "./Newsfeed";
 import AvatarCropModal from "./AvatarCropModal";
 import LinkedVerseText from "./LinkedVerseText";
 
@@ -182,11 +183,14 @@ function MyProfileControl({
 
       {!editing ? (
         <div className="profile-view">
-          <div className="friend-profile-header">
+          <div className="friend-profile-header myprofile-name-row">
             <span className="auth-avatar auth-avatar-lg" aria-hidden="true">
               {saved.avatarUrl ? <img src={saved.avatarUrl} alt="" /> : "👤"}
             </span>
-            <p className="friend-profile-name">{saved.displayName}</p>
+            <p className="friend-profile-name myprofile-name-grow">{saved.displayName}</p>
+            <button type="button" className="myprofile-edit-btn" onClick={() => setEditing(true)}>
+              ✏️ Edit
+            </button>
           </div>
           {saved.church && (
             <p className="profile-view-field">
@@ -206,9 +210,6 @@ function MyProfileControl({
             </div>
           )}
           {saved.bio && <p className="profile-view-field">{saved.bio}</p>}
-          <button type="button" onClick={() => setEditing(true)}>
-            ✏️ Edit
-          </button>
         </div>
       ) : (
         <>
@@ -342,6 +343,9 @@ interface MyProfileViewProps {
   /** Jumps the Bible reader to a reference (used by the favorite-verse link) — the view closes itself
    * first so the reader actually sees the passage land, same as Timeline mode's exitTimelineThen. */
   onGoToVerse: (reference: string) => void;
+  /** Opens the Friends panel to a specific list (Friends/Messages/Groups), closing My Profile first —
+   * same "leave this full-screen mode to enter another surface" shape as onGoToVerse above. */
+  onOpenFriends: (view: "friends" | "messages" | "groups") => void;
 }
 
 /** Full-screen "My Profile" mode — same top-level takeover pattern as TimelineView (a boolean in App
@@ -349,7 +353,8 @@ interface MyProfileViewProps {
  * anchored dropdown this used to be. Reachable from the desktop account menu's "My Profile" and the
  * mobile "More" sheet's entry of the same name; both now open this directly rather than popping the
  * account flyout to an internal "profile" view. */
-export default function MyProfileView({ userId, onDisplayNameSaved, onClose, onGoToVerse }: MyProfileViewProps) {
+export default function MyProfileView({ userId, onDisplayNameSaved, onClose, onGoToVerse, onOpenFriends }: MyProfileViewProps) {
+  const [postsTab, setPostsTab] = useState<"newsfeed" | "mine">("newsfeed");
   return (
     <section className="myprofile-root" aria-label="My Profile">
       <header className="myprofile-header">
@@ -369,6 +374,20 @@ export default function MyProfileView({ userId, onDisplayNameSaved, onClose, onG
       </header>
       <div className="myprofile-body">
         <div className="myprofile-body-inner">
+          <div className="auth-settings-section auth-settings-section-stacked">
+            <div className="myprofile-social-links">
+              <button type="button" onClick={() => onOpenFriends("friends")}>
+                👥 Friends
+              </button>
+              <button type="button" onClick={() => onOpenFriends("messages")}>
+                💬 Messages
+              </button>
+              <button type="button" onClick={() => onOpenFriends("groups")}>
+                👪 Groups
+              </button>
+            </div>
+          </div>
+          <div className="auth-settings-divider" />
           <MyProfileControl userId={userId} onDisplayNameSaved={onDisplayNameSaved} onGoToVerse={onGoToVerse} />
           <div className="auth-settings-divider" />
           <div className="auth-settings-section auth-settings-section-stacked">
@@ -377,8 +396,31 @@ export default function MyProfileView({ userId, onDisplayNameSaved, onClose, onG
           </div>
           <div className="auth-settings-divider" />
           <div className="auth-settings-section auth-settings-section-stacked">
-            <span className="auth-settings-label">My Posts</span>
-            <PostsFeed userId={userId} viewerId={userId} isOwn />
+            <div className="myprofile-posts-tabs" role="tablist">
+              <button
+                type="button"
+                role="tab"
+                aria-selected={postsTab === "newsfeed"}
+                className={`myprofile-posts-tab ${postsTab === "newsfeed" ? "myprofile-posts-tab-active" : ""}`}
+                onClick={() => setPostsTab("newsfeed")}
+              >
+                Newsfeed
+              </button>
+              <button
+                type="button"
+                role="tab"
+                aria-selected={postsTab === "mine"}
+                className={`myprofile-posts-tab ${postsTab === "mine" ? "myprofile-posts-tab-active" : ""}`}
+                onClick={() => setPostsTab("mine")}
+              >
+                My Posts
+              </button>
+            </div>
+            {postsTab === "newsfeed" ? (
+              <Newsfeed userId={userId} onGoToVerse={onGoToVerse} />
+            ) : (
+              <PostsFeed userId={userId} viewerId={userId} isOwn />
+            )}
           </div>
           <div className="auth-settings-divider" />
           <DataExportControl userId={userId} />

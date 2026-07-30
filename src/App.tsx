@@ -449,6 +449,14 @@ function App() {
     setFriendsView(targetView);
     setFriendsViewNonce((n) => n + 1);
   };
+  /** My Profile's Friends/Messages/Groups links — leave My Profile the same way the mobile tab bar's
+   * panel-switching does (see its onSelect above), then open Friends to the requested list. */
+  const openFriendsFromProfile = (targetView: "friends" | "messages" | "groups") => {
+    closeMyProfile();
+    if (isMobile) setMobileActivePanel("friends");
+    else openPanel("friends");
+    handleSelectFriendsView(targetView);
+  };
 
   // Every real account needs a display name (new signups set one in the form itself). This catches
   // accounts created before that field existed and blocks the app with DisplayNameGate until they
@@ -1371,6 +1379,7 @@ function App() {
                 closeMyProfile();
                 openVerse(reference);
               }}
+              onOpenFriends={openFriendsFromProfile}
             />
           </div>
         )}

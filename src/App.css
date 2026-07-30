@@ -4182,6 +4182,65 @@ body.resizing-panels {
   cursor: default;
 }
 
+.friend-post-author {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--accent);
+  margin-bottom: 2px;
+}
+
+.myprofile-posts-tabs {
+  display: flex;
+  gap: 4px;
+  margin-bottom: 10px;
+  border-bottom: 1px solid var(--border);
+}
+
+.myprofile-posts-tab {
+  border: none;
+  background: none;
+  color: var(--text);
+  opacity: 0.6;
+  font-size: 13px;
+  font-weight: 600;
+  padding: 6px 10px;
+  cursor: pointer;
+  border-bottom: 2px solid transparent;
+}
+
+.myprofile-posts-tab-active {
+  opacity: 1;
+  color: var(--text-h);
+  border-bottom-color: var(--accent);
+}
+
+.newsfeed {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.newsfeed-daily-verse {
+  background: var(--accent-bg);
+  border-color: var(--accent);
+}
+
+.newsfeed-daily-verse-ref {
+  border: none;
+  background: none;
+  padding: 0;
+  font: inherit;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-h);
+  cursor: pointer;
+  text-align: left;
+}
+
+.newsfeed-daily-verse-ref:hover {
+  color: var(--accent);
+}
+
 .friends-request-actions {
   display: flex;
   gap: 6px;
@@ -5651,6 +5710,30 @@ body.resizing-panels {
   margin: 0 auto;
   display: flex;
   flex-direction: column;
+}
+
+.myprofile-name-row {
+  justify-content: space-between;
+}
+
+.myprofile-name-grow {
+  flex: 1;
+  min-width: 0;
+}
+
+.myprofile-edit-btn {
+  flex-shrink: 0;
+}
+
+.myprofile-social-links {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.myprofile-social-links button {
+  flex: 1;
+  min-width: 100px;
 }
 
 /* --- Desktop footer strip (Timeline entry point) --- */
