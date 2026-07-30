@@ -64,6 +64,10 @@ function App() {
   // in-panel cross-links — a fresh selection from the map, search, or Bible text clears the trail
   // instead, since that's a new starting point, not a continuation of the link chain.
   const [detailsHistory, setDetailsHistory] = useState<DetailsSelection[]>([]);
+  // Mobile only: which tab was active right before a pin/link tap switched to the Details tab (which
+  // has no tab-bar entry of its own — see MobileTabBar) — lets the details article's Back button
+  // return to wherever the reader actually came from instead of always landing on the map.
+  const [detailsReturnPanel, setDetailsReturnPanel] = useState<PanelKey>("map");
   const [poisVisible, setPoisVisible] = useState(true);
   const [locationsVisible, setLocationsVisible] = useState(true);
   const [map, setMap] = useState<maplibregl.Map | null>(null);
@@ -513,6 +517,15 @@ function App() {
   // (no reading_progress lookup to wait on), so this doesn't add a perceptible delay for them.
   const bibleInitializing = !authResolved || (!!session && !restoreChecked);
 
+  // Mobile only: switches to the Details tab, first remembering whichever tab was active so the
+  // details article's Back button can return there — but only if we're not already ON details (a
+  // cross-link tap from inside one details article to another must not overwrite the original
+  // "came from" tab with "details" itself).
+  const enterMobileDetails = () => {
+    if (activeMobilePanel !== "details") setDetailsReturnPanel(activeMobilePanel);
+    setMobileActivePanel("details");
+  };
+
   const handleSelect = (id: string) => {
     setSelectedId(id);
     setSelectedPoiId(null);
@@ -521,7 +534,7 @@ function App() {
     setSelectedTimelineEventId(null);
     setLocationsVisible(true);
     if (isMobile) {
-      setMobileActivePanel("details");
+      enterMobileDetails();
     } else {
       openPanel("details");
       openPanel("map");
@@ -535,7 +548,7 @@ function App() {
     setSelectedTopicId(null);
     setSelectedTimelineEventId(null);
     if (isMobile) {
-      setMobileActivePanel("details");
+      enterMobileDetails();
     } else {
       openPanel("details");
       openPanel("map");
@@ -550,7 +563,7 @@ function App() {
     setSelectedPoiId(null);
     setSelectedTopicId(null);
     setSelectedTimelineEventId(null);
-    if (isMobile) setMobileActivePanel("details");
+    if (isMobile) enterMobileDetails();
     else openPanel("details");
   };
 
@@ -562,7 +575,7 @@ function App() {
     setSelectedPoiId(null);
     setSelectedPersonId(null);
     setSelectedTimelineEventId(null);
-    if (isMobile) setMobileActivePanel("details");
+    if (isMobile) enterMobileDetails();
     else openPanel("details");
   };
 
@@ -574,7 +587,7 @@ function App() {
     setSelectedPoiId(null);
     setSelectedPersonId(null);
     setSelectedTopicId(null);
-    if (isMobile) setMobileActivePanel("details");
+    if (isMobile) enterMobileDetails();
     else openPanel("details");
   };
 
@@ -753,8 +766,15 @@ function App() {
     navigate();
   };
 
+  // A details article's Back button: steps back through the cross-link trail if there is one (e.g.
+  // Jesus's bio -> Nazareth -> Back returns to Jesus), and once that trail is empty, leaves Details
+  // entirely — back to whichever map/Bible/tab view the reader actually opened it from (see
+  // closeDetailsPanel) — rather than becoming a dead end with nothing left to do.
   const goBackInDetails = () => {
-    if (detailsHistory.length === 0) return;
+    if (detailsHistory.length === 0) {
+      closeDetailsPanel();
+      return;
+    }
     const prev = detailsHistory[detailsHistory.length - 1];
     setDetailsHistory((h) => h.slice(0, -1));
     if (prev.kind === "location") handleSelect(prev.id);
@@ -788,6 +808,22 @@ function App() {
     // On desktop the Details panel can't render without a selection (showDetails goes false), so
     // close it in state too — otherwise the invisible panel keeps holding one of the LRU slots
     // while the menu's disabled Details row leaves no way to free it.
+    else closePanel("details");
+  };
+
+  // Every details article's own Back button — leaves Details entirely and returns to wherever the
+  // reader actually came from, unlike clearSelection above (which is "Show All Pins" from the map
+  // itself and always means "stay on/return to the map"). On mobile that's detailsReturnPanel (the
+  // tab active right before a pin/link tap opened Details); on desktop the map/Bible panels were
+  // never replaced, so simply closing Details reveals them again underneath.
+  const closeDetailsPanel = () => {
+    setSelectedId(null);
+    setSelectedPoiId(null);
+    setSelectedPersonId(null);
+    setSelectedTopicId(null);
+    setSelectedTimelineEventId(null);
+    setDetailsHistory([]);
+    if (isMobile) setMobileActivePanel(detailsReturnPanel);
     else closePanel("details");
   };
 
@@ -1217,7 +1253,7 @@ function App() {
         {showDetails && selectedPerson && (
           <PersonPanel
             person={selectedPerson}
-            onBack={detailsHistory.length > 0 ? goBackInDetails : undefined}
+            onBack={goBackInDetails}
             onSelectVerse={openVerse}
             onSelectLocation={handleSelectLocationFromDetails}
             onSelectPoi={handleSelectPoiFromDetails}
@@ -1231,7 +1267,7 @@ function App() {
         {showDetails && !selectedPerson && selectedPoi && (
           <PoiPanel
             poi={selectedPoi}
-            onBack={detailsHistory.length > 0 ? goBackInDetails : undefined}
+            onBack={goBackInDetails}
             onSelectLocation={handleSelectLocationFromDetails}
             onSelectPoi={handleSelectPoiFromDetails}
             onSelectPerson={handleSelectPersonFromDetails}
@@ -1244,7 +1280,7 @@ function App() {
         {showDetails && !selectedPerson && !selectedPoi && selectedTopic && (
           <TopicPanel
             topic={selectedTopic}
-            onBack={detailsHistory.length > 0 ? goBackInDetails : undefined}
+            onBack={goBackInDetails}
             onSelectVerse={openVerse}
             onSelectLocation={handleSelectLocationFromDetails}
             onSelectPoi={handleSelectPoiFromDetails}
@@ -1258,7 +1294,7 @@ function App() {
         {showDetails && !selectedPerson && !selectedPoi && !selectedTopic && selectedTimelineEvent && (
           <TimelineEventPanel
             event={selectedTimelineEvent}
-            onBack={detailsHistory.length > 0 ? goBackInDetails : undefined}
+            onBack={goBackInDetails}
             onSelectVerse={openVerse}
             onSelectLocation={handleSelectLocationFromDetails}
             onSelectPoi={handleSelectPoiFromDetails}
@@ -1272,7 +1308,7 @@ function App() {
         {showDetails && !selectedPerson && !selectedPoi && !selectedTopic && !selectedTimelineEvent && (
           <LocationPanel
             location={selectedLocation}
-            onBack={detailsHistory.length > 0 ? goBackInDetails : undefined}
+            onBack={goBackInDetails}
             onSelectVerse={openVerse}
             onSelectLocation={handleSelectLocationFromDetails}
             onSelectPoi={handleSelectPoiFromDetails}
