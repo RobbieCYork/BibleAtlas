@@ -3788,9 +3788,9 @@ Because Acts ends here rather than with Paul's death, many evangelical scholars 
 
 This is the first documented, empire-sanctioned persecution of Christians as a distinct group, and it stands as a grim historical marker outside the New Testament confirming both that a recognizable Christian community existed in Rome in significant numbers by the mid-60s and that Roman authorities, at least under Nero, regarded that community as an acceptable scapegoat. Tacitus's account, along with references in Suetonius, gives the events of AD 64 unusually strong outside corroboration for a first-century persecution.
 
-Early church tradition consistently places the martyrdoms of both Paul and Peter within this same Neronian persecution or its immediate aftermath. Whatever the precise year each apostle died, this brutal episode marks a turning point: Rome's relationship to the church shifted from indifference or mild suspicion toward the possibility of outright, state-sponsored violence - a pattern that would recur, with varying intensity, for the next two and a half centuries.`,
+Early church tradition consistently places the martyrdoms of both Paul and Peter within this same Neronian persecution or its immediate aftermath. Whatever the precise year each apostle died, this brutal episode marks a turning point: Rome's relationship to the church shifted from indifference or mild suspicion toward the possibility of outright, state-sponsored violence - a pattern that would recur, with varying intensity, for the next two and a half centuries. Many read Peter's charge to the suffering churches to not be surprised at the "fiery trial" testing them in 1 Peter 4:12-16 as written with this very persecution on the horizon, and Paul's own final words in 2 Timothy 4:6-8 - "I have fought the good fight" - as penned from a Roman prison in the shadow of this same Neronian violence.`,
     datingNotes: `The fire and Nero's blaming of Christians are firmly dated to AD 64 by Tacitus; the exact timing of Paul's and Peter's deaths relative to it is less certain.`,
-    scriptureRefs: [],
+    scriptureRefs: ["1 Peter 4:12-16", "2 Timothy 4:6-8"],
     externalRefs: [
       "Tacitus, Annals 15.44",
       "Suetonius, Nero 16"
