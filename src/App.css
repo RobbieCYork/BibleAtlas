@@ -2704,8 +2704,8 @@ body.resizing-panels {
 
 .mobile-tab {
   flex: 1;
-  /* Six slots (Bible/Map/Timeline/Details/Notes/Social) must split a 375px screen evenly — without
-     this, a wider label could make its tab hog width from the others. */
+  /* Seven slots (Bible/Map/Timeline/Games/Details/Notes/Social) must split a 375px screen evenly —
+     without this, a wider label could make its tab hog width from the others. */
   min-width: 0;
   display: flex;
   flex-direction: column;
@@ -5578,6 +5578,19 @@ body.resizing-panels {
   display: flex;
 }
 
+/* --- Games mode (full-screen takeover, same pattern as Timeline/My Profile above) --- */
+/* The rest of the Games UI (lobby, buzzer, scoreboard, video strip) lives in Game.css — its layout
+ * (video tile grid, big answer buttons) is different enough from every other panel to warrant its
+ * own file, same reasoning as TimelineView.css. */
+
+.game-mode {
+  position: absolute;
+  inset: 0;
+  z-index: 60;
+  background: var(--bg);
+  display: flex;
+}
+
 .myprofile-root {
   display: flex;
   flex-direction: column;
@@ -5648,6 +5661,7 @@ body.resizing-panels {
   flex-shrink: 0;
   display: flex;
   justify-content: center;
+  gap: 4px;
   border-top: 1px solid var(--border);
   background: var(--panel-bg);
   z-index: 10;

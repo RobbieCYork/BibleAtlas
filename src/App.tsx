@@ -23,9 +23,10 @@ import MobileTabBar from "./components/MobileTabBar";
 import ResizeHandle from "./components/ResizeHandle";
 import AuthButton from "./components/AuthButton";
 import MyProfileView from "./components/MyProfileView";
+import GameView from "./components/GameView";
 import DisplayNameGate from "./components/DisplayNameGate";
 import ResetPasswordGate from "./components/ResetPasswordGate";
-import { supabase } from "./lib/supabase";
+import { supabase, setRememberMe } from "./lib/supabase";
 import { locations } from "./data/locations";
 import { pois } from "./data/pois";
 import { people } from "./data/people";
@@ -412,6 +413,13 @@ function App() {
   // Bumped whenever MyProfileView saves a display-name change, so AuthButton's own fetch (which only
   // otherwise re-runs on a session change) knows to refresh the label it shows.
   const [profileVersion, setProfileVersion] = useState(0);
+
+  // --- Games mode ----------------------------------------------------------------------------------
+  // Full-screen multiplayer trivia (GameView), same top-level takeover pattern as Timeline/My Profile
+  // above — video tiles and the buzzer UI need real screen space, not a squeezed 240–800px side panel.
+  const [showGame, setShowGame] = useState(false);
+  const openGame = () => setShowGame(true);
+  const closeGame = () => setShowGame(false);
   /** Shared by the mobile "More" sheet and the in-panel view switcher (so it works on desktop too,
    * where there's no "More" sheet to reach Messages/Groups from otherwise). */
   const handleSelectFriendsView = (targetView: "friends" | "messages" | "groups") => {
@@ -1306,9 +1314,37 @@ function App() {
             />
           </div>
         )}
+        {/* Games mode — same full-area takeover as Timeline/My Profile above. Unlike Timeline, this
+            needs *some* session (the game RPCs require auth.uid()) — a guest session is fine, but a
+            visitor who's never signed in at all (browsing this app doesn't force that choice, unlike
+            some other panels) sees a prompt to continue as a guest instead of a blank overlay. */}
+        {showGame && (
+          <div className="game-mode">
+            {session ? (
+              <GameView session={session} onClose={closeGame} />
+            ) : (
+              <div className="game-signin-prompt">
+                <button type="button" className="game-back-btn" onClick={closeGame} aria-label="Close Games">
+                  ← Back
+                </button>
+                <p>Sign in (or continue as a guest) to play multiplayer trivia.</p>
+                <button
+                  type="button"
+                  className="games-primary-button"
+                  onClick={() => {
+                    setRememberMe(true);
+                    supabase.auth.signInAnonymously();
+                  }}
+                >
+                  Continue as Guest
+                </button>
+              </div>
+            )}
+          </div>
+        )}
       </div>
-      {/* Slim always-visible footer strip — the desktop entry point to Timeline mode (mobile gets
-          its own tab in the bottom bar instead). Clicking it again closes the mode. */}
+      {/* Slim always-visible footer strip — the desktop entry point to Timeline/Games mode (mobile
+          gets its own tabs in the bottom bar instead). Clicking an active one again closes it. */}
       {!isMobile && (
         <footer className="app-footer">
           <button
@@ -1329,6 +1365,16 @@ function App() {
             <span className="app-footer-timeline-label">Timeline</span>
             <span className="app-footer-timeline-tagline">— journey through biblical &amp; world history</span>
           </button>
+          <button
+            type="button"
+            className={`app-footer-timeline app-footer-game${showGame ? " active" : ""}`}
+            onClick={showGame ? closeGame : openGame}
+            aria-pressed={showGame}
+          >
+            <span aria-hidden="true">🎮</span>
+            <span className="app-footer-timeline-label">Games</span>
+            <span className="app-footer-timeline-tagline">— play live trivia with friends</span>
+          </button>
         </footer>
       )}
       {/* Fixed-position overlay (styled in App.css), not a child of map-area — on mobile it stays
@@ -1341,10 +1387,11 @@ function App() {
           active={activeMobilePanel}
           hasSelection={hasSelection}
           onSelect={(key, view) => {
-            // Picking any panel tab leaves Timeline mode or My Profile — on mobile the tab bar
-            // stays visible underneath both full-screen takeovers, so tabs must keep working as
-            // the way out of either one.
+            // Picking any panel tab leaves Timeline mode, Games mode, or My Profile — on mobile the
+            // tab bar stays visible underneath all three full-screen takeovers, so tabs must keep
+            // working as the way out of any of them.
             closeTimeline();
+            closeGame();
             closeMyProfile();
             if (key === "friends" && view) handleSelectFriendsView(view);
             setMobileActivePanel(key);
@@ -1360,9 +1407,16 @@ function App() {
           }}
           onOpenTimeline={openTimeline}
           timelineActive={showTimeline}
+          onOpenGame={() => {
+            closeTimeline();
+            closeMyProfile();
+            openGame();
+          }}
+          gameActive={showGame}
           myProfileActive={showMyProfile}
           onOpenSocial={() => {
             closeTimeline();
+            closeGame();
             closeMyProfile();
           }}
         />

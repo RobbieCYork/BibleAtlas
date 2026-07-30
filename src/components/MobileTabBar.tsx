@@ -21,11 +21,15 @@ interface MobileTabBarProps {
    * menu (top-right avatar) straight to Settings instead. */
   onOpenProfile: () => void;
   /** The Timeline tab — opens full-screen Timeline mode rather than selecting a panel. Pinned as
-   * its own tab (not tucked into "Social") because the timeline is a flagship destination: six
-   * slots at 375px still gives each tab a ~62px touch target, comfortably above tap-size guidance. */
+   * its own tab (not tucked into "Social") because the timeline is a flagship destination: seven
+   * slots at 375px still gives each tab a comfortable touch target, above tap-size guidance. */
   onOpenTimeline: () => void;
   /** Whether Timeline mode is currently open, for the tab's active styling. */
   timelineActive: boolean;
+  /** The Games tab — same full-screen-takeover pattern as Timeline (multiplayer trivia needs real
+   * screen space for video tiles + the buzzer UI, not a squeezed side panel). */
+  onOpenGame: () => void;
+  gameActive: boolean;
   /** Whether My Profile's full-screen takeover is currently open — combined with isOverflowActive
    * below so the Social tab reads as "active" while any of its four destinations (Friends, Messages,
    * Groups, My Profile) is on screen, not just the panel-based three. */
@@ -69,6 +73,8 @@ export default function MobileTabBar({
   onOpenProfile,
   onOpenTimeline,
   timelineActive,
+  onOpenGame,
+  gameActive,
   myProfileActive = false,
   onOpenSocial,
 }: MobileTabBarProps) {
@@ -94,9 +100,9 @@ export default function MobileTabBar({
 
   const renderPinnedTab = (tab: (typeof PINNED_TABS)[number]) => {
     const showDot = tab.key === "details" && hasSelection && active !== "details";
-    // While Timeline mode is open it is the active destination — the underlying panel's tab
-    // shouldn't also read as active.
-    const isActive = active === tab.key && !timelineActive;
+    // While Timeline or Games mode is open it is the active destination — the underlying panel's
+    // tab shouldn't also read as active.
+    const isActive = active === tab.key && !timelineActive && !gameActive;
     return (
       <button
         key={tab.key}
@@ -134,6 +140,21 @@ export default function MobileTabBar({
           ⏳
         </span>
         <span className="mobile-tab-label">Timeline</span>
+      </button>
+
+      <button
+        type="button"
+        className={`mobile-tab ${gameActive ? "active" : ""}`}
+        onClick={() => {
+          setSocialOpen(false);
+          onOpenGame();
+        }}
+        aria-current={gameActive ? "page" : undefined}
+      >
+        <span className="mobile-tab-icon" aria-hidden="true">
+          🎮
+        </span>
+        <span className="mobile-tab-label">Games</span>
       </button>
 
       {PINNED_TABS.slice(TIMELINE_SPLIT_INDEX).map(renderPinnedTab)}
