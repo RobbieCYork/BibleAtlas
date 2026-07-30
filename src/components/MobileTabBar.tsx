@@ -142,21 +142,6 @@ export default function MobileTabBar({
         <span className="mobile-tab-label">Timeline</span>
       </button>
 
-      <button
-        type="button"
-        className={`mobile-tab ${gameActive ? "active" : ""}`}
-        onClick={() => {
-          setSocialOpen(false);
-          onOpenGame();
-        }}
-        aria-current={gameActive ? "page" : undefined}
-      >
-        <span className="mobile-tab-icon" aria-hidden="true">
-          🎮
-        </span>
-        <span className="mobile-tab-label">Games</span>
-      </button>
-
       {PINNED_TABS.slice(TIMELINE_SPLIT_INDEX).map(renderPinnedTab)}
 
 
@@ -212,6 +197,21 @@ export default function MobileTabBar({
           <span className="mobile-tab-label">Social</span>
         </button>
       </div>
+
+      <button
+        type="button"
+        className={`mobile-tab ${gameActive ? "active" : ""}`}
+        onClick={() => {
+          setSocialOpen(false);
+          onOpenGame();
+        }}
+        aria-current={gameActive ? "page" : undefined}
+      >
+        <span className="mobile-tab-icon" aria-hidden="true">
+          🎮
+        </span>
+        <span className="mobile-tab-label">Games</span>
+      </button>
     </nav>
   );
 }
