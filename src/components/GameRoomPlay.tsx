@@ -19,6 +19,10 @@ interface GameRoomPlayProps {
  * with that function's own `interval '15 seconds'` guard. */
 const ROUND_SECONDS = 15;
 const REVEAL_DELAY_MS = 3_000;
+const ADVANCE_RETRY_MS = 2_000;
+/** How long a round can sit revealed before the manual "Continue" fallback appears — well past what
+ * the retry loop below should ever need, so it's a rarely-seen safety net, not the normal path. */
+const MANUAL_CONTINUE_AFTER_MS = 8_000;
 
 /** Live "everyone answers" gameplay for one question at a time. Every seated player gets one shot at
  * each question — submitAnswer() scores their own answer immediately (no separate reveal-then-resolve
@@ -40,7 +44,11 @@ export default function GameRoomPlay({ room, players, userId, answersVersion, re
   // whether it actually won that race.
   const [myAwardedDelta, setMyAwardedDelta] = useState<number | null>(null);
 
-  const advancedIndexRef = useRef<number>(-1);
+  // Tracks which question index this component has already scheduled an advance-attempt LOOP for —
+  // not "already succeeded," since a single failed RPC call used to permanently stall the room (see
+  // the retrying effect below). One loop per index is still enough; it just doesn't give up early.
+  const advancingIndexRef = useRef<number>(-1);
+  const [roundOverAt, setRoundOverAt] = useState<number | null>(null);
 
   // Reset per-question local state whenever the room moves to a new question.
   useEffect(() => {
@@ -48,6 +56,7 @@ export default function GameRoomPlay({ room, players, userId, answersVersion, re
     setMyChoice(null);
     setSubmitting(false);
     setMyAwardedDelta(null);
+    setRoundOverAt(null);
   }, [index]);
 
   useEffect(() => {
@@ -68,19 +77,41 @@ export default function GameRoomPlay({ room, players, userId, answersVersion, re
   const everyoneAnswered = players.length > 0 && answers.length >= players.length;
   const roundOver = everyoneAnswered || elapsedMs >= ROUND_SECONDS * 1000;
 
+  useEffect(() => {
+    if (roundOver) setRoundOverAt((prev) => prev ?? Date.now());
+  }, [roundOver]);
+
   // Once the round's over, every client (independently, from the same shared state above) shows the
-  // reveal; after a short pause to let it land, one call to checkAndAdvance() moves the room on. A
-  // ref per index means only the FIRST client-side effect firing schedules the call — but every
-  // client still fires that effect, so it's not reliant on any single "host" being present.
+  // reveal; after a short pause to let it land, one call to checkAndAdvance() moves the room on. This
+  // KEEPS RETRYING every couple seconds rather than trying once — a single failed call (server-clock
+  // skew against the RPC's own 15s guard, a backgrounded/throttled tab, a dropped request) used to
+  // permanently stall the room, since nothing else was allowed to try again for that question. Every
+  // seated player's client runs this same loop, so it's not reliant on any single "host" being
+  // present; checkAndAdvance() itself no-ops harmlessly once someone else's call has already landed,
+  // which is what actually stops the loop (via the index changing and this effect re-running/cleaning
+  // up), not any local success flag.
   useEffect(() => {
     if (!question || !roundOver) return;
-    if (advancedIndexRef.current === index) return;
-    advancedIndexRef.current = index;
-    const timer = setTimeout(() => {
-      checkAndAdvance(room.id, index).catch(() => {});
-    }, REVEAL_DELAY_MS);
-    return () => clearTimeout(timer);
+    if (advancingIndexRef.current === index) return;
+    advancingIndexRef.current = index;
+    let cancelled = false;
+    const attempt = () => {
+      if (cancelled) return;
+      checkAndAdvance(room.id, index).catch(() => {
+        if (!cancelled) setTimeout(attempt, ADVANCE_RETRY_MS);
+      });
+    };
+    const timer = setTimeout(attempt, REVEAL_DELAY_MS);
+    return () => {
+      cancelled = true;
+      clearTimeout(timer);
+    };
   }, [question, roundOver, room.id, index]);
+
+  // Safety net: if a whole round window plus retries goes by with the room still stuck on this
+  // question, any player can force it forward by hand — covers the pathological case where every
+  // client's own retry loop above is somehow stalled (e.g. every tab backgrounded at once).
+  const showManualContinue = roundOver && roundOverAt !== null && now - roundOverAt >= MANUAL_CONTINUE_AFTER_MS;
 
   if (!question) {
     return <p className="games-error">This game's questions couldn't be loaded.</p>;
@@ -163,6 +194,11 @@ export default function GameRoomPlay({ room, players, userId, answersVersion, re
         ) : locked ? (
           <p className="game-question-reveal">Answer locked in — waiting on the rest of the table…</p>
         ) : null}
+        {showManualContinue && (
+          <button type="button" className="games-secondary-button" onClick={() => checkAndAdvance(room.id, index).catch(() => {})}>
+            Continue ▶
+          </button>
+        )}
       </div>
     </div>
   );

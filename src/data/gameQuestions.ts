@@ -309,9 +309,14 @@ function poiTagQuestions(): QuizQuestion[] {
   return out;
 }
 
+// Trivia only draws on biblical-history events — "world" and "religion" category entries exist in
+// the Timeline view for context (surrounding world history, other world religions' milestones) but
+// aren't meant to be quizzed on here.
+const biblicalTimelineEvents = timelineEvents.filter((e) => e.category === "biblical");
+
 function timelineYearQuestions(): QuizQuestion[] {
   const out: QuizQuestion[] = [];
-  for (const event of timelineEvents) {
+  for (const event of biblicalTimelineEvents) {
     const id = `history-year-${event.id}`;
     const rand = mulberry32(hashSeed(id));
     const magnitude = Math.max(50, Math.round(Math.abs(event.startYear) * 0.05));
@@ -331,7 +336,7 @@ function timelineYearQuestions(): QuizQuestion[] {
     out.push({
       id,
       category: "history",
-      testament: event.category === "biblical" ? testamentFromRefStrings(event.scriptureRefs) ?? (event.startYear < 0 ? "old" : "new") : null,
+      testament: testamentFromRefStrings(event.scriptureRefs) ?? (event.startYear < 0 ? "old" : "new"),
       difficulty,
       points: DIFFICULTY_POINTS[difficulty],
       prompt: `About what year did "${event.title}" happen?`,
@@ -347,7 +352,7 @@ function timelineYearQuestions(): QuizQuestion[] {
 function timelineOrderQuestions(): QuizQuestion[] {
   const out: QuizQuestion[] = [];
   const byEra = new Map<string, typeof timelineEvents>();
-  for (const event of timelineEvents) {
+  for (const event of biblicalTimelineEvents) {
     const group = byEra.get(event.era) ?? [];
     group.push(event);
     byEra.set(event.era, group);
@@ -367,11 +372,9 @@ function timelineOrderQuestions(): QuizQuestion[] {
         "firm" as TimelineDateCertainty
       );
       const difficulty = CERTAINTY_TO_DIFFICULTY[worstCertainty];
-      // Only meaningfully "old"/"new" if every event in the group agrees — a mixed-era group (common
-      // once a handful of "world"/"religion" events are mixed into a biblical era) isn't one testament.
-      const testaments = new Set(
-        group.map((e) => (e.category === "biblical" ? testamentFromRefStrings(e.scriptureRefs) ?? (e.startYear < 0 ? "old" : "new") : null))
-      );
+      // Only meaningfully "old"/"new" if every event in the group agrees — a group can still straddle
+      // both testaments (e.g. an era spanning Malachi into the Gospels).
+      const testaments = new Set(group.map((e) => testamentFromRefStrings(e.scriptureRefs) ?? (e.startYear < 0 ? "old" : "new")));
       const testament: QuizTestament = testaments.size === 1 ? [...testaments][0] : "both";
       out.push({
         id,
