@@ -114,7 +114,7 @@ const MOMENTUM_FRICTION = 0.0028; // per-ms exponential decay rate (~250ms veloc
 const MOMENTUM_MAX_VX = 3.5; // px/ms safety cap on captured fling speed
 
 const LANES: { cat: TimelineEventCategory; label: string; cssVar: string }[] = [
-  { cat: "biblical", label: "Biblical", cssVar: "var(--tl-biblical)" },
+  { cat: "biblical", label: "Biblical History", cssVar: "var(--tl-biblical)" },
   { cat: "world", label: "World History", cssVar: "var(--tl-world)" },
   { cat: "religion", label: "Other Religions", cssVar: "var(--tl-religion)" },
 ];

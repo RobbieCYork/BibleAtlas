@@ -1046,4 +1046,51 @@ export const topics: Topic[] = [
       { label: "Got Questions: What is the meaning of Passover?", url: "https://www.gotquestions.org/Passover-meaning.html" },
     ],
   },
+  {
+    id: "young-earth-old-earth-creationism",
+    name: "Young Earth and Old Earth Creationism",
+    alternateNames: ["young-earth creationism", "old-earth creationism", "young earth creationism", "old earth creationism"],
+    category: "doctrine",
+    role: "A Debate Among Bible-Believing Christians Over the Age of Creation",
+    summary:
+      "Two positions held by Christians who both affirm Genesis 1-2 as real history, a real Adam and Eve, and God as sole Creator — differing only on how old the earth and universe are and how the six creation days relate to that age.",
+    sections: [
+      {
+        heading: "What Both Views Share",
+        paragraphs: [
+          "Before the disagreement, the common ground matters: young-earth and old-earth evangelicals both affirm that Genesis 1-2 is real, historical divine revelation rather than borrowed myth or poetry, that God created the universe, the earth, and every living thing by his direct word and will rather than by unguided natural process, and that Adam and Eve were real historical individuals whose fall into sin brought death and corruption into a world God had made good. Both camps therefore reject theistic evolution's account of unguided common descent producing humanity, even though old-earth creationists accept an ancient universe. The disagreement between them is narrower than it can first appear: not whether God created, but how the six days of Genesis 1 and the genealogies that follow relate to the calendar age of the earth and universe.",
+        ],
+      },
+      {
+        heading: "The Case for a Young Earth",
+        paragraphs: [
+          "Young-earth creationists read Genesis 1's six days as ordinary, consecutive 24-hour days, pointing to the repeated Hebrew formula 'and there was evening and there was morning' attached to each one — a phrase used nowhere else in the Old Testament to describe anything but a literal day. Exodus 20:11 grounds the Sabbath commandment directly in this reading: Israel is to rest on the seventh day 'for in six days the LORD made heaven and earth... and rested the seventh day,' treating the creation week as a real six-day pattern worth imitating, not a loose figure of speech. Young-earth advocates also read the genealogies of Genesis 5 and 11 as a fairly tight, connected chronology — the method Archbishop Ussher used to calculate his famous 4004 BC date — yielding an earth some thousands, not billions, of years old. A further theological concern drives much young-earth conviction: Romans 5:12 ties death's entry into the world to Adam's sin, which young-earth writers argue is hard to square with millions of years of animal death, disease, and predation before Adam ever existed, since Genesis 1:31 calls the finished, pre-fall creation 'very good.' Organizations such as Answers in Genesis and the Institute for Creation Research are the best-known contemporary defenders of this view, which was also the overwhelming consensus of the church for most of its history, before 19th-century geology raised the alternative.",
+        ],
+      },
+      {
+        heading: "The Case for an Old Earth",
+        paragraphs: [
+          "Old-earth creationists (including day-age and framework views) argue the Hebrew word for 'day' (yom) is not always a strict 24-hour period even within Genesis itself — Genesis 2:4 uses 'day' to summarize the entire creation week, and yom elsewhere in the Old Testament can denote an extended era ('the day of the LORD'). Some point to 2 Peter 3:8 and Psalm 90:4 ('a thousand years in your sight are like a day') as evidence Scripture itself treats God's relationship to time as different from a strict human calendar, though critics note neither passage is actually about Genesis 1. Old-earth advocates also argue the Genesis 5 and 11 genealogies may contain real gaps, as Hebrew genealogies demonstrably do elsewhere (Matthew 1's genealogy openly skips generations to structure itself in three sets of fourteen), making Ussher-style arithmetic less secure than it looks. Framework-view proponents go further, reading the six days as a literary structure — three days of forming (light, sky/sea, land) matched by three days of filling (sun/moon/stars, sea/sky creatures, land creatures/man) — meant to teach that God ordered and filled his world, not to fix a scientific timescale. Most old-earth evangelicals also hold that the scientific case for an ancient universe and earth (starlight travel time, radiometric dating, geological strata) is strong enough that Scripture, properly interpreted, should be read in a way that doesn't require rejecting it — a hermeneutical move young-earth writers view as letting outside science dictate the reading of the text. Hugh Ross and the organization Reasons to Believe are the best-known contemporary defenders of this view; the Princeton theologian B.B. Warfield held a similar position over a century ago.",
+        ],
+      },
+      {
+        heading: "A Secondary Issue Among Believers",
+        paragraphs: [
+          "Both sides typically treat this as an in-house disagreement among Christians who share the same confidence in Scripture's authority and the same core convictions about a real Creator, a real Adam and Eve, and a real Fall — not a test of orthodoxy the way the deity of Christ or the physical resurrection would be. Believers on both sides can and do accuse the other of letting an outside pressure (either a scientific consensus or a rigid arithmetic reading) distort the text, so the debate is argued with real conviction — but it is a debate about the timing and mechanics of creation, not about whether God created.",
+        ],
+      },
+    ],
+    verses: [
+      { reference: "Genesis 1:1-2:3", note: "The six days of creation" },
+      { reference: "Genesis 2:4", note: "'Day' used to summarize the whole creation week" },
+      { reference: "Exodus 20:11", note: "The Sabbath grounded in a six-day creation week" },
+      { reference: "Genesis 5:1-32", note: "The genealogy from Adam to Noah, central to young-earth chronology" },
+      { reference: "Romans 5:12", note: "Death entering the world through Adam's sin" },
+      { reference: "2 Peter 3:8", note: "'With the Lord a day is as a thousand years'" },
+    ],
+    sources: [
+      { label: "Got Questions: What is the day-age theory?", url: "https://www.gotquestions.org/day-age-theory.html" },
+      { label: "Encyclopaedia Britannica: Creationism", url: "https://www.britannica.com/topic/creationism" },
+    ],
+  },
 ];
