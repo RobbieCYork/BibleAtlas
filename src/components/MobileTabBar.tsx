@@ -9,31 +9,32 @@ interface MobileTabBarProps {
   /** `view` is only meaningful for the "friends" key — it tells the panel which of its three
    * top-level lists (friend requests/management, 1:1 conversations, or groups) to jump to. */
   onSelect: (key: PanelKey, view?: FriendsView) => void;
-  /** Pending incoming friend requests — badges the "More" tab and the Friends row inside it, so a
+  /** Pending incoming friend requests — badges the "Social" tab and the Friends row inside it, so a
    * new request is noticeable without opening the sheet (and then the Friends panel) first. */
   friendsBadgeCount?: number;
-  /** Unread 1:1 messages — badges the "More" tab and the Messages row the same way. */
+  /** Unread 1:1 messages — badges the "Social" tab and the Messages row the same way. */
   messagesBadgeCount?: number;
-  /** Unread group messages + pending join requests you can approve — badges the "More" tab and the
-   * Groups row. */
+  /** Unread group messages + pending join requests you can approve — badges the "Social" tab and
+   * the Groups row. */
   groupsBadgeCount?: number;
   /** "My Profile" in the sheet doesn't select a panel like the others — it pops open the account
    * menu (top-right avatar) straight to Settings instead. */
   onOpenProfile: () => void;
-  /** "Reading Plans" in the sheet, same shape as onOpenProfile above — switches to the Bible tab
-   * and pops it straight to the Reading Plans view (see BiblePanel's openReadingPlansRequest). */
-  onOpenReadingPlans: () => void;
   /** The Timeline tab — opens full-screen Timeline mode rather than selecting a panel. Pinned as
-   * its own tab (not tucked into "More") because the timeline is a flagship destination: six slots
-   * at 375px still gives each tab a ~62px touch target, comfortably above tap-size guidance. */
+   * its own tab (not tucked into "Social") because the timeline is a flagship destination: six
+   * slots at 375px still gives each tab a ~62px touch target, comfortably above tap-size guidance. */
   onOpenTimeline: () => void;
   /** Whether Timeline mode is currently open, for the tab's active styling. */
   timelineActive: boolean;
-  /** Fired whenever the "More" tab itself is tapped (open or close) — lets App.tsx leave any
+  /** Whether My Profile's full-screen takeover is currently open — combined with isOverflowActive
+   * below so the Social tab reads as "active" while any of its four destinations (Friends, Messages,
+   * Groups, My Profile) is on screen, not just the panel-based three. */
+  myProfileActive?: boolean;
+  /** Fired whenever the "Social" tab itself is tapped (open or close) — lets App.tsx leave any
    * full-screen takeover (Timeline, My Profile) first, since those sit at a higher z-index than
-   * this bar and would otherwise silently swallow the sheet underneath them, making "More" look
+   * this bar and would otherwise silently swallow the sheet underneath them, making "Social" look
    * completely unresponsive while one of those modes is active. */
-  onOpenMore?: () => void;
+  onOpenSocial?: () => void;
 }
 
 const PINNED_TABS: { key: PanelKey; label: string; icon: string }[] = [
@@ -47,9 +48,11 @@ const PINNED_TABS: { key: PanelKey; label: string; icon: string }[] = [
  * Details, Notes, so Timeline sits right after Map rather than tacked onto the end of the row. */
 const TIMELINE_SPLIT_INDEX = 2;
 
-/** Panels that don't get their own pinned bottom-bar slot — reachable through the "More" tab
- * instead, so the bar doesn't have to grow every time a new panel is added. Friends, Messages, and
- * Groups all open the same underlying "friends" panel, just defaulted to a different internal view. */
+/** Panels that don't get their own pinned bottom-bar slot — reachable through the "Social" tab
+ * instead, so the bar doesn't have to grow every time a new destination is added. Friends,
+ * Messages, and Groups all open the same underlying "friends" panel, just defaulted to a different
+ * internal view; "My Profile" (added to the sheet separately below) opens the full-screen profile
+ * takeover instead of a panel. */
 const OVERFLOW_TABS: { key: PanelKey; view?: FriendsView; label: string; icon: string }[] = [
   { key: "friends", view: "friends", label: "Friends", icon: "👥" },
   { key: "friends", view: "messages", label: "Messages", icon: "💬" },
@@ -64,24 +67,24 @@ export default function MobileTabBar({
   messagesBadgeCount = 0,
   groupsBadgeCount = 0,
   onOpenProfile,
-  onOpenReadingPlans,
   onOpenTimeline,
   timelineActive,
-  onOpenMore,
+  myProfileActive = false,
+  onOpenSocial,
 }: MobileTabBarProps) {
-  const [moreOpen, setMoreOpen] = useState(false);
-  const moreRef = useRef<HTMLDivElement | null>(null);
-  const isOverflowActive = OVERFLOW_TABS.some((t) => t.key === active);
+  const [socialOpen, setSocialOpen] = useState(false);
+  const socialRef = useRef<HTMLDivElement | null>(null);
+  const isOverflowActive = OVERFLOW_TABS.some((t) => t.key === active) || myProfileActive;
   const totalBadgeCount = friendsBadgeCount + messagesBadgeCount + groupsBadgeCount;
 
   useEffect(() => {
-    if (!moreOpen) return;
+    if (!socialOpen) return;
     const handleClick = (e: MouseEvent) => {
-      if (moreRef.current && !moreRef.current.contains(e.target as Node)) setMoreOpen(false);
+      if (socialRef.current && !socialRef.current.contains(e.target as Node)) setSocialOpen(false);
     };
     document.addEventListener("mousedown", handleClick);
     return () => document.removeEventListener("mousedown", handleClick);
-  }, [moreOpen]);
+  }, [socialOpen]);
 
   const badgeFor = (view?: FriendsView) => {
     if (view === "messages") return messagesBadgeCount;
@@ -100,7 +103,7 @@ export default function MobileTabBar({
         type="button"
         className={`mobile-tab ${isActive ? "active" : ""}`}
         onClick={() => {
-          setMoreOpen(false);
+          setSocialOpen(false);
           onSelect(tab.key);
         }}
         aria-current={isActive ? "page" : undefined}
@@ -122,7 +125,7 @@ export default function MobileTabBar({
         type="button"
         className={`mobile-tab ${timelineActive ? "active" : ""}`}
         onClick={() => {
-          setMoreOpen(false);
+          setSocialOpen(false);
           onOpenTimeline();
         }}
         aria-current={timelineActive ? "page" : undefined}
@@ -136,43 +139,33 @@ export default function MobileTabBar({
       {PINNED_TABS.slice(TIMELINE_SPLIT_INDEX).map(renderPinnedTab)}
 
 
-      <div className="mobile-tab-more" ref={moreRef}>
-        {moreOpen && (
-          <div className="mobile-more-sheet">
+      <div className="mobile-tab-social" ref={socialRef}>
+        {socialOpen && (
+          <div className="mobile-social-sheet">
+            <div className="mobile-social-heading">Social</div>
             {OVERFLOW_TABS.map((tab) => {
               const badgeCount = badgeFor(tab.view);
               return (
                 <button
                   key={tab.label}
                   type="button"
-                  className={`mobile-more-item ${active === tab.key ? "active" : ""}`}
+                  className={`mobile-social-item ${active === tab.key ? "active" : ""}`}
                   onClick={() => {
-                    setMoreOpen(false);
+                    setSocialOpen(false);
                     onSelect(tab.key, tab.view);
                   }}
                 >
                   <span aria-hidden="true">{tab.icon}</span>
                   {tab.label}
-                  {badgeCount > 0 && <span className="mobile-more-item-badge">{badgeCount}</span>}
+                  {badgeCount > 0 && <span className="mobile-social-item-badge">{badgeCount}</span>}
                 </button>
               );
             })}
             <button
               type="button"
-              className="mobile-more-item"
+              className={`mobile-social-item ${myProfileActive ? "active" : ""}`}
               onClick={() => {
-                setMoreOpen(false);
-                onOpenReadingPlans();
-              }}
-            >
-              <span aria-hidden="true">🗓️</span>
-              Reading Plans
-            </button>
-            <button
-              type="button"
-              className="mobile-more-item"
-              onClick={() => {
-                setMoreOpen(false);
+                setSocialOpen(false);
                 onOpenProfile();
               }}
             >
@@ -185,17 +178,17 @@ export default function MobileTabBar({
           type="button"
           className={`mobile-tab ${isOverflowActive ? "active" : ""}`}
           onClick={() => {
-            onOpenMore?.();
-            setMoreOpen((o) => !o);
+            onOpenSocial?.();
+            setSocialOpen((o) => !o);
           }}
-          aria-label="More panels"
-          aria-expanded={moreOpen}
+          aria-label="Social — Friends, Messages, Groups, and My Profile"
+          aria-expanded={socialOpen}
         >
-          <span className="mobile-tab-icon mobile-tab-icon-more" aria-hidden="true">
-            ☰
+          <span className="mobile-tab-icon" aria-hidden="true">
+            🧑‍🤝‍🧑
             {totalBadgeCount > 0 && <span className="mobile-tab-dot" />}
           </span>
-          <span className="mobile-tab-label">More</span>
+          <span className="mobile-tab-label">Social</span>
         </button>
       </div>
     </nav>

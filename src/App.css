@@ -1161,7 +1161,7 @@ body.resizing-panels {
 }
 
 .panel-menu-item-badge,
-.mobile-more-item-badge {
+.mobile-social-item-badge {
   margin-left: auto;
   background: #e0392b;
   color: #fff;
@@ -2704,7 +2704,7 @@ body.resizing-panels {
 
 .mobile-tab {
   flex: 1;
-  /* Six slots (Bible/Map/Details/Notes/Timeline/More) must split a 375px screen evenly — without
+  /* Six slots (Bible/Map/Timeline/Details/Notes/Social) must split a 375px screen evenly — without
      this, a wider label could make its tab hog width from the others. */
   min-width: 0;
   display: flex;
@@ -2731,12 +2731,6 @@ body.resizing-panels {
   line-height: 1;
 }
 
-/* The ☰ glyph renders visually smaller/thinner than the colorful emoji used for the other tabs at
-   the same font-size — bumped up specifically so "More" reads as the same visual weight. */
-.mobile-tab-icon-more {
-  font-size: 26px;
-}
-
 .mobile-tab-label {
   font-size: 11px;
   font-weight: 500;
@@ -2753,17 +2747,17 @@ body.resizing-panels {
   border: 1.5px solid var(--panel-bg);
 }
 
-.mobile-tab-more {
+.mobile-tab-social {
   position: relative;
   flex: 1;
   display: flex;
 }
 
-.mobile-tab-more .mobile-tab {
+.mobile-tab-social .mobile-tab {
   flex: 1;
 }
 
-.mobile-more-sheet {
+.mobile-social-sheet {
   position: absolute;
   bottom: calc(100% + 8px);
   right: 4px;
@@ -2776,7 +2770,16 @@ body.resizing-panels {
   z-index: 25;
 }
 
-.mobile-more-item {
+.mobile-social-heading {
+  padding: 4px 10px 6px;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+.mobile-social-item {
   display: flex;
   align-items: center;
   gap: 8px;
@@ -2792,8 +2795,8 @@ body.resizing-panels {
   text-align: left;
 }
 
-.mobile-more-item:hover,
-.mobile-more-item.active {
+.mobile-social-item:hover,
+.mobile-social-item.active {
   background: var(--accent-bg);
   color: var(--accent);
 }

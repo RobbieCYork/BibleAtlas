@@ -1354,14 +1354,14 @@ function App() {
           groupsBadgeCount={groupsBadgeCount}
           onOpenProfile={() => {
             // Bumping this nonce pops the account flyout open (see AuthButton's effect), which must
-            // only ever happen from a deliberate tap on "My Profile" in the mobile More sheet —
+            // only ever happen from a deliberate tap on "My Profile" in the mobile Social sheet —
             // guard on isMobile so no desktop path (e.g. a resize mid-tap) can ever route through.
             if (isMobile) setOpenProfileNonce((n) => (n ?? 0) + 1);
           }}
-          onOpenReadingPlans={openReadingPlans}
           onOpenTimeline={openTimeline}
           timelineActive={showTimeline}
-          onOpenMore={() => {
+          myProfileActive={showMyProfile}
+          onOpenSocial={() => {
             closeTimeline();
             closeMyProfile();
           }}
