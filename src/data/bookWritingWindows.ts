@@ -65,9 +65,9 @@ export const bookWritingWindows: BookWritingWindow[] = [
   {
     book: "Deuteronomy",
     startYear: -1406,
-    endYear: -1250,
+    endYear: -1210,
     disputed: true,
-    note: "Traditional Mosaic dating (delivered on the plains of Moab, c. 1406 or c. 1250 BC) vs. the critical identification with the law scroll found under Josiah (2 Kings 22, c. 622 BC), treated as a 7th-century composition later expanded through the exile.",
+    note: "Traditional Mosaic dating (delivered on the plains of Moab, c. 1406 or c. 1210 BC) vs. the critical identification with the law scroll found under Josiah (2 Kings 22, c. 622 BC), treated as a 7th-century composition later expanded through the exile.",
   },
   {
     book: "Joshua",
@@ -79,9 +79,9 @@ export const bookWritingWindows: BookWritingWindow[] = [
   {
     book: "Judges",
     startYear: -1050,
-    endYear: -970,
+    endYear: -1003,
     disputed: true,
-    note: "Traditional dating near the early monarchy (following 12th–11th-century BC events) vs. the critical view of a Deuteronomistic composition assembling older tribal traditions, finalized in the exilic or post-exilic period.",
+    note: "Traditional dating bounds composition between Saul's kingship (implied by 'no king in Israel') and David's capture of Jerusalem c. 1003 BC (the Jebusites 'to this day' notice in 1:21) vs. the critical view of a Deuteronomistic composition assembling older tribal traditions, finalized in the exilic or post-exilic period.",
   },
   {
     book: "Ruth",
@@ -131,9 +131,10 @@ export const bookWritingWindows: BookWritingWindow[] = [
   },
   {
     book: "Ezra",
-    startYear: -450,
-    endYear: -400,
-    disputed: false,
+    startYear: -460,
+    endYear: -390,
+    disputed: true,
+    note: "The identity of \"Artaxerxes\" in Ezra 7:7–8 is disputed, shifting the date of Ezra's mission (and the underlying 'Ezra memoir') by decades. The traditional view — held by most evangelical scholarship (e.g., Kitchen, Yamauchi, and standard introductions like Archer's and Dillard & Longman's) — identifies him as Artaxerxes I, dating Ezra's return to 458 BC, before Nehemiah's 445 BC arrival and matching the book's narrative order. Following Van Hoonacker, some critical scholars instead identify him as Artaxerxes II, dating Ezra's return to 398 BC, after Nehemiah.",
   },
   {
     book: "Nehemiah",
@@ -280,9 +281,9 @@ export const bookWritingWindows: BookWritingWindow[] = [
   {
     book: "Zechariah",
     startYear: -520,
-    endYear: -518,
+    endYear: -480,
     disputed: true,
-    note: "Chapters 1–8 are precisely dated to 520–518 BC; many scholars regard the undated chapters 9–14 ('Second Zechariah') as later material, while others defend the unity of the whole book.",
+    note: "Chapters 1–8 are precisely dated to 520–518 BC. The traditional single-author view assigns undated chapters 9–14 to a later stage of the same prophet's ministry, after the 516 BC temple completion — commonly placed in the 480s–470s BC and sometimes linked to the Greco-Persian wars (cf. 9:13). Critical scholarship instead assigns chapters 9–14 to an anonymous, possibly much later hand, with some proposals reaching into the Persian or even early Hellenistic period.",
   },
   {
     book: "Malachi",
@@ -345,7 +346,8 @@ export const bookWritingWindows: BookWritingWindow[] = [
     book: "Galatians",
     startYear: 48,
     endYear: 55,
-    disputed: false,
+    disputed: true,
+    note: "Date hinges on which region 'Galatia' designates: the South Galatian view (Ramsay, F. F. Bruce, Longenecker) points to the southern province cities evangelized in Acts 13–14, dating the letter as early as AD 48–49 — possibly Paul's earliest letter, before the Jerusalem Council of Acts 15; the North Galatian view (Lightfoot, Betz) points to the ethnic region further north, evangelized later, dating it after the Council, c. AD 53–55.",
   },
   {
     book: "Ephesians",
@@ -358,7 +360,8 @@ export const bookWritingWindows: BookWritingWindow[] = [
     book: "Philippians",
     startYear: 60,
     endYear: 62,
-    disputed: false,
+    disputed: true,
+    note: "Traditional dating ties it to Paul's Roman imprisonment (c. AD 60–62); a minority of scholars (e.g., G. S. Duncan) argue instead for an earlier imprisonment in Ephesus or Caesarea, dating the letter to the mid-to-late 50s AD.",
   },
   {
     book: "Colossians",
@@ -457,7 +460,8 @@ export const bookWritingWindows: BookWritingWindow[] = [
     book: "Jude",
     startYear: 60,
     endYear: 80,
-    disputed: false,
+    disputed: true,
+    note: "Traditional view holds this was written by Jude, brother of James and half-brother of Jesus, in the 60s-80s AD; scholars who regard it as pseudonymous — citing Jude 17-18's retrospective reference to apostolic predictions as looking back on a closed apostolic era — date it later, into the late first or early second century.",
   },
   {
     book: "Revelation",
