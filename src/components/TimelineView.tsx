@@ -135,6 +135,31 @@ const LIFE_ROW_H = 34;
 const LIFE_ROW_PAD = 26;
 const MIN_LIFE_H = 84;
 
+/** Per-row height for the event lanes (Biblical/World/Religion) when they're packed into multiple
+ * rows — same idea as BOOK_ROW_H/LIFE_ROW_H above, sized to comfortably hold a marker dot or
+ * range-bar plus its own always-visible two-line title+year pill (see .tl-marker-title /
+ * .tl-range-bar-label in TimelineView.css). */
+const EVENT_ROW_H = 27;
+const EVENT_ROW_PAD = 18;
+const MIN_EVENT_ROWS_H = 64;
+/** A point-event marker's required horizontal "reach" in px — its own dot plus its always-visible
+ * inline label (bounded by max-width + ellipsis, same idiom as every other label in this file) —
+ * used to convert to a year-space span for packRows, so two markers whose labels would actually
+ * collide land in different rows instead of overlapping. Built from the same LABEL_GAP_PX the rest
+ * of the file already uses as its "safe label clearance" constant, plus the dot's own footprint. */
+const EVENT_MARKER_RESERVE_PX = LABEL_GAP_PX + 20;
+/** A range-bar event's required reach past its own (real, pixel-accurate) end — just enough for its
+ * trailing label, which is all the label needs since the bar itself already occupies real dimension. */
+const EVENT_RANGE_LABEL_RESERVE_PX = LABEL_GAP_PX;
+/** Row-packing an event lane can, in principle, require an unbounded number of rows once you zoom
+ * out far enough that huge swaths of years all compress into overlapping label reach — at that point
+ * the lane would need to grow absurdly tall just to label every event individually. Beyond this many
+ * required rows, that's the "most extreme zoom-out" case where a numbered cluster badge (see
+ * kind: "cluster" below) is kept as the one remaining fallback — every other case gets full
+ * always-visible per-event labels, matching the Lifespans lane. As soon as zooming in drops a lane's
+ * required rows back to this cap or below, it snaps back to full per-event labels automatically. */
+const MAX_EVENT_ROWS = 36;
+
 const LANE_VISIBILITY_STORAGE_KEY = "timeline-visible-lanes";
 
 const DEFAULT_VISIBLE_LANES: Record<TimelineLaneKey, boolean> = {
@@ -824,6 +849,11 @@ export default function TimelineView({
 
   /* ----- vertical geometry ----- */
 
+  // Needed ahead of geom now: the event lanes' row-packing (below) reserves label "reach" in
+  // pixels, which only converts to a year-space span once we know the current pxPerYear — unlike
+  // the books/lifespans packs, which are pure year-space and don't depend on zoom at all.
+  const pxPerYear = view?.pxPerYear ?? 0;
+
   // Hidden lanes skip their row-packing entirely — no point computing interval placement for
   // content that won't render (this is the "hidden lanes don't need clustering/label math" perf win).
   const bookPack = useMemo(
@@ -842,6 +872,52 @@ export default function TimelineView({
     [visibleLanes.lifespans, lifespans],
   );
 
+  /** Per-lane, zoom-dependent row-packing for the Biblical/World/Religion event lanes — the same
+   * packRows helper the books band and Lifespans lane use above, just fed a per-item year-space
+   * "reach" (start..start+reach for a point event, endYear..endYear+reach for a ranged one) built
+   * from EVENT_MARKER_RESERVE_PX/EVENT_RANGE_LABEL_RESERVE_PX at the CURRENT pxPerYear. Doing the
+   * conversion at the current zoom (rather than at some fixed worst-case zoom) is deliberate: it's
+   * what lets a lane's required row count shrink back down — and its always-visible per-event labels
+   * return — as soon as the user zooms into a less crowded span, instead of staying pinned at
+   * whatever depth the most extreme zoom-out would ever need.
+   * useCluster flips on only when the packed row count would exceed MAX_EVENT_ROWS — i.e., zoomed out
+   * so far that individually labeling every event would require an impractically tall lane. That's
+   * the one remaining case that falls back to the old numbered cluster badge below; every other case
+   * — which is the overwhelming majority of real usage — gets full per-event labels. */
+  const eventPacks = useMemo(() => {
+    const map = new Map<
+      TimelineEventCategory,
+      { useCluster: boolean; rowCount: number; placed: { item: TimelineEvent; row: number }[] }
+    >();
+    if (pxPerYear <= 0) return map;
+    for (const lane of LANES) {
+      if (!visibleLanes[lane.cat]) continue;
+      const laneEvents = events.filter((e) => e.category === lane.cat);
+      const withReach = laneEvents.map((e) => {
+        const hasRange = typeof e.endYear === "number" && e.endYear > e.startYear;
+        const end = hasRange
+          ? (e.endYear as number) + EVENT_RANGE_LABEL_RESERVE_PX / pxPerYear
+          : e.startYear + EVENT_MARKER_RESERVE_PX / pxPerYear;
+        return { e, end };
+      });
+      const packed = packRows(
+        withReach,
+        (x) => x.e.startYear,
+        (x) => x.end,
+      );
+      if (packed.rowCount > MAX_EVENT_ROWS) {
+        map.set(lane.cat, { useCluster: true, rowCount: 1, placed: [] });
+      } else {
+        map.set(lane.cat, {
+          useCluster: false,
+          rowCount: Math.max(packed.rowCount, 1),
+          placed: packed.placed.map((p) => ({ item: p.item.e, row: p.row })),
+        });
+      }
+    }
+    return map;
+  }, [events, visibleLanes, pxPerYear]);
+
   const geom = useMemo(() => {
     const h = size.h;
     if (h <= 0) return null;
@@ -857,33 +933,41 @@ export default function TimelineView({
       return { empty: true as const, axisTop: avail, totalH: h, needsScroll: false };
     }
 
-    // Fixed, generous per-lane heights — each visible lane simply gets its own comfortable height,
-    // never stretched to exactly fill the viewport and never squeezed thinner to let more lanes fit
-    // above the fold. Books/lifespans still grow with their own row count (more overlapping bars
-    // legitimately need more room), but that growth is additive, not a fight over shared space with
-    // the event lanes. The event lanes always get the same flat EVENT_LANE_H regardless of how many
-    // are checked. Total stack height is just the sum of what's visible (see contentH below); the
-    // outer .tl-canvas-viewport scrolls vertically whenever that sum exceeds the viewport, which is
-    // now the normal case rather than something the layout tries to avoid.
+    // Generous per-lane heights — each visible lane simply gets its own comfortable height, never
+    // stretched to exactly fill the viewport and never squeezed thinner to let more lanes fit above
+    // the fold. Books/lifespans grow with their own row count (more overlapping bars legitimately
+    // need more room); the event lanes now do the same via eventPacks above — a lane with more
+    // packed rows (denser overlapping events at the current zoom) simply gets a taller band, and a
+    // lane in cluster-fallback mode (see eventPacks) keeps the old flat EVENT_LANE_H, which was
+    // already tuned for a fixed-row fan-out of badges/markers. Total stack height is just the sum of
+    // what's visible (see contentH below); the outer .tl-canvas-viewport scrolls vertically whenever
+    // that sum exceeds the viewport, which is the normal case rather than something the layout tries
+    // to avoid.
     const bookRows = Math.max(bookPack.rowCount, 1);
     const booksH = showBooks ? Math.max(bookRows * BOOK_ROW_H + BOOK_ROW_PAD, MIN_BOOKS_H) : 0;
     const lifeRows = lifePack.rowCount;
     const lifeH = showLife ? Math.max(lifeRows * LIFE_ROW_H + LIFE_ROW_PAD, MIN_LIFE_H) : 0;
-    const laneH = EVENT_LANE_H;
-    const contentH = booksH + lifeH + nEvent * laneH;
-
-    // Purely descriptive now (drives the touch-action CSS class below) — no longer a feasibility
-    // gate that changes how tall any lane is. With generous fixed heights this will be true for
-    // most non-trivial lane selections, which matches Robbie's ask: scrolling below the fold is the
-    // expected default, not an edge case.
-    const needsScroll = contentH > avail;
 
     const laneTop = new Map<TimelineEventCategory, number>();
+    const laneHeights = new Map<TimelineEventCategory, number>();
     let cursor = booksH + lifeH;
     for (const lane of visibleEventLanes) {
+      const pack = eventPacks.get(lane.cat);
+      const laneH =
+        pack && !pack.useCluster
+          ? Math.max(pack.rowCount * EVENT_ROW_H + EVENT_ROW_PAD, MIN_EVENT_ROWS_H)
+          : EVENT_LANE_H;
       laneTop.set(lane.cat, cursor);
+      laneHeights.set(lane.cat, laneH);
       cursor += laneH;
     }
+    const contentH = cursor;
+
+    // Purely descriptive now (drives the touch-action CSS class below) — no longer a feasibility
+    // gate that changes how tall any lane is. With generous heights this will be true for most
+    // non-trivial lane selections, which matches Robbie's ask: scrolling below the fold is the
+    // expected default, not an edge case.
+    const needsScroll = contentH > avail;
 
     return {
       empty: false as const,
@@ -892,14 +976,12 @@ export default function TimelineView({
       lifeTop: booksH,
       lifeH,
       laneTop,
-      laneH,
+      laneHeights,
       axisTop: contentH,
       totalH: contentH + AXIS_H,
       needsScroll,
     };
-  }, [size.h, bookPack.rowCount, lifePack.rowCount, visibleLanes]);
-
-  const pxPerYear = view?.pxPerYear ?? 0;
+  }, [size.h, bookPack.rowCount, lifePack.rowCount, visibleLanes, eventPacks]);
 
   /* ----- world-space layers, memoized per zoom level -----
    * Pan only changes translateX on the scroller — these element trees are
@@ -1042,16 +1124,86 @@ export default function TimelineView({
 
     const nodes: ReactNode[] = [];
 
+    // Two-line title+year chip shared by markers and range bars in the (default) per-event-row
+    // mode below — same opaque-pill legibility treatment as .tl-range-bar-label always had, just
+    // with a second, smaller/muted line for the year(s) so the date is on-screen without a click,
+    // not only in the hover tooltip.
+    const labelLines = (title: string, year: string) => (
+      <>
+        <span className="tl-event-label-name">{title}</span>
+        <span className="tl-event-label-year">{year}</span>
+      </>
+    );
+
     for (const lane of LANES) {
       const { cat } = lane;
       // Hidden lane: geom never allocated it a top offset — skip clustering/label math for it
       // entirely rather than computing work for something that won't render.
       const laneTop = geom.laneTop.get(cat);
-      if (laneTop === undefined) continue;
+      const laneH = geom.laneHeights.get(cat);
+      if (laneTop === undefined || laneH === undefined) continue;
+      const pack = eventPacks.get(cat);
+      if (!pack) continue;
+
+      if (!pack.useCluster) {
+        // Default path: every event got its own row from packRows above (same helper the
+        // Lifespans lane uses), so every event gets its own always-visible title+year label — no
+        // clicking required to see what's on the timeline. Mirrors lifespansLayer's row math.
+        const rowH = Math.max(laneH - EVENT_ROW_PAD, 1) / pack.rowCount;
+        const topPad = EVENT_ROW_PAD / 2;
+        for (const { item: e, row } of pack.placed) {
+          const x = (e.startYear - minYear) * pxPerYear;
+          const y = laneTop + topPad + row * rowH + rowH / 2;
+          const hasRange = typeof e.endYear === "number" && e.endYear > e.startYear;
+          const focused = focusedEventIds?.has(e.id) ? " tl-focused" : "";
+
+          if (hasRange) {
+            const barW = Math.max((e.endYear! - e.startYear) * pxPerYear, 12);
+            nodes.push(
+              <button
+                key={e.id}
+                type="button"
+                className={`tl-range-bar tl-cat-${cat}${focused}`}
+                style={{ left: x, top: y, width: barW }}
+                onClick={() => onSelectTimelineEvent(e.id)}
+                onMouseEnter={(ev) => showTip(ev, e.title, e.dateLabel, e.era)}
+                onMouseLeave={hideTip}
+                aria-label={`${e.title}, ${e.dateLabel}`}
+              >
+                <span className="tl-range-bar-label">
+                  {labelLines(e.title, formatYearRange(e.startYear, e.endYear!))}
+                </span>
+              </button>,
+            );
+          } else {
+            nodes.push(
+              <button
+                key={e.id}
+                type="button"
+                className={`tl-marker tl-cat-${cat}${focused}`}
+                style={{ left: x, top: y }}
+                onClick={() => onSelectTimelineEvent(e.id)}
+                onMouseEnter={(ev) => showTip(ev, e.title, e.dateLabel, e.era)}
+                onMouseLeave={hideTip}
+                aria-label={`${e.title}, ${e.dateLabel}`}
+              >
+                <span className="tl-marker-title">{labelLines(e.title, formatYear(e.startYear))}</span>
+              </button>,
+            );
+          }
+        }
+        continue;
+      }
+
+      // Fallback path — only reached when packRows above determined that giving every event in
+      // this lane its own row, at the current zoom, would need more than MAX_EVENT_ROWS rows (the
+      // "most extreme zoom-out" case). Same fixed-pixel-bucket clustering this lane always used,
+      // now reserved for that case instead of being the default: still fans out same-year/
+      // unsplittable groups into real markers, still zooms into a splittable cluster on click.
       const laneEvents = events
         .filter((e) => e.category === cat)
         .sort((a, b) => a.startYear - b.startYear);
-      const centerY = laneTop + geom.laneH / 2;
+      const centerY = laneTop + laneH / 2;
 
       // Fixed-width pixel buckets in world space (pan-invariant at a given zoom).
       const buckets = new Map<number, TimelineEvent[]>();
@@ -1094,7 +1246,7 @@ export default function TimelineView({
               kind: "single",
               x: (e.startYear - minYear) * pxPerYear,
               e,
-              yOff: clamp((i - (group.length - 1) / 2) * 15, -geom.laneH / 2 + 10, geom.laneH / 2 - 10),
+              yOff: clamp((i - (group.length - 1) / 2) * 15, -laneH / 2 + 10, laneH / 2 - 10),
             });
           });
         }
@@ -1195,7 +1347,18 @@ export default function TimelineView({
       }
     }
     return nodes;
-  }, [geom, pxPerYear, events, minYear, onSelectTimelineEvent, zoomToYearRange, showTip, hideTip, focusedEventIds]);
+  }, [
+    geom,
+    pxPerYear,
+    events,
+    minYear,
+    eventPacks,
+    onSelectTimelineEvent,
+    zoomToYearRange,
+    showTip,
+    hideTip,
+    focusedEventIds,
+  ]);
 
   /* ----- axis ticks (cheap — rebuilt every render for the live window) ----- */
 
@@ -1316,7 +1479,7 @@ export default function TimelineView({
                 <div
                   key={lane.cat}
                   className={`tl-lane-underlay tl-lane-${lane.cat}`}
-                  style={{ top: geom.laneTop.get(lane.cat), height: geom.laneH }}
+                  style={{ top: geom.laneTop.get(lane.cat), height: geom.laneHeights.get(lane.cat) }}
                 />
               ))}
 
