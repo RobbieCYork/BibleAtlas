@@ -129,6 +129,27 @@ export interface NoteComment {
   created_at: string;
 }
 
+/** A standalone status update for "My Posts" — unlike Note, not anchored to any Bible passage, so
+ * it can carry photos/video and tagged friends instead. See sql/008_posts.sql. */
+export interface Post {
+  id: string;
+  user_id: string;
+  body: string;
+  image_urls: string[];
+  video_url: string | null;
+  tagged_user_ids: string[];
+  is_public: boolean;
+  created_at: string;
+}
+
+export interface PostComment {
+  id: string;
+  post_id: string;
+  author_id: string;
+  body: string;
+  created_at: string;
+}
+
 export interface Tag {
   id: string;
   name: string;

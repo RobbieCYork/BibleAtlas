@@ -6,6 +6,8 @@ import {
   type Profile,
   type Note,
   type NoteComment,
+  type Post as PostRow,
+  type PostComment,
   type FriendRequest,
 } from "../lib/supabase";
 import { getDailyVerse, formatDailyReference, getLocalDayKey } from "../data/dailyVerse";
@@ -24,11 +26,12 @@ interface NewsfeedProps {
  * post's author — same column PostsFeed and MyNotesPanel already filter by. */
 type FriendNote = Note & { user_id: string };
 
-interface Post {
-  note: FriendNote;
-  author: Profile | null;
-  comments: NoteComment[];
-}
+/** A friend's public note (verse commentary) and a friend's standalone post (a status update,
+ * optionally with photos/video and tagged friends) render side by side, newest first — same
+ * union PostsFeed's own feed uses, plus `author` since this feed spans multiple friends at once. */
+type FeedItem =
+  | { kind: "note"; id: string; createdAt: string; note: FriendNote; author: Profile | null; comments: NoteComment[] }
+  | { kind: "post"; id: string; createdAt: string; post: PostRow; author: Profile | null; comments: PostComment[] };
 
 function refLabel(note: Note): string {
   return note.start_verse === note.end_verse
@@ -134,7 +137,7 @@ export default function Newsfeed({ userId, onGoToVerse }: NewsfeedProps) {
     setMyResponse(null);
   };
 
-  const [posts, setPosts] = useState<Post[] | null>(null);
+  const [items, setItems] = useState<FeedItem[] | null>(null);
   const [profiles, setProfiles] = useState<Record<string, Profile>>({});
   const [commentDrafts, setCommentDrafts] = useState<Record<string, string>>({});
   const [commentErrors, setCommentErrors] = useState<Record<string, string>>({});
@@ -149,63 +152,81 @@ export default function Newsfeed({ userId, onGoToVerse }: NewsfeedProps) {
       r.sender_id === userId ? r.receiver_id : r.sender_id
     );
     if (friendIds.length === 0) {
-      setPosts([]);
+      setItems([]);
       return;
     }
 
-    const { data: notesData } = await supabase
-      .from("notes")
-      .select("*")
-      .in("user_id", friendIds)
-      .eq("is_public", true)
-      .order("created_at", { ascending: false });
-    const notes = (notesData as FriendNote[] | null) ?? [];
-    if (notes.length === 0) {
-      setPosts([]);
+    const [notesRes, postsRes] = await Promise.all([
+      supabase.from("notes").select("*").in("user_id", friendIds).eq("is_public", true).order("created_at", { ascending: false }),
+      supabase.from("posts").select("*").in("user_id", friendIds).eq("is_public", true).order("created_at", { ascending: false }),
+    ]);
+    const notes = (notesRes.data as FriendNote[] | null) ?? [];
+    const posts = (postsRes.data as PostRow[] | null) ?? [];
+    if (notes.length === 0 && posts.length === 0) {
+      setItems([]);
       return;
     }
 
-    const { data: commentsData } = await supabase
-      .from("note_comments")
-      .select("*")
-      .in(
-        "note_id",
-        notes.map((n) => n.id)
-      )
-      .order("created_at", { ascending: true });
-    const comments = (commentsData as NoteComment[] | null) ?? [];
+    const [noteCommentsRes, postCommentsRes] = await Promise.all([
+      notes.length > 0
+        ? supabase.from("note_comments").select("*").in("note_id", notes.map((n) => n.id)).order("created_at", { ascending: true })
+        : Promise.resolve({ data: [] as NoteComment[] }),
+      posts.length > 0
+        ? supabase.from("post_comments").select("*").in("post_id", posts.map((p) => p.id)).order("created_at", { ascending: true })
+        : Promise.resolve({ data: [] as PostComment[] }),
+    ]);
+    const noteComments = (noteCommentsRes.data as NoteComment[] | null) ?? [];
+    const postComments = (postCommentsRes.data as PostComment[] | null) ?? [];
 
-    const profileIds = Array.from(new Set([...friendIds, ...comments.map((c) => c.author_id)]));
-    const { data: profilesData } = await supabase.from("profiles").select("*").in("id", profileIds);
+    const profileIds = new Set<string>(friendIds);
+    noteComments.forEach((c) => profileIds.add(c.author_id));
+    postComments.forEach((c) => profileIds.add(c.author_id));
+    posts.forEach((p) => p.tagged_user_ids.forEach((id) => profileIds.add(id)));
+    const { data: profilesData } = await supabase.from("profiles").select("*").in("id", Array.from(profileIds));
     const map: Record<string, Profile> = {};
     (profilesData as Profile[] | null)?.forEach((p) => (map[p.id] = p));
     setProfiles(map);
 
-    setPosts(
-      notes.map((note) => ({
+    const merged: FeedItem[] = [
+      ...notes.map((note): FeedItem => ({
+        kind: "note",
+        id: note.id,
+        createdAt: note.created_at,
         note,
         author: map[note.user_id] ?? null,
-        comments: comments.filter((c) => c.note_id === note.id),
-      }))
-    );
+        comments: noteComments.filter((c) => c.note_id === note.id),
+      })),
+      ...posts.map((post): FeedItem => ({
+        kind: "post",
+        id: post.id,
+        createdAt: post.created_at,
+        post,
+        author: map[post.user_id] ?? null,
+        comments: postComments.filter((c) => c.post_id === post.id),
+      })),
+    ].sort((a, b) => b.createdAt.localeCompare(a.createdAt));
+    setItems(merged);
   };
 
   useEffect(() => {
-    setPosts(null);
+    setItems(null);
     fetchFeed();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userId]);
 
-  const handleAddComment = async (noteId: string) => {
-    const body = (commentDrafts[noteId] ?? "").trim();
+  const handleAddComment = async (item: FeedItem) => {
+    const body = (commentDrafts[item.id] ?? "").trim();
     if (!body) return;
-    setCommentErrors((e) => ({ ...e, [noteId]: "" }));
-    const { error } = await supabase.from("note_comments").insert({ note_id: noteId, author_id: userId, body });
+    setCommentErrors((e) => ({ ...e, [item.id]: "" }));
+    const { error } =
+      item.kind === "note"
+        ? await supabase.from("note_comments").insert({ note_id: item.note.id, author_id: userId, body })
+        : await supabase.from("post_comments").insert({ post_id: item.post.id, author_id: userId, body });
     if (error) {
-      setCommentErrors((e) => ({ ...e, [noteId]: "Couldn't post comment — try again." }));
+      setCommentErrors((e) => ({ ...e, [item.id]: "Couldn't post comment — try again." }));
       return;
     }
-    setCommentDrafts((d) => ({ ...d, [noteId]: "" }));
+    setCommentDrafts((d) => ({ ...d, [item.id]: "" }));
     fetchFeed();
   };
 
@@ -267,52 +288,70 @@ export default function Newsfeed({ userId, onGoToVerse }: NewsfeedProps) {
         {responseError && <p className="comment-status">{responseError}</p>}
       </div>
 
-      {posts === null && <p className="comment-status">Loading newsfeed…</p>}
-      {posts !== null && posts.length === 0 && (
+      {items === null && <p className="comment-status">Loading newsfeed…</p>}
+      {items !== null && items.length === 0 && (
         <p className="comment-status">No public posts from friends yet — add friends to see their posts here.</p>
       )}
-      {posts !== null && posts.length > 0 && (
+      {items !== null && items.length > 0 && (
         <div className="friend-posts">
-          {posts.map(({ note, author, comments }) => (
-            <div key={note.id} className="friend-post">
-              <p className="friend-post-author">{author ? displayFor(author) : "Someone"}</p>
-              <div className="friend-post-meta">
-                <p className="friend-post-ref">{refLabel(note)}</p>
-                <span className="friend-post-date">{formatPostDate(note.created_at)}</span>
-              </div>
-              {note.quoted_text && <p className="verse-popup-quoted">"{note.quoted_text}"</p>}
-              <p className="friend-post-text">{note.note_text}</p>
-              {comments.length > 0 && (
-                <div className="friend-post-comments">
-                  {comments.map((c) => (
-                    <p key={c.id} className="friend-post-comment">
-                      <strong>{profiles[c.author_id] ? displayFor(profiles[c.author_id]) : "Someone"}:</strong>{" "}
-                      {c.body}
-                    </p>
-                  ))}
+          {items.map((item) => {
+            const taggedProfiles = item.kind === "post" ? item.post.tagged_user_ids.map((id) => profiles[id]).filter(Boolean) : [];
+            return (
+              <div key={item.id} className="friend-post">
+                <p className="friend-post-author">{item.author ? displayFor(item.author) : "Someone"}</p>
+                <div className="friend-post-meta">
+                  {item.kind === "note" ? <p className="friend-post-ref">{refLabel(item.note)}</p> : <span />}
+                  <span className="friend-post-date">{formatPostDate(item.createdAt)}</span>
                 </div>
-              )}
-              <form
-                className="friend-post-comment-form"
-                onSubmit={(e) => {
-                  e.preventDefault();
-                  handleAddComment(note.id);
-                }}
-              >
-                <input
-                  type="text"
-                  value={commentDrafts[note.id] ?? ""}
-                  onChange={(e) => setCommentDrafts((d) => ({ ...d, [note.id]: e.target.value }))}
-                  placeholder="Add a comment…"
-                  maxLength={2000}
-                />
-                <button type="submit" disabled={!commentDrafts[note.id]?.trim()}>
-                  Post
-                </button>
-              </form>
-              {commentErrors[note.id] && <p className="comment-status">{commentErrors[note.id]}</p>}
-            </div>
-          ))}
+                {item.kind === "note" && item.note.quoted_text && <p className="verse-popup-quoted">"{item.note.quoted_text}"</p>}
+                <p className="friend-post-text">{item.kind === "note" ? item.note.note_text : item.post.body}</p>
+                {item.kind === "post" && item.post.image_urls.length > 0 && (
+                  <div className="post-media-grid">
+                    {item.post.image_urls.map((url) => (
+                      <a key={url} href={url} target="_blank" rel="noopener noreferrer">
+                        <img src={url} alt="" className="post-media-image" />
+                      </a>
+                    ))}
+                  </div>
+                )}
+                {item.kind === "post" && item.post.video_url && (
+                  <video className="post-media-video" src={item.post.video_url} controls />
+                )}
+                {taggedProfiles.length > 0 && (
+                  <p className="post-tagged-friends">with {taggedProfiles.map((p) => displayFor(p)).join(", ")}</p>
+                )}
+                {item.comments.length > 0 && (
+                  <div className="friend-post-comments">
+                    {item.comments.map((c) => (
+                      <p key={c.id} className="friend-post-comment">
+                        <strong>{profiles[c.author_id] ? displayFor(profiles[c.author_id]) : "Someone"}:</strong>{" "}
+                        {c.body}
+                      </p>
+                    ))}
+                  </div>
+                )}
+                <form
+                  className="friend-post-comment-form"
+                  onSubmit={(e) => {
+                    e.preventDefault();
+                    handleAddComment(item);
+                  }}
+                >
+                  <input
+                    type="text"
+                    value={commentDrafts[item.id] ?? ""}
+                    onChange={(e) => setCommentDrafts((d) => ({ ...d, [item.id]: e.target.value }))}
+                    placeholder="Add a comment…"
+                    maxLength={2000}
+                  />
+                  <button type="submit" disabled={!commentDrafts[item.id]?.trim()}>
+                    Post
+                  </button>
+                </form>
+                {commentErrors[item.id] && <p className="comment-status">{commentErrors[item.id]}</p>}
+              </div>
+            );
+          })}
         </div>
       )}
     </div>
