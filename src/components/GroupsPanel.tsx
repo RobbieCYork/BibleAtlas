@@ -13,6 +13,7 @@ import {
   type GroupStudyTripStopNote,
   type GroupSummary,
   type Profile,
+  type PublicGroupResult,
 } from "../lib/supabase";
 import ViewSwitcher, { type FriendsView } from "./ViewSwitcher";
 import BackButton from "./BackButton";
@@ -101,7 +102,14 @@ export default function GroupsPanel({
   const [editingInfo, setEditingInfo] = useState(false);
   const [editName, setEditName] = useState("");
   const [editDescription, setEditDescription] = useState("");
+  const [editIsPublic, setEditIsPublic] = useState(false);
   const [savingInfo, setSavingInfo] = useState(false);
+
+  const [groupSearchQuery, setGroupSearchQuery] = useState("");
+  const [groupSearchResults, setGroupSearchResults] = useState<PublicGroupResult[] | null>(null);
+  const [groupSearchStatus, setGroupSearchStatus] = useState<string | null>(null);
+  const [searchingGroups, setSearchingGroups] = useState(false);
+  const [requestedGroupIds, setRequestedGroupIds] = useState<Set<string>>(new Set());
 
   const [addMemberContact, setAddMemberContact] = useState("");
   const [addMemberStatus, setAddMemberStatus] = useState<string | null>(null);
@@ -112,6 +120,7 @@ export default function GroupsPanel({
   const [friendOptions, setFriendOptions] = useState<Profile[]>([]);
   const [newName, setNewName] = useState("");
   const [newDescription, setNewDescription] = useState("");
+  const [newIsPublic, setNewIsPublic] = useState(false);
   const [selectedFriendIds, setSelectedFriendIds] = useState<Set<string>>(new Set());
   const [creating, setCreating] = useState(false);
   const [createError, setCreateError] = useState<string | null>(null);
@@ -296,6 +305,7 @@ export default function GroupsPanel({
   const startCreate = () => {
     setNewName("");
     setNewDescription("");
+    setNewIsPublic(false);
     setSelectedFriendIds(new Set());
     setCreateError(null);
     fetchFriendOptions();
@@ -321,6 +331,12 @@ export default function GroupsPanel({
       p_description: newDescription.trim() || null,
       p_member_ids: [...selectedFriendIds],
     });
+    if (!error && data && newIsPublic) {
+      // create_group() has no is_public param of its own (adding one would mean dropping and
+      // recreating it, same as list_my_groups — not worth it for a single boolean) — a follow-up
+      // update on the row it just made is simpler and just as atomic from the user's perspective.
+      await supabase.from("groups").update({ is_public: true }).eq("id", data as string);
+    }
     setCreating(false);
     if (error || !data) {
       setCreateError("Couldn't create the group — try again.");
@@ -328,6 +344,29 @@ export default function GroupsPanel({
     }
     await fetchGroups();
     openGroup(data as string);
+  };
+
+  const handleSearchGroups = async (e: React.FormEvent) => {
+    e.preventDefault();
+    const query = groupSearchQuery.trim();
+    if (!query) return;
+    setSearchingGroups(true);
+    setGroupSearchStatus(null);
+    const { data, error } = await supabase.rpc("find_public_groups_by_name", { query });
+    setSearchingGroups(false);
+    if (error) {
+      setGroupSearchStatus("Couldn't search groups — try again.");
+      setGroupSearchResults(null);
+      return;
+    }
+    const rows = (data as PublicGroupResult[] | null) ?? [];
+    setGroupSearchResults(rows);
+    if (rows.length === 0) setGroupSearchStatus("No public groups matched that name.");
+  };
+
+  const handleRequestToJoinGroup = async (groupId: string) => {
+    const { error } = await supabase.rpc("request_to_join_group", { p_group_id: groupId });
+    if (!error) setRequestedGroupIds((prev) => new Set(prev).add(groupId));
   };
 
   const handleCopyInviteLink = async () => {
@@ -423,6 +462,7 @@ export default function GroupsPanel({
     if (!activeGroup) return;
     setEditName(activeGroup.name);
     setEditDescription(activeGroup.description ?? "");
+    setEditIsPublic(activeGroup.is_public);
     setEditingInfo(true);
   };
 
@@ -432,7 +472,7 @@ export default function GroupsPanel({
     setSavingInfo(true);
     await supabase
       .from("groups")
-      .update({ name: editName.trim(), description: editDescription.trim() || null })
+      .update({ name: editName.trim(), description: editDescription.trim() || null, is_public: editIsPublic })
       .eq("id", activeGroupId);
     setSavingInfo(false);
     setEditingInfo(false);
@@ -564,6 +604,10 @@ export default function GroupsPanel({
                   rows={2}
                   maxLength={300}
                 />
+                <label className="my-notes-public-toggle">
+                  <input type="checkbox" checked={editIsPublic} onChange={(e) => setEditIsPublic(e.target.checked)} />
+                  🌐 Public — anyone can find this group by searching and request to join
+                </label>
                 <div className="group-info-edit-actions">
                   <button type="submit" disabled={savingInfo || !editName.trim()}>
                     {savingInfo ? "…" : "Save"}
@@ -576,6 +620,7 @@ export default function GroupsPanel({
             ) : (
               <div className="group-info-display">
                 {activeGroup.description && <p className="group-description">{activeGroup.description}</p>}
+                <p className="comment-status">{activeGroup.is_public ? "🌐 Public group" : "🔒 Private group"}</p>
                 {isAdmin && (
                   <button type="button" className="friends-invite-link-button" onClick={startEditingInfo}>
                     ✏️ Edit name &amp; description
@@ -722,6 +767,10 @@ export default function GroupsPanel({
             rows={2}
             maxLength={300}
           />
+          <label className="my-notes-public-toggle">
+            <input type="checkbox" checked={newIsPublic} onChange={(e) => setNewIsPublic(e.target.checked)} />
+            🌐 Public — anyone can find this group by searching and request to join
+          </label>
           <p className="friends-invite-hint">Add friends now, or skip and invite people later.</p>
           {friendOptions.length === 0 ? (
             <p className="comment-status">You don't have any friends to add yet — you can still create the group and invite people later.</p>
@@ -771,6 +820,39 @@ export default function GroupsPanel({
           <button type="button" className="friends-invite-link-button" onClick={startCreate}>
             ➕ New Group
           </button>
+
+          <form
+            className="friends-add-form"
+            onSubmit={handleSearchGroups}
+          >
+            <input
+              type="text"
+              value={groupSearchQuery}
+              onChange={(e) => setGroupSearchQuery(e.target.value)}
+              placeholder="Search Groups"
+            />
+            <button type="submit" disabled={searchingGroups || !groupSearchQuery.trim()}>
+              {searchingGroups ? "…" : "Search"}
+            </button>
+          </form>
+          {groupSearchStatus && <p className="comment-status">{groupSearchStatus}</p>}
+          {groupSearchResults && groupSearchResults.length > 0 && (
+            <ul className="friends-list">
+              {groupSearchResults.map((g) => (
+                <li key={g.id} className="friends-list-item">
+                  <div className="message-preview">
+                    <span className="message-preview-name">{g.name}</span>
+                    <span className="message-preview-text">
+                      {g.description || "No description"} · {g.member_count} member{g.member_count === 1 ? "" : "s"}
+                    </span>
+                  </div>
+                  <button type="button" disabled={requestedGroupIds.has(g.id)} onClick={() => handleRequestToJoinGroup(g.id)}>
+                    {requestedGroupIds.has(g.id) ? "Requested" : "Request to Join"}
+                  </button>
+                </li>
+              ))}
+            </ul>
+          )}
 
           {groupList.length === 0 && <p className="comment-status">No groups yet — start one above.</p>}
           <ul className="friends-list">

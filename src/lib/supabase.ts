@@ -506,9 +506,20 @@ export interface GroupSummary {
   group_id: string;
   name: string;
   description: string | null;
+  is_public: boolean;
   last_message: string | null;
   last_message_at: string | null;
   last_sender_id: string | null;
   unread_count: number;
   my_role: GroupRole;
+}
+
+/** One row per match — the return shape of the find_public_groups_by_name() RPC (sql/014), the
+ * "Search Groups" counterpart to find_users_by_display_name(). Only ever includes public groups the
+ * caller isn't already a member of. */
+export interface PublicGroupResult {
+  id: string;
+  name: string;
+  description: string | null;
+  member_count: number;
 }
