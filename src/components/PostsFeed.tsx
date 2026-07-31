@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import {
   supabase,
   displayFor,
@@ -282,8 +282,19 @@ function PostComposer({ userId, onPosted }: { userId: string; onPosted: () => vo
   const [isPublic, setIsPublic] = useState(true);
   const [friends, setFriends] = useState<Profile[]>([]);
   const [taggedIds, setTaggedIds] = useState<string[]>([]);
+  const [tagMenuOpen, setTagMenuOpen] = useState(false);
+  const tagMenuRef = useRef<HTMLDivElement | null>(null);
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    if (!tagMenuOpen) return;
+    const handleClick = (e: MouseEvent) => {
+      if (tagMenuRef.current && !tagMenuRef.current.contains(e.target as Node)) setTagMenuOpen(false);
+    };
+    document.addEventListener("mousedown", handleClick);
+    return () => document.removeEventListener("mousedown", handleClick);
+  }, [tagMenuOpen]);
 
   useEffect(() => {
     const loadFriends = async () => {
@@ -402,22 +413,34 @@ function PostComposer({ userId, onPosted }: { userId: string; onPosted: () => vo
           🎥 Video
           <input type="file" accept="video/*" hidden onChange={handleVideoSelected} disabled={!!video} />
         </label>
+        {friends.length > 0 && (
+          <div className="post-composer-tag-menu-wrap" ref={tagMenuRef}>
+            <button
+              type="button"
+              className="post-composer-media-button"
+              onClick={() => setTagMenuOpen((o) => !o)}
+              aria-expanded={tagMenuOpen}
+            >
+              🏷️ Tag friends{taggedIds.length > 0 ? ` (${taggedIds.length})` : ""}
+            </button>
+            {tagMenuOpen && (
+              <div className="post-composer-tag-menu">
+                {friends.map((f) => (
+                  <label key={f.id} className="post-composer-tag-menu-item">
+                    <input type="checkbox" checked={taggedIds.includes(f.id)} onChange={() => toggleTag(f.id)} />
+                    {displayFor(f)}
+                  </label>
+                ))}
+              </div>
+            )}
+          </div>
+        )}
       </div>
 
-      {friends.length > 0 && (
-        <div className="post-composer-tags">
-          <span className="post-composer-tags-label">Tag friends:</span>
-          {friends.map((f) => (
-            <button
-              key={f.id}
-              type="button"
-              className={`post-composer-tag-chip ${taggedIds.includes(f.id) ? "post-composer-tag-chip-active" : ""}`}
-              onClick={() => toggleTag(f.id)}
-            >
-              {displayFor(f)}
-            </button>
-          ))}
-        </div>
+      {taggedIds.length > 0 && (
+        <p className="post-tagged-friends">
+          Tagging: {friends.filter((f) => taggedIds.includes(f.id)).map((f) => displayFor(f)).join(", ")}
+        </p>
       )}
 
       <label className="my-notes-public-toggle">

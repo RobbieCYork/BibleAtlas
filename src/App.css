@@ -4204,32 +4204,39 @@ body.resizing-panels {
   cursor: pointer;
 }
 
-.post-composer-tags {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 6px;
+.post-composer-tag-menu-wrap {
+  position: relative;
 }
 
-.post-composer-tags-label {
-  font-size: 12px;
-  color: var(--text-muted);
-}
-
-.post-composer-tag-chip {
-  border: 1px solid var(--border);
+.post-composer-tag-menu {
+  position: absolute;
+  top: calc(100% + 6px);
+  left: 0;
+  z-index: 5;
+  min-width: 180px;
+  max-height: 220px;
+  overflow-y: auto;
   background: var(--panel-bg);
-  color: var(--text);
-  border-radius: 999px;
-  padding: 4px 10px;
-  font-size: 12px;
-  cursor: pointer;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.18);
+  padding: 6px;
 }
 
-.post-composer-tag-chip-active {
-  background: var(--accent);
-  border-color: var(--accent);
-  color: #fff;
+.post-composer-tag-menu-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 8px;
+  border-radius: 6px;
+  font-size: 13px;
+  color: var(--text);
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.post-composer-tag-menu-item:hover {
+  background: var(--accent-bg);
 }
 
 .post-composer-submit {
