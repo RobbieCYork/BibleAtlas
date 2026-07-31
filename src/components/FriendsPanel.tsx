@@ -514,14 +514,16 @@ export default function FriendsPanel({
                 onClick={() => setActiveFriendId(c.friendId)}
               >
                 <div className="message-preview">
-                  <span className="message-preview-name">{profiles[c.friendId] ? displayFor(profiles[c.friendId]) : "Friend"}</span>
+                  <span className="message-preview-name">
+                    {profiles[c.friendId] ? displayFor(profiles[c.friendId]) : "Friend"}
+                    {c.unreadCount > 0 && <span className="friends-list-item-dot" aria-hidden="true" />}
+                  </span>
                   <span className="message-preview-text">
                     {c.lastMessage
                       ? `${c.lastMessage.sender_id === userId ? "You: " : ""}${c.lastMessage.body}`
                       : "No messages yet — say hello!"}
                   </span>
                 </div>
-                {c.unreadCount > 0 && <span className="friends-list-item-badge">{c.unreadCount}</span>}
               </li>
             ))}
           </ul>

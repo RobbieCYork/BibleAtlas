@@ -4073,6 +4073,16 @@ body.resizing-panels {
   border-radius: 999px;
 }
 
+.friends-list-item-dot {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #e0392b;
+  margin-left: 6px;
+  vertical-align: middle;
+}
+
 .friend-profile-body {
   display: flex;
   flex-direction: column;
@@ -4173,27 +4183,48 @@ body.resizing-panels {
   margin-bottom: 6px;
 }
 
+/* Media bleeds edge-to-edge across the post card's own padding (10px 12px, see .friend-post above) so
+   photos/video read full-width like a typical feed app, rather than sitting inset as a small thumbnail
+   grid. */
 .post-media-grid {
   display: flex;
-  flex-wrap: wrap;
-  gap: 6px;
-  margin-bottom: 6px;
+  flex-direction: column;
+  gap: 2px;
+  width: calc(100% + 24px);
+  margin: 0 -12px 6px;
 }
 
 .post-media-image {
-  width: 96px;
-  height: 96px;
+  display: block;
+  width: 100%;
+  max-height: 420px;
   object-fit: cover;
-  border-radius: 6px;
-  border: 1px solid var(--border);
 }
 
 .post-media-video {
-  width: 100%;
-  max-height: 320px;
-  border-radius: 6px;
-  margin-bottom: 6px;
+  display: block;
+  width: calc(100% + 24px);
+  margin: 0 -12px 6px;
+  max-height: 420px;
   background: #000;
+}
+
+.friend-post-comment-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  background: none;
+  border: none;
+  color: var(--text-muted);
+  font-size: 13px;
+  font-weight: 600;
+  padding: 4px 0;
+  margin-bottom: 4px;
+  cursor: pointer;
+}
+
+.friend-post-comment-toggle:hover {
+  color: var(--text-h);
 }
 
 .post-tagged-friends {
@@ -4717,6 +4748,16 @@ body.resizing-panels {
   line-height: 1;
   padding: 2px 5px;
   border-radius: 999px;
+}
+
+.friends-view-switcher-dot {
+  display: inline-block;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #e0392b;
+  margin-left: 5px;
+  vertical-align: middle;
 }
 
 /* --- Groups --- */
@@ -6279,4 +6320,83 @@ body.resizing-panels {
 .share-modal-submit:disabled {
   opacity: 0.5;
   cursor: default;
+}
+
+/* --- In-app notification toasts (NotificationToasts) --- */
+
+.notification-toast-stack {
+  position: fixed;
+  top: 12px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 500;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  width: min(360px, calc(100vw - 24px));
+}
+
+.notification-toast {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  background: var(--panel-bg);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 12px 14px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
+  cursor: pointer;
+  animation: notification-toast-in 0.2s ease;
+}
+
+@keyframes notification-toast-in {
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.notification-toast-icon {
+  font-size: 20px;
+  flex-shrink: 0;
+  line-height: 1.3;
+}
+
+.notification-toast-text {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+  flex: 1;
+}
+
+.notification-toast-title {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--text-h);
+}
+
+.notification-toast-body {
+  font-size: 12.5px;
+  color: var(--text-muted);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
+
+.notification-toast-close {
+  flex-shrink: 0;
+  border: none;
+  background: none;
+  color: var(--text-muted);
+  font-size: 18px;
+  line-height: 1;
+  padding: 0 2px;
+  cursor: pointer;
 }

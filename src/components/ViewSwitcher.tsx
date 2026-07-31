@@ -34,7 +34,7 @@ export default function ViewSwitcher({
           onClick={() => onSelectView(tab.key)}
         >
           {tab.icon} {tab.label}
-          {!!tab.badge && <span className="friends-view-switcher-badge">{tab.badge}</span>}
+          {!!tab.badge && <span className="friends-view-switcher-dot" aria-hidden="true" />}
         </button>
       ))}
     </div>
