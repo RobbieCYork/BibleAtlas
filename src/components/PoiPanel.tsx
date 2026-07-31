@@ -5,7 +5,7 @@ import ShareCardButton from "./ShareCardButton";
 import ProfileAudioPlayer from "./ProfileAudioPlayer";
 import PronunciationAudioButton from "./PronunciationAudioButton";
 import BackButton from "./BackButton";
-import { generatePlaceCard, shareFilename } from "../lib/shareCard";
+import { placeCardSpec, shareFilename } from "../lib/shareCard";
 
 interface PoiPanelProps {
   poi: PointOfInterest | null;
@@ -43,7 +43,7 @@ export default function PoiPanel({
       )}
       <div className="panel-header-row">
         <span className="category-badge poi-badge">{poi.tag}</span>
-        <ShareCardButton getBlob={() => generatePlaceCard(poi)} filename={shareFilename(poi.name)} />
+        <ShareCardButton spec={placeCardSpec(poi)} filename={shareFilename(poi.name)} />
       </div>
       <h2>{poi.name}</h2>
       {poi.pronunciation && (

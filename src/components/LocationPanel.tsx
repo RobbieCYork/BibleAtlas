@@ -6,7 +6,7 @@ import ShareCardButton from "./ShareCardButton";
 import ProfileAudioPlayer from "./ProfileAudioPlayer";
 import PronunciationAudioButton from "./PronunciationAudioButton";
 import BackButton from "./BackButton";
-import { generatePlaceCard, shareFilename } from "../lib/shareCard";
+import { placeCardSpec, shareFilename } from "../lib/shareCard";
 
 interface LocationPanelProps {
   location: Location | null;
@@ -70,7 +70,7 @@ export default function LocationPanel({
       )}
       <div className="panel-header-row">
         <span className="category-badge">{CATEGORY_LABELS[location.category]}</span>
-        <ShareCardButton getBlob={() => generatePlaceCard(location)} filename={shareFilename(location.name)} />
+        <ShareCardButton spec={placeCardSpec(location)} filename={shareFilename(location.name)} />
       </div>
       <h2>{location.name}</h2>
       {location.pronunciation && (

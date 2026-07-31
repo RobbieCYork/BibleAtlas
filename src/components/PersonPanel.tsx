@@ -6,7 +6,7 @@ import ShareCardButton from "./ShareCardButton";
 import ProfileAudioPlayer from "./ProfileAudioPlayer";
 import PronunciationAudioButton from "./PronunciationAudioButton";
 import BackButton from "./BackButton";
-import { generatePersonCard, shareFilename } from "../lib/shareCard";
+import { personCardSpec, shareFilename } from "../lib/shareCard";
 
 interface PersonPanelProps {
   person: Person | null;
@@ -66,7 +66,7 @@ export default function PersonPanel({
       )}
       <div className="panel-header-row">
         <span className="category-badge person-badge">{person.role}</span>
-        <ShareCardButton getBlob={() => generatePersonCard(person)} filename={shareFilename(person.name)} />
+        <ShareCardButton spec={personCardSpec(person)} filename={shareFilename(person.name)} />
       </div>
       <h2>{person.name}</h2>
       {person.pronunciation && (

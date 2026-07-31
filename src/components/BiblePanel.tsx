@@ -26,7 +26,8 @@ import {
 import { getTextOffsetInRoot } from "../lib/domTextOffset";
 import { CHAPTER_AUDIO_CREDIT, chapterAudioUrl, fallbackChapterAudioUrl } from "../lib/chapterAudio";
 import { clipRangeForVerse } from "../lib/verseRange";
-import { deliverCard, generateVerseCard, shareFilename } from "../lib/shareCard";
+import { shareFilename, verseCardSpec, type ShareCardSpec } from "../lib/shareCard";
+import ShareCardModal from "./ShareCardModal";
 
 interface BiblePanelProps {
   reference: string | null;
@@ -232,22 +233,11 @@ export default function BiblePanel({
   const [popup, setPopup] = useState<PopupState | null>(null);
   const [noteDraft, setNoteDraft] = useState("");
   const [newTagName, setNewTagName] = useState("");
-  /** Brief share-card feedback ("Saved image") — rendered as a floating pill at panel level, not
-   * inside the action sheet, because on desktop the sheet closes the moment the click collapses the
-   * native selection (see the selectionchange handler) and would take its feedback with it. */
-  const [shareToast, setShareToast] = useState<string | null>(null);
-  const shareToastTimerRef = useRef<number | null>(null);
-  useEffect(
-    () => () => {
-      if (shareToastTimerRef.current !== null) window.clearTimeout(shareToastTimerRef.current);
-    },
-    []
-  );
-  const flashShareToast = (message: string) => {
-    if (shareToastTimerRef.current !== null) window.clearTimeout(shareToastTimerRef.current);
-    setShareToast(message);
-    shareToastTimerRef.current = window.setTimeout(() => setShareToast(null), 2400);
-  };
+  /** Set when the verse-selection popup's Share action is used — ShareCardModal owns its own
+   * open/closed state elsewhere in the app (see ShareCardButton), but the popup here calls
+   * verseCardSpec() directly instead of going through that button, so this panel renders the modal
+   * itself. Kept separate from `popup` (which closes on selection change) so the modal survives that. */
+  const [shareCardSpec, setShareCardSpec] = useState<ShareCardSpec | null>(null);
 
   // Whether the currently-loaded chapter is marked read by this account, and this account's total
   // seconds read so far this calendar month (both visible to friends too — see chapter_reads/
@@ -789,23 +779,16 @@ export default function BiblePanel({
       .join(" ");
   };
 
-  /** Generates a share-card PNG for the current selection and hands it off (Web Share sheet on
-   * mobile, PNG download elsewhere). Selection values are read up front — on desktop the click
-   * itself collapses the selection and closes the sheet, so nothing here re-reads `popup` after
-   * the first await. Works signed out too: sharing needs no account. */
-  const handleShareVerseCard = async () => {
+  /** Opens the share editor for the current selection. Selection values are read up front — on
+   * desktop the click itself collapses the native selection and closes the sheet (see the
+   * selectionchange handler), so this can't wait and re-read `popup` later. Works signed out too:
+   * sharing needs no account. */
+  const handleShareVerseCard = () => {
     if (!popup || popup.kind !== "selection" || !currentBook || currentChapter === null) return;
     const { startVerse, startOffset, endVerse, endOffset } = popup;
     const text = buildQuotedText(startVerse, startOffset, endVerse, endOffset);
     const reference = `${currentBook} ${currentChapter}:${startVerse}${endVerse !== startVerse ? `-${endVerse}` : ""}`;
-    try {
-      const blob = await generateVerseCard(reference, text);
-      const outcome = await deliverCard(blob, shareFilename(reference));
-      if (outcome === "saved") flashShareToast("Saved image");
-    } catch (err) {
-      console.error("Verse share card failed:", err);
-      flashShareToast("Couldn't create image");
-    }
+    setShareCardSpec(verseCardSpec(reference, text));
   };
 
   const handleOpenNoteEditor = () => {
@@ -1381,10 +1364,12 @@ export default function BiblePanel({
       )}
       </div>
 
-      {shareToast && (
-        <div className="bible-share-toast" role="status">
-          {shareToast}
-        </div>
+      {shareCardSpec && (
+        <ShareCardModal
+          spec={shareCardSpec}
+          filename={shareFilename(shareCardSpec.title)}
+          onClose={() => setShareCardSpec(null)}
+        />
       )}
 
       {popup && (
@@ -1417,7 +1402,7 @@ export default function BiblePanel({
                 <span className="verse-popup-signin-note">Log in to highlight or add notes</span>
               )}
               <button type="button" className="verse-popup-share-btn" onClick={handleShareVerseCard}>
-                📤 Share card
+                📤 Share
               </button>
               <button type="button" className="verse-popup-close" onClick={closePopup} aria-label="Close">
                 ×
