@@ -1,9 +1,18 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import type { Session } from "@supabase/supabase-js";
 import { supabase } from "../lib/supabase";
-import { SAVING_PETER_LEVELS, SAVING_PETER_WORDS, type SavingPeterLevel } from "../data/savingPeterWords";
+import { SAVING_PETER_LEVELS, SAVING_PETER_WORDS, type SavingPeterLevel, type SavingPeterWord } from "../data/savingPeterWords";
 import BackButton from "./BackButton";
 import "./Crossword.css";
+
+function shuffled<T>(items: T[]): T[] {
+  const copy = [...items];
+  for (let i = copy.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [copy[i], copy[j]] = [copy[j], copy[i]];
+  }
+  return copy;
+}
 
 const MAX_WRONG = 6;
 // Standard QWERTY row order — easier to scan/type on than strict alphabetical for anyone used to a
@@ -38,14 +47,33 @@ export default function SavingPeterView({ session, onBack }: SavingPeterViewProp
   }, [session]);
   const playerName = displayName ?? session.user.email ?? "You";
 
-  const pickWord = (forLevel: SavingPeterLevel) => {
-    const bank = SAVING_PETER_WORDS[forLevel];
-    return bank[Math.floor(Math.random() * bank.length)];
+  // A shuffled "bag" per level (drawn without replacement) instead of a fresh random pick each
+  // round — a plain random pick can hand back the same word two or three rounds in a row purely by
+  // chance, especially on the smaller banks (Expert). Refilling only once the bag empties guarantees
+  // every word in a level is seen before any repeats, and the reshuffle below never lets the last
+  // card of one bag equal the first card of the next, so back-to-back repeats can't happen at the
+  // seam either.
+  const bagRef = useRef<SavingPeterWord[]>([]);
+  const lastWordRef = useRef<string | null>(null);
+
+  const drawWord = (forLevel: SavingPeterLevel) => {
+    if (bagRef.current.length === 0) {
+      const fresh = shuffled(SAVING_PETER_WORDS[forLevel]);
+      if (fresh.length > 1 && fresh[0].word === lastWordRef.current) {
+        [fresh[0], fresh[1]] = [fresh[1], fresh[0]];
+      }
+      bagRef.current = fresh;
+    }
+    const word = bagRef.current.shift()!;
+    lastWordRef.current = word.word;
+    return word;
   };
 
   const startLevel = (chosen: SavingPeterLevel) => {
+    bagRef.current = [];
+    lastWordRef.current = null;
     setLevel(chosen);
-    setEntry(pickWord(chosen));
+    setEntry(drawWord(chosen));
     setGuessed(new Set());
   };
   const backToLevelPicker = () => setLevel(null);
@@ -76,7 +104,7 @@ export default function SavingPeterView({ session, onBack }: SavingPeterViewProp
 
   const handleNewRound = () => {
     if (!level) return;
-    setEntry(pickWord(level));
+    setEntry(drawWord(level));
     setGuessed(new Set());
   };
 
