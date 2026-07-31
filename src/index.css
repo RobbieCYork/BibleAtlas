@@ -52,9 +52,24 @@
   color: var(--text);
 }
 
+/* Locks the actual document to the viewport so it never has anything of its own to scroll — every
+ * scrollable area in this app is an inner container (.myprofile-body, .bible-panel, etc.) with its
+ * own overflow-y: auto. Without this, focusing a text input on Mobile Safari makes it "helpfully"
+ * scroll the whole page to bring the input above the keyboard; since the document has no real extra
+ * height to scroll into, that scroll instead reveals blank html/body background (black in dark mode)
+ * above the app and shoves fixed-height content like the bottom tab bar out of place until the
+ * keyboard closes. */
+html {
+  height: 100%;
+  overflow: hidden;
+}
+
 body {
   margin: 0;
-  min-height: 100svh;
+  height: 100%;
+  overflow: hidden;
+  position: fixed;
+  width: 100%;
 }
 
 h1,
