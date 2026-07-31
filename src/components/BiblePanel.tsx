@@ -119,6 +119,10 @@ type PopupState =
        * while a native selection is still live — mutating the DOM under an active native selection
        * causes the browser to reset/corrupt it (see the touchend handler below). */
       viaTouch?: boolean;
+      /** Set once a highlight has been created for this exact selection — lets a second tap on a
+       * different color UPDATE that same row's color instead of inserting a duplicate overlapping
+       * highlight, since the sheet now stays open after highlighting (see handleCreateHighlight). */
+      appliedHighlightId?: string;
     }
   | { kind: "note-editor"; startVerse: number; startOffset: number; endVerse: number; endOffset: number; quotedText: string }
   | { kind: "highlight-actions"; highlight: Highlight }
@@ -710,7 +714,13 @@ export default function BiblePanel({
   // (same reasoning as the touch path below — and mirrors how the browser's own selection UI behaves,
   // only settling once you release the mouse button).
   useEffect(() => {
-    const handleMouseUp = () => {
+    const handleMouseUp = (e: MouseEvent) => {
+      // A mouseup on the sheet itself (e.g. clicking a highlight color) still sees the old selection
+      // still technically live in the DOM — without this guard, that reconstructs a brand-new
+      // "selection" popup right on top of the one handleCreateHighlight just updated, silently
+      // dropping its appliedHighlightId and causing the next color tap to insert a duplicate,
+      // overlapping highlight instead of updating the one already there.
+      if ((e.target as HTMLElement | null)?.closest(".verse-sheet")) return;
       const result = readSelectionRange();
       if (!result) return;
       setPopup({ kind: "selection", ...result });
@@ -743,9 +753,20 @@ export default function BiblePanel({
     setPopup(null);
   };
 
+  // Deliberately leaves the sheet open afterward (unlike Note/Tag-save) so a highlight tap can be
+  // followed by Share/Note/Tag on the same selection without having to re-select the text — the
+  // explicit ✕ is the only way to dismiss it now. A second color tap on the same selection replaces
+  // the highlight already created (via popup.appliedHighlightId) rather than inserting a duplicate,
+  // overlapping row — delete-then-insert rather than an UPDATE, since highlights only has RLS
+  // policies for insert/select/delete, not update (confirmed empirically: an update matches 0 rows).
   const handleCreateHighlight = async (color: HighlightColor) => {
     if (!popup || popup.kind !== "selection" || !userId || !currentBook || currentChapter === null) return;
-    const { startVerse, startOffset, endVerse, endOffset } = popup;
+    const { startVerse, startOffset, endVerse, endOffset, appliedHighlightId } = popup;
+    if (appliedHighlightId) {
+      await supabase.from("highlights").delete().eq("id", appliedHighlightId);
+      setHighlights((hs) => hs.filter((h) => h.id !== appliedHighlightId));
+      setPopup((p) => (p?.kind === "selection" ? { ...p, appliedHighlightId: undefined } : p));
+    }
     const { data, error: hlError } = await supabase
       .from("highlights")
       .insert({
@@ -761,8 +782,11 @@ export default function BiblePanel({
       })
       .select()
       .single();
-    if (!hlError && data) setHighlights((hs) => [...hs, data as Highlight]);
-    closePopup();
+    if (!hlError && data) {
+      const inserted = data as Highlight;
+      setHighlights((hs) => [...hs, inserted]);
+      setPopup((p) => (p?.kind === "selection" ? { ...p, appliedHighlightId: inserted.id } : p));
+    }
   };
 
   /** Reconstructs the exact quoted text for a (possibly multi-verse) selection from the loaded passage. */
@@ -1384,15 +1408,22 @@ export default function BiblePanel({
                       type="button"
                       className={`verse-popup-color verse-popup-color-${color}`}
                       aria-label={`Highlight ${color}`}
+                      // Clicking a button naturally collapses the mouse-drag text selection on desktop
+                      // (a real, user-driven selectionchange), which the effect above treats the same as
+                      // tapping/clicking elsewhere and closes the sheet — preventDefault on mousedown
+                      // stops the browser from collapsing the selection in the first place, so the sheet
+                      // and its selection both survive the click and Note/Tag/Share can still follow.
+                      onMouseDown={(e) => e.preventDefault()}
                       onClick={() => handleCreateHighlight(color)}
                     />
                   ))}
-                  <button type="button" className="verse-popup-note-btn" onClick={handleOpenNoteEditor}>
+                  <button type="button" className="verse-popup-note-btn" onMouseDown={(e) => e.preventDefault()} onClick={handleOpenNoteEditor}>
                     📝 Note
                   </button>
                   <button
                     type="button"
                     className="verse-popup-tag-btn"
+                    onMouseDown={(e) => e.preventDefault()}
                     onClick={() => setPopup({ kind: "tag-picker", startVerse: popup.startVerse, endVerse: popup.endVerse })}
                   >
                     🏷️ Tag
@@ -1401,7 +1432,7 @@ export default function BiblePanel({
               ) : (
                 <span className="verse-popup-signin-note">Log in to highlight or add notes</span>
               )}
-              <button type="button" className="verse-popup-share-btn" onClick={handleShareVerseCard}>
+              <button type="button" className="verse-popup-share-btn" onMouseDown={(e) => e.preventDefault()} onClick={handleShareVerseCard}>
                 📤 Share
               </button>
               <button type="button" className="verse-popup-close" onClick={closePopup} aria-label="Close">
