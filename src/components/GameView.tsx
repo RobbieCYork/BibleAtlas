@@ -3,19 +3,16 @@ import type { Session } from "@supabase/supabase-js";
 import GameCenter from "./GameCenter";
 import BibleTriviaView from "./BibleTriviaView";
 import CrosswordView from "./CrosswordView";
-import SinkingPeterView from "./SinkingPeterView";
+import SavingPeterView from "./SavingPeterView";
 import BackButton from "./BackButton";
 import "./Game.css";
-
-const ACTIVE_GAME_KEY = "bible-atlas-active-game-key";
 
 interface GameViewProps {
   session: Session;
   onClose: () => void;
   /** Bumped by App.tsx when the Games nav entry point is tapped while Games mode is ALREADY showing —
    * treated the same way re-tapping an already-active tab returns to that tab's root in many apps:
-   * jump back to Game Center instead of silently doing nothing (which is what used to happen, since
-   * activeGame lives here, not in App.tsx, so App.tsx alone has no way to reset it). */
+   * jump back to Game Center instead of silently doing nothing. */
   gameCenterNonce: number;
 }
 
@@ -23,23 +20,20 @@ interface GameViewProps {
  * renders this over the whole app body; the map/Bible layout underneath stays mounted). A thin router:
  * GameCenter is the landing list; each selected game owns its own header/back-button/state entirely
  * (BibleTriviaView, CrosswordView) and hands back to GameCenter via onBack when done, rather than this
- * component needing to know anything about a given game's internals. */
+ * component needing to know anything about a given game's internals.
+ *
+ * Always starts at Game Center on mount (no persisted "resume where I left off") — App.tsx already
+ * closes Games mode (unmounting this) the moment the reader taps any other nav tab, so the only way
+ * back in is deliberately tapping Games again, and that should land on the list, not silently drop
+ * them back into whatever they were playing before they navigated away. */
 export default function GameView({ session, onClose, gameCenterNonce }: GameViewProps) {
-  // Which game's flow is showing — null means GameCenter itself. Persisted so a page refresh mid-game
-  // doesn't strand the player on GameCenter while their game (or trivia room) lives on.
-  const [activeGame, setActiveGame] = useState<string | null>(() => sessionStorage.getItem(ACTIVE_GAME_KEY));
+  const [activeGame, setActiveGame] = useState<string | null>(null);
 
-  const selectGame = (key: string) => {
-    setActiveGame(key);
-    sessionStorage.setItem(ACTIVE_GAME_KEY, key);
-  };
-  const backToCenter = () => {
-    setActiveGame(null);
-    sessionStorage.removeItem(ACTIVE_GAME_KEY);
-  };
+  const selectGame = (key: string) => setActiveGame(key);
+  const backToCenter = () => setActiveGame(null);
 
   // Only react on an actual CHANGE to the nonce, not its initial value on mount — otherwise Games
-  // mode would jump to Game Center the instant it opens, discarding whatever game was resumed above.
+  // mode would jump to Game Center a second, redundant time right as it opens.
   const prevNonceRef = useRef(gameCenterNonce);
   useEffect(() => {
     if (gameCenterNonce !== prevNonceRef.current) {
@@ -51,7 +45,7 @@ export default function GameView({ session, onClose, gameCenterNonce }: GameView
 
   if (activeGame === "bible-trivia") return <BibleTriviaView session={session} onBack={backToCenter} />;
   if (activeGame === "crossword") return <CrosswordView onBack={backToCenter} />;
-  if (activeGame === "sinking-peter") return <SinkingPeterView session={session} onBack={backToCenter} />;
+  if (activeGame === "saving-peter") return <SavingPeterView session={session} onBack={backToCenter} />;
 
   return (
     <div className="game-root">

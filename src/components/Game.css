@@ -763,7 +763,7 @@
 
 /* --- Sinking Peter (hangman) --- */
 
-.sinking-peter {
+.saving-peter {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -772,16 +772,16 @@
   max-width: 420px;
 }
 
-.sinking-peter-scene {
+.saving-peter-scene {
   position: relative;
   width: 100%;
   height: 220px;
   border-radius: 12px;
   overflow: hidden;
-  background: url("/games/sinking-peter/background.jpg") center / cover no-repeat;
+  background: url("/games/saving-peter/background.jpg") center / cover no-repeat;
 }
 
-.sinking-peter-figure {
+.saving-peter-figure {
   position: absolute;
   top: 8px;
   left: 50%;
@@ -793,7 +793,7 @@
   filter: drop-shadow(0 6px 10px rgba(0, 0, 0, 0.35));
 }
 
-.sinking-peter-water {
+.saving-peter-water {
   position: absolute;
   bottom: 0;
   left: 0;
@@ -802,28 +802,28 @@
   transition: height 0.4s ease;
 }
 
-.sinking-peter-status {
+.saving-peter-status {
   font-size: 13px;
   font-weight: 600;
   color: var(--text-h);
   text-align: center;
 }
 
-.sinking-peter-clue {
+.saving-peter-clue {
   font-size: 14px;
   color: var(--text);
   text-align: center;
   font-style: italic;
 }
 
-.sinking-peter-word {
+.saving-peter-word {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
   gap: 6px;
 }
 
-.sinking-peter-letter-slot {
+.saving-peter-letter-slot {
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -836,30 +836,30 @@
   text-transform: uppercase;
 }
 
-.sinking-peter-reveal {
+.saving-peter-reveal {
   font-size: 13px;
   color: var(--text-muted);
 }
 
-.sinking-peter-post-game {
+.saving-peter-post-game {
   display: flex;
   gap: 10px;
 }
 
-.sinking-peter-keyboard {
+.saving-peter-keyboard {
   display: flex;
   flex-direction: column;
   gap: 6px;
   width: 100%;
 }
 
-.sinking-peter-keyboard-row {
+.saving-peter-keyboard-row {
   display: flex;
   justify-content: center;
   gap: 6px;
 }
 
-.sinking-peter-key {
+.saving-peter-key {
   flex: 1;
   max-width: 40px;
   border: 1px solid var(--border);
@@ -872,18 +872,18 @@
   cursor: pointer;
 }
 
-.sinking-peter-key:disabled {
+.saving-peter-key:disabled {
   cursor: default;
 }
 
-.sinking-peter-key-correct {
+.saving-peter-key-correct {
   background: #1f9d55;
   border-color: #1f9d55;
   color: #fff;
   opacity: 1;
 }
 
-.sinking-peter-key-wrong {
+.saving-peter-key-wrong {
   background: #db284e;
   border-color: #db284e;
   color: #fff;

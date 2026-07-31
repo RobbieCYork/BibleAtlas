@@ -1,6 +1,6 @@
 import { CROSSWORD_LEVELS, type CrosswordLevel } from "./crosswordWords";
 
-export interface SinkingPeterWord {
+export interface SavingPeterWord {
   /** Letters only, uppercase. */
   word: string;
   clue: string;
@@ -8,12 +8,12 @@ export interface SinkingPeterWord {
 
 // Reused as-is (see CrosswordView's level picker) — "the same levels of difficulty as the Crossword"
 // means literally these five tiers, not a look-alike set defined twice.
-export { CROSSWORD_LEVELS as SINKING_PETER_LEVELS };
-export type { CrosswordLevel as SinkingPeterLevel };
+export { CROSSWORD_LEVELS as SAVING_PETER_LEVELS };
+export type { CrosswordLevel as SavingPeterLevel };
 
 /** One word bank per difficulty tier — same {word, clue} shape as the flat bank this replaced, just
  * split five ways instead of pooled into one list. */
-export const SINKING_PETER_WORDS: Record<CrosswordLevel, SinkingPeterWord[]> = {
+export const SAVING_PETER_WORDS: Record<CrosswordLevel, SavingPeterWord[]> = {
   beginner: [
     { word: "PETER", clue: "The disciple who walked on water, then doubted" },
     { word: "JESUS", clue: "Who said \"Come\" and caught Peter when he sank" },

@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useState } from "react";
 import type { Session } from "@supabase/supabase-js";
 import { supabase } from "../lib/supabase";
-import { SINKING_PETER_LEVELS, SINKING_PETER_WORDS, type SinkingPeterLevel } from "../data/sinkingPeterWords";
+import { SAVING_PETER_LEVELS, SAVING_PETER_WORDS, type SavingPeterLevel } from "../data/savingPeterWords";
 import BackButton from "./BackButton";
 import "./Crossword.css";
 
@@ -10,7 +10,7 @@ const MAX_WRONG = 6;
 // real keyboard, which is most players.
 const KEYBOARD_ROWS = ["QWERTYUIOP", "ASDFGHJKL", "ZXCVBNM"].map((row) => row.split(""));
 
-interface SinkingPeterViewProps {
+interface SavingPeterViewProps {
   session: Session;
   onBack: () => void;
 }
@@ -18,10 +18,10 @@ interface SinkingPeterViewProps {
 /** Hangman, themed around Matthew 14:22-33 — every wrong guess sinks Peter a little further into the
  * water instead of building a gallows; a full miss (MAX_WRONG wrong letters) means he goes under
  * entirely, guessing the word before that means Jesus catches his hand in time. Same five difficulty
- * tiers as the Crossword (see data/sinkingPeterWords.ts), picked the same way. */
-export default function SinkingPeterView({ session, onBack }: SinkingPeterViewProps) {
-  const [level, setLevel] = useState<SinkingPeterLevel | null>(null);
-  const [entry, setEntry] = useState(() => SINKING_PETER_WORDS.beginner[0]);
+ * tiers as the Crossword (see data/savingPeterWords.ts), picked the same way. */
+export default function SavingPeterView({ session, onBack }: SavingPeterViewProps) {
+  const [level, setLevel] = useState<SavingPeterLevel | null>(null);
+  const [entry, setEntry] = useState(() => SAVING_PETER_WORDS.beginner[0]);
   const [guessed, setGuessed] = useState<Set<string>>(new Set());
 
   // Best-effort — falls back to the account's email (or a generic "You") if the profile hasn't
@@ -38,12 +38,12 @@ export default function SinkingPeterView({ session, onBack }: SinkingPeterViewPr
   }, [session]);
   const playerName = displayName ?? session.user.email ?? "You";
 
-  const pickWord = (forLevel: SinkingPeterLevel) => {
-    const bank = SINKING_PETER_WORDS[forLevel];
+  const pickWord = (forLevel: SavingPeterLevel) => {
+    const bank = SAVING_PETER_WORDS[forLevel];
     return bank[Math.floor(Math.random() * bank.length)];
   };
 
-  const startLevel = (chosen: SinkingPeterLevel) => {
+  const startLevel = (chosen: SavingPeterLevel) => {
     setLevel(chosen);
     setEntry(pickWord(chosen));
     setGuessed(new Set());
@@ -59,15 +59,15 @@ export default function SinkingPeterView({ session, onBack }: SinkingPeterViewPr
   const lost = wrongCount >= MAX_WRONG && !won;
   const over = won || lost;
 
-  // Three photos of Peter (see public/games/sinking-peter) stand in for the old emoji figure —
+  // Three photos of Peter (see public/games/saving-peter) stand in for the old emoji figure —
   // further along by wrong-guess count, unless the round is already decided.
   const peterImage = lost
-    ? "/games/sinking-peter/peter-drowning.png"
+    ? "/games/saving-peter/peter-drowning.png"
     : won || wrongCount <= 1
-      ? "/games/sinking-peter/peter-standing.png"
+      ? "/games/saving-peter/peter-standing.png"
       : wrongCount <= 3
-        ? "/games/sinking-peter/peter-sinking.png"
-        : "/games/sinking-peter/peter-drowning.png";
+        ? "/games/saving-peter/peter-sinking.png"
+        : "/games/saving-peter/peter-drowning.png";
 
   const handleGuess = (letter: string) => {
     if (over || guessed.has(letter)) return;
@@ -85,7 +85,7 @@ export default function SinkingPeterView({ session, onBack }: SinkingPeterViewPr
       <div className="game-root">
         <header className="game-header">
           <BackButton onClick={onBack} ariaLabel="Back to Game Center" />
-          <h2>🌊 Sinking Peter</h2>
+          <h2>🌊 Saving Peter</h2>
         </header>
         <div className="game-body">
           <div className="crossword-level-picker">
@@ -94,7 +94,7 @@ export default function SinkingPeterView({ session, onBack }: SinkingPeterViewPr
               <p>Beginner is for little ones just learning Bible stories; Expert is seminary-level.</p>
             </div>
             <div className="game-center-list">
-              {SINKING_PETER_LEVELS.map((l) => (
+              {SAVING_PETER_LEVELS.map((l) => (
                 <button key={l.key} type="button" className="game-center-card crossword-level-card" onClick={() => startLevel(l.key)}>
                   <span className="game-center-card-icon" aria-hidden="true">
                     {l.icon}
@@ -119,16 +119,16 @@ export default function SinkingPeterView({ session, onBack }: SinkingPeterViewPr
     <div className="game-root">
       <header className="game-header">
         <BackButton onClick={backToLevelPicker} ariaLabel="Back to level picker" />
-        <h2>🌊 Sinking Peter</h2>
+        <h2>🌊 Saving Peter</h2>
       </header>
       <div className="game-body">
-        <div className="sinking-peter">
-          <div className="sinking-peter-scene">
-            <img className="sinking-peter-figure" src={peterImage} alt="" style={{ transform: `translateY(${wrongCount * 11}px)` }} />
-            <div className="sinking-peter-water" style={{ height: `${18 + wrongCount * 11}%` }} />
+        <div className="saving-peter">
+          <div className="saving-peter-scene">
+            <img className="saving-peter-figure" src={peterImage} alt="" style={{ transform: `translateY(${wrongCount * 11}px)` }} />
+            <div className="saving-peter-water" style={{ height: `${18 + wrongCount * 11}%` }} />
           </div>
 
-          <p className="sinking-peter-status">
+          <p className="saving-peter-status">
             {won
               ? "🎉 Jesus reached out and caught him — you got it!"
               : lost
@@ -136,20 +136,20 @@ export default function SinkingPeterView({ session, onBack }: SinkingPeterViewPr
                 : `Wrong guesses so far: ${wrongCount} / ${MAX_WRONG}`}
           </p>
 
-          <p className="sinking-peter-clue">{entry.clue}</p>
+          <p className="saving-peter-clue">{entry.clue}</p>
 
-          <div className="sinking-peter-word">
+          <div className="saving-peter-word">
             {entry.word.split("").map((letter, i) => (
-              <span key={i} className="sinking-peter-letter-slot">
+              <span key={i} className="saving-peter-letter-slot">
                 {guessed.has(letter) || over ? letter : ""}
               </span>
             ))}
           </div>
 
-          {over && !won && <p className="sinking-peter-reveal">The word was: {entry.word}</p>}
+          {over && !won && <p className="saving-peter-reveal">The word was: {entry.word}</p>}
 
           {over ? (
-            <div className="sinking-peter-post-game">
+            <div className="saving-peter-post-game">
               <button type="button" className="games-primary-button" onClick={handleNewRound}>
                 🔄 Play Again
               </button>
@@ -158,9 +158,9 @@ export default function SinkingPeterView({ session, onBack }: SinkingPeterViewPr
               </button>
             </div>
           ) : (
-            <div className="sinking-peter-keyboard">
+            <div className="saving-peter-keyboard">
               {KEYBOARD_ROWS.map((row, i) => (
-                <div key={i} className="sinking-peter-keyboard-row">
+                <div key={i} className="saving-peter-keyboard-row">
                   {row.map((letter) => {
                     const used = guessed.has(letter);
                     const correct = used && entry.word.includes(letter);
@@ -168,7 +168,7 @@ export default function SinkingPeterView({ session, onBack }: SinkingPeterViewPr
                       <button
                         key={letter}
                         type="button"
-                        className={`sinking-peter-key ${used ? (correct ? "sinking-peter-key-correct" : "sinking-peter-key-wrong") : ""}`}
+                        className={`saving-peter-key ${used ? (correct ? "saving-peter-key-correct" : "saving-peter-key-wrong") : ""}`}
                         onClick={() => handleGuess(letter)}
                         disabled={used}
                       >
