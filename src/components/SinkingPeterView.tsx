@@ -1,6 +1,9 @@
-import { useMemo, useState } from "react";
-import { SINKING_PETER_WORDS } from "../data/sinkingPeterWords";
+import { useEffect, useMemo, useState } from "react";
+import type { Session } from "@supabase/supabase-js";
+import { supabase } from "../lib/supabase";
+import { SINKING_PETER_LEVELS, SINKING_PETER_WORDS, type SinkingPeterLevel } from "../data/sinkingPeterWords";
 import BackButton from "./BackButton";
+import "./Crossword.css";
 
 const MAX_WRONG = 6;
 // Standard QWERTY row order — easier to scan/type on than strict alphabetical for anyone used to a
@@ -8,16 +11,44 @@ const MAX_WRONG = 6;
 const KEYBOARD_ROWS = ["QWERTYUIOP", "ASDFGHJKL", "ZXCVBNM"].map((row) => row.split(""));
 
 interface SinkingPeterViewProps {
+  session: Session;
   onBack: () => void;
 }
 
 /** Hangman, themed around Matthew 14:22-33 — every wrong guess sinks Peter a little further into the
  * water instead of building a gallows; a full miss (MAX_WRONG wrong letters) means he goes under
- * entirely, guessing the word before that means Jesus catches his hand in time. */
-export default function SinkingPeterView({ onBack }: SinkingPeterViewProps) {
-  const pickWord = () => SINKING_PETER_WORDS[Math.floor(Math.random() * SINKING_PETER_WORDS.length)];
-  const [entry, setEntry] = useState(pickWord);
+ * entirely, guessing the word before that means Jesus catches his hand in time. Same five difficulty
+ * tiers as the Crossword (see data/sinkingPeterWords.ts), picked the same way. */
+export default function SinkingPeterView({ session, onBack }: SinkingPeterViewProps) {
+  const [level, setLevel] = useState<SinkingPeterLevel | null>(null);
+  const [entry, setEntry] = useState(() => SINKING_PETER_WORDS.beginner[0]);
   const [guessed, setGuessed] = useState<Set<string>>(new Set());
+
+  // Best-effort — falls back to the account's email (or a generic "You") if the profile hasn't
+  // loaded yet or has no display name, same fallback chain AuthButton's own label uses.
+  const [displayName, setDisplayName] = useState<string | null>(null);
+  useEffect(() => {
+    if (session.user.is_anonymous) return;
+    supabase
+      .from("profiles")
+      .select("display_name")
+      .eq("id", session.user.id)
+      .single()
+      .then(({ data }) => setDisplayName((data as { display_name: string | null } | null)?.display_name ?? null));
+  }, [session]);
+  const playerName = displayName ?? session.user.email ?? "You";
+
+  const pickWord = (forLevel: SinkingPeterLevel) => {
+    const bank = SINKING_PETER_WORDS[forLevel];
+    return bank[Math.floor(Math.random() * bank.length)];
+  };
+
+  const startLevel = (chosen: SinkingPeterLevel) => {
+    setLevel(chosen);
+    setEntry(pickWord(chosen));
+    setGuessed(new Set());
+  };
+  const backToLevelPicker = () => setLevel(null);
 
   const wrongLetters = useMemo(
     () => [...guessed].filter((l) => !entry.word.includes(l)),
@@ -44,14 +75,50 @@ export default function SinkingPeterView({ onBack }: SinkingPeterViewProps) {
   };
 
   const handleNewRound = () => {
-    setEntry(pickWord());
+    if (!level) return;
+    setEntry(pickWord(level));
     setGuessed(new Set());
   };
+
+  if (!level) {
+    return (
+      <div className="game-root">
+        <header className="game-header">
+          <BackButton onClick={onBack} ariaLabel="Back to Game Center" />
+          <h2>🌊 Sinking Peter</h2>
+        </header>
+        <div className="game-body">
+          <div className="crossword-level-picker">
+            <div className="games-panel-intro">
+              <h2>Choose a difficulty</h2>
+              <p>Beginner is for little ones just learning Bible stories; Expert is seminary-level.</p>
+            </div>
+            <div className="game-center-list">
+              {SINKING_PETER_LEVELS.map((l) => (
+                <button key={l.key} type="button" className="game-center-card crossword-level-card" onClick={() => startLevel(l.key)}>
+                  <span className="game-center-card-icon" aria-hidden="true">
+                    {l.icon}
+                  </span>
+                  <span className="game-center-card-body">
+                    <span className="game-center-card-title">{l.label}</span>
+                    <span className="game-center-card-tagline">{l.description}</span>
+                  </span>
+                  <span className="game-center-card-chevron" aria-hidden="true">
+                    ›
+                  </span>
+                </button>
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="game-root">
       <header className="game-header">
-        <BackButton onClick={onBack} label="Back" ariaLabel="Back to Game Center" />
+        <BackButton onClick={backToLevelPicker} ariaLabel="Back to level picker" />
         <h2>🌊 Sinking Peter</h2>
       </header>
       <div className="game-body">
@@ -65,7 +132,7 @@ export default function SinkingPeterView({ onBack }: SinkingPeterViewProps) {
             {won
               ? "🎉 Jesus reached out and caught him — you got it!"
               : lost
-                ? "🌊 Peter went under — out of guesses."
+                ? `Bye bye, Peter! ${playerName} couldn't save you. Fortunately Jesus did.`
                 : `Wrong guesses so far: ${wrongCount} / ${MAX_WRONG}`}
           </p>
 
@@ -82,9 +149,14 @@ export default function SinkingPeterView({ onBack }: SinkingPeterViewProps) {
           {over && !won && <p className="sinking-peter-reveal">The word was: {entry.word}</p>}
 
           {over ? (
-            <button type="button" className="games-primary-button" onClick={handleNewRound}>
-              🔄 Play Again
-            </button>
+            <div className="sinking-peter-post-game">
+              <button type="button" className="games-primary-button" onClick={handleNewRound}>
+                🔄 Play Again
+              </button>
+              <button type="button" className="games-secondary-button" onClick={backToLevelPicker}>
+                Choose Different Level
+              </button>
+            </div>
           ) : (
             <div className="sinking-peter-keyboard">
               {KEYBOARD_ROWS.map((row, i) => (

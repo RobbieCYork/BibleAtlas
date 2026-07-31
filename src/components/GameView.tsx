@@ -51,7 +51,7 @@ export default function GameView({ session, onClose, gameCenterNonce }: GameView
 
   if (activeGame === "bible-trivia") return <BibleTriviaView session={session} onBack={backToCenter} />;
   if (activeGame === "crossword") return <CrosswordView onBack={backToCenter} />;
-  if (activeGame === "sinking-peter") return <SinkingPeterView onBack={backToCenter} />;
+  if (activeGame === "sinking-peter") return <SinkingPeterView session={session} onBack={backToCenter} />;
 
   return (
     <div className="game-root">

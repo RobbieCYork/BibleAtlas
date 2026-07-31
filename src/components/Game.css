@@ -841,6 +841,11 @@
   color: var(--text-muted);
 }
 
+.sinking-peter-post-game {
+  display: flex;
+  gap: 10px;
+}
+
 .sinking-peter-keyboard {
   display: flex;
   flex-direction: column;
