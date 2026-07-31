@@ -46,7 +46,7 @@ export default function SinkingPeterView({ onBack }: SinkingPeterViewProps) {
         <div className="sinking-peter">
           <div className="sinking-peter-scene">
             <span className="sinking-peter-figure" style={{ transform: `translateY(${wrongCount * 11}px)` }}>
-              {lost ? "😱" : won ? "🙌" : "🧍"}
+              {lost ? "😱" : won ? "🙌🏾" : "🧔🏾"}
             </span>
             <span className="sinking-peter-boat" aria-hidden="true">
               ⛵
