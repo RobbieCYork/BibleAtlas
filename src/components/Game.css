@@ -858,19 +858,25 @@
 
 .saving-peter-word {
   display: flex;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
   justify-content: center;
   gap: 6px;
+  width: 100%;
 }
 
+/* flex: 1 1 0 + min-width: 0 lets every slot shrink equally so even the longest words (e.g.
+   SUBSTITUTIONARY) fit on one line instead of wrapping — max-width keeps short words from stretching
+   into oversized blocks. Font size itself is set inline per-word (see SavingPeterView.tsx), since a
+   15-letter word needs noticeably smaller glyphs than a 4-letter one to stay legible at this width. */
 .saving-peter-letter-slot {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 26px;
+  flex: 1 1 0;
+  min-width: 0;
+  max-width: 32px;
   height: 32px;
   border-bottom: 2px solid var(--border);
-  font-size: 18px;
   font-weight: 700;
   color: var(--text-h);
   text-transform: uppercase;

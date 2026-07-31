@@ -166,7 +166,13 @@ export default function SavingPeterView({ session, onBack }: SavingPeterViewProp
 
           <p className="saving-peter-clue">{entry.clue}</p>
 
-          <div className="saving-peter-word">
+          <div
+            className="saving-peter-word"
+            style={{
+              fontSize: entry.word.length > 12 ? 12 : entry.word.length > 9 ? 14 : entry.word.length > 6 ? 16 : 18,
+              gap: entry.word.length > 12 ? 2 : entry.word.length > 9 ? 3 : 6,
+            }}
+          >
             {entry.word.split("").map((letter, i) => (
               <span key={i} className="saving-peter-letter-slot">
                 {guessed.has(letter) || over ? letter : ""}
