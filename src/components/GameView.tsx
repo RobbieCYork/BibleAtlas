@@ -3,6 +3,7 @@ import type { Session } from "@supabase/supabase-js";
 import GameCenter from "./GameCenter";
 import BibleTriviaView from "./BibleTriviaView";
 import CrosswordView from "./CrosswordView";
+import SinkingPeterView from "./SinkingPeterView";
 import BackButton from "./BackButton";
 import "./Game.css";
 
@@ -50,6 +51,7 @@ export default function GameView({ session, onClose, gameCenterNonce }: GameView
 
   if (activeGame === "bible-trivia") return <BibleTriviaView session={session} onBack={backToCenter} />;
   if (activeGame === "crossword") return <CrosswordView onBack={backToCenter} />;
+  if (activeGame === "sinking-peter") return <SinkingPeterView onBack={backToCenter} />;
 
   return (
     <div className="game-root">

@@ -20,6 +20,12 @@ export const GAMES: GameDef[] = [
     title: "Bible Crossword",
     tagline: "Solo crossword puzzles from Beginner (little ones) to Expert (pastors & Bible students).",
   },
+  {
+    key: "sinking-peter",
+    icon: "🌊",
+    title: "Sinking Peter",
+    tagline: "Hangman, Matthew 14 style — guess the word before Peter goes under.",
+  },
 ];
 
 interface GameCenterProps {

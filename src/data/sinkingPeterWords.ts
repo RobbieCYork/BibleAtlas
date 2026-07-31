@@ -1,0 +1,61 @@
+export interface SinkingPeterWord {
+  /** Letters only, uppercase. */
+  word: string;
+  clue: string;
+}
+
+/** Word bank for the Sinking Peter game (see components/SinkingPeterView.tsx) — one random entry per
+ * round. Same {word, clue} shape as the crossword's word bank (crosswordWords.ts), just without
+ * difficulty tiers; a single round doesn't need the same breadth a whole puzzle does. */
+export const SINKING_PETER_WORDS: SinkingPeterWord[] = [
+  { word: "PETER", clue: "The disciple who walked on water, then doubted" },
+  { word: "JESUS", clue: "Who said \"Come\" and caught Peter when he sank" },
+  { word: "BOAT", clue: "What the disciples were in during the storm" },
+  { word: "STORM", clue: "What made the waves so rough that night" },
+  { word: "WATER", clue: "What Peter walked on — until he didn't" },
+  { word: "FAITH", clue: "What Jesus said Peter had too little of" },
+  { word: "DOUBT", clue: "What crept in when Peter saw the wind" },
+  { word: "GALILEE", clue: "The sea this story takes place on" },
+  { word: "DISCIPLES", clue: "The twelve who followed Jesus" },
+  { word: "MIRACLE", clue: "What walking on water was" },
+  { word: "WIND", clue: "What Peter noticed and became afraid of" },
+  { word: "SINK", clue: "What Peter began to do when he doubted" },
+  { word: "HAND", clue: "What Jesus stretched out to catch Peter" },
+  { word: "GHOST", clue: "What the disciples thought Jesus was at first" },
+  { word: "FEAR", clue: "What Jesus told them not to have" },
+  { word: "NOAH", clue: "He built an ark before a great flood" },
+  { word: "ARK", clue: "The vessel that survived the flood" },
+  { word: "MOSES", clue: "He parted the Red Sea" },
+  { word: "REDSEA", clue: "The sea Moses parted for Israel to cross" },
+  { word: "JONAH", clue: "Swallowed by a great fish" },
+  { word: "WHALE", clue: "The great fish that swallowed Jonah (commonly said, if imprecisely)" },
+  { word: "DAVID", clue: "The shepherd boy who defeated Goliath" },
+  { word: "GOLIATH", clue: "The giant David defeated with a sling" },
+  { word: "SAMSON", clue: "His strength was in his hair" },
+  { word: "DELILAH", clue: "She cut Samson's hair" },
+  { word: "ESTHER", clue: "A queen who saved her people" },
+  { word: "DANIEL", clue: "Thrown into a lions' den" },
+  { word: "LIONS", clue: "What Daniel was thrown in with" },
+  { word: "ADAM", clue: "The first man" },
+  { word: "EVE", clue: "The first woman" },
+  { word: "GARDEN", clue: "Eden was one" },
+  { word: "SERPENT", clue: "The tempter in the garden" },
+  { word: "ABRAHAM", clue: "Father of many nations" },
+  { word: "ISAAC", clue: "Abraham's promised son" },
+  { word: "JACOB", clue: "He wrestled with an angel and got a new name" },
+  { word: "JOSEPH", clue: "Sold by his brothers, given a coat of many colors" },
+  { word: "MANNA", clue: "Bread from heaven in the wilderness" },
+  { word: "CROSS", clue: "Where Jesus was crucified" },
+  { word: "RESURRECTION", clue: "Jesus rising from the dead" },
+  { word: "BETHLEHEM", clue: "Where Jesus was born" },
+  { word: "NAZARETH", clue: "Where Jesus grew up" },
+  { word: "JERUSALEM", clue: "The holy city" },
+  { word: "TEMPLE", clue: "The holy building in Jerusalem" },
+  { word: "PARABLE", clue: "A story Jesus used to teach a lesson" },
+  { word: "SHEPHERD", clue: "One who cares for sheep — and a picture of Jesus" },
+  { word: "PSALMS", clue: "The book of songs and prayers" },
+  { word: "GOSPEL", clue: "Good news — also the name for the first four New Testament books" },
+  { word: "TRINITY", clue: "Father, Son, and Holy Spirit" },
+  { word: "BAPTISM", clue: "A ritual of washing symbolizing new life" },
+  { word: "PENTECOST", clue: "When the Holy Spirit came upon the disciples" },
+];
