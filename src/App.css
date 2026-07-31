@@ -1140,8 +1140,7 @@ body.resizing-panels {
   border: 1.5px solid var(--panel-bg);
 }
 
-.panel-menu-item-badge,
-.mobile-social-item-badge {
+.panel-menu-item-badge {
   margin-left: auto;
   background: #e0392b;
   color: #fff;
@@ -2725,60 +2724,6 @@ body.resizing-panels {
   border-radius: 50%;
   background: #e0392b;
   border: 1.5px solid var(--panel-bg);
-}
-
-.mobile-tab-social {
-  position: relative;
-  flex: 1;
-  display: flex;
-}
-
-.mobile-tab-social .mobile-tab {
-  flex: 1;
-}
-
-.mobile-social-sheet {
-  position: absolute;
-  bottom: calc(100% + 8px);
-  right: 4px;
-  background: var(--panel-bg);
-  border: 1px solid var(--border);
-  border-radius: 10px;
-  box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.18);
-  padding: 6px;
-  min-width: 160px;
-  z-index: 25;
-}
-
-.mobile-social-heading {
-  padding: 4px 10px 6px;
-  font-size: 11px;
-  font-weight: 600;
-  letter-spacing: 0.03em;
-  text-transform: uppercase;
-  color: var(--text-muted);
-}
-
-.mobile-social-item {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  width: 100%;
-  border: none;
-  background: none;
-  color: var(--text);
-  font: inherit;
-  font-size: 14px;
-  padding: 10px 10px;
-  border-radius: 6px;
-  cursor: pointer;
-  text-align: left;
-}
-
-.mobile-social-item:hover,
-.mobile-social-item.active {
-  background: var(--accent-bg);
-  color: var(--accent);
 }
 
 /* --- Mobile layout --- */

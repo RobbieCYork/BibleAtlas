@@ -369,11 +369,11 @@ export default function MyProfileView({ userId, onDisplayNameSaved, onClose, onG
               <button type="button" onClick={() => onOpenFriends("friends")}>
                 👥 Friends
               </button>
-              <button type="button" onClick={() => onOpenFriends("messages")}>
-                💬 Messages
-              </button>
               <button type="button" onClick={() => onOpenFriends("groups")}>
                 👪 Groups
+              </button>
+              <button type="button" onClick={() => onOpenFriends("messages")}>
+                💬 Messages
               </button>
             </div>
           </div>

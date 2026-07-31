@@ -1520,7 +1520,6 @@ function App() {
           onOpenSocial={() => {
             closeTimeline();
             closeGame();
-            closeMyProfile();
           }}
         />
       )}
