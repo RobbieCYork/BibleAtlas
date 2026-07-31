@@ -6122,6 +6122,7 @@ body.resizing-panels {
   width: 100%;
   max-height: 92vh;
   overflow-y: auto;
+  overflow-x: hidden;
   padding: 18px;
   display: flex;
   flex-direction: column;
@@ -6156,7 +6157,10 @@ body.resizing-panels {
 
 .share-card-preview {
   position: relative;
-  flex-shrink: 0;
+  /* flex-basis 260px (not flex-shrink: 0) lets this shrink below its 340px inline max-width on narrow
+     screens instead of forcing the row wider than the viewport — combined with .share-modal-body's
+     flex-wrap, it drops to its own full-width row rather than getting clipped off the right edge. */
+  flex: 1 1 260px;
   border-radius: 16px;
   overflow: hidden;
   display: flex;

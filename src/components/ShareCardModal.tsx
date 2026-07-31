@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from "react";
+import { createPortal } from "react-dom";
 import html2canvas from "html2canvas";
 import { SHARE_BACKGROUNDS, SHARE_BACKGROUND_CATEGORIES, type ShareBackground } from "../data/shareBackgrounds";
 import { deliverCard, type ShareCardSpec } from "../lib/shareCard";
@@ -67,7 +68,13 @@ export default function ShareCardModal({ spec, filename, onClose }: ShareCardMod
     }
   };
 
-  return (
+  // Portaled to document.body rather than rendered in place: BiblePanel (this modal's usual caller)
+  // has `zoom: var(--text-scale, 1)` applied for the app's text-size setting, and `zoom` scales its
+  // entire subtree including fixed-position descendants — left in place, this modal's fixed overlay
+  // would render visually bigger and mispositioned any time text-size is above 100%, cutting off the
+  // card and pushing the Share/Save button out of reach. Rendering at the document root sidesteps that
+  // ancestor entirely, matching LinkChoicePopup's own use of createPortal for the same reason.
+  return createPortal(
     <div className="share-modal-overlay" onClick={onClose}>
       <div className="share-modal" onClick={(e) => e.stopPropagation()}>
         <div className="share-modal-header">
@@ -81,7 +88,13 @@ export default function ShareCardModal({ spec, filename, onClose }: ShareCardMod
           <div
             ref={cardRef}
             className="share-card-preview"
-            style={{ width: CARD_W, height: CARD_H, background: background.css, color: background.textColor }}
+            style={{
+              width: "100%",
+              maxWidth: CARD_W,
+              aspectRatio: `${CARD_W} / ${CARD_H}`,
+              background: background.css,
+              color: background.textColor,
+            }}
           >
             {background.symbol && <span className="share-card-symbol">{background.symbol}</span>}
             <div ref={editableRef} className="share-card-content" contentEditable suppressContentEditableWarning />
@@ -169,7 +182,8 @@ export default function ShareCardModal({ spec, filename, onClose }: ShareCardMod
           </button>
         </div>
       </div>
-    </div>
+    </div>,
+    document.body
   );
 }
 
