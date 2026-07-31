@@ -1,11 +1,67 @@
 import { useEffect, useRef, useState } from "react";
-import { supabase, formatJoinDate } from "../lib/supabase";
+import { supabase, formatJoinDate, type Profile } from "../lib/supabase";
 import ReadingProgressGrid from "./ReadingProgressGrid";
 import PostsFeed from "./PostsFeed";
 import Newsfeed from "./Newsfeed";
 import AvatarCropModal from "./AvatarCropModal";
 import LinkedVerseText from "./LinkedVerseText";
 import BackButton from "./BackButton";
+
+/** Every optional "About Me" / Work / Education / Interests field — each independently public or
+ * private (see Profile.profile_visibility) and each fine to leave blank. One config drives both
+ * MyProfileView's editor and FriendProfileView's read-only display, so a field only needs to be
+ * described once. `phone` isn't listed here — it already has its own dedicated input (digits-only,
+ * normalized on save) below; it's added to the visibility toggle set separately. */
+export interface ProfileFieldConfig {
+  key: keyof Pick<
+    Profile,
+    | "location"
+    | "birthday"
+    | "relationship_status"
+    | "hobbies"
+    | "work_experience"
+    | "education"
+    | "favorite_band"
+    | "favorite_song"
+    | "favorite_tv_shows"
+    | "favorite_movies"
+    | "favorite_team_football"
+    | "favorite_team_basketball"
+    | "favorite_team_baseball"
+    | "favorite_team_hockey"
+    | "favorite_team_soccer"
+  >;
+  label: string;
+  icon: string;
+  section: "about" | "work" | "education" | "interests";
+  type: "text" | "textarea" | "date";
+  placeholder?: string;
+}
+
+export const PROFILE_FIELD_CONFIGS: ProfileFieldConfig[] = [
+  { key: "location", label: "Where I live", icon: "📍", section: "about", type: "text", placeholder: "City, State" },
+  { key: "birthday", label: "Birthday", icon: "🎂", section: "about", type: "date" },
+  { key: "relationship_status", label: "Relationship status", icon: "💍", section: "about", type: "text", placeholder: "e.g. Married, Single" },
+  { key: "hobbies", label: "Hobbies", icon: "🎨", section: "about", type: "textarea", placeholder: "Hiking, cooking, reading…" },
+  { key: "work_experience", label: "Work experience", icon: "💼", section: "work", type: "textarea", placeholder: "Where you've worked…" },
+  { key: "education", label: "Education", icon: "🎓", section: "education", type: "textarea", placeholder: "High school, college…" },
+  { key: "favorite_band", label: "Favorite band", icon: "🎵", section: "interests", type: "text" },
+  { key: "favorite_song", label: "Favorite song", icon: "🎧", section: "interests", type: "text" },
+  { key: "favorite_tv_shows", label: "Favorite TV shows", icon: "📺", section: "interests", type: "text" },
+  { key: "favorite_movies", label: "Favorite movies", icon: "🎬", section: "interests", type: "text" },
+  { key: "favorite_team_football", label: "Favorite football team", icon: "🏈", section: "interests", type: "text" },
+  { key: "favorite_team_basketball", label: "Favorite basketball team", icon: "🏀", section: "interests", type: "text" },
+  { key: "favorite_team_baseball", label: "Favorite baseball team", icon: "⚾", section: "interests", type: "text" },
+  { key: "favorite_team_hockey", label: "Favorite hockey team", icon: "🏒", section: "interests", type: "text" },
+  { key: "favorite_team_soccer", label: "Favorite soccer team", icon: "⚽", section: "interests", type: "text" },
+];
+
+export const PROFILE_SECTION_LABELS: Record<ProfileFieldConfig["section"], string> = {
+  about: "About Me",
+  work: "Work",
+  education: "Education",
+  interests: "Interests",
+};
 
 interface ProfileFields {
   displayName: string;
@@ -14,6 +70,10 @@ interface ProfileFields {
   church: string;
   favoriteVerse: string;
   bio: string;
+  /** Keyed by ProfileFieldConfig.key. */
+  extra: Record<string, string>;
+  /** Keyed by ProfileFieldConfig.key, plus "phone" — true means visible on FriendProfileView. */
+  visibility: Record<string, boolean>;
 }
 
 const EMPTY_PROFILE_FIELDS: ProfileFields = {
@@ -23,6 +83,8 @@ const EMPTY_PROFILE_FIELDS: ProfileFields = {
   church: "",
   favoriteVerse: "",
   bio: "",
+  extra: {},
+  visibility: {},
 };
 
 /** The whole "My Profile" page — display name, photo, church, favorite verse, and bio — behind
@@ -55,21 +117,15 @@ function MyProfileControl({
   const fetchProfile = () =>
     supabase
       .from("profiles")
-      .select("display_name, phone, avatar_url, church, favorite_verse, bio, created_at")
+      .select("*")
       .eq("id", userId)
       .single()
       .then(({ data }) => {
-        const row = data as
-          | {
-              display_name: string | null;
-              phone: string | null;
-              avatar_url: string | null;
-              church: string | null;
-              favorite_verse: string | null;
-              bio: string | null;
-              created_at: string;
-            }
-          | null;
+        const row = data as Profile | null;
+        const extra: Record<string, string> = {};
+        PROFILE_FIELD_CONFIGS.forEach((f) => {
+          extra[f.key] = row?.[f.key] ?? "";
+        });
         const fields: ProfileFields = {
           displayName: row?.display_name ?? "",
           phone: row?.phone ?? "",
@@ -77,6 +133,8 @@ function MyProfileControl({
           church: row?.church ?? "",
           favoriteVerse: row?.favorite_verse ?? "",
           bio: row?.bio ?? "",
+          extra,
+          visibility: row?.profile_visibility ?? {},
         };
         setSavedFields(fields);
         setDraft(fields);
@@ -145,6 +203,10 @@ function MyProfileControl({
     setSaving(true);
     setStatus(null);
     const normalizedPhone = draft.phone.replace(/\D/g, "");
+    const extraUpdates: Record<string, string | null> = {};
+    PROFILE_FIELD_CONFIGS.forEach((f) => {
+      extraUpdates[f.key] = draft.extra[f.key]?.trim() || null;
+    });
     const { error } = await supabase
       .from("profiles")
       .update({
@@ -153,6 +215,8 @@ function MyProfileControl({
         church: draft.church.trim() || null,
         favorite_verse: draft.favoriteVerse.trim() || null,
         bio: draft.bio.trim() || null,
+        profile_visibility: draft.visibility,
+        ...extraUpdates,
       })
       .eq("id", userId);
     setSaving(false);
@@ -211,6 +275,28 @@ function MyProfileControl({
             </div>
           )}
           {saved.bio && <p className="profile-view-field">{saved.bio}</p>}
+          {saved.phone && (
+            <p className="profile-view-field">
+              <span aria-hidden="true">📱</span> Phone: {saved.phone}{" "}
+              <span className="profile-field-visibility-note">{saved.visibility.phone ? "🌐" : "🔒"}</span>
+            </p>
+          )}
+
+          {(["about", "work", "education", "interests"] as const).map((section) => {
+            const fields = PROFILE_FIELD_CONFIGS.filter((f) => f.section === section && saved.extra[f.key]);
+            if (fields.length === 0) return null;
+            return (
+              <div key={section} className="profile-view-section">
+                <h4 className="profile-view-section-heading">{PROFILE_SECTION_LABELS[section]}</h4>
+                {fields.map((f) => (
+                  <p key={f.key} className="profile-view-field">
+                    <span aria-hidden="true">{f.icon}</span> {f.label}: {saved.extra[f.key]}{" "}
+                    <span className="profile-field-visibility-note">{saved.visibility[f.key] ? "🌐" : "🔒"}</span>
+                  </p>
+                ))}
+              </div>
+            );
+          })}
         </div>
       ) : (
         <>
@@ -229,12 +315,22 @@ function MyProfileControl({
             onChange={(e) => setDraft((f) => ({ ...f, displayName: e.target.value }))}
             placeholder="What friends see"
           />
-          <input
-            type="tel"
-            value={draft.phone}
-            onChange={(e) => setDraft((f) => ({ ...f, phone: e.target.value }))}
-            placeholder="So friends can find you by phone (optional)"
-          />
+          <div className="profile-edit-field-row">
+            <input
+              type="tel"
+              value={draft.phone}
+              onChange={(e) => setDraft((f) => ({ ...f, phone: e.target.value }))}
+              placeholder="Phone number (optional)"
+            />
+            <label className="profile-field-visibility-toggle" title="Show on your profile to friends">
+              <input
+                type="checkbox"
+                checked={!!draft.visibility.phone}
+                onChange={(e) => setDraft((f) => ({ ...f, visibility: { ...f.visibility, phone: e.target.checked } }))}
+              />
+              🌐
+            </label>
+          </div>
           <input
             type="text"
             value={draft.church}
@@ -253,6 +349,42 @@ function MyProfileControl({
             placeholder="A little about you (optional)"
             rows={3}
           />
+
+          {(["about", "work", "education", "interests"] as const).map((section) => (
+            <div key={section} className="profile-edit-section">
+              <h4 className="profile-edit-section-heading">{PROFILE_SECTION_LABELS[section]}</h4>
+              {PROFILE_FIELD_CONFIGS.filter((f) => f.section === section).map((f) => (
+                <div key={f.key} className="profile-edit-field-row">
+                  {f.type === "textarea" ? (
+                    <textarea
+                      value={draft.extra[f.key] ?? ""}
+                      onChange={(e) => setDraft((d) => ({ ...d, extra: { ...d.extra, [f.key]: e.target.value } }))}
+                      placeholder={`${f.label} (optional)`}
+                      rows={2}
+                    />
+                  ) : (
+                    <input
+                      type={f.type}
+                      value={draft.extra[f.key] ?? ""}
+                      onChange={(e) => setDraft((d) => ({ ...d, extra: { ...d.extra, [f.key]: e.target.value } }))}
+                      placeholder={f.type === "date" ? undefined : `${f.label} (optional)`}
+                    />
+                  )}
+                  <label className="profile-field-visibility-toggle" title="Show on your profile to friends">
+                    <input
+                      type="checkbox"
+                      checked={!!draft.visibility[f.key]}
+                      onChange={(e) =>
+                        setDraft((d) => ({ ...d, visibility: { ...d.visibility, [f.key]: e.target.checked } }))
+                      }
+                    />
+                    🌐
+                  </label>
+                </div>
+              ))}
+            </div>
+          ))}
+
           <div className="profile-edit-actions">
             <button type="button" onClick={handleCancel} disabled={saving}>
               Cancel

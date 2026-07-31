@@ -1483,6 +1483,65 @@ body.resizing-panels {
   gap: 8px;
 }
 
+.profile-field-visibility-note {
+  font-size: 11px;
+  opacity: 0.7;
+}
+
+.profile-view-section {
+  width: 100%;
+  padding-top: 4px;
+}
+
+.profile-view-section-heading {
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--text-muted);
+  margin-bottom: 4px;
+}
+
+.profile-edit-section {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  border-top: 1px solid var(--border);
+  padding-top: 10px;
+  margin-top: 4px;
+}
+
+.profile-edit-section-heading {
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--text-muted);
+}
+
+.profile-edit-field-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.profile-edit-field-row input,
+.profile-edit-field-row textarea {
+  flex: 1;
+  min-width: 0;
+}
+
+.profile-field-visibility-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  font-size: 13px;
+  color: var(--text-muted);
+  cursor: pointer;
+  flex-shrink: 0;
+  white-space: nowrap;
+}
+
 .avatar-crop-overlay {
   position: fixed;
   inset: 0;

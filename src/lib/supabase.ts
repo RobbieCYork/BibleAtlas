@@ -215,6 +215,29 @@ export interface Profile {
    * lets an account re-read the Bible on a yearly (or monthly) cycle without manually clearing last
    * cycle's marks. Enforced at query time (a cutoff on chapter_reads.read_at), not by deleting rows. */
   chapter_read_reset: "never" | "monthly" | "yearly";
+
+  // --- About Me / Work / Education / Interests — see PROFILE_FIELD_CONFIGS in MyProfileView.tsx and
+  // sql/009_profile_details.sql. Every one of these is optional to fill out at all, and independently
+  // public or private via `profile_visibility` below. ---
+  location: string | null;
+  birthday: string | null;
+  relationship_status: string | null;
+  hobbies: string | null;
+  work_experience: string | null;
+  education: string | null;
+  favorite_band: string | null;
+  favorite_song: string | null;
+  favorite_tv_shows: string | null;
+  favorite_movies: string | null;
+  favorite_team_football: string | null;
+  favorite_team_basketball: string | null;
+  favorite_team_baseball: string | null;
+  favorite_team_hockey: string | null;
+  favorite_team_soccer: string | null;
+  /** Which of the fields above (plus "phone") show on FriendProfileView — a key that's missing or
+   * false is private. MyProfileView always shows every filled-in field regardless, since that's the
+   * owner's own view; this only governs what a friend sees. */
+  profile_visibility: Record<string, boolean>;
 }
 
 /** ISO timestamp before which a chapter_reads row no longer counts as "read", per an account's
