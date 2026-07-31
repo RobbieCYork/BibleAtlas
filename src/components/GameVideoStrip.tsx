@@ -1,5 +1,4 @@
 import { useEffect, useRef, useState } from "react";
-import type { GamePlayer } from "../lib/gameSupabase";
 
 interface RoundState {
   answeredUserIds: Set<string>;
@@ -7,8 +6,17 @@ interface RoundState {
   correctUserIds: Set<string>;
 }
 
+/** Just the fields this component actually reads — shared structurally by GamePlayer (Bible Trivia,
+ * lib/gameSupabase.ts) and SavingPeterPlayer (lib/savingPeterMultiplayer.ts) so this one video strip
+ * works for both games' room models without needing its own duplicate. */
+interface VideoStripPlayer {
+  user_id: string;
+  display_name: string;
+  score: number;
+}
+
 interface GameVideoStripProps {
-  players: GamePlayer[];
+  players: VideoStripPlayer[];
   userId: string;
   hostId: string;
   localStream: MediaStream | null;

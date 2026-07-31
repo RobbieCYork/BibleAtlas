@@ -464,6 +464,46 @@
   color: #db284e;
 }
 
+/* Saving Peter multiplayer's own difficulty tiers (beginner/easy/intermediate/advanced/expert — see
+   data/savingPeterWords.ts) reuse .game-difficulty-easy above where the name matches; these fill in
+   the rest of the scale. */
+.game-difficulty-beginner {
+  background: rgba(88, 166, 255, 0.15);
+  color: #58a6ff;
+}
+
+.game-difficulty-intermediate {
+  background: rgba(210, 153, 34, 0.15);
+  color: #d29922;
+}
+
+.game-difficulty-advanced {
+  background: rgba(219, 109, 40, 0.15);
+  color: #db6d28;
+}
+
+.game-difficulty-expert {
+  background: rgba(219, 40, 78, 0.15);
+  color: #db284e;
+}
+
+.saving-peter-guess-form {
+  display: flex;
+  gap: 8px;
+}
+
+.saving-peter-guess-input {
+  flex: 1;
+  min-width: 0;
+  padding: 10px 12px;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  background: var(--panel-bg);
+  color: var(--text);
+  font-size: 15px;
+  text-transform: uppercase;
+}
+
 .game-question-prompt {
   font-size: 18px;
   font-weight: 600;

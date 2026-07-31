@@ -6,6 +6,62 @@ export interface SavingPeterWord {
   clue: string;
 }
 
+/** Points a correct guess is worth in multiplayer mode, by difficulty tier — the harder the word, the
+ * more it's worth, same idea as Bible Trivia's per-question point values. */
+export const SAVING_PETER_LEVEL_POINTS: Record<CrosswordLevel, number> = {
+  beginner: 5,
+  easy: 10,
+  intermediate: 15,
+  advanced: 20,
+  expert: 25,
+};
+
+export interface SavingPeterRoundEntry {
+  id: string;
+  level: CrosswordLevel;
+  word: string;
+  clue: string;
+  points: number;
+}
+
+function shuffledWords<T>(items: T[]): T[] {
+  const copy = [...items];
+  for (let i = copy.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [copy[i], copy[j]] = [copy[j], copy[i]];
+  }
+  return copy;
+}
+
+/** Builds a shuffled sequence of round ids ("level:WORD") drawn from every difficulty tier at once —
+ * mirrors buildQuestionSequence's role in Bible Trivia (src/data/gameQuestions.ts), but the "question
+ * bank" here is just every word across every level, so the mix of easy/hard rounds falls out of the
+ * shuffle rather than needing its own weighting. Stored on the room as ids only (not word/clue text)
+ * so every client resolves the actual content from this same local bundle, same trust model as Trivia. */
+export function buildSavingPeterRoundIds(count = 30): string[] {
+  const pool: string[] = [];
+  for (const level of CROSSWORD_LEVELS.map((l) => l.key)) {
+    for (const entry of SAVING_PETER_WORDS[level]) {
+      pool.push(`${level}:${entry.word}`);
+    }
+  }
+  return shuffledWords(pool).slice(0, Math.min(count, pool.length));
+}
+
+/** Resolves a round id ("level:WORD") produced by buildSavingPeterRoundIds() back into its full entry
+ * — returns null if the id is malformed or the word can no longer be found (shouldn't happen since the
+ * bundle this reads from is the same one the id was built from, but a network client is a network
+ * client). */
+export function resolveSavingPeterRound(id: string): SavingPeterRoundEntry | null {
+  const sep = id.indexOf(":");
+  if (sep < 0) return null;
+  const level = id.slice(0, sep) as CrosswordLevel;
+  const word = id.slice(sep + 1);
+  const entry = SAVING_PETER_WORDS[level]?.find((w) => w.word === word);
+  if (!entry) return null;
+  return { id, level, word: entry.word, clue: entry.clue, points: SAVING_PETER_LEVEL_POINTS[level] };
+}
+
 // Reused as-is (see CrosswordView's level picker) — "the same levels of difficulty as the Crossword"
 // means literally these five tiers, not a look-alike set defined twice.
 export { CROSSWORD_LEVELS as SAVING_PETER_LEVELS };

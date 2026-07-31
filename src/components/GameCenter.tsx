@@ -24,7 +24,7 @@ export const GAMES: GameDef[] = [
     key: "saving-peter",
     icon: "🌊",
     title: "Saving Peter",
-    tagline: "Hangman, Matthew 14 style — guess the word before Peter goes under.",
+    tagline: "Hangman, Matthew 14 style — solo, or up to 4 players live with video chat.",
   },
 ];
 
