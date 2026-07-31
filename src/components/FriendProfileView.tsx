@@ -3,7 +3,7 @@ import { supabase, displayFor, formatJoinDate, type Profile } from "../lib/supab
 import ReadingProgressGrid from "./ReadingProgressGrid";
 import PostsFeed from "./PostsFeed";
 import BackButton from "./BackButton";
-import { PROFILE_FIELD_CONFIGS, PROFILE_SECTION_LABELS } from "./MyProfileView";
+import { PROFILE_FIELD_CONFIGS, PROFILE_SECTION_LABELS, ensureUrlProtocol } from "./MyProfileView";
 
 interface FriendProfileViewProps {
   friendId: string;
@@ -53,7 +53,17 @@ export default function FriendProfileView({ friendId, viewerId, onBack, onMessag
             </span>
             <div>
               <p className="friend-profile-name">{displayFor(profile)}</p>
-              {profile.church && <p className="friend-profile-church">{profile.church}</p>}
+              {profile.church && (
+                <p className="friend-profile-church">
+                  {profile.church_website ? (
+                    <a href={ensureUrlProtocol(profile.church_website)} target="_blank" rel="noopener noreferrer">
+                      {profile.church}
+                    </a>
+                  ) : (
+                    profile.church
+                  )}
+                </p>
+              )}
               <p className="friend-profile-joined">Joined {formatJoinDate(profile.created_at)}</p>
             </div>
           </div>

@@ -206,6 +206,9 @@ export interface Profile {
    * avatar circle used everywhere else in the app. */
   avatar_url: string | null;
   church: string | null;
+  /** Optional — when set, the church name on the profile links out to this instead of being shown as
+   * its own separate field/row. */
+  church_website: string | null;
   /** Free text, not a structured verse reference — shown as-is on the profile, only parsed if the
    * viewer clicks it to jump to the Bible (best-effort; not every string a person types is a valid
    * "Book Chapter:Verse" the Bible panel can resolve). */

@@ -7,6 +7,12 @@ import AvatarCropModal from "./AvatarCropModal";
 import LinkedVerseText from "./LinkedVerseText";
 import BackButton from "./BackButton";
 
+/** A church website is typed without a scheme half the time ("mychurch.org") — treat that as shorthand
+ * for https rather than rejecting it or linking to a relative path on this app's own domain. */
+export function ensureUrlProtocol(url: string): string {
+  return /^https?:\/\//i.test(url) ? url : `https://${url}`;
+}
+
 /** Every optional "About Me" / Work / Education / Interests field — each independently public or
  * private (see Profile.profile_visibility) and each fine to leave blank. One config drives both
  * MyProfileView's editor and FriendProfileView's read-only display, so a field only needs to be
@@ -68,6 +74,7 @@ interface ProfileFields {
   phone: string;
   avatarUrl: string | null;
   church: string;
+  churchWebsite: string;
   favoriteVerse: string;
   bio: string;
   /** Keyed by ProfileFieldConfig.key. */
@@ -82,6 +89,7 @@ const EMPTY_PROFILE_FIELDS: ProfileFields = {
   phone: "",
   avatarUrl: null,
   church: "",
+  churchWebsite: "",
   favoriteVerse: "",
   bio: "",
   extra: {},
@@ -134,6 +142,7 @@ function MyProfileControl({
           phone: row?.phone ?? "",
           avatarUrl: row?.avatar_url ?? null,
           church: row?.church ?? "",
+          churchWebsite: row?.church_website ?? "",
           favoriteVerse: row?.favorite_verse ?? "",
           bio: row?.bio ?? "",
           extra,
@@ -217,6 +226,7 @@ function MyProfileControl({
         display_name: trimmedName,
         phone: normalizedPhone || null,
         church: draft.church.trim() || null,
+        church_website: draft.churchWebsite.trim() || null,
         favorite_verse: draft.favoriteVerse.trim() || null,
         bio: draft.bio.trim() || null,
         profile_visibility: draft.visibility,
@@ -300,7 +310,14 @@ function MyProfileControl({
           )}
           {saved.church && (
             <p className="profile-view-field">
-              <span aria-hidden="true">⛪</span> Church: {saved.church}
+              <span aria-hidden="true">⛪</span> Church:{" "}
+              {saved.churchWebsite ? (
+                <a href={ensureUrlProtocol(saved.churchWebsite)} target="_blank" rel="noopener noreferrer">
+                  {saved.church}
+                </a>
+              ) : (
+                saved.church
+              )}
             </p>
           )}
           {saved.favoriteVerse && (
@@ -363,6 +380,17 @@ function MyProfileControl({
             onChange={(e) => setDraft((f) => ({ ...f, church: e.target.value }))}
             placeholder="Church you attend (optional)"
           />
+          {draft.church.trim() && (
+            <>
+              <p className="profile-field-hint">🌐 Show your church some love! Enter your church's website here and we'll link to it!</p>
+              <input
+                type="text"
+                value={draft.churchWebsite}
+                onChange={(e) => setDraft((f) => ({ ...f, churchWebsite: e.target.value }))}
+                placeholder="Church website (optional)"
+              />
+            </>
+          )}
           <input
             type="text"
             value={draft.favoriteVerse}
