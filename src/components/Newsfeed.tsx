@@ -141,6 +141,16 @@ export default function Newsfeed({ userId, onGoToVerse }: NewsfeedProps) {
   const [profiles, setProfiles] = useState<Record<string, Profile>>({});
   const [commentDrafts, setCommentDrafts] = useState<Record<string, string>>({});
   const [commentErrors, setCommentErrors] = useState<Record<string, string>>({});
+  // Comments start collapsed behind a 💬N toggle below the media — only opened on tap, so a post
+  // with a long comment thread doesn't push the rest of the feed down by default.
+  const [openCommentIds, setOpenCommentIds] = useState<Set<string>>(new Set());
+  const toggleComments = (id: string) =>
+    setOpenCommentIds((prev) => {
+      const next = new Set(prev);
+      if (next.has(id)) next.delete(id);
+      else next.add(id);
+      return next;
+    });
 
   const fetchFeed = async () => {
     const { data: reqData } = await supabase
@@ -320,7 +330,10 @@ export default function Newsfeed({ userId, onGoToVerse }: NewsfeedProps) {
                 {taggedProfiles.length > 0 && (
                   <p className="post-tagged-friends">with {taggedProfiles.map((p) => displayFor(p)).join(", ")}</p>
                 )}
-                {item.comments.length > 0 && (
+                <button type="button" className="friend-post-comment-toggle" onClick={() => toggleComments(item.id)}>
+                  💬 {item.comments.length}
+                </button>
+                {openCommentIds.has(item.id) && item.comments.length > 0 && (
                   <div className="friend-post-comments">
                     {item.comments.map((c) => (
                       <p key={c.id} className="friend-post-comment">
