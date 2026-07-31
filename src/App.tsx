@@ -23,6 +23,7 @@ import MobileTabBar from "./components/MobileTabBar";
 import ResizeHandle from "./components/ResizeHandle";
 import AuthButton from "./components/AuthButton";
 import MyProfileView from "./components/MyProfileView";
+import NotificationToasts from "./components/NotificationToasts";
 import GameView from "./components/GameView";
 import BackButton from "./components/BackButton";
 import DisplayNameGate from "./components/DisplayNameGate";
@@ -454,10 +455,13 @@ function App() {
     setFriendsView(targetView);
     setFriendsViewNonce((n) => n + 1);
   };
-  /** My Profile's Friends/Messages/Groups links — leave My Profile the same way the mobile tab bar's
-   * panel-switching does (see its onSelect above), then open Friends to the requested list. */
+  /** My Profile's Friends/Messages/Groups links (and tapping a NotificationToasts banner) — leave
+   * whatever full-screen mode is showing, same as the mobile tab bar's own panel-switching does, then
+   * open Friends to the requested list. */
   const openFriendsFromProfile = (targetView: "friends" | "messages" | "groups") => {
     closeMyProfile();
+    closeTimeline();
+    closeGame();
     if (isMobile) setMobileActivePanel("friends");
     else openPanel("friends");
     handleSelectFriendsView(targetView);
@@ -1029,6 +1033,7 @@ function App() {
   return (
     <TimelineLinkContext.Provider value={timelineLinkHandlers}>
     <div className="app-shell">
+      <NotificationToasts session={session} onOpenFriends={openFriendsFromProfile} />
       {passwordRecovery && session && <ResetPasswordGate onDone={() => setPasswordRecovery(false)} />}
       {!passwordRecovery && needsDisplayName && session && (
         <DisplayNameGate userId={session.user.id} onSaved={() => setNeedsDisplayName(false)} />
