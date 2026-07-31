@@ -9,16 +9,17 @@
 
 .tl-root {
   /* Lane palette. Biblical rides the app accent; the others are deliberately
-   * distinct hues so the three streams read apart at a glance. */
+   * distinct hues so the three streams read apart at a glance. Dark-palette
+   * values by default (see index.css) — [data-theme="light"] below overrides. */
   --tl-biblical: var(--accent);
-  --tl-biblical-rgb: 124, 58, 237;
-  --tl-world: #64748b;
-  --tl-world-rgb: 100, 116, 139;
-  --tl-religion: #d97706;
-  --tl-religion-rgb: 217, 119, 6;
-  --tl-life: #0d9488;
-  --tl-life-rgb: 13, 148, 136;
-  --tl-book-rgb: 124, 58, 237;
+  --tl-biblical-rgb: 167, 139, 250;
+  --tl-world: #94a3b8;
+  --tl-world-rgb: 148, 163, 184;
+  --tl-religion: #f59e0b;
+  --tl-religion-rgb: 245, 158, 11;
+  --tl-life: #2dd4bf;
+  --tl-life-rgb: 45, 212, 191;
+  --tl-book-rgb: 167, 139, 250;
   --tl-grid: color-mix(in srgb, var(--border) 72%, transparent);
   --tl-lane-tint: color-mix(in srgb, var(--panel-bg) 55%, transparent);
 
@@ -32,17 +33,15 @@
   overflow: hidden;
 }
 
-@media (prefers-color-scheme: dark) {
-  .tl-root {
-    --tl-biblical-rgb: 167, 139, 250;
-    --tl-world: #94a3b8;
-    --tl-world-rgb: 148, 163, 184;
-    --tl-religion: #f59e0b;
-    --tl-religion-rgb: 245, 158, 11;
-    --tl-life: #2dd4bf;
-    --tl-life-rgb: 45, 212, 191;
-    --tl-book-rgb: 167, 139, 250;
-  }
+:root[data-theme="light"] .tl-root {
+  --tl-biblical-rgb: 124, 58, 237;
+  --tl-world: #64748b;
+  --tl-world-rgb: 100, 116, 139;
+  --tl-religion: #d97706;
+  --tl-religion-rgb: 217, 119, 6;
+  --tl-life: #0d9488;
+  --tl-life-rgb: 13, 148, 136;
+  --tl-book-rgb: 124, 58, 237;
 }
 
 /* ---------------------------------------------------------------- header */

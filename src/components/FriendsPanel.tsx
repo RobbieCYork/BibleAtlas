@@ -64,6 +64,11 @@ export default function FriendsPanel({
   const [loading, setLoading] = useState(false);
   const [addContact, setAddContact] = useState("");
   const [addStatus, setAddStatus] = useState<string | null>(null);
+  /** Multiple hits from a name search (see handleAddFriend) — lets the reader pick which person they
+   * meant instead of guessing which of several same-named accounts to request. */
+  const [nameMatches, setNameMatches] = useState<{ id: string; display_name: string; avatar_url: string | null }[] | null>(
+    null
+  );
   const [adding, setAdding] = useState(false);
   const [inviteStatus, setInviteStatus] = useState<string | null>(null);
   const [activeFriendId, setActiveFriendId] = useState<string | null>(null);
@@ -215,19 +220,52 @@ export default function FriendsPanel({
     if (!userId || !query) return;
     setAdding(true);
     setAddStatus(null);
-    // Emails and phone numbers are looked up separately (rather than one combined query) so a phone
-    // search normalizes to digits-only first, matching how phone numbers are stored.
+    setNameMatches(null);
+
     const isEmail = query.includes("@");
-    const { data: foundId, error: lookupErr } = isEmail
-      ? await supabase.rpc("find_user_id_by_email", { lookup_email: query })
-      : await supabase.rpc("find_user_by_contact", { query: query.replace(/\D/g, "") });
-    if (lookupErr || !foundId) {
-      setAddStatus(isEmail ? "No account found with that email." : "No account found with that phone number.");
+    const digitsOnly = query.replace(/\D/g, "");
+    // A phone-shaped query is digits (plus punctuation like spaces/dashes/parens) with enough digits
+    // to be a real number — anything else (a name) falls through to the name search below, which can
+    // return several people rather than one exact match.
+    const isPhoneLike = !isEmail && /^[0-9()+\-.\s]+$/.test(query) && digitsOnly.length >= 7;
+
+    if (isEmail || isPhoneLike) {
+      const { data: foundId, error: lookupErr } = isEmail
+        ? await supabase.rpc("find_user_id_by_email", { lookup_email: query })
+        : await supabase.rpc("find_user_by_contact", { query: digitsOnly });
+      if (lookupErr || !foundId) {
+        setAddStatus(isEmail ? "No account found with that email." : "No account found with that phone number.");
+        setAdding(false);
+        return;
+      }
+      setAddStatus(await sendRequestTo(foundId));
+      setAddContact("");
       setAdding(false);
       return;
     }
-    setAddStatus(await sendRequestTo(foundId));
+
+    // Name search: opt-in on the other side (profiles.discoverable_by_name), so this can turn up
+    // zero, one, or several people — only auto-sends the request when there's exactly one match.
+    const { data: matches, error: nameErr } = await supabase.rpc("find_users_by_display_name", { query });
+    const rows = (matches as { id: string; display_name: string; avatar_url: string | null }[] | null) ?? [];
+    if (nameErr || rows.length === 0) {
+      setAddStatus("No one found by that name, email, or phone number.");
+      setAdding(false);
+      return;
+    }
+    if (rows.length === 1) {
+      setAddStatus(await sendRequestTo(rows[0].id));
+      setAddContact("");
+      setAdding(false);
+      return;
+    }
+    setNameMatches(rows);
     setAdding(false);
+  };
+
+  const handlePickNameMatch = async (id: string) => {
+    setAddStatus(await sendRequestTo(id));
+    setNameMatches(null);
     setAddContact("");
   };
 
@@ -496,8 +534,11 @@ export default function FriendsPanel({
             <input
               type="text"
               value={addContact}
-              onChange={(e) => setAddContact(e.target.value)}
-              placeholder="Friend's email or phone number"
+              onChange={(e) => {
+                setAddContact(e.target.value);
+                setNameMatches(null);
+              }}
+              placeholder="Search People"
               required
             />
             <button type="submit" disabled={adding || !addContact.trim()}>
@@ -505,6 +546,18 @@ export default function FriendsPanel({
             </button>
           </form>
           {addStatus && <p className="comment-status">{addStatus}</p>}
+          {nameMatches && (
+            <ul className="friends-list">
+              {nameMatches.map((m) => (
+                <li key={m.id} className="friends-list-item friends-list-item-clickable" onClick={() => handlePickNameMatch(m.id)}>
+                  <span className="auth-avatar" aria-hidden="true">
+                    {m.avatar_url ? <img src={m.avatar_url} alt="" /> : m.display_name.charAt(0).toUpperCase()}
+                  </span>
+                  <span>{m.display_name}</span>
+                </li>
+              ))}
+            </ul>
+          )}
 
           <button type="button" className="friends-invite-link-button" onClick={handleCopyInviteLink}>
             🔗 Copy invite link

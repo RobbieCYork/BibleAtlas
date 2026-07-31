@@ -1,19 +1,23 @@
+/* Dark is this app's default appearance (see lib/theme.tsx) — these are the dark-palette values.
+ * [data-theme="light"] below overrides them; there's deliberately no `prefers-color-scheme` query
+ * anymore, since the appearance is now an explicit Settings choice, not one that silently follows
+ * the OS. */
 :root {
-  --text: #3f3b45;
-  --text-h: #16141a;
-  --text-muted: #7a7482;
-  --bg: #faf9fc;
-  --panel-bg: #ffffff;
-  --border: #e4e1e9;
-  --accent: #7c3aed;
-  --accent-hover: #6d28d9;
-  --accent-bg: rgba(124, 58, 237, 0.08);
+  --text: #d4d1d9;
+  --text-h: #f5f4f7;
+  --text-muted: #9a95a3;
+  --bg: #131217;
+  --panel-bg: #1b1a20;
+  --border: #302e37;
+  --accent: #a78bfa;
+  --accent-hover: #c4b5fd;
+  --accent-bg: rgba(167, 139, 250, 0.14);
   /* Stronger accent wash than --accent-bg — used for the one-shot verse "landed here" flash,
    * which has to read clearly at a glance before fading. */
-  --verse-flash-bg: rgba(124, 58, 237, 0.2);
+  --verse-flash-bg: rgba(167, 139, 250, 0.26);
 
   --sans: system-ui, "Segoe UI", Roboto, sans-serif;
-  color-scheme: light dark;
+  color-scheme: dark;
   color: var(--text);
   background: var(--bg);
   font: 15px/1.5 var(--sans);
@@ -26,19 +30,18 @@
   text-size-adjust: 100%;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --text: #d4d1d9;
-    --text-h: #f5f4f7;
-    --text-muted: #9a95a3;
-    --bg: #131217;
-    --panel-bg: #1b1a20;
-    --border: #302e37;
-    --accent: #a78bfa;
-    --accent-hover: #c4b5fd;
-    --accent-bg: rgba(167, 139, 250, 0.14);
-    --verse-flash-bg: rgba(167, 139, 250, 0.26);
-  }
+:root[data-theme="light"] {
+  --text: #3f3b45;
+  --text-h: #16141a;
+  --text-muted: #7a7482;
+  --bg: #faf9fc;
+  --panel-bg: #ffffff;
+  --border: #e4e1e9;
+  --accent: #7c3aed;
+  --accent-hover: #6d28d9;
+  --accent-bg: rgba(124, 58, 237, 0.08);
+  --verse-flash-bg: rgba(124, 58, 237, 0.2);
+  color-scheme: light;
 }
 
 * {

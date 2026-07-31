@@ -74,6 +74,7 @@ interface ProfileFields {
   extra: Record<string, string>;
   /** Keyed by ProfileFieldConfig.key, plus "phone" — true means visible on FriendProfileView. */
   visibility: Record<string, boolean>;
+  discoverableByName: boolean;
 }
 
 const EMPTY_PROFILE_FIELDS: ProfileFields = {
@@ -85,6 +86,7 @@ const EMPTY_PROFILE_FIELDS: ProfileFields = {
   bio: "",
   extra: {},
   visibility: {},
+  discoverableByName: false,
 };
 
 /** The whole "My Profile" page — display name, photo, church, favorite verse, and bio — behind
@@ -108,6 +110,7 @@ function MyProfileControl({
   const [joinedAt, setJoinedAt] = useState<string | null>(null);
   const [loaded, setLoaded] = useState(false);
   const [editing, setEditing] = useState(false);
+  const [aboutOpen, setAboutOpen] = useState(false);
   const [cropSrc, setCropSrc] = useState<string | null>(null);
   const [uploading, setUploading] = useState(false);
   const [saving, setSaving] = useState(false);
@@ -135,6 +138,7 @@ function MyProfileControl({
           bio: row?.bio ?? "",
           extra,
           visibility: row?.profile_visibility ?? {},
+          discoverableByName: row?.discoverable_by_name ?? false,
         };
         setSavedFields(fields);
         setDraft(fields);
@@ -216,6 +220,7 @@ function MyProfileControl({
         favorite_verse: draft.favoriteVerse.trim() || null,
         bio: draft.bio.trim() || null,
         profile_visibility: draft.visibility,
+        discoverable_by_name: draft.discoverableByName,
         ...extraUpdates,
       })
       .eq("id", userId);
@@ -257,6 +262,42 @@ function MyProfileControl({
               ✏️ Edit
             </button>
           </div>
+          <button
+            type="button"
+            className="profile-view-toggle"
+            onClick={() => setAboutOpen((o) => !o)}
+            aria-expanded={aboutOpen}
+          >
+            {aboutOpen ? "▾ Hide" : "▸ Show"} About Me
+          </button>
+
+          {aboutOpen && (
+            <>
+              {saved.bio && <p className="profile-view-field">{saved.bio}</p>}
+              {saved.phone && (
+                <p className="profile-view-field">
+                  <span aria-hidden="true">📱</span> Phone: {saved.phone}{" "}
+                  <span className="profile-field-visibility-note">{saved.visibility.phone ? "🌐" : "🔒"}</span>
+                </p>
+              )}
+
+              {(["about", "work", "education", "interests"] as const).map((section) => {
+                const fields = PROFILE_FIELD_CONFIGS.filter((f) => f.section === section && saved.extra[f.key]);
+                if (fields.length === 0) return null;
+                return (
+                  <div key={section} className="profile-view-section">
+                    <h4 className="profile-view-section-heading">{PROFILE_SECTION_LABELS[section]}</h4>
+                    {fields.map((f) => (
+                      <p key={f.key} className="profile-view-field">
+                        <span aria-hidden="true">{f.icon}</span> {f.label}: {saved.extra[f.key]}{" "}
+                        <span className="profile-field-visibility-note">{saved.visibility[f.key] ? "🌐" : "🔒"}</span>
+                      </p>
+                    ))}
+                  </div>
+                );
+              })}
+            </>
+          )}
           {saved.church && (
             <p className="profile-view-field">
               <span aria-hidden="true">⛪</span> Church: {saved.church}
@@ -274,29 +315,6 @@ function MyProfileControl({
               {favoriteVerseText && <p className="verse-popup-quoted">"{favoriteVerseText}"</p>}
             </div>
           )}
-          {saved.bio && <p className="profile-view-field">{saved.bio}</p>}
-          {saved.phone && (
-            <p className="profile-view-field">
-              <span aria-hidden="true">📱</span> Phone: {saved.phone}{" "}
-              <span className="profile-field-visibility-note">{saved.visibility.phone ? "🌐" : "🔒"}</span>
-            </p>
-          )}
-
-          {(["about", "work", "education", "interests"] as const).map((section) => {
-            const fields = PROFILE_FIELD_CONFIGS.filter((f) => f.section === section && saved.extra[f.key]);
-            if (fields.length === 0) return null;
-            return (
-              <div key={section} className="profile-view-section">
-                <h4 className="profile-view-section-heading">{PROFILE_SECTION_LABELS[section]}</h4>
-                {fields.map((f) => (
-                  <p key={f.key} className="profile-view-field">
-                    <span aria-hidden="true">{f.icon}</span> {f.label}: {saved.extra[f.key]}{" "}
-                    <span className="profile-field-visibility-note">{saved.visibility[f.key] ? "🌐" : "🔒"}</span>
-                  </p>
-                ))}
-              </div>
-            );
-          })}
         </div>
       ) : (
         <>
@@ -315,6 +333,14 @@ function MyProfileControl({
             onChange={(e) => setDraft((f) => ({ ...f, displayName: e.target.value }))}
             placeholder="What friends see"
           />
+          <label className="my-notes-public-toggle">
+            <input
+              type="checkbox"
+              checked={draft.discoverableByName}
+              onChange={(e) => setDraft((f) => ({ ...f, discoverableByName: e.target.checked }))}
+            />
+            🔍 Let people find me by searching my name (email and phone always work)
+          </label>
           <div className="profile-edit-field-row">
             <input
               type="tel"

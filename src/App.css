@@ -1403,6 +1403,29 @@ body.resizing-panels {
   text-align: center;
 }
 
+.auth-appearance-toggle {
+  display: flex;
+  gap: 6px;
+}
+
+.auth-appearance-toggle button {
+  flex: 1;
+  border: 1px solid var(--border);
+  background: transparent;
+  color: var(--text);
+  border-radius: 6px;
+  padding: 6px 10px;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.auth-appearance-toggle button.active {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #fff;
+}
+
 .auth-settings-divider {
   height: 1px;
   background: var(--border);
@@ -1486,6 +1509,24 @@ body.resizing-panels {
 .profile-field-visibility-note {
   font-size: 11px;
   opacity: 0.7;
+}
+
+.profile-view-toggle {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  width: 100%;
+  padding: 2px 0 4px;
+  border: none;
+  background: none;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text-muted);
+  cursor: pointer;
+}
+
+.profile-view-toggle:hover {
+  color: var(--accent);
 }
 
 .profile-view-section {

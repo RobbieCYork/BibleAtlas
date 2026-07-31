@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import type { Session } from "@supabase/supabase-js";
 import { supabase, setRememberMe, type Profile } from "../lib/supabase";
 import { useTextSize } from "../lib/textSize";
+import { useTheme } from "../lib/theme";
 
 interface AuthButtonProps {
   session: Session | null;
@@ -39,6 +40,26 @@ function TextSizeControl() {
         <span className="auth-text-size-value">{Math.round(scale * 100)}%</span>
         <button type="button" onClick={increase} disabled={!canIncrease} aria-label="Increase text size">
           A⁺
+        </button>
+      </div>
+    </div>
+  );
+}
+
+/** Shared with both the logged-in and logged-out dropdown states, same as TextSizeControl — the
+ * app's appearance defaults to dark (see lib/theme.tsx) and is a plain local preference, not tied to
+ * an account. */
+function AppearanceControl() {
+  const { theme, setTheme } = useTheme();
+  return (
+    <div className="auth-settings-section">
+      <span className="auth-settings-label">Appearance</span>
+      <div className="auth-appearance-toggle">
+        <button type="button" className={theme === "light" ? "active" : ""} onClick={() => setTheme("light")}>
+          ☀️ Light
+        </button>
+        <button type="button" className={theme === "dark" ? "active" : ""} onClick={() => setTheme("dark")}>
+          🌙 Dark
         </button>
       </div>
     </div>
@@ -293,6 +314,7 @@ export default function AuthButton({ session, openProfileNonce, onOpenReadingPla
               ← Back
             </button>
             <TextSizeControl />
+            <AppearanceControl />
             {!session.user.is_anonymous && (
               <>
                 <div className="auth-settings-divider" />
@@ -316,6 +338,7 @@ export default function AuthButton({ session, openProfileNonce, onOpenReadingPla
       {open && (
         <div className="auth-dropdown">
           <TextSizeControl />
+          <AppearanceControl />
           <div className="auth-settings-divider" />
           <p className="auth-benefits">
             Create a free account to sync your notes, highlights, and tags — and pick up right where you left off on any

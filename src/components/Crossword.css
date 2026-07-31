@@ -4,17 +4,15 @@
  * so it reads as atmosphere around the edges while every actual content panel (grid, clues, cards)
  * keeps its own fully-opaque background and stays perfectly legible. */
 .crossword-scenic {
-  --xw-scrim: rgba(250, 249, 252, 0.88);
+  --xw-scrim: rgba(19, 18, 23, 0.88);
   background-image: linear-gradient(var(--xw-scrim), var(--xw-scrim)), var(--xw-photo);
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
 }
 
-@media (prefers-color-scheme: dark) {
-  .crossword-scenic {
-    --xw-scrim: rgba(19, 18, 23, 0.88);
-  }
+:root[data-theme="light"] .crossword-scenic {
+  --xw-scrim: rgba(250, 249, 252, 0.88);
 }
 
 .crossword-photo-credit {

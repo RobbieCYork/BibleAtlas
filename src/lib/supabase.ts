@@ -238,6 +238,10 @@ export interface Profile {
    * false is private. MyProfileView always shows every filled-in field regardless, since that's the
    * owner's own view; this only governs what a friend sees. */
   profile_visibility: Record<string, boolean>;
+  /** Opt-in — lets someone find this account by display name (a partial, possibly-ambiguous match)
+   * via find_users_by_display_name, alongside the always-on exact email/phone lookups. Defaults to
+   * off since a name search is more exposing than an exact match. */
+  discoverable_by_name: boolean;
 }
 
 /** ISO timestamp before which a chapter_reads row no longer counts as "read", per an account's
