@@ -3,7 +3,9 @@ import { SINKING_PETER_WORDS } from "../data/sinkingPeterWords";
 import BackButton from "./BackButton";
 
 const MAX_WRONG = 6;
-const ALPHABET = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("");
+// Standard QWERTY row order — easier to scan/type on than strict alphabetical for anyone used to a
+// real keyboard, which is most players.
+const KEYBOARD_ROWS = ["QWERTYUIOP", "ASDFGHJKL", "ZXCVBNM"].map((row) => row.split(""));
 
 interface SinkingPeterViewProps {
   onBack: () => void;
@@ -26,6 +28,16 @@ export default function SinkingPeterView({ onBack }: SinkingPeterViewProps) {
   const lost = wrongCount >= MAX_WRONG && !won;
   const over = won || lost;
 
+  // Three photos of Peter (see public/games/sinking-peter) stand in for the old emoji figure —
+  // further along by wrong-guess count, unless the round is already decided.
+  const peterImage = lost
+    ? "/games/sinking-peter/peter-drowning.png"
+    : won || wrongCount <= 1
+      ? "/games/sinking-peter/peter-standing.png"
+      : wrongCount <= 3
+        ? "/games/sinking-peter/peter-sinking.png"
+        : "/games/sinking-peter/peter-drowning.png";
+
   const handleGuess = (letter: string) => {
     if (over || guessed.has(letter)) return;
     setGuessed((prev) => new Set(prev).add(letter));
@@ -45,12 +57,7 @@ export default function SinkingPeterView({ onBack }: SinkingPeterViewProps) {
       <div className="game-body">
         <div className="sinking-peter">
           <div className="sinking-peter-scene">
-            <span className="sinking-peter-figure" style={{ transform: `translateY(${wrongCount * 11}px)` }}>
-              {lost ? "😱" : won ? "🙌🏾" : "🧔🏾"}
-            </span>
-            <span className="sinking-peter-boat" aria-hidden="true">
-              ⛵
-            </span>
+            <img className="sinking-peter-figure" src={peterImage} alt="" style={{ transform: `translateY(${wrongCount * 11}px)` }} />
             <div className="sinking-peter-water" style={{ height: `${18 + wrongCount * 11}%` }} />
           </div>
 
@@ -80,21 +87,25 @@ export default function SinkingPeterView({ onBack }: SinkingPeterViewProps) {
             </button>
           ) : (
             <div className="sinking-peter-keyboard">
-              {ALPHABET.map((letter) => {
-                const used = guessed.has(letter);
-                const correct = used && entry.word.includes(letter);
-                return (
-                  <button
-                    key={letter}
-                    type="button"
-                    className={`sinking-peter-key ${used ? (correct ? "sinking-peter-key-correct" : "sinking-peter-key-wrong") : ""}`}
-                    onClick={() => handleGuess(letter)}
-                    disabled={used}
-                  >
-                    {letter}
-                  </button>
-                );
-              })}
+              {KEYBOARD_ROWS.map((row, i) => (
+                <div key={i} className="sinking-peter-keyboard-row">
+                  {row.map((letter) => {
+                    const used = guessed.has(letter);
+                    const correct = used && entry.word.includes(letter);
+                    return (
+                      <button
+                        key={letter}
+                        type="button"
+                        className={`sinking-peter-key ${used ? (correct ? "sinking-peter-key-correct" : "sinking-peter-key-wrong") : ""}`}
+                        onClick={() => handleGuess(letter)}
+                        disabled={used}
+                      >
+                        {letter}
+                      </button>
+                    );
+                  })}
+                </div>
+              ))}
             </div>
           )}
         </div>
