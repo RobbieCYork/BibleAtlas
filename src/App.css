@@ -2859,12 +2859,25 @@ body.resizing-panels {
     max-width: none;
   }
 
-  /* 16px prevents iOS Safari from auto-zooming the page on focus. */
+  /* 16px prevents iOS Safari from auto-zooming the page on focus. The rule below (added later)
+     already covers every input/textarea/select in the app, including these two — kept here anyway
+     since removing it buys nothing and this comment is the historical "why" for that broader one. */
   .search-bar input,
   .bible-keyword-search input,
   .bible-nav-select,
   .bible-translation-select {
     font-size: 16px;
+  }
+
+  /* Same fix, applied app-wide: dozens of components (profile fields, comment boxes, group/trip
+     forms, etc.) each set their own smaller font-size for a tighter desktop look, and every one of
+     them is small enough to trigger iOS Safari's auto-zoom-on-focus. Rather than hunting down and
+     bumping each one individually, force a 16px floor for every text input on mobile — !important is
+     deliberate here since the point is to override those per-component choices unconditionally. */
+  input,
+  textarea,
+  select {
+    font-size: 16px !important;
   }
 
   /* Panels are always full-screen (one at a time, via the tab bar) — drop the desktop

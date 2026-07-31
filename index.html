@@ -11,8 +11,12 @@
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
     <meta name="apple-mobile-web-app-title" content="Bible Atlas" />
-    <!-- No maximum-scale/user-scalable lock — pinch-zoom must stay available for accessibility. -->
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <!-- Page-level pinch-zoom disabled: on iOS it visually detaches the fixed bottom tab bar from
+         the rest of the layout mid-zoom (a native viewport quirk, not something CSS can prevent).
+         Map (MapLibre) and Timeline each implement their own independent pinch/wheel zoom directly on
+         their own canvas, so this doesn't affect either of those. Text size has its own dedicated
+         accessibility control in Settings (the A-/A+ toggle) as the alternative to page pinch-zoom. -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
     <title>Biblical Atlas</title>
   </head>
   <body>
