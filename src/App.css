@@ -1877,7 +1877,8 @@ body.resizing-panels {
 .bible-panel,
 .location-panel,
 .my-notes-panel,
-.friends-panel {
+.friends-panel,
+.myprofile-root {
   zoom: var(--text-scale, 1);
 }
 
@@ -4704,41 +4705,9 @@ body.resizing-panels {
   background: var(--border);
 }
 
-/* --- Friends/Messages/Groups view switcher --- */
-
-.friends-view-switcher {
-  display: flex;
-  border: 1px solid var(--border);
-  border-radius: 8px;
-  overflow: hidden;
-  margin-bottom: 14px;
-}
-
-.friends-view-switcher button {
-  flex: 1;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 6px;
-  border: none;
-  background: none;
-  color: var(--text-muted);
-  font: inherit;
-  font-size: 12px;
-  font-weight: 600;
-  padding: 8px 4px;
-  cursor: pointer;
-  border-right: 1px solid var(--border);
-}
-
-.friends-view-switcher button:last-child {
-  border-right: none;
-}
-
-.friends-view-switcher button.active {
-  background: var(--accent);
-  color: #fff;
-}
+/* --- Friends/Messages/Groups view switcher — reuses .myprofile-social-links (see MyProfileView's
+   quick links, defined below) for identical button format/size/layout; only the active-tab
+   treatment and this context's bottom margin are added here. --- */
 
 .friends-view-switcher-badge {
   background: #e0392b;
@@ -5965,11 +5934,24 @@ body.resizing-panels {
   display: flex;
   gap: 8px;
   flex-wrap: wrap;
+  margin-bottom: 14px;
 }
 
 .myprofile-social-links button {
   flex: 1;
   min-width: 100px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+}
+
+/* Marks the current tab when this same button row is reused as the Friends/Groups/Messages
+ * in-panel switcher (see ViewSwitcher.tsx) — My Profile's own use of these buttons is pure
+ * navigation with no "current" state, so this only ever applies in that other context. */
+.myprofile-social-links-active {
+  border-color: var(--accent) !important;
+  color: var(--accent) !important;
 }
 
 /* --- Desktop footer strip (Timeline entry point) --- */
