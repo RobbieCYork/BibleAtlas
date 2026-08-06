@@ -13,7 +13,6 @@ import TopicPanel from "./components/TopicPanel";
 import TimelineEventPanel from "./components/TimelineEventPanel";
 import TimelineView, { type View as TimelineViewState } from "./components/TimelineView";
 import { TimelineLinkContext } from "./components/LinkChoicePopup";
-import type { TimelineLinkHandlers } from "./components/LinkChoicePopup";
 import BiblePanel from "./components/BiblePanel";
 import MyNotesPanel from "./components/MyNotesPanel";
 import FriendsPanel from "./components/FriendsPanel";
@@ -731,30 +730,10 @@ function App() {
     setTimelineOverlayEventId(null);
     setTimelineFocusEntityId(null);
   };
-  // showTimeline mirrored in a ref so the stable link-choice handlers below always see the live
-  // value without needing to be recreated per render.
-  const showTimelineRef = useRef(showTimeline);
-  showTimelineRef.current = showTimeline;
-
-  /** Handlers for the link-choice popup (VerseText/LinkedVerseText via TimelineLinkContext) — only
-   * consulted when a clicked name has a timeline association; every other click never reaches these. */
-  const timelineLinkHandlers: TimelineLinkHandlers = {
-    onSelectTimelineEvent: (id: string) => {
-      if (showTimelineRef.current) {
-        // Already inside Timeline mode — show the article as the in-mode overlay instead of
-        // silently changing the details panel hidden underneath.
-        setTimelineOverlayEventId(id);
-        return;
-      }
-      setDetailsHistory([]);
-      handleSelectTimelineEvent(id);
-    },
-    onOpenTimelineForEntity: (entityId: string) => {
-      setTimelineFocusEntityId(entityId);
-      setTimelineOverlayEventId(null);
-      setShowTimeline(true);
-    },
-  };
+  // Timeline mode's UI entry points (desktop footer button, mobile tab bar tab, and the
+  // link-choice popup's "View in Timeline" option) have been removed — see the History-feature
+  // removal note near the TimelineLinkContext.Provider below. The context is now provided as
+  // `null`, so LinkChoicePopup's intercept always falls through to direct navigation.
 
   /** Leave Timeline mode and run a normal navigation — used by every cross-link reachable while
    * Timeline mode is open (the Lifespans bar, the Books band, and every cross-link inside the
@@ -1030,8 +1009,13 @@ function App() {
     else openPanel("bible");
   };
 
+  // History/Timeline feature nav entry points removed from the app UI (see Part 2 of the
+  // History-feature-removal work) — TimelineLinkContext is provided as null so the
+  // LinkChoicePopup "View in Timeline" intercept always falls through to direct navigation
+  // instead of opening Timeline mode. TimelineView/TimelineEventPanel/timelineEvents.ts and
+  // friends are left in place on disk, just unreachable from the UI.
   return (
-    <TimelineLinkContext.Provider value={timelineLinkHandlers}>
+    <TimelineLinkContext.Provider value={null}>
     <div className="app-shell">
       <NotificationToasts session={session} onOpenFriends={openFriendsFromProfile} />
       {passwordRecovery && session && <ResetPasswordGate onDone={() => setPasswordRecovery(false)} />}
@@ -1452,28 +1436,12 @@ function App() {
           </div>
         )}
       </div>
-      {/* Slim always-visible footer strip — the desktop entry point to Timeline/Games mode (mobile
-          gets its own tabs in the bottom bar instead). Clicking an active one again closes it. */}
+      {/* Slim always-visible footer strip — the desktop entry point to Games mode (mobile gets its
+          own tab in the bottom bar instead). The Timeline entry point that used to live here has
+          been removed (History feature is no longer reachable from the app UI — see Part 2 of the
+          History-feature-removal work); TimelineView.tsx itself is untouched on disk. */}
       {!isMobile && (
         <footer className="app-footer">
-          <button
-            type="button"
-            className={`app-footer-timeline${showTimeline ? " active" : ""}`}
-            onClick={showTimeline ? closeTimeline : openTimeline}
-            aria-pressed={showTimeline}
-          >
-            <svg width="15" height="15" viewBox="0 0 16 16" fill="none" aria-hidden="true">
-              <path
-                d="M4 2.2h8M4 13.8h8M4.6 2.2c0 2.6 0 3.5 3.4 5.8 3.4-2.3 3.4-3.2 3.4-5.8M4.6 13.8c0-2.6 0-3.5 3.4-5.8 3.4 2.3 3.4 3.2 3.4 5.8"
-                stroke="currentColor"
-                strokeWidth="1.4"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
-            </svg>
-            <span className="app-footer-timeline-label">Timeline</span>
-            <span className="app-footer-timeline-tagline">— journey through biblical &amp; world history</span>
-          </button>
           <button
             type="button"
             className={`app-footer-timeline app-footer-game${showGame ? " active" : ""}`}
@@ -1513,8 +1481,6 @@ function App() {
             // guard on isMobile so no desktop path (e.g. a resize mid-tap) can ever route through.
             if (isMobile) setOpenProfileNonce((n) => (n ?? 0) + 1);
           }}
-          onOpenTimeline={openTimeline}
-          timelineActive={showTimeline}
           onOpenGame={() => {
             closeTimeline();
             closeMyProfile();
