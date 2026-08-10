@@ -1,0 +1,242 @@
+/* --- Scripture Memorization Challenge (MemorizationView.tsx) --- */
+/* Picker reuses .game-center-card/.games-panel-intro/.game-center-list from Game.css; everything
+   below is specific to this game. */
+
+.memchallenge-picker {
+  width: 100%;
+  max-width: 560px;
+}
+
+.memchallenge-reset-link {
+  display: block;
+  margin: 0 0 14px;
+  background: none;
+  border: none;
+  color: var(--text-muted);
+  font-size: 13px;
+  text-decoration: underline;
+  cursor: pointer;
+  padding: 0;
+}
+
+.memchallenge-reset-link:hover {
+  color: var(--text);
+}
+
+.memchallenge-search {
+  width: 100%;
+  box-sizing: border-box;
+  font: inherit;
+  padding: 10px 14px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: var(--bg);
+  color: var(--text);
+  margin-bottom: 18px;
+}
+
+.memchallenge-search:focus {
+  outline: none;
+  border-color: var(--accent);
+}
+
+.memchallenge-category {
+  margin-bottom: 22px;
+}
+
+.memchallenge-category-title {
+  font-size: 13px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--text-muted);
+  margin: 0 0 8px;
+}
+
+.memchallenge-verse-list {
+  gap: 6px;
+}
+
+.memchallenge-verse-row .game-center-card-tagline {
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.memchallenge-empty {
+  color: var(--text-muted);
+  font-size: 14px;
+}
+
+/* --- Ready screen --- */
+
+.memchallenge-ready {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+  text-align: center;
+  max-width: 560px;
+  margin: 20px auto 0;
+}
+
+.memchallenge-fulltext {
+  font-size: 20px;
+  line-height: 1.7;
+  color: var(--text);
+}
+
+.memchallenge-ready-hint {
+  font-size: 13px;
+  color: var(--text-muted);
+  max-width: 420px;
+}
+
+/* --- Play (learn + review) --- */
+
+.memchallenge-play {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+  width: 100%;
+  max-width: 620px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.memchallenge-reference {
+  font-weight: 700;
+  font-size: 16px;
+  color: var(--text-h);
+  margin: 0;
+}
+
+.memchallenge-stage-label {
+  font-size: 13px;
+  color: var(--text-muted);
+  margin: 0;
+}
+
+.memchallenge-relearn-banner {
+  background: #fef3c7;
+  color: #92400e;
+  border-radius: 8px;
+  padding: 8px 14px;
+  font-size: 13px;
+  font-weight: 600;
+  margin: 0;
+}
+
+.memchallenge-review-banner {
+  background: color-mix(in srgb, var(--accent) 14%, transparent);
+  color: var(--accent);
+  border-radius: 8px;
+  padding: 8px 14px;
+  font-size: 13px;
+  font-weight: 600;
+  margin: 0;
+}
+
+.memchallenge-stage-dots {
+  display: flex;
+  gap: 6px;
+}
+
+.memchallenge-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--border);
+}
+
+.memchallenge-dot-done {
+  background: #22c55e;
+}
+
+.memchallenge-dot-active {
+  background: var(--accent);
+}
+
+.memchallenge-verse-text {
+  font-size: 19px;
+  line-height: 1.9;
+  color: var(--text);
+  margin: 4px 0;
+}
+
+.memchallenge-blank-wrap {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  vertical-align: middle;
+  margin: 0 2px;
+}
+
+.memchallenge-input {
+  font: inherit;
+  font-weight: 600;
+  text-align: center;
+  background: var(--bg);
+  border: none;
+  border-bottom: 2px solid var(--accent);
+  color: var(--text-h);
+  padding: 2px 4px;
+}
+
+.memchallenge-input:focus {
+  outline: none;
+  border-bottom-color: var(--accent-hover);
+}
+
+.memchallenge-input:disabled {
+  opacity: 0.9;
+}
+
+.memchallenge-input-correct {
+  border-bottom-color: #22c55e;
+  color: #16a34a;
+}
+
+.memchallenge-input-wrong {
+  border-bottom-color: #e53e3e;
+  color: #e53e3e;
+  text-decoration: line-through;
+}
+
+.memchallenge-answer-reveal {
+  font-size: 12px;
+  color: #22c55e;
+  font-weight: 600;
+  margin-top: 2px;
+}
+
+.memchallenge-btn-primary {
+  background: var(--accent);
+  color: #fff;
+  border: none;
+  border-radius: 10px;
+  padding: 10px 24px;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.memchallenge-btn-primary:hover {
+  background: var(--accent-hover);
+}
+
+.memchallenge-result-correct {
+  color: #16a34a;
+  font-weight: 700;
+  font-size: 16px;
+  margin: 0;
+}
+
+.memchallenge-result-wrong {
+  color: #e53e3e;
+  font-weight: 700;
+  font-size: 16px;
+  margin: 0;
+}

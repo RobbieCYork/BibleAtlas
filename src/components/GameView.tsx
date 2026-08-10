@@ -4,6 +4,8 @@ import GameCenter from "./GameCenter";
 import BibleTriviaView from "./BibleTriviaView";
 import CrosswordView from "./CrosswordView";
 import SavingPeterHub from "./SavingPeterHub";
+import FillBlankView from "./FillBlankView";
+import MemorizationView from "./MemorizationView";
 import BackButton from "./BackButton";
 import "./Game.css";
 
@@ -46,6 +48,8 @@ export default function GameView({ session, onClose, gameCenterNonce }: GameView
   if (activeGame === "bible-trivia") return <BibleTriviaView session={session} onBack={backToCenter} />;
   if (activeGame === "crossword") return <CrosswordView onBack={backToCenter} />;
   if (activeGame === "saving-peter") return <SavingPeterHub session={session} onBack={backToCenter} />;
+  if (activeGame === "fill-blank") return <FillBlankView onBack={backToCenter} />;
+  if (activeGame === "memorization") return <MemorizationView onBack={backToCenter} />;
 
   return (
     <div className="game-root">

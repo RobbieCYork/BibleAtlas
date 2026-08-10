@@ -26,6 +26,18 @@ export const GAMES: GameDef[] = [
     title: "Saving Peter",
     tagline: "Hangman, Matthew 14 style — solo, or up to 4 players live with video chat.",
   },
+  {
+    key: "fill-blank",
+    icon: "✍️",
+    title: "Fill in the Blank",
+    tagline: "Standout OT & NT verses with words missing — beat the clock, you get 3 lives.",
+  },
+  {
+    key: "memorization",
+    icon: "📿",
+    title: "Scripture Memorization Challenge",
+    tagline: "Pick a verse from 100 and learn it word by word — then recite everything you know before the next one.",
+  },
 ];
 
 interface GameCenterProps {
