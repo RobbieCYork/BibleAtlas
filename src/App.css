@@ -3025,6 +3025,46 @@ body.resizing-panels {
   background: #f9a8d4;
 }
 
+/* --- Highlight drag handles (HighlightHandles.tsx) --- */
+/* Portaled to <body> and positioned `fixed` at the caret position of the highlight's start/end —
+   real screen coordinates, so they track scroll/zoom correctly without needing to live inside the
+   (overflow: hidden) .bible-panel. A thin vertical bar spans the text's line height (::before);
+   the round knob at the bottom is the actual drag target, oversized past the bar for an easy grab
+   on touch. z-index sits above .verse-sheet (40) so a handle is never trapped under the action sheet
+   when a highlight sits near the bottom of the visible chapter. */
+.highlight-handle {
+  position: fixed;
+  width: 28px;
+  transform: translateX(-50%);
+  cursor: ew-resize;
+  touch-action: none;
+  z-index: 50;
+}
+
+.highlight-handle::before {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  transform: translateX(-50%);
+  background: var(--accent);
+}
+
+.highlight-handle-knob {
+  position: absolute;
+  left: 50%;
+  bottom: -10px;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: var(--accent);
+  border: 2px solid var(--panel-bg);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.35);
+  transform: translateX(-50%);
+}
+
 /* --- Note indicator (small icon after a verse that has a note) --- */
 
 .verse-note-indicator {

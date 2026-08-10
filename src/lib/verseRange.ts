@@ -15,3 +15,15 @@ export function clipRangeForVerse(
   if (verseNum === endVerse) return { start: 0, end: endOffset };
   return { start: 0, end: textLength };
 }
+
+/** Orders two verse+offset positions — negative if `a` comes first, positive if `b` does, 0 if equal.
+ * Used to keep a dragged highlight handle from crossing past the opposite, stationary edge. */
+export function comparePosition(
+  aVerse: number,
+  aOffset: number,
+  bVerse: number,
+  bOffset: number
+): number {
+  if (aVerse !== bVerse) return aVerse - bVerse;
+  return aOffset - bOffset;
+}

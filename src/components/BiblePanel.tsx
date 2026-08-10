@@ -25,9 +25,10 @@ import {
 } from "../lib/supabase";
 import { getTextOffsetInRoot } from "../lib/domTextOffset";
 import { CHAPTER_AUDIO_CREDIT, chapterAudioUrl, fallbackChapterAudioUrl } from "../lib/chapterAudio";
-import { clipRangeForVerse } from "../lib/verseRange";
+import { clipRangeForVerse, comparePosition } from "../lib/verseRange";
 import { shareFilename, verseCardSpec, type ShareCardSpec } from "../lib/shareCard";
 import ShareCardModal from "./ShareCardModal";
+import HighlightHandles from "./HighlightHandles";
 
 interface BiblePanelProps {
   reference: string | null;
@@ -229,6 +230,20 @@ export default function BiblePanel({
   const [flashVerse, setFlashVerse] = useState<number | null>(null);
   const verseRefs = useRef<Record<number, HTMLParagraphElement | null>>({});
   const textRefs = useRef<Record<number, HTMLSpanElement | null>>({});
+  /** The scrollable reading area (see .bible-panel-scroll) — passed to HighlightHandles so its
+   * portaled knobs reposition as the chapter scrolls underneath them. */
+  const scrollContainerRef = useRef<HTMLDivElement | null>(null);
+  /** Live (uncommitted) position of a highlight boundary being dragged via HighlightHandles — null
+   * whenever no drag is in progress. Rendered in place of the highlight's stored offsets both for
+   * the handles themselves and for the highlight's own on-screen extent, so the mark grows/shrinks
+   * live as the user drags. Persisted (delete+insert — see handleHighlightDragEnd) only on release. */
+  const [handleDrag, setHandleDrag] = useState<{
+    highlightId: string;
+    startVerse: number;
+    startOffset: number;
+    endVerse: number;
+    endOffset: number;
+  } | null>(null);
 
   const [highlights, setHighlights] = useState<Highlight[]>([]);
   const [notes, setNotes] = useState<Note[]>([]);
@@ -897,6 +912,95 @@ export default function BiblePanel({
     setPopup(null);
   };
 
+  /** The highlight whose drag handles should currently be shown — right after creating one (the
+   * "selection" sheet stays open with appliedHighlightId set) or after tapping an existing one. */
+  const activeHandleHighlightId =
+    popup?.kind === "highlight-actions" ? popup.highlight.id : popup?.kind === "selection" ? popup.appliedHighlightId : undefined;
+  const activeHandleHighlight = highlights.find((h) => h.id === activeHandleHighlightId) ?? null;
+
+  // A drag in progress belongs to a specific highlight id — once the popup moves on to a different
+  // (or no) highlight, any stale in-flight drag position needs to stop being applied.
+  useEffect(() => {
+    if (!activeHandleHighlightId) setHandleDrag(null);
+  }, [activeHandleHighlightId]);
+
+  const handleRange = activeHandleHighlight
+    ? handleDrag && handleDrag.highlightId === activeHandleHighlight.id
+      ? handleDrag
+      : {
+          highlightId: activeHandleHighlight.id,
+          startVerse: activeHandleHighlight.start_verse,
+          startOffset: activeHandleHighlight.start_offset,
+          endVerse: activeHandleHighlight.end_verse,
+          endOffset: activeHandleHighlight.end_offset,
+        }
+    : null;
+
+  /** Live-updates the dragged edge, clamped so it can't cross past the opposite (stationary) edge —
+   * past that point "start" and "end" stop being meaningful. */
+  const handleHighlightDragChange = (edge: "start" | "end", pos: { verse: number; offset: number }) => {
+    if (!handleRange) return;
+    if (edge === "start") {
+      if (comparePosition(pos.verse, pos.offset, handleRange.endVerse, handleRange.endOffset) >= 0) return;
+      setHandleDrag({ ...handleRange, startVerse: pos.verse, startOffset: pos.offset });
+    } else {
+      if (comparePosition(pos.verse, pos.offset, handleRange.startVerse, handleRange.startOffset) <= 0) return;
+      setHandleDrag({ ...handleRange, endVerse: pos.verse, endOffset: pos.offset });
+    }
+  };
+
+  // Highlights only support insert/select/delete via RLS (no update policy — confirmed empirically,
+  // same reasoning as the re-color path in handleCreateHighlight), so committing a drag is a
+  // delete-then-insert rather than an UPDATE.
+  const handleHighlightDragEnd = async () => {
+    const drag = handleDrag;
+    if (!drag || !userId || !currentBook || currentChapter === null) {
+      setHandleDrag(null);
+      return;
+    }
+    const original = highlights.find((h) => h.id === drag.highlightId);
+    if (
+      !original ||
+      (drag.startVerse === original.start_verse &&
+        drag.startOffset === original.start_offset &&
+        drag.endVerse === original.end_verse &&
+        drag.endOffset === original.end_offset)
+    ) {
+      setHandleDrag(null);
+      return;
+    }
+    await supabase.from("highlights").delete().eq("id", drag.highlightId);
+    const { data, error: hlError } = await supabase
+      .from("highlights")
+      .insert({
+        user_id: userId,
+        book: currentBook,
+        chapter: currentChapter,
+        start_verse: drag.startVerse,
+        end_verse: drag.endVerse,
+        translation,
+        start_offset: drag.startOffset,
+        end_offset: drag.endOffset,
+        color: original.color,
+      })
+      .select()
+      .single();
+    setHandleDrag(null);
+    if (hlError || !data) {
+      // The delete above already went through — drop the now-nonexistent row locally too rather
+      // than leave a highlight on screen that no longer exists in the database.
+      setHighlights((hs) => hs.filter((h) => h.id !== drag.highlightId));
+      return;
+    }
+    const inserted = data as Highlight;
+    setHighlights((hs) => [...hs.filter((h) => h.id !== drag.highlightId), inserted]);
+    setPopup((p) => {
+      if (p?.kind === "highlight-actions" && p.highlight.id === drag.highlightId) return { kind: "highlight-actions", highlight: inserted };
+      if (p?.kind === "selection" && p.appliedHighlightId === drag.highlightId) return { ...p, appliedHighlightId: inserted.id };
+      return p;
+    });
+  };
+
   const handleDeleteNote = async (noteId: string) => {
     await supabase.from("notes").delete().eq("id", noteId);
     setNotes((prev) => prev.filter((n) => n.id !== noteId));
@@ -1089,7 +1193,7 @@ export default function BiblePanel({
       className={`bible-panel ${expand ? "panel-expand" : ""} ${hidden ? "bible-panel-hidden" : ""}`}
       style={expand ? undefined : style}
     >
-      <div className="bible-panel-scroll">
+      <div className="bible-panel-scroll" ref={scrollContainerRef}>
 
       {secondsThisMonth !== null && (
         <p className="bible-minutes-this-month no-print">📖 {formatReadingTime(secondsThisMonth)} read this month</p>
@@ -1305,7 +1409,17 @@ export default function BiblePanel({
               const verseNotes = notesForVerse(v.verse);
               const verseTagList = tagsForVerse(v.verse);
               const clippedHighlights: ClippedHighlight[] = highlights.flatMap((h) => {
-                const clip = clipRangeForVerse(h.start_verse, h.start_offset, h.end_verse, h.end_offset, v.verse, text.length);
+                // While this highlight's handle is being dragged, render its live (uncommitted)
+                // extent instead of the stored one, so the mark visibly grows/shrinks with the drag.
+                const live = handleDrag && handleDrag.highlightId === h.id ? handleDrag : null;
+                const clip = clipRangeForVerse(
+                  live?.startVerse ?? h.start_verse,
+                  live?.startOffset ?? h.start_offset,
+                  live?.endVerse ?? h.end_verse,
+                  live?.endOffset ?? h.end_offset,
+                  v.verse,
+                  text.length
+                );
                 return clip ? [{ highlight: h, startOffset: clip.start, endOffset: clip.end }] : [];
               });
               const previewRange =
@@ -1393,6 +1507,18 @@ export default function BiblePanel({
           spec={shareCardSpec}
           filename={shareFilename(shareCardSpec.title)}
           onClose={() => setShareCardSpec(null)}
+        />
+      )}
+
+      {handleRange && (
+        <HighlightHandles
+          start={{ verse: handleRange.startVerse, offset: handleRange.startOffset }}
+          end={{ verse: handleRange.endVerse, offset: handleRange.endOffset }}
+          getVerseTextEl={(verse) => textRefs.current[verse] ?? null}
+          findVerseAndOffset={findVerseAndOffset}
+          onDragChange={handleHighlightDragChange}
+          onDragEnd={handleHighlightDragEnd}
+          scrollContainer={scrollContainerRef.current}
         />
       )}
 
