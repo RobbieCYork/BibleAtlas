@@ -38,6 +38,12 @@ export const GAMES: GameDef[] = [
     title: "Scripture Memorization Challenge",
     tagline: "Pick a verse from 100 and learn it word by word — then recite everything you know before the next one.",
   },
+  {
+    key: "chronology",
+    icon: "⏳",
+    title: "Chronology",
+    tagline: "Put events from the timeline back in the order they happened — Beginner to Expert.",
+  },
 ];
 
 interface GameCenterProps {

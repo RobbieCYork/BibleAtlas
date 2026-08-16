@@ -6,6 +6,7 @@ import CrosswordView from "./CrosswordView";
 import SavingPeterHub from "./SavingPeterHub";
 import FillBlankView from "./FillBlankView";
 import MemorizationView from "./MemorizationView";
+import ChronologyView from "./ChronologyView";
 import BackButton from "./BackButton";
 import "./Game.css";
 
@@ -50,6 +51,7 @@ export default function GameView({ session, onClose, gameCenterNonce }: GameView
   if (activeGame === "saving-peter") return <SavingPeterHub session={session} onBack={backToCenter} />;
   if (activeGame === "fill-blank") return <FillBlankView onBack={backToCenter} />;
   if (activeGame === "memorization") return <MemorizationView onBack={backToCenter} />;
+  if (activeGame === "chronology") return <ChronologyView onBack={backToCenter} />;
 
   return (
     <div className="game-root">
