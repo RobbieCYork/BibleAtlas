@@ -19,7 +19,9 @@ interface TimelineEventPanelProps {
 
 const CATEGORY_LABELS: Record<TimelineEventCategory, string> = {
   biblical: "Biblical History",
+  church: "Church History",
   world: "World History",
+  movement: "Movements & Revivals",
   religion: "World Religions",
 };
 

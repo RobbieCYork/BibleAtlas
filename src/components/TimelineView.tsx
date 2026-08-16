@@ -114,9 +114,13 @@ const MOMENTUM_STOP_VX = 0.015; // px/ms — glide ends once decayed velocity dr
 const MOMENTUM_FRICTION = 0.0028; // per-ms exponential decay rate (~250ms velocity half-life)
 const MOMENTUM_MAX_VX = 3.5; // px/ms safety cap on captured fling speed
 
+/** Top-to-bottom lane order — must stay in step with TIMELINE_LANE_ORDER in TimelineLaneMenu, which
+ * drives the checklist the user toggles these with. */
 const LANES: { cat: TimelineEventCategory; label: string; cssVar: string }[] = [
   { cat: "biblical", label: "Biblical History", cssVar: "var(--tl-biblical)" },
+  { cat: "church", label: "Church History", cssVar: "var(--tl-church)" },
   { cat: "world", label: "World History", cssVar: "var(--tl-world)" },
+  { cat: "movement", label: "Movements & Revivals", cssVar: "var(--tl-movement)" },
   { cat: "religion", label: "Other Religions", cssVar: "var(--tl-religion)" },
 ];
 
@@ -173,7 +177,9 @@ const DEFAULT_VISIBLE_LANES: Record<TimelineLaneKey, boolean> = {
   books: true,
   lifespans: true,
   biblical: true,
+  church: true,
   world: true,
+  movement: true,
   religion: true,
 };
 

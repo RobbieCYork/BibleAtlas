@@ -5668,4 +5668,2069 @@ export const people: Person[] = [
             { label: "Livius.org — Magi", url: "https://www.livius.org/articles/concept/magi/" },
         ],
     },
+
+  /* ---------------------------------------------------------------------------------------------
+   * Church history figures — merged in from the standalone christian-history-atlas app. They carry
+   * kind: "church": they are never named in Scripture, so `verses` is empty and `quotes` holds
+   * citations from their own writings instead (PersonPanel renders those as plain citations rather
+   * than links into the Bible panel, and titles their evidence section "Historical Evidence").
+   * ------------------------------------------------------------------------------------------- */
+  {
+    id: "constantine-the-great",
+    name: "Constantine the Great",
+    alternateNames: ["Flavius Valerius Constantinus"],
+    bornYear: 272,
+    diedYear: 337,
+    lifespanLabel: "AD 272–337",
+    lifespanCertainty: "firm",
+    kind: "church",
+    tier: "major",
+    role: "Roman Emperor",
+    summary:
+      "The first Roman emperor to embrace Christianity, Constantine ended imperial persecution with the Edict of Milan and convened the Council of Nicaea, permanently changing the trajectory of the church.",
+    lifeStory: [
+      "Constantine was proclaimed emperor by his troops in York in AD 306 after the death of his father, Constantius Chlorus. He spent years consolidating power in a fractured empire ruled by competing claimants under the Tetrarchy system established by Diocletian.",
+      "In AD 312, before the decisive Battle of the Milvian Bridge against his rival Maxentius, Constantine reported a vision (variously described by Eusebius and Lactantius) instructing him to mark his soldiers' shields with a Christian symbol. His victory secured Rome and, in his own account, convinced him of Christianity's power.",
+      "In 313, Constantine and his co-emperor Licinius issued the Edict of Milan, granting toleration to Christianity and ordering the return of confiscated church property, ending centuries of intermittent persecution. Constantine did not make Christianity the state religion but favored it heavily — funding churches, exempting clergy from taxes, and involving himself directly in church affairs.",
+      "When the Arian controversy over the nature of Christ threatened to split the empire's church, Constantine convened and personally opened the Council of Nicaea in 325, seeking unity as much as doctrinal precision. He was baptized only on his deathbed in 337, a common practice at the time reflecting beliefs about baptismal forgiveness.",
+      "Constantine also founded the city of Constantinople on the site of Byzantium in 330, moving the empire's center of gravity eastward and creating what would become the capital of the Byzantine Empire and a major center of Christianity for over a millennium.",
+    ],
+    occupation: "Roman Emperor",
+    placesLived: "Naissus, York, Trier, Rome, Constantinople",
+    extraBiblicalReferences: [
+      {
+        source: "Eusebius, Life of Constantine",
+        citation: "1.28",
+        url: "https://www.ccel.org/ccel/schaff/npnf201.html",
+        summary:
+          "Eusebius records Constantine's account of a vision of a cross of light before the Battle of the Milvian Bridge.",
+        reliability:
+          "Contemporary but highly favorable biography written by a churchman who knew him",
+      },
+    ],
+    quotes: [
+      {
+        reference: "attributed, Edict of Milan, AD 313",
+        note:
+          "Granted Christians and all others \"free power to follow the religion which each preferred.\"",
+      },
+    ],
+    verses: [],
+    sources: [
+      {
+        label: "Encyclopedia Britannica: Constantine I",
+        url: "https://www.britannica.com/biography/Constantine-I-Roman-emperor",
+      },
+      {
+        label: "New Advent Catholic Encyclopedia: Constantine the Great",
+        url: "https://www.newadvent.org/cathen/04295c.htm",
+      },
+    ],
+  },
+  {
+    id: "athanasius-of-alexandria",
+    name: "Athanasius of Alexandria",
+    bornYear: 296,
+    diedYear: 373,
+    lifespanLabel: "c. AD 296–373",
+    lifespanCertainty: "traditional",
+    kind: "church",
+    tier: "significant",
+    role: "Bishop of Alexandria, defender of Nicene orthodoxy",
+    summary:
+      "The chief theological opponent of Arianism, Athanasius spent decades defending the Nicene formula that the Son is of the same substance as the Father, enduring five exiles for his position.",
+    lifeStory: [
+      "Athanasius rose from deacon to become secretary to Bishop Alexander of Alexandria, in which role he attended the Council of Nicaea in 325 as a young man, though not yet a bishop himself. He became Bishop of Alexandria in 328 and would hold the see, with interruptions, for over four decades.",
+      "His life's defining struggle was against Arianism, the teaching (associated with the priest Arius) that the Son was a created being, not co-eternal with the Father. Athanasius insisted on the term homoousios (\"of the same substance\") adopted at Nicaea, becoming so identified with the cause that later historians speak of \"Athanasius against the world.\"",
+      "Political shifts among emperors sympathetic to Arian factions led to Athanasius being exiled from Alexandria five separate times across his career, spending roughly seventeen years total in exile, including time in Trier and Rome, where he helped popularize Egyptian monasticism in the West.",
+      "His theological writings, including On the Incarnation and his Life of Antony (which spread the ideal of desert monasticism), proved deeply influential. He also, in a festal letter of 367, provided one of the earliest lists matching exactly the 27 books of the later New Testament canon.",
+    ],
+    occupation: "Bishop, theologian",
+    placesLived: "Alexandria, Trier, Rome",
+    quotes: [
+      {
+        reference: "On the Incarnation",
+        note:
+          "\"God became man so that man might become god\" (a summary of his doctrine of theosis).",
+      },
+    ],
+    verses: [],
+    sources: [
+      {
+        label: "Encyclopedia Britannica: Saint Athanasius",
+        url: "https://www.britannica.com/biography/Saint-Athanasius",
+      },
+      {
+        label: "New Advent Catholic Encyclopedia: St. Athanasius",
+        url: "https://www.newadvent.org/cathen/02035a.htm",
+      },
+    ],
+  },
+  {
+    id: "arius",
+    name: "Arius",
+    bornYear: 250,
+    diedYear: 336,
+    lifespanLabel: "c. AD 250–336",
+    lifespanCertainty: "traditional",
+    kind: "church",
+    tier: "notable",
+    role: "Presbyter of Alexandria, originator of Arianism",
+    summary:
+      "An Alexandrian priest whose teaching that the Son of God was created rather than co-eternal with the Father provoked the Arian controversy and the Council of Nicaea.",
+    lifeStory: [
+      "Arius was a presbyter in Alexandria known for ascetic living and effective preaching. Around 318 he began teaching that the Son was brought into being by the Father and therefore was not eternal in the same sense — a position that seemed to many, including his own bishop Alexander, to make Christ a creature rather than fully divine.",
+      "The dispute spread rapidly through the Eastern church and threatened imperial unity, prompting Constantine to convene the Council of Nicaea in 325. The council condemned Arius's teaching, affirmed that the Son is homoousios (of one substance) with the Father, and exiled Arius.",
+      "The controversy did not end with Nicaea; Arian and semi-Arian positions retained substantial support for decades, and Arius was briefly readmitted to communion before dying suddenly in Constantinople in 336, an event later Christian writers described in dramatic and hostile terms.",
+    ],
+    occupation: "Presbyter",
+    placesLived: "Alexandria",
+    noExtraBiblicalRecordNote:
+      "Arius's own writings survive only in fragments quoted by his opponents, notably Athanasius; no complete work of his has survived independently.",
+    verses: [],
+    sources: [
+      {
+        label: "Encyclopedia Britannica: Arius",
+        url: "https://www.britannica.com/biography/Arius",
+      },
+    ],
+  },
+  {
+    id: "eusebius-of-caesarea",
+    name: "Eusebius of Caesarea",
+    bornYear: 260,
+    diedYear: 340,
+    lifespanLabel: "c. AD 260–340",
+    lifespanCertainty: "traditional",
+    kind: "church",
+    tier: "significant",
+    role: "Bishop of Caesarea, historian of the early church",
+    summary:
+      "Bishop of Caesarea and author of the Ecclesiastical History, Eusebius is often called the \"father of church history\" for compiling the most important surviving narrative of Christianity's first three centuries.",
+    lifeStory: [
+      "Eusebius was trained in the theological library of Caesarea Maritima, a center of Christian scholarship founded by Origen's student Pamphilus, whose name Eusebius later adopted in gratitude (Eusebius Pamphili). He survived the Diocletianic persecution, which he witnessed and later described in detail.",
+      "As Bishop of Caesarea from around 313, Eusebius became a trusted advisor to Constantine, attended the Council of Nicaea, and later wrote a flattering biography of the emperor, the Life of Constantine.",
+      "His most enduring work, the Ecclesiastical History, traces Christianity from the apostolic age through his own time, preserving quotations from earlier documents that would otherwise be lost entirely, including fragments of Papias, Hegesippus, and imperial correspondence.",
+      "Eusebius held theological views closer to a moderate, semi-Arian position during parts of the fourth-century controversies, a stance that later orthodox writers viewed with some suspicion even while relying heavily on his historical scholarship.",
+    ],
+    occupation: "Bishop, historian",
+    placesLived: "Caesarea Maritima",
+    quotes: [
+      {
+        reference: "Ecclesiastical History, Preface",
+        note:
+          "States his purpose as recording \"the successions from the holy apostles\" and the events of church history \"worthy of memory.\"",
+      },
+    ],
+    verses: [],
+    sources: [
+      {
+        label: "Encyclopedia Britannica: Eusebius of Caesarea",
+        url: "https://www.britannica.com/biography/Eusebius-of-Caesarea",
+      },
+      {
+        label: "CCEL: Ecclesiastical History (full text)",
+        url: "https://www.ccel.org/ccel/schaff/npnf201.html",
+      },
+    ],
+  },
+  {
+    id: "jerome",
+    name: "Jerome",
+    alternateNames: ["Eusebius Sophronius Hieronymus"],
+    bornYear: 347,
+    diedYear: 420,
+    lifespanLabel: "c. AD 347–420",
+    lifespanCertainty: "traditional",
+    kind: "church",
+    tier: "significant",
+    role: "Biblical scholar, translator of the Vulgate",
+    summary:
+      "A brilliant, irascible scholar who produced the Vulgate, the Latin Bible translation that would dominate Western Christianity for over a thousand years.",
+    lifeStory: [
+      "Jerome was born in Stridon (in modern Croatia/Slovenia) and received a classical education in Rome, where he was also baptized. A restless, ascetic temperament drove him to the Syrian desert for a period of hermit life, where he learned Hebrew from a converted Jew, an unusual and demanding pursuit for a Latin Christian scholar of his time.",
+      "Jerome served briefly as secretary to Pope Damasus I in Rome, who commissioned him to revise the existing Latin translations of the Gospels against the Greek text — the beginning of what became the Vulgate.",
+      "After Damasus's death, Jerome settled in Bethlehem, where he spent the rest of his life running a monastery and completing his translation of the entire Old Testament directly from the Hebrew (rather than the Greek Septuagint, a controversial choice at the time) alongside the New Testament from Greek.",
+      "Jerome was also a combative controversialist, engaging in bitter polemical exchanges with figures including Rufinus and, at times, Augustine, over questions of translation, Origenism, and asceticism. His extensive correspondence and biblical commentaries remain valuable windows into late antique Christian scholarship.",
+    ],
+    occupation: "Priest, translator, scholar",
+    placesLived: "Stridon, Rome, Antioch, the Syrian desert, Constantinople, Bethlehem",
+    quotes: [
+      {
+        reference: "Commentary on Isaiah, Prologue",
+        note: "\"Ignorance of Scripture is ignorance of Christ.\"",
+      },
+    ],
+    verses: [],
+    sources: [
+      {
+        label: "Encyclopedia Britannica: Saint Jerome",
+        url: "https://www.britannica.com/biography/Saint-Jerome",
+      },
+      {
+        label: "New Advent Catholic Encyclopedia: St. Jerome",
+        url: "https://www.newadvent.org/cathen/08341a.htm",
+      },
+    ],
+  },
+  {
+    id: "augustine-of-hippo",
+    name: "Augustine of Hippo",
+    alternateNames: ["Aurelius Augustinus"],
+    bornYear: 354,
+    diedYear: 430,
+    lifespanLabel: "AD 354–430",
+    lifespanCertainty: "firm",
+    kind: "church",
+    tier: "major",
+    role: "Bishop of Hippo, theologian",
+    summary:
+      "One of the most influential theologians in Western Christian history, Augustine's Confessions and City of God shaped Christian thought on grace, original sin, and the relationship of church and state for over a millennium.",
+    lifeStory: [
+      "Augustine was born in Thagaste in Roman North Africa to a pagan father and a devoutly Christian mother, Monica, whose prayers for his conversion are a recurring theme in his later writing. As a young man he pursued rhetoric, took a mistress with whom he had a son, and for a time embraced Manichaeism, a dualistic religious philosophy.",
+      "Moving to Milan to teach rhetoric, Augustine came under the influence of Bishop Ambrose and, after a prolonged inner struggle described famously in the Confessions, converted to Christianity in 386, reportedly prompted by a child's voice telling him to \"take up and read\" scripture. He was baptized by Ambrose the following Easter.",
+      "Returning to Africa, Augustine was ordained a priest and then Bishop of Hippo Regius in 395/396, a position he held until his death. He became the dominant intellectual defender of Nicene orthodoxy in the West, writing extensively against Manichaeism, Donatism, and Pelagianism — the last controversy shaping his mature doctrine of grace and original sin.",
+      "His Confessions, an extended prayer recounting his own conversion, is considered the first true autobiography in Western literature. His City of God, written in the aftermath of the Visigothic sack of Rome in 410, argued that the earthly and heavenly cities are distinct and that Rome's fall did not doom the church.",
+      "Augustine died in 430 as the Vandals besieged Hippo, part of the broader collapse of Roman authority in North Africa. His theology of grace, will, and predestination would later be claimed by both Catholic and Reformation theologians, including Luther and Calvin, as foundational to their own thought.",
+    ],
+    occupation: "Bishop, theologian, rhetorician",
+    placesLived: "Thagaste, Carthage, Rome, Milan, Hippo Regius",
+    extraBiblicalReferences: [
+      {
+        source: "Possidius, Life of Augustine",
+        citation: "throughout",
+        summary:
+          "A biography written by a friend and fellow bishop shortly after Augustine's death, describing his final illness during the siege of Hippo.",
+        reliability: "Contemporary eyewitness account",
+      },
+    ],
+    quotes: [
+      {
+        reference: "Confessions, Book I",
+        note:
+          "\"You have made us for yourself, O Lord, and our heart is restless until it rests in you.\"",
+      },
+      {
+        reference: "City of God, Book XIV",
+        note:
+          "Distinguishes the \"city of God\" from the \"earthly city,\" built respectively on love of God and love of self.",
+      },
+    ],
+    verses: [],
+    sources: [
+      {
+        label: "Encyclopedia Britannica: Saint Augustine",
+        url: "https://www.britannica.com/biography/Saint-Augustine",
+      },
+      {
+        label: "CCEL: Confessions (full text)",
+        url: "https://www.ccel.org/ccel/augustine/confess.html",
+      },
+    ],
+  },
+  {
+    id: "ambrose-of-milan",
+    name: "Ambrose of Milan",
+    bornYear: 340,
+    diedYear: 397,
+    lifespanLabel: "c. AD 340–397",
+    lifespanCertainty: "traditional",
+    kind: "church",
+    tier: "significant",
+    role: "Bishop of Milan",
+    summary:
+      "A Roman governor unexpectedly elected bishop by popular acclaim, Ambrose became one of the great pastoral and political figures of the fourth century, and the man whose preaching converted Augustine.",
+    lifeStory: [
+      "Ambrose was serving as the Roman governor of Aemilia-Liguria, based in Milan, when the city's bishop died amid factional tension between Nicene and Arian Christians in 374. Though only a catechumen (unbaptized), Ambrose was acclaimed bishop by the crowd trying to keep the peace, and was baptized and consecrated within days.",
+      "As bishop, Ambrose proved a formidable defender of Nicene orthodoxy against Arianism and a fearless check on imperial power — most famously compelling the emperor Theodosius I to do public penance after a massacre of civilians in Thessalonica in 390, establishing a precedent for church authority over even the emperor in matters of conscience.",
+      "Ambrose's eloquent preaching in Milan drew the young rhetoric teacher Augustine, who came initially to admire his oratory and was gradually won over to Christian belief, receiving baptism from Ambrose in 387.",
+      "Ambrose also composed hymns still used in Christian worship and contributed to Latin theological vocabulary, helping to establish an intellectual and liturgical foundation for the Western church distinct from its Greek-speaking Eastern counterpart.",
+    ],
+    occupation: "Roman governor, bishop, hymn writer",
+    placesLived: "Trier, Rome, Milan",
+    quotes: [
+      {
+        reference: "attributed",
+        note:
+          "\"When in Rome, live in the Roman style; when elsewhere, live as they live elsewhere\" (the origin of the modern proverb \"When in Rome...\").",
+      },
+    ],
+    verses: [],
+    sources: [
+      {
+        label: "Encyclopedia Britannica: Saint Ambrose",
+        url: "https://www.britannica.com/biography/Saint-Ambrose",
+      },
+    ],
+  },
+  {
+    id: "john-chrysostom",
+    name: "John Chrysostom",
+    bornYear: 349,
+    diedYear: 407,
+    lifespanLabel: "c. AD 349–407",
+    lifespanCertainty: "traditional",
+    kind: "church",
+    tier: "significant",
+    role: "Archbishop of Constantinople, preacher",
+    summary:
+      "Nicknamed \"Chrysostom\" (\"golden-mouthed\") for his eloquence, John's outspoken preaching against luxury and corruption in Constantinople led to his exile and death.",
+    lifeStory: [
+      "Born in Antioch, John studied rhetoric before turning to ascetic life, spending several years as a hermit in the mountains near the city, an experience that permanently damaged his health but shaped his preaching style. Ordained a priest in Antioch, he became famous for extensive, practical, and morally direct sermons on the biblical text.",
+      "In 398, John was made Archbishop of Constantinople, where his reforms of clerical excess and outspoken criticism of the lifestyle of the imperial court, particularly Empress Eudoxia, made him powerful enemies. A hostile synod, engineered by rival bishop Theophilus of Alexandria, deposed him in 403.",
+      "Briefly restored after popular unrest, John was exiled again in 404 and died in 407 during a forced march to a remoter place of exile, reportedly with the words \"Glory be to God for all things\" on his lips.",
+      "His extensive body of homilies, especially on Matthew, John, and Paul's epistles, remain among the most read patristic sermons, valued for their practical moral exhortation and vivid engagement with everyday life in a late Roman city.",
+    ],
+    occupation: "Priest, archbishop, preacher",
+    placesLived: "Antioch, Constantinople",
+    quotes: [
+      {
+        reference: "attributed final words",
+        note: "\"Glory be to God for all things.\"",
+      },
+    ],
+    verses: [],
+    sources: [
+      {
+        label: "Encyclopedia Britannica: Saint John Chrysostom",
+        url: "https://www.britannica.com/biography/Saint-John-Chrysostom",
+      },
+    ],
+  },
+  {
+    id: "benedict-of-nursia",
+    name: "Benedict of Nursia",
+    bornYear: 480,
+    diedYear: 547,
+    lifespanLabel: "c. AD 480–547",
+    lifespanCertainty: "traditional",
+    lifespanDatingNotes:
+      "The primary source for his life, Gregory the Great's Dialogues, was written decades after his death and mixes biography with miracle stories; exact dates are reconstructions.",
+    kind: "church",
+    tier: "major",
+    role: "Founder of Western monasticism",
+    summary:
+      "Author of the Rule of Saint Benedict, a balanced monastic code of prayer, work, and community life that became the template for Western monasticism for over a thousand years.",
+    lifeStory: [
+      "According to Gregory the Great's Dialogues, our main source for his life, Benedict was born in Nursia in central Italy and sent to study in Rome, but was so repelled by the city's moral decay that he withdrew to live as a hermit in a cave near Subiaco.",
+      "Benedict's reputation for holiness attracted disciples, and he eventually founded a group of monasteries, most famously Monte Cassino around 529, built on the site of a former pagan temple. There he composed his Rule, a practical guide balancing communal prayer (the \"divine office\"), manual labor, and study under the authority of an abbot.",
+      "The Benedictine Rule's moderation — avoiding the extreme asceticism of some earlier desert monasticism in favor of stability, obedience, and a sustainable daily rhythm (summarized in the later motto ora et labora, \"pray and work\") — allowed it to spread widely across Western Europe in the centuries after his death.",
+      "Benedictine monasteries became crucial centers for preserving classical and Christian texts, education, and agricultural innovation through the early medieval period, making Benedict's influence on Western civilization far greater than the modest scope of his own lifetime would suggest.",
+    ],
+    occupation: "Monk, abbot",
+    placesLived: "Nursia, Rome, Subiaco, Monte Cassino",
+    extraBiblicalReferences: [
+      {
+        source: "Gregory the Great, Dialogues",
+        citation: "Book 2",
+        summary:
+          "The primary and essentially only biographical source, written c. 593, roughly 50 years after Benedict's death, combining biography and miracle narrative.",
+        reliability:
+          "Later hagiographic source, written within living memory but with heavy legendary embellishment",
+      },
+    ],
+    quotes: [
+      {
+        reference: "Rule of Saint Benedict, Prologue",
+        note:
+          "\"Listen carefully, my child, to your master's precepts, and incline the ear of your heart.\"",
+      },
+    ],
+    verses: [],
+    sources: [
+      {
+        label: "Encyclopedia Britannica: Saint Benedict of Nursia",
+        url: "https://www.britannica.com/biography/Saint-Benedict-of-Nursia",
+      },
+      {
+        label: "CCEL: Rule of St. Benedict",
+        url: "https://www.ccel.org/ccel/benedict/rule.html",
+      },
+    ],
+  },
+  {
+    id: "gregory-the-great",
+    name: "Gregory the Great",
+    alternateNames: ["Pope Gregory I"],
+    bornYear: 540,
+    diedYear: 604,
+    lifespanLabel: "c. AD 540–604",
+    lifespanCertainty: "traditional",
+    kind: "church",
+    tier: "significant",
+    role: "Pope",
+    summary:
+      "A former Roman prefect turned monk and pope, Gregory reformed church administration, dispatched the mission that converted Anglo-Saxon England, and left an enduring mark on the papacy's authority and liturgy.",
+    lifeStory: [
+      "Gregory came from a wealthy senatorial Roman family and served as Prefect of Rome before renouncing secular life to convert his family estate into a monastery and become a monk himself, a step he later described as one of the happiest of his life.",
+      "Drawn back into public service, Gregory served as a papal representative (apocrisiarius) to Constantinople before being elected pope in 590, reluctantly by his own account, amid plague and Lombard invasions threatening Italy.",
+      "As pope, Gregory reorganized the administration of the extensive papal estates to fund charity for Rome's poor, negotiated directly with Lombard invaders when imperial authority proved absent, and asserted papal authority in ways that strengthened the office for centuries to come.",
+      "In 596, Gregory sent a mission of monks led by Augustine of Canterbury to evangelize the pagan Anglo-Saxon kingdoms of England, a decision often traced to Gregory's famous encounter with fair-haired Anglian slaves in the Roman forum (\"non Angli, sed angeli\" — \"not Angles, but angels\").",
+      "Gregory also wrote extensively on pastoral care (his Pastoral Rule became a standard manual for bishops throughout the Middle Ages) and is traditionally, though disputedly, associated with the codification of Gregorian chant.",
+    ],
+    occupation: "Roman prefect, monk, pope",
+    placesLived: "Rome, Constantinople",
+    quotes: [
+      {
+        reference: "attributed, on seeing Anglian slaves",
+        note: "\"Non Angli, sed angeli\" — \"Not Angles, but angels.\"",
+      },
+    ],
+    verses: [],
+    sources: [
+      {
+        label: "Encyclopedia Britannica: Saint Gregory I",
+        url: "https://www.britannica.com/biography/Saint-Gregory-I",
+      },
+      {
+        label: "New Advent Catholic Encyclopedia: Pope St. Gregory I",
+        url: "https://www.newadvent.org/cathen/06780a.htm",
+      },
+    ],
+  },
+  {
+    id: "patrick-of-ireland",
+    name: "Patrick of Ireland",
+    alternateNames: ["Saint Patrick"],
+    bornYear: 385,
+    diedYear: 461,
+    lifespanLabel: "c. AD 385–461",
+    lifespanCertainty: "disputed",
+    lifespanDatingNotes:
+      "Dates for Patrick are notoriously uncertain; traditional dating (390–461) rests on later medieval annals of dubious precision, and scholars continue to debate whether he should be dated to the earlier or later fifth century.",
+    kind: "church",
+    tier: "significant",
+    role: "Missionary bishop to Ireland",
+    summary:
+      "A Romano-British Christian enslaved in Ireland as a youth who later returned as a missionary bishop, Patrick is credited with the widespread Christianization of Ireland, though much of his legend developed centuries after his death.",
+    lifeStory: [
+      "Patrick's own writing, the Confessio, is the only reliably authentic source for his life. Born in Roman Britain to a Christian family (his father was a deacon), he was captured by Irish raiders at around age sixteen and enslaved for six years, tending sheep and, in his account, deepening his faith through prayer during his captivity.",
+      "Patrick escaped, made his way back to Britain, and reported a vision calling him to return to Ireland as a missionary. After ecclesiastical training, he went back to the land of his enslavement, this time to preach the gospel among a largely pagan Celtic population.",
+      "Patrick's Confessio describes conflict with British ecclesiastical superiors who questioned his fitness and legitimacy, and it defends his mission and character against these charges — a rare firsthand glimpse of the anxieties of an early medieval missionary bishop.",
+      "The vast body of later Patrick legend — driving snakes from Ireland, using the shamrock to explain the Trinity, lighting the Paschal fire on the Hill of Slane — developed in hagiographies written centuries after his death and cannot be verified from his own writing, though they shaped his enduring popular image.",
+    ],
+    occupation: "Missionary bishop",
+    placesLived: "Roman Britain, Ireland",
+    extraBiblicalReferences: [
+      {
+        source: "Patrick, Confessio",
+        citation: "throughout",
+        url: "https://www.confessio.ie/",
+        summary:
+          "Patrick's own autobiographical defense of his mission and character, the only certainly authentic document from his life.",
+        reliability: "Primary source, written by Patrick himself",
+      },
+    ],
+    quotes: [
+      {
+        reference: "Confessio, §1",
+        note:
+          "\"I, Patrick, a sinner, a most simple countryman, the least of all the faithful...\"",
+      },
+    ],
+    verses: [],
+    sources: [
+      {
+        label: "Encyclopedia Britannica: Saint Patrick",
+        url: "https://www.britannica.com/biography/Saint-Patrick",
+      },
+      {
+        label: "Confessio.ie: Patrick's Confessio (translated text)",
+        url: "https://www.confessio.ie/",
+      },
+    ],
+  },
+  {
+    id: "charlemagne",
+    name: "Charlemagne",
+    alternateNames: ["Charles the Great", "Karl der Große"],
+    bornYear: 748,
+    diedYear: 814,
+    lifespanLabel: "AD 748–814",
+    lifespanCertainty: "firm",
+    kind: "church",
+    tier: "significant",
+    role: "King of the Franks, Holy Roman Emperor",
+    summary:
+      "King of the Franks who was crowned Emperor by Pope Leo III in 800, Charlemagne unified much of Western Europe under Christian rule and sponsored a revival of learning known as the Carolingian Renaissance.",
+    lifeStory: [
+      "Charlemagne inherited the Frankish kingdom jointly with his brother Carloman in 768 and became sole ruler in 771. Over decades of campaigning he expanded Frankish control across most of Western and Central Europe, including a brutal, decades-long conquest of the pagan Saxons that involved forced conversion and mass killings, most infamously the Massacre of Verden.",
+      "Charlemagne saw himself as a defender and promoter of the church, corresponding with popes, supporting missionary efforts, and enforcing tithing and church attendance within his territories. His alliance with the papacy culminated on Christmas Day, 800, when Pope Leo III crowned him Emperor in Rome — reviving, symbolically, the title of Roman Emperor in the West and creating a template for what would become the Holy Roman Empire.",
+      "His court at Aachen became a center of the \"Carolingian Renaissance,\" a deliberate revival of classical and Christian learning led by scholars such as Alcuin of York, who standardized monastic education, promoted a legible new script (Carolingian minuscule), and worked to correct and standardize biblical and liturgical texts.",
+      "Charlemagne's empire fragmented after his death among his heirs, but his coronation established a durable link between Western Christian kingship and papal legitimation that shaped European politics for centuries, including the later Investiture Controversy.",
+    ],
+    occupation: "King, Emperor",
+    placesLived: "Aachen, various Frankish territories",
+    verses: [],
+    sources: [
+      {
+        label: "Encyclopedia Britannica: Charlemagne",
+        url: "https://www.britannica.com/biography/Charlemagne",
+      },
+    ],
+  },
+  {
+    id: "photius",
+    name: "Photius of Constantinople",
+    alternateNames: ["Photios I"],
+    bornYear: 810,
+    diedYear: 893,
+    lifespanLabel: "c. AD 810–893",
+    lifespanCertainty: "traditional",
+    kind: "church",
+    tier: "notable",
+    role: "Patriarch of Constantinople",
+    summary:
+      "A brilliant scholar-statesman twice installed as Patriarch of Constantinople, Photius's disputes with Rome over papal authority and doctrine prefigured the later formal schism between East and West.",
+    lifeStory: [
+      "Photius was a layman and celebrated scholar in the imperial civil service when he was rapidly elevated through clerical ranks and installed as Patriarch of Constantinople in 858, replacing the deposed Ignatius — an irregular succession that Pope Nicholas I refused to recognize.",
+      "The resulting dispute, sometimes called the Photian Schism, involved competing claims of jurisdiction between Rome and Constantinople, disagreements over missionary rights in newly converted Bulgaria, and a theological dispute over the Filioque clause (whether the Nicene Creed should say the Holy Spirit proceeds from the Father \"and the Son\") that would become one of the enduring doctrinal divides between Eastern and Western Christianity.",
+      "Photius was deposed and later reinstated as circumstances in Constantinople shifted; the schism with Rome was formally healed within his lifetime, but the underlying tensions over papal primacy and the Filioque he had articulated resurfaced two centuries later in the more permanent Great Schism of 1054.",
+      "Beyond ecclesiastical politics, Photius was one of the great scholars of Byzantine learning, compiling the Bibliotheca, a vast summary of ancient texts (many now lost) that preserved knowledge of classical literature for later generations.",
+    ],
+    occupation: "Scholar, patriarch",
+    placesLived: "Constantinople",
+    verses: [],
+    sources: [
+      {
+        label: "Encyclopedia Britannica: Saint Photius",
+        url: "https://www.britannica.com/biography/Saint-Photius",
+      },
+    ],
+  },
+  {
+    id: "anselm-of-canterbury",
+    name: "Anselm of Canterbury",
+    bornYear: 1033,
+    diedYear: 1109,
+    lifespanLabel: "AD 1033–1109",
+    lifespanCertainty: "firm",
+    kind: "church",
+    tier: "notable",
+    role: "Archbishop of Canterbury, theologian",
+    summary:
+      "An Italian-born Benedictine monk who became Archbishop of Canterbury, Anselm is remembered as \"the father of scholasticism\" for his rigorous rational arguments for God's existence and his theory of atonement.",
+    lifeStory: [
+      "Born in Aosta in the Kingdom of Burgundy, Anselm became a monk at the Norman abbey of Bec, rising to abbot and gaining fame for his intellectual rigor and devotional writing, including the Proslogion, which contains his famous \"ontological argument\" for God's existence — reasoning that God, defined as \"that than which nothing greater can be conceived,\" must exist, since existence in reality is greater than existence in the mind alone.",
+      "Anselm was made Archbishop of Canterbury in 1093 and spent much of his tenure in conflict with English kings William II and Henry I over the Investiture Controversy — the broader European struggle over whether kings or the church had authority to appoint bishops — leading to two periods of exile.",
+      "His treatise Cur Deus Homo (\"Why God Became Man\") developed an influential \"satisfaction\" theory of atonement, arguing that human sin created an infinite debt to God's honor that only a God-man could satisfy, a framework that shaped Western atonement theology for centuries.",
+    ],
+    occupation: "Monk, archbishop, theologian",
+    placesLived: "Aosta, Bec (Normandy), Canterbury",
+    quotes: [
+      {
+        reference: "Proslogion, Chapter 1",
+        note:
+          "\"I do not seek to understand in order to believe, but I believe in order to understand.\" (Credo ut intelligam)",
+      },
+    ],
+    verses: [],
+    sources: [
+      {
+        label: "Encyclopedia Britannica: Saint Anselm of Canterbury",
+        url: "https://www.britannica.com/biography/Saint-Anselm-of-Canterbury",
+      },
+    ],
+  },
+  {
+    id: "bernard-of-clairvaux",
+    name: "Bernard of Clairvaux",
+    bornYear: 1090,
+    diedYear: 1153,
+    lifespanLabel: "AD 1090–1153",
+    lifespanCertainty: "firm",
+    kind: "church",
+    tier: "significant",
+    role: "Cistercian abbot, preacher",
+    summary:
+      "The most influential churchman of his era, Bernard led the reforming Cistercian monastic movement, preached the Second Crusade, and shaped medieval devotion to Christ and Mary through his mystical writings.",
+    lifeStory: [
+      "Bernard entered the fledgling, strict Cistercian order at Cîteaux in 1112 with a group of relatives and friends he had persuaded to join him, and within three years was sent to found a new monastery at Clairvaux, which he led as abbot for the rest of his life and which grew into one of the most important religious houses in Europe.",
+      "Bernard's charisma and reputation for holiness gave him outsized influence in the politics of the church, and he was frequently called upon to mediate papal schisms, condemn perceived heresies (including the teaching of Peter Abelard), and advise kings.",
+      "In 1146, at the request of Pope Eugene III, Bernard preached the call to the Second Crusade with tremendous popular effect; its subsequent military failure, however, damaged his reputation and prompted him to write a defense of his actions, distinguishing the rightness of the cause from the outcome of the campaign.",
+      "Bernard's theological and devotional writing, especially his sermons on the Song of Songs, cultivated an intensely affective, bridal mysticism centered on personal love for Christ, and helped popularize devotion to the Virgin Mary in the medieval West.",
+    ],
+    occupation: "Abbot, preacher, theologian",
+    placesLived: "Fontaine-lès-Dijon, Cîteaux, Clairvaux",
+    quotes: [
+      {
+        reference: "On Loving God",
+        note: "\"The reason for loving God is God himself.\"",
+      },
+    ],
+    verses: [],
+    sources: [
+      {
+        label: "Encyclopedia Britannica: Saint Bernard of Clairvaux",
+        url: "https://www.britannica.com/biography/Saint-Bernard-of-Clairvaux",
+      },
+    ],
+  },
+  {
+    id: "francis-of-assisi",
+    name: "Francis of Assisi",
+    alternateNames: ["Giovanni di Pietro di Bernardone"],
+    bornYear: 1181,
+    diedYear: 1226,
+    lifespanLabel: "AD 1181/82–1226",
+    lifespanCertainty: "firm",
+    kind: "church",
+    tier: "major",
+    role: "Founder of the Franciscan order",
+    summary:
+      "A wealthy merchant's son who renounced his inheritance to embrace radical poverty, Francis founded the Franciscan movement and became one of the most beloved figures in Christian history for his simplicity, joy, and love of creation.",
+    lifeStory: [
+      "Francis was born to a prosperous cloth merchant in Assisi and lived a carefree youth before a period of illness, imprisonment following a local war, and a series of religious experiences — including a vision at the ruined chapel of San Damiano in which he heard Christ tell him to \"rebuild my church\" — led to a dramatic break with his old life around 1206, when he publicly renounced his father's wealth.",
+      "Francis embraced a life of radical poverty, preaching repentance and rebuilding chapels with his own hands. A small band of followers gathered around him, and in 1209 Pope Innocent III verbally approved a simple rule of life for what became the Order of Friars Minor, or Franciscans — mendicant friars who owned no property and lived by begging and manual labor while preaching in towns and cities, a departure from the fixed monastic life of earlier orders.",
+      "Francis traveled to Egypt during the Fifth Crusade in 1219 in an unsuccessful but respectful attempt to convert the Sultan al-Kamil, an episode notable for the peaceful, dialogical approach it represented amid a crusading age.",
+      "In his final years Francis withdrew increasingly from formal leadership of the rapidly growing order, and in 1224, while praying on Mount La Verna, he reportedly received the stigmata — wounds corresponding to Christ's crucifixion — the first such report in Christian history. He died in 1226 and was canonized just two years later.",
+      "Francis's Canticle of the Sun, praising God through \"Brother Sun,\" \"Sister Moon,\" and other elements of creation, remains one of the most cherished texts of Christian spirituality and a foundational text for later Christian environmental theology.",
+    ],
+    occupation: "Friar, founder of a religious order",
+    placesLived: "Assisi, Rome, Egypt, La Verna",
+    quotes: [
+      {
+        reference: "Canticle of the Sun",
+        note:
+          "\"Praised be You, my Lord, through Brother Sun, who is the day and through whom You give us light.\"",
+      },
+      {
+        reference: "attributed",
+        note:
+          "\"Preach the Gospel at all times. When necessary, use words.\" (authenticity of this exact phrasing is disputed by scholars)",
+      },
+    ],
+    verses: [],
+    sources: [
+      {
+        label: "Encyclopedia Britannica: Saint Francis of Assisi",
+        url: "https://www.britannica.com/biography/Saint-Francis-of-Assisi",
+      },
+    ],
+  },
+  {
+    id: "dominic-de-guzman",
+    name: "Dominic de Guzmán",
+    bornYear: 1170,
+    diedYear: 1221,
+    lifespanLabel: "c. AD 1170–1221",
+    lifespanCertainty: "traditional",
+    kind: "church",
+    tier: "notable",
+    role: "Founder of the Dominican order",
+    summary:
+      "A Castilian priest who founded the Order of Preachers (Dominicans) to combat heresy through education and preaching, emphasizing rigorous study alongside vowed poverty.",
+    lifeStory: [
+      "Dominic was born in Castile and became a canon regular before accompanying his bishop on a diplomatic journey through southern France, where he encountered the Cathar (Albigensian) heresy, a dualist movement that rejected the material world and much of orthodox Catholic sacramental practice.",
+      "Convinced that heresy needed to be met with better preaching and a visible model of apostolic poverty rather than force alone, Dominic began preaching missions in Languedoc and in 1216 received papal approval from Honorius III for a new order dedicated to preaching and study, the Order of Preachers.",
+      "Unlike earlier monastic orders bound to a single location, Dominicans were organized as a mobile, educated preaching order that would send friars to universities and cities across Europe, producing some of the era's greatest scholars, including Thomas Aquinas a generation later.",
+      "Dominic's own order later became closely associated, controversially, with the medieval Inquisition established to investigate heresy, though this development occurred mainly after his death and reflected broader ecclesiastical and political structures of the thirteenth century rather than a specific mandate from Dominic himself.",
+    ],
+    occupation: "Priest, founder of a religious order",
+    placesLived: "Castile, Languedoc, Rome, Bologna",
+    verses: [],
+    sources: [
+      {
+        label: "Encyclopedia Britannica: Saint Dominic",
+        url: "https://www.britannica.com/biography/Saint-Dominic",
+      },
+    ],
+  },
+  {
+    id: "thomas-aquinas",
+    name: "Thomas Aquinas",
+    bornYear: 1225,
+    diedYear: 1274,
+    lifespanLabel: "c. AD 1225–1274",
+    lifespanCertainty: "traditional",
+    kind: "church",
+    tier: "major",
+    role: "Dominican theologian and philosopher",
+    summary:
+      "The most influential theologian of medieval Catholicism, Aquinas synthesized Aristotelian philosophy with Christian doctrine in the Summa Theologica, shaping Catholic theology to the present day.",
+    lifeStory: [
+      "Born to a noble family near Aquino in southern Italy, Thomas was sent as a child oblate to the great abbey of Monte Cassino before studying at the University of Naples, where he encountered the newly translated works of Aristotle and, against his family's fierce objections (who reportedly held him captive for over a year to dissuade him), joined the mendicant Dominican order.",
+      "Thomas studied under Albertus Magnus in Cologne and Paris, and spent his career teaching theology at Paris, Naples, and various Dominican houses in Italy, developing a formidable reputation despite a famously reserved, quiet personal manner that earned him the nickname \"the Dumb Ox\" among fellow students, until Albertus reportedly predicted his \"bellow\" would one day \"be heard throughout the world.\"",
+      "His two great works, the Summa Contra Gentiles and especially the unfinished Summa Theologica, systematically address the whole of Christian theology using the tools of Aristotelian logic, arguing that faith and reason are complementary rather than opposed, and offering his famous \"five ways\" of arguing for God's existence from observed features of the natural world.",
+      "In late 1273, Thomas experienced a profound mystical episode during Mass and abruptly stopped writing, reportedly telling his secretary that \"all that I have written seems like straw to me\" compared to what he had experienced, leaving the Summa Theologica incomplete at his death the following year.",
+      "Though controversial in his own time — some of his positions were briefly condemned by the Bishop of Paris in 1277 — Aquinas's synthesis was later embraced as the normative framework of Catholic philosophy and theology, formally endorsed by the church especially from the nineteenth century onward.",
+    ],
+    occupation: "Friar, theologian, philosopher",
+    placesLived: "Roccasecca, Naples, Cologne, Paris, Rome",
+    quotes: [
+      {
+        reference: "Summa Theologica, I, Q.2, Art.3",
+        note:
+          "Presents the \"five ways\" (quinque viae), arguments for God's existence from motion, causation, contingency, gradation, and design.",
+      },
+      {
+        reference: "attributed, late in life",
+        note: "\"All that I have written seems like straw to me.\"",
+      },
+    ],
+    verses: [],
+    sources: [
+      {
+        label: "Encyclopedia Britannica: Saint Thomas Aquinas",
+        url: "https://www.britannica.com/biography/Saint-Thomas-Aquinas",
+      },
+      {
+        label: "New Advent: Summa Theologica (full text)",
+        url: "https://www.newadvent.org/summa/",
+      },
+    ],
+  },
+  {
+    id: "peter-waldo",
+    name: "Peter Waldo",
+    alternateNames: ["Valdes of Lyon"],
+    bornYear: 1140,
+    diedYear: 1205,
+    lifespanLabel: "c. AD 1140–1205",
+    lifespanCertainty: "disputed",
+    lifespanDatingNotes:
+      "Very little is known of Waldo's life with certainty; even his exact death date and location are debated among historians, with some sources placing his death as late as 1218.",
+    kind: "church",
+    tier: "notable",
+    role: "Founder of the Waldensian movement",
+    summary:
+      "A wealthy Lyon merchant who gave away his possessions to preach apostolic poverty in the vernacular, Waldo's followers, the Waldensians, were condemned as heretical but survived underground for centuries, later joining the Reformation.",
+    lifeStory: [
+      "Waldo was a prosperous merchant in Lyon who, moved by a conversion experience around 1173, gave away his wealth, commissioned vernacular translations of scripture, and began preaching a message of voluntary poverty and lay biblical literacy.",
+      "His followers, known as the \"Poor of Lyon\" or Waldensians, preached without formal ecclesiastical authorization, which brought them into conflict with the local archbishop and, in 1184, formal condemnation as heretics by the church at the Synod of Verona, largely over the question of unauthorized lay preaching rather than doctrine.",
+      "Despite persecution across succeeding centuries, Waldensian communities survived in isolated valleys of the Alps between France and Italy, developing their own distinct religious identity emphasizing scripture in the vernacular and rejection of certain Catholic practices such as purgatory and the veneration of saints.",
+      "In the sixteenth century, the surviving Waldensian churches formally aligned themselves with the Protestant Reformation, and Waldensian communities continue to exist today, making the movement one of the longest-lived pre-Reformation dissenting Christian traditions.",
+    ],
+    occupation: "Merchant, lay preacher",
+    placesLived: "Lyon",
+    noExtraBiblicalRecordNote:
+      "No writings by Waldo himself survive; what is known of him comes from hostile ecclesiastical records and later Waldensian tradition.",
+    verses: [],
+    sources: [
+      {
+        label: "Encyclopedia Britannica: Waldenses",
+        url: "https://www.britannica.com/topic/Waldenses",
+      },
+    ],
+  },
+  {
+    id: "john-wycliffe",
+    name: "John Wycliffe",
+    bornYear: 1328,
+    diedYear: 1384,
+    lifespanLabel: "c. AD 1328–1384",
+    lifespanCertainty: "traditional",
+    kind: "church",
+    tier: "significant",
+    role: "Oxford theologian, Bible translator",
+    summary:
+      "An Oxford scholar whose challenges to papal authority, transubstantiation, and clerical wealth, along with his sponsorship of an English Bible translation, earned him the title \"Morning Star of the Reformation.\"",
+    lifeStory: [
+      "Wycliffe was an accomplished Oxford philosopher and theologian who, from the 1370s, began articulating increasingly radical positions: that civil and ecclesiastical authority depended on a state of grace (so that corrupt clergy forfeited legitimate authority), that scripture alone should be the final standard for Christian doctrine, and, most provocatively, that the doctrine of transubstantiation lacked scriptural support.",
+      "His views won him aristocratic protectors, including John of Gaunt, which shielded him for a time even as his teachings were condemned by church authorities. Wycliffe's followers, known as Lollards, spread his ideas among both clergy and laypeople in England.",
+      "Wycliffe sponsored and inspired the first complete translation of the Bible into English, produced by his followers (the degree of his personal hand in the translation itself is debated by scholars), aiming to give ordinary readers direct access to scripture without dependence on clerical mediation — a direct challenge to church control of biblical interpretation.",
+      "Though he died of natural causes in 1384, the Council of Constance in 1415 posthumously condemned Wycliffe as a heretic; his bones were exhumed, burned, and scattered into the River Swift in 1428, a symbolic act intended to erase his influence that instead cemented his later reputation as a forerunner of the Reformation.",
+    ],
+    occupation: "Theologian, Oxford lecturer",
+    placesLived: "Yorkshire, Oxford, Lutterworth",
+    quotes: [
+      {
+        reference: "attributed",
+        note:
+          "\"Englishmen learn Christ's law best in English. Moses heard God's law in his own tongue; so did Christ's apostles.\"",
+      },
+    ],
+    verses: [],
+    sources: [
+      {
+        label: "Encyclopedia Britannica: John Wycliffe",
+        url: "https://www.britannica.com/biography/John-Wycliffe",
+      },
+    ],
+  },
+  {
+    id: "jan-hus",
+    name: "Jan Hus",
+    bornYear: 1369,
+    diedYear: 1415,
+    lifespanLabel: "c. AD 1369–1415",
+    lifespanCertainty: "traditional",
+    kind: "church",
+    tier: "significant",
+    role: "Czech reformer and priest",
+    summary:
+      "A Bohemian priest and rector of Prague University whose calls for church reform, influenced by Wycliffe, led to his condemnation and burning at the Council of Constance despite a promised safe conduct.",
+    lifeStory: [
+      "Hus rose from a peasant family to become a priest, popular preacher at Prague's Bethlehem Chapel (where he preached in Czech rather than Latin), and rector of the University of Prague. He was deeply influenced by the writings of John Wycliffe, which circulated at the university and shaped Hus's own critique of clerical corruption, the sale of indulgences, and aspects of papal authority.",
+      "Hus's preaching against ecclesiastical abuses, particularly the sale of indulgences to fund a papal war, brought him into direct conflict with church authorities, and he was excommunicated in 1411. He continued preaching and writing, appealing to scripture and conscience over institutional authority.",
+      "In 1414, Hus was summoned to the Council of Constance to defend his views, traveling under a safe conduct promised by Emperor Sigismund. Despite this guarantee, he was arrested, tried for heresy, and, refusing to recant views he maintained he had not actually held or that were misrepresented, was burned at the stake on July 6, 1415.",
+      "Hus's execution provoked outrage in Bohemia and fueled the Hussite Wars, a series of conflicts between his followers and Catholic crusading forces that lasted for decades. He became a lasting national and religious symbol in the Czech lands and a direct inspiration cited by Martin Luther a century later.",
+    ],
+    occupation: "Priest, university rector",
+    placesLived: "Husinec, Prague, Constance",
+    extraBiblicalReferences: [
+      {
+        source: "Council of Constance, official condemnation records",
+        citation: "Session 15, 1415",
+        summary: "Official conciliar record of Hus's condemnation and execution.",
+        reliability: "Contemporary institutional record, from the hostile party's perspective",
+      },
+    ],
+    quotes: [
+      {
+        reference: "attributed, at the stake",
+        note: "\"O Holy Simplicity!\" (reportedly said on seeing a peasant add wood to the pyre).",
+      },
+      {
+        reference: "letters from Constance",
+        note:
+          "\"Seek the truth, listen to the truth, learn the truth, love the truth, speak the truth, hold the truth, defend the truth till death.\"",
+      },
+    ],
+    verses: [],
+    sources: [
+      {
+        label: "Encyclopedia Britannica: Jan Hus",
+        url: "https://www.britannica.com/biography/Jan-Hus",
+      },
+    ],
+  },
+  {
+    id: "johannes-gutenberg",
+    name: "Johannes Gutenberg",
+    bornYear: 1400,
+    diedYear: 1468,
+    lifespanLabel: "c. AD 1400–1468",
+    lifespanCertainty: "traditional",
+    kind: "church",
+    tier: "significant",
+    role: "Inventor of the printing press",
+    summary:
+      "A German goldsmith whose invention of movable-type printing and production of the Gutenberg Bible around 1455 revolutionized the spread of texts and, within decades, of the Reformation itself.",
+    lifeStory: [
+      "Gutenberg was born in Mainz to a patrician family and trained in metalworking, likely as a goldsmith. Around 1440, working in Strasbourg and later Mainz, he began developing a system of movable metal type, an adjustable mold for casting individual letters, oil-based ink, and a modified wine press for printing.",
+      "Financed by the businessman Johann Fust, Gutenberg produced his masterpiece around 1455: a Latin Bible printed with movable type, of stunning quality that rivaled hand-copied manuscripts. Roughly 180 copies were produced, of which around 49 survive today, some complete.",
+      "A legal dispute with Fust in 1455 stripped Gutenberg of his press and much of his equipment, and he died in relative obscurity in 1468, receiving little of the credit or profit for an invention that would transform European society.",
+      "Printing spread with extraordinary speed across Europe in the following decades, radically lowering the cost of books, accelerating literacy, and — crucially for church history — enabling the rapid, wide distribution of vernacular Bibles and Reformation pamphlets that Martin Luther and others would exploit within a generation.",
+    ],
+    occupation: "Goldsmith, printer, inventor",
+    placesLived: "Mainz, Strasbourg",
+    verses: [],
+    sources: [
+      {
+        label: "Encyclopedia Britannica: Johannes Gutenberg",
+        url: "https://www.britannica.com/biography/Johannes-Gutenberg",
+      },
+    ],
+  },
+  {
+    id: "martin-luther",
+    name: "Martin Luther",
+    bornYear: 1483,
+    diedYear: 1546,
+    lifespanLabel: "AD 1483–1546",
+    lifespanCertainty: "firm",
+    kind: "church",
+    tier: "major",
+    role: "German Reformer",
+    summary:
+      "An Augustinian monk whose 95 Theses against indulgences in 1517 ignited the Protestant Reformation; Luther's doctrine of justification by faith alone and translation of the Bible into German reshaped Western Christianity.",
+    lifeStory: [
+      "Luther was born in Eisleben and studied law before, following a terrifying thunderstorm in 1505 in which he vowed to become a monk if spared, he abandoned his legal career and entered an Augustinian monastery. He was ordained a priest in 1507 and earned a doctorate in theology, becoming a professor at the new University of Wittenberg.",
+      "Luther's intense personal struggle with guilt and the fear of divine judgment led him, through study of Paul's letters, especially Romans, to a breakthrough understanding of justification: that righteousness before God comes not from human effort or merit but is received by grace through faith alone (sola fide) — a conviction he later called his \"tower experience.\"",
+      "In October 1517, outraged by the sale of indulgences to fund the rebuilding of St. Peter's Basilica, Luther wrote his Ninety-Five Theses questioning the practice and, according to long tradition, posted them to the door of the Wittenberg castle church — an act made possible to spread swiftly by the recent invention of the printing press.",
+      "Refusing to recant before papal representatives and, in 1521, before the Diet of Worms (where he reportedly declared \"Here I stand, I can do no other\"), Luther was excommunicated and declared an outlaw. Protected by Elector Frederick the Wise, he hid at Wartburg Castle, where he translated the New Testament into German, a landmark of the German language and a direct challenge to clerical control of scripture.",
+      "Luther's mature reform movement produced a new understanding of the church built around scripture alone (sola scriptura), the priesthood of all believers, and a reduced sacramental system, while also involving him in bitter controversies — including his violent condemnation of the Peasants' Revolt of 1525 and deeply troubling, virulently antisemitic writings late in his life that later Lutheran churches have formally repudiated.",
+    ],
+    controversies: [
+      "Luther's harsh condemnation of the 1525 Peasants' War, urging German princes to 'smite, slay, and stab' the rebels, alienated many common people who had seen his reform as a movement for their liberation.",
+      "Luther's late-life treatise 'On the Jews and Their Lies' (1543) contains virulent antisemitic rhetoric that was later cited by Nazi propagandists; modern Lutheran denominations have formally repudiated these writings.",
+    ],
+    occupation: "Monk, priest, professor, reformer",
+    placesLived: "Eisleben, Erfurt, Wittenberg, Wartburg Castle",
+    extraBiblicalReferences: [
+      {
+        source: "Diet of Worms, official proceedings",
+        citation: "1521",
+        summary:
+          "Imperial records of Luther's appearance and refusal to recant before Emperor Charles V.",
+        reliability: "Contemporary institutional record",
+      },
+    ],
+    quotes: [
+      {
+        reference: "attributed, Diet of Worms, 1521",
+        note:
+          "\"Here I stand, I can do no other. God help me. Amen.\" (exact wording debated by historians)",
+      },
+      {
+        reference: "Ninety-Five Theses, #1",
+        note:
+          "\"When our Lord and Master Jesus Christ said, 'Repent,' he willed the entire life of believers to be one of repentance.\"",
+      },
+    ],
+    verses: [],
+    sources: [
+      {
+        label: "Encyclopedia Britannica: Martin Luther",
+        url: "https://www.britannica.com/biography/Martin-Luther",
+      },
+      {
+        label: "CCEL: Works of Martin Luther",
+        url: "https://www.ccel.org/ccel/luther",
+      },
+    ],
+  },
+  {
+    id: "huldrych-zwingli",
+    name: "Huldrych Zwingli",
+    alternateNames: ["Ulrich Zwingli"],
+    bornYear: 1484,
+    diedYear: 1531,
+    lifespanLabel: "AD 1484–1531",
+    lifespanCertainty: "firm",
+    kind: "church",
+    tier: "significant",
+    role: "Swiss Reformer",
+    summary:
+      "A Zurich priest who led the Swiss Reformation independently of Luther, Zwingli reformed worship, disputed the nature of the Eucharist, and died on the battlefield defending Protestant Zurich.",
+    lifeStory: [
+      "Zwingli studied humanist scholarship, including Greek, which shaped his direct engagement with the New Testament text, before becoming a priest and eventually, in 1519, the people's priest at the Grossmünster in Zurich, where he began preaching systematically through books of the Bible rather than the traditional lectionary.",
+      "Zwingli led Zurich toward reform through public disputations rather than singular dramatic acts, persuading the city council in 1523 to abolish the Mass, remove images from churches, and adopt a simplified, scripture-centered form of worship, effectively founding the Reformed (as distinct from Lutheran) branch of Protestantism.",
+      "Zwingli and Luther met at the Marburg Colloquy in 1529 in an attempt to unify the Protestant movement but famously failed to agree on the nature of Christ's presence in the Lord's Supper — Zwingli holding a symbolic, memorial view against Luther's insistence on Christ's real bodily presence — a division that has persisted between Lutheran and Reformed traditions.",
+      "Zwingli was killed in 1531 at the Battle of Kappel, fighting alongside Zurich's forces against Catholic cantons, one of the relatively few major Reformers to die in armed conflict.",
+    ],
+    occupation: "Priest, reformer",
+    placesLived: "Wildhaus, Glarus, Einsiedeln, Zurich",
+    verses: [],
+    sources: [
+      {
+        label: "Encyclopedia Britannica: Huldrych Zwingli",
+        url: "https://www.britannica.com/biography/Huldrych-Zwingli",
+      },
+    ],
+  },
+  {
+    id: "john-calvin",
+    name: "John Calvin",
+    bornYear: 1509,
+    diedYear: 1564,
+    lifespanLabel: "AD 1509–1564",
+    lifespanCertainty: "firm",
+    kind: "church",
+    tier: "major",
+    role: "French Reformer, theologian of Geneva",
+    summary:
+      "A French lawyer-turned-theologian whose Institutes of the Christian Religion systematized Reformed theology and whose governance of Geneva made the city a model for Reformed Protestantism across Europe.",
+    lifeStory: [
+      "Calvin was born in Noyon, France, and trained in law and humanist classical scholarship before undergoing a religious conversion around 1533 that drew him toward the reform movement then spreading through France. Facing persecution as a Protestant, he fled France and, while passing through Geneva in 1536, was persuaded by the fiery reformer William Farel to stay and help reform the city.",
+      "That same year Calvin published the first edition of his Institutes of the Christian Religion, a systematic exposition of Protestant doctrine that he continued to expand throughout his life; it became the single most influential theological work of the Reformed tradition, organizing doctrine around the sovereignty and glory of God.",
+      "Expelled from Geneva in 1538 amid political conflict, Calvin spent three years in Strasbourg before returning in 1541 to lead the city's religious and moral reform for the rest of his life, establishing a consistory of pastors and elders to oversee both doctrine and public morals — a system admired by supporters as godly discipline and criticized by opponents as theocratic overreach.",
+      "Geneva under Calvin became a training center for Reformed pastors and refugees from across Europe, including John Knox, who called it \"the most perfect school of Christ,\" and its influence spread Reformed (Calvinist) Christianity into France (Huguenots), the Netherlands, Scotland, and eventually the English Puritan and American colonial traditions.",
+      "Calvin's theology, especially his doctrine of predestination — that God has sovereignly elected some to salvation — became a defining and often controversial hallmark of Reformed Protestantism, later systematized further by his followers into what became known as Calvinism.",
+    ],
+    controversies: [
+      "Calvin's Geneva consistory oversaw strict moral discipline over citizens' lives, and Calvin supported the 1553 execution by burning of Michael Servetus for heresy (denial of the Trinity), an episode frequently cited as a stain on his legacy even by admirers.",
+    ],
+    occupation: "Lawyer, theologian, pastor",
+    placesLived: "Noyon, Paris, Basel, Geneva, Strasbourg",
+    quotes: [
+      {
+        reference: "Institutes of the Christian Religion, Book I, Ch. 1",
+        note:
+          "\"Nearly all the wisdom we possess... consists of two parts: the knowledge of God and of ourselves.\"",
+      },
+    ],
+    verses: [],
+    sources: [
+      {
+        label: "Encyclopedia Britannica: John Calvin",
+        url: "https://www.britannica.com/biography/John-Calvin",
+      },
+      {
+        label: "CCEL: Institutes of the Christian Religion",
+        url: "https://www.ccel.org/ccel/calvin/institutes.html",
+      },
+    ],
+  },
+  {
+    id: "thomas-cranmer",
+    name: "Thomas Cranmer",
+    bornYear: 1489,
+    diedYear: 1556,
+    lifespanLabel: "AD 1489–1556",
+    lifespanCertainty: "firm",
+    kind: "church",
+    tier: "significant",
+    role: "Archbishop of Canterbury, architect of English Reformation liturgy",
+    summary:
+      "Archbishop of Canterbury under Henry VIII and Edward VI, Cranmer authored the Book of Common Prayer and shaped the theology and liturgy of the Church of England before being burned as a heretic under Mary I.",
+    lifeStory: [
+      "Cranmer was an Cambridge academic drawn into royal service through his suggestion that Henry VIII's marriage annulment case be argued via university theological opinion rather than papal appeal — a solution the king liked enough to make Cranmer Archbishop of Canterbury in 1533, in which role he formally annulled Henry's marriage to Catherine of Aragon.",
+      "Though initially cautious, Cranmer's own theology moved in a Protestant direction over the following decades, especially during the reign of the young Edward VI, when he was free to implement more thorough reform, most importantly authoring the Book of Common Prayer (1549, revised 1552), which replaced the Latin Mass with English-language worship and became the foundational liturgical text of Anglicanism.",
+      "When the Catholic Mary I came to the throne in 1553, Cranmer was arrested for treason and heresy. Under intense pressure he signed several recantations of his Protestant beliefs, but at his execution in 1556 he dramatically renounced the recantations and thrust the hand that had signed them first into the fire, declaring it should burn first for having \"offended.\"",
+      "The Book of Common Prayer, revised further after Cranmer's death, remained the standard liturgy of the Church of England and its global Anglican descendants for centuries, and its cadences deeply influenced English literary style.",
+    ],
+    occupation: "Archbishop, liturgist",
+    placesLived: "Aslockton, Cambridge, London, Oxford",
+    quotes: [
+      {
+        reference: "Book of Common Prayer",
+        note:
+          "Author of enduring English liturgical language, including the collect \"Lord of all power and might, who art the author and giver of all good things.\"",
+      },
+    ],
+    verses: [],
+    sources: [
+      {
+        label: "Encyclopedia Britannica: Thomas Cranmer",
+        url: "https://www.britannica.com/biography/Thomas-Cranmer",
+      },
+    ],
+  },
+  {
+    id: "henry-viii",
+    name: "Henry VIII",
+    bornYear: 1491,
+    diedYear: 1547,
+    lifespanLabel: "AD 1491–1547",
+    lifespanCertainty: "firm",
+    kind: "church",
+    tier: "significant",
+    role: "King of England",
+    summary:
+      "King of England whose desire to annul his marriage to Catherine of Aragon led him to break with Rome, establish himself as head of the Church of England, and dissolve England's monasteries.",
+    lifeStory: [
+      "Henry became king in 1509 and, in his early reign, was a defender of Catholic orthodoxy, even earning the papal title \"Defender of the Faith\" (Fidei Defensor) for a treatise attacking Luther. His priorities changed dramatically when his marriage to Catherine of Aragon failed to produce a surviving male heir and he sought an annulment to marry Anne Boleyn.",
+      "When Pope Clement VII refused to grant the annulment, Henry, with the help of Thomas Cromwell and Thomas Cranmer, engineered a legal and religious break from Rome, culminating in the Act of Supremacy (1534), which declared the king \"Supreme Head\" of the Church of England.",
+      "Henry's break with Rome was driven primarily by dynastic and personal motives rather than Protestant conviction, and he retained many traditional Catholic doctrines and practices throughout his reign even as he suppressed dissent from both conservative Catholics (executing Thomas More and John Fisher for refusing the oath of supremacy) and radical Protestants.",
+      "Between 1536 and 1541, Henry ordered the Dissolution of the Monasteries, seizing the immense wealth and land of English religious houses for the crown — a massive transfer of property that permanently reshaped English society, economy, and the physical landscape of ruined abbeys still visible today.",
+    ],
+    occupation: "King",
+    placesLived: "Greenwich, London, various English royal palaces",
+    verses: [],
+    sources: [
+      {
+        label: "Encyclopedia Britannica: Henry VIII",
+        url: "https://www.britannica.com/biography/Henry-VIII-king-of-England",
+      },
+    ],
+  },
+  {
+    id: "ignatius-of-loyola",
+    name: "Ignatius of Loyola",
+    bornYear: 1491,
+    diedYear: 1556,
+    lifespanLabel: "AD 1491–1556",
+    lifespanCertainty: "firm",
+    kind: "church",
+    tier: "significant",
+    role: "Founder of the Society of Jesus",
+    summary:
+      "A Basque soldier whose battlefield injury led to a religious conversion, Ignatius founded the Society of Jesus (Jesuits), which became a leading force of Catholic education, missions, and Counter-Reformation renewal.",
+    lifeStory: [
+      "Ignatius was a Spanish nobleman and soldier whose leg was shattered by a cannonball during the siege of Pamplona in 1521. During a long convalescence, denied the chivalric romances he wanted to read, he instead read a life of Christ and lives of the saints, sparking a profound conversion and a resolve to devote himself entirely to God.",
+      "After a period of intense asceticism, pilgrimage, and study — including formal theological education in Paris in his thirties, alongside much younger students — Ignatius developed the Spiritual Exercises, a structured month-long program of meditation and prayer designed to help a person discern God's will, which remains widely used in Catholic (and increasingly ecumenical) spiritual direction.",
+      "In 1540, Ignatius and a small group of companions, including Francis Xavier, received papal approval to found the Society of Jesus, an order distinguished by a fourth vow of special obedience to the pope, an emphasis on education, and flexibility to be deployed wherever most needed rather than being bound to a single monastery.",
+      "The Jesuits became a leading engine of the Catholic Counter-Reformation, founding schools and universities across Europe, sending missionaries to Asia and the Americas (most famously Francis Xavier to India and Japan, and later Matteo Ricci to China), and serving as influential confessors and advisors to European rulers.",
+    ],
+    occupation: "Soldier, priest, founder of a religious order",
+    placesLived: "Loyola (Basque Country), Manresa, Paris, Rome",
+    quotes: [
+      {
+        reference: "Spiritual Exercises",
+        note:
+          "\"Take, Lord, and receive all my liberty, my memory, my understanding, and my entire will.\" (the Suscipe prayer)",
+      },
+    ],
+    verses: [],
+    sources: [
+      {
+        label: "Encyclopedia Britannica: Saint Ignatius of Loyola",
+        url: "https://www.britannica.com/biography/Saint-Ignatius-of-Loyola",
+      },
+    ],
+  },
+  {
+    id: "teresa-of-avila",
+    name: "Teresa of Ávila",
+    alternateNames: ["Teresa Sánchez de Cepeda y Ahumada"],
+    bornYear: 1515,
+    diedYear: 1582,
+    lifespanLabel: "AD 1515–1582",
+    lifespanCertainty: "firm",
+    kind: "church",
+    tier: "significant",
+    role: "Carmelite mystic and reformer",
+    summary:
+      "A Spanish Carmelite nun and mystic whose reform of the Carmelite order and vivid writings on contemplative prayer made her one of the most influential spiritual teachers in Christian history and the first woman named a Doctor of the Church.",
+    lifeStory: [
+      "Teresa entered the Carmelite convent of the Incarnation in Ávila in 1535, but grew dissatisfied with what she saw as its relaxed observance of poverty and enclosure. Around 1554, after years of what she described as inconsistent devotion, she experienced a deep conversion that intensified her prayer life and, over subsequent years, a series of profound mystical experiences, including visions and the famous \"transverberation,\" a mystical piercing of her heart.",
+      "In 1562, Teresa founded the Convent of St. Joseph in Ávila as the first house of what became the Discalced (\"barefoot,\" i.e., stricter-observance) Carmelite reform, emphasizing poverty, enclosure, and contemplative prayer. Despite fierce opposition from within her own order and periods of investigation by the Inquisition, she went on to found over a dozen additional reformed convents across Spain.",
+      "Teresa's writings — including her Autobiography, The Way of Perfection, and especially The Interior Castle, which describes the soul's journey toward union with God through a series of seven \"mansions\" — are considered classics of Christian mystical literature, remarkable for their psychological precision and literary skill.",
+      "She worked closely with the younger friar John of the Cross to extend the Discalced reform to Carmelite men, and in 1970 Pope Paul VI named her the first woman Doctor of the Church, recognizing the enduring theological significance of her writing.",
+    ],
+    occupation: "Nun, mystic, reformer, writer",
+    placesLived: "Ávila, various Spanish cities",
+    quotes: [
+      {
+        reference: "attributed",
+        note:
+          "\"Christ has no body now on earth but yours, no hands but yours, no feet but yours.\" (authorship debated)",
+      },
+      {
+        reference: "The Interior Castle",
+        note:
+          "Describes the soul as a crystal castle with seven mansions, the innermost being union with God.",
+      },
+    ],
+    verses: [],
+    sources: [
+      {
+        label: "Encyclopedia Britannica: Saint Teresa of Ávila",
+        url: "https://www.britannica.com/biography/Saint-Teresa-of-Avila",
+      },
+    ],
+  },
+  {
+    id: "john-of-the-cross",
+    name: "John of the Cross",
+    alternateNames: ["Juan de Yepes Álvarez"],
+    bornYear: 1542,
+    diedYear: 1591,
+    lifespanLabel: "AD 1542–1591",
+    lifespanCertainty: "firm",
+    kind: "church",
+    tier: "notable",
+    role: "Carmelite mystic and poet",
+    summary:
+      "A Spanish Carmelite friar who partnered with Teresa of Ávila to reform the order, John's poetry and prose on the \"dark night of the soul\" remain foundational texts of Christian mysticism.",
+    lifeStory: [
+      "John was born to a poor family in Castile and joined the Carmelite order, studying theology at Salamanca before meeting Teresa of Ávila in 1567, who persuaded him to help extend her reform of stricter observance to the male branch of the order.",
+      "His support for the reform provoked fierce resistance from Carmelites opposed to the changes; in 1577 he was kidnapped by opponents within his own order and imprisoned for nine months in Toledo under harsh conditions, during which he composed some of his greatest poetry, reportedly from memory, before escaping.",
+      "John's major works, including the poem and commentary Dark Night of the Soul and Ascent of Mount Carmel, describe the soul's purifying journey through periods of spiritual desolation toward union with God — giving Christian spirituality its most famous term for periods of felt divine absence.",
+      "John was declared a Doctor of the Church in 1926, and his writings remain central texts for both Catholic contemplative spirituality and, more broadly, psychological and literary studies of mystical experience.",
+    ],
+    occupation: "Friar, mystic, poet",
+    placesLived: "Fontiveros, Salamanca, Toledo, Úbeda",
+    quotes: [
+      {
+        reference: "Dark Night of the Soul",
+        note: "\"In the dark night of the soul, bright flows the river of God.\"",
+      },
+    ],
+    verses: [],
+    sources: [
+      {
+        label: "Encyclopedia Britannica: Saint John of the Cross",
+        url: "https://www.britannica.com/biography/Saint-John-of-the-Cross",
+      },
+    ],
+  },
+  {
+    id: "menno-simons",
+    name: "Menno Simons",
+    bornYear: 1496,
+    diedYear: 1561,
+    lifespanLabel: "AD 1496–1561",
+    lifespanCertainty: "firm",
+    kind: "church",
+    tier: "notable",
+    role: "Anabaptist leader",
+    summary:
+      "A former Catholic priest from Friesland who became a leading voice of the pacifist Anabaptist movement, giving his name to the Mennonite churches that continue his tradition of adult baptism and nonviolence.",
+    lifeStory: [
+      "Menno Simons was ordained a Catholic priest in 1524 but grew doubtful of transubstantiation and, later, infant baptism as he studied scripture. The 1535 death of his own brother, killed among a group of radical, violent Anabaptists suppressed by authorities at Bolsward, deeply affected him and pushed him toward open break with the Catholic Church in 1536.",
+      "Menno emerged as a leader of the more moderate, pacifist wing of the Anabaptist movement, which had been badly discredited in the eyes of both Catholics and mainstream Protestants by the violent, apocalyptic episode at Münster in 1534–35, where radical Anabaptists had seized the city and instituted a chaotic theocratic and polygamous regime before being brutally crushed.",
+      "Traveling and writing under constant threat of arrest — Anabaptists were persecuted by Catholic and Protestant authorities alike for rejecting infant baptism and, in most cases, participation in warfare and civil oaths — Menno organized scattered Anabaptist congregations in the Netherlands and northern Germany into a more stable, disciplined church movement.",
+      "His followers became known as Mennonites, and the tradition he shaped — emphasizing believer's baptism, church discipline, nonresistance, and separation from worldly power — spread to North America with later waves of migration and continues today among Mennonite, Amish, and related Anabaptist communities.",
+    ],
+    occupation: "Priest, Anabaptist leader, writer",
+    placesLived: "Witmarsum (Friesland), various Dutch and German towns",
+    quotes: [
+      {
+        reference: "Foundation of Christian Doctrine",
+        note:
+          "\"True evangelical faith... cannot lie dormant; it clothes the naked, it feeds the hungry, it comforts the sorrowful.\"",
+      },
+    ],
+    verses: [],
+    sources: [
+      {
+        label: "Encyclopedia Britannica: Menno Simons",
+        url: "https://www.britannica.com/biography/Menno-Simons",
+      },
+    ],
+  },
+  {
+    id: "john-knox",
+    name: "John Knox",
+    bornYear: 1514,
+    diedYear: 1572,
+    lifespanLabel: "c. AD 1514–1572",
+    lifespanCertainty: "traditional",
+    kind: "church",
+    tier: "notable",
+    role: "Scottish Reformer",
+    summary:
+      "A fiery Scottish preacher trained under Calvin in Geneva, Knox led the Scottish Reformation and founded the Presbyterian tradition, most known for his uncompromising sermons and writings against Catholic monarchy.",
+    lifeStory: [
+      "Knox was ordained a Catholic priest but converted to Protestantism in the 1540s under the influence of reformers including George Wishart. Captured by French forces after the fall of the Protestant-held St. Andrews Castle in 1547, Knox spent nineteen months as a galley slave, an ordeal that hardened his convictions.",
+      "After release, Knox spent time in England and, following Mary I's restoration of Catholicism there, fled to Geneva, where he came under Calvin's influence and called the city \"the most perfect school of Christ since the days of the Apostles.\" While in exile he wrote The First Blast of the Trumpet Against the Monstrous Regiment of Women, a polemic against female rule aimed at Catholic queens, which later embarrassed him when Protestant Elizabeth I came to the English throne.",
+      "Knox returned to Scotland in 1559 and became the driving force of the Scottish Reformation, helping draft the Scots Confession and the First Book of Discipline, which established a Presbyterian system of church government — governed by elected elders rather than bishops — that became the foundation of the Church of Scotland.",
+      "Knox repeatedly clashed directly and dramatically with the Catholic Mary, Queen of Scots, in a series of famous confrontations, contributing to the political and religious turmoil that eventually led to her deposition.",
+    ],
+    occupation: "Priest, reformer, writer",
+    placesLived: "Haddington, St. Andrews, Geneva, Edinburgh",
+    quotes: [
+      {
+        reference: "attributed prayer",
+        note: "\"Give me Scotland, or I die.\"",
+      },
+    ],
+    verses: [],
+    sources: [
+      {
+        label: "Encyclopedia Britannica: John Knox",
+        url: "https://www.britannica.com/biography/John-Knox",
+      },
+    ],
+  },
+  {
+    id: "john-wesley",
+    name: "John Wesley",
+    bornYear: 1703,
+    diedYear: 1791,
+    lifespanLabel: "AD 1703–1791",
+    lifespanCertainty: "firm",
+    kind: "church",
+    tier: "major",
+    role: "Founder of Methodism",
+    summary:
+      "An Anglican priest whose tireless itinerant preaching and organizational genius sparked the Methodist movement and the broader Evangelical revival in eighteenth-century Britain and America.",
+    lifeStory: [
+      "Wesley was raised in a devout Anglican rectory family in Epworth, one of nineteen children of Samuel and Susanna Wesley, and was ordained a priest after studies at Oxford, where he and his brother Charles led a small group derisively nicknamed the \"Holy Club\" or \"Methodists\" for its disciplined, methodical approach to prayer and charitable work.",
+      "A difficult missionary stint in the American colony of Georgia (1735–1737) left Wesley discouraged about his own faith, but on May 24, 1738, at a meeting on Aldersgate Street in London, he experienced a profound assurance of salvation while listening to a reading of Luther's preface to Romans, famously describing his heart as \"strangely warmed.\"",
+      "Barred from many Anglican pulpits due to his enthusiasm, Wesley followed the example of his friend George Whitefield in taking to open-air preaching, traveling an estimated quarter-million miles on horseback over five decades and preaching tens of thousands of sermons across Britain, organizing converts into small accountability groups called \"societies\" and \"classes\" that became the backbone of the Methodist movement.",
+      "Though he intended Methodism to remain a renewal movement within the Church of England, tensions over sacraments (especially in America, cut off from Anglican clergy after the Revolution) led Wesley in 1784 to ordain ministers himself for America, a step that effectively launched Methodism as an independent denomination after his death.",
+      "Wesley was also a vigorous social reformer, opposing slavery (his last letter, written days before his death, encouraged William Wilberforce in his abolitionist campaign), promoting prison reform, and providing medical care and education for the poor.",
+    ],
+    occupation: "Anglican priest, evangelist, organizer",
+    placesLived: "Epworth, Oxford, Georgia (colonial America), London, Bristol",
+    quotes: [
+      {
+        reference: "Journal, May 24, 1738",
+        note:
+          "\"I felt my heart strangely warmed. I felt I did trust in Christ, Christ alone for salvation.\"",
+      },
+      {
+        reference: "attributed",
+        note: "\"The world is my parish.\"",
+      },
+    ],
+    verses: [],
+    sources: [
+      {
+        label: "Encyclopedia Britannica: John Wesley",
+        url: "https://www.britannica.com/biography/John-Wesley",
+      },
+      {
+        label: "CCEL: The Journal of John Wesley",
+        url: "https://www.ccel.org/ccel/wesley/journal.html",
+      },
+    ],
+  },
+  {
+    id: "charles-wesley",
+    name: "Charles Wesley",
+    bornYear: 1707,
+    diedYear: 1788,
+    lifespanLabel: "AD 1707–1788",
+    lifespanCertainty: "firm",
+    kind: "church",
+    tier: "notable",
+    role: "Methodist hymn writer",
+    summary:
+      "Brother of John Wesley and co-founder of Methodism, Charles wrote several thousand hymns, including \"Hark! The Herald Angels Sing\" and \"O for a Thousand Tongues to Sing,\" that shaped English-language Christian worship.",
+    lifeStory: [
+      "Charles Wesley co-founded the \"Holy Club\" at Oxford with his brother John and, like him, was ordained an Anglican priest and traveled to Georgia. He experienced his own evangelical conversion just days before John's, in May 1738.",
+      "While John became the movement's chief organizer and preacher, Charles became its poet, composing an estimated 6,000 hymns over his lifetime that set Methodist theology — particularly the experience of conversion and assurance of salvation — to memorable verse sung by ordinary people rather than reserved for trained choirs.",
+      "Hymns including \"Hark! The Herald Angels Sing,\" \"O for a Thousand Tongues to Sing,\" and \"Christ the Lord Is Risen Today\" remain in continuous use across Protestant hymnody, making Charles arguably as influential on popular Christian devotion as his more famous brother's preaching.",
+    ],
+    occupation: "Anglican priest, hymn writer",
+    placesLived: "Epworth, Oxford, Georgia, London",
+    quotes: [
+      {
+        reference: "\"Hark! The Herald Angels Sing\"",
+        note: "\"Hark! The herald angels sing, Glory to the newborn King.\"",
+      },
+      {
+        reference: "\"O for a Thousand Tongues to Sing\"",
+        note: "\"O for a thousand tongues to sing my great Redeemer's praise.\"",
+      },
+    ],
+    verses: [],
+    sources: [
+      {
+        label: "Encyclopedia Britannica: Charles Wesley",
+        url: "https://www.britannica.com/biography/Charles-Wesley",
+      },
+    ],
+  },
+  {
+    id: "george-whitefield",
+    name: "George Whitefield",
+    bornYear: 1714,
+    diedYear: 1770,
+    lifespanLabel: "AD 1714–1770",
+    lifespanCertainty: "firm",
+    kind: "church",
+    tier: "significant",
+    role: "Evangelist of the Great Awakening",
+    summary:
+      "An electrifying Anglican preacher whose powerful open-air sermons on both sides of the Atlantic helped ignite the First Great Awakening, drawing crowds of tens of thousands without amplification.",
+    lifeStory: [
+      "Whitefield was an Oxford contemporary of the Wesleys and part of their \"Holy Club,\" experiencing his own conversion before either of them and preceding John Wesley into open-air preaching after finding himself barred from parish pulpits for his revivalist style.",
+      "Renowned for a booming, theatrical voice that could reportedly be heard by thousands outdoors without amplification (a claim later analyzed and given some scientific credence by acoustic historians), Whitefield preached an estimated 18,000 sermons across Britain and made seven preaching tours of the American colonies.",
+      "Whitefield's American tours, especially in 1740, helped fuse local revivals into the broader trans-colonial phenomenon historians call the First Great Awakening, working alongside figures like Jonathan Edwards and drawing crowds so large that Benjamin Franklin, a skeptical admirer, calculated the size of the crowds he could address.",
+      "Unlike John Wesley, Whitefield held to a Calvinist theology of predestined election, a difference that caused friction between the two, though they remained personally close; Whitefield also, controversially by later standards, supported and personally owned slaves in Georgia to help fund the orphanage he founded there.",
+    ],
+    controversies: [
+      "Whitefield owned enslaved people and lobbied for the legalization of slavery in the colony of Georgia to provide labor for his orphanage, a significant moral failure by later — and even some contemporary — standards.",
+    ],
+    occupation: "Anglican priest, evangelist",
+    placesLived: "Gloucester, Oxford, Georgia, various American colonies, England",
+    quotes: [
+      {
+        reference: "attributed",
+        note:
+          "\"I am content to wait till the Day of Judgment for the clearing up of my reputation.\"",
+      },
+    ],
+    verses: [],
+    sources: [
+      {
+        label: "Encyclopedia Britannica: George Whitefield",
+        url: "https://www.britannica.com/biography/George-Whitefield",
+      },
+    ],
+  },
+  {
+    id: "jonathan-edwards",
+    name: "Jonathan Edwards",
+    bornYear: 1703,
+    diedYear: 1758,
+    lifespanLabel: "AD 1703–1758",
+    lifespanCertainty: "firm",
+    kind: "church",
+    tier: "significant",
+    role: "New England theologian and revival preacher",
+    summary:
+      "A Puritan pastor and philosopher-theologian whose preaching sparked revival in Northampton, Massachusetts, and whose writings made him early America's most important theological mind.",
+    lifeStory: [
+      "Edwards entered Yale College at age thirteen and became a pastor in Northampton, Massachusetts, succeeding his grandfather Solomon Stoddard. In 1734–35, his preaching sparked an intense local revival, which he documented in A Faithful Narrative of the Surprising Work of God, a text that circulated widely and influenced the broader transatlantic Great Awakening.",
+      "Edwards's most famous sermon, \"Sinners in the Hands of an Angry God\" (1741), preached with vivid, unrelenting imagery of divine judgment, became emblematic (sometimes to Edwards's later disadvantage) of the Great Awakening's revivalist intensity, though Edwards himself was a careful, philosophically sophisticated theologian rather than a simple hellfire preacher.",
+      "Edwards was ultimately dismissed from his Northampton pulpit in 1750 over a dispute regarding standards for church membership and communion, after which he served as a missionary to Native Americans at Stockbridge, during which period he wrote some of his most important philosophical theology, including Freedom of the Will.",
+      "In 1758 Edwards was appointed president of the College of New Jersey (later Princeton), but died of complications from a smallpox inoculation just weeks after taking office. He is widely regarded as colonial America's most significant philosophical theologian.",
+    ],
+    occupation: "Pastor, theologian, missionary",
+    placesLived: "East Windsor (Connecticut), Northampton (Massachusetts), Stockbridge, Princeton",
+    quotes: [
+      {
+        reference: "\"Sinners in the Hands of an Angry God,\" 1741",
+        note:
+          "\"The God that holds you over the pit of hell, much as one holds a spider... abhors you.\"",
+      },
+      {
+        reference: "Personal Narrative",
+        note:
+          "Describes a transformative sense of \"the glory of the divine Being\" that shaped his theology of beauty and God.",
+      },
+    ],
+    verses: [],
+    sources: [
+      {
+        label: "Encyclopedia Britannica: Jonathan Edwards",
+        url: "https://www.britannica.com/biography/Jonathan-Edwards",
+      },
+    ],
+  },
+  {
+    id: "william-carey",
+    name: "William Carey",
+    bornYear: 1761,
+    diedYear: 1834,
+    lifespanLabel: "AD 1761–1834",
+    lifespanCertainty: "firm",
+    kind: "church",
+    tier: "significant",
+    role: "Missionary to India, \"father of modern missions\"",
+    summary:
+      "An English cobbler-turned-missionary whose translation work, educational institutions, and social reform efforts in India, along with his influential pamphlet on missionary obligation, helped launch the modern Protestant missions movement.",
+    lifeStory: [
+      "Carey was a largely self-taught English shoemaker who learned Greek, Latin, and Hebrew while working his trade and became convinced, against the prevailing view among many contemporary Baptists that the Great Commission applied only to the apostolic age, that Christians retained an active obligation to evangelize the whole world.",
+      "In 1792 Carey published An Enquiry into the Obligations of Christians to Use Means for the Conversion of the Heathens, a pamphlet that helped found the Baptist Missionary Society; the following year he sailed for India, where he would spend the rest of his life without returning to England.",
+      "Carey settled eventually in the Danish colony of Serampore, near Calcutta, working initially as an indigo plantation manager to support himself while learning Bengali and other Indian languages. He and his colleagues translated the Bible, in whole or in part, into dozens of Indian languages and founded Serampore College in 1818, one of India's first degree-granting institutions.",
+      "Beyond translation, Carey campaigned against the practice of sati (widow immolation), promoted agricultural and botanical science, and helped establish a printing press that produced texts in numerous Indian languages, leaving a footprint on Indian education and public life well beyond narrowly religious activity.",
+      "Carey's example and writing are widely credited with launching the great wave of nineteenth-century Protestant foreign missions that followed, earning him the frequently used, if somewhat overstated, title \"father of modern missions.\"",
+    ],
+    occupation: "Cobbler, missionary, translator, botanist",
+    placesLived: "Paulerspury (England), Serampore and Calcutta (India)",
+    quotes: [
+      {
+        reference: "attributed motto",
+        note: "\"Expect great things from God; attempt great things for God.\"",
+      },
+    ],
+    verses: [],
+    sources: [
+      {
+        label: "Encyclopedia Britannica: William Carey",
+        url: "https://www.britannica.com/biography/William-Carey",
+      },
+    ],
+  },
+  {
+    id: "david-livingstone",
+    name: "David Livingstone",
+    bornYear: 1813,
+    diedYear: 1873,
+    lifespanLabel: "AD 1813–1873",
+    lifespanCertainty: "firm",
+    kind: "church",
+    tier: "significant",
+    role: "Missionary explorer of Africa",
+    summary:
+      "A Scottish missionary doctor whose explorations of central Africa combined evangelism, geographic discovery, and outspoken opposition to the East African slave trade.",
+    lifeStory: [
+      "Livingstone worked in a Scottish cotton mill as a child before training as a doctor and being sent by the London Missionary Society to southern Africa in 1841. He soon concluded that establishing scattered isolated mission stations was less effective than exploring and opening routes for what he called the \"three Cs\": Christianity, commerce, and civilization, believing legitimate trade could undercut the slave trade.",
+      "Between the 1850s and his death, Livingstone undertook a series of major expeditions across the African interior, becoming the first European to see and name Victoria Falls (after Queen Victoria) in 1855, and mapping substantial portions of the Zambezi River system, though several expeditions, including the disastrous Zambezi Expedition, ended in failure and loss of life.",
+      "Livingstone became increasingly consumed by exploring the sources of the Nile and campaigning against the brutal Arab-Swahili slave trade he witnessed devastating communities in the region he traveled; his vivid published accounts of slave trade atrocities helped galvanize British anti-slavery opinion and later contributed to the 1873 closure of the Zanzibar slave market.",
+      "Cut off from contact for years, Livingstone was famously located by journalist Henry Morton Stanley in 1871 near Lake Tanganyika, greeted by Stanley's now-legendary (if likely partly embellished) line \"Dr. Livingstone, I presume?\" Livingstone died in Africa in 1873; his heart was buried in Africa at his own wish, while his body was returned to England for burial in Westminster Abbey.",
+    ],
+    occupation: "Physician, missionary, explorer",
+    placesLived: "Blantyre (Scotland), Kuruman, Zambezi region, Lake Tanganyika area",
+    extraBiblicalReferences: [
+      {
+        source: "Henry Morton Stanley, How I Found Livingstone",
+        citation: "1872",
+        summary:
+          "Stanley's firsthand account of locating Livingstone in central Africa and their subsequent time together.",
+        reliability:
+          "Contemporary eyewitness account, though Stanley was known to embellish for dramatic effect",
+      },
+    ],
+    quotes: [
+      {
+        reference: "attributed",
+        note: "\"I am prepared to go anywhere, provided it be forward.\"",
+      },
+    ],
+    verses: [],
+    sources: [
+      {
+        label: "Encyclopedia Britannica: David Livingstone",
+        url: "https://www.britannica.com/biography/David-Livingstone",
+      },
+    ],
+  },
+  {
+    id: "william-wilberforce",
+    name: "William Wilberforce",
+    bornYear: 1759,
+    diedYear: 1833,
+    lifespanLabel: "AD 1759–1833",
+    lifespanCertainty: "firm",
+    kind: "church",
+    tier: "significant",
+    role: "British abolitionist parliamentarian",
+    summary:
+      "A British member of Parliament whose decades-long campaign, rooted in evangelical Christian conviction, led to the abolition of the British slave trade in 1807 and slavery itself in the British Empire shortly before his death.",
+    lifeStory: [
+      "Wilberforce was elected to Parliament at age 21 and lived initially as a fashionable young politician before undergoing an evangelical conversion in 1785 that reoriented his life around what he came to describe as his two great objects: the suppression of the slave trade and the reformation of public morals.",
+      "Working closely with a circle of evangelical reformers known as the Clapham Sect, and drawing on evidence gathered by campaigners including Thomas Clarkson and formerly enslaved writers such as Olaudah Equiano, Wilberforce introduced a bill to abolish the British slave trade nearly every year from 1789, facing repeated defeat amid powerful commercial and political opposition.",
+      "The Slave Trade Act finally passed in 1807, abolishing the trade (though not slavery itself) throughout the British Empire, a landmark achieved substantially through Wilberforce's persistence, parliamentary skill, and moral appeal, encouraged in his early efforts by a final letter from the aging John Wesley.",
+      "Wilberforce continued to campaign for the complete abolition of slavery itself for another quarter-century; the Slavery Abolition Act finally passed Parliament in 1833, just three days before his death, freeing enslaved people throughout most of the British Empire.",
+    ],
+    occupation: "Member of Parliament, philanthropist",
+    placesLived: "Hull, Cambridge, London",
+    quotes: [
+      {
+        reference: "speech to Parliament, 1789",
+        note:
+          "\"You may choose to look the other way, but you can never again say you did not know.\"",
+      },
+    ],
+    verses: [],
+    sources: [
+      {
+        label: "Encyclopedia Britannica: William Wilberforce",
+        url: "https://www.britannica.com/biography/William-Wilberforce",
+      },
+    ],
+  },
+  {
+    id: "charles-spurgeon",
+    name: "Charles Spurgeon",
+    alternateNames: ["Charles Haddon Spurgeon", "the Prince of Preachers"],
+    bornYear: 1834,
+    diedYear: 1892,
+    lifespanLabel: "AD 1834–1892",
+    lifespanCertainty: "firm",
+    kind: "church",
+    tier: "significant",
+    role: "English Baptist preacher",
+    summary:
+      "Known as the \"Prince of Preachers,\" Spurgeon pastored London's Metropolitan Tabernacle to congregations of thousands, and his published sermons remain among the most widely distributed Christian texts in history.",
+    lifeStory: [
+      "Spurgeon experienced a dramatic conversion at age fifteen after wandering into a small Primitive Methodist chapel during a snowstorm, and by sixteen was already preaching. His preaching gifts were quickly recognized, and at nineteen he became pastor of New Park Street Chapel in London, a congregation that grew so rapidly under his ministry that it required construction of the vast Metropolitan Tabernacle, seating around 5,000, completed in 1861.",
+      "Spurgeon preached without amplification to consistently full houses for decades, and his sermons were transcribed and published weekly, eventually filling 63 bound volumes — reportedly making him one of the best-selling authors in the English language during the nineteenth century, with sermons still reprinted and read widely today.",
+      "Beyond preaching, Spurgeon founded a pastors' training college, an orphanage, and numerous charitable institutions, while also engaging in significant theological controversy, most notably the \"Downgrade Controversy\" of the late 1880s, in which he broke from the Baptist Union over concerns that mainstream British Christianity was drifting from core doctrinal commitments under the influence of theological liberalism.",
+      "Spurgeon suffered throughout his life from gout, depression, and Bright's disease, and died in 1892 in Menton, France, where he had gone seeking recovery; his combination of doctrinal conservatism, oratorical brilliance, and social compassion left a lasting mark on evangelical Protestantism.",
+    ],
+    occupation: "Baptist pastor, author",
+    placesLived: "Kelvedon (Essex), Cambridgeshire, London",
+    quotes: [
+      {
+        reference: "Lectures to My Students",
+        note:
+          "\"A Bible that's falling apart usually belongs to someone who isn't.\" (widely attributed, exact origin debated)",
+      },
+      {
+        reference: "sermon, 1855",
+        note: "\"Praying is the best fighting.\"",
+      },
+    ],
+    verses: [],
+    sources: [
+      {
+        label: "Encyclopedia Britannica: Charles Haddon Spurgeon",
+        url: "https://www.britannica.com/biography/Charles-Haddon-Spurgeon",
+      },
+      {
+        label: "Spurgeon Center archive of sermons",
+        url: "https://www.spurgeon.org/resource-library/sermons/",
+      },
+    ],
+  },
+  {
+    id: "hudson-taylor",
+    name: "Hudson Taylor",
+    alternateNames: ["James Hudson Taylor"],
+    bornYear: 1832,
+    diedYear: 1905,
+    lifespanLabel: "AD 1832–1905",
+    lifespanCertainty: "firm",
+    kind: "church",
+    tier: "significant",
+    role: "Founder of the China Inland Mission",
+    summary:
+      "An English missionary who founded the China Inland Mission and pioneered a model of interdenominational, faith-supported mission work that emphasized adopting local dress and customs, becoming one of the most influential missionaries of the nineteenth century.",
+    lifeStory: [
+      "Taylor grew up in a Methodist family committed to missions and, after medical training, first traveled to China in 1854 under the Chinese Evangelization Society. Frustrated by that organization's financial instability and by missionary practice that kept foreigners isolated in coastal treaty ports, he developed convictions that would define his later work.",
+      "In 1865, Taylor founded the China Inland Mission (CIM) on principles that were then unusual: missionaries would not solicit funds directly but trust God to provide (a \"faith mission\" model), would be drawn from any Protestant denomination, and — most controversially to Victorian sensibilities — would adopt Chinese dress and, for men, the queue hairstyle, to live and travel more effectively among the inland Chinese population rather than remaining confined to coastal enclaves.",
+      "Under Taylor's leadership, the CIM grew to become the largest Protestant mission agency in China by the early twentieth century, sending hundreds of missionaries into inland provinces previously unreached by Western missionaries, though the mission's history is also marked by tragedy, including the deaths of Taylor's own wife and several children in China, and the killing of dozens of CIM missionaries during the Boxer Rebellion of 1900.",
+      "Taylor's faith-mission model and emphasis on cultural adaptation influenced the broader Protestant missions movement for generations afterward, and the organization he founded continues today, renamed OMF International.",
+    ],
+    occupation: "Missionary, physician, mission organization founder",
+    placesLived: "Barnsley (England), various inland Chinese provinces",
+    quotes: [
+      {
+        reference: "attributed",
+        note: "\"China is not to be won for Christ by quiet, ease-loving men and women.\"",
+      },
+    ],
+    verses: [],
+    sources: [
+      {
+        label: "Encyclopedia Britannica: Hudson Taylor",
+        url: "https://www.britannica.com/biography/Hudson-Taylor",
+      },
+    ],
+  },
+  {
+    id: "fanny-crosby",
+    name: "Fanny Crosby",
+    alternateNames: ["Frances Jane Crosby"],
+    bornYear: 1820,
+    diedYear: 1915,
+    lifespanLabel: "AD 1820–1915",
+    lifespanCertainty: "firm",
+    kind: "church",
+    tier: "notable",
+    role: "American hymn writer",
+    summary:
+      "An American poet blinded in infancy who wrote an estimated 8,000–9,000 gospel hymns, including \"Blessed Assurance\" and \"To God Be the Glory,\" making her one of the most prolific and beloved hymnists in American history.",
+    lifeStory: [
+      "Crosby lost her sight as an infant due to improper medical treatment for an eye infection and was educated at the New York Institute for the Blind, where she later taught for over a decade. She began writing secular poetry and songs before turning increasingly to hymn writing in the 1860s, collaborating with composers including William Howard Doane and Ira Sankey (the songleader for evangelist D. L. Moody's revival campaigns).",
+      "Crosby wrote with remarkable speed and volume — sometimes several hymns in a single day — and to avoid the appearance of overproduction under her own name, published many under dozens of pseudonyms. Her hymns, including \"Blessed Assurance,\" \"To God Be the Glory,\" and \"Pass Me Not, O Gentle Saviour,\" became staples of American revivalist and mainstream Protestant hymnody.",
+      "Beyond hymn writing, Crosby was active in urban rescue mission work in New York City, ministering personally to the poor and addicted in the Bowery district well into old age, seeing her hymn writing and her direct mission work as inseparable expressions of the same faith.",
+    ],
+    occupation: "Hymn writer, poet, mission worker",
+    placesLived: "Southeast, New York; New York City",
+    quotes: [
+      {
+        reference: "\"Blessed Assurance,\" 1873",
+        note: "\"Blessed assurance, Jesus is mine! Oh, what a foretaste of glory divine!\"",
+      },
+    ],
+    verses: [],
+    sources: [
+      {
+        label: "Encyclopedia Britannica: Fanny Crosby",
+        url: "https://www.britannica.com/biography/Fanny-Crosby",
+      },
+    ],
+  },
+  {
+    id: "william-seymour",
+    name: "William J. Seymour",
+    bornYear: 1870,
+    diedYear: 1922,
+    lifespanLabel: "AD 1870–1922",
+    lifespanCertainty: "firm",
+    kind: "church",
+    tier: "significant",
+    role: "Leader of the Azusa Street Revival",
+    summary:
+      "The son of formerly enslaved parents, Seymour led the Azusa Street Revival in Los Angeles (1906–1915), the racially integrated meeting widely regarded as the founding event of the global Pentecostal movement.",
+    lifeStory: [
+      "Seymour was born in Louisiana to parents who had been enslaved, and grew up amid the poverty and racial violence of the post-Reconstruction South before moving north and eventually to Houston, where he studied briefly under Charles Parham, an early proponent of the teaching that speaking in tongues was the necessary evidence of baptism in the Holy Spirit — though, due to segregation laws, Seymour was required to listen to Parham's classes from a separate room.",
+      "Invited to pastor a small Los Angeles holiness congregation in 1906, Seymour's preaching on Spirit baptism led to a spiritual outpouring that, after outgrowing a house meeting, moved to a former livery stable and African Methodist Episcopal church building at 312 Azusa Street.",
+      "The Azusa Street Revival, which continued nearly daily for about three years, was remarkable for its racial and gender integration at a time of strict American segregation — black, white, Latino, and Asian worshippers, along with men and women, participated and led together, a fact contemporary observers, both sympathetic and hostile, found startling.",
+      "News of the revival, spread through Seymour's paper The Apostolic Faith and by visitors who carried the experience home, is credited by historians as the primary catalyst for the modern global Pentecostal movement, which by the early twenty-first century numbered several hundred million adherents worldwide, including Pentecostal and charismatic Christians across every continent.",
+    ],
+    occupation: "Pastor, revivalist",
+    placesLived: "Centerville (Louisiana), Houston, Los Angeles",
+    quotes: [
+      {
+        reference: "The Apostolic Faith newsletter",
+        note:
+          "Reported the revival's message as one of \"the baptism with the Holy Ghost and fire\" available to all believers regardless of race.",
+      },
+    ],
+    verses: [],
+    sources: [
+      {
+        label: "Encyclopedia Britannica: Azusa Street Revival",
+        url: "https://www.britannica.com/event/Azusa-Street-Revival",
+      },
+    ],
+  },
+  {
+    id: "aimee-semple-mcpherson",
+    name: "Aimee Semple McPherson",
+    bornYear: 1890,
+    diedYear: 1944,
+    lifespanLabel: "AD 1890–1944",
+    lifespanCertainty: "firm",
+    kind: "church",
+    tier: "notable",
+    role: "Pentecostal evangelist, founder of the Foursquare Church",
+    summary:
+      "A Canadian-American evangelist and pioneer of religious media, McPherson built the 5,300-seat Angelus Temple in Los Angeles and founded the International Church of the Foursquare Gospel, becoming one of the most famous and controversial religious figures of early twentieth-century America.",
+    lifeStory: [
+      "McPherson was raised in a Salvation Army household in Ontario and experienced conversion and Pentecostal Spirit baptism as a teenager under evangelist Robert Semple, whom she married and accompanied on a short-lived missionary trip to China, where he died of malaria and dysentery shortly after their arrival in 1910.",
+      "Returning to North America, McPherson began an itinerant healing and revival ministry that drew enormous crowds, eventually settling in Los Angeles, where in 1923 she opened the Angelus Temple, an architecturally striking, technologically innovative megachurch seating over 5,000 that used radio broadcasting (McPherson held one of the first licenses granted to a woman in America), elaborate illustrated sermons, and stagecraft to reach mass audiences.",
+      "In 1927 McPherson founded the International Church of the Foursquare Gospel, organized around a \"foursquare\" gospel of Jesus as savior, baptizer, healer, and coming king; the denomination continued to grow into a significant global Pentecostal body long after her death.",
+      "McPherson's ministry was also marked by controversy, most sensationally a mysterious five-week disappearance in 1926 that she explained as a kidnapping but that produced conflicting evidence and intense public and legal scrutiny, along with a tumultuous personal life including multiple marriages and financial and legal disputes that made her a fixture of American tabloid coverage.",
+    ],
+    controversies: [
+      "Her 1926 disappearance and claimed kidnapping generated a highly publicized grand jury investigation amid allegations she had instead been in a romantic hideaway; charges were ultimately dropped, but the episode permanently colored her public reputation.",
+    ],
+    occupation: "Evangelist, radio broadcaster, denominational founder",
+    placesLived: "Salford (Ontario), China, Los Angeles",
+    quotes: [
+      {
+        reference: "attributed",
+        note: "\"When God pours out his Spirit, there's bound to be results.\"",
+      },
+    ],
+    verses: [],
+    sources: [
+      {
+        label: "Encyclopedia Britannica: Aimee Semple McPherson",
+        url: "https://www.britannica.com/biography/Aimee-Semple-McPherson",
+      },
+    ],
+  },
+  {
+    id: "karl-barth",
+    name: "Karl Barth",
+    bornYear: 1886,
+    diedYear: 1968,
+    lifespanLabel: "AD 1886–1968",
+    lifespanCertainty: "firm",
+    kind: "church",
+    tier: "significant",
+    role: "Swiss Reformed theologian",
+    summary:
+      "A Swiss pastor whose commentary on Romans and monumental Church Dogmatics led a twentieth-century revolt against theological liberalism, and who drafted the Barmen Declaration opposing Nazi influence over the German church.",
+    lifeStory: [
+      "Barth was trained in the dominant liberal Protestant theology of turn-of-the-century Germany, but his experience as a young pastor in Safenwil, Switzerland, and his shock at seeing many of his liberal theology professors sign a declaration supporting German war policy in 1914, led him to a fundamental break with liberal theology's confidence in human religious experience and cultural progress.",
+      "His 1919 (revised 1922) commentary The Epistle to the Romans reasserted the radical otherness and sovereignty of God against human religious striving, and became a landmark that launched what came to be called \"neo-orthodoxy\" or dialectical theology, shaking the complacency of the prevailing academic theological establishment.",
+      "As professor in Germany during the rise of Nazism, Barth became a leading figure of the \"Confessing Church,\" the movement of German Protestants who resisted the pro-Nazi \"German Christians\" faction's attempt to align church doctrine with Nazi racial ideology; he was the principal author of the 1934 Barmen Declaration, which asserted Christ alone, not any political leader or ideology, as the church's head, and was dismissed from his professorship and expelled from Germany in 1935 for refusing to swear unconditional loyalty to Hitler.",
+      "Barth spent the rest of his career at the University of Basel working on his Church Dogmatics, an immense multi-volume systematic theology (left unfinished at his death) that remains one of the most significant theological works of the twentieth century, influencing Protestant and, increasingly, Catholic theology alike.",
+    ],
+    occupation: "Pastor, theologian, professor",
+    placesLived: "Basel, Safenwil, Göttingen, Münster, Bonn",
+    quotes: [
+      {
+        reference: "attributed, on summarizing his theology",
+        note:
+          "\"Jesus loves me, this I know, for the Bible tells me so.\" (reportedly given when asked to summarize his life's theological work in one sentence)",
+      },
+    ],
+    verses: [],
+    sources: [
+      {
+        label: "Encyclopedia Britannica: Karl Barth",
+        url: "https://www.britannica.com/biography/Karl-Barth",
+      },
+    ],
+  },
+  {
+    id: "dietrich-bonhoeffer",
+    name: "Dietrich Bonhoeffer",
+    bornYear: 1906,
+    diedYear: 1945,
+    lifespanLabel: "AD 1906–1945",
+    lifespanCertainty: "firm",
+    kind: "church",
+    tier: "significant",
+    role: "German pastor, theologian, and anti-Nazi resister",
+    summary:
+      "A German Lutheran pastor and theologian who helped found the Confessing Church's underground seminary, joined a conspiracy against Hitler, and was executed by the Nazis just weeks before the end of World War II.",
+    lifeStory: [
+      "Bonhoeffer earned his doctorate in theology at 21 and studied briefly at Union Theological Seminary in New York, where exposure to the Black church in Harlem's Abyssinian Baptist Church profoundly shaped his theology of solidarity and lived faith. Returning to Germany as Hitler rose to power, Bonhoeffer was an early and outspoken critic, broadcasting a radio address just two days after Hitler's 1933 appointment as chancellor that warned against the dangers of a leader who could become an idol — a broadcast that was cut off before he finished.",
+      "As part of the Confessing Church resisting Nazi control of German Protestantism, Bonhoeffer led an illegal seminary at Finkenwalde training pastors outside the Nazi-aligned official church structures, an experience that produced his influential books on Christian community and radical discipleship, The Cost of Discipleship and Life Together.",
+      "By 1939, Bonhoeffer, despite the safety of an offer to stay in the United States, chose to return to Germany, reasoning he could not credibly help rebuild German Christian life after the war if he had not shared in its trials. He subsequently joined the Abwehr (military intelligence) resistance circle involved in plots against Hitler's life, a decision that placed him well outside traditional Christian pacifist ethics and which he wrestled with theologically as an extraordinary, tragic necessity.",
+      "Arrested in 1943 for his resistance activities, Bonhoeffer continued writing in prison, producing the fragmentary reflections later published as Letters and Papers from Prison. After the failed July 1944 plot to assassinate Hitler implicated him further, he was executed by hanging at Flossenbürg concentration camp on April 9, 1945, just weeks before the camp's liberation and Germany's surrender.",
+    ],
+    occupation: "Pastor, theologian, seminary director, resistance member",
+    placesLived: "Breslau, Berlin, New York City, Finkenwalde, Flossenbürg",
+    extraBiblicalReferences: [
+      {
+        source: "Eberhard Bethge, Dietrich Bonhoeffer: A Biography",
+        citation: "throughout",
+        summary:
+          "The definitive biography, written by Bonhoeffer's closest friend and fellow resistance participant.",
+        reliability:
+          "Primary-adjacent, written by an intimate contemporary with direct access to Bonhoeffer's papers",
+      },
+    ],
+    quotes: [
+      {
+        reference: "The Cost of Discipleship",
+        note: "\"When Christ calls a man, he bids him come and die.\"",
+      },
+      {
+        reference: "Letters and Papers from Prison",
+        note: "Reflections written during his final two years of imprisonment before execution.",
+      },
+    ],
+    verses: [],
+    sources: [
+      {
+        label: "Encyclopedia Britannica: Dietrich Bonhoeffer",
+        url: "https://www.britannica.com/biography/Dietrich-Bonhoeffer",
+      },
+    ],
+  },
+  {
+    id: "c-s-lewis",
+    name: "C. S. Lewis",
+    alternateNames: ["Clive Staples Lewis"],
+    bornYear: 1898,
+    diedYear: 1963,
+    lifespanLabel: "AD 1898–1963",
+    lifespanCertainty: "firm",
+    kind: "church",
+    tier: "significant",
+    role: "British writer and Christian apologist",
+    summary:
+      "An Oxford and Cambridge literary scholar who moved from atheism to Christianity in adulthood, Lewis became one of the twentieth century's most widely read popular Christian apologists and author of The Chronicles of Narnia.",
+    lifeStory: [
+      "Lewis was raised nominally Christian in Belfast but became a committed atheist as a teenager, a position he held through his service in World War I (where he was wounded) and his early academic career as a literary scholar at Oxford, where he became a close friend of fellow scholar and devout Catholic J.R.R. Tolkien.",
+      "Through a combination of philosophical reasoning, the influence of Christian friends including Tolkien, and what he described in his memoir Surprised by Joy as a long, reluctant intellectual journey, Lewis converted first to theism in 1929 and then specifically to Christianity in 1931, later becoming an active Anglican layman rather than clergy.",
+      "During World War II, Lewis delivered a series of BBC radio talks explaining and defending basic Christian belief to a wartime British public, later compiled into Mere Christianity, which remains one of the most widely read works of popular Christian apologetics ever written.",
+      "Lewis's other major Christian works include The Screwtape Letters (a satirical correspondence from a senior to a junior demon), The Problem of Pain, and Surprised by Joy, alongside his celebrated Chronicles of Narnia children's series and his academic scholarship on medieval and Renaissance literature at Oxford and later Cambridge.",
+      "Lewis's writing has remained continuously in print and influential across a very wide range of Christian traditions — evangelical, Catholic, and mainline alike — an unusual reach for a writer who himself remained a fairly traditional Anglican layman throughout his life.",
+    ],
+    occupation: "Literary scholar, novelist, essayist, apologist",
+    placesLived: "Belfast, Oxford, Cambridge",
+    quotes: [
+      {
+        reference: "Mere Christianity",
+        note:
+          "\"I believe in Christianity as I believe that the sun has risen: not only because I see it, but because by it I see everything else.\"",
+      },
+      {
+        reference: "The Weight of Glory",
+        note:
+          "Describes the human longing for a joy \"no experience in this world can satisfy\" as evidence pointing toward another world.",
+      },
+    ],
+    verses: [],
+    sources: [
+      {
+        label: "Encyclopedia Britannica: C. S. Lewis",
+        url: "https://www.britannica.com/biography/C-S-Lewis",
+      },
+    ],
+  },
+  {
+    id: "billy-graham",
+    name: "Billy Graham",
+    alternateNames: ["William Franklin Graham Jr."],
+    bornYear: 1918,
+    diedYear: 2018,
+    lifespanLabel: "AD 1918–2018",
+    lifespanCertainty: "firm",
+    kind: "church",
+    tier: "major",
+    role: "American evangelist",
+    summary:
+      "An American Southern Baptist evangelist whose decades of \"crusade\" preaching, radio, television, and advising of successive U.S. presidents made him one of the most recognized religious figures of the twentieth century, preaching in person to an estimated 200 million people worldwide.",
+    lifeStory: [
+      "Graham grew up on a North Carolina dairy farm and, after a conversion experience at a revival meeting as a teenager, trained at Bible colleges before rising to national prominence through his association with Youth for Christ and, decisively, his 1949 Los Angeles crusade, which was extended for weeks amid substantial newspaper coverage and drew wide public attention.",
+      "Graham went on to hold hundreds of large-scale evangelistic \"crusades\" across six continents over the following decades, adapting radio and then television broadcasting to reach unprecedented audiences, and founding the Billy Graham Evangelistic Association to support the organizational scale his ministry required.",
+      "Graham became an influential, if often controversial, spiritual advisor to every U.S. president from Harry Truman to Barack Obama, and worked, not without criticism from some quarters, to insist on racially integrated seating at his crusades in the American South well before this became legally mandated, inviting Martin Luther King Jr. to pray at a 1957 New York crusade.",
+      "Later in life Graham expressed regret over some of his political entanglements, particularly recordings revealed decades later of private conversations with President Nixon containing antisemitic remarks, for which Graham publicly apologized. He largely stepped back from a formal political role in his later ministry, focusing on straightforward gospel preaching.",
+      "Graham's ministry emphasized a simple, direct evangelical message calling listeners to personal decision for Christ, and the organizational and technological model he pioneered — mass media evangelism paired with local church partnership and post-crusade follow-up — became a template widely copied by later evangelists.",
+    ],
+    controversies: [
+      "Recordings released decades later revealed Graham making antisemitic remarks in a private 1972 Oval Office conversation with President Nixon; Graham later apologized publicly, saying the comments did not reflect his actual views or ministry.",
+    ],
+    occupation: "Evangelist, broadcaster",
+    placesLived: "Charlotte, North Carolina",
+    quotes: [
+      {
+        reference: "attributed, frequent crusade refrain",
+        note: "\"The Bible says...\"",
+      },
+      {
+        reference: "Just As I Am (autobiography)",
+        note: "Recounts his life and ministry in his own words, published 1997.",
+      },
+    ],
+    verses: [],
+    sources: [
+      {
+        label: "Encyclopedia Britannica: Billy Graham",
+        url: "https://www.britannica.com/biography/Billy-Graham",
+      },
+    ],
+  },
+  {
+    id: "mother-teresa",
+    name: "Mother Teresa",
+    alternateNames: ["Anjezë Gonxhe Bojaxhiu", "Saint Teresa of Calcutta"],
+    bornYear: 1910,
+    diedYear: 1997,
+    lifespanLabel: "AD 1910–1997",
+    lifespanCertainty: "firm",
+    kind: "church",
+    tier: "major",
+    role: "Founder of the Missionaries of Charity",
+    summary:
+      "An Albanian-born Catholic nun who founded the Missionaries of Charity in Calcutta to care for the poorest of the poor, becoming a global symbol of compassionate service and winning the 1979 Nobel Peace Prize.",
+    lifeStory: [
+      "Born Anjezë Gonxhe Bojaxhiu in Skopje (in present-day North Macedonia) to an ethnic Albanian family, she joined the Sisters of Loreto at eighteen and was sent to India, taking the name Teresa and teaching for nearly two decades at a Loreto convent school in Calcutta.",
+      "In 1946, on a train journey to Darjeeling, she experienced what she described as a distinct call within her vocation — \"the call within the call\" — to leave the convent and serve Christ directly among the poorest of Calcutta's slums. After receiving permission and basic medical training, she began her new work in 1948, and in 1950 founded the Missionaries of Charity, a new religious order dedicated to serving the destitute, dying, and abandoned.",
+      "The Missionaries of Charity grew from a single Calcutta house into a global order operating homes for the dying, orphanages, and hospices in dozens of countries, drawing both wide admiration for its direct, hands-on care of society's most marginalized and, from some critics including physician-writer Aroup Chatterjee and journalist Christopher Hitchens, sharp criticism over the medical standards of its facilities and its acceptance of donations from controversial figures.",
+      "Mother Teresa received the Nobel Peace Prize in 1979, using her acceptance speech to speak against abortion as, in her framing, a form of violence against the vulnerable. The posthumous publication of her private letters in Come Be My Light (2007) revealed decades of profound spiritual darkness and doubt she experienced privately even while publicly radiating serene faith, adding a complex and much-discussed dimension to her legacy.",
+      "She was canonized by Pope Francis in 2016 as Saint Teresa of Calcutta, and remains one of the most globally recognized Catholic figures of the modern era.",
+    ],
+    controversies: [
+      "Medical standards at Missionaries of Charity facilities were criticized by some visiting physicians and journalists as inadequate; her acceptance of donations from figures later convicted of fraud, and her public opposition to contraception and abortion in contexts of severe poverty, drew significant criticism as well as strong defense from supporters.",
+    ],
+    occupation: "Nun, founder of a religious order",
+    placesLived: "Skopje, Dublin, Calcutta",
+    quotes: [
+      {
+        reference: "attributed",
+        note: "\"Not all of us can do great things. But we can do small things with great love.\"",
+      },
+      {
+        reference: "Nobel Peace Prize acceptance speech, 1979",
+        note:
+          "Spoke of \"the greatest destroyer of peace today\" as being what she described as abortion.",
+      },
+    ],
+    verses: [],
+    sources: [
+      {
+        label: "Encyclopedia Britannica: Mother Teresa",
+        url: "https://www.britannica.com/biography/Mother-Teresa",
+      },
+      {
+        label: "Nobel Prize official biography",
+        url: "https://www.nobelprize.org/prizes/peace/1979/teresa/biographical/",
+      },
+    ],
+  },
+  {
+    id: "pope-john-xxiii",
+    name: "Pope John XXIII",
+    alternateNames: ["Angelo Giuseppe Roncalli"],
+    bornYear: 1881,
+    diedYear: 1963,
+    lifespanLabel: "AD 1881–1963",
+    lifespanCertainty: "firm",
+    kind: "church",
+    tier: "significant",
+    role: "Pope who convened the Second Vatican Council",
+    summary:
+      "Elected as a presumed caretaker pope at age 76, John XXIII surprised the Catholic world by convening the Second Vatican Council, launching the most significant reform of Catholic worship, theology, and posture toward the modern world in centuries.",
+    lifeStory: [
+      "Angelo Roncalli was born to a farming family near Bergamo, Italy, and spent much of his earlier career as a Vatican diplomat, serving in posts including Bulgaria, Turkey, and Greece, and as papal nuncio to France after World War II, gaining a reputation for pastoral warmth and quiet diplomatic effectiveness, including efforts to help Jewish refugees during the Holocaust while serving in wartime Turkey.",
+      "Elected pope in 1958 at age 76, largely expected by cardinals to be a transitional, low-impact pontificate, Roncalli took the name John XXIII and quickly confounded expectations, announcing in January 1959 his intention to convene an ecumenical council — the first since Vatican I nearly a century earlier — to bring about aggiornamento, an \"updating\" of the church's engagement with the modern world.",
+      "The Second Vatican Council opened in October 1962 with over 2,000 bishops from around the world in attendance, and would go on, across four sessions (the last three after John's death, under Pope Paul VI), to produce sweeping reforms including the use of vernacular languages in the Mass, a renewed emphasis on scripture, new statements on religious liberty and relations with other Christian denominations and non-Christian religions, and a redefined understanding of the church as \"the people of God.\"",
+      "John XXIII died in June 1963, only months into the Council's proceedings, but his decision to convene it is widely regarded as the single most consequential act of any twentieth-century pope; he was canonized by Pope Francis in 2014.",
+    ],
+    occupation: "Priest, Vatican diplomat, pope",
+    placesLived: "Sotto il Monte (Italy), Bulgaria, Turkey, France, Rome",
+    quotes: [
+      {
+        reference: "attributed, on opening the Council",
+        note: "Spoke of wanting to \"throw open the windows\" of the church to let in fresh air.",
+      },
+    ],
+    verses: [],
+    sources: [
+      {
+        label: "Encyclopedia Britannica: Saint John XXIII",
+        url: "https://www.britannica.com/biography/Saint-John-XXIII",
+      },
+    ],
+  },
+  {
+    id: "pope-john-paul-ii",
+    name: "Pope John Paul II",
+    alternateNames: ["Karol Józef Wojtyła"],
+    bornYear: 1920,
+    diedYear: 2005,
+    lifespanLabel: "AD 1920–2005",
+    lifespanCertainty: "firm",
+    kind: "church",
+    tier: "major",
+    role: "Pope",
+    summary:
+      "A Polish pope whose 27-year pontificate was among the longest and most consequential in history, playing a significant role in the collapse of Communism in Eastern Europe and traveling more widely than any previous pope.",
+    lifeStory: [
+      "Karol Wojtyła grew up in Poland under both Nazi occupation, during which he studied for the priesthood clandestinely while working in a stone quarry and chemical factory to avoid deportation, and later Communist rule, experiences that shaped his lifelong preoccupation with human dignity and resistance to totalitarian ideology.",
+      "Ordained a priest in 1946, Wojtyła rose through the Polish church hierarchy, becoming Archbishop of Kraków and a respected philosopher-theologian before his surprise election as pope in 1978 — the first non-Italian pope in over 450 years and the first ever from a Communist country.",
+      "As pope, John Paul II traveled to over 100 countries, using his global visibility, and especially his emotionally powerful 1979 return visit to Poland, to encourage the growing Solidarity trade union movement resisting Communist rule; many historians credit his support, alongside economic pressures and other factors, as a significant contribution to the largely nonviolent collapse of Communist governments across Eastern Europe by 1989–91.",
+      "John Paul II also worked to improve Catholic relations with Judaism (becoming the first pope to visit a synagogue and formally recognizing the State of Israel) and with other Christian traditions, issued the comprehensive Catechism of the Catholic Church (1992), and survived an assassination attempt in 1981 by a Turkish gunman, later visiting and forgiving his attacker in prison.",
+      "His pontificate also faced the emerging global clergy sexual abuse crisis, and later critics and some victims' advocates argued his Vatican response was slow and inadequate, a criticism that shadowed his legacy even as he was canonized by Pope Francis in 2014 amid continued broad Catholic devotion to him.",
+    ],
+    controversies: [
+      "Critics, including clergy abuse survivors' advocates, have argued that the Vatican under John Paul II responded too slowly and protectively toward the institutional church when confronting reports of clergy sexual abuse during his pontificate.",
+    ],
+    occupation: "Priest, philosopher, archbishop, pope",
+    placesLived: "Wadowice (Poland), Kraków, Vatican City",
+    quotes: [
+      {
+        reference: "homily, inaugural Mass, 1978",
+        note: "\"Be not afraid! Open wide the doors for Christ.\"",
+      },
+    ],
+    verses: [],
+    sources: [
+      {
+        label: "Encyclopedia Britannica: Saint John Paul II",
+        url: "https://www.britannica.com/biography/Saint-John-Paul-II",
+      },
+    ],
+  },
+  {
+    id: "desmond-tutu",
+    name: "Desmond Tutu",
+    bornYear: 1931,
+    diedYear: 2021,
+    lifespanLabel: "AD 1931–2021",
+    lifespanCertainty: "firm",
+    kind: "church",
+    tier: "significant",
+    role: "South African Anglican archbishop and anti-apartheid leader",
+    summary:
+      "The first Black Archbishop of Cape Town, Tutu was a leading moral voice against South African apartheid, won the 1984 Nobel Peace Prize, and later chaired the Truth and Reconciliation Commission that helped the country confront its past.",
+    lifeStory: [
+      "Tutu was born in Klerksdorp, South Africa, and trained initially as a teacher before turning to theological study and ordination as an Anglican priest, later studying theology in London, an experience that also exposed him directly to a society without legal racial segregation, sharpening his opposition to South African apartheid upon his return.",
+      "As Bishop of Lesotho, General Secretary of the South African Council of Churches, and later Bishop of Johannesburg and Archbishop of Cape Town (the first Black person to hold that office), Tutu became one of the most prominent domestic voices against apartheid, consistently advocating nonviolent resistance and international economic pressure (including sanctions and disinvestment) at a time when many anti-apartheid leaders, including Nelson Mandela, were imprisoned or exiled.",
+      "Tutu received the Nobel Peace Prize in 1984 in recognition of his role, using the platform to continue pressing internationally for an end to apartheid, which formally began to dismantle in the early 1990s under President F. W. de Klerk, leading to Mandela's release and 1994 election.",
+      "After apartheid's end, Tutu chaired South Africa's Truth and Reconciliation Commission (1996–1998), an institution that took public testimony from victims and perpetrators of apartheid-era violence in an effort to acknowledge past wrongs and enable national healing rather than pursuing purely retributive justice — a model since studied and partially emulated by other post-conflict societies.",
+      "In later years Tutu remained an outspoken moral voice on issues including LGBT rights within the Anglican Communion, climate change, and criticism of subsequent South African leaders when he felt they fell short of the values of the anti-apartheid movement, until his death in 2021.",
+    ],
+    occupation: "Priest, archbishop, human rights activist",
+    placesLived: "Klerksdorp, Johannesburg, London, Lesotho, Cape Town",
+    quotes: [
+      {
+        reference: "attributed",
+        note:
+          "\"If you are neutral in situations of injustice, you have chosen the side of the oppressor.\"",
+      },
+      {
+        reference: "attributed",
+        note:
+          "\"Do your little bit of good where you are; it's those little bits of good put together that overwhelm the world.\"",
+      },
+    ],
+    verses: [],
+    sources: [
+      {
+        label: "Nobel Prize official biography: Desmond Tutu",
+        url: "https://www.nobelprize.org/prizes/peace/1984/tutu/biographical/",
+      },
+      {
+        label: "Encyclopedia Britannica: Desmond Tutu",
+        url: "https://www.britannica.com/biography/Desmond-Tutu",
+      },
+    ],
+  },
+  {
+    id: "martin-luther-king-jr",
+    name: "Martin Luther King Jr.",
+    bornYear: 1929,
+    diedYear: 1968,
+    lifespanLabel: "AD 1929–1968",
+    lifespanCertainty: "firm",
+    kind: "church",
+    tier: "major",
+    role: "Baptist minister and civil rights leader",
+    summary:
+      "An American Baptist pastor whose theologically grounded, nonviolent leadership of the civil rights movement produced landmark victories against racial segregation and made him one of the most influential Christian moral voices of the twentieth century.",
+    lifeStory: [
+      "King was born into a family of Baptist ministers in Atlanta and pursued advanced theological study, earning a doctorate at Boston University, where he engaged deeply with both the Black church tradition of his upbringing and the philosophy of Christian nonviolent resistance associated with Mohandas Gandhi, which King came to see as a direct application of Jesus's teaching of love for enemies.",
+      "As a young pastor in Montgomery, Alabama, King was thrust into national leadership when the Montgomery Improvement Association, organized after Rosa Parks's arrest, selected him to lead the 1955–56 Montgomery Bus Boycott, a successful year-long campaign that ended legal segregation on the city's buses and established King as the movement's most visible leader.",
+      "Over the following decade King led and inspired a series of major campaigns — including the 1963 Birmingham campaign, the March on Washington (where he delivered his \"I Have a Dream\" speech), and the 1965 Selma to Montgomery marches — that combined explicitly Christian moral appeal, strategic nonviolent civil disobedience, and effective use of media coverage to build pressure that contributed directly to the Civil Rights Act of 1964 and Voting Rights Act of 1965.",
+      "King's later activism increasingly linked racial justice to opposition to the Vietnam War and to economic inequality more broadly, positions that cost him support even among some former allies. He was awarded the Nobel Peace Prize in 1964, the youngest recipient at the time.",
+      "King was assassinated in Memphis, Tennessee, on April 4, 1968, while supporting a sanitation workers' strike, an event that provoked national grief and unrest and cemented his status as a defining American moral and religious figure; his birthday is now a U.S. federal holiday.",
+    ],
+    occupation: "Baptist pastor, civil rights leader",
+    placesLived: "Atlanta, Boston, Montgomery, Memphis",
+    quotes: [
+      {
+        reference: "\"I Have a Dream\" speech, 1963",
+        note:
+          "\"I have a dream that my four little children will one day live in a nation where they will not be judged by the color of their skin but by the content of their character.\"",
+      },
+      {
+        reference: "Letter from Birmingham Jail, 1963",
+        note: "\"Injustice anywhere is a threat to justice everywhere.\"",
+      },
+    ],
+    verses: [],
+    sources: [
+      {
+        label: "Nobel Prize official biography: Martin Luther King Jr.",
+        url: "https://www.nobelprize.org/prizes/peace/1964/king/biographical/",
+      },
+      {
+        label: "The Martin Luther King Jr. Research and Education Institute, Stanford University",
+        url: "https://kinginstitute.stanford.edu/",
+      },
+    ],
+  },
 ];

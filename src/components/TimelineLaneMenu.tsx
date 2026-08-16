@@ -8,13 +8,25 @@ import { useEffect, useRef, useState } from "react";
  * of the app, at zoom-control scale to fit TimelineView's header.
  * ========================================================================== */
 
-export type TimelineLaneKey = "books" | "lifespans" | "biblical" | "world" | "religion";
+export type TimelineLaneKey =
+  | "books"
+  | "lifespans"
+  | "biblical"
+  | "church"
+  | "world"
+  | "movement"
+  | "religion";
 
+/** Chronological-ish reading order: Scripture first, then the church that grew out of it, the world
+ * around it, and the movements within it. "church" and "movement" arrived with the
+ * christian-history-atlas merge. */
 export const TIMELINE_LANE_ORDER: TimelineLaneKey[] = [
   "books",
   "lifespans",
   "biblical",
+  "church",
   "world",
+  "movement",
   "religion",
 ];
 
@@ -22,7 +34,9 @@ export const TIMELINE_LANE_LABELS: Record<TimelineLaneKey, string> = {
   books: "Books of the Bible",
   lifespans: "Lifespans",
   biblical: "Biblical",
+  church: "Church History",
   world: "World History",
+  movement: "Movements & Revivals",
   religion: "Other Religions",
 };
 
@@ -63,7 +77,9 @@ export default function TimelineLaneMenu({ visible, onToggle }: TimelineLaneMenu
           <rect x="1.5" y="6.85" width="8.5" height="2.3" rx="1.15" fill="currentColor" />
           <rect x="1.5" y="11.3" width="11" height="2.3" rx="1.15" fill="currentColor" />
         </svg>
-        <span className="tl-lane-menu-count">{visibleCount}/5</span>
+        <span className="tl-lane-menu-count">
+          {visibleCount}/{TIMELINE_LANE_ORDER.length}
+        </span>
       </button>
       {open && (
         <div className="tl-lane-menu-dropdown">

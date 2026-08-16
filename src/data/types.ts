@@ -18,6 +18,15 @@ export interface VerseRef {
   note?: string;
 }
 
+/** A citation from a historical figure's own writings — e.g. reference "Confessions, Book I" with
+ * the quoted line in `note`. Structurally the same as VerseRef but kept as its own type so a
+ * quotation can never be mistaken for a Bible reference: VerseRefs are rendered as buttons that
+ * navigate the Bible panel, and "Confessions, Book I" is not something that panel can resolve. */
+export interface QuoteRef {
+  reference: string;
+  note?: string;
+}
+
 export interface LocationHistory {
   founded?: string;
   population?: string;
@@ -117,6 +126,14 @@ export interface Person {
   /** How the lifespan dates were derived, including caveats, textual variants, or competing chronologies
    * — rendered as its own "Dating" section, same convention as TimelineEvent.datingNotes. */
   lifespanDatingNotes?: string;
+  /** Which stream of history this person belongs to. Absent means "biblical", so every person
+   * carried over from the original Atlas dataset is unaffected.
+   * - "biblical": named in Scripture. `verses` holds real Bible references, rendered as links into
+   *   the Bible panel, and the evidence section asks what survives *outside* the Bible.
+   * - "church": a post-apostolic church-history figure (Augustine, Luther, Wesley, Bonhoeffer, ...),
+   *   merged in from the standalone christian-history-atlas app. They are never named in Scripture,
+   *   so `verses` stays empty and `quotes` carries citations from their own writings instead. */
+  kind?: "biblical" | "church";
   tier: PersonTier;
   /** Short tag, e.g. "Apostle", "Roman Governor of Judea", "Prophetess". */
   role: string;
@@ -131,6 +148,10 @@ export interface Person {
   extraBiblicalReferences?: ExtraBiblicalReference[];
   /** Explicit note shown when no extra-biblical record exists, instead of the section being silently absent. */
   noExtraBiblicalRecordNote?: string;
+  /** Citations from this person's own writings, used instead of `verses` for kind: "church"
+   * figures — who have no Bible references of their own. Rendered as plain citations, never as
+   * links into the Bible panel. */
+  quotes?: QuoteRef[];
   verses: VerseRef[];
   /** Citations backing the historical claims — general further reading, e.g. a reputable encyclopedia entry. */
   sources?: SourceCitation[];
@@ -173,8 +194,18 @@ export interface Topic {
 }
 
 /** Which historical stream a timeline event belongs to — drives its lane/color on the zoomable
- * timeline and the category tag in its details panel. */
-export type TimelineEventCategory = "biblical" | "world" | "religion";
+ * timeline and the category tag in its details panel.
+ * - "biblical": events narrated in Scripture itself, creation through the apostolic age.
+ * - "church": church history proper — councils, creeds, schisms, key documents, institutional
+ *   milestones, from the post-apostolic era onward.
+ * - "world": surrounding world history that shaped or was shaped by the church.
+ * - "movement": renewal/reform/revival/mission movements (monastic reform, the Great Awakenings,
+ *   the modern missions movement, Pentecostalism, ...).
+ * - "religion": milestones of other world religions.
+ *
+ * "church" and "movement" arrived with the christian-history-atlas merge; the other three predate
+ * it and their events were left untouched. */
+export type TimelineEventCategory = "biblical" | "church" | "world" | "movement" | "religion";
 
 /** How firmly an event's date is established. Anything other than "firm" surfaces a small badge
  * next to the dateLabel in the details panel, so traditional/legendary material is never presented

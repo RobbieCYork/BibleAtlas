@@ -13,8 +13,12 @@
    * values by default (see index.css) — [data-theme="light"] below overrides. */
   --tl-biblical: var(--accent);
   --tl-biblical-rgb: 167, 139, 250;
+  --tl-church: #38bdf8;
+  --tl-church-rgb: 56, 189, 248;
   --tl-world: #94a3b8;
   --tl-world-rgb: 148, 163, 184;
+  --tl-movement: #fb7185;
+  --tl-movement-rgb: 251, 113, 133;
   --tl-religion: #f59e0b;
   --tl-religion-rgb: 245, 158, 11;
   --tl-life: #2dd4bf;
@@ -35,8 +39,12 @@
 
 :root[data-theme="light"] .tl-root {
   --tl-biblical-rgb: 124, 58, 237;
+  --tl-church: #0284c7;
+  --tl-church-rgb: 2, 132, 199;
   --tl-world: #64748b;
   --tl-world-rgb: 100, 116, 139;
+  --tl-movement: #e11d48;
+  --tl-movement-rgb: 225, 29, 72;
   --tl-religion: #d97706;
   --tl-religion-rgb: 217, 119, 6;
   --tl-life: #0d9488;
@@ -281,8 +289,18 @@
   border-bottom: 1px solid var(--tl-grid);
 }
 
+.tl-lane-underlay.tl-lane-church {
+  background: rgba(var(--tl-church-rgb), 0.045);
+  border-bottom: 1px solid var(--tl-grid);
+}
+
 .tl-lane-underlay.tl-lane-world {
   background: rgba(var(--tl-world-rgb), 0.045);
+  border-bottom: 1px solid var(--tl-grid);
+}
+
+.tl-lane-underlay.tl-lane-movement {
+  background: rgba(var(--tl-movement-rgb), 0.045);
   border-bottom: 1px solid var(--tl-grid);
 }
 
@@ -544,8 +562,16 @@
   background: var(--tl-biblical);
 }
 
+.tl-marker.tl-cat-church {
+  background: var(--tl-church);
+}
+
 .tl-marker.tl-cat-world {
   background: var(--tl-world);
+}
+
+.tl-marker.tl-cat-movement {
+  background: var(--tl-movement);
 }
 
 .tl-marker.tl-cat-religion {
@@ -578,8 +604,16 @@
   background: linear-gradient(to right, var(--tl-biblical), rgba(var(--tl-biblical-rgb), 0.45));
 }
 
+.tl-range-bar.tl-cat-church {
+  background: linear-gradient(to right, var(--tl-church), rgba(var(--tl-church-rgb), 0.45));
+}
+
 .tl-range-bar.tl-cat-world {
   background: linear-gradient(to right, var(--tl-world), rgba(var(--tl-world-rgb), 0.45));
+}
+
+.tl-range-bar.tl-cat-movement {
+  background: linear-gradient(to right, var(--tl-movement), rgba(var(--tl-movement-rgb), 0.45));
 }
 
 .tl-range-bar.tl-cat-religion {
@@ -681,8 +715,16 @@
   background: var(--tl-biblical);
 }
 
+.tl-cluster.tl-cat-church {
+  background: var(--tl-church);
+}
+
 .tl-cluster.tl-cat-world {
   background: var(--tl-world);
+}
+
+.tl-cluster.tl-cat-movement {
+  background: var(--tl-movement);
 }
 
 .tl-cluster.tl-cat-religion {

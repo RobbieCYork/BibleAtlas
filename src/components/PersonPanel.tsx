@@ -91,6 +91,23 @@ export default function PersonPanel({
 
       <VerseList verses={person.verses} onSelectVerse={onSelectVerse} />
 
+      {/* Church-history figures carry citations from their own writings instead of Bible references
+          (see Person.quotes) — rendered as plain text, never as buttons into the Bible panel, since
+          "Confessions, Book I" is not a reference that panel can resolve. */}
+      {person.quotes && person.quotes.length > 0 && (
+        <div className="verse-list quote-list">
+          <h4>In Their Own Words ({person.quotes.length})</h4>
+          <ul>
+            {person.quotes.map((q) => (
+              <li key={q.reference}>
+                <span className="verse-ref">{q.reference}</span>
+                {q.note && <span className="verse-note"> — {q.note}</span>}
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
+
       {person.reflectionPrompt && (
         <ReflectionPrompt
           prompt={person.reflectionPrompt}
@@ -180,8 +197,11 @@ export default function PersonPanel({
         )}
       </div>
 
+      {/* For biblical figures the question is what survives *outside* the Bible; for church-history
+          figures (kind: "church") there is no biblical record to be "extra" to, so the same section
+          is titled plainly. */}
       <div className="extra-biblical-section">
-        <h4>Extra-Biblical Evidence</h4>
+        <h4>{person.kind === "church" ? "Historical Evidence" : "Extra-Biblical Evidence"}</h4>
         {person.extraBiblicalReferences && person.extraBiblicalReferences.length > 0 ? (
           <ul className="extra-biblical-list">
             {person.extraBiblicalReferences.map((ref, i) => (
@@ -202,7 +222,9 @@ export default function PersonPanel({
         ) : (
           <p className="extra-biblical-none">
             {person.noExtraBiblicalRecordNote ??
-              "No known extra-biblical historical record of this person survives — what we know comes from the Bible text alone."}
+              (person.kind === "church"
+                ? "No detailed contemporary record of this person survives — what we know comes from later accounts."
+                : "No known extra-biblical historical record of this person survives — what we know comes from the Bible text alone.")}
           </p>
         )}
       </div>
