@@ -1360,6 +1360,115 @@ body.resizing-panels {
   background: var(--accent);
 }
 
+/* --- Hand-editing the book-by-book grid (own profile only, ReadingProgressGrid.tsx) --- */
+
+.reading-progress-edit-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 6px 0;
+}
+
+.reading-progress-edit-hint {
+  font-size: 12px;
+  color: var(--text-muted);
+}
+
+.reading-progress-edit-actions {
+  display: flex;
+  gap: 6px;
+  margin-left: auto;
+}
+
+.reading-progress-edit-btn {
+  border: none;
+  border-radius: 8px;
+  background: var(--accent);
+  color: #fff;
+  padding: 5px 12px;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.reading-progress-edit-btn:hover:not(:disabled) {
+  background: var(--accent-hover);
+}
+
+.reading-progress-edit-btn:disabled,
+.reading-progress-edit-cancel:disabled {
+  opacity: 0.6;
+  cursor: default;
+}
+
+.reading-progress-edit-cancel {
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: none;
+  color: var(--text);
+  padding: 5px 12px;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.reading-progress-edit-error {
+  margin: 0 0 6px;
+  font-size: 12px;
+  color: #ef4444;
+}
+
+/* Numbered chapter buttons are much taller than the 8px dots, so the scroll area gets more room
+   rather than editing being done through a 320px letterbox. */
+.reading-progress-books-editing {
+  max-height: 460px;
+}
+
+.reading-progress-book-all {
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  background: none;
+  color: var(--text-muted);
+  padding: 1px 6px;
+  font-size: 11px;
+  cursor: pointer;
+}
+
+.reading-progress-book-all:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+.reading-progress-chapters-editing {
+  gap: 4px;
+  margin-bottom: 4px;
+}
+
+.reading-progress-chip {
+  min-width: 26px;
+  min-height: 26px;
+  padding: 0 4px;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  background: none;
+  color: var(--text-muted);
+  font-size: 11px;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.reading-progress-chip:hover {
+  border-color: var(--accent);
+}
+
+.reading-progress-chip-read {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #fff;
+  font-weight: 600;
+}
+
 .profile-page-header {
   display: flex;
   align-items: baseline;
