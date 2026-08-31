@@ -10,6 +10,10 @@
   align-items: center;
   gap: 24px;
   padding: 14px 20px;
+  /* On devices with a notch/Dynamic Island (standalone PWA especially), the system status bar
+     (clock, battery, wifi) sits on top of this header's content unless we pad for it. The fallback
+     keeps ordinary padding on desktop and on phones with no inset (safe-area-inset-top: 0). */
+  padding-top: calc(14px + env(safe-area-inset-top, 0px));
   border-bottom: 1px solid var(--border);
   background: var(--panel-bg);
   /* Must clear the full-area mode takeovers (.timeline-mode / .myprofile-mode, both z-index 60):
@@ -2950,6 +2954,7 @@ body.resizing-panels {
   .app-header {
     gap: 10px;
     padding: 10px 12px;
+    padding-top: calc(10px + env(safe-area-inset-top, 0px));
   }
 
   .app-header h1 {
