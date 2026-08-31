@@ -2,15 +2,19 @@ import { createContext, useContext, useEffect, useLayoutEffect, useRef, useState
 import type { ReactNode } from "react";
 import { createPortal } from "react-dom";
 import type { TimelineEvent } from "../data/types";
-import { getTimelineEventsForEntity, personHasLifespan } from "../lib/timelineLinks";
+import { getTimelineEventsForEntity } from "../lib/timelineLinks";
 
 /* ============================================================================
  * LinkChoicePopup — the small anchored "View X / View in Timeline" chooser.
  *
- * Shown ONLY when a clicked auto-linked name has a timeline association
- * (a primaryEntityIds match or, for people, lifespan data). For every other
- * click — the overwhelming majority — the intercept calls the original direct
- * navigation callback untouched, with zero added friction.
+ * Shown ONLY when a clicked auto-linked name has a timeline association (a
+ * primaryEntityIds match) AND has no more specific home of its own to always
+ * win instead — in practice that's just "topic" today. Locations and people
+ * always resolve straight to their own place/article: a mention of either
+ * must never land on the Timeline, so those two kinds skip this chooser
+ * entirely regardless of any timeline association they might also have. For
+ * every other click — the overwhelming majority — the intercept calls the
+ * original direct navigation callback untouched, with zero added friction.
  *
  * The intercept is wired through context rather than props so the deeply
  * nested render sites (every verse, every article paragraph) don't need new
@@ -61,13 +65,28 @@ export function useLinkChoice() {
   ) => {
     // Verse refs and timeline-event links never need disambiguation; without a provider (or an id)
     // there is nothing to offer either. All of these fall straight through.
-    if (!handlers || !ann.id || ann.kind === "verse" || ann.kind === "timeline") {
+    //
+    // Locations and people are map/article destinations first and foremost — a mention of either
+    // must always land on its own place or person, never on the Timeline, even when the entity also
+    // happens to have a timeline association (an event's primaryEntityIds match, or lifespan data).
+    // The "View in Timeline" detour is only ever offered for kinds that have no more specific home of
+    // their own (currently just "topic") — Timeline itself, and its own entries, are untouched; this
+    // only changes what a location/person mention resolves to.
+    if (
+      !handlers ||
+      !ann.id ||
+      ann.kind === "verse" ||
+      ann.kind === "timeline" ||
+      ann.kind === "location" ||
+      ann.kind === "person"
+    ) {
       direct();
       return;
     }
+    // Only "poi" and "topic" ever reach here now — "person" (lifespan data) is filtered out above,
+    // so this is just the primaryEntityIds association check.
     const events = getTimelineEventsForEntity(ann.id);
-    const hasLifespan = ann.kind === "person" && personHasLifespan(ann.id);
-    if (events.length === 0 && !hasLifespan) {
+    if (events.length === 0) {
       // The common case: no association — navigate directly, unchanged.
       direct();
       return;
