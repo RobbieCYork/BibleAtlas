@@ -1124,7 +1124,7 @@ function App() {
         <button type="button" className="app-logo-button" onClick={goHome} aria-label="Go to Bible">
           <img src="/favicon.svg" className="app-logo" alt="" aria-hidden="true" />
         </button>
-        <h1>Biblical Atlas</h1>
+        <h1>Capstone Bible</h1>
         {searchMode === "map" && (
           <SearchBar
             locations={locations}

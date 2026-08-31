@@ -98,7 +98,7 @@ export default function ShareCardModal({ spec, filename, onClose }: ShareCardMod
           >
             {background.symbol && <span className="share-card-symbol">{background.symbol}</span>}
             <div ref={editableRef} className="share-card-content" contentEditable suppressContentEditableWarning />
-            <div className="share-card-footer">Biblical Atlas</div>
+            <div className="share-card-footer">Capstone Bible</div>
           </div>
 
           <div className="share-modal-controls">
