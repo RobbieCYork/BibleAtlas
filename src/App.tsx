@@ -102,7 +102,14 @@ function App() {
       ? { map: false, details: false, bible: true, notes: false, friends: false }
       : { map: true, details: false, bible: true, notes: false, friends: false }
   );
-  const [bibleWidth, setBibleWidth] = useState(340);
+  // Default desktop split: Bible panel gets 1/3 of the width, map gets the remaining 2/3 (map
+  // fills via flex:1 in .app-body, so only the Bible panel's width needs to be set). Clamped to
+  // the same [MIN_PANEL_WIDTH, MAX_PANEL_WIDTH] range the resize handle itself enforces. Mobile
+  // ignores this value entirely (panels go full-width via .panel-expand), so it's fine to compute
+  // it unconditionally from the initial viewport width.
+  const [bibleWidth, setBibleWidth] = useState(() =>
+    Math.min(MAX_PANEL_WIDTH, Math.max(MIN_PANEL_WIDTH, Math.round(window.innerWidth / 3)))
+  );
   const [detailsWidth, setDetailsWidth] = useState(380);
   const [notesWidth] = useState(380);
   const [friendsWidth] = useState(380);
@@ -514,6 +521,18 @@ function App() {
       });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [session, authResolved]);
+
+  // First-time visitor default: once we've finished checking for a saved reading position
+  // (guests resolve this immediately; signed-in users after the reading_progress lookup above)
+  // and found none, open straight to Matthew 1 instead of the "Select a book" welcome screen.
+  // Runs after the restore effect so a real saved position (which calls goToReference itself)
+  // always wins — this only fires when bibleReference is still unset.
+  useEffect(() => {
+    if (!restoreChecked) return;
+    if (bibleReference) return;
+    goToReference("Matthew 1");
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [restoreChecked]);
 
   // Gates BiblePanel's cold-start welcome screen (see the `initializing` prop passed to it below)
   // until we actually know whether there's a saved reading position to jump to — otherwise a
