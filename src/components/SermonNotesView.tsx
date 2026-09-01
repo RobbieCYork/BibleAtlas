@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { supabase, type SermonNote } from "../lib/supabase";
 import BackButton from "./BackButton";
+import { track } from "../lib/analytics";
 
 interface SermonNotesViewProps {
   userId: string | null | undefined;
@@ -63,6 +64,7 @@ export default function SermonNotesView({ userId }: SermonNotesViewProps) {
     saveTimer.current = setTimeout(async () => {
       if (!userId) return;
       if (isNew) {
+        track("sermon_note.create");
         const { data, error } = await supabase
           .from("sermon_notes")
           .insert({

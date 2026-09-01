@@ -28,6 +28,7 @@ import { CHAPTER_AUDIO_CREDIT, chapterAudioUrl, fallbackChapterAudioUrl } from "
 import { clipRangeForVerse, comparePosition } from "../lib/verseRange";
 import { shareFilename, verseCardSpec, type ShareCardSpec } from "../lib/shareCard";
 import ShareCardModal from "./ShareCardModal";
+import { track } from "../lib/analytics";
 import HighlightHandles from "./HighlightHandles";
 
 interface BiblePanelProps {
@@ -383,6 +384,9 @@ export default function BiblePanel({
       return { ...prev, [planId]: wasDone ? days.filter((d) => d !== dayNumber) : [...days, dayNumber] };
     });
     setPlanDayDone(userId, planId, dayNumber, !wasDone);
+    // Only the checking-off direction, and only the plan's own id (a fixed key from
+    // data/readingPlans.ts) — never which day or which passage.
+    if (!wasDone) track("plan.day_done", { plan: planId });
   };
 
   /** Opening a plan day drives the normal go-to-reference path (chapter load + verse scroll/flash),
@@ -396,6 +400,7 @@ export default function BiblePanel({
   };
 
   const openPlansView = (planId: string | null) => {
+    track("plan.open", planId ? { plan: planId } : undefined);
     setOpenPlanId(planId);
     setShowPlans(true);
     setShowIntro(false);
@@ -456,6 +461,7 @@ export default function BiblePanel({
   const handleToggleChapterRead = async () => {
     if (!userId || !currentBook || currentChapter === null) return;
     const next = !chapterMarkedRead;
+    if (next) track("bible.chapter_read");
     setChapterMarkedRead(next); // optimistic — this is a personal checklist, not worth a loading state
     if (next) {
       // Upsert, not insert — re-checking a chapter that's already read but aged past the reset window
@@ -860,6 +866,7 @@ export default function BiblePanel({
       setHighlights((hs) => hs.map((h) => (h.id === updated.id ? updated : h)));
       return updated;
     }
+    track("highlight.create", { color });
     const { data, error: hlError } = await supabase
       .from("highlights")
       .insert({
@@ -940,6 +947,8 @@ export default function BiblePanel({
     const { startVerse, startOffset, endVerse, endOffset } = popup;
     const text = buildQuotedText(startVerse, startOffset, endVerse, endOffset);
     const reference = `${currentBook} ${currentChapter}:${startVerse}${endVerse !== startVerse ? `-${endVerse}` : ""}`;
+    // The card KIND only — never the reference or the verse text it renders.
+    track("share.card", { kind: "verse" });
     setShareCardSpec(verseCardSpec(reference, text));
   };
 
@@ -1013,6 +1022,7 @@ export default function BiblePanel({
     const text = noteDraft.trim();
     if (!text) return;
     const editor = popup;
+    track("note.create");
     const { data, error: noteError } = await supabase
       .from("notes")
       .insert({

@@ -6,6 +6,8 @@ import Newsfeed from "./Newsfeed";
 import AvatarCropModal from "./AvatarCropModal";
 import LinkedVerseText from "./LinkedVerseText";
 import BackButton from "./BackButton";
+import AdminConsole from "./AdminConsole";
+import { fetchIsAdmin } from "../lib/adminApi";
 import { ProfileLinksEditor, ProfileLinksList, type LinkDrafts } from "./ProfileLinks";
 import {
   DEFAULT_LINK_VISIBILITY,
@@ -644,6 +646,21 @@ interface MyProfileViewProps {
  * account flyout to an internal "profile" view. */
 export default function MyProfileView({ userId, onDisplayNameSaved, onClose, onGoToVerse, onOpenFriends }: MyProfileViewProps) {
   const [postsTab, setPostsTab] = useState<"newsfeed" | "mine">("newsfeed");
+  // Whether to DRAW the Admin Console section. Not the access control: every query the console makes
+  // is refused server-side for a non-admin (see sql/019 — each admin_* function raises before doing
+  // any work, and analytics_events' RLS grants SELECT to admins only). A client that flipped this
+  // boolean would get a console full of "not authorized".
+  const [isAdmin, setIsAdmin] = useState(false);
+  const [adminOpen, setAdminOpen] = useState(false);
+  useEffect(() => {
+    let cancelled = false;
+    fetchIsAdmin(userId).then((ok) => {
+      if (!cancelled) setIsAdmin(ok);
+    });
+    return () => {
+      cancelled = true;
+    };
+  }, [userId]);
   return (
     <section className="myprofile-root" aria-label="My Profile">
       <header className="myprofile-header">
@@ -702,6 +719,22 @@ export default function MyProfileView({ userId, onDisplayNameSaved, onClose, onG
           </div>
           <div className="auth-settings-divider" />
           <DataExportControl userId={userId} />
+          {isAdmin && (
+            <>
+              <div className="auth-settings-divider" />
+              <div className="auth-settings-section auth-settings-section-stacked">
+                <span className="auth-settings-label">Admin Console</span>
+                <p className="auth-benefits">
+                  Usage, engagement, and moderation for the whole site. Only accounts listed in <code>admin_users</code>{" "}
+                  can load any of it — the database refuses the queries for everyone else, not just this button.
+                </p>
+                <button type="button" onClick={() => setAdminOpen((v) => !v)}>
+                  {adminOpen ? "Hide Admin Console" : "Open Admin Console"}
+                </button>
+                {adminOpen && <AdminConsole />}
+              </div>
+            </>
+          )}
         </div>
       </div>
     </section>

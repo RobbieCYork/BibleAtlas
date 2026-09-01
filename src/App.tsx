@@ -33,6 +33,7 @@ import DisplayNameGate from "./components/DisplayNameGate";
 import ResetPasswordGate from "./components/ResetPasswordGate";
 import { supabase, setRememberMe } from "./lib/supabase";
 import { useMobileTabs } from "./lib/mobileTabs";
+import { startAnalytics, track, noteAuthChange } from "./lib/analytics";
 import { locations } from "./data/locations";
 import { pois } from "./data/pois";
 import { people } from "./data/people";
@@ -184,6 +185,10 @@ function App() {
     touchPanelOrder(key);
     const p = panelsRef.current;
     if (p[key]) return;
+    // Feature-usage capture: which panels actually get opened. Only on a real
+    // open (the early return above means re-selecting an already-open panel
+    // isn't counted), and only the panel's own key — never what's inside it.
+    track("panel.open", { panel: key });
     const openKeys = (Object.keys(p) as PanelKey[]).filter((k) => p[k]);
     if (openKeys.length < MAX_OPEN_PANELS) {
       applyPanels({ ...p, [key]: true });
@@ -205,14 +210,20 @@ function App() {
   const mobilePanelOf = (p: Record<PanelKey, boolean>): PanelKey =>
     p.bible ? "bible" : p.notes ? "notes" : p.friends ? "friends" : p.articles ? "articles" : "map";
   // Mobile has exactly one active panel at a time, switched via the bottom tab bar.
-  const setMobileActivePanel = (key: PanelKey) =>
-    applyPanels({
+  const setMobileActivePanel = (key: PanelKey) => {
+    // Mobile's counterpart to openPanel's tracking above — the tab bar swaps the
+    // single active panel rather than going through openPanel, so it has to
+    // report for itself. Guarded on an actual change so a tap on the tab you're
+    // already standing on doesn't inflate the count.
+    if (!panelsRef.current[key]) track("panel.open", { panel: key });
+    return applyPanels({
       map: key === "map",
       bible: key === "bible",
       notes: key === "notes",
       friends: key === "friends",
       articles: key === "articles",
     });
+  };
 
   // Keep isMobile in sync with live resizes/rotations.
   useEffect(() => {
@@ -272,10 +283,17 @@ function App() {
     });
     const { data: listener } = supabase.auth.onAuthStateChange((event, newSession) => {
       setSession(newSession);
+      // Flush across the auth boundary so the events either side of a sign-in land with the
+      // right attribution, and the session row picks up its user_id on the next touch.
+      if (event === "SIGNED_IN" || event === "SIGNED_OUT") noteAuthChange();
       if (event === "PASSWORD_RECOVERY") setPasswordRecovery(true);
     });
     return () => listener.subscription.unsubscribe();
   }, []);
+
+  // Usage analytics: starts the session, the flush timer and the time-on-site heartbeat.
+  // Everything it does is fire-and-forget and failure-silent — see src/lib/analytics.ts.
+  useEffect(() => startAnalytics(), []);
 
   // A friend's "Copy invite link" produces a URL like "?invite=<their user id>". Save it to
   // localStorage (not just read from the URL) because a brand-new visitor has to sign up and click
@@ -452,6 +470,7 @@ function App() {
   // sets it lives in the app header, which MyProfileView doesn't own.
   const [viewedPersonId, setViewedPersonId] = useState<string | null>(null);
   const openMyProfile = () => {
+    track("panel.open", { panel: "profile" });
     setViewedPersonId(null);
     setShowMyProfile(true);
   };
@@ -478,6 +497,7 @@ function App() {
     const wasAlreadyShowing = showGame;
     closeTimeline();
     closeMyProfile();
+    if (!wasAlreadyShowing) track("panel.open", { panel: "games" });
     setShowGame(true);
     if (wasAlreadyShowing) setGameCenterNonce((n) => n + 1);
   };
@@ -786,6 +806,7 @@ function App() {
     // underneath, so its own entry point looks unresponsive. Always close the others first.
     closeGame();
     closeMyProfile();
+    track("panel.open", { panel: "timeline" });
     setTimelineFocusEntityId(null);
     setTimelineOverlayEventId(null);
     setShowTimeline(true);
@@ -1107,7 +1128,10 @@ function App() {
             {searchMode === "map" && (
               <SearchBar
                 locations={locations}
-                onSelect={focusLocationOnMap}
+                onSelect={(id) => {
+                  track("search.run", { scope: "places" });
+                  focusLocationOnMap(id);
+                }}
                 selectedLocationName={selectedLocation?.name ?? null}
               />
             )}
@@ -1117,7 +1141,12 @@ function App() {
                 icon="📖"
                 value={bibleSearchQuery}
                 onChange={setBibleSearchQuery}
-                onSubmit={() => setBibleSearchNonce((n) => n + 1)}
+                onSubmit={() => {
+                  // The scope, never the query. What someone searches Scripture for is
+                  // exactly the kind of thing this app has no business logging.
+                  track("search.run", { scope: "scripture" });
+                  setBibleSearchNonce((n) => n + 1);
+                }}
               />
             )}
             {/* Only genuinely ambiguous when both panels are open at once (desktop) — that's the

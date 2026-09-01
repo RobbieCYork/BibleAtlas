@@ -1,3 +1,5 @@
+import { track } from "../lib/analytics";
+
 export interface GameDef {
   key: string;
   icon: string;
@@ -68,7 +70,16 @@ export default function GameCenter({ onSelectGame }: GameCenterProps) {
       </div>
       <div className="game-center-list">
         {GAMES.map((g) => (
-          <button key={g.key} type="button" className="game-center-card" onClick={() => onSelectGame(g.key)}>
+          <button
+            key={g.key}
+            type="button"
+            className="game-center-card"
+            onClick={() => {
+              // Which games get picked — the game's own fixed key, nothing else.
+              track("game.play", { game: g.key });
+              onSelectGame(g.key);
+            }}
+          >
             <span className="game-center-card-icon" aria-hidden="true">
               {g.icon}
             </span>

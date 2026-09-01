@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from "react";
+import { track } from "../lib/analytics";
 import {
   supabase,
   displayFor,
@@ -461,6 +462,7 @@ function PostComposer({ userId, onPosted }: { userId: string; onPosted: () => vo
         if (uploadError) throw uploadError;
         videoUrl = supabase.storage.from("post-media").getPublicUrl(path).data.publicUrl;
       }
+      track("post.create");
       const { error: insertError } = await supabase.from("posts").insert({
         user_id: userId,
         body: body.trim(),
