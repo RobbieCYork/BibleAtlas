@@ -1327,6 +1327,7 @@ body.resizing-panels {
   align-items: center;
   justify-content: space-between;
   gap: 8px;
+  margin-bottom: 12px;
 }
 
 .auth-settings-label {
