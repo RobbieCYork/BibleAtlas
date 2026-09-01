@@ -3114,7 +3114,10 @@ body.resizing-panels {
   display: block;
   width: 34px;
   height: 34px;
-  border-radius: 8px;
+  /* No border-radius here on purpose. favicon.svg carries the brand mark's own corner radius
+     (3.13% of its width, measured off the owner's source artwork); an 8px CSS clip on a 34px box
+     is 23%, which re-rounded an already-rounded mark and made the header logo read as a squircle
+     while every raster icon stayed sharp. The SVG owns the radius now, so all the icons agree. */
   flex-shrink: 0;
 }
 

@@ -50,7 +50,13 @@
   --rubric-bright: #d06047;
   --verdigris: #3e6b52;
   --umber: #7a6144;
-  --brand: #5c3fa6; /* the brand violet, desaturated and pulled toward lapis */
+  /* The brand violet, sampled straight out of the owner's own logo artwork
+   * (public/brand-logo-source.png, whose embedded display profile converts to exactly this in
+   * sRGB). An earlier pass desaturated it toward lapis (#5c3fa6) to make it feel less like stock
+   * Tailwind violet; that killed the vivid-cool-against-warm tension the brand imagery is built
+   * on, so it's back. Purple means "Capstone / brand mark" here — NOT "sacred", and not a general
+   * UI accent (that's --accent, gold). Keep it scarce or it reads generic again. */
+  --brand: #7c3aed;
 
   /* --- Type roles --- */
   --display: "Cormorant Garamond", "Iowan Old Style", Georgia, "Times New Roman", serif;
