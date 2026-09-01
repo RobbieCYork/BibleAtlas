@@ -96,9 +96,89 @@ function ensureSatelliteLayer(map: maplibregl.Map) {
   );
 }
 
+/** Paint overrides that make the atlas's warm brown label ink legible over satellite photography.
+ *
+ * The parchment styling sets dark brown text on a pale vellum halo — perfect on the drawn map, and
+ * essentially invisible over dark saturated imagery (equatorial rainforest, the Carpathians, deep
+ * sea). Value contrast, not hue, is the problem: a dark fill only ever works on bright ground. So
+ * satellite mode flips every label to a light fill with a dark halo, the standard treatment for
+ * type over imagery — it survives both black-green jungle and blown-out desert without a trade-off.
+ *
+ * Fonts are untouched (the self-hosted Cinzel / EB Garamond SDF glyphs are the only ones served),
+ * as are text-size, spacing and case. Only colour and halo change. */
+const SATELLITE_LABEL_PAINT: Record<string, Record<string, unknown>> = {};
+{
+  // Country & state names: Cinzel caps, widely tracked, read at a glance across a whole landmass —
+  // the owner's actual complaint. Warmest white, heaviest halo, and the halo grows a little with
+  // zoom so it stays proportional to the larger type without bloating at z4.
+  const majuscule = {
+    "text-color": "#FEFBF2",
+    "text-halo-color": "rgba(18,14,9,0.92)",
+    "text-halo-width": ["interpolate", ["linear"], ["zoom"], 2, 1.7, 8, 2.3],
+    "text-halo-blur": 0.5,
+  };
+  // Settlements: smaller Garamond, so a lighter halo keeps the letterforms from clogging.
+  const settlement = {
+    "text-color": "#F8F3E6",
+    "text-halo-color": "rgba(18,14,9,0.88)",
+    "text-halo-width": 1.5,
+    "text-halo-blur": 0.5,
+  };
+  for (const id of ["label_country_1", "label_country_2", "label_country_3", "label_state"])
+    SATELLITE_LABEL_PAINT[id] = majuscule;
+  for (const id of ["label_city_capital", "label_city", "label_town", "label_village", "label_other"])
+    SATELLITE_LABEL_PAINT[id] = settlement;
+  // River and stream names run along the waterway line, so their backdrop is the terrain photo —
+  // same failure as the country names over the Congo basin, same fix, in a cooler white.
+  SATELLITE_LABEL_PAINT["waterway_line_label"] = {
+    "text-color": "#E9F1F4",
+    "text-halo-color": "rgba(12,20,26,0.88)",
+    "text-halo-width": 1.5,
+    "text-halo-blur": 0.6,
+  };
+  // Sea and lake names (water_name_*) are deliberately left alone: the satellite raster is inserted
+  // *below* the water fill, so open water keeps its pale hand-tinted parchment blue in satellite
+  // mode too. Those labels never sit on photography, and flipping them to white would break the one
+  // case that currently works.
+  SATELLITE_LABEL_PAINT["highway-name-major"] = {
+    "text-color": "#EFE7D4",
+    "text-halo-color": "rgba(18,14,9,0.85)",
+    "text-halo-width": 1.3,
+    "text-halo-blur": 0.5,
+  };
+}
+
+/** Per-map cache of each label layer's original (parchment) paint values, read straight off the
+ * style the first time we override it. Restoring from this — rather than from a hardcoded copy —
+ * is what guarantees Map mode comes back byte-identical however many times you toggle. */
+const baseLabelPaint = new WeakMap<maplibregl.Map, Record<string, Record<string, unknown>>>();
+
+function applyLabelMode(map: maplibregl.Map, mode: MapMode) {
+  let base = baseLabelPaint.get(map);
+  if (!base) {
+    base = {};
+    baseLabelPaint.set(map, base);
+  }
+  for (const [layerId, overrides] of Object.entries(SATELLITE_LABEL_PAINT)) {
+    if (!map.getLayer(layerId)) continue;
+    if (!base[layerId]) {
+      const captured: Record<string, unknown> = {};
+      for (const prop of Object.keys(overrides)) {
+        captured[prop] = map.getPaintProperty(layerId, prop);
+      }
+      base[layerId] = captured;
+    }
+    const values = mode === "satellite" ? overrides : base[layerId];
+    for (const [prop, value] of Object.entries(values)) {
+      map.setPaintProperty(layerId, prop, value);
+    }
+  }
+}
+
 function applyMapMode(map: maplibregl.Map, mode: MapMode) {
   if (!map.getLayer(SATELLITE_LAYER_ID)) return;
   map.setLayoutProperty(SATELLITE_LAYER_ID, "visibility", mode === "satellite" ? "visible" : "none");
+  applyLabelMode(map, mode);
 }
 
 const HIGHLIGHT_SOURCE_ID = "region-highlight";
