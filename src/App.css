@@ -70,7 +70,8 @@
  * (see the .panel-expand fix below). Compound selectors make this robust to source order. */
 .bible-panel.bible-panel-hidden,
 .my-notes-panel.bible-panel-hidden,
-.friends-panel.bible-panel-hidden {
+.friends-panel.bible-panel-hidden,
+.articles-panel.bible-panel-hidden {
   display: none;
 }
 
@@ -600,7 +601,8 @@ body.resizing-panels {
 }
 
 .my-notes-panel,
-.friends-panel {
+.friends-panel,
+.articles-panel {
   width: 380px;
   flex-shrink: 0;
   overflow-y: auto;
@@ -610,7 +612,8 @@ body.resizing-panels {
   position: relative;
 }
 
-.friends-panel {
+.friends-panel,
+.articles-panel {
   display: flex;
   flex-direction: column;
 }
@@ -622,6 +625,158 @@ body.resizing-panels {
   text-align: center;
   color: var(--text-muted);
   padding: 40px;
+}
+
+/* --- Articles panel (standalone browse/search destination) --- */
+
+.articles-title {
+  margin: 0 0 4px;
+}
+
+.articles-subtitle {
+  margin: 0 0 16px;
+  color: var(--text-muted);
+  font-size: 13px;
+}
+
+/* Same look as the header's .search-bar, but sits inline in the panel's own flow rather than
+   floating over the header. */
+.articles-search {
+  position: relative;
+  flex-shrink: 0;
+  margin-bottom: 12px;
+}
+
+.articles-search input {
+  width: 100%;
+  padding: 9px 34px 9px 36px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  font-size: 14px;
+  background: var(--bg);
+  color: var(--text);
+}
+
+.articles-search input:focus {
+  outline: 2px solid var(--accent);
+  outline-offset: -1px;
+}
+
+.articles-search-clear {
+  position: absolute;
+  right: 8px;
+  top: 50%;
+  transform: translateY(-50%);
+  border: none;
+  background: none;
+  color: var(--text-muted);
+  font-size: 18px;
+  line-height: 1;
+  cursor: pointer;
+  padding: 4px;
+}
+
+.articles-sections {
+  flex: 1;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.articles-section-header {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 8px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--bg);
+  color: var(--text);
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  text-align: left;
+}
+
+.articles-section-icon {
+  font-size: 15px;
+}
+
+.articles-section-label {
+  flex: 1;
+}
+
+.articles-section-count {
+  color: var(--text-muted);
+  font-weight: 400;
+  font-size: 13px;
+}
+
+.articles-section-chevron {
+  color: var(--text-muted);
+  width: 14px;
+  text-align: center;
+}
+
+.articles-section-list {
+  margin-top: 4px;
+  max-height: 320px;
+  overflow-y: auto;
+}
+
+.articles-results {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  flex: 1;
+  overflow-y: auto;
+}
+
+.articles-results li.search-results-empty {
+  padding: 10px 8px;
+  color: var(--text-muted);
+  font-size: 14px;
+}
+
+.articles-result-row {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px;
+  border: none;
+  background: none;
+  color: var(--text);
+  text-align: left;
+  cursor: pointer;
+  border-radius: 6px;
+}
+
+.articles-result-row:hover {
+  background: var(--bg);
+}
+
+.articles-result-icon {
+  font-size: 15px;
+  flex-shrink: 0;
+}
+
+.articles-result-text {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.articles-result-name {
+  font-size: 14px;
+}
+
+.articles-result-sublabel {
+  font-size: 12px;
+  color: var(--text-muted);
+  text-transform: capitalize;
 }
 
 /* Details articles use the shared .back-btn (BackButton.tsx) instead of a bespoke style — it sits
@@ -2060,6 +2215,7 @@ body.resizing-panels {
 .location-panel,
 .my-notes-panel,
 .friends-panel,
+.articles-panel,
 .myprofile-root {
   zoom: var(--text-scale, 1);
 }
@@ -2950,7 +3106,8 @@ body.resizing-panels {
 .bible-panel.panel-expand,
 .location-panel.panel-expand,
 .my-notes-panel.panel-expand,
-.friends-panel.panel-expand {
+.friends-panel.panel-expand,
+.articles-panel.panel-expand {
   width: auto;
   flex: 1;
   max-width: 720px;
@@ -2968,7 +3125,7 @@ body.resizing-panels {
 
 .mobile-tab {
   flex: 1;
-  /* Seven slots (Bible/Map/Timeline/Games/Details/Notes/Social) must split a 375px screen evenly —
+  /* Seven slots (Bible/Map/Timeline/Notes/Articles/Social/Games) must split a 375px screen evenly —
      without this, a wider label could make its tab hog width from the others. */
   min-width: 0;
   display: flex;
@@ -3071,7 +3228,8 @@ body.resizing-panels {
   .bible-panel.panel-expand,
   .location-panel.panel-expand,
   .my-notes-panel.panel-expand,
-  .friends-panel.panel-expand {
+  .friends-panel.panel-expand,
+  .articles-panel.panel-expand {
     max-width: none;
     width: calc(100% / var(--text-scale, 1));
   }

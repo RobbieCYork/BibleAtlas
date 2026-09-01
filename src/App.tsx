@@ -16,6 +16,7 @@ import { TimelineLinkContext } from "./components/LinkChoicePopup";
 import type { TimelineLinkHandlers } from "./components/LinkChoicePopup";
 import BiblePanel from "./components/BiblePanel";
 import MyNotesPanel from "./components/MyNotesPanel";
+import ArticlesPanel from "./components/ArticlesPanel";
 import FriendsPanel from "./components/FriendsPanel";
 import ThenNowToggle, { type MapMode } from "./components/ThenNowToggle";
 import PanelMenu, { type PanelKey } from "./components/PanelMenu";
@@ -104,8 +105,8 @@ function App() {
   // Bible. Desktop shows Bible+Map together by default.
   const [panels, setPanels] = useState<Record<PanelKey, boolean>>(() =>
     isMobile
-      ? { map: false, details: false, bible: true, notes: false, friends: false }
-      : { map: true, details: false, bible: true, notes: false, friends: false }
+      ? { map: false, details: false, bible: true, notes: false, friends: false, articles: false }
+      : { map: true, details: false, bible: true, notes: false, friends: false, articles: false }
   );
   // Default desktop split: Bible panel gets 1/3 of the width, map gets the remaining 2/3 (map
   // fills via flex:1 in .app-body, so only the Bible panel's width needs to be set). Clamped to
@@ -118,6 +119,7 @@ function App() {
   const [detailsWidth, setDetailsWidth] = useState(380);
   const [notesWidth] = useState(380);
   const [friendsWidth] = useState(380);
+  const [articlesWidth] = useState(380);
   const [session, setSession] = useState<Session | null>(null);
   // True once the initial supabase.auth.getSession() call has settled (whether or not it found a
   // session) — `session` alone can't tell "haven't checked yet" apart from "genuinely logged out",
@@ -200,6 +202,7 @@ function App() {
       details: key === "details",
       notes: key === "notes",
       friends: key === "friends",
+      articles: key === "articles",
     });
 
   // Keep isMobile in sync with live resizes/rotations.
@@ -227,6 +230,7 @@ function App() {
       details: false,
       notes: false,
       friends: false,
+      articles: false,
     };
     // Details only renders on desktop with a live selection; leaving it closed here avoids an
     // invisible panel holding an LRU slot (it reopens on the next selection anyway).
@@ -687,6 +691,18 @@ function App() {
     handleSelectPoi(id);
   };
 
+  // Picking a result in the standalone Articles browse/search panel is the same kind of fresh
+  // starting point as a map pin or search result — clear the back trail, then reuse the exact same
+  // per-type selection handlers everything else in the app opens a details article through (Bible
+  // text links, map pins, cross-links inside another article). Location/POI already have a
+  // ready-made "fresh start" wrapper above; person/topic reuse the "FromBible" ones (which clear
+  // history by default too); timeline events get the one new wrapper below, following that same
+  // naming pattern.
+  const handleSelectTimelineEventFromArticles = (id: string) => {
+    setDetailsHistory([]);
+    handleSelectTimelineEvent(id);
+  };
+
   // Cross-links *inside* a details panel (e.g. a person's bio linking to where they lived) push the
   // selection being left behind onto the back trail before switching, so "Back" can return to it.
   const handleSelectLocationFromDetails = (id: string) => {
@@ -995,7 +1011,8 @@ function App() {
   // map expand instead of leaving a blank panel visible. On mobile it always renders (as its own
   // full-screen tab) so the empty state ("search or click a pin") shows instead of a blank tab.
   const showDetails = panels.details && (hasSelection || isMobile);
-  const noPanelsOpen = !panels.bible && !panels.map && !panels.notes && !panels.friends && !showDetails;
+  const noPanelsOpen =
+    !panels.bible && !panels.map && !panels.notes && !panels.friends && !panels.articles && !showDetails;
   // The hamburger checklist mirrors what's actually on screen: its Details row tracks showDetails
   // rather than raw panels.details, which can be "open" in state while nothing renders (desktop with
   // no selection) — a checked box next to an invisible panel reads as a broken toggle.
@@ -1010,7 +1027,9 @@ function App() {
         ? "notes"
         : panels.friends
           ? "friends"
-          : "map";
+          : panels.articles
+            ? "articles"
+            : "map";
   // On mobile, keep the map mounted even while another tab is active (hidden via CSS below)
   // instead of unmounting it, so MapLibre/tiles/pins survive tab switches.
   const mapMounted = panels.map || isMobile;
@@ -1023,6 +1042,8 @@ function App() {
   const notesHiddenOnMobile = isMobile && !panels.notes;
   const friendsMounted = panels.friends || isMobile;
   const friendsHiddenOnMobile = isMobile && !panels.friends;
+  const articlesMounted = panels.articles || isMobile;
+  const articlesHiddenOnMobile = isMobile && !panels.articles;
   // Which panel the header search bar serves — each panel gets its own search behavior (Map flies to
   // a location, Bible runs a word/phrase search, Notes filters live, Timeline searches timeline
   // events) rather than one generic bar, so only one can be "active" at a time. On desktop, when
@@ -1421,6 +1442,23 @@ function App() {
             onSelectLocation={focusLocationOnMap}
             onSelectPoi={handleSelectPoiFromBible}
             onGoToReference={openVerse}
+          />
+        )}
+        {articlesMounted && (
+          <ArticlesPanel
+            locations={locations}
+            pois={pois}
+            people={people}
+            topics={topics}
+            timelineEvents={timelineEvents}
+            onSelectLocation={handleSelectFromMap}
+            onSelectPoi={handleSelectPoiFromMap}
+            onSelectPerson={handleSelectPersonFromBible}
+            onSelectTopic={handleSelectTopicFromBible}
+            onSelectTimelineEvent={handleSelectTimelineEventFromArticles}
+            expand={sideExpand}
+            style={{ width: articlesWidth }}
+            hidden={articlesHiddenOnMobile}
           />
         )}
         {noPanelsOpen && (

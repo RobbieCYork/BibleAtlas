@@ -45,10 +45,11 @@ const PINNED_TABS: { key: PanelKey; label: string; icon: string }[] = [
   { key: "bible", label: "Bible", icon: "📖" },
   { key: "map", label: "Map", icon: "🗺️" },
   { key: "notes", label: "Notes", icon: "📝" },
+  { key: "articles", label: "Articles", icon: "📚" },
 ];
 
 /** Index within PINNED_TABS after which the Timeline tab is inserted — Bible, Map, [Timeline],
- * Notes, so Timeline sits right after Map rather than tacked onto the end of the row. */
+ * Notes, Articles, so Timeline sits right after Map rather than tacked onto the end of the row. */
 const TIMELINE_SPLIT_INDEX = 2;
 
 export default function MobileTabBar({

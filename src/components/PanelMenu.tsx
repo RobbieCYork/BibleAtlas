@@ -1,6 +1,6 @@
 import { Fragment, useEffect, useRef, useState } from "react";
 
-export type PanelKey = "map" | "details" | "bible" | "notes" | "friends";
+export type PanelKey = "map" | "details" | "bible" | "notes" | "friends" | "articles";
 
 interface PanelMenuProps {
   panels: Record<PanelKey, boolean>;
@@ -20,17 +20,23 @@ interface PanelMenuProps {
 const PANEL_LABELS: Record<PanelKey, string> = {
   bible: "Bible",
   map: "Map",
-  details: "Location Details",
+  // "details" and "articles" are two different doors into the same idea (a place/person/topic
+  // write-up): "details" opens with a specific entry already picked (a pin tap, a text link) — so
+  // it reads as "Article" (singular, one open entry) — while "articles" is the standalone
+  // browse/search destination for everything, hence the plural. Distinct labels keep the two rows
+  // from reading as duplicates in this same menu.
+  details: "Article",
   notes: "My Notes",
   friends: "Friends",
+  articles: "Articles",
 };
 
-/** Bible/Map above the rule, the three content panels below — the visual split (plus the caption
- * under the list) hints that these aren't five free-for-all checkboxes: only 3 panels fit at once,
+/** Bible/Map above the rule, the content panels below — the visual split (plus the caption
+ * under the list) hints that these aren't free-for-all checkboxes: only 3 panels fit at once,
  * so in practice the lower group trades places while Bible and Map usually stay put. */
 const PANEL_GROUPS: PanelKey[][] = [
   ["bible", "map"],
-  ["details", "notes", "friends"],
+  ["details", "articles", "notes", "friends"],
 ];
 
 export default function PanelMenu({ panels, onToggle, friendsBadgeCount = 0, lastAutoClosed = null, disabled }: PanelMenuProps) {
