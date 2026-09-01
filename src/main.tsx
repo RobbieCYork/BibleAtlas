@@ -5,6 +5,7 @@ import './lib/viewportHeight'
 import App from './App.tsx'
 import { TextSizeProvider } from './lib/textSize.tsx'
 import { ThemeProvider } from './lib/theme.tsx'
+import { MobileTabsProvider } from './lib/mobileTabs.tsx'
 import { startUpdateChecks } from './lib/updateCheck'
 
 // Applied synchronously, before the first paint, so a reader who chose "dark" doesn't see a flash
@@ -18,7 +19,9 @@ createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <ThemeProvider>
       <TextSizeProvider>
-        <App />
+        <MobileTabsProvider>
+          <App />
+        </MobileTabsProvider>
       </TextSizeProvider>
     </ThemeProvider>
   </StrictMode>,

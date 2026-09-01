@@ -30,6 +30,7 @@ import BackButton from "./components/BackButton";
 import DisplayNameGate from "./components/DisplayNameGate";
 import ResetPasswordGate from "./components/ResetPasswordGate";
 import { supabase, setRememberMe } from "./lib/supabase";
+import { useMobileTabs } from "./lib/mobileTabs";
 import { locations } from "./data/locations";
 import { pois } from "./data/pois";
 import { people } from "./data/people";
@@ -963,6 +964,34 @@ function App() {
   const toggleMenuPanel = (key: PanelKey) => (panels[key] ? closePanel(key) : openPanel(key));
   const sideExpand = !panels.map;
   const activeMobilePanel: PanelKey = mobilePanelOf(panels);
+
+  // Which tabs the reader has chosen to keep in the bottom bar (Settings → Tab Bar; see
+  // lib/mobileTabs.tsx). App needs it for one reason only: rescuing someone who hides the tab they
+  // are standing on.
+  const { visible: visibleTabs } = useMobileTabs();
+  useEffect(() => {
+    if (!isMobile) return;
+    // Which destination is on screen right now, in the same precedence the tab bar's own active
+    // styling uses: the full-screen takeovers win over whatever panel is mounted underneath them.
+    const currentTab = showTimeline
+      ? "timeline"
+      : showGame
+        ? "games"
+        : showMyProfile || activeMobilePanel === "friends"
+          ? "social"
+          : activeMobilePanel === "articles"
+            ? "articles"
+            : activeMobilePanel;
+    if (visibleTabs[currentTab as keyof typeof visibleTabs] !== false) return;
+    // The tab under the reader just disappeared. Leave every takeover and land on Bible — the one
+    // tab that can never be hidden, so this is always a real destination and never a blank panel.
+    closeTimeline();
+    closeGame();
+    closeMyProfile();
+    setMobileActivePanel("bible");
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [visibleTabs, isMobile]);
+
   // On mobile, keep the map mounted even while another tab is active (hidden via CSS below)
   // instead of unmounting it, so MapLibre/tiles/pins survive tab switches.
   const mapMounted = panels.map || isMobile;

@@ -3,6 +3,7 @@ import type { Session } from "@supabase/supabase-js";
 import { supabase, setRememberMe, type Profile } from "../lib/supabase";
 import { useTextSize } from "../lib/textSize";
 import { useTheme } from "../lib/theme";
+import { MIN_VISIBLE_TABS, MOBILE_TAB_META, MOBILE_TAB_ORDER, LOCKED_TAB, useMobileTabs } from "../lib/mobileTabs";
 
 interface AuthButtonProps {
   session: Session | null;
@@ -62,6 +63,82 @@ function AppearanceControl() {
           🌙 Dark
         </button>
       </div>
+    </div>
+  );
+}
+
+/** Lets a reader choose which of the seven destinations the mobile bottom bar shows. Seven tabs on
+ * a 375px phone is a crowded row, and not everyone uses all seven — so each can be switched off and
+ * back on here, in the same account-menu Settings view as text size and appearance.
+ *
+ * Mobile-only, matching the same 768px breakpoint App uses: desktop navigates via the hamburger
+ * PanelMenu and the footer, neither of which this touches. Rendered only when the viewport is
+ * actually narrow, so the control never appears as a dead setting on a desktop screen.
+ *
+ * Two guards, both surfaced rather than silent: Bible has no switch at all (it's the cold-start
+ * landing tab and the fallback every other safety path points at), and once the bar is down to
+ * MIN_VISIBLE_TABS the remaining switches are disabled with a line of copy saying why. */
+function TabBarControl() {
+  const { visible, canHide, setTabVisible, resetTabs, isDefault } = useMobileTabs();
+  const [isNarrow, setIsNarrow] = useState(() => window.matchMedia("(max-width: 768px)").matches);
+
+  useEffect(() => {
+    const mq = window.matchMedia("(max-width: 768px)");
+    const handleChange = (e: MediaQueryListEvent) => setIsNarrow(e.matches);
+    mq.addEventListener("change", handleChange);
+    return () => mq.removeEventListener("change", handleChange);
+  }, []);
+
+  if (!isNarrow) return null;
+
+  const atMinimum = MOBILE_TAB_ORDER.filter((k) => visible[k]).length <= MIN_VISIBLE_TABS;
+
+  return (
+    <div className="auth-settings-section auth-settings-section-stacked">
+      <span className="auth-settings-label">Tab Bar</span>
+      <p className="auth-benefits auth-tabbar-note">
+        Choose which buttons appear in the bar at the bottom of the screen. Bible always stays, and at least{" "}
+        {MIN_VISIBLE_TABS} tabs are always shown.
+      </p>
+      <ul className="auth-tabbar-list">
+        {MOBILE_TAB_ORDER.map((key) => {
+          const on = visible[key];
+          const locked = key === LOCKED_TAB;
+          // A visible tab can only be switched off while above the minimum; a hidden one can always
+          // be switched back on.
+          const disabled = locked || (on && !canHide(key));
+          return (
+            <li key={key} className={`auth-tabbar-row${disabled ? " disabled" : ""}`}>
+              <span className="auth-tabbar-name">
+                <span aria-hidden="true">{MOBILE_TAB_META[key].icon}</span>
+                {MOBILE_TAB_META[key].label}
+              </span>
+              {locked ? (
+                <span className="auth-tabbar-always">Always on</span>
+              ) : (
+                <label className="auth-tabbar-switch">
+                  <input
+                    type="checkbox"
+                    checked={on}
+                    disabled={disabled}
+                    onChange={(e) => setTabVisible(key, e.target.checked)}
+                    aria-label={`Show ${MOBILE_TAB_META[key].label} in the tab bar`}
+                  />
+                  <span className="auth-tabbar-track" aria-hidden="true" />
+                </label>
+              )}
+            </li>
+          );
+        })}
+      </ul>
+      {atMinimum && (
+        <p className="auth-tabbar-limit" role="status">
+          That's the minimum of {MIN_VISIBLE_TABS} tabs — turn another one on before hiding any more.
+        </p>
+      )}
+      <button type="button" className="auth-tabbar-reset" onClick={resetTabs} disabled={isDefault}>
+        Reset to default
+      </button>
     </div>
   );
 }
@@ -315,6 +392,7 @@ export default function AuthButton({ session, openProfileNonce, onOpenReadingPla
             </button>
             <TextSizeControl />
             <AppearanceControl />
+            <TabBarControl />
             {!session.user.is_anonymous && (
               <>
                 <div className="auth-settings-divider" />
@@ -339,6 +417,7 @@ export default function AuthButton({ session, openProfileNonce, onOpenReadingPla
         <div className="auth-dropdown">
           <TextSizeControl />
           <AppearanceControl />
+          <TabBarControl />
           <div className="auth-settings-divider" />
           <p className="auth-benefits">
             Create a free account to sync your notes, highlights, and tags — and pick up right where you left off on any

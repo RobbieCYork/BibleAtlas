@@ -1,4 +1,5 @@
 import type { PanelKey } from "./PanelMenu";
+import { MOBILE_TAB_META, useMobileTabs, type MobileTabKey } from "../lib/mobileTabs";
 
 type FriendsView = "friends" | "messages" | "groups";
 
@@ -18,9 +19,7 @@ interface MobileTabBarProps {
   /** Opens the full-screen My Profile view for a real account (guests, who have no profile page,
    * get the account menu's Settings view instead — see AuthButton's openProfileNonce effect). */
   onOpenProfile: () => void;
-  /** The Timeline tab — opens full-screen Timeline mode rather than selecting a panel. Pinned as
-   * its own tab (not tucked into "Social") because the timeline is a flagship destination: six
-   * slots at 375px still gives each tab a comfortable touch target, above tap-size guidance. */
+  /** The Timeline tab — opens full-screen Timeline mode rather than selecting a panel. */
   onOpenTimeline: () => void;
   /** Whether Timeline mode is currently open, for the tab's active styling. */
   timelineActive: boolean;
@@ -37,21 +36,24 @@ interface MobileTabBarProps {
   onOpenSocial?: () => void;
 }
 
+/** Tab bar keys that simply select one of the single-panel destinations, mapped to the PanelKey the
+ * panel itself is registered under. The other three keys are special: "timeline" and "games" open
+ * full-screen takeovers, and "social" opens My Profile. */
+const PANEL_TAB_KEYS: Partial<Record<MobileTabKey, PanelKey>> = {
+  bible: "bible",
+  map: "map",
+  notes: "notes",
+  articles: "articles",
+};
+
 /** No dedicated "Article" tab — a location/person/topic/event's write-up isn't a destination of its
  * own, it's what the Articles tab shows once something is selected (App.tsx's enterMobileArticle
  * switches here from a Bible-text hyperlink, a map pin, or a search result; Back returns to whichever
- * tab the reader came from). The Articles tab with nothing selected is the browse/search list. */
-const PINNED_TABS: { key: PanelKey; label: string; icon: string }[] = [
-  { key: "bible", label: "Bible", icon: "📖" },
-  { key: "map", label: "Map", icon: "🗺️" },
-  { key: "notes", label: "Notes", icon: "📝" },
-  { key: "articles", label: "Articles", icon: "📚" },
-];
-
-/** Index within PINNED_TABS after which the Timeline tab is inserted — Bible, Map, [Timeline],
- * Notes, Articles, so Timeline sits right after Map rather than tacked onto the end of the row. */
-const TIMELINE_SPLIT_INDEX = 2;
-
+ * tab the reader came from). The Articles tab with nothing selected is the browse/search list.
+ *
+ * Which of the seven tabs actually render is the reader's choice (Settings → Tab Bar, see
+ * lib/mobileTabs.tsx). Order is fixed: hidden tabs are omitted in place, never rearranged, and the
+ * remaining tabs re-share the row automatically via `.mobile-tab { flex: 1 }`. */
 export default function MobileTabBar({
   active,
   onSelect,
@@ -66,75 +68,54 @@ export default function MobileTabBar({
   myProfileActive = false,
   onOpenSocial,
 }: MobileTabBarProps) {
+  const { visibleTabs } = useMobileTabs();
   const isSocialActive = active === "friends" || myProfileActive;
   const totalBadgeCount = friendsBadgeCount + messagesBadgeCount + groupsBadgeCount;
 
-  const renderPinnedTab = (tab: (typeof PINNED_TABS)[number]) => {
+  const renderTab = (key: MobileTabKey) => {
+    const { label, icon } = MOBILE_TAB_META[key];
+    const panelKey = PANEL_TAB_KEYS[key];
+
     // While Timeline or Games mode is open it is the active destination — the underlying panel's
     // tab shouldn't also read as active.
-    const isActive = active === tab.key && !timelineActive && !gameActive;
+    const isActive =
+      key === "timeline"
+        ? timelineActive
+        : key === "games"
+          ? gameActive
+          : key === "social"
+            ? isSocialActive
+            : panelKey !== undefined && active === panelKey && !timelineActive && !gameActive;
+
+    const handleClick =
+      key === "timeline"
+        ? onOpenTimeline
+        : key === "games"
+          ? onOpenGame
+          : key === "social"
+            ? () => {
+                onOpenSocial?.();
+                onOpenProfile();
+              }
+            : () => panelKey && onSelect(panelKey);
+
     return (
       <button
-        key={tab.key}
+        key={key}
         type="button"
         className={`mobile-tab ${isActive ? "active" : ""}`}
-        onClick={() => onSelect(tab.key)}
+        onClick={handleClick}
+        aria-label={key === "social" ? "Social — My Profile, Friends, Groups, and Messages" : undefined}
         aria-current={isActive ? "page" : undefined}
       >
         <span className="mobile-tab-icon" aria-hidden="true">
-          {tab.icon}
+          {icon}
+          {key === "social" && totalBadgeCount > 0 && <span className="mobile-tab-dot" />}
         </span>
-        <span className="mobile-tab-label">{tab.label}</span>
+        <span className="mobile-tab-label">{label}</span>
       </button>
     );
   };
 
-  return (
-    <nav className="mobile-tab-bar">
-      {PINNED_TABS.slice(0, TIMELINE_SPLIT_INDEX).map(renderPinnedTab)}
-
-      <button
-        type="button"
-        className={`mobile-tab ${timelineActive ? "active" : ""}`}
-        onClick={onOpenTimeline}
-        aria-current={timelineActive ? "page" : undefined}
-      >
-        <span className="mobile-tab-icon" aria-hidden="true">
-          ⏳
-        </span>
-        <span className="mobile-tab-label">Timeline</span>
-      </button>
-
-      {PINNED_TABS.slice(TIMELINE_SPLIT_INDEX).map(renderPinnedTab)}
-
-      <button
-        type="button"
-        className={`mobile-tab ${isSocialActive ? "active" : ""}`}
-        onClick={() => {
-          onOpenSocial?.();
-          onOpenProfile();
-        }}
-        aria-label="Social — My Profile, Friends, Groups, and Messages"
-        aria-current={isSocialActive ? "page" : undefined}
-      >
-        <span className="mobile-tab-icon" aria-hidden="true">
-          🧑‍🤝‍🧑
-          {totalBadgeCount > 0 && <span className="mobile-tab-dot" />}
-        </span>
-        <span className="mobile-tab-label">Social</span>
-      </button>
-
-      <button
-        type="button"
-        className={`mobile-tab ${gameActive ? "active" : ""}`}
-        onClick={onOpenGame}
-        aria-current={gameActive ? "page" : undefined}
-      >
-        <span className="mobile-tab-icon" aria-hidden="true">
-          🎮
-        </span>
-        <span className="mobile-tab-label">Games</span>
-      </button>
-    </nav>
-  );
+  return <nav className="mobile-tab-bar">{visibleTabs.map(renderTab)}</nav>;
 }
