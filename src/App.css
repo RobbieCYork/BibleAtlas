@@ -296,9 +296,19 @@ body.resizing-panels {
   width: 28px;
   height: 36px;
   cursor: pointer;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.35));
+}
+
+/* The hover/active "pop" scale lives on the inner <svg>, not on .map-pin itself — MapLibre's
+ * Marker._update() writes a fresh `translate(...)` transform straight onto .map-pin's inline
+ * style on every 'move' event (i.e. every frame while panning/dragging). A `transition: transform`
+ * on that same element would tween each new translate value instead of applying it instantly,
+ * so during a fast drag the pin visibly lags behind the map and only "catches up" once motion
+ * stops and the transition finishes. Scoping the transition to the child svg keeps MapLibre's
+ * translate perfectly in sync with the map while still animating the independent hover/active scale. */
+.map-pin svg {
   transform-origin: 50% 94.4%; /* the pin's tip, where it meets the coordinate */
   transition: transform 0.15s ease;
-  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.35));
 }
 
 .map-pin .pin-body {
@@ -323,11 +333,11 @@ body.resizing-panels {
   fill: #ffffff;
 }
 
-.map-pin:hover {
+.map-pin:hover svg {
   transform: scale(1.15);
 }
 
-.map-pin-active {
+.map-pin-active svg {
   transform: scale(1.3);
   animation: pin-pop 0.25s ease;
 }
@@ -342,9 +352,13 @@ body.resizing-panels {
   width: 18px;
   height: 18px;
   cursor: pointer;
+  filter: drop-shadow(0 1px 3px rgba(0, 0, 0, 0.35));
+}
+
+/* See the comment on .map-pin svg above — same MapLibre translate/CSS-transition conflict, same fix. */
+.poi-pin svg {
   transform-origin: 50% 50%;
   transition: transform 0.15s ease;
-  filter: drop-shadow(0 1px 3px rgba(0, 0, 0, 0.35));
 }
 
 .poi-pin .poi-pin-body {
@@ -353,11 +367,11 @@ body.resizing-panels {
   stroke-width: 2;
 }
 
-.poi-pin:hover {
+.poi-pin:hover svg {
   transform: scale(1.25);
 }
 
-.poi-pin-active {
+.poi-pin-active svg {
   transform: scale(1.4);
   animation: pin-pop 0.25s ease;
 }
@@ -383,10 +397,17 @@ body.resizing-panels {
   border: 2px solid #ffffff;
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.35);
   cursor: pointer;
+}
+
+/* Hover scale lives on this inner span, not on .cluster-marker itself — see the comment on
+ * .map-pin svg above for why a `transition: transform` can never sit on the element MapLibre's
+ * Marker._update() repositions directly (it caused cluster badges to visibly lag behind the map
+ * during fast pans/flicks and only snap into place once the drag settled). */
+.cluster-marker-badge {
   transition: transform 0.15s ease;
 }
 
-.cluster-marker:hover {
+.cluster-marker:hover .cluster-marker-badge {
   transform: scale(1.12);
 }
 
@@ -2896,12 +2917,14 @@ body.resizing-panels {
   background: transparent;
 }
 
-/* --- Header logo (mobile-only branding, see media query) --- */
+/* --- Header logo --- */
+/* Visible on both desktop and mobile; the mobile media query below just resizes it down to match
+   the more compact mobile header (see ".app-logo" inside "@media (max-width: 768px)"). */
 
 .app-logo {
-  display: none;
-  width: 30px;
-  height: 30px;
+  display: block;
+  width: 34px;
+  height: 34px;
   border-radius: 8px;
   flex-shrink: 0;
 }
@@ -3004,6 +3027,8 @@ body.resizing-panels {
 
   .app-logo {
     display: block;
+    width: 30px;
+    height: 30px;
   }
 
   .panel-menu {

@@ -505,14 +505,20 @@ export default function MapView({
       if (existing) {
         existing.setLngLat(info.coordinates);
         const el = existing.getElement();
-        el.textContent = String(info.count);
+        const badge = el.querySelector<HTMLSpanElement>(".cluster-marker-badge");
+        if (badge) badge.textContent = String(info.count);
         el.title = `${info.count} places — click to zoom in`;
         return;
       }
       const el = document.createElement("div");
       el.className = "cluster-marker";
-      el.textContent = String(info.count);
       el.title = `${info.count} places — click to zoom in`;
+      // The count lives in an inner span (not directly on .cluster-marker) so the hover-scale
+      // transition can be scoped there — see the CSS comment on .cluster-marker-badge for why.
+      const badge = document.createElement("span");
+      badge.className = "cluster-marker-badge";
+      badge.textContent = String(info.count);
+      el.appendChild(badge);
       el.addEventListener("click", () => {
         // Read from clusterInfoRef, not the creation-time `info` closure — see the ref's comment.
         const current = clusterInfoRef.current[key];
