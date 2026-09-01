@@ -5,7 +5,21 @@ import type { Feature, FeatureCollection, Geometry, LineString, Point, Polygon }
 import type { Location, LocationCategory, PointOfInterest } from "../data/types";
 import type { MapMode } from "./ThenNowToggle";
 
-const STYLE_URL = "https://tiles.openfreemap.org/styles/liberty";
+/**
+ * "Illuminated" — our own MapLibre style (public/map/illuminated.json), derived from the
+ * OpenFreeMap Liberty style but repainted as an aged vellum atlas: parchment land, desaturated
+ * tan sea, drawn coastlines and serif (EB Garamond / Cinzel) place names in warm brown ink.
+ * It keeps Liberty's source ids ("openmaptiles", "ne2_shaded") and its layer ids, which the
+ * river-geometry lookup and the before-layer insertions below both depend on.
+ * Regenerate with public/map/build-illuminated-style.py.
+ */
+const STYLE_URL = "/map/illuminated.json";
+
+/** Paper grain — a stitched fractal-noise tile multiplied over the canvas so the vellum ground
+ * reads as fibrous stock rather than flat fill. Inline (not App.css) because the map overlay is
+ * owned by this component. */
+const PARCHMENT_GRAIN =
+  "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)' opacity='0.55'/%3E%3C/svg%3E\")";
 
 /** Initial whole-region overview camera — also where "Show All Pins" falls back to if no pins are visible. */
 const DEFAULT_CENTER: [number, number] = [30, 36];
@@ -135,7 +149,7 @@ function ensureHighlightLayer(map: maplibregl.Map) {
       id: HIGHLIGHT_FILL_LAYER_ID,
       type: "fill",
       source: HIGHLIGHT_SOURCE_ID,
-      paint: { "fill-color": "#fde047", "fill-opacity": 0.3 },
+      paint: { "fill-color": "#C8912F", "fill-opacity": 0.22 },
     },
     beforeLayer?.id
   );
@@ -144,7 +158,7 @@ function ensureHighlightLayer(map: maplibregl.Map) {
       id: HIGHLIGHT_OUTLINE_LAYER_ID,
       type: "line",
       source: HIGHLIGHT_SOURCE_ID,
-      paint: { "line-color": "#eab308", "line-width": 2, "line-opacity": 0.7 },
+      paint: { "line-color": "#A8761F", "line-width": 2, "line-opacity": 0.75 },
     },
     beforeLayer?.id
   );
@@ -165,7 +179,7 @@ function ensureRiverHighlightLayer(map: maplibregl.Map) {
       type: "line",
       source: RIVER_HIGHLIGHT_SOURCE_ID,
       layout: { "line-cap": "round", "line-join": "round" },
-      paint: { "line-color": "#0c4a6e", "line-width": 9, "line-opacity": 0.4 },
+      paint: { "line-color": "#F0E4C2", "line-width": 9, "line-opacity": 0.55 },
     },
     beforeLayer?.id
   );
@@ -175,7 +189,7 @@ function ensureRiverHighlightLayer(map: maplibregl.Map) {
       type: "line",
       source: RIVER_HIGHLIGHT_SOURCE_ID,
       layout: { "line-cap": "round", "line-join": "round" },
-      paint: { "line-color": "#38bdf8", "line-width": 4, "line-opacity": 0.95 },
+      paint: { "line-color": "#2E5F7A", "line-width": 4, "line-opacity": 0.95 },
     },
     beforeLayer?.id
   );
@@ -204,7 +218,7 @@ function ensureWalkRouteLayer(map: maplibregl.Map) {
       type: "line",
       source: WALK_ROUTE_SOURCE_ID,
       layout: { "line-cap": "round", "line-join": "round" },
-      paint: { "line-color": "#f5f3ff", "line-width": 7, "line-opacity": 0.55 },
+      paint: { "line-color": "#F5EACB", "line-width": 7, "line-opacity": 0.6 },
     },
     beforeLayer?.id
   );
@@ -214,7 +228,7 @@ function ensureWalkRouteLayer(map: maplibregl.Map) {
       type: "line",
       source: WALK_ROUTE_SOURCE_ID,
       layout: { "line-cap": "round", "line-join": "round" },
-      paint: { "line-color": "#7c3aed", "line-width": 3, "line-opacity": 0.9, "line-dasharray": [2, 1.6] },
+      paint: { "line-color": "#B4472E", "line-width": 3, "line-opacity": 0.9, "line-dasharray": [2, 1.6] },
     },
     beforeLayer?.id
   );
@@ -351,13 +365,20 @@ const CATEGORY_PIN_CLASS: Record<LocationCategory, string> = {
   island: "map-pin-cat-terrain",
 };
 
-/** A modern flat teardrop pin. Anchored at its tip (14, 34) in the 28x36 box. */
+/** Vellum outline stroked around the pin bodies so the pigment fills stay legible against the
+ * warm parchment ground of the Illuminated base style. Set as SVG presentation attributes (not
+ * CSS) because the pin *fills* are themed from App.css and a class rule there would win — nothing
+ * in App.css styles `stroke` on .pin-body, so these attributes take effect without fighting it. */
+const PIN_HALO = "#F2E6C8";
+
+/** A flat teardrop pin, haloed in vellum. Anchored at its tip (14, 34) in the 28x36 box. */
 function createFlagElement(category: LocationCategory): HTMLDivElement {
   const el = document.createElement("div");
   el.className = `map-pin ${CATEGORY_PIN_CLASS[category]}`;
   el.innerHTML = `
     <svg width="28" height="36" viewBox="0 0 28 36" xmlns="http://www.w3.org/2000/svg">
-      <path class="pin-body" d="M14 34C14 34 4 20 4 12C4 6.5 8.5 2 14 2C19.5 2 24 6.5 24 12C24 20 14 34 14 34Z" />
+      <path class="pin-body" stroke="${PIN_HALO}" stroke-width="1.4" stroke-linejoin="round"
+        d="M14 33.2C14 33.2 4.7 19.8 4.7 12C4.7 6.9 8.9 2.7 14 2.7C19.1 2.7 23.3 6.9 23.3 12C23.3 19.8 14 33.2 14 33.2Z" />
       <circle class="pin-dot" cx="14" cy="12" r="4.5" />
     </svg>
   `;
@@ -701,6 +722,38 @@ export default function MapView({
   return (
     <>
       <div ref={containerRef} className="map-container" />
+      {/* Aged-paper pass over the finished canvas: fibrous grain multiplied into the vellum plus a
+       * soft inset vignette, so the tiles read as one printed sheet instead of a live raster.
+       * Styled inline (App.css belongs to the palette work) and pointer-events:none so every map
+       * interaction — pin clicks, cluster clicks, drag, the zoom controls — passes straight through.
+       * Hidden in Satellite mode, where a parchment wash over photography just looks like haze. */}
+      {mapMode !== "satellite" && (
+        <div
+          aria-hidden="true"
+          style={{
+            position: "absolute",
+            inset: 0,
+            pointerEvents: "none",
+            zIndex: 3,
+            backgroundImage: PARCHMENT_GRAIN,
+            backgroundSize: "200px 200px",
+            mixBlendMode: "multiply",
+            opacity: 0.14,
+          }}
+        />
+      )}
+      {mapMode !== "satellite" && (
+        <div
+          aria-hidden="true"
+          style={{
+            position: "absolute",
+            inset: 0,
+            pointerEvents: "none",
+            zIndex: 3,
+            boxShadow: "inset 0 0 120px 30px rgba(94, 74, 44, 0.16)",
+          }}
+        />
+      )}
       {!styleReady && (
         <div className="map-loading-overlay" role="status">
           <div className="map-loading-pill">
