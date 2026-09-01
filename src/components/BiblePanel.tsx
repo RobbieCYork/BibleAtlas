@@ -1534,6 +1534,12 @@ export default function BiblePanel({
           <p className="bible-status">Loading…</p>
         ) : (
           <div className="bible-welcome">
+            {/* The one surface with room for the brand to introduce itself — and the only place the
+                slogan reaches mobile readers, whose header drops the wordmark entirely. */}
+            <div className="bible-welcome-brand">
+              <p className="bible-welcome-wordmark">Capstone Bible</p>
+              <p className="brand-tagline">God&rsquo;s Word. Every day.</p>
+            </div>
             <p className="bible-welcome-title">Select a book to start reading</p>
             <p className="bible-welcome-text">
               Pick a book and chapter above — places and people in the text link to the interactive map and their full histories.

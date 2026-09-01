@@ -1122,7 +1122,15 @@ function App() {
         <button type="button" className="app-logo-button" onClick={goHome} aria-label="Go to Bible">
           <img src="/favicon.svg" className="app-logo" alt="" aria-hidden="true" />
         </button>
-        <h1>Capstone Bible</h1>
+        {/* Wordmark and slogan are one locked unit, exactly as on the brand's cover art: the
+            slogan is a subtitle of the name, not an independent line of header content. Hidden
+            wholesale on mobile (see .app-brand in the max-width:768px block) — the mobile header
+            already drops the wordmark for space, and a slogan with no name to sit under is just
+            clutter in a bar that's fighting for room. */}
+        <div className="app-brand">
+          <h1>Capstone Bible</h1>
+          <p className="brand-tagline">God&rsquo;s Word. Every day.</p>
+        </div>
         {(searchMode === "map" || searchMode === "bible") && (
           <div className="header-search-group">
             {searchMode === "map" && (

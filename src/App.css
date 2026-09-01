@@ -60,6 +60,39 @@
   white-space: nowrap;
 }
 
+/* Wordmark + slogan as one unit. flex-shrink:0 keeps it off the list of things that give way when
+ * the search bar, the scope toggle and the account button compete for room between ~768 and
+ * ~1100px — the search group (flex:1) is what absorbs that squeeze, as it always did.
+ *
+ * The tight line-heights are load-bearing: the header's height is set by its tallest child, which
+ * is the search input (~37px), NOT the wordmark (~27px). Keeping the stacked pair at or under that
+ * means the slogan costs the header no height at all. */
+.app-brand {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  flex-shrink: 0;
+  min-width: 0;
+}
+
+.app-header .app-brand h1 {
+  line-height: 1.12;
+}
+
+/* Small tracked-out caps in Archivo, not the display face. Cormorant at this size and letter-
+ * spacing renders so light it stops being readable — the same reason every other small uppercase
+ * label in this app was pushed back to the sans role. */
+.brand-tagline {
+  font-family: var(--sans);
+  font-size: 10px;
+  font-weight: 600;
+  line-height: 1.1;
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-label);
+  color: var(--brand-tint);
+  white-space: nowrap;
+}
+
 /* The logo stays at the far left (its natural flex position) and the account button always sits at
  * the far right — margin-left:auto pushes it there whether or not the search bar (flex:1, normally
  * fills this same gap) is present. */
@@ -3371,6 +3404,12 @@ a.profile-links-url {
   }
 
   .app-header h1 {
+    display: none;
+  }
+
+  /* The whole lockup goes, not just the wordmark: the slogan is a subtitle of a name that isn't
+     rendered here, and this header is already down to logo + search + avatar for a reason. */
+  .app-brand {
     display: none;
   }
 
@@ -7137,6 +7176,30 @@ a.profile-links-url {
   font-size: 23px;
   font-weight: 600;
   letter-spacing: 0.01em;
+}
+
+/* The cold-start welcome is where a first-time reader actually stops and reads — it's the only
+ * surface in the app with room for the brand to speak, and it's the one place the slogan reaches
+ * mobile, where the header lockup is hidden. Same wordmark/slogan relationship as the header,
+ * one size up and centred to suit the panel. */
+.bible-welcome-brand {
+  margin-bottom: 14px;
+  padding-bottom: 12px;
+  border-bottom: 1px dashed var(--border);
+}
+
+.bible-welcome-wordmark {
+  font-family: var(--display);
+  font-weight: 600;
+  font-size: 24px;
+  line-height: 1.15;
+  letter-spacing: 0.01em;
+  color: var(--text-h);
+}
+
+.bible-welcome-brand .brand-tagline {
+  font-size: 11px;
+  margin-top: 3px;
 }
 
 .bible-panel-header h3 {

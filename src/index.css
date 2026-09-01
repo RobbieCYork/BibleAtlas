@@ -57,6 +57,12 @@
    * on, so it's back. Purple means "Capstone / brand mark" here — NOT "sacred", and not a general
    * UI accent (that's --accent, gold). Keep it scarce or it reads generic again. */
   --brand: #7c3aed;
+  /* A legible tint of --brand for small text — the brand violet itself only clears 3.04:1 on the
+   * dark chrome surface, and small tracked-out caps are the first thing to go unreadable. This is
+   * the pale lavender of the Facebook cover art; it reads as the same violet family, one step
+   * lighter, at 8.17:1 on --panel-bg. The light theme redefines it in the other direction (see
+   * below) because a pale lavender on a white panel is barely there. */
+  --brand-tint: #b9a8f0;
 
   /* --- Type roles --- */
   --display: "Cormorant Garamond", "Iowan Old Style", Georgia, "Times New Roman", serif;
@@ -137,6 +143,11 @@
   --accent-bg: rgba(138, 94, 18, 0.11);
   --accent-contrast: #fdf9f0;
   --link: #2e3a8c;
+  /* The light-mode counterpart to the dark theme's pale lavender --brand-tint: on white the tint
+   * has to go DARKER than --brand, not lighter. #7c3aed itself clears 5.7:1 on --panel-bg, but only
+   * 4.98:1 on the parchment reading sheet; one step down holds 7.1:1 / 6.21:1 and still reads
+   * unmistakably as the brand violet rather than as a generic indigo. */
+  --brand-tint: #6d28d9;
   --danger: #a83c24;
   --verse-flash-bg: rgba(200, 145, 47, 0.32);
   color-scheme: light;
