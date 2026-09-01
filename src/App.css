@@ -3412,17 +3412,33 @@ a.profile-links-url {
 
   /* Panels are always full-screen (one at a time, via the tab bar) — drop the desktop
      720px expand cap and the drag-to-resize handles that only make sense side-by-side.
-     Width is explicitly compensated for `zoom` (see the global text-size rule at the top of this
-     file): `zoom` scales the rendered box AFTER layout, so a plain 100%-wide panel would render
-     wider than the screen at any text size above 100%, forcing horizontal scrolling. Sizing to
-     100% / scale first means the zoomed result lands back at exactly 100% of the screen. */
+
+     This used to also carry `width: calc(100% / var(--text-scale, 1))`, meant to cancel out the
+     `zoom` from the global text-size rule at the top of this file so a full-width panel couldn't
+     render wider than the screen. That compensation was doing nothing, and would have been wrong
+     if it ever started doing something. Two independent reasons, both measured:
+
+       - `.panel-expand` sets `flex: 1`, i.e. `flex-basis: 0`, so in the panel row the flex
+         algorithm — not `width` — decides the main size. The declaration was inert: measured in
+         both Chromium and WebKit at a 375px viewport and scale 1.8, the panel's rendered width was
+         exactly 375px with the compensation and exactly 375px with it replaced by `width: auto`,
+         with no horizontal overflow either way (document scrollWidth stayed 375).
+
+       - Both engines now ship the STANDARDIZED `zoom` (Chrome 126+, Safari 18+), where a
+         percentage resolved against a containing block of a different zoom is already divided by
+         the zoom ratio. `100%` inside the zoomed panel therefore already means "the screen width,
+         in this element's zoomed units" — dividing by the scale a second time double-applies. Had
+         `flex` not been overriding it, this would have rendered the reading column at 1/scale of
+         the screen with a dead band beside it, and the reading measure would have shrunk as the
+         type grew, so line length never changed. Sizing here must stay in the flex algorithm's
+         hands; do not reintroduce a manual `zoom` correction. */
   .bible-panel.panel-expand,
   .location-panel.panel-expand,
   .my-notes-panel.panel-expand,
   .friends-panel.panel-expand,
   .articles-panel.panel-expand {
     max-width: none;
-    width: calc(100% / var(--text-scale, 1));
+    width: auto;
   }
 
   .resize-handle {
