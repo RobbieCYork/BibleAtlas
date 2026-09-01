@@ -1187,9 +1187,27 @@ function App() {
         <h1>Capstone Bible</h1>
         {(searchMode === "map" || searchMode === "bible") && (
           <div className="header-search-group">
+            {searchMode === "map" && (
+              <SearchBar
+                locations={locations}
+                onSelect={focusLocationOnMap}
+                selectedLocationName={selectedLocation?.name ?? null}
+              />
+            )}
+            {searchMode === "bible" && (
+              <HeaderTextSearch
+                placeholder="Search Scripture…"
+                icon="📖"
+                value={bibleSearchQuery}
+                onChange={setBibleSearchQuery}
+                onSubmit={() => setBibleSearchNonce((n) => n + 1)}
+              />
+            )}
             {/* Only genuinely ambiguous when both panels are open at once (desktop) — that's the
                 only time the explicit scope toggle is worth the header space. Otherwise the active
-                panel already makes the scope obvious, exactly as before this toggle existed. */}
+                panel already makes the scope obvious, exactly as before this toggle existed. Placed
+                after the search bar (rather than before it) so it reads as "search bar, then its
+                scope" left to right. */}
             {panels.map && panels.bible && (
               <div className="search-scope-toggle" role="group" aria-label="Search scope">
                 <button
@@ -1211,22 +1229,6 @@ function App() {
                   🗺️
                 </button>
               </div>
-            )}
-            {searchMode === "map" && (
-              <SearchBar
-                locations={locations}
-                onSelect={focusLocationOnMap}
-                selectedLocationName={selectedLocation?.name ?? null}
-              />
-            )}
-            {searchMode === "bible" && (
-              <HeaderTextSearch
-                placeholder="Search Scripture…"
-                icon="📖"
-                value={bibleSearchQuery}
-                onChange={setBibleSearchQuery}
-                onSubmit={() => setBibleSearchNonce((n) => n + 1)}
-              />
             )}
           </div>
         )}
