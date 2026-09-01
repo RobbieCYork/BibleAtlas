@@ -25,7 +25,15 @@
          Map (MapLibre) and Timeline each implement their own independent pinch/wheel zoom directly on
          their own canvas, so this doesn't affect either of those. Text size has its own dedicated
          accessibility control in Settings (the A-/A+ toggle) as the alternative to page pinch-zoom. -->
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
+    <!-- interactive-widget=resizes-visual: when the on-screen keyboard opens it must NOT resize the
+         layout viewport. The app shell is a fixed-height flex column with the bottom tab bar as its
+         last child, so a layout-viewport shrink would drag the tab bar up on top of the keyboard and
+         (combined with the browser's own scroll-into-view) push the focused field off the top of the
+         screen. Keeping the layout viewport at its full size lets the tab bar stay anchored to the
+         bottom of the page, behind the keyboard, while only the visual viewport scrolls to reveal the
+         field. This is the default on iOS Safari; declaring it explicitly pins the same behavior on
+         Chrome/Android, and src/lib/viewportHeight.ts enforces the matching rule for --app-height. -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover, interactive-widget=resizes-visual" />
     <title>Capstone Bible</title>
   </head>
   <body>
