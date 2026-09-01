@@ -14,8 +14,54 @@
  * trigger a re-measure. Listening on "scroll" too, plus orientation changes and bfcache restores
  * (`pageshow`), covers the transitions "resize" alone can miss.
  */
+/**
+ * Standalone (installed, home-screen-launched) vs. an ordinary browser tab. `display-mode:
+ * standalone` is the cross-platform media query; iOS Safari also has an older, iOS-only
+ * `navigator.standalone` boolean that predates the media query and is still the more reliable
+ * signal on some iOS versions, so both are checked. Neither ever changes for the lifetime of a
+ * page (installing/uninstalling reloads the app), so this only needs to be read once.
+ */
+function isStandalone(): boolean {
+  return (
+    window.matchMedia?.("(display-mode: standalone)").matches === true ||
+    (window.navigator as Navigator & { standalone?: boolean }).standalone === true
+  );
+}
+
+document.documentElement.classList.toggle("standalone-mode", isStandalone());
+
+/**
+ * Tracks whether a text input is currently focused, so `setAppHeight` below can tell a genuine
+ * on-screen-keyboard resize apart from the standalone stale-height quirk described there.
+ */
+let textInputFocused = false;
+function isTextInput(target: EventTarget | null): boolean {
+  const el = target as HTMLElement | null;
+  return !!el && (el.tagName === "INPUT" || el.tagName === "TEXTAREA" || el.isContentEditable);
+}
+document.addEventListener("focusin", (e) => {
+  if (isTextInput(e.target)) textInputFocused = true;
+});
+document.addEventListener("focusout", (e) => {
+  if (isTextInput(e.target)) textInputFocused = false;
+});
+
 function setAppHeight() {
-  const height = window.visualViewport?.height ?? window.innerHeight;
+  // `visualViewport.height` is what lets `.app-shell` shrink to clear an open on-screen keyboard
+  // (see the file header), so it stays the source of truth whenever a text field is focused, in
+  // both display modes. But standalone home-screen launches have their own well-documented WebKit
+  // quirk: `visualViewport.height` can come back (or get stuck, e.g. after returning from an
+  // external flow like OAuth) reporting the *reduced*, chrome-visible height as if a Safari
+  // toolbar were still eating into the viewport — even though standalone mode has no toolbar at
+  // all. In a real browser tab that reduced height is correct and wanted (Safari's own chrome
+  // genuinely occupies the rest). In standalone there's nothing there to fill it, so the same
+  // number just leaves a dead gap at the bottom of the screen. `window.innerHeight` doesn't carry
+  // that toolbar concept and reflects the true full-screen standalone height, so it's used instead
+  // whenever no keyboard is in play.
+  const height =
+    isStandalone() && !textInputFocused
+      ? window.innerHeight
+      : window.visualViewport?.height ?? window.innerHeight;
   document.documentElement.style.setProperty("--app-height", `${height}px`);
 }
 
@@ -35,9 +81,7 @@ window.addEventListener("pageshow", setAppHeight);
 document.addEventListener(
   "focusout",
   (e) => {
-    const target = e.target as HTMLElement | null;
-    if (!target) return;
-    if (target.tagName === "INPUT" || target.tagName === "TEXTAREA" || target.isContentEditable) {
+    if (isTextInput(e.target)) {
       setTimeout(setAppHeight, 100);
     }
   },
