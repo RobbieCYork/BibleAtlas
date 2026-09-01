@@ -1967,6 +1967,90 @@ body.resizing-panels {
   white-space: nowrap;
 }
 
+/* --- Social links (sql/017_profile_links.sql) -------------------------------
+ * Read-only list, used on both the owner's own profile (with the who-can-see-it badge) and on a
+ * friend's (without — by then the row's presence already means the viewer was allowed it). */
+.profile-links-list {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+}
+
+.profile-links-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  color: var(--text);
+  min-width: 0;
+}
+
+.profile-links-icon {
+  flex-shrink: 0;
+  font-size: 14px;
+  line-height: 1;
+}
+
+/* URLs are long and unbreakable; on a narrow phone they must ellipsize rather than push the whole
+ * profile column sideways. */
+.profile-links-url {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  min-width: 0;
+}
+
+a.profile-links-url {
+  color: var(--accent);
+}
+
+.profile-links-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  flex-shrink: 0;
+  margin-left: auto;
+  padding: 1px 7px;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  background: var(--surface-sunken);
+  color: var(--text-muted);
+  font-size: 11px;
+  white-space: nowrap;
+}
+
+.profile-link-edit-row {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.profile-link-visibility-select {
+  flex-shrink: 0;
+  max-width: 42%;
+  padding: 5px 6px;
+  border: 1px solid var(--input-border);
+  border-radius: 6px;
+  background: var(--panel-bg);
+  color: var(--text);
+  font-size: 12px;
+  font-family: inherit;
+}
+
+.profile-link-visibility-select:disabled {
+  opacity: 0.55;
+}
+
+.profile-link-edit-error {
+  color: var(--danger);
+  font-size: 12px;
+  margin: 0 0 0 22px;
+}
+
 .avatar-crop-overlay {
   position: fixed;
   inset: 0;

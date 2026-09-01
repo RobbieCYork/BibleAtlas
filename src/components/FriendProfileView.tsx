@@ -4,6 +4,8 @@ import ReadingProgressGrid from "./ReadingProgressGrid";
 import PostsFeed from "./PostsFeed";
 import BackButton from "./BackButton";
 import { PROFILE_FIELD_CONFIGS, PROFILE_SECTION_LABELS, ensureUrlProtocol } from "./MyProfileView";
+import { ProfileLinksList } from "./ProfileLinks";
+import { fetchProfileLinks, type ProfileLink } from "../lib/profileLinks";
 
 interface FriendProfileViewProps {
   friendId: string;
@@ -22,6 +24,14 @@ interface FriendProfileViewProps {
 export default function FriendProfileView({ friendId, viewerId, onBack, onMessage, expand, style, hidden }: FriendProfileViewProps) {
   const [profile, setProfile] = useState<Profile | null>(null);
   const [loaded, setLoaded] = useState(false);
+  // Only the links this viewer is allowed to see ever arrive — the RLS policy in
+  // sql/017_profile_links.sql filters by each row's own visibility, so a private (or friends-only,
+  // to a non-friend) link isn't in the response at all. Nothing here needs to hide anything.
+  const [links, setLinks] = useState<ProfileLink[]>([]);
+
+  useEffect(() => {
+    fetchProfileLinks(friendId).then(setLinks);
+  }, [friendId]);
 
   useEffect(() => {
     setLoaded(false);
@@ -95,6 +105,13 @@ export default function FriendProfileView({ friendId, viewerId, onBack, onMessag
               </div>
             );
           })}
+
+          {links.length > 0 && (
+            <div className="profile-view-section">
+              <h4 className="profile-view-section-heading">Social Links</h4>
+              <ProfileLinksList links={links} />
+            </div>
+          )}
 
           <button type="button" className="friend-profile-message-button" onClick={onMessage}>
             💬 Message

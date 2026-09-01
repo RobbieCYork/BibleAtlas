@@ -6,6 +6,15 @@ import Newsfeed from "./Newsfeed";
 import AvatarCropModal from "./AvatarCropModal";
 import LinkedVerseText from "./LinkedVerseText";
 import BackButton from "./BackButton";
+import { ProfileLinksEditor, ProfileLinksList, type LinkDrafts } from "./ProfileLinks";
+import {
+  DEFAULT_LINK_VISIBILITY,
+  SOCIAL_LINK_CONFIGS,
+  fetchProfileLinks,
+  normalizeExternalUrl,
+  type LinkPlatform,
+  type ProfileLink,
+} from "../lib/profileLinks";
 
 /** A church website is typed without a scheme half the time ("mychurch.org") — treat that as shorthand
  * for https rather than rejecting it or linking to a relative path on this app's own domain. */
@@ -124,6 +133,28 @@ function MyProfileControl({
   const [saving, setSaving] = useState(false);
   const [status, setStatus] = useState<string | null>(null);
   const fileInputRef = useRef<HTMLInputElement | null>(null);
+  // Social links live in their own table (sql/017_profile_links.sql) rather than as more `profiles`
+  // columns, because their per-link visibility has to be enforced by RLS and RLS is row-level — a
+  // hidden *column* would still be shipped to whoever may read the row. So they load and save on
+  // their own path, but ride the same one Edit/Save/Cancel as the rest of this page.
+  const [savedLinks, setSavedLinks] = useState<ProfileLink[]>([]);
+  const [linkDrafts, setLinkDrafts] = useState<LinkDrafts>({});
+  const [linkErrors, setLinkErrors] = useState<Record<string, string>>({});
+
+  const draftsFromLinks = (links: ProfileLink[]): LinkDrafts => {
+    const drafts: LinkDrafts = {};
+    SOCIAL_LINK_CONFIGS.forEach((c) => {
+      const existing = links.find((l) => l.platform === c.platform);
+      drafts[c.platform] = { url: existing?.url ?? "", visibility: existing?.visibility ?? DEFAULT_LINK_VISIBILITY };
+    });
+    return drafts;
+  };
+
+  const loadLinks = () =>
+    fetchProfileLinks(userId).then((links) => {
+      setSavedLinks(links);
+      setLinkDrafts(draftsFromLinks(links));
+    });
 
   const fetchProfile = () =>
     supabase
@@ -157,6 +188,7 @@ function MyProfileControl({
 
   useEffect(() => {
     fetchProfile();
+    loadLinks();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userId]);
 
@@ -213,6 +245,38 @@ function MyProfileControl({
       setStatus("Display name can't be empty.");
       return;
     }
+    // Validate every link before touching the database, so one bad URL doesn't leave the profile
+    // half-saved. `javascript:` and friends are refused here, again by the CHECK constraint on
+    // profile_links.url, and a third time by safeHref() at render — a link that reaches another
+    // person's screen has been through all three.
+    const nextErrors: Record<string, string> = {};
+    const upserts: { user_id: string; platform: LinkPlatform; url: string; visibility: string }[] = [];
+    const deletes: LinkPlatform[] = [];
+    SOCIAL_LINK_CONFIGS.forEach((c) => {
+      const entry = linkDrafts[c.platform];
+      const raw = entry?.url.trim() ?? "";
+      if (!raw) {
+        if (savedLinks.some((l) => l.platform === c.platform)) deletes.push(c.platform);
+        return;
+      }
+      const normalized = normalizeExternalUrl(raw);
+      if (!normalized) {
+        nextErrors[c.platform] = "That doesn't look like a web address — use something like instagram.com/yourname.";
+        return;
+      }
+      upserts.push({
+        user_id: userId,
+        platform: c.platform,
+        url: normalized,
+        visibility: entry?.visibility ?? DEFAULT_LINK_VISIBILITY,
+      });
+    });
+    setLinkErrors(nextErrors);
+    if (Object.keys(nextErrors).length > 0) {
+      setStatus("Check the social links marked below.");
+      return;
+    }
+
     setSaving(true);
     setStatus(null);
     const normalizedPhone = draft.phone.replace(/\D/g, "");
@@ -234,11 +298,26 @@ function MyProfileControl({
         ...extraUpdates,
       })
       .eq("id", userId);
-    setSaving(false);
     if (error) {
+      setSaving(false);
       setStatus(error.code === "23505" ? "That display name is taken — try another." : "Couldn't save — try again.");
       return;
     }
+
+    if (deletes.length > 0) {
+      await supabase.from("profile_links").delete().eq("user_id", userId).in("platform", deletes);
+    }
+    if (upserts.length > 0) {
+      const { error: linkError } = await supabase.from("profile_links").upsert(upserts, { onConflict: "user_id,platform" });
+      if (linkError) {
+        setSaving(false);
+        setStatus("Couldn't save your social links — try again.");
+        return;
+      }
+    }
+    await loadLinks();
+
+    setSaving(false);
     const nextSaved = { ...draft, displayName: trimmedName, phone: normalizedPhone };
     setSavedFields(nextSaved);
     setDraft(nextSaved);
@@ -248,6 +327,8 @@ function MyProfileControl({
 
   const handleCancel = () => {
     setDraft(saved);
+    setLinkDrafts(draftsFromLinks(savedLinks));
+    setLinkErrors({});
     setStatus(null);
     setEditing(false);
   };
@@ -330,6 +411,14 @@ function MyProfileControl({
                 onSelectVerse={onGoToVerse}
               />
               {favoriteVerseText && <p className="verse-popup-quoted">"{favoriteVerseText}"</p>}
+            </div>
+          )}
+          {/* The owner always sees every link they've added, private ones included — the badge beside
+           * each says who else can. */}
+          {savedLinks.length > 0 && (
+            <div className="profile-view-section">
+              <h4 className="profile-view-section-heading">Social Links</h4>
+              <ProfileLinksList links={savedLinks} showVisibility />
             </div>
           )}
         </div>
@@ -438,6 +527,19 @@ function MyProfileControl({
               ))}
             </div>
           ))}
+
+          <ProfileLinksEditor
+            drafts={linkDrafts}
+            errors={linkErrors}
+            onChange={(platform, next) => {
+              setLinkDrafts((d) => ({ ...d, [platform]: next }));
+              setLinkErrors((e) => {
+                if (!e[platform]) return e;
+                const { [platform]: _removed, ...rest } = e;
+                return rest;
+              });
+            }}
+          />
 
           <div className="profile-edit-actions">
             <button type="button" onClick={handleCancel} disabled={saving}>
