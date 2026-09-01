@@ -216,8 +216,6 @@ export default function LocationPanel({
         </div>
       )}
 
-      <VerseList verses={location.verses} onSelectVerse={onSelectVerse} />
-
       {location.sources && location.sources.length > 0 && (
         <div className="sources-section">
           <h4>Sources</h4>
