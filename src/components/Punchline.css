@@ -1,0 +1,227 @@
+/* --- Guess the Punchline (PunchlineView.tsx) --- */
+/* The difficulty picker reuses .game-center-card / .games-panel-intro from Game.css, same as the
+   Crossword, Chronology and Fill in the Blank pickers; everything below is the play screen only.
+   Every colour is a token so both themes are covered by construction — the two exceptions are the
+   green/red answer marks, which match the hard-coded pair ChronologyView already uses. */
+
+.punchline-picker {
+  width: 100%;
+  max-width: 480px;
+}
+
+/* --------------------------------------------------------------------- hud */
+
+.punchline-hud {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  width: 100%;
+  max-width: 560px;
+  margin-bottom: 12px;
+}
+
+.punchline-lives {
+  display: flex;
+  gap: 2px;
+  font-size: 18px;
+}
+
+.punchline-heart-lost {
+  opacity: 0.5;
+}
+
+.punchline-score,
+.punchline-streak {
+  font-weight: 600;
+  color: var(--text-h);
+}
+
+/* ------------------------------------------------------------------- setup */
+
+.punchline-setup {
+  width: 100%;
+  max-width: 560px;
+  box-sizing: border-box;
+  padding: 16px;
+  margin-bottom: 14px;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: var(--surface-sunken);
+}
+
+.punchline-theme {
+  display: block;
+  margin-bottom: 6px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: var(--tracking-label);
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+.punchline-setup-text {
+  margin: 0;
+  font-size: 19px;
+  line-height: 1.35;
+  font-weight: 600;
+  color: var(--text-h);
+}
+
+/* ----------------------------------------------------------------- choices */
+
+.punchline-choices {
+  list-style: none;
+  margin: 0 0 14px;
+  padding: 0;
+  width: 100%;
+  max-width: 560px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.punchline-choice {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  /* Comfortably past the 44px touch target minimum even for a one-word punchline. */
+  min-height: 52px;
+  padding: 10px 14px;
+  box-sizing: border-box;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: var(--panel-bg);
+  color: var(--text);
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+  transition: border-color 0.15s ease, background 0.15s ease;
+}
+
+.punchline-choice:hover:not(:disabled) {
+  border-color: var(--accent);
+}
+
+.punchline-choice:disabled {
+  cursor: default;
+}
+
+.punchline-choice-letter {
+  flex-shrink: 0;
+  width: 26px;
+  height: 26px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: var(--border);
+  color: var(--text-h);
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.punchline-choice-text {
+  flex: 1;
+  min-width: 0;
+  font-size: 15px;
+  line-height: 1.35;
+}
+
+.punchline-choice-correct {
+  border-color: #22c55e;
+  background: rgba(34, 197, 94, 0.08);
+}
+
+.punchline-choice-wrong {
+  border-color: #ef4444;
+  background: rgba(239, 68, 68, 0.08);
+}
+
+/* Unpicked wrong answers recede so the eye lands on the real punchline first. */
+.punchline-choice-dimmed {
+  opacity: 0.55;
+}
+
+/* ----------------------------------------------------------------- verdict */
+
+.punchline-verdict {
+  width: 100%;
+  max-width: 560px;
+  margin: 0 0 14px;
+  font-size: 15px;
+  font-weight: 600;
+  text-align: center;
+}
+
+.punchline-verdict-right {
+  color: var(--text-h);
+}
+
+.punchline-verdict-wrong {
+  color: var(--danger);
+}
+
+/* ----------------------------------------------------------------- buttons */
+
+.punchline-btn-primary {
+  background: var(--accent);
+  color: var(--accent-contrast);
+  border: none;
+  border-radius: 10px;
+  padding: 10px 24px;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.punchline-btn-primary:hover {
+  background: var(--accent-hover);
+}
+
+.punchline-btn-secondary {
+  background: none;
+  border: 1px solid var(--border);
+  color: var(--text);
+  border-radius: 10px;
+  padding: 10px 24px;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+/* --------------------------------------------------------------- game over */
+
+.punchline-gameover {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  text-align: center;
+  margin-top: 40px;
+}
+
+.punchline-gameover-icon {
+  font-size: 48px;
+  margin: 0;
+}
+
+.punchline-gameover-score {
+  font-size: 16px;
+  color: var(--text-muted);
+  margin: 0;
+}
+
+.punchline-gameover-best {
+  font-size: 14px;
+  color: var(--text-muted);
+  margin-bottom: 12px;
+}
+
+.punchline-gameover-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 100%;
+  max-width: 280px;
+}
