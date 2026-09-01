@@ -44,6 +44,13 @@ function refLabel(e: Entry): string {
   return e.startVerse === e.endVerse ? `${e.book} ${e.chapter}:${e.startVerse}` : `${e.book} ${e.chapter}:${e.startVerse}-${e.endVerse}`;
 }
 
+/** True once a note has actually been edited after it was written. created_at and updated_at are both
+ * defaulted to now() on insert and land a few microseconds apart, so a small tolerance keeps
+ * never-edited notes from claiming they were. */
+function isEdited(note: Note): boolean {
+  return new Date(note.updated_at).getTime() - new Date(note.created_at).getTime() > 2000;
+}
+
 function escapeHtml(text: string): string {
   return text.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
 }
@@ -61,6 +68,13 @@ export default function MyNotesPanel({ userId, onGoToVerse, expand, style, hidde
   const exportMenuRef = useRef<HTMLDivElement | null>(null);
   const [openTagPickerKey, setOpenTagPickerKey] = useState<string | null>(null);
   const [newTagName, setNewTagName] = useState("");
+  /** Id of the note currently open in its inline editor (only ever one at a time), plus its
+   * working copy — the saved note in `notes` is left untouched until Save succeeds, so Cancel is
+   * just dropping the draft and a failed save keeps the reader's typing on screen. */
+  const [editingNoteId, setEditingNoteId] = useState<string | null>(null);
+  const [editDraft, setEditDraft] = useState("");
+  const [savingEdit, setSavingEdit] = useState(false);
+  const [editError, setEditError] = useState<string | null>(null);
 
   useEffect(() => {
     if (!exportMenuOpen) return;
@@ -159,6 +173,49 @@ export default function MyNotesPanel({ userId, onGoToVerse, expand, style, hidde
   const handleDeleteNote = async (id: string) => {
     await supabase.from("notes").delete().eq("id", id);
     setNotes((prev) => prev.filter((n) => n.id !== id));
+    if (editingNoteId === id) cancelEdit();
+  };
+
+  const startEdit = (note: Note) => {
+    setEditingNoteId(note.id);
+    setEditDraft(note.note_text);
+    setEditError(null);
+  };
+
+  const cancelEdit = () => {
+    setEditingNoteId(null);
+    setEditDraft("");
+    setEditError(null);
+    setSavingEdit(false);
+  };
+
+  /** Writes the edited text back to the row this panel already holds in state (the list is a plain
+   * fetch, not a realtime subscription), so the change shows without a refetch. On failure the
+   * editor stays open with the draft intact rather than discarding what was typed. */
+  const handleSaveEdit = async (note: Note) => {
+    const text = editDraft.trim();
+    if (!text || savingEdit) return;
+    if (text === note.note_text) {
+      cancelEdit();
+      return;
+    }
+    setSavingEdit(true);
+    setEditError(null);
+    const updatedAt = new Date().toISOString();
+    const { data, error } = await supabase
+      .from("notes")
+      .update({ note_text: text, updated_at: updatedAt })
+      .eq("id", note.id)
+      .select()
+      .single();
+    setSavingEdit(false);
+    if (error || !data) {
+      setEditError(error?.message ? `Couldn't save: ${error.message}` : "Couldn't save your changes. Your text is still here — try again.");
+      return;
+    }
+    const saved = data as Note;
+    setNotes((prev) => prev.map((n) => (n.id === saved.id ? saved : n)));
+    cancelEdit();
   };
 
   /** Public notes show as a post on this account's profile and friends can comment on them. */
@@ -367,7 +424,39 @@ export default function MyNotesPanel({ userId, onGoToVerse, expand, style, hidde
                         {e.note.translation && <span className="my-notes-translation-tag"> ({translationLabel(e.note.translation)})</span>}
                       </p>
                     )}
-                    {e.note && <p className="my-notes-text">{e.note.note_text}</p>}
+                    {e.note && editingNoteId === e.note.id && (
+                      <div className="my-notes-edit no-print">
+                        <textarea
+                          className="my-notes-edit-textarea"
+                          value={editDraft}
+                          onChange={(ev) => setEditDraft(ev.target.value)}
+                          rows={4}
+                          maxLength={8000}
+                          aria-label="Edit note"
+                          autoFocus
+                        />
+                        {editError && <p className="my-notes-edit-error">{editError}</p>}
+                        <div className="my-notes-edit-actions">
+                          <button
+                            type="button"
+                            className="my-notes-edit-save"
+                            onClick={() => handleSaveEdit(e.note!)}
+                            disabled={!editDraft.trim() || savingEdit}
+                          >
+                            {savingEdit ? "Saving…" : "Save"}
+                          </button>
+                          <button type="button" onClick={cancelEdit} disabled={savingEdit}>
+                            Cancel
+                          </button>
+                        </div>
+                      </div>
+                    )}
+                    {e.note && editingNoteId !== e.note.id && (
+                      <p className="my-notes-text">
+                        {e.note.note_text}
+                        {isEdited(e.note) && <span className="my-notes-edited-flag"> (edited)</span>}
+                      </p>
+                    )}
                     {!e.note && <p className="my-notes-text my-notes-text-muted">(tagged verse, no note)</p>}
                     {e.verseTags.length > 0 && (
                       <div className="my-notes-tag-chips">
@@ -438,9 +527,16 @@ export default function MyNotesPanel({ userId, onGoToVerse, expand, style, hidde
                           />
                           {e.note.is_public ? "🌐 Public — shows on your profile" : "🔒 Private"}
                         </label>
-                        <button type="button" className="my-notes-delete" onClick={() => handleDeleteNote(e.note!.id)}>
-                          Delete note
-                        </button>
+                        <div className="my-notes-actions-buttons">
+                          {editingNoteId !== e.note.id && (
+                            <button type="button" className="my-notes-edit-button" onClick={() => startEdit(e.note!)}>
+                              ✎ Edit
+                            </button>
+                          )}
+                          <button type="button" className="my-notes-delete" onClick={() => handleDeleteNote(e.note!.id)}>
+                            Delete note
+                          </button>
+                        </div>
                       </div>
                     )}
                   </div>

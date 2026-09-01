@@ -3728,10 +3728,45 @@ body.resizing-panels {
 .verse-popup-note-item button {
   border: none;
   background: none;
-  color: var(--danger);
+  color: var(--accent);
   font-size: 12px;
+  font-weight: 500;
   padding: 0;
   cursor: pointer;
+}
+
+.verse-popup-note-item button:disabled {
+  opacity: 0.5;
+  cursor: default;
+}
+
+/* Delete keeps the destructive colour; Edit/Save/Cancel sit alongside it in the accent. */
+.verse-popup-note-item .verse-popup-note-delete {
+  color: var(--danger);
+}
+
+.verse-popup-note-item-actions {
+  display: flex;
+  gap: 12px;
+}
+
+.verse-popup-note-edit-textarea {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 6px 8px;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  font: inherit;
+  font-size: 13px;
+  background: var(--surface-sunken);
+  color: var(--text);
+  resize: vertical;
+  margin-bottom: 6px;
+}
+
+.verse-popup-note-error {
+  color: var(--danger) !important;
+  font-size: 12px !important;
 }
 
 .verse-popup-tag-picker {
@@ -3866,6 +3901,80 @@ body.resizing-panels {
   justify-content: space-between;
   gap: 10px;
   margin-top: 6px;
+}
+
+.my-notes-actions-buttons {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.my-notes-edit-button {
+  border: none;
+  background: none;
+  color: var(--accent);
+  font-size: 12px;
+  font-weight: 500;
+  padding: 0;
+  cursor: pointer;
+}
+
+/* --- Inline note editor (My Notes) --- */
+
+.my-notes-edit {
+  margin-bottom: 6px;
+}
+
+.my-notes-edit-textarea {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 7px 9px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  font: inherit;
+  font-size: 14px;
+  line-height: 1.5;
+  background: var(--surface-sunken);
+  color: var(--text);
+  resize: vertical;
+}
+
+.my-notes-edit-actions {
+  display: flex;
+  gap: 8px;
+  margin-top: 6px;
+}
+
+.my-notes-edit-actions button {
+  border: 1px solid var(--border);
+  background: var(--surface-sunken);
+  color: var(--text);
+  border-radius: 8px;
+  padding: 5px 12px;
+  font-size: 13px;
+  cursor: pointer;
+}
+
+.my-notes-edit-actions .my-notes-edit-save {
+  border-color: var(--accent);
+  background: var(--accent);
+  color: var(--accent-contrast);
+}
+
+.my-notes-edit-actions button:disabled {
+  opacity: 0.5;
+  cursor: default;
+}
+
+.my-notes-edit-error {
+  color: var(--danger);
+  font-size: 12px;
+  margin-top: 6px;
+}
+
+.my-notes-edited-flag {
+  color: var(--text-muted);
+  font-size: 12px;
 }
 
 .my-notes-public-toggle {
@@ -6883,6 +6992,8 @@ body.resizing-panels {
 .bible-keyword-search input,
 .bible-translation-select,
 .verse-popup-note-editor textarea,
+.verse-popup-note-edit-textarea,
+.my-notes-edit-textarea,
 .tag-picker-new input,
 .sermon-notes-title-input,
 .sermon-notes-meta-row input,

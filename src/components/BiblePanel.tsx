@@ -251,6 +251,13 @@ export default function BiblePanel({
   const [verseTags, setVerseTags] = useState<VerseTag[]>([]);
   const [popup, setPopup] = useState<PopupState | null>(null);
   const [noteDraft, setNoteDraft] = useState("");
+  /** Inline editing of an already-saved note in the verse-notes popup — the saved row stays
+   * untouched until the update succeeds, so Cancel just drops the draft and a failed save keeps
+   * the reader's text on screen. Mirrors the same flow in MyNotesPanel. */
+  const [editingNoteId, setEditingNoteId] = useState<string | null>(null);
+  const [editNoteDraft, setEditNoteDraft] = useState("");
+  const [savingNoteEdit, setSavingNoteEdit] = useState(false);
+  const [noteEditError, setNoteEditError] = useState<string | null>(null);
   const [newTagName, setNewTagName] = useState("");
   /** Set when the verse-selection popup's Share action is used — ShareCardModal owns its own
    * open/closed state elsewhere in the app (see ShareCardButton), but the popup here calls
@@ -1004,6 +1011,48 @@ export default function BiblePanel({
   const handleDeleteNote = async (noteId: string) => {
     await supabase.from("notes").delete().eq("id", noteId);
     setNotes((prev) => prev.filter((n) => n.id !== noteId));
+    if (editingNoteId === noteId) cancelNoteEdit();
+    onNotesChanged?.();
+  };
+
+  const startNoteEdit = (note: Note) => {
+    setEditingNoteId(note.id);
+    setEditNoteDraft(note.note_text);
+    setNoteEditError(null);
+  };
+
+  const cancelNoteEdit = () => {
+    setEditingNoteId(null);
+    setEditNoteDraft("");
+    setNoteEditError(null);
+    setSavingNoteEdit(false);
+  };
+
+  const handleSaveNoteEdit = async (note: Note) => {
+    const text = editNoteDraft.trim();
+    if (!text || savingNoteEdit) return;
+    if (text === note.note_text) {
+      cancelNoteEdit();
+      return;
+    }
+    setSavingNoteEdit(true);
+    setNoteEditError(null);
+    const { data, error: updateError } = await supabase
+      .from("notes")
+      .update({ note_text: text, updated_at: new Date().toISOString() })
+      .eq("id", note.id)
+      .select()
+      .single();
+    setSavingNoteEdit(false);
+    if (updateError || !data) {
+      setNoteEditError(
+        updateError?.message ? `Couldn't save: ${updateError.message}` : "Couldn't save your changes. Your text is still here — try again."
+      );
+      return;
+    }
+    const saved = data as Note;
+    setNotes((prev) => prev.map((n) => (n.id === saved.id ? saved : n)));
+    cancelNoteEdit();
     onNotesChanged?.();
   };
 
@@ -1619,10 +1668,40 @@ export default function BiblePanel({
               {notesForVerse(popup.verse).map((n) => (
                 <div key={n.id} className="verse-popup-note-item">
                   {n.quoted_text && <p className="verse-popup-quoted">"{n.quoted_text}"</p>}
-                  <p>{n.note_text}</p>
-                  <button type="button" onClick={() => handleDeleteNote(n.id)}>
-                    Delete
-                  </button>
+                  {editingNoteId === n.id ? (
+                    <>
+                      <textarea
+                        className="verse-popup-note-edit-textarea"
+                        value={editNoteDraft}
+                        onChange={(ev) => setEditNoteDraft(ev.target.value)}
+                        rows={3}
+                        maxLength={8000}
+                        aria-label="Edit note"
+                        autoFocus
+                      />
+                      {noteEditError && <p className="verse-popup-note-error">{noteEditError}</p>}
+                      <div className="verse-popup-note-item-actions">
+                        <button type="button" onClick={() => handleSaveNoteEdit(n)} disabled={!editNoteDraft.trim() || savingNoteEdit}>
+                          {savingNoteEdit ? "Saving…" : "Save"}
+                        </button>
+                        <button type="button" onClick={cancelNoteEdit} disabled={savingNoteEdit}>
+                          Cancel
+                        </button>
+                      </div>
+                    </>
+                  ) : (
+                    <>
+                      <p>{n.note_text}</p>
+                      <div className="verse-popup-note-item-actions">
+                        <button type="button" onClick={() => startNoteEdit(n)}>
+                          ✎ Edit
+                        </button>
+                        <button type="button" className="verse-popup-note-delete" onClick={() => handleDeleteNote(n.id)}>
+                          Delete
+                        </button>
+                      </div>
+                    </>
+                  )}
                 </div>
               ))}
               <button type="button" className="verse-popup-close-full" onClick={() => setPopup(null)}>
