@@ -94,6 +94,11 @@ function App() {
   const [bibleSearchQuery, setBibleSearchQuery] = useState("");
   const [bibleSearchNonce, setBibleSearchNonce] = useState(0);
   const [notesSearchQuery, setNotesSearchQuery] = useState("");
+  // Explicit scope for the header's shared search box, for the one case where it's genuinely
+  // ambiguous: desktop with both the Bible and Map panels open at once. Always starts on
+  // "scripture" on a fresh load/app start (never persisted) — see the searchMode/toggle logic
+  // below for how this is kept in sync with the mobile tab bar instead of shown as a control there.
+  const [searchScope, setSearchScope] = useState<"scripture" | "places">("scripture");
   const [isMobile, setIsMobile] = useState(() => window.matchMedia(MOBILE_QUERY).matches);
   // On mobile, exactly one panel is shown at a time (driven by the bottom tab bar) — default to
   // Bible. Desktop shows Bible+Map together by default.
@@ -1020,9 +1025,10 @@ function App() {
   const friendsHiddenOnMobile = isMobile && !panels.friends;
   // Which panel the header search bar serves — each panel gets its own search behavior (Map flies to
   // a location, Bible runs a word/phrase search, Notes filters live, Timeline searches timeline
-  // events) rather than one generic bar, so only one can be "active" at a time. On desktop, where
-  // Bible+Map are often open together, Map wins ties (unchanged from the original map-only behavior)
-  // since it's the more common case.
+  // events) rather than one generic bar, so only one can be "active" at a time. On desktop, when
+  // Bible+Map are both open at once the choice is genuinely ambiguous, so it's resolved by the
+  // explicit `searchScope` toggle (rendered next to the search box only in that situation) instead
+  // of silently picking one — see the scope-toggle UI below.
   //
   // Timeline mode is checked FIRST, ahead of the panel/mobile-tab logic below: `showTimeline` is a
   // separate top-level takeover, not one of the PanelKey values those branches switch on, and the
@@ -1036,13 +1042,27 @@ function App() {
       ? activeMobilePanel === "map" || activeMobilePanel === "bible" || activeMobilePanel === "notes"
         ? activeMobilePanel
         : null
-      : panels.map
-        ? "map"
-        : panels.bible
-          ? "bible"
-          : panels.notes
-            ? "notes"
-            : null;
+      : panels.map && panels.bible
+        ? (searchScope === "places" ? "map" : "bible")
+        : panels.map
+          ? "map"
+          : panels.bible
+            ? "bible"
+            : panels.notes
+              ? "notes"
+              : null;
+
+  // Mobile shows exactly one panel at a time via the bottom tab bar, so there's no ambiguity to
+  // surface a toggle for there — instead, keep `searchScope` auto-aligned with whichever tab is
+  // active so it never silently disagrees with what's on screen (e.g. re-opening the app to the
+  // Map tab, or switching to it, should make Places the active scope, not leave Scripture stuck
+  // from a fresh load). Desktop never runs this, so `searchScope`'s initial "scripture" default —
+  // and any manual choice made once both panels are open — is left alone.
+  useEffect(() => {
+    if (!isMobile) return;
+    if (activeMobilePanel === "bible") setSearchScope("scripture");
+    else if (activeMobilePanel === "map") setSearchScope("places");
+  }, [isMobile, activeMobilePanel]);
 
   const goHome = () => {
     if (isMobile) setMobileActivePanel("bible");
@@ -1144,21 +1164,50 @@ function App() {
           <img src="/favicon.svg" className="app-logo" alt="" aria-hidden="true" />
         </button>
         <h1>Capstone Bible</h1>
-        {searchMode === "map" && (
-          <SearchBar
-            locations={locations}
-            onSelect={focusLocationOnMap}
-            selectedLocationName={selectedLocation?.name ?? null}
-          />
-        )}
-        {searchMode === "bible" && (
-          <HeaderTextSearch
-            placeholder="Search Scripture…"
-            icon="📖"
-            value={bibleSearchQuery}
-            onChange={setBibleSearchQuery}
-            onSubmit={() => setBibleSearchNonce((n) => n + 1)}
-          />
+        {(searchMode === "map" || searchMode === "bible") && (
+          <div className="header-search-group">
+            {/* Only genuinely ambiguous when both panels are open at once (desktop) — that's the
+                only time the explicit scope toggle is worth the header space. Otherwise the active
+                panel already makes the scope obvious, exactly as before this toggle existed. */}
+            {panels.map && panels.bible && (
+              <div className="search-scope-toggle" role="group" aria-label="Search scope">
+                <button
+                  type="button"
+                  className={searchScope === "scripture" ? "active" : ""}
+                  aria-pressed={searchScope === "scripture"}
+                  title="Search Scripture"
+                  onClick={() => setSearchScope("scripture")}
+                >
+                  📖
+                </button>
+                <button
+                  type="button"
+                  className={searchScope === "places" ? "active" : ""}
+                  aria-pressed={searchScope === "places"}
+                  title="Search Places"
+                  onClick={() => setSearchScope("places")}
+                >
+                  🗺️
+                </button>
+              </div>
+            )}
+            {searchMode === "map" && (
+              <SearchBar
+                locations={locations}
+                onSelect={focusLocationOnMap}
+                selectedLocationName={selectedLocation?.name ?? null}
+              />
+            )}
+            {searchMode === "bible" && (
+              <HeaderTextSearch
+                placeholder="Search Scripture…"
+                icon="📖"
+                value={bibleSearchQuery}
+                onChange={setBibleSearchQuery}
+                onSubmit={() => setBibleSearchNonce((n) => n + 1)}
+              />
+            )}
+          </div>
         )}
         {searchMode === "notes" && (
           <HeaderTextSearch

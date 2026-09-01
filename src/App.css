@@ -152,6 +152,47 @@ body.resizing-panels {
 
 /* --- Search --- */
 
+/* Wraps the header search input together with the scope toggle (Scripture vs. Places) that only
+   appears when Bible and Map are both open on desktop and the target is otherwise ambiguous — see
+   searchMode/searchScope in App.tsx. Takes over the flex:1/max-width the bare .search-bar used to
+   own so the pair sizes as one unit inside .app-header. */
+.header-search-group {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex: 1;
+  max-width: 480px;
+}
+
+.header-search-group .search-bar {
+  max-width: none;
+}
+
+/* Same segmented-button look as the map's Map/Satellite toggle (.then-now-buttons) — reused here
+   rather than inventing a new control style. Icon-only to stay compact in an already-tight header. */
+.search-scope-toggle {
+  display: flex;
+  flex-shrink: 0;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.search-scope-toggle button {
+  border: none;
+  background: var(--bg);
+  color: var(--text);
+  font-size: 14px;
+  line-height: 1;
+  padding: 8px 10px;
+  cursor: pointer;
+}
+
+.search-scope-toggle button.active {
+  background: var(--accent);
+  color: #fff;
+}
+
 .search-bar {
   position: relative;
   flex: 1;
@@ -2969,7 +3010,8 @@ body.resizing-panels {
     display: none;
   }
 
-  .search-bar {
+  .search-bar,
+  .header-search-group {
     max-width: none;
   }
 
