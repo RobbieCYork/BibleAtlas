@@ -24,6 +24,8 @@ import MobileTabBar from "./components/MobileTabBar";
 import ResizeHandle from "./components/ResizeHandle";
 import AuthButton from "./components/AuthButton";
 import MyProfileView from "./components/MyProfileView";
+import FriendProfileView from "./components/FriendProfileView";
+import PeopleSearchBar from "./components/PeopleSearchBar";
 import NotificationToasts from "./components/NotificationToasts";
 import GameView from "./components/GameView";
 import BackButton from "./components/BackButton";
@@ -444,8 +446,19 @@ function App() {
   // from the desktop account menu or the mobile "More" sheet's "My Profile" entry (both via AuthButton)
   // and left via its own Back button — replaces the small anchored dropdown this used to be.
   const [showMyProfile, setShowMyProfile] = useState(false);
-  const openMyProfile = () => setShowMyProfile(true);
-  const closeMyProfile = () => setShowMyProfile(false);
+  // Someone picked out of My Profile mode's header people-search (see PeopleSearchBar / searchMode
+  // below): their read-only profile takes over the same area, with its own Back button returning to
+  // the reader's own profile. Kept here rather than inside MyProfileView because the search that
+  // sets it lives in the app header, which MyProfileView doesn't own.
+  const [viewedPersonId, setViewedPersonId] = useState<string | null>(null);
+  const openMyProfile = () => {
+    setViewedPersonId(null);
+    setShowMyProfile(true);
+  };
+  const closeMyProfile = () => {
+    setViewedPersonId(null);
+    setShowMyProfile(false);
+  };
   // Bumped whenever MyProfileView saves a display-name change, so AuthButton's own fetch (which only
   // otherwise re-runs on a session change) knows to refresh the label it shows.
   const [profileVersion, setProfileVersion] = useState(0);
@@ -1024,8 +1037,19 @@ function App() {
   // that leaves the panels underneath mounted, but unlike Timeline it has nothing for the header
   // search to act on — so without this early-out it fell through to whatever panel was last active
   // and painted Bible's (or Map's/Notes') search bar over the Games UI. Games gets no header search.
-  const searchMode: "map" | "bible" | "notes" | "timeline" | null = showGame
+  //
+  // My Profile is the third takeover of that same shape, and it leaked the same way — a profile page
+  // with "Search Scripture…" sitting on top of it. It resolves to "people" rather than null because
+  // a profile page DOES have something for a header search to act on: other people. It's ordered
+  // between Games and Timeline to match the render order of the three takeovers below (all z-index
+  // 60, so the last one rendered is the one on screen): Games over My Profile over Timeline.
+  // The guard mirrors the render condition — for a guest the takeover isn't rendered at all, so the
+  // panel underneath is what's actually on screen and should keep its own search.
+  const myProfileMode = showMyProfile && !!session && !session.user.is_anonymous;
+  const searchMode: "map" | "bible" | "notes" | "timeline" | "people" | null = showGame
     ? null
+    : myProfileMode
+    ? "people"
     : showTimeline
     ? "timeline"
     : isMobile
@@ -1135,6 +1159,9 @@ function App() {
         )}
         {searchMode === "timeline" && (
           <TimelineSearchBar events={timelineEvents} onSelect={handleSelectTimelineSearchResult} />
+        )}
+        {searchMode === "people" && session && (
+          <PeopleSearchBar viewerId={session.user.id} onSelect={setViewedPersonId} />
         )}
         <AuthButton
           session={session}
@@ -1419,18 +1446,31 @@ function App() {
         {/* My Profile mode — same full-area takeover as Timeline mode above (the layout underneath
             stays mounted so map/Bible state survives the visit). Only meaningful for a real account;
             guests are routed to the account menu's Settings view instead (see AuthButton). */}
-        {showMyProfile && session && !session.user.is_anonymous && (
+        {myProfileMode && session && (
           <div className="myprofile-mode">
-            <MyProfileView
-              userId={session.user.id}
-              onDisplayNameSaved={() => setProfileVersion((v) => v + 1)}
-              onClose={closeMyProfile}
-              onGoToVerse={(reference) => {
-                closeMyProfile();
-                openVerse(reference);
-              }}
-              onOpenFriends={openFriendsFromProfile}
-            />
+            {viewedPersonId ? (
+              /* Someone found through the header's people search — the same read-only profile the
+                 Friends list opens, shown in place of the reader's own until Back clears it, so a
+                 search result leads somewhere instead of just naming a person. */
+              <FriendProfileView
+                friendId={viewedPersonId}
+                viewerId={session.user.id}
+                onBack={() => setViewedPersonId(null)}
+                onMessage={() => openFriendsFromProfile("messages")}
+                expand
+              />
+            ) : (
+              <MyProfileView
+                userId={session.user.id}
+                onDisplayNameSaved={() => setProfileVersion((v) => v + 1)}
+                onClose={closeMyProfile}
+                onGoToVerse={(reference) => {
+                  closeMyProfile();
+                  openVerse(reference);
+                }}
+                onOpenFriends={openFriendsFromProfile}
+              />
+            )}
           </div>
         )}
         {/* Games mode — same full-area takeover as Timeline/My Profile above. Unlike Timeline, this
