@@ -5749,92 +5749,7 @@ body.resizing-panels {
   padding: 0;
 }
 
-/* --- Verse & Place of the Day (daily devotional card — see src/data/dailyVerse.ts) --- */
-
-.daily-verse-overlay {
-  position: fixed;
-  inset: 0;
-  /* Below the account gates (z-index 100) — password reset / display name must win if both are up. */
-  z-index: 90;
-  background: rgba(0, 0, 0, 0.45);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 20px;
-}
-
-.daily-verse-card {
-  position: relative;
-  background: var(--panel-bg);
-  /* Soft accent wash fading from the top so it reads as an invitation, not a system dialog. */
-  background-image: linear-gradient(180deg, var(--accent-bg), transparent 45%);
-  border: 1px solid var(--border);
-  border-radius: 16px;
-  padding: 26px 26px 24px;
-  max-width: 430px;
-  width: 100%;
-  /* Cap to the viewport (minus the overlay's 20px padding on each side) and scroll — on short
-     viewports (phone landscape) the centered card otherwise clips top and bottom, putting the
-     action buttons out of reach. vh fallback first for browsers without dvh. */
-  max-height: calc(100vh - 40px);
-  max-height: calc(100dvh - 40px);
-  overflow-y: auto;
-  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.3);
-}
-
-.daily-verse-close {
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  border: none;
-  background: none;
-  color: var(--text-muted);
-  font-size: 22px;
-  line-height: 1;
-  padding: 6px 10px;
-  border-radius: 8px;
-  cursor: pointer;
-}
-
-.daily-verse-close:hover {
-  background: var(--border);
-  color: var(--text-h);
-}
-
-.daily-verse-eyebrow {
-  font-size: 11px;
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-  color: var(--accent);
-  margin-bottom: 12px;
-}
-
-.daily-verse-reference {
-  font-size: 24px;
-  margin: 0 0 2px;
-}
-
-.daily-verse-place {
-  font-size: 14px;
-  color: var(--text-muted);
-  margin-bottom: 14px;
-}
-
-/* The verse's own text — set apart as a quote so it's clearly Scripture, not the note below it. */
-.daily-verse-text {
-  font-size: 15px;
-  font-style: italic;
-  line-height: 1.55;
-  color: var(--text-h);
-  margin: 0 0 12px;
-}
-
-.daily-verse-note {
-  font-size: 14px;
-  line-height: 1.55;
-  margin: 0 0 12px;
-}
+/* --- Daily verse prompt / response (Newsfeed's Verse of the Day card — see src/data/dailyVerse.ts) --- */
 
 /* The reflective prompt gets the same accent-quote treatment as a pull quote — it's the devotional
  * heart of the card, not fine print. */
@@ -5890,39 +5805,6 @@ body.resizing-panels {
 .daily-verse-response-submit:disabled {
   opacity: 0.6;
   cursor: default;
-}
-
-.daily-verse-response-saved,
-.daily-verse-response-signed-out {
-  font-size: 13px;
-  color: var(--text-muted);
-  margin: 0 0 18px;
-}
-
-.daily-verse-actions {
-  display: flex;
-  gap: 10px;
-}
-
-.daily-verse-actions button {
-  flex: 1;
-  font: inherit;
-  font-size: 14px;
-  font-weight: 600;
-  border-radius: 8px;
-  padding: 10px 12px;
-  cursor: pointer;
-}
-
-.daily-verse-map {
-  border: 1px solid var(--border);
-  background: var(--bg);
-  color: var(--text);
-}
-
-.daily-verse-map:hover {
-  background: var(--accent-bg);
-  border-color: var(--accent);
 }
 
 /* --- Seasonal walks (Holy Week / Advent) --- */
@@ -6854,7 +6736,6 @@ body.resizing-panels {
 .my-notes-book-heading,
 .group-friend-add-list-label,
 .book-intro-fact-label,
-.daily-verse-eyebrow,
 .walk-panel-eyebrow,
 .poi-badge,
 .category-badge,
@@ -6880,7 +6761,6 @@ body.resizing-panels {
 .articles-result-text,
 .reflection-prompt-text,
 .verse-popup-quoted,
-.daily-verse-text,
 .my-notes-text,
 .trip-note-body,
 .share-card-content .share-card-body {
@@ -6905,8 +6785,7 @@ body.resizing-panels {
 
 .person-summary,
 .extra-biblical-summary,
-.reflection-prompt-text,
-.daily-verse-text {
+.reflection-prompt-text {
   font-size: 15px;
   line-height: 1.6;
 }

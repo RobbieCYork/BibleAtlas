@@ -35,7 +35,6 @@ import { pois } from "./data/pois";
 import { people } from "./data/people";
 import { topics } from "./data/topics";
 import { timelineEvents } from "./data/timelineEvents";
-import { DAILY_VERSE_DISMISSED_KEY, formatDailyReference, getDailyVerse, getLocalDayKey } from "./data/dailyVerse";
 import { formatWalkStopReference, getActiveSeasonalWalk, getWalkDismissKey } from "./data/seasonalWalks";
 import SeasonalWalkPanel from "./components/SeasonalWalkPanel";
 import "./App.css";
@@ -893,79 +892,10 @@ function App() {
     openVerse(reference);
   };
 
-  // --- Verse & Place of the Day ---------------------------------------------------------------
-  // Deterministic daily rotation (see dailyVerse.ts) pairing a passage with its place on the map —
-  // shown to everyone (signed in or not) as an inviting entry point instead of blank pickers.
-  // Computed once per app load; any close persists today's day-key so the card stays gone until
-  // tomorrow, when a fresh key (and a fresh entry) brings it back.
-  const [dailyVerse] = useState(() => getDailyVerse());
-  const [dailyVerseOpen, setDailyVerseOpen] = useState(
-    () => localStorage.getItem(DAILY_VERSE_DISMISSED_KEY) !== getLocalDayKey()
-  );
-  const dismissDailyVerse = () => {
-    localStorage.setItem(DAILY_VERSE_DISMISSED_KEY, getLocalDayKey());
-    setDailyVerseOpen(false);
-  };
-  const dailyVerseReference = formatDailyReference(dailyVerse);
-  const dailyVersePlace = locations.find((l) => l.id === dailyVerse.locationId) ?? null;
-  const viewDailyVerseOnMap = () => {
-    dismissDailyVerse();
-    focusLocationOnMap(dailyVerse.locationId);
-  };
-
-  // The card shows the verse's own text inline (not just its reference) — fetched once per app
-  // load the same way BiblePanel loads a chapter, since the text isn't duplicated into this file.
-  const [dailyVerseText, setDailyVerseText] = useState<string | null>(null);
-  useEffect(() => {
-    let cancelled = false;
-    fetch(`https://bible-api.com/${encodeURIComponent(dailyVerseReference)}?translation=web`)
-      .then((res) => res.json())
-      .then((data) => {
-        if (!cancelled && data?.text) setDailyVerseText(data.text.trim());
-      })
-      .catch(() => {});
-    return () => {
-      cancelled = true;
-    };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
-  // A signed-in reader's written response to the daily prompt — posted as a note (the same
-  // mechanism behind "My Notes" -> Public and the profile Posts feed) rather than a new table, so a
-  // public response shows up on their own profile exactly like any other shared note would. Public by
-  // default (most people posting here want it on their profile), but the form below lets them choose
-  // private instead before submitting — same public/private idiom as MyNotesPanel/PostsFeed.
-  const [dailyVerseResponse, setDailyVerseResponse] = useState("");
-  const [dailyVerseResponsePublic, setDailyVerseResponsePublic] = useState(true);
-  const [dailyVerseResponseStatus, setDailyVerseResponseStatus] = useState<"idle" | "saving" | "saved">("idle");
-  const postDailyVerseResponse = async () => {
-    const text = dailyVerseResponse.trim();
-    if (!text || !session) return;
-    setDailyVerseResponseStatus("saving");
-    const { error: postError } = await supabase.from("notes").insert({
-      user_id: session.user.id,
-      book: dailyVerse.reference.book,
-      chapter: dailyVerse.reference.chapter,
-      start_verse: dailyVerse.reference.verse,
-      end_verse: dailyVerse.reference.verse,
-      translation: "web",
-      quoted_text: dailyVerseText,
-      note_text: text,
-      is_public: dailyVerseResponsePublic,
-    });
-    if (postError) {
-      setDailyVerseResponseStatus("idle");
-      return;
-    }
-    setDailyVerseResponseStatus("saved");
-    setNotesVersion((n) => n + 1);
-  };
-
   // --- Seasonal walks (Holy Week, Advent) ------------------------------------------------------
-  // A dismissible banner pill under the header — deliberately NOT another modal, since the daily
-  // verse card already owns that moment — shown only while today falls in a walk's season window.
-  // Computed once per app load like dailyVerse; dismissal persists per season occurrence (see
-  // getWalkDismissKey), so one × keeps it gone until that season comes around next year.
+  // A dismissible banner pill under the header — deliberately a banner, not a modal — shown only
+  // while today falls in a walk's season window. Computed once per app load; dismissal persists per
+  // season occurrence (see getWalkDismissKey), so one × keeps it gone until that season next year.
   const [activeWalk] = useState(() => getActiveSeasonalWalk());
   const [walkBannerDismissed, setWalkBannerDismissed] = useState(() =>
     activeWalk ? localStorage.getItem(getWalkDismissKey(activeWalk)) === "1" : true
@@ -1097,76 +1027,6 @@ function App() {
       {passwordRecovery && session && <ResetPasswordGate onDone={() => setPasswordRecovery(false)} />}
       {!passwordRecovery && needsDisplayName && session && (
         <DisplayNameGate userId={session.user.id} onSaved={() => setNeedsDisplayName(false)} />
-      )}
-      {/* Verse & Place of the Day — never over the account gates, which must be dealt with first.
-          Clicking the backdrop counts as a dismissal (persisted for the day) like the × does. */}
-      {dailyVerseOpen && !passwordRecovery && !needsDisplayName && (
-        <div className="daily-verse-overlay" onClick={dismissDailyVerse}>
-          <div
-            className="daily-verse-card"
-            role="dialog"
-            aria-label="Verse and Place of the Day"
-            onClick={(e) => e.stopPropagation()}
-          >
-            <button type="button" className="daily-verse-close" onClick={dismissDailyVerse} aria-label="Dismiss for today">
-              ×
-            </button>
-            <div className="daily-verse-eyebrow">Verse &amp; Place of the Day</div>
-            <h2 className="daily-verse-reference">{dailyVerseReference}</h2>
-            {dailyVersePlace && <div className="daily-verse-place">📍 {dailyVersePlace.name}</div>}
-            {dailyVerseText && <p className="daily-verse-text">"{dailyVerseText}"</p>}
-            <p className="daily-verse-note">{dailyVerse.verseNote}</p>
-            <p className="daily-verse-prompt">{dailyVerse.prompt}</p>
-            {session ? (
-              dailyVerseResponseStatus === "saved" ? (
-                <p className="daily-verse-response-saved">
-                  {dailyVerseResponsePublic
-                    ? "Posted to your profile. Thanks for sharing."
-                    : "Saved privately to your notes."}
-                </p>
-              ) : (
-                <form
-                  className="daily-verse-response-form"
-                  onSubmit={(e) => {
-                    e.preventDefault();
-                    postDailyVerseResponse();
-                  }}
-                >
-                  <textarea
-                    className="daily-verse-response-input"
-                    value={dailyVerseResponse}
-                    onChange={(e) => setDailyVerseResponse(e.target.value)}
-                    placeholder="Write your response…"
-                    rows={3}
-                    maxLength={2000}
-                  />
-                  <label className="my-notes-public-toggle">
-                    <input
-                      type="checkbox"
-                      checked={dailyVerseResponsePublic}
-                      onChange={(e) => setDailyVerseResponsePublic(e.target.checked)}
-                    />
-                    {dailyVerseResponsePublic ? "🌐 Share publicly on my profile" : "🔒 Keep private"}
-                  </label>
-                  <button
-                    type="submit"
-                    className="daily-verse-response-submit"
-                    disabled={!dailyVerseResponse.trim() || dailyVerseResponseStatus === "saving"}
-                  >
-                    {dailyVerseResponseStatus === "saving" ? "Posting…" : dailyVerseResponsePublic ? "Post to my profile" : "Save privately"}
-                  </button>
-                </form>
-              )
-            ) : (
-              <p className="daily-verse-response-signed-out">Log in to write and share a response.</p>
-            )}
-            <div className="daily-verse-actions">
-              <button type="button" className="daily-verse-map" onClick={viewDailyVerseOnMap}>
-                View Location
-              </button>
-            </div>
-          </div>
-        </div>
       )}
       <header className="app-header">
         <PanelMenu
