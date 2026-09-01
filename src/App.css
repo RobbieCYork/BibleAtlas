@@ -5,6 +5,35 @@
   height: var(--app-height, 100svh);
 }
 
+/* Standalone (installed home-screen app) only, and a floor rather than a height: the shell must
+ * never come up SHORTER than the window, because an installed app has no browser chrome — anything
+ * left below the bottom tab bar is just page background showing through as a dead band. That's the
+ * failure mode WebKit's phantom-chrome measurement bugs produce, and src/lib/viewportHeight.ts
+ * defends against it from the JS side; this is the same guarantee expressed in pure CSS, so a bad
+ * reading can't produce a visible gap even for the frames before the JS re-measures.
+ *
+ * `100%` (not a vh unit) is the point: it resolves against the html/body chain, which is pinned to
+ * the layout viewport in index.css, so it's the one full-window quantity that doesn't go through the
+ * viewport-percentage machinery those bugs live in. #root needs a definite height for the percentage
+ * to resolve — its own `min-height` alone would make this compute to zero.
+ *
+ * Deliberately NOT applied to browser tabs, where the layout viewport extends behind Safari's
+ * collapsible toolbar: a floor there would push the tab bar underneath that toolbar. The browser-tab
+ * case is correct as it stands and stays on `--app-height` alone.
+ *
+ * Being a floor also keeps it clear of the keyboard: while a field is focused the shell is held at
+ * the (taller or equal) frozen height, so `height` wins and the tab bar still sits behind the
+ * keyboard. */
+.standalone-mode #root {
+  height: 100%;
+  min-height: 100%;
+}
+
+.standalone-mode .app-shell {
+  min-height: 100%;
+}
+
+
 .app-header {
   display: flex;
   align-items: center;

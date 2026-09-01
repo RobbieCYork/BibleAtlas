@@ -42,16 +42,18 @@ function isStandalone(): boolean {
   );
 }
 
-document.documentElement.classList.toggle("standalone-mode", isStandalone());
-
 /**
- * Tracks whether a text input is currently focused — i.e. whether the on-screen keyboard is (about
- * to be) up. `setAppHeight` freezes the height for exactly that window.
+ * Whether a text field currently holds focus — i.e. whether the on-screen keyboard is (about to be)
+ * up. Read live off `document.activeElement` rather than tracked with a focusin/focusout boolean:
+ * iOS can take focus away without a `focusout` ever firing (the field's popup gets unmounted, the
+ * app is backgrounded), and a boolean stuck at `true` would pin the height forever.
  */
-let textInputFocused = false;
 function isTextInput(target: EventTarget | null): boolean {
   const el = target as HTMLElement | null;
   return !!el && (el.tagName === "INPUT" || el.tagName === "TEXTAREA" || el.isContentEditable);
+}
+function keyboardMayBeUp(): boolean {
+  return isTextInput(document.activeElement);
 }
 
 /**
@@ -63,44 +65,63 @@ let keyboardClosedHeight: number | null = null;
 /**
  * The height the shell should be when nothing is covering the viewport.
  *
- * Standalone home-screen launches have a well-documented WebKit quirk: `visualViewport.height` can
- * come back (or get stuck, e.g. after returning from an external flow like OAuth) reporting the
- * *reduced*, chrome-visible height as if a Safari toolbar were still eating into the viewport — even
- * though standalone mode has no toolbar at all. In a real browser tab that reduced height is correct
- * and wanted (Safari's own chrome genuinely occupies the rest, and it changes live as the collapsible
- * URL bar hides/shows). In standalone there's nothing there to fill it, so the same number just leaves
- * a dead gap at the bottom of the screen. `window.innerHeight` doesn't carry that toolbar concept and
- * reflects the true full-screen standalone height, so it's used there instead.
+ * A BROWSER TAB is the simple case: `visualViewport.height` is the truth, live, including every
+ * change as Safari's collapsible URL bar hides and shows. Nothing else here touches that path.
+ *
+ * STANDALONE is where the phantom chrome lives. An installed home-screen app has no browser toolbar
+ * at all, so the WebView is the whole screen — yet WebKit has a long-standing family of bugs where
+ * one measurement or another still comes back sized as though a Safari toolbar were eating into the
+ * viewport: `visualViewport.height` can report (or get stuck at) the reduced, chrome-visible height,
+ * and `window.innerHeight` can hand back a pre-layout or chrome-inclusive value early in startup
+ * before it settles. Whichever one is wrong, the symptom is identical — the shell comes up shorter
+ * than the screen and leaves a dead band of page background below the bottom tab bar.
+ *
+ * Rather than bet on a single reading, standalone takes the LARGEST of the three independent
+ * measurements. That is sound because in standalone there is nothing to subtract: no chrome, so the
+ * true height IS the full window, so any reading smaller than another is the artifact and the
+ * largest is the least-wrong. `documentElement.clientHeight` is the third opinion and a genuinely
+ * different quantity — the initial containing block, i.e. the layout viewport — so it doesn't share
+ * the visual-viewport bug's failure mode. None of the three can exceed the window except while the
+ * keyboard is up, which never reaches here: that case is frozen in `setAppHeight` below.
  */
 function measureOpenHeight(): number {
-  return isStandalone()
-    ? window.innerHeight
-    : window.visualViewport?.height ?? window.innerHeight;
+  const visual = window.visualViewport?.height ?? 0;
+  if (!isStandalone()) return visual || window.innerHeight;
+  return Math.max(window.innerHeight, document.documentElement.clientHeight, visual);
 }
 
 document.addEventListener("focusin", (e) => {
   if (!isTextInput(e.target)) return;
-  // Capture *before* flipping the flag: focusin fires ahead of the keyboard's viewport resize, so
-  // right now the viewport is still at its keyboard-closed size. This also self-heals if the last
-  // stored value went stale (rotation, tab restore) between keyboard sessions.
+  // `focusin` fires ahead of the keyboard's viewport resize, so this reading is still the
+  // keyboard-closed height — the value the shell is held at for the rest of the keyboard session.
   keyboardClosedHeight = measureOpenHeight();
-  textInputFocused = true;
   setAppHeight();
-});
-document.addEventListener("focusout", (e) => {
-  if (isTextInput(e.target)) textInputFocused = false;
 });
 
 function setAppHeight() {
+  // Detection is re-read every time rather than cached: if the display-mode media query hadn't
+  // resolved yet at module-evaluation time, this heals on the next measurement instead of leaving
+  // the app permanently on the wrong branch (the CSS floor in App.css keys off this class).
+  document.documentElement.classList.toggle("standalone-mode", isStandalone());
+
+  const measured = measureOpenHeight();
   // Keyboard up: hold the shell at its keyboard-closed height (see the file header) so the layout
-  // doesn't move and the tab bar sits behind the keyboard rather than on top of it. The
-  // `window.innerHeight` fallback only applies if we somehow never captured a closed height (e.g. a
-  // rotation cleared it mid-keyboard); on iOS the layout viewport — and so `innerHeight` — is not
-  // shrunk by the keyboard, which makes it the right approximation there.
-  const height =
-    textInputFocused
-      ? keyboardClosedHeight ?? window.innerHeight
-      : (keyboardClosedHeight = measureOpenHeight());
+  // doesn't move and the tab bar sits behind the keyboard rather than on top of it.
+  //
+  // The frozen value is a FLOOR, not an absolute, so it can only ever hold the shell taller than the
+  // live measurement — never shorter. That is what releases the freeze when the keyboard closes
+  // without the field being blurred (iOS's "Done"/swipe-down dismissal fires no `focusout` at all,
+  // and the field keeps focus): the measurement grows back to full, exceeds the frozen value, and
+  // wins. It also self-corrects a frozen value that was captured too small — e.g. tapping straight
+  // from one field to another, where the second `focusin` measures with the first field's keyboard
+  // still on screen. Without the floor either of those would strand the shell short and leave dead
+  // space at the bottom. `window.innerHeight` is the fallback when no closed height was ever
+  // captured (a rotation cleared it mid-keyboard); the keyboard doesn't shrink the layout viewport
+  // under `interactive-widget=resizes-visual`, which makes it the right approximation.
+  const height = keyboardMayBeUp()
+    ? Math.max(keyboardClosedHeight ?? window.innerHeight, measured)
+    : measured;
+  keyboardClosedHeight = height;
   document.documentElement.style.setProperty("--app-height", `${height}px`);
 }
 
@@ -116,6 +137,22 @@ window.addEventListener("orientationchange", () => {
   setTimeout(setAppHeight, 300);
 });
 window.addEventListener("pageshow", setAppHeight);
+// Coming back from the app switcher / a lock screen is another moment iOS is known to hand back a
+// stale height on the first read.
+document.addEventListener("visibilitychange", () => {
+  if (!document.hidden) setAppHeight();
+});
+
+/**
+ * Startup settle. The very first measurement in a standalone WebView can be taken before iOS has
+ * finished laying the window out, and every listener above only fires on a *change* — so a single
+ * bad opening reading would otherwise persist untouched for the whole session, which is exactly the
+ * dead-band-at-the-bottom symptom. These re-measures cost nothing and give the true height several
+ * chances to land.
+ */
+window.addEventListener("load", setAppHeight);
+requestAnimationFrame(setAppHeight);
+for (const delay of [50, 250, 800]) setTimeout(setAppHeight, delay);
 
 /**
  * Belt-and-suspenders for the keyboard-dismiss case specifically: tapping away from a text input
@@ -128,6 +165,9 @@ document.addEventListener(
   (e) => {
     if (isTextInput(e.target)) {
       setTimeout(setAppHeight, 100);
+      // A second pass after the keyboard's dismissal animation has fully finished — the 100ms one
+      // can still catch a mid-animation height on a slow device.
+      setTimeout(setAppHeight, 500);
     }
   },
   true
