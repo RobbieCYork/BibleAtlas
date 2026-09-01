@@ -140,6 +140,9 @@ export interface Post {
   tagged_user_ids: string[];
   is_public: boolean;
   created_at: string;
+  /** Added by sql/015_posts_updated_at.sql and backfilled to created_at, so a post that was never
+   * revised reads as unrevised — see isEdited(). */
+  updated_at: string;
 }
 
 export interface PostComment {
@@ -267,6 +270,15 @@ export function formatJoinDate(createdAt: string): string {
  * reader can tell when something was written, not just what it says. */
 export function formatPostDate(createdAt: string): string {
   return new Date(createdAt).toLocaleDateString(undefined, { month: "short", day: "numeric", year: "numeric" });
+}
+
+/** True once a note or post has actually been revised after it was written. created_at and
+ * updated_at are both defaulted to now() on insert (and posts' updated_at was backfilled to
+ * created_at by sql/015), landing microseconds apart, so a small tolerance keeps never-edited rows
+ * from claiming they were. Mirrors MyNotesPanel's local isEdited, which predates this. */
+export function isEdited(row: { created_at: string; updated_at: string | null }): boolean {
+  if (!row.updated_at) return false;
+  return new Date(row.updated_at).getTime() - new Date(row.created_at).getTime() > 2000;
 }
 
 /** "42 sec" below a minute, "3 min" at or above one — so a reading session shorter than a minute still

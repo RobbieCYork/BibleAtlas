@@ -3,6 +3,7 @@ import {
   supabase,
   displayFor,
   formatPostDate,
+  isEdited,
   type Profile,
   type Note,
   type NoteComment,
@@ -10,6 +11,7 @@ import {
   type PostComment,
   type FriendRequest,
 } from "../lib/supabase";
+import InlineTextEditor from "./InlineTextEditor";
 
 interface PostsFeedProps {
   /** Whose public notes/posts to show. */
@@ -57,6 +59,19 @@ export default function PostsFeed({ userId, viewerId, isOwn }: PostsFeedProps) {
   // of removed immediately) so the reader sees a confirmation before the item leaves the list.
   const [leavingIds, setLeavingIds] = useState<Record<string, boolean>>({});
   const [visibilityErrors, setVisibilityErrors] = useState<Record<string, string>>({});
+  /** Id of the feed item currently open in its inline editor (only ever one at a time), plus its
+   * working copy — same shape MyNotesPanel uses. The saved row is left untouched until Save
+   * succeeds, so Cancel is just dropping the draft and a failed save keeps the typing on screen. */
+  const [editingId, setEditingId] = useState<string | null>(null);
+  const [editDraft, setEditDraft] = useState("");
+  const [savingEdit, setSavingEdit] = useState(false);
+  const [editError, setEditError] = useState<string | null>(null);
+
+  /** This feed is a single author's, so "can I edit what's in it" is decided once, not per item: the
+   * signed-in account has to be looking at its own profile. FriendProfileView renders the same
+   * component without `isOwn`, and RLS is the real gate either way (posts/notes both restrict UPDATE
+   * to auth.uid() = user_id) — this only decides whether the affordance is offered. */
+  const canEdit = !!isOwn && !!viewerId && viewerId === userId;
 
   const fetchFeed = async () => {
     const [notesRes, postsRes] = await Promise.all([
@@ -133,11 +148,60 @@ export default function PostsFeed({ userId, viewerId, isOwn }: PostsFeedProps) {
     fetchFeed();
   };
 
+  const startEdit = (item: FeedItem) => {
+    setEditingId(item.id);
+    setEditDraft(item.kind === "note" ? item.note.note_text : item.post.body);
+    setEditError(null);
+  };
+
+  const cancelEdit = () => {
+    setEditingId(null);
+    setEditDraft("");
+    setEditError(null);
+    setSavingEdit(false);
+  };
+
+  /** Writes the edited text back to the row this feed already holds in state (the list is a plain
+   * fetch, not a realtime subscription), so the change shows without a refetch. `.select().single()`
+   * so an RLS rejection comes back as zero rows and errors rather than looking like a success — on
+   * failure the editor stays open with the draft intact. */
+  const handleSaveEdit = async (item: FeedItem) => {
+    const text = editDraft.trim();
+    if (!text || savingEdit) return;
+    const original = item.kind === "note" ? item.note.note_text : item.post.body;
+    if (text === original) {
+      cancelEdit();
+      return;
+    }
+    setSavingEdit(true);
+    setEditError(null);
+    const updatedAt = new Date().toISOString();
+    const { data, error } =
+      item.kind === "note"
+        ? await supabase.from("notes").update({ note_text: text, updated_at: updatedAt }).eq("id", item.note.id).select().single()
+        : await supabase.from("posts").update({ body: text, updated_at: updatedAt }).eq("id", item.post.id).select().single();
+    setSavingEdit(false);
+    if (error || !data) {
+      setEditError(error?.message ? `Couldn't save: ${error.message}` : "Couldn't save your changes. Your text is still here — try again.");
+      return;
+    }
+    setItems((prev) =>
+      prev
+        ? prev.map((i) => {
+            if (i.id !== item.id) return i;
+            return i.kind === "note" ? { ...i, note: data as Note } : { ...i, post: data as PostRow };
+          })
+        : prev
+    );
+    cancelEdit();
+  };
+
   /** isOwn only: the same notes.is_public toggle MyNotesPanel's handleToggleNotePublic uses. Since
    * this feed only ever fetches is_public=true notes, the only direction a post can flip here is to
    * private — which means it stops being a "post" at all. Show a brief confirmation, then drop it
    * from the list, rather than yanking it away instantly. */
   const handleMakePrivate = async (note: Note) => {
+    if (editingId === note.id) cancelEdit();
     setVisibilityErrors((e) => ({ ...e, [note.id]: "" }));
     setLeavingIds((l) => ({ ...l, [note.id]: true }));
     const { error } = await supabase.from("notes").update({ is_public: false }).eq("id", note.id);
@@ -156,6 +220,7 @@ export default function PostsFeed({ userId, viewerId, isOwn }: PostsFeedProps) {
   };
 
   const handleRemovePost = async (post: PostRow) => {
+    if (editingId === post.id) cancelEdit();
     setVisibilityErrors((e) => ({ ...e, [post.id]: "" }));
     setLeavingIds((l) => ({ ...l, [post.id]: true }));
     const { error } = await supabase.from("posts").delete().eq("id", post.id);
@@ -198,7 +263,25 @@ export default function PostsFeed({ userId, viewerId, isOwn }: PostsFeedProps) {
                   <span className="friend-post-date">{formatPostDate(item.createdAt)}</span>
                 </div>
                 {item.kind === "note" && item.note.quoted_text && <p className="verse-popup-quoted">"{item.note.quoted_text}"</p>}
-                <p className="friend-post-text">{item.kind === "note" ? item.note.note_text : item.post.body}</p>
+                {editingId === item.id ? (
+                  <InlineTextEditor
+                    value={editDraft}
+                    onChange={setEditDraft}
+                    onSave={() => handleSaveEdit(item)}
+                    onCancel={cancelEdit}
+                    saving={savingEdit}
+                    error={editError}
+                    label={item.kind === "note" ? "Edit note" : "Edit post"}
+                    maxLength={item.kind === "note" ? 8000 : 2000}
+                  />
+                ) : (
+                  <p className="friend-post-text">
+                    {item.kind === "note" ? item.note.note_text : item.post.body}
+                    {isEdited(item.kind === "note" ? item.note : item.post) && (
+                      <span className="my-notes-edited-flag"> (edited)</span>
+                    )}
+                  </p>
+                )}
 
                 {item.kind === "post" && item.post.image_urls.length > 0 && (
                   <div className="post-media-grid">
@@ -221,10 +304,17 @@ export default function PostsFeed({ userId, viewerId, isOwn }: PostsFeedProps) {
                     {leavingIds[item.id] ? (
                       <p className="comment-status">Moved to private — find it in My Notes.</p>
                     ) : (
-                      <label className="my-notes-public-toggle">
-                        <input type="checkbox" checked={item.note.is_public} onChange={() => handleMakePrivate(item.note)} />
-                        🌐 Public — shows on your profile
-                      </label>
+                      <>
+                        <label className="my-notes-public-toggle">
+                          <input type="checkbox" checked={item.note.is_public} onChange={() => handleMakePrivate(item.note)} />
+                          🌐 Public — shows on your profile
+                        </label>
+                        {canEdit && editingId !== item.id && (
+                          <button type="button" className="my-notes-edit-button" onClick={() => startEdit(item)}>
+                            ✎ Edit
+                          </button>
+                        )}
+                      </>
                     )}
                     {visibilityErrors[item.id] && <p className="comment-status">{visibilityErrors[item.id]}</p>}
                   </div>
@@ -234,9 +324,16 @@ export default function PostsFeed({ userId, viewerId, isOwn }: PostsFeedProps) {
                     {leavingIds[item.id] ? (
                       <p className="comment-status">Removed.</p>
                     ) : (
-                      <button type="button" className="my-notes-delete" onClick={() => handleRemovePost(item.post)}>
-                        Remove
-                      </button>
+                      <div className="my-notes-actions-buttons">
+                        {canEdit && editingId !== item.id && (
+                          <button type="button" className="my-notes-edit-button" onClick={() => startEdit(item)}>
+                            ✎ Edit
+                          </button>
+                        )}
+                        <button type="button" className="my-notes-delete" onClick={() => handleRemovePost(item.post)}>
+                          Remove
+                        </button>
+                      </div>
                     )}
                     {visibilityErrors[item.id] && <p className="comment-status">{visibilityErrors[item.id]}</p>}
                   </div>

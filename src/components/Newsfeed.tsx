@@ -3,6 +3,7 @@ import {
   supabase,
   displayFor,
   formatPostDate,
+  isEdited,
   type Profile,
   type Note,
   type NoteComment,
@@ -10,6 +11,7 @@ import {
   type PostComment,
   type FriendRequest,
 } from "../lib/supabase";
+import InlineTextEditor from "./InlineTextEditor";
 import { getDailyVerse, formatDailyReference, getLocalDayKey } from "../data/dailyVerse";
 
 interface NewsfeedProps {
@@ -124,7 +126,49 @@ export default function Newsfeed({ userId, onGoToVerse }: NewsfeedProps) {
     setResponseDraft("");
   };
 
+  /** The daily-verse response is this account's own note shown inside the feed, so it gets the same
+   * inline editor the feed items below do — its own small piece of state since it isn't a FeedItem. */
+  const [editingResponse, setEditingResponse] = useState(false);
+  const [responseEditDraft, setResponseEditDraft] = useState("");
+  const [responseEditError, setResponseEditError] = useState<string | null>(null);
+  const [responseEditSaving, setResponseEditSaving] = useState(false);
+
+  const cancelResponseEdit = () => {
+    setEditingResponse(false);
+    setResponseEditDraft("");
+    setResponseEditError(null);
+    setResponseEditSaving(false);
+  };
+
+  const saveResponseEdit = async () => {
+    if (!myResponse) return;
+    const text = responseEditDraft.trim();
+    if (!text || responseEditSaving) return;
+    if (text === myResponse.note_text) {
+      cancelResponseEdit();
+      return;
+    }
+    setResponseEditSaving(true);
+    setResponseEditError(null);
+    const { data, error } = await supabase
+      .from("notes")
+      .update({ note_text: text, updated_at: new Date().toISOString() })
+      .eq("id", myResponse.id)
+      .select()
+      .single();
+    setResponseEditSaving(false);
+    if (error || !data) {
+      setResponseEditError(
+        error?.message ? `Couldn't save: ${error.message}` : "Couldn't save your changes. Your text is still here — try again."
+      );
+      return;
+    }
+    setMyResponse(data as FriendNote);
+    cancelResponseEdit();
+  };
+
   const removeResponse = async () => {
+    cancelResponseEdit();
     if (!myResponse) return;
     setResponseBusy(true);
     setResponseError(null);
@@ -141,6 +185,62 @@ export default function Newsfeed({ userId, onGoToVerse }: NewsfeedProps) {
   const [profiles, setProfiles] = useState<Record<string, Profile>>({});
   const [commentDrafts, setCommentDrafts] = useState<Record<string, string>>({});
   const [commentErrors, setCommentErrors] = useState<Record<string, string>>({});
+  /** Same one-at-a-time inline editor PostsFeed and MyNotesPanel use. This feed is scoped to
+   * accepted friends' rows, so in practice nothing here is this account's own — but the ownership
+   * test below is on the row's user_id rather than on that assumption, so the affordance can't leak
+   * onto someone else's post if the fetch ever widens. RLS is the actual gate. */
+  const [editingId, setEditingId] = useState<string | null>(null);
+  const [editDraft, setEditDraft] = useState("");
+  const [savingEdit, setSavingEdit] = useState(false);
+  const [editError, setEditError] = useState<string | null>(null);
+
+  const cancelEdit = () => {
+    setEditingId(null);
+    setEditDraft("");
+    setEditError(null);
+    setSavingEdit(false);
+  };
+
+  const startEdit = (item: FeedItem) => {
+    setEditingId(item.id);
+    setEditDraft(item.kind === "note" ? item.note.note_text : item.post.body);
+    setEditError(null);
+  };
+
+  /** `.select().single()` so an RLS rejection returns zero rows and errors instead of looking like a
+   * success; on failure the editor stays open with the draft intact. The feed is a plain fetch (no
+   * realtime subscription), so the saved row is patched into state directly. */
+  const handleSaveEdit = async (item: FeedItem) => {
+    const text = editDraft.trim();
+    if (!text || savingEdit) return;
+    const original = item.kind === "note" ? item.note.note_text : item.post.body;
+    if (text === original) {
+      cancelEdit();
+      return;
+    }
+    setSavingEdit(true);
+    setEditError(null);
+    const updatedAt = new Date().toISOString();
+    const { data, error } =
+      item.kind === "note"
+        ? await supabase.from("notes").update({ note_text: text, updated_at: updatedAt }).eq("id", item.note.id).select().single()
+        : await supabase.from("posts").update({ body: text, updated_at: updatedAt }).eq("id", item.post.id).select().single();
+    setSavingEdit(false);
+    if (error || !data) {
+      setEditError(error?.message ? `Couldn't save: ${error.message}` : "Couldn't save your changes. Your text is still here — try again.");
+      return;
+    }
+    setItems((prev) =>
+      prev
+        ? prev.map((i) => {
+            if (i.id !== item.id) return i;
+            return i.kind === "note" ? { ...i, note: data as FriendNote } : { ...i, post: data as PostRow };
+          })
+        : prev
+    );
+    cancelEdit();
+  };
+
   // Comments start collapsed behind a 💬N toggle below the media — only opened on tap, so a post
   // with a long comment thread doesn't push the rest of the feed down by default.
   const [openCommentIds, setOpenCommentIds] = useState<Set<string>>(new Set());
@@ -282,15 +382,48 @@ export default function Newsfeed({ userId, onGoToVerse }: NewsfeedProps) {
 
         {myResponse && (
           <div className="newsfeed-daily-verse-response">
-            <p className="friend-post-text">{myResponse.note_text}</p>
+            {editingResponse ? (
+              <InlineTextEditor
+                value={responseEditDraft}
+                onChange={setResponseEditDraft}
+                onSave={saveResponseEdit}
+                onCancel={cancelResponseEdit}
+                saving={responseEditSaving}
+                error={responseEditError}
+                label="Edit your response"
+                rows={3}
+                maxLength={2000}
+              />
+            ) : (
+              <p className="friend-post-text">
+                {myResponse.note_text}
+                {isEdited(myResponse) && <span className="my-notes-edited-flag"> (edited)</span>}
+              </p>
+            )}
             <div className="my-notes-actions friend-post-visibility">
               <span className="comment-status">
                 {myResponse.is_public ? "🌐 Posted to your profile" : "🔒 Saved privately"} —{" "}
                 {formatPostDate(myResponse.created_at)}
               </span>
-              <button type="button" className="my-notes-delete" onClick={removeResponse} disabled={responseBusy}>
-                {responseBusy ? "Removing…" : "Remove"}
-              </button>
+              <div className="my-notes-actions-buttons">
+                {!editingResponse && (
+                  <button
+                    type="button"
+                    className="my-notes-edit-button"
+                    onClick={() => {
+                      setEditingResponse(true);
+                      setResponseEditDraft(myResponse.note_text);
+                      setResponseEditError(null);
+                    }}
+                    disabled={responseBusy}
+                  >
+                    ✎ Edit
+                  </button>
+                )}
+                <button type="button" className="my-notes-delete" onClick={removeResponse} disabled={responseBusy}>
+                  {responseBusy ? "Removing…" : "Remove"}
+                </button>
+              </div>
             </div>
           </div>
         )}
@@ -306,6 +439,7 @@ export default function Newsfeed({ userId, onGoToVerse }: NewsfeedProps) {
         <div className="friend-posts">
           {items.map((item) => {
             const taggedProfiles = item.kind === "post" ? item.post.tagged_user_ids.map((id) => profiles[id]).filter(Boolean) : [];
+            const isMine = (item.kind === "note" ? item.note.user_id : item.post.user_id) === userId;
             return (
               <div key={item.id} className="friend-post">
                 <p className="friend-post-author">{item.author ? displayFor(item.author) : "Someone"}</p>
@@ -314,7 +448,32 @@ export default function Newsfeed({ userId, onGoToVerse }: NewsfeedProps) {
                   <span className="friend-post-date">{formatPostDate(item.createdAt)}</span>
                 </div>
                 {item.kind === "note" && item.note.quoted_text && <p className="verse-popup-quoted">"{item.note.quoted_text}"</p>}
-                <p className="friend-post-text">{item.kind === "note" ? item.note.note_text : item.post.body}</p>
+                {editingId === item.id ? (
+                  <InlineTextEditor
+                    value={editDraft}
+                    onChange={setEditDraft}
+                    onSave={() => handleSaveEdit(item)}
+                    onCancel={cancelEdit}
+                    saving={savingEdit}
+                    error={editError}
+                    label={item.kind === "note" ? "Edit note" : "Edit post"}
+                    maxLength={item.kind === "note" ? 8000 : 2000}
+                  />
+                ) : (
+                  <p className="friend-post-text">
+                    {item.kind === "note" ? item.note.note_text : item.post.body}
+                    {isEdited(item.kind === "note" ? item.note : item.post) && (
+                      <span className="my-notes-edited-flag"> (edited)</span>
+                    )}
+                  </p>
+                )}
+                {isMine && editingId !== item.id && (
+                  <div className="my-notes-actions friend-post-visibility">
+                    <button type="button" className="my-notes-edit-button" onClick={() => startEdit(item)}>
+                      ✎ Edit
+                    </button>
+                  </div>
+                )}
                 {item.kind === "post" && item.post.image_urls.length > 0 && (
                   <div className="post-media-grid">
                     {item.post.image_urls.map((url) => (

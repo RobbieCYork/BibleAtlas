@@ -7014,3 +7014,20 @@ body.resizing-panels {
 .daily-verse-response-input {
   border-color: var(--input-border);
 }
+
+/* --- Inline editing inside the feeds (Newsfeed / PostsFeed) ---------------
+   Reuses the .my-notes-edit* editor from the My Notes panel so a post reads the
+   same wherever it's edited; these rules only place it inside a .friend-post
+   card and keep the "✎ Edit" affordance on the card's own action row. */
+
+.friend-post .my-notes-edit {
+  margin: 6px 0 10px;
+}
+
+.friend-post .my-notes-edit-textarea {
+  border-color: var(--input-border);
+}
+
+.friend-post-visibility .my-notes-actions-buttons {
+  margin-left: auto;
+}
