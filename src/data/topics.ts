@@ -1093,4 +1093,168 @@ export const topics: Topic[] = [
       { label: "Encyclopaedia Britannica: Creationism", url: "https://www.britannica.com/topic/creationism" },
     ],
   },
+  /* Gehenna is deliberately a Topic and not a Location, even though it names a real, mappable ravine.
+   * The Location type is built around a map pin — it requires `coordinates` and a `modernMapUrl`, its
+   * category union has no "valley" member (city/region/province/nation/sea/river/mountain/island), and
+   * its body is a `history.notableFacts` bullet list with no place to put discursive prose. The
+   * substance of this article — how a valley became a word, and what English Bibles do with that word —
+   * needs Topic's heading + paragraphs `sections`. The valley itself is described in the first section
+   * and cross-links to Jerusalem, so nothing is lost by leaving it off the map. */
+  {
+    id: "gehenna",
+    name: "Gehenna",
+    // NOT registered: "hell". The auto-linker matches whole words case-insensitively with no
+    // translation awareness, and the KJV (offered alongside the WEB in the Bible panel) renders
+    // Sheol, Hades AND Gehenna all as "hell" — so the alternate name would mislink dozens of Old
+    // Testament grave/realm-of-the-dead verses to this article, which is precisely the confusion the
+    // article exists to undo. The WEB, this app's default, prints "Gehenna" outright, so Matthew
+    // 5:22 and Mark 9:43-48 link here on the primary name with no help needed.
+    alternateNames: ["Valley of Hinnom", "valley of the son of Hinnom", "Ge-Hinnom", "Hinnom", "Topheth"],
+    category: "concept",
+    role: "A Real Valley Outside Jerusalem, and the New Testament's Word for Final Judgment",
+    summary:
+      "A steep ravine on the south and west side of Jerusalem where two of Judah's kings burned their own children in sacrifice — desecrated by Josiah, cursed by Jeremiah, and by Jesus's day the standard image for God's final judgment. Most English Bibles simply print \"hell.\"",
+    sections: [
+      {
+        heading: "A Real Valley Outside Jerusalem",
+        paragraphs: [
+          "Gehenna is a place before it is an idea. The Greek word geenna transliterates an Aramaic form of the Hebrew ge ben-hinnom, \"the valley of the son of Hinnom\" — a steep ravine running along the western and southern edge of ancient Jerusalem before it bends east to meet the Kidron Valley just below the City of David. It is still there, and anyone standing on the southern wall of the Old City today is looking down into it. Scripture introduces it not as a symbol of anything but as a surveyor's landmark: the valley of the son of Hinnom marks the boundary between the tribal allotments of Judah and Benjamin (Joshua 15:8; 18:16). That ordinariness is worth holding onto, because the English translations that print \"hell\" wherever the Greek says Gehenna are not so much wrong as compressed — they hand the reader an abstraction where the first hearers heard the name of a specific ditch a short walk from where Jesus was standing.",
+        ],
+      },
+      {
+        heading: "What Happened in the Valley",
+        paragraphs: [
+          "The valley acquired its reputation under two of Judah's worst kings. Ahaz \"made his son to pass through the fire, according to the abominations of the nations\" (2 Kings 16:3), and 2 Chronicles 28:3 names the site: \"he burnt incense in the valley of the son of Hinnom, and burnt his children in the fire.\" Three generations later Manasseh did the same (2 Kings 21:6; 2 Chronicles 33:6). The particular installation used for this was called Topheth, and the god invoked was Molech. Scripture never explains the practice sympathetically or treats it as a regrettable cultural difference; the historian of Kings names it as the specific thing that finally exhausted God's patience with Jerusalem (2 Kings 21:11-15). Whatever else Gehenna would come to mean, it began as the place where God's own covenant people did the worst thing in the book, within sight of the temple.",
+        ],
+      },
+      {
+        heading: "Josiah's Desecration and Jeremiah's Valley of Slaughter",
+        paragraphs: [
+          "Josiah, Manasseh's grandson and the last good king of Judah, went through the valley as part of his reform: \"He defiled Topheth, which is in the valley of the children of Hinnom, that no man might make his son or his daughter to pass through the fire to Molech\" (2 Kings 23:10). \"Defiled\" is a technical term — he deliberately made the site ritually unclean, filling it with human bones and refuse, so that it could never be used for worship again. That is why the valley ends up associated with corpses and burning: not as an accident of municipal history but as a king's calculated act of desecration.",
+          "Jeremiah, who preached in Josiah's lifetime and long after, gave the valley the name it kept. God tells him the people \"have built the high places of Topheth, which is in the valley of the son of Hinnom, to burn their sons and their daughters in the fire; which I didn't command, nor did it come into my mind\" (Jeremiah 7:31) — and then declares that the place will be renamed \"the valley of Slaughter,\" heaped with the unburied bodies of the very people who built it, with no one to drive the birds away (Jeremiah 7:32-33). In Jeremiah 19 the prophet is sent to buy a potter's earthen jar, carry it out to that valley by the Potsherd Gate, announce the coming judgment, and smash the jar in front of the elders: \"Even so will I break this people and this city, as one breaks a potter's vessel, that can't be made whole again.\" Jeremiah 32:35 repeats the horrified refrain that this was something God never asked for and that never entered his mind. By the exile, then, the valley already carried a fixed set of associations — fire, dead children, unburied corpses, and the judgment of God falling on his own city — and later writers had to invent none of it.",
+        ],
+      },
+      {
+        heading: "From a Valley to an Image of Judgment",
+        paragraphs: [
+          "In the centuries between the Old and New Testaments, Jewish writers began using the valley's name for the place of final judgment itself. Works such as 1 Enoch describe an accursed valley where the wicked are gathered for judgment, and later rabbinic literature speaks routinely of Gehinnom as the destiny of the unrighteous, over against Paradise. By the first century the word needed no explanation: when Jesus said \"Gehenna,\" his hearers understood a theological term, not a set of directions, in much the way \"Auschwitz\" now names something larger than a Polish town.",
+          "One popular explanation is worth flagging. Many sermons and study Bibles say that in Jesus's day the valley served as Jerusalem's perpetually smoldering garbage dump, and that this is where the imagery of unquenchable fire comes from. It is a vivid story, and it may even be true, but it cannot be traced back any further than the medieval Jewish commentator Rabbi Kimhi (Radak) around AD 1200, and no ancient writer and no excavation has yet confirmed it. Nothing in the biblical picture depends on it: Jeremiah supplied the fire, the corpses, and the judgment six hundred years earlier, and Isaiah 66:24 — \"their worm won't die, neither will their fire be quenched\" — supplied the exact line Jesus quotes.",
+        ],
+      },
+      {
+        heading: "How Jesus Uses the Word",
+        paragraphs: [
+          "Gehenna appears twelve times in the New Testament. Eleven of them are on the lips of Jesus; the twelfth is James 3:6, where the tongue is \"set on fire by Gehenna.\" Jesus warns that contemptuous anger puts a person \"in danger of the fire of Gehenna\" (Matthew 5:22), that it is better to lose an eye or a hand than for the whole body to be thrown into it (Matthew 5:29-30; 18:9; Mark 9:43-48, where he quotes Isaiah 66:24 directly), and that the one to fear is not whoever can kill the body but \"him who is able to destroy both soul and body in Gehenna\" (Matthew 10:28; Luke 12:5). Two of the sharpest uses are aimed squarely at religious professionals: a convert made twice as much \"a son of Gehenna\" as those who made him, and \"How will you escape the judgment of Gehenna?\" (Matthew 23:15, 33).",
+          "Two things are striking about that list. First, nearly every warning is addressed to insiders — to disciples and to the religiously scrupulous — rather than to the pagans, tax collectors, and prostitutes Jesus is elsewhere accused of being too friendly with. Second, Jesus never describes Gehenna. He names it, quotes one line of Isaiah about it, and moves immediately to what his hearers should do about it. The New Testament's most detailed pictures of the next world are parables and visions; the word itself is deployed as a warning, not as a travel guide.",
+        ],
+      },
+      {
+        heading: "Gehenna, Hades, Sheol, Tartarus — and the English Word \"Hell\"",
+        paragraphs: [
+          "This is where translation matters. Scripture uses four different words that English versions have variously rendered \"hell.\" Sheol is the Old Testament's Hebrew word for the realm of the dead, where righteous and wicked alike are said to go (Jacob expects to join Joseph there in Genesis 37:35); Hades is the New Testament's Greek equivalent, the intermediate state of the dead before judgment (Luke 16:23; Revelation 20:13-14); Gehenna is the final judgment described above; and Tartarus appears once, as a verb, for the confinement of fallen angels (2 Peter 2:4). The King James Version translated Sheol as \"hell,\" \"grave,\" and \"pit\" more or less interchangeably, and rendered both Hades and Gehenna \"hell\" as well — one English word doing the work of four originals. Modern translations diverge: many keep \"hell\" for Gehenna while transliterating Sheol and Hades, and the World English Bible, this app's default text, simply prints Gehenna, Hades, and Sheol as they stand, which is why Matthew 5:22 here reads \"the fire of Gehenna\" rather than \"hell fire.\"",
+          "Christians who take all these texts with equal seriousness have long disagreed about what the judgment Gehenna names actually involves. The historic and majority position across Catholic, Orthodox, and Protestant traditions is conscious, unending punishment. A minority within evangelicalism, appealing to language like \"destroy both soul and body\" (Matthew 10:28) and \"the wages of sin is death\" (Romans 6:23), holds instead to conditional immortality or annihilationism — that the unrepentant finally perish rather than suffer endlessly. A smaller strand, drawing on texts about God reconciling all things (Colossians 1:20), has hoped for an ultimate restoration. That debate is not settled by the vocabulary, and this article does not try to settle it. What the vocabulary does settle is a narrower and more practical question: knowing that a given verse says Gehenna and not Sheol tells the reader which subject is even under discussion — final judgment, or simply the state of the dead — and that distinction alone clears up a great deal of confusion that the single English word \"hell\" creates.",
+        ],
+      },
+    ],
+    verses: [
+      { reference: "Joshua 15:8", note: "The valley of the son of Hinnom as a tribal boundary marker" },
+      { reference: "2 Kings 16:3", note: "Ahaz makes his son \"pass through the fire\"" },
+      { reference: "2 Chronicles 33:6", note: "Manasseh burns his children in the valley of the son of Hinnom" },
+      { reference: "2 Kings 23:10", note: "Josiah defiles Topheth so it can never be used for worship again" },
+      { reference: "Jeremiah 7:31-33", note: "Renamed \"the valley of Slaughter\"; \"nor did it come into my mind\"" },
+      { reference: "Jeremiah 19:1-15", note: "The smashed potter's jar, prophesied in the valley itself" },
+      { reference: "Isaiah 66:24", note: "\"Their worm won't die, neither will their fire be quenched\" — the line Jesus quotes" },
+      { reference: "Matthew 5:22", note: "\"In danger of the fire of Gehenna\"" },
+      { reference: "Matthew 10:28", note: "\"Him who is able to destroy both soul and body in Gehenna\"" },
+      { reference: "Mark 9:43-48", note: "Jesus quoting Isaiah 66:24" },
+      { reference: "Luke 12:5", note: "\"Fear him who... has power to cast into Gehenna\"" },
+      { reference: "James 3:6", note: "The tongue \"set on fire by Gehenna\" — the one use not on Jesus's lips" },
+    ],
+    sources: [
+      { label: "Encyclopaedia Britannica: Gehenna", url: "https://www.britannica.com/topic/Gehenna" },
+      { label: "Encyclopaedia Britannica: Sheol", url: "https://www.britannica.com/topic/sheol" },
+      { label: "Got Questions: What is Gehenna?", url: "https://www.gotquestions.org/Gehenna.html" },
+    ],
+  },
+  /* The Nicene Creed is a Topic rather than something added to the existing timeline events, which
+   * already cover the two councils as events (bib-ac-council-of-nicaea, AD 325; and
+   * council-of-constantinople-381) and should stay focused on what happened when. The creed itself
+   * outlives both meetings — it is recited weekly, sixteen centuries later — so it belongs where a
+   * reader can look it up as a subject rather than as a date. Both event articles already say
+   * "Nicene Creed" verbatim in their prose, so this entry makes those mentions live links from the
+   * timeline panel without either article being edited. */
+  {
+    id: "nicene-creed",
+    name: "Nicene Creed",
+    alternateNames: ["Creed of Nicaea", "Nicene-Constantinopolitan Creed", "Niceno-Constantinopolitan Creed"],
+    category: "doctrine",
+    role: "The Church's Most Widely Shared Confession of Faith",
+    summary:
+      "The statement of faith drawn up at the Council of Nicaea in AD 325 and expanded at Constantinople in AD 381 — the closest thing Christianity has to a common confession, recited weekly in Catholic, Orthodox, Anglican, Lutheran and many other churches, and the place where the church settled that Jesus Christ is fully and eternally God.",
+    sections: [
+      {
+        heading: "The Crisis That Produced It",
+        paragraphs: [
+          "Early in the fourth century a presbyter of Alexandria named Arius began teaching that the Son of God, however exalted, was not eternal. His reasoning was simple enough to fit on a banner, and in fact circulated as popular songs: if the Son is begotten, then there was a moment before he was begotten, so \"there was when he was not.\" On this view Christ was the first and greatest of all creatures, the one through whom everything else was made, worthy of enormous honor — but a creature nonetheless, not God in the way the Father is God. The argument had real appeal. It protected the oneness of God against any suspicion of two gods, and it could point to verses like \"the Father is greater than I\" (John 14:28) and the Greek text of Proverbs 8:22, where Wisdom says the Lord \"created\" her.",
+          "The dispute tore through the eastern churches, and Constantine the Great, who had only recently ended the persecutions and had no wish to preside over a fractured church, summoned bishops from across the empire to the city of Nicaea in AD 325. Somewhere between 250 and 318 bishops came — many of them, within living memory of the persecutions, missing eyes or hands. The council rejected Arius's teaching almost unanimously; only two bishops refused to sign. What they produced was a short baptismal-style confession with one contested word at its center.",
+        ],
+      },
+      {
+        heading: "One Word: Homoousios",
+        paragraphs: [
+          "The hinge of the whole controversy was the Greek word homoousios — \"of one substance,\" or in older English translations \"consubstantial\" with the Father. The council declared the Son \"begotten, not made, of one substance with the Father,\" and added \"true God from true God\" and \"light from light\" to make the point unmistakable. Begetting, in this account, is what God eternally is rather than something God once did: the Son is not a product of the Father's will at a point in time, the way creation is, but is what the Father is, eternally.",
+          "The obvious objection, raised at the time and repeated ever since, is that homoousios is not a biblical word. Nobody at Nicaea denied that. The council's defenders — Athanasius of Alexandria most tenaciously — argued that this was exactly the point. Every scriptural phrase they proposed, the Arian party was willing to sign, because each could be given a reading in which the Son was still a creature: \"of God,\" \"the image of God,\" even \"the Word was God\" could be softened. Homoousios could not be softened. It was chosen not because it was found in Scripture but because it was the one formula that could not be signed in bad faith by someone who believed Christ was made.",
+          "What was actually at stake was less abstract than the vocabulary suggests. Christians prayed to Christ, were baptized into his name, and believed he had saved them — and if only God can save, and only God may be worshiped, then the question of whether the Son is God is not a technicality about metaphysics but a question about whether Christian worship is idolatry and whether the cross accomplished anything. That is why a single word could hold a council for weeks.",
+        ],
+      },
+      {
+        heading: "The Revision at Constantinople (AD 381)",
+        paragraphs: [
+          "The creed of 325 gave the Son several careful lines and then stopped almost immediately: \"And in the Holy Spirit.\" That silence became the next battleground, as a group later nicknamed the Pneumatomachians (\"Spirit-fighters\") argued that the Spirit, whatever else he was, was not fully divine. More than half a century of contested imperial policy later, the emperor Theodosius I convened a second council at Constantinople in AD 381, which reaffirmed Nicaea on the Son and greatly expanded the article on the Spirit: \"the Lord and Giver of Life, who proceeds from the Father, who with the Father and the Son together is worshiped and glorified, who spoke by the prophets.\" It also added the clauses on the church, baptism, the resurrection of the dead, and the life of the world to come, and appended \"whose kingdom shall have no end.\"",
+          "The result is what scholars call the Niceno-Constantinopolitan Creed, and it is what almost every church that recites \"the Nicene Creed\" is actually reciting. Nicaea gets the name; Constantinople wrote most of the text now in use.",
+        ],
+      },
+      {
+        heading: "What the Creed Actually Says",
+        paragraphs: [
+          "The creed has three movements, one for each person of the Trinity, and then a short fourth on the church and the age to come. It opens with \"We believe in one God, the Father Almighty, maker of heaven and earth, and of all things visible and invisible\" — a deliberate refusal of any view in which the material world is the work of a lesser or hostile power.",
+          "The longest section is on the Son: \"one Lord Jesus Christ, the only-begotten Son of God, begotten of the Father before all worlds, God of God, Light of Light, very God of very God, begotten, not made, being of one substance with the Father, by whom all things were made; who for us men and for our salvation came down from heaven, and was incarnate by the Holy Spirit of the Virgin Mary, and was made man; and was crucified also for us under Pontius Pilate; he suffered and was buried; and the third day he rose again according to the Scriptures, and ascended into heaven, and sits on the right hand of the Father; and he shall come again, with glory, to judge both the living and the dead; whose kingdom shall have no end.\" It is worth noticing how much of that is plain narrative. The creed's answer to a metaphysical controversy is largely a story with a date in it — the reference to Pontius Pilate pins the whole confession to a particular Friday under a particular Roman governor.",
+          "Then the Spirit, in the expanded 381 form quoted above, and finally: \"one holy catholic and apostolic Church; one baptism for the remission of sins; and we look for the resurrection of the dead, and the life of the world to come.\" One point regularly trips up modern readers: \"catholic\" here is the ordinary Greek word for \"universal,\" not a reference to the Roman Catholic Church as a denomination, which is why Protestant congregations can and do recite the line unchanged. Some print \"christian\" or \"universal\" in its place to avoid the confusion.",
+        ],
+      },
+      {
+        heading: "The Filioque and the Split Between East and West",
+        paragraphs: [
+          "One clause divides the churches that otherwise share this creed. Where Constantinople said the Spirit \"proceeds from the Father,\" Latin-speaking churches came to say \"proceeds from the Father and the Son\" — in Latin, filioque, \"and the Son.\" The phrase appears in Spain by the late sixth century, spread through the Frankish churches under Charlemagne, and was accepted at Rome by the early eleventh. Today it is retained by the Catholic Church and by most Protestant churches that use the creed at all; the Orthodox churches have never accepted it.",
+          "The Western case is both scriptural and theological. Jesus says he will send the Spirit (John 15:26; 16:7), Paul calls him \"the Spirit of his Son\" (Galatians 4:6), and Augustine's account of the Trinity understands the Spirit as the bond of love between Father and Son. On this reading the clause does not add a new doctrine but makes explicit the relation the New Testament already describes, guarding against any picture in which the Spirit's work is detached from Christ's.",
+          "The Eastern objection has two parts, and it is important that they are distinct. The first is procedural, and many Eastern theologians consider it the weightier of the two: the creed is the text of an ecumenical council, agreed by the whole church, and no local church — not even Rome — has the authority to amend it unilaterally. Whatever the merits of the theology, altering a conciliar text by regional custom was, on this view, a breach of how the church decides things. The second is theological: Eastern tradition holds that the Father alone is the single source or \"origin\" within the Godhead, and that having the Spirit proceed from the Father and the Son either introduces two sources into God or quietly subordinates the Spirit to the other two persons. Photius of Constantinople pressed this case most forcefully in the ninth century.",
+          "The filioque was one of the standing grievances in the estrangement that culminated in the Great Schism between East and West in AD 1054, though historians generally regard the political, jurisdictional, and cultural causes of that break as at least as weighty as this clause. Modern dialogue has narrowed the theological distance considerably — a 1995 Vatican clarification distinguished the Greek and Latin senses of \"procession\" and acknowledged the Father as sole origin, and popes have on occasion recited the creed in Greek without the clause — but whether the addition was ever legitimate remains a genuinely open question between the traditions, and this app does not attempt to settle it.",
+        ],
+      },
+      {
+        heading: "The Creed in Worship Today",
+        paragraphs: [
+          "Sixteen centuries on, the creed is recited at every Catholic Mass on Sundays and feast days, at every Orthodox Divine Liturgy, and regularly in Anglican, Lutheran, Methodist, Presbyterian and Reformed services. Many evangelical, Baptist, and nondenominational churches do not recite creeds at all, usually out of the conviction that Scripture alone is the church's rule of faith and that no human summary should compete with it — but the overwhelming majority of them affirm what the creed teaches, and it is not unusual to find its language quoted in a doctrinal statement by a congregation that would never read it aloud.",
+          "That near-universal reach is the creed's real significance for an ordinary churchgoer. Christians disagree about a great many things — baptism, church government, the end times, the filioque itself — but a Catholic in Manila, an Orthodox believer in Athens, and a Presbyterian in Idaho can say almost all of these same sentences and mean the same thing by them. It also functions as a check: the creed is not a set of extra rules added to Scripture but a compressed summary of what the church, under pressure and after long argument, concluded that Scripture had been saying all along about who God is. See the Trinity for how that conclusion developed, and Arius and Athanasius of Alexandria for the two men whose argument forced the question.",
+        ],
+      },
+    ],
+    verses: [
+      { reference: "John 1:1-3", note: "\"The Word was God... all things were made through him\"" },
+      { reference: "John 1:14", note: "\"The Word became flesh\" — the creed's \"was made man\"" },
+      { reference: "John 14:28", note: "\"The Father is greater than I\" — a text the Arian party leaned on" },
+      { reference: "Colossians 1:15-20", note: "Christ as image of the invisible God, in whom all things were created" },
+      { reference: "Philippians 2:5-11", note: "The pre-existent Son who \"emptied himself\" — an early confession in hymn form" },
+      { reference: "Hebrews 1:3", note: "\"The very image of his substance\" — language close to the creed's own" },
+      { reference: "John 15:26", note: "\"The Spirit of truth, who proceeds from the Father\" — the disputed clause's source text" },
+      { reference: "Galatians 4:6", note: "\"The Spirit of his Son\" — a key text in the Western case for the filioque" },
+      { reference: "Matthew 28:19", note: "Baptism in the one name of Father, Son, and Holy Spirit" },
+    ],
+    sources: [
+      { label: "Nicene Creed (325 and 381) — full text at CCEL", url: "https://www.ccel.org/creeds/nicene.creed.html" },
+      { label: "Encyclopaedia Britannica: Nicene Creed", url: "https://www.britannica.com/topic/Nicene-Creed" },
+      { label: "Encyclopaedia Britannica: Filioque", url: "https://www.britannica.com/topic/Filioque" },
+      { label: "Got Questions: What is the Nicene Creed?", url: "https://www.gotquestions.org/Nicene-creed.html" },
+    ],
+  },
 ];
