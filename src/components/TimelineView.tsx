@@ -5,7 +5,7 @@ import { bookWritingWindows } from "../data/bookWritingWindows";
 import type { BookWritingWindow } from "../data/bookWritingWindows";
 import { people } from "../data/people";
 import type { Person, TimelineEvent, TimelineEventCategory } from "../data/types";
-import TimelineLaneMenu, { TIMELINE_LANE_LABELS, TIMELINE_LANE_ORDER } from "./TimelineLaneMenu";
+import TimelineLaneMenu, { TIMELINE_LANE_ORDER } from "./TimelineLaneMenu";
 import TimelineEraMenu from "./TimelineEraMenu";
 import type { TimelineLaneKey } from "./TimelineLaneMenu";
 import BackButton from "./BackButton";
@@ -21,11 +21,12 @@ import "./TimelineView.css";
  * Zooming changes pxPerYear and recomputes positions — content is NEVER
  * CSS-scaled, so text and circles stay crisp at every zoom level.
  *
- * Layout, top to bottom:
- *   1. Scripture & the Church   — ONE continuous chronology carrying biblical events, church
- *                                 history and movements/revivals together; category survives as
- *                                 the mark's colour + silhouette, not as a separate track
- *   2. Lifespans lane           — bars for Persons carrying bornYear (optional data)
+ * Four timelines, top to bottom:
+ *   1. Biblical and Church History — ONE continuous chronology carrying biblical events, church
+ *                                 history and movements/revivals together, in gold leaf. Nothing
+ *                                 inside it is drawn differently from anything else inside it:
+ *                                 "they are all just a part of one timeline."
+ *   2. Lifespans lane           — bars for Persons carrying bornYear (optional data), brand violet
  *   3. World History lane       — umber
  *   4. Other Religions lane     — verdigris
  *   5. Year axis
@@ -120,30 +121,42 @@ const MOMENTUM_MAX_VX = 3.5; // px/ms safety cap on captured fling speed
 
 /** ---------------------------------------------------------------- lane registry
  *
- * A LANE is a horizontal band; a CATEGORY is what colours an individual mark. They used to be
- * the same thing (one lane per category), which is exactly why the timeline read as several
- * parallel timelines stacked up rather than one — biblical history ran along one track and
- * church history along another, so nothing ever appeared "after" anything else across that seam.
+ * There are four timelines, and nothing below that level.
  *
- * Now the top lane carries biblical + church + movement together on ONE continuous chronology,
- * packed by year against each other (see eventPacks below), with category surviving as the
- * mark's colour and silhouette (see .tl-cat-* in TimelineView.css). World History and Other
- * Religions stay in their own lanes — they're context running alongside the story, not part of it.
+ * The data has always been one array of events carrying a `category`, and this file used to draw
+ * one horizontal band PER CATEGORY. That is exactly why the timeline read as several parallel
+ * timelines stacked up rather than one: biblical history ran along one track and church history
+ * along another, so nothing ever appeared "after" anything else across that seam.
  *
- * Lane order top-to-bottom is: Scripture & the Church, Lifespans, World History, Other Religions.
- * The Lifespans band is injected between the first and second entries here (see `geom`). */
+ * "Biblical and Church History" now carries the biblical, church and movement categories together
+ * on ONE continuous chronology, packed by year against each other (see eventPacks below).
+ * Crucially, category does NOT survive as a visual distinction inside that lane — every mark in it
+ * is the same shape and the same colour, per the owner: the different types of event "are all just
+ * a part of one timeline". `cats` below is purely a data filter saying which events belong to the
+ * lane; `markCat` is the single category class every one of that lane's marks is drawn with.
+ *
+ * World History and Other Religions keep their own lanes and their own single mark colours —
+ * they're context running alongside the story, not part of it.
+ *
+ * Lane order top-to-bottom: Biblical and Church History, Lifespans, World History, Other
+ * Religions. The Lifespans band is injected between the first and second entries here (see
+ * `geom`). Lane keys are also the visibility keys — see TIMELINE_LANE_ORDER in TimelineLaneMenu. */
 const EVENT_LANES: {
-  key: string;
+  key: TimelineLaneKey;
   label: string;
+  /** Which event categories feed this lane. A filter only — never a visual distinction. */
   cats: TimelineEventCategory[];
+  /** The one category class every mark in this lane is drawn with, whatever its own category. */
+  markCat: TimelineEventCategory;
 }[] = [
   {
-    key: "sacred",
-    label: "Scripture & the Church",
+    key: "bible-church",
+    label: "Biblical and Church History",
     cats: ["biblical", "church", "movement"],
+    markCat: "biblical",
   },
-  { key: "world", label: "World History", cats: ["world"] },
-  { key: "religion", label: "Other Religions", cats: ["religion"] },
+  { key: "world", label: "World History", cats: ["world"], markCat: "world" },
+  { key: "religion", label: "Other Religions", cats: ["religion"], markCat: "religion" },
 ];
 
 /** The Books-of-the-Bible band (66 translucent writing-window bars along the top) is DISABLED at
@@ -200,31 +213,85 @@ const EVENT_RANGE_LABEL_RESERVE_PX = LABEL_GAP_PX;
  * required rows back to this cap or below, it snaps back to full per-event labels automatically. */
 const MAX_EVENT_ROWS = 36;
 
-const LANE_VISIBILITY_STORAGE_KEY = "timeline-visible-lanes";
+/** Bumped from the unsuffixed "timeline-visible-lanes" when the per-category checkboxes collapsed
+ * into one switch per lane: the OLD records are keyed by category (biblical/church/movement/books)
+ * and describe a lane set that no longer exists, so they cannot be read as-is. A returning user's
+ * old value is migrated once (see below) and then retired. */
+const LANE_VISIBILITY_STORAGE_KEY = "timeline-visible-lanes-v2";
+const LEGACY_LANE_VISIBILITY_STORAGE_KEY = "timeline-visible-lanes";
 
 const DEFAULT_VISIBLE_LANES: Record<TimelineLaneKey, boolean> = {
   books: true,
+  "bible-church": true,
   lifespans: true,
-  biblical: true,
-  church: true,
   world: true,
-  movement: true,
   religion: true,
 };
 
-/** Same defensive localStorage-read pattern used elsewhere in the app (see
- * readLocalPlanProgress in lib/supabase.ts) — a corrupt or missing value just falls back to
- * "show everything," which is also today's fixed behavior for anyone who's never opened the menu. */
+/** Reads a stored record defensively: unknown keys are ignored, non-boolean values are ignored,
+ * and anything missing keeps its default of visible. Returns null when nothing usable was found,
+ * so callers can tell "no preference" apart from "preference says hide everything". */
+function readLaneRecord(
+  raw: string | null,
+  pick: (parsed: Record<string, unknown>, next: Record<TimelineLaneKey, boolean>) => void,
+): Record<TimelineLaneKey, boolean> | null {
+  if (!raw) return null;
+  const parsed: unknown = JSON.parse(raw);
+  if (!parsed || typeof parsed !== "object" || Array.isArray(parsed)) return null;
+  const next = { ...DEFAULT_VISIBLE_LANES };
+  pick(parsed as Record<string, unknown>, next);
+  return next;
+}
+
+/** Same defensive localStorage-read pattern used elsewhere in the app (see readLocalPlanProgress
+ * in lib/supabase.ts): anything corrupt, missing, or shaped unexpectedly falls back to "show
+ * everything", which is also the behaviour for anyone who has never opened the menu.
+ *
+ * Two extra guards, because the stored shape genuinely changed under existing users:
+ *  - A legacy record (keyed by category) is translated once: the merged lane is visible if ANY of
+ *    the biblical / church / movement boxes was still checked, which preserves the only intent a
+ *    user could have expressed about it. Lifespans / World / Other Religions carry over directly.
+ *  - Whatever the source, a result that would leave EVERY lane hidden is discarded in favour of the
+ *    defaults. A stale or hostile record must never be able to strand someone on a blank timeline
+ *    (the lane menu would still be reachable, but there'd be nothing on screen explaining why). */
 function loadVisibleLanes(): Record<TimelineLaneKey, boolean> {
+  const anyVisible = (v: Record<TimelineLaneKey, boolean>) =>
+    TIMELINE_LANE_ORDER.some((k) => v[k]);
   try {
-    const raw = localStorage.getItem(LANE_VISIBILITY_STORAGE_KEY);
-    if (!raw) return DEFAULT_VISIBLE_LANES;
-    const parsed = JSON.parse(raw) as Partial<Record<TimelineLaneKey, boolean>>;
-    const next = { ...DEFAULT_VISIBLE_LANES };
-    for (const key of TIMELINE_LANE_ORDER) {
-      if (typeof parsed[key] === "boolean") next[key] = parsed[key] as boolean;
+    const current = readLaneRecord(
+      localStorage.getItem(LANE_VISIBILITY_STORAGE_KEY),
+      (parsed, next) => {
+        for (const key of TIMELINE_LANE_ORDER) {
+          if (typeof parsed[key] === "boolean") next[key] = parsed[key] as boolean;
+        }
+      },
+    );
+    if (current) return anyVisible(current) ? current : DEFAULT_VISIBLE_LANES;
+
+    const legacy = readLaneRecord(
+      localStorage.getItem(LEGACY_LANE_VISIBILITY_STORAGE_KEY),
+      (parsed, next) => {
+        const merged = (["biblical", "church", "movement"] as const).filter(
+          (k) => typeof parsed[k] === "boolean",
+        );
+        if (merged.length > 0) next["bible-church"] = merged.some((k) => parsed[k] === true);
+        for (const key of ["lifespans", "world", "religion", "books"] as const) {
+          if (typeof parsed[key] === "boolean") next[key] = parsed[key] as boolean;
+        }
+      },
+    );
+    if (legacy) {
+      const migrated = anyVisible(legacy) ? legacy : DEFAULT_VISIBLE_LANES;
+      // Retire the old record so this translation runs exactly once per browser.
+      try {
+        localStorage.setItem(LANE_VISIBILITY_STORAGE_KEY, JSON.stringify(migrated));
+        localStorage.removeItem(LEGACY_LANE_VISIBILITY_STORAGE_KEY);
+      } catch {
+        // Storage full/blocked — the migration just re-runs next time, which is harmless.
+      }
+      return migrated;
     }
-    return next;
+    return DEFAULT_VISIBLE_LANES;
   } catch {
     return DEFAULT_VISIBLE_LANES;
   }
@@ -984,12 +1051,10 @@ export default function TimelineView({
     >();
     if (pxPerYear <= 0) return map;
     for (const lane of EVENT_LANES) {
-      // A lane's categories are filtered independently: unchecking "Church History" removes those
-      // events from the merged top lane without removing the lane itself. A lane whose categories
-      // are ALL unchecked drops out entirely (no entry in the map -> no band allocated in `geom`).
-      const activeCats = lane.cats.filter((c) => visibleLanes[c]);
-      if (activeCats.length === 0) continue;
-      const laneEvents = events.filter((e) => activeCats.includes(e.category));
+      // One switch per lane — an unchecked lane simply gets no entry in this map, which means
+      // `geom` never allocates it a band and none of the clustering/label maths below runs for it.
+      if (!visibleLanes[lane.key]) continue;
+      const laneEvents = events.filter((e) => lane.cats.includes(e.category));
       const withReach = laneEvents.map((e) => {
         const hasRange = typeof e.endYear === "number" && e.endYear > e.startYear;
         const end = hasRange
@@ -1077,12 +1142,12 @@ export default function TimelineView({
       cursor += AXIS_H;
     };
 
-    // Owner-specified stacking: the merged Scripture & the Church lane first, then Lifespans
+    // Owner-specified stacking: the merged Biblical and Church History lane first, then Lifespans
     // DIRECTLY beneath it (the people belong next to the events they lived through), then the
     // remaining context lanes. `visibleEventLanes` is already in EVENT_LANES order, so the first
     // entry is the merged lane whenever it's showing.
     const first = visibleEventLanes[0];
-    if (first && first.key === "sacred") placeEventLane(first);
+    if (first && first.key === "bible-church") placeEventLane(first);
 
     if (showLife) {
       lifeTop = cursor;
@@ -1282,10 +1347,11 @@ export default function TimelineView({
       if (laneTop === undefined || laneH === undefined) continue;
       const pack = eventPacks.get(lane.key);
       if (!pack) continue;
-      // Marks are coloured by the EVENT's own category, never by the lane — that's what lets the
-      // merged top lane show biblical, church and movement events interleaved in one chronology
-      // and still be read apart. `activeCats` is the lane's checked subset (see eventPacks).
-      const activeCats = lane.cats.filter((c) => visibleLanes[c]);
+      // Every mark in a lane is drawn identically, from the LANE's single mark category — never
+      // from the event's own. Inside "Biblical and Church History" a biblical event, a church
+      // event and a movement event are the same gold disc, because they are all just part of one
+      // timeline; the only thing that separates two marks there is where they fall in time.
+      const markClass = `tl-cat-${lane.markCat}`;
 
       if (!pack.useCluster) {
         // Default path: every event got its own row from packRows above (same helper the
@@ -1305,7 +1371,7 @@ export default function TimelineView({
               <button
                 key={e.id}
                 type="button"
-                className={`tl-range-bar tl-cat-${e.category}${focused}`}
+                className={`tl-range-bar ${markClass}${focused}`}
                 style={{ left: x, top: y, width: barW }}
                 onClick={() => onSelectTimelineEvent(e.id)}
                 onMouseEnter={(ev) => showTip(ev, e.title, e.dateLabel, e.era)}
@@ -1322,7 +1388,7 @@ export default function TimelineView({
               <button
                 key={e.id}
                 type="button"
-                className={`tl-marker tl-cat-${e.category}${focused}`}
+                className={`tl-marker ${markClass}${focused}`}
                 style={{ left: x, top: y }}
                 onClick={() => onSelectTimelineEvent(e.id)}
                 onMouseEnter={(ev) => showTip(ev, e.title, e.dateLabel, e.era)}
@@ -1343,7 +1409,7 @@ export default function TimelineView({
       // now reserved for that case instead of being the default: still fans out same-year/
       // unsplittable groups into real markers, still zooms into a splittable cluster on click.
       const laneEvents = events
-        .filter((e) => activeCats.includes(e.category))
+        .filter((e) => lane.cats.includes(e.category))
         .sort((a, b) => a.startYear - b.startYear);
       const centerY = laneTop + laneH / 2;
 
@@ -1428,17 +1494,16 @@ export default function TimelineView({
         const nextX = i < items.length - 1 ? items[i + 1].x : Infinity;
 
         if (it.kind === "cluster") {
-          // A cluster in the merged lane can span several categories at once, so it takes the
-          // colour of whichever category it holds most of rather than a single lane colour.
-          const tally = new Map<TimelineEventCategory, number>();
-          for (const ev of it.events) tally.set(ev.category, (tally.get(ev.category) ?? 0) + 1);
-          const domCat = [...tally.entries()].sort((a, b) => b[1] - a[1])[0][0];
+          // Same rule as the individual marks above: a cluster takes its lane's one colour. It
+          // used to be tinted by whichever category it held most of, which is exactly the
+          // distinction that's been removed. Numerals come from --tl-on-cat (see .tl-cluster in
+          // TimelineView.css), which follows the theme rather than being a hardcoded white.
           const label = `${it.events.length} ${lane.label} events, ${formatYearRange(it.lo, it.hi)}`;
           nodes.push(
             <button
               key={`c-${lane.key}-${it.lo}-${it.hi}-${it.events.length}`}
               type="button"
-              className={`tl-cluster tl-cat-${domCat}`}
+              className={`tl-cluster ${markClass}`}
               style={{ left: it.x, top: centerY }}
               onClick={() => zoomToYearRange(it.lo, it.hi)}
               onMouseEnter={(e) =>
@@ -1465,7 +1530,7 @@ export default function TimelineView({
             <button
               key={e.id}
               type="button"
-              className={`tl-range-bar tl-cat-${e.category}${focusedEventIds?.has(e.id) ? " tl-focused" : ""}`}
+              className={`tl-range-bar ${markClass}${focusedEventIds?.has(e.id) ? " tl-focused" : ""}`}
               style={{ left: it.x, top: centerY + it.yOff, width: barW }}
               onClick={() => onSelectTimelineEvent(e.id)}
               onMouseEnter={(ev) => showTip(ev, e.title, e.dateLabel, e.era)}
@@ -1480,7 +1545,7 @@ export default function TimelineView({
             <button
               key={e.id}
               type="button"
-              className={`tl-marker tl-cat-${e.category}${focusedEventIds?.has(e.id) ? " tl-focused" : ""}`}
+              className={`tl-marker ${markClass}${focusedEventIds?.has(e.id) ? " tl-focused" : ""}`}
               style={{ left: it.x, top: centerY + it.yOff }}
               onClick={() => onSelectTimelineEvent(e.id)}
               onMouseEnter={(ev) => showTip(ev, e.title, e.dateLabel, e.era)}
@@ -1640,40 +1705,23 @@ export default function TimelineView({
                   Lifespans
                 </span>
               )}
-              {/* A lane's chip carries one legend swatch PER CATEGORY it currently shows — for the
-                * merged top lane that's the whole key to reading it (gold disc = biblical,
-                * lapis square = church, rubric ring = movement), so the legend has to travel with
-                * the lane rather than hide in a menu. Swatch shapes mirror .tl-marker's. */}
-              {EVENT_LANES.filter((lane) => geom.laneTop.has(lane.key)).map((lane) => {
-                const cats = lane.cats.filter((c) => visibleLanes[c]);
-                return (
+              {/* One swatch, one name, per lane. The merged lane briefly carried a live legend
+                * (gold disc = biblical, lapis square = church, rubric ring = movement) back when
+                * those were drawn differently; with a single uniform mark there is nothing left
+                * for a legend to explain, so it's gone. */}
+              {EVENT_LANES.filter((lane) => geom.laneTop.has(lane.key)).map((lane) => (
+                <span
+                  key={lane.key}
+                  className="tl-lane-label"
+                  style={{ top: (geom.laneTop.get(lane.key) as number) + 5 }}
+                >
                   <span
-                    key={lane.key}
-                    className="tl-lane-label"
-                    style={{ top: (geom.laneTop.get(lane.key) as number) + 5 }}
-                  >
-                    {cats.length > 1 ? (
-                      <>
-                        {lane.label}
-                        {cats.map((c) => (
-                          <span key={c} className="tl-lane-legend">
-                            <span className={`tl-lane-label-dot tl-cat-${c}`} aria-hidden="true" />
-                            {TIMELINE_LANE_LABELS[c]}
-                          </span>
-                        ))}
-                      </>
-                    ) : (
-                      <>
-                        <span
-                          className={`tl-lane-label-dot tl-cat-${cats[0]}`}
-                          aria-hidden="true"
-                        />
-                        {lane.label}
-                      </>
-                    )}
-                  </span>
-                );
-              })}
+                    className={`tl-lane-label-dot tl-cat-${lane.markCat}`}
+                    aria-hidden="true"
+                  />
+                  {lane.label}
+                </span>
+              ))}
 
               {/* The panning world surface — a single GPU-composited transform, never scaled.
                * translate3d (vs. translateX) explicitly promotes this to its own compositor

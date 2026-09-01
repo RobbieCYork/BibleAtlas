@@ -327,10 +327,9 @@
   border-bottom: 1px solid var(--tl-grid);
 }
 
-/* Lane tints are keyed by LANE (see EVENT_LANES in TimelineView.tsx), not by category —
- * the top lane now carries three categories at once, so its tint can't belong to any one
- * of them. Kept very faint: the categories are told apart by the marks themselves. */
-.tl-lane-underlay.tl-lane-sacred {
+/* One tint per LANE (see EVENT_LANES in TimelineView.tsx). Kept very faint — it's a band
+ * separator, not a colour code; the marks carry the lane's actual colour. */
+.tl-lane-underlay.tl-lane-bible-church {
   background: rgba(var(--tl-biblical-rgb), 0.05);
   border-bottom: 1px solid var(--tl-grid);
 }
@@ -372,50 +371,21 @@
   border-radius: 50%;
   margin-right: 5px;
   vertical-align: 0;
-  /* Category swatches get their colour from the .tl-cat-* class beside them; the Lifespans chip
-   * still passes an inline background, which overrides this fallback. */
+  /* Takes its colour from the .tl-cat-* class beside it; the Lifespans chip still passes an
+   * inline background, which overrides this fallback. One disc per lane — the merged lane
+   * briefly carried a three-swatch legend, which the uniform mark made redundant. */
   background: var(--cat, var(--text-muted));
 }
 
-/* Legend entries inside the merged lane's chip — one per category currently showing there. */
-.tl-lane-legend {
-  margin-left: 9px;
-  font-weight: 600;
-  letter-spacing: 0.04em;
-  text-transform: none;
-  color: var(--text);
-}
-
-/* Swatch silhouettes mirror the marks themselves (see .tl-marker below): disc / square / ring. */
-.tl-lane-label-dot.tl-cat-church,
-.tl-lane-menu-swatch.tl-cat-church {
-  border-radius: 2px;
-}
-
-.tl-lane-label-dot.tl-cat-movement,
-.tl-lane-menu-swatch.tl-cat-movement {
-  background: var(--panel-bg);
-  border: 2.5px solid var(--cat);
-}
-
-/* Same swatch, at checklist scale. */
+/* Same swatch, at checklist scale. Colour comes from an inline style (see LANE_SWATCH_VAR in
+ * TimelineLaneMenu.tsx) since the checklist keys off lanes, not categories. */
 .tl-lane-menu-swatch {
   display: inline-block;
   flex-shrink: 0;
   width: 9px;
   height: 9px;
   border-radius: 50%;
-  background: var(--cat, var(--text-muted));
-}
-
-.tl-lane-menu-swatch.tl-swatch-life {
-  background: var(--tl-life);
-}
-
-.tl-lane-menu-title-divided {
-  margin-top: 8px;
-  padding-top: 8px;
-  border-top: 1px solid var(--border);
+  background: var(--text-muted);
 }
 
 /* The panning surface. translateX only — content x-positions are recomputed
@@ -619,9 +589,15 @@
 
 /* ------------------------------------------------------------ event lanes */
 
-/* One place decides what colour a category is. Every mark below (dot, range bar,
- * cluster badge, legend dot) reads --cat off its own .tl-cat-* class, so the
- * category -> pigment mapping lives here and nowhere else. */
+/* One place decides what colour a mark is. Every mark below (dot, range bar, cluster badge,
+ * lane chip dot) reads --cat off its own .tl-cat-* class, so the pigment mapping lives here
+ * and nowhere else.
+ *
+ * These are applied PER LANE, not per event: a lane's markCat (see EVENT_LANES in
+ * TimelineView.tsx) picks one of them for every mark it draws. .tl-cat-church and
+ * .tl-cat-movement are consequently unused by the current lane set — kept because the
+ * pigments are still referenced by the palette block at the top of this file and because
+ * splitting a lane back out would want them again. */
 .tl-cat-biblical {
   --cat: var(--tl-biblical);
   --cat-rgb: var(--tl-biblical-rgb);
@@ -664,26 +640,12 @@
   box-shadow: 0 2px 7px rgba(0, 0, 0, 0.4);
 }
 
+/* Every point event is the same filled disc in its lane's colour. There was briefly a
+ * disc/square/ring system separating biblical, church and movement events inside the merged
+ * lane; it's gone at the owner's direction — those are all just part of one timeline, so
+ * nothing inside a lane is drawn differently from anything else in it. */
 .tl-marker {
   background: var(--cat);
-}
-
-/* Shape, not only hue, separates the three categories that now share the top lane —
- * biblical (filled disc), church (filled square), movements & revivals (open ring).
- * Colour alone would be a red/blue/gold distinction that a deuteranope or a
- * greyscale screenshot loses; the silhouette survives both. World History and Other
- * Religions keep the plain disc — they sit in their own lanes, so there's nothing
- * for them to be confused with. */
-.tl-marker.tl-cat-church {
-  border-radius: 3px;
-}
-
-.tl-marker.tl-cat-movement {
-  width: 14px;
-  height: 14px;
-  background: var(--panel-bg);
-  border: 4px solid var(--cat);
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.28), 0 0 0 1px var(--panel-bg);
 }
 
 /* Ranged events (reigns, exiles, wars): thin bar instead of a dot. */
@@ -710,21 +672,12 @@
 
 /* The fade is a direction cue (start solid, trail off toward the end year). Tail alpha raised
  * from 0.45 to 0.68 so even the faintest end of the bar stays a visible object; the bar's
- * identifying leading edge is the full category colour, which is what the contrast audit
- * measures against the lane. */
+ * identifying leading edge is the full lane colour, which is what the contrast audit measures
+ * against the lane. Every span in a lane is drawn this same way — the squared-off and
+ * outlined variants that distinguished church and movement spans are gone with the rest of
+ * the intra-lane coding. */
 .tl-range-bar {
   background: linear-gradient(to right, var(--cat), rgba(var(--cat-rgb), 0.68));
-}
-
-/* Same silhouette logic as the markers above, applied to spans: church bars are
- * squared off, movement bars are drawn as an open outline rather than a solid fill. */
-.tl-range-bar.tl-cat-church {
-  border-radius: 2px;
-}
-
-.tl-range-bar.tl-cat-movement {
-  background: var(--panel-bg);
-  border: 2px solid var(--cat);
 }
 
 /* Always-visible title+year chip for a point-event marker and the label for a range-bar event
@@ -926,17 +879,6 @@
   .tl-range-readout {
     overflow: hidden;
     text-overflow: ellipsis;
-  }
-
-  /* The merged lane's legend is three named swatches — too wide for a phone, so the names
-   * collapse and the swatches (which are the actual key) stay. */
-  .tl-lane-legend {
-    font-size: 0;
-    margin-left: 5px;
-  }
-
-  .tl-lane-legend .tl-lane-label-dot {
-    margin-right: 0;
   }
 }
 
