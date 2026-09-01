@@ -7205,3 +7205,393 @@ body.resizing-panels {
   letter-spacing: 0.07em;
   opacity: 0.66;
 }
+
+/* ==========================================================================
+   Share card v2 — photographic backgrounds (ShareCardModal + shareCardRender)
+   ==========================================================================
+
+   Appended, self-contained, and deliberately last: these rules replace the flat-gradient card's
+   geometry (.share-card-preview / .share-card-content / .share-card-footer) rather than editing it
+   in place, so the older block above stays readable as the thing it superseded.
+
+   The legibility model, in one place:
+
+     photo → scrim → ink
+
+   The photo is untouched. The scrim is a set of top-to-bottom gradients generated in
+   shareCardRender.ts from the background's own `safeArea` and `textColor`; it is *not* a flat wash —
+   every layer hits alpha 0 somewhere, so a third to a half of the picture is never veiled. The ink
+   carries a soft shadow as a second line of defence for the case a gradient cannot solve: a bright
+   highlight in the photo landing directly behind a stroke.
+
+   Sizes inside the card are all `em` off a root font-size set in JS to (card width / 34). That makes
+   the composition resolution-independent — the same card at a 300px preview, a 360px preview, and
+   the 1080px export is proportionally identical. */
+
+.share-modal-photo {
+  max-width: 780px;
+}
+
+.share-modal-photo .share-modal-body {
+  align-items: flex-start;
+}
+
+.share-card-stage {
+  flex: 1 1 300px;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.share-modal-photo .share-card-preview {
+  position: relative;
+  display: block;
+  flex: none;
+  width: 100%;
+  max-width: 340px;
+  margin: 0 auto;
+  padding: 0;
+  border-radius: 18px;
+  overflow: hidden;
+  background: #0b0d11;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+  user-select: none;
+}
+
+/* The ~20px placeholder, blown up and blurred: paints in the first frame so the card is never an
+   empty rectangle, and the full photo cross-fades over it once decoded. */
+.share-card-photo-placeholder {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center;
+  filter: blur(16px);
+  transform: scale(1.2);
+}
+
+.share-card-photo {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.share-card-photo.ready {
+  opacity: 1;
+}
+
+.share-card-scrim {
+  position: absolute;
+  inset: 0;
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  pointer-events: none;
+}
+
+/* The only element handed to html2canvas — text and wordmark on transparency. Nothing here may
+   carry a background: the photo and scrim are painted natively underneath it in the export. */
+.share-card-ink {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  /* The bottom padding is the footer's keep-out zone: the wordmark is absolutely positioned at the
+     foot of the card, and the text block must never crowd it. */
+  padding: 2.4em 2em 6.2em;
+  text-align: center;
+  font-family: var(--sans);
+  font-size: 10px;
+}
+
+.share-card-ink[data-safe="top"] {
+  justify-content: flex-start;
+}
+
+.share-card-ink[data-safe="center"] {
+  justify-content: center;
+}
+
+.share-card-ink[data-safe="bottom"] {
+  justify-content: flex-end;
+}
+
+.share-card-ink[data-ink="light"] {
+  color: #ffffff;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5), 0 2px 16px rgba(0, 0, 0, 0.45);
+}
+
+.share-card-ink[data-ink="dark"] {
+  color: #1b1712;
+  text-shadow: 0 1px 2px rgba(255, 255, 255, 0.7), 0 2px 16px rgba(255, 255, 255, 0.55);
+}
+
+.share-card-ink .share-card-content {
+  --fit: 1;
+  position: relative;
+  z-index: 1;
+  outline: none;
+  max-height: 100%;
+  overflow: hidden;
+  min-height: 0;
+}
+
+.share-card-ink .share-card-content:focus-visible {
+  outline: 1px dashed currentColor;
+  outline-offset: 6px;
+}
+
+.share-card-ink .share-card-badge {
+  font-family: var(--sans);
+  font-size: calc(1.05em * var(--fit));
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  opacity: 0.88;
+  margin-bottom: 0.9em;
+}
+
+.share-card-ink .share-card-title {
+  font-family: var(--display);
+  font-size: calc(2.55em * var(--fit));
+  font-weight: 600;
+  line-height: 1.16;
+  margin-bottom: 0.5em;
+}
+
+.share-card-ink .share-card-body {
+  font-family: var(--serif);
+  font-size: calc(1.85em * var(--fit));
+  line-height: 1.44;
+}
+
+/* Scripture cards sign off with the reference rather than heading with it — set small, in the sans,
+   so it reads as attribution under the verse instead of competing with it. */
+.share-card-ink .share-card-title-ref {
+  font-family: var(--sans);
+  font-size: calc(1.1em * var(--fit));
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  opacity: 0.92;
+  margin: 1.3em 0 0;
+  line-height: 1.3;
+}
+
+.share-card-ink .share-card-footer {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 1.6em;
+  text-align: center;
+  opacity: 1;
+  line-height: 1.3;
+}
+
+.share-card-ink .share-card-footer-mark {
+  display: block;
+  font-size: 0.95em;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  opacity: 0.88;
+}
+
+.share-card-ink .share-card-footer-url {
+  display: block;
+  font-size: 0.8em;
+  letter-spacing: 0.06em;
+  opacity: 0.7;
+  margin-top: 0.2em;
+}
+
+/* --- Format chips (4:5 / 1:1 / 9:16) --- */
+
+.share-format-row {
+  display: flex;
+  gap: 6px;
+  justify-content: center;
+}
+
+.share-format-chip {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1px;
+  border: 1px solid var(--input-border);
+  background: var(--surface-sunken);
+  color: var(--text-muted);
+  border-radius: 8px;
+  padding: 5px 12px;
+  cursor: pointer;
+  line-height: 1.1;
+}
+
+.share-format-chip strong {
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.share-format-chip span {
+  font-size: 9px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  opacity: 0.8;
+}
+
+.share-format-chip.active {
+  border-color: var(--accent);
+  background: var(--accent-bg, var(--surface-sunken));
+  color: var(--accent);
+}
+
+/* --- Background picker --- */
+
+.share-bg-filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.share-bg-filter {
+  flex: none;
+  border: 1px solid var(--input-border);
+  background: var(--surface-sunken);
+  color: var(--text-muted);
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 600;
+  padding: 5px 12px;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.share-bg-filter.active {
+  border-color: var(--accent);
+  background: var(--accent);
+  color: var(--accent-contrast);
+}
+
+.share-bg-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(66px, 1fr));
+  gap: 8px;
+  max-height: 260px;
+  overflow-y: auto;
+  padding: 3px;
+  border-radius: 10px;
+  background: var(--surface-sunken);
+  border: 1px solid var(--border);
+}
+
+.share-bg-thumb {
+  position: relative;
+  aspect-ratio: 4 / 5;
+  border-radius: 9px;
+  overflow: hidden;
+  border: 2px solid transparent;
+  padding: 0;
+  cursor: pointer;
+  background-size: cover;
+  background-position: center;
+  background-color: var(--border);
+}
+
+.share-bg-thumb img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.share-bg-thumb.active {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 2px var(--panel-bg), 0 0 0 4px var(--accent);
+}
+
+.share-bg-thumb-check {
+  position: absolute;
+  right: 3px;
+  bottom: 3px;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: var(--accent);
+  color: var(--accent-contrast);
+  font-size: 10px;
+  line-height: 16px;
+  text-align: center;
+  opacity: 0;
+  transition: opacity 0.15s ease;
+}
+
+.share-bg-thumb.active .share-bg-thumb-check {
+  opacity: 1;
+}
+
+.share-bg-empty {
+  grid-column: 1 / -1;
+  margin: 0;
+  padding: 16px 8px;
+  text-align: center;
+  font-size: 12px;
+  color: var(--text-muted);
+}
+
+/* On a phone the picker makes the modal taller than the screen, which would bury Share/Save below the
+   fold — the one control the whole modal exists to reach. Pinning the action row to the foot of the
+   scroll container keeps it in reach at every scroll position. */
+.share-modal-photo .share-modal-actions {
+  position: sticky;
+  bottom: -18px;
+  z-index: 2;
+  margin: 0 -18px -18px;
+  padding: 12px 18px;
+  background: var(--panel-bg);
+  border-top: 1px solid var(--border);
+  flex-wrap: wrap;
+}
+
+.share-modal-size-note {
+  margin-right: auto;
+  font-size: 11px;
+  color: var(--text-muted);
+  letter-spacing: 0.03em;
+}
+
+@media (max-width: 700px) {
+  .share-modal-overlay {
+    padding: 10px;
+  }
+
+  .share-modal-photo {
+    padding: 14px;
+    gap: 12px;
+  }
+
+  .share-modal-photo .share-modal-body {
+    gap: 12px;
+  }
+
+  .share-modal-photo .share-card-preview {
+    max-width: 300px;
+  }
+
+  .share-bg-grid {
+    max-height: 168px;
+    grid-template-columns: repeat(auto-fill, minmax(58px, 1fr));
+  }
+
+  .share-modal-photo .share-modal-actions {
+    bottom: -14px;
+    margin: 0 -14px -14px;
+    padding: 10px 14px;
+  }
+
+  .share-modal-size-note {
+    font-size: 10px;
+  }
+}
