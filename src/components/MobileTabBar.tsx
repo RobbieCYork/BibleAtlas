@@ -37,10 +37,10 @@ interface MobileTabBarProps {
   onOpenSocial?: () => void;
 }
 
-/** No dedicated "Details" tab — a location/person/topic/event's details panel is reached by tapping
- * a hyperlink in the Bible text, a map pin, or a search result, not by navigating to it directly, so
- * it doesn't need its own icon here. App.tsx's setMobileActivePanel("details") still switches to it
- * from any of those entry points; only its bottom-bar button is gone. */
+/** No dedicated "Article" tab — a location/person/topic/event's write-up isn't a destination of its
+ * own, it's what the Articles tab shows once something is selected (App.tsx's enterMobileArticle
+ * switches here from a Bible-text hyperlink, a map pin, or a search result; Back returns to whichever
+ * tab the reader came from). The Articles tab with nothing selected is the browse/search list. */
 const PINNED_TABS: { key: PanelKey; label: string; icon: string }[] = [
   { key: "bible", label: "Bible", icon: "📖" },
   { key: "map", label: "Map", icon: "🗺️" },

@@ -1,33 +1,34 @@
 import { Fragment, useEffect, useRef, useState } from "react";
 
-export type PanelKey = "map" | "details" | "bible" | "notes" | "friends" | "articles";
+/** The panel slots the layout can show. There is deliberately no separate "details" slot: a single
+ * article (a place/person/topic/POI/timeline event) is a *state* of the Articles panel, not a panel
+ * of its own — see App.tsx's `showArticle`. */
+export type PanelKey = "map" | "bible" | "notes" | "friends" | "articles";
 
 interface PanelMenuProps {
   panels: Record<PanelKey, boolean>;
   onToggle: (key: PanelKey) => void;
-  /** Pending incoming friend requests — shown as a badge on the Friends row (and the menu button
-   * itself) so a new request is noticeable without opening the Friends panel first. */
+  /** Pending incoming friend requests — shown as a badge on the Social row (and the menu button
+   * itself) so a new request is noticeable without opening the Social panel first. */
   friendsBadgeCount?: number;
   /** The panel most recently auto-closed by App's 3-panel LRU cap — named briefly in the caption so
    * a checkbox flipping off on its own reads as "made room," not a misclick or a broken toggle. */
   lastAutoClosed?: { key: PanelKey; nonce: number } | null;
-  /** Panels that can't render right now, mapped to the reason (shown as a tooltip). Their rows are
-   * dimmed and their checkboxes disabled — opening a panel that would show nothing would only evict
-   * a visible one to no effect. */
-  disabled?: Partial<Record<PanelKey, string>>;
 }
 
 const PANEL_LABELS: Record<PanelKey, string> = {
   bible: "Bible",
   map: "Map",
-  // "details" and "articles" are two different doors into the same idea (a place/person/topic
-  // write-up): "details" opens with a specific entry already picked (a pin tap, a text link) — so
-  // it reads as "Article" (singular, one open entry) — while "articles" is the standalone
-  // browse/search destination for everything, hence the plural. Distinct labels keep the two rows
-  // from reading as duplicates in this same menu.
-  details: "Article",
   notes: "My Notes",
-  friends: "Friends",
+  // Labelled "Social" (not "Friends") to match the mobile tab bar's name for this same destination —
+  // one name for one place on both platforms. The `friends` key itself stays as-is: it's the
+  // PanelKey/localStorage identity, not copy. Friends/Groups/Messages remain the names of the three
+  // lists *inside* the destination.
+  friends: "Social",
+  // One row for the whole article destination — it opens the browse/search list, and shows a single
+  // article in that same slot once one is picked (map pin, in-text link, or a row in the list). It
+  // used to be two rows ("Article", greyed out until something was selected, plus "Articles"), which
+  // read as a duplicate with one half permanently unavailable.
   articles: "Articles",
 };
 
@@ -36,10 +37,10 @@ const PANEL_LABELS: Record<PanelKey, string> = {
  * so in practice the lower group trades places while Bible and Map usually stay put. */
 const PANEL_GROUPS: PanelKey[][] = [
   ["bible", "map"],
-  ["details", "articles", "notes", "friends"],
+  ["articles", "notes", "friends"],
 ];
 
-export default function PanelMenu({ panels, onToggle, friendsBadgeCount = 0, lastAutoClosed = null, disabled }: PanelMenuProps) {
+export default function PanelMenu({ panels, onToggle, friendsBadgeCount = 0, lastAutoClosed = null }: PanelMenuProps) {
   const [open, setOpen] = useState(false);
   // Swaps the caption to name the auto-closed panel for a few seconds, then falls back to the
   // standing "up to 3 panels" hint. Re-runs per nonce so back-to-back evictions restart the timer.
@@ -80,27 +81,15 @@ export default function PanelMenu({ panels, onToggle, friendsBadgeCount = 0, las
           {PANEL_GROUPS.map((group, groupIndex) => (
             <Fragment key={groupIndex}>
               {groupIndex > 0 && <div className="panel-menu-separator" role="separator" />}
-              {group.map((key) => {
-                const disabledReason = disabled?.[key];
-                return (
-                  <label
-                    key={key}
-                    className={`panel-menu-item${disabledReason ? " panel-menu-item-disabled" : ""}`}
-                    title={disabledReason}
-                  >
-                    <input
-                      type="checkbox"
-                      checked={panels[key]}
-                      disabled={!!disabledReason}
-                      onChange={() => onToggle(key)}
-                    />
-                    {PANEL_LABELS[key]}
-                    {key === "friends" && friendsBadgeCount > 0 && (
-                      <span className="panel-menu-item-badge">{friendsBadgeCount}</span>
-                    )}
-                  </label>
-                );
-              })}
+              {group.map((key) => (
+                <label key={key} className="panel-menu-item">
+                  <input type="checkbox" checked={panels[key]} onChange={() => onToggle(key)} />
+                  {PANEL_LABELS[key]}
+                  {key === "friends" && friendsBadgeCount > 0 && (
+                    <span className="panel-menu-item-badge">{friendsBadgeCount}</span>
+                  )}
+                </label>
+              ))}
             </Fragment>
           ))}
           <p className="panel-menu-caption" aria-live="polite">

@@ -104,8 +104,8 @@ function App() {
   // Bible. Desktop shows Bible+Map together by default.
   const [panels, setPanels] = useState<Record<PanelKey, boolean>>(() =>
     isMobile
-      ? { map: false, details: false, bible: true, notes: false, friends: false, articles: false }
-      : { map: true, details: false, bible: true, notes: false, friends: false, articles: false }
+      ? { map: false, bible: true, notes: false, friends: false, articles: false }
+      : { map: true, bible: true, notes: false, friends: false, articles: false }
   );
   // Default desktop split: Bible panel gets 1/3 of the width, map gets the remaining 2/3 (map
   // fills via flex:1 in .app-body, so only the Bible panel's width needs to be set). Clamped to
@@ -115,10 +115,11 @@ function App() {
   const [bibleWidth, setBibleWidth] = useState(() =>
     Math.min(MAX_PANEL_WIDTH, Math.max(MIN_PANEL_WIDTH, Math.round(window.innerWidth / 3)))
   );
-  const [detailsWidth, setDetailsWidth] = useState(380);
   const [notesWidth] = useState(380);
   const [friendsWidth] = useState(380);
-  const [articlesWidth] = useState(380);
+  // One width for the Articles slot, whichever of its two states is showing (browse list or an open
+  // article) — they're the same panel, so a width set while browsing must survive opening an article.
+  const [articlesWidth, setArticlesWidth] = useState(380);
   const [session, setSession] = useState<Session | null>(null);
   // True once the initial supabase.auth.getSession() call has settled (whether or not it found a
   // session) — `session` alone can't tell "haven't checked yet" apart from "genuinely logged out",
@@ -193,12 +194,18 @@ function App() {
     panelOrderRef.current = panelOrderRef.current.filter((k) => k !== key);
     applyPanels({ ...panelsRef.current, [key]: false });
   };
+  /** Which single panel mobile is showing, derived from a panels record. Handlers that can be
+   * invoked from a stale closure must read this off `panelsRef.current` rather than the
+   * render-scoped `activeMobilePanel` below: MapView attaches its pin-click listeners once, in a
+   * mount-only effect, so a pin tap runs the first render's copy of whatever handler it was handed
+   * — which would otherwise report "bible" (the cold-start tab) forever. */
+  const mobilePanelOf = (p: Record<PanelKey, boolean>): PanelKey =>
+    p.bible ? "bible" : p.notes ? "notes" : p.friends ? "friends" : p.articles ? "articles" : "map";
   // Mobile has exactly one active panel at a time, switched via the bottom tab bar.
   const setMobileActivePanel = (key: PanelKey) =>
     applyPanels({
       map: key === "map",
       bible: key === "bible",
-      details: key === "details",
       notes: key === "notes",
       friends: key === "friends",
       articles: key === "articles",
@@ -226,14 +233,11 @@ function App() {
     const next: Record<PanelKey, boolean> = {
       map: true,
       bible: true,
-      details: false,
       notes: false,
       friends: false,
       articles: false,
     };
-    // Details only renders on desktop with a live selection; leaving it closed here avoids an
-    // invisible panel holding an LRU slot (it reopens on the next selection anyway).
-    if (active && active !== "details") next[active] = true;
+    if (active) next[active] = true;
     panelOrderRef.current = (Object.keys(next) as PanelKey[]).filter((k) => next[k]);
     applyPanels(next);
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -549,13 +553,20 @@ function App() {
   // (no reading_progress lookup to wait on), so this doesn't add a perceptible delay for them.
   const bibleInitializing = !authResolved || (!!session && !restoreChecked);
 
-  // Mobile only: switches to the Details tab, first remembering whichever tab was active so the
-  // details article's Back button can return there — but only if we're not already ON details (a
-  // cross-link tap from inside one details article to another must not overwrite the original
-  // "came from" tab with "details" itself).
-  const enterMobileDetails = () => {
-    if (activeMobilePanel !== "details") setDetailsReturnPanel(activeMobilePanel);
-    setMobileActivePanel("details");
+  // Mobile only: switches to the Articles tab (where the open article renders, in place of the
+  // browse list), first remembering whichever tab was active so the article's Back button can return
+  // there — but only if we're not already ON Articles (a cross-link tap from inside one article to
+  // another, or a tap on a row in the browse list, must not overwrite the original "came from" tab).
+  const enterMobileArticle = () => {
+    // "Already reading an article" is the one case that must NOT re-record the origin — otherwise a
+    // cross-link from one article to the next would rewrite "came from the map" as "came from
+    // Articles". Being on the Articles tab isn't enough on its own to mean that: with no selection
+    // the reader is on the browse list, which is a legitimate origin to come back to.
+    // Both reads go through live refs, not the render-scoped values — see mobilePanelOf.
+    const from = mobilePanelOf(panelsRef.current);
+    const showingArticle = from === "articles" && hasSelectionRef.current;
+    if (!showingArticle) setDetailsReturnPanel(from);
+    setMobileActivePanel("articles");
   };
 
   const handleSelect = (id: string) => {
@@ -566,9 +577,9 @@ function App() {
     setSelectedTimelineEventId(null);
     setLocationsVisible(true);
     if (isMobile) {
-      enterMobileDetails();
+      enterMobileArticle();
     } else {
-      openPanel("details");
+      openPanel("articles");
       openPanel("map");
     }
   };
@@ -580,9 +591,9 @@ function App() {
     setSelectedTopicId(null);
     setSelectedTimelineEventId(null);
     if (isMobile) {
-      enterMobileDetails();
+      enterMobileArticle();
     } else {
-      openPanel("details");
+      openPanel("articles");
       openPanel("map");
     }
   };
@@ -595,8 +606,8 @@ function App() {
     setSelectedPoiId(null);
     setSelectedTopicId(null);
     setSelectedTimelineEventId(null);
-    if (isMobile) enterMobileDetails();
-    else openPanel("details");
+    if (isMobile) enterMobileArticle();
+    else openPanel("articles");
   };
 
   // Topics (practices, doctrines, people groups) have no map presence, same as people — selecting one
@@ -607,8 +618,8 @@ function App() {
     setSelectedPoiId(null);
     setSelectedPersonId(null);
     setSelectedTimelineEventId(null);
-    if (isMobile) enterMobileDetails();
-    else openPanel("details");
+    if (isMobile) enterMobileArticle();
+    else openPanel("articles");
   };
 
   // Timeline events have no map presence either — same pattern as people and topics: selecting one
@@ -619,8 +630,8 @@ function App() {
     setSelectedPoiId(null);
     setSelectedPersonId(null);
     setSelectedTopicId(null);
-    if (isMobile) enterMobileDetails();
-    else openPanel("details");
+    if (isMobile) enterMobileArticle();
+    else openPanel("articles");
   };
 
   // Shows a location on the map without opening the Details panel — used for the Bible text's
@@ -839,6 +850,9 @@ function App() {
     selectedPersonId !== null ||
     selectedTopicId !== null ||
     selectedTimelineEventId !== null;
+  // Live mirror for the same stale-closure reason as panelsRef (see mobilePanelOf).
+  const hasSelectionRef = useRef(hasSelection);
+  hasSelectionRef.current = hasSelection;
   // Clears the pin-selection filter so every pin reappears — deliberately leaves the camera where
   // it is (MapView's selectedId/selectedPoiId effect rebuilds the pin set; nothing refits/flies).
   const clearSelection = () => {
@@ -849,17 +863,21 @@ function App() {
     setSelectedTimelineEventId(null);
     setDetailsHistory([]);
     if (isMobile) setMobileActivePanel("map");
-    // On desktop the Details panel can't render without a selection (showDetails goes false), so
-    // close it in state too — otherwise the invisible panel keeps holding one of the LRU slots
-    // while the menu's disabled Details row leaves no way to free it.
-    else closePanel("details");
+    // Desktop: the Articles panel stays open and simply falls back to its browse/search list now
+    // that nothing is selected — it's a destination the reader opened, not a sidecar of the map, so
+    // "Show All Pins" shouldn't close it out from under them.
   };
 
-  // Every details article's own Back button — leaves Details entirely and returns to wherever the
-  // reader actually came from, unlike clearSelection above (which is "Show All Pins" from the map
-  // itself and always means "stay on/return to the map"). On mobile that's detailsReturnPanel (the
-  // tab active right before a pin/link tap opened Details); on desktop the map/Bible panels were
-  // never replaced, so simply closing Details reveals them again underneath.
+  // Every article's own Back button, once its cross-link trail is exhausted. Clearing the selection
+  // is all desktop needs: the Articles panel is a single slot whose two states are "an article" and
+  // "the browse/search list", so dropping the selection reveals the list again in place — the
+  // browse-list state is deliberately the back stop, not a closed panel.
+  //
+  // Mobile keeps the extra step of returning to whichever tab the reader actually came from
+  // (detailsReturnPanel — the tab active right before a pin/link tap jumped them to Articles), since
+  // there only one panel is on screen at a time and stranding them on the Articles list would lose
+  // the map or passage they were looking at. Arriving from the browse list itself leaves
+  // detailsReturnPanel untouched (see enterMobileArticle), so that case lands back on the list.
   const closeDetailsPanel = () => {
     setSelectedId(null);
     setSelectedPoiId(null);
@@ -868,7 +886,6 @@ function App() {
     setSelectedTimelineEventId(null);
     setDetailsHistory([]);
     if (isMobile) setMobileActivePanel(detailsReturnPanel);
-    else closePanel("details");
   };
 
   const openVerse = (reference: string) => {
@@ -937,29 +954,15 @@ function App() {
     return coords;
   }, [walkOpen, activeWalk]);
 
-  // The details panel has nothing to show without a selection on desktop — hiding it lets the
-  // map expand instead of leaving a blank panel visible. On mobile it always renders (as its own
-  // full-screen tab) so the empty state ("search or click a pin") shows instead of a blank tab.
-  const showDetails = panels.details && (hasSelection || isMobile);
-  const noPanelsOpen =
-    !panels.bible && !panels.map && !panels.notes && !panels.friends && !panels.articles && !showDetails;
-  // The hamburger checklist mirrors what's actually on screen: its Details row tracks showDetails
-  // rather than raw panels.details, which can be "open" in state while nothing renders (desktop with
-  // no selection) — a checked box next to an invisible panel reads as a broken toggle.
-  const menuPanels: Record<PanelKey, boolean> = { ...panels, details: showDetails };
-  const toggleMenuPanel = (key: PanelKey) => (menuPanels[key] ? closePanel(key) : openPanel(key));
+  // The Articles panel is one slot with two states: an open article when something is selected, the
+  // browse/search list otherwise. Opening an article therefore costs no extra panel slot — it
+  // replaces the list inside the slot the reader already has — which is why a map-pin tap can no
+  // longer evict the Bible panel just to show a write-up.
+  const showArticle = panels.articles && hasSelection;
+  const noPanelsOpen = !panels.bible && !panels.map && !panels.notes && !panels.friends && !panels.articles;
+  const toggleMenuPanel = (key: PanelKey) => (panels[key] ? closePanel(key) : openPanel(key));
   const sideExpand = !panels.map;
-  const activeMobilePanel: PanelKey = panels.bible
-    ? "bible"
-    : panels.details
-      ? "details"
-      : panels.notes
-        ? "notes"
-        : panels.friends
-          ? "friends"
-          : panels.articles
-            ? "articles"
-            : "map";
+  const activeMobilePanel: PanelKey = mobilePanelOf(panels);
   // On mobile, keep the map mounted even while another tab is active (hidden via CSS below)
   // instead of unmounting it, so MapLibre/tiles/pins survive tab switches.
   const mapMounted = panels.map || isMobile;
@@ -1037,15 +1040,9 @@ function App() {
       )}
       <header className="app-header">
         <PanelMenu
-          panels={menuPanels}
+          panels={panels}
           onToggle={toggleMenuPanel}
           lastAutoClosed={lastAutoClosed}
-          disabled={
-            // Mirrors showDetails: on desktop with nothing selected the Details panel can't render,
-            // so its row is dimmed instead of letting a click evict a visible panel for nothing.
-            // (Mobile always renders Details' empty state, but the menu is hidden there anyway.)
-            hasSelection || isMobile ? undefined : { details: "Select a place on the map or in the text first" }
-          }
           friendsBadgeCount={pendingFriendRequests + unreadMessages + groupsBadgeCount}
         />
         <button type="button" className="app-logo-button" onClick={goHome} aria-label="Go to Bible">
@@ -1205,84 +1202,6 @@ function App() {
             <div className="map-hint">Click a pin for more details</div>
           </div>
         )}
-        {panels.map && showDetails && (
-          <ResizeHandle
-            width={detailsWidth}
-            minWidth={MIN_PANEL_WIDTH}
-            maxWidth={MAX_PANEL_WIDTH}
-            direction={-1}
-            onWidthChange={setDetailsWidth}
-          />
-        )}
-        {showDetails && selectedPerson && (
-          <PersonPanel
-            person={selectedPerson}
-            onBack={goBackInDetails}
-            onSelectVerse={openVerse}
-            onSelectLocation={handleSelectLocationFromDetails}
-            onSelectPoi={handleSelectPoiFromDetails}
-            onSelectPerson={handleSelectPersonFromDetails}
-            onSelectTopic={handleSelectTopicFromDetails}
-            onJournalPrompt={session ? handleJournalPrompt : undefined}
-            expand={sideExpand}
-            style={{ width: detailsWidth }}
-          />
-        )}
-        {showDetails && !selectedPerson && selectedPoi && (
-          <PoiPanel
-            poi={selectedPoi}
-            onBack={goBackInDetails}
-            onSelectLocation={handleSelectLocationFromDetails}
-            onSelectPoi={handleSelectPoiFromDetails}
-            onSelectPerson={handleSelectPersonFromDetails}
-            onSelectTopic={handleSelectTopicFromDetails}
-            onSelectVerse={openVerse}
-            expand={sideExpand}
-            style={{ width: detailsWidth }}
-          />
-        )}
-        {showDetails && !selectedPerson && !selectedPoi && selectedTopic && (
-          <TopicPanel
-            topic={selectedTopic}
-            onBack={goBackInDetails}
-            onSelectVerse={openVerse}
-            onSelectLocation={handleSelectLocationFromDetails}
-            onSelectPoi={handleSelectPoiFromDetails}
-            onSelectPerson={handleSelectPersonFromDetails}
-            onSelectTopic={handleSelectTopicFromDetails}
-            onJournalPrompt={session ? handleJournalPrompt : undefined}
-            expand={sideExpand}
-            style={{ width: detailsWidth }}
-          />
-        )}
-        {showDetails && !selectedPerson && !selectedPoi && !selectedTopic && selectedTimelineEvent && (
-          <TimelineEventPanel
-            event={selectedTimelineEvent}
-            onBack={goBackInDetails}
-            onSelectVerse={openVerse}
-            onSelectLocation={handleSelectLocationFromDetails}
-            onSelectPoi={handleSelectPoiFromDetails}
-            onSelectPerson={handleSelectPersonFromDetails}
-            onSelectTopic={handleSelectTopicFromDetails}
-            onSelectTimelineEvent={handleSelectTimelineEventFromDetails}
-            expand={sideExpand}
-            style={{ width: detailsWidth }}
-          />
-        )}
-        {showDetails && !selectedPerson && !selectedPoi && !selectedTopic && !selectedTimelineEvent && (
-          <LocationPanel
-            location={selectedLocation}
-            onBack={goBackInDetails}
-            onSelectVerse={openVerse}
-            onSelectLocation={handleSelectLocationFromDetails}
-            onSelectPoi={handleSelectPoiFromDetails}
-            onSelectPerson={handleSelectPersonFromDetails}
-            onSelectTopic={handleSelectTopicFromDetails}
-            onJournalPrompt={session ? handleJournalPrompt : undefined}
-            expand={sideExpand}
-            style={{ width: detailsWidth }}
-          />
-        )}
         {notesMounted && (
           <MyNotesPanel
             userId={session?.user.id}
@@ -1313,6 +1232,91 @@ function App() {
             onGoToReference={openVerse}
           />
         )}
+        {/* --- The Articles slot ------------------------------------------------------------------
+            One position in the layout, two states. ArticlesPanel (the browse/search list) stays
+            mounted underneath the whole time and is merely hidden while an article is open, so the
+            reader's search text and expanded sections are still there when they come back — which is
+            the whole point of Back landing on the list rather than on a closed panel.
+            Exactly one of the five article panels renders, in the same precedence order as
+            currentDetailsSelection (person > POI > topic > timeline event > location). */}
+        {panels.map && panels.articles && (
+          <ResizeHandle
+            width={articlesWidth}
+            minWidth={MIN_PANEL_WIDTH}
+            maxWidth={MAX_PANEL_WIDTH}
+            direction={-1}
+            onWidthChange={setArticlesWidth}
+          />
+        )}
+        {showArticle && selectedPerson && (
+          <PersonPanel
+            person={selectedPerson}
+            onBack={goBackInDetails}
+            onSelectVerse={openVerse}
+            onSelectLocation={handleSelectLocationFromDetails}
+            onSelectPoi={handleSelectPoiFromDetails}
+            onSelectPerson={handleSelectPersonFromDetails}
+            onSelectTopic={handleSelectTopicFromDetails}
+            onJournalPrompt={session ? handleJournalPrompt : undefined}
+            expand={sideExpand}
+            style={{ width: articlesWidth }}
+          />
+        )}
+        {showArticle && !selectedPerson && selectedPoi && (
+          <PoiPanel
+            poi={selectedPoi}
+            onBack={goBackInDetails}
+            onSelectLocation={handleSelectLocationFromDetails}
+            onSelectPoi={handleSelectPoiFromDetails}
+            onSelectPerson={handleSelectPersonFromDetails}
+            onSelectTopic={handleSelectTopicFromDetails}
+            onSelectVerse={openVerse}
+            expand={sideExpand}
+            style={{ width: articlesWidth }}
+          />
+        )}
+        {showArticle && !selectedPerson && !selectedPoi && selectedTopic && (
+          <TopicPanel
+            topic={selectedTopic}
+            onBack={goBackInDetails}
+            onSelectVerse={openVerse}
+            onSelectLocation={handleSelectLocationFromDetails}
+            onSelectPoi={handleSelectPoiFromDetails}
+            onSelectPerson={handleSelectPersonFromDetails}
+            onSelectTopic={handleSelectTopicFromDetails}
+            onJournalPrompt={session ? handleJournalPrompt : undefined}
+            expand={sideExpand}
+            style={{ width: articlesWidth }}
+          />
+        )}
+        {showArticle && !selectedPerson && !selectedPoi && !selectedTopic && selectedTimelineEvent && (
+          <TimelineEventPanel
+            event={selectedTimelineEvent}
+            onBack={goBackInDetails}
+            onSelectVerse={openVerse}
+            onSelectLocation={handleSelectLocationFromDetails}
+            onSelectPoi={handleSelectPoiFromDetails}
+            onSelectPerson={handleSelectPersonFromDetails}
+            onSelectTopic={handleSelectTopicFromDetails}
+            onSelectTimelineEvent={handleSelectTimelineEventFromDetails}
+            expand={sideExpand}
+            style={{ width: articlesWidth }}
+          />
+        )}
+        {showArticle && !selectedPerson && !selectedPoi && !selectedTopic && !selectedTimelineEvent && (
+          <LocationPanel
+            location={selectedLocation}
+            onBack={goBackInDetails}
+            onSelectVerse={openVerse}
+            onSelectLocation={handleSelectLocationFromDetails}
+            onSelectPoi={handleSelectPoiFromDetails}
+            onSelectPerson={handleSelectPersonFromDetails}
+            onSelectTopic={handleSelectTopicFromDetails}
+            onJournalPrompt={session ? handleJournalPrompt : undefined}
+            expand={sideExpand}
+            style={{ width: articlesWidth }}
+          />
+        )}
         {articlesMounted && (
           <ArticlesPanel
             locations={locations}
@@ -1327,7 +1331,7 @@ function App() {
             onSelectTimelineEvent={handleSelectTimelineEventFromArticles}
             expand={sideExpand}
             style={{ width: articlesWidth }}
-            hidden={articlesHiddenOnMobile}
+            hidden={articlesHiddenOnMobile || showArticle}
           />
         )}
         {noPanelsOpen && (
