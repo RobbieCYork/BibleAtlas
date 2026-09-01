@@ -1,22 +1,77 @@
-/* Dark is this app's default appearance (see lib/theme.tsx) — these are the dark-palette values.
- * [data-theme="light"] below overrides them; there's deliberately no `prefers-color-scheme` query
- * anymore, since the appearance is now an explicit Settings choice, not one that silently follows
- * the OS. */
+/* ============================================================================
+ * "Illuminated" palette — the materials of the illuminated manuscript tradition.
+ *
+ * Iron gall ink, vellum, gold leaf, lapis lazuli, rubric red.
+ *   dark mode  = iron-gall ground, vellum ink, gold leaf accents
+ *   light mode = vellum ground, iron-gall ink, burnished-gold accents
+ *
+ * The `:root` block below is the DARK palette (this file's historical default);
+ * `:root[data-theme="light"]` overrides to the light one. The app's actual default
+ * appearance is light — see lib/theme.tsx, which always writes an explicit
+ * `data-theme` attribute, and main.tsx, which writes it synchronously before first
+ * paint. There's deliberately no `prefers-color-scheme` query: appearance is an
+ * explicit Settings choice, not one that silently follows the OS.
+ *
+ * Typography follows one governing principle: THE INTERFACE RECEDES, SCRIPTURE
+ * DOES NOT. Three roles, never mixed:
+ *   --display  Cormorant Garamond — chapter titles, headings, article titles
+ *   --serif    EB Garamond        — Scripture, article prose, long-form reading
+ *   --sans     Archivo            — all chrome: nav, buttons, labels, counts, inputs
+ * ==========================================================================*/
+
 :root {
-  --text: #d4d1d9;
-  --text-h: #f5f4f7;
-  --text-muted: #9a95a3;
-  --bg: #131217;
-  --panel-bg: #1b1a20;
-  --border: #302e37;
-  --accent: #a78bfa;
-  --accent-hover: #c4b5fd;
-  --accent-bg: rgba(167, 139, 250, 0.14);
+  /* --- Raw pigments (theme-independent; both palettes derive from these) --- */
+  --ink-900: #100c09;
+  --ink-800: #17120e;
+  --ink-700: #211a14;
+  --ink-600: #2e251c;
+  --ink-500: #3f3225;
+
+  --vellum-100: #f7f1e3;
+  --vellum-200: #f2ead9;
+  --vellum-300: #e9ddc5;
+  --vellum-400: #d6c7a8;
+  --vellum-500: #b5a78a;
+  --vellum-600: #9e8f73;
+
+  --gold: #c8912f;
+  --gold-bright: #e5b355;
+  --gold-glow: #f7d590;
+  --gold-deep: #9c6d1c; /* derived: the only gold that carries text on vellum */
+
+  --lapis: #2e3a8c;
+  --lapis-light: #6474ce;
+  --rubric: #b4472e;
+  --rubric-bright: #d06047;
+  --verdigris: #3e6b52;
+  --umber: #7a6144;
+  --brand: #5c3fa6; /* the brand violet, desaturated and pulled toward lapis */
+
+  /* --- Type roles --- */
+  --display: "Cormorant Garamond", "Iowan Old Style", Georgia, "Times New Roman", serif;
+  --serif: "EB Garamond", "Iowan Old Style", Georgia, "Times New Roman", serif;
+  --sans: Archivo, system-ui, "Segoe UI", Roboto, sans-serif;
+  --tracking-label: 0.12em;
+
+  /* --- DARK: iron gall --- */
+  --text: #ddd0b6;
+  --text-h: #f4ecdb;
+  --text-muted: #a3927a;
+  --bg: #17120e;
+  --panel-bg: #211a14;
+  --surface-sunken: #100c09;
+  --border: #3f3225;
+  --border-strong: #56462f;
+  --accent: #e5b355;
+  --accent-hover: #f7d590;
+  --accent-bg: rgba(229, 179, 85, 0.13);
+  --accent-contrast: #17120e; /* text placed ON a filled --accent surface */
+  --link: #93a2e8;
+  --danger: #d06047;
   /* Stronger accent wash than --accent-bg — used for the one-shot verse "landed here" flash,
    * which has to read clearly at a glance before fading. */
-  --verse-flash-bg: rgba(167, 139, 250, 0.26);
+  --verse-flash-bg: rgba(229, 179, 85, 0.24);
 
-  --sans: system-ui, "Segoe UI", Roboto, sans-serif;
   color-scheme: dark;
   color: var(--text);
   background: var(--bg);
@@ -30,17 +85,27 @@
   text-size-adjust: 100%;
 }
 
+/* --- LIGHT: vellum ---
+ * Full-saturation vellum (#E9DDC5) across an entire app background reads too intense for a long
+ * reading session, so the large grounds use lighter derived tints and the saturated vellum is kept
+ * for insets/chips (--surface-sunken) and borders. Panels sit a step ABOVE the page ground, which is
+ * how this app's chrome already reads (panel over body). */
 :root[data-theme="light"] {
-  --text: #3f3b45;
-  --text-h: #16141a;
-  --text-muted: #7a7482;
-  --bg: #faf9fc;
-  --panel-bg: #ffffff;
-  --border: #e4e1e9;
-  --accent: #7c3aed;
-  --accent-hover: #6d28d9;
-  --accent-bg: rgba(124, 58, 237, 0.08);
-  --verse-flash-bg: rgba(124, 58, 237, 0.2);
+  --text: #2e251c;
+  --text-h: #17120e;
+  --text-muted: #6e5f48;
+  --bg: #f2ead9;
+  --panel-bg: #f7f1e3;
+  --surface-sunken: #e9ddc5;
+  --border: #d6c7a8;
+  --border-strong: #b5a78a;
+  --accent: #9c6d1c;
+  --accent-hover: #7d5613;
+  --accent-bg: rgba(200, 145, 47, 0.14);
+  --accent-contrast: #fdf9f0;
+  --link: #2e3a8c;
+  --danger: #a83c24;
+  --verse-flash-bg: rgba(200, 145, 47, 0.28);
   color-scheme: light;
 }
 
@@ -65,6 +130,7 @@
 html {
   height: 100%;
   overflow: hidden;
+  background: var(--bg);
 }
 
 body {
@@ -75,13 +141,22 @@ body {
   width: 100%;
 }
 
+/* Headings are the display face. Cormorant Garamond runs optically small and light for its nominal
+ * size, so it takes a slightly heavier weight and a tighter line than the sans it replaces. */
 h1,
 h2,
 h3,
 h4 {
   color: var(--text-h);
+  font-family: var(--display);
   font-weight: 600;
+  line-height: 1.2;
+  letter-spacing: 0.005em;
   margin: 0;
+  /* Cormorant ships oldstyle figures by default, which drop below the baseline — fine in prose,
+   * but a chapter number in a title ("Matthew 1") then sits lower than the word beside it. */
+  font-variant-numeric: lining-nums;
+  font-feature-settings: "lnum" 1;
 }
 
 p {
@@ -90,6 +165,16 @@ p {
 
 a {
   color: var(--accent);
+}
+
+/* Form controls don't inherit the document font — without this the chrome would silently fall back
+ * to the platform UI font and split the sans role in two. */
+button,
+input,
+select,
+textarea,
+optgroup {
+  font-family: var(--sans);
 }
 
 #root {

@@ -191,7 +191,7 @@ body.resizing-panels {
 
 .search-scope-toggle button.active {
   background: var(--accent);
-  color: #fff;
+  color: var(--accent-contrast);
 }
 
 .search-bar {
@@ -283,14 +283,27 @@ body.resizing-panels {
 /* --- Map pins (modern flat teardrop markers) --- */
 
 /* Shared pin category colors — used by both the map markers (MapView) and the Legend (LayerControls),
- * so the legend can never drift out of sync with what's actually drawn. */
+ * so the legend can never drift out of sync with what's actually drawn. Drawn from the manuscript
+ * pigment set (gold leaf, verdigris, lapis, umber, brand violet, rubric) rather than the old generic
+ * tailwind hues; the six stay well separated in hue so categories remain distinguishable at pin size. */
 :root {
-  --pin-city: var(--accent);
-  --pin-region: #0d9488;
-  --pin-water: #0284c7;
-  --pin-terrain: #8d6e63;
-  --pin-poi: #d97706;
-  --pin-selected: #e0392b;
+  --pin-city: var(--gold);
+  --pin-region: var(--verdigris);
+  --pin-water: var(--lapis);
+  --pin-terrain: var(--umber);
+  --pin-poi: var(--brand);
+  --pin-selected: var(--rubric);
+}
+
+/* Pins sit on a light map ground in light mode and a dark one in dark mode; the dark-mode variants
+ * are the same pigments lifted so they don't sink into an iron-gall ground. */
+:root:not([data-theme="light"]) {
+  --pin-city: var(--gold-bright);
+  --pin-region: #6fa487;
+  --pin-water: var(--lapis-light);
+  --pin-terrain: #a68a63;
+  --pin-poi: #9c7fe0;
+  --pin-selected: var(--rubric-bright);
 }
 
 .map-pin {
@@ -392,7 +405,7 @@ body.resizing-panels {
   padding: 0 8px;
   border-radius: 100px;
   background: var(--accent);
-  color: #fff;
+  color: var(--accent-contrast);
   font-size: 13px;
   font-weight: 600;
   border: 2px solid #ffffff;
@@ -434,7 +447,7 @@ body.resizing-panels {
   padding: 6px 14px;
   border-radius: 100px;
   background: var(--accent);
-  color: #fff;
+  color: var(--accent-contrast);
   font-size: 13px;
   font-weight: 600;
   white-space: nowrap;
@@ -582,7 +595,7 @@ body.resizing-panels {
   height: 18px;
   border-radius: 50%;
   background: var(--accent);
-  color: #fff;
+  color: var(--accent-contrast);
   font-size: 10px;
   font-weight: 600;
   border: 1.5px solid #ffffff;
@@ -1041,7 +1054,7 @@ body.resizing-panels {
   font: inherit;
   font-size: 13px;
   font-weight: 600;
-  color: #fff;
+  color: var(--accent-contrast);
   border: 1px solid var(--accent);
   background: var(--accent);
   border-radius: 8px;
@@ -1260,7 +1273,7 @@ body.resizing-panels {
   transform: translateX(-50%);
   z-index: 6;
   background: var(--accent);
-  color: #fff;
+  color: var(--accent-contrast);
   border: none;
   border-radius: 100px;
   padding: 9px 16px;
@@ -1329,7 +1342,7 @@ body.resizing-panels {
 
 .then-now-buttons button.active {
   background: var(--accent);
-  color: #fff;
+  color: var(--accent-contrast);
 }
 
 /* --- Panel menu (hamburger) --- */
@@ -1357,13 +1370,13 @@ body.resizing-panels {
   width: 8px;
   height: 8px;
   border-radius: 50%;
-  background: #e0392b;
+  background: var(--danger);
   border: 1.5px solid var(--panel-bg);
 }
 
 .panel-menu-item-badge {
   margin-left: auto;
-  background: #e0392b;
+  background: var(--danger);
   color: #fff;
   font-size: 11px;
   font-weight: 600;
@@ -1462,7 +1475,9 @@ body.resizing-panels {
 }
 
 .auth-trigger-label {
-  color: #fff;
+  /* Sits on the accent-filled pill (.auth-trigger-wide) — the gold is bright enough in dark mode
+     that plain white on it falls under 2:1, so it takes the accent's own contrast pair. */
+  color: var(--accent-contrast);
   font-size: 13px;
   font-weight: 600;
   white-space: nowrap;
@@ -1607,7 +1622,7 @@ body.resizing-panels {
   border: none;
   border-radius: 8px;
   background: var(--accent);
-  color: #fff;
+  color: var(--accent-contrast);
   padding: 5px 12px;
   font-size: 12px;
   font-weight: 600;
@@ -1638,7 +1653,7 @@ body.resizing-panels {
 .reading-progress-edit-error {
   margin: 0 0 6px;
   font-size: 12px;
-  color: #ef4444;
+  color: var(--danger);
 }
 
 /* Numbered chapter buttons are much taller than the 8px dots, so the scroll area gets more room
@@ -1687,7 +1702,7 @@ body.resizing-panels {
 .reading-progress-chip-read {
   background: var(--accent);
   border-color: var(--accent);
-  color: #fff;
+  color: var(--accent-contrast);
   font-weight: 600;
 }
 
@@ -1754,7 +1769,7 @@ body.resizing-panels {
 .auth-appearance-toggle button.active {
   background: var(--accent);
   border-color: var(--accent);
-  color: #fff;
+  color: var(--accent-contrast);
 }
 
 .auth-settings-divider {
@@ -1771,7 +1786,7 @@ body.resizing-panels {
   height: 38px;
   border-radius: 50%;
   background: var(--accent);
-  color: #fff;
+  color: var(--accent-contrast);
   font-size: 15px;
   font-weight: 600;
   overflow: hidden;
@@ -2007,7 +2022,7 @@ body.resizing-panels {
 
 .auth-mode-toggle button.active {
   background: var(--accent);
-  color: #fff;
+  color: var(--accent-contrast);
 }
 
 .auth-form {
@@ -2061,7 +2076,7 @@ body.resizing-panels {
 .auth-form button[type="submit"] {
   border: 1px solid var(--accent);
   background: var(--accent);
-  color: #fff;
+  color: var(--accent-contrast);
   border-radius: 8px;
   padding: 8px 10px;
   font-size: 13px;
@@ -2082,7 +2097,7 @@ body.resizing-panels {
 }
 
 .auth-error {
-  color: #e0392b;
+  color: var(--danger);
 }
 
 .auth-guest-divider {
@@ -2372,7 +2387,7 @@ body.resizing-panels {
 
 .inline-picker-list li button.active {
   background: var(--accent);
-  color: #fff;
+  color: var(--accent-contrast);
 }
 
 /* --- Keyword search --- */
@@ -2398,7 +2413,7 @@ body.resizing-panels {
 .bible-keyword-search button {
   border: 1px solid var(--accent);
   background: var(--accent);
-  color: #fff;
+  color: var(--accent-contrast);
   border-radius: 8px;
   padding: 8px 14px;
   font-size: 13px;
@@ -2842,7 +2857,7 @@ body.resizing-panels {
 }
 
 .bible-error {
-  color: #e0392b;
+  color: var(--danger);
 }
 
 .bible-passage h4 {
@@ -2974,7 +2989,7 @@ body.resizing-panels {
 
 .bible-chapter-nav-small:hover:not(:disabled) {
   background: var(--accent);
-  color: #fff;
+  color: var(--accent-contrast);
 }
 
 .bible-chapter-nav-small:disabled {
@@ -3063,7 +3078,7 @@ body.resizing-panels {
 
 .bible-chapter-nav button:hover:not(:disabled) {
   background: var(--accent);
-  color: #fff;
+  color: var(--accent-contrast);
 }
 
 .bible-chapter-nav button:disabled {
@@ -3164,7 +3179,7 @@ body.resizing-panels {
   width: 8px;
   height: 8px;
   border-radius: 50%;
-  background: #e0392b;
+  background: var(--danger);
   border: 1.5px solid var(--panel-bg);
 }
 
@@ -3572,9 +3587,9 @@ body.resizing-panels {
 }
 
 .verse-popup-remove {
-  border: 1px solid #e0392b;
+  border: 1px solid var(--danger);
   background: rgba(224, 57, 43, 0.08);
-  color: #e0392b;
+  color: var(--danger);
   border-radius: 8px;
   padding: 5px 10px;
   font-size: 13px;
@@ -3666,7 +3681,7 @@ body.resizing-panels {
 .verse-popup-note-actions .verse-popup-save {
   border-color: var(--accent);
   background: var(--accent);
-  color: #fff;
+  color: var(--accent-contrast);
 }
 
 .verse-popup-note-actions .verse-popup-save:disabled {
@@ -3696,7 +3711,7 @@ body.resizing-panels {
 .verse-popup-note-item button {
   border: none;
   background: none;
-  color: #e0392b;
+  color: var(--danger);
   font-size: 12px;
   padding: 0;
   cursor: pointer;
@@ -3732,7 +3747,7 @@ body.resizing-panels {
 .tag-picker-chip-active {
   border-color: var(--accent);
   background: var(--accent);
-  color: #fff;
+  color: var(--accent-contrast);
 }
 
 .tag-picker-new {
@@ -3822,7 +3837,7 @@ body.resizing-panels {
 .my-notes-delete {
   border: none;
   background: none;
-  color: #e0392b;
+  color: var(--danger);
   font-size: 12px;
   padding: 0;
   cursor: pointer;
@@ -3865,7 +3880,7 @@ body.resizing-panels {
 
 .notes-tab-switcher button.active {
   background: var(--accent);
-  color: #fff;
+  color: var(--accent-contrast);
 }
 
 /* --- Sermon Notes --- */
@@ -4303,7 +4318,7 @@ body.resizing-panels {
 .friends-add-form button {
   border: 1px solid var(--accent);
   background: var(--accent);
-  color: #fff;
+  color: var(--accent-contrast);
   border-radius: 8px;
   padding: 8px 14px;
   font-size: 13px;
@@ -4463,7 +4478,7 @@ body.resizing-panels {
 
 .friends-list-item-badge {
   flex-shrink: 0;
-  background: #e0392b;
+  background: var(--danger);
   color: #fff;
   font-size: 11px;
   font-weight: 600;
@@ -4477,7 +4492,7 @@ body.resizing-panels {
   width: 8px;
   height: 8px;
   border-radius: 50%;
-  background: #e0392b;
+  background: var(--danger);
   margin-left: 6px;
   vertical-align: middle;
 }
@@ -4774,7 +4789,7 @@ body.resizing-panels {
   align-self: flex-start;
   border: 1px solid var(--accent);
   background: var(--accent);
-  color: #fff;
+  color: var(--accent-contrast);
   border-radius: 6px;
   padding: 7px 16px;
   font-size: 13px;
@@ -4912,7 +4927,7 @@ body.resizing-panels {
 .friends-request-actions button {
   border: 1px solid var(--accent);
   background: var(--accent);
-  color: #fff;
+  color: var(--accent-contrast);
   border-radius: 6px;
   padding: 5px 10px;
   font-size: 12px;
@@ -4927,8 +4942,8 @@ body.resizing-panels {
 }
 
 .friends-decline:hover {
-  color: #e0392b !important;
-  border-color: #e0392b !important;
+  color: var(--danger) !important;
+  border-color: var(--danger) !important;
 }
 
 /* --- Conversation view --- */
@@ -4967,7 +4982,7 @@ body.resizing-panels {
 
 .message-own .message-bubble {
   background: var(--accent);
-  color: #fff;
+  color: var(--accent-contrast);
   border-color: var(--accent);
 }
 
@@ -5089,7 +5104,7 @@ body.resizing-panels {
 .display-name-gate-card button {
   border: 1px solid var(--accent);
   background: var(--accent);
-  color: #fff;
+  color: var(--accent-contrast);
   border-radius: 8px;
   padding: 9px 16px;
   font-size: 14px;
@@ -5140,7 +5155,7 @@ body.resizing-panels {
    treatment and this context's bottom margin are added here. --- */
 
 .friends-view-switcher-badge {
-  background: #e0392b;
+  background: var(--danger);
   color: #fff;
   font-size: 10px;
   font-weight: 700;
@@ -5154,7 +5169,7 @@ body.resizing-panels {
   width: 7px;
   height: 7px;
   border-radius: 50%;
-  background: #e0392b;
+  background: var(--danger);
   margin-left: 5px;
   vertical-align: middle;
 }
@@ -5187,7 +5202,7 @@ body.resizing-panels {
 .group-detail-tabs button.active {
   background: var(--accent);
   border-color: var(--accent);
-  color: #fff;
+  color: var(--accent-contrast);
 }
 
 .group-message-stack {
@@ -5256,7 +5271,7 @@ body.resizing-panels {
 .group-info-edit-actions button {
   border: 1px solid var(--accent);
   background: var(--accent);
-  color: #fff;
+  color: var(--accent-contrast);
   border-radius: 8px;
   padding: 7px 14px;
   font-size: 13px;
@@ -5313,7 +5328,7 @@ body.resizing-panels {
 .group-create-form > button[type="submit"] {
   border: 1px solid var(--accent);
   background: var(--accent);
-  color: #fff;
+  color: var(--accent-contrast);
   border-radius: 8px;
   padding: 10px;
   font-size: 14px;
@@ -5448,7 +5463,7 @@ body.resizing-panels {
   height: 20px;
   border-radius: 50%;
   background: var(--accent);
-  color: #fff;
+  color: var(--accent-contrast);
   font-size: 11px;
   font-weight: 700;
   display: flex;
@@ -5516,7 +5531,7 @@ body.resizing-panels {
 }
 
 .trip-action-danger {
-  color: #e0392b;
+  color: var(--danger);
 }
 
 /* Shared per-stop note thread — deliberately lighter-weight than chat bubbles: these are study
@@ -5604,7 +5619,7 @@ body.resizing-panels {
 .trip-note-form button {
   border: 1px solid var(--accent);
   background: var(--accent);
-  color: #fff;
+  color: var(--accent-contrast);
   border-radius: 8px;
   padding: 7px 12px;
   font-size: 12px;
@@ -5864,7 +5879,7 @@ body.resizing-panels {
   cursor: pointer;
   border: 1px solid var(--accent);
   background: var(--accent);
-  color: #fff;
+  color: var(--accent-contrast);
 }
 
 .daily-verse-response-submit:hover:not(:disabled) {
@@ -6078,7 +6093,7 @@ body.resizing-panels {
 .walk-nav-next {
   background: var(--accent);
   border-color: var(--accent);
-  color: #fff;
+  color: var(--accent-contrast);
 }
 
 .walk-nav-next:hover:not(:disabled) {
@@ -6131,7 +6146,7 @@ body.resizing-panels {
   height: 20px;
   border-radius: 50%;
   background: var(--accent);
-  color: #fff;
+  color: var(--accent-contrast);
   font-size: 11px;
   font-weight: 600;
 }
@@ -6712,7 +6727,7 @@ body.resizing-panels {
 .share-modal-submit {
   border: 1px solid var(--accent);
   background: var(--accent);
-  color: #fff;
+  color: var(--accent-contrast);
   border-radius: 6px;
   padding: 7px 16px;
   font-size: 13px;
@@ -6802,4 +6817,152 @@ body.resizing-panels {
   line-height: 1;
   padding: 0 2px;
   cursor: pointer;
+}
+
+/* ============================================================================
+ * "Illuminated" typography layer
+ *
+ * One principle: THE INTERFACE RECEDES, SCRIPTURE DOES NOT. Before this, chrome and
+ * Bible text shared a font and therefore shared a status. Three roles now:
+ *
+ *   var(--sans)     Archivo            — tab bar, buttons, selects, inputs, labels,
+ *                                        counts, badges. The default, set on :root.
+ *   var(--display)  Cormorant Garamond — headings and titles (set on h1–h4 in index.css).
+ *   var(--serif)    EB Garamond        — Scripture, article prose, anything read at length.
+ *
+ * This block lives at the END of App.css deliberately: it only ever sets font-family /
+ * letter-spacing / measure, and being last it wins over the same-specificity selectors
+ * above without needing !important or restating their sizing.
+ * ==========================================================================*/
+
+/* --- Chrome that must stay in the sans, despite being an h1–h4 ---
+ * Small uppercase section labels are interface furniture, not headings to be read. The display
+ * face at 11–13px uppercase is illegibly light, so they go back to Archivo and take the wider
+ * tracking that uppercase needs to breathe. */
+.layer-controls h3,
+.history-field h4,
+.verse-list h4,
+.reflection-prompt h4,
+.archaeology-section h4,
+.extra-biblical-section h4,
+.sources-section h4,
+.friends-section h4,
+.book-intro h5,
+.profile-view-section-heading,
+.profile-edit-section-heading,
+.bible-welcome-plans-title,
+.my-notes-book-heading,
+.group-friend-add-list-label,
+.book-intro-fact-label,
+.daily-verse-eyebrow,
+.walk-panel-eyebrow,
+.poi-badge,
+.category-badge,
+.person-tier-tag,
+.group-role-badge,
+.share-card-content .share-card-badge {
+  font-family: var(--sans);
+  font-weight: 600;
+  letter-spacing: var(--tracking-label);
+}
+
+/* --- Scripture and long-form prose: EB Garamond ---
+ * Garamond's x-height is small relative to its em, so the reading sizes step up ~1px and the
+ * leading opens slightly; without that the text reads smaller than the sans it replaced. */
+.bible-verses,
+.bible-verses p,
+.bible-search-result-text,
+.bible-welcome-text,
+.book-intro p,
+.book-intro-manuscripts li,
+.person-summary,
+.extra-biblical-summary,
+.articles-result-text,
+.reflection-prompt-text,
+.verse-popup-quoted,
+.daily-verse-text,
+.my-notes-text,
+.trip-note-body,
+.share-card-content .share-card-body {
+  font-family: var(--serif);
+}
+
+.bible-verses p {
+  font-size: 17.5px;
+  line-height: 1.68;
+  margin-bottom: 11px;
+  /* Long-form measure. `max-width` on the paragraphs (not the panel) keeps the chapter nav,
+     toolbar and headers full-bleed while the reading column stays near 65 characters. */
+  max-width: 30em;
+}
+
+.book-intro p,
+.book-intro-manuscripts li {
+  font-size: 15.5px;
+  line-height: 1.7;
+  max-width: 32em;
+}
+
+.person-summary,
+.extra-biblical-summary,
+.reflection-prompt-text,
+.daily-verse-text {
+  font-size: 15px;
+  line-height: 1.6;
+}
+
+/* Verse numbers: gold, small, superscript, out of the way. They mark the text without
+ * competing with it, so the weight comes down from bold — the color already does the work. */
+.bible-verse-num {
+  font-family: var(--sans);
+  font-weight: 500;
+  color: var(--accent);
+  font-size: 0.62em;
+  vertical-align: super;
+  letter-spacing: 0.02em;
+  margin-right: 4px;
+  opacity: 0.9;
+}
+
+/* --- Display face: titles that ARE meant to be read as titles --- */
+.bible-welcome-title,
+.bible-plans-heading,
+.walk-panel-heading,
+.share-card-content .share-card-title {
+  font-family: var(--display);
+  font-weight: 600;
+}
+
+/* Cormorant runs small for its nominal size — the two most prominent titles in the app take a
+ * step up so the display face reads as display rather than as slightly-odd body copy. */
+.app-header h1 {
+  font-size: 23px;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+}
+
+.bible-panel-header h3 {
+  font-size: 18px;
+}
+
+.bible-passage-header h4,
+.book-intro h4 {
+  font-size: 21px;
+  font-weight: 500;
+}
+
+.bible-welcome-title {
+  font-size: 20px;
+}
+
+/* Inline place/person links inside Scripture are lapis, not gold. Gold is reserved for the verse
+ * numbers; when the links shared it, a genealogy chapter turned into an undifferentiated gold field
+ * and the numbering stopped reading as numbering. Blue-and-gold marking of a text is also exactly
+ * what the manuscript tradition this palette comes from did. */
+.verse-location-link {
+  color: var(--link);
+}
+
+.verse-location-link:hover {
+  color: var(--accent);
 }
