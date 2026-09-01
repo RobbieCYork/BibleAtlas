@@ -711,8 +711,16 @@
   z-index: 5;
 }
 
+/* --tl-biblical IS --accent, which in dark mode is bright gold — white numerals on it measured
+ * 1.9:1. Same bug (and same fix) as the white-on-accent rules corrected app-wide in 259a1b6.
+ * --tl-religion is a mid amber that white also fails against, in both themes. */
 .tl-cluster.tl-cat-biblical {
   background: var(--tl-biblical);
+  color: var(--accent-contrast);
+}
+
+.tl-cluster.tl-cat-religion {
+  color: #241a05;
 }
 
 .tl-cluster.tl-cat-church {

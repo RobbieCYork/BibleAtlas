@@ -257,7 +257,7 @@
 }
 
 .crossword-clue-column button:hover {
-  background: var(--bg);
+  background: var(--surface-sunken);
 }
 
 .crossword-clue-active button {

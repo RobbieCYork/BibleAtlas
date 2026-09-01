@@ -30,7 +30,7 @@
   padding: 10px 14px;
   border: 1px solid var(--border);
   border-radius: 10px;
-  background: var(--bg);
+  background: var(--surface-sunken);
   color: var(--text);
   margin-bottom: 18px;
 }
@@ -178,7 +178,7 @@
   font: inherit;
   font-weight: 600;
   text-align: center;
-  background: var(--bg);
+  background: var(--surface-sunken);
   border: none;
   border-bottom: 2px solid var(--accent);
   color: var(--text-h);
@@ -214,7 +214,7 @@
 
 .memchallenge-btn-primary {
   background: var(--accent);
-  color: #fff;
+  color: var(--accent-contrast);
   border: none;
   border-radius: 10px;
   padding: 10px 24px;
@@ -239,4 +239,9 @@
   font-weight: 700;
   font-size: 16px;
   margin: 0;
+}
+
+/* Matches the grouped form-control rule at the end of App.css. */
+.memchallenge-search {
+  border-color: var(--input-border);
 }

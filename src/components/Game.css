@@ -197,7 +197,7 @@
 
 .games-primary-button {
   background: var(--accent);
-  color: #fff;
+  color: var(--accent-contrast);
 }
 
 .games-primary-button:disabled {
@@ -214,7 +214,7 @@
 .games-code-input {
   border: 1px solid var(--border);
   border-radius: 8px;
-  background: var(--bg);
+  background: var(--surface-sunken);
   color: var(--text);
   font: inherit;
   font-size: 20px;
@@ -271,7 +271,7 @@
   width: 100%;
   border: 1px solid var(--border);
   border-radius: 8px;
-  background: var(--bg);
+  background: var(--surface-sunken);
   color: var(--text);
   font: inherit;
   font-size: 15px;
@@ -294,7 +294,7 @@
 .games-topic-custom-input {
   border: 1px solid var(--border);
   border-radius: 8px;
-  background: var(--bg);
+  background: var(--surface-sunken);
   color: var(--text);
   font: inherit;
   font-size: 14px;
@@ -524,7 +524,7 @@
 
 .game-choice-button {
   border: 1px solid var(--border);
-  background: var(--bg);
+  background: var(--surface-sunken);
   color: var(--text);
   border-radius: 10px;
   padding: 12px 14px;
@@ -934,4 +934,13 @@
   border-color: #db284e;
   color: #fff;
   opacity: 1;
+}
+
+/* Same treatment as the grouped form-control rule at the end of App.css — text controls take the
+ * stronger --input-border so they read as wells cut into the surface, not flat patches of it. */
+.games-code-input,
+.games-topic-select,
+.games-topic-custom-input,
+.saving-peter-guess-input {
+  border-color: var(--input-border);
 }

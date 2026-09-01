@@ -3,7 +3,12 @@
  *
  * Iron gall ink, vellum, gold leaf, lapis lazuli, rubric red.
  *   dark mode  = iron-gall ground, vellum ink, gold leaf accents
- *   light mode = vellum ground, iron-gall ink, burnished-gold accents
+ *   light mode = clean warm-white ground, iron-gall ink, burnished-gold accents
+ *
+ * Vellum is a READING surface, not a ground: --reading-bg is the only parchment field in the app,
+ * and only Scripture sits on it. Chrome (header, panels, toolbars, dropdowns, Articles, Notes) is
+ * near-neutral so the reading column reads as a sheet of paper laid on a clean desk. See the
+ * light-mode block below for the surface ladder and its measured separations.
  *
  * The `:root` block below is the DARK palette (this file's historical default);
  * `:root[data-theme="light"]` overrides to the light one. The app's actual default
@@ -53,15 +58,24 @@
   --sans: Archivo, system-ui, "Segoe UI", Roboto, sans-serif;
   --tracking-label: 0.12em;
 
-  /* --- DARK: iron gall --- */
+  /* --- DARK: iron gall ---
+   * Four distinct surface levels, deepest to lightest:
+   *   --surface-sunken (inputs/wells) < --bg (app ground) < --panel-bg (chrome) < --reading-bg.
+   * At these luminances no pair can reach the 0.06 relative-luminance separation that light mode
+   * uses, so EVERY level change in dark mode is carried by --border, which is tuned to clear
+   * 1.4:1 contrast against all four surfaces. Borders here are structural, not decoration. */
   --text: #ddd0b6;
   --text-h: #f4ecdb;
   --text-muted: #a3927a;
-  --bg: #17120e;
-  --panel-bg: #211a14;
-  --surface-sunken: #100c09;
-  --border: #3f3225;
-  --border-strong: #56462f;
+  --bg: #14110e;
+  --panel-bg: #1e1a15;
+  --reading-bg: #241e16;
+  --surface-sunken: #0f0c0a;
+  --border: #524634;
+  --border-strong: #7a6848;
+  /* Form controls sit on --surface-sunken, the app's darkest surface, so their edge needs more
+   * contrast than a panel divider does — see the grouped form-control rule at the end of App.css. */
+  --input-border: #5f5138;
   --accent: #e5b355;
   --accent-hover: #f7d590;
   --accent-bg: rgba(229, 179, 85, 0.13);
@@ -85,27 +99,40 @@
   text-size-adjust: 100%;
 }
 
-/* --- LIGHT: vellum ---
- * Full-saturation vellum (#E9DDC5) across an entire app background reads too intense for a long
- * reading session, so the large grounds use lighter derived tints and the saturated vellum is kept
- * for insets/chips (--surface-sunken) and borders. Panels sit a step ABOVE the page ground, which is
- * how this app's chrome already reads (panel over body). */
+/* --- LIGHT ---
+ * Vellum is NOT the ground. An earlier pass tinted every surface in the app parchment, which did
+ * two bad things at once: it read as an undifferentiated field of tan, and it compressed the whole
+ * app into 0.055 of relative luminance (ground 0.827 / panel 0.882), so nothing read as sitting on
+ * top of anything else. Parchment now appears in exactly one place — under Scripture, via
+ * --reading-bg — which is also what the type system already says out loud: the interface recedes,
+ * Scripture does not. The reading column is a sheet of paper on a clean desk.
+ *
+ * Four surface levels, each separated from its neighbours by >= 0.06 relative luminance:
+ *   --surface-sunken 0.794  (inputs, wells, chips — INSET, always darker than what contains it)
+ *   --reading-bg     0.868  (Scripture only)
+ *   --bg             0.889  (app chrome ground — warm, but it must read WHITE, not tan)
+ *   --panel-bg       1.000  (panels, cards, toolbars, dropdowns — lifts clearly off the ground) */
 :root[data-theme="light"] {
   --text: #2e251c;
   --text-h: #17120e;
   --text-muted: #6e5f48;
-  --bg: #f2ead9;
-  --panel-bg: #f7f1e3;
-  --surface-sunken: #e9ddc5;
-  --border: #d6c7a8;
-  --border-strong: #b5a78a;
-  --accent: #9c6d1c;
-  --accent-hover: #7d5613;
-  --accent-bg: rgba(200, 145, 47, 0.14);
+  --bg: #f4f2ee;
+  --panel-bg: #ffffff;
+  --reading-bg: #f7efdf;
+  --surface-sunken: #eae6df;
+  --border: #d9d3ca;
+  --border-strong: #b8b0a4;
+  --input-border: #b8b0a4;
+  /* Burnished gold, darkened one more step from #9c6d1c so it clears 4.5:1 on the two surfaces it
+   * actually lands on most — the parchment reading sheet (4.98) and sunken inputs (4.57) — not
+   * just on white. */
+  --accent: #8a5e12;
+  --accent-hover: #6d4a0c;
+  --accent-bg: rgba(138, 94, 18, 0.11);
   --accent-contrast: #fdf9f0;
   --link: #2e3a8c;
   --danger: #a83c24;
-  --verse-flash-bg: rgba(200, 145, 47, 0.28);
+  --verse-flash-bg: rgba(200, 145, 47, 0.32);
   color-scheme: light;
 }
 
