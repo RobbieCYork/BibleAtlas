@@ -17,16 +17,22 @@ export type TimelineLaneKey =
   | "movement"
   | "religion";
 
-/** Chronological-ish reading order: Scripture first, then the church that grew out of it, the world
- * around it, and the movements within it. "church" and "movement" arrived with the
- * christian-history-atlas merge. */
+/** The checklist, in the order the bands actually stack on screen.
+ *
+ * The first three are CATEGORIES sharing the single merged "Scripture & the Church" lane, so
+ * unchecking one thins that lane rather than removing a band; the rest are whole bands. See
+ * EVENT_LANES in TimelineView.tsx.
+ *
+ * "books" is deliberately absent: the Books-of-the-Bible band is switched off at the owner's
+ * request behind SHOW_BOOKS_LANE in TimelineView.tsx. Its key, label, storage handling and
+ * rendering all remain — re-add "books" to the front of this array and flip that constant to
+ * `true` to bring the lane back exactly as it was. */
 export const TIMELINE_LANE_ORDER: TimelineLaneKey[] = [
-  "books",
-  "lifespans",
   "biblical",
   "church",
-  "world",
   "movement",
+  "lifespans",
+  "world",
   "religion",
 ];
 
@@ -39,6 +45,10 @@ export const TIMELINE_LANE_LABELS: Record<TimelineLaneKey, string> = {
   movement: "Movements & Revivals",
   religion: "Other Religions",
 };
+
+/** Where the "Scripture & the Church" group ends in TIMELINE_LANE_ORDER — the checklist draws a
+ * subheading above these and a divider after them, so it's clear the first three share one lane. */
+const MERGED_LANE_KEYS: TimelineLaneKey[] = ["biblical", "church", "movement"];
 
 interface TimelineLaneMenuProps {
   visible: Record<TimelineLaneKey, boolean>;
@@ -83,16 +93,28 @@ export default function TimelineLaneMenu({ visible, onToggle }: TimelineLaneMenu
       </button>
       {open && (
         <div className="tl-lane-menu-dropdown">
-          <p className="tl-lane-menu-title">Show lanes</p>
-          {TIMELINE_LANE_ORDER.map((key) => (
+          <p className="tl-lane-menu-title">Scripture &amp; the Church</p>
+          {MERGED_LANE_KEYS.map((key) => (
             <label key={key} className="tl-lane-menu-item">
               <input type="checkbox" checked={visible[key]} onChange={() => onToggle(key)} />
+              <span className={`tl-lane-menu-swatch tl-cat-${key}`} aria-hidden="true" />
+              {TIMELINE_LANE_LABELS[key]}
+            </label>
+          ))}
+          <p className="tl-lane-menu-title tl-lane-menu-title-divided">Alongside</p>
+          {TIMELINE_LANE_ORDER.filter((k) => !MERGED_LANE_KEYS.includes(k)).map((key) => (
+            <label key={key} className="tl-lane-menu-item">
+              <input type="checkbox" checked={visible[key]} onChange={() => onToggle(key)} />
+              <span
+                className={`tl-lane-menu-swatch${key === "lifespans" ? " tl-swatch-life" : ` tl-cat-${key}`}`}
+                aria-hidden="true"
+              />
               {TIMELINE_LANE_LABELS[key]}
             </label>
           ))}
           <p className="tl-lane-menu-caption">
-            Each checked lane gets its own generous height — checking more means more scrolling to
-            reach them all.
+            The first three share one continuous lane — biblical, church and movement events run
+            together in date order, told apart by colour and shape.
           </p>
         </div>
       )}

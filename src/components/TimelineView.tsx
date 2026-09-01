@@ -5,7 +5,8 @@ import { bookWritingWindows } from "../data/bookWritingWindows";
 import type { BookWritingWindow } from "../data/bookWritingWindows";
 import { people } from "../data/people";
 import type { Person, TimelineEvent, TimelineEventCategory } from "../data/types";
-import TimelineLaneMenu, { TIMELINE_LANE_ORDER } from "./TimelineLaneMenu";
+import TimelineLaneMenu, { TIMELINE_LANE_LABELS, TIMELINE_LANE_ORDER } from "./TimelineLaneMenu";
+import TimelineEraMenu from "./TimelineEraMenu";
 import type { TimelineLaneKey } from "./TimelineLaneMenu";
 import BackButton from "./BackButton";
 import "./TimelineView.css";
@@ -21,14 +22,17 @@ import "./TimelineView.css";
  * CSS-scaled, so text and circles stay crisp at every zoom level.
  *
  * Layout, top to bottom:
- *   1. Books of the Bible band  — 66 translucent writing-window bars
+ *   1. Scripture & the Church   — ONE continuous chronology carrying biblical events, church
+ *                                 history and movements/revivals together; category survives as
+ *                                 the mark's colour + silhouette, not as a separate track
  *   2. Lifespans lane           — bars for Persons carrying bornYear (optional data)
- *   3. Biblical events lane     — accent purple
- *   4. World History lane       — slate
- *   5. Other Religions lane     — amber
- *   6. Year axis
+ *   3. World History lane       — umber
+ *   4. Other Religions lane     — verdigris
+ *   5. Year axis
+ *   (A Books-of-the-Bible band used to sit above all of these; it is disabled behind
+ *    SHOW_BOOKS_LANE below, with its code and data intact.)
  *
- * Any of the five lanes above the axis can be hidden via the "Lanes" button in the header
+ * Any of the lanes above the axis can be hidden via the "Lanes" button in the header
  * (TimelineLaneMenu) — the choice persists in localStorage. Hidden lanes are skipped entirely (no
  * clustering/label math computed for them — see the `geom`/`bookPack`/`lifePack`/`eventsLayer`
  * memos below). Each visible lane gets its own generous, FIXED height (see `geom` below) — lanes
@@ -114,15 +118,40 @@ const MOMENTUM_STOP_VX = 0.015; // px/ms — glide ends once decayed velocity dr
 const MOMENTUM_FRICTION = 0.0028; // per-ms exponential decay rate (~250ms velocity half-life)
 const MOMENTUM_MAX_VX = 3.5; // px/ms safety cap on captured fling speed
 
-/** Top-to-bottom lane order — must stay in step with TIMELINE_LANE_ORDER in TimelineLaneMenu, which
- * drives the checklist the user toggles these with. */
-const LANES: { cat: TimelineEventCategory; label: string; cssVar: string }[] = [
-  { cat: "biblical", label: "Biblical History", cssVar: "var(--tl-biblical)" },
-  { cat: "church", label: "Church History", cssVar: "var(--tl-church)" },
-  { cat: "world", label: "World History", cssVar: "var(--tl-world)" },
-  { cat: "movement", label: "Movements & Revivals", cssVar: "var(--tl-movement)" },
-  { cat: "religion", label: "Other Religions", cssVar: "var(--tl-religion)" },
+/** ---------------------------------------------------------------- lane registry
+ *
+ * A LANE is a horizontal band; a CATEGORY is what colours an individual mark. They used to be
+ * the same thing (one lane per category), which is exactly why the timeline read as several
+ * parallel timelines stacked up rather than one — biblical history ran along one track and
+ * church history along another, so nothing ever appeared "after" anything else across that seam.
+ *
+ * Now the top lane carries biblical + church + movement together on ONE continuous chronology,
+ * packed by year against each other (see eventPacks below), with category surviving as the
+ * mark's colour and silhouette (see .tl-cat-* in TimelineView.css). World History and Other
+ * Religions stay in their own lanes — they're context running alongside the story, not part of it.
+ *
+ * Lane order top-to-bottom is: Scripture & the Church, Lifespans, World History, Other Religions.
+ * The Lifespans band is injected between the first and second entries here (see `geom`). */
+const EVENT_LANES: {
+  key: string;
+  label: string;
+  cats: TimelineEventCategory[];
+}[] = [
+  {
+    key: "sacred",
+    label: "Scripture & the Church",
+    cats: ["biblical", "church", "movement"],
+  },
+  { key: "world", label: "World History", cats: ["world"] },
+  { key: "religion", label: "Other Religions", cats: ["religion"] },
 ];
+
+/** The Books-of-the-Bible band (66 translucent writing-window bars along the top) is DISABLED at
+ * the owner's request. Its data (src/data/bookWritingWindows.ts), its row-packing, its
+ * `booksLayer` renderer, its CSS (.tl-book-bar*, .tl-band-books) and its entry in the lane
+ * checklist are all deliberately left intact and working — flipping this single constant back to
+ * `true` restores the lane exactly as it was, with no other change anywhere. */
+const SHOW_BOOKS_LANE = false;
 
 /* ------------------------------------------------------- lane visibility */
 
@@ -874,6 +903,22 @@ export default function TimelineView({
     [animateTo],
   );
 
+  /** Frame a named span so it FILLS the viewport, zooming out as readily as in. Distinct from
+   * zoomToYearRange above, which exists to drill into a cluster badge and is therefore deliberately
+   * one-way (it never zooms out, and only spreads the bucket over ~40% of the width). An era jump
+   * has to work in both directions — going from the Modern Era back to Primeval History is a zoom
+   * OUT of four thousand years — so it computes its scale from the range alone. */
+  const showYearRange = useCallback(
+    (lo: number, hi: number) => {
+      const w = Math.max(sizeRef.current.w, 1);
+      const span = Math.max(hi - lo, 1);
+      const pxy = clamp((w * 0.9) / span, 0.0001, MAX_PX_PER_YEAR);
+      const center = (lo + hi) / 2;
+      animateTo({ pxPerYear: pxy, startYear: center - w / (2 * pxy) });
+    },
+    [animateTo],
+  );
+
   /* ----- tooltip plumbing ----- */
 
   const showTip = useCallback(
@@ -902,12 +947,14 @@ export default function TimelineView({
 
   // Hidden lanes skip their row-packing entirely — no point computing interval placement for
   // content that won't render (this is the "hidden lanes don't need clustering/label math" perf win).
+  const showBooksLane = SHOW_BOOKS_LANE && visibleLanes.books;
+
   const bookPack = useMemo(
     () =>
-      visibleLanes.books
+      showBooksLane
         ? packRows(BOOK_WINDOWS, (w) => w.startYear, (w) => w.endYear)
         : { placed: [], rowCount: 0 },
-    [visibleLanes.books],
+    [showBooksLane],
   );
 
   const lifePack = useMemo(
@@ -918,7 +965,7 @@ export default function TimelineView({
     [visibleLanes.lifespans, lifespans],
   );
 
-  /** Per-lane, zoom-dependent row-packing for the Biblical/World/Religion event lanes — the same
+  /** Per-lane, zoom-dependent row-packing for the event lanes — the same
    * packRows helper the books band and Lifespans lane use above, just fed a per-item year-space
    * "reach" (start..start+reach for a point event, endYear..endYear+reach for a ranged one) built
    * from EVENT_MARKER_RESERVE_PX/EVENT_RANGE_LABEL_RESERVE_PX at the CURRENT pxPerYear. Doing the
@@ -932,13 +979,17 @@ export default function TimelineView({
    * — which is the overwhelming majority of real usage — gets full per-event labels. */
   const eventPacks = useMemo(() => {
     const map = new Map<
-      TimelineEventCategory,
+      string,
       { useCluster: boolean; rowCount: number; placed: { item: TimelineEvent; row: number }[] }
     >();
     if (pxPerYear <= 0) return map;
-    for (const lane of LANES) {
-      if (!visibleLanes[lane.cat]) continue;
-      const laneEvents = events.filter((e) => e.category === lane.cat);
+    for (const lane of EVENT_LANES) {
+      // A lane's categories are filtered independently: unchecking "Church History" removes those
+      // events from the merged top lane without removing the lane itself. A lane whose categories
+      // are ALL unchecked drops out entirely (no entry in the map -> no band allocated in `geom`).
+      const activeCats = lane.cats.filter((c) => visibleLanes[c]);
+      if (activeCats.length === 0) continue;
+      const laneEvents = events.filter((e) => activeCats.includes(e.category));
       const withReach = laneEvents.map((e) => {
         const hasRange = typeof e.endYear === "number" && e.endYear > e.startYear;
         const end = hasRange
@@ -952,9 +1003,9 @@ export default function TimelineView({
         (x) => x.end,
       );
       if (packed.rowCount > MAX_EVENT_ROWS) {
-        map.set(lane.cat, { useCluster: true, rowCount: 1, placed: [] });
+        map.set(lane.key, { useCluster: true, rowCount: 1, placed: [] });
       } else {
-        map.set(lane.cat, {
+        map.set(lane.key, {
           useCluster: false,
           rowCount: Math.max(packed.rowCount, 1),
           placed: packed.placed.map((p) => ({ item: p.item.e, row: p.row })),
@@ -969,9 +1020,9 @@ export default function TimelineView({
     if (h <= 0) return null;
     const avail = h - AXIS_H;
 
-    const showBooks = visibleLanes.books;
+    const showBooks = showBooksLane;
     const showLife = visibleLanes.lifespans && lifePack.rowCount > 0;
-    const visibleEventLanes = LANES.filter((lane) => visibleLanes[lane.cat]);
+    const visibleEventLanes = EVENT_LANES.filter((lane) => eventPacks.has(lane.key));
     const nEvent = visibleEventLanes.length;
     const visibleCount = (showBooks ? 1 : 0) + (showLife ? 1 : 0) + nEvent;
 
@@ -1010,6 +1061,29 @@ export default function TimelineView({
       sectionBottoms.push(cursor);
       cursor += AXIS_H;
     }
+    const laneTop = new Map<string, number>();
+    const laneHeights = new Map<string, number>();
+
+    const placeEventLane = (lane: (typeof EVENT_LANES)[number]) => {
+      const pack = eventPacks.get(lane.key);
+      const laneH =
+        pack && !pack.useCluster
+          ? Math.max(pack.rowCount * EVENT_ROW_H + EVENT_ROW_PAD, MIN_EVENT_ROWS_H)
+          : EVENT_LANE_H;
+      laneTop.set(lane.key, cursor);
+      laneHeights.set(lane.key, laneH);
+      cursor += laneH;
+      sectionBottoms.push(cursor);
+      cursor += AXIS_H;
+    };
+
+    // Owner-specified stacking: the merged Scripture & the Church lane first, then Lifespans
+    // DIRECTLY beneath it (the people belong next to the events they lived through), then the
+    // remaining context lanes. `visibleEventLanes` is already in EVENT_LANES order, so the first
+    // entry is the merged lane whenever it's showing.
+    const first = visibleEventLanes[0];
+    if (first && first.key === "sacred") placeEventLane(first);
+
     if (showLife) {
       lifeTop = cursor;
       cursor += lifeH;
@@ -1017,19 +1091,9 @@ export default function TimelineView({
       cursor += AXIS_H;
     }
 
-    const laneTop = new Map<TimelineEventCategory, number>();
-    const laneHeights = new Map<TimelineEventCategory, number>();
     for (const lane of visibleEventLanes) {
-      const pack = eventPacks.get(lane.cat);
-      const laneH =
-        pack && !pack.useCluster
-          ? Math.max(pack.rowCount * EVENT_ROW_H + EVENT_ROW_PAD, MIN_EVENT_ROWS_H)
-          : EVENT_LANE_H;
-      laneTop.set(lane.cat, cursor);
-      laneHeights.set(lane.cat, laneH);
-      cursor += laneH;
-      sectionBottoms.push(cursor);
-      cursor += AXIS_H;
+      if (laneTop.has(lane.key)) continue;
+      placeEventLane(lane);
     }
     // `cursor` already includes one AXIS_H gap after the very last section (added in the loop above),
     // so it IS the total height — no separate "+ AXIS_H" tacked on afterward like before.
@@ -1210,15 +1274,18 @@ export default function TimelineView({
       </>
     );
 
-    for (const lane of LANES) {
-      const { cat } = lane;
+    for (const lane of EVENT_LANES) {
       // Hidden lane: geom never allocated it a top offset — skip clustering/label math for it
       // entirely rather than computing work for something that won't render.
-      const laneTop = geom.laneTop.get(cat);
-      const laneH = geom.laneHeights.get(cat);
+      const laneTop = geom.laneTop.get(lane.key);
+      const laneH = geom.laneHeights.get(lane.key);
       if (laneTop === undefined || laneH === undefined) continue;
-      const pack = eventPacks.get(cat);
+      const pack = eventPacks.get(lane.key);
       if (!pack) continue;
+      // Marks are coloured by the EVENT's own category, never by the lane — that's what lets the
+      // merged top lane show biblical, church and movement events interleaved in one chronology
+      // and still be read apart. `activeCats` is the lane's checked subset (see eventPacks).
+      const activeCats = lane.cats.filter((c) => visibleLanes[c]);
 
       if (!pack.useCluster) {
         // Default path: every event got its own row from packRows above (same helper the
@@ -1238,7 +1305,7 @@ export default function TimelineView({
               <button
                 key={e.id}
                 type="button"
-                className={`tl-range-bar tl-cat-${cat}${focused}`}
+                className={`tl-range-bar tl-cat-${e.category}${focused}`}
                 style={{ left: x, top: y, width: barW }}
                 onClick={() => onSelectTimelineEvent(e.id)}
                 onMouseEnter={(ev) => showTip(ev, e.title, e.dateLabel, e.era)}
@@ -1255,7 +1322,7 @@ export default function TimelineView({
               <button
                 key={e.id}
                 type="button"
-                className={`tl-marker tl-cat-${cat}${focused}`}
+                className={`tl-marker tl-cat-${e.category}${focused}`}
                 style={{ left: x, top: y }}
                 onClick={() => onSelectTimelineEvent(e.id)}
                 onMouseEnter={(ev) => showTip(ev, e.title, e.dateLabel, e.era)}
@@ -1276,7 +1343,7 @@ export default function TimelineView({
       // now reserved for that case instead of being the default: still fans out same-year/
       // unsplittable groups into real markers, still zooms into a splittable cluster on click.
       const laneEvents = events
-        .filter((e) => e.category === cat)
+        .filter((e) => activeCats.includes(e.category))
         .sort((a, b) => a.startYear - b.startYear);
       const centerY = laneTop + laneH / 2;
 
@@ -1361,12 +1428,17 @@ export default function TimelineView({
         const nextX = i < items.length - 1 ? items[i + 1].x : Infinity;
 
         if (it.kind === "cluster") {
-          const label = `${it.events.length} ${cat === "biblical" ? "biblical" : cat === "world" ? "world history" : "religion"} events, ${formatYearRange(it.lo, it.hi)}`;
+          // A cluster in the merged lane can span several categories at once, so it takes the
+          // colour of whichever category it holds most of rather than a single lane colour.
+          const tally = new Map<TimelineEventCategory, number>();
+          for (const ev of it.events) tally.set(ev.category, (tally.get(ev.category) ?? 0) + 1);
+          const domCat = [...tally.entries()].sort((a, b) => b[1] - a[1])[0][0];
+          const label = `${it.events.length} ${lane.label} events, ${formatYearRange(it.lo, it.hi)}`;
           nodes.push(
             <button
-              key={`c-${cat}-${it.lo}-${it.hi}-${it.events.length}`}
+              key={`c-${lane.key}-${it.lo}-${it.hi}-${it.events.length}`}
               type="button"
-              className={`tl-cluster tl-cat-${cat}`}
+              className={`tl-cluster tl-cat-${domCat}`}
               style={{ left: it.x, top: centerY }}
               onClick={() => zoomToYearRange(it.lo, it.hi)}
               onMouseEnter={(e) =>
@@ -1393,7 +1465,7 @@ export default function TimelineView({
             <button
               key={e.id}
               type="button"
-              className={`tl-range-bar tl-cat-${cat}${focusedEventIds?.has(e.id) ? " tl-focused" : ""}`}
+              className={`tl-range-bar tl-cat-${e.category}${focusedEventIds?.has(e.id) ? " tl-focused" : ""}`}
               style={{ left: it.x, top: centerY + it.yOff, width: barW }}
               onClick={() => onSelectTimelineEvent(e.id)}
               onMouseEnter={(ev) => showTip(ev, e.title, e.dateLabel, e.era)}
@@ -1408,7 +1480,7 @@ export default function TimelineView({
             <button
               key={e.id}
               type="button"
-              className={`tl-marker tl-cat-${cat}${focusedEventIds?.has(e.id) ? " tl-focused" : ""}`}
+              className={`tl-marker tl-cat-${e.category}${focusedEventIds?.has(e.id) ? " tl-focused" : ""}`}
               style={{ left: it.x, top: centerY + it.yOff }}
               onClick={() => onSelectTimelineEvent(e.id)}
               onMouseEnter={(ev) => showTip(ev, e.title, e.dateLabel, e.era)}
@@ -1428,6 +1500,7 @@ export default function TimelineView({
     events,
     minYear,
     eventPacks,
+    visibleLanes,
     onSelectTimelineEvent,
     zoomToYearRange,
     showTip,
@@ -1469,6 +1542,10 @@ export default function TimelineView({
         </div>
         <div className="tl-header-spacer" />
         <div className="tl-zoom-controls">
+          <TimelineEraMenu
+            onJump={showYearRange}
+            onFit={() => animateTo(fitView())}
+          />
           <TimelineLaneMenu visible={visibleLanes} onToggle={toggleLane} />
           <button
             type="button"
@@ -1539,11 +1616,11 @@ export default function TimelineView({
                   style={{ top: geom.lifeTop, height: geom.lifeH }}
                 />
               )}
-              {LANES.filter((lane) => geom.laneTop.has(lane.cat)).map((lane) => (
+              {EVENT_LANES.filter((lane) => geom.laneTop.has(lane.key)).map((lane) => (
                 <div
-                  key={lane.cat}
-                  className={`tl-lane-underlay tl-lane-${lane.cat}`}
-                  style={{ top: geom.laneTop.get(lane.cat), height: geom.laneHeights.get(lane.cat) }}
+                  key={lane.key}
+                  className={`tl-lane-underlay tl-lane-${lane.key}`}
+                  style={{ top: geom.laneTop.get(lane.key), height: geom.laneHeights.get(lane.key) }}
                 />
               ))}
 
@@ -1563,20 +1640,40 @@ export default function TimelineView({
                   Lifespans
                 </span>
               )}
-              {LANES.filter((lane) => geom.laneTop.has(lane.cat)).map((lane) => (
-                <span
-                  key={lane.cat}
-                  className="tl-lane-label"
-                  style={{ top: (geom.laneTop.get(lane.cat) as number) + 5 }}
-                >
+              {/* A lane's chip carries one legend swatch PER CATEGORY it currently shows — for the
+                * merged top lane that's the whole key to reading it (gold disc = biblical,
+                * lapis square = church, rubric ring = movement), so the legend has to travel with
+                * the lane rather than hide in a menu. Swatch shapes mirror .tl-marker's. */}
+              {EVENT_LANES.filter((lane) => geom.laneTop.has(lane.key)).map((lane) => {
+                const cats = lane.cats.filter((c) => visibleLanes[c]);
+                return (
                   <span
-                    className="tl-lane-label-dot"
-                    style={{ background: lane.cssVar }}
-                    aria-hidden="true"
-                  />
-                  {lane.label}
-                </span>
-              ))}
+                    key={lane.key}
+                    className="tl-lane-label"
+                    style={{ top: (geom.laneTop.get(lane.key) as number) + 5 }}
+                  >
+                    {cats.length > 1 ? (
+                      <>
+                        {lane.label}
+                        {cats.map((c) => (
+                          <span key={c} className="tl-lane-legend">
+                            <span className={`tl-lane-label-dot tl-cat-${c}`} aria-hidden="true" />
+                            {TIMELINE_LANE_LABELS[c]}
+                          </span>
+                        ))}
+                      </>
+                    ) : (
+                      <>
+                        <span
+                          className={`tl-lane-label-dot tl-cat-${cats[0]}`}
+                          aria-hidden="true"
+                        />
+                        {lane.label}
+                      </>
+                    )}
+                  </span>
+                );
+              })}
 
               {/* The panning world surface — a single GPU-composited transform, never scaled.
                * translate3d (vs. translateX) explicitly promotes this to its own compositor

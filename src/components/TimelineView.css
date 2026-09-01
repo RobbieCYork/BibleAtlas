@@ -8,22 +8,36 @@
  * ========================================================================== */
 
 .tl-root {
-  /* Lane palette. Biblical rides the app accent; the others are deliberately
-   * distinct hues so the three streams read apart at a glance. Dark-palette
-   * values by default (see index.css) — [data-theme="light"] below overrides. */
-  --tl-biblical: var(--accent);
-  --tl-biblical-rgb: 167, 139, 250;
-  --tl-church: #38bdf8;
-  --tl-church-rgb: 56, 189, 248;
-  --tl-world: #94a3b8;
-  --tl-world-rgb: 148, 163, 184;
-  --tl-movement: #fb7185;
-  --tl-movement-rgb: 251, 113, 133;
-  --tl-religion: #f59e0b;
-  --tl-religion-rgb: 245, 158, 11;
-  --tl-life: #2dd4bf;
-  --tl-life-rgb: 45, 212, 191;
-  --tl-book-rgb: 167, 139, 250;
+  /* ---- Category pigments -------------------------------------------------
+   * Replaces the pre-Illuminated palette this file carried until now (sky #38bdf8,
+   * rose #fb7185, violet 167,139,250 — leftovers from before 259a1b6, which measured
+   * as low as 1.01:1 in light mode once the app's surfaces changed under them).
+   *
+   * Every value below is one of index.css's raw manuscript pigments, lifted for the
+   * dark ground or darkened for the light one so it clears 3:1 as a graphical mark
+   * against its own lane, and so --tl-on-cat clears 4.5:1 as text ON it:
+   *   biblical  gold leaf      church  lapis        movement  rubric red
+   *   world     umber/vellum   religion verdigris   lifespans brand violet
+   * The Timeline is meant to look alive and graphical, so these stay genuinely
+   * chromatic rather than being flattened into the app's beige chrome.
+   *
+   * DARK values here; :root[data-theme="light"] below overrides. */
+  --tl-biblical: var(--gold-bright); /* #e5b355 */
+  --tl-biblical-rgb: 229, 179, 85;
+  --tl-church: #8f9be0; /* --lapis-light, lifted for the iron-gall ground */
+  --tl-church-rgb: 143, 155, 224;
+  --tl-movement: #ef8468; /* --rubric-bright, lifted */
+  --tl-movement-rgb: 239, 132, 104;
+  --tl-world: #c3b295; /* --vellum-500, lifted — the quiet, non-chromatic stream */
+  --tl-world-rgb: 195, 178, 149;
+  --tl-religion: #6cc39a; /* --verdigris, lifted */
+  --tl-religion-rgb: 108, 195, 154;
+  --tl-life: #b3a0ea; /* --brand violet, lifted */
+  --tl-life-rgb: 179, 160, 234;
+  --tl-book-rgb: 179, 160, 234;
+  /* Text/numerals placed ON a filled category swatch (cluster badges). Dark mode's
+   * category colours are all light, so ink wins; light mode's are all dark, so paper wins. */
+  --tl-on-cat: var(--ink-800);
   --tl-grid: color-mix(in srgb, var(--border) 72%, transparent);
   --tl-lane-tint: color-mix(in srgb, var(--panel-bg) 55%, transparent);
 
@@ -38,18 +52,20 @@
 }
 
 :root[data-theme="light"] .tl-root {
-  --tl-biblical-rgb: 124, 58, 237;
-  --tl-church: #0284c7;
-  --tl-church-rgb: 2, 132, 199;
-  --tl-world: #64748b;
-  --tl-world-rgb: 100, 116, 139;
-  --tl-movement: #e11d48;
-  --tl-movement-rgb: 225, 29, 72;
-  --tl-religion: #d97706;
-  --tl-religion-rgb: 217, 119, 6;
-  --tl-life: #0d9488;
-  --tl-life-rgb: 13, 148, 136;
-  --tl-book-rgb: 124, 58, 237;
+  --tl-biblical: #9a6a12; /* --gold-deep, one step darker so it clears 3:1 on white chrome */
+  --tl-biblical-rgb: 154, 106, 18;
+  --tl-church: var(--lapis); /* #2e3a8c */
+  --tl-church-rgb: 46, 58, 140;
+  --tl-movement: #a83c24; /* --rubric, darkened (same value as light --danger) */
+  --tl-movement-rgb: 168, 60, 36;
+  --tl-world: var(--umber); /* #7a6144 */
+  --tl-world-rgb: 122, 97, 68;
+  --tl-religion: #2f6b4d; /* --verdigris, darkened */
+  --tl-religion-rgb: 47, 107, 77;
+  --tl-life: #54339e; /* --brand violet, darkened */
+  --tl-life-rgb: 84, 51, 158;
+  --tl-book-rgb: 84, 51, 158;
+  --tl-on-cat: #ffffff;
 }
 
 /* ---------------------------------------------------------------- header */
@@ -198,6 +214,33 @@
   background: var(--accent-bg);
 }
 
+/* The era list is long enough to want its own scroll rather than running off a short viewport. */
+.tl-era-menu-dropdown {
+  max-height: min(70vh, 480px);
+  overflow-y: auto;
+  min-width: 220px;
+}
+
+/* Era entries are buttons, not checkboxes — reuse .tl-lane-menu-item's box and strip the
+ * native button chrome the shared rule doesn't cover. */
+.tl-era-menu-item {
+  width: 100%;
+  text-align: left;
+  border: none;
+  background: none;
+  color: inherit;
+  font: inherit;
+  appearance: none;
+  -webkit-appearance: none;
+}
+
+.tl-era-menu-all {
+  margin-top: 4px;
+  border-top: 1px solid var(--border);
+  border-radius: 0 0 6px 6px;
+  color: var(--text-muted);
+}
+
 .tl-lane-menu-caption {
   margin: 6px 0 0;
   padding: 6px 8px 0;
@@ -284,28 +327,21 @@
   border-bottom: 1px solid var(--tl-grid);
 }
 
-.tl-lane-underlay.tl-lane-biblical {
-  background: rgba(var(--tl-biblical-rgb), 0.035);
-  border-bottom: 1px solid var(--tl-grid);
-}
-
-.tl-lane-underlay.tl-lane-church {
-  background: rgba(var(--tl-church-rgb), 0.045);
+/* Lane tints are keyed by LANE (see EVENT_LANES in TimelineView.tsx), not by category —
+ * the top lane now carries three categories at once, so its tint can't belong to any one
+ * of them. Kept very faint: the categories are told apart by the marks themselves. */
+.tl-lane-underlay.tl-lane-sacred {
+  background: rgba(var(--tl-biblical-rgb), 0.05);
   border-bottom: 1px solid var(--tl-grid);
 }
 
 .tl-lane-underlay.tl-lane-world {
-  background: rgba(var(--tl-world-rgb), 0.045);
-  border-bottom: 1px solid var(--tl-grid);
-}
-
-.tl-lane-underlay.tl-lane-movement {
-  background: rgba(var(--tl-movement-rgb), 0.045);
+  background: rgba(var(--tl-world-rgb), 0.05);
   border-bottom: 1px solid var(--tl-grid);
 }
 
 .tl-lane-underlay.tl-lane-religion {
-  background: rgba(var(--tl-religion-rgb), 0.045);
+  background: rgba(var(--tl-religion-rgb), 0.05);
   border-bottom: 1px solid var(--tl-grid);
 }
 
@@ -319,7 +355,7 @@
   letter-spacing: 0.09em;
   text-transform: uppercase;
   color: var(--text-muted);
-  background: color-mix(in srgb, var(--bg) 82%, transparent);
+  background: var(--panel-bg);
   border: 1px solid var(--tl-grid);
   padding: 2px 7px;
   border-radius: 100px;
@@ -336,6 +372,50 @@
   border-radius: 50%;
   margin-right: 5px;
   vertical-align: 0;
+  /* Category swatches get their colour from the .tl-cat-* class beside them; the Lifespans chip
+   * still passes an inline background, which overrides this fallback. */
+  background: var(--cat, var(--text-muted));
+}
+
+/* Legend entries inside the merged lane's chip — one per category currently showing there. */
+.tl-lane-legend {
+  margin-left: 9px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: none;
+  color: var(--text);
+}
+
+/* Swatch silhouettes mirror the marks themselves (see .tl-marker below): disc / square / ring. */
+.tl-lane-label-dot.tl-cat-church,
+.tl-lane-menu-swatch.tl-cat-church {
+  border-radius: 2px;
+}
+
+.tl-lane-label-dot.tl-cat-movement,
+.tl-lane-menu-swatch.tl-cat-movement {
+  background: var(--panel-bg);
+  border: 2.5px solid var(--cat);
+}
+
+/* Same swatch, at checklist scale. */
+.tl-lane-menu-swatch {
+  display: inline-block;
+  flex-shrink: 0;
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: var(--cat, var(--text-muted));
+}
+
+.tl-lane-menu-swatch.tl-swatch-life {
+  background: var(--tl-life);
+}
+
+.tl-lane-menu-title-divided {
+  margin-top: 8px;
+  padding-top: 8px;
+  border-top: 1px solid var(--border);
 }
 
 /* The panning surface. translateX only — content x-positions are recomputed
@@ -441,7 +521,7 @@
   line-height: 1.3;
   padding: 1px 5px;
   color: var(--text-h);
-  background: color-mix(in srgb, var(--bg) 88%, transparent);
+  background: var(--panel-bg);
   border: 1px solid var(--tl-grid);
   border-radius: 4px;
   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.14);
@@ -484,8 +564,10 @@
   display: flex;
   align-items: center;
   border-radius: 100px;
-  background: rgba(var(--tl-life-rgb), 0.22);
-  border: 1px solid rgba(var(--tl-life-rgb), 0.55);
+  /* Alphas raised from 0.22/0.55: at the old values the bar's own outline measured 2.71:1
+   * against the lane, under the 3:1 a graphical object needs to be identifiable. */
+  background: rgba(var(--tl-life-rgb), 0.28);
+  border: 1px solid rgba(var(--tl-life-rgb), 0.8);
   cursor: pointer;
   padding: 0;
   font: inherit;
@@ -537,6 +619,30 @@
 
 /* ------------------------------------------------------------ event lanes */
 
+/* One place decides what colour a category is. Every mark below (dot, range bar,
+ * cluster badge, legend dot) reads --cat off its own .tl-cat-* class, so the
+ * category -> pigment mapping lives here and nowhere else. */
+.tl-cat-biblical {
+  --cat: var(--tl-biblical);
+  --cat-rgb: var(--tl-biblical-rgb);
+}
+.tl-cat-church {
+  --cat: var(--tl-church);
+  --cat-rgb: var(--tl-church-rgb);
+}
+.tl-cat-movement {
+  --cat: var(--tl-movement);
+  --cat-rgb: var(--tl-movement-rgb);
+}
+.tl-cat-world {
+  --cat: var(--tl-world);
+  --cat-rgb: var(--tl-world-rgb);
+}
+.tl-cat-religion {
+  --cat: var(--tl-religion);
+  --cat-rgb: var(--tl-religion-rgb);
+}
+
 .tl-marker {
   position: absolute;
   width: 13px;
@@ -558,24 +664,26 @@
   box-shadow: 0 2px 7px rgba(0, 0, 0, 0.4);
 }
 
-.tl-marker.tl-cat-biblical {
-  background: var(--tl-biblical);
+.tl-marker {
+  background: var(--cat);
 }
 
+/* Shape, not only hue, separates the three categories that now share the top lane —
+ * biblical (filled disc), church (filled square), movements & revivals (open ring).
+ * Colour alone would be a red/blue/gold distinction that a deuteranope or a
+ * greyscale screenshot loses; the silhouette survives both. World History and Other
+ * Religions keep the plain disc — they sit in their own lanes, so there's nothing
+ * for them to be confused with. */
 .tl-marker.tl-cat-church {
-  background: var(--tl-church);
-}
-
-.tl-marker.tl-cat-world {
-  background: var(--tl-world);
+  border-radius: 3px;
 }
 
 .tl-marker.tl-cat-movement {
-  background: var(--tl-movement);
-}
-
-.tl-marker.tl-cat-religion {
-  background: var(--tl-religion);
+  width: 14px;
+  height: 14px;
+  background: var(--panel-bg);
+  border: 4px solid var(--cat);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.28), 0 0 0 1px var(--panel-bg);
 }
 
 /* Ranged events (reigns, exiles, wars): thin bar instead of a dot. */
@@ -600,24 +708,23 @@
   z-index: 5;
 }
 
-.tl-range-bar.tl-cat-biblical {
-  background: linear-gradient(to right, var(--tl-biblical), rgba(var(--tl-biblical-rgb), 0.45));
+/* The fade is a direction cue (start solid, trail off toward the end year). Tail alpha raised
+ * from 0.45 to 0.68 so even the faintest end of the bar stays a visible object; the bar's
+ * identifying leading edge is the full category colour, which is what the contrast audit
+ * measures against the lane. */
+.tl-range-bar {
+  background: linear-gradient(to right, var(--cat), rgba(var(--cat-rgb), 0.68));
 }
 
+/* Same silhouette logic as the markers above, applied to spans: church bars are
+ * squared off, movement bars are drawn as an open outline rather than a solid fill. */
 .tl-range-bar.tl-cat-church {
-  background: linear-gradient(to right, var(--tl-church), rgba(var(--tl-church-rgb), 0.45));
-}
-
-.tl-range-bar.tl-cat-world {
-  background: linear-gradient(to right, var(--tl-world), rgba(var(--tl-world-rgb), 0.45));
+  border-radius: 2px;
 }
 
 .tl-range-bar.tl-cat-movement {
-  background: linear-gradient(to right, var(--tl-movement), rgba(var(--tl-movement-rgb), 0.45));
-}
-
-.tl-range-bar.tl-cat-religion {
-  background: linear-gradient(to right, var(--tl-religion), rgba(var(--tl-religion-rgb), 0.45));
+  background: var(--panel-bg);
+  border: 2px solid var(--cat);
 }
 
 /* Always-visible title+year chip for a point-event marker and the label for a range-bar event
@@ -646,7 +753,7 @@
   line-height: 1.3;
   padding: 1px 6px;
   color: var(--text-h);
-  background: color-mix(in srgb, var(--bg) 88%, transparent);
+  background: var(--panel-bg);
   border: 1px solid var(--tl-grid);
   border-radius: 4px;
   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.14);
@@ -693,7 +800,6 @@
   height: 24px;
   padding: 0 7px;
   border-radius: 100px;
-  color: #fff;
   font-size: 12px;
   font-weight: 600;
   border: 2px solid var(--panel-bg);
@@ -711,32 +817,14 @@
   z-index: 5;
 }
 
-/* --tl-biblical IS --accent, which in dark mode is bright gold — white numerals on it measured
- * 1.9:1. Same bug (and same fix) as the white-on-accent rules corrected app-wide in 259a1b6.
- * --tl-religion is a mid amber that white also fails against, in both themes. */
-.tl-cluster.tl-cat-biblical {
-  background: var(--tl-biblical);
-  color: var(--accent-contrast);
-}
-
-.tl-cluster.tl-cat-religion {
-  color: #241a05;
-}
-
-.tl-cluster.tl-cat-church {
-  background: var(--tl-church);
-}
-
-.tl-cluster.tl-cat-world {
-  background: var(--tl-world);
-}
-
-.tl-cluster.tl-cat-movement {
-  background: var(--tl-movement);
-}
-
-.tl-cluster.tl-cat-religion {
-  background: var(--tl-religion);
+/* Numerals sit ON a filled category swatch, so their colour has to follow the theme's
+ * category lightness, not a hardcoded white: dark mode's pigments are all light (ink
+ * numerals), light mode's are all dark (paper numerals). The old per-category
+ * exceptions here existed because white-on-gold measured 1.9:1 and white-on-amber
+ * failed too; --tl-on-cat removes the whole class of bug. */
+.tl-cluster {
+  background: var(--cat);
+  color: var(--tl-on-cat);
 }
 
 /* Buttons used as markers/bars need their native chrome stripped. */
@@ -794,7 +882,10 @@
   font-weight: 700;
   letter-spacing: 0.06em;
   text-transform: uppercase;
-  color: var(--tl-religion);
+  /* Was --tl-religion (a mid amber) regardless of what the hovered event actually was —
+   * this is the era name, not a category, so it takes the theme accent, which is already
+   * tuned to clear 4.5:1 on --panel-bg in both themes. */
+  color: var(--accent);
   margin-top: 3px;
 }
 
@@ -819,6 +910,33 @@
   .tl-lane-label {
     font-size: 9px;
     padding: 2px 6px;
+  }
+
+  /* The era jump control is one more thing competing with the title for a 375px header,
+   * so on phones it drops to its arrow icon alone. */
+  .tl-era-menu-button .tl-lane-menu-count {
+    display: none;
+  }
+
+  .tl-title-block {
+    overflow: hidden;
+  }
+
+  .tl-title,
+  .tl-range-readout {
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  /* The merged lane's legend is three named swatches — too wide for a phone, so the names
+   * collapse and the swatches (which are the actual key) stay. */
+  .tl-lane-legend {
+    font-size: 0;
+    margin-left: 5px;
+  }
+
+  .tl-lane-legend .tl-lane-label-dot {
+    margin-right: 0;
   }
 }
 
