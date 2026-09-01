@@ -392,6 +392,22 @@ function timelineOrderQuestions(): QuizQuestion[] {
   return out;
 }
 
+/** Which quiz category a Topic-derived question actually belongs to.
+ *
+ * Topics cover four kinds of subject (see TopicCategory in types.ts), and only three of them are
+ * theological. The "people-group" topics — Israelites, Pharisees, Philistines, Assyrians, Romans,
+ * Gentiles and the rest — are questions about *who a group of people was*, which is a People
+ * question, not a doctrine question. Filing all 31 topics under Theology meant the Theology preset
+ * was ~59% "which people group was X?", which is exactly what it was reported as being. Doctrines,
+ * practices, and concepts stay in Theology; people groups go where they belong.
+ *
+ * Question *ids* are deliberately left alone ("theology-role-<topic>") even for the reclassified
+ * ones — ids are opaque keys already written into existing game_rooms.question_ids rows, and
+ * renaming them would break any in-flight or replayed room. */
+function topicQuizCategory(topic: (typeof topics)[number]): QuizCategory {
+  return topic.category === "people-group" ? "people" : "theology";
+}
+
 function theologyRoleQuestions(): QuizQuestion[] {
   const out: QuizQuestion[] = [];
   for (const topic of topics) {
@@ -405,7 +421,7 @@ function theologyRoleQuestions(): QuizQuestion[] {
     const { choices, correctIndex } = shuffleChoices(topic.role, distractors, rand);
     out.push({
       id,
-      category: "theology",
+      category: topicQuizCategory(topic),
       // Doctrines/practices/people-groups generally span or transcend a single testament.
       testament: "both",
       difficulty: "moderate",
@@ -432,7 +448,7 @@ function theologySummaryQuestions(): QuizQuestion[] {
     const { choices, correctIndex } = shuffleChoices(topic.name, distractors, rand);
     out.push({
       id,
-      category: "theology",
+      category: topicQuizCategory(topic),
       testament: "both",
       difficulty: "difficult",
       points: DIFFICULTY_POINTS.difficult,
@@ -444,6 +460,681 @@ function theologySummaryQuestions(): QuizQuestion[] {
     });
   }
   return out;
+}
+
+// ------------------------------------------------------------------------------------------------
+// Core doctrine bank — the only hand-written questions in this module.
+//
+// Everything else here is generated from the app's own content (people/locations/pois/timeline/
+// topics), which is great for recall questions but can't produce a genuine doctrine question: the
+// content simply doesn't contain "what does justification mean?" anywhere to derive one from. So the
+// Theology preset is topped up with a hand-written bank covering the standard loci — theology proper,
+// Christology, pneumatology, soteriology, hamartiology, ecclesiology, eschatology, the creeds and the
+// classical heresies.
+//
+// Rule for anything added here: the answer has to be objectively checkable, not a position in a live
+// intra-Christian argument. Where a doctrine is genuinely disputed across traditions (predestination,
+// baptismal mode and subjects, the millennium, eucharistic presence), the question is either left out
+// or reframed around what a *named* creed, council, or tradition actually teaches — "the Nicene Creed
+// confesses…", "Chalcedon defines…", "the Filioque dispute concerns…" — which has one right answer no
+// matter which pew the player sits in. Definitional questions ("what does X mean?") are fine even for
+// terms that live inside one tradition's vocabulary, since the term's meaning isn't the disputed part.
+// ------------------------------------------------------------------------------------------------
+
+interface DoctrineQuestionSeed {
+  /** Becomes `theology-core-<slug>`; must be stable forever once shipped (ids go into room rows). */
+  slug: string;
+  difficulty: QuizDifficulty;
+  prompt: string;
+  answer: string;
+  distractors: [string, string, string];
+  /** Extra free-text for the custom-topic search, on top of the prompt/answer words. */
+  keywords?: string;
+}
+
+const DOCTRINE_QUESTIONS: DoctrineQuestionSeed[] = [
+  // --- easy ---------------------------------------------------------------------------------------
+  {
+    slug: "incarnation-term",
+    difficulty: "easy",
+    prompt: "Which term names the Christian teaching that the eternal Son of God took on human nature in Jesus Christ?",
+    answer: "The Incarnation",
+    distractors: ["The Ascension", "The Transfiguration", "The Annunciation"],
+    keywords: "incarnation christology jesus divine human nature",
+  },
+  {
+    slug: "trinity-persons",
+    difficulty: "easy",
+    prompt: "The doctrine of the Trinity confesses one God in how many persons?",
+    answer: "Three",
+    distractors: ["Two", "Four", "Seven"],
+    keywords: "trinity father son holy spirit persons godhead",
+  },
+  {
+    slug: "gospel-meaning",
+    difficulty: "easy",
+    prompt: "The word \"gospel\" translates a Greek word meaning what?",
+    answer: "Good news",
+    distractors: ["Holy law", "Sacred writing", "Chosen people"],
+    keywords: "gospel euangelion good news preaching",
+  },
+  {
+    slug: "grace-definition",
+    difficulty: "easy",
+    prompt: "In Christian theology, \"grace\" is best defined as what?",
+    answer: "God's unearned favor toward people who have not merited it",
+    distractors: [
+      "A reward God owes to those who keep his law",
+      "A vow of poverty taken by monks and nuns",
+      "A formal decision issued by a church council",
+    ],
+    keywords: "grace favor unmerited soteriology",
+  },
+  {
+    slug: "resurrection-doctrine",
+    difficulty: "easy",
+    prompt: "What does the Christian doctrine of the resurrection of Christ affirm?",
+    answer: "That Jesus was raised bodily from the dead",
+    distractors: [
+      "That Jesus' teachings live on in his followers",
+      "That Jesus was taken up to heaven without ever dying",
+      "That Jesus' soul survived while his body stayed in the tomb",
+    ],
+    keywords: "resurrection easter bodily risen christology",
+  },
+  {
+    slug: "monotheism",
+    difficulty: "easy",
+    prompt: "To call a religion \"monotheistic\" means it teaches what?",
+    answer: "That there is only one God",
+    distractors: [
+      "That many gods exist but one rules the others",
+      "That God and the universe are the same thing",
+      "That the world had no creator at all",
+    ],
+    keywords: "monotheism theology proper one god polytheism pantheism",
+  },
+  {
+    slug: "atonement-term",
+    difficulty: "easy",
+    prompt: "In Christian theology, \"atonement\" refers to what?",
+    answer: "The reconciling of sinners to God through the work of Christ",
+    distractors: [
+      "The ranking of angels into orders",
+      "The arrangement of a worship service",
+      "The copying and preservation of biblical manuscripts",
+    ],
+    keywords: "atonement reconciliation cross soteriology",
+  },
+  {
+    slug: "second-coming",
+    difficulty: "easy",
+    prompt: "Which term names the Christian expectation that Christ will return in glory?",
+    answer: "The Second Coming",
+    distractors: ["The Transfiguration", "Pentecost", "The Ascension"],
+    keywords: "second coming parousia return eschatology advent",
+  },
+  {
+    slug: "creed-definition",
+    difficulty: "easy",
+    prompt: "The Apostles' Creed and the Nicene Creed are examples of what?",
+    answer: "Creeds — short summaries of Christian belief confessed by the church",
+    distractors: [
+      "Books of the New Testament",
+      "Letters written by the apostle Paul",
+      "Rules governing monastic communities",
+    ],
+    keywords: "creed apostles nicene confession symbol of faith",
+  },
+  {
+    slug: "creation-term",
+    difficulty: "easy",
+    prompt: "Which doctrine concerns God bringing the universe into existence?",
+    answer: "Creation",
+    distractors: ["Redemption", "Revelation", "Glorification"],
+    keywords: "creation creator genesis doctrine",
+  },
+  {
+    slug: "salvation-term",
+    difficulty: "easy",
+    prompt: "In Christian theology, \"salvation\" most basically means what?",
+    answer: "Being rescued from sin and its consequences",
+    distractors: [
+      "Achieving wealth and long life",
+      "Memorizing large portions of Scripture",
+      "Being appointed to an office in the church",
+    ],
+    keywords: "salvation saved soteriology rescue sin",
+  },
+
+  // --- moderate -----------------------------------------------------------------------------------
+  {
+    slug: "original-sin",
+    difficulty: "moderate",
+    prompt: "Which term names the teaching that human beings come into the world already under a condition of sin traced to Adam?",
+    answer: "Original sin",
+    distractors: ["Ritual impurity", "Apostasy", "Blasphemy"],
+    keywords: "original sin adam fall hamartiology",
+  },
+  {
+    slug: "omniscience",
+    difficulty: "moderate",
+    prompt: "Which divine attribute means that God knows all things?",
+    answer: "Omniscience",
+    distractors: ["Omnipotence", "Omnipresence", "Immutability"],
+    keywords: "omniscience attributes of god knowledge theology proper",
+  },
+  {
+    slug: "immutability",
+    difficulty: "moderate",
+    prompt: "Which divine attribute means that God does not change?",
+    answer: "Immutability",
+    distractors: ["Impassibility", "Omnipresence", "Omniscience"],
+    keywords: "immutability unchanging attributes of god",
+  },
+  {
+    slug: "justification-definition",
+    difficulty: "moderate",
+    prompt: "The doctrine of justification deals with which question?",
+    answer: "How a sinner comes to stand righteous before God",
+    distractors: [
+      "How the church chooses its leaders",
+      "How the books of the Bible were collected",
+      "How history will finally come to an end",
+    ],
+    keywords: "justification righteousness soteriology forensic",
+  },
+  {
+    slug: "sanctification-definition",
+    difficulty: "moderate",
+    prompt: "In Christian theology, sanctification refers to what?",
+    answer: "The process of being made holy",
+    distractors: [
+      "The moment of physical death",
+      "The public reading of Scripture in worship",
+      "The ordination of clergy",
+    ],
+    keywords: "sanctification holiness growth soteriology",
+  },
+  {
+    slug: "eschatology-definition",
+    difficulty: "moderate",
+    prompt: "\"Eschatology\" is the branch of theology that studies what?",
+    answer: "Last things — death, judgment, and the age to come",
+    distractors: ["The church", "The Holy Spirit", "The doctrine of salvation"],
+    keywords: "eschatology last things end times judgment",
+  },
+  {
+    slug: "christology-definition",
+    difficulty: "moderate",
+    prompt: "\"Christology\" is the branch of theology that studies what?",
+    answer: "The person and work of Christ",
+    distractors: ["The end times", "The sacraments", "The angels"],
+    keywords: "christology jesus person work doctrine",
+  },
+  {
+    slug: "ecclesiology-definition",
+    difficulty: "moderate",
+    prompt: "\"Ecclesiology\" is the branch of theology that studies what?",
+    answer: "The church — its nature, marks, and mission",
+    distractors: ["Scripture and its inspiration", "Sin and the fall", "Prophecy and fulfillment"],
+    keywords: "ecclesiology church doctrine body of christ",
+  },
+  {
+    slug: "revelation-definition",
+    difficulty: "moderate",
+    prompt: "In Christian theology, \"revelation\" refers to what?",
+    answer: "God making himself known to human beings",
+    distractors: [
+      "The church's system of government",
+      "The practice of fasting before a feast day",
+      "Human reasoning about God apart from any disclosure",
+    ],
+    keywords: "revelation disclosure god makes known doctrine",
+  },
+  {
+    slug: "covenant-definition",
+    difficulty: "moderate",
+    prompt: "In biblical theology, a \"covenant\" is best described as what?",
+    answer: "A binding relationship, with promises and obligations, that God establishes with his people",
+    distractors: [
+      "A tax paid for the upkeep of the temple",
+      "A Roman legal contract for the sale of land",
+      "A form of Hebrew poetry using parallel lines",
+    ],
+    keywords: "covenant berith promise abraham sinai new covenant",
+  },
+  {
+    slug: "providence-definition",
+    difficulty: "moderate",
+    prompt: "The doctrine of providence concerns what?",
+    answer: "God's ongoing preserving and governing of what he has created",
+    distractors: [
+      "God's act of bringing the world into being",
+      "God's final judgment of the nations",
+      "God's giving of the law at Sinai",
+    ],
+    keywords: "providence preservation government creation doctrine",
+  },
+  {
+    slug: "repentance-definition",
+    difficulty: "moderate",
+    prompt: "In Christian theology, repentance means what?",
+    answer: "A change of mind and heart that turns from sin toward God",
+    distractors: [
+      "Paying a fine set by the church",
+      "Reciting a creed in public worship",
+      "Fasting for a fixed period each year",
+    ],
+    keywords: "repentance metanoia turning conversion",
+  },
+  {
+    slug: "nicene-consubstantial",
+    difficulty: "moderate",
+    prompt: "The Nicene Creed confesses that the Son is what, in relation to the Father?",
+    answer: "Of one substance (consubstantial) with the Father",
+    distractors: [
+      "The first and highest of God's creatures",
+      "A human being adopted as Son at his baptism",
+      "One of three modes in which one person appears",
+    ],
+    keywords: "nicene creed homoousios consubstantial son father trinity",
+  },
+  {
+    slug: "arianism",
+    difficulty: "moderate",
+    prompt: "Which teaching, condemned in the fourth century, held that the Son was a created being and not fully divine?",
+    answer: "Arianism",
+    distractors: ["Docetism", "Pelagianism", "Montanism"],
+    keywords: "arianism arius heresy nicaea son created",
+  },
+  {
+    slug: "docetism",
+    difficulty: "moderate",
+    prompt: "Which early error denied that Christ had a real, physical human body, holding that he only seemed to?",
+    answer: "Docetism",
+    distractors: ["Arianism", "Modalism", "Donatism"],
+    keywords: "docetism heresy body flesh christology seemed",
+  },
+  {
+    slug: "reformation-solas",
+    difficulty: "moderate",
+    prompt: "The slogans sola gratia (\"grace alone\") and sola fide (\"faith alone\") are associated with which movement?",
+    answer: "The Protestant Reformation",
+    distractors: ["The Second Vatican Council", "The Great Schism of 1054", "The Council of Jerusalem in Acts 15"],
+    keywords: "reformation sola gratia fide scriptura luther protestant",
+  },
+  {
+    slug: "incarnation-literal",
+    difficulty: "moderate",
+    prompt: "The word \"incarnation\" literally means what?",
+    answer: "Becoming flesh",
+    distractors: ["Rising again", "Being anointed", "Being sent out"],
+    keywords: "incarnation carnis flesh john 1:14 word became flesh",
+  },
+  {
+    slug: "the-fall",
+    difficulty: "moderate",
+    prompt: "In Christian theology, \"the fall\" refers to what?",
+    answer: "Humanity's turn into sin through Adam and Eve's disobedience",
+    distractors: [
+      "The collapse of Jerusalem's walls under Nebuchadnezzar",
+      "The destruction of the second temple in AD 70",
+      "The scattering of the nations at Babel",
+    ],
+    keywords: "fall adam eve eden disobedience sin hamartiology",
+  },
+  {
+    slug: "redemption-image",
+    difficulty: "moderate",
+    prompt: "The word \"redemption\" carries which underlying image?",
+    answer: "Being bought back, or ransomed, out of bondage",
+    distractors: [
+      "Being declared not guilty in a courtroom",
+      "Being taken into a family as an heir",
+      "Being washed clean of defilement",
+    ],
+    keywords: "redemption ransom bought back slavery soteriology",
+  },
+  {
+    slug: "apostles-creed-communion",
+    difficulty: "moderate",
+    prompt: "\"The communion of saints\" and \"the forgiveness of sins\" are phrases from which widely recited creed?",
+    answer: "The Apostles' Creed",
+    distractors: ["The Chalcedonian Definition", "The Athanasian Creed", "The Westminster Confession"],
+    keywords: "apostles creed communion of saints forgiveness confession",
+  },
+  {
+    slug: "baptism-universal-rite",
+    difficulty: "moderate",
+    prompt: "Which rite, commanded in Matthew 28:19, is practiced by virtually every Christian tradition as the sign of entry into the church?",
+    answer: "Baptism",
+    distractors: ["Foot washing", "Anointing of kings", "Pilgrimage to Jerusalem"],
+    keywords: "baptism great commission sacrament ordinance initiation",
+  },
+
+  // --- difficult ----------------------------------------------------------------------------------
+  {
+    slug: "propitiation",
+    difficulty: "difficult",
+    prompt: "\"Propitiation\" specifically refers to what?",
+    answer: "The turning aside of God's wrath by means of a sacrifice",
+    distractors: [
+      "The freeing of a slave by payment of a price",
+      "The declaring of a defendant righteous",
+      "The adoption of an outsider as a legal heir",
+    ],
+    keywords: "propitiation wrath sacrifice hilasterion atonement",
+  },
+  {
+    slug: "expiation",
+    difficulty: "difficult",
+    prompt: "In contrast to propitiation, \"expiation\" puts the emphasis on what?",
+    answer: "The removal or covering of sin itself",
+    distractors: [
+      "The appeasing of divine anger",
+      "The purchase of freedom from slavery",
+      "The imputing of righteousness to a believer",
+    ],
+    keywords: "expiation atonement covering sin removal",
+  },
+  {
+    slug: "aseity",
+    difficulty: "difficult",
+    prompt: "Which divine attribute is named by the term \"aseity\"?",
+    answer: "God's self-existence — that he depends on nothing outside himself",
+    distractors: [
+      "God's presence at every point of creation",
+      "God's changelessness across time",
+      "God's exhaustive knowledge of all things",
+    ],
+    keywords: "aseity self existence independence attributes of god",
+  },
+  {
+    slug: "chalcedon-definition",
+    difficulty: "difficult",
+    prompt: "The Chalcedonian Definition (AD 451) confesses Christ as what?",
+    answer: "One person in two natures, fully divine and fully human",
+    distractors: [
+      "Two persons joined in a single nature",
+      "One nature formed by blending divinity and humanity",
+      "A human being permanently indwelt by a divine power",
+    ],
+    keywords: "chalcedon 451 two natures one person hypostatic christology",
+  },
+  {
+    slug: "hypostatic-union",
+    difficulty: "difficult",
+    prompt: "The term \"hypostatic union\" refers to what?",
+    answer: "The union of divine and human natures in the one person of Christ",
+    distractors: [
+      "The union of Father, Son, and Spirit in one divine essence",
+      "The union of Christ with his church as head and body",
+      "The union of soul and body in every human being",
+    ],
+    keywords: "hypostatic union natures person christ chalcedon",
+  },
+  {
+    slug: "modalism",
+    difficulty: "difficult",
+    prompt: "Which Trinitarian error treats Father, Son, and Spirit as three modes or masks of a single person rather than three distinct persons?",
+    answer: "Modalism (Sabellianism)",
+    distractors: ["Arianism", "Tritheism", "Subordinationism"],
+    keywords: "modalism sabellianism patripassianism trinity heresy modes",
+  },
+  {
+    slug: "adoptionism",
+    difficulty: "difficult",
+    prompt: "Which early error held that Jesus was an ordinary man who was made God's Son at a point in his life, such as his baptism?",
+    answer: "Adoptionism",
+    distractors: ["Docetism", "Modalism", "Apollinarianism"],
+    keywords: "adoptionism heresy baptism sonship christology",
+  },
+  {
+    slug: "theodicy",
+    difficulty: "difficult",
+    prompt: "A \"theodicy\" is an attempt to address which problem?",
+    answer: "How a good and all-powerful God can permit evil and suffering",
+    distractors: [
+      "How Scripture should be interpreted across cultures",
+      "How the church ought to be governed",
+      "How prophecy is verified after the fact",
+    ],
+    keywords: "theodicy problem of evil suffering leibniz apologetics",
+  },
+  {
+    slug: "soteriology-definition",
+    difficulty: "difficult",
+    prompt: "\"Soteriology\" is the branch of theology dealing with what?",
+    answer: "Salvation",
+    distractors: ["The Holy Spirit", "Creation", "The sacraments"],
+    keywords: "soteriology salvation doctrine loci",
+  },
+  {
+    slug: "pneumatology-definition",
+    difficulty: "difficult",
+    prompt: "\"Pneumatology\" is the branch of theology dealing with what?",
+    answer: "The Holy Spirit",
+    distractors: ["The soul's state after death", "The angelic hierarchy", "The breathing prayers of the desert monks"],
+    keywords: "pneumatology holy spirit doctrine loci",
+  },
+  {
+    slug: "hermeneutics-definition",
+    difficulty: "difficult",
+    prompt: "\"Hermeneutics\" names which discipline?",
+    answer: "The theory and method of interpreting texts",
+    distractors: [
+      "The copying and transmission of manuscripts",
+      "The comparison of competing Bible translations",
+      "The composition and delivery of sermons",
+    ],
+    keywords: "hermeneutics interpretation exegesis method scripture",
+  },
+  {
+    slug: "general-revelation",
+    difficulty: "difficult",
+    prompt: "\"General revelation\" refers to what?",
+    answer: "What can be known of God through creation and conscience, available to everyone",
+    distractors: [
+      "The public reading of Scripture in worship",
+      "The visions recorded in the book of Revelation",
+      "Prophecies given to named individuals",
+    ],
+    keywords: "general revelation natural creation conscience romans 1 special",
+  },
+  {
+    slug: "kenosis",
+    difficulty: "difficult",
+    prompt: "\"Kenosis,\" drawn from Philippians 2, refers to what?",
+    answer: "Christ's self-emptying in taking the form of a servant",
+    distractors: [
+      "The filling of believers with the Spirit at Pentecost",
+      "The emptiness of the tomb on Easter morning",
+      "The pouring out of God's wrath in judgment",
+    ],
+    keywords: "kenosis philippians 2 self emptying servant christology",
+  },
+  {
+    slug: "perichoresis",
+    difficulty: "difficult",
+    prompt: "In Trinitarian theology, \"perichoresis\" describes what?",
+    answer: "The mutual indwelling of the three persons in one another",
+    distractors: [
+      "The procession of the Spirit from the Father",
+      "The ordering of the persons in the work of salvation",
+      "The distinction between God's essence and his energies",
+    ],
+    keywords: "perichoresis circumincession mutual indwelling trinity",
+  },
+  {
+    slug: "imago-dei",
+    difficulty: "difficult",
+    prompt: "The phrase \"imago Dei\" refers to what?",
+    answer: "Humanity's creation in the image of God",
+    distractors: [
+      "The veneration of painted icons in worship",
+      "The seal of the Spirit given at baptism",
+      "The likeness of Christ displayed in the sacrament",
+    ],
+    keywords: "imago dei image of god genesis 1:27 anthropology dignity",
+  },
+  {
+    slug: "filioque",
+    difficulty: "difficult",
+    prompt: "The \"Filioque\" clause, long disputed between the Eastern and Western churches, concerns which question?",
+    answer: "Whether the Holy Spirit proceeds from the Father \"and the Son\"",
+    distractors: [
+      "Whether Christ possesses one will or two",
+      "Whether icons may rightly be venerated",
+      "Whether bishops may be married",
+    ],
+    keywords: "filioque procession holy spirit east west schism creed",
+  },
+  {
+    slug: "apophatic-theology",
+    difficulty: "difficult",
+    prompt: "Apophatic (or \"negative\") theology proceeds by which method?",
+    answer: "Describing God by saying what he is not",
+    distractors: [
+      "Deducing God's nature from the design of the natural world",
+      "Building doctrine only from direct quotations of Scripture",
+      "Resting doctrine on the reports of mystical visions",
+    ],
+    keywords: "apophatic negative theology via negativa cataphatic mystery",
+  },
+  {
+    slug: "federal-headship",
+    difficulty: "difficult",
+    prompt: "In theology, \"headship\" language about Adam and Christ (as in Romans 5) means what?",
+    answer: "That one person acts as the representative of a whole group",
+    distractors: [
+      "That the church is governed by a single national assembly",
+      "That authority in the church descends from the apostles",
+      "That Christ's human nature was taken from Adam's line only",
+    ],
+    keywords: "federal headship representation adam christ romans 5 covenant",
+  },
+
+  // --- impossible ---------------------------------------------------------------------------------
+  {
+    slug: "constantinople-381",
+    difficulty: "impossible",
+    prompt: "The creed commonly recited today as \"the Nicene Creed\" was given its familiar final form at which council?",
+    answer: "The First Council of Constantinople (AD 381)",
+    distractors: [
+      "The Council of Chalcedon (AD 451)",
+      "The Council of Ephesus (AD 431)",
+      "The Second Council of Nicaea (AD 787)",
+    ],
+    keywords: "constantinople 381 nicene creed niceno constantinopolitan council",
+  },
+  {
+    slug: "ephesus-theotokos",
+    difficulty: "impossible",
+    prompt: "Which council condemned Nestorius and affirmed the title Theotokos (\"God-bearer\") for Mary?",
+    answer: "The Council of Ephesus (AD 431)",
+    distractors: [
+      "The Council of Nicaea (AD 325)",
+      "The Council of Chalcedon (AD 451)",
+      "The Second Council of Constantinople (AD 553)",
+    ],
+    keywords: "ephesus 431 theotokos nestorius council christology mary",
+  },
+  {
+    slug: "apollinarianism",
+    difficulty: "impossible",
+    prompt: "Apollinarianism was condemned for teaching what about Christ?",
+    answer: "That the divine Word took the place of Christ's human mind or rational soul",
+    distractors: [
+      "That Christ only appeared to have a body",
+      "That Christ was two persons loosely joined",
+      "That Christ became divine at his resurrection",
+    ],
+    keywords: "apollinarianism apollinaris human soul mind heresy christology",
+  },
+  {
+    slug: "traducianism",
+    difficulty: "impossible",
+    prompt: "\"Traducianism\" and \"creationism\" (in its older theological sense) are competing explanations of what?",
+    answer: "The origin of each individual human soul",
+    distractors: [
+      "The age of the earth",
+      "The authorship of the Pentateuch",
+      "The manner of Christ's presence in the Lord's Supper",
+    ],
+    keywords: "traducianism creationism soul origin anthropology",
+  },
+  {
+    slug: "divine-simplicity",
+    difficulty: "impossible",
+    prompt: "The classical attribute of divine \"simplicity\" means what?",
+    answer: "That God is not composed of parts",
+    distractors: [
+      "That God's commands are easy to understand",
+      "That God's nature can be fully grasped by reason",
+      "That God acts directly, without intermediaries",
+    ],
+    keywords: "divine simplicity parts essence attributes classical theism",
+  },
+  {
+    slug: "prevenient-grace",
+    difficulty: "impossible",
+    prompt: "In theological vocabulary, \"prevenient grace\" names grace that does what?",
+    answer: "Goes before, enabling a person to respond to God at all",
+    distractors: [
+      "Is given after conversion to sustain a holy life",
+      "Is conveyed only through the sacraments",
+      "Is granted to angels rather than to human beings",
+    ],
+    keywords: "prevenient grace preceding wesley arminian enabling",
+  },
+  {
+    slug: "recapitulation",
+    difficulty: "impossible",
+    prompt: "\"Recapitulation,\" the atonement theme developed by Irenaeus, means what?",
+    answer: "That Christ retraces and restores in himself the whole course of human life",
+    distractors: [
+      "That Christ paid a ransom owed to the devil",
+      "That Christ satisfied an offense against God's honor",
+      "That Christ's death chiefly serves as a moral example",
+    ],
+    keywords: "recapitulation irenaeus atonement second adam anakephalaiosis",
+  },
+  {
+    slug: "communicatio-idiomatum",
+    difficulty: "impossible",
+    prompt: "The \"communicatio idiomatum\" refers to what?",
+    answer: "Attributing the properties of either of Christ's natures to his one person",
+    distractors: [
+      "The sharing of goods among believers in the early church",
+      "The exchange of vows between a bishop and his diocese",
+      "The transfer of merit from the saints to the living",
+    ],
+    keywords: "communicatio idiomatum properties natures person christ chalcedon",
+  },
+];
+
+/** Turns the hand-written seeds above into QuizQuestions — same deterministic id-seeded choice
+ * shuffle every other generator uses, so all clients derive identical choice orders from the id
+ * alone and nothing about the question ever travels over the wire. */
+function doctrineQuestions(): QuizQuestion[] {
+  return DOCTRINE_QUESTIONS.map((seed) => {
+    const id = `theology-core-${seed.slug}`;
+    const rand = mulberry32(hashSeed(id));
+    const { choices, correctIndex } = shuffleChoices(seed.answer, seed.distractors, rand);
+    return {
+      id,
+      category: "theology" as const,
+      // Doctrine spans the canon; the strict Old/New Testament presets deliberately don't claim these.
+      testament: "both" as QuizTestament,
+      difficulty: seed.difficulty,
+      points: DIFFICULTY_POINTS[seed.difficulty],
+      prompt: seed.prompt,
+      choices,
+      correctIndex,
+      keywords: buildKeywords(seed.keywords, seed.prompt, seed.answer),
+    };
+  });
 }
 
 /** The full generated pool — built once at module load from the static content in src/data/*.ts.
@@ -458,6 +1149,7 @@ export const ALL_QUESTIONS: QuizQuestion[] = [
   ...timelineOrderQuestions(),
   ...theologyRoleQuestions(),
   ...theologySummaryQuestions(),
+  ...doctrineQuestions(),
 ];
 
 const QUESTIONS_BY_ID = new Map(ALL_QUESTIONS.map((q) => [q.id, q]));
@@ -484,7 +1176,7 @@ export const TOPIC_PRESETS: { key: QuizTopicPreset; label: string; description: 
   { key: "people", label: "People of the Bible", description: "Prophets, apostles, kings, and everyone in between." },
   { key: "places", label: "Locations of the Bible", description: "Cities, regions, and archaeological sites." },
   { key: "history", label: "Biblical History", description: "When things happened, and in what order." },
-  { key: "theology", label: "Theology", description: "Doctrines, practices, and people groups." },
+  { key: "theology", label: "Theology", description: "Doctrine, the creeds, and the language of the faith." },
   { key: "old-testament", label: "Old Testament", description: "Genesis through Malachi." },
   { key: "new-testament", label: "New Testament", description: "Matthew through Revelation." },
 ];

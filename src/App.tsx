@@ -987,7 +987,14 @@ function App() {
   // Timeline is open. Without this early case, opening Timeline while Bible (or Map) was last active
   // fell through to that stale panel state and kept showing Bible's/Map's search bar and behavior on
   // top of Timeline — the bug this early-out fixes.
-  const searchMode: "map" | "bible" | "notes" | "timeline" | null = showTimeline
+  //
+  // Games mode is checked even earlier, and resolves to null: like Timeline it's a full-area takeover
+  // that leaves the panels underneath mounted, but unlike Timeline it has nothing for the header
+  // search to act on — so without this early-out it fell through to whatever panel was last active
+  // and painted Bible's (or Map's/Notes') search bar over the Games UI. Games gets no header search.
+  const searchMode: "map" | "bible" | "notes" | "timeline" | null = showGame
+    ? null
+    : showTimeline
     ? "timeline"
     : isMobile
       ? activeMobilePanel === "map" || activeMobilePanel === "bible" || activeMobilePanel === "notes"

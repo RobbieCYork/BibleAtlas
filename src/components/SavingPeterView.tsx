@@ -14,7 +14,17 @@ function shuffled<T>(items: T[]): T[] {
   return copy;
 }
 
-const MAX_WRONG = 6;
+/** Wrong guesses allowed before Peter goes under, per difficulty tier. Every tier gets the standard
+ * six except Expert, which gets three — its word bank is seminary-level vocabulary, and the tighter
+ * margin is what makes "Expert" mean something beyond a harder word list. */
+const MAX_WRONG_BY_LEVEL: Record<SavingPeterLevel, number> = {
+  beginner: 6,
+  easy: 6,
+  intermediate: 6,
+  advanced: 6,
+  expert: 3,
+};
+const DEFAULT_MAX_WRONG = 6;
 // Standard QWERTY row order — easier to scan/type on than strict alphabetical for anyone used to a
 // real keyboard, which is most players.
 const KEYBOARD_ROWS = ["QWERTYUIOP", "ASDFGHJKL", "ZXCVBNM"].map((row) => row.split(""));
@@ -25,7 +35,7 @@ interface SavingPeterViewProps {
 }
 
 /** Hangman, themed around Matthew 14:22-33 — every wrong guess sinks Peter a little further into the
- * water instead of building a gallows; a full miss (MAX_WRONG wrong letters) means he goes under
+ * water instead of building a gallows; a full miss (this level's MAX_WRONG_BY_LEVEL allowance) means he goes under
  * entirely, guessing the word before that means Jesus catches his hand in time. Same five difficulty
  * tiers as the Crossword (see data/savingPeterWords.ts), picked the same way. */
 export default function SavingPeterView({ session, onBack }: SavingPeterViewProps) {
@@ -45,7 +55,9 @@ export default function SavingPeterView({ session, onBack }: SavingPeterViewProp
       .single()
       .then(({ data }) => setDisplayName((data as { display_name: string | null } | null)?.display_name ?? null));
   }, [session]);
-  const playerName = displayName ?? session.user.email ?? "You";
+  // `||` rather than `??` — a guest session carries an empty-string email, which `??` would happily
+  // pass through and render as "Bye bye, Peter!  couldn't save you."
+  const playerName = displayName || session.user.email || "You";
 
   // A shuffled "bag" per level (drawn without replacement) instead of a fresh random pick each
   // round — a plain random pick can hand back the same word two or three rounds in a row purely by
@@ -82,18 +94,24 @@ export default function SavingPeterView({ session, onBack }: SavingPeterViewProp
     () => [...guessed].filter((l) => !entry.word.includes(l)),
     [guessed, entry]
   );
-  const wrongCount = Math.min(wrongLetters.length, MAX_WRONG);
+  const maxWrong = level ? MAX_WRONG_BY_LEVEL[level] : DEFAULT_MAX_WRONG;
+  const wrongCount = Math.min(wrongLetters.length, maxWrong);
   const won = entry.word.split("").every((l) => guessed.has(l));
-  const lost = wrongCount >= MAX_WRONG && !won;
+  const lost = wrongCount >= maxWrong && !won;
   const over = won || lost;
 
+  // How far Peter has sunk, as a share of this level's allowance — so Expert's three-guess budget
+  // still walks the figure all the way down the scene rather than stopping a third of the way.
+  const sinkProgress = wrongCount / maxWrong;
+
   // Three photos of Peter (see public/games/saving-peter) stand in for the old emoji figure —
-  // further along by wrong-guess count, unless the round is already decided.
+  // further along by wrong-guess count, unless the round is already decided. Thresholds are
+  // proportional (a sixth / a half of the allowance) so they land sensibly at either budget.
   const peterImage = lost
     ? "/games/saving-peter/peter-drowning.png"
-    : won || wrongCount <= 1
+    : won || wrongCount <= Math.round(maxWrong / 6)
       ? "/games/saving-peter/peter-standing.png"
-      : wrongCount <= 3
+      : wrongCount <= Math.round(maxWrong / 2)
         ? "/games/saving-peter/peter-sinking.png"
         : "/games/saving-peter/peter-drowning.png";
 
@@ -119,7 +137,7 @@ export default function SavingPeterView({ session, onBack }: SavingPeterViewProp
           <div className="crossword-level-picker">
             <div className="games-panel-intro">
               <h2>Choose a difficulty</h2>
-              <p>Beginner is for little ones just learning Bible stories; Expert is seminary-level.</p>
+              <p>Beginner is for little ones just learning Bible stories; Expert is seminary-level — and allows only 3 wrong guesses instead of 6.</p>
             </div>
             <div className="game-center-list">
               {SAVING_PETER_LEVELS.map((l) => (
@@ -152,8 +170,8 @@ export default function SavingPeterView({ session, onBack }: SavingPeterViewProp
       <div className="game-body">
         <div className="saving-peter">
           <div className="saving-peter-scene">
-            <img className="saving-peter-figure" src={peterImage} alt="" style={{ transform: `translateY(${wrongCount * 11}px)` }} />
-            <div className="saving-peter-water" style={{ height: `${18 + wrongCount * 11}%` }} />
+            <img className="saving-peter-figure" src={peterImage} alt="" style={{ transform: `translateY(${sinkProgress * 66}px)` }} />
+            <div className="saving-peter-water" style={{ height: `${18 + sinkProgress * 66}%` }} />
           </div>
 
           <p className="saving-peter-status">
@@ -161,7 +179,7 @@ export default function SavingPeterView({ session, onBack }: SavingPeterViewProp
               ? "🎉 Jesus reached out and caught him — you got it!"
               : lost
                 ? `Bye bye, Peter! ${playerName} couldn't save you. Fortunately Jesus did.`
-                : `Wrong guesses so far: ${wrongCount} / ${MAX_WRONG}`}
+                : `Wrong guesses so far: ${wrongCount} / ${maxWrong}`}
           </p>
 
           <p className="saving-peter-clue">{entry.clue}</p>
