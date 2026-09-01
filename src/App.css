@@ -3114,10 +3114,12 @@ body.resizing-panels {
   display: block;
   width: 34px;
   height: 34px;
-  /* No border-radius here on purpose. favicon.svg carries the brand mark's own corner radius
-     (3.13% of its width, measured off the owner's source artwork); an 8px CSS clip on a 34px box
-     is 23%, which re-rounded an already-rounded mark and made the header logo read as a squircle
-     while every raster icon stayed sharp. The SVG owns the radius now, so all the icons agree. */
+  /* No border-radius here on purpose. favicon.svg carries the mark's corner radius itself
+     (rx=10 on a 48 viewBox = 20.83%), and every raster icon is generated at that same ratio, so
+     the header logo and the browser-tab icon finally agree. The old 8px CSS clip on a 34px box
+     was 23.5% — close enough to hide the mismatch here, which is exactly why the sharp rasters
+     went unnoticed for so long. Don't reintroduce it: it would re-round an already-rounded mark
+     and drift out of sync with the SVG again the next time either number changes. */
   flex-shrink: 0;
 }
 

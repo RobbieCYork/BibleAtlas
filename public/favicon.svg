@@ -1,10 +1,13 @@
-<!-- Capstone Bible mark. Fill and corner radius are both taken from the owner's own logo
-     artwork (public/brand-logo-source.png): #7c3aed in sRGB, and a corner radius measured at
-     32px on a 1025px square = 3.13% of the width — "lightly rounded", not squircle-rounded.
-     Every raster icon in public/ is generated from that same source at the same 3.13% ratio,
-     so keep rx here at 3.13% of the viewBox if the size ever changes. -->
+<!-- Capstone Bible mark. Fill is #7c3aed, sampled from the owner's logo artwork
+     (public/brand-logo-source.png, whose embedded display profile converts to exactly this in
+     sRGB). The corner radius is 10/48 = 20.83% of the width — this SVG is the reference the
+     owner judges the mark by, because it's what the in-app header logo renders. Every raster
+     icon in public/ is generated at that same 20.83% ratio so the browser-tab icon and the
+     header logo agree; keep rx at 20.83% of the viewBox if the size ever changes.
+     Exceptions, on purpose: apple-touch-icon.png and icon-maskable-512.png stay square and
+     full-bleed, because iOS and Android launchers apply their own mask. -->
 <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 48 48">
-  <rect width="48" height="48" rx="1.5" fill="#7c3aed"/>
+  <rect width="48" height="48" rx="10" fill="#7c3aed"/>
   <g transform="translate(0, 2.5)">
     <path d="M24 13c-2.8-2.2-6.6-3-11-3v20c4.4 0 8.2.8 11 3 2.8-2.2 6.6-3 11-3V10c-4.4 0-8.2.8-11 3z"
           fill="none" stroke="#ffffff" stroke-width="2.2" stroke-linejoin="round" stroke-linecap="round"/>
