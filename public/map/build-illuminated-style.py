@@ -18,9 +18,18 @@ with urllib.request.urlopen(req) as r:
     d = json.load(r)
 
 VELLUM = "#E4D4B0"
-SEA = "#B4A582"
-SEA_DEEP = "#A89A78"
+# The sea is a pale hand-tinted blue wash, the way an engraved atlas was coloured by hand: high
+# in value so the vellum land still carries the weight, and very low in chroma so it never drifts
+# toward the bright saturated blue of a modern web basemap. The drawn coastline and its offset
+# wash still do the definition work; the tint just makes "this is water" instant.
+SEA = "#C3D3D8"
+SEA_DEEP = "#B6C8CF"  # world zooms, where the coastline is hairline-thin and needs help
+SEA_SHALLOW = "#CCDBDE"
 COAST = "#9A8760"
+# Rivers and streams are the same family as the sea — a slate-blue ink, deep enough that a
+# hairline still reads, desaturated enough to sit beside the tint rather than shout.
+RIVER = "#7A94A0"
+STREAM = "#8CA1AB"
 INK = "#5E4A2C"
 HALO = "rgba(236,225,197,0.9)"
 
@@ -50,9 +59,10 @@ FILLS = {
 
 LINES = {
     "park_outline": ("#C3B189", 0.5),
-    "waterway_tunnel": ("#8C7F5C", 0.45),
-    "waterway_river": ("#8C7F5C", 0.85),
-    "waterway_other": ("#93865F", 0.7),
+    # Inland waterways read as one family with the sea instead of staying at the old darker olive.
+    "waterway_tunnel": (STREAM, 0.4),
+    "waterway_river": (RIVER, 0.8),
+    "waterway_other": (STREAM, 0.65),
     "boundary_2": ("#8A6F45", 0.75),
     "boundary_3": ("#9C8560", 0.5),
     "boundary_disputed": ("#8A6F45", 0.6),
@@ -120,7 +130,7 @@ for layer in d["layers"]:
         paint["raster-brightness-max"] = 0.95
     elif lid == "water":
         paint["fill-color"] = [
-            "interpolate", ["linear"], ["zoom"], 0, SEA_DEEP, 5, SEA, 10, "#BDAF8D",
+            "interpolate", ["linear"], ["zoom"], 0, SEA_DEEP, 5, SEA, 10, SEA_SHALLOW,
         ]
     elif lid in FILLS:
         color, opacity, outline = FILLS[lid]
@@ -182,7 +192,8 @@ for layer in d["layers"]:
         l.pop("layout")
     layers.append(l)
 
-    # A drawn coastline right after the water fill — the single strongest "engraved atlas" cue.
+    # A drawn coastline right after the water fill — the single strongest "engraved atlas" cue,
+    # and now also the thing that separates sea from shore, since the fills sit close in value.
     if lid == "water":
         layers.append({
             "id": "water_coastline",
@@ -193,8 +204,8 @@ for layer in d["layers"]:
             "layout": {"line-cap": "round", "line-join": "round"},
             "paint": {
                 "line-color": COAST,
-                "line-opacity": 0.75,
-                "line-width": ["interpolate", ["exponential", 1.3], ["zoom"], 2, 0.5, 6, 1.0, 12, 2.0],
+                "line-opacity": 0.92,
+                "line-width": ["interpolate", ["exponential", 1.3], ["zoom"], 2, 0.7, 6, 1.3, 12, 2.2],
             },
         })
         layers.append({
@@ -202,14 +213,20 @@ for layer in d["layers"]:
             "type": "line",
             "source": "openmaptiles",
             "source-layer": "water",
-            "filter": ["!=", ["get", "brunnel"], "tunnel"],
+            # Sea coasts only. Offsetting a wash off both banks of a river or a small lake makes
+            # the two washes meet in the middle and fill the channel with a muddy smear — very
+            # visible now that the water itself is a pale tint. The plain coastline still outlines
+            # every lake and river; only the ocean gets the wash.
+            "filter": ["all",
+                       ["!=", ["get", "brunnel"], "tunnel"],
+                       ["==", ["get", "class"], "ocean"]],
             "layout": {"line-cap": "round", "line-join": "round"},
             "paint": {
                 "line-color": COAST,
-                "line-opacity": 0.18,
+                "line-opacity": 0.24,
                 "line-blur": 4,
-                "line-width": ["interpolate", ["exponential", 1.3], ["zoom"], 2, 4, 6, 8, 12, 16],
-                "line-offset": ["interpolate", ["exponential", 1.3], ["zoom"], 2, 2, 6, 4, 12, 8],
+                "line-width": ["interpolate", ["exponential", 1.3], ["zoom"], 2, 4, 6, 8, 12, 12],
+                "line-offset": ["interpolate", ["exponential", 1.3], ["zoom"], 2, 2, 6, 4, 12, 6],
             },
         })
 
