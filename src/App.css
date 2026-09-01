@@ -3415,20 +3415,27 @@ body.resizing-panels {
   padding: 0 1px;
 }
 
+/* Softened 2026-09: the old set were Tailwind-300 tints, and yellow (#fde047) in particular read as a
+   fluorescent marker stripe rather than a highlight — bright enough that it pulled the eye off the
+   sentence it was meant to serve. Every colour here now sits in the ~90-93% lightness band, low enough
+   in chroma to sit *behind* Scripture rather than compete with it, while staying clearly
+   distinguishable from each other. Legibility is unaffected in either theme: .verse-highlight forces
+   near-black text on top regardless of theme, and these are all light enough to carry it (each is at
+   least 13:1 against #1a1a1a — the old set were 10-15:1, so contrast is if anything better). */
 .verse-highlight-yellow {
-  background: #fde047;
+  background: #fbeaa8;
 }
 
 .verse-highlight-green {
-  background: #86efac;
+  background: #bdead0;
 }
 
 .verse-highlight-blue {
-  background: #93c5fd;
+  background: #c4dcf7;
 }
 
 .verse-highlight-pink {
-  background: #f9a8d4;
+  background: #f7cbe0;
 }
 
 /* --- Highlight drag handles (HighlightHandles.tsx) --- */
@@ -3546,20 +3553,21 @@ body.resizing-panels {
   flex-shrink: 0;
 }
 
+/* Kept identical to the .verse-highlight-* fills above so a swatch is an honest preview of the mark. */
 .verse-popup-color-yellow {
-  background: #fde047;
+  background: #fbeaa8;
 }
 
 .verse-popup-color-green {
-  background: #86efac;
+  background: #bdead0;
 }
 
 .verse-popup-color-blue {
-  background: #93c5fd;
+  background: #c4dcf7;
 }
 
 .verse-popup-color-pink {
-  background: #f9a8d4;
+  background: #f7cbe0;
 }
 
 .verse-popup-note-btn {
@@ -7061,4 +7069,139 @@ body.resizing-panels {
 
 .friend-post-visibility .my-notes-actions-buttons {
   margin-left: auto;
+}
+
+/* --- Unified verse-action sheet (BiblePanel) ------------------------------------------------ */
+/* Appended as a self-contained block: one bottom sheet now serves selection, existing highlights,
+   and notes, so these additions extend the .verse-popup-* family above rather than reorganizing it. */
+
+/* The swatch whose colour is already on the passage: ringed in the accent, and struck through with a
+   ✕ so it reads as "tap to remove" rather than "tap to re-apply what's already there". The ✕ is drawn
+   in near-black — the same ink .verse-highlight forces on highlighted Scripture — so it stays legible
+   on every one of the four (deliberately pale) fills, in both themes. */
+.verse-popup-color.is-active {
+  box-shadow: 0 0 0 2px var(--accent);
+  position: relative;
+}
+
+.verse-popup-color.is-active::after {
+  content: "✕";
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  line-height: 1;
+  font-weight: 700;
+  color: #1a1a1a;
+  pointer-events: none;
+}
+
+/* The colour the note composer's auto-highlight will use — a plain selected state (no ✕: tapping it
+   again wouldn't remove anything, since the highlight doesn't exist until Save). */
+.verse-popup-color.is-chosen {
+  box-shadow: 0 0 0 2px var(--accent);
+}
+
+.verse-popup-note-highlight-row {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 8px;
+}
+
+.verse-popup-note-highlight-label {
+  font-size: 12px;
+  color: var(--text-muted);
+  margin-right: 2px;
+}
+
+/* Notes listed under the swatch row inside the same sheet. The divider separates them from the
+   actions above; each note's own text and its Edit/✕ sit on one line so a short note doesn't cost
+   two rows of a phone-sized sheet. */
+.verse-sheet .verse-popup-notes-list {
+  margin-top: 10px;
+  border-top: 1px solid var(--border);
+  padding-top: 4px;
+}
+
+.verse-popup-note-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+}
+
+.verse-popup-note-row p {
+  flex: 1;
+  min-width: 0;
+  margin-bottom: 0;
+  overflow-wrap: anywhere;
+}
+
+.verse-popup-note-row .verse-popup-note-item-actions {
+  flex-shrink: 0;
+  align-items: center;
+}
+
+/* Bigger than its 12px label sibling so the destructive control is a comfortable touch target. */
+.verse-popup-note-row .verse-popup-note-delete {
+  font-size: 14px;
+  line-height: 1;
+}
+
+.verse-popup-note-error {
+  font-size: 12px;
+  color: var(--danger);
+  margin: 4px 0 6px;
+}
+
+/* With the on-screen keyboard up, the composer must not be pushed past the fold — cap the sheet and
+   let it scroll internally instead of growing. The panel-relative sheet is inside the reader's own
+   layout, so this stays clear of the app-wide viewport work in viewportHeight.ts. */
+@media (max-width: 768px) {
+  .verse-sheet {
+    max-height: min(70vh, 420px);
+  }
+
+  .verse-popup-note-editor textarea {
+    min-height: 56px;
+  }
+}
+
+/* --- Share-card footer: wordmark + web address (ShareCardModal) ---
+ * The address is what turns a shared PNG into a way back to the app, so it ships on the card itself
+ * rather than only in the share sheet's text (which strips away the moment someone re-posts the
+ * image). Two stacked lines, address second and smaller, so it reads as an attribution line under
+ * the wordmark instead of a watermark competing with the verse.
+ *
+ * No colour is declared anywhere in here on purpose: the card's colour is set inline from the chosen
+ * background's `textColor`, so both lines inherit a value already chosen for contrast against that
+ * exact gradient (white on the dark themes, near-black on Lake/Easter, warm grey on Good Friday).
+ * A theme token like --text-muted would be the app-shell's colour, not the card's, and would go
+ * invisible on half the backgrounds. Emphasis is carried by opacity + size against currentColor,
+ * which stays correct on every background and in both app themes.
+ *
+ * Opacity moves off the wrapper and onto each line: nested opacity multiplies, and .75 × .75 would
+ * have faded the address to the edge of legibility once html2canvas rasterises it. */
+.share-card-footer {
+  bottom: 12px;
+  opacity: 1;
+  line-height: 1.35;
+}
+
+.share-card-footer-mark {
+  display: block;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  opacity: 0.8;
+}
+
+.share-card-footer-url {
+  display: block;
+  font-size: 8.5px;
+  letter-spacing: 0.07em;
+  opacity: 0.66;
 }
