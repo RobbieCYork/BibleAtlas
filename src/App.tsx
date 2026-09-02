@@ -1112,17 +1112,33 @@ function App() {
    * Social opens My Profile — those three don't touch setMobileActivePanel at all. Every branch
    * first leaves whichever takeover is currently up, since all three sit at the same z-index and
    * would otherwise stay painted over the destination. */
-  const goToMobileDestination = (key: MobileTabKey) => {
+  /** The two full-area takeovers both platforms can navigate to. Shared by the mobile router below
+   * and by desktop's PanelMenu "Go to" group, which replaced the old footer strip: the routing is
+   * identical on both (leave whichever other takeover is up, then open this one), even though the
+   * rest of `goToMobileDestination` is mobile-specific — Social/panel tabs have no desktop analogue.
+   * Kept as one function so the two entry points can't drift apart. */
+  const goToTakeover = (key: "timeline" | "games") => {
     if (key === "timeline") {
       closeGame();
       closeMyProfile();
       openTimeline();
-      return;
-    }
-    if (key === "games") {
+    } else {
       closeTimeline();
       closeMyProfile();
       openGame();
+    }
+  };
+
+  /** Desktop's way back out of a takeover from the menu — picking the destination that is already
+   * on screen. Mirrors what the old footer strip's active button did. */
+  const leaveTakeover = () => {
+    closeTimeline();
+    closeGame();
+  };
+
+  const goToMobileDestination = (key: MobileTabKey) => {
+    if (key === "timeline" || key === "games") {
+      goToTakeover(key);
       return;
     }
     if (key === "social") {
@@ -1158,6 +1174,9 @@ function App() {
           onToggle={toggleMenuPanel}
           lastAutoClosed={lastAutoClosed}
           friendsBadgeCount={pendingFriendRequests + unreadMessages + groupsBadgeCount}
+          activeDestination={showTimeline ? "timeline" : showGame ? "games" : null}
+          onNavigate={goToTakeover}
+          onLeaveDestination={leaveTakeover}
         />
         <button type="button" className="app-logo-button" onClick={goHome} aria-label="Go to Bible">
           <img src="/favicon.svg" className="app-logo" alt="" aria-hidden="true" />
@@ -1577,40 +1596,6 @@ function App() {
           </div>
         )}
       </div>
-      {/* Slim always-visible footer strip — the desktop entry point to Timeline/Games mode (mobile
-          gets its own tabs in the bottom bar instead). Clicking an active one again closes it. */}
-      {!isMobile && (
-        <footer className="app-footer">
-          <button
-            type="button"
-            className={`app-footer-timeline${showTimeline ? " active" : ""}`}
-            onClick={showTimeline ? closeTimeline : openTimeline}
-            aria-pressed={showTimeline}
-          >
-            <svg width="15" height="15" viewBox="0 0 16 16" fill="none" aria-hidden="true">
-              <path
-                d="M4 2.2h8M4 13.8h8M4.6 2.2c0 2.6 0 3.5 3.4 5.8 3.4-2.3 3.4-3.2 3.4-5.8M4.6 13.8c0-2.6 0-3.5 3.4-5.8 3.4 2.3 3.4 3.2 3.4 5.8"
-                stroke="currentColor"
-                strokeWidth="1.4"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
-            </svg>
-            <span className="app-footer-timeline-label">Timeline</span>
-            <span className="app-footer-timeline-tagline">— journey through biblical &amp; world history</span>
-          </button>
-          <button
-            type="button"
-            className={`app-footer-timeline app-footer-game${showGame ? " active" : ""}`}
-            onClick={openGame}
-            aria-pressed={showGame}
-          >
-            <span aria-hidden="true">🎮</span>
-            <span className="app-footer-timeline-label">Games</span>
-            <span className="app-footer-timeline-tagline">— play live trivia with friends</span>
-          </button>
-        </footer>
-      )}
       {/* Fixed-position overlay (styled in App.css), not a child of map-area — on mobile it stays
           reachable while the reader flips to the Bible tab to read a stop's passage. */}
       {walkOpen && activeWalk && (
