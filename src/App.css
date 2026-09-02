@@ -8486,5 +8486,38 @@ a.profile-links-url {
 @media (min-width: 769px) {
   .app-body {
     border-bottom: 1px solid var(--border);
+    /* THE HAIRLINE ALONE WAS NOT ENOUGH. Drawn at the very last row of pixels in the window it is
+     * technically present and perceptually absent: a 1px line flush against the browser's own edge
+     * reads as the edge of the window, not as the end of the content. The panels still looked like
+     * they ran off the bottom of the screen.
+     *
+     * So give the layout real termination: lift the panels off the bottom of the window and let a
+     * strip of the app's own ground (html { background: var(--bg) }, index.css) show beneath them.
+     * The hairline above then sits at the panels' actual edge instead of the viewport's, and the
+     * whole field reads as a surface sitting IN the window rather than bleeding out of it.
+     *
+     * 12px, matched to the shell's existing rhythm rather than invented: the header's vertical
+     * padding is 14px and 8/10/12px is the spacing step used throughout this file. Big enough to be
+     * unmistakable at a glance, small enough that it is a margin and not a band.
+     *
+     * MARGIN, not padding, and that choice is load-bearing three times over:
+     *   1. It cannot add page height. .app-shell is a fixed-height flex column and .app-body is
+     *      `flex: 1` (flex-basis 0, min-height 0); the flex algorithm subtracts an item's margins
+     *      from the free space before distributing it, so the 12px comes out of the panels' height,
+     *      exactly like the border does. scrollHeight still equals innerHeight. Nothing here touches
+     *      .app-shell's 100svh floor (6b9e7f8) — that element is untouched.
+     *   2. The three full-area takeovers respect it for free. .timeline-mode / .myprofile-mode /
+     *      .game-mode are `position: absolute; inset: 0` children of .app-body, and an absolutely
+     *      positioned box is laid out against its containing block's PADDING box — which excludes
+     *      margin. Padding-bottom here would have been painted over by all three; margin cannot be.
+     *      They stop at the same hairline the panels do.
+     *   3. The map's MapLibre canvas and its corner controls are sized by .map-area, which is inside
+     *      the content box, so the canvas terminates at the new edge and the zoom/compass buttons
+     *      and attribution move up with it — nothing is clipped or pushed under the fold.
+     *
+     * The strip is --bg, so it is the vellum ground in light mode and the iron-gall ground in dark
+     * with no second declaration. Desktop only, as the exact complement of MOBILE_QUERY: on mobile
+     * the bottom tab bar is the terminator and must keep meeting the bottom of the screen. */
+    margin-bottom: 12px;
   }
 }
