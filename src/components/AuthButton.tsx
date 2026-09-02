@@ -4,6 +4,8 @@ import { supabase, setRememberMe, type Profile } from "../lib/supabase";
 import { useTextSize } from "../lib/textSize";
 import { useTheme } from "../lib/theme";
 import { MIN_VISIBLE_TABS, MOBILE_TAB_META, MOBILE_TAB_ORDER, LOCKED_TAB, useMobileTabs } from "../lib/mobileTabs";
+import AdminConsole from "./AdminConsole";
+import { useIsAdmin } from "../lib/adminApi";
 
 interface AuthButtonProps {
   session: Session | null;
@@ -365,6 +367,11 @@ export default function AuthButton({ session, openProfileNonce, onOpenReadingPla
                 👤 My Profile
               </button>
             )}
+            {isAdmin && (
+              <button type="button" className="auth-menu-item" onClick={() => setMenuView("admin")}>
+                🛡️ Admin Console
+              </button>
+            )}
             <button type="button" className="auth-menu-item" onClick={() => setMenuView("settings")}>
               ⚙️ Settings
             </button>
@@ -383,6 +390,23 @@ export default function AuthButton({ session, openProfileNonce, onOpenReadingPla
             <button type="button" className="auth-menu-item auth-signout" onClick={handleSignOut}>
               Log Out
             </button>
+          </div>
+        )}
+        {open && menuView === "admin" && isAdmin && (
+          <div className="auth-admin-sheet" role="dialog" aria-label="Admin Console">
+            <div className="auth-admin-sheet-head">
+              <button type="button" className="auth-back-link" onClick={() => setMenuView("menu")}>
+                ← Back
+              </button>
+              <h3 className="auth-admin-sheet-title">Admin Console</h3>
+            </div>
+            <div className="auth-admin-sheet-body">
+              <p className="auth-benefits">
+                Usage, engagement, and moderation for the whole site. Only accounts listed in <code>admin_users</code>{" "}
+                can load any of it — the database refuses the queries for everyone else, not just this menu.
+              </p>
+              <AdminConsole />
+            </div>
           </div>
         )}
         {open && menuView === "settings" && (

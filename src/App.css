@@ -8446,6 +8446,152 @@ a.profile-links-url {
   padding-right: 40px;
 }
 
+/* ============================================================================
+ * ADMIN CONSOLE — account-menu entry point, and the aggregate Guests card.
+ *
+ * Every colour is an existing token, so both themes come for free (light on bare
+ * :root in index.css, dark swapped under :root:not([data-theme="light"])).
+ * Nothing here hard-codes a colour.
+ * ========================================================================== */
+
+/* The console does not fit in a 240px flyout — it has six tabs and a stat grid.
+ * So the account menu's "Admin Console" item takes over the screen instead of
+ * rendering inside the dropdown, borrowing My Profile's full-screen pattern.
+ * Fixed rather than absolute for exactly that reason: it must escape the
+ * dropdown's box, not be sized by it. */
+.auth-admin-sheet {
+  position: fixed;
+  inset: 0;
+  z-index: 60;
+  display: flex;
+  flex-direction: column;
+  background: var(--bg);
+  color: var(--text);
+  text-align: left;
+  zoom: var(--text-scale, 1);
+}
+
+.auth-admin-sheet-head {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 16px;
+  border-bottom: 1px solid var(--border);
+  background: var(--panel-bg);
+  flex-shrink: 0;
+  min-height: 54px;
+}
+
+.auth-admin-sheet-title {
+  font-size: 17px;
+  line-height: 1.25;
+  margin: 0;
+}
+
+.auth-admin-sheet-body {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  padding: 14px 16px 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+@media (min-width: 900px) {
+  /* Wide screens get the console centred rather than stretched across a monitor;
+     the ranked rows read badly at 1400px wide. */
+  .auth-admin-sheet-body {
+    width: min(880px, 100%);
+    margin: 0 auto;
+  }
+}
+
+/* --- The one card that stands in for every anonymous guest row --- */
+
+.admin-guest-card {
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: var(--panel-bg);
+  overflow: hidden;
+}
+
+.admin-guest-summary {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  width: 100%;
+  padding: 12px;
+  border: none;
+  background: transparent;
+  color: var(--text);
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
+.admin-guest-summary:hover {
+  background: var(--surface-sunken);
+}
+
+.admin-guest-summary:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: -2px;
+}
+
+.admin-guest-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.admin-guest-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-h);
+}
+
+.admin-guest-chevron {
+  color: var(--text-muted);
+  font-size: 12px;
+}
+
+/* Wraps rather than scrolls: five short figures at 375px become two or three
+   lines, which is the right answer on a phone. */
+.admin-guest-figures {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 14px;
+  font-size: 12px;
+  color: var(--text-muted);
+}
+
+.admin-guest-figures strong {
+  color: var(--text);
+  font-weight: 600;
+}
+
+.admin-guest-detail {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  padding: 0 12px 14px;
+  border-top: 1px solid var(--border);
+  padding-top: 14px;
+}
+
+/* A recent-visit row has no bar, so its two halves stack on a narrow screen
+   instead of squeezing the timestamp into two characters. */
+.admin-row-stacked {
+  flex-wrap: wrap;
+  row-gap: 2px;
+}
+
 /* --- Panel menu: "Go to" destinations (Timeline / Games) ---------------------------------------
  * These replaced the desktop footer strip. They are NOT panel checkboxes: Timeline and Games are
  * full-area takeovers, one at a time, so they get button rows with an icon, a blurb (carried over

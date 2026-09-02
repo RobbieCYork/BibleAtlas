@@ -7,6 +7,7 @@ import {
   fetchEngagement,
   fetchFeatureBreakdown,
   fetchFeatureUsage,
+  fetchGuestSummary,
   fetchOverview,
   fetchRecentPublicContent,
   fetchUsers,
@@ -20,6 +21,7 @@ import {
   type AdminDailyRow,
   type AdminEngagement,
   type AdminFeatureRow,
+  type AdminGuestSummary,
   type AdminOverview,
   type AdminUserRow,
 } from "../lib/adminApi";
@@ -82,6 +84,8 @@ export default function AdminConsole() {
   const [daily, setDaily] = useState<AdminDailyRow[] | null>(null);
   const [users, setUsers] = useState<AdminUserRow[] | null>(null);
   const [userSearch, setUserSearch] = useState("");
+  const [guests, setGuests] = useState<AdminGuestSummary | null>(null);
+  const [guestsOpen, setGuestsOpen] = useState(false);
   const [engagement, setEngagement] = useState<AdminEngagement | null>(null);
   const [features, setFeatures] = useState<AdminFeatureRow[] | null>(null);
   const [panelBreakdown, setPanelBreakdown] = useState<AdminBreakdownRow[] | null>(null);
@@ -122,6 +126,7 @@ export default function AdminConsole() {
   // Per-section lazy loading, re-firing when the time window changes for the windowed sections.
   useEffect(() => {
     if (section === "users" && users === null) void loadUsers("");
+    if (section === "users" && guests === null) void run(async () => setGuests(await fetchGuestSummary(30)));
     if (section === "engagement") void run(async () => setEngagement(await fetchEngagement(days)));
     if (section === "features")
       void run(async () => {
@@ -165,6 +170,10 @@ export default function AdminConsole() {
 
   const maxDaily = Math.max(1, ...(daily ?? []).map((d) => Math.max(d.signups, d.sessions)));
   const maxFeature = Math.max(1, ...(features ?? []).map((f) => f.uses));
+  // Guests are rolled into one card; only real accounts get a row of their own.
+  const registeredUsers = (users ?? []).filter((u) => !u.is_anonymous);
+  const guestRowCount = (users ?? []).length - registeredUsers.length;
+  const maxGuestDay = Math.max(1, ...(guests?.days ?? []).map((d) => Math.max(d.new_guests, d.sessions)));
 
   return (
     <div className="admin-console">
@@ -272,12 +281,148 @@ export default function AdminConsole() {
           {users && (
             <>
               <p className="admin-note">
-                {users[0]?.total_count ?? 0} account{(users[0]?.total_count ?? 0) === 1 ? "" : "s"} match
-                {(users[0]?.total_count ?? 0) === 1 ? "es" : ""}
-                {users.length < (users[0]?.total_count ?? 0) ? ` — showing the newest ${users.length}` : ""}.
+                {registeredUsers.length} registered account{registeredUsers.length === 1 ? "" : "s"}
+                {guestRowCount > 0 ? ` and ${guestRowCount} guest session${guestRowCount === 1 ? "" : "s"}` : ""} in
+                this result
+                {users.length < (users[0]?.total_count ?? 0) ? ` — showing the newest ${users.length} of ${users[0]?.total_count}` : ""}
+                .
               </p>
+
+              {/* Guests are throwaway: "Continue as Guest" mints a new anonymous account on every
+                  tap, so they outnumber real people several to one and listing them individually
+                  buries the handful of accounts worth looking at. One card stands in for all of
+                  them; the people who matter stay listed below, one row each. */}
+              {guestRowCount > 0 && guests && (
+                <div className="admin-guest-card">
+                  <button
+                    type="button"
+                    className="admin-guest-summary"
+                    aria-expanded={guestsOpen}
+                    onClick={() => setGuestsOpen((v) => !v)}
+                  >
+                    <span className="admin-guest-head">
+                      <span className="admin-guest-title">
+                        <span aria-hidden="true">👤</span> Guests
+                        <span className="admin-badge admin-badge-muted">{guests.total}</span>
+                      </span>
+                      <span className="admin-guest-chevron" aria-hidden="true">
+                        {guestsOpen ? "▾" : "▸"}
+                      </span>
+                    </span>
+                    <span className="admin-guest-figures">
+                      <span>
+                        <strong>{guests.new_24h}</strong> new in 24h
+                      </span>
+                      <span>
+                        <strong>{guests.new_7d}</strong> new in 7d
+                      </span>
+                      <span>
+                        <strong>{guests.active_7d}</strong> active in 7d
+                      </span>
+                      <span>Newest {formatWhen(guests.newest_seen)}</span>
+                      <span>First {formatWhen(guests.first_seen)}</span>
+                    </span>
+                  </button>
+
+                  {guestsOpen && (
+                    <div className="admin-guest-detail">
+                      <div className="admin-stat-grid">
+                        <Stat label="Guest accounts" value={guests.total} hint="one per “Continue as Guest” tap" />
+                        <Stat
+                          label="Measured"
+                          value={guests.guests_with_sessions}
+                          hint="have session data"
+                        />
+                        <Stat label="Sessions" value={guests.sessions_total} />
+                        <Stat label="Median session" value={formatDuration(guests.median_session_seconds)} />
+                        <Stat label="Total time" value={formatDuration(guests.sessions_seconds_total)} />
+                        <Stat label="Came back" value={guests.returning_guests} hint="more than one session" />
+                        <Stat label="Active (24h)" value={guests.active_24h} />
+                        <Stat label="Last active" value={formatWhen(guests.last_active_at)} />
+                      </div>
+
+                      {/* The caveat, stated where the numbers are — not in a footnote. Most guests
+                          predate migration 019, so they have a creation date and nothing else. A
+                          small "sessions" figure next to a large "guests" figure is a gap in the
+                          record, not a finding about behaviour. */}
+                      {guests.guests_before_analytics > 0 && (
+                        <p className="admin-note">
+                          {guests.guests_before_analytics} of these {guests.total} guests were created before usage
+                          tracking started
+                          {guests.analytics_since
+                            ? ` on ${new Date(guests.analytics_since).toLocaleDateString(undefined, { month: "long", day: "numeric", year: "numeric" })}`
+                            : ""}
+                          . We know when they arrived and nothing else — no session lengths, no times, no activity.
+                          Every session figure above and every time below covers only the{" "}
+                          {guests.guests_with_sessions} guest{guests.guests_with_sessions === 1 ? "" : "s"} who arrived
+                          after that. It can't be backfilled.
+                        </p>
+                      )}
+
+                      <div className="admin-block">
+                        <h4 className="admin-block-heading">By day</h4>
+                        {guests.days.length === 0 ? (
+                          <p className="admin-note">No guest arrived and no guest session started in the last 30 days.</p>
+                        ) : (
+                          <ul className="admin-rows">
+                            {guests.days.map((d) => (
+                              <li key={d.day} className="admin-row">
+                                <span className="admin-row-label">
+                                  {new Date(`${d.day}T12:00:00`).toLocaleDateString(undefined, {
+                                    month: "short",
+                                    day: "numeric",
+                                  })}
+                                </span>
+                                <Bar value={Math.max(d.new_guests, d.sessions)} max={maxGuestDay} />
+                                <span className="admin-row-value">
+                                  {d.new_guests} new
+                                  {d.sessions > 0
+                                    ? ` · ${d.sessions} session${d.sessions === 1 ? "" : "s"} · ${formatDuration(d.seconds)}`
+                                    : " · no session data"}
+                                </span>
+                              </li>
+                            ))}
+                          </ul>
+                        )}
+                      </div>
+
+                      <div className="admin-block">
+                        <h4 className="admin-block-heading">Most recent guest visits</h4>
+                        {guests.recent_sessions.length === 0 ? (
+                          <p className="admin-note">
+                            No guest session has been recorded yet. Guests created before tracking started don't have
+                            one, so this stays empty until a new guest visits with this build installed.
+                          </p>
+                        ) : (
+                          <ul className="admin-rows">
+                            {guests.recent_sessions.map((sn) => (
+                              <li key={sn.session_id} className="admin-row admin-row-stacked">
+                                <span className="admin-row-label">{formatWhen(sn.started_at)}</span>
+                                <span className="admin-row-value">
+                                  {formatDuration(sn.seconds)} · {sn.event_count} action
+                                  {sn.event_count === 1 ? "" : "s"} · left{" "}
+                                  {new Date(sn.last_seen_at).toLocaleTimeString(undefined, {
+                                    hour: "numeric",
+                                    minute: "2-digit",
+                                  })}
+                                </span>
+                              </li>
+                            ))}
+                          </ul>
+                        )}
+                      </div>
+
+                      <p className="admin-note">
+                        A guest has no name, email, or profile — nothing here identifies anyone. A guest who later
+                        creates an account appears as a separate registered row below; the two are not linked.
+                      </p>
+                    </div>
+                  )}
+                </div>
+              )}
+
               <ul className="admin-user-list">
-                {users.map((u) => (
+                {registeredUsers.map((u) => (
                   <li key={u.user_id} className="admin-user">
                     <div className="admin-user-main">
                       <span className="admin-user-name">
@@ -304,7 +449,13 @@ export default function AdminConsole() {
                   </li>
                 ))}
               </ul>
-              {users.length === 0 && <p className="admin-note">No accounts match that search.</p>}
+              {registeredUsers.length === 0 && (
+                <p className="admin-note">
+                  {guestRowCount > 0
+                    ? "No registered account matches that search — only guests, which are summarised above."
+                    : "No accounts match that search."}
+                </p>
+              )}
             </>
           )}
         </>

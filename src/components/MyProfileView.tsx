@@ -7,7 +7,7 @@ import AvatarCropModal from "./AvatarCropModal";
 import LinkedVerseText from "./LinkedVerseText";
 import BackButton from "./BackButton";
 import AdminConsole from "./AdminConsole";
-import { fetchIsAdmin } from "../lib/adminApi";
+import { useIsAdmin } from "../lib/adminApi";
 import { ProfileLinksEditor, ProfileLinksList, type LinkDrafts } from "./ProfileLinks";
 import {
   DEFAULT_LINK_VISIBILITY,
@@ -649,18 +649,10 @@ export default function MyProfileView({ userId, onDisplayNameSaved, onClose, onG
   // Whether to DRAW the Admin Console section. Not the access control: every query the console makes
   // is refused server-side for a non-admin (see sql/019 — each admin_* function raises before doing
   // any work, and analytics_events' RLS grants SELECT to admins only). A client that flipped this
-  // boolean would get a console full of "not authorized".
-  const [isAdmin, setIsAdmin] = useState(false);
+  // boolean would get a console full of "not authorized". Shared with the account menu's entry
+  // (AuthButton) via useIsAdmin, so the two entry points can't drift apart.
+  const isAdmin = useIsAdmin(userId);
   const [adminOpen, setAdminOpen] = useState(false);
-  useEffect(() => {
-    let cancelled = false;
-    fetchIsAdmin(userId).then((ok) => {
-      if (!cancelled) setIsAdmin(ok);
-    });
-    return () => {
-      cancelled = true;
-    };
-  }, [userId]);
   return (
     <section className="myprofile-root" aria-label="My Profile">
       <header className="myprofile-header">

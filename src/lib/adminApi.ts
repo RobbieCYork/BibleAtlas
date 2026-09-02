@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import { supabase } from "./supabase";
 
 /* ============================================================================
@@ -100,6 +101,50 @@ export interface AdminContentRow {
   created_at: string;
 }
 
+export interface AdminGuestDay {
+  day: string;
+  new_guests: number;
+  sessions: number;
+  active_guests: number;
+  seconds: number;
+  first_session_at: string | null;
+  last_session_at: string | null;
+}
+
+export interface AdminGuestSession {
+  session_id: string;
+  started_at: string;
+  last_seen_at: string;
+  seconds: number;
+  event_count: number;
+}
+
+/** The one aggregate that stands in for every anonymous "Continue as Guest" row in the Users list.
+ * Note the deliberate split: `total`/`new_*`/`first_seen` are head counts of auth.users and are
+ * always true, while every session-derived figure covers only `guests_with_sessions` — the guests
+ * who arrived after analytics started. `guests_before_analytics` is the size of the blind spot, and
+ * the UI states it rather than letting a small `sessions_total` read as "guests don't stay". */
+export interface AdminGuestSummary {
+  total: number;
+  new_24h: number;
+  new_7d: number;
+  new_30d: number;
+  first_seen: string | null;
+  newest_seen: string | null;
+  active_24h: number;
+  active_7d: number;
+  last_active_at: string | null;
+  guests_with_sessions: number;
+  guests_before_analytics: number;
+  sessions_total: number;
+  sessions_seconds_total: number;
+  median_session_seconds: number | null;
+  returning_guests: number;
+  analytics_since: string | null;
+  days: AdminGuestDay[];
+  recent_sessions: AdminGuestSession[];
+}
+
 /** Whether this account is an admin. Reads the caller's OWN admin_users row — the table's only
  * SELECT policy is `user_id = auth.uid()`, so this can neither enumerate other admins nor be
  * answered affirmatively by a client that simply decides to. A false here only hides the UI;
@@ -114,6 +159,29 @@ export async function fetchIsAdmin(userId: string): Promise<boolean> {
   } catch {
     return false;
   }
+}
+
+
+/** The single admin gate the UI uses, so every entry point to the console asks the same question the
+ * same way and none of them can drift. Both call sites (My Profile's section and the account menu's
+ * item) mount this; neither re-implements the check. It only decides whether to DRAW an entry point
+ * — the refusal that matters is the `42501 not authorized` every admin_* function raises. */
+export function useIsAdmin(userId: string | null | undefined): boolean {
+  const [isAdmin, setIsAdmin] = useState(false);
+  useEffect(() => {
+    if (!userId) {
+      setIsAdmin(false);
+      return;
+    }
+    let cancelled = false;
+    void fetchIsAdmin(userId).then((ok) => {
+      if (!cancelled) setIsAdmin(ok);
+    });
+    return () => {
+      cancelled = true;
+    };
+  }, [userId]);
+  return isAdmin;
 }
 
 async function rpc<T>(fn: string, args?: Record<string, unknown>): Promise<T> {
@@ -135,6 +203,8 @@ export const fetchFeatureBreakdown = (event: string, key: string, days = 30) =>
 
 export const fetchUsers = (search: string | null, limit = 50, offset = 0) =>
   rpc<AdminUserRow[]>("admin_list_users", { p_search: search, p_limit: limit, p_offset: offset });
+
+export const fetchGuestSummary = (days = 30) => rpc<AdminGuestSummary>("admin_guest_summary", { p_days: days });
 
 export const deleteContent = (kind: "post" | "comment", id: string) =>
   rpc<void>("admin_delete_content", { p_kind: kind, p_id: id });
