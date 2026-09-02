@@ -856,9 +856,45 @@
 }
 
 @media (max-width: 720px) {
+  /* The header is a single non-wrapping row carrying six things at 375px: Back, the title block
+   * (title + year readout), the Eras jump menu, the Lanes menu, −, + and Fit. Measured at 375px
+   * before this block was tightened, the title block was left 79.6px against a 117px title and an
+   * 83px year readout — both ellipsized. The three reclamations below (a 6px row gap, a 4px gap
+   * between the zoom controls, and dropping "Historical" from the heading) give it 93.6px, which
+   * fits both whole with the row still one line and no horizontal page overflow. */
   .tl-header {
     padding: 8px 10px;
-    gap: 8px;
+    gap: 6px;
+  }
+
+  .tl-zoom-controls {
+    gap: 4px;
+  }
+
+  /* See the note in TimelineView.tsx where this span is rendered — the heading reads "Timeline" on
+   * phones, matching the tab-bar label that opened it. */
+  .tl-title-long {
+    display: none;
+  }
+
+  /* The era list is 220px wide and the desktop rule hangs it off the RIGHT edge of its 35px button.
+   * That button sits at x=150.6 in a 375px header, so right-anchoring put the panel's left edge at
+   * -26px and clipped the first two characters of every era name off the screen. There is no purely
+   * relative anchor that fixes this — the button's distance from the header's right padding edge is
+   * a layout result, not something CSS can name — so on phones the panel leaves the button's
+   * coordinate space and spans the screen instead, inset by the same 10px the header is padded by.
+   *
+   * `top` is derived, not guessed: .tl-header has an explicit `min-height: 54px` which wins here
+   * (its content is a 32px control row inside 8px padding = 48px), and 6px is the same gap the
+   * desktop `top: calc(100% + 6px)` uses. Nothing between here and the viewport is transformed or
+   * filtered, so `fixed` really is viewport-relative. */
+  .tl-era-menu-dropdown {
+    position: fixed;
+    top: 60px;
+    left: 10px;
+    right: 10px;
+    min-width: 0;
+    max-height: calc(100vh - 140px);
   }
 
   .tl-title {
@@ -879,7 +915,8 @@
   }
 
   /* The era jump control is one more thing competing with the title for a 375px header,
-   * so on phones it drops to its arrow icon alone. */
+   * so on phones it drops to its arrow icon alone — 35px instead of 62.6px. This is the reason the
+   * control could come back at all (see SHOW_ERA_MENU in TimelineView.tsx); do not remove it. */
   .tl-era-menu-button .tl-lane-menu-count {
     display: none;
   }

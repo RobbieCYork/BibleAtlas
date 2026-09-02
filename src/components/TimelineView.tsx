@@ -168,15 +168,22 @@ const SHOW_BOOKS_LANE = false;
 
 /** The header's "Jump to" era menu (TimelineEraMenu — an arrow button reading "Eras" that opens a
  * checklist of thirteen named spans, from Primeval History to The Modern Era, plus "The whole
- * span") is REMOVED AT THE OWNER'S REQUEST, behind this flag and in exactly the same way the
- * Books-of-the-Bible band above is: nothing is deleted. TimelineEraMenu.tsx, its era table, its
- * CSS (.tl-era-menu*) and the `showYearRange` callback it drives are all still here and still
- * working — flip this single constant back to `true` and the control returns exactly as it was,
- * with no other change anywhere.
+ * span"). RESTORED — it was hidden behind this flag for one release (b123697) and is back on.
+ *
+ * It came back because the cost of losing it was measured rather than guessed: with the menu gone,
+ * reaching the New Testament from the fitted full-span view took THIRTEEN discrete zoom-in taps at
+ * 375px, each one landing somewhere you then had to pan to find. The axis is honestly linear across
+ * ~6000 years (see the header comment in TimelineEraMenu.tsx for why it stays that way), so
+ * navigation has to carry the load, and one tap versus thirteen is not a close call.
+ *
+ * The reason it was pulled — header crowding at 375px — is handled in CSS rather than by removal:
+ * the @media (max-width: 720px) block in TimelineView.css already drops this button to its arrow
+ * icon alone (`.tl-era-menu-button .tl-lane-menu-count { display: none }`) and hides the back
+ * button's label, so on a phone the control costs ~33px in a row that has room for it.
  *
  * `showYearRange` has no other caller. The cluster-badge drill-in path uses `zoomToYearRange`,
  * which is a different callback (deliberately one-way — it only ever zooms IN) and is untouched. */
-const SHOW_ERA_MENU = false;
+const SHOW_ERA_MENU = true;
 
 /* ------------------------------------------------------- lane visibility */
 
@@ -1690,7 +1697,14 @@ export default function TimelineView({
       <header className="tl-header">
         <BackButton onClick={onClose} ariaLabel="Close timeline" />
         <div className="tl-title-block">
-          <h2 className="tl-title">Historical Timeline</h2>
+          {/* "Historical" is dropped below 720px (see .tl-title-long in TimelineView.css). Measured:
+              at 375px the full string wants 117px and the header can only give the title block ~94px
+              once the Eras button, the Lanes menu and −/+/Fit have taken their share, so it was
+              rendering as "Historical Time…" with the year readout beneath it clipped too. The short
+              form is 54px, fits whole, and matches the tab-bar label that got you here. */}
+          <h2 className="tl-title">
+            <span className="tl-title-long">Historical </span>Timeline
+          </h2>
           {view && (
             <span className="tl-range-readout">
               {formatYear(visibleFrom || 1)} — {formatYear(visibleTo || 1)}
@@ -1699,10 +1713,8 @@ export default function TimelineView({
         </div>
         <div className="tl-header-spacer" />
         <div className="tl-zoom-controls">
-          {/* Disabled at the owner's request — see SHOW_ERA_MENU above. Left as a live, type-checked
-            * reference to the component and its callbacks rather than commented out, so flipping the
-            * flag is genuinely the only edit needed to bring it back. The header row is a plain flex
-            * line with a gap, so rendering nothing here closes the row up with no hole left behind. */}
+          {/* See SHOW_ERA_MENU above — on again. Kept behind the flag (rather than unwrapped) so the
+            * control can be taken back out with a one-line change if it is ever unwanted again. */}
           {SHOW_ERA_MENU && (
             <TimelineEraMenu onJump={showYearRange} onFit={() => animateTo(fitView())} />
           )}
