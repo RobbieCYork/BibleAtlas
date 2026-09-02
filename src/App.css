@@ -8292,3 +8292,124 @@ a.profile-links-url {
   font-size: 12px;
   color: var(--text);
 }
+
+/* --- Mobile header hamburger (MobileNavMenu) ---
+   Rendered only when App is in mobile mode (isMobile, the same max-width:768px query), and sits at
+   the far left of the header ahead of the logo. Desktop's own hamburger (.panel-menu) is hidden at
+   this width, so there is never a second one. Sized a little tighter than .panel-menu-button (34px
+   vs 38px) because the mobile header is already carrying logo + search + avatar at 320px. */
+.mobile-nav-menu {
+  position: relative;
+  flex-shrink: 0;
+}
+
+.mobile-nav-menu-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  padding: 0;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--surface-sunken);
+  color: var(--text);
+  cursor: pointer;
+}
+
+.mobile-nav-menu-button:hover {
+  background: var(--accent-bg);
+}
+
+.mobile-nav-menu-button:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+/* Three drawn bars rather than the ☰ glyph — the glyph's weight and vertical centring vary wildly
+   between iOS and Android system fonts, and this has to sit optically level with the logo. */
+.mobile-nav-menu-bars {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 4px;
+  width: 16px;
+}
+
+.mobile-nav-menu-bars span {
+  display: block;
+  height: 2px;
+  border-radius: 1px;
+  background: currentColor;
+}
+
+.mobile-nav-menu-dropdown {
+  position: absolute;
+  top: calc(100% + 6px);
+  left: 0;
+  min-width: 200px;
+  padding: 6px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: var(--panel-bg);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.18);
+  /* Above the header's own search dropdown and the panels below it; the header itself is 65. */
+  z-index: 70;
+}
+
+.mobile-nav-menu-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  padding: 9px 10px;
+  border: none;
+  border-radius: 7px;
+  background: none;
+  color: var(--text);
+  font: inherit;
+  font-size: 15px;
+  text-align: left;
+  cursor: pointer;
+}
+
+.mobile-nav-menu-item:hover {
+  background: var(--surface-sunken);
+}
+
+.mobile-nav-menu-item:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: -2px;
+}
+
+.mobile-nav-menu-item.active {
+  background: var(--accent);
+  color: var(--accent-contrast);
+}
+
+.mobile-nav-menu-icon {
+  font-size: 16px;
+  line-height: 1;
+  width: 20px;
+  text-align: center;
+}
+
+.mobile-nav-menu-label {
+  flex: 1;
+  min-width: 0;
+}
+
+/* Only appears for a destination the reader has taken out of the bottom tab bar. */
+.mobile-nav-menu-tag {
+  flex-shrink: 0;
+  font-size: 10px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-label);
+  color: var(--text-muted);
+}
+
+.mobile-nav-menu-item.active .mobile-nav-menu-tag {
+  color: var(--accent-contrast);
+  opacity: 0.8;
+}

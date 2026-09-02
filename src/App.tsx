@@ -32,7 +32,8 @@ import BackButton from "./components/BackButton";
 import DisplayNameGate from "./components/DisplayNameGate";
 import ResetPasswordGate from "./components/ResetPasswordGate";
 import { supabase, setRememberMe } from "./lib/supabase";
-import { useMobileTabs } from "./lib/mobileTabs";
+import { useMobileTabs, type MobileTabKey } from "./lib/mobileTabs";
+import MobileNavMenu from "./components/MobileNavMenu";
 import { startAnalytics, track, noteAuthChange } from "./lib/analytics";
 import { locations } from "./data/locations";
 import { pois } from "./data/pois";
@@ -1003,20 +1004,21 @@ function App() {
   // lib/mobileTabs.tsx). App needs it for one reason only: rescuing someone who hides the tab they
   // are standing on.
   const { visible: visibleTabs } = useMobileTabs();
+  // Which destination is on screen right now, in the same precedence the tab bar's own active
+  // styling uses: the full-screen takeovers win over whatever panel is mounted underneath them.
+  // Also what the header hamburger (MobileNavMenu) marks as the current row.
+  const currentMobileTab: MobileTabKey = showTimeline
+    ? "timeline"
+    : showGame
+      ? "games"
+      : showMyProfile || activeMobilePanel === "friends"
+        ? "social"
+        : activeMobilePanel === "articles"
+          ? "articles"
+          : activeMobilePanel;
   useEffect(() => {
     if (!isMobile) return;
-    // Which destination is on screen right now, in the same precedence the tab bar's own active
-    // styling uses: the full-screen takeovers win over whatever panel is mounted underneath them.
-    const currentTab = showTimeline
-      ? "timeline"
-      : showGame
-        ? "games"
-        : showMyProfile || activeMobilePanel === "friends"
-          ? "social"
-          : activeMobilePanel === "articles"
-            ? "articles"
-            : activeMobilePanel;
-    if (visibleTabs[currentTab as keyof typeof visibleTabs] !== false) return;
+    if (visibleTabs[currentMobileTab] !== false) return;
     // The tab under the reader just disappeared. Leave every takeover and land on Bible — the one
     // tab that can never be hidden, so this is always a real destination and never a blank panel.
     closeTimeline();
@@ -1104,6 +1106,39 @@ function App() {
     else openPanel("bible");
   };
 
+  /** Where the header hamburger routes to. Every branch mirrors the handler the bottom tab bar
+   * already hands MobileTabBar for that same destination, so the two agree.
+   * Timeline and Games are full-screen takeovers rather than panels, and
+   * Social opens My Profile — those three don't touch setMobileActivePanel at all. Every branch
+   * first leaves whichever takeover is currently up, since all three sit at the same z-index and
+   * would otherwise stay painted over the destination. */
+  const goToMobileDestination = (key: MobileTabKey) => {
+    if (key === "timeline") {
+      closeGame();
+      closeMyProfile();
+      openTimeline();
+      return;
+    }
+    if (key === "games") {
+      closeTimeline();
+      closeMyProfile();
+      openGame();
+      return;
+    }
+    if (key === "social") {
+      closeTimeline();
+      closeGame();
+      // Same nonce the tab bar's Social tab bumps — it pops the account flyout, which is the mobile
+      // route into My Profile. Guarded on isMobile for the same reason it is there.
+      if (isMobile) setOpenProfileNonce((n) => (n ?? 0) + 1);
+      return;
+    }
+    closeTimeline();
+    closeGame();
+    closeMyProfile();
+    setMobileActivePanel(key);
+  };
+
   return (
     <TimelineLinkContext.Provider value={timelineLinkHandlers}>
     <div className="app-shell">
@@ -1113,6 +1148,11 @@ function App() {
         <DisplayNameGate userId={session.user.id} onSaved={() => setNeedsDisplayName(false)} />
       )}
       <header className="app-header">
+        {/* Mobile-only, at the far left of the header (matching the desktop order: hamburger, logo,
+            wordmark). It is the escape hatch for destinations the reader has hidden from the
+            customisable bottom bar — see MobileNavMenu. Desktop keeps PanelMenu below; the two are
+            never on screen together. */}
+        {isMobile && <MobileNavMenu current={currentMobileTab} onNavigate={goToMobileDestination} />}
         <PanelMenu
           panels={panels}
           onToggle={toggleMenuPanel}
