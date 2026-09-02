@@ -1,3 +1,4 @@
+import Icon, { type IconName } from "./Icon";
 export type FriendsView = "friends" | "messages" | "groups";
 
 /** Rendered at the top of every top-level list (Friends/Messages/Groups) so all three are reachable
@@ -19,10 +20,10 @@ export default function ViewSwitcher({
   groupsBadge?: number;
 }) {
   if (!onSelectView) return null;
-  const tabs: { key: FriendsView; icon: string; label: string; badge?: number }[] = [
-    { key: "friends", icon: "👥", label: "Friends", badge: friendsBadge },
-    { key: "groups", icon: "👪", label: "Groups", badge: groupsBadge },
-    { key: "messages", icon: "💬", label: "Messages", badge: messagesBadge },
+  const tabs: { key: FriendsView; icon: IconName; label: string; badge?: number }[] = [
+    { key: "friends", icon: "players", label: "Friends", badge: friendsBadge },
+    { key: "groups", icon: "groups", label: "Groups", badge: groupsBadge },
+    { key: "messages", icon: "messages", label: "Messages", badge: messagesBadge },
   ];
   return (
     <div className="myprofile-social-links">
@@ -33,7 +34,7 @@ export default function ViewSwitcher({
           className={active === tab.key ? "myprofile-social-links-active" : ""}
           onClick={() => onSelectView(tab.key)}
         >
-          {tab.icon} {tab.label}
+          <Icon name={tab.icon} inline /> {tab.label}
           {!!tab.badge && <span className="friends-view-switcher-dot" aria-hidden="true" />}
         </button>
       ))}

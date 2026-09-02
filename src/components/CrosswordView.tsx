@@ -259,7 +259,7 @@ export default function CrosswordView({ onBack }: CrosswordViewProps) {
       <div className="game-body crossword-body crossword-scenic" style={scenicStyle(`${level}-${puzzleIndex}`)}>
         <div className="crossword-toolbar">
           <button type="button" className="games-secondary-button" onClick={restartPuzzle}>
-            🔄 Restart Puzzle
+            <Icon name="restart" inline /> Restart Puzzle
           </button>
           <button type="button" className="games-secondary-button" onClick={backToLevelPicker}>
             Choose Different Level
@@ -361,7 +361,7 @@ export default function CrosswordView({ onBack }: CrosswordViewProps) {
         </div>
 
         <a href={background.sourceUrl} target="_blank" rel="noopener noreferrer" className="crossword-photo-credit">
-          📷 {background.caption} · Wikimedia Commons
+          <Icon name="camera" inline /> {background.caption} · Wikimedia Commons
         </a>
       </div>
     </div>

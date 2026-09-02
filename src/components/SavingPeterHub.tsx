@@ -36,7 +36,7 @@ export default function SavingPeterHub({ session, onBack }: SavingPeterHubProps)
         <div className="game-center-list">
           <button type="button" className="game-center-card" onClick={() => setMode("solo")}>
             <span className="game-center-card-icon" aria-hidden="true">
-              🧑
+              <Icon name="people" />
             </span>
             <span className="game-center-card-body">
               <span className="game-center-card-title">Solo</span>
@@ -48,7 +48,7 @@ export default function SavingPeterHub({ session, onBack }: SavingPeterHubProps)
           </button>
           <button type="button" className="game-center-card" onClick={() => setMode("multiplayer")}>
             <span className="game-center-card-icon" aria-hidden="true">
-              👥
+              <Icon name="players" />
             </span>
             <span className="game-center-card-body">
               <span className="game-center-card-title">Multiplayer (up to 4, video chat)</span>

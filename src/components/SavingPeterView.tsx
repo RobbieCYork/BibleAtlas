@@ -210,7 +210,7 @@ export default function SavingPeterView({ session, onBack }: SavingPeterViewProp
           {over ? (
             <div className="saving-peter-post-game">
               <button type="button" className="games-primary-button" onClick={handleNewRound}>
-                🔄 Play Again
+                <Icon name="restart" inline /> Play Again
               </button>
               <button type="button" className="games-secondary-button" onClick={backToLevelPicker}>
                 Choose Different Level

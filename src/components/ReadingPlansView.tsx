@@ -1,4 +1,5 @@
 import { READING_PLANS, formatPlanDayDisplayReference, type ReadingPlan, type ReadingPlanDay } from "../data/readingPlans";
+import Icon from "./Icon";
 
 interface ReadingPlansViewProps {
   /** Which plan's day list is open — null shows the three plan cards. */
@@ -84,7 +85,7 @@ export default function ReadingPlansView({ openPlanId, onOpenPlan, progress, onS
                   <span className="bible-plan-day-num">Day {day.day}</span>
                   <span className="bible-plan-day-ref">
                     {formatPlanDayDisplayReference(day)}
-                    {(day.locationId || day.poiId) && <span className="bible-plan-day-pin" aria-label="Shown on the map"> 📍</span>}
+                    {(day.locationId || day.poiId) && <span className="bible-plan-day-pin" aria-label="Shown on the map"> <Icon name="place" inline /></span>}
                   </span>
                 </span>
                 <span className="bible-plan-day-title">{day.title}</span>

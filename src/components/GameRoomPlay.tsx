@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState, type ReactNode } from "react";
 import { getQuestionById } from "../data/gameQuestions";
 import { fetchAnswersForQuestion, checkAndAdvance, submitAnswer, type GameRoom, type GamePlayer, type GameBuzz } from "../lib/gameSupabase";
+import Icon from "./Icon";
 
 interface GameRoomPlayProps {
   room: GameRoom;
@@ -157,7 +158,7 @@ export default function GameRoomPlay({ room, players, userId, answersVersion, re
           <span className="game-question-answered-count">
             {answeredUserIds.size}/{players.length} answered
           </span>
-          <span className="game-question-bonus-hint">🥇 First correct = 2×</span>
+          <span className="game-question-bonus-hint"><Icon name="medal" inline /> First correct = 2×</span>
         </div>
         <p className="game-question-prompt">{question.prompt}</p>
         <div className="game-question-choices">
@@ -189,10 +190,10 @@ export default function GameRoomPlay({ room, players, userId, answersVersion, re
             {myAnswer
               ? correctUserIds.has(userId)
                 ? myAwardedDelta && myAwardedDelta > question.points
-                  ? `✅ First correct answer — double points! +${myAwardedDelta}`
-                  : `✅ Correct! +${myAwardedDelta ?? question.points}`
-                : `❌ Not quite — that's ${myAwardedDelta ?? -question.points}. The answer was "${question.choices[question.correctIndex]}."`
-              : `⏱ Time's up. The answer was "${question.choices[question.correctIndex]}."`}
+                  ? <><Icon name="check" inline /> First correct answer — double points! +{myAwardedDelta}</>
+                  : <><Icon name="check" inline /> Correct! +{myAwardedDelta ?? question.points}</>
+                : <><Icon name="close" inline /> Not quite — that's {myAwardedDelta ?? -question.points}. The answer was "{question.choices[question.correctIndex]}."</>
+              : <><Icon name="timer" inline /> Time's up. The answer was "{question.choices[question.correctIndex]}."</>}
           </p>
         ) : locked ? (
           <p className="game-question-reveal">Answer locked in — waiting on the rest of the table…</p>

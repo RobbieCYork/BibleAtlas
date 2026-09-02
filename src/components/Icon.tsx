@@ -56,9 +56,11 @@
 
 import type { ReactElement } from "react";
 import {
-  Briefcase, Cake, CalendarDays, Camera, Clapperboard, Eye, EyeOff, Gem, Globe, GraduationCap,
-  Headphones, House, Link as LinkIcon, Lock, Moon, Music, Palette, Settings, Shield, Smartphone,
-  Play, Sun, ThumbsUp, Tv, X as XMark, type LucideIcon,
+  Ban, Briefcase, Cake, CalendarDays, Camera, Check, Clapperboard, Crown, Eye, EyeOff, FileText,
+  Flame, Gem, Globe, GraduationCap, Headphones, HeartCrack, House, Link as LinkIcon, Lock, LogOut,
+  Medal, Menu, Mic, MicOff, Moon, Music, Palette, Pin, Play, Plus, Printer, RotateCcw, Settings,
+  Share2, Shield, Smartphone, Sun, ThumbsUp, Timer, Tv, Video, VideoOff, Volume2, X as XMark,
+  type LucideIcon,
 } from "lucide-react";
 
 export type IconName =
@@ -98,6 +100,10 @@ export type IconName =
   | "groups"
   | "messages"
   | "church"
+  // Drawn: the marks a reader puts on the text, and the game HUD's lives.
+  | "tag"
+  | "heart"
+  | "heartFull"
   // ── FROM LUCIDE, not drawn. See the LIBRARY map below for why. ──────────────
   | "lock"
   | "globe"
@@ -123,7 +129,27 @@ export type IconName =
   | "movie"
   | "camera"
   | "thumbsUp"
-  | "play";
+  | "play"
+  | "volume"
+  | "crown"
+  | "pin"
+  | "medal"
+  | "ban"
+  | "printer"
+  | "doc"
+  | "share"
+  | "restart"
+  | "plus"
+  | "leave"
+  | "mic"
+  | "micOff"
+  | "video"
+  | "videoOff"
+  | "timer"
+  | "heartBreak"
+  | "menu"
+  | "check"
+  | "flame";
 
 interface IconProps {
   name: IconName;
@@ -559,6 +585,34 @@ const PATHS = {
       <path d="M10.2 20.6v-3.9a1.8 1.8 0 0 1 3.6 0v3.9Z" fill="currentColor" stroke="none" />
     </>
   ),
+
+  /* ── THE READER'S OWN MARKS ON THE TEXT ────────────────────────────────────────────────────────
+     The verse note indicator reuses `notes` and the plan's map pip reuses `place`: both already
+     exist and mean exactly this, and a second near-identical drawing would be a distinction without
+     a difference — the same call made for Friends. Only `tag` is genuinely new. */
+
+  /* Tag: a luggage label pierced by its eyelet. Held apart from `topics`, which is also a label
+     shape, by the pierce and the angle — Topics is a destination you go to, a tag is a thing you
+     tie onto a verse. Solid: the eyelet. */
+  tag: (
+    <>
+      <path d="M11.4 2.8h7a2.8 2.8 0 0 1 2.8 2.8v7a2 2 0 0 1-.6 1.4l-6.6 6.6a2 2 0 0 1-2.8 0l-7-7a2 2 0 0 1 0-2.8l6.6-6.6a2 2 0 0 1 1.4-.6Z" />
+      <circle cx="16.6" cy="7.4" r="1.5" fill="currentColor" stroke="none" />
+    </>
+  ),
+
+  /* Lives. A hollow heart and a filled one, drawn as a PAIR rather than taken from Lucide, because
+     the game HUD needs both states to be the same heart — a library outline sitting next to a
+     hand-filled version of itself reads as two different hearts at 16px. This is the one place the
+     "exactly one solid element" rule is deliberately a state, not a constant: `heart` has none and
+     `heartFull` is nothing but. The row's own aria-label carries the count; see the call sites. */
+  heart: <path d="M12 20.4l-7.1-7a4.4 4.4 0 0 1 6.2-6.2l.9.9.9-.9a4.4 4.4 0 0 1 6.2 6.2Z" />,
+  heartFull: (
+    <path
+      d="M12 20.4l-7.1-7a4.4 4.4 0 0 1 6.2-6.2l.9.9.9-.9a4.4 4.4 0 0 1 6.2 6.2Z"
+      fill="currentColor"
+    />
+  ),
 } satisfies Partial<Record<IconName, ReactElement>>;
 
 /** ── MARKS TAKEN FROM LUCIDE RATHER THAN DRAWN ────────────────────────────────────────────────
@@ -619,6 +673,26 @@ const LIBRARY = {
   camera: Camera,
   thumbsUp: ThumbsUp,
   play: Play,
+  volume: Volume2,
+  crown: Crown,
+  pin: Pin,
+  medal: Medal,
+  ban: Ban,
+  printer: Printer,
+  doc: FileText,
+  share: Share2,
+  restart: RotateCcw,
+  plus: Plus,
+  leave: LogOut,
+  mic: Mic,
+  micOff: MicOff,
+  video: Video,
+  videoOff: VideoOff,
+  timer: Timer,
+  heartBreak: HeartCrack,
+  menu: Menu,
+  check: Check,
+  flame: Flame,
 } satisfies Partial<Record<IconName, LucideIcon>>;
 
 /** Every name in the union must be satisfied by one of the two maps above. Both are declared with

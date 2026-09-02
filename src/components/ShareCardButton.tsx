@@ -1,13 +1,15 @@
+import type { ReactNode } from "react";
 import { useState } from "react";
 import ShareCardModal from "./ShareCardModal";
 import type { ShareCardSpec } from "../lib/shareCard";
+import Icon from "./Icon";
 
 interface ShareCardButtonProps {
   spec: ShareCardSpec;
   filename: string;
   /** Button class — defaults to the details-panel header style. */
   className?: string;
-  label?: string;
+  label?: ReactNode;
   title?: string;
 }
 
@@ -17,7 +19,11 @@ export default function ShareCardButton({
   spec,
   filename,
   className = "panel-share",
-  label = "📤 Share",
+  label = (
+    <>
+      <Icon name="share" inline /> Share
+    </>
+  ),
   title = "Share this",
 }: ShareCardButtonProps) {
   const [open, setOpen] = useState(false);

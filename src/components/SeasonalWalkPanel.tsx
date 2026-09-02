@@ -1,6 +1,7 @@
 import { useState } from "react";
 import type { SeasonalWalk } from "../data/seasonalWalks";
 import { formatWalkStopReference } from "../data/seasonalWalks";
+import Icon from "./Icon";
 
 interface SeasonalWalkPanelProps {
   walk: SeasonalWalk;
@@ -40,7 +41,7 @@ export default function SeasonalWalkPanel({ walk, stopIndex, onGoToStop, onClose
         </button>
       </div>
       <h3 className="walk-stop-label">{stop.label}</h3>
-      <div className="walk-stop-reference">📖 {formatWalkStopReference(stop)}</div>
+      <div className="walk-stop-reference"><Icon name="bible" inline /> {formatWalkStopReference(stop)}</div>
       <p className="walk-stop-blurb">{stop.blurb}</p>
       <div className="walk-panel-nav">
         <button

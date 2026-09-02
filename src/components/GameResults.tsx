@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { fetchTopHighScores, type GameRoom, type GamePlayer, type GameHighScore } from "../lib/gameSupabase";
+import Icon from "./Icon";
 
 interface GameResultsProps {
   room: GameRoom;
@@ -23,7 +24,7 @@ export default function GameResults({ room, players, onPlayAgain }: GameResultsP
   return (
     <div className="game-results">
       <div className="game-results-banner">
-        <p className="game-results-trophy">🏆</p>
+        <p className="game-results-trophy"><Icon name="trophy" /></p>
         <h2>{winner ? `${winner.display_name} wins!` : "Game over"}</h2>
         {winner && <p className="game-results-score">{winner.score} points</p>}
       </div>
@@ -41,7 +42,7 @@ export default function GameResults({ room, players, onPlayAgain }: GameResultsP
       </div>
 
       <div className="games-high-scores">
-        <h3>🏆 Top 5 High Scores</h3>
+        <h3><Icon name="trophy" inline /> Top 5 High Scores</h3>
         {highScores === null ? (
           <p className="games-high-scores-empty">Loading…</p>
         ) : (

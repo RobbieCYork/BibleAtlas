@@ -30,6 +30,7 @@ import { shareFilename, verseCardSpec, type ShareCardSpec } from "../lib/shareCa
 import ShareCardModal from "./ShareCardModal";
 import { track } from "../lib/analytics";
 import HighlightHandles from "./HighlightHandles";
+import Icon from "./Icon";
 
 interface BiblePanelProps {
   reference: string | null;
@@ -118,7 +119,7 @@ interface VerseRange {
 }
 
 /** The one unified verse-action sheet. Whether it was opened by dragging out a fresh selection, by
- * tapping an existing highlight, or by tapping a verse's 📝/🏷️ indicator, it shows the same full set
+ * tapping an existing highlight, or by tapping a verse's note/tag indicator, it shows the same full set
  * of actions — colour swatches (apply / change / remove), the notes already on this range with edit
  * and delete, "Add note", Tag, and Share — and reflects the current state of the range rather than
  * offering a single dead-end "remove" the way the old separate highlight/note popups did. */
@@ -1011,7 +1012,7 @@ export default function BiblePanel({
 
   // Opens the note composer for a pending journal request once its chapter has landed — anchored to
   // the reference's first verse (or the chapter's first when the reference names none), exactly as
-  // if that whole verse had been selected and "📝 Note" tapped, with the prompt quoted into the
+  // if that whole verse had been selected and "Note" tapped, with the prompt quoted into the
   // draft. Declared after the chapter-change popup-clearing effect above so that in the commit where
   // the requested chapter arrives, the clear runs first and this open wins.
   useEffect(() => {
@@ -1240,7 +1241,7 @@ export default function BiblePanel({
    * revised, or deleted without leaving the colour swatches behind. */
   const rangeNotes = popup?.kind === "verse-actions" ? notesForRange(popup.startVerse, popup.endVerse) : [];
 
-  /** Raises the unified sheet from a verse's 📝/🏷️ indicator, which points at a whole verse rather
+  /** Raises the unified sheet from a verse's note/tag indicator, which points at a whole verse rather
    * than at a dragged-out range. If a highlight already touches that verse the sheet opens on *that
    * highlight's* own range instead of the whole verse — otherwise its colour wouldn't read as active
    * (a mark over half a verse doesn't enclose the whole one) and the next swatch tap would stack a
@@ -1467,7 +1468,7 @@ export default function BiblePanel({
           options={
             currentBookInfo
               ? [
-                  { value: "intro", label: "📖 Introduction" },
+                  { value: "intro", label: "Introduction" },
                   ...Array.from({ length: currentBookInfo.chapters }, (_, i) => ({
                     value: String(i + 1),
                     label: String(i + 1),
@@ -1492,7 +1493,7 @@ export default function BiblePanel({
           arrive at a chapter — the same figure the profile grid shows, so the two cannot disagree. */}
       {chaptersThisMonth !== null && (
         <p className="bible-minutes-this-month no-print">
-          📖 {chaptersThisMonth} {chaptersThisMonth === 1 ? "chapter" : "chapters"} read this month
+          <Icon name="bible" inline /> {chaptersThisMonth} {chaptersThisMonth === 1 ? "chapter" : "chapters"} read this month
         </p>
       )}
 
@@ -1517,7 +1518,7 @@ export default function BiblePanel({
             aria-label="Listen to this chapter"
             title={CHAPTER_AUDIO_CREDIT}
           >
-            🔊 Listen
+            <Icon name="volume" inline /> Listen
           </button>
         )}
       </div>
@@ -1735,7 +1736,7 @@ export default function BiblePanel({
                       // note popup is no longer a separate, note-only dead end.
                       onClick={() => openVerseActionsForVerse(v.verse, text.length)}
                     >
-                      📝
+                      <Icon name="notes" />
                     </button>
                   )}
                   {verseTagList.length > 0 && (
@@ -1745,7 +1746,7 @@ export default function BiblePanel({
                       aria-label={`View ${verseTagList.length === 1 ? "tag" : "tags"} on this verse`}
                       onClick={() => openVerseActionsForVerse(v.verse, text.length)}
                     >
-                      🏷️
+                      <Icon name="tag" />
                     </button>
                   )}
                 </p>
@@ -1846,7 +1847,7 @@ export default function BiblePanel({
                       onMouseDown={(e) => e.preventDefault()}
                       onClick={handleOpenNoteEditor}
                     >
-                      📝 {rangeNotes.length > 0 ? "Add note" : "Note"}
+                      <Icon name="notes" inline /> {rangeNotes.length > 0 ? "Add note" : "Note"}
                     </button>
                     <button
                       type="button"
@@ -1856,14 +1857,14 @@ export default function BiblePanel({
                         setPopup({ kind: "tag-picker", startVerse: popup.startVerse, endVerse: popup.endVerse, returnTo: popup })
                       }
                     >
-                      🏷️ Tag
+                      <Icon name="tag" inline /> Tag
                     </button>
                   </>
                 ) : (
                   <span className="verse-popup-signin-note">Log in to highlight or add notes</span>
                 )}
                 <button type="button" className="verse-popup-share-btn" onMouseDown={(e) => e.preventDefault()} onClick={handleShareVerseCard}>
-                  📤 Share
+                  <Icon name="share" inline /> Share
                 </button>
               </div>
 

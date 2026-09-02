@@ -149,7 +149,7 @@ export default function ChronologyView({ onBack }: ChronologyViewProps) {
         <div className="game-body">
           <div className="chronology-gameover">
             <p className="chronology-gameover-icon" aria-hidden="true">
-              💔
+              <Icon name="heartBreak" />
             </p>
             <h2>Game Over</h2>
             <p className="chronology-gameover-score">
@@ -190,19 +190,19 @@ export default function ChronologyView({ onBack }: ChronologyViewProps) {
           <span className="chronology-lives" aria-label={`${lives} lives remaining`}>
             {Array.from({ length: STARTING_LIVES }, (_, i) => (
               <span key={i} className={i < lives ? "chronology-heart" : "chronology-heart chronology-heart-lost"}>
-                {i < lives ? "❤️" : "🤍"}
+                <Icon name={i < lives ? "heartFull" : "heart"} />
               </span>
             ))}
           </span>
           <span className="chronology-score">Solved: {score}</span>
-          <span className="chronology-streak">🔥 {streak}</span>
+          <span className="chronology-streak"><Icon name="flame" inline /> {streak}</span>
         </div>
 
         <p className="chronology-instruction">
           {checked
             ? solved
-              ? "✅ Correct — that's the right order."
-              : "❌ Not quite. The right order is shown below."
+              ? <><Icon name="check" inline /> Correct — that's the right order.</>
+              : <><Icon name="close" inline /> Not quite. The right order is shown below.</>
             : "Earliest at the top. Use ▲ ▼ to reorder."}
         </p>
 

@@ -66,7 +66,7 @@ export default function SavingPeterMultiplayerPanel({ onRoomReady }: SavingPeter
           <h3>Start a game</h3>
           <p>Create a room and share the code with up to 3 friends.</p>
           <button type="button" className="games-primary-button" onClick={handleCreate} disabled={busy}>
-            {busy ? "Creating…" : "👥 Create Room"}
+            {busy ? "Creating…" : <><Icon name="players" inline /> Create Room</>}
           </button>
         </div>
 
@@ -99,7 +99,7 @@ export default function SavingPeterMultiplayerPanel({ onRoomReady }: SavingPeter
       {error && <p className="games-error">{error}</p>}
 
       <div className="games-high-scores">
-        <h3>🏆 Top 5 High Scores</h3>
+        <h3><Icon name="trophy" inline /> Top 5 High Scores</h3>
         {highScores === null ? (
           <p className="games-high-scores-empty">Loading…</p>
         ) : highScores.length === 0 ? (

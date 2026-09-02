@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { supabase } from "../lib/supabase";
+import Icon from "./Icon";
 
 interface PersonMatch {
   id: string;
@@ -68,7 +69,7 @@ export default function PeopleSearchBar({ viewerId, onSelect }: PeopleSearchBarP
   return (
     <div className="search-bar">
       <span className="search-bar-icon" aria-hidden="true">
-        🧑‍🤝‍🧑
+        <Icon name="players" />
       </span>
       <input
         type="text"

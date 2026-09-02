@@ -3,6 +3,7 @@ import type { ReactNode } from "react";
 import { createPortal } from "react-dom";
 import type { TimelineEvent } from "../data/types";
 import { getTimelineEventsForEntity } from "../lib/timelineLinks";
+import Icon from "./Icon";
 
 /* ============================================================================
  * LinkChoicePopup — the small anchored "View X / View in Timeline" chooser.
@@ -185,7 +186,7 @@ export default function LinkChoicePopup({
     >
       <button type="button" role="menuitem" className="link-choice-option" onClick={onViewDirect}>
         <span className="link-choice-icon" aria-hidden="true">
-          📄
+          <Icon name="doc" />
         </span>
         View {name}
       </button>

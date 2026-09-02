@@ -5,6 +5,7 @@ import GroupsPanel from "./GroupsPanel";
 import FriendProfileView from "./FriendProfileView";
 import ViewSwitcher, { type FriendsView } from "./ViewSwitcher";
 import BackButton from "./BackButton";
+import Icon from "./Icon";
 
 interface ConversationSummary {
   friendId: string;
@@ -428,7 +429,7 @@ export default function FriendsPanel({
         </div>
         {pinnedMessage && (
           <div className="pinned-message-banner">
-            <span className="pinned-message-icon" aria-hidden="true">📌</span>
+            <span className="pinned-message-icon"><Icon name="pin" /></span>
             <span className="pinned-message-text">{pinnedMessage.body}</span>
             <button type="button" onClick={() => handleTogglePin(pinnedMessage)} aria-label="Unpin message">
               Unpin
@@ -448,7 +449,7 @@ export default function FriendsPanel({
                   aria-label={m.pinned ? "Unpin message" : "Pin message"}
                   title={m.pinned ? "Unpin message" : "Pin message"}
                 >
-                  📌
+                  <Icon name="pin" />
                 </button>
               </div>
             </div>
@@ -551,7 +552,7 @@ export default function FriendsPanel({
           )}
 
           <button type="button" className="friends-invite-link-button" onClick={handleCopyInviteLink}>
-            🔗 Copy invite link
+            <Icon name="link" inline /> Copy invite link
           </button>
           {inviteStatus && <p className="comment-status">{inviteStatus}</p>}
           <p className="friends-invite-hint">
@@ -620,7 +621,7 @@ export default function FriendsPanel({
                     </div>
                     <div className="friends-list-item-actions">
                       <button type="button" className="friends-message-button" onClick={() => setActiveFriendId(fid)}>
-                        💬 Message
+                        <Icon name="messages" inline /> Message
                       </button>
                       <button
                         type="button"

@@ -141,7 +141,7 @@ export default function PanelMenu({
         aria-haspopup="menu"
         aria-controls={open ? menuId : undefined}
       >
-        ☰
+        <Icon name="menu" />
         {friendsBadgeCount > 0 && <span className="panel-menu-badge" aria-hidden="true" />}
       </button>
       {open && (

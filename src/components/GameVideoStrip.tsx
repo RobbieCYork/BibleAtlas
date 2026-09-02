@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from "react";
+import Icon from "./Icon";
 
 interface RoundState {
   answeredUserIds: Set<string>;
@@ -95,14 +96,14 @@ function VideoTile({
         </button>
       )}
       <span className="game-video-label">
-        {isHost && "👑 "}
+        {isHost && <Icon name="crown" inline />}
         {label}
       </span>
     </div>
   );
 }
 
-/** The row of local + remote video tiles — doubles as the scoreboard (score badge, "answered ✓", and
+/** The row of local + remote video tiles — doubles as the scoreboard (score badge, "answered", and
  * a floating +N/−N pop overlaid right on each tile) so gameplay doesn't need a separate scoreboard
  * list competing for vertical space. Falls back to the app's existing initials-avatar circle (same
  * `.auth-avatar` class used everywhere else) for anyone with no stream yet, camera off, or denied
@@ -191,16 +192,26 @@ export default function GameVideoStrip({
       <div className="game-video-controls">
         {!isSolo && (
           <>
-            <button type="button" className={`game-video-toggle${micOn ? "" : " game-video-toggle-off"}`} onClick={onToggleMic}>
-              {micOn ? "🎙️" : "🔇"}
+            <button
+              type="button"
+              className={`game-video-toggle${micOn ? "" : " game-video-toggle-off"}`}
+              onClick={onToggleMic}
+              aria-label={micOn ? "Mute microphone" : "Unmute microphone"}
+            >
+              <Icon name={micOn ? "mic" : "micOff"} />
             </button>
-            <button type="button" className={`game-video-toggle${cameraOn ? "" : " game-video-toggle-off"}`} onClick={onToggleCamera}>
-              {cameraOn ? "📷" : "📷🚫"}
+            <button
+              type="button"
+              className={`game-video-toggle${cameraOn ? "" : " game-video-toggle-off"}`}
+              onClick={onToggleCamera}
+              aria-label={cameraOn ? "Turn camera off" : "Turn camera on"}
+            >
+              <Icon name={cameraOn ? "video" : "videoOff"} />
             </button>
           </>
         )}
         <button type="button" className="game-video-toggle game-video-leave" onClick={onLeave}>
-          🚪 Leave
+          <Icon name="leave" inline /> Leave
         </button>
       </div>
     </div>

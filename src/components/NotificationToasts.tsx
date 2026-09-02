@@ -1,10 +1,11 @@
 import { useEffect, useRef, useState } from "react";
 import type { Session } from "@supabase/supabase-js";
 import { supabase, displayFor, type Profile } from "../lib/supabase";
+import Icon, { type IconName } from "./Icon";
 
 interface Toast {
   id: string;
-  icon: string;
+  icon: IconName;
   title: string;
   body: string;
   /** Which Friends/Messages/Groups list tapping this toast should open. */
@@ -60,7 +61,7 @@ export default function NotificationToasts({
         async (payload) => {
           const body = (payload.new as { body: string; sender_id: string }).body;
           const name = await nameFor((payload.new as { sender_id: string }).sender_id);
-          push({ icon: "💬", title: `New message from ${name}`, body, view: "messages" });
+          push({ icon: "messages", title: `New message from ${name}`, body, view: "messages" });
         }
       )
       .subscribe();
@@ -72,7 +73,7 @@ export default function NotificationToasts({
         { event: "INSERT", schema: "public", table: "friend_requests", filter: `receiver_id=eq.${userId}` },
         async (payload) => {
           const name = await nameFor((payload.new as { sender_id: string }).sender_id);
-          push({ icon: "👥", title: "New friend request", body: `${name} wants to connect`, view: "friends" });
+          push({ icon: "players", title: "New friend request", body: `${name} wants to connect`, view: "friends" });
         }
       )
       .on(
@@ -82,7 +83,7 @@ export default function NotificationToasts({
           const row = payload.new as { status: string; receiver_id: string };
           if (row.status !== "accepted") return;
           const name = await nameFor(row.receiver_id);
-          push({ icon: "🎉", title: "Friend request accepted", body: `${name} accepted your request`, view: "friends" });
+          push({ icon: "check", title: "Friend request accepted", body: `${name} accepted your request`, view: "friends" });
         }
       )
       .subscribe();
@@ -108,7 +109,7 @@ export default function NotificationToasts({
           }}
         >
           <span className="notification-toast-icon" aria-hidden="true">
-            {t.icon}
+            <Icon name={t.icon} />
           </span>
           <span className="notification-toast-text">
             <span className="notification-toast-title">{t.title}</span>

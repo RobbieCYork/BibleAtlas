@@ -194,7 +194,7 @@ export default function FillBlankView({ onBack }: FillBlankViewProps) {
         <div className="game-body">
           <div className="fillblank-gameover">
             <p className="fillblank-gameover-icon" aria-hidden="true">
-              💔
+              <Icon name="heartBreak" />
             </p>
             <h2>Game Over</h2>
             <p className="fillblank-gameover-score">
@@ -237,12 +237,12 @@ export default function FillBlankView({ onBack }: FillBlankViewProps) {
           <span className="fillblank-lives" aria-label={`${lives} lives remaining`}>
             {Array.from({ length: STARTING_LIVES }, (_, i) => (
               <span key={i} className={i < lives ? "fillblank-heart" : "fillblank-heart fillblank-heart-lost"}>
-                {i < lives ? "❤️" : "🤍"}
+                <Icon name={i < lives ? "heartFull" : "heart"} />
               </span>
             ))}
           </span>
           <span className="fillblank-score">Score: {score}</span>
-          <span className={`fillblank-timer ${timeLeft <= 5 ? "fillblank-timer-urgent" : ""}`}>⏱ {timeLeft}s</span>
+          <span className={`fillblank-timer ${timeLeft <= 5 ? "fillblank-timer-urgent" : ""}`}><Icon name="timer" inline /> {timeLeft}s</span>
         </div>
         <div className="fillblank-timer-bar">
           <div className="fillblank-timer-bar-fill" style={{ width: `${Math.max(0, (timeLeft / totalTime) * 100)}%` }} />
@@ -292,7 +292,7 @@ export default function FillBlankView({ onBack }: FillBlankViewProps) {
           ) : (
             <div className="fillblank-round-result">
               <p className={roundCorrect ? "fillblank-result-correct" : "fillblank-result-wrong"}>
-                {roundCorrect ? "✅ Correct!" : timeLeft <= 0 ? "⏱ Time's up!" : "❌ Not quite."}
+                {roundCorrect ? <><Icon name="check" inline /> Correct!</> : timeLeft <= 0 ? <><Icon name="timer" inline /> Time's up!</> : <><Icon name="close" inline /> Not quite.</>}
               </p>
               {lives > 0 && (
                 <button type="button" className="fillblank-btn-primary" onClick={handleContinue}>

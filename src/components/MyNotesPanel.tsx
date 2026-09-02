@@ -3,6 +3,7 @@ import { supabase, HIGHLIGHT_COLORS, type Highlight, type HighlightColor, type N
 import { BOOKS } from "../data/bibleBooks";
 import TagPicker from "./TagPicker";
 import SermonNotesView from "./SermonNotesView";
+import Icon from "./Icon";
 
 type NotesTab = "verse" | "sermon";
 
@@ -383,10 +384,10 @@ export default function MyNotesPanel({ userId, onGoToVerse, expand, style, hidde
             {exportMenuOpen && (
               <div className="my-notes-export-dropdown">
                 <button type="button" onClick={handlePrint}>
-                  🖨️ Print / Save as PDF
+                  <Icon name="printer" inline /> Print / Save as PDF
                 </button>
                 <button type="button" onClick={handleExportWord}>
-                  📄 Export to Word
+                  <Icon name="doc" inline /> Export to Word
                 </button>
               </div>
             )}
@@ -525,7 +526,7 @@ export default function MyNotesPanel({ userId, onGoToVerse, expand, style, hidde
                             checked={e.note.is_public}
                             onChange={() => handleToggleNotePublic(e.note!)}
                           />
-                          {e.note.is_public ? "🌐 Public — shows on your profile" : "🔒 Private"}
+                          {e.note.is_public ? <><Icon name="globe" inline /> Public — shows on your profile</> : <><Icon name="lock" inline /> Private</>}
                         </label>
                         <div className="my-notes-actions-buttons">
                           {editingNoteId !== e.note.id && (

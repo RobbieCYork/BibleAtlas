@@ -8,6 +8,7 @@ import {
   type SavingPeterPlayer,
   type SavingPeterGuess,
 } from "../lib/savingPeterMultiplayer";
+import Icon from "./Icon";
 
 interface SavingPeterRoundPlayProps {
   room: SavingPeterRoom;
@@ -149,7 +150,7 @@ export default function SavingPeterRoundPlay({ room, players, userId, guessesVer
           <span className="game-question-answered-count">
             {answeredUserIds.size}/{players.length} guessed
           </span>
-          <span className="game-question-bonus-hint">🥇 First correct only</span>
+          <span className="game-question-bonus-hint"><Icon name="medal" inline /> First correct only</span>
         </div>
         <p className="game-question-prompt">{round.clue}</p>
 
@@ -180,8 +181,8 @@ export default function SavingPeterRoundPlay({ room, players, userId, guessesVer
           <p className="game-question-reveal">
             {myGuess
               ? myGuess.correct
-                ? `✅ Correct! +${myAwardedDelta ?? round.points}`
-                : `❌ Not quite — that's ${myAwardedDelta ?? -round.points}. The word was "${round.word}."`
+                ? <><Icon name="check" inline /> Correct! +{myAwardedDelta ?? round.points}</>
+                : <><Icon name="close" inline /> Not quite — that's {myAwardedDelta ?? -round.points}. The word was "{round.word}."</>
               : anyoneCorrect
                 ? `Someone else got it first. The word was "${round.word}."`
                 : `⏱ Time's up. The word was "${round.word}."`}

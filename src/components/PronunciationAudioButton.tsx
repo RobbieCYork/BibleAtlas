@@ -1,12 +1,13 @@
 import { useEffect, useRef, useState } from "react";
 import { pronunciationAudioAvailable, pronunciationAudioUrl, type PronunciationAudioKind } from "../lib/pronunciationAudio";
+import Icon from "./Icon";
 
 interface PronunciationAudioButtonProps {
   kind: PronunciationAudioKind;
   id: string;
 }
 
-/** Compact inline 🔊 icon button shown right next to a "Pronounced: ..." label when a
+/** Compact inline speaker button shown right next to a "Pronounced: ..." label when a
  * pre-generated pronunciation MP3 exists for the entry (see src/lib/pronunciationAudio.ts for
  * the file convention). Unlike ProfileAudioPlayer's expandable pill (built for long narration),
  * this is a single small button that just plays the clip — renders nothing at all while
@@ -43,7 +44,7 @@ export default function PronunciationAudioButton({ kind, id }: PronunciationAudi
       aria-label="Play pronunciation"
       title="Play pronunciation"
     >
-      🔊
+      <Icon name="volume" />
       <audio ref={audioRef} src={pronunciationAudioUrl(kind, id)} preload="none" />
     </button>
   );

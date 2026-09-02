@@ -378,7 +378,7 @@ export default function MemorizationView({ onBack }: MemorizationViewProps) {
 
             {checked ? (
               <p className={allCorrect ? "memchallenge-result-correct" : "memchallenge-result-wrong"}>
-                {allCorrect ? (isFinal ? "✅ Verse mastered!" : "✅ Nice — a few more words next round.") : "❌ Not quite — try again."}
+                {allCorrect ? (isFinal ? <><Icon name="check" inline /> Verse mastered!</> : <><Icon name="check" inline /> Nice — a few more words next round.</>) : <><Icon name="close" inline /> Not quite — try again.</>}
               </p>
             ) : (
               <button type="button" className="memchallenge-btn-primary" onClick={submitLearnStage}>
@@ -406,7 +406,7 @@ export default function MemorizationView({ onBack }: MemorizationViewProps) {
         <div className="game-body">
           <div className="memchallenge-play">
             <p className="memchallenge-review-banner">
-              🔁 Cumulative review — recite {mode.total - mode.queue.length + 1} of {mode.total} before your next new verse.
+              <Icon name="restart" inline /> Cumulative review — recite {mode.total - mode.queue.length + 1} of {mode.total} before your next new verse.
             </p>
             <p className="memchallenge-reference">{mode.verse.reference}</p>
             <p className="memchallenge-verse-text">
@@ -435,7 +435,7 @@ export default function MemorizationView({ onBack }: MemorizationViewProps) {
 
             {checked ? (
               <p className={allCorrect ? "memchallenge-result-correct" : "memchallenge-result-wrong"}>
-                {allCorrect ? "✅ Correct!" : "❌ Not quite — back to a few words missing for this one."}
+                {allCorrect ? <><Icon name="check" inline /> Correct!</> : <><Icon name="close" inline /> Not quite — back to a few words missing for this one.</>}
               </p>
             ) : (
               <button type="button" className="memchallenge-btn-primary" onClick={submitReview}>
@@ -455,7 +455,7 @@ function VersePickerRow({ verse, mastered, onPick }: { verse: MemorizationVerse;
   return (
     <button type="button" className="game-center-card memchallenge-verse-row" onClick={onPick}>
       <span className="game-center-card-icon" aria-hidden="true">
-        {mastered ? "✅" : "📖"}
+        <Icon name={mastered ? "check" : "bible"} />
       </span>
       <span className="game-center-card-body">
         <span className="game-center-card-title">{verse.reference}</span>

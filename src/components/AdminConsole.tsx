@@ -25,6 +25,7 @@ import {
   type AdminOverview,
   type AdminUserRow,
 } from "../lib/adminApi";
+import Icon from "./Icon";
 
 /** Every section loads on demand, so opening the console costs one small query (the overview) rather
  * than eight. `AdminSection` is both the tab key and the loader key. */
@@ -302,7 +303,7 @@ export default function AdminConsole() {
                   >
                     <span className="admin-guest-head">
                       <span className="admin-guest-title">
-                        <span aria-hidden="true">👤</span> Guests
+                        <Icon name="people" inline /> Guests
                         <span className="admin-badge admin-badge-muted">{guests.total}</span>
                       </span>
                       <span className="admin-guest-chevron" aria-hidden="true">

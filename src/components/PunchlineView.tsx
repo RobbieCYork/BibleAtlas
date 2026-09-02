@@ -138,7 +138,7 @@ export default function PunchlineView({ onBack }: PunchlineViewProps) {
         <div className="game-body">
           <div className="punchline-gameover">
             <p className="punchline-gameover-icon" aria-hidden="true">
-              {cleared ? "🏆" : "💔"}
+              <Icon name={cleared ? "trophy" : "heartBreak"} />
             </p>
             <h2>{cleared ? "You got through the whole book!" : "Game Over"}</h2>
             <p className="punchline-gameover-score">
@@ -180,12 +180,12 @@ export default function PunchlineView({ onBack }: PunchlineViewProps) {
           <span className="punchline-lives" aria-label={`${lives} lives remaining`}>
             {Array.from({ length: STARTING_LIVES }, (_, i) => (
               <span key={i} className={i < lives ? "punchline-heart" : "punchline-heart punchline-heart-lost"}>
-                {i < lives ? "❤️" : "🤍"}
+                <Icon name={i < lives ? "heartFull" : "heart"} />
               </span>
             ))}
           </span>
           <span className="punchline-score">Landed: {score}</span>
-          <span className="punchline-streak">🔥 {streak}</span>
+          <span className="punchline-streak"><Icon name="flame" inline /> {streak}</span>
         </div>
 
         <div className="punchline-setup">

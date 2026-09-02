@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { supabase, chapterReadCutoff, chaptersReadThisMonth, type Profile } from "../lib/supabase";
 import { BOOKS } from "../data/bibleBooks";
+import Icon from "./Icon";
 
 interface ReadingProgressGridProps {
   userId: string;
@@ -215,7 +216,7 @@ export default function ReadingProgressGrid({ userId, displayName, isOwn }: Read
             <div className="reading-progress-edit-bar">
               {!editing ? (
                 <button type="button" className="reading-progress-edit-btn" onClick={startEdit}>
-                  ✏️ Edit
+                  <Icon name="pencil" inline /> Edit
                 </button>
               ) : (
                 <>

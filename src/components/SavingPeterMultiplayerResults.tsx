@@ -5,6 +5,7 @@ import {
   type SavingPeterPlayer,
   type SavingPeterHighScore,
 } from "../lib/savingPeterMultiplayer";
+import Icon from "./Icon";
 
 interface SavingPeterMultiplayerResultsProps {
   room: SavingPeterRoom;
@@ -27,7 +28,7 @@ export default function SavingPeterMultiplayerResults({ room, players, onPlayAga
   return (
     <div className="game-results">
       <div className="game-results-banner">
-        <p className="game-results-trophy">🏆</p>
+        <p className="game-results-trophy"><Icon name="trophy" /></p>
         <h2>{winner ? `${winner.display_name} saved Peter!` : "Game over"}</h2>
         {winner && <p className="game-results-score">{winner.score} points</p>}
       </div>
@@ -45,7 +46,7 @@ export default function SavingPeterMultiplayerResults({ room, players, onPlayAga
       </div>
 
       <div className="games-high-scores">
-        <h3>🏆 Top 5 High Scores</h3>
+        <h3><Icon name="trophy" inline /> Top 5 High Scores</h3>
         {highScores === null ? (
           <p className="games-high-scores-empty">Loading…</p>
         ) : (

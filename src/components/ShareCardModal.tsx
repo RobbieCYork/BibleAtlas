@@ -12,6 +12,7 @@ import {
   type ShareFormat,
   type TextRegion,
 } from "../lib/shareCardRender";
+import Icon from "./Icon";
 
 interface ShareCardModalProps {
   spec: ShareCardSpec;
@@ -297,7 +298,7 @@ export default function ShareCardModal({ spec, filename, onClose }: ShareCardMod
                 />
               ))}
               <button type="button" onClick={() => exec("hiliteColor", "transparent")} title="Remove highlight">
-                🚫
+                <Icon name="ban" />
               </button>
               <span className="share-card-toolbar-divider" />
               <button type="button" onClick={() => exec("fontSize", "2")} title="Small text">

@@ -1,4 +1,5 @@
 import type { ReactNode } from "react";
+import Icon from "./Icon";
 
 /** Just the fields this component actually reads — shared structurally by GameRoom (Bible Trivia) and
  * SavingPeterRoom (Saving Peter multiplayer) so this one lobby works for both games' room models. */
@@ -48,7 +49,7 @@ export default function GameLobby({ room, players, userId, onStart, onLeave, onK
             <li key={p.user_id} className={p.user_id === userId ? "game-lobby-player-you" : ""}>
               <span>
                 {p.display_name}
-                {p.user_id === room.host_id && <span title="Host"> 👑</span>}
+                {p.user_id === room.host_id && <span title="Host"> <Icon name="crown" inline /></span>}
                 {p.user_id === userId && " (you)"}
               </span>
               {isHost && p.user_id !== userId && (

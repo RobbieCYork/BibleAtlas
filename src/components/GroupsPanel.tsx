@@ -13,6 +13,7 @@ import {
 } from "../lib/supabase";
 import ViewSwitcher, { type FriendsView } from "./ViewSwitcher";
 import BackButton from "./BackButton";
+import Icon from "./Icon";
 
 type Screen = "list" | "create" | "detail";
 type DetailTab = "chat" | "members";
@@ -482,7 +483,7 @@ export default function GroupsPanel({
               const pinnedSender = profiles[pinnedMessage.sender_id];
               return (
                 <div className="pinned-message-banner">
-                  <span className="pinned-message-icon" aria-hidden="true">📌</span>
+                  <span className="pinned-message-icon"><Icon name="pin" /></span>
                   <span className="pinned-message-text">
                     {pinnedMessage.sender_id !== userId && pinnedSender && `${displayFor(pinnedSender)}: `}
                     {pinnedMessage.body}
@@ -511,7 +512,7 @@ export default function GroupsPanel({
                           aria-label={m.pinned ? "Unpin message" : "Pin message"}
                           title={m.pinned ? "Unpin message" : "Pin message"}
                         >
-                          📌
+                          <Icon name="pin" />
                         </button>
                       </div>
                     </div>
@@ -549,7 +550,7 @@ export default function GroupsPanel({
                 />
                 <label className="my-notes-public-toggle">
                   <input type="checkbox" checked={editIsPublic} onChange={(e) => setEditIsPublic(e.target.checked)} />
-                  🌐 Public — anyone can find this group by searching and request to join
+                  <Icon name="globe" inline /> Public — anyone can find this group by searching and request to join
                 </label>
                 <div className="group-info-edit-actions">
                   <button type="submit" disabled={savingInfo || !editName.trim()}>
@@ -563,10 +564,10 @@ export default function GroupsPanel({
             ) : (
               <div className="group-info-display">
                 {activeGroup.description && <p className="group-description">{activeGroup.description}</p>}
-                <p className="comment-status">{activeGroup.is_public ? "🌐 Public group" : "🔒 Private group"}</p>
+                <p className="comment-status">{activeGroup.is_public ? <><Icon name="globe" inline /> Public group</> : <><Icon name="lock" inline /> Private group</>}</p>
                 {isAdmin && (
                   <button type="button" className="friends-invite-link-button" onClick={startEditingInfo}>
-                    ✏️ Edit name &amp; description
+                    <Icon name="pencil" inline /> Edit name &amp; description
                   </button>
                 )}
               </div>
@@ -575,7 +576,7 @@ export default function GroupsPanel({
             {isAdmin && (
               <>
                 <button type="button" className="friends-invite-link-button" onClick={handleCopyInviteLink}>
-                  🔗 Copy invite link
+                  <Icon name="link" inline /> Copy invite link
                 </button>
                 {inviteStatus && <p className="comment-status">{inviteStatus}</p>}
 
@@ -712,7 +713,7 @@ export default function GroupsPanel({
           />
           <label className="my-notes-public-toggle">
             <input type="checkbox" checked={newIsPublic} onChange={(e) => setNewIsPublic(e.target.checked)} />
-            🌐 Public — anyone can find this group by searching and request to join
+            <Icon name="globe" inline /> Public — anyone can find this group by searching and request to join
           </label>
           <p className="friends-invite-hint">Add friends now, or skip and invite people later.</p>
           {friendOptions.length === 0 ? (
@@ -761,7 +762,7 @@ export default function GroupsPanel({
       {canUse && (
         <>
           <button type="button" className="friends-invite-link-button" onClick={startCreate}>
-            ➕ New Group
+            <Icon name="plus" inline /> New Group
           </button>
 
           <form
