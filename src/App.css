@@ -5744,7 +5744,9 @@ a.profile-links-url {
   cursor: default;
 }
 
-/* --- Group study trips (Study Trips tab inside a group — see GroupsPanel's StudyTripsTab) --- */
+/* --- Group study trips (Study Trips tab inside a group — see GroupsPanel's StudyTripsTab).
+   The tab is DISABLED at the owner's request behind GroupsPanel's SHOW_STUDY_TRIPS constant;
+   these styles are deliberately left intact so flipping that one flag restores it. --- */
 
 /* Quiet notice while the trip tables haven't been migrated yet — informational, not an error. */
 .trip-unavailable {

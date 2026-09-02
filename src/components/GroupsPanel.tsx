@@ -24,6 +24,21 @@ import { BOOKS } from "../data/bibleBooks";
 type Screen = "list" | "create" | "detail";
 type DetailTab = "chat" | "members" | "trips";
 
+/** The Study Trips tab inside a group (a leader-curated, ordered walk through the biblical places
+ * behind a passage, with a shared note thread under each stop) is REMOVED AT THE OWNER'S REQUEST,
+ * in the same way TimelineView's Books lane is — behind one constant, with everything else left
+ * intact and working. Still here and unchanged: the StudyTripsTab component below (~line 880),
+ * resolveStopPlace()/scriptureRefParses() above it, the GroupStudyTrip / GroupStudyTripStop /
+ * GroupStudyTripStopNote types and isMissingStudyTripTableError() in src/lib/supabase.ts, and the
+ * .trip-* styles in src/App.css. Flipping this back to `true` restores the tab exactly as it was,
+ * with no other change anywhere.
+ *
+ * Note for whoever flips it: the three tables it queries (group_study_trips,
+ * group_study_trip_stops, group_study_trip_stop_notes) DO now exist in the database, with RLS —
+ * see sql/020_group_study_trips.sql — so the tab would come up live rather than showing its
+ * "available after the next database update" fallback. */
+const SHOW_STUDY_TRIPS = false;
+
 /** A trip stop's location_id resolved against both static datasets — locations first, matching how
  * seasonal walk stops resolve (no stop id exists in both datasets today). Null when the id matches
  * neither (e.g. a dataset entry was renamed after the stop was saved). */
@@ -512,12 +527,14 @@ export default function GroupsPanel({
             Members ({members.length})
             {isAdmin && joinRequests.length > 0 && <span className="friends-list-item-badge">{joinRequests.length}</span>}
           </button>
-          <button type="button" className={detailTab === "trips" ? "active" : ""} onClick={() => setDetailTab("trips")}>
-            Study Trips
-          </button>
+          {SHOW_STUDY_TRIPS && (
+            <button type="button" className={detailTab === "trips" ? "active" : ""} onClick={() => setDetailTab("trips")}>
+              Study Trips
+            </button>
+          )}
         </div>
 
-        {detailTab === "trips" && (
+        {SHOW_STUDY_TRIPS && detailTab === "trips" && (
           <StudyTripsTab
             key={activeGroup.group_id}
             groupId={activeGroup.group_id}

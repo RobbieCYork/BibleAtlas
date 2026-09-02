@@ -494,7 +494,11 @@ export interface GroupJoinRequest {
   responded_at: string | null;
 }
 
-/** A leader-authored, ordered walk through places tied to a passage series — the group-study
+/** NOTE: the Study Trips tab that uses these three types is DISABLED at the owner's request —
+ * see GroupsPanel's SHOW_STUDY_TRIPS constant. The types are kept, unchanged, so flipping that one
+ * flag restores the feature.
+ *
+ * A leader-authored, ordered walk through places tied to a passage series — the group-study
  * counterpart of the seasonal walks, except stops live in the database so each group curates its
  * own. Only the group's owner/admins can create or edit trips (enforced by RLS). */
 export interface GroupStudyTrip {
