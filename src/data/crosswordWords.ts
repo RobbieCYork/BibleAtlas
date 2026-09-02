@@ -1,21 +1,24 @@
+import type { IconName } from "../components/Icon";
 export type CrosswordLevel = "beginner" | "easy" | "intermediate" | "advanced" | "expert";
 
 export interface CrosswordLevelDef {
   key: CrosswordLevel;
   label: string;
   description: string;
-  icon: string;
+  /** A name from components/Icon.tsx. These use the shared difficulty ladder (level1..level5),
+   * so a picker reads as a progression rather than as a list of unrelated pictures. */
+  icon: IconName;
 }
 
 /** Five difficulty tiers, Beginner (little kids just learning Bible stories) through Expert (Bible
  * students and pastors) — each backed by its own word/clue bank below, scaled in vocabulary and
  * concept difficulty, not just word length. */
 export const CROSSWORD_LEVELS: CrosswordLevelDef[] = [
-  { key: "beginner", label: "Beginner", description: "For little ones just learning Bible stories.", icon: "🌱" },
-  { key: "easy", label: "Easy", description: "Sunday school level — familiar people and places.", icon: "📖" },
-  { key: "intermediate", label: "Intermediate", description: "For a regular churchgoer — books, doctrine, deeper history.", icon: "⛪" },
-  { key: "advanced", label: "Advanced", description: "Serious Bible study — theology and biblical languages.", icon: "📜" },
-  { key: "expert", label: "Expert", description: "Seminary-level — for Bible students and pastors.", icon: "🎓" },
+  { key: "beginner", label: "Beginner", description: "For little ones just learning Bible stories.", icon: "level1" },
+  { key: "easy", label: "Easy", description: "Sunday school level — familiar people and places.", icon: "level2" },
+  { key: "intermediate", label: "Intermediate", description: "For a regular churchgoer — books, doctrine, deeper history.", icon: "level3" },
+  { key: "advanced", label: "Advanced", description: "Serious Bible study — theology and biblical languages.", icon: "level4" },
+  { key: "expert", label: "Expert", description: "Seminary-level — for Bible students and pastors.", icon: "level5" },
 ];
 
 export interface CrosswordWordEntry {

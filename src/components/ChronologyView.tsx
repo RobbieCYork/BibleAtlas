@@ -10,6 +10,7 @@ import {
 } from "../data/chronologyRounds";
 import BackButton from "./BackButton";
 import "./Chronology.css";
+import Icon from "./Icon";
 
 interface ChronologyViewProps {
   onBack: () => void;
@@ -99,7 +100,10 @@ export default function ChronologyView({ onBack }: ChronologyViewProps) {
       <div className="game-root">
         <header className="game-header">
           <BackButton onClick={onBack} ariaLabel="Back to Game Center" />
-          <h2>⏳ Chronology</h2>
+          <h2 className="games-inline-icon">
+          <Icon name="chronology" />
+          Chronology
+        </h2>
         </header>
         <div className="game-body">
           <div className="chronology-picker">
@@ -113,8 +117,8 @@ export default function ChronologyView({ onBack }: ChronologyViewProps) {
             <div className="game-center-list">
               {CHRONOLOGY_LEVELS.map((l) => (
                 <button key={l.key} type="button" className="game-center-card" onClick={() => startGame(l.key)}>
-                  <span className="game-center-card-icon" aria-hidden="true">
-                    {l.icon}
+                  <span className="game-center-card-icon">
+                    <Icon name={l.icon} />
                   </span>
                   <span className="game-center-card-body">
                     <span className="game-center-card-title">{l.label}</span>
@@ -137,7 +141,10 @@ export default function ChronologyView({ onBack }: ChronologyViewProps) {
       <div className="game-root">
         <header className="game-header">
           <BackButton onClick={onBack} ariaLabel="Back to Game Center" />
-          <h2>⏳ Chronology</h2>
+          <h2 className="games-inline-icon">
+          <Icon name="chronology" />
+          Chronology
+        </h2>
         </header>
         <div className="game-body">
           <div className="chronology-gameover">
@@ -173,7 +180,10 @@ export default function ChronologyView({ onBack }: ChronologyViewProps) {
     <div className="game-root">
       <header className="game-header">
         <BackButton onClick={backToMenu} ariaLabel="Back to difficulty select" />
-        <h2>⏳ Chronology</h2>
+        <h2 className="games-inline-icon">
+          <Icon name="chronology" />
+          Chronology
+        </h2>
       </header>
       <div className="game-body">
         <div className="chronology-hud">

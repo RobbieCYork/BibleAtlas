@@ -2,6 +2,7 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import { MEMORIZATION_VERSES, type MemorizationCategory, type MemorizationVerse } from "../data/memorizationVerses";
 import BackButton from "./BackButton";
 import "./Memorization.css";
+import Icon from "./Icon";
 
 interface MemorizationViewProps {
   onBack: () => void;
@@ -236,7 +237,10 @@ export default function MemorizationView({ onBack }: MemorizationViewProps) {
       <div className="game-root">
         <header className="game-header">
           <BackButton onClick={onBack} ariaLabel="Back to Game Center" />
-          <h2>📿 Scripture Memorization Challenge</h2>
+          <h2 className="games-inline-icon">
+          <Icon name="memorization" />
+          Scripture Memorization Challenge
+        </h2>
         </header>
         <div className="game-body">
           <div className="memchallenge-picker">
@@ -293,7 +297,10 @@ export default function MemorizationView({ onBack }: MemorizationViewProps) {
       <div className="game-root">
         <header className="game-header">
           <BackButton onClick={backToPicker} ariaLabel="Back to verse list" />
-          <h2>📿 Scripture Memorization Challenge</h2>
+          <h2 className="games-inline-icon">
+          <Icon name="memorization" />
+          Scripture Memorization Challenge
+        </h2>
         </header>
         <div className="game-body">
           <div className="memchallenge-ready">
@@ -322,7 +329,10 @@ export default function MemorizationView({ onBack }: MemorizationViewProps) {
       <div className="game-root">
         <header className="game-header">
           <BackButton onClick={backToPicker} ariaLabel="Back to verse list" />
-          <h2>📿 Scripture Memorization Challenge</h2>
+          <h2 className="games-inline-icon">
+          <Icon name="memorization" />
+          Scripture Memorization Challenge
+        </h2>
         </header>
         <div className="game-body">
           <div className="memchallenge-play">
@@ -388,7 +398,10 @@ export default function MemorizationView({ onBack }: MemorizationViewProps) {
       <div className="game-root">
         <header className="game-header">
           <BackButton onClick={backToPicker} ariaLabel="Back to verse list" />
-          <h2>📿 Scripture Memorization Challenge</h2>
+          <h2 className="games-inline-icon">
+          <Icon name="memorization" />
+          Scripture Memorization Challenge
+        </h2>
         </header>
         <div className="game-body">
           <div className="memchallenge-play">

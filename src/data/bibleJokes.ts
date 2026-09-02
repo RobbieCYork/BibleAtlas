@@ -25,6 +25,8 @@
  *          default.
  * ========================================================================== */
 
+import type { IconName } from "../components/Icon";
+
 export type JokeTheme = "noah" | "genesis" | "moses" | "ot-people" | "nt" | "church";
 
 export interface BibleJoke {
@@ -220,7 +222,9 @@ export interface JokeLevelDef {
   key: JokeLevel;
   label: string;
   description: string;
-  icon: string;
+  /** A name from components/Icon.tsx. These use the shared difficulty ladder (level1..level5),
+   * so a picker reads as a progression rather than as a list of unrelated pictures. */
+  icon: IconName;
   /** Where the three wrong punchlines come from. "far" = other themes only, so the decoys are
    * visibly about the wrong characters. "any" = the whole bank. "same" = the joke's own theme, so
    * every option names the same cast and only the actual joke tells them apart. */
@@ -234,21 +238,21 @@ export const JOKE_LEVELS: JokeLevelDef[] = [
     key: "beginner",
     label: "Warm-Up",
     description: "The wrong answers are about completely different people. Read the setup, spot the one that fits.",
-    icon: "🌱",
+    icon: "level1",
     distractors: "far",
   },
   {
     key: "intermediate",
     label: "Fellowship Hall",
     description: "Decoys drawn from anywhere in the joke book. You'll need to actually get the pun.",
-    icon: "☕",
+    icon: "level3",
     distractors: "any",
   },
   {
     key: "expert",
     label: "Pulpit Ready",
     description: "Every option is about the same character. Only knowing the joke will save you.",
-    icon: "🎤",
+    icon: "level5",
     distractors: "same",
   },
 ];

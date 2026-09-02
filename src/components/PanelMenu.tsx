@@ -1,4 +1,5 @@
 import { Fragment, useEffect, useId, useRef, useState } from "react";
+import Icon, { type IconName } from "./Icon";
 
 /** The panel slots the layout can show. There is deliberately no separate "details" slot: a single
  * article (a place/person/topic/POI/timeline event) is a *state* of the Articles panel, not a panel
@@ -54,9 +55,9 @@ const PANEL_GROUPS: PanelKey[][] = [
 
 /** Icons match the mobile tab bar / MobileNavMenu for these same two destinations
  * (lib/mobileTabs.tsx) so one place keeps one face on both platforms. */
-const DESTINATIONS: { key: DestinationKey; label: string; icon: string; blurb: string }[] = [
-  { key: "timeline", label: "Timeline", icon: "⌛", blurb: "Biblical & world history" },
-  { key: "games", label: "Games", icon: "🎮", blurb: "Live trivia with friends" },
+const DESTINATIONS: { key: DestinationKey; label: string; icon: IconName; blurb: string }[] = [
+  { key: "timeline", label: "Timeline", icon: "timeline", blurb: "Biblical & world history" },
+  { key: "games", label: "Games", icon: "games", blurb: "Live trivia with friends" },
 ];
 
 /** The desktop header's hamburger.
@@ -181,8 +182,8 @@ export default function PanelMenu({
                   aria-label={isCurrent ? `${label} — on screen now; return to panels` : undefined}
                   onClick={() => selectDestination(key)}
                 >
-                  <span className="panel-menu-link-icon" aria-hidden="true">
-                    {icon}
+                  <span className="panel-menu-link-icon">
+                    <Icon name={icon} />
                   </span>
                   <span className="panel-menu-link-text">
                     <span className="panel-menu-link-label">{label}</span>

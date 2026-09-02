@@ -69,7 +69,26 @@ export type IconName =
   | "timelineEvent"
   | "poi"
   | "place"
-  | "search";
+  | "search"
+  // The seven games, one mark each — see the block comment above PATHS.trivia.
+  | "trivia"
+  | "crossword"
+  | "savingPeter"
+  | "fillBlank"
+  | "memorization"
+  | "punchline"
+  | "chronology"
+  // The shared difficulty ladder. One construction in five steps, not five pictures.
+  | "level1"
+  | "level2"
+  | "level3"
+  | "level4"
+  | "level5"
+  // Marks the Games surface needs beyond the games themselves.
+  | "trophy"
+  | "players"
+  | "target"
+  | "pencil";
 
 interface IconProps {
   name: IconName;
@@ -107,16 +126,24 @@ const PATHS: Record<IconName, ReactElement> = {
     </>
   ),
 
-  /* Chronological chart: a base rule with three risers of unequal height, each capped by a node.
-     Wide and bottom-heavy — the deliberate opposite of Timeline Events' vertical column, so the two
-     never have to be told apart by their detail. Centre node is the solid one. */
+  /* An hourglass. This replaces the abstract riser chart that shipped in 3511973: nobody could tell
+     what that drawing was, and ⌛ is the glyph this destination used before it, so the hourglass is
+     what a reader already associates with it.
+     An hourglass is a glass in a FRAME, and drawing the frame is what saves the mark at 20px —
+     two hairline triangles dissolve, a closed frame does not. The posts sit right out at the edge
+     and the glass is pinched well inside them, because a first pass with the posts hard against
+     the bulbs filled in and read as a black blob at 15px. Round bulbs rather than cones, so it is
+     not the default two-triangles-touching. Solid: the sand already fallen, which is both the
+     required accent and the only part of an hourglass that carries the meaning.
+     Against Timeline Events (still a tall mark) this is symmetrical and enclosed where that one is
+     asymmetrical and open down one side — checked side by side at 15 and 20px. */
   timeline: (
     <>
-      <path d="M3 17.5h18" />
-      <path d="M7 17.5v-4.6M12 17.5v-8.3M17 17.5v-2.6" />
-      <circle cx="7" cy="11.4" r="1.5" />
-      <circle cx="17" cy="13.4" r="1.5" />
-      <circle cx="12" cy="7.7" r="1.55" fill="currentColor" stroke="none" />
+      <path d="M4.6 3.4h14.8M4.6 20.6h14.8" />
+      <path d="M6 3.4v17.2M18 3.4v17.2" />
+      <path d="M9 3.4c0 4.2 3 6.2 3 8.6s-3 4.4-3 8.6" />
+      <path d="M15 3.4c0 4.2-3 6.2-3 8.6s3 4.4 3 8.6" />
+      <path d="M12 14.6c1.1 1.5 2.6 3 2.6 4.6H9.4c0-1.6 1.5-3.1 2.6-4.6Z" fill="currentColor" stroke="none" />
     </>
   ),
 
@@ -237,6 +264,209 @@ const PATHS: Record<IconName, ReactElement> = {
       <circle cx="10.6" cy="10.6" r="6.4" />
       <path d="M15.4 15.4 20.4 20.4" />
       <circle cx="8.4" cy="8.4" r="1.2" fill="currentColor" stroke="none" />
+    </>
+  ),
+
+  /* ── THE SEVEN GAMES ───────────────────────────────────────────────────────────────────────────
+     These sit in one vertical list at 28px, so the binding constraint is not "does each mark look
+     good" but "can seven of them be told apart in one glance". Four of the seven are fundamentally
+     'answer a question', which is exactly where a games set collapses into seven variations on a
+     card, so each is held apart by CONSTRUCTION: a glyph, a cruciform, a figure on water, a broken
+     rule, a strung cord, a weighted stack, an offset pair. Every one was checked at 15/16/20/24/48
+     against the other six and against the thirteen already shipped. */
+
+  /* Bible Trivia: the question mark itself, and its own dot is the family's solid element — the one
+     case where the glyph's anatomy and the family signature are the same thing. Same reasoning the
+     `search` mark above already carries: this is a universally learned form, and a cleverer object
+     would cost comprehension for nothing. It also owns the only hook-and-dot silhouette in the set,
+     which is what lets the flagship game win the most legible mark without crowding anyone. Two
+     more invented objects were drawn and thrown away first — a dome buzzer, which read as a serving
+     cloche, and a herald's trumpet, which read as a hand tool. */
+  trivia: (
+    <>
+      <path d="M8.1 9.1a3.9 3.9 0 1 1 5.5 3.6c-1.1.6-1.6 1.5-1.6 2.6v.9" />
+      <circle cx="12" cy="19.4" r="1.9" fill="currentColor" stroke="none" />
+    </>
+  ),
+
+  /* Bible Crossword: two word-bars crossing and sharing a cell, which is literally what a crossword
+     IS rather than a picture of one — and deliberately not the 3×3 grid of squares every product
+     uses. The cruciform silhouette is owned by nothing else here. Divider lines are kept to the
+     four either side of the centre; a first pass ruled every cell and went to mush at 15px.
+     Solid: the shared crossing cell, the letter two answers have in common. */
+  crossword: (
+    <>
+      <rect x="3.4" y="9.1" width="17.2" height="5.8" rx="1.4" />
+      <rect x="9.1" y="3.4" width="5.8" height="17.2" rx="1.4" />
+      <path d="M6.9 9.1v5.8M17.1 9.1v5.8M9.1 6.9h5.8M9.1 17.1h5.8" />
+      <rect x="10.2" y="10.2" width="3.6" height="3.6" rx="0.9" fill="currentColor" stroke="none" />
+    </>
+  ),
+
+  /* Saving Peter: a figure standing on open water — Matthew 14 stated as a construction rather than
+     narrated. No drowning cartoon and no gallows, both of which the game's hangman mechanic invites
+     and neither of which is what the game is about. The solid figure over two ruled swells is the
+     only such silhouette in either set. Solid: the figure. */
+  savingPeter: (
+    <>
+      <path d="M3.2 16.8c1.9-2.1 3.9-2.1 5.8 0s3.9 2.1 5.8 0 3.9-2.1 5.8 0" />
+      <path d="M3.2 20.4c1.9-2.1 3.9-2.1 5.8 0s3.9 2.1 5.8 0 3.9-2.1 5.8 0" />
+      <path
+        d="M12 2.8c2.2 0 3.6 2 3.6 4.5 0 1.9-1 3-1 4.4 0 1.5-1.2 2.5-2.6 2.5s-2.6-1-2.6-2.5c0-1.4-1-2.5-1-4.4C8.4 4.8 9.8 2.8 12 2.8Z"
+        fill="currentColor"
+        stroke="none"
+      />
+    </>
+  ),
+
+  /* Fill in the Blank: three ruled lines with the middle one broken open and the missing word
+     dropping into the gap. There is deliberately no page around it — the sparse, broken, unframed
+     construction is the whole thing that keeps it clear of the paper group (Articles, Topics), and
+     the hole in the middle rule is what makes it read as a blank rather than as body text.
+     Solid: the word going into the slot. */
+  fillBlank: (
+    <>
+      <path d="M3.6 6.6h16.8" />
+      <path d="M3.6 12h4.4M16 12h4.4" />
+      <path d="M3.6 17.4h11.2" />
+      <rect x="9.6" y="9.8" width="4.8" height="4.4" rx="1.2" fill="currentColor" stroke="none" />
+    </>
+  ),
+
+  /* Scripture Memorization: a prayer cord hanging from its two anchor beads, with the bead just
+     counted worked solid. Learning a verse a word at a time and then reciting the whole bank back
+     is a counted, repeated act, and the cord is the object made for precisely that — the older,
+     more specific answer rather than a brain or a lightbulb. Drawn as a hanging line rather than a
+     closed loop because the loop read as a location pin, which is the exact form this family
+     rejected for Places. Solid: the counted bead. */
+  memorization: (
+    <>
+      <path d="M4 7.6c0 7.4 3.6 11.2 8 11.2s8-3.8 8-11.2" />
+      <circle cx="4" cy="7.6" r="2" />
+      <circle cx="20" cy="7.6" r="2" />
+      <circle cx="12" cy="18.8" r="2.2" fill="currentColor" stroke="none" />
+    </>
+  ),
+
+  /* Guess the Punchline: the shape of a joke rather than a picture of laughter. Three setup rules
+     shortening as they go, then the punchline landing as one solid heavy bar — lighter, lighter,
+     lighter, BAM. A smiling face was the obvious mark and was rejected outright: this whole set
+     exists to retire emoji, and a smiley icon would simply be an emoji redrawn.
+     Solid: the punchline. */
+  punchline: (
+    <>
+      <path d="M4.6 5.2h14.8M4.6 9.2h12.2M4.6 13.2h9.4" />
+      <rect x="4.6" y="16.6" width="14.8" height="4.2" rx="2.1" fill="currentColor" stroke="none" />
+    </>
+  ),
+
+  /* Chronology: two cards caught mid-sort, offset on the diagonal. The constraint here was purely
+     one of silhouette — Timeline Events is tall and vertical and the hourglass is symmetrical, so
+     chronology had to be a third thing, and a diagonal stagger is a shape neither of them can be
+     confused with. It is also honest about the game, which is reordering, not reading.
+     Solid: the order pip on the front card. */
+  chronology: (
+    <>
+      <rect x="8.2" y="3.2" width="12.6" height="12.6" rx="2.2" />
+      <rect x="3.2" y="8.2" width="12.6" height="12.6" rx="2.2" />
+      <path d="M6.4 16.4h6.2" />
+      <circle cx="7.6" cy="12.4" r="1.7" fill="currentColor" stroke="none" />
+    </>
+  ),
+
+  /* ── THE DIFFICULTY LADDER ─────────────────────────────────────────────────────────────────────
+     Five tiers as ONE construction that grows, rather than five unrelated pictures. What shipped
+     before was a seedling, a book, a church, a scroll and a mortarboard: five perfectly good marks
+     that, stacked in a picker, read as a category list — you had to know the ordering to see it.
+     Here the run of risers grows a step at a time and the tier you are on is the SOLID one,
+     climbing as it goes, so the order is legible without being learned. The family's
+     one-filled-element rule is what carries the ordering, which is the best possible outcome: the
+     signature and the semantics are the same decision.
+     Risers stand at x = 5.2 / 8.6 / 12 / 15.4 / 18.8 with tops stepping 13.6 → 4.8 on a shared
+     baseline. A cairn of stacked stones (Joshua 4) was drawn as the alternative and lost on the
+     proof sheet — below 48px the stones merged into one solid trapezoid and read as a traffic cone.
+     Games with three tiers rather than five use 1 / 3 / 5, so the spread still reads as low to high.
+     Shared by Crossword, Saving Peter, Chronology, Fill in the Blank and Guess the Punchline. */
+  level1: (
+    <>
+      <path d="M3.2 20.6h17.6" />
+      <rect x="3.9" y="13.6" width="2.6" height="5.5" rx="1.3" fill="currentColor" stroke="none" />
+    </>
+  ),
+  level2: (
+    <>
+      <path d="M3.2 20.6h17.6" />
+      <path d="M5.2 19.1v-5.5" />
+      <rect x="7.3" y="11.4" width="2.6" height="7.7" rx="1.3" fill="currentColor" stroke="none" />
+    </>
+  ),
+  level3: (
+    <>
+      <path d="M3.2 20.6h17.6" />
+      <path d="M5.2 19.1v-5.5M8.6 19.1v-7.7" />
+      <rect x="10.7" y="9.2" width="2.6" height="9.9" rx="1.3" fill="currentColor" stroke="none" />
+    </>
+  ),
+  level4: (
+    <>
+      <path d="M3.2 20.6h17.6" />
+      <path d="M5.2 19.1v-5.5M8.6 19.1v-7.7M12 19.1v-9.9" />
+      <rect x="14.1" y="7" width="2.6" height="12.1" rx="1.3" fill="currentColor" stroke="none" />
+    </>
+  ),
+  level5: (
+    <>
+      <path d="M3.2 20.6h17.6" />
+      <path d="M5.2 19.1v-5.5M8.6 19.1v-7.7M12 19.1v-9.9M15.4 19.1v-12.1" />
+      <rect x="17.5" y="4.8" width="2.6" height="14.3" rx="1.3" fill="currentColor" stroke="none" />
+    </>
+  ),
+
+  /* ── GAMES-SURFACE UTILITY ─────────────────────────────────────────────────────────────────────
+     These four are not identity marks and are not trying to be. They follow the `search` precedent:
+     learned forms, drawn to the family's weight, terminals and one-solid-element rule so they sit
+     in the same set, with no invention spent on them. */
+
+  /* Trophy: a two-handled cup on a stepped foot. Solid: the boss on the bowl. */
+  trophy: (
+    <>
+      <path d="M7.4 3.6h9.2v4.2a4.6 4.6 0 0 1-9.2 0Z" />
+      <path d="M7.4 4.8H5.2a2.6 2.6 0 0 0 2.6 2.6M16.6 4.8h2.2a2.6 2.6 0 0 1-2.6 2.6" />
+      <path d="M12 12.4v3.4M8.4 20.4h7.2M9.8 20.4v-2.2a2.2 2.2 0 0 1 4.4 0v2.2" />
+      <circle cx="12" cy="6.6" r="1.6" fill="currentColor" stroke="none" />
+    </>
+  ),
+
+  /* Multiplayer: two busts, the near one solid. Solo play reuses `people` rather than adding a
+     fourteenth near-identical roundel — the shipped People mark already IS one bust in a roundel,
+     and the two never appear in the same list. Solid: the near head. */
+  players: (
+    <>
+      <circle cx="9" cy="9.4" r="3" />
+      <path d="M3.4 18.6c.5-3.6 10.7-3.6 11.2 0" />
+      <path d="M16.4 7.4a3 3 0 0 1 0 5.4M17.4 15.2c2 .5 3.3 1.7 3.5 3.4" />
+      <circle cx="9" cy="9.4" r="1.5" fill="currentColor" stroke="none" />
+    </>
+  ),
+
+  /* Target: how many questions a chosen topic can actually field. Solid: the bullseye. */
+  target: (
+    <>
+      <circle cx="12" cy="12" r="8.4" />
+      <circle cx="12" cy="12" r="4.4" />
+      <circle cx="12" cy="12" r="1.7" fill="currentColor" stroke="none" />
+    </>
+  ),
+
+  /* Pencil: blunt and diagonal on purpose, so it never collides with Notes' upright quill nib —
+     the two are the same act done with different tools and must not be the same drawing.
+     Solid: the sharpened tip. */
+  pencil: (
+    <>
+      <path d="M14.6 4.6 19.4 9.4" />
+      <path d="M16.2 3 21 7.8 9.2 19.6l-6 1.2 1.2-6Z" />
+      <path d="m4.4 14.8 4.8 4.8" />
+      <path d="M3.2 20.8l1.2-6 2.4 2.4 2.4 2.4Z" fill="currentColor" stroke="none" />
     </>
   ),
 };

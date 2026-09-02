@@ -1,8 +1,11 @@
 import { track } from "../lib/analytics";
+import Icon, { type IconName } from "./Icon";
 
 export interface GameDef {
   key: string;
-  icon: string;
+  /** A name from components/Icon.tsx, not a glyph — so this table stays plain data and the
+   * drawing lives in one place. */
+  icon: IconName;
   title: string;
   tagline: string;
 }
@@ -12,43 +15,43 @@ export interface GameDef {
 export const GAMES: GameDef[] = [
   {
     key: "bible-trivia",
-    icon: "📖",
+    icon: "trivia",
     title: "Bible Trivia",
     tagline: "Live multiplayer trivia with video chat — every player answers, first correct doubles.",
   },
   {
     key: "crossword",
-    icon: "🧩",
+    icon: "crossword",
     title: "Bible Crossword",
     tagline: "Solo crossword puzzles from Beginner (little ones) to Expert (pastors & Bible students).",
   },
   {
     key: "saving-peter",
-    icon: "🌊",
+    icon: "savingPeter",
     title: "Saving Peter",
     tagline: "Hangman, Matthew 14 style — solo, or up to 4 players live with video chat.",
   },
   {
     key: "fill-blank",
-    icon: "✍️",
+    icon: "fillBlank",
     title: "Fill in the Blank",
     tagline: "Standout OT & NT verses with words missing — beat the clock, you get 3 lives.",
   },
   {
     key: "memorization",
-    icon: "📿",
+    icon: "memorization",
     title: "Scripture Memorization Challenge",
     tagline: "Pick a verse from 100 and learn it word by word — then recite everything you know before the next one.",
   },
   {
     key: "punchline",
-    icon: "😄",
+    icon: "punchline",
     title: "Guess the Punchline",
     tagline: "Over 100 clean Bible jokes — you get the setup, pick the punchline that really belongs to it.",
   },
   {
     key: "chronology",
-    icon: "⏳",
+    icon: "chronology",
     title: "Chronology",
     tagline: "Put events from the timeline back in the order they happened — Beginner to Expert.",
   },
@@ -80,8 +83,8 @@ export default function GameCenter({ onSelectGame }: GameCenterProps) {
               onSelectGame(g.key);
             }}
           >
-            <span className="game-center-card-icon" aria-hidden="true">
-              {g.icon}
+            <span className="game-center-card-icon">
+              <Icon name={g.icon} />
             </span>
             <span className="game-center-card-body">
               <span className="game-center-card-title">{g.title}</span>

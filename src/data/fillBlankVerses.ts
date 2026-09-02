@@ -8,6 +8,8 @@
  * indices — locateBlanks() below finds each one by matching words case/punctuation-insensitively,
  * so a typo in a blank phrase throws immediately at module load instead of silently mis-indexing. */
 
+import type { IconName } from "../components/Icon";
+
 export type Difficulty = "easy" | "moderate" | "hard";
 export type Testament = "OT" | "NT";
 
@@ -244,10 +246,10 @@ export const FILL_BLANK_VERSES: FillBlankVerse[] = RAW.map((v) => ({
   testament: v.testament,
 }));
 
-export const DIFFICULTY_LEVELS: { key: Difficulty; label: string; description: string; icon: string }[] = [
-  { key: "easy", label: "Easy", description: "Short, well-known verses — one word missing.", icon: "🌱" },
-  { key: "moderate", label: "Moderate", description: "Longer verses — two phrases missing.", icon: "🔥" },
-  { key: "hard", label: "Hard", description: "Full verses, less-familiar phrasing — three phrases missing.", icon: "⚔️" },
+export const DIFFICULTY_LEVELS: { key: Difficulty; label: string; description: string; icon: IconName }[] = [
+  { key: "easy", label: "Easy", description: "Short, well-known verses — one word missing.", icon: "level1" },
+  { key: "moderate", label: "Moderate", description: "Longer verses — two phrases missing.", icon: "level3" },
+  { key: "hard", label: "Hard", description: "Full verses, less-familiar phrasing — three phrases missing.", icon: "level5" },
 ];
 
 /** Seconds allotted to answer a verse: a flat base for reading/orienting, plus time per missing word

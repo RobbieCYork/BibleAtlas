@@ -7,6 +7,7 @@ import SavingPeterMultiplayerResults from "./SavingPeterMultiplayerResults";
 import GameVideoStrip from "./GameVideoStrip";
 import BackButton from "./BackButton";
 import { useGameWebRTC } from "../hooks/useGameWebRTC";
+import Icon from "./Icon";
 import {
   fetchSavingPeterRoom,
   fetchSavingPeterPlayers,
@@ -143,7 +144,10 @@ export default function SavingPeterMultiplayerView({ session, onBack }: SavingPe
     <div className="game-root">
       <header className="game-header">
         <BackButton onClick={handleBack} ariaLabel="Back to solo/multiplayer picker" />
-        <h2>🌊 Saving Peter — Multiplayer</h2>
+        <h2 className="games-inline-icon">
+          <Icon name="savingPeter" />
+          Saving Peter — Multiplayer
+        </h2>
       </header>
       <div className="game-body">
         {loadError && <p className="games-error">{loadError}</p>}

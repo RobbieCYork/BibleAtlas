@@ -4,6 +4,7 @@ import { supabase } from "../lib/supabase";
 import { SAVING_PETER_LEVELS, SAVING_PETER_WORDS, type SavingPeterLevel, type SavingPeterWord } from "../data/savingPeterWords";
 import BackButton from "./BackButton";
 import "./Crossword.css";
+import Icon from "./Icon";
 
 function shuffled<T>(items: T[]): T[] {
   const copy = [...items];
@@ -131,7 +132,10 @@ export default function SavingPeterView({ session, onBack }: SavingPeterViewProp
       <div className="game-root">
         <header className="game-header">
           <BackButton onClick={onBack} ariaLabel="Back to Game Center" />
-          <h2>🌊 Saving Peter</h2>
+          <h2 className="games-inline-icon">
+          <Icon name="savingPeter" />
+          Saving Peter
+        </h2>
         </header>
         <div className="game-body">
           <div className="crossword-level-picker">
@@ -142,8 +146,8 @@ export default function SavingPeterView({ session, onBack }: SavingPeterViewProp
             <div className="game-center-list">
               {SAVING_PETER_LEVELS.map((l) => (
                 <button key={l.key} type="button" className="game-center-card crossword-level-card" onClick={() => startLevel(l.key)}>
-                  <span className="game-center-card-icon" aria-hidden="true">
-                    {l.icon}
+                  <span className="game-center-card-icon">
+                    <Icon name={l.icon} />
                   </span>
                   <span className="game-center-card-body">
                     <span className="game-center-card-title">{l.label}</span>
@@ -165,7 +169,10 @@ export default function SavingPeterView({ session, onBack }: SavingPeterViewProp
     <div className="game-root">
       <header className="game-header">
         <BackButton onClick={backToLevelPicker} ariaLabel="Back to level picker" />
-        <h2>🌊 Saving Peter</h2>
+        <h2 className="games-inline-icon">
+          <Icon name="savingPeter" />
+          Saving Peter
+        </h2>
       </header>
       <div className="game-body">
         <div className="saving-peter">

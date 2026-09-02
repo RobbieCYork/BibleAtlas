@@ -3,6 +3,7 @@ import type { Session } from "@supabase/supabase-js";
 import SavingPeterView from "./SavingPeterView";
 import SavingPeterMultiplayerView from "./SavingPeterMultiplayerView";
 import BackButton from "./BackButton";
+import Icon from "./Icon";
 
 interface SavingPeterHubProps {
   session: Session;
@@ -22,7 +23,10 @@ export default function SavingPeterHub({ session, onBack }: SavingPeterHubProps)
     <div className="game-root">
       <header className="game-header">
         <BackButton onClick={onBack} ariaLabel="Back to Game Center" />
-        <h2>🌊 Saving Peter</h2>
+        <h2 className="games-inline-icon">
+          <Icon name="savingPeter" />
+          Saving Peter
+        </h2>
       </header>
       <div className="game-body">
         <div className="games-panel-intro">

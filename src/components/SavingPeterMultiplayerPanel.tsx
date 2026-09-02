@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { createSavingPeterRoom, joinSavingPeterRoom, fetchTopSavingPeterHighScores, type SavingPeterHighScore } from "../lib/savingPeterMultiplayer";
+import Icon from "./Icon";
 
 interface SavingPeterMultiplayerPanelProps {
   onRoomReady: (roomId: string) => void;
@@ -50,7 +51,10 @@ export default function SavingPeterMultiplayerPanel({ onRoomReady }: SavingPeter
   return (
     <div className="games-panel">
       <div className="games-panel-intro">
-        <h2>🌊 Saving Peter — Multiplayer</h2>
+        <h2 className="games-inline-icon">
+          <Icon name="savingPeter" />
+          Saving Peter — Multiplayer
+        </h2>
         <p>
           Up to 4 players with video chat. Every round shows a clue from a random difficulty — only the first correct guess
           scores, wrong guesses cost you. First to 50 wins.

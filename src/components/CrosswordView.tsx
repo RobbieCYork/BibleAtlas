@@ -4,6 +4,7 @@ import { getCrosswordPuzzle, pickRandomPuzzleIndex, type CrosswordEntry, type Cr
 import { backgroundFor } from "../data/crosswordBackgrounds";
 import BackButton from "./BackButton";
 import "./Crossword.css";
+import Icon from "./Icon";
 
 /** A scenic Holy Land photo behind the screen, tinted with a theme-aware scrim (see .crossword-scenic
  * in Crossword.css) so the actual puzzle content stays fully legible — the grid/clue panels keep their
@@ -208,7 +209,10 @@ export default function CrosswordView({ onBack }: CrosswordViewProps) {
       <div className="game-root">
         <header className="game-header">
           <BackButton onClick={onBack} ariaLabel="Back to Game Center" />
-          <h2>🧩 Bible Crossword</h2>
+          <h2 className="games-inline-icon">
+          <Icon name="crossword" />
+          Bible Crossword
+        </h2>
         </header>
         <div className="game-body crossword-scenic" style={scenicStyle("crossword-picker")}>
           <div className="crossword-level-picker">
@@ -219,8 +223,8 @@ export default function CrosswordView({ onBack }: CrosswordViewProps) {
             <div className="game-center-list">
               {CROSSWORD_LEVELS.map((l) => (
                 <button key={l.key} type="button" className="game-center-card crossword-level-card" onClick={() => startLevel(l.key)}>
-                  <span className="game-center-card-icon" aria-hidden="true">
-                    {l.icon}
+                  <span className="game-center-card-icon">
+                    <Icon name={l.icon} />
                   </span>
                   <span className="game-center-card-body">
                     <span className="game-center-card-title">{l.label}</span>

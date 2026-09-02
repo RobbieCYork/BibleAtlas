@@ -1,5 +1,6 @@
 import { timelineEvents } from "./timelineEvents";
 import type { TimelineEvent, TimelineEventCategory } from "./types";
+import type { IconName } from "../components/Icon";
 
 /* ============================================================================
  * chronologyRounds — the round builder behind the Chronology game, generated
@@ -18,7 +19,9 @@ export interface ChronologyLevelDef {
   key: ChronologyLevel;
   label: string;
   description: string;
-  icon: string;
+  /** A name from components/Icon.tsx. These use the shared difficulty ladder (level1..level5),
+   * so a picker reads as a progression rather than as a list of unrelated pictures. */
+  icon: IconName;
   /** How many events the player orders in one round. */
   cardCount: number;
   /** Minimum years between consecutive events in a round. Kept well above zero even at Expert:
@@ -34,7 +37,7 @@ export const CHRONOLOGY_LEVELS: ChronologyLevelDef[] = [
     key: "beginner",
     label: "Beginner",
     description: "Three landmark moments, whole eras apart.",
-    icon: "🌱",
+    icon: "level1",
     cardCount: 3,
     minGapYears: 500,
   },
@@ -42,7 +45,7 @@ export const CHRONOLOGY_LEVELS: ChronologyLevelDef[] = [
     key: "easy",
     label: "Easy",
     description: "Four events, a couple of centuries between each.",
-    icon: "📖",
+    icon: "level2",
     cardCount: 4,
     minGapYears: 250,
   },
@@ -50,7 +53,7 @@ export const CHRONOLOGY_LEVELS: ChronologyLevelDef[] = [
     key: "intermediate",
     label: "Intermediate",
     description: "Five events, a century apart — you'll need the general sweep of history.",
-    icon: "⛪",
+    icon: "level3",
     cardCount: 5,
     minGapYears: 100,
   },
@@ -58,7 +61,7 @@ export const CHRONOLOGY_LEVELS: ChronologyLevelDef[] = [
     key: "advanced",
     label: "Advanced",
     description: "Six events, sometimes a single generation apart.",
-    icon: "📜",
+    icon: "level4",
     cardCount: 6,
     minGapYears: 40,
   },
@@ -66,7 +69,7 @@ export const CHRONOLOGY_LEVELS: ChronologyLevelDef[] = [
     key: "expert",
     label: "Expert",
     description: "Seven events, some barely a decade apart. Seminary-level chronology.",
-    icon: "🎓",
+    icon: "level5",
     cardCount: 7,
     minGapYears: 10,
   },

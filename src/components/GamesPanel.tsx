@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from "react";
 import { createGameRoom, joinGameRoom, startGameRoom, fetchTopHighScores, type GameHighScore } from "../lib/gameSupabase";
 import { TOPIC_PRESETS, countAvailableQuestions, type QuizTopicPreset } from "../data/gameQuestions";
+import Icon from "./Icon";
 
 interface GamesPanelProps {
   onRoomReady: (roomId: string) => void;
@@ -78,7 +79,10 @@ export default function GamesPanel({ onRoomReady }: GamesPanelProps) {
   return (
     <div className="games-panel">
       <div className="games-panel-intro">
-        <h2>📖 Bible Trivia</h2>
+        <h2 className="games-inline-icon">
+          <Icon name="trivia" />
+          Bible Trivia
+        </h2>
         <p>Play solo or live with friends — every player answers, wrong answers cost you, first correct doubles. First to 50 wins.</p>
       </div>
 
@@ -102,7 +106,7 @@ export default function GamesPanel({ onRoomReady }: GamesPanelProps) {
               {p.label}
             </option>
           ))}
-          <option value="custom">✏️ Custom…</option>
+          <option value="custom">Custom…</option>
         </select>
         <p className="games-topic-description">
           {customMode ? "Type your own focus below." : TOPIC_PRESETS.find((p) => p.key === preset)?.description}
@@ -124,12 +128,18 @@ export default function GamesPanel({ onRoomReady }: GamesPanelProps) {
             </p>
           </div>
         )}
-        <p className="games-topic-count">
+        <p className="games-topic-count games-inline-icon">
           {customMode && customQuery.trim()
             ? availableCount > 0
-              ? `🎯 ${availableCount} question${availableCount === 1 ? "" : "s"} matched your topic`
+              ? <>
+                  <Icon name="target" />
+                  {`${availableCount} question${availableCount === 1 ? "" : "s"} matched your topic`}
+                </>
               : "No matches yet — the game will use a general mix instead"
-            : `🎯 ${availableCount} questions available in this topic`}
+            : <>
+                <Icon name="target" />
+                {`${availableCount} questions available in this topic`}
+              </>}
         </p>
       </div>
 
@@ -138,10 +148,24 @@ export default function GamesPanel({ onRoomReady }: GamesPanelProps) {
           <h3>Play now</h3>
           <p>Solo practice, or start a room and share the code with others.</p>
           <button type="button" className="games-primary-button" onClick={handlePlaySolo} disabled={busy}>
-            {busy ? "Starting…" : "🧑 Play Solo"}
+            {busy ? (
+              "Starting…"
+            ) : (
+              <>
+                <Icon name="people" />
+                Play Solo
+              </>
+            )}
           </button>
           <button type="button" className="games-secondary-button" onClick={handleCreate} disabled={busy}>
-            {busy ? "Creating…" : "👥 Create Multiplayer Game"}
+            {busy ? (
+              "Creating…"
+            ) : (
+              <>
+                <Icon name="players" />
+                Create Multiplayer Game
+              </>
+            )}
           </button>
         </div>
 
@@ -174,7 +198,10 @@ export default function GamesPanel({ onRoomReady }: GamesPanelProps) {
       {error && <p className="games-error">{error}</p>}
 
       <div className="games-high-scores">
-        <h3>🏆 Top 5 High Scores</h3>
+        <h3 className="games-inline-icon">
+          <Icon name="trophy" />
+          Top 5 High Scores
+        </h3>
         {highScores === null ? (
           <p className="games-high-scores-empty">Loading…</p>
         ) : highScores.length === 0 ? (

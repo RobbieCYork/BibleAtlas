@@ -8,6 +8,7 @@ import {
 } from "../data/fillBlankVerses";
 import BackButton from "./BackButton";
 import "./FillBlank.css";
+import Icon from "./Icon";
 
 interface FillBlankViewProps {
   onBack: () => void;
@@ -147,7 +148,10 @@ export default function FillBlankView({ onBack }: FillBlankViewProps) {
       <div className="game-root">
         <header className="game-header">
           <BackButton onClick={onBack} ariaLabel="Back to Game Center" />
-          <h2>✍️ Fill in the Blank</h2>
+          <h2 className="games-inline-icon">
+          <Icon name="fillBlank" />
+          Fill in the Blank
+        </h2>
         </header>
         <div className="game-body">
           <div className="fillblank-picker">
@@ -158,8 +162,8 @@ export default function FillBlankView({ onBack }: FillBlankViewProps) {
             <div className="game-center-list">
               {DIFFICULTY_LEVELS.map((l) => (
                 <button key={l.key} type="button" className="game-center-card" onClick={() => startGame(l.key)}>
-                  <span className="game-center-card-icon" aria-hidden="true">
-                    {l.icon}
+                  <span className="game-center-card-icon">
+                    <Icon name={l.icon} />
                   </span>
                   <span className="game-center-card-body">
                     <span className="game-center-card-title">{l.label}</span>
@@ -182,7 +186,10 @@ export default function FillBlankView({ onBack }: FillBlankViewProps) {
       <div className="game-root">
         <header className="game-header">
           <BackButton onClick={onBack} ariaLabel="Back to Game Center" />
-          <h2>✍️ Fill in the Blank</h2>
+          <h2 className="games-inline-icon">
+          <Icon name="fillBlank" />
+          Fill in the Blank
+        </h2>
         </header>
         <div className="game-body">
           <div className="fillblank-gameover">
@@ -220,7 +227,10 @@ export default function FillBlankView({ onBack }: FillBlankViewProps) {
     <div className="game-root">
       <header className="game-header">
         <BackButton onClick={backToMenu} ariaLabel="Back to difficulty select" />
-        <h2>✍️ Fill in the Blank</h2>
+        <h2 className="games-inline-icon">
+          <Icon name="fillBlank" />
+          Fill in the Blank
+        </h2>
       </header>
       <div className="game-body">
         <div className="fillblank-hud">

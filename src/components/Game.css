@@ -100,9 +100,48 @@
   border-color: var(--accent);
 }
 
+/* `font-size` is what sizes the drawn icon: components/Icon.tsx renders at 1em, so this existing
+   rule keeps doing the sizing it always did and no layout moved. 28px was tuned for an emoji,
+   which draws well outside its font box, so a true 28px glyph came out visibly smaller than what
+   it replaced — same nudge the three App.css rules needed in 3511973. */
 .game-center-card-icon {
-  font-size: 28px;
+  font-size: 30px;
   flex-shrink: 0;
+  color: var(--text-h);
+}
+
+/* An Icon renders `display: block` (it has to — the emoji it replaces were inline text and sat on
+   a baseline with a descender gap under them). That means anywhere a mark sits INLINE beside its
+   own label — a heading, a count, a button — the label's box has to be the flex container.
+   One class rather than one rule per site, so the pattern is obvious the next time. */
+.games-inline-icon {
+  /* inline-flex, not flex: these are h2s, h3s and paragraphs whose parents already centre or
+     left-align them via text-align, and a block-level flex box would ignore that. */
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4em;
+}
+
+/* Icon renders with an INLINE `margin: 0 auto`. It has to: the tab-bar and menu boxes that size it
+   centre their contents with text-align, which a block-level SVG ignores, so the auto margin is
+   what keeps the thirteen shipped marks centred in their boxes. But inside a flex row that same
+   auto margin absorbs every pixel of free space, throwing the mark to one end and its label to the
+   other — which is exactly what happened to "Play Solo" and the question count on first render.
+   An inline style can only be beaten by `!important`, and App.css (where a tidier fix would live)
+   is held by other work, so this is the honest minimum: kill the auto margin wherever a mark sits
+   inline beside text, and nowhere else. */
+.games-inline-icon > svg,
+.games-primary-button > svg,
+.games-secondary-button > svg {
+  margin: 0 !important;
+}
+
+.games-primary-button,
+.games-secondary-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4em;
 }
 
 .game-center-card-body {

@@ -10,6 +10,7 @@ import {
 } from "../data/bibleJokes";
 import BackButton from "./BackButton";
 import "./Punchline.css";
+import Icon from "./Icon";
 
 interface PunchlineViewProps {
   onBack: () => void;
@@ -86,7 +87,10 @@ export default function PunchlineView({ onBack }: PunchlineViewProps) {
       <div className="game-root">
         <header className="game-header">
           <BackButton onClick={onBack} ariaLabel="Back to Game Center" />
-          <h2>😄 Guess the Punchline</h2>
+          <h2 className="games-inline-icon">
+          <Icon name="punchline" />
+          Guess the Punchline
+        </h2>
         </header>
         <div className="game-body">
           <div className="punchline-picker">
@@ -101,8 +105,8 @@ export default function PunchlineView({ onBack }: PunchlineViewProps) {
             <div className="game-center-list">
               {JOKE_LEVELS.map((l) => (
                 <button key={l.key} type="button" className="game-center-card" onClick={() => startGame(l.key)}>
-                  <span className="game-center-card-icon" aria-hidden="true">
-                    {l.icon}
+                  <span className="game-center-card-icon">
+                    <Icon name={l.icon} />
                   </span>
                   <span className="game-center-card-body">
                     <span className="game-center-card-title">{l.label}</span>
@@ -126,7 +130,10 @@ export default function PunchlineView({ onBack }: PunchlineViewProps) {
       <div className="game-root">
         <header className="game-header">
           <BackButton onClick={onBack} ariaLabel="Back to Game Center" />
-          <h2>😄 Guess the Punchline</h2>
+          <h2 className="games-inline-icon">
+          <Icon name="punchline" />
+          Guess the Punchline
+        </h2>
         </header>
         <div className="game-body">
           <div className="punchline-gameover">
@@ -163,7 +170,10 @@ export default function PunchlineView({ onBack }: PunchlineViewProps) {
     <div className="game-root">
       <header className="game-header">
         <BackButton onClick={backToMenu} ariaLabel="Back to difficulty select" />
-        <h2>😄 Guess the Punchline</h2>
+        <h2 className="games-inline-icon">
+          <Icon name="punchline" />
+          Guess the Punchline
+        </h2>
       </header>
       <div className="game-body">
         <div className="punchline-hud">
