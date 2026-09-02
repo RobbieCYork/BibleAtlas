@@ -8413,3 +8413,78 @@ a.profile-links-url {
   color: var(--accent-contrast);
   opacity: 0.8;
 }
+
+/* --- Verse-action sheet: corner dismiss control ---------------------------------------------- */
+/* The ✕ that closes the sheet used to sit inline at the end of the action row, where it wrapped onto
+   the second line next to Share and read as one more action — and where it sat inches from the ✕ on
+   the active swatch, which does something entirely different (removes the highlight). It now lives in
+   the sheet's top-right corner, as chrome, with a full 44x44 touch target around a modest glyph.
+   Appended as a self-contained block that overrides the .verse-popup-close base rules above. */
+
+/* Zero-height sticky strip: takes no space in the flow (so the action row still starts at the top of
+   the sheet) but keeps the button pinned to the corner when a long note list scrolls underneath. */
+.verse-sheet-chrome {
+  position: sticky;
+  top: 0;
+  z-index: 3;
+  height: 0;
+  display: flex;
+  justify-content: flex-end;
+  pointer-events: none;
+}
+
+.verse-sheet .verse-popup-close {
+  pointer-events: auto;
+  width: 44px;
+  height: 44px;
+  margin: -2px -8px 0 0; /* pulls the oversized target into the corner without inflating the sheet */
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  /* Square, not a circle: a rounded button clips its own hit-testing at the corners, which would cut
+     the real target back below 44x44 even though the box measures 44. The visible disc is the span. */
+  border-radius: 0;
+  background: none;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* The visible glyph stays modest — a quiet grey disc — while the tap target around it is full size.
+   Deliberately unlike the swatch ✕: neutral surface rather than a highlight colour, no accent ring,
+   a lighter × (U+00D7) rather than the swatch's bold ✕ (U+2715), and its own corner of the sheet. */
+.verse-sheet .verse-popup-close > span {
+  width: 30px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--border);
+  border-radius: 50%;
+  background: var(--surface-sunken);
+  color: var(--text-muted);
+  font-size: 19px;
+  line-height: 1;
+}
+
+.verse-sheet .verse-popup-close:hover {
+  background: none;
+}
+
+.verse-sheet .verse-popup-close:hover > span {
+  border-color: var(--accent);
+  color: var(--text);
+}
+
+.verse-sheet .verse-popup-close:focus-visible > span {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+/* Reserves the corner so the action row's own controls never run under the button, at any width, and
+   makes the first row exactly as tall as the target so it can't reach down into the notes list. */
+.verse-sheet-actions {
+  min-height: 44px;
+  padding-right: 40px;
+}

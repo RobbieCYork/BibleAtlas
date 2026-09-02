@@ -846,6 +846,23 @@ export default function BiblePanel({
     setPopup(null);
   };
 
+  // Escape dismisses the sheet, the way anything modal-shaped is expected to on a keyboard. From the
+  // note composer or the tag picker it mirrors their own Cancel/Done — back to the sheet they were
+  // opened from — rather than throwing an in-progress draft and the sheet away in one keystroke.
+  useEffect(() => {
+    if (!popup) return;
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key !== "Escape") return;
+      if ((popup.kind === "note-editor" || popup.kind === "tag-picker") && popup.returnTo) {
+        setPopup(popup.returnTo);
+        return;
+      }
+      closePopup();
+    };
+    document.addEventListener("keydown", handleKeyDown);
+    return () => document.removeEventListener("keydown", handleKeyDown);
+  }, [popup]);
+
   /** Writes a highlight of `color` over `range`, re-colouring `existingId` in place when one is
    * already there. Returns the row now on screen, or null if the write failed.
    *
@@ -1790,6 +1807,16 @@ export default function BiblePanel({
               and notes sit right underneath with Edit and ✕ of their own. */}
           {popup.kind === "verse-actions" && (
             <>
+              {/* Sheet chrome, not an action: the dismiss control is parked in the top-right corner,
+                  out of the action row, so it reads as "close this window" rather than as one more
+                  button beside Share — and so it can't be confused with the ✕ on the active swatch,
+                  which removes the highlight. The wrapper is a zero-height sticky strip, so the
+                  button stays in the corner even when a long note list scrolls underneath it. */}
+              <div className="verse-sheet-chrome">
+                <button type="button" className="verse-popup-close" onClick={closePopup} aria-label="Close" title="Close">
+                  <span aria-hidden="true">×</span>
+                </button>
+              </div>
               <div className="verse-sheet-actions">
                 {userId ? (
                   <>
@@ -1837,9 +1864,6 @@ export default function BiblePanel({
                 )}
                 <button type="button" className="verse-popup-share-btn" onMouseDown={(e) => e.preventDefault()} onClick={handleShareVerseCard}>
                   📤 Share
-                </button>
-                <button type="button" className="verse-popup-close" onClick={closePopup} aria-label="Close">
-                  ×
                 </button>
               </div>
 
