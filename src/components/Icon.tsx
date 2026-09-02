@@ -55,6 +55,11 @@
  */
 
 import type { ReactElement } from "react";
+import {
+  Briefcase, Cake, CalendarDays, Camera, Clapperboard, Eye, EyeOff, Gem, Globe, GraduationCap,
+  Headphones, House, Link as LinkIcon, Lock, Moon, Music, Palette, Settings, Shield, Smartphone,
+  Play, Sun, ThumbsUp, Tv, X as XMark, type LucideIcon,
+} from "lucide-react";
 
 export type IconName =
   | "bible"
@@ -88,7 +93,37 @@ export type IconName =
   | "trophy"
   | "players"
   | "target"
-  | "pencil";
+  | "pencil"
+  // Drawn: the Friends / Groups / Messages trio and the church a profile names.
+  | "groups"
+  | "messages"
+  | "church"
+  // ── FROM LUCIDE, not drawn. See the LIBRARY map below for why. ──────────────
+  | "lock"
+  | "globe"
+  | "link"
+  | "phone"
+  | "sun"
+  | "moon"
+  | "shield"
+  | "settings"
+  | "calendar"
+  | "eye"
+  | "eyeOff"
+  | "close"
+  | "home"
+  | "cake"
+  | "ring"
+  | "palette"
+  | "briefcase"
+  | "education"
+  | "music"
+  | "headphones"
+  | "tv"
+  | "movie"
+  | "camera"
+  | "thumbsUp"
+  | "play";
 
 interface IconProps {
   name: IconName;
@@ -98,12 +133,19 @@ interface IconProps {
    * rather than twice. */
   title?: string;
   className?: string;
+  /** Set where the mark sits INLINE in a run of text — "📱 Phone: 555…", a button reading
+   * "✏️ Edit". The default is a block box with auto margins, which is right for the tab bar and
+   * the menus (they centre by `text-align`, which a block SVG ignores) but wrong in a sentence:
+   * a block box breaks the line, and inside a flex row the auto margin absorbs all the free space
+   * and shoves the mark away from its own label. `inline` swaps both for an inline-block sitting
+   * on the text baseline, so no stylesheet has to be involved at the call site. */
+  inline?: boolean;
 }
 
 /** Drawn geometry, one entry per name. Kept as data rather than twelve components so the shared
  * root element below is the single place stroke width, terminals and sizing are decided — the spec
  * is enforced by construction, not by remembering to repeat it. */
-const PATHS: Record<IconName, ReactElement> = {
+const PATHS = {
   /* Bound book, opened: two bowed leaves meeting at a central spine, with a solid clasp-boss on the
      spine. Deliberately the same construction as the app mark in public/favicon.svg — the Bible tab
      and the product's own logo should be recognisably the same drawing. */
@@ -469,33 +511,166 @@ const PATHS: Record<IconName, ReactElement> = {
       <path d="M3.2 20.8l1.2-6 2.4 2.4 2.4 2.4Z" fill="currentColor" stroke="none" />
     </>
   ),
-};
 
-export default function Icon({ name, title, className }: IconProps) {
+  /* ── FRIENDS / GROUPS / MESSAGES ───────────────────────────────────────────────────────────────
+     The three rows of a profile's own navigation, so they are drawn rather than borrowed: this is
+     the part of the app that is about the reader's people, and it should look like the app.
+     Friends reuses `players` — it already IS two busts, and a fourth near-identical roundel would
+     be a distinction without a difference. */
+
+  /* Groups: a congregation — two figures set back and one brought forward and worked solid, all
+     over a single wide shoulder line. Held apart from `players` by COUNT and by depth: two abreast
+     reads as a pair, three with one in front reads as a body of people. A first pass gave the two
+     back figures their own little shoulder stubs, which at 15px stopped reading as people and
+     started reading as an insect — the stubs were legs. A second pass dropped the stubs but left
+     the back heads close enough to touch the solid one, and it read as a pair of ears. The centres
+     are now 6.5u apart against 5.2u of combined radius, so there is real white between all three
+     at every size. Solid: the near figure. */
+  groups: (
+    <>
+      <circle cx="6.4" cy="7.6" r="2.3" />
+      <circle cx="17.6" cy="7.6" r="2.3" />
+      <path d="M4.4 20.4c1.5-5.2 13.7-5.2 15.2 0" />
+      <circle cx="12" cy="11" r="2.9" fill="currentColor" stroke="none" />
+    </>
+  ),
+
+  /* Messages: a bubble carrying three beads, the first worked solid. The bubble is the learned form
+     and there is nothing to gain by inventing past it; the character comes from the beads sharing
+     the roundel vocabulary the rest of the set uses. Solid: the first bead. */
+  messages: (
+    <>
+      <path d="M4.2 4.6h15.6a2 2 0 0 1 2 2v8.2a2 2 0 0 1-2 2h-8.4l-4.8 3.6v-3.6H4.2a2 2 0 0 1-2-2V6.6a2 2 0 0 1 2-2Z" />
+      <circle cx="12" cy="10.7" r="1.5" />
+      <circle cx="16" cy="10.7" r="1.5" />
+      <circle cx="8" cy="10.7" r="1.5" fill="currentColor" stroke="none" />
+    </>
+  ),
+
+  /* Church: a chapel — pitched roof, a cross above it, a door below. Drawn rather than taken from
+     Lucide because in THIS app a church is not a building category, it is the congregation a reader
+     names on their own profile. Distinct from Places' low crenellated town and from Points of
+     Interest's arch by having a pitch and a spire. Solid: the door. */
+  church: (
+    <>
+      <path d="M12 2.2v3.8M10.4 3.7h3.2" />
+      <path d="M4.4 20.6V10.6L12 5.8l7.6 4.8v10" />
+      <path d="M2.8 20.6h18.4" />
+      <path d="M10.2 20.6v-3.9a1.8 1.8 0 0 1 3.6 0v3.9Z" fill="currentColor" stroke="none" />
+    </>
+  ),
+} satisfies Partial<Record<IconName, ReactElement>>;
+
+/** ── MARKS TAKEN FROM LUCIDE RATHER THAN DRAWN ────────────────────────────────────────────────
+ *
+ * The app needs on the order of seventy distinct marks. Drawing all seventy by hand would produce
+ * a WORSE set than drawing twenty and taking the rest from a library, because the ones that would
+ * suffer are exactly the ones that must not: a padlock, an eye, a calendar, a stopwatch are learned
+ * forms where invention costs comprehension and buys nothing. This file already conceded the point
+ * once, for `search`. This is the same concession, made deliberately and at scale.
+ *
+ * The line is what a mark's JOB is:
+ *   - "Which thing is this?"  → drawn here. Destinations, games, categories, the people a reader
+ *     knows, the church they name. Being recognisable and distinct IS the work, and construction is
+ *     what buys it.
+ *   - "What does this button do?" → Lucide. Locks, eyes, gears, cameras, chevrons.
+ *
+ * Lucide's own defaults already match this family — 24x24 viewBox, fill none, stroke currentColor,
+ * round cap and join — so the only thing that has to be imposed is the weight, and `Icon` below
+ * passes strokeWidth 1.75 to both branches from one place.
+ *
+ * What Lucide does NOT have is this set's signature: exactly one solid filled element. That is a
+ * FEATURE of the split rather than a problem with it. The filled mark is the tell that something is
+ * one of ours, so the drawn marks stay visibly the app's own and the plumbing stays quietly
+ * generic, which is the correct relationship between the two.
+ *
+ * Icons are imported by name, never as a namespace, so the bundler keeps only what is used.
+ *
+ * Two things Lucide 1.39 does not ship, worth knowing before reaching for them: brand marks
+ * (Instagram, Facebook, LinkedIn were all removed) and sports balls. Both are handled at their call
+ * sites — the social links use neutral marks, which is what the emoji they replace already were,
+ * and the five "favourite team" fields share the drawn `trophy`.
+ */
+const LIBRARY = {
+  lock: Lock,
+  globe: Globe,
+  link: LinkIcon,
+  phone: Smartphone,
+  sun: Sun,
+  moon: Moon,
+  shield: Shield,
+  settings: Settings,
+  calendar: CalendarDays,
+  eye: Eye,
+  eyeOff: EyeOff,
+  close: XMark,
+  // `House`, not Lucide's MapPin: this row is "Where I live", and the drawn set rejected the
+  // teardrop pin outright for Places. Reintroducing one three screens away would undercut that.
+  home: House,
+  cake: Cake,
+  ring: Gem,
+  palette: Palette,
+  briefcase: Briefcase,
+  education: GraduationCap,
+  music: Music,
+  headphones: Headphones,
+  tv: Tv,
+  movie: Clapperboard,
+  camera: Camera,
+  thumbsUp: ThumbsUp,
+  play: Play,
+} satisfies Partial<Record<IconName, LucideIcon>>;
+
+/** Every name in the union must be satisfied by one of the two maps above. Both are declared with
+ * `satisfies` rather than an annotation precisely so this check can work: an annotation of
+ * `Partial<Record<IconName, _>>` would make `keyof` the whole union again and the check vacuous,
+ * whereas `satisfies` keeps the literal keys each map actually has.
+ *
+ * Without this, a name could be added to `IconName` and never given a mark, and the only symptom
+ * would be an icon silently missing at whatever call site used it. Now it is a compile error that
+ * names the offender. */
+type NameWithNoMark = Exclude<IconName, keyof typeof PATHS | keyof typeof LIBRARY>;
+type AssertNever<T extends never> = T;
+export type _EveryNameHasAMark = AssertNever<NameWithNoMark>;
+
+export default function Icon({ name, title, className, inline }: IconProps) {
+  // Shared by both branches, so weight, sizing, centring and the accessibility decision are made
+  // ONCE and a Lucide mark cannot drift away from a drawn one.
+  const shared = {
+    width: "1em",
+    height: "1em",
+    strokeWidth: 1.75,
+    className,
+    // Block, auto-margin: the emoji these replace were inline text and sat on a baseline with a
+    // descender gap under them. An inline SVG would inherit that gap and push every icon a pixel
+    // or two high in its box; `block` removes it, and `margin: 0 auto` preserves the centring that
+    // `.mobile-nav-menu-icon`/`.panel-menu-link-icon` were getting from `text-align: center`.
+    // (Where a mark sits inline BESIDE text, Game.css cancels the auto margin — inside a flex row
+    // it would otherwise absorb all the free space and push the mark away from its own label.)
+    style: inline
+      ? ({ display: "inline-block", verticalAlign: "-0.125em", margin: 0, flexShrink: 0 } as const)
+      : ({ display: "block", margin: "0 auto" } as const),
+    // Named only when nothing else names the control. Otherwise hidden outright, so the visible
+    // label next to it is the single accessible name rather than one of two competing ones.
+    role: title ? ("img" as const) : undefined,
+    "aria-hidden": title ? undefined : true,
+    focusable: "false" as const,
+  };
+
+  const FromLibrary = (LIBRARY as Partial<Record<IconName, LucideIcon>>)[name];
+  if (FromLibrary) {
+    // `size` is deliberately not used: it feeds Lucide's absoluteStrokeWidth maths, which does
+    // Number(size) and would produce NaN for "1em". Passing width/height straight through avoids
+    // that entirely and keeps em-sizing identical to the drawn branch.
+    return (
+      <FromLibrary {...shared}>{title ? <title>{title}</title> : null}</FromLibrary>
+    );
+  }
+
   return (
-    <svg
-      viewBox="0 0 24 24"
-      width="1em"
-      height="1em"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth={1.75}
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      className={className}
-      // Block, auto-margin: the emoji these replace were inline text and sat on a baseline with a
-      // descender gap under them. An inline SVG would inherit that gap and push every icon a pixel
-      // or two high in its box; `block` removes it, and `margin: 0 auto` preserves the centring that
-      // `.mobile-nav-menu-icon`/`.panel-menu-link-icon` were getting from `text-align: center`.
-      style={{ display: "block", margin: "0 auto" }}
-      // Named only when nothing else names the control. Otherwise hidden outright, so the visible
-      // label next to it is the single accessible name rather than one of two competing ones.
-      role={title ? "img" : undefined}
-      aria-hidden={title ? undefined : true}
-      focusable="false"
-    >
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" {...shared}>
       {title ? <title>{title}</title> : null}
-      {PATHS[name]}
+      {(PATHS as Partial<Record<IconName, ReactElement>>)[name]}
     </svg>
   );
 }

@@ -6,6 +6,7 @@ import BackButton from "./BackButton";
 import { PROFILE_FIELD_CONFIGS, PROFILE_SECTION_LABELS, ensureUrlProtocol } from "./MyProfileView";
 import { ProfileLinksList } from "./ProfileLinks";
 import { fetchProfileLinks, type ProfileLink } from "../lib/profileLinks";
+import Icon from "./Icon";
 
 interface FriendProfileViewProps {
   friendId: string;
@@ -79,13 +80,13 @@ export default function FriendProfileView({ friendId, viewerId, onBack, onMessag
           </div>
           {profile.favorite_verse && (
             <p className="friend-profile-verse">
-              <span aria-hidden="true">📖</span> Favorite verse: {profile.favorite_verse}
+              <Icon name="bible" inline /> Favorite verse: {profile.favorite_verse}
             </p>
           )}
           {profile.bio && <p className="friend-profile-bio">{profile.bio}</p>}
           {profile.phone && profile.profile_visibility.phone && (
             <p className="profile-view-field">
-              <span aria-hidden="true">📱</span> Phone: {profile.phone}
+              <Icon name="phone" inline /> Phone: {profile.phone}
             </p>
           )}
 
@@ -114,7 +115,7 @@ export default function FriendProfileView({ friendId, viewerId, onBack, onMessag
           )}
 
           <button type="button" className="friend-profile-message-button" onClick={onMessage}>
-            💬 Message
+            <Icon name="messages" inline /> Message
           </button>
 
           <div className="friend-profile-section">

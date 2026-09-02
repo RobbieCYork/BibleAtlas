@@ -6,6 +6,7 @@ import { useTheme } from "../lib/theme";
 import { MIN_VISIBLE_TABS, MOBILE_TAB_META, MOBILE_TAB_ORDER, LOCKED_TAB, useMobileTabs } from "../lib/mobileTabs";
 import AdminConsole from "./AdminConsole";
 import { useIsAdmin } from "../lib/adminApi";
+import Icon from "./Icon";
 
 interface AuthButtonProps {
   session: Session | null;
@@ -59,10 +60,10 @@ function AppearanceControl() {
       <span className="auth-settings-label">Appearance</span>
       <div className="auth-appearance-toggle">
         <button type="button" className={theme === "light" ? "active" : ""} onClick={() => setTheme("light")}>
-          ☀️ Light
+          <Icon name="sun" inline /> Light
         </button>
         <button type="button" className={theme === "dark" ? "active" : ""} onClick={() => setTheme("dark")}>
-          🌙 Dark
+          <Icon name="moon" inline /> Dark
         </button>
       </div>
     </div>
@@ -345,14 +346,14 @@ export default function AuthButton({ session, openProfileNonce, onOpenReadingPla
           aria-label="Settings and account"
         >
           <span className="auth-avatar" aria-hidden="true">
-            {session.user.is_anonymous ? "👤" : label.charAt(0).toUpperCase()}
+            {session.user.is_anonymous ? <Icon name="people" /> : label.charAt(0).toUpperCase()}
           </span>
         </button>
         {open && menuView === "menu" && (
           <div className="auth-dropdown">
             <div className="auth-identity">
               <span className="auth-avatar auth-avatar-lg" aria-hidden="true">
-                {session.user.is_anonymous ? "👤" : label.charAt(0).toUpperCase()}
+                {session.user.is_anonymous ? <Icon name="people" /> : label.charAt(0).toUpperCase()}
               </span>
               <div>
                 <p className="auth-current-user">{label}</p>
@@ -372,16 +373,16 @@ export default function AuthButton({ session, openProfileNonce, onOpenReadingPla
                   onOpenMyProfile();
                 }}
               >
-                👤 My Profile
+                <Icon name="people" inline /> My Profile
               </button>
             )}
             {isAdmin && (
               <button type="button" className="auth-menu-item" onClick={() => setMenuView("admin")}>
-                🛡️ Admin Console
+                <Icon name="shield" inline /> Admin Console
               </button>
             )}
             <button type="button" className="auth-menu-item" onClick={() => setMenuView("settings")}>
-              ⚙️ Settings
+              <Icon name="settings" inline /> Settings
             </button>
             {onOpenReadingPlans && (
               <button
@@ -392,7 +393,7 @@ export default function AuthButton({ session, openProfileNonce, onOpenReadingPla
                   onOpenReadingPlans();
                 }}
               >
-                🗓️ Reading Plans
+                <Icon name="calendar" inline /> Reading Plans
               </button>
             )}
             <button type="button" className="auth-menu-item auth-signout" onClick={handleSignOut}>
@@ -441,7 +442,7 @@ export default function AuthButton({ session, openProfileNonce, onOpenReadingPla
     <div className="auth-button" ref={containerRef}>
       <button type="button" className="auth-trigger auth-trigger-loggedout" onClick={() => setOpen((o) => !o)} aria-label="Settings, log in, or sign up">
         <span className="auth-avatar" aria-hidden="true">
-          👤
+          <Icon name="people" />
         </span>
         <span className="auth-trigger-label">Log In</span>
       </button>
@@ -527,7 +528,7 @@ export default function AuthButton({ session, openProfileNonce, onOpenReadingPla
                   onClick={() => setShowPassword((v) => !v)}
                   aria-label={showPassword ? "Hide password" : "Show password"}
                 >
-                  {showPassword ? "🙈" : "👁️"}
+                  <Icon name={showPassword ? "eyeOff" : "eye"} />
                 </button>
               </div>
             )}

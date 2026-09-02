@@ -7,18 +7,25 @@ import { supabase } from "./supabase";
  * `private` is the default for every newly added link, deliberately: someone typing an Instagram
  * handle into their profile should have to opt that link *into* being seen, never discover after the
  * fact that adding it published it. */
+import type { IconName } from "../components/Icon";
+
 export type LinkVisibility = "private" | "friends" | "public";
 
-export const LINK_VISIBILITY_OPTIONS: { value: LinkVisibility; label: string; icon: string }[] = [
-  { value: "private", label: "Only me", icon: "🔒" },
-  { value: "friends", label: "My friends", icon: "👥" },
-  { value: "public", label: "Everyone", icon: "🌐" },
+/** `icon` is for the BADGE on a link row. It is deliberately not rendered in the editor's
+ * `<select>`, because an `<option>` can hold text and nothing else — no element may go inside one,
+ * so a drawn mark cannot follow the label in there. The three labels carry themselves. */
+export const LINK_VISIBILITY_OPTIONS: { value: LinkVisibility; label: string; icon: IconName }[] = [
+  { value: "private", label: "Only me", icon: "lock" },
+  { value: "friends", label: "My friends", icon: "players" },
+  { value: "public", label: "Everyone", icon: "globe" },
 ];
 
 export const DEFAULT_LINK_VISIBILITY: LinkVisibility = "private";
 
-export function visibilityIcon(v: LinkVisibility): string {
-  return LINK_VISIBILITY_OPTIONS.find((o) => o.value === v)?.icon ?? "🔒";
+export function visibilityIcon(v: LinkVisibility): IconName {
+  // Falls back to the most private mark, matching DEFAULT_LINK_VISIBILITY: if the value is ever
+  // unrecognised, the badge should under-promise reach rather than over-promise it.
+  return LINK_VISIBILITY_OPTIONS.find((o) => o.value === v)?.icon ?? "lock";
 }
 
 export function visibilityLabel(v: LinkVisibility): string {
@@ -34,18 +41,21 @@ export type LinkPlatform = "website" | "instagram" | "facebook" | "x" | "youtube
 export interface SocialLinkConfig {
   platform: LinkPlatform;
   label: string;
-  icon: string;
+  /** Neutral marks, not brand logos — which is what the emoji here already were. Lucide removed its
+   * brand icons in 1.x for trademark reasons, so there is no logo to reach for even if we wanted
+   * one, and each row's visible label already names the network. */
+  icon: IconName;
   placeholder: string;
 }
 
 export const SOCIAL_LINK_CONFIGS: SocialLinkConfig[] = [
-  { platform: "website", label: "Website", icon: "🔗", placeholder: "yoursite.com" },
-  { platform: "instagram", label: "Instagram", icon: "📸", placeholder: "instagram.com/yourname" },
-  { platform: "facebook", label: "Facebook", icon: "👍", placeholder: "facebook.com/yourname" },
-  { platform: "x", label: "X", icon: "✖️", placeholder: "x.com/yourname" },
-  { platform: "youtube", label: "YouTube", icon: "▶️", placeholder: "youtube.com/@yourname" },
-  { platform: "tiktok", label: "TikTok", icon: "🎵", placeholder: "tiktok.com/@yourname" },
-  { platform: "linkedin", label: "LinkedIn", icon: "💼", placeholder: "linkedin.com/in/yourname" },
+  { platform: "website", label: "Website", icon: "link", placeholder: "yoursite.com" },
+  { platform: "instagram", label: "Instagram", icon: "camera", placeholder: "instagram.com/yourname" },
+  { platform: "facebook", label: "Facebook", icon: "thumbsUp", placeholder: "facebook.com/yourname" },
+  { platform: "x", label: "X", icon: "close", placeholder: "x.com/yourname" },
+  { platform: "youtube", label: "YouTube", icon: "play", placeholder: "youtube.com/@yourname" },
+  { platform: "tiktok", label: "TikTok", icon: "music", placeholder: "tiktok.com/@yourname" },
+  { platform: "linkedin", label: "LinkedIn", icon: "briefcase", placeholder: "linkedin.com/in/yourname" },
 ];
 
 export interface ProfileLink {

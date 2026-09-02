@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { supabase } from "../lib/supabase";
+import Icon from "./Icon";
 
 interface ResetPasswordGateProps {
   onDone: () => void;
@@ -59,7 +60,7 @@ export default function ResetPasswordGate({ onDone }: ResetPasswordGateProps) {
               onClick={() => setShowPassword((v) => !v)}
               aria-label={showPassword ? "Hide password" : "Show password"}
             >
-              {showPassword ? "🙈" : "👁️"}
+              <Icon name={showPassword ? "eyeOff" : "eye"} />
             </button>
           </div>
           <div className="auth-password-field">
@@ -78,7 +79,7 @@ export default function ResetPasswordGate({ onDone }: ResetPasswordGateProps) {
               onClick={() => setShowPassword((v) => !v)}
               aria-label={showPassword ? "Hide password" : "Show password"}
             >
-              {showPassword ? "🙈" : "👁️"}
+              <Icon name={showPassword ? "eyeOff" : "eye"} />
             </button>
           </div>
           <button type="submit" disabled={saving || !password || !confirm}>

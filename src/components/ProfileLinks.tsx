@@ -9,6 +9,7 @@ import {
   type LinkVisibility,
   type ProfileLink,
 } from "../lib/profileLinks";
+import Icon from "./Icon";
 
 const CONFIG_BY_PLATFORM = Object.fromEntries(SOCIAL_LINK_CONFIGS.map((c) => [c.platform, c]));
 
@@ -16,7 +17,7 @@ const CONFIG_BY_PLATFORM = Object.fromEntries(SOCIAL_LINK_CONFIGS.map((c) => [c.
  *
  * On someone else's profile the rows that arrive here are already only the ones RLS let through, so
  * this component never has to decide what to hide — it draws what it was given. On the owner's own
- * profile it's given everything, and `showVisibility` adds the 🔒/👥/🌐 badge so the owner can see at
+ * profile it's given everything, and `showVisibility` adds the lock/friends/globe badge so the owner can see at
  * a glance who each link is reaching. */
 export function ProfileLinksList({ links, showVisibility }: { links: ProfileLink[]; showVisibility?: boolean }) {
   if (links.length === 0) return null;
@@ -27,8 +28,8 @@ export function ProfileLinksList({ links, showVisibility }: { links: ProfileLink
         const href = safeHref(link.url);
         return (
           <li key={link.id} className="profile-links-item">
-            <span className="profile-links-icon" aria-hidden="true">
-              {config?.icon ?? "🔗"}
+            <span className="profile-links-icon">
+              <Icon name={config?.icon ?? "link"} />
             </span>
             {/* No href at all when the stored URL doesn't survive re-validation — a bad row renders
              * as plain text rather than as a link that could carry a hostile scheme. */}
@@ -41,7 +42,7 @@ export function ProfileLinksList({ links, showVisibility }: { links: ProfileLink
             )}
             {showVisibility && (
               <span className="profile-links-badge" title={`Visible to: ${visibilityLabel(link.visibility)}`}>
-                {visibilityIcon(link.visibility)} {visibilityLabel(link.visibility)}
+                <Icon name={visibilityIcon(link.visibility)} inline /> {visibilityLabel(link.visibility)}
               </span>
             )}
           </li>
@@ -87,8 +88,8 @@ export function ProfileLinksEditor({
         return (
           <div key={config.platform} className="profile-link-edit-row">
             <div className="profile-edit-field-row">
-              <span className="profile-links-icon" aria-hidden="true">
-                {config.icon}
+              <span className="profile-links-icon">
+                <Icon name={config.icon} />
               </span>
               <input
                 type="text"
@@ -109,7 +110,7 @@ export function ProfileLinksEditor({
               >
                 {LINK_VISIBILITY_OPTIONS.map((o) => (
                   <option key={o.value} value={o.value}>
-                    {o.icon} {o.label}
+                    {o.label}
                   </option>
                 ))}
               </select>

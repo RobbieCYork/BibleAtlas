@@ -17,6 +17,7 @@ import {
   type LinkPlatform,
   type ProfileLink,
 } from "../lib/profileLinks";
+import Icon, { type IconName } from "./Icon";
 
 /** A church website is typed without a scheme half the time ("mychurch.org") — treat that as shorthand
  * for https rather than rejecting it or linking to a relative path on this app's own domain. */
@@ -49,28 +50,31 @@ export interface ProfileFieldConfig {
     | "favorite_team_soccer"
   >;
   label: string;
-  icon: string;
+  /** The five "favourite team" rows deliberately share the drawn `trophy`. Lucide ships no sports
+   * balls, and five mismatched stand-ins would read worse than one honest repeated mark when each
+   * row's own label already says which sport it is. */
+  icon: IconName;
   section: "about" | "work" | "education" | "interests";
   type: "text" | "textarea" | "date";
   placeholder?: string;
 }
 
 export const PROFILE_FIELD_CONFIGS: ProfileFieldConfig[] = [
-  { key: "location", label: "Where I live", icon: "📍", section: "about", type: "text", placeholder: "City, State" },
-  { key: "birthday", label: "Birthday", icon: "🎂", section: "about", type: "date" },
-  { key: "relationship_status", label: "Relationship status", icon: "💍", section: "about", type: "text", placeholder: "e.g. Married, Single" },
-  { key: "hobbies", label: "Hobbies", icon: "🎨", section: "about", type: "textarea", placeholder: "Hiking, cooking, reading…" },
-  { key: "work_experience", label: "Work experience", icon: "💼", section: "work", type: "textarea", placeholder: "Where you've worked…" },
-  { key: "education", label: "Education", icon: "🎓", section: "education", type: "textarea", placeholder: "High school, college…" },
-  { key: "favorite_band", label: "Favorite band", icon: "🎵", section: "interests", type: "text" },
-  { key: "favorite_song", label: "Favorite song", icon: "🎧", section: "interests", type: "text" },
-  { key: "favorite_tv_shows", label: "Favorite TV shows", icon: "📺", section: "interests", type: "text" },
-  { key: "favorite_movies", label: "Favorite movies", icon: "🎬", section: "interests", type: "text" },
-  { key: "favorite_team_football", label: "Favorite football team", icon: "🏈", section: "interests", type: "text" },
-  { key: "favorite_team_basketball", label: "Favorite basketball team", icon: "🏀", section: "interests", type: "text" },
-  { key: "favorite_team_baseball", label: "Favorite baseball team", icon: "⚾", section: "interests", type: "text" },
-  { key: "favorite_team_hockey", label: "Favorite hockey team", icon: "🏒", section: "interests", type: "text" },
-  { key: "favorite_team_soccer", label: "Favorite soccer team", icon: "⚽", section: "interests", type: "text" },
+  { key: "location", label: "Where I live", icon: "home", section: "about", type: "text", placeholder: "City, State" },
+  { key: "birthday", label: "Birthday", icon: "cake", section: "about", type: "date" },
+  { key: "relationship_status", label: "Relationship status", icon: "ring", section: "about", type: "text", placeholder: "e.g. Married, Single" },
+  { key: "hobbies", label: "Hobbies", icon: "palette", section: "about", type: "textarea", placeholder: "Hiking, cooking, reading…" },
+  { key: "work_experience", label: "Work experience", icon: "briefcase", section: "work", type: "textarea", placeholder: "Where you've worked…" },
+  { key: "education", label: "Education", icon: "education", section: "education", type: "textarea", placeholder: "High school, college…" },
+  { key: "favorite_band", label: "Favorite band", icon: "music", section: "interests", type: "text" },
+  { key: "favorite_song", label: "Favorite song", icon: "headphones", section: "interests", type: "text" },
+  { key: "favorite_tv_shows", label: "Favorite TV shows", icon: "tv", section: "interests", type: "text" },
+  { key: "favorite_movies", label: "Favorite movies", icon: "movie", section: "interests", type: "text" },
+  { key: "favorite_team_football", label: "Favorite football team", icon: "trophy", section: "interests", type: "text" },
+  { key: "favorite_team_basketball", label: "Favorite basketball team", icon: "trophy", section: "interests", type: "text" },
+  { key: "favorite_team_baseball", label: "Favorite baseball team", icon: "trophy", section: "interests", type: "text" },
+  { key: "favorite_team_hockey", label: "Favorite hockey team", icon: "trophy", section: "interests", type: "text" },
+  { key: "favorite_team_soccer", label: "Favorite soccer team", icon: "trophy", section: "interests", type: "text" },
 ];
 
 export const PROFILE_SECTION_LABELS: Record<ProfileFieldConfig["section"], string> = {
@@ -348,11 +352,11 @@ function MyProfileControl({
         <div className="profile-view">
           <div className="friend-profile-header myprofile-name-row">
             <span className="auth-avatar auth-avatar-lg" aria-hidden="true">
-              {saved.avatarUrl ? <img src={saved.avatarUrl} alt="" /> : "👤"}
+              {saved.avatarUrl ? <img src={saved.avatarUrl} alt="" /> : <Icon name="people" />}
             </span>
             <p className="friend-profile-name myprofile-name-grow">{saved.displayName}</p>
             <button type="button" className="myprofile-edit-btn" onClick={() => setEditing(true)}>
-              ✏️ Edit
+              <Icon name="pencil" inline /> Edit
             </button>
           </div>
           <button
@@ -369,8 +373,8 @@ function MyProfileControl({
               {saved.bio && <p className="profile-view-field">{saved.bio}</p>}
               {saved.phone && (
                 <p className="profile-view-field">
-                  <span aria-hidden="true">📱</span> Phone: {saved.phone}{" "}
-                  <span className="profile-field-visibility-note">{saved.visibility.phone ? "🌐" : "🔒"}</span>
+                  <Icon name="phone" inline /> Phone: {saved.phone}{" "}
+                  <span className="profile-field-visibility-note"><Icon name={saved.visibility.phone ? "globe" : "lock"} inline /></span>
                 </p>
               )}
 
@@ -382,8 +386,8 @@ function MyProfileControl({
                     <h4 className="profile-view-section-heading">{PROFILE_SECTION_LABELS[section]}</h4>
                     {fields.map((f) => (
                       <p key={f.key} className="profile-view-field">
-                        <span aria-hidden="true">{f.icon}</span> {f.label}: {saved.extra[f.key]}{" "}
-                        <span className="profile-field-visibility-note">{saved.visibility[f.key] ? "🌐" : "🔒"}</span>
+                        <Icon name={f.icon} inline /> {f.label}: {saved.extra[f.key]}{" "}
+                        <span className="profile-field-visibility-note"><Icon name={saved.visibility[f.key] ? "globe" : "lock"} inline /></span>
                       </p>
                     ))}
                   </div>
@@ -393,7 +397,7 @@ function MyProfileControl({
           )}
           {saved.church && (
             <p className="profile-view-field">
-              <span aria-hidden="true">⛪</span> Church:{" "}
+              <Icon name="church" inline /> Church:{" "}
               {saved.churchWebsite ? (
                 <a href={ensureUrlProtocol(saved.churchWebsite)} target="_blank" rel="noopener noreferrer">
                   {saved.church}
@@ -405,7 +409,7 @@ function MyProfileControl({
           )}
           {saved.favoriteVerse && (
             <div className="profile-view-field profile-favorite-verse">
-              <span aria-hidden="true">📖</span> Favorite verse:{" "}
+              <Icon name="bible" inline /> Favorite verse:{" "}
               <LinkedVerseText
                 text={saved.favoriteVerse}
                 onSelectLocation={() => {}}
@@ -428,7 +432,7 @@ function MyProfileControl({
         <>
           <div className="auth-avatar-upload-row">
             <span className="auth-avatar auth-avatar-lg" aria-hidden="true">
-              {draft.avatarUrl ? <img src={draft.avatarUrl} alt="" /> : "👤"}
+              {draft.avatarUrl ? <img src={draft.avatarUrl} alt="" /> : <Icon name="people" />}
             </span>
             <button type="button" onClick={() => fileInputRef.current?.click()} disabled={uploading}>
               {uploading ? "Uploading…" : "Change Photo"}
@@ -447,7 +451,7 @@ function MyProfileControl({
               checked={draft.discoverableByName}
               onChange={(e) => setDraft((f) => ({ ...f, discoverableByName: e.target.checked }))}
             />
-            🔍 Let people find me by searching my name (email and phone always work)
+            <Icon name="search" inline /> Let people find me by searching my name (email and phone always work)
           </label>
           <div className="profile-edit-field-row">
             <input
@@ -462,7 +466,7 @@ function MyProfileControl({
                 checked={!!draft.visibility.phone}
                 onChange={(e) => setDraft((f) => ({ ...f, visibility: { ...f.visibility, phone: e.target.checked } }))}
               />
-              🌐
+              <Icon name="globe" title="Show on your profile to friends" />
             </label>
           </div>
           <input
@@ -473,7 +477,7 @@ function MyProfileControl({
           />
           {draft.church.trim() && (
             <>
-              <p className="profile-field-hint">🌐 Show your church some love! Enter your church's website here and we'll link to it!</p>
+              <p className="profile-field-hint"><Icon name="globe" inline /> Show your church some love! Enter your church's website here and we'll link to it!</p>
               <input
                 type="text"
                 value={draft.churchWebsite}
@@ -523,7 +527,7 @@ function MyProfileControl({
                         setDraft((d) => ({ ...d, visibility: { ...d.visibility, [f.key]: e.target.checked } }))
                       }
                     />
-                    🌐
+                    <Icon name="globe" title="Show on your profile to friends" />
                   </label>
                 </div>
               ))}
@@ -664,13 +668,13 @@ export default function MyProfileView({ userId, onDisplayNameSaved, onClose, onG
           <div className="auth-settings-section auth-settings-section-stacked">
             <div className="myprofile-social-links">
               <button type="button" onClick={() => onOpenFriends("friends")}>
-                👥 Friends
+                <Icon name="players" inline /> Friends
               </button>
               <button type="button" onClick={() => onOpenFriends("groups")}>
-                👪 Groups
+                <Icon name="groups" inline /> Groups
               </button>
               <button type="button" onClick={() => onOpenFriends("messages")}>
-                💬 Messages
+                <Icon name="messages" inline /> Messages
               </button>
             </div>
           </div>
