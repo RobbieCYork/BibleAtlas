@@ -270,16 +270,3 @@ export function startUpdateChecks(): void {
   window.addEventListener('pageshow', () => void checkAndReschedule());
   window.addEventListener('focus', () => void checkAndReschedule());
 }
-
-/** Test seam — lets a console-driven check run on demand without waiting out a poll. */
-if (typeof window !== 'undefined') {
-  (window as unknown as Record<string, unknown>).__updateCheckNow = checkAndReschedule;
-  (window as unknown as Record<string, unknown>).__updateCheckState = () => ({
-    buildId: __BUILD_ID__,
-    failures,
-    updatePending,
-    polling: pollTimer !== null,
-    risky: isReloadRisky(),
-    nextDelay: nextDelay(),
-  });
-}
