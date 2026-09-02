@@ -3541,6 +3541,85 @@ A young man named Saul of Tarsus stood by, approving of the killing and guarding
     ],
   },
   {
+    /** The spanning entry that stands in for the apostolic career of Paul — the journeys, the
+     * letters, the arrest, the appeal to Caesar, Rome and the martyrdom — with one deliberate
+     * exception. Ten separate Paul marks strung across AD 34-68 crowded the Acts era and buried the
+     * rest of the early church behind them, so the canvas draws this entry instead of its members
+     * at every zoom level (see TimelineView.tsx); but Saul's Conversion on the Damascus Road keeps a
+     * mark of its own, because it is the hinge of the New Testament's second half rather than an
+     * episode inside a ministry, and a timeline you can scroll to the mid-30s on and find no
+     * Damascus road would be saying something this app does not mean. Paul's window therefore
+     * carries exactly two marks.
+     *
+     * Everything folded in still exists as a full article — still opening, still searchable in
+     * Articles, still auto-linked from other prose, and named and linked from this article's own
+     * text below, which is also where the one exception is picked up in narrative order so a reader
+     * of this entry can still reach it in a tap. This is a display grouping, not a replacement.
+     * Members point at this id via `collapsedInto`, which is the single source of truth: the
+     * article's own index of members is derived from it, so the promoted conversion left that list
+     * by itself, with nothing to keep in step by hand.
+     *
+     * Scope rule, applied consistently: an event folds in when Paul is its subject — an episode of
+     * his own life between the Damascus road and his death. Events he merely attends stay out,
+     * because they belong to the wider church rather than to him: The Jerusalem Council is the
+     * whole church's doctrinal hinge with Peter and James at its centre, and The Church at Antioch
+     * is a congregation's founding that happens to commission him. Stephen's Martyrdom stays out
+     * because it precedes his conversion and is Stephen's event, not Saul's. The Martyrdoms of
+     * Peter and Paul stays out because it sits in the Roman Empire lane, and a collapse never
+     * reaches across eras.
+     *
+     * The span is AD 34-68 because that is what the underlying data says: the conversion is
+     * c. AD 34 and the martyrdom is c. AD 64-68. It is the span of Paul's life in Christ, not a
+     * claim to stand in for every mark inside it — the conversion at its near edge is drawn beside
+     * this entry rather than folded into it, exactly as the Crucifixion is drawn beside the
+     * Public Ministry of Jesus. */
+    id: "bib-ac-paul-ministry",
+    title: "The Life and Ministry of Paul",
+    category: "biblical",
+    era: "Acts & Early Church",
+    startYear: 34,
+    endYear: 68,
+    dateLabel: "c. AD 34-68",
+    dateCertainty: "traditional",
+    summary:
+      `From the Damascus road to a Roman execution block, Paul spent roughly thirty years planting churches from Antioch to Corinth, writing the letters that carry the bulk of the New Testament's doctrine, and defending the gospel before magistrates, kings and finally Caesar himself.`,
+    article: `No one in the New Testament travelled further, wrote more, or was more thoroughly turned around than Paul of Tarsus. A Pharisee trained under Gamaliel, a Roman citizen by birth, and a Greek-speaking Jew from a Cilician trading city, he was equipped almost accidentally for a work he spent his early manhood trying to destroy. Saul's Conversion on the Damascus Road ended that: the risen Christ met him on the road he was travelling to arrest believers, and the church's chief persecutor became its most tireless missionary. Everything below flows from that morning.
+
+The years immediately after are the quietest in the record. Paul went away into Arabia and back to Damascus, spent time in his home city of Tarsus, and was eventually fetched by Barnabas to help teach at the fast-growing congregation in Syrian Antioch — the base The Church at Antioch would become for the whole Gentile mission. It was Antioch, not Jerusalem, that sent him out.
+
+Paul's First Missionary Journey took him and Barnabas through Cyprus and into the Galatian highlands, planting the first wave of Gentile-majority churches at Pisidian Antioch, Iconium, Lystra and Derbe — and establishing the pattern that would repeat for the rest of his life: the synagogue first, a mixed response, then opposition sharp enough to drive him out of town, at Lystra by stoning. Those churches raised the question the church could not dodge, and The Jerusalem Council answered it: Gentiles are saved by grace through faith, not by circumcision and the law. Paul's Second Missionary Journey carried the gospel across the Aegean into Europe for the first time — Philippi, Thessalonica, Berea, the Areopagus at Athens, and eighteen months in Corinth, where the courtroom scene of Gallio and Paul at Corinth gave later historians the single firmest date in his whole chronology. Paul's Third Missionary Journey settled him for roughly three years at Ephesus, the high-water mark of his church planting, and ended with a collection gathered from the Gentile churches for the poor saints in Jerusalem and a farewell to the Ephesian elders at Miletus in which he told them plainly that chains were waiting for him.
+
+Out of those journeys came the letters. Thirteen of the New Testament's twenty-seven books carry Paul's name, and they were not written in a study — they were written on the road, to congregations he had planted and left, answering real questions from real people: Galatians against a gospel of law-keeping, 1 and 2 Thessalonians on the Lord's return, 1 and 2 Corinthians into a church tearing itself apart, and Romans, the fullest exposition of justification by faith ever set down, dictated at Corinth to a church he had never visited. That last letter alone has re-founded the church more than once, from Augustine's garden to Luther's tower to Wesley's warmed heart.
+
+The chains came. Paul's Arrest in Jerusalem began in a Temple riot over a false rumour and ended with Roman soldiers pulling him out of a mob that meant to kill him. Paul's Imprisonment at Caesarea kept him two years in provincial custody, defending himself before Felix, before Festus, and before King Agrippa II, until, with the case about to be moved back to Jerusalem where an assassination plot was still waiting, he exercised the one right no provincial governor could overrule and appealed to Caesar. Paul's Voyage and Shipwreck to Rome is Luke's most vivid piece of narrative — a fortnight driven before a northeaster, a ship broken up on Malta, and not one of two hundred and seventy-six lives lost, exactly as Paul had been promised.
+
+Acts closes with Paul's First Roman Imprisonment: two years under house arrest in his own rented lodging, receiving all who came to him and "proclaiming the kingdom of God and teaching about the Lord Jesus Christ with all boldness and without hindrance." Ephesians, Philippians, Colossians and Philemon — the Prison Epistles — most likely date from those two years. Luke stops there without a verdict, because the gospel reaching Rome, not Paul's personal fate, was the story he set out to tell.
+
+Paul's Martyrdom is therefore known from his own last letter and from the church's earliest memory rather than from Acts. Writing to Timothy from a second and far harsher confinement, he said, "I have fought the good fight, I have finished the race, I have kept the faith." Tradition going back to Clement of Rome, within living memory of the events, holds that he was beheaded on the Ostian Way outside the city under Nero — beheaded rather than crucified because a Roman citizen could not lawfully be crucified. The apostle who had set out from Damascus to arrest Christians died in the capital of the empire for being one.
+
+What holds these thirty years together is not Paul's stamina but his message. He said it himself, to the Ephesian elders and to anyone who would listen: he counted his life of no value to himself, if only he might finish his course and the ministry he received from the Lord Jesus — to testify to the gospel of the grace of God.`,
+    datingNotes: `The span here is simply the span of the events it covers: the conversion at c. AD 34 and the martyrdom at c. AD 64-68. It is a date range, not a claim of exclusive coverage — Saul's Conversion on the Damascus Road sits at its near edge and is drawn as its own mark rather than folded into this one, and other events in these years that are not Paul's own life keep their marks too. Pauline chronology is genuinely disputed at both ends and reasonably firm only in the middle. The one fixed point is the Delphi inscription placing Gallio's proconsulship of Achaia at c. AD 51-52, which anchors Paul's eighteen months in Corinth; everything else is reckoned forward and backward from it using the intervals Paul gives in Galatians 1-2 ("after three years", "after fourteen years") and the durations in Acts. Reading those intervals differently moves the conversion anywhere from c. AD 31 to c. AD 36. At the other end, the accession of Porcius Festus — the hinge for the Caesarean imprisonment, the voyage and the Roman years — is placed by most scholars at AD 59, by others at 60, and by a minority anywhere from the mid-50s to 61; every later date moves with it. The martyrdom rests on tradition rather than on any dated record, and AD 64-68 is a range rather than a year. The order of events is not in doubt; the years carry margins of several years at each end, and this entry's AD 34-68 should be read as the conventional reconstruction rather than as a settled fact.`,
+    scriptureRefs: [
+      "Acts 9:1-31",
+      "Acts 13:1-28:31",
+      "Galatians 1:11-2:14",
+      "2 Corinthians 11:22-33",
+      "2 Timothy 4:6-8"
+    ],
+    externalRefs: [
+      "Eusebius, Ecclesiastical History 2.22, 2.25",
+      "1 Clement 5"
+    ],
+    primaryEntityIds: [
+      "paul-of-tarsus",
+      "damascus",
+      "antioch-syria",
+      "ephesus",
+      "corinth",
+      "rome"
+    ],
+  },
+  {
     id: "bib-ac-paul-conversion",
     title: "Saul's Conversion on the Damascus Road",
     category: "biblical",
@@ -3697,6 +3776,9 @@ Rather than pressing further, Paul and Barnabas retraced their steps, strengthen
       "barnabas",
       "cyprus"
     ],
+    /** Display-only: folds into "The Life and Ministry of Paul" on the timeline canvas at every zoom
+     * level. The record, its article and its links are untouched — see collapsedInto in types.ts. */
+    collapsedInto: "bib-ac-paul-ministry",
   },
   {
     id: "bib-ac-jerusalem-council",
@@ -3753,6 +3835,9 @@ This otherwise minor courtroom scene has become one of the single most valuable 
       "paul-of-tarsus",
       "corinth"
     ],
+    /** Display-only: folds into "The Life and Ministry of Paul" on the timeline canvas at every zoom
+     * level. The record, its article and its links are untouched — see collapsedInto in types.ts. */
+    collapsedInto: "bib-ac-paul-ministry",
   },
   {
     id: "bib-ac-paul-second-journey",
@@ -3780,6 +3865,9 @@ The journey's longest stay came in Corinth, roughly eighteen months, where Paul 
       "silas",
       "philippi"
     ],
+    /** Display-only: folds into "The Life and Ministry of Paul" on the timeline canvas at every zoom
+     * level. The record, its article and its links are untouched — see collapsedInto in types.ts. */
+    collapsedInto: "bib-ac-paul-ministry",
   },
   {
     id: "bib-ac-paul-third-journey",
@@ -3805,6 +3893,9 @@ On the return trip, Paul stopped at Miletus and delivered an emotional farewell 
       "paul-of-tarsus",
       "ephesus"
     ],
+    /** Display-only: folds into "The Life and Ministry of Paul" on the timeline canvas at every zoom
+     * level. The record, its article and its links are untouched — see collapsedInto in types.ts. */
+    collapsedInto: "bib-ac-paul-ministry",
   },
   {
     id: "bib-ac-paul-arrest-jerusalem",
@@ -3829,6 +3920,9 @@ This arrest began a period of imprisonment that would stretch, with interruption
       "paul-of-tarsus",
       "jerusalem"
     ],
+    /** Display-only: folds into "The Life and Ministry of Paul" on the timeline canvas at every zoom
+     * level. The record, its article and its links are untouched — see collapsedInto in types.ts. */
+    collapsedInto: "bib-ac-paul-ministry",
   },
   {
     id: "bib-ac-paul-caesarea-imprisonment",
@@ -3854,6 +3948,9 @@ Agrippa's verdict - "This man could have been set free if he had not appealed to
     primaryEntityIds: [
       "paul-of-tarsus"
     ],
+    /** Display-only: folds into "The Life and Ministry of Paul" on the timeline canvas at every zoom
+     * level. The record, its article and its links are untouched — see collapsedInto in types.ts. */
+    collapsedInto: "bib-ac-paul-ministry",
   },
   {
     id: "bib-ac-paul-voyage-rome",
@@ -3880,6 +3977,9 @@ On Malta, Paul was bitten by a viper while gathering firewood and suffered no ha
       "rome",
       "malta"
     ],
+    /** Display-only: folds into "The Life and Ministry of Paul" on the timeline canvas at every zoom
+     * level. The record, its article and its links are untouched — see collapsedInto in types.ts. */
+    collapsedInto: "bib-ac-paul-ministry",
   },
   {
     id: "bib-ac-paul-first-roman-imprisonment",
@@ -3910,6 +4010,9 @@ Because Acts ends here rather than with Paul's death, many evangelical scholars 
       "paul-of-tarsus",
       "rome"
     ],
+    /** Display-only: folds into "The Life and Ministry of Paul" on the timeline canvas at every zoom
+     * level. The record, its article and its links are untouched — see collapsedInto in types.ts. */
+    collapsedInto: "bib-ac-paul-ministry",
   },
   {
     id: "bib-ac-nero-fire-persecution",
@@ -3964,6 +4067,9 @@ Most evangelical scholars place Paul's death sometime between AD 64 and 68, duri
       "paul-of-tarsus",
       "rome"
     ],
+    /** Display-only: folds into "The Life and Ministry of Paul" on the timeline canvas at every zoom
+     * level. The record, its article and its links are untouched — see collapsedInto in types.ts. */
+    collapsedInto: "bib-ac-paul-ministry",
   },
   {
     id: "bib-ac-peter-martyrdom",
