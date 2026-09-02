@@ -37,8 +37,12 @@ const CATEGORY_LABELS: Record<TimelineEventCategory, string> = {
  * too — no event id appears here, so any future spanning entry gets the same index automatically.
  *
  * This matters because the members have no mark of their own on the timeline at any zoom: for a
- * reader who tapped the one mark drawn for AD 27-30, this list IS the way into the twenty-seven
- * articles it covers. */
+ * reader who tapped the one mark drawn for AD 27-30, this list IS the way into the articles it
+ * covers. It follows that an event promoted back OUT of the collapse should drop off the list —
+ * The Crucifixion and The Resurrection have marks of their own again, so listing them here as
+ * things hidden inside the span would be false. They are not lost from the article: the prose above
+ * the list still narrates them in sequence and auto-links them by title. Deriving the list is what
+ * makes that correction automatic; a hand-written list would still be claiming to hide them. */
 function collapsedMembersOf(id: string): TimelineEvent[] {
   const index = new Map(timelineEvents.map((e, i) => [e.id, i]));
   return timelineEvents
@@ -124,7 +128,7 @@ export default function TimelineEventPanel({
             the overlay's own Back inside Timeline mode) carries the reader home unchanged. */}
         {collapsedMembers.length > 0 && (
           <div className="history-field">
-            <h4>Events in this period</h4>
+            <h4>Events included in this entry</h4>
             <ul>
               {collapsedMembers.map((member) => (
                 <li key={member.id}>

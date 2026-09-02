@@ -2665,14 +2665,22 @@ As Jesus comes up out of the water, heaven opens, the Spirit of God descends lik
     collapsedInto: "bib-loc-public-ministry",
   },
   {
-    /** The one spanning entry that stands in for EVERY event of Jesus's ministry years — the
-     * baptism, the parables, the miracles, the callings, and Passion Week through the Ascension.
-     * The timeline canvas draws this entry and nothing else inside AD 27-30, at every zoom level
-     * (see TimelineView.tsx): a three-year window carrying thirty separate marks was unreadable,
-     * and the owner asked for one. Those events all still exist as full articles — still opening,
-     * still searchable in Articles, still auto-linked from other prose, and named and linked from
-     * this article's own text below so they stay one tap away. This is a display grouping, not a
-     * replacement. Members point at this id via `collapsedInto`.
+    /** The spanning entry that stands in for the ministry years — the baptism, the parables, the
+     * miracles, the callings, and Passion Week through the Ascension — with two deliberate
+     * exceptions. A three-year window carrying thirty separate marks was unreadable, so the canvas
+     * draws this entry instead of its members at every zoom level (see TimelineView.tsx); but The
+     * Crucifixion and The Resurrection keep marks of their own, because they are the hinge of the
+     * whole dataset rather than episodes inside a ministry, and a timeline you can scroll to AD 30
+     * on and find no cross and no empty tomb would be saying something this app does not mean.
+     * AD 27-30 therefore carries exactly three marks.
+     *
+     * Everything folded in still exists as a full article — still opening, still searchable in
+     * Articles, still auto-linked from other prose, and named and linked from this article's own
+     * text below, which is also where the two exceptions are picked back up in narrative order.
+     * This is a display grouping, not a replacement. Members point at this id via `collapsedInto`,
+     * which is the single source of truth: the article's own index of members is derived from it,
+     * so promoting an event out of the collapse (as those two are) removes it from that list for
+     * free, with nothing to keep in step by hand.
      *
      * The span stays AD 27-30 because that is what the underlying data says: the baptism is c. AD 27
      * and the dataset's Ascension is c. AD 30, so the collapse adds no years to either end. */
@@ -2699,7 +2707,7 @@ Everything He said and did in these years was true and gracious in itself, and i
 The Crucifixion is where the whole ministry had been going from the start. He was nailed to a Roman cross outside the city walls, bore the wrath our sins deserved, cried "It is finished," and gave up His spirit; the Temple curtain tore from top to bottom. The Burial of Jesus laid Him in Joseph of Arimathea's new tomb behind a sealed stone, and on the third day The Resurrection emptied it — not a symbol and not a rumour, but a bodily rising attested by the women, by Peter and John at the tomb, and in the Post-Resurrection Appearances by more than five hundred witnesses over forty days. To those witnesses He entrusted The Great Commission — "make disciples of all nations" — and then, in The Ascension, He was taken up out of their sight to be seated at the right hand of the Father, where He reigns and intercedes for His people still.
 
 The kingdom He preached in Galilee was purchased with His own blood in Jerusalem, and it is His resurrection and ascension that make the preaching of it good news rather than merely good advice.`,
-    datingNotes: `Dated here from the baptism (c. AD 27) through the crucifixion, resurrection and ascension (all c. AD 30), following the traditional chronology used throughout this timeline. Because this entry now stands in for every event of the ministry years, its span is simply the span of the events it covers — the earliest, the baptism, is c. AD 27 and the latest, the ascension, is c. AD 30, so the range is unchanged. John's Gospel names at least three Passovers during the ministry, which is why "about three years" is the long-standing reading. Scholars who date the crucifixion to AD 33 shift the whole span roughly two years later (c. AD 29-33) without changing the order of events; the Gospels themselves are far more concerned with what happened than with when, and none of them offers a continuous dated itinerary.`,
+    datingNotes: `Dated here from the baptism (c. AD 27) through the crucifixion, resurrection and ascension (all c. AD 30), following the traditional chronology used throughout this timeline. Because this entry stands in for the events of the ministry years, its span is simply the span of the events it covers — the earliest, the baptism, is c. AD 27 and the latest, the ascension, is c. AD 30, so the range is unchanged. John's Gospel names at least three Passovers during the ministry, which is why "about three years" is the long-standing reading. Scholars who date the crucifixion to AD 33 shift the whole span roughly two years later (c. AD 29-33) without changing the order of events; the Gospels themselves are far more concerned with what happened than with when, and none of them offers a continuous dated itinerary.`,
     scriptureRefs: [
       "Matthew 3:13-28:20",
       "Mark 1:9-16:20",
@@ -3308,9 +3316,6 @@ A Roman centurion overseeing the execution responds, "Truly this was the Son of 
       "jesus-of-nazareth",
       "jerusalem"
     ],
-    /** Display-only: folds into "Public Ministry of Jesus" on the timeline canvas at every zoom
-     * level. The record, its article and its links are untouched — see collapsedInto in types.ts. */
-    collapsedInto: "bib-loc-public-ministry",
   },
   {
     id: "bib-loc-burial-of-jesus",
@@ -3369,9 +3374,6 @@ The resurrection is not a footnote to the Gospel story but its climax and proof:
       "jesus-of-nazareth",
       "jerusalem"
     ],
-    /** Display-only: folds into "Public Ministry of Jesus" on the timeline canvas at every zoom
-     * level. The record, its article and its links are untouched — see collapsedInto in types.ts. */
-    collapsedInto: "bib-loc-public-ministry",
   },
   {
     id: "bib-loc-post-resurrection-appearances",
