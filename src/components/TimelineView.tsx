@@ -166,6 +166,18 @@ const EVENT_LANES: {
  * `true` restores the lane exactly as it was, with no other change anywhere. */
 const SHOW_BOOKS_LANE = false;
 
+/** The header's "Jump to" era menu (TimelineEraMenu — an arrow button reading "Eras" that opens a
+ * checklist of thirteen named spans, from Primeval History to The Modern Era, plus "The whole
+ * span") is REMOVED AT THE OWNER'S REQUEST, behind this flag and in exactly the same way the
+ * Books-of-the-Bible band above is: nothing is deleted. TimelineEraMenu.tsx, its era table, its
+ * CSS (.tl-era-menu*) and the `showYearRange` callback it drives are all still here and still
+ * working — flip this single constant back to `true` and the control returns exactly as it was,
+ * with no other change anywhere.
+ *
+ * `showYearRange` has no other caller. The cluster-badge drill-in path uses `zoomToYearRange`,
+ * which is a different callback (deliberately one-way — it only ever zooms IN) and is untouched. */
+const SHOW_ERA_MENU = false;
+
 /* ------------------------------------------------------- lane visibility */
 
 /** Generous, FIXED per-lane heights (px). Each visible lane gets exactly this much room — it is
@@ -187,6 +199,35 @@ const MIN_BOOKS_H = 76;
 const LIFE_ROW_H = 34;
 const LIFE_ROW_PAD = 26;
 const MIN_LIFE_H = 84;
+
+/** ------------------------------------------------- the lane label's own gutter
+ *
+ * Every lane is drawn with a pinned name chip (.tl-lane-label — "BIBLICAL AND CHURCH HISTORY",
+ * "LIFESPANS", ...) at its top-left corner. That chip does not pan with the content, it paints
+ * above it (z-index 6), and it used to be laid straight over the lane's first row, where it
+ * covered the first card's title and left only the date showing.
+ *
+ * The fix is structural rather than a nudge: every lane now reserves a FULL-WIDTH horizontal band
+ * of exactly this height at its top, and NO content is ever positioned inside it — the row stack
+ * (and the cluster fallback's fan-out) starts below it. Full-width is the load-bearing part: the
+ * chip is pinned horizontally while the world surface pans underneath it, so a gutter measured in
+ * x (a left margin, say) would only hold until the user dragged. A band measured in y cannot be
+ * panned into at any pan offset, at any zoom, in any lane, by any card.
+ *
+ * The three numbers below are the chip's own geometry, and the chip's height is PINNED in CSS
+ * (.tl-lane-label { height: var(--tl-lane-label-h) }, one declaration, both breakpoints) from the
+ * same value, so the reservation here cannot silently drift out of step with what's drawn. Because
+ * the chip is `white-space: nowrap` and vertically centred inside that fixed height, its height is
+ * independent of how long the lane's name is — the longest label reserves exactly as much as the
+ * shortest. */
+const LANE_LABEL_TOP = 5;
+const LANE_LABEL_H = 22;
+/** Clear space between the bottom of the chip and the first thing drawn in the lane. Also absorbs
+ * the few pixels a marker's title pill (centred on its dot, ~27px tall) reaches above the topmost
+ * fan-out position in the cluster fallback path. */
+const LANE_LABEL_GAP = 8;
+/** The reserved band, top of lane -> first pixel content may occupy. */
+const LANE_LABEL_RESERVE = LANE_LABEL_TOP + LANE_LABEL_H + LANE_LABEL_GAP;
 
 /** Per-row height for the event lanes (Biblical/World/Religion) when they're packed into multiple
  * rows — same idea as BOOK_ROW_H/LIFE_ROW_H above, sized to comfortably hold a marker dot or
@@ -1032,6 +1073,43 @@ export default function TimelineView({
     [visibleLanes.lifespans, lifespans],
   );
 
+  /** ------------------------------------------------- collapsed detail groups
+   *
+   * DISPLAY ONLY. Some stretches of the story are made of many small episodes inside a very short
+   * span — the Life of Christ era carries roughly a dozen parables, miracles and discourses inside
+   * AD 27-30 — and drawing every one of them as its own mark buries the structural events around
+   * them. An event may therefore name a wider "spanning" event in `collapsedInto` (see types.ts);
+   * the canvas then draws the ONE spanning entry instead of its members, and swaps back to the
+   * members once the user is zoomed in far enough for them to be worth reading individually.
+   *
+   * The timeline's detail axis is zoom — that is the only "tier" this view has (the header's "4/4"
+   * is the LANE checklist, i.e. how many of the four timelines are switched on, not a density
+   * control). So the tier test is simply pixels-per-year: at or past this, individual episodes;
+   * below it, the spanning entry. MAX_PX_PER_YEAR is 48, so this is genuinely the "zoomed well in"
+   * end of the range, and the swap is automatic and reversible in both directions.
+   *
+   * Nothing is removed from the dataset by any of this: `events` still holds every record, so the
+   * focus fly-to, the tooltips, the article panel, Articles browse/search, the auto-linker and the
+   * games all continue to see all of them. A collapsed event is also force-shown whenever it is the
+   * current focus target ("View in Timeline" on it, or picking it from the timeline search box),
+   * so the one path that aims the canvas AT a specific event never aims at something undrawn. */
+  const COLLAPSE_DETAIL_PX_PER_YEAR = 20;
+
+  const canvasEvents = useMemo(() => {
+    const showDetail = pxPerYear >= COLLAPSE_DETAIL_PX_PER_YEAR;
+    // The spanning entries are identified purely by being named in some member's `collapsedInto`.
+    const summaryIds = new Set<string>();
+    for (const e of events) if (e.collapsedInto) summaryIds.add(e.collapsedInto);
+    if (summaryIds.size === 0) return events;
+    const focused = focusInfo?.eventIds ?? null;
+    return events.filter((e) => {
+      if (focused?.has(e.id)) return true;
+      if (e.collapsedInto) return showDetail;
+      if (summaryIds.has(e.id)) return !showDetail;
+      return true;
+    });
+  }, [events, pxPerYear, focusInfo]);
+
   /** Per-lane, zoom-dependent row-packing for the event lanes — the same
    * packRows helper the books band and Lifespans lane use above, just fed a per-item year-space
    * "reach" (start..start+reach for a point event, endYear..endYear+reach for a ranged one) built
@@ -1054,7 +1132,7 @@ export default function TimelineView({
       // One switch per lane — an unchecked lane simply gets no entry in this map, which means
       // `geom` never allocates it a band and none of the clustering/label maths below runs for it.
       if (!visibleLanes[lane.key]) continue;
-      const laneEvents = events.filter((e) => lane.cats.includes(e.category));
+      const laneEvents = canvasEvents.filter((e) => lane.cats.includes(e.category));
       const withReach = laneEvents.map((e) => {
         const hasRange = typeof e.endYear === "number" && e.endYear > e.startYear;
         const end = hasRange
@@ -1078,7 +1156,7 @@ export default function TimelineView({
       }
     }
     return map;
-  }, [events, visibleLanes, pxPerYear]);
+  }, [canvasEvents, visibleLanes, pxPerYear]);
 
   const geom = useMemo(() => {
     const h = size.h;
@@ -1105,10 +1183,18 @@ export default function TimelineView({
     // what's visible (see contentH below); the outer .tl-canvas-viewport scrolls vertically whenever
     // that sum exceeds the viewport, which is the normal case rather than something the layout tries
     // to avoid.
+    // Every lane's height is its own content height PLUS the LANE_LABEL_RESERVE band its pinned
+    // name chip sits in (see the constant above). The layers below all start their row maths at
+    // LANE_LABEL_RESERVE, so the band stays empty at every zoom and every pan offset instead of
+    // being drawn over by the lane's first row.
     const bookRows = Math.max(bookPack.rowCount, 1);
-    const booksH = showBooks ? Math.max(bookRows * BOOK_ROW_H + BOOK_ROW_PAD, MIN_BOOKS_H) : 0;
+    const booksH = showBooks
+      ? LANE_LABEL_RESERVE + Math.max(bookRows * BOOK_ROW_H + BOOK_ROW_PAD, MIN_BOOKS_H)
+      : 0;
     const lifeRows = lifePack.rowCount;
-    const lifeH = showLife ? Math.max(lifeRows * LIFE_ROW_H + LIFE_ROW_PAD, MIN_LIFE_H) : 0;
+    const lifeH = showLife
+      ? LANE_LABEL_RESERVE + Math.max(lifeRows * LIFE_ROW_H + LIFE_ROW_PAD, MIN_LIFE_H)
+      : 0;
 
     // The bottom edge of every visible section (Books, Lifespans, then each event lane, in stacking
     // order) — a year-axis row gets repeated at each of these, not just the very last one, so
@@ -1132,9 +1218,10 @@ export default function TimelineView({
     const placeEventLane = (lane: (typeof EVENT_LANES)[number]) => {
       const pack = eventPacks.get(lane.key);
       const laneH =
-        pack && !pack.useCluster
+        LANE_LABEL_RESERVE +
+        (pack && !pack.useCluster
           ? Math.max(pack.rowCount * EVENT_ROW_H + EVENT_ROW_PAD, MIN_EVENT_ROWS_H)
-          : EVENT_LANE_H;
+          : EVENT_LANE_H);
       laneTop.set(lane.key, cursor);
       laneHeights.set(lane.key, laneH);
       cursor += laneH;
@@ -1192,8 +1279,11 @@ export default function TimelineView({
 
   const booksLayer = useMemo<ReactNode>(() => {
     if (!geom || geom.empty || geom.booksH <= 0 || pxPerYear <= 0) return null;
-    const rowH = (geom.booksH - BOOK_ROW_PAD) / Math.max(bookPack.rowCount, 1);
-    const topPad = BOOK_ROW_PAD / 2;
+    // Row maths starts BELOW the lane's reserved label band (see LANE_LABEL_RESERVE) — the height
+    // geom handed back includes it, so it comes off the top here rather than being divided into rows.
+    const rowH =
+      (geom.booksH - LANE_LABEL_RESERVE - BOOK_ROW_PAD) / Math.max(bookPack.rowCount, 1);
+    const topPad = LANE_LABEL_RESERVE + BOOK_ROW_PAD / 2;
     const barH = clamp(rowH - 1.5, 3.5, 16);
 
     // Group placements by row — same approach the lifespans lane uses: packRows processes items
@@ -1258,8 +1348,10 @@ export default function TimelineView({
 
   const lifespansLayer = useMemo<ReactNode>(() => {
     if (!geom || geom.empty || geom.lifeH <= 0 || pxPerYear <= 0) return null;
-    const rowH = (geom.lifeH - LIFE_ROW_PAD) / Math.max(lifePack.rowCount, 1);
-    const topPad = LIFE_ROW_PAD / 2;
+    // Same reserved-label-band offset as the books band above.
+    const rowH =
+      (geom.lifeH - LANE_LABEL_RESERVE - LIFE_ROW_PAD) / Math.max(lifePack.rowCount, 1);
+    const topPad = LANE_LABEL_RESERVE + LIFE_ROW_PAD / 2;
     const barH = clamp(rowH - 3, 8, 22);
 
     // Group placements by row — packRows processes items pre-sorted by start year, so each
@@ -1357,8 +1449,10 @@ export default function TimelineView({
         // Default path: every event got its own row from packRows above (same helper the
         // Lifespans lane uses), so every event gets its own always-visible title+year label — no
         // clicking required to see what's on the timeline. Mirrors lifespansLayer's row math.
-        const rowH = Math.max(laneH - EVENT_ROW_PAD, 1) / pack.rowCount;
-        const topPad = EVENT_ROW_PAD / 2;
+        // As with the books/lifespans lanes, the lane's reserved label band comes off the top
+        // before rows are measured, so row 0's card never lands under the pinned lane chip.
+        const rowH = Math.max(laneH - LANE_LABEL_RESERVE - EVENT_ROW_PAD, 1) / pack.rowCount;
+        const topPad = LANE_LABEL_RESERVE + EVENT_ROW_PAD / 2;
         for (const { item: e, row } of pack.placed) {
           const x = (e.startYear - minYear) * pxPerYear;
           const y = laneTop + topPad + row * rowH + rowH / 2;
@@ -1408,10 +1502,15 @@ export default function TimelineView({
       // "most extreme zoom-out" case). Same fixed-pixel-bucket clustering this lane always used,
       // now reserved for that case instead of being the default: still fans out same-year/
       // unsplittable groups into real markers, still zooms into a splittable cluster on click.
-      const laneEvents = events
+      const laneEvents = canvasEvents
         .filter((e) => lane.cats.includes(e.category))
         .sort((a, b) => a.startYear - b.startYear);
-      const centerY = laneTop + laneH / 2;
+      // Cluster fallback: the fan-out is centred in, and clamped to, the lane's CONTENT box — the
+      // lane minus its reserved label band — so a badge or a fanned-out marker can never rise into
+      // the pinned lane chip either.
+      const contentTop = laneTop + LANE_LABEL_RESERVE;
+      const contentH = Math.max(laneH - LANE_LABEL_RESERVE, 1);
+      const centerY = contentTop + contentH / 2;
 
       // Fixed-width pixel buckets in world space (pan-invariant at a given zoom).
       const buckets = new Map<number, TimelineEvent[]>();
@@ -1454,7 +1553,7 @@ export default function TimelineView({
               kind: "single",
               x: (e.startYear - minYear) * pxPerYear,
               e,
-              yOff: clamp((i - (group.length - 1) / 2) * 15, -laneH / 2 + 10, laneH / 2 - 10),
+              yOff: clamp((i - (group.length - 1) / 2) * 15, -contentH / 2 + 10, contentH / 2 - 10),
             });
           });
         }
@@ -1562,7 +1661,7 @@ export default function TimelineView({
   }, [
     geom,
     pxPerYear,
-    events,
+    canvasEvents,
     minYear,
     eventPacks,
     visibleLanes,
@@ -1607,10 +1706,13 @@ export default function TimelineView({
         </div>
         <div className="tl-header-spacer" />
         <div className="tl-zoom-controls">
-          <TimelineEraMenu
-            onJump={showYearRange}
-            onFit={() => animateTo(fitView())}
-          />
+          {/* Disabled at the owner's request — see SHOW_ERA_MENU above. Left as a live, type-checked
+            * reference to the component and its callbacks rather than commented out, so flipping the
+            * flag is genuinely the only edit needed to bring it back. The header row is a plain flex
+            * line with a gap, so rendering nothing here closes the row up with no hole left behind. */}
+          {SHOW_ERA_MENU && (
+            <TimelineEraMenu onJump={showYearRange} onFit={() => animateTo(fitView())} />
+          )}
           <TimelineLaneMenu visible={visibleLanes} onToggle={toggleLane} />
           <button
             type="button"

@@ -17,6 +17,14 @@ import { useEffect, useRef, useState } from "react";
  * view to a named span using the same animated zoomToYearRange a cluster badge uses.
  *
  * Same dropdown idiom and sizing as TimelineLaneMenu next to it.
+ *
+ * CURRENTLY NOT RENDERED. The owner asked for the "Jump to" button to be removed from the
+ * timeline, so TimelineView.tsx gates it behind `SHOW_ERA_MENU = false` (search for that constant
+ * there). Nothing here has been deleted or stubbed: this component, the TIMELINE_ERAS table below
+ * and the `showYearRange` callback that drives it are all intact and type-checked, and flipping
+ * that one flag back to `true` restores the control exactly as it was. Note the tradeoff the flag
+ * turns off — see "Why this exists" above: with this gone, panning and zooming are the only way to
+ * traverse six thousand linear years.
  * ========================================================================== */
 
 /** Signed years, same convention as everywhere else in the timeline: negative = BC.

@@ -2662,6 +2662,46 @@ As Jesus comes up out of the water, heaven opens, the Spirit of God descends lik
     ],
   },
   {
+    /** The one spanning entry that stands in for the itinerant public ministry — every parable,
+     * miracle, discourse and calling between the Baptism and the Triumphal Entry — whenever the
+     * timeline is zoomed out past COLLAPSE_DETAIL_PX_PER_YEAR (see TimelineView.tsx). Those events
+     * all still exist, still open, and still appear here at the most detailed zoom; this is a
+     * display grouping, not a replacement. Members point at this id via `collapsedInto`. */
+    id: "bib-loc-public-ministry",
+    title: "Public Ministry of Jesus",
+    category: "biblical",
+    era: "Life of Christ",
+    startYear: 27,
+    endYear: 30,
+    dateLabel: "c. AD 27-30",
+    dateCertainty: "traditional",
+    summary:
+      `Between His baptism and Passion Week, Jesus spent roughly three years preaching the kingdom of God across Galilee, Samaria and Judea — teaching in parables, healing the sick, casting out demons, and training the twelve men He would send to the world.`,
+    article: `After the Father's voice at the Jordan and the forty days of testing in the wilderness, Jesus began the public ministry that fills the bulk of all four Gospels. For roughly three years He walked the roads of Galilee, Samaria and Judea, preaching one message above all others: "The time is fulfilled, and the kingdom of God is at hand; repent and believe in the gospel."
+
+He taught constantly, and He taught in parables — the sower and the soils, the good Samaritan, the prodigal son — stories that handed the kingdom to anyone humble enough to receive it while leaving the proud no handle to grasp. He taught the Sermon on the Mount, the fullest single summary of kingdom life ever given, and He taught with an authority the scribes plainly did not have.
+
+He also worked signs, and the signs were never showmanship. Water became wine at a wedding in Cana; a storm on the Sea of Galilee fell silent at His word; five thousand men were fed from a boy's lunch; He walked on the water in the fourth watch of the night; and outside a tomb in Bethany He called a four-days-dead Lazarus back into the daylight. Each miracle was a claim about who He is — Lord over creation, over sickness, over demons, over death itself — offered as evidence that the kingdom had genuinely arrived in His person.
+
+Alongside the crowds He gave Himself to twelve ordinary men. He called them from fishing boats and a tax booth, took them with Him everywhere, corrected them patiently, and at Caesarea Philippi drew from Peter the confession the whole ministry had been building toward: "You are the Christ, the Son of the living God." From that point on He set His face toward Jerusalem, and told them plainly that He must suffer, be killed, and on the third day rise.
+
+The ministry ends where Passion Week begins. Everything He said and did in these years was true and gracious in itself, and it was also preparation: the Teacher who healed and fed and forgave was on His way to the cross, where the kingdom He preached would be purchased with His own blood.`,
+    datingNotes: `Dated here from the baptism (c. AD 27) to the crucifixion (c. AD 30), following the traditional chronology used throughout this timeline. John's Gospel names at least three Passovers during the ministry, which is why "about three years" is the long-standing reading. Scholars who date the crucifixion to AD 33 shift the whole span roughly two years later (c. AD 29-33) without changing the order of events; the Gospels themselves are far more concerned with what happened than with when, and none of them offers a continuous dated itinerary.`,
+    scriptureRefs: [
+      "Matthew 4:12-20:34",
+      "Mark 1:14-10:52",
+      "Luke 4:14-19:27",
+      "John 2:1-11:57"
+    ],
+    externalRefs: [],
+    primaryEntityIds: [
+      "jesus-of-nazareth",
+      "sea-of-galilee",
+      "capernaum",
+      "galilee"
+    ],
+  },
+  {
     id: "bib-loc-temptation-wilderness",
     title: "Temptation in the Wilderness",
     category: "biblical",
@@ -2684,6 +2724,9 @@ Jesus answers each temptation not with a display of power but with Scripture, qu
     primaryEntityIds: [
       "jesus-of-nazareth"
     ],
+    /** Display-only: folds into "Public Ministry of Jesus" except at the most detailed zoom.
+     * The record, its article and its links are untouched — see collapsedInto in types.ts. */
+    collapsedInto: "bib-loc-public-ministry",
   },
   {
     id: "bib-loc-calling-first-disciples",
@@ -2710,6 +2753,9 @@ Farther along the shore, Jesus calls James and John, sons of Zebedee, who leave 
       "simon-peter",
       "sea-of-galilee"
     ],
+    /** Display-only: folds into "Public Ministry of Jesus" except at the most detailed zoom.
+     * The record, its article and its links are untouched — see collapsedInto in types.ts. */
+    collapsedInto: "bib-loc-public-ministry",
   },
   {
     id: "bib-loc-wedding-at-cana",
@@ -2734,6 +2780,9 @@ Jesus has six stone water jars, used for Jewish ceremonial washing, filled to th
       "cana",
       "mary-mother-of-jesus"
     ],
+    /** Display-only: folds into "Public Ministry of Jesus" except at the most detailed zoom.
+     * The record, its article and its links are untouched — see collapsedInto in types.ts. */
+    collapsedInto: "bib-loc-public-ministry",
   },
   {
     id: "bib-loc-temple-cleansing-early",
@@ -2757,6 +2806,9 @@ His disciples recall the psalm, "Zeal for your house will consume me." When Jewi
       "jesus-of-nazareth",
       "jerusalem"
     ],
+    /** Display-only: folds into "Public Ministry of Jesus" except at the most detailed zoom.
+     * The record, its article and its links are untouched — see collapsedInto in types.ts. */
+    collapsedInto: "bib-loc-public-ministry",
   },
   {
     id: "bib-loc-sermon-on-the-mount",
@@ -2783,6 +2835,9 @@ The sermon closes with the parable of two builders: one who hears Jesus's words 
       "jesus-of-nazareth",
       "galilee"
     ],
+    /** Display-only: folds into "Public Ministry of Jesus" except at the most detailed zoom.
+     * The record, its article and its links are untouched — see collapsedInto in types.ts. */
+    collapsedInto: "bib-loc-public-ministry",
   },
   {
     id: "bib-loc-parable-of-the-sower",
@@ -2807,6 +2862,9 @@ When his disciples ask privately why he teaches in parables, Jesus explains that
       "jesus-of-nazareth",
       "sea-of-galilee"
     ],
+    /** Display-only: folds into "Public Ministry of Jesus" except at the most detailed zoom.
+     * The record, its article and its links are untouched — see collapsedInto in types.ts. */
+    collapsedInto: "bib-loc-public-ministry",
   },
   {
     id: "bib-loc-calming-the-storm",
@@ -2831,6 +2889,9 @@ Jesus stands, rebukes the wind, and says to the sea, "Peace! Be still!" — and 
       "jesus-of-nazareth",
       "sea-of-galilee"
     ],
+    /** Display-only: folds into "Public Ministry of Jesus" except at the most detailed zoom.
+     * The record, its article and its links are untouched — see collapsedInto in types.ts. */
+    collapsedInto: "bib-loc-public-ministry",
   },
   {
     id: "bib-loc-feeding-five-thousand",
@@ -2856,6 +2917,9 @@ A boy's lunch of five barley loaves and two small fish is all that can be found 
       "jesus-of-nazareth",
       "sea-of-galilee"
     ],
+    /** Display-only: folds into "Public Ministry of Jesus" except at the most detailed zoom.
+     * The record, its article and its links are untouched — see collapsedInto in types.ts. */
+    collapsedInto: "bib-loc-public-ministry",
   },
   {
     id: "bib-loc-jesus-walks-on-water",
@@ -2881,6 +2945,9 @@ Peter, impulsive as ever, asks to come to Jesus on the water and, remarkably, be
       "simon-peter",
       "sea-of-galilee"
     ],
+    /** Display-only: folds into "Public Ministry of Jesus" except at the most detailed zoom.
+     * The record, its article and its links are untouched — see collapsedInto in types.ts. */
+    collapsedInto: "bib-loc-public-ministry",
   },
   {
     id: "bib-loc-parable-good-samaritan",
@@ -2904,6 +2971,9 @@ A man is beaten, robbed, and left half-dead on that road. A priest and then a Le
       "jerusalem",
       "jericho"
     ],
+    /** Display-only: folds into "Public Ministry of Jesus" except at the most detailed zoom.
+     * The record, its article and its links are untouched — see collapsedInto in types.ts. */
+    collapsedInto: "bib-loc-public-ministry",
   },
   {
     id: "bib-loc-parable-prodigal-son",
@@ -2925,6 +2995,9 @@ Coming to his senses, he resolves to return home and beg to be treated as a hire
     primaryEntityIds: [
       "jesus-of-nazareth"
     ],
+    /** Display-only: folds into "Public Ministry of Jesus" except at the most detailed zoom.
+     * The record, its article and its links are untouched — see collapsedInto in types.ts. */
+    collapsedInto: "bib-loc-public-ministry",
   },
   {
     id: "bib-loc-confession-caesarea-philippi",
@@ -2949,6 +3022,9 @@ Peter answers for the group: "You are the Christ, the Son of the living God." Je
       "jesus-of-nazareth",
       "simon-peter"
     ],
+    /** Display-only: folds into "Public Ministry of Jesus" except at the most detailed zoom.
+     * The record, its article and its links are untouched — see collapsedInto in types.ts. */
+    collapsedInto: "bib-loc-public-ministry",
   },
   {
     id: "bib-loc-transfiguration",
@@ -3006,6 +3082,9 @@ John presents this as the last and greatest of Jesus's public signs, so undeniab
       "lazarus-of-bethany",
       "bethany"
     ],
+    /** Display-only: folds into "Public Ministry of Jesus" except at the most detailed zoom.
+     * The record, its article and its links are untouched — see collapsedInto in types.ts. */
+    collapsedInto: "bib-loc-public-ministry",
   },
   {
     id: "bib-loc-triumphal-entry",

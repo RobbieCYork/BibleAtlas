@@ -344,11 +344,24 @@
   border-bottom: 1px solid var(--tl-grid);
 }
 
-/* Pinned lane name chips (don't pan with content). */
+/* Pinned lane name chips (don't pan with content).
+ *
+ * The chip's HEIGHT is pinned here, and TimelineView.tsx reserves exactly that many pixels
+ * (LANE_LABEL_H, plus its top offset and a gap = LANE_LABEL_RESERVE) as an empty band at the top
+ * of every lane, so no card is ever laid under it. Keep the two in step: if this height changes,
+ * change LANE_LABEL_H in TimelineView.tsx to match. It is a fixed height rather than a
+ * content-derived one precisely so that a longer lane name — or the smaller phone font size in the
+ * media query at the bottom of this file — can never make the chip taller than the band reserved
+ * for it. `white-space: nowrap` keeps it one line at any width for the same reason. */
 .tl-lane-label {
   position: absolute;
   left: 10px;
   z-index: 6;
+  /* Must equal LANE_LABEL_H in TimelineView.tsx. */
+  height: 22px;
+  box-sizing: border-box;
+  display: inline-flex;
+  align-items: center;
   font-size: 10px;
   font-weight: 700;
   letter-spacing: 0.09em;
