@@ -1377,11 +1377,6 @@ function App() {
             friendsBadgeCount={pendingFriendRequests}
             messagesBadgeCount={unreadMessages}
             groupsBadgeCount={groupsBadgeCount}
-            // Study-trip stop actions — the same paths the Bible panel's place links use (focus a
-            // location/POI on the map without opening Details) and openVerse (load a passage).
-            onSelectLocation={focusLocationOnMap}
-            onSelectPoi={handleSelectPoiFromBible}
-            onGoToReference={openVerse}
           />
         )}
         {/* --- The Articles slot ------------------------------------------------------------------

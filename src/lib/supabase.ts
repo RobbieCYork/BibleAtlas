@@ -494,64 +494,6 @@ export interface GroupJoinRequest {
   responded_at: string | null;
 }
 
-/** NOTE: the Study Trips tab that uses these three types is DISABLED at the owner's request —
- * see GroupsPanel's SHOW_STUDY_TRIPS constant. The types are kept, unchanged, so flipping that one
- * flag restores the feature.
- *
- * A leader-authored, ordered walk through places tied to a passage series — the group-study
- * counterpart of the seasonal walks, except stops live in the database so each group curates its
- * own. Only the group's owner/admins can create or edit trips (enforced by RLS). */
-export interface GroupStudyTrip {
-  id: string;
-  group_id: string;
-  created_by: string;
-  title: string;
-  description: string | null;
-  /** Optional link to a named study series — free-form text, not a foreign key. */
-  series_id: string | null;
-  created_at: string;
-  updated_at: string;
-}
-
-/** One ordered stop on a study trip. location_id is a raw id from either static dataset
- * (locations OR pois, no prefix) — resolve against both, locations first, same as the seasonal
- * walk stops do. position is 1-based and unique within a trip. */
-export interface GroupStudyTripStop {
-  id: string;
-  trip_id: string;
-  position: number;
-  location_id: string;
-  label: string | null;
-  /** e.g. "Acts 16:12" — plain text; only drives the "Read" button when it parses as a real reference. */
-  scripture_ref: string | null;
-  description: string | null;
-  created_at: string;
-}
-
-/** A shared note under one stop — visible to the whole group; any member can add one
- * (edit/delete own; admins can delete any). */
-export interface GroupStudyTripStopNote {
-  id: string;
-  stop_id: string;
-  author_id: string;
-  body: string;
-  created_at: string;
-  updated_at: string;
-}
-
-/** True when an error means the group study trip tables haven't been created in this database yet —
- * the migration is written but not applied, so the UI degrades to a quiet "coming soon" notice
- * instead of crashing or spamming errors. Same shape as isMissingPlanTableError above: Postgres's
- * undefined_table (42P01) or PostgREST's schema-cache miss (PGRST205 / "Could not find the table"). */
-export function isMissingStudyTripTableError(
-  error: { code?: string; message?: string } | null | undefined
-): boolean {
-  if (!error) return false;
-  if (error.code === "42P01" || error.code === "PGRST205") return true;
-  const msg = error.message ?? "";
-  return msg.includes("group_study_trip") && /does not exist|could not find|schema cache/i.test(msg);
-}
-
 /** One row per group the caller is in — the return shape of the list_my_groups() RPC, which
  * pre-joins the last message and unread count server-side instead of N+1 client queries. */
 export interface GroupSummary {

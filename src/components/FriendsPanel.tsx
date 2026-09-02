@@ -32,11 +32,6 @@ interface FriendsPanelProps {
   friendsBadgeCount?: number;
   messagesBadgeCount?: number;
   groupsBadgeCount?: number;
-  /** Study-trip actions passed straight through to GroupsPanel — the same App.tsx paths the Bible
-   * panel's place links and openVerse use, so a trip stop can focus the map and load a passage. */
-  onSelectLocation?: (id: string) => void;
-  onSelectPoi?: (id: string) => void;
-  onGoToReference?: (reference: string) => void;
 }
 
 export default function FriendsPanel({
@@ -50,9 +45,6 @@ export default function FriendsPanel({
   friendsBadgeCount,
   messagesBadgeCount,
   groupsBadgeCount,
-  onSelectLocation,
-  onSelectPoi,
-  onGoToReference,
 }: FriendsPanelProps) {
   const userId = session?.user.id;
   const canUseFriends = !!session && !session.user.is_anonymous;
@@ -403,9 +395,6 @@ export default function FriendsPanel({
         friendsBadgeCount={friendsBadgeCount}
         messagesBadgeCount={messagesBadgeCount}
         groupsBadgeCount={groupsBadgeCount}
-        onSelectLocation={onSelectLocation}
-        onSelectPoi={onSelectPoi}
-        onGoToReference={onGoToReference}
       />
     );
   }
