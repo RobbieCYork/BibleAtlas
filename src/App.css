@@ -1000,8 +1000,20 @@ body.resizing-panels {
   letter-spacing: 0.04em;
   color: var(--accent);
   background: var(--accent-bg);
-  padding: 3px 9px;
-  border-radius: 100px;
+  /* Letter-spaced caps need more room than the tracking-free chips elsewhere: the 0.12em
+   * `--tracking-label` also hangs off the *last* glyph as trailing space inside the content box,
+   * so a mathematically symmetric padding reads as text shoved left. The extra 0.12em on the left
+   * cancels that and centres the type optically. */
+  padding: 4px 12px 4px calc(12px + 0.12em);
+  /* Not 100px: a wrapped badge is tall, and a radius of half its height turns the pill into a
+   * blob whose curves swallow the first and last lines of text. 14px still clamps to a true pill
+   * on the single-line case (~26px tall) and degrades to a sane rounded rect once it wraps. */
+  border-radius: 14px;
+  /* `.panel-header-row .category-badge` sets `min-width: 0` so the Share button always keeps its
+   * column — which means this flex item can be squeezed narrower than its longest word. At the
+   * largest text size a word like MESOPOTAMIA then hangs outside the pale ground entirely, so let
+   * it break rather than spill. */
+  overflow-wrap: break-word;
   margin-bottom: 8px;
 }
 
@@ -1271,8 +1283,10 @@ body.resizing-panels {
   letter-spacing: 0.04em;
   color: var(--text-muted);
   border: 1px solid var(--border);
-  border-radius: 100px;
-  padding: 2px 8px;
+  /* Same reasoning as .category-badge above — radius clamped so a wrapped tag stays a rounded
+   * rect, and the left padding carries the extra 0.12em that the trailing tracking eats. */
+  border-radius: 13px;
+  padding: 3px 11px 3px calc(11px + 0.12em);
 }
 
 .extra-biblical-section {
@@ -5684,8 +5698,9 @@ a.profile-links-url {
   letter-spacing: 0.03em;
   color: var(--accent);
   border: 1px solid var(--accent);
-  border-radius: 999px;
-  padding: 1px 6px;
+  /* Same optical-centring and radius reasoning as .category-badge. */
+  border-radius: 12px;
+  padding: 2px 8px 2px calc(8px + 0.12em);
 }
 
 .group-member-item {
