@@ -137,7 +137,15 @@
    * it actually shrink to the space available, which is what makes max-width/overflow do anything. */
   min-width: 0;
   max-width: 100%;
-  max-height: 70vh;
+  /* `zoom` (the app's text-size setting, applied at .game-root — see App.css) scales lengths but
+   * does NOT divide viewport units, so a bare `70vh` inside the zoomed subtree renders as 70vh ×
+   * scale — 126vh at 1.8×, i.e. a nested scroll box taller than the screen whose bottom edge can
+   * never be reached. Dividing by the scale corrects that, but which of the two is right is
+   * engine-dependent (the same standardized-vs-legacy `zoom` split documented in App.css), so take
+   * the SMALLER of the two rather than picking a side: on an engine that leaves vh alone this
+   * renders at exactly 70vh, and on one that already adjusts it, it renders smaller than 70vh —
+   * never larger, and never taller than the screen, in either. */
+  max-height: min(70vh, calc(70vh / var(--text-scale, 1)));
   border: 1px solid var(--border);
   border-radius: 8px;
   background: var(--panel-bg);
@@ -219,8 +227,23 @@
   display: flex;
   gap: 24px;
   flex-wrap: wrap;
-  min-width: 240px;
-  max-height: 70vh;
+  /* Was a flat `min-width: 240px`, which is a floor this box could not go under even when its
+   * container was narrower. Once .game-root carries the text-size `zoom`, 240 of this element's own
+   * units is 432 real pixels at 1.8× — measured on a 375px screen the clue panel rendered from
+   * x=-28.5 to x=403.5, clipped off BOTH edges by .game-body's overflow-x. The `min()` keeps the
+   * comfortable 240px column wherever there is room for it and lets the box shrink to its container
+   * everywhere else. Both terms resolve inside the same zoom context, so no percentage crosses a
+   * zoom boundary here. */
+  min-width: min(240px, 100%);
+  /* `zoom` (the app's text-size setting, applied at .game-root — see App.css) scales lengths but
+   * does NOT divide viewport units, so a bare `70vh` inside the zoomed subtree renders as 70vh ×
+   * scale — 126vh at 1.8×, i.e. a nested scroll box taller than the screen whose bottom edge can
+   * never be reached. Dividing by the scale corrects that, but which of the two is right is
+   * engine-dependent (the same standardized-vs-legacy `zoom` split documented in App.css), so take
+   * the SMALLER of the two rather than picking a side: on an engine that leaves vh alone this
+   * renders at exactly 70vh, and on one that already adjusts it, it renders smaller than 70vh —
+   * never larger, and never taller than the screen, in either. */
+  max-height: min(70vh, calc(70vh / var(--text-scale, 1)));
   overflow-y: auto;
   background: var(--panel-bg);
   border: 1px solid var(--border);

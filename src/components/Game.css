@@ -1,10 +1,18 @@
 /* --- Games mode shell (GameView) --- */
 
+/* Sized by the flex algorithm, NOT by percentages. This element carries `zoom` from the global
+ * text-size setting (see the --text-scale rule in App.css), and its containing block — .game-mode —
+ * is at a different zoom, which is exactly the trap 8ea570e documented: engines shipping the
+ * standardized `zoom` divide a percentage by the zoom ratio, engines on the older non-standard
+ * `zoom` do not, so `width: 100%` here would mean two different things in two browsers. That was
+ * the actual root cause of the Social panel's scaling bug. `flex: 1` fills the main axis and the
+ * default `align-self: stretch` fills the cross axis; neither is a percentage. Do not reintroduce
+ * width/height percentages on this element. */
 .game-root {
   display: flex;
   flex-direction: column;
-  width: 100%;
-  height: 100%;
+  flex: 1;
+  min-width: 0;
   min-height: 0;
   background: var(--bg);
   color: var(--text);
@@ -21,8 +29,16 @@
   min-height: 54px;
 }
 
+/* min-width: 0 is load-bearing once .game-root carries the text-size `zoom` (see the --text-scale
+ * rule in App.css). A flex item defaults to min-width: auto, i.e. it refuses to shrink below its
+ * content, and .games-inline-icon below is an inline-flex box whose text is an anonymous flex item
+ * with the same default. Measured at 375px and scale 1.8, "Scripture Memorization Challenge" held
+ * the header 21px wider than the screen (document scrollWidth 396) because of exactly that. With
+ * both min-widths zeroed the heading wraps inside the header instead of pushing the page sideways;
+ * the mark itself stays at its intrinsic size via flex: 0 0 auto. */
 .game-header h2 {
   font-size: 17px;
+  min-width: 0;
 }
 
 /* Game screens' header back button is the shared .back-btn (BackButton.tsx, styled in App.css). */
@@ -48,14 +64,16 @@
   margin: 0 0 12px;
 }
 
+/* Same rule as .game-root above — this is the other direct child of the zoomed-root pair, so its
+ * sizing comes from flex, not from percentages resolved across a zoom boundary. */
 .game-signin-prompt {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   gap: 16px;
-  width: 100%;
-  height: 100%;
+  flex: 1;
+  min-width: 0;
   text-align: center;
   padding: 20px;
 }
@@ -120,6 +138,18 @@
   display: inline-flex;
   align-items: center;
   gap: 0.4em;
+  /* See .game-header h2 above. min-width: 0 alone is not enough: the label is an ANONYMOUS flex
+     item, and its min-content width is its longest unbreakable word — "Memorization" is 195px at
+     scale 1.8, which still pushed the page to scrollWidth 396 on a 375px screen. `flex-wrap` lets
+     the row break between the mark and its label as the last resort instead. Nothing wraps at
+     normal text sizes (measured: identical layout at scale 1), so the cost is paid only by the
+     large-text case that would otherwise run off the screen. */
+  min-width: 0;
+  flex-wrap: wrap;
+}
+
+.games-inline-icon > svg {
+  flex: 0 0 auto;
 }
 
 /* Icon renders with an INLINE `margin: 0 auto`. It has to: the tab-bar and menu boxes that size it
@@ -197,6 +227,16 @@
   .games-panel-actions {
     grid-template-columns: 1fr;
   }
+}
+
+/* A grid item defaults to min-width: auto, so a `1fr` track cannot actually go below its content's
+ * min-content width — the track just grows and the item hangs out of the grid. That is invisible
+ * until .game-root carries the text-size `zoom`: measured at 375px and scale 1.8 the entry cards'
+ * min-content was 231.8 of their own units against 168 available, and the Bible Trivia panel
+ * rendered 417px wide on a 375px screen, clipped on the right by .game-body's overflow-x: hidden.
+ * Zeroing the floor lets 1fr mean what it says. */
+.games-panel-actions > * {
+  min-width: 0;
 }
 
 .games-panel-card {

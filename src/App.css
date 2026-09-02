@@ -2469,7 +2469,26 @@ a.profile-links-url {
 .my-notes-panel,
 .friends-panel,
 .articles-panel,
-.myprofile-root {
+.myprofile-root,
+/* Games. Added last (e1a0482 audited the scaling and found this the one real reading surface with
+   no text sizing at all — GameCenter card titles and taglines, trivia questions, crossword clues,
+   Fill-in-the-Blank, Memorization and Punchline all read from here).
+
+   NOTE THE SELECTORS: `.game-root` and `.game-signin-prompt`, NOT their parent `.game-mode`. That
+   mirrors .myprofile-root above rather than .myprofile-mode, and for the same reason — the zoomed
+   element must be one the FLEX algorithm sizes, never one sized by a percentage or by insets
+   resolved against a containing block at a different zoom. `.game-mode` is the
+   `position: absolute; inset: 0` takeover; its two children are ordinary flex items, so they are
+   the safe place to put the zoom. Both were `width: 100%; height: 100%` in Game.css and have been
+   converted to `flex: 1; min-width: 0` + the default `align-self: stretch` as part of this change.
+   Do not move this to `.game-mode` and do not reintroduce percentage sizing on either child.
+
+   Nothing under Games is exempted — the crossword grid scales along with everything else, since it
+   already lives in a pan-able overflow box built for content wider than the screen. The two places
+   that genuinely could not take the zoom as written are fixed at the source rather than excluded:
+   the viewport-unit height caps in Crossword.css, and the min-width floors in Game.css. */
+.game-root,
+.game-signin-prompt {
   zoom: var(--text-scale, 1);
 }
 
