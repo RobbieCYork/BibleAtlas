@@ -253,14 +253,15 @@ export interface TimelineEvent {
    * entries" affordances; not required for the auto-linker, which matches on names in the text. */
   primaryEntityIds?: string[];
   /** DISPLAY ONLY, and only on the timeline canvas: the id of a wider "spanning" TimelineEvent that
-   * stands in for this one when the timeline is not zoomed in far enough to be showing individual
-   * episodes (see COLLAPSE_DETAIL_PX_PER_YEAR in TimelineView.tsx).
+   * stands in for this one there — at EVERY zoom level, unconditionally (see `canvasEvents` in
+   * TimelineView.tsx). An event carrying this field never gets a mark of its own on the canvas.
    *
    * This changes NOTHING about the record itself. The event stays in `timelineEvents`, keeps its id,
-   * its article and its route; it is still listed and searchable in Articles, still auto-linked from
-   * Bible passages and other articles, still reachable from "View in Timeline" (which un-collapses
-   * it), and still drawn on the timeline at the most detailed zoom. The only effect is that at
-   * coarser zooms the canvas draws the one spanning entry named here instead of this mark.
+   * its article and its route; it is still listed and searchable in Articles, still openable, and
+   * still auto-linked from Bible passages and other articles. The only effect is on the canvas,
+   * which draws the one spanning entry named here instead of this mark. "View in Timeline" and the
+   * timeline's own search box therefore aim the canvas at the spanning entry instead of at this
+   * event, so they never fly to something that was never drawn.
    *
    * The spanning entry is an ordinary TimelineEvent like any other — it is identified purely by
    * being named here, so there is no second field to keep in step. */

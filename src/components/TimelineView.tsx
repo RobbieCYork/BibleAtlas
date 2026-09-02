@@ -634,16 +634,27 @@ export default function TimelineView({
   // collectively span.
   const focusInfo = useMemo(() => {
     if (!focusEntityId) return null;
+    // A collapsed episode has no mark of its own on the canvas at any zoom (see `canvasEvents`
+    // below), so aiming AT one — "View in Timeline" on it, or picking it from the timeline search
+    // box — is redirected to the spanning entry that stands in for it. Flying to "Public Ministry
+    // of Jesus" after searching "Feeding of the Five Thousand" lands on the entry that contains it;
+    // flying to the episode itself would land on blank canvas. The article overlay the caller opens
+    // alongside this is still the episode's own (see App.handleSelectTimelineSearchResult).
+    const direct = events.find((e) => e.id === focusEntityId);
+    const targetId = direct?.collapsedInto ?? focusEntityId;
     const eventIds = new Set<string>();
     const ys: number[] = [];
     for (const e of events) {
-      if (e.id === focusEntityId || e.primaryEntityIds?.includes(focusEntityId)) {
+      // Collapsed members are never drawn, so they must not contribute a highlight or stretch the
+      // fitted year range — that would zoom to a span whose end marks don't exist on the canvas.
+      if (e.collapsedInto) continue;
+      if (e.id === targetId || e.primaryEntityIds?.includes(targetId)) {
         eventIds.add(e.id);
         ys.push(e.startYear);
         if (typeof e.endYear === "number") ys.push(e.endYear);
       }
     }
-    const life = lifespans.find((l) => l.id === focusEntityId);
+    const life = lifespans.find((l) => l.id === targetId);
     if (life) ys.push(life.bornYear, lifespanEnd(life));
     if (ys.length === 0) return null;
     return { lo: Math.min(...ys), hi: Math.max(...ys), eventIds, lifeId: life?.id ?? null };
@@ -1079,36 +1090,18 @@ export default function TimelineView({
    * span — the Life of Christ era carries roughly a dozen parables, miracles and discourses inside
    * AD 27-30 — and drawing every one of them as its own mark buries the structural events around
    * them. An event may therefore name a wider "spanning" event in `collapsedInto` (see types.ts);
-   * the canvas then draws the ONE spanning entry instead of its members, and swaps back to the
-   * members once the user is zoomed in far enough for them to be worth reading individually.
-   *
-   * The timeline's detail axis is zoom — that is the only "tier" this view has (the header's "4/4"
-   * is the LANE checklist, i.e. how many of the four timelines are switched on, not a density
-   * control). So the tier test is simply pixels-per-year: at or past this, individual episodes;
-   * below it, the spanning entry. MAX_PX_PER_YEAR is 48, so this is genuinely the "zoomed well in"
-   * end of the range, and the swap is automatic and reversible in both directions.
+   * the canvas then draws the ONE spanning entry and NEVER its members — at any zoom level. This is
+   * unconditional on purpose: an earlier version swapped back to the individual episodes once the
+   * user zoomed in past a pixels-per-year threshold, and that re-crowding is exactly what the
+   * collapse exists to prevent, so there is no threshold and no "detail" mode any more.
    *
    * Nothing is removed from the dataset by any of this: `events` still holds every record, so the
-   * focus fly-to, the tooltips, the article panel, Articles browse/search, the auto-linker and the
-   * games all continue to see all of them. A collapsed event is also force-shown whenever it is the
-   * current focus target ("View in Timeline" on it, or picking it from the timeline search box),
-   * so the one path that aims the canvas AT a specific event never aims at something undrawn. */
-  const COLLAPSE_DETAIL_PX_PER_YEAR = 20;
-
-  const canvasEvents = useMemo(() => {
-    const showDetail = pxPerYear >= COLLAPSE_DETAIL_PX_PER_YEAR;
-    // The spanning entries are identified purely by being named in some member's `collapsedInto`.
-    const summaryIds = new Set<string>();
-    for (const e of events) if (e.collapsedInto) summaryIds.add(e.collapsedInto);
-    if (summaryIds.size === 0) return events;
-    const focused = focusInfo?.eventIds ?? null;
-    return events.filter((e) => {
-      if (focused?.has(e.id)) return true;
-      if (e.collapsedInto) return showDetail;
-      if (summaryIds.has(e.id)) return !showDetail;
-      return true;
-    });
-  }, [events, pxPerYear, focusInfo]);
+   * tooltips, the article panel, Articles browse/search, the auto-linker and the games all continue
+   * to see all of them — a collapsed episode is a full article that simply has no mark of its own on
+   * the canvas. The one path that aims the canvas AT a specific event ("View in Timeline", or
+   * picking a result from the timeline search box) is redirected to the spanning entry — see
+   * `focusInfo` above — so it never aims at something undrawn. */
+  const canvasEvents = useMemo(() => events.filter((e) => !e.collapsedInto), [events]);
 
   /** Per-lane, zoom-dependent row-packing for the event lanes — the same
    * packRows helper the books band and Lifespans lane use above, just fed a per-item year-space

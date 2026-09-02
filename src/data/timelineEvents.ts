@@ -2660,13 +2660,22 @@ As Jesus comes up out of the water, heaven opens, the Spirit of God descends lik
       "john-the-baptist",
       "jordan-river"
     ],
+    /** Display-only: folds into "Public Ministry of Jesus" on the timeline canvas at every zoom
+     * level. The record, its article and its links are untouched — see collapsedInto in types.ts. */
+    collapsedInto: "bib-loc-public-ministry",
   },
   {
-    /** The one spanning entry that stands in for the itinerant public ministry — every parable,
-     * miracle, discourse and calling between the Baptism and the Triumphal Entry — whenever the
-     * timeline is zoomed out past COLLAPSE_DETAIL_PX_PER_YEAR (see TimelineView.tsx). Those events
-     * all still exist, still open, and still appear here at the most detailed zoom; this is a
-     * display grouping, not a replacement. Members point at this id via `collapsedInto`. */
+    /** The one spanning entry that stands in for EVERY event of Jesus's ministry years — the
+     * baptism, the parables, the miracles, the callings, and Passion Week through the Ascension.
+     * The timeline canvas draws this entry and nothing else inside AD 27-30, at every zoom level
+     * (see TimelineView.tsx): a three-year window carrying thirty separate marks was unreadable,
+     * and the owner asked for one. Those events all still exist as full articles — still opening,
+     * still searchable in Articles, still auto-linked from other prose, and named and linked from
+     * this article's own text below so they stay one tap away. This is a display grouping, not a
+     * replacement. Members point at this id via `collapsedInto`.
+     *
+     * The span stays AD 27-30 because that is what the underlying data says: the baptism is c. AD 27
+     * and the dataset's Ascension is c. AD 30, so the collapse adds no years to either end. */
     id: "bib-loc-public-ministry",
     title: "Public Ministry of Jesus",
     category: "biblical",
@@ -2676,29 +2685,35 @@ As Jesus comes up out of the water, heaven opens, the Spirit of God descends lik
     dateLabel: "c. AD 27-30",
     dateCertainty: "traditional",
     summary:
-      `Between His baptism and Passion Week, Jesus spent roughly three years preaching the kingdom of God across Galilee, Samaria and Judea — teaching in parables, healing the sick, casting out demons, and training the twelve men He would send to the world.`,
-    article: `After the Father's voice at the Jordan and the forty days of testing in the wilderness, Jesus began the public ministry that fills the bulk of all four Gospels. For roughly three years He walked the roads of Galilee, Samaria and Judea, preaching one message above all others: "The time is fulfilled, and the kingdom of God is at hand; repent and believe in the gospel."
+      `From His baptism in the Jordan to His ascension from the Mount of Olives, Jesus spent roughly three years preaching the kingdom of God across Galilee, Samaria and Judea — teaching in parables, healing the sick, training the twelve, and then going deliberately to the cross, the empty tomb, and the Father's right hand.`,
+    article: `The Baptism of Jesus at the Jordan, where the Father's voice named Him the beloved Son, opened the public ministry that fills the bulk of all four Gospels. After the Temptation in the Wilderness — forty days of hunger in which He answered the devil with Scripture and did not bend — He walked the roads of Galilee, Samaria and Judea for roughly three years, preaching one message above all others: "The time is fulfilled, and the kingdom of God is at hand; repent and believe in the gospel."
 
-He taught constantly, and He taught in parables — the sower and the soils, the good Samaritan, the prodigal son — stories that handed the kingdom to anyone humble enough to receive it while leaving the proud no handle to grasp. He taught the Sermon on the Mount, the fullest single summary of kingdom life ever given, and He taught with an authority the scribes plainly did not have.
+He taught constantly, and He taught in parables — the Parable of the Sower, the Parable of the Good Samaritan, the Parable of the Prodigal Son — stories that handed the kingdom to anyone humble enough to receive it while leaving the proud no handle to grasp. He preached the Sermon on the Mount, the fullest single summary of kingdom life ever given, and He taught with an authority the scribes plainly did not have.
 
-He also worked signs, and the signs were never showmanship. Water became wine at a wedding in Cana; a storm on the Sea of Galilee fell silent at His word; five thousand men were fed from a boy's lunch; He walked on the water in the fourth watch of the night; and outside a tomb in Bethany He called a four-days-dead Lazarus back into the daylight. Each miracle was a claim about who He is — Lord over creation, over sickness, over demons, over death itself — offered as evidence that the kingdom had genuinely arrived in His person.
+He also worked signs, and the signs were never showmanship. Water became wine at the Wedding at Cana; He drove the traders from His Father's house at the Early Cleansing of the Temple; a squall on the Sea of Galilee fell silent at His word in the Calming of the Storm; the Feeding of the Five Thousand came out of a boy's lunch; in the fourth watch of the night Jesus Walks on Water toward a terrified boat; and in the Raising of Lazarus He called a four-days-dead friend out of a Bethany tomb into the daylight. Each miracle was a claim about who He is — Lord over creation, over sickness, over demons, over death itself — offered as evidence that the kingdom had genuinely arrived in His person.
 
-Alongside the crowds He gave Himself to twelve ordinary men. He called them from fishing boats and a tax booth, took them with Him everywhere, corrected them patiently, and at Caesarea Philippi drew from Peter the confession the whole ministry had been building toward: "You are the Christ, the Son of the living God." From that point on He set His face toward Jerusalem, and told them plainly that He must suffer, be killed, and on the third day rise.
+Alongside the crowds He gave Himself to twelve ordinary men. The Calling of the First Disciples took them from fishing boats and a tax booth; He kept them with Him everywhere and corrected them patiently; and Peter's Confession at Caesarea Philippi drew out of them the confession the whole ministry had been building toward: "You are the Christ, the Son of the living God." Days later The Transfiguration showed three of them His unveiled glory on the mountain. From that point on He set His face toward Jerusalem, and told them plainly that He must suffer, be killed, and on the third day rise.
 
-The ministry ends where Passion Week begins. Everything He said and did in these years was true and gracious in itself, and it was also preparation: the Teacher who healed and fed and forgave was on His way to the cross, where the kingdom He preached would be purchased with His own blood.`,
-    datingNotes: `Dated here from the baptism (c. AD 27) to the crucifixion (c. AD 30), following the traditional chronology used throughout this timeline. John's Gospel names at least three Passovers during the ministry, which is why "about three years" is the long-standing reading. Scholars who date the crucifixion to AD 33 shift the whole span roughly two years later (c. AD 29-33) without changing the order of events; the Gospels themselves are far more concerned with what happened than with when, and none of them offers a continuous dated itinerary.`,
+Everything He said and did in these years was true and gracious in itself, and it was also preparation. The road that began at the Jordan ran to Jerusalem, and in the last week of it the Gospels slow almost to the hour. He came over the Mount of Olives to the shouts of the crowd in the Triumphal Entry into Jerusalem, drove the traders out of His Father's house a second time, and sat down opposite that Temple to give The Olivet Discourse on the age to come. In an upper room He gave The Last Supper, taking bread and cup and naming them His body and His blood of the new covenant. Then came Gethsemane and the Arrest of Jesus, where He prayed until He sweat like drops of blood and still said, "Not my will, but yours, be done," and the Trials of Jesus before the Sanhedrin and Pilate, where a sinless man was condemned by the courts of both God's people and Rome.
+
+The Crucifixion is where the whole ministry had been going from the start. He was nailed to a Roman cross outside the city walls, bore the wrath our sins deserved, cried "It is finished," and gave up His spirit; the Temple curtain tore from top to bottom. The Burial of Jesus laid Him in Joseph of Arimathea's new tomb behind a sealed stone, and on the third day The Resurrection emptied it — not a symbol and not a rumour, but a bodily rising attested by the women, by Peter and John at the tomb, and in the Post-Resurrection Appearances by more than five hundred witnesses over forty days. To those witnesses He entrusted The Great Commission — "make disciples of all nations" — and then, in The Ascension, He was taken up out of their sight to be seated at the right hand of the Father, where He reigns and intercedes for His people still.
+
+The kingdom He preached in Galilee was purchased with His own blood in Jerusalem, and it is His resurrection and ascension that make the preaching of it good news rather than merely good advice.`,
+    datingNotes: `Dated here from the baptism (c. AD 27) through the crucifixion, resurrection and ascension (all c. AD 30), following the traditional chronology used throughout this timeline. Because this entry now stands in for every event of the ministry years, its span is simply the span of the events it covers — the earliest, the baptism, is c. AD 27 and the latest, the ascension, is c. AD 30, so the range is unchanged. John's Gospel names at least three Passovers during the ministry, which is why "about three years" is the long-standing reading. Scholars who date the crucifixion to AD 33 shift the whole span roughly two years later (c. AD 29-33) without changing the order of events; the Gospels themselves are far more concerned with what happened than with when, and none of them offers a continuous dated itinerary.`,
     scriptureRefs: [
-      "Matthew 4:12-20:34",
-      "Mark 1:14-10:52",
-      "Luke 4:14-19:27",
-      "John 2:1-11:57"
+      "Matthew 3:13-28:20",
+      "Mark 1:9-16:20",
+      "Luke 3:21-24:53",
+      "John 1:29-21:25",
+      "Acts 1:1-11"
     ],
     externalRefs: [],
     primaryEntityIds: [
       "jesus-of-nazareth",
       "sea-of-galilee",
       "capernaum",
-      "galilee"
+      "galilee",
+      "jerusalem"
     ],
   },
   {
@@ -2724,8 +2739,8 @@ Jesus answers each temptation not with a display of power but with Scripture, qu
     primaryEntityIds: [
       "jesus-of-nazareth"
     ],
-    /** Display-only: folds into "Public Ministry of Jesus" except at the most detailed zoom.
-     * The record, its article and its links are untouched — see collapsedInto in types.ts. */
+    /** Display-only: folds into "Public Ministry of Jesus" on the timeline canvas at every zoom
+     * level. The record, its article and its links are untouched — see collapsedInto in types.ts. */
     collapsedInto: "bib-loc-public-ministry",
   },
   {
@@ -2753,8 +2768,8 @@ Farther along the shore, Jesus calls James and John, sons of Zebedee, who leave 
       "simon-peter",
       "sea-of-galilee"
     ],
-    /** Display-only: folds into "Public Ministry of Jesus" except at the most detailed zoom.
-     * The record, its article and its links are untouched — see collapsedInto in types.ts. */
+    /** Display-only: folds into "Public Ministry of Jesus" on the timeline canvas at every zoom
+     * level. The record, its article and its links are untouched — see collapsedInto in types.ts. */
     collapsedInto: "bib-loc-public-ministry",
   },
   {
@@ -2780,8 +2795,8 @@ Jesus has six stone water jars, used for Jewish ceremonial washing, filled to th
       "cana",
       "mary-mother-of-jesus"
     ],
-    /** Display-only: folds into "Public Ministry of Jesus" except at the most detailed zoom.
-     * The record, its article and its links are untouched — see collapsedInto in types.ts. */
+    /** Display-only: folds into "Public Ministry of Jesus" on the timeline canvas at every zoom
+     * level. The record, its article and its links are untouched — see collapsedInto in types.ts. */
     collapsedInto: "bib-loc-public-ministry",
   },
   {
@@ -2806,8 +2821,8 @@ His disciples recall the psalm, "Zeal for your house will consume me." When Jewi
       "jesus-of-nazareth",
       "jerusalem"
     ],
-    /** Display-only: folds into "Public Ministry of Jesus" except at the most detailed zoom.
-     * The record, its article and its links are untouched — see collapsedInto in types.ts. */
+    /** Display-only: folds into "Public Ministry of Jesus" on the timeline canvas at every zoom
+     * level. The record, its article and its links are untouched — see collapsedInto in types.ts. */
     collapsedInto: "bib-loc-public-ministry",
   },
   {
@@ -2835,8 +2850,8 @@ The sermon closes with the parable of two builders: one who hears Jesus's words 
       "jesus-of-nazareth",
       "galilee"
     ],
-    /** Display-only: folds into "Public Ministry of Jesus" except at the most detailed zoom.
-     * The record, its article and its links are untouched — see collapsedInto in types.ts. */
+    /** Display-only: folds into "Public Ministry of Jesus" on the timeline canvas at every zoom
+     * level. The record, its article and its links are untouched — see collapsedInto in types.ts. */
     collapsedInto: "bib-loc-public-ministry",
   },
   {
@@ -2862,8 +2877,8 @@ When his disciples ask privately why he teaches in parables, Jesus explains that
       "jesus-of-nazareth",
       "sea-of-galilee"
     ],
-    /** Display-only: folds into "Public Ministry of Jesus" except at the most detailed zoom.
-     * The record, its article and its links are untouched — see collapsedInto in types.ts. */
+    /** Display-only: folds into "Public Ministry of Jesus" on the timeline canvas at every zoom
+     * level. The record, its article and its links are untouched — see collapsedInto in types.ts. */
     collapsedInto: "bib-loc-public-ministry",
   },
   {
@@ -2889,8 +2904,8 @@ Jesus stands, rebukes the wind, and says to the sea, "Peace! Be still!" — and 
       "jesus-of-nazareth",
       "sea-of-galilee"
     ],
-    /** Display-only: folds into "Public Ministry of Jesus" except at the most detailed zoom.
-     * The record, its article and its links are untouched — see collapsedInto in types.ts. */
+    /** Display-only: folds into "Public Ministry of Jesus" on the timeline canvas at every zoom
+     * level. The record, its article and its links are untouched — see collapsedInto in types.ts. */
     collapsedInto: "bib-loc-public-ministry",
   },
   {
@@ -2917,8 +2932,8 @@ A boy's lunch of five barley loaves and two small fish is all that can be found 
       "jesus-of-nazareth",
       "sea-of-galilee"
     ],
-    /** Display-only: folds into "Public Ministry of Jesus" except at the most detailed zoom.
-     * The record, its article and its links are untouched — see collapsedInto in types.ts. */
+    /** Display-only: folds into "Public Ministry of Jesus" on the timeline canvas at every zoom
+     * level. The record, its article and its links are untouched — see collapsedInto in types.ts. */
     collapsedInto: "bib-loc-public-ministry",
   },
   {
@@ -2945,8 +2960,8 @@ Peter, impulsive as ever, asks to come to Jesus on the water and, remarkably, be
       "simon-peter",
       "sea-of-galilee"
     ],
-    /** Display-only: folds into "Public Ministry of Jesus" except at the most detailed zoom.
-     * The record, its article and its links are untouched — see collapsedInto in types.ts. */
+    /** Display-only: folds into "Public Ministry of Jesus" on the timeline canvas at every zoom
+     * level. The record, its article and its links are untouched — see collapsedInto in types.ts. */
     collapsedInto: "bib-loc-public-ministry",
   },
   {
@@ -2971,8 +2986,8 @@ A man is beaten, robbed, and left half-dead on that road. A priest and then a Le
       "jerusalem",
       "jericho"
     ],
-    /** Display-only: folds into "Public Ministry of Jesus" except at the most detailed zoom.
-     * The record, its article and its links are untouched — see collapsedInto in types.ts. */
+    /** Display-only: folds into "Public Ministry of Jesus" on the timeline canvas at every zoom
+     * level. The record, its article and its links are untouched — see collapsedInto in types.ts. */
     collapsedInto: "bib-loc-public-ministry",
   },
   {
@@ -2995,8 +3010,8 @@ Coming to his senses, he resolves to return home and beg to be treated as a hire
     primaryEntityIds: [
       "jesus-of-nazareth"
     ],
-    /** Display-only: folds into "Public Ministry of Jesus" except at the most detailed zoom.
-     * The record, its article and its links are untouched — see collapsedInto in types.ts. */
+    /** Display-only: folds into "Public Ministry of Jesus" on the timeline canvas at every zoom
+     * level. The record, its article and its links are untouched — see collapsedInto in types.ts. */
     collapsedInto: "bib-loc-public-ministry",
   },
   {
@@ -3022,8 +3037,8 @@ Peter answers for the group: "You are the Christ, the Son of the living God." Je
       "jesus-of-nazareth",
       "simon-peter"
     ],
-    /** Display-only: folds into "Public Ministry of Jesus" except at the most detailed zoom.
-     * The record, its article and its links are untouched — see collapsedInto in types.ts. */
+    /** Display-only: folds into "Public Ministry of Jesus" on the timeline canvas at every zoom
+     * level. The record, its article and its links are untouched — see collapsedInto in types.ts. */
     collapsedInto: "bib-loc-public-ministry",
   },
   {
@@ -3055,6 +3070,9 @@ Jesus instructs the three to tell no one what they'd seen until after the resurr
       "elijah",
       "simon-peter"
     ],
+    /** Display-only: folds into "Public Ministry of Jesus" on the timeline canvas at every zoom
+     * level. The record, its article and its links are untouched — see collapsedInto in types.ts. */
+    collapsedInto: "bib-loc-public-ministry",
   },
   {
     id: "bib-loc-raising-of-lazarus",
@@ -3082,8 +3100,8 @@ John presents this as the last and greatest of Jesus's public signs, so undeniab
       "lazarus-of-bethany",
       "bethany"
     ],
-    /** Display-only: folds into "Public Ministry of Jesus" except at the most detailed zoom.
-     * The record, its article and its links are untouched — see collapsedInto in types.ts. */
+    /** Display-only: folds into "Public Ministry of Jesus" on the timeline canvas at every zoom
+     * level. The record, its article and its links are untouched — see collapsedInto in types.ts. */
     collapsedInto: "bib-loc-public-ministry",
   },
   {
@@ -3111,6 +3129,9 @@ Crowds swelling with Passover pilgrims spread cloaks and cut palm branches on th
       "jesus-of-nazareth",
       "jerusalem"
     ],
+    /** Display-only: folds into "Public Ministry of Jesus" on the timeline canvas at every zoom
+     * level. The record, its article and its links are untouched — see collapsedInto in types.ts. */
+    collapsedInto: "bib-loc-public-ministry",
   },
   {
     id: "bib-loc-temple-cleansing-passion-week",
@@ -3136,6 +3157,9 @@ This second cleansing, coming at the close of his ministry rather than the start
       "jesus-of-nazareth",
       "jerusalem"
     ],
+    /** Display-only: folds into "Public Ministry of Jesus" on the timeline canvas at every zoom
+     * level. The record, its article and its links are untouched — see collapsedInto in types.ts. */
+    collapsedInto: "bib-loc-public-ministry",
   },
   {
     id: "bib-loc-olivet-discourse",
@@ -3163,6 +3187,9 @@ The discourse weaves together near-term warnings — wars, false messiahs, perse
       "mount-of-olives",
       "jerusalem"
     ],
+    /** Display-only: folds into "Public Ministry of Jesus" on the timeline canvas at every zoom
+     * level. The record, its article and its links are untouched — see collapsedInto in types.ts. */
+    collapsedInto: "bib-loc-public-ministry",
   },
   {
     id: "bib-loc-last-supper",
@@ -3189,6 +3216,9 @@ During the meal, Jesus takes bread, gives thanks, breaks it, and says, "This is 
       "jesus-of-nazareth",
       "jerusalem"
     ],
+    /** Display-only: folds into "Public Ministry of Jesus" on the timeline canvas at every zoom
+     * level. The record, its article and its links are untouched — see collapsedInto in types.ts. */
+    collapsedInto: "bib-loc-public-ministry",
   },
   {
     id: "bib-loc-gethsemane-arrest",
@@ -3215,6 +3245,9 @@ Jesus prays that the "cup" of coming suffering might pass from him, yet submits 
       "judas-iscariot",
       "mount-of-olives"
     ],
+    /** Display-only: folds into "Public Ministry of Jesus" on the timeline canvas at every zoom
+     * level. The record, its article and its links are untouched — see collapsedInto in types.ts. */
+    collapsedInto: "bib-loc-public-ministry",
   },
   {
     id: "bib-loc-trials-of-jesus",
@@ -3241,6 +3274,9 @@ Lacking authority to execute anyone, the Jewish leaders bring Jesus to the Roman
       "caiaphas",
       "pontius-pilate"
     ],
+    /** Display-only: folds into "Public Ministry of Jesus" on the timeline canvas at every zoom
+     * level. The record, its article and its links are untouched — see collapsedInto in types.ts. */
+    collapsedInto: "bib-loc-public-ministry",
   },
   {
     id: "bib-loc-crucifixion",
@@ -3272,6 +3308,9 @@ A Roman centurion overseeing the execution responds, "Truly this was the Son of 
       "jesus-of-nazareth",
       "jerusalem"
     ],
+    /** Display-only: folds into "Public Ministry of Jesus" on the timeline canvas at every zoom
+     * level. The record, its article and its links are untouched — see collapsedInto in types.ts. */
+    collapsedInto: "bib-loc-public-ministry",
   },
   {
     id: "bib-loc-burial-of-jesus",
@@ -3298,6 +3337,9 @@ The two men wrap Jesus's body in clean linen cloths with the spices, according t
       "joseph-of-arimathea",
       "jerusalem"
     ],
+    /** Display-only: folds into "Public Ministry of Jesus" on the timeline canvas at every zoom
+     * level. The record, its article and its links are untouched — see collapsedInto in types.ts. */
+    collapsedInto: "bib-loc-public-ministry",
   },
   {
     id: "bib-loc-resurrection",
@@ -3327,6 +3369,9 @@ The resurrection is not a footnote to the Gospel story but its climax and proof:
       "jesus-of-nazareth",
       "jerusalem"
     ],
+    /** Display-only: folds into "Public Ministry of Jesus" on the timeline canvas at every zoom
+     * level. The record, its article and its links are untouched — see collapsedInto in types.ts. */
+    collapsedInto: "bib-loc-public-ministry",
   },
   {
     id: "bib-loc-post-resurrection-appearances",
@@ -3354,6 +3399,9 @@ By the Sea of Galilee, Jesus provides another miraculous catch of fish and share
       "jesus-of-nazareth",
       "sea-of-galilee"
     ],
+    /** Display-only: folds into "Public Ministry of Jesus" on the timeline canvas at every zoom
+     * level. The record, its article and its links are untouched — see collapsedInto in types.ts. */
+    collapsedInto: "bib-loc-public-ministry",
   },
   {
     id: "bib-loc-great-commission",
@@ -3377,6 +3425,9 @@ Jesus declares that all authority in heaven and on earth has been given to him, 
       "jesus-of-nazareth",
       "galilee"
     ],
+    /** Display-only: folds into "Public Ministry of Jesus" on the timeline canvas at every zoom
+     * level. The record, its article and its links are untouched — see collapsedInto in types.ts. */
+    collapsedInto: "bib-loc-public-ministry",
   },
   {
     id: "bib-loc-ascension",
@@ -3404,6 +3455,9 @@ The ascension marks the close of Jesus's earthly ministry and the beginning of h
       "mount-of-olives",
       "bethany"
     ],
+    /** Display-only: folds into "Public Ministry of Jesus" on the timeline canvas at every zoom
+     * level. The record, its article and its links are untouched — see collapsedInto in types.ts. */
+    collapsedInto: "bib-loc-public-ministry",
   },
   {
     id: "bib-ac-pentecost",

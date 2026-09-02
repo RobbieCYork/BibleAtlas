@@ -1,4 +1,5 @@
 import type { TimelineEvent, TimelineEventCategory, TimelineDateCertainty } from "../data/types";
+import { timelineEvents } from "../data/timelineEvents";
 import LinkedVerseText from "./LinkedVerseText";
 import BackButton from "./BackButton";
 
@@ -27,6 +28,29 @@ const CATEGORY_LABELS: Record<TimelineEventCategory, string> = {
 
 /** Small badge shown beside the date whenever it isn't firmly established — "firm" gets no badge,
  * so anchored dates read plainly and everything else is visibly qualified. */
+/** Every event that names `id` in its own `collapsedInto` — i.e. the members a spanning entry
+ * stands in for on the timeline canvas (see canvasEvents in TimelineView.tsx), in date order.
+ *
+ * Derived, never hand-maintained: membership lives in exactly one place (the members' own
+ * `collapsedInto`), so adding, removing or re-pointing a member updates this list for free and the
+ * article can never drift out of step with what the canvas actually hides. Generic by construction
+ * too — no event id appears here, so any future spanning entry gets the same index automatically.
+ *
+ * This matters because the members have no mark of their own on the timeline at any zoom: for a
+ * reader who tapped the one mark drawn for AD 27-30, this list IS the way into the twenty-seven
+ * articles it covers. */
+function collapsedMembersOf(id: string): TimelineEvent[] {
+  const index = new Map(timelineEvents.map((e, i) => [e.id, i]));
+  return timelineEvents
+    .filter((e) => e.collapsedInto === id)
+    // Year first, then the order the events are written in timelineEvents.ts. The second half is
+    // load-bearing, not a stable-sort formality: a dozen of these share a single year (all of
+    // Passion Week is AD 30), and any tiebreak on the data itself — title, endYear — puts the
+    // Resurrection before the Crucifixion. The source array is authored in narrative order, so it
+    // is the only sequence within a year that reads correctly.
+    .sort((a, b) => a.startYear - b.startYear || (index.get(a.id) ?? 0) - (index.get(b.id) ?? 0));
+}
+
 const CERTAINTY_BADGES: Record<TimelineDateCertainty, string | null> = {
   firm: null,
   traditional: "traditional date",
@@ -55,6 +79,8 @@ export default function TimelineEventPanel({
     .map((p) => p.trim())
     .filter(Boolean);
   const hasReferences = (event.scriptureRefs?.length ?? 0) > 0 || (event.externalRefs?.length ?? 0) > 0;
+  // Empty for the overwhelming majority of events — only a spanning entry has members.
+  const collapsedMembers = collapsedMembersOf(event.id);
   /** Shared by every LinkedVerseText below — the same auto-link mechanism the other detail panels
    * use, so people/places/topics/events mentioned in the text link automatically. */
   const linkHandlers = {
@@ -91,6 +117,31 @@ export default function TimelineEventPanel({
             </p>
           ))}
         </div>
+
+        {/* The index of everything this entry stands in for. Each row opens that event's own full
+            article through the same onSelectTimelineEvent the auto-linked mentions in the prose
+            above use, so the caller's existing back trail (goBackInDetails in the Details column,
+            the overlay's own Back inside Timeline mode) carries the reader home unchanged. */}
+        {collapsedMembers.length > 0 && (
+          <div className="history-field">
+            <h4>Events in this period</h4>
+            <ul>
+              {collapsedMembers.map((member) => (
+                <li key={member.id}>
+                  <button
+                    type="button"
+                    className="verse-location-link"
+                    onClick={() => onSelectTimelineEvent(member.id)}
+                  >
+                    {member.title}
+                  </button>{" "}
+                  <span className="ruler-period">{member.dateLabel}</span>
+                  <p>{member.summary}</p>
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
 
         {event.datingNotes && (
           <div className="history-field">
