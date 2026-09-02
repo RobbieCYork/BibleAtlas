@@ -1,4 +1,5 @@
 import type { PanelKey } from "./PanelMenu";
+import Icon from "./Icon";
 import { MOBILE_TAB_META, useMobileTabs, type MobileTabKey } from "../lib/mobileTabs";
 
 type FriendsView = "friends" | "messages" | "groups";
@@ -109,7 +110,7 @@ export default function MobileTabBar({
         aria-current={isActive ? "page" : undefined}
       >
         <span className="mobile-tab-icon" aria-hidden="true">
-          {icon}
+          <Icon name={icon} />
           {key === "social" && totalBadgeCount > 0 && <span className="mobile-tab-dot" />}
         </span>
         <span className="mobile-tab-label">{label}</span>

@@ -42,6 +42,7 @@ import { topics } from "./data/topics";
 import { timelineEvents } from "./data/timelineEvents";
 import { formatWalkStopReference, getActiveSeasonalWalk, getWalkDismissKey } from "./data/seasonalWalks";
 import SeasonalWalkPanel from "./components/SeasonalWalkPanel";
+import Icon from "./components/Icon";
 import "./App.css";
 
 const MIN_PANEL_WIDTH = 240;
@@ -1205,7 +1206,7 @@ function App() {
             {searchMode === "bible" && (
               <HeaderTextSearch
                 placeholder="Search Scripture…"
-                icon="📖"
+                icon="bible"
                 value={bibleSearchQuery}
                 onChange={setBibleSearchQuery}
                 onSubmit={() => {
@@ -1228,18 +1229,20 @@ function App() {
                   className={searchScope === "scripture" ? "active" : ""}
                   aria-pressed={searchScope === "scripture"}
                   title="Search Scripture"
+                  aria-label="Search Scripture"
                   onClick={() => setSearchScope("scripture")}
                 >
-                  📖
+                  <Icon name="bible" />
                 </button>
                 <button
                   type="button"
                   className={searchScope === "places" ? "active" : ""}
                   aria-pressed={searchScope === "places"}
                   title="Search Places"
+                  aria-label="Search Places"
                   onClick={() => setSearchScope("places")}
                 >
-                  🗺️
+                  <Icon name="map" />
                 </button>
               </div>
             )}
@@ -1248,7 +1251,7 @@ function App() {
         {searchMode === "notes" && (
           <HeaderTextSearch
             placeholder="Search My Notes"
-            icon="📝"
+            icon="notes"
             value={notesSearchQuery}
             onChange={setNotesSearchQuery}
           />

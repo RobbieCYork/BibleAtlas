@@ -1,4 +1,5 @@
 import { createContext, useCallback, useContext, useEffect, useMemo, useState, type ReactNode } from "react";
+import type { IconName } from "../components/Icon";
 
 /** The seven destinations the mobile bottom bar can show. These are the tab bar's OWN keys, not
  * PanelKey values — "timeline" and "games" are full-screen takeovers with no panel at all, and
@@ -20,14 +21,18 @@ export const MOBILE_TAB_ORDER: MobileTabKey[] = [
   "games",
 ];
 
-export const MOBILE_TAB_META: Record<MobileTabKey, { label: string; icon: string }> = {
-  bible: { label: "Bible", icon: "📖" },
-  map: { label: "Map", icon: "🗺️" },
-  timeline: { label: "Timeline", icon: "⏳" },
-  notes: { label: "Notes", icon: "📝" },
-  articles: { label: "Articles", icon: "📚" },
-  social: { label: "Social", icon: "🧑‍🤝‍🧑" },
-  games: { label: "Games", icon: "🎮" },
+/** `icon` is a name in the app's own icon set (components/Icon.tsx), not a glyph. It used to be an
+ * emoji, which meant the seven destinations were drawn by whatever platform the reader happened to
+ * be on, in a colour the theme had no say over. Keeping it a plain string keeps this table data:
+ * every consumer still destructures `{ label, icon }` exactly as before. */
+export const MOBILE_TAB_META: Record<MobileTabKey, { label: string; icon: IconName }> = {
+  bible: { label: "Bible", icon: "bible" },
+  map: { label: "Map", icon: "map" },
+  timeline: { label: "Timeline", icon: "timeline" },
+  notes: { label: "Notes", icon: "notes" },
+  articles: { label: "Articles", icon: "articles" },
+  social: { label: "Social", icon: "social" },
+  games: { label: "Games", icon: "games" },
 };
 
 /** Bible can never be hidden. It is the app's cold-start landing tab (App mounts mobile on

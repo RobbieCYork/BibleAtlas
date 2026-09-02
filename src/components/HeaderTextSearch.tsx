@@ -1,8 +1,11 @@
+import Icon, { type IconName } from "./Icon";
+
 interface HeaderTextSearchProps {
   placeholder: string;
-  /** Mode icon shown inside the input's left edge — matches the tab-bar icon of the panel this
-   * search serves (📖 Bible, 📝 Notes), so it's visually distinct from the map's place search. */
-  icon: string;
+  /** Mode icon shown inside the input's left edge — the same name from the app's icon set that the
+   * tab bar uses for the panel this search serves ("bible", "notes"), so the header and the tab
+   * agree and both are visually distinct from the map's place search. */
+  icon: IconName;
   value: string;
   onChange: (value: string) => void;
   /** Only Bible search needs this — it hits an external API, so it waits for Enter instead of
@@ -16,7 +19,7 @@ export default function HeaderTextSearch({ placeholder, icon, value, onChange, o
   return (
     <div className="search-bar">
       <span className="search-bar-icon" aria-hidden="true">
-        {icon}
+        <Icon name={icon} />
       </span>
       <input
         type="text"

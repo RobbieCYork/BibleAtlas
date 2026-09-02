@@ -273,13 +273,17 @@ body.resizing-panels {
 }
 
 /* Mode icon inside the input's left edge — tells apart what the header search currently targets
-   (🗺️ places, 📖 Scripture, 📝 notes), since the same bar serves whichever panel is active. */
+   (Map places, Bible Scripture, Notes), since the same bar serves whichever panel is active.
+   `font-size` is what sizes the drawn icon: components/Icon.tsx renders at 1em, so these existing
+   rules keep doing the sizing they always did. 13px was tuned for an emoji, which draws well
+   outside its font box; a real 13px glyph came out visibly smaller than the icon it replaced, so
+   this is the one place the swap needed a nudge to hold its previous optical size. */
 .search-bar-icon {
   position: absolute;
   left: 12px;
   top: 50%;
   transform: translateY(-50%);
-  font-size: 13px;
+  font-size: 15px;
   line-height: 1;
   pointer-events: none;
 }
@@ -789,8 +793,10 @@ body.resizing-panels {
   text-align: left;
 }
 
+/* Same story as .search-bar-icon: sized in em by components/Icon.tsx, and nudged up from the 15px
+   that suited an emoji so the drawn mark keeps the weight the row was designed around. */
 .articles-section-icon {
-  font-size: 15px;
+  font-size: 17px;
 }
 
 .articles-section-label {
@@ -848,7 +854,7 @@ body.resizing-panels {
 }
 
 .articles-result-icon {
-  font-size: 15px;
+  font-size: 17px;
   flex-shrink: 0;
 }
 

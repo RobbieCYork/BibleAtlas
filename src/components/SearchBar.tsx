@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
 import type { Location } from "../data/types";
+import Icon from "./Icon";
 
 interface SearchBarProps {
   locations: Location[];
@@ -43,7 +44,7 @@ export default function SearchBar({ locations, onSelect, selectedLocationName }:
   return (
     <div className="search-bar">
       <span className="search-bar-icon" aria-hidden="true">
-        🗺️
+        <Icon name="map" />
       </span>
       <input
         type="text"

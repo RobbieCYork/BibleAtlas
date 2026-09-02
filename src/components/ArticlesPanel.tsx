@@ -1,4 +1,5 @@
 import { useMemo, useState } from "react";
+import Icon, { type IconName } from "./Icon";
 import type { Location, Person, PointOfInterest, Topic, TimelineEvent } from "../data/types";
 
 type ArticleKind = "location" | "poi" | "person" | "topic" | "timelineEvent";
@@ -29,12 +30,12 @@ interface ArticlesPanelProps {
 
 /** One browsable group in the section list below the search bar — order here is the order groups
  * render in, deliberately Places/POIs/People/Topics/Timeline (biggest map-facing categories first). */
-const SECTIONS: { kind: ArticleKind; label: string; icon: string }[] = [
-  { kind: "location", label: "Places", icon: "📍" },
-  { kind: "poi", label: "Points of Interest", icon: "🏛️" },
-  { kind: "person", label: "People", icon: "🧑" },
-  { kind: "topic", label: "Topics", icon: "📚" },
-  { kind: "timelineEvent", label: "Timeline Events", icon: "⏳" },
+const SECTIONS: { kind: ArticleKind; label: string; icon: IconName }[] = [
+  { kind: "location", label: "Places", icon: "place" },
+  { kind: "poi", label: "Points of Interest", icon: "poi" },
+  { kind: "person", label: "People", icon: "people" },
+  { kind: "topic", label: "Topics", icon: "topics" },
+  { kind: "timelineEvent", label: "Timeline Events", icon: "timelineEvent" },
 ];
 
 export default function ArticlesPanel({
@@ -137,7 +138,7 @@ export default function ArticlesPanel({
     timelineEvent: onSelectTimelineEvent,
   };
 
-  const iconFor = (kind: ArticleKind) => SECTIONS.find((s) => s.kind === kind)?.icon ?? "";
+  const iconFor = (kind: ArticleKind): IconName => SECTIONS.find((s) => s.kind === kind)?.icon ?? "articles";
 
   return (
     <div
@@ -148,7 +149,7 @@ export default function ArticlesPanel({
       <p className="articles-subtitle">Browse or search every place, person, and topic in the atlas.</p>
       <div className="articles-search">
         <span className="search-bar-icon" aria-hidden="true">
-          🔎
+          <Icon name="search" />
         </span>
         <input
           type="text"
@@ -175,7 +176,7 @@ export default function ArticlesPanel({
               <li key={`${entry.kind}-${entry.id}`}>
                 <button type="button" className="articles-result-row" onClick={() => selectHandlers[entry.kind](entry.id)}>
                   <span className="articles-result-icon" aria-hidden="true">
-                    {iconFor(entry.kind)}
+                    <Icon name={iconFor(entry.kind)} />
                   </span>
                   <span className="articles-result-text">
                     <span className="articles-result-name">{entry.name}</span>
@@ -202,7 +203,7 @@ export default function ArticlesPanel({
                   aria-expanded={isOpen}
                 >
                   <span className="articles-section-icon" aria-hidden="true">
-                    {section.icon}
+                    <Icon name={section.icon} />
                   </span>
                   <span className="articles-section-label">{section.label}</span>
                   <span className="articles-section-count">{entries.length}</span>

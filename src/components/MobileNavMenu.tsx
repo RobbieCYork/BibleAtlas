@@ -1,5 +1,6 @@
 import { useEffect, useId, useRef, useState } from "react";
 import { MOBILE_TAB_ORDER, MOBILE_TAB_META, useMobileTabs, type MobileTabKey } from "../lib/mobileTabs";
+import Icon from "./Icon";
 
 interface MobileNavMenuProps {
   /** Which of the seven destinations is on screen right now (App derives this in the same
@@ -104,7 +105,7 @@ export default function MobileNavMenu({ current, onNavigate }: MobileNavMenuProp
                 onClick={() => select(key)}
               >
                 <span className="mobile-nav-menu-icon" aria-hidden="true">
-                  {icon}
+                  <Icon name={icon} />
                 </span>
                 <span className="mobile-nav-menu-label">{label}</span>
                 {/* Only shown for a destination the reader has taken out of the bottom bar. It
