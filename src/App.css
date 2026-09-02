@@ -6531,7 +6531,10 @@ a.profile-links-url {
  * width the reader's own profile gets from .myprofile-body-inner. */
 .myprofile-mode > .friends-panel {
   margin: 0 auto;
-  height: 100%;
+  /* Cross-axis stretch rather than `height: 100%`, for the same reason as .myprofile-root above:
+     this element is zoomed by the text-size setting, and a percentage inside a zoomed box is
+     engine-dependent. */
+  align-self: stretch;
   min-height: 0;
 }
 
@@ -6548,11 +6551,21 @@ a.profile-links-url {
   display: flex;
 }
 
+/* Sized by the flex algorithm, NOT by percentages — this root carries `zoom` from the text-size
+ * setting (see the --text-scale rule near the top of this file), and a percentage resolved inside a
+ * zoomed box is exactly the trap 8ea570e documented for the mobile reading panel: engines that ship
+ * the standardized `zoom` already divide the percentage by the zoom ratio, engines on the older
+ * non-standard `zoom` do not, so `width: 100%` means two different things depending on the browser.
+ * Every other scaled panel root avoids this by letting its flex parent decide (`width: auto` in the
+ * mobile block below); this one was the last percentage-sized scaled root, and it is the Social
+ * destination's container — the surface the owner reported as not responding to A+/A−.
+ * `flex: 1` fills the main axis, the default `align-self: stretch` fills the cross axis, and neither
+ * is a percentage. Do not reintroduce width/height percentages here. */
 .myprofile-root {
   display: flex;
   flex-direction: column;
-  width: 100%;
-  height: 100%;
+  flex: 1;
+  min-width: 0;
   min-height: 0;
   background: var(--bg);
   color: var(--text);
