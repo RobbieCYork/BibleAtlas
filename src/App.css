@@ -3,34 +3,78 @@
   flex-direction: column;
   height: 100svh;
   height: var(--app-height, 100svh);
+  /* THE UNCONDITIONAL FLOOR. Everything else in this file and in src/lib/viewportHeight.ts that
+   * fights the dead-band-below-the-tab-bar bug is gated on two things going right: a JS measurement
+   * being correct, and standalone mode being *detected*. This line is gated on neither. It applies
+   * in every display mode, needs no class to have been added by script, and asks the browser for a
+   * quantity the browser computes itself.
+   *
+   * `svh` is the SMALL viewport height — the viewport as it is with every retractable piece of
+   * browser UI shown. That definition is what makes it safe to apply everywhere:
+   *   • In a browser tab it is the toolbar-visible height, i.e. by construction never taller than
+   *     what is actually on screen. A floor of that size can never push the bottom tab bar down
+   *     behind Safari's toolbar — which is exactly why the `100%` floor below had to be fenced off
+   *     to standalone, and why it is `svh` and not `lvh`/`vh`/`%` that is safe unconditionally.
+   *     When the toolbar collapses, --app-height (dvh, tracked live) grows past this and `height`
+   *     wins, so db2f52d's toolbar tracking is untouched.
+   *   • In an installed standalone app there is no retractable UI at all, so svh, lvh and dvh are
+   *     all the same number: the whole screen. The floor is therefore exactly the full window.
+   *
+   * And it is inert against the keyboard: index.html declares interactive-widget=resizes-visual, so
+   * the on-screen keyboard resizes only the VISUAL viewport, never the layout viewport that svh is
+   * measured from. svh does not change when the keyboard opens, so this cannot shrink the shell out
+   * from under 2ff1766's frozen height — that frozen value is >= svh and stays the used height.
+   *
+   * Note it is deliberately a min-height on .app-shell and not on #root: #root has carried
+   * min-height:100svh since index.css was written, and it did nothing for this bug, because the
+   * shell inside it has an explicit `height` and simply left #root's spare area showing through as
+   * page background. The floor has to be on the element that paints. */
+  min-height: 100svh;
 }
 
-/* Standalone (installed home-screen app) only, and a floor rather than a height: the shell must
- * never come up SHORTER than the window, because an installed app has no browser chrome — anything
- * left below the bottom tab bar is just page background showing through as a dead band. That's the
- * failure mode WebKit's phantom-chrome measurement bugs produce, and src/lib/viewportHeight.ts
- * defends against it from the JS side; this is the same guarantee expressed in pure CSS, so a bad
- * reading can't produce a visible gap even for the frames before the JS re-measures.
+/* SECOND, INDEPENDENT FLOOR — standalone only, and expressed in a property the first floor does not
+ * use, so the two can never overwrite one another.
  *
- * `100%` (not a vh unit) is the point: it resolves against the html/body chain, which is pinned to
- * the layout viewport in index.css, so it's the one full-window quantity that doesn't go through the
- * viewport-percentage machinery those bugs live in. #root needs a definite height for the percentage
- * to resolve — its own `min-height` alone would make this compute to zero.
+ * This covers the one case `svh` alone cannot: if WebKit's phantom-chrome bug reaches the LAYOUT
+ * viewport itself, svh comes back short in standalone too. `100%` is a different quantity — it
+ * resolves up the #root → body chain, and body is `position: fixed; height: 100%` (index.css), so it
+ * lands on the initial containing block by a route that does not go through the viewport-percentage
+ * units at all. In a browser tab that quantity is the LARGE viewport and a floor of it would push
+ * the bottom tab bar down behind Safari's collapsible toolbar, so it must stay fenced to standalone.
  *
- * Deliberately NOT applied to browser tabs, where the layout viewport extends behind Safari's
- * collapsible toolbar: a floor there would push the tab bar underneath that toolbar. The browser-tab
- * case is correct as it stands and stays on `--app-height` alone.
+ * Two things make this fence safe where the previous one wasn't:
+ *   1. `(display-mode: standalone)` is resolved by the CSS engine at paint time. Unlike the
+ *      `.standalone-mode` class it cannot be missing because a matchMedia read ran too early, and it
+ *      needs no script to have run at all. The class-based twin below is kept only as a third path.
+ *   2. It grows the shell with `flex-grow` rather than `min-height`. #root is already a flex column
+ *      (index.css), so giving it a definite height and letting the shell take the free space fills
+ *      the window without touching `min-height` — which means the unconditional 100svh floor above
+ *      SURVIVES here rather than being overridden. If the percentage chain fails to resolve, #root
+ *      is content-sized, there is no free space, flex-grow is a no-op, and the svh floor still
+ *      holds. Neither layer can take the other down with it.
  *
- * Being a floor also keeps it clear of the keyboard: while a field is focused the shell is held at
- * the (taller or equal) frozen height, so `height` wins and the tab bar still sits behind the
- * keyboard. */
+ * Growing is also inert against the keyboard: it can only ever expand the shell to the layout
+ * viewport, which `interactive-widget=resizes-visual` keeps at its full size while the keyboard is
+ * open, so 2ff1766's frozen height is what the shell already is and there is nothing to grow into. */
+@media all and (display-mode: standalone) {
+  #root {
+    height: 100%;
+  }
+
+  .app-shell {
+    flex-grow: 1;
+  }
+}
+
+/* Third path, same intent, keyed off the class src/lib/viewportHeight.ts sets — for any engine that
+ * doesn't support the `display-mode` media feature. Purely redundant with the block above wherever
+ * that block applies, and — like it — uses flex-grow so it cannot clobber the 100svh floor. */
 .standalone-mode #root {
   height: 100%;
-  min-height: 100%;
 }
 
 .standalone-mode .app-shell {
-  min-height: 100%;
+  flex-grow: 1;
 }
 
 
