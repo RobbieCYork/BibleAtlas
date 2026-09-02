@@ -8415,3 +8415,32 @@ a.profile-links-url {
     bottom: calc(68px + env(safe-area-inset-bottom, 0px));
   }
 }
+
+/* --- Desktop bottom edge -----------------------------------------------------------------------
+ * db193a8 removed the desktop footer strip, which had been the app's visual terminator: with it
+ * gone the Bible and Map ran straight off the bottom of the window with no boundary, which reads
+ * as a page that got cut off rather than one that ended.
+ *
+ * The fix is the app's own edge language, not a replacement strip. Every other seam in the shell is
+ * a 1px hairline in --border: the header's border-bottom above the panels, and the border-left /
+ * border-right between adjacent panels. This closes the fourth side with the same line, so the
+ * panel area reads as a bounded field on all four edges instead of three.
+ *
+ * On .app-body rather than on each panel, so it is one continuous line across whatever is mounted —
+ * Bible, Map, Articles, My Notes, Social, and the three full-area takeovers (.timeline-mode,
+ * .myprofile-mode, .game-mode), which are position:absolute;inset:0 children and therefore sit
+ * inside this element's padding box, leaving the border showing beneath them.
+ *
+ * It costs no layout height and cannot bring back the scrollbar db193a8 removed. Everything is
+ * border-box (see index.css), and .app-body is `flex: 1` — flex-basis 0 — inside the fixed-height
+ * .app-shell column, so its used border-box height is still exactly the space the header leaves.
+ * The border comes out of the panels' content box, not out of the viewport: scrollHeight still
+ * equals innerHeight.
+ *
+ * Desktop only, as the exact complement of MOBILE_QUERY in App.tsx: below 769px the bottom tab bar
+ * is the terminator and already carries its own top border, so a line here would double it. */
+@media (min-width: 769px) {
+  .app-body {
+    border-bottom: 1px solid var(--border);
+  }
+}
