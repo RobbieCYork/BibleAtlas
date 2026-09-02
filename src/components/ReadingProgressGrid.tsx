@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { supabase, chapterReadCutoff, formatReadingTime, type Profile } from "../lib/supabase";
+import { supabase, chapterReadCutoff, chaptersReadThisMonth, type Profile } from "../lib/supabase";
 import { BOOKS } from "../data/bibleBooks";
 
 interface ReadingProgressGridProps {
@@ -33,7 +33,7 @@ const UPSERT_CHUNK = 400;
  * Cancel genuinely undoes it. */
 export default function ReadingProgressGrid({ userId, displayName, isOwn }: ReadingProgressGridProps) {
   const [readSet, setReadSet] = useState<Set<string> | null>(null);
-  const [seconds, setSeconds] = useState<number | null>(null);
+  const [monthChapters, setMonthChapters] = useState<number | null>(null);
   const [resetSetting, setResetSetting] = useState<Profile["chapter_read_reset"]>("never");
   const [booksOpen, setBooksOpen] = useState(false);
 
@@ -46,7 +46,7 @@ export default function ReadingProgressGrid({ userId, displayName, isOwn }: Read
   useEffect(() => {
     let cancelled = false;
     setReadSet(null);
-    setSeconds(null);
+    setMonthChapters(null);
     (async () => {
       const { data: profileRow } = await supabase.from("profiles").select("chapter_read_reset").eq("id", userId).single();
       const reset = (profileRow as { chapter_read_reset: Profile["chapter_read_reset"] } | null)?.chapter_read_reset ?? "never";
@@ -58,11 +58,13 @@ export default function ReadingProgressGrid({ userId, displayName, isOwn }: Read
       const { data } = await query;
       if (!cancelled) setReadSet(new Set((data as { book: string; chapter: number }[] | null ?? []).map((r) => key(r.book, r.chapter))));
     })();
-    supabase
-      .rpc("reading_seconds_this_month", { p_user_id: userId })
-      .then(({ data }) => {
-        if (!cancelled) setSeconds(typeof data === "number" ? data : 0);
-      });
+    chaptersReadThisMonth(userId)
+      .then((n) => {
+        if (!cancelled) setMonthChapters(n);
+      })
+      // Left as null on failure, which renders "…" — never 0, which would read as
+      // "you have read nothing this month" when the truth is that we could not find out.
+      .catch(() => {});
     return () => {
       cancelled = true;
     };
@@ -193,7 +195,8 @@ export default function ReadingProgressGrid({ userId, displayName, isOwn }: Read
           <strong>{shown.size}</strong> / {totalChapters} chapters read
         </span>
         <span>
-          <strong>{seconds !== null ? formatReadingTime(seconds) : "…"}</strong> {isOwn ? "read this month" : "this month"}
+          <strong>{monthChapters !== null ? monthChapters : "…"}</strong>{" "}
+          {monthChapters === 1 ? "chapter" : "chapters"} {isOwn ? "read this month" : "this month"}
         </span>
       </div>
       <button

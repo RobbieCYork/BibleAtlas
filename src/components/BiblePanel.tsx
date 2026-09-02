@@ -12,7 +12,7 @@ import {
   chapterReadCutoff,
   fetchPlanProgress,
   flushReadingTimeReliably,
-  formatReadingTime,
+  chaptersReadThisMonth,
   mergeLocalPlanProgress,
   setPlanDayDone,
   HIGHLIGHT_COLORS,
@@ -302,12 +302,15 @@ export default function BiblePanel({
   const [shareCardSpec, setShareCardSpec] = useState<ShareCardSpec | null>(null);
 
   // Whether the currently-loaded chapter is marked read by this account, and this account's total
-  // seconds read so far this calendar month (both visible to friends too — see chapter_reads/
-  // reading_time_daily RLS). Both are chapter/account-scoped, so they're refetched on either change.
-  // Kept as raw seconds (not pre-divided minutes) so a session under a minute still shows real
-  // progress instead of a flat "0" — see formatReadingTime for the display formatting.
+  // chapters marked read so far this calendar month (visible to friends too — see chapter_reads
+  // RLS). Chapter/account-scoped, so it is refetched on either change.
+  //
+  // This used to be reading SECONDS. It measured how long the tab sat open, which rewarded leaving
+  // it open and said nothing about how much of the Bible had actually been read; a count of
+  // chapters is the thing the reader is choosing to do. Null means "not known yet, or the read
+  // failed" and renders nothing — 0 is a real answer and must not stand in for a failure.
   const [chapterMarkedRead, setChapterMarkedRead] = useState(false);
-  const [secondsThisMonth, setSecondsThisMonth] = useState<number | null>(null);
+  const [chaptersThisMonth, setChaptersThisMonth] = useState<number | null>(null);
   /** This account's chapter_read_reset setting (see Settings) — fetched once per login, used to decide
    * whether an old chapter_reads row still counts as "read" for the checkbox above. */
   const [chapterReadReset, setChapterReadReset] = useState<Profile["chapter_read_reset"]>("never");
@@ -472,16 +475,25 @@ export default function BiblePanel({
     } else {
       await supabase.from("chapter_reads").delete().eq("user_id", userId).eq("book", currentBook).eq("chapter", currentChapter);
     }
+    // Re-count rather than adding or subtracting one: ticking a chapter that was already read
+    // months ago moves its read_at into this month (the upsert above), which changes the total by
+    // one — but unticking a chapter read in a PREVIOUS month changes it by nothing at all. Asking
+    // the database is one cheap indexed count and is right in every case.
+    fetchChaptersThisMonth(userId);
   };
 
-  const fetchSecondsThisMonth = async (forUserId: string) => {
-    const { data } = await supabase.rpc("reading_seconds_this_month", { p_user_id: forUserId });
-    setSecondsThisMonth(typeof data === "number" ? data : 0);
+  const fetchChaptersThisMonth = async (forUserId: string) => {
+    try {
+      setChaptersThisMonth(await chaptersReadThisMonth(forUserId));
+    } catch {
+      // Stay null (shows nothing) rather than claim zero chapters read.
+      setChaptersThisMonth(null);
+    }
   };
 
   useEffect(() => {
-    if (userId) fetchSecondsThisMonth(userId);
-    else setSecondsThisMonth(null);
+    if (userId) fetchChaptersThisMonth(userId);
+    else setChaptersThisMonth(null);
   }, [userId]);
 
   // Reading-time heartbeat — tracks real elapsed foreground time via Date.now() deltas (not fixed-size
@@ -496,10 +508,6 @@ export default function BiblePanel({
     const FLUSH_INTERVAL_MS = 15000;
     let visibleSince = document.visibilityState === "visible" ? Date.now() : null;
 
-    const applyToDisplay = (wholeSeconds: number) => {
-      setSecondsThisMonth((s) => (s ?? 0) + wholeSeconds);
-    };
-
     const flush = (reliable: boolean) => {
       if (visibleSince === null) return;
       const elapsed = Math.round((Date.now() - visibleSince) / 1000);
@@ -507,7 +515,9 @@ export default function BiblePanel({
       if (elapsed < 1) return;
       if (reliable) flushReadingTimeReliably(elapsed);
       else supabase.rpc("increment_reading_time", { p_seconds: elapsed });
-      applyToDisplay(elapsed);
+      // Nothing on screen to update any more. Reading time is still RECORDED — other screens and
+      // any future report can still use it — it simply is not the number shown at the top of a
+      // chapter, which now counts chapters read this month instead.
     };
 
     const interval = window.setInterval(() => flush(false), FLUSH_INTERVAL_MS);
@@ -1420,10 +1430,6 @@ export default function BiblePanel({
     >
       <div className="bible-panel-scroll" ref={scrollContainerRef}>
 
-      {secondsThisMonth !== null && (
-        <p className="bible-minutes-this-month no-print">📖 {formatReadingTime(secondsThisMonth)} read this month</p>
-      )}
-
       <div className="bible-nav">
         <InlinePicker
           ariaLabel="Book"
@@ -1464,6 +1470,14 @@ export default function BiblePanel({
           options={passage?.verses.map((v) => ({ value: String(v.verse), label: String(v.verse) })) ?? []}
         />
       </div>
+
+      {/* Sits directly under the book/chapter pickers, where the reader's eye already is when they
+          arrive at a chapter — the same figure the profile grid shows, so the two cannot disagree. */}
+      {chaptersThisMonth !== null && (
+        <p className="bible-minutes-this-month no-print">
+          📖 {chaptersThisMonth} {chaptersThisMonth === 1 ? "chapter" : "chapters"} read this month
+        </p>
+      )}
 
       <div className="bible-toolbar">
         <select

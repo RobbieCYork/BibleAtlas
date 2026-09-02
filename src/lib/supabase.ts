@@ -281,6 +281,42 @@ export function isEdited(row: { created_at: string; updated_at: string | null })
   return new Date(row.updated_at).getTime() - new Date(row.created_at).getTime() > 2000;
 }
 
+/** How many chapters this reader has marked read since the 1st of the current month.
+ *
+ * WHY A COUNT AND NOT A DURATION. This replaced "N mins read this month" on both the profile grid
+ * and the top of the Bible panel. Minutes measured how long the tab sat open, which rewarded
+ * leaving it open and told you nothing about how much of the Bible you had actually got through.
+ * Chapters are the thing the reader is choosing to do, and the thing the rest of this screen is
+ * already counting.
+ *
+ * WHY IT IS COUNTED HERE RATHER THAN IN AN RPC. `reading_seconds_this_month` had to be a database
+ * function because per-day reading seconds have to be summed server-side. A chapter count is one
+ * indexed COUNT over rows this user is already allowed to read, so `head: true` returns the number
+ * without shipping a single row — no migration, and nothing new to keep in step.
+ *
+ * THE MONTH BOUNDARY IS THE READER'S OWN. `new Date(y, m, 1)` is local midnight on the 1st, sent as
+ * an instant, so someone reading at 11pm on the 31st sees it roll over when their calendar does and
+ * not when UTC's does. That is a deliberate difference from the old seconds RPC, which trimmed the
+ * month in the database's zone.
+ *
+ * Re-reading a chapter does not double count: chapter_reads is keyed on (user, book, chapter) and
+ * re-checking an old one upserts `read_at` forward, so it counts once, in the month it was last read.
+ */
+export async function chaptersReadThisMonth(userId: string): Promise<number> {
+  const now = new Date();
+  const monthStart = new Date(now.getFullYear(), now.getMonth(), 1).toISOString();
+  const { count, error } = await supabase
+    .from("chapter_reads")
+    .select("*", { count: "exact", head: true })
+    .eq("user_id", userId)
+    .gte("read_at", monthStart);
+  // A failed read is not a zero — zero is a real answer meaning "read nothing yet this month", and
+  // the callers show nothing at all rather than tell someone they have read nothing when we simply
+  // could not find out.
+  if (error) throw error;
+  return count ?? 0;
+}
+
 /** "42 sec" below a minute, "3 min" at or above one — so a reading session shorter than a minute still
  * shows real progress instead of floor-dividing to a flat, misleadingly-looking-broken "0 mins". */
 export function formatReadingTime(totalSeconds: number): string {
