@@ -206,15 +206,38 @@ export default function PersonPanel({
           <ul className="extra-biblical-list">
             {person.extraBiblicalReferences.map((ref, i) => (
               <li key={i} className="extra-biblical-item">
+                {/* The source line and summary name the actual finds — "The Pilate Stone", "The Tel
+                    Dan Stele" — which now have articles of their own, so they run through the
+                    auto-linker like every other prose field. `citation` deliberately does not: it is
+                    a book/chapter/section reference ("18.5.2"), not prose, and the linker would read
+                    its digits as a Bible verse. */}
                 <p className="extra-biblical-source">
-                  {ref.source} <span className="extra-biblical-citation">({ref.citation})</span>
+                  <LinkedVerseText
+                    text={ref.source}
+                    onSelectLocation={onSelectLocation}
+                    onSelectPoi={onSelectPoi}
+                    onSelectPerson={onSelectPerson}
+                    onSelectTopic={onSelectTopic}
+                    excludeId={person.id}
+                  />{" "}
+                  <span className="extra-biblical-citation">({ref.citation})</span>
                   {ref.url && (
                     <a href={ref.url} target="_blank" rel="noopener noreferrer" className="extra-biblical-link">
                       Read the source ↗
                     </a>
                   )}
                 </p>
-                <p className="extra-biblical-summary">{ref.summary}</p>
+                <p className="extra-biblical-summary">
+                  <LinkedVerseText
+                    text={ref.summary}
+                    onSelectLocation={onSelectLocation}
+                    onSelectPoi={onSelectPoi}
+                    onSelectPerson={onSelectPerson}
+                    onSelectTopic={onSelectTopic}
+                    onSelectVerse={onSelectVerse}
+                    excludeId={person.id}
+                  />
+                </p>
                 <p className="extra-biblical-reliability">{ref.reliability}</p>
               </li>
             ))}

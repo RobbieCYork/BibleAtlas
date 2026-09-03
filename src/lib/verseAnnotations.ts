@@ -325,8 +325,14 @@ export function computeLinkAnnotations(
     const name = match[0];
     const start = match.index;
     const end = start + name.length;
-    if (/\d/.test(name)) {
-      // Any match containing a digit is a Bible verse reference (no location/POI name does).
+    if (/\d/.test(name) && !NAME_TO_ENTRY.has(name.toLowerCase())) {
+      // A match containing a digit is a Bible verse reference — UNLESS it is itself a registered
+      // entity name. Almost no name in this app's data contains a digit, but a few must: manuscript
+      // sigla like "P52" are how the artefact articles are actually referred to in prose, and
+      // without this exception they rendered as a verse link that the Bible panel cannot resolve.
+      // Safe because the verse-reference fragments are listed FIRST in NAME_PATTERN's alternation,
+      // so a real reference like "John 3:16" is matched as a verse before the name branch is tried
+      // — this exception can only fire on a whole match that is exactly a registered name.
       annotations.push({ start, end, text: name, kind: "verse" });
     } else {
       const nameLower = name.toLowerCase();

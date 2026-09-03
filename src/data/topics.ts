@@ -1257,4 +1257,577 @@ export const topics: Topic[] = [
       { label: "Got Questions: What is the Nicene Creed?", url: "https://www.gotquestions.org/Nicene-creed.html" },
     ],
   },
+  /* ---------------------------------------------------------------------------------------------
+   * Archaeological finds — the inscriptions, papyri and manuscripts already named in locations' and
+   * POIs' `archaeology` prose and in people's `extraBiblicalReferences`, which until now were dead
+   * text. Each is a Topic rather than a Location or a POI, on one consistent rule:
+   *
+   *   A PLACE you can stand in gets a POI. A PORTABLE OBJECT gets a Topic.
+   *
+   * Every entry below is an object that has been moved: the Mesha Stele is in Paris, the Cyrus
+   * Cylinder and the Black Obelisk in London, the Siloam Inscription in Istanbul, Codex Sinaiticus
+   * in four countries at once. A map pin at the findspot would point at a hole in the ground, and
+   * the findspot itself is usually already a Location or POI here (Dan, Caesarea Maritima, Qumran).
+   * What a reader actually wants is discursive — what it says, how it surfaced, and what it does and
+   * does not prove — which is exactly what `Location`/`PointOfInterest` have nowhere to put and what
+   * `Topic.sections` is for. This is the same reasoning that made Gehenna a Topic (see above).
+   *
+   * The two inscriptions that already exist as POIs (erastus-inscription-corinth,
+   * gallio-inscription-delphi) are not exceptions to the rule and are deliberately not duplicated
+   * here: both are entries for a spot inside an already-mapped excavation you can visit.
+   *
+   * `category` is "concept" throughout — the four TopicCategory values are practice/doctrine/
+   * people-group/concept, and an artefact is none of the first three. The descriptive `role` field
+   * carries the real label ("Ninth-Century BC Aramaic Victory Inscription"), which is what the panel
+   * renders as the badge; `category` only drives the small tier tag.
+   *
+   * On evidential weight: these are the app's apologetic-adjacent articles, and overclaiming here
+   * would cost more credibility than it buys. Every entry states plainly what its find does not
+   * establish, and names the scholars who dissent where there is a real dissent — the same standard
+   * `ExtraBiblicalReference.reliability` already enforces on person articles.
+   * ------------------------------------------------------------------------------------------- */
+  {
+    id: "pilate-stone",
+    name: "Pilate Stone",
+    // NOT registered: "Pilate" — that is Pontius Pilate the person, who already owns it.
+    alternateNames: ["Pilate Inscription", "Caesarea Pilate Inscription"],
+    category: "concept",
+    role: "First-Century Latin Dedication Naming Pontius Pilate",
+    summary:
+      "A reused block of limestone found in the theatre at Caesarea Maritima in 1961, carrying the only inscription ever found from Pilate's own lifetime — and the one that settles what his job title actually was.",
+    sections: [
+      {
+        heading: "Found in a Staircase",
+        paragraphs: [
+          "In the summer of 1961 an Italian expedition under Antonio Frova was clearing the Roman theatre at Caesarea Maritima, the harbour city Herod the Great built on the Judean coast and the seat of the Roman governor. In a fourth-century rebuilding of the theatre steps the masons had done what masons everywhere have always done: they took a handy piece of dressed stone from an older, ruined building and set it into the staircase face-down. When it was turned over it carried four lines of Latin, badly worn on the left where the block had been trimmed to fit.",
+          "What survives reads, in the standard reconstruction, something like: \"...Tiberieum ... [Pont]ius Pilatus ... [praef]ectus Iuda[ea]e ... [ded]it\" — Pontius Pilate, prefect of Judea, gave or dedicated a building called a Tiberieum, presumably something named in honour of the emperor Tiberius. The stone is now in the Israel Museum in Jerusalem; a replica stands in the theatre at Caesarea where visitors see it today.",
+        ],
+      },
+      {
+        heading: "Why the Title Matters",
+        paragraphs: [
+          "The Gospels never give Pilate a formal Latin title; Luke calls him the one \"governing Judea\" (Luke 3:1), and John simply calls him the governor. The Roman historian Tacitus, writing around AD 116, calls him a procurator (Annals 15.44). For a long time that was the only label available, and it was slightly wrong: procurator was the title used for governors of Judea from the reign of Claudius onward, roughly a decade after Pilate left. The stone says praefectus — prefect — the earlier, more military title, exactly what a governor of Judea in the AD 20s and 30s should have been called.",
+          "That is a small thing, and it is worth being precise about how much it carries. It does not prove any event in the Gospels happened. What it does is place a man named Pontius Pilatus in Judea, in the right office, under Tiberius, in a document cut while he held the job — and quietly correct a later Roman historian in the direction of the earlier evidence. Josephus and Philo both write about Pilate at length, and the Gospels assume him without explaining him; the stone is the one witness that is not a narrative about him but a leftover from his administration.",
+        ],
+      },
+      {
+        heading: "What Is Actually Legible, and What Is Restored",
+        paragraphs: [
+          "Honesty about this inscription means being clear which letters are on the stone and which are scholars' reconstructions. \"NTIVS PILATVS\" is plainly there and is not seriously disputed by anyone; the reading of the name is secure. \"ECTVS IVDA E\" is likewise on the stone, and \"[praef]ectus\" is the overwhelmingly favoured restoration, though it is a restoration. The first line, \"TIBERIEVM,\" is the genuinely contested part: no other example of the word is known, and what kind of structure a Tiberieum was — a temple, a lighthouse, a hall for the imperial cult — has been argued over ever since, with several competing reconstructions of the whole text proposed over the decades.",
+          "The stone's authenticity, by contrast, is not in question. It came out of a controlled excavation, in situ in a datable rebuild, and no serious scholar has challenged it. That is a useful distinction to hold on to: an object can be entirely genuine and still have lines in it that nobody can read with confidence.",
+        ],
+      },
+    ],
+    verses: [
+      { reference: "Luke 3:1", note: "\"Pontius Pilate being governor of Judea\" — Luke's dating of John the Baptist's ministry" },
+      { reference: "Matthew 27:11-26", note: "Pilate at the trial of Jesus" },
+      { reference: "John 18:28-19:16", note: "The longest Gospel account of Pilate's questioning" },
+      { reference: "Acts 23:23-35", note: "Paul sent under guard to the governor's headquarters at Caesarea" },
+    ],
+    sources: [
+      { label: "Bible Odyssey (SBL): Pontius Pilate", url: "https://www.bibleodyssey.org/articles/pontius-pilate/" },
+      { label: "Wikipedia: Pilate stone", url: "https://en.wikipedia.org/wiki/Pilate_stone" },
+    ],
+  },
+  {
+    id: "tel-dan-stele",
+    name: "Tel Dan Stele",
+    // NOT registered: "Tel Dan" alone — that is the modern name of the city of Dan, which already
+    // owns it. Every alias below is longer than "Tel Dan", and NAME_ENTRIES is sorted longest-first,
+    // so a mention of the stele wins over the city and a bare "Tel Dan" still goes to the city.
+    alternateNames: ["Tel Dan Stela", "Tel Dan Inscription", "House of David Inscription"],
+    category: "concept",
+    role: "Ninth-Century BC Aramaic Victory Inscription",
+    summary:
+      "Three fragments of a smashed basalt monument found at Tel Dan in 1993 and 1995, carrying what most scholars read as the earliest mention of David anywhere outside the Bible.",
+    sections: [
+      {
+        heading: "A Broken Monument in a City Wall",
+        paragraphs: [
+          "In July 1993, a surveyor working with Avraham Biran's long-running excavation at Tel Dan noticed writing on a stone built into a wall beside the Iron Age gate. It turned out to be part of a black basalt victory stele that had been deliberately smashed and its pieces reused as ordinary building material — which is itself a clue, since that is what a conquering army did to a rival's monuments. Two more fragments surfaced in 1995. Together they preserve thirteen broken lines of Old Aramaic from the ninth century BC. The stele is on permanent display in the Israel Museum in Jerusalem.",
+          "The text is a boast. An Aramean king — most scholars think Hazael of Damascus, or possibly his son — describes how his father died, how the king of Israel had invaded his land, and how the god Hadad went before him and gave him victory. He then names two men he says he killed: a king of Israel and a king of \"the house of David.\"",
+        ],
+      },
+      {
+        heading: "The Line Everyone Argues About",
+        paragraphs: [
+          "The phrase is written BYTDWD, and the argument turns on it. Ancient Aramaic scribes used a small mark to separate words, and there is no separator inside BYTDWD — so, strictly, the stone says one continuous string of consonants. The large majority of epigraphers read it as bet-David, \"house of David,\" the standard ancient Near Eastern way of naming a dynasty by its founder, exactly as the same stele names Israel by the dynastic label the Assyrians used. If that reading is right, this is a hostile foreign king in roughly 840 BC referring to the ruling family of Judah as David's house — the earliest surviving reference to David outside the Bible.",
+          "A minority has pushed back. Philip Davies and others proposed that BYTDWD might be a place name (\"Bethdod\") or a phrase such as \"house of the beloved\" or \"house of the kettle,\" and argued that a dynastic reading assumes what it sets out to prove. That case has not persuaded most specialists — no such place is otherwise known, and the parallel dynastic usage in the same inscription tells against it — but it is a real scholarly position held by credentialed people, not a fringe stunt, and it deserves to be named rather than waved away. A separate accusation of forgery made shortly after the discovery has, by contrast, found essentially no support; the fragments came out of a controlled dig in datable stratigraphy.",
+        ],
+      },
+      {
+        heading: "What It Establishes, and What It Doesn't",
+        paragraphs: [
+          "Taken at the majority reading, the stele establishes something narrow and genuinely important: that within roughly a century and a half of David's traditional lifetime, a neighbouring state referred to the kingdom of Judah as \"the house of David\" — which is hard to explain unless there had been a David. That is a real answer to a real argument; a generation of scholars had proposed that David was a literary invention of much later writers, and this find made that position considerably harder to hold.",
+          "It establishes nothing about the David of the biblical narrative — not his psalms, his kingdom's size, his character, or any episode of his life. And the stele's own account sits in some tension with Scripture: the Aramean king claims to have killed the kings of Israel and Judah, while 2 Kings 9 credits those two deaths to Jehu's coup. Historians reconcile this in various ways — Hazael claiming credit for deaths that happened during his campaign, or Jehu acting as his client — and none of the reconciliations is certain. A find that corroborates one thing is not obliged to corroborate everything, and pretending otherwise is how good evidence gets spent badly.",
+        ],
+      },
+    ],
+    verses: [
+      { reference: "2 Samuel 7:16", note: "The promise to David of an enduring house" },
+      { reference: "1 Kings 12:19", note: "\"Israel rebelled against the house of David\" — the phrase in Scripture's own mouth" },
+      { reference: "2 Kings 8:7-15", note: "Hazael takes the throne of Aram-Damascus" },
+      { reference: "2 Kings 9:14-28", note: "Jehu kills Joram of Israel and Ahaziah of Judah — the deaths the stele's author also claims" },
+      { reference: "Judges 18:27-29", note: "The city of Dan itself, where the stele was found" },
+    ],
+    sources: [
+      { label: "Bible Odyssey (SBL): The Tel Dan Inscription", url: "https://www.bibleodyssey.org/articles/the-tel-dan-inscription/" },
+      { label: "Wikipedia: Tel Dan stele", url: "https://en.wikipedia.org/wiki/Tel_Dan_stele" },
+    ],
+  },
+  {
+    id: "mesha-stele",
+    name: "Mesha Stele",
+    // NOT registered: "Mesha" alone. There is no person entry for King Mesha of Moab, so a bare
+    // mention has nowhere better to go, but "Mesha" is also a personal and place name elsewhere in
+    // Genesis 10:30 and 1 Chronicles 2:42/8:9, and the whole-word case-insensitive matcher cannot
+    // tell those apart from the king.
+    alternateNames: ["Mesha Stela", "Moabite Stone", "Mesha Inscription"],
+    category: "concept",
+    role: "Ninth-Century BC Moabite Royal Inscription",
+    summary:
+      "A basalt monument set up by King Mesha of Moab around 840 BC, recovered from Jordan in 1868 and then blown apart by the villagers who owned it — the only substantial text we have telling an Old Testament episode from the other side.",
+    sections: [
+      {
+        heading: "Discovered, Then Destroyed",
+        paragraphs: [
+          "In 1868 a missionary named Frederick Augustus Klein was shown a large inscribed slab of black basalt lying on the mound of Dhiban in Jordan — biblical Dibon, the Moabite capital. Word of the find set off a bidding contest between European consulates, and in 1869, with the local Bedouin caught in the middle of an argument about who owned it and what the Ottoman authorities would do, the villagers heated the stone in a fire, poured cold water on it, and broke it into pieces.",
+          "It could have ended there. Before the stone was destroyed, Charles Clermont-Ganneau had arranged for a squeeze to be taken — a wet paper impression pressed onto the surface, which comes away carrying the shape of every letter. The squeeze was itself torn off the stone in haste and survives only in pieces, but between it and the recovered fragments, which were eventually bought and reassembled, most of the thirty-four lines are readable. The reconstructed stele is in the Louvre.",
+        ],
+      },
+      {
+        heading: "What Mesha Says",
+        paragraphs: [
+          "The inscription is a king's account of his own reign, written in Moabite — a language so close to biblical Hebrew that a reader of one can largely read the other. Mesha says that Omri, king of Israel, oppressed Moab for many years \"because Chemosh was angry with his land,\" that Omri's son continued it, and that Chemosh then gave Moab its freedom back. He lists the towns he took, the fortifications and cisterns he built, and the Israelite sanctuaries he destroyed — including a line describing how he dragged \"the vessels of YHWH\" before his own god Chemosh.",
+          "Two things in that are remarkable. The first is Omri: this is a foreign king naming an Israelite king known from 1 Kings 16, on stone, within living memory of his reign. The second is the theology. Mesha explains his nation's defeat as its god's anger with his own people, and its recovery as that god's favour returning — precisely the logic the books of Kings apply to Israel. Whatever else the stele shows, it shows that the way the Old Testament reads history was not a peculiarity of Israel but the shared idiom of the region, which is worth knowing before deciding what is distinctive about Scripture and what is not.",
+        ],
+      },
+      {
+        heading: "Where It Meets, and Where It Contradicts, 2 Kings 3",
+        paragraphs: [
+          "2 Kings 3 tells of Mesha's rebellion after Ahab's death, of a joint campaign by Israel, Judah, and Edom that devastated Moab, and of Mesha sacrificing his own eldest son on the city wall, after which the coalition withdrew. Mesha's stele describes the same era and claims unambiguous victory. Both cannot be straightforwardly true as told, and the honest thing to say is that these are two royal accounts of the same conflict, each shaped by the interests of its author, and that neither is a neutral report. Historians generally take the stele as evidence that Moab's rebellion succeeded in the long run, and 2 Kings as evidence that a punishing campaign preceded that success — but the reconciliation is an inference, not a reading either text supplies.",
+          "One more line is genuinely disputed. In 1994 André Lemaire proposed that a damaged section near line 31 reads \"house of David,\" which would make the Mesha Stele a second ninth-century witness to David's dynasty alongside the Tel Dan Stele. Later imaging work, including a 2022 study using the surviving squeeze, has been argued both for and against the reading, and specialists remain split. Unlike Tel Dan, where the majority reading is secure, this one should be described as possible and contested — not as a second proof.",
+        ],
+      },
+    ],
+    verses: [
+      { reference: "2 Kings 3:4-27", note: "Mesha's rebellion and the campaign against Moab — the biblical side of the same events" },
+      { reference: "1 Kings 16:21-28", note: "Omri, the Israelite king Mesha names on the stone" },
+      { reference: "Numbers 21:29", note: "Chemosh, the god of Moab, named in an early Hebrew poem" },
+      { reference: "Jeremiah 48:1-13", note: "Dibon and the Moabite towns the stele lists, in a later oracle" },
+    ],
+    sources: [
+      { label: "Bible Odyssey (SBL): The Mesha Stela", url: "https://www.bibleodyssey.org/articles/the-mesha-stela/" },
+      { label: "Wikipedia: Mesha Stele", url: "https://en.wikipedia.org/wiki/Mesha_Stele" },
+    ],
+  },
+  {
+    id: "merneptah-stele",
+    name: "Merneptah Stele",
+    alternateNames: ["Merneptah Stela", "Israel Stele", "Merneptah Inscription", "Victory Stele of Merneptah"],
+    category: "concept",
+    role: "Egyptian Victory Monument, c. 1208 BC — the Earliest Mention of Israel",
+    summary:
+      "A ten-foot granite slab from a pharaoh's mortuary temple at Thebes, found by Flinders Petrie in 1896, whose last three lines contain the oldest known appearance of the name \"Israel\" outside the Bible.",
+    sections: [
+      {
+        heading: "The Find",
+        paragraphs: [
+          "Flinders Petrie uncovered the stele in 1896 in the ruins of the mortuary temple of Merneptah, son and successor of Ramesses II, on the west bank at Thebes. Like a great deal of Egyptian monumental stone it was second-hand: the back carries an earlier inscription of Amenhotep III, and Merneptah's masons simply turned it round. It stands about three metres high and is now in the Egyptian Museum in Cairo. Petrie is said to have grasped its importance at once and remarked that this stone would be better known than anything else he ever dug up. He was right.",
+          "The bulk of the text is a triumph poem about a campaign against the Libyans in the fifth year of Merneptah's reign, around 1208 BC. Only the closing stanza turns east, to a sweep through Canaan, and it is there — in a list of defeated enemies including Ashkelon, Gezer, and Yanoam — that the line appears: \"Israel is laid waste, his seed is not.\"",
+        ],
+      },
+      {
+        heading: "A People, Not a Place",
+        paragraphs: [
+          "Egyptian hieroglyphic writing attaches a small silent sign, called a determinative, to a word to say what kind of thing it is. The other names in this list carry the determinative for a city or a territory. Israel does not; it carries the determinative used for a people. Egyptologists have taken that seriously for well over a century, and the standard conclusion is that around 1208 BC an Egyptian scribe knew of a group in Canaan called Israel who were identified as a people rather than as the inhabitants of a particular walled city — which fits a population not yet organised into a state.",
+          "It should be said that the determinative reading, while standard, is not unanimous; a minority of scholars have argued the sign is a scribal slip or that the name refers to something else, and one much-discussed proposal reads a different name entirely. The mainstream view has held up well, but a reader is better served knowing that the argument turns on a single small sign than being told the matter is beyond question.",
+        ],
+      },
+      {
+        heading: "What It Does Not Say",
+        paragraphs: [
+          "The stele is often introduced as evidence for the exodus or the conquest. It is not, and claiming so wastes it. It says nothing about Egypt having enslaved these people, nothing about their leaving, nothing about their religion, and nothing about how they came to be in Canaan. It also does not tell us that Israel was destroyed: \"his seed is not\" is stock pharaonic boasting, and every campaign inscription in Egypt annihilates its enemies whether or not anything much happened.",
+          "What it gives is a fixed point, and fixed points are scarce. Whatever a reader concludes about the dating of the exodus — and the early date around 1446 BC and the late date around 1260 BC are both seriously defended — a people called Israel was in Canaan, and known to Egypt by name, by roughly 1208 BC. Every reconstruction has to fit under that ceiling. That is a genuine and durable contribution, and it is smaller and harder than the claim usually made for it.",
+        ],
+      },
+    ],
+    verses: [
+      { reference: "Exodus 1:8-14", note: "Israel in Egypt, before the exodus" },
+      { reference: "Joshua 10:33", note: "Gezer, one of the Canaanite cities named alongside Israel on the stele" },
+      { reference: "Judges 1:18", note: "Ashkelon, also named on the stele" },
+      { reference: "Judges 2:16-19", note: "Israel in Canaan as a loose people under judges rather than a state" },
+    ],
+    sources: [
+      { label: "Wikipedia: Merneptah Stele", url: "https://en.wikipedia.org/wiki/Merneptah_Stele" },
+      { label: "Bible Odyssey (SBL): Pharaoh", url: "https://www.bibleodyssey.org/articles/pharaoh/" },
+    ],
+  },
+  {
+    id: "cyrus-cylinder",
+    name: "Cyrus Cylinder",
+    alternateNames: ["Cyrus Cylinder inscription"],
+    category: "concept",
+    role: "Babylonian Foundation Inscription of Cyrus the Great, 539 BC",
+    summary:
+      "A barrel-shaped clay cylinder covered in Akkadian cuneiform, found in the ruins of Babylon in 1879, in which the Persian conqueror announces that he has restored displaced gods and peoples to their homes.",
+    sections: [
+      {
+        heading: "A Building Inscription, Not a Proclamation",
+        paragraphs: [
+          "Hormuzd Rassam recovered the cylinder in 1879 from the foundations of the Esagila temple precinct at Babylon; it is in the British Museum. It belongs to a very well-attested Mesopotamian genre: a text buried in the fabric of a building by the king who repaired it, addressed less to the public than to posterity and to the gods. It was never a decree posted for citizens to read, and it was never meant to be read at all until someone dug up the wall.",
+          "The text tells the story of Babylon's fall in 539 BC entirely from the winner's side. Nabonidus, the last Babylonian king, is described as neglecting the god Marduk and imposing improper worship; Marduk therefore looked for a righteous ruler, chose Cyrus of Anshan, and delivered Babylon into his hands without a battle. Cyrus then presents himself restoring the sanctuaries, returning the divine images Nabonidus had gathered into the capital, and sending home the peoples who had been settled there.",
+        ],
+      },
+      {
+        heading: "Why Christians and Jews Care",
+        paragraphs: [
+          "Ezra 1:1-4 and 2 Chronicles 36:22-23 record a decree of Cyrus in his first year permitting the Jewish exiles to return to Jerusalem and rebuild the temple, and Ezra 6:3-5 records a memorandum in Aramaic ordering the temple rebuilt at royal expense and the confiscated temple vessels returned. Isaiah 44:28 and 45:1 go further, naming Cyrus as the LORD's shepherd and anointed, appointed to say of Jerusalem that it shall be built.",
+          "The cylinder shows that returning gods and peoples to their sanctuaries was a policy Cyrus himself advertised — that the biblical decree fits the way this king actually governed and presented himself, rather than being an isolated favour invented after the fact. Persian administrative practice elsewhere backs the same picture. That is a real and useful corroboration of the kind of thing the Bible reports.",
+        ],
+      },
+      {
+        heading: "Two Overclaims Worth Refusing",
+        paragraphs: [
+          "The first is the one made in sermons: that the Cyrus Cylinder is the decree of Ezra 1, or that it mentions the Jews. It does not. The cylinder never names Judah, Jerusalem, the temple, or the Jewish exiles; the sanctuaries and peoples it describes restoring are Mesopotamian. It corroborates a pattern of policy, not a specific event, and the difference matters. Ezra's decree, if it existed in written form, would have been a separate document in a different language — which is roughly what Ezra 6 claims to be quoting from the Persian archives.",
+          "The second overclaim comes from the other direction. In the 1970s the cylinder was widely promoted as \"the first charter of human rights,\" and a replica was presented to the United Nations on that basis. Historians of the ancient Near East have consistently rejected the description: the text is a conventional royal building inscription of a type known from centuries earlier, it grants no rights to anyone, and reading modern political categories into it flatters the object at the cost of understanding it. A find is best defended by describing it accurately.",
+        ],
+      },
+    ],
+    verses: [
+      { reference: "2 Chronicles 36:22-23", note: "The decree of Cyrus closing the Hebrew Bible" },
+      { reference: "Ezra 1:1-4", note: "Cyrus permits the exiles to return and rebuild" },
+      { reference: "Ezra 6:3-5", note: "The Aramaic memorandum ordering the temple rebuilt and the vessels returned" },
+      { reference: "Isaiah 44:28", note: "\"He is my shepherd, and shall perform all my pleasure\"" },
+      { reference: "Isaiah 45:1", note: "Cyrus called the LORD's anointed" },
+      { reference: "Daniel 5:30-31", note: "The night Babylon changes hands" },
+    ],
+    sources: [
+      { label: "Bible Odyssey (SBL): Cyrus the Messiah", url: "https://www.bibleodyssey.org/articles/cyrus-the-messiah/" },
+      { label: "Wikipedia: Cyrus Cylinder", url: "https://en.wikipedia.org/wiki/Cyrus_Cylinder" },
+    ],
+  },
+  {
+    id: "sennacherib-prism",
+    name: "Sennacherib's Prism",
+    // NOT registered: "the Prism" or bare "Sennacherib" (a person entry already owns the latter).
+    alternateNames: [
+      "Sennacherib Prism",
+      "Taylor Prism",
+      "Sennacherib's Annals",
+      "Oriental Institute Prism",
+      "Chicago Prism",
+    ],
+    category: "concept",
+    role: "Assyrian Royal Annals of the 701 BC Campaign Against Judah",
+    summary:
+      "A six-sided clay prism, surviving in three near-identical copies, on which Sennacherib of Assyria records shutting King Hezekiah up in Jerusalem \"like a bird in a cage\" — and conspicuously does not record taking the city.",
+    sections: [
+      {
+        heading: "Three Copies of the Same Boast",
+        paragraphs: [
+          "Assyrian kings kept annals, and the grandest were inscribed on hexagonal baked-clay prisms about the size of a large jar, buried in the foundations of palaces. Three substantially complete copies of Sennacherib's survive. The Taylor Prism, acquired in 1830 and now in the British Museum, was the first known; the Oriental Institute Prism, sometimes called the Chicago Prism, was bought in 1919 and is in Chicago; a third is in the Israel Museum in Jerusalem. Their texts agree closely, which is itself informative — this was an official account, copied and distributed.",
+          "The section that concerns the Bible describes the third campaign, in 701 BC, against the west. Sennacherib says he took forty-six walled cities of Judah along with countless smaller settlements, deported a very large number of people, stripped Hezekiah of territory and handed it to Philistine rulers, and confined Hezekiah himself \"like a bird in a cage\" in Jerusalem, his royal city, throwing up earthworks against it. He then lists the tribute Hezekiah sent after him to Nineveh.",
+        ],
+      },
+      {
+        heading: "Reading It Alongside 2 Kings 18-19",
+        paragraphs: [
+          "The overlap with Scripture is unusually detailed. 2 Kings 18:13 reports that Sennacherib took all the fortified cities of Judah; the prism counts forty-six. 2 Kings 18:14-16 reports Hezekiah paying tribute, stripping the temple doors to do it; the prism lists the tribute. The two accounts agree on thirty talents of gold. They differ on the silver — 2 Kings says three hundred talents, the prism eight hundred — and the usual explanations are a different talent standard or a scribe's inflation, neither of which is provable.",
+          "The most discussed feature of the prism is what is absent. Assyrian annals do not understate. When Sennacherib takes a city he says so, in detail, and burns it in the telling. Here he describes the siege works and the caged bird and then moves to the tribute, never claiming to have entered Jerusalem — which is exactly the outcome 2 Kings 19:32-36 describes, with the Assyrian army withdrawing without shooting an arrow into the city. That silence is a real point and worth making.",
+        ],
+      },
+      {
+        heading: "How Much Weight the Silence Carries",
+        paragraphs: [
+          "It carries some, and less than is usually claimed. The prism does not corroborate 2 Kings 19:35, the angel of the LORD striking the Assyrian camp; no Assyrian record would ever have said such a thing, and its absence is therefore not evidence either way. Nor is confinement without capture unusual: kings broke off sieges for supply, season, or a rebellion at home, and Sennacherib presents the tribute as the campaign's successful conclusion, which from his side it was. Herodotus preserves a separate and much later Egyptian story of Sennacherib's army being disabled by mice, which some historians take as a garbled memory of plague; it is late and secondhand and cannot bear much.",
+          "What can be said plainly is this: two independent accounts, one Judean and one Assyrian, agree that in 701 BC Sennacherib devastated Judah, besieged Hezekiah in Jerusalem, took heavy tribute — and did not take the city. They disagree about why. That is a substantial and unusual convergence, and it is stronger stated at that size than stretched. Sennacherib's own palace at Nineveh, incidentally, carried a room-sized carved relief of his siege of Lachish, the Judean city named in 2 Kings 18:14 and 2 Chronicles 32:9; the reliefs are in the British Museum and show the assault in extraordinary detail.",
+        ],
+      },
+    ],
+    verses: [
+      { reference: "2 Kings 18:13-16", note: "Forty-six cities taken; Hezekiah's tribute, including the temple doors" },
+      { reference: "2 Kings 18:17-37", note: "The Assyrian officers at the wall of Jerusalem" },
+      { reference: "2 Kings 19:32-36", note: "The siege lifted; Sennacherib returns to Nineveh" },
+      { reference: "2 Chronicles 32:1-23", note: "The Chronicler's account, naming the siege of Lachish" },
+      { reference: "Isaiah 36:1-37:38", note: "Isaiah's parallel narrative of the same campaign" },
+    ],
+    sources: [
+      { label: "Bible Odyssey (SBL): Babylonian Accounts of the Invasion of Judah", url: "https://www.bibleodyssey.org/articles/babylonian-accounts-of-the-invasion-of-judah/" },
+      { label: "Wikipedia: Sennacherib's Annals", url: "https://en.wikipedia.org/wiki/Sennacherib%27s_Annals" },
+    ],
+  },
+  {
+    id: "black-obelisk",
+    name: "Black Obelisk",
+    alternateNames: ["Black Obelisk of Shalmaneser III", "Black Obelisk of Shalmaneser"],
+    category: "concept",
+    role: "Assyrian Tribute Monument, c. 825 BC",
+    summary:
+      "A two-metre limestone pillar from Nimrud carrying five bands of carved tribute scenes — one of which is captioned with the name of an Israelite king, and is the only image we have of one.",
+    sections: [
+      {
+        heading: "Layard's Obelisk",
+        paragraphs: [
+          "Austen Henry Layard found the obelisk in 1846 at Nimrud, the Assyrian city the Bible calls Calah, during the excavations that first brought Assyria back into European view. It is a slim four-sided pillar of black limestone with a stepped top, carved on all four faces with five registers of relief, each register running round the monument as a single scene of foreigners bringing tribute to Shalmaneser III. A cuneiform caption above each register says who is paying. It is in the British Museum.",
+          "The second register from the top shows a man prostrate on the ground before the Assyrian king, with a line of bearers behind him carrying metal vessels and bars. The caption reads: \"Tribute of Jehu, son of Omri: I received from him silver, gold, a golden bowl, a golden vase with pointed bottom, golden tumblers, golden buckets, tin, a staff for a king, and wooden puruhtu.\"",
+        ],
+      },
+      {
+        heading: "Jehu, Son of Omri",
+        paragraphs: [
+          "Jehu is the army commander who, in 2 Kings 9-10, is anointed to destroy the house of Ahab, kills two kings in a single day, and wipes out Omri's dynasty root and branch. So \"son of Omri\" looks like a mistake — Jehu was emphatically not Omri's son, and had killed the last of his line. It is not a mistake. Assyrian scribes routinely named a kingdom after the dynasty that founded it and kept the label long after the dynasty was gone; Israel appears in Assyrian records as \"the house of Omri\" for over a century. The caption means roughly \"Jehu of the land of Omri.\"",
+          "The date is around 841 BC, early in Jehu's reign, and the payment fits a moment when Assyria was pressing hard on Damascus and a new king in Samaria had every reason to buy protection. The Bible does not mention this tribute at all — 2 Kings simply does not record it, which is a useful reminder that the biblical historians were selecting, not transcribing.",
+        ],
+      },
+      {
+        heading: "Is That Actually Jehu?",
+        paragraphs: [
+          "The figure on the ground is often described as the only surviving picture of a named king of Israel, and that is probably right, but it is worth stating the caveat that specialists state. Assyrian tribute reliefs frequently depict a delegation rather than the ruler in person, and it is entirely possible that the prostrate figure is Jehu's envoy delivering Jehu's tribute. The caption names the tribute, not the man's face. Most scholars still take the figure as Jehu himself, and the register is fairly described that way, but with \"probably\" in the sentence rather than left out of it.",
+          "What is not in doubt is the name. A contemporary Assyrian monument, cut within a few years of the events of 2 Kings 9-10, names a king of Israel called Jehu and locates him in the land of Omri. Alongside the Mesha Stele's Omri and the Tel Dan Stele's kings, it puts the ninth-century royal houses of Israel and Judah firmly into the documented history of the ancient Near East.",
+        ],
+      },
+    ],
+    verses: [
+      { reference: "2 Kings 9:1-13", note: "Jehu anointed king over Israel" },
+      { reference: "2 Kings 10:28-36", note: "Jehu's reign, and Hazael's pressure on Israel's borders" },
+      { reference: "1 Kings 16:21-28", note: "Omri, whose dynastic name Assyria kept using" },
+      { reference: "Genesis 10:11-12", note: "Calah, the Assyrian city where the obelisk was found" },
+    ],
+    sources: [
+      { label: "Wikipedia: Black Obelisk of Shalmaneser III", url: "https://en.wikipedia.org/wiki/Black_Obelisk_of_Shalmaneser_III" },
+      { label: "Bible Odyssey (SBL): Kingdom of Israel", url: "https://www.bibleodyssey.org/articles/kingdom-of-israel/" },
+    ],
+  },
+  {
+    id: "siloam-inscription",
+    name: "Siloam Inscription",
+    // NOT registered: "Siloam" alone — the Pool of Siloam POI already owns that name, and every
+    // alias here is longer, so the specific inscription still wins where it is named in full.
+    alternateNames: ["Siloam Tunnel Inscription", "Shiloah Inscription"],
+    category: "concept",
+    role: "Paleo-Hebrew Engineering Inscription, c. 700 BC",
+    summary:
+      "Six lines carved into the wall of Hezekiah's Tunnel under Jerusalem, describing the moment two teams of quarrymen digging from opposite ends heard each other's voices through the rock.",
+    sections: [
+      {
+        heading: "Found by a Boy in the Water",
+        paragraphs: [
+          "Hezekiah's Tunnel runs about 533 metres under the City of David, cut through solid limestone to carry water from the Gihon Spring, outside the wall, to the Pool of Siloam inside it. People have waded it for centuries. In 1880 a boy named Jacob Eliyahu, exploring the tunnel, noticed cut letters on the wall a few metres from the Siloam end, below the waterline. They turned out to be six lines of paleo-Hebrew — the older script Israel used before the exile — in a smoothed panel prepared for the purpose.",
+          "The text is not a royal proclamation. It is the workmen's account of their own job: while three cubits still remained to be cut through, each man's voice could be heard calling to his fellow through the rock; on the day of the breakthrough the quarrymen struck each toward the other, pick against pick; and the water flowed from the spring to the pool, twelve hundred cubits, with a hundred cubits of rock above the workers' heads. It is one of the longest monumental Hebrew inscriptions known, and among the most human.",
+        ],
+      },
+      {
+        heading: "Hezekiah's Water Project",
+        paragraphs: [
+          "2 Kings 20:20 says Hezekiah made the pool and the conduit and brought water into the city; 2 Chronicles 32:30 says he stopped the upper spring of Gihon and brought it straight down on the west side of the City of David, and that he did it because Sennacherib was coming. The tunnel matches that description well — it takes an oddly winding S-shaped course, it was cut from both ends at once, which is what you do when you are in a hurry, and it moves the city's water supply out of an attacker's reach.",
+          "The inscription itself, though, names nobody. There is no king in it, no date, no dedication — which is unusual enough that scholars have suggested the workmen cut it themselves rather than an official ordering it. So the connection to Hezekiah rests on the tunnel's identification, the script's date, and the biblical notice, not on the stone saying so.",
+        ],
+      },
+      {
+        heading: "The Dating Challenge, and How It Was Settled",
+        paragraphs: [
+          "In 1996 John Rogerson and Philip Davies argued that the letter forms fit the Hasmonean period, some five centuries later than Hezekiah, and that the tunnel had been misdated. Almost every specialist in Hebrew epigraphy rejected the proposal — the script is a good fit for the late eighth century and a poor one for the second — but it was a serious challenge that had to be answered on more than authority. It was: in 2003 a team led by Amos Frumkin radiocarbon-dated organic material in the tunnel's original plaster and uranium-thorium-dated stalactites formed in it, and both methods placed the cutting around 700 BC. The traditional dating is now unusually well anchored for an ancient inscription.",
+          "The stone did not fare so well. In 1890 someone cut it out of the tunnel wall to sell it, breaking it in the process; the Ottoman authorities confiscated the pieces, and the inscription has been in the Istanbul Archaeology Museums ever since. Israel has repeatedly asked for its return. What visitors see in the tunnel today is the empty scar where it was.",
+        ],
+      },
+    ],
+    verses: [
+      { reference: "2 Kings 20:20", note: "\"He made the pool, and the conduit, and brought water into the city\"" },
+      { reference: "2 Chronicles 32:2-4", note: "Stopping the springs so the Assyrians would find no water" },
+      { reference: "2 Chronicles 32:30", note: "Gihon's waters brought down to the west side of the City of David" },
+      { reference: "Isaiah 22:9-11", note: "Isaiah on Jerusalem's water works, and on trusting the engineering rather than its Maker" },
+      { reference: "John 9:1-11", note: "The Pool of Siloam, the tunnel's outlet, centuries later" },
+    ],
+    sources: [
+      { label: "Wikipedia: Siloam inscription", url: "https://en.wikipedia.org/wiki/Siloam_inscription" },
+      { label: "Bible Odyssey (SBL): Jerusalem", url: "https://www.bibleodyssey.org/articles/jerusalem/" },
+    ],
+  },
+  {
+    id: "dead-sea-scrolls",
+    name: "Dead Sea Scrolls",
+    // NOT registered: "the Scrolls", "Qumran" (a POI owns that). "Isaiah Scroll" is registered even
+    // though "Isaiah" is a person entry — the two-word alias is longer, and NAME_ENTRIES is sorted
+    // longest-first, so a bare "Isaiah" still resolves to the prophet.
+    alternateNames: ["Qumran Scrolls", "Great Isaiah Scroll", "Isaiah Scroll"],
+    category: "concept",
+    role: "Jewish Manuscripts from the Judean Desert, c. 250 BC - AD 70",
+    summary:
+      "Roughly a thousand manuscripts recovered from eleven caves near the Dead Sea between 1947 and 1956, including copies of almost every Old Testament book a thousand years older than anything previously known.",
+    sections: [
+      {
+        heading: "What Was Found",
+        paragraphs: [
+          "The first scrolls came to light in 1947, when Bedouin shepherds found jars in a cave in the cliffs above Qumran, near the northwest corner of the Dead Sea. Over the next nine years ten more caves were emptied, some by archaeologists and some by the Bedouin, producing the remains of perhaps 900 to 1,000 manuscripts — a handful nearly complete, the vast majority in tens of thousands of fragments, some no larger than a fingernail. Related finds came from Masada, Wadi Murabba'at, and Nahal Hever nearby.",
+          "About a quarter are copies of books of the Hebrew Bible; every book except Esther is represented. The rest are other Jewish writings of the period: commentaries, psalms and hymns outside the Psalter, calendars, the community's own rule books, and works such as Jubilees and 1 Enoch. The best-preserved is the Great Isaiah Scroll, a complete copy of Isaiah on seventeen sheets of leather, dated to about 125 BC and now in the Shrine of the Book at the Israel Museum.",
+        ],
+      },
+      {
+        heading: "Why They Changed the Picture",
+        paragraphs: [
+          "Before 1947, the oldest substantially complete Hebrew Bible manuscripts were medieval — the Aleppo Codex and the Leningrad Codex, from the tenth and eleventh centuries AD. The Isaiah Scroll is roughly a thousand years older. That leap is the single most important thing about the discovery: for the first time it was possible to test whether the text Jews and Christians had been reading matched what was actually circulating in the Second Temple period, rather than assuming it.",
+          "The scrolls also transformed the study of the world Jesus was born into. They give a Jewish community's own words about scripture, purity, priesthood, the calendar, and the expectation of God's decisive intervention — not filtered through a later writer's summary. Understanding first-century Judaism as a set of arguments rather than a single settled system owes a great deal to these texts.",
+        ],
+      },
+      {
+        heading: "Being Careful About What They Prove",
+        paragraphs: [
+          "The claim heard most often is that the Isaiah Scroll is word-for-word identical to the Bible we read, proving the text was transmitted perfectly. That overstates it, and the true version is more interesting. The Great Isaiah Scroll agrees with the medieval Masoretic text to a remarkable degree, but it carries something on the order of 1,300 differences — overwhelmingly spelling, word order, and grammatical forms, of the kind that do not change meaning, plus a small number of genuine variants that translators note. The honest summary is that a thousand years of copying introduced far less change than anyone had a right to expect, and that this is a strong result rather than a perfect one.",
+          "Two other cautions. First, the scrolls do not show one fixed text; some biblical books circulated in more than one edition. The Jeremiah copies from Cave 4 include a substantially shorter form of the book matching the Greek Septuagint — evidence that the differences between the Hebrew and Greek Bibles go back to real ancient Hebrew editions rather than to careless Greek translators. Second, there is no New Testament among the scrolls. A proposal in the 1970s that a scrap from Cave 7 preserved a few letters of Mark's Gospel attracted headlines and has been rejected by nearly all specialists. And the identification of the Qumran community with the Essenes described by Josephus and Pliny, though still the majority view, is genuinely contested.",
+        ],
+      },
+    ],
+    verses: [
+      { reference: "Isaiah 53:1-12", note: "The Suffering Servant, preserved complete in a copy from c. 125 BC" },
+      { reference: "Jeremiah 36:1-32", note: "Jeremiah's scroll — a book the caves preserve in two different lengths" },
+      { reference: "Psalms 119:105", note: "The Psalms are among the most-copied books in the caves" },
+      { reference: "Luke 4:16-21", note: "Jesus reading Isaiah aloud in the synagogue, a century after the Isaiah Scroll was copied" },
+    ],
+    sources: [
+      { label: "Text & Canon Institute: How Much Can the Most Famous Dead Sea Scroll Prove?", url: "https://textandcanon.org/how-much-can-the-most-famous-dead-sea-scroll-prove/" },
+      { label: "Text & Canon Institute: Appreciating the Diverse Evidence from the Dead Sea Scrolls", url: "https://textandcanon.org/appreciating-the-diverse-evidence-from-the-dead-sea-scrolls/" },
+      { label: "The Israel Museum: The Shrine of the Book", url: "https://www.imj.org.il/en/wings/shrine-book/dead-sea-scrolls" },
+      { label: "The Leon Levy Dead Sea Scrolls Digital Library", url: "https://www.deadseascrolls.org.il/" },
+    ],
+  },
+  {
+    id: "rylands-papyrus-p52",
+    name: "Rylands Papyrus P52",
+    // "P52" is registered deliberately, and required a one-line fix in verseAnnotations.ts: any match
+    // containing a digit was previously assumed to be a Bible verse reference. NOT registered:
+    // "Rylands" alone (a library and a person), "P45"/"P46"/"P47" (too short and generic to match
+    // safely on whole words).
+    alternateNames: [
+      "John Rylands Library Papyrus P52",
+      "Rylands Library Papyrus P52",
+      "John Rylands Papyrus",
+      "Rylands Papyrus",
+      "Rylands Fragment",
+      "P52",
+    ],
+    category: "concept",
+    role: "Second-Century Greek Fragment of John's Gospel",
+    summary:
+      "A scrap of papyrus the size of a credit card, carrying a few lines of John 18 on both sides — for ninety years the earliest identified piece of any New Testament book.",
+    sections: [
+      {
+        heading: "A Scrap in a Drawer",
+        paragraphs: [
+          "In 1920 Bernard Grenfell bought a batch of papyri in Egypt for the John Rylands Library in Manchester. They sat unsorted for over a decade. In 1934 a young scholar named Colin H. Roberts, working through the batch, recognised Greek text on a fragment about nine centimetres by six: on one side parts of John 18:31-33, Pilate's exchange with the Jewish leaders and his question \"Are you the King of the Jews?\"; on the other, parts of John 18:37-38, ending near \"What is truth?\"",
+          "That it is written on both sides matters as much as what it says. A scroll is written on one side; a codex — a book with leaves — is written on both. So this fragment is a leaf from a bound book, in provincial Egypt, of a Gospel. Christians adopted the codex for their scriptures far earlier and far more completely than the surrounding literary culture did, and P52 is one of the pieces of evidence for how early that habit began.",
+        ],
+      },
+      {
+        heading: "The Date, and the Argument About It",
+        paragraphs: [
+          "Roberts dated the hand to the first half of the second century, around AD 125, comparing the letter forms to dated documentary papyri. That figure has been repeated in study Bibles and apologetics ever since, usually with the conclusion that John's Gospel must have been written and circulating well before AD 100 — which was a genuinely useful point when the fashionable scholarly dating put John in the mid-second century.",
+          "Since then the confidence has been trimmed, and by textual scholars rather than by sceptics of Christianity. In 2005 Brent Nongbri argued in detail that palaeography — dating a manuscript by the shape of its handwriting — simply cannot narrow an undated literary hand to a twenty-five-year window, and that the comparanda Roberts used are consistent with a range running from the early second century into the early third. Most specialists now cite P52 with a wider bracket than \"AD 125,\" and some are more cautious still. It remains among the earliest identified New Testament fragments; it is no longer safe to treat it as a precisely dated one.",
+        ],
+      },
+      {
+        heading: "What It Is Good For",
+        paragraphs: [
+          "A reader could be forgiven for asking what is left. Quite a lot, provided the claim is sized correctly. A copy of John's Gospel — not the original, but a copy, in codex form, made by someone who was not a professional scribe — was in circulation in a provincial town far up the Nile, hundreds of miles from Ephesus, at a date almost certainly within the second century and possibly early in it. Copies take time to travel and time to be made. That is real evidence about how early and how widely this Gospel spread, and it does not depend on pinning a year.",
+          "It is also worth noticing what the fragment does not do. It preserves a few dozen legible letters; it tells us nothing about the rest of John's text, and it cannot by itself establish that the Gospel we read is what was written. The case for the New Testament's textual reliability rests on the sheer number and spread of manuscripts, of which this is one very early and very small piece. The fragment is on display at the John Rylands Library in Manchester.",
+        ],
+      },
+    ],
+    verses: [
+      { reference: "John 18:31-33", note: "The recto: \"Are you the King of the Jews?\"" },
+      { reference: "John 18:37-38", note: "The verso: \"What is truth?\"" },
+      { reference: "John 21:24-25", note: "The Gospel's own closing claim about its writing" },
+    ],
+    sources: [
+      { label: "Text & Canon Institute: Dating Ancient Greek Manuscripts with the Help of Modern Software", url: "https://textandcanon.org/dating-ancient-greek-manuscripts-with-the-help-of-modern-software/" },
+      { label: "The John Rylands Research Institute and Library, Manchester", url: "https://www.library.manchester.ac.uk/rylands/" },
+      { label: "Wikipedia: Rylands Library Papyrus P52", url: "https://en.wikipedia.org/wiki/Rylands_Library_Papyrus_P52" },
+    ],
+  },
+  {
+    id: "chester-beatty-papyri",
+    name: "Chester Beatty Papyri",
+    alternateNames: ["Chester Beatty Biblical Papyri"],
+    category: "concept",
+    role: "Third-Century Greek Biblical Codices",
+    summary:
+      "Eleven papyrus codices bought on the Egyptian antiquities market in the 1930s, which pushed the surviving manuscript evidence for the New Testament back by well over a century in a single stroke.",
+    sections: [
+      {
+        heading: "A Mining Magnate's Purchase",
+        paragraphs: [
+          "Alfred Chester Beatty was an American-born mining engineer who made a fortune in copper and spent a great deal of it collecting manuscripts. In the early 1930s he acquired, through Cairo dealers, the remains of eleven papyrus codices containing Greek biblical texts. Their exact provenance was never established — they were purchased, not excavated, which is a real limitation on what can be said about where and how they were used. Most are in the Chester Beatty Library in Dublin; some leaves from the same codices ended up at the University of Michigan and elsewhere.",
+          "Three matter most for the New Testament. P45 contains portions of all four Gospels and Acts. P46 contains most of Paul's letters and is usually dated around AD 200. P47 contains part of Revelation. Others in the group preserve Old Testament books in Greek, including Genesis, Numbers, Deuteronomy, Isaiah, Jeremiah, Ezekiel, Daniel, and Esther.",
+        ],
+      },
+      {
+        heading: "What They Changed",
+        paragraphs: [
+          "Until these codices appeared, the earliest substantial New Testament manuscripts were the great fourth-century parchment Bibles, Codex Sinaiticus and Codex Vaticanus. The Chester Beatty papyri are roughly 150 years older, and they are not scraps — P46 alone preserves eighty-six leaves. For the first time scholars could see what the text looked like well before the fourth century, and the answer was reassuring in the way that matters: substantially the same text, with the same kinds of ordinary copying variations already present.",
+          "P46 also shows something about the shape of the collection. It is a single codex gathering Paul's letters together as a set, around AD 200 — evidence that the letters were being read and copied as a body long before any church council pronounced on a canon. In P46 Hebrews follows Romans, an arrangement not used later, which is a small window onto how fluid the ordering still was.",
+        ],
+      },
+      {
+        heading: "One Argument to Handle Carefully",
+        paragraphs: [
+          "P46's surviving leaves do not include 1 and 2 Timothy or Titus, and this is sometimes presented as evidence that those letters were not yet regarded as Paul's, or not yet written. The inference is weaker than it sounds. The codex is incomplete at both ends, and the argument depends on reconstructing how many leaves are missing and how much text would have fitted on them — a calculation scholars have run to opposite conclusions, since the scribe's handwriting shrinks as he goes, apparently realising he was running out of room. Some conclude there was no space for the Pastorals; others that there may have been. It is a genuinely open question and should be described as one.",
+          "More generally, these codices are working copies, not showpieces: they have corrections, they have mistakes, and their scribes vary in skill. That is what makes them valuable. A manuscript tradition that shows its own ordinary human wear is a tradition that can be studied and reconstructed, and the discipline of textual criticism exists precisely to do that work in the open.",
+        ],
+      },
+    ],
+    verses: [
+      { reference: "Romans 1:1-7", note: "P46 opens Paul's collected letters with Romans" },
+      { reference: "Hebrews 1:1-4", note: "In P46, Hebrews follows immediately after Romans" },
+      { reference: "Revelation 1:1-8", note: "Preserved in part by P47" },
+      { reference: "2 Timothy 3:16-17", note: "From the Pastoral Epistles, whose absence from P46's surviving leaves is debated" },
+    ],
+    sources: [
+      { label: "Text & Canon Institute: Lessons from the \"First-Century Mark\" Saga", url: "https://textandcanon.org/lessons-from-the-first-century-mark-saga/" },
+      { label: "The Chester Beatty, Dublin", url: "https://chesterbeatty.ie/" },
+      { label: "Wikipedia: Chester Beatty Papyri", url: "https://en.wikipedia.org/wiki/Chester_Beatty_Papyri" },
+    ],
+  },
+  {
+    id: "codex-sinaiticus",
+    name: "Codex Sinaiticus",
+    alternateNames: ["Sinaiticus"],
+    category: "concept",
+    role: "Fourth-Century Greek Bible",
+    summary:
+      "A parchment Bible written around the middle of the AD 300s at St Catherine's Monastery on Mount Sinai, containing the oldest surviving complete copy of the New Testament — and now divided between four institutions in four countries.",
+    sections: [
+      {
+        heading: "Tischendorf at Sinai",
+        paragraphs: [
+          "Constantin von Tischendorf, a German scholar hunting for early biblical manuscripts, visited St Catherine's Monastery at the foot of Mount Sinai in 1844 and left with forty-three leaves of a very old Greek Bible, which he deposited at Leipzig. He returned in 1853 and found nothing more. On a third visit in 1859, backed by the Russian tsar, he was shown the bulk of the manuscript, and it travelled to St Petersburg. In 1933 the Soviet government sold the Russian portion to the British Museum for £100,000, raised partly by public subscription; it is now in the British Library.",
+          "The codex is written on fine parchment in four narrow columns to the page, in a formal script, by three or four scribes, with corrections added by later hands over centuries. It originally ran to something like 730 leaves. What survives is split: the largest part in London, the 1844 leaves in Leipzig, a portion in the National Library of Russia, and further leaves and fragments found at the monastery itself in 1975. All four holdings have been photographed and reunited digitally, so the whole book can now be read online in one place for the first time since the nineteenth century.",
+        ],
+      },
+      {
+        heading: "What Is In It",
+        paragraphs: [
+          "Sinaiticus contains the Greek Old Testament, incomplete, and the complete New Testament — the earliest complete New Testament we have. After Revelation it continues with two more works: the Epistle of Barnabas and part of the Shepherd of Hermas. That is worth pausing on. It is not evidence that the fourth-century church regarded those books as scripture on a par with the Gospels, since a codex could gather useful reading beyond the canon; but it is evidence that the edges of the collection were still being worked out in a way the printed table of contents of a modern Bible conceals.",
+          "The manuscript also lacks two familiar passages: the longer ending of Mark (Mark 16:9-20) and the account of the woman caught in adultery (John 7:53-8:11). This is not a suppression and not a discovery of the modern era — it is simply what the early manuscript evidence shows, which is why most modern Bibles mark both passages with a note. Vaticanus, of roughly the same date, agrees on Mark. A translation that tells the reader this is being honest with them, not undermining them.",
+        ],
+      },
+      {
+        heading: "How It Left the Monastery",
+        paragraphs: [
+          "The circumstances of Tischendorf's acquisition are genuinely disputed, and the dispute is not settled by evidence available to outsiders. Tischendorf's published accounts, which vary between tellings, describe leaves about to be used as kindling in 1844 and a gift of the remainder to the tsar in 1859. St Catherine's Monastery has maintained for well over a century that the manuscript was lent for copying and not given, and points to a receipt in which Tischendorf undertook to return it. Historians assess the story differently depending on which documents they weight. The fair statement is that a Western scholar removed a monastery's most valuable book, that the monastery says it did not consent, and that his own narrative of how it happened changed over time.",
+          "One further controversy can be closed. In the 1860s a Greek named Constantine Simonides claimed he had written the codex himself as a young man. Palaeographers dismissed the claim at the time, and nothing since has supported it; the manuscript's script, materials, corrections, and textual character are all consistent with the fourth century and inconsistent with a nineteenth-century forgery. It resurfaces occasionally online and can be set aside.",
+        ],
+      },
+    ],
+    verses: [
+      { reference: "Mark 16:9-20", note: "The longer ending of Mark, absent from Sinaiticus" },
+      { reference: "John 7:53-8:11", note: "The woman caught in adultery, also absent" },
+      { reference: "John 1:1-5", note: "One of the passages where the fourth-century text can be read directly" },
+      { reference: "Revelation 22:18-21", note: "After which Sinaiticus continues with the Epistle of Barnabas" },
+    ],
+    sources: [
+      { label: "Codex Sinaiticus Project: read the manuscript online", url: "https://www.codexsinaiticus.org/en/" },
+      { label: "Bible Odyssey (SBL): What Is the Oldest Bible?", url: "https://www.bibleodyssey.org/articles/what-is-the-oldest-bible/" },
+      { label: "Wikipedia: Codex Sinaiticus", url: "https://en.wikipedia.org/wiki/Codex_Sinaiticus" },
+    ],
+  },
 ];
