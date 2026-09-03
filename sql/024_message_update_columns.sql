@@ -1,0 +1,69 @@
+-- ============================================================================
+-- DIRECT MESSAGES — stop the recipient from rewriting what was sent to them.
+--
+-- Run once, by hand, the same way as sql/023_message_delete.sql:
+--   psql "$SUPABASE_DB_URL" -f sql/024_message_update_columns.sql
+-- or paste it into the Supabase project's SQL Editor.
+--
+-- ----------------------------------------------------------------------------
+-- THE BUG
+-- ----------------------------------------------------------------------------
+-- `messages_update_mark_read` exists so a recipient can stamp `read_at`:
+--     messages_update_mark_read  UPDATE
+--       USING      (auth.uid() = receiver_id)
+--       WITH CHECK (auth.uid() = receiver_id)
+-- But RLS is ROW-level, not column-level. That policy authorizes an update to
+-- ANY column of a row addressed to you — including `body`. Confirmed against
+-- this database before writing the fix: signed in as the receiver,
+--     update messages set body = '...' where id = <a message they received>
+-- succeeded and rewrote the sender's words in place. The sender has no way to
+-- detect it; there is no edit marker on this table (`isEdited` in the client
+-- keys off updated_at, which `messages` does not have).
+--
+-- This is the exact escalation sql/019's header describes for a hypothetical
+-- `profiles.is_admin` — "Postgres RLS is ROW-level, not column-level, so that
+-- policy permits an update to ANY column of your own row" — reappearing on a
+-- table where nobody applied the lesson.
+--
+-- ----------------------------------------------------------------------------
+-- WHY THIS IS FIXED WITH COLUMN PRIVILEGES AND NOT A BETTER POLICY
+-- ----------------------------------------------------------------------------
+-- The tempting fix is a WITH CHECK that pins the other columns to their old
+-- values. That is not expressible: an RLS policy's USING clause sees the OLD
+-- row and its WITH CHECK sees the NEW row, but neither can reference the
+-- other, so a policy cannot say "body must not change". Enforcing that inside
+-- RLS alone would take a BEFORE UPDATE trigger.
+--
+-- Postgres already has the right tool — column-level UPDATE privileges — and
+-- it composes cleanly with the policy that is already there:
+--   * the GRANT decides WHICH COLUMNS a role may write (read_at, nothing else)
+--   * the RLS policy decides WHICH ROWS it may write them on (ones addressed
+--     to you)
+-- Neither is weakened, and `messages_update_mark_read` is left exactly as-is.
+--
+-- ----------------------------------------------------------------------------
+-- WHY THIS DOES NOT BREAK PINNING
+-- ----------------------------------------------------------------------------
+-- `pinned` is the only other column the product ever changes, and the client
+-- never writes it directly — FriendsPanel calls the `pin_message` /
+-- `unpin_message` RPCs, both of which are SECURITY DEFINER and run as their
+-- owner, so they are unaffected by what `authenticated` may write. They do
+-- their own participant check (`auth.uid() not in (sender_id, receiver_id)`
+-- raises), which is why they were written that way in the first place. The
+-- only UPDATE the client issues against this table directly is the
+-- `{ read_at }` mark-read in FriendsPanel.fetchMessages.
+--
+-- `anon` loses UPDATE outright rather than being narrowed: an anonymous
+-- session has no auth.uid() and so can never satisfy the row policy anyway.
+-- `postgres` and `service_role` are deliberately untouched.
+--
+-- CAUTION: a later blanket `grant all on all tables in schema public to
+-- authenticated` — the shape Supabase's own bootstrap snippets use — would
+-- silently restore table-wide UPDATE and reopen this. Re-run this file after
+-- any such grant.
+-- ============================================================================
+
+revoke update on public.messages from authenticated;
+revoke update on public.messages from anon;
+
+grant update (read_at) on public.messages to authenticated;
