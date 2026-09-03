@@ -149,6 +149,35 @@ export default function PostsFeed({ userId, viewerId, isOwn }: PostsFeedProps) {
     fetchFeed();
   };
 
+  /** Who may delete a comment, mirroring the RLS both comment tables now enforce (note_comments has
+   * always had it; post_comments got it in sql/022_post_comment_delete.sql): the comment's author,
+   * or the owner of the note/post it sits under. This feed only ever renders one owner's items, so
+   * `userId === viewerId` IS parent ownership. */
+  const canRemoveComment = (c: NoteComment | PostComment) =>
+    !!viewerId && (c.author_id === viewerId || userId === viewerId);
+
+  /** Drops the row from local state on success rather than refetching — the whole feed reloading
+   * would collapse the open comment thread the reader is looking at. A failure (an RLS refusal,
+   * most likely) leaves the comment in place and says so under the thread. */
+  const handleRemoveComment = async (item: FeedItem, commentId: string) => {
+    setCommentErrors((e) => ({ ...e, [item.id]: "" }));
+    const { error } =
+      item.kind === "note"
+        ? await supabase.from("note_comments").delete().eq("id", commentId)
+        : await supabase.from("post_comments").delete().eq("id", commentId);
+    if (error) {
+      setCommentErrors((e) => ({ ...e, [item.id]: "Couldn't remove comment — try again." }));
+      return;
+    }
+    setItems((prev) =>
+      prev
+        ? prev.map((i) =>
+            i.id === item.id ? ({ ...i, comments: i.comments.filter((c) => c.id !== commentId) } as FeedItem) : i,
+          )
+        : prev,
+    );
+  };
+
   const startEdit = (item: FeedItem) => {
     setEditingId(item.id);
     setEditDraft(item.kind === "note" ? item.note.note_text : item.post.body);
@@ -348,6 +377,17 @@ export default function PostsFeed({ userId, viewerId, isOwn }: PostsFeedProps) {
                     {item.comments.map((c) => (
                       <p key={c.id} className="friend-post-comment">
                         <strong>{profiles[c.author_id] ? displayFor(profiles[c.author_id]) : "Someone"}:</strong> {c.body}
+                        {canRemoveComment(c) && (
+                          <button
+                            type="button"
+                            className="friend-post-comment-remove"
+                            title="Remove this comment"
+                            aria-label="Remove this comment"
+                            onClick={() => handleRemoveComment(item, c.id)}
+                          >
+                            ×
+                          </button>
+                        )}
                       </p>
                     ))}
                   </div>

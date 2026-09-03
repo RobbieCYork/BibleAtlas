@@ -340,6 +340,40 @@ export default function Newsfeed({ userId, onGoToVerse }: NewsfeedProps) {
     fetchFeed();
   };
 
+  /** Who may delete a comment, mirroring the RLS both comment tables enforce (note_comments has
+   * always had it; post_comments got it in sql/022_post_comment_delete.sql): the comment's author,
+   * or the owner of the note/post it sits under. Unlike PostsFeed — which renders a single owner's
+   * items and can compare against that one id — this feed spans every friend at once, so parent
+   * ownership is read off the item. Today fetchFeed only pulls friends' items, so in practice just
+   * the author branch fires; deriving the owner anyway keeps this correct if the viewer's own posts
+   * ever join the feed. */
+  const canRemoveComment = (item: FeedItem, c: NoteComment | PostComment) => {
+    const parentOwnerId = item.kind === "note" ? item.note.user_id : item.post.user_id;
+    return c.author_id === userId || parentOwnerId === userId;
+  };
+
+  /** Drops the row from local state on success rather than refetching — the whole feed reloading
+   * would collapse the open comment thread the reader is looking at. A failure (an RLS refusal,
+   * most likely) leaves the comment in place and says so under the thread. */
+  const handleRemoveComment = async (item: FeedItem, commentId: string) => {
+    setCommentErrors((e) => ({ ...e, [item.id]: "" }));
+    const { error } =
+      item.kind === "note"
+        ? await supabase.from("note_comments").delete().eq("id", commentId)
+        : await supabase.from("post_comments").delete().eq("id", commentId);
+    if (error) {
+      setCommentErrors((e) => ({ ...e, [item.id]: "Couldn't remove comment — try again." }));
+      return;
+    }
+    setItems((prev) =>
+      prev
+        ? prev.map((i) =>
+            i.id === item.id ? ({ ...i, comments: i.comments.filter((c) => c.id !== commentId) } as FeedItem) : i,
+          )
+        : prev,
+    );
+  };
+
   return (
     <div className="newsfeed">
       <div className="friend-post newsfeed-daily-verse">
@@ -498,6 +532,17 @@ export default function Newsfeed({ userId, onGoToVerse }: NewsfeedProps) {
                       <p key={c.id} className="friend-post-comment">
                         <strong>{profiles[c.author_id] ? displayFor(profiles[c.author_id]) : "Someone"}:</strong>{" "}
                         {c.body}
+                        {canRemoveComment(item, c) && (
+                          <button
+                            type="button"
+                            className="friend-post-comment-remove"
+                            title="Remove this comment"
+                            aria-label="Remove this comment"
+                            onClick={() => handleRemoveComment(item, c.id)}
+                          >
+                            ×
+                          </button>
+                        )}
                       </p>
                     ))}
                   </div>
