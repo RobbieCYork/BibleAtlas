@@ -311,22 +311,6 @@ export default function AuthButton({ session, openProfileNonce, onOpenReadingPla
     }
   };
 
-  const handleGuest = async () => {
-    setError(null);
-    setInfo(null);
-    setLoading(true);
-    try {
-      setRememberMe(true);
-      const { error: err } = await supabase.auth.signInAnonymously();
-      if (err) throw err;
-      setOpen(false);
-    } catch (err) {
-      setError(err instanceof Error ? err.message : "Couldn't continue as guest.");
-    } finally {
-      setLoading(false);
-    }
-  };
-
   const handleSignOut = async () => {
     await supabase.auth.signOut();
     setOpen(false);
@@ -556,10 +540,6 @@ export default function AuthButton({ session, openProfileNonce, onOpenReadingPla
           </form>
           {error && <p className="auth-status auth-error">{error}</p>}
           {info && <p className="auth-status">{info}</p>}
-          <div className="auth-guest-divider">or</div>
-          <button type="button" className="auth-guest-button" onClick={handleGuest} disabled={loading}>
-            Continue as Guest
-          </button>
         </div>
       )}
     </div>

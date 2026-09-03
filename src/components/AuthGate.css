@@ -1,0 +1,329 @@
+/* AuthGate — the front door of the whole app. See AuthGate.tsx for why this lives in its own file
+ * rather than App.css (a concurrent task owns App.css while this was built) and for the boundary
+ * this gate does and doesn't provide.
+ *
+ * z-index 5000 is deliberately far above every other layer in App.css (whose own comments say its
+ * tallest stack — the mobile bottom-sheet family — tops out at 1000, and the tallest literal value
+ * anywhere in that file is 1100). This must win over literally everything: header, panels, takeovers,
+ * toasts, the tab bar. */
+.auth-gate {
+  position: fixed;
+  inset: 0;
+  z-index: 5000;
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+  overflow-x: hidden;
+  background: #14110e;
+}
+
+.auth-gate-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  background-image: url("/share-backgrounds/sermon-on-the-mount.webp");
+  background-size: cover;
+  background-position: center;
+}
+
+/* Scrim: darkens the photo enough that vellum-toned text and the form card read clearly regardless
+ * of theme — this gate intentionally does NOT switch its own photo/scrim by theme, since a full-bleed
+ * photographic cover is a fixed piece of brand art, same idea as a book's cover art not changing
+ * between a store's light and dark shelf. Heavier at the bottom, where the form card sits. */
+.auth-gate-scrim {
+  position: fixed;
+  inset: 0;
+  z-index: 1;
+  background: linear-gradient(
+    to bottom,
+    rgba(10, 8, 6, 0.55) 0%,
+    rgba(10, 8, 6, 0.62) 40%,
+    rgba(10, 8, 6, 0.86) 100%
+  );
+}
+
+.auth-gate-content {
+  position: relative;
+  z-index: 2;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 28px;
+  width: 100%;
+  max-width: 460px;
+  margin: 0 auto;
+  padding: calc(28px + env(safe-area-inset-top, 0px)) 20px calc(28px + env(safe-area-inset-bottom, 0px));
+  min-height: 100%;
+  box-sizing: border-box;
+}
+
+.auth-gate-intro {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 14px;
+  margin-top: auto;
+}
+
+.auth-gate-brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.auth-gate-logo {
+  width: 40px;
+  height: 40px;
+  flex-shrink: 0;
+}
+
+.auth-gate-brand-text {
+  text-align: left;
+}
+
+.auth-gate-brand-text h1 {
+  margin: 0;
+  font-family: var(--display);
+  font-size: 30px;
+  font-weight: 600;
+  color: #f7f1e3;
+  letter-spacing: 0.01em;
+}
+
+.auth-gate-tagline {
+  margin: 2px 0 0;
+  font-family: var(--sans);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #e5b355;
+}
+
+.auth-gate-pitch {
+  margin: 0;
+  max-width: 38ch;
+  font-family: var(--serif);
+  font-size: 16px;
+  line-height: 1.5;
+  color: #f2ead9;
+}
+
+.auth-gate-card {
+  width: 100%;
+  background: rgba(30, 26, 21, 0.82);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid rgba(229, 179, 85, 0.28);
+  border-radius: 18px;
+  padding: 20px 20px calc(20px + env(safe-area-inset-bottom, 0px) * 0);
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.45);
+  box-sizing: border-box;
+}
+
+:root[data-theme="light"] .auth-gate-card {
+  background: rgba(255, 255, 255, 0.92);
+  border-color: rgba(138, 94, 18, 0.28);
+}
+
+.auth-gate-mode-toggle {
+  display: flex;
+  gap: 6px;
+  background: rgba(0, 0, 0, 0.28);
+  border-radius: 10px;
+  padding: 4px;
+  margin-bottom: 12px;
+}
+
+:root[data-theme="light"] .auth-gate-mode-toggle {
+  background: rgba(0, 0, 0, 0.06);
+}
+
+.auth-gate-mode-toggle button {
+  flex: 1;
+  border: none;
+  background: none;
+  padding: 9px 0;
+  font-family: var(--sans);
+  font-size: 14px;
+  font-weight: 600;
+  color: #d6c7a8;
+  border-radius: 7px;
+  cursor: pointer;
+}
+
+:root[data-theme="light"] .auth-gate-mode-toggle button {
+  color: #6e5f48;
+}
+
+.auth-gate-mode-toggle button.active {
+  background: #e5b355;
+  color: #17120e;
+}
+
+.auth-gate-free {
+  margin: 0 0 12px;
+  font-family: var(--sans);
+  font-size: 12.5px;
+  font-weight: 600;
+  color: #e5b355;
+  text-align: center;
+}
+
+.auth-gate-back {
+  display: block;
+  margin: 0 0 12px;
+  border: none;
+  background: none;
+  padding: 0;
+  font-family: var(--sans);
+  font-size: 13px;
+  color: #e5b355;
+  cursor: pointer;
+}
+
+.auth-gate-form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.auth-gate-form input {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 12px 14px;
+  border: 1px solid rgba(229, 179, 85, 0.3);
+  border-radius: 10px;
+  background: rgba(0, 0, 0, 0.25);
+  color: #f7f1e3;
+  font-family: var(--sans);
+  font-size: 15px;
+}
+
+.auth-gate-form input::placeholder {
+  color: #a3927a;
+}
+
+:root[data-theme="light"] .auth-gate-form input {
+  background: #f4f2ee;
+  border-color: #d9d3ca;
+  color: #2e251c;
+}
+
+:root[data-theme="light"] .auth-gate-form input::placeholder {
+  color: #6e5f48;
+}
+
+.auth-gate-form input:focus {
+  outline: none;
+  border-color: #e5b355;
+}
+
+.auth-gate-password-field {
+  position: relative;
+}
+
+.auth-gate-password-field input {
+  padding-right: 42px;
+}
+
+.auth-gate-password-toggle {
+  position: absolute;
+  right: 6px;
+  top: 50%;
+  transform: translateY(-50%);
+  border: none;
+  background: none;
+  padding: 6px 8px;
+  cursor: pointer;
+  color: #d6c7a8;
+  border-radius: 6px;
+}
+
+:root[data-theme="light"] .auth-gate-password-toggle {
+  color: #6e5f48;
+}
+
+.auth-gate-form-extras {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-family: var(--sans);
+  font-size: 13px;
+}
+
+.auth-gate-remember-me {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: #d6c7a8;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+:root[data-theme="light"] .auth-gate-remember-me {
+  color: #6e5f48;
+}
+
+.auth-gate-forgot-link {
+  border: none;
+  background: none;
+  padding: 0;
+  color: #e5b355;
+  cursor: pointer;
+  font-family: var(--sans);
+  font-size: 13px;
+}
+
+.auth-gate-submit {
+  margin-top: 4px;
+  border: none;
+  border-radius: 10px;
+  padding: 13px 0;
+  background: #e5b355;
+  color: #17120e;
+  font-family: var(--sans);
+  font-size: 15px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.auth-gate-submit:hover:not(:disabled) {
+  background: #f7d590;
+}
+
+.auth-gate-submit:disabled {
+  opacity: 0.6;
+  cursor: default;
+}
+
+.auth-gate-status {
+  margin: 12px 0 0;
+  font-family: var(--sans);
+  font-size: 13px;
+  line-height: 1.4;
+  color: #f2ead9;
+  text-align: center;
+}
+
+.auth-gate-error {
+  color: #ff9d8a;
+}
+
+@media (min-width: 640px) {
+  .auth-gate-content {
+    justify-content: center;
+    gap: 36px;
+  }
+
+  .auth-gate-intro {
+    margin-top: 0;
+  }
+
+  .auth-gate-card {
+    padding: 26px 28px;
+  }
+}

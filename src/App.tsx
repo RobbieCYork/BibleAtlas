@@ -31,6 +31,7 @@ import GameView from "./components/GameView";
 import BackButton from "./components/BackButton";
 import DisplayNameGate from "./components/DisplayNameGate";
 import ResetPasswordGate from "./components/ResetPasswordGate";
+import AuthGate from "./components/AuthGate";
 import { supabase, setRememberMe } from "./lib/supabase";
 import { useMobileTabs, type MobileTabKey } from "./lib/mobileTabs";
 import MobileNavMenu from "./components/MobileNavMenu";
@@ -132,6 +133,14 @@ function App() {
   // and BiblePanel's cold-start welcome screen needs that distinction (see bibleInitializing below).
   const [authResolved, setAuthResolved] = useState(false);
   const [passwordRecovery, setPasswordRecovery] = useState(false);
+  // True for the brief window a `?code=...` password-reset link is being exchanged for a session
+  // (see the effect below). getSession() below can resolve with no session first, since the
+  // exchange is a separate in-flight request — without this, AuthGate would flash on top of a
+  // signed-out-looking screen for a visitor who is, in fact, mid-recovery. Starts true only when
+  // the param is actually present, so it's a no-op for every other page load.
+  const [exchangingRecoveryCode, setExchangingRecoveryCode] = useState(
+    () => !!new URLSearchParams(window.location.search).get("code")
+  );
   const [restoreTranslation, setRestoreTranslation] = useState<string | undefined>(undefined);
   // Avoids re-yanking the reader back to their saved spot on every token refresh — only restore
   // once per signed-in user per app load.
@@ -277,6 +286,7 @@ function App() {
     if (code) {
       supabase.auth.exchangeCodeForSession(window.location.href).finally(() => {
         window.history.replaceState({}, "", window.location.pathname);
+        setExchangingRecoveryCode(false);
       });
     }
     supabase.auth.getSession().then(({ data }) => {
@@ -1070,6 +1080,14 @@ function App() {
   // The guard mirrors the render condition — for a guest the takeover isn't rendered at all, so the
   // panel underneath is what's actually on screen and should keep its own search.
   const myProfileMode = showMyProfile && !!session && !session.user.is_anonymous;
+  // The whole app requires a real account (owner's decision — see AuthGate.tsx). Gate on:
+  //   - auth not resolved yet, or a `?code=` recovery link still being exchanged: render nothing
+  //     rather than flashing the gate on top of what turns out to be a mid-recovery visitor.
+  //   - no session, or a session that's merely anonymous (the retired "Continue as Guest" path,
+  //     still live in the database for existing sessions we were told not to delete): show the gate.
+  // A password-recovery session is never anonymous, so it never trips this — ResetPasswordGate
+  // below handles it on its own.
+  const showAuthGate = authResolved && !exchangingRecoveryCode && (!session || session.user.is_anonymous);
   const searchMode: "map" | "bible" | "notes" | "timeline" | "people" | null = showGame
     ? null
     : myProfileMode
@@ -1155,6 +1173,15 @@ function App() {
     closeMyProfile();
     setMobileActivePanel(key);
   };
+
+  // Below this point is the entire rest of the app — header, every panel, both takeovers, the tab
+  // bar. Sign-up/sign-in is required site-wide (owner's decision), so a visitor with no real account
+  // sees AuthGate and literally nothing else: no panel, toast or takeover from the rest of this
+  // component mounts underneath it. While auth genuinely hasn't resolved yet (first paint, or a
+  // `?code=` recovery link mid-exchange — see exchangingRecoveryCode above) this renders nothing at
+  // all rather than flashing the gate first.
+  if (showAuthGate) return <AuthGate />;
+  if (!authResolved || exchangingRecoveryCode) return null;
 
   return (
     <TimelineLinkContext.Provider value={timelineLinkHandlers}>
