@@ -238,6 +238,9 @@ export default function PersonPanel({
                 <a href={s.url} target="_blank" rel="noopener noreferrer">
                   {s.label}
                 </a>
+                {s.note && (
+                  <span style={{ color: "var(--text-muted)", fontSize: "0.92em" }}> {s.note}</span>
+                )}
               </li>
             ))}
           </ul>

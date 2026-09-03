@@ -3485,6 +3485,9 @@ Most evangelical scholars place this Pentecost in AD 30; a minority prefer AD 33
       "jerusalem",
       "simon-peter"
     ],
+    sources: [
+      { label: "Bible Odyssey (SBL): Pentecost in the Book of Acts", url: "https://www.bibleodyssey.org/articles/pentecost-in-the-book-of-acts/" },
+    ],
   },
   {
     id: "bib-ac-jerusalem-church-community",
@@ -3512,6 +3515,9 @@ This early period, generally placed in the few years immediately following Pente
     primaryEntityIds: [
       "jerusalem",
       "simon-peter"
+    ],
+    sources: [
+      { label: "Christian History Magazine 147: Everyday Life in the Early Church", url: "https://christianhistoryinstitute.org/magazine/issue/everyday-life-in-the-early-church-ch-147", note: "free full issue" },
     ],
   },
   {
@@ -3646,6 +3652,10 @@ Whatever the precise year, the church has always recognized this moment as one o
       "paul-of-tarsus",
       "damascus"
     ],
+    sources: [
+      { label: "Christian History Magazine 47: Paul and His Times", url: "https://christianhistoryinstitute.org/magazine/issue/the-apostle-paul-and-his-times", note: "free full issue" },
+      { label: "Bible Odyssey (SBL): Paul", url: "https://www.bibleodyssey.org/articles/paul/" },
+    ],
   },
   {
     id: "bib-ac-philip-ethiopian-eunuch",
@@ -3696,6 +3706,9 @@ Back in Jerusalem, Peter defended this decision point by point to skeptical Jewi
       "simon-peter",
       "cornelius-the-centurion"
     ],
+    sources: [
+      { label: "Bible Odyssey (SBL): Early Christian Converts", url: "https://www.bibleodyssey.org/articles/early-christian-converts/" },
+    ],
   },
   {
     id: "bib-ac-antioch-church-founded",
@@ -3723,6 +3736,10 @@ Dated to roughly the early-to-mid 40s AD, Antioch's rise as a thriving, multi-et
       "antioch-syria",
       "barnabas",
       "paul-of-tarsus"
+    ],
+    sources: [
+      { label: "Bible Odyssey (SBL): Antioch", url: "https://www.bibleodyssey.org/articles/antioch/" },
+      { label: "Bible Odyssey (SBL): Antioch to Jerusalem", url: "https://www.bibleodyssey.org/articles/antioch-to-jerusalem/" },
     ],
   },
   {
@@ -3779,6 +3796,9 @@ Rather than pressing further, Paul and Barnabas retraced their steps, strengthen
     /** Display-only: folds into "The Life and Ministry of Paul" on the timeline canvas at every zoom
      * level. The record, its article and its links are untouched — see collapsedInto in types.ts. */
     collapsedInto: "bib-ac-paul-ministry",
+    sources: [
+      { label: "Bible Odyssey (SBL): Pauline Cities", url: "https://www.bibleodyssey.org/articles/pauline-cities/" },
+    ],
   },
   {
     id: "bib-ac-jerusalem-council",
@@ -3806,6 +3826,10 @@ Traditionally dated to around AD 49-50, the Jerusalem Council stands as the chur
       "jerusalem",
       "paul-of-tarsus",
       "simon-peter"
+    ],
+    sources: [
+      { label: "Bible Odyssey (SBL): Paul and the Gentiles", url: "https://www.bibleodyssey.org/articles/paul-and-the-gentiles/" },
+      { label: "Bible Odyssey (SBL): Antioch to Jerusalem", url: "https://www.bibleodyssey.org/articles/antioch-to-jerusalem/" },
     ],
   },
   {
@@ -3838,6 +3862,9 @@ This otherwise minor courtroom scene has become one of the single most valuable 
     /** Display-only: folds into "The Life and Ministry of Paul" on the timeline canvas at every zoom
      * level. The record, its article and its links are untouched — see collapsedInto in types.ts. */
     collapsedInto: "bib-ac-paul-ministry",
+    sources: [
+      { label: "Bible Odyssey (SBL): Erastus, Gallio, and Paul", url: "https://www.bibleodyssey.org/articles/erastus-gallio-and-paul/" },
+    ],
   },
   {
     id: "bib-ac-paul-second-journey",
@@ -3868,6 +3895,9 @@ The journey's longest stay came in Corinth, roughly eighteen months, where Paul 
     /** Display-only: folds into "The Life and Ministry of Paul" on the timeline canvas at every zoom
      * level. The record, its article and its links are untouched — see collapsedInto in types.ts. */
     collapsedInto: "bib-ac-paul-ministry",
+    sources: [
+      { label: "Bible Odyssey (SBL): Pauline Cities", url: "https://www.bibleodyssey.org/articles/pauline-cities/" },
+    ],
   },
   {
     id: "bib-ac-paul-third-journey",
@@ -3896,6 +3926,9 @@ On the return trip, Paul stopped at Miletus and delivered an emotional farewell 
     /** Display-only: folds into "The Life and Ministry of Paul" on the timeline canvas at every zoom
      * level. The record, its article and its links are untouched — see collapsedInto in types.ts. */
     collapsedInto: "bib-ac-paul-ministry",
+    sources: [
+      { label: "Bible Odyssey (SBL): Paul and Acts", url: "https://www.bibleodyssey.org/articles/paul-and-acts/" },
+    ],
   },
   {
     id: "bib-ac-paul-arrest-jerusalem",
@@ -3923,6 +3956,9 @@ This arrest began a period of imprisonment that would stretch, with interruption
     /** Display-only: folds into "The Life and Ministry of Paul" on the timeline canvas at every zoom
      * level. The record, its article and its links are untouched — see collapsedInto in types.ts. */
     collapsedInto: "bib-ac-paul-ministry",
+    sources: [
+      { label: "Bible Odyssey (SBL): Paul and Roman Citizenship", url: "https://www.bibleodyssey.org/articles/paul-and-roman-citizenship/" },
+    ],
   },
   {
     id: "bib-ac-paul-caesarea-imprisonment",
@@ -4013,6 +4049,10 @@ Because Acts ends here rather than with Paul's death, many evangelical scholars 
     /** Display-only: folds into "The Life and Ministry of Paul" on the timeline canvas at every zoom
      * level. The record, its article and its links are untouched — see collapsedInto in types.ts. */
     collapsedInto: "bib-ac-paul-ministry",
+    sources: [
+      { label: "Bible Odyssey (SBL): Rome in the New Testament", url: "https://www.bibleodyssey.org/articles/rome-in-the-new-testament/" },
+      { label: "Bible Odyssey (SBL): Hidden Messages in Paul's Prison Letters", url: "https://www.bibleodyssey.org/articles/hidden-messages-in-pauls-prison-letters/" },
+    ],
   },
   {
     id: "bib-ac-nero-fire-persecution",
@@ -4037,6 +4077,10 @@ Early church tradition consistently places the martyrdoms of both Paul and Peter
     ],
     primaryEntityIds: [
       "rome"
+    ],
+    sources: [
+      { label: "Bible Odyssey (SBL): Christian Martyrdom", url: "https://www.bibleodyssey.org/articles/christian-martyrdom/" },
+      { label: "Christian History Magazine 27: Persecution in the Early Church", url: "https://christianhistoryinstitute.org/magazine/issue/persecution-in-the-early-church", note: "free full issue" },
     ],
   },
   {
@@ -4070,6 +4114,10 @@ Most evangelical scholars place Paul's death sometime between AD 64 and 68, duri
     /** Display-only: folds into "The Life and Ministry of Paul" on the timeline canvas at every zoom
      * level. The record, its article and its links are untouched — see collapsedInto in types.ts. */
     collapsedInto: "bib-ac-paul-ministry",
+    sources: [
+      { label: "Christian History Magazine 156: What Happened to the Apostles?", url: "https://christianhistoryinstitute.org/magazine/issue/ch-156-fate-of-apostles", note: "free full issue" },
+      { label: "Christian History Magazine 47: Paul and His Times", url: "https://christianhistoryinstitute.org/magazine/issue/the-apostle-paul-and-his-times", note: "free full issue" },
+    ],
   },
   {
     id: "bib-ac-peter-martyrdom",
@@ -4100,6 +4148,9 @@ The traditional site of Peter's crucifixion and burial lies on Rome's Vatican Hi
       "simon-peter",
       "rome"
     ],
+    sources: [
+      { label: "Christian History Magazine 156: What Happened to the Apostles?", url: "https://christianhistoryinstitute.org/magazine/issue/ch-156-fate-of-apostles", note: "free full issue" },
+    ],
   },
   {
     id: "bib-ac-fall-of-jerusalem",
@@ -4126,6 +4177,10 @@ The Temple's fall marks one of the great hinge points of redemptive history. Wit
     ],
     primaryEntityIds: [
       "jerusalem"
+    ],
+    sources: [
+      { label: "Bible Odyssey (SBL): The Destruction and Reconstruction of the Temple", url: "https://www.bibleodyssey.org/articles/the-destruction-and-reconstruction-of-the-temple/" },
+      { label: "Bible Odyssey (SBL): Josephus", url: "https://www.bibleodyssey.org/articles/josephus/", note: "on the siege's chief eyewitness" },
     ],
   },
   {
@@ -4154,6 +4209,11 @@ The early church father Irenaeus, who had personal links back to John's own disc
       "john-the-apostle",
       "patmos"
     ],
+    sources: [
+      { label: "Bible Odyssey (SBL): Patmos", url: "https://www.bibleodyssey.org/articles/patmos/" },
+      { label: "Bible Odyssey (SBL): The Seven Cities of Revelation", url: "https://www.bibleodyssey.org/articles/the-seven-cities-of-revelation/" },
+      { label: "Text & Canon Institute: The Fall and Rise of Revelation", url: "https://textandcanon.org/the-fall-and-rise-of-revelation/", note: "how Revelation entered the canon" },
+    ],
   },
   {
     id: "bib-ac-domitian-persecution",
@@ -4179,6 +4239,10 @@ Generally dated to the mid-90s AD, this season of pressure forms the direct hist
     primaryEntityIds: [
       "rome"
     ],
+    sources: [
+      { label: "Catholic Encyclopedia (1913): Domitian", url: "https://www.newadvent.org/cathen/05114b.htm" },
+      { label: "Bible Odyssey (SBL): Christian Martyrdom", url: "https://www.bibleodyssey.org/articles/christian-martyrdom/" },
+    ],
   },
   {
     id: "bib-ac-muratorian-fragment",
@@ -4200,6 +4264,11 @@ Most scholars date the fragment's composition to around AD 170-180, likely from 
     scriptureRefs: [],
     externalRefs: [
       "Muratorian Fragment (Codex Muratorianus)"
+    ],
+    sources: [
+      { label: "Catholic Encyclopedia (1913): The Muratorian Canon", url: "https://www.newadvent.org/cathen/10642a.htm" },
+      { label: "Bible Odyssey (SBL): The New Testament Canon", url: "https://www.bibleodyssey.org/articles/the-new-testament-canon/" },
+      { label: "Text & Canon Institute: How Can You Know We Have the Right Books in the Bible?", url: "https://textandcanon.org/how-can-christians-know-we-have-the-right-books-in-the-bible/" },
     ],
   },
   {
@@ -4226,6 +4295,12 @@ Nicaea did not end the controversy overnight - the Arian dispute continued for d
     ],
     primaryEntityIds: [
       "jesus-of-nazareth"
+    ],
+    sources: [
+      { label: "Christian History Magazine 158: Debating Jesus's Divinity", url: "https://christianhistoryinstitute.org/magazine/issue/ch158-nicaea", note: "free full issue on Nicaea's 1700th anniversary" },
+      { label: "Wikisource: The Nicene Creed", url: "https://en.wikisource.org/wiki/Nicene_Creed", note: "primary source" },
+      { label: "Catholic Encyclopedia (1913): The First Council of Nicaea", url: "https://www.newadvent.org/cathen/11044a.htm" },
+      { label: "Text & Canon Institute: Did Nicaea Really Create the Bible?", url: "https://textandcanon.org/the-council-of-nicea-and-the-biblical-canon/", note: "what Nicaea did not decide" },
     ],
   },
   {
@@ -5257,6 +5332,10 @@ Nero's reign is the setting for the first empire-sponsored persecution of Christ
     primaryEntityIds: [
       "nero-caesar",
     ],
+    sources: [
+      { label: "Catholic Encyclopedia (1913): Nero", url: "https://www.newadvent.org/cathen/10752c.htm" },
+      { label: "Bible Odyssey (SBL): Roman Emperors and Imperial Families", url: "https://www.bibleodyssey.org/articles/roman-emperors-and-imperial-families/" },
+    ],
   },
   {
     id: "wld-rom-great-fire-nero-persecution",
@@ -5282,6 +5361,10 @@ This moment marks a turning point: what had been sporadic local hostility toward
     primaryEntityIds: [
       "nero-caesar",
       "rome",
+    ],
+    sources: [
+      { label: "Catholic Encyclopedia (1913): Nero", url: "https://www.newadvent.org/cathen/10752c.htm" },
+      { label: "Christian History Magazine 27: Persecution in the Early Church", url: "https://christianhistoryinstitute.org/magazine/issue/persecution-in-the-early-church", note: "free full issue" },
     ],
   },
   {
@@ -5313,6 +5396,10 @@ Some later legendary embellishments (such as the popular 'Quo Vadis' story of Pe
       "simon-peter",
       "paul-of-tarsus",
     ],
+    sources: [
+      { label: "Christian History Magazine 156: What Happened to the Apostles?", url: "https://christianhistoryinstitute.org/magazine/issue/ch-156-fate-of-apostles", note: "free full issue" },
+      { label: "Bible Odyssey (SBL): Peter and Paul", url: "https://www.bibleodyssey.org/articles/peter-and-paul/" },
+    ],
   },
   {
     id: "wld-rom-jewish-revolt-begins",
@@ -5338,6 +5425,10 @@ Decades before any of this happened, Jesus had wept over Jerusalem and warned th
     primaryEntityIds: [
       "jerusalem",
       "judea",
+    ],
+    sources: [
+      { label: "Bible Odyssey (SBL): Josephus", url: "https://www.bibleodyssey.org/articles/josephus/", note: "on the revolt's chief eyewitness" },
+      { label: "Bible Odyssey (SBL): The Roman Empire", url: "https://www.bibleodyssey.org/articles/the-roman-empire/" },
     ],
   },
   {
@@ -5367,6 +5458,10 @@ For Christian readers, this event carries enormous historical and theological we
     primaryEntityIds: [
       "jerusalem",
     ],
+    sources: [
+      { label: "Bible Odyssey (SBL): The Destruction and Reconstruction of the Temple", url: "https://www.bibleodyssey.org/articles/the-destruction-and-reconstruction-of-the-temple/" },
+      { label: "Catholic Encyclopedia (1913): Jerusalem Before AD 71", url: "https://www.newadvent.org/cathen/08344a.htm" },
+    ],
   },
   {
     id: "wld-rom-fall-of-masada",
@@ -5386,6 +5481,9 @@ Historians treat some details of Josephus's dramatic account, especially the mas
     scriptureRefs: [],
     externalRefs: [
       "Josephus, Wars of the Jews 7.8-9",
+    ],
+    sources: [
+      { label: "Bible Odyssey (SBL): Josephus", url: "https://www.bibleodyssey.org/articles/josephus/", note: "Masada's only narrative source" },
     ],
   },
   {
@@ -5407,6 +5505,10 @@ Church tradition also places the martyrdom of Ignatius, bishop of Antioch, withi
     externalRefs: [
       "Pliny the Younger, Letters 10.96-97",
       "Ignatius of Antioch, Letters",
+    ],
+    sources: [
+      { label: "Catholic Encyclopedia (1913): Trajan", url: "https://www.newadvent.org/cathen/15015a.htm" },
+      { label: "Christian History Magazine 27: Persecution in the Early Church", url: "https://christianhistoryinstitute.org/magazine/issue/persecution-in-the-early-church", note: "free full issue" },
     ],
   },
   {
@@ -5433,6 +5535,9 @@ In the revolt's aftermath, Hadrian moved to erase the very memory of a Jewish ho
     primaryEntityIds: [
       "jerusalem",
     ],
+    sources: [
+      { label: "Christian History Magazine 133: Christianity and Judaism", url: "https://christianhistoryinstitute.org/magazine/issue/christianity-and-judaism", note: "free full issue" },
+    ],
   },
   {
     id: "wld-rom-diocletian-great-persecution",
@@ -5454,6 +5559,10 @@ It failed. In AD 311, Galerius himself, dying of a painful illness, issued an ed
     externalRefs: [
       "Eusebius, Church History, Book 8",
       "Lactantius, On the Deaths of the Persecutors",
+    ],
+    sources: [
+      { label: "Christian History Magazine 27: Persecution in the Early Church", url: "https://christianhistoryinstitute.org/magazine/issue/persecution-in-the-early-church", note: "free full issue" },
+      { label: "Catholic Encyclopedia (1913): Diocletian", url: "https://www.newadvent.org/cathen/05007b.htm" },
     ],
   },
   {
@@ -5477,6 +5586,10 @@ Honest history requires a note of caution here: scholars have long debated exact
       "Eusebius, Life of Constantine 1.28",
       "Lactantius, On the Deaths of the Persecutors 44",
     ],
+    sources: [
+      { label: "Catholic Encyclopedia (1913): Constantine the Great", url: "https://www.newadvent.org/cathen/04295c.htm" },
+      { label: "Christian History Magazine 57: Converting the Empire", url: "https://christianhistoryinstitute.org/magazine/issue/converting-the-empire-early-church-evangelism", note: "free full issue" },
+    ],
   },
   {
     // Deliberately NOT titled "The Council of Nicaea": the council's full article lives in the
@@ -5499,6 +5612,10 @@ It is a fitting place to close this chapter of Rome's history: the same empire t
     scriptureRefs: [],
     externalRefs: [
       "Eusebius, Life of Constantine, Book 3",
+    ],
+    sources: [
+      { label: "Christian History Magazine 85: The Council of Nicaea", url: "https://christianhistoryinstitute.org/magazine/issue/the-council-of-nicaea-debating-jesus-divinity", note: "free full issue" },
+      { label: "Catholic Encyclopedia (1913): Constantine the Great", url: "https://www.newadvent.org/cathen/04295c.htm" },
     ],
   },
   {
@@ -7151,6 +7268,11 @@ The council also addressed church governance, notably granting the see of Consta
 
 Shortly before the council, in 380, Theodosius had already issued the Edict of Thessalonica, formally establishing Nicene Christianity as the official state religion of the Roman Empire, so the 381 council effectively consolidated, at both the theological and political level, the triumph of Nicene orthodoxy after decades of contested imperial religious policy.`,
     externalRefs: ["Nicene-Constantinopolitan Creed (381 text)"],
+    sources: [
+      { label: "Catholic Encyclopedia (1913): First Council of Constantinople", url: "https://www.newadvent.org/cathen/04308a.htm" },
+      { label: "Wikisource: The Nicene Creed", url: "https://en.wikisource.org/wiki/Nicene_Creed", note: "primary source, including the 381 additions" },
+      { label: "Christian History Magazine 51: Heresy in the Early Church", url: "https://christianhistoryinstitute.org/magazine/issue/heresy-in-the-early-church", note: "free full issue" },
+    ],
   },
   {
     id: "jerome-vulgate-c405",
@@ -7176,6 +7298,11 @@ The Vulgate's dominance in Western Christianity lasted well over a millennium, s
       "Jerome, Letters (Epistulae), various",
     ],
     primaryEntityIds: ["jerome"],
+    sources: [
+      { label: "Christian History Magazine 43: How We Got Our Bible", url: "https://christianhistoryinstitute.org/magazine/issue/how-we-got-our-bible-canon-to-king-james", note: "free full issue" },
+      { label: "Catholic Encyclopedia (1913): St. Jerome", url: "https://www.newadvent.org/cathen/08341a.htm" },
+      { label: "Text & Canon Institute: The Most Important Bible Translation You've Never Heard Of", url: "https://textandcanon.org/the-most-important-bible-translation-youve-never-heard-of/" },
+    ],
   },
   {
     id: "augustine-confessions-397",
@@ -7197,6 +7324,11 @@ Beyond straightforward autobiography, the Confessions is also a sustained theolo
 The Confessions has remained continuously influential across the history of Western literature and theology, frequently cited as the first true autobiography in the Western tradition and a foundational text for later Christian traditions of introspective spiritual writing, from medieval mystics to Reformation-era conversion narratives.`,
     externalRefs: ["Augustine, Confessions (full text)"],
     primaryEntityIds: ["augustine-of-hippo", "ambrose-of-milan"],
+    sources: [
+      { label: "Christian History Magazine 67: Augustine, Sinner, Bishop, Saint", url: "https://christianhistoryinstitute.org/magazine/issue/st-augustine-sinner-bishop-saint", note: "free full issue" },
+      { label: "Wikisource: Augustine's Confessions", url: "https://en.wikisource.org/wiki/Confessions_(Augustine)", note: "primary source, public-domain translations" },
+      { label: "Catholic Encyclopedia (1913): St. Augustine of Hippo", url: "https://www.newadvent.org/cathen/02084a.htm" },
+    ],
   },
   {
     id: "council-of-ephesus-431",
@@ -7216,6 +7348,10 @@ The emperor initially arrested both Cyril and Nestorius, but ultimately Cyril's 
 
 Communities that continued to hold Nestorius's Christology, or something like it, survived especially in the Church of the East (sometimes historically called the "Nestorian Church"), which spread extensively across Persia and along Silk Road trade routes into Central Asia, India, and China in the following centuries, remaining institutionally and theologically distinct from both the Western Latin church and the Byzantine Greek church.`,
     externalRefs: ["Acts of the Council of Ephesus (431)"],
+    sources: [
+      { label: "Catholic Encyclopedia (1913): Council of Ephesus", url: "https://www.newadvent.org/cathen/05491a.htm" },
+      { label: "Catholic Encyclopedia (1913): Nestorius and Nestorianism", url: "https://www.newadvent.org/cathen/10755a.htm" },
+    ],
   },
   {
     id: "patrick-mission-to-ireland-c432",
@@ -7238,6 +7374,11 @@ The Christianization of Ireland that followed Patrick's era, whatever its precis
       "Patrick's own writing gives no absolute dates. The traditional dates associated with his mission (arrival c. 432, death c. 461/493) derive from later medieval Irish annals compiled centuries after his life and are treated with caution by modern historians, some of whom place his active ministry later in the fifth century.",
     externalRefs: ["Patrick, Confessio", "Patrick, Letter to the Soldiers of Coroticus"],
     primaryEntityIds: ["patrick-of-ireland"],
+    sources: [
+      { label: "Christian History Magazine 60: How the Irish Were Saved", url: "https://christianhistoryinstitute.org/magazine/issue/how-the-irish-were-saved", note: "free full issue" },
+      { label: "St Patrick's Confessio (Royal Irish Academy)", url: "https://www.confessio.ie/etexts/confessio_english", note: "primary source, Patrick's own account" },
+      { label: "Catholic Encyclopedia (1913): St. Patrick", url: "https://www.newadvent.org/cathen/11554a.htm" },
+    ],
   },
   {
     id: "council-of-chalcedon-451",
@@ -7257,6 +7398,11 @@ Emperor Marcian convened the Council of Chalcedon in 451 with over 500 bishops i
 
 The council's formula became normative for the Catholic Church, the Eastern Orthodox Church, and most Protestant traditions that followed. However, significant portions of the Eastern church — particularly in Egypt (the Coptic Church), Ethiopia, Armenia, and Syria — rejected the Chalcedonian formula as insufficiently affirming the unity of Christ's nature, forming the Oriental Orthodox communion that remains institutionally and theologically distinct from Chalcedonian Christianity to the present day, a division that has persisted for over a millennium and a half.`,
     externalRefs: ["Acts of the Council of Chalcedon (451)", "Pope Leo I, Tome of Leo"],
+    sources: [
+      { label: "Catholic Encyclopedia (1913): Council of Chalcedon", url: "https://www.newadvent.org/cathen/03555a.htm" },
+      { label: "Wikisource: The Definition of Faith of Chalcedon", url: "https://en.wikisource.org/wiki/Nicene_and_Post-Nicene_Fathers:_Series_II/Volume_XIV/The_Fourth_Ecumenical_Council/The_Definition_of_Faith", note: "primary source, 1900 translation" },
+      { label: "Catholic Encyclopedia (1913): Monophysites and Monophysitism", url: "https://www.newadvent.org/cathen/10489b.htm" },
+    ],
   },
   {
     id: "fall-of-western-rome-476",
@@ -7277,6 +7423,9 @@ For the church, the collapse of centralized Roman political authority in the Wes
 Augustine's City of God, written decades earlier partly in response to the shock of the Visigothic sack of Rome in 410, had already anticipated and theologically prepared many Western Christians for the idea that the earthly fate of the Roman state, however significant, was ultimately distinct from and subordinate to the fate of the church and the "City of God" it represented.`,
     externalRefs: ["various Byzantine and Western chronicle sources of the late fifth century"],
     primaryEntityIds: ["augustine-of-hippo"],
+    sources: [
+      { label: "Christian History Magazine 94: Building the City of God in a Crumbling World", url: "https://christianhistoryinstitute.org/magazine/issue/building-the-city-of-god-in-a-crumbling-world", note: "free full issue" },
+    ],
   },
   {
     id: "benedict-rule-c529",
@@ -7299,6 +7448,11 @@ The Rule spread gradually across Western Europe in the centuries after Benedict'
       "The main biographical source, Gregory the Great's Dialogues (Book 2), was written roughly fifty years after Benedict's death and blends historical detail with hagiographic miracle stories, so exact dates for Benedict's life and the composition of the Rule are reconstructions rather than firmly documented facts.",
     externalRefs: ["Rule of Saint Benedict (full text)", "Gregory the Great, Dialogues, Book 2"],
     primaryEntityIds: ["benedict-of-nursia"],
+    sources: [
+      { label: "Christian History Magazine 93: St. Benedict and Western Monasticism", url: "https://christianhistoryinstitute.org/magazine/issue/st-benedict-and-western-monasticisms", note: "free full issue" },
+      { label: "Wikisource: The Rule of St Benedict", url: "https://en.wikisource.org/wiki/Select_Historical_Documents_of_the_Middle_Ages/Book_III/The_Rule_of_St._Benedict", note: "primary source" },
+      { label: "Catholic Encyclopedia (1913): Rule of St. Benedict", url: "https://www.newadvent.org/cathen/02436a.htm" },
+    ],
   },
   {
     id: "gregory-mission-to-england-597",
@@ -7322,6 +7476,10 @@ Gregory maintained detailed correspondence with Augustine throughout the mission
       "Gregory the Great, Letters (Registrum Epistularum)",
     ],
     primaryEntityIds: ["gregory-the-great"],
+    sources: [
+      { label: "Catholic Encyclopedia (1913): St. Gregory the Great", url: "https://www.newadvent.org/cathen/06780a.htm" },
+      { label: "Catholic Encyclopedia (1913): The Venerable Bede", url: "https://www.newadvent.org/cathen/02384a.htm", note: "the mission's earliest narrator" },
+    ],
   },
   {
     id: "rise-of-islam-conquest-jerusalem-637",
@@ -7343,6 +7501,10 @@ The rise of Islamic power east and south of the Mediterranean also permanently a
     externalRefs: [
       "various early Islamic and Byzantine chronicle sources",
       "Sophronius of Jerusalem, surviving homilies referencing the conquest",
+    ],
+    sources: [
+      { label: "Christian History Magazine 74: Christians and Muslims", url: "https://christianhistoryinstitute.org/magazine/issue/christians-and-muslims", note: "free full issue" },
+      { label: "Catholic Encyclopedia (1913): Jerusalem, AD 71-1099", url: "https://www.newadvent.org/cathen/08355a.htm" },
     ],
   },
   {
@@ -7366,6 +7528,10 @@ Charlemagne's court at Aachen also became the center of the Carolingian Renaissa
 The empire Charlemagne built fragmented among his heirs within a few generations, but the precedent of his coronation shaped the later development of the Holy Roman Empire and fed directly into subsequent medieval conflicts over the relative authority of popes and emperors, including the eleventh-century Investiture Controversy.`,
     externalRefs: ["Einhard, Life of Charlemagne", "Royal Frankish Annals, entry for 800"],
     primaryEntityIds: ["charlemagne"],
+    sources: [
+      { label: "Christian History Magazine 108: Charlemagne", url: "https://christianhistoryinstitute.org/magazine/issue/108-charlemagne", note: "free full issue" },
+      { label: "Catholic Encyclopedia (1913): Charlemagne", url: "https://www.newadvent.org/cathen/03610c.htm" },
+    ],
   },
   {
     id: "great-schism-1054",
@@ -7387,6 +7553,10 @@ However, the mutual bitterness of 1054, compounded by later events — most dama
     externalRefs: [
       "Cardinal Humbert's bull of excommunication (1054, surviving text)",
       "Michael Cerularius's response excommunicating the legates",
+    ],
+    sources: [
+      { label: "Christian History Magazine 54: Eastern Orthodoxy, Then and Now", url: "https://christianhistoryinstitute.org/magazine/issue/eastern-orthodoxy", note: "free full issue" },
+      { label: "Catholic Encyclopedia (1913): The Eastern Schism", url: "https://www.newadvent.org/cathen/13535a.htm", note: "a Western Catholic account, written in 1912" },
     ],
   },
   {
@@ -7411,6 +7581,10 @@ The crusaders established a set of Latin Christian states in the region, known a
       "Fulcher of Chartres, Chronicle of the First Crusade",
       "Robert the Monk, Historia Iherosolimitana (records of Urban II's Clermont speech)",
     ],
+    sources: [
+      { label: "Christian History Magazine 40: The Crusades", url: "https://christianhistoryinstitute.org/magazine/issue/the-crusades", note: "free full issue" },
+      { label: "Catholic Encyclopedia (1913): The Crusades", url: "https://www.newadvent.org/cathen/04543c.htm" },
+    ],
   },
   {
     id: "founding-of-franciscans-1209",
@@ -7434,6 +7608,10 @@ The order grew with extraordinary speed during Francis's own lifetime and after 
       "Thomas of Celano, First Life of St. Francis",
     ],
     primaryEntityIds: ["francis-of-assisi"],
+    sources: [
+      { label: "Christian History Magazine 42: Francis of Assisi", url: "https://christianhistoryinstitute.org/magazine/issue/st-francis-of-assisi", note: "free full issue" },
+      { label: "Catholic Encyclopedia (1913): The Franciscan Order", url: "https://www.newadvent.org/cathen/06217a.htm" },
+    ],
   },
   {
     id: "aquinas-summa-theologica-c1265",
@@ -7457,6 +7635,11 @@ The work remained unfinished at Aquinas's death in 1274, following a mystical ex
       "Aquinas began the Summa around 1265-66 and left it unfinished at his death in 1274; the exact chronology of its composition across various teaching posts in Italy and Paris is reconstructed from internal and external evidence rather than precisely documented.",
     externalRefs: ["Thomas Aquinas, Summa Theologica (full text)"],
     primaryEntityIds: ["thomas-aquinas"],
+    sources: [
+      { label: "Christian History Magazine 73: Thomas Aquinas", url: "https://christianhistoryinstitute.org/magazine/issue/thomas-aquinas-greatest-medieval-theologian", note: "free full issue" },
+      { label: "The Summa Theologiae in English", url: "https://www.newadvent.org/summa/", note: "primary source, complete" },
+      { label: "Catholic Encyclopedia (1913): St. Thomas Aquinas", url: "https://www.newadvent.org/cathen/14663b.htm" },
+    ],
   },
   {
     id: "avignon-papacy-and-western-schism-1309-1417",
@@ -7477,6 +7660,10 @@ The resulting Western Schism (1378-1417) saw the church divided under two, and e
 
 The schism was finally resolved at the Council of Constance (1414-1418), which deposed or accepted the resignation of the rival claimants and elected a single new pope, Martin V, restoring institutional unity, though the underlying tensions over reform, papal authority, and conciliar power that the schism exposed continued to shape church politics for the following century, contributing to the broader climate of institutional crisis and calls for reform that preceded the Protestant Reformation.`,
     externalRefs: ["Acts of the Council of Constance (1414-1418)"],
+    sources: [
+      { label: "Catholic Encyclopedia (1913): The Western Schism", url: "https://www.newadvent.org/cathen/13539a.htm" },
+      { label: "Catholic Encyclopedia (1913): Avignon", url: "https://www.newadvent.org/cathen/02158a.htm" },
+    ],
   },
   {
     id: "wycliffe-english-bible-c1382",
@@ -7502,6 +7689,10 @@ Though Wycliffe himself died of natural causes in 1384, the Council of Constance
       "Constitutions of Oxford, 1409",
     ],
     primaryEntityIds: ["john-wycliffe"],
+    sources: [
+      { label: "Christian History Magazine 3: John Wycliffe, Bible Translator", url: "https://christianhistoryinstitute.org/magazine/issue/john-wycliffe-bible-translator", note: "free full issue" },
+      { label: "Catholic Encyclopedia (1913): John Wyclif", url: "https://www.newadvent.org/cathen/15722a.htm", note: "a hostile Catholic account, written in 1912" },
+    ],
   },
   {
     id: "execution-of-jan-hus-1415",
@@ -7525,6 +7716,10 @@ Hus's execution provoked immediate and sustained outrage in Bohemia, fueling the
       "Jan Hus, letters written from Constance",
     ],
     primaryEntityIds: ["jan-hus"],
+    sources: [
+      { label: "Christian History Magazine 68: Jan Hus, the Incendiary Preacher of Prague", url: "https://christianhistoryinstitute.org/magazine/issue/jan-hus-incendiary-preacher-of-prague", note: "free full issue" },
+      { label: "Catholic Encyclopedia (1913): Jan Hus", url: "https://www.newadvent.org/cathen/07584b.htm" },
+    ],
   },
   {
     id: "fall-of-constantinople-1453",
@@ -7546,6 +7741,10 @@ The fall also had significant indirect consequences for Western Christianity and
     externalRefs: [
       "Michael Kritovoulos, History of Mehmed the Conqueror",
       "Nicolò Barbaro, Diary of the Siege of Constantinople",
+    ],
+    sources: [
+      { label: "Christian History Magazine 54: Eastern Orthodoxy, Then and Now", url: "https://christianhistoryinstitute.org/magazine/issue/eastern-orthodoxy", note: "free full issue" },
+      { label: "Catholic Encyclopedia (1913): Constantinople", url: "https://www.newadvent.org/cathen/04301a.htm" },
     ],
   },
   {
@@ -7569,6 +7768,10 @@ The long-term significance of Gutenberg's invention for Christian history is dif
       "surviving copies of the Gutenberg Bible (Library of Congress, British Library, and other institutional holdings)",
     ],
     primaryEntityIds: ["johannes-gutenberg"],
+    sources: [
+      { label: "Christian History Magazine 43: How We Got Our Bible", url: "https://christianhistoryinstitute.org/magazine/issue/how-we-got-our-bible-canon-to-king-james", note: "free full issue" },
+      { label: "Catholic Encyclopedia (1913): Johann Gutenberg", url: "https://www.newadvent.org/cathen/07090a.htm" },
+    ],
   },
   {
     id: "luthers-95-theses-1517",
@@ -7591,6 +7794,11 @@ Whatever the precise circumstances of its initial posting, the document was quic
       "The traditional account of Luther physically nailing the theses to the Wittenberg church door on October 31, 1517, derives from Philip Melanchthon's later account rather than any contemporary record by Luther himself, and some historians debate whether this specific act occurred as described, though the theses' composition and circulation in 1517 is well established.",
     externalRefs: ["Martin Luther, Ninety-Five Theses (full text)"],
     primaryEntityIds: ["martin-luther"],
+    sources: [
+      { label: "Christian History Magazine 34: Martin Luther, the Early Years", url: "https://christianhistoryinstitute.org/magazine/issue/martin-luther-the-reformers-early-years", note: "free full issue" },
+      { label: "Wikisource: Luther's Disputation on the Power of Indulgences (the Ninety-Five Theses)", url: "https://en.wikisource.org/wiki/Disputation_of_Doctor_Martin_Luther_on_the_Power_and_Efficacy_of_Indulgences", note: "primary source, 1915 translation" },
+      { label: "Catholic Encyclopedia (1913): Martin Luther", url: "https://www.newadvent.org/cathen/09438b.htm", note: "a Catholic account, written in 1910" },
+    ],
   },
   {
     id: "diet-of-worms-1521",
@@ -7614,6 +7822,10 @@ During his roughly year-long stay at Wartburg, disguised under the alias "Junker
       "contemporary accounts of the Diet of Worms proceedings",
     ],
     primaryEntityIds: ["martin-luther"],
+    sources: [
+      { label: "Christian History Magazine 39: Martin Luther, the Later Years", url: "https://christianhistoryinstitute.org/magazine/issue/martin-luther-the-later-years", note: "free full issue" },
+      { label: "Christian History Magazine 115: Luther Leads the Way", url: "https://christianhistoryinstitute.org/magazine/issue/luther-and-the-reformation", note: "free full issue" },
+    ],
   },
   {
     id: "zurich-reformation-1523",
@@ -7634,6 +7846,10 @@ Following the first and second Zurich disputations in January and October 1523, 
 Zwingli's reform, though sharing core Protestant convictions with Luther's movement regarding scriptural authority and justification by faith, differed on several points, most consequentially regarding the nature of Christ's presence in the Lord's Supper — a disagreement that surfaced sharply at the 1529 Marburg Colloquy, where Luther and Zwingli failed to reach agreement, cementing a lasting division between Lutheran and Reformed branches of Protestantism that persists to the present day.`,
     externalRefs: ["Records of the Zurich Disputations, 1523"],
     primaryEntityIds: ["huldrych-zwingli"],
+    sources: [
+      { label: "Christian History Magazine 4: Zwingli, Father of the Swiss Reformation", url: "https://christianhistoryinstitute.org/magazine/issue/zwingli-father-of-the-swiss-reformation", note: "free full issue" },
+      { label: "Catholic Encyclopedia (1913): Ulrich Zwingli", url: "https://www.newadvent.org/cathen/15772a.htm" },
+    ],
   },
   {
     id: "english-reformation-1534",
@@ -7654,6 +7870,10 @@ Henry's motivations were substantially dynastic and personal rather than driven 
 Between 1536 and 1541, Henry's government carried out the Dissolution of the Monasteries, confiscating the extensive lands and wealth of England's monastic institutions for the crown — both a major fiscal windfall for the state and an event that permanently transformed the English religious, social, and physical landscape, leaving many ruined abbeys still visible today. The more thoroughly Protestant theological and liturgical reforms associated with the English Reformation, especially Cranmer's Book of Common Prayer, developed more fully under Henry's successor, the young Edward VI.`,
     externalRefs: ["Act of Supremacy, 1534 (full text)"],
     primaryEntityIds: ["henry-viii", "thomas-cranmer"],
+    sources: [
+      { label: "Christian History Magazine 48: Thomas Cranmer and the English Reformation", url: "https://christianhistoryinstitute.org/magazine/issue/thomas-cranmer-and-the-english-reformation", note: "free full issue" },
+      { label: "Catholic Encyclopedia (1913): Anglicanism", url: "https://www.newadvent.org/cathen/01498a.htm" },
+    ],
   },
   {
     id: "calvin-institutes-1536",
@@ -7674,6 +7894,11 @@ Calvin's initial tenure in Geneva was contentious and led to his expulsion by th
 Calvin continued revising and dramatically expanding the Institutes across several subsequent editions throughout his life, and the work became the single most influential systematic theological statement of the Reformed tradition, organizing Christian doctrine comprehensively around the sovereignty and glory of God; Geneva itself, meanwhile, became a training center and refuge for Reformed pastors and exiles from across Europe, spreading Calvin's theological and ecclesiastical model into France, the Netherlands, Scotland, and eventually into the English Puritan and American colonial traditions.`,
     externalRefs: ["John Calvin, Institutes of the Christian Religion (1536 and later editions)"],
     primaryEntityIds: ["john-calvin"],
+    sources: [
+      { label: "Christian History Magazine 12: John Calvin, Reformer, Pastor, Theologian", url: "https://christianhistoryinstitute.org/magazine/issue/john-calvin-reformer-pastor-theologian", note: "free full issue" },
+      { label: "Wikisource: Calvin's Institutes of the Christian Religion", url: "https://en.wikisource.org/wiki/Institutes_of_the_Christian_Religion_(1845)", note: "primary source, Beveridge translation" },
+      { label: "Christian History Magazine 120: Calvin, Councils, and Confessions", url: "https://christianhistoryinstitute.org/magazine/issue/calvin-councils-and-confessions" },
+    ],
   },
   {
     id: "society-of-jesus-founded-1540",
@@ -7697,6 +7922,11 @@ The order rapidly became one of the most significant institutional forces of the
       "Ignatius of Loyola, Spiritual Exercises",
     ],
     primaryEntityIds: ["ignatius-of-loyola"],
+    sources: [
+      { label: "Christian History Magazine 122: The Catholic Reformation", url: "https://christianhistoryinstitute.org/magazine/issue/catholic-reformation", note: "free full issue" },
+      { label: "Catholic Encyclopedia (1913): The Jesuits", url: "https://www.newadvent.org/cathen/14081a.htm" },
+      { label: "Catholic Encyclopedia (1913): St. Ignatius Loyola", url: "https://www.newadvent.org/cathen/07639c.htm" },
+    ],
   },
   {
     id: "council-of-trent-1545",
@@ -7719,6 +7949,10 @@ Beyond doctrine, Trent enacted extensive internal reforms addressing many of the
 
 The council's decrees provided the doctrinal and institutional foundation for what historians call the Catholic Counter-Reformation (or Catholic Reformation), shaping Catholic theology, liturgy, and church discipline in a form that remained largely unchanged until the Second Vatican Council nearly four hundred years later in the 1960s.`,
     externalRefs: ["Canons and Decrees of the Council of Trent (full text)"],
+    sources: [
+      { label: "Christian History Magazine 122: The Catholic Reformation", url: "https://christianhistoryinstitute.org/magazine/issue/catholic-reformation", note: "free full issue" },
+      { label: "Catholic Encyclopedia (1913): The Council of Trent", url: "https://www.newadvent.org/cathen/15030c.htm" },
+    ],
   },
   {
     id: "pilgrims-plymouth-1620",
@@ -7741,6 +7975,10 @@ The resulting Plymouth Colony, established in the winter of 1620-21, suffered de
       "Mayflower Compact, 1620 (full text)",
       "William Bradford, Of Plymouth Plantation",
     ],
+    sources: [
+      { label: "Christian History Magazine 41: The American Puritans", url: "https://christianhistoryinstitute.org/magazine/issue/the-american-puritans", note: "free full issue" },
+      { label: "Wikisource: The Mayflower Compact", url: "https://en.wikisource.org/wiki/Mayflower_Compact", note: "primary source" },
+    ],
   },
   {
     id: "peace-of-westphalia-1648",
@@ -7761,6 +7999,10 @@ The settlement did not establish individual religious liberty in the modern sens
 Beyond its religious significance, the Peace of Westphalia is often cited by historians of international relations as marking the emergence of the modern concept of state sovereignty and a system of formally equal, independent states — the so-called "Westphalian system" — that has remained foundationally influential in international law and diplomacy long after the specific religious conflicts that produced it had faded from immediate political relevance.`,
     externalRefs: [
       "Peace of Westphalia, 1648 (Treaty of Münster and Treaty of Osnabrück, full texts)",
+    ],
+    sources: [
+      { label: "Catholic Encyclopedia (1913): Westphalia", url: "https://www.newadvent.org/cathen/15601b.htm" },
+      { label: "Christian History Magazine 71: Huguenots and the Wars of Religion", url: "https://christianhistoryinstitute.org/magazine/issue/the-french-huguenots-and-the-wars-of-religion", note: "free full issue" },
     ],
   },
   {
@@ -7786,6 +8028,10 @@ The Awakening's emphasis on individual religious experience over inherited denom
       "George Whitefield, Journals",
     ],
     primaryEntityIds: ["jonathan-edwards", "george-whitefield", "john-wesley"],
+    sources: [
+      { label: "Christian History Magazine 8: Jonathan Edwards and the Great Awakening", url: "https://christianhistoryinstitute.org/magazine/issue/jonathan-edwards-and-the-great-awakening", note: "free full issue" },
+      { label: "Christian History Magazine 38: George Whitefield", url: "https://christianhistoryinstitute.org/magazine/issue/george-whitefield-17th-c-preacher-and-revivalist", note: "free full issue" },
+    ],
   },
   {
     id: "william-carey-india-mission-1793",
@@ -7808,6 +8054,9 @@ Carey's combination of linguistic scholarship, educational institution-building,
       "William Carey, An Enquiry into the Obligations of Christians to Use Means for the Conversion of the Heathens (1792)",
     ],
     primaryEntityIds: ["william-carey"],
+    sources: [
+      { label: "Christian History Magazine 36: William Carey and the Great Missions Century", url: "https://christianhistoryinstitute.org/magazine/issue/william-carey-19th-c-missionary-to-india", note: "free full issue" },
+    ],
   },
   {
     id: "second-great-awakening-c1800",
@@ -7828,6 +8077,10 @@ Finney and other revivalist leaders increasingly emphasized human choice and act
 
 This conviction fed directly into a wide range of nineteenth-century American reform movements substantially staffed and led by revival-influenced Protestant Christians, including the abolitionist movement against slavery, the temperance movement against alcohol consumption, early efforts toward women's rights, and significant new institutional investment in foreign and domestic missions, prison reform, and public education — making the Second Great Awakening one of the most socially consequential religious movements in American history.`,
     externalRefs: ["Charles Grandison Finney, Lectures on Revivals of Religion"],
+    sources: [
+      { label: "Christian History Magazine 151: Awakenings", url: "https://christianhistoryinstitute.org/magazine/issue/ch151-awakenings", note: "free full issue" },
+      { label: "Christian History Magazine 45: Camp Meetings and Circuit Riders", url: "https://christianhistoryinstitute.org/magazine/issue/camp-meetings-and-circuit-riders-frontier-revivals", note: "free full issue" },
+    ],
   },
   {
     id: "abolition-slave-trade-1807",
@@ -7851,6 +8104,9 @@ The Slave Trade Act finally passed both houses of Parliament in March 1807, form
       "William Wilberforce, parliamentary speeches, various",
     ],
     primaryEntityIds: ["william-wilberforce", "john-wesley"],
+    sources: [
+      { label: "Christian History Magazine 53: William Wilberforce and the Century of Reform", url: "https://christianhistoryinstitute.org/magazine/issue/william-wilberforce-fighting-the-slave-trade", note: "free full issue" },
+    ],
   },
   {
     id: "azusa-street-revival-1906",
@@ -7872,6 +8128,10 @@ The revival was notable, and to many contemporary observers startling, for its r
 Visitors traveled to Azusa Street from across the United States and internationally, and Seymour's periodical The Apostolic Faith spread news and testimony of the revival widely; the movement that grew from this and related early twentieth-century revivals — organized eventually into denominations including the Assemblies of God, the Church of God in Christ, and numerous others — expanded over the following century into the global Pentecostal and charismatic movement, which by the early twenty-first century numbered several hundred million adherents worldwide, among the most significant developments in the entire history of global Christianity.`,
     externalRefs: ["The Apostolic Faith (Azusa Street mission periodical, 1906-1908 issues)"],
     primaryEntityIds: ["william-seymour"],
+    sources: [
+      { label: "Christian History Magazine 58: The Rise of Pentecostalism", url: "https://christianhistoryinstitute.org/magazine/issue/the-rise-of-pentecostalism", note: "free full issue" },
+      { label: "Christian History Magazine 153: Global Outpouring", url: "https://christianhistoryinstitute.org/magazine/issue/ch153-global-outpouring", note: "free full issue" },
+    ],
   },
   {
     id: "dietrich-bonhoeffer-german-church-struggle-1933-1945",
@@ -7897,6 +8157,9 @@ By 1939, despite the relative safety of an offer to remain in the United States,
       "Eberhard Bethge, Dietrich Bonhoeffer: A Biography",
     ],
     primaryEntityIds: ["dietrich-bonhoeffer", "karl-barth"],
+    sources: [
+      { label: "Christian History Magazine 32: Dietrich Bonhoeffer, Theologian in Nazi Germany", url: "https://christianhistoryinstitute.org/magazine/issue/dietrich-bonhoeffer-theologian-in-nazi-germany", note: "free full issue" },
+    ],
   },
   {
     id: "world-council-of-churches-1948",
@@ -7916,6 +8179,10 @@ The Roman Catholic Church, while not a formal member of the WCC, has engaged wit
 
 The WCC has since its founding coordinated cooperative work in areas including international humanitarian relief, human rights advocacy, and interfaith and inter-Christian theological dialogue, while also facing persistent internal tensions between its more institutionally liberal Western Protestant membership and more theologically conservative or politically cautious member churches, reflecting the broader diversity and occasional friction characteristic of the modern global ecumenical movement.`,
     externalRefs: ["World Council of Churches, founding documents, Amsterdam Assembly, 1948"],
+    sources: [
+      { label: "What is the World Council of Churches?", url: "https://www.oikoumene.org/about-the-wcc", note: "the WCC's own account of itself" },
+      { label: "Catholic Encyclopedia (1913): The Union of Christendom", url: "https://www.newadvent.org/cathen/15132a.htm" },
+    ],
   },
   {
     id: "billy-graham-crusades-1949-1957",
@@ -7937,6 +8204,10 @@ His 1957 New York City crusade, held over sixteen weeks at Madison Square Garden
 Graham's organizational and technological approach — combining direct, theologically simple evangelistic preaching with sophisticated media outreach, extensive local church partnership, and systematic follow-up of new converts through the Billy Graham Evangelistic Association — became a widely emulated template for later evangelists and helped define the public face of mainstream American evangelical Protestantism for the remainder of the twentieth century.`,
     externalRefs: ["Billy Graham Evangelistic Association archival materials"],
     primaryEntityIds: ["billy-graham"],
+    sources: [
+      { label: "Christian History Magazine 111: Billy Graham", url: "https://christianhistoryinstitute.org/magazine/issue/billy-graham", note: "free full issue" },
+      { label: "Christian History Magazine 92: A New Evangelical Awakening", url: "https://christianhistoryinstitute.org/magazine/issue/americas-20th-century-evangelical-awakening", note: "free full issue" },
+    ],
   },
   {
     id: "vatican-ii-1962",
@@ -7961,6 +8232,10 @@ The council's reforms produced profound and, in some respects, still-contested c
       "Nostra Aetate (1965)",
     ],
     primaryEntityIds: ["pope-john-xxiii"],
+    sources: [
+      { label: "Christian History Magazine 157: Vatican II", url: "https://christianhistoryinstitute.org/magazine/issue/ch157-vatican-ii", note: "free full issue" },
+      { label: "The Documents of the Second Vatican Council", url: "https://www.vatican.va/archive/hist_councils/ii_vatican_council/index.htm", note: "primary sources, official texts" },
+    ],
   },
   {
     id: "civil-rights-movement-mlk-1963-1968",
@@ -7986,6 +8261,10 @@ King's later activism increasingly connected the movement's concerns to broader 
       "Civil Rights Act of 1964 and Voting Rights Act of 1965 (full texts)",
     ],
     primaryEntityIds: ["martin-luther-king-jr"],
+    sources: [
+      { label: "Letter from Birmingham Jail (King Institute, Stanford)", url: "https://kinginstitute.stanford.edu/letter-birmingham-jail", note: "primary source" },
+      { label: "The Martin Luther King, Jr. Research and Education Institute", url: "https://kinginstitute.stanford.edu/" },
+    ],
   },
   {
     id: "fall-of-communism-poland-1989",
@@ -8006,6 +8285,10 @@ Throughout the 1980s, as the Polish Communist government alternately tolerated a
 By 1989, amid broader economic pressures, the reforms of Soviet leader Mikhail Gorbachev, and sustained internal civil society pressure across the region, Communist governments across Eastern Europe collapsed in rapid succession, largely without large-scale violence, beginning with Poland's semi-free elections in June 1989 and continuing through the fall of the Berlin Wall in November of that year and the collapse of Communist rule across the wider Eastern bloc by 1991. While historians debate the precise weight of John Paul II's contribution alongside other significant economic, political, and diplomatic factors, his moral and religious influence is broadly recognized as one of the notable contributing factors in this epochal, largely nonviolent political transformation.`,
     externalRefs: ["John Paul II, homilies from the 1979 Polish pilgrimage"],
     primaryEntityIds: ["pope-john-paul-ii"],
+    sources: [
+      { label: "Christian History Magazine 123: Captive Faith", url: "https://christianhistoryinstitute.org/magazine/issue/captive-faith", note: "free full issue on the church under communism" },
+      { label: "Christian History Magazine 109: Eyewitnesses to the Modern Age of Persecution", url: "https://christianhistoryinstitute.org/magazine/issue/109-persecuted-church", note: "free full issue" },
+    ],
   },
   {
     id: "clergy-sex-abuse-crisis-reckoning-2002",

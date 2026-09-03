@@ -51,6 +51,11 @@ export interface Archaeology {
 export interface SourceCitation {
   label: string;
   url: string;
+  /** Optional one-clause characterisation of *what kind* of source this is, shown as small muted
+   * text after the label — e.g. "primary source, 1900 translation" vs "popular overview". Only
+   * worth setting where the distinction genuinely changes how a reader should weigh the link;
+   * most citations leave it off. */
+  note?: string;
 }
 
 export interface Location {
@@ -249,6 +254,10 @@ export interface TimelineEvent {
   scriptureRefs?: string[];
   /** Non-biblical sources/witnesses, e.g. "Josephus, The Jewish War 6.249-270" or a URL. */
   externalRefs?: string[];
+  /** Linkable further reading, rendered as its own "Further Reading" section below References —
+   * the same SourceCitation treatment the location/person/topic/POI panels use. Distinct from
+   * externalRefs, which is bare bibliographic text (ancient witnesses, book titles). */
+  sources?: SourceCitation[];
   /** Ids of the people/locations/POIs/topics most central to this event — for future "show related
    * entries" affordances; not required for the auto-linker, which matches on names in the text. */
   primaryEntityIds?: string[];

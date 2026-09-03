@@ -186,6 +186,27 @@ export default function TimelineEventPanel({
           </ul>
         </div>
       )}
+
+      {/* Linkable further reading, kept below References so the bibliographic externalRefs above
+          stay the primary "how we know this" list. Same markup/classes as the Further Reading
+          section in PersonPanel and TopicPanel. */}
+      {event.sources && event.sources.length > 0 && (
+        <div className="sources-section">
+          <h4>Further Reading</h4>
+          <ul>
+            {event.sources.map((s) => (
+              <li key={s.url}>
+                <a href={s.url} target="_blank" rel="noopener noreferrer">
+                  {s.label}
+                </a>
+                {s.note && (
+                  <span style={{ color: "var(--text-muted)", fontSize: "0.92em" }}> {s.note}</span>
+                )}
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
     </div>
   );
 }
