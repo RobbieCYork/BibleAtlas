@@ -1830,4 +1830,569 @@ export const topics: Topic[] = [
       { label: "Wikipedia: Codex Sinaiticus", url: "https://en.wikipedia.org/wiki/Codex_Sinaiticus" },
     ],
   },
+  /* Batch two of the archaeological-finds cluster — see the rule and the reasoning in the comment
+   * above the Pilate Stone. These are the texts rather than the monuments: the versions and codices
+   * behind the Bible in a reader's hands, and the Mesopotamian and Egyptian archives the Old
+   * Testament's world produced. Same standard on evidential weight; two of them (the Nuzi tablets
+   * and the Amarna letters' Habiru) are cases where an older generation of scholarship overclaimed
+   * and has since walked the claim back, and the articles say so. */
+  {
+    id: "septuagint",
+    name: "Septuagint",
+    alternateNames: ["LXX", "Greek Old Testament"],
+    category: "concept",
+    role: "The Greek Old Testament, Third Century BC Onward",
+    summary:
+      "The translation of the Hebrew scriptures into Greek, begun in Alexandria around 250 BC — the version most New Testament writers quote, and the reason Catholic and Protestant Bibles have different tables of contents.",
+    sections: [
+      {
+        heading: "Seventy Translators, or Seventy-Two",
+        paragraphs: [
+          "The name comes from the Latin for seventy, and behind it is a story. The Letter of Aristeas, a Greek document written in Alexandria some time in the second century BC, tells how Ptolemy II Philadelphus wanted a copy of the Jewish law for his great library, sent to Jerusalem for scholars, and received seventy-two elders who completed a translation of the Torah in seventy-two days. Later retellings improved on it: Philo has the translators working in separate cells and emerging with word-for-word identical texts, a miracle guaranteeing the Greek's authority.",
+          "Historians treat the letter as a piece of advocacy rather than a report — it is written to commend the Greek translation to Greek-speaking Jews, and it postdates the events it describes. What is not in doubt is the plain fact underneath it: the five books of Moses were translated into Greek in Alexandria in the third century BC, and over the next two centuries the rest of the Hebrew scriptures followed, in a series of separate efforts by different translators of very different skill. Some books are rendered almost word for word; others, notably Job and Proverbs, are freely paraphrased and considerably shorter.",
+        ],
+      },
+      {
+        heading: "The Bible the Apostles Quoted",
+        paragraphs: [
+          "By the first century, Greek was the working language of Jews across the Mediterranean, and the Septuagint was simply their Bible. When the New Testament writers quote the Old Testament, they most often follow the Greek — including at points where the Greek differs from the Hebrew we have. The most discussed example is Isaiah 7:14: the Hebrew says almah, a young woman of marriageable age; the Septuagint's translators, two centuries before Christ and with no Christian argument to make, chose parthenos, virgin. Matthew 1:23 quotes the Greek.",
+          "That pattern has a practical consequence for anyone comparing an Old Testament passage with its New Testament quotation and finding they do not match. Usually nothing has gone wrong: the writer is quoting a Greek Bible, and modern Old Testaments translate the Hebrew. The Septuagint's own vocabulary also shaped Christian language permanently — christos for messiah, kyrios for the divine name, diatheke for covenant, ekklesia for assembly. The theological vocabulary of the New Testament was largely built in Alexandria before the New Testament was written.",
+        ],
+      },
+      {
+        heading: "Why It Has More Books",
+        paragraphs: [
+          "Greek manuscripts of the Old Testament also carry books not in the Hebrew Bible: Tobit, Judith, Wisdom, Sirach, Baruch, 1 and 2 Maccabees, and additions to Esther and Daniel. Because the early church read the Old Testament in Greek, these came along with it. At the Reformation, Protestants returned to the Hebrew canon and set those books apart as the Apocrypha; the Council of Trent affirmed them as scripture for Catholics; Orthodox churches include these and a few more. The disagreement is old, real, and entirely traceable to which collection a tradition inherited.",
+          "One thing the Dead Sea Scrolls settled is worth knowing here. Before 1947 it was often assumed that where the Greek differed from the Hebrew, the Greek translators had been careless. Some of the Hebrew manuscripts from the caves turned out to match the Greek where it differs from the traditional Hebrew — including a copy of Jeremiah in the shorter form the Septuagint has. So a good number of the Septuagint's differences are not translation errors at all; they faithfully render a Hebrew text that really existed. That makes the Greek Old Testament a witness to the Hebrew Bible's own history rather than a distortion of it, and it complicates any simple account of which version is the original.",
+        ],
+      },
+    ],
+    verses: [
+      { reference: "Isaiah 7:14", note: "\"A young woman\" in Hebrew; \"a virgin\" in the Greek" },
+      { reference: "Matthew 1:22-23", note: "Matthew quoting the Greek form" },
+      { reference: "Hebrews 10:5-7", note: "\"A body you prepared for me\" — a quotation of Psalm 40 that follows the Greek, not the Hebrew" },
+      { reference: "Acts 8:26-35", note: "The Ethiopian official reading Isaiah in Greek on a desert road" },
+    ],
+    sources: [
+      { label: "Bible Odyssey (SBL): What Is the Septuagint?", url: "https://www.bibleodyssey.org/articles/what-is-the-septuagint/" },
+      { label: "Text & Canon Institute: The Bible Jesus Read", url: "https://textandcanon.org/bible-jesus-read/" },
+      { label: "Wikipedia: Septuagint", url: "https://en.wikipedia.org/wiki/Septuagint" },
+    ],
+  },
+  {
+    id: "masoretic-text",
+    name: "Masoretic Text",
+    alternateNames: ["Aleppo Codex", "Leningrad Codex"],
+    category: "concept",
+    role: "The Standard Hebrew Bible, Fixed c. AD 600-1000",
+    summary:
+      "The Hebrew text produced by generations of Jewish scribes at Tiberias and in Babylonia, who added vowels, accents, and an elaborate apparatus of counting-notes to a consonantal text they had inherited — and which almost every modern Old Testament translates.",
+    sections: [
+      {
+        heading: "Who the Masoretes Were",
+        paragraphs: [
+          "Hebrew was written with consonants only. A reader supplied the vowels from knowledge of the language and the tradition of how a passage was read aloud, which works well until the language stops being spoken daily. Between roughly AD 600 and 1000, scribal families — the best known being the ben Asher family of Tiberias, on the Sea of Galilee — developed systems of small marks above and below the consonants to fix the pronunciation, and a second set of marks to fix the chanting and phrasing.",
+          "They also compiled the masorah, the notes that give the tradition its name: marginal annotations recording how many times a given word occurs, which spelling is used where, and where an unusual form is genuine rather than a slip. It is essentially a checksum system, designed so that a copyist's error would show up against the count. The consonants themselves the Masoretes did not touch; where they judged the written text wrong, they left it written and noted the reading in the margin instead.",
+        ],
+      },
+      {
+        heading: "Two Manuscripts Almost Everything Rests On",
+        paragraphs: [
+          "The Aleppo Codex, written around AD 930 and vocalised by Aaron ben Asher himself, was regarded as the finest copy in existence; Maimonides used it. It was kept for centuries in the synagogue at Aleppo, and in riots there in 1947 a large part of it was lost, including almost all of the Torah. What survives is in Jerusalem.",
+          "The Leningrad Codex, copied in Cairo in AD 1008 and now in the National Library of Russia in St Petersburg, is therefore the oldest complete Masoretic Bible. It is the base text of the standard scholarly edition, Biblia Hebraica Stuttgartensia, which means it stands behind the Old Testament of nearly every English Bible on a modern shelf. A reader opening Genesis in almost any translation is reading, at one remove, a manuscript finished in Egypt in the eleventh century.",
+        ],
+      },
+      {
+        heading: "How Good Is It?",
+        paragraphs: [
+          "Very good, and it is worth saying exactly what that means. When the Dead Sea Scrolls appeared, the obvious test was to set the Masoretic consonants against Hebrew copies a thousand years older. A large proportion of the biblical scrolls are of a type essentially identical to the later Masoretic consonantal text — evidence that the Masoretes were preserving something already ancient and already stable, not inventing it.",
+          "The caution is that the scrolls also show other Hebrew text forms circulating at the same time, some agreeing with the Septuagint and some with the Samaritan Pentateuch. The Masoretic Text is the survivor of a family that already existed in the Second Temple period and became the standard; it is not the only Hebrew text there ever was, and modern translators consult the alternatives at points where the Masoretic reading is hard. Nor is it an autograph — it is a superb medieval edition of an ancient text, and describing it accurately is a stronger position than describing it as untouched.",
+        ],
+      },
+    ],
+    verses: [
+      { reference: "Deuteronomy 4:2", note: "\"You shall not add to the word... neither shall you take away from it\" — the conviction the masorah was built to serve" },
+      { reference: "Psalms 119:89", note: "\"Forever, LORD, your word is settled in heaven\"" },
+      { reference: "Isaiah 40:8", note: "\"The word of our God stands forever\"" },
+    ],
+    sources: [
+      { label: "Text & Canon Institute: articles on the Masoretic Text", url: "https://textandcanon.org/tag/masoretic-text/" },
+      { label: "Bible Odyssey (SBL): The Samaritan Pentateuch", url: "https://www.bibleodyssey.org/articles/the-samaritan-pentateuch/" },
+      { label: "Wikipedia: Masoretic Text", url: "https://en.wikipedia.org/wiki/Masoretic_Text" },
+    ],
+  },
+  {
+    id: "codex-vaticanus",
+    name: "Codex Vaticanus",
+    alternateNames: ["Vaticanus"],
+    category: "concept",
+    role: "Fourth-Century Greek Bible in the Vatican Library",
+    summary:
+      "A mid-fourth-century Greek Bible that has been in the Vatican Library since at least its first catalogue in 1475 — with Codex Sinaiticus, one of the two most important manuscripts of the New Testament.",
+    sections: [
+      {
+        heading: "A Book with No Discovery Story",
+        paragraphs: [
+          "Unlike Codex Sinaiticus, which has a nineteenth-century adventure attached to it, Vaticanus was never found. It appears in the Vatican Library's earliest surviving catalogue, drawn up in 1475, and nobody knows where it was before that. It is written on fine parchment in a small, plain, unadorned hand, three narrow columns to the page — an austere and very early layout. Scholars date it to the middle of the fourth century, making it a near-contemporary of Sinaiticus and possibly a little earlier.",
+          "For centuries the library guarded it closely, and access was the subject of long frustration among textual scholars; Tischendorf, permitted a few days with it in 1866, was reprimanded for copying too much. That era is over. The manuscript has been photographed in full and can be paged through online, and a facsimile edition put it into libraries worldwide.",
+        ],
+      },
+      {
+        heading: "What Survives, and What Is Missing",
+        paragraphs: [
+          "Leaves have been lost at both ends and in places in between. The Old Testament lacks most of Genesis and a stretch of Psalms; the New Testament breaks off in Hebrews at chapter 9 verse 14, so 1 and 2 Timothy, Titus, Philemon, and Revelation are absent. That absence is physical damage, not a canonical statement — the missing leaves are simply gone.",
+          "More interesting is where the scribe wrote nothing. Mark ends at 16:8, and after it the scribe left a conspicuous blank column before beginning Luke — the only such blank in the New Testament portion. Scholars read this as a copyist who knew of the longer ending, did not find it in the exemplar he was copying, and left room in case. John 7:53-8:11, the woman caught in adultery, is likewise absent, as it is in Sinaiticus. Two independent fourth-century Bibles agreeing on these gaps is why translators add the notes they do.",
+        ],
+      },
+      {
+        heading: "Why Two Manuscripts Matter So Much",
+        paragraphs: [
+          "Sinaiticus and Vaticanus are the earliest substantially complete Greek Bibles, and where they agree against the mass of later medieval copies, most textual scholars follow them — the basis of the modern critical editions behind almost every twentieth-century translation. The King James Version, by contrast, rests on a text compiled in the sixteenth century from a handful of late manuscripts, which is why it includes readings the modern versions footnote.",
+          "It is worth stating what is and is not at stake. The differences between these text traditions are real, are documented in the footnotes of any decent study Bible, and are argued about openly by people who care about scripture. They are also, taken together, small: no Christian doctrine rests on a disputed reading. A tradition confident enough to print its variants in the margin is not one that has something to hide, and Vaticanus is one of the two manuscripts that made printing them possible.",
+        ],
+      },
+    ],
+    verses: [
+      { reference: "Mark 16:8", note: "Where Vaticanus ends Mark, followed by a blank column" },
+      { reference: "John 7:53-8:11", note: "Absent from Vaticanus and Sinaiticus alike" },
+      { reference: "Hebrews 9:14", note: "The verse at which the surviving text breaks off" },
+    ],
+    sources: [
+      { label: "Vatican Library: Codex Vaticanus (Vat. gr. 1209) digitised", url: "https://digi.vatlib.it/view/MSS_Vat.gr.1209" },
+      { label: "Bible Odyssey (SBL): What Is the Oldest Bible?", url: "https://www.bibleodyssey.org/articles/what-is-the-oldest-bible/" },
+      { label: "Wikipedia: Codex Vaticanus", url: "https://en.wikipedia.org/wiki/Codex_Vaticanus" },
+    ],
+  },
+  {
+    id: "muratorian-fragment",
+    name: "Muratorian Fragment",
+    alternateNames: ["Muratorian Canon", "Canon Muratori"],
+    category: "concept",
+    role: "The Earliest Known List of New Testament Books",
+    summary:
+      "Eighty-five lines of bad Latin in an eighth-century manuscript at Milan, preserving what is most likely a list of accepted Christian writings drawn up in Rome around AD 180 — the oldest such list we have.",
+    sections: [
+      {
+        heading: "Found in a Milan Library",
+        paragraphs: [
+          "Ludovico Antonio Muratori, an Italian priest and historian, published the text in 1740 from a seventh- or eighth-century codex in the Ambrosian Library in Milan. The manuscript is a scrappy thing — the Latin is clumsy and full of errors, and most scholars think it is a rough translation of a Greek original. It begins in mid-sentence, so the opening is lost, and it breaks off at the end.",
+          "What survives is a survey of Christian writings with comments on each. Luke is named as the third Gospel and John as the fourth, which implies Matthew and Mark stood in the missing opening. Acts is there, thirteen letters of Paul, Jude, two letters of John, Revelation, and the Wisdom of Solomon. The writer discusses Paul's letters to seven churches as a deliberate pattern, dismisses letters forged in Paul's name to the Laodiceans and Alexandrians as Marcionite fabrications, and says the Shepherd of Hermas may be read privately but not read out in church, because it was written recently, in his own time, by the brother of Bishop Pius of Rome.",
+        ],
+      },
+      {
+        heading: "Why It Matters",
+        paragraphs: [
+          "It is often assumed that the New Testament was assembled by a church council centuries after the fact. This list is one of the plainest pieces of evidence against that picture. Long before any council pronounced on the subject, a Christian writer is simply describing which books the churches read publicly and which they do not, giving reasons, and treating the question as largely settled for the Gospels and for Paul.",
+          "It is equally plain that the edges were not settled. Hebrews, James, and 1-2 Peter are not in the surviving text; the Apocalypse of Peter is listed as accepted by some and rejected by others; Wisdom is included. A reader who wants the honest shape of the evidence should notice both halves: a firm core, agreed early and without central decision, and a fringe that took generations to resolve.",
+        ],
+      },
+      {
+        heading: "The Date Is Disputed",
+        paragraphs: [
+          "The traditional dating, around AD 170-200, rests on the writer's remark that the Shepherd of Hermas was composed \"very recently, in our own times,\" during his brother's episcopate — which places the author within a generation of the 140s or 150s. That reading has been standard since the nineteenth century.",
+          "It is not unanimous. Albert Sundberg in 1973 and Geoffrey Hahneman in 1992 argued that the fragment fits far better among fourth-century Eastern canon lists, and that the Hermas remark could have been copied from an earlier source. Most specialists have not been persuaded and the second-century Roman dating remains the majority view, but the alternative is a serious scholarly position, and an argument that leans hard on this document as second-century evidence should acknowledge that it is doing so."
+        ],
+      },
+    ],
+    verses: [
+      { reference: "Luke 1:1-4", note: "The Gospel the fragment describes as third in order" },
+      { reference: "2 Peter 3:15-16", note: "Paul's letters already spoken of alongside \"the other Scriptures\"" },
+      { reference: "Colossians 4:16", note: "Letters circulated and exchanged between churches from the beginning" },
+    ],
+    sources: [
+      { label: "Wikipedia: Muratorian fragment", url: "https://en.wikipedia.org/wiki/Muratorian_fragment" },
+      { label: "Text & Canon Institute: How the Two Testaments Became One Bible", url: "https://textandcanon.org/how-the-two-testaments-became-one-bible/" },
+    ],
+  },
+  {
+    id: "babylonian-chronicles",
+    name: "Babylonian Chronicles",
+    // "Nabonidus Chronicle" is one tablet within this series and is registered here. The Nabonidus
+    // CYLINDER is deliberately not aliased to this entry — it is a building inscription, a different
+    // genre, and has its own article below.
+    alternateNames: ["Babylonian Chronicle", "Jerusalem Chronicle", "Nabonidus Chronicle"],
+    category: "concept",
+    role: "Neo-Babylonian Year-by-Year Records on Clay",
+    summary:
+      "A series of terse cuneiform tablets logging what happened in each year of a Babylonian king's reign — including the exact date, to the day, on which Nebuchadnezzar took Jerusalem.",
+    sections: [
+      {
+        heading: "Accounts, Not Propaganda",
+        paragraphs: [
+          "Most royal inscriptions from the ancient Near East are boasts. The Babylonian Chronicles are not. They are a genre of their own: flat, year-by-year entries recording who campaigned where, who died, who took the throne, and occasionally an omen or an eclipse, in a style closer to a ledger than a monument. They record defeats as well as victories, which is precisely what makes historians value them. Most of the surviving tablets came into the British Museum in the nineteenth century through the antiquities trade rather than from controlled excavation.",
+          "The most important for Bible readers is the tablet catalogued BM 21946, covering the years 605 to 594 BC, published by Donald Wiseman in 1956. Its entry for the seventh year of Nebuchadnezzar records that the king of Akkad marched on the land of Hatti, besieged the city of Judah, and on the second day of the month Adar captured the city and seized its king — then appointed a king of his own choosing and took heavy tribute back to Babylon.",
+        ],
+      },
+      {
+        heading: "A Biblical Event with a Calendar Date",
+        paragraphs: [
+          "2 Kings 24:10-17 describes the same event from inside the city: Jerusalem besieged, King Jehoiachin surrendering, the treasury and temple stripped, the leading citizens deported, and Nebuchadnezzar installing Jehoiachin's uncle Mattaniah as king under the new name Zedekiah. The chronicle's \"a king of his own choice\" and the Bible's Zedekiah are the same appointment.",
+          "The chronicle's date converts to 15 or 16 March 597 BC. Very few events in the Old Testament can be dated to a particular day, and this is one of them — a rare, precise convergence between an Israelite narrative and a foreign administrative record with no interest in Israel's story. Separate Babylonian ration tablets, found at Babylon and published in the 1930s, list provisions issued to \"Ya'ukinu, king of the land of Yahudu\" and his sons — Jehoiachin, still alive and drawing a royal allowance in exile, which is where 2 Kings 25:27-30 leaves him.",
+        ],
+      },
+      {
+        heading: "What the Chronicles Do Not Cover",
+        paragraphs: [
+          "The destruction of Jerusalem and the burning of the temple in 587 or 586 BC is the event most often attributed to these tablets, and it is not in them. The tablet covering Nebuchadnezzar's later years is lost; the surviving chronicle text breaks off in 594 BC. The 597 deportation is documented; the final destruction a decade later is not, and saying otherwise misrepresents the evidence.",
+          "One other tablet in the series matters here. The Nabonidus Chronicle records the fall of Babylon to Cyrus in 539 BC — the army of Persia entering the city without a battle, and Cyrus arriving to acclamation shortly after. That is the night behind Daniel 5, though the chronicle itself is brief and says nothing of a feast, a hand, or a wall.",
+        ],
+      },
+    ],
+    verses: [
+      { reference: "2 Kings 24:10-17", note: "The siege and surrender of 597 BC, and Zedekiah's installation" },
+      { reference: "2 Kings 25:27-30", note: "Jehoiachin released and given an allowance at the Babylonian court" },
+      { reference: "Jeremiah 52:28-30", note: "The deportations counted year by year" },
+      { reference: "Daniel 5:30-31", note: "The night Babylon fell to the Persians" },
+    ],
+    sources: [
+      { label: "Bible Odyssey (SBL): Babylonian Accounts of the Invasion of Judah", url: "https://www.bibleodyssey.org/articles/babylonian-accounts-of-the-invasion-of-judah/" },
+      { label: "Wikipedia: Babylonian Chronicles", url: "https://en.wikipedia.org/wiki/Babylonian_Chronicles" },
+      { label: "Wikipedia: Nabonidus Chronicle", url: "https://en.wikipedia.org/wiki/Nabonidus_Chronicle" },
+    ],
+  },
+  {
+    id: "nabonidus-cylinder",
+    name: "Nabonidus Cylinder",
+    alternateNames: ["Nabonidus Cylinders", "Cylinder of Nabonidus"],
+    category: "concept",
+    role: "Sixth-Century BC Babylonian Building Inscription Naming Belshazzar",
+    summary:
+      "Clay foundation cylinders from Ur and Sippar in which the last king of Babylon prays for himself and for \"Belshazzar, my firstborn son\" — the man who, until the nineteenth century, was known only from the book of Daniel.",
+    sections: [
+      {
+        heading: "The Problem Daniel 5 Used to Have",
+        paragraphs: [
+          "Daniel 5 tells of a feast held by Belshazzar, king of Babylon, interrupted by a hand writing on the wall, and ending that same night with the king dead and the city in Persian hands. For a long time this was one of the standard examples of the Bible getting history wrong. Greek and Roman historians named the last king of Babylon as Nabonidus, and none of them had ever heard of a Belshazzar. Daniel also has Belshazzar offer Daniel \"the third ruler in the kingdom\" as a reward, which looked like an odd way to describe second place.",
+          "Then the cuneiform record began to be read. Clay cylinders inscribed for Nabonidus, buried in the foundations of temples he restored, turned up at Ur and elsewhere from the 1850s onward. One from Ur, recovered by J. G. Taylor, closes with a prayer asking the moon god to preserve the king — and then, in the same breath, \"and as for Belshazzar, my firstborn son, my own offspring, set the fear of your great godhead in his heart.\" Belshazzar was real, and he was Nabonidus's son."
+        ],
+      },
+      {
+        heading: "Regent While the King Was Away",
+        paragraphs: [
+          "Other Babylonian documents filled in the rest. Nabonidus spent roughly a decade of his reign at Tayma in Arabia, far from his capital, and administrative texts show that he entrusted the kingship — the practical government of Babylon — to his son during that absence. That accounts for the detail that looked like a mistake: with Nabonidus first and Belshazzar acting second, the highest honour actually in Belshazzar's gift was third place.",
+          "This is a genuinely strong case, and it is stronger for being stated exactly. A book that could name a co-regent no classical historian remembered, and get the peculiar rank right, is showing knowledge of Babylonian court arrangements that had been lost for two thousand years and were recovered only from clay."
+        ],
+      },
+      {
+        heading: "What It Still Does Not Settle",
+        paragraphs: [
+          "Two caveats belong in the same paragraph as the case. First, the Babylonian texts never call Belshazzar \"king\"; he is the king's son exercising kingship, which is not quite the same thing, and Daniel's usage is best read as reflecting practical reality rather than Babylonian protocol. Second, Daniel 5 repeatedly calls Nebuchadnezzar Belshazzar's \"father.\" Nabonidus was not descended from Nebuchadnezzar. The usual explanation — that Aramaic and Hebrew use father and son for predecessor and successor, as Assyrian scribes did for Jehu \"son of Omri\" — is reasonable and widely accepted, and it is still an explanation rather than a confirmation.",
+          "The wider question of when the book of Daniel was written is not settled by any of this, and readers should not be told that it is. Scholars who date the book to the second century BC and scholars who date it to the sixth both have to account for the Belshazzar material, and they do so differently. What the cylinders establish is narrower and quite solid: a figure the book names, whom no other surviving ancient historian remembered, existed exactly as it says.",
+        ],
+      },
+    ],
+    verses: [
+      { reference: "Daniel 5:1-4", note: "Belshazzar's feast" },
+      { reference: "Daniel 5:7", note: "\"Third ruler in the kingdom\" — the offer that fits a co-regency" },
+      { reference: "Daniel 5:29-31", note: "The night the kingdom passed to the Medes and Persians" },
+      { reference: "Daniel 7:1", note: "\"In the first year of Belshazzar king of Babylon\"" },
+    ],
+    sources: [
+      { label: "Wikipedia: Nabonidus Chronicle", url: "https://en.wikipedia.org/wiki/Nabonidus_Chronicle" },
+      { label: "Bible Odyssey (SBL): Cyrus the Messiah", url: "https://www.bibleodyssey.org/articles/cyrus-the-messiah/" },
+    ],
+  },
+  {
+    id: "behistun-inscription",
+    name: "Behistun Inscription",
+    alternateNames: ["Bisitun Inscription", "Behistun relief", "Bisotun Inscription"],
+    category: "concept",
+    role: "Trilingual Cliff Inscription of Darius I, c. 520 BC",
+    summary:
+      "A vast relief and inscription cut into a limestone cliff in western Iran, in three languages and three scripts — the text that let scholars read cuneiform, and so the reason every other Mesopotamian document in this atlas can be read at all.",
+    sections: [
+      {
+        heading: "Darius Explains Himself",
+        paragraphs: [
+          "About sixty metres up a cliff face on the old road between Babylon and Ecbatana, Darius I had his account of his accession carved where nobody could reach it to deface it. A relief shows the king with his foot on a fallen rival and a line of nine captive kings roped at the neck; around and below it, the same text runs in Old Persian, Elamite, and Babylonian. It describes how Darius came to the throne, how he put down rebellion after rebellion in the first year, and how the god Ahura Mazda gave him the kingdom.",
+          "As history it must be read with care. Darius was not the obvious heir, and his account — that the man he killed was an impostor magus named Gaumata impersonating Cyrus's son Bardiya, who had already been secretly murdered — is a very convenient story for a usurper to tell. Herodotus repeats a version of it, having probably got it from Persian sources downstream of this very inscription. Historians have debated the truth of it for a century and a half without resolution. This is royal self-justification carved a hundred feet above the road.",
+        ],
+      },
+      {
+        heading: "The Key That Opened Cuneiform",
+        paragraphs: [
+          "Its importance for the Bible is indirect and enormous. In the 1830s and 1840s Henry Rawlinson, a British officer in Persia, had himself lowered on ropes and stood on ladders to copy the inscription. Because the Old Persian script was alphabetic and partly guessable, and because the three versions say the same thing, the trilingual text gave scholars the leverage to work outward into Elamite and then into Akkadian — the language of Assyria and Babylon, written in the cuneiform used across Mesopotamia for three thousand years.",
+          "Without that, the Cyrus Cylinder, Sennacherib's Prism, the Babylonian Chronicles, the Amarna letters, the Code of Hammurabi, and the Epic of Gilgamesh would all be handsome, mute objects. Behistun did for cuneiform what the Rosetta Stone did for hieroglyphs. Nearly everything the last two centuries have added to the historical setting of the Old Testament traces back through this cliff."
+        ],
+      },
+      {
+        heading: "Darius in Scripture",
+        paragraphs: [
+          "Darius I appears in the Bible in his own right. Ezra 5-6 has the rebuilding of the temple stalled by local opposition and referred to Darius, who orders a search of the royal archives at Ecbatana, finds Cyrus's original authorisation, and rules in the Jews' favour with funding attached. Haggai and Zechariah both date their preaching by his regnal years.",
+          "It is worth distinguishing him from the Darius of Daniel 6, called Darius the Mede, who is a separate and much-debated figure — the identification of that Darius with any known Persian or Median ruler remains an unsolved problem, and this inscription does not solve it.",
+        ],
+      },
+    ],
+    verses: [
+      { reference: "Ezra 5:6-17", note: "The provincial governor's letter referring the temple question to Darius" },
+      { reference: "Ezra 6:1-12", note: "Darius searches the archives and confirms Cyrus's decree" },
+      { reference: "Haggai 1:1", note: "\"In the second year of Darius the king\"" },
+      { reference: "Zechariah 1:1", note: "Zechariah dated by the same reign" },
+    ],
+    sources: [
+      { label: "Wikipedia: Behistun Inscription", url: "https://en.wikipedia.org/wiki/Behistun_Inscription" },
+      { label: "Bible Odyssey (SBL): Cyrus the Messiah", url: "https://www.bibleodyssey.org/articles/cyrus-the-messiah/" },
+    ],
+  },
+  {
+    id: "kurkh-monolith",
+    name: "Kurkh Monolith",
+    alternateNames: ["Kurkh Monoliths", "Kurkh Stele"],
+    category: "concept",
+    role: "Assyrian Campaign Stele Naming Ahab of Israel, 853 BC",
+    summary:
+      "A carved stone slab from southeastern Turkey on which Shalmaneser III lists the kings who fought him at Qarqar — among them \"Ahab the Israelite,\" the earliest Assyrian mention of an Israelite king by name.",
+    sections: [
+      {
+        heading: "The Battle of Qarqar",
+        paragraphs: [
+          "John George Taylor found the monolith in 1861 at Kurkh, in what is now southeastern Turkey; it is in the British Museum. It shows Shalmaneser III in relief with the emblems of his gods, and carries a long account of his campaigns. The section on his sixth year describes a battle at Qarqar on the Orontes in 853 BC against a coalition of a dozen western kings who had combined to stop the Assyrian advance.",
+          "The list of the coalition names Hadadezer of Damascus, Irhuleni of Hamath, and third among them \"Ahab the Israelite,\" credited with two thousand chariots and ten thousand foot soldiers. It is the first appearance of an Israelite king by name in an Assyrian record, and it places Ahab in a specific battle in a specific year.",
+        ],
+      },
+      {
+        heading: "Why the Date Matters More Than the Battle",
+        paragraphs: [
+          "Qarqar is one of the anchor points of Old Testament chronology. Assyrian records are dated by an annual official whose name marks the year, and one such year-list is fixed absolutely by a solar eclipse recorded in it, which astronomers can date to 15 June 763 BC. Counting from there fixes Qarqar to 853 BC. Because Ahab was at Qarqar, and because Shalmaneser's Black Obelisk records tribute from Jehu about twelve years later, the reigns of the Israelite kings between them can be pinned to an absolute calendar rather than floating on internal biblical arithmetic alone.",
+          "The Bible, for its part, never mentions Qarqar or the coalition. 1 Kings has Ahab fighting Ben-Hadad of Damascus, not allied with him. There is no contradiction — alliances shifted, and 1 Kings 22:1 notes three years without war between Israel and Aram, which is where the joint campaign fits — but it is another reminder that the biblical historians were writing a theological account of the kings of Israel, not a complete military record.",
+        ],
+      },
+      {
+        heading: "Two Thousand Chariots?",
+        paragraphs: [
+          "The chariot figure is the disputed part. Two thousand chariots would make Ahab by far the largest chariot power in the coalition, larger than Damascus, which is difficult to credit for a kingdom of Israel's size and resources. Proposals have included a scribal exaggeration, a cuneiform sign misread and a much smaller number originally intended, chariots contributed by allied states and counted under Ahab, or — a minority view — that the name should be read as a different king altogether.",
+          "None of this touches the main point, which is that Ahab is named. It is simply an example of a real feature of these sources: Assyrian scribes inflated enemy numbers to magnify the victory, and Shalmaneser claims a crushing win at Qarqar and then went home and had to campaign in the same region repeatedly for years afterward, which is not what a decisive victory looks like. Historians generally treat Qarqar as, at best, a draw.",
+        ],
+      },
+    ],
+    verses: [
+      { reference: "1 Kings 16:29-33", note: "Ahab's reign over Israel" },
+      { reference: "1 Kings 20:1-34", note: "Ahab at war with Ben-Hadad of Aram — a different season of the same relationship" },
+      { reference: "1 Kings 22:1-4", note: "\"Three years without war between Syria and Israel\" — the window Qarqar fits into" },
+      { reference: "1 Kings 22:29-40", note: "Ahab's death at Ramoth Gilead" },
+    ],
+    sources: [
+      { label: "Wikipedia: Kurkh Monoliths", url: "https://en.wikipedia.org/wiki/Kurkh_Monoliths" },
+      { label: "Bible Odyssey (SBL): Kingdom of Israel", url: "https://www.bibleodyssey.org/articles/kingdom-of-israel/" },
+    ],
+  },
+  {
+    id: "nuzi-tablets",
+    name: "Nuzi Tablets",
+    alternateNames: ["Nuzi texts", "Nuzi archives", "Nuzi tablet"],
+    category: "concept",
+    role: "Hurrian Family and Legal Archives, Fifteenth-Fourteenth Century BC",
+    summary:
+      "Some five thousand cuneiform tablets from a provincial town near modern Kirkuk, once presented as decisive proof that Genesis preserves authentic second-millennium customs — a claim later scholarship has substantially withdrawn.",
+    sections: [
+      {
+        heading: "The Archive",
+        paragraphs: [
+          "Between 1925 and 1931, excavations at Yorghan Tepe in northern Iraq — ancient Nuzi — recovered roughly five thousand clay tablets from private houses and public buildings. The town was Hurrian, under the kingdom of Mitanni, in the fifteenth and fourteenth centuries BC. The tablets are almost entirely everyday documents: adoptions, marriage contracts, wills, loans, lawsuits, land sales, inventories. It is one of the fullest pictures we have of ordinary family and property law anywhere in the ancient Near East.",
+          "The excavators and the scholars who first published them noticed that some of these arrangements looked strikingly like customs in the patriarchal narratives — and for about forty years, that observation became one of the best-known arguments for the historical setting of Genesis.",
+        ],
+      },
+      {
+        heading: "The Parallels, as They Were Argued",
+        paragraphs: [
+          "The case, developed above all by Ephraim Speiser and Cyrus Gordon in the mid-twentieth century, ran roughly like this. Abraham, childless, expects his servant Eliezer to inherit (Genesis 15:2-3), and Nuzi has adoptions of a servant as heir, voided by the later birth of a natural son. Sarah, barren, gives Hagar to Abraham to bear a child on her behalf (Genesis 16:1-4), and Nuzi marriage contracts require a barren wife to provide a servant woman for exactly that purpose. Esau sells his birthright for a meal (Genesis 25:29-34), and Nuzi records a man selling an inheritance share to his brother for three sheep. Rachel steals her father's household gods (Genesis 31:19), and Nuzi documents were read as making possession of the household gods a claim on the estate.",
+          "The conclusion drawn was that the patriarchal stories reflect a genuine second-millennium legal world that a much later writer could not have invented — a strong argument, widely repeated in study Bibles and pulpits, and still repeated today.",
+        ],
+      },
+      {
+        heading: "Why Specialists Walked It Back",
+        paragraphs: [
+          "From the 1970s onward the case was taken apart, largely by scholars working directly with the tablets. Thomas Thompson and John Van Seters, among others, showed that several of the celebrated parallels rested on misreadings. The Nuzi household-gods texts do not in fact make possession of the figures a title to inheritance; that reading was imported into them. The servant-heir adoptions are not as close a match as claimed. And crucially, most of the practices that do genuinely parallel Genesis — surrogate childbearing by a servant, adoption, transfers of inheritance — are attested widely across the ancient Near East and across many centuries, including the first millennium BC. A custom found in every period cannot date a story to one of them.",
+          "That leaves an honest and less dramatic position, which is roughly where the field now sits. The Nuzi tablets are a superb source for Hurrian family law and for the texture of ordinary life in the ancient Near East. They show that the social world Genesis describes is a plausible one. They do not date the patriarchal narratives, and the confident mid-century claim that they proved a second-millennium origin has not survived scrutiny. This atlas includes the article partly because that overreach is itself worth knowing about: evidence pressed harder than it will bear tends, eventually, to be pressed back."
+        ],
+      },
+    ],
+    verses: [
+      { reference: "Genesis 15:2-3", note: "Abram expects a servant of his household to be his heir" },
+      { reference: "Genesis 16:1-4", note: "Sarai gives Hagar to Abram" },
+      { reference: "Genesis 25:29-34", note: "Esau sells his birthright" },
+      { reference: "Genesis 31:19-35", note: "Rachel takes her father's household idols" },
+    ],
+    sources: [
+      { label: "Wikipedia: Nuzi", url: "https://en.wikipedia.org/wiki/Nuzi" },
+      { label: "Bible Odyssey (SBL): Abraham", url: "https://www.bibleodyssey.org/articles/abraham/" },
+    ],
+  },
+  {
+    id: "amarna-letters",
+    name: "Amarna Letters",
+    alternateNames: ["Amarna tablets", "Tell el-Amarna letters", "el-Amarna letters"],
+    category: "concept",
+    role: "Egyptian Diplomatic Archive, Fourteenth Century BC",
+    summary:
+      "Around 380 clay tablets from the abandoned Egyptian capital at Amarna — the incoming diplomatic mail of two pharaohs, and the closest thing we have to a live picture of Canaan in the century or so before Israel appears there.",
+    sections: [
+      {
+        heading: "A Pharaoh's In-Tray",
+        paragraphs: [
+          "In 1887 a woman digging for fertiliser in the ruins of Akhetaten — the short-lived capital built by Akhenaten in Middle Egypt, now Tell el-Amarna — turned up inscribed clay tablets. Nearly four hundred were eventually recovered, most of them letters received by the Egyptian court under Amenhotep III and his son Akhenaten in the fourteenth century BC. They are written not in Egyptian but in Akkadian, the diplomatic language of the whole Near East at the time, on clay, in cuneiform, by scribes in Canaan and Syria writing to Egypt in a language native to neither.",
+          "Some are correspondence between great kings — Babylon, Assyria, Mitanni, the Hittites — trading gold, marriage alliances, and elaborate courtesy. The larger group is from the rulers of the small city-states of Canaan, who were Egyptian vassals. These are less dignified. They plead for troops, denounce their neighbours as traitors, complain that previous letters have gone unanswered, and protest their own loyalty at length.",
+        ],
+      },
+      {
+        heading: "Canaan Before Israel",
+        paragraphs: [
+          "This is the archive's real value for Bible readers. It shows Canaan as a patchwork of small, fortified, quarrelsome city-states — Jerusalem, Shechem, Megiddo, Gezer, Lachish, Hazor and dozens more — under loose Egyptian overlordship, each with its own ruler, none able to dominate the others, all of them appealing to a distant pharaoh who mostly did nothing. That is recognisably the political landscape the books of Joshua and Judges describe, minus Israel.",
+          "The letters from Abdi-Heba, the ruler of Jerusalem, are among the earliest written references to the city — six letters begging Egypt for archers and warning that the land is being lost. Shechem appears under a ruler named Labaya, who is repeatedly accused of carving out territory for himself. A reader who wants a sense of what a Canaanite city-state was and how it behaved will find it here rather than in any monument.",
+        ],
+      },
+      {
+        heading: "The Habiru Question",
+        paragraphs: [
+          "Many of the letters complain about the 'Apiru or Habiru, groups outside the settled order who raid, take service as mercenaries, and shelter runaways. When the tablets were first read, the resemblance between Habiru and Hebrew was electrifying, and for decades the Amarna letters were presented as an outside witness to Israel's arrival in Canaan.",
+          "That identification has largely been abandoned, and for good reasons. Habiru turns up across the Near East for the better part of a thousand years, from Mesopotamia to Anatolia to Egypt, referring to people of varied origins; it describes a social and legal status — displaced, stateless, outside the city system — rather than an ethnic group. The Amarna Habiru are used by Canaanite rulers as an insult for rivals as much as a description of outsiders. A linguistic relationship between the words is possible and is still argued by some scholars; an equation between the Habiru of these letters and the Israelites of the Bible is not supportable, and should not be offered as though it were.",
+        ],
+      },
+    ],
+    verses: [
+      { reference: "Joshua 10:1-5", note: "A coalition of Canaanite city-state kings, including Jerusalem" },
+      { reference: "Joshua 12:7-24", note: "The list of defeated kings — one per city, exactly the Amarna pattern" },
+      { reference: "Judges 1:27-36", note: "Canaanite cities Israel did not take" },
+      { reference: "Genesis 34:1-31", note: "Shechem, whose Amarna-era ruler Labaya troubled his neighbours" },
+    ],
+    sources: [
+      { label: "Bible Odyssey (SBL): Jerusalem in the Amarna Letters", url: "https://www.bibleodyssey.org/articles/jerusalem-in-the-amarna-letters/" },
+      { label: "Wikipedia: Amarna letters", url: "https://en.wikipedia.org/wiki/Amarna_letters" },
+    ],
+  },
+  {
+    id: "epic-of-gilgamesh",
+    name: "Epic of Gilgamesh",
+    // NOT registered: bare "Gilgamesh" — in this dataset it is used for the king as a character as
+    // often as for the poem, and the two-word forms below cover every mention that means the text.
+    alternateNames: ["Gilgamesh Epic"],
+    category: "concept",
+    role: "Akkadian Poem, Standard Version c. 1200 BC",
+    summary:
+      "The great Mesopotamian poem about a king's search for immortality — whose eleventh tablet tells a flood story so close to Genesis 6-9 that its decipherment in 1872 caused a public sensation.",
+    sections: [
+      {
+        heading: "George Smith's Announcement",
+        paragraphs: [
+          "The tablets came from the library Ashurbanipal assembled at Nineveh in the seventh century BC, excavated by Austen Henry Layard and Hormuzd Rassam and shipped in fragments to the British Museum. In 1872 George Smith, a former banknote engraver who had taught himself cuneiform while working as a museum assistant, was sorting fragments when he read an account of a flood, a ship, and a bird sent out to find land. He is said to have run about the room in his excitement. His lecture announcing it, in December 1872, made the front pages.",
+          "The poem itself is much larger than the flood episode. It follows Gilgamesh, king of Uruk, and his friend Enkidu through adventure and then through Enkidu's death, after which Gilgamesh — undone by the fact of mortality — sets out to find the one man who survived the flood and was granted unending life. The standard twelve-tablet version was compiled around 1200 BC from older Sumerian and Akkadian material going back centuries further.",
+        ],
+      },
+      {
+        heading: "Tablet XI and Genesis",
+        paragraphs: [
+          "In Tablet XI, Utnapishtim tells Gilgamesh how the gods decided to destroy humanity, how the god Ea warned him, how he built and sealed a great vessel and loaded it with his family, craftsmen, and animals, how the storm raged for days, how the boat grounded on a mountain, how he released birds — a dove, a swallow, a raven — until one did not return, and how he then offered a sacrifice on the mountaintop around which the gods gathered.",
+          "The overlap with Genesis 6-9 is not vague, and it is not honest to minimise it. The warning, the vessel, the animals, the duration, the mountain landing, the birds, the sacrifice on emerging, and even a rainbow-like token all appear in both. Anyone who has read the two will notice, and a reader who is told there is no resemblance will rightly stop trusting whoever told them.",
+        ],
+      },
+      {
+        heading: "What the Resemblance Means",
+        paragraphs: [
+          "Here scholars and Christians divide, and the divisions do not fall neatly along belief. Some hold that both accounts remember a real catastrophic flood, preserved in two traditions from a common source. Some hold that Israel knew the Mesopotamian story — Abraham came from Ur, after all — and retold it deliberately. Some hold that the Genesis account was composed in conscious argument with a story its first readers already knew, especially during the Babylonian exile. Each position has serious defenders, and the evidence does not force a choice.",
+          "What the comparison does show plainly is how differently the two tell it. In Gilgamesh, the gods send the flood because humanity has grown too numerous and too noisy for them to sleep; they quarrel about it; when it comes they are terrified of their own storm and cower like dogs against a wall; and when the sacrifice is offered they swarm around it like flies, because they have not eaten. In Genesis, one God acts alone, for a stated moral reason, grieved rather than annoyed, and afterward binds himself by a covenant never to do it again. The shared furniture makes the difference in the theology impossible to miss — which may be exactly the point.",
+        ],
+      },
+    ],
+    verses: [
+      { reference: "Genesis 6:5-8", note: "The flood as a moral judgment, and Noah finding favour" },
+      { reference: "Genesis 7:11-24", note: "The flood itself" },
+      { reference: "Genesis 8:6-12", note: "The raven and the dove" },
+      { reference: "Genesis 8:20-22", note: "The sacrifice on leaving the ark" },
+      { reference: "Genesis 9:8-17", note: "The covenant and the bow in the cloud" },
+    ],
+    sources: [
+      { label: "Bible Odyssey (SBL): Gilgamesh and the Bible", url: "https://www.bibleodyssey.org/articles/gilgamesh-and-the-bible/" },
+      { label: "Wikipedia: Epic of Gilgamesh", url: "https://en.wikipedia.org/wiki/Epic_of_Gilgamesh" },
+    ],
+  },
+  {
+    id: "enuma-elish",
+    name: "Enuma Elish",
+    alternateNames: ["Enûma Eliš", "Babylonian creation epic"],
+    category: "concept",
+    role: "Babylonian Creation Poem, Seven Tablets",
+    summary:
+      "The Babylonian account of how the world was made — Marduk killing the sea-goddess Tiamat and building the cosmos from her body — read alongside Genesis 1 ever since its publication in 1876.",
+    sections: [
+      {
+        heading: "\"When On High\"",
+        paragraphs: [
+          "The poem is named for its opening words, enuma elish, \"when on high.\" It survives on seven clay tablets, mostly from Ashurbanipal's library at Nineveh, and was published by George Smith in 1876, four years after his flood discovery. It was recited annually at the Babylonian new year festival, which tells you what it was for: it is as much a civic liturgy exalting Babylon and its god as it is a story about origins.",
+          "It begins before anything is named, with only the mingled fresh and salt waters, Apsu and Tiamat. Younger gods are born, are noisy, and are resented; Apsu plots to destroy them and is killed first. Tiamat responds by breeding monsters and making war, and the terrified gods can find no champion until Marduk agrees — on condition that they make him supreme over all of them. He kills Tiamat, splits her body like a shellfish, and makes the sky from one half and the earth from the other; he sets the stars in their courses and fixes the calendar; and finally, so that the gods need not labour, humanity is made from the blood of the slain god who led Tiamat's revolt.",
+        ],
+      },
+      {
+        heading: "Set Beside Genesis 1",
+        paragraphs: [
+          "The similarities that struck early readers are structural. Both begin with a watery, formless state; both proceed by separation — waters above from waters below, sky from earth; both set the lights in the heavens to mark seasons and days; both culminate in humanity; and the Hebrew word for the deep in Genesis 1:2, tehom, is linguistically related to the name Tiamat. In the late nineteenth and early twentieth centuries this was widely taken as evidence that Genesis was a sanitised Babylonian myth, an argument pressed hard in what became known as the Babel-Bible controversy.",
+          "The differences are at least as striking, and current scholarship weights them more heavily. Genesis has no theogony — God is not born and has no rivals. There is no combat: the deep is simply there and is simply divided, and the great sea creatures of Genesis 1:21, which in the Babylonian frame would be monsters of chaos, are listed among the things God made and called good. The sun and moon are not deities but lamps, and Genesis pointedly declines to name them. And humanity is not slave labour made from a rebel's blood but is made in God's image and blessed. Where the two overlap in idiom, Genesis reads less like a copy than like a rebuttal.",
+        ],
+      },
+      {
+        heading: "Holding It Honestly",
+        paragraphs: [
+          "Two claims should be resisted. The first is that Genesis simply borrowed from Enuma Elish; the direct-dependence case, popular a century ago, is not the mainstream position now, and the differences are too systematic to be accidental tidying. The second is that there is no relationship at all; the shared vocabulary, sequence, and imagery are real, and Israel plainly wrote within a world that told this kind of story.",
+          "The position most scholars hold, and the one this atlas takes, is in between: Genesis 1 speaks the cosmological language of its neighbours and uses it to say something they did not say. Knowing the neighbours' version makes the biblical text sharper, not weaker — you cannot hear an argument if you have never heard the position it is arguing against.",
+        ],
+      },
+    ],
+    verses: [
+      { reference: "Genesis 1:1-2", note: "The formless deep — tehom, the word related to Tiamat" },
+      { reference: "Genesis 1:6-10", note: "Separating the waters and the dry land" },
+      { reference: "Genesis 1:14-19", note: "The sun and moon as lamps, unnamed and undeified" },
+      { reference: "Genesis 1:21", note: "The great sea creatures, made and called good" },
+      { reference: "Genesis 1:26-28", note: "Humanity in God's image, not as the gods' labour force" },
+    ],
+    sources: [
+      { label: "Wikipedia: Enûma Eliš", url: "https://en.wikipedia.org/wiki/En%C3%BBma_Eli%C5%A1" },
+      { label: "Bible Odyssey (SBL): Gilgamesh and the Bible", url: "https://www.bibleodyssey.org/articles/gilgamesh-and-the-bible/" },
+    ],
+  },
+  {
+    id: "code-of-hammurabi",
+    name: "Code of Hammurabi",
+    // NOT registered: bare "Hammurabi" — that is the king, who is the subject of timeline events in
+    // his own right ("Hammurabi and the Rise of Babylon"), and linking every mention of the man to
+    // his law code would be wrong more often than right.
+    alternateNames: ["Hammurabi's Code", "Laws of Hammurabi", "Hammurabi Code", "Hammurabi stele"],
+    category: "concept",
+    role: "Babylonian Law Collection, c. 1750 BC",
+    summary:
+      "A seven-foot pillar of black stone carrying nearly three hundred laws and the king's account of why he made them — the closest and most instructive ancient parallel to the laws of Exodus.",
+    sections: [
+      {
+        heading: "Carried Off as Loot, and Found at Susa",
+        paragraphs: [
+          "The stele was set up in Babylon in the eighteenth century BC. Around 1150 BC an Elamite king raided Babylonia and carried it home as plunder, which is why a French expedition under Jacques de Morgan dug it up at Susa, in southwestern Iran, in the winter of 1901-02. It is now in the Louvre. At the top, a relief shows Hammurabi standing before the seated sun god Shamash, god of justice, receiving the rod and ring of authority; below, in tight columns of archaic cuneiform, run the laws.",
+          "They are not a code in the modern sense of a comprehensive statute book. They are a collection of rulings in the form \"if a man does X, then Y,\" framed by a prologue in which Hammurabi says the gods called him to make justice appear in the land and to keep the strong from oppressing the weak, and an epilogue heaping curses on any later king who alters them. Whether they were actually applied in court, or functioned mainly as a monument advertising the king's righteousness, is genuinely debated — surviving Babylonian court records rarely cite them.",
+        ],
+      },
+      {
+        heading: "Alongside the Book of the Covenant",
+        paragraphs: [
+          "The parallels with Exodus 21-23 are close enough to be worth reading side by side. Both are cast in the same conditional form. Both handle the goring ox, and in remarkably similar terms: an ox that has gored before, whose owner was warned and did nothing, brings the owner into liability, where a first offence does not. Both address injury to a pregnant woman, a slave's status and release, theft and restitution, deposits left with a neighbour, and the negligent builder. And both use the talion formula — an eye for an eye, a tooth for a tooth.",
+          "That is a shared legal tradition, not a borrowing. Hammurabi's laws are some five centuries older than any date proposed for Moses, and there is no evidence of direct literary dependence; what the resemblance shows is that Israel's law was written in the legal language of its world, in forms any ancient Near Eastern reader would have recognised. It is the same point as Gilgamesh and Enuma Elish, in a different register.",
+        ],
+      },
+      {
+        heading: "Where They Differ",
+        paragraphs: [
+          "The differences are where the comparison earns its keep. Hammurabi's penalties are explicitly graded by social class: the same injury costs a different amount depending on whether the victim is a free man, a commoner, or a slave, and an offence against a superior is punished far more severely than the reverse. Israel's law applies one standard and famously insists on it — \"you shall have one kind of law, for the foreigner as well as for the native-born.\" Hammurabi makes a long list of property offences capital, including theft and receiving stolen goods; the Torah does not execute for property crimes, and the balance it strikes between life and property runs consistently the other way.",
+          "The framing differs too. Hammurabi presents the laws as his own achievement, and the epilogue is largely about his reputation. The Torah presents its laws as the terms of a covenant between God and a whole people, addressed to that people in the second person — \"you shall,\" not \"if a man\" — and grounded repeatedly in a shared memory: you were slaves in Egypt, therefore do not do this to the vulnerable among you. The talion formula reads differently inside that frame, as a limit on vengeance rather than a licence for it, which is how Jesus takes it up in the Sermon on the Mount."
+        ],
+      },
+    ],
+    verses: [
+      { reference: "Exodus 21:28-32", note: "The goring ox — the closest single parallel" },
+      { reference: "Exodus 21:23-25", note: "\"Eye for eye, tooth for tooth\"" },
+      { reference: "Exodus 22:21-27", note: "The stranger, the widow, the orphan, and the poor man's cloak" },
+      { reference: "Leviticus 24:22", note: "\"One kind of law for the foreigner as well as the native-born\"" },
+      { reference: "Matthew 5:38-42", note: "Jesus on \"an eye for an eye\"" },
+    ],
+    sources: [
+      { label: "Wikipedia: Code of Hammurabi", url: "https://en.wikipedia.org/wiki/Code_of_Hammurabi" },
+      { label: "Louvre: the Code of Hammurabi stele", url: "https://collections.louvre.fr/en/ark:/53355/cl010174436" },
+      { label: "Bible Odyssey (SBL): The Ten Commandments", url: "https://www.bibleodyssey.org/articles/the-ten-commandments/" },
+    ],
+  },
 ];
