@@ -5251,6 +5251,23 @@ a.profile-links-url {
   color: var(--text-h);
 }
 
+/* Sits inline at the end of the comment text, quiet until hovered — the same "×" weight the rest of
+   the feed gives a destructive owner action, not a button competing with the comment itself. */
+.friend-post-comment-remove {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0 4px;
+  margin-left: 4px;
+  font-size: 13px;
+  line-height: 1;
+  color: var(--text-muted);
+}
+
+.friend-post-comment-remove:hover {
+  color: var(--danger);
+}
+
 .friend-post-comment-form {
   display: flex;
   gap: 6px;
