@@ -313,6 +313,117 @@
   color: #ff9d8a;
 }
 
+/* The post-signup "check your email" state — replaces the mode toggle + form entirely while
+ * pendingEmail is set, rather than a toast that vanishes and leaves the reader staring at a blank
+ * login form with no idea whether anything happened. */
+.auth-gate-check-email {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 10px;
+}
+
+.auth-gate-check-email h2 {
+  margin: 0;
+  font-family: var(--display);
+  font-size: 21px;
+  font-weight: 600;
+  color: #f7f1e3;
+}
+
+:root[data-theme="light"] .auth-gate-check-email h2 {
+  color: #2e251c;
+}
+
+.auth-gate-check-email p {
+  margin: 0;
+  font-family: var(--sans);
+  font-size: 14px;
+  line-height: 1.5;
+  color: #f2ead9;
+}
+
+:root[data-theme="light"] .auth-gate-check-email p {
+  color: #45392a;
+}
+
+.auth-gate-check-email strong {
+  color: #e5b355;
+  font-weight: 700;
+  word-break: break-all;
+}
+
+:root[data-theme="light"] .auth-gate-check-email strong {
+  color: #8a5e12;
+}
+
+/* Spam-folder steer — deliberately its own visually distinct line, not folded into the paragraph
+ * above it, since it's the single sentence most likely to actually rescue a stuck signup. */
+.auth-gate-spam-note {
+  padding: 10px 12px;
+  background: rgba(229, 179, 85, 0.12);
+  border: 1px solid rgba(229, 179, 85, 0.28);
+  border-radius: 10px;
+  font-size: 13px !important;
+  color: #e5b355 !important;
+}
+
+:root[data-theme="light"] .auth-gate-spam-note {
+  background: rgba(138, 94, 18, 0.08);
+  border-color: rgba(138, 94, 18, 0.22);
+  color: #8a5e12 !important;
+}
+
+.auth-gate-check-email .auth-gate-submit {
+  width: 100%;
+  margin-top: 6px;
+}
+
+.auth-gate-check-email-back {
+  margin: 4px 0 0;
+}
+
+/* Offered under a "email not confirmed" login error — a returning, still-unconfirmed user gets a
+ * way forward right there instead of a dead-end error message. */
+.auth-gate-unconfirmed {
+  margin-top: 10px;
+  padding-top: 10px;
+  border-top: 1px solid rgba(229, 179, 85, 0.22);
+  text-align: center;
+}
+
+:root[data-theme="light"] .auth-gate-unconfirmed {
+  border-top-color: rgba(138, 94, 18, 0.2);
+}
+
+.auth-gate-unconfirmed p {
+  margin: 0 0 6px;
+  font-family: var(--sans);
+  font-size: 13px;
+  color: #d6c7a8;
+}
+
+:root[data-theme="light"] .auth-gate-unconfirmed p {
+  color: #6e5f48;
+}
+
+.auth-gate-resend-link {
+  border: none;
+  background: none;
+  padding: 0;
+  color: #e5b355;
+  font-family: var(--sans);
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.auth-gate-resend-link:disabled {
+  opacity: 0.6;
+  cursor: default;
+}
+
 @media (min-width: 640px) {
   .auth-gate-content {
     justify-content: center;
