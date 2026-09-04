@@ -431,6 +431,86 @@ function ensureClusterSource(map: maplibregl.Map) {
   });
 }
 
+/* ==============================================================================================
+ * CLICKING A PLACE'S NAME, NOT JUST ITS PIN
+ *
+ * The names printed on the map are not ours. Our pins are DOM markers carrying an SVG teardrop and
+ * nothing else — no text — so every word a reader sees on the map ("Jerusalem", "Damascus", "Sea of
+ * Galilee") is painted into the WebGL canvas by MapLibre from the base style's own symbol layers.
+ * That is why tapping the name did nothing while tapping the pin two millimetres away opened the
+ * panel: the name is not an element, it is a picture of a word, and the only thing under the
+ * reader's finger was the map.
+ *
+ * The fix keeps the pin as the source of truth and makes the label a second door to it. On a click
+ * we ask the style what label — if any — is actually rendered under that point, take that label's
+ * own anchor coordinate, and look for one of our markers standing at the same spot. If there is
+ * one, the click does exactly what clicking that pin does.
+ *
+ * WHY GEOMETRY AND NOT NAME MATCHING. The obvious version compares the label's text to our
+ * location's name, and it fails on the cases that matter most: our names are ancient and the base
+ * map's are modern (Sychar/Nablus, Golgotha/Jerusalem), our data transliterates differently, and a
+ * name match on its own would happily fly the reader to the Antioch in the wrong country. Standing
+ * in the same place is the thing we actually mean, and it is exactly what we can measure.
+ *
+ * TWO CAPS, BOTH DELIBERATE, so the label never starts swallowing taps meant for the map or for a
+ * neighbouring label:
+ *   - The click must land on a rendered label. Not "near a pin" — ON the text. A tap on empty
+ *     parchment resolves to nothing and the map behaves exactly as it did before.
+ *   - The pin must be within LABEL_MATCH_MAX_PX of the label AND within LABEL_MATCH_MAX_KM of it.
+ *     The pixel cap is what stops a crowded zoom-12 view; the kilometre cap is what stops a
+ *     zoomed-right-out view, where 30px is a hundred miles and every label has *some* pin near it.
+ *     Either alone is wrong at the other end of the zoom range.
+ * ============================================================================================== */
+
+/** Ground distance allowed between a clicked label and the pin it resolves to — the real test of
+ * "these are the same place", and the one that does not change meaning with the zoom level.
+ *
+ * 2km is measured, not guessed, and the two measurements it sits between are only 0.66km apart.
+ * Our coordinates are hand-placed at the ancient site; OpenMapTiles uses OSM's node for the modern
+ * settlement, so the two disagree by however far one is from the other. Sampled against the live
+ * style at z11:
+ *
+ *   MUST match      Tyre 0.05km · Sidon 0.43km · Jerusalem 1.63km (our pin is on the Old City,
+ *                   OSM's node is not) · "Beit Sahur" to Shepherds' Field 0.58km
+ *   MUST NOT match  "Bethlehem" to Shepherds' Field 2.29km — the nearest thing we hold to
+ *                   Bethlehem, but two villages away from the word being tapped, and exactly the
+ *                   "swallowing the neighbouring label" this is not allowed to do
+ *
+ * Raise this and Bethlehem starts answering for Beit Sahour. Lower it and Jerusalem — the most
+ * important pin on the map — stops answering for itself. Re-measure before touching it. */
+const LABEL_MATCH_MAX_KM = 2;
+
+/** Screen distance allowed as well, so the pin you get is one you can see beside the name you
+ * tapped. This is the cap that binds when zoomed right in, where 2.5km is most of a mile of
+ * screen; the kilometre cap is the one that binds when zoomed out, where 150px is a hundred miles.
+ * Whichever is tighter wins, and the conservative direction — do nothing — is the one they fail
+ * towards. NOTE this is not the hit area: a click still has to land on the label's own glyphs. */
+const LABEL_MATCH_MAX_PX = 150;
+
+/** Padding around the click point when asking the style what is under it, in pixels. A fingertip is
+ * not a point, and a label's own hit box is only as tall as its type. Small enough that two
+ * separate words still resolve separately. */
+const LABEL_HIT_PAD_PX = 3;
+
+/** Rough great-circle distance in km. Same flat-earth approximation as createCircleFeature above,
+ * which is far more accuracy than a 6km threshold needs. */
+function kmBetween(a: [number, number], b: [number, number]): number {
+  const dx = (a[0] - b[0]) * 111.32 * Math.cos(((a[1] + b[1]) / 2) * (Math.PI / 180));
+  const dy = (a[1] - b[1]) * 110.574;
+  return Math.sqrt(dx * dx + dy * dy);
+}
+
+/** Every symbol layer in the loaded style that actually prints text — i.e. every layer capable of
+ * putting a place name under the reader's finger. Read from the style rather than hardcoded so a
+ * regenerated illuminated.json can add or rename a label layer without silently making part of the
+ * map unclickable again. Our own added layers are raster/circle/fill/line and never match. */
+function textLabelLayerIds(map: maplibregl.Map): string[] {
+  return map
+    .getStyle()
+    .layers.filter((layer) => layer.type === "symbol" && "layout" in layer && layer.layout?.["text-field"] !== undefined)
+    .map((layer) => layer.id);
+}
+
 /** Category → pin color class. Cities keep the default accent purple; the rest group into
  * regions/provinces/nations, water features, and terrain so the map is scannable at a glance
  * (mirrored by the Legend in LayerControls via the shared --pin-* variables in App.css). */
@@ -699,6 +779,73 @@ export default function MapView({
       map.on("sourcedata", (e) => {
         if (e.sourceId === CLUSTER_SOURCE_ID && e.isSourceLoaded) updateClusterView(map);
       });
+
+      // --- Clicking a place's NAME (see the block comment above LABEL_MATCH_MAX_PX) ------------
+      const labelLayerIds = textLabelLayerIds(map);
+
+      /** The pin a click on a rendered place name resolves to, or null for "this was a click on the
+       * map". Only ever returns a marker that is currently ON SCREEN — a place folded into a
+       * cluster badge has no pin to stand in for it, and jumping to one the reader cannot see would
+       * be a different feature than the one asked for. */
+      const pinUnderLabel = (e: maplibregl.MapMouseEvent): { kind: "loc" | "poi"; id: string } | null => {
+        if (labelLayerIds.length === 0) return null;
+        const { x, y } = e.point;
+        const hits = map.queryRenderedFeatures(
+          [
+            [x - LABEL_HIT_PAD_PX, y - LABEL_HIT_PAD_PX],
+            [x + LABEL_HIT_PAD_PX, y + LABEL_HIT_PAD_PX],
+          ],
+          { layers: labelLayerIds },
+        );
+        if (hits.length === 0) return null;
+
+        // A point label's own coordinate is the honest anchor. River and country names run along a
+        // line or sit inside a polygon, where there is no single point to compare against — for
+        // those the click itself is the best anchor we have, and the two caps below still apply.
+        const top = hits[0];
+        const anchor: [number, number] =
+          top.geometry.type === "Point"
+            ? ((top.geometry as Point).coordinates as [number, number])
+            : (map.unproject(e.point).toArray() as [number, number]);
+        const anchorPx = map.project(anchor);
+
+        let best: { kind: "loc" | "poi"; id: string } | null = null;
+        let bestPx = LABEL_MATCH_MAX_PX;
+
+        const consider = (kind: "loc" | "poi", id: string, marker: maplibregl.Marker) => {
+          // display:"none" is exactly how updateClusterView hides a clustered or filtered-out pin.
+          if (marker.getElement().style.display === "none") return;
+          const lngLat = marker.getLngLat();
+          if (kmBetween([lngLat.lng, lngLat.lat], anchor) > LABEL_MATCH_MAX_KM) return;
+          const px = map.project(lngLat);
+          const d = Math.hypot(px.x - anchorPx.x, px.y - anchorPx.y);
+          if (d >= bestPx) return;
+          bestPx = d;
+          best = { kind, id };
+        };
+
+        Object.entries(markersRef.current).forEach(([id, m]) => consider("loc", id, m));
+        Object.entries(poiMarkersRef.current).forEach(([id, m]) => consider("poi", id, m));
+        return best;
+      };
+
+      map.on("click", (e) => {
+        const hit = pinUnderLabel(e);
+        if (!hit) return;
+        // Whatever the pin does, the label does — literally the same two handlers the marker
+        // elements' own click listeners call above.
+        if (hit.kind === "loc") onSelect(hit.id);
+        else onSelectPoi(hit.id);
+      });
+
+      // Desktop affordance to match the pin's `cursor: pointer`: a name you can click should say so
+      // before you click it. Skipped while the reader is dragging the map, when the pointer is
+      // sweeping across labels it has no intention of pressing.
+      map.on("mousemove", (e) => {
+        if (map.isMoving()) return;
+        map.getCanvas().style.cursor = pinUnderLabel(e) ? "pointer" : "";
+      });
+
       styleReadyRef.current = true;
       setStyleReady(true);
       onMapLoad(map);
