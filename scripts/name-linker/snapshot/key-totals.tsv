@@ -360,6 +360,8 @@ location	ziklag	ziklag	reader	15
 person	aaron	aaron	panel	352
 person	aaron	aaron	prose	18
 person	aaron	aaron	reader	352
+person	abba	god-the-father	panel	1
+person	abba	god-the-father	reader	1
 person	abba, father	god-the-father	panel	2
 person	abba, father	god-the-father	reader	2
 person	abel	abel	panel	23
@@ -440,6 +442,9 @@ person	balaam son of beor	balaam	prose	1
 person	barnabas	barnabas	panel	29
 person	barnabas	barnabas	prose	20
 person	barnabas	barnabas	reader	29
+person	bartholomew	bartholomew-nathanael	panel	4
+person	bartholomew	bartholomew-nathanael	prose	1
+person	bartholomew	bartholomew-nathanael	reader	4
 person	bathsheba	bathsheba	panel	11
 person	bathsheba	bathsheba	prose	13
 person	bathsheba	bathsheba	reader	11
@@ -517,6 +522,8 @@ person	didymus	thomas-apostle	reader	3
 person	diotrephes	diotrephes	panel	1
 person	diotrephes	diotrephes	prose	3
 person	diotrephes	diotrephes	reader	1
+person	dorcas	dorcas-tabitha	panel	2
+person	dorcas	dorcas-tabitha	reader	2
 person	drusilla	drusilla	panel	1
 person	drusilla	drusilla	prose	2
 person	drusilla	drusilla	reader	1
@@ -616,12 +623,18 @@ person	isaiah	isaiah	reader	53
 person	jacob	jacob	panel	381
 person	jacob	jacob	prose	76
 person	jacob	jacob	reader	381
-person	james	james-brother-of-jesus	reader	13
-person	james	james-son-of-zebedee	panel	42
+person	james	james-brother-of-jesus	reader	10
+person	james	james-son-of-zebedee	panel	32
 person	james	james-son-of-zebedee	prose	54
-person	james	james-son-of-zebedee	reader	28
+person	james	james-son-of-zebedee	reader	22
 person	james the just	james-brother-of-jesus	prose	1
+person	james the son of alphaeus	james-son-of-alphaeus	panel	2
+person	james the son of alphaeus	james-son-of-alphaeus	reader	2
+person	james the son of zebedee	james-son-of-zebedee	panel	4
+person	james the son of zebedee	james-son-of-zebedee	reader	4
 person	james, son of zebedee	james-son-of-zebedee	prose	2
+person	james, the son of alphaeus	james-son-of-alphaeus	panel	2
+person	james, the son of alphaeus	james-son-of-alphaeus	reader	2
 person	jeconiah	jeconiah	panel	7
 person	jeconiah	jeconiah	prose	3
 person	jeconiah	jeconiah	reader	7
@@ -692,13 +705,15 @@ person	josiah	josiah	reader	32
 person	jotham	jotham-king-of-judah	panel	25
 person	jotham	jotham-king-of-judah	prose	2
 person	jotham	jotham-king-of-judah	reader	15
-person	judas	judas-iscariot	panel	23
+person	judas	judas-iscariot	panel	21
 person	judas	judas-iscariot	prose	10
 person	judas	judas-iscariot	reader	19
-person	judas	thaddaeus	reader	3
+person	judas	thaddaeus	reader	1
 person	judas iscariot	judas-iscariot	panel	7
 person	judas iscariot	judas-iscariot	prose	4
 person	judas iscariot	judas-iscariot	reader	7
+person	judas the son of james	thaddaeus	panel	2
+person	judas the son of james	thaddaeus	reader	2
 person	junia	junia	panel	1
 person	junia	junia	reader	1
 person	king agrippa	herod-agrippa-ii	panel	7
@@ -736,7 +751,8 @@ person	mark	john-mark	reader	36
 person	martha	martha-of-bethany	panel	13
 person	martha	martha-of-bethany	prose	6
 person	martha	martha-of-bethany	reader	13
-person	martin luther	martin-luther	prose	3
+person	martin luther	martin-luther	prose	2
+person	martin luther king	martin-luther-king-jr	prose	1
 person	mary	mary-magdalene	reader	3
 person	mary	mary-mother-of-james-the-less	reader	7
 person	mary	mary-mother-of-jesus	panel	42
@@ -753,6 +769,8 @@ person	mary, mother of jesus	mary-mother-of-jesus	prose	2
 person	matthan	matthan	panel	2
 person	matthan	matthan	prose	3
 person	matthan	matthan	reader	2
+person	matthew the tax collector	matthew-levi	panel	1
+person	matthew the tax collector	matthew-levi	reader	1
 person	melchizedek	melchizedek	panel	11
 person	melchizedek	melchizedek	prose	2
 person	melchizedek	melchizedek	reader	11
@@ -775,6 +793,9 @@ person	nahshon	nahshon	reader	13
 person	naomi	naomi	panel	21
 person	naomi	naomi	prose	24
 person	naomi	naomi	reader	21
+person	nathan	nathan-the-prophet	panel	44
+person	nathan	nathan-the-prophet	prose	11
+person	nathan	nathan-the-prophet	reader	30
 person	nathanael	bartholomew-nathanael	panel	6
 person	nathanael	bartholomew-nathanael	prose	1
 person	nathanael	bartholomew-nathanael	reader	6
@@ -876,11 +897,13 @@ person	sarai	sarah	reader	17
 person	satan	satan	panel	55
 person	satan	satan	prose	14
 person	satan	satan	reader	55
-person	saul	paul-of-tarsus	panel	420
+person	saul	paul-of-tarsus	panel	416
 person	saul	paul-of-tarsus	prose	70
-person	saul	paul-of-tarsus	reader	31
-person	saul	saul-king-of-israel	reader	389
+person	saul	paul-of-tarsus	reader	30
+person	saul	saul-king-of-israel	reader	386
 person	saul of tarsus	paul-of-tarsus	prose	4
+person	saul the son of kish	saul-king-of-israel	panel	4
+person	saul the son of kish	saul-king-of-israel	reader	4
 person	sergius paulus	sergius-paulus	panel	1
 person	sergius paulus	sergius-paulus	prose	4
 person	sergius paulus	sergius-paulus	reader	1
@@ -894,9 +917,12 @@ person	silvanus	silas	reader	4
 person	simeon	simeon-at-the-temple	panel	49
 person	simeon	simeon-at-the-temple	prose	5
 person	simeon	simeon-at-the-temple	reader	3
+person	simon	simon-magus	reader	4
+person	simon	simon-of-cyrene	reader	1
 person	simon	simon-peter	panel	51
 person	simon	simon-peter	prose	16
-person	simon	simon-peter	reader	45
+person	simon	simon-peter	reader	35
+person	simon	simon-the-pharisee	reader	3
 person	simon of cyrene	simon-of-cyrene	panel	2
 person	simon of cyrene	simon-of-cyrene	reader	2
 person	simon peter	simon-peter	panel	20
@@ -929,6 +955,8 @@ person	stephen	stephen-the-martyr	reader	7
 person	tabitha	dorcas-tabitha	panel	2
 person	tabitha	dorcas-tabitha	reader	2
 person	teresa of ávila	teresa-of-avila	prose	1
+person	thaddaeus	thaddaeus	panel	2
+person	thaddaeus	thaddaeus	reader	2
 person	the accuser	satan	panel	2
 person	the accuser	satan	prose	4
 person	the accuser	satan	reader	2
@@ -1000,11 +1028,17 @@ poi	amphipolis	amphipolis	panel	1
 poi	amphipolis	amphipolis	prose	1
 poi	amphipolis	amphipolis	reader	1
 poi	ancient agora of athens	ancient-agora-athens	prose	1
+poi	antipatris	antipatris	panel	1
+poi	antipatris	antipatris	reader	1
 poi	antonia fortress	antonia-fortress	prose	1
 poi	apollonia	apollonia-macedonia	panel	1
 poi	apollonia	apollonia-macedonia	reader	1
+poi	areopagus	areopagus-athens	panel	2
+poi	areopagus	areopagus-athens	prose	5
+poi	areopagus	areopagus-athens	reader	2
 poi	assos	assos	panel	2
 poi	assos	assos	reader	2
+poi	bab kisan	bab-kisan-damascus	prose	1
 poi	basilica of st. john	basilica-st-john	prose	1
 poi	basilica of the annunciation	basilica-of-annunciation-nazareth	prose	2
 poi	beersheba	beersheba	panel	34
@@ -1065,6 +1099,7 @@ poi	magdala	magdala	panel	1
 poi	magdala	magdala	prose	7
 poi	magdala	magdala	reader	1
 poi	mamertine prison	mamertine-prison-rome	prose	1
+poi	mars hill	areopagus-athens	prose	1
 poi	masada	masada	prose	4
 poi	megiddo	megiddo	panel	12
 poi	megiddo	megiddo	prose	6
@@ -1072,6 +1107,8 @@ poi	megiddo	megiddo	reader	12
 poi	mount sinai	mount-sinai	panel	21
 poi	mount sinai	mount-sinai	prose	9
 poi	mount sinai	mount-sinai	reader	21
+poi	neapolis	neapolis-philippi-port	panel	1
+poi	neapolis	neapolis-philippi-port	reader	1
 poi	paphos	paphos	panel	2
 poi	paphos	paphos	prose	2
 poi	paphos	paphos	reader	2
@@ -1101,6 +1138,8 @@ poi	shiloh	shiloh	reader	33
 poi	siloam	pool-of-siloam	panel	1
 poi	siloam	pool-of-siloam	prose	3
 poi	siloam	pool-of-siloam	reader	1
+poi	straight street	straight-street-damascus	prose	1
+poi	street called straight	straight-street-damascus	prose	2
 poi	syracuse	syracuse	panel	1
 poi	syracuse	syracuse	prose	1
 poi	syracuse	syracuse	reader	1
@@ -1110,6 +1149,7 @@ poi	tomb of lazarus	tomb-of-lazarus-bethany	prose	1
 poi	upper room	upper-room	panel	13
 poi	upper room	upper-room	prose	2
 poi	upper room	upper-room	reader	13
+poi	via recta	straight-street-damascus	prose	1
 poi	western wall	western-wall	prose	3
 timeline	absalom's rebellion	bib-um-absaloms-rebellion	prose	1
 timeline	azusa street revival	azusa-street-revival-1906	prose	1

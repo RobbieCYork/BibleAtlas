@@ -81,12 +81,15 @@ console.log(`  ${DIM}Additionally ignoring sentence-initial capitals would reach
 if (withProse) {
   const blocks = await loadProseBlocks();
   let pn = 0, plow = 0;
+  console.log(`\n--- prose ---`);
   for (const b of blocks) {
     for (const a of computeLinkAnnotations(b.text, b.owner)) {
       if (a.text.toLowerCase() !== needle) continue;
       pn++;
       if (!/^[A-Z]/.test(a.text)) plow++;
-      console.log(`  ${DIM}prose${OFF} ${b.src} (${b.owner ?? "-"}) ${JSON.stringify(a.text)} -> ${a.id}`);
+      console.log(`${b.src} (${b.owner ?? "-"}) -> ${a.id}`);
+      console.log(`    ${DIM}…${b.text.slice(Math.max(0, a.start - CTX), a.start)}«${a.text}»` +
+        `${b.text.slice(a.end, a.end + CTX)}…${OFF}`);
     }
   }
   console.log(`\n  prose: ${pn} occurrences, ${plow} of them lowercase`);

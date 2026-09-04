@@ -1888,6 +1888,9 @@ export const pois: PointOfInterest[] = [
     id: "straight-street-damascus",
     name: "Street Called Straight (Via Recta)",
     pronunciation: "VEE-uh REK-tuh",
+    // The bracketed display name can never match. Acts 9:11 words it "the street which is called
+    // Straight", which no single key can reach; these cover how our own writing refers to it.
+    alternateNames: ["Street Called Straight", "Via Recta", "Straight Street"],
     tag: "Historic Street",
     modernName: "Medhat Pasha Street / Bab Sharqi Street, Damascus, Syria",
     coordinates: [36.3114, 33.5092],
@@ -1941,6 +1944,7 @@ export const pois: PointOfInterest[] = [
     id: "bab-kisan-damascus",
     name: "Bab Kisan (St. Paul's Window)",
     pronunciation: "bahb kee-SAHN",
+    alternateNames: ["Bab Kisan"],
     tag: "Traditional Site",
     modernName: "Southeastern Old City Wall, Damascus, Syria",
     coordinates: [36.3153, 33.5064],
@@ -1993,6 +1997,9 @@ export const pois: PointOfInterest[] = [
     id: "antipatris",
     name: "Antipatris (Tel Afek)",
     pronunciation: "an-TIP-uh-triss",
+    // Acts 23:31 names Antipatris outright — the only place Scripture does — and until now the
+    // bracketed display name meant nothing in the app could link to it.
+    alternateNames: ["Antipatris", "Tel Afek"],
     tag: "Archaeological Site",
     modernName: "Yarkon-Tel Afek National Park, near Rosh HaAyin, Israel",
     coordinates: [34.9304, 32.105],
@@ -2072,6 +2079,7 @@ export const pois: PointOfInterest[] = [
     id: "bema-of-corinth",
     name: "Bema of Corinth (Judgment Seat)",
     pronunciation: "BEE-muh of KOR-inth",
+    alternateNames: ["Bema of Corinth"],
     tag: "Monument",
     modernName: "Ancient Corinth, Corinthia, Greece",
     coordinates: [22.8803, 37.9051],
@@ -2152,6 +2160,9 @@ export const pois: PointOfInterest[] = [
     id: "areopagus-athens",
     name: "Areopagus (Mars Hill)",
     pronunciation: "air-ee-OP-uh-gus",
+    // Acts 17:19 and 17:22 — where Paul preaches to the Athenians — both name the Areopagus, and
+    // neither could link to it.
+    alternateNames: ["Areopagus", "Mars Hill"],
     tag: "Ancient Site",
     modernName: "Athens, Attica, Greece",
     coordinates: [23.7238, 37.9715],
@@ -2286,6 +2297,7 @@ export const pois: PointOfInterest[] = [
     id: "church-of-mary-ephesus",
     name: "Church of Mary (Double Church)",
     pronunciation: "CHURCH of MAIR-ee",
+    alternateNames: ["Church of Mary"],
     tag: "Council Basilica",
     modernName: "Ephesus archaeological site, near Selçuk, İzmir Province, Turkey",
     coordinates: [27.33948, 37.94502],
@@ -2627,6 +2639,7 @@ export const pois: PointOfInterest[] = [
     id: "catacombs-of-callixtus-rome",
     name: "Catacombs of San Callisto (Callixtus)",
     pronunciation: "KAT-uh-koomz of san kah-LEES-toh",
+    alternateNames: ["Catacombs of San Callisto", "Catacombs of Callixtus"],
     tag: "Catacomb",
     modernName: "Rome, Italy (Via Appia Antica)",
     coordinates: [12.5106, 41.8586],
@@ -2749,6 +2762,8 @@ export const pois: PointOfInterest[] = [
     id: "neapolis-philippi-port",
     name: "Neapolis (Philippi's Port)",
     pronunciation: "nee-AP-uh-liss",
+    // Acts 16:11 — Paul's landfall in Europe. Named in Scripture, unlinkable until now.
+    alternateNames: ["Neapolis"],
     tag: "Ancient Port",
     modernName: "Kavala, Greece",
     coordinates: [24.4, 40.933],
@@ -2847,6 +2862,8 @@ export const pois: PointOfInterest[] = [
     id: "megiddo-church",
     name: "Megiddo Church (Christian Prayer Hall)",
     pronunciation: "meh-GID-oh CHURCH",
+    // Longer than the "Megiddo" POI key, so it wins wherever the full phrase is written out.
+    alternateNames: ["Megiddo Church"],
     tag: "Early Christian Prayer Hall",
     modernName: "Megiddo Prison, near Tel Megiddo, Israel",
     coordinates: [35.191306, 32.571167],

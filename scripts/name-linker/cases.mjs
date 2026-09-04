@@ -48,8 +48,12 @@ export const CASES = [
   { ref: "Luke 6:16", surface: "Judas", occurrence: 1, expect: "thaddaeus", status: "guard",
     why: "'Judas the son of James' is Thaddaeus; the verse's second Judas matches the longer key " +
          "'Judas Iscariot' and is unaffected." },
-  { ref: "Luke 6:16", surface: "James", expect: null, status: "guard",
-    why: "Thaddaeus's father James has no entry — suppressed rather than mislinked." },
+  { ref: "Luke 6:16", surface: "James", expect: "thaddaeus", expectSurface: "Judas the son of James",
+    status: "guard",
+    why: "Thaddaeus's father James still gets no link of his own. Since batch 1 the whole phrase " +
+         "'Judas the son of James' is one link to Thaddaeus, the way 'Simon the Zealot' already " +
+         "was — so the father is inside a link, not the target of one. expectSurface pins that " +
+         "distinction: if 'James' ever becomes a link to a James again, this fails." },
   { ref: "Matthew 13:55", surface: "James", expect: "james-brother-of-jesus", status: "guard",
     why: "The Nazareth crowd lists Jesus' brothers (fixed in 858d05c)." },
   { ref: "Matthew 13:55", surface: "Simon", expect: null, status: "guard",
@@ -161,39 +165,70 @@ export const CASES = [
   // ─────────────────────────────────────────────────────────────────────────────────────────
   // Batch 1 — registrations the linker can never reach, and wordings it does not know.
   // ─────────────────────────────────────────────────────────────────────────────────────────
-  { ref: "Acts 1:13", surface: "James", occurrence: 1, expect: "james-son-of-zebedee", status: "known-wrong",
-    why: "The apostle list's first James is Zebedee's son. All three of this verse's Jameses " +
-         "currently resolve to james-brother-of-jesus, which is wrong for every one of them." },
-  { ref: "Acts 1:13", surface: "James the son of Alphaeus", expect: "james-son-of-alphaeus", status: "known-wrong",
-    why: "The app has this man (james-son-of-alphaeus) but registers him as 'James, son of Alphaeus' " +
-         "— with a comma — so the wording Scripture actually uses never matches." },
-  { ref: "Acts 1:13", surface: "Judas the son of James", expect: "thaddaeus", status: "known-wrong",
-    why: "Registered as 'Judas, son of James'. Matching the long form also removes the third bare " +
-         "'James' (the father), who has no entry and should not be linked at all." },
+  { ref: "Acts 1:13", surface: "James", occurrence: 1, expect: "james-son-of-zebedee",
+    expectSurface: "James", status: "guard",
+    why: "FIXED in batch 1. The apostle list's first James is Zebedee's son. Until batch 1 all " +
+         "three of this verse's Jameses resolved to james-brother-of-jesus — wrong for every one." },
+  { ref: "Acts 1:13", surface: "James the son of Alphaeus", expect: "james-son-of-alphaeus", status: "guard",
+    why: "FIXED in batch 1 by registering the wording the translations actually use. The app had " +
+         "this man all along and spelled him 'James, son of Alphaeus', with a comma." },
+  { ref: "Acts 1:13", surface: "Judas the son of James", expect: "thaddaeus", status: "guard",
+    why: "FIXED in batch 1. Matching the long form also removes the verse's third bare 'James' " +
+         "(Thaddaeus's father), who has no entry and should not be linked at all." },
+  { ref: "Acts 1:13", surface: "James", occurrence: 3, expect: "thaddaeus",
+    expectSurface: "Judas the son of James", status: "guard",
+    why: "The third James — Thaddaeus's father — is now inside the Judas link rather than being " +
+         "mislinked to a James of his own. This is the case that proves Acts 1:13 is closed." },
   { ref: "Acts 1:13", surface: "Simon the Zealot", expect: "simon-the-zealot", status: "guard",
     why: "Already correct — and the proof that longest-match resolution works when the registered " +
          "string matches the translation. The rest of this verse is the same fix." },
-  { ref: "Acts 1:13", surface: "Bartholomew", expect: "bartholomew-nathanael", status: "known-wrong",
-    why: "The entry is named 'Bartholomew (Nathanael)'; the closing bracket makes the key " +
-         "unreachable, so 'Bartholomew' links nowhere in the app." },
+  { ref: "Acts 1:13", surface: "Bartholomew", expect: "bartholomew-nathanael", status: "guard",
+    why: "FIXED in batch 1. The entry is named 'Bartholomew (Nathanael)'; the closing bracket made " +
+         "the key unreachable, so 'Bartholomew' linked nowhere in the app." },
+  { ref: "Acts 1:13", surface: "Matthew", expect: "matthew-levi", status: "known-wrong",
+    why: "STILL UNLINKED, deliberately. 'Matthew (Levi)' is unreachable behind its bracket, and " +
+         "registering bare 'Matthew' was tried and reverted: it fired on 85 mentions in our own " +
+         "articles that all mean the Gospel, not the man. See the note in people.ts. Closing this " +
+         "needs the prose surface fixed first (batch 7), not a dictionary entry." },
   { ref: "Mark 15:21", surface: "Simon of Cyrene", expect: "simon-of-cyrene", status: "guard",
     why: "Already correct. CORRECTS the scoping document, which claimed simon-of-cyrene was " +
          "unreachable: 'Simon of Cyrene' IS a registered key and Mark spells it that way." },
   { ref: "Luke 23:26", surface: "Simon of Cyrene", expect: "simon-of-cyrene", status: "guard",
     why: "Already correct, same reason." },
-  { ref: "Matthew 27:32", surface: "Simon", expect: "simon-of-cyrene", status: "known-wrong",
-    why: "The one Cyrene verse that IS wrong: Matthew words it 'a man of Cyrene, Simon by name', so " +
-         "the registered long key cannot match and the bare name falls through to Peter. Needs a " +
-         "per-verse entry, not a dictionary one." },
-  { ref: "Acts 8:9", surface: "Simon", expect: "simon-magus", status: "known-wrong",
-    why: "The sorcerer who tries to buy the Holy Spirit, rendered as the chief apostle." },
-  { ref: "Acts 8:18", surface: "Simon", expect: "simon-magus", status: "known-wrong",
-    why: "'when Simon saw that the Holy Spirit was given... he offered them money'." },
-  { ref: "Luke 7:40", surface: "Simon", expect: "simon-the-pharisee", status: "known-wrong",
-    why: "The Pharisee hosting the anointing dinner, rendered as Simon Peter." },
-  { ref: "2 Samuel 12:1", surface: "Nathan", expect: "nathan-the-prophet", status: "known-wrong",
-    why: "The prophet who confronts David. The entry is named 'Nathan (Prophet)', so the key is " +
-         "unreachable and Nathan links nowhere in the app at all." },
+  { ref: "Matthew 27:32", surface: "Simon", expect: "simon-of-cyrene", status: "guard",
+    why: "FIXED in batch 1, per-verse. Matthew words it 'a man of Cyrene, Simon by name', so the " +
+         "registered long key cannot match and the bare name fell through to Peter." },
+  { ref: "Acts 8:9", surface: "Simon", expect: "simon-magus", status: "guard",
+    why: "FIXED in batch 1. The sorcerer who tries to buy the Holy Spirit, previously rendered as " +
+         "the chief apostle in the passage where Peter rebukes him." },
+  { ref: "Acts 8:18", surface: "Simon", expect: "simon-magus", status: "guard",
+    why: "FIXED in batch 1." },
+  { ref: "Acts 8:20", surface: "Peter", expect: "simon-peter", status: "guard",
+    why: "Peter is still Peter in the same passage — the Acts 8 override is keyed to 'simon', not " +
+         "to the whole chapter." },
+  { ref: "Luke 7:40", surface: "Simon", expect: "simon-the-pharisee", status: "guard",
+    why: "FIXED in batch 1. The Pharisee hosting the anointing dinner, previously Simon Peter." },
+  { ref: "Acts 9:43", surface: "Simon", expect: null, status: "guard",
+    why: "FIXED in batch 1. Simon the tanner of Joppa — a different man with no entry, so no link." },
+  { ref: "Acts 10:32", surface: "Simon", occurrence: 2, expect: null, status: "known-wrong",
+    why: "STILL WRONG, and not fixable the way the rest were: this verse names BOTH Simons — " +
+         "'summon Simon, who is also called Peter... in the house of a tanner named Simon' — and a " +
+         "per-verse override applies one answer to every match in the verse. Needs occurrence-aware " +
+         "resolution (batch 6). Left alone rather than half-fixed." },
+  { ref: "Acts 13:21", surface: "Saul the son of Kish", expect: "saul-king-of-israel", status: "guard",
+    why: "FIXED in batch 1 by registering the phrase. Israel's first king had been rendered as " +
+         "Paul of Tarsus, inside Paul's own sermon at Pisidian Antioch. The same key also corrects " +
+         "1 Samuel 10:21, 1 Chronicles 12:1 and 26:28 on the panel path." },
+  { ref: "2 Samuel 12:1", surface: "Nathan", expect: "nathan-the-prophet", status: "guard",
+    why: "FIXED in batch 1. The prophet who confronts David over Bathsheba. His entry is named " +
+         "'Nathan (Prophet)', which the linker could never match, so Nathan linked nowhere at all." },
+  { ref: "2 Samuel 5:14", surface: "Nathan", expect: null, status: "guard",
+    why: "A son born to David in Jerusalem — a different Nathan, no entry, suppressed per-verse." },
+  { ref: "Luke 3:31", surface: "Nathan", expect: null, status: "guard",
+    why: "David's son again, in Jesus' genealogy. Luke is outside Nathan's book allowlist." },
+  { ref: "1 Kings 4:5", surface: "Nathan", occurrence: 1, expect: null, status: "guard",
+    why: "'Azariah the son of Nathan' / 'Zabud the son of Nathan' — commentators divide over " +
+         "whether this Nathan is the prophet or David's son. Left unlinked rather than guessed." },
 
   // ─────────────────────────────────────────────────────────────────────────────────────────
   // Batch 3 — two kings named Joram reigning at once, and the last king of Israel.

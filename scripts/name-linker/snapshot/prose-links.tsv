@@ -285,6 +285,7 @@ bookIntro.summary|-|2b4b57d0f2	51	Josiah	josiah
 bookIntro.summary|-|2f41905208	0	Paul	paul-of-tarsus
 bookIntro.summary|-|2f41905208	201	Jesus	jesus-of-nazareth
 bookIntro.summary|-|342cfc945c	0	Paul	paul-of-tarsus
+bookIntro.summary|-|34ed5bc686	161	Nathan	nathan-the-prophet
 bookIntro.summary|-|34ed5bc686	20	David	david
 bookIntro.summary|-|34ed5bc686	200	David	david
 bookIntro.summary|-|34ed5bc686	6	Saul	paul-of-tarsus
@@ -369,6 +370,7 @@ bookIntro.summary|-|6346e3ac12	218	Mark	john-mark
 bookIntro.summary|-|6346e3ac12	352	Jesus	jesus-of-nazareth
 bookIntro.summary|-|63b684e0b7	138	Jesus	jesus-of-nazareth
 bookIntro.summary|-|63b684e0b7	47	Jesus	jesus-of-nazareth
+bookIntro.summary|-|656f78313f	111	Nathan	nathan-the-prophet
 bookIntro.summary|-|656f78313f	144	David	david
 bookIntro.summary|-|656f78313f	28	David	david
 bookIntro.summary|-|656f78313f	56	Bathsheba	bathsheba
@@ -837,6 +839,7 @@ person.controversies|cain|27e64c69da	168	mark	john-mark
 person.controversies|cain|27e64c69da	304	mark	john-mark
 person.controversies|cain|27e64c69da	5	mark	john-mark
 person.controversies|david|d9f19f17a6	16	Bathsheba	bathsheba
+person.controversies|david|d9f19f17a6	180	Nathan	nathan-the-prophet
 person.controversies|david|d9f19f17a6	473	Saul	paul-of-tarsus
 person.controversies|drusilla|64d0d8d332	82	Felix	antonius-felix
 person.controversies|enoch|3237349214	67	Cain	cain
@@ -1201,7 +1204,9 @@ person.lifeStory|bartholomew-nathanael|c1ab57ea31	24	Philip	philip-the-apostle
 person.lifeStory|bartholomew-nathanael|c1ab57ea31	3	John	john-the-baptist
 person.lifeStory|bartholomew-nathanael|c1ab57ea31	460	Jesus	jesus-of-nazareth
 person.lifeStory|bartholomew-nathanael|c1ab57ea31	75	Jesus of Nazareth	jesus-of-nazareth
+person.lifeStory|bathsheba|197adb44f6	12	Nathan	nathan-the-prophet
 person.lifeStory|bathsheba|197adb44f6	140	David	david
+person.lifeStory|bathsheba|197adb44f6	173	Nathan	nathan-the-prophet
 person.lifeStory|bathsheba|197adb44f6	30	David	david
 person.lifeStory|bathsheba|197adb44f6	336	David	david
 person.lifeStory|bathsheba|197adb44f6	392	David	david
@@ -1214,8 +1219,10 @@ person.lifeStory|bathsheba|78b480d832	302	David	david
 person.lifeStory|bathsheba|78b480d832	364	Solomon	solomon
 person.lifeStory|bathsheba|78b480d832	398	Solomon	solomon
 person.lifeStory|bathsheba|78b480d832	6	Solomon	solomon
+person.lifeStory|bathsheba|9035093c30	144	Nathan	nathan-the-prophet
 person.lifeStory|bathsheba|9035093c30	178	David	david
 person.lifeStory|bathsheba|9035093c30	226	Solomon	solomon
+person.lifeStory|bathsheba|9035093c30	281	Nathan	nathan-the-prophet
 person.lifeStory|bathsheba|9035093c30	297	Solomon	solomon
 person.lifeStory|bathsheba|9035093c30	70	David	david
 person.lifeStory|bathsheba|befb09465d	142	David	david
@@ -1233,7 +1240,7 @@ person.lifeStory|bernice|d481de7222	242	Festus	porcius-festus
 person.lifeStory|bernice|d481de7222	28	Herod Agrippa I	herod-agrippa-i
 person.lifeStory|bernice|d481de7222	336	Paul	paul-of-tarsus
 person.lifeStory|bernice|d481de7222	71	Herod the Great	herod-the-great
-person.lifeStory|billy-graham|296f1defa1	315	Martin Luther	martin-luther
+person.lifeStory|billy-graham|296f1defa1	315	Martin Luther King	martin-luther-king-jr
 person.lifeStory|boaz|0768167222	0	Naomi	naomi
 person.lifeStory|boaz|0768167222	245	Ruth	ruth
 person.lifeStory|boaz|56b9cd7378	26	Obed	obed
@@ -1318,6 +1325,7 @@ person.lifeStory|daniel|060b0f2c4a	153	ram	ram-son-of-hezron
 person.lifeStory|daniel|1aaadda0c9	17	Jesus	jesus-of-nazareth
 person.lifeStory|daniel|1aaadda0c9	264	Jesus	jesus-of-nazareth
 person.lifeStory|daniel|cdf55f7bc9	188	Azariah	uzziah
+person.lifeStory|david|04ac042ff6	109	Nathan	nathan-the-prophet
 person.lifeStory|david|04ac042ff6	471	mark	john-mark
 person.lifeStory|david|09d3723198	187	Saul	paul-of-tarsus
 person.lifeStory|david|09d3723198	277	Saul	paul-of-tarsus
@@ -1330,6 +1338,7 @@ person.lifeStory|david|9cdfeeda74	53	Solomon	solomon
 person.lifeStory|david|9cdfeeda74	73	Bathsheba	bathsheba
 person.lifeStory|david|a6771289c6	263	Bathsheba	bathsheba
 person.lifeStory|david|a6771289c6	298	Uriah the Hittite	uriah-the-hittite
+person.lifeStory|david|a6771289c6	406	Nathan	nathan-the-prophet
 person.lifeStory|david|a88ff0c1f8	26	Jesse	jesse
 person.lifeStory|david|a88ff0c1f8	360	Saul	paul-of-tarsus
 person.lifeStory|david|a88ff0c1f8	84	Samuel	samuel
@@ -2742,6 +2751,7 @@ person.lifeStory|solomon|3f9e7f2cdb	75	Rehoboam	rehoboam
 person.lifeStory|solomon|a282caf56d	145	David	david
 person.lifeStory|solomon|a282caf56d	213	Bathsheba	bathsheba
 person.lifeStory|solomon|a282caf56d	23	David	david
+person.lifeStory|solomon|a282caf56d	239	Nathan	nathan-the-prophet
 person.lifeStory|solomon|a282caf56d	262	David	david
 person.lifeStory|solomon|a282caf56d	33	Bathsheba	bathsheba
 person.lifeStory|solomon|adba1f95ef	279	David	david
@@ -2822,6 +2832,7 @@ person.lifeStory|titus|eeabb89725	67	Paul	paul-of-tarsus
 person.lifeStory|uriah-the-hittite|4263282edc	12	David	david
 person.lifeStory|uriah-the-hittite|4263282edc	382	David	david
 person.lifeStory|uriah-the-hittite|4263282edc	398	Bathsheba	bathsheba
+person.lifeStory|uriah-the-hittite|4263282edc	464	Nathan	nathan-the-prophet
 person.lifeStory|uriah-the-hittite|4263282edc	482	David	david
 person.lifeStory|uriah-the-hittite|4263282edc	596	David	david
 person.lifeStory|uriah-the-hittite|4263282edc	708	David	david
@@ -2929,6 +2940,7 @@ person.lifespanDatingNotes|simon-peter|699ec17677	111	Jesus	jesus-of-nazareth
 person.lifespanDatingNotes|simon-peter|699ec17677	156	Jesus	jesus-of-nazareth
 person.lifespanDatingNotes|simon-peter|699ec17677	320	Nero	nero-caesar
 person.lifespanDatingNotes|stephen-the-martyr|998087162c	179	Paul	paul-of-tarsus
+person.lifespanDatingNotes|thaddaeus|0a8b11c37e	158	Bartholomew	bartholomew-nathanael
 person.lifespanDatingNotes|timothy|37ed45bd64	0	Paul	paul-of-tarsus
 person.lifespanDatingNotes|timothy|37ed45bd64	453	Paul	paul-of-tarsus
 person.placesLived|abel|251abda820	15	Adam	adam

@@ -3025,7 +3025,7 @@ Ruth 4:22	68	David	david	david
 1 Samuel 10:16	125	Samuel	samuel	samuel
 1 Samuel 10:17	0	Samuel	samuel	samuel
 1 Samuel 10:20	3	Samuel	samuel	samuel
-1 Samuel 10:21	105	Saul	saul-king-of-israel	paul-of-tarsus
+1 Samuel 10:21	105	Saul the son of Kish	saul-king-of-israel	saul-king-of-israel
 1 Samuel 10:24	0	Samuel	samuel	samuel
 1 Samuel 10:25	5	Samuel	samuel	samuel
 1 Samuel 10:25	114	Samuel	samuel	samuel
@@ -3800,6 +3800,7 @@ Ruth 4:22	68	David	david	david
 2 Samuel 5:12	0	David	david	david
 2 Samuel 5:13	0	David	david	david
 2 Samuel 5:13	139	David	david	david
+2 Samuel 5:14	81	Nathan	-	nathan-the-prophet
 2 Samuel 5:14	89	Solomon	solomon	solomon
 2 Samuel 5:17	50	David	david	david
 2 Samuel 5:17	110	David	david	david
@@ -3842,9 +3843,13 @@ Ruth 4:22	68	David	david	david
 2 Samuel 6:20	89	David	david	david
 2 Samuel 6:21	0	David	david	david
 2 Samuel 6:23	23	Saul	saul-king-of-israel	paul-of-tarsus
+2 Samuel 7:2	17	Nathan	nathan-the-prophet	nathan-the-prophet
+2 Samuel 7:3	0	Nathan	nathan-the-prophet	nathan-the-prophet
+2 Samuel 7:4	39	Nathan	nathan-the-prophet	nathan-the-prophet
 2 Samuel 7:5	24	David	david	david
 2 Samuel 7:8	30	David	david	david
 2 Samuel 7:15	67	Saul	saul-king-of-israel	paul-of-tarsus
+2 Samuel 7:17	0	Nathan	nathan-the-prophet	nathan-the-prophet
 2 Samuel 7:17	16	David	david	david
 2 Samuel 7:18	5	David	david	david
 2 Samuel 7:20	14	David	david	david
@@ -3928,14 +3933,20 @@ Ruth 4:22	68	David	david	david
 2 Samuel 11:25	5	David	david	david
 2 Samuel 11:27	28	David	david	david
 2 Samuel 11:27	135	David	david	david
+2 Samuel 12:1	12	Nathan	nathan-the-prophet	nathan-the-prophet
 2 Samuel 12:1	22	David	david	david
 2 Samuel 12:5	0	David	david	david
+2 Samuel 12:5	57	Nathan	nathan-the-prophet	nathan-the-prophet
+2 Samuel 12:7	0	Nathan	nathan-the-prophet	nathan-the-prophet
 2 Samuel 12:7	15	David	david	david
 2 Samuel 12:7	159	Saul	saul-king-of-israel	paul-of-tarsus
 2 Samuel 12:9	92	Uriah the Hittite	uriah-the-hittite	uriah-the-hittite
 2 Samuel 12:10	104	Uriah the Hittite	uriah-the-hittite	uriah-the-hittite
 2 Samuel 12:13	0	David	david	david
+2 Samuel 12:13	14	Nathan	nathan-the-prophet	nathan-the-prophet
+2 Samuel 12:13	54	Nathan	nathan-the-prophet	nathan-the-prophet
 2 Samuel 12:13	69	David	david	david
+2 Samuel 12:15	0	Nathan	nathan-the-prophet	nathan-the-prophet
 2 Samuel 12:15	80	David	david	david
 2 Samuel 12:16	0	David	david	david
 2 Samuel 12:16	46	David	david	david
@@ -3947,6 +3958,7 @@ Ruth 4:22	68	David	david	david
 2 Samuel 12:24	0	David	david	david
 2 Samuel 12:24	16	Bathsheba	bathsheba	bathsheba
 2 Samuel 12:24	113	Solomon	solomon	solomon
+2 Samuel 12:25	27	Nathan	nathan-the-prophet	nathan-the-prophet
 2 Samuel 12:27	24	David	david	david
 2 Samuel 12:29	0	David	david	david
 2 Samuel 12:30	138	David	david	david
@@ -4069,6 +4081,7 @@ Ruth 4:22	68	David	david	david
 2 Samuel 23:15	0	David	david	david
 2 Samuel 23:16	160	David	david	david
 2 Samuel 23:23	74	David	david	david
+2 Samuel 23:36	16	Nathan	-	nathan-the-prophet
 2 Samuel 23:39	4	Uriah the Hittite	uriah-the-hittite	uriah-the-hittite
 2 Samuel 24:1	57	David	david	david
 2 Samuel 24:10	0	David	david	david
@@ -4087,8 +4100,11 @@ Ruth 4:22	68	David	david	david
 2 Samuel 24:25	0	David	david	david
 1 Kings 1:1	9	David	david	david
 1 Kings 1:8	4	Zadok	-	zadok-in-jesus-genealogy
+1 Kings 1:8	51	Nathan	nathan-the-prophet	nathan-the-prophet
 1 Kings 1:8	119	David	david	david
+1 Kings 1:10	19	Nathan	nathan-the-prophet	nathan-the-prophet
 1 Kings 1:10	76	Solomon	solomon	solomon
+1 Kings 1:11	5	Nathan	nathan-the-prophet	nathan-the-prophet
 1 Kings 1:11	21	Bathsheba	bathsheba	bathsheba
 1 Kings 1:11	45	Solomon	solomon	solomon
 1 Kings 1:11	126	David	david	david
@@ -4100,6 +4116,9 @@ Ruth 4:22	68	David	david	david
 1 Kings 1:17	84	Solomon	solomon	solomon
 1 Kings 1:19	174	Solomon	solomon	solomon
 1 Kings 1:21	91	Solomon	solomon	solomon
+1 Kings 1:22	51	Nathan	nathan-the-prophet	nathan-the-prophet
+1 Kings 1:23	37	Nathan	nathan-the-prophet	nathan-the-prophet
+1 Kings 1:24	0	Nathan	nathan-the-prophet	nathan-the-prophet
 1 Kings 1:26	47	Zadok	-	zadok-in-jesus-genealogy
 1 Kings 1:26	111	Solomon	solomon	solomon
 1 Kings 1:28	10	David	david	david
@@ -4109,12 +4128,15 @@ Ruth 4:22	68	David	david	david
 1 Kings 1:31	109	David	david	david
 1 Kings 1:32	5	David	david	david
 1 Kings 1:32	29	Zadok	-	zadok-in-jesus-genealogy
+1 Kings 1:32	47	Nathan	nathan-the-prophet	nathan-the-prophet
 1 Kings 1:33	75	Solomon	solomon	solomon
 1 Kings 1:34	4	Zadok	-	zadok-in-jesus-genealogy
+1 Kings 1:34	25	Nathan	nathan-the-prophet	nathan-the-prophet
 1 Kings 1:34	122	Solomon	solomon	solomon
 1 Kings 1:37	65	Solomon	solomon	solomon
 1 Kings 1:37	134	David	david	david
 1 Kings 1:38	3	Zadok	-	zadok-in-jesus-genealogy
+1 Kings 1:38	21	Nathan	nathan-the-prophet	nathan-the-prophet
 1 Kings 1:38	127	Solomon	solomon	solomon
 1 Kings 1:38	148	David	david	david
 1 Kings 1:39	0	Zadok	-	zadok-in-jesus-genealogy
@@ -4123,7 +4145,9 @@ Ruth 4:22	68	David	david	david
 1 Kings 1:43	58	David	david	david
 1 Kings 1:43	73	Solomon	solomon	solomon
 1 Kings 1:44	27	Zadok	-	zadok-in-jesus-genealogy
+1 Kings 1:44	45	Nathan	nathan-the-prophet	nathan-the-prophet
 1 Kings 1:45	0	Zadok	-	zadok-in-jesus-genealogy
+1 Kings 1:45	21	Nathan	nathan-the-prophet	nathan-the-prophet
 1 Kings 1:46	6	Solomon	solomon	solomon
 1 Kings 1:47	57	David	david	david
 1 Kings 1:47	103	Solomon	solomon	solomon
@@ -4182,6 +4206,8 @@ Ruth 4:22	68	David	david	david
 1 Kings 4:3	51	Jehoshaphat	jehoshaphat	jehoshaphat
 1 Kings 4:4	47	Zadok	-	zadok-in-jesus-genealogy
 1 Kings 4:5	0	Azariah	-	uzziah
+1 Kings 4:5	19	Nathan	-	nathan-the-prophet
+1 Kings 4:5	66	Nathan	-	nathan-the-prophet
 1 Kings 4:7	0	Solomon	solomon	solomon
 1 Kings 4:11	56	Solomon	solomon	solomon
 1 Kings 4:12	130	Abel	abel	abel
@@ -4786,6 +4812,7 @@ Ruth 4:22	68	David	david	david
 2 Kings 22:2	75	David	david	david
 2 Kings 22:3	31	Josiah	josiah	josiah
 2 Kings 23:8	233	Joshua	-	joshua
+2 Kings 23:11	120	Nathan	-	nathan-the-prophet
 2 Kings 23:12	74	Ahaz	ahaz	ahaz
 2 Kings 23:12	136	Manasseh	manasseh-king-of-judah	manasseh-king-of-judah
 2 Kings 23:13	127	Solomon	solomon	solomon
@@ -4862,6 +4889,8 @@ Ruth 4:22	68	David	david	david
 1 Chronicles 2:25	39	Hezron	-	hezron-son-of-perez
 1 Chronicles 2:25	51	Ram	ram-son-of-hezron	ram-son-of-hezron
 1 Chronicles 2:27	12	Ram	ram-son-of-hezron	ram-son-of-hezron
+1 Chronicles 2:36	27	Nathan	-	nathan-the-prophet
+1 Chronicles 2:36	39	Nathan	-	nathan-the-prophet
 1 Chronicles 2:37	71	Obed	obed	obed
 1 Chronicles 2:38	4	Obed	obed	obed
 1 Chronicles 2:38	66	Azariah	-	uzziah
@@ -4873,6 +4902,7 @@ Ruth 4:22	68	David	david	david
 1 Chronicles 2:50	23	Caleb	caleb	caleb
 1 Chronicles 3:1	27	David	david	david
 1 Chronicles 3:1	129	Daniel	daniel	daniel
+1 Chronicles 3:5	57	Nathan	-	nathan-the-prophet
 1 Chronicles 3:5	69	Solomon	solomon	solomon
 1 Chronicles 3:9	27	David	david	david
 1 Chronicles 3:10	0	Solomon	solomon	solomon
@@ -5028,10 +5058,11 @@ Ruth 4:22	68	David	david	david
 1 Chronicles 11:18	151	David	david	david
 1 Chronicles 11:18	162	David	david	david
 1 Chronicles 11:25	86	David	david	david
+1 Chronicles 11:38	20	Nathan	-	nathan-the-prophet
 1 Chronicles 11:41	0	Uriah the Hittite	uriah-the-hittite	uriah-the-hittite
 1 Chronicles 11:47	11	Obed	obed	obed
 1 Chronicles 12:1	32	David	david	david
-1 Chronicles 12:1	78	Saul	saul-king-of-israel	paul-of-tarsus
+1 Chronicles 12:1	78	Saul the son of Kish	saul-king-of-israel	saul-king-of-israel
 1 Chronicles 12:2	143	Saul	saul-king-of-israel	paul-of-tarsus
 1 Chronicles 12:4	82	Jeremiah	-	jeremiah
 1 Chronicles 12:8	20	David	david	david
@@ -5083,6 +5114,7 @@ Ruth 4:22	68	David	david	david
 1 Chronicles 14:2	0	David	david	david
 1 Chronicles 14:3	0	David	david	david
 1 Chronicles 14:3	40	David	david	david
+1 Chronicles 14:4	79	Nathan	-	nathan-the-prophet
 1 Chronicles 14:4	87	Solomon	solomon	solomon
 1 Chronicles 14:8	32	David	david	david
 1 Chronicles 14:8	109	David	david	david
@@ -5134,9 +5166,13 @@ Ruth 4:22	68	David	david	david
 1 Chronicles 16:43	52	David	david	david
 1 Chronicles 17:1	5	David	david	david
 1 Chronicles 17:1	31	David	david	david
+1 Chronicles 17:1	45	Nathan	nathan-the-prophet	nathan-the-prophet
+1 Chronicles 17:2	0	Nathan	nathan-the-prophet	nathan-the-prophet
 1 Chronicles 17:2	15	David	david	david
+1 Chronicles 17:3	41	Nathan	nathan-the-prophet	nathan-the-prophet
 1 Chronicles 17:4	13	David	david	david
 1 Chronicles 17:7	42	David	david	david
+1 Chronicles 17:15	67	Nathan	nathan-the-prophet	nathan-the-prophet
 1 Chronicles 17:15	83	David	david	david
 1 Chronicles 17:16	5	David	david	david
 1 Chronicles 17:18	9	David	david	david
@@ -5277,7 +5313,7 @@ Ruth 4:22	68	David	david	david
 1 Chronicles 26:25	70	Joram	joram-king-of-judah	joram-king-of-judah
 1 Chronicles 26:26	91	David	david	david
 1 Chronicles 26:28	9	Samuel	samuel	samuel
-1 Chronicles 26:28	30	Saul	saul-king-of-israel	paul-of-tarsus
+1 Chronicles 26:28	30	Saul the son of Kish	saul-king-of-israel	saul-king-of-israel
 1 Chronicles 26:31	178	David	david	david
 1 Chronicles 26:32	101	David	david	david
 1 Chronicles 27:3	26	Perez	perez	perez
@@ -5329,6 +5365,7 @@ Ruth 4:22	68	David	david	david
 1 Chronicles 29:28	64	Solomon	solomon	solomon
 1 Chronicles 29:29	16	David	david	david
 1 Chronicles 29:29	91	Samuel	samuel	samuel
+1 Chronicles 29:29	130	Nathan	nathan-the-prophet	nathan-the-prophet
 2 Chronicles 1:1	0	Solomon	solomon	solomon
 2 Chronicles 1:1	19	David	david	david
 2 Chronicles 1:2	0	Solomon	solomon	solomon
@@ -5436,6 +5473,7 @@ Ruth 4:22	68	David	david	david
 2 Chronicles 9:25	0	Solomon	solomon	solomon
 2 Chronicles 9:28	24	Solomon	solomon	solomon
 2 Chronicles 9:29	28	Solomon	solomon	solomon
+2 Chronicles 9:29	91	Nathan	nathan-the-prophet	nathan-the-prophet
 2 Chronicles 9:30	0	Solomon	solomon	solomon
 2 Chronicles 9:31	0	Solomon	solomon	solomon
 2 Chronicles 9:31	64	David	david	david
@@ -5676,6 +5714,7 @@ Ruth 4:22	68	David	david	david
 2 Chronicles 29:20	5	Hezekiah	hezekiah	hezekiah
 2 Chronicles 29:21	180	Aaron	aaron	aaron
 2 Chronicles 29:25	126	David	david	david
+2 Chronicles 29:25	161	Nathan	nathan-the-prophet	nathan-the-prophet
 2 Chronicles 29:26	23	David	david	david
 2 Chronicles 29:27	0	Hezekiah	hezekiah	hezekiah
 2 Chronicles 29:27	151	David	david	david
@@ -5832,6 +5871,7 @@ Ezra 8:3	49	Zechariah	-	zechariah-father-of-john-baptist
 Ezra 8:8	47	Michael	michael-archangel	michael-archangel
 Ezra 8:11	22	Zechariah	-	zechariah-father-of-john-baptist
 Ezra 8:15	180	Levi	-	matthew-levi
+Ezra 8:16	93	Nathan	-	nathan-the-prophet
 Ezra 8:16	105	Zechariah	-	zechariah-father-of-john-baptist
 Ezra 8:18	114	Levi	-	matthew-levi
 Ezra 8:20	33	David	david	david
@@ -5850,6 +5890,7 @@ Ezra 10:26	32	Zechariah	-	zechariah-father-of-john-baptist
 Ezra 10:26	83	Elijah	elijah	elijah
 Ezra 10:30	100	Manasseh	-	manasseh-king-of-judah
 Ezra 10:33	71	Manasseh	-	manasseh-king-of-judah
+Ezra 10:39	19	Nathan	-	nathan-the-prophet
 Ezra 10:42	18	Joseph	joseph-son-of-jacob	joseph-son-of-jacob
 Nehemiah 1:1	13	Nehemiah	nehemiah	nehemiah
 Nehemiah 1:7	149	Moses	moses	moses
@@ -6189,6 +6230,7 @@ Psalms 47:4	48	Jacob	jacob	jacob
 Psalms 47:9	75	Abraham	abraham	abraham
 Psalms 48:13	0	Mark	john-mark	john-mark
 Psalms 51:1	35	David	david	david
+Psalms 51:1	47	Nathan	nathan-the-prophet	nathan-the-prophet
 Psalms 51:1	103	Bathsheba	bathsheba	bathsheba
 Psalms 52:1	43	David	david	david
 Psalms 52:1	86	Saul	paul-of-tarsus	paul-of-tarsus
@@ -6927,6 +6969,7 @@ Zechariah 12:8	114	David	david	david
 Zechariah 12:8	125	David	david	david
 Zechariah 12:10	15	David	david	david
 Zechariah 12:12	55	David	david	david
+Zechariah 12:12	126	Nathan	-	nathan-the-prophet
 Zechariah 12:13	27	Levi	-	matthew-levi
 Zechariah 13:1	46	David	david	david
 Zechariah 14:5	181	Uzziah	uzziah	uzziah
@@ -7072,7 +7115,7 @@ Matthew 4:17	16	Jesus	jesus-of-nazareth	jesus-of-nazareth
 Matthew 4:18	52	Simon	simon-peter	simon-peter
 Matthew 4:18	73	Peter	simon-peter	simon-peter
 Matthew 4:18	84	Andrew	andrew-apostle	andrew-apostle
-Matthew 4:21	48	James	james-son-of-zebedee	james-son-of-zebedee
+Matthew 4:21	48	James the son of Zebedee	james-son-of-zebedee	james-son-of-zebedee
 Matthew 4:21	78	John	john-the-baptist	john-the-baptist
 Matthew 4:23	0	Jesus	jesus-of-nazareth	jesus-of-nazareth
 Matthew 5:37	85	the evil one	satan	satan
@@ -7119,12 +7162,15 @@ Matthew 9:35	0	Jesus	jesus-of-nazareth	jesus-of-nazareth
 Matthew 10:2	59	Simon	simon-peter	simon-peter
 Matthew 10:2	80	Peter	simon-peter	simon-peter
 Matthew 10:2	87	Andrew	andrew-apostle	andrew-apostle
-Matthew 10:2	108	James	james-son-of-zebedee	james-son-of-zebedee
+Matthew 10:2	108	James the son of Zebedee	james-son-of-zebedee	james-son-of-zebedee
 Matthew 10:2	134	John	john-the-baptist	john-the-baptist
 Matthew 10:3	0	Philip	philip-the-apostle	philip-the-apostle
+Matthew 10:3	8	Bartholomew	bartholomew-nathanael	bartholomew-nathanael
 Matthew 10:3	21	Thomas	thomas-apostle	thomas-apostle
-Matthew 10:3	56	James	james-son-of-zebedee	james-son-of-zebedee
+Matthew 10:3	29	Matthew the tax collector	matthew-levi	matthew-levi
+Matthew 10:3	56	James the son of Alphaeus	james-son-of-alphaeus	james-son-of-alphaeus
 Matthew 10:3	83	Lebbaeus	thaddaeus	thaddaeus
+Matthew 10:3	113	Thaddaeus	thaddaeus	thaddaeus
 Matthew 10:4	0	Simon	simon-peter	simon-peter
 Matthew 10:4	25	Judas Iscariot	judas-iscariot	judas-iscariot
 Matthew 10:5	0	Jesus	jesus-of-nazareth	jesus-of-nazareth
@@ -7357,7 +7403,7 @@ Matthew 27:22	46	Jesus	jesus-of-nazareth	jesus-of-nazareth
 Matthew 27:24	8	Pilate	pontius-pilate	pontius-pilate
 Matthew 27:26	39	Jesus	jesus-of-nazareth	jesus-of-nazareth
 Matthew 27:27	34	Jesus	jesus-of-nazareth	jesus-of-nazareth
-Matthew 27:32	46	Simon	simon-peter	simon-peter
+Matthew 27:32	46	Simon	simon-of-cyrene	simon-peter
 Matthew 27:37	71	JESUS	jesus-of-nazareth	jesus-of-nazareth
 Matthew 27:46	21	Jesus	jesus-of-nazareth	jesus-of-nazareth
 Matthew 27:47	77	Elijah	elijah	elijah
@@ -7399,7 +7445,7 @@ Mark 1:16	44	Simon	simon-peter	simon-peter
 Mark 1:16	54	Andrew	andrew-apostle	andrew-apostle
 Mark 1:16	76	Simon	simon-peter	simon-peter
 Mark 1:17	0	Jesus	jesus-of-nazareth	jesus-of-nazareth
-Mark 1:19	45	James	james-son-of-zebedee	james-son-of-zebedee
+Mark 1:19	45	James the son of Zebedee	james-son-of-zebedee	james-son-of-zebedee
 Mark 1:19	75	John	john-the-baptist	john-the-baptist
 Mark 1:24	45	Jesus	jesus-of-nazareth	jesus-of-nazareth
 Mark 1:25	0	Jesus	jesus-of-nazareth	jesus-of-nazareth
@@ -7423,14 +7469,16 @@ Mark 2:25	42	David	david	david
 Mark 3:7	0	Jesus	jesus-of-nazareth	jesus-of-nazareth
 Mark 3:16	0	Simon	simon-peter	simon-peter
 Mark 3:16	32	Peter	simon-peter	simon-peter
-Mark 3:17	0	James	james-son-of-zebedee	james-son-of-zebedee
+Mark 3:17	0	James the son of Zebedee	james-son-of-zebedee	james-son-of-zebedee
 Mark 3:17	26	John	john-the-baptist	john-the-baptist
 Mark 3:17	47	James	james-son-of-zebedee	james-son-of-zebedee
 Mark 3:17	73	Boanerges	james-son-of-zebedee	james-son-of-zebedee
 Mark 3:18	0	Andrew	andrew-apostle	andrew-apostle
 Mark 3:18	8	Philip	philip-the-apostle	philip-the-apostle
+Mark 3:18	16	Bartholomew	bartholomew-nathanael	bartholomew-nathanael
 Mark 3:18	38	Thomas	thomas-apostle	thomas-apostle
-Mark 3:18	46	James	james-son-of-zebedee	james-son-of-zebedee
+Mark 3:18	46	James, the son of Alphaeus	james-son-of-alphaeus	james-son-of-alphaeus
+Mark 3:18	74	Thaddaeus	thaddaeus	thaddaeus
 Mark 3:18	85	Simon the Zealot	simon-the-zealot	simon-the-zealot
 Mark 3:19	4	Judas Iscariot	judas-iscariot	judas-iscariot
 Mark 3:22	55	Beelzebul	satan	satan
@@ -7729,6 +7777,7 @@ Luke 3:29	86	Levi	-	matthew-levi
 Luke 3:30	11	Simeon	simeon-at-the-temple	simeon-at-the-temple
 Luke 3:30	48	Joseph	joseph-husband-of-mary	joseph-son-of-jacob
 Luke 3:30	85	Eliakim	eliakim-son-of-abiud	eliakim-son-of-abiud
+Luke 3:31	68	Nathan	-	nathan-the-prophet
 Luke 3:31	87	David	david	david
 Luke 3:32	11	Jesse	jesse	jesse
 Luke 3:32	29	Obed	obed	obed
@@ -7795,11 +7844,11 @@ Luke 6:14	33	Andrew	andrew-apostle	andrew-apostle
 Luke 6:14	54	James	james-son-of-zebedee	james-son-of-zebedee
 Luke 6:14	61	John	john-the-baptist	john-the-baptist
 Luke 6:14	67	Philip	philip-the-apostle	philip-the-apostle
+Luke 6:14	75	Bartholomew	bartholomew-nathanael	bartholomew-nathanael
 Luke 6:15	9	Thomas	thomas-apostle	thomas-apostle
-Luke 6:15	17	James	james-son-of-zebedee	james-son-of-zebedee
+Luke 6:15	17	James, the son of Alphaeus	james-son-of-alphaeus	james-son-of-alphaeus
 Luke 6:15	45	Simon	simon-peter	simon-peter
-Luke 6:16	0	Judas	thaddaeus	judas-iscariot
-Luke 6:16	17	James	-	james-son-of-zebedee
+Luke 6:16	0	Judas the son of James	thaddaeus	thaddaeus
 Luke 6:16	28	Judas Iscariot	judas-iscariot	judas-iscariot
 Luke 7:3	20	Jesus	jesus-of-nazareth	jesus-of-nazareth
 Luke 7:4	18	Jesus	jesus-of-nazareth	jesus-of-nazareth
@@ -7817,9 +7866,9 @@ Luke 7:28	87	John the Baptizer	john-the-baptist	john-the-baptist
 Luke 7:29	111	John	john-the-baptist	john-the-baptist
 Luke 7:33	4	John the Baptizer	john-the-baptist	john-the-baptist
 Luke 7:40	0	Jesus	jesus-of-nazareth	jesus-of-nazareth
-Luke 7:40	21	Simon	simon-peter	simon-peter
-Luke 7:43	0	Simon	simon-peter	simon-peter
-Luke 7:44	33	Simon	simon-peter	simon-peter
+Luke 7:40	21	Simon	simon-the-pharisee	simon-peter
+Luke 7:43	0	Simon	simon-the-pharisee	simon-peter
+Luke 7:44	33	Simon	simon-the-pharisee	simon-peter
 Luke 8:2	71	Mary	mary-magdalene	mary-mother-of-jesus
 Luke 8:3	4	Joanna	joanna-follower-of-jesus	joanna-follower-of-jesus
 Luke 8:12	46	the devil	satan	satan
@@ -8515,14 +8564,14 @@ Acts 1:8	32	the Holy Spirit	holy-spirit	holy-spirit
 Acts 1:11	80	Jesus	jesus-of-nazareth	jesus-of-nazareth
 Acts 1:13	90	Peter	simon-peter	simon-peter
 Acts 1:13	97	John	john-the-apostle	john-the-baptist
-Acts 1:13	103	James	james-brother-of-jesus	james-son-of-zebedee
+Acts 1:13	103	James	james-son-of-zebedee	james-son-of-zebedee
 Acts 1:13	110	Andrew	andrew-apostle	andrew-apostle
 Acts 1:13	118	Philip	philip-the-apostle	philip-the-apostle
 Acts 1:13	126	Thomas	thomas-apostle	thomas-apostle
-Acts 1:13	156	James	james-brother-of-jesus	james-son-of-zebedee
+Acts 1:13	134	Bartholomew	bartholomew-nathanael	bartholomew-nathanael
+Acts 1:13	156	James the son of Alphaeus	james-son-of-alphaeus	james-son-of-alphaeus
 Acts 1:13	183	Simon the Zealot	simon-the-zealot	simon-the-zealot
-Acts 1:13	205	Judas	thaddaeus	judas-iscariot
-Acts 1:13	222	James	james-brother-of-jesus	james-son-of-zebedee
+Acts 1:13	205	Judas the son of James	thaddaeus	thaddaeus
 Acts 1:14	102	Mary	mary-mother-of-jesus	mary-mother-of-jesus
 Acts 1:14	121	Jesus	jesus-of-nazareth	jesus-of-nazareth
 Acts 1:15	15	Peter	simon-peter	simon-peter
@@ -8660,21 +8709,21 @@ Acts 8:2	18	Stephen	stephen-the-martyr	stephen-the-martyr
 Acts 8:3	4	Saul	paul-of-tarsus	paul-of-tarsus
 Acts 8:5	0	Philip	philip-the-evangelist	philip-the-apostle
 Acts 8:6	74	Philip	philip-the-evangelist	philip-the-apostle
-Acts 8:9	29	Simon	simon-peter	simon-peter
+Acts 8:9	29	Simon	simon-magus	simon-peter
 Acts 8:12	23	Philip	philip-the-evangelist	philip-the-apostle
 Acts 8:12	91	Jesus Christ	jesus-of-nazareth	jesus-of-nazareth
-Acts 8:13	0	Simon	simon-peter	simon-peter
+Acts 8:13	0	Simon	simon-magus	simon-peter
 Acts 8:13	63	Philip	philip-the-evangelist	philip-the-apostle
 Acts 8:14	103	Peter	simon-peter	simon-peter
 Acts 8:14	113	John	john-the-apostle	john-the-baptist
 Acts 8:15	71	the Holy Spirit	holy-spirit	holy-spirit
 Acts 8:16	85	Christ Jesus	jesus-of-nazareth	jesus-of-nazareth
 Acts 8:17	54	the Holy Spirit	holy-spirit	holy-spirit
-Acts 8:18	9	Simon	simon-peter	simon-peter
+Acts 8:18	9	Simon	simon-magus	simon-peter
 Acts 8:18	24	the Holy Spirit	holy-spirit	holy-spirit
 Acts 8:19	78	the Holy Spirit	holy-spirit	holy-spirit
 Acts 8:20	4	Peter	simon-peter	simon-peter
-Acts 8:24	0	Simon	simon-peter	simon-peter
+Acts 8:24	0	Simon	simon-magus	simon-peter
 Acts 8:26	34	Philip	philip-the-evangelist	philip-the-apostle
 Acts 8:28	73	Isaiah	isaiah	isaiah
 Acts 8:29	19	Philip	philip-the-evangelist	philip-the-apostle
@@ -8713,17 +8762,19 @@ Acts 9:32	3	Peter	simon-peter	simon-peter
 Acts 9:34	0	Peter	simon-peter	simon-peter
 Acts 9:34	28	Jesus Christ	jesus-of-nazareth	jesus-of-nazareth
 Acts 9:36	48	Tabitha	dorcas-tabitha	dorcas-tabitha
+Acts 9:36	86	Dorcas	dorcas-tabitha	dorcas-tabitha
 Acts 9:38	53	Peter	simon-peter	simon-peter
 Acts 9:39	0	Peter	simon-peter	simon-peter
+Acts 9:39	167	Dorcas	dorcas-tabitha	dorcas-tabitha
 Acts 9:40	0	Peter	simon-peter	simon-peter
 Acts 9:40	83	Tabitha	dorcas-tabitha	dorcas-tabitha
 Acts 9:40	139	Peter	simon-peter	simon-peter
-Acts 9:43	49	Simon	simon-peter	simon-peter
+Acts 9:43	49	Simon	-	simon-peter
 Acts 10:1	41	Cornelius	cornelius-the-centurion	cornelius-the-centurion
 Acts 10:3	114	Cornelius	cornelius-the-centurion	cornelius-the-centurion
 Acts 10:5	31	Simon	simon-peter	simon-peter
 Acts 10:5	57	Peter	simon-peter	simon-peter
-Acts 10:6	30	Simon	simon-peter	simon-peter
+Acts 10:6	30	Simon	-	simon-peter
 Acts 10:7	46	Cornelius	cornelius-the-centurion	cornelius-the-centurion
 Acts 10:9	78	Peter	simon-peter	simon-peter
 Acts 10:13	28	Peter	simon-peter	simon-peter
@@ -8818,7 +8869,7 @@ Acts 13:13	4	Paul	paul-of-tarsus	paul-of-tarsus
 Acts 13:13	79	John	john-the-apostle	john-the-baptist
 Acts 13:16	0	Paul	paul-of-tarsus	paul-of-tarsus
 Acts 13:20	45	Samuel	samuel	samuel
-Acts 13:21	54	Saul	paul-of-tarsus	paul-of-tarsus
+Acts 13:21	54	Saul the son of Kish	saul-king-of-israel	saul-king-of-israel
 Acts 13:22	38	David	david	david
 Acts 13:22	103	David	david	david
 Acts 13:22	120	Jesse	jesse	jesse
@@ -9160,6 +9211,7 @@ Romans 8:9	69	Spirit of God	holy-spirit	holy-spirit
 Romans 8:11	39	Jesus	jesus-of-nazareth	jesus-of-nazareth
 Romans 8:11	91	Christ Jesus	jesus-of-nazareth	jesus-of-nazareth
 Romans 8:14	30	Spirit of God	holy-spirit	holy-spirit
+Romans 8:15	118	Abba	god-the-father	god-the-father
 Romans 8:39	109	Christ Jesus	jesus-of-nazareth	jesus-of-nazareth
 Romans 9:1	80	the Holy Spirit	holy-spirit	holy-spirit
 Romans 9:7	26	Abraham	abraham	abraham

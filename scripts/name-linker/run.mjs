@@ -136,10 +136,15 @@ for (const c of CASES) {
   const ctx = c.path === "panel" ? [] : [undefined, book, chapter, verse];
   // The annotation COVERING the occurrence, not the one starting on it: a longer registered key
   // ("the Counselor", "James the son of Alphaeus") legitimately begins earlier and swallows it.
-  const got = computeLinkAnnotations(text, ...ctx)
-    .find((a) => a.start <= at && a.end >= at + c.surface.length)?.id ?? null;
+  const ann = computeLinkAnnotations(text, ...ctx)
+    .find((a) => a.start <= at && a.end >= at + c.surface.length);
+  const got = ann?.id ?? null;
   const want = c.expect ?? null;
-  const matches = got === want;
+  // `expectSurface` pins the whole span the link covers, not just where it points — the difference
+  // between "James is a link to Thaddaeus" (wrong) and "the phrase 'Judas the son of James' is one
+  // link to Thaddaeus, and the father is not linked separately" (right).
+  const gotSurface = ann?.text ?? null;
+  const matches = got === want && (!c.expectSurface || gotSurface === c.expectSurface);
 
   if (c.status === "known-wrong") {
     if (matches) {
@@ -153,8 +158,8 @@ for (const c of CASES) {
   } else {
     fail++;
     failures.push(`${label}${c.status === "flagged" ? ` ${RED}(FLAGGED — §7, Robbie's call)${OFF}` : ""}\n` +
-      `      expected: ${want ?? "(no link)"}\n` +
-      `      actual:   ${got ?? "(no link)"}\n` +
+      `      expected: ${want ?? "(no link)"}${c.expectSurface ? `  covering ${JSON.stringify(c.expectSurface)}` : ""}\n` +
+      `      actual:   ${got ?? "(no link)"}${c.expectSurface ? `  covering ${JSON.stringify(gotSurface)}` : ""}\n` +
       `      ${DIM}${c.why}${OFF}`);
   }
 }

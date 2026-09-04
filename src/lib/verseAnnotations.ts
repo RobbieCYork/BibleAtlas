@@ -30,21 +30,23 @@ interface NameEntry {
  * differ (e.g. "James son of Alphaeus" is its own distinct string, not a collision with plain "James"). */
 const NAME_ENTRIES: NameEntry[] = (() => {
   const entries: NameEntry[] = [];
+  // `alternateNames` is reader-facing copy — PersonPanel, LocationPanel and TopicPanel print it as
+  // "Also called: ...". `matchNames` is for wordings that exist only so the linker can match them
+  // and would be noise on the page: the same phrase punctuated two ways because two translations
+  // punctuate it two ways. Both feed the pattern; only the first is ever shown.
+  const names = (r: { name: string; alternateNames?: string[]; matchNames?: string[] }) =>
+    [r.name, ...(r.alternateNames ?? []), ...(r.matchNames ?? [])];
   locations.forEach((loc) => {
-    entries.push({ name: loc.name, id: loc.id, kind: "location" });
-    (loc.alternateNames ?? []).forEach((alt) => entries.push({ name: alt, id: loc.id, kind: "location" }));
+    names(loc).forEach((n) => entries.push({ name: n, id: loc.id, kind: "location" }));
   });
   pois.forEach((poi) => {
-    entries.push({ name: poi.name, id: poi.id, kind: "poi" });
-    (poi.alternateNames ?? []).forEach((alt) => entries.push({ name: alt, id: poi.id, kind: "poi" }));
+    names(poi).forEach((n) => entries.push({ name: n, id: poi.id, kind: "poi" }));
   });
   people.forEach((person) => {
-    entries.push({ name: person.name, id: person.id, kind: "person" });
-    (person.alternateNames ?? []).forEach((alt) => entries.push({ name: alt, id: person.id, kind: "person" }));
+    names(person).forEach((n) => entries.push({ name: n, id: person.id, kind: "person" }));
   });
   topics.forEach((topic) => {
-    entries.push({ name: topic.name, id: topic.id, kind: "topic" });
-    (topic.alternateNames ?? []).forEach((alt) => entries.push({ name: alt, id: topic.id, kind: "topic" }));
+    names(topic).forEach((n) => entries.push({ name: n, id: topic.id, kind: "topic" }));
   });
   // Timeline events (no alternateNames field) — pushed last, so an event title would win a collision
   // with any earlier entry's name; titles are deliberately long, distinctive phrases ("Fall of
@@ -249,13 +251,40 @@ const VERSE_NAME_OVERRIDES: Record<string, Record<string, Record<string, string 
   },
   simon: {
     John: { "6:71": null, "12:4": null, "13:2": null, "13:26": null },
-    Matthew: { "13:55": null },
+    // Matthew 27:32 words it "a man of Cyrene, Simon by name", so the registered key "Simon of
+    // Cyrene" — which does resolve Mark 15:21 and Luke 23:26 correctly — cannot reach it, and the
+    // man who carried the cross rendered as Simon Peter.
+    Matthew: { "13:55": null, "27:32": "simon-of-cyrene" },
     Mark: { "6:3": null },
+    // Luke 7:36-50, the anointing at the Pharisee's house: the host is named Simon three times and
+    // is not Peter. simon-the-pharisee has an entry; the text never gives it a longer wording.
+    Luke: { "7:40": "simon-the-pharisee", "7:43": "simon-the-pharisee", "7:44": "simon-the-pharisee" },
+    Acts: {
+      // Acts 8:9-24 — the sorcerer who tries to buy the Holy Spirit, rendered as the chief apostle
+      // in the very passage where Peter rebukes him. simon-magus has an entry; Acts only ever calls
+      // him "Simon".
+      "8:9": "simon-magus",
+      "8:13": "simon-magus",
+      "8:18": "simon-magus",
+      "8:24": "simon-magus",
+      // Simon the tanner of Joppa, whose house Peter lodges in — a different man, with no entry.
+      // Acts 10:17's "Simon's house" is genuinely ambiguous between the two and is left alone;
+      // Acts 10:32 names BOTH men in one verse and cannot be separated by a per-verse override at
+      // all (it needs occurrence-aware resolution), so it is left alone too.
+      "9:43": null,
+      "10:6": null,
+    },
   },
   james: {
     Matthew: { "13:55": "james-brother-of-jesus" },
     Mark: { "6:3": "james-brother-of-jesus" },
     Luke: { "6:16": null },
+    // Acts 1:13's apostle list names three different men called James. Two of them are now matched
+    // as whole phrases — "James the son of Alphaeus", and the "James" inside "Judas the son of
+    // James" — leaving exactly one bare "James", the son of Zebedee, which the Acts book override
+    // would otherwise send to the brother of Jesus. That is what makes this verse fixable: it is
+    // no longer three occurrences needing three answers, it is one.
+    Acts: { "1:13": "james-son-of-zebedee" },
   },
   judas: {
     Matthew: { "13:55": null },
@@ -278,6 +307,18 @@ const VERSE_NAME_OVERRIDES: Record<string, Record<string, Record<string, string 
   // "Ananias": ananias-and-sapphira (the best-known of the three) is the default owner of bare
   // "Ananias," but Acts 9/22 name a different Ananias — the Damascus disciple who restores Saul's
   // sight — and Acts 23-24 name a third, the high priest who prosecutes Paul.
+  // "Nathan": the court prophet is the only Nathan with an entry, and until his name was registered
+  // at all (see people.ts) he could not be linked from anywhere. Several other men share it. The
+  // allowlist below keeps him to the books where he acts; these are the exceptions inside those
+  // books — all of them a different Nathan, none of them with an entry, so: no link.
+  nathan: {
+    "2 Samuel": { "5:14": null, "23:36": null },
+    "1 Chronicles": { "2:36": null, "3:5": null, "11:38": null, "14:4": null },
+    // 1 Kings 4:5 names "Azariah the son of Nathan" and "Zabud the son of Nathan": commentators
+    // divide over whether that Nathan is the prophet or David's son of the same name. Left unlinked
+    // rather than resolved on a guess.
+    "1 Kings": { "4:5": null },
+  },
   ananias: {
     Acts: {
       "9:10": "ananias-of-damascus",
@@ -315,6 +356,11 @@ const BOOK_NAME_ALLOWLIST: Record<string, string[]> = {
   ahaz: ["2 Kings", "2 Chronicles", "Isaiah", "Matthew"],
   amon: ["2 Kings", "2 Chronicles", "Matthew"],
   azariah: ["2 Kings", "2 Chronicles", "Matthew"],
+  // "Nathan": the prophet acts in 2 Samuel, 1 Kings and 1-2 Chronicles, and Psalm 51's
+  // superscription names him. Everywhere else — Ezra 8:16 and 10:39, Zechariah 12:12, Luke 3:31 —
+  // the name belongs to someone else with no entry here. Exceptions inside the allowed books are
+  // handled verse by verse in VERSE_NAME_OVERRIDES above.
+  nathan: ["2 Samuel", "1 Kings", "1 Chronicles", "2 Chronicles", "Psalms"],
 };
 
 function escapeRegExp(s: string): string {

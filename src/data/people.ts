@@ -637,7 +637,12 @@ export const people: Person[] = [
     id: "james-son-of-zebedee",
     name: "James, son of Zebedee",
     pronunciation: "JAYMZ",
+    // "James the son of Zebedee" is how Matthew 4:21, 10:2, Mark 1:19 and 3:17 word it. Those
+    // already resolved here through the bare name, but registering the full phrase makes them
+    // immune to any future book-level redirect of bare "James" — which is exactly what goes wrong
+    // in Acts, where the book override sends every "James" to the brother of Jesus.
     alternateNames: ["James", "Boanerges"],
+    matchNames: ["James the son of Zebedee"],
     diedYear: 44,
     lifespanLabel: "d. AD 44",
     lifespanCertainty: "firm",
@@ -701,7 +706,10 @@ export const people: Person[] = [
     id: "bartholomew-nathanael",
     name: "Bartholomew (Nathanael)",
     pronunciation: "bar-THOL-uh-myoo / nuh-THAN-yel",
+    // "Bartholomew" was unreachable behind the bracket, so the four apostle lists that name him —
+    // Matthew 10:3, Mark 3:18, Luke 6:14, Acts 1:13 — linked nowhere. All four are this man.
     alternateNames: ["Nathanael"],
+    matchNames: ["Bartholomew"],
     diedYear: 68,
     lifespanLabel: "d. c. AD 68 (late tradition)",
     lifespanCertainty: "legendary",
@@ -763,6 +771,11 @@ export const people: Person[] = [
     id: "james-son-of-alphaeus",
     name: "James, son of Alphaeus",
     pronunciation: "JAYMZ",
+    // The display name uses a comma; no translation does. Both wordings below appear in the WEB —
+    // "James the son of Alphaeus" in Matthew 10:3 and Acts 1:13, "James, the son of Alphaeus" in
+    // Mark 3:18 and Luke 6:15 — and until they were registered this man could not be linked from
+    // Scripture at all: every one of his four mentions fell through to the bare name "James".
+    matchNames: ["James the son of Alphaeus", "James, the son of Alphaeus"],
     diedYear: 62,
     lifespanLabel: "d. c. AD 62 (thin tradition)",
     lifespanCertainty: "legendary",
@@ -787,7 +800,12 @@ export const people: Person[] = [
     id: "thaddaeus",
     name: "Thaddaeus (Judas, son of James)",
     pronunciation: "THAD-ee-us",
+    // "Thaddaeus" itself was missing, so Matthew 10:3 and Mark 3:18 — the two verses that actually
+    // use the name this entry is titled with — linked nowhere. "Judas the son of James" is how
+    // Luke 6:16 and Acts 1:13 word it; registering it also stops Acts 1:13's third bare "James"
+    // (Thaddaeus's father, who has no entry) from being mislinked, because the longer key swallows it.
     alternateNames: ["Judas, son of James", "Lebbaeus"],
+    matchNames: ["Thaddaeus", "Judas the son of James"],
     diedYear: 65,
     lifespanLabel: "d. c. AD 65 (thin tradition)",
     lifespanCertainty: "legendary",
@@ -837,7 +855,17 @@ export const people: Person[] = [
     id: "matthew-levi",
     name: "Matthew (Levi)",
     pronunciation: "MATH-yoo",
+    // The bracket in the display name makes "Matthew (Levi)" unmatchable, so the apostle's own name
+    // links nowhere. Bare "Matthew" was tried and REVERTED: all five Scripture occurrences
+    // (Matthew 9:9, 10:3; Mark 3:18; Luke 6:15; Acts 1:13) really are this man, but it also fired
+    // on 85 mentions in our own articles — "Matthew's account", "Matthew and Luke", "Matthew's
+    // genealogy" — every one of which means the Gospel, not the person. Linking those to the
+    // apostle would assert Matthean authorship in 85 places, which is not a claim this app makes
+    // and is next door to a question flagged for Robbie. The prose surface passes no book or verse,
+    // so there is no way to allow the name in Scripture and refuse it in our own writing.
+    // Matthew 10:3's "Matthew the tax collector" is registered because that phrase is unambiguous.
     alternateNames: ["Levi"],
+    matchNames: ["Matthew the tax collector"],
     diedYear: 60,
     lifespanLabel: "d. c. AD 60 (tradition varies)",
     lifespanCertainty: "legendary",
@@ -1819,7 +1847,9 @@ export const people: Person[] = [
     id: "dorcas-tabitha",
     name: "Dorcas (Tabitha)",
     pronunciation: "DOR-kus / tuh-BY-thuh",
+    // Acts 9:36 and 9:39 both name her Dorcas; the bracketed display name could never match it.
     alternateNames: ["Tabitha"],
+    matchNames: ["Dorcas"],
     tier: "notable",
     role: "Disciple Known for Charity",
     summary: "A disciple in Joppa known for good works and charity — especially making clothing for widows — who died and was raised back to life by Peter.",
@@ -3566,6 +3596,11 @@ export const people: Person[] = [
     id: "saul-king-of-israel",
     name: "Saul (King of Israel)",
     pronunciation: "SAWL",
+    // The bare name "Saul" belongs to Paul of Tarsus globally and is recovered for the king by book
+    // in 1-2 Samuel and 1 Chronicles. That leaves Acts 13:21 — "God gave to them Saul the son of
+    // Kish" — pointing Israel's first king at Paul, inside Paul's own sermon at Pisidian Antioch.
+    // Registering that exact wording resolves it without touching the bare name anywhere.
+    alternateNames: ["Saul the son of Kish"],
     diedYear: -1010,
     lifespanLabel: "d. 1010 BC (reigned c. 1050-1010 BC)",
     lifespanCertainty: "disputed",
@@ -3693,6 +3728,12 @@ export const people: Person[] = [
     id: "nathan-the-prophet",
     name: "Nathan (Prophet)",
     pronunciation: "NAY-thun",
+    // Until this line, Nathan could not be linked from anywhere in the app: the bracketed display
+    // name was his only key and the linker could never match it. "Nathan" is shared with several
+    // other men — David's son (2 Samuel 5:14; 1 Chronicles 3:5, 14:4; Zechariah 12:12; Luke 3:31),
+    // Igal's father, Joel's brother, two post-exilic men in Ezra — so it is restricted by book in
+    // BOOK_NAME_ALLOWLIST and by verse in VERSE_NAME_OVERRIDES; see verseAnnotations.ts.
+    matchNames: ["Nathan"],
     tier: "notable",
     role: "Court prophet under David and Solomon",
     summary: "A prophet in David's court best known for delivering the Davidic covenant and for confronting David over the Bathsheba affair with a memorable parable, later also securing Solomon's succession to the throne.",
@@ -4262,7 +4303,11 @@ export const people: Person[] = [
     id: "god-the-father",
     name: "God the Father",
     pronunciation: "GOD thuh FAH-ther",
+    // "Abba! Father!" cannot match — the exclamation marks defeat the word boundaries — which left
+    // Romans 8:15 unlinked while Mark 14:36 and Galatians 4:6 matched under "Abba, Father". Bare
+    // "Abba" covers it; the longer key still wins wherever the full phrase is written out.
     alternateNames: ["Father in heaven", "heavenly Father", "Abba, Father", "Abba! Father!"],
+    matchNames: ["Abba"],
     tier: "major",
     role: "First Person of the Trinity",
     summary:
@@ -7482,7 +7527,9 @@ export const people: Person[] = [
   {
     id: "billy-graham",
     name: "Billy Graham",
+    // "William Franklin Graham Jr." cannot match — the trailing "Jr." defeats the word boundary.
     alternateNames: ["William Franklin Graham Jr."],
+    matchNames: ["William Franklin Graham"],
     bornYear: 1918,
     diedYear: 2018,
     lifespanLabel: "AD 1918–2018",
@@ -7692,6 +7739,9 @@ export const people: Person[] = [
   {
     id: "martin-luther-king-jr",
     name: "Martin Luther King Jr.",
+    // The trailing "Jr." made his only key unmatchable, so nothing in the app could link to him.
+    // Registered without it — and longer than "Martin Luther", which therefore cannot shadow it.
+    matchNames: ["Martin Luther King"],
     bornYear: 1929,
     diedYear: 1968,
     lifespanLabel: "AD 1929–1968",
