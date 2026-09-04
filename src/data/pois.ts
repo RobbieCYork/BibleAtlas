@@ -1043,8 +1043,6 @@ export const pois: PointOfInterest[] = [
       { label: "Biblical Archaeology Society - The Magdala Stone", url: "https://www.biblicalarchaeology.org/daily/ancient-cultures/ancient-israel/the-magdala-stone/" },
       { label: "Bible Gateway - John 20 (Mary Magdalene at the tomb)", url: "https://www.biblegateway.com/passage/?search=John+20&version=NIV" },
     ],
-    reflectionPrompt:
-      "Jesus likely taught in Magdala's small-town synagogue, uncovered only in 2009 — what holy things might be hiding in your ordinary places?",
   },
   {
     id: "pool-of-bethesda",
