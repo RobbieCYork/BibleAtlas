@@ -88,9 +88,15 @@ function AppearanceControl() {
   );
 }
 
-/** Lets a reader choose which of the seven destinations the mobile bottom bar shows. Seven tabs on
- * a 375px phone is a crowded row, and not everyone uses all seven — so each can be switched off and
- * back on here, in the same account-menu Settings view as text size and appearance.
+/** Lets a reader choose which of the seven destinations the mobile bottom bar shows. Seven buttons
+ * on a 375px phone is a crowded row, and not everyone uses all seven — so each can be switched off
+ * and back on here, in the same account-menu Settings view as text size and appearance.
+ *
+ * CALLED "NAVIGATION BAR" TO THE READER, not "tab bar". The owner's word for it, and the accurate
+ * one: it is how you get from one part of the app to another. "Tab bar" is a platform term for a
+ * control most people have never had to name. The `mobileTabs`/`auth-tabbar-*` identifiers behind
+ * it still say "tab" — they are load-bearing across App.tsx, MobileTabBar, MobileNavMenu and ~30
+ * CSS rules, and renaming them buys nothing a reader can see.
  *
  * Mobile-only, matching the same 768px breakpoint App uses: desktop navigates via the hamburger
  * PanelMenu and the footer, neither of which this touches. Rendered only when the viewport is
@@ -99,7 +105,7 @@ function AppearanceControl() {
  * Two guards, both surfaced rather than silent: Bible has no switch at all (it's the cold-start
  * landing tab and the fallback every other safety path points at), and once the bar is down to
  * MIN_VISIBLE_TABS the remaining switches are disabled with a line of copy saying why. */
-function TabBarControl() {
+function NavBarControl() {
   const { visible, canHide, setTabVisible, resetTabs, isDefault } = useMobileTabs();
   const [isNarrow, setIsNarrow] = useState(() => window.matchMedia("(max-width: 768px)").matches);
 
@@ -116,10 +122,10 @@ function TabBarControl() {
 
   return (
     <div className="auth-settings-section auth-settings-section-stacked">
-      <span className="auth-settings-label">Tab Bar</span>
+      <span className="auth-settings-label">Navigation Bar</span>
       <p className="auth-benefits auth-tabbar-note">
         Choose which buttons appear in the bar at the bottom of the screen. Bible always stays, and at least{" "}
-        {MIN_VISIBLE_TABS} tabs are always shown.
+        {MIN_VISIBLE_TABS} buttons are always shown.
       </p>
       <ul className="auth-tabbar-list">
         {MOBILE_TAB_ORDER.map((key) => {
@@ -130,8 +136,15 @@ function TabBarControl() {
           const disabled = locked || (on && !canHide(key));
           return (
             <li key={key} className={`auth-tabbar-row${disabled ? " disabled" : ""}`}>
+              {/* `MOBILE_TAB_META[key].icon` is a NAME in the app's icon set ("bible", "map"), not
+                  a glyph — it stopped being an emoji when the bar moved to drawn icons. This row
+                  was the one consumer left rendering it as text, so every name showed up twice:
+                  "bible Bible", "map Map". It draws the icon now, like the bar and the hamburger
+                  menu already did. */}
               <span className="auth-tabbar-name">
-                <span aria-hidden="true">{MOBILE_TAB_META[key].icon}</span>
+                <span className="auth-tabbar-icon" aria-hidden="true">
+                  <Icon name={MOBILE_TAB_META[key].icon} />
+                </span>
                 {MOBILE_TAB_META[key].label}
               </span>
               {locked ? (
@@ -143,7 +156,7 @@ function TabBarControl() {
                     checked={on}
                     disabled={disabled}
                     onChange={(e) => setTabVisible(key, e.target.checked)}
-                    aria-label={`Show ${MOBILE_TAB_META[key].label} in the tab bar`}
+                    aria-label={`Show ${MOBILE_TAB_META[key].label} in the navigation bar`}
                   />
                   <span className="auth-tabbar-track" aria-hidden="true" />
                 </label>
@@ -154,7 +167,7 @@ function TabBarControl() {
       </ul>
       {atMinimum && (
         <p className="auth-tabbar-limit" role="status">
-          That's the minimum of {MIN_VISIBLE_TABS} tabs — turn another one on before hiding any more.
+          That's the minimum of {MIN_VISIBLE_TABS} buttons — turn another one on before hiding any more.
         </p>
       )}
       <button type="button" className="auth-tabbar-reset" onClick={resetTabs} disabled={isDefault}>
@@ -513,7 +526,7 @@ export default function AuthButton({
             </button>
             <TextSizeControl />
             <AppearanceControl />
-            <TabBarControl />
+            <NavBarControl />
             {!session.user.is_anonymous && (
               <>
                 <div className="auth-settings-divider" />
@@ -538,7 +551,7 @@ export default function AuthButton({
         <div className="auth-dropdown">
           <TextSizeControl />
           <AppearanceControl />
-          <TabBarControl />
+          <NavBarControl />
           <div className="auth-settings-divider" />
           <p className="auth-benefits">
             Create a free account to sync your notes, highlights, and tags — and pick up right where you left off on any
