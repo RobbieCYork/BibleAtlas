@@ -7565,6 +7565,17 @@ a.profile-links-url {
   min-width: 0;
 }
 
+/* Sized in em terms exactly like .mobile-nav-menu-icon, because it is the same icon at the same job
+   — Icon draws at 1em, so the font-size here IS the icon size. A fixed 20px box keeps the seven
+   labels left-aligned with each other whatever each mark's own width turns out to be. */
+.auth-tabbar-icon {
+  flex-shrink: 0;
+  width: 20px;
+  font-size: 16px;
+  line-height: 1;
+  color: var(--text-muted);
+}
+
 .auth-tabbar-always {
   font-size: 11px;
   font-weight: 600;
