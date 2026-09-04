@@ -71,6 +71,34 @@ const ID_TO_KIND = new Map(NAME_ENTRIES.map((e) => [e.id, e.kind]));
 const edomLocationEntry = NAME_ENTRIES.find((e) => e.kind === "location" && e.name.toLowerCase() === "edom");
 if (edomLocationEntry) NAME_TO_ENTRY.set("edom", edomLocationEntry);
 
+// SAUL_DEFAULT.
+// "Saul" is the same problem between two people, and it was the largest single wrong-link fault the
+// harness has measured. Two men share the bare name: Israel's first king, and Paul before his
+// renaming. Paul owned the key globally, and BOOK_NAME_OVERRIDES recovered the king inside 1-2
+// Samuel and 1 Chronicles — which fixed the Bible reader and nothing else, because no other surface
+// passes a book. Measured with scripts/name-linker, per surface:
+//
+//   surface                                          king   Paul
+//   Scripture, reader path (book passed)              386     30   ← the 5 Psalms superscriptions
+//                                                                    were Paul's, wrongly
+//   Scripture, panel path (verse lists, no book)        0    416
+//   the app's own prose (articles, panels, intros)      0    126
+//
+// The king is the referent of 391 of the 416 bare "Saul"s in Scripture and 100 of the 126 in our own
+// prose, so he — not Paul — is the honest global default, exactly as "Edom" above belongs to the
+// nation and not to Esau. Forcing it here rather than relying on people.ts array order, for the same
+// reason Edom does: the order that makes it come out right today is an accident of where the record
+// happens to sit in the file.
+//
+// Paul is recovered three ways once the default moves: BOOK_NAME_OVERRIDES sends every bare "Saul"
+// in Acts back to him on the reader path; OWNER_NAME_OVERRIDES sends the seven records whose own
+// article is about him back to him on the prose path; and "Saul the son of Kish" stays registered
+// on the king (people.ts) so Acts 13:21 survives the Acts override. What is left is the 25 bare
+// "Saul"s of Acts as they appear in a PANEL verse list with no owner — genuinely context-free, and
+// the same residual every key in this file carries there.
+const saulKingEntry = NAME_ENTRIES.find((e) => e.id === "saul-king-of-israel" && e.name.toLowerCase() === "saul");
+if (saulKingEntry) NAME_TO_ENTRY.set("saul", saulKingEntry);
+
 /** Some bare names are genuinely ambiguous between two prominent, frequently-recurring people, and
  * whichever one "owns" the name globally (see the comments in people.ts) will be wrong within a
  * specific book. Rather than trying to disambiguate at the individual-verse level (which would need
@@ -91,8 +119,10 @@ if (edomLocationEntry) NAME_TO_ENTRY.set("edom", edomLocationEntry);
  * - "James": James, son of Zebedee is the global default, but Galatians, 1 Corinthians, and Acts
  *   overwhelmingly mean James, brother of Jesus (leader of the Jerusalem church) once Zebedee's son is
  *   long dead (Acts 12:2) — Acts 12:17/15:13/21:18 all mean the brother.
- * - "Saul": Saul of Tarsus (Paul, before his renaming) is the global default, but every "Saul" in
- *   1/2 Samuel and 1 Chronicles is King Saul, centuries earlier.
+ * - "Saul": the direction of this one REVERSED — see the SAUL_DEFAULT block above. King Saul is now
+ *   the global default, and Acts is the one book where a bare "Saul" means Paul before his
+ *   renaming. Acts 13:21's "Saul the son of Kish" is the king even so, and is matched as that
+ *   longer registered wording rather than by an exception here.
  * - "Edom": default owner is the Edom location (see edomLocationEntry above) — Genesis is the one book
  *   where "Edom" means Esau himself (Genesis 36's "Esau is Edom"). */
 const BOOK_NAME_OVERRIDES: Record<string, Record<string, string>> = {
@@ -104,7 +134,7 @@ const BOOK_NAME_OVERRIDES: Record<string, Record<string, string>> = {
   },
   john: { Acts: "john-the-apostle" },
   james: { Galatians: "james-brother-of-jesus", "1 Corinthians": "james-brother-of-jesus", Acts: "james-brother-of-jesus" },
-  saul: { "1 Samuel": "saul-king-of-israel", "2 Samuel": "saul-king-of-israel", "1 Chronicles": "saul-king-of-israel" },
+  saul: { Acts: "paul-of-tarsus" },
   edom: { Genesis: "esau" },
   // "Caesar": Tiberius (the global default — see his alternateNames) is correct for every bare
   // mention in the four Gospels, since Jesus's entire ministry and death fell within his reign. Acts'
@@ -193,8 +223,10 @@ const BOOK_NAME_OVERRIDES: Record<string, Record<string, string>> = {
  *   jesus, whose own `verses` field cites Mark 6:3). Luke 6:16's "Judas the son of James" names a third
  *   James — the apostle Judas's father, an otherwise unmentioned man with no entry. That whole wording
  *   is now registered on thaddaeus (see people.ts) and is matched as one phrase, so no bare "James" is
- *   produced at Luke 6:16 at all and the `Luke` entry below no longer fires. It is left in place
- *   because it agrees with the result, but the phrase is what does the work, not the suppression.
+ *   produced at Luke 6:16 at all. There WAS a `Luke: { "6:16": null }` entry below; it could not fire
+ *   once the phrase was registered, and it has been removed rather than left standing as a claim
+ *   about behaviour it no longer has. `run.mjs --ref "Luke 6:16"` is the check: the verse returns only
+ *   whole-phrase annotations.
  *   Acts 1:13 is fixed, and was not always. Its apostle list names three DIFFERENT men called James
  *   (Zebedee's son; Alphaeus's son; Judas's father), and a per-verse override applies one answer to
  *   every match of the key, so while all three were bare "James" matches any single value was wrong
@@ -208,7 +240,8 @@ const BOOK_NAME_OVERRIDES: Record<string, Record<string, string>> = {
  *   Acts 1:13; John 14:22, where the text itself says "Judas (not Iscariot)"). Of those three only
  *   John 14:22 still needs its entry below: at Luke 6:16 and Acts 1:13 the full wording "Judas the son
  *   of James" is registered on thaddaeus (see people.ts) and is matched as one phrase, so no bare
- *   "Judas" survives at either verse and the `Luke` entry below no longer fires. (Luke 6:16's second
+ *   "Judas" survives at either verse. Luke 6:16's own entry has been removed for the same reason as
+ *   "James"'s above — it could not fire, and a dead entry reads as a live claim. (Luke 6:16's second
  *   Judas is matched as the longer registered name "Judas Iscariot" and resolves on its own.) Wrong
  *   again at Matthew 13:55, where the Judas listed is a brother of Jesus — a fourth, distinct man with
  *   no entry here, so suppressed. (Mark 6:3, the parallel passage, needs no entry: WEB renders that
@@ -288,7 +321,6 @@ const VERSE_NAME_OVERRIDES: Record<string, Record<string, Record<string, string 
   james: {
     Matthew: { "13:55": "james-brother-of-jesus" },
     Mark: { "6:3": "james-brother-of-jesus" },
-    Luke: { "6:16": null },
     // Acts 1:13's apostle list names three different men called James. Two of them are now matched
     // as whole phrases — "James the son of Alphaeus", and the "James" inside "Judas the son of
     // James" — leaving exactly one bare "James", the son of Zebedee, which the Acts book override
@@ -298,7 +330,6 @@ const VERSE_NAME_OVERRIDES: Record<string, Record<string, Record<string, string 
   },
   judas: {
     Matthew: { "13:55": null },
-    Luke: { "6:16": "thaddaeus" },
     John: { "14:22": "thaddaeus" },
     Acts: { "1:13": "thaddaeus" },
   },
@@ -426,6 +457,119 @@ const VERSE_NAME_OVERRIDES: Record<string, Record<string, Record<string, string 
   },
 };
 
+/** The coarsest correction in this file, and the ONLY one that reaches the app's own articles.
+ *
+ * BOOK_NAME_OVERRIDES and VERSE_NAME_OVERRIDES both need a book, and the only surface that passes
+ * one is the Bible reader (VerseText). Every panel renders through LinkedVerseText, which passes no
+ * book, no chapter and no verse — so an ambiguous bare name in a timeline article, a person's life
+ * story or a POI description gets the global default and nothing else. That is how 44 "Saul"s in
+ * united-monarchy and conquest timeline articles came to point at Paul of Tarsus.
+ *
+ * What those surfaces DO pass is `excludeId`: the id of the record whose page the text belongs to.
+ * PersonPanel passes `person.id`, LocationPanel `location.id`, PoiPanel `poi.id`, TopicPanel
+ * `topic.id` and TimelineEventPanel `event.id`. It exists so a page does not link to itself, but it
+ * is also a fact about the text — "this paragraph is the article on X" — and that is exactly the
+ * context an ambiguous name needs when there is no verse to look at. This table reads it as such:
+ * lowercase bare name -> owning record id -> target person id, or `null` to suppress the link.
+ *
+ * Its reach is honest about what it is NOT. BookIntroView passes no id (a book intro has no record
+ * id to pass), so nothing here can reach one; where a bare name is wrong inside a book intro the
+ * only lever is the global default or a longer registered wording. And a whole record gets ONE
+ * answer — if an article legitimately names both bearers, this cannot split them, and the longer
+ * wording has to do the work instead (see Acts 1:13 and Acts 10:32 above).
+ *
+ * Checked AFTER the per-verse table and the capitalisation test, and BEFORE the book allowlist and
+ * book overrides — in practice a book and an owner never arrive together, since the reader passes no
+ * excludeId and the panels pass no book, but the order makes the precedence explicit rather than
+ * incidental.
+ *
+ * An entry pointing a name at its own owner (`"paul-of-tarsus": "paul-of-tarsus"`) is not a no-op:
+ * it hands the mention back to the exclusion rule, which is what suppresses a page linking to
+ * itself. That is how bare "Saul" behaves on Paul's own page, and it is what it did before the
+ * global default moved. */
+const OWNER_NAME_OVERRIDES: Record<string, Record<string, string | null>> = {
+  // "Saul": the king is now the global default (see SAUL_DEFAULT above), which is right for 100 of
+  // the 126 bare "Saul"s in our prose. These are the seven records that hold the other 26 — every
+  // one of them an article about the conversion, the Damascus disciple who baptised him, the man
+  // who sent him to Antioch, or the martyrdom he watched. Read one by one; no record below names
+  // both men.
+  saul: {
+    // Paul's own page: "Paul was born Saul in Tarsus", "Saul, Saul, why do you persecute me?".
+    // Mapped to himself so the self-link exclusion suppresses it, unchanged from before.
+    "paul-of-tarsus": "paul-of-tarsus",
+    // Acts 9:10-19 told from the other side — "ask for Saul", "Brother Saul", "scales fell from
+    // Saul's eyes". Eight mentions, all Paul.
+    "ananias-of-damascus": "paul-of-tarsus",
+    // "the newly converted Saul (Paul)", "traveled to Tarsus to bring Saul in as a teacher",
+    // "commissioned Barnabas and Saul".
+    barnabas: "paul-of-tarsus",
+    // "the witnesses laid their coats at the feet of a young man named Saul".
+    "stephen-the-martyr": "paul-of-tarsus",
+    // The house where Ananias was sent "to lay hands on the blinded Saul".
+    "house-of-ananias-damascus": "paul-of-tarsus",
+    "bib-ac-paul-conversion": "paul-of-tarsus",
+    "bib-ac-antioch-church-founded": "paul-of-tarsus",
+    "bib-ac-paul-first-journey": "paul-of-tarsus",
+  },
+  // "Levi": the only entry is Matthew/Levi the apostle, and BOOK_NAME_ALLOWLIST already confines him
+  // to Matthew and Mark in the Bible reader. On the article surface there is no allowlist, so all
+  // 13 prose mentions resolved to the apostle — and every one of the 13 is Levi son of Jacob, the
+  // tribe descended from him, or (on Matthan's page) Luke's "Matthat son of Levi". None is the
+  // apostle. There is no entry for the patriarch, so the least-wrong answer is the allowlist's own:
+  // no link. Keyed by owner rather than suppressed globally so the apostle's own pages are
+  // untouched — none of them writes the bare name.
+  levi: {
+    melchizedek: null,
+    jacob: null,
+    leah: null,
+    moses: null,
+    aaron: null,
+    matthan: null,
+    levites: null,
+    "bib-pat-jacob-marriages-sons": null,
+    "bib-pat-death-jacob": null,
+    "bib-exo-birth-of-moses": null,
+    "bib-exo-golden-calf": null,
+  },
+  // "Simeon": the only entry is Simeon at the temple (Luke 2), allowlisted to Luke for the reader.
+  // Of the 10 prose mentions, 2 are his (Mary's page and Anna's) and 8 are not: Simeon son of Jacob
+  // in the patriarch articles, and Simeon bar Kosiba — bar Kokhba — in the Roman revolt article.
+  // Neither has an entry.
+  simeon: {
+    jacob: null,
+    leah: null,
+    "joseph-son-of-jacob": null,
+    "bib-pat-jacob-marriages-sons": null,
+    "bib-pat-joseph-reveals-brothers": null,
+    "bib-pat-death-jacob": null,
+    "wld-rom-bar-kokhba-revolt": null,
+  },
+  // "Zadok": the only entry is the minor Zadok of Matthew's genealogy, allowlisted to Matthew. Two
+  // of the five prose mentions are his (Azor's and Achim's genealogy pages, which name him
+  // directly); the other three are Zadok the priest under David and Solomon, who has no entry —
+  // named on the Sadducees' page as the origin of their name, and in the Maccabean high-priesthood
+  // article as "Solomon's priest".
+  zadok: {
+    sadducees: null,
+    "bib-it-jonathan-maccabeus-high-priest": null,
+  },
+  // "Eleazar": the only entry is the minor Eleazar of Matthew's genealogy, allowlisted to Matthew.
+  // Two of the eleven prose mentions are his (Eliud's and Matthan's genealogy pages). The other
+  // nine are three other men, none with an entry: Eleazar son of Aaron, Israel's third high priest
+  // (Aaron's page, Joshua's page, Zadok's own page, the death-of-Aaron article, and Judges 20:28's
+  // "Phinehas, son of Eleazar" in the Benjamite-war dating note); the elderly scribe martyred under
+  // Antiochus IV; and Eleazar the Maccabee, brother of Judas.
+  eleazar: {
+    aaron: null,
+    joshua: null,
+    "zadok-in-jesus-genealogy": null,
+    "bib-exo-death-of-aaron": null,
+    "bib-cj-benjamite-war": null,
+    "bib-it-antiochus-defiles-temple": null,
+    "bib-it-maccabean-revolt-begins": null,
+  },
+};
+
 const BOOK_NAME_ALLOWLIST: Record<string, string[]> = {
   manasseh: ["2 Kings", "2 Chronicles", "Matthew"],
   levi: ["Matthew", "Mark"],
@@ -443,6 +587,19 @@ const BOOK_NAME_ALLOWLIST: Record<string, string[]> = {
   jotham: ["2 Kings", "2 Chronicles", "Matthew"],
   zadok: ["Matthew"],
   eleazar: ["Matthew"],
+  // "Eliakim": same shape as "Zadok" and "Eleazar" above and missed when they were done. The only
+  // entry is the Eliakim of Matthew's genealogy (Matthew 1:13, twice — the sole correct mentions of
+  // 15 in Scripture). The other 13 are three different men with no entry: Eliakim son of Hilkiah,
+  // Hezekiah's palace steward who negotiates with the Rabshakeh (2 Kings 18-19, Isaiah 22 and
+  // 36-37); Josiah's son Eliakim, whom Pharaoh Necoh renames Jehoiakim (2 Kings 23:34, 2 Chronicles
+  // 36:4); a priest at Nehemiah's wall dedication (Nehemiah 12:41); and Luke 3:30's Eliakim, who
+  // sits in Luke's line rather than Matthew's and so is not the same man either.
+  eliakim: ["Matthew"],
+  // "Gamaliel": the entry is Paul's teacher, who appears in Acts 5:34 and 22:3 and nowhere else.
+  // The other five occurrences are Gamaliel the son of Pedahzur, prince of Manasseh in the
+  // wilderness census (Numbers 1:10, 2:20, 7:54, 7:59, 10:23) — a different man, no entry. All
+  // eight prose mentions are the teacher and are unaffected: the allowlist needs a book to fire.
+  gamaliel: ["Acts"],
   hezron: ["Genesis", "Ruth", "Matthew"],
   amminadab: ["Ruth", "Exodus", "Matthew"],
   josiah: ["2 Kings", "2 Chronicles", "Matthew"],
@@ -535,7 +692,10 @@ const NAME_PATTERN =
  * BOOK_NAME_OVERRIDES/VERSE_NAME_OVERRIDES above. `chapter`/`verse` narrow further to VERSE_NAME_OVERRIDES
  * (exact chapter:verse) when all three are supplied — the Bible reader passes all three per-verse; the
  * verse-list views in person/location/POI panels pass none, so ambiguous names there just resolve to
- * their global default owner. */
+ * their global default owner — unless OWNER_NAME_OVERRIDES has an answer for them, which is the one
+ * correction `excludeId` alone can reach. `excludeId` therefore does two jobs: it suppresses a
+ * record's page from linking to itself, and it tells this function whose article the text is, which
+ * on every LinkedVerseText surface is the only context there is. */
 export function computeLinkAnnotations(
   text: string,
   excludeId?: string,
@@ -579,6 +739,18 @@ export function computeLinkAnnotations(
           // table on purpose: a verse override can still force a link on a lowercase match if some
           // future translation ever needs one, and it is what suppresses the handful of capitalised
           // stragglers this test cannot see (Psalm 37:37's "Mark the perfect man", 1 John 2:1).
+        } else if (
+          excludeId !== undefined &&
+          OWNER_NAME_OVERRIDES[nameLower] !== undefined &&
+          Object.prototype.hasOwnProperty.call(OWNER_NAME_OVERRIDES[nameLower], excludeId)
+        ) {
+          // This text is the article on a record that settles the name. See OWNER_NAME_OVERRIDES.
+          const ownerId = OWNER_NAME_OVERRIDES[nameLower][excludeId];
+          if (ownerId !== null && ownerId !== excludeId) {
+            annotations.push({ start, end, text: name, kind: ID_TO_KIND.get(ownerId) ?? entry.kind, id: ownerId });
+          }
+          // ownerId === null: a different, unrepresented bearer of the name — no link.
+          // ownerId === excludeId: the record's own page — the self-link exclusion, spelled out.
         } else {
           const allowlist = BOOK_NAME_ALLOWLIST[nameLower];
           const suppressed = !!allowlist && !!book && !allowlist.includes(book);
