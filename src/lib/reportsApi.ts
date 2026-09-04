@@ -29,8 +29,9 @@ import { supabase } from "./supabase";
  * `priority_score` is `numeric` and `total_count` is `bigint`. Neither fits a
  * double without loss in the general case, so PostgREST ships both as JSON
  * strings. Untouched, `a.priority_score - b.priority_score` is NaN and a sort by
- * priority silently becomes a sort by nothing. coerceRow() below is the single
- * place that converts them, so no call site has to remember.
+ * priority silently becomes a sort by nothing. coerceNumerics() below (and
+ * coerceRow(), which wraps it for report_list()'s two computed extras) is the
+ * single place that converts them, so no call site has to remember.
  *
  * ── ERRORS ARE IDENTIFIED BY MESSAGE PREFIX, NOT BY CODE ────────────────────
  * The migration raises `rate_limited:`, `duplicate_submission:`, `report_locked:`,
@@ -151,10 +152,63 @@ export interface ReportHistoryRow {
   note: string | null;
 }
 
-/** report_detail()'s jsonb. `report` is the whole row (minus reporter_id when identity is hidden),
- * so its numerics are strings here too — coerced in fetchReportDetail(). */
+/** The `reports` TABLE row, exactly as report_detail() ships it: `to_jsonb(r)`, the base table and
+ * nothing else.
+ *
+ * NOT a ReportListRow, and typing it as one is a trap rather than a shortcut. report_list() is a
+ * RETURNS TABLE that joins and computes, so the two shapes differ in BOTH directions. Missing here:
+ * `category_label` (joined from report_categories), `reporter_name` (joined from profiles/
+ * auth.users), `my_vote` (computed per viewer) and `total_count` (a paging total, which one row has
+ * no meaning for) — read the first two off ReportDetail itself and derive the vote from its
+ * `votes`. Present here and absent from report_list(): `app_context`, `resolved_by`, `triaged_at`.
+ *
+ * The failure mode this type exists to prevent is silent: `detail.report.my_vote` type-checks
+ * against ReportListRow, compiles, and is `undefined` at runtime forever. */
+export interface ReportRow {
+  id: string;
+  /** ABSENT, not null, when the viewer is an advisor and `reports.reveal_reporter_to_advisors` is
+   * off — report_detail() deletes the key from the jsonb. For identity read ReportDetail's own
+   * `reporter_name`, which is the field that knows about the setting. */
+  reporter_id?: string;
+  category: string;
+  title: string;
+  body: string;
+  reporter_severity: Severity | null;
+  page_url: string | null;
+  route: string | null;
+  page_title: string | null;
+  target_kind: TargetKind | null;
+  target_id: string | null;
+  target_label: string | null;
+  selected_text: string | null;
+  build_id: string | null;
+  user_agent: string | null;
+  viewport_w: number | null;
+  viewport_h: number | null;
+  platform: string | null;
+  /** sql/025's size-capped escape hatch, and `{}` on every row this app files: the reporter is shown
+   * every field before they send, and a payload they cannot see is exactly what that rule exists to
+   * prevent. Typed because it is really there, not because anything should start filling it. */
+  app_context: Record<string, unknown>;
+  status: ReportStatus;
+  duplicate_of: string | null;
+  resolution_note: string | null;
+  resolved_by: string | null;
+  resolved_at: string | null;
+  triaged_at: string | null;
+  assigned_to: string | null;
+  vote_agree: number;
+  vote_disagree: number;
+  /** numeric in Postgres — see the header note. Already coerced by fetchReportDetail(). */
+  priority_score: number;
+  created_at: string;
+  updated_at: string;
+}
+
+/** report_detail()'s jsonb. `report` is the whole table row (minus reporter_id when identity is
+ * hidden), so its numerics are strings here too — coerced in fetchReportDetail(). */
 export interface ReportDetail {
-  report: ReportListRow;
+  report: ReportRow;
   reporter_name: string | null;
   category_label: string | null;
   votes: ReportVoteRow[];
@@ -298,9 +352,24 @@ export function humanizeReportError(err: unknown): string {
   if (raw.startsWith("last_owner:")) {
     return "There has to be at least one owner. Promote someone else first, then change this one.";
   }
-  // The tier refusal every gated function raises. Reachable if a role was revoked between the menu
-  // being drawn and the call being made.
-  if (raw.includes("not authorized")) {
+  // THE RLS REFUSAL, WHICH HAS NO PREFIX BECAUSE POSTGRES WROTE IT, NOT THE MIGRATION. PostgREST
+  // hands the policy's own text through verbatim — "new row violates row-level security policy for
+  // table \"reports\"" — and without this case it falls all the way to `return raw` and a reader
+  // sees those words. The way to get one is a guest: reports_insert_own requires a non-anonymous
+  // JWT unless app_settings 'reports.allow_anonymous' says otherwise, and it ships false.
+  //
+  // This is the SEATBELT, not the fix. ReportIssueSheet's guest branch is what actually stops an
+  // anonymous session ever reaching a form it cannot submit, and AuthGate stops one reaching the
+  // header at all today. But `allow_anonymous` is a live app_settings row that flips with one
+  // UPDATE, in either direction, with no deploy — so this path is one setting away from real, and
+  // a raw Postgres string is never an acceptable thing to show a reader.
+  if (raw.includes("row-level security policy")) {
+    return "Filing a report needs a full account, so the team can come back to you about it — guest browsing can't. Sign in with an account you created and try again.";
+  }
+  // The tier refusal every gated function raises, plus the bare table-grant refusal that reads the
+  // same to a reader. Reachable if a role was revoked between the menu being drawn and the call
+  // being made.
+  if (raw.includes("not authorized") || raw.startsWith("permission denied")) {
     return "Your account doesn't have access to that. If that's a surprise, your role may have changed since this screen loaded — reload and try again.";
   }
   if (!raw) return "Something went wrong. Try again.";
@@ -441,14 +510,23 @@ async function rpc<T>(fn: string, args?: Record<string, unknown>): Promise<T> {
   return data as T;
 }
 
-/** The one place Postgres numerics stop being strings. See the header note. */
-function coerceRow(row: ReportListRow): ReportListRow {
+/** The one place Postgres numerics stop being strings — the three columns BOTH shapes carry, so a
+ * ReportListRow and a raw ReportRow can share it. See the header note. */
+function coerceNumerics<T extends { priority_score: number; vote_agree: number; vote_disagree: number }>(row: T): T {
   return {
     ...row,
     priority_score: Number(row.priority_score ?? 0),
-    total_count: Number(row.total_count ?? 0),
     vote_agree: Number(row.vote_agree ?? 0),
     vote_disagree: Number(row.vote_disagree ?? 0),
+  };
+}
+
+/** The two extra columns report_list() computes on top of the table's own — see ReportRow for why
+ * the raw row has neither. */
+function coerceRow(row: ReportListRow): ReportListRow {
+  return {
+    ...coerceNumerics(row),
+    total_count: Number(row.total_count ?? 0),
     my_vote: row.my_vote === null || row.my_vote === undefined ? null : Number(row.my_vote),
   };
 }
@@ -484,7 +562,7 @@ export async function fetchReportList(
 
 export async function fetchReportDetail(reportId: string): Promise<ReportDetail> {
   const raw = await rpc<ReportDetail>("report_detail", { p_report_id: reportId });
-  return { ...raw, report: coerceRow(raw.report) };
+  return { ...raw, report: coerceNumerics(raw.report) };
 }
 
 /** vote: 1 agree, -1 disagree, 0 retracts. */

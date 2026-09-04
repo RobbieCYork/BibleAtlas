@@ -19,8 +19,19 @@ import Icon from "./Icon";
 interface ReportIssueSheetProps {
   userId: string;
   /** True for the retired "Continue as Guest" accounts. `reports.allow_anonymous` ships FALSE, so
-   * the database would refuse the insert — this sheet says so up front rather than letting someone
-   * write out a paragraph and then get rejected by an RLS policy. */
+   * reports_insert_own would refuse the insert — this sheet says so up front rather than letting
+   * someone write out a paragraph and then get rejected by an RLS policy.
+   *
+   * EXPLAIN RATHER THAN HIDE, because that is how this app already handles a guest meeting an
+   * account-only feature: FriendsPanel keeps its view and swaps the contents for "Log in with an
+   * account (not just as a guest) to add friends and message them", and the mobile "My Profile"
+   * entry stays put and lands a guest on Settings. An entry point that silently is not there
+   * teaches a reader nothing; both of those tell them what the account buys. So the menu item
+   * stays and this branch answers it.
+   *
+   * The database is still the boundary, and humanizeReportError() now translates the RLS refusal
+   * too — so if `reports.allow_anonymous` is ever flipped back the other way, or a guest reaches
+   * a submit some other way, the worst case is a sentence rather than Postgres's own words. */
   isGuest: boolean;
   /** Where the reporter was standing, from App's own render. Captured once on mount, not read
    * live: the context that matters is the screen they pressed "Report" on, and App keeps
@@ -63,7 +74,11 @@ export default function ReportIssueSheet({ userId, isGuest, surface, onClose, on
   const [error, setError] = useState<string | null>(null);
   const [sent, setSent] = useState(false);
 
+  // Not fetched for a guest: the guest branch below returns before the form exists, so this would
+  // be a round trip for a <select> nobody will see — and a failure would park an error in state
+  // that the guest branch does not render, which is the kind of thing that looks like a ghost later.
   useEffect(() => {
+    if (isGuest) return;
     let cancelled = false;
     void fetchCategories()
       .then((rows) => {
@@ -78,7 +93,7 @@ export default function ReportIssueSheet({ userId, isGuest, surface, onClose, on
     return () => {
       cancelled = true;
     };
-  }, []);
+  }, [isGuest]);
 
   const selectedCategory = useMemo(
     () => (categories ?? []).find((c) => c.key === category) ?? null,
