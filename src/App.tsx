@@ -5,6 +5,7 @@ import MapView from "./components/MapView";
 import LayerControls from "./components/LayerControls";
 import SearchBar from "./components/SearchBar";
 import HeaderTextSearch from "./components/HeaderTextSearch";
+import { completionTail, suggestReference } from "./lib/bibleReference";
 import TimelineSearchBar from "./components/TimelineSearchBar";
 import LocationPanel from "./components/LocationPanel";
 import PoiPanel from "./components/PoiPanel";
@@ -106,6 +107,12 @@ function App() {
   // for why Bible needs a nonce: it hits an external API on Enter, not on every keystroke).
   const [bibleSearchQuery, setBibleSearchQuery] = useState("");
   const [bibleSearchNonce, setBibleSearchNonce] = useState(0);
+  // The reference the Bible box appears to be heading for, and the unwritten tail of it drawn in
+  // grey after the cursor. Derived, never stored — it is a function of the query and nothing else,
+  // so there is no second copy of the truth to keep in step. BiblePanel resolves the same query
+  // independently when the search is actually submitted; this exists only to show it coming.
+  const bibleSuggestion = suggestReference(bibleSearchQuery);
+  const bibleCompletion = completionTail(bibleSearchQuery, bibleSuggestion);
   const [notesSearchQuery, setNotesSearchQuery] = useState("");
   // Explicit scope for the header's shared search box, for the one case where it's genuinely
   // ambiguous: desktop with both the Bible and Map panels open at once. Always starts on
@@ -1375,6 +1382,19 @@ function App() {
                 icon="bible"
                 value={bibleSearchQuery}
                 onChange={setBibleSearchQuery}
+                completion={bibleCompletion}
+                // Accepting writes the whole reference into the box and submits it in the same
+                // commit. BiblePanel's effect keys off the nonce and reads the query from that same
+                // render, so it sees "Matthew 1" and not the "Matt" that was there a moment ago.
+                onAcceptCompletion={
+                  bibleCompletion
+                    ? () => {
+                        setBibleSearchQuery(bibleSuggestion!.text);
+                        track("search.run", { scope: "scripture" });
+                        setBibleSearchNonce((n) => n + 1);
+                      }
+                    : undefined
+                }
                 onSubmit={() => {
                   // The scope, never the query. What someone searches Scripture for is
                   // exactly the kind of thing this app has no business logging.

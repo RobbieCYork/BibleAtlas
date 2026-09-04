@@ -6,6 +6,7 @@ import InlinePicker, { type PickerHandle } from "./InlinePicker";
 import BookIntroView from "./BookIntroView";
 import ReadingPlansView from "./ReadingPlansView";
 import { BOOKS } from "../data/bibleBooks";
+import { shouldNavigate, suggestReference } from "../lib/bibleReference";
 import { READING_PLANS, formatPlanDayReference, type ReadingPlan, type ReadingPlanDay } from "../data/readingPlans";
 import {
   supabase,
@@ -1373,6 +1374,25 @@ export default function BiblePanel({
   const runSearch = async (rawQuery: string) => {
     const q = rawQuery.trim();
     if (!q) return;
+
+    // A REFERENCE IS A DESTINATION, NOT A SEARCH TERM. "Matthew 1" typed into this box has always
+    // meant "take me there", and until now it went to bolls.life as a phrase and came back with
+    // nothing. The header draws the grey suggestion (see lib/bibleReference + HeaderTextSearch);
+    // this is where accepting it actually lands. Resolved from the raw query rather than handed
+    // down as a prop so Enter and the accepted completion take exactly the same path.
+    const reference = suggestReference(q);
+    if (shouldNavigate(reference) && reference) {
+      setSearchError(null);
+      const ok = await loadChapter(reference.book, reference.chapter, translation);
+      if (ok) {
+        setSearchResults(null);
+        setShowPlans(false);
+      } else {
+        setSearchError("Couldn't open that chapter — try again in a moment.");
+      }
+      return;
+    }
+
     setSearching(true);
     setSearchError(null);
     try {

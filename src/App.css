@@ -337,6 +337,44 @@ body.resizing-panels {
   outline-offset: -1px;
 }
 
+/* --- Inline reference anticipation (Bible search; see components/HeaderTextSearch.tsx) ---------
+   A copy of the field's text laid exactly under the field's text: transparent for the part the
+   reader typed, grey for the part being suggested. EVERY metric here has to match `.search-bar
+   input` above — padding, border width, font-size, and the sans family index.css gives form
+   controls — or the grey tail lands off the cursor. Change one, change both. The mobile 16px bump
+   is the case this already got wrong once: it lives in the max-width:768px block further down, and
+   this selector is listed there alongside the input for exactly that reason. */
+.search-bar-ghost {
+  position: absolute;
+  inset: 0;
+  padding: 9px 14px 9px 36px;
+  border: 1px solid transparent;
+  font-family: var(--sans);
+  font-size: 14px;
+  line-height: normal; /* the input's own default — not the document's 1.5 */
+  white-space: pre;
+  overflow: hidden;
+  /* Painted OVER the field, not under it — the input carries an opaque --surface-sunken background,
+     so anything behind it is invisible. Being absolutely positioned is what puts it there; it has
+     no background of its own, so the reader's text, caret and focus ring all show through. It must
+     never eat a click meant for the field, hence pointer-events: none — the grey tail opts back in
+     below, because tapping it is how a phone accepts the suggestion. */
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* Holds the width of what has been typed, and nothing else. `visibility: hidden` rather than a
+   transparent colour so it cannot be selected, found by in-page search, or read aloud. */
+.search-bar-ghost-typed {
+  visibility: hidden;
+}
+
+.search-bar-ghost-rest {
+  color: var(--text-muted);
+  pointer-events: auto;
+  cursor: pointer;
+}
+
 .search-results {
   position: absolute;
   top: calc(100% + 4px);
@@ -3515,6 +3553,11 @@ a.profile-links-url {
      already covers every input/textarea/select in the app, including these two — kept here anyway
      since removing it buys nothing and this comment is the historical "why" for that broader one. */
   .search-bar input,
+  /* The grey completion behind the field is a div, so neither this rule's original list nor the
+     app-wide `input { font-size: 16px !important }` below reaches it — and a ghost still set to the
+     desktop 14px puts the suggestion several pixels short of the cursor on every phone. It is in
+     THIS rule rather than in its own so the two font sizes cannot drift apart again. */
+  .search-bar-ghost,
   .bible-keyword-search input,
   .bible-nav-select,
   .bible-translation-select {
