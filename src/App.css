@@ -2530,6 +2530,54 @@ a.profile-links-url {
   zoom: var(--text-scale, 1);
 }
 
+/* iOS Safari: the zoom above scales the boxes but NOT the glyphs, unless the scale is handed to
+   text autosizing as well.
+
+   Reported from an iPhone: pressing A+ in the Bible panel grew the space between the lines while
+   the letters stayed exactly where they were. That is iOS-only behaviour and it is not a `zoom`
+   bug. When text autosizing is active (iOS/iPadOS WebKit only — macOS Safari does not have it) and
+   `text-size-adjust` is set to anything other than `auto`, WebKit recomputes every element's font
+   size as SPECIFIED size x the adjust multiplier. That recomputation discards the factor `zoom`
+   already applied, so lengths keep the zoom and type does not: the boxes grow, the letters don't.
+   index.css sets `-webkit-text-size-adjust: 100%` on `:root` on purpose (without it Mobile Safari
+   inflates small text inside narrow flex layouts and `overflow: hidden` clips it), so the
+   multiplier is pinned at 1 everywhere and the glyphs never move. Feeding the panel's own scale in
+   here puts them back in step with the boxes; the boxes need no correction, they already carry it.
+
+   THE @supports FENCE IS THE LOAD-BEARING PART OF THIS RULE. Blink does the opposite of WebKit and
+   MULTIPLIES the adjust percentage on top of the zoom: measured in Chrome 148 at 375px with the
+   declaration unfenced, a 15px probe inside .bible-panel computes to 27px at scale 1.8 (15 x 180%)
+   and is then zoomed 1.8x again — 3.24x on the glyphs. Leaking this rule out of the fence is a far
+   worse bug, on far more readers, than the one it fixes. `-webkit-touch-callout` never shipped in
+   Blink (measured: CSS.supports('-webkit-touch-callout','none') is false in desktop Chrome 148 and
+   false again under its Android emulation) and never shipped on macOS Safari, which has no
+   autosizing to feed anyway. If a future WebKit drops the property, the @supports goes false, this
+   rule stops applying, and iOS is back to the original bug — never to the Blink one. Keep it that
+   way round: do not replace this with a UA sniff, and do not move the declaration outside.
+
+   Same ten roots as the `zoom` rule above — all three `zoom: var(--text-scale, 1)` declarations in
+   the app (this one, .auth-admin-sheet and .report-sheet further down) are listed here, because
+   every surface carrying the zoom has this defect. If you add an eleventh scaled root, add it in
+   both places.
+
+   NOT VERIFIED ON REAL iOS. This machine has no iOS Simulator (no full Xcode) and the fix cannot be
+   reproduced in any browser available here; what was verified is that the fence excludes Blink and
+   that desktop scaling is byte-identical to the commit before it. */
+@supports (-webkit-touch-callout: none) {
+  .bible-panel,
+  .location-panel,
+  .my-notes-panel,
+  .friends-panel,
+  .articles-panel,
+  .myprofile-root,
+  .game-root,
+  .game-signin-prompt,
+  .auth-admin-sheet,
+  .report-sheet {
+    -webkit-text-size-adjust: calc(var(--text-scale, 1) * 100%);
+  }
+}
+
 /* --- Bible panel --- */
 
 .bible-panel {
