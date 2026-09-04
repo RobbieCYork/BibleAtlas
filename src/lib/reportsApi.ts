@@ -373,7 +373,18 @@ export function humanizeReportError(err: unknown): string {
     return "Your account doesn't have access to that. If that's a surprise, your role may have changed since this screen loaded — reload and try again.";
   }
   if (!raw) return "Something went wrong. Try again.";
-  return raw;
+  // THE LAST RESORT, AND THE REASON THIS FUNCTION NO LONGER ENDS IN `return raw`.
+  //
+  // Every branch above translates a message we put there on purpose. Anything reaching this line is
+  // by definition a string nobody wrote for a reader: a Postgres constraint name, a PostgREST
+  // envelope, a fetch failure, a future migration's new error that this file hasn't learned yet.
+  // Showing it leaks schema details and reads as a crash; there is no wording of it that helps.
+  //
+  // But it is the only evidence of a case we haven't handled, so it is not discarded — it goes to
+  // the console, where a developer looking at a bug report can find it, and where it costs a reader
+  // nothing. When one of these shows up, the fix is to add a branch above, not to widen this one.
+  console.error("[reports] unhandled error, showing the generic message instead:", raw, err);
+  return "Something went wrong. Try again.";
 }
 
 /* --------------------------------------------------------------------------
