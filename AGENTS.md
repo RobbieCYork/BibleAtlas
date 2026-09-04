@@ -13,8 +13,8 @@
 > **before you finish.** Format is in that folder's `README.md`. Bob relays it to Robbie; a message
 > in a session nobody reopens does not survive. Never report to Robbie directly.
 
-Two things here will lie to you, and one thing will silently destroy other
-people's work. All three have actually happened, repeatedly.
+Three things here will lie to you, and one thing will silently destroy other
+people's work. All four have actually happened, repeatedly.
 
 ## `tsc --noEmit` does not tell you whether the build passes
 
@@ -25,6 +25,34 @@ pushed a broken commit to a live site because it trusted a clean `--noEmit`.
 Always:
 
     npm run build     # exit 0, no exceptions
+
+## A verification worktree that shares `node_modules` shares `.tsbuildinfo` too
+
+Same class of lie, one level further out: the build *runs*, exits 0, and never
+compiles a line.
+
+`tsc -b` is incremental. Both project references write their state into
+`node_modules/.tmp/` (`tsBuildInfoFile` in `tsconfig.app.json` and
+`tsconfig.node.json`), which is *inside* `node_modules`. So the symlink in the
+recipe below — the one that exists to save you an install in the throwaway
+worktree - also hands `tsc -b` the build info from the tree you just built. It
+reads it, decides both projects are up to date, and skips the type check
+entirely. What you get back is a green build of nothing.
+
+The tell is the clock. A real check of this project takes about 6.2s; the false
+pass comes back in about 0.49s. If your verification build was suspiciously
+fast, it did not happen.
+
+Delete the build info first, every time:
+
+    rm -f /tmp/verify/node_modules/.tmp/*.tsbuildinfo
+
+Note the path: it is the shared file you are deleting, through the symlink, so
+the next build in the main tree is a full one as well. That is the intended
+behaviour — do not "fix" it by pointing `tsBuildInfoFile` somewhere outside
+`node_modules`, which would only move the shared state, and do not skip the
+delete because the worktree looks clean. The whole point of the verification
+build is that you do not trust what you think is in there.
 
 ## Committing with a pathspec ignores the index
 
@@ -75,5 +103,9 @@ after filtering hunks. Check the commit out somewhere clean and build that:
 
     git worktree add /tmp/verify <sha> --detach
     ln -s "$PWD/node_modules" /tmp/verify/node_modules
-    (cd /tmp/verify && npm run build)
+    rm -f /tmp/verify/node_modules/.tmp/*.tsbuildinfo   # or tsc -b skips everything
+    (cd /tmp/verify && npm run build)                   # ~6.2s. ~0.5s means it skipped
     git worktree remove /tmp/verify --force
+
+The `rm` is not optional and it is not tidiness — see the `.tsbuildinfo`
+section above. The symlink on the line before it is what makes it necessary.
