@@ -22,9 +22,17 @@ verse, says what it should resolve to, and says why in a sentence. Each carries 
 | `known-wrong` | This is a fault we have measured and not yet fixed. `expect` holds the *right* answer, and the case passes while the app still gives the wrong one. **When it starts passing, the case deliberately FAILS** and tells you to flip it to `guard` — so a fix cannot land unrecorded. |
 | `flagged` | A live confessional or scholarly question that is **Robbie's to settle**, recorded so an unrelated change cannot take a position on his behalf. Do not "fix" one of these. If your change moves one, back the change out and escalate. |
 
-**2. A whole-corpus snapshot** (`snapshot/*.tsv`). Every person-link in all 31,098 verses of the WEB
-and in every authored prose block, on **both** rendering paths, one row each. The run diffs the live
-result against the committed baseline and prints every row that moved.
+**2. A whole-corpus snapshot** (`snapshot/*.tsv`), in three files:
+
+| file | rows | what it holds |
+|---|---:|---|
+| `bible-links.tsv` | 9,800 | every person-link in all 31,098 WEB verses, with the id each rendering path gives it |
+| `prose-links.tsv` | 3,673 | every person-link in every authored prose block |
+| `key-totals.tsv` | 3,021 | a tally covering **every** kind — location, POI, topic, timeline, verse reference — one row per (kind, matched text, id, path) |
+
+The first two are row-level, so a diff names the verse. `key-totals.tsv` is there because the other
+two only watch people: a change to `people.ts` can steal a key from a location, and adding one POI
+alternate name can start firing hundreds of links that no person snapshot would ever show.
 
 This is the half that catches what you did not think to assert. The named cases cover a few dozen
 verses; the snapshot covers all of them.

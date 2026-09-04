@@ -22,12 +22,13 @@ import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { loadLinker, stripMarkup } from "./loadLinker.mjs";
-import { loadBible, loadProseBlocks, snapshotBible, snapshotProse } from "./corpus.mjs";
+import { loadBible, loadProseBlocks, snapshotBible, snapshotProse, snapshotKeyTotals } from "./corpus.mjs";
 import { CASES } from "./cases.mjs";
 
 const HERE = path.dirname(fileURLToPath(import.meta.url));
 const SNAP_BIBLE = path.join(HERE, "snapshot/bible-links.tsv");
 const SNAP_PROSE = path.join(HERE, "snapshot/prose-links.tsv");
+const SNAP_KEYS = path.join(HERE, "snapshot/key-totals.tsv");
 
 const argv = process.argv.slice(2);
 const has = (f) => argv.includes(f);
@@ -175,12 +176,16 @@ if (newlyFixed.length) {
 let snapshotChanged = false;
 if (full) {
   const t0 = Date.now();
+  const blocks = await loadProseBlocks();
   const bibleRows = await snapshotBible(verses);
-  const proseRows = await snapshotProse(await loadProseBlocks());
+  const proseRows = await snapshotProse(blocks);
+  const keyRows = await snapshotKeyTotals(verses, blocks);
   console.log(`\n${DIM}corpus: ${verses.length} verses -> ${bibleRows.length} person-link rows; ` +
-    `prose -> ${proseRows.length} person-link rows  (${((Date.now() - t0) / 1000).toFixed(1)}s)${OFF}`);
+    `prose -> ${proseRows.length} person-link rows; ${keyRows.length} key totals across all kinds ` +
+    `(${((Date.now() - t0) / 1000).toFixed(1)}s)${OFF}`);
 
-  for (const [file, rows, label] of [[SNAP_BIBLE, bibleRows, "bible"], [SNAP_PROSE, proseRows, "prose"]]) {
+  for (const [file, rows, label] of [[SNAP_BIBLE, bibleRows, "bible"], [SNAP_PROSE, proseRows, "prose"],
+                                     [SNAP_KEYS, keyRows, "key-totals"]]) {
     const next = rows.join("\n") + "\n";
     if (update) { fs.mkdirSync(path.dirname(file), { recursive: true }); fs.writeFileSync(file, next); continue; }
     if (!fs.existsSync(file)) { console.log(`${RED}no baseline snapshot at ${file} — run with --update${OFF}`); snapshotChanged = true; continue; }

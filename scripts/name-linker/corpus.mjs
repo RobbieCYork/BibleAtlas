@@ -99,6 +99,29 @@ export async function snapshotBible(verses) {
 const blockKey = (b) =>
   `${b.src}|${b.owner ?? "-"}|${createHash("sha1").update(b.text).digest("hex").slice(0, 10)}`;
 
+/** A compact, whole-corpus tally covering EVERY annotation kind, not just people: one row per
+ * (kind, matched surface, resolved id, path) with a count.
+ *
+ * The row-level snapshots above only record person-links, because that is where the ambiguity is.
+ * But a change to `people.ts` can steal a key from a location, and adding a POI alternate name can
+ * start firing hundreds of new links — neither of which the person snapshots would show at all.
+ * This file is small enough to keep forever and catches both. */
+export async function snapshotKeyTotals(verses, blocks) {
+  const { computeLinkAnnotations } = await loadLinker();
+  const tally = new Map();
+  const bump = (path, a) => {
+    const k = `${a.kind}\t${a.text.toLowerCase()}\t${a.id ?? "-"}\t${path}`;
+    tally.set(k, (tally.get(k) ?? 0) + 1);
+  };
+  for (const v of verses) {
+    const text = stripMarkup(v.text);
+    for (const a of computeLinkAnnotations(text, undefined, v.book, v.chapter, v.verse)) bump("reader", a);
+    for (const a of computeLinkAnnotations(text)) bump("panel", a);
+  }
+  for (const b of blocks) for (const a of computeLinkAnnotations(b.text, b.owner)) bump("prose", a);
+  return [...tally.entries()].map(([k, n]) => `${k}\t${n}`).sort();
+}
+
 export async function snapshotProse(blocks) {
   const { computeLinkAnnotations } = await loadLinker();
   const rows = [];

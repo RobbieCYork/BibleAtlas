@@ -1,0 +1,3021 @@
+location	achaia	achaia	panel	11
+location	achaia	achaia	prose	11
+location	achaia	achaia	reader	11
+location	ai	ai	panel	37
+location	ai	ai	prose	7
+location	ai	ai	reader	37
+location	alexandria	alexandria	panel	2
+location	alexandria	alexandria	prose	17
+location	alexandria	alexandria	reader	2
+location	alexandria troas	troas	prose	2
+location	ammon	ammon	panel	106
+location	ammon	ammon	prose	5
+location	ammon	ammon	reader	106
+location	antioch	antioch-syria	panel	18
+location	antioch	antioch-syria	prose	18
+location	antioch	antioch-syria	reader	18
+location	antioch of pisidia	antioch-pisidia	panel	1
+location	antioch of pisidia	antioch-pisidia	reader	1
+location	ashdod	ashdod	panel	21
+location	ashdod	ashdod	prose	2
+location	ashdod	ashdod	reader	21
+location	ashkelon	ashkelon	panel	12
+location	ashkelon	ashkelon	prose	3
+location	ashkelon	ashkelon	reader	12
+location	asia	asia-province	panel	19
+location	asia	asia-province	prose	4
+location	asia	asia-province	reader	19
+location	asia minor	asia-province	prose	11
+location	athens	athens	panel	5
+location	athens	athens	prose	10
+location	athens	athens	reader	5
+location	azotus	ashdod	panel	1
+location	azotus	ashdod	prose	2
+location	azotus	ashdod	reader	1
+location	azzah	gaza	panel	1
+location	azzah	gaza	reader	1
+location	babel	babylon	panel	2
+location	babel	babylon	prose	1
+location	babel	babylon	reader	2
+location	babylon	babylon	panel	294
+location	babylon	babylon	prose	56
+location	babylon	babylon	reader	294
+location	berea	berea	prose	1
+location	beroea	berea	panel	3
+location	beroea	berea	reader	3
+location	bethany	bethany	panel	11
+location	bethany	bethany	prose	14
+location	bethany	bethany	reader	11
+location	bethlehem	bethlehem	panel	47
+location	bethlehem	bethlehem	prose	56
+location	bethlehem	bethlehem	reader	47
+location	bethlehem of judea	bethlehem	panel	2
+location	bethlehem of judea	bethlehem	reader	2
+location	bithynia	bithynia	panel	2
+location	bithynia	bithynia	prose	2
+location	bithynia	bithynia	reader	2
+location	cana	cana	panel	4
+location	cana	cana	prose	5
+location	cana	cana	reader	4
+location	capernaum	capernaum	panel	16
+location	capernaum	capernaum	prose	14
+location	capernaum	capernaum	reader	16
+location	cappadocia	cappadocia	panel	2
+location	cappadocia	cappadocia	reader	2
+location	cenchreae	cenchreae	panel	2
+location	cenchreae	cenchreae	prose	3
+location	cenchreae	cenchreae	reader	2
+location	cilicia	cilicia	panel	8
+location	cilicia	cilicia	prose	6
+location	cilicia	cilicia	reader	8
+location	colossae	colossae	panel	1
+location	colossae	colossae	prose	5
+location	colossae	colossae	reader	1
+location	corinth	corinth	panel	6
+location	corinth	corinth	prose	44
+location	corinth	corinth	reader	6
+location	crete	crete	panel	5
+location	crete	crete	prose	6
+location	crete	crete	reader	5
+location	cyprus	cyprus	panel	8
+location	cyprus	cyprus	prose	19
+location	cyprus	cyprus	reader	8
+location	cyrene	cyrene	panel	4
+location	cyrene	cyrene	prose	2
+location	cyrene	cyrene	reader	4
+location	damascus	damascus	panel	61
+location	damascus	damascus	prose	29
+location	damascus	damascus	reader	61
+location	dan	dan	panel	72
+location	dan	dan	prose	7
+location	dan	dan	reader	72
+location	dead sea	dead-sea	prose	10
+location	decapolis	decapolis	panel	3
+location	decapolis	decapolis	prose	2
+location	decapolis	decapolis	reader	3
+location	derbe	derbe	panel	4
+location	derbe	derbe	reader	4
+location	eastern sea	dead-sea	panel	2
+location	eastern sea	dead-sea	reader	2
+location	edom	edom	panel	112
+location	edom	edom	prose	23
+location	edom	edom	reader	101
+location	egypt	egypt	panel	618
+location	egypt	egypt	prose	97
+location	egypt	egypt	reader	618
+location	ekron	ekron	panel	22
+location	ekron	ekron	prose	2
+location	ekron	ekron	reader	22
+location	en gedi	en-gedi	panel	6
+location	en gedi	en-gedi	reader	6
+location	ephesus	ephesus	panel	17
+location	ephesus	ephesus	prose	37
+location	ephesus	ephesus	reader	17
+location	ephrathah	bethlehem	panel	6
+location	ephrathah	bethlehem	prose	1
+location	ephrathah	bethlehem	reader	6
+location	ethiopia	ethiopia	panel	17
+location	ethiopia	ethiopia	prose	3
+location	ethiopia	ethiopia	reader	17
+location	gadara	gadara	prose	1
+location	galatia	galatia	panel	6
+location	galatia	galatia	prose	3
+location	galatia	galatia	reader	6
+location	galilee	galilee	panel	66
+location	galilee	galilee	prose	31
+location	galilee	galilee	reader	66
+location	garden of eden	eden	panel	5
+location	garden of eden	eden	prose	4
+location	garden of eden	eden	reader	5
+location	gath	gath	panel	42
+location	gath	gath	prose	5
+location	gath	gath	reader	42
+location	gath of the philistines	gath	panel	1
+location	gath of the philistines	gath	reader	1
+location	gaza	gaza	panel	21
+location	gaza	gaza	prose	9
+location	gaza	gaza	reader	21
+location	gibeah	gibeah	panel	39
+location	gibeah	gibeah	prose	2
+location	gibeah	gibeah	reader	39
+location	gibeah of saul	gibeah	panel	4
+location	gibeah of saul	gibeah	reader	4
+location	gibeath	gibeah	panel	1
+location	gibeath	gibeah	reader	1
+location	gibeon	gibeon	panel	37
+location	gibeon	gibeon	prose	2
+location	gibeon	gibeon	reader	37
+location	gilgal	gilgal	panel	41
+location	gilgal	gilgal	prose	6
+location	gilgal	gilgal	reader	41
+location	gomorrah	gomorrah	panel	24
+location	gomorrah	gomorrah	prose	1
+location	gomorrah	gomorrah	reader	24
+location	goshen	goshen	panel	15
+location	goshen	goshen	prose	5
+location	goshen	goshen	reader	15
+location	haran	haran	panel	22
+location	haran	haran	prose	7
+location	haran	haran	reader	22
+location	horeb	mount-sinai	panel	17
+location	horeb	mount-sinai	prose	3
+location	horeb	mount-sinai	reader	17
+location	iconium	iconium	panel	6
+location	iconium	iconium	reader	6
+location	idumea	edom	prose	1
+location	jerusalem	jerusalem	panel	813
+location	jerusalem	jerusalem	prose	308
+location	jerusalem	jerusalem	reader	813
+location	jezreel	jezreel	panel	36
+location	jezreel	jezreel	prose	5
+location	jezreel	jezreel	reader	36
+location	joppa	joppa	panel	14
+location	joppa	joppa	prose	6
+location	joppa	joppa	reader	14
+location	jordan river	jordan-river	prose	1
+location	judea	judea	panel	43
+location	judea	judea	prose	55
+location	judea	judea	reader	43
+location	kadesh	kadesh-barnea	panel	18
+location	kadesh	kadesh-barnea	prose	2
+location	kadesh	kadesh-barnea	reader	18
+location	kadesh barnea	kadesh-barnea	panel	10
+location	kadesh barnea	kadesh-barnea	reader	10
+location	kiriath-arba	hebron	prose	1
+location	lachish	lachish	panel	24
+location	lachish	lachish	prose	10
+location	lachish	lachish	reader	24
+location	laish	dan	panel	6
+location	laish	dan	reader	6
+location	land of rameses	goshen	panel	1
+location	land of rameses	goshen	reader	1
+location	laodicea	laodicea	panel	6
+location	laodicea	laodicea	prose	2
+location	laodicea	laodicea	reader	6
+location	leshem	dan	panel	2
+location	leshem	dan	reader	2
+location	lod	lydda	panel	4
+location	lod	lydda	reader	4
+location	lydda	lydda	panel	3
+location	lydda	lydda	prose	1
+location	lydda	lydda	reader	3
+location	lystra	lystra	panel	6
+location	lystra	lystra	prose	4
+location	lystra	lystra	reader	6
+location	macedonia	macedonia	panel	26
+location	macedonia	macedonia	prose	8
+location	macedonia	macedonia	reader	26
+location	malta	malta	panel	1
+location	malta	malta	prose	7
+location	malta	malta	reader	1
+location	miletus	miletus	panel	3
+location	miletus	miletus	prose	2
+location	miletus	miletus	reader	3
+location	mizpah	mizpah	panel	44
+location	mizpah	mizpah	prose	4
+location	mizpah	mizpah	reader	44
+location	mizpeh	mizpah	panel	3
+location	mizpeh	mizpah	reader	3
+location	moab	moab	panel	171
+location	moab	moab	prose	30
+location	moab	moab	reader	171
+location	mount carmel	mount-carmel	panel	4
+location	mount carmel	mount-carmel	prose	4
+location	mount carmel	mount-carmel	reader	4
+location	mount gilboa	mount-gilboa	panel	5
+location	mount gilboa	mount-gilboa	prose	4
+location	mount gilboa	mount-gilboa	reader	5
+location	mount moriah	mount-moriah	panel	1
+location	mount moriah	mount-moriah	prose	1
+location	mount moriah	mount-moriah	reader	1
+location	mount nebo	mount-nebo	panel	2
+location	mount nebo	mount-nebo	prose	2
+location	mount nebo	mount-nebo	reader	2
+location	mount of olives	mount-of-olives	panel	12
+location	mount of olives	mount-of-olives	prose	12
+location	mount of olives	mount-of-olives	reader	12
+location	mountains of ararat	mount-ararat	prose	2
+location	nain	nain	panel	1
+location	nain	nain	reader	1
+location	nazareth	nazareth	panel	12
+location	nazareth	nazareth	prose	31
+location	nazareth	nazareth	reader	12
+location	nineveh	nineveh	panel	19
+location	nineveh	nineveh	prose	22
+location	nineveh	nineveh	reader	19
+location	pamphylia	pamphylia	panel	5
+location	pamphylia	pamphylia	prose	2
+location	pamphylia	pamphylia	reader	5
+location	patmos	patmos	panel	1
+location	patmos	patmos	prose	5
+location	patmos	patmos	reader	1
+location	peniel	peniel	panel	2
+location	peniel	peniel	reader	2
+location	penuel	peniel	panel	7
+location	penuel	peniel	reader	7
+location	pergamum	pergamum	panel	2
+location	pergamum	pergamum	reader	2
+location	philadelphia	philadelphia-asia	panel	2
+location	philadelphia	philadelphia-asia	prose	1
+location	philadelphia	philadelphia-asia	reader	2
+location	philippi	philippi	panel	4
+location	philippi	philippi	prose	13
+location	philippi	philippi	reader	4
+location	phrygia	phrygia	panel	3
+location	phrygia	phrygia	prose	4
+location	phrygia	phrygia	reader	3
+location	pisidian antioch	antioch-pisidia	prose	1
+location	pontus	pontus	panel	3
+location	pontus	pontus	prose	4
+location	pontus	pontus	reader	3
+location	puteoli	puteoli	panel	1
+location	puteoli	puteoli	prose	2
+location	puteoli	puteoli	reader	1
+location	rabbah	rabbah	panel	15
+location	rabbah	rabbah	prose	5
+location	rabbah	rabbah	reader	15
+location	rabbath-ammon	rabbah	prose	3
+location	ramah	ramah	panel	37
+location	ramah	ramah	prose	6
+location	ramah	ramah	reader	37
+location	red sea	red-sea	panel	26
+location	red sea	red-sea	prose	4
+location	red sea	red-sea	reader	26
+location	roman province of asia	asia-province	prose	1
+location	rome	rome	panel	9
+location	rome	rome	prose	146
+location	rome	rome	reader	9
+location	salt sea	dead-sea	panel	9
+location	salt sea	dead-sea	reader	9
+location	samaria	samaria	panel	122
+location	samaria	samaria	prose	22
+location	samaria	samaria	reader	122
+location	sardis	sardis	panel	3
+location	sardis	sardis	prose	3
+location	sardis	sardis	reader	3
+location	sea of galilee	sea-of-galilee	panel	5
+location	sea of galilee	sea-of-galilee	prose	32
+location	sea of galilee	sea-of-galilee	reader	5
+location	sea of the arabah	dead-sea	panel	5
+location	sea of the arabah	dead-sea	reader	5
+location	sea of tiberias	sea-of-galilee	panel	2
+location	sea of tiberias	sea-of-galilee	prose	2
+location	sea of tiberias	sea-of-galilee	reader	2
+location	seir	edom	panel	39
+location	seir	edom	prose	3
+location	seir	edom	reader	39
+location	shunem	shunem	panel	3
+location	shunem	shunem	reader	3
+location	shushan	susa	panel	11
+location	shushan	susa	reader	11
+location	sidon	sidon	panel	35
+location	sidon	sidon	prose	2
+location	sidon	sidon	reader	35
+location	smyrna	smyrna	panel	2
+location	smyrna	smyrna	prose	3
+location	smyrna	smyrna	reader	2
+location	sodom	sodom	panel	49
+location	sodom	sodom	prose	2
+location	sodom	sodom	reader	49
+location	spain	spain	panel	2
+location	spain	spain	prose	4
+location	spain	spain	reader	2
+location	succoth	succoth	panel	19
+location	succoth	succoth	reader	19
+location	susa	susa	panel	10
+location	susa	susa	prose	11
+location	susa	susa	reader	10
+location	sychar	sychar	panel	1
+location	sychar	sychar	reader	1
+location	tarsus	tarsus	panel	5
+location	tarsus	tarsus	prose	8
+location	tarsus	tarsus	reader	5
+location	tekoa	tekoa	panel	9
+location	tekoa	tekoa	reader	9
+location	temple mount	mount-moriah	prose	1
+location	the jordan	jordan-river	panel	189
+location	the jordan	jordan-river	prose	15
+location	the jordan	jordan-river	reader	189
+location	thessalonica	thessalonica	panel	6
+location	thessalonica	thessalonica	prose	9
+location	thessalonica	thessalonica	reader	6
+location	thyatira	thyatira	panel	4
+location	thyatira	thyatira	prose	1
+location	thyatira	thyatira	reader	4
+location	tiberias	tiberias	panel	1
+location	tiberias	tiberias	prose	5
+location	tiberias	tiberias	reader	1
+location	troas	troas	panel	6
+location	troas	troas	prose	5
+location	troas	troas	reader	6
+location	tyre	tyre	panel	59
+location	tyre	tyre	prose	7
+location	tyre	tyre	reader	59
+location	ur	ur	panel	5
+location	ur	ur	prose	3
+location	ur	ur	reader	5
+location	ur of the chaldeans	ur	prose	3
+location	ziklag	ziklag	panel	15
+location	ziklag	ziklag	reader	15
+person	aaron	aaron	panel	352
+person	aaron	aaron	prose	18
+person	aaron	aaron	reader	352
+person	abba, father	god-the-father	panel	2
+person	abba, father	god-the-father	reader	2
+person	abel	abel	panel	23
+person	abel	abel	prose	13
+person	abel	abel	reader	23
+person	abijah	abijah-king-of-judah	panel	28
+person	abijah	abijah-king-of-judah	prose	1
+person	abijah	abijah-king-of-judah	reader	18
+person	abijam	abijah-king-of-judah	panel	5
+person	abijam	abijah-king-of-judah	reader	5
+person	abiud	abiud	panel	2
+person	abiud	abiud	prose	1
+person	abiud	abiud	reader	2
+person	abraham	abraham	panel	249
+person	abraham	abraham	prose	53
+person	abraham	abraham	reader	249
+person	abram	abraham	panel	64
+person	abram	abraham	prose	12
+person	abram	abraham	reader	64
+person	achim	achim	panel	2
+person	achim	achim	prose	2
+person	achim	achim	reader	2
+person	adam	adam	panel	21
+person	adam	adam	prose	23
+person	adam	adam	reader	21
+person	agrippa i	herod-agrippa-i	prose	2
+person	agrippa ii	herod-agrippa-ii	prose	7
+person	ahaz	ahaz	panel	44
+person	ahaz	ahaz	prose	8
+person	ahaz	ahaz	reader	37
+person	amminadab	amminadab	panel	16
+person	amminadab	amminadab	prose	2
+person	amminadab	amminadab	reader	5
+person	amon	amon-king-of-judah	panel	18
+person	amon	amon-king-of-judah	prose	1
+person	amon	amon-king-of-judah	reader	13
+person	amon, king of judah	amon-king-of-judah	panel	3
+person	amon, king of judah	amon-king-of-judah	reader	3
+person	ananias	ananias-and-sapphira	panel	11
+person	ananias	ananias-and-sapphira	prose	18
+person	ananias	ananias-and-sapphira	reader	3
+person	ananias	ananias-of-damascus	reader	6
+person	ananias	ananias-the-high-priest	reader	2
+person	ananias and sapphira	ananias-and-sapphira	prose	1
+person	andrew	andrew-apostle	panel	13
+person	andrew	andrew-apostle	prose	7
+person	andrew	andrew-apostle	reader	13
+person	anna	anna-the-prophetess	panel	1
+person	anna	anna-the-prophetess	reader	1
+person	antipas	herod-antipas	panel	1
+person	antipas	herod-antipas	prose	7
+person	antipas	herod-antipas	reader	1
+person	apollos	apollos	panel	10
+person	apollos	apollos	prose	2
+person	apollos	apollos	reader	10
+person	aquila	aquila	panel	6
+person	aquila	aquila	prose	5
+person	aquila	aquila	reader	6
+person	archelaus	herod-archelaus	panel	1
+person	archelaus	herod-archelaus	prose	2
+person	archelaus	herod-archelaus	reader	1
+person	arius	arius	prose	5
+person	asa	asa	panel	60
+person	asa	asa	prose	3
+person	asa	asa	reader	60
+person	athanasius of alexandria	athanasius-of-alexandria	prose	2
+person	augustus	caesar-augustus	prose	28
+person	azariah	uzziah	panel	49
+person	azariah	uzziah	prose	2
+person	azariah	uzziah	reader	21
+person	azor	azor	panel	2
+person	azor	azor	prose	2
+person	azor	azor	reader	2
+person	balaam	balaam	panel	63
+person	balaam	balaam	prose	3
+person	balaam	balaam	reader	63
+person	balaam son of beor	balaam	prose	1
+person	barnabas	barnabas	panel	29
+person	barnabas	barnabas	prose	20
+person	barnabas	barnabas	reader	29
+person	bathsheba	bathsheba	panel	11
+person	bathsheba	bathsheba	prose	13
+person	bathsheba	bathsheba	reader	11
+person	beelzebul	satan	panel	7
+person	beelzebul	satan	reader	7
+person	belial	satan	panel	1
+person	belial	satan	reader	1
+person	bernice	bernice	panel	3
+person	bernice	bernice	prose	2
+person	bernice	bernice	reader	3
+person	boanerges	james-son-of-zebedee	panel	1
+person	boanerges	james-son-of-zebedee	prose	1
+person	boanerges	james-son-of-zebedee	reader	1
+person	boaz	boaz	panel	27
+person	boaz	boaz	prose	24
+person	boaz	boaz	reader	22
+person	caesar	claudius-caesar	reader	1
+person	caesar	nero-caesar	reader	10
+person	caesar	tiberius-caesar	panel	27
+person	caesar	tiberius-caesar	prose	16
+person	caesar	tiberius-caesar	reader	16
+person	caesar augustus	caesar-augustus	panel	1
+person	caesar augustus	caesar-augustus	prose	1
+person	caesar augustus	caesar-augustus	reader	1
+person	caiaphas	caiaphas	panel	9
+person	caiaphas	caiaphas	prose	5
+person	caiaphas	caiaphas	reader	9
+person	cain	cain	panel	22
+person	cain	cain	prose	14
+person	cain	cain	reader	22
+person	caleb	caleb	panel	37
+person	caleb	caleb	prose	2
+person	caleb	caleb	reader	37
+person	cephas	simon-peter	panel	6
+person	cephas	simon-peter	prose	1
+person	cephas	simon-peter	reader	6
+person	charlemagne	charlemagne	prose	1
+person	chloe	chloe	panel	1
+person	chloe	chloe	reader	1
+person	christ jesus	jesus-of-nazareth	panel	84
+person	christ jesus	jesus-of-nazareth	prose	4
+person	christ jesus	jesus-of-nazareth	reader	84
+person	claudius	claudius-caesar	panel	3
+person	claudius	claudius-caesar	prose	13
+person	claudius	claudius-caesar	reader	3
+person	cleopas	cleopas	panel	1
+person	cleopas	cleopas	reader	1
+person	coniah	jeconiah	panel	3
+person	coniah	jeconiah	reader	3
+person	constantine the great	constantine-the-great	prose	1
+person	cornelius	cornelius-the-centurion	panel	9
+person	cornelius	cornelius-the-centurion	prose	5
+person	cornelius	cornelius-the-centurion	reader	9
+person	counselor	holy-spirit	panel	12
+person	counselor	holy-spirit	prose	2
+person	counselor	holy-spirit	reader	12
+person	crispus	crispus	panel	2
+person	crispus	crispus	reader	2
+person	daniel	daniel	panel	83
+person	daniel	daniel	prose	24
+person	daniel	daniel	reader	83
+person	david	david	panel	1138
+person	david	david	prose	167
+person	david	david	reader	1138
+person	deborah	deborah	panel	10
+person	deborah	deborah	prose	4
+person	deborah	deborah	reader	9
+person	delilah	delilah	panel	6
+person	delilah	delilah	prose	1
+person	delilah	delilah	reader	6
+person	demas	demas	panel	3
+person	demas	demas	reader	3
+person	didymus	thomas-apostle	panel	3
+person	didymus	thomas-apostle	reader	3
+person	diotrephes	diotrephes	panel	1
+person	diotrephes	diotrephes	prose	3
+person	diotrephes	diotrephes	reader	1
+person	drusilla	drusilla	panel	1
+person	drusilla	drusilla	prose	2
+person	drusilla	drusilla	reader	1
+person	edom	esau	reader	11
+person	eleazar	eleazar-in-jesus-genealogy	panel	74
+person	eleazar	eleazar-in-jesus-genealogy	prose	5
+person	eleazar	eleazar-in-jesus-genealogy	reader	2
+person	eliakim	eliakim-son-of-abiud	panel	15
+person	eliakim	eliakim-son-of-abiud	prose	1
+person	eliakim	eliakim-son-of-abiud	reader	15
+person	elijah	elijah	panel	101
+person	elijah	elijah	prose	21
+person	elijah	elijah	reader	101
+person	elisha	elisha	panel	59
+person	elisha	elisha	prose	5
+person	elisha	elisha	reader	59
+person	eliud	eliud	panel	2
+person	eliud	eliud	prose	2
+person	eliud	eliud	reader	2
+person	elizabeth	elizabeth-mother-of-john-baptist	panel	9
+person	elizabeth	elizabeth-mother-of-john-baptist	prose	12
+person	elizabeth	elizabeth-mother-of-john-baptist	reader	9
+person	enoch	enoch	panel	13
+person	enoch	enoch	prose	13
+person	enoch	enoch	reader	10
+person	epaphroditus	epaphroditus	panel	2
+person	epaphroditus	epaphroditus	prose	2
+person	epaphroditus	epaphroditus	reader	2
+person	esau	esau	panel	102
+person	esau	esau	prose	22
+person	esau	esau	reader	102
+person	esther	esther	panel	55
+person	esther	esther	prose	17
+person	esther	esther	reader	55
+person	eusebius of caesarea	eusebius-of-caesarea	prose	3
+person	eve	eve	panel	4
+person	eve	eve	prose	15
+person	eve	eve	reader	4
+person	ezekiel	ezekiel	panel	2
+person	ezekiel	ezekiel	prose	13
+person	ezekiel	ezekiel	reader	2
+person	ezra	ezra	panel	25
+person	ezra	ezra	prose	19
+person	ezra	ezra	reader	25
+person	father in heaven	god-the-father	panel	4
+person	father in heaven	god-the-father	reader	4
+person	felix	antonius-felix	panel	9
+person	felix	antonius-felix	prose	13
+person	felix	antonius-felix	reader	9
+person	festus	porcius-festus	panel	12
+person	festus	porcius-festus	prose	8
+person	festus	porcius-festus	reader	12
+person	gabriel	gabriel-archangel	panel	4
+person	gabriel	gabriel-archangel	prose	10
+person	gabriel	gabriel-archangel	reader	4
+person	gallio	gallio	panel	3
+person	gallio	gallio	prose	9
+person	gallio	gallio	reader	3
+person	gamaliel	gamaliel	panel	7
+person	gamaliel	gamaliel	prose	6
+person	gamaliel	gamaliel	reader	7
+person	george whitefield	george-whitefield	prose	1
+person	gideon	gideon	panel	40
+person	gideon	gideon	prose	4
+person	gideon	gideon	reader	40
+person	god the father	god-the-father	panel	14
+person	god the father	god-the-father	prose	3
+person	god the father	god-the-father	reader	14
+person	gregory the great	gregory-the-great	prose	4
+person	hadassah	esther	panel	1
+person	hadassah	esther	prose	1
+person	hadassah	esther	reader	1
+person	hagar	hagar	panel	14
+person	hagar	hagar	prose	17
+person	hagar	hagar	reader	14
+person	heavenly father	god-the-father	panel	6
+person	heavenly father	god-the-father	reader	6
+person	henry viii	henry-viii	prose	1
+person	herod agrippa i	herod-agrippa-i	prose	7
+person	herod antipas	herod-antipas	prose	16
+person	herod archelaus	herod-archelaus	prose	3
+person	herod the great	herod-the-great	prose	24
+person	hezekiah	hezekiah	panel	131
+person	hezekiah	hezekiah	prose	29
+person	hezekiah	hezekiah	reader	131
+person	hezron	hezron-son-of-perez	panel	21
+person	hezron	hezron-son-of-perez	prose	1
+person	hezron	hezron-son-of-perez	reader	6
+person	hoshea	joshua	panel	12
+person	hoshea	joshua	reader	12
+person	isaac	isaac	panel	132
+person	isaac	isaac	prose	35
+person	isaac	isaac	reader	132
+person	isaiah	isaiah	panel	53
+person	isaiah	isaiah	prose	28
+person	isaiah	isaiah	reader	53
+person	jacob	jacob	panel	381
+person	jacob	jacob	prose	76
+person	jacob	jacob	reader	381
+person	james	james-brother-of-jesus	reader	13
+person	james	james-son-of-zebedee	panel	42
+person	james	james-son-of-zebedee	prose	54
+person	james	james-son-of-zebedee	reader	28
+person	james the just	james-brother-of-jesus	prose	1
+person	james, son of zebedee	james-son-of-zebedee	prose	2
+person	jeconiah	jeconiah	panel	7
+person	jeconiah	jeconiah	prose	3
+person	jeconiah	jeconiah	reader	7
+person	jehoiachin	jeconiah	panel	14
+person	jehoiachin	jeconiah	prose	8
+person	jehoiachin	jeconiah	reader	14
+person	jehoram	joram-king-of-judah	panel	22
+person	jehoram	joram-king-of-judah	prose	1
+person	jehoram	joram-king-of-judah	reader	22
+person	jehoshaphat	jehoshaphat	panel	86
+person	jehoshaphat	jehoshaphat	prose	3
+person	jehoshaphat	jehoshaphat	reader	86
+person	jeremiah	jeremiah	panel	150
+person	jeremiah	jeremiah	prose	32
+person	jeremiah	jeremiah	reader	134
+person	jerome	jerome	prose	3
+person	jerubbaal	gideon	panel	13
+person	jerubbaal	gideon	reader	13
+person	jesse	jesse	panel	47
+person	jesse	jesse	prose	6
+person	jesse	jesse	reader	47
+person	jesus	jesus-of-nazareth	panel	717
+person	jesus	jesus-of-nazareth	prose	500
+person	jesus	jesus-of-nazareth	reader	717
+person	jesus christ	jesus-of-nazareth	panel	165
+person	jesus christ	jesus-of-nazareth	prose	9
+person	jesus christ	jesus-of-nazareth	reader	165
+person	jesus of nazareth	jesus-of-nazareth	panel	12
+person	jesus of nazareth	jesus-of-nazareth	prose	2
+person	jesus of nazareth	jesus-of-nazareth	reader	12
+person	jezebel	jezebel	panel	23
+person	jezebel	jezebel	prose	7
+person	jezebel	jezebel	reader	23
+person	joanna	joanna-follower-of-jesus	panel	2
+person	joanna	joanna-follower-of-jesus	reader	2
+person	job	job	panel	59
+person	job	job	prose	27
+person	job	job	reader	59
+person	john	john-the-apostle	reader	24
+person	john	john-the-baptist	panel	117
+person	john	john-the-baptist	prose	184
+person	john	john-the-baptist	reader	93
+person	john chrysostom	john-chrysostom	prose	1
+person	john knox	john-knox	prose	1
+person	john mark	john-mark	prose	6
+person	john of the cross	john-of-the-cross	prose	1
+person	john the apostle	john-the-apostle	prose	1
+person	john the baptist	john-the-baptist	prose	23
+person	john the baptizer	john-the-baptist	panel	15
+person	john the baptizer	john-the-baptist	reader	15
+person	john wesley	john-wesley	prose	3
+person	john wycliffe	john-wycliffe	prose	1
+person	jonathan edwards	jonathan-edwards	prose	1
+person	joram	joram-king-of-judah	panel	30
+person	joram	joram-king-of-judah	reader	30
+person	joseph	joseph-husband-of-mary	reader	20
+person	joseph	joseph-of-arimathea	reader	6
+person	joseph	joseph-son-of-jacob	panel	249
+person	joseph	joseph-son-of-jacob	prose	69
+person	joseph	joseph-son-of-jacob	reader	223
+person	joseph of arimathea	joseph-of-arimathea	prose	5
+person	joshua	joshua	panel	220
+person	joshua	joshua	prose	30
+person	joshua	joshua	reader	191
+person	josiah	josiah	panel	55
+person	josiah	josiah	prose	10
+person	josiah	josiah	reader	32
+person	jotham	jotham-king-of-judah	panel	25
+person	jotham	jotham-king-of-judah	prose	2
+person	jotham	jotham-king-of-judah	reader	15
+person	judas	judas-iscariot	panel	23
+person	judas	judas-iscariot	prose	10
+person	judas	judas-iscariot	reader	19
+person	judas	thaddaeus	reader	3
+person	judas iscariot	judas-iscariot	panel	7
+person	judas iscariot	judas-iscariot	prose	4
+person	judas iscariot	judas-iscariot	reader	7
+person	junia	junia	panel	1
+person	junia	junia	reader	1
+person	king agrippa	herod-agrippa-ii	panel	7
+person	king agrippa	herod-agrippa-ii	prose	2
+person	king agrippa	herod-agrippa-ii	reader	7
+person	lazarus	lazarus-of-bethany	panel	15
+person	lazarus	lazarus-of-bethany	prose	15
+person	lazarus	lazarus-of-bethany	reader	11
+person	leah	leah	panel	34
+person	leah	leah	prose	9
+person	leah	leah	reader	34
+person	lebbaeus	thaddaeus	panel	1
+person	lebbaeus	thaddaeus	reader	1
+person	levi	matthew-levi	panel	74
+person	levi	matthew-levi	prose	8
+person	levi	matthew-levi	reader	1
+person	luke	luke-evangelist	panel	3
+person	luke	luke-evangelist	prose	100
+person	luke	luke-evangelist	reader	3
+person	lydia	lydia-of-thyatira	panel	2
+person	lydia	lydia-of-thyatira	prose	4
+person	lydia	lydia-of-thyatira	reader	2
+person	lysanias	lysanias	panel	1
+person	lysanias	lysanias	reader	1
+person	magi	magi	prose	4
+person	malchus	malchus	panel	1
+person	malchus	malchus	prose	1
+person	malchus	malchus	reader	1
+person	manasseh	manasseh-king-of-judah	panel	148
+person	manasseh	manasseh-king-of-judah	prose	12
+person	manasseh	manasseh-king-of-judah	reader	32
+person	mark	john-mark	panel	36
+person	mark	john-mark	prose	65
+person	mark	john-mark	reader	36
+person	martha	martha-of-bethany	panel	13
+person	martha	martha-of-bethany	prose	6
+person	martha	martha-of-bethany	reader	13
+person	martin luther	martin-luther	prose	3
+person	mary	mary-magdalene	reader	3
+person	mary	mary-mother-of-james-the-less	reader	7
+person	mary	mary-mother-of-jesus	panel	42
+person	mary	mary-mother-of-jesus	prose	78
+person	mary	mary-mother-of-jesus	reader	20
+person	mary	mary-of-bethany	reader	11
+person	mary magdalene	mary-magdalene	panel	11
+person	mary magdalene	mary-magdalene	prose	8
+person	mary magdalene	mary-magdalene	reader	11
+person	mary of bethany	mary-of-bethany	prose	3
+person	mary the wife of clopas	mary-mother-of-james-the-less	panel	1
+person	mary the wife of clopas	mary-mother-of-james-the-less	reader	1
+person	mary, mother of jesus	mary-mother-of-jesus	prose	2
+person	matthan	matthan	panel	2
+person	matthan	matthan	prose	3
+person	matthan	matthan	reader	2
+person	melchizedek	melchizedek	panel	11
+person	melchizedek	melchizedek	prose	2
+person	melchizedek	melchizedek	reader	11
+person	michael	michael-archangel	panel	15
+person	michael	michael-archangel	prose	4
+person	michael	michael-archangel	reader	15
+person	michael the archangel	michael-archangel	prose	1
+person	miriam	miriam	panel	15
+person	miriam	miriam	prose	3
+person	miriam	miriam	reader	15
+person	mordecai	mordecai	panel	60
+person	mordecai	mordecai	prose	14
+person	mordecai	mordecai	reader	60
+person	moses	moses	panel	830
+person	moses	moses	prose	70
+person	moses	moses	reader	830
+person	nahshon	nahshon	panel	13
+person	nahshon	nahshon	prose	3
+person	nahshon	nahshon	reader	13
+person	naomi	naomi	panel	21
+person	naomi	naomi	prose	24
+person	naomi	naomi	reader	21
+person	nathanael	bartholomew-nathanael	panel	6
+person	nathanael	bartholomew-nathanael	prose	1
+person	nathanael	bartholomew-nathanael	reader	6
+person	nehemiah	nehemiah	panel	8
+person	nehemiah	nehemiah	prose	15
+person	nehemiah	nehemiah	reader	8
+person	nero	nero-caesar	prose	17
+person	nicodemus	nicodemus	panel	5
+person	nicodemus	nicodemus	prose	5
+person	nicodemus	nicodemus	reader	5
+person	noah	noah	panel	58
+person	noah	noah	prose	6
+person	noah	noah	reader	58
+person	obed	obed	panel	33
+person	obed	obed	prose	7
+person	obed	obed	reader	33
+person	octavian	caesar-augustus	prose	2
+person	onesimus	onesimus	panel	2
+person	onesimus	onesimus	prose	6
+person	onesimus	onesimus	reader	2
+person	paul	paul-of-tarsus	panel	161
+person	paul	paul-of-tarsus	prose	400
+person	paul	paul-of-tarsus	reader	161
+person	perez	perez	panel	22
+person	perez	perez	prose	7
+person	perez	perez	reader	22
+person	peter	simon-peter	panel	141
+person	peter	simon-peter	prose	125
+person	peter	simon-peter	reader	141
+person	philemon	philemon	panel	1
+person	philemon	philemon	prose	19
+person	philemon	philemon	reader	1
+person	philip	philip-the-apostle	panel	33
+person	philip	philip-the-apostle	prose	43
+person	philip	philip-the-apostle	reader	16
+person	philip	philip-the-evangelist	reader	14
+person	philip	philip-the-tetrarch	reader	1
+person	philip the apostle	philip-the-apostle	prose	1
+person	philip the evangelist	philip-the-evangelist	panel	1
+person	philip the evangelist	philip-the-evangelist	prose	4
+person	philip the evangelist	philip-the-evangelist	reader	1
+person	philip the tetrarch	philip-the-tetrarch	prose	1
+person	phoebe	phoebe	panel	1
+person	phoebe	phoebe	reader	1
+person	photius of constantinople	photius	prose	1
+person	pilate	pontius-pilate	panel	52
+person	pilate	pontius-pilate	prose	20
+person	pilate	pontius-pilate	reader	52
+person	pontius pilate	pontius-pilate	panel	4
+person	pontius pilate	pontius-pilate	prose	14
+person	pontius pilate	pontius-pilate	reader	4
+person	pope gregory i	gregory-the-great	prose	1
+person	porcius festus	porcius-festus	panel	1
+person	porcius festus	porcius-festus	prose	1
+person	porcius festus	porcius-festus	reader	1
+person	priscilla	priscilla	panel	4
+person	priscilla	priscilla	prose	6
+person	priscilla	priscilla	reader	4
+person	quirinius	quirinius	panel	1
+person	quirinius	quirinius	reader	1
+person	rachel	rachel	panel	48
+person	rachel	rachel	prose	18
+person	rachel	rachel	reader	48
+person	rahab	rahab	panel	14
+person	rahab	rahab	prose	9
+person	rahab	rahab	reader	8
+person	ram	ram-son-of-hezron	panel	101
+person	ram	ram-son-of-hezron	prose	6
+person	ram	ram-son-of-hezron	reader	8
+person	rebekah	rebekah	panel	31
+person	rebekah	rebekah	prose	9
+person	rebekah	rebekah	reader	31
+person	rehoboam	rehoboam	panel	52
+person	rehoboam	rehoboam	prose	4
+person	rehoboam	rehoboam	reader	52
+person	rhoda	rhoda	panel	1
+person	rhoda	rhoda	reader	1
+person	ruth	ruth	panel	13
+person	ruth	ruth	prose	31
+person	ruth	ruth	reader	13
+person	salmon	salmon-father-of-boaz	panel	5
+person	salmon	salmon-father-of-boaz	prose	1
+person	salmon	salmon-father-of-boaz	reader	5
+person	salome	salome-follower-of-jesus	panel	2
+person	salome	salome-follower-of-jesus	prose	4
+person	salome	salome-follower-of-jesus	reader	2
+person	samson	samson	panel	39
+person	samson	samson	prose	8
+person	samson	samson	reader	39
+person	samuel	samuel	panel	143
+person	samuel	samuel	prose	31
+person	samuel	samuel	reader	143
+person	sarah	sarah	panel	42
+person	sarah	sarah	prose	22
+person	sarah	sarah	reader	42
+person	sarai	sarah	panel	17
+person	sarai	sarah	prose	8
+person	sarai	sarah	reader	17
+person	satan	satan	panel	55
+person	satan	satan	prose	14
+person	satan	satan	reader	55
+person	saul	paul-of-tarsus	panel	420
+person	saul	paul-of-tarsus	prose	70
+person	saul	paul-of-tarsus	reader	31
+person	saul	saul-king-of-israel	reader	389
+person	saul of tarsus	paul-of-tarsus	prose	4
+person	sergius paulus	sergius-paulus	panel	1
+person	sergius paulus	sergius-paulus	prose	4
+person	sergius paulus	sergius-paulus	reader	1
+person	shealtiel	shealtiel	panel	13
+person	shealtiel	shealtiel	reader	13
+person	silas	silas	panel	12
+person	silas	silas	prose	8
+person	silas	silas	reader	12
+person	silvanus	silas	panel	4
+person	silvanus	silas	reader	4
+person	simeon	simeon-at-the-temple	panel	49
+person	simeon	simeon-at-the-temple	prose	5
+person	simeon	simeon-at-the-temple	reader	3
+person	simon	simon-peter	panel	51
+person	simon	simon-peter	prose	16
+person	simon	simon-peter	reader	45
+person	simon of cyrene	simon-of-cyrene	panel	2
+person	simon of cyrene	simon-of-cyrene	reader	2
+person	simon peter	simon-peter	panel	20
+person	simon peter	simon-peter	prose	4
+person	simon peter	simon-peter	reader	20
+person	simon the leper	simon-the-leper	panel	2
+person	simon the leper	simon-the-leper	prose	1
+person	simon the leper	simon-the-leper	reader	2
+person	simon the sorcerer	simon-magus	prose	1
+person	simon the zealot	simon-the-zealot	panel	2
+person	simon the zealot	simon-the-zealot	reader	2
+person	solomon	solomon	panel	306
+person	solomon	solomon	prose	45
+person	solomon	solomon	reader	306
+person	sosthenes	sosthenes	panel	2
+person	sosthenes	sosthenes	prose	1
+person	sosthenes	sosthenes	reader	2
+person	spirit of god	holy-spirit	panel	15
+person	spirit of god	holy-spirit	prose	1
+person	spirit of god	holy-spirit	reader	15
+person	spirit of the lord	holy-spirit	panel	4
+person	spirit of the lord	holy-spirit	prose	1
+person	spirit of the lord	holy-spirit	reader	4
+person	spirit of truth	holy-spirit	panel	4
+person	spirit of truth	holy-spirit	prose	1
+person	spirit of truth	holy-spirit	reader	4
+person	stephen	stephen-the-martyr	panel	7
+person	stephen	stephen-the-martyr	prose	5
+person	stephen	stephen-the-martyr	reader	7
+person	tabitha	dorcas-tabitha	panel	2
+person	tabitha	dorcas-tabitha	reader	2
+person	teresa of ávila	teresa-of-avila	prose	1
+person	the accuser	satan	panel	2
+person	the accuser	satan	prose	4
+person	the accuser	satan	reader	2
+person	the adversary	satan	panel	15
+person	the adversary	satan	reader	15
+person	the comforter	holy-spirit	panel	1
+person	the comforter	holy-spirit	reader	1
+person	the counselor	holy-spirit	panel	4
+person	the counselor	holy-spirit	reader	4
+person	the devil	satan	panel	34
+person	the devil	satan	prose	4
+person	the devil	satan	reader	34
+person	the dragon	satan	panel	11
+person	the dragon	satan	prose	5
+person	the dragon	satan	reader	11
+person	the ethiopian eunuch	ethiopian-eunuch	prose	1
+person	the evil one	satan	panel	13
+person	the evil one	satan	reader	13
+person	the holy spirit	holy-spirit	panel	90
+person	the holy spirit	holy-spirit	prose	28
+person	the holy spirit	holy-spirit	reader	90
+person	the nazarene	jesus-of-nazareth	panel	4
+person	the nazarene	jesus-of-nazareth	reader	4
+person	the old serpent	satan	panel	2
+person	the old serpent	satan	reader	2
+person	the tempter	satan	panel	2
+person	the tempter	satan	reader	2
+person	theophilus	theophilus	panel	2
+person	theophilus	theophilus	prose	5
+person	theophilus	theophilus	reader	2
+person	thomas	thomas-apostle	panel	11
+person	thomas	thomas-apostle	prose	9
+person	thomas	thomas-apostle	reader	11
+person	thomas aquinas	thomas-aquinas	prose	1
+person	thomas cranmer	thomas-cranmer	prose	1
+person	tiberius	tiberius-caesar	prose	12
+person	tiberius caesar	tiberius-caesar	panel	1
+person	tiberius caesar	tiberius-caesar	reader	1
+person	timothy	timothy	panel	24
+person	timothy	timothy	prose	36
+person	timothy	timothy	reader	24
+person	titus	titus	panel	13
+person	titus	titus	prose	18
+person	titus	titus	reader	13
+person	uriah the hittite	uriah-the-hittite	panel	10
+person	uriah the hittite	uriah-the-hittite	prose	2
+person	uriah the hittite	uriah-the-hittite	reader	10
+person	uzziah	uzziah	panel	29
+person	uzziah	uzziah	prose	5
+person	uzziah	uzziah	reader	29
+person	william wilberforce	william-wilberforce	prose	1
+person	zacchaeus	zacchaeus	panel	3
+person	zacchaeus	zacchaeus	prose	1
+person	zacchaeus	zacchaeus	reader	3
+person	zacharias	zechariah-father-of-john-baptist	panel	9
+person	zacharias	zechariah-father-of-john-baptist	reader	9
+person	zadok	zadok-in-jesus-genealogy	panel	55
+person	zadok	zadok-in-jesus-genealogy	prose	4
+person	zadok	zadok-in-jesus-genealogy	reader	2
+person	zechariah	zechariah-father-of-john-baptist	panel	43
+person	zechariah	zechariah-father-of-john-baptist	prose	25
+person	zerah	zerah-son-of-judah	panel	22
+person	zerah	zerah-son-of-judah	prose	3
+person	zerah	zerah-son-of-judah	reader	11
+person	zerubbabel	zerubbabel	panel	25
+person	zerubbabel	zerubbabel	prose	16
+person	zerubbabel	zerubbabel	reader	25
+poi	amphipolis	amphipolis	panel	1
+poi	amphipolis	amphipolis	prose	1
+poi	amphipolis	amphipolis	reader	1
+poi	ancient agora of athens	ancient-agora-athens	prose	1
+poi	antonia fortress	antonia-fortress	prose	1
+poi	apollonia	apollonia-macedonia	panel	1
+poi	apollonia	apollonia-macedonia	reader	1
+poi	assos	assos	panel	2
+poi	assos	assos	reader	2
+poi	basilica of st. john	basilica-st-john	prose	1
+poi	basilica of the annunciation	basilica-of-annunciation-nazareth	prose	2
+poi	beersheba	beersheba	panel	34
+poi	beersheba	beersheba	prose	7
+poi	beersheba	beersheba	reader	34
+poi	beth shean	beth-shean	panel	6
+poi	beth shean	beth-shean	prose	1
+poi	beth shean	beth-shean	reader	6
+poi	bethany beyond the jordan	al-maghtas	panel	1
+poi	bethany beyond the jordan	al-maghtas	prose	1
+poi	bethany beyond the jordan	al-maghtas	reader	1
+poi	bethel	bethel	panel	69
+poi	bethel	bethel	prose	9
+poi	bethel	bethel	reader	69
+poi	bethesda	pool-of-bethesda	panel	1
+poi	bethesda	pool-of-bethesda	reader	1
+poi	bethsaida	bethsaida	panel	7
+poi	bethsaida	bethsaida	prose	12
+poi	bethsaida	bethsaida	reader	7
+poi	caesarea	caesarea-maritima	panel	15
+poi	caesarea	caesarea-maritima	prose	18
+poi	caesarea	caesarea-maritima	reader	15
+poi	caesarea maritima	caesarea-maritima	prose	12
+poi	caesarea philippi	caesarea-philippi	panel	2
+poi	caesarea philippi	caesarea-philippi	prose	7
+poi	caesarea philippi	caesarea-philippi	reader	2
+poi	cave of the apocalypse	cave-of-apocalypse-patmos	prose	1
+poi	chorazin	chorazin	panel	2
+poi	chorazin	chorazin	prose	1
+poi	chorazin	chorazin	reader	2
+poi	city of david	city-of-david	prose	9
+poi	dura-europos house church	dura-europos-house-church	prose	1
+poi	emmaus	emmaus	panel	1
+poi	emmaus	emmaus	prose	2
+poi	emmaus	emmaus	reader	1
+poi	erastus inscription	erastus-inscription-corinth	prose	1
+poi	gallio inscription	gallio-inscription-delphi	prose	2
+poi	garden tomb	garden-tomb	prose	2
+poi	gethsemane	gethsemane	panel	2
+poi	gethsemane	gethsemane	prose	9
+poi	gethsemane	gethsemane	reader	2
+poi	golgotha	golgotha	panel	3
+poi	golgotha	golgotha	prose	1
+poi	golgotha	golgotha	reader	3
+poi	hebron	hebron	panel	72
+poi	hebron	hebron	prose	12
+poi	hebron	hebron	reader	72
+poi	herodium	herodium	prose	3
+poi	hierapolis	hierapolis	panel	1
+poi	hierapolis	hierapolis	prose	6
+poi	hierapolis	hierapolis	reader	1
+poi	jericho	jericho	panel	64
+poi	jericho	jericho	prose	25
+poi	jericho	jericho	reader	64
+poi	kursi	kursi	prose	1
+poi	machaerus	machaerus	prose	4
+poi	magdala	magdala	panel	1
+poi	magdala	magdala	prose	7
+poi	magdala	magdala	reader	1
+poi	mamertine prison	mamertine-prison-rome	prose	1
+poi	masada	masada	prose	4
+poi	megiddo	megiddo	panel	12
+poi	megiddo	megiddo	prose	6
+poi	megiddo	megiddo	reader	12
+poi	mount sinai	mount-sinai	panel	21
+poi	mount sinai	mount-sinai	prose	9
+poi	mount sinai	mount-sinai	reader	21
+poi	paphos	paphos	panel	2
+poi	paphos	paphos	prose	2
+poi	paphos	paphos	reader	2
+poi	patara	patara	panel	1
+poi	patara	patara	reader	1
+poi	perga	perga	panel	3
+poi	perga	perga	prose	1
+poi	perga	perga	reader	3
+poi	pool of bethesda	pool-of-bethesda	prose	1
+poi	pool of siloam	pool-of-siloam	panel	2
+poi	pool of siloam	pool-of-siloam	prose	3
+poi	pool of siloam	pool-of-siloam	reader	2
+poi	praetorium	antonia-fortress	prose	1
+poi	qumran	qumran	prose	61
+poi	rhegium	rhegium	panel	1
+poi	rhegium	rhegium	prose	1
+poi	rhegium	rhegium	reader	1
+poi	salamis	salamis	panel	1
+poi	salamis	salamis	reader	1
+poi	sepphoris	sepphoris	prose	1
+poi	shechem	shechem	panel	68
+poi	shechem	shechem	prose	12
+poi	shechem	shechem	reader	68
+poi	shiloh	shiloh	panel	33
+poi	shiloh	shiloh	prose	6
+poi	shiloh	shiloh	reader	33
+poi	siloam	pool-of-siloam	panel	1
+poi	siloam	pool-of-siloam	prose	3
+poi	siloam	pool-of-siloam	reader	1
+poi	syracuse	syracuse	panel	1
+poi	syracuse	syracuse	prose	1
+poi	syracuse	syracuse	reader	1
+poi	the praetorium	antonia-fortress	panel	6
+poi	the praetorium	antonia-fortress	reader	6
+poi	tomb of lazarus	tomb-of-lazarus-bethany	prose	1
+poi	upper room	upper-room	panel	13
+poi	upper room	upper-room	prose	2
+poi	upper room	upper-room	reader	13
+poi	western wall	western-wall	prose	3
+timeline	absalom's rebellion	bib-um-absaloms-rebellion	prose	1
+timeline	azusa street revival	azusa-street-revival-1906	prose	1
+timeline	council of constantinople	council-of-constantinople-381	prose	2
+timeline	council of ephesus	council-of-ephesus-431	prose	1
+timeline	council of trent	council-of-trent-1545	prose	1
+timeline	cyrus's decree	bib-er-cyrus-decree	prose	3
+timeline	diet of worms	diet-of-worms-1521	prose	2
+timeline	division of the kingdom	bib-um-division-of-kingdom	prose	2
+timeline	esau sells his birthright	bib-pat-esau-birthright	prose	1
+timeline	esther becomes queen	bib-er-esther-becomes-queen	prose	2
+timeline	feeding of the five thousand	bib-loc-feeding-five-thousand	prose	2
+timeline	hezekiah's religious reforms	bib-dkj-hezekiah-reforms	prose	1
+timeline	korah's rebellion	bib-exo-korahs-rebellion	prose	1
+timeline	noah's flood	bib-prim-flood	prose	1
+timeline	parable of the good samaritan	bib-loc-parable-good-samaritan	prose	1
+timeline	paul's arrest in jerusalem	bib-ac-paul-arrest-jerusalem	prose	1
+timeline	second vatican council	vatican-ii-1962	prose	1
+timeline	sermon on the mount	bib-loc-sermon-on-the-mount	prose	5
+timeline	stephen's martyrdom	bib-ac-stephen-martyrdom	prose	1
+timeline	the ascension	bib-loc-ascension	prose	3
+timeline	the battle of actium	wld-rom-battle-of-actium	prose	1
+timeline	the church at antioch	bib-ac-antioch-church-founded	prose	2
+timeline	the code of hammurabi	wld-ane-code-of-hammurabi	prose	2
+timeline	the council of nicaea	bib-ac-council-of-nicaea	prose	5
+timeline	the crucifixion	bib-loc-crucifixion	prose	14
+timeline	the davidic covenant	bib-um-davidic-covenant	prose	2
+timeline	the death of abraham	bib-pat-death-abraham	panel	2
+timeline	the death of abraham	bib-pat-death-abraham	reader	2
+timeline	the death of joshua	bib-cj-death-of-joshua	panel	1
+timeline	the death of joshua	bib-cj-death-of-joshua	reader	1
+timeline	the destruction of sodom and gomorrah	bib-pat-sodom-gomorrah	prose	2
+timeline	the early jerusalem church	bib-ac-jerusalem-church-community	prose	1
+timeline	the fall of babylon to cyrus	wld-pg-fall-of-babylon	prose	1
+timeline	the first great awakening	first-great-awakening-c1740	prose	1
+timeline	the golden calf	bib-exo-golden-calf	prose	4
+timeline	the great commission	bib-loc-great-commission	prose	3
+timeline	the jerusalem council	bib-ac-jerusalem-council	prose	6
+timeline	the last supper	bib-loc-last-supper	prose	11
+timeline	the muratorian fragment	bib-ac-muratorian-fragment	prose	4
+timeline	the olivet discourse	bib-loc-olivet-discourse	prose	3
+timeline	the resurrection	bib-loc-resurrection	panel	26
+timeline	the resurrection	bib-loc-resurrection	prose	28
+timeline	the resurrection	bib-loc-resurrection	reader	26
+timeline	the tower of babel	bib-prim-tower-of-babel	prose	2
+timeline	the transfiguration	bib-loc-transfiguration	prose	4
+topic	aleppo codex	masoretic-text	prose	5
+topic	amarna letters	amarna-letters	prose	2
+topic	ammonite	moabites-and-ammonites	panel	8
+topic	ammonite	moabites-and-ammonites	prose	7
+topic	ammonite	moabites-and-ammonites	reader	8
+topic	ammonites	moabites-and-ammonites	panel	8
+topic	ammonites	moabites-and-ammonites	prose	5
+topic	ammonites	moabites-and-ammonites	reader	8
+topic	an angel	angels	panel	36
+topic	an angel	angels	prose	21
+topic	an angel	angels	reader	36
+topic	angel	angels	panel	92
+topic	angel	angels	prose	9
+topic	angel	angels	reader	92
+topic	angels	angels	panel	91
+topic	angels	angels	prose	22
+topic	angels	angels	reader	91
+topic	assyrian	assyrians	panel	10
+topic	assyrian	assyrians	prose	57
+topic	assyrian	assyrians	reader	10
+topic	assyrians	assyrians	panel	10
+topic	assyrians	assyrians	prose	2
+topic	assyrians	assyrians	reader	10
+topic	babylonian	babylonians	panel	1
+topic	babylonian	babylonians	prose	47
+topic	babylonian	babylonians	reader	1
+topic	babylonian chronicle	babylonian-chronicles	prose	7
+topic	babylonian chronicles	babylonian-chronicles	prose	5
+topic	babylonians	babylonians	panel	4
+topic	babylonians	babylonians	prose	5
+topic	babylonians	babylonians	reader	4
+topic	behistun inscription	behistun-inscription	prose	2
+topic	black obelisk	black-obelisk	prose	1
+topic	black obelisk of shalmaneser iii	black-obelisk	prose	1
+topic	canaanite	canaanites	panel	29
+topic	canaanite	canaanites	prose	19
+topic	canaanite	canaanites	reader	29
+topic	canaanites	canaanites	panel	43
+topic	canaanites	canaanites	prose	1
+topic	canaanites	canaanites	reader	43
+topic	cast lots	casting-lots	panel	21
+topic	cast lots	casting-lots	reader	21
+topic	casting lots	casting-lots	panel	2
+topic	casting lots	casting-lots	reader	2
+topic	chaldean	babylonians	panel	4
+topic	chaldean	babylonians	reader	4
+topic	chaldeans	babylonians	panel	74
+topic	chaldeans	babylonians	prose	2
+topic	chaldeans	babylonians	reader	74
+topic	cherub	cherubim	panel	29
+topic	cherub	cherubim	reader	29
+topic	cherubim	cherubim	panel	65
+topic	cherubim	cherubim	prose	2
+topic	cherubim	cherubim	reader	65
+topic	children of israel	israelites	panel	643
+topic	children of israel	israelites	prose	1
+topic	children of israel	israelites	reader	643
+topic	codex sinaiticus	codex-sinaiticus	prose	18
+topic	codex vaticanus	codex-vaticanus	prose	18
+topic	cyrus cylinder	cyrus-cylinder	prose	4
+topic	dead sea scrolls	dead-sea-scrolls	prose	37
+topic	demon	demons	panel	23
+topic	demon	demons	prose	1
+topic	demon	demons	reader	23
+topic	demons	demons	panel	56
+topic	demons	demons	prose	7
+topic	demons	demons	reader	56
+topic	edomite	edomites	panel	7
+topic	edomite	edomites	prose	3
+topic	edomite	edomites	reader	7
+topic	edomites	edomites	panel	12
+topic	edomites	edomites	prose	1
+topic	edomites	edomites	reader	12
+topic	egyptian	egyptians	panel	30
+topic	egyptian	egyptians	prose	61
+topic	egyptian	egyptians	reader	30
+topic	egyptians	egyptians	panel	93
+topic	egyptians	egyptians	prose	1
+topic	egyptians	egyptians	reader	93
+topic	enuma elish	enuma-elish	prose	3
+topic	epic of gilgamesh	epic-of-gilgamesh	prose	4
+topic	evil spirit	demons	panel	9
+topic	evil spirit	demons	reader	9
+topic	evil spirits	demons	panel	4
+topic	evil spirits	demons	prose	1
+topic	evil spirits	demons	reader	4
+topic	gehenna	gehenna	panel	12
+topic	gehenna	gehenna	reader	12
+topic	gentile	gentiles	panel	2
+topic	gentile	gentiles	prose	31
+topic	gentile	gentiles	reader	2
+topic	gentiles	gentiles	panel	83
+topic	gentiles	gentiles	prose	18
+topic	gentiles	gentiles	reader	83
+topic	great isaiah scroll	dead-sea-scrolls	prose	3
+topic	greek	greeks	panel	15
+topic	greek	greeks	prose	174
+topic	greek	greeks	reader	15
+topic	greek old testament	septuagint	prose	1
+topic	greeks	greeks	panel	19
+topic	greeks	greeks	prose	3
+topic	greeks	greeks	reader	19
+topic	hammurabi stele	code-of-hammurabi	prose	1
+topic	hellenists	greeks	panel	3
+topic	hellenists	greeks	reader	3
+topic	hinnom	gehenna	panel	1
+topic	hinnom	gehenna	prose	1
+topic	hinnom	gehenna	reader	1
+topic	holy of holies	holy-of-holies	panel	1
+topic	holy of holies	holy-of-holies	prose	2
+topic	holy of holies	holy-of-holies	reader	1
+topic	isaiah scroll	dead-sea-scrolls	prose	1
+topic	israel stele	merneptah-stele	prose	1
+topic	israelites	israelites	panel	9
+topic	israelites	israelites	prose	16
+topic	israelites	israelites	reader	9
+topic	jewish	jews	panel	7
+topic	jewish	jews	prose	211
+topic	jewish	jews	reader	7
+topic	jews	jews	panel	38
+topic	jews	jews	prose	24
+topic	jews	jews	reader	38
+topic	kurkh monolith	kurkh-monolith	prose	1
+topic	leningrad codex	masoretic-text	prose	5
+topic	levite	levites	panel	29
+topic	levite	levites	prose	3
+topic	levite	levites	reader	29
+topic	levites	levites	panel	263
+topic	levites	levites	prose	10
+topic	levites	levites	reader	263
+topic	lxx	septuagint	prose	1
+topic	masoretic text	masoretic-text	prose	32
+topic	merneptah stele	merneptah-stele	prose	5
+topic	mesha stele	mesha-stele	prose	5
+topic	moabite	moabites-and-ammonites	panel	4
+topic	moabite	moabites-and-ammonites	prose	11
+topic	moabite	moabites-and-ammonites	reader	4
+topic	moabite stone	mesha-stele	prose	4
+topic	moabites	moabites-and-ammonites	panel	16
+topic	moabites	moabites-and-ammonites	prose	3
+topic	moabites	moabites-and-ammonites	reader	16
+topic	most holy place	holy-of-holies	panel	1
+topic	most holy place	holy-of-holies	prose	1
+topic	most holy place	holy-of-holies	reader	1
+topic	nabonidus cylinder	nabonidus-cylinder	prose	2
+topic	new covenant	new-covenant	panel	10
+topic	new covenant	new-covenant	prose	3
+topic	new covenant	new-covenant	reader	10
+topic	nicene creed	nicene-creed	prose	4
+topic	nuzi tablets	nuzi-tablets	prose	3
+topic	oriental institute prism	sennacherib-prism	prose	1
+topic	p52	rylands-papyrus-p52	prose	1
+topic	passover	passover	panel	12
+topic	passover	passover	prose	21
+topic	passover	passover	reader	12
+topic	persian	persians	panel	2
+topic	persian	persians	prose	67
+topic	persian	persians	reader	2
+topic	persians	persians	panel	5
+topic	persians	persians	prose	1
+topic	persians	persians	reader	5
+topic	pharisee	topic-pharisees	panel	12
+topic	pharisee	topic-pharisees	prose	9
+topic	pharisee	topic-pharisees	reader	12
+topic	pharisees	topic-pharisees	panel	89
+topic	pharisees	topic-pharisees	prose	36
+topic	pharisees	topic-pharisees	reader	89
+topic	philistine	philistines	panel	33
+topic	philistine	philistines	prose	28
+topic	philistine	philistines	reader	33
+topic	philistines	philistines	panel	254
+topic	philistines	philistines	prose	17
+topic	philistines	philistines	reader	254
+topic	pilate stone	pilate-stone	prose	2
+topic	preparation day	day-of-preparation	panel	1
+topic	preparation day	day-of-preparation	reader	1
+topic	roman	romans	panel	8
+topic	roman	romans	prose	291
+topic	roman	romans	reader	8
+topic	romans	romans	panel	3
+topic	romans	romans	prose	14
+topic	romans	romans	reader	3
+topic	sadducee	topic-sadducees	prose	1
+topic	sadducees	topic-sadducees	panel	14
+topic	sadducees	topic-sadducees	prose	26
+topic	sadducees	topic-sadducees	reader	14
+topic	samaritan	samaritans	panel	5
+topic	samaritan	samaritans	prose	26
+topic	samaritan	samaritans	reader	5
+topic	samaritans	samaritans	panel	7
+topic	samaritans	samaritans	prose	4
+topic	samaritans	samaritans	reader	7
+topic	sennacherib's prism	sennacherib-prism	prose	4
+topic	septuagint	septuagint	prose	40
+topic	siloam inscription	siloam-inscription	prose	1
+topic	sinaiticus	codex-sinaiticus	prose	16
+topic	synagogue	synagogue	panel	44
+topic	synagogue	synagogue	prose	31
+topic	synagogue	synagogue	reader	44
+topic	synagogues	synagogue	panel	25
+topic	synagogues	synagogue	prose	4
+topic	synagogues	synagogue	reader	25
+topic	tabernacle	tabernacle	panel	125
+topic	tabernacle	tabernacle	prose	20
+topic	tabernacle	tabernacle	reader	125
+topic	taylor prism	sennacherib-prism	prose	3
+topic	tel dan stele	tel-dan-stele	prose	8
+topic	tent of meeting	tabernacle	panel	146
+topic	tent of meeting	tabernacle	prose	1
+topic	tent of meeting	tabernacle	reader	146
+topic	the angel	angels	panel	67
+topic	the angel	angels	prose	14
+topic	the angel	angels	reader	67
+topic	the jews	jews	panel	215
+topic	the jews	jews	prose	48
+topic	the jews	jews	reader	215
+topic	the law and the prophets	torah	panel	4
+topic	the law and the prophets	torah	prose	1
+topic	the law and the prophets	torah	reader	4
+topic	the law of moses	torah	panel	20
+topic	the law of moses	torah	prose	3
+topic	the law of moses	torah	reader	20
+topic	the lot	casting-lots	panel	24
+topic	the lot	casting-lots	reader	24
+topic	the most holy place	holy-of-holies	panel	11
+topic	the most holy place	holy-of-holies	prose	1
+topic	the most holy place	holy-of-holies	reader	11
+topic	the passover	passover	panel	65
+topic	the passover	passover	prose	10
+topic	the passover	passover	reader	65
+topic	the preparation	day-of-preparation	panel	6
+topic	the preparation	day-of-preparation	reader	6
+topic	the romans	romans	panel	3
+topic	the romans	romans	prose	5
+topic	the romans	romans	reader	3
+topic	the temple	the-temple	panel	150
+topic	the temple	the-temple	prose	102
+topic	the temple	the-temple	reader	150
+topic	the trinity	the-trinity	prose	11
+topic	topheth	gehenna	panel	9
+topic	topheth	gehenna	reader	9
+topic	torah	torah	prose	20
+topic	trinitarian	the-trinity	prose	1
+topic	unclean spirit	demons	panel	13
+topic	unclean spirit	demons	prose	1
+topic	unclean spirit	demons	reader	13
+topic	unclean spirits	demons	panel	10
+topic	unclean spirits	demons	prose	1
+topic	unclean spirits	demons	reader	10
+topic	valley of hinnom	gehenna	panel	3
+topic	valley of hinnom	gehenna	reader	3
+topic	valley of the son of hinnom	gehenna	panel	9
+topic	valley of the son of hinnom	gehenna	reader	9
+topic	vaticanus	codex-vaticanus	prose	11
+verse	1 chronicles 11:41	-	prose	1
+verse	1 chronicles 21:1	-	prose	1
+verse	1 chronicles 22:1	-	prose	1
+verse	1 chronicles 22:8	-	prose	1
+verse	1 chronicles 23:24-32	-	prose	1
+verse	1 chronicles 2:10	-	prose	1
+verse	1 chronicles 2:10-11	-	prose	1
+verse	1 chronicles 2:11	-	prose	1
+verse	1 chronicles 2:12	-	prose	1
+verse	1 chronicles 2:5	-	prose	1
+verse	1 chronicles 2:9-10	-	prose	1
+verse	1 chronicles 3:17	-	prose	1
+verse	1 chronicles 3:17-19	-	prose	1
+verse	1 chronicles 3:19	-	prose	2
+verse	1 chronicles 3:19-20	-	prose	2
+verse	1 corinthians 11:25	-	prose	1
+verse	1 corinthians 12	-	prose	1
+verse	1 corinthians 12:4-11	-	prose	1
+verse	1 corinthians 15	-	prose	1
+verse	1 corinthians 15:22	-	prose	2
+verse	1 corinthians 15:3-8	-	prose	1
+verse	1 corinthians 15:33	-	prose	1
+verse	1 corinthians 15:7	-	prose	2
+verse	1 corinthians 16:12	-	prose	1
+verse	1 corinthians 16:19	-	prose	2
+verse	1 corinthians 16:8	-	prose	1
+verse	1 corinthians 1:1	-	prose	1
+verse	1 corinthians 1:11	-	prose	1
+verse	1 corinthians 1:12	-	prose	2
+verse	1 corinthians 1:14	-	prose	1
+verse	1 corinthians 3:16	-	prose	1
+verse	1 corinthians 3:4-9	-	prose	1
+verse	1 corinthians 4:17	-	prose	1
+verse	1 corinthians 5:5	-	prose	1
+verse	1 corinthians 5:7	-	prose	1
+verse	1 corinthians 6:19	-	prose	1
+verse	1 corinthians 8	-	prose	1
+verse	1 john 2:22	-	prose	1
+verse	1 john 5:7	-	prose	1
+verse	1 kings 1	-	prose	1
+verse	1 kings 10:1-13	-	prose	1
+verse	1 kings 10:14-29	-	prose	1
+verse	1 kings 11:1-3	-	prose	1
+verse	1 kings 11:14	-	prose	1
+verse	1 kings 11:4-13	-	prose	1
+verse	1 kings 11:42	-	prose	1
+verse	1 kings 11:42-12	-	prose	1
+verse	1 kings 12:1-5	-	prose	1
+verse	1 kings 12:16-24	-	prose	1
+verse	1 kings 12:29	-	prose	1
+verse	1 kings 12:4	-	prose	1
+verse	1 kings 12:6-15	-	prose	1
+verse	1 kings 14:21	-	prose	1
+verse	1 kings 14:21-24	-	prose	1
+verse	1 kings 14:25-28	-	prose	1
+verse	1 kings 15:1-3	-	prose	1
+verse	1 kings 15:16-22	-	prose	1
+verse	1 kings 15:23-24	-	prose	1
+verse	1 kings 15:7-8	-	prose	1
+verse	1 kings 15:9-13	-	prose	1
+verse	1 kings 16	-	prose	1
+verse	1 kings 16:31	-	prose	1
+verse	1 kings 17:1	-	prose	1
+verse	1 kings 17:2-24	-	prose	1
+verse	1 kings 18:16-40	-	prose	1
+verse	1 kings 18:19	-	prose	1
+verse	1 kings 18:4	-	prose	1
+verse	1 kings 19:1-3	-	prose	1
+verse	1 kings 19:1-4	-	prose	1
+verse	1 kings 19:19-21	-	prose	2
+verse	1 kings 19:5-18	-	prose	1
+verse	1 kings 1:1-53	-	prose	1
+verse	1 kings 1:11-31	-	prose	1
+verse	1 kings 1:38-39	-	prose	1
+verse	1 kings 1:8-45	-	prose	1
+verse	1 kings 21:1-16	-	prose	1
+verse	1 kings 21:17-29	-	prose	1
+verse	1 kings 22:1	-	prose	1
+verse	1 kings 22:1-33	-	prose	1
+verse	1 kings 22:42	-	prose	1
+verse	1 kings 22:48-49	-	prose	1
+verse	1 kings 2:10-11	-	prose	1
+verse	1 kings 2:13-25	-	prose	1
+verse	1 kings 2:19	-	prose	1
+verse	1 kings 3:16-28	-	prose	1
+verse	1 kings 3:5-14	-	prose	1
+verse	1 kings 4:25	-	prose	1
+verse	1 kings 5	-	prose	1
+verse	1 kings 6	-	prose	1
+verse	1 kings 6:1	-	prose	3
+verse	1 kings 6:16	-	prose	1
+verse	1 kings 6:3-33	-	prose	1
+verse	1 kings 8:10-11	-	prose	1
+verse	1 kings 9:15	-	prose	2
+verse	1 peter 2:24	-	prose	1
+verse	1 peter 5:12	-	prose	1
+verse	1 peter 5:13	-	prose	1
+verse	1 peter 5:8	-	prose	1
+verse	1 samuel 1	-	prose	1
+verse	1 samuel 10:1	-	prose	1
+verse	1 samuel 10:10	-	prose	1
+verse	1 samuel 10:20-24	-	prose	1
+verse	1 samuel 11	-	prose	1
+verse	1 samuel 11:1-15	-	prose	1
+verse	1 samuel 13:1	-	prose	1
+verse	1 samuel 13:13-14	-	prose	1
+verse	1 samuel 13:19-22	-	prose	1
+verse	1 samuel 13:8-14	-	prose	1
+verse	1 samuel 15:1-23	-	prose	1
+verse	1 samuel 16:1-13	-	prose	3
+verse	1 samuel 16:10-11	-	prose	1
+verse	1 samuel 16:14	-	prose	1
+verse	1 samuel 16:14-23	-	prose	1
+verse	1 samuel 17	-	prose	1
+verse	1 samuel 17:1-54	-	prose	1
+verse	1 samuel 17:12	-	prose	1
+verse	1 samuel 17:12-14	-	prose	1
+verse	1 samuel 17:12-23	-	prose	1
+verse	1 samuel 18	-	prose	1
+verse	1 samuel 18:7	-	prose	1
+verse	1 samuel 1:20-28	-	prose	1
+verse	1 samuel 1:3	-	prose	1
+verse	1 samuel 1:9-18	-	prose	1
+verse	1 samuel 22:3-4	-	prose	1
+verse	1 samuel 22:6-19	-	prose	1
+verse	1 samuel 24	-	prose	1
+verse	1 samuel 25:1	-	prose	2
+verse	1 samuel 28:3	-	prose	1
+verse	1 samuel 28:3-19	-	prose	2
+verse	1 samuel 31	-	prose	1
+verse	1 samuel 31:1-6	-	prose	1
+verse	1 samuel 31:8-13	-	prose	1
+verse	1 samuel 3:1-10	-	prose	1
+verse	1 samuel 3:19-20	-	prose	1
+verse	1 samuel 4	-	prose	1
+verse	1 samuel 4:4	-	prose	1
+verse	1 samuel 7:3-17	-	prose	1
+verse	1 samuel 8:5	-	prose	1
+verse	1 samuel 8:6-18	-	prose	1
+verse	1 samuel 9:15-10	-	prose	1
+verse	1 samuel 9:2	-	prose	1
+verse	1 thessalonians 1:1	-	prose	1
+verse	1 thessalonians 2:18	-	prose	1
+verse	1 thessalonians 3:1-6	-	prose	1
+verse	1 timothy 1:3	-	prose	1
+verse	1 timothy 2:13	-	prose	1
+verse	1 timothy 2:13-14	-	prose	2
+verse	1 timothy 4:12	-	prose	2
+verse	2 chronicles 11:5-12	-	prose	1
+verse	2 chronicles 12:1-12	-	prose	1
+verse	2 chronicles 13:1-20	-	prose	1
+verse	2 chronicles 13:19-14	-	prose	1
+verse	2 chronicles 14:2-5	-	prose	1
+verse	2 chronicles 14:6-15	-	prose	1
+verse	2 chronicles 14:9-13	-	prose	1
+verse	2 chronicles 16:1-10	-	prose	1
+verse	2 chronicles 16:12-14	-	prose	1
+verse	2 chronicles 17:1-9	-	prose	1
+verse	2 chronicles 17:10-19	-	prose	1
+verse	2 chronicles 18:1-34	-	prose	1
+verse	2 chronicles 20:1-30	-	prose	1
+verse	2 chronicles 20:35-37	-	prose	1
+verse	2 chronicles 21:1-4	-	prose	1
+verse	2 chronicles 21:12-15	-	prose	1
+verse	2 chronicles 21:16-20	-	prose	1
+verse	2 chronicles 21:6	-	prose	1
+verse	2 chronicles 21:8-10	-	prose	1
+verse	2 chronicles 26:1-15	-	prose	1
+verse	2 chronicles 26:16-20	-	prose	1
+verse	2 chronicles 26:21-23	-	prose	1
+verse	2 chronicles 27:1-2	-	prose	1
+verse	2 chronicles 27:3-4	-	prose	1
+verse	2 chronicles 27:5-6	-	prose	1
+verse	2 chronicles 28:1-4	-	prose	1
+verse	2 chronicles 28:16-21	-	prose	1
+verse	2 chronicles 28:17-19	-	prose	1
+verse	2 chronicles 28:3	-	prose	1
+verse	2 chronicles 29	-	prose	1
+verse	2 chronicles 29:20-36	-	prose	1
+verse	2 chronicles 29:3-19	-	prose	1
+verse	2 chronicles 30	-	prose	2
+verse	2 chronicles 32	-	prose	1
+verse	2 chronicles 32:1-8	-	prose	1
+verse	2 chronicles 32:2-4	-	prose	1
+verse	2 chronicles 32:27-33	-	prose	1
+verse	2 chronicles 32:30	-	prose	2
+verse	2 chronicles 32:9	-	prose	1
+verse	2 chronicles 33	-	prose	1
+verse	2 chronicles 33:10-17	-	prose	1
+verse	2 chronicles 33:11	-	prose	1
+verse	2 chronicles 33:21-23	-	prose	1
+verse	2 chronicles 33:24-25	-	prose	1
+verse	2 chronicles 33:6	-	prose	1
+verse	2 chronicles 34:3-7	-	prose	1
+verse	2 chronicles 35	-	prose	1
+verse	2 chronicles 35:1-19	-	prose	2
+verse	2 chronicles 35:20	-	prose	1
+verse	2 chronicles 35:20-25	-	prose	1
+verse	2 chronicles 36:22	-	prose	1
+verse	2 chronicles 36:22-23	-	prose	2
+verse	2 chronicles 36:9	-	prose	2
+verse	2 chronicles 3:1	-	prose	1
+verse	2 chronicles 9:29	-	prose	1
+verse	2 corinthians 11:14	-	prose	1
+verse	2 corinthians 11:24-27	-	prose	1
+verse	2 corinthians 11:3	-	prose	1
+verse	2 corinthians 11:32-33	-	prose	1
+verse	2 corinthians 12:7	-	prose	1
+verse	2 corinthians 13:14	-	prose	3
+verse	2 corinthians 1:1	-	prose	1
+verse	2 corinthians 5:21	-	prose	1
+verse	2 corinthians 7:6-7	-	prose	1
+verse	2 corinthians 8:6	-	prose	1
+verse	2 kings 13:20-21	-	prose	1
+verse	2 kings 15:1-4	-	prose	1
+verse	2 kings 15:32-35	-	prose	1
+verse	2 kings 15:37	-	prose	1
+verse	2 kings 15:5-7	-	prose	1
+verse	2 kings 16:1-4	-	prose	1
+verse	2 kings 16:10-18	-	prose	1
+verse	2 kings 16:3	-	prose	1
+verse	2 kings 16:5-9	-	prose	1
+verse	2 kings 17	-	prose	1
+verse	2 kings 17:24	-	prose	1
+verse	2 kings 17:29-41	-	prose	1
+verse	2 kings 17:5-6	-	prose	1
+verse	2 kings 18	-	prose	3
+verse	2 kings 18:1-6	-	prose	1
+verse	2 kings 18:13	-	prose	1
+verse	2 kings 18:13-37	-	prose	1
+verse	2 kings 18:14	-	prose	1
+verse	2 kings 18:14-16	-	prose	1
+verse	2 kings 18:18	-	prose	1
+verse	2 kings 18:2	-	prose	1
+verse	2 kings 18:4	-	prose	1
+verse	2 kings 18:5	-	prose	1
+verse	2 kings 18:6-8	-	prose	1
+verse	2 kings 19	-	prose	1
+verse	2 kings 19:1-7	-	prose	1
+verse	2 kings 19:14-37	-	prose	1
+verse	2 kings 19:32-36	-	prose	1
+verse	2 kings 19:35	-	prose	3
+verse	2 kings 1:1-16	-	prose	1
+verse	2 kings 20	-	prose	1
+verse	2 kings 20:1-11	-	prose	1
+verse	2 kings 20:12-19	-	prose	1
+verse	2 kings 20:20	-	prose	4
+verse	2 kings 21:1-9	-	prose	1
+verse	2 kings 21:10-16	-	prose	1
+verse	2 kings 21:11-15	-	prose	1
+verse	2 kings 21:19-22	-	prose	1
+verse	2 kings 21:23-24	-	prose	1
+verse	2 kings 21:25-26	-	prose	1
+verse	2 kings 21:6	-	prose	1
+verse	2 kings 22:1	-	prose	1
+verse	2 kings 22:1-2	-	prose	1
+verse	2 kings 22:3-20	-	prose	1
+verse	2 kings 23:1-25	-	prose	1
+verse	2 kings 23:10	-	prose	1
+verse	2 kings 23:21-23	-	prose	2
+verse	2 kings 23:29	-	prose	1
+verse	2 kings 23:29-30	-	prose	1
+verse	2 kings 23:34	-	prose	1
+verse	2 kings 24	-	prose	1
+verse	2 kings 24:10-16	-	prose	1
+verse	2 kings 24:10-17	-	prose	1
+verse	2 kings 24:14-16	-	prose	1
+verse	2 kings 24:17	-	prose	1
+verse	2 kings 24:8-9	-	prose	1
+verse	2 kings 25:1-21	-	prose	1
+verse	2 kings 25:27-30	-	prose	2
+verse	2 kings 25:8-9	-	prose	1
+verse	2 kings 2:1-14	-	prose	1
+verse	2 kings 2:19-22	-	prose	1
+verse	2 kings 2:9-14	-	prose	1
+verse	2 kings 3	-	prose	3
+verse	2 kings 5:1-19	-	prose	1
+verse	2 kings 6:8-23	-	prose	1
+verse	2 kings 8:16-19	-	prose	1
+verse	2 kings 8:20-22	-	prose	1
+verse	2 kings 9	-	prose	3
+verse	2 kings 9:30-37	-	prose	2
+verse	2 peter 2:15-16	-	prose	1
+verse	2 peter 2:4	-	prose	1
+verse	2 peter 2:5	-	prose	1
+verse	2 peter 3:8	-	prose	1
+verse	2 samuel 11	-	prose	1
+verse	2 samuel 11:14-17	-	prose	1
+verse	2 samuel 11:2-3	-	prose	1
+verse	2 samuel 11:2-5	-	prose	1
+verse	2 samuel 11:26-12	-	prose	1
+verse	2 samuel 11:26-27	-	prose	1
+verse	2 samuel 11:27	-	prose	1
+verse	2 samuel 11:3	-	prose	1
+verse	2 samuel 11:6-13	-	prose	1
+verse	2 samuel 11:6-17	-	prose	1
+verse	2 samuel 12:1-15	-	prose	1
+verse	2 samuel 12:1-7	-	prose	1
+verse	2 samuel 12:10	-	prose	1
+verse	2 samuel 12:14-19	-	prose	1
+verse	2 samuel 12:24	-	prose	1
+verse	2 samuel 12:24-25	-	prose	1
+verse	2 samuel 13	-	prose	1
+verse	2 samuel 18:33	-	prose	1
+verse	2 samuel 1:18	-	prose	1
+verse	2 samuel 23:39	-	prose	1
+verse	2 samuel 24	-	prose	1
+verse	2 samuel 24:1	-	prose	1
+verse	2 samuel 2:4	-	prose	1
+verse	2 samuel 5:4	-	prose	1
+verse	2 samuel 5:5	-	prose	1
+verse	2 samuel 5:6-9	-	prose	1
+verse	2 samuel 7	-	prose	1
+verse	2 samuel 7:1-13	-	prose	1
+verse	2 samuel 7:1-17	-	prose	1
+verse	2 samuel 7:12-16	-	prose	1
+verse	2 samuel 7:14	-	prose	1
+verse	2 samuel 8	-	prose	1
+verse	2 samuel 8:2	-	prose	1
+verse	2 thessalonians 1:1	-	prose	3
+verse	2 thessalonians 1:4	-	prose	1
+verse	2 timothy 1:5	-	prose	2
+verse	2 timothy 4:10	-	prose	1
+verse	2 timothy 4:11	-	prose	2
+verse	2 timothy 4:19	-	prose	2
+verse	2 timothy 4:20	-	prose	1
+verse	3 john 1:9-10	-	prose	1
+verse	acts 10	-	prose	3
+verse	acts 10:1-2	-	prose	1
+verse	acts 10:24-48	-	prose	1
+verse	acts 10:3-8	-	prose	1
+verse	acts 10:44-45	-	prose	1
+verse	acts 10:44-47	-	prose	1
+verse	acts 10:9-23	-	prose	1
+verse	acts 11:1-18	-	prose	1
+verse	acts 11:22-26	-	prose	1
+verse	acts 11:26	-	prose	2
+verse	acts 11:27-28	-	prose	1
+verse	acts 12	-	prose	1
+verse	acts 12:1-11	-	prose	1
+verse	acts 12:12	-	prose	1
+verse	acts 12:13-16	-	prose	1
+verse	acts 12:17	-	prose	1
+verse	acts 12:2	-	prose	2
+verse	acts 12:20-23	-	prose	2
+verse	acts 12:25	-	prose	1
+verse	acts 12:6-11	-	prose	1
+verse	acts 13	-	prose	3
+verse	acts 13:1-3	-	prose	1
+verse	acts 13:13	-	prose	1
+verse	acts 13:13-14	-	prose	1
+verse	acts 13:15	-	prose	1
+verse	acts 13:2	-	prose	2
+verse	acts 13:21	-	prose	1
+verse	acts 13:42-45	-	prose	1
+verse	acts 13:5	-	prose	2
+verse	acts 13:6-12	-	prose	2
+verse	acts 13:6-8	-	prose	1
+verse	acts 13:9-12	-	prose	1
+verse	acts 14:12	-	prose	1
+verse	acts 14:25	-	prose	1
+verse	acts 15	-	prose	6
+verse	acts 15:1-29	-	prose	1
+verse	acts 15:13-21	-	prose	1
+verse	acts 15:17	-	prose	1
+verse	acts 15:19	-	prose	1
+verse	acts 15:22	-	prose	1
+verse	acts 15:28	-	prose	2
+verse	acts 15:36-39	-	prose	1
+verse	acts 15:36-40	-	prose	1
+verse	acts 15:36-41	-	prose	2
+verse	acts 15:40-41	-	prose	1
+verse	acts 15:7-9	-	prose	1
+verse	acts 16:1	-	prose	1
+verse	acts 16:1-3	-	prose	1
+verse	acts 16:10-17	-	prose	1
+verse	acts 16:11-12	-	prose	1
+verse	acts 16:12	-	prose	1
+verse	acts 16:13-15	-	prose	1
+verse	acts 16:15	-	prose	1
+verse	acts 16:16-18	-	prose	1
+verse	acts 16:19-26	-	prose	1
+verse	acts 16:25	-	prose	1
+verse	acts 16:37-39	-	prose	1
+verse	acts 17:1	-	prose	2
+verse	acts 17:1-15	-	prose	1
+verse	acts 17:1-9	-	prose	1
+verse	acts 17:16-34	-	prose	2
+verse	acts 17:17	-	prose	2
+verse	acts 17:19-34	-	prose	1
+verse	acts 17:23	-	prose	2
+verse	acts 17:26	-	prose	1
+verse	acts 17:28	-	prose	2
+verse	acts 17:6	-	prose	1
+verse	acts 18	-	prose	1
+verse	acts 18:1-2	-	prose	1
+verse	acts 18:1-3	-	prose	2
+verse	acts 18:11	-	prose	1
+verse	acts 18:12	-	prose	1
+verse	acts 18:12-17	-	prose	4
+verse	acts 18:17	-	prose	1
+verse	acts 18:18	-	prose	1
+verse	acts 18:18-19	-	prose	2
+verse	acts 18:24-25	-	prose	1
+verse	acts 18:24-26	-	prose	1
+verse	acts 18:26	-	prose	2
+verse	acts 18:27-28	-	prose	1
+verse	acts 18:8	-	prose	1
+verse	acts 19	-	prose	2
+verse	acts 19:13-16	-	prose	1
+verse	acts 19:22	-	prose	1
+verse	acts 19:23-41	-	prose	2
+verse	acts 19:28	-	prose	1
+verse	acts 19:29	-	prose	1
+verse	acts 19:29-34	-	prose	1
+verse	acts 19:30-31	-	prose	1
+verse	acts 1:1	-	prose	1
+verse	acts 1:1-2	-	prose	1
+verse	acts 1:13	-	prose	7
+verse	acts 1:14	-	prose	2
+verse	acts 1:16-19	-	prose	1
+verse	acts 1:18	-	prose	1
+verse	acts 1:18-19	-	prose	1
+verse	acts 1:21-26	-	prose	1
+verse	acts 1:26	-	prose	1
+verse	acts 1:6-11	-	prose	1
+verse	acts 1:8	-	prose	1
+verse	acts 1:9-12	-	prose	1
+verse	acts 2	-	prose	3
+verse	acts 20:13-14	-	prose	1
+verse	acts 20:17-38	-	prose	1
+verse	acts 20:5-15	-	prose	1
+verse	acts 20:7-12	-	prose	1
+verse	acts 21:1-18	-	prose	1
+verse	acts 21:1-2	-	prose	1
+verse	acts 21:27-36	-	prose	1
+verse	acts 21:39	-	prose	1
+verse	acts 21:8	-	prose	1
+verse	acts 21:8-9	-	prose	1
+verse	acts 21:9	-	prose	1
+verse	acts 22:12-16	-	prose	1
+verse	acts 22:25-28	-	prose	1
+verse	acts 22:3	-	prose	5
+verse	acts 23	-	prose	1
+verse	acts 23:1-5	-	prose	1
+verse	acts 23:31	-	prose	1
+verse	acts 23:6	-	prose	1
+verse	acts 23:6-10	-	prose	1
+verse	acts 23:6-9	-	prose	1
+verse	acts 23:8	-	prose	4
+verse	acts 24:1-23	-	prose	1
+verse	acts 24:1-9	-	prose	1
+verse	acts 24:24-25	-	prose	1
+verse	acts 24:26	-	prose	1
+verse	acts 25:1-5	-	prose	1
+verse	acts 25:10-12	-	prose	2
+verse	acts 25:11	-	prose	1
+verse	acts 25:13	-	prose	1
+verse	acts 25:13-27	-	prose	1
+verse	acts 25:26-27	-	prose	1
+verse	acts 25:9-11	-	prose	1
+verse	acts 26:28	-	prose	1
+verse	acts 26:5	-	prose	1
+verse	acts 27	-	prose	2
+verse	acts 27:1-28	-	prose	1
+verse	acts 27:39-28	-	prose	1
+verse	acts 28	-	prose	1
+verse	acts 28:1-10	-	prose	1
+verse	acts 28:12	-	prose	1
+verse	acts 28:13	-	prose	1
+verse	acts 28:15	-	prose	1
+verse	acts 28:30-31	-	prose	1
+verse	acts 28:7-10	-	prose	1
+verse	acts 2:1-21	-	prose	1
+verse	acts 2:1-4	-	prose	1
+verse	acts 2:30	-	prose	1
+verse	acts 2:30-31	-	prose	1
+verse	acts 3	-	prose	2
+verse	acts 3:22	-	prose	1
+verse	acts 4	-	prose	1
+verse	acts 4:1-2	-	prose	1
+verse	acts 4:1-3	-	prose	1
+verse	acts 4:31	-	prose	1
+verse	acts 4:32-35	-	prose	1
+verse	acts 4:36	-	prose	1
+verse	acts 4:36-37	-	prose	2
+verse	acts 5:1-2	-	prose	1
+verse	acts 5:17-18	-	prose	1
+verse	acts 5:3-6	-	prose	1
+verse	acts 5:33-39	-	prose	1
+verse	acts 5:33-40	-	prose	1
+verse	acts 5:34-39	-	prose	1
+verse	acts 5:7-11	-	prose	1
+verse	acts 6	-	prose	4
+verse	acts 6:1-6	-	prose	3
+verse	acts 6:2-6	-	prose	1
+verse	acts 6:8-15	-	prose	1
+verse	acts 7:1-53	-	prose	1
+verse	acts 7:23	-	prose	1
+verse	acts 7:23-29	-	prose	1
+verse	acts 7:37	-	prose	1
+verse	acts 7:54-56	-	prose	1
+verse	acts 7:57-60	-	prose	1
+verse	acts 7:58	-	prose	2
+verse	acts 7:58-8	-	prose	1
+verse	acts 8	-	prose	1
+verse	acts 8:1-4	-	prose	1
+verse	acts 8:14-24	-	prose	1
+verse	acts 8:26-29	-	prose	1
+verse	acts 8:26-40	-	prose	1
+verse	acts 8:28-35	-	prose	1
+verse	acts 8:30-39	-	prose	1
+verse	acts 8:4-13	-	prose	1
+verse	acts 8:4-25	-	prose	1
+verse	acts 8:9-13	-	prose	1
+verse	acts 9:1-19	-	prose	1
+verse	acts 9:1-2	-	prose	1
+verse	acts 9:10-12	-	prose	1
+verse	acts 9:10-19	-	prose	1
+verse	acts 9:11	-	prose	2
+verse	acts 9:13-16	-	prose	1
+verse	acts 9:17-19	-	prose	1
+verse	acts 9:23-25	-	prose	1
+verse	acts 9:25	-	prose	1
+verse	acts 9:27	-	prose	1
+verse	acts 9:36-39	-	prose	1
+verse	acts 9:40-42	-	prose	1
+verse	amos 1:1	-	prose	1
+verse	amos 1:6-8	-	prose	1
+verse	amos 9:11	-	prose	1
+verse	amos 9:11-12	-	prose	1
+verse	colossians 1:1	-	prose	1
+verse	colossians 1:20	-	prose	1
+verse	colossians 4:10	-	prose	2
+verse	colossians 4:10-14	-	prose	1
+verse	colossians 4:13	-	prose	1
+verse	colossians 4:14	-	prose	1
+verse	colossians 4:9	-	prose	1
+verse	daniel 10	-	prose	1
+verse	daniel 10:1	-	prose	2
+verse	daniel 10:13	-	prose	1
+verse	daniel 10:21	-	prose	1
+verse	daniel 12:1	-	prose	1
+verse	daniel 1:1-6	-	prose	1
+verse	daniel 1:1-7	-	prose	1
+verse	daniel 1:8-20	-	prose	1
+verse	daniel 2	-	prose	2
+verse	daniel 3	-	prose	1
+verse	daniel 3:19-27	-	prose	1
+verse	daniel 4	-	prose	2
+verse	daniel 5	-	prose	6
+verse	daniel 5:16	-	prose	1
+verse	daniel 6	-	prose	2
+verse	daniel 7	-	prose	2
+verse	daniel 8	-	prose	1
+verse	daniel 8:16	-	prose	1
+verse	daniel 9	-	prose	1
+verse	daniel 9:21	-	prose	1
+verse	daniel 9:24-27	-	prose	1
+verse	deuteronomy 1	-	prose	1
+verse	deuteronomy 12:31	-	prose	1
+verse	deuteronomy 17:16-17	-	prose	1
+verse	deuteronomy 18:1-2	-	prose	1
+verse	deuteronomy 23:4-5	-	prose	1
+verse	deuteronomy 31:7-8	-	prose	1
+verse	deuteronomy 32	-	prose	1
+verse	deuteronomy 32:6	-	prose	1
+verse	deuteronomy 34:1-8	-	prose	1
+verse	deuteronomy 34:10	-	prose	1
+verse	deuteronomy 34:7	-	prose	1
+verse	deuteronomy 6:20-23	-	prose	1
+verse	deuteronomy 6:4	-	prose	2
+verse	deuteronomy 7:6-8	-	prose	1
+verse	ephesians 1:13-14	-	prose	1
+verse	ephesians 2:11-16	-	prose	1
+verse	ephesians 2:8	-	prose	1
+verse	ephesians 6:11-12	-	prose	1
+verse	ephesians 6:12	-	prose	1
+verse	esther 2:10	-	prose	1
+verse	esther 2:16	-	prose	1
+verse	esther 2:21-23	-	prose	1
+verse	esther 2:5-6	-	prose	1
+verse	esther 2:5-7	-	prose	1
+verse	esther 2:7	-	prose	1
+verse	esther 2:8-20	-	prose	1
+verse	esther 3	-	prose	2
+verse	esther 3:1-6	-	prose	1
+verse	esther 4:1-14	-	prose	1
+verse	esther 4:14	-	prose	1
+verse	esther 4:15-17	-	prose	1
+verse	esther 5	-	prose	1
+verse	esther 7	-	prose	1
+verse	esther 7:9-10	-	prose	1
+verse	esther 8	-	prose	1
+verse	esther 9:20-10	-	prose	1
+verse	esther 9:20-32	-	prose	1
+verse	exodus 1	-	prose	1
+verse	exodus 12:1-7	-	prose	1
+verse	exodus 12:12	-	prose	1
+verse	exodus 12:13	-	prose	1
+verse	exodus 12:14	-	prose	1
+verse	exodus 12:40	-	prose	2
+verse	exodus 12:46	-	prose	2
+verse	exodus 12:8-11	-	prose	1
+verse	exodus 13:19	-	prose	1
+verse	exodus 14	-	prose	1
+verse	exodus 15:20-21	-	prose	1
+verse	exodus 16	-	prose	1
+verse	exodus 17:8-13	-	prose	1
+verse	exodus 19	-	prose	2
+verse	exodus 19:6	-	prose	1
+verse	exodus 1:11	-	prose	1
+verse	exodus 1:22	-	prose	1
+verse	exodus 1:8-14	-	prose	1
+verse	exodus 20:1-17	-	prose	1
+verse	exodus 20:11	-	prose	1
+verse	exodus 21	-	prose	1
+verse	exodus 24:13	-	prose	1
+verse	exodus 24:8	-	prose	1
+verse	exodus 25:18-20	-	prose	1
+verse	exodus 25:22	-	prose	1
+verse	exodus 25:8	-	prose	1
+verse	exodus 26:33-34	-	prose	1
+verse	exodus 28	-	prose	1
+verse	exodus 2:1-10	-	prose	1
+verse	exodus 2:10	-	prose	1
+verse	exodus 2:11-15	-	prose	2
+verse	exodus 2:15-22	-	prose	1
+verse	exodus 2:4-8	-	prose	1
+verse	exodus 31:1-5	-	prose	1
+verse	exodus 32:1-6	-	prose	2
+verse	exodus 32:9-14	-	prose	1
+verse	exodus 33:11	-	prose	1
+verse	exodus 3:1-4	-	prose	1
+verse	exodus 40:34-35	-	prose	1
+verse	exodus 4:14-16	-	prose	1
+verse	exodus 4:27-31	-	prose	1
+verse	exodus 5	-	prose	1
+verse	exodus 6:23	-	prose	2
+verse	exodus 7	-	prose	1
+verse	exodus 7:7	-	prose	1
+verse	exodus 7:9-12	-	prose	1
+verse	ezekiel 1	-	prose	1
+verse	ezekiel 10:1-19	-	prose	1
+verse	ezekiel 10:15	-	prose	1
+verse	ezekiel 11:5	-	prose	1
+verse	ezekiel 14:14	-	prose	1
+verse	ezekiel 1:1	-	prose	1
+verse	ezekiel 1:1-3	-	prose	1
+verse	ezekiel 1:2	-	prose	1
+verse	ezekiel 1:4-14	-	prose	1
+verse	ezekiel 28:11-19	-	prose	1
+verse	ezekiel 34:23	-	prose	1
+verse	ezekiel 36:26-27	-	prose	1
+verse	ezekiel 37:1-14	-	prose	1
+verse	ezekiel 3:26-27	-	prose	1
+verse	ezekiel 40	-	prose	1
+verse	ezekiel 8	-	prose	1
+verse	ezra 1	-	prose	2
+verse	ezra 1:1-4	-	prose	3
+verse	ezra 2:1-2	-	prose	1
+verse	ezra 3:1-13	-	prose	1
+verse	ezra 3:10-13	-	prose	1
+verse	ezra 3:2	-	prose	1
+verse	ezra 4	-	prose	1
+verse	ezra 5	-	prose	1
+verse	ezra 5:1-2	-	prose	1
+verse	ezra 6	-	prose	1
+verse	ezra 6:14-15	-	prose	2
+verse	ezra 6:3-5	-	prose	1
+verse	ezra 7:1-10	-	prose	1
+verse	ezra 7:11-26	-	prose	1
+verse	ezra 7:7-8	-	prose	1
+verse	ezra 8:21-23	-	prose	1
+verse	ezra 9	-	prose	1
+verse	galatians 1:1	-	prose	1
+verse	galatians 1:19	-	prose	2
+verse	galatians 2:1-3	-	prose	1
+verse	galatians 2:11-13	-	prose	1
+verse	galatians 2:11-14	-	prose	4
+verse	galatians 2:9	-	prose	2
+verse	galatians 3:11	-	prose	1
+verse	galatians 3:19-24	-	prose	1
+verse	galatians 4:24-25	-	prose	1
+verse	galatians 4:6	-	prose	2
+verse	galatians 5:18	-	prose	1
+verse	galatians 5:19-23	-	prose	1
+verse	galatians 5:6	-	prose	1
+verse	galatians 6:11	-	prose	1
+verse	genesis 1	-	prose	6
+verse	genesis 10:23	-	prose	1
+verse	genesis 11:27-12	-	prose	1
+verse	genesis 11:29-31	-	prose	1
+verse	genesis 12:1-3	-	prose	1
+verse	genesis 12:10	-	prose	1
+verse	genesis 12:10-20	-	prose	3
+verse	genesis 12:3	-	prose	1
+verse	genesis 12:6-7	-	prose	1
+verse	genesis 13	-	prose	1
+verse	genesis 14:18-20	-	prose	1
+verse	genesis 15:16	-	prose	1
+verse	genesis 15:19-21	-	prose	1
+verse	genesis 15:2-3	-	prose	2
+verse	genesis 15:6	-	prose	2
+verse	genesis 16	-	prose	2
+verse	genesis 16:1-16	-	prose	1
+verse	genesis 16:1-4	-	prose	1
+verse	genesis 16:1-6	-	prose	1
+verse	genesis 16:6	-	prose	1
+verse	genesis 17	-	prose	1
+verse	genesis 17:15-21	-	prose	1
+verse	genesis 18	-	prose	1
+verse	genesis 18:9-15	-	prose	1
+verse	genesis 19:30-38	-	prose	1
+verse	genesis 19:37	-	prose	1
+verse	genesis 19:38	-	prose	1
+verse	genesis 1:1-2	-	prose	1
+verse	genesis 1:2	-	prose	2
+verse	genesis 1:21	-	prose	1
+verse	genesis 1:26	-	prose	1
+verse	genesis 1:26-27	-	prose	1
+verse	genesis 1:27	-	prose	1
+verse	genesis 1:31	-	prose	1
+verse	genesis 20	-	prose	2
+verse	genesis 21	-	prose	1
+verse	genesis 21:1-7	-	prose	1
+verse	genesis 21:1-8	-	prose	1
+verse	genesis 21:10	-	prose	1
+verse	genesis 21:22-34	-	prose	1
+verse	genesis 21:5	-	prose	1
+verse	genesis 21:8-14	-	prose	1
+verse	genesis 21:8-21	-	prose	1
+verse	genesis 22	-	prose	1
+verse	genesis 22:1-19	-	prose	1
+verse	genesis 23	-	prose	2
+verse	genesis 24	-	prose	2
+verse	genesis 25:19-26	-	prose	2
+verse	genesis 25:24-26	-	prose	1
+verse	genesis 25:26	-	prose	1
+verse	genesis 25:27-28	-	prose	2
+verse	genesis 25:29-34	-	prose	4
+verse	genesis 25:7	-	prose	1
+verse	genesis 26	-	prose	2
+verse	genesis 26:34-35	-	prose	1
+verse	genesis 27	-	prose	3
+verse	genesis 27:1-29	-	prose	1
+verse	genesis 27:30-40	-	prose	1
+verse	genesis 27:41-45	-	prose	2
+verse	genesis 28:10-17	-	prose	1
+verse	genesis 28:10-19	-	prose	1
+verse	genesis 28:18-22	-	prose	1
+verse	genesis 28:6-9	-	prose	1
+verse	genesis 29:15-30	-	prose	1
+verse	genesis 29:16-17	-	prose	1
+verse	genesis 29:17	-	prose	1
+verse	genesis 29:21-30	-	prose	2
+verse	genesis 29:30-30	-	prose	1
+verse	genesis 29:31-30	-	prose	1
+verse	genesis 29:31-35	-	prose	1
+verse	genesis 29:35	-	prose	1
+verse	genesis 29:9-12	-	prose	1
+verse	genesis 2:15	-	prose	1
+verse	genesis 2:16-17	-	prose	1
+verse	genesis 2:18	-	prose	1
+verse	genesis 2:19-20	-	prose	1
+verse	genesis 2:21-23	-	prose	1
+verse	genesis 2:24-25	-	prose	1
+verse	genesis 2:4	-	prose	1
+verse	genesis 2:7	-	prose	1
+verse	genesis 30:14-16	-	prose	1
+verse	genesis 30:22-24	-	prose	1
+verse	genesis 30:25-43	-	prose	1
+verse	genesis 30:3-8	-	prose	1
+verse	genesis 30:9-21	-	prose	1
+verse	genesis 31:14-16	-	prose	1
+verse	genesis 31:19	-	prose	3
+verse	genesis 31:22-55	-	prose	1
+verse	genesis 32:22-32	-	prose	1
+verse	genesis 32:24-28	-	prose	1
+verse	genesis 32:24-30	-	prose	1
+verse	genesis 33:1-16	-	prose	1
+verse	genesis 33:1-4	-	prose	1
+verse	genesis 33:12-16	-	prose	1
+verse	genesis 33:18-20	-	prose	1
+verse	genesis 34	-	prose	1
+verse	genesis 35:16-20	-	prose	2
+verse	genesis 35:28	-	prose	1
+verse	genesis 35:29	-	prose	1
+verse	genesis 36	-	prose	1
+verse	genesis 36:1	-	prose	1
+verse	genesis 36:6-8	-	prose	1
+verse	genesis 37:12-35	-	prose	1
+verse	genesis 37:2	-	prose	1
+verse	genesis 37:2-3	-	prose	1
+verse	genesis 37:26-27	-	prose	1
+verse	genesis 37:3-4	-	prose	1
+verse	genesis 37:31-35	-	prose	1
+verse	genesis 37:35	-	prose	1
+verse	genesis 37:5-11	-	prose	1
+verse	genesis 38	-	prose	1
+verse	genesis 38:1-10	-	prose	1
+verse	genesis 38:11	-	prose	1
+verse	genesis 38:11-26	-	prose	1
+verse	genesis 38:12-19	-	prose	1
+verse	genesis 38:24-26	-	prose	1
+verse	genesis 38:27	-	prose	1
+verse	genesis 38:27-30	-	prose	2
+verse	genesis 38:28-29	-	prose	1
+verse	genesis 38:30	-	prose	1
+verse	genesis 38:6-26	-	prose	1
+verse	genesis 38:6-7	-	prose	1
+verse	genesis 38:8-10	-	prose	1
+verse	genesis 39:1-20	-	prose	1
+verse	genesis 3:1	-	prose	1
+verse	genesis 3:1-6	-	prose	1
+verse	genesis 3:1-8	-	prose	1
+verse	genesis 3:13-16	-	prose	1
+verse	genesis 3:20	-	prose	1
+verse	genesis 3:24	-	prose	2
+verse	genesis 3:9-24	-	prose	1
+verse	genesis 40	-	prose	1
+verse	genesis 41:1-45	-	prose	1
+verse	genesis 41:42	-	prose	1
+verse	genesis 42	-	prose	1
+verse	genesis 43:8-10	-	prose	1
+verse	genesis 44:18-34	-	prose	1
+verse	genesis 45:1-15	-	prose	1
+verse	genesis 45:25-46	-	prose	1
+verse	genesis 46	-	prose	1
+verse	genesis 46:1-7	-	prose	1
+verse	genesis 46:12	-	prose	1
+verse	genesis 47:1-26	-	prose	1
+verse	genesis 47:28	-	prose	1
+verse	genesis 47:7-10	-	prose	1
+verse	genesis 47:9	-	prose	1
+verse	genesis 48	-	prose	1
+verse	genesis 49:1-28	-	prose	1
+verse	genesis 49:29-50	-	prose	1
+verse	genesis 49:31	-	prose	1
+verse	genesis 49:8-12	-	prose	1
+verse	genesis 4:1	-	prose	1
+verse	genesis 4:1-2	-	prose	3
+verse	genesis 4:13-17	-	prose	1
+verse	genesis 4:15	-	prose	1
+verse	genesis 4:17-18	-	prose	1
+verse	genesis 4:18-24	-	prose	1
+verse	genesis 4:2	-	prose	1
+verse	genesis 4:3-5	-	prose	1
+verse	genesis 4:3-7	-	prose	1
+verse	genesis 4:8-10	-	prose	1
+verse	genesis 4:8-12	-	prose	1
+verse	genesis 5	-	prose	9
+verse	genesis 50:15-21	-	prose	1
+verse	genesis 50:22-26	-	prose	1
+verse	genesis 5:18	-	prose	1
+verse	genesis 5:21-24	-	prose	1
+verse	genesis 5:24	-	prose	1
+verse	genesis 5:28-29	-	prose	2
+verse	genesis 5:3-5	-	prose	1
+verse	genesis 5:5	-	prose	1
+verse	genesis 6	-	prose	1
+verse	genesis 6:14-22	-	prose	1
+verse	genesis 6:5-8	-	prose	1
+verse	genesis 7:6	-	prose	1
+verse	genesis 7:6-24	-	prose	1
+verse	genesis 8:1-19	-	prose	1
+verse	genesis 8:20-22	-	prose	1
+verse	genesis 9:1-17	-	prose	1
+verse	genesis 9:20-27	-	prose	2
+verse	genesis 9:28-29	-	prose	2
+verse	habakkuk 2:4	-	prose	1
+verse	habakkuk 3:1	-	prose	1
+verse	habakkuk 3:9	-	prose	1
+verse	haggai 1:1	-	prose	1
+verse	haggai 1:1-2	-	prose	1
+verse	haggai 2:23	-	prose	1
+verse	hebrews 10:1-4	-	prose	1
+verse	hebrews 10:19-20	-	prose	1
+verse	hebrews 10:38	-	prose	1
+verse	hebrews 11:31	-	prose	2
+verse	hebrews 11:37	-	prose	2
+verse	hebrews 11:4	-	prose	1
+verse	hebrews 11:5	-	prose	2
+verse	hebrews 12:16-17	-	prose	1
+verse	hebrews 1:14	-	prose	1
+verse	hebrews 1:5	-	prose	1
+verse	hebrews 4:15	-	prose	1
+verse	hebrews 5:6	-	prose	1
+verse	hebrews 7:3	-	prose	1
+verse	hebrews 7:4-10	-	prose	1
+verse	hebrews 8:13	-	prose	1
+verse	hebrews 8:5	-	prose	1
+verse	hebrews 8:8-12	-	prose	1
+verse	hebrews 9:1-5	-	prose	1
+verse	hebrews 9:11	-	prose	1
+verse	hebrews 9:12	-	prose	1
+verse	hebrews 9:14	-	prose	1
+verse	hebrews 9:15	-	prose	1
+verse	hebrews 9:2-3	-	prose	1
+verse	hebrews 9:24	-	prose	1
+verse	hebrews 9:8	-	prose	1
+verse	hosea 11:1	-	prose	2
+verse	isaiah 11:1	-	prose	1
+verse	isaiah 14:12-15	-	prose	1
+verse	isaiah 1:1	-	prose	1
+verse	isaiah 36	-	prose	2
+verse	isaiah 37	-	prose	2
+verse	isaiah 38	-	prose	2
+verse	isaiah 39	-	prose	1
+verse	isaiah 42	-	prose	1
+verse	isaiah 44:28	-	prose	2
+verse	isaiah 45:23	-	prose	1
+verse	isaiah 48:16	-	prose	1
+verse	isaiah 49:6	-	prose	1
+verse	isaiah 53	-	prose	1
+verse	isaiah 53:4-6	-	prose	1
+verse	isaiah 53:7-8	-	prose	1
+verse	isaiah 60:1-6	-	prose	1
+verse	isaiah 61:1	-	prose	1
+verse	isaiah 63:16	-	prose	1
+verse	isaiah 66:24	-	prose	2
+verse	isaiah 6:1	-	prose	1
+verse	isaiah 6:1-3	-	prose	1
+verse	isaiah 6:1-8	-	prose	1
+verse	isaiah 7:1-16	-	prose	2
+verse	isaiah 7:14	-	prose	1
+verse	isaiah 7:3	-	prose	1
+verse	isaiah 9:1	-	prose	1
+verse	isaiah 9:6	-	prose	1
+verse	james 2:17	-	prose	1
+verse	james 2:19	-	prose	1
+verse	james 2:2	-	prose	1
+verse	james 2:25	-	prose	2
+verse	james 3:6	-	prose	1
+verse	james 4:7	-	prose	1
+verse	james 5:11	-	prose	1
+verse	jeremiah 19	-	prose	1
+verse	jeremiah 1:1-3	-	prose	1
+verse	jeremiah 1:2	-	prose	1
+verse	jeremiah 1:4-10	-	prose	1
+verse	jeremiah 20:1-2	-	prose	1
+verse	jeremiah 20:7-18	-	prose	1
+verse	jeremiah 21	-	prose	1
+verse	jeremiah 22:24-30	-	prose	1
+verse	jeremiah 22:30	-	prose	1
+verse	jeremiah 23:5	-	prose	1
+verse	jeremiah 25:11-12	-	prose	1
+verse	jeremiah 31:15	-	prose	1
+verse	jeremiah 31:31-34	-	prose	1
+verse	jeremiah 32	-	prose	1
+verse	jeremiah 32:35	-	prose	1
+verse	jeremiah 34:7	-	prose	1
+verse	jeremiah 36	-	prose	1
+verse	jeremiah 39	-	prose	1
+verse	jeremiah 40	-	prose	1
+verse	jeremiah 43	-	prose	1
+verse	jeremiah 52:31-34	-	prose	1
+verse	jeremiah 7:31	-	prose	1
+verse	jeremiah 7:32-33	-	prose	1
+verse	job 1:1-3	-	prose	1
+verse	job 1:13-22	-	prose	1
+verse	job 1:6-12	-	prose	1
+verse	job 2:1-10	-	prose	1
+verse	job 3	-	prose	1
+verse	job 32	-	prose	1
+verse	job 38	-	prose	1
+verse	job 42:1-6	-	prose	1
+verse	job 42:7-17	-	prose	1
+verse	joel 2:28	-	prose	1
+verse	joel 2:28-29	-	prose	1
+verse	john 10:30	-	prose	1
+verse	john 11	-	prose	1
+verse	john 11:1-35	-	prose	1
+verse	john 11:1-44	-	prose	2
+verse	john 11:16	-	prose	1
+verse	john 11:27	-	prose	1
+verse	john 11:35	-	prose	2
+verse	john 11:47-53	-	prose	1
+verse	john 11:49-50	-	prose	1
+verse	john 11:5	-	prose	1
+verse	john 12:1-2	-	prose	2
+verse	john 12:1-8	-	prose	1
+verse	john 12:20-22	-	prose	2
+verse	john 12:38-41	-	prose	1
+verse	john 12:4-6	-	prose	1
+verse	john 12:9-11	-	prose	2
+verse	john 13:21-30	-	prose	1
+verse	john 13:23	-	prose	1
+verse	john 13:27	-	prose	1
+verse	john 13:29	-	prose	1
+verse	john 14:16-17	-	prose	2
+verse	john 14:22	-	prose	1
+verse	john 14:28	-	prose	1
+verse	john 14:5	-	prose	1
+verse	john 14:8-9	-	prose	1
+verse	john 15:26	-	prose	1
+verse	john 18:1-12	-	prose	1
+verse	john 18:10	-	prose	2
+verse	john 18:13-14	-	prose	1
+verse	john 18:28-19	-	prose	1
+verse	john 18:31-33	-	prose	1
+verse	john 18:37-38	-	prose	1
+verse	john 19:1-16	-	prose	2
+verse	john 19:13	-	prose	2
+verse	john 19:14	-	prose	1
+verse	john 19:17-42	-	prose	1
+verse	john 19:23-24	-	prose	1
+verse	john 19:24	-	prose	1
+verse	john 19:25	-	prose	2
+verse	john 19:25-27	-	prose	1
+verse	john 19:26-27	-	prose	4
+verse	john 19:31	-	prose	1
+verse	john 19:31-36	-	prose	1
+verse	john 19:31-37	-	prose	1
+verse	john 19:33-36	-	prose	1
+verse	john 19:35	-	prose	1
+verse	john 19:39-40	-	prose	3
+verse	john 19:39-42	-	prose	1
+verse	john 19:41	-	prose	1
+verse	john 19:42	-	prose	1
+verse	john 19:5	-	prose	1
+verse	john 1:1	-	prose	3
+verse	john 1:14	-	prose	2
+verse	john 1:28	-	prose	1
+verse	john 1:29	-	prose	1
+verse	john 1:35-40	-	prose	1
+verse	john 1:35-42	-	prose	1
+verse	john 1:40-41	-	prose	1
+verse	john 1:43-46	-	prose	2
+verse	john 1:44	-	prose	1
+verse	john 1:45-51	-	prose	2
+verse	john 20:1-15	-	prose	1
+verse	john 20:11-18	-	prose	1
+verse	john 20:16-18	-	prose	1
+verse	john 20:2-8	-	prose	1
+verse	john 20:24-25	-	prose	1
+verse	john 20:24-29	-	prose	1
+verse	john 20:26-28	-	prose	1
+verse	john 21:15-17	-	prose	1
+verse	john 21:18-19	-	prose	1
+verse	john 21:2	-	prose	3
+verse	john 2:1-11	-	prose	2
+verse	john 2:13-16	-	prose	1
+verse	john 2:14-16	-	prose	1
+verse	john 2:19-21	-	prose	1
+verse	john 3:1-2	-	prose	1
+verse	john 3:1-21	-	prose	2
+verse	john 3:16	-	prose	2
+verse	john 3:16-17	-	prose	1
+verse	john 3:3-8	-	prose	1
+verse	john 3:30	-	prose	1
+verse	john 4	-	prose	1
+verse	john 4:1-26	-	prose	1
+verse	john 4:39-42	-	prose	1
+verse	john 4:5-6	-	prose	1
+verse	john 4:6	-	prose	1
+verse	john 4:9	-	prose	1
+verse	john 5	-	prose	2
+verse	john 5:1-18	-	prose	1
+verse	john 5:18	-	prose	1
+verse	john 5:2	-	prose	1
+verse	john 6:14	-	prose	1
+verse	john 6:42	-	prose	1
+verse	john 6:5-7	-	prose	1
+verse	john 6:8-9	-	prose	1
+verse	john 7:5	-	prose	2
+verse	john 7:50-51	-	prose	1
+verse	john 7:50-52	-	prose	1
+verse	john 7:53	-	prose	1
+verse	john 7:53-8	-	prose	2
+verse	john 8:44	-	prose	1
+verse	john 8:58	-	prose	1
+verse	john 9	-	prose	1
+verse	john 9:1-16	-	prose	1
+verse	jonah 1:1-3	-	prose	1
+verse	jonah 1:17	-	prose	1
+verse	jonah 1:7	-	prose	1
+verse	jonah 3:5-10	-	prose	1
+verse	jonah 4:1-11	-	prose	1
+verse	joshua 10:1-15	-	prose	1
+verse	joshua 10:13	-	prose	1
+verse	joshua 11	-	prose	1
+verse	joshua 11:13	-	prose	1
+verse	joshua 13	-	prose	1
+verse	joshua 13:22	-	prose	1
+verse	joshua 14:1	-	prose	1
+verse	joshua 14:13-15	-	prose	1
+verse	joshua 14:6-12	-	prose	1
+verse	joshua 15:15-19	-	prose	1
+verse	joshua 15:8	-	prose	1
+verse	joshua 18:1	-	prose	2
+verse	joshua 18:6-10	-	prose	1
+verse	joshua 1:1-9	-	prose	1
+verse	joshua 2	-	prose	1
+verse	joshua 24	-	prose	1
+verse	joshua 24:15	-	prose	1
+verse	joshua 24:29	-	prose	1
+verse	joshua 24:29-30	-	prose	1
+verse	joshua 24:32	-	prose	1
+verse	joshua 2:1-7	-	prose	1
+verse	joshua 2:12-21	-	prose	1
+verse	joshua 2:8-11	-	prose	1
+verse	joshua 3	-	prose	1
+verse	joshua 5:10-12	-	prose	1
+verse	joshua 5:2-12	-	prose	1
+verse	joshua 6	-	prose	2
+verse	joshua 6:22-25	-	prose	2
+verse	joshua 6:24	-	prose	1
+verse	joshua 7	-	prose	1
+verse	joshua 7:1	-	prose	1
+verse	joshua 9	-	prose	1
+verse	jude 1:11	-	prose	1
+verse	jude 1:14	-	prose	1
+verse	jude 1:14-15	-	prose	1
+verse	jude 1:6	-	prose	2
+verse	jude 1:9	-	prose	1
+verse	judges 11:26	-	prose	1
+verse	judges 13:2-5	-	prose	1
+verse	judges 13:5	-	prose	1
+verse	judges 14	-	prose	1
+verse	judges 15:1-8	-	prose	1
+verse	judges 15:20	-	prose	1
+verse	judges 15:9-17	-	prose	1
+verse	judges 16:1-3	-	prose	1
+verse	judges 16:15-21	-	prose	1
+verse	judges 16:23-30	-	prose	2
+verse	judges 16:31	-	prose	1
+verse	judges 16:4-21	-	prose	1
+verse	judges 16:4-5	-	prose	1
+verse	judges 16:6-14	-	prose	1
+verse	judges 18	-	prose	1
+verse	judges 19	-	prose	1
+verse	judges 1:12-15	-	prose	1
+verse	judges 1:27-33	-	prose	1
+verse	judges 3:10	-	prose	1
+verse	judges 3:12-30	-	prose	1
+verse	judges 4:10-22	-	prose	1
+verse	judges 4:4-5	-	prose	1
+verse	judges 4:6-9	-	prose	1
+verse	judges 5	-	prose	1
+verse	judges 5:31	-	prose	1
+verse	judges 6:1-16	-	prose	1
+verse	judges 6:17-24	-	prose	1
+verse	judges 6:2	-	prose	1
+verse	judges 6:25-32	-	prose	1
+verse	judges 6:36-40	-	prose	1
+verse	judges 6:7	-	prose	1
+verse	judges 7:1-8	-	prose	1
+verse	judges 7:9-25	-	prose	1
+verse	judges 8:22-23	-	prose	1
+verse	judges 8:24-27	-	prose	1
+verse	judges 8:28	-	prose	1
+verse	judges 8:30-31	-	prose	1
+verse	judges 9	-	prose	2
+verse	lamentations 4:21	-	prose	1
+verse	leviticus 10:1-3	-	prose	1
+verse	leviticus 16:2	-	prose	1
+verse	leviticus 16:8-10	-	prose	1
+verse	leviticus 18:21-25	-	prose	1
+verse	leviticus 19:9-10	-	prose	1
+verse	leviticus 8	-	prose	1
+verse	luke 10:13-15	-	prose	1
+verse	luke 10:17	-	prose	1
+verse	luke 10:18	-	prose	1
+verse	luke 10:25-37	-	prose	1
+verse	luke 10:31-32	-	prose	1
+verse	luke 10:38-42	-	prose	3
+verse	luke 11:1-4	-	prose	1
+verse	luke 11:29	-	prose	1
+verse	luke 11:37-54	-	prose	1
+verse	luke 12:5	-	prose	1
+verse	luke 13:10-17	-	prose	1
+verse	luke 15:1-2	-	prose	1
+verse	luke 15:10	-	prose	1
+verse	luke 16:23	-	prose	1
+verse	luke 17:11-19	-	prose	1
+verse	luke 19:1-10	-	prose	1
+verse	luke 19:41-44	-	prose	1
+verse	luke 19:7	-	prose	1
+verse	luke 19:9-10	-	prose	1
+verse	luke 1:1	-	prose	3
+verse	luke 1:1-4	-	prose	2
+verse	luke 1:11-17	-	prose	1
+verse	luke 1:13	-	prose	1
+verse	luke 1:18-20	-	prose	1
+verse	luke 1:19	-	prose	1
+verse	luke 1:20	-	prose	1
+verse	luke 1:21-24	-	prose	1
+verse	luke 1:24-25	-	prose	1
+verse	luke 1:26	-	prose	1
+verse	luke 1:26-38	-	prose	5
+verse	luke 1:31-35	-	prose	1
+verse	luke 1:32	-	prose	1
+verse	luke 1:35	-	prose	1
+verse	luke 1:39-56	-	prose	1
+verse	luke 1:41-45	-	prose	1
+verse	luke 1:46-55	-	prose	1
+verse	luke 1:5-17	-	prose	1
+verse	luke 1:5-7	-	prose	2
+verse	luke 1:56	-	prose	1
+verse	luke 1:57-64	-	prose	2
+verse	luke 1:57-80	-	prose	1
+verse	luke 1:67-79	-	prose	1
+verse	luke 1:8-23	-	prose	1
+verse	luke 1:8-9	-	prose	1
+verse	luke 20:27-40	-	prose	1
+verse	luke 22:14-20	-	prose	1
+verse	luke 22:19-20	-	prose	1
+verse	luke 22:20	-	prose	1
+verse	luke 22:3	-	prose	1
+verse	luke 22:3-6	-	prose	1
+verse	luke 22:31-32	-	prose	1
+verse	luke 22:39-53	-	prose	1
+verse	luke 22:43	-	prose	1
+verse	luke 22:50-51	-	prose	1
+verse	luke 22:54-62	-	prose	1
+verse	luke 22:7-15	-	prose	1
+verse	luke 23:1-25	-	prose	1
+verse	luke 23:26	-	prose	1
+verse	luke 23:33-53	-	prose	1
+verse	luke 23:34	-	prose	1
+verse	luke 23:45	-	prose	1
+verse	luke 23:54	-	prose	1
+verse	luke 23:6-12	-	prose	1
+verse	luke 24:10	-	prose	2
+verse	luke 24:13-35	-	prose	2
+verse	luke 24:44	-	prose	3
+verse	luke 2:1-2	-	prose	1
+verse	luke 2:1-7	-	prose	4
+verse	luke 2:22-24	-	prose	1
+verse	luke 2:22-35	-	prose	1
+verse	luke 2:25-26	-	prose	1
+verse	luke 2:27-32	-	prose	1
+verse	luke 2:33-35	-	prose	1
+verse	luke 2:36-37	-	prose	1
+verse	luke 2:38	-	prose	1
+verse	luke 2:4	-	prose	1
+verse	luke 2:41-51	-	prose	3
+verse	luke 2:6	-	prose	1
+verse	luke 2:8-14	-	prose	1
+verse	luke 2:8-20	-	prose	2
+verse	luke 3:1	-	prose	4
+verse	luke 3:1-2	-	prose	2
+verse	luke 3:2	-	prose	1
+verse	luke 3:23	-	prose	1
+verse	luke 3:23-24	-	prose	1
+verse	luke 3:23-38	-	prose	1
+verse	luke 3:38	-	prose	2
+verse	luke 4	-	prose	1
+verse	luke 4:1-13	-	prose	1
+verse	luke 4:15	-	prose	1
+verse	luke 4:16-21	-	prose	1
+verse	luke 4:16-30	-	prose	2
+verse	luke 4:17-21	-	prose	1
+verse	luke 4:18	-	prose	1
+verse	luke 4:22	-	prose	1
+verse	luke 4:28-30	-	prose	1
+verse	luke 4:29	-	prose	1
+verse	luke 5	-	prose	1
+verse	luke 5:27	-	prose	1
+verse	luke 6:14	-	prose	1
+verse	luke 6:15	-	prose	4
+verse	luke 6:16	-	prose	2
+verse	luke 7	-	prose	3
+verse	luke 7:36-50	-	prose	3
+verse	luke 8:1-3	-	prose	2
+verse	luke 8:2	-	prose	1
+verse	luke 8:3	-	prose	1
+verse	luke 9:10	-	prose	1
+verse	luke 9:51-56	-	prose	1
+verse	luke 9:54	-	prose	1
+verse	malachi 3:1	-	prose	1
+verse	malachi 3:6	-	prose	1
+verse	malachi 4:5-6	-	prose	1
+verse	mark 10:35-41	-	prose	1
+verse	mark 10:46-52	-	prose	1
+verse	mark 10:6	-	prose	1
+verse	mark 12:18-27	-	prose	2
+verse	mark 13	-	prose	1
+verse	mark 13:26	-	prose	1
+verse	mark 13:3	-	prose	1
+verse	mark 14:12-26	-	prose	1
+verse	mark 14:3-9	-	prose	2
+verse	mark 14:32-34	-	prose	1
+verse	mark 14:32-52	-	prose	1
+verse	mark 14:33	-	prose	1
+verse	mark 14:36	-	prose	1
+verse	mark 14:62	-	prose	1
+verse	mark 15:21	-	prose	1
+verse	mark 15:22-46	-	prose	1
+verse	mark 15:24	-	prose	1
+verse	mark 15:38	-	prose	1
+verse	mark 15:40	-	prose	4
+verse	mark 15:42	-	prose	1
+verse	mark 15:43	-	prose	1
+verse	mark 16:1	-	prose	1
+verse	mark 16:9-20	-	prose	1
+verse	mark 1:19-20	-	prose	1
+verse	mark 1:21-27	-	prose	1
+verse	mark 1:24	-	prose	1
+verse	mark 1:29-31	-	prose	1
+verse	mark 1:6	-	prose	1
+verse	mark 2:14	-	prose	1
+verse	mark 2:23-28	-	prose	1
+verse	mark 3:1-6	-	prose	1
+verse	mark 3:17	-	prose	2
+verse	mark 3:18	-	prose	5
+verse	mark 3:27	-	prose	1
+verse	mark 3:28-29	-	prose	1
+verse	mark 3:31-35	-	prose	1
+verse	mark 4:35-41	-	prose	1
+verse	mark 5:1-13	-	prose	1
+verse	mark 5:1-20	-	prose	1
+verse	mark 5:10-12	-	prose	1
+verse	mark 5:37	-	prose	1
+verse	mark 6	-	prose	1
+verse	mark 6:14-29	-	prose	2
+verse	mark 6:17	-	prose	1
+verse	mark 6:17-18	-	prose	1
+verse	mark 6:21-28	-	prose	1
+verse	mark 6:21-29	-	prose	1
+verse	mark 6:3	-	prose	1
+verse	mark 6:30-44	-	prose	1
+verse	mark 7:1-23	-	prose	1
+verse	mark 7:8-13	-	prose	1
+verse	mark 8:22-26	-	prose	1
+verse	mark 9:2	-	prose	1
+verse	mark 9:43-48	-	prose	1
+verse	matthew 1	-	prose	2
+verse	matthew 10:1	-	prose	1
+verse	matthew 10:28	-	prose	2
+verse	matthew 10:3	-	prose	4
+verse	matthew 10:4	-	prose	2
+verse	matthew 11:11	-	prose	1
+verse	matthew 11:2-6	-	prose	1
+verse	matthew 11:20-24	-	prose	1
+verse	matthew 12:28	-	prose	1
+verse	matthew 12:31-32	-	prose	1
+verse	matthew 12:38	-	prose	1
+verse	matthew 12:40	-	prose	2
+verse	matthew 13:19	-	prose	1
+verse	matthew 13:55	-	prose	3
+verse	matthew 14	-	prose	1
+verse	matthew 14:1-12	-	prose	2
+verse	matthew 14:13-21	-	prose	1
+verse	matthew 14:3	-	prose	1
+verse	matthew 15:1-20	-	prose	1
+verse	matthew 15:24	-	prose	1
+verse	matthew 16:1-6	-	prose	1
+verse	matthew 16:13-19	-	prose	1
+verse	matthew 16:13-20	-	prose	1
+verse	matthew 17:1-8	-	prose	1
+verse	matthew 18:10	-	prose	1
+verse	matthew 19:3-9	-	prose	1
+verse	matthew 19:4	-	prose	1
+verse	matthew 1:1-17	-	prose	1
+verse	matthew 1:11-12	-	prose	1
+verse	matthew 1:12	-	prose	1
+verse	matthew 1:13	-	prose	2
+verse	matthew 1:13-14	-	prose	1
+verse	matthew 1:14	-	prose	2
+verse	matthew 1:14-15	-	prose	1
+verse	matthew 1:15	-	prose	2
+verse	matthew 1:15-16	-	prose	1
+verse	matthew 1:18-25	-	prose	2
+verse	matthew 1:22-23	-	prose	2
+verse	matthew 1:23	-	prose	1
+verse	matthew 1:3	-	prose	2
+verse	matthew 1:3-4	-	prose	1
+verse	matthew 1:4	-	prose	1
+verse	matthew 1:5	-	prose	3
+verse	matthew 1:5-6	-	prose	2
+verse	matthew 2	-	prose	2
+verse	matthew 20:20-24	-	prose	1
+verse	matthew 21:1-11	-	prose	1
+verse	matthew 21:12-13	-	prose	1
+verse	matthew 22:15-16	-	prose	1
+verse	matthew 22:15-22	-	prose	1
+verse	matthew 22:23-33	-	prose	2
+verse	matthew 22:37-40	-	prose	1
+verse	matthew 23:1-36	-	prose	1
+verse	matthew 23:15	-	prose	1
+verse	matthew 23:2-3	-	prose	1
+verse	matthew 23:23	-	prose	2
+verse	matthew 23:27	-	prose	1
+verse	matthew 23:35	-	prose	1
+verse	matthew 23:5-7	-	prose	1
+verse	matthew 24	-	prose	1
+verse	matthew 24:1-2	-	prose	1
+verse	matthew 24:15	-	prose	1
+verse	matthew 24:37	-	prose	1
+verse	matthew 26:14-16	-	prose	1
+verse	matthew 26:26-28	-	prose	1
+verse	matthew 26:36-39	-	prose	1
+verse	matthew 26:36-56	-	prose	1
+verse	matthew 26:47-50	-	prose	2
+verse	matthew 26:57-68	-	prose	1
+verse	matthew 26:6-13	-	prose	2
+verse	matthew 26:69-75	-	prose	1
+verse	matthew 27:19	-	prose	1
+verse	matthew 27:24	-	prose	1
+verse	matthew 27:3-10	-	prose	2
+verse	matthew 27:32	-	prose	1
+verse	matthew 27:33-60	-	prose	1
+verse	matthew 27:35	-	prose	1
+verse	matthew 27:5	-	prose	1
+verse	matthew 27:51	-	prose	1
+verse	matthew 27:55-56	-	prose	1
+verse	matthew 27:56	-	prose	1
+verse	matthew 27:57-60	-	prose	1
+verse	matthew 27:60	-	prose	1
+verse	matthew 27:61	-	prose	1
+verse	matthew 28:1	-	prose	1
+verse	matthew 28:19	-	prose	4
+verse	matthew 28:2-7	-	prose	1
+verse	matthew 2:1-12	-	prose	1
+verse	matthew 2:1-18	-	prose	2
+verse	matthew 2:1-8	-	prose	1
+verse	matthew 2:10	-	prose	1
+verse	matthew 2:11	-	prose	1
+verse	matthew 2:12	-	prose	1
+verse	matthew 2:13-15	-	prose	3
+verse	matthew 2:13-23	-	prose	2
+verse	matthew 2:16-18	-	prose	2
+verse	matthew 2:19-23	-	prose	1
+verse	matthew 2:22	-	prose	2
+verse	matthew 3:1-6	-	prose	1
+verse	matthew 3:13-17	-	prose	2
+verse	matthew 3:16-17	-	prose	3
+verse	matthew 3:3	-	prose	1
+verse	matthew 3:7-10	-	prose	1
+verse	matthew 4:1	-	prose	1
+verse	matthew 4:1-11	-	prose	2
+verse	matthew 4:11	-	prose	1
+verse	matthew 4:14-16	-	prose	1
+verse	matthew 4:15	-	prose	1
+verse	matthew 4:18-20	-	prose	2
+verse	matthew 4:2	-	prose	1
+verse	matthew 4:21-22	-	prose	1
+verse	matthew 4:23	-	prose	1
+verse	matthew 5	-	prose	2
+verse	matthew 5:1-12	-	prose	1
+verse	matthew 5:17	-	prose	2
+verse	matthew 5:21-48	-	prose	1
+verse	matthew 5:22	-	prose	2
+verse	matthew 5:29-30	-	prose	1
+verse	matthew 6:9	-	prose	1
+verse	matthew 6:9-13	-	prose	1
+verse	matthew 7:12	-	prose	1
+verse	matthew 7:28-29	-	prose	1
+verse	matthew 9:10-11	-	prose	1
+verse	matthew 9:10-13	-	prose	2
+verse	matthew 9:14-17	-	prose	1
+verse	matthew 9:9	-	prose	2
+verse	micah 3:8	-	prose	1
+verse	micah 5:2	-	prose	1
+verse	micah 6:5	-	prose	1
+verse	nehemiah 1	-	prose	2
+verse	nehemiah 13	-	prose	1
+verse	nehemiah 13:6-7	-	prose	1
+verse	nehemiah 1:11	-	prose	1
+verse	nehemiah 2:1	-	prose	1
+verse	nehemiah 2:1-8	-	prose	1
+verse	nehemiah 2:11-3	-	prose	1
+verse	nehemiah 4	-	prose	1
+verse	nehemiah 5	-	prose	1
+verse	nehemiah 5:14-19	-	prose	1
+verse	nehemiah 6:15	-	prose	1
+verse	nehemiah 8	-	prose	3
+verse	numbers 10:14	-	prose	1
+verse	numbers 11	-	prose	1
+verse	numbers 12:1-13	-	prose	1
+verse	numbers 12:1-15	-	prose	1
+verse	numbers 13	-	prose	1
+verse	numbers 13:16	-	prose	1
+verse	numbers 13:22	-	prose	1
+verse	numbers 13:23-24	-	prose	1
+verse	numbers 13:30	-	prose	1
+verse	numbers 14:24	-	prose	1
+verse	numbers 16	-	prose	1
+verse	numbers 1:7	-	prose	1
+verse	numbers 20:1	-	prose	1
+verse	numbers 20:1-13	-	prose	1
+verse	numbers 20:14-21	-	prose	1
+verse	numbers 20:2-13	-	prose	1
+verse	numbers 20:22-29	-	prose	1
+verse	numbers 20:28	-	prose	1
+verse	numbers 22	-	prose	2
+verse	numbers 22:1-6	-	prose	1
+verse	numbers 22:21-35	-	prose	1
+verse	numbers 22:36-24	-	prose	1
+verse	numbers 22:5	-	prose	1
+verse	numbers 22:7-20	-	prose	1
+verse	numbers 24:17	-	prose	1
+verse	numbers 25	-	prose	1
+verse	numbers 26:20	-	prose	1
+verse	numbers 26:20-21	-	prose	1
+verse	numbers 27:18-23	-	prose	1
+verse	numbers 2:3	-	prose	1
+verse	numbers 31:16	-	prose	1
+verse	numbers 31:8	-	prose	1
+verse	numbers 33:38-39	-	prose	1
+verse	numbers 35:1-8	-	prose	1
+verse	numbers 3:5-10	-	prose	1
+verse	numbers 4	-	prose	1
+verse	numbers 6:24	-	prose	1
+verse	numbers 7:12-17	-	prose	1
+verse	numbers 9:1-5	-	prose	1
+verse	obadiah 1:10-14	-	prose	1
+verse	philemon 1:1-7	-	prose	1
+verse	philemon 1:10-13	-	prose	1
+verse	philemon 1:14-19	-	prose	1
+verse	philemon 1:24	-	prose	1
+verse	philemon 1:8-21	-	prose	1
+verse	philemon 24	-	prose	2
+verse	philemon 9	-	prose	1
+verse	philippians 1:1	-	prose	1
+verse	philippians 2:20-22	-	prose	1
+verse	philippians 2:25	-	prose	1
+verse	philippians 2:25-30	-	prose	1
+verse	philippians 2:27	-	prose	1
+verse	philippians 2:8-11	-	prose	1
+verse	philippians 2:9-11	-	prose	1
+verse	philippians 3:5	-	prose	2
+verse	philippians 4:22	-	prose	1
+verse	proverbs 16:33	-	prose	1
+verse	proverbs 8:22	-	prose	1
+verse	psalms 1	-	prose	2
+verse	psalms 154	-	prose	1
+verse	psalms 2	-	prose	1
+verse	psalms 90	-	prose	1
+verse	revelation 12:12	-	prose	1
+verse	revelation 12:7-9	-	prose	2
+verse	revelation 12:9	-	prose	1
+verse	revelation 16:16	-	prose	1
+verse	revelation 1:7	-	prose	1
+verse	revelation 1:9	-	prose	2
+verse	revelation 1:9-11	-	prose	1
+verse	revelation 20:1-3	-	prose	1
+verse	revelation 20:10	-	prose	1
+verse	revelation 20:13-14	-	prose	1
+verse	revelation 21:3	-	prose	1
+verse	revelation 22:17	-	prose	1
+verse	revelation 22:8-9	-	prose	1
+verse	revelation 2:14	-	prose	1
+verse	revelation 2:7	-	prose	1
+verse	revelation 2:8-11	-	prose	1
+verse	revelation 3	-	prose	1
+verse	revelation 3:1-6	-	prose	1
+verse	revelation 4:8	-	prose	1
+verse	romans 10:9	-	prose	1
+verse	romans 11:1	-	prose	1
+verse	romans 11:11	-	prose	1
+verse	romans 11:13	-	prose	1
+verse	romans 11:25-26	-	prose	1
+verse	romans 11:25-29	-	prose	1
+verse	romans 16:1-2	-	prose	1
+verse	romans 16:13	-	prose	1
+verse	romans 16:23	-	prose	4
+verse	romans 16:3	-	prose	1
+verse	romans 16:3-4	-	prose	2
+verse	romans 16:5	-	prose	2
+verse	romans 16:7	-	prose	1
+verse	romans 1:16	-	prose	2
+verse	romans 1:17	-	prose	1
+verse	romans 1:3	-	prose	1
+verse	romans 1:4	-	prose	1
+verse	romans 3:20	-	prose	1
+verse	romans 3:28	-	prose	1
+verse	romans 5:12	-	prose	2
+verse	romans 5:12-19	-	prose	1
+verse	romans 5:8	-	prose	1
+verse	romans 6:23	-	prose	1
+verse	romans 6:4	-	prose	1
+verse	romans 8:14	-	prose	1
+verse	romans 8:15	-	prose	1
+verse	romans 9	-	prose	3
+verse	ruth 1:1-5	-	prose	2
+verse	ruth 1:16	-	prose	1
+verse	ruth 1:16-17	-	prose	1
+verse	ruth 1:20-21	-	prose	1
+verse	ruth 1:6-19	-	prose	1
+verse	ruth 2	-	prose	1
+verse	ruth 2:1	-	prose	1
+verse	ruth 2:1-3	-	prose	1
+verse	ruth 2:8-9	-	prose	1
+verse	ruth 3	-	prose	1
+verse	ruth 3:1-9	-	prose	1
+verse	ruth 3:10-13	-	prose	1
+verse	ruth 4:1-10	-	prose	1
+verse	ruth 4:12	-	prose	1
+verse	ruth 4:13	-	prose	1
+verse	ruth 4:13-17	-	prose	2
+verse	ruth 4:14-15	-	prose	1
+verse	ruth 4:14-17	-	prose	1
+verse	ruth 4:16-17	-	prose	1
+verse	ruth 4:17	-	prose	2
+verse	ruth 4:18-19	-	prose	1
+verse	ruth 4:18-22	-	prose	2
+verse	ruth 4:19	-	prose	1
+verse	ruth 4:19-20	-	prose	1
+verse	ruth 4:20-21	-	prose	1
+verse	ruth 4:20-22	-	prose	1
+verse	titus 1:12	-	prose	1
+verse	titus 1:5	-	prose	1
+verse	titus 3:13	-	prose	1
+verse	zechariah 3:1-5	-	prose	1
+verse	zechariah 4:1-14	-	prose	1
+verse	zephaniah 2:4-7	-	prose	1
