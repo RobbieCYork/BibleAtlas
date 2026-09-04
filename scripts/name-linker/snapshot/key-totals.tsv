@@ -498,9 +498,9 @@ person	constantine the great	constantine-the-great	prose	1
 person	cornelius	cornelius-the-centurion	panel	9
 person	cornelius	cornelius-the-centurion	prose	5
 person	cornelius	cornelius-the-centurion	reader	9
-person	counselor	holy-spirit	panel	12
-person	counselor	holy-spirit	prose	2
-person	counselor	holy-spirit	reader	12
+person	counselor	holy-spirit	panel	3
+person	counselor	holy-spirit	prose	1
+person	counselor	holy-spirit	reader	2
 person	crispus	crispus	panel	2
 person	crispus	crispus	reader	2
 person	daniel	daniel	panel	83
@@ -745,9 +745,9 @@ person	malchus	malchus	reader	1
 person	manasseh	manasseh-king-of-judah	panel	148
 person	manasseh	manasseh-king-of-judah	prose	12
 person	manasseh	manasseh-king-of-judah	reader	32
-person	mark	john-mark	panel	36
-person	mark	john-mark	prose	65
-person	mark	john-mark	reader	36
+person	mark	john-mark	panel	12
+person	mark	john-mark	prose	49
+person	mark	john-mark	reader	8
 person	martha	martha-of-bethany	panel	13
 person	martha	martha-of-bethany	prose	6
 person	martha	martha-of-bethany	reader	13
@@ -862,8 +862,8 @@ person	rachel	rachel	reader	48
 person	rahab	rahab	panel	14
 person	rahab	rahab	prose	9
 person	rahab	rahab	reader	8
-person	ram	ram-son-of-hezron	panel	101
-person	ram	ram-son-of-hezron	prose	6
+person	ram	ram-son-of-hezron	panel	9
+person	ram	ram-son-of-hezron	prose	2
 person	ram	ram-son-of-hezron	reader	8
 person	rebekah	rebekah	panel	31
 person	rebekah	rebekah	prose	9
@@ -959,13 +959,11 @@ person	thaddaeus	thaddaeus	panel	2
 person	thaddaeus	thaddaeus	reader	2
 person	the accuser	satan	panel	2
 person	the accuser	satan	prose	4
-person	the accuser	satan	reader	2
-person	the adversary	satan	panel	15
-person	the adversary	satan	reader	15
+person	the accuser	satan	reader	1
 person	the comforter	holy-spirit	panel	1
 person	the comforter	holy-spirit	reader	1
-person	the counselor	holy-spirit	panel	4
-person	the counselor	holy-spirit	reader	4
+person	the counselor	holy-spirit	panel	3
+person	the counselor	holy-spirit	reader	3
 person	the devil	satan	panel	34
 person	the devil	satan	prose	4
 person	the devil	satan	reader	34

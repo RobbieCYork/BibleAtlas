@@ -36,7 +36,6 @@ bookIntro.manuscripts|-|30d08a3938	66	Peter	simon-peter
 bookIntro.manuscripts|-|33f7381f73	122	Titus	titus
 bookIntro.manuscripts|-|35688bdfb6	49	Ruth	ruth
 bookIntro.manuscripts|-|36659d6048	0	Paul	paul-of-tarsus
-bookIntro.manuscripts|-|36659d6048	76	mark	john-mark
 bookIntro.manuscripts|-|3a8dece532	129	Paul	paul-of-tarsus
 bookIntro.manuscripts|-|3af3fbd854	102	Ezra	ezra
 bookIntro.manuscripts|-|3af3fbd854	156	Ezra	ezra
@@ -444,7 +443,6 @@ bookIntro.summary|-|94441c5879	288	Nicodemus	nicodemus
 bookIntro.summary|-|9506eee3f2	178	Moses	moses
 bookIntro.summary|-|98a5875431	92	Paul	paul-of-tarsus
 bookIntro.summary|-|98c5d51f3b	159	Paul	paul-of-tarsus
-bookIntro.summary|-|98c5d51f3b	326	mark	john-mark
 bookIntro.summary|-|992b64f5a1	136	Jesus	jesus-of-nazareth
 bookIntro.summary|-|992b64f5a1	90	Jesus	jesus-of-nazareth
 bookIntro.summary|-|99516c43d6	109	Jesus	jesus-of-nazareth
@@ -514,7 +512,6 @@ bookIntro.summary|-|c0f328f073	62	Abraham	abraham
 bookIntro.summary|-|c439ee3575	0	Titus	titus
 bookIntro.summary|-|c439ee3575	202	Paul	paul-of-tarsus
 bookIntro.summary|-|c487c0e29a	0	Nehemiah	nehemiah
-bookIntro.summary|-|c4cf12f2b9	132	ram	ram-son-of-hezron
 bookIntro.summary|-|c4cf12f2b9	73	Daniel	daniel
 bookIntro.summary|-|c4cf12f2b9	869	Jesus	jesus-of-nazareth
 bookIntro.summary|-|c74a8c3adc	257	Paul	paul-of-tarsus
@@ -734,7 +731,6 @@ location.archaeology.note|berea|594e863071	212	Paul	paul-of-tarsus
 location.archaeology.note|berea|594e863071	268	Paul	paul-of-tarsus
 location.archaeology.note|bethany|5f255cd7f2	321	Lazarus	lazarus-of-bethany
 location.archaeology.note|bethlehem|ff50993e30	210	Jesus	jesus-of-nazareth
-location.archaeology.note|bethphage|7f9a51cf52	434	mark	john-mark
 location.archaeology.note|cana|d4b8d7e474	372	Jesus	jesus-of-nazareth
 location.archaeology.note|capernaum|383f9c6795	220	Jesus	jesus-of-nazareth
 location.archaeology.note|capernaum|383f9c6795	498	Peter	simon-peter
@@ -751,7 +747,6 @@ location.archaeology.note|cyprus|f36d683586	96	Sergius Paulus	sergius-paulus
 location.archaeology.note|damascus|90ae9b1f85	365	Paul	paul-of-tarsus
 location.archaeology.note|damascus|90ae9b1f85	476	Paul	paul-of-tarsus
 location.archaeology.note|derbe|4ce47af970	59	Michael	michael-archangel
-location.archaeology.note|gadara|af78dab2b1	651	mark	john-mark
 location.archaeology.note|galilee|7b6714ff4d	338	Jesus	jesus-of-nazareth
 location.archaeology.note|galilee|7b6714ff4d	444	Peter	simon-peter
 location.archaeology.note|galilee|7b6714ff4d	454	Andrew	andrew-apostle
@@ -835,9 +830,6 @@ person.controversies|barnabas|e893a86f21	15	Paul	paul-of-tarsus
 person.controversies|barnabas|e893a86f21	42	John Mark	john-mark
 person.controversies|bernice|63b1446c1c	73	Titus	titus
 person.controversies|bernice|8cf4c7c6ac	49	Agrippa II	herod-agrippa-ii
-person.controversies|cain|27e64c69da	168	mark	john-mark
-person.controversies|cain|27e64c69da	304	mark	john-mark
-person.controversies|cain|27e64c69da	5	mark	john-mark
 person.controversies|david|d9f19f17a6	16	Bathsheba	bathsheba
 person.controversies|david|d9f19f17a6	180	Nathan	nathan-the-prophet
 person.controversies|david|d9f19f17a6	473	Saul	paul-of-tarsus
@@ -1031,7 +1023,6 @@ person.lifeStory|abraham|102d26205b	114	Sarah	sarah
 person.lifeStory|abraham|102d26205b	187	Sarah	sarah
 person.lifeStory|abraham|102d26205b	259	Isaac	isaac
 person.lifeStory|abraham|128e6f7f0e	266	Paul	paul-of-tarsus
-person.lifeStory|abraham|5a4c1d8ad3	181	ram	ram-son-of-hezron
 person.lifeStory|abraham|5a4c1d8ad3	277	Sarah	sarah
 person.lifeStory|abraham|5a4c1d8ad3	467	Isaac	isaac
 person.lifeStory|abraham|5a4c1d8ad3	72	Isaac	isaac
@@ -1278,7 +1269,6 @@ person.lifeStory|caiaphas|dea8d6c946	170	Pontius Pilate	pontius-pilate
 person.lifeStory|caiaphas|dea8d6c946	196	Pilate	pontius-pilate
 person.lifeStory|cain|3760c71f22	132	Abel	abel
 person.lifeStory|cain|3760c71f22	81	Abel	abel
-person.lifeStory|cain|85cdc6067f	130	mark	john-mark
 person.lifeStory|cain|85cdc6067f	324	Enoch	enoch
 person.lifeStory|cain|8a6404ba9c	131	Abel	abel
 person.lifeStory|cain|8a6404ba9c	30	Adam	adam
@@ -1290,7 +1280,6 @@ person.lifeStory|caleb|4d2149dd18	253	Moses	moses
 person.lifeStory|caleb|4d2149dd18	405	Joshua	joshua
 person.lifeStory|caleb|e4fd6f85d1	209	Joshua	joshua
 person.lifeStory|caleb|e4fd6f85d1	82	Moses	moses
-person.lifeStory|charles-spurgeon|30327e390c	258	mark	john-mark
 person.lifeStory|charles-wesley|4db037d091	6	John	john-the-baptist
 person.lifeStory|charles-wesley|52be6c0fd5	209	John	john-the-baptist
 person.lifeStory|charles-wesley|52be6c0fd5	69	John	john-the-baptist
@@ -1306,7 +1295,6 @@ person.lifeStory|cleopas|1e0d735d55	134	Jesus	jesus-of-nazareth
 person.lifeStory|cleopas|1e0d735d55	160	Jesus	jesus-of-nazareth
 person.lifeStory|cleopas|1e0d735d55	355	Jesus	jesus-of-nazareth
 person.lifeStory|cleopas|1e0d735d55	410	Jesus	jesus-of-nazareth
-person.lifeStory|constantine-the-great|2833aedef3	187	mark	john-mark
 person.lifeStory|cornelius-the-centurion|4c0d9e2aee	438	Simon Peter	simon-peter
 person.lifeStory|cornelius-the-centurion|539a87ff47	0	Peter	simon-peter
 person.lifeStory|cornelius-the-centurion|539a87ff47	229	Jesus	jesus-of-nazareth
@@ -1321,12 +1309,10 @@ person.lifeStory|crispus|2a39e1e0f7	106	Paul	paul-of-tarsus
 person.lifeStory|crispus|2a39e1e0f7	172	Luke	luke-evangelist
 person.lifeStory|crispus|2a39e1e0f7	277	Luke	luke-evangelist
 person.lifeStory|crispus|2a39e1e0f7	315	Paul	paul-of-tarsus
-person.lifeStory|daniel|060b0f2c4a	153	ram	ram-son-of-hezron
 person.lifeStory|daniel|1aaadda0c9	17	Jesus	jesus-of-nazareth
 person.lifeStory|daniel|1aaadda0c9	264	Jesus	jesus-of-nazareth
 person.lifeStory|daniel|cdf55f7bc9	188	Azariah	uzziah
 person.lifeStory|david|04ac042ff6	109	Nathan	nathan-the-prophet
-person.lifeStory|david|04ac042ff6	471	mark	john-mark
 person.lifeStory|david|09d3723198	187	Saul	paul-of-tarsus
 person.lifeStory|david|09d3723198	277	Saul	paul-of-tarsus
 person.lifeStory|david|09d3723198	33	Saul	paul-of-tarsus
@@ -1648,7 +1634,6 @@ person.lifeStory|isaac|5ddc6ece27	30	Sarah	sarah
 person.lifeStory|isaac|5ddc6ece27	41	Abraham	abraham
 person.lifeStory|isaac|5ddc6ece27	61	Sarah	sarah
 person.lifeStory|isaac|6152d3beba	236	Abraham	abraham
-person.lifeStory|isaac|6152d3beba	329	ram	ram-son-of-hezron
 person.lifeStory|isaac|6152d3beba	48	Abraham	abraham
 person.lifeStory|isaac|da6ea86e0b	117	Rebekah	rebekah
 person.lifeStory|isaac|da6ea86e0b	147	Jacob	jacob
@@ -1667,7 +1652,6 @@ person.lifeStory|isaiah|64d108250e	109	Hezekiah	hezekiah
 person.lifeStory|isaiah|64d108250e	83	Uzziah	uzziah
 person.lifeStory|isaiah|64d108250e	91	Jotham	jotham-king-of-judah
 person.lifeStory|isaiah|64d108250e	99	Ahaz	ahaz
-person.lifeStory|isaiah|716a6fea3f	19	counselor	holy-spirit
 person.lifeStory|isaiah|716a6fea3f	397	Jesus	jesus-of-nazareth
 person.lifeStory|isaiah|716a6fea3f	83	Ahaz	ahaz
 person.lifeStory|isaiah|80f3750839	255	Hezekiah	hezekiah
@@ -2876,7 +2860,6 @@ person.lifeStory|zechariah-father-of-john-baptist|c544ae9bc2	156	Elizabeth	eliza
 person.lifeStory|zechariah-father-of-john-baptist|c544ae9bc2	179	John	john-the-baptist
 person.lifeStory|zechariah-father-of-john-baptist|c544ae9bc2	256	John	john-the-baptist
 person.lifeStory|zechariah-father-of-john-baptist|c544ae9bc2	343	the Holy Spirit	holy-spirit
-person.lifeStory|zerah-son-of-judah|d9f0972955	142	mark	john-mark
 person.lifeStory|zerah-son-of-judah|d9f0972955	49	Perez	perez
 person.lifeStory|zerah-son-of-judah|d9f0972955	805	Asa	asa
 person.lifeStory|zerubbabel|2791651157	102	Zechariah	zechariah-father-of-john-baptist
@@ -3347,7 +3330,6 @@ topic.section|chester-beatty-papyri|c53f378519	91	Paul	paul-of-tarsus
 topic.section|code-of-hammurabi|0d5c5d6ea2	539	Jesus	jesus-of-nazareth
 topic.section|code-of-hammurabi|85f43700a7	125	Moses	moses
 topic.section|codex-sinaiticus|511f8c0648	201	Barnabas	barnabas
-topic.section|codex-sinaiticus|da0fc044b7	309	mark	john-mark
 topic.section|codex-sinaiticus|da0fc044b7	388	Mark	john-mark
 topic.section|codex-sinaiticus|da0fc044b7	70	Mark	john-mark
 topic.section|codex-vaticanus|2fabe61acc	281	James	james-son-of-zebedee
@@ -3393,7 +3375,6 @@ topic.section|egyptians|dda53a59e4	257	Joseph	joseph-son-of-jacob
 topic.section|egyptians|dda53a59e4	274	Mary	mary-mother-of-jesus
 topic.section|egyptians|dda53a59e4	294	Jesus	jesus-of-nazareth
 topic.section|egyptians|dda53a59e4	92	Abraham	abraham
-topic.section|enuma-elish|6c7fa08f8f	216	mark	john-mark
 topic.section|epic-of-gilgamesh|de015d5350	255	Abraham	abraham
 topic.section|gehenna|2ebd373e2c	911	Jesus	jesus-of-nazareth
 topic.section|gehenna|4c4c505230	0	Josiah	josiah
@@ -3523,7 +3504,6 @@ topic.section|passover|0bb46fba6b	684	John the Baptist	john-the-baptist
 topic.section|passover|0bb46fba6b	754	Jesus	jesus-of-nazareth
 topic.section|passover|1e4c6bcc4a	375	Hezekiah	hezekiah
 topic.section|passover|1e4c6bcc4a	422	Josiah	josiah
-topic.section|passover|1e4c6bcc4a	486	mark	john-mark
 topic.section|passover|1e4c6bcc4a	581	Samuel	samuel
 topic.section|passover|787b7adf16	0	Paul	paul-of-tarsus
 topic.section|passover|c647d8ce77	101	Moses	moses
@@ -3622,7 +3602,6 @@ topic.section|tel-dan-stele|836d35b34a	278	David	david
 topic.section|tel-dan-stele|836d35b34a	295	David	david
 topic.section|tel-dan-stele|836d35b34a	576	David	david
 topic.section|tel-dan-stele|836d35b34a	628	David	david
-topic.section|tel-dan-stele|836d35b34a	97	mark	john-mark
 topic.section|tel-dan-stele|9cf69ffa5f	323	David	david
 topic.section|tel-dan-stele|e74454778c	28	Philip	philip-the-apostle
 topic.section|the-temple|034dce22c7	0	David	david

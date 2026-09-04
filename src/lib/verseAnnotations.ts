@@ -307,6 +307,28 @@ const VERSE_NAME_OVERRIDES: Record<string, Record<string, Record<string, string 
   // "Ananias": ananias-and-sapphira (the best-known of the three) is the default owner of bare
   // "Ananias," but Acts 9/22 name a different Ananias — the Damascus disciple who restores Saul's
   // sight — and Acts 23-24 name a third, the high priest who prosecutes Paul.
+  // "Mark": the capitalisation test in CAPITALISED_ONLY below removes the 24 lowercase matches — the
+  // mark of the beast, "signs to mark seasons", "set a mark on the foreheads". Four capitalised ones
+  // survive it, and all four are the imperative verb rather than the evangelist. They are the only
+  // "Mark"s in Scripture that are not the man; the other eight (Acts 12:12 onward) are.
+  mark: {
+    "2 Samuel": { "13:28": null },   // "Mark now, when Amnon's heart is merry with wine"
+    Job: { "33:31": null },          // "Mark well, Job, and listen to me"
+    Psalms: { "37:37": null, "48:13": null }, // "Mark the perfect man"; "Mark well her bulwarks"
+  },
+  // "Counselor": lowercase matches are human royal advisers and are removed by capitalisation.
+  // 1 John 2:1 is capitalised and still wrong — the verse names the Counselor as "Jesus Christ, the
+  // righteous" on the same line, and the link says Holy Spirit. Suppressed rather than redirected:
+  // pointing it at Jesus would take the same position Isaiah 9:6 is flagged for, which is not ours
+  // to take. Isaiah 9:6 itself is left exactly as it is, pending that decision.
+  counselor: {
+    "1 John": { "2:1": null },
+  },
+  // "The accuser": see CAPITALISED_ONLY — the key is not flagged, because Revelation 12:10 is
+  // genuinely Satan. Job 31:35's accuser is the legal opponent in Job's imagined lawsuit.
+  "the accuser": {
+    Job: { "31:35": null },
+  },
   // "Nathan": the court prophet is the only Nathan with an entry, and until his name was registered
   // at all (see people.ts) he could not be linked from anywhere. Several other men share it. The
   // allowlist below keeps him to the books where he acts; these are the exceptions inside those
@@ -362,6 +384,40 @@ const BOOK_NAME_ALLOWLIST: Record<string, string[]> = {
   // handled verse by verse in VERSE_NAME_OVERRIDES above.
   nathan: ["2 Samuel", "1 Kings", "1 Chronicles", "2 Chronicles", "Psalms"],
 };
+
+/** Names that are also ordinary English words. The match is case-insensitive on purpose — it is what
+ * lets lowercase-in-translation phrases like "city of David" and "upper room" link — but that same
+ * insensitivity meant *the mark of the beast* pointed at Mark the Evangelist in six verses of
+ * Revelation, "let them be for signs to mark seasons" in Genesis 1:14, a king's *counselor* pointed
+ * at the Holy Spirit, and every sacrificial *ram* from Genesis 22 onward pointed at Ram son of
+ * Hezron. For the keys listed here, and only these, the match must also LOOK like a name.
+ *
+ * Unlike the book and verse tables above, this works on both rendering paths — it needs no context —
+ * so it is the first correction in this file that fixes our own articles as well as the Bible reader.
+ *
+ * Measured over the whole WEB (see scripts/name-linker): this removes 24 of the 28 wrong "mark"
+ * links, 10 of 11 wrong "counselor", all 15 "the adversary", and 92 wrong "ram" links on the
+ * article surface. The stragglers are capitalised and are handled verse by verse above.
+ *
+ * "the accuser" is deliberately NOT in this list. Both its occurrences are lowercase, and one of
+ * them — Revelation 12:10, "the accuser of our brothers... who accuses them before our God" — is
+ * genuinely Satan. Flagging the key would take that correct link out to fix the one wrong one, so
+ * Job 31:35 gets a per-verse entry instead. */
+const CAPITALISED_ONLY = new Set(["mark", "counselor", "the counselor", "the adversary", "ram"]);
+
+/** Does this match's capitalisation mark it as a name rather than the common word?
+ *
+ * A leading article carries no information — "The adversary" opening Lamentations 1:10 is
+ * capitalised by position, not because anyone is being named — so it is stripped before the test,
+ * and what is judged is the noun itself.
+ *
+ * Sentence position is deliberately NOT consulted beyond that. It is tempting to discount every
+ * capital that opens a sentence, but "Ram" opens both 1 Chronicles 2:10 and Matthew 1:4 and is the
+ * man in each, and "Mark" opens genuine sentences in our own articles. Doing so would trade a
+ * handful of fixes for a pile of real links. */
+function looksLikeAName(matched: string): boolean {
+  return /^[A-Z]/.test(matched.replace(/^(?:the|a|an)\s+/i, ""));
+}
 
 function escapeRegExp(s: string): string {
   return s.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
@@ -428,6 +484,11 @@ export function computeLinkAnnotations(
             annotations.push({ start, end, text: name, kind: ID_TO_KIND.get(verseId) ?? entry.kind, id: verseId });
           }
           // verseId === null means this exact mention is a different, unrepresented person — no link.
+        } else if (CAPITALISED_ONLY.has(nameLower) && !looksLikeAName(name)) {
+          // An ordinary English word, not the name it shares. No link. Checked AFTER the per-verse
+          // table on purpose: a verse override can still force a link on a lowercase match if some
+          // future translation ever needs one, and it is what suppresses the handful of capitalised
+          // stragglers this test cannot see (Psalm 37:37's "Mark the perfect man", 1 John 2:1).
         } else {
           const allowlist = BOOK_NAME_ALLOWLIST[nameLower];
           const suppressed = !!allowlist && !!book && !allowlist.includes(book);

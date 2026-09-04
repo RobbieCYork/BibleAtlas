@@ -62,30 +62,30 @@ export const CASES = [
   // ─────────────────────────────────────────────────────────────────────────────────────────
   // Batch 2 — ordinary English words read as names.
   // ─────────────────────────────────────────────────────────────────────────────────────────
-  { ref: "Revelation 13:17", surface: "mark", expect: null, status: "known-wrong",
+  { ref: "Revelation 13:17", surface: "mark", expect: null, status: "guard",
     why: "'the mark of the beast' is not Mark the Evangelist. Six such links across Revelation." },
-  { ref: "Revelation 14:9", surface: "mark", expect: null, status: "known-wrong",
+  { ref: "Revelation 14:9", surface: "mark", expect: null, status: "guard",
     why: "Mark of the beast." },
-  { ref: "Revelation 14:11", surface: "mark", expect: null, status: "known-wrong",
+  { ref: "Revelation 14:11", surface: "mark", expect: null, status: "guard",
     why: "Mark of the beast." },
-  { ref: "Revelation 16:2", surface: "mark", expect: null, status: "known-wrong",
+  { ref: "Revelation 16:2", surface: "mark", expect: null, status: "guard",
     why: "Mark of the beast." },
-  { ref: "Revelation 19:20", surface: "mark", expect: null, status: "known-wrong",
+  { ref: "Revelation 19:20", surface: "mark", expect: null, status: "guard",
     why: "Mark of the beast." },
-  { ref: "Revelation 20:4", surface: "mark", expect: null, status: "known-wrong",
+  { ref: "Revelation 20:4", surface: "mark", expect: null, status: "guard",
     why: "Mark of the beast." },
-  { ref: "Genesis 1:14", surface: "mark", expect: null, status: "known-wrong",
+  { ref: "Genesis 1:14", surface: "mark", expect: null, status: "guard",
     why: "'let them be for signs to mark seasons' — the verb." },
-  { ref: "Ezekiel 9:4", surface: "mark", expect: null, status: "known-wrong",
+  { ref: "Ezekiel 9:4", surface: "mark", expect: null, status: "guard",
     why: "'set a mark on the foreheads' — the noun, not the man." },
-  { ref: "Psalms 37:37", surface: "Mark", expect: null, status: "known-wrong",
+  { ref: "Psalms 37:37", surface: "Mark", expect: null, status: "guard",
     why: "'Mark the perfect man' — the imperative verb, capitalised only because it opens the verse. " +
          "Capitalisation alone cannot catch this one; it needs a per-verse suppression." },
-  { ref: "2 Samuel 13:28", surface: "Mark", expect: null, status: "known-wrong",
+  { ref: "2 Samuel 13:28", surface: "Mark", expect: null, status: "guard",
     why: "'Mark now, when Amnon's heart is merry' — the imperative verb." },
-  { ref: "Job 33:31", surface: "Mark", expect: null, status: "known-wrong",
+  { ref: "Job 33:31", surface: "Mark", expect: null, status: "guard",
     why: "'Mark well, Job, and listen to me' — the imperative verb." },
-  { ref: "Psalms 48:13", surface: "Mark", expect: null, status: "known-wrong",
+  { ref: "Psalms 48:13", surface: "Mark", expect: null, status: "guard",
     why: "'Mark well her bulwarks' — the imperative verb." },
   { ref: "Acts 12:12", surface: "Mark", expect: "john-mark", status: "guard",
     why: "'John who was called Mark' — the real one. Eight such links must survive batch 2." },
@@ -94,18 +94,18 @@ export const CASES = [
   { ref: "1 Peter 5:13", surface: "Mark", expect: "john-mark", status: "guard",
     why: "'so does Mark, my son' — the real one." },
 
-  { ref: "1 John 2:1", surface: "Counselor", expect: null, status: "known-wrong",
+  { ref: "1 John 2:1", surface: "Counselor", expect: null, status: "guard",
     why: "The verse names the Counselor as 'Jesus Christ, the righteous' on the same line, and the " +
          "link says Holy Spirit. Capitalised here, so only a per-verse entry can reach it. " +
          "Suppressed rather than redirected: pointing it at Jesus would take the same position " +
          "Isaiah 9:6 is flagged for, and that is Robbie's to take." },
-  { ref: "Isaiah 3:3", surface: "the counselor", expect: null, status: "known-wrong",
+  { ref: "Isaiah 3:3", surface: "the counselor", expect: null, status: "guard",
     why: "A civic official in a list of them ('the captain of fifty, the honorable man, the counselor')." },
-  { ref: "2 Samuel 15:12", surface: "counselor", expect: null, status: "known-wrong",
+  { ref: "2 Samuel 15:12", surface: "counselor", expect: null, status: "guard",
     why: "'Ahithophel the Gilonite, David's counselor' — a human royal adviser." },
-  { ref: "1 Chronicles 27:33", surface: "counselor", expect: null, status: "known-wrong",
+  { ref: "1 Chronicles 27:33", surface: "counselor", expect: null, status: "guard",
     why: "'Ahithophel was the king's counselor'." },
-  { ref: "Romans 11:34", surface: "counselor", expect: null, status: "known-wrong",
+  { ref: "Romans 11:34", surface: "counselor", expect: null, status: "guard",
     why: "'who has been his counselor?' — the common noun." },
   { ref: "John 14:16", surface: "Counselor", expect: "holy-spirit", status: "guard",
     why: "'another Counselor... with you forever' — the Paraclete. Four such links must survive." },
@@ -113,26 +113,30 @@ export const CASES = [
     why: "'the Counselor, the Holy Spirit' — named in the verse itself. Note this matches under the " +
          "separate registered key 'the Counselor', which any fix must cover as well as 'Counselor'." },
 
-  { ref: "Psalms 44:10", surface: "the adversary", expect: null, status: "known-wrong",
+  { ref: "John 15:26", surface: "the Counselor", expect: "holy-spirit", status: "guard",
+    why: "The leading article is stripped before the capitalisation test, so what gets judged is " +
+         "'Counselor' — capitalised, therefore a name. This is the case that proves stripping the " +
+         "article does not throw the Paraclete out with the king's advisers." },
+  { ref: "Psalms 44:10", surface: "the adversary", expect: null, status: "guard",
     why: "A human enemy in battle. All 15 occurrences of this key in the WEB are the ordinary word." },
-  { ref: "Lamentations 1:10", surface: "The adversary", expect: null, status: "known-wrong",
+  { ref: "Lamentations 1:10", surface: "The adversary", expect: null, status: "guard",
     why: "Babylon, plundering the temple. Capitalised only because it opens the verse — which is " +
          "why the capitalisation test has to look past a leading 'The'." },
-  { ref: "1 Timothy 5:14", surface: "the adversary", expect: null, status: "known-wrong",
+  { ref: "1 Timothy 5:14", surface: "the adversary", expect: null, status: "guard",
     why: "Read by many as a human slanderer rather than Satan; commentators divide. No link is the " +
          "neutral outcome and does not commit the app either way." },
 
-  { ref: "Job 31:35", surface: "the accuser", expect: null, status: "known-wrong",
+  { ref: "Job 31:35", surface: "the accuser", expect: null, status: "guard",
     why: "Job's legal opponent in his imagined lawsuit, not Satan." },
   { ref: "Revelation 12:10", surface: "the accuser", expect: "satan", status: "guard",
     why: "'the accuser of our brothers... who accuses them before our God' — genuinely Satan. This " +
          "is why 'the accuser' must NOT get the capitalisation flag: both its occurrences are " +
          "lowercase, and the flag would take this correct link out along with Job 31:35." },
 
-  { ref: "Genesis 22:13", surface: "ram", occurrence: 1, path: "panel", expect: null, status: "known-wrong",
+  { ref: "Genesis 22:13", surface: "ram", occurrence: 1, path: "panel", expect: null, status: "guard",
     why: "Abraham's sacrificial ram, rendered as Ram son of Hezron on every panel that shows this " +
          "verse. 92 of the 101 'ram's in Scripture are the animal." },
-  { ref: "Numbers 23:2", surface: "ram", path: "panel", expect: null, status: "known-wrong",
+  { ref: "Numbers 23:2", surface: "ram", path: "panel", expect: null, status: "guard",
     why: "Balaam's sacrifice — the animal." },
   { ref: "Ruth 4:19", surface: "Ram", occurrence: 1, expect: "ram-son-of-hezron", status: "guard",
     why: "The genealogy. The real one." },
