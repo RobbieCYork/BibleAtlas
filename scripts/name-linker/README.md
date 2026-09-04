@@ -64,6 +64,14 @@ fixed half the app.
     node scripts/name-linker/census.mjs "the adversary" --prose    …including the prose corpus
     node scripts/name-linker/inventory.mjs                    what the linker knows; what it
                                                               registers but can never reach
+    node scripts/name-linker/tally.mjs <old.tsv> <new.tsv>    counts what moved between two
+                                                              snapshots, per rendering path
+
+`tally.mjs` is how you turn "this feels like a big change" into a number you can put in a commit
+message. Get the old snapshot with `git show <sha>:scripts/name-linker/snapshot/bible-links.tsv >
+/tmp/old.tsv`. It follows an occurrence by reference and offset, so a link that merely grew to cover
+a longer phrase — "James" becoming "James the son of Alphaeus" — is counted as repointed, not as one
+link lost and another gained.
 
 `census.mjs` exists because the alternative — reasoning about how a name "probably" appears in
 Scripture — is how wrong counts get into reports. It has already corrected this project's own
