@@ -2,7 +2,7 @@
 
 `src/lib/verseAnnotations.ts` decides which words in the Bible text — and in every article the app
 has ever written — become links to a person, place or topic. It renders **9,704 person-links across
-Scripture and 5,837 across the app's own prose**. Until this directory existed it had no tests at
+Scripture and 5,783 across the app's own prose**. Until this directory existed it had no tests at
 all, and a one-line data edit could move hundreds of them with nobody noticing.
 
     npm run test:linker
@@ -33,7 +33,7 @@ verse, says what it should resolve to, and says why in a sentence. Each carries 
 | file | rows | what it holds |
 |---|---:|---|
 | `bible-links.tsv` | 9,704 | every person-link in all 31,098 WEB verses, with the id each rendering path gives it |
-| `prose-links.tsv` | 5,837 | every person-link in every authored prose block the app puts through `LinkedVerseText` |
+| `prose-links.tsv` | 5,783 | every person-link in every authored prose block the app puts through `LinkedVerseText` |
 | `key-totals.tsv` | 3,488 | a tally covering **every** kind — location, POI, topic, timeline, verse reference — one row per (kind, matched text, id, path) |
 
 The first two are row-level, so a diff names the verse or the block. `key-totals.tsv` exists because
@@ -83,18 +83,31 @@ snapshot.
 ## The two rendering paths, and why every row has both
 
     reader   VerseText.tsx        passes book, chapter and verse.  All corrections fire.
-    panel    LinkedVerseText.tsx  passes NOTHING.                  No correction fires.
+    panel    LinkedVerseText.tsx  passes only excludeId.           Only OWNER_NAME_OVERRIDES fires.
 
 `LinkedVerseText` is what PersonPanel, LocationPanel, PoiPanel, TopicPanel, BookIntroView,
 TimelineEventPanel and MyProfileView render with. Every book override, verse override and
-suppression in `verseAnnotations.ts` is invisible there. **1,170 links across 1,020 verses resolve
-differently between the two paths**, and all 5,837 prose links run with zero disambiguation. A fix
-that only moves the `reader` column has fixed half the app.
+suppression in `verseAnnotations.ts` is invisible there. **827 links across 736 verses resolve
+differently between the two paths**, and all but a handful of the 5,783 prose links run with no
+disambiguation at all — `OWNER_NAME_OVERRIDES` (below) is the only correction that reaches them. A
+fix that only moves the `reader` column has fixed half the app.
 
 **Say which surface a number is measured on, every time.** They differ by an order of magnitude, and
 describing a panel-path figure as if it were the article surface is the mistake this work has made
 most often — "92 wrong `ram` links" is a panel-over-Scripture number; the reader path never had them
 (a book allowlist already handled it) and the article surface had 9, of which 7 went.
+
+### The one correction the panel path does have
+
+`LinkedVerseText` passes no book, but it does pass `excludeId` — the id of the record whose page the
+text is on. `PersonPanel` passes `person.id`, `TimelineEventPanel` passes `event.id`, and so on;
+`BookIntroView` is the exception, because a book intro has no record id to pass. That id is context,
+and `OWNER_NAME_OVERRIDES` in `verseAnnotations.ts` reads it: lowercase bare name -> owning record
+id -> target person id, or `null` for no link.
+
+It is the only lever the app's own articles have. It is also coarse — one answer per record, so an
+article that legitimately names both bearers of a name needs the longer-wording trick instead (Acts
+1:13, Acts 10:32). A named case can pin it with `path: "panel"` plus `owner: "<record id>"`.
 
 ## Tools
 

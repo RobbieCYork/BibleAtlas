@@ -3,12 +3,18 @@
 //
 // Every case names one occurrence of one name in one verse, on one rendering path:
 //   path: "reader" (default) — what VerseText.tsx renders; book, chapter and verse are passed.
-//   path: "panel"            — what LinkedVerseText.tsx renders; NO context is passed, so none of
-//                              the book/verse corrections fire. Used by PersonPanel, LocationPanel,
-//                              PoiPanel, TopicPanel, BookIntroView, TimelineEventPanel and
-//                              MyProfileView. (This list has been wrong before — it omitted both of
-//                              the last two, and TimelineEventPanel's absence from corpus.mjs left
-//                              2,151 links unmeasured. Grep for LinkedVerseText before trusting it.)
+//   path: "panel"            — what LinkedVerseText.tsx renders; NO book, chapter or verse is
+//                              passed, so none of those corrections fire. Used by PersonPanel,
+//                              LocationPanel, PoiPanel, TopicPanel, BookIntroView,
+//                              TimelineEventPanel and MyProfileView. (This list has been wrong
+//                              before — it omitted both of the last two, and TimelineEventPanel's
+//                              absence from corpus.mjs left 2,151 links unmeasured. Grep for
+//                              LinkedVerseText before trusting it.)
+//   owner: "<record id>"     — only with path: "panel". The id the panel passes as excludeId: the
+//                              record whose page the text sits on. Every detail panel passes one
+//                              (BookIntroView is the exception — a book intro has no record id),
+//                              and it is the sole context OWNER_NAME_OVERRIDES has to work with.
+//                              Omit it and the case runs with no context at all, as before.
 //
 // `status` is the part that makes this net honest:
 //   "guard"       — this resolution is CORRECT. If it changes, something has regressed.
@@ -39,9 +45,50 @@ export const CASES = [
     why: "Acts 8's Philip is the evangelist, one of the seven — VERSE_NAME_OVERRIDES." },
   { ref: "1 Samuel 9:2", surface: "Saul", expect: "saul-king-of-israel", status: "guard",
     why: "Every Saul in 1 Samuel is the king — BOOK_NAME_OVERRIDES." },
-  { ref: "1 Samuel 9:2", surface: "Saul", path: "panel", expect: "saul-king-of-israel", status: "known-wrong",
-    why: "The panel path passes no book, so all 389 Samuel/Chronicles 'Saul's resolve to Paul of " +
-         "Tarsus. The prose surface is batch 7 — recorded here so the scale of it stays visible." },
+  { ref: "1 Samuel 9:2", surface: "Saul", path: "panel", expect: "saul-king-of-israel", status: "guard",
+    why: "Fixed by moving the global owner of bare 'Saul' from Paul of Tarsus to the king " +
+         "(SAUL_DEFAULT in verseAnnotations.ts). Was known-wrong: the panel path passes no book, " +
+         "so all 416 Scripture 'Saul's — and all 126 in our own prose — went to Paul." },
+  { ref: "Acts 9:4", surface: "Saul", expect: "paul-of-tarsus", status: "guard",
+    why: "Acts is the one book where a bare 'Saul' is Paul — BOOK_NAME_OVERRIDES, the direction " +
+         "of which reversed when the global default moved to the king." },
+  { ref: "Acts 13:21", surface: "Saul", expect: "saul-king-of-israel", expectSurface: "Saul the son of Kish",
+    status: "guard",
+    why: "The one 'Saul' in Acts who is the king, inside Paul's own sermon. It survives the Acts " +
+         "book override by being matched as the longer registered wording, not as a bare 'Saul'." },
+  { ref: "Psalms 18:1", surface: "Saul", expect: "saul-king-of-israel", status: "guard",
+    why: "The five 'Saul's in the Psalm superscriptions are the king. They were Paul's until the " +
+         "default moved: the old book override listed 1-2 Samuel and 1 Chronicles and not Psalms." },
+  { ref: "Acts 9:17", surface: "Saul", path: "panel", owner: "ananias-of-damascus",
+    expect: "paul-of-tarsus", status: "guard",
+    why: "Acts 9 rendered in Ananias of Damascus's own verse list — no book, so only " +
+         "OWNER_NAME_OVERRIDES can say this 'Saul' is Paul. The article surface depends on the " +
+         "same entry for the eight bare 'Saul's in his life story." },
+  { ref: "Acts 9:1", surface: "Saul", path: "panel", owner: "paul-of-tarsus", expect: null, status: "guard",
+    why: "On Paul's own page the mention is himself, so it is not a link at all. The owner entry " +
+         "maps the name back to paul-of-tarsus precisely so the self-link exclusion catches it." },
+  { ref: "2 Kings 18:18", surface: "Eliakim", expect: null, status: "guard",
+    why: "Hezekiah's palace steward, Eliakim son of Hilkiah — not the Eliakim of Matthew's " +
+         "genealogy, who is the only entry. 13 of the 15 'Eliakim's in Scripture are other men." },
+  { ref: "Matthew 1:13", surface: "Eliakim", expect: "eliakim-son-of-abiud", status: "guard",
+    why: "Matthew 1:13 is the allowlisted book, and these two are the genuine mentions." },
+  { ref: "Numbers 1:10", surface: "Gamaliel", expect: null, status: "guard",
+    why: "Gamaliel the son of Pedahzur, prince of Manasseh — no entry. Five such in Numbers." },
+  { ref: "Acts 5:34", surface: "Gamaliel", expect: "gamaliel", status: "guard",
+    why: "Paul's teacher, who appears only in Acts 5:34 and 22:3." },
+  // The other three keys of the same shape as "Saul" — an Old Testament figure and a New Testament
+  // one sharing a bare name, with the app's entry on the NT side. BOOK_NAME_ALLOWLIST already held
+  // the reader path; these assert the article/panel surface, which had nothing. Each verse below is
+  // inside a range that owner's own panel actually renders.
+  { ref: "Genesis 29:34", surface: "Levi", path: "panel", owner: "leah", expect: null, status: "guard",
+    why: "Leah naming her third son. The only 'Levi' entry is Matthew/Levi the apostle; the " +
+         "patriarch has none, so no link — the allowlist's own answer, reached by owner." },
+  { ref: "Genesis 49:5", surface: "Simeon", path: "panel", owner: "jacob", expect: null, status: "guard",
+    why: "'Simeon and Levi are brothers' in Jacob's blessing — sons of Jacob, not Simeon at the " +
+         "temple, and neither has an entry." },
+  { ref: "Numbers 20:26", surface: "Eleazar", path: "panel", owner: "aaron", expect: null, status: "guard",
+    why: "Aaron's son and successor as high priest, on Aaron's own page — not the Eleazar of " +
+         "Matthew's genealogy, who is the only entry." },
   { ref: "Genesis 36:8", surface: "Edom", expect: "esau", status: "guard",
     why: "'Esau is Edom' — Genesis is the one book where Edom is the man, not the nation." },
   { ref: "Acts 9:10", surface: "Ananias", expect: "ananias-of-damascus", status: "guard",

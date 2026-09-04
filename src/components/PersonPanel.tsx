@@ -56,6 +56,11 @@ export default function PersonPanel({
   if (!person) return null;
 
   const lifespanBadge = person.lifespanCertainty ? LIFESPAN_CERTAINTY_BADGES[person.lifespanCertainty] : null;
+  // `kind` is optional and absent means "biblical" — every person carried over from the original
+  // Atlas dataset has no `kind` at all. Asking whether the figure IS biblical rather than which
+  // non-biblical kind they are keeps "church" and "world" (and anything added later) on the same
+  // side of the one distinction the panel actually makes.
+  const isBiblical = (person.kind ?? "biblical") === "biblical";
 
   return (
     <div className={`location-panel person-panel ${expand ? "panel-expand" : ""}`} style={expand ? undefined : style}>
@@ -197,11 +202,14 @@ export default function PersonPanel({
         )}
       </div>
 
-      {/* For biblical figures the question is what survives *outside* the Bible; for church-history
-          figures (kind: "church") there is no biblical record to be "extra" to, so the same section
-          is titled plainly. */}
+      {/* For biblical figures the question is what survives *outside* the Bible; for anyone not
+          named in Scripture — a church-history figure (kind: "church"), or a secular one from the
+          surrounding world (kind: "world") — there is no biblical record to be "extra" to, so the
+          same section is titled plainly. The test is deliberately "is this figure biblical", not
+          "is this figure church": `kind` is optional and absent means biblical, and any further
+          non-biblical kind should fall on the plain side without another edit here. */}
       <div className="extra-biblical-section">
-        <h4>{person.kind === "church" ? "Historical Evidence" : "Extra-Biblical Evidence"}</h4>
+        <h4>{isBiblical ? "Extra-Biblical Evidence" : "Historical Evidence"}</h4>
         {person.extraBiblicalReferences && person.extraBiblicalReferences.length > 0 ? (
           <ul className="extra-biblical-list">
             {person.extraBiblicalReferences.map((ref, i) => (
@@ -245,9 +253,9 @@ export default function PersonPanel({
         ) : (
           <p className="extra-biblical-none">
             {person.noExtraBiblicalRecordNote ??
-              (person.kind === "church"
-                ? "No detailed contemporary record of this person survives — what we know comes from later accounts."
-                : "No known extra-biblical historical record of this person survives — what we know comes from the Bible text alone.")}
+              (isBiblical
+                ? "No known extra-biblical historical record of this person survives — what we know comes from the Bible text alone."
+                : "No detailed contemporary record of this person survives — what we know comes from later accounts.")}
           </p>
         )}
       </div>

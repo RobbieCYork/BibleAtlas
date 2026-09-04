@@ -544,11 +544,11 @@ person	drusilla	drusilla	prose	2
 person	drusilla	drusilla	reader	1
 person	edom	esau	reader	11
 person	eleazar	eleazar-in-jesus-genealogy	panel	74
-person	eleazar	eleazar-in-jesus-genealogy	prose	11
+person	eleazar	eleazar-in-jesus-genealogy	prose	2
 person	eleazar	eleazar-in-jesus-genealogy	reader	2
 person	eliakim	eliakim-son-of-abiud	panel	15
 person	eliakim	eliakim-son-of-abiud	prose	1
-person	eliakim	eliakim-son-of-abiud	reader	15
+person	eliakim	eliakim-son-of-abiud	reader	2
 person	elijah	elijah	panel	101
 person	elijah	elijah	prose	76
 person	elijah	elijah	reader	101
@@ -600,7 +600,7 @@ person	gallio	gallio	prose	16
 person	gallio	gallio	reader	3
 person	gamaliel	gamaliel	panel	7
 person	gamaliel	gamaliel	prose	8
-person	gamaliel	gamaliel	reader	7
+person	gamaliel	gamaliel	reader	2
 person	george whitefield	george-whitefield	prose	2
 person	gideon	gideon	panel	40
 person	gideon	gideon	prose	14
@@ -768,7 +768,6 @@ person	leah	leah	reader	34
 person	lebbaeus	thaddaeus	panel	1
 person	lebbaeus	thaddaeus	reader	1
 person	levi	matthew-levi	panel	74
-person	levi	matthew-levi	prose	13
 person	levi	matthew-levi	reader	1
 person	luke	luke-evangelist	panel	3
 person	luke	luke-evangelist	prose	132
@@ -940,10 +939,11 @@ person	sarai	sarah	reader	17
 person	satan	satan	panel	55
 person	satan	satan	prose	15
 person	satan	satan	reader	55
-person	saul	paul-of-tarsus	panel	416
-person	saul	paul-of-tarsus	prose	126
-person	saul	paul-of-tarsus	reader	30
-person	saul	saul-king-of-israel	reader	386
+person	saul	paul-of-tarsus	prose	26
+person	saul	paul-of-tarsus	reader	25
+person	saul	saul-king-of-israel	panel	416
+person	saul	saul-king-of-israel	prose	80
+person	saul	saul-king-of-israel	reader	391
 person	saul of tarsus	paul-of-tarsus	prose	6
 person	saul the son of kish	saul-king-of-israel	panel	4
 person	saul the son of kish	saul-king-of-israel	reader	4
@@ -958,7 +958,7 @@ person	silas	silas	reader	12
 person	silvanus	silas	panel	4
 person	silvanus	silas	reader	4
 person	simeon	simeon-at-the-temple	panel	49
-person	simeon	simeon-at-the-temple	prose	10
+person	simeon	simeon-at-the-temple	prose	2
 person	simeon	simeon-at-the-temple	reader	3
 person	simon	simon-magus	reader	4
 person	simon	simon-of-cyrene	reader	1
@@ -1062,7 +1062,7 @@ person	zacchaeus	zacchaeus	reader	3
 person	zacharias	zechariah-father-of-john-baptist	panel	9
 person	zacharias	zechariah-father-of-john-baptist	reader	9
 person	zadok	zadok-in-jesus-genealogy	panel	55
-person	zadok	zadok-in-jesus-genealogy	prose	5
+person	zadok	zadok-in-jesus-genealogy	prose	2
 person	zadok	zadok-in-jesus-genealogy	reader	2
 person	zechariah	zechariah-father-of-john-baptist	panel	43
 person	zechariah	zechariah-father-of-john-baptist	prose	32

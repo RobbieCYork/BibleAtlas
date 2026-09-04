@@ -11,7 +11,7 @@
 // cases in cases.mjs, then regenerates the whole-corpus snapshot (all 31,098 WEB verses and every
 // authored prose block, on both rendering paths) and diffs it against the committed baseline.
 //
-// The snapshot is the part that matters. 9,800 Bible links and 3,673 prose links are far more than
+// The snapshot is the part that matters. 9,704 Bible links and 5,783 prose links are far more than
 // anyone has read; the diff is what tells you that a one-line data edit moved 400 of them. `--update`
 // is how you accept a deliberate move — the snapshot diff then lands in the same commit as the
 // change that caused it, and a reviewer can read every moved row.
@@ -122,7 +122,8 @@ for (const c of CASES) {
   const { book, chapter, verse } = parseRef(c.ref);
   const v = byRef.get(c.ref);
   const n = c.occurrence ?? 1;
-  const label = `${c.ref} ${JSON.stringify(c.surface)}${n > 1 ? `#${n}` : ""} [${c.path ?? "reader"}]`;
+  const label = `${c.ref} ${JSON.stringify(c.surface)}${n > 1 ? `#${n}` : ""} ` +
+    `[${c.path ?? "reader"}${c.owner ? ` on ${c.owner}` : ""}]`;
   if (!v) { failures.push(`${label} — verse is not in the corpus`); fail++; continue; }
 
   const text = stripMarkup(v.text);
@@ -133,7 +134,11 @@ for (const c of CASES) {
     fail++; continue;
   }
 
-  const ctx = c.path === "panel" ? [] : [undefined, book, chapter, verse];
+  // `owner` is the id a detail panel passes as excludeId — the record whose page the text is on.
+  // It is the only context LinkedVerseText has (no book, no chapter, no verse), and it is what
+  // OWNER_NAME_OVERRIDES reads, so a panel case can pin it. Absent, panel cases pass nothing, as
+  // they always have.
+  const ctx = c.path === "panel" ? [c.owner] : [undefined, book, chapter, verse];
   // The annotation COVERING the occurrence, not the one starting on it: a longer registered key
   // ("the Counselor", "James the son of Alphaeus") legitimately begins earlier and swallows it.
   const ann = computeLinkAnnotations(text, ...ctx)

@@ -3605,14 +3605,20 @@ export const people: Person[] = [
     id: "saul-king-of-israel",
     name: "Saul (King of Israel)",
     pronunciation: "SAWL",
-    // The bare name "Saul" belongs to Paul of Tarsus globally and is recovered for the king by book
-    // in 1-2 Samuel and 1 Chronicles. That leaves Acts 13:21 — "God gave to them Saul the son of
-    // Kish" — pointing Israel's first king at Paul, inside Paul's own sermon at Pisidian Antioch.
-    // Registering that exact wording resolves it without touching the bare name anywhere.
-    // matchNames, NOT alternateNames: this is a match-only wording. In alternateNames the panel
-    // printed "Also called: Saul the son of Kish" to readers, which is a phrase from one verse of
-    // Acts, not a name anybody calls him.
-    matchNames: ["Saul the son of Kish"],
+    // The bare name "Saul" is now HIS globally, not Paul's — see the SAUL_DEFAULT block in
+    // verseAnnotations.ts for the measurement that settled it (391 of the 416 bare "Saul"s in
+    // Scripture and 100 of the 126 in the app's own prose are this man). Paul keeps "Saul" in his
+    // `alternateNames` because it is true and reader-facing copy; what changed is only which entry
+    // the linker's lookup map hands the bare key to.
+    //
+    // "Saul the son of Kish" stays registered as its own longer wording. It is what resolves
+    // Acts 13:21 — "God gave to them Saul the son of Kish", Israel's first king named inside Paul's
+    // own sermon at Pisidian Antioch — without the Acts book override (which now sends bare "Saul"
+    // to Paul) ever seeing it. matchNames, NOT alternateNames, for both: in alternateNames the
+    // panel printed "Also called: Saul the son of Kish" to readers, which is a phrase from one
+    // verse of Acts, not a name anybody calls him — and "Also called: Saul" is noise next to a
+    // display name that already reads "Saul (King of Israel)".
+    matchNames: ["Saul", "Saul the son of Kish"],
     diedYear: -1010,
     lifespanLabel: "d. 1010 BC (reigned c. 1050-1010 BC)",
     lifespanCertainty: "disputed",
@@ -5410,11 +5416,12 @@ export const people: Person[] = [
     diedYear: -30,
     lifespanLabel: "c. 83-30 BC",
     lifespanCertainty: "firm",
-    // Not named in Scripture. `kind: "church"` is the schema's only non-biblical option and is what
-    // gives him the "Historical Evidence" heading rather than "Extra-Biblical Evidence" — the right
-    // rendering, even though the field's name fits him poorly. Flagged for Bob: the schema has no
-    // "world" kind, and the timeline already has a "world" category.
-    kind: "church",
+    // Not named in Scripture and not a church-history figure: a Roman triumvir who touches the
+    // biblical story from outside it. He was `kind: "church"` because that was the schema's only
+    // non-biblical option; "world" now exists for exactly this, following the timeline's own
+    // category of the same name. The rendering is unchanged — PersonPanel asks whether a figure is
+    // biblical, not whether they are church — so he keeps the "Historical Evidence" heading.
+    kind: "world",
     tier: "notable",
     role: "Roman Triumvir",
     summary:

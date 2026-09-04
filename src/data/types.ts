@@ -150,8 +150,17 @@ export interface Person {
    *   the Bible panel, and the evidence section asks what survives *outside* the Bible.
    * - "church": a post-apostolic church-history figure (Augustine, Luther, Wesley, Bonhoeffer, ...),
    *   merged in from the standalone christian-history-atlas app. They are never named in Scripture,
-   *   so `verses` stays empty and `quotes` carries citations from their own writings instead. */
-  kind?: "biblical" | "church";
+   *   so `verses` stays empty and `quotes` carries citations from their own writings instead.
+   * - "world": a secular figure from the surrounding world who touches the biblical story without
+   *   belonging to either stream — Mark Antony, who argued Herod onto the throne of Judea, is the
+   *   first. Named in no Scripture and no church history, so `verses` stays empty, exactly as for
+   *   "church". Follows the timeline's own "world" category, which already draws this line.
+   *
+   * Only "biblical" is treated specially by the app: PersonPanel titles the evidence section
+   * "Extra-Biblical Evidence" for a biblical figure and "Historical Evidence" for everyone else, and
+   * picks the matching wording for the no-record note. Adding a further non-biblical kind therefore
+   * needs no change there beyond that test being written as "is it biblical", not "is it church". */
+  kind?: "biblical" | "church" | "world";
   tier: PersonTier;
   /** Short tag, e.g. "Apostle", "Roman Governor of Judea", "Prophetess". */
   role: string;
