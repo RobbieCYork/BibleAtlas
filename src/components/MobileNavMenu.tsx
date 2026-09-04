@@ -1,5 +1,5 @@
 import { useEffect, useId, useRef, useState } from "react";
-import { MOBILE_TAB_ORDER, MOBILE_TAB_META, useMobileTabs, type MobileTabKey } from "../lib/mobileTabs";
+import { MOBILE_TAB_ORDER, MOBILE_TAB_META, type MobileTabKey } from "../lib/mobileTabs";
 import Icon from "./Icon";
 
 interface MobileNavMenuProps {
@@ -19,11 +19,15 @@ interface MobileNavMenuProps {
  * panels at all. Same glyph, different verb — sharing a component would mean a prop-driven fork at
  * every line of both the markup and the behaviour.
  *
- * Why it exists at all, given the bottom tab bar already lists these seven: the bar is
- * customisable (Settings → Tab Bar), and Timeline, Games and Notes have no other mobile entry
- * point. Hiding one of those from the bar would otherwise strand it. So this menu ALWAYS lists all
- * seven, regardless of the tab-bar visibility record — the destination someone hid is exactly the
- * one they need this menu to reach.
+ * Why it exists at all, given the bottom navigation bar already lists these seven: the bar is
+ * customisable (Settings → Navigation Bar), and Timeline, Games and Notes have no other mobile
+ * entry point. Hiding one of those from the bar would otherwise strand it. So this menu ALWAYS
+ * lists all seven, regardless of the bar's visibility record — the destination someone hid is
+ * exactly the one they need this menu to reach.
+ *
+ * It does NOT say which of the seven are currently in the bar. Rows used to carry a "not in bar"
+ * tag for the hidden ones; it read as a debug string rather than as help, and the answer is one
+ * glance at the bar itself, which is on screen directly below this menu the whole time it is open.
  */
 export default function MobileNavMenu({ current, onNavigate }: MobileNavMenuProps) {
   const [open, setOpen] = useState(false);
@@ -31,8 +35,6 @@ export default function MobileNavMenu({ current, onNavigate }: MobileNavMenuProp
   const buttonRef = useRef<HTMLButtonElement | null>(null);
   const listRef = useRef<HTMLDivElement | null>(null);
   const menuId = useId();
-  // Read only to annotate rows — never to filter them. See the component comment above.
-  const { visible } = useMobileTabs();
 
   useEffect(() => {
     if (!open) return;
@@ -94,7 +96,6 @@ export default function MobileNavMenu({ current, onNavigate }: MobileNavMenuProp
           {MOBILE_TAB_ORDER.map((key) => {
             const { label, icon } = MOBILE_TAB_META[key];
             const isCurrent = key === current;
-            const hiddenFromBar = visible[key] === false;
             return (
               <button
                 key={key}
@@ -108,12 +109,6 @@ export default function MobileNavMenu({ current, onNavigate }: MobileNavMenuProp
                   <Icon name={icon} />
                 </span>
                 <span className="mobile-nav-menu-label">{label}</span>
-                {/* Only shown for a destination the reader has taken out of the bottom bar. It
-                    answers the question the menu otherwise raises — "why does this list more than
-                    the bar?" — and points at Settings for putting it back. Nothing is marked at
-                    all in the default all-seven-visible state, so it costs nothing until it
-                    means something. */}
-                {hiddenFromBar && <span className="mobile-nav-menu-tag">not in bar</span>}
               </button>
             );
           })}
