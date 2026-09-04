@@ -237,17 +237,53 @@ export const CASES = [
   // ─────────────────────────────────────────────────────────────────────────────────────────
   // Batch 3 — two kings named Joram reigning at once, and the last king of Israel.
   // ─────────────────────────────────────────────────────────────────────────────────────────
-  { ref: "2 Kings 17:1", surface: "Hoshea", expect: "hoshea-king-of-israel", status: "known-wrong",
+  { ref: "2 Kings 17:1", surface: "Hoshea", expect: "hoshea-king-of-israel", status: "guard",
     why: "Hoshea son of Elah, the last king of Israel, under whom Samaria fell — rendered as " +
          "Joshua son of Nun. Eight verses of the fall of the northern kingdom." },
-  { ref: "2 Kings 17:6", surface: "Hoshea", expect: "hoshea-king-of-israel", status: "known-wrong",
+  { ref: "2 Kings 17:6", surface: "Hoshea", expect: "hoshea-king-of-israel", status: "guard",
     why: "'In the ninth year of Hoshea the king of Assyria took Samaria'." },
-  { ref: "2 Kings 18:10", surface: "Hoshea", expect: "hoshea-king-of-israel", status: "known-wrong",
+  { ref: "2 Kings 18:10", surface: "Hoshea", expect: "hoshea-king-of-israel", status: "guard",
     why: "'the ninth year of Hoshea king of Israel, Samaria was taken'." },
+  { ref: "2 Kings 15:30", surface: "Hoshea the son of Elah", expect: "hoshea-king-of-israel", status: "guard",
+    why: "FIXED in batch 3, by the long-form key rather than a per-verse entry — he kills Pekah and " +
+         "takes the throne." },
+  { ref: "2 Kings 17:4", surface: "Hoshea", expect: "hoshea-king-of-israel", status: "guard",
+    why: "FIXED in batch 3. The appeal to 'So king of Egypt' that ends the northern kingdom." },
   { ref: "Numbers 13:16", surface: "Hoshea", expect: "joshua", status: "guard",
     why: "'Moses called Hoshea the son of Nun Joshua' — here Hoshea IS Joshua. Must not change." },
-  { ref: "1 Chronicles 27:20", surface: "Hoshea", expect: null, status: "known-wrong",
+  // Joram of Israel and Joram of Judah reigned at the same time under the same name, and 2 Kings 8-9
+  // moves between them sentence by sentence. The bare names belong to Judah; batch 3 recovers Israel
+  // verse by verse, and by registering the phrases "Joram the son of Ahab" / "Jehoram the son of Ahab".
+  { ref: "2 Kings 9:24", surface: "Joram", expect: "joram-king-of-israel", status: "guard",
+    why: "FIXED in batch 3. Jehu shoots him through the heart — the end of the house of Ahab, and " +
+         "unambiguously the king of Israel." },
+  { ref: "2 Kings 9:14", surface: "Joram", occurrence: 1, expect: "joram-king-of-israel", status: "guard",
+    why: "FIXED in batch 3. Jehu's coup is entirely an Israelite affair; both this verse's Jorams " +
+         "are the same man, which is why one per-verse answer works here." },
+  { ref: "2 Kings 3:1", surface: "Jehoram", expect: "joram-king-of-israel",
+    expectSurface: "Jehoram the son of Ahab", status: "guard",
+    why: "FIXED in batch 3 by the long-form key: 'Jehoram the son of Ahab began to reign over Israel'." },
+  { ref: "2 Kings 8:24", surface: "Joram", expect: "joram-king-of-judah", status: "guard",
+    why: "MUST NOT MOVE. 'Joram slept with his fathers, and was buried... in David's city' — this " +
+         "one really is the king of Judah, three verses before one that is not." },
+  { ref: "Matthew 1:8", surface: "Joram", occurrence: 1, expect: "joram-king-of-judah", status: "guard",
+    why: "MUST NOT MOVE. The Davidic genealogy — Judah's line." },
+  { ref: "2 Samuel 8:10", surface: "Joram", occurrence: 1, expect: null, status: "guard",
+    why: "FIXED in batch 3. Joram son of Toi of Hamath, a Syrian prince sent to congratulate David — " +
+         "neither king, and no entry." },
+  { ref: "2 Chronicles 17:8", surface: "Jehoram", expect: null, status: "guard",
+    why: "FIXED in batch 3. 'Elishama and Jehoram, the priests' — a Levite, no entry." },
+  { ref: "2 Kings 1:17", surface: "Jehoram", occurrence: 1, expect: "joram-king-of-israel", status: "known-wrong",
+    why: "STILL WRONG, and the only Joram/Jehoram verse batch 3 could not reach. This verse names " +
+         "BOTH men under the same key — 'Jehoram began to reign in his place [Israel] in the second " +
+         "year of Jehoram the son of Jehoshaphat king of Judah' — and a per-verse override applies " +
+         "one answer to every match in the verse. Occurrence-aware resolution (batch 6). Left alone " +
+         "rather than half-fixed: whichever value were chosen would be wrong for the other." },
+  { ref: "2 Kings 1:17", surface: "Jehoram", occurrence: 2, expect: "joram-king-of-judah", status: "guard",
+    why: "The second Jehoram in that verse IS Judah's, and is correct today. It is the reason the " +
+         "first one cannot simply be redirected." },
+  { ref: "1 Chronicles 27:20", surface: "Hoshea", expect: null, status: "guard",
     why: "Hoshea son of Azaziah, an Ephraimite officer under David — a third man, with no entry." },
-  { ref: "Nehemiah 10:23", surface: "Hoshea", expect: null, status: "known-wrong",
+  { ref: "Nehemiah 10:23", surface: "Hoshea", expect: null, status: "guard",
     why: "A signer of Nehemiah's covenant — a fourth man, with no entry." },
 ];

@@ -3787,9 +3787,9 @@ Ruth 4:22	68	David	david	david
 2 Samuel 8:7	0	David	david	david
 2 Samuel 8:8	56	David	david	david
 2 Samuel 8:9	35	David	david	david
-2 Samuel 8:10	14	Joram	joram-king-of-judah	joram-king-of-judah
+2 Samuel 8:10	14	Joram	-	joram-king-of-judah
 2 Samuel 8:10	36	David	david	david
-2 Samuel 8:10	164	Joram	joram-king-of-judah	joram-king-of-judah
+2 Samuel 8:10	164	Joram	-	joram-king-of-judah
 2 Samuel 8:11	5	David	david	david
 2 Samuel 8:13	0	David	david	david
 2 Samuel 8:14	104	David	david	david
@@ -4482,9 +4482,9 @@ Ruth 4:22	68	David	david	david
 2 Kings 2:15	118	Elisha	elisha	elisha
 2 Kings 2:19	28	Elisha	elisha	elisha
 2 Kings 2:22	52	Elisha	elisha	elisha
-2 Kings 3:1	4	Jehoram	joram-king-of-judah	joram-king-of-judah
+2 Kings 3:1	4	Jehoram the son of Ahab	joram-king-of-israel	joram-king-of-israel
 2 Kings 3:1	92	Jehoshaphat	jehoshaphat	jehoshaphat
-2 Kings 3:6	5	Jehoram	joram-king-of-judah	joram-king-of-judah
+2 Kings 3:6	5	Jehoram	joram-king-of-israel	joram-king-of-judah
 2 Kings 3:7	20	Jehoshaphat	jehoshaphat	jehoshaphat
 2 Kings 3:11	4	Jehoshaphat	jehoshaphat	jehoshaphat
 2 Kings 3:11	148	Elisha	elisha	elisha
@@ -4524,7 +4524,7 @@ Ruth 4:22	68	David	david	david
 2 Kings 8:13	94	Elisha	elisha	elisha
 2 Kings 8:14	22	Elisha	elisha	elisha
 2 Kings 8:14	81	Elisha	elisha	elisha
-2 Kings 8:16	21	Joram	joram-king-of-judah	joram-king-of-judah
+2 Kings 8:16	21	Joram the son of Ahab	joram-king-of-israel	joram-king-of-israel
 2 Kings 8:16	59	Jehoshaphat	jehoshaphat	jehoshaphat
 2 Kings 8:16	97	Jehoram	joram-king-of-judah	joram-king-of-judah
 2 Kings 8:16	116	Jehoshaphat	jehoshaphat	jehoshaphat
@@ -4533,32 +4533,32 @@ Ruth 4:22	68	David	david	david
 2 Kings 8:23	24	Joram	joram-king-of-judah	joram-king-of-judah
 2 Kings 8:24	0	Joram	joram-king-of-judah	joram-king-of-judah
 2 Kings 8:24	65	David	david	david
-2 Kings 8:25	23	Joram	joram-king-of-judah	joram-king-of-judah
+2 Kings 8:25	23	Joram the son of Ahab	joram-king-of-israel	joram-king-of-israel
 2 Kings 8:25	80	Jehoram	joram-king-of-judah	joram-king-of-judah
-2 Kings 8:28	13	Joram	joram-king-of-judah	joram-king-of-judah
-2 Kings 8:28	113	Joram	joram-king-of-judah	joram-king-of-judah
-2 Kings 8:29	5	Joram	joram-king-of-judah	joram-king-of-judah
+2 Kings 8:28	13	Joram the son of Ahab	joram-king-of-israel	joram-king-of-israel
+2 Kings 8:28	113	Joram	joram-king-of-israel	joram-king-of-judah
+2 Kings 8:29	5	Joram	joram-king-of-israel	joram-king-of-judah
 2 Kings 8:29	166	Jehoram	joram-king-of-judah	joram-king-of-judah
-2 Kings 8:29	205	Joram	joram-king-of-judah	joram-king-of-judah
+2 Kings 8:29	205	Joram the son of Ahab	joram-king-of-israel	joram-king-of-israel
 2 Kings 9:1	0	Elisha	elisha	elisha
 2 Kings 9:2	42	Jehoshaphat	jehoshaphat	jehoshaphat
 2 Kings 9:7	159	Jezebel	jezebel	jezebel
 2 Kings 9:10	18	Jezebel	jezebel	jezebel
 2 Kings 9:14	19	Jehoshaphat	jehoshaphat	jehoshaphat
-2 Kings 9:14	67	Joram	joram-king-of-judah	joram-king-of-judah
-2 Kings 9:14	79	Joram	joram-king-of-judah	joram-king-of-judah
-2 Kings 9:15	9	Joram	joram-king-of-judah	joram-king-of-judah
-2 Kings 9:16	51	Joram	joram-king-of-judah	joram-king-of-judah
-2 Kings 9:16	111	Joram	joram-king-of-judah	joram-king-of-judah
-2 Kings 9:17	129	Joram	joram-king-of-judah	joram-king-of-judah
-2 Kings 9:21	0	Joram	joram-king-of-judah	joram-king-of-judah
-2 Kings 9:21	58	Joram	joram-king-of-judah	joram-king-of-judah
-2 Kings 9:22	5	Joram	joram-king-of-judah	joram-king-of-judah
+2 Kings 9:14	67	Joram	joram-king-of-israel	joram-king-of-judah
+2 Kings 9:14	79	Joram	joram-king-of-israel	joram-king-of-judah
+2 Kings 9:15	9	Joram	joram-king-of-israel	joram-king-of-judah
+2 Kings 9:16	51	Joram	joram-king-of-israel	joram-king-of-judah
+2 Kings 9:16	111	Joram	joram-king-of-israel	joram-king-of-judah
+2 Kings 9:17	129	Joram	joram-king-of-israel	joram-king-of-judah
+2 Kings 9:21	0	Joram	joram-king-of-israel	joram-king-of-judah
+2 Kings 9:21	58	Joram	joram-king-of-israel	joram-king-of-judah
+2 Kings 9:22	5	Joram	joram-king-of-israel	joram-king-of-judah
 2 Kings 9:22	120	Jezebel	jezebel	jezebel
-2 Kings 9:23	0	Joram	joram-king-of-judah	joram-king-of-judah
-2 Kings 9:24	53	Joram	joram-king-of-judah	joram-king-of-judah
+2 Kings 9:23	0	Joram	joram-king-of-israel	joram-king-of-judah
+2 Kings 9:24	53	Joram	joram-king-of-israel	joram-king-of-judah
 2 Kings 9:28	99	David	david	david
-2 Kings 9:29	24	Joram	joram-king-of-judah	joram-king-of-judah
+2 Kings 9:29	24	Joram the son of Ahab	joram-king-of-israel	joram-king-of-israel
 2 Kings 9:30	31	Jezebel	jezebel	jezebel
 2 Kings 9:36	103	Elijah	elijah	elijah
 2 Kings 9:36	164	Jezebel	jezebel	jezebel
@@ -4599,7 +4599,7 @@ Ruth 4:22	68	David	david	david
 2 Kings 15:23	24	Azariah	uzziah	uzziah
 2 Kings 15:27	28	Azariah	uzziah	uzziah
 2 Kings 15:29	89	Abel	abel	abel
-2 Kings 15:30	0	Hoshea	joshua	joshua
+2 Kings 15:30	0	Hoshea the son of Elah	hoshea-king-of-israel	hoshea-king-of-israel
 2 Kings 15:30	153	Jotham	jotham-king-of-judah	jotham-king-of-judah
 2 Kings 15:30	171	Uzziah	uzziah	uzziah
 2 Kings 15:32	64	Jotham	jotham-king-of-judah	jotham-king-of-judah
@@ -4629,13 +4629,13 @@ Ruth 4:22	68	David	david	david
 2 Kings 16:20	64	David	david	david
 2 Kings 16:20	82	Hezekiah	hezekiah	hezekiah
 2 Kings 17:1	23	Ahaz	ahaz	ahaz
-2 Kings 17:1	43	Hoshea	joshua	joshua
-2 Kings 17:3	53	Hoshea	joshua	joshua
-2 Kings 17:4	40	Hoshea	joshua	joshua
-2 Kings 17:6	21	Hoshea	joshua	joshua
+2 Kings 17:1	43	Hoshea the son of Elah	hoshea-king-of-israel	hoshea-king-of-israel
+2 Kings 17:3	53	Hoshea	hoshea-king-of-israel	joshua
+2 Kings 17:4	40	Hoshea	hoshea-king-of-israel	joshua
+2 Kings 17:6	21	Hoshea	hoshea-king-of-israel	joshua
 2 Kings 17:21	24	David	david	david
 2 Kings 17:34	192	Jacob	jacob	jacob
-2 Kings 18:1	25	Hoshea	joshua	joshua
+2 Kings 18:1	25	Hoshea son of Elah	hoshea-king-of-israel	hoshea-king-of-israel
 2 Kings 18:1	60	Hezekiah	hezekiah	hezekiah
 2 Kings 18:1	80	Ahaz	ahaz	ahaz
 2 Kings 18:2	142	Zechariah	-	zechariah-father-of-john-baptist
@@ -4643,9 +4643,9 @@ Ruth 4:22	68	David	david	david
 2 Kings 18:4	125	Moses	moses	moses
 2 Kings 18:6	114	Moses	moses	moses
 2 Kings 18:9	27	Hezekiah	hezekiah	hezekiah
-2 Kings 18:9	67	Hoshea	joshua	joshua
+2 Kings 18:9	67	Hoshea son of Elah	hoshea-king-of-israel	hoshea-king-of-israel
 2 Kings 18:10	61	Hezekiah	hezekiah	hezekiah
-2 Kings 18:10	99	Hoshea	joshua	joshua
+2 Kings 18:10	99	Hoshea	hoshea-king-of-israel	joshua
 2 Kings 18:12	96	Moses	moses	moses
 2 Kings 18:13	35	Hezekiah	hezekiah	hezekiah
 2 Kings 18:14	0	Hezekiah	hezekiah	hezekiah
@@ -5227,7 +5227,7 @@ Ruth 4:22	68	David	david	david
 1 Chronicles 26:14	45	Zechariah	-	zechariah-father-of-john-baptist
 1 Chronicles 26:15	3	Obed	obed	obed
 1 Chronicles 26:24	43	Moses	moses	moses
-1 Chronicles 26:25	70	Joram	joram-king-of-judah	joram-king-of-judah
+1 Chronicles 26:25	70	Joram	-	joram-king-of-judah
 1 Chronicles 26:26	91	David	david	david
 1 Chronicles 26:28	9	Samuel	samuel	samuel
 1 Chronicles 26:28	30	Saul the son of Kish	saul-king-of-israel	saul-king-of-israel
@@ -5239,7 +5239,7 @@ Ruth 4:22	68	David	david	david
 1 Chronicles 27:17	48	Zadok	-	zadok-in-jesus-genealogy
 1 Chronicles 27:18	40	David	david	david
 1 Chronicles 27:18	76	Michael	michael-archangel	michael-archangel
-1 Chronicles 27:20	28	Hoshea	joshua	joshua
+1 Chronicles 27:20	28	Hoshea	-	joshua
 1 Chronicles 27:20	76	Manasseh	-	manasseh-king-of-judah
 1 Chronicles 27:21	21	Manasseh	-	manasseh-king-of-judah
 1 Chronicles 27:21	57	Zechariah	-	zechariah-father-of-john-baptist
@@ -5495,7 +5495,7 @@ Ruth 4:22	68	David	david	david
 2 Chronicles 17:3	79	David	david	david
 2 Chronicles 17:5	83	Jehoshaphat	jehoshaphat	jehoshaphat
 2 Chronicles 17:7	81	Zechariah	-	zechariah-father-of-john-baptist
-2 Chronicles 17:8	172	Jehoram	joram-king-of-judah	joram-king-of-judah
+2 Chronicles 17:8	172	Jehoram	-	joram-king-of-judah
 2 Chronicles 17:10	114	Jehoshaphat	jehoshaphat	jehoshaphat
 2 Chronicles 17:11	32	Jehoshaphat	jehoshaphat	jehoshaphat
 2 Chronicles 17:12	0	Jehoshaphat	jehoshaphat	jehoshaphat
@@ -5555,13 +5555,13 @@ Ruth 4:22	68	David	david	david
 2 Chronicles 21:16	26	Jehoram	joram-king-of-judah	joram-king-of-judah
 2 Chronicles 21:20	150	David	david	david
 2 Chronicles 22:1	189	Jehoram	joram-king-of-judah	joram-king-of-judah
-2 Chronicles 22:5	46	Jehoram	joram-king-of-judah	joram-king-of-judah
-2 Chronicles 22:5	163	Joram	joram-king-of-judah	joram-king-of-judah
+2 Chronicles 22:5	46	Jehoram the son of Ahab	joram-king-of-israel	joram-king-of-israel
+2 Chronicles 22:5	163	Joram	joram-king-of-israel	joram-king-of-judah
 2 Chronicles 22:6	130	Azariah	uzziah	uzziah
 2 Chronicles 22:6	149	Jehoram	joram-king-of-judah	joram-king-of-judah
-2 Chronicles 22:6	188	Jehoram	joram-king-of-judah	joram-king-of-judah
-2 Chronicles 22:7	62	Joram	joram-king-of-judah	joram-king-of-judah
-2 Chronicles 22:7	108	Jehoram	joram-king-of-judah	joram-king-of-judah
+2 Chronicles 22:6	188	Jehoram the son of Ahab	joram-king-of-israel	joram-king-of-israel
+2 Chronicles 22:7	62	Joram	joram-king-of-israel	joram-king-of-judah
+2 Chronicles 22:7	108	Jehoram	joram-king-of-israel	joram-king-of-judah
 2 Chronicles 22:9	171	Jehoshaphat	jehoshaphat	jehoshaphat
 2 Chronicles 22:11	220	Jehoram	joram-king-of-judah	joram-king-of-judah
 2 Chronicles 23:1	87	Azariah	uzziah	uzziah
@@ -5844,7 +5844,7 @@ Nehemiah 10:6	0	Daniel	daniel	daniel
 Nehemiah 10:7	11	Abijah	-	abijah-king-of-judah
 Nehemiah 10:17	6	Hezekiah	hezekiah	hezekiah
 Nehemiah 10:21	12	Zadok	-	zadok-in-jesus-genealogy
-Nehemiah 10:23	0	Hoshea	joshua	joshua
+Nehemiah 10:23	0	Hoshea	-	joshua
 Nehemiah 10:29	132	Moses	moses	moses
 Nehemiah 10:38	22	Aaron	aaron	aaron
 Nehemiah 10:39	47	Levi	-	matthew-levi

@@ -4774,6 +4774,59 @@ export const people: Person[] = [
     sources: [{ label: "Encyclopaedia Britannica: Jehoshaphat", url: "https://www.britannica.com/biography/Jehoshaphat" }],
   },
   {
+    id: "joram-king-of-israel",
+    name: "Joram, King of Israel",
+    pronunciation: "JOR-am",
+    // Deliberately no bare "Joram" or "Jehoram" here: both names are shared with the king of Judah
+    // below, who reigned at the same time, and the bare names are already his. Which of the two a
+    // verse means is decided verse by verse in VERSE_NAME_OVERRIDES — see verseAnnotations.ts.
+    alternateNames: ["Jehoram, son of Ahab"],
+    // Both wordings, with and without "the": 2 Kings writes "Joram the son of Ahab", and our own
+    // articles need a form of the name that resolves to THIS man. Bare "Joram" and "Jehoram" belong
+    // to Judah, and our articles pass no book or verse to the linker, so a bare mention on this
+    // very page would link to the other king. The prose below is written to use these forms.
+    matchNames: ["Joram the son of Ahab", "Jehoram the son of Ahab", "Joram son of Ahab", "Jehoram son of Ahab"],
+    diedYear: -841,
+    lifespanLabel: "d. c. 841 BC (reigned c. 852-841 BC)",
+    lifespanCertainty: "disputed",
+    lifespanDatingNotes:
+      "The regnal years for Israel and Judah in this period are famously hard to reconcile, and the standard reconstructions (Thiele, Albright, Galil) differ by several years. 2 Kings gives two synchronisms for the start of this reign that do not agree with each other: 2 Kings 3:1 dates it to the eighteenth year of Jehoshaphat of Judah, while 2 Kings 1:17 dates it to the second year of the Jehoram who ruled Judah. Coregencies are the usual explanation offered; the dates above follow Thiele's widely used scheme and should be read as approximate.",
+    tier: "significant",
+    role: "King of Israel (not to be confused with Joram/Jehoram, King of Judah, son of Jehoshaphat)",
+    summary:
+      "The last king of Ahab's dynasty, who ruled the northern kingdom for about twelve years alongside a king of Judah with the same name, and was shot through the heart by Jehu in the coup that ended his family line.",
+    lifeStory: [
+      "Joram son of Ahab is called by the longer form of his name, Jehoram son of Ahab, about as often as by the short one — and both forms are shared, letter for letter, with the man who was king of Judah at the same moment. Confusing the two is easy and 2 Kings does nothing to help; the deciding phrase is almost always \"the son of Ahab\" or \"king of Israel\" in the same clause. This one was a son of Ahab and Jezebel. He came to the throne of Israel after the death of his brother Ahaziah, who had no son (2 Kings 1:17), and reigned about twelve years from Samaria (2 Kings 3:1).",
+      "The text gives him a qualified verdict rather than a flat condemnation: he did evil in God's sight, \"but not like his father and his mother; for he put away the pillar of Baal that his father had made\" (2 Kings 3:2). He nevertheless kept up the state shrines at Bethel and Dan that 2 Kings treats as the founding sin of the northern kingdom.",
+      "When Moab rebelled after Ahab's death, Joram son of Ahab allied with Jehoshaphat of Judah and the king of Edom and marched around the southern end of the Dead Sea. The army ran out of water, and it was Jehoshaphat who insisted on consulting a prophet; Elisha agreed to speak only out of regard for the king of Judah, telling him to his face to go to his father's and mother's prophets instead (2 Kings 3:4-27).",
+      "Much of the Elisha cycle unfolds during his reign — Naaman's healing, the Syrian raiders struck blind, the siege and famine in Samaria so severe that women ate their own children — though in those chapters the text says only \"the king of Israel\" and never names him, so the identification is inference from the surrounding chronology rather than something the text states.",
+      "He was wounded fighting Hazael of Syria at Ramoth Gilead and withdrew to Jezreel to recover. Elisha had a young prophet anoint Jehu, one of his own commanders, as king with orders to destroy the house of Ahab. Jehu drove to Jezreel; the king rode out to meet him and asked, \"Is it peace, Jehu?\" Jehu answered by drawing his bow and shooting him through the heart, and had the body thrown into the field of Naboth the Jezreelite — the vineyard Ahab had taken by judicial murder, and the place the text says the judgment was always aimed at (2 Kings 9:14-26).",
+    ],
+    controversies: [
+      "2 Kings 6-7 tells the siege of Samaria and the famine without naming the king, who says \"God do so to me, and more also, if the head of Elisha the son of Shaphat stays on him today.\" He is conventionally identified as Joram son of Ahab on chronological grounds, but the text withholds the name, and some scholars read those chapters as originally belonging to a different reign.",
+    ],
+    occupation: "King of Israel",
+    placesLived: "Samaria, the capital of the northern kingdom; wounded at Ramoth Gilead and killed at Jezreel.",
+    extraBiblicalReferences: [
+      {
+        source: "Tel Dan Stele",
+        citation: "Fragments A-B, lines 7-9",
+        summary:
+          "A ninth-century BC Aramaic victory inscription, most often attributed to Hazael of Damascus, in which the author boasts of killing a king of Israel and a king of the House of David. Most reconstructions restore those two names as Jehoram son of Ahab and Ahaziah of Judah — the same pair 2 Kings 9 says Jehu killed.",
+        reliability:
+          "The stele itself came out of a controlled excavation in datable stratigraphy and is not seriously questioned. The two royal names, however, fall in broken lines and are restorations, not surviving text — so the inscription is strong evidence that an Aramean king claimed these killings, and weaker evidence about which individuals it named. It also credits the deaths to the Aramean king rather than to Jehu, which is a real tension with 2 Kings that scholars resolve in different ways.",
+      },
+    ],
+    verses: [
+      { reference: "2 Kings 1:17", note: "Succeeds his brother Ahaziah on the throne of Israel" },
+      { reference: "2 Kings 3:1-3", note: "Reign summary; removes the pillar of Baal" },
+      { reference: "2 Kings 3:4-27", note: "The campaign against Moab, and Elisha's rebuke" },
+      { reference: "2 Kings 8:28-29", note: "Wounded by the Syrians at Ramoth Gilead" },
+      { reference: "2 Kings 9:14-26", note: "Killed by Jehu; the end of the house of Ahab" },
+    ],
+    sources: [{ label: "Encyclopaedia Britannica: Jehoram, king of Israel", url: "https://www.britannica.com/biography/Jehoram-king-of-Israel" }],
+  },
+  {
     id: "joram-king-of-judah",
     name: "Joram, King of Judah",
     pronunciation: "JOR-am",
@@ -4796,6 +4849,63 @@ export const people: Person[] = [
       { reference: "Matthew 1:8", note: "Named as 'Joram' in Jesus's genealogy" },
     ],
     sources: [{ label: "Encyclopaedia Britannica: Jehoram", url: "https://www.britannica.com/biography/Jehoram-king-of-Judah" }],
+  },
+  {
+    id: "hoshea-king-of-israel",
+    name: "Hoshea, King of Israel",
+    pronunciation: "hoh-SHEE-uh",
+    // No bare "Hoshea": that name already belongs to Joshua son of Nun, whose original name it was
+    // (Numbers 13:16). The long forms below are how 2 Kings introduces this man; the four bare
+    // mentions inside his own reign are handled in VERSE_NAME_OVERRIDES.
+    alternateNames: ["Hoshea, son of Elah"],
+    matchNames: ["Hoshea the son of Elah", "Hoshea son of Elah"],
+    lifespanLabel: "reigned c. 732-722 BC",
+    lifespanCertainty: "disputed",
+    lifespanDatingNotes:
+      "Neither his birth nor his death is recorded — Scripture leaves him in an Assyrian prison and says nothing more. The reign dates follow the conventional synchronism of his ninth year with the fall of Samaria; the northern kingdom's regnal figures are difficult to reconcile in this period and reconstructions differ by a few years.",
+    tier: "significant",
+    role: "Last king of Israel",
+    summary:
+      "The final king of the northern kingdom, who took the throne by assassination, submitted to Assyria, then gambled on Egypt — and lost Samaria, his crown, and his people to deportation.",
+    lifeStory: [
+      "Hoshea son of Elah came to power the way several of his predecessors had: he conspired against Pekah son of Remaliah, struck him down, and reigned in his place (2 Kings 15:30). He ruled nine years from Samaria over what was left of Israel, by then already stripped of Galilee and Gilead by Assyrian campaigns.",
+      "2 Kings gives him the same qualified verdict it gave Joram son of Ahab a century earlier — he did evil in God's sight, \"yet not as the kings of Israel who were before him\" (2 Kings 17:2). It is the last such verdict the northern kingdom receives.",
+      "Shalmaneser V of Assyria came against him and he became an Assyrian vassal, paying annual tribute. Then he stopped. The text says he had sent messengers to \"So king of Egypt\" and brought no tribute up as he had done year by year, and that the king of Assyria found conspiracy in him and shut him in prison (2 Kings 17:3-4).",
+      "Assyria besieged Samaria for three years and took it in the ninth year of his reign. The population was deported to Halah, to the Habor river in Gozan, and to the cities of the Medes, and foreign settlers were brought in to replace them (2 Kings 17:5-6, 24). 2 Kings then breaks off the narrative for a long chapter explaining why the kingdom fell — the one sustained theological post-mortem in the historical books.",
+      "Scripture never says what became of him. He is last seen in prison, before the siege he is imprisoned for is even over.",
+    ],
+    controversies: [
+      "Who actually captured Samaria is genuinely unsettled. 2 Kings says only \"the king of Assyria\" took it. Shalmaneser V died around 722 BC, at almost exactly the moment the city fell, and his successor Sargon II claims the conquest and the deportation of 27,290 people in his own royal inscriptions. Scholars variously credit Shalmaneser, credit Sargon, or reconstruct two separate captures a few years apart; the Babylonian Chronicle's brief note is read both ways.",
+      "\"So king of Egypt\" has never been convincingly identified. Proposals include the Twenty-second Dynasty pharaoh Osorkon IV, the Delta ruler Tefnakht, and an Egyptian commander rather than a king; another reading treats the word not as a personal name at all but as the city of Sais. No proposal has won the field.",
+    ],
+    occupation: "King of Israel",
+    placesLived: "Samaria, the capital of the northern kingdom, until its fall; afterwards an Assyrian prison, location unrecorded.",
+    extraBiblicalReferences: [
+      {
+        source: "Tiglath-Pileser III, summary inscriptions",
+        citation: "Summary Inscription 4, and parallels",
+        summary:
+          "The Assyrian king records that the people of Israel \"overthrew Pekah their king\" and that he installed Hoshea son of Elah (Assyrian A-ú-si-ʾ) over them, receiving tribute from him. This names him directly, and puts an Assyrian hand behind the coup 2 Kings 15:30 reports without one.",
+        reliability:
+          "A contemporary royal inscription naming the king in question — strong attestation of his existence and of the political situation. Assyrian royal annals are also propaganda, written to credit the king with everything, so the claim to have installed Hoshea personally may overstate Assyria's role in a coup it merely profited from.",
+      },
+      {
+        source: "Sargon II, Khorsabad annals and Display Inscription",
+        citation: "Khorsabad Annals, year 1; Display Inscription lines 23-25",
+        summary:
+          "Sargon II claims to have besieged and captured Samaria and to have deported 27,290 of its inhabitants, settling others in their place — the event 2 Kings 17:6 records without naming the Assyrian king.",
+        reliability:
+          "Contemporary and detailed, but it is precisely the contested evidence: Sargon's claim conflicts with the natural reading that Shalmaneser V, who besieged the city, also took it. Assyrian kings routinely claimed campaigns begun by predecessors, so the inscription establishes that Samaria fell and roughly when, more securely than it establishes who was standing there.",
+      },
+    ],
+    verses: [
+      { reference: "2 Kings 15:30", note: "Kills Pekah and takes the throne" },
+      { reference: "2 Kings 17:1-6", note: "His reign, the appeal to Egypt, and the fall of Samaria" },
+      { reference: "2 Kings 18:9-12", note: "The siege dated against Hezekiah's reign in Judah" },
+    ],
+    sources: [{ label: "Encyclopaedia Britannica: Hoshea", url: "https://www.britannica.com/biography/Hoshea" }],
+    reflectionPrompt:
+      "This was not the worst king Israel had — 2 Kings says so outright — but he inherited the consequences of everyone who came before him. Where are you carrying something you did not start?",
   },
   {
     id: "uzziah",

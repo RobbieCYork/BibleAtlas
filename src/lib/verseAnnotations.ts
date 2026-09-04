@@ -307,6 +307,50 @@ const VERSE_NAME_OVERRIDES: Record<string, Record<string, Record<string, string 
   // "Ananias": ananias-and-sapphira (the best-known of the three) is the default owner of bare
   // "Ananias," but Acts 9/22 name a different Ananias — the Damascus disciple who restores Saul's
   // sight — and Acts 23-24 name a third, the high priest who prosecutes Paul.
+  // "Joram" / "Jehoram": two kings of the same name reigning at the same time, one in Israel (son of
+  // Ahab) and one in Judah (son of Jehoshaphat), and 2 Kings 8-9 moves between them sentence by
+  // sentence. The bare names belong to the king of Judah; every verse below means the king of
+  // Israel. Read one by one against the WEB text — the deciding phrase is usually "the son of Ahab"
+  // or "king of Israel" in the same clause, or Jehu's coup, which is entirely an Israelite affair.
+  //
+  // Two verses are NOT here and cannot be: 2 Kings 1:17 and 2 Chronicles 22:6 each name BOTH men
+  // under the key "jehoram", and a per-verse override applies one answer to every match in the
+  // verse. They need occurrence-aware resolution and are left alone rather than half-fixed.
+  joram: {
+    "2 Kings": {
+      "8:16": "joram-king-of-israel", "8:25": "joram-king-of-israel",
+      "8:28": "joram-king-of-israel", "8:29": "joram-king-of-israel",
+      "9:14": "joram-king-of-israel", "9:15": "joram-king-of-israel",
+      "9:16": "joram-king-of-israel", "9:17": "joram-king-of-israel",
+      "9:21": "joram-king-of-israel", "9:22": "joram-king-of-israel",
+      "9:23": "joram-king-of-israel", "9:24": "joram-king-of-israel",
+      "9:29": "joram-king-of-israel",
+    },
+    "2 Chronicles": { "22:5": "joram-king-of-israel", "22:7": "joram-king-of-israel" },
+    // Joram son of Toi of Hamath, a Syrian prince sent to congratulate David — no entry.
+    "2 Samuel": { "8:10": null },
+    // A Levite descended from Eliezer, in the temple-treasury lists — no entry.
+    "1 Chronicles": { "26:25": null },
+  },
+  jehoram: {
+    "2 Kings": { "3:1": "joram-king-of-israel", "3:6": "joram-king-of-israel" },
+    "2 Chronicles": {
+      "22:5": "joram-king-of-israel", "22:7": "joram-king-of-israel",
+      "17:8": null,  // "Elishama and Jehoram, the priests" — a Levite, no entry.
+    },
+  },
+  // "Hoshea": the bare name is Joshua's — Numbers 13:16 records Moses renaming him — and the
+  // allowlist below keeps it to Numbers for that reason. These four are the last king of Israel,
+  // whose reign 2 Kings 17 narrates; the verses that introduce him as "Hoshea the son of Elah"
+  // (2 Kings 15:30, 17:1, 18:1, 18:9) match that longer phrase and need no entry here.
+  hoshea: {
+    "2 Kings": {
+      "17:3": "hoshea-king-of-israel",
+      "17:4": "hoshea-king-of-israel",
+      "17:6": "hoshea-king-of-israel",
+      "18:10": "hoshea-king-of-israel",
+    },
+  },
   // "Mark": the capitalisation test in CAPITALISED_ONLY below removes the 24 lowercase matches — the
   // mark of the beast, "signs to mark seasons", "set a mark on the foreheads". Four capitalised ones
   // survive it, and all four are the imperative verb rather than the evangelist. They are the only
@@ -383,6 +427,11 @@ const BOOK_NAME_ALLOWLIST: Record<string, string[]> = {
   // the name belongs to someone else with no entry here. Exceptions inside the allowed books are
   // handled verse by verse in VERSE_NAME_OVERRIDES above.
   nathan: ["2 Samuel", "1 Kings", "1 Chronicles", "2 Chronicles", "Psalms"],
+  // "Hoshea" is Joshua's own original name and means him in Numbers 13:8 and 13:16 — and nowhere
+  // else. Everywhere outside Numbers it names the last king of Israel (recovered verse by verse
+  // above), an Ephraimite officer under David (1 Chronicles 27:20), or a signer of Nehemiah's
+  // covenant (Nehemiah 10:23) — the last two with no entry here, so no link.
+  hoshea: ["Numbers"],
 };
 
 /** Names that are also ordinary English words. The match is case-insensitive on purpose — it is what

@@ -864,6 +864,7 @@ person.controversies|john-the-apostle|c31e5f3585	65	John	john-the-baptist
 person.controversies|john-the-apostle|ec67afe184	55	John	john-the-baptist
 person.controversies|john-the-baptist|ea4e5673ae	206	Antipas	herod-antipas
 person.controversies|john-the-baptist|ea4e5673ae	85	Herod Antipas	herod-antipas
+person.controversies|joram-king-of-israel|bcd9b31a32	136	Elisha	elisha
 person.controversies|judas-iscariot|38fe713ee4	134	Luke	luke-evangelist
 person.controversies|judas-iscariot|38fe713ee4	143	John	john-the-baptist
 person.controversies|judas-iscariot|38fe713ee4	262	Jesus	jesus-of-nazareth
@@ -966,6 +967,7 @@ person.extraBib.summary|john-mark|4e0d32a4e5	129	Peter	simon-peter
 person.extraBib.summary|john-mark|4e0d32a4e5	153	Jesus	jesus-of-nazareth
 person.extraBib.summary|john-mark|4e0d32a4e5	64	Peter	simon-peter
 person.extraBib.summary|john-the-baptist|69d885cf03	105	Herod Antipas	herod-antipas
+person.extraBib.summary|joram-king-of-israel|5434ba1cb7	175	David	david
 person.extraBib.summary|lysanias|07df4a257f	169	Augustus	caesar-augustus
 person.extraBib.summary|lysanias|07df4a257f	291	Tiberius	tiberius-caesar
 person.extraBib.summary|lysanias|24295875e7	120	Agrippa II	herod-agrippa-ii
@@ -1624,6 +1626,7 @@ person.lifeStory|holy-spirit|e014fd0ff0	665	Saul	paul-of-tarsus
 person.lifeStory|holy-spirit|e014fd0ff0	686	David	david
 person.lifeStory|holy-spirit|eb6938d597	530	Cornelius	cornelius-the-centurion
 person.lifeStory|holy-spirit|eb6938d597	570	Peter	simon-peter
+person.lifeStory|hoshea-king-of-israel|6a8ebdcf17	53	Joram son of Ahab	joram-king-of-israel
 person.lifeStory|ignatius-of-loyola|cf454ad644	125	Jesus	jesus-of-nazareth
 person.lifeStory|isaac|02e91ab48e	187	Rebekah	rebekah
 person.lifeStory|isaac|02e91ab48e	21	Abraham	abraham
@@ -1902,6 +1905,12 @@ person.lifeStory|john-wesley|38e8bb1e29	121	William Wilberforce	william-wilberfo
 person.lifeStory|john-wesley|fadab196b6	94	Samuel	samuel
 person.lifeStory|john-wycliffe|8083e4f331	53	John	john-the-baptist
 person.lifeStory|jonathan-edwards|fde010ae53	123	Solomon	solomon
+person.lifeStory|joram-king-of-israel|20708641fa	202	Jehoshaphat	jehoshaphat
+person.lifeStory|joram-king-of-israel|20708641fa	252	Elisha	elisha
+person.lifeStory|joram-king-of-israel|20708641fa	69	Jehoshaphat	jehoshaphat
+person.lifeStory|joram-king-of-israel|4b60fb2359	405	Jezebel	jezebel
+person.lifeStory|joram-king-of-israel|a89e3c96a0	93	Elisha	elisha
+person.lifeStory|joram-king-of-israel|d88721ffd7	12	Elisha	elisha
 person.lifeStory|joram-king-of-judah|022e0b198a	94	Jehoshaphat	jehoshaphat
 person.lifeStory|joram-king-of-judah|8a957cf367	42	Jezebel	jezebel
 person.lifeStory|joram-king-of-judah|ec5fdb5086	206	Elijah	elijah
@@ -2907,6 +2916,8 @@ person.lifespanDatingNotes|john-the-baptist|2fefe6293f	234	Antipas	herod-antipas
 person.lifespanDatingNotes|john-the-baptist|2fefe6293f	29	Jesus	jesus-of-nazareth
 person.lifespanDatingNotes|john-the-baptist|2fefe6293f	54	Zechariah	zechariah-father-of-john-baptist
 person.lifespanDatingNotes|john-the-baptist|2fefe6293f	68	Elizabeth	elizabeth-mother-of-john-baptist
+person.lifespanDatingNotes|joram-king-of-israel|1ed9116b84	310	Jehoshaphat	jehoshaphat
+person.lifespanDatingNotes|joram-king-of-israel|1ed9116b84	386	Jehoram	joram-king-of-judah
 person.lifespanDatingNotes|joshua|8d9a553541	223	Moses	moses
 person.lifespanDatingNotes|mary-magdalene|9021fbf30a	10	Jesus	jesus-of-nazareth
 person.lifespanDatingNotes|mary-magdalene|9021fbf30a	252	Mary of Bethany	mary-of-bethany
