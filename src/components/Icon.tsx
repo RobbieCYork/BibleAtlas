@@ -57,9 +57,11 @@
 import type { ReactElement } from "react";
 import {
   Ban, Briefcase, Cake, CalendarDays, Camera, Check, Clapperboard, Crown, Eye, EyeOff, FileText,
-  Flame, Gem, Globe, GraduationCap, Headphones, HeartCrack, House, Link as LinkIcon, Lock, LogOut,
+  Flag, Flame, Gem, Globe, GraduationCap, Headphones, HeartCrack, House, Link as LinkIcon, Lock,
+  LogOut,
   Medal, Menu, Mic, MicOff, Moon, Music, Palette, Pin, Play, Plus, Printer, RotateCcw, Settings,
-  Share2, Shield, Smartphone, Sun, ThumbsUp, Timer, Tv, Video, VideoOff, Volume2, X as XMark,
+  Share2, Shield, Smartphone, Sun, ThumbsDown, ThumbsUp, Timer, Tv, Video, VideoOff, Volume2,
+  X as XMark,
   type LucideIcon,
 } from "lucide-react";
 
@@ -129,6 +131,8 @@ export type IconName =
   | "movie"
   | "camera"
   | "thumbsUp"
+  | "thumbsDown"
+  | "flag"
   | "play"
   | "volume"
   | "crown"
@@ -672,6 +676,8 @@ const LIBRARY = {
   movie: Clapperboard,
   camera: Camera,
   thumbsUp: ThumbsUp,
+  thumbsDown: ThumbsDown,
+  flag: Flag,
   play: Play,
   volume: Volume2,
   crown: Crown,

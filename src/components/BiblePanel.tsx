@@ -24,6 +24,7 @@ import {
   type Profile,
 } from "../lib/supabase";
 import { getTextOffsetInRoot } from "../lib/domTextOffset";
+import { setActiveScripture } from "../lib/reportContext";
 import { CHAPTER_AUDIO_CREDIT, chapterAudioUrl, fallbackChapterAudioUrl } from "../lib/chapterAudio";
 import { clipRangeForVerse, comparePosition } from "../lib/verseRange";
 import { shareFilename, verseCardSpec, type ShareCardSpec } from "../lib/shareCard";
@@ -573,6 +574,21 @@ export default function BiblePanel({
     audioChapterRef.current =
       currentBook !== null && currentChapter !== null ? { book: currentBook, chapter: currentChapter } : null;
   }, [currentBook, currentChapter]);
+
+  /** Publishes the chapter on screen for the issue reporter, so a report filed from the reader
+   * carries `target_kind: 'scripture'` and the reference rather than just "the Bible panel".
+   *
+   * Written imperatively into a module singleton instead of being lifted into App as state — see
+   * the reasoning in lib/reportContext.ts. In short: App does not otherwise re-render on a chapter
+   * turn, and making it do so would repaint the map, the timeline and every other panel to serve a
+   * form that is not on screen. The second effect clears it on unmount so a chapter this panel is
+   * no longer showing can never be attached to a later report. */
+  useEffect(() => {
+    setActiveScripture(
+      currentBook !== null && currentChapter !== null ? { book: currentBook, chapter: currentChapter } : null
+    );
+  }, [currentBook, currentChapter]);
+  useEffect(() => () => setActiveScripture(null), []);
 
   const audioEligible = translation === "web" && !!passage && !!currentBook && currentChapter !== null;
 
