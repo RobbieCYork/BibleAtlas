@@ -13,8 +13,9 @@
 > **before you finish.** Format is in that folder's `README.md`. Bob relays it to Robbie; a message
 > in a session nobody reopens does not survive. Never report to Robbie directly.
 
-Three things here will lie to you, and one thing will silently destroy other
-people's work. All four have actually happened, repeatedly.
+Four things here will lie to you, and one thing will silently destroy other
+people's work. Most of them have actually happened here, repeatedly; the rest
+are one trusting run away.
 
 ## `tsc --noEmit` does not tell you whether the build passes
 
@@ -26,10 +27,35 @@ Always:
 
     npm run build     # exit 0, no exceptions
 
+## `npm run test:linker` is not a build check either
+
+The name linker's regression suite (`scripts/name-linker/`) loads the real
+`verseAnnotations.ts` and the real data files by bundling them with rolldown,
+the bundler Vite already ships. rolldown **strips TypeScript types without
+checking them**. The suite therefore goes green on a tree that does not
+compile.
+
+It is the `--noEmit` trap from the other side: that one type-checks without
+building, this one builds without type-checking. Neither tells you the app
+compiles. `cases: 91 passed` and three unchanged snapshots mean the linker
+still resolves names the way it did — a real and valuable thing to know, and
+not this one.
+
+Both, in that order, every time you touch `verseAnnotations.ts` or the data
+files feeding it:
+
+    npm run test:linker    # did any links move?
+    npm run build          # does it compile? exit 0, no exceptions
+
+The linker's own `scripts/name-linker/README.md` has said this since the
+harness was written. It was reported once as having been written *here*, in
+this file, when it had not been — which is its own reminder that a claim a
+check exists is not the check existing.
+
 ## A verification worktree that shares `node_modules` shares `.tsbuildinfo` too
 
-Same class of lie, one level further out: the build *runs*, exits 0, and never
-compiles a line.
+Same class of lie as `--noEmit`, one level further out: the build *runs*, exits
+0, and never compiles a line.
 
 `tsc -b` is incremental. Both project references write their state into
 `node_modules/.tmp/` (`tsBuildInfoFile` in `tsconfig.app.json` and
