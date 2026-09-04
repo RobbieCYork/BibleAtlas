@@ -33,6 +33,12 @@ import DisplayNameGate from "./components/DisplayNameGate";
 import ResetPasswordGate from "./components/ResetPasswordGate";
 import AuthGate from "./components/AuthGate";
 import { supabase, setRememberMe } from "./lib/supabase";
+import {
+  clearRememberedSelection,
+  installSelectionCapture,
+  type ReportSurface,
+  type ReportTarget,
+} from "./lib/reportContext";
 import { useMobileTabs, type MobileTabKey } from "./lib/mobileTabs";
 import MobileNavMenu from "./components/MobileNavMenu";
 import { startAnalytics, track, noteAuthChange } from "./lib/analytics";
@@ -1174,6 +1180,139 @@ function App() {
     setMobileActivePanel(key);
   };
 
+  /** Where the reader is standing, in the terms the issue reporter files a report in: a synthetic
+   * route, a human page title, and — the field that decides whether a report is actionable — WHICH
+   * article, person, chapter, profile or screen it is about.
+   *
+   * Derived here and nowhere else, because this component is the only thing that can. The app has
+   * no router, so `window.location` is the same string on every screen and there is nothing to
+   * read; the answer instead lives across three full-screen takeovers, the seasonal walk, the
+   * `panels` record, the mobile tab, and five separate detail selections. `route` is synthetic for
+   * that reason — without it the `route` column would say "/" for every report ever filed.
+   *
+   * Precedence deliberately mirrors `searchMode` above, for the same reason it has one: the
+   * takeovers stay mounted OVER panels that are still open underneath, so a naive read of `panels`
+   * reports the Bible panel while the reader is looking at Games. Within the panels it follows
+   * `currentDetailsSelection`'s own person > POI > topic > timeline event > place order.
+   *
+   * The target is a best guess, and the form treats it as one — it renders as a chip with a "Not
+   * this" control. On desktop three panels can be open at once and no derivation can know which one
+   * the reader means; asking is better than being confidently wrong. */
+  const reportSurface = useMemo<ReportSurface>(() => {
+    const detailTarget = (): ReportTarget | null => {
+      if (selectedPerson) return { kind: "person", id: selectedPerson.id, label: selectedPerson.name };
+      if (selectedPoi) return { kind: "poi", id: selectedPoi.id, label: selectedPoi.name };
+      if (selectedTopic) return { kind: "topic", id: selectedTopic.id, label: selectedTopic.name };
+      if (selectedTimelineEvent)
+        return { kind: "timeline_event", id: selectedTimelineEvent.id, label: selectedTimelineEvent.title };
+      // A place is `article` — sql/025 gave POIs, people, topics and events kinds of their own,
+      // which leaves that kind for the fifth thing the Articles panel browses. See
+      // TARGET_KIND_LABELS in lib/reportsApi.ts, which labels it "Place" for readers.
+      if (selectedLocation) return { kind: "article", id: selectedLocation.id, label: selectedLocation.name };
+      return null;
+    };
+
+    if (showGame) return { route: "games", title: "Games", target: null };
+
+    if (myProfileMode) {
+      return viewedPersonId
+        ? {
+            route: `profile/${viewedPersonId}`,
+            title: "Someone else's profile",
+            target: { kind: "profile", id: viewedPersonId, label: "Another member's profile" },
+          }
+        : {
+            route: "profile",
+            title: "My Profile",
+            target: { kind: "profile", id: "self", label: "My own profile" },
+          };
+    }
+
+    if (showTimeline) {
+      const overlay = timelineOverlayEventId
+        ? timelineEvents.find((e) => e.id === timelineOverlayEventId) ?? null
+        : null;
+      return overlay
+        ? {
+            route: `timeline/${overlay.id}`,
+            title: `Timeline — ${overlay.title}`,
+            target: { kind: "timeline_event", id: overlay.id, label: overlay.title },
+          }
+        : { route: "timeline", title: "Timeline", target: null };
+    }
+
+    if (walkOpen && activeWalk) {
+      return { route: `walk/${activeWalk.id}`, title: `${activeWalk.title} (seasonal walk)`, target: null };
+    }
+
+    if (showArticle) {
+      const target = detailTarget();
+      return target
+        ? { route: `articles/${target.kind}/${target.id}`, title: `${target.label} — article`, target }
+        : { route: "articles", title: "Articles", target: null };
+    }
+
+    // No takeover and no open article: name whichever panel the reader is actually looking at.
+    // Mobile shows exactly one; desktop shows up to three, so this picks the most-likely subject
+    // rather than pretending to know — the form's "Not this" control is the escape hatch.
+    const active: PanelKey = isMobile
+      ? activeMobilePanel
+      : panels.articles
+        ? "articles"
+        : panels.bible
+          ? "bible"
+          : panels.map
+            ? "map"
+            : panels.notes
+              ? "notes"
+              : panels.friends
+                ? "friends"
+                : "bible";
+
+    switch (active) {
+      // No target here on purpose: the chapter on screen lives inside BiblePanel's own state, and
+      // captureReportContext() fills it in from what that panel publishes. See lib/reportContext.ts.
+      case "bible":
+        return { route: "bible", title: "Bible reader", target: null };
+      case "map":
+        return { route: "map", title: "Map", target: detailTarget() };
+      case "notes":
+        return { route: "notes", title: "My Notes", target: null };
+      case "friends":
+        return { route: "social", title: "Social — friends, groups and messages", target: null };
+      case "articles":
+        return { route: "articles", title: "Articles", target: null };
+    }
+  }, [
+    showGame,
+    myProfileMode,
+    viewedPersonId,
+    showTimeline,
+    timelineOverlayEventId,
+    walkOpen,
+    activeWalk,
+    showArticle,
+    isMobile,
+    activeMobilePanel,
+    panels,
+    selectedPerson,
+    selectedPoi,
+    selectedTopic,
+    selectedTimelineEvent,
+    selectedLocation,
+  ]);
+
+  // Remembers the reader's last text selection for the report form. It has to be remembered rather
+  // than read on demand: reaching the form means clicking the account menu, and that click collapses
+  // whatever was selected, so window.getSelection() is always empty by the time the form mounts.
+  useEffect(() => installSelectionCapture(), []);
+  // Text highlighted in an article is not context for a report about the Games screen. Dropping it
+  // on every navigation is the cheap half of the staleness guard; lib/reportContext.ts has a TTL for
+  // the other half (sitting on one screen for a long time).
+  useEffect(() => {
+    clearRememberedSelection();
+  }, [reportSurface.route]);
+
   // Below this point is the entire rest of the app — header, every panel, both takeovers, the tab
   // bar. Sign-up/sign-in is required site-wide (owner's decision), so a visitor with no real account
   // sees AuthGate and literally nothing else: no panel, toast or takeover from the rest of this
@@ -1295,6 +1434,7 @@ function App() {
           onOpenReadingPlans={openReadingPlans}
           onOpenMyProfile={openMyProfile}
           profileVersion={profileVersion}
+          reportSurface={reportSurface}
         />
       </header>
       {/* Seasonal walk banner — a slim pill strip under the header (not a modal; see the walk state

@@ -8572,3 +8572,782 @@ a.profile-links-url {
     margin-bottom: 12px;
   }
 }
+
+
+/* ============================================================================
+ * ISSUE REPORTING + REPORTS DASHBOARD
+ * (components/ReportIssueSheet, MyReportsSheet, ReportsDashboard —
+ *  database contract in sql/025_roles_and_reports.sql)
+ *
+ * Every colour is an existing token, so both themes come for free: the light
+ * values live on bare :root in index.css and the dark ones are swapped in under
+ * :root:not([data-theme="light"]). Nothing below hard-codes a colour, and there
+ * is no new styling vocabulary — the stat grid, the tab strip, the ranked rows
+ * and the muted note are the Admin Console's own classes, reused.
+ *
+ * MOBILE FIRST, and this one genuinely has to be: a report is most often filed
+ * from a phone, by someone who just noticed something wrong while reading. So
+ * everything here is a single column that reflows on its own, every control is
+ * at least 40px tall, and the two things that can be arbitrarily long — a
+ * user-agent string and a quoted selection — wrap with `overflow-wrap: anywhere`
+ * rather than pushing the page sideways. Nothing in this block can produce a
+ * horizontal scrollbar at 375px.
+ * ========================================================================== */
+
+/* Same full-screen treatment, and for the same reason, as .auth-admin-sheet:
+ * none of these three surfaces fits in the account menu's 240px flyout, and a
+ * form someone has to write a paragraph into least of all. Fixed rather than
+ * absolute so it escapes the dropdown's box instead of being sized by it.
+ * Deliberately a separate class rather than a second selector on the admin
+ * sheet's rules — these are the app's newest surfaces and the console is its
+ * most load-bearing one; they should not be able to break each other. */
+.report-sheet {
+  position: fixed;
+  inset: 0;
+  z-index: 60;
+  display: flex;
+  flex-direction: column;
+  background: var(--bg);
+  color: var(--text);
+  text-align: left;
+  zoom: var(--text-scale, 1);
+}
+
+.report-sheet-head {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 16px;
+  border-bottom: 1px solid var(--border);
+  background: var(--panel-bg);
+  flex-shrink: 0;
+  min-height: 54px;
+}
+
+.report-sheet-title {
+  font-size: 17px;
+  line-height: 1.25;
+  margin: 0;
+  min-width: 0;
+}
+
+.report-sheet-body {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  /* Bottom padding clears the phone's home indicator as well as giving the last
+   * control room to breathe — the sheet covers the tab bar, so nothing else is
+   * holding that space open. */
+  padding: 14px 16px calc(32px + env(safe-area-inset-bottom, 0px));
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+@media (min-width: 900px) {
+  /* Same measure the Admin Console uses. A report body read at 1400px wide is a
+   * paragraph nobody can track back to the start of. */
+  .report-sheet-body {
+    width: min(880px, 100%);
+    margin: 0 auto;
+  }
+}
+
+.report-intro {
+  margin: 0;
+  font-size: 14px;
+  line-height: 1.55;
+  color: var(--text);
+}
+
+/* --- The captured-context card: what the report will say about where you were --- */
+
+.report-context-card {
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: var(--surface-sunken);
+  padding: 10px 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.report-context-line,
+.report-context-target {
+  margin: 0;
+  font-size: 13px;
+  line-height: 1.5;
+  color: var(--text-muted);
+  overflow-wrap: anywhere;
+}
+
+.report-context-line strong,
+.report-context-target strong {
+  color: var(--text-h);
+}
+
+/* "Not this" / "Remove". A quiet control on purpose: it is a correction, not an
+ * action anyone should be nudged toward. */
+.report-chip-clear {
+  margin-left: 8px;
+  border: none;
+  background: none;
+  padding: 0;
+  font: inherit;
+  font-size: 12px;
+  color: var(--accent);
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+.report-selection {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.report-selection-head {
+  margin: 0;
+  font-size: 12px;
+  line-height: 1.5;
+  color: var(--text-muted);
+}
+
+/* The quoted selection is the reporter's evidence, so it gets the reading face
+ * and the reading surface — it is a piece of the app's content, not chrome. */
+.report-selection-quote {
+  margin: 0;
+  padding: 8px 12px;
+  border-left: 3px solid var(--accent);
+  border-radius: 0 8px 8px 0;
+  background: var(--reading-bg);
+  font-family: var(--serif);
+  font-size: 15px;
+  line-height: 1.5;
+  color: var(--text);
+  overflow-wrap: anywhere;
+  white-space: pre-wrap;
+  /* A 4000-character selection would otherwise be the whole screen. */
+  max-height: 12em;
+  overflow-y: auto;
+}
+
+/* --- Fields --- */
+
+.report-form {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.report-field {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.report-field-label {
+  font-family: var(--sans);
+  font-size: 11px;
+  letter-spacing: var(--tracking-label);
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+.report-field-hint {
+  font-size: 12px;
+  line-height: 1.4;
+  color: var(--text-muted);
+}
+
+/* Grouped so a select, an input and a textarea in these surfaces are one
+ * control with one edge. 16px on the text inputs is not a style choice — iOS
+ * Safari zooms the whole page when a focused field is under 16px, which on a
+ * 375px screen throws the reader out of the form they were filling in. */
+.report-field input,
+.report-field select,
+.report-field textarea,
+.report-editor input,
+.report-editor select,
+.report-editor textarea,
+.report-vote-note,
+.report-filter-row select,
+.report-dup-search input,
+.report-admin-box select,
+.report-admin-box textarea,
+.report-role-row select {
+  width: 100%;
+  min-height: 40px;
+  padding: 9px 10px;
+  border: 1px solid var(--input-border);
+  border-radius: 8px;
+  background: var(--surface-sunken);
+  color: var(--text);
+  font-family: var(--sans);
+  font-size: 16px;
+  line-height: 1.4;
+}
+
+.report-field textarea,
+.report-editor textarea,
+.report-vote-note,
+.report-admin-box textarea {
+  resize: vertical;
+  min-height: 80px;
+}
+
+.report-field input:focus-visible,
+.report-field select:focus-visible,
+.report-field textarea:focus-visible,
+.report-vote-note:focus-visible,
+.report-dup-search input:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 1px;
+}
+
+/* --- Buttons --- */
+
+.report-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+}
+
+.report-btn {
+  min-height: 40px;
+  padding: 9px 14px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--panel-bg);
+  color: var(--text);
+  font-family: var(--sans);
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.report-btn:hover {
+  background: var(--accent-bg);
+}
+
+.report-btn-primary {
+  border-color: var(--accent);
+  background: var(--accent);
+  color: var(--accent-contrast);
+  font-weight: 600;
+}
+
+.report-btn-primary:hover {
+  background: var(--accent-hover);
+}
+
+.report-btn-danger {
+  color: var(--danger);
+  border-color: var(--danger);
+}
+
+.report-btn:disabled {
+  opacity: 0.55;
+  cursor: default;
+}
+
+.report-btn:disabled:hover {
+  background: var(--panel-bg);
+}
+
+.report-btn-primary:disabled:hover {
+  background: var(--accent);
+}
+
+/* --- "What gets sent with this report" --- */
+
+.report-captured {
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: var(--panel-bg);
+  overflow: hidden;
+}
+
+.report-captured-toggle {
+  width: 100%;
+  min-height: 40px;
+  padding: 10px 12px;
+  border: none;
+  background: transparent;
+  color: var(--text-muted);
+  font-family: var(--sans);
+  font-size: 13px;
+  text-align: left;
+  cursor: pointer;
+}
+
+.report-captured-toggle:hover {
+  background: var(--surface-sunken);
+}
+
+.report-captured-list {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 0 12px 12px;
+}
+
+/* Label above value, not beside it. A side-by-side row would have to give the
+ * label a fixed column, and the longest value here (a user-agent string) needs
+ * every pixel of a 375px screen it can get. */
+.report-captured-row {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  padding-top: 6px;
+  border-top: 1px solid var(--border);
+}
+
+.report-captured-label {
+  font-family: var(--sans);
+  font-size: 10px;
+  letter-spacing: var(--tracking-label);
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+.report-captured-value {
+  font-size: 13px;
+  line-height: 1.45;
+  color: var(--text);
+  overflow-wrap: anywhere;
+}
+
+.report-captured-note {
+  margin: 4px 0 0;
+  font-size: 12px;
+  line-height: 1.5;
+  color: var(--text-muted);
+}
+
+/* --- One report, as a card (My Reports) --- */
+
+.report-card {
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: var(--panel-bg);
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.report-card-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.report-card-title,
+.report-detail-title {
+  margin: 0;
+  font-family: var(--display);
+  font-size: 18px;
+  line-height: 1.25;
+  color: var(--text-h);
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.report-detail-title {
+  font-size: 21px;
+}
+
+.report-card-meta {
+  margin: 0;
+  font-size: 12px;
+  line-height: 1.5;
+  color: var(--text-muted);
+  overflow-wrap: anywhere;
+}
+
+.report-card-blurb {
+  margin: 0;
+  font-size: 13px;
+  line-height: 1.5;
+  color: var(--text);
+}
+
+.report-card-body {
+  margin: 0;
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--text);
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+
+.report-resolution {
+  margin: 0;
+  padding: 8px 10px;
+  border-radius: 8px;
+  background: var(--accent-bg);
+  font-size: 13px;
+  line-height: 1.55;
+  color: var(--text);
+  overflow-wrap: anywhere;
+}
+
+.report-editor {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.report-empty {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  align-items: flex-start;
+}
+
+/* --- Status badges ---
+ * One neutral pill, three tints. Colour is never the only signal — the badge
+ * always carries the status word — so this stays readable for anyone who can't
+ * separate the tints, and no new token is invented for it. */
+.report-status {
+  flex-shrink: 0;
+  padding: 3px 9px;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  background: var(--surface-sunken);
+  font-family: var(--sans);
+  font-size: 11px;
+  letter-spacing: 0.04em;
+  color: var(--text-muted);
+  white-space: nowrap;
+}
+
+.report-status-new,
+.report-status-triaged {
+  border-color: var(--accent);
+  color: var(--text-h);
+}
+
+.report-status-accepted,
+.report-status-in_progress {
+  border-color: var(--border-strong);
+  color: var(--text-h);
+}
+
+.report-status-resolved {
+  border-color: var(--accent);
+  background: var(--accent-bg);
+  color: var(--text-h);
+}
+
+.report-status-declined,
+.report-status-duplicate {
+  color: var(--danger);
+  border-color: var(--danger);
+}
+
+/* --- Dashboard: filters --- */
+
+.report-filters {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.report-status-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.report-chip {
+  min-height: 32px;
+  padding: 5px 11px;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  background: transparent;
+  color: var(--text-muted);
+  font-family: var(--sans);
+  font-size: 12px;
+  cursor: pointer;
+}
+
+.report-chip.active {
+  border-color: var(--accent);
+  background: var(--accent-bg);
+  color: var(--text-h);
+  font-weight: 600;
+}
+
+/* auto-fit rather than a column count, so three selects sit in a row on a
+ * desktop panel and stack on a phone without a media query deciding. */
+.report-filter-row {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 8px;
+}
+
+.report-dup-search {
+  display: flex;
+  gap: 8px;
+  align-items: stretch;
+}
+
+.report-dup-search input {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+.report-dup-search .report-btn {
+  flex: 0 0 auto;
+}
+
+/* --- Dashboard: the ranked queue --- */
+
+.report-queue-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: var(--panel-bg);
+  color: var(--text);
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
+.report-queue-row:hover {
+  background: var(--surface-sunken);
+}
+
+.report-queue-score {
+  flex: 0 0 auto;
+  min-width: 2.5em;
+  font-family: var(--display);
+  font-size: 20px;
+  line-height: 1.2;
+  color: var(--accent);
+  font-variant-numeric: tabular-nums;
+}
+
+/* min-width:0 is what stops a long title from forcing the row wider than the
+ * sheet — without it this flex item's min-content width is the title itself. */
+.report-queue-main {
+  flex: 1 1 auto;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.report-queue-title {
+  font-size: 14px;
+  line-height: 1.4;
+  color: var(--text-h);
+  overflow-wrap: anywhere;
+}
+
+.report-queue-side {
+  flex: 0 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 4px;
+}
+
+.report-queue-votes {
+  font-size: 12px;
+  color: var(--text-muted);
+  white-space: nowrap;
+}
+
+/* Below ~430px the vote column and the badge stop fitting beside the title, so
+ * the row becomes two lines instead of squeezing the title to nothing. */
+@media (max-width: 430px) {
+  .report-queue-row {
+    flex-wrap: wrap;
+  }
+
+  .report-queue-side {
+    flex-direction: row;
+    align-items: center;
+    width: 100%;
+    justify-content: flex-start;
+    gap: 8px;
+  }
+}
+
+/* --- Dashboard: one report --- */
+
+.report-detail {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.report-vote-box,
+.report-admin-box {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 12px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: var(--panel-bg);
+}
+
+.report-vote-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.report-vote-btn {
+  flex: 1 1 auto;
+  min-height: 40px;
+  min-width: 96px;
+  padding: 8px 12px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--surface-sunken);
+  color: var(--text);
+  font-family: var(--sans);
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.report-vote-btn:hover {
+  background: var(--accent-bg);
+}
+
+.report-vote-btn.active {
+  border-color: var(--accent);
+  background: var(--accent-bg);
+  color: var(--text-h);
+  font-weight: 600;
+}
+
+.report-vote-btn:disabled {
+  opacity: 0.55;
+  cursor: default;
+}
+
+.report-vote-row,
+.report-history-row {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: 8px 10px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--panel-bg);
+  font-size: 12px;
+  line-height: 1.5;
+  color: var(--text-muted);
+  overflow-wrap: anywhere;
+}
+
+.report-vote-mark {
+  font-family: var(--sans);
+  font-size: 10px;
+  letter-spacing: var(--tracking-label);
+  text-transform: uppercase;
+}
+
+.report-vote-mark.agree {
+  color: var(--accent);
+}
+
+.report-vote-mark.disagree {
+  color: var(--danger);
+}
+
+.report-vote-who {
+  color: var(--text-muted);
+}
+
+.report-vote-text {
+  color: var(--text);
+  white-space: pre-wrap;
+}
+
+.report-dup {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.report-dup-option {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  font-size: 13px;
+  line-height: 1.45;
+  color: var(--text);
+  cursor: pointer;
+  overflow-wrap: anywhere;
+}
+
+.report-dup-option input {
+  margin-top: 3px;
+  flex-shrink: 0;
+}
+
+/* --- Roles --- */
+
+.report-roles {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.report-role-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 10px 12px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: var(--panel-bg);
+}
+
+.report-role-row > div {
+  min-width: 0;
+  flex: 1 1 200px;
+}
+
+.report-role-row select {
+  flex: 0 1 auto;
+  width: auto;
+  min-width: 150px;
+}
+
+.report-role-name {
+  margin: 0;
+  font-size: 14px;
+  color: var(--text-h);
+  overflow-wrap: anywhere;
+}
+
+.report-role-tag {
+  display: inline-block;
+  margin-left: 6px;
+  padding: 2px 8px;
+  border: 1px solid var(--accent);
+  border-radius: 999px;
+  font-family: var(--sans);
+  font-size: 10px;
+  letter-spacing: var(--tracking-label);
+  text-transform: uppercase;
+  color: var(--text-muted);
+  white-space: nowrap;
+}

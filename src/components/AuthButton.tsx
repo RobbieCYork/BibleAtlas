@@ -5,7 +5,12 @@ import { useTextSize } from "../lib/textSize";
 import { useTheme } from "../lib/theme";
 import { MIN_VISIBLE_TABS, MOBILE_TAB_META, MOBILE_TAB_ORDER, LOCKED_TAB, useMobileTabs } from "../lib/mobileTabs";
 import AdminConsole from "./AdminConsole";
+import ReportIssueSheet from "./ReportIssueSheet";
+import MyReportsSheet from "./MyReportsSheet";
+import ReportsDashboard from "./ReportsDashboard";
 import { useIsAdmin } from "../lib/adminApi";
+import { fetchReportCounts, hasRoleAtLeast, useCurrentRole } from "../lib/reportsApi";
+import type { ReportSurface } from "../lib/reportContext";
 import Icon from "./Icon";
 
 interface AuthButtonProps {
@@ -26,6 +31,19 @@ interface AuthButtonProps {
    * session alone otherwise) refreshes the label shown on the trigger button/menu without needing a
    * full session change. */
   profileVersion?: number;
+  /** Where the reader is standing right now, derived by App from its own render (see its
+   * `reportSurface` memo). Handed to the report form so a report knows which article, person,
+   * chapter or screen it is about.
+   *
+   * WHY THE ENTRY POINT IS HERE AT ALL. "From anywhere in the app" needs a control that is on
+   * screen everywhere, and this menu's trigger is: the header renders above every panel and outlives
+   * all three full-screen takeovers (Timeline, Games, My Profile). The two alternatives were both
+   * worse. The mobile bottom bar is customisable and capped, and an eighth destination there — or
+   * an eighth row in MobileNavMenu — is exactly the clutter the owner has already complained about.
+   * A floating action button would have to dodge the map controls, the timeline canvas, the walk
+   * banner and the tab bar on every screen. This menu already hosts the app's other
+   * "about your account, not about the content" entries, which is what reporting is. */
+  reportSurface?: ReportSurface;
 }
 
 type Mode = "login" | "signup" | "reset";
@@ -196,9 +214,21 @@ function ReadingResetControl({ userId }: { userId: string }) {
   );
 }
 
-type MenuView = "menu" | "settings" | "admin";
+type MenuView = "menu" | "settings" | "admin" | "report" | "myReports" | "reports";
 
-export default function AuthButton({ session, openProfileNonce, onOpenReadingPlans, onOpenMyProfile, profileVersion }: AuthButtonProps) {
+/** Fallback for the one render where App hasn't told us where the reader is. A report filed against
+ * it is still a valid report — it just says less. Never left blank: `route`/`page_title` are what a
+ * triager reads first. */
+const UNKNOWN_SURFACE: ReportSurface = { route: "app", title: "Capstone Bible", target: null };
+
+export default function AuthButton({
+  session,
+  openProfileNonce,
+  onOpenReadingPlans,
+  onOpenMyProfile,
+  profileVersion,
+  reportSurface,
+}: AuthButtonProps) {
   const [open, setOpen] = useState(false);
   const [menuView, setMenuView] = useState<MenuView>("menu");
   // The second entry point to the Admin Console (My Profile has the first). Same gate, same hook,
@@ -209,6 +239,38 @@ export default function AuthButton({ session, openProfileNonce, onOpenReadingPla
   // by whether the database holds an admin_users row, and adding a second client-side rule about who
   // is even allowed to ask is exactly the kind of divergence this hook exists to prevent.
   const isAdmin = useIsAdmin(session?.user.id ?? null);
+
+  // The reports tier gate. Separate from useIsAdmin above on purpose: that hook answers sql/019's
+  // "is there an admin_users row", this one answers sql/025's four-tier current_user_role(), and an
+  // ADVISOR is neither an admin nor a plain member. Both fail closed, and neither decides anything
+  // — every reports_* function re-refuses on its own.
+  const { role: reportsRole, loading: roleLoading } = useCurrentRole(session?.user.id ?? null);
+  const canSeeReports = !roleLoading && hasRoleAtLeast(reportsRole, "advisor");
+  // Guests are the retired "Continue as Guest" accounts. `reports.allow_anonymous` ships false, so
+  // the INSERT policy would refuse them — the form says so instead of failing at submit time.
+  const isGuest = !!session?.user.is_anonymous;
+
+  /** Untriaged count for the menu badge — report_counts()'s whole purpose ("badge counts for the
+   * dashboard nav", per sql/025). Only asked once the role check has actually said advisor+, so a
+   * member's account never fires a call the database is going to refuse. */
+  const [untriaged, setUntriaged] = useState(0);
+  useEffect(() => {
+    if (!canSeeReports) {
+      setUntriaged(0);
+      return;
+    }
+    let cancelled = false;
+    void fetchReportCounts()
+      .then((c) => {
+        if (!cancelled) setUntriaged(c.untriaged ?? 0);
+      })
+      .catch(() => {
+        // A badge is not worth an error message. The dashboard itself surfaces real failures.
+      });
+    return () => {
+      cancelled = true;
+    };
+  }, [canSeeReports, menuView]);
 
   useEffect(() => {
     if (openProfileNonce === undefined) return;
@@ -360,6 +422,12 @@ export default function AuthButton({ session, openProfileNonce, onOpenReadingPla
                 <Icon name="people" inline /> My Profile
               </button>
             )}
+            {canSeeReports && (
+              <button type="button" className="auth-menu-item" onClick={() => setMenuView("reports")}>
+                <Icon name="flag" inline /> Reports
+                {untriaged > 0 && <span className="panel-menu-item-badge">{untriaged}</span>}
+              </button>
+            )}
             {isAdmin && (
               <button type="button" className="auth-menu-item" onClick={() => setMenuView("admin")}>
                 <Icon name="shield" inline /> Admin Console
@@ -378,6 +446,17 @@ export default function AuthButton({ session, openProfileNonce, onOpenReadingPla
                 }}
               >
                 <Icon name="calendar" inline /> Reading Plans
+              </button>
+            )}
+            {/* Everyone signed in, guests included — the guest branch of the sheet explains why
+                they can't file one, which is a better answer than an item that isn't there. */}
+            <div className="auth-settings-divider" />
+            <button type="button" className="auth-menu-item" onClick={() => setMenuView("report")}>
+              <Icon name="flag" inline /> Report a Problem
+            </button>
+            {!session.user.is_anonymous && (
+              <button type="button" className="auth-menu-item" onClick={() => setMenuView("myReports")}>
+                <Icon name="doc" inline /> My Reports
               </button>
             )}
             <button type="button" className="auth-menu-item auth-signout" onClick={handleSignOut}>
@@ -401,6 +480,31 @@ export default function AuthButton({ session, openProfileNonce, onOpenReadingPla
               <AdminConsole />
             </div>
           </div>
+        )}
+        {/* The three reports surfaces borrow the Admin Console's full-screen treatment for the same
+            reason it does: none of them fits in a 240px flyout, and a form the reader has to write a
+            paragraph into least of all. `open` stays true so ← Back returns to the menu. */}
+        {open && menuView === "report" && (
+          <ReportIssueSheet
+            userId={session.user.id}
+            isGuest={isGuest}
+            surface={reportSurface ?? UNKNOWN_SURFACE}
+            onClose={() => setMenuView("menu")}
+            onOpenMyReports={() => setMenuView("myReports")}
+          />
+        )}
+        {open && menuView === "myReports" && !session.user.is_anonymous && (
+          <MyReportsSheet
+            userId={session.user.id}
+            onClose={() => setMenuView("menu")}
+            onReportSomething={() => setMenuView("report")}
+          />
+        )}
+        {/* Gated on the resolved role, never on `reportsRole` being merely non-null: canSeeReports
+            is false while the check is still in flight, so a slow network shows nothing privileged
+            rather than a dashboard that then empties itself. */}
+        {open && menuView === "reports" && canSeeReports && reportsRole && (
+          <ReportsDashboard role={reportsRole} viewerId={session.user.id} onClose={() => setMenuView("menu")} />
         )}
         {open && menuView === "settings" && (
           <div className="auth-dropdown">
