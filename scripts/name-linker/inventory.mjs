@@ -14,12 +14,16 @@ import { loadLinker } from "./loadLinker.mjs";
 const showAll = process.argv.includes("--all");
 const { computeLinkAnnotations, locations, pois, people, topics, timelineEvents } = await loadLinker();
 
+// Must mirror NAME_ENTRIES in verseAnnotations.ts exactly, INCLUDING `matchNames` — the field that
+// holds wordings the linker matches but the panels never print. Leaving it out here reported people
+// as unreachable who had just been made reachable, which is worse than not having the tool.
 const raw = [];
 const push = (n, id, kind) => raw.push({ name: n, id, kind });
-locations.forEach((l) => { push(l.name, l.id, "location"); (l.alternateNames ?? []).forEach((a) => push(a, l.id, "location")); });
-pois.forEach((p) => { push(p.name, p.id, "poi"); (p.alternateNames ?? []).forEach((a) => push(a, p.id, "poi")); });
-people.forEach((p) => { push(p.name, p.id, "person"); (p.alternateNames ?? []).forEach((a) => push(a, p.id, "person")); });
-topics.forEach((t) => { push(t.name, t.id, "topic"); (t.alternateNames ?? []).forEach((a) => push(a, t.id, "topic")); });
+const all = (r) => [r.name ?? r.title, ...(r.alternateNames ?? []), ...(r.matchNames ?? [])];
+locations.forEach((l) => all(l).forEach((n) => push(n, l.id, "location")));
+pois.forEach((p) => all(p).forEach((n) => push(n, p.id, "poi")));
+people.forEach((p) => all(p).forEach((n) => push(n, p.id, "person")));
+topics.forEach((t) => all(t).forEach((n) => push(n, t.id, "topic")));
 timelineEvents.forEach((e) => push(e.title, e.id, "timeline"));
 
 const keys = new Map();
