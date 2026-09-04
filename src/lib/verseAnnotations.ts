@@ -191,22 +191,28 @@ const BOOK_NAME_OVERRIDES: Record<string, Record<string, string>> = {
  * - "James": James, son of Zebedee owns the bare name globally, but the Nazareth crowd's list of Jesus'
  *   brothers in Matthew 13:55/Mark 6:3 means James "the Just," already an entry here (james-brother-of-
  *   jesus, whose own `verses` field cites Mark 6:3). Luke 6:16's "Judas the son of James" names a third
- *   James — the apostle Judas's father, an otherwise unmentioned man with no entry — suppressed.
- *   NOTE: Acts 1:13 is knowingly left alone. Its three bare "James" matches are three DIFFERENT men
- *   (Zebedee's son; Alphaeus's son; Judas's father) and a per-verse override cannot separate occurrences,
- *   so any single value is wrong twice over. It currently resolves all three to james-brother-of-jesus
- *   via the Acts entry in BOOK_NAME_OVERRIDES, which is wrong for all three; suppressing the verse
- *   outright is the least-wrong option but is a visible change to the apostle list, so it is flagged
- *   rather than made here.
+ *   James — the apostle Judas's father, an otherwise unmentioned man with no entry. That whole wording
+ *   is now registered on thaddaeus (see people.ts) and is matched as one phrase, so no bare "James" is
+ *   produced at Luke 6:16 at all and the `Luke` entry below no longer fires. It is left in place
+ *   because it agrees with the result, but the phrase is what does the work, not the suppression.
+ *   Acts 1:13 is fixed, and was not always. Its apostle list names three DIFFERENT men called James
+ *   (Zebedee's son; Alphaeus's son; Judas's father), and a per-verse override applies one answer to
+ *   every match of the key, so while all three were bare "James" matches any single value was wrong
+ *   twice over. Registering the two longer wordings — "James the son of Alphaeus" on james-son-of-
+ *   alphaeus, and the "James" inside "Judas the son of James" on thaddaeus (both in people.ts) —
+ *   takes those two out of this key, leaving exactly one bare "James": the son of Zebedee, which the
+ *   Acts entry below now sets. Without it the Acts entry in BOOK_NAME_OVERRIDES would send him to
+ *   the brother of Jesus. Same technique as Acts 10:32's two Simons.
  * - "Judas": Judas Iscariot owns the bare name globally, and is right at most mentions, but is wrong at
  *   three places naming the OTHER apostle Judas — "Judas, son of James," i.e. Thaddaeus (Luke 6:16;
- *   Acts 1:13; John 14:22, where the text itself says "Judas (not Iscariot)"). Wrong again at Matthew
- *   13:55, where the Judas listed is a brother of Jesus — a fourth, distinct man with no entry here,
- *   so suppressed. (Mark 6:3, the parallel passage, needs no entry: WEB renders that same brother's
- *   name "Judah," which no entry in this app claims, so it already produces no link.)
- *   At Luke 6:16 the override touches only the bare "Judas" of "Judas the son of James" — the verse's
- *   second Judas is matched as the longer registered name "Judas Iscariot" (a different lookup key),
- *   so it keeps resolving correctly. */
+ *   Acts 1:13; John 14:22, where the text itself says "Judas (not Iscariot)"). Of those three only
+ *   John 14:22 still needs its entry below: at Luke 6:16 and Acts 1:13 the full wording "Judas the son
+ *   of James" is registered on thaddaeus (see people.ts) and is matched as one phrase, so no bare
+ *   "Judas" survives at either verse and the `Luke` entry below no longer fires. (Luke 6:16's second
+ *   Judas is matched as the longer registered name "Judas Iscariot" and resolves on its own.) Wrong
+ *   again at Matthew 13:55, where the Judas listed is a brother of Jesus — a fourth, distinct man with
+ *   no entry here, so suppressed. (Mark 6:3, the parallel passage, needs no entry: WEB renders that
+ *   same brother's name "Judah," which no entry in this app claims, so it already produces no link.) */
 const VERSE_NAME_OVERRIDES: Record<string, Record<string, Record<string, string | null>>> = {
   mary: {
     Matthew: { "27:56": "mary-mother-of-james-the-less", "27:61": "mary-mother-of-james-the-less", "28:1": "mary-mother-of-james-the-less" },
