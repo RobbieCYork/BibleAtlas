@@ -4454,9 +4454,8 @@ Ruth 4:22	68	David	david	david
 2 Kings 1:13	133	Elijah	elijah	elijah
 2 Kings 1:15	23	Elijah	elijah	elijah
 2 Kings 1:17	44	Elijah	elijah	elijah
-2 Kings 1:17	63	Jehoram	joram-king-of-judah	joram-king-of-judah
-2 Kings 1:17	121	Jehoram	joram-king-of-judah	joram-king-of-judah
-2 Kings 1:17	140	Jehoshaphat	jehoshaphat	jehoshaphat
+2 Kings 1:17	63	Jehoram	joram-king-of-israel	joram-king-of-judah
+2 Kings 1:17	121	Jehoram the son of Jehoshaphat	joram-king-of-judah	joram-king-of-judah
 2 Kings 2:1	30	Elijah	elijah	elijah
 2 Kings 2:1	68	Elijah	elijah	elijah
 2 Kings 2:1	85	Elisha	elisha	elisha
@@ -4526,8 +4525,7 @@ Ruth 4:22	68	David	david	david
 2 Kings 8:14	81	Elisha	elisha	elisha
 2 Kings 8:16	21	Joram the son of Ahab	joram-king-of-israel	joram-king-of-israel
 2 Kings 8:16	59	Jehoshaphat	jehoshaphat	jehoshaphat
-2 Kings 8:16	97	Jehoram	joram-king-of-judah	joram-king-of-judah
-2 Kings 8:16	116	Jehoshaphat	jehoshaphat	jehoshaphat
+2 Kings 8:16	97	Jehoram the son of Jehoshaphat	joram-king-of-judah	joram-king-of-judah
 2 Kings 8:19	44	David	david	david
 2 Kings 8:21	5	Joram	joram-king-of-judah	joram-king-of-judah
 2 Kings 8:23	24	Joram	joram-king-of-judah	joram-king-of-judah
@@ -6980,8 +6978,7 @@ Matthew 4:12	9	Jesus	jesus-of-nazareth	jesus-of-nazareth
 Matthew 4:12	26	John	john-the-baptist	john-the-baptist
 Matthew 4:14	52	Isaiah	isaiah	isaiah
 Matthew 4:17	16	Jesus	jesus-of-nazareth	jesus-of-nazareth
-Matthew 4:18	52	Simon	simon-peter	simon-peter
-Matthew 4:18	73	Peter	simon-peter	simon-peter
+Matthew 4:18	52	Simon, who is called Peter	simon-peter	simon-peter
 Matthew 4:18	84	Andrew	andrew-apostle	andrew-apostle
 Matthew 4:21	48	James the son of Zebedee	james-son-of-zebedee	james-son-of-zebedee
 Matthew 4:21	78	John	john-the-baptist	john-the-baptist
@@ -7027,8 +7024,7 @@ Matthew 9:27	109	David	david	david
 Matthew 9:28	60	Jesus	jesus-of-nazareth	jesus-of-nazareth
 Matthew 9:30	24	Jesus	jesus-of-nazareth	jesus-of-nazareth
 Matthew 9:35	0	Jesus	jesus-of-nazareth	jesus-of-nazareth
-Matthew 10:2	59	Simon	simon-peter	simon-peter
-Matthew 10:2	80	Peter	simon-peter	simon-peter
+Matthew 10:2	59	Simon, who is called Peter	simon-peter	simon-peter
 Matthew 10:2	87	Andrew	andrew-apostle	andrew-apostle
 Matthew 10:2	108	James the son of Zebedee	james-son-of-zebedee	james-son-of-zebedee
 Matthew 10:2	134	John	john-the-baptist	john-the-baptist
@@ -8640,8 +8636,7 @@ Acts 9:40	139	Peter	simon-peter	simon-peter
 Acts 9:43	49	Simon	-	simon-peter
 Acts 10:1	41	Cornelius	cornelius-the-centurion	cornelius-the-centurion
 Acts 10:3	114	Cornelius	cornelius-the-centurion	cornelius-the-centurion
-Acts 10:5	31	Simon	simon-peter	simon-peter
-Acts 10:5	57	Peter	simon-peter	simon-peter
+Acts 10:5	31	Simon, who is also called Peter	simon-peter	simon-peter
 Acts 10:6	30	Simon	-	simon-peter
 Acts 10:7	46	Cornelius	cornelius-the-centurion	cornelius-the-centurion
 Acts 10:9	78	Peter	simon-peter	simon-peter
@@ -8662,9 +8657,8 @@ Acts 10:25	20	Cornelius	cornelius-the-centurion	cornelius-the-centurion
 Acts 10:26	4	Peter	simon-peter	simon-peter
 Acts 10:30	0	Cornelius	cornelius-the-centurion	cornelius-the-centurion
 Acts 10:31	11	Cornelius	cornelius-the-centurion	cornelius-the-centurion
-Acts 10:32	36	Simon	simon-peter	simon-peter
-Acts 10:32	62	Peter	simon-peter	simon-peter
-Acts 10:32	110	Simon	simon-peter	simon-peter
+Acts 10:32	36	Simon, who is also called Peter	simon-peter	simon-peter
+Acts 10:32	110	Simon	-	simon-peter
 Acts 10:34	0	Peter	simon-peter	simon-peter
 Acts 10:36	82	Jesus Christ	jesus-of-nazareth	jesus-of-nazareth
 Acts 10:37	126	John	john-the-apostle	john-the-baptist
@@ -8681,8 +8675,7 @@ Acts 10:48	48	Jesus Christ	jesus-of-nazareth	jesus-of-nazareth
 Acts 11:2	5	Peter	simon-peter	simon-peter
 Acts 11:4	4	Peter	simon-peter	simon-peter
 Acts 11:7	42	Peter	simon-peter	simon-peter
-Acts 11:13	103	Simon	simon-peter	simon-peter
-Acts 11:13	124	Peter	simon-peter	simon-peter
+Acts 11:13	103	Simon, who is called Peter	simon-peter	simon-peter
 Acts 11:15	21	the Holy Spirit	holy-spirit	holy-spirit
 Acts 11:16	49	John	john-the-apostle	john-the-baptist
 Acts 11:16	108	the Holy Spirit	holy-spirit	holy-spirit

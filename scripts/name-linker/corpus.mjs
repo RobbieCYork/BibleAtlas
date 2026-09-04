@@ -20,9 +20,16 @@ export function loadBible() {
 }
 
 /** Every authored prose block, with the `excludeId` the owning panel passes. Mirrors what
- * PersonPanel / LocationPanel / PoiPanel / TopicPanel / BookIntroView actually render. */
+ * PersonPanel / LocationPanel / PoiPanel / TopicPanel / BookIntroView / TimelineEventPanel
+ * actually render.
+ *
+ * If you add a component that puts authored text through `LinkedVerseText`, add its source fields
+ * here in the same commit. Until 2026-09-04 this function omitted `timelineEvents` entirely, and
+ * the 358 timeline articles — the single largest authored surface in the app — were invisible to
+ * the whole net: a batch could move thousands of links inside them and every snapshot stayed
+ * green. Nothing outside this file caught that, and nothing outside this file can. */
 export async function loadProseBlocks() {
-  const { locations, pois, people, topics, bookIntros } = await loadLinker();
+  const { locations, pois, people, topics, bookIntros, timelineEvents } = await loadLinker();
   const blocks = [];
   const add = (src, owner, text) => {
     if (typeof text === "string" && text.trim()) blocks.push({ src, owner, text });
@@ -52,6 +59,17 @@ export async function loadProseBlocks() {
   });
   topics.forEach((t) => {
     (t.sections ?? []).forEach((s) => (s.paragraphs ?? []).forEach((x) => add("topic.section", t.id, x)));
+  });
+  // TimelineEventPanel splits `article` on blank lines and renders each paragraph through its own
+  // LinkedVerseText, so the harness must split it the same way: annotation offsets are per-block,
+  // and a whole-article block would report offsets no rendered element ever has.
+  timelineEvents.forEach((e) => {
+    e.article
+      .split(/\n\s*\n/)
+      .map((p) => p.trim())
+      .filter(Boolean)
+      .forEach((p) => add("timelineEvent.article", e.id, p));
+    add("timelineEvent.datingNotes", e.id, e.datingNotes);
   });
   Object.entries(bookIntros).forEach(([book, i]) => {
     add("bookIntro.whyWritten", undefined, i.whyWritten);

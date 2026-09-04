@@ -1890,6 +1890,14 @@ export const pois: PointOfInterest[] = [
     pronunciation: "VEE-uh REK-tuh",
     // The bracketed display name can never match. Acts 9:11 words it "the street which is called
     // Straight", which no single key can reach; these cover how our own writing refers to it.
+    //
+    // On the choice of field, for this and the eight other POIs below whose display names carry a
+    // bracket: alternateNames, deliberately, not matchNames. PoiPanel does NOT print a POI's
+    // alternate names — only PersonPanel, LocationPanel and TopicPanel render "Also called: ..." —
+    // so there is no reader-facing cost here, and alternateNames is the field that also feeds
+    // ArticlesPanel search and the quiz keywords in gameQuestions.ts. Every string added is a real
+    // name of the site, so it is wanted in all three. Contrast saul-king-of-israel in people.ts,
+    // where the same choice DID print to readers and belonged in matchNames.
     alternateNames: ["Street Called Straight", "Via Recta", "Straight Street"],
     tag: "Historic Street",
     modernName: "Medhat Pasha Street / Bab Sharqi Street, Damascus, Syria",

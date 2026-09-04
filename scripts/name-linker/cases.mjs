@@ -5,7 +5,10 @@
 //   path: "reader" (default) — what VerseText.tsx renders; book, chapter and verse are passed.
 //   path: "panel"            — what LinkedVerseText.tsx renders; NO context is passed, so none of
 //                              the book/verse corrections fire. Used by PersonPanel, LocationPanel,
-//                              PoiPanel, TopicPanel and BookIntroView.
+//                              PoiPanel, TopicPanel, BookIntroView, TimelineEventPanel and
+//                              MyProfileView. (This list has been wrong before — it omitted both of
+//                              the last two, and TimelineEventPanel's absence from corpus.mjs left
+//                              2,151 links unmeasured. Grep for LinkedVerseText before trusting it.)
 //
 // `status` is the part that makes this net honest:
 //   "guard"       — this resolution is CORRECT. If it changes, something has regressed.
@@ -95,10 +98,13 @@ export const CASES = [
     why: "'so does Mark, my son' — the real one." },
 
   { ref: "1 John 2:1", surface: "Counselor", expect: null, status: "guard",
-    why: "The verse names the Counselor as 'Jesus Christ, the righteous' on the same line, and the " +
-         "link says Holy Spirit. Capitalised here, so only a per-verse entry can reach it. " +
-         "Suppressed rather than redirected: pointing it at Jesus would take the same position " +
-         "Isaiah 9:6 is flagged for, and that is Robbie's to take." },
+    why: "'we have a Counselor with the Father, Jesus Christ, the righteous' — the verse names its " +
+         "own referent, and the link said Holy Spirit. Capitalised, so only a per-verse entry " +
+         "reaches it. This is NOT the Isaiah 9:6 question and must not be filed under it: nothing " +
+         "here is being read as messianic prophecy. No link rather than a link to Jesus because " +
+         "the name is right there in the same clause, and because pointing 'Counselor' at Jesus in " +
+         "one verse while it points at the Spirit in John 14:16, 14:26 and 15:26 is a decision " +
+         "about the whole key." },
   { ref: "Isaiah 3:3", surface: "the counselor", expect: null, status: "guard",
     why: "A civic official in a list of them ('the captain of fifty, the honorable man, the counselor')." },
   { ref: "2 Samuel 15:12", surface: "counselor", expect: null, status: "guard",
@@ -118,7 +124,11 @@ export const CASES = [
          "'Counselor' — capitalised, therefore a name. This is the case that proves stripping the " +
          "article does not throw the Paraclete out with the king's advisers." },
   { ref: "Psalms 44:10", surface: "the adversary", expect: null, status: "guard",
-    why: "A human enemy in battle. All 15 occurrences of this key in the WEB are the ordinary word." },
+    why: "A human enemy in battle. The suppression covers 15 occurrences of this key in the WEB. " +
+         "Do NOT restate that as 'all 15 are the ordinary word' — that was claimed once and is not " +
+         "true: 1 Timothy 5:14 is read as Satan by a substantial body of commentators (see its own " +
+         "case below). The defensible claim is narrower — no occurrence is UNAMBIGUOUSLY Satan, so " +
+         "suppressing the key takes no position, whereas linking it would." },
   { ref: "Lamentations 1:10", surface: "The adversary", expect: null, status: "guard",
     why: "Babylon, plundering the temple. Capitalised only because it opens the verse — which is " +
          "why the capitalisation test has to look past a leading 'The'." },
@@ -214,11 +224,18 @@ export const CASES = [
     why: "FIXED in batch 1. The Pharisee hosting the anointing dinner, previously Simon Peter." },
   { ref: "Acts 9:43", surface: "Simon", expect: null, status: "guard",
     why: "FIXED in batch 1. Simon the tanner of Joppa — a different man with no entry, so no link." },
-  { ref: "Acts 10:32", surface: "Simon", occurrence: 2, expect: null, status: "known-wrong",
-    why: "STILL WRONG, and not fixable the way the rest were: this verse names BOTH Simons — " +
-         "'summon Simon, who is also called Peter... in the house of a tanner named Simon' — and a " +
-         "per-verse override applies one answer to every match in the verse. Needs occurrence-aware " +
-         "resolution (batch 6). Left alone rather than half-fixed." },
+  { ref: "Acts 10:32", surface: "Simon", occurrence: 2, expect: null, status: "guard",
+    why: "FIXED in batch 4. The verse names BOTH Simons — 'summon Simon, who is also called " +
+         "Peter... in the house of a tanner named Simon' — and a per-verse override applies one " +
+         "answer to every match of a key, so nulling 'simon' would have unlinked the apostle too. " +
+         "Registering 'Simon, who is also called Peter' as a phrase takes the apostle out of the " +
+         "key here, leaving one bare 'Simon' for the tanner to suppress. No occurrence-aware " +
+         "resolution needed; this is the Acts 1:13 technique." },
+  { ref: "Acts 10:32", surface: "Simon", occurrence: 1, expect: "simon-peter",
+    expectSurface: "Simon, who is also called Peter", status: "guard",
+    why: "The other half of the same fix: the apostle must still be linked, and as the whole " +
+         "phrase. expectSurface is what makes the two cases distinguish 'the tanner is unlinked' " +
+         "from 'nothing in this verse is linked'." },
   { ref: "Acts 13:21", surface: "Saul the son of Kish", expect: "saul-king-of-israel", status: "guard",
     why: "FIXED in batch 1 by registering the phrase. Israel's first king had been rendered as " +
          "Paul of Tarsus, inside Paul's own sermon at Pisidian Antioch. The same key also corrects " +
@@ -273,15 +290,19 @@ export const CASES = [
          "neither king, and no entry." },
   { ref: "2 Chronicles 17:8", surface: "Jehoram", expect: null, status: "guard",
     why: "FIXED in batch 3. 'Elishama and Jehoram, the priests' — a Levite, no entry." },
-  { ref: "2 Kings 1:17", surface: "Jehoram", occurrence: 1, expect: "joram-king-of-israel", status: "known-wrong",
-    why: "STILL WRONG, and the only Joram/Jehoram verse batch 3 could not reach. This verse names " +
-         "BOTH men under the same key — 'Jehoram began to reign in his place [Israel] in the second " +
-         "year of Jehoram the son of Jehoshaphat king of Judah' — and a per-verse override applies " +
-         "one answer to every match in the verse. Occurrence-aware resolution (batch 6). Left alone " +
-         "rather than half-fixed: whichever value were chosen would be wrong for the other." },
-  { ref: "2 Kings 1:17", surface: "Jehoram", occurrence: 2, expect: "joram-king-of-judah", status: "guard",
-    why: "The second Jehoram in that verse IS Judah's, and is correct today. It is the reason the " +
-         "first one cannot simply be redirected." },
+  { ref: "2 Kings 1:17", surface: "Jehoram", occurrence: 1, expect: "joram-king-of-israel",
+    expectSurface: "Jehoram", status: "guard",
+    why: "FIXED in batch 4. This verse names BOTH men under the same key — 'Jehoram began to reign " +
+         "in his place [Israel] in the second year of Jehoram the son of Jehoshaphat king of " +
+         "Judah' — and a per-verse override applies one answer to every match of a key. Registering " +
+         "'Jehoram the son of Jehoshaphat' on the king of Judah leaves exactly one bare 'Jehoram' " +
+         "here, which the per-verse table now points at Israel." },
+  { ref: "2 Kings 1:17", surface: "Jehoram", occurrence: 2, expect: "joram-king-of-judah",
+    expectSurface: "Jehoram the son of Jehoshaphat", status: "guard",
+    why: "The second Jehoram in that verse IS Judah's, and is now matched as the whole phrase — " +
+         "which is what lets the first one be redirected. expectSurface pins that: if this ever " +
+         "shrinks back to a bare 'Jehoram', the verse override would capture it too and Judah's " +
+         "king would be relabelled Israel's." },
   { ref: "1 Chronicles 27:20", surface: "Hoshea", expect: null, status: "guard",
     why: "Hoshea son of Azaziah, an Ephraimite officer under David — a third man, with no entry." },
   { ref: "Nehemiah 10:23", surface: "Hoshea", expect: null, status: "guard",

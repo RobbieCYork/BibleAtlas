@@ -268,11 +268,15 @@ const VERSE_NAME_OVERRIDES: Record<string, Record<string, Record<string, string 
       "8:18": "simon-magus",
       "8:24": "simon-magus",
       // Simon the tanner of Joppa, whose house Peter lodges in — a different man, with no entry.
-      // Acts 10:17's "Simon's house" is genuinely ambiguous between the two and is left alone;
-      // Acts 10:32 names BOTH men in one verse and cannot be separated by a per-verse override at
-      // all (it needs occurrence-aware resolution), so it is left alone too.
+      // Acts 10:17's "Simon's house" is genuinely ambiguous between the two and is left alone.
+      // Acts 10:32 names BOTH men — "summon Simon, who is also called Peter... in the house of a
+      // tanner named Simon" — which a per-verse override alone cannot separate, because it applies
+      // one answer to every match of the key. Registering "Simon, who is also called Peter" as a
+      // phrase on simon-peter (see people.ts) takes the apostle out of this key here, so the entry
+      // below reaches only the tanner. Same technique as Acts 1:13's three Jameses.
       "9:43": null,
       "10:6": null,
+      "10:32": null,
     },
   },
   james: {
@@ -313,9 +317,12 @@ const VERSE_NAME_OVERRIDES: Record<string, Record<string, Record<string, string 
   // Israel. Read one by one against the WEB text — the deciding phrase is usually "the son of Ahab"
   // or "king of Israel" in the same clause, or Jehu's coup, which is entirely an Israelite affair.
   //
-  // Two verses are NOT here and cannot be: 2 Kings 1:17 and 2 Chronicles 22:6 each name BOTH men
-  // under the key "jehoram", and a per-verse override applies one answer to every match in the
-  // verse. They need occurrence-aware resolution and are left alone rather than half-fixed.
+  // The two verses that name BOTH men are handled by matching the longer wording rather than by a
+  // per-verse answer, since a per-verse override applies one answer to every match of a key:
+  // 2 Chronicles 22:6 is settled entirely by the registered phrase "Jehoram the son of Ahab", and
+  // 2 Kings 1:17 by registering "Jehoram the son of Jehoshaphat" on the king of Judah, which
+  // leaves one bare "Jehoram" for the entry below to point at Israel. Neither needs
+  // occurrence-aware resolution after all.
   joram: {
     "2 Kings": {
       "8:16": "joram-king-of-israel", "8:25": "joram-king-of-israel",
@@ -333,7 +340,13 @@ const VERSE_NAME_OVERRIDES: Record<string, Record<string, Record<string, string 
     "1 Chronicles": { "26:25": null },
   },
   jehoram: {
-    "2 Kings": { "3:1": "joram-king-of-israel", "3:6": "joram-king-of-israel" },
+    "2 Kings": {
+      "3:1": "joram-king-of-israel", "3:6": "joram-king-of-israel",
+      // "Jehoram began to reign in his place in the second year of Jehoram the son of Jehoshaphat
+      // king of Judah" — the first is Israel's (Ahaziah of Israel has just died with no son); the
+      // second is matched as a phrase and never reaches this key.
+      "1:17": "joram-king-of-israel",
+    },
     "2 Chronicles": {
       "22:5": "joram-king-of-israel", "22:7": "joram-king-of-israel",
       "17:8": null,  // "Elishama and Jehoram, the priests" — a Levite, no entry.
@@ -361,10 +374,19 @@ const VERSE_NAME_OVERRIDES: Record<string, Record<string, Record<string, string 
     Psalms: { "37:37": null, "48:13": null }, // "Mark the perfect man"; "Mark well her bulwarks"
   },
   // "Counselor": lowercase matches are human royal advisers and are removed by capitalisation.
-  // 1 John 2:1 is capitalised and still wrong — the verse names the Counselor as "Jesus Christ, the
-  // righteous" on the same line, and the link says Holy Spirit. Suppressed rather than redirected:
-  // pointing it at Jesus would take the same position Isaiah 9:6 is flagged for, which is not ours
-  // to take. Isaiah 9:6 itself is left exactly as it is, pending that decision.
+  // 1 John 2:1 is capitalised, so only a per-verse entry can reach it, and the link it produced was
+  // plainly wrong: "we have a Counselor with the Father, Jesus Christ, the righteous" names its own
+  // referent in the next clause, and the link said Holy Spirit. Removing it is not a judgement call.
+  //
+  // What IS a judgement call is what replaces it, and this is NOT the Isaiah 9:6 question — an
+  // earlier version of this comment said it was, and that is wrong. Isaiah 9:6 asks whether a
+  // throne-name in a prophetic oracle is messianic; 1 John 2:1 asks nothing, because the verse
+  // identifies the Counselor itself. The reason for no link rather than a link to Jesus is simpler:
+  // the verse already names him three words later, so the link would carry no information a reader
+  // does not already have — and making "Counselor" point at Jesus here while it points at the Holy
+  // Spirit in John 14:16, 14:26 and 15:26 is a decision about the key as a whole, not about this
+  // verse. Whoever takes that up should take it up for all five at once. Isaiah 9:6 is left exactly
+  // as it is, pending Robbie's ruling (§7.3).
   counselor: {
     "1 John": { "2:1": null },
   },
@@ -444,9 +466,22 @@ const BOOK_NAME_ALLOWLIST: Record<string, string[]> = {
  * Unlike the book and verse tables above, this works on both rendering paths — it needs no context —
  * so it is the first correction in this file that fixes our own articles as well as the Bible reader.
  *
- * Measured over the whole WEB (see scripts/name-linker): this removes 24 of the 28 wrong "mark"
- * links, 10 of 11 wrong "counselor", all 15 "the adversary", and 92 wrong "ram" links on the
- * article surface. The stragglers are capitalised and are handled verse by verse above.
+ * Measured by turning the rule off and diffing the whole-corpus snapshot (scripts/name-linker).
+ * State the SURFACE with every one of these numbers — they differ by an order of magnitude between
+ * them, and quoting the panel figure as if it were the article surface is the single mistake this
+ * work has made most often:
+ *
+ *   key             Scripture, reader   Scripture, panel   our own articles (prose)
+ *   mark                    24                 24                    30
+ *   counselor                9                  9                     1
+ *   the counselor            1                  1                     0
+ *   the adversary           15                 15                     0
+ *   ram                      0                 92                     7
+ *
+ * "ram" is the clearest illustration: 92 is a PANEL-path number. The reader path never had those
+ * links to lose — BOOK_NAME_ALLOWLIST already confines "ram" to Ruth, 1 Chronicles and Matthew —
+ * and on the article surface the rule takes 7 links out, leaving 2, both of them the real man.
+ * The capitalised stragglers this rule cannot see are handled verse by verse above.
  *
  * "the accuser" is deliberately NOT in this list. Both its occurrences are lowercase, and one of
  * them — Revelation 12:10, "the accuser of our brothers... who accuses them before our God" — is
