@@ -183,7 +183,28 @@ const BOOK_NAME_OVERRIDES: Record<string, Record<string, string>> = {
  *   different Herodian half-brother (see the note in philip-the-tetrarch's lifeStory) with no entry —
  *   suppressed rather than mislinked.
  * - "Simon": Simon Peter (the default) is correct except John 6:71/12:4/13:2/13:26, where "Simon('s
- *   son)/Simon Iscariot" names Judas Iscariot's father — a distinct person with no entry — suppressed. */
+ *   son)/Simon Iscariot" names Judas Iscariot's father — a distinct person with no entry — suppressed;
+ *   and except Matthew 13:55/Mark 6:3, where the Nazareth crowd lists Jesus' brothers (see "James" and
+ *   "Judas" below) — that Simon is not Peter and not Simon the Zealot, and has no entry — suppressed.
+ * - "James": James, son of Zebedee owns the bare name globally, but the Nazareth crowd's list of Jesus'
+ *   brothers in Matthew 13:55/Mark 6:3 means James "the Just," already an entry here (james-brother-of-
+ *   jesus, whose own `verses` field cites Mark 6:3). Luke 6:16's "Judas the son of James" names a third
+ *   James — the apostle Judas's father, an otherwise unmentioned man with no entry — suppressed.
+ *   NOTE: Acts 1:13 is knowingly left alone. Its three bare "James" matches are three DIFFERENT men
+ *   (Zebedee's son; Alphaeus's son; Judas's father) and a per-verse override cannot separate occurrences,
+ *   so any single value is wrong twice over. It currently resolves all three to james-brother-of-jesus
+ *   via the Acts entry in BOOK_NAME_OVERRIDES, which is wrong for all three; suppressing the verse
+ *   outright is the least-wrong option but is a visible change to the apostle list, so it is flagged
+ *   rather than made here.
+ * - "Judas": Judas Iscariot owns the bare name globally, and is right at most mentions, but is wrong at
+ *   three places naming the OTHER apostle Judas — "Judas, son of James," i.e. Thaddaeus (Luke 6:16;
+ *   Acts 1:13; John 14:22, where the text itself says "Judas (not Iscariot)"). Wrong again at Matthew
+ *   13:55, where the Judas listed is a brother of Jesus — a fourth, distinct man with no entry here,
+ *   so suppressed. (Mark 6:3, the parallel passage, needs no entry: WEB renders that same brother's
+ *   name "Judah," which no entry in this app claims, so it already produces no link.)
+ *   At Luke 6:16 the override touches only the bare "Judas" of "Judas the son of James" — the verse's
+ *   second Judas is matched as the longer registered name "Judas Iscariot" (a different lookup key),
+ *   so it keeps resolving correctly. */
 const VERSE_NAME_OVERRIDES: Record<string, Record<string, Record<string, string | null>>> = {
   mary: {
     Matthew: { "27:56": "mary-mother-of-james-the-less", "27:61": "mary-mother-of-james-the-less", "28:1": "mary-mother-of-james-the-less" },
@@ -228,6 +249,19 @@ const VERSE_NAME_OVERRIDES: Record<string, Record<string, Record<string, string 
   },
   simon: {
     John: { "6:71": null, "12:4": null, "13:2": null, "13:26": null },
+    Matthew: { "13:55": null },
+    Mark: { "6:3": null },
+  },
+  james: {
+    Matthew: { "13:55": "james-brother-of-jesus" },
+    Mark: { "6:3": "james-brother-of-jesus" },
+    Luke: { "6:16": null },
+  },
+  judas: {
+    Matthew: { "13:55": null },
+    Luke: { "6:16": "thaddaeus" },
+    John: { "14:22": "thaddaeus" },
+    Acts: { "1:13": "thaddaeus" },
   },
   // "Enoch": the patriarch (Genesis 5, Hebrews 11:5, Jude 1:14-15) is the default owner of bare
   // "Enoch," but Genesis 4:17-18, one chapter earlier, names a completely different Enoch — Cain's
