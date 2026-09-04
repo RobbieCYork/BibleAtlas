@@ -64,6 +64,12 @@ export interface Location {
   /** Phonetic respelling, e.g. "juh-ROO-suh-lem", shown next to the name. */
   pronunciation?: string;
   alternateNames?: string[];
+  /** Wordings the LINKER should match but that must never be shown to a reader — see
+   * `computeLinkAnnotations`. `alternateNames` is user-facing copy ("Also called: ..."), so the
+   * near-duplicates a translation forces on us belong here instead: "James the son of Alphaeus"
+   * AND "James, the son of Alphaeus", because Matthew and Mark punctuate it differently. Putting
+   * those in `alternateNames` would print both to the reader, one comma apart. */
+  matchNames?: string[];
   category: LocationCategory;
   modernName?: string;
   /** [longitude, latitude] */
@@ -110,8 +116,15 @@ export interface Person {
   name: string;
   /** Phonetic respelling, e.g. "SIGH-mun PEE-ter", shown next to the name. */
   pronunciation?: string;
-  /** Other names/titles this person is called by in the text, e.g. "Simon Peter", "Cephas", "Simon". */
+  /** Other names/titles this person is called by in the text, e.g. "Simon Peter", "Cephas", "Simon".
+   * SHOWN TO THE READER as "Also called: ..." — for match-only wordings use `matchNames` below. */
   alternateNames?: string[];
+  /** Wordings the LINKER should match but that must never be shown to a reader — see
+   * `computeLinkAnnotations`. `alternateNames` is user-facing copy ("Also called: ..."), so the
+   * near-duplicates a translation forces on us belong here instead: "James the son of Alphaeus"
+   * AND "James, the son of Alphaeus", because Matthew and Mark punctuate it differently. Putting
+   * those in `alternateNames` would print both to the reader, one comma apart. */
+  matchNames?: string[];
   /** Signed birth year: negative = BC, positive = AD (e.g. -586 = 586 BC, 5 = AD 5). There is no year 0.
    * Omitted when Scripture and tradition give no basis for even an approximate year. */
   bornYear?: number;
@@ -184,6 +197,12 @@ export interface Topic {
   id: string;
   name: string;
   alternateNames?: string[];
+  /** Wordings the LINKER should match but that must never be shown to a reader — see
+   * `computeLinkAnnotations`. `alternateNames` is user-facing copy ("Also called: ..."), so the
+   * near-duplicates a translation forces on us belong here instead: "James the son of Alphaeus"
+   * AND "James, the son of Alphaeus", because Matthew and Mark punctuate it differently. Putting
+   * those in `alternateNames` would print both to the reader, one comma apart. */
+  matchNames?: string[];
   category: TopicCategory;
   /** Short tag, e.g. "Old Testament Practice", "Trinitarian Doctrine", "People Group". */
   role: string;
@@ -288,6 +307,12 @@ export interface PointOfInterest {
   pronunciation?: string;
   /** Other names/spellings this site is called by in NT verse text, e.g. "Bethesda" for the Pool of Bethesda. */
   alternateNames?: string[];
+  /** Wordings the LINKER should match but that must never be shown to a reader — see
+   * `computeLinkAnnotations`. `alternateNames` is user-facing copy ("Also called: ..."), so the
+   * near-duplicates a translation forces on us belong here instead: "James the son of Alphaeus"
+   * AND "James, the son of Alphaeus", because Matthew and Mark punctuate it differently. Putting
+   * those in `alternateNames` would print both to the reader, one comma apart. */
+  matchNames?: string[];
   /** Short descriptive tag, e.g. "Fortress", "Ancient City", "Religious Site". */
   tag: string;
   modernName?: string;

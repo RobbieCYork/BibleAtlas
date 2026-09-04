@@ -8,6 +8,15 @@ export const people: Person[] = [
     name: "Simon Peter",
     pronunciation: "SIGH-mun PEE-ter",
     alternateNames: ["Peter", "Simon", "Cephas"],
+    // Matched as whole phrases so that a verse naming BOTH Simons can still be disambiguated.
+    // Acts 10:32 — "summon Simon, who is also called Peter. He lodges in the house of a tanner
+    // named Simon" — used to be unfixable: a per-verse override applies one answer to every match
+    // of a key in the verse, so nulling "simon" would have unlinked the apostle too. Matching the
+    // long form takes the apostle out of the "simon" key's hands entirely, leaving exactly one
+    // bare "Simon" for the per-verse table to suppress. Both punctuations occur in the WEB
+    // (Matthew 4:18 and 10:2 write "who is called"; Acts 10:5, 10:32 and 11:13 "who is also
+    // called"), which is precisely what matchNames is for.
+    matchNames: ["Simon, who is also called Peter", "Simon, who is called Peter"],
     diedYear: 67,
     lifespanLabel: "d. c. AD 67 (tradition)",
     lifespanCertainty: "traditional",
@@ -637,7 +646,12 @@ export const people: Person[] = [
     id: "james-son-of-zebedee",
     name: "James, son of Zebedee",
     pronunciation: "JAYMZ",
+    // "James the son of Zebedee" is how Matthew 4:21, 10:2, Mark 1:19 and 3:17 word it. Those
+    // already resolved here through the bare name, but registering the full phrase makes them
+    // immune to any future book-level redirect of bare "James" — which is exactly what goes wrong
+    // in Acts, where the book override sends every "James" to the brother of Jesus.
     alternateNames: ["James", "Boanerges"],
+    matchNames: ["James the son of Zebedee"],
     diedYear: 44,
     lifespanLabel: "d. AD 44",
     lifespanCertainty: "firm",
@@ -701,7 +715,10 @@ export const people: Person[] = [
     id: "bartholomew-nathanael",
     name: "Bartholomew (Nathanael)",
     pronunciation: "bar-THOL-uh-myoo / nuh-THAN-yel",
+    // "Bartholomew" was unreachable behind the bracket, so the four apostle lists that name him —
+    // Matthew 10:3, Mark 3:18, Luke 6:14, Acts 1:13 — linked nowhere. All four are this man.
     alternateNames: ["Nathanael"],
+    matchNames: ["Bartholomew"],
     diedYear: 68,
     lifespanLabel: "d. c. AD 68 (late tradition)",
     lifespanCertainty: "legendary",
@@ -763,6 +780,11 @@ export const people: Person[] = [
     id: "james-son-of-alphaeus",
     name: "James, son of Alphaeus",
     pronunciation: "JAYMZ",
+    // The display name uses a comma; no translation does. Both wordings below appear in the WEB —
+    // "James the son of Alphaeus" in Matthew 10:3 and Acts 1:13, "James, the son of Alphaeus" in
+    // Mark 3:18 and Luke 6:15 — and until they were registered this man could not be linked from
+    // Scripture at all: every one of his four mentions fell through to the bare name "James".
+    matchNames: ["James the son of Alphaeus", "James, the son of Alphaeus"],
     diedYear: 62,
     lifespanLabel: "d. c. AD 62 (thin tradition)",
     lifespanCertainty: "legendary",
@@ -787,7 +809,12 @@ export const people: Person[] = [
     id: "thaddaeus",
     name: "Thaddaeus (Judas, son of James)",
     pronunciation: "THAD-ee-us",
+    // "Thaddaeus" itself was missing, so Matthew 10:3 and Mark 3:18 — the two verses that actually
+    // use the name this entry is titled with — linked nowhere. "Judas the son of James" is how
+    // Luke 6:16 and Acts 1:13 word it; registering it also stops Acts 1:13's third bare "James"
+    // (Thaddaeus's father, who has no entry) from being mislinked, because the longer key swallows it.
     alternateNames: ["Judas, son of James", "Lebbaeus"],
+    matchNames: ["Thaddaeus", "Judas the son of James"],
     diedYear: 65,
     lifespanLabel: "d. c. AD 65 (thin tradition)",
     lifespanCertainty: "legendary",
@@ -837,7 +864,17 @@ export const people: Person[] = [
     id: "matthew-levi",
     name: "Matthew (Levi)",
     pronunciation: "MATH-yoo",
+    // The bracket in the display name makes "Matthew (Levi)" unmatchable, so the apostle's own name
+    // links nowhere. Bare "Matthew" was tried and REVERTED: all five Scripture occurrences
+    // (Matthew 9:9, 10:3; Mark 3:18; Luke 6:15; Acts 1:13) really are this man, but it also fired
+    // on 85 mentions in our own articles — "Matthew's account", "Matthew and Luke", "Matthew's
+    // genealogy" — every one of which means the Gospel, not the person. Linking those to the
+    // apostle would assert Matthean authorship in 85 places, which is not a claim this app makes
+    // and is next door to a question flagged for Robbie. The prose surface passes no book or verse,
+    // so there is no way to allow the name in Scripture and refuse it in our own writing.
+    // Matthew 10:3's "Matthew the tax collector" is registered because that phrase is unambiguous.
     alternateNames: ["Levi"],
+    matchNames: ["Matthew the tax collector"],
     diedYear: 60,
     lifespanLabel: "d. c. AD 60 (tradition varies)",
     lifespanCertainty: "legendary",
@@ -1819,7 +1856,9 @@ export const people: Person[] = [
     id: "dorcas-tabitha",
     name: "Dorcas (Tabitha)",
     pronunciation: "DOR-kus / tuh-BY-thuh",
+    // Acts 9:36 and 9:39 both name her Dorcas; the bracketed display name could never match it.
     alternateNames: ["Tabitha"],
+    matchNames: ["Dorcas"],
     tier: "notable",
     role: "Disciple Known for Charity",
     summary: "A disciple in Joppa known for good works and charity — especially making clothing for widows — who died and was raised back to life by Peter.",
@@ -3566,6 +3605,14 @@ export const people: Person[] = [
     id: "saul-king-of-israel",
     name: "Saul (King of Israel)",
     pronunciation: "SAWL",
+    // The bare name "Saul" belongs to Paul of Tarsus globally and is recovered for the king by book
+    // in 1-2 Samuel and 1 Chronicles. That leaves Acts 13:21 — "God gave to them Saul the son of
+    // Kish" — pointing Israel's first king at Paul, inside Paul's own sermon at Pisidian Antioch.
+    // Registering that exact wording resolves it without touching the bare name anywhere.
+    // matchNames, NOT alternateNames: this is a match-only wording. In alternateNames the panel
+    // printed "Also called: Saul the son of Kish" to readers, which is a phrase from one verse of
+    // Acts, not a name anybody calls him.
+    matchNames: ["Saul the son of Kish"],
     diedYear: -1010,
     lifespanLabel: "d. 1010 BC (reigned c. 1050-1010 BC)",
     lifespanCertainty: "disputed",
@@ -3693,6 +3740,12 @@ export const people: Person[] = [
     id: "nathan-the-prophet",
     name: "Nathan (Prophet)",
     pronunciation: "NAY-thun",
+    // Until this line, Nathan could not be linked from anywhere in the app: the bracketed display
+    // name was his only key and the linker could never match it. "Nathan" is shared with several
+    // other men — David's son (2 Samuel 5:14; 1 Chronicles 3:5, 14:4; Zechariah 12:12; Luke 3:31),
+    // Igal's father, Joel's brother, two post-exilic men in Ezra — so it is restricted by book in
+    // BOOK_NAME_ALLOWLIST and by verse in VERSE_NAME_OVERRIDES; see verseAnnotations.ts.
+    matchNames: ["Nathan"],
     tier: "notable",
     role: "Court prophet under David and Solomon",
     summary: "A prophet in David's court best known for delivering the Davidic covenant and for confronting David over the Bathsheba affair with a memorable parable, later also securing Solomon's succession to the throne.",
@@ -4262,7 +4315,11 @@ export const people: Person[] = [
     id: "god-the-father",
     name: "God the Father",
     pronunciation: "GOD thuh FAH-ther",
+    // "Abba! Father!" cannot match — the exclamation marks defeat the word boundaries — which left
+    // Romans 8:15 unlinked while Mark 14:36 and Galatians 4:6 matched under "Abba, Father". Bare
+    // "Abba" covers it; the longer key still wins wherever the full phrase is written out.
     alternateNames: ["Father in heaven", "heavenly Father", "Abba, Father", "Abba! Father!"],
+    matchNames: ["Abba"],
     tier: "major",
     role: "First Person of the Trinity",
     summary:
@@ -4729,18 +4786,93 @@ export const people: Person[] = [
     sources: [{ label: "Encyclopaedia Britannica: Jehoshaphat", url: "https://www.britannica.com/biography/Jehoshaphat" }],
   },
   {
+    id: "joram-king-of-israel",
+    name: "Joram, King of Israel",
+    pronunciation: "JOR-am",
+    // Deliberately no bare "Joram" or "Jehoram" here: both names are shared with the king of Judah
+    // below, who reigned at the same time, and the bare names are already his. Which of the two a
+    // verse means is decided verse by verse in VERSE_NAME_OVERRIDES — see verseAnnotations.ts.
+    alternateNames: ["Jehoram, son of Ahab"],
+    // Both wordings, with and without "the": 2 Kings writes "Joram the son of Ahab", and our own
+    // articles need a form of the name that resolves to THIS man. Bare "Joram" and "Jehoram" belong
+    // to Judah, and our articles pass no book or verse to the linker, so a bare mention on this
+    // very page would link to the other king. The prose below is written to use these forms.
+    matchNames: ["Joram the son of Ahab", "Jehoram the son of Ahab", "Joram son of Ahab", "Jehoram son of Ahab"],
+    diedYear: -841,
+    lifespanLabel: "d. c. 841 BC (reigned c. 852-841 BC)",
+    lifespanCertainty: "disputed",
+    lifespanDatingNotes:
+      "The regnal years for Israel and Judah in this period are famously hard to reconcile, and the standard reconstructions (Thiele, Albright, Galil) differ by several years. 2 Kings gives two synchronisms for the start of this reign that do not agree with each other: 2 Kings 3:1 dates it to the eighteenth year of Jehoshaphat of Judah, while 2 Kings 1:17 dates it to the second year of the Jehoram who ruled Judah. Coregencies are the usual explanation offered; the dates above follow Thiele's widely used scheme and should be read as approximate.",
+    tier: "significant",
+    // Plain role. `role` is a category badge, a share-card badge, a quiz ANSWER and a quiz
+    // DISTRACTOR for other people (see gameQuestions.ts) — a parenthetical disambiguation is
+    // wrong in every one of those places. The two kings are told apart in the prose below.
+    role: "King of Israel",
+    summary:
+      "The last king of Ahab's dynasty, who ruled the northern kingdom for about twelve years alongside a king of Judah with the same name, and was shot through the heart by Jehu in the coup that ended his family line.",
+    lifeStory: [
+      "Joram son of Ahab is called by the longer form of his name, Jehoram son of Ahab, about as often as by the short one — and both forms are shared, letter for letter, with the man who was king of Judah at the same moment. Confusing the two is easy and 2 Kings does nothing to help; the deciding phrase is almost always \"the son of Ahab\" or \"king of Israel\" in the same clause. This one was a son of Ahab and Jezebel. He came to the throne of Israel after the death of his brother Ahaziah, who had no son (2 Kings 1:17), and reigned about twelve years from Samaria (2 Kings 3:1).",
+      "The text gives him a qualified verdict rather than a flat condemnation: he did evil in God's sight, \"but not like his father, and like his mother, for he put away the pillar of Baal that his father had made\" (2 Kings 3:2). He nevertheless kept up the state shrines at Bethel and Dan that 2 Kings treats as the founding sin of the northern kingdom.",
+      "When Moab rebelled after Ahab's death, Joram son of Ahab allied with Jehoshaphat of Judah and the king of Edom and marched around the southern end of the Dead Sea. The army ran out of water, and it was Jehoshaphat who insisted on consulting a prophet; Elisha agreed to speak only out of regard for the king of Judah, telling him to his face to go to his father's and mother's prophets instead (2 Kings 3:4-27).",
+      "Much of the Elisha cycle unfolds during his reign — Naaman's healing, the Syrian raiders struck blind, the siege and famine in Samaria so severe that women ate their own children — though in those chapters the text says only \"the king of Israel\" and never names him, so the identification is inference from the surrounding chronology rather than something the text states.",
+      "He was wounded fighting Hazael of Syria at Ramoth Gilead and withdrew to Jezreel to recover. Elisha had a young prophet anoint Jehu, one of his own commanders, as king with orders to destroy the house of Ahab. Jehu drove to Jezreel; the king rode out to meet him and asked, \"Is it peace, Jehu?\" Jehu answered by drawing his bow and shooting him through the heart, and had the body thrown into the field of Naboth the Jezreelite — the vineyard Ahab had taken by judicial murder, and the place the text says the judgment was always aimed at (2 Kings 9:14-26).",
+    ],
+    controversies: [
+      "The siege of Samaria and the famine, told across 2 Kings 6 and 2 Kings 7, never name the king, who says \"God do so to me, and more also, if the head of Elisha the son of Shaphat stays on him today\" (2 Kings 6:31). He is conventionally identified as Joram son of Ahab on chronological grounds, but the text withholds the name, and some scholars read those chapters as originally belonging to a different reign.",
+    ],
+    occupation: "King of Israel",
+    placesLived: "Samaria, the capital of the northern kingdom; wounded at Ramoth Gilead and killed at Jezreel.",
+    extraBiblicalReferences: [
+      {
+        source: "Tel Dan Stele",
+        citation: "Fragments A-B, lines 7-9",
+        summary:
+          "A ninth-century BC Aramaic victory inscription, most often attributed to Hazael of Damascus, in which the author boasts of killing a king of Israel and a king of the House of David. Most reconstructions restore those two names as Jehoram son of Ahab and Ahaziah of Judah — the same pair 2 Kings 9 says Jehu killed.",
+        reliability:
+          "The stele came out of a controlled excavation at Tel Dan — one fragment in 1993, two more in 1994 — which is why the handful of forgery allegations made against it have had almost no effect on its scholarly acceptance. The fragments were in secondary use, reused as building material in a wall and in the debris beside it rather than lying in the stratum they were cut for, so the archaeology dates the inscription only loosely. On the text itself, the distinction worth knowing is which words are actually on the stone: bytdwd, \"House of David,\" is fully preserved and undamaged, and the long argument over it turns on the absence of a word divider, not on any break. The two royal names are a different matter — only their terminations survive, -rm restored as [Jeho]ram and -yhw as Ahaz[iahu], and the fathers' names that would clinch the identification, Ahab and Jehoram, are supplied entirely by modern editors. The reconstruction is very widely accepted and fits 2 Kings 9 closely, but it is a reconstruction. The inscription also credits both deaths to the Aramean king rather than to Jehu, a real tension with 2 Kings that scholars resolve in different ways.",
+      },
+    ],
+    verses: [
+      { reference: "2 Kings 1:17", note: "Succeeds his brother Ahaziah on the throne of Israel" },
+      { reference: "2 Kings 3:1-3", note: "Reign summary; removes the pillar of Baal" },
+      { reference: "2 Kings 3:4-27", note: "The campaign against Moab, and Elisha's rebuke" },
+      { reference: "2 Kings 8:28-29", note: "Wounded by the Syrians at Ramoth Gilead" },
+      { reference: "2 Kings 9:14-26", note: "Killed by Jehu; the end of the house of Ahab" },
+    ],
+    // NOT Britannica. britannica.com/biography/Jehoram-king-of-Israel is a combined article on both
+    // Jehorams whose own page title reads "King of Judah" — the exact confusion this entry exists to
+    // dispel — and it contains a flat error (it places Jezreel in Judah; Jezreel is in Israel). The
+    // companion URL cited on the king of Judah, /biography/Jehoram-king-of-Judah, is a 404. Both are
+    // replaced with references a reader can actually open and that do not contradict us. Both are
+    // old, and say so in their notes: they are further reading, not the source of our dates, which
+    // come from the modern reconstructions named in the dating note above.
+    sources: [
+      { label: "Jewish Encyclopedia (1906): Jehoram (Joram)", url: "https://www.jewishencyclopedia.com/articles/8564-jehoram-joram", note: "public-domain encyclopaedia; covers both kings in one article, under clearly separate headings" },
+      { label: "Encyclopaedia Britannica (1911): Jehoram — via Wikisource", url: "https://en.wikisource.org/wiki/1911_Encyclop%C3%A6dia_Britannica/Jehoram", note: "public-domain reference text; gives almost no absolute dates, and says so" },
+    ],
+  },
+  {
     id: "joram-king-of-judah",
     name: "Joram, King of Judah",
     pronunciation: "JOR-am",
     alternateNames: ["Jehoram", "Joram"],
+    // The bare names above already belong to this man, so this long form changes nothing on its
+    // own — its job is to take him out of the "jehoram" key in the one verse that names both
+    // kings. 2 Kings 1:17 reads "Jehoram began to reign in his place [Israel] in the second year
+    // of Jehoram the son of Jehoshaphat king of Judah": matching the second occurrence as a phrase
+    // leaves exactly one bare "Jehoram", which VERSE_NAME_OVERRIDES can then point at Israel.
+    // 2 Kings 8:16 uses the same wording and resolves to this man either way.
+    matchNames: ["Jehoram the son of Jehoshaphat"],
     tier: "significant",
-    role: "King of Judah (not to be confused with Joram/Jehoram, King of Israel, son of Ahab)",
+    // Plain role — see the note on the king of Israel above. This entry is where the convention
+    // started; it was copied, not invented, and both are fixed together.
+    role: "King of Judah",
     summary: "Jehoshaphat's son, who secured his throne by murdering his own brothers, led Judah into Baal worship under the influence of his wife Athaliah, daughter of Ahab, and died of a prolonged, painful bowel disease that the text presents as divine judgment.",
     lifeStory: [
-      "Joram, more commonly called Jehoram in 2 Kings and 2 Chronicles, became king after his father Jehoshaphat and immediately consolidated power by killing all of his brothers along with some officials of Israel (2 Chronicles 21:1-4).",
+      "Joram, more commonly called Jehoram in 2 Kings and 2 Chronicles, became king after his father Jehoshaphat and immediately consolidated power by killing all of his brothers along with some officials of Israel (2 Chronicles 21:1-4). He is not the Joram son of Ahab who ruled the northern kingdom at the same moment under the same two names; the deciding phrase in the text is almost always \"the son of Jehoshaphat\" or \"king of Judah\" in the same clause.",
       "He married Athaliah, daughter of Ahab and Jezebel, and under her influence 'walked in the way of the kings of Israel,' leading Judah into Baal worship; the text says he did evil because of this marriage alliance, describing it as being joined to the house of Ahab (2 Kings 8:16-19; 2 Chronicles 21:6).",
       "During his reign Edom revolted successfully against Judah's control, and the town of Libnah also rebelled, both linked in the text to his unfaithfulness (2 Kings 8:20-22; 2 Chronicles 21:8-10). The prophet Elijah sent him a letter condemning his brother-killing and idolatry and predicting a plague on his people and a severe illness for himself (2 Chronicles 21:12-15).",
-      "Philistines and Arabians subsequently raided Judah, carrying off his wives and all his sons except the youngest, Ahaziah, and Joram then developed an intestinal disease that grew worse over two years until 'his bowels came out' and he died in great pain; the text notes that, unlike other kings, he departed 'with no one's regret' and was not buried in the royal tombs (2 Chronicles 21:16-20).",
+      "Philistines and Arabians subsequently raided Judah, carrying off his wives and all his sons except the youngest, Ahaziah, and Joram then developed an intestinal disease that grew worse over two years until 'his bowels fell out by reason of his sickness, and he died of severe diseases'; the text notes that, unlike other kings, 'he departed without being missed' and was buried in David's city but not in the tombs of the kings (2 Chronicles 21:16-20).",
     ],
     occupation: "King of Judah",
     placesLived: "Jerusalem",
@@ -4750,7 +4882,68 @@ export const people: Person[] = [
       { reference: "2 Chronicles 21:1-20", note: "Murder of his brothers, Elijah's letter, illness, and death" },
       { reference: "Matthew 1:8", note: "Named as 'Joram' in Jesus's genealogy" },
     ],
-    sources: [{ label: "Encyclopaedia Britannica: Jehoram", url: "https://www.britannica.com/biography/Jehoram-king-of-Judah" }],
+    // See the note on Joram, King of Israel: the Britannica URL previously cited here was a 404.
+    sources: [
+      { label: "Jewish Encyclopedia (1906): Jehoram (Joram)", url: "https://www.jewishencyclopedia.com/articles/8564-jehoram-joram", note: "public-domain encyclopaedia; covers both kings in one article, under clearly separate headings" },
+      { label: "Encyclopaedia Britannica (1911): Jehoram — via Wikisource", url: "https://en.wikisource.org/wiki/1911_Encyclop%C3%A6dia_Britannica/Jehoram", note: "public-domain reference text; gives almost no absolute dates, and says so" },
+    ],
+  },
+  {
+    id: "hoshea-king-of-israel",
+    name: "Hoshea, King of Israel",
+    pronunciation: "hoh-SHEE-uh",
+    // No bare "Hoshea": that name already belongs to Joshua son of Nun, whose original name it was
+    // (Numbers 13:16). The long forms below are how 2 Kings introduces this man; the four bare
+    // mentions inside his own reign are handled in VERSE_NAME_OVERRIDES.
+    alternateNames: ["Hoshea, son of Elah"],
+    matchNames: ["Hoshea the son of Elah", "Hoshea son of Elah"],
+    lifespanLabel: "reigned c. 732-723 BC",
+    lifespanCertainty: "disputed",
+    lifespanDatingNotes:
+      "Neither his birth nor his death is recorded — Scripture leaves him in an Assyrian prison and says nothing more. 2 Kings gives him nine years (17:1) and dates the fall of Samaria to his ninth (17:6; 18:10), so the reign has to span nine years: an earlier version of this entry read 732-722, which is ten, and has been corrected. Where those nine years sit absolutely depends on the reconstruction — schemes in print put the accession anywhere from 733 to 731 and the end of the reign from 724 to 722 — and the northern kingdom's regnal figures are notoriously hard to reconcile in this period.",
+    tier: "significant",
+    role: "Last king of Israel",
+    summary:
+      "The final king of the northern kingdom, who took the throne by assassination, submitted to Assyria, then gambled on Egypt — and lost Samaria, his crown, and his people to deportation.",
+    lifeStory: [
+      "Hoshea son of Elah came to power the way several of his predecessors had: he conspired against Pekah son of Remaliah, struck him down, and reigned in his place (2 Kings 15:30). He ruled nine years from Samaria over what was left of Israel, by then already stripped of Galilee and Gilead by Assyrian campaigns.",
+      "2 Kings gives him the same qualified verdict it gave Joram son of Ahab a century earlier — he did evil in God's sight, \"yet not as the kings of Israel who were before him\" (2 Kings 17:2). It is the last such verdict the northern kingdom receives.",
+      "Shalmaneser V of Assyria came against him and he became an Assyrian vassal, paying annual tribute. Then he stopped. The text says he had sent messengers to \"So king of Egypt\" and brought no tribute up as he had done year by year, and that the king of Assyria found conspiracy in him and shut him in prison (2 Kings 17:3-4).",
+      "Assyria besieged Samaria for three years and took it in the ninth year of his reign. The population was deported to Halah, to the Habor river in Gozan, and to the cities of the Medes, and foreign settlers were brought in to replace them (2 Kings 17:5-6, 24). 2 Kings then breaks off the narrative for a long chapter explaining why the kingdom fell — the one sustained theological post-mortem in the historical books.",
+      "Scripture never says what became of him. He is last seen in prison, before the siege he is imprisoned for is even over.",
+    ],
+    controversies: [
+      "Who actually captured Samaria is genuinely unsettled. 2 Kings says only \"the king of Assyria\" took it. Shalmaneser V died around 722 BC, at almost exactly the moment the city fell, and his successor Sargon II claims the conquest and the deportation of 27,290 people — the figure most copies of that inscription give — in his own royal inscriptions. Scholars variously credit Shalmaneser, credit Sargon, or reconstruct two separate captures a few years apart; the Babylonian Chronicle's brief note is read both ways.",
+      "\"So king of Egypt\" has never been securely identified, and no identification commands consensus — but the proposals are not four equal options. Osorkon IV of Tanis, of the Twenty-second Dynasty, is the most widely favoured, following Kenneth Kitchen, who read So as a shortening of (O)so(rkon). A substantial minority read So not as a personal name at all but as the city of Sais, which makes the king in view Tefnakht I of the Twenty-fourth Dynasty; those two are largely the same proposal, though Tefnakht has also been argued for on separate linguistic grounds. An older view, going back to Rudolf Kittel in 1922 and revived since, identifies him with Piye of the Nubian Twenty-fifth Dynasty. A fourth reading — that So was not a king at all but the Egyptian commander the Assyrians called Sib'e — has been abandoned, because cuneiformists now read that name as Re'e.",
+    ],
+    occupation: "King of Israel",
+    placesLived: "Samaria, the capital of the northern kingdom, until its fall; afterwards an Assyrian prison, location unrecorded.",
+    extraBiblicalReferences: [
+      {
+        source: "Tiglath-pileser III, Summary Inscription 4",
+        citation: "RINAP 1 no. 42 (Tadmor's Summary Inscription 4), line 17'",
+        summary:
+          "The Assyrian king records that Pekah their king was killed and that he installed Hoshea son of Elah (Assyrian A-ú-si-ʾ) over them, receiving tribute from him. This names him directly, and puts an Assyrian hand somewhere near the coup that 2 Kings 15:30 reports without one.",
+        reliability:
+          "A contemporary royal inscription naming the king in question — strong attestation of his existence and of the political situation. Two cautions. First, the line breaks exactly where the verb stands: what survives of it is [x]-du-x-x-ma, and the text's modern editors leave the subject open between 'they killed' and 'I killed', noting that neither restoration fits the traces perfectly. The familiar older rendering — that the people of Israel overthrew Pekah their king — is a restoration and not preserved text, and it cannot be re-checked, because the slab was left where it was found and the squeezes taken from it have been lost. A separate Assyrian inscription does preserve the stem of a plural 'they overthrew', but it does not mention Hoshea. Whether Tiglath-pileser was claiming the killing himself or crediting it to the Israelites cannot be settled from the stone. Second, Assyrian royal annals are propaganda, written to credit the king with everything, so the claim to have installed Hoshea personally may overstate Assyria's role in a coup it merely profited from.",
+      },
+      {
+        source: "Sargon II, Display Inscription (Khorsabad)",
+        citation: "RINAP 2 no. 7, lines 23b-25a (the number itself in line 24)",
+        summary:
+          "Sargon II claims to have besieged and captured Samaria and to have carried off 27,290 of its inhabitants — the figure most copies give — settling others in their place: the event 2 Kings 17:6 records without naming the Assyrian king.",
+        reliability:
+          "Contemporary and detailed, but it is precisely the contested evidence: Sargon's claim conflicts with the natural reading that Shalmaneser V, who besieged the city, also took it. Assyrian kings routinely claimed campaigns begun by predecessors, so the inscription establishes that Samaria fell and roughly when, more securely than it establishes who was standing there. The famous number needs two cautions of its own. It is often cited from Sargon's Khorsabad Annals as well; there it is restored in full by modern editors and carries no independent weight, which is why the Annals are no longer cited here. And it is not stable even in the inscription that does preserve it: copies of the Display Inscription give 27,290, 27,280 and apparently 24,280, and the Nimrud Prism has been read as 27,280 or 47,280.",
+      },
+    ],
+    verses: [
+      { reference: "2 Kings 15:30", note: "Kills Pekah and takes the throne" },
+      { reference: "2 Kings 17:1-6", note: "His reign, the appeal to Egypt, and the fall of Samaria" },
+      { reference: "2 Kings 18:9-12", note: "The siege dated against Hezekiah's reign in Judah" },
+    ],
+    sources: [{ label: "Encyclopaedia Britannica: Hoshea", url: "https://www.britannica.com/biography/Hoshea" }],
+    reflectionPrompt:
+      "This was not the worst king Israel had — 2 Kings says so outright — but he inherited the consequences of everyone who came before him. Where are you carrying something you did not start?",
   },
   {
     id: "uzziah",
@@ -5199,6 +5392,65 @@ export const people: Person[] = [
       { reference: "Matthew 2:22", note: "Joseph avoids Judea upon hearing Archelaus reigns there, settling in Nazareth instead" },
     ],
     sources: [{ label: "Encyclopaedia Britannica: Herod Archelaus", url: "https://www.britannica.com/biography/Herod-Archelaus" }],
+  },
+  {
+    id: "mark-antony",
+    name: "Mark Antony",
+    pronunciation: "MARK AN-tuh-nee",
+    // KNOWN RESIDUE: the one "Julius Caesar" in the life story below links to Tiberius, because
+    // bare "Caesar" is owned globally by Tiberius and there is no Julius Caesar entry in the app.
+    // It is written once, deliberately, and cannot be avoided without omitting the name. Forty-odd
+    // prose links already have this fault; a fix needs a julius-caesar entry, which is its own job.
+    //
+    // NOT bare "Antony": Athanasius wrote the Life of Antony, and that Antony is the desert
+    // father, not the triumvir. Registering the short form linked Athanasius's own page to this
+    // man. Same reasoning that keeps bare "Matthew" and bare "Mark" out of the dictionary.
+    alternateNames: ["Marcus Antonius"],
+    bornYear: -83,
+    diedYear: -30,
+    lifespanLabel: "c. 83-30 BC",
+    lifespanCertainty: "firm",
+    // Not named in Scripture. `kind: "church"` is the schema's only non-biblical option and is what
+    // gives him the "Historical Evidence" heading rather than "Extra-Biblical Evidence" — the right
+    // rendering, even though the field's name fits him poorly. Flagged for Bob: the schema has no
+    // "world" kind, and the timeline already has a "world" category.
+    kind: "church",
+    tier: "notable",
+    role: "Roman Triumvir",
+    summary:
+      "Julius Caesar's lieutenant and one of the three men who divided the Roman world after his murder — the Roman power who had Herod the Great made king of Judea, and who lost the East, and his life, to Octavian at Actium.",
+    lifeStory: [
+      "Marcus Antonius was a Roman soldier and politician who rose under Julius Caesar in Gaul and in the civil war, and was serving as consul beside him in 44 BC when the dictator was assassinated. He turned the funeral into political theatre that drove the conspirators out of Rome, and the following year formed the Second Triumvirate with the dictator's heir Octavian and Marcus Lepidus — a formal three-way division of power that outlawed and killed thousands of their opponents.",
+      "After defeating the conspirators at Philippi in 42 BC, Antony took the eastern half of the Roman world as his sphere. He summoned Cleopatra VII of Egypt to meet him at Tarsus in 41 BC — the beginning of the political and personal alliance that defined the rest of his life — and spent the following decade reorganising Rome's eastern client kingdoms.",
+      "That reorganisation is where he touches the biblical story. In 40 BC, with the Parthians overrunning Judea and a rival installed in Jerusalem, Herod was presented to the Roman Senate; Antony spoke for him, arguing that a King Herod would strengthen Rome against Parthia, and the Senate voted him king of the Jews. Roman arms then had to put him on the throne, which took three more years. Every Gospel reference to Herod the Great as king rests on a settlement Antony argued for.",
+      "His eastern campaigns went badly. An invasion of Parthia in 36 BC failed with heavy losses, and his public grants of territory to Cleopatra and her children in 34 BC gave Octavian the material for a propaganda war in Rome. Their alliance collapsed into open conflict, and Octavian's fleet destroyed Antony's at Actium in 31 BC. Antony and Cleopatra took their own lives in Alexandria the following year, leaving Octavian sole ruler of the Roman world — the Caesar Augustus of Luke 2:1.",
+    ],
+    occupation: "Roman general, consul (44 BC), and triumvir (43-33 BC)",
+    placesLived: "Rome; Athens; Tarsus; Antioch; Alexandria, where he died",
+    extraBiblicalReferences: [
+      {
+        source: "Plutarch, Life of Antony",
+        citation: "Parallel Lives, Antony, throughout",
+        url: "https://penelope.uchicago.edu/Thayer/E/Roman/Texts/Plutarch/Lives/Antony*.html",
+        summary:
+          "The fullest ancient narrative of his career, from his service in Gaul through Philippi, the eastern command, Cleopatra, Actium and his death.",
+        reliability:
+          "Written roughly 150 years after the events, by a moralising biographer working from earlier sources now lost. The standard ancient account and the source of most of the familiar detail, but a biography with a thesis rather than a neutral record — Plutarch is writing Antony as a cautionary life.",
+      },
+      {
+        source: "Josephus, Antiquities of the Jews",
+        citation: "14.14.4 (384-385)",
+        url: "https://www.perseus.tufts.edu/hopper/text?doc=J.+AJ+14.14.4",
+        summary:
+          "Josephus records that when Herod was presented to the Roman Senate, it was Antony who rose and argued that a King Herod would be an advantage to Rome in its war with the Parthians; the Senate voted accordingly. This is the appointment on which Herod's whole reign rests.",
+        reliability:
+          "A Jewish historian writing about a century later with access to Herodian court records and to Nicolaus of Damascus, Herod's own historian. Close to the Judean side of the story and generally reliable for the political sequence, though Nicolaus is a partisan source for anything to Herod's credit.",
+      },
+    ],
+    verses: [],
+    sources: [
+      { label: "Plutarch, Life of Antony — via Wikisource", url: "https://en.wikisource.org/wiki/Lives_(Dryden_translation)/Antony", note: "primary source; the Dryden translation as revised by A. H. Clough, 1859" },
+    ],
   },
   {
     id: "caesar-augustus",
@@ -7482,7 +7734,9 @@ export const people: Person[] = [
   {
     id: "billy-graham",
     name: "Billy Graham",
+    // "William Franklin Graham Jr." cannot match — the trailing "Jr." defeats the word boundary.
     alternateNames: ["William Franklin Graham Jr."],
+    matchNames: ["William Franklin Graham"],
     bornYear: 1918,
     diedYear: 2018,
     lifespanLabel: "AD 1918–2018",
@@ -7692,6 +7946,9 @@ export const people: Person[] = [
   {
     id: "martin-luther-king-jr",
     name: "Martin Luther King Jr.",
+    // The trailing "Jr." made his only key unmatchable, so nothing in the app could link to him.
+    // Registered without it — and longer than "Martin Luther", which therefore cannot shadow it.
+    matchNames: ["Martin Luther King"],
     bornYear: 1929,
     diedYear: 1968,
     lifespanLabel: "AD 1929–1968",

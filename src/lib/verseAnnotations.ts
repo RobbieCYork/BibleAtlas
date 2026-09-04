@@ -30,21 +30,23 @@ interface NameEntry {
  * differ (e.g. "James son of Alphaeus" is its own distinct string, not a collision with plain "James"). */
 const NAME_ENTRIES: NameEntry[] = (() => {
   const entries: NameEntry[] = [];
+  // `alternateNames` is reader-facing copy — PersonPanel, LocationPanel and TopicPanel print it as
+  // "Also called: ...". `matchNames` is for wordings that exist only so the linker can match them
+  // and would be noise on the page: the same phrase punctuated two ways because two translations
+  // punctuate it two ways. Both feed the pattern; only the first is ever shown.
+  const names = (r: { name: string; alternateNames?: string[]; matchNames?: string[] }) =>
+    [r.name, ...(r.alternateNames ?? []), ...(r.matchNames ?? [])];
   locations.forEach((loc) => {
-    entries.push({ name: loc.name, id: loc.id, kind: "location" });
-    (loc.alternateNames ?? []).forEach((alt) => entries.push({ name: alt, id: loc.id, kind: "location" }));
+    names(loc).forEach((n) => entries.push({ name: n, id: loc.id, kind: "location" }));
   });
   pois.forEach((poi) => {
-    entries.push({ name: poi.name, id: poi.id, kind: "poi" });
-    (poi.alternateNames ?? []).forEach((alt) => entries.push({ name: alt, id: poi.id, kind: "poi" }));
+    names(poi).forEach((n) => entries.push({ name: n, id: poi.id, kind: "poi" }));
   });
   people.forEach((person) => {
-    entries.push({ name: person.name, id: person.id, kind: "person" });
-    (person.alternateNames ?? []).forEach((alt) => entries.push({ name: alt, id: person.id, kind: "person" }));
+    names(person).forEach((n) => entries.push({ name: n, id: person.id, kind: "person" }));
   });
   topics.forEach((topic) => {
-    entries.push({ name: topic.name, id: topic.id, kind: "topic" });
-    (topic.alternateNames ?? []).forEach((alt) => entries.push({ name: alt, id: topic.id, kind: "topic" }));
+    names(topic).forEach((n) => entries.push({ name: n, id: topic.id, kind: "topic" }));
   });
   // Timeline events (no alternateNames field) — pushed last, so an event title would win a collision
   // with any earlier entry's name; titles are deliberately long, distinctive phrases ("Fall of
@@ -249,13 +251,44 @@ const VERSE_NAME_OVERRIDES: Record<string, Record<string, Record<string, string 
   },
   simon: {
     John: { "6:71": null, "12:4": null, "13:2": null, "13:26": null },
-    Matthew: { "13:55": null },
+    // Matthew 27:32 words it "a man of Cyrene, Simon by name", so the registered key "Simon of
+    // Cyrene" — which does resolve Mark 15:21 and Luke 23:26 correctly — cannot reach it, and the
+    // man who carried the cross rendered as Simon Peter.
+    Matthew: { "13:55": null, "27:32": "simon-of-cyrene" },
     Mark: { "6:3": null },
+    // Luke 7:36-50, the anointing at the Pharisee's house: the host is named Simon three times and
+    // is not Peter. simon-the-pharisee has an entry; the text never gives it a longer wording.
+    Luke: { "7:40": "simon-the-pharisee", "7:43": "simon-the-pharisee", "7:44": "simon-the-pharisee" },
+    Acts: {
+      // Acts 8:9-24 — the sorcerer who tries to buy the Holy Spirit, rendered as the chief apostle
+      // in the very passage where Peter rebukes him. simon-magus has an entry; Acts only ever calls
+      // him "Simon".
+      "8:9": "simon-magus",
+      "8:13": "simon-magus",
+      "8:18": "simon-magus",
+      "8:24": "simon-magus",
+      // Simon the tanner of Joppa, whose house Peter lodges in — a different man, with no entry.
+      // Acts 10:17's "Simon's house" is genuinely ambiguous between the two and is left alone.
+      // Acts 10:32 names BOTH men — "summon Simon, who is also called Peter... in the house of a
+      // tanner named Simon" — which a per-verse override alone cannot separate, because it applies
+      // one answer to every match of the key. Registering "Simon, who is also called Peter" as a
+      // phrase on simon-peter (see people.ts) takes the apostle out of this key here, so the entry
+      // below reaches only the tanner. Same technique as Acts 1:13's three Jameses.
+      "9:43": null,
+      "10:6": null,
+      "10:32": null,
+    },
   },
   james: {
     Matthew: { "13:55": "james-brother-of-jesus" },
     Mark: { "6:3": "james-brother-of-jesus" },
     Luke: { "6:16": null },
+    // Acts 1:13's apostle list names three different men called James. Two of them are now matched
+    // as whole phrases — "James the son of Alphaeus", and the "James" inside "Judas the son of
+    // James" — leaving exactly one bare "James", the son of Zebedee, which the Acts book override
+    // would otherwise send to the brother of Jesus. That is what makes this verse fixable: it is
+    // no longer three occurrences needing three answers, it is one.
+    Acts: { "1:13": "james-son-of-zebedee" },
   },
   judas: {
     Matthew: { "13:55": null },
@@ -278,6 +311,102 @@ const VERSE_NAME_OVERRIDES: Record<string, Record<string, Record<string, string 
   // "Ananias": ananias-and-sapphira (the best-known of the three) is the default owner of bare
   // "Ananias," but Acts 9/22 name a different Ananias — the Damascus disciple who restores Saul's
   // sight — and Acts 23-24 name a third, the high priest who prosecutes Paul.
+  // "Joram" / "Jehoram": two kings of the same name reigning at the same time, one in Israel (son of
+  // Ahab) and one in Judah (son of Jehoshaphat), and 2 Kings 8-9 moves between them sentence by
+  // sentence. The bare names belong to the king of Judah; every verse below means the king of
+  // Israel. Read one by one against the WEB text — the deciding phrase is usually "the son of Ahab"
+  // or "king of Israel" in the same clause, or Jehu's coup, which is entirely an Israelite affair.
+  //
+  // The two verses that name BOTH men are handled by matching the longer wording rather than by a
+  // per-verse answer, since a per-verse override applies one answer to every match of a key:
+  // 2 Chronicles 22:6 is settled entirely by the registered phrase "Jehoram the son of Ahab", and
+  // 2 Kings 1:17 by registering "Jehoram the son of Jehoshaphat" on the king of Judah, which
+  // leaves one bare "Jehoram" for the entry below to point at Israel. Neither needs
+  // occurrence-aware resolution after all.
+  joram: {
+    "2 Kings": {
+      "8:16": "joram-king-of-israel", "8:25": "joram-king-of-israel",
+      "8:28": "joram-king-of-israel", "8:29": "joram-king-of-israel",
+      "9:14": "joram-king-of-israel", "9:15": "joram-king-of-israel",
+      "9:16": "joram-king-of-israel", "9:17": "joram-king-of-israel",
+      "9:21": "joram-king-of-israel", "9:22": "joram-king-of-israel",
+      "9:23": "joram-king-of-israel", "9:24": "joram-king-of-israel",
+      "9:29": "joram-king-of-israel",
+    },
+    "2 Chronicles": { "22:5": "joram-king-of-israel", "22:7": "joram-king-of-israel" },
+    // Joram son of Toi of Hamath, a Syrian prince sent to congratulate David — no entry.
+    "2 Samuel": { "8:10": null },
+    // A Levite descended from Eliezer, in the temple-treasury lists — no entry.
+    "1 Chronicles": { "26:25": null },
+  },
+  jehoram: {
+    "2 Kings": {
+      "3:1": "joram-king-of-israel", "3:6": "joram-king-of-israel",
+      // "Jehoram began to reign in his place in the second year of Jehoram the son of Jehoshaphat
+      // king of Judah" — the first is Israel's (Ahaziah of Israel has just died with no son); the
+      // second is matched as a phrase and never reaches this key.
+      "1:17": "joram-king-of-israel",
+    },
+    "2 Chronicles": {
+      "22:5": "joram-king-of-israel", "22:7": "joram-king-of-israel",
+      "17:8": null,  // "Elishama and Jehoram, the priests" — a Levite, no entry.
+    },
+  },
+  // "Hoshea": the bare name is Joshua's — Numbers 13:16 records Moses renaming him — and the
+  // allowlist below keeps it to Numbers for that reason. These four are the last king of Israel,
+  // whose reign 2 Kings 17 narrates; the verses that introduce him as "Hoshea the son of Elah"
+  // (2 Kings 15:30, 17:1, 18:1, 18:9) match that longer phrase and need no entry here.
+  hoshea: {
+    "2 Kings": {
+      "17:3": "hoshea-king-of-israel",
+      "17:4": "hoshea-king-of-israel",
+      "17:6": "hoshea-king-of-israel",
+      "18:10": "hoshea-king-of-israel",
+    },
+  },
+  // "Mark": the capitalisation test in CAPITALISED_ONLY below removes the 24 lowercase matches — the
+  // mark of the beast, "signs to mark seasons", "set a mark on the foreheads". Four capitalised ones
+  // survive it, and all four are the imperative verb rather than the evangelist. They are the only
+  // "Mark"s in Scripture that are not the man; the other eight (Acts 12:12 onward) are.
+  mark: {
+    "2 Samuel": { "13:28": null },   // "Mark now, when Amnon's heart is merry with wine"
+    Job: { "33:31": null },          // "Mark well, Job, and listen to me"
+    Psalms: { "37:37": null, "48:13": null }, // "Mark the perfect man"; "Mark well her bulwarks"
+  },
+  // "Counselor": lowercase matches are human royal advisers and are removed by capitalisation.
+  // 1 John 2:1 is capitalised, so only a per-verse entry can reach it, and the link it produced was
+  // plainly wrong: "we have a Counselor with the Father, Jesus Christ, the righteous" names its own
+  // referent in the next clause, and the link said Holy Spirit. Removing it is not a judgement call.
+  //
+  // What IS a judgement call is what replaces it, and this is NOT the Isaiah 9:6 question — an
+  // earlier version of this comment said it was, and that is wrong. Isaiah 9:6 asks whether a
+  // throne-name in a prophetic oracle is messianic; 1 John 2:1 asks nothing, because the verse
+  // identifies the Counselor itself. The reason for no link rather than a link to Jesus is simpler:
+  // the verse already names him three words later, so the link would carry no information a reader
+  // does not already have — and making "Counselor" point at Jesus here while it points at the Holy
+  // Spirit in John 14:16, 14:26 and 15:26 is a decision about the key as a whole, not about this
+  // verse. Whoever takes that up should take it up for all five at once. Isaiah 9:6 is left exactly
+  // as it is, pending Robbie's ruling (§7.3).
+  counselor: {
+    "1 John": { "2:1": null },
+  },
+  // "The accuser": see CAPITALISED_ONLY — the key is not flagged, because Revelation 12:10 is
+  // genuinely Satan. Job 31:35's accuser is the legal opponent in Job's imagined lawsuit.
+  "the accuser": {
+    Job: { "31:35": null },
+  },
+  // "Nathan": the court prophet is the only Nathan with an entry, and until his name was registered
+  // at all (see people.ts) he could not be linked from anywhere. Several other men share it. The
+  // allowlist below keeps him to the books where he acts; these are the exceptions inside those
+  // books — all of them a different Nathan, none of them with an entry, so: no link.
+  nathan: {
+    "2 Samuel": { "5:14": null, "23:36": null },
+    "1 Chronicles": { "2:36": null, "3:5": null, "11:38": null, "14:4": null },
+    // 1 Kings 4:5 names "Azariah the son of Nathan" and "Zabud the son of Nathan": commentators
+    // divide over whether that Nathan is the prophet or David's son of the same name. Left unlinked
+    // rather than resolved on a guess.
+    "1 Kings": { "4:5": null },
+  },
   ananias: {
     Acts: {
       "9:10": "ananias-of-damascus",
@@ -315,7 +444,64 @@ const BOOK_NAME_ALLOWLIST: Record<string, string[]> = {
   ahaz: ["2 Kings", "2 Chronicles", "Isaiah", "Matthew"],
   amon: ["2 Kings", "2 Chronicles", "Matthew"],
   azariah: ["2 Kings", "2 Chronicles", "Matthew"],
+  // "Nathan": the prophet acts in 2 Samuel, 1 Kings and 1-2 Chronicles, and Psalm 51's
+  // superscription names him. Everywhere else — Ezra 8:16 and 10:39, Zechariah 12:12, Luke 3:31 —
+  // the name belongs to someone else with no entry here. Exceptions inside the allowed books are
+  // handled verse by verse in VERSE_NAME_OVERRIDES above.
+  nathan: ["2 Samuel", "1 Kings", "1 Chronicles", "2 Chronicles", "Psalms"],
+  // "Hoshea" is Joshua's own original name and means him in Numbers 13:8 and 13:16 — and nowhere
+  // else. Everywhere outside Numbers it names the last king of Israel (recovered verse by verse
+  // above), an Ephraimite officer under David (1 Chronicles 27:20), or a signer of Nehemiah's
+  // covenant (Nehemiah 10:23) — the last two with no entry here, so no link.
+  hoshea: ["Numbers"],
 };
+
+/** Names that are also ordinary English words. The match is case-insensitive on purpose — it is what
+ * lets lowercase-in-translation phrases like "city of David" and "upper room" link — but that same
+ * insensitivity meant *the mark of the beast* pointed at Mark the Evangelist in six verses of
+ * Revelation, "let them be for signs to mark seasons" in Genesis 1:14, a king's *counselor* pointed
+ * at the Holy Spirit, and every sacrificial *ram* from Genesis 22 onward pointed at Ram son of
+ * Hezron. For the keys listed here, and only these, the match must also LOOK like a name.
+ *
+ * Unlike the book and verse tables above, this works on both rendering paths — it needs no context —
+ * so it is the first correction in this file that fixes our own articles as well as the Bible reader.
+ *
+ * Measured by turning the rule off and diffing the whole-corpus snapshot (scripts/name-linker).
+ * State the SURFACE with every one of these numbers — they differ by an order of magnitude between
+ * them, and quoting the panel figure as if it were the article surface is the single mistake this
+ * work has made most often:
+ *
+ *   key             Scripture, reader   Scripture, panel   our own articles (prose)
+ *   mark                    24                 24                    30
+ *   counselor                9                  9                     1
+ *   the counselor            1                  1                     0
+ *   the adversary           15                 15                     0
+ *   ram                      0                 92                     7
+ *
+ * "ram" is the clearest illustration: 92 is a PANEL-path number. The reader path never had those
+ * links to lose — BOOK_NAME_ALLOWLIST already confines "ram" to Ruth, 1 Chronicles and Matthew —
+ * and on the article surface the rule takes 7 links out, leaving 2, both of them the real man.
+ * The capitalised stragglers this rule cannot see are handled verse by verse above.
+ *
+ * "the accuser" is deliberately NOT in this list. Both its occurrences are lowercase, and one of
+ * them — Revelation 12:10, "the accuser of our brothers... who accuses them before our God" — is
+ * genuinely Satan. Flagging the key would take that correct link out to fix the one wrong one, so
+ * Job 31:35 gets a per-verse entry instead. */
+const CAPITALISED_ONLY = new Set(["mark", "counselor", "the counselor", "the adversary", "ram"]);
+
+/** Does this match's capitalisation mark it as a name rather than the common word?
+ *
+ * A leading article carries no information — "The adversary" opening Lamentations 1:10 is
+ * capitalised by position, not because anyone is being named — so it is stripped before the test,
+ * and what is judged is the noun itself.
+ *
+ * Sentence position is deliberately NOT consulted beyond that. It is tempting to discount every
+ * capital that opens a sentence, but "Ram" opens both 1 Chronicles 2:10 and Matthew 1:4 and is the
+ * man in each, and "Mark" opens genuine sentences in our own articles. Doing so would trade a
+ * handful of fixes for a pile of real links. */
+function looksLikeAName(matched: string): boolean {
+  return /^[A-Z]/.test(matched.replace(/^(?:the|a|an)\s+/i, ""));
+}
 
 function escapeRegExp(s: string): string {
   return s.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
@@ -382,6 +568,11 @@ export function computeLinkAnnotations(
             annotations.push({ start, end, text: name, kind: ID_TO_KIND.get(verseId) ?? entry.kind, id: verseId });
           }
           // verseId === null means this exact mention is a different, unrepresented person — no link.
+        } else if (CAPITALISED_ONLY.has(nameLower) && !looksLikeAName(name)) {
+          // An ordinary English word, not the name it shares. No link. Checked AFTER the per-verse
+          // table on purpose: a verse override can still force a link on a lowercase match if some
+          // future translation ever needs one, and it is what suppresses the handful of capitalised
+          // stragglers this test cannot see (Psalm 37:37's "Mark the perfect man", 1 John 2:1).
         } else {
           const allowlist = BOOK_NAME_ALLOWLIST[nameLower];
           const suppressed = !!allowlist && !!book && !allowlist.includes(book);
