@@ -59,7 +59,8 @@ import {
   Ban, Briefcase, Cake, CalendarDays, Camera, Check, Clapperboard, Crown, Eye, EyeOff, FileText,
   Flag, Flame, Gem, Globe, GraduationCap, Headphones, HeartCrack, House, Link as LinkIcon, Lock,
   LogOut,
-  Medal, Menu, Mic, MicOff, Moon, Music, Palette, Pin, Play, Plus, Printer, RotateCcw, Settings,
+  Medal, Menu, Mic, MicOff, Moon, Music, Palette, Pause, Pin, Play, Plus, Printer, RotateCcw,
+  Settings,
   Share2, Shield, Smartphone, Sun, ThumbsDown, ThumbsUp, Timer, Tv, Video, VideoOff, Volume2,
   X as XMark,
   type LucideIcon,
@@ -134,6 +135,7 @@ export type IconName =
   | "thumbsDown"
   | "flag"
   | "play"
+  | "pause"
   | "volume"
   | "crown"
   | "pin"
@@ -679,6 +681,7 @@ const LIBRARY = {
   thumbsDown: ThumbsDown,
   flag: Flag,
   play: Play,
+  pause: Pause,
   volume: Volume2,
   crown: Crown,
   pin: Pin,

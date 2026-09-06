@@ -20,8 +20,14 @@ WEB-only, so the button appears only while the WEB translation is selected.
   Regenerate it with `node scripts/generate-web-audio-manifest.mjs > public/web-audio-manifest.json`
   — the script validates count and chapter order per book and fails loudly on any quirk it
   can't prove correct.
-- **Credit** (also shown in the player bar and the Listen button tooltip):
-  *Audio: Winfred W. Henson's recording of the World English Bible, via eBible.org.*
+- **Credit**: *Audio: Winfred W. Henson's recording of the World English Bible, via eBible.org.*
+  Shown in the reader's translation-credit line under the chapter — shortened there to *Audio:
+  Winfred W. Henson's recording, via eBible.org*, since that line has already named the World
+  English Bible one clause earlier — and in full in the Listen button's tooltip. It used to sit in
+  the player bar; the bar was removed in favour of a play/pause Listen button and the credit moved
+  rather than went. Neither eBible.org nor the WEB licence *demands* attribution (the text is
+  public domain and the recording is given away freely), but this is a commercial product playing
+  someone else's voice work, so the credit is not optional here.
 
 ## 2. Audio atlas — profile narrations (player live, files generated on demand)
 

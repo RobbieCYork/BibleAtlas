@@ -26,7 +26,12 @@ import {
 } from "../lib/supabase";
 import { getTextOffsetInRoot } from "../lib/domTextOffset";
 import { setActiveScripture } from "../lib/reportContext";
-import { CHAPTER_AUDIO_CREDIT, chapterAudioUrl, fallbackChapterAudioUrl } from "../lib/chapterAudio";
+import {
+  CHAPTER_AUDIO_CREDIT,
+  CHAPTER_AUDIO_CREDIT_SHORT,
+  chapterAudioUrl,
+  fallbackChapterAudioUrl,
+} from "../lib/chapterAudio";
 import { clipRangeForVerse, comparePosition } from "../lib/verseRange";
 import { shareFilename, verseCardSpec, type ShareCardSpec } from "../lib/shareCard";
 import ShareCardModal from "./ShareCardModal";
@@ -185,9 +190,10 @@ const MAX_SEARCH_RESULTS = 30;
  * saving, or the sheet afterwards. */
 const DEFAULT_NOTE_HIGHLIGHT_COLOR: HighlightColor = "yellow";
 
-/** Whether the chapter-audio bar was left open — restored on load so a listener's setup survives
- * a refresh (restoring never autoplays; playback always waits for a fresh press of play). */
-const AUDIO_BAR_OPEN_KEY = "bible-audio-bar-open";
+/* The chapter-audio bar's "was it left open" preference (localStorage `bible-audio-bar-open`) was
+ * dropped when the bar was: with the transport folded into the Listen button there is no open state
+ * left to remember — a reload always lands with nothing playing, and the button says so. The stale
+ * key on existing devices is inert; nothing reads it. */
 
 function findBookIndex(name: string): number {
   return BOOKS.findIndex((b) => b.name.toLowerCase() === name.toLowerCase());
@@ -554,18 +560,30 @@ export default function BiblePanel({
 
   // --- Chapter audio (human-narrated WEB recording — see src/lib/chapterAudio.ts) ---
 
-  /** Whether the sticky audio bar is open. Restored from localStorage so the preference survives
-   * reloads; audio itself only ever starts from an explicit press of play (or auto-advance). */
-  const [audioOpen, setAudioOpen] = useState(() => localStorage.getItem(AUDIO_BAR_OPEN_KEY) === "1");
+  /** What the Listen button says, driven by the element's own events rather than by intent, so the
+   * label can never claim playback the browser isn't doing. "idle" covers both never-started and
+   * paused — in both, one press starts audio, which is all the button needs to know. */
+  const [audioState, setAudioState] = useState<"idle" | "loading" | "playing">("idle");
   const [audioSrc, setAudioSrc] = useState<string | null>(null);
   const [audioError, setAudioError] = useState<string | null>(null);
+  /** Whether the reader has actually asked to hear this chapter. A media element that fails while
+   * nobody asked it to play should say nothing — the failure notice is an answer to a press, and
+   * without this a bad chapter file would put an error under the toolbar of a reader who was only
+   * reading. */
+  const [audioAsked, setAudioAsked] = useState(false);
   const audioElRef = useRef<HTMLAudioElement | null>(null);
   /** True while the reader is actually listening (play/pause events) — a chapter change mid-
    * playback (manual nav or auto-advance) then continues seamlessly into the new chapter, while
    * navigating with the player paused stays paused. */
   const isPlayingRef = useRef(false);
-  /** One-shot autoplay intents: pressing "Listen" open, and auto-advance after a chapter ends. */
+  /** One-shot autoplay intents: pressing Listen, and auto-advance after a chapter ends. */
   const shouldAutoplayRef = useRef(false);
+  /** True from the moment a chapter turn asks the player to keep going until it actually does.
+   * Swapping the src runs the media load algorithm, which fires a `pause` the reader did not ask
+   * for; without this guard that stray event flips the button back to "Listen" a beat before the
+   * next chapter starts playing. Real pauses (a press, a headphone unplug, an incoming call) all
+   * arrive with this false, and must still be believed. */
+  const continuingRef = useRef(false);
   /** Guards the error handler so the eBible.org fallback is tried at most once per chapter. */
   const triedFallbackRef = useRef(false);
   /** Mirrors the chapter currently shown, for async audio callbacks to detect navigation —
@@ -593,37 +611,93 @@ export default function BiblePanel({
 
   const audioEligible = translation === "web" && !!passage && !!currentBook && currentChapter !== null;
 
-  // Point the player at the current chapter's primary URL whenever the bar is open. The bar (and
-  // the <audio> element with it) unmounts when closed or when the translation isn't WEB, which is
-  // also what stops playback.
+  // Point the hidden player at the current chapter's primary URL. Note what is NOT in the
+  // condition: whether the reader is listening. The element is mounted (at preload="none", so it
+  // costs no bytes) for every WEB chapter, playing or not, so that the first press of Listen can
+  // call play() synchronously inside the click handler — iOS Safari only honours playback started
+  // that way, and the user-activation token does not survive a round trip through a React effect.
+  // Losing eligibility (switching off WEB, leaving the chapter) unmounts it, which is what stops
+  // playback.
   useEffect(() => {
-    if (!audioOpen || !audioEligible || !currentBook || currentChapter === null) {
+    if (!audioEligible || !currentBook || currentChapter === null) {
       setAudioSrc(null);
       setAudioError(null);
+      setAudioAsked(false);
       isPlayingRef.current = false;
+      shouldAutoplayRef.current = false;
+      continuingRef.current = false;
+      setAudioState("idle");
       return;
     }
     triedFallbackRef.current = false;
     setAudioError(null);
+    // A new chapter is only "asked for" if the reader is still mid-listen — a chapter they merely
+    // turned to has not asked for narration, and must not be told the narration failed.
+    setAudioAsked(shouldAutoplayRef.current || isPlayingRef.current);
     setAudioSrc(chapterAudioUrl(currentBook, currentChapter));
-  }, [audioOpen, audioEligible, currentBook, currentChapter]);
+  }, [audioEligible, currentBook, currentChapter]);
 
-  // Continue playback across a src swap when the reader was (or asked to be) listening.
+  // Continue playback across a src swap when the reader was (or asked to be) listening — this is
+  // what carries a chapter turn, an auto-advance and the eBible.org fallback into the new file.
   useEffect(() => {
     if (!audioSrc) return;
     if (shouldAutoplayRef.current || isPlayingRef.current) {
       shouldAutoplayRef.current = false;
+      continuingRef.current = true;
+      setAudioState("loading");
       audioElRef.current?.play().catch(() => {
-        // Autoplay was blocked (e.g. no user activation yet) — the bar's own controls still work.
+        // Autoplay was refused (no user activation — a chapter turn is not a gesture iOS counts).
+        // Say so on the button rather than leaving it reading "Pause" over silence.
+        continuingRef.current = false;
+        isPlayingRef.current = false;
+        setAudioState("idle");
       });
     }
   }, [audioSrc]);
 
-  const toggleAudioBar = () => {
-    const next = !audioOpen;
-    setAudioOpen(next);
-    localStorage.setItem(AUDIO_BAR_OPEN_KEY, next ? "1" : "0");
-    shouldAutoplayRef.current = next; // opening the bar IS the intent to listen
+  /** The Listen button IS the transport now — press to start, press again to pause. Buffering
+   * counts as "stop it" too: a reader who presses again while it spins wants out, not a queue. */
+  const handleListenPress = () => {
+    const el = audioElRef.current;
+    if (audioState !== "idle") {
+      shouldAutoplayRef.current = false;
+      continuingRef.current = false;
+      isPlayingRef.current = false;
+      setAudioAsked(false); // stop asking, so a late error from the attempt just abandoned is silent
+      el?.pause();
+      setAudioState("idle");
+      return;
+    }
+    if (!el) return;
+    setAudioAsked(true);
+    if (audioError) {
+      // The last attempt failed. Start the ladder again from the TOP — archive.org first, then the
+      // eBible.org fallback — rather than leaving the reader tapping a button that does nothing.
+      // Rewinding to the primary URL is what makes the retry a real retry: a failed attempt leaves
+      // the element pointed at the fallback, and re-resolving from there yields the same URL, which
+      // React sees as no change at all (see the matching guard in handleAudioError).
+      setAudioError(null);
+      triedFallbackRef.current = false;
+      const primary =
+        currentBook && currentChapter !== null ? chapterAudioUrl(currentBook, currentChapter) : null;
+      if (primary && primary !== audioSrc) {
+        // The element is parked on the fallback. Hand the retry to the src-change effect — the same
+        // path the fallback swap already takes — instead of setting src here and calling play():
+        // React writes the src attribute again on the next commit, which restarts the load and
+        // aborts the play() we just issued. Verified: doing it imperatively leaves it paused.
+        shouldAutoplayRef.current = true;
+        setAudioState("loading");
+        setAudioSrc(primary);
+        return;
+      }
+      el.load();
+    }
+    setAudioState("loading");
+    // Synchronous, inside the gesture — see the mounting note on the effect above.
+    el.play().catch(() => {
+      isPlayingRef.current = false;
+      setAudioState("idle");
+    });
   };
 
   /** Primary URL failed — swap in the pre-scraped eBible.org fallback once, then give up gently. */
@@ -631,20 +705,40 @@ export default function BiblePanel({
     if (!audioSrc || !currentBook || currentChapter === null) return;
     if (triedFallbackRef.current) {
       setAudioError("Couldn't load audio for this chapter — try again later.");
+      continuingRef.current = false;
+      isPlayingRef.current = false;
+      setAudioState("idle");
       return;
     }
     triedFallbackRef.current = true;
     const book = currentBook;
     const chapter = currentChapter;
-    // Keep the listening intent across the swap: the error stopped playback, but isPlayingRef
-    // still reflects the pre-error state, so the src-change effect above resumes automatically.
+    // Carry the listening intent across the swap. A failure mid-run leaves isPlayingRef true and
+    // resumes on its own, but a failure on the reader's very FIRST press never set it — and with
+    // the player bar gone there is no second control to press, so the fallback would load
+    // perfectly and then just sit there. Verified: without this line, an unreachable archive.org
+    // leaves the button reading "Listen" over a fully buffered eBible.org file.
+    if (audioAsked) {
+      shouldAutoplayRef.current = true;
+      setAudioState("loading");
+    }
     fallbackChapterAudioUrl(book, chapter).then((url) => {
       // The reader may have navigated while the manifest loaded — the ref (unlike the state this
       // closure captured) reflects the chapter shown *now*, so bail out when it has moved on.
       const shown = audioChapterRef.current;
       if (!shown || shown.book !== book || shown.chapter !== chapter) return;
-      if (url) setAudioSrc(url);
-      else setAudioError("Couldn't load audio for this chapter — try again later.");
+      // `url === audioSrc` means the element is ALREADY on the file we were about to swap to — the
+      // fallback is what just failed. Setting the same state value re-renders nothing, so the
+      // src-change effect never re-runs and the button would sit on "Loading…" for ever. There is
+      // no rung left below this one, so give up here instead.
+      if (url && url !== audioSrc) setAudioSrc(url);
+      else {
+        setAudioError("Couldn't load audio for this chapter — try again later.");
+        shouldAutoplayRef.current = false;
+        continuingRef.current = false;
+        isPlayingRef.current = false;
+        setAudioState("idle");
+      }
     });
   };
 
@@ -652,8 +746,16 @@ export default function BiblePanel({
    * (same path as the Next Chapter button, so progress saving etc. all still apply). */
   const handleAudioEnded = () => {
     isPlayingRef.current = false;
-    if (atBibleEnd()) return;
+    if (atBibleEnd()) {
+      // Revelation 22 — nothing left to roll into, so the run really is over and the button has to
+      // stop offering to pause silence.
+      continuingRef.current = false;
+      setAudioState("idle");
+      return;
+    }
     shouldAutoplayRef.current = true;
+    continuingRef.current = true;
+    setAudioState("loading");
     goToChapter(1);
   };
 
@@ -1494,17 +1596,69 @@ export default function BiblePanel({
             </option>
           ))}
         </select>
+        {/* The transport itself, not a disclosure toggle: press to play, press again to pause. The
+            native <audio> controls this replaced cost ~100px of the phone's screen above the first
+            verse, every time a reader turned the narration on. Its scrubber and elapsed/remaining
+            readout went with it — a deliberate trade for that space, not an oversight. */}
         {audioEligible && (
           <button
             type="button"
-            className={`bible-plans-chip${audioOpen ? " bible-plans-chip-active" : ""}`}
-            onClick={toggleAudioBar}
-            aria-pressed={audioOpen}
-            aria-label="Listen to this chapter"
+            className={`bible-plans-chip bible-listen-chip${audioState === "idle" ? "" : " bible-plans-chip-active"}`}
+            onClick={handleListenPress}
+            aria-pressed={audioState !== "idle"}
+            aria-label={
+              audioState === "playing" ? "Pause the narration of this chapter" : "Listen to this chapter"
+            }
+            // The full credit also lives under the chapter, where a phone can actually reach it —
+            // this tooltip is a desktop convenience, not the app's attribution.
             title={CHAPTER_AUDIO_CREDIT}
           >
-            <Icon name="volume" inline /> Listen
+            {audioState === "playing" ? (
+              <>
+                <Icon name="pause" inline /> Pause
+              </>
+            ) : audioState === "loading" ? (
+              <>
+                <Icon name="volume" inline /> Loading…
+              </>
+            ) : (
+              <>
+                <Icon name="volume" inline /> Listen
+              </>
+            )}
           </button>
+        )}
+        {/* Mounted for every WEB chapter and never drawn — see the src effect for why it can't wait
+            until the reader presses play. preload="none" keeps that free (verified: no request to
+            archive.org until the press). It deliberately survives an error too; unmounting it there
+            would leave the Listen button with nothing to call, i.e. dead until the chapter changed.
+            display:none, so it takes no width from the select and no place in the row's order. */}
+        {audioSrc && (
+          <audio
+            ref={audioElRef}
+            className="bible-audio-element"
+            preload="none"
+            src={audioSrc}
+            onPlay={() => {
+              isPlayingRef.current = true;
+            }}
+            onPlaying={() => {
+              continuingRef.current = false;
+              isPlayingRef.current = true;
+              setAudioState("playing");
+            }}
+            onWaiting={() => {
+              // Buffering mid-run says "loading", but must never wake a player the reader paused.
+              setAudioState((s) => (s === "idle" ? s : "loading"));
+            }}
+            onPause={() => {
+              if (continuingRef.current) return; // the src swap's own pause — see continuingRef
+              isPlayingRef.current = false;
+              setAudioState("idle");
+            }}
+            onEnded={handleAudioEnded}
+            onError={handleAudioError}
+          />
         )}
         {/* The month's reading, as a mark and a number rather than the sentence it used to spell out
             across a line of its own. That line cost 28px of scripture on every phone screen to say
@@ -1531,6 +1685,11 @@ export default function BiblePanel({
           </p>
         )}
       </div>
+
+      {/* Only on screen when narration the reader actually asked for failed, so it costs nothing the
+          rest of the time — which is the whole point of having removed the bar it used to sit in.
+          Pressing Listen again retries; see handleListenPress. */}
+      {audioError && audioAsked && <p className="bible-audio-error no-print">{audioError}</p>}
 
       {searching && <p className="bible-status">Searching…</p>}
       {searchError && <p className="bible-status bible-error">{searchError}</p>}
@@ -1637,29 +1796,6 @@ export default function BiblePanel({
 
       {!showPlans && !showIntro && passage && !loading && !error && !searchResults && (
         <div className="bible-passage">
-          {audioOpen && audioEligible && (
-            <div className="bible-audio-bar no-print">
-              {audioSrc && !audioError && (
-                <audio
-                  ref={audioElRef}
-                  className="bible-audio-player"
-                  controls
-                  preload="metadata"
-                  src={audioSrc}
-                  onPlay={() => {
-                    isPlayingRef.current = true;
-                  }}
-                  onPause={() => {
-                    isPlayingRef.current = false;
-                  }}
-                  onEnded={handleAudioEnded}
-                  onError={handleAudioError}
-                />
-              )}
-              {audioError && <p className="bible-audio-error">{audioError}</p>}
-              <p className="bible-audio-credit">{CHAPTER_AUDIO_CREDIT}</p>
-            </div>
-          )}
           <div className="bible-passage-header">
             <button
               type="button"
@@ -1810,7 +1946,16 @@ export default function BiblePanel({
           </div>
           {boundaryMessage && <p className="bible-status">{boundaryMessage}</p>}
 
-          <p className="bible-translation-credit">{passage.translationName}, Public Domain</p>
+          {/* The narration credit's new home, now that the player bar it used to sit in is gone.
+              This line already exists to say where the words came from, so saying where the voice
+              came from belongs in the same breath — and it sits below the chapter, where it costs
+              the scripture no screen. The credit is a courtesy, not a licence condition (the WEB
+              text is public domain and eBible.org asks nothing for Henson's recording), but this is
+              a paid product reading someone else's voice work aloud, so it stays. */}
+          <p className="bible-translation-credit">
+            {passage.translationName}, Public Domain
+            {audioEligible && ` · ${CHAPTER_AUDIO_CREDIT_SHORT}`}
+          </p>
         </div>
       )}
       </div>

@@ -11,6 +11,13 @@ import { BOOKS } from "../data/bibleBooks";
 export const CHAPTER_AUDIO_CREDIT =
   "Audio: Winfred W. Henson's recording of the World English Bible, via eBible.org";
 
+/** The same credit with the work's name dropped, for the reader's translation-credit line — that
+ * line has already named "World English Bible" one clause earlier, so repeating it there reads as
+ * a stutter. Everything the credit is FOR (the narrator, and eBible.org as distributor) survives.
+ * Use the full string anywhere the credit stands on its own, e.g. the Listen button's tooltip. */
+export const CHAPTER_AUDIO_CREDIT_SHORT =
+  "Audio: Winfred W. Henson's recording, via eBible.org";
+
 /** Book name (canon table spelling, case-insensitive) -> 01..66 Protestant canon number. */
 const BOOK_NUMBER = new Map(BOOKS.map((b, i) => [b.name.toLowerCase(), i + 1]));
 
