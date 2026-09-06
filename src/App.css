@@ -3159,12 +3159,41 @@ a.profile-links-url {
   align-items: stretch;
   gap: 6px;
   margin-bottom: 6px;
+  /* Above the default text size the translation picker takes a line of its own — see the
+     min-width on it below. At and under the default this never triggers and the row is
+     one line exactly as before. */
+  flex-wrap: wrap;
 }
 
 .bible-toolbar .bible-translation-select {
   flex: 1;
-  min-width: 0;
   margin-bottom: 0;
+  /* Gives the picker its own line above the default text size, and nothing below it.
+     `zoom` scales this row's contents without giving the row a single extra pixel — the panel
+     is 375px on a phone whatever the setting says — so the select is squeezed by whatever else
+     shares the line. Measured at 375px: the longest label needs 279px x the scale, while the
+     line offers 375 - 36 x the scale. One line stops being survivable immediately above 1.0.
+
+     The threshold is expressed against the scale itself rather than as a fixed width, on
+     purpose. A tuned pixel floor would encode today's Listen chip and reading-count widths and
+     would silently start wrapping at the DEFAULT size the moment either of those changed. This
+     cannot: below 1.05 the calc is negative and clamps to zero, so the row is untouched at 1.0
+     and 0.8; above it the floor exceeds what the line can spare and the select wraps. `min()`
+     against 100% is what stops the floor overflowing the row once the select is alone on it —
+     without it the floor keeps growing with the scale and becomes an overflow of its own.
+
+     This is not the whole fix. At 1.3 and above the longest label does not fit even a full-width
+     row (362.7px wanted, 328.2px available), which is why BiblePanel switches to the short
+     translation codes there — see TRANSLATIONS/LABEL_SHORTENS_ABOVE. Wrapping is what makes
+     1.15 correct and what gives the shortened labels room to breathe above that.
+
+     The slope is deliberately far steeper than the distance it has to cover: the floor has to
+     reach the FULL row width to be any use, because a floor that only part-fills the line still
+     lets the Listen chip sit beside the select and squeeze it (measured: a 200px floor at 1.15
+     left the select on a shared line, 27px short of its label). At this slope the floor passes
+     the row's own width by about 1.065 and `min()` holds it at 100% from there, so the behaviour
+     is a step and not a ramp: one line at and below the default, its own full-width line above. */
+  min-width: min(100%, calc((var(--text-scale, 1) - 1.05) * 20000px));
 }
 
 .bible-status {
@@ -3902,6 +3931,18 @@ a.profile-links-url {
 .mobile-tab-label {
   font-size: 11px;
   font-weight: 500;
+  /* Kept inside its own tab. The bar splits a 375px screen into as many as seven equal slots, and
+     since it started scaling with the text-size setting those slots no longer widen to hold a
+     longer word: measured at 375px with all seven tabs on, "Timeline" spilled 1.7px past its tab
+     at 1.3 and 23px at 1.8, where five neighbouring labels were overlapping each other outright.
+     The tab is a centred flex column, so an unconstrained label simply grows out of both sides of
+     it. Truncating is the graceful end of that — the icon above the label still identifies the
+     destination, and the full word stays in the DOM for a screen reader, which reads the text and
+     not the ellipsis. */
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .mobile-tab-dot {

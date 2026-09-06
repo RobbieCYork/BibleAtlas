@@ -7,6 +7,7 @@ import BookIntroView from "./BookIntroView";
 import ReadingPlansView from "./ReadingPlansView";
 import { BOOKS } from "../data/bibleBooks";
 import { shouldNavigate, suggestReference } from "../lib/bibleReference";
+import { useTextSize } from "../lib/textSize";
 import { READING_PLANS, formatPlanDayReference, type ReadingPlan, type ReadingPlanDay } from "../data/readingPlans";
 import {
   supabase,
@@ -177,11 +178,29 @@ const SINGLE_CHAPTER_BOOK_LAST_VERSE: Record<string, number> = {
   Jude: 25,
 };
 
+/** `short` is what the picker shows once the full name stops fitting — see LABEL_SHORTENS_ABOVE.
+ * The full name stays on the control as its title and aria-label at every size, so nothing is
+ * lost to a screen reader, or to a hover, when the visible text shortens. */
 const TRANSLATIONS = [
-  { id: "web", label: "World English Bible (WEB)" },
-  { id: "kjv", label: "King James Version (KJV)" },
-  { id: "asv", label: "American Standard Version (ASV)" },
+  { id: "web", label: "World English Bible (WEB)", short: "WEB" },
+  { id: "kjv", label: "King James Version (KJV)", short: "KJV" },
+  { id: "asv", label: "American Standard Version (ASV)", short: "ASV" },
 ];
+
+/** Above this text size the picker shows "ASV" instead of "American Standard Version (ASV)".
+ *
+ * Not a taste call — it is the point where the long name stops fitting on a phone. The reading
+ * panel is 375px wide whatever the text-size setting says; `zoom` scales the type without
+ * widening the panel. Measured at 375px: the longest label wants 279px x the scale, a full-width
+ * row offers 375 - 36 x the scale, and those cross just under 1.2. At 1.15 the long name still
+ * fits once the row wraps (320.9 wanted, 333.6 offered — see .bible-toolbar in App.css); at 1.3
+ * it does not (362.7 vs 328.2), and no amount of layout recovers it, because a native select
+ * truncates rather than wraps. A reader who asked for large type is better served by "ASV" at the
+ * size they asked for than by "American Standard Versi" at the same size.
+ *
+ * All three options switch together: shortening only the one that overflows would leave the open
+ * dropdown a ragged mix of full names and codes. */
+const LABEL_SHORTENS_ABOVE = 1.2;
 
 const MAX_SEARCH_RESULTS = 30;
 
@@ -240,6 +259,9 @@ export default function BiblePanel({
   initializing,
 }: BiblePanelProps) {
   const [translation, setTranslation] = useState("web");
+  /** Read only to decide when the translation picker's labels shorten — see
+   * LABEL_SHORTENS_ABOVE. Everything else about text size is CSS. */
+  const { scale: textScale } = useTextSize();
   const [passage, setPassage] = useState<PassageResult | null>(null);
   const [currentBook, setCurrentBook] = useState<string | null>(null);
   const [currentChapter, setCurrentChapter] = useState<number | null>(null);
@@ -1589,10 +1611,14 @@ export default function BiblePanel({
           className="bible-translation-select"
           value={translation}
           onChange={(e) => handleTranslationChange(e.target.value)}
+          /* The full name regardless of what the option text is showing, so shortening the
+             visible label never costs a screen reader or a hover the actual translation. */
+          aria-label={`Translation: ${TRANSLATIONS.find((t) => t.id === translation)?.label ?? translation}`}
+          title={TRANSLATIONS.find((t) => t.id === translation)?.label}
         >
           {TRANSLATIONS.map((t) => (
             <option key={t.id} value={t.id}>
-              {t.label}
+              {textScale > LABEL_SHORTENS_ABOVE ? t.short : t.label}
             </option>
           ))}
         </select>
