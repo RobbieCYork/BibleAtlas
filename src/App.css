@@ -6991,7 +6991,11 @@ a.profile-links-url {
 
 .notification-toast-stack {
   position: fixed;
-  top: 12px;
+  /* Fixed to the viewport, not to the shell, so — like the two full-screen sheet heads — it does
+   * not get .app-header's notch padding above it and a toast at a bare `top: 12px` lands under the
+   * clock and the Dynamic Island. No division by --text-scale here: this stack renders in
+   * .app-shell, which carries no `zoom`. */
+  top: calc(12px + env(safe-area-inset-top, 0px));
   left: 50%;
   transform: translateX(-50%);
   z-index: 500;
@@ -8517,6 +8521,11 @@ a.profile-links-url {
   align-items: center;
   gap: 12px;
   padding: 10px 16px;
+  /* Same fault and same fix as .report-sheet-head — the long version of the reasoning, including
+   * why the inset is divided by --text-scale and why no other takeover needs this, is in the
+   * comment on that rule. These two sheets are the app's only `position: fixed; inset: 0` heads,
+   * so they are the only two places .app-header's notch padding does not reach. */
+  padding-top: calc(10px + env(safe-area-inset-top, 0px) / var(--text-scale, 1));
   border-bottom: 1px solid var(--border);
   background: var(--panel-bg);
   flex-shrink: 0;
@@ -8905,6 +8914,27 @@ a.profile-links-url {
   align-items: center;
   gap: 12px;
   padding: 10px 16px;
+  /* This sheet is `position: fixed; inset: 0`, so it escapes .app-shell entirely and never gets
+   * .app-header above it — and .app-header is the one place in the app that pays the notch /
+   * Dynamic Island tax (see its padding-top near the top of this file). Nothing else is holding
+   * that space open here, so the head has to pay it itself. Reported from a real iPhone
+   * 2026-09-05: the whole 54px head sat inside a 62px inset, so the system clock, signal and
+   * battery were drawn straight through "← Back", "Reports" and the role badge, and the Queue /
+   * Roles row underneath was left with 6px of clearance. .auth-admin-sheet-head, the only other
+   * fixed full-screen head in the app, had the same defect and is fixed the same way; every other
+   * takeover (.timeline-mode, .myprofile-mode, .game-mode) is a position:absolute child of the
+   * shell and sits below the header for free.
+   *
+   * Divided by --text-scale because .report-sheet carries `zoom: var(--text-scale, 1)`, and zoom
+   * scales this padding along with everything else in the sheet. env() reports the inset in real
+   * screen pixels, so an undivided value would be wrong in both directions: at scale 0.8 it would
+   * render 49.6px against a 62px inset — this exact bug back again at the smallest text size — and
+   * at 1.8 it would waste 50px of a phone screen. The variable is clamped to [0.8, 1.8] in
+   * lib/textSize.tsx and is never 0, so the division cannot invalidate the declaration. Division
+   * binds tighter than addition in calc(), so the 10px design padding is deliberately outside it:
+   * that part is meant to scale with the text. Crossword.css divides by the same variable for the
+   * same reason. */
+  padding-top: calc(10px + env(safe-area-inset-top, 0px) / var(--text-scale, 1));
   border-bottom: 1px solid var(--border);
   background: var(--panel-bg);
   flex-shrink: 0;
