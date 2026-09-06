@@ -1,3 +1,4 @@
+import type { CSSProperties } from "react";
 import type { PanelKey } from "./PanelMenu";
 import Icon from "./Icon";
 import { MOBILE_TAB_META, useMobileTabs, type MobileTabKey } from "../lib/mobileTabs";
@@ -118,5 +119,16 @@ export default function MobileTabBar({
     );
   };
 
-  return <nav className="mobile-tab-bar">{visibleTabs.map(renderTab)}</nav>;
+  // How many tabs are showing, handed to CSS so the icon size can follow it — fewer tabs, larger
+  // icons (see .mobile-tab-icon in App.css for the ramp and why 20px is its floor). A custom
+  // property rather than a class per count or an inline font-size: the count is a layout input, and
+  // this keeps the sizes, the range guard and the reasoning for both in the stylesheet, with one
+  // number crossing over.
+  const barStyle = { "--tab-count": visibleTabs.length } as CSSProperties;
+
+  return (
+    <nav className="mobile-tab-bar" style={barStyle}>
+      {visibleTabs.map(renderTab)}
+    </nav>
+  );
 }

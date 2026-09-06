@@ -3898,7 +3898,18 @@ a.profile-links-url {
   justify-content: center;
   gap: 2px;
   min-height: 56px;
-  padding: 8px 4px 6px;
+  /* Vertical padding here is a FLOOR, not a spacer, and that is why it is smaller than it looks
+     like it should be. The column is `justify-content: center` inside a 56px `min-height`, so while
+     the content is shorter than the box the padding does not position anything — the content's top
+     offset is (56 - content)/2 + (padTop - padBottom)/2. What the padding actually does is set the
+     point at which the content stops fitting and the BAR ITSELF GROWS. Since the icon is now sized
+     from the tab count (see .mobile-tab-icon), the bar would change height as the reader toggles
+     tabs in Settings, which is worse than the problem being solved.
+     4/2 was chosen to be equivalent to the 8/6 it replaced, not merely close: the 2px difference is
+     preserved, so (padTop - padBottom)/2 is unchanged and every icon and label sits at exactly the
+     pixel it did before. The budget it buys: 56 - 6 - 2 (gap) - 16.5 (label line box) = 31.5px of
+     icon, against a 28px maximum, leaving the same 3.5px of slack the bar had at 20px. */
+  padding: 4px 4px 2px;
   border: none;
   background: none;
   color: var(--text-muted);
@@ -3910,9 +3921,28 @@ a.profile-links-url {
   color: var(--accent);
 }
 
+/* The icon is sized from how many tabs are on screen: fewer tabs, larger icons. Reported as "at
+   three tabs each one has a great deal of unused width and the icon looks undersized" — which it
+   was, because the tab widens from 53px to 125px as tabs are hidden and the icon never moved.
+   `--tab-count` is set inline on .mobile-tab-bar from `visibleTabs.length` (MobileTabBar.tsx), so
+   the count reaches the layout the same render it reaches the markup.
+
+   ONE EXPRESSION RATHER THAN FIVE CASES because the ramp is genuinely linear — 2px per tab across
+   the 3-7 range the Settings panel can produce (Bible is locked on and MIN_VISIBLE_TABS is 3):
+
+     3 tabs 28px   4 tabs 26px   5 tabs 24px   6 tabs 22px   7 tabs 20px
+
+   20px at seven is deliberately today's size and the floor, not a shrink. components/Icon.tsx
+   specs this whole set AT the tab bar's 20px — stroke-width 1.75 renders ~1.46px there, and its
+   own note is that the set goes wispy below about 1.6px of stroke. So the crowded end is already
+   at the size the icons were drawn for; the room that exists is all above it, and taking the
+   uncrowded end up to 28px is what the request was actually about.
+
+   clamp() is the guard, not the mechanism: it holds the range even if --tab-count is ever absent,
+   malformed, or driven outside 3-7 by a future eighth tab. */
 .mobile-tab-icon {
   position: relative;
-  font-size: 20px;
+  font-size: clamp(20px, calc(34px - 2px * var(--tab-count, 7)), 28px);
   line-height: 1;
 }
 
