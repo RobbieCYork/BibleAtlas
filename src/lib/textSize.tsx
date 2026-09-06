@@ -24,9 +24,17 @@ function loadInitialScale(): number {
   return saved >= TEXT_SCALE_MIN && saved <= TEXT_SCALE_MAX ? saved : 1;
 }
 
-/** Applies text size everywhere reading/writing happens (Bible, Details, Notes, Friends/Messages) via
- * a `--text-scale` CSS variable each of those panels' root class reads with `zoom` — deliberately NOT
- * applied to the map, which has its own fixed UI scale. */
+/** Applies text size through a `--text-scale` CSS variable that each scaled root reads with `zoom`
+ * (see the two "Global text size" rules in App.css for the full root list and the nesting rules).
+ *
+ * It covers both the reading and writing panels (Bible, Details, Notes, Friends/Messages, Articles,
+ * Social, Games) and the app's own chrome — the header and the Settings panel inside it, the mobile
+ * tab bar, the Timeline's header, the sign-in screen. The chrome was added after the owner reported
+ * the setting as doing nothing: he was watching the Settings panel the A-/A+ buttons sit in, and
+ * that panel was not wired to this at all.
+ *
+ * Still deliberately excluded: the map, which has its own fixed UI scale, and the share-card modal,
+ * which is portaled to document.body specifically to escape the zoom. */
 export function TextSizeProvider({ children }: { children: ReactNode }) {
   const [scale, setScale] = useState(loadInitialScale);
 

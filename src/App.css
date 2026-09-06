@@ -86,7 +86,12 @@
   /* On devices with a notch/Dynamic Island (standalone PWA especially), the system status bar
      (clock, battery, wifi) sits on top of this header's content unless we pad for it. The fallback
      keeps ordinary padding on desktop and on phones with no inset (safe-area-inset-top: 0). */
-  padding-top: calc(14px + env(safe-area-inset-top, 0px));
+  /* The 14px is design padding and SHOULD grow with the text-size setting. The safe-area inset is
+     a physical property of the device and must not: .app-header carries `zoom: var(--text-scale)`,
+     which scales `env()` along with everything else, so at 80% the notch clearance would shrink to
+     0.8x and slide the header under the status bar. Dividing it back out is the same idiom
+     .auth-admin-sheet-head and .report-sheet-head already use. */
+  padding-top: calc(14px + env(safe-area-inset-top, 0px) / var(--text-scale, 1));
   border-bottom: 1px solid var(--border);
   background: var(--panel-bg);
   /* Must clear the full-area mode takeovers (.timeline-mode / .myprofile-mode, both z-index 60):
@@ -303,6 +308,11 @@ body.resizing-panels {
 .search-bar {
   position: relative;
   flex: 1;
+  /* Load-bearing once .app-header carries `zoom: var(--text-scale)`: a flex item defaults to
+     `min-width: auto`, which refuses to shrink below the input's intrinsic width. At 180% on a
+     375px phone the header has only 375/1.8 = 208 units of its own space to lay out in, so without
+     this the field pushes the account avatar off the right edge instead of giving way. */
+  min-width: 0;
   max-width: 480px;
 }
 
@@ -2271,7 +2281,13 @@ a.profile-links-url {
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
   z-index: 30;
   width: 240px;
-  max-height: min(70vh, 640px);
+  /* This dropdown now rides .app-header's `zoom: var(--text-scale)`, so 240px renders at 432px on
+     a 375px phone at 180%. Viewport units are the one length `zoom` does NOT divide, which makes
+     them the right tool for clamping back to the real screen: dividing by the scale converts a
+     physical screen measurement into this element's own zoomed units. The 24px is a physical
+     gutter, kept outside the division so it stays 24 real pixels at every setting. */
+  max-width: calc((100vw - 24px) / var(--text-scale, 1));
+  max-height: min(calc(70vh / var(--text-scale, 1)), 640px);
   overflow-y: auto;
 }
 
@@ -2530,6 +2546,60 @@ a.profile-links-url {
   zoom: var(--text-scale, 1);
 }
 
+/* --- The app's own chrome, scaled by the same setting ---
+   The rule above covers the reading and writing panels, which is all this setting ever governed.
+   The owner reported it as broken from an iPhone while watching the Settings panel, and he was
+   right about what he saw: the Settings panel is the surface the A-/A+ control physically sits in,
+   and it did not move at all. Neither did the header he opened it from, the tab bar, the sign-in
+   screen or the Timeline's own chrome. A control called "Text Size", in a panel that does not
+   respond to it, reads as broken no matter what the reading column does.
+
+   EVERY ROOT LISTED HERE MUST BE OUTSIDE EVERY OTHER SCALED ROOT. `zoom` compounds: a scaled root
+   inside another scaled root gets the factor twice, 1.8 x 1.8 = 3.24, which is the same runaway
+   this file already warns about under the `text-size-adjust` rule below. The DOM positions that
+   make this list safe (App.tsx renders .app-header, .app-body, .walk-panel, .mobile-tab-bar and
+   the gate overlays as siblings inside .app-shell; .auth-gate is an early return and replaces the
+   whole tree):
+
+     .app-header             also covers .search-bar, .panel-menu, .mobile-nav-menu and
+                             .auth-dropdown — the Settings panel — which are its descendants, not
+                             separate roots. None of them are portaled. Do not add them here.
+     .mobile-tab-bar         sibling of .app-header.
+     .tl-header              the Timeline's own header: title, range readout, era/lane menus, zoom
+                             buttons. NOT .tl-root and NOT .timeline-mode — see the exclusions.
+     .auth-gate              the signed-out screen; App.tsx returns it instead of the shell.
+     .walk-panel             fixed overlay, child of .app-shell.
+     .display-name-gate-overlay   used by both DisplayNameGate and ResetPasswordGate.
+
+   DELIBERATELY NOT HERE, each for a measured reason:
+
+     .timeline-mode / .tl-root   .timeline-mode contains .timeline-event-overlay, which renders
+       TimelineEventPanel — and that returns `<div className="location-panel person-panel">`, a
+       root the rule above ALREADY scales. Scaling either ancestor would compound it to 3.24x on
+       the article a reader opens from the timeline. .tl-header is a sibling of both the canvas and
+       that overlay, so it is the one part of Timeline mode that can take the zoom safely.
+     .tl-canvas-viewport   the pan/zoom canvas mixes getBoundingClientRect() with pointer clientX
+       for its drag and wheel math (see TimelineView.tsx). `zoom` changes one of those coordinate
+       spaces and not the other, so scaling it would put every drag and click at the wrong offset.
+       Its labels are already CSS-scaled by the view's own transform.
+     .avatar-crop-overlay   rendered by MyProfileControl, which lives inside .myprofile-root. It
+       ALREADY scales, inherited. Adding it here would compound it to 3.24x.
+     .share-modal / .share-modal-overlay   portaled to document.body specifically to escape this
+       zoom — see the comment in ShareCardModal.tsx. Leave it escaped.
+     The map and its controls   the original deliberate exclusion; it has its own fixed UI scale.
+
+   On iOS this makes these surfaces respond, but — until lib/glyphZoom.ts can be made to fire
+   there — it moves their spacing without moving their letters, exactly as the reading column
+   already does on that platform. That is the known open bug, not a new one. */
+.app-header,
+.mobile-tab-bar,
+.tl-header,
+.auth-gate,
+.walk-panel,
+.display-name-gate-overlay {
+  zoom: var(--text-scale, 1);
+}
+
 /* The zoom above scales the BOXES on every engine, but on iOS/iPadOS WebKit it does not scale the
    GLYPHS: text autosizing recomputes each font size as the SPECIFIED size times `text-size-adjust`
    (pinned at 100% on :root in index.css, on purpose — see there), which discards the factor `zoom`
@@ -2547,8 +2617,8 @@ a.profile-links-url {
    observed to be right. Everywhere else the attribute is absent, this never matches, and the app
    falls back to the original bug — never to oversized text.
 
-   Same roots as the `zoom` rule above, plus .auth-admin-sheet and .report-sheet further down —
-   every one of the three `zoom: var(--text-scale, 1)` declarations in the app is listed here,
+   Same roots as the two `zoom` rules above, plus .auth-admin-sheet and .report-sheet further down
+   — every one of the four `zoom: var(--text-scale, 1)` declarations in the app is listed here,
    because every surface carrying that zoom has this defect. If you add another scaled root, add
    it in both places.
 
@@ -2563,7 +2633,13 @@ a.profile-links-url {
 :root[data-zoom-text-fix="on"] .game-root,
 :root[data-zoom-text-fix="on"] .game-signin-prompt,
 :root[data-zoom-text-fix="on"] .auth-admin-sheet,
-:root[data-zoom-text-fix="on"] .report-sheet {
+:root[data-zoom-text-fix="on"] .report-sheet,
+:root[data-zoom-text-fix="on"] .app-header,
+:root[data-zoom-text-fix="on"] .mobile-tab-bar,
+:root[data-zoom-text-fix="on"] .tl-header,
+:root[data-zoom-text-fix="on"] .auth-gate,
+:root[data-zoom-text-fix="on"] .walk-panel,
+:root[data-zoom-text-fix="on"] .display-name-gate-overlay {
   -webkit-text-size-adjust: calc(var(--text-scale, 1) * 100%);
 }
 
@@ -3762,7 +3838,9 @@ a.profile-links-url {
   flex-shrink: 0;
   border-top: 1px solid var(--border);
   background: var(--panel-bg);
-  padding-bottom: env(safe-area-inset-bottom, 0);
+  /* Divided by the scale: this bar carries `zoom: var(--text-scale)`, and the home-indicator inset
+     is a fixed physical distance, not something the text-size setting should stretch or shrink. */
+  padding-bottom: calc(env(safe-area-inset-bottom, 0px) / var(--text-scale, 1));
 }
 
 .mobile-tab {
@@ -3818,7 +3896,9 @@ a.profile-links-url {
   .app-header {
     gap: 10px;
     padding: 10px 12px;
-    padding-top: calc(10px + env(safe-area-inset-top, 0px));
+    /* env() divided by the scale for the same reason as the desktop rule above — this is the one
+       that runs on a phone, where the notch clearance actually exists. */
+    padding-top: calc(10px + env(safe-area-inset-top, 0px) / var(--text-scale, 1));
   }
 
   .app-header h1 {
@@ -6309,8 +6389,12 @@ a.profile-links-url {
   right: 16px;
   bottom: 20px;
   width: 320px;
-  max-width: calc(100vw - 32px);
-  max-height: calc(100dvh - 120px);
+  /* Viewport units divided by the text scale. `zoom` scales ordinary lengths but does NOT divide
+     viewport units, so inside this zoomed root a bare `100vw` renders as 100vw x the scale — at
+     180% the panel's own cap would be nearly twice the screen. Same correction, and the same
+     reason, as the height caps in Crossword.css. The px terms are design spacing and do scale. */
+  max-width: calc(100vw / var(--text-scale, 1) - 32px);
+  max-height: calc(100dvh / var(--text-scale, 1) - 120px);
   overflow-y: auto;
   background: var(--panel-bg);
   background-image: linear-gradient(180deg, var(--accent-bg), transparent 40%);
@@ -6476,8 +6560,11 @@ a.profile-links-url {
     right: 10px;
     width: auto;
     max-width: none;
-    bottom: calc(67px + env(safe-area-inset-bottom, 0px));
-    max-height: 55dvh;
+    /* The 67px clears the tab bar, which now scales with the text-size setting too, so that term
+       SHOULD scale along with it. The safe-area inset is a physical device distance and must not —
+       .walk-panel carries `zoom: var(--text-scale)`, so divide it back out. */
+    bottom: calc(67px + env(safe-area-inset-bottom, 0px) / var(--text-scale, 1));
+    max-height: calc(55dvh / var(--text-scale, 1));
   }
 }
 
@@ -8413,7 +8500,9 @@ a.profile-links-url {
   position: absolute;
   top: calc(100% + 6px);
   left: 0;
-  min-width: 200px;
+  /* Capped against the real screen — same reason as .panel-menu-dropdown: this rides
+     .app-header's `zoom: var(--text-scale)`, and min-width beats max-width in the cascade. */
+  min-width: min(200px, calc((100vw - 24px) / var(--text-scale, 1)));
   padding: 6px;
   border: 1px solid var(--border);
   border-radius: 10px;
@@ -8698,7 +8787,10 @@ a.profile-links-url {
  * The checkbox group above keeps its own heading so the two kinds of entry read as two lists. */
 
 .panel-menu-dropdown {
-  min-width: 232px;
+  /* Capped against the real screen: this dropdown rides .app-header's `zoom: var(--text-scale)`,
+     so a flat 232px renders at 418px on a 375px phone at 180%. `min-width` beats `max-width` in
+     the cascade, so the clamp has to go inside the min-width itself rather than beside it. */
+  min-width: min(232px, calc((100vw - 24px) / var(--text-scale, 1)));
 }
 
 .panel-menu-heading {

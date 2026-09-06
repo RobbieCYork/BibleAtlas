@@ -54,7 +54,12 @@
   width: 100%;
   max-width: 460px;
   margin: 0 auto;
-  padding: calc(28px + env(safe-area-inset-top, 0px)) 20px calc(28px + env(safe-area-inset-bottom, 0px));
+  /* env() divided by the text scale: .auth-gate carries `zoom: var(--text-scale)` (see the app
+     chrome rule in App.css), which would otherwise stretch or shrink the notch and home-indicator
+     clearances along with the type. The 28px design padding is meant to scale; the device insets
+     are not. */
+  padding: calc(28px + env(safe-area-inset-top, 0px) / var(--text-scale, 1)) 20px
+    calc(28px + env(safe-area-inset-bottom, 0px) / var(--text-scale, 1));
   min-height: 100%;
   box-sizing: border-box;
 }
