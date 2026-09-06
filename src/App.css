@@ -2530,6 +2530,43 @@ a.profile-links-url {
   zoom: var(--text-scale, 1);
 }
 
+/* The zoom above scales the BOXES on every engine, but on iOS/iPadOS WebKit it does not scale the
+   GLYPHS: text autosizing recomputes each font size as the SPECIFIED size times `text-size-adjust`
+   (pinned at 100% on :root in index.css, on purpose — see there), which discards the factor `zoom`
+   already applied. Reported from an iPhone as "A+ grew the space between the lines and the letters
+   stayed exactly the size they were". Handing the panel's own scale to `text-size-adjust` puts the
+   glyphs back in step with the boxes; the boxes need no correction, they already carry it.
+
+   THE ATTRIBUTE SELECTOR IS THE LOAD-BEARING PART OF THIS RULE, and it is not a UA sniff. On an
+   engine that does NOT discard the zoom, this percentage lands on top of it and the two MULTIPLY —
+   measured in Chrome 148 at 375px with the rule unconditional, a 15px probe computes to 27px at
+   scale 1.8 and is then zoomed 1.8x again, 3.24x on the glyphs. lib/glyphZoom.ts measures the real
+   rendered glyph scale on the reader's own device, applies this correction to an offscreen probe,
+   RE-MEASURES, and sets `data-zoom-text-fix` only if the result landed on target rather than
+   overshooting. So this rule reaches a reader only where the corrected size has actually been
+   observed to be right. Everywhere else the attribute is absent, this never matches, and the app
+   falls back to the original bug — never to oversized text.
+
+   Same roots as the `zoom` rule above, plus .auth-admin-sheet and .report-sheet further down —
+   every one of the three `zoom: var(--text-scale, 1)` declarations in the app is listed here,
+   because every surface carrying that zoom has this defect. If you add another scaled root, add
+   it in both places.
+
+   NOT VERIFIED ON REAL iOS — no device and no simulator here. What is verified is that the probe
+   declines to set the attribute on every engine reachable from this machine. */
+:root[data-zoom-text-fix="on"] .bible-panel,
+:root[data-zoom-text-fix="on"] .location-panel,
+:root[data-zoom-text-fix="on"] .my-notes-panel,
+:root[data-zoom-text-fix="on"] .friends-panel,
+:root[data-zoom-text-fix="on"] .articles-panel,
+:root[data-zoom-text-fix="on"] .myprofile-root,
+:root[data-zoom-text-fix="on"] .game-root,
+:root[data-zoom-text-fix="on"] .game-signin-prompt,
+:root[data-zoom-text-fix="on"] .auth-admin-sheet,
+:root[data-zoom-text-fix="on"] .report-sheet {
+  -webkit-text-size-adjust: calc(var(--text-scale, 1) * 100%);
+}
+
 /* --- Bible panel --- */
 
 .bible-panel {

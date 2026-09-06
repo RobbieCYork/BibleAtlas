@@ -1,4 +1,5 @@
 import { createContext, useContext, useEffect, useState, type ReactNode } from "react";
+import { applyGlyphZoomCorrection } from "./glyphZoom";
 
 export const TEXT_SCALE_MIN = 0.8;
 export const TEXT_SCALE_MAX = 1.8;
@@ -28,6 +29,15 @@ function loadInitialScale(): number {
  * applied to the map, which has its own fixed UI scale. */
 export function TextSizeProvider({ children }: { children: ReactNode }) {
   const [scale, setScale] = useState(loadInitialScale);
+
+  // The `zoom` this setting works through scales the boxes on every engine, but on iOS WebKit it
+  // does not scale the letters — which is what made the whole setting look broken on an iPhone.
+  // Measured and corrected once per load. See lib/glyphZoom.ts for why this is a measurement of
+  // the engine's actual behaviour rather than a browser check, and why declining is the safe
+  // outcome. Runs after mount so the probe has a real document body to lay out in.
+  useEffect(() => {
+    applyGlyphZoomCorrection();
+  }, []);
 
   useEffect(() => {
     document.documentElement.style.setProperty("--text-scale", String(scale));
