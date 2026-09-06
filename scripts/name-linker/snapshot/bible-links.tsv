@@ -983,7 +983,6 @@ Genesis 50:2	0	Joseph	joseph-son-of-jacob	joseph-son-of-jacob
 Genesis 50:4	44	Joseph	joseph-son-of-jacob	joseph-son-of-jacob
 Genesis 50:7	0	Joseph	joseph-son-of-jacob	joseph-son-of-jacob
 Genesis 50:8	17	Joseph	joseph-son-of-jacob	joseph-son-of-jacob
-Genesis 50:11	178	Abel	abel	abel
 Genesis 50:13	110	Abraham	abraham	abraham
 Genesis 50:14	0	Joseph	joseph-son-of-jacob	joseph-son-of-jacob
 Genesis 50:15	5	Joseph	joseph-son-of-jacob	joseph-son-of-jacob
@@ -2171,7 +2170,6 @@ Numbers 33:19	51	Perez	perez	perez
 Numbers 33:20	26	Perez	perez	perez
 Numbers 33:38	0	Aaron	aaron	aaron
 Numbers 33:39	0	Aaron	aaron	aaron
-Numbers 33:49	57	Abel	abel	abel
 Numbers 33:50	16	Moses	moses	moses
 Numbers 34:1	16	Moses	moses	moses
 Numbers 34:13	0	Moses	moses	moses
@@ -2691,7 +2689,6 @@ Judges 7:15	16	Gideon	gideon	gideon
 Judges 7:18	142	Gideon	gideon	gideon
 Judges 7:19	3	Gideon	gideon	gideon
 Judges 7:20	205	Gideon	gideon	gideon
-Judges 7:22	198	Abel	abel	abel
 Judges 7:23	91	Manasseh	-	manasseh-king-of-judah
 Judges 7:24	0	Gideon	gideon	gideon
 Judges 7:25	196	Gideon	gideon	gideon
@@ -3736,7 +3733,6 @@ Ruth 4:22	68	David	david	david
 2 Samuel 6:2	0	David	david	david
 2 Samuel 6:5	0	David	david	david
 2 Samuel 6:8	0	David	david	david
-2 Samuel 6:8	92	Perez	perez	perez
 2 Samuel 6:9	0	David	david	david
 2 Samuel 6:10	3	David	david	david
 2 Samuel 6:10	55	David	david	david
@@ -3954,9 +3950,8 @@ Ruth 4:22	68	David	david	david
 2 Samuel 20:3	0	David	david	david
 2 Samuel 20:6	0	David	david	david
 2 Samuel 20:11	87	David	david	david
-2 Samuel 20:14	44	Abel	abel	abel
-2 Samuel 20:15	30	Abel	abel	abel
-2 Samuel 20:18	90	Abel	abel	abel
+2 Samuel 20:14	44	Abel	-	abel
+2 Samuel 20:18	90	Abel	-	abel
 2 Samuel 20:21	151	David	david	david
 2 Samuel 20:24	49	Jehoshaphat	jehoshaphat	jehoshaphat
 2 Samuel 20:25	22	Zadok	-	zadok-in-jesus-genealogy
@@ -4129,7 +4124,6 @@ Ruth 4:22	68	David	david	david
 1 Kings 4:5	66	Nathan	-	nathan-the-prophet
 1 Kings 4:7	0	Solomon	solomon	solomon
 1 Kings 4:11	56	Solomon	solomon	solomon
-1 Kings 4:12	130	Abel	abel	abel
 1 Kings 4:13	58	Manasseh	-	manasseh-king-of-judah
 1 Kings 4:15	60	Solomon	solomon	solomon
 1 Kings 4:17	0	Jehoshaphat	jehoshaphat	jehoshaphat
@@ -4336,7 +4330,6 @@ Ruth 4:22	68	David	david	david
 1 Kings 15:18	5	Asa	asa	asa
 1 Kings 15:18	189	Asa	asa	asa
 1 Kings 15:20	27	Asa	asa	asa
-1 Kings 15:20	128	Abel	abel	abel
 1 Kings 15:22	10	Asa	asa	asa
 1 Kings 15:22	162	Asa	asa	asa
 1 Kings 15:23	32	Asa	asa	asa
@@ -4399,7 +4392,6 @@ Ruth 4:22	68	David	david	david
 1 Kings 19:13	5	Elijah	elijah	elijah
 1 Kings 19:13	171	Elijah	elijah	elijah
 1 Kings 19:16	65	Elisha	elisha	elisha
-1 Kings 19:16	94	Abel	abel	abel
 1 Kings 19:17	100	Elisha	elisha	elisha
 1 Kings 19:19	37	Elisha	elisha	elisha
 1 Kings 19:19	142	Elijah	elijah	elijah
@@ -4596,7 +4588,6 @@ Ruth 4:22	68	David	david	david
 2 Kings 15:17	28	Azariah	uzziah	uzziah
 2 Kings 15:23	24	Azariah	uzziah	uzziah
 2 Kings 15:27	28	Azariah	uzziah	uzziah
-2 Kings 15:29	89	Abel	abel	abel
 2 Kings 15:30	0	Hoshea the son of Elah	hoshea-king-of-israel	hoshea-king-of-israel
 2 Kings 15:30	153	Jotham	jotham-king-of-judah	jotham-king-of-judah
 2 Kings 15:30	171	Uzziah	uzziah	uzziah
@@ -4799,7 +4790,6 @@ Ruth 4:22	68	David	david	david
 1 Chronicles 2:19	17	Caleb	caleb	caleb
 1 Chronicles 2:21	10	Hezron	-	hezron-son-of-perez
 1 Chronicles 2:24	6	Hezron	-	hezron-son-of-perez
-1 Chronicles 2:24	21	Caleb	caleb	caleb
 1 Chronicles 2:24	38	Abijah	-	abijah-king-of-judah
 1 Chronicles 2:24	45	Hezron	-	hezron-son-of-perez
 1 Chronicles 2:25	39	Hezron	-	hezron-son-of-perez
@@ -5019,7 +5009,6 @@ Ruth 4:22	68	David	david	david
 1 Chronicles 13:6	0	David	david	david
 1 Chronicles 13:8	0	David	david	david
 1 Chronicles 13:11	0	David	david	david
-1 Chronicles 13:11	87	Perez	perez	perez
 1 Chronicles 13:12	0	David	david	david
 1 Chronicles 13:13	3	David	david	david
 1 Chronicles 13:13	43	David	david	david
@@ -5478,7 +5467,6 @@ Ruth 4:22	68	David	david	david
 2 Chronicles 16:1	158	Asa	asa	asa
 2 Chronicles 16:2	5	Asa	asa	asa
 2 Chronicles 16:4	27	Asa	asa	asa
-2 Chronicles 16:4	125	Abel	abel	abel
 2 Chronicles 16:6	5	Asa	asa	asa
 2 Chronicles 16:7	37	Asa	asa	asa
 2 Chronicles 16:10	5	Asa	asa	asa
@@ -8935,7 +8923,6 @@ Acts 23:18	70	Paul	paul-of-tarsus	paul-of-tarsus
 Acts 23:20	51	Paul	paul-of-tarsus	paul-of-tarsus
 Acts 23:24	54	Paul	paul-of-tarsus	paul-of-tarsus
 Acts 23:24	91	Felix	antonius-felix	antonius-felix
-Acts 23:26	1	Claudius	claudius-caesar	claudius-caesar
 Acts 23:26	48	Felix	antonius-felix	antonius-felix
 Acts 23:31	49	Paul	paul-of-tarsus	paul-of-tarsus
 Acts 23:33	89	Paul	paul-of-tarsus	paul-of-tarsus

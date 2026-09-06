@@ -376,9 +376,9 @@ person	abba	god-the-father	panel	1
 person	abba	god-the-father	reader	1
 person	abba, father	god-the-father	panel	2
 person	abba, father	god-the-father	reader	2
-person	abel	abel	panel	23
-person	abel	abel	prose	21
-person	abel	abel	reader	23
+person	abel	abel	panel	14
+person	abel	abel	prose	20
+person	abel	abel	reader	12
 person	abijah	abijah-king-of-judah	panel	28
 person	abijah	abijah-king-of-judah	prose	1
 person	abijah	abijah-king-of-judah	reader	18
@@ -419,7 +419,7 @@ person	ananias	ananias-of-damascus	reader	6
 person	ananias	ananias-the-high-priest	reader	2
 person	ananias and sapphira	ananias-and-sapphira	prose	2
 person	andrew	andrew-apostle	panel	13
-person	andrew	andrew-apostle	prose	10
+person	andrew	andrew-apostle	prose	9
 person	andrew	andrew-apostle	reader	13
 person	anna	anna-the-prophetess	panel	1
 person	anna	anna-the-prophetess	reader	1
@@ -441,7 +441,7 @@ person	asa	asa	prose	9
 person	asa	asa	reader	60
 person	athanasius of alexandria	athanasius-of-alexandria	prose	2
 person	augustine of hippo	augustine-of-hippo	prose	1
-person	augustus	caesar-augustus	prose	38
+person	augustus	caesar-augustus	prose	37
 person	azariah	uzziah	panel	49
 person	azariah	uzziah	prose	5
 person	azariah	uzziah	reader	21
@@ -478,7 +478,7 @@ person	boaz	boaz	reader	22
 person	caesar	claudius-caesar	reader	1
 person	caesar	nero-caesar	reader	10
 person	caesar	tiberius-caesar	panel	27
-person	caesar	tiberius-caesar	prose	42
+person	caesar	tiberius-caesar	prose	41
 person	caesar	tiberius-caesar	reader	16
 person	caesar augustus	caesar-augustus	panel	1
 person	caesar augustus	caesar-augustus	prose	5
@@ -489,9 +489,9 @@ person	caiaphas	caiaphas	reader	9
 person	cain	cain	panel	22
 person	cain	cain	prose	24
 person	cain	cain	reader	22
-person	caleb	caleb	panel	37
+person	caleb	caleb	panel	36
 person	caleb	caleb	prose	16
-person	caleb	caleb	reader	37
+person	caleb	caleb	reader	36
 person	cephas	simon-peter	panel	6
 person	cephas	simon-peter	prose	1
 person	cephas	simon-peter	reader	6
@@ -501,9 +501,9 @@ person	chloe	chloe	reader	1
 person	christ jesus	jesus-of-nazareth	panel	84
 person	christ jesus	jesus-of-nazareth	prose	4
 person	christ jesus	jesus-of-nazareth	reader	84
-person	claudius	claudius-caesar	panel	3
-person	claudius	claudius-caesar	prose	26
-person	claudius	claudius-caesar	reader	3
+person	claudius	claudius-caesar	panel	2
+person	claudius	claudius-caesar	prose	25
+person	claudius	claudius-caesar	reader	2
 person	cleopas	cleopas	panel	1
 person	cleopas	cleopas	reader	1
 person	coniah	jeconiah	panel	3
@@ -521,7 +521,7 @@ person	daniel	daniel	panel	83
 person	daniel	daniel	prose	62
 person	daniel	daniel	reader	83
 person	david	david	panel	1138
-person	david	david	prose	281
+person	david	david	prose	280
 person	david	david	reader	1138
 person	deborah	deborah	panel	10
 person	deborah	deborah	prose	10
@@ -586,7 +586,7 @@ person	ezra	ezra	reader	25
 person	father in heaven	god-the-father	panel	4
 person	father in heaven	god-the-father	reader	4
 person	felix	antonius-felix	panel	9
-person	felix	antonius-felix	prose	16
+person	felix	antonius-felix	prose	15
 person	felix	antonius-felix	reader	9
 person	festus	porcius-festus	panel	12
 person	festus	porcius-festus	prose	11
@@ -603,7 +603,7 @@ person	gamaliel	gamaliel	prose	8
 person	gamaliel	gamaliel	reader	2
 person	george whitefield	george-whitefield	prose	2
 person	gideon	gideon	panel	40
-person	gideon	gideon	prose	14
+person	gideon	gideon	prose	13
 person	gideon	gideon	reader	40
 person	god the father	god-the-father	panel	14
 person	god the father	god-the-father	prose	4
@@ -646,11 +646,11 @@ person	isaiah	isaiah	panel	53
 person	isaiah	isaiah	prose	51
 person	isaiah	isaiah	reader	53
 person	jacob	jacob	panel	381
-person	jacob	jacob	prose	135
+person	jacob	jacob	prose	134
 person	jacob	jacob	reader	381
 person	james	james-brother-of-jesus	reader	10
 person	james	james-son-of-zebedee	panel	32
-person	james	james-son-of-zebedee	prose	60
+person	james	james-son-of-zebedee	prose	57
 person	james	james-son-of-zebedee	reader	22
 person	james the just	james-brother-of-jesus	prose	1
 person	james the son of alphaeus	james-son-of-alphaeus	panel	2
@@ -754,7 +754,7 @@ person	jotham	jotham-king-of-judah	panel	25
 person	jotham	jotham-king-of-judah	prose	9
 person	jotham	jotham-king-of-judah	reader	15
 person	judas	judas-iscariot	panel	21
-person	judas	judas-iscariot	prose	18
+person	judas	judas-iscariot	prose	15
 person	judas	judas-iscariot	reader	19
 person	judas	thaddaeus	reader	1
 person	judas iscariot	judas-iscariot	panel	7
@@ -806,7 +806,7 @@ person	martin luther king	martin-luther-king-jr	prose	3
 person	mary	mary-magdalene	reader	3
 person	mary	mary-mother-of-james-the-less	reader	7
 person	mary	mary-mother-of-jesus	panel	42
-person	mary	mary-mother-of-jesus	prose	92
+person	mary	mary-mother-of-jesus	prose	89
 person	mary	mary-mother-of-jesus	reader	20
 person	mary	mary-of-bethany	reader	11
 person	mary magdalene	mary-magdalene	panel	11
@@ -825,7 +825,7 @@ person	melchizedek	melchizedek	panel	11
 person	melchizedek	melchizedek	prose	4
 person	melchizedek	melchizedek	reader	11
 person	michael	michael-archangel	panel	15
-person	michael	michael-archangel	prose	5
+person	michael	michael-archangel	prose	1
 person	michael	michael-archangel	reader	15
 person	michael the archangel	michael-archangel	prose	1
 person	miriam	miriam	panel	15
@@ -869,17 +869,17 @@ person	onesimus	onesimus	reader	2
 person	paul	paul-of-tarsus	panel	161
 person	paul	paul-of-tarsus	prose	512
 person	paul	paul-of-tarsus	reader	161
-person	perez	perez	panel	22
+person	perez	perez	panel	20
 person	perez	perez	prose	7
-person	perez	perez	reader	22
+person	perez	perez	reader	20
 person	peter	simon-peter	panel	136
-person	peter	simon-peter	prose	184
+person	peter	simon-peter	prose	181
 person	peter	simon-peter	reader	136
 person	philemon	philemon	panel	1
 person	philemon	philemon	prose	22
 person	philemon	philemon	reader	1
 person	philip	philip-the-apostle	panel	33
-person	philip	philip-the-apostle	prose	57
+person	philip	philip-the-apostle	prose	53
 person	philip	philip-the-apostle	reader	16
 person	philip	philip-the-evangelist	reader	14
 person	philip	philip-the-tetrarch	reader	1
@@ -932,7 +932,7 @@ person	salmon	salmon-father-of-boaz	panel	5
 person	salmon	salmon-father-of-boaz	prose	1
 person	salmon	salmon-father-of-boaz	reader	5
 person	salome	salome-follower-of-jesus	panel	2
-person	salome	salome-follower-of-jesus	prose	4
+person	salome	salome-follower-of-jesus	prose	3
 person	salome	salome-follower-of-jesus	reader	2
 person	samson	samson	panel	39
 person	samson	samson	prose	14
@@ -992,7 +992,7 @@ person	simon, who is also called peter	simon-peter	reader	2
 person	simon, who is called peter	simon-peter	panel	3
 person	simon, who is called peter	simon-peter	reader	3
 person	solomon	solomon	panel	306
-person	solomon	solomon	prose	103
+person	solomon	solomon	prose	102
 person	solomon	solomon	reader	306
 person	sosthenes	sosthenes	panel	2
 person	sosthenes	sosthenes	prose	1
@@ -1043,11 +1043,11 @@ person	theophilus	theophilus	panel	2
 person	theophilus	theophilus	prose	5
 person	theophilus	theophilus	reader	2
 person	thomas	thomas-apostle	panel	11
-person	thomas	thomas-apostle	prose	14
+person	thomas	thomas-apostle	prose	6
 person	thomas	thomas-apostle	reader	11
 person	thomas aquinas	thomas-aquinas	prose	2
 person	thomas cranmer	thomas-cranmer	prose	2
-person	tiberius	tiberius-caesar	prose	20
+person	tiberius	tiberius-caesar	prose	18
 person	tiberius caesar	tiberius-caesar	panel	1
 person	tiberius caesar	tiberius-caesar	prose	2
 person	tiberius caesar	tiberius-caesar	reader	1

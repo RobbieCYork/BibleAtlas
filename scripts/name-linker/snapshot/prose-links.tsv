@@ -135,8 +135,6 @@ bookIntro.manuscripts|-|b9719fb3c8	88	Theophilus	theophilus
 bookIntro.manuscripts|-|bcf062e408	26	Paul	paul-of-tarsus
 bookIntro.manuscripts|-|bed28e4878	105	Ezekiel	ezekiel
 bookIntro.manuscripts|-|bf24314589	231	Jeremiah	jeremiah
-bookIntro.manuscripts|-|c0ee3343f5	69	James	james-son-of-zebedee
-bookIntro.manuscripts|-|c0ee3343f5	93	Peter	simon-peter
 bookIntro.manuscripts|-|c25ecbdc67	69	Esther	esther
 bookIntro.manuscripts|-|c4c9f18ff7	36	Philemon	philemon
 bookIntro.manuscripts|-|c511fe48b3	8	Samuel	samuel
@@ -706,7 +704,6 @@ location.archaeology.note|cyprus|f36d683586	485	Paul	paul-of-tarsus
 location.archaeology.note|cyprus|f36d683586	96	Sergius Paulus	sergius-paulus
 location.archaeology.note|damascus|90ae9b1f85	365	Paul	paul-of-tarsus
 location.archaeology.note|damascus|90ae9b1f85	476	Paul	paul-of-tarsus
-location.archaeology.note|derbe|4ce47af970	59	Michael	michael-archangel
 location.archaeology.note|galilee|7b6714ff4d	338	Jesus	jesus-of-nazareth
 location.archaeology.note|galilee|7b6714ff4d	444	Peter	simon-peter
 location.archaeology.note|galilee|7b6714ff4d	454	Andrew	andrew-apostle
@@ -720,7 +717,6 @@ location.archaeology.note|jordan-river|2341c30c0c	195	Jesus	jesus-of-nazareth
 location.archaeology.note|jordan-river|2341c30c0c	214	John the Baptist	john-the-baptist
 location.archaeology.note|judea|e58bc75055	194	Jesus	jesus-of-nazareth
 location.archaeology.note|judea|e58bc75055	301	Herod the Great	herod-the-great
-location.archaeology.note|lystra|0b11ffd4d2	118	Felix	antonius-felix
 location.archaeology.note|malta|3b297ee4ae	306	Paul	paul-of-tarsus
 location.archaeology.note|mount-nebo|2221c3f64e	23	Moses	moses
 location.archaeology.note|nazareth|5733b27bc4	301	Jesus	jesus-of-nazareth
@@ -755,7 +751,6 @@ location.history.founded|gibeah|0524fc3be5	52	Saul	saul-king-of-israel
 location.history.founded|jerusalem|fe9b3c85e8	106	David	david
 location.history.founded|judea|29040ea3de	89	Herod Archelaus	herod-archelaus
 location.history.founded|sardis|d6ba55af08	19	Lydia	lydia-of-thyatira
-location.history.founded|succoth|113bcde660	943	James	james-son-of-zebedee
 location.history.founded|tekoa|3304265a38	76	Rehoboam	rehoboam
 location.history.founded|tiberias|894799724e	20	Herod Antipas	herod-antipas
 location.history.founded|tiberias|894799724e	76	Tiberius	tiberius-caesar
@@ -813,7 +808,6 @@ person.controversies|jeconiah|bb53f6f76e	80	David	david
 person.controversies|jesus-of-nazareth|d10226dd5a	90	Pontius Pilate	pontius-pilate
 person.controversies|job|2a955af0d9	624	Noah	noah
 person.controversies|job|2a955af0d9	633	Daniel	daniel
-person.controversies|john-calvin|2ebb61c1f3	135	Michael	michael-archangel
 person.controversies|john-the-apostle|c31e5f3585	247	Lazarus	lazarus-of-bethany
 person.controversies|john-the-apostle|c31e5f3585	35	Jesus	jesus-of-nazareth
 person.controversies|john-the-baptist|ea4e5673ae	206	Antipas	herod-antipas
@@ -888,7 +882,6 @@ person.extraBib.summary|caiaphas|5fb9ac3505	67	Joseph	joseph-son-of-jacob
 person.extraBib.summary|caiaphas|f71df8a325	246	Joseph	joseph-son-of-jacob
 person.extraBib.summary|caiaphas|f71df8a325	333	Joseph	joseph-son-of-jacob
 person.extraBib.summary|caiaphas|f71df8a325	54	Joseph	joseph-son-of-jacob
-person.extraBib.summary|claudius-caesar|e67501b463	106	Tiberius	tiberius-caesar
 person.extraBib.summary|drusilla|fbd77e2b80	54	Felix	antonius-felix
 person.extraBib.summary|drusilla|fbd77e2b80	75	Felix	antonius-felix
 person.extraBib.summary|gallio|d9cfd4d502	182	Claudius	claudius-caesar
@@ -1166,7 +1159,6 @@ person.lifeStory|bathsheba|befb09465d	39	Uriah the Hittite	uriah-the-hittite
 person.lifeStory|bathsheba|befb09465d	65	David	david
 person.lifeStory|benedict-of-nursia|38394e150d	13	Gregory the Great	gregory-the-great
 person.lifeStory|bernard-of-clairvaux|79fd998706	226	Mary	mary-mother-of-jesus
-person.lifeStory|bernard-of-clairvaux|9661706b5f	220	Peter	simon-peter
 person.lifeStory|bernice|663761950d	361	Titus	titus
 person.lifeStory|bernice|d481de7222	154	Agrippa II	herod-agrippa-ii
 person.lifeStory|bernice|d481de7222	201	Paul	paul-of-tarsus
@@ -1194,7 +1186,6 @@ person.lifeStory|caesar-augustus|0504338f85	234	David	david
 person.lifeStory|caesar-augustus|0504338f85	282	Mary	mary-mother-of-jesus
 person.lifeStory|caesar-augustus|0504338f85	382	Luke	luke-evangelist
 person.lifeStory|caesar-augustus|0504338f85	490	Jesus	jesus-of-nazareth
-person.lifeStory|caesar-augustus|65e0b11f3a	131	Caesar	tiberius-caesar
 person.lifeStory|caesar-augustus|65e0b11f3a	191	Caesar	tiberius-caesar
 person.lifeStory|caesar-augustus|65e0b11f3a	325	Mark Antony	mark-antony
 person.lifeStory|caesar-augustus|65e0b11f3a	94	Caesar	tiberius-caesar
@@ -1226,7 +1217,6 @@ person.lifeStory|charles-wesley|52be6c0fd5	209	John	john-wesley
 person.lifeStory|charles-wesley|52be6c0fd5	69	John	john-wesley
 person.lifeStory|chloe|6cb0ce5e37	0	Paul	paul-of-tarsus
 person.lifeStory|chloe|6cb0ce5e37	338	Paul	paul-of-tarsus
-person.lifeStory|claudius-caesar|550cb1bb8e	0	Tiberius	tiberius-caesar
 person.lifeStory|claudius-caesar|550cb1bb8e	25	Augustus	caesar-augustus
 person.lifeStory|claudius-caesar|f4bb27850d	25	Paul	paul-of-tarsus
 person.lifeStory|claudius-caesar|f4bb27850d	34	Aquila	aquila
@@ -1461,8 +1451,6 @@ person.lifeStory|hagar|e4d7d960e1	463	Sarai	sarah
 person.lifeStory|hagar|e4d7d960e1	50	Sarah	sarah
 person.lifeStory|hagar|e4d7d960e1	655	Abram	abraham
 person.lifeStory|hagar|e4d7d960e1	98	Abram	abraham
-person.lifeStory|henry-viii|97d6b2bdd8	274	Thomas	thomas-apostle
-person.lifeStory|henry-viii|b3b16aebe7	78	Thomas	thomas-apostle
 person.lifeStory|henry-viii|b3b16aebe7	98	Thomas Cranmer	thomas-cranmer
 person.lifeStory|herod-agrippa-ii|2e753037ae	26	Herod Agrippa I	herod-agrippa-i
 person.lifeStory|herod-agrippa-ii|7bf5cf729b	0	Paul	paul-of-tarsus
@@ -1746,7 +1734,6 @@ person.lifeStory|john-chrysostom|24d848cfae	65	Paul	paul-of-tarsus
 person.lifeStory|john-chrysostom|4af16402c3	254	Theophilus	theophilus
 person.lifeStory|john-knox|095a330749	68	Mary	mary-mother-of-jesus
 person.lifeStory|john-knox|bc43602820	439	Elizabeth	elizabeth-mother-of-john-baptist
-person.lifeStory|john-knox|bc43602820	57	Mary	mary-mother-of-jesus
 person.lifeStory|john-mark|340839fd38	187	Paul	paul-of-tarsus
 person.lifeStory|john-mark|340839fd38	196	Barnabas	barnabas
 person.lifeStory|john-mark|340839fd38	231	Barnabas	barnabas
@@ -1814,7 +1801,6 @@ person.lifeStory|john-the-baptist|db24d7402a	88	Zechariah	zechariah-father-of-jo
 person.lifeStory|john-wesley|261d7e2a11	99	George Whitefield	george-whitefield
 person.lifeStory|john-wesley|38e8bb1e29	121	William Wilberforce	william-wilberforce
 person.lifeStory|john-wesley|fadab196b6	94	Samuel	samuel
-person.lifeStory|jonathan-edwards|fde010ae53	123	Solomon	solomon
 person.lifeStory|joram-king-of-israel|20708641fa	202	Jehoshaphat	jehoshaphat
 person.lifeStory|joram-king-of-israel|20708641fa	252	Elisha	elisha
 person.lifeStory|joram-king-of-israel|20708641fa	69	Jehoshaphat	jehoshaphat
@@ -2239,7 +2225,6 @@ person.lifeStory|pharisees|47acdc0a1e	1118	Luke	luke-evangelist
 person.lifeStory|pharisees|47acdc0a1e	377	Caesar	tiberius-caesar
 person.lifeStory|pharisees|47acdc0a1e	604	Jesus	jesus-of-nazareth
 person.lifeStory|pharisees|47acdc0a1e	94	Jesus	jesus-of-nazareth
-person.lifeStory|pharisees|a53ad41060	815	Salome	salome-follower-of-jesus
 person.lifeStory|philemon|38d7032861	21	Paul	paul-of-tarsus
 person.lifeStory|philemon|38d7032861	78	Onesimus	onesimus
 person.lifeStory|philemon|65fd62ec65	154	Paul	paul-of-tarsus
@@ -2658,7 +2643,6 @@ person.lifeStory|thomas-apostle|a36e5bfe17	88	Jesus	jesus-of-nazareth
 person.lifeStory|thomas-aquinas|416a6c4e34	54	Thomas	thomas-apostle
 person.lifeStory|thomas-aquinas|823548e01a	14	Thomas	thomas-apostle
 person.lifeStory|thomas-aquinas|9e1f6f1173	0	Thomas	thomas-apostle
-person.lifeStory|thomas-cranmer|3769316b8e	18	Mary	mary-mother-of-jesus
 person.lifeStory|thomas-cranmer|ec277a52e5	87	Henry VIII	henry-viii
 person.lifeStory|tiberius-caesar|39ee330f0f	137	Augustus	caesar-augustus
 person.lifeStory|tiberius-caesar|39ee330f0f	195	Augustus	caesar-augustus
@@ -2703,7 +2687,6 @@ person.lifeStory|uriah-the-hittite|5b68440512	74	David	david
 person.lifeStory|uriah-the-hittite|5b68440512	91	Bathsheba	bathsheba
 person.lifeStory|uzziah|a1cb19210c	127	Jotham	jotham-king-of-judah
 person.lifeStory|william-seymour|3914203c93	341	the Holy Spirit	holy-spirit
-person.lifeStory|william-wilberforce|a7b53b2a74	140	Thomas	thomas-apostle
 person.lifeStory|william-wilberforce|f4dccec0db	297	John Wesley	john-wesley
 person.lifeStory|zacchaeus|8cf9984e4c	145	Jesus	jesus-of-nazareth
 person.lifeStory|zacchaeus|8cf9984e4c	320	Jesus	jesus-of-nazareth
@@ -2803,7 +2786,6 @@ person.placesLived|abel|251abda820	24	Eve	eve
 person.placesLived|cain|7e201c36c5	15	Adam	adam
 person.placesLived|cain|7e201c36c5	24	Eve	eve
 person.placesLived|drusilla|7091d675a4	33	Felix	antonius-felix
-person.placesLived|elisha|e2ac6011bd	0	Abel	abel
 person.placesLived|epaphroditus|9629ae1641	31	Paul	paul-of-tarsus
 person.placesLived|ethiopian-eunuch|c1b1542132	50	Philip	philip-the-apostle
 person.placesLived|gideon|1f85868fb5	28	Manasseh	manasseh-king-of-judah
@@ -2867,7 +2849,6 @@ poi.archaeology.note|circus-of-nero-rome|9c89e1a75a	417	Peter	simon-peter
 poi.archaeology.note|city-of-david|490ab89a53	171	David	david
 poi.archaeology.note|dominus-flevit|621fe7402b	390	Jesus	jesus-of-nazareth
 poi.archaeology.note|dormition-abbey|d39d59c090	462	Mary	mary-mother-of-jesus
-poi.archaeology.note|dura-europos-house-church|859560f450	76	Michael	michael-archangel
 poi.archaeology.note|ein-karem|f56ab6de27	158	John the Baptist	john-the-baptist
 poi.archaeology.note|ein-karem|f56ab6de27	255	Elizabeth	elizabeth-mother-of-john-baptist
 poi.archaeology.note|emmaus|335bdfa72d	438	Luke	luke-evangelist
@@ -2879,7 +2860,6 @@ poi.archaeology.note|garden-tomb|692d0a532c	406	Jesus	jesus-of-nazareth
 poi.archaeology.note|golgotha|774a271246	496	Jesus	jesus-of-nazareth
 poi.archaeology.note|great-theatre-ephesus|f82790cb7a	200	Nero	nero-caesar
 poi.archaeology.note|grotto-of-st-paul-ephesus|0db86eddae	324	Paul	paul-of-tarsus
-poi.archaeology.note|herodium|0df5edb1eb	188	Gideon	gideon
 poi.archaeology.note|hierapolis|46d9a2eee7	188	Philip	philip-the-apostle
 poi.archaeology.note|hierapolis|46d9a2eee7	251	Philip	philip-the-apostle
 poi.archaeology.note|house-of-ananias-damascus|671f1e1a6c	371	Ananias	ananias-and-sapphira
@@ -2902,7 +2882,6 @@ poi.archaeology.note|pool-of-siloam|caf56a96a9	206	Jesus	jesus-of-nazareth
 poi.archaeology.note|rhegium|424f789ce6	318	Paul	paul-of-tarsus
 poi.archaeology.note|salamis|4b13067fc0	283	Paul	paul-of-tarsus
 poi.archaeology.note|sepphoris|62d5301ee1	427	Jesus	jesus-of-nazareth
-poi.archaeology.note|st-pauls-bay-malta|4cc9c275f7	330	Thomas	thomas-apostle
 poi.archaeology.note|st-pauls-bay-malta|4cc9c275f7	397	Paul	paul-of-tarsus
 poi.archaeology.note|st-peter-gallicantu|c8fee3bd19	218	Jesus	jesus-of-nazareth
 poi.archaeology.note|st-peter-gallicantu|c8fee3bd19	341	Caiaphas	caiaphas
@@ -2911,7 +2890,6 @@ poi.archaeology.note|straight-street-damascus|bee2b53edf	338	Judas	judas-iscario
 poi.archaeology.note|syracuse|559b9d78fb	257	Paul	paul-of-tarsus
 poi.archaeology.note|temple-of-artemis-ephesus|4839b74e3d	149	Lydia	lydia-of-thyatira
 poi.archaeology.note|temple-of-artemis-ephesus|4839b74e3d	233	Paul	paul-of-tarsus
-poi.archaeology.note|temple-of-artemis-ephesus|4839b74e3d	389	David	david
 poi.archaeology.note|theatre-of-miletus|b8a6666d7d	434	Paul	paul-of-tarsus
 poi.archaeology.note|tomb-of-lazarus-bethany|135d163982	515	Lazarus	lazarus-of-bethany
 poi.archaeology.note|tomb-of-lazarus-bethany|135d163982	58	Jerome	jerome
@@ -2945,7 +2923,6 @@ poi.description|appian-way-quo-vadis-rome|608a4c338b	292	Peter	simon-peter
 poi.description|appian-way-quo-vadis-rome|608a4c338b	322	Peter	simon-peter
 poi.description|appian-way-quo-vadis-rome|608a4c338b	407	Peter	simon-peter
 poi.description|appian-way-quo-vadis-rome|608a4c338b	563	Peter	simon-peter
-poi.description|appian-way-quo-vadis-rome|608a4c338b	61	Claudius	claudius-caesar
 poi.description|areopagus-athens|7fc35b5e09	241	Paul	paul-of-tarsus
 poi.description|assos|469007dc07	95	Paul	paul-of-tarsus
 poi.description|bab-kisan-damascus|f2408ffd28	144	Paul	paul-of-tarsus
@@ -3153,7 +3130,6 @@ poi.description|western-wall|37906ceed8	178	Jesus	jesus-of-nazareth
 poi.description|western-wall|37906ceed8	72	Herod the Great	herod-the-great
 timelineEvent.article|abolition-slave-trade-1807|3c77c02cf5	0	William Wilberforce	william-wilberforce
 timelineEvent.article|abolition-slave-trade-1807|6ac4ddc068	271	John Wesley	john-wesley
-timelineEvent.article|abolition-slave-trade-1807|816abe073b	210	Thomas	thomas-apostle
 timelineEvent.article|aquinas-summa-theologica-c1265|fdf826cc7a	0	Thomas Aquinas	thomas-aquinas
 timelineEvent.article|augustine-confessions-397|697843f5a8	442	Paul	paul-of-tarsus
 timelineEvent.article|azusa-street-revival-1906|e6df9f525a	0	William J. Seymour	william-seymour
@@ -3917,13 +3893,11 @@ timelineEvent.article|bib-it-herod-the-great-rise|3c7661f39c	205	David	david
 timelineEvent.article|bib-it-john-hyrcanus-reign|f61219cd5d	199	Herod the Great	herod-the-great
 timelineEvent.article|bib-it-john-hyrcanus-reign|f61219cd5d	572	Jesus	jesus-of-nazareth
 timelineEvent.article|bib-it-john-hyrcanus-reign|ffe24394ae	0	Simon	simon-peter
-timelineEvent.article|bib-it-jonathan-maccabeus-high-priest|2385345ee9	0	Judas	judas-iscariot
 timelineEvent.article|bib-it-jonathan-maccabeus-high-priest|397d9025bc	242	Aaron	aaron
 timelineEvent.article|bib-it-jonathan-maccabeus-high-priest|397d9025bc	263	Solomon	solomon
 timelineEvent.article|bib-it-jonathan-maccabeus-high-priest|4035fff66d	111	Simon	simon-peter
 timelineEvent.article|bib-it-jonathan-maccabeus-high-priest|f78f05220e	375	Simon	simon-peter
 timelineEvent.article|bib-it-judas-maccabeus-campaigns|2a5a78ba0c	16	Judas	judas-iscariot
-timelineEvent.article|bib-it-judas-maccabeus-campaigns|5e0cec815f	34	Judas	judas-iscariot
 timelineEvent.article|bib-it-judas-maccabeus-campaigns|bb60dff0b5	186	Gideon	gideon
 timelineEvent.article|bib-it-judas-maccabeus-campaigns|bb60dff0b5	230	David	david
 timelineEvent.article|bib-it-maccabean-revolt-begins|83a323ec93	398	Moses	moses
@@ -3941,7 +3915,6 @@ timelineEvent.article|bib-it-septuagint-translation|5c88111416	317	Luke	luke-eva
 timelineEvent.article|bib-it-septuagint-translation|5c88111416	347	Paul	paul-of-tarsus
 timelineEvent.article|bib-it-temple-rededication-hanukkah|0ae7c8aeab	82	Jesus	jesus-of-nazareth
 timelineEvent.article|bib-it-temple-rededication-hanukkah|20bf3cb030	300	Solomon	solomon
-timelineEvent.article|bib-it-temple-rededication-hanukkah|a6fc6e3119	89	Judas	judas-iscariot
 timelineEvent.article|bib-loc-ascension|252ae4b3ed	0	Luke	luke-evangelist
 timelineEvent.article|bib-loc-ascension|252ae4b3ed	134	Jesus	jesus-of-nazareth
 timelineEvent.article|bib-loc-ascension|6b52bec4ea	33	Jesus	jesus-of-nazareth
@@ -4755,8 +4728,6 @@ timelineEvent.article|dietrich-bonhoeffer-german-church-struggle-1933-1945|8a35d
 timelineEvent.article|dietrich-bonhoeffer-german-church-struggle-1933-1945|b744f39f9d	260	Karl Barth	karl-barth
 timelineEvent.article|dietrich-bonhoeffer-german-church-struggle-1933-1945|b744f39f9d	287	Jesus Christ	jesus-of-nazareth
 timelineEvent.article|english-reformation-1534|4658d02ce2	0	Henry VIII	henry-viii
-timelineEvent.article|english-reformation-1534|8f56d1ddcc	482	Thomas	thomas-apostle
-timelineEvent.article|english-reformation-1534|bd5dc70d89	32	Thomas	thomas-apostle
 timelineEvent.article|english-reformation-1534|bd5dc70d89	98	Thomas Cranmer	thomas-cranmer
 timelineEvent.article|execution-of-jan-hus-1415|74724d8b88	0	Jan Hus	jan-hus
 timelineEvent.article|execution-of-jan-hus-1415|74724d8b88	97	John Wycliffe	john-wycliffe
@@ -4770,7 +4741,6 @@ timelineEvent.article|first-great-awakening-c1740|f14fb1e9e2	407	George Whitefie
 timelineEvent.article|first-great-awakening-c1740|f14fb1e9e2	65	Jonathan Edwards	jonathan-edwards
 timelineEvent.article|founding-of-franciscans-1209|0e8b62d146	0	Francis of Assisi	francis-of-assisi
 timelineEvent.article|great-schism-1054|491d6e1567	303	the Holy Spirit	holy-spirit
-timelineEvent.article|great-schism-1054|b5f40a3164	264	Michael	michael-archangel
 timelineEvent.article|gregory-mission-to-england-597|09b186fca7	83	Gregory the Great	gregory-the-great
 timelineEvent.article|gregory-mission-to-england-597|0ef39cfc40	162	Augustine of Hippo	augustine-of-hippo
 timelineEvent.article|gutenberg-bible-1455|bfb1601058	287	Martin Luther	martin-luther
@@ -4781,7 +4751,6 @@ timelineEvent.article|jerome-vulgate-c405|e7d6359409	0	Jerome	jerome
 timelineEvent.article|jerome-vulgate-c405|e7d6359409	196	Jerome	jerome
 timelineEvent.article|luthers-95-theses-1517|18ad030e96	0	Martin Luther	martin-luther
 timelineEvent.article|luthers-95-theses-1517|18ad030e96	208	Paul	paul-of-tarsus
-timelineEvent.article|luthers-95-theses-1517|652fb51656	107	Philip	philip-the-apostle
 timelineEvent.article|luthers-95-theses-1517|7890d916f3	411	Peter	simon-peter
 timelineEvent.article|rel-ane-akhenaten-aten-reform|448c3aef50	306	Moses	moses
 timelineEvent.article|rel-ane-akhenaten-aten-reform|448c3aef50	69	Abraham	abraham
@@ -4827,7 +4796,6 @@ timelineEvent.article|rel-east-confucius-birth|825c57bcef	572	Daniel	daniel
 timelineEvent.article|rel-east-first-buddhist-council|3b2f5c4549	226	Jesus	jesus-of-nazareth
 timelineEvent.article|rel-east-first-buddhist-council|3b2f5c4549	614	the Holy Spirit	holy-spirit
 timelineEvent.article|society-of-jesus-founded-1540|2f6304dbb2	0	Ignatius of Loyola	ignatius-of-loyola
-timelineEvent.article|society-of-jesus-founded-1540|2f6304dbb2	411	Peter	simon-peter
 timelineEvent.article|society-of-jesus-founded-1540|e53a6ad843	395	Jesus	jesus-of-nazareth
 timelineEvent.article|vatican-ii-1962|2ccc9ca657	0	Pope John XXIII	pope-john-xxiii
 timelineEvent.article|vatican-ii-1962|70eaee9d98	30	John XXIII	pope-john-xxiii
@@ -5128,7 +5096,6 @@ timelineEvent.datingNotes|bib-it-jonathan-maccabeus-high-priest|388f783f7b	242	S
 timelineEvent.datingNotes|bib-it-judas-maccabeus-campaigns|fc644d0e8f	39	Judas	judas-iscariot
 timelineEvent.datingNotes|bib-loc-baptism-of-jesus|e90e367c35	68	John	john-the-baptist
 timelineEvent.datingNotes|bib-loc-birth-of-jesus|589d0053ff	131	magi	magi
-timelineEvent.datingNotes|bib-loc-birth-of-jesus|589d0053ff	235	Andrew	andrew-apostle
 timelineEvent.datingNotes|bib-loc-birth-of-jesus|589d0053ff	37	Herod the Great	herod-the-great
 timelineEvent.datingNotes|bib-loc-calling-first-disciples|1ebbef77e9	21	Andrew	andrew-apostle
 timelineEvent.datingNotes|bib-loc-calling-first-disciples|1ebbef77e9	29	Peter	simon-peter
@@ -5193,7 +5160,6 @@ timelineEvent.datingNotes|bib-pat-sodom-gomorrah|6be6489af6	100	Isaac	isaac
 timelineEvent.datingNotes|bib-pat-sodom-gomorrah|6be6489af6	48	Sarah	sarah
 timelineEvent.datingNotes|bib-prim-cain-abel|ae14d2d942	204	Abel	abel
 timelineEvent.datingNotes|bib-prim-cain-abel|ae14d2d942	343	Adam	adam
-timelineEvent.datingNotes|bib-prim-creation|223ef20806	36	James	james-son-of-zebedee
 timelineEvent.datingNotes|bib-prim-curse-of-ham|c7074b0710	55	Noah	noah
 timelineEvent.datingNotes|bib-prim-enoch|2d85fef242	112	Enoch	enoch
 timelineEvent.datingNotes|bib-prim-fall|91c12d97d0	87	Adam	adam
@@ -5228,12 +5194,10 @@ timelineEvent.datingNotes|bib-um-temple-construction-begins|e70c6afa02	124	Solom
 timelineEvent.datingNotes|bib-um-temple-construction-begins|e70c6afa02	486	Solomon	solomon
 timelineEvent.datingNotes|bib-um-temple-dedication|18e5bbeffa	48	Solomon	solomon
 timelineEvent.datingNotes|jerome-vulgate-c405|ed3aa42937	0	Jerome	jerome
-timelineEvent.datingNotes|luthers-95-theses-1517|918b9dba3a	128	Philip	philip-the-apostle
 timelineEvent.datingNotes|rel-ane-akhenaten-aten-reform|09f994c5fc	502	Moses	moses
 timelineEvent.datingNotes|rel-ane-hammurabi-marduk-rise|7d065a9edf	281	Moses	moses
 timelineEvent.datingNotes|rel-ane-sumerian-ziggurats|fe431e3721	204	Abram	abraham
 timelineEvent.datingNotes|rel-ane-zoroaster-disputed-dates|c62aaff4ef	437	Lydia	lydia-of-thyatira
-timelineEvent.datingNotes|rel-ane-zoroaster-disputed-dates|c62aaff4ef	732	Mary	mary-mother-of-jesus
 timelineEvent.datingNotes|wld-ane-egyptian-middle-kingdom|3d43d5fed3	227	Joseph	joseph-son-of-jacob
 timelineEvent.datingNotes|wld-ane-hyksos-egypt|610d9d2038	141	Jacob	jacob
 timelineEvent.datingNotes|wld-ane-thutmose-iii-empire|04f4f2f174	246	Moses	moses
@@ -5396,7 +5360,6 @@ topic.section|levites|e1e8d99182	0	Jesus	jesus-of-nazareth
 topic.section|levites|e1e8d99182	280	Barnabas	barnabas
 topic.section|levites|e1e8d99182	290	Paul	paul-of-tarsus
 topic.section|masoretic-text|d98167a410	57	Aaron	aaron
-topic.section|mesha-stele|9361481b52	37	Augustus	caesar-augustus
 topic.section|mesha-stele|a4d684c2a7	120	David	david
 topic.section|mesha-stele|a4d684c2a7	195	David	david
 topic.section|moabites-and-ammonites|2fb7abb40c	135	Naomi	naomi
@@ -5444,7 +5407,6 @@ topic.section|nicene-creed|aa7a298fbc	45	Jesus Christ	jesus-of-nazareth
 topic.section|nicene-creed|aa7a298fbc	888	Pontius Pilate	pontius-pilate
 topic.section|nicene-creed|b92d0e52a2	340	Charlemagne	charlemagne
 topic.section|nicene-creed|d3e247f741	764	Photius of Constantinople	photius
-topic.section|nuzi-tablets|2208d5b2f1	103	Thomas	thomas-apostle
 topic.section|nuzi-tablets|e02d8be473	119	Abraham	abraham
 topic.section|nuzi-tablets|e02d8be473	285	Sarah	sarah
 topic.section|nuzi-tablets|e02d8be473	306	Hagar	hagar
@@ -5510,12 +5472,10 @@ topic.section|septuagint|95977a2c7a	326	Jeremiah	jeremiah
 topic.section|septuagint|f8b64d96b0	259	Moses	moses
 topic.section|septuagint|f8b64d96b0	551	Job	job
 topic.section|siloam-inscription|3f6e3bad37	126	Hezekiah	hezekiah
-topic.section|siloam-inscription|3f6e3bad37	26	Philip	philip-the-apostle
 topic.section|siloam-inscription|42865f7ecf	79	job	job
 topic.section|siloam-inscription|4a9ae734bf	236	Hezekiah	hezekiah
 topic.section|siloam-inscription|751fc2bb82	19	Hezekiah	hezekiah
 topic.section|siloam-inscription|7e4416d1e6	0	Hezekiah	hezekiah
-topic.section|siloam-inscription|7e4416d1e6	238	Jacob	jacob
 topic.section|synagogue|b1fc7c8260	18	Jesus	jesus-of-nazareth
 topic.section|synagogue|b1fc7c8260	379	Isaiah	isaiah
 topic.section|synagogue|b1fc7c8260	44	Luke	luke-evangelist
@@ -5545,7 +5505,6 @@ topic.section|tel-dan-stele|836d35b34a	295	David	david
 topic.section|tel-dan-stele|836d35b34a	576	David	david
 topic.section|tel-dan-stele|836d35b34a	628	David	david
 topic.section|tel-dan-stele|9cf69ffa5f	323	David	david
-topic.section|tel-dan-stele|e74454778c	28	Philip	philip-the-apostle
 topic.section|the-temple|034dce22c7	0	David	david
 topic.section|the-temple|034dce22c7	246	Solomon	solomon
 topic.section|the-temple|034dce22c7	314	Solomon	solomon

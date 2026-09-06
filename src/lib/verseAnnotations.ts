@@ -440,6 +440,14 @@ const VERSE_NAME_OVERRIDES: Record<string, Record<string, Record<string, string 
   enoch: {
     Genesis: { "4:17": null, "4:18": null },
   },
+  // "Abel": the same shape as Enoch. Abel son of Adam owns the bare name and keeps all nine of his
+  // mentions, but the northern town of Abel — Abel of Beth Maacah, the "mother in Israel" of
+  // 2 Samuel 20 — is a place, and in these two verses it is named on its own with no second word
+  // for the context rule below to catch. Every other occurrence of the town carries a qualifier
+  // ("Abel Meholah", "Abel Beth Maacah", "Abel Mizraim") and is handled there.
+  abel: {
+    "2 Samuel": { "20:14": null, "20:18": null },
+  },
   // "Caesar" in Acts is Nero almost everywhere (BOOK_NAME_OVERRIDES above), except Acts 17:7 —
   // Paul's very early ministry in Thessalonica, which falls within Claudius's reign (compare Acts
   // 18:2's mention of Claudius's expulsion edict, not long after).
@@ -1036,9 +1044,97 @@ const NAME_CONTEXT_RULES: Record<string, NameContextRule[]> = {
   ],
   philip: [
     { after: /^\s+II\b/, to: null }, // Philip II of Macedon, who founded Philippi
+    // Melanchthon (Luther's colleague) and Davies (the Tel Dan minority view) — modern men whose
+    // first name is the apostle's. Interim: a record for either would change this answer.
+    { after: /^\s+(?:Melanchthon|Davies)\b/, to: null },
   ],
   james: [
     { before: /\bKing\s+$/, to: null }, // "the King James Version" — a translation, not a man
+    // Ussher (the 4004 BC chronology), Hoffmeier and Sanders (modern scholars, cited as
+    // authorities). Interim; records would change the answer.
+    { after: /^\s+(?:Hoffmeier|Sanders|Ussher)\b/, to: null },
+  ],
+
+  // ── Judas Maccabeus. THE priority in this batch: the leader of the Maccabean revolt was linking
+  // to Judas Iscariot, on three articles the app already carries timeline events for. Of everything
+  // in this sweep it is the one most likely to cost a reader's trust — the man who cleansed the
+  // temple pointed at the man who betrayed Jesus.
+  //
+  // Suppression is the interim, not a verdict. Judas Maccabeus is the strongest candidate in this
+  // whole class for an actual person record: he is a major figure, the app has three events about
+  // his campaigns, and 1-2 Maccabees are in some canons the app serves. If a record is ever
+  // written, delete this rule and register "Judas Maccabeus" on it instead.
+  judas: [
+    { after: /^\s+Maccabeus\b/, to: null },
+  ],
+
+  // ── The rest of the split-name sweep. Every one of these is a man the app has no record for,
+  // whose first name is a biblical name, and whose mention was linking the fragment to the biblical
+  // person. Same interim as above in every case: no link now, a record would change the answer.
+  //
+  // Enumerated by surname, one at a time, and deliberately NOT generalised into "a biblical first
+  // name followed by an unknown capitalised word". The two guard cases at Acts 19:15 and Luke 9:9
+  // exist because the obvious generalisation of the RULE ABOVE would have stripped the link off the
+  // apostle Paul inside a live verse; the same caution applies here, where a general rule would
+  // reach every "Simon Peter", "Mary Magdalene" and "James the son of Zebedee" in Scripture.
+  thomas: [
+    // More and Cromwell (Henry VIII's court), Clarkson (abolition), Thompson (the Nuzi parallels),
+    // and St Thomas Bay, which is a place in Malta rather than a man at all.
+    { after: /^\s+(?:More|Cromwell|Clarkson|Thompson|Bay)\b/, to: null },
+  ],
+  peter: [
+    // Abelard, Faber (a founding Jesuit), Flint (a Dead Sea Scrolls scholar).
+    { after: /^\s+(?:Abelard|Faber|Flint)\b/, to: null },
+  ],
+  michael: [
+    // Servetus (burned at Geneva), Cerularius (the 1054 schism), Ballance and Rostovtzeff
+    // (excavators). All were linking to Michael the archangel.
+    { after: /^\s+(?:Servetus|Cerularius|Ballance|Rostovtzeff)\b/, to: null },
+  ],
+  mary: [
+    // Mary I of England, and Mary Boyce the Zoroastrian scholar — both linking to Mary the mother
+    // of Jesus. "Mary I" is enumerated as a whole token: a bare numeral rule would be the Acts
+    // 19:15 mistake again.
+    { after: /^\s+(?:Boyce|I)\b/, to: null },
+  ],
+  andrew: [{ after: /^\s+Steinmann\b/, to: null }],   // the Herod-dating minority view
+  gideon: [{ after: /^\s+Foerster\b/, to: null }],    // the Herodium excavator
+  jacob: [{ after: /^\s+Eliyahu\b/, to: null }],      // the boy who found the Siloam inscription
+  solomon: [{ after: /^\s+Stoddard\b/, to: null }],   // Jonathan Edwards's grandfather
+  david: [{ after: /^\s+George\b/, to: null }],       // David George Hogarth, who dug at Ephesus
+  salome: [{ after: /^\s+Alexandra\b/, to: null }],   // the Hasmonean queen, not Jesus's follower
+  felix: [{ after: /^\s+Gemina\b/, to: null }],       // "Colonia Iulia Felix Gemina Lystra" — a title
+
+  // Roman name-chains. A full imperial name is several registered names in a row, so each piece was
+  // linking to a different emperor than the man being named. "Tiberius Claudius Caesar Augustus
+  // Germanicus" is Claudius, not Tiberius and not Augustus.
+  augustus: [{ after: /^\s+Klein\b/, to: null }],     // Frederick Augustus Klein, the Mesha stele
+  caesar: [{ after: /^\s+Octavianus\b/, to: null }],  // "Gaius Julius Caesar Octavianus" — Augustus
+  tiberius: [
+    { after: /^\s+(?:Claudius|Alexander)\b/, to: null }, // Claudius's regnal name; the procurator
+  ],
+  claudius: [
+    // Claudius Lysias is the tribune of Acts 23:26, not the emperor — and this one is IN SCRIPTURE,
+    // on the reader path. Appius Claudius Caecus built the Appian Way three centuries before him.
+    { after: /^\s+(?:Lysias|Caecus)\b/, to: null },
+  ],
+
+  // ── Place names that begin with a person's name. A different fault from the ones above and a
+  // worse one, because it is in the biblical text itself: "Abel" in "Abel Meholah" is not Adam's
+  // son but the Hebrew word for a meadow, and it was linking every one of these towns to the first
+  // murder victim. The app has no location record for any of them, so no link is the answer; if one
+  // is ever added, register the compound name on the LOCATION and delete the rule.
+  //
+  // Abel son of Adam keeps all nine of his own mentions (Genesis 4, Matthew 23:35, Luke 11:51,
+  // Hebrews 11:4 and 12:24) — none of them is followed by any of these words.
+  abel: [
+    { after: /^\s+(?:Mizraim|Shittim|Meholah|Maim|Beth Maacah|of Beth Maacah)\b/, to: null },
+  ],
+  perez: [
+    { after: /^\s+Uzzah?\b/, to: null }, // "Perez Uzzah"/"Perez Uzza" — the place David named
+  ],
+  caleb: [
+    { after: /^\s+Ephrathah\b/, to: null }, // 1 Chronicles 2:24 — a place, not the spy
   ],
 };
 
