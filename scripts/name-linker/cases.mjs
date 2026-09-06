@@ -298,27 +298,116 @@ export const CASES = [
     why: "The article surface repointed by OWNER_NAME_OVERRIDES, which is the only correction " +
          "that reaches it." },
 
+  // ── The four rulings recorded in automation/manager-inbox. These were `flagged` — held still,
+  // pointing at John the Baptist, pending a decision. The decision was that the app has ALREADY
+  // taken the traditional position in its own prose (the exile article opens "The apostle John";
+  // john-the-apostle carries "the Beloved Disciple" as a reader-facing alternate name), so linking
+  // introduces no theological commitment the copy does not already carry. They are guards now:
+  // a future pass cannot silently undo them without failing here.
+
+  // Ruling 1 — the John of Patmos links to the Apostle. 4 in the reader, 15 in articles.
+  { ref: "Revelation 1:9", surface: "John", expect: "john-the-apostle", status: "guard",
+    why: "'I John, your brother… on the isle that is called Patmos.' Was John the Baptist, who " +
+         "died some sixty years earlier — wrong under every reading. Now the Apostle, by a " +
+         "Revelation book override; the book's four occurrences are all the same man." },
+  { ref: "Revelation 22:8", surface: "John", expect: "john-the-apostle", status: "guard",
+    why: "The closing self-identification, matching the opening one." },
+  { text: "The apostle John - by this point the last living member of the original Twelve",
+    surface: "John", owner: "bib-ac-john-exile-revelation", expect: "john-the-apostle", status: "guard",
+    why: "The article whose own first sentence names him the apostle, and whose 'John's vision' " +
+         "and 'back to John himself' all pointed at the Baptist. This sentence is the reason the " +
+         "ruling went the way it did." },
+
+  // Ruling 2 — the Fourth Gospel's narrating voice is suppressed, not linked. No link asserts
+  // nothing about who held the pen; a link to the Baptist asserted something false.
+  { text: "John reports that because many Jews were believing in Jesus on account of Lazarus",
+    surface: "John", owner: "lazarus-of-bethany", expect: null, status: "guard",
+    why: "'John reports', 'John notes', 'John tells us' — 48 article links, all of them the " +
+         "Baptist, who wrote none of it. Suppressed rather than pointed at the Apostle: same " +
+         "answer this file gives the contested Nathan at 1 Kings 4:5." },
+  { text: "John alone records this scene, calling it the \"first of his signs.\"",
+    surface: "John", owner: "bib-loc-wedding-at-cana", expect: null, status: "guard",
+    why: "Same rule on a timeline article rather than a person page." },
+
+  // Ruling 4 — and the case that proves a record can hold two different Johns. Both of these
+  // records are in OWNER_NAME_OVERRIDES with a `null`, and both recover the Apostle here, because
+  // the "Peter and John" context rule is checked BEFORE the owner table.
+  { text: "in John's account, she runs to tell Peter and John, then remains weeping outside the empty tomb",
+    surface: "John", occurrence: 2, owner: "mary-magdalene", expect: "john-the-apostle", status: "guard",
+    why: "Ruling 4. The SECOND 'John' in this sentence is the Apostle; the first is the Gospel " +
+         "and is suppressed by the possessive rule. One sentence, two Johns, two answers — which " +
+         "no owner rule alone could produce." },
+  { text: "in John's account, she runs to tell Peter and John, then remains weeping outside the empty tomb",
+    surface: "John", occurrence: 1, owner: "mary-magdalene", expect: null, status: "guard",
+    why: "The other half of the same sentence. Guards the split itself: if the possessive rule " +
+         "or the 'Peter and John' rule stops firing, exactly one of this pair fails." },
+  { text: "Jesus sends Peter and John ahead to prepare the Passover in a furnished upper room",
+    surface: "John", owner: "bib-loc-last-supper", expect: "john-the-apostle", status: "guard",
+    why: "Ruling 4, second instance — on a record whose other two 'John's are narrator " +
+         "references and are suppressed by the owner entry." },
+
+  // Ruling 3 — the book intros, pinned one at a time. BookIntroView passes no record id, so
+  // nothing but an exact phrase can reach these 22. Each pin gets a case because a pin is only as
+  // durable as the sentence it quotes: if the copy is rewritten the pin stops matching and the
+  // link silently reverts to the Baptist. A failure here means the copy moved — re-read the
+  // sentence and re-pin it. Do not delete the case.
+  { text: "attested in Matthew, Luke, John, Acts, and 1 Corinthians 15",
+    surface: "John", expect: null, status: "guard", why: "Ruling 3 — a book in an appositive list." },
+  { text: "containing large portions of both Luke and John, and it closely agrees with Codex Vaticanus",
+    surface: "John", expect: null, status: "guard", why: "Ruling 3 — a manuscript's contents." },
+  { text: "John is strikingly different from the other three Gospels",
+    surface: "John", expect: null, status: "guard", why: "Ruling 3 — the book as a work." },
+  { text: "In John, Jesus speaks largely in extended discourses",
+    surface: "John", expect: null, status: "guard", why: "Ruling 3 — 'in John' names the book." },
+  { text: "far from Ephesus, where John is traditionally held to have been written",
+    surface: "John", expect: null, status: "guard", why: "Ruling 3 — a book is written, not a man." },
+  { text: "it undercuts the older critical theory that John was a mid-2nd-century work",
+    surface: "John", expect: null, status: "guard", why: "Ruling 3 — a date of composition." },
+  { text: "near-complete copy of John and one of the oldest substantial New Testament manuscripts",
+    surface: "John", expect: null, status: "guard", why: "Ruling 3 — a copy of a book." },
+  { text: "contains large portions of both Luke and John and is an important early witness to John's text",
+    surface: "John", occurrence: 1, expect: null, status: "guard", why: "Ruling 3 — P75's contents." },
+  { text: "contains large portions of both Luke and John and is an important early witness to John's text",
+    surface: "John", occurrence: 2, expect: null, status: "guard",
+    why: "Ruling 3 — \"John's text\" is the book's text. Note this sentence needs BOTH pins: the " +
+         "possessive rule does not fire because what follows is 'text', not 'Gospel'." },
+  { text: "most scholars conclude it was not part of John's original text",
+    surface: "John", expect: null, status: "guard", why: "Ruling 3 — the book's original text." },
+  { text: "points to John circulating broadly and early in the church",
+    surface: "John", expect: null, status: "guard", why: "Ruling 3 — a book circulates." },
+  { text: "John states his purpose plainly near the end",
+    surface: "John", expect: null, status: "guard", why: "Ruling 2 in a book intro — the voice." },
+  { text: "Much of this reflects the material John chose to record",
+    surface: "John", expect: null, status: "guard", why: "Ruling 2 in a book intro." },
+  { text: "on the last night — and John writes as one who was there",
+    surface: "John", expect: null, status: "guard",
+    why: "Ruling 2. Note this is the strongest authorship claim in the whole corpus and it is " +
+         "still only suppressed, never linked — the copy makes the claim, the link does not." },
+  { text: "After the crucifixion, John gives vivid resurrection accounts",
+    surface: "John", expect: null, status: "guard", why: "Ruling 2 in a book intro." },
+  { text: "left the community, and John writes to strengthen those who remained",
+    surface: "John", expect: null, status: "guard", why: "Ruling 2 — 1 John's intro." },
+  { text: "John warns of 'antichrists' and deceivers who deny the Son",
+    surface: "John", expect: null, status: "guard", why: "Ruling 2 — 1 John's intro." },
+  { text: "John closes by assuring those who believe in the name of the Son of God",
+    surface: "John", expect: null, status: "guard", why: "Ruling 2 — 1 John's intro." },
+  { text: "Through a series of dramatic visions, John seeks to comfort and warn these believers",
+    surface: "John", expect: null, status: "guard",
+    why: "Ruling 2 — Revelation's intro. Note the deliberate asymmetry with ruling 1: the exile " +
+         "ARTICLE names the man ('The apostle John') and links; the book intro describes the " +
+         "book's voice ('John describes a thousand-year reign') and does not. Bob drew that line." },
+  { text: "Revelation opens with John's overwhelming vision of the risen Christ",
+    surface: "John", expect: null, status: "guard", why: "Ruling 2 — Revelation's intro." },
+  { text: "John is then caught up to heaven, where he sees God's throne room",
+    surface: "John", expect: null, status: "guard", why: "Ruling 2 — Revelation's intro." },
+  { text: "John describes a thousand-year reign",
+    surface: "John", expect: null, status: "guard", why: "Ruling 2 — Revelation's intro." },
+
   // ─────────────────────────────────────────────────────────────────────────────────────────
   // Flagged — §7 of the scoping document. These record what the app does TODAY, so that a change
   // aimed at something else cannot quietly take a confessional position on Robbie's behalf. If
   // one of these fails, the change that caused it is out of bounds until Robbie has ruled.
   // ─────────────────────────────────────────────────────────────────────────────────────────
-  { ref: "Revelation 1:9", surface: "John", expect: "john-the-baptist", status: "flagged",
-    why: "NEW, and the one flagged case that is wrong under EVERY view — the Baptist died some " +
-         "sixty years before Revelation. But whether the John of Patmos is the Apostle, John the " +
-         "Elder/Presbyter, or an unknown third John is a live scholarly question, and the app " +
-         "must not settle it as a side effect of a linking pass. Robbie's ruling decides between " +
-         "john-the-apostle and no link. Also Revelation 1:1, 1:4 and 22:8." },
-  { ref: "Revelation 1:1", surface: "John", expect: "john-the-baptist", status: "flagged",
-    why: "Same question, in the book's opening self-identification." },
-  { text: "John reports that because many Jews were believing in Jesus on account of Lazarus",
-    surface: "John", owner: "lazarus-of-bethany", expect: "john-the-baptist", status: "flagged",
-    why: "NEW. The Fourth Gospel's narrator referred to as a person — 'John reports', 'John " +
-         "notes', 'John tells us'. About 60 such links remain across our articles and they are " +
-         "wrong under every view, but naming the right man IS the authorship question. " +
-         "Deliberately NOT covered by the book-reference rule, which only removes links on " +
-         "phrases naming a book. Robbie's ruling: john-the-apostle, or suppress as we do for the " +
-         "contested Nathan at 1 Kings 4:5." },
   { ref: "Isaiah 9:6", surface: "Counselor", expect: "holy-spirit", status: "flagged",
     why: "§7.3 — 'Wonderful, Counselor'. Most Christian readings take this as a title of the " +
          "Messiah; the app currently says Holy Spirit. Changing it is a doctrinal statement." },

@@ -706,11 +706,12 @@ person	job	job	prose	29
 person	job	job	reader	59
 person	johannes gutenberg	johannes-gutenberg	prose	1
 person	john	john-mark	reader	2
-person	john	john-the-apostle	prose	29
-person	john	john-the-apostle	reader	30
-person	john	john-the-baptist	panel	114
-person	john	john-the-baptist	prose	101
-person	john	john-the-baptist	reader	81
+person	john	john-the-apostle	panel	7
+person	john	john-the-apostle	prose	46
+person	john	john-the-apostle	reader	34
+person	john	john-the-baptist	panel	107
+person	john	john-the-baptist	prose	25
+person	john	john-the-baptist	reader	77
 person	john	john-wesley	prose	3
 person	john	pope-john-paul-ii	prose	3
 person	john	pope-john-xxiii	prose	1
