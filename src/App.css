@@ -9809,3 +9809,406 @@ a.profile-links-url {
   color: var(--text-muted);
   white-space: nowrap;
 }
+
+/* ============================================================================
+ * ADMIN → GROWTH (components/GrowthPanel.tsx, components/GrowthChart.tsx)
+ *
+ * A table of numbers first, charts on request. Sized for the phone the owner
+ * actually reads this on: the summary row wraps to two lines at 375px rather
+ * than scrolling sideways, and the chart measures its own container so it draws
+ * 1:1 at any width instead of being squashed by a fixed viewBox.
+ *
+ * Chart colours are the --growth-* tokens defined in BOTH theme blocks of
+ * index.css. Nothing here hardcodes a hex, so the appearance toggle moves them.
+ * ==========================================================================*/
+
+.growth-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.growth-bucket-picker {
+  align-self: flex-start;
+}
+
+.growth-fallback-note {
+  padding: 10px 12px;
+  border: 1px solid var(--border);
+  border-left: 3px solid var(--accent);
+  border-radius: 8px;
+  background: var(--surface-sunken);
+}
+
+.growth-fallback-note code {
+  font-size: 11px;
+  overflow-wrap: anywhere;
+}
+
+.growth-groups {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  transition: opacity 120ms ease;
+}
+
+/* Refetch holds the previous render rather than flashing a skeleton — no layout
+   jump when the day/week/month toggle changes. */
+.growth-reloading {
+  opacity: 0.45;
+  pointer-events: none;
+}
+
+.growth-rows {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.growth-row {
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: var(--surface-sunken);
+}
+
+.growth-row-open {
+  border-color: var(--border-strong);
+}
+
+.growth-row-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 9px 10px;
+}
+
+.growth-row-figures {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  min-width: 0;
+}
+
+.growth-row-label {
+  font-size: 13px;
+  color: var(--text-h);
+  overflow-wrap: anywhere;
+}
+
+.growth-row-numbers {
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 4px 12px;
+}
+
+/* Figures line up in columns, so tabular figures earn their place here — unlike
+   the big standalone .admin-stat-value, which stays proportional. */
+.growth-figure,
+.growth-delta {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 4px;
+  font-size: 12px;
+  color: var(--text-muted);
+}
+
+.growth-figure strong,
+.growth-delta {
+  font-variant-numeric: tabular-nums;
+}
+
+.growth-figure strong {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text);
+}
+
+.growth-figure-label {
+  font-size: 10px;
+  letter-spacing: var(--tracking-label);
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+/* Direction is carried by the sign in the text as well as the colour — the
+   glyph is already there in "+3" / "−1", so this never depends on hue alone. */
+.growth-delta-up {
+  color: var(--accent);
+}
+
+.growth-delta-down,
+.growth-delta-flat {
+  color: var(--text-muted);
+}
+
+.growth-chart-toggle {
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  min-height: 32px;
+  padding: 5px 11px;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  background: transparent;
+  color: var(--text-muted);
+  font-family: var(--sans);
+  font-size: 12px;
+  cursor: pointer;
+}
+
+.growth-chart-toggle:hover {
+  color: var(--text-h);
+  border-color: var(--border-strong);
+}
+
+.growth-row-open .growth-chart-toggle {
+  border-color: var(--accent);
+  color: var(--text-h);
+}
+
+.growth-sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.growth-expansion {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 4px 10px 12px;
+  border-top: 1px solid var(--border);
+}
+
+.growth-mode-picker {
+  display: flex;
+  gap: 6px;
+  padding-top: 8px;
+}
+
+.growth-mode-picker button {
+  min-height: 30px;
+  padding: 4px 11px;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  background: transparent;
+  color: var(--text-muted);
+  font-family: var(--sans);
+  font-size: 12px;
+  cursor: pointer;
+}
+
+.growth-mode-picker button.active {
+  border-color: var(--accent);
+  color: var(--text-h);
+}
+
+/* --- the chart itself --- */
+
+.growth-chart {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  width: 100%;
+  min-width: 0;
+}
+
+/* The tooltip is positioned against this box, so it has to be the containing
+   block. The chart sits on --panel-bg, which is the surface both --growth-series
+   steps were contrast-validated against. */
+.growth-chart-plot {
+  position: relative;
+  width: 100%;
+  padding: 6px 0 0;
+  border-radius: 8px;
+  background: var(--panel-bg);
+}
+
+.growth-svg {
+  display: block;
+  width: 100%;
+  height: auto;
+  overflow: visible;
+}
+
+.growth-bar {
+  fill: var(--growth-series);
+}
+
+.growth-bar-active {
+  fill: var(--growth-series-hover);
+}
+
+.growth-grid,
+.growth-axis,
+.growth-boundary {
+  stroke-width: 1;
+  shape-rendering: crispEdges;
+}
+
+.growth-grid {
+  stroke: var(--growth-grid);
+}
+
+.growth-axis {
+  stroke: var(--growth-axis);
+}
+
+.growth-boundary {
+  stroke: var(--growth-boundary);
+  stroke-dasharray: 3 3;
+}
+
+/* Axis text wears text tokens, never the series colour. */
+.growth-tick {
+  fill: var(--text-muted);
+  font-family: var(--sans);
+  font-size: 10px;
+  font-variant-numeric: tabular-nums;
+}
+
+.growth-value-label {
+  fill: var(--text);
+  font-family: var(--sans);
+  font-size: 10px;
+  font-weight: 600;
+}
+
+.growth-hit {
+  fill: transparent;
+  cursor: default;
+}
+
+.growth-hit:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: -2px;
+}
+
+.growth-tooltip {
+  position: absolute;
+  top: 0;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1px;
+  padding: 4px 9px;
+  border: 1px solid var(--border-strong);
+  border-radius: 7px;
+  background: var(--panel-bg);
+  box-shadow: 0 2px 8px rgb(0 0 0 / 0.18);
+  pointer-events: none;
+  white-space: nowrap;
+  z-index: 2;
+}
+
+/* Value leads, label follows — the reader already knows which series it is. */
+.growth-tooltip strong {
+  font-size: 13px;
+  font-variant-numeric: tabular-nums;
+  color: var(--text-h);
+}
+
+.growth-tooltip span {
+  font-size: 10px;
+  color: var(--text-muted);
+}
+
+.growth-empty-note {
+  text-align: center;
+}
+
+/* --- the table-view twin --- */
+
+.growth-table-details summary {
+  font-size: 12px;
+  color: var(--text-muted);
+  cursor: pointer;
+}
+
+.growth-table-scroll {
+  max-height: 260px;
+  margin-top: 8px;
+  overflow: auto;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+}
+
+.growth-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 12px;
+  font-variant-numeric: tabular-nums;
+}
+
+.growth-table th,
+.growth-table td {
+  padding: 5px 9px;
+  text-align: right;
+  white-space: nowrap;
+}
+
+.growth-table thead th {
+  position: sticky;
+  top: 0;
+  background: var(--panel-bg);
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: var(--tracking-label);
+  text-transform: uppercase;
+  color: var(--text-muted);
+  border-bottom: 1px solid var(--border);
+}
+
+.growth-table tbody th {
+  text-align: left;
+  font-weight: 400;
+  color: var(--text-muted);
+}
+
+.growth-table tbody td {
+  color: var(--text);
+}
+
+.growth-table tbody tr + tr th,
+.growth-table tbody tr + tr td {
+  border-top: 1px solid var(--border);
+}
+
+/* The owner reads this on an iPhone far more often than on a desktop, so the
+   phone layout is the one that has to work: the figures move under the label
+   and the Chart control keeps a full-size tap target. */
+@media (max-width: 460px) {
+  .growth-row-head {
+    align-items: flex-start;
+    padding: 8px 9px;
+  }
+
+  .growth-row-numbers {
+    gap: 3px 10px;
+  }
+
+  .growth-figure strong {
+    font-size: 13px;
+  }
+
+  .growth-expansion {
+    padding: 4px 8px 10px;
+  }
+
+  .growth-table-scroll {
+    max-height: 220px;
+  }
+}

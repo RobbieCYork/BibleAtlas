@@ -25,14 +25,16 @@ import {
   type AdminOverview,
   type AdminUserRow,
 } from "../lib/adminApi";
+import GrowthPanel from "./GrowthPanel";
 import Icon from "./Icon";
 
 /** Every section loads on demand, so opening the console costs one small query (the overview) rather
  * than eight. `AdminSection` is both the tab key and the loader key. */
-type AdminSection = "overview" | "users" | "engagement" | "features" | "content" | "moderation";
+type AdminSection = "overview" | "growth" | "users" | "engagement" | "features" | "content" | "moderation";
 
 const SECTION_LABELS: Record<AdminSection, string> = {
   overview: "Overview",
+  growth: "Growth",
   users: "Users",
   engagement: "Engagement",
   features: "Features",
@@ -259,6 +261,12 @@ export default function AdminConsole() {
           )}
         </>
       )}
+
+      {/* ---------------------------------------------------------------- GROWTH */}
+      {/* Owns its own period control and its own fetch: its day/week/month toggle
+          scopes only this section, and folding it into the console's 7/30/90-day
+          picker would give two controls that mean different things the same name. */}
+      {section === "growth" && <GrowthPanel />}
 
       {/* ----------------------------------------------------------------- USERS */}
       {section === "users" && (

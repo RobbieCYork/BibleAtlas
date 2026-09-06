@@ -98,6 +98,30 @@
    * which has to read clearly at a glance before fading. */
   --verse-flash-bg: rgba(229, 179, 85, 0.24);
 
+  /* --- Data-viz (the admin console's Growth charts) ---
+   * ONE series colour, because every chart in the console plots one series — a
+   * second hue here would be decoration, and a legend with one swatch restates
+   * the heading. It is --lapis-light, the app's own blue rather than a generic
+   * chart blue: these charts sit on --panel-bg inside the admin sheet and should
+   * look like they belong to this app.
+   *
+   * Both steps were validated against the surface they actually render on rather
+   * than eyeballed — dark #6474ce on #1e1a15, light #3b5bbf on #ffffff — and each
+   * passes the lightness band, the chroma floor, and >= 3:1 contrast against its
+   * own surface. The light step is SELECTED for white, not an automatic flip of
+   * the dark one. Re-run the check if either value or --panel-bg moves: a colour
+   * that passes on white can fail on the panel it is really drawn on.
+   *
+   * Grid and axis sit one step off the surface and are deliberately recessive —
+   * the data is the only thing allowed to be loud. --growth-boundary marks "no
+   * data was recorded before here", so it is muted ink and NOT a status colour:
+   * it reports an absence of records, not a problem. */
+  --growth-series: #6474ce;
+  --growth-series-hover: #8a97e0;
+  --growth-grid: #2c2820;
+  --growth-axis: #524634;
+  --growth-boundary: #6b5c42;
+
   color-scheme: dark;
   color: var(--text);
   background: var(--bg);
@@ -150,6 +174,15 @@
   --brand-tint: #6d28d9;
   --danger: #a83c24;
   --verse-flash-bg: rgba(200, 145, 47, 0.32);
+
+  /* Light steps of the same lapis, chosen for this surface — see the dark block
+   * above for what was validated and against what. */
+  --growth-series: #3b5bbf;
+  --growth-series-hover: #2e4899;
+  --growth-grid: #e6e2db;
+  --growth-axis: #c4bdb1;
+  --growth-boundary: #b0a693;
+
   color-scheme: light;
 }
 
