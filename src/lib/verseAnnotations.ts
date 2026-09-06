@@ -111,11 +111,16 @@ if (saulKingEntry) NAME_TO_ENTRY.set("saul", saulKingEntry);
  *   mentions). Matthew/Luke are Mary's husband; Mark and John are Joseph of Arimathea (Mark 15:43-45;
  *   John 19:38) — John also has one genuine Genesis-Joseph cross-reference (John 4:5), accepted as the
  *   residual imperfection since Arimathea's mentions are more frequent there.
- * - "John": John the Baptist is the global default, but in Acts nearly every solo "John" is the
- *   Apostle (paired with Peter). Not perfect — Acts 4:6 names an unrelated minor "John" of the high
- *   priest's family — but a large net improvement over zero disambiguation. Mark has the same
- *   Baptist/Apostle mix as Acts but isn't overridden — unlike Acts, Mark's Baptist mentions are frequent
- *   enough that a blanket redirect would trade one set of misses for another with no clear net gain.
+ * - "John": John the Baptist stays the global default, and the whole-Bible count is why — of the 132
+ *   bare "John"s in the WEB text, 92 are the Baptist, 30 the Apostle, 5 John Mark, 1 the
+ *   high-priestly John of Acts 4:6, and 4 the John of Revelation. He is the honest majority owner
+ *   in Scripture, though NOT in our own articles, where the article surface needs
+ *   OWNER_NAME_OVERRIDES below. The book overrides are Acts (9 of its 24 are the Apostle, and the
+ *   other 15 are corrected verse by verse below — a blanket Acts redirect on its own scored exactly
+ *   as badly as no redirect at all, 9 right and 15 wrong either way) and Galatians (whose single
+ *   occurrence, the "pillars" of Galatians 2:9, is the Apostle). The Gospels are NOT overridden —
+ *   the Baptist is right in 64 of their 83 mentions — so the 19 apostle occurrences there are
+ *   corrected verse by verse instead.
  * - "James": James, son of Zebedee is the global default, but Galatians, 1 Corinthians, and Acts
  *   overwhelmingly mean James, brother of Jesus (leader of the Jerusalem church) once Zebedee's son is
  *   long dead (Acts 12:2) — Acts 12:17/15:13/21:18 all mean the brother.
@@ -132,7 +137,7 @@ const BOOK_NAME_OVERRIDES: Record<string, Record<string, string>> = {
     Mark: "joseph-of-arimathea",
     John: "joseph-of-arimathea",
   },
-  john: { Acts: "john-the-apostle" },
+  john: { Acts: "john-the-apostle", Galatians: "john-the-apostle" },
   james: { Galatians: "james-brother-of-jesus", "1 Corinthians": "james-brother-of-jesus", Acts: "james-brother-of-jesus" },
   saul: { Acts: "paul-of-tarsus" },
   edom: { Genesis: "esau" },
@@ -333,6 +338,89 @@ const VERSE_NAME_OVERRIDES: Record<string, Record<string, Record<string, string 
     John: { "14:22": "thaddaeus" },
     Acts: { "1:13": "thaddaeus" },
   },
+  // "John". Five different men share the bare name in the New Testament, and until this entry
+  // existed the app gave all of them to the Baptist except in Acts, where a blanket book override
+  // gave all of them to the Apostle. The reported fault was Matthew 17:1 — "Peter, James, and John
+  // his brother" at the Transfiguration, rendered as John the Baptist.
+  //
+  // Every verse below was read against the WEB text one at a time (the list is in
+  // scripts/name-linker; `run.mjs --ref` reproduces any of them). Each contains exactly ONE "John",
+  // which is what makes a per-verse answer safe here — the mechanism applies one value to every
+  // match of the key in a verse, so a verse naming two Johns could not be fixed this way. None does.
+  //
+  // The GOSPELS are not book-overridden, because the Baptist is right in 64 of their 83 mentions.
+  // The 19 below are the Apostle: the calling of Zebedee's sons, the apostle lists, the inner three
+  // at the Transfiguration, Jairus's house and Gethsemane, the Sons of Thunder, the request for the
+  // seats of honour, the Samaritan village, and the two sent to prepare the Passover.
+  //
+  // ACTS keeps its book override to the Apostle (correct at 1:13, 3:1-11, 4:13, 4:19, 8:14, 12:2 —
+  // nine verses), and these fifteen are the exceptions:
+  //   the Baptist, in every "the baptism of John" retrospective — 1:5, 1:22, 10:37, 11:16, 13:24,
+  //     13:25, 18:25, 19:3, 19:4;
+  //   John Mark, bare, at 13:5 ("they had also John as their attendant") and 13:13 ("John departed
+  //     from them and returned to Jerusalem") — Acts 12:12, 12:25 and 15:37 name him in a longer
+  //     wording now registered on john-mark in people.ts and never reach this key in WEB;
+  //   4:6, the John of the high-priestly family listed beside Annas and Caiaphas — a real, distinct
+  //     man this app has no entry for, so no link. That is the same "link to nobody, or link to the
+  //     wrong man" question §7.12 of automation/manager/name-linker-scope.md is already holding for
+  //     Robbie; suppression is the interim this file uses everywhere else (Simon the tanner, Mary
+  //     at Acts 12:12, Judas at Matthew 13:55) and is not a new position.
+  //
+  // NOT here, and deliberately: Revelation 1:1, 1:4, 1:9 and 22:8. The John who names himself there
+  // is certainly not the Baptist, who died some sixty years earlier — but whether he is the Apostle,
+  // John the Elder/Presbyter, or an otherwise unknown John of Patmos is a live scholarly question,
+  // and the app must not settle it as a side effect of a linking pass. Those four are recorded as
+  // `flagged` cases in scripts/name-linker/cases.mjs and are pending Robbie's ruling. They still
+  // resolve to John the Baptist today, which is wrong under every view; the flagged cases exist so
+  // that stays visible instead of quietly becoming the answer.
+  john: {
+    Matthew: {
+      "4:21": "john-the-apostle", // "James the son of Zebedee, and John his brother"
+      "10:2": "john-the-apostle", // the apostle list
+      "17:1": "john-the-apostle", // the Transfiguration — the verse this whole pass began from
+    },
+    Mark: {
+      "1:19": "john-the-apostle", // "James the son of Zebedee, and John, his brother"
+      "1:29": "john-the-apostle", // "with James and John"
+      "3:17": "john-the-apostle", // "John, the brother of James" — Boanerges
+      "5:37": "john-the-apostle", // Jairus's house: "Peter, James, and John the brother of James"
+      "9:2": "john-the-apostle", // the Transfiguration
+      "9:38": "john-the-apostle", // "John said to him, 'Teacher, we saw someone…'"
+      "10:35": "john-the-apostle", // "James and John, the sons of Zebedee"
+      "10:41": "john-the-apostle", // "indignant towards James and John"
+      "13:3": "john-the-apostle", // "Peter, James, John, and Andrew asked him privately"
+      "14:33": "john-the-apostle", // Gethsemane
+    },
+    Luke: {
+      "5:10": "john-the-apostle", // "James and John, sons of Zebedee"
+      "6:14": "john-the-apostle", // the apostle list
+      "8:51": "john-the-apostle", // Jairus's house
+      "9:28": "john-the-apostle", // the Transfiguration
+      "9:49": "john-the-apostle", // "John answered, 'Master, we saw someone…'"
+      "9:54": "john-the-apostle", // the Samaritan village
+      "22:8": "john-the-apostle", // "He sent Peter and John" to prepare the Passover
+    },
+    Acts: {
+      "1:5": "john-the-baptist",
+      "1:22": "john-the-baptist",
+      "4:6": null, // John of the high-priestly family — no entry; see the note above
+      "10:37": "john-the-baptist",
+      "11:16": "john-the-baptist",
+      "13:5": "john-mark",
+      "13:13": "john-mark",
+      "13:24": "john-the-baptist",
+      "13:25": "john-the-baptist",
+      // Dead in WEB and in KJV, live in ASV, and kept for that reason rather than as a stale claim:
+      // WEB reads "John, who was called Mark" and KJV "John, whose surname was Mark", both of which
+      // people.ts now matches as whole phrases, so no bare "John" survives for this entry to answer.
+      // ASV reads "John also, who was called Mark" — the interposed "also" defeats a whole-phrase
+      // match, and per-verse overrides are translation-blind, so this covers the ASV reader.
+      "15:37": "john-mark",
+      "18:25": "john-the-baptist",
+      "19:3": "john-the-baptist",
+      "19:4": "john-the-baptist",
+    },
+  },
   // "Enoch": the patriarch (Genesis 5, Hebrews 11:5, Jude 1:14-15) is the default owner of bare
   // "Enoch," but Genesis 4:17-18, one chapter earlier, names a completely different Enoch — Cain's
   // son, after whom Cain named a city — so those two verses are suppressed rather than mislinked.
@@ -531,6 +619,79 @@ const OWNER_NAME_OVERRIDES: Record<string, Record<string, string | null>> = {
     "bib-exo-birth-of-moses": null,
     "bib-exo-golden-calf": null,
   },
+  // "John": the largest single fault this table has ever been used for. Bare "John" belongs to the
+  // Baptist globally, which is right for most of Scripture and badly wrong for our own writing: all
+  // 238 prose occurrences resolved to him, on the article surface, with nothing to correct them.
+  // On John the Apostle's OWN page, every "John" linked to John the Baptist.
+  //
+  // The 238 were read one at a time, grouped by owning record (the grouping is what this table
+  // needs, since it gives one answer per record). Two other corrections landed first and shrank the
+  // job: NAME_CONTEXT_SUPPRESSIONS above took out 52 book references ("the Gospel of John", "1
+  // John", "John's Gospel") and 8 more that name a different man ("Simon, son of John", "John
+  // Hyrcanus"), leaving 178 for this table and for the residue below.
+  //
+  // Records where every remaining "John" is the same man, and that man is not the Baptist:
+  john: {
+    // The Apostle. Zebedee's sons, the inner three, "Peter and John" in Acts, the household Jesus
+    // entrusted Mary to from the cross, the Ephesus traditions. None of these turns on who wrote
+    // the Fourth Gospel — they are narrative or traditional identifications the app already makes
+    // in the surrounding sentence.
+    "james-son-of-zebedee": "john-the-apostle",
+    "simon-peter": "john-the-apostle",
+    "james-brother-of-jesus": "john-the-apostle",
+    "andrew-apostle": "john-the-apostle",
+    "herod-agrippa-i": "john-the-apostle",
+    "joseph-husband-of-mary": "john-the-apostle",
+    "simon-magus": "john-the-apostle",
+    "salome-follower-of-jesus": "john-the-apostle",
+    sadducees: "john-the-apostle",
+    "sea-of-galilee": "john-the-apostle",
+    "basilica-st-john": "john-the-apostle",
+    "house-of-virgin-mary-ephesus": "john-the-apostle",
+    "martyrdom-site-polycarp-smyrna": "john-the-apostle",
+    "bib-loc-calling-first-disciples": "john-the-apostle",
+    "bib-loc-transfiguration": "john-the-apostle",
+    "bib-loc-gethsemane-arrest": "john-the-apostle",
+    "bib-loc-resurrection": "john-the-apostle",
+    "bib-loc-public-ministry": "john-the-apostle",
+    "bib-ac-jerusalem-church-community": "john-the-apostle",
+    "bib-ac-herod-agrippa-death": "john-the-apostle",
+
+    // Their own pages. Mapped to themselves so the self-link exclusion suppresses the link, exactly
+    // as bare "Saul" behaves on Paul's page above. On john-the-apostle's page this also sidesteps
+    // the authorship question entirely: "Tradition credits John as the author of…" needs no link,
+    // because the reader is already on that page.
+    "john-the-apostle": "john-the-apostle",
+    "john-mark": "john-mark",
+    "john-chrysostom": "john-chrysostom",
+    "john-of-the-cross": "john-of-the-cross",
+    "pope-john-xxiii": "pope-john-xxiii",
+    "pope-john-paul-ii": "pope-john-paul-ii",
+
+    // Later Johns the app DOES have entries for, named by first name only on someone else's page.
+    "charles-wesley": "john-wesley", // his brother John, three times on the page
+    "fall-of-communism-poland-1989": "pope-john-paul-ii",
+    "vatican-ii-1962": "pope-john-xxiii",
+
+    // Later Johns the app does NOT have entries for. No link is the least-wrong answer and the one
+    // this file uses everywhere else; whether a stub or a disambiguation note would be better is
+    // §7.12 of automation/manager/name-linker-scope.md, still open with Robbie.
+    "john-wycliffe": null, // John of Gaunt, Wycliffe's protector
+    "henry-viii": null, // John Fisher, executed for refusing the oath
+    "english-reformation-1534": null, // John Fisher again
+    "wycliffe-english-bible-c1382": null, // John Purvey, Wycliffe's associate
+    "council-of-ephesus-431": null, // John of Antioch, who held the rival council
+    "dormition-abbey": null, // Bishop John II of Jerusalem
+    "temple-of-artemis-ephesus": null, // John Turtle Wood, the 1869 excavator
+    "kurkh-monolith": null, // John George Taylor, who found the monolith in 1861
+    "siloam-inscription": null, // John Rogerson, the 1996 palaeographic argument
+    "nuzi-tablets": null, // John Van Seters, who took the Nuzi parallels apart
+    "bib-it-maccabean-revolt-begins": null, // John, one of Mattathias's five sons
+    // The two remaining mentions are the John Rylands Library, and the Gospel referred to by title
+    // in a list ("put John in the mid-second century") — a building and a book, neither a person.
+    "rylands-papyrus-p52": null,
+    "muratorian-fragment": null, // "Luke is named as the third Gospel and John as the fourth"
+  },
   // "Simeon": the only entry is Simeon at the temple (Luke 2), allowlisted to Luke for the reader.
   // Of the 10 prose mentions, 2 are his (Mary's page and Anna's) and 8 are not: Simeon son of Jacob
   // in the patriarch articles, and Simeon bar Kosiba — bar Kokhba — in the Roman revolt article.
@@ -666,6 +827,79 @@ function looksLikeAName(matched: string): boolean {
   return /^[A-Z]/.test(matched.replace(/^(?:the|a|an)\s+/i, ""));
 }
 
+/** Names that are ALSO the title of a book of the Bible, where the surrounding words can say which
+ * is meant. A reference to the book must not link to a person at all — not even to the person the
+ * book is named after, and least of all to a different person entirely.
+ *
+ * "John" is the case this was built for and the only key in it, because it is the only one measured.
+ * Bare "John" is registered on john-the-baptist (people.ts), so before this rule *the Gospel of
+ * John*, *1 John*, *2 John*, *3 John* and *John's Gospel* all rendered as links to John the Baptist
+ * — a man who wrote none of them and died before any of them was written. Measured over the whole
+ * corpus (scripts/name-linker), stating the surface for each, as `CAPITALISED_ONLY` above does:
+ *
+ *   surface                        occurrences of bare "John"   caught by this rule
+ *   Scripture, reader path                 132                          0
+ *   Scripture, panel path                  132                          0
+ *   our own articles (prose)               238                         52
+ *
+ * Zero on both Scripture paths is not an accident and is the point: the biblical text never refers
+ * to its own books by title, so this rule cannot touch a verse. It is an article-surface fix, and
+ * the article surface is where the whole fault lived.
+ *
+ * What it deliberately does NOT catch: "John notes...", "John writes...", "John's account", "in
+ * John, Jesus speaks..." — the author referred to as a person, or the book named in a bare list.
+ * Suppressing those needs a judgement about who wrote the Fourth Gospel and Revelation, which is a
+ * live confessional question (see the flagged cases in scripts/name-linker/cases.mjs and §7 of
+ * automation/manager/name-linker-scope.md). This rule takes no position on authorship: it removes
+ * links on phrases that name a BOOK, which is neutral between every answer to that question. */
+const NAME_CONTEXT_SUPPRESSIONS: Record<string, { before?: RegExp[]; after?: RegExp[] }> = {
+  john: {
+    before: [
+      // The book. "1 John 2:1" never reaches here — NAME_PATTERN lists the verse-reference
+      // fragments first, so a reference carrying a chapter is matched whole as kind "verse". Only
+      // a bare "1 John" with no numbers after it gets this far.
+      /(?:^|[^\p{L}])(?:[123]|First|Second|Third)\s+$/u, // "1 John", "3 John"
+      /\b[Gg]ospels? of\s+$/, // "the Gospel of John"
+      /\b[Ll]etters? of\s+$/, // "two letters of John"
+      /\b[Bb]ooks? of\s+$/, // "the book of John"
+      // A patronymic: "Simon, son of John". This is Simon Peter's FATHER — a different man, and one
+      // this app has no entry for. It is why simon-peter's own page could not simply be handed to
+      // the Apostle by OWNER_NAME_OVERRIDES: the page names two Johns and an owner rule gives one
+      // answer. It also reaches a surface the harness cannot see: WEB reads "Simon the son of
+      // Jonah" at John 1:42 and 21:15-17 and so never triggers, but ASV reads "the son of John" in
+      // all four, and the app offers ASV. Checked against WEB: no verse contains "son of John".
+      /\bsons? of\s+$/,
+    ],
+    after: [
+      // The book again. Note how narrow the possessive is: "John's Gospel" is the book, but "John's
+      // baptism" (Acts 19:3) and "John's disciples" (Matthew 9:14) are the Baptist himself and must
+      // keep their links, so only a following "Gospel" counts.
+      /^['’]s\s+[Gg]ospel/, // "John's Gospel"
+      /^\s+chapter\b/i, // "John chapter 18"
+      // John Hyrcanus, the Hasmonean ruler — no entry, and named in articles (the Sadducees, the
+      // Pharisees, Herod's rise) that ALSO name the Apostle, so again an owner rule cannot separate
+      // them. Registering the full name on a person record would be the tidier fix if he is ever
+      // given one.
+      /^\s+Hyrcanus\b/,
+    ],
+  },
+};
+
+/** Do the words immediately around this match say it is NOT the person who owns the name?
+ *
+ * This is the only correction in the file that reads the surrounding text, and it is deliberately a
+ * short, enumerated list rather than a general parser. It earns its place by being the only
+ * mechanism that can reach the two hardest cases: a book title (which must link to no person at
+ * all, and which the Bible reader's book/verse tables cannot see because the biblical text never
+ * names its own books), and a record whose article legitimately names two different men called
+ * John, which OWNER_NAME_OVERRIDES gives one answer to and therefore cannot split. */
+function isSuppressedByContext(nameLower: string, text: string, start: number, end: number): boolean {
+  const rules = NAME_CONTEXT_SUPPRESSIONS[nameLower];
+  if (!rules) return false;
+  if (rules.before?.some((re) => re.test(text.slice(Math.max(0, start - 24), start)))) return true;
+  return rules.after?.some((re) => re.test(text.slice(end, end + 24))) ?? false;
+}
+
 function escapeRegExp(s: string): string {
   return s.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
 }
@@ -734,6 +968,12 @@ export function computeLinkAnnotations(
             annotations.push({ start, end, text: name, kind: ID_TO_KIND.get(verseId) ?? entry.kind, id: verseId });
           }
           // verseId === null means this exact mention is a different, unrepresented person — no link.
+        } else if (isSuppressedByContext(nameLower, text, start, end)) {
+          // "the Gospel of John", "1 John", "John's Gospel" — the book, not a man. "Simon, son of
+          // John", "John Hyrcanus" — a different man with no entry. Either way, no link.
+          // Checked after the per-verse table for the same reason CAPITALISED_ONLY is: an explicit
+          // verse answer should still win. Checked BEFORE OWNER_NAME_OVERRIDES so that an owner
+          // rule written for the person cannot resurrect a link on a book title.
         } else if (CAPITALISED_ONLY.has(nameLower) && !looksLikeAName(name)) {
           // An ordinary English word, not the name it shares. No link. Checked AFTER the per-verse
           // table on purpose: a verse override can still force a link on a lowercase match if some

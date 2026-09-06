@@ -910,6 +910,25 @@ export const people: Person[] = [
     name: "Mark (John Mark)",
     pronunciation: "MARK",
     alternateNames: ["John Mark", "Mark"],
+    // Acts never writes "John Mark" as one phrase. It writes the two names joined by a relative
+    // clause, and bare "John" belongs to the Baptist, so all three of these verses rendered the
+    // man who left Paul at Perga as John the Baptist. Registering the whole wording is the
+    // longest-match trick verseAnnotations.ts already uses at Acts 1:13 and Acts 10:32, and unlike
+    // a per-verse override it works on the article surface and in every translation at once.
+    // Checked verse by verse against each translation's actual text, not from memory:
+    //   WEB  Acts 12:12, 12:25          "John who was called Mark"      (no comma)
+    //   WEB  Acts 15:37                 "John, who was called Mark"     (comma)
+    //   KJV  Acts 12:12, 12:25, 15:37   "John, whose surname was Mark"
+    //   ASV  Acts 12:12, 12:25          "John whose surname was Mark"
+    // ASV 15:37 reads "John also, who was called Mark" — the interposed "also" defeats a
+    // whole-phrase match, so that one verse is left to the per-verse override in
+    // verseAnnotations.ts, which is translation-blind and covers it.
+    matchNames: [
+      "John who was called Mark",
+      "John, who was called Mark",
+      "John, whose surname was Mark",
+      "John whose surname was Mark",
+    ],
     tier: "significant",
     role: "Missionary companion, traditional Gospel author",
     summary: "A younger companion of Paul and Barnabas whose early departure from a missionary journey caused a sharp falling-out between them, but who later reconciled with Paul and, by strong early tradition, wrote the Gospel of Mark based on Peter's preaching.",

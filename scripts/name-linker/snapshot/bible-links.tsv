@@ -6981,7 +6981,7 @@ Matthew 4:17	16	Jesus	jesus-of-nazareth	jesus-of-nazareth
 Matthew 4:18	52	Simon, who is called Peter	simon-peter	simon-peter
 Matthew 4:18	84	Andrew	andrew-apostle	andrew-apostle
 Matthew 4:21	48	James the son of Zebedee	james-son-of-zebedee	james-son-of-zebedee
-Matthew 4:21	78	John	john-the-baptist	john-the-baptist
+Matthew 4:21	78	John	john-the-apostle	john-the-baptist
 Matthew 4:23	0	Jesus	jesus-of-nazareth	jesus-of-nazareth
 Matthew 5:37	85	the evil one	satan	satan
 Matthew 5:48	45	Father in heaven	god-the-father	god-the-father
@@ -7027,7 +7027,7 @@ Matthew 9:35	0	Jesus	jesus-of-nazareth	jesus-of-nazareth
 Matthew 10:2	59	Simon, who is called Peter	simon-peter	simon-peter
 Matthew 10:2	87	Andrew	andrew-apostle	andrew-apostle
 Matthew 10:2	108	James the son of Zebedee	james-son-of-zebedee	james-son-of-zebedee
-Matthew 10:2	134	John	john-the-baptist	john-the-baptist
+Matthew 10:2	134	John	john-the-apostle	john-the-baptist
 Matthew 10:3	0	Philip	philip-the-apostle	philip-the-apostle
 Matthew 10:3	8	Bartholomew	bartholomew-nathanael	bartholomew-nathanael
 Matthew 10:3	21	Thomas	thomas-apostle	thomas-apostle
@@ -7127,7 +7127,7 @@ Matthew 16:24	5	Jesus	jesus-of-nazareth	jesus-of-nazareth
 Matthew 17:1	16	Jesus	jesus-of-nazareth	jesus-of-nazareth
 Matthew 17:1	36	Peter	simon-peter	simon-peter
 Matthew 17:1	43	James	james-son-of-zebedee	james-son-of-zebedee
-Matthew 17:1	54	John	john-the-baptist	john-the-baptist
+Matthew 17:1	54	John	john-the-apostle	john-the-baptist
 Matthew 17:3	8	Moses	moses	moses
 Matthew 17:3	18	Elijah	elijah	elijah
 Matthew 17:4	0	Peter	simon-peter	simon-peter
@@ -7310,13 +7310,13 @@ Mark 1:16	54	Andrew	andrew-apostle	andrew-apostle
 Mark 1:16	76	Simon	simon-peter	simon-peter
 Mark 1:17	0	Jesus	jesus-of-nazareth	jesus-of-nazareth
 Mark 1:19	45	James the son of Zebedee	james-son-of-zebedee	james-son-of-zebedee
-Mark 1:19	75	John	john-the-baptist	john-the-baptist
+Mark 1:19	75	John	john-the-apostle	john-the-baptist
 Mark 1:24	45	Jesus	jesus-of-nazareth	jesus-of-nazareth
 Mark 1:25	0	Jesus	jesus-of-nazareth	jesus-of-nazareth
 Mark 1:29	82	Simon	simon-peter	simon-peter
 Mark 1:29	92	Andrew	andrew-apostle	andrew-apostle
 Mark 1:29	105	James	james-son-of-zebedee	james-son-of-zebedee
-Mark 1:29	115	John	john-the-baptist	john-the-baptist
+Mark 1:29	115	John	john-the-apostle	john-the-baptist
 Mark 1:30	4	Simon	simon-peter	simon-peter
 Mark 1:36	0	Simon	simon-peter	simon-peter
 Mark 1:44	132	Moses	moses	moses
@@ -7334,7 +7334,7 @@ Mark 3:7	0	Jesus	jesus-of-nazareth	jesus-of-nazareth
 Mark 3:16	0	Simon	simon-peter	simon-peter
 Mark 3:16	32	Peter	simon-peter	simon-peter
 Mark 3:17	0	James the son of Zebedee	james-son-of-zebedee	james-son-of-zebedee
-Mark 3:17	26	John	john-the-baptist	john-the-baptist
+Mark 3:17	26	John	john-the-apostle	john-the-baptist
 Mark 3:17	47	James	james-son-of-zebedee	james-son-of-zebedee
 Mark 3:17	73	Boanerges	james-son-of-zebedee	james-son-of-zebedee
 Mark 3:18	0	Andrew	andrew-apostle	andrew-apostle
@@ -7362,7 +7362,7 @@ Mark 5:30	12	Jesus	jesus-of-nazareth	jesus-of-nazareth
 Mark 5:36	4	Jesus	jesus-of-nazareth	jesus-of-nazareth
 Mark 5:37	40	Peter	simon-peter	simon-peter
 Mark 5:37	47	James	james-son-of-zebedee	james-son-of-zebedee
-Mark 5:37	58	John	john-the-baptist	john-the-baptist
+Mark 5:37	58	John	john-the-apostle	john-the-baptist
 Mark 5:37	78	James	james-son-of-zebedee	james-son-of-zebedee
 Mark 6:3	37	Mary	mary-mother-of-jesus	mary-mother-of-jesus
 Mark 6:3	58	James	james-brother-of-jesus	james-son-of-zebedee
@@ -7395,7 +7395,7 @@ Mark 8:33	91	Satan	satan	satan
 Mark 9:2	15	Jesus	jesus-of-nazareth	jesus-of-nazareth
 Mark 9:2	35	Peter	simon-peter	simon-peter
 Mark 9:2	42	James	james-son-of-zebedee	james-son-of-zebedee
-Mark 9:2	53	John	john-the-baptist	john-the-baptist
+Mark 9:2	53	John	john-the-apostle	john-the-baptist
 Mark 9:4	0	Elijah	elijah	elijah
 Mark 9:4	11	Moses	moses	moses
 Mark 9:4	62	Jesus	jesus-of-nazareth	jesus-of-nazareth
@@ -7410,7 +7410,7 @@ Mark 9:13	20	Elijah	elijah	elijah
 Mark 9:23	0	Jesus	jesus-of-nazareth	jesus-of-nazareth
 Mark 9:25	5	Jesus	jesus-of-nazareth	jesus-of-nazareth
 Mark 9:27	4	Jesus	jesus-of-nazareth	jesus-of-nazareth
-Mark 9:38	0	John	john-the-baptist	john-the-baptist
+Mark 9:38	0	John	john-the-apostle	john-the-baptist
 Mark 9:39	4	Jesus	jesus-of-nazareth	jesus-of-nazareth
 Mark 10:3	23	Moses	moses	moses
 Mark 10:4	12	Moses	moses	moses
@@ -7425,11 +7425,11 @@ Mark 10:28	0	Peter	simon-peter	simon-peter
 Mark 10:29	0	Jesus	jesus-of-nazareth	jesus-of-nazareth
 Mark 10:32	49	Jesus	jesus-of-nazareth	jesus-of-nazareth
 Mark 10:35	0	James	james-son-of-zebedee	james-son-of-zebedee
-Mark 10:35	10	John	john-the-baptist	john-the-baptist
+Mark 10:35	10	John	john-the-apostle	john-the-baptist
 Mark 10:38	4	Jesus	jesus-of-nazareth	jesus-of-nazareth
 Mark 10:39	33	Jesus	jesus-of-nazareth	jesus-of-nazareth
 Mark 10:41	58	James	james-son-of-zebedee	james-son-of-zebedee
-Mark 10:41	68	John	john-the-baptist	john-the-baptist
+Mark 10:41	68	John	john-the-apostle	john-the-baptist
 Mark 10:42	0	Jesus	jesus-of-nazareth	jesus-of-nazareth
 Mark 10:47	26	Jesus	jesus-of-nazareth	jesus-of-nazareth
 Mark 10:47	32	the Nazarene	jesus-of-nazareth	jesus-of-nazareth
@@ -7478,7 +7478,7 @@ Mark 12:41	0	Jesus	jesus-of-nazareth	jesus-of-nazareth
 Mark 13:2	0	Jesus	jesus-of-nazareth	jesus-of-nazareth
 Mark 13:3	54	Peter	simon-peter	simon-peter
 Mark 13:3	61	James	james-son-of-zebedee	james-son-of-zebedee
-Mark 13:3	68	John	john-the-baptist	john-the-baptist
+Mark 13:3	68	John	john-the-apostle	john-the-baptist
 Mark 13:3	78	Andrew	andrew-apostle	andrew-apostle
 Mark 13:5	0	Jesus	jesus-of-nazareth	jesus-of-nazareth
 Mark 13:11	189	the Holy Spirit	holy-spirit	holy-spirit
@@ -7493,7 +7493,7 @@ Mark 14:29	4	Peter	simon-peter	simon-peter
 Mark 14:30	0	Jesus	jesus-of-nazareth	jesus-of-nazareth
 Mark 14:33	17	Peter	simon-peter	simon-peter
 Mark 14:33	24	James	james-son-of-zebedee	james-son-of-zebedee
-Mark 14:33	35	John	john-the-baptist	john-the-baptist
+Mark 14:33	35	John	john-the-apostle	john-the-baptist
 Mark 14:36	10	Abba, Father	god-the-father	god-the-father
 Mark 14:37	45	Peter	simon-peter	simon-peter
 Mark 14:37	53	Simon	simon-peter	simon-peter
@@ -7685,7 +7685,7 @@ Luke 5:5	0	Simon	simon-peter	simon-peter
 Luke 5:8	4	Simon Peter	simon-peter	simon-peter
 Luke 5:8	46	Jesus	jesus-of-nazareth	jesus-of-nazareth
 Luke 5:10	17	James	james-son-of-zebedee	james-son-of-zebedee
-Luke 5:10	27	John	john-the-baptist	john-the-baptist
+Luke 5:10	27	John	john-the-apostle	john-the-baptist
 Luke 5:10	73	Simon	simon-peter	simon-peter
 Luke 5:10	80	Jesus	jesus-of-nazareth	jesus-of-nazareth
 Luke 5:10	94	Simon	simon-peter	simon-peter
@@ -7706,7 +7706,7 @@ Luke 6:14	0	Simon	simon-peter	simon-peter
 Luke 6:14	26	Peter	simon-peter	simon-peter
 Luke 6:14	33	Andrew	andrew-apostle	andrew-apostle
 Luke 6:14	54	James	james-son-of-zebedee	james-son-of-zebedee
-Luke 6:14	61	John	john-the-baptist	john-the-baptist
+Luke 6:14	61	John	john-the-apostle	john-the-baptist
 Luke 6:14	67	Philip	philip-the-apostle	philip-the-apostle
 Luke 6:14	75	Bartholomew	bartholomew-nathanael	bartholomew-nathanael
 Luke 6:15	9	Thomas	thomas-apostle	thomas-apostle
@@ -7752,7 +7752,7 @@ Luke 8:45	50	Peter	simon-peter	simon-peter
 Luke 8:46	4	Jesus	jesus-of-nazareth	jesus-of-nazareth
 Luke 8:50	4	Jesus	jesus-of-nazareth	jesus-of-nazareth
 Luke 8:51	70	Peter	simon-peter	simon-peter
-Luke 8:51	77	John	john-the-baptist	john-the-baptist
+Luke 8:51	77	John	john-the-apostle	john-the-baptist
 Luke 8:51	83	James	james-son-of-zebedee	james-son-of-zebedee
 Luke 9:7	118	John	john-the-baptist	john-the-baptist
 Luke 9:8	17	Elijah	elijah	elijah
@@ -7761,7 +7761,7 @@ Luke 9:19	17	John the Baptizer	john-the-baptist	john-the-baptist
 Luke 9:19	54	Elijah	elijah	elijah
 Luke 9:20	49	Peter	simon-peter	simon-peter
 Luke 9:28	55	Peter	simon-peter	simon-peter
-Luke 9:28	62	John	john-the-baptist	john-the-baptist
+Luke 9:28	62	John	john-the-apostle	john-the-baptist
 Luke 9:28	72	James	james-son-of-zebedee	james-son-of-zebedee
 Luke 9:30	48	Moses	moses	moses
 Luke 9:30	58	Elijah	elijah	elijah
@@ -7775,10 +7775,10 @@ Luke 9:41	0	Jesus	jesus-of-nazareth	jesus-of-nazareth
 Luke 9:42	85	Jesus	jesus-of-nazareth	jesus-of-nazareth
 Luke 9:43	101	Jesus	jesus-of-nazareth	jesus-of-nazareth
 Luke 9:47	0	Jesus	jesus-of-nazareth	jesus-of-nazareth
-Luke 9:49	0	John	john-the-baptist	john-the-baptist
+Luke 9:49	0	John	john-the-apostle	john-the-baptist
 Luke 9:50	0	Jesus	jesus-of-nazareth	jesus-of-nazareth
 Luke 9:54	20	James	james-son-of-zebedee	james-son-of-zebedee
-Luke 9:54	30	John	john-the-baptist	john-the-baptist
+Luke 9:54	30	John	john-the-apostle	john-the-baptist
 Luke 9:54	148	Elijah	elijah	elijah
 Luke 9:58	0	Jesus	jesus-of-nazareth	jesus-of-nazareth
 Luke 9:60	4	Jesus	jesus-of-nazareth	jesus-of-nazareth
@@ -7881,7 +7881,7 @@ Luke 21:37	10	Jesus	jesus-of-nazareth	jesus-of-nazareth
 Luke 22:3	0	Satan	satan	satan
 Luke 22:3	19	Judas	judas-iscariot	judas-iscariot
 Luke 22:8	8	Peter	simon-peter	simon-peter
-Luke 22:8	18	John	john-the-baptist	john-the-baptist
+Luke 22:8	18	John	john-the-apostle	john-the-baptist
 Luke 22:31	16	Simon	simon-peter	simon-peter
 Luke 22:31	23	Simon	simon-peter	simon-peter
 Luke 22:31	38	Satan	satan	satan
@@ -8422,7 +8422,7 @@ John 21:25	39	Jesus	jesus-of-nazareth	jesus-of-nazareth
 Acts 1:1	24	Theophilus	theophilus	theophilus
 Acts 1:1	55	Jesus	jesus-of-nazareth	jesus-of-nazareth
 Acts 1:2	82	the Holy Spirit	holy-spirit	holy-spirit
-Acts 1:5	4	John	john-the-apostle	john-the-baptist
+Acts 1:5	4	John	john-the-baptist	john-the-baptist
 Acts 1:5	63	the Holy Spirit	holy-spirit	holy-spirit
 Acts 1:8	32	the Holy Spirit	holy-spirit	holy-spirit
 Acts 1:11	80	Jesus	jesus-of-nazareth	jesus-of-nazareth
@@ -8444,7 +8444,7 @@ Acts 1:16	120	David	david	david
 Acts 1:16	137	Judas	judas-iscariot	judas-iscariot
 Acts 1:16	176	Jesus	jesus-of-nazareth	jesus-of-nazareth
 Acts 1:21	73	Jesus	jesus-of-nazareth	jesus-of-nazareth
-Acts 1:22	30	John	john-the-apostle	john-the-baptist
+Acts 1:22	30	John	john-the-baptist	john-the-baptist
 Acts 1:23	22	Joseph	joseph-son-of-jacob	joseph-son-of-jacob
 Acts 1:25	57	Judas	judas-iscariot	judas-iscariot
 Acts 2:4	26	the Holy Spirit	holy-spirit	holy-spirit
@@ -8484,7 +8484,7 @@ Acts 3:25	101	Abraham	abraham	abraham
 Acts 3:26	34	Jesus	jesus-of-nazareth	jesus-of-nazareth
 Acts 4:2	61	Jesus	jesus-of-nazareth	jesus-of-nazareth
 Acts 4:6	38	Caiaphas	caiaphas	caiaphas
-Acts 4:6	48	John	john-the-apostle	john-the-baptist
+Acts 4:6	48	John	-	john-the-baptist
 Acts 4:8	5	Peter	simon-peter	simon-peter
 Acts 4:8	24	the Holy Spirit	holy-spirit	holy-spirit
 Acts 4:10	77	Jesus Christ	jesus-of-nazareth	jesus-of-nazareth
@@ -8661,7 +8661,7 @@ Acts 10:32	36	Simon, who is also called Peter	simon-peter	simon-peter
 Acts 10:32	110	Simon	-	simon-peter
 Acts 10:34	0	Peter	simon-peter	simon-peter
 Acts 10:36	82	Jesus Christ	jesus-of-nazareth	jesus-of-nazareth
-Acts 10:37	126	John	john-the-apostle	john-the-baptist
+Acts 10:37	126	John	john-the-baptist	john-the-baptist
 Acts 10:38	5	Jesus of Nazareth	jesus-of-nazareth	jesus-of-nazareth
 Acts 10:38	50	the Holy Spirit	holy-spirit	holy-spirit
 Acts 10:38	146	the devil	satan	satan
@@ -8677,7 +8677,7 @@ Acts 11:4	4	Peter	simon-peter	simon-peter
 Acts 11:7	42	Peter	simon-peter	simon-peter
 Acts 11:13	103	Simon, who is called Peter	simon-peter	simon-peter
 Acts 11:15	21	the Holy Spirit	holy-spirit	holy-spirit
-Acts 11:16	49	John	john-the-apostle	john-the-baptist
+Acts 11:16	49	John	john-the-baptist	john-the-baptist
 Acts 11:16	108	the Holy Spirit	holy-spirit	holy-spirit
 Acts 11:17	75	Jesus Christ	jesus-of-nazareth	jesus-of-nazareth
 Acts 11:19	76	Stephen	stephen-the-martyr	stephen-the-martyr
@@ -8697,8 +8697,7 @@ Acts 12:6	54	Peter	simon-peter	simon-peter
 Acts 12:7	88	Peter	simon-peter	simon-peter
 Acts 12:11	5	Peter	simon-peter	simon-peter
 Acts 12:12	45	Mary	-	mary-mother-of-jesus
-Acts 12:12	65	John	john-the-apostle	john-the-baptist
-Acts 12:12	85	Mark	john-mark	john-mark
+Acts 12:12	65	John who was called Mark	john-mark	john-mark
 Acts 12:13	5	Peter	simon-peter	simon-peter
 Acts 12:13	57	Rhoda	rhoda	rhoda
 Acts 12:14	20	Peter	simon-peter	simon-peter
@@ -8708,8 +8707,7 @@ Acts 12:17	150	James	james-brother-of-jesus	james-son-of-zebedee
 Acts 12:18	95	Peter	simon-peter	simon-peter
 Acts 12:25	0	Barnabas	barnabas	barnabas
 Acts 12:25	13	Saul	paul-of-tarsus	saul-king-of-israel
-Acts 12:25	102	John	john-the-apostle	john-the-baptist
-Acts 12:25	122	Mark	john-mark	john-mark
+Acts 12:25	102	John who was called Mark	john-mark	john-mark
 Acts 13:1	79	Barnabas	barnabas	barnabas
 Acts 13:1	89	Simeon	-	simeon-at-the-temple
 Acts 13:1	189	Saul	paul-of-tarsus	saul-king-of-israel
@@ -8717,7 +8715,7 @@ Acts 13:2	36	the Holy Spirit	holy-spirit	holy-spirit
 Acts 13:2	68	Barnabas	barnabas	barnabas
 Acts 13:2	81	Saul	paul-of-tarsus	saul-king-of-israel
 Acts 13:4	22	the Holy Spirit	holy-spirit	holy-spirit
-Acts 13:5	99	John	john-the-apostle	john-the-baptist
+Acts 13:5	99	John	john-mark	john-the-baptist
 Acts 13:6	123	Jesus	jesus-of-nazareth	jesus-of-nazareth
 Acts 13:7	28	Sergius Paulus	sergius-paulus	sergius-paulus
 Acts 13:7	86	Barnabas	barnabas	barnabas
@@ -8727,15 +8725,15 @@ Acts 13:9	29	Paul	paul-of-tarsus	paul-of-tarsus
 Acts 13:9	47	the Holy Spirit	holy-spirit	holy-spirit
 Acts 13:10	58	the devil	satan	satan
 Acts 13:13	4	Paul	paul-of-tarsus	paul-of-tarsus
-Acts 13:13	79	John	john-the-apostle	john-the-baptist
+Acts 13:13	79	John	john-mark	john-the-baptist
 Acts 13:16	0	Paul	paul-of-tarsus	paul-of-tarsus
 Acts 13:20	45	Samuel	samuel	samuel
 Acts 13:21	54	Saul the son of Kish	saul-king-of-israel	saul-king-of-israel
 Acts 13:22	38	David	david	david
 Acts 13:22	103	David	david	david
 Acts 13:22	120	Jesse	jesse	jesse
-Acts 13:24	24	John	john-the-apostle	john-the-baptist
-Acts 13:25	3	John	john-the-apostle	john-the-baptist
+Acts 13:24	24	John	john-the-baptist	john-the-baptist
+Acts 13:25	3	John	john-the-baptist	john-the-baptist
 Acts 13:26	35	Abraham	abraham	abraham
 Acts 13:28	55	Pilate	pontius-pilate	pontius-pilate
 Acts 13:33	76	Jesus	jesus-of-nazareth	jesus-of-nazareth
@@ -8788,8 +8786,7 @@ Acts 15:35	13	Barnabas	barnabas	barnabas
 Acts 15:36	16	Paul	paul-of-tarsus	paul-of-tarsus
 Acts 15:36	29	Barnabas	barnabas	barnabas
 Acts 15:37	0	Barnabas	barnabas	barnabas
-Acts 15:37	25	John	john-the-apostle	john-the-baptist
-Acts 15:37	46	Mark	john-mark	john-mark
+Acts 15:37	25	John, who was called Mark	john-mark	john-mark
 Acts 15:38	4	Paul	paul-of-tarsus	paul-of-tarsus
 Acts 15:39	71	Barnabas	barnabas	barnabas
 Acts 15:39	85	Mark	john-mark	john-mark
@@ -8855,16 +8852,16 @@ Acts 18:18	126	Priscilla	priscilla	priscilla
 Acts 18:18	140	Aquila	aquila	aquila
 Acts 18:24	24	Apollos	apollos	apollos
 Acts 18:25	135	Jesus	jesus-of-nazareth	jesus-of-nazareth
-Acts 18:25	179	John	john-the-apostle	john-the-baptist
+Acts 18:25	179	John	john-the-baptist	john-the-baptist
 Acts 18:26	52	Priscilla	priscilla	priscilla
 Acts 18:26	66	Aquila	aquila	aquila
 Acts 18:28	76	Jesus	jesus-of-nazareth	jesus-of-nazareth
 Acts 19:1	6	Apollos	apollos	apollos
 Acts 19:1	30	Paul	paul-of-tarsus	paul-of-tarsus
 Acts 19:2	34	the Holy Spirit	holy-spirit	holy-spirit
-Acts 19:3	62	John	john-the-apostle	john-the-baptist
+Acts 19:3	62	John	john-the-baptist	john-the-baptist
 Acts 19:4	0	Paul	paul-of-tarsus	paul-of-tarsus
-Acts 19:4	12	John	john-the-apostle	john-the-baptist
+Acts 19:4	12	John	john-the-baptist	john-the-baptist
 Acts 19:4	160	Jesus	jesus-of-nazareth	jesus-of-nazareth
 Acts 19:5	65	Jesus	jesus-of-nazareth	jesus-of-nazareth
 Acts 19:6	5	Paul	paul-of-tarsus	paul-of-tarsus
@@ -9244,7 +9241,7 @@ Galatians 2:7	112	Peter	simon-peter	simon-peter
 Galatians 2:8	22	Peter	simon-peter	simon-peter
 Galatians 2:9	56	James	james-brother-of-jesus	james-son-of-zebedee
 Galatians 2:9	66	Cephas	simon-peter	simon-peter
-Galatians 2:9	77	John	john-the-baptist	john-the-baptist
+Galatians 2:9	77	John	john-the-apostle	john-the-baptist
 Galatians 2:9	135	Barnabas	barnabas	barnabas
 Galatians 2:11	9	Peter	simon-peter	simon-peter
 Galatians 2:12	33	James	james-brother-of-jesus	james-son-of-zebedee
