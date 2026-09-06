@@ -1479,13 +1479,8 @@ export default function BiblePanel({
           see ReferencePicker. They cost a permanent row of every phone screen for a tap that happens
           once a session, and the heading below already says what they said.
 
-          The reading-progress line stays: it is a stat, not navigation, and the profile grid shows
-          the same figure, so the two cannot disagree. */}
-      {chaptersThisMonth !== null && (
-        <p className="bible-minutes-this-month no-print">
-          <Icon name="bible" inline /> {chaptersThisMonth} {chaptersThisMonth === 1 ? "chapter" : "chapters"} read this month
-        </p>
-      )}
+          The reading-progress stat that used to sit here is now the last item of the toolbar row
+          below, in its compact form — see .bible-chapters-read. */}
 
       <div className="bible-toolbar">
         <select
@@ -1510,6 +1505,30 @@ export default function BiblePanel({
           >
             <Icon name="volume" inline /> Listen
           </button>
+        )}
+        {/* The month's reading, as a mark and a number rather than the sentence it used to spell out
+            across a line of its own. That line cost 28px of scripture on every phone screen to say
+            something the reader had already read; here it costs no height at all, because this row
+            exists anyway for the translation select.
+
+            role="img" + aria-label is what keeps this from being a bare glyph and a digit: it prunes
+            the mark and the number out of the accessibility tree and hands over the original
+            sentence whole, so a screen reader hears exactly what the line used to say. `title` gives
+            the same sentence to anything with a pointer. Touch gets neither — a tap-to-reveal would
+            need a tooltip layer this caption does not justify.
+
+            LAST in the row on purpose. Leading, it reads as a third control at the head of a row of
+            controls; trailing and muted, it reads as the caption it is. And it must never take width
+            from the select — see .bible-toolbar, which has none to give at 375px. */}
+        {chaptersThisMonth !== null && (
+          <p
+            className="bible-chapters-read no-print"
+            role="img"
+            aria-label={`${chaptersThisMonth} ${chaptersThisMonth === 1 ? "chapter" : "chapters"} read this month`}
+            title={`${chaptersThisMonth} ${chaptersThisMonth === 1 ? "chapter" : "chapters"} read this month`}
+          >
+            <Icon name="bible" inline /> {chaptersThisMonth}
+          </p>
         )}
       </div>
 

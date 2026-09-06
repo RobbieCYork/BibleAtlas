@@ -3506,11 +3506,38 @@ a.profile-links-url {
   line-height: 1.45;
 }
 
-.bible-minutes-this-month {
-  font-size: 12px;
+/* The month's reading count, riding along at the end of the toolbar row. Was
+ * .bible-minutes-this-month — a name that had said "minutes" since before it counted chapters — on
+ * a centred line of its own above that row, which cost 28px of scripture on every phone screen.
+ *
+ * `align-self: center` rather than the row's default `stretch`, and no vertical padding: the row's
+ * height belongs to the translation select and this must never become the thing that sets it.
+ * `flex-shrink: 0` and `nowrap` because the one thing this caption may not do is take width from
+ * that select — at 375px the row is already 13px under its natural width and has none to give. */
+.bible-chapters-read {
+  align-self: center;
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  /* Pulls back most of the row's 6px gap. Measured, not taste: at 375px with WEB selected and the
+     Listen button present, a three-digit count at the row's natural spacing left the select 3.7px
+     short of its longest label and clipped it to "World English Bible (WEB". A caption is not
+     allowed to do that to a control, and this row has no slack to find it anywhere else. */
+  margin: 0 0 0 -3px;
+  font-size: 11px;
+  /* Equal-width figures, so the row does not twitch sideways going from 9 chapters to 10. */
+  font-variant-numeric: tabular-nums;
   color: var(--text-muted);
-  text-align: center;
-  margin-bottom: 10px;
+  white-space: nowrap;
+}
+
+/* Purely to buy width. Icon renders at 1em; trimming it to 0.95em was one of the several fractions
+   of a pixel this row had to find to stop a three-digit count clipping the select, and it is the one
+   the eye notices least. If this row ever gains slack, this is the first thing to put back. */
+.bible-chapters-read svg {
+  width: 0.95em;
+  height: 0.95em;
 }
 
 .bible-mark-read {
