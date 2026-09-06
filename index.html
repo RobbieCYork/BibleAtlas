@@ -35,6 +35,49 @@
          Chrome/Android, and src/lib/viewportHeight.ts enforces the matching rule for --app-height. -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover, interactive-widget=resizes-visual" />
     <title>Capstone Bible</title>
+    <!-- Last-resort recovery for a build's own assets 404ing.
+         Vite content-hashes everything under /assets/, and a Vercel deploy only serves the
+         hashed files belonging to the deployment currently promoted. So when this HTML is
+         served from an edge cache that outlived the deploy it came from, the bundle and
+         stylesheet it names no longer exist and both 404: the app either renders with no
+         styles at all, or — because there is no code splitting, so main.tsx *is* the whole
+         bundle — never boots and shows a blank page. In that second case nothing in src/
+         gets the chance to run, which is why this lives inline in the HTML and not in
+         lib/updateCheck.ts.
+         A reload is the correct response: it re-requests the document and usually picks up
+         the current build's HTML. It is also the only response available, so it is fired
+         at most once every 30 seconds per tab — if the reload comes back just as broken
+         (a still-stale edge node), the user is left on the unstyled page rather than
+         thrown into a reload loop, which would be strictly worse.
+         Registered with capture: true because resource-load errors fire on the element and
+         do not bubble; placed above Vite's injected <script>/<link> so the listener exists
+         before either is parsed. -->
+    <script>
+      (function () {
+        var KEY = 'cb:asset-reload';
+        var COOLDOWN_MS = 30000;
+        window.addEventListener(
+          'error',
+          function (event) {
+            var el = event.target;
+            if (!el || !el.tagName) return;
+            var url = el.src || el.href;
+            if (!url || url.indexOf('/assets/') === -1) return;
+            try {
+              var last = Number(window.sessionStorage.getItem(KEY)) || 0;
+              if (Date.now() - last < COOLDOWN_MS) return;
+              window.sessionStorage.setItem(KEY, String(Date.now()));
+            } catch (e) {
+              // Storage blocked (private mode, cookies off). Without somewhere to record
+              // the attempt there is no way to bound the retries, so do nothing.
+              return;
+            }
+            window.location.reload();
+          },
+          true
+        );
+      })();
+    </script>
   </head>
   <body>
     <div id="root"></div>
