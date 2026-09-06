@@ -2632,25 +2632,48 @@ a.profile-links-url {
 }
 
 /* --- The chapter heading, doubling as the reference picker's trigger ---
- * Deliberately not styled as a button at rest: it has to keep reading as the passage's title, which
- * is its first job. The caret is the only permanent hint that it does anything. */
+ * It first shipped as bare title text with a small muted caret, on the theory that the heading's
+ * first job is to name the passage. Reported from an iPhone within the hour: the caret was "almost
+ * invisible" and the heading read as decoration rather than a control. So it wears the ‹ › arrows'
+ * own chip — same accent border, same accent well — and the three read as one navigation cluster
+ * instead of two buttons standing either side of a label.
+ *
+ * NONE OF IT COSTS A PIXEL OF HEIGHT, which is the entire point of the row this replaced. The chip
+ * is capped at the 36px the arrows beside it already impose on the row, so .bible-passage-header
+ * measures exactly what it measured as bare text. */
 
 .bible-passage-title {
   min-width: 0;
 }
 
 .bible-passage-title-btn {
+  position: relative;
   display: inline-flex;
   align-items: center;
-  gap: 6px;
+  gap: 8px;
   max-width: 100%;
-  padding: 2px 8px;
-  border: none;
-  background: none;
-  border-radius: 8px;
+  min-height: 36px;
+  padding: 3px 14px;
+  border: 1px solid var(--accent);
+  background: var(--accent-bg);
+  border-radius: 999px;
   color: inherit;
   font: inherit;
   cursor: pointer;
+}
+
+/* 44px of touch target out of a 36px chip, taken from the 6px gap above and the 10px margin below
+   rather than from the layout: an absolutely-positioned overlay contributes no height, so the
+   finger gets Apple's minimum and the reader keeps the pixels. Held to the chip's own width
+   (left/right: 0) so it cannot swallow taps meant for the ‹ › arrows either side. */
+.bible-passage-title-btn::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 50%;
+  height: 44px;
+  transform: translateY(-50%);
 }
 
 .bible-passage-title-btn > span:first-child {
@@ -2660,18 +2683,22 @@ a.profile-links-url {
 }
 
 .bible-passage-title-btn:hover {
-  background: var(--accent-bg);
-  color: var(--accent);
+  background: var(--accent);
+  color: var(--accent-contrast);
 }
 
+/* In em so it tracks the heading, and the reader's text-size setting with it, instead of being
+   pinned small: against the app's 21px mobile heading this is a ~15px solid triangle in the accent
+   where it was a ~10px one in --text-muted. */
 .bible-passage-title-caret {
   flex-shrink: 0;
-  font-size: 0.5em;
-  color: var(--text-muted);
+  font-size: 0.7em;
+  line-height: 1;
+  color: var(--accent);
 }
 
 .bible-passage-title-btn:hover .bible-passage-title-caret {
-  color: var(--accent);
+  color: var(--accent-contrast);
 }
 
 /* --- Reference picker: book -> chapter -> optional verse, opened from the chapter heading ---
