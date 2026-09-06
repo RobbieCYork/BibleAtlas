@@ -1603,8 +1603,9 @@ export default function BiblePanel({
           see ReferencePicker. They cost a permanent row of every phone screen for a tap that happens
           once a session, and the heading below already says what they said.
 
-          The reading-progress stat that used to sit here is now the last item of the toolbar row
-          below, in its compact form — see .bible-chapters-read. */}
+          The reading-progress stat that used to sit here now lives under the chapter heading,
+          immediately above the passage — see .bible-chapters-read. It spent a few hours in the
+          toolbar row below as a mark and a number; that was too small to read on a phone. */}
 
       <div className="bible-toolbar">
         <select
@@ -1695,30 +1696,6 @@ export default function BiblePanel({
             onEnded={handleAudioEnded}
             onError={handleAudioError}
           />
-        )}
-        {/* The month's reading, as a mark and a number rather than the sentence it used to spell out
-            across a line of its own. That line cost 28px of scripture on every phone screen to say
-            something the reader had already read; here it costs no height at all, because this row
-            exists anyway for the translation select.
-
-            role="img" + aria-label is what keeps this from being a bare glyph and a digit: it prunes
-            the mark and the number out of the accessibility tree and hands over the original
-            sentence whole, so a screen reader hears exactly what the line used to say. `title` gives
-            the same sentence to anything with a pointer. Touch gets neither — a tap-to-reveal would
-            need a tooltip layer this caption does not justify.
-
-            LAST in the row on purpose. Leading, it reads as a third control at the head of a row of
-            controls; trailing and muted, it reads as the caption it is. And it must never take width
-            from the select — see .bible-toolbar, which has none to give at 375px. */}
-        {chaptersThisMonth !== null && (
-          <p
-            className="bible-chapters-read no-print"
-            role="img"
-            aria-label={`${chaptersThisMonth} ${chaptersThisMonth === 1 ? "chapter" : "chapters"} read this month`}
-            title={`${chaptersThisMonth} ${chaptersThisMonth === 1 ? "chapter" : "chapters"} read this month`}
-          >
-            <Icon name="bible" inline /> {chaptersThisMonth}
-          </p>
         )}
       </div>
 
@@ -1872,6 +1849,31 @@ export default function BiblePanel({
               ›
             </button>
           </div>
+
+          {/* Under the chapter heading, in the sentence it has always been — the owner's call, made
+              after seeing it as a mark and a number in the toolbar and finding that unreadable. It
+              is a line of prose about the reader's own month, so it is read, not scanned, and
+              shrinking it to fit somewhere cheaper was the wrong trade. The space it takes is spent
+              deliberately; do not try to win it back with a smaller size, a lighter colour or a
+              shorter string.
+
+              What it does NOT do is stack a third gap between the heading and the first verse: it
+              pulls up into the margin the heading already had and hands its own back to the passage,
+              so the whole move costs the line of text and nothing else. See .bible-chapters-read.
+
+              Inside the passage block on purpose — it sits under a chapter heading, so it appears
+              where there is a chapter to head. The intro, the plans view and search results do not
+              get an orphaned reading stat with nothing above it. */}
+          {/* No aria-label and no role: the sentence is on screen now, so it is already the
+              accessible name, and Icon marks itself aria-hidden when it has no title of its own.
+              The compact form needed role="img" precisely because a mark and a digit did not say
+              anything on their own. */}
+          {chaptersThisMonth !== null && (
+            <p className="bible-chapters-read no-print">
+              <Icon name="bible" inline /> {chaptersThisMonth}{" "}
+              {chaptersThisMonth === 1 ? "chapter" : "chapters"} read this month
+            </p>
+          )}
 
           <div className="bible-verses">
             {passage.verses.map((v) => {
