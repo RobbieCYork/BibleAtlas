@@ -559,8 +559,17 @@ function App() {
       .from("profiles")
       .select("display_name")
       .eq("id", session.user.id)
-      .single()
-      .then(({ data }) => {
+      .maybeSingle()
+      .then(({ data, error }) => {
+        // "The lookup failed" and "this account has no display name" are different facts, and
+        // `.single()` collapsed them into one. It answers a row it cannot read with data:null AND
+        // an error — verified against the live project: a row that isn't there comes back HTTP 406,
+        // PGRST116 — and this only ever destructured `data`. So a dropped request, an offline
+        // reload or an RLS refusal all read here as "no name" and put a reader who set one long ago
+        // behind a prompt they have already answered. maybeSingle() keeps the two apart: 0 rows is
+        // data:null with error:null, a failed request has error set. On a failed request, leave the
+        // app alone rather than blocking it on a guess.
+        if (error) return;
         setNeedsDisplayName(!(data as { display_name: string | null } | null)?.display_name);
       });
   }, [session]);

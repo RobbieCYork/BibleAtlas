@@ -5980,6 +5980,16 @@ a.profile-links-url {
   line-height: 1.4;
 }
 
+/* The failure message, which until now was not reaching the reader as one. `.auth-error` sets
+   `color: var(--danger)` at specificity (0,1,0) and loses to `.display-name-gate-card p` (0,1,1)
+   directly above, so every error either gate raised — a taken name, a refused save — came out in
+   the same muted brown as the card's own explanatory copy and read as more instructions. Measured
+   in Chrome 148 at 375px before this rule: rgb(110, 95, 72), i.e. --text-muted, not --danger.
+   Applies to ResetPasswordGate too; it renders into this same card. */
+.display-name-gate-card p.auth-error {
+  color: var(--danger);
+}
+
 .display-name-gate-card form {
   display: flex;
   gap: 8px;
@@ -6008,6 +6018,33 @@ a.profile-links-url {
 }
 
 .display-name-gate-card button:disabled {
+  opacity: 0.6;
+  cursor: default;
+}
+
+/* The way out of a gate that cannot be satisfied — a save that keeps failing offline, or a policy
+   refusal — because this overlay is fixed, full-screen and has nothing else on it. Deliberately
+   quiet: it is an escape hatch, not an alternative to setting a name, and it must not read as a
+   second offer beside Continue.
+
+   BOTH SELECTORS NEED THE CARD IN FRONT OF THEM. `.display-name-gate-card button` above is a class
+   plus a type, so a bare `.display-name-gate-escape` loses to it on specificity and the escape comes
+   out looking like the accent-filled primary button. */
+.display-name-gate-card .display-name-gate-escape {
+  display: block;
+  width: 100%;
+  margin: 14px 0 0;
+  border: none;
+  background: none;
+  color: var(--text-muted);
+  padding: 6px 0 0;
+  font-size: 13px;
+  font-weight: 400;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.display-name-gate-card .display-name-gate-escape:disabled {
   opacity: 0.6;
   cursor: default;
 }
