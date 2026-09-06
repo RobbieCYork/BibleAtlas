@@ -705,10 +705,15 @@ person	job	job	panel	59
 person	job	job	prose	29
 person	job	job	reader	59
 person	johannes gutenberg	johannes-gutenberg	prose	1
-person	john	john-the-apostle	reader	24
-person	john	john-the-baptist	panel	117
-person	john	john-the-baptist	prose	238
-person	john	john-the-baptist	reader	93
+person	john	john-mark	reader	2
+person	john	john-the-apostle	prose	29
+person	john	john-the-apostle	reader	30
+person	john	john-the-baptist	panel	114
+person	john	john-the-baptist	prose	101
+person	john	john-the-baptist	reader	81
+person	john	john-wesley	prose	3
+person	john	pope-john-paul-ii	prose	3
+person	john	pope-john-xxiii	prose	1
 person	john calvin	john-calvin	prose	1
 person	john chrysostom	john-chrysostom	prose	1
 person	john knox	john-knox	prose	1
@@ -719,7 +724,11 @@ person	john the baptist	john-the-baptist	prose	31
 person	john the baptizer	john-the-baptist	panel	15
 person	john the baptizer	john-the-baptist	reader	15
 person	john wesley	john-wesley	prose	4
+person	john who was called mark	john-mark	panel	2
+person	john who was called mark	john-mark	reader	2
 person	john wycliffe	john-wycliffe	prose	3
+person	john, who was called mark	john-mark	panel	1
+person	john, who was called mark	john-mark	reader	1
 person	jonathan edwards	jonathan-edwards	prose	2
 person	joram	joram-king-of-israel	reader	15
 person	joram	joram-king-of-judah	panel	25
@@ -784,9 +793,9 @@ person	malchus	malchus	reader	1
 person	manasseh	manasseh-king-of-judah	panel	148
 person	manasseh	manasseh-king-of-judah	prose	24
 person	manasseh	manasseh-king-of-judah	reader	32
-person	mark	john-mark	panel	12
+person	mark	john-mark	panel	9
 person	mark	john-mark	prose	45
-person	mark	john-mark	reader	8
+person	mark	john-mark	reader	5
 person	mark antony	mark-antony	prose	7
 person	martha	martha-of-bethany	panel	13
 person	martha	martha-of-bethany	prose	8

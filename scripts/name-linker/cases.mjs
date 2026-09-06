@@ -204,10 +204,121 @@ export const CASES = [
     why: "Same: sentence-initial and genuine." },
 
   // ─────────────────────────────────────────────────────────────────────────────────────────
+  // The John cluster. Five men share the bare name in the New Testament and the app had audited
+  // none of them: 132 occurrences in the WEB text and 238 in our own articles, all resolving to
+  // John the Baptist except in Acts, where a blanket book override sent all 24 to the Apostle.
+  // The reported fault was Matthew 17:1.
+  // ─────────────────────────────────────────────────────────────────────────────────────────
+  { ref: "Matthew 17:1", surface: "John", expect: "john-the-apostle", status: "guard",
+    why: "THE reported fault. 'Peter, James, and John his brother' at the Transfiguration is the " +
+         "son of Zebedee. It pointed at John the Baptist, who is not James's brother and is dead " +
+         "by Matthew 14. Fixed by VERSE_NAME_OVERRIDES; the Gospels get no book override because " +
+         "the Baptist is right in 64 of their 83 mentions." },
+  { ref: "Matthew 4:21", surface: "John", expect: "john-the-apostle", status: "guard",
+    why: "'James the son of Zebedee, and John his brother' — the calling. Same fault, same fix." },
+  { ref: "Mark 3:17", surface: "John", expect: "john-the-apostle", status: "guard",
+    why: "'John, the brother of James' — the Boanerges naming. The verse states the relationship." },
+  { ref: "Luke 22:8", surface: "John", expect: "john-the-apostle", status: "guard",
+    why: "'He sent Peter and John' to prepare the Passover — the Baptist has been dead since 9:9." },
+  { ref: "Matthew 3:13", surface: "John", expect: "john-the-baptist", status: "guard",
+    why: "The other 96. Jesus comes to John to be baptized. Guards the global default from being " +
+         "moved wholesale to the Apostle — he owns 30 of the 132, not the majority." },
+  { ref: "Acts 3:1", surface: "John", expect: "john-the-apostle", status: "guard",
+    why: "'Peter and John were going up into the temple' — the Acts book override, correct at " +
+         "nine of Acts' 24 occurrences." },
+  { ref: "Acts 19:4", surface: "John", expect: "john-the-baptist", status: "guard",
+    why: "'John indeed baptized with the baptism of repentance' — one of nine Baptist " +
+         "retrospectives in Acts that the book override sent to the Apostle. Was wrong." },
+  { ref: "Acts 13:13", surface: "John", expect: "john-mark", status: "guard",
+    why: "'John departed from them and returned to Jerusalem' — the desertion at Perga that " +
+         "splits Paul and Barnabas two chapters later. Rendered as John the Apostle." },
+  { ref: "Acts 12:12", surface: "John", expect: "john-mark",
+    expectSurface: "John who was called Mark", status: "guard",
+    why: "Matched as one phrase rather than as a bare 'John' plus a separate 'Mark' — the " +
+         "wording is registered on john-mark in people.ts, so it works on every surface and in " +
+         "every translation, not only where a verse override can reach." },
+  { ref: "Acts 15:37", surface: "John", expect: "john-mark",
+    expectSurface: "John, who was called Mark", status: "guard",
+    why: "Same phrase, comma'd — WEB punctuates 15:37 differently from 12:12 and 12:25, which is " +
+         "what matchNames exists for. KJV reads 'whose surname was Mark' and is registered too." },
+  { ref: "Acts 4:6", surface: "John", expect: null, status: "guard",
+    why: "The John of the high-priestly family, listed beside Annas and Caiaphas. A real, " +
+         "distinct man the app has no entry for, so no link — the same interim this file uses for " +
+         "Simon the tanner. Whether to link at all here is §7.12, still open with Robbie." },
+  { ref: "Galatians 2:9", surface: "John", expect: "john-the-apostle", status: "guard",
+    why: "The 'pillars' — James, Cephas and John. Galatians' only occurrence, so a book override." },
+  { ref: "Acts 12:2", surface: "John", expect: "john-the-apostle", status: "guard",
+    why: "'James, the brother of John.' Already correct before this batch; guards it." },
+
+  // Prose cases — the article surface, which is where the John fault was largest (238 links, all
+  // of them the Baptist) and which no named case could reach until `text` cases existed.
+  { text: "By this point the Gospel of John records that the chief priests and Pharisees had " +
+          "already resolved that he must be put to death",
+    surface: "John", owner: "jesus-of-nazareth", expect: null, status: "guard",
+    why: "A reference to the BOOK must not link to a person at all. On Jesus's own page this " +
+         "said the Gospel of John was written by John the Baptist. NAME_CONTEXT_SUPPRESSIONS." },
+  { text: "1 John was written to reassure believers of their faith",
+    surface: "John", expect: null, status: "guard",
+    why: "The epistle, in its own book intro. No owner — BookIntroView passes no record id, so " +
+         "OWNER_NAME_OVERRIDES cannot reach a book intro and only the context rule can." },
+  { text: "John's Gospel records that after Jesus raised Lazarus, the chief priests and Pharisees " +
+          "convened the council",
+    surface: "John", owner: "caiaphas", expect: null, status: "guard",
+    why: "The possessive naming the book. Suppressing it takes NO position on who wrote it, " +
+         "which is the point — that question is flagged below." },
+  { text: "a small fragment containing a few verses from John chapter 18",
+    surface: "John", expect: null, status: "guard",
+    why: "'John chapter 18' — a citation, not a man." },
+  { text: "Antipas, wary of John's popularity, imprisoned him instead",
+    surface: "John", owner: "herod-antipas", expect: "john-the-baptist", status: "guard",
+    why: "The counterweight to the three cases above, and the reason the possessive rule tests " +
+         "for a following 'Gospel' and nothing else. \"John's popularity\", \"John's disciples\" " +
+         "and \"John's baptism\" are the Baptist himself and must keep their links. Widening the " +
+         "rule to any possessive breaks this." },
+  { text: "Peter was born Simon, son of John (or Jonah), and worked as a fisherman",
+    surface: "John", owner: "simon-peter", expect: null, status: "guard",
+    why: "Peter's FATHER — a different man with no entry. It is also why simon-peter could not " +
+         "simply be handed to the Apostle by OWNER_NAME_OVERRIDES: the page names two Johns and " +
+         "an owner rule gives one answer. Reaches ASV's John 1:42 and 21:15-17 too, which read " +
+         "'son of John' where WEB reads 'son of Jonah'." },
+  { text: "a real historical split between the Hasmonean ruler John Hyrcanus and the Pharisees",
+    surface: "John", owner: "sadducees", expect: null, status: "guard",
+    why: "The Hasmonean, no entry — and on a page that also says 'arrest Peter and John', so " +
+         "again an owner rule alone could not separate them." },
+  { text: "John was the son of a fisherman named Zebedee",
+    surface: "John", owner: "john-the-apostle", expect: null, status: "guard",
+    why: "On John the Apostle's OWN page every 'John' linked to John the Baptist — the single " +
+         "most visible instance of this fault. Now handed to the self-link exclusion." },
+  { text: "While John became the movement's chief organizer and preacher, Charles became its poet",
+    surface: "John", owner: "charles-wesley", expect: "john-wesley", status: "guard",
+    why: "Not a biblical John at all. Charles Wesley's brother, on Charles's page, linked to " +
+         "John the Baptist. The app has a john-wesley entry." },
+  { text: "James and John wanted to call down fire on a Samaritan village",
+    surface: "John", owner: "james-son-of-zebedee", expect: "john-the-apostle", status: "guard",
+    why: "The article surface repointed by OWNER_NAME_OVERRIDES, which is the only correction " +
+         "that reaches it." },
+
+  // ─────────────────────────────────────────────────────────────────────────────────────────
   // Flagged — §7 of the scoping document. These record what the app does TODAY, so that a change
   // aimed at something else cannot quietly take a confessional position on Robbie's behalf. If
   // one of these fails, the change that caused it is out of bounds until Robbie has ruled.
   // ─────────────────────────────────────────────────────────────────────────────────────────
+  { ref: "Revelation 1:9", surface: "John", expect: "john-the-baptist", status: "flagged",
+    why: "NEW, and the one flagged case that is wrong under EVERY view — the Baptist died some " +
+         "sixty years before Revelation. But whether the John of Patmos is the Apostle, John the " +
+         "Elder/Presbyter, or an unknown third John is a live scholarly question, and the app " +
+         "must not settle it as a side effect of a linking pass. Robbie's ruling decides between " +
+         "john-the-apostle and no link. Also Revelation 1:1, 1:4 and 22:8." },
+  { ref: "Revelation 1:1", surface: "John", expect: "john-the-baptist", status: "flagged",
+    why: "Same question, in the book's opening self-identification." },
+  { text: "John reports that because many Jews were believing in Jesus on account of Lazarus",
+    surface: "John", owner: "lazarus-of-bethany", expect: "john-the-baptist", status: "flagged",
+    why: "NEW. The Fourth Gospel's narrator referred to as a person — 'John reports', 'John " +
+         "notes', 'John tells us'. About 60 such links remain across our articles and they are " +
+         "wrong under every view, but naming the right man IS the authorship question. " +
+         "Deliberately NOT covered by the book-reference rule, which only removes links on " +
+         "phrases naming a book. Robbie's ruling: john-the-apostle, or suppress as we do for the " +
+         "contested Nathan at 1 Kings 4:5." },
   { ref: "Isaiah 9:6", surface: "Counselor", expect: "holy-spirit", status: "flagged",
     why: "§7.3 — 'Wonderful, Counselor'. Most Christian readings take this as a title of the " +
          "Messiah; the app currently says Holy Spirit. Changing it is a doctrinal statement." },

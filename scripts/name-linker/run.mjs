@@ -119,17 +119,33 @@ function occurrenceOffset(text, surface, n) {
 }
 
 for (const c of CASES) {
-  const { book, chapter, verse } = parseRef(c.ref);
-  const v = byRef.get(c.ref);
+  // A case is normally keyed to a Bible verse. `text` instead of `ref` makes it a PROSE case: a
+  // literal sentence, run the way LinkedVerseText runs one — no book, no chapter, no verse, only
+  // `owner`. Prose cases exist because the article surface could not be pinned by a named case at
+  // all until they did. The snapshot covers prose, but only by a hash of the whole block, so
+  // editing a paragraph re-keys every link in it and the assertion silently disappears with it
+  // (see the tally.mjs note in README.md). A prose case survives a rewrite of the article it came
+  // from, which is exactly what you want from a rule like "the Gospel of John is not a person".
+  const isProse = typeof c.text === "string";
+  const { book, chapter, verse } = isProse ? {} : parseRef(c.ref);
   const n = c.occurrence ?? 1;
-  const label = `${c.ref} ${JSON.stringify(c.surface)}${n > 1 ? `#${n}` : ""} ` +
-    `[${c.path ?? "reader"}${c.owner ? ` on ${c.owner}` : ""}]`;
-  if (!v) { failures.push(`${label} — verse is not in the corpus`); fail++; continue; }
+  const label = isProse
+    ? `prose ${JSON.stringify(c.text.length > 52 ? c.text.slice(0, 49) + "…" : c.text)} ` +
+      `${JSON.stringify(c.surface)}${n > 1 ? `#${n}` : ""} [prose${c.owner ? ` on ${c.owner}` : ""}]`
+    : `${c.ref} ${JSON.stringify(c.surface)}${n > 1 ? `#${n}` : ""} ` +
+      `[${c.path ?? "reader"}${c.owner ? ` on ${c.owner}` : ""}]`;
 
-  const text = stripMarkup(v.text);
+  let text;
+  if (isProse) {
+    text = c.text;
+  } else {
+    const v = byRef.get(c.ref);
+    if (!v) { failures.push(`${label} — verse is not in the corpus`); fail++; continue; }
+    text = stripMarkup(v.text);
+  }
   const at = occurrenceOffset(text, c.surface, n);
   if (at === null) {
-    failures.push(`${label} — that occurrence is not in the WEB text of the verse.\n` +
+    failures.push(`${label} — that occurrence is not in the ${isProse ? "case's own text" : "WEB text of the verse"}.\n` +
       `      ${DIM}${text}${OFF}`);
     fail++; continue;
   }
@@ -138,7 +154,7 @@ for (const c of CASES) {
   // It is the only context LinkedVerseText has (no book, no chapter, no verse), and it is what
   // OWNER_NAME_OVERRIDES reads, so a panel case can pin it. Absent, panel cases pass nothing, as
   // they always have.
-  const ctx = c.path === "panel" ? [c.owner] : [undefined, book, chapter, verse];
+  const ctx = isProse || c.path === "panel" ? [c.owner] : [undefined, book, chapter, verse];
   // The annotation COVERING the occurrence, not the one starting on it: a longer registered key
   // ("the Counselor", "James the son of Alphaeus") legitimately begins earlier and swallows it.
   const ann = computeLinkAnnotations(text, ...ctx)
