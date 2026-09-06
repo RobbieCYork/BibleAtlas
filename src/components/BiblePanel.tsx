@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import VerseText from "./VerseText";
 import type { ClippedHighlight } from "./VerseText";
 import TagPicker from "./TagPicker";
-import InlinePicker, { type PickerHandle } from "./InlinePicker";
+import ReferencePicker from "./ReferencePicker";
 import BookIntroView from "./BookIntroView";
 import ReadingPlansView from "./ReadingPlansView";
 import { BOOKS } from "../data/bibleBooks";
@@ -253,8 +253,8 @@ export default function BiblePanel({
   /** Completed day numbers per plan id — localStorage for guests, Supabase (with a silent
    * localStorage fallback while the table doesn't exist) once logged in. */
   const [planProgress, setPlanProgress] = useState<Record<string, number[]>>({});
-  const chapterPickerRef = useRef<PickerHandle>(null);
-  const versePickerRef = useRef<PickerHandle>(null);
+  /** Whether the book/chapter/verse sheet behind the chapter heading is open. */
+  const [referencePickerOpen, setReferencePickerOpen] = useState(false);
 
   const [searchResults, setSearchResults] = useState<SearchHit[] | null>(null);
   const [searching, setSearching] = useState(false);
@@ -1329,35 +1329,28 @@ export default function BiblePanel({
     }
   };
 
-  /** Picking a book jumps straight to chapter 1 (existing behavior) and immediately opens the
-   * chapter picker so the user can pick a different chapter right away without an extra tap —
-   * setting currentBook synchronously here (loadChapter will redundantly set it again once its
-   * fetch resolves) is what lets the chapter picker's option list be correct before that fetch
-   * finishes, instead of still showing the previous book's chapter count. */
-  const handleBookSelect = (bookName: string) => {
-    if (!bookName) return;
+  /** The reference picker's chapter step. Setting currentBook synchronously (loadChapter sets it
+   * again once its fetch resolves) is what keeps the heading and the sheet agreeing about which
+   * book we're in while the fetch is still in flight. Also clears any search results, so choosing a
+   * passage from the sheet always lands the reader on that passage rather than back in a result
+   * list that no longer describes what's on screen. */
+  const handlePickChapter = async (bookName: string, chapterNum: number) => {
     setCurrentBook(bookName);
     setShowIntro(false);
     setShowPlans(false);
-    loadChapter(bookName, 1, translation);
-    chapterPickerRef.current?.open();
+    setSearchResults(null);
+    return loadChapter(bookName, chapterNum, translation);
   };
 
-  /** Picking "Introduction" shows the book intro instead of loading a chapter. Picking a real
-   * chapter loads it and, once loaded, opens the verse picker (chained the same way as the book
-   * picker above) — this has to wait for the fetch since verse counts aren't known until then. */
-  const handleChapterSelect = async (value: string) => {
-    if (value === "intro") {
-      setShowIntro(true);
-      setShowPlans(false);
-      return;
-    }
-    if (!currentBook) return;
-    setShowIntro(false);
+  /** The sheet's "Introduction to <book>" entry — shows the book intro instead of loading a chapter. */
+  const handlePickIntro = (bookName: string) => {
+    setCurrentBook(bookName);
+    setShowIntro(true);
     setShowPlans(false);
-    const ok = await loadChapter(currentBook, Number(value), translation);
-    if (ok) versePickerRef.current?.open();
+    setSearchResults(null);
   };
+
+  const openReferencePicker = () => setReferencePickerOpen(true);
 
   const handleIntroJumpToChapter = async (chapter: number, verse?: number) => {
     if (!currentBook) return;
@@ -1475,8 +1468,6 @@ export default function BiblePanel({
     }
   };
 
-  const currentBookInfo = currentBook ? BOOKS.find((b) => b.name === currentBook) : undefined;
-
   return (
     <div
       className={`bible-panel ${expand ? "panel-expand" : ""} ${hidden ? "bible-panel-hidden" : ""}`}
@@ -1484,49 +1475,12 @@ export default function BiblePanel({
     >
       <div className="bible-panel-scroll" ref={scrollContainerRef}>
 
-      <div className="bible-nav">
-        <InlinePicker
-          ariaLabel="Book"
-          placeholder="Book…"
-          value={currentBook ?? ""}
-          onSelect={handleBookSelect}
-          options={BOOKS.map((b) => ({ value: b.name, label: b.name }))}
-          className="bible-nav-picker"
-        />
-        <InlinePicker
-          ref={chapterPickerRef}
-          ariaLabel="Chapter"
-          placeholder="Ch."
-          value={showIntro ? "intro" : currentChapter !== null ? String(currentChapter) : ""}
-          onSelect={handleChapterSelect}
-          disabled={!currentBookInfo}
-          className="bible-nav-picker bible-nav-picker-narrow"
-          options={
-            currentBookInfo
-              ? [
-                  { value: "intro", label: "Introduction" },
-                  ...Array.from({ length: currentBookInfo.chapters }, (_, i) => ({
-                    value: String(i + 1),
-                    label: String(i + 1),
-                  })),
-                ]
-              : []
-          }
-        />
-        <InlinePicker
-          ref={versePickerRef}
-          ariaLabel="Jump to verse"
-          placeholder="Verse…"
-          value=""
-          onSelect={(v) => handleVerseJump(Number(v))}
-          disabled={!passage}
-          className="bible-nav-picker bible-nav-picker-narrow"
-          options={passage?.verses.map((v) => ({ value: String(v.verse), label: String(v.verse) })) ?? []}
-        />
-      </div>
+      {/* The book/chapter/verse pickers that used to sit here are now behind the chapter heading —
+          see ReferencePicker. They cost a permanent row of every phone screen for a tap that happens
+          once a session, and the heading below already says what they said.
 
-      {/* Sits directly under the book/chapter pickers, where the reader's eye already is when they
-          arrive at a chapter — the same figure the profile grid shows, so the two cannot disagree. */}
+          The reading-progress line stays: it is a stat, not navigation, and the profile grid shows
+          the same figure, so the two cannot disagree. */}
       {chaptersThisMonth !== null && (
         <p className="bible-minutes-this-month no-print">
           <Icon name="bible" inline /> {chaptersThisMonth} {chaptersThisMonth === 1 ? "chapter" : "chapters"} read this month
@@ -1609,8 +1563,14 @@ export default function BiblePanel({
               <p className="brand-tagline">God&rsquo;s Word. Every day.</p>
             </div>
             <p className="bible-welcome-title">Select a book to start reading</p>
+            {/* "above" used to point at the picker row this replaced. With nothing above, the
+                welcome screen needs its own way into the sheet — a reader with no book selected has
+                no chapter heading to tap yet. */}
+            <button type="button" className="bible-welcome-choose" onClick={openReferencePicker}>
+              Choose a book
+            </button>
             <p className="bible-welcome-text">
-              Pick a book and chapter above — places and people in the text link to the interactive map and their full histories.
+              Places and people in the text link to the interactive map and their full histories.
             </p>
             <div className="bible-welcome-plans">
               <p className="bible-welcome-plans-title">Or follow a guided reading plan</p>
@@ -1645,6 +1605,9 @@ export default function BiblePanel({
         <BookIntroView
           book={currentBook}
           onJumpToChapter={handleIntroJumpToChapter}
+          /* The intro's own heading opens the same sheet, so this surface isn't a dead end now that
+             the picker row above it is gone. */
+          onChangePassage={openReferencePicker}
           onBack={onBookIntroBack}
           onSelectLocation={onSelectLocation}
           onSelectPoi={onSelectPoi}
@@ -1689,7 +1652,24 @@ export default function BiblePanel({
             >
               ‹
             </button>
-            <h4>{passage.reference}</h4>
+            {/* The heading IS the navigation now — it already names the passage, so it costs no row
+                of its own. The ‹ › arrows either side stay: they're the fast path between adjacent
+                chapters and the sheet would be three taps for the same thing. */}
+            <h4 className="bible-passage-title">
+              <button
+                type="button"
+                className="bible-passage-title-btn"
+                onClick={openReferencePicker}
+                aria-haspopup="dialog"
+                aria-expanded={referencePickerOpen}
+                aria-label={`${passage.reference} — choose a different book, chapter or verse`}
+              >
+                <span>{passage.reference}</span>
+                <span className="bible-passage-title-caret" aria-hidden="true">
+                  ▾
+                </span>
+              </button>
+            </h4>
             <button
               type="button"
               className="bible-chapter-nav-small"
@@ -1815,6 +1795,20 @@ export default function BiblePanel({
         </div>
       )}
       </div>
+
+      {/* A sibling of the scroll container, not a child of it — same reason the verse-action sheet
+          is (see .bible-panel-scroll in App.css): anchored to the panel's visible box so it stays
+          put instead of scrolling away with the passage underneath it. */}
+      <ReferencePicker
+        open={referencePickerOpen}
+        currentBook={currentBook}
+        currentChapter={showIntro ? null : currentChapter}
+        verses={passage?.verses.map((v) => v.verse) ?? []}
+        onClose={() => setReferencePickerOpen(false)}
+        onPickIntro={handlePickIntro}
+        onPickChapter={handlePickChapter}
+        onPickVerse={handleVerseJump}
+      />
 
       {shareCardSpec && (
         <ShareCardModal

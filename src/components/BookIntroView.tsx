@@ -9,6 +9,11 @@ interface BookIntroViewProps {
    * (its only entry point today) — renders a "Back to Timeline" affordance that restores the
    * Timeline view the reader left, via App's detailsHistory back-trail (see goBackInDetails). */
   onBack?: () => void;
+  /** Opens the reference picker. Set from BiblePanel, where the intro is one of the surfaces the
+   * picker can land on: with the book/chapter dropdown row gone, this heading is the only way off
+   * an introduction other than the back trail, and a reader who arrived here from the Timeline may
+   * not have one. Left optional so other callers can render the intro without a picker to open. */
+  onChangePassage?: () => void;
   /** Same auto-linking callbacks PersonPanel/TopicPanel/TimelineEventPanel already use — book intro
    * prose (e.g. Genesis's mentions Abraham, Moses, Egypt) links the same way theirs does. */
   onSelectLocation: (id: string) => void;
@@ -17,9 +22,31 @@ interface BookIntroViewProps {
   onSelectTopic: (id: string) => void;
 }
 
-export default function BookIntroView({ book, onJumpToChapter, onBack, onSelectLocation, onSelectPoi, onSelectPerson, onSelectTopic }: BookIntroViewProps) {
+export default function BookIntroView({ book, onJumpToChapter, onBack, onChangePassage, onSelectLocation, onSelectPoi, onSelectPerson, onSelectTopic }: BookIntroViewProps) {
   const linkHandlers = { onSelectLocation, onSelectPoi, onSelectPerson, onSelectTopic };
   const intro = bookIntros.find((b) => b.book === book);
+
+  /** The intro's heading, doubling as the reference picker's trigger when there is one — the same
+   * control the chapter heading uses, so the two surfaces open the picker the same way. */
+  const heading = (text: string) =>
+    onChangePassage ? (
+      <h4 className="bible-passage-title">
+        <button
+          type="button"
+          className="bible-passage-title-btn"
+          onClick={onChangePassage}
+          aria-haspopup="dialog"
+          aria-label={`${text} — choose a different book or chapter`}
+        >
+          <span>{text}</span>
+          <span className="bible-passage-title-caret" aria-hidden="true">
+            ▾
+          </span>
+        </button>
+      </h4>
+    ) : (
+      <h4>{text}</h4>
+    );
 
   if (!intro) {
     return (
@@ -29,7 +56,7 @@ export default function BookIntroView({ book, onJumpToChapter, onBack, onSelectL
             <BackButton onClick={onBack} label="Back to Timeline" />
           </div>
         )}
-        <h4>{book} — Introduction</h4>
+        {heading(`${book} — Introduction`)}
         <p className="bible-status">No introduction available for this book yet.</p>
       </div>
     );
@@ -42,7 +69,7 @@ export default function BookIntroView({ book, onJumpToChapter, onBack, onSelectL
           <BackButton onClick={onBack} label="Back to Timeline" />
         </div>
       )}
-      <h4>{intro.book} — Introduction</h4>
+      {heading(`${intro.book} — Introduction`)}
 
       <div className="book-intro-facts">
         <div className="book-intro-fact">

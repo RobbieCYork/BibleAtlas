@@ -2571,14 +2571,13 @@ a.profile-links-url {
   white-space: nowrap;
 }
 
-/* --- Book / chapter / verse navigation --- */
-
-.bible-nav {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 6px;
-  margin-bottom: 8px;
-}
+/* --- Book / chapter / verse navigation ---
+ * The row of three side-by-side dropdowns (Book / Ch. / Verse) that used to live here is gone. It
+ * held a permanent ~46px band across the top of every phone screen to serve a tap most readers make
+ * once a session, directly above a chapter heading that already said the same thing. The heading is
+ * the control now — see .bible-passage-title-btn and .ref-picker below.
+ *
+ * .bible-nav-select survives the removal because MyNotesPanel's two filter selects borrow it. */
 
 .bible-nav-select {
   flex: 2;
@@ -2595,92 +2594,272 @@ a.profile-links-url {
   flex: 1;
 }
 
-/* --- Inline picker (custom dropdown standing in for a native <select> — see InlinePicker.tsx for
-   why: it lets a selection here open the NEXT picker in a chain, e.g. Book -> Chapter -> Verse) --- */
+/* --- The chapter heading, doubling as the reference picker's trigger ---
+ * Deliberately not styled as a button at rest: it has to keep reading as the passage's title, which
+ * is its first job. The caret is the only permanent hint that it does anything. */
 
-.inline-picker {
-  position: relative;
+.bible-passage-title {
   min-width: 0;
 }
 
-.bible-nav-picker {
-  flex: 2;
-}
-
-.bible-nav-picker-narrow {
-  flex: 1;
-}
-
-.inline-picker-trigger {
-  width: 100%;
-  display: flex;
+.bible-passage-title-btn {
+  display: inline-flex;
   align-items: center;
-  justify-content: space-between;
   gap: 6px;
-  padding: 8px 8px;
-  border: 1px solid var(--border);
+  max-width: 100%;
+  padding: 2px 8px;
+  border: none;
+  background: none;
   border-radius: 8px;
-  font-size: 13px;
-  background: var(--surface-sunken);
-  color: var(--text);
+  color: inherit;
+  font: inherit;
   cursor: pointer;
-  text-align: left;
 }
 
-.inline-picker-trigger:disabled {
-  opacity: 0.5;
-  cursor: default;
-}
-
-.inline-picker-trigger span:first-child {
+.bible-passage-title-btn > span:first-child {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
 }
 
-.inline-picker-placeholder {
-  color: var(--text-muted);
+.bible-passage-title-btn:hover {
+  background: var(--accent-bg);
+  color: var(--accent);
 }
 
-.inline-picker-caret {
+.bible-passage-title-caret {
   flex-shrink: 0;
-  font-size: 10px;
+  font-size: 0.5em;
   color: var(--text-muted);
 }
 
-.inline-picker-list {
+.bible-passage-title-btn:hover .bible-passage-title-caret {
+  color: var(--accent);
+}
+
+/* --- Reference picker: book -> chapter -> optional verse, opened from the chapter heading ---
+ * Anchored to .bible-panel, not the viewport, for the same reason .verse-sheet is: it is a sibling
+ * of .bible-panel-scroll, so absolute positioning here measures the panel's visible box and the
+ * sheet stays pinned instead of scrolling away with the passage behind it. */
+
+.ref-picker-backdrop {
   position: absolute;
-  top: calc(100% + 4px);
+  inset: 0;
+  z-index: 44;
+  background: rgba(0, 0, 0, 0.4);
+}
+
+.ref-picker {
+  position: absolute;
   left: 0;
   right: 0;
-  z-index: 20;
-  max-height: 260px;
-  overflow-y: auto;
+  bottom: 0;
+  z-index: 45;
+  display: flex;
+  flex-direction: column;
+  max-height: 82%;
   background: var(--panel-bg);
-  border: 1px solid var(--border);
-  border-radius: 8px;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.18);
-  padding: 4px;
+  border-top: 1px solid var(--border);
+  border-radius: 16px 16px 0 0;
+  box-shadow: 0 -8px 24px rgba(0, 0, 0, 0.22);
 }
 
-.inline-picker-list li button {
-  display: block;
-  width: 100%;
-  text-align: left;
+.ref-picker-head {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
   padding: 8px 10px;
+  border-bottom: 1px solid var(--border);
+}
+
+.ref-picker-title {
+  flex: 1;
+  min-width: 0;
+  text-align: center;
+  font-weight: 600;
+  font-size: 15px;
+  color: var(--text-h);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.ref-picker-back,
+.ref-picker-close,
+.ref-picker-head-spacer {
+  flex-shrink: 0;
+  width: 34px;
+  height: 34px;
+}
+
+.ref-picker-back,
+.ref-picker-close {
+  display: flex;
+  align-items: center;
+  justify-content: center;
   border: none;
   background: none;
-  color: var(--text);
-  font-size: 13px;
-  border-radius: 6px;
+  border-radius: 50%;
+  color: var(--text-muted);
+  line-height: 1;
   cursor: pointer;
 }
 
-.inline-picker-list li button:hover {
-  background: var(--accent-bg);
+.ref-picker-back {
+  font-size: 24px;
 }
 
-.inline-picker-list li button.active {
+.ref-picker-close {
+  font-size: 15px;
+}
+
+.ref-picker-back:hover,
+.ref-picker-close:hover {
+  background: var(--accent-bg);
+  color: var(--accent);
+}
+
+.ref-picker-body {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  padding: 8px 12px calc(14px + env(safe-area-inset-bottom, 0px));
+}
+
+.ref-picker-section {
+  font-family: var(--sans);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: var(--tracking-label);
+  text-transform: uppercase;
+  color: var(--text-muted);
+  padding: 10px 6px 4px;
+}
+
+.ref-picker-books {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.ref-picker-book {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  width: 100%;
+  padding: 10px 8px;
+  border: none;
+  border-radius: 8px;
+  background: none;
+  color: var(--text);
+  font-size: 15px;
+  text-align: left;
+  cursor: pointer;
+}
+
+.ref-picker-book:hover {
+  background: var(--accent-bg);
+  color: var(--accent);
+}
+
+.ref-picker-book.is-current {
+  background: var(--accent);
+  color: var(--accent-contrast);
+}
+
+.ref-picker-book-count {
+  flex-shrink: 0;
+  font-size: 12px;
+  color: var(--text-muted);
+}
+
+.ref-picker-book.is-current .ref-picker-book-count {
+  color: inherit;
+  opacity: 0.85;
+}
+
+.ref-picker-intro {
+  display: block;
+  width: 100%;
+  margin: 6px 0 12px;
+  padding: 10px;
+  border: 1px dashed var(--border);
+  border-radius: 8px;
+  background: none;
+  color: var(--text-muted);
+  font-size: 13px;
+  cursor: pointer;
+}
+
+.ref-picker-intro:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+/* Chapters and verses share a grid: same shape, same target size, and the verse step is the chapter
+   step's own follow-on, so making them look different would only suggest they behave differently. */
+.ref-picker-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(46px, 1fr));
+  gap: 6px;
+}
+
+.ref-picker-cell {
+  min-height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--surface-sunken);
+  color: var(--text);
+  font-size: 15px;
+  cursor: pointer;
+}
+
+.ref-picker-cell:hover:not(:disabled) {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+.ref-picker-cell.is-current {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: var(--accent-contrast);
+}
+
+.ref-picker-cell.is-loading {
+  opacity: 0.55;
+}
+
+.ref-picker-cell:disabled {
+  cursor: default;
+}
+
+.ref-picker-hint {
+  font-size: 12px;
+  color: var(--text-muted);
+  margin-bottom: 10px;
+}
+
+.ref-picker-done {
+  display: block;
+  width: 100%;
+  margin-top: 14px;
+  padding: 11px;
+  border: 1px solid var(--accent);
+  border-radius: 8px;
+  background: var(--accent-bg);
+  color: var(--accent);
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.ref-picker-done:hover {
   background: var(--accent);
   color: var(--accent-contrast);
 }
@@ -2834,6 +3013,28 @@ a.profile-links-url {
   font-weight: 600;
   color: var(--text-h);
   margin-bottom: 6px;
+}
+
+/* The welcome screen's own way into the reference picker. It needs one: with no book loaded there is
+   no chapter heading on screen yet to tap. */
+.bible-welcome-choose {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin: 10px 0 12px;
+  padding: 10px 20px;
+  border: 1px solid var(--accent);
+  border-radius: 999px;
+  background: var(--accent);
+  color: var(--accent-contrast);
+  font-family: var(--sans);
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.bible-welcome-choose:hover {
+  filter: brightness(1.08);
 }
 
 .bible-welcome-text {
