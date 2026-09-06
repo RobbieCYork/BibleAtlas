@@ -845,7 +845,6 @@ person.controversies|pharisees|c49103835c	581	Gamaliel	gamaliel
 person.controversies|pharisees|c49103835c	591	Paul	paul-of-tarsus
 person.controversies|philip-the-evangelist|cba3ebee7a	98	Philip the Apostle	philip-the-apostle
 person.controversies|pontius-pilate|915eeeb725	94	Jesus	jesus-of-nazareth
-person.controversies|pope-john-paul-ii|fdc3737c13	94	Paul	paul-of-tarsus
 person.controversies|rebekah|2ca920ceb6	124	Esau	esau
 person.controversies|rebekah|2ca920ceb6	280	Jacob	jacob
 person.controversies|rebekah|2ca920ceb6	41	Isaac	isaac
@@ -2300,8 +2299,6 @@ person.lifeStory|pontius-pilate|43a7123e59	55	Jesus	jesus-of-nazareth
 person.lifeStory|pontius-pilate|43a7123e59	560	Caesar	tiberius-caesar
 person.lifeStory|pontius-pilate|43a7123e59	581	Jesus	jesus-of-nazareth
 person.lifeStory|pontius-pilate|460d1ce3d7	92	Tiberius	tiberius-caesar
-person.lifeStory|pope-john-paul-ii|06842ab9a0	14	Paul	paul-of-tarsus
-person.lifeStory|pope-john-paul-ii|2a6f1d412e	5	Paul	paul-of-tarsus
 person.lifeStory|pope-john-xxiii|fcf4df867f	196	Paul	paul-of-tarsus
 person.lifeStory|porcius-festus|197ad653f2	120	Paul	paul-of-tarsus
 person.lifeStory|porcius-festus|197ad653f2	189	Paul	paul-of-tarsus
@@ -4771,13 +4768,10 @@ timelineEvent.article|english-reformation-1534|bd5dc70d89	98	Thomas Cranmer	thom
 timelineEvent.article|execution-of-jan-hus-1415|74724d8b88	0	Jan Hus	jan-hus
 timelineEvent.article|execution-of-jan-hus-1415|74724d8b88	97	John Wycliffe	john-wycliffe
 timelineEvent.article|execution-of-jan-hus-1415|c43370c8dc	347	Martin Luther	martin-luther
-timelineEvent.article|fall-of-communism-poland-1989|12fe4bc70f	0	John	pope-john-paul-ii
-timelineEvent.article|fall-of-communism-poland-1989|12fe4bc70f	5	Paul	paul-of-tarsus
+timelineEvent.article|fall-of-communism-poland-1989|12fe4bc70f	0	John Paul II	pope-john-paul-ii
 timelineEvent.article|fall-of-communism-poland-1989|2f8b7e133f	23	Pope John Paul II	pope-john-paul-ii
-timelineEvent.article|fall-of-communism-poland-1989|5975c1d3b8	154	John	pope-john-paul-ii
-timelineEvent.article|fall-of-communism-poland-1989|5975c1d3b8	159	Paul	paul-of-tarsus
-timelineEvent.article|fall-of-communism-poland-1989|62630873e4	521	John	pope-john-paul-ii
-timelineEvent.article|fall-of-communism-poland-1989|62630873e4	526	Paul	paul-of-tarsus
+timelineEvent.article|fall-of-communism-poland-1989|5975c1d3b8	154	John Paul II	pope-john-paul-ii
+timelineEvent.article|fall-of-communism-poland-1989|62630873e4	521	John Paul II	pope-john-paul-ii
 timelineEvent.article|first-crusade-1095|f46e71583a	256	Peter	simon-peter
 timelineEvent.article|first-great-awakening-c1740|f14fb1e9e2	407	George Whitefield	george-whitefield
 timelineEvent.article|first-great-awakening-c1740|f14fb1e9e2	65	Jonathan Edwards	jonathan-edwards

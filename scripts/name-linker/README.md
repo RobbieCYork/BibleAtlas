@@ -42,8 +42,10 @@ snapshot. That is not the same thing: `prose-links.tsv` keys each row by a hash 
 so editing a paragraph re-keys every link in it and any assertion about them vanishes with the old
 hash rather than failing (see the `tally.mjs` note below). A prose case survives a rewrite of the
 article it was drawn from. Use one for any rule whose whole purpose is the article surface — the
-book-reference suppressions in `NAME_CONTEXT_SUPPRESSIONS` fire *only* there and are invisible to
-every reader-path case.
+book-reference suppressions in `NAME_CONTEXT_RULES` ("the Gospel of John", "1 John") fire *only*
+there, because Scripture never names its own books, and are invisible to every reader-path case.
+Not every rule in that table is article-only: the `"Peter and John"` rule in the same list resolves
+7 verses on both Scripture paths, so it is pinned by ordinary verse cases as well.
 
 **2. A whole-corpus snapshot** (`snapshot/*.tsv`), in three files:
 

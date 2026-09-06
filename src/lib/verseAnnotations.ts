@@ -373,13 +373,19 @@ const VERSE_NAME_OVERRIDES: Record<string, Record<string, Record<string, string 
   //     Robbie; suppression is the interim this file uses everywhere else (Simon the tanner, Mary
   //     at Acts 12:12, Judas at Matthew 13:55) and is not a new position.
   //
-  // NOT here, and deliberately: Revelation 1:1, 1:4, 1:9 and 22:8. The John who names himself there
-  // is certainly not the Baptist, who died some sixty years earlier — but whether he is the Apostle,
-  // John the Elder/Presbyter, or an otherwise unknown John of Patmos is a live scholarly question,
-  // and the app must not settle it as a side effect of a linking pass. Those four are recorded as
-  // `flagged` cases in scripts/name-linker/cases.mjs and are pending Robbie's ruling. They still
-  // resolve to John the Baptist today, which is wrong under every view; the flagged cases exist so
-  // that stays visible instead of quietly becoming the answer.
+  // NOT here, but handled elsewhere: Revelation 1:1, 1:4, 1:9 and 22:8. The John who names himself
+  // there is certainly not the Baptist, who died some sixty years earlier. Whether he is the
+  // Apostle, John the Elder/Presbyter, or an otherwise unknown John of Patmos is a live scholarly
+  // question; it was escalated rather than decided here, and the ruling (recorded in
+  // automation/manager-inbox) was to link the Apostle, on the ground that the app's own prose
+  // beside these links already says so — the exile article opens "The apostle John". Those four
+  // are carried by the Revelation entry in BOOK_NAME_OVERRIDES above rather than by a per-verse
+  // override, and are pinned as `guard` cases in scripts/name-linker/cases.mjs.
+  //
+  // They are the Apostle on the reader path only. On the panel path they still read as the Baptist,
+  // because that path passes no book and so no book override can fire there at all — a structural
+  // limit of the panel path (833 rows across every ambiguous name diverge this way), neither
+  // introduced nor worsened by this entry.
   john: {
     Matthew: {
       "4:21": "john-the-apostle", // "James the son of Zebedee, and John his brother"
@@ -627,15 +633,20 @@ const OWNER_NAME_OVERRIDES: Record<string, Record<string, string | null>> = {
     "bib-exo-golden-calf": null,
   },
   // "John": the largest single fault this table has ever been used for. Bare "John" belongs to the
-  // Baptist globally, which is right for most of Scripture and badly wrong for our own writing: all
-  // 238 prose occurrences resolved to him, on the article surface, with nothing to correct them.
-  // On John the Apostle's OWN page, every "John" linked to John the Baptist.
+  // Baptist globally, which is right for most of Scripture and badly wrong for our own writing.
+  // The article surface has 256 occurrences the linker matches on the bare key; 18 of them sit on
+  // the Baptist's own page and were harmlessly self-excluded, so 238 actually rendered as a link to
+  // John the Baptist, with nothing to correct them. On John the Apostle's OWN page, every "John"
+  // linked to John the Baptist.
   //
-  // The 238 were read one at a time, grouped by owning record (the grouping is what this table
-  // needs, since it gives one answer per record). Two other corrections landed first and shrank the
-  // job: NAME_CONTEXT_SUPPRESSIONS above took out 52 book references ("the Gospel of John", "1
-  // John", "John's Gospel") and 8 more that name a different man ("Simon, son of John", "John
-  // Hyrcanus"), leaving 178 for this table and for the residue below.
+  // Those 238 were read one at a time, grouped by owning record (the grouping is what this table
+  // needs, since it gives one answer per record). NAME_CONTEXT_RULES below lands first and shrinks
+  // the job, measured on this same bare-key population of 256:
+  //   51  book references — "the Gospel of John", "1 John", "John's Gospel", "two letters of John"
+  //    8  a different man — "Simon, son of John" (Peter's father), "John Hyrcanus"
+  //    8  "Peter and John" — resolved to the Apostle, not suppressed
+  //   22  book-intro phrases, pinned one at a time because BookIntroView passes no record id
+  // — 89 in all, leaving 167 for this table, the self-link exclusion, and the global default.
   //
   // Records where every remaining "John" is the same man, and that man is not the Baptist:
   john: {
@@ -880,31 +891,37 @@ function looksLikeAName(matched: string): boolean {
   return /^[A-Z]/.test(matched.replace(/^(?:the|a|an)\s+/i, ""));
 }
 
-/** Names that are ALSO the title of a book of the Bible, where the surrounding words can say which
- * is meant. A reference to the book must not link to a person at all — not even to the person the
- * book is named after, and least of all to a different person entirely.
+/** What the words immediately around a match say about it: that it names a BOOK rather than a
+ * person, that it names a DIFFERENT bearer of the name, or — the one case that asserts rather than
+ * suppresses — that it is a specific man.
  *
  * "John" is the case this was built for and the only key in it, because it is the only one measured.
- * Bare "John" is registered on john-the-baptist (people.ts), so before this rule *the Gospel of
+ * Bare "John" is registered on john-the-baptist (people.ts), so before these rules *the Gospel of
  * John*, *1 John*, *2 John*, *3 John* and *John's Gospel* all rendered as links to John the Baptist
  * — a man who wrote none of them and died before any of them was written. Measured over the whole
- * corpus (scripts/name-linker), stating the surface for each, as `CAPITALISED_ONLY` above does:
+ * corpus (scripts/name-linker), stating the surface for each, as `CAPITALISED_ONLY` above does.
+ * The counts are of occurrences the linker matches on the BARE key "john"; a mention swallowed by a
+ * longer registered name ("John the Baptist", "John Wesley") never reaches these rules:
  *
- *   surface                        occurrences of bare "John"   caught by this rule
- *   Scripture, reader path                 132                          0
- *   Scripture, panel path                  132                          0
- *   our own articles (prose)               238                         52
+ *   surface                        bare-key "John"   caught here   effect
+ *   Scripture, reader path               132              7        all 7 resolved to the Apostle
+ *   Scripture, panel path                132              7        all 7 resolved to the Apostle
+ *   our own articles (prose)             256             89        81 suppressed, 8 resolved
  *
- * Zero on both Scripture paths is not an accident and is the point: the biblical text never refers
- * to its own books by title, so this rule cannot touch a verse. It is an article-surface fix, and
- * the article surface is where the whole fault lived.
+ * The 7 on both Scripture paths are "Peter and John" — Luke 22:8 and Acts 3:1, 3:3, 3:11, 4:13,
+ * 4:19, 8:14. That rule is the only one here that can touch a verse: no book of the Bible refers to
+ * its own books by title, so every book-title rule below is an article-surface rule in practice.
+ * On the panel path those 7 are the ONLY correction "John" gets, since no book or verse override
+ * fires there — which is why the pair rule is worth more than its size suggests.
  *
- * What it deliberately does NOT catch: "John notes...", "John writes...", "John's account", "in
- * John, Jesus speaks..." — the author referred to as a person, or the book named in a bare list.
- * Suppressing those needs a judgement about who wrote the Fourth Gospel and Revelation, which is a
- * live confessional question (see the flagged cases in scripts/name-linker/cases.mjs and §7 of
- * automation/manager/name-linker-scope.md). This rule takes no position on authorship: it removes
- * links on phrases that name a BOOK, which is neutral between every answer to that question. */
+ * On authorship this file still takes no position. The book-title rules remove links on phrases
+ * that name a BOOK, which is neutral between every answer to who wrote it. The Fourth Gospel's and
+ * Revelation's narrating voice — "John notes", "John writes", "In John, Jesus speaks" — is
+ * SUPPRESSED, not resolved, for the same reason: no link asserts nothing about who held the pen,
+ * where the link that used to be there asserted something false. Narrator mentions inside an
+ * article are suppressed by that record's entry in OWNER_NAME_OVERRIDES; the ones in a book intro
+ * have no record id to key on and are pinned by exact phrase below. See §7 of
+ * automation/manager/name-linker-scope.md, and the rulings in automation/manager-inbox. */
 interface NameContextRule {
   /** An exact phrase from our own copy. Applies when the match falls INSIDE an occurrence of it.
    * Used where a pattern would be reckless — see the hand-pinned book intros below. */

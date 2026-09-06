@@ -7889,6 +7889,13 @@ export const people: Person[] = [
     id: "pope-john-paul-ii",
     name: "Pope John Paul II",
     alternateNames: ["Karol Józef Wojtyła"],
+    // Our copy usually drops the "Pope", and the bare regnal name split into TWO links: "John"
+    // (correct, via OWNER_NAME_OVERRIDES) and "Paul" — which fell through to its global owner and
+    // linked the pope's own name to the apostle Paul, on his own biography page among others.
+    // 6 of the 7 "John Paul II" mentions in our prose rendered that way. Registering the whole
+    // regnal name lets longest-match swallow both words into one correct link. matchNames, not
+    // alternateNames: "John Paul II" is a short form of his name, not an "Also called".
+    matchNames: ["John Paul II"],
     bornYear: 1920,
     diedYear: 2005,
     lifespanLabel: "AD 1920–2005",

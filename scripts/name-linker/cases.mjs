@@ -256,7 +256,7 @@ export const CASES = [
           "already resolved that he must be put to death",
     surface: "John", owner: "jesus-of-nazareth", expect: null, status: "guard",
     why: "A reference to the BOOK must not link to a person at all. On Jesus's own page this " +
-         "said the Gospel of John was written by John the Baptist. NAME_CONTEXT_SUPPRESSIONS." },
+         "said the Gospel of John was written by John the Baptist. NAME_CONTEXT_RULES." },
   { text: "1 John was written to reassure believers of their faith",
     surface: "John", expect: null, status: "guard",
     why: "The epistle, in its own book intro. No owner — BookIntroView passes no record id, so " +
@@ -293,6 +293,23 @@ export const CASES = [
     surface: "John", owner: "charles-wesley", expect: "john-wesley", status: "guard",
     why: "Not a biblical John at all. Charles Wesley's brother, on Charles's page, linked to " +
          "John the Baptist. The app has a john-wesley entry." },
+  // The regnal name has to be matched WHOLE or it splits into two links, the second of them wrong.
+  // Found in review of this pass; the fix is matchNames on pope-john-paul-ii in people.ts.
+  { text: "John Paul II also worked to improve Catholic relations with Judaism",
+    surface: "John Paul II", owner: "fall-of-communism-poland-1989", expect: "pope-john-paul-ii",
+    expectSurface: "John Paul II", status: "guard",
+    why: "One link covering the whole regnal name. Before the matchNames entry this rendered as " +
+         "TWO links — 'John' to the pope (correct) and 'Paul' to the apostle Paul (wrong), on 6 " +
+         "of the 7 'John Paul II' mentions in our prose, including the pope's own page." },
+  { text: "John Paul II also worked to improve Catholic relations with Judaism",
+    surface: "Paul", owner: "fall-of-communism-poland-1989", expect: "pope-john-paul-ii",
+    expectSurface: "John Paul II", status: "guard",
+    why: "The other half of the same guard: 'Paul' here must be swallowed by the longer match, " +
+         "never resolve to paul-of-tarsus on its own." },
+  { text: "As pope, John Paul II traveled to over 100 countries",
+    surface: "John Paul II", owner: "pope-john-paul-ii", expect: null, status: "guard",
+    why: "On his OWN page the whole name is self-excluded, so neither word links. Previously " +
+         "'Paul' still linked to the apostle Paul here." },
   { text: "James and John wanted to call down fire on a Samaritan village",
     surface: "John", owner: "james-son-of-zebedee", expect: "john-the-apostle", status: "guard",
     why: "The article surface repointed by OWNER_NAME_OVERRIDES, which is the only correction " +

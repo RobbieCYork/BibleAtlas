@@ -713,13 +713,13 @@ person	john	john-the-baptist	panel	107
 person	john	john-the-baptist	prose	25
 person	john	john-the-baptist	reader	77
 person	john	john-wesley	prose	3
-person	john	pope-john-paul-ii	prose	3
 person	john	pope-john-xxiii	prose	1
 person	john calvin	john-calvin	prose	1
 person	john chrysostom	john-chrysostom	prose	1
 person	john knox	john-knox	prose	1
 person	john mark	john-mark	prose	7
 person	john of the cross	john-of-the-cross	prose	1
+person	john paul ii	pope-john-paul-ii	prose	3
 person	john the apostle	john-the-apostle	prose	1
 person	john the baptist	john-the-baptist	prose	31
 person	john the baptizer	john-the-baptist	panel	15
@@ -867,7 +867,7 @@ person	onesimus	onesimus	panel	2
 person	onesimus	onesimus	prose	7
 person	onesimus	onesimus	reader	2
 person	paul	paul-of-tarsus	panel	161
-person	paul	paul-of-tarsus	prose	525
+person	paul	paul-of-tarsus	prose	519
 person	paul	paul-of-tarsus	reader	161
 person	perez	perez	panel	22
 person	perez	perez	prose	7
