@@ -69,9 +69,16 @@ The tell is the clock. A real check of this project takes about 6.2s; the false
 pass comes back in about 0.49s. If your verification build was suspiciously
 fast, it did not happen.
 
-Delete the build info first, every time:
+Delete the build info first, every time — with `find`, not a glob:
 
-    rm -f /tmp/verify/node_modules/.tmp/*.tsbuildinfo
+    find /tmp/verify/node_modules/.tmp -name '*.tsbuildinfo' -delete
+
+**Not `rm -f .../*.tsbuildinfo`.** This file used to say that, and it is a trap
+under zsh: an unmatched glob is an *error*, not an empty argument list, so when
+there is no build info to delete the command fails, `&&` short-circuits, and
+the build you chained after it never runs. An agent read the resulting silence
+as a pass and spent the next hour testing a stale bundle. `find -delete`
+succeeds on nothing.
 
 Note the path: it is the shared file you are deleting, through the symlink, so
 the next build in the main tree is a full one as well. That is the intended
@@ -122,6 +129,46 @@ depends on rendering steps the browser freezes there. Verify it against a
 static `vite preview` of the production build, not the shared dev server,
 which hot-reloads under whoever else is working.
 
+## There is a browser harness in the repo — you do not need tooling in your session
+
+`scripts/stale-deploy-harness/` drives the real Google Chrome on this machine
+over the DevTools Protocol with **no npm dependencies** (Node 24 ships a global
+`WebSocket`, which is all CDP needs). Read its README. "No browser tooling was
+available in my session" is not a reason to ship something unverified; it is a
+reason to run this.
+
+It exists to reproduce a stale deploy — HTML whose hashed assets 404 — and it is
+what verifies the recovery listener at the top of `index.html`. `drive-chrome.mjs`
+on its own will open any URL, including a `vite preview`, and evaluate JavaScript
+in it.
+
+**Prefer the server's request log to anything the page tells you.** The section
+above says a screenshot is a hint; that goes for in-page measurement too. A
+measurement of a `<select>`'s usable width, taken inside the page, once left out
+the native dropdown arrow — it agreed with the screenshot, and it put a clipping
+regression in front of real users for twenty minutes. A request log observed from
+outside the browser has neither failure mode.
+
+Three things about driving Chrome here that have each cost real time:
+
+**`--window-size` is silently floored at 500px wide in headless Chrome on macOS.**
+Ask for 375 and you get a 500px render cropped to look narrow, so a mobile layout
+bug either hides or is invented. Use CDP `Emulation.setDeviceMetricsOverride`
+instead — `drive-chrome.mjs --viewport 375x667` does exactly that, and reports
+`window.innerWidth: 375` where the default run reports 756. Measure with
+`getBoundingClientRect` in the page rather than trusting the window.
+
+**Never `pkill -f "vite preview"`, `pkill -f chrome`, or anything like them.**
+Several agents work in this tree at once and that pattern matches their processes
+too. It has taken other people's servers down mid-verification more than once in a
+single evening. Kill the PID you started, or kill by port. `run.sh` allocates both
+its ports and uses a fresh `mktemp` Chrome profile for the same reason.
+
+**A backgrounded headless tab still throttles timers.** If you are measuring
+anything time-based — a retry cadence, a debounce — pass
+`--disable-background-timer-throttling --disable-renderer-backgrounding
+--disable-backgrounding-occluded-windows`, as `run.sh` does.
+
 ## Verify the commit, not the working tree
 
 A working tree that builds proves nothing about what you committed, especially
@@ -129,9 +176,10 @@ after filtering hunks. Check the commit out somewhere clean and build that:
 
     git worktree add /tmp/verify <sha> --detach
     ln -s "$PWD/node_modules" /tmp/verify/node_modules
-    rm -f /tmp/verify/node_modules/.tmp/*.tsbuildinfo   # or tsc -b skips everything
+    find /tmp/verify/node_modules/.tmp -name '*.tsbuildinfo' -delete
     (cd /tmp/verify && npm run build)                   # ~6.2s. ~0.5s means it skipped
     git worktree remove /tmp/verify --force
 
-The `rm` is not optional and it is not tidiness — see the `.tsbuildinfo`
-section above. The symlink on the line before it is what makes it necessary.
+The `find -delete` is not optional and it is not tidiness — see the
+`.tsbuildinfo` section above, including why it is `find` and not `rm -f` with a
+glob. The symlink on the line before it is what makes it necessary.
