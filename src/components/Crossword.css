@@ -76,19 +76,108 @@
   box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
 }
 
+/* Sticky clue + zoom bar.
+ *
+ * Zoomed in far enough to read comfortably, the board is several times the width of a phone, so the
+ * clue list below it and the zoom controls above it are both off screen — the player is looking at
+ * lettered boxes with no idea what they are answering and no obvious way back to a whole-board view.
+ * This bar carries both and never leaves the screen. Its parent .crossword-body IS the scroll
+ * container (it is .game-body), so `top: 0` pins it to the top of that scrollport.
+ *
+ * `align-self: stretch` rather than `width: 100%`: .game-body is a centring flex column, and a
+ * percentage here resolves against a containing block that App.css warns can sit at a different
+ * scale. Stretch gives the same result with no percentage involved. */
+.crossword-sticky-bar {
+  position: sticky;
+  top: 0;
+  z-index: 3;
+  align-self: stretch;
+  display: flex;
+  align-items: center;
+  /* The three zoom buttons are 44px squares that must not shrink, and at the largest text-size
+   * setting .game-root's `zoom` leaves this bar only ~168 of its own units to lay out in — less than
+   * the buttons alone. Without wrapping, the clue was squeezed to a couple of characters per line
+   * and stacked into a 182-unit-tall column: measured on WebKit at 375px and scale 1.8, a bar 327px
+   * tall, covering the board and swallowing taps meant for the squares underneath it. Let the
+   * controls drop to their own row instead. */
+  flex-wrap: wrap;
+  gap: 8px;
+  padding: 8px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: var(--panel-bg);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.12);
+}
+
+.crossword-current-clue {
+  flex: 1;
+  /* A floor, not a fixed width: enough room for a readable line of clue, and the trigger that makes
+   * the bar above wrap rather than crush this to two characters a line. `min()` keeps it a floor
+   * only where there is room for it — below 160px of bar it gives way rather than forcing the bar
+   * wider than the screen. */
+  min-width: min(160px, 100%);
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  margin: 0;
+  padding: 4px 6px;
+  border: none;
+  border-radius: 8px;
+  background: none;
+  font: inherit;
+  color: var(--text);
+  text-align: left;
+  cursor: pointer;
+}
+
+.crossword-current-clue-empty {
+  color: var(--text-muted);
+  cursor: default;
+}
+
+.crossword-current-clue-tag {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--accent);
+  /* One line, always — "16 ACROSS" wrapping is what turns a two-line bar into a four-line one. */
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Both the live clue and the placeholder that stands in its place: two lines covers every clue in
+ * the banks at a phone width, and a hard cap here is what stops this bar growing without limit at
+ * large text sizes and covering the board it is supposed to be helping with. */
+.crossword-current-clue-text,
+.crossword-current-clue-empty {
+  font-size: 14px;
+  line-height: 1.3;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
 .crossword-zoom-controls {
   display: flex;
   gap: 4px;
+  flex-shrink: 0;
 }
 
+/* 44px square is the tap-target minimum, and these are the controls a player reaches for precisely
+ * because they are having trouble hitting things. */
 .crossword-zoom-controls .games-secondary-button {
-  padding: 10px 14px;
-  min-width: 40px;
+  padding: 0;
+  min-width: 44px;
+  min-height: 44px;
+  font-size: 17px;
   text-align: center;
 }
 
 .crossword-scroll-hint {
-  margin: -8px 0 0;
+  margin: 0;
   text-align: center;
   color: var(--text-muted);
   font-size: 12px;
@@ -172,6 +261,9 @@
   height: var(--xw-cell);
   box-sizing: border-box;
   border: 1px solid var(--border);
+  /* At the smallest zoom-out steps the corner number is larger than the square it labels; clip it
+   * rather than let it bleed over the neighbouring cell. */
+  overflow: hidden;
 }
 
 /* Unused squares blend into the grid box's own background instead of rendering as a solid black
@@ -206,7 +298,21 @@
   text-align: center;
   font: inherit;
   font-weight: 700;
-  font-size: calc(var(--xw-cell) * 0.5);
+  /* The letter has to grow with the square, or zooming in produces big empty boxes with the same
+   * tiny glyph in them — which is what this looked like on a phone before.
+   *
+   * `!important` is load-bearing and not laziness. App.css carries an app-wide, deliberately
+   * unconditional `input, textarea, select { font-size: 16px !important }` inside its mobile media
+   * query, to stop iOS Safari auto-zooming the page when a small field is focused. It reaches these
+   * cells too, and on mobile it pinned every letter at 16px at EVERY zoom level — measured on
+   * WebKit: 16px in a 12px square and still 16px in an 80px square. A crossword cell is a
+   * single-character box, not a form field, so it needs the exception; the specificity here already
+   * beats a bare `input`, but only another `!important` can beat that one.
+   *
+   * The `min(16px, ...)` term keeps the reason that rule exists intact: this never resolves below
+   * 16px until the square itself is smaller than 20px, i.e. only at the deliberate zoomed-all-the-way-
+   * out overview, where nobody is typing. From 20px up it is 16px or larger, exactly as before. */
+  font-size: max(calc(var(--xw-cell) * 0.5), min(16px, calc(var(--xw-cell) - 4px))) !important;
   color: var(--text-h);
   text-transform: uppercase;
   padding: 0;
