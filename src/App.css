@@ -8775,12 +8775,23 @@ a.profile-links-url {
   background: var(--panel-bg);
   flex-shrink: 0;
   min-height: 54px;
+  --sheet-head-line: 20px;
 }
 
 .auth-admin-sheet-title {
-  font-size: 17px;
-  line-height: 1.25;
+  font-size: 16px;
+  line-height: var(--sheet-head-line);
   margin: 0;
+}
+
+/* Same misalignment and same fix as .report-sheet-head — the reasoning, and the measurements it
+ * came from, are in the comment above .report-sheet-title. This head has no role badge, so it needs
+ * only the back link's two auth-form leftovers undone and the shared line box applied. */
+.auth-admin-sheet-head .auth-back-link {
+  align-self: center;
+  margin-bottom: 0;
+  line-height: var(--sheet-head-line);
+  white-space: nowrap;
 }
 
 .auth-admin-sheet-body {
@@ -9187,13 +9198,67 @@ a.profile-links-url {
   background: var(--panel-bg);
   flex-shrink: 0;
   min-height: 54px;
+  /* The one line box every item in this head is sized to. See the block under .report-sheet-title
+   * for why it exists; 20px is the title's own 16px x 1.25, rounded. */
+  --sheet-head-line: 20px;
 }
 
+/* --- The head has to read as one row, not three things at three heights -----------------------
+ *
+ * Reported from a real iPhone 2026-09-06, on the Reports dashboard, whose head is the only one
+ * carrying all three items: "different font sizes and not on the same plane". Both halves were
+ * true, and neither was a design decision — they were leftovers.
+ *
+ * THE PLANE. .auth-back-link is an auth *form* link: it carries `align-self: flex-start` and
+ * `margin-bottom: 10px` so it can sit above a stack of inputs. Reused as a header control, those
+ * two declarations are simply wrong. align-self overrides the head's `align-items: center`, pinning
+ * the link to the top of the row while the title and badge stay centred, and the margin makes the
+ * link the tallest item so the row it is pinned to the top of is taller than the text needs.
+ * Measured in Blink at 375px, the "← Back" baseline sat 7px above the title's with a 62px safe-area
+ * inset, 11px above with none (where `min-height: 54px` makes the flex line taller than its
+ * content, so flex-start has further to travel), and 24px above at text scale 1.8. Undoing both,
+ * and giving all three items the same 20px line box so `align-items: center` has identical boxes to
+ * work with, brings the box centres to exactly 0.00px apart at every scale and the baselines to
+ * 0.8 / 1.0 / 1.8px at scales 0.8 / 1.0 / 1.8. That residue is a font-metric constant — Archivo and
+ * Cormorant differ in (ascent - descent) — so no line-height closes it. Only `align-items: baseline`
+ * would, and that cannot also centre the group inside the 54px min-height without an extra wrapper
+ * element in four components. 1px is typography; 7-24px was the complaint.
+ *
+ * THE SIZES. 12 / 17 / 10 became 12 / 16 / 10. The title comes down one step rather than the link
+ * going up, and that choice was measured rather than taste: raising the link to 13px pushed the
+ * report form's long title from two lines to three at text scale 1.8 (+37px of head), and raising
+ * the badge to 12px overflowed the head by 11px on the widest role label, "Administrator". Bringing
+ * the title down instead costs nothing anywhere and gives back 8px at scale 1.8. 16px display is
+ * also not a new size — it is what .bible-panel-header h3 already uses for a panel title. The face
+ * stays serif: h1-h4 are the display face app-wide (index.css), so Cormorant here is the
+ * convention, not a one-off.
+ * -------------------------------------------------------------------------------------------- */
+
 .report-sheet-title {
-  font-size: 17px;
-  line-height: 1.25;
+  font-size: 16px;
+  line-height: var(--sheet-head-line);
   margin: 0;
   min-width: 0;
+}
+
+.report-sheet-head .auth-back-link {
+  align-self: center;
+  margin-bottom: 0;
+  line-height: var(--sheet-head-line);
+  /* At text scale 1.8 a 375px phone is 208px of layout width, and the badge squeezes "← Back" into
+   * breaking after the arrow — two lines, on the one control that has to look like an exit. It is
+   * two words and a glyph; it never wraps. The title beside it still can, and should. */
+  white-space: nowrap;
+}
+
+.report-sheet-head .report-role-tag {
+  /* The 6px is for the badge's other home, inline after a name in the roles list. In a flex row
+   * with `gap: 12px` it only makes one side of the badge 18px and the other 12px. */
+  margin-left: 0;
+  /* Border box = line box + 4px padding + 2px border, which lands the pill on exactly the same
+   * 20px as the title and the back link. It reaches that today only by inheriting body's `15px/1.5`
+   * and multiplying 1.5 by its own 10px — an accident any change to body would take away. */
+  line-height: calc(var(--sheet-head-line) - 6px);
 }
 
 .report-sheet-body {
