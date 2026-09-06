@@ -1,9 +1,25 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { BOOKS } from "../data/bibleBooks";
 
 const NT_START_INDEX = BOOKS.findIndex((b) => b.name === "Matthew");
 
 type Step = "book" | "chapter" | "verse";
+
+/** How the book list is ordered. "canonical" is the order the books appear in the Bible and is the
+ * default — a reader who never touches the toggle gets the list they have always had. */
+type SortOrder = "canonical" | "alphabetical";
+
+const SORT_STORAGE_KEY = "bible-book-sort";
+
+/** Anything unrecognised — missing, corrupt, or written by an older build — falls back to
+ * canonical, so a bad value can never leave a new reader in an order they did not choose. */
+function loadSortOrder(): SortOrder {
+  try {
+    return localStorage.getItem(SORT_STORAGE_KEY) === "alphabetical" ? "alphabetical" : "canonical";
+  } catch {
+    return "canonical";
+  }
+}
 
 interface ReferencePickerProps {
   open: boolean;
@@ -48,7 +64,32 @@ export default function ReferencePicker({
   const [book, setBook] = useState<string | null>(null);
   const [chapter, setChapter] = useState<number | null>(null);
   const [loadingChapter, setLoadingChapter] = useState<number | null>(null);
+  const [sortOrder, setSortOrder] = useState<SortOrder>(loadSortOrder);
   const bodyRef = useRef<HTMLDivElement | null>(null);
+
+  const alphabetical = sortOrder === "alphabetical";
+
+  // Alphabetical sorts on the name exactly as it is printed in the list, which puts the numbered
+  // books first ("1 Chronicles" … "3 John") rather than filing them under their letter. That is the
+  // literal reading of A–Z, and it is the only one a reader can predict from what is on screen:
+  // sorting on a hidden key that skips the leading numeral would put "1 Corinthians" under C, where
+  // nothing visible explains why.
+  const bookList = useMemo(
+    () => (alphabetical ? [...BOOKS].sort((a, b) => a.name.localeCompare(b.name, "en")) : BOOKS),
+    [alphabetical],
+  );
+
+  const toggleSort = () => {
+    setSortOrder((prev) => {
+      const next: SortOrder = prev === "alphabetical" ? "canonical" : "alphabetical";
+      try {
+        localStorage.setItem(SORT_STORAGE_KEY, next);
+      } catch {
+        // A full or blocked store costs the reader the preference next session, not this one.
+      }
+      return next;
+    });
+  };
 
   // Read through a ref, not the dependency array: choosing a chapter navigates the reader while the
   // sheet is still open, which changes currentBook/currentChapter. If those were dependencies this
@@ -67,11 +108,13 @@ export default function ReferencePicker({
   }, [open]);
 
   // Bring the current book/chapter into view rather than making the reader scroll to Revelation.
+  // Re-runs on sortOrder too: re-ordering the list under a fixed scroll position would otherwise
+  // leave the reader looking at whichever books happened to land at that offset.
   useEffect(() => {
     if (!open || !bodyRef.current) return;
     const target = bodyRef.current.querySelector('[data-current="true"]');
     target?.scrollIntoView({ block: "center" });
-  }, [open, step]);
+  }, [open, step, sortOrder]);
 
   useEffect(() => {
     if (!open) return;
@@ -105,7 +148,21 @@ export default function ReferencePicker({
       <div className="ref-picker" role="dialog" aria-modal="true" aria-label="Choose a passage">
         <div className="ref-picker-head">
           {step === "book" ? (
-            <span className="ref-picker-head-spacer" aria-hidden="true" />
+            /* The sort toggle takes the head slot the book step used to leave empty, so offering a
+             * second order costs no vertical space — this whole area exists to give scripture more
+             * of the screen, and a control row would have taken some of it straight back. */
+            <button
+              type="button"
+              className={alphabetical ? "ref-picker-sort is-on" : "ref-picker-sort"}
+              onClick={toggleSort}
+              aria-pressed={alphabetical}
+              title={alphabetical ? "Sorted A–Z — switch to Bible order" : "Sort the books A–Z"}
+              aria-label={
+                alphabetical ? "Sorted alphabetically. Switch to Bible order." : "Sort the books alphabetically"
+              }
+            >
+              A–Z
+            </button>
           ) : (
             <button
               type="button"
@@ -125,9 +182,12 @@ export default function ReferencePicker({
         <div className="ref-picker-body" ref={bodyRef}>
           {step === "book" && (
             <ul className="ref-picker-books">
-              {BOOKS.map((b, i) => (
+              {bookList.map((b, i) => (
                 <li key={b.name}>
-                  {(i === 0 || i === NT_START_INDEX) && (
+                  {/* Testament headings only mean anything while the list is in Bible order. A–Z
+                   * interleaves the testaments, so it gets a flat list instead of two headings
+                   * sitting over books that no longer belong under them. */}
+                  {!alphabetical && (i === 0 || i === NT_START_INDEX) && (
                     <p className="ref-picker-section">{i === 0 ? "Old Testament" : "New Testament"}</p>
                   )}
                   <button

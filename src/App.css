@@ -2751,10 +2751,42 @@ a.profile-links-url {
 
 .ref-picker-back,
 .ref-picker-close,
+.ref-picker-sort,
 .ref-picker-head-spacer {
   flex-shrink: 0;
   width: 34px;
   height: 34px;
+}
+
+/* The A-Z toggle takes the head slot the book step would otherwise leave empty, and is exactly as
+ * wide and tall as the back button it stands in for. Offering a second book order therefore costs
+ * the sheet no height at all — this area exists to give scripture more of the screen, and a row of
+ * sort buttons would have taken some of it straight back. */
+.ref-picker-sort {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  border: 1px solid var(--border);
+  border-radius: 50%;
+  background: none;
+  color: var(--text-muted);
+  font-family: var(--sans);
+  font-size: 10px;
+  font-weight: 700;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.ref-picker-sort:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+.ref-picker-sort.is-on {
+  border-color: var(--accent);
+  background: var(--accent);
+  color: var(--accent-contrast);
 }
 
 .ref-picker-back,
