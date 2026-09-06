@@ -7854,6 +7854,12 @@ export const people: Person[] = [
     id: "pope-john-xxiii",
     name: "Pope John XXIII",
     alternateNames: ["Angelo Giuseppe Roncalli"],
+    // Same whole-name registration as pope-john-paul-ii below, and for the same reason: our copy
+    // usually drops the "Pope". Milder here — the bare "John" already resolved to him correctly via
+    // OWNER_NAME_OVERRIDES, so this was a short link span rather than a wrong link, and "XXIII" is
+    // not itself a registered name so nothing else was mislinked. Registered anyway so the two
+    // popes behave alike and the link covers the name a reader sees.
+    matchNames: ["John XXIII"],
     bornYear: 1881,
     diedYear: 1963,
     lifespanLabel: "AD 1881–1963",

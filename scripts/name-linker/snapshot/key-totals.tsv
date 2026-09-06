@@ -650,7 +650,7 @@ person	jacob	jacob	prose	135
 person	jacob	jacob	reader	381
 person	james	james-brother-of-jesus	reader	10
 person	james	james-son-of-zebedee	panel	32
-person	james	james-son-of-zebedee	prose	63
+person	james	james-son-of-zebedee	prose	60
 person	james	james-son-of-zebedee	reader	22
 person	james the just	james-brother-of-jesus	prose	1
 person	james the son of alphaeus	james-son-of-alphaeus	panel	2
@@ -713,7 +713,6 @@ person	john	john-the-baptist	panel	107
 person	john	john-the-baptist	prose	25
 person	john	john-the-baptist	reader	77
 person	john	john-wesley	prose	3
-person	john	pope-john-xxiii	prose	1
 person	john calvin	john-calvin	prose	1
 person	john chrysostom	john-chrysostom	prose	1
 person	john knox	john-knox	prose	1
@@ -728,6 +727,7 @@ person	john wesley	john-wesley	prose	4
 person	john who was called mark	john-mark	panel	2
 person	john who was called mark	john-mark	reader	2
 person	john wycliffe	john-wycliffe	prose	3
+person	john xxiii	pope-john-xxiii	prose	1
 person	john, who was called mark	john-mark	panel	1
 person	john, who was called mark	john-mark	reader	1
 person	jonathan edwards	jonathan-edwards	prose	2
@@ -867,7 +867,7 @@ person	onesimus	onesimus	panel	2
 person	onesimus	onesimus	prose	7
 person	onesimus	onesimus	reader	2
 person	paul	paul-of-tarsus	panel	161
-person	paul	paul-of-tarsus	prose	519
+person	paul	paul-of-tarsus	prose	512
 person	paul	paul-of-tarsus	reader	161
 person	perez	perez	panel	22
 person	perez	perez	prose	7
@@ -879,7 +879,7 @@ person	philemon	philemon	panel	1
 person	philemon	philemon	prose	22
 person	philemon	philemon	reader	1
 person	philip	philip-the-apostle	panel	33
-person	philip	philip-the-apostle	prose	60
+person	philip	philip-the-apostle	prose	57
 person	philip	philip-the-apostle	reader	16
 person	philip	philip-the-evangelist	reader	14
 person	philip	philip-the-tetrarch	reader	1

@@ -1015,6 +1015,31 @@ const NAME_CONTEXT_RULES: Record<string, NameContextRule[]> = {
     { phrase: "John is then caught up to heaven", to: null },
     { phrase: "John describes a thousand-year reign", to: null },
   ],
+
+  // ── The split-name fault. A multi-word name whose FIRST word is a biblical name, where the app
+  // has no record for the whole man, does not fail by refusing to link — it fails by linking the
+  // fragment. "Pope Paul VI" rendered "Paul" as a link to the apostle Paul; "Philip II of Macedon"
+  // rendered "Philip" as the apostle Philip; "the King James Version" rendered "James" as James son
+  // of Zebedee. Where the app HAS a record the remedy is a whole-name entry in matchNames (see
+  // pope-john-paul-ii and pope-john-xxiii in people.ts). These three have no record, so the remedy
+  // is no link — §7.12's standing interim, the same answer this file already gives the
+  // high-priestly John of Acts 4:6 and Simon Peter's father. It is NOT a ruling that the app will
+  // never carry a Paul VI, Paul III or Philip of Macedon record. If one is ever written, delete the
+  // rule here and register the whole name on that record instead.
+  //
+  // The numerals are enumerated, never a general /[IVX]+/ pattern, and that is not fussiness: WEB
+  // reads "and Paul I know, but who are you?" at Acts 19:15 and "John I beheaded" at Luke 9:9, so a
+  // general Roman-numeral rule would strip the link off the apostle Paul in a real verse. Measured
+  // against the whole corpus before being written, not reasoned about.
+  paul: [
+    { after: /^\s+(?:III|VI)\b/, to: null }, // Popes Paul III (Trent, the Jesuits) and Paul VI
+  ],
+  philip: [
+    { after: /^\s+II\b/, to: null }, // Philip II of Macedon, who founded Philippi
+  ],
+  james: [
+    { before: /\bKing\s+$/, to: null }, // "the King James Version" — a translation, not a man
+  ],
 };
 
 /** Do the words around this match say who it is — or that it is nobody?

@@ -410,15 +410,79 @@ export const CASES = [
     surface: "John", expect: null, status: "guard", why: "Ruling 2 — 1 John's intro." },
   { text: "Through a series of dramatic visions, John seeks to comfort and warn these believers",
     surface: "John", expect: null, status: "guard",
-    why: "Ruling 2 — Revelation's intro. Note the deliberate asymmetry with ruling 1: the exile " +
-         "ARTICLE names the man ('The apostle John') and links; the book intro describes the " +
-         "book's voice ('John describes a thousand-year reign') and does not. Bob drew that line." },
+    why: "Ruling 2 — Revelation's intro. The asymmetry with ruling 1 is DELIBERATE and confirmed " +
+         "by Bob, not an inconsistency to tidy away: ruling 1 covers identifying the John of " +
+         "Patmos as a PERSON, so the exile article, which names the man ('The apostle John'), " +
+         "links. Ruling 2 covers NARRATOR VOICE, and a book intro saying 'John describes a " +
+         "thousand-year reign' is narrator voice regardless of which book it introduces — so it " +
+         "does not link. Same man, two different things being said about him. Leave it as it is." },
   { text: "Revelation opens with John's overwhelming vision of the risen Christ",
     surface: "John", expect: null, status: "guard", why: "Ruling 2 — Revelation's intro." },
   { text: "John is then caught up to heaven, where he sees God's throne room",
     surface: "John", expect: null, status: "guard", why: "Ruling 2 — Revelation's intro." },
   { text: "John describes a thousand-year reign",
     surface: "John", expect: null, status: "guard", why: "Ruling 2 — Revelation's intro." },
+
+  // ── The split-name fault: a multi-word name whose first word is a biblical name, with no record
+  // for the whole man, linking the fragment to the wrong person. Suppression is §7.12's interim,
+  // not a ruling that these records will never exist — if one is written, register the whole name
+  // on it and delete the rule. One case per site so a later pass cannot quietly reintroduce any.
+  { text: "in 1970 Pope Paul VI named her the first woman Doctor of the Church",
+    surface: "Paul", owner: "teresa-of-avila", expect: null, status: "guard",
+    why: "Pope Paul VI is not the apostle Paul. The app has no Paul VI record, so no link." },
+  { text: "the last three after John's death, under Pope Paul VI), to produce sweeping reforms",
+    surface: "Paul", owner: "pope-john-xxiii", expect: null, status: "guard",
+    why: "Same, on John XXIII's own page." },
+  { text: "Further work led Pope Paul VI to announce in 1968 that bones recovered",
+    surface: "Paul", owner: "vatican-necropolis-rome", expect: null, status: "guard",
+    why: "Same, on a POI." },
+  { text: "the mutual lifting of the 1054 excommunications by Pope Paul VI and Patriarch Athenagoras",
+    surface: "Paul", owner: "great-schism-1054", expect: null, status: "guard",
+    why: "Same, on a timeline event." },
+  { text: "the council continued under his successor, Pope Paul VI), the council produced sixteen major documents",
+    surface: "Paul", owner: "vatican-ii-1962", expect: null, status: "guard",
+    why: "Same. These five are every Paul VI mention in the corpus." },
+  { text: "the group instead offered themselves to Pope Paul III, who formally approved the new religious order",
+    surface: "Paul", owner: "society-of-jesus-founded-1540", expect: null, status: "guard",
+    why: "Pope Paul III — a different pope, the same fault. Found by sweeping the class rather " +
+         "than the name." },
+  { text: "Pope Paul III convened a general council at Trent",
+    surface: "Paul", owner: "council-of-trent-1545", expect: null, status: "guard",
+    why: "Paul III again. These two are every Paul III mention." },
+  { text: "Founded 356 BC by Philip II of Macedon; refounded as a Roman colony",
+    surface: "Philip", owner: "philippi", expect: null, status: "guard",
+    why: "Philip II of Macedon founded Philippi three centuries before the apostle Philip was " +
+         "born. Linked to the apostle until this rule." },
+  { text: "originally built by Philip II in the 4th century BC and substantially reconstructed",
+    surface: "Philip", owner: "philippi", expect: null, status: "guard", why: "Philip II again." },
+  { text: "King Philip II transformed Macedon from a peripheral kingdom",
+    surface: "Philip", owner: "wld-pg-philip-of-macedon", expect: null, status: "guard",
+    why: "On the timeline event that is ABOUT him — which had him linked to the apostle. These " +
+         "three are every Philip II mention." },
+  { text: "The King James Version translated Sheol as \"hell,\" \"grave,\" and \"pit\"",
+    surface: "James", owner: "gehenna", expect: null, status: "guard",
+    why: "A translation named for a king of England, linked to James son of Zebedee. Suppressed " +
+         "on the same ground as 'the Gospel of John' above: a book title is not a person." },
+  { text: "The King James Version, by contrast, rests on a text compiled in the",
+    surface: "James", owner: "codex-vaticanus", expect: null, status: "guard",
+    why: "Same." },
+  { text: "in what the King James Version famously calls \"a still small voice\"",
+    surface: "James", owner: "bib-dki-elijah-still-small-voice", expect: null, status: "guard",
+    why: "Same. These three are every King James Version mention." },
+
+  // The enumerated-numeral guards. A general Roman-numeral rule would break both of these, which
+  // is why the rules in verseAnnotations.ts list numerals one at a time.
+  { ref: "Acts 19:15", surface: "Paul", expect: "paul-of-tarsus", status: "guard",
+    why: "'Jesus I know, and Paul I know' — the apostle, followed by the word 'I'. A general " +
+         "/Paul\\s+[IVX]+/ rule would have suppressed this. It is why the numerals are enumerated." },
+  { ref: "Luke 9:9", surface: "John", expect: "john-the-baptist", status: "guard",
+    why: "'John I beheaded' — Herod on the Baptist. The same trap for the other key." },
+
+  { text: "Across four working sessions (John XXIII died in June 1963, midway through",
+    surface: "John XXIII", owner: "vatican-ii-1962", expect: "pope-john-xxiii",
+    expectSurface: "John XXIII", status: "guard",
+    why: "The whole regnal name is one link, matching pope-john-paul-ii. Was a correct link on a " +
+         "short span ('John' only); no wrong link, but the two popes now behave alike." },
 
   // ─────────────────────────────────────────────────────────────────────────────────────────
   // Flagged — §7 of the scoping document. These record what the app does TODAY, so that a change
