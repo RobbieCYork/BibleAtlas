@@ -322,8 +322,12 @@ export default function AuthButton({
       .from("profiles")
       .select("display_name")
       .eq("id", session.user.id)
-      .single()
-      .then(({ data }) => {
+      // maybeSingle(), not single(): a row this account cannot read comes back data:null AND an
+      // error, so a dropped request or an RLS refusal was indistinguishable from "no display name"
+      // and reverted the label to the raw email. Only a real answer changes it now.
+      .maybeSingle()
+      .then(({ data, error }) => {
+        if (error) return;
         setSavedDisplayName((data as { display_name: string | null } | null)?.display_name ?? null);
       });
   }, [session, profileVersion]);

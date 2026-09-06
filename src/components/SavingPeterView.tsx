@@ -53,8 +53,14 @@ export default function SavingPeterView({ session, onBack }: SavingPeterViewProp
       .from("profiles")
       .select("display_name")
       .eq("id", session.user.id)
-      .single()
-      .then(({ data }) => setDisplayName((data as { display_name: string | null } | null)?.display_name ?? null));
+      // maybeSingle(), not single(): a row this account cannot read comes back data:null AND an
+      // error, which single() makes indistinguishable from "no display name". Only a real answer
+      // moves this off the email fallback below.
+      .maybeSingle()
+      .then(({ data, error }) => {
+        if (error) return;
+        setDisplayName((data as { display_name: string | null } | null)?.display_name ?? null);
+      });
   }, [session]);
   // `||` rather than `??` — a guest session carries an empty-string email, which `??` would happily
   // pass through and render as "Bye bye, Peter!  couldn't save you."

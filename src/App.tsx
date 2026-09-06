@@ -312,6 +312,11 @@ function App() {
       // right attribution, and the session row picks up its user_id on the next touch.
       if (event === "SIGNED_IN" || event === "SIGNED_OUT") noteAuthChange();
       if (event === "PASSWORD_RECOVERY") setPasswordRecovery(true);
+      // ResetPasswordGate's "Sign out instead" escape ends the recovery session rather than
+      // dismissing the gate, so the overlay goes away on its own (it renders only while `session`
+      // is truthy). This clears the flag behind it: without it, logging back in during the same
+      // page load would put the reader straight back on a reset screen they just left.
+      if (event === "SIGNED_OUT") setPasswordRecovery(false);
     });
     return () => listener.subscription.unsubscribe();
   }, []);

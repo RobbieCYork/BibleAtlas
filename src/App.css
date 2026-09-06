@@ -6036,6 +6036,14 @@ a.profile-links-url {
   gap: 8px;
 }
 
+/* ResetPasswordGate's form, which unlike DisplayNameGate's has THREE children in it — two password
+   fields plus the submit button. Sharing the row above gave each field 59.4px at 375px (measured in
+   Chrome 152), too narrow to read a password in, with the show/hide eye toggle overlapping it.
+   Stacking is the only thing this changes; DisplayNameGate's single-input row is untouched. */
+.display-name-gate-card form.reset-password-form {
+  flex-direction: column;
+}
+
 .display-name-gate-card input {
   flex: 1;
   min-width: 0;
