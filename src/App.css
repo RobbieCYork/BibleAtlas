@@ -6693,21 +6693,33 @@ a.profile-links-url {
   display: none;
 }
 
-/* The Listen chip changes width as it changes word ("Listen" / "Loading…" / "Pause"). Without a
- * floor it drags the translation select beside it about on every state change. 92px is measured,
- * not guessed: it is the natural width of the widest of the three ("Loading…") at 375px, so the
- * row holds still through the whole press → buffer → play sequence.
+/* The Listen chip says two words, not three: "Listen" and "Pause". Buffering keeps the word and
+ * swaps the mark for a spinner, so the chip's width never moves — 70px is the measured natural
+ * width of the wider of the two, and pinning it there stops even the 1px "Listen"/"Pause" twitch.
  *
- * It costs the select 26px, on a row .bible-toolbar's own note calls out as having none to give at
- * 375px — affordable only because of WHICH label has to share the row. The chip is WEB-only, so the
- * select beside it always reads "World English Bible (WEB)": 189px of text in 215px of usable width
- * at this floor, measured, still not clipped. KJV and ASV never show the chip and keep the full row. */
+ * That constraint is not fussiness. A "Loading…" label needs 92px, and the 26px came straight out
+ * of the translation select beside it, on a row .bible-toolbar's own note calls out as having none
+ * to give at 375px. It clipped "World English Bible (WEB)" to "World English Bible (WEB". That
+ * shipped, and was caught on the live site. Any future label here has to fit 70px. */
 .bible-listen-chip {
   display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: 5px;
-  min-width: 92px;
+  min-width: 70px;
+}
+
+/* Buffering mark. 1em to match the Icon component's own em-sizing exactly, so swapping one for the
+ * other cannot move the label by even a pixel. Borrows @keyframes map-spinner from the map's
+ * loading pill rather than defining a second identical rotation. */
+.bible-listen-spinner {
+  width: 1em;
+  height: 1em;
+  flex-shrink: 0;
+  border-radius: 50%;
+  border: 2px solid var(--border);
+  border-top-color: currentColor;
+  animation: map-spinner 0.8s linear infinite;
 }
 
 /* Narration failure. Only rendered when there is a failure, so it costs nothing the rest of the

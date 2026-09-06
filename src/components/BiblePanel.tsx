@@ -1633,7 +1633,11 @@ export default function BiblePanel({
             onClick={handleListenPress}
             aria-pressed={audioState !== "idle"}
             aria-label={
-              audioState === "playing" ? "Pause the narration of this chapter" : "Listen to this chapter"
+              audioState === "playing"
+                ? "Pause the narration of this chapter"
+                : audioState === "loading"
+                  ? "Loading the narration of this chapter"
+                  : "Listen to this chapter"
             }
             // The full credit also lives under the chapter, where a phone can actually reach it —
             // this tooltip is a desktop convenience, not the app's attribution.
@@ -1643,13 +1647,19 @@ export default function BiblePanel({
               <>
                 <Icon name="pause" inline /> Pause
               </>
-            ) : audioState === "loading" ? (
-              <>
-                <Icon name="volume" inline /> Loading…
-              </>
             ) : (
               <>
-                <Icon name="volume" inline /> Listen
+                {/* Buffering changes the MARK and not the word. "Loading…" here read honestly and
+                    cost 26px, which came out of the translation select beside it and clipped
+                    "World English Bible (WEB)" to "(WEB" on a 375px screen — shipped once and
+                    caught on the live site. The word stays "Listen" because that is still true:
+                    nothing is playing yet, and a press still means stop. */}
+                {audioState === "loading" ? (
+                  <span className="bible-listen-spinner" aria-hidden="true" />
+                ) : (
+                  <Icon name="volume" inline />
+                )}{" "}
+                Listen
               </>
             )}
           </button>
