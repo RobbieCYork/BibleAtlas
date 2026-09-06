@@ -44,18 +44,74 @@
          bundle — never boots and shows a blank page. In that second case nothing in src/
          gets the chance to run, which is why this lives inline in the HTML and not in
          lib/updateCheck.ts.
-         A reload is the correct response: it re-requests the document and usually picks up
-         the current build's HTML. It is also the only response available, so it is fired
-         at most once every 30 seconds per tab — if the reload comes back just as broken
-         (a still-stale edge node), the user is left on the unstyled page rather than
-         thrown into a reload loop, which would be strictly worse.
+         A reload is the correct response, because the stale HTML is what has to be
+         replaced and re-requesting the document is the only way to replace it. It cannot
+         be a *single* reload, though. Measured against the live edge on 2026-09-06: a
+         deployment was promoted at 06:50:49 UTC and eight seconds later capstonebible.com
+         still answered GET / with x-vercel-cache: HIT, age=41 — the previous deployment's
+         HTML, naming a stylesheet that had already been withdrawn and now 404'd. Fresh
+         HTML did not appear on that edge node until 06:51:01. So the window is real and
+         runs about 10-15 seconds, and a reload fired immediately lands inside it and comes
+         back just as broken.
+         Hence a short bounded backoff: reload after 2s, then 6s, then 15s, then stop. The
+         attempts span ~23s, which clears the measured window with margin. DELAYS.length is
+         the cap and the cap is the point — if the edge is still handing out the same stale
+         HTML after three tries, a fourth is a reload loop, which is strictly worse than
+         standing still. At that point we stop and say so in plain inline-styled text,
+         because the stylesheet is precisely the thing that may be missing.
+         The attempt count lives in sessionStorage and is written *before* each reload, so
+         it survives the reload it schedules — a counter that reset on reload would make
+         "three attempts" mean "forever". It is cleared again on any page load that fetched
+         all of its own assets, so the next deploy gets the full budget.
+         Note this cannot be fixed with cache headers. /, /index.html and /version.json all
+         carry Vercel-CDN-Cache-Control: no-store (see vercel.json) and Vercel's edge caches
+         them regardless: age was measured climbing 211 -> 233 with that header in force.
+         Vercel does not allow bypassing the cache for static files, so recovering on the
+         client is the remaining option.
          Registered with capture: true because resource-load errors fire on the element and
          do not bubble; placed above Vite's injected <script>/<link> so the listener exists
          before either is parsed. -->
     <script>
       (function () {
-        var KEY = 'cb:asset-reload';
-        var COOLDOWN_MS = 30000;
+        var KEY = 'cb:asset-recovery';
+        var DELAYS = [2000, 6000, 15000];
+        /* The js and the css can both 404 on the same load; only act on the first. */
+        var handled = false;
+        var sawError = false;
+
+        function attempts() {
+          try {
+            return Number(window.sessionStorage.getItem(KEY)) || 0;
+          } catch (e) {
+            /* Storage blocked (private mode, cookies off). With nowhere to record the
+               attempt there is no way to bound the retries, so we must not start. */
+            return null;
+          }
+        }
+
+        function record(n) {
+          try {
+            window.sessionStorage.setItem(KEY, String(n));
+            return true;
+          } catch (e) {
+            return false;
+          }
+        }
+
+        function explain() {
+          var el = document.createElement('div');
+          el.setAttribute(
+            'style',
+            'position:fixed;top:0;left:0;right:0;bottom:0;display:flex;align-items:center;' +
+              'justify-content:center;padding:24px;background:#ffffff;color:#111111;' +
+              'font:16px/1.5 system-ui,-apple-system,Segoe UI,sans-serif;text-align:center;' +
+              'z-index:2147483647'
+          );
+          el.textContent = 'Capstone Bible is updating. Please reload the page in a moment.';
+          if (document.body) document.body.appendChild(el);
+          else window.addEventListener('DOMContentLoaded', function () { document.body.appendChild(el); });
+        }
+
         window.addEventListener(
           'error',
           function (event) {
@@ -63,19 +119,30 @@
             if (!el || !el.tagName) return;
             var url = el.src || el.href;
             if (!url || url.indexOf('/assets/') === -1) return;
-            try {
-              var last = Number(window.sessionStorage.getItem(KEY)) || 0;
-              if (Date.now() - last < COOLDOWN_MS) return;
-              window.sessionStorage.setItem(KEY, String(Date.now()));
-            } catch (e) {
-              // Storage blocked (private mode, cookies off). Without somewhere to record
-              // the attempt there is no way to bound the retries, so do nothing.
+
+            sawError = true;
+            if (handled) return;
+            handled = true;
+
+            var n = attempts();
+            if (n === null || n >= DELAYS.length || !record(n + 1)) {
+              explain();
               return;
             }
-            window.location.reload();
+            window.setTimeout(function () {
+              window.location.reload();
+            }, DELAYS[n]);
           },
           true
         );
+
+        /* Every asset this document named came back. Forget the attempts. */
+        window.addEventListener('load', function () {
+          if (sawError) return;
+          try {
+            window.sessionStorage.removeItem(KEY);
+          } catch (e) {}
+        });
       })();
     </script>
   </head>
