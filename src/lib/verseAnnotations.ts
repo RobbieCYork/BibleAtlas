@@ -137,7 +137,14 @@ const BOOK_NAME_OVERRIDES: Record<string, Record<string, string>> = {
     Mark: "joseph-of-arimathea",
     John: "joseph-of-arimathea",
   },
-  john: { Acts: "john-the-apostle", Galatians: "john-the-apostle" },
+  // "Revelation": all four occurrences (1:1, 1:4, 1:9, 22:8) are the John who names himself as the
+  // book's author and its exile on Patmos. Ruled to john-the-apostle rather than left on the
+  // Baptist — who died some sixty years earlier and is wrong under every reading — on the grounds
+  // that the app's own copy already says it in print: the exile article opens "The apostle John",
+  // and john-the-apostle carries "the Beloved Disciple" as a reader-facing alternate name. Linking
+  // adds no claim the prose beside it does not already make. If the app is ever made neutral on
+  // Johannine authorship this entry and the five article owners below are the whole of the change.
+  john: { Acts: "john-the-apostle", Galatians: "john-the-apostle", Revelation: "john-the-apostle" },
   james: { Galatians: "james-brother-of-jesus", "1 Corinthians": "james-brother-of-jesus", Acts: "james-brother-of-jesus" },
   saul: { Acts: "paul-of-tarsus" },
   edom: { Genesis: "esau" },
@@ -691,6 +698,52 @@ const OWNER_NAME_OVERRIDES: Record<string, Record<string, string | null>> = {
     // in a list ("put John in the mid-second century") — a building and a book, neither a person.
     "rylands-papyrus-p52": null,
     "muratorian-fragment": null, // "Luke is named as the third Gospel and John as the fourth"
+
+    // The John of Patmos, in the five records that tell that story — the exile and its dating, the
+    // cave, the island, the Domitian persecution, and the Angels topic ("when the apostle John
+    // falls down to worship an angel in Revelation"). Same ruling and same reasoning as the
+    // Revelation book override above: every one of these articles already calls him the apostle in
+    // its own prose, so the link agrees with the sentence around it instead of contradicting it.
+    "bib-ac-john-exile-revelation": "john-the-apostle",
+    "cave-of-apocalypse-patmos": "john-the-apostle",
+    patmos: "john-the-apostle",
+    "bib-ac-domitian-persecution": "john-the-apostle",
+    angels: "john-the-apostle",
+
+    // The Fourth Gospel's narrating voice — "John notes", "John tells us", "John alone records",
+    // "Placed by John". These are references to the book speaking, not to a man being introduced,
+    // and they were all John the Baptist, who wrote none of it. Suppressed rather than pointed at
+    // the Apostle: no link removes the falsehood while asserting nothing about who held the pen,
+    // which is the same answer this file already gives the contested Nathan at 1 Kings 4:5.
+    //
+    // mary-magdalene and bib-loc-last-supper are in this list AND name the Apostle ("she runs to
+    // tell Peter and John", "Jesus sends Peter and John ahead"). Those two are recovered by the
+    // "Peter and John" context rule, which is checked before this table — that is what makes a
+    // record with two different Johns resolvable at all.
+    "judas-iscariot": null,
+    "mary-magdalene": null,
+    "philip-the-apostle": null,
+    "bartholomew-nathanael": null,
+    "joseph-of-arimathea": null,
+    "martha-of-bethany": null,
+    "lazarus-of-bethany": null,
+    caiaphas: null,
+    "mary-mother-of-james-the-less": null,
+    "the-temple": null,
+    tabernacle: null,
+    "day-of-preparation": null,
+    "casting-lots": null,
+    passover: null,
+    "pilate-stone": null,
+    "bib-loc-wedding-at-cana": null,
+    "bib-loc-temple-cleansing-early": null,
+    "bib-loc-feeding-five-thousand": null,
+    "bib-loc-raising-of-lazarus": null,
+    "bib-loc-last-supper": null,
+    "bib-loc-burial-of-jesus": null,
+    "bib-loc-post-resurrection-appearances": null,
+    "bib-ac-council-of-nicaea": null,
+    "wld-rom-martyrdom-peter-paul": null,
   },
   // "Simeon": the only entry is Simeon at the temple (Luke 2), allowlisted to Luke for the reader.
   // Of the 10 prose mentions, 2 are his (Mary's page and Anna's) and 8 are not: Simeon son of Jacob
@@ -852,52 +905,135 @@ function looksLikeAName(matched: string): boolean {
  * live confessional question (see the flagged cases in scripts/name-linker/cases.mjs and §7 of
  * automation/manager/name-linker-scope.md). This rule takes no position on authorship: it removes
  * links on phrases that name a BOOK, which is neutral between every answer to that question. */
-const NAME_CONTEXT_SUPPRESSIONS: Record<string, { before?: RegExp[]; after?: RegExp[] }> = {
-  john: {
-    before: [
-      // The book. "1 John 2:1" never reaches here — NAME_PATTERN lists the verse-reference
-      // fragments first, so a reference carrying a chapter is matched whole as kind "verse". Only
-      // a bare "1 John" with no numbers after it gets this far.
-      /(?:^|[^\p{L}])(?:[123]|First|Second|Third)\s+$/u, // "1 John", "3 John"
-      /\b[Gg]ospels? of\s+$/, // "the Gospel of John"
-      /\b[Ll]etters? of\s+$/, // "two letters of John"
-      /\b[Bb]ooks? of\s+$/, // "the book of John"
-      // A patronymic: "Simon, son of John". This is Simon Peter's FATHER — a different man, and one
-      // this app has no entry for. It is why simon-peter's own page could not simply be handed to
-      // the Apostle by OWNER_NAME_OVERRIDES: the page names two Johns and an owner rule gives one
-      // answer. It also reaches a surface the harness cannot see: WEB reads "Simon the son of
-      // Jonah" at John 1:42 and 21:15-17 and so never triggers, but ASV reads "the son of John" in
-      // all four, and the app offers ASV. Checked against WEB: no verse contains "son of John".
-      /\bsons? of\s+$/,
-    ],
-    after: [
-      // The book again. Note how narrow the possessive is: "John's Gospel" is the book, but "John's
-      // baptism" (Acts 19:3) and "John's disciples" (Matthew 9:14) are the Baptist himself and must
-      // keep their links, so only a following "Gospel" counts.
-      /^['’]s\s+[Gg]ospel/, // "John's Gospel"
-      /^\s+chapter\b/i, // "John chapter 18"
-      // John Hyrcanus, the Hasmonean ruler — no entry, and named in articles (the Sadducees, the
-      // Pharisees, Herod's rise) that ALSO name the Apostle, so again an owner rule cannot separate
-      // them. Registering the full name on a person record would be the tidier fix if he is ever
-      // given one.
-      /^\s+Hyrcanus\b/,
-    ],
-  },
+interface NameContextRule {
+  /** An exact phrase from our own copy. Applies when the match falls INSIDE an occurrence of it.
+   * Used where a pattern would be reckless — see the hand-pinned book intros below. */
+  phrase?: string;
+  /** Matched against the ~24 characters immediately before the match, anchored to their end. */
+  before?: RegExp;
+  /** Matched against the ~24 characters immediately after the match, anchored to their start. */
+  after?: RegExp;
+  /** Person id to resolve to, or `null` for no link at all. */
+  to: string | null;
+}
+
+const NAME_CONTEXT_RULES: Record<string, NameContextRule[]> = {
+  john: [
+    // ── Resolution, not suppression. Checked first: it is the most specific thing we can say.
+    // "Peter and John" is the Apostle everywhere in the New Testament and everywhere in our own
+    // writing — there is no passage where the pair means the Baptist. This rule exists because two
+    // records (mary-magdalene, bib-loc-last-supper) name the Apostle in one sentence and the Fourth
+    // Gospel's narrator in the next, and OWNER_NAME_OVERRIDES gives one answer per record.
+    { before: /\bPeter and\s+$/, to: "john-the-apostle" },
+
+    // ── The book, by pattern. "1 John 2:1" never reaches here: NAME_PATTERN lists the
+    // verse-reference fragments first, so a reference carrying a chapter is matched whole as kind
+    // "verse". Only a bare "1 John" with no numbers after it gets this far.
+    { before: /(?:^|[^\p{L}])(?:[123]|First|Second|Third)\s+$/u, to: null }, // "1 John", "3 John"
+    { before: /\b[Gg]ospels? of\s+$/, to: null }, // "the Gospel of John"
+    { before: /\b[Ll]etters? of\s+$/, to: null }, // "two letters of John"
+    { before: /\b[Bb]ooks? of\s+$/, to: null }, // "the book of John"
+    // Note how narrow the possessive is: "John's Gospel" is the book, but "John's baptism"
+    // (Acts 19:3) and "John's disciples" (Matthew 9:14) are the Baptist himself and must keep
+    // their links, so only a following "Gospel" counts.
+    { after: /^['’]s\s+[Gg]ospel/, to: null }, // "John's Gospel"
+    { after: /^\s+chapter\b/i, to: null }, // "John chapter 18"
+
+    // ── Different men, by pattern.
+    // A patronymic: "Simon, son of John" — Simon Peter's FATHER, a different man with no entry. It
+    // is why simon-peter's own page could not simply be handed to the Apostle by
+    // OWNER_NAME_OVERRIDES: the page names two Johns. It also reaches a surface the harness cannot
+    // see — WEB reads "Simon the son of Jonah" at John 1:42 and 21:15-17 and so never triggers, but
+    // ASV reads "the son of John" in all four, and the app offers ASV. Checked against WEB: no
+    // verse contains "son of John".
+    { before: /\bsons? of\s+$/, to: null },
+    // John Hyrcanus, the Hasmonean ruler — no entry, and named in articles (the Sadducees, the
+    // Pharisees, Herod's rise) that ALSO name the Apostle. Registering the full name on a person
+    // record would be the tidier fix if he is ever given one.
+    { after: /^\s+Hyrcanus\b/, to: null },
+
+    // ── The book intros, pinned one at a time by their own words.
+    //
+    // BookIntroView passes no record id (a book intro has no record to pass), so OWNER_NAME_OVERRIDES
+    // cannot reach a single one of these 22 links, and they were all John the Baptist. Under the
+    // rulings recorded in automation/manager-inbox they all come out the same way — no link — but
+    // for two different reasons, so they are grouped and labelled rather than lumped.
+    //
+    // They are pinned by exact phrase ON PURPOSE. A bare name inside an appositive list ("Matthew,
+    // Luke, John, Acts") is precisely where a loose pattern does collateral damage, and an exact
+    // phrase cannot reach a sentence nobody has read. The cost is that rewriting one of these
+    // paragraphs silently unpins its link — which is why every one of them also has a regression
+    // case in scripts/name-linker/cases.mjs. If a case here starts failing, the copy moved: re-read
+    // the sentence and re-pin it, do not delete the case.
+    //
+    // The durable fix is for BookIntroView to pass the book name as excludeId, or for
+    // LinkedVerseText to take an explicit owner. That is a component change and belongs to whoever
+    // owns the components; until then this is the only lever a book intro has.
+
+    // The book named as a work — a title in a list, a manuscript's contents, a date of composition.
+    { phrase: "attested in Matthew, Luke, John, Acts", to: null },
+    { phrase: "large portions of both Luke and John, and it closely agrees", to: null },
+    { phrase: "John is strikingly different from the other three Gospels", to: null },
+    { phrase: "In John, Jesus speaks largely in extended discourses", to: null },
+    { phrase: "far from Ephesus, where John is traditionally held to have been written", to: null },
+    { phrase: "the older critical theory that John was a mid-2nd-century work", to: null },
+    { phrase: "near-complete copy of John and one of the oldest substantial", to: null },
+    { phrase: "large portions of both Luke and John and is an important early witness", to: null },
+    { phrase: "an important early witness to John's text", to: null },
+    { phrase: "it was not part of John's original text", to: null },
+    { phrase: "points to John circulating broadly and early in the church", to: null },
+
+    // The Fourth Gospel's and Revelation's narrating voice — "John states", "John writes", "John
+    // describes". Suppressed rather than resolved: naming the man is the authorship question, and
+    // no link asserts nothing. Same precedent as the contested Nathan at 1 Kings 4:5 above.
+    { phrase: "John states his purpose plainly near the end", to: null },
+    { phrase: "the material John chose to record", to: null },
+    { phrase: "and John writes as one who was there", to: null },
+    { phrase: "After the crucifixion, John gives vivid resurrection accounts", to: null },
+    { phrase: "the community, and John writes to strengthen those who remained", to: null },
+    { phrase: "John warns of 'antichrists' and deceivers", to: null },
+    { phrase: "John closes by assuring those who believe", to: null },
+    { phrase: "dramatic visions, John seeks to comfort and warn", to: null },
+    { phrase: "Revelation opens with John's overwhelming vision", to: null },
+    { phrase: "John is then caught up to heaven", to: null },
+    { phrase: "John describes a thousand-year reign", to: null },
+  ],
 };
 
-/** Do the words immediately around this match say it is NOT the person who owns the name?
+/** Do the words around this match say who it is — or that it is nobody?
  *
- * This is the only correction in the file that reads the surrounding text, and it is deliberately a
- * short, enumerated list rather than a general parser. It earns its place by being the only
- * mechanism that can reach the two hardest cases: a book title (which must link to no person at
- * all, and which the Bible reader's book/verse tables cannot see because the biblical text never
- * names its own books), and a record whose article legitimately names two different men called
- * John, which OWNER_NAME_OVERRIDES gives one answer to and therefore cannot split. */
-function isSuppressedByContext(nameLower: string, text: string, start: number, end: number): boolean {
-  const rules = NAME_CONTEXT_SUPPRESSIONS[nameLower];
-  if (!rules) return false;
-  if (rules.before?.some((re) => re.test(text.slice(Math.max(0, start - 24), start)))) return true;
-  return rules.after?.some((re) => re.test(text.slice(end, end + 24))) ?? false;
+ * The only correction in this file that reads the surrounding text, and deliberately a short,
+ * enumerated list rather than a general parser. It earns its place by reaching three things nothing
+ * else can: a book title (which must link to no person at all, and which the book/verse tables
+ * cannot see because the biblical text never names its own books); a record whose article
+ * legitimately names two different men called John, which OWNER_NAME_OVERRIDES gives one answer to;
+ * and a book intro, which passes no record id at all.
+ *
+ * Returns `undefined` when no rule applies — distinct from a rule that applies and says `null`,
+ * which means "this is deliberately not a link". */
+function resolveByContext(
+  nameLower: string,
+  text: string,
+  start: number,
+  end: number
+): { to: string | null } | undefined {
+  const rules = NAME_CONTEXT_RULES[nameLower];
+  if (!rules) return undefined;
+  const before = text.slice(Math.max(0, start - 24), start);
+  const after = text.slice(end, end + 24);
+  for (const rule of rules) {
+    if (rule.phrase !== undefined) {
+      // The match must fall inside an occurrence of the phrase, not merely share a paragraph with it.
+      for (let i = text.indexOf(rule.phrase); i !== -1; i = text.indexOf(rule.phrase, i + 1)) {
+        if (start >= i && end <= i + rule.phrase.length) return { to: rule.to };
+      }
+      continue;
+    }
+    if (rule.before && !rule.before.test(before)) continue;
+    if (rule.after && !rule.after.test(after)) continue;
+    if (rule.before || rule.after) return { to: rule.to };
+  }
+  return undefined;
 }
 
 function escapeRegExp(s: string): string {
@@ -962,18 +1098,25 @@ export function computeLinkAnnotations(
         const verseOverrides = book && verseKey ? VERSE_NAME_OVERRIDES[nameLower]?.[book] : undefined;
         const hasVerseOverride = !!verseOverrides && Object.prototype.hasOwnProperty.call(verseOverrides, verseKey!);
 
+        const contextRule = hasVerseOverride ? undefined : resolveByContext(nameLower, text, start, end);
+
         if (hasVerseOverride) {
           const verseId = verseOverrides![verseKey!];
           if (verseId !== null && verseId !== excludeId) {
             annotations.push({ start, end, text: name, kind: ID_TO_KIND.get(verseId) ?? entry.kind, id: verseId });
           }
           // verseId === null means this exact mention is a different, unrepresented person — no link.
-        } else if (isSuppressedByContext(nameLower, text, start, end)) {
-          // "the Gospel of John", "1 John", "John's Gospel" — the book, not a man. "Simon, son of
-          // John", "John Hyrcanus" — a different man with no entry. Either way, no link.
-          // Checked after the per-verse table for the same reason CAPITALISED_ONLY is: an explicit
-          // verse answer should still win. Checked BEFORE OWNER_NAME_OVERRIDES so that an owner
-          // rule written for the person cannot resurrect a link on a book title.
+        } else if (contextRule) {
+          // The words around the match settle it. "the Gospel of John", "1 John", "John's Gospel" —
+          // the book, not a man. "Simon, son of John", "John Hyrcanus" — a different man with no
+          // entry. "Peter and John" — the Apostle. Checked after the per-verse table for the same
+          // reason CAPITALISED_ONLY is: an explicit verse answer should still win. Checked BEFORE
+          // OWNER_NAME_OVERRIDES so that a record-wide rule cannot resurrect a link on a book title,
+          // and so the two records naming both an Apostle and a narrator resolve each separately.
+          const ctxId = contextRule.to;
+          if (ctxId !== null && ctxId !== excludeId) {
+            annotations.push({ start, end, text: name, kind: ID_TO_KIND.get(ctxId) ?? entry.kind, id: ctxId });
+          }
         } else if (CAPITALISED_ONLY.has(nameLower) && !looksLikeAName(name)) {
           // An ordinary English word, not the name it shares. No link. Checked AFTER the per-verse
           // table on purpose: a verse override can still force a link on a lowercase match if some

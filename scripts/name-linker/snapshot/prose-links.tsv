@@ -1,6 +1,5 @@
 bookIntro.manuscripts|-|00688f0650	117	Hezekiah	hezekiah
 bookIntro.manuscripts|-|00688f0650	12	Hezekiah	hezekiah
-bookIntro.manuscripts|-|0413b3fde3	95	John	john-the-baptist
 bookIntro.manuscripts|-|06acf2f0cc	35	Peter	simon-peter
 bookIntro.manuscripts|-|0816ac86a7	13	Ezekiel	ezekiel
 bookIntro.manuscripts|-|0888454258	0	Ezra	ezra
@@ -41,8 +40,6 @@ bookIntro.manuscripts|-|3af3fbd854	205	Nehemiah	nehemiah
 bookIntro.manuscripts|-|3af3fbd854	335	Zerubbabel	zerubbabel
 bookIntro.manuscripts|-|3af3fbd854	717	Ezra	ezra
 bookIntro.manuscripts|-|3e6c639b3c	36	Timothy	timothy
-bookIntro.manuscripts|-|430ebbd8b9	479	John	john-the-baptist
-bookIntro.manuscripts|-|430ebbd8b9	708	John	john-the-baptist
 bookIntro.manuscripts|-|4682dc5370	0	Luke	luke-evangelist
 bookIntro.manuscripts|-|4682dc5370	50	Luke	luke-evangelist
 bookIntro.manuscripts|-|4682dc5370	91	Theophilus	theophilus
@@ -86,7 +83,6 @@ bookIntro.manuscripts|-|6cc6f5ba3f	49	Samuel	samuel
 bookIntro.manuscripts|-|6e1ff49880	45	David	david
 bookIntro.manuscripts|-|718e07a2a3	108	Jesus	jesus-of-nazareth
 bookIntro.manuscripts|-|718e07a2a3	22	Zechariah	zechariah-father-of-john-baptist
-bookIntro.manuscripts|-|719537ead7	145	John	john-the-baptist
 bookIntro.manuscripts|-|7228a600d1	137	Paul	paul-of-tarsus
 bookIntro.manuscripts|-|725b2e4022	2	Peter	simon-peter
 bookIntro.manuscripts|-|779e42061a	78	Zechariah	zechariah-father-of-john-baptist
@@ -105,9 +101,7 @@ bookIntro.manuscripts|-|98cb49a416	32	Joshua	joshua
 bookIntro.manuscripts|-|9d7eb4c852	166	Isaiah	isaiah
 bookIntro.manuscripts|-|9d7eb4c852	20	Isaiah	isaiah
 bookIntro.manuscripts|-|9e07fe101e	12	Ezra	ezra
-bookIntro.manuscripts|-|9ec388e995	126	John	john-the-baptist
 bookIntro.manuscripts|-|9ec388e995	75	Luke	luke-evangelist
-bookIntro.manuscripts|-|9ec388e995	84	John	john-the-baptist
 bookIntro.manuscripts|-|9ef3503f19	0	Esther	esther
 bookIntro.manuscripts|-|9fac849f8a	73	Solomon	solomon
 bookIntro.manuscripts|-|a0545813d0	236	Manasseh	manasseh-king-of-judah
@@ -129,14 +123,12 @@ bookIntro.manuscripts|-|a49aa24da5	783	David	david
 bookIntro.manuscripts|-|a4bbd6df59	22	Daniel	daniel
 bookIntro.manuscripts|-|a4bbd6df59	248	Azariah	uzziah
 bookIntro.manuscripts|-|a4bbd6df59	300	the Dragon	satan
-bookIntro.manuscripts|-|a5d16c39a5	215	John	john-the-baptist
 bookIntro.manuscripts|-|a606cc7ef3	0	Titus	titus
 bookIntro.manuscripts|-|a77e6771f7	91	James	james-son-of-zebedee
 bookIntro.manuscripts|-|a8efcb5323	8	Ruth	ruth
 bookIntro.manuscripts|-|b286c2356b	49	Samuel	samuel
 bookIntro.manuscripts|-|b5ae8816d5	148	Samuel	samuel
 bookIntro.manuscripts|-|b91968616d	104	Luke	luke-evangelist
-bookIntro.manuscripts|-|b91968616d	113	John	john-the-baptist
 bookIntro.manuscripts|-|b9392f518e	8	Daniel	daniel
 bookIntro.manuscripts|-|b9719fb3c8	37	Luke	luke-evangelist
 bookIntro.manuscripts|-|b9719fb3c8	88	Theophilus	theophilus
@@ -238,7 +230,6 @@ bookIntro.summary|-|1f8a6eae2d	256	Saul	saul-king-of-israel
 bookIntro.summary|-|1f8a6eae2d	92	Saul	saul-king-of-israel
 bookIntro.summary|-|24143de932	267	David	david
 bookIntro.summary|-|25009e841c	20	Ezekiel	ezekiel
-bookIntro.summary|-|2525e18c41	130	John	john-the-baptist
 bookIntro.summary|-|2525e18c41	207	Satan	satan
 bookIntro.summary|-|25ae0b3143	374	Jesus	jesus-of-nazareth
 bookIntro.summary|-|26390d1b2c	148	Naomi	naomi
@@ -305,12 +296,8 @@ bookIntro.summary|-|487af1c168	0	Paul	paul-of-tarsus
 bookIntro.summary|-|4c442fb3bf	29	Diotrephes	diotrephes
 bookIntro.summary|-|4c49846d4f	206	Peter	simon-peter
 bookIntro.summary|-|4c49846d4f	426	the Holy Spirit	holy-spirit
-bookIntro.summary|-|4f0b8c7563	0	John	john-the-baptist
 bookIntro.summary|-|4f15bbfa12	107	Mark	john-mark
 bookIntro.summary|-|4f15bbfa12	117	Luke	luke-evangelist
-bookIntro.summary|-|4f15bbfa12	158	John	john-the-baptist
-bookIntro.summary|-|4f15bbfa12	280	John	john-the-baptist
-bookIntro.summary|-|4f15bbfa12	3	John	john-the-baptist
 bookIntro.summary|-|4f15bbfa12	530	Jesus	jesus-of-nazareth
 bookIntro.summary|-|4f15bbfa12	9	Jesus	jesus-of-nazareth
 bookIntro.summary|-|50a7154a86	50	Paul	paul-of-tarsus
@@ -323,7 +310,6 @@ bookIntro.summary|-|532fc619c9	1130	Mark	john-mark
 bookIntro.summary|-|532fc619c9	386	Mark	john-mark
 bookIntro.summary|-|532fc619c9	595	Mark	john-mark
 bookIntro.summary|-|532fc619c9	723	Luke	luke-evangelist
-bookIntro.summary|-|532fc619c9	729	John	john-the-baptist
 bookIntro.summary|-|532fc619c9	86	Jesus	jesus-of-nazareth
 bookIntro.summary|-|532fc619c9	934	Mark	john-mark
 bookIntro.summary|-|54c97f0f87	135	Moses	moses
@@ -370,7 +356,6 @@ bookIntro.summary|-|6d75aa74ab	437	Philemon	philemon
 bookIntro.summary|-|6efec66083	145	Thomas	thomas-apostle
 bookIntro.summary|-|6efec66083	211	Jesus	jesus-of-nazareth
 bookIntro.summary|-|6efec66083	226	Peter	simon-peter
-bookIntro.summary|-|6efec66083	23	John	john-the-baptist
 bookIntro.summary|-|6efec66083	312	Jesus	jesus-of-nazareth
 bookIntro.summary|-|6efec66083	63	Mary Magdalene	mary-magdalene
 bookIntro.summary|-|6f82dc079f	0	Luke	luke-evangelist
@@ -436,7 +421,6 @@ bookIntro.summary|-|99516c43d6	233	Jesus	jesus-of-nazareth
 bookIntro.summary|-|9981d9f1af	176	Timothy	timothy
 bookIntro.summary|-|9981d9f1af	67	Paul	paul-of-tarsus
 bookIntro.summary|-|9c0d5035c5	24	Paul	paul-of-tarsus
-bookIntro.summary|-|9cdbf145ec	22	John	john-the-baptist
 bookIntro.summary|-|9f83467527	126	Ruth	ruth
 bookIntro.summary|-|9f83467527	174	Obed	obed
 bookIntro.summary|-|9f83467527	19	Ruth	ruth
@@ -485,7 +469,6 @@ bookIntro.summary|-|b5769c6caa	81	Luke	luke-evangelist
 bookIntro.summary|-|bac145bbd1	117	Peter	simon-peter
 bookIntro.summary|-|bac145bbd1	227	the devil	satan
 bookIntro.summary|-|bc2e06e051	181	Jesus	jesus-of-nazareth
-bookIntro.summary|-|bc2e06e051	220	John	john-the-baptist
 bookIntro.summary|-|bdbe782d62	0	Paul	paul-of-tarsus
 bookIntro.summary|-|bdbe782d62	84	Timothy	timothy
 bookIntro.summary|-|bf5011a25b	0	Paul	paul-of-tarsus
@@ -529,13 +512,11 @@ bookIntro.summary|-|db50eb34db	264	Jesus	jesus-of-nazareth
 bookIntro.summary|-|db50eb34db	42	Jesus	jesus-of-nazareth
 bookIntro.summary|-|e055278300	44	Moses	moses
 bookIntro.summary|-|e22f4817b0	236	Paul	paul-of-tarsus
-bookIntro.summary|-|e2f409771c	244	John	john-the-baptist
 bookIntro.summary|-|e64eeb99a0	269	Peter	simon-peter
 bookIntro.summary|-|e64eeb99a0	33	Paul	paul-of-tarsus
 bookIntro.summary|-|e7bb60ca38	372	Jesus	jesus-of-nazareth
 bookIntro.summary|-|e9d7335fda	49	Paul	paul-of-tarsus
 bookIntro.summary|-|eae45b62cc	0	James	james-son-of-zebedee
-bookIntro.summary|-|ed76108bda	0	John	john-the-baptist
 bookIntro.summary|-|ee23d799c3	211	the Holy Spirit	holy-spirit
 bookIntro.summary|-|ee23d799c3	268	Jesus	jesus-of-nazareth
 bookIntro.summary|-|ee23d799c3	72	Jesus	jesus-of-nazareth
@@ -632,7 +613,6 @@ bookIntro.whyWritten|-|72bb27554a	262	Elijah	elijah
 bookIntro.whyWritten|-|72bb27554a	30	Solomon	solomon
 bookIntro.whyWritten|-|7484752c22	349	Zerubbabel	zerubbabel
 bookIntro.whyWritten|-|7484752c22	364	Joshua	joshua
-bookIntro.whyWritten|-|79e88f8f30	0	John	john-the-baptist
 bookIntro.whyWritten|-|79e88f8f30	100	Jesus	jesus-of-nazareth
 bookIntro.whyWritten|-|79e88f8f30	239	Jesus	jesus-of-nazareth
 bookIntro.whyWritten|-|79e88f8f30	431	Jesus	jesus-of-nazareth
@@ -651,7 +631,6 @@ bookIntro.whyWritten|-|9ee0a0ed60	0	Daniel	daniel
 bookIntro.whyWritten|-|a35f085ea1	0	Jeremiah	jeremiah
 bookIntro.whyWritten|-|b0c9b35313	0	Ezekiel	ezekiel
 bookIntro.whyWritten|-|b3fcdb5940	0	James	james-son-of-zebedee
-bookIntro.whyWritten|-|b472c0bc2f	222	John	john-the-baptist
 bookIntro.whyWritten|-|bdd49a55bf	0	Paul	paul-of-tarsus
 bookIntro.whyWritten|-|bdd49a55bf	139	Timothy	timothy
 bookIntro.whyWritten|-|bdd49a55bf	224	Timothy	timothy
@@ -701,7 +680,6 @@ bookIntro.whyWritten|-|f6533da446	250	Paul	paul-of-tarsus
 bookIntro.whyWritten|-|f92c4bae7f	0	Paul	paul-of-tarsus
 bookIntro.whyWritten|-|f92c4bae7f	292	Paul	paul-of-tarsus
 bookIntro.whyWritten|-|f9842b030c	149	Jesus	jesus-of-nazareth
-bookIntro.whyWritten|-|f9842b030c	240	John	john-the-baptist
 bookIntro.whyWritten|-|f9c5d1dc4b	353	Jesus Christ	jesus-of-nazareth
 location.archaeology.note|antioch-pisidia|6bfdd2a9e6	249	Paul	paul-of-tarsus
 location.archaeology.note|antioch-pisidia|6bfdd2a9e6	41	Augustus	caesar-augustus
@@ -746,8 +724,8 @@ location.archaeology.note|lystra|0b11ffd4d2	118	Felix	antonius-felix
 location.archaeology.note|malta|3b297ee4ae	306	Paul	paul-of-tarsus
 location.archaeology.note|mount-nebo|2221c3f64e	23	Moses	moses
 location.archaeology.note|nazareth|5733b27bc4	301	Jesus	jesus-of-nazareth
-location.archaeology.note|patmos|d15d61065f	141	John	john-the-baptist
-location.archaeology.note|patmos|d15d61065f	294	John	john-the-baptist
+location.archaeology.note|patmos|d15d61065f	141	John	john-the-apostle
+location.archaeology.note|patmos|d15d61065f	294	John	john-the-apostle
 location.archaeology.note|pergamum|442ec689a4	330	Satan	satan
 location.archaeology.note|philippi|49586a9916	139	Luke	luke-evangelist
 location.archaeology.note|philippi|49586a9916	294	Philip	philip-the-apostle
@@ -844,9 +822,7 @@ person.controversies|john-the-baptist|ea4e5673ae	206	Antipas	herod-antipas
 person.controversies|john-the-baptist|ea4e5673ae	85	Herod Antipas	herod-antipas
 person.controversies|joram-king-of-israel|67dc8209a6	152	Elisha	elisha
 person.controversies|judas-iscariot|38fe713ee4	134	Luke	luke-evangelist
-person.controversies|judas-iscariot|38fe713ee4	143	John	john-the-baptist
 person.controversies|judas-iscariot|38fe713ee4	262	Jesus	jesus-of-nazareth
-person.controversies|judas-iscariot|38fe713ee4	95	John	john-the-baptist
 person.controversies|junia|f85e93af0b	88	John Chrysostom	john-chrysostom
 person.controversies|lazarus-of-bethany|12599e5adb	79	Jesus	jesus-of-nazareth
 person.controversies|magi|48980da8bb	46	Luke	luke-evangelist
@@ -1159,12 +1135,10 @@ person.lifeStory|barnabas|dcba37e25c	31	Paul	paul-of-tarsus
 person.lifeStory|barnabas|dcba37e25c	441	Saul	paul-of-tarsus
 person.lifeStory|bartholomew-nathanael|129ab23ab3	314	Jesus	jesus-of-nazareth
 person.lifeStory|bartholomew-nathanael|129ab23ab3	323	Philip	philip-the-apostle
-person.lifeStory|bartholomew-nathanael|129ab23ab3	514	John	john-the-baptist
 person.lifeStory|bartholomew-nathanael|129ab23ab3	95	Philip	philip-the-apostle
 person.lifeStory|bartholomew-nathanael|c1ab57ea31	168	Jesus	jesus-of-nazareth
 person.lifeStory|bartholomew-nathanael|c1ab57ea31	198	Philip	philip-the-apostle
 person.lifeStory|bartholomew-nathanael|c1ab57ea31	24	Philip	philip-the-apostle
-person.lifeStory|bartholomew-nathanael|c1ab57ea31	3	John	john-the-baptist
 person.lifeStory|bartholomew-nathanael|c1ab57ea31	460	Jesus	jesus-of-nazareth
 person.lifeStory|bartholomew-nathanael|c1ab57ea31	75	Jesus of Nazareth	jesus-of-nazareth
 person.lifeStory|bathsheba|197adb44f6	12	Nathan	nathan-the-prophet
@@ -1235,7 +1209,6 @@ person.lifeStory|caiaphas|1c2b20b097	48	Jesus	jesus-of-nazareth
 person.lifeStory|caiaphas|5be5920d59	134	Jesus	jesus-of-nazareth
 person.lifeStory|caiaphas|5be5920d59	33	Jesus	jesus-of-nazareth
 person.lifeStory|caiaphas|5be5920d59	46	Lazarus	lazarus-of-bethany
-person.lifeStory|caiaphas|5be5920d59	466	John	john-the-baptist
 person.lifeStory|caiaphas|dea8d6c946	170	Pontius Pilate	pontius-pilate
 person.lifeStory|caiaphas|dea8d6c946	196	Pilate	pontius-pilate
 person.lifeStory|cain|3760c71f22	132	Abel	abel
@@ -1893,7 +1866,6 @@ person.lifeStory|joseph-of-arimathea|747a996349	0	Joseph	joseph-son-of-jacob
 person.lifeStory|joseph-of-arimathea|747a996349	145	Jesus	jesus-of-nazareth
 person.lifeStory|joseph-of-arimathea|747a996349	152	Luke	luke-evangelist
 person.lifeStory|joseph-of-arimathea|747a996349	181	Joseph	joseph-son-of-jacob
-person.lifeStory|joseph-of-arimathea|747a996349	247	John	john-the-baptist
 person.lifeStory|joseph-of-arimathea|747a996349	262	Joseph	joseph-son-of-jacob
 person.lifeStory|joseph-of-arimathea|747a996349	288	Jesus	jesus-of-nazareth
 person.lifeStory|joseph-of-arimathea|747a996349	70	Mark	john-mark
@@ -1945,10 +1917,8 @@ person.lifeStory|judah-son-of-jacob|e86f69731d	69	Leah	leah
 person.lifeStory|judas-iscariot|2399143ba2	41	Jesus	jesus-of-nazareth
 person.lifeStory|judas-iscariot|c0e8a6641d	84	Peter	simon-peter
 person.lifeStory|judas-iscariot|d9d2435a99	148	Luke	luke-evangelist
-person.lifeStory|judas-iscariot|d9d2435a99	157	John	john-the-baptist
 person.lifeStory|judas-iscariot|d9d2435a99	178	Satan	satan
 person.lifeStory|judas-iscariot|d9d2435a99	280	Jesus	jesus-of-nazareth
-person.lifeStory|judas-iscariot|d9d2435a99	399	John	john-the-baptist
 person.lifeStory|judas-iscariot|d9d2435a99	414	Jesus	jesus-of-nazareth
 person.lifeStory|judas-iscariot|d9d2435a99	88	Jesus	jesus-of-nazareth
 person.lifeStory|judas-iscariot|dc48887185	276	Jesus	jesus-of-nazareth
@@ -1959,17 +1929,14 @@ person.lifeStory|junia|f63dab478b	40	Paul	paul-of-tarsus
 person.lifeStory|lazarus-of-bethany|6201a38b0a	107	Jesus	jesus-of-nazareth
 person.lifeStory|lazarus-of-bethany|6201a38b0a	261	Jesus	jesus-of-nazareth
 person.lifeStory|lazarus-of-bethany|6201a38b0a	432	Jesus	jesus-of-nazareth
-person.lifeStory|lazarus-of-bethany|6201a38b0a	53	John	john-the-baptist
 person.lifeStory|lazarus-of-bethany|a4268fce3d	13	Jesus	jesus-of-nazareth
 person.lifeStory|lazarus-of-bethany|a4268fce3d	205	Jesus	jesus-of-nazareth
-person.lifeStory|lazarus-of-bethany|a4268fce3d	324	John	john-the-baptist
 person.lifeStory|lazarus-of-bethany|a4268fce3d	398	Jesus	jesus-of-nazareth
 person.lifeStory|lazarus-of-bethany|da1bebcabb	174	Jesus	jesus-of-nazareth
 person.lifeStory|lazarus-of-bethany|da1bebcabb	214	Jesus	jesus-of-nazareth
 person.lifeStory|lazarus-of-bethany|da1bebcabb	353	Jesus	jesus-of-nazareth
 person.lifeStory|lazarus-of-bethany|da1bebcabb	42	Martha	martha-of-bethany
 person.lifeStory|lazarus-of-bethany|da1bebcabb	53	Mary	mary-mother-of-jesus
-person.lifeStory|lazarus-of-bethany|da1bebcabb	63	John	john-the-baptist
 person.lifeStory|lazarus-of-bethany|da1bebcabb	79	Jesus	jesus-of-nazareth
 person.lifeStory|leah|7fd0e8bb41	124	Rachel	rachel
 person.lifeStory|leah|7fd0e8bb41	226	Jacob	jacob
@@ -2036,7 +2003,6 @@ person.lifeStory|mark-antony|865156d374	356	Octavian	caesar-augustus
 person.lifeStory|mark-antony|865156d374	73	Caesar	tiberius-caesar
 person.lifeStory|mark-antony|aeee86175b	415	Herod the Great	herod-the-great
 person.lifeStory|martha-of-bethany|45ab648e95	188	Luke	luke-evangelist
-person.lifeStory|martha-of-bethany|45ab648e95	215	John	john-the-baptist
 person.lifeStory|martha-of-bethany|45ab648e95	63	Jesus	jesus-of-nazareth
 person.lifeStory|martha-of-bethany|4b6c51062f	111	Jesus	jesus-of-nazareth
 person.lifeStory|martha-of-bethany|4b6c51062f	333	Peter	simon-peter
@@ -2061,15 +2027,13 @@ person.lifeStory|mary-magdalene|8f31f906ae	166	Jesus	jesus-of-nazareth
 person.lifeStory|mary-magdalene|8f31f906ae	271	Joseph of Arimathea	joseph-of-arimathea
 person.lifeStory|mary-magdalene|8f31f906ae	65	Jesus	jesus-of-nazareth
 person.lifeStory|mary-magdalene|e373336d03	131	Peter	simon-peter
-person.lifeStory|mary-magdalene|e373336d03	141	John	john-the-baptist
+person.lifeStory|mary-magdalene|e373336d03	141	John	john-the-apostle
 person.lifeStory|mary-magdalene|e373336d03	319	Mary	mary-mother-of-jesus
 person.lifeStory|mary-magdalene|e373336d03	341	Jesus	jesus-of-nazareth
 person.lifeStory|mary-magdalene|e373336d03	449	Jesus	jesus-of-nazareth
-person.lifeStory|mary-magdalene|e373336d03	98	John	john-the-baptist
 person.lifeStory|mary-mother-of-james-the-less|38aca1a7b0	133	Jesus	jesus-of-nazareth
 person.lifeStory|mary-mother-of-james-the-less|38aca1a7b0	294	Jesus	jesus-of-nazareth
 person.lifeStory|mary-mother-of-james-the-less|38aca1a7b0	44	James	james-son-of-zebedee
-person.lifeStory|mary-mother-of-james-the-less|38aca1a7b0	536	John	john-the-baptist
 person.lifeStory|mary-mother-of-jesus|5bde7ba8d4	116	Jesus	jesus-of-nazareth
 person.lifeStory|mary-mother-of-jesus|5bde7ba8d4	240	Jesus	jesus-of-nazareth
 person.lifeStory|mary-mother-of-jesus|5bde7ba8d4	7	Jesus	jesus-of-nazareth
@@ -2283,7 +2247,6 @@ person.lifeStory|philemon|38d7032861	21	Paul	paul-of-tarsus
 person.lifeStory|philemon|38d7032861	78	Onesimus	onesimus
 person.lifeStory|philemon|65fd62ec65	154	Paul	paul-of-tarsus
 person.lifeStory|philip-the-apostle|5a30a62dac	167	Philip the Evangelist	philip-the-evangelist
-person.lifeStory|philip-the-apostle|7635e2b93d	0	John	john-the-baptist
 person.lifeStory|philip-the-apostle|7635e2b93d	355	Jesus	jesus-of-nazareth
 person.lifeStory|philip-the-apostle|7635e2b93d	452	Jesus	jesus-of-nazareth
 person.lifeStory|philip-the-apostle|7635e2b93d	493	Jesus	jesus-of-nazareth
@@ -2902,7 +2865,7 @@ poi.archaeology.note|caesarea-philippi|dad29b93e4	184	Herod the Great	herod-the-
 poi.archaeology.note|caesarea-philippi|dad29b93e4	218	Augustus	caesar-augustus
 poi.archaeology.note|catacombs-of-priscilla-rome|781c038e61	456	Mary	mary-mother-of-jesus
 poi.archaeology.note|cave-church-st-peter-antioch|f878e8c9c9	227	Peter	simon-peter
-poi.archaeology.note|cave-of-apocalypse-patmos|a1e6d4267b	409	John	john-the-baptist
+poi.archaeology.note|cave-of-apocalypse-patmos|a1e6d4267b	409	John	john-the-apostle
 poi.archaeology.note|chorazin|664628df5d	226	Moses	moses
 poi.archaeology.note|chorazin|664628df5d	260	Jesus	jesus-of-nazareth
 poi.archaeology.note|chorazin|664628df5d	315	Moses	moses
@@ -3027,9 +2990,9 @@ poi.description|caesarea-philippi|5c3efdd6cf	234	Jesus	jesus-of-nazareth
 poi.description|catacombs-of-priscilla-rome|2e40708bc9	63	Priscilla	priscilla
 poi.description|cave-church-st-peter-antioch|2e6a8c17f7	313	Paul	paul-of-tarsus
 poi.description|cave-church-st-peter-antioch|2e6a8c17f7	322	Barnabas	barnabas
-poi.description|cave-of-apocalypse-patmos|c84d818fb2	112	John	john-the-baptist
-poi.description|cave-of-apocalypse-patmos|c84d818fb2	284	John	john-the-baptist
-poi.description|cave-of-apocalypse-patmos|c84d818fb2	393	John	john-the-baptist
+poi.description|cave-of-apocalypse-patmos|c84d818fb2	112	John	john-the-apostle
+poi.description|cave-of-apocalypse-patmos|c84d818fb2	284	John	john-the-apostle
+poi.description|cave-of-apocalypse-patmos|c84d818fb2	393	John	john-the-apostle
 poi.description|chapel-of-ascension|f2fa15c8d9	95	Jesus	jesus-of-nazareth
 poi.description|chorazin|71ced53735	196	Jesus	jesus-of-nazareth
 poi.description|church-of-mary-ephesus|18cbfee53f	218	Mary	mary-mother-of-jesus
@@ -3218,13 +3181,12 @@ timelineEvent.article|bib-ac-antioch-church-founded|82deac9334	123	Barnabas	barn
 timelineEvent.article|bib-ac-antioch-church-founded|82deac9334	136	Saul	paul-of-tarsus
 timelineEvent.article|bib-ac-antioch-church-founded|82deac9334	223	Paul	paul-of-tarsus
 timelineEvent.article|bib-ac-council-of-nicaea|5b18df476c	36	Arius	arius
-timelineEvent.article|bib-ac-council-of-nicaea|5b18df476c	456	John	john-the-baptist
 timelineEvent.article|bib-ac-council-of-nicaea|5b18df476c	507	Paul	paul-of-tarsus
 timelineEvent.article|bib-ac-council-of-nicaea|a194bfacac	261	Arius	arius
 timelineEvent.article|bib-ac-council-of-nicaea|a194bfacac	358	God the Father	god-the-father
 timelineEvent.article|bib-ac-domitian-persecution|1ae10624ef	209	Antipas	herod-antipas
 timelineEvent.article|bib-ac-domitian-persecution|1ae10624ef	252	Satan	satan
-timelineEvent.article|bib-ac-domitian-persecution|1ae10624ef	556	John	john-the-baptist
+timelineEvent.article|bib-ac-domitian-persecution|1ae10624ef	556	John	john-the-apostle
 timelineEvent.article|bib-ac-domitian-persecution|4dd18abad0	106	Nero	nero-caesar
 timelineEvent.article|bib-ac-fall-of-jerusalem|3d6f042c6d	91	Jesus	jesus-of-nazareth
 timelineEvent.article|bib-ac-fall-of-jerusalem|d66e51fc4c	136	Titus	titus
@@ -3270,14 +3232,14 @@ timelineEvent.article|bib-ac-jerusalem-council|4229cecdc5	203	Barnabas	barnabas
 timelineEvent.article|bib-ac-jerusalem-council|4229cecdc5	23	Peter	simon-peter
 timelineEvent.article|bib-ac-jerusalem-council|4229cecdc5	294	James	james-son-of-zebedee
 timelineEvent.article|bib-ac-john-exile-revelation|11582682e0	272	the dragon	satan
-timelineEvent.article|bib-ac-john-exile-revelation|61ab54eb5c	101	John	john-the-baptist
+timelineEvent.article|bib-ac-john-exile-revelation|61ab54eb5c	101	John	john-the-apostle
 timelineEvent.article|bib-ac-john-exile-revelation|61ab54eb5c	318	Nero	nero-caesar
-timelineEvent.article|bib-ac-john-exile-revelation|61ab54eb5c	436	John	john-the-baptist
-timelineEvent.article|bib-ac-john-exile-revelation|61ab54eb5c	65	John	john-the-baptist
-timelineEvent.article|bib-ac-john-exile-revelation|e1c5f54752	12	John	john-the-baptist
+timelineEvent.article|bib-ac-john-exile-revelation|61ab54eb5c	436	John	john-the-apostle
+timelineEvent.article|bib-ac-john-exile-revelation|61ab54eb5c	65	John	john-the-apostle
+timelineEvent.article|bib-ac-john-exile-revelation|e1c5f54752	12	John	john-the-apostle
 timelineEvent.article|bib-ac-john-exile-revelation|e1c5f54752	201	Jesus	jesus-of-nazareth
 timelineEvent.article|bib-ac-john-exile-revelation|e1c5f54752	322	Jesus	jesus-of-nazareth
-timelineEvent.article|bib-ac-john-exile-revelation|e1c5f54752	373	John	john-the-baptist
+timelineEvent.article|bib-ac-john-exile-revelation|e1c5f54752	373	John	john-the-apostle
 timelineEvent.article|bib-ac-muratorian-fragment|6e630025b1	451	Paul	paul-of-tarsus
 timelineEvent.article|bib-ac-nero-fire-persecution|1f0dcd63cc	172	Nero	nero-caesar
 timelineEvent.article|bib-ac-nero-fire-persecution|1f0dcd63cc	359	Nero	nero-caesar
@@ -4017,7 +3979,6 @@ timelineEvent.article|bib-loc-birth-of-jesus|9d89d4f9a6	503	Isaiah	isaiah
 timelineEvent.article|bib-loc-burial-of-jesus|304ee20125	118	Joseph	joseph-son-of-jacob
 timelineEvent.article|bib-loc-burial-of-jesus|304ee20125	17	Jesus	jesus-of-nazareth
 timelineEvent.article|bib-loc-burial-of-jesus|304ee20125	315	Pilate	pontius-pilate
-timelineEvent.article|bib-loc-burial-of-jesus|c62b8718f9	107	John	john-the-baptist
 timelineEvent.article|bib-loc-burial-of-jesus|c62b8718f9	152	Jesus	jesus-of-nazareth
 timelineEvent.article|bib-loc-burial-of-jesus|c62b8718f9	221	Pilate	pontius-pilate
 timelineEvent.article|bib-loc-burial-of-jesus|c62b8718f9	241	Jesus	jesus-of-nazareth
@@ -4059,7 +4020,6 @@ timelineEvent.article|bib-loc-crucifixion|3969a0ed99	335	Pilate	pontius-pilate
 timelineEvent.article|bib-loc-crucifixion|b9d5660e35	15	Jesus	jesus-of-nazareth
 timelineEvent.article|bib-loc-crucifixion|b9d5660e35	490	Jesus	jesus-of-nazareth
 timelineEvent.article|bib-loc-feeding-five-thousand|f7b7c7ece9	160	Jesus	jesus-of-nazareth
-timelineEvent.article|bib-loc-feeding-five-thousand|f7b7c7ece9	403	John	john-the-baptist
 timelineEvent.article|bib-loc-feeding-five-thousand|f7b7c7ece9	476	Jesus	jesus-of-nazareth
 timelineEvent.article|bib-loc-feeding-five-thousand|fb966ed12d	0	Jesus	jesus-of-nazareth
 timelineEvent.article|bib-loc-feeding-five-thousand|fb966ed12d	114	John the Baptist	john-the-baptist
@@ -4108,12 +4068,10 @@ timelineEvent.article|bib-loc-john-baptist-ministry-begins|94a93a39ce	328	Zechar
 timelineEvent.article|bib-loc-john-baptist-ministry-begins|94a93a39ce	506	Elijah	elijah
 timelineEvent.article|bib-loc-last-supper|6e3106c0e3	0	Jesus	jesus-of-nazareth
 timelineEvent.article|bib-loc-last-supper|6e3106c0e3	12	Peter	simon-peter
-timelineEvent.article|bib-loc-last-supper|6e3106c0e3	198	John	john-the-baptist
-timelineEvent.article|bib-loc-last-supper|6e3106c0e3	22	John	john-the-baptist
+timelineEvent.article|bib-loc-last-supper|6e3106c0e3	22	John	john-the-apostle
 timelineEvent.article|bib-loc-last-supper|6e3106c0e3	267	Jesus	jesus-of-nazareth
 timelineEvent.article|bib-loc-last-supper|f4a557d253	17	Jesus	jesus-of-nazareth
 timelineEvent.article|bib-loc-last-supper|f4a557d253	361	Judas Iscariot	judas-iscariot
-timelineEvent.article|bib-loc-last-supper|f4a557d253	431	John	john-the-baptist
 timelineEvent.article|bib-loc-last-supper|f4a557d253	511	the Holy Spirit	holy-spirit
 timelineEvent.article|bib-loc-magi-flight-to-egypt|443cc544b3	201	Herod the Great	herod-the-great
 timelineEvent.article|bib-loc-magi-flight-to-egypt|443cc544b3	26	magi	magi
@@ -4136,7 +4094,6 @@ timelineEvent.article|bib-loc-parable-prodigal-son|a219fbbdda	586	Jesus	jesus-of
 timelineEvent.article|bib-loc-parable-prodigal-son|ea570fd922	53	Jesus	jesus-of-nazareth
 timelineEvent.article|bib-loc-post-resurrection-appearances|5361f2b6c3	130	Peter	simon-peter
 timelineEvent.article|bib-loc-post-resurrection-appearances|5361f2b6c3	23	Jesus	jesus-of-nazareth
-timelineEvent.article|bib-loc-post-resurrection-appearances|5361f2b6c3	314	John	john-the-baptist
 timelineEvent.article|bib-loc-post-resurrection-appearances|7761ec2300	322	Jesus	jesus-of-nazareth
 timelineEvent.article|bib-loc-post-resurrection-appearances|7761ec2300	62	Jesus	jesus-of-nazareth
 timelineEvent.article|bib-loc-post-resurrection-appearances|e0c3211fbd	19	Jesus	jesus-of-nazareth
@@ -4156,7 +4113,6 @@ timelineEvent.article|bib-loc-raising-of-lazarus|e40821d8c6	116	Jesus	jesus-of-n
 timelineEvent.article|bib-loc-raising-of-lazarus|e40821d8c6	13	Jesus	jesus-of-nazareth
 timelineEvent.article|bib-loc-raising-of-lazarus|e40821d8c6	301	Jesus	jesus-of-nazareth
 timelineEvent.article|bib-loc-raising-of-lazarus|e40821d8c6	444	Lazarus	lazarus-of-bethany
-timelineEvent.article|bib-loc-raising-of-lazarus|eaa604b564	0	John	john-the-baptist
 timelineEvent.article|bib-loc-raising-of-lazarus|eaa604b564	219	Jesus	jesus-of-nazareth
 timelineEvent.article|bib-loc-raising-of-lazarus|eaa604b564	47	Jesus	jesus-of-nazareth
 timelineEvent.article|bib-loc-resurrection|7573a08176	64	Jesus	jesus-of-nazareth
@@ -4184,11 +4140,9 @@ timelineEvent.article|bib-loc-sermon-on-the-mount|6a85e373e7	66	Jesus	jesus-of-n
 timelineEvent.article|bib-loc-sermon-on-the-mount|819ce4da23	0	Jesus	jesus-of-nazareth
 timelineEvent.article|bib-loc-sermon-on-the-mount|9009b67e71	19	Jesus	jesus-of-nazareth
 timelineEvent.article|bib-loc-sermon-on-the-mount|9009b67e71	281	Jesus	jesus-of-nazareth
-timelineEvent.article|bib-loc-temple-cleansing-early|2b755f3967	0	John	john-the-baptist
 timelineEvent.article|bib-loc-temple-cleansing-early|2b755f3967	408	Jesus	jesus-of-nazareth
 timelineEvent.article|bib-loc-temple-cleansing-early|2b755f3967	45	Jesus	jesus-of-nazareth
 timelineEvent.article|bib-loc-temple-cleansing-early|ce78a747b8	131	Jesus	jesus-of-nazareth
-timelineEvent.article|bib-loc-temple-cleansing-early|ce78a747b8	226	John	john-the-baptist
 timelineEvent.article|bib-loc-temple-cleansing-passion-week|0d9cddceb5	337	Jesus	jesus-of-nazareth
 timelineEvent.article|bib-loc-temple-cleansing-passion-week|0d9cddceb5	391	Isaiah	isaiah
 timelineEvent.article|bib-loc-temple-cleansing-passion-week|0d9cddceb5	402	Jeremiah	jeremiah
@@ -4246,8 +4200,6 @@ timelineEvent.article|bib-loc-triumphal-entry|739268d1fe	236	Jesus	jesus-of-naza
 timelineEvent.article|bib-loc-triumphal-entry|739268d1fe	273	Zechariah	zechariah-father-of-john-baptist
 timelineEvent.article|bib-loc-triumphal-entry|739268d1fe	55	Jesus	jesus-of-nazareth
 timelineEvent.article|bib-loc-wedding-at-cana|9d65051b77	0	Jesus	jesus-of-nazareth
-timelineEvent.article|bib-loc-wedding-at-cana|9d65051b77	315	John	john-the-baptist
-timelineEvent.article|bib-loc-wedding-at-cana|e81391a061	0	John	john-the-baptist
 timelineEvent.article|bib-loc-wedding-at-cana|e81391a061	300	Mary	mary-mother-of-jesus
 timelineEvent.article|bib-loc-wedding-at-cana|e81391a061	327	Jesus	jesus-of-nazareth
 timelineEvent.article|bib-loc-wedding-at-cana|e81391a061	68	Jesus	jesus-of-nazareth
@@ -5048,7 +5000,6 @@ timelineEvent.article|wld-rom-martyrdom-peter-paul|5cedd8c5dd	426	Peter	simon-pe
 timelineEvent.article|wld-rom-martyrdom-peter-paul|5cedd8c5dd	706	Jesus	jesus-of-nazareth
 timelineEvent.article|wld-rom-martyrdom-peter-paul|5cedd8c5dd	737	Peter	simon-peter
 timelineEvent.article|wld-rom-martyrdom-peter-paul|5cedd8c5dd	787	Peter	simon-peter
-timelineEvent.article|wld-rom-martyrdom-peter-paul|5cedd8c5dd	910	John	john-the-baptist
 timelineEvent.article|wld-rom-martyrdom-peter-paul|7a4e920582	395	Nero	nero-caesar
 timelineEvent.article|wld-rom-martyrdom-peter-paul|7a4e920582	78	Peter	simon-peter
 timelineEvent.article|wld-rom-martyrdom-peter-paul|fbb29b981b	101	Paul	paul-of-tarsus
@@ -5089,11 +5040,11 @@ timelineEvent.datingNotes|benedict-rule-c529|c138fa9d08	30	Gregory the Great	gre
 timelineEvent.datingNotes|bib-ac-antioch-church-founded|1c19c491f6	231	Barnabas	barnabas
 timelineEvent.datingNotes|bib-ac-antioch-church-founded|1c19c491f6	267	Saul	paul-of-tarsus
 timelineEvent.datingNotes|bib-ac-antioch-church-founded|1c19c491f6	81	Stephen	stephen-the-martyr
-timelineEvent.datingNotes|bib-ac-domitian-persecution|5ad0825c27	183	John	john-the-baptist
+timelineEvent.datingNotes|bib-ac-domitian-persecution|5ad0825c27	183	John	john-the-apostle
 timelineEvent.datingNotes|bib-ac-gallio-inscription|d8d3750878	109	Paul	paul-of-tarsus
 timelineEvent.datingNotes|bib-ac-gallio-inscription|d8d3750878	4	Gallio	gallio
 timelineEvent.datingNotes|bib-ac-jerusalem-council|febba500ee	60	Paul	paul-of-tarsus
-timelineEvent.datingNotes|bib-ac-john-exile-revelation|e5159fee2a	71	John	john-the-baptist
+timelineEvent.datingNotes|bib-ac-john-exile-revelation|e5159fee2a	71	John	john-the-apostle
 timelineEvent.datingNotes|bib-ac-nero-fire-persecution|f93db7d539	100	Paul	paul-of-tarsus
 timelineEvent.datingNotes|bib-ac-nero-fire-persecution|f93db7d539	111	Peter	simon-peter
 timelineEvent.datingNotes|bib-ac-nero-fire-persecution|f93db7d539	13	Nero	nero-caesar
@@ -5213,12 +5164,10 @@ timelineEvent.datingNotes|bib-loc-john-baptist-ministry-begins|af328a0c6d	78	Tib
 timelineEvent.datingNotes|bib-loc-last-supper|e041612e93	171	Jesus	jesus-of-nazareth
 timelineEvent.datingNotes|bib-loc-magi-flight-to-egypt|dc1cae5aa4	149	magi	magi
 timelineEvent.datingNotes|bib-loc-magi-flight-to-egypt|dc1cae5aa4	176	Jesus	jesus-of-nazareth
-timelineEvent.datingNotes|bib-loc-raising-of-lazarus|980e7dc06d	10	John	john-the-baptist
 timelineEvent.datingNotes|bib-loc-raising-of-lazarus|980e7dc06d	115	Jesus	jesus-of-nazareth
 timelineEvent.datingNotes|bib-loc-return-nazareth-childhood|eba50049e3	66	Jesus	jesus-of-nazareth
 timelineEvent.datingNotes|bib-loc-sermon-on-the-mount|ea27023e37	249	Jesus	jesus-of-nazareth
 timelineEvent.datingNotes|bib-loc-sermon-on-the-mount|ea27023e37	64	Luke	luke-evangelist
-timelineEvent.datingNotes|bib-loc-temple-cleansing-early|c73879e936	161	John	john-the-baptist
 timelineEvent.datingNotes|bib-loc-temple-cleansing-early|c73879e936	194	Jesus	jesus-of-nazareth
 timelineEvent.datingNotes|bib-loc-temple-cleansing-early|c73879e936	88	Mark	john-mark
 timelineEvent.datingNotes|bib-loc-temple-cleansing-early|c73879e936	98	Luke	luke-evangelist
@@ -5324,7 +5273,7 @@ topic.section|angels|1acfcbaf96	368	Jesus	jesus-of-nazareth
 topic.section|angels|1acfcbaf96	564	Peter	simon-peter
 topic.section|angels|1acfcbaf96	598	Jesus	jesus-of-nazareth
 topic.section|angels|499c7fc618	669	Luke	luke-evangelist
-topic.section|angels|f4995caf86	115	John	john-the-baptist
+topic.section|angels|f4995caf86	115	John	john-the-apostle
 topic.section|angels|f4995caf86	513	Satan	satan
 topic.section|babylonian-chronicles|1d479420e3	209	Jehoiachin	jeconiah
 topic.section|babylonian-chronicles|1d479420e3	89	Jehoiachin	jeconiah
@@ -5343,7 +5292,6 @@ topic.section|canaanites|67333c884f	0	Joshua	joshua
 topic.section|casting-lots|3bca883602	6	Judas	judas-iscariot
 topic.section|casting-lots|5f4ceebb7b	148	Aaron	aaron
 topic.section|casting-lots|5f4ceebb7b	460	Joshua	joshua
-topic.section|casting-lots|6f50ca8cb5	287	John	john-the-baptist
 topic.section|casting-lots|6f50ca8cb5	62	Jesus	jesus-of-nazareth
 topic.section|cherubim|44960bc801	40	Adam	adam
 topic.section|cherubim|44960bc801	466	Ezekiel	ezekiel
@@ -5373,14 +5321,11 @@ topic.section|codex-vaticanus|3a0172ddbd	216	Philemon	philemon
 topic.section|codex-vaticanus|85654c3a8c	144	Luke	luke-evangelist
 topic.section|codex-vaticanus|85654c3a8c	52	Mark	john-mark
 topic.section|cyrus-cylinder|ccab31afbd	363	Ezra	ezra
-topic.section|day-of-preparation|0af0977bbe	188	John	john-the-baptist
 topic.section|day-of-preparation|16217b4f2e	291	Mark	john-mark
 topic.section|day-of-preparation|16217b4f2e	430	Luke	luke-evangelist
 topic.section|day-of-preparation|20af95a228	157	Joseph of Arimathea	joseph-of-arimathea
 topic.section|day-of-preparation|20af95a228	23	Jesus	jesus-of-nazareth
-topic.section|day-of-preparation|20af95a228	356	John	john-the-baptist
 topic.section|day-of-preparation|20af95a228	700	Jesus	jesus-of-nazareth
-topic.section|day-of-preparation|20af95a228	765	John	john-the-baptist
 topic.section|dead-sea-scrolls|0a7e4ed26d	128	Jeremiah	jeremiah
 topic.section|dead-sea-scrolls|0a7e4ed26d	515	Mark	john-mark
 topic.section|dead-sea-scrolls|7f915080c3	276	Enoch	enoch
@@ -5526,7 +5471,6 @@ topic.section|nuzi-tablets|e02d8be473	315	Abraham	abraham
 topic.section|nuzi-tablets|e02d8be473	615	Rachel	rachel
 topic.section|passover|0bb46fba6b	18	Jesus	jesus-of-nazareth
 topic.section|passover|0bb46fba6b	421	Jesus	jesus-of-nazareth
-topic.section|passover|0bb46fba6b	527	John	john-the-baptist
 topic.section|passover|0bb46fba6b	684	John the Baptist	john-the-baptist
 topic.section|passover|0bb46fba6b	754	Jesus	jesus-of-nazareth
 topic.section|passover|1e4c6bcc4a	375	Hezekiah	hezekiah
@@ -5549,7 +5493,6 @@ topic.section|pilate-stone|05a44d050f	220	Tiberius	tiberius-caesar
 topic.section|pilate-stone|05a44d050f	266	job	job
 topic.section|pilate-stone|05a44d050f	394	Pilate	pontius-pilate
 topic.section|pilate-stone|17b931f856	134	Herod the Great	herod-the-great
-topic.section|pilate-stone|69dc9ce4a3	109	John	john-the-baptist
 topic.section|pilate-stone|69dc9ce4a3	23	Pilate	pontius-pilate
 topic.section|pilate-stone|69dc9ce4a3	385	Claudius	claudius-caesar
 topic.section|pilate-stone|69dc9ce4a3	425	Pilate	pontius-pilate
@@ -5608,7 +5551,6 @@ topic.section|synagogue|ef884e0083	247	Jesus	jesus-of-nazareth
 topic.section|synagogue|ef884e0083	292	Paul	paul-of-tarsus
 topic.section|tabernacle|4117845278	136	Moses	moses
 topic.section|tabernacle|b1d6a861c9	9	Moses	moses
-topic.section|tabernacle|f1241cf863	226	John	john-the-baptist
 topic.section|tabernacle|f1241cf863	245	Jesus	jesus-of-nazareth
 topic.section|tabernacle|fdbff73168	195	David	david
 topic.section|tabernacle|fdbff73168	240	Solomon	solomon
@@ -5628,7 +5570,6 @@ topic.section|the-temple|034dce22c7	246	Solomon	solomon
 topic.section|the-temple|034dce22c7	314	Solomon	solomon
 topic.section|the-temple|034dce22c7	88	Solomon	solomon
 topic.section|the-temple|36d0904654	0	Jesus	jesus-of-nazareth
-topic.section|the-temple|36d0904654	293	John	john-the-baptist
 topic.section|the-temple|36d0904654	374	Jesus	jesus-of-nazareth
 topic.section|the-temple|36d0904654	521	Paul	paul-of-tarsus
 topic.section|the-temple|9496fc2ad8	0	Herod the Great	herod-the-great
