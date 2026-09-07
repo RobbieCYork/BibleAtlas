@@ -468,6 +468,28 @@
   cursor: default;
 }
 
+/* Capstone Bible's own Facebook and Instagram, under the card. See the comment at the call site in
+ * AuthGate.tsx for why they sit below rather than above.
+ *
+ * No `:root[data-theme="light"]` twin, and that is not an oversight: this row is OUTSIDE the card,
+ * on the scrimmed photograph, and this gate deliberately does not switch its photo or scrim by
+ * theme (see the .auth-gate-scrim comment). Everything else out here — the h1, the tagline, the
+ * pitch — is likewise a single set of light-on-dark values. A light-theme override would be the
+ * only rule on this surface fighting a background that never changed.
+ *
+ * The negative margin trims .auth-gate-content's column gap for this one child. The row is a
+ * footnote to the card, not a third block of equal weight, and at the full 20px phone gap it read
+ * as one. */
+.auth-gate-social {
+  margin-top: -8px;
+  color: #f2ead9;
+}
+
+.auth-gate-social .social-links-item:hover,
+.auth-gate-social .social-links-item:focus-visible {
+  color: #e5b355;
+}
+
 /* Phone-only vertical tightening. The centring change above does most of the work of lifting the
  * card; this takes the remaining slack out of the gaps so the branding and the card read as one
  * block instead of two. Deliberately scoped under 640px — the desktop rhythm is unchanged, and
@@ -492,5 +514,10 @@
 
   .auth-gate-card {
     padding: 26px 28px;
+  }
+
+  /* Same footnote relationship against the desktop's looser 36px gap. */
+  .auth-gate-social {
+    margin-top: -16px;
   }
 }

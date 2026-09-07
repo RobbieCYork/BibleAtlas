@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { supabase, setRememberMe } from "../lib/supabase";
 import Icon from "./Icon";
+import SocialLinks from "./SocialLinks";
 import "./AuthGate.css";
 
 type Mode = "login" | "signup" | "reset";
@@ -446,6 +447,15 @@ export default function AuthGate() {
             </>
           )}
         </div>
+
+        {/* Under the card, not above it. Every social post drives a stranger to this screen, and a
+          * brand with no visible social presence on its own front door reads thinner than it is —
+          * but the card is what they came to use, so the marks go below the fold of attention
+          * rather than between the pitch and the form. Placement matters mechanically too: this
+          * column is centred (see .auth-gate-content), so a row added *below* the card lifts the
+          * card slightly rather than pushing it down, which is the opposite of what a row above it
+          * would have done to the phone layout that was just tightened. */}
+        <SocialLinks className="auth-gate-social" />
       </div>
     </div>
   );

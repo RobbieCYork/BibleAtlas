@@ -1,0 +1,57 @@
+/* SocialLinks — the row of brand marks for Capstone Bible's own accounts. See SocialLinks.tsx.
+ *
+ * Deliberately carries NO colour of its own. The marks are `fill="currentColor"` and this file
+ * only ever sets `opacity`, so the row inherits whatever the surface it is placed on has already
+ * decided about text colour — including that surface's light/dark handling. A second placement
+ * therefore needs no new colour rules here, only a class of its own on the host. */
+.social-links {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /* Marks sit close; the tap targets around them do not overlap, which is what the padding on the
+     item below buys. */
+  gap: 2px;
+}
+
+.social-links-item {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  /* 20px mark + 8px either side = a 36px target, which clears the minimum for a thumb without
+     turning two icons into a band. */
+  font-size: 20px;
+  padding: 8px;
+  border-radius: 10px;
+  color: inherit;
+  text-decoration: none;
+  /* Muted by default, full strength on hover/focus: these are a footnote on every surface they
+     appear on, never competing with the button the reader actually came for. */
+  opacity: 0.7;
+  transition: opacity 120ms ease;
+}
+
+.social-links-item svg {
+  /* Sized in em exactly like Icon.tsx, so a host surface changes the mark size by setting
+     `font-size` on `.social-links-item` and nothing else. */
+  width: 1em;
+  height: 1em;
+  display: block;
+}
+
+.social-links-item:hover,
+.social-links-item:focus-visible {
+  opacity: 1;
+}
+
+/* The focus ring is drawn here rather than left to the browser default, which on a dark
+   photographic backdrop is a near-invisible thin blue line. */
+.social-links-item:focus-visible {
+  outline: 2px solid currentColor;
+  outline-offset: 1px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .social-links-item {
+    transition: none;
+  }
+}
