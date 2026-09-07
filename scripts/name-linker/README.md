@@ -1,8 +1,8 @@
 # The name linker's regression net
 
 `src/lib/verseAnnotations.ts` decides which words in the Bible text — and in every article the app
-has ever written — become links to a person, place or topic. It renders **9,701 person-links across
-Scripture and 5,623 across the app's own prose**. Until this directory existed it had no tests at
+has ever written — become links to a person, place or topic. It renders **9,688 person-links across
+Scripture and 5,568 across the app's own prose**. Until this directory existed it had no tests at
 all, and a one-line data edit could move hundreds of them with nobody noticing.
 
     npm run test:linker
@@ -37,7 +37,7 @@ about real copy and not about a hypothetical.
       surface: "John", owner: "jesus-of-nazareth", expect: null, status: "guard", why: "…" }
 
 Prose cases exist because until they did, **the article surface could not be pinned by a named case
-at all** — every case had to be a verse, so the only cover the 5,623 prose links had was the
+at all** — every case had to be a verse, so the only cover the 5,568 prose links had was the
 snapshot. That is not the same thing: `prose-links.tsv` keys each row by a hash of its block's text,
 so editing a paragraph re-keys every link in it and any assertion about them vanishes with the old
 hash rather than failing (see the `tally.mjs` note below). A prose case survives a rewrite of the
@@ -51,14 +51,14 @@ Not every rule in that table is article-only: the `"Peter and John"` rule in the
 
 | file | rows | what it holds |
 |---|---:|---|
-| `bible-links.tsv` | 9,701 | every person-link in all 31,098 WEB verses, with the id each rendering path gives it |
-| `prose-links.tsv` | 5,623 | every person-link in every authored prose block the app puts through `LinkedVerseText` |
-| `key-totals.tsv` | 3,498 | a tally covering **every** kind — location, POI, topic, timeline, verse reference — one row per (kind, matched text, id, path) |
+| `bible-links.tsv` | 9,688 | every person-link in all 31,098 WEB verses, with the id each rendering path gives it |
+| `prose-links.tsv` | 5,568 | every person-link in every authored prose block the app puts through `LinkedVerseText` |
+| `key-totals.tsv` | 3,524 | a tally covering **every** kind — location, POI, topic, timeline, verse reference — one row per (kind, matched text, id, path) |
 
 The first two are row-level, so a diff names the verse or the block. `key-totals.tsv` exists because
 the other two only record **people**: a change to `people.ts` can steal a key from a location, and
 adding one POI alternate name can start firing hundreds of links that no person snapshot would ever
-show. Its 3,498 rows currently break down as 1,942 verse references, 713 person, 371 location, 263
+show. Its 3,524 rows currently break down as 1,963 verse references, 718 person, 371 location, 263
 topic, 130 POI and 79 timeline.
 
 This is the half that catches what you did not think to assert. The named cases cover a few dozen
@@ -69,6 +69,23 @@ verses; the snapshot covers all of them.
 Only run `--update` once you have read the diff and can account for **every** moved row, including
 the improvements you did not intend. Commit the snapshot change together with the change that caused
 it: a reviewer should be able to read the two diffs side by side.
+
+### Re-count the figures on this page when you update the snapshot
+
+Every number above and below is counted from the snapshot files, and this page has been the last
+thing to hear about a change more than once. It had drifted for four commits before 2026-09-07:
+`ff14871` (-6 prose), `4a32dcc` (-13 prose), `2a3ea93` (-13 Bible, -41 prose, +2 divergent) and
+`d3fc1e4` (-20 prose) each reported their own move accurately in their commit messages, and none of
+them came back here — so the headline totals sat 13 Bible rows and 80 prose rows behind the files
+they describe. Nothing catches that but doing it:
+
+    wc -l scripts/name-linker/snapshot/*.tsv                                 # the three totals
+    cut -f1 scripts/name-linker/snapshot/key-totals.tsv | sort | uniq -c     # the kind breakdown
+    awk -F'\t' '$4!=$5 {n++; v[$1]=1} END {print n, length(v)}' \
+      scripts/name-linker/snapshot/bible-links.tsv                           # reader/panel divergence
+
+The block table further down is the one figure not in a snapshot file; `loadProseBlocks().length`
+is where it comes from.
 
 ### What "every authored prose block" means, and how it has been wrong before
 
@@ -87,13 +104,13 @@ add its source fields to `loadProseBlocks()` in the same commit.** The blocks cu
 
 | source | blocks |
 |---|---:|
-| `people.ts` — lifeStory, controversies, placesLived, dating notes, extra-biblical source/summary | 1,476 |
+| `people.ts` — lifeStory, controversies, placesLived, dating notes, extra-biblical source/summary | 1,486 |
 | `timelineEvents.ts` — article paragraphs, datingNotes | 1,338 |
 | `bookIntros.ts` — whyWritten, summary, manuscripts | 607 |
 | `locations.ts` — history fields, archaeology note | 336 |
 | `topics.ts` — section paragraphs | 265 |
 | `pois.ts` — description, archaeology note | 202 |
-| **total** | **4,224** |
+| **total** | **4,234** |
 
 `MyProfileView` also renders through `LinkedVerseText`, and is deliberately **not** here: what it
 passes is the user's own typed favourite-verse text, not authored content, so there is nothing to
@@ -106,8 +123,8 @@ snapshot.
 
 `LinkedVerseText` is what PersonPanel, LocationPanel, PoiPanel, TopicPanel, BookIntroView,
 TimelineEventPanel and MyProfileView render with. Every book override, verse override and
-suppression in `verseAnnotations.ts` is invisible there. **833 links across 743 verses resolve
-differently between the two paths**, and all but a handful of the 5,623 prose links run with no
+suppression in `verseAnnotations.ts` is invisible there. **831 links across 741 verses resolve
+differently between the two paths**, and all but a handful of the 5,568 prose links run with no
 disambiguation at all — `OWNER_NAME_OVERRIDES` (below) is the only correction that reaches them. A
 fix that only moves the `reader` column has fixed half the app.
 
