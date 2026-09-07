@@ -1484,9 +1484,6 @@ export default function BiblePanel({
     if (ok && verse) setPendingScrollVerse(verse);
   };
 
-  const handleVerseJump = (verseNum: number) => {
-    verseRefs.current[verseNum]?.scrollIntoView({ behavior: "smooth", block: "center" });
-  };
 
   const runSearch = async (rawQuery: string) => {
     const q = rawQuery.trim();
@@ -2005,11 +2002,9 @@ export default function BiblePanel({
         open={referencePickerOpen}
         currentBook={currentBook}
         currentChapter={showIntro ? null : currentChapter}
-        verses={passage?.verses.map((v) => v.verse) ?? []}
         onClose={() => setReferencePickerOpen(false)}
         onPickIntro={handlePickIntro}
         onPickChapter={handlePickChapter}
-        onPickVerse={handleVerseJump}
       />
 
       {shareCardSpec && (

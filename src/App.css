@@ -3011,30 +3011,9 @@ a.profile-links-url {
   cursor: default;
 }
 
-.ref-picker-hint {
-  font-size: 12px;
-  color: var(--text-muted);
-  margin-bottom: 10px;
-}
-
-.ref-picker-done {
-  display: block;
-  width: 100%;
-  margin-top: 14px;
-  padding: 11px;
-  border: 1px solid var(--accent);
-  border-radius: 8px;
-  background: var(--accent-bg);
-  color: var(--accent);
-  font-size: 14px;
-  font-weight: 600;
-  cursor: pointer;
-}
-
-.ref-picker-done:hover {
-  background: var(--accent);
-  color: var(--accent-contrast);
-}
+/* .ref-picker-hint and .ref-picker-done were dropped with the picker's verse step: they styled the
+   "Jump to a verse, or close — you're already there" line and the Done button under the verse grid,
+   and nothing else ever used either class. The picker ends at the chapter now. */
 
 /* --- Keyword search --- */
 

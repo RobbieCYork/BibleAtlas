@@ -3,7 +3,7 @@ import { BOOKS } from "../data/bibleBooks";
 
 const NT_START_INDEX = BOOKS.findIndex((b) => b.name === "Matthew");
 
-type Step = "book" | "chapter" | "verse";
+type Step = "book" | "chapter";
 
 /** How the book list is ordered. "canonical" is the order the books appear in the Bible and is the
  * default — a reader who never touches the toggle gets the list they have always had. */
@@ -27,15 +27,12 @@ interface ReferencePickerProps {
    * reader already is, so reopening the picker doesn't mean re-finding their place in 66 books. */
   currentBook: string | null;
   currentChapter: number | null;
-  /** Verse numbers of the chapter currently loaded. Empty until a chapter is on screen. */
-  verses: number[];
   onClose: () => void;
   onPickIntro: (book: string) => void;
-  /** Loads the chapter. Resolves true once the passage is rendered behind the sheet — the sheet
-   * only advances to its optional verse step after that, so the verse list it offers is the
-   * loaded chapter's and not the previous one's. */
+  /** Loads the chapter. Resolves true once the passage is rendered behind the sheet, which is when
+   * the sheet closes — a false result means the fetch failed, and the sheet stays open on the
+   * chapter grid rather than dismissing onto the passage the reader was trying to leave. */
   onPickChapter: (book: string, chapter: number) => Promise<boolean>;
-  onPickVerse: (verse: number) => void;
 }
 
 /** The reader's whole book/chapter/verse navigation, collapsed into one sheet behind the chapter
@@ -46,23 +43,29 @@ interface ReferencePickerProps {
  * already on screen saying exactly what those dropdowns said, so it does the job instead and the row
  * goes back to scripture.
  *
- * Two steps, not three at once: book, then that book's chapters. Choosing a chapter navigates
- * immediately — the passage is already behind the sheet — and the sheet then offers that chapter's
- * verses as an optional third step. Dismissing at any point leaves the reader on the chapter they
- * chose, so the verse step can never block the common case of just wanting a chapter. */
+ * Two steps, and it ends at two: book, then that book's chapters, then the reader is on the passage
+ * with the sheet gone.
+ *
+ * There was a third step. Picking a chapter used to leave the sheet open over the passage it had
+ * just loaded, offering that chapter's verses under "Jump to a verse, or close — you're already
+ * there". It was meant as an optional extra and read as an obstacle: a grid of verse numbers and a
+ * Done button standing between the reader and a chapter they had already navigated to. Removed on
+ * Robbie's instruction — book, chapter, done. A reader who wants verse 14 scrolls to it, which is
+ * what the sheet's own hint was telling him to do.
+ *
+ * This is the MANUAL flow only. Programmatic verse targeting is untouched and lives elsewhere:
+ * BiblePanel's `pendingScrollVerse` still scrolls and flashes a verse for deep links, search
+ * results, reading-plan jumps and a book intro's Key Passages. */
 export default function ReferencePicker({
   open,
   currentBook,
   currentChapter,
-  verses,
   onClose,
   onPickIntro,
   onPickChapter,
-  onPickVerse,
 }: ReferencePickerProps) {
   const [step, setStep] = useState<Step>("book");
   const [book, setBook] = useState<string | null>(null);
-  const [chapter, setChapter] = useState<number | null>(null);
   const [loadingChapter, setLoadingChapter] = useState<number | null>(null);
   const [sortOrder, setSortOrder] = useState<SortOrder>(loadSortOrder);
   const bodyRef = useRef<HTMLDivElement | null>(null);
@@ -91,11 +94,11 @@ export default function ReferencePicker({
     });
   };
 
-  // Read through a ref, not the dependency array: choosing a chapter navigates the reader while the
-  // sheet is still open, which changes currentBook/currentChapter. If those were dependencies this
-  // reset would fire on that navigation and throw the reader back to the book list mid-flow.
-  const latest = useRef({ currentBook, currentChapter });
-  latest.current = { currentBook, currentChapter };
+  // Read through a ref, not the dependency array: choosing a chapter navigates the reader, which
+  // changes currentBook. If it were a dependency this reset would fire on that navigation and throw
+  // the reader back to the book list on the way out of the sheet.
+  const latest = useRef({ currentBook });
+  latest.current = { currentBook };
 
   // Every opening starts at the book step: the heading that opens this sheet is a "take me
   // somewhere else" control, and somewhere else usually starts with a different book.
@@ -103,7 +106,6 @@ export default function ReferencePicker({
     if (!open) return;
     setStep("book");
     setBook(latest.current.currentBook);
-    setChapter(latest.current.currentChapter);
     setLoadingChapter(null);
   }, [open]);
 
@@ -134,13 +136,12 @@ export default function ReferencePicker({
     setLoadingChapter(n);
     const ok = await onPickChapter(book, n);
     setLoadingChapter(null);
-    if (!ok) return;
-    setChapter(n);
-    setStep("verse");
+    // The chapter is the destination. Close on success and leave the reader on it; on failure stay
+    // put, so a dead fetch does not dismiss the sheet onto the passage he was trying to leave.
+    if (ok) onClose();
   };
 
-  const title =
-    step === "book" ? "Choose a book" : step === "chapter" ? (book ?? "Choose a chapter") : `${book} ${chapter}`;
+  const title = step === "book" ? "Choose a book" : (book ?? "Choose a chapter");
 
   return (
     <>
@@ -167,8 +168,8 @@ export default function ReferencePicker({
             <button
               type="button"
               className="ref-picker-back"
-              onClick={() => setStep(step === "verse" ? "chapter" : "book")}
-              aria-label={step === "verse" ? "Back to chapters" : "Back to books"}
+              onClick={() => setStep("book")}
+              aria-label="Back to books"
             >
               ‹
             </button>
@@ -238,35 +239,6 @@ export default function ReferencePicker({
                   );
                 })}
               </div>
-            </>
-          )}
-
-          {step === "verse" && (
-            <>
-              {/* Optional by design: the chapter is already open behind this sheet. */}
-              <p className="ref-picker-hint">Jump to a verse, or close — you&rsquo;re already there.</p>
-              {verses.length === 0 ? (
-                <p className="ref-picker-hint">No verses loaded.</p>
-              ) : (
-                <div className="ref-picker-grid">
-                  {verses.map((v) => (
-                    <button
-                      key={v}
-                      type="button"
-                      className="ref-picker-cell"
-                      onClick={() => {
-                        onPickVerse(v);
-                        onClose();
-                      }}
-                    >
-                      {v}
-                    </button>
-                  ))}
-                </div>
-              )}
-              <button type="button" className="ref-picker-done" onClick={onClose}>
-                Done
-              </button>
             </>
           )}
         </div>
