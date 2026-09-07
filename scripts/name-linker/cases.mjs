@@ -847,11 +847,24 @@ export const CASES = [
     why: "Ezekiel's 93 occurrences are God addressing the prophet as a mortal, not a title for " +
          "Jesus. The linker is case-insensitive, so only BOOK_NAME_ALLOWLIST keeps them out. " +
          "If this ever links, the app is calling Ezekiel the Son of Man." },
-  { ref: "Daniel 7:13", surface: "son of man", expect: null, status: "guard",
-    why: "DELIBERATE non-link. Whether Daniel's 'one like a son of man' is an individual " +
-         "deliverer or a corporate symbol for faithful Israel is a live scholarly question the " +
-         "app does not settle. Linking it to the Jesus-title article would settle it silently. " +
-         "The verse is discussed and cited inside that article instead." },
+  { ref: "Daniel 7:13", surface: "son of man", expect: "son-of-man", status: "guard",
+    why: "CHANGED 2026-09-07 with the move to a stated Protestant evangelical position. This " +
+         "was deliberately unlinked while the app took no view of who Daniel's figure is. The " +
+         "app now takes one: that figure is the Messiah, and Jesus quoted this verse at his own " +
+         "trial (Mark 14:62). Evangelicals still differ over how Daniel 7's individual and " +
+         "corporate strands relate — the article says so — but not over whether Jesus is the one " +
+         "Daniel saw, so the link asserts only what the position holds." },
+  { ref: "Daniel 8:17", surface: "son of man", expect: null, status: "guard",
+    why: "The angel addressing DANIEL — the Ezekiel sense, a mortal. Admitting Daniel to the " +
+         "allowlist would have linked this too, which is why it is excepted by verse. If this " +
+         "ever links, the app is calling Daniel the Son of Man." },
+  { ref: "Revelation 1:13", surface: "son of man", expect: "son-of-man", status: "guard",
+    why: "The exalted Christ among the lampstands, who identifies himself two verses later as " +
+         "the one who was dead and is alive. Not disputed in the way 14:14 is." },
+  { ref: "Revelation 14:14", surface: "son of man", expect: null, status: "guard",
+    why: "DELIBERATE non-link. The figure on the cloud with a sickle is read as Christ by some " +
+         "interpreters and as an angel by others, evangelicals included. Taking a position on " +
+         "the title does not licence settling a question the position itself leaves open." },
   { ref: "Mark 2:28", surface: "Son of Man", expect: "son-of-man", status: "guard",
     why: "The Gospel use, which is what the article is about." },
   { ref: "Acts 7:56", surface: "Son of Man", expect: "son-of-man", status: "guard",

@@ -269,6 +269,21 @@ const VERSE_NAME_OVERRIDES: Record<string, Record<string, Record<string, string 
     Matthew: { "16:17": null },
     John: { "1:42": null, "21:15": null, "21:16": null, "21:17": null },
   },
+  // "son of man": the allowlist below now admits Daniel and Revelation, because the app writes from
+  // a Protestant evangelical position under which Daniel 7:13's figure IS the one Jesus claimed to
+  // be. Two verses inside those books must still be suppressed, for two different reasons.
+  //   Daniel 8:17 — "Understand, son of man" is the angel addressing DANIEL. It is the Ezekiel
+  //     sense, a mortal, and has nothing to do with the title. A book-level allowlist alone would
+  //     have linked it, which is why the book was not simply added and left.
+  //   Revelation 14:14 — "one sitting like a son of man" with a sickle is genuinely disputed among
+  //     interpreters, including evangelical ones, between Christ and an angel. Revelation 1:13 is
+  //     not disputed in the same way (the figure identifies himself as the one who was dead and is
+  //     alive), so that one links and this one does not. Stating a position does not licence
+  //     settling a question the position itself leaves open.
+  "son of man": {
+    Daniel: { "8:17": null },
+    Revelation: { "14:14": null },
+  },
   // "elders": the topic is the JEWISH elders (see topics.ts). BOOK_NAME_ALLOWLIST below already
   // confines the name to Matthew, Mark, Luke and Acts. Acts is the one allowed book that holds
   // both senses, so the CHRISTIAN congregational elders inside it are suppressed here one by one.
@@ -911,12 +926,15 @@ const BOOK_NAME_ALLOWLIST: Record<string, string[]> = {
   // case-insensitive, which matters enormously here. EZEKIEL uses "Son of man" 93 times as God's
   // form of address to the prophet — more occurrences than the Gospels have — and it means a
   // mortal there, not a title. Psalms 8:4, Job, Numbers, Isaiah, Jeremiah and Hebrews 2:6 are the
-  // same ordinary sense. Daniel 7:13's "one like a son of man" and Revelation's two echoes of it
-  // are deliberately EXCLUDED as well: whether that figure is an individual deliverer or a
-  // corporate symbol for faithful Israel is a live scholarly question the app does not settle, and
-  // linking it to a page about Jesus would settle it silently. All three are discussed, and cited
-  // as verse references, inside the article itself.
-  "son of man": ["Matthew", "Mark", "Luke", "John", "Acts"],
+  // same ordinary sense, and all stay out.
+  // Daniel and Revelation were ALSO out until 2026-09-07, on the grounds that the app took no view
+  // of who Daniel 7:13's figure is. Under the app's stated Protestant evangelical position it does
+  // take a view: that figure is the Messiah, and Jesus claimed at his trial to be him (Mark 14:62
+  // quotes Daniel 7:13 back at the high priest). Evangelicals do still differ over how the
+  // individual and corporate strands of Daniel 7 relate — see the article — but not over whether
+  // Jesus is the one Daniel saw, so the link asserts only what the position actually holds.
+  // Daniel 8:17 and Revelation 14:14 are excepted verse by verse above.
+  "son of man": ["Matthew", "Mark", "Luke", "John", "Acts", "Daniel", "Revelation"],
   // "elders": Jewish elders only, per the brief. Deuteronomy, Exodus, Judges, Joshua, Ezekiel and
   // the rest use it of Israel's local elders, which the article covers but does not centre on;
   // 1 Timothy, Titus, 1 Peter, James and 2-3 John use it of the Christian congregational office;
