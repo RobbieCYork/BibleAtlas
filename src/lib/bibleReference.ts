@@ -77,6 +77,10 @@ export interface ReferenceSuggestion {
    * Used to decide whether Enter should navigate or run an ordinary word search: nobody searching
    * Scripture for a phrase types a book name followed by a number. */
   explicitChapter: boolean;
+  /** The verse the reader typed after a colon ("Romans 8:28"), if any. Left unvalidated on purpose:
+   * how many verses a chapter has is not something this module knows, and a verse past the end is
+   * caught where it matters — the scroll gives up loudly rather than landing anywhere. */
+  verse?: number;
 }
 
 /**
@@ -113,8 +117,12 @@ function matchBook(partial: string): string | null {
  *
  * Handles a chapter typed after the book, clamped to what the book actually has: "Psalms 200" is
  * offered as Psalms 150 rather than a chapter that would fail to load. A trailing verse ("john
- * 3:16") is accepted and the verse dropped — the app navigates by chapter, and refusing to
- * recognise the most-typed reference form in the Bible would be a strange place to draw a line.
+ * 3:16") is accepted and KEPT, in `verse`. It used to be recognised and then thrown away, on the
+ * reasoning that the app navigates by chapter — but the app has always been able to land on a
+ * verse (see BiblePanel's pendingScrollVerse, which is what a deep link or a search result uses),
+ * so dropping it meant "Romans 8:28" typed into the bar opened Romans 8 at verse 1 and left the
+ * reader to hunt. `text` deliberately stays the chapter reference: it is what the grey inline
+ * completion is drawn from, and a completion is only honest about where the chapter picker goes.
  */
 export function suggestReference(input: string): ReferenceSuggestion | null {
   const q = normalize(input);
@@ -122,10 +130,11 @@ export function suggestReference(input: string): ReferenceSuggestion | null {
 
   // Split into "name part" and "chapter part". The leading digit of a numbered book belongs to the
   // name, so the chapter is only the digits that follow at least one letter.
-  const m = /^(\d?\s*[a-z][a-z\s]*?)\s*(\d+)?\s*(?::\s*\d+)?$/.exec(q);
+  const m = /^(\d?\s*[a-z][a-z\s]*?)\s*(\d+)?\s*(?::\s*(\d+))?$/.exec(q);
   if (!m) return null;
   const namePart = normalize(m[1]);
   const chapterPart = m[2];
+  const versePart = m[3];
 
   const book = matchBook(namePart);
   if (!book) return null;
@@ -145,6 +154,9 @@ export function suggestReference(input: string): ReferenceSuggestion | null {
     text,
     inline: text.toLowerCase().startsWith(input.toLowerCase().trimStart()),
     explicitChapter: !!chapterPart,
+    // A verse only means anything alongside a chapter the reader actually typed; "john:3" is not a
+    // reference anyone writes, and the regex can only reach here with a chapter in hand anyway.
+    verse: versePart && chapterPart ? Math.max(parseInt(versePart, 10), 1) : undefined,
   };
 }
 

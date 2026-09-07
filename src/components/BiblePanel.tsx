@@ -847,12 +847,30 @@ export default function BiblePanel({
   // Scroll to a verse once its chapter has finished loading and rendering (used after jumping in
   // from a keyword search result or a "Book 3:16"-style reference, which lands on a specific verse
   // within a whole new chapter), and flash that verse so the eye finds it without hunting.
+  //
+  // The lookup is deliberately NOT `verseRefs.current[n]?.scrollIntoView(...)`. Written that way it
+  // is a scroll that can decline to happen and say nothing, and that is exactly the shape of bug
+  // this reading pane is worst at surfacing — the flash still fires, so it looks like the jump
+  // worked while the reader is left at verse 1. A missing entry here means either a verse number
+  // past the end of the chapter (a bad deep link, a search index out of step with the translation)
+  // or a genuine ordering fault, and both are worth a line in the console rather than silence.
+  //
+  // verseRefs is keyed by verse number alone and is never cleared, so it can still hold entries
+  // from the chapter before this one — but React nulls a ref when its element unmounts, so a verse
+  // the current chapter does not have reads as null and is caught by the same check.
   useEffect(() => {
-    if (pendingScrollVerse !== null && passage) {
-      verseRefs.current[pendingScrollVerse]?.scrollIntoView({ behavior: "smooth", block: "center" });
-      setFlashVerse(pendingScrollVerse);
-      setPendingScrollVerse(null);
+    if (pendingScrollVerse === null || !passage) return;
+    const target = verseRefs.current[pendingScrollVerse];
+    if (target) {
+      target.scrollIntoView({ behavior: "smooth", block: "center" });
+    } else {
+      console.warn(
+        `[BiblePanel] Can't scroll to verse ${pendingScrollVerse} of ${passage.reference}: no element is ` +
+          `registered for it. Verses rendered: ${passage.verses.length}.`
+      );
     }
+    setFlashVerse(pendingScrollVerse);
+    setPendingScrollVerse(null);
   }, [passage, pendingScrollVerse]);
 
   // The flash is one-shot — drop the class once the CSS animation has had time to finish, so a
@@ -1501,6 +1519,11 @@ export default function BiblePanel({
       if (ok) {
         setSearchResults(null);
         setShowPlans(false);
+        // "Romans 8:28" names a verse, not just a chapter, and this is the only jump in the app
+        // that used to ignore that — suggestReference recognised the verse and threw it away, so
+        // the reader arrived at Romans 8 verse 1 with no flash and no scroll, which reads as the
+        // search being broken. Same pendingScrollVerse a search result or a deep link uses.
+        if (reference.verse) setPendingScrollVerse(reference.verse);
       } else {
         setSearchError("Couldn't open that chapter — try again in a moment.");
       }
