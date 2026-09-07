@@ -913,46 +913,65 @@ const OWNER_NAME_OVERRIDES: Record<string, Record<string, string | null>> = {
     "bib-it-antiochus-defiles-temple": null,
     "bib-it-maccabean-revolt-begins": null,
   },
-  // "Zechariah": the only entry is Zechariah the priest, father of John the Baptist, and
-  // BOOK_NAME_ALLOWLIST already confines him to Luke for the reader — which is why all 43
-  // occurrences in Scripture, none of them his, render unlinked there. The article surface has no
-  // allowlist, so all 32 prose mentions resolved to him, and 20 of the 32 are not him.
+  // "Zechariah": two records now share the name. The bare key belongs to Zechariah the priest,
+  // father of John the Baptist, and BOOK_NAME_ALLOWLIST confines him to Luke for the reader —
+  // which is why all 43 occurrences in Scripture, none of them his, render unlinked there. The
+  // article surface has no allowlist, so all 32 prose mentions resolved to him, and 20 of the 32
+  // are not him. This table is where the other 20 are sorted out, one owning record at a time.
   //
-  // Read one at a time and grouped by owning record. No record below names two different
-  // Zechariahs, so the one-answer-per-record limit costs nothing here. The twelve his own pages
-  // hold — John the Baptist's, Elizabeth's, Gabriel's, Ein Karem, the ministry-begins article and
-  // Luke's introduction ("Zechariah's prophecy", the Benedictus) — are correct and stay untouched.
+  // Eleven of them are Zechariah the post-exilic prophet, who now HAS a record
+  // (zechariah-the-prophet, added 2026-09-07), so those eleven resolve to him instead of
+  // resolving to nothing. He does not own the bare key and must not: he would take it from the
+  // priest, whose twelve mentions are the ones the app has always had right.
   //
-  // The other twenty are three different subjects, and the app has a record for none of them, so
-  // no link is the least-wrong answer — the same ruling this table already gives Levi, Simeon,
-  // Zadok and Eleazar, and §7.12 of automation/manager/name-linker-scope.md is still the open
-  // question of whether a stub would be better.
+  // The twelve that ARE the priest — John the Baptist's page, Elizabeth's, Gabriel's, Ein Karem,
+  // the ministry-begins article and Luke's introduction ("Zechariah's prophecy", the Benedictus)
+  // — are correct by default and stay out of this table entirely.
   zechariah: {
-    // Zechariah the post-exilic prophet, son of Berechiah, son of Iddo — eleven mentions, mostly
-    // paired with Haggai urging the Second Temple to completion, plus his own visions (the
-    // lampstand, Satan accusing the high priest Joshua) and the donkey-riding king of Zechariah
-    // 9:9 that the triumphal-entry article calls "the prophet Zechariah's picture".
-    satan: null, // "Zechariah's vision, standing at the right hand of the high priest Joshua"
-    zerubbabel: null, // "the prophets Haggai and Zechariah urged"; "Zechariah's vision of a lampstand"
-    "behistun-inscription": null, // "Haggai and Zechariah both date their preaching by his regnal years"
-    "bib-er-zerubbabels-return": null,
-    "bib-er-second-temple-completed": null,
-    "bib-loc-triumphal-entry": null,
-    "wld-pg-darius-consolidation": null,
-    "book-intro:Ezra": null, // "with the encouragement of the prophets Haggai and Zechariah"
-    // Zechariah son of Jehoiada, stoned in the temple court under Joash (2 Chronicles 24:20-22) —
-    // a different man entirely, and the article names his father in the same sentence.
+    // ── Zechariah the prophet, son of Berechiah, son of Iddo.
+    // Nine of his eleven mentions sit on records that name no other Zechariah, so an owner entry
+    // settles them. The remaining two share a record with a mention of the BOOK, which one answer
+    // per record cannot serve; they are pinned by phrase in NAME_CONTEXT_RULES below.
+    zerubbabel: "zechariah-the-prophet", // "the prophets Haggai and Zechariah urged"; "Zechariah's vision of a lampstand"
+    "behistun-inscription": "zechariah-the-prophet", // "Haggai and Zechariah both date their preaching by his regnal years"
+    "bib-er-zerubbabels-return": "zechariah-the-prophet", // "until two prophets, Haggai and Zechariah, arrived"
+    "bib-er-second-temple-completed": "zechariah-the-prophet", // "Haggai and Zechariah began preaching"; "the Temple that Zechariah, Malachi… would walk into"
+    "bib-loc-triumphal-entry": "zechariah-the-prophet", // "the prophet Zechariah's picture of Israel's king"
+    "wld-pg-darius-consolidation": "zechariah-the-prophet", // "the preaching of the prophets Haggai and Zechariah"
+    "book-intro:Ezra": "zechariah-the-prophet", // "with the encouragement of the prophets Haggai and Zechariah"
+    // His own page. Spelled out rather than left to fall through: without an entry here the bare
+    // "Zechariah"s in his own article — "Zechariah told Zerubbabel", "sometimes called 'Second
+    // Zechariah'" — would resolve to the priest, who is a different man and not this page's
+    // subject. Setting it to the owner's own id is the self-link exclusion, which renders nothing.
+    "zechariah-the-prophet": "zechariah-the-prophet",
+    // ── Zechariah son of Jehoiada, stoned in the temple court under Joash (2 Chronicles
+    // 24:20-22) — a third man entirely, with no record, and the article names his father in the
+    // same sentence. One mention does not earn a record; no link stays the answer here.
     "bib-dkj-joash-reign": null,
-    // The BOOK, not a man: a title in a list of where the Hebrew Bible develops Satan, a list of
-    // which books call Zerubbabel "son of Shealtiel", and the manuscript notes of two Minor
+    // ── The BOOK, not a man: a title in a list of where the Hebrew Bible develops Satan, a list
+    // of which books call Zerubbabel "son of Shealtiel", and the manuscript notes of two Minor
     // Prophets introductions. Suppressed for the same reason as the "John as the fourth Gospel"
-    // pins above — these are works being named, and a person link there is simply false.
+    // pins below — these are works being named, and a person link there is false whether or not
+    // the person exists. Writing the prophet's record did not change that.
     shealtiel: null, // "Ezra, Haggai, Zechariah, and Matthew all consistently call Zerubbabel…"
     "book-intro:Malachi": null, // "its preserved text breaks off in Zechariah, before Malachi"
-    // Zechariah's own introduction holds both: the prophet in `whyWritten` ("Like Haggai,
-    // Zechariah encourages the returned exiles") and the book in all four manuscript notes. Same
-    // answer either way, so one entry covers all five.
-    "book-intro:Zechariah": null,
+    // The two records that name both the man and the book. The record-level answer here is the
+    // BOOK's — no link — and the single prophet mention on each is recovered by an exact-phrase
+    // pin in NAME_CONTEXT_RULES. That direction is deliberate: if one of those two sentences is
+    // ever rewritten, the pin stops matching and the mention falls back to no link, which is a
+    // lost correct link rather than a wrong one asserted on a book title.
+    satan: null, // controversies: "largely limited to Job, Zechariah, and 1 Chronicles" — the book
+    "book-intro:Zechariah": null, // all four manuscript notes name the book
+  },
+  // "Joshua": the only entry is Joshua son of Nun, Moses's successor, and BOOK_NAME_ALLOWLIST
+  // confines him to his own book and the handful that name him for the reader. The article
+  // surface has no allowlist, so every "Joshua" in our prose resolves to him — including, on the
+  // prophet Zechariah's page, Joshua son of Jehozadak, the high priest of the return, who is a
+  // different man five centuries later with no record of his own. Suppressed here rather than
+  // linked to the wrong Joshua. (The same wrong link already sits on the satan and zerubbabel
+  // articles; those predate this table's Joshua key and are not this change's to move.)
+  joshua: {
+    "zechariah-the-prophet": null,
   },
 };
 
@@ -1311,6 +1330,28 @@ const NAME_CONTEXT_RULES: Record<string, NameContextRule[]> = {
   ],
   caleb: [
     { after: /^\s+Ephrathah\b/, to: null }, // 1 Chronicles 2:24 — a place, not the spy
+  ],
+
+  // ── Two records name both the prophet Zechariah and the book named after him, and
+  // OWNER_NAME_OVERRIDES gives one answer per record. Its answer for both is the book's — no link
+  // — because that is what most of their mentions are; these two pins recover the single mention
+  // on each that is the man. Same mechanism, and the same reason, as the "Peter and John" rule at
+  // the top of this table.
+  //
+  // Pinned this way round on purpose. A phrase pin cannot reach a sentence that has been
+  // rewritten, so if either paragraph is edited the pin stops matching and the mention falls back
+  // to the record-level answer: a correct link lost, not a wrong one asserted on a book title. The
+  // reverse arrangement — pinning the book mentions and letting the record default to the man —
+  // fails the other way, and a person link on a manuscript note is the worse failure. Both are
+  // covered by prose cases in scripts/name-linker/cases.mjs: if one starts failing, the copy
+  // moved. Re-read the sentence and re-pin it; do not delete the case.
+  zechariah: [
+    // person.lifeStory on the `satan` record. Its `controversies` field names the BOOK in the same
+    // breath as Job and 1 Chronicles, which is why the record-level answer is null.
+    { phrase: "prosecutorial role in Zechariah's vision", to: "zechariah-the-prophet" },
+    // bookIntro.whyWritten on the book of Zechariah. Its four manuscript notes name the book,
+    // which is why the record-level answer there is null too.
+    { phrase: "Like Haggai, Zechariah encourages the returned exiles", to: "zechariah-the-prophet" },
   ],
 };
 

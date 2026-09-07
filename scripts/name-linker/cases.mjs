@@ -789,40 +789,111 @@ export const CASES = [
   { ref: "Hebrews 11:4", surface: "Abel", expect: "abel", status: "guard", why: "'By faith, Abel offered' — must still link." },
 
   // ─────────────────────────────────────────────────────────────────────────────────────────
-  // "Zechariah" — the app's one entry is the priest of Luke 1, father of John the Baptist, and
-  // 20 of the 32 mentions on the article surface were other men or the book itself. Fixed by
-  // OWNER_NAME_OVERRIDES, including the first four corrections ever written against a book
-  // introduction. The reader path never had the fault: BOOK_NAME_ALLOWLIST confines the name to
-  // Luke, so all 43 occurrences in Scripture — none of them his — render unlinked there.
+  // "Zechariah" — three men and a book share the name across our prose, and the app now has
+  // records for two of the men: the priest of Luke 1, who owns the bare key, and the post-exilic
+  // prophet, added 2026-09-07, who deliberately does not. Of the 32 prose mentions, 12 are the
+  // priest, 11 are the prophet, 8 are the BOOK named as a work, and 1 is Zechariah son of
+  // Jehoiada. The prophet's 11 are routed by OWNER_NAME_OVERRIDES, except the two that share a
+  // record with a mention of the book, which are pinned by phrase in NAME_CONTEXT_RULES.
+  //
+  // These are prose cases on purpose. Every rule being asserted here fires ONLY on the article
+  // surface, and each one is quoted verbatim from the copy it corrects, so a case survives a
+  // rewrite of the paragraph the snapshot would silently re-key.
   // ─────────────────────────────────────────────────────────────────────────────────────────
-  { ref: "Ezra 5:1", surface: "Zechariah", expect: null, status: "guard",
-    why: "'Zechariah the son of Iddo' is the post-exilic prophet, and the reader path already " +
-         "declined to link him — BOOK_NAME_ALLOWLIST. This must not move: the fix is on the " +
-         "article surface only." },
-  { ref: "Ezra 5:1", surface: "Zechariah", path: "panel", owner: "book-intro:Ezra",
-    expect: null, status: "guard",
-    why: "Ezra's introduction names 'the prophets Haggai and Zechariah'. Until BookIntroView " +
-         "passed an id this could not be corrected at all and rendered as John the Baptist's " +
-         "father. The prophet has no entry, so no link is the least-wrong answer." },
-  { ref: "Zechariah 1:1", surface: "Zechariah", path: "panel", owner: "book-intro:Zechariah",
-    expect: null, status: "guard",
-    why: "The book's own introduction — one mention of the prophet in whyWritten, four of the " +
-         "book as a work in the manuscript notes. Same answer either way, so one owner entry " +
-         "covers all five." },
-  { ref: "2 Chronicles 24:20", surface: "Zechariah", path: "panel", owner: "bib-dkj-joash-reign",
-    expect: null, status: "guard",
-    why: "Zechariah son of Jehoiada, stoned in the temple court under Joash — a third man again, " +
-         "named with his father in the article's own sentence. No entry, so no link." },
-  { ref: "Ezra 5:1", surface: "Zechariah", path: "panel", owner: "zerubbabel",
-    expect: null, status: "guard",
-    why: "The prophet paired with Haggai in Zerubbabel's life story, and the same man behind " +
-         "'Zechariah's vision of a lampstand' two sentences later." },
-  { ref: "Ezra 5:1", surface: "Zechariah", path: "panel", owner: "elizabeth-mother-of-john-baptist",
+
+  // ── The prophet, by owner. Seven records, nine mentions.
+  { text: "until the prophets Haggai and Zechariah urged Zerubbabel and the high priest Joshua to resume the work",
+    surface: "Zechariah", owner: "zerubbabel", expect: "zechariah-the-prophet", status: "guard",
+    why: "Zerubbabel's life story names the prophet twice — here, and behind 'Zechariah's vision of a lampstand' two sentences later. Same man, same answer, one owner entry." },
+  { text: "Haggai and Zechariah both date their preaching by his regnal years.",
+    surface: "Zechariah", owner: "behistun-inscription", expect: "zechariah-the-prophet", status: "guard",
+    why: "The Behistun article's point is that Darius's regnal years date the prophets' preaching — which is what makes this man's ministry datable to the month at all." },
+  { text: "until two prophets, Haggai and Zechariah, arrived to reignite the people's resolve.",
+    surface: "Zechariah", owner: "bib-er-zerubbabels-return", expect: "zechariah-the-prophet", status: "guard",
+    why: "The prophet who restarted the stalled temple work, named as one of the two (Ezra 5:1-2)." },
+  { text: "the prophets Haggai and Zechariah began preaching urgent, specific challenges to Governor Zerubbabel",
+    surface: "Zechariah", owner: "bib-er-second-temple-completed", expect: "zechariah-the-prophet", status: "guard",
+    why: "The same pairing in the temple-completion article's first paragraph." },
+  { text: "as the Temple that Zechariah, Malachi, and eventually Jesus Himself would walk into.",
+    surface: "Zechariah", owner: "bib-er-second-temple-completed", expect: "zechariah-the-prophet", status: "guard",
+    why: "Second paragraph of the same article, and the man not the book: books do not walk into temples. Malachi has no record, so he stays unlinked beside him." },
+  { text: "Jesus consciously enacts the prophet Zechariah's picture of Israel's king coming",
+    surface: "Zechariah", owner: "bib-loc-triumphal-entry", expect: "zechariah-the-prophet", status: "guard",
+    why: "The donkey-riding king of Zechariah 9:9. The article calls him 'the prophet Zechariah' in as many words and, until this record existed, linked him to a priest born five centuries later." },
+  { text: "Spurred on by the preaching of the prophets Haggai and Zechariah, the people finished the Second Temple",
+    surface: "Zechariah", owner: "wld-pg-darius-consolidation", expect: "zechariah-the-prophet", status: "guard",
+    why: "Darius's own article, crediting the two prophets with the finished temple (Ezra 6:14-15)." },
+  { text: "complete the Second Temple with the encouragement of the prophets Haggai and Zechariah.",
+    surface: "Zechariah", owner: "book-intro:Ezra", expect: "zechariah-the-prophet", status: "guard",
+    why: "Ezra's book introduction. A book intro can only be corrected at all because BookIntroView passes bookIntroOwnerId(book) as its excludeId." },
+
+  // ── The prophet, by phrase pin. Two records name both the man and the book, and
+  // OWNER_NAME_OVERRIDES gives one answer per record; its answer for both is the book's. If
+  // either of these two cases starts failing, the copy moved — re-read the sentence and re-pin
+  // it in NAME_CONTEXT_RULES. Do not delete the case, and do not widen the owner entry.
+  { text: "Satan appears in a similar prosecutorial role in Zechariah's vision, standing at the right hand of the high priest Joshua",
+    surface: "Zechariah", owner: "satan", expect: "zechariah-the-prophet", status: "guard",
+    why: "Zechariah 3:1-5, in Satan's own article — the man. The record-level answer is null because the SAME record's controversies field names the book (next case)." },
+  { text: "Like Haggai, Zechariah encourages the returned exiles to rebuild the temple",
+    surface: "Zechariah", owner: "book-intro:Zechariah", expect: "zechariah-the-prophet", status: "guard",
+    why: "The only mention of the man in his own book's introduction. Its four manuscript notes name the book, so the record-level answer there is null too." },
+
+  // ── The book named as a work. Eight mentions, and a person link on any of them is false
+  // whether or not the person has a record. Writing the prophet's record did not change that.
+  { text: "comparatively modest — largely limited to Job, Zechariah, and 1 Chronicles",
+    surface: "Zechariah", owner: "satan", expect: null, status: "guard",
+    why: "A list of BOOKS where the Hebrew Bible develops Satan, on the same record whose life story names the man. This is the case that fails first if that phrase pin is ever replaced by an owner entry." },
+  { text: "Zechariah is preserved among the Dead Sea Scrolls as part of the Book of the Twelve",
+    surface: "Zechariah", owner: "book-intro:Zechariah", expect: null, status: "guard",
+    why: "A manuscript note about the book. Four of these sit in Zechariah's own introduction alongside the one mention of the man." },
+  { text: "its preserved text breaks off in Zechariah, before Malachi",
+    surface: "Zechariah", owner: "book-intro:Malachi", expect: null, status: "guard",
+    why: "Malachi's introduction describing where the Murabba'at scroll ends — a place in a scroll, not a person." },
+  { text: "Ezra, Haggai, Zechariah, and Matthew all consistently call Zerubbabel 'son of Shealtiel,'",
+    surface: "Zechariah", owner: "shealtiel", expect: null, status: "guard",
+    why: "Four books listed by name. 'Matthew' beside it is the Gospel, not the apostle, for exactly the same reason." },
+
+  // ── The third man. One mention, no record, and one mention does not earn one.
+  { text: "even having Jehoiada's own son Zechariah stoned to death in the Temple courtyard",
+    surface: "Zechariah", owner: "bib-dkj-joash-reign", expect: null, status: "guard",
+    why: "Zechariah son of Jehoiada (2 Chronicles 24:20-22), named with his father in the article's own sentence — not the prophet, and not the priest. No record, so no link." },
+
+  // ── The priest keeps his twelve. Elizabeth's page has no owner entry at all, so it falls to
+  // the global default; if a correction above is ever widened past its owner list, or if the
+  // prophet is ever given the bare key, this is the case that fails first.
+  { text: "Elizabeth was a descendant of Aaron, married to the priest Zechariah, and Luke describes both of them as righteous",
+    surface: "Zechariah", owner: "elizabeth-mother-of-john-baptist",
     expect: "zechariah-father-of-john-baptist", status: "guard",
-    why: "The other half of the work: the twelve mentions that ARE the priest — on Elizabeth's, " +
-         "John's and Gabriel's pages, at Ein Karem, and in Luke's introduction — must survive. " +
-         "Elizabeth's page has no owner entry, so it falls to the global default, which is right. " +
-         "If a suppression above is ever widened past its owner list, this fails first." },
+    why: "The father of John the Baptist, on his wife's page. Bare 'Zechariah' is his key and must stay his." },
+
+  // ── The prophet's own page. Two links the record must NOT render.
+  { text: "The visions were addressed to a specific, stalled building project. Zechariah told Zerubbabel that the hands which had laid the temple's foundation would also finish it",
+    surface: "Zechariah", owner: "zechariah-the-prophet", expect: null, status: "guard",
+    why: "Self-link exclusion, spelled out in OWNER_NAME_OVERRIDES rather than left to fall through — without the entry a bare 'Zechariah' on his own page resolves to the priest of Luke 1, a different man." },
+  { text: "In the fourth vision he saw Joshua the high priest standing before the angel of the LORD in filthy garments",
+    surface: "Joshua", owner: "zechariah-the-prophet", expect: null, status: "guard",
+    why: "Joshua son of Jehozadak, high priest of the return — not Joshua son of Nun, who owns the 'joshua' key and is the only Joshua the app has a record for." },
+
+  // ── Scripture. Registering the two patronymics on the record links four verses that had no
+  // person link on the reader path at all, and moves four wrong panel-path links off the priest.
+  // Everything else the name touches in Scripture is unchanged: bare "Zechariah" is still
+  // confined to Luke by BOOK_NAME_ALLOWLIST, so the remaining 39 occurrences stay unlinked for
+  // the reader, and 39 (not 43) still fall to the priest on the context-free panel path.
+  { ref: "Zechariah 1:1", surface: "Zechariah", expect: "zechariah-the-prophet", status: "guard",
+    why: "'Zechariah the son of Berechiah, the son of Iddo, the prophet' — the fullest form the text gives him, and the reason a bare-name allowlist could never have reached it." },
+  { ref: "Ezra 5:1", surface: "Zechariah", expect: "zechariah-the-prophet", status: "guard",
+    why: "'Zechariah the son of Iddo' — Ezra names him by his grandfather, which Zechariah 1:1 and Nehemiah 12:4, 12:16 together explain." },
+  { ref: "Ezra 6:14", surface: "Zechariah", expect: "zechariah-the-prophet", status: "guard",
+    why: "The same wording, crediting him and Haggai with the finished temple." },
+  { ref: "Ezra 5:1", surface: "Zechariah", path: "panel", owner: "book-intro:Ezra",
+    expect: "zechariah-the-prophet", status: "guard",
+    why: "The same verse with no book context at all — the panel path. It resolves through the registered patronymic rather than through any override, which is why it now comes out right on both paths." },
+  { ref: "Isaiah 8:2", surface: "Zechariah", expect: null, status: "guard",
+    why: "'Zechariah the son of Jeberechiah' — a DIFFERENT man in Isaiah's day, and one letter away from the prophet's patronymic. If the matchName on the record is ever loosened, this fails." },
+  { ref: "Nehemiah 12:16", surface: "Zechariah", expect: null, status: "guard",
+    why: "'of Iddo, Zechariah' — very likely this same prophet, but the text gives only the bare name, which the allowlist confines to Luke. Left unlinked rather than guessed at; noted here so the choice is a choice." },
+  { ref: "2 Kings 15:8", surface: "Zechariah", expect: null, status: "guard",
+    why: "Zechariah son of Jeroboam, king of Israel — one of some twenty other men in Scripture with the name, none of whom has a record. The allowlist is what keeps them all unlinked." },
 
   // ─────────────────────────────────────────────────────────────────────────────────────────
   // The 2026-09-07 content batch: Jonah, "the Christ", Son of Man, Sabbath, the Jewish

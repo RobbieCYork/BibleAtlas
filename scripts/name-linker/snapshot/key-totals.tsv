@@ -38,7 +38,7 @@ location	babel	babylon	panel	2
 location	babel	babylon	prose	12
 location	babel	babylon	reader	2
 location	babylon	babylon	panel	294
-location	babylon	babylon	prose	112
+location	babylon	babylon	prose	116
 location	babylon	babylon	reader	294
 location	berea	berea	prose	3
 location	beroea	berea	panel	3
@@ -170,7 +170,7 @@ location	iconium	iconium	prose	2
 location	iconium	iconium	reader	6
 location	idumea	edom	prose	3
 location	jerusalem	jerusalem	panel	813
-location	jerusalem	jerusalem	prose	469
+location	jerusalem	jerusalem	prose	473
 location	jerusalem	jerusalem	reader	813
 location	jezreel	jezreel	panel	36
 location	jezreel	jezreel	prose	10
@@ -585,10 +585,10 @@ person	eve	eve	panel	4
 person	eve	eve	prose	26
 person	eve	eve	reader	4
 person	ezekiel	ezekiel	panel	2
-person	ezekiel	ezekiel	prose	26
+person	ezekiel	ezekiel	prose	27
 person	ezekiel	ezekiel	reader	2
 person	ezra	ezra	panel	25
-person	ezra	ezra	prose	30
+person	ezra	ezra	prose	32
 person	ezra	ezra	reader	25
 person	father in heaven	god-the-father	panel	4
 person	father in heaven	god-the-father	reader	4
@@ -652,7 +652,7 @@ person	isaac	isaac	panel	132
 person	isaac	isaac	prose	75
 person	isaac	isaac	reader	132
 person	isaiah	isaiah	panel	53
-person	isaiah	isaiah	prose	51
+person	isaiah	isaiah	prose	52
 person	isaiah	isaiah	reader	53
 person	jacob	jacob	panel	381
 person	jacob	jacob	prose	134
@@ -688,7 +688,7 @@ person	jehoshaphat	jehoshaphat	panel	84
 person	jehoshaphat	jehoshaphat	prose	15
 person	jehoshaphat	jehoshaphat	reader	84
 person	jeremiah	jeremiah	panel	150
-person	jeremiah	jeremiah	prose	46
+person	jeremiah	jeremiah	prose	48
 person	jeremiah	jeremiah	reader	134
 person	jerome	jerome	prose	8
 person	jerubbaal	gideon	panel	13
@@ -697,7 +697,7 @@ person	jesse	jesse	panel	47
 person	jesse	jesse	prose	8
 person	jesse	jesse	reader	47
 person	jesus	jesus-of-nazareth	panel	717
-person	jesus	jesus-of-nazareth	prose	719
+person	jesus	jesus-of-nazareth	prose	720
 person	jesus	jesus-of-nazareth	reader	717
 person	jesus christ	jesus-of-nazareth	panel	165
 person	jesus christ	jesus-of-nazareth	prose	19
@@ -768,7 +768,7 @@ person	jotham	jotham-king-of-judah	panel	25
 person	jotham	jotham-king-of-judah	prose	9
 person	jotham	jotham-king-of-judah	reader	15
 person	judas	judas-iscariot	panel	21
-person	judas	judas-iscariot	prose	16
+person	judas	judas-iscariot	prose	17
 person	judas	judas-iscariot	reader	19
 person	judas	thaddaeus	reader	1
 person	judas iscariot	judas-iscariot	panel	7
@@ -864,7 +864,7 @@ person	nathanael	bartholomew-nathanael	panel	6
 person	nathanael	bartholomew-nathanael	prose	4
 person	nathanael	bartholomew-nathanael	reader	6
 person	nehemiah	nehemiah	panel	8
-person	nehemiah	nehemiah	prose	29
+person	nehemiah	nehemiah	prose	30
 person	nehemiah	nehemiah	reader	8
 person	nero	nero-caesar	prose	39
 person	nicodemus	nicodemus	panel	5
@@ -961,7 +961,7 @@ person	sarai	sarah	panel	17
 person	sarai	sarah	prose	16
 person	sarai	sarah	reader	17
 person	satan	satan	panel	55
-person	satan	satan	prose	16
+person	satan	satan	prose	17
 person	satan	satan	reader	55
 person	saul	paul-of-tarsus	prose	26
 person	saul	paul-of-tarsus	reader	25
@@ -1029,7 +1029,7 @@ person	teresa of ávila	teresa-of-avila	prose	1
 person	thaddaeus	thaddaeus	panel	2
 person	thaddaeus	thaddaeus	reader	2
 person	the accuser	satan	panel	2
-person	the accuser	satan	prose	4
+person	the accuser	satan	prose	5
 person	the accuser	satan	reader	1
 person	the comforter	holy-spirit	panel	1
 person	the comforter	holy-spirit	reader	1
@@ -1088,13 +1088,18 @@ person	zacharias	zechariah-father-of-john-baptist	reader	9
 person	zadok	zadok-in-jesus-genealogy	panel	55
 person	zadok	zadok-in-jesus-genealogy	prose	2
 person	zadok	zadok-in-jesus-genealogy	reader	2
-person	zechariah	zechariah-father-of-john-baptist	panel	43
+person	zechariah	zechariah-father-of-john-baptist	panel	39
 person	zechariah	zechariah-father-of-john-baptist	prose	12
+person	zechariah	zechariah-the-prophet	prose	11
+person	zechariah the son of berechiah	zechariah-the-prophet	panel	2
+person	zechariah the son of berechiah	zechariah-the-prophet	reader	2
+person	zechariah the son of iddo	zechariah-the-prophet	panel	2
+person	zechariah the son of iddo	zechariah-the-prophet	reader	2
 person	zerah	zerah-son-of-judah	panel	22
 person	zerah	zerah-son-of-judah	prose	4
 person	zerah	zerah-son-of-judah	reader	11
 person	zerubbabel	zerubbabel	panel	25
-person	zerubbabel	zerubbabel	prose	20
+person	zerubbabel	zerubbabel	prose	23
 person	zerubbabel	zerubbabel	reader	25
 poi	amphipolis	amphipolis	panel	1
 poi	amphipolis	amphipolis	prose	1
@@ -1392,7 +1397,7 @@ topic	egyptians	egyptians	panel	93
 topic	egyptians	egyptians	prose	4
 topic	egyptians	egyptians	reader	93
 topic	elders	jewish-elders	panel	190
-topic	elders	jewish-elders	prose	43
+topic	elders	jewish-elders	prose	44
 topic	elders	jewish-elders	reader	33
 topic	enuma elish	enuma-elish	prose	5
 topic	epic of gilgamesh	epic-of-gilgamesh	prose	4
@@ -1478,7 +1483,7 @@ topic	passover	passover	panel	12
 topic	passover	passover	prose	41
 topic	passover	passover	reader	12
 topic	persian	persians	panel	2
-topic	persian	persians	prose	130
+topic	persian	persians	prose	131
 topic	persian	persians	reader	2
 topic	persians	persians	panel	5
 topic	persians	persians	prose	5
@@ -1545,7 +1550,7 @@ topic	tent of meeting	tabernacle	panel	146
 topic	tent of meeting	tabernacle	prose	1
 topic	tent of meeting	tabernacle	reader	146
 topic	the angel	angels	panel	67
-topic	the angel	angels	prose	21
+topic	the angel	angels	prose	22
 topic	the angel	angels	reader	67
 topic	the christ	the-christ	panel	54
 topic	the christ	the-christ	prose	13
@@ -1574,7 +1579,7 @@ topic	the romans	romans	panel	3
 topic	the romans	romans	prose	6
 topic	the romans	romans	reader	3
 topic	the temple	the-temple	panel	150
-topic	the temple	the-temple	prose	191
+topic	the temple	the-temple	prose	195
 topic	the temple	the-temple	reader	150
 topic	the trinity	the-trinity	prose	13
 topic	topheth	gehenna	panel	9
@@ -1788,6 +1793,7 @@ verse	2 chronicles 21:16-17	-	prose	1
 verse	2 chronicles 21:16-20	-	prose	1
 verse	2 chronicles 21:6	-	prose	1
 verse	2 chronicles 21:8-10	-	prose	1
+verse	2 chronicles 24:20-22	-	prose	1
 verse	2 chronicles 26:1-15	-	prose	1
 verse	2 chronicles 26:16-20	-	prose	1
 verse	2 chronicles 26:21-23	-	prose	1
@@ -2451,10 +2457,11 @@ verse	ezra 3:10-13	-	prose	1
 verse	ezra 3:2	-	prose	1
 verse	ezra 4	-	prose	1
 verse	ezra 5	-	prose	1
+verse	ezra 5:1	-	prose	1
 verse	ezra 5:1-2	-	prose	1
 verse	ezra 6	-	prose	1
 verse	ezra 6:1-12	-	prose	1
-verse	ezra 6:14-15	-	prose	2
+verse	ezra 6:14-15	-	prose	3
 verse	ezra 6:15	-	prose	2
 verse	ezra 6:3-5	-	prose	1
 verse	ezra 7	-	prose	1
@@ -2714,7 +2721,7 @@ verse	genesis 9:28-29	-	prose	2
 verse	habakkuk 2:4	-	prose	1
 verse	habakkuk 3:1	-	prose	1
 verse	habakkuk 3:9	-	prose	1
-verse	haggai 1:1	-	prose	1
+verse	haggai 1:1	-	prose	2
 verse	haggai 1:1-2	-	prose	1
 verse	haggai 2:23	-	prose	1
 verse	hebrews 10:1-14	-	prose	1
@@ -2852,6 +2859,7 @@ verse	john 11:49-50	-	prose	1
 verse	john 11:5	-	prose	1
 verse	john 12:1-2	-	prose	2
 verse	john 12:1-8	-	prose	1
+verse	john 12:15	-	prose	1
 verse	john 12:20-22	-	prose	2
 verse	john 12:34	-	prose	2
 verse	john 12:38-41	-	prose	1
@@ -2888,6 +2896,7 @@ verse	john 19:31-36	-	prose	1
 verse	john 19:31-37	-	prose	1
 verse	john 19:33-36	-	prose	1
 verse	john 19:35	-	prose	1
+verse	john 19:37	-	prose	1
 verse	john 19:39-40	-	prose	3
 verse	john 19:39-42	-	prose	1
 verse	john 19:41	-	prose	1
@@ -3083,6 +3092,7 @@ verse	luke 11:29-32	-	prose	1
 verse	luke 11:30	-	prose	1
 verse	luke 11:32	-	prose	1
 verse	luke 11:37-54	-	prose	1
+verse	luke 11:51	-	prose	1
 verse	luke 12:5	-	prose	1
 verse	luke 13:10-17	-	prose	1
 verse	luke 13:14-16	-	prose	1
@@ -3211,6 +3221,7 @@ verse	mark 13:1-2	-	prose	1
 verse	mark 13:26	-	prose	1
 verse	mark 13:3	-	prose	1
 verse	mark 14:12-26	-	prose	1
+verse	mark 14:27	-	prose	1
 verse	mark 14:3-9	-	prose	2
 verse	mark 14:32-34	-	prose	1
 verse	mark 14:32-52	-	prose	1
@@ -3323,6 +3334,7 @@ verse	matthew 2	-	prose	2
 verse	matthew 20:20-24	-	prose	1
 verse	matthew 21:1-11	-	prose	1
 verse	matthew 21:12-13	-	prose	1
+verse	matthew 21:5	-	prose	1
 verse	matthew 22:15-16	-	prose	1
 verse	matthew 22:15-21	-	prose	1
 verse	matthew 22:15-22	-	prose	1
@@ -3334,7 +3346,7 @@ verse	matthew 23:15	-	prose	1
 verse	matthew 23:2-3	-	prose	1
 verse	matthew 23:23	-	prose	2
 verse	matthew 23:27	-	prose	1
-verse	matthew 23:35	-	prose	1
+verse	matthew 23:35	-	prose	2
 verse	matthew 23:5-7	-	prose	1
 verse	matthew 24	-	prose	1
 verse	matthew 24:1-2	-	prose	3
@@ -3346,6 +3358,7 @@ verse	matthew 24:37-39	-	prose	1
 verse	matthew 25:31	-	prose	2
 verse	matthew 26:14-16	-	prose	1
 verse	matthew 26:26-28	-	prose	1
+verse	matthew 26:31	-	prose	1
 verse	matthew 26:36-39	-	prose	1
 verse	matthew 26:36-56	-	prose	1
 verse	matthew 26:47-50	-	prose	2
@@ -3367,6 +3380,8 @@ verse	matthew 27:56	-	prose	1
 verse	matthew 27:57-60	-	prose	1
 verse	matthew 27:60	-	prose	1
 verse	matthew 27:61	-	prose	1
+verse	matthew 27:9	-	prose	1
+verse	matthew 27:9-10	-	prose	1
 verse	matthew 28:1	-	prose	1
 verse	matthew 28:19	-	prose	4
 verse	matthew 28:2-7	-	prose	1
@@ -3418,6 +3433,7 @@ verse	micah 3:8	-	prose	1
 verse	micah 5:2	-	prose	2
 verse	micah 6:5	-	prose	1
 verse	nehemiah 1	-	prose	2
+verse	nehemiah 12:1-4	-	prose	1
 verse	nehemiah 13	-	prose	1
 verse	nehemiah 13:6-7	-	prose	1
 verse	nehemiah 1:1	-	prose	1
@@ -3596,7 +3612,17 @@ verse	ruth 4:20-22	-	prose	1
 verse	titus 1:12	-	prose	1
 verse	titus 1:5	-	prose	2
 verse	titus 3:13	-	prose	1
+verse	zechariah 1:1	-	prose	3
+verse	zechariah 1:3	-	prose	1
+verse	zechariah 1:7	-	prose	2
 verse	zechariah 3:1-5	-	prose	1
+verse	zechariah 3:1-7	-	prose	1
 verse	zechariah 4:1-14	-	prose	1
-verse	zechariah 4:6	-	prose	1
+verse	zechariah 4:6	-	prose	2
+verse	zechariah 4:9	-	prose	1
+verse	zechariah 6:11-13	-	prose	1
+verse	zechariah 7:1	-	prose	1
+verse	zechariah 7:1-3	-	prose	1
+verse	zechariah 7:9-10	-	prose	1
+verse	zechariah 8:19-23	-	prose	1
 verse	zephaniah 2:4-7	-	prose	1

@@ -306,6 +306,7 @@ bookIntro.summary|book-intro:Exodus|03f77ceb67	72	Moses	moses
 bookIntro.summary|book-intro:Ezekiel|25009e841c	20	Ezekiel	ezekiel
 bookIntro.summary|book-intro:Ezra|26906bc280	0	Ezra	ezra
 bookIntro.summary|book-intro:Ezra|b2bb99256d	94	Ezra	ezra
+bookIntro.summary|book-intro:Ezra|d20840f564	304	Zechariah	zechariah-the-prophet
 bookIntro.summary|book-intro:Ezra|d20840f564	64	Zerubbabel	zerubbabel
 bookIntro.summary|book-intro:Galatians|1e23ff3c4f	0	Paul	paul-of-tarsus
 bookIntro.summary|book-intro:Galatians|1e23ff3c4f	117	Abraham	abraham
@@ -686,6 +687,7 @@ bookIntro.whyWritten|book-intro:Titus|66b60cb0f6	123	Titus	titus
 bookIntro.whyWritten|book-intro:Titus|66b60cb0f6	14	Titus	titus
 bookIntro.whyWritten|book-intro:Titus|66b60cb0f6	232	Paul	paul-of-tarsus
 bookIntro.whyWritten|book-intro:Titus|66b60cb0f6	381	Timothy	timothy
+bookIntro.whyWritten|book-intro:Zechariah|873dce75b3	13	Zechariah	zechariah-the-prophet
 bookIntro.whyWritten|book-intro:Zephaniah|e52dd7ff96	192	Josiah	josiah
 location.archaeology.note|antioch-pisidia|6bfdd2a9e6	249	Paul	paul-of-tarsus
 location.archaeology.note|antioch-pisidia|6bfdd2a9e6	41	Augustus	caesar-augustus
@@ -871,6 +873,8 @@ person.controversies|simon-peter|ac0d1151d5	21	Jesus	jesus-of-nazareth
 person.controversies|stephen-the-martyr|ab8b7cd54a	188	Paul	paul-of-tarsus
 person.controversies|stephen-the-martyr|ab8b7cd54a	46	Saul of Tarsus	paul-of-tarsus
 person.controversies|theophilus|dfb8cd3238	262	Luke	luke-evangelist
+person.controversies|zechariah-the-prophet|3e9d48f1d0	367	Zerubbabel	zerubbabel
+person.controversies|zechariah-the-prophet|6f95ced6fd	0	Jesus	jesus-of-nazareth
 person.extraBib.source|aquila|e8a5f31625	19	Claudius	claudius-caesar
 person.extraBib.source|benedict-of-nursia|6ff557987d	0	Gregory the Great	gregory-the-great
 person.extraBib.source|james-brother-of-jesus|1e2252382b	0	Eusebius of Caesarea	eusebius-of-caesarea
@@ -2483,6 +2487,7 @@ person.lifeStory|satan|038fb6dbab	747	James	james-son-of-zebedee
 person.lifeStory|satan|2122f689da	115	Joshua	joshua
 person.lifeStory|satan|2122f689da	177	Joshua	joshua
 person.lifeStory|satan|2122f689da	344	David	david
+person.lifeStory|satan|2122f689da	49	Zechariah	zechariah-the-prophet
 person.lifeStory|satan|2122f689da	499	David	david
 person.lifeStory|satan|34f8dfc091	253	Job	job
 person.lifeStory|satan|34f8dfc091	415	Job	job
@@ -2723,9 +2728,23 @@ person.lifeStory|zechariah-father-of-john-baptist|c544ae9bc2	156	Elizabeth	eliza
 person.lifeStory|zechariah-father-of-john-baptist|c544ae9bc2	179	John	john-the-baptist
 person.lifeStory|zechariah-father-of-john-baptist|c544ae9bc2	256	John	john-the-baptist
 person.lifeStory|zechariah-father-of-john-baptist|c544ae9bc2	343	the Holy Spirit	holy-spirit
+person.lifeStory|zechariah-the-prophet|14572cce40	355	Ezra	ezra
+person.lifeStory|zechariah-the-prophet|14572cce40	83	Zerubbabel	zerubbabel
+person.lifeStory|zechariah-the-prophet|35abca372d	583	Judas	judas-iscariot
+person.lifeStory|zechariah-the-prophet|35abca372d	716	Isaiah	isaiah
+person.lifeStory|zechariah-the-prophet|35abca372d	869	Jeremiah	jeremiah
+person.lifeStory|zechariah-the-prophet|61b95b3b89	328	Nehemiah	nehemiah
+person.lifeStory|zechariah-the-prophet|61b95b3b89	417	Zerubbabel	zerubbabel
+person.lifeStory|zechariah-the-prophet|61b95b3b89	598	Jeremiah	jeremiah
+person.lifeStory|zechariah-the-prophet|61b95b3b89	611	Ezekiel	ezekiel
+person.lifeStory|zechariah-the-prophet|61b95b3b89	91	Ezra	ezra
+person.lifeStory|zechariah-the-prophet|80d0ef9799	602	Satan	satan
+person.lifeStory|zechariah-the-prophet|80d0ef9799	641	the accuser	satan
 person.lifeStory|zerah-son-of-judah|d9f0972955	49	Perez	perez
 person.lifeStory|zerah-son-of-judah|d9f0972955	805	Asa	asa
+person.lifeStory|zerubbabel|2791651157	102	Zechariah	zechariah-the-prophet
 person.lifeStory|zerubbabel|2791651157	149	Joshua	joshua
+person.lifeStory|zerubbabel|2791651157	347	Zechariah	zechariah-the-prophet
 person.lifeStory|zerubbabel|2791651157	403	Joshua	joshua
 person.lifeStory|zerubbabel|ef958b2fe1	40	Jehoiachin	jeconiah
 person.lifeStory|zerubbabel|ef958b2fe1	410	Solomon	solomon
@@ -3775,13 +3794,16 @@ timelineEvent.article|bib-er-nehemiahs-wall|75db4ad4a6	15	Nehemiah	nehemiah
 timelineEvent.article|bib-er-nehemiahs-wall|75db4ad4a6	481	Nehemiah	nehemiah
 timelineEvent.article|bib-er-second-temple-completed|5c35f36f0d	116	Solomon	solomon
 timelineEvent.article|bib-er-second-temple-completed|5c35f36f0d	297	Solomon	solomon
+timelineEvent.article|bib-er-second-temple-completed|5c35f36f0d	425	Zechariah	zechariah-the-prophet
 timelineEvent.article|bib-er-second-temple-completed|5c35f36f0d	460	Jesus	jesus-of-nazareth
+timelineEvent.article|bib-er-second-temple-completed|c6d680a82a	255	Zechariah	zechariah-the-prophet
 timelineEvent.article|bib-er-second-temple-completed|c6d680a82a	321	Zerubbabel	zerubbabel
 timelineEvent.article|bib-er-second-temple-completed|c6d680a82a	348	Joshua	joshua
 timelineEvent.article|bib-er-zerubbabels-return|10376bcab7	290	Zerubbabel	zerubbabel
 timelineEvent.article|bib-er-zerubbabels-return|10376bcab7	332	Jehoiachin	jeconiah
 timelineEvent.article|bib-er-zerubbabels-return|10376bcab7	360	David	david
 timelineEvent.article|bib-er-zerubbabels-return|47b96571c0	420	Solomon	solomon
+timelineEvent.article|bib-er-zerubbabels-return|ac7e2c5b30	277	Zechariah	zechariah-the-prophet
 timelineEvent.article|bib-exo-birth-of-moses|6aeceb43ed	210	Miriam	miriam
 timelineEvent.article|bib-exo-birth-of-moses|6aeceb43ed	262	Moses	moses
 timelineEvent.article|bib-exo-birth-of-moses|6aeceb43ed	309	Stephen	stephen-the-martyr
@@ -4173,6 +4195,7 @@ timelineEvent.article|bib-loc-triumphal-entry|6ff18d7cb8	306	Jesus	jesus-of-naza
 timelineEvent.article|bib-loc-triumphal-entry|6ff18d7cb8	325	Luke	luke-evangelist
 timelineEvent.article|bib-loc-triumphal-entry|6ff18d7cb8	381	Jesus	jesus-of-nazareth
 timelineEvent.article|bib-loc-triumphal-entry|739268d1fe	236	Jesus	jesus-of-nazareth
+timelineEvent.article|bib-loc-triumphal-entry|739268d1fe	273	Zechariah	zechariah-the-prophet
 timelineEvent.article|bib-loc-triumphal-entry|739268d1fe	55	Jesus	jesus-of-nazareth
 timelineEvent.article|bib-loc-wedding-at-cana|9d65051b77	0	Jesus	jesus-of-nazareth
 timelineEvent.article|bib-loc-wedding-at-cana|e81391a061	300	Mary	mary-mother-of-jesus
@@ -4862,6 +4885,7 @@ timelineEvent.article|wld-pg-cyrus-decree|0ac034884e	55	Jeremiah	jeremiah
 timelineEvent.article|wld-pg-cyrus-decree|68f32b5a1e	34	David	david
 timelineEvent.article|wld-pg-cyrus-decree|68f32b5a1e	45	Joshua	joshua
 timelineEvent.article|wld-pg-cyrus-decree|68f32b5a1e	6	Zerubbabel	zerubbabel
+timelineEvent.article|wld-pg-darius-consolidation|e2c058965f	552	Zechariah	zechariah-the-prophet
 timelineEvent.article|wld-pg-death-of-alexander|7996104898	0	Daniel	daniel
 timelineEvent.article|wld-pg-esther-becomes-queen|207ad5920c	12	Esther	esther
 timelineEvent.article|wld-pg-esther-becomes-queen|4b4824d97c	143	Esther	esther
@@ -5248,6 +5272,7 @@ topic.section|babylonians|03b08ed2ee	440	Jeremiah	jeremiah
 topic.section|babylonians|dcbf19bd59	12	Daniel	daniel
 topic.section|babylonians|dcbf19bd59	439	Daniel	daniel
 topic.section|babylonians|dcbf19bd59	94	Daniel	daniel
+topic.section|behistun-inscription|8d9f718cd6	299	Zechariah	zechariah-the-prophet
 topic.section|canaanites|590b3c00fc	17	Abraham	abraham
 topic.section|canaanites|590b3c00fc	222	Abraham	abraham
 topic.section|canaanites|590b3c00fc	377	Joshua	joshua

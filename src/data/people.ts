@@ -4308,6 +4308,66 @@ export const people: Person[] = [
       "Ezra set his heart to study, then to do, then to teach — in that order — which of those three do you skip?",
   },
   {
+    id: "zechariah-the-prophet",
+    name: "Zechariah (Prophet)",
+    pronunciation: "zek-uh-RYE-uh",
+    // The display name is bracketed for the same reason Nathan's is, and there is deliberately no
+    // bare "Zechariah" in `alternateNames` or `matchNames`: that key belongs to the priest of
+    // Luke 1 (zechariah-father-of-john-baptist), who sits earlier in this array and whose twelve
+    // correct prose links would be silently stolen by this record if it registered the bare name.
+    // Same fault, same remedy, as the two kings called Joram below. Our own articles reach this
+    // man through OWNER_NAME_OVERRIDES in verseAnnotations.ts, keyed by whose page the prose is
+    // on. The wordings below are the ones that can only be him wherever they appear: Zechariah
+    // 1:1 and 1:7 give the full patronymic, Ezra 5:1 and 6:14 name him by his grandfather, and
+    // the third is the form our own prose uses. Isaiah 8:2's "Zechariah the son of Jeberechiah"
+    // is a different man and a different string, so it stays untouched.
+    matchNames: [
+      "Zechariah the son of Berechiah",
+      "Zechariah the son of Iddo",
+      "Zechariah son of Berechiah",
+    ],
+    lifespanLabel: "fl. 520-518 BC (his dated oracles)",
+    lifespanCertainty: "firm",
+    lifespanDatingNotes:
+      "Three of his oracles are dated to the day by the regnal years of Darius I, which the chronology of the Persian kings fixes precisely: the eighth month of Darius's second year (October or November 520 BC, Zechariah 1:1), the twenty-fourth of the month Shebat in the same regnal year (February 519 BC, Zechariah 1:7), and the fourth of the month Chislev in Darius's fourth year (December 518 BC, Zechariah 7:1). Chapters 9-14 carry no dates at all, so how long his ministry ran past 518 BC is simply unknown. Scripture records neither his birth nor his death.",
+    tier: "significant",
+    role: "Prophet and priest of the return from exile",
+    summary:
+      "A prophet of priestly descent who, alongside Haggai, pressed the discouraged returned exiles to finish the Second Temple, and whose night visions and later oracles of a humble king are among the passages the Gospel writers quote most in the passion narratives.",
+    lifeStory: [
+      "Zechariah began to prophesy in the eighth month of the second year of Darius I — October or November of 520 BC — two months after Haggai had begun, and to the same community: the Judeans who had returned from Babylon and left the temple half-built for over fifteen years (Zechariah 1:1; Haggai 1:1). His opening word was not about building at all but about repentance, urging a generation not to repeat the deafness of their fathers: \"Return to me, and I will return to you\" (Zechariah 1:3).",
+      "His own book introduces him as \"the son of Berechiah, the son of Iddo, the prophet,\" while Ezra twice calls him simply \"Zechariah the son of Iddo\" (Zechariah 1:1; Ezra 5:1, 6:14). The usual reading is that Berechiah was his father and Iddo his grandfather, \"son of\" carrying its ordinary Hebrew breadth of \"descendant of\" — and Nehemiah fits that reading, listing Iddo among the priests who came up from Babylon with Zerubbabel and Jeshua, and naming a Zechariah as head of Iddo's priestly house a generation later (Nehemiah 12:1-4, 12:16). On that reading he was a priest as well as a prophet, as Jeremiah and Ezekiel had been before him. He was most likely himself among those who came back from Babylon, though no text says so outright.",
+      "Three months after his opening call, on the twenty-fourth of Shebat in February 519 BC, he received eight night visions in a single night, set out in Zechariah 1:7 to 6:8: horsemen reporting a world at rest while Jerusalem still lay in ruins, four horns and four craftsmen, a man sent to measure a Jerusalem that would outgrow its walls and be ringed instead by a wall of fire, a flying scroll, a woman in a basket carried off to Babylonia, and four chariots going out to the four winds. In the fourth vision he saw Joshua the high priest standing before the angel of the LORD in filthy garments, with Satan at his right hand to accuse him; the accuser is rebuked, the garments are exchanged for clean ones, and Joshua is given a charge and a promise (Zechariah 3:1-7). In the fifth, a golden lampstand fed by two olive trees produced the line the book is best remembered for: \"Not by might, nor by power, but by my Spirit, says the LORD of Armies\" (Zechariah 4:6).",
+      "The visions were addressed to a specific, stalled building project. Zechariah told Zerubbabel that the hands which had laid the temple's foundation would also finish it (Zechariah 4:9), and was told to set a crown on the head of Joshua son of Jehozadak and speak of a coming figure called the Branch who would build the LORD's temple (Zechariah 6:11-13). Ezra credits the two prophets with the result in as many words: the elders \"built and prospered, through the prophesying of Haggai the prophet and Zechariah the son of Iddo,\" and the house was finished in the sixth year of Darius (Ezra 6:14-15).",
+      "In Darius's fourth year, December 518 BC, a delegation came to ask whether the community should keep fasting in mourning for the destroyed temple now that a new one was nearly standing (Zechariah 7:1-3). The answer runs two chapters and barely addresses the question: what had been asked of them all along was to \"execute true judgment, and show kindness and compassion every man to his brother,\" and not to oppress the widow, the fatherless, the foreigner or the poor (Zechariah 7:9-10). The fasts, he was told, would become feasts, and people from many nations would take hold of the sleeve of a Jew and ask to come along, \"for we have heard that God is with you\" (Zechariah 8:19-23).",
+      "The last six chapters carry no dates, no names and no temple business, and turn instead to a king and a shepherd: a ruler entering Jerusalem \"lowly, and riding on a donkey, even on a colt, the foal of a donkey\" (9:9); a shepherd paid off with thirty pieces of silver that are thrown to the potter in the LORD's house (11:12-13); one who is pierced and mourned as an only son (12:10); a shepherd struck and a flock scattered (13:7). The Gospel writers quote all four in the passion narrative — Matthew 21:5 and John 12:15 at the triumphal entry, Matthew 27:9-10 at the price paid for Judas's betrayal, John 19:37 at the cross, and Matthew 26:31 with Mark 14:27 on the night of the arrest — which puts Zechariah, with Isaiah and the Psalms, among the Old Testament sources those accounts lean on most. Matthew 27:9 introduces the thirty-pieces passage as spoken \"through Jeremiah the prophet\" rather than through Zechariah, a long-discussed feature of that verse for which commentators have offered several explanations and reached no agreement.",
+    ],
+    controversies: [
+      "Whether the undated chapters 9-14 come from Zechariah's own later years or from a later hand has been argued for centuries. Much critical scholarship assigns them to a different, later writer — sometimes called \"Second Zechariah\" — pointing to the absence of dates and personal references, the two anonymous \"An Oracle\" headings at 9:1 and 12:1, the disappearance of Zerubbabel, Joshua and the temple, and the mention of the \"sons of Greece\" at 9:13. Others hold to the unity of the book, pointing out that it is transmitted whole in every manuscript witness with no ancient tradition of a second author, and that a change of subject late in a long ministry accounts for the differences. This app's introduction to the book of Zechariah lays out both cases at length; the record here takes no side.",
+      "Jesus speaks in Matthew 23:35 of \"Zachariah son of Barachiah, whom you killed between the sanctuary and the altar,\" and which Zechariah he means is genuinely disputed. The martyrdom described matches Zechariah son of Jehoiada, stoned in the temple court under King Joash (2 Chronicles 24:20-22) — but that man's father was Jehoiada, not Berechiah, and the parallel saying in Luke 11:51 gives no father's name at all. Proposals have included that the prophet of this record is the man meant, that Jehoiada was a grandfather or bore a second name, that the patronymic is a copyist's importation, and — as early as Origen — that a different Zechariah entirely is in view. No explanation has carried the field, and this record asserts none of them.",
+    ],
+    occupation: "Prophet; a priest of the house of Iddo",
+    placesLived: "Jerusalem, among the community returned from exile in Babylon",
+    noExtraBiblicalRecordNote:
+      "No inscription or ancient document names Zechariah. What the extra-biblical record does supply is his calendar: he dates his own oracles by the regnal years of Darius I, and the chronology of the Persian kings is independently anchored by Babylonian dated tablets and astronomical records, with Darius's own account of his accession carved into the cliff at Behistun around the same years Zechariah was preaching. That makes his preaching datable to the month — a rare thing for an Old Testament prophet — while confirming nothing about the man himself.",
+    verses: [
+      { reference: "Zechariah 1:1-6", note: "His opening call to return, dated to Darius's second year" },
+      { reference: "Zechariah 1:7-6:8", note: "The eight night visions" },
+      { reference: "Zechariah 3:1-7", note: "Joshua the high priest accused by Satan and given clean garments" },
+      { reference: "Zechariah 4:1-14", note: "The lampstand and the two olive trees: \"not by might, nor by power\"" },
+      { reference: "Zechariah 7:1-14", note: "Asked about fasting, he answers about justice and mercy" },
+      { reference: "Zechariah 9:9", note: "The king coming to Jerusalem on a donkey, quoted at the triumphal entry" },
+      { reference: "Ezra 5:1-2", note: "Named with Haggai as the prophets who restarted the temple work" },
+      { reference: "Ezra 6:14-15", note: "The temple finished, credited to their preaching" },
+    ],
+    sources: [
+      { label: "Encyclopaedia Britannica: Zechariah", url: "https://www.britannica.com/biography/Zechariah" },
+      { label: "Encyclopaedia Britannica: Book of Zechariah", url: "https://www.britannica.com/topic/Book-of-Zechariah" },
+    ],
+    reflectionPrompt:
+      "They came to Zechariah with a narrow question about fasting and got two chapters about justice and mercy instead — what question of yours might be answered by a bigger one?",
+  },
+  {
     id: "job",
     name: "Job",
     pronunciation: "JOHB",
