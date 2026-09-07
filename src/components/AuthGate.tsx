@@ -27,7 +27,13 @@ const RESEND_COOLDOWN_SECONDS = 60;
  * protected by a real boundary is user data (notes, highlights, posts, profiles), via row-level
  * security in the database — signing up doesn't change that boundary, it was already there. */
 export default function AuthGate() {
-  const [mode, setMode] = useState<Mode>("signup");
+  // Opens on Log In, not Sign Up. Nearly everyone who reaches this gate already has an account —
+  // signed out, or back on a new device — and defaulting to signup made all of them click across
+  // before they could type. Sign Up is one tap away in the toggle below and otherwise unchanged.
+  // Nothing deep-links in expecting a particular tab: this component takes no props, and the only
+  // query params the app reads (`invite`, `joinGroup`, recovery `code`) either stash to
+  // localStorage and apply after *any* successful auth, or bypass this gate entirely.
+  const [mode, setMode] = useState<Mode>("login");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
@@ -254,6 +260,7 @@ export default function AuthGate() {
                 {mode === "signup" && (
                   <input
                     type="text"
+                    name="name"
                     placeholder="Name"
                     value={displayName}
                     onChange={(e) => setDisplayName(e.target.value)}
@@ -262,8 +269,17 @@ export default function AuthGate() {
                     autoFocus
                   />
                 )}
+                {/* `username`, not `email`. Both autofill an address, but only `username` tells a
+                 * password manager this is the *account identifier* half of a credential pair, so
+                 * it has something to file the password under and something to fill next to it
+                 * later. Chrome and iOS Safari both want it on sign-in and sign-up alike. The
+                 * `name` attributes on these three fields are the same story from the other end:
+                 * Safari's heuristics key off them, and a form of anonymous inputs is a form it
+                 * can decline to offer to save. Nothing here stores a password — the browser's
+                 * own manager does that, which is the only place it belongs. */}
                 <input
                   type="email"
+                  name="email"
                   placeholder="Email"
                   value={email}
                   onChange={(e) => {
@@ -271,13 +287,19 @@ export default function AuthGate() {
                     if (unconfirmedEmail) setUnconfirmedEmail(null);
                   }}
                   required
-                  autoComplete="email"
+                  autoComplete="username"
                   autoFocus={mode !== "signup"}
                 />
                 {mode !== "reset" && (
                   <div className="auth-gate-password-field">
+                    {/* Already mode-aware, and left that way deliberately: React writes the new
+                     * `autocomplete` onto this same DOM node when the tab flips, so the field
+                     * never sits there advertising `new-password` on the Log In tab. Not keyed to
+                     * `mode` on purpose — remounting it would make managers treat each tab switch
+                     * as a brand-new form. */}
                     <input
                       type={showPassword ? "text" : "password"}
+                      name="password"
                       placeholder="Password"
                       value={password}
                       onChange={(e) => setPassword(e.target.value)}
