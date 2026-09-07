@@ -12,6 +12,7 @@ import { useIsAdmin } from "../lib/adminApi";
 import { fetchReportCounts, hasRoleAtLeast, useCurrentRole } from "../lib/reportsApi";
 import type { ReportSurface } from "../lib/reportContext";
 import Icon from "./Icon";
+import SocialLinks from "./SocialLinks";
 
 interface AuthButtonProps {
   session: Session | null;
@@ -479,6 +480,16 @@ export default function AuthButton({
             <button type="button" className="auth-menu-item auth-signout" onClick={handleSignOut}>
               Log Out
             </button>
+            {/* The MOBILE home for Capstone Bible's own accounts. On desktop they sit in the header
+                itself, immediately left of this menu's trigger (App.tsx, .header-social); this copy
+                is hidden there by CSS so they are never on screen twice.
+                WHY HERE ON A PHONE. The mobile header has room for logo + search + avatar and
+                nothing else, and the alternatives all cost reading height — the one thing several
+                changes this week were spent reclaiming. A footer row in the menu the reader opens
+                deliberately costs none of it, is reached from the same top-right control as the
+                desktop placement, and sits with the app's other "about your account, not about the
+                content" entries. Muted, below Log Out, deliberately last: a footnote. */}
+            <SocialLinks className="auth-social" />
           </div>
         )}
         {open && menuView === "admin" && isAdmin && (

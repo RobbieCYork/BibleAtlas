@@ -149,6 +149,53 @@
   margin-left: auto;
 }
 
+/* Capstone Bible's own social marks in the app's own chrome (App.tsx renders SocialLinks here on
+ * desktop only). They take the right end of the header alongside the account button rather than a
+ * spot of their own: `margin-left:auto` moves the push-right job onto this row when it is present,
+ * and the negative margin below closes the header's 24px rhythm to 12px between the marks and the
+ * avatar so the three read as one corner instead of two unrelated controls.
+ *
+ * The `+` pair is why `.app-header .auth-button`'s own auto is left alone above: two items both
+ * asking for auto would SPLIT the free space between them and strand the marks mid-header. On
+ * mobile this row is not rendered at all, so that rule is still the one doing the work there. */
+.app-header .header-social {
+  margin-left: auto;
+  color: var(--text-muted);
+}
+
+.app-header .header-social + .auth-button {
+  margin-left: -12px;
+}
+
+/* Smaller than SocialLinks' own 20px default. This is signed-in chrome next to a 38px avatar and a
+ * 37px search field, not a login card — 16px puts the marks at the size of the header's other
+ * glyphs (the scope toggle, the hamburger) and keeps the tap target at 28px, which is fine for a
+ * pointer on the one breakpoint this row appears at. */
+.app-header .header-social .social-links-item {
+  font-size: 16px;
+  padding: 6px;
+}
+
+.app-header .header-social .social-links-item:hover,
+.app-header .header-social .social-links-item:focus-visible {
+  color: var(--text);
+}
+
+/* The mobile copy, in the account dropdown (see AuthButton). Two selector classes deep so it beats
+ * `.social-links { display: flex }` in SocialLinks.css regardless of which stylesheet loads first —
+ * a one-class rule here would be a coin toss on import order. */
+.auth-button .auth-social {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  .auth-button .auth-social {
+    display: flex;
+    margin-top: 10px;
+    color: var(--text-muted);
+  }
+}
+
 .app-body {
   flex: 1;
   display: flex;

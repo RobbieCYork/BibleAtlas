@@ -24,6 +24,7 @@ import PanelMenu, { type PanelKey } from "./components/PanelMenu";
 import MobileTabBar from "./components/MobileTabBar";
 import ResizeHandle from "./components/ResizeHandle";
 import AuthButton from "./components/AuthButton";
+import SocialLinks from "./components/SocialLinks";
 import MyProfileView from "./components/MyProfileView";
 import FriendProfileView from "./components/FriendProfileView";
 import PeopleSearchBar from "./components/PeopleSearchBar";
@@ -1501,6 +1502,14 @@ function App() {
         {searchMode === "people" && session && (
           <PeopleSearchBar viewerId={session.user.id} onSelect={setViewedPersonId} />
         )}
+        {/* Capstone Bible's own Facebook and Instagram, at the right end of the header immediately
+            before the account avatar. Same component and same SOCIAL_LINKS array as the signed-out
+            front door (see SocialLinks/AuthGate) — a second placement was exactly what its
+            `className` prop was built for, and neither the paths nor the hrefs are repeated here.
+            Desktop only, and rendered rather than merely hidden: the mobile header is already down
+            to logo + search + avatar (see the max-width:768px block in App.css), and the marks go
+            in the account menu there instead — see .auth-social in AuthButton. */}
+        {!isMobile && <SocialLinks className="header-social" />}
         <AuthButton
           session={session}
           openProfileNonce={openProfileNonce}
