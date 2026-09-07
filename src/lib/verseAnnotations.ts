@@ -566,6 +566,25 @@ const VERSE_NAME_OVERRIDES: Record<string, Record<string, Record<string, string 
   },
 };
 
+/** The `excludeId` a book introduction renders under.
+ *
+ * Every other authored surface hands `computeLinkAnnotations` the id of the record it belongs to.
+ * A book intro belongs to no record, so it had nothing to pass and OWNER_NAME_OVERRIDES could not
+ * reach a single word of it. This mints a stable id from the book name instead — the one fact an
+ * introduction does have — so a per-book correction has somewhere to key on.
+ *
+ * The `book-intro:` prefix is what keeps it safe. No record id in this app contains a colon, so the
+ * synthesised id can never collide with a real one: it cannot accidentally suppress a link (the
+ * `id !== excludeId` tests can never match it) and it corrects nothing until someone writes an
+ * entry for it. Introducing it therefore moves no link at all — deliberately. It is the hook the
+ * corrections hang from, not a correction.
+ *
+ * `book` is the book name as `bookIntros` spells it — "Zechariah", "1 Samuel", "Song of Solomon" —
+ * so the key a correction is written against is readable on sight. scripts/name-linker/corpus.mjs
+ * imports THIS function rather than re-deriving the string, so the harness and the app cannot
+ * disagree about what a book intro's owner is. */
+export const bookIntroOwnerId = (book: string) => `book-intro:${book}`;
+
 /** The coarsest correction in this file, and the ONLY one that reaches the app's own articles.
  *
  * BOOK_NAME_OVERRIDES and VERSE_NAME_OVERRIDES both need a book, and the only surface that passes
@@ -581,11 +600,15 @@ const VERSE_NAME_OVERRIDES: Record<string, Record<string, Record<string, string 
  * context an ambiguous name needs when there is no verse to look at. This table reads it as such:
  * lowercase bare name -> owning record id -> target person id, or `null` to suppress the link.
  *
- * Its reach is honest about what it is NOT. BookIntroView passes no id (a book intro has no record
- * id to pass), so nothing here can reach one; where a bare name is wrong inside a book intro the
- * only lever is the global default or a longer registered wording. And a whole record gets ONE
- * answer — if an article legitimately names both bearers, this cannot split them, and the longer
- * wording has to do the work instead (see Acts 1:13 and Acts 10:32 above).
+ * Book intros are reachable too, as of this change. An introduction has no record of its own, so
+ * BookIntroView synthesises an id with `bookIntroOwnerId` below: key an entry on
+ * `"book-intro:Zechariah"` and it corrects that introduction and nothing else. Before this, the
+ * only lever a book intro had was the global default or an exact phrase pinned in
+ * NAME_CONTEXT_RULES — see the hand-pinned "john" block for what that costs.
+ *
+ * Its reach is still honest about what it is NOT: a whole record gets ONE answer — if an article
+ * legitimately names both bearers, this cannot split them, and the longer wording has to do the
+ * work instead (see Acts 1:13 and Acts 10:32 above).
  *
  * Checked AFTER the per-verse table and the capitalisation test, and BEFORE the book allowlist and
  * book overrides — in practice a book and an owner never arrive together, since the reader passes no
@@ -653,7 +676,8 @@ const OWNER_NAME_OVERRIDES: Record<string, Record<string, string | null>> = {
   //   51  book references — "the Gospel of John", "1 John", "John's Gospel", "two letters of John"
   //    8  a different man — "Simon, son of John" (Peter's father), "John Hyrcanus"
   //    8  "Peter and John" — resolved to the Apostle, not suppressed
-  //   22  book-intro phrases, pinned one at a time because BookIntroView passes no record id
+  //   22  book-intro phrases, pinned one at a time back when BookIntroView passed no record id
+  //        (it passes `bookIntroOwnerId(book)` now; the pins stay until someone re-reads them)
   // — 89 in all, leaving 167 for this table, the self-link exclusion, and the global default.
   //
   // Records where every remaining "John" is the same man, and that man is not the Baptist:
@@ -928,7 +952,7 @@ function looksLikeAName(matched: string): boolean {
  * SUPPRESSED, not resolved, for the same reason: no link asserts nothing about who held the pen,
  * where the link that used to be there asserted something false. Narrator mentions inside an
  * article are suppressed by that record's entry in OWNER_NAME_OVERRIDES; the ones in a book intro
- * have no record id to key on and are pinned by exact phrase below. See §7 of
+ * are pinned by exact phrase below, from when an intro had no id to key on. See §7 of
  * automation/manager/name-linker-scope.md, and the rulings in automation/manager-inbox. */
 interface NameContextRule {
   /** An exact phrase from our own copy. Applies when the match falls INSIDE an occurrence of it.
@@ -979,8 +1003,8 @@ const NAME_CONTEXT_RULES: Record<string, NameContextRule[]> = {
 
     // ── The book intros, pinned one at a time by their own words.
     //
-    // BookIntroView passes no record id (a book intro has no record to pass), so OWNER_NAME_OVERRIDES
-    // cannot reach a single one of these 22 links, and they were all John the Baptist. Under the
+    // Written when BookIntroView passed no record id at all, so OWNER_NAME_OVERRIDES could not
+    // reach a single one of these 22 links, and they were all John the Baptist. Under the
     // rulings recorded in automation/manager-inbox they all come out the same way — no link — but
     // for two different reasons, so they are grouped and labelled rather than lumped.
     //
@@ -991,9 +1015,12 @@ const NAME_CONTEXT_RULES: Record<string, NameContextRule[]> = {
     // case in scripts/name-linker/cases.mjs. If a case here starts failing, the copy moved: re-read
     // the sentence and re-pin it, do not delete the case.
     //
-    // The durable fix is for BookIntroView to pass the book name as excludeId, or for
-    // LinkedVerseText to take an explicit owner. That is a component change and belongs to whoever
-    // owns the components; until then this is the only lever a book intro has.
+    // The durable fix has since landed: BookIntroView passes `bookIntroOwnerId(book)`, so a book
+    // intro can now be corrected per-book in OWNER_NAME_OVERRIDES like any other article. These 22
+    // pins are deliberately LEFT ALONE — they are read, ruled on and covered by cases.mjs, and
+    // rewriting settled rules into a new mechanism buys nothing. Write new book-intro corrections
+    // as OWNER_NAME_OVERRIDES entries keyed on "book-intro:<Book>"; reach for a phrase pin only
+    // when one book intro needs two different answers for the same name.
 
     // The book named as a work — a title in a list, a manuscript's contents, a date of composition.
     { phrase: "attested in Matthew, Luke, John, Acts", to: null },

@@ -29,7 +29,7 @@ export function loadBible() {
  * the whole net: a batch could move thousands of links inside them and every snapshot stayed
  * green. Nothing outside this file caught that, and nothing outside this file can. */
 export async function loadProseBlocks() {
-  const { locations, pois, people, topics, bookIntros, timelineEvents } = await loadLinker();
+  const { locations, pois, people, topics, bookIntros, timelineEvents, bookIntroOwnerId } = await loadLinker();
   const blocks = [];
   const add = (src, owner, text) => {
     if (typeof text === "string" && text.trim()) blocks.push({ src, owner, text });
@@ -71,11 +71,15 @@ export async function loadProseBlocks() {
       .forEach((p) => add("timelineEvent.article", e.id, p));
     add("timelineEvent.datingNotes", e.id, e.datingNotes);
   });
-  Object.entries(bookIntros).forEach(([book, i]) => {
-    add("bookIntro.whyWritten", undefined, i.whyWritten);
-    (i.summary ?? []).forEach((x) => add("bookIntro.summary", undefined, x));
-    (i.manuscripts ?? []).forEach((x) => add("bookIntro.manuscripts", undefined, x));
-    void book;
+  // BookIntroView passes `bookIntroOwnerId(book)` as its excludeId — the synthesised owner a book
+  // intro has in place of a record id. The harness imports that function from the shipped module
+  // rather than re-deriving the string, so the two cannot drift: if the id's shape ever changes,
+  // both sides change together and the snapshot diff says so.
+  bookIntros.forEach((i) => {
+    const owner = bookIntroOwnerId(i.book);
+    add("bookIntro.whyWritten", owner, i.whyWritten);
+    (i.summary ?? []).forEach((x) => add("bookIntro.summary", owner, x));
+    (i.manuscripts ?? []).forEach((x) => add("bookIntro.manuscripts", owner, x));
   });
   return blocks;
 }

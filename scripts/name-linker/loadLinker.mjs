@@ -16,7 +16,7 @@ import { rolldown } from "rolldown";
 export const REPO_ROOT = path.resolve(fileURLToPath(new URL("../..", import.meta.url)));
 
 const ENTRY = `
-export { computeLinkAnnotations } from ${JSON.stringify(path.join(REPO_ROOT, "src/lib/verseAnnotations"))};
+export { computeLinkAnnotations, bookIntroOwnerId } from ${JSON.stringify(path.join(REPO_ROOT, "src/lib/verseAnnotations"))};
 export { locations } from ${JSON.stringify(path.join(REPO_ROOT, "src/data/locations"))};
 export { pois } from ${JSON.stringify(path.join(REPO_ROOT, "src/data/pois"))};
 export { people } from ${JSON.stringify(path.join(REPO_ROOT, "src/data/people"))};

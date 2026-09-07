@@ -119,10 +119,17 @@ most often — "92 wrong `ram` links" is a panel-over-Scripture number; the read
 ### The one correction the panel path does have
 
 `LinkedVerseText` passes no book, but it does pass `excludeId` — the id of the record whose page the
-text is on. `PersonPanel` passes `person.id`, `TimelineEventPanel` passes `event.id`, and so on;
-`BookIntroView` is the exception, because a book intro has no record id to pass. That id is context,
-and `OWNER_NAME_OVERRIDES` in `verseAnnotations.ts` reads it: lowercase bare name -> owning record
-id -> target person id, or `null` for no link.
+text is on. `PersonPanel` passes `person.id`, `TimelineEventPanel` passes `event.id`, and so on.
+`BookIntroView` has no record to name, so it passes a synthesised id from `bookIntroOwnerId(book)`
+in `verseAnnotations.ts` — `"book-intro:Zechariah"`, `"book-intro:1 Samuel"`. The `book-intro:`
+prefix cannot collide with a real record id (none contains a colon), so introducing it moved no
+link: `key-totals` was unchanged and all 681 prose rows came back identical but for the owner
+field. It exists so a book intro has a key to be corrected against at all. `corpus.mjs` imports
+that same function, so the harness's `owner` for a book-intro block is exactly what the component
+passes.
+
+That id is context, and `OWNER_NAME_OVERRIDES` in `verseAnnotations.ts` reads it: lowercase bare
+name -> owning record id -> target person id, or `null` for no link.
 
 It is the only lever the app's own articles have. It is also coarse — one answer per record, so an
 article that legitimately names both bearers of a name needs the longer-wording trick instead (Acts

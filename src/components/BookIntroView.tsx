@@ -1,4 +1,5 @@
 import { bookIntros } from "../data/bookIntros";
+import { bookIntroOwnerId } from "../lib/verseAnnotations";
 import LinkedVerseText from "./LinkedVerseText";
 import BackButton from "./BackButton";
 
@@ -23,7 +24,14 @@ interface BookIntroViewProps {
 }
 
 export default function BookIntroView({ book, onJumpToChapter, onBack, onChangePassage, onSelectLocation, onSelectPoi, onSelectPerson, onSelectTopic }: BookIntroViewProps) {
-  const linkHandlers = { onSelectLocation, onSelectPoi, onSelectPerson, onSelectTopic };
+  /** `excludeId` is how every other authored surface tells the linker whose article the text is —
+   * PersonPanel passes `person.id`, TimelineEventPanel `event.id`. An introduction has no record,
+   * so it passes a synthesised id instead ("book-intro:Zechariah"); see `bookIntroOwnerId`. It is
+   * the ONLY context this surface has, and without it OWNER_NAME_OVERRIDES could not correct a
+   * single ambiguous name in any of the 66 introductions. Passing it moves no link on its own — no
+   * real record id contains a colon, so nothing is excluded and nothing is overridden until an
+   * entry is written against the key. */
+  const linkHandlers = { onSelectLocation, onSelectPoi, onSelectPerson, onSelectTopic, excludeId: bookIntroOwnerId(book) };
   const intro = bookIntros.find((b) => b.book === book);
 
   /** The intro's heading, doubling as the reference picker's trigger when there is one — the same
