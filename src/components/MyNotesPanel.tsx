@@ -358,23 +358,36 @@ export default function MyNotesPanel({ userId, onGoToVerse, expand, style, hidde
 
       {tab === "verse" && userId && (
         <>
+          {/* Both filters wear a visible caption. They shipped as two identical unlabelled grey
+              selects side by side, and tag filtering was reported as a MISSING FEATURE by someone
+              looking straight at it: "All tags" reads as a heading, not as a control, and nothing
+              said the second box was about tags at all. The book one is captioned too — a labelled
+              control next to an unlabelled one just moves the ambiguity. The aria-labels stay: they
+              are longer than the visible text and contain it, so the accessible name still says
+              "Filter by …" without breaking WCAG 2.5.3. */}
           <div className="my-notes-filters no-print">
-            <select className="bible-nav-select" aria-label="Filter by book" value={bookFilter} onChange={(e) => setBookFilter(e.target.value)}>
-              <option value="">All books ({allEntries.length})</option>
-              {booksWithEntries.map((b) => (
-                <option key={b} value={b}>
-                  {b} ({allEntries.filter((e) => e.book === b).length})
-                </option>
-              ))}
-            </select>
-            <select className="bible-nav-select" aria-label="Filter by tag" value={tagFilter} onChange={(e) => setTagFilter(e.target.value)}>
-              <option value="">All tags</option>
-              {tags.map((t) => (
-                <option key={t.id} value={t.id}>
-                  {t.name} ({tagCounts[t.id] ?? 0})
-                </option>
-              ))}
-            </select>
+            <label className="my-notes-filter">
+              <span className="my-notes-filter-label">Book</span>
+              <select className="bible-nav-select" aria-label="Filter by book" value={bookFilter} onChange={(e) => setBookFilter(e.target.value)}>
+                <option value="">All books ({allEntries.length})</option>
+                {booksWithEntries.map((b) => (
+                  <option key={b} value={b}>
+                    {b} ({allEntries.filter((e) => e.book === b).length})
+                  </option>
+                ))}
+              </select>
+            </label>
+            <label className="my-notes-filter">
+              <span className="my-notes-filter-label">Tag</span>
+              <select className="bible-nav-select" aria-label="Filter by tag" value={tagFilter} onChange={(e) => setTagFilter(e.target.value)}>
+                <option value="">All tags</option>
+                {tags.map((t) => (
+                  <option key={t.id} value={t.id}>
+                    {t.name} ({tagCounts[t.id] ?? 0})
+                  </option>
+                ))}
+              </select>
+            </label>
           </div>
 
           <div className="my-notes-export no-print" ref={exportMenuRef}>
