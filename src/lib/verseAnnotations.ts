@@ -825,6 +825,47 @@ const OWNER_NAME_OVERRIDES: Record<string, Record<string, string | null>> = {
     "bib-it-antiochus-defiles-temple": null,
     "bib-it-maccabean-revolt-begins": null,
   },
+  // "Zechariah": the only entry is Zechariah the priest, father of John the Baptist, and
+  // BOOK_NAME_ALLOWLIST already confines him to Luke for the reader — which is why all 43
+  // occurrences in Scripture, none of them his, render unlinked there. The article surface has no
+  // allowlist, so all 32 prose mentions resolved to him, and 20 of the 32 are not him.
+  //
+  // Read one at a time and grouped by owning record. No record below names two different
+  // Zechariahs, so the one-answer-per-record limit costs nothing here. The twelve his own pages
+  // hold — John the Baptist's, Elizabeth's, Gabriel's, Ein Karem, the ministry-begins article and
+  // Luke's introduction ("Zechariah's prophecy", the Benedictus) — are correct and stay untouched.
+  //
+  // The other twenty are three different subjects, and the app has a record for none of them, so
+  // no link is the least-wrong answer — the same ruling this table already gives Levi, Simeon,
+  // Zadok and Eleazar, and §7.12 of automation/manager/name-linker-scope.md is still the open
+  // question of whether a stub would be better.
+  zechariah: {
+    // Zechariah the post-exilic prophet, son of Berechiah, son of Iddo — eleven mentions, mostly
+    // paired with Haggai urging the Second Temple to completion, plus his own visions (the
+    // lampstand, Satan accusing the high priest Joshua) and the donkey-riding king of Zechariah
+    // 9:9 that the triumphal-entry article calls "the prophet Zechariah's picture".
+    satan: null, // "Zechariah's vision, standing at the right hand of the high priest Joshua"
+    zerubbabel: null, // "the prophets Haggai and Zechariah urged"; "Zechariah's vision of a lampstand"
+    "behistun-inscription": null, // "Haggai and Zechariah both date their preaching by his regnal years"
+    "bib-er-zerubbabels-return": null,
+    "bib-er-second-temple-completed": null,
+    "bib-loc-triumphal-entry": null,
+    "wld-pg-darius-consolidation": null,
+    "book-intro:Ezra": null, // "with the encouragement of the prophets Haggai and Zechariah"
+    // Zechariah son of Jehoiada, stoned in the temple court under Joash (2 Chronicles 24:20-22) —
+    // a different man entirely, and the article names his father in the same sentence.
+    "bib-dkj-joash-reign": null,
+    // The BOOK, not a man: a title in a list of where the Hebrew Bible develops Satan, a list of
+    // which books call Zerubbabel "son of Shealtiel", and the manuscript notes of two Minor
+    // Prophets introductions. Suppressed for the same reason as the "John as the fourth Gospel"
+    // pins above — these are works being named, and a person link there is simply false.
+    shealtiel: null, // "Ezra, Haggai, Zechariah, and Matthew all consistently call Zerubbabel…"
+    "book-intro:Malachi": null, // "its preserved text breaks off in Zechariah, before Malachi"
+    // Zechariah's own introduction holds both: the prophet in `whyWritten` ("Like Haggai,
+    // Zechariah encourages the returned exiles") and the book in all four manuscript notes. Same
+    // answer either way, so one entry covers all five.
+    "book-intro:Zechariah": null,
+  },
 };
 
 const BOOK_NAME_ALLOWLIST: Record<string, string[]> = {

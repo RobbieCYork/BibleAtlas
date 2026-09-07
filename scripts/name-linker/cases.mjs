@@ -787,4 +787,40 @@ export const CASES = [
   { ref: "Genesis 4:8", surface: "Abel", expect: "abel", status: "guard", why: "Adam's son — must still link." },
   { ref: "Matthew 23:35", surface: "Abel", expect: "abel", status: "guard", why: "'righteous Abel' — must still link." },
   { ref: "Hebrews 11:4", surface: "Abel", expect: "abel", status: "guard", why: "'By faith, Abel offered' — must still link." },
+
+  // ─────────────────────────────────────────────────────────────────────────────────────────
+  // "Zechariah" — the app's one entry is the priest of Luke 1, father of John the Baptist, and
+  // 20 of the 32 mentions on the article surface were other men or the book itself. Fixed by
+  // OWNER_NAME_OVERRIDES, including the first four corrections ever written against a book
+  // introduction. The reader path never had the fault: BOOK_NAME_ALLOWLIST confines the name to
+  // Luke, so all 43 occurrences in Scripture — none of them his — render unlinked there.
+  // ─────────────────────────────────────────────────────────────────────────────────────────
+  { ref: "Ezra 5:1", surface: "Zechariah", expect: null, status: "guard",
+    why: "'Zechariah the son of Iddo' is the post-exilic prophet, and the reader path already " +
+         "declined to link him — BOOK_NAME_ALLOWLIST. This must not move: the fix is on the " +
+         "article surface only." },
+  { ref: "Ezra 5:1", surface: "Zechariah", path: "panel", owner: "book-intro:Ezra",
+    expect: null, status: "guard",
+    why: "Ezra's introduction names 'the prophets Haggai and Zechariah'. Until BookIntroView " +
+         "passed an id this could not be corrected at all and rendered as John the Baptist's " +
+         "father. The prophet has no entry, so no link is the least-wrong answer." },
+  { ref: "Zechariah 1:1", surface: "Zechariah", path: "panel", owner: "book-intro:Zechariah",
+    expect: null, status: "guard",
+    why: "The book's own introduction — one mention of the prophet in whyWritten, four of the " +
+         "book as a work in the manuscript notes. Same answer either way, so one owner entry " +
+         "covers all five." },
+  { ref: "2 Chronicles 24:20", surface: "Zechariah", path: "panel", owner: "bib-dkj-joash-reign",
+    expect: null, status: "guard",
+    why: "Zechariah son of Jehoiada, stoned in the temple court under Joash — a third man again, " +
+         "named with his father in the article's own sentence. No entry, so no link." },
+  { ref: "Ezra 5:1", surface: "Zechariah", path: "panel", owner: "zerubbabel",
+    expect: null, status: "guard",
+    why: "The prophet paired with Haggai in Zerubbabel's life story, and the same man behind " +
+         "'Zechariah's vision of a lampstand' two sentences later." },
+  { ref: "Ezra 5:1", surface: "Zechariah", path: "panel", owner: "elizabeth-mother-of-john-baptist",
+    expect: "zechariah-father-of-john-baptist", status: "guard",
+    why: "The other half of the work: the twelve mentions that ARE the priest — on Elizabeth's, " +
+         "John's and Gabriel's pages, at Ein Karem, and in Luke's introduction — must survive. " +
+         "Elizabeth's page has no owner entry, so it falls to the global default, which is right. " +
+         "If a suppression above is ever widened past its owner list, this fails first." },
 ];
