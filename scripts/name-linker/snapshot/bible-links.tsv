@@ -4574,6 +4574,7 @@ Ruth 4:22	68	David	david	david
 2 Kings 14:3	59	David	david	david
 2 Kings 14:20	79	David	david	david
 2 Kings 14:21	29	Azariah	uzziah	uzziah
+2 Kings 14:25	164	Jonah the son of Amittai	jonah	jonah
 2 Kings 14:29	68	Zechariah	-	zechariah-father-of-john-baptist
 2 Kings 15:1	55	Azariah	uzziah	uzziah
 2 Kings 15:5	103	Jotham	jotham-king-of-judah	jotham-king-of-judah
@@ -6758,6 +6759,24 @@ Obadiah 1:18	81	Esau	esau	esau
 Obadiah 1:18	191	Esau	esau	esau
 Obadiah 1:19	48	Esau	esau	esau
 Obadiah 1:21	59	Esau	esau	esau
+Jonah 1:1	26	Jonah the son of Amittai	jonah	jonah
+Jonah 1:3	4	Jonah	jonah	jonah
+Jonah 1:5	143	Jonah	jonah	jonah
+Jonah 1:7	159	Jonah	jonah	jonah
+Jonah 1:15	16	Jonah	jonah	jonah
+Jonah 1:17	43	Jonah	jonah	jonah
+Jonah 1:17	54	Jonah	jonah	jonah
+Jonah 2:1	5	Jonah	jonah	jonah
+Jonah 2:10	45	Jonah	jonah	jonah
+Jonah 3:1	22	Jonah	jonah	jonah
+Jonah 3:3	3	Jonah	jonah	jonah
+Jonah 3:4	0	Jonah	jonah	jonah
+Jonah 4:1	18	Jonah	jonah	jonah
+Jonah 4:5	5	Jonah	jonah	jonah
+Jonah 4:6	56	Jonah	jonah	jonah
+Jonah 4:6	142	Jonah	jonah	jonah
+Jonah 4:8	73	Jonah	jonah	jonah
+Jonah 4:9	12	Jonah	jonah	jonah
 Micah 1:1	63	Jotham	-	jotham-king-of-judah
 Micah 1:1	71	Ahaz	-	ahaz
 Micah 1:1	81	Hezekiah	hezekiah	hezekiah
@@ -7051,6 +7070,10 @@ Matthew 12:26	19	Satan	satan	satan
 Matthew 12:27	8	Beelzebul	satan	satan
 Matthew 12:28	16	Spirit of God	holy-spirit	holy-spirit
 Matthew 12:32	98	the Holy Spirit	holy-spirit	holy-spirit
+Matthew 12:39	125	Jonah	jonah	jonah
+Matthew 12:40	7	Jonah	jonah	jonah
+Matthew 12:41	130	Jonah	jonah	jonah
+Matthew 12:41	170	Jonah	jonah	jonah
 Matthew 12:42	157	Solomon	solomon	solomon
 Matthew 12:42	199	Solomon	solomon	solomon
 Matthew 13:1	12	Jesus	jesus-of-nazareth	jesus-of-nazareth
@@ -7067,6 +7090,7 @@ Matthew 13:55	80	James	james-brother-of-jesus	james-son-of-zebedee
 Matthew 13:55	94	Simon	-	simon-peter
 Matthew 13:55	105	Judas	-	judas-iscariot
 Matthew 13:57	31	Jesus	jesus-of-nazareth	jesus-of-nazareth
+Matthew 14:1	14	Herod the tetrarch	herod-antipas	herod-antipas
 Matthew 14:1	61	Jesus	jesus-of-nazareth	jesus-of-nazareth
 Matthew 14:2	35	John the Baptizer	john-the-baptist	john-the-baptist
 Matthew 14:3	27	John	john-the-baptist	john-the-baptist
@@ -7096,6 +7120,7 @@ Matthew 15:28	5	Jesus	jesus-of-nazareth	jesus-of-nazareth
 Matthew 15:29	0	Jesus	jesus-of-nazareth	jesus-of-nazareth
 Matthew 15:32	0	Jesus	jesus-of-nazareth	jesus-of-nazareth
 Matthew 15:34	0	Jesus	jesus-of-nazareth	jesus-of-nazareth
+Matthew 16:4	124	Jonah	jonah	jonah
 Matthew 16:6	0	Jesus	jesus-of-nazareth	jesus-of-nazareth
 Matthew 16:8	0	Jesus	jesus-of-nazareth	jesus-of-nazareth
 Matthew 16:13	9	Jesus	jesus-of-nazareth	jesus-of-nazareth
@@ -7105,6 +7130,7 @@ Matthew 16:14	66	Jeremiah	jeremiah	jeremiah
 Matthew 16:16	0	Simon Peter	simon-peter	simon-peter
 Matthew 16:17	0	Jesus	jesus-of-nazareth	jesus-of-nazareth
 Matthew 16:17	38	Simon	simon-peter	simon-peter
+Matthew 16:17	48	Jonah	-	jonah
 Matthew 16:18	29	Peter	simon-peter	simon-peter
 Matthew 16:20	73	Jesus	jesus-of-nazareth	jesus-of-nazareth
 Matthew 16:21	16	Jesus	jesus-of-nazareth	jesus-of-nazareth
@@ -7615,6 +7641,7 @@ Luke 3:8	178	Abraham	abraham	abraham
 Luke 3:15	83	John	john-the-baptist	john-the-baptist
 Luke 3:16	0	John	john-the-baptist	john-the-baptist
 Luke 3:16	172	the Holy Spirit	holy-spirit	holy-spirit
+Luke 3:19	4	Herod the tetrarch	herod-antipas	herod-antipas
 Luke 3:20	45	John	john-the-baptist	john-the-baptist
 Luke 3:21	39	Jesus	jesus-of-nazareth	jesus-of-nazareth
 Luke 3:22	4	the Holy Spirit	holy-spirit	holy-spirit
@@ -7742,6 +7769,7 @@ Luke 8:50	4	Jesus	jesus-of-nazareth	jesus-of-nazareth
 Luke 8:51	70	Peter	simon-peter	simon-peter
 Luke 8:51	77	John	john-the-apostle	john-the-baptist
 Luke 8:51	83	James	james-son-of-zebedee	james-son-of-zebedee
+Luke 9:7	4	Herod the tetrarch	herod-antipas	herod-antipas
 Luke 9:7	118	John	john-the-baptist	john-the-baptist
 Luke 9:8	17	Elijah	elijah	elijah
 Luke 9:9	13	John	john-the-baptist	john-the-baptist
@@ -7794,8 +7822,12 @@ Luke 11:15	47	Beelzebul	satan	satan
 Luke 11:18	3	Satan	satan	satan
 Luke 11:18	108	Beelzebul	satan	satan
 Luke 11:19	28	Beelzebul	satan	satan
+Luke 11:29	165	Jonah	jonah	jonah
+Luke 11:30	12	Jonah	jonah	jonah
 Luke 11:31	170	Solomon	solomon	solomon
 Luke 11:31	208	Solomon	solomon	solomon
+Luke 11:32	130	Jonah	jonah	jonah
+Luke 11:32	166	Jonah	jonah	jonah
 Luke 11:51	18	Abel	abel	abel
 Luke 12:10	100	the Holy Spirit	holy-spirit	holy-spirit
 Luke 12:12	4	the Holy Spirit	holy-spirit	holy-spirit
@@ -7948,6 +7980,7 @@ John 1:41	32	Simon	simon-peter	simon-peter
 John 1:42	18	Jesus	jesus-of-nazareth	jesus-of-nazareth
 John 1:42	25	Jesus	jesus-of-nazareth	jesus-of-nazareth
 John 1:42	65	Simon	simon-peter	simon-peter
+John 1:42	82	Jonah	-	jonah
 John 1:42	109	Cephas	simon-peter	simon-peter
 John 1:42	146	Peter	simon-peter	simon-peter
 John 1:43	72	Philip	philip-the-apostle	philip-the-apostle
@@ -8395,8 +8428,11 @@ John 21:14	32	Jesus	jesus-of-nazareth	jesus-of-nazareth
 John 21:15	40	Jesus	jesus-of-nazareth	jesus-of-nazareth
 John 21:15	54	Simon Peter	simon-peter	simon-peter
 John 21:15	68	Simon	simon-peter	simon-peter
+John 21:15	82	Jonah	-	jonah
 John 21:16	37	Simon	simon-peter	simon-peter
+John 21:16	51	Jonah	-	jonah
 John 21:17	32	Simon	simon-peter	simon-peter
+John 21:17	46	Jonah	-	jonah
 John 21:17	84	Peter	simon-peter	simon-peter
 John 21:17	256	Jesus	jesus-of-nazareth	jesus-of-nazareth
 John 21:20	5	Peter	simon-peter	simon-peter
@@ -8698,6 +8734,7 @@ Acts 12:25	13	Saul	paul-of-tarsus	saul-king-of-israel
 Acts 12:25	102	John who was called Mark	john-mark	john-mark
 Acts 13:1	79	Barnabas	barnabas	barnabas
 Acts 13:1	89	Simeon	-	simeon-at-the-temple
+Acts 13:1	165	Herod the tetrarch	herod-antipas	herod-antipas
 Acts 13:1	189	Saul	paul-of-tarsus	saul-king-of-israel
 Acts 13:2	36	the Holy Spirit	holy-spirit	holy-spirit
 Acts 13:2	68	Barnabas	barnabas	barnabas

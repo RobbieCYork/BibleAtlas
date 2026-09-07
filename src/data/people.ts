@@ -1317,7 +1317,10 @@ export const people: Person[] = [
     id: "herod-antipas",
     name: "Herod Antipas",
     pronunciation: "AN-tih-pus",
-    alternateNames: ["Antipas"],
+    // "Herod the tetrarch" is how Matthew 14:1, Luke 3:19, Luke 9:7 and Acts 13:1 name him, and it
+    // produced no link at all before — bare "Herod" is registered to nobody. Reader-facing, because
+    // it is a title he is genuinely called by, not a punctuation variant.
+    alternateNames: ["Antipas", "Herod the tetrarch"],
     tier: "significant",
     role: "Tetrarch of Galilee and Perea; executed John the Baptist",
     summary: "A son of Herod the Great who ruled Galilee for over four decades, had John the Baptist beheaded over a rash oath, and briefly interrogated Jesus before his crucifixion.",
@@ -8028,5 +8031,55 @@ export const people: Person[] = [
         url: "https://kinginstitute.stanford.edu/",
       },
     ],
+  },
+  {
+    id: "jonah",
+    name: "Jonah",
+    pronunciation: "JOH-nuh",
+    alternateNames: ["Jonah the son of Amittai"],
+    lifespanLabel: "fl. early 8th century BC",
+    lifespanCertainty: "traditional",
+    lifespanDatingNotes:
+      "Jonah is dated by a single verse outside his own book: 2 Kings 14:25 names 'his servant Jonah the son of Amittai, the prophet, who was from Gath Hepher' as having foretold Jeroboam II's restoration of Israel's borders. Jeroboam II reigned in Samaria for forty-one years, conventionally placed c. 793-753 BC, which puts Jonah in the first half of the 8th century BC. Note that this dates the man; the date of the book that bears his name is a separate and contested question, discussed below.",
+    kind: "biblical",
+    tier: "significant",
+    role: "Prophet Sent to Nineveh",
+    summary:
+      "The prophet who ran from his commission, was swallowed by a great fish, preached to Nineveh anyway, and then sulked when the city repented and was spared — the one prophetic book that ends by arguing with its own prophet.",
+    occupation: "Prophet",
+    placesLived:
+      "From Gath Hepher in the territory of Zebulun, in the northern kingdom of Israel. Fled by ship from Joppa toward Tarshish, and was finally sent to Nineveh, the Assyrian capital.",
+    lifeStory: [
+      "Jonah is the only one of the twelve Minor Prophets whose book is a story about the prophet rather than a collection of his oracles, and almost the only thing recorded of him outside it is a single line in 2 Kings 14:25, which credits him with a prophecy that Jeroboam II would restore Israel's northern border. That verse matters for reading the book, because it establishes Jonah as a prophet associated with national restoration — and then the book sends him to preach to Israel's most feared enemy.",
+      "The narrative is spare and famous. Told to go to Nineveh, Jonah goes down to Joppa and takes ship in the opposite direction, toward Tarshish, 'from the presence of Yahweh' (Jonah 1:3). A storm rises; the sailors cast lots and the lot falls on Jonah; at his own suggestion they throw him overboard, and the sea goes calm. 'Yahweh prepared a great fish to swallow up Jonah, and Jonah was in the belly of the fish three days and three nights' (Jonah 1:17). From inside it he prays a psalm of thanksgiving that ends 'Salvation belongs to Yahweh' (Jonah 2:9), and the fish puts him ashore.",
+      "Sent a second time, he walks into the city and delivers the shortest recorded sermon in Scripture — eight words in English: 'In forty days, Nineveh will be overthrown!' (Jonah 3:4). The city, improbably, repents from the king down, and God relents (Jonah 3:10). This is where the book turns. Jonah is furious, and says why: he had suspected all along that God was 'gracious and merciful, slow to anger, and abundant in loving kindness,' and would let Nineveh off. He goes outside the city to sulk and wait, God grows a vine to shade him and then kills it, and the book ends not with a resolution but with a question put to Jonah and left hanging: 'Shouldn't I be concerned for Nineveh, that great city, in which are more than one hundred twenty thousand persons who can't discern between their right hand and their left hand?' (Jonah 4:11). Jonah does not answer, and neither does the narrator.",
+      "In the Gospels Jesus twice refers to 'the sign of Jonah' when refused-and-demanded signs are at issue. In Matthew the comparison is to the three days: 'as Jonah was three days and three nights in the belly of the whale, so will the Son of Man be three days and three nights in the heart of the earth' (Matthew 12:40). In Luke the emphasis falls instead on Nineveh's response: 'even as Jonah became a sign to the Ninevites, so will also the Son of Man be to this generation' (Luke 11:30), with the men of Nineveh rising in judgment because 'they repented at the preaching of Jonah' (Matthew 12:41; Luke 11:32).",
+      "A small point of translation is worth knowing, because it has caused a great deal of unnecessary argument. Jonah 1:17 says 'a great fish'; Matthew 12:40 in the World English Bible says 'the belly of the whale.' The Greek word there denotes a large sea creature generally, and the Hebrew simply says a great fish. Neither text is making a zoological claim, and the familiar picture of a whale comes from the translation history rather than from either author.",
+    ],
+    controversies: [
+      "How the book of Jonah should be read is a genuine and long-standing disagreement among people who take Scripture equally seriously, and this app does not settle it. One position reads it as historical narrative: it names a prophet independently attested in 2 Kings, sets him in a real reign and a real city, and is placed among the prophets rather than among the wisdom books. On this reading the fish is a miracle, and miracles are not a reason to reclassify a text.",
+      "Another position reads it as a didactic narrative — a story told to make a point, in the way a parable does — pointing to features that look literary rather than reportorial: the neat symmetry of the structure, the comic exaggerations (a city three days' journey across, livestock in sackcloth), the unnamed king, the absence of any Assyrian record of a national repentance, and above all an ending that refuses to resolve and instead turns the question on the reader. On this reading the book's truth is in what it says about God's mercy reaching beyond Israel, and its genre no more undermines that than a parable's does.",
+      "Dating divides along similar lines. Many critical scholars place the book's composition in the post-exilic period, the 5th or 4th century BC, on linguistic grounds and because its concerns fit that setting; others date it much closer to the prophet's own 8th century. The two questions are related but not identical, and a reader should be aware that confident statements in either direction are more common than the evidence warrants.",
+      "Jesus's references are used on both sides and settle less than is often claimed. Those who read the book as history point out that he compares his own burial and resurrection — real events — to Jonah's three days, and that Matthew 12:41 speaks of the men of Nineveh standing up at the judgment. Those who read it as didactic answer that an illustration drawn from a story known to the hearers works whether or not the story is a chronicle, in the same way that a reference to the Good Samaritan asserts nothing about a particular traveller. The argument is about what kind of appeal a teaching reference makes, and it is not resolved by the texts themselves.",
+    ],
+    noExtraBiblicalRecordNote:
+      "No contemporary extra-biblical record of Jonah is known, and no Assyrian source records a repentance of Nineveh — an absence that is used as an argument in the genre discussion above, though Assyrian royal inscriptions are a genre that would be unlikely to record such a thing in any case. Josephus retells the story in his Antiquities of the Jews, but he is dependent on the biblical book rather than an independent witness to it.",
+    verses: [
+      { reference: "2 Kings 14:25", note: "The one mention of Jonah outside his own book, dating him to Jeroboam II's reign" },
+      { reference: "Jonah 1:1-3", note: "The commission, and the flight toward Tarshish" },
+      { reference: "Jonah 1:17", note: "'Yahweh prepared a great fish to swallow up Jonah'" },
+      { reference: "Jonah 2:1-10", note: "Jonah's prayer from inside the fish" },
+      { reference: "Jonah 3:1-10", note: "The eight-word sermon, and Nineveh's repentance" },
+      { reference: "Jonah 4:1-11", note: "Jonah's anger, the vine, and the question the book ends on" },
+      { reference: "Matthew 12:39-41", note: "'The sign of Jonah' — the three days, and the men of Nineveh" },
+      { reference: "Luke 11:29-32", note: "The same sign, with the weight on Nineveh's repentance" },
+    ],
+    sources: [
+      { label: "Encyclopaedia Britannica: Jonah", url: "https://www.britannica.com/biography/Jonah-biblical-figure" },
+      { label: "Encyclopaedia Britannica: Book of Jonah", url: "https://www.britannica.com/topic/Book-of-Jonah" },
+      { label: "Wikipedia: Book of Jonah", url: "https://en.wikipedia.org/wiki/Book_of_Jonah" },
+    ],
+    reflectionPrompt:
+      "God's last word to Jonah is a question, and Jonah never answers it. What would your answer be?",
   },
 ];

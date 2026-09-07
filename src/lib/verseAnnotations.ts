@@ -259,6 +259,44 @@ const BOOK_NAME_OVERRIDES: Record<string, Record<string, string>> = {
  *   no entry here, so suppressed. (Mark 6:3, the parallel passage, needs no entry: WEB renders that
  *   same brother's name "Judah," which no entry in this app claims, so it already produces no link.) */
 const VERSE_NAME_OVERRIDES: Record<string, Record<string, Record<string, string | null>>> = {
+  // "Jonah": the entry is the prophet, correct at 2 Kings 14:25 and throughout the book of Jonah,
+  // and correct at every Gospel mention of "the sign of Jonah". Wrong at exactly five places, all
+  // naming SIMON PETER'S FATHER — "Simon Bar Jonah" (Matthew 16:17) and "Simon, son of Jonah"
+  // (John 1:42, 21:15, 21:16, 21:17). That man is a distinct person with no entry here, so the
+  // least-wrong move is no link, exactly as for Simon Iscariot's father above. Note the bare
+  // "Simon" in those same verses still resolves to Peter and is untouched by this.
+  jonah: {
+    Matthew: { "16:17": null },
+    John: { "1:42": null, "21:15": null, "21:16": null, "21:17": null },
+  },
+  // "elders": the topic is the JEWISH elders (see topics.ts). BOOK_NAME_ALLOWLIST below already
+  // confines the name to Matthew, Mark, Luke and Acts. Acts is the one allowed book that holds
+  // both senses, so the CHRISTIAN congregational elders inside it are suppressed here one by one.
+  // Read against the WEB text: 11:30 (relief sent to the elders in Judea), 14:23 (elders appointed
+  // in every assembly), 15:2/4/6/22/23 and 16:4 (the Jerusalem council's "apostles and elders"),
+  // 20:17 (the Ephesian elders) and 21:18 (the elders with James). The Jewish elders at Acts 4:5,
+  // 4:8, 4:23, 6:12, 22:5, 23:14, 24:1 and 25:15 are left to resolve normally.
+  elders: {
+    Acts: {
+      "11:30": null,
+      "14:23": null,
+      "15:2": null,
+      "15:4": null,
+      "15:6": null,
+      "15:22": null,
+      "15:23": null,
+      "16:4": null,
+      "20:17": null,
+      "21:18": null,
+    },
+  },
+  // "scribes": the topic covers Israel's scribes, royal secretaries and legal scholars alike, so
+  // the Old Testament mentions (1 Kings 4:3, 1 Chronicles 2:55, 2 Chronicles 34:13, Jeremiah 8:8)
+  // are correct and left alone. The two exceptions are Persian: "the king's scribes" in Esther are
+  // Ahasuerus's imperial secretaries, not Israelite scribes at all.
+  scribes: {
+    Esther: { "3:12": null, "8:9": null },
+  },
   mary: {
     Matthew: { "27:56": "mary-mother-of-james-the-less", "27:61": "mary-mother-of-james-the-less", "28:1": "mary-mother-of-james-the-less" },
     Mark: { "15:40": "mary-mother-of-james-the-less", "15:47": "mary-mother-of-james-the-less", "16:1": "mary-mother-of-james-the-less" },
@@ -869,6 +907,23 @@ const OWNER_NAME_OVERRIDES: Record<string, Record<string, string | null>> = {
 };
 
 const BOOK_NAME_ALLOWLIST: Record<string, string[]> = {
+  // "son of man": the topic is the title as applied to Jesus (topics.ts), and the match is
+  // case-insensitive, which matters enormously here. EZEKIEL uses "Son of man" 93 times as God's
+  // form of address to the prophet — more occurrences than the Gospels have — and it means a
+  // mortal there, not a title. Psalms 8:4, Job, Numbers, Isaiah, Jeremiah and Hebrews 2:6 are the
+  // same ordinary sense. Daniel 7:13's "one like a son of man" and Revelation's two echoes of it
+  // are deliberately EXCLUDED as well: whether that figure is an individual deliverer or a
+  // corporate symbol for faithful Israel is a live scholarly question the app does not settle, and
+  // linking it to a page about Jesus would settle it silently. All three are discussed, and cited
+  // as verse references, inside the article itself.
+  "son of man": ["Matthew", "Mark", "Luke", "John", "Acts"],
+  // "elders": Jewish elders only, per the brief. Deuteronomy, Exodus, Judges, Joshua, Ezekiel and
+  // the rest use it of Israel's local elders, which the article covers but does not centre on;
+  // 1 Timothy, Titus, 1 Peter, James and 2-3 John use it of the Christian congregational office;
+  // and Revelation's twenty-four elders around the throne are a third thing entirely. Confining it
+  // to the Gospels and Acts keeps the reader-facing link on the sense the article is about.
+  // Exceptions inside Acts are handled verse by verse in VERSE_NAME_OVERRIDES above.
+  elders: ["Matthew", "Mark", "Luke", "Acts"],
   manasseh: ["2 Kings", "2 Chronicles", "Matthew"],
   levi: ["Matthew", "Mark"],
   simeon: ["Luke"],

@@ -473,6 +473,10 @@ export const locations: Location[] = [
     name: "Sea of Galilee",
     pronunciation: "SEE uv GAL-ih-lee",
     alternateNames: ["Lake Gennesaret", "Sea of Tiberias", "Lake Kinneret"],
+    // WEB renders Luke 5:1 "the lake of Gennesaret" — the reader-facing "Lake Gennesaret" above
+    // does not match that wording. Match-only, because printing both to a reader as "Also called"
+    // would show the same name twice, one preposition apart.
+    matchNames: ["lake of Gennesaret"],
     category: "sea",
     modernName: "Sea of Galilee (Lake Kinneret), Israel",
     coordinates: [35.5892, 32.8062],
@@ -2251,6 +2255,38 @@ export const locations: Location[] = [
     ],
     reflectionPrompt:
       "Shipwrecked on Malta, Paul was met with unusual kindness from strangers — whose kindness carried you through a wreck, and who needs yours?",
+  },
+  {
+    id: "gennesaret",
+    name: "Gennesaret",
+    pronunciation: "geh-NESS-uh-ret",
+    alternateNames: ["Land of Gennesaret", "Plain of Gennesaret"],
+    matchNames: ["land of Gennesaret"],
+    category: "region",
+    modernName: "Ginosar plain, Israel",
+    coordinates: [35.52, 32.845],
+    highlightRadiusKm: 5,
+    history: {
+      founded:
+        "A small, exceptionally fertile crescent of plain on the north-west shore of the Sea of Galilee, between Magdala and Capernaum",
+      industry: "Intensive agriculture — the most productive farmland in Galilee",
+      notableFacts: [
+        "The name attaches to two different things in the Gospels, and the distinction is easy to miss: the LAND of Gennesaret is this plain (Matthew 14:34; Mark 6:53), while the LAKE of Gennesaret is the Sea of Galilee itself (Luke 5:1)",
+        "Josephus devotes a well-known passage of his Jewish War to the plain's fertility, describing a soil and climate that let walnuts, palms, figs and olives — trees that normally demand different conditions — grow side by side, and fruit ripen across most of the year",
+        "Jesus and the disciples land here after the crossing during which he walks on the water, and the crowds recognise him immediately (Mark 6:53-56)",
+        "The 1st-century fishing boat recovered from the lake bed in 1986 during a drought, popularly called the 'Jesus Boat,' was found off this shore near Kibbutz Ginosar and is displayed there",
+      ],
+    },
+    verses: [
+      { reference: "Matthew 14:34", note: "Jesus and the disciples come to the land of Gennesaret" },
+      { reference: "Mark 6:53-56", note: "They moor at Gennesaret and the sick are brought to him" },
+      { reference: "Luke 5:1", note: "The 'lake of Gennesaret' — the Sea of Galilee, not this plain" },
+    ],
+    modernMapUrl: mapsUrl(32.845, 35.52),
+    sources: [
+      { label: "Wikipedia: Ginosar", url: "https://en.wikipedia.org/wiki/Ginosar" },
+      { label: "Wikipedia: Sea of Galilee Boat", url: "https://en.wikipedia.org/wiki/Sea_of_Galilee_Boat" },
+    ],
   },
   {
     id: "gadara",
