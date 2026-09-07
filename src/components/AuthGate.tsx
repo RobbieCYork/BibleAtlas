@@ -277,19 +277,12 @@ export default function AuthGate() {
           ) : (
             <>
               <div className="auth-gate-mode-toggle" role="tablist" aria-label="Sign in or sign up">
-                <button
-                  type="button"
-                  role="tab"
-                  aria-selected={mode === "signup"}
-                  className={mode === "signup" ? "active" : ""}
-                  onClick={() => {
-                    setMode("signup");
-                    setUnconfirmedEmail(null);
-                    resetStatus();
-                  }}
-                >
-                  Sign Up
-                </button>
+                {/* Log In sits first, Sign Up second, so reading order matches the tab this card
+                  * opens on. Safe to reorder: `mode` is the only source of truth for which tab is
+                  * selected — nothing here or in AuthGate.css derives it from position or index
+                  * (the toggle is a plain flex row with no :nth-child rules), and the shared
+                  * password input below is a sibling of this toggle, not a child, so moving these
+                  * two buttons doesn't remount it or disturb its mode-driven `autocomplete`. */}
                 <button
                   type="button"
                   role="tab"
@@ -302,6 +295,19 @@ export default function AuthGate() {
                   }}
                 >
                   Log In
+                </button>
+                <button
+                  type="button"
+                  role="tab"
+                  aria-selected={mode === "signup"}
+                  className={mode === "signup" ? "active" : ""}
+                  onClick={() => {
+                    setMode("signup");
+                    setUnconfirmedEmail(null);
+                    resetStatus();
+                  }}
+                >
+                  Sign Up
                 </button>
               </div>
 
