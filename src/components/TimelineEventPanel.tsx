@@ -2,12 +2,17 @@ import type { TimelineEvent, TimelineEventCategory, TimelineDateCertainty } from
 import { timelineEvents } from "../data/timelineEvents";
 import LinkedVerseText from "./LinkedVerseText";
 import BackButton from "./BackButton";
+import CloseButton from "./CloseButton";
 
 interface TimelineEventPanelProps {
   event: TimelineEvent | null;
   /** Present only when there's somewhere to go back to (i.e. this panel was reached by clicking a
    * cross-link from another person/place/topic/event's details) — renders a "Back" button when set. */
   onBack?: () => void;
+  /** Desktop only — App.tsx withholds it on mobile, where the article is a full tab reached from
+   * the bottom bar and Back already returns the reader to the tab they came from. Renders the
+   * shared close control (CloseButton.tsx) in the top right of the back row. */
+  onClose?: () => void;
   onSelectVerse?: (reference: string) => void;
   onSelectLocation: (id: string) => void;
   onSelectPoi: (id: string) => void;
@@ -65,6 +70,7 @@ const CERTAINTY_BADGES: Record<TimelineDateCertainty, string | null> = {
 export default function TimelineEventPanel({
   event,
   onBack,
+  onClose,
   onSelectVerse,
   onSelectLocation,
   onSelectPoi,
@@ -99,9 +105,10 @@ export default function TimelineEventPanel({
 
   return (
     <div className={`location-panel person-panel ${expand ? "panel-expand" : ""}`} style={expand ? undefined : style}>
-      {onBack && (
+      {(onBack || onClose) && (
         <div className="panel-back-row">
-          <BackButton onClick={onBack} />
+          {onBack && <BackButton onClick={onBack} />}
+          {onClose && <CloseButton onClick={onClose} ariaLabel="Close article" />}
         </div>
       )}
       <span className="category-badge person-badge">{event.era}</span>

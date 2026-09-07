@@ -642,6 +642,25 @@ function App() {
     setMobileActivePanel("articles");
   };
 
+  // Desktop's counterpart to detailsReturnPanel above, and the reason the article's Close button
+  // can tell two situations apart that look identical once the article is on screen:
+  //
+  //   - Bible + Map open, reader clicks a pin. The Articles slot is pushed open *by* the article,
+  //     as a third column nobody asked for. Closing should take that column away again and leave
+  //     the two panels the reader actually had.
+  //   - Reader opens Articles from the panel menu and picks a row from the browse list. The column
+  //     is theirs. Closing the article should reveal the list again underneath, which is what
+  //     closeDetailsPanel has always done and what the Articles-slot comment by the render calls
+  //     "deliberately the back stop, not a closed panel".
+  //
+  // A ref rather than state: nothing renders off it, and it has to be readable synchronously from
+  // handlers that also write `panels` — same reason panelsRef exists.
+  const articlesOpenedByArticleRef = useRef(false);
+  const openArticlesForArticle = () => {
+    if (!panelsRef.current.articles) articlesOpenedByArticleRef.current = true;
+    openPanel("articles");
+  };
+
   const handleSelect = (id: string) => {
     setSelectedId(id);
     setSelectedPoiId(null);
@@ -652,7 +671,7 @@ function App() {
     if (isMobile) {
       enterMobileArticle();
     } else {
-      openPanel("articles");
+      openArticlesForArticle();
       openPanel("map");
     }
   };
@@ -666,7 +685,7 @@ function App() {
     if (isMobile) {
       enterMobileArticle();
     } else {
-      openPanel("articles");
+      openArticlesForArticle();
       openPanel("map");
     }
   };
@@ -680,7 +699,7 @@ function App() {
     setSelectedTopicId(null);
     setSelectedTimelineEventId(null);
     if (isMobile) enterMobileArticle();
-    else openPanel("articles");
+    else openArticlesForArticle();
   };
 
   // Topics (practices, doctrines, people groups) have no map presence, same as people — selecting one
@@ -692,7 +711,7 @@ function App() {
     setSelectedPersonId(null);
     setSelectedTimelineEventId(null);
     if (isMobile) enterMobileArticle();
-    else openPanel("articles");
+    else openArticlesForArticle();
   };
 
   // Timeline events have no map presence either — same pattern as people and topics: selecting one
@@ -704,7 +723,7 @@ function App() {
     setSelectedPersonId(null);
     setSelectedTopicId(null);
     if (isMobile) enterMobileArticle();
-    else openPanel("articles");
+    else openArticlesForArticle();
   };
 
   // Shows a location on the map without opening the Details panel — used for the Bible text's
@@ -961,6 +980,26 @@ function App() {
     setDetailsHistory([]);
     if (isMobile) setMobileActivePanel(detailsReturnPanel);
   };
+
+  /** The article's Close button (desktop only — see the `onClose` prop on the five article panels).
+   *
+   * Back walks the cross-link trail and only leaves once it's exhausted; this is the "I'm done with
+   * this column" exit, and it skips the trail entirely however deep the reader went. Where the
+   * column was opened by the article itself, it goes away and the reader is left with exactly the
+   * two panels they had; where the reader opened Articles for themselves, the browse list comes
+   * back underneath. See articlesOpenedByArticleRef for why those two are told apart. */
+  const closeArticleColumn = () => {
+    closeDetailsPanel();
+    if (articlesOpenedByArticleRef.current) closePanel("articles");
+  };
+
+  // Whichever route closed the Articles column — this button, the panel menu's checklist, the LRU
+  // cap making room for a fourth panel, or a mobile tab switch — the next open starts a fresh
+  // question of who opened it. Without this reset a reader who closed the column from the menu and
+  // reopened it themselves would still get the "close the whole column" behaviour afterwards.
+  useEffect(() => {
+    if (!panels.articles) articlesOpenedByArticleRef.current = false;
+  }, [panels.articles]);
 
   const openVerse = (reference: string) => {
     goToReference(reference);
@@ -1603,6 +1642,7 @@ function App() {
           <PersonPanel
             person={selectedPerson}
             onBack={goBackInDetails}
+            onClose={isMobile ? undefined : closeArticleColumn}
             onSelectVerse={openVerse}
             onSelectLocation={handleSelectLocationFromDetails}
             onSelectPoi={handleSelectPoiFromDetails}
@@ -1617,6 +1657,7 @@ function App() {
           <PoiPanel
             poi={selectedPoi}
             onBack={goBackInDetails}
+            onClose={isMobile ? undefined : closeArticleColumn}
             onSelectLocation={handleSelectLocationFromDetails}
             onSelectPoi={handleSelectPoiFromDetails}
             onSelectPerson={handleSelectPersonFromDetails}
@@ -1630,6 +1671,7 @@ function App() {
           <TopicPanel
             topic={selectedTopic}
             onBack={goBackInDetails}
+            onClose={isMobile ? undefined : closeArticleColumn}
             onSelectVerse={openVerse}
             onSelectLocation={handleSelectLocationFromDetails}
             onSelectPoi={handleSelectPoiFromDetails}
@@ -1644,6 +1686,7 @@ function App() {
           <TimelineEventPanel
             event={selectedTimelineEvent}
             onBack={goBackInDetails}
+            onClose={isMobile ? undefined : closeArticleColumn}
             onSelectVerse={openVerse}
             onSelectLocation={handleSelectLocationFromDetails}
             onSelectPoi={handleSelectPoiFromDetails}
@@ -1658,6 +1701,7 @@ function App() {
           <LocationPanel
             location={selectedLocation}
             onBack={goBackInDetails}
+            onClose={isMobile ? undefined : closeArticleColumn}
             onSelectVerse={openVerse}
             onSelectLocation={handleSelectLocationFromDetails}
             onSelectPoi={handleSelectPoiFromDetails}

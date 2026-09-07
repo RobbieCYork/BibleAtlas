@@ -967,9 +967,54 @@ body.resizing-panels {
 }
 
 /* Details articles use the shared .back-btn (BackButton.tsx) instead of a bespoke style — it sits
- * in normal document flow as its own row above the category badge, same spot this used to occupy. */
+ * in normal document flow as its own row above the category badge, same spot this used to occupy.
+ *
+ * Now a two-ended row: Back on the left, Close on the right (CloseButton.tsx). `space-between`
+ * rather than a margin auto so the row still looks right on mobile, where App.tsx passes no
+ * `onClose` and the Back button is the only child — a lone flex item under `space-between` sits
+ * flush left, exactly where it sat before. */
 .panel-back-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
   margin: -6px 0 8px -1px;
+}
+
+/* --- Shared "Close" button (CloseButton.tsx) ---
+ * Copied from .ref-picker-close (App.css, the .ref-picker-back/.ref-picker-close pair): same 34x34
+ * ghost circle, same muted-to-accent hover. That is the one existing close button that already sits
+ * in a panel header next to a Back control, which is exactly this one's job. See CloseButton.tsx
+ * for why this is a shared component rather than the app's ninth bespoke close rule.
+ *
+ * Not to be confused with the orphaned `.panel-close` further down in the mobile block — that is
+ * dead CSS left behind when the old per-panel "×" was removed (see the MAX_OPEN_PANELS comment in
+ * App.tsx). Nothing renders it, and this deliberately does not reuse its name. */
+.panel-close-btn {
+  flex-shrink: 0;
+  width: 34px;
+  height: 34px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  background: none;
+  border-radius: 50%;
+  color: var(--text-muted);
+  font-size: 20px;
+  line-height: 1;
+  cursor: pointer;
+  transition: background 0.15s ease, color 0.15s ease;
+}
+
+.panel-close-btn:hover {
+  background: var(--accent-bg);
+  color: var(--accent);
+}
+
+.panel-close-btn:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
 }
 
 /* Header row pairing the category/role badge with the Share button. Flex (not absolute

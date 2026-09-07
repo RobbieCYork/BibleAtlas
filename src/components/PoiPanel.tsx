@@ -5,6 +5,7 @@ import ShareCardButton from "./ShareCardButton";
 import ProfileAudioPlayer from "./ProfileAudioPlayer";
 import PronunciationAudioButton from "./PronunciationAudioButton";
 import BackButton from "./BackButton";
+import CloseButton from "./CloseButton";
 import { placeCardSpec, shareFilename } from "../lib/shareCard";
 
 interface PoiPanelProps {
@@ -12,6 +13,10 @@ interface PoiPanelProps {
   /** Present only when there's somewhere to go back to (i.e. this panel was reached by clicking a
    * cross-link from another person/place's details) — renders a "Back" button when set. */
   onBack?: () => void;
+  /** Desktop only — App.tsx withholds it on mobile, where the article is a full tab reached from
+   * the bottom bar and Back already returns the reader to the tab they came from. Renders the
+   * shared close control (CloseButton.tsx) in the top right of the back row. */
+  onClose?: () => void;
   onSelectLocation: (id: string) => void;
   onSelectPoi: (id: string) => void;
   onSelectPerson: (id: string) => void;
@@ -24,6 +29,7 @@ interface PoiPanelProps {
 export default function PoiPanel({
   poi,
   onBack,
+  onClose,
   onSelectLocation,
   onSelectPoi,
   onSelectPerson,
@@ -36,9 +42,10 @@ export default function PoiPanel({
 
   return (
     <div className={`location-panel ${expand ? "panel-expand" : ""}`} style={expand ? undefined : style}>
-      {onBack && (
+      {(onBack || onClose) && (
         <div className="panel-back-row">
-          <BackButton onClick={onBack} />
+          {onBack && <BackButton onClick={onBack} />}
+          {onClose && <CloseButton onClick={onClose} ariaLabel="Close article" />}
         </div>
       )}
       <div className="panel-header-row">
