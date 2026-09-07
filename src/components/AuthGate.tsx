@@ -10,6 +10,22 @@ type Mode = "login" | "signup" | "reset";
  * themselves. Doesn't prevent the quota being exhausted by other traffic, only by this button. */
 const RESEND_COOLDOWN_SECONDS = 60;
 
+/** Shortest password Supabase will accept for a *new* account, mirrored here so signup can say so in
+ * the card instead of making the round trip. Matches ResetPasswordGate's own MIN_PASSWORD_LENGTH and
+ * the project's auth setting; if that setting is ever raised, Supabase's own message still surfaces
+ * through friendlyError() below, so this being stale degrades to a slower answer, not a wrong one.
+ *
+ * WHY THIS IS A CHECK IN handleSubmit AND NOT `minLength` ON THE INPUT. There is one password field
+ * on this card and both tabs share it, so a `minLength` attribute applies to Log In as well — and a
+ * login form has no business enforcing a password policy. The credential either matches what is
+ * stored or it does not; a client-side minimum only locks out accounts whose password predates the
+ * rule, which is exactly what happened to a real account here (a five-character password that had
+ * been working stopped being accepted). Worse, `minLength` fails *silently* as far as this component
+ * is concerned: the browser blocks the submit, handleSubmit never runs, no error state is ever set,
+ * and all the reader gets is a native bubble that fades in a few seconds. Enforcing it here instead
+ * means the rule applies to signup only, and that failing it produces a message that stays on screen. */
+const MIN_NEW_PASSWORD_LENGTH = 6;
+
 /** The front door of the entire app. Rendered by App.tsx above every panel, takeover, header and
  * tab bar whenever there is no *real* signed-in session — no session at all, or one that's merely
  * anonymous (Supabase's "Continue as Guest", now retired as an entry path but still sitting in the
@@ -78,8 +94,27 @@ export default function AuthGate() {
     }
   };
 
+  /** HTTP status carried by supabase-js's auth errors (AuthApiError and AuthRetryableFetchError both
+   * have one; AuthRetryableFetchError uses 0 for a fetch that never got a response at all). */
+  const errorStatus = (err: unknown): number | undefined => {
+    const status = (err as { status?: unknown } | null)?.status;
+    return typeof status === "number" ? status : undefined;
+  };
+
   const friendlyError = (err: unknown): string => {
-    const msg = err instanceof Error ? err.message : "";
+    const raw = err instanceof Error ? err.message : "";
+    const status = errorStatus(err);
+    // supabase-js throws away the response body for every 5xx before anyone can read it: handleError()
+    // in @supabase/auth-js short-circuits on status 500-504/520-530 and builds an
+    // AuthRetryableFetchError from the *Response object* rather than the JSON inside it. Its message
+    // helper then falls through to JSON.stringify(response) — which for a Response is "{}". So the
+    // literal two characters "{}" is what a server-side auth failure hands this function, and until
+    // now it was passed straight through to the card as the error text. A reader who has just had a
+    // signup fail sees "{}" under the button, reads it as nothing at all, and reasonably concludes
+    // the click did nothing — which is exactly what happened on the live site when Resend rejected
+    // the SMTP credentials, GoTrue answered /signup with a 500, and the half-made account was rolled
+    // back. Treat that placeholder as no message, and answer from the status instead.
+    const msg = raw.trim() === "{}" ? "" : raw;
     const lower = msg.toLowerCase();
     if (lower.includes("already registered") || lower.includes("already exists") || lower.includes("user already"))
       return "That email already has an account — try logging in instead, or use “Forgot password?”";
@@ -88,12 +123,28 @@ export default function AuthGate() {
     if (lower.includes("email not confirmed"))
       return "Almost there — check your email for a confirmation link before logging in.";
     if (lower.includes("password") && (lower.includes("least") || lower.includes("short") || lower.includes("weak")))
-      return "That password's too short — use at least 6 characters.";
+      return `That password's too short — use at least ${MIN_NEW_PASSWORD_LENGTH} characters.`;
     if (lower.includes("rate limit"))
       return "Too many attempts — wait a minute and try again.";
-    if (lower.includes("failed to fetch") || lower.includes("network"))
+    // Status 0 is supabase-js's "the fetch itself failed" — no response, so genuinely the reader's
+    // connection (or ours being unreachable), not a server that answered with a fault.
+    if (status === 0 || lower.includes("failed to fetch") || lower.includes("network"))
       return "Couldn't reach the server — check your connection and try again.";
-    return msg || "Something went wrong — try again.";
+    if (status !== undefined && status >= 500) {
+      // Deliberately does NOT promise the account/email was or wasn't created: a 500 can land either
+      // side of that line, and telling someone "nothing was saved" when something was is worse than
+      // telling them less. What it does promise is true of every 5xx — the fault is ours, and what
+      // they typed is not the problem.
+      console.error("[auth-gate] server error, body unavailable (supabase-js discards 5xx bodies):", {
+        status,
+        name: err instanceof Error ? err.name : typeof err,
+        rawMessage: raw,
+      });
+      return "Something went wrong on our end and the request didn't complete — this isn't a problem with what you typed. Wait a minute and try again; if it keeps happening, email admin@capstonebible.com.";
+    }
+    if (msg) return msg;
+    console.error("[auth-gate] unhandled auth error, showing the generic message instead:", err);
+    return "Something went wrong — try again.";
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -117,6 +168,12 @@ export default function AuthGate() {
           throw err;
         }
       } else {
+        // Checked before the display-name lookup so the reader gets the cheapest failure first, and
+        // before signUp so a password Supabase would reject anyway never costs a round trip.
+        if (password.length < MIN_NEW_PASSWORD_LENGTH) {
+          setError(`That password is too short — use at least ${MIN_NEW_PASSWORD_LENGTH} characters.`);
+          return;
+        }
         const trimmedName = displayName.trim();
         const { data: available } = await supabase.rpc("is_display_name_available", { p_name: trimmedName });
         if (available === false) {
@@ -172,10 +229,16 @@ export default function AuthGate() {
         <div className="auth-gate-card">
           {pendingEmail ? (
             <div className="auth-gate-check-email">
-              <h2>Check your email</h2>
+              {/* Says the account was created *and* names the address, because those are the two
+                * things a new reader can't otherwise tell: whether the click did anything at all,
+                * and whether the address they typed is the one the mail is going to. A typo here is
+                * the other reason a confirmation email never arrives, and it can only be caught by
+                * showing it back to them. */}
+              <h2>Account created — check your email</h2>
               <p>
-                We sent a confirmation link to <strong>{pendingEmail}</strong>. Click it to activate your
-                account, then come back here and log in.
+                Your account is set up, and a confirmation email is on its way to{" "}
+                <strong>{pendingEmail}</strong>. Click the link in it to activate the account, then come
+                back here and log in.
               </p>
               <p className="auth-gate-spam-note">
                 Don&rsquo;t see it after a few minutes? Check your spam or junk folder — first-time mail
@@ -296,7 +359,12 @@ export default function AuthGate() {
                      * `autocomplete` onto this same DOM node when the tab flips, so the field
                      * never sits there advertising `new-password` on the Log In tab. Not keyed to
                      * `mode` on purpose — remounting it would make managers treat each tab switch
-                     * as a brand-new form. */}
+                     * as a brand-new form.
+                     *
+                     * Deliberately carries no `minLength`: this one node serves both tabs, so the
+                     * attribute enforced a signup rule on Log In and locked out an existing shorter
+                     * password. The signup minimum is MIN_NEW_PASSWORD_LENGTH, applied in
+                     * handleSubmit — see the constant at the top of this file. */}
                     <input
                       type={showPassword ? "text" : "password"}
                       name="password"
@@ -304,7 +372,6 @@ export default function AuthGate() {
                       value={password}
                       onChange={(e) => setPassword(e.target.value)}
                       required
-                      minLength={6}
                       autoComplete={mode === "login" ? "current-password" : "new-password"}
                     />
                     <button
