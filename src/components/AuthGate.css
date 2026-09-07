@@ -49,7 +49,12 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: flex-end;
+  /* Centred at every width, phones included. This used to be `flex-end` paired with
+     `margin-top: auto` on the intro, which pinned the whole block to the bottom of the screen and
+     left a tall band of empty photo above the logo — 288px of it on a 375x812 phone, with the
+     card's last row a hair off the bottom edge. Centring lifts the card without touching the
+     desktop block at the end of this file, which already centred. */
+  justify-content: center;
   gap: 28px;
   width: 100%;
   max-width: 460px;
@@ -70,7 +75,6 @@
   align-items: center;
   text-align: center;
   gap: 14px;
-  margin-top: auto;
 }
 
 .auth-gate-brand {
@@ -196,7 +200,11 @@
   gap: 10px;
 }
 
-.auth-gate-form input {
+/* `:not([type="checkbox"])` on this and its light-theme twin below: the Remember-me box lives
+   inside this form, so a bare `.auth-gate-form input` was aiming a full-width text-field skin —
+   `width: 100%`, 12px/14px padding, a border and a fill — at a native checkbox. Browsers ignore
+   most of it, but not all of it, and it is not what any of these declarations were written for. */
+.auth-gate-form input:not([type="checkbox"]) {
   width: 100%;
   box-sizing: border-box;
   padding: 12px 14px;
@@ -212,7 +220,7 @@
   color: #a3927a;
 }
 
-:root[data-theme="light"] .auth-gate-form input {
+:root[data-theme="light"] .auth-gate-form input:not([type="checkbox"]) {
   background: #f4f2ee;
   border-color: #d9d3ca;
   color: #2e251c;
@@ -252,10 +260,22 @@
   color: #6e5f48;
 }
 
+/* Reported from an iPhone as "Remember m(Fe)rgot password?" — the two strings printed on top of
+ * one another. This row had room on a desktop and none on a phone, and nothing here stopped it
+ * running out: with the app's text scale turned up, both children were shrunk below their own
+ * content, and a `<button>` centres text it cannot fit, so "Forgot password?" spilled out of a
+ * 64px box roughly 20px past each edge and painted straight over the checkbox label. The only
+ * password-recovery route on this screen was both unreadable and untappable.
+ *
+ * `flex-wrap` plus `flex-shrink: 0` on both children is the whole fix: neither can be squeezed,
+ * so when they no longer fit side by side the row breaks and they stack, left-aligned. Where
+ * there is room — desktop, and a phone at normal text size — nothing about the row changes. */
 .auth-gate-form-extras {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 2px 12px;
   font-family: var(--sans);
   font-size: 13px;
 }
@@ -263,7 +283,12 @@
 .auth-gate-remember-me {
   display: flex;
   align-items: center;
-  gap: 6px;
+  gap: 8px;
+  /* Vertical padding rather than a height: the input is nested inside the label, so the label is
+     the hit area, and 7px either side of a 13px line clears a ~30px target without turning the
+     row into a band. */
+  padding: 7px 0;
+  flex-shrink: 0;
   color: #d6c7a8;
   cursor: pointer;
   white-space: nowrap;
@@ -273,10 +298,24 @@
   color: #6e5f48;
 }
 
+/* A default checkbox is 13px square — under a finger, that is a miss waiting to happen. The label
+   around it is the real target, but the box itself should be worth aiming at too. */
+.auth-gate-remember-me input[type="checkbox"] {
+  width: 17px;
+  height: 17px;
+  flex-shrink: 0;
+  margin: 0;
+  accent-color: #e5b355;
+}
+
 .auth-gate-forgot-link {
   border: none;
   background: none;
-  padding: 0;
+  /* Matches the label's vertical padding so both halves of the row are the same tappable height,
+     wrapped or not. */
+  padding: 7px 0;
+  flex-shrink: 0;
+  white-space: nowrap;
   color: #e5b355;
   cursor: pointer;
   font-family: var(--sans);
@@ -429,14 +468,26 @@
   cursor: default;
 }
 
-@media (min-width: 640px) {
+/* Phone-only vertical tightening. The centring change above does most of the work of lifting the
+ * card; this takes the remaining slack out of the gaps so the branding and the card read as one
+ * block instead of two. Deliberately scoped under 640px — the desktop rhythm is unchanged, and
+ * nothing here shortens the tagline or the pitch, which stay exactly as written. */
+@media (max-width: 639px) {
   .auth-gate-content {
-    justify-content: center;
-    gap: 36px;
+    gap: 20px;
+    padding-top: calc(20px + env(safe-area-inset-top, 0px) / var(--text-scale, 1));
   }
 
   .auth-gate-intro {
-    margin-top: 0;
+    gap: 10px;
+  }
+}
+
+@media (min-width: 640px) {
+  /* `justify-content: center` and the intro's `margin-top: 0` used to live here; both are now the
+     base behaviour, so this block is only the desktop's looser spacing. */
+  .auth-gate-content {
+    gap: 36px;
   }
 
   .auth-gate-card {

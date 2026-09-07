@@ -129,6 +129,33 @@ depends on rendering steps the browser freezes there. Verify it against a
 static `vite preview` of the production build, not the shared dev server,
 which hot-reloads under whoever else is working.
 
+## A hidden tab renders no frames, so smooth scrolling does not happen at all
+
+This is not throttling and it is not slowness. A backgrounded tab produces no
+animation frames, and every animated scroll is driven by them. So
+`scrollIntoView({ behavior: "smooth" })`, `scrollTo({ behavior: "smooth" })` and
+anything built on them **do not move the container by a single pixel** while the
+tab is hidden. `behavior: "instant"` still works, because it needs no frames.
+
+Read `scrollTop` after one of those calls in a background tab and you get `0` —
+the same `0` that broken code returns. An agent spent most of a run on that and
+came close to rewriting scroll handling that was working the whole time. The same
+mechanism eats anything else you step frame by frame: a `requestAnimationFrame`
+loop in a hidden tab never reaches its next iteration, so a measurement helper
+built around one simply hangs until the tool times out.
+
+Before you trust any scroll measurement:
+
+    document.visibilityState        // "hidden" means the number below is meaningless
+
+Then either front the tab, or measure with an instant scroll — the thing you
+usually need to know is whether the right element got targeted, and an instant
+scroll answers that just as well.
+
+Note what this does *not* excuse: the `--disable-background-timer-throttling`
+flags in the harness section below are about timers running slowly. This is about
+frames not existing, and those flags do not bring them back.
+
 ## There is a browser harness in the repo — you do not need tooling in your session
 
 `scripts/stale-deploy-harness/` drives the real Google Chrome on this machine
