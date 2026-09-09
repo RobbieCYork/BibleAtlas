@@ -1019,7 +1019,16 @@ body.resizing-panels {
  * Now a two-ended row: Back on the left, Close on the right (CloseButton.tsx). `space-between`
  * rather than a margin auto so the row still looks right on mobile, where App.tsx passes no
  * `onClose` and the Back button is the only child — a lone flex item under `space-between` sits
- * flush left, exactly where it sat before. */
+ * flush left, exactly where it sat before.
+ *
+ * NO WRAP GUARD, AND IT WAS MEASURED RATHER THAN ASSUMED — a labelled Close is much wider than the
+ * 34px circle it replaced, and the obvious worry is that it crowds Back in a narrow column. It does
+ * not. The two pills come to 72.6px and 76.6px; the column's floor is MIN_PANEL_WIDTH (240px) less
+ * 22px padding either side, so 196px of row, leaving 47px of clear space at the narrowest the
+ * reader can drag it. Text scale doesn't move any of that: `zoom` on .location-panel scales the
+ * panel and its contents together, so the row's own geometry is identical at 0.8x and at 1.8x
+ * (measured at both, at 240/280/320/380px — no overflow, no wrap, buttons the same height and on
+ * the same top edge in all twelve). Re-measure if either label gets longer. */
 .panel-back-row {
   display: flex;
   align-items: center;
@@ -1029,34 +1038,49 @@ body.resizing-panels {
 }
 
 /* --- Shared "Close" button (CloseButton.tsx) ---
- * Copied from .ref-picker-close (App.css, the .ref-picker-back/.ref-picker-close pair): same 34x34
- * ghost circle, same muted-to-accent hover. That is the one existing close button that already sits
- * in a panel header next to a Back control, which is exactly this one's job. See CloseButton.tsx
- * for why this is a shared component rather than the app's ninth bespoke close rule.
+ * THE MATCHED PAIR IS THE POINT. Every declaration below is copied from `.back-btn` (further down
+ * this file, ~line 7000) so the two ends of `.panel-back-row` are the same pill: same border,
+ * radius, background, colour, font size, padding and therefore the same height, sitting on the same
+ * baseline. It was a 34x34 ghost circle borrowed from `.ref-picker-close` first, and next to a real
+ * labelled Back button that read as two unrelated controls rather than one row — see CloseButton.tsx.
+ *
+ * The padding is `.back-btn`'s exactly, including the asymmetry (9px leading, 12px trailing): both
+ * buttons lead with a 14px mark and follow it with text, so the same rule flatters both. Do not
+ * "fix" it to be symmetric on this one without doing the same to Back.
  *
  * Not to be confused with the orphaned `.panel-close` further down in the mobile block — that is
  * dead CSS left behind when the old per-panel "×" was removed (see the MAX_OPEN_PANELS comment in
  * App.tsx). Nothing renders it, and this deliberately does not reuse its name. */
 .panel-close-btn {
-  flex-shrink: 0;
-  width: 34px;
-  height: 34px;
-  display: flex;
+  display: inline-flex;
   align-items: center;
-  justify-content: center;
-  border: none;
-  background: none;
-  border-radius: 50%;
-  color: var(--text-muted);
-  font-size: 20px;
-  line-height: 1;
+  gap: 6px;
+  border: 1px solid var(--border);
+  background: transparent;
+  color: var(--text);
+  font: inherit;
+  font-size: 13px;
+  padding: 6px 12px 6px 9px;
+  border-radius: 8px;
   cursor: pointer;
-  transition: background 0.15s ease, color 0.15s ease;
+  transition: background 0.15s ease, border-color 0.15s ease;
+  flex-shrink: 0;
+}
+
+/* Occupies the same 14x14 box as BackButton's chevron <svg>, so the two labels land on one optical
+ * line however the glyph itself is drawn. `×` needs to be set larger than the 13px label to read at
+ * the chevron's visual weight; the fixed box keeps that from widening the pill. */
+.panel-close-btn-glyph {
+  width: 14px;
+  flex-shrink: 0;
+  text-align: center;
+  font-size: 16px;
+  line-height: 1;
 }
 
 .panel-close-btn:hover {
   background: var(--accent-bg);
-  color: var(--accent);
+  border-color: var(--accent);
 }
 
 .panel-close-btn:focus-visible {
