@@ -1,0 +1,85 @@
+/* HeyMomPage — the one public page in the app (`/heymom`). See HeyMomPage.tsx for why it exists
+ * and why its colours are literals rather than theme tokens.
+ *
+ * THE LOAD-BEARING RULE HERE IS `.heymom-photo`. The picture in `public/heymom.jpg` is meant to be
+ * replaced by a real phone photo of unknown shape — portrait, landscape, or anything between — and
+ * the layout must survive that without a code change. So the image is never given a definite width
+ * or height: `max-width` and `max-height` cap it in both directions and the intrinsic aspect ratio
+ * decides the rest. It cannot letterbox (the card shrink-wraps the image, so there are no bars to
+ * fill) and it cannot crop (there is no `object-fit: cover` anywhere in this file — a tall portrait
+ * simply gets narrower, it does not lose the tops of anyone's heads). */
+
+.heymom {
+  position: fixed;
+  inset: 0;
+  z-index: 5000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow-y: auto;
+  overflow-x: hidden;
+  box-sizing: border-box;
+  padding: calc(24px + env(safe-area-inset-top, 0px)) 20px
+    calc(24px + env(safe-area-inset-bottom, 0px));
+  /* The vellum ground of the light palette, written out: --vellum-100 to --vellum-300. */
+  background: linear-gradient(to bottom, #f7f1e3 0%, #f2ead9 55%, #e9ddc5 100%);
+}
+
+.heymom-card {
+  /* Shrink-wraps the photo: the card is exactly as wide as the picture turns out to be, which is
+     what keeps any aspect ratio from leaving empty margins inside the frame. */
+  width: fit-content;
+  max-width: 100%;
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 22px;
+  padding: 18px 18px 26px;
+  box-sizing: border-box;
+  background: #fffdf7;
+  border: 1px solid #d6c7a8;
+  border-radius: 18px;
+  box-shadow: 0 18px 44px rgba(46, 37, 28, 0.14), 0 2px 6px rgba(46, 37, 28, 0.08);
+}
+
+.heymom-photo {
+  display: block;
+  /* No width, no height — only caps. See the note at the top of this file. */
+  max-width: 100%;
+  max-height: min(64vh, 620px);
+  border-radius: 10px;
+  /* The gold hairline of the app's accent, one step deeper so it holds against a light photo. */
+  box-shadow: 0 0 0 1px #c8912f;
+  background: #f2ead9;
+}
+
+.heymom-caption {
+  margin: 0;
+  font-family: var(--display);
+  font-size: clamp(34px, 7vw, 52px);
+  font-weight: 600;
+  line-height: 1.05;
+  letter-spacing: 0.01em;
+  text-align: center;
+  color: #2e251c;
+}
+
+/* Phone first — she will open this on a phone. Tighter frame, and a shorter photo cap so the
+   caption is on screen with the picture instead of below the fold. */
+@media (max-width: 560px) {
+  .heymom {
+    padding: calc(16px + env(safe-area-inset-top, 0px)) 14px
+      calc(16px + env(safe-area-inset-bottom, 0px));
+  }
+
+  .heymom-card {
+    gap: 18px;
+    padding: 12px 12px 20px;
+    border-radius: 14px;
+  }
+
+  .heymom-photo {
+    max-height: min(58vh, 460px);
+  }
+}

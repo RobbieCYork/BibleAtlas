@@ -34,6 +34,7 @@ import BackButton from "./components/BackButton";
 import DisplayNameGate from "./components/DisplayNameGate";
 import ResetPasswordGate from "./components/ResetPasswordGate";
 import AuthGate from "./components/AuthGate";
+import HeyMomPage from "./components/HeyMomPage";
 import { supabase, setRememberMe } from "./lib/supabase";
 import {
   clearRememberedSelection,
@@ -57,6 +58,30 @@ import "./App.css";
 const MIN_PANEL_WIDTH = 240;
 const MAX_PANEL_WIDTH = 800;
 const MOBILE_QUERY = "(max-width: 768px)";
+
+/** The one path on this domain that renders WITHOUT an account. Everything else sits behind
+ * AuthGate (owner's decision), which App returns before any of the app mounts — so a page wired up
+ * the ordinary way would show its visitor a login card and nothing else. `/heymom` is a personal
+ * page the owner sends to his mother; a signup form there defeats the entire point of it.
+ *
+ * Read from the URL once at module load, exactly like the `?code=` password-recovery bypass below
+ * (see `exchangingRecoveryCode`), and acted on in the same place: ahead of the gate's early return.
+ * That is this file's existing precedent for "this visitor is not here to sign in", and reusing it
+ * means there is one bypass mechanism here rather than two.
+ *
+ * DELIBERATELY EXACT — one pathname, trailing slash tolerated, no prefix match and no pattern.
+ * Nothing that was behind the gate a moment ago is newly reachable.
+ *
+ * THE OTHER HALF OF THIS LIVES IN vercel.json, which cannot hold a comment, so it is written here.
+ * The app has no client-side router and the deployment has no SPA fallback: every URL but `/` is a
+ * real file or a 404 (checked against the live edge — an unknown path answers NOT_FOUND, it does
+ * not load the app). So `/heymom` also needs a rewrite to /index.html or nothing here ever runs.
+ * That rewrite lists this one path literally, with and without the trailing slash, rather than a
+ * catch-all: a catch-all would quietly load the whole app for every mistyped URL on the domain,
+ * and would swallow the asset 404s that index.html's recovery script depends on seeing. Rewrites
+ * are evaluated after the filesystem, so /heymom.jpg and everything under /assets still serve
+ * themselves. */
+const isHeyMomPage = window.location.pathname.replace(/\/+$/, "") === "/heymom";
 
 /** One entry in the details "back" trail — enough to restore a prior selection without re-deriving it.
  * The "timeline" variant is different from the rest: it doesn't restore a *selection*, it restores
@@ -1380,6 +1405,10 @@ function App() {
   // component mounts underneath it. While auth genuinely hasn't resolved yet (first paint, or a
   // `?code=` recovery link mid-exchange — see exchangingRecoveryCode above) this renders nothing at
   // all rather than flashing the gate first.
+  // Above the gate AND above the not-yet-resolved blank, because /heymom has nothing to wait for:
+  // it reads no session, makes no request, and must paint immediately even on a cold load where
+  // auth hasn't settled. See isHeyMomPage at the top of this file.
+  if (isHeyMomPage) return <HeyMomPage />;
   if (showAuthGate) return <AuthGate />;
   if (!authResolved || exchangingRecoveryCode) return null;
 
