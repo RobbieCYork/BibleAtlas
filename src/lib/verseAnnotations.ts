@@ -1182,6 +1182,95 @@ const OWNER_NAME_OVERRIDES: Record<string, Record<string, string | null>> = {
     "mary-mother-of-jesus": "joseph-husband-of-mary",
     matthan: "joseph-husband-of-mary",
     "jacob-father-of-joseph": "joseph-husband-of-mary",
+
+    // ── THE REST OF THE NATIVITY CAST, 2026-09-10 ────────────────────────────────────────────
+    //
+    // Same fault as the three above and the same shape, swept rather than noticed one at a time.
+    // Every bare "Joseph"/"Jacob" link in the corpus was enumerated across all 6,677 blocks — the
+    // 5,692 the app renders through LinkedVerseText AND the 985 that are links only on the
+    // pre-rendered public pages, which no snapshot covers — and read in its own sentence. 321 of
+    // them. Outside the records already listed above, the nativity cast was wrong in one
+    // direction throughout: a bare "Joseph" in a sentence about the birth, the census, the magi,
+    // the flight, the return to Nazareth or Matthew's genealogy resolved to Joseph son of Jacob
+    // and sent the reader to Egypt.
+    //
+    // The rule applied, and its whole extent: ON A RECORD WHOSE SUBJECT BELONGS TO THE NATIVITY
+    // OR TO MATTHEW'S GENEALOGY, A BARE "Joseph" IS THE HUSBAND OF MARY. That is a statement
+    // about these records, not about the corpus. It is safe here because the sentences name the
+    // man themselves — "Joseph and Mary traveled to Bethlehem", "Joseph is warned in a dream",
+    // "Joseph, the husband of Mary" — so no reading of any of them is the patriarch.
+    //
+    // It settles nothing about who a bare "Joseph" belongs to ANYWHERE ELSE. That question is
+    // Robbie's and is open; the 284 links outside this list are deliberately untouched, including
+    // every one of the ~150 in the Genesis patriarch articles, which are already right.
+    //
+    // OWNER_NAME_OVERRIDES rather than a phrase pin for all of these, and the test was the same
+    // every time: EVERY occurrence of the name on the record means one man. That was measured per
+    // record, not assumed — a regex over every "Joseph"/"Jacob" token on each record's blocks,
+    // linked or not, read in context. A record-keyed answer survives the paragraph being
+    // rewritten, which a pin does not and a snapshot row does not. The one record here that names
+    // both men is `egyptians`, and it is pinned by phrase in NAME_CONTEXT_RULES instead.
+    //
+    // Counts are exact and were read off the enumeration, not estimated. Where the count includes
+    // a `summary`, that link exists ONLY on capstonebible.com — the app renders those fields as
+    // plain text and scripts/seo/render.mjs linkifies them — so no snapshot can hold it and the
+    // prose case in cases.mjs is the only thing that does.
+
+    // Nativity people. Each names Mary in the same clause or the same paragraph.
+    "caesar-augustus": "joseph-husband-of-mary", // 2: "the reason Joseph, of the house of David, traveled from Nazareth"; summary
+    quirinius: "joseph-husband-of-mary", // 2: "the census that brought Joseph and Mary to Bethlehem"; summary
+    "herod-the-great": "joseph-husband-of-mary", // 2: the Bethlehem massacre "Joseph and Mary escaped"; "led Joseph to settle instead in Nazareth"
+    "herod-archelaus": "joseph-husband-of-mary", // 3: Matthew 2:22 in lifeStory, controversies and summary
+    "simeon-at-the-temple": "joseph-husband-of-mary", // 2: "Mary and Joseph brought the infant Jesus"; "blessed Mary and Joseph"
+    magi: "joseph-husband-of-mary", // 1: "Joseph is likewise warned in a dream to flee with Mary and the child"
+    "jesus-of-nazareth": "joseph-husband-of-mary", // 1: "raised… by Mary and her husband Joseph". The record's OTHER Joseph is "Joseph of Arimathea", which is a longer registered name and a different key, so this entry cannot reach it.
+    "james-brother-of-jesus": "joseph-husband-of-mary", // 1: "Raised in Nazareth in the household of Joseph and Mary"
+    "philip-the-apostle": "joseph-husband-of-mary", // 1: John 1:45 quoted — "Jesus of Nazareth, the son of Joseph"
+
+    // Matthew's genealogy. Five stubs whose only content is that they are a name in the chain, and
+    // Jeconiah, whose whole controversy is that the line runs through this Joseph.
+    azor: "joseph-husband-of-mary", // 1: "the chain linking… to Joseph, the husband of Mary"
+    achim: "joseph-husband-of-mary", // 1: same sentence
+    eliud: "joseph-husband-of-mary", // 1: same sentence
+    "eleazar-in-jesus-genealogy": "joseph-husband-of-mary", // 1: "this genealogical figure in Joseph's ancestry"
+    "zadok-in-jesus-genealogy": "joseph-husband-of-mary", // 1: same clause
+    jeconiah: "joseph-husband-of-mary", // 2: "an ancestor of Jesus through Joseph in Matthew's genealogy"; the same point in controversies
+
+    // The nativity timeline events, and the two Roman ones that reach the census from the other end.
+    "bib-loc-birth-of-jesus": "joseph-husband-of-mary", // 1: "move Joseph and Mary from Nazareth… to Bethlehem"
+    "bib-loc-magi-flight-to-egypt": "joseph-husband-of-mary", // 1: "Joseph, likewise warned in a dream, takes Mary and the child and flees by night to Egypt"
+    "bib-loc-jesus-in-temple-age-twelve": "joseph-husband-of-mary", // 1: "Joseph and Mary make their customary Passover pilgrimage"
+    "bib-loc-return-nazareth-childhood": "joseph-husband-of-mary", // 3: the angel's instruction, the warning about Archelaus, "Joseph's carpentry trade"
+    "wld-rom-battle-of-actium": "joseph-husband-of-mary", // 1: "the census mentioned in Luke 2:1 that brought Joseph and Mary to Bethlehem"
+    "wld-rom-augustus-becomes-emperor": "joseph-husband-of-mary", // 1, SUMMARY ONLY — public page, no snapshot: "brought Joseph and Mary to Bethlehem"
+
+    // Two places and a book intro pair, where the nativity is what the record says about them.
+    sepphoris: "joseph-husband-of-mary", // 1: "some scholars suggest Joseph and the young Jesus… may have found work"
+    egypt: "joseph-husband-of-mary", // 1: "Where Joseph, Mary, and the infant Jesus fled to escape Herod's massacre"
+    romans: "joseph-husband-of-mary", // 1: "Caesar Augustus's census brings Joseph and Mary to Bethlehem"
+    "book-intro:Matthew": "joseph-husband-of-mary", // 1: "the angelic message to Joseph, the virgin birth"
+    "book-intro:Luke": "joseph-husband-of-mary", // 1: "the census that brings Joseph and Mary to Bethlehem"
+
+    // ── The one that is NOT the husband, and the reason to read sentences instead of lists ────
+    //
+    // bib-loc-burial-of-jesus was measured as a nativity-adjacent record with one wrong "Joseph",
+    // and the assumption would have been the husband. It is not. The article opens "Joseph of
+    // Arimathea — a wealthy member of the Sanhedrin", and the bare mention three sentences later
+    // is "lay it in Joseph's own new tomb" — the same man, the tomb owner, named at length once
+    // and briefly afterwards. Both other occurrences on the record already resolve correctly
+    // because "Joseph of Arimathea" is its own registered name and its own key, which this entry
+    // does not touch. Mary's husband is not in this article at all.
+    "bib-loc-burial-of-jesus": "joseph-of-arimathea", // 1: "Joseph's own new tomb"
+
+    // ── Where the pin has to do it instead ───────────────────────────────────────────────────
+    //
+    // `egypt` and `bib-loc-magi-flight-to-egypt` are the two records above where a future editor
+    // is most likely to add the patriarch — the article is about Egypt, and he is the man Egypt
+    // is otherwise about. Measured today, neither names him: one "Joseph" each, both the husband,
+    // which is what this table requires. If either ever gains a patriarch mention, this entry
+    // becomes the wrong lever for it and must be replaced by a phrase pin pair, exactly as
+    // `egyptians` and `jacob-father-of-joseph` already are. Recorded here so the next person
+    // finds it before the snapshot does.
   },
 
   // ── Two more from the same sweep: a bare name that is the WRONG ancient man ──────────────────
@@ -2203,6 +2292,34 @@ const NAME_CONTEXT_RULES: Record<string, NameContextRule[]> = {
     { phrase: "David's line through Joseph's legal fatherhood", to: "joseph-husband-of-mary" },
     {
       phrase: "Jacob begat Joseph, him to whom was betrothed Mary the Virgin",
+      to: "joseph-husband-of-mary",
+    },
+
+    // ── THE ONE MIXED RECORD IN THE NATIVITY SWEEP: `egyptians` ─────────────────────────────
+    //
+    // The Egyptians topic names BOTH men, which is exactly what OWNER_NAME_OVERRIDES cannot do:
+    // "when Joseph rose to power there and welcomed his father Jacob's family during a famine"
+    // and "a new king over Egypt, who didn't know Joseph" are the patriarch's son and are already
+    // right, and "Matthew records that Joseph fled with Mary and the infant Jesus to Egypt to
+    // escape Herod's massacre" is Mary's husband and was pointing at the other man — on the one
+    // record in the app where the two are a paragraph apart.
+    //
+    // So the record-wide answer is left alone (the global default, the patriarch, which is right
+    // for two of the three) and the exception is recovered here, checked before that table.
+    //
+    // Read what this costs, because it is the opposite of the direction the `jacob-father-of-
+    // joseph` and `book-intro:Zechariah` pins get, and it cannot be helped. There the record-wide
+    // answer renders NO link, so a reworded sentence loses a correct link. Here the record-wide
+    // answer is a real link to the patriarch, so if this sentence is ever reworded the mention
+    // degrades to the WRONG man rather than to nothing. The alternative — an owner entry of
+    // `null` plus this pin — would buy that safety by killing the two correct patriarch links on
+    // the same record, which is a worse trade. Anyone rewording that paragraph must move this pin
+    // with it; the prose case in cases.mjs is what will say so.
+    //
+    // Measured before it was written, across all 31,098 WEB verses and all 6,677 blocks (the 985
+    // public-page-only ones included): this phrase occurs in exactly ONE block and in NO verse.
+    {
+      phrase: "Matthew records that Joseph fled with Mary and the infant Jesus to Egypt",
       to: "joseph-husband-of-mary",
     },
 

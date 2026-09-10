@@ -2356,4 +2356,393 @@ export const CASES = [
   { ref: "Genesis 32:28", surface: "Jacob", expect: "jacob", status: "guard",
     why: "The same for Jacob: \"Your name will no longer be called Jacob, but Israel.\" The " +
          "patriarch keeps the bare key everywhere the two owner entries do not reach." },
+
+  // ── THE REST OF THE NATIVITY CAST ────────────────────────────────────────────────────────────
+  //
+  // 2026-09-10. Every bare "Joseph"/"Jacob" link in the corpus was enumerated — all 6,677 blocks,
+  // the 985 public-page-only ones included — and read in its own sentence. 321 of them. Outside
+  // the records already fixed, the nativity cast was wrong in one direction throughout: a bare
+  // "Joseph" in a sentence about the birth, the census, the magi, the flight, the return to
+  // Nazareth or Matthew's genealogy resolved to Joseph son of Jacob and sent the reader to Egypt.
+  //
+  // 37 links moved across 28 records. 33 of them are in prose-links.tsv. THE OTHER FOUR ARE IN NO
+  // SNAPSHOT AT ALL — they are `summary` fields, which the app renders as plain text and
+  // scripts/seo/render.mjs linkifies onto capstonebible.com, and a case is the only thing in this
+  // directory that can hold one. They are marked SUMMARY below.
+  //
+  // The lever is OWNER_NAME_OVERRIDES on 27 of the 28, because on each of those every occurrence
+  // of the name means one man — measured per record, by reading every "Joseph"/"Jacob" token on
+  // it, linked or not. `egyptians` is the exception and is a phrase pin, because it names both.
+  //
+  // This settles nothing about who a bare "Joseph" belongs to anywhere else. That is Robbie's
+  // question and is open. The guards at the end of the block are what hold the scope down.
+
+  { text: "This decree is presented as the reason Joseph, of the house of David, traveled " +
+          "from Nazareth to Bethlehem with Mary to be registered, 'and while they were there, " +
+          "the time came for her to give birth' (Luke 2:6).",
+    surface: "Joseph", owner: "caesar-augustus", expect: "joseph-husband-of-mary",
+    status: "guard",
+    why: "Luke 2:4-6, on the emperor whose decree moved him. 'Of the house of David' and 'with " +
+         "Mary' both say which Joseph, and it was linking to the other one." },
+  { text: "The first Roman emperor, whose empire-wide registration decree is named in Luke's " +
+          "Gospel as the reason Joseph and Mary traveled to Bethlehem, where Jesus was born.",
+    surface: "Joseph", owner: "caesar-augustus", expect: "joseph-husband-of-mary",
+    status: "guard",
+    why: "SUMMARY — a link only on the public page at /person/caesar-augustus, in no snapshot. " +
+         "This case is the only thing holding it." },
+  { text: "Luke 2:1-2 places the census that brought Joseph and Mary to Bethlehem 'while " +
+          "Quirinius was governor of Syria,' during the reign of Herod the Great, whose death " +
+          "is conventionally dated to 4 BC.",
+    surface: "Joseph", owner: "quirinius", expect: "joseph-husband-of-mary",
+    status: "guard",
+    why: "The census article's own sentence. Named beside Mary and dated to Herod's reign." },
+  { text: "The Roman governor of Syria named in Luke's account of the census that brought " +
+          "Joseph and Mary to Bethlehem — a reference that raises a genuine, long-debated " +
+          "chronological question among historians.",
+    surface: "Joseph", owner: "quirinius", expect: "joseph-husband-of-mary",
+    status: "guard",
+    why: "SUMMARY — public page only, no snapshot." },
+  { text: "Matthew's Gospel places one final act of violence at the very end of Herod's " +
+          "reign: alarmed by magi from the East asking about a newborn \"king of the Jews,\" " +
+          "Herod ordered the killing of all boys age two and under in Bethlehem and its " +
+          "vicinity, a massacre Joseph and Mary escaped only by fleeing with the infant Jesus " +
+          "to Egypt (Matthew 2:1-18).",
+    surface: "Joseph", owner: "herod-the-great", expect: "joseph-husband-of-mary",
+    status: "guard",
+    why: "Matthew 2:13-16. The sentence is about fleeing TO Egypt and the link pointed at the " +
+         "man who was sold INTO it." },
+  { text: "Herod died shortly afterward in 4 BC of a painful illness, after which his kingdom " +
+          "was divided among three of his surviving sons, including Herod Antipas, who would " +
+          "later have John the Baptist executed and question Jesus before his crucifixion, " +
+          "and Herod Archelaus, whose harsh rule over Judea led Joseph to settle instead in " +
+          "Nazareth (Matthew 2:19-23).",
+    surface: "Joseph", owner: "herod-the-great", expect: "joseph-husband-of-mary",
+    status: "guard",
+    why: "Matthew 2:22-23, the second of the two on this record. Both are the husband, which is " +
+         "why one answer per record serves here." },
+  { text: "This is the political backdrop for Matthew 2:22, where Joseph, returning from " +
+          "Egypt, hears that 'Archelaus was reigning over Judea in place of his father Herod' " +
+          "and is afraid to go there, withdrawing instead to the district of Galilee and " +
+          "settling in Nazareth.",
+    surface: "Joseph", owner: "herod-archelaus", expect: "joseph-husband-of-mary",
+    status: "guard",
+    why: "Matthew 2:22 named in the sentence. Archelaus's record says the verse number out loud." },
+  { text: "His violent suppression of the Passover protest at the very start of his reign, " +
+          "and the broader reputation for cruelty that led Joseph to avoid Judea in Matthew " +
+          "2:22.",
+    surface: "Joseph", owner: "herod-archelaus", expect: "joseph-husband-of-mary",
+    status: "guard",
+    why: "The same verse in the controversies field." },
+  { text: "Son of Herod the Great whose harsh and unstable rule over Judea after his father's " +
+          "death caused Joseph to avoid settling there with Mary and Jesus, choosing Nazareth " +
+          "in Galilee instead.",
+    surface: "Joseph", owner: "herod-archelaus", expect: "joseph-husband-of-mary",
+    status: "guard",
+    why: "SUMMARY — public page only, no snapshot. Third of three on this record." },
+  { text: "When Mary and Joseph brought the infant Jesus to the temple for the customary " +
+          "purification rites and to present him to the Lord, Simeon was moved by the Spirit " +
+          "to come into the temple courts at that exact moment.",
+    surface: "Joseph", owner: "simeon-at-the-temple", expect: "joseph-husband-of-mary",
+    status: "guard",
+    why: "Luke 2:27. Named beside Mary, carrying the infant Jesus." },
+  { text: "He then blessed Mary and Joseph and, turning to Mary specifically, prophesied that " +
+          "the child was destined to cause the falling and rising of many in Israel, and that " +
+          "a sword would pierce her own soul too (Luke 2:33-35).",
+    surface: "Joseph", owner: "simeon-at-the-temple", expect: "joseph-husband-of-mary",
+    status: "guard",
+    why: "Luke 2:33-34, the second on this record." },
+  { text: "The account closes with two warnings delivered in dreams that shape the rest of " +
+          "the infancy narrative: the magi, 'being warned in a dream not to return to Herod, " +
+          "departed to their own country by another way' (Matthew 2:12), and shortly " +
+          "afterward Joseph is likewise warned in a dream to flee with Mary and the child to " +
+          "Egypt (Matthew 2:13-15).",
+    surface: "Joseph", owner: "magi", expect: "joseph-husband-of-mary",
+    status: "guard",
+    why: "Matthew 2:13. The dream is his, on the magi's own page." },
+  { text: "In taking a human body, the eternal Son also took on real human growth and " +
+          "dependence, raised in the Galilean village of Nazareth by Mary and her husband " +
+          "Joseph; the only childhood episode recorded is a visit to the Jerusalem temple at " +
+          "age twelve, where he was already found discussing Scripture with the religious " +
+          "teachers (Luke 2:41-51).",
+    surface: "Joseph", owner: "jesus-of-nazareth", expect: "joseph-husband-of-mary",
+    status: "guard",
+    why: "\"Mary and her husband Joseph\" — the sentence names the relationship, on the page of " +
+         "the child being raised. This was live on the app's single most-read biography." },
+  { text: "Raised in Nazareth in the household of Joseph and Mary; based in Jerusalem as " +
+          "leader of the church there from shortly after the resurrection until his death " +
+          "around AD 62.",
+    surface: "Joseph", owner: "james-brother-of-jesus", expect: "joseph-husband-of-mary",
+    status: "guard",
+    why: "The household James grew up in. His own family, and the link went to Egypt." },
+  { text: "Philip's first act as a disciple was to find Nathanael and tell him, \"We have " +
+          "found him of whom Moses in the Law and also the prophets wrote, Jesus of Nazareth, " +
+          "the son of Joseph\" (John 1:43-46).",
+    surface: "Joseph", owner: "philip-the-apostle", expect: "joseph-husband-of-mary",
+    status: "guard",
+    why: "John 1:45 quoted verbatim. The only Joseph on the record, and the one man the clause " +
+         "can mean." },
+  { text: "No narrative episode involving Azor is recorded anywhere in the Bible — he is " +
+          "known only as a name in the chain linking the postexilic descendants of Zerubbabel " +
+          "to Joseph, the husband of Mary.",
+    surface: "Joseph", owner: "azor", expect: "joseph-husband-of-mary",
+    status: "guard",
+    why: "Matthew 1:13-14. The clause says \"the husband of Mary\" in as many words, and the " +
+         "link pointed at the patriarch." },
+  { text: "No narrative episode involving Achim is recorded anywhere in the Bible — he is " +
+          "known only as a name in the chain linking the postexilic descendants of Zerubbabel " +
+          "to Joseph, the husband of Mary.",
+    surface: "Joseph", owner: "achim", expect: "joseph-husband-of-mary",
+    status: "guard",
+    why: "The same sentence on the next rung of Matthew 1." },
+  { text: "No narrative episode involving Eliud is recorded anywhere in the Bible — he is " +
+          "known only as a name in the chain linking the postexilic descendants of Zerubbabel " +
+          "to Joseph, the husband of Mary.",
+    surface: "Joseph", owner: "eliud", expect: "joseph-husband-of-mary",
+    status: "guard",
+    why: "And again. Three stubs share this wording, so a later rewrite of one leaves the other " +
+         "two asserted." },
+  { text: "No episode or detail about his life is recorded, and he should not be confused " +
+          "with the far more prominent Eleazar, son of Aaron, who succeeded his father as " +
+          "high priest and oversaw the division of the land of Canaan (Numbers 20:28; Joshua " +
+          "14:1) — that Eleazar lived many centuries earlier and is unrelated to this " +
+          "genealogical figure in Joseph's ancestry.",
+    surface: "Joseph", owner: "eleazar-in-jesus-genealogy", expect: "joseph-husband-of-mary",
+    status: "guard",
+    why: "Matthew 1:15. A sentence whose whole point is not confusing two men of one name was " +
+         "itself linking to the wrong man of another." },
+  { text: "No episode or detail about his life is recorded, and he should not be confused " +
+          "with the far more prominent Zadok who served as high priest under David and " +
+          "Solomon and anointed Solomon king at Gihon (1 Kings 1:38-39) — that Zadok lived " +
+          "many generations earlier and belongs to the priestly line of Eleazar and Aaron, " +
+          "unrelated to this genealogical figure in Joseph's ancestry.",
+    surface: "Joseph", owner: "zadok-in-jesus-genealogy", expect: "joseph-husband-of-mary",
+    status: "guard",
+    why: "Matthew 1:14. A FIFTH genealogy stub — the sweep that scoped this work named four, and " +
+         "this one is why the enumeration was redone rather than worked from the list." },
+  { text: "Despite Jeremiah's judgment on his direct royal succession, Jeconiah is listed as " +
+          "an ancestor of Jesus through Joseph in Matthew's genealogy.",
+    surface: "Joseph", owner: "jeconiah", expect: "joseph-husband-of-mary",
+    status: "guard",
+    why: "Matthew 1:11-12. Jeconiah's record sits in a genealogy that elsewhere runs through the " +
+         "patriarch, so it was read token by token first; neither of its two Josephs is him." },
+  { text: "Jeremiah's judgment that none of Coniah's offspring would 'sit on the throne of " +
+          "David' (Jeremiah 22:30) sits alongside Jeconiah's continued appearance in Jesus's " +
+          "legal genealogy through Joseph in Matthew 1:11-12, a tension that has drawn " +
+          "various explanations across Jewish and Christian interpretive traditions, " +
+          "including proposals that the curse applied only to the immediate royal throne in " +
+          "the collapsed kingdom rather than to all future descendants absolutely.",
+    surface: "Joseph", owner: "jeconiah", expect: "joseph-husband-of-mary",
+    status: "guard",
+    why: "The Jeconiah curse in controversies. The whole argument is about the line that reaches " +
+         "Jesus through this Joseph." },
+  { text: "When the emperor Augustus called for an empire-wide census, God used a Roman " +
+          "bureaucratic decree to move Joseph and Mary from Nazareth in Galilee to Bethlehem " +
+          "in Judea, the ancestral town of David.",
+    surface: "Joseph", owner: "bib-loc-birth-of-jesus", expect: "joseph-husband-of-mary",
+    status: "guard",
+    why: "The birth-of-Jesus timeline article. Luke 2:1-5." },
+  { text: "Joseph, likewise warned in a dream, takes Mary and the child and flees by night to " +
+          "Egypt, a natural refuge just across the border with its own large Jewish " +
+          "community.",
+    surface: "Joseph", owner: "bib-loc-magi-flight-to-egypt", expect: "joseph-husband-of-mary",
+    status: "guard",
+    why: "Matthew 2:13-14. THE record where both men could most plausibly appear, and the reason " +
+         "the owner entry was written only after every token on it was read: it names one " +
+         "Joseph, once, and he is the husband. If the patriarch is ever added here, the entry " +
+         "becomes the wrong lever and must be split into pins." },
+  { text: "Joseph and Mary make their customary Passover pilgrimage to Jerusalem, and on the " +
+          "journey home discover that the twelve-year-old Jesus isn't among the caravan of " +
+          "relatives and friends.",
+    surface: "Joseph", owner: "bib-loc-jesus-in-temple-age-twelve", expect: "joseph-husband-of-mary",
+    status: "guard",
+    why: "Luke 2:41-43." },
+  { text: "With Herod the Great dead, an angel again instructs Joseph in a dream to bring " +
+          "Mary and Jesus back from Egypt.",
+    surface: "Joseph", owner: "bib-loc-return-nazareth-childhood", expect: "joseph-husband-of-mary",
+    status: "guard",
+    why: "Matthew 2:19-20, the first of three on the record with the most of them." },
+  { text: "Learning that Herod's son Archelaus now ruled Judea with a reputation nearly as " +
+          "ruthless as his father's, Joseph is warned once more and steers the family north " +
+          "to Galilee, settling in Nazareth — the same small, unremarkable town Mary had " +
+          "called home before the annunciation.",
+    surface: "Joseph", owner: "bib-loc-return-nazareth-childhood", expect: "joseph-husband-of-mary",
+    status: "guard",
+    why: "Matthew 2:22." },
+  { text: "Luke simply tells us the boy \"grew and became strong, filled with wisdom, and the " +
+          "favor of God was upon him\" — a childhood of quiet, faithful obedience within " +
+          "Joseph's carpentry trade rather than public ministry.",
+    surface: "Joseph", owner: "bib-loc-return-nazareth-childhood", expect: "joseph-husband-of-mary",
+    status: "guard",
+    why: "A possessive, and the third. The carpentry trade is his." },
+  { text: "Within a few years the Senate would grant him the title 'Augustus,' inaugurating " +
+          "the age of the emperors — and it is this same man, ruling in unchallenged peace " +
+          "after Actium, who would one day order the census mentioned in Luke 2:1 that " +
+          "brought Joseph and Mary to Bethlehem.",
+    surface: "Joseph", owner: "wld-rom-battle-of-actium", expect: "joseph-husband-of-mary",
+    status: "guard",
+    why: "A Roman-history article reaching the census from the other end. Not on the scoping " +
+         "list either; found by the enumeration." },
+  { text: "In 27 BC the Roman Senate granted Octavian the title 'Augustus,' inaugurating the " +
+          "age of the Roman emperors and a long era of relative peace and order known as the " +
+          "Pax Romana — the same 'Caesar Augustus' whose census decree, according to Luke " +
+          "2:1, brought Joseph and Mary to Bethlehem for the birth of Jesus.",
+    surface: "Joseph", owner: "wld-rom-augustus-becomes-emperor", expect: "joseph-husband-of-mary",
+    status: "guard",
+    why: "SUMMARY — public page only, no snapshot, and the record's ONLY Joseph link. Without " +
+         "this case nothing in this directory would ever mention it again." },
+  { text: "Given this proximity, some scholars suggest Joseph and the young Jesus, as a " +
+          "craftsman, may have found work in the city during its Herodian building boom, " +
+          "though the New Testament never mentions Jesus visiting Sepphoris directly.",
+    surface: "Joseph", owner: "sepphoris", expect: "joseph-husband-of-mary",
+    status: "guard",
+    why: "The Sepphoris POI. The craftsman beside the young Jesus is his adoptive father." },
+  { text: "Where Joseph, Mary, and the infant Jesus fled to escape Herod's massacre, " +
+          "fulfilling the prophecy \"out of Egypt I called my son\" (Matthew 2:13-15)",
+    surface: "Joseph", owner: "egypt", expect: "joseph-husband-of-mary",
+    status: "guard",
+    why: "A notable fact on the Egypt location record — a surface that was enumerated by nothing " +
+         "at all until 2026-09-10. The same warning as bib-loc-magi-flight-to-egypt applies: one " +
+         "Joseph today, and he is the husband, but this is the article a patriarch mention is " +
+         "most likely to be added to." },
+  { text: "This is the political backdrop for essentially the entire New Testament: Caesar " +
+          "Augustus's census brings Joseph and Mary to Bethlehem (Luke 2:1-7); Roman soldiers " +
+          "ultimately carry out Jesus's crucifixion, a distinctly Roman method of execution, " +
+          "under the authority of the Roman governor Pilate (John 19:1-16); and the New " +
+          "Testament's own dating markers (Tiberius's regnal years, various emperors and " +
+          "governors named) are all Roman administrative facts Luke uses to anchor Gospel and " +
+          "Acts events in verifiable history (Luke 3:1-2).",
+    surface: "Joseph", owner: "romans", expect: "joseph-husband-of-mary",
+    status: "guard",
+    why: "The Romans topic. Its only Joseph, in the census clause." },
+  { text: "Matthew opens with a genealogy tracing Jesus back to Abraham and David, anchoring " +
+          "him in Israel's royal and covenant history, followed by the birth narrative: the " +
+          "angelic message to Joseph, the virgin birth, the visit of the magi, and the flight " +
+          "to Egypt to escape Herod.",
+    surface: "Joseph", owner: "book-intro:Matthew", expect: "joseph-husband-of-mary",
+    status: "guard",
+    why: "Matthew's own introduction, keyed on the synthesised book-intro owner. The reader path " +
+         "already had every bare Joseph in Matthew right via BOOK_NAME_OVERRIDES; the " +
+         "introduction is not a verse and had nothing." },
+  { text: "It contains beloved songs such as Mary's Magnificat and Zechariah's prophecy, the " +
+          "census that brings Joseph and Mary to Bethlehem, the manger, and the angels " +
+          "announcing the birth to shepherds.",
+    surface: "Joseph", owner: "book-intro:Luke", expect: "joseph-husband-of-mary",
+    status: "guard",
+    why: "The same for Luke. Per-book, not per-testament — see the Genesis guard below." },
+
+  // ── The one that is NOT the husband ──────────────────────────────────────────────────────────
+  { text: "The two men wrap Jesus's body in clean linen cloths with the spices, according to " +
+          "Jewish burial custom, and lay it in Joseph's own new tomb, cut into rock in a " +
+          "garden near the crucifixion site, one in which no one had yet been buried.",
+    surface: "Joseph", owner: "bib-loc-burial-of-jesus", expect: "joseph-of-arimathea",
+    status: "guard",
+    why: "NOT Mary's husband, and the reason every one of these was read in its own sentence " +
+         "instead of being swept by rule. The article opens \"Joseph of Arimathea — a wealthy " +
+         "member of the Sanhedrin\"; this is the tomb owner, named briefly the second time. " +
+         "Applying the nativity rule here would have swapped one wrong man for another." },
+
+  // ── The one record that names both men, and is pinned rather than owned ─────────────────────
+  { text: "Most strikingly, Matthew records that Joseph fled with Mary and the infant Jesus " +
+          "to Egypt to escape Herod's massacre of Bethlehem's infants, seeing in it a " +
+          "fulfillment of Hosea's words, 'Out of Egypt I called my son' (Matthew 2:13-15; " +
+          "Hosea 11:1) — the nation once defined by Israel's oppression becoming, one final " +
+          "time, the place where God's own greater Son found safety.",
+    surface: "Joseph", owner: "egyptians", expect: "joseph-husband-of-mary",
+    status: "guard",
+    why: "Matthew 2:13-15 on the Egyptians topic — the ONE record in the sweep that names both " +
+         "Josephs, two paragraphs apart. A phrase pin, not an owner entry, because an owner " +
+         "entry has one answer per record and would have taken the two correct patriarch links " +
+         "in the guards immediately below." },
+  { text: "Egypt's central role in Israel's story is bound up entirely with the book of " +
+          "Exodus: what began as refuge, when Joseph rose to power there and welcomed his " +
+          "father Jacob's family during a famine (Genesis 46-47), turned generations later " +
+          "into brutal slavery once 'there arose a new king over Egypt, who didn't know " +
+          "Joseph' (Exodus 1:8-14).",
+    surface: "Joseph", owner: "egyptians", expect: "joseph-son-of-jacob", status: "guard",
+    why: "KEPT — Genesis 41-47, the patriarch's son, on the same record as the pin above and " +
+         "correct before and after it. This is the link an owner entry would have broken." },
+  { text: "Egypt's central role in Israel's story is bound up entirely with the book of " +
+          "Exodus: what began as refuge, when Joseph rose to power there and welcomed his " +
+          "father Jacob's family during a famine (Genesis 46-47), turned generations later " +
+          "into brutal slavery once 'there arose a new king over Egypt, who didn't know " +
+          "Joseph' (Exodus 1:8-14).",
+    surface: "Joseph", occurrence: 2, owner: "egyptians", expect: "joseph-son-of-jacob",
+    status: "guard",
+    why: "KEPT — Exodus 1:8, the second patriarch link in the same sentence, and the one that " +
+         "sits closest to the pin. Two of the three Josephs on this record are the patriarch, " +
+         "which is what makes it the only pinned record in the batch." },
+  { text: "Egypt's central role in Israel's story is bound up entirely with the book of " +
+          "Exodus: what began as refuge, when Joseph rose to power there and welcomed his " +
+          "father Jacob's family during a famine (Genesis 46-47), turned generations later " +
+          "into brutal slavery once 'there arose a new king over Egypt, who didn't know " +
+          "Joseph' (Exodus 1:8-14).",
+    surface: "Jacob", owner: "egyptians", expect: "jacob", status: "guard",
+    why: "KEPT — and the patriarch Jacob, in the same clause, untouched by any of this." },
+
+  // ── The guards that hold the scope down ──────────────────────────────────────────────────────
+  // 28 records were named and only 28. If any line below moves, a record-scoped fix has become a
+  // corpus-wide ruling by accident, and that ruling is Robbie's to make.
+  { text: "In Egypt, Joseph is bought by Potiphar, an officer of Pharaoh, and Genesis repeats " +
+          "a phrase across this whole ordeal like a drumbeat: \"the LORD was with Joseph.",
+    surface: "Joseph", owner: "bib-pat-joseph-slavery-prison", expect: "joseph-son-of-jacob",
+    status: "guard",
+    why: "Real copy, not a probe sentence: the patriarch's son on the timeline article about " +
+         "him. Roughly 150 links across the Genesis articles still resolve to him and are still " +
+         "right; this is one of them." },
+  { text: "That same theory offers a plausible explanation for Exodus 1:8's ominous line, " +
+          "\"Now there arose a new king over Egypt, who did not know Joseph.",
+    surface: "Joseph", owner: "wld-ane-hyksos-egypt", expect: "joseph-son-of-jacob",
+    status: "guard",
+    why: "An EGYPT article that is deliberately not in the list. The `egypt` and " +
+         "`bib-loc-magi-flight-to-egypt` entries are keyed to their own records and cannot " +
+         "reach this one." },
+  { text: "The narrative follows the patriarchs across four generations — Abraham, Isaac, " +
+          "Jacob, and finally Joseph — through covenant, testing, family conflict, and " +
+          "reconciliation.",
+    surface: "Joseph", owner: "book-intro:Genesis", expect: "joseph-son-of-jacob",
+    status: "guard",
+    why: "A BOOK INTRO that is deliberately not in the list. `book-intro:Matthew` and " +
+         "`book-intro:Luke` are two keys, not a rule about introductions." },
+  { text: "The narrative follows the patriarchs across four generations — Abraham, Isaac, " +
+          "Jacob, and finally Joseph — through covenant, testing, family conflict, and " +
+          "reconciliation.",
+    surface: "Jacob", owner: "book-intro:Genesis", expect: "jacob", status: "guard",
+    why: "And his father, in the same clause. Bare \"Jacob\" moved nowhere in this batch: 173 " +
+         "of its links were enumerated and every one already pointed at the right man." },
+  { text: "Joseph settled his father Jacob and brothers in Goshen because it was good " +
+          "pastureland and separate from the main Egyptian population, who considered " +
+          "shepherds detestable (Genesis 46:31-34; 47:1-6)",
+    surface: "Joseph", owner: "goshen", expect: "joseph-son-of-jacob", status: "guard",
+    why: "A LOCATION notable fact that is deliberately not in the list, on the same surface as " +
+         "the `egypt` entry and the same field. One record, one key." },
+  { text: "Joseph's bones, carried out of Egypt, were buried at Shechem in the plot Jacob had " +
+          "purchased (Joshua 24:32)",
+    surface: "Joseph", owner: "shechem", expect: "joseph-son-of-jacob", status: "guard",
+    why: "And another. Joshua 24:32." },
+  { text: "He was buried in a nearby rock-cut tomb belonging to Joseph of Arimathea (Matthew " +
+          "27:57-60).",
+    surface: "Joseph of Arimathea", owner: "jesus-of-nazareth", expect: "joseph-of-arimathea",
+    status: "guard",
+    why: "The proof that an owner entry keyed on `joseph` cannot reach a longer registered name: " +
+         "the lookup is by the WHOLE matched string, so \"Joseph of Arimathea\" is a different " +
+         "key. jesus-of-nazareth names both men and needed no pin for that reason." },
+  { ref: "Genesis 41:41", surface: "Joseph", expect: "joseph-son-of-jacob", status: "guard",
+    why: "Scripture, on the reader path, untouched. None of the 27 owner entries can reach a " +
+         "verse — OWNER_NAME_OVERRIDES needs an owner and the Bible reader passes none — and the " +
+         "one phrase pin was measured against all 31,098 WEB verses and hits none of them." },
+  { ref: "Matthew 1:16", surface: "Joseph", expect: "joseph-husband-of-mary", status: "guard",
+    why: "And the other man in Scripture, still right, by the route he already had." },
+
+  // ── A THIRD Joseph, measured and NOT fixed ───────────────────────────────────────────────────
+  // Found by the same enumeration and left alone deliberately: it is outside the nativity/
+  // genealogy authorisation this batch was given, and the answer is not mechanical.
+  { text: "Barnabas is introduced in Acts as Joseph, a Levite from Cyprus, whom the apostles " +
+          "nicknamed \"Barnabas,\" meaning \"son of encouragement.",
+    surface: "Joseph", owner: "barnabas", expect: null, status: "known-wrong",
+    why: "Acts 4:36 — Joseph Barnabas, a third bearer of the name who is neither the patriarch " +
+         "nor Mary's husband and has no record of his own. It resolves to Joseph son of Jacob " +
+         "today, which is wrong on any reading. `null` is recorded as the right answer on the " +
+         "same grounds as the unrepresented Eleazars and Zechariahs in OWNER_NAME_OVERRIDES, but " +
+         "NOT applied: this batch was scoped to the nativity cast, and a Barnabas record would " +
+         "be the better fix. Escalated 2026-09-10; when it is settled, flip this to `guard`." },
 ];

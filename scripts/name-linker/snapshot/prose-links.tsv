@@ -381,7 +381,7 @@ bookIntro.summary|book-intro:Luke|6f82dc079f	115	John the Baptist	john-the-bapti
 bookIntro.summary|book-intro:Luke|6f82dc079f	136	Jesus	jesus-of-nazareth
 bookIntro.summary|book-intro:Luke|6f82dc079f	177	Mary	mary-mother-of-jesus
 bookIntro.summary|book-intro:Luke|6f82dc079f	199	Zechariah	zechariah-father-of-john-baptist
-bookIntro.summary|book-intro:Luke|6f82dc079f	244	Joseph	joseph-son-of-jacob
+bookIntro.summary|book-intro:Luke|6f82dc079f	244	Joseph	joseph-husband-of-mary
 bookIntro.summary|book-intro:Luke|6f82dc079f	255	Mary	mary-mother-of-jesus
 bookIntro.summary|book-intro:Luke|6f82dc079f	336	Luke	luke-evangelist
 bookIntro.summary|book-intro:Luke|6f82dc079f	369	Jesus	jesus-of-nazareth
@@ -423,7 +423,7 @@ bookIntro.summary|book-intro:Matthew|39d8cb70ab	313	Jesus	jesus-of-nazareth
 bookIntro.summary|book-intro:Matthew|63b684e0b7	138	Jesus	jesus-of-nazareth
 bookIntro.summary|book-intro:Matthew|63b684e0b7	47	Jesus	jesus-of-nazareth
 bookIntro.summary|book-intro:Matthew|a230d6db65	238	Jesus	jesus-of-nazareth
-bookIntro.summary|book-intro:Matthew|ae3bf5c36f	182	Joseph	joseph-son-of-jacob
+bookIntro.summary|book-intro:Matthew|ae3bf5c36f	182	Joseph	joseph-husband-of-mary
 bookIntro.summary|book-intro:Matthew|ae3bf5c36f	225	magi	magi
 bookIntro.summary|book-intro:Matthew|ae3bf5c36f	302	Jesus	jesus-of-nazareth
 bookIntro.summary|book-intro:Matthew|ae3bf5c36f	322	David	david
@@ -791,7 +791,7 @@ location.history.facts|edom|9605f47dc6	15	Esau	esau
 location.history.facts|edom|9a0c09df6d	13	Moses	moses
 location.history.facts|egypt|fc3444c85d	14	Mary	mary-mother-of-jesus
 location.history.facts|egypt|fc3444c85d	35	Jesus	jesus-of-nazareth
-location.history.facts|egypt|fc3444c85d	6	Joseph	joseph-son-of-jacob
+location.history.facts|egypt|fc3444c85d	6	Joseph	joseph-husband-of-mary
 location.history.facts|ekron|8eec0e32b8	75	Elijah	elijah
 location.history.facts|en-gedi|f4f5122fd7	0	David	david
 location.history.facts|en-gedi|f4f5122fd7	112	Saul	saul-king-of-israel
@@ -1068,7 +1068,7 @@ person.controversies|enoch|3237349214	67	Cain	cain
 person.controversies|enoch|3237349214	90	Cain	cain
 person.controversies|herod-antipas|953154fa7a	132	John	john-the-baptist
 person.controversies|herod-antipas|953154fa7a	77	John	john-the-baptist
-person.controversies|herod-archelaus|3148538dbd	128	Joseph	joseph-son-of-jacob
+person.controversies|herod-archelaus|3148538dbd	128	Joseph	joseph-husband-of-mary
 person.controversies|herod-the-great|cff9424c63	699	Jesus	jesus-of-nazareth
 person.controversies|holy-spirit|8d48e213bd	69	God the Father	god-the-father
 person.controversies|holy-spirit|8d48e213bd	88	Jesus	jesus-of-nazareth
@@ -1081,7 +1081,7 @@ person.controversies|jacob|cd946c9ab6	138	Isaac	isaac
 person.controversies|jacob|cd946c9ab6	44	Esau	esau
 person.controversies|jeconiah|bb53f6f76e	0	Jeremiah	jeremiah
 person.controversies|jeconiah|bb53f6f76e	154	Jesus	jesus-of-nazareth
-person.controversies|jeconiah|bb53f6f76e	186	Joseph	joseph-son-of-jacob
+person.controversies|jeconiah|bb53f6f76e	186	Joseph	joseph-husband-of-mary
 person.controversies|jeconiah|bb53f6f76e	80	David	david
 person.controversies|jesus-of-nazareth|d10226dd5a	90	Pontius Pilate	pontius-pilate
 person.controversies|job|2a955af0d9	624	Noah	noah
@@ -1252,7 +1252,7 @@ person.lifeStory|abraham|f27f8d1f29	103	Sarah	sarah
 person.lifeStory|abraham|f27f8d1f29	136	Hagar	hagar
 person.lifeStory|achim|97912f91cc	113	Jesus	jesus-of-nazareth
 person.lifeStory|achim|97912f91cc	286	Zerubbabel	zerubbabel
-person.lifeStory|achim|97912f91cc	300	Joseph	joseph-son-of-jacob
+person.lifeStory|achim|97912f91cc	300	Joseph	joseph-husband-of-mary
 person.lifeStory|achim|97912f91cc	323	Mary	mary-mother-of-jesus
 person.lifeStory|achim|97912f91cc	61	Zadok	zadok-in-jesus-genealogy
 person.lifeStory|achim|97912f91cc	81	Eliud	eliud
@@ -1379,7 +1379,7 @@ person.lifeStory|asa|5f8f8288f7	91	Zerah	zerah-son-of-judah
 person.lifeStory|athanasius-of-alexandria|b2c551fa6c	92	Arius	arius
 person.lifeStory|azor|264a0bf004	114	Jesus	jesus-of-nazareth
 person.lifeStory|azor|264a0bf004	289	Zerubbabel	zerubbabel
-person.lifeStory|azor|264a0bf004	303	Joseph	joseph-son-of-jacob
+person.lifeStory|azor|264a0bf004	303	Joseph	joseph-husband-of-mary
 person.lifeStory|azor|264a0bf004	326	Mary	mary-mother-of-jesus
 person.lifeStory|azor|264a0bf004	60	Eliakim	eliakim-son-of-abiud
 person.lifeStory|azor|264a0bf004	82	Zadok	zadok-in-jesus-genealogy
@@ -1454,7 +1454,7 @@ person.lifeStory|boaz|b8aab35914	57	Ruth	ruth
 person.lifeStory|boaz|d64de96d0e	11	Naomi	naomi
 person.lifeStory|boaz|d64de96d0e	273	Naomi	naomi
 person.lifeStory|boaz|d64de96d0e	5	Ruth	ruth
-person.lifeStory|caesar-augustus|0504338f85	210	Joseph	joseph-son-of-jacob
+person.lifeStory|caesar-augustus|0504338f85	210	Joseph	joseph-husband-of-mary
 person.lifeStory|caesar-augustus|0504338f85	234	David	david
 person.lifeStory|caesar-augustus|0504338f85	282	Mary	mary-mother-of-jesus
 person.lifeStory|caesar-augustus|0504338f85	382	Luke	luke-evangelist
@@ -1557,7 +1557,7 @@ person.lifeStory|drusilla|17b4d5198c	339	Felix	antonius-felix
 person.lifeStory|drusilla|17b4d5198c	400	Paul	paul-of-tarsus
 person.lifeStory|eleazar-in-jesus-genealogy|43bb92e24c	122	Jesus	jesus-of-nazareth
 person.lifeStory|eleazar-in-jesus-genealogy|43bb92e24c	267	Aaron	aaron
-person.lifeStory|eleazar-in-jesus-genealogy|43bb92e24c	482	Joseph	joseph-son-of-jacob
+person.lifeStory|eleazar-in-jesus-genealogy|43bb92e24c	482	Joseph	joseph-husband-of-mary
 person.lifeStory|eleazar-in-jesus-genealogy|43bb92e24c	68	Eliud	eliud
 person.lifeStory|eleazar-in-jesus-genealogy|43bb92e24c	88	Matthan	matthan
 person.lifeStory|eliakim-son-of-abiud|d0c40c8ba2	114	Jesus	jesus-of-nazareth
@@ -1586,7 +1586,7 @@ person.lifeStory|elisha|2fc8b86893	524	Elijah	elijah
 person.lifeStory|elisha|75f4392828	381	Jezebel	jezebel
 person.lifeStory|eliud|1527f42922	115	Jesus	jesus-of-nazareth
 person.lifeStory|eliud|1527f42922	291	Zerubbabel	zerubbabel
-person.lifeStory|eliud|1527f42922	305	Joseph	joseph-son-of-jacob
+person.lifeStory|eliud|1527f42922	305	Joseph	joseph-husband-of-mary
 person.lifeStory|eliud|1527f42922	328	Mary	mary-mother-of-jesus
 person.lifeStory|eliud|1527f42922	61	Achim	achim
 person.lifeStory|eliud|1527f42922	81	Eleazar	eleazar-in-jesus-genealogy
@@ -1759,19 +1759,19 @@ person.lifeStory|herod-archelaus|5324342708	94	Herod Antipas	herod-antipas
 person.lifeStory|herod-archelaus|5505c574dc	110	Augustus	caesar-augustus
 person.lifeStory|herod-archelaus|5505c574dc	172	Augustus	caesar-augustus
 person.lifeStory|herod-archelaus|5505c574dc	220	Augustus	caesar-augustus
-person.lifeStory|herod-archelaus|5505c574dc	450	Joseph	joseph-son-of-jacob
+person.lifeStory|herod-archelaus|5505c574dc	450	Joseph	joseph-husband-of-mary
 person.lifeStory|herod-archelaus|e10a842661	289	Augustus	caesar-augustus
 person.lifeStory|herod-archelaus|e10a842661	327	Augustus	caesar-augustus
 person.lifeStory|herod-archelaus|e10a842661	532	Pontius Pilate	pontius-pilate
 person.lifeStory|herod-the-great|4457b1f648	455	Augustus	caesar-augustus
-person.lifeStory|herod-the-great|446df3eb02	255	Joseph	joseph-son-of-jacob
+person.lifeStory|herod-the-great|446df3eb02	255	Joseph	joseph-husband-of-mary
 person.lifeStory|herod-the-great|446df3eb02	266	Mary	mary-mother-of-jesus
 person.lifeStory|herod-the-great|446df3eb02	311	Jesus	jesus-of-nazareth
 person.lifeStory|herod-the-great|446df3eb02	484	Herod Antipas	herod-antipas
 person.lifeStory|herod-the-great|446df3eb02	520	John the Baptist	john-the-baptist
 person.lifeStory|herod-the-great|446df3eb02	559	Jesus	jesus-of-nazareth
 person.lifeStory|herod-the-great|446df3eb02	593	Herod Archelaus	herod-archelaus
-person.lifeStory|herod-the-great|446df3eb02	642	Joseph	joseph-son-of-jacob
+person.lifeStory|herod-the-great|446df3eb02	642	Joseph	joseph-husband-of-mary
 person.lifeStory|herod-the-great|446df3eb02	95	magi	magi
 person.lifeStory|herod-the-great|867241b5d4	294	Mark Antony	mark-antony
 person.lifeStory|herod-the-great|867241b5d4	310	Octavian	caesar-augustus
@@ -1937,7 +1937,7 @@ person.lifeStory|jeconiah|6aee70212d	12	Jeremiah	jeremiah
 person.lifeStory|jeconiah|6aee70212d	156	David	david
 person.lifeStory|jeconiah|95f586d99a	292	Jeremiah	jeremiah
 person.lifeStory|jeconiah|95f586d99a	381	Jesus	jesus-of-nazareth
-person.lifeStory|jeconiah|95f586d99a	395	Joseph	joseph-son-of-jacob
+person.lifeStory|jeconiah|95f586d99a	395	Joseph	joseph-husband-of-mary
 person.lifeStory|jehoshaphat|3697e6ee7e	33	Asa	asa
 person.lifeStory|jehoshaphat|a5319e503d	75	Jehoram	joram-king-of-judah
 person.lifeStory|jeremiah|aead376c81	88	Josiah	josiah
@@ -1968,7 +1968,7 @@ person.lifeStory|jesus-of-nazareth|2887dae1a6	305	Herod the Great	herod-the-grea
 person.lifeStory|jesus-of-nazareth|2887dae1a6	449	Luke	luke-evangelist
 person.lifeStory|jesus-of-nazareth|2887dae1a6	555	magi	magi
 person.lifeStory|jesus-of-nazareth|2887dae1a6	846	Mary	mary-mother-of-jesus
-person.lifeStory|jesus-of-nazareth|2887dae1a6	867	Joseph	joseph-son-of-jacob
+person.lifeStory|jesus-of-nazareth|2887dae1a6	867	Joseph	joseph-husband-of-mary
 person.lifeStory|jesus-of-nazareth|59c9d85791	503	Satan	satan
 person.lifeStory|jesus-of-nazareth|59c9d85791	76	John the Baptist	john-the-baptist
 person.lifeStory|jesus-of-nazareth|70e0fa16a2	354	Lazarus	lazarus-of-bethany
@@ -2209,7 +2209,7 @@ person.lifeStory|lysanias|79a3d83a7e	106	Tiberius	tiberius-caesar
 person.lifeStory|lysanias|79a3d83a7e	126	Pilate	pontius-pilate
 person.lifeStory|lysanias|79a3d83a7e	134	Herod Antipas	herod-antipas
 person.lifeStory|lysanias|79a3d83a7e	153	Philip	philip-the-apostle
-person.lifeStory|magi|ab9432110a	246	Joseph	joseph-son-of-jacob
+person.lifeStory|magi|ab9432110a	246	Joseph	joseph-husband-of-mary
 person.lifeStory|magi|ab9432110a	296	Mary	mary-mother-of-jesus
 person.lifeStory|magi|ab9432110a	685	Jeremiah	jeremiah
 person.lifeStory|magi|ab9432110a	708	Rachel	rachel
@@ -2474,7 +2474,7 @@ person.lifeStory|philip-the-apostle|7635e2b93d	92	Jesus	jesus-of-nazareth
 person.lifeStory|philip-the-apostle|775fba9fb7	178	Nathanael	bartholomew-nathanael
 person.lifeStory|philip-the-apostle|775fba9fb7	229	Moses	moses
 person.lifeStory|philip-the-apostle|775fba9fb7	275	Jesus of Nazareth	jesus-of-nazareth
-person.lifeStory|philip-the-apostle|775fba9fb7	305	Joseph	joseph-son-of-jacob
+person.lifeStory|philip-the-apostle|775fba9fb7	305	Joseph	joseph-husband-of-mary
 person.lifeStory|philip-the-apostle|775fba9fb7	44	Andrew	andrew-apostle
 person.lifeStory|philip-the-apostle|775fba9fb7	55	Peter	simon-peter
 person.lifeStory|philip-the-apostle|775fba9fb7	85	Jesus	jesus-of-nazareth
@@ -2550,7 +2550,7 @@ person.lifeStory|quirinius|5b00daf4c4	377	Herod Archelaus	herod-archelaus
 person.lifeStory|quirinius|5b00daf4c4	516	Judas	judas-iscariot
 person.lifeStory|quirinius|6479b8a211	132	Herod the Great	herod-the-great
 person.lifeStory|quirinius|6479b8a211	352	Luke	luke-evangelist
-person.lifeStory|quirinius|6479b8a211	42	Joseph	joseph-son-of-jacob
+person.lifeStory|quirinius|6479b8a211	42	Joseph	joseph-husband-of-mary
 person.lifeStory|quirinius|6479b8a211	53	Mary	mary-mother-of-jesus
 person.lifeStory|quirinius|ae654f4805	478	Luke	luke-evangelist
 person.lifeStory|quirinius|ae654f4805	731	Luke	luke-evangelist
@@ -2757,11 +2757,11 @@ person.lifeStory|silas|6f5356e6b4	158	Paul	paul-of-tarsus
 person.lifeStory|silas|6f5356e6b4	21	Paul	paul-of-tarsus
 person.lifeStory|silas|6f5356e6b4	341	Peter	simon-peter
 person.lifeStory|silas|e147b673ae	100	Judas	judas-iscariot
-person.lifeStory|simeon-at-the-temple|794a5353eb	14	Joseph	joseph-son-of-jacob
+person.lifeStory|simeon-at-the-temple|794a5353eb	14	Joseph	joseph-husband-of-mary
 person.lifeStory|simeon-at-the-temple|794a5353eb	40	Jesus	jesus-of-nazareth
 person.lifeStory|simeon-at-the-temple|794a5353eb	5	Mary	mary-mother-of-jesus
 person.lifeStory|simeon-at-the-temple|794a5353eb	501	Mary	mary-mother-of-jesus
-person.lifeStory|simeon-at-the-temple|794a5353eb	510	Joseph	joseph-son-of-jacob
+person.lifeStory|simeon-at-the-temple|794a5353eb	510	Joseph	joseph-husband-of-mary
 person.lifeStory|simeon-at-the-temple|794a5353eb	533	Mary	mary-mother-of-jesus
 person.lifeStory|simeon-at-the-temple|cb76c063ea	0	Luke	luke-evangelist
 person.lifeStory|simeon-at-the-temple|cb76c063ea	121	the Holy Spirit	holy-spirit
@@ -2929,7 +2929,7 @@ person.lifeStory|zadok-in-jesus-genealogy|d166e5d4bb	284	David	david
 person.lifeStory|zadok-in-jesus-genealogy|d166e5d4bb	294	Solomon	solomon
 person.lifeStory|zadok-in-jesus-genealogy|d166e5d4bb	315	Solomon	solomon
 person.lifeStory|zadok-in-jesus-genealogy|d166e5d4bb	447	Aaron	aaron
-person.lifeStory|zadok-in-jesus-genealogy|d166e5d4bb	495	Joseph	joseph-son-of-jacob
+person.lifeStory|zadok-in-jesus-genealogy|d166e5d4bb	495	Joseph	joseph-husband-of-mary
 person.lifeStory|zadok-in-jesus-genealogy|d166e5d4bb	66	Azor	azor
 person.lifeStory|zadok-in-jesus-genealogy|d166e5d4bb	85	Achim	achim
 person.lifeStory|zechariah-father-of-john-baptist|83961c3d08	123	John	john-the-baptist
@@ -3030,7 +3030,7 @@ person.placesLived|epaphroditus|9629ae1641	31	Paul	paul-of-tarsus
 person.placesLived|ethiopian-eunuch|c1b1542132	50	Philip	philip-the-apostle
 person.placesLived|gideon|1f85868fb5	28	Manasseh	manasseh-king-of-judah
 person.placesLived|hagar|f7d3c9f6dd	0	Abraham	abraham
-person.placesLived|james-brother-of-jesus|422f18e3f2	39	Joseph	joseph-son-of-jacob
+person.placesLived|james-brother-of-jesus|422f18e3f2	39	Joseph	joseph-husband-of-mary
 person.placesLived|james-brother-of-jesus|422f18e3f2	50	Mary	mary-mother-of-jesus
 person.placesLived|james-son-of-alphaeus|3f254ba686	64	Jesus	jesus-of-nazareth
 person.placesLived|john-mark|6ed5a25965	136	Peter	simon-peter
@@ -3324,7 +3324,7 @@ poi.description|rhegium|27afdd6544	141	Paul	paul-of-tarsus
 poi.description|salamis|fc1cc4b7ad	188	Barnabas	barnabas
 poi.description|salamis|fc1cc4b7ad	30	Paul	paul-of-tarsus
 poi.description|salamis|fc1cc4b7ad	39	Barnabas	barnabas
-poi.description|sepphoris|9f8e87d48d	181	Joseph	joseph-son-of-jacob
+poi.description|sepphoris|9f8e87d48d	181	Joseph	joseph-husband-of-mary
 poi.description|sepphoris|9f8e87d48d	202	Jesus	jesus-of-nazareth
 poi.description|sepphoris|9f8e87d48d	332	Jesus	jesus-of-nazareth
 poi.description|sepphoris|9f8e87d48d	79	Herod Antipas	herod-antipas
@@ -4179,14 +4179,14 @@ timelineEvent.article|bib-loc-baptism-of-jesus|8ddae5fe75	73	John	john-the-bapti
 timelineEvent.article|bib-loc-birth-of-jesus|0321628d1a	185	Jesus	jesus-of-nazareth
 timelineEvent.article|bib-loc-birth-of-jesus|0321628d1a	289	Herod the Great	herod-the-great
 timelineEvent.article|bib-loc-birth-of-jesus|0321628d1a	358	magi	magi
-timelineEvent.article|bib-loc-birth-of-jesus|62ead7e912	105	Joseph	joseph-son-of-jacob
+timelineEvent.article|bib-loc-birth-of-jesus|62ead7e912	105	Joseph	joseph-husband-of-mary
 timelineEvent.article|bib-loc-birth-of-jesus|62ead7e912	116	Mary	mary-mother-of-jesus
 timelineEvent.article|bib-loc-birth-of-jesus|62ead7e912	17	Augustus	caesar-augustus
 timelineEvent.article|bib-loc-birth-of-jesus|62ead7e912	191	David	david
 timelineEvent.article|bib-loc-birth-of-jesus|9d89d4f9a6	14	Mary	mary-mother-of-jesus
 timelineEvent.article|bib-loc-birth-of-jesus|9d89d4f9a6	186	Luke	luke-evangelist
 timelineEvent.article|bib-loc-birth-of-jesus|9d89d4f9a6	503	Isaiah	isaiah
-timelineEvent.article|bib-loc-burial-of-jesus|304ee20125	118	Joseph	joseph-son-of-jacob
+timelineEvent.article|bib-loc-burial-of-jesus|304ee20125	118	Joseph	joseph-of-arimathea
 timelineEvent.article|bib-loc-burial-of-jesus|304ee20125	17	Jesus	jesus-of-nazareth
 timelineEvent.article|bib-loc-burial-of-jesus|304ee20125	315	Pilate	pontius-pilate
 timelineEvent.article|bib-loc-burial-of-jesus|c62b8718f9	152	Jesus	jesus-of-nazareth
@@ -4256,7 +4256,7 @@ timelineEvent.article|bib-loc-jesus-in-temple-age-twelve|cefc3c2c87	5	Mary	mary-
 timelineEvent.article|bib-loc-jesus-in-temple-age-twelve|dad827663e	0	Luke	luke-evangelist
 timelineEvent.article|bib-loc-jesus-in-temple-age-twelve|dad827663e	190	Jesus	jesus-of-nazareth
 timelineEvent.article|bib-loc-jesus-in-temple-age-twelve|dad827663e	44	Jesus	jesus-of-nazareth
-timelineEvent.article|bib-loc-jesus-in-temple-age-twelve|dad827663e	61	Joseph	joseph-son-of-jacob
+timelineEvent.article|bib-loc-jesus-in-temple-age-twelve|dad827663e	61	Joseph	joseph-husband-of-mary
 timelineEvent.article|bib-loc-jesus-in-temple-age-twelve|dad827663e	72	Mary	mary-mother-of-jesus
 timelineEvent.article|bib-loc-jesus-walks-on-water|147cae7458	33	Jesus	jesus-of-nazareth
 timelineEvent.article|bib-loc-jesus-walks-on-water|147cae7458	364	Jesus	jesus-of-nazareth
@@ -4289,7 +4289,7 @@ timelineEvent.article|bib-loc-magi-flight-to-egypt|443cc544b3	395	magi	magi
 timelineEvent.article|bib-loc-magi-flight-to-egypt|48dad65887	156	Jesus	jesus-of-nazareth
 timelineEvent.article|bib-loc-magi-flight-to-egypt|bb8d9d4160	128	Mary	mary-mother-of-jesus
 timelineEvent.article|bib-loc-magi-flight-to-egypt|bb8d9d4160	51	magi	magi
-timelineEvent.article|bib-loc-magi-flight-to-egypt|bb8d9d4160	86	Joseph	joseph-son-of-jacob
+timelineEvent.article|bib-loc-magi-flight-to-egypt|bb8d9d4160	86	Joseph	joseph-husband-of-mary
 timelineEvent.article|bib-loc-olivet-discourse|5e6bcba86e	138	Jesus	jesus-of-nazareth
 timelineEvent.article|bib-loc-olivet-discourse|8d08a72b02	228	Titus	titus
 timelineEvent.article|bib-loc-olivet-discourse|8d08a72b02	40	Jesus	jesus-of-nazareth
@@ -4336,12 +4336,12 @@ timelineEvent.article|bib-loc-resurrection|ad306c34b4	364	Thomas	thomas-apostle
 timelineEvent.article|bib-loc-resurrection|ad306c34b4	418	Paul	paul-of-tarsus
 timelineEvent.article|bib-loc-return-nazareth-childhood|4a5630aa95	142	Nathanael	bartholomew-nathanael
 timelineEvent.article|bib-loc-return-nazareth-childhood|4a5630aa95	366	Luke	luke-evangelist
-timelineEvent.article|bib-loc-return-nazareth-childhood|4a5630aa95	525	Joseph	joseph-son-of-jacob
+timelineEvent.article|bib-loc-return-nazareth-childhood|4a5630aa95	525	Joseph	joseph-husband-of-mary
 timelineEvent.article|bib-loc-return-nazareth-childhood|fc844693d9	137	Archelaus	herod-archelaus
-timelineEvent.article|bib-loc-return-nazareth-childhood|fc844693d9	217	Joseph	joseph-son-of-jacob
+timelineEvent.article|bib-loc-return-nazareth-childhood|fc844693d9	217	Joseph	joseph-husband-of-mary
 timelineEvent.article|bib-loc-return-nazareth-childhood|fc844693d9	341	Mary	mary-mother-of-jesus
 timelineEvent.article|bib-loc-return-nazareth-childhood|fc844693d9	5	Herod the Great	herod-the-great
-timelineEvent.article|bib-loc-return-nazareth-childhood|fc844693d9	52	Joseph	joseph-son-of-jacob
+timelineEvent.article|bib-loc-return-nazareth-childhood|fc844693d9	52	Joseph	joseph-husband-of-mary
 timelineEvent.article|bib-loc-return-nazareth-childhood|fc844693d9	79	Mary	mary-mother-of-jesus
 timelineEvent.article|bib-loc-return-nazareth-childhood|fc844693d9	88	Jesus	jesus-of-nazareth
 timelineEvent.article|bib-loc-sermon-on-the-mount|6a85e373e7	208	Luke	luke-evangelist
@@ -5142,7 +5142,7 @@ timelineEvent.article|wld-rom-battle-of-actium|767e6ba3e7	238	Octavian	caesar-au
 timelineEvent.article|wld-rom-battle-of-actium|767e6ba3e7	248	Caesar	tiberius-caesar
 timelineEvent.article|wld-rom-battle-of-actium|767e6ba3e7	303	Mark Antony	mark-antony
 timelineEvent.article|wld-rom-battle-of-actium|dfedf88609	215	Augustus	caesar-augustus
-timelineEvent.article|wld-rom-battle-of-actium|dfedf88609	403	Joseph	joseph-son-of-jacob
+timelineEvent.article|wld-rom-battle-of-actium|dfedf88609	403	Joseph	joseph-husband-of-mary
 timelineEvent.article|wld-rom-battle-of-actium|dfedf88609	414	Mary	mary-mother-of-jesus
 timelineEvent.article|wld-rom-battle-of-actium|dfedf88609	56	Octavian	caesar-augustus
 timelineEvent.article|wld-rom-caesar-crosses-rubicon|466cb8cab8	0	Caesar	tiberius-caesar
@@ -5703,7 +5703,7 @@ topic.section|egyptians|1de2d60e66	163	Jacob	jacob
 topic.section|egyptians|1de2d60e66	313	Joseph	joseph-son-of-jacob
 topic.section|egyptians|1de2d60e66	396	Moses	moses
 topic.section|egyptians|dda53a59e4	158	Jacob	jacob
-topic.section|egyptians|dda53a59e4	257	Joseph	joseph-son-of-jacob
+topic.section|egyptians|dda53a59e4	257	Joseph	joseph-husband-of-mary
 topic.section|egyptians|dda53a59e4	274	Mary	mary-mother-of-jesus
 topic.section|egyptians|dda53a59e4	294	Jesus	jesus-of-nazareth
 topic.section|egyptians|dda53a59e4	92	Abraham	abraham
@@ -6117,7 +6117,7 @@ topic.section|robinsons-arch|2189e9d0e0	67	Jesus	jesus-of-nazareth
 topic.section|romans|1a0b26f70d	106	Herod the Great	herod-the-great
 topic.section|romans|1a0b26f70d	175	Pontius Pilate	pontius-pilate
 topic.section|romans|1a0b26f70d	265	Caesar Augustus	caesar-augustus
-topic.section|romans|1a0b26f70d	297	Joseph	joseph-son-of-jacob
+topic.section|romans|1a0b26f70d	297	Joseph	joseph-husband-of-mary
 topic.section|romans|1a0b26f70d	308	Mary	mary-mother-of-jesus
 topic.section|romans|1a0b26f70d	376	Jesus	jesus-of-nazareth
 topic.section|romans|1a0b26f70d	479	Pilate	pontius-pilate
