@@ -1567,6 +1567,12 @@ const NAME_CONTEXT_RULES: Record<string, NameContextRule[]> = {
   ],
   david: [
     { after: /^\s+George\b/, to: null },              // David George Hogarth, who dug at Ephesus
+    // "Nahal David" is the wadi at Ein Gedi — a modern Hebrew place name honouring the king, in a
+    // sentence about a Chalcolithic temple three thousand years older than him. Rewording was not
+    // an option: it is the name of the place. Found the day the location `notableFacts` surface
+    // entered the harness, having linked to the king on a live page until then. "Nahal Mishmar" in
+    // the same sentence needs no rule, because Mishmar is not a registered name.
+    { before: /\bNahal\s+$/, to: null },
     // MODERN WORK TITLES (see the block below): the title of Finkelstein, Singer-Avitz, Herzog and
     // Ussishkin's article in Tel Aviv 34 (2007), quoted in the large-stone-structure article. The
     // words name a journal article, not the king, so they link to nobody. Pinned by the title

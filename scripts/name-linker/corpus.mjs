@@ -50,7 +50,17 @@ export async function loadProseBlocks() {
     add("location.history.founded", l.id, h.founded);
     add("location.history.population", l.id, h.population);
     add("location.history.industry", l.id, h.industry);
-    (h.facts ?? []).forEach((x) => add("location.history.facts", l.id, x));
+    // The field is `notableFacts` — that is what `LocationHistory` declares in src/data/types.ts
+    // and what LocationPanel maps over, each entry through its own LinkedVerseText. This line read
+    // `h.facts`, a name no record has ever carried, so it silently enumerated NOTHING: 385 blocks
+    // across all 117 location records, carrying 852 links of which 321 are person links, were
+    // outside the net from the day it was written. Same shape as the timelineEvents omission the
+    // README describes, and found the same way — by a batch editing four location records and
+    // noticing its own cross-links never reached the snapshot.
+    //
+    // `facts` is kept as a fallback rather than deleted, because reading a field that does not
+    // exist is the bug and hard-coding a single name is how it happened.
+    (h.notableFacts ?? h.facts ?? []).forEach((x) => add("location.history.facts", l.id, x));
     if (l.archaeology?.note) add("location.archaeology.note", l.id, l.archaeology.note);
   });
   pois.forEach((p) => {

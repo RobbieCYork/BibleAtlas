@@ -3686,7 +3686,7 @@ export const locations: Location[] = [
       population: "Described in Joshua as 'a great city, like one of the royal cities,' larger than Ai, with notable fighting men",
       industry: "Wine production was a major industry in later periods — excavations found an extensive wine-storage and fermentation complex; also known for its major water system",
       notableFacts: [
-        "James Pritchard's excavations (1956-1962) uncovered a massive rock-cut pool with a spiral staircase descending about 25 meters, plausibly the 'pool of Gibeon' mentioned in 2 Samuel 2:13, along with dozens of jar handles inscribed 'gb'n' (Gibeon) confirming the site's identification",
+        "J. B. Pritchard's excavations (1956-1962) uncovered a massive rock-cut pool with a spiral staircase descending about 25 meters, plausibly the 'pool of Gibeon' mentioned in 2 Samuel 2:13, along with dozens of jar handles inscribed 'gb'n' (Gibeon) confirming the site's identification",
         "The Gibeonites tricked Joshua into a peace treaty by disguising themselves as travelers from a distant land, and were made 'woodcutters and water carriers' rather than destroyed",
         "The battle to defend Gibeon from a coalition of Amorite kings is the setting for the 'sun stood still' account in Joshua 10",
         "In David's reign, a fateful contest between the armies of Joab and Abner took place at the pool of Gibeon (2 Samuel 2:12-17)",
@@ -3936,7 +3936,7 @@ export const locations: Location[] = [
       notableFacts: [
         "David hid from Saul among the strongholds and caves of En Gedi, and in one of them famously cut off a corner of Saul's robe rather than kill him (1 Samuel 24)",
         "The oasis was renowned in the ancient world for its balsam groves, a rare and costly perfume ingredient; Song of Solomon 1:14 refers to its henna blossoms",
-        "A monumental Chalcolithic (Ghassulian) temple enclosure, dated to roughly 3500 BC, sits on a terrace above the oasis between the Ein Gedi spring and the spring in Nahal David — discovered by Yohanan Aharoni in a 1956 survey and excavated in 1962 by a Hebrew University expedition (Benjamin Mazar directing, with David Ussishkin publishing the final report), it stands apart from any settlement and has been linked by some scholars to the copper hoard from the nearby Nahal Mishmar 'Cave of the Treasure'",
+        "A monumental Chalcolithic (Ghassulian) temple enclosure, dated to roughly 3500 BC, sits on a terrace above the oasis between the Ein Gedi spring and the spring in Nahal David — discovered by Yohanan Aharoni in a 1956 survey and excavated in 1962 by a Hebrew University expedition (Benjamin Mazar directing, with D. Ussishkin publishing the final report), it stands apart from any settlement and has been linked by some scholars to the copper hoard from the nearby Nahal Mishmar 'Cave of the Treasure'",
         "Tel Goren (Tell el-Jurn), a separate mound roughly a half-kilometer south of the temple terrace, was excavated 1961-65 by Benjamin Mazar, Trude Dothan, and Immanuel Dunayevsky; its earliest settlement dates to the Iron Age (mid-7th century BC), and it is generally identified with the En-Gedi of the Hebrew Bible, with occupation continuing through the Persian, Hellenistic, Roman, and Byzantine periods",
         "Today En Gedi is a nature reserve fed by four springs with waterfalls, recognized for its unique desert-oasis ecosystem",
       ],

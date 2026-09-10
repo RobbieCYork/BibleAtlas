@@ -40,12 +40,19 @@
 # neither this check nor NAME_CONTEXT_RULES governs it, suppressing it would mean inventing a
 # second mechanism, and the words there do denote Jews. If that is ever to change it is a separate
 # ruling and a separate mechanism, not a widening of this one.
+#
+# ── A WARNING ABOUT THIS FILE'S OWN HEADER ───────────────────────────────────────────────────────
+# `--update` REGENERATES this file from a three-line template and destroys everything above this
+# point. It did exactly that on 2026-09-10, taking the modern-work-title ruling with it, and the
+# header was restored by hand from git. Until the script preserves it, run `--update`, then
+# `git diff` this file and put the header back before you commit. The rows are machine-owned; the
+# header is not, and nothing in the script knows the difference.
 ok	bookIntro.manuscripts	book-intro:Jonah	jesus-of-nazareth	Jesus	inside-capitalised-run
 ok	bookIntro.summary	book-intro:Matthew	magi	magi	lowercase-surface
 ok	location.archaeology.note	antioch-syria	simon-peter	Peter	forename-before:Saint
-ok	location.archaeology.note	galilee	jesus-of-nazareth	Jesus	surname-after:Boat
 ok	location.archaeology.note	patmos	john-the-apostle	John	forename-before:Saint
-ok	location.archaeology.note	sea-of-galilee	jesus-of-nazareth	Jesus	surname-after:Boat
+ok	location.history.facts	capernaum	jesus-of-nazareth	Jesus	forename-before:Became
+ok	location.history.facts	pamphylia	john-mark	John Mark	inside-capitalised-run
 ok	person.extraBib.source	lysanias	caesar-augustus	Augustus	forename-before:Deified
 ok	person.lifeStory	abraham	paul-of-tarsus	Paul	inside-capitalised-run
 ok	person.lifeStory	aimee-semple-mcpherson	jesus-of-nazareth	Jesus	biblical-in-modern-article
