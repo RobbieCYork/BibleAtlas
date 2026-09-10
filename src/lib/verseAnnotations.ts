@@ -1784,6 +1784,57 @@ const NAME_CONTEXT_RULES: Record<string, NameContextRule[]> = {
     // way. Nothing else about Abraham is touched: the phrase occurs once in the whole corpus.
     { phrase: "Abraham in History and Tradition", to: null },
   ],
+
+  // ── QUOTED INSCRIPTIONS ON DISPUTED OBJECTS, AND ONE MORE MODERN TITLE ──────────────────────
+  //
+  // Added 2026-09-10 with the forgeries-and-disputed-authenticity articles, and the same principle
+  // as the two blocks above: linking makes a claim, declining to link makes none.
+  //
+  // The Talpiot tomb's ossuaries carry six of the commonest names in first-century Judea, and the
+  // whole point of the `talpiot-tomb` article is that a common cluster of common names does not
+  // identify anybody. Linking the inscription "Jesus son of Joseph" to Jesus of Nazareth — and
+  // "Joseph" to the patriarch, which is the global default and would be wrong on any reading —
+  // asserts on the reader's behalf exactly the identification the article says the evidence does
+  // not support. So the inscribed strings link to no one. The names elsewhere in the article link
+  // normally; only these two quoted readings are pinned.
+  //
+  // "The Lost Tomb of Jesus" is the 2007 documentary, and falls under the MODERN WORK TITLES
+  // ruling above: a person's name inside a modern work's title names the work, not the man.
+  //
+  // NOT pinned, deliberately, and the difference is worth recording: the James Ossuary article
+  // quotes its inscription in Aramaic transliteration ("...akhui di Yeshua"), and "Yeshua" there
+  // is left resolving to Jesus of Nazareth. What is disputed about that object is whether the
+  // words are ancient, not who they would mean if they are — which is the opposite of the Talpiot
+  // case, where the referent is precisely what is in question.
+  jesus: [
+    { phrase: "Jesus son of Joseph", to: null },
+    { phrase: "Judah son of Jesus", to: null },
+    { phrase: "The Lost Tomb of Jesus", to: null },
+  ],
+  joseph: [
+    { phrase: "Jesus son of Joseph", to: null },
+  ],
+
+  // ── TWO MODERN SURNAMES THAT ARE ALSO PLACES ───────────────────────────────────────────────
+  //
+  // Same shape as the `andrew`/`gideon`/`jacob` excavator rules above, except that what gets
+  // stolen here is a LOCATION's key rather than a person's. resolveByContext runs on every match
+  // kind, so a phrase pin works for both.
+  //
+  // "Y. Gath" is Yosef Gath, who carried out the 1980 salvage excavation of the Talpiot tomb. Gath
+  // is also a Philistine city with its own map record, and without this pin his surname sends the
+  // reader to the Shephelah.
+  //
+  // "Damascus Gate" is a gate of Jerusalem's Old City with no record of its own. Pinning it also
+  // corrects a link that was already live: the Garden Tomb POI's description locates the tomb
+  // "outside Jerusalem's Damascus Gate", and that "Damascus" had been resolving to the Syrian city
+  // ever since. One prose row leaves the snapshot as a result, and that is the row.
+  gath: [
+    { phrase: "Y. Gath", to: null },
+  ],
+  damascus: [
+    { phrase: "Damascus Gate", to: null },
+  ],
 };
 
 /** Do the words around this match say who it is — or that it is nobody?

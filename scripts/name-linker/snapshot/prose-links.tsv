@@ -5345,6 +5345,13 @@ topic.section|gentiles|71d843460c	151	Cornelius	cornelius-the-centurion
 topic.section|gentiles|71d843460c	211	the Holy Spirit	holy-spirit
 topic.section|gentiles|71d843460c	349	the Holy Spirit	holy-spirit
 topic.section|gentiles|a763e7237a	386	Abram	abraham
+topic.section|gospel-of-jesus-wife-fragment|11b902dd89	213	Jesus	jesus-of-nazareth
+topic.section|gospel-of-jesus-wife-fragment|35b3a61407	224	Jesus	jesus-of-nazareth
+topic.section|gospel-of-jesus-wife-fragment|35b3a61407	499	Jesus	jesus-of-nazareth
+topic.section|gospel-of-jesus-wife-fragment|ac93703be5	652	Jesus	jesus-of-nazareth
+topic.section|gospel-of-jesus-wife-fragment|ac93703be5	778	Paul	paul-of-tarsus
+topic.section|gospel-of-jesus-wife-fragment|ac93703be5	883	Cephas	simon-peter
+topic.section|gospel-of-jesus-wife-fragment|ac93703be5	931	Paul	paul-of-tarsus
 topic.section|greeks|9918be58bc	331	Stephen	stephen-the-martyr
 topic.section|greeks|9918be58bc	343	Philip	philip-the-apostle
 topic.section|greeks|9918be58bc	392	Paul	paul-of-tarsus
@@ -5388,6 +5395,13 @@ topic.section|israelites|b97ccf9408	28	Jacob	jacob
 topic.section|israelites|b97ccf9408	346	Abraham	abraham
 topic.section|israelites|b97ccf9408	407	Moses	moses
 topic.section|israelites|b97ccf9408	47	Abraham	abraham
+topic.section|ivory-pomegranate|9057941e4a	413	Solomon	solomon
+topic.section|james-ossuary|79085375be	257	James the Just	james-brother-of-jesus
+topic.section|james-ossuary|79085375be	353	Jesus	jesus-of-nazareth
+topic.section|james-ossuary|8dd68f07f9	616	Jesus	jesus-of-nazareth
+topic.section|james-ossuary|95fcf60372	216	Jesus	jesus-of-nazareth
+topic.section|james-ossuary|95fcf60372	54	Paul	paul-of-tarsus
+topic.section|james-ossuary|ed837c5efc	354	Yeshua	jesus-of-nazareth
 topic.section|jehoiachin-ration-tablets|0c7c0edbef	490	Jeremiah	jeremiah
 topic.section|jehoiachin-ration-tablets|1227eebb84	146	Jehoiachin	jeconiah
 topic.section|jehoiachin-ration-tablets|72841bf7a6	15	Jehoiachin	jeconiah
@@ -5465,6 +5479,7 @@ topic.section|moabites-and-ammonites|2fb7abb40c	297	David	david
 topic.section|moabites-and-ammonites|2fb7abb40c	349	Jesus	jesus-of-nazareth
 topic.section|moabites-and-ammonites|2fb7abb40c	430	David	david
 topic.section|moabites-and-ammonites|84d1a6e657	360	Balaam	balaam
+topic.section|mount-ebal-lead-object|45a27f2840	303	Joshua	joshua
 topic.section|mount-ebal-structure|e9023ce233	210	Joshua	joshua
 topic.section|muratorian-fragment|31b5ff58f1	155	Mark	john-mark
 topic.section|muratorian-fragment|31b5ff58f1	225	Paul	paul-of-tarsus
@@ -5585,6 +5600,7 @@ topic.section|romans|1a0b26f70d	644	Luke	luke-evangelist
 topic.section|romans|270e0831a9	0	Paul	paul-of-tarsus
 topic.section|romans|270e0831a9	317	Caesar	tiberius-caesar
 topic.section|romans|270e0831a9	439	Paul	paul-of-tarsus
+topic.section|ron-wyatt-claimed-discoveries|52f4cda6b1	387	Paul	paul-of-tarsus
 topic.section|rylands-papyrus-p52|6b7071b8a0	618	Pilate	pontius-pilate
 topic.section|sabbath|2131d6a1c0	211	Jesus	jesus-of-nazareth
 topic.section|sabbath|2131d6a1c0	29	Jesus	jesus-of-nazareth
@@ -5625,7 +5641,10 @@ topic.section|sergius-paulus-inscriptions|9da496d635	165	Sergius Paulus	sergius-
 topic.section|sergius-paulus-inscriptions|c902189bc2	86	Sergius Paulus	sergius-paulus
 topic.section|sergius-paulus-inscriptions|ca3495f229	251	Luke	luke-evangelist
 topic.section|sergius-paulus-inscriptions|ddca383bed	169	Claudius	claudius-caesar
+topic.section|shapira-scroll|d41f1546a6	142	Moses	moses
 topic.section|shema-seal|fb1fddd58a	380	Solomon	solomon
+topic.section|shroud-of-turin|79f34afaa9	487	Jesus	jesus-of-nazareth
+topic.section|shroud-of-turin|e24026acb4	196	Pope John Paul II	pope-john-paul-ii
 topic.section|siloam-inscription|3f6e3bad37	126	Hezekiah	hezekiah
 topic.section|siloam-inscription|4a9ae734bf	236	Hezekiah	hezekiah
 topic.section|siloam-inscription|751fc2bb82	19	Hezekiah	hezekiah
@@ -5677,6 +5696,12 @@ topic.section|tabernacle|b1d6a861c9	9	Moses	moses
 topic.section|tabernacle|f1241cf863	245	Jesus	jesus-of-nazareth
 topic.section|tabernacle|fdbff73168	195	David	david
 topic.section|tabernacle|fdbff73168	240	Solomon	solomon
+topic.section|talpiot-tomb|1c8fe4c552	187	Jesus	jesus-of-nazareth
+topic.section|talpiot-tomb|41181a490e	479	Mary Magdalene	mary-magdalene
+topic.section|talpiot-tomb|5b88fe5133	127	Jesus of Nazareth	jesus-of-nazareth
+topic.section|talpiot-tomb|5b88fe5133	185	Mary Magdalene	mary-magdalene
+topic.section|talpiot-tomb|5b88fe5133	280	Jesus	jesus-of-nazareth
+topic.section|talpiot-tomb|8f67438076	390	Jesus of Nazareth	jesus-of-nazareth
 topic.section|tel-dan-stele|03833a1bc5	139	David	david
 topic.section|tel-dan-stele|03833a1bc5	240	David	david
 topic.section|tel-dan-stele|03833a1bc5	298	David	david

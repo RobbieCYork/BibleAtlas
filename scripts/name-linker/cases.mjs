@@ -1513,4 +1513,58 @@ export const CASES = [
     why: "KEPT. Quotation marks and the words \"David's palace\" again, but this is the app " +
          "discussing the claim about the king, not citing a title. The pin is the full title " +
          "string, and it must not reach this." },
+
+  // ─────────────────────────────────────────────────────────────────────────────────────────────
+  // QUOTED INSCRIPTIONS ON DISPUTED OBJECTS, plus two modern surnames that are also places.
+  // Added with the forgeries batch, 2026-09-10. Same mechanism as the block above — phrase pins in
+  // NAME_CONTEXT_RULES — and the same reason for pinning them here: a phrase pin is undone in
+  // silence the day someone rewords the sentence it sits in, and these cases are its only cover.
+  //
+  // The Talpiot tomb's whole argument is that a cluster of very common names identifies nobody. So
+  // the ossuary readings link to nobody, and the KEEPS below are the links the same article should
+  // and does make.
+  { text: "Five of the six inscriptions are in Hebrew or Aramaic and are usually rendered Jesus " +
+          "son of Joseph, Maria, Mattia, Joseh, and Judah son of Jesus.",
+    surface: "Jesus", owner: "talpiot-tomb", expect: null, status: "guard",
+    why: "A quoted ossuary inscription. Linking it to Jesus of Nazareth would assert on the " +
+         "reader's behalf the identification the article says the evidence does not support." },
+  { text: "Five of the six inscriptions are in Hebrew or Aramaic and are usually rendered Jesus " +
+          "son of Joseph, Maria, Mattia, Joseh, and Judah son of Jesus.",
+    surface: "Joseph", owner: "talpiot-tomb", expect: null, status: "guard",
+    why: "Same inscription. Without the pin this resolves to Joseph son of Jacob, the global " +
+         "default, which is wrong on every reading of the ossuary." },
+  { text: "usually rendered Jesus son of Joseph, Maria, Mattia, Joseh, and Judah son of Jesus.",
+    surface: "Jesus", occurrence: 2, owner: "talpiot-tomb", expect: null, status: "guard",
+    why: "The second inscribed name in the same sentence, pinned by its own phrase." },
+  { text: "The Lost Tomb of Jesus aired on the Discovery Channel days later, and a book followed.",
+    surface: "Jesus", owner: "talpiot-tomb", expect: null, status: "guard",
+    why: "A 2007 documentary's title. The MODERN WORK TITLES ruling above, applied to a film." },
+  { text: "a man from outside Judea is normally identified by his town, as Jesus of Nazareth is " +
+          "throughout the Gospels, rather than by his father",
+    surface: "Jesus of Nazareth", owner: "talpiot-tomb", expect: "jesus-of-nazareth",
+    status: "guard",
+    why: "KEPT, in the same article. This is the man, and the sentence is about how the Gospels " +
+         "name him. Any rule wide enough to reach this would be too wide." },
+  { text: "It was reported, and a salvage excavation ran from 28 March to 14 April under permit " +
+          "number 938: Y. Gath of the Department of Antiquities directed it, with A. Kloner and " +
+          "E. Braun, and S. Gibson drew the plans.",
+    surface: "Gath", owner: "talpiot-tomb", expect: null, status: "guard",
+    why: "Yosef Gath, the excavator. Gath is also a Philistine city with a map record, and " +
+         "without the pin his surname sends the reader to the Shephelah." },
+  { text: "The Garden Tomb is a rock-cut tomb near a skull-shaped rocky outcropping outside " +
+          "Jerusalem's Damascus Gate, promoted since the 19th century as an alternative site",
+    surface: "Damascus", owner: "garden-tomb", expect: null, status: "guard",
+    why: "A gate of Jerusalem's Old City, not the Syrian city. This link WAS live before the " +
+         "forgeries batch pinned the phrase — it is the one prose row that left the snapshot " +
+         "on that commit." },
+  { text: "he excavated a chamber beneath the stone escarpment near the Damascus Gate in " +
+          "Jerusalem and found the ark of the covenant there",
+    surface: "Damascus", owner: "ron-wyatt-claimed-discoveries", expect: null, status: "guard",
+    why: "The same gate, in the article that made the pin necessary." },
+  { text: "It is 50.5 cm along its base, and along one side run two lines of Aramaic: Ya'akov " +
+          "bar Yosef akhui di Yeshua.",
+    surface: "Yeshua", owner: "james-ossuary", expect: "jesus-of-nazareth", status: "guard",
+    why: "DELIBERATELY NOT SUPPRESSED, and recorded so the difference from Talpiot is not read " +
+         "as an oversight. What is disputed about this object is whether the words are ancient, " +
+         "not who they would mean if they are." },
 ];

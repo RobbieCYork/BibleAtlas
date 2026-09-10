@@ -13,6 +13,8 @@
 ok	hezekiah-bulla	unprovenanced	unprovenanced
 ok	shema-seal	authenticityDisputed	forgery
 ok	shema-seal	unprovenanced	unprovenanced
+ok	museum-of-the-bible-scroll-fragments	authenticityDisputed	forgery
+ok	mount-ebal-lead-object	authenticityDisputed	forgery
 #
 # The reading behind each row above, so a later reader is not asked to take it on trust:
 #
@@ -28,3 +30,18 @@ ok	shema-seal	unprovenanced	unprovenanced
 #   object is the Megiddo seal Schumacher excavated in 1904, which is neither unprovenanced nor
 #   authenticity-disputed. The article says so explicitly: "The Megiddo seal is excavated and
 #   usable. The Beersheba bulla is unprovenanced, actively disputed as of 2024."
+#
+# museum-of-the-bible-scroll-fragments / authenticityDisputed — the word "forgery" is all over
+#   this article because the question is CLOSED, not open. All sixteen fragments were judged
+#   modern forgeries in 2020 by the investigation the museum itself commissioned and published,
+#   and the museum withdrew them. authenticityDisputed means specialists disagree about whether
+#   an object is genuine; nobody does here. Setting the flag would tell the reader there is still
+#   an argument, and there is not.
+#
+# mount-ebal-lead-object / authenticityDisputed — the article uses "forgery" only to say what
+#   this is NOT. No specialist has alleged that the object is a forgery, and this app does not:
+#   the lead is real and really came off Mount Ebal. What is rejected, by the great majority of
+#   the specialists who have answered it, is the claim that there is writing inside it. That is a
+#   reading nobody accepts, not an object anybody doubts, and the article turns on keeping those
+#   two apart. The record is marked unprovenanced, which is the flag that IS true of it: it was
+#   wet-sifted from a spoil heap and has no stratigraphy.
