@@ -5476,6 +5476,15 @@ timelineEvent.datingNotes|wld-rom-claudius-emperor|9067ebbf87	406	Paul	paul-of-t
 timelineEvent.datingNotes|wld-rom-claudius-emperor|9067ebbf87	577	Claudius	claudius-caesar
 timelineEvent.datingNotes|wld-rom-martyrdom-peter-paul|3ec6ed9441	152	Nero	nero-caesar
 timelineEvent.datingNotes|wld-rom-martyrdom-peter-paul|3ec6ed9441	216	Peter	simon-peter
+topic.section|4qmmt|1f7d0b2407	159	Paul	paul-of-tarsus
+topic.section|4qmmt|1f7d0b2407	208	Paul	paul-of-tarsus
+topic.section|4qmmt|1f7d0b2407	454	Paul	paul-of-tarsus
+topic.section|4qmmt|59e43f4637	169	Paul	paul-of-tarsus
+topic.section|4qmmt|59e43f4637	670	Abraham	abraham
+topic.section|4qmmt|59e43f4637	682	Paul	paul-of-tarsus
+topic.section|4qmmt|59e43f4637	970	Paul	paul-of-tarsus
+topic.section|4qsamuel-a|16dfa29c4b	120	Saul	saul-king-of-israel
+topic.section|4qsamuel-a|1a28a9ba2e	777	Samuel	samuel
 topic.section|ai-candidate-sites|d20c311686	473	Joshua	joshua
 topic.section|alexamenos-graffito|d8dfceea10	444	Paul	paul-of-tarsus
 topic.section|angels|1acfcbaf96	164	Jacob	jacob
@@ -5601,6 +5610,10 @@ topic.section|codex-sinaiticus|28fea9501e	254	Job	job
 topic.section|codex-sinaiticus|da0fc044b7	388	Mark	john-mark
 topic.section|codex-vaticanus|85654c3a8c	144	Luke	luke-evangelist
 topic.section|codex-vaticanus|85654c3a8c	52	Mark	john-mark
+topic.section|community-rule|3b2f18f97d	275	John the Baptist	john-the-baptist
+topic.section|community-rule|3b2f18f97d	377	John	john-the-baptist
+topic.section|community-rule|3b2f18f97d	456	John	john-the-baptist
+topic.section|community-rule|f7655eb743	482	spirit of truth	holy-spirit
 topic.section|crucified-man-givat-hamivtar|596d9fe46f	250	Pilate	pontius-pilate
 topic.section|crucified-man-givat-hamivtar|596d9fe46f	486	Jesus	jesus-of-nazareth
 topic.section|crucified-man-givat-hamivtar|596d9fe46f	564	Paul	paul-of-tarsus
@@ -5608,14 +5621,15 @@ topic.section|crucified-man-givat-hamivtar|e0f15ef2c2	532	Jesus	jesus-of-nazaret
 topic.section|crucified-man-givat-hamivtar|e0f15ef2c2	550	Thomas	thomas-apostle
 topic.section|crucified-man-givat-hamivtar|e0f15ef2c2	595	Jesus	jesus-of-nazareth
 topic.section|cyrus-cylinder|ccab31afbd	363	Ezra	ezra
+topic.section|damascus-document|a01fa56d82	538	Jesus	jesus-of-nazareth
 topic.section|day-of-preparation|16217b4f2e	291	Mark	john-mark
 topic.section|day-of-preparation|16217b4f2e	430	Luke	luke-evangelist
 topic.section|day-of-preparation|20af95a228	157	Joseph of Arimathea	joseph-of-arimathea
 topic.section|day-of-preparation|20af95a228	23	Jesus	jesus-of-nazareth
 topic.section|day-of-preparation|20af95a228	700	Jesus	jesus-of-nazareth
 topic.section|dead-sea-scrolls|0a7e4ed26d	128	Jeremiah	jeremiah
-topic.section|dead-sea-scrolls|7f915080c3	349	Isaiah	isaiah
-topic.section|dead-sea-scrolls|7f915080c3	75	Esther	esther
+topic.section|dead-sea-scrolls|365c207ea9	356	Isaiah	isaiah
+topic.section|dead-sea-scrolls|365c207ea9	75	Esther	esther
 topic.section|dead-sea-scrolls|815e68b358	52	Jesus	jesus-of-nazareth
 topic.section|deir-alla-inscription|2f28e51e9d	464	Balaam	balaam
 topic.section|deir-alla-inscription|2f28e51e9d	512	Balaam	balaam
@@ -5691,10 +5705,30 @@ topic.section|gospel-of-jesus-wife-fragment|ac93703be5	652	Jesus	jesus-of-nazare
 topic.section|gospel-of-jesus-wife-fragment|ac93703be5	778	Paul	paul-of-tarsus
 topic.section|gospel-of-jesus-wife-fragment|ac93703be5	883	Cephas	simon-peter
 topic.section|gospel-of-jesus-wife-fragment|ac93703be5	931	Paul	paul-of-tarsus
+topic.section|great-isaiah-scroll|20eb08c9bd	469	Mark	john-mark
+topic.section|great-isaiah-scroll|3426efeac1	325	Isaiah	isaiah
+topic.section|great-isaiah-scroll|3426efeac1	354	Isaiah	isaiah
+topic.section|great-isaiah-scroll|9d8726a25e	323	Isaiah	isaiah
+topic.section|great-isaiah-scroll|df7439e274	422	Isaiah	isaiah
+topic.section|great-isaiah-scroll|df7439e274	710	Isaiah	isaiah
+topic.section|great-isaiah-scroll|df7439e274	791	Isaiah	isaiah
+topic.section|great-psalms-scroll|22c4e92703	753	Isaiah	isaiah
+topic.section|great-psalms-scroll|d979b5e7b0	545	David	david
 topic.section|greeks|9918be58bc	331	Stephen	stephen-the-martyr
 topic.section|greeks|9918be58bc	343	Philip	philip-the-apostle
 topic.section|greeks|9918be58bc	392	Paul	paul-of-tarsus
 topic.section|greeks|afe7bda811	328	Paul	paul-of-tarsus
+topic.section|habakkuk-pesher|8eed0c586c	104	Paul	paul-of-tarsus
+topic.section|habakkuk-pesher|8eed0c586c	828	Paul	paul-of-tarsus
+topic.section|habakkuk-pesher|b921377ee6	1008	Paul	paul-of-tarsus
+topic.section|habakkuk-pesher|b921377ee6	1307	Paul	paul-of-tarsus
+topic.section|habakkuk-pesher|b921377ee6	215	Paul	paul-of-tarsus
+topic.section|habakkuk-pesher|b921377ee6	223	John the Baptist	john-the-baptist
+topic.section|habakkuk-pesher|b921377ee6	604	Paul	paul-of-tarsus
+topic.section|habakkuk-pesher|b921377ee6	663	Jesus	jesus-of-nazareth
+topic.section|habakkuk-pesher|b921377ee6	805	Jesus	jesus-of-nazareth
+topic.section|habakkuk-pesher|b921377ee6	825	Paul	paul-of-tarsus
+topic.section|habakkuk-pesher|b921377ee6	89	Paul	paul-of-tarsus
 topic.section|hezekiah-bulla|52d97dbdce	102	Hezekiah	hezekiah
 topic.section|hezekiah-bulla|52d97dbdce	121	Ahaz	ahaz
 topic.section|hezekiah-bulla|52d97dbdce	417	Hezekiah	hezekiah
@@ -6067,6 +6101,8 @@ topic.section|tel-hazor|ce955579ab	69	Joshua	joshua
 topic.section|tell-es-safi-ostracon|04f6d6650e	122	David	david
 topic.section|tell-es-safi-ostracon|dbe37c3509	520	David	david
 topic.section|temple-mount-sifting-project|3d9eb67019	154	Solomon	solomon
+topic.section|temple-scroll|345391bff7	396	Moses	moses
+topic.section|temple-scroll|e4d3daff94	355	Jesus	jesus-of-nazareth
 topic.section|temple-warning-inscription|e6e0aeba7c	266	Paul	paul-of-tarsus
 topic.section|temple-warning-inscription|e6e0aeba7c	80	Paul	paul-of-tarsus
 topic.section|the-christ|4d78c4e744	389	Jesus	jesus-of-nazareth
@@ -6162,6 +6198,8 @@ topic.section|torah|fba21c9ca1	480	Luke	luke-evangelist
 topic.section|torah|fba21c9ca1	503	Jesus	jesus-of-nazareth
 topic.section|ugarit-tablets|b9970d49c7	134	Elijah	elijah
 topic.section|ugarit-tablets|b9970d49c7	214	Josiah	josiah
+topic.section|war-scroll|dbdfaaa763	72	Michael	michael-archangel
+topic.section|war-scroll|e5f2eb667c	277	Belial	satan
 topic.section|warrens-shaft|384d04ea9d	356	David	david
 topic.section|warrens-shaft|3df13a3cf6	162	David	david
 topic.section|warrens-shaft|4a73596be3	73	David	david

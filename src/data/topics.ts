@@ -2036,10 +2036,11 @@ export const topics: Topic[] = [
   {
     id: "dead-sea-scrolls",
     name: "Dead Sea Scrolls",
-    // NOT registered: "the Scrolls", "Qumran" (a POI owns that). "Isaiah Scroll" is registered even
-    // though "Isaiah" is a person entry — the two-word alias is longer, and NAME_ENTRIES is sorted
-    // longest-first, so a bare "Isaiah" still resolves to the prophet.
-    alternateNames: ["Qumran Scrolls", "Great Isaiah Scroll", "Isaiah Scroll"],
+    // NOT registered: "the Scrolls", "Qumran" (a POI owns that). "Great Isaiah Scroll" and
+    // "Isaiah Scroll" used to live here; batch 10 gave that scroll its own record and MOVED both
+    // aliases onto it, so the links they already carried in the Isaiah book introduction and in
+    // people.ts repoint rather than multiply. Do not add them back.
+    alternateNames: ["Qumran Scrolls"],
     category: "manuscript",
     role: "Jewish Manuscripts from the Judean Desert, c. 250 BC - AD 70",
     summary:
@@ -2049,7 +2050,7 @@ export const topics: Topic[] = [
         heading: "What Was Found",
         paragraphs: [
           "The first scrolls came to light in 1947, when Bedouin shepherds found jars in a cave in the cliffs above Qumran, near the northwest corner of the Dead Sea. Over the next nine years ten more caves were emptied, some by archaeologists and some by the Bedouin, producing the remains of perhaps 900 to 1,000 manuscripts — a handful nearly complete, the vast majority in tens of thousands of fragments, some no larger than a fingernail. Related finds came from Masada, Wadi Murabba'at, and Nahal Hever nearby.",
-          "About a quarter are copies of books of the Hebrew Bible; every book except Esther is represented. The rest are other Jewish writings of the period: commentaries, psalms and hymns outside the Psalter, calendars, the community's own rule books, and works such as Jubilees and 1 Enoch. The best-preserved is the Great Isaiah Scroll, a complete copy of Isaiah on seventeen sheets of leather, dated to about 125 BC and now in the Shrine of the Book at the Israel Museum.",
+          "About a quarter are copies of books of the Hebrew Bible; every book except Esther is represented. The rest are other Jewish writings of the period: commentaries, psalms and hymns outside the Psalter, calendars, the community's own rule books, and works such as Jubilees and 1 Enoch. The best-preserved is the Great Isaiah Scroll, a nearly complete copy of Isaiah on seventeen sheets of leather, dated to about 125 BC and now in the Shrine of the Book at the Israel Museum.",
         ],
       },
       {
@@ -2068,7 +2069,7 @@ export const topics: Topic[] = [
       },
     ],
     verses: [
-      { reference: "Isaiah 53:1-12", note: "The Suffering Servant, preserved complete in a copy from c. 125 BC" },
+      { reference: "Isaiah 53:1-12", note: "The Suffering Servant, preserved in a copy from c. 125 BC" },
       { reference: "Jeremiah 36:1-32", note: "Jeremiah's scroll — a book the caves preserve in two different lengths" },
       { reference: "Psalms 119:105", note: "The Psalms are among the most-copied books in the caves" },
       { reference: "Luke 4:16-21", note: "Jesus reading Isaiah aloud in the synagogue, a century after the Isaiah Scroll was copied" },
@@ -11526,5 +11527,1368 @@ export const topics: Topic[] = [
     ],
     reflectionPrompt:
       "Every serious refutation of these claims was written by someone who believed the flood happened. What does it cost you when someone on your own side says the evidence does not hold?",
+  },
+  {
+    id: "great-isaiah-scroll",
+    name: "Great Isaiah Scroll",
+    // "Great Isaiah Scroll" and "Isaiah Scroll" were registered on `dead-sea-scrolls` until this
+    // record existed. They MOVE here rather than being added, so the links they already carry in
+    // the Isaiah book introduction and in people.ts repoint instead of multiplying. NOT registered:
+    // "1QIsaa" — everywhere the corpus writes it, it sits in brackets straight after the full name,
+    // so registering it would only put a second chip beside the first.
+    alternateNames: ["Isaiah Scroll", "St. Mark's Isaiah Scroll"],
+    category: "manuscript",
+    role: "The Only Nearly Complete Bible Scroll from Qumran",
+    summary:
+      "Seventeen sheets of leather sewn end to end, carrying all sixty-six chapters of Isaiah in fifty-four columns — copied about a thousand years before any Hebrew Bible manuscript known before 1947.",
+    sections: [
+      {
+        heading: "Seventeen Sheets, Sewn End to End",
+        paragraphs: [
+          "The Great Isaiah Scroll came out of the first cave at Qumran in 1947, in the find that started everything else. It is 7.34 metres long and between 22 and 25 centimetres high, seventeen sheets of prepared animal skin stitched together and written in fifty-four columns of Hebrew. Those columns carry all sixty-six chapters of Isaiah. Twenty-one copies of Isaiah were eventually identified among the Qumran manuscripts, which makes it one of the two or three most-copied books in the caves; this is the only one that survived as a book rather than as fragments, and Emanuel Tov notes that it is the longest preserved biblical scroll from the Judean Desert, exceeded only by a non-biblical one, the Temple Scroll — which he measures at 8.148 m where the Israel Museum gives 8.146, the sort of two-millimetre disagreement that comes of measuring a thing that is in pieces.",
+          "Its first years out of the cave were commercial rather than archaeological, and the trail is worth following because it is the trail all seven took. The Bedouin sold four of the scrolls to Khalil Eskander Shahin, the Bethlehem antiquities dealer known as Kando, and three to a dealer named Salahi. Kando resold his four — this one, the Habakkuk Pesher, the Community Rule and a fourth so brittle it could not be opened for years — to Mar Athanasius Yeshue Samuel of St Mark's Monastery in Jerusalem, while E. L. Sukenik of the Hebrew University bought Salahi's three. The archbishop moved his four to a Syrian church in New Jersey at the end of the 1940s — the Israel Antiquities Authority dates the move to 1949 and the Israel Museum to 1948 — and advertised them in the Wall Street Journal of 1 June 1954. The Israel Antiquities Authority reproduces the notice, and it is worth reading whole, its own dating claim included: \"The Four Dead Sea Scroll - Biblical Manuscripts dating back to at least 200 BC, are for sale. This would be an ideal gift to an educational or religious institution by an individual or group.\" Sukenik's son, Yigael Yadin, bought them through an American intermediary for the State of Israel. All seven were reunited in 1955, and the Shrine of the Book was built for them ten years later. The Israel Museum catalogues this one as HU 95.57/27 and has published every column of it online.",
+        ],
+      },
+      {
+        heading: "Dating It, and Counting the Hands",
+        paragraphs: [
+          "The conventional date is about 125 BC, argued from the shape of the letters — a formal Hasmonaean hand. Two radiocarbon runs have been done on it: one reported in 1991 gave 199-120 BC, and one in 1995 gave 335-122 BC. Both brackets contain the palaeographic date rather than overturning it, and both are wide. There is also a complication that has nothing to do with antiquity: many scroll fragments were treated with castor oil in the 1950s to make them easier to read, and a 2009 study by K. L. Rasmussen and colleagues concluded that the cleaning method used in those two runs could not remove it, which would pull the measured dates towards the present by an unknown amount.",
+          "Two recent studies have gone at the scroll from the handwriting instead. In 2021 M. Popović, M. A. Dhali and L. Schomaker ran a pattern-recognition analysis over the fifty-four columns and concluded that two scribes wrote it, dividing between columns 27 and 28 — the same point at which the manuscript carries what they call a three-line lacuna at the foot of column 27, and where a new sheet begins. In 2025 the same group published the Enoch model, trained on radiocarbon-dated manuscripts, which dates both halves of this scroll consistently between 180 and 100 BC. Their headline finding was that many Qumran manuscripts are older than palaeography had assumed; this one is not among them. In the earlier of the two papers the same team set the limit themselves: these techniques \"do not give certainty of identification but statistically proven probabilities\".",
+        ],
+      },
+      {
+        heading: "The Other Isaiah Scroll from the Same Cave",
+        paragraphs: [
+          "The claim usually attached to this scroll is that it is word for word what we read today, and so proves the text was copied perfectly for a thousand years. The umbrella article on the Dead Sea Scrolls sets out why that is an overstatement, and there is a sharper reason to be careful here. Cave 1 produced a second copy of Isaiah, 1QIsaᵇ, fragmentary but substantial, and it is a good deal closer to the medieval Masoretic text than this one is. E. Tov reports the field's judgement and endorses it: 1QIsaᵇ's readings \"were considered to be more or less identical to MT\" while 1QIsaᵃ's \"were often described as secondary when compared with MT\" — and, he adds, \"while these statements on the intrinsic value of the texts are correct, neither of these texts is representative of the Qumran scrolls.\" The two scrolls sat in the same cave and do not agree with each other.",
+          "That warning is the sentence worth keeping, and it runs on: \"and therefore no generalizations should be made.\" Because these were the first scrolls published, their features were treated for years as the norm for everything else in the caves, and Tov argues the whole field would look different had the Cave 4 material been published first. One further detail is often pressed into the argument over who wrote the book of Isaiah: chapter 40 begins on the last line of the same column that ends chapter 39, separated by only an ordinary paragraph space, while the scroll's one conspicuous multi-line blank falls at the end of chapter 33. That is a real feature of the manuscript, and this app's introduction to Isaiah lays out what it does and does not carry. A copy made six centuries after Isaiah of Jerusalem shows what a scroll of Isaiah looked like in about 125 BC. It cannot show who composed it.",
+        ],
+      },
+    ],
+    verses: [
+      { reference: "Isaiah 53:3-6", note: "The Suffering Servant, preserved here in a copy from the second century BC" },
+      { reference: "Isaiah 40:1-5", note: "Beginning on the last line of the column that ends chapter 39" },
+      { reference: "Isaiah 33:22", note: "The chapter at whose close the scroll carries its one multi-line blank, and the handwriting changes" },
+      { reference: "Luke 4:16-21", note: "Jesus reading Isaiah aloud in the synagogue, roughly a century and a half after this copy was made" },
+    ],
+    sources: [
+      { label: "The Israel Museum: The Digital Dead Sea Scrolls", url: "http://dss.collections.imj.org.il/isaiah" },
+      { label: "Text & Canon Institute: How Much Can the Most Famous Dead Sea Scroll Prove?", url: "https://textandcanon.org/how-much-can-the-most-famous-dead-sea-scroll-prove/" },
+      { label: "Wikipedia: Isaiah Scroll", url: "https://en.wikipedia.org/wiki/Isaiah_Scroll" },
+    ],
+    manuscript: {
+      siglum: "1QIsaᵃ",
+      manuscriptType: "Parchment scroll, seventeen sheets sewn end to end, 54 columns, 734 cm long and 22-25 cm high",
+      language: "Hebrew",
+      contents:
+        "All 66 chapters of Isaiah, nearly complete — the only biblical scroll from the Qumran caves that survives as a whole book. Verses are not divided and the chapter numbers are a later convention; the scribes marked sections with spacing of their own",
+      origin: "Judea. Whether it was copied at Qumran or brought there is not known",
+      findSite: "Qumran, Cave 1",
+      foundYear: "1947",
+      foundBy:
+        "Bedouin of the Ta'amireh tribe. The finder's name given in most retellings is traditional and is not documented by either holding institution",
+      dateAssigned:
+        "c. 125 BC on the handwriting. Radiocarbon gave 199-120 BC in 1991 and 335-122 BC in 1995; a 2025 handwriting model dates both halves to 180-100 BC",
+      dateCertainty: "traditional",
+      currentLocation: "The Shrine of the Book, Israel Museum, Jerusalem",
+      shelfmark: "HU 95.57/27",
+      facsimileUrl: "http://dss.collections.imj.org.il/isaiah",
+    },
+    citations: [
+      {
+        tier: "institution",
+        label: "The Israel Museum, Jerusalem — The Digital Dead Sea Scrolls: The Great Isaiah Scroll",
+        url: "http://dss.collections.imj.org.il/isaiah",
+        credit: "The Israel Museum, Jerusalem — Shrine of the Book",
+        detail:
+          "The museum's own object record: \"Qumran Cave 1\", \"1st century BCE\", \"Parchment\", \"H: 22-25, L: 734 cm\", \"Accession number: HU 95.57/27\", and \"The 54 columns contain all 66 chapters\". Its column-by-column viewer data gives column 27 as Isaiah 33:1-24, column 28 as 34:1-36:2, and column 32 as 38:8-40:2. Served over http only",
+        supports: "The dimensions, findspot, accession number, and where the scroll's column breaks actually fall",
+      },
+      {
+        tier: "scholarly",
+        label: "Emanuel Tov, \"The Text of Isaiah at Qumran\"",
+        url: "http://www.emanueltov.info/docs/papers/05.isaiah.2008.pdf?v=1.0",
+        credit: "Emanuel Tov, Hebrew University of Jerusalem",
+        detail:
+          "In Hebrew Bible, Greek Bible, and Qumran: Collected Essays (TSAJ 121; Tübingen: Mohr Siebeck, 2008), 42-56; the author's own copy is freely readable. Source for the twenty-one Qumran copies of Isaiah, the four scrolls Mar Athanasius Samuel took to the United States in 1949 and their 1954 purchase, the 7.34 m length against the Temple Scroll's 8.148 m, both radiocarbon results, and the judgement on 1QIsaᵃ and 1QIsaᵇ quoted in section three",
+        supports: "The acquisition chain, the number of Isaiah copies, the radiocarbon figures, and the comparison with 1QIsaᵇ",
+      },
+      {
+        tier: "institution",
+        label: "Israel Antiquities Authority, Leon Levy Dead Sea Scrolls Digital Library: Discovery and Publication",
+        url: "https://www.deadseascrolls.org.il/learn-about-the-scrolls/discovery-and-publication",
+        credit: "Israel Antiquities Authority",
+        detail:
+          "The authority's own account of the acquisition: the Bedouin \"sold four of the seven scrolls to Kando and three to a second antiquities dealer named Salahi\"; Kando \"resold the four scrolls to Archbishop Samuel\"; in 1949 Samuel moved them \"to a Syrian Church in New Jersey\"; in 1954 he \"places the same four Scrolls up for sale in a Wall Street Journal advertisement\" and \"Yigael Yadin, son of Professor Sukenik, purchases the four Scrolls through an American middleman, on behalf of the State of Israel\". The page reproduces the advertisement itself, dated 1 June 1954, and it is quoted in full in section one; the seven were joined in 1955 and the Shrine of the Book built in 1965. It also notes that the two Bedouin goatherds named in every retelling \"claimed to have discovered\" the scrolls",
+        supports: "The acquisition chain, the 1954 advertisement, and the caution over the finders' names",
+      },
+      {
+        tier: "scholarly",
+        label: "M. Popović, M. A. Dhali and L. Schomaker, \"Artificial intelligence based writer identification generates new evidence for the unknown scribes of the Dead Sea Scrolls exemplified by the Great Isaiah Scroll (1QIsaa)\"",
+        url: "https://doi.org/10.1371/journal.pone.0249769",
+        credit: "Mladen Popović, Maruf A. Dhali and Lambert Schomaker, University of Groningen",
+        detail:
+          "PLOS ONE 16:4 (2021), e0249769. Open access. Concludes that \"two main scribes, each showing different writing patterns, were responsible for the Great Isaiah Scroll\", dividing between columns 27 and 28, where there is \"a three-line lacuna at the bottom of column 27\" and a change of sheet. Also the source of the caveat quoted in section two, that such techniques \"do not give certainty of identification but statistically proven probabilities\"",
+        supports: "The two-scribe finding and the location of the division",
+      },
+      {
+        tier: "scholarly",
+        label: "M. Popović, M. A. Dhali, L. Schomaker et al., \"Dating ancient manuscripts using radiocarbon and AI-based writing style analysis\"",
+        url: "https://doi.org/10.1371/journal.pone.0323185",
+        credit: "Mladen Popović, Maruf A. Dhali, Lambert Schomaker, Johannes van der Plicht, Kaare Lund Rasmussen, Jacopo La Nasa, Ilaria Degano, Maria Perla Colombini and Eibert Tigchelaar",
+        detail:
+          "PLOS ONE 20:6 (2025), e0323185. Open access. \"Enoch dates the two halves consistently between 180-100 BCE\". The caution quoted in section two is from the same team's earlier paper, not this one",
+        supports: "The 2025 handwriting-model date for this scroll and the authors' own caveat",
+      },
+      {
+        tier: "scholarly",
+        label: "K. L. Rasmussen et al., \"The Effects of Possible Contamination on the Radiocarbon Dating of the Dead Sea Scrolls II: Empirical Methods to Remove Castor Oil and Suggestions for Redating\"",
+        url: "https://doi.org/10.1017/S0033822200034081",
+        credit: "Kaare Lund Rasmussen, Johannes van der Plicht, Gregory Doudna, Frederik Nielsen, Peter Højrup, Erling Halfdan Stenby and Carl Th. Pedersen",
+        detail: "Radiocarbon 51:3 (2009), 1005-1022. Concludes that if castor oil \"is not removed prior to dating, the 14C dates will be skewed artificially towards modern values\"",
+        supports: "The caveat attached to the 1991 and 1995 radiocarbon results",
+        paywalled: true,
+      },
+      {
+        tier: "encyclopedic",
+        label: "Wikipedia: Isaiah Scroll",
+        url: "https://en.wikipedia.org/wiki/Isaiah_Scroll",
+      },
+    ],
+    reflectionPrompt:
+      "Two people copied this scroll, and we do not know either name. Where are you doing careful work that nobody will sign?",
+  },
+  {
+    id: "community-rule",
+    name: "Community Rule",
+    // NOT registered: "1QS" (three characters, and it never appears in the corpus), "the Rule",
+    // "the Community" (ordinary words). "Manual of Discipline" is the older English title and is
+    // still what many older books call it, so a reader meeting it there should be able to tap it.
+    alternateNames: ["Rule of the Community", "Serekh ha-Yahad", "Manual of Discipline"],
+    category: "manuscript",
+    role: "The Rule Book of the Qumran Community, Copied c. 100-75 BC",
+    summary:
+      "Eleven columns setting out how a Jewish community by the Dead Sea admitted members, ate, prayed, punished offenders and understood the world — the fullest surviving description of a Second Temple sect written by the sect itself.",
+    sections: [
+      {
+        heading: "A Community Describing Itself",
+        paragraphs: [
+          "Almost everything known about Jewish groups of the Second Temple period comes from outsiders — Josephus writing for Romans, Philo writing philosophy, the Gospels writing about opponents. The Community Rule is the exception. It is a group's own rule book, and it reads like one. The Israel Museum lists its subjects as \"the admission of new members, conduct at communal meals, and even theological doctrines\"; the Israel Antiquities Authority adds the instructions for an annual ceremony renewing the community's covenant with God, and the examination a candidate had to pass before he could eat with the rest. The scroll is 250 centimetres long and about 24 high, eleven columns in a square Hasmonaean hand, and the Israel Museum's record dates the copying to between 100 and 75 BC. That date is now under pressure from two directions. A radiocarbon measurement published in 1995 returned a range running from 206 BC to AD 111 at ninety-five per cent confidence — wide enough to contain the palaeographic date and a great deal besides. And in 2025 a Groningen team's handwriting model, trained on radiocarbon-dated manuscripts, singled this scroll out: its estimate reaches back into the second century BC, and the authors say that if it holds, \"hypotheses about whether the movement behind the scrolls originated in the second or first century BCE will need to be reconsidered.\"",
+          "It came from Cave 1 in 1947, one of the seven, and followed the same path as the Isaiah scroll and the Habakkuk commentary: bought by Mar Athanasius Yeshue Samuel, carried to the United States in 1949, purchased there for the State of Israel in 1954, and now in the Shrine of the Book under accession 96.83/208A-B. It is not the only copy. Fragments of at least ten more were found in Cave 4 and two scraps of another in Cave 5, and comparing them changed how the Cave 1 scroll is read: the museum's own note reports the conclusion that this longest and best-preserved copy \"represents a late stage in the evolution of the composition\" rather than its original form.",
+        ],
+      },
+      {
+        heading: "Cosmic Dualism, and a Community Without a Temple",
+        paragraphs: [
+          "Alongside the house rules the scroll carries doctrine. The Israel Museum's own summary of its contents names \"the belief in cosmic dualism and in predestination\", and the passage that carries them is the teaching on the two spirits: God appointed for humanity two spirits, one of truth and one of falsehood, and set the ways of each, and every person walks in one or the other until the appointed end. Readers of the New Testament notice the vocabulary at once — sons of light, the spirit of truth, walking in darkness. The overlap is real and worth knowing about. It does not establish borrowing in either direction — a text cannot show that — but it does mean that this way of speaking was available in first-century Judaism, which is worth knowing if you have been told the vocabulary of John's Gospel must have come late and from Greek philosophy.",
+          "The other thing the scroll describes is a community that had withdrawn from the Temple in Jerusalem and reorganised itself around purity, study and prayer instead. Because it was a wilderness movement with a washing rite and a call to repentance, it has often been linked to John the Baptist, sometimes to the point of enrolling him as a member. The texts do not support that. John is not mentioned in them, and where the two can be compared they diverge: John baptised the crowds who came out to him, once each; this community examined its candidates through a three-year probation before it would let them eat with the rest.",
+        ],
+      },
+      {
+        heading: "Who Wrote It, and How Sure Anyone Can Be",
+        paragraphs: [
+          "The community behind this scroll is usually identified with the Essenes, the sect the first-century historian Josephus describes in the second book of his Jewish War. The identification is well argued: the withdrawal, the ritual washing and above all the long staged initiation line up, and Josephus gives the Essenes a three-year probation exactly as this scroll does. It is not a demonstrated fact, and the scroll never uses the word Essene, which is a Greek term with no agreed Hebrew original. The Israel Antiquities Authority describes the arc of the question in its own words: early on, scholars \"attributed all of the Qumran scrolls to the Essene community\", but \"in recent years, however, this consensus has been challenged and modified, though many scholars still maintain a link between the Essenes and the Dead Sea Scrolls.\"",
+          "The Israel Antiquities Authority, which holds most of the corpus, sets out three live positions rather than one. Some scholars ascribe the Community Rule to the Essenes and treat the mismatches with Josephus as the ordinary distortion of an outsider's account. Others hold that \"several of these differences are fundamental and cannot be brushed aside\" and read the scroll as the rule of an Essene subgroup or a breakaway. And, in the authority's own words, \"yet other scholars claim that there is no connection between the Dead Sea Scrolls and the Essenes, and that the Community Rule represents a movement documented in no other source from this period.\" A second and related puzzle sits alongside it: the Damascus Document, the other rule book in the corpus, legislates for members who marry and raise children, and this scroll mentions no women at all. What can be said without hedging is that some Jews in the last century and a half before Christ organised their lives like this and wrote it down; who they were called by anyone else is a further question, and it is open.",
+        ],
+      },
+    ],
+    verses: [
+      { reference: "Matthew 3:1-6", note: "John the Baptist in the wilderness — a movement often linked to this one, on thinner evidence than is usually admitted" },
+      { reference: "John 3:19-21", note: "\"Sons of light\" and walking in darkness — the same vocabulary, put to a different use" },
+      { reference: "Acts 2:44-45", note: "Another Jewish group holding property in common, a generation later" },
+      { reference: "1 Thessalonians 5:4-5", note: "Paul writing to Gentiles as \"children of light\"" },
+    ],
+    sources: [
+      { label: "The Israel Museum: The Digital Dead Sea Scrolls", url: "http://dss.collections.imj.org.il/community" },
+      { label: "The Leon Levy Dead Sea Scrolls Digital Library", url: "https://www.deadseascrolls.org.il/" },
+      { label: "Wikipedia: Community Rule", url: "https://en.wikipedia.org/wiki/Community_Rule" },
+    ],
+    manuscript: {
+      siglum: "1QS",
+      manuscriptType: "Parchment scroll, eleven columns, 250 cm long and 24 cm high",
+      language: "Hebrew, in a square Hasmonaean script",
+      contents:
+        "The rule of a Jewish community: the admission and examination of candidates, the annual covenant-renewal ceremony, the teaching on the two spirits, conduct at communal meals, and a closing hymn. The Cave 1 copy is the longest form of the text known",
+      origin: "Judea",
+      findSite: "Qumran, Cave 1",
+      foundYear: "1947",
+      foundBy: "Bedouin of the Ta'amireh tribe; the cave was excavated by archaeologists in 1949",
+      dateAssigned:
+        "Copied between 100 and 75 BC on the Israel Museum's record. Radiocarbon in 1995 gave 206 BC - AD 111 at two sigma, and a 2025 handwriting model reaches back into the second century BC",
+      dateCertainty: "disputed",
+      currentLocation: "The Shrine of the Book, Israel Museum, Jerusalem",
+      shelfmark: "96.83/208A-B",
+      facsimileUrl: "http://dss.collections.imj.org.il/community",
+    },
+    citations: [
+      {
+        tier: "institution",
+        label: "The Israel Museum, Jerusalem — The Digital Dead Sea Scrolls: The Community Rule Scroll",
+        url: "http://dss.collections.imj.org.il/community",
+        credit: "The Israel Museum, Jerusalem — Shrine of the Book",
+        detail:
+          "The museum's own object record: \"Qumran, Cave 1\", \"1st century BCE\", \"Parchment\", \"H: 24, L: 250 cm\", \"Accession number: 96.83/208A-B\", \"copied between 100 and 75 BCE\", ten further copies in Cave 4 (4Q255-264) and two fragments in Cave 5 (5Q11), and the judgement that the Cave 1 manuscript \"represents a late stage in the evolution of the composition\"",
+        supports: "The dimensions, accession number, date of copying, the other copies, and the scroll's place in the text's development",
+      },
+      {
+        tier: "institution",
+        label: "Israel Antiquities Authority, Leon Levy Dead Sea Scrolls Digital Library: 4Q Community Rule (4Q258)",
+        url: "https://www.deadseascrolls.org.il/explore-the-archive/manuscript/4Q258-1",
+        credit: "Israel Antiquities Authority",
+        detail:
+          "The IAA's own account of the composition and of the debate over it: the group \"referred to itself as the Yahad\", a \"three year probation period\" preceded full membership, and on the Essene question it sets out three positions, including that \"there is no connection between the Dead Sea Scrolls and the Essenes, and that the Community Rule represents a movement documented in no other source from this period\"",
+        supports: "The Yahad self-designation, the three-year probation, and the three positions on the Essene identification in section three",
+      },
+      {
+        tier: "institution",
+        label: "Israel Antiquities Authority, Leon Levy Dead Sea Scrolls Digital Library: 4Q Damascus Document (4Q266)",
+        url: "https://www.deadseascrolls.org.il/explore-the-archive/manuscript/4Q266-1",
+        credit: "Israel Antiquities Authority",
+        detail:
+          "The IAA's own note on the two rule books: the Damascus Document's community \"included women, and its members married and had children; the one portrayed in the Community Rule is an ascetic group\", and there is \"a heated debate among scholars over how to explain the connection between these two communities\"",
+        supports: "The contrast between the two rule books in section three",
+      },
+      {
+        tier: "scholarly",
+        label: "Emanuel Tov, \"The Text of Isaiah at Qumran\"",
+        url: "http://www.emanueltov.info/docs/papers/05.isaiah.2008.pdf?v=1.0",
+        credit: "Emanuel Tov, Hebrew University of Jerusalem",
+        detail:
+          "In Hebrew Bible, Greek Bible, and Qumran: Collected Essays (TSAJ 121; Tübingen: Mohr Siebeck, 2008), 42-56. Names 1QS as one of the four scrolls Mar Athanasius Samuel took to the United States in 1949 and records their purchase on behalf of the State of Israel in 1954",
+        supports: "The acquisition chain in section one",
+      },
+      {
+        tier: "institution",
+        label: "Israel Antiquities Authority, Leon Levy Dead Sea Scrolls Digital Library: Introduction",
+        url: "https://www.deadseascrolls.org.il/learn-about-the-scrolls/introduction",
+        credit: "Israel Antiquities Authority",
+        detail:
+          "\"In the early days of Scrolls research, scholars attributed all of the Qumran scrolls to the Essene community, one of three main Jewish sects described in ancient sources. In recent years, however, this consensus has been challenged and modified, though many scholars still maintain a link between the Essenes and the Dead Sea Scrolls.\"",
+        supports: "That the Essene identification is a contested majority view rather than a settled fact",
+      },
+      {
+        tier: "primary",
+        label: "M. Burrows (ed.), The Dead Sea Scrolls of St. Mark's Monastery, Vol. II fasc. 2: Plates and Transcription of the Manual of Discipline",
+        credit: "Millar Burrows, with J. C. Trever and W. H. Brownlee; American Schools of Oriental Research",
+        detail:
+          "New Haven: American Schools of Oriental Research, 1951 — the editio princeps, and the plates and transcription behind every translation of this scroll. Named as the official publication in the Israel Antiquities Authority's own record for 1Q28. The Cave 1 fragments were published by D. Barthélemy and J. T. Milik in Discoveries in the Judaean Desert 1 (Clarendon, 1955), 107-130. Print only",
+        supports: "The text of the scroll described throughout this article",
+      },
+      {
+        tier: "scholarly",
+        label: "M. Popović, M. A. Dhali, L. Schomaker et al., \"Dating ancient manuscripts using radiocarbon and AI-based writing style analysis\"",
+        url: "https://doi.org/10.1371/journal.pone.0323185",
+        credit: "M. Popović, M. A. Dhali, L. Schomaker and colleagues, University of Groningen",
+        detail:
+          "PLOS ONE 20:6 (2025), e0323185. Open access. Names this scroll among the manuscripts its model dates earlier than palaeography does, and states the consequence: \"Hypotheses about whether the movement behind the scrolls originated in the second or first century BCE will need to be reconsidered in light of Enoch's second-century BCE date predictions for Hasmonaean-type manuscripts such as 1QS\"",
+        supports: "The dating pressure described in section one",
+      },
+      {
+        tier: "scholarly",
+        label: "A. J. T. Jull, D. J. Donahue, M. Broshi and E. Tov, \"Radiocarbon Dating of Scrolls and Linen Fragments from the Judean Desert\"",
+        url: "https://doi.org/10.1017/S0033822200014740",
+        credit: "A. J. T. Jull, D. J. Donahue, M. Broshi and E. Tov",
+        detail:
+          "Radiocarbon 37:1 (1995), 11-19. The measurement on this scroll, sample AA-13418 from column XI, calibrates to 206 BC - AD 111 at two sigma. The same paper records the field's own framing: the scrolls are \"generally considered to have been hidden by the Qumran Community, identified by most scholars as the Essenes\"",
+        supports: "The radiocarbon range in section one, and that the Essene identification is the majority view rather than a settled one",
+      },
+      {
+        tier: "encyclopedic",
+        label: "Wikipedia: Community Rule",
+        url: "https://en.wikipedia.org/wiki/Community_Rule",
+      },
+    ],
+    reflectionPrompt:
+      "This community wrote down a penalty for interrupting a neighbour and for falling asleep in a meeting. What would be on the list if your household wrote one?",
+  },
+  {
+    id: "habakkuk-pesher",
+    name: "Habakkuk Pesher",
+    // "Habakkuk Pesher" (15 characters) beats the bare "Habakkuk" entry, which NAME_ENTRIES sorts
+    // shorter, so the prophet keeps every other mention. NOT registered: "1QpHab" — the corpus
+    // writes it in brackets straight after the full name twice out of three times, and a siglum
+    // chip beside a name chip pointing at the same record reads as a bug.
+    alternateNames: ["Pesher Habakkuk", "Commentary on Habakkuk", "Habakkuk Commentary"],
+    category: "manuscript",
+    role: "A First-Century BC Running Commentary from Qumran",
+    summary:
+      "Thirteen columns quoting Habakkuk 1-2 a passage at a time and reading each one as a coded description of the writer's own century — the clearest surviving example of how the Qumran community read Scripture.",
+    sections: [
+      {
+        heading: "A Commentary, Not a Copy",
+        paragraphs: [
+          "This is not a manuscript of Habakkuk. It is a commentary on Habakkuk, and the difference is the whole point of it. The scroll quotes the biblical text in order, a paragraph at a time, and after each quotation writes out what the passage means, introduced by the Hebrew word pishro — \"its interpretation is\" — from which the whole genre takes its name, pesher. Physically it is a modest object: 148 centimetres long, only 14 high, thirteen columns in a clear square hand of the Herodian type. One detail on it is worth pausing over. Wherever the four-letter name of God appears in the quoted text, the scribe wrote it in the old palaeo-Hebrew alphabet rather than in the square script he used for everything else, a way of marking the name off as untouchable.",
+          "It was one of the seven scrolls from Cave 1, found in 1947, and one of the four bought by Mar Athanasius Yeshue Samuel, taken by him to the United States at the end of the 1940s, and purchased there on behalf of the State of Israel in 1954. It is now in the Shrine of the Book, catalogued as accession 95.57/28. The commentary runs through Habakkuk 1 and 2 and stops at 2:20; the rest of the last column was left blank, so the ending was a decision and not an accident. A few scholars have read that as evidence that the commentator's copy of Habakkuk had no chapter 3. This app's introduction to Habakkuk sets out the case against, and it is a strong one: a pesher is a running commentary rather than a copy, chapter 3 is a liturgical psalm with musical rubrics that this genre had no use for, and chapter 3 is present in the Hebrew and Greek manuscripts of the book that preserve that part of it, including the Wadi Murabba'at scroll and the Greek Minor Prophets scroll from Nahal Hever.",
+        ],
+      },
+      {
+        heading: "People Who Are Never Named",
+        paragraphs: [
+          "The commentary is populated, and the Israel Museum's note lists its cast: the scroll alludes to \"the Teacher of Righteousness,\" \"the Wicked Priest,\" \"the Man of Lies,\" and others, and its second great subject is the arrival of the Romans on the historical scene, whom it calls the Chaldeans or the Kittim. Not one of the people is given a name. The writer plainly expected his readers to know exactly who was meant, which is a good indication of how recent the events were and a very poor one for anybody trying to reconstruct them two thousand years later.",
+          "The Kittim are the least contested: the description of a relentless, idolatrous imperial army arriving from the sea fits Rome, and that is how most specialists read it, though a Seleucid identification has also been argued and the scroll itself never says. The Teacher and the Wicked Priest are worse. Names have been proposed for both for eighty years, mostly from among the Hasmonean high priests, and none has carried the field. The Israel Museum's own note on the scroll puts it flatly: these are individuals \"whose exact identities have yet to be established.\" An article that hands a reader a confident identification here is telling them something the evidence does not support.",
+        ],
+      },
+      {
+        heading: "Habakkuk 2:4 Before Paul Reached For It",
+        paragraphs: [
+          "The verse a Christian reader will want is Habakkuk 2:4 — \"the righteous will live by his faith\" — which Paul quotes at Romans 1:17 and Galatians 3:11 and which the letter to the Hebrews quotes again. The commentary on it survives; the quotation of it does not. T. H. Lim, who has edited the scroll, says so plainly: \"nothing of Hab 2:4b is preserved in the mutilated line 17 of col. 7,\" and the lemma printed in every translation is his reconstruction from the pattern the scribe follows everywhere else. What is actually on the leather is the comment, at column 8. In F. F. Bruce's rendering it runs: \"Their interpretation concerns all the doers of the law in the house of Judah, whom God will save from the house of judgment because of their trouble and their faith in the Teacher of Righteousness.\" Lim argues from this that Paul's choice of the half-verse makes better sense than it first appears — there was already a Jewish tradition of reading it, visible in this scroll, as a statement about who is saved and who is judged rather than as a general observation about integrity.",
+          "That is a real result, and it is worth being exact about its size. It does not show that Paul read this scroll, that he knew the Qumran community, or that he learned his doctrine from them; the recurring claim that Paul or John the Baptist was an Essene rests on nothing in these texts. Nor do the two readings agree, and the clearest statement of the difference comes from an evangelical scholar who took the parallel seriously. Bruce granted the resemblance — \"if the Qumran sect believed that they would escape condemnation in the last judgment because of their faith in the Teacher of Righteousness, Paul proclaims that God justifies the man who has faith in Jesus\" — and then said where it breaks: \"Faith in the Teacher of Righteousness implied mainly belief in his teaching; whereas saving faith in Jesus, according to Paul and his fellow-apostles, involves over and above this a personal commitment to Him as Lord and Redeemer.\" The Qumran acquittal is promised to doers of the law; the justification Paul preaches is, in his own phrase, apart from the law. And Bruce lets the other side answer in its own voice rather than summarising it: \"The Qumran sect would have thought this a scandalous misapplication of their proof-text from Habakkuk.\" What the scroll gives is the shape of the conversation Paul was writing into — evidence that the verse was already being read as a question of salvation a century before he quoted it, by people who answered it differently.",
+        ],
+      },
+    ],
+    verses: [
+      { reference: "Habakkuk 1:6-11", note: "The Chaldeans, whom the pesher reads as the Kittim of its own day" },
+      { reference: "Habakkuk 2:4", note: "The half-verse the commentary reads of the Teacher of Righteousness" },
+      { reference: "Habakkuk 2:20", note: "Where the commentary stops, leaving the rest of the column blank" },
+      { reference: "Romans 1:16-17", note: "Paul quoting the same half-verse to a different end" },
+    ],
+    sources: [
+      { label: "The Israel Museum: The Digital Dead Sea Scrolls", url: "http://dss.collections.imj.org.il/habakkuk" },
+      { label: "The Leon Levy Dead Sea Scrolls Digital Library", url: "https://www.deadseascrolls.org.il/" },
+      { label: "Wikipedia: Habakkuk Commentary", url: "https://en.wikipedia.org/wiki/Habakkuk_Commentary" },
+    ],
+    manuscript: {
+      siglum: "1QpHab",
+      manuscriptType: "Parchment scroll, thirteen columns, 148 cm long and 14 cm high",
+      language: "Hebrew, with the divine name written in palaeo-Hebrew letters",
+      contents:
+        "A running commentary on Habakkuk 1-2, quoting the prophet paragraph by paragraph and interpreting each passage of the writer's own time. It stops at Habakkuk 2:20; chapter 3 is not commented on and the remainder of the final column was deliberately left blank",
+      origin: "Judea",
+      findSite: "Qumran, Cave 1",
+      foundYear: "1947",
+      foundBy: "Bedouin of the Ta'amireh tribe; the cave was excavated by archaeologists in 1949",
+      dateAssigned: "Second half of the first century BC",
+      dateCertainty: "traditional",
+      currentLocation: "The Shrine of the Book, Israel Museum, Jerusalem",
+      shelfmark: "95.57/28",
+      facsimileUrl: "http://dss.collections.imj.org.il/habakkuk",
+    },
+    citations: [
+      {
+        tier: "institution",
+        label: "The Israel Museum, Jerusalem — The Digital Dead Sea Scrolls: The Commentary on Habakkuk Scroll",
+        url: "http://dss.collections.imj.org.il/habakkuk",
+        credit: "The Israel Museum, Jerusalem — Shrine of the Book",
+        detail:
+          "The museum's own object record: \"Qumran, Cave 1\", \"1st century BCE\", \"Parchment\", \"H: 14; L: 148 cm\", \"Accession number: 95.57/28\", thirteen columns in \"a clear, square Herodian script\", the tetragrammaton \"written in ancient Hebrew characters\", and the allusions to figures \"whose exact identities have yet to be established\". Served over http only",
+        supports: "The dimensions, script, accession number, palaeo-Hebrew divine name, and the unresolved identifications",
+      },
+      {
+        tier: "scholarly",
+        label: "T. H. Lim, \"Why did Paul cite Habakkuk 2:4b?\"",
+        url: "https://repository.up.ac.za/bitstreams/12023dde-222e-4b79-84a1-68cab6c229f9/download",
+        credit: "T. H. Lim, University of Edinburgh",
+        detail:
+          "The Expository Times 133:6 (2022), 225-232, DOI 10.1177/00145246221075893. The publisher's own page refuses automated requests; this is the University of Pretoria repository's open copy. Argues that Paul selected the half-verse \"because there was already a tradition of Jewish biblical interpretation, evident in Pesher Habakkuk, that understood the verse as a salvation of the\" righteous — and states plainly that \"nothing of Hab 2:4b is preserved in the mutilated line 17 of col. 7\", so the lemma every translation prints is a reconstruction",
+        supports: "That the quotation of Habakkuk 2:4b is reconstructed rather than extant, and the argument about why Paul chose it",
+      },
+      {
+        tier: "primary",
+        label: "M. Burrows (ed.), The Dead Sea Scrolls of St. Mark's Monastery, Vol. I: The Isaiah Manuscript and the Habakkuk Commentary",
+        credit: "Millar Burrows, with J. C. Trever and W. H. Brownlee; American Schools of Oriental Research",
+        detail:
+          "New Haven: American Schools of Oriental Research, 1950 — the editio princeps of this scroll and of the Great Isaiah Scroll, and the plates behind every translation of either. Print only",
+        supports: "The text of the commentary described and quoted throughout this article",
+      },
+      {
+        tier: "scholarly",
+        label: "F. F. Bruce, The Teacher of Righteousness in the Qumran Texts",
+        url: "https://biblicalstudies.org.uk/pdf/tp/qumran_bruce.pdf",
+        credit: "F. F. Bruce, University of Sheffield",
+        detail:
+          "The Tyndale Lecture in Biblical Archaeology, 1956 (London: The Tyndale Press, 1957); freely readable in full. Source of the translation of 1QpHab column 8, lines 1-3 quoted in section three, and of the comparison with Paul — including Bruce's own concession of the resemblance and his statement of where it breaks",
+        supports: "The wording of the pesher on Habakkuk 2:4, and the difference between its reading and Paul's",
+      },
+      {
+        tier: "institution",
+        label: "Israel Antiquities Authority, Leon Levy Dead Sea Scrolls Digital Library: Discovery Sites",
+        url: "https://www.deadseascrolls.org.il/learn-about-the-scrolls/discovery-sites",
+        credit: "Israel Antiquities Authority",
+        detail:
+          "\"Qumran Cave 1 (1Q) - Discovered by a young Bedouin shepherd in 1947 and excavated by archaeologists in 1949\", and lists \"Pesher Habakkuk (Habakkuk Commentary)\" among the seven scrolls from that cave",
+        supports: "The find circumstances and the scroll's place among the original seven",
+      },
+      {
+        tier: "encyclopedic",
+        label: "Wikipedia: Habakkuk Commentary",
+        url: "https://en.wikipedia.org/wiki/Habakkuk_Commentary",
+      },
+    ],
+    reflectionPrompt:
+      "The community that wrote this read their own troubles into an old prophecy, and were sure they had it right. When have you been sure a text was about you?",
+  },
+  {
+    id: "war-scroll",
+    name: "War Scroll",
+    // NOT registered: "1QM" (two letters and a digit, and it appears nowhere in the corpus), "the
+    // War" (an ordinary phrase). The long popular title is registered because older books use it.
+    alternateNames: ["The War of the Sons of Light Against the Sons of Darkness"],
+    category: "manuscript",
+    role: "A Battle Order for the Last War, Qumran Cave 1",
+    summary:
+      "Nineteen columns setting out how the Sons of Light will fight the Sons of Darkness at the end of the age — battle arrays, weaponry, formations and the ages of the men, written like a military manual for a war nobody fought.",
+    sections: [
+      {
+        heading: "A Manual for a Battle at the End of the Age",
+        paragraphs: [
+          "The War Scroll is one of the seven scrolls from Cave 1, and one of the three that E. L. Sukenik of the Hebrew University bought from the Bethlehem dealer Salahi rather than from Kando. It is 279 centimetres long and unusually short in height, between 15 and 16 centimetres, and carries nineteen columns; there were at least twenty originally, and the lower part of every column is lost. Sukenik published selections almost immediately, and the full plates in 1955. It is in the Shrine of the Book under accession 96.84/210.",
+          "What it contains is not a prophecy in the biblical sense but something closer to a staff manual. It sets out a war in seven engagements between the Sons of Light — the community's name for itself — and the Sons of Darkness, who are everyone else, Jew and Gentile alike, led by Belial and assisted by a nation called the Kittim. The confrontation is to run forty-nine years and end with the restoration of the Temple service. Around that frame the scroll specifies battle arrays, weaponry, the ages of the participants and the manoeuvres, in a way that recalls the Hellenistic and Roman military handbooks of the period.",
+        ],
+      },
+      {
+        heading: "Why a New Testament Reader Recognises It",
+        paragraphs: [
+          "Sons of light and sons of darkness, a prince of light who is also named Michael, a final conflict between heavenly and earthly forces, a decisive intervention that ends the present age: a reader who comes to this scroll from the New Testament will find the furniture familiar. The Israel Museum's own note observes that it \"sheds light on the New Testament Book of Revelation, in which a final war is also described between earthly and heavenly forces.\" What that shows is worth stating carefully. It is not that Revelation borrowed from this scroll, and not that this community influenced the church. It is that the imagery and the vocabulary of a last battle were already Jewish and already current before the New Testament was written.",
+          "The differences are as instructive as the overlaps, and they run deep. The Israel Museum, describing the scroll, says it \"lacks a 'messianic' figure\" — the museum's reading of the text, given here as that rather than as a settled verdict of the field. What is plain on the surface of it is that the fighting is done by armed Israelites under priests, in formations, with weapons whose dimensions are specified. The language of Ephesians 6, where the armour is truth and righteousness and faith and the wrestling is not against flesh and blood, is doing something else entirely. The two texts share a set of images and disagree about the war.",
+        ],
+      },
+      {
+        heading: "A War That Never Happened",
+        paragraphs: [
+          "The obvious question is whether the Kittim are the Romans. The Israel Museum will only write \"(Romans?)\", and it is right to hedge, because the way the question is now asked has changed. Rather than choosing between Rome and the Seleucids for the whole scroll, recent work reads it as layered. P. R. Davies argued in 1977 that columns 2 to 9 come from the Hasmonean period while the final shape of columns 15 to 19 points to a Roman date; Brian Schultz has argued similarly that columns 1 to 9 are the older Hellenistic core and 10 to 19 a later addition made under Roman rule. On that reading the scroll is not one author's answer to one enemy but a text that kept being rewritten as the enemy changed. There is a second uncertainty of the same kind: seven further manuscripts from Cave 4 carry similar contents, and the Israel Museum's note says the relationship \"is not entirely clear\" — they may be an earlier version of this scroll, or material it drew on.",
+          "The larger caution is about what kind of document this is. It is tempting to read it as a first-century Jewish prediction of a real war, and to line it up with the revolt that broke out in AD 66 and destroyed the Temple. The scroll itself argues against that reading. As the Israel Museum's note puts it, the work \"is not, strictly speaking, an apocalypse\" — no heaven is opened, nothing is revealed — and it \"lacks a 'messianic' figure\"; details such as \"the advanced age of the combatants and the leadership of the priests, point to the idealistic nature of the war described in the work and impart a fictional quality to the treatise.\" It may well reflect the real political pressure that produced the revolt. It is not a forecast of it, and no battle of the sort it describes was ever fought.",
+        ],
+      },
+    ],
+    verses: [
+      { reference: "Daniel 12:1-3", note: "The biblical tradition of a final crisis that the scroll builds on" },
+      { reference: "Ezekiel 38:14-23", note: "Gog and Magog — the other Old Testament text standing behind it" },
+      { reference: "Ephesians 6:10-13", note: "The same imagery, and a wholly different war" },
+      { reference: "Revelation 19:11-16", note: "A last battle in which the fighting is not done by the saints" },
+    ],
+    sources: [
+      { label: "The Israel Museum: The Digital Dead Sea Scrolls", url: "http://dss.collections.imj.org.il/war" },
+      { label: "The Leon Levy Dead Sea Scrolls Digital Library", url: "https://www.deadseascrolls.org.il/" },
+      { label: "Wikipedia: War Scroll", url: "https://en.wikipedia.org/wiki/War_Scroll" },
+    ],
+    manuscript: {
+      siglum: "1QM (1Q33)",
+      manuscriptType: "Parchment scroll, nineteen columns, 279 cm long and 15-16 cm high",
+      language: "Hebrew, in a square Herodian script",
+      contents:
+        "A rule for the final war between the Sons of Light and the Sons of Darkness: the seven engagements, the battle arrays, the weaponry, the ages of the combatants, the manoeuvres, and the priests' leadership. Nineteen columns survive of at least twenty, and the foot of every column is lost",
+      origin: "Judea",
+      findSite: "Qumran, Cave 1",
+      foundYear: "1947",
+      foundBy:
+        "Bedouin of the Ta'amireh tribe; bought from the dealer Salahi by E. L. Sukenik for the Hebrew University",
+      dateAssigned: "Late first century BC or early first century AD",
+      dateCertainty: "traditional",
+      currentLocation: "The Shrine of the Book, Israel Museum, Jerusalem",
+      shelfmark: "96.84/210",
+      facsimileUrl: "http://dss.collections.imj.org.il/war",
+    },
+    citations: [
+      {
+        tier: "institution",
+        label: "The Israel Museum, Jerusalem — The Digital Dead Sea Scrolls: The War Scroll",
+        url: "http://dss.collections.imj.org.il/war",
+        credit: "The Israel Museum, Jerusalem — Shrine of the Book",
+        detail:
+          "The museum's own object record: \"Qumran, Cave 1\", \"1st century BCE - 1st century CE\", \"H: 15-16; L: 279 cm\", \"Accession number: 96.84/210\", nineteen columns of at least twenty, the Kittim glossed only as \"(Romans?)\", the seven further manuscripts 4Q491-497 whose relationship to 1QM \"is not entirely clear\", and the judgements quoted in section three about the work's idealistic and fictional character",
+        supports: "The dimensions, accession number, date, the Kittim question, and the honest limit in section three",
+      },
+      {
+        tier: "institution",
+        label: "Israel Antiquities Authority, Leon Levy Dead Sea Scrolls Digital Library: 1Q War Scroll (1Q33)",
+        url: "https://www.deadseascrolls.org.il/explore-the-archive/manuscript/1Q33-1",
+        credit: "Israel Antiquities Authority",
+        detail:
+          "The authority's own record of the manuscript, giving the site as \"Qumran, Cave 1\", the material as parchment, the period as Herodian, and the official publications as Milik, DJD 1: 135-136, and Sukenik, The Dead Sea Scrolls of the Hebrew University (Jerusalem, 1955), plates XVI-XXXIV",
+        supports: "The manuscript number, period and publication record",
+      },
+      {
+        tier: "scholarly",
+        label: "Jean Duhaime, The War Texts: 1QM and Related Manuscripts",
+        credit: "Jean Duhaime, Université de Montréal",
+        detail:
+          "Companion to the Qumran Scrolls 6 (London: T&T Clark, 2004). The standard book-length treatment of 1QM and the Cave 4 war texts; reviewed by J. G. Campbell in the Journal of Jewish Studies 56:2 (2005), 343-345, DOI 10.18647/2625/jjs-2005. Print only",
+        supports: "That the date and the identity of the Kittim remain argued rather than settled",
+      },
+      {
+        tier: "scholarly",
+        label: "Hanna Vanonen, War Traditions from the Qumran Caves",
+        url: "https://brill.com/display/book/9789004512061/BP000010.xml",
+        credit: "Hanna Vanonen, University of Helsinki",
+        detail:
+          "Studies on the Texts of the Desert of Judah (Leiden: Brill, 2022), DOI 10.1163/9789004512061; the introduction is open. Its survey is the source for the layered readings in section three: \"According to Davies, there were two main sections of the scroll: the text in columns 2-9 derives from the Hasmonean period and the final redaction of the text in columns 15-19 ... points to a Roman date\"; and Schultz \"argues that columns 1-9 form the primitive part of the Scroll from the Hellenistic period and columns 10-19 were added later, inspired by the Roman conquest of Judea\". Davies is P. R. Davies, 1QM, the War Scroll from Qumran: Its Structure and History (Rome: Biblical Institute Press, 1977)",
+        supports: "The layered composition reading in section three, and the two scholars named for it",
+      },
+      {
+        tier: "institution",
+        label: "Israel Antiquities Authority: Discovery and Publication",
+        url: "https://www.deadseascrolls.org.il/learn-about-the-scrolls/discovery-and-publication",
+        credit: "Israel Antiquities Authority",
+        detail:
+          "\"Sukenik acquires and publishes selections of three Scrolls: The War Scroll, the Thanksgiving Scroll (Hodayot), and a second copy of Isaiah\" — the three bought from the dealer Salahi rather than from Kando",
+        supports: "Which of the seven Cave 1 scrolls went to Sukenik and how",
+      },
+      {
+        tier: "encyclopedic",
+        label: "Wikipedia: War Scroll",
+        url: "https://en.wikipedia.org/wiki/War_Scroll",
+      },
+    ],
+    reflectionPrompt:
+      "These men drew up formations for a battle that never came. What are you preparing for that may never arrive, and what does the preparing do to you?",
+  },
+  {
+    id: "temple-scroll",
+    name: "Temple Scroll",
+    // NOT registered: "11QTa" or "11Q19" — sigla, and neither appears in the app's prose.
+    // "the Temple Scroll" is a matchName and is NOT decoration. NAME_ENTRIES is sorted longest-first
+    // but matching runs left to right, so where the prose reads "the Temple Scroll" the existing
+    // "the Temple" topic entry starts one character earlier and wins the position — measured, on
+    // this record's own first sentence. Registering the article + name as a single 17-character
+    // wording puts the longer match at the same start and takes the position back.
+    alternateNames: [],
+    matchNames: ["the Temple Scroll"],
+    category: "manuscript",
+    role: "The Longest Dead Sea Scroll, and a Rewritten Law",
+    summary:
+      "Eight metres of the thinnest parchment found in the caves, rewriting the laws of the Pentateuch as if God were speaking them directly, and describing a Temple that was never built.",
+    sections: [
+      {
+        heading: "Eight Metres of Very Thin Skin",
+        paragraphs: [
+          "The Temple Scroll is the longest manuscript from the Qumran caves: eighteen sheets of parchment, three or four columns to a sheet, running to 8.146 metres. The skin is extraordinary — a tenth of a millimetre thick, the thinnest of any scroll from the site — and the second half, which lay on the inside of the roll, survived far better than the first. The Israel Museum records that it was \"almost certainly discovered in 1956 in Cave 11\", two kilometres north of the Qumran ruin, by Bedouin rather than archaeologists. It then spent eleven years with the Bethlehem antiquities dealer Kando before Yigael Yadin obtained it in 1967, during the Six-Day War. Exactly how is not agreed: the Israel Museum's own credit line says the scroll was \"purchased for the Shrine of the Book with the aid of a grant from the Wolfson Foundation\", other accounts describe Israeli officers demanding it and Kando being paid afterwards, and the figure named is variously $105,000 and $108,000. It is catalogued under three accession numbers, H95.57.25, H95.57.23 and H95.82.120.",
+          "Two other manuscripts carry the same composition — a second Cave 11 copy and a fragmentary text from Cave 4 — and the Israel Museum reports that most scholars date the original work to the second half of the second century BC, earlier than any of the surviving copies. What the work does is rewrite the law. In the museum's description it \"claims to provide the details of God's instructions (to Moses?) in regard to the construction and operation of the Temple\", combining the Temple and sacrificial legislation of Exodus, Leviticus and Numbers with a new version of the laws of Deuteronomy 12-23. The Israel Antiquities Authority puts the purpose more sharply still: the scroll \"seeks to bring into accord several conflicts found in the biblical legal code.\" It is a harmonisation, presented as revelation.",
+        ],
+      },
+      {
+        heading: "A Temple Nobody Could Have Built",
+        paragraphs: [
+          "A large part of the scroll is architecture. In the Israel Antiquities Authority's summary, \"a significant portion of the text comprises an architectural description of the temple and the surrounding city of Jerusalem\" — and the measurements are the problem. The same note says plainly that \"the vast dimensions of both the temple and the city seem unrealistic.\" Nothing on the scale described could have stood on the Temple Mount, or in the Jerusalem of the second century BC.",
+          "That does not make it a vision of the world to come. The same note is careful on the point: \"it is apparent that the author did not compose a utopian vision of the end of days, but rather a description of the proper way the temple and its rituals should be conducted during his own lifetime\" — and the reason for saying so is inside the scroll, which distinguishes this Temple from a further, greater one that God will build at the end of days. So the document is a programme. Somebody in second-century-BC Judea believed the Temple then standing in Jerusalem was wrong, wrote out what a right one would be, and put it in God's own mouth.",
+        ],
+      },
+      {
+        heading: "Whose Book Was It?",
+        paragraphs: [
+          "Yigael Yadin, who brought the scroll into Israeli hands in 1967 and produced its first edition ten years later, read it as the community's own book of the law. Hartmut Stegemann argued against that in \"The Origins of the Temple Scroll\" in 1988: on his reading the work is not a sectarian composition at all. The Israel Antiquities Authority sets the question out without taking a side — \"it is unclear whether the Temple Scroll is a sectarian composition or an earlier composition that was later adopted by the Dead Sea Scrolls community as an authoritative text\" — and the Israel Museum states both positions in the same breath: \"Many scholars still attribute the Temple Scroll to the isolated community living at Qumran. But others reject any connection with the Qumran community, affirming that the work originated in certain priestly (possible Zadokite) circles.\" The evidence pulls both ways. Its legal positions have real parallels in the Damascus Document and the Community Rule; but as the museum notes, the sectarian markers are missing — no Sons of Light, and no predestination.",
+          "What follows for a Christian reader is a matter of proportion rather than doctrine. If the Temple Scroll is not sectarian, it is evidence that dissatisfaction with the Jerusalem Temple was broader than one group by the Dead Sea; if it is sectarian, it is evidence of how far that one group went. Either way it belongs to the same century as the buildings Jesus walked through and the argument he walked into, and it shows that a Jew of the period could believe the standing Temple was wrong without ceasing to believe in the Temple. What it is not is a blueprint for a future building, or a prophecy. It is a proposal, and nobody adopted it.",
+        ],
+      },
+    ],
+    verses: [
+      { reference: "Deuteronomy 12:5-14", note: "The legislation the scroll rewrites at greatest length" },
+      { reference: "Ezekiel 40:1-5", note: "The other ancient description of a Temple that was never built" },
+      { reference: "Mark 11:15-18", note: "Jesus in the Temple this scroll's author thought had gone wrong" },
+      { reference: "Hebrews 9:11-12", note: "A New Testament answer to the same dissatisfaction, in a different direction" },
+    ],
+    sources: [
+      { label: "The Israel Museum: The Digital Dead Sea Scrolls", url: "http://dss.collections.imj.org.il/temple" },
+      { label: "The Leon Levy Dead Sea Scrolls Digital Library", url: "https://www.deadseascrolls.org.il/" },
+      { label: "Wikipedia: Temple Scroll", url: "https://en.wikipedia.org/wiki/Temple_Scroll" },
+    ],
+    manuscript: {
+      siglum: "11QTᵃ (11Q19)",
+      manuscriptType: "Parchment scroll, eighteen sheets, 8.146 m long and 24-26 cm high, on skin a tenth of a millimetre thick",
+      language: "Hebrew, in a square Herodian script",
+      contents:
+        "A rewriting of Pentateuchal law presented as God's own instructions: an extended architectural description of the Temple and of the city around it, the festival calendar and its sacrifices, purity regulations, and a reworked version of the laws of Deuteronomy 12-23. The second half of the roll is far better preserved than the first",
+      origin: "Judea. Most scholars date the composition to the second half of the second century BC, earlier than this copy",
+      findSite: "Qumran, Cave 11",
+      foundYear: "1956",
+      foundBy:
+        "Bedouin, not archaeologists. It was held by the dealer Kando until 1967, when Yigael Yadin obtained it for Israel; accounts differ over whether that was a purchase or a requisition later paid for",
+      dateAssigned: "Late first century BC to early first century AD",
+      dateCertainty: "traditional",
+      currentLocation: "The Shrine of the Book, Israel Museum, Jerusalem",
+      shelfmark: "H95.57.25, H95.57.23, H95.82.120",
+      facsimileUrl: "http://dss.collections.imj.org.il/temple",
+    },
+    citations: [
+      {
+        tier: "institution",
+        label: "The Israel Museum, Jerusalem — The Digital Dead Sea Scrolls: The Temple Scroll",
+        url: "http://dss.collections.imj.org.il/temple",
+        credit: "The Israel Museum, Jerusalem — Shrine of the Book",
+        detail:
+          "The museum's own object record: \"Qumran Cave 11\", \"Late 1st century BCE - early 1st century CE\", \"H: 24-26; L: 814 cm\", \"Accession number: H95.57.25, H95.57.23, H95.82.120\", \"almost certainly discovered in 1956 in Cave 11\", eighteen sheets and a total length of 8.146 m, \"the thinnest parchment scroll ever found in the caves of Qumran\", and the two further copies 11Q20 and 4Q524. Served over http only",
+        supports: "The dimensions, thickness, sheet count, accession numbers, find year and the other copies",
+      },
+      {
+        tier: "institution",
+        label: "Israel Antiquities Authority, Leon Levy Dead Sea Scrolls Digital Library: 11Q Temple Scroll (11Q20)",
+        url: "https://www.deadseascrolls.org.il/explore-the-archive/manuscript/11Q20-1",
+        credit: "Israel Antiquities Authority",
+        detail:
+          "The authority's own account of the composition: \"the longest non-biblical composition discovered among the Dead Sea Scrolls\"; \"the vast dimensions of both the temple and the city seem unrealistic\"; \"the author did not compose a utopian vision of the end of days, but rather a description of the proper way the temple and its rituals should be conducted during his own lifetime\"; and \"Scholars still debate the source of this text, and it is unclear whether the Temple Scroll is a sectarian composition or an earlier composition that was later adopted by the Dead Sea Scrolls community\"",
+        supports: "The scale of the described Temple, the scroll's own purpose, and the open question in section three",
+      },
+      {
+        tier: "scholarly",
+        label: "F. García Martínez, E. J. C. Tigchelaar and A. S. van der Woude, Qumran Cave 11.II (11Q2-18, 11Q20-31)",
+        credit: "Florentino García Martínez, Eibert J. C. Tigchelaar and Adam S. van der Woude",
+        detail:
+          "Discoveries in the Judaean Desert 23 (Oxford: Clarendon Press, 1998), 357-409 — the official edition of the second Cave 11 copy, named as such in the Israel Antiquities Authority's own record for 11Q20. Print only",
+        supports: "The publication record for the composition's second copy",
+      },
+      {
+        tier: "scholarly",
+        label: "Emanuel Tov, \"The Text of Isaiah at Qumran\"",
+        url: "http://www.emanueltov.info/docs/papers/05.isaiah.2008.pdf?v=1.0",
+        credit: "Emanuel Tov, Hebrew University of Jerusalem",
+        detail:
+          "In Hebrew Bible, Greek Bible, and Qumran: Collected Essays (TSAJ 121; Tübingen: Mohr Siebeck, 2008), 42-56, note 12: the Great Isaiah Scroll is the longest preserved biblical scroll at 7.34 m, \"surpassed only by a nonbiblical composition, 11QTa (8.148 m; reconstructed total length 8.75 m)\"",
+        supports: "That this is the longest scroll from the caves, and its reconstructed original length",
+      },
+      {
+        tier: "scholarly",
+        label: "Hartmut Stegemann, \"The Origins of the Temple Scroll\"",
+        url: "https://doi.org/10.1163/9789004275638_021",
+        credit: "Hartmut Stegemann, University of Göttingen",
+        detail:
+          "In Congress Volume Jerusalem 1986, Supplements to Vetus Testamentum 40 (Leiden: Brill, 1988), 235-256. The standard statement of the case against Yadin: that the Temple Scroll is not a sectarian composition",
+        supports: "The counter-position in section three",
+        paywalled: true,
+      },
+      {
+        tier: "scholarly",
+        label: "Yigael Yadin, Megillat ha-Miqdash / The Temple Scroll",
+        credit: "Yigael Yadin, Hebrew University of Jerusalem",
+        detail:
+          "Jerusalem: Israel Exploration Society, the Institute of Archaeology of the Hebrew University and the Shrine of the Book, 1977 (Hebrew), in three volumes; revised English edition 1983. The editio princeps — the scroll was never published in Discoveries in the Judaean Desert. Yadin announced the acquisition in \"The Temple Scroll\", The Biblical Archaeologist 30:4 (1967), 135-139, DOI 10.2307/3211021. Print only",
+        supports: "The first edition, and that the scroll stands outside the DJD series",
+      },
+      {
+        tier: "encyclopedic",
+        label: "Wikipedia: Temple Scroll",
+        url: "https://en.wikipedia.org/wiki/Temple_Scroll",
+      },
+    ],
+    reflectionPrompt:
+      "Somebody wrote out, in detail, what the house of God ought to look like, knowing it would never be built. What have you planned carefully and never seen happen?",
+  },
+  {
+    id: "great-psalms-scroll",
+    name: "Great Psalms Scroll",
+    // "Psalms Scroll" is registered as well as the full name: both are shorter than nothing else
+    // in the corpus and neither collides. NOT registered: "11QPsa" or "11Q5" — the app's Psalms
+    // book introduction writes both in brackets straight after the full name, so registering them
+    // would only stack a second chip on the first.
+    alternateNames: ["Psalms Scroll"],
+    category: "manuscript",
+    role: "The Largest Psalms Manuscript from Qumran, and the Argument About It",
+    summary:
+      "Twenty-eight columns of psalms from Cave 11, in an order that is not the Bible's and with compositions in it that are not in the Bible — the single most argued-over biblical manuscript from the Judean Desert.",
+    sections: [
+      {
+        heading: "What Is Actually On It",
+        paragraphs: [
+          "Bedouin found Cave 11 in 1956, and this scroll was among what came out of it. It was not unrolled until 1961, and what emerged carries twenty-eight incomplete columns, with six or seven lines missing from the foot of every one, on a skin thicker than any other scroll from the caves and possibly calf rather than sheep. The Library of Congress, which exhibited six of those columns, gives the displayed portion as 86 centimetres long and 18.5 high. J. A. Sanders published it in 1965 as the fourth volume of Discoveries in the Judaean Desert. It is the most extensive Psalms manuscript from any of the caves, and Psalms was the most-copied book at Qumran: E. Tov counts thirty-six copies of it there, against twenty-six of Deuteronomy and twenty-one of Isaiah.",
+          "Two things about the contents are immediately striking. First, the order is not the Masoretic order. It carries parts of forty-one biblical psalms, chiefly from Psalms 101 to 150, in a sequence that no later Bible follows. Second, it contains material that is not in the Hebrew Bible: Psalm 151, which is in the Greek Septuagint and in Syriac Bibles but not the Hebrew; two further psalms known previously only in Syriac; a Plea for Deliverance; an Apostrophe to Zion; a Hymn to the Creator; a passage from Sirach; and a prose paragraph listing David's compositions and numbering them at 4,050.",
+        ],
+      },
+      {
+        heading: "Psalter or Prayer Book?",
+        paragraphs: [
+          "Sanders read the scroll as what it looks like: a genuine edition of the Psalter, still circulating in the first century AD, evidence that the shape of the book was not yet fixed. That reading landed in Jerusalem badly, and the response came fast and in one place. The 1966 volume of Textus carries three articles on the scroll in sequence — Yigael Yadin publishing a further fragment, then Shemaryahu Talmon, then M. H. Goshen-Gottstein under the title \"The Psalms Scroll (11QPsa): A Problem of Canon and Text.\" Their case was that this is not a biblical manuscript at all but a secondary liturgical collection, assembled for worship out of a Psalter that already existed — which would account neatly for the rearrangement and for the non-biblical hymns mixed in. P. W. Skehan argued the same in 1973, and P. W. Flint later took Sanders's side, devoting a chapter of his 1997 book to the question under the heading \"True Psalter or Secondary Collection?\"",
+          "The Israel Antiquities Authority's own catalogue records the impasse in its metadata rather than its prose: it classifies the manuscript as \"Biblical Compositions?\" and its composition type as \"Scripture?\", question marks included. Punctuation is a thin place to record a scholarly impasse, but it is an honest one.",
+        ],
+      },
+      {
+        heading: "Two Reasons the Old Argument Has Moved",
+        paragraphs: [
+          "The first is that the question itself has been challenged. William Yarchin argued in the Journal of Biblical Literature in 2015 that the either/or is unfounded: since no standard configuration of the Hebrew Psalter can be shown to have existed in the period, asking whether a Qumran scroll is a true psalter or a secondary collection assumes the very thing that is missing. Presenting the debate as a straight two-sided contest between Sanders and Talmon is now about a decade out of date, and a reader who meets it that way and then reads further will notice.",
+          "The second is the date. The Library of Congress, exhibiting the scroll, gives its copying as about AD 30 to 50, from the handwriting. In 2025 the Groningen team that built the Enoch model reported that this manuscript is one of only two in their set whose palaeographic estimate is older than its radiocarbon result, and that the style-based estimate for it comes out \"above 100 CE.\" They say what follows without softening it: that \"may go against historical reconstructions according to which the scrolls were hidden in the Qumran caves before the summer of 68 CE.\" They did not force the model to respect that deadline. Nothing here is settled, and a reader is better served knowing that than being handed either side's version as the answer. What is comparatively settled is the wording: across the Qumran Psalms manuscripts the text of the individual psalms is stable to a degree that surprised everyone, and the argument is overwhelmingly about which psalms and in what order rather than about what they say.",
+        ],
+      },
+    ],
+    verses: [
+      { reference: "Psalms 145:1-7", note: "One of the psalms this scroll carries, in a sequence no later Bible follows" },
+      { reference: "Psalms 101:1-4", note: "About where the scroll's biblical material is concentrated" },
+      { reference: "Psalms 119:105", note: "Included here, as in every Psalter" },
+      { reference: "Luke 24:44", note: "Jesus naming \"the psalms\" as a division of Scripture" },
+    ],
+    sources: [
+      { label: "The Leon Levy Dead Sea Scrolls Digital Library: 11Q Psalms", url: "https://www.deadseascrolls.org.il/explore-the-archive/manuscript/11Q5-1" },
+      { label: "Library of Congress: Scrolls from the Dead Sea — the Psalms Scroll", url: "https://www.loc.gov/exhibits/scrolls/" },
+      { label: "Wikipedia: Great Psalms Scroll", url: "https://en.wikipedia.org/wiki/Great_Psalms_Scroll" },
+    ],
+    manuscript: {
+      siglum: "11QPsᵃ (11Q5)",
+      manuscriptType:
+        "Parchment scroll, twenty-eight incomplete columns and four fragments, on unusually thick skin; the portion the Library of Congress exhibited measures 86 x 18.5 cm. The divine name is written in palaeo-Hebrew letters",
+      language: "Hebrew",
+      contents:
+        "Parts of forty-one biblical psalms, chiefly from Psalms 101-150, in an order no later Bible follows, together with compositions outside the Hebrew Bible: Psalm 151, two further psalms known previously only in Syriac, a Plea for Deliverance, an Apostrophe to Zion, a Hymn to the Creator, a passage from Sirach, and a prose paragraph on David's compositions",
+      origin: "Judea",
+      findSite: "Qumran, Cave 11",
+      foundYear: "1956; unrolled in 1961",
+      foundBy: "Bedouin",
+      dateAssigned:
+        "About AD 30-50 on the handwriting. A 2025 radiocarbon and handwriting study puts it later still, possibly after AD 100, which sits awkwardly with the usual reconstruction of when the caves were sealed",
+      dateCertainty: "disputed",
+      currentLocation: "The Israel Antiquities Authority, Jerusalem. No accession number could be confirmed",
+      facsimileUrl: "https://www.deadseascrolls.org.il/explore-the-archive/manuscript/11Q5-1",
+    },
+    citations: [
+      {
+        tier: "institution",
+        label: "Israel Antiquities Authority, Leon Levy Dead Sea Scrolls Digital Library: 11Q Psalms (11Q5)",
+        url: "https://www.deadseascrolls.org.il/explore-the-archive/manuscript/11Q5-1",
+        credit: "Israel Antiquities Authority",
+        detail:
+          "The authority's own record: site \"Qumran, Cave 11\", material parchment, period Herodian, copy \"a\". Its classification fields carry the dispute in their punctuation — manuscript type \"Biblical Compositions?\" and composition type \"Scripture?\". Official publications given as \"Sanders 1965. DJD 4: 1-99\" and \"Garcia Martinez, Tigchelaar, van der Woude 1998. DJD 23: 28-36\"",
+        supports: "The cave, period, publication record, and the institution's own hedged classification",
+      },
+      {
+        tier: "scholarly",
+        label: "J. A. Sanders, The Psalms Scroll of Qumrân Cave 11 (11QPsa)",
+        credit: "J. A. Sanders",
+        detail:
+          "Discoveries in the Judaean Desert 4 (Oxford: Clarendon Press, 1965), xi + 99 pages and xvii plates — the editio princeps, and the origin of the reading that the scroll is a genuine Psalter. Sanders restated the case for a general readership in The Dead Sea Psalms Scroll (Ithaca: Cornell University Press, 1967). Print only",
+        supports: "The first publication and Sanders's own position",
+      },
+      {
+        tier: "scholarly",
+        label: "M. H. Goshen-Gottstein, \"The Psalms Scroll (11QPsa): A Problem of Canon and Text\", and S. Talmon, \"Pisqah Be'emsa' Pasuq and 11QPsa\"",
+        url: "https://bibleproject.huji.ac.il/%D7%98%D7%A7%D7%A1%D7%98%D7%95%D7%A1/vol-5",
+        credit: "Moshe H. Goshen-Gottstein and Shemaryahu Talmon, Hebrew University of Jerusalem",
+        detail:
+          "Textus 5 (1966), 22-33 and 11-21 respectively, alongside Y. Yadin's publication of a further fragment at 1-10; the contents of the volume are listed by the journal's own publisher, the Hebrew University Bible Project. The case that the scroll is a secondary liturgical collection rather than a biblical manuscript. P. W. Skehan argued similarly in \"A Liturgical Complex in 11QPsa\", Catholic Biblical Quarterly 35 (1973), 195-205. Print only",
+        supports: "The counter-position in section two, and where it was published",
+      },
+      {
+        tier: "scholarly",
+        label: "P. W. Flint, \"True Psalter or Secondary Collection?\"",
+        url: "https://doi.org/10.1163/9789004350199_011",
+        credit: "Peter W. Flint, Trinity Western University",
+        detail:
+          "Chapter 11 of The Dead Sea Psalms Scrolls and the Book of Psalms, Studies on the Texts of the Desert of Judah 17 (Leiden: Brill, 1997), 202-227. The chapter title is the question this article's second section describes, and Flint answers it on Sanders's side; his chapter 10, \"David's Solar Psalter: The Structure and Provenance of 11QPsa\" (172-201), sets out the case",
+        supports: "That Flint took Sanders's side, in his own publication",
+        paywalled: true,
+      },
+      {
+        tier: "scholarly",
+        label: "William Yarchin, \"Were the Psalms Collections at Qumran True Psalters?\"",
+        url: "https://doi.org/10.1353/jbl.2015.0047",
+        credit: "William Yarchin, Azusa Pacific University",
+        detail:
+          "Journal of Biblical Literature 134:4 (2015), 775-789. Argues that because no standard configuration of the premodern Hebrew Psalter can be shown to have existed, the question whether a Qumran scroll is a true psalter or a secondary collection has no basis in the manuscript evidence",
+        supports: "The argument in section three that the old two-sided framing is unfounded",
+        paywalled: true,
+      },
+      {
+        tier: "scholarly",
+        label: "M. Popović, M. A. Dhali, L. Schomaker et al., \"Dating ancient manuscripts using radiocarbon and AI-based writing style analysis\"",
+        url: "https://doi.org/10.1371/journal.pone.0323185",
+        credit: "Mladen Popović, Maruf A. Dhali, Lambert Schomaker and colleagues, University of Groningen",
+        detail:
+          "PLOS ONE 20:6 (2025), e0323185. Open access. Reports that \"Only 4Q201 and 11Q5 have older palaeographic date estimates\" than their radiocarbon results, that for 11Q5 \"a fairly certain style-based date estimate above 100 CE can also be achieved\", and that this \"may go against historical reconstructions according to which the scrolls were hidden in the Qumran caves before the summer of 68 CE\"",
+        supports: "The dating tension in section three",
+      },
+      {
+        tier: "reference",
+        label: "Library of Congress and the Israel Antiquities Authority, \"Scrolls from the Dead Sea\": the Psalms Scroll",
+        url: "https://ibiblio.org/expo/deadsea.scrolls.exhibit/Library/psalms.html",
+        credit: "Library of Congress, with the Israel Antiquities Authority",
+        detail:
+          "The exhibition's own object caption: \"Copied ca. 30 - 50 C.E.\", \"Height 18.5 cm ... length 86 cm\", \"Courtesy of the Israel Antiquties Authority\" [sic], \"parts of forty-one biblical psalms (chiefly form chapters 101-50), in non-canonical sequence\", \"found in 1956 in Cave 11 and unrolled in 1961\", twenty-eight incomplete columns with \"six to seven lines ... lacking at the bottom of each\", and the Tetragrammaton \"written in the paleo-Hebrew script\". Read at a long-standing mirror of the exhibition; the Library of Congress's own object pages for it no longer resolve",
+        supports: "The dimensions, date of copying, contents, unrolling, column state and custody",
+      },
+      {
+        tier: "scholarly",
+        label: "E. Tov, \"The Text of Isaiah at Qumran\"",
+        url: "http://www.emanueltov.info/docs/papers/05.isaiah.2008.pdf?v=1.0",
+        credit: "E. Tov, Hebrew University of Jerusalem",
+        detail:
+          "In Hebrew Bible, Greek Bible, and Qumran: Collected Essays (TSAJ 121; Tübingen: Mohr Siebeck, 2008), 42-56; the author's own copy is freely readable. Opens by counting the copies at Qumran: twenty-one of Isaiah, \"Deuteronomy, of which twenty-six copies are known, and Psalms with thirty-six copies\"",
+        supports: "That Psalms was the most-copied book among the Qumran manuscripts",
+      },
+      {
+        tier: "encyclopedic",
+        label: "Wikipedia: Great Psalms Scroll",
+        url: "https://en.wikipedia.org/wiki/Great_Psalms_Scroll",
+      },
+    ],
+    reflectionPrompt:
+      "The people who copied this scroll prayed the psalms in an order no Bible now prints. Does the order you read them in change what they do to you?",
+  },
+  {
+    id: "copper-scroll",
+    name: "Copper Scroll",
+    // NOT registered: "3Q15" (a siglum, and absent from the corpus), "the treasure".
+    alternateNames: [],
+    category: "manuscript",
+    role: "A List of Hidden Deposits, Beaten into Copper, Qumran Cave 3",
+    summary:
+      "Two rolls of almost pure copper, engraved rather than written, listing sixty-four places where gold, silver and priestly goods were said to be buried. Nothing on the list has ever been found.",
+    sections: [
+      {
+        heading: "The One Scroll That Is Not a Scroll",
+        paragraphs: [
+          "Everything else from the Judean Desert is leather or papyrus. This is metal: two rolls of about ninety-nine per cent copper with a little tin, roughly two and a half metres of sheet in all, with the letters hammered through from the front so that the text stands out on the back. It carries twelve columns in an early form of Mishnaic Hebrew, sprinkled with Greek loanwords and with sequences of Greek letters at the ends of some entries that nobody has explained. Its contents are an inventory of deposits — sixty-four of them — each entry naming a place, a depth, and what lies there: talents of silver, bars of gold, tithe vessels, priestly vestments.",
+          "Unusually for this material, it was found by archaeologists rather than bought from a dealer. It came out of what J. E. Taylor calls \"the cave explorations done jointly by the American Schools of Oriental Research, the Palestine Archaeological Museum and the École Biblique\" in March 1952, and \"was found by a team headed by Henri de Contenson\" in a cave north of the Qumran ruin. Accounts of the day differ — 14 and 20 March are both given — so the honest date is the month.",
+        ],
+      },
+      {
+        heading: "Cutting It Open in Manchester",
+        paragraphs: [
+          "Copper that has lain in a cave for nineteen centuries does not unroll; it is a brittle oxide shell that would shatter. The rolls were sent to Manchester, where H. Wright Baker of the Manchester College of Technology built a rig to saw them into strips with a very fine circular blade. The work ran through 1955 and into 1956 and produced twenty-three curved sections, which is how the object exists today; J. M. Allegro, who had arranged the transfer, filmed part of it. Baker wrote his own account of the operation into the official edition.",
+          "The strips were read and the text published in 1962 by J. T. Milik, in the third volume of Discoveries in the Judaean Desert; a second critical edition followed after French conservators had cleaned and stabilised the metal. The scroll is now in Amman: J. E. Taylor writes that \"it now exists in the Jordan Archaeological Museum in Amman ... cut into 23 sections\", and the Israel Museum, listing where the Judean Desert manuscripts ended up, names the same institution. The École Biblique, which co-excavated it, says the original \"belongs to the Amman Museum\" and keeps a replica in Jerusalem. No published inventory number for it could be confirmed.",
+        ],
+      },
+      {
+        heading: "Whether Any of It Was There",
+        paragraphs: [
+          "The quantities are enormous — on any reading, more precious metal than a small sect by the Dead Sea is likely to have owned — and that is the crux. J. T. Milik, who edited it, held that the list was not a record of an actual hoard. J. M. Allegro took the opposite view, published a popular book on it in 1960, two years before the official edition appeared, and went looking. The position that has since prevailed is closer to Allegro's on the narrow point and to nobody's on the wider one: the publisher's description of Al Wolters's edition puts the shift plainly — the scroll was \"once dismissed as a fictional composition\" and \"is now generally held to indicate the hiding places of a genuine hoard\" — while leaving the obvious question open, \"Are the treasures those of the Jerusalem temple? Or of the Essenes? Or are they Zealot booty?\" Those are a publisher's words rather than Wolters's own, and they are quoted here as a description of where the field sits rather than as his argument.",
+          "Steven Weitzman's summary of where the argument stands is the fairest one available, and it is not a verdict: some scholars judged the amounts too large to be real, others found them plausible and connected to the Temple, and \"the scroll itself, however, revealed nothing that might settle the issue in one direction or the other.\" To that, one fact should always be attached, in Joan E. Taylor's words: \"not a single piece of treasure from the Copper Scroll has ever been located.\" The date is unsettled too — Frank M. Cross put it in the mid first century AD, W. F. Albright after AD 70, and Taylor argues for the aftermath of the Bar Kokhba revolt — and the date matters, because a list made before AD 70 and a list made after it are records of different things. What the object certainly is is evidence that somebody, in Roman Judea, thought there was enough at stake to engrave an inventory into metal.",
+        ],
+      },
+    ],
+    verses: [
+      { reference: "1 Kings 7:45-47", note: "Temple vessels of bronze, uncounted for their number" },
+      { reference: "2 Kings 25:13-17", note: "What the Babylonians took, and what the Copper Scroll's entries sound like" },
+      { reference: "Jeremiah 32:9-15", note: "A deed of purchase put in an earthenware jar to last many days" },
+      { reference: "Matthew 6:19-21", note: "Treasure hidden where moth and rust destroy" },
+    ],
+    sources: [
+      { label: "The Leon Levy Dead Sea Scrolls Digital Library: 3Q Copper Scroll", url: "https://www.deadseascrolls.org.il/explore-the-archive/manuscript/3Q15-1" },
+      { label: "École Biblique et Archéologique Française: the Qumran Copper Scroll back at EBAF", url: "https://www.ebaf.edu/2024/02/the-qumran-copper-scroll-back-at-ebaf/" },
+      { label: "Wikipedia: Copper Scroll", url: "https://en.wikipedia.org/wiki/Copper_Scroll" },
+    ],
+    manuscript: {
+      siglum: "3Q15",
+      manuscriptType:
+        "Two rolls of sheet copper, about 99 per cent copper and 1 per cent tin, the letters punched through from the front. Now twenty-three curved sections, cut apart in 1955-56",
+      language: "Hebrew, an early form of the Mishnaic dialect, with Greek loanwords and unexplained sequences of Greek letters",
+      contents:
+        "Twelve columns listing sixty-four deposits, each with a location, a depth and a content — talents of silver, bars of gold, tithe vessels and priestly garments. It is an inventory and nothing else: no narrative, no prayer, no law",
+      origin: "Judea",
+      findSite: "Qumran, Cave 3",
+      foundYear: "March 1952. Accounts differ over the day; 14 and 20 March are both given",
+      foundBy:
+        "The team led by Henri de Contenson, in the joint expedition of the American Schools of Oriental Research, the École Biblique and the Palestine Archaeological Museum with the Jordanian Department of Antiquities",
+      dateAssigned:
+        "Disputed. Frank M. Cross put it in the mid first century AD, W. F. Albright between AD 70 and 135, and J. E. Taylor argues for the period after the Bar Kokhba revolt",
+      dateCertainty: "disputed",
+      currentLocation: "The Jordan Archaeological Museum, Amman. No published inventory number could be confirmed",
+    },
+    citations: [
+      {
+        tier: "scholarly",
+        label: "Joan E. Taylor, \"Secrets of the Copper Scroll\"",
+        url: "https://kclpure.kcl.ac.uk/ws/portalfiles/portal/113513258/Secrets_of_the_Copper_Scroll_TAYLOR_Published2019_GREEN_AAM.pdf",
+        credit: "Joan E. Taylor, King's College London",
+        detail:
+          "Biblical Archaeology Review 45:4 (2019); the author's accepted manuscript is freely readable in King's College London's repository. Source, in her own words, for \"the cave explorations done jointly by the American Schools of Oriental Research, the Palestine Archaeological Museum and the École Biblique\"; for \"It was found by a team headed by Henri de Contenson\"; for \"two copper rolls, about 8 feet long\"; for \"It now exists in the Jordan Archaeological Museum in Amman ... cut into 23 sections\"; for the range of proposed dates; and for \"not a single piece of treasure from the Copper Scroll has ever been located.\" Note that the accepted manuscript misprints the Manchester opening as 1953; the contemporary record and the archive both give 1955",
+        supports: "The excavators, the physical state, the dating debate, and that nothing on the list has been found",
+      },
+      {
+        tier: "institution",
+        label: "Israel Antiquities Authority, Leon Levy Dead Sea Scrolls Digital Library: 3Q Copper Scroll (3Q15)",
+        url: "https://www.deadseascrolls.org.il/explore-the-archive/manuscript/3Q15-1",
+        credit: "Israel Antiquities Authority",
+        detail:
+          "The authority's own record: site \"Qumran, Cave 3\", material \"Copper\", period \"Roman\", script square Hebrew, official publication \"Milik 1962. DJD 3\". The library carries no images of it, because the object is not in Israel. The authority's discovery-sites page adds that Cave 3 was \"Discovered and excavated by archaeologists in 1952\" and describes the scroll as \"listing what may be sites of the Temple's buried treasure\"",
+        supports: "The manuscript number, material, period, publication, and that Cave 3 was an excavation rather than a purchase",
+      },
+      {
+        tier: "scholarly",
+        label: "Steven Weitzman, \"Absent but Accounted for: A New Approach to the Copper Scroll\"",
+        url: "https://doi.org/10.1017/S0017816015000267",
+        credit: "Steven Weitzman, University of Pennsylvania",
+        detail:
+          "Harvard Theological Review 108:3 (2015), 423-447. States the impasse: some scholars \"felt that the treasure was too large to be real\", others \"believed the treasure to be quite plausible, probably connected to the Temple in some way\", and \"The scroll itself, however, revealed nothing that might settle the issue in one direction or the other\"",
+        supports: "The state of the argument over whether the treasure was real",
+        paywalled: true,
+      },
+      {
+        tier: "scholarly",
+        label: "J. T. Milik, \"Le rouleau de cuivre provenant de la grotte 3Q (3Q15)\"",
+        credit: "Józef T. Milik",
+        detail:
+          "In M. Baillet, J. T. Milik and R. de Vaux, Les \"petites grottes\" de Qumran, Discoveries in the Judaean Desert 3 (Oxford: Clarendon Press, 1962), with a contribution by H. W. Baker on the opening of the scroll — the official edition, and the source of the view that the list does not record a real hoard. Milik's preliminary account is \"The Copper Document from Cave III, Qumran\", The Biblical Archaeologist 19:3 (1956), 60-64, DOI 10.2307/3209219. Print only",
+        supports: "The editio princeps, Baker's technical account, and Milik's own position on the treasure",
+      },
+      {
+        tier: "reference",
+        label: "J. M. Allegro, The Treasure of the Copper Scroll",
+        credit: "John Marco Allegro, University of Manchester",
+        detail:
+          "Garden City, NY: Doubleday, 1960 — published two years before the official edition and written for a general readership. The book in which Allegro argued the deposits were real and went looking for them. Print only",
+        supports: "Allegro's own position in section three",
+      },
+      {
+        tier: "reference",
+        label: "Al Wolters, The Copper Scroll: Overview, Text and Translation",
+        credit: "Al Wolters, Redeemer University College",
+        detail:
+          "Sheffield Academic Press, 1996 (JSOT Supplement Series 228). The publisher's own description: the scroll was \"Once dismissed as a fictional composition\" and \"is now generally held to indicate the hiding places of a genuine hoard\", leaving open \"Are the treasures those of the Jerusalem temple? Or of the Essenes? Or are they Zealot booty?\"",
+        supports: "Where the majority view now sits, and what it still does not answer",
+      },
+      {
+        tier: "encyclopedic",
+        label: "Wikipedia: Copper Scroll",
+        url: "https://en.wikipedia.org/wiki/Copper_Scroll",
+      },
+    ],
+    reflectionPrompt:
+      "Someone went to the trouble of engraving this list into metal so it would outlast them, and the things it points to are gone. What are you preserving, and for whom?",
+  },
+  {
+    id: "4qmmt",
+    name: "4QMMT",
+    // The siglum IS the common name here — there is no English title in general use, and the
+    // transliterated Hebrew is spelled half a dozen ways. Registering it is safe: the string
+    // appears nowhere else in the corpus and cannot be an ordinary word. NOT registered: "MMT"
+    // alone, or "works of the law", which is a phrase of Scripture.
+    alternateNames: ["Miqsat Ma'ase ha-Torah"],
+    matchNames: ["Miqtsat Ma'ase ha-Torah", "Miqsat Maase ha-Torah"],
+    category: "manuscript",
+    role: "A Letter About the Law, Reassembled from Six Damaged Copies",
+    summary:
+      "Six fragmentary copies of a letter from one Jewish group to another, arguing about purity and the calendar — and carrying a phrase Paul uses in Galatians.",
+    sections: [
+      {
+        heading: "One Group Writing to Another",
+        paragraphs: [
+          "4QMMT is not a scroll. It is six fragmentary manuscripts from Cave 4, none of them complete, which scholars have fitted together into a single reconstructed text — and it is worth saying at the outset that the composite is itself a piece of scholarship rather than an object anyone dug up. What the composite gives is something unlike anything else in the corpus: a letter, addressed by the writers to a leader in Jerusalem, arguing a case.",
+          "The case is about halakhah — how the law is to be applied. In the Israel Antiquities Authority's summary, the text \"implores the addressee to follow the strict religious rulings of the Dead Sea Scrolls community rather than the practices of an unnamed third group,\" and the surviving sections \"deal primarily with questions of purity and impurity.\" A section on the calendar and the festivals is largely lost. The authority makes a further observation with real bite: the disputes here \"have parallels in rabbinic literature, indicating that the Rabbis were familiar with some of the legal precepts stated in this composition\" — and the rabbis attributed those positions to the Sadducees, and rejected them. Three centuries of Jewish argument are visible in a document written by one of the parties while the argument was live.",
+        ],
+      },
+      {
+        heading: "\"Works of the Law\"",
+        paragraphs: [
+          "The letter's title comes from a phrase near its close: miqsat ma'ase ha-Torah, some of the works of the law. Martin Abegg pointed out in 1994 what a reader of Paul notices immediately — that the Greek phrase Paul uses at Galatians 2:16 and 3:10, erga nomou, works of the law, is the same expression, and that until this text was published there was no known Jewish parallel to it. His article's subtitle put it without hedging: \"This Dead Sea Scroll and Paul use the very same phrase.\"",
+          "What follows from that is argued. J. D. G. Dunn took it up in New Testament Studies in 1997 and read the parallel as supporting his own long-standing account: that when Paul rejects justification by works of the law, the works in view are the observances that marked Jews off from Gentiles — circumcision, food laws, the calendar, exactly the kind of thing this letter is about — rather than good deeds performed to earn God's favour. Others have contested that reading of the parallel. Jacqueline C. R. de Roo argued in a 2007 monograph that the phrase carries different senses in the two bodies of literature: at Qumran, God-given deeds of obedience in the pattern of Abraham; in Paul, something taken as a false route to salvation. The honest summary is that the discovery gave the debate a real Jewish comparison it had never had, and did not decide it — and a reader should be told that the phrase's presence in a Qumran letter is a fact while what it proves about Paul is a reading.",
+        ],
+      },
+      {
+        heading: "The Letter Nobody Dug Up",
+        paragraphs: [
+          "There is a second thing to hold on to, and it is about the object rather than the argument. Nobody has ever excavated 4QMMT. What was excavated is six damaged manuscripts, none of them complete, none of them overlapping tidily with the others; the continuous letter that everyone quotes was assembled out of them by E. Qimron and J. Strugnell and published in 1994 as the tenth volume of Discoveries in the Judaean Desert. That reconstruction is a real scholarly achievement and it is also a hypothesis, and the difference matters when a single phrase in it is being weighed against Galatians.",
+          "How much judgement goes into it can be seen in the catalogue. The Israel Antiquities Authority heads its record for the first of the six manuscripts, 4Q394, not \"Miqsat Ma'ase ha-Torah\" but \"4Q Calendar D\" — because the calendrical fragments once counted as the letter's opening are now commonly treated as a separate text. The composite has been reassembled since it was first assembled. None of that makes the letter a fiction; the halakhic core of it is solid and the polemic is unmistakable. It does mean a reader should know that the text they are being shown was put together by scholars from pieces, and that its edges are still moving. That the material was assembled at all is worth a word: for forty years the unpublished Qumran texts were held, in the Israel Antiquities Authority's own account, by \"fewer then a dozen international scholars\", and it took a reorganisation in the early 1990s, under E. Tov and about a hundred editors, to open them.",
+        ],
+      },
+    ],
+    verses: [
+      { reference: "Galatians 2:15-16", note: "\"Works of the law\" — the phrase this letter also uses" },
+      { reference: "Galatians 3:10-12", note: "Paul's argument from the law's own curse" },
+      { reference: "Romans 3:27-31", note: "The same question put a second time, to a different church" },
+      { reference: "Mark 7:1-8", note: "A first-century argument about purity practice, from the other side of the room" },
+    ],
+    sources: [
+      { label: "The Leon Levy Dead Sea Scrolls Digital Library: 4Q Miqsat Ma'ase ha-Torah", url: "https://www.deadseascrolls.org.il/explore-the-archive/manuscript/4Q397-1" },
+      { label: "Israel Antiquities Authority: Discovery and Publication", url: "https://www.deadseascrolls.org.il/learn-about-the-scrolls/discovery-and-publication" },
+      { label: "Wikipedia: 4QMMT", url: "https://en.wikipedia.org/wiki/4QMMT" },
+    ],
+    manuscript: {
+      siglum: "4QMMT (4Q394-399)",
+      manuscriptType: "Six fragmentary manuscripts, five on parchment and one on papyrus, combined by scholars into a single reconstructed composite text",
+      language: "Hebrew",
+      contents:
+        "A letter from one Jewish group to a leader in Jerusalem, arguing some twenty points of religious law, mostly on purity and impurity, with a largely lost section on the calendar and festivals and a closing exhortation containing the phrase \"some of the works of the law\". No copy is complete and the continuous text everyone quotes is a reconstruction",
+      origin: "Judea",
+      findSite: "Qumran, Cave 4",
+      foundYear: "1952",
+      foundBy: "Bedouin, who found Cave 4 while archaeologists were excavating the ruin nearby",
+      dateAssigned: "Hasmonaean to Herodian, on the Israel Antiquities Authority's own classification of the manuscripts",
+      dateCertainty: "traditional",
+      currentLocation: "The Israel Antiquities Authority, Jerusalem",
+      facsimileUrl: "https://www.deadseascrolls.org.il/explore-the-archive/manuscript/4Q397-1",
+    },
+    citations: [
+      {
+        tier: "institution",
+        label: "Israel Antiquities Authority, Leon Levy Dead Sea Scrolls Digital Library: 4Q Miqsat Ma'ase ha-Torah (4Q397, 4Q396, 4Q398)",
+        url: "https://www.deadseascrolls.org.il/explore-the-archive/manuscript/4Q397-1",
+        credit: "Israel Antiquities Authority",
+        detail:
+          "The authority's own record and account: \"The text is a persuasion letter addressed to a leading figure in Jerusalem, most likely one of the high priests\"; it \"implores the addressee to follow the strict religious rulings of the Dead Sea Scrolls community rather than the practices of an unnamed third group\"; the surviving sections \"deal primarily with questions of purity and impurity\"; and the parallels in rabbinic literature indicate \"that the Rabbis were familiar with some of the legal precepts stated in this composition\" and \"attributed them to the erroneous laws of the Sadducees\". Official publication given as Qimron and Strugnell, DJD 10",
+        supports: "The letter's addressee, subject matter, rabbinic parallels and publication",
+      },
+      {
+        tier: "scholarly",
+        label: "E. Qimron and J. Strugnell, Qumran Cave 4.V: Miqsat Ma'ase ha-Torah",
+        credit: "E. Qimron and J. Strugnell",
+        detail:
+          "Discoveries in the Judaean Desert 10 (Oxford: Clarendon Press, 1994), xiv + 235 pages and viii plates — the official edition, and the reconstruction at the centre of the litigation described in section three. Print only",
+        supports: "The editio princeps and the reconstruction's authorship",
+      },
+      {
+        tier: "scholarly",
+        label: "J. D. G. Dunn, \"4QMMT and Galatians\"",
+        url: "https://doi.org/10.1017/S0028688500022554",
+        credit: "J. D. G. Dunn, University of Durham",
+        detail:
+          "New Testament Studies 43:1 (1997), 147-153. Takes up Martin Abegg's proposal about the shared phrase and reads it as support for understanding Paul's \"works of the law\" as boundary-marking observances rather than merit-earning deeds",
+        supports: "One side of the argument in section two, in the scholar's own publication",
+        paywalled: true,
+      },
+      {
+        tier: "reference",
+        label: "Martin Abegg, \"Paul, 'Works of the Law' and MMT\"",
+        url: "https://library.biblicalarchaeology.org/biblical-archaeology-review/20/6/5",
+        credit: "Martin G. Abegg Jr., Trinity Western University",
+        detail:
+          "Biblical Archaeology Review 20:6 (November/December 1994). The article that first put the parallel in front of a general readership, under the standfirst \"This Dead Sea Scroll and Paul use the very same phrase\"",
+        supports: "The observation that the Qumran letter and Paul share the expression",
+        paywalled: true,
+      },
+      {
+        tier: "scholarly",
+        label: "Jacqueline C. R. de Roo, \"Works of the Law\" at Qumran and in Paul",
+        credit: "Jacqueline C. R. de Roo",
+        detail:
+          "Sheffield: Sheffield Phoenix Press, 2007. Argues that the phrase does not carry the same sense in the two literatures: at Qumran, God-given deeds of obedience in the pattern of Abraham; in Paul, something taken as a false route to salvation. Print only",
+        supports: "The dissenting reading of the parallel in section two",
+      },
+      {
+        tier: "institution",
+        label: "Israel Antiquities Authority: Discovery and Publication",
+        url: "https://www.deadseascrolls.org.il/learn-about-the-scrolls/discovery-and-publication",
+        credit: "Israel Antiquities Authority",
+        detail:
+          "\"For the first 40 years after their discovery, the study of the thousands of text fragments was monopolized by fewer then a dozen international scholars\"; \"In the early 1990s, the Israel Antiquities Authority (IAA) took major steps to advance the publication\", with Emanuel Tov as chief editor and the work \"divided among about 100 international scholars\"",
+        supports: "The publication monopoly and its reform, in section three",
+      },
+      {
+        tier: "encyclopedic",
+        label: "Wikipedia: 4QMMT",
+        url: "https://en.wikipedia.org/wiki/4QMMT",
+      },
+    ],
+    reflectionPrompt:
+      "This is one side of an argument, written to persuade. If someone read only your side of a disagreement you are in, what would they conclude about the other person?",
+  },
+  {
+    id: "4qsamuel-a",
+    name: "4QSamuel-a",
+    // The siglum is registered deliberately and it is the ONLY bare siglum in this batch that is.
+    // The Bible reader's introductions to 1 and 2 Samuel each write "The Qumran scroll 4QSam-a"
+    // with no full name anywhere near it, so without this the two paragraphs that most need the
+    // link would not get one. "4QSam-a" is the spelling those paragraphs use.
+    alternateNames: ["4QSam-a", "4Q51"],
+    matchNames: ["4QSama"],
+    category: "manuscript",
+    role: "The Cave 4 Samuel Scroll, and a Paragraph Missing from Every Hebrew Bible",
+    summary:
+      "The most substantial manuscript of the book of Samuel from Qumran, agreeing again and again with the Greek Septuagint against the Hebrew text that became standard — and carrying a paragraph before 1 Samuel 11 that no Hebrew Bible has.",
+    sections: [
+      {
+        heading: "A Scroll That Sided With the Greek",
+        paragraphs: [
+          "Bedouin found Cave 4 in 1952, and it turned out to hold the remains of hundreds of manuscripts, most of them in very small pieces. Among them were three copies of the book of Samuel, and the fullest is this one. Frank Moore Cross published a first fragment of it in 1953 under a title that stated its significance directly: a Qumran biblical fragment related to the original Hebrew underlying the Septuagint. The full edition took another half-century and appeared in 2005, edited by Cross with Donald W. Parry and Richard J. Saley, as the seventeenth volume of Discoveries in the Judaean Desert.",
+          "The point Cross had seen in 1953 held up. The Greek Old Testament translates a text of Samuel noticeably different from the Hebrew that later became standard, and for centuries the obvious explanation was that the Greek translators had been loose or careless. This scroll shows otherwise. Time and again, where the Greek differs from the Masoretic Text, this Hebrew manuscript reads with the Greek — which means the Greek translators were faithfully rendering a Hebrew text that really existed, and that the book of Samuel circulated in more than one Hebrew form. The same scroll also agrees with Chronicles against the Masoretic text of Samuel in places where the Chronicler was retelling it, which points the same way.",
+        ],
+      },
+      {
+        heading: "Nahash the Ammonite",
+        paragraphs: [
+          "The most-discussed single feature of the scroll comes just before 1 Samuel 11:1. The Masoretic Text moves straight from Saul's detractors at the end of chapter 10 to \"Then Nahash the Ammonite came up, and encamped against Jabesh Gilead.\" This manuscript has a paragraph in between: Nahash, king of the Ammonites, had been oppressing the Gadites and Reubenites, gouging out the right eye of every man among them, and a body of men who escaped him had gone to Jabesh-gilead. That supplies something the Masoretic Text does not. In the next verse Nahash offers Jabesh terms — he will make a covenant with them on condition that he puts out every right eye — and in the Hebrew as it stands the demand arrives from nowhere. With the extra paragraph it is a practice he is already known for, and the men of Jabesh know it.",
+          "The editors of the official edition explain the difference as loss rather than addition: a scribe's eye skipped from one occurrence of a word or phrase to a similar one further on and dropped what lay between. There is independent support, because Josephus tells the story in the first century with the same material in it. On this reading a Hebrew Bible has been missing a paragraph for two thousand years and a cave gave it back — which is why the New Revised Standard Version prints it, as an unnumbered paragraph between 10:27 and 11:1, under a note that names both witnesses: \"Q Ms Compare Josephus, Antiquities VI.68-71: MT lacks Now Nahash . . . entered Jabesh-gilead.\"",
+        ],
+      },
+      {
+        heading: "Or a Later Hand Filling a Gap",
+        paragraphs: [
+          "Not everyone agrees, and the dissent is serious. Alexander Rofé has argued that the paragraph is not older material recovered but younger material added — a midrashic expansion of the kind a later scribe writes to smooth a rough narrative, exactly what a reader would expect somebody to compose in order to explain why Nahash was at Jabesh in the first place. He put the case for treating the manuscript as a whole this way in an article whose title asks the question outright, \"4QMidrash Samuel?\", and has restated it since. On his account the scroll is not a better text of the book but a livelier one, and its agreements with the Greek show a shared tendency to expand rather than a shared ancient source.",
+          "That the question is open matters more than which way it falls, and it cuts against a habit on both sides. A reader who assumes the Masoretic Text must be right because it is the received Hebrew is assuming what needs showing; so is a reader who assumes the older manuscript must be right because it is older. Both are arguments from a prior commitment rather than from the evidence. What the scroll establishes beyond argument is that the text of Samuel was not uniform in the last century BC, and that the translators of the Septuagint were more careful than they were long given credit for. It is worth adding that the differences between these witnesses are unusually large by the standards of the Hebrew Bible, and not a sample of how the Old Testament generally behaves. Samuel is one of the books where the problem is at its sharpest; The book of Jeremiah, which the caves preserve in two editions of markedly different length, is another.",
+        ],
+      },
+    ],
+    verses: [
+      { reference: "1 Samuel 10:27", note: "Where the Masoretic Text ends the chapter, and where this scroll adds a paragraph" },
+      { reference: "1 Samuel 11:1-3", note: "Nahash at Jabesh Gilead, and the terms he offers" },
+      { reference: "1 Samuel 11:2", note: "The demand for every right eye, which the extra paragraph makes intelligible" },
+      { reference: "1 Chronicles 21:14-17", note: "The Chronicler retelling 2 Samuel 24 — a third witness this scroll sometimes sides with" },
+    ],
+    sources: [
+      { label: "The Leon Levy Dead Sea Scrolls Digital Library: 4Q51", url: "https://www.deadseascrolls.org.il/explore-the-archive/manuscript/4Q51-1" },
+      { label: "Israel Antiquities Authority: Discovery Sites", url: "https://www.deadseascrolls.org.il/learn-about-the-scrolls/discovery-sites" },
+    ],
+    manuscript: {
+      siglum: "4QSamᵃ (4Q51)",
+      manuscriptType: "Parchment scroll, surviving in many fragments",
+      language: "Hebrew",
+      contents:
+        "Substantial portions of 1 and 2 Samuel — the fullest manuscript of the book from the caves, though still far from a complete book. It repeatedly agrees with the Greek Septuagint, and sometimes with Chronicles, against the Masoretic Text, and carries a paragraph about Nahash the Ammonite that stands in no Hebrew Bible",
+      origin: "Judea",
+      findSite: "Qumran, Cave 4",
+      foundYear: "1952",
+      foundBy: "Bedouin, who found Cave 4 while archaeologists were working the ruin nearby",
+      dateAssigned: "Between about 50 and 25 BC",
+      dateCertainty: "traditional",
+      currentLocation: "The Israel Antiquities Authority, Jerusalem",
+      facsimileUrl: "https://www.deadseascrolls.org.il/explore-the-archive/manuscript/4Q51-1",
+    },
+    citations: [
+      {
+        tier: "institution",
+        label: "Israel Antiquities Authority, Leon Levy Dead Sea Scrolls Digital Library: 4Q51",
+        url: "https://www.deadseascrolls.org.il/explore-the-archive/manuscript/4Q51-1",
+        credit: "Israel Antiquities Authority",
+        detail:
+          "The authority's own record: site \"Qumran, Cave 4\", material parchment, period Herodian, and the official publications given as \"Cross, Parry, Saley 2005. DJD 17\". The authority's discovery-sites page records that Cave 4 was \"Discovered by Bedouin treasure hunters in 1952, who were exploring right under the noses of archaeologists excavating the site of Qumran\"",
+        supports: "The cave, period, find circumstances and publication record",
+      },
+      {
+        tier: "scholarly",
+        label: "F. M. Cross, D. W. Parry and R. J. Saley, Qumran Cave 4.XII: 1-2 Samuel",
+        credit: "Frank Moore Cross, Donald W. Parry and Richard J. Saley; the volume also contains 4QSamᵇ and 4QSamᶜ, the last edited by Eugene Ulrich",
+        detail:
+          "Discoveries in the Judaean Desert 17 (Oxford: Clarendon Press, 2005), 1-217 and plates I-XXII for 4QSamᵃ — the official edition, which explains the Masoretic Text's shorter reading at 1 Samuel 11 as scribal loss by parablepsis. Reviewed by Charlotte Hempel, Journal of Theological Studies 59:1 (2008), 244-246, DOI 10.1093/jts/flm111. Print only",
+        supports: "The editio princeps, the date, and the editors' explanation of the missing paragraph",
+      },
+      {
+        tier: "scholarly",
+        label: "F. M. Cross, \"A New Qumran Biblical Fragment Related to the Original Hebrew Underlying the Septuagint\"",
+        credit: "Frank Moore Cross, Harvard University",
+        detail:
+          "Bulletin of the American Schools of Oriental Research 132 (1953), 15-26 — the first publication of a fragment of this scroll, and the argument that it witnesses the Hebrew behind the Greek. Cross set out the Nahash paragraph separately in \"The Ammonite Oppression of the Tribes of Gad and Reuben: Missing Verses from 1 Samuel 11 Found in 4QSamuel-a\", in H. Tadmor and M. Weinfeld (eds.), History, Historiography and Interpretation (Jerusalem: Magnes Press, 1983). Print only",
+        supports: "The Septuagint relationship and Cross's own case for the paragraph",
+      },
+      {
+        tier: "scholarly",
+        label: "Alexander Rofé, \"Midrashic Traits in 4Q51 (so-called 4QSamᵃ)\"",
+        url: "https://doi.org/10.1163/ej.9789004179578.i-304.34",
+        credit: "Alexander Rofé, Hebrew University of Jerusalem",
+        detail:
+          "In P. Hugo and A. Schenker (eds.), Archaeology of the Books of Samuel, Supplements to Vetus Testamentum 132 (Leiden: Brill, 2010), 75-89. The case that the scroll's distinctive readings are later midrashic expansion rather than recovered older text, restating the argument he first made in \"4QMidrash Samuel? Observations Concerning the Character of 4QSamᵃ\", Textus 19 (1998), 63-74",
+        supports: "The dissenting position in section three, in the scholar's own publication",
+        paywalled: true,
+      },
+    ],
+    reflectionPrompt:
+      "A scribe's eye slipped, and a paragraph was gone for two thousand years — or somebody added one, and it looked like it belonged. How would you tell the difference?",
+  },
+  {
+    id: "damascus-document",
+    name: "Damascus Document",
+    // "Damascus Document" is 17 characters and NAME_ENTRIES is sorted longest-first, so it wins
+    // over the "Damascus" location entry — which is the point: without it, a reader clicking this
+    // phrase would be sent to a city in Syria that the text is probably not talking about.
+    // NOT registered: "CD" (two letters), "the Document".
+    alternateNames: ["Zadokite Fragments", "Cairo Damascus Document"],
+    category: "manuscript",
+    role: "A Sectarian Rule Book Found in Cairo Fifty Years Before Qumran",
+    summary:
+      "Two medieval copies turned up in a Cairo synagogue storeroom in 1896 and puzzled scholars for half a century — until ten ancient copies of the same work came out of the Qumran caves and proved the guess right.",
+    sections: [
+      {
+        heading: "Found in the Wrong Place, Fifty Years Early",
+        paragraphs: [
+          "In the 1890s S. Schechter, then Reader in Talmudic at Cambridge, brought back to England the contents of the genizah — the disused-manuscript store — of the Ben Ezra synagogue in Old Cairo, and he and Charles Taylor gave the collection to the University Library in 1898. Among its fragments were two manuscripts, in Hebrew, carrying a text nobody could place. It described a covenant community with its own priesthood, a founding figure called the Teacher of Righteousness, and a detailed legal code. Cambridge classes them as T-S 10K6, eight leaves it dates to the tenth century, and T-S 16.311, a single leaf it leaves undated; Steven D. Fraade dates the pair to the tenth or eleventh century. Schechter published them in 1910 as Fragments of a Zadokite Work, the first volume of his Documents of Jewish Sectaries, and argued that these medieval copies preserved something very much older.",
+          "That was a guess, and a contested one, for half a century. Then the Qumran caves produced fragments of ten more copies of the same composition — eight from Cave 4, one from Cave 5, one from Cave 6, found in 1952 and not published in full until 1996. The guess had been right. The Israel Antiquities Authority's own record puts the sequence plainly: the hypothesis that the composition \"originated in the Second Temple period\" was \"confirmed fifty years later, when fragments of ten manuscripts of the work were discovered in the Qumran caves.\" Fraade dates the oldest parts of the work to \"the mid- to late second century BCE.\" How a copy reached a Cairo synagogue a thousand years after that is a separate question, and the authority answers it honestly: it \"remains a mystery.\" Cambridge adds the detail that keeps the story from being tidier than it is — the Genizah manuscripts \"exhibit differences both with each other and with the versions found at Qumran.\"",
+        ],
+      },
+      {
+        heading: "A Community With Wives and Children",
+        paragraphs: [
+          "The Damascus Document opens with the group's own version of its history: Israel went astray, God preserved a remnant, and the remnant was given a teacher — the Teacher of Righteousness — sent, in the Israel Antiquities Authority's summary, \"to warn the people of Israel of the imminent Day of Judgment.\" Its members are the truly chosen Sons of Light; everyone else has sinned and been punished. Then comes the law, and this is where the document earns its place: a detailed legal code covering, in the authority's words, \"many aspects of daily life, family law, and the community's internal organization and leadership.\"",
+          "Family law is the word that matters. The Community Rule describes an ascetic group and mentions no women at all; this document legislates for members who married and raised children. The two texts share vocabulary, share the Teacher, and rule on overlapping questions — the authority notes that many of the regulations are \"similar, and at times identical\" — and yet they describe two different ways of living, and both were kept in the same caves. For a reader of the Gospels the value is contextual rather than direct. The Gospels show Jesus arguing with other Jews about the Sabbath, about divorce, about who counts as clean. This is one of those other parties, writing down its own answers a century or so earlier, at length, and for its own use rather than for an opponent.",
+        ],
+      },
+      {
+        heading: "What \"Damascus\" Means, and Why It Matters",
+        paragraphs: [
+          "The document takes its name from a covenant its members entered \"in the land of Damascus.\" The obvious reading is the Syrian city, and it has been defended — that the group went into exile there under persecution. Most specialists now read it otherwise. The Israel Antiquities Authority states the majority position: \"This is probably not a literal reference to the Syrian city, but rather an allegorical reference to biblical verses, indicating that the covenant took place in exile.\" The verses in view are prophetic passages that speak of exile beyond Damascus, and reading the group's own displacement into them is exactly the interpretive habit the Habakkuk Pesher shows on every column.",
+          "The unresolved question is the relation between this community and the one in the Community Rule, and it is not a small one, because how it is answered decides what the Dead Sea Scrolls are evidence of. One long-standing answer, going back to Josephus, is that there were two orders of Essenes, one celibate and one married. Another is that these are two stages of one movement, or a parent body and an inner circle. Another is that the Community Rule never forbids marriage and simply does not discuss it. The Israel Antiquities Authority describes the state of play as \"a heated debate among scholars\" and does not settle it — which is the honest report. What is settled is that a Jewish group of the last two centuries BC wrote this, that its rule survived in Egypt for a thousand years by accident, and that nobody in 1896 could have known what they were reading.",
+        ],
+      },
+    ],
+    verses: [
+      { reference: "Amos 5:26-27", note: "Exile \"beyond Damascus\" — the kind of prophetic verse the document's name is now usually read against" },
+      { reference: "Ezekiel 44:15", note: "The sons of Zadok, after whom Schechter named the work in 1910" },
+      { reference: "Jeremiah 31:31-34", note: "A new covenant with a remnant — the shape the document claims for its own community" },
+      { reference: "Mark 10:2-9", note: "Jesus arguing marriage law with other Jews, in the century after this code was written" },
+    ],
+    sources: [
+      { label: "The Leon Levy Dead Sea Scrolls Digital Library: 4Q Damascus Document", url: "https://www.deadseascrolls.org.il/explore-the-archive/manuscript/4Q266-1" },
+      { label: "Cambridge University Library: the Taylor-Schechter Genizah Research Unit", url: "https://www.lib.cam.ac.uk/collections/departments/taylor-schechter-genizah-research-unit" },
+      { label: "Wikipedia: Damascus Document", url: "https://en.wikipedia.org/wiki/Damascus_Document" },
+    ],
+    manuscript: {
+      siglum: "CD (Cairo); 4Q266-273, 5Q12, 6Q15 (Qumran)",
+      manuscriptType:
+        "Two medieval manuscripts on paper from Cairo, plus fragments of ten ancient parchment scrolls from Qumran",
+      language: "Hebrew",
+      contents:
+        "An account of the community's origins and its Teacher of Righteousness, followed by a legal code covering the Sabbath, oaths, purity, courts, the examination of members, marriage and family life. The Cairo copies are the fullest text; the Qumran copies are fragmentary but preserve material the Cairo manuscripts lack",
+      origin: "Judea. The medieval copies were made much later, and how the work reached Cairo is not known",
+      findSite:
+        "The genizah of the Ben Ezra synagogue, Old Cairo, for the medieval copies; Qumran Caves 4, 5 and 6 for the ancient ones",
+      foundYear: "Recovered from Cairo in the 1890s and given to Cambridge in 1898; the Qumran copies in 1952",
+      foundBy:
+        "S. Schechter, who brought the Cairo genizah's contents to Cambridge; the Qumran copies came from Bedouin and archaeologists working the caves",
+      dateAssigned:
+        "Composed in the mid- to late second century BC; the Qumran copies are Hasmonaean and Herodian. Cambridge dates the fuller Cairo manuscript to the tenth century and leaves the other undated; S. D. Fraade puts the pair in the tenth or eleventh",
+      dateCertainty: "traditional",
+      currentLocation:
+        "Cambridge University Library for the two Cairo manuscripts; the Israel Antiquities Authority for the Qumran copies",
+      shelfmark: "T-S 10K6 and T-S 16.311 (Cambridge); 4Q266-273, 5Q12, 6Q15 (Qumran)",
+      facsimileUrl: "https://www.deadseascrolls.org.il/explore-the-archive/manuscript/4Q266-1",
+    },
+    citations: [
+      {
+        tier: "institution",
+        label: "Israel Antiquities Authority, Leon Levy Dead Sea Scrolls Digital Library: 4Q Damascus Document (4Q266)",
+        url: "https://www.deadseascrolls.org.il/explore-the-archive/manuscript/4Q266-1",
+        credit: "Israel Antiquities Authority",
+        detail:
+          "The authority's own record and account: two manuscripts found \"in 1896 in the Cairo Genizah\"; the Second Temple origin \"confirmed fifty years later, when fragments of ten manuscripts of the work were discovered in the Qumran caves\"; \"How this text ended up in the Cairo Genizah remains a mystery\"; the covenant \"established in 'Damascus'\" is \"probably not a literal reference to the Syrian city, but rather an allegorical reference to biblical verses\"; the community \"included women, and its members married and had children\"; and there is \"a heated debate among scholars\" over the relation to the Community Rule. Official publication given as Baumgarten 1996, DJD 18: 1-93",
+        supports: "The Cairo find, the Qumran confirmation, the reading of \"Damascus\", the family legislation, and the open question in section three",
+      },
+      {
+        tier: "scholarly",
+        label: "S. Schechter, Documents of Jewish Sectaries, Vol. 1: Fragments of a Zadokite Work",
+        credit: "S. Schechter, Cambridge",
+        detail:
+          "Cambridge University Press, 1910 — the first publication of the Cairo manuscripts, half a century before the Qumran copies confirmed his dating. Reviewed on its reissue by Jonas C. Greenfield in the Journal of Near Eastern Studies 32:3 (1973), 344-346, DOI 10.1086/372284, and noticed within a year by M. H. Segal, \"Notes on 'Fragments of a Zadokite Work'\", Jewish Quarterly Review 2:1 (1911), 133, DOI 10.2307/1451094. Print only",
+        supports: "Schechter's 1910 publication and its title",
+      },
+      {
+        tier: "scholarly",
+        label: "J. M. Baumgarten, Qumran Cave 4.XIII: The Damascus Document (4Q266-273)",
+        credit: "Joseph M. Baumgarten",
+        detail:
+          "Discoveries in the Judaean Desert 18 (Oxford: Clarendon Press, 1996), 1-93 — the official edition of the Cave 4 copies, named as the official publication in the Israel Antiquities Authority's own record for 4Q266. Print only",
+        supports: "The publication record for the Qumran copies",
+      },
+      {
+        tier: "institution",
+        label: "Cambridge University Library: the Damascus Document, T-S 10K6 and T-S 16.311",
+        url: "https://cudl.lib.cam.ac.uk/view/MS-TS-00010-K-00006/1",
+        credit: "Cambridge University Library, Taylor-Schechter Genizah Collection",
+        detail:
+          "The library's own catalogue: shelfmarks \"T-S 10K6\" and \"T-S 16.311\", both \"Donated by Dr S. Schechter and his patron Dr Charles Taylor in 1898\"; MS A is eight leaves of paper dated to the tenth century, MS B a single leaf the library leaves undated; and the note that \"The Genizah manuscripts of the Damascus Document exhibit differences both with each other and with the versions found at Qumran.\" The site refuses automated requests, so this record was read in a browser; its images are not openly licensed and the Genizah Research Unit must be asked before any are reproduced",
+        supports: "The shelfmarks, the 1898 gift, the dating of MS A, and the differences between the witnesses",
+      },
+      {
+        tier: "scholarly",
+        label: "Steven D. Fraade, The Damascus Document",
+        url: "https://doi.org/10.1093/oso/9780198734338.001.0001",
+        credit: "Steven D. Fraade, Yale University",
+        detail:
+          "Oxford University Press, 2021. The publisher's abstract: the work's \"oldest parts originate in the mid- to late second century BCE\", the Geniza copies were \"written in the tenth-eleventh centuries CE\", and the Qumran fragments were \"discovered in 1952 (but not published in full until 1996)\"",
+        supports: "The date of composition, the date of the Cairo copies, and the 1952 discovery of the Qumran copies",
+        paywalled: true,
+      },
+      {
+        tier: "encyclopedic",
+        label: "Wikipedia: Damascus Document",
+        url: "https://en.wikipedia.org/wiki/Damascus_Document",
+      },
+    ],
+    reflectionPrompt:
+      "This text survived because somebody could not bring themselves to throw away a page with God's name on it. What are you keeping that you cannot explain?",
+  },
+  {
+    id: "nash-papyrus",
+    name: "Nash Papyrus",
+    // NOT registered: "Nash" alone (a modern surname, and the linker's modern-name sweep exists
+    // precisely to catch that class), "Or.233".
+    alternateNames: [],
+    category: "manuscript",
+    role: "The Oldest Known Hebrew Scripture Before the Dead Sea Scrolls - and Not a Bible Manuscript",
+    summary:
+      "A single scrap of papyrus from Egypt, four pieces mounted together, carrying the Ten Commandments and the opening of the Shema — and not, on the best reading, a page of a Bible at all.",
+    sections: [
+      {
+        heading: "Bought in Egypt, Given to Cambridge",
+        paragraphs: [
+          "The Nash Papyrus is one leaf, 140 by 60 millimetres, made of four separate pieces fixed together, holed and torn and in places barely legible. Twenty-four lines survive, with traces of a twenty-fifth. Walter Llewellyn Nash, secretary of the Society of Biblical Archaeology, bought it from a dealer in Egypt — alongside some fragments of the twelfth book of the Odyssey — and presented it to Cambridge University Library in 1903, where it is MS Or.233. The library's own record says the fragment \"was said to have come from the Fayyūm,\" and its place of origin is entered, with the question mark, as \"Egypt (?)\". A date of 1898 for the purchase circulates widely; the contemporary evidence points to 1902, and Cambridge's current record gives no year at all.",
+          "It was published in 1903 by S. A. Cook, whom Cambridge's own catalogue quotes calling it the \"oldest Hebrew MS. of any kind in existence\" — a claim that held for forty-four years, until the first cave at Qumran. What is on it is the Ten Commandments, running straight on into the opening of the Shema, Deuteronomy 6:4-5. Cambridge has digitised it in visible light, infrared and multispectral imaging, and publishes the images free to view. They are licensed for non-commercial use only, so this app links to them rather than reproducing them.",
+        ],
+      },
+      {
+        heading: "How Old It Is",
+        paragraphs: [
+          "The first readers put it late. F. C. Burkitt, writing in 1903, compared the hand not to any Hebrew manuscript but to Palmyrene and Nabataean inscriptions, found that \"The nearest parallel of all is to be found in a Nabataean inscription of A. D. 55,\" and assigned the papyrus to about that date; Cambridge's own annual report for 1903 said \"probably dating from the first century A.D.\" That stood for a generation.",
+          "It was overturned by W. F. Albright, in a 1937 article in the Journal of Biblical Literature whose title says what it did: \"A Biblical Fragment from the Maccabaean Age: The Nash Papyrus.\" Cambridge now dates it to the middle of the second century BC and describes the hand as an early pre-Herodian cursive. Precise ranges are quoted for Albright's conclusion in many places; the safe statement is the one his own title makes. Albright's argument was vindicated in an unexpected way in 1947, when the Qumran caves produced Hebrew hands of exactly the kind he had reasoned to.",
+        ],
+      },
+      {
+        heading: "Not a Page of a Bible",
+        paragraphs: [
+          "The most interesting thing about the Nash Papyrus is what it is not. Its Decalogue is not the text of Exodus 20 and it is not the text of Deuteronomy 5; it is a mixture. It begins the fourth commandment with \"Remember\" as Exodus does and keeps Exodus's reason drawn from creation, but it lists \"thy ox and thy ass\" and adds \"that it may be well with thee\" as Deuteronomy does, and then it runs on into the Shema, which is Deuteronomy alone. Burkitt's conclusion in 1903 was that it is \"impossible to resist the impression that the Papyrus gives a text containing elements both from Exodus and from Deuteronomy, just such a text as might be formed in a liturgical work based indeed upon the Pentateuch, yet not a direct transcript either of Exodus or of Deuteronomy.\" Cambridge's catalogue says the same: it was identified as a lectionary for liturgical use, and \"it has been suggested that it is from a phylactery,\" which would put it beside the tefillin later found at Qumran.",
+          "It also agrees with the Greek Septuagint against the Hebrew text that became standard, and in ways a reader of the New Testament will recognise. It orders the commandments adultery, murder, theft — the order found in some Septuagint manuscripts and in Philo, and the order used by the Gospel of Luke, by Romans and by the letter of James, where Matthew has murder first. It writes \"seventh day\" where the Masoretic Text has \"Sabbath day.\" And it carries the introductory line before the Shema that stands in the Greek of Deuteronomy 6:4 and not in the Hebrew. Cambridge offers two explanations and does not choose between them: the mixture \"may reflect the fluidity of the biblical text at this early date, or it may have resulted from it being composed from memory, rather than copied from a written Vorlage.\" Either way, the point to hold on to is that a devotional sheet is weaker evidence about the wording of the Bible than a Bible manuscript would be — and richer evidence about how a Jew in Egypt actually prayed.",
+        ],
+      },
+    ],
+    verses: [
+      { reference: "Exodus 20:8-11", note: "The fourth commandment as Exodus gives it, with the reason drawn from creation" },
+      { reference: "Deuteronomy 5:12-15", note: "The same commandment as Deuteronomy gives it, with a different reason" },
+      { reference: "Deuteronomy 6:4-5", note: "The Shema, which follows the commandments straight on in this papyrus" },
+      { reference: "Luke 18:20", note: "Adultery before murder — the order the Nash Papyrus uses, and Paul and James with it" },
+    ],
+    sources: [
+      { label: "Cambridge Digital Library: Nash Papyrus (MS Or.233)", url: "https://cudl.lib.cam.ac.uk/view/MS-OR-00233/1" },
+      { label: "Brent Nongbri: Early Publications on the Nash Papyrus", url: "https://brentnongbri.com/2026/08/06/early-publications-on-the-nash-papyrus/" },
+      { label: "Wikipedia: Nash Papyrus", url: "https://en.wikipedia.org/wiki/Nash_Papyrus" },
+    ],
+    manuscript: {
+      siglum: "MS Or.233",
+      manuscriptType: "Papyrus sheet, one leaf of four pieces mounted together, 140 x 60 mm, 24 lines with traces of a 25th",
+      language: "Hebrew",
+      contents:
+        "The Ten Commandments in a form mixing Exodus 20:1-17 with Deuteronomy 5:4-21, running straight on into the opening of the Shema at Deuteronomy 6:4-5. Holed, torn and in places barely legible",
+      origin: "Egypt, said to be the Fayyum; Cambridge enters the place with a question mark",
+      findSite: "Not excavated. Bought from a dealer in Egypt",
+      foundYear: "Bought in 1902 and presented to Cambridge University Library in 1903. A date of 1898 is often given and is not supported by the contemporary record",
+      foundBy: "Walter Llewellyn Nash, secretary of the Society of Biblical Archaeology, who bought it and gave it to the library",
+      dateAssigned:
+        "Middle of the second century BC, on Cambridge's own assignment, following W. F. Albright's redating of 1937. Earlier readers placed it in the first century AD",
+      dateCertainty: "traditional",
+      currentLocation: "Cambridge University Library",
+      shelfmark: "MS Or.233",
+      facsimileUrl: "https://cudl.lib.cam.ac.uk/view/MS-OR-00233/1",
+    },
+    citations: [
+      {
+        tier: "institution",
+        label: "Cambridge University Library, Cambridge Digital Library: Nash Papyrus (MS Or.233)",
+        url: "https://cudl.lib.cam.ac.uk/view/MS-OR-00233/1",
+        credit: "Cambridge University Library",
+        detail:
+          "The library's own record: shelfmark \"MS Or.233\"; \"Purchased from an Egyptian dealer in antiquities by Dr Walter Llewellyn Nash, and presented to the Library in 1903, the fragment was said to have come from the Fayyūm\"; one leaf, 140 x 60 mm, 24 lines; date of creation \"Middle of second century BCE\"; \"a composite of Exodus 20:1-17 and Deuteronomy 5:4-21\"; originally identified as \"a lectionary used in liturgical contexts\" and \"it has been suggested that it is from a phylactery\"; the mixture \"may reflect the fluidity of the biblical text at this early date, or it may have resulted from it being composed from memory\". Images are CC BY-NC and are linked, not reproduced. The site refuses automated requests and was read in a browser",
+        supports: "The shelfmark, acquisition, dimensions, contents, current dating and the liturgical identification",
+      },
+      {
+        tier: "primary",
+        label: "F. C. Burkitt, \"The Hebrew Papyrus of the Ten Commandments\"",
+        credit: "F. C. Burkitt, University of Cambridge",
+        detail:
+          "Jewish Quarterly Review 15 (1903), 392-408; out of copyright and readable in the journal's own back run. No stable link is given because the one in circulation for it points at a different article. The first full study. Source for the early dating — \"The nearest parallel of all is to be found in a Nabataean inscription of A. D. 55\" — for the liturgical conclusion quoted in section three, for the apportionment of the Decalogue between Exodus and Deuteronomy set out in the same section, and for the specific agreements with the Septuagint against the Masoretic Text, including the commandment order and the preface to the Shema. Burkitt lists Mark among the New Testament witnesses to that order; the World English Bible this app renders puts murder first at Mark 10:19, so the article names only Luke, Romans and James, which it does not",
+        supports: "The original first-century AD dating, the liturgical reading, and the Septuagint agreements",
+      },
+      {
+        tier: "scholarly",
+        label: "W. F. Albright, \"A Biblical Fragment from the Maccabaean Age: The Nash Papyrus\"",
+        url: "https://doi.org/10.2307/3259607",
+        credit: "William Foxwell Albright, Johns Hopkins University",
+        detail:
+          "Journal of Biblical Literature 56:3 (1937), 145-176 — the article that moved the papyrus from the second century AD to the second century BC. Widely quoted precise ranges for his conclusion could not be checked against the article itself, which is paywalled; the century is what his own title claims",
+        supports: "The redating in section two",
+        paywalled: true,
+      },
+      {
+        tier: "primary",
+        label: "S. A. Cook, \"A Pre-Masoretic Biblical Papyrus\"",
+        credit: "Stanley A. Cook, University of Cambridge",
+        detail:
+          "Proceedings of the Society of Biblical Archaeology 25 (1903), 34-55 — the editio princeps, preceded by a notice at PSBA 24 (1902), 272. Bibliographic details as given by B. Nongbri, whose survey of the early publications is cited below. Print only",
+        supports: "The first publication of the papyrus in 1903",
+      },
+      {
+        tier: "reference",
+        label: "Brent Nongbri, \"Early Publications on the Nash Papyrus\"",
+        url: "https://brentnongbri.com/2026/08/06/early-publications-on-the-nash-papyrus/",
+        credit: "Brent Nongbri, MF Norwegian School of Theology",
+        detail:
+          "Traces the contemporary evidence for the 1902 purchase, quoting Burkitt in The Cambridge Review (1903): the fragments \"came into the possession of Mr. W. L. Nash ... in the course of 1902, having been bought in Egypt from a native dealer together with some papyrus fragments of the twelfth book of the Odyssey\". Also describes Albright's 1937 paper as the one that \"redated the Nash Papyrus from the second century CE to the second century BCE\"",
+        supports: "The purchase year and the significance of Albright's article",
+      },
+      {
+        tier: "encyclopedic",
+        label: "Wikipedia: Nash Papyrus",
+        url: "https://en.wikipedia.org/wiki/Nash_Papyrus",
+      },
+    ],
+    reflectionPrompt:
+      "This scrap is probably somebody's daily prayers, carried and folded until it fell apart. What do you say often enough to wear out?",
   },
 ];

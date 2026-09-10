@@ -47,6 +47,21 @@
 # header was restored by hand from git. Until the script preserves it, run `--update`, then
 # `git diff` this file and put the header back before you commit. The rows are machine-owned; the
 # header is not, and nothing in the script knows the difference.
+#
+# ── A NOTE ON `--update`, ADDED 2026-09-10 WITH THE JUDEAN DESERT MANUSCRIPT BATCH ───────────────
+# `node scripts/name-linker/modern-names.mjs --update` REWRITES THIS WHOLE FILE, header included,
+# and replaces everything above with three generic lines. Everything from "Modern-name candidates"
+# down to here is hand-written and is the only place several rulings are recorded. If you run
+# `--update`, check `git diff` on this file before you commit and put the header back. Adding two
+# rows by hand is cheaper than losing forty lines of reasoning.
+#
+# The two rows added in that batch, both read and both correct:
+#   community-rule / "spirit of truth" — the sentence lists NEW TESTAMENT vocabulary that the
+#     Community Rule's dualism resembles, and "the Spirit of truth" is John 14:17 and 16:13. The
+#     link is the Holy Spirit because the clause is about the Holy Spirit's own vocabulary.
+#   great-isaiah-scroll / "Mark" — "St Mark's Monastery" in Jerusalem, the Syriac Orthodox house
+#     whose metropolitan bought four of the Cave 1 scrolls. Same shape as the saint's-basilica rows
+#     already here (antioch-syria, patmos): a building named for a man, linking to that man.
 ok	bookIntro.manuscripts	book-intro:Jonah	jesus-of-nazareth	Jesus	inside-capitalised-run
 ok	bookIntro.summary	book-intro:Matthew	magi	magi	lowercase-surface
 ok	location.archaeology.note	antioch-syria	simon-peter	Peter	forename-before:Saint
@@ -120,6 +135,8 @@ ok	timelineEvent.article	world-council-of-churches-1948	jesus-of-nazareth	Jesus 
 ok	timelineEvent.article	wycliffe-english-bible-c1382	martin-luther	Martin Luther	inside-capitalised-run
 ok	timelineEvent.datingNotes	bib-loc-birth-of-jesus	magi	magi	lowercase-surface
 ok	timelineEvent.datingNotes	bib-loc-magi-flight-to-egypt	magi	magi	lowercase-surface
+ok	topic.section	community-rule	holy-spirit	spirit of truth	lowercase-surface
+ok	topic.section	great-isaiah-scroll	john-mark	Mark	inside-capitalised-run
 ok	topic.section	nicene-creed	jesus-of-nazareth	Jesus Christ	inside-capitalised-run
 ok	topic.section	passover	hezekiah	Hezekiah	inside-capitalised-run
 ok	topic.section	passover	josiah	Josiah	inside-capitalised-run

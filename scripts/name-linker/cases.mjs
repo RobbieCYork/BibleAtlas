@@ -1567,4 +1567,51 @@ export const CASES = [
     why: "DELIBERATELY NOT SUPPRESSED, and recorded so the difference from Talpiot is not read " +
          "as an oversight. What is disputed about this object is whether the words are ancient, " +
          "not who they would mean if they are." },
+
+  // ── THE JUDEAN DESERT MANUSCRIPT ARTICLES ──────────────────────────────────────────────────
+  //
+  // Six pins added with the Qumran manuscript batch, plus one matchName that is not a pin at all.
+  // Every one was found by enumerating the links the new prose renders BEFORE committing, with
+  // scripts/name-linker/probe.mjs, rather than by reading a snapshot diff afterwards. The rest of
+  // that batch's collisions were fixed by writing scholars' names with initials, which is why
+  // "J. A. Sanders", "J. D. G. Dunn", "E. Qimron", "J. Strugnell", "P. W. Flint", "J. M. Allegro",
+  // "S. Schechter", "T. H. Lim", "J. A. Fitzmyer" and "P. Kahle" appear in that form and must
+  // stay that way — spelling any of them out again re-opens the link this file is guarding.
+  { text: "Kando resold his four — this one, the Habakkuk Pesher, the Community Rule and a " +
+          "fourth so brittle it could not be opened for years — to Mar Athanasius Yeshue Samuel " +
+          "of St Mark's Monastery in Jerusalem",
+    surface: "Samuel", owner: "great-isaiah-scroll", expect: null, status: "guard",
+    why: "Mar Athanasius Yeshue Samuel, the Syriac Orthodox metropolitan who bought four of the " +
+         "seven Cave 1 scrolls. Without the pin his surname sends the reader to the prophet." },
+  { text: "In the 1890s S. Schechter, then Reader in Talmudic at Cambridge, brought back to " +
+          "England the contents of the genizah — the disused-manuscript store — of the Ben Ezra " +
+          "synagogue in Old Cairo",
+    surface: "Ezra", owner: "damascus-document", expect: null, status: "guard",
+    why: "The Ben Ezra synagogue in Old Cairo, not the scribe of the return." },
+  { text: "In 2025 the same group published the Enoch model, trained on radiocarbon-dated " +
+          "manuscripts, which dates both halves of this scroll consistently between 180 and 100 BC.",
+    surface: "Enoch", owner: "great-isaiah-scroll", expect: null, status: "guard",
+    why: "A 2025 handwriting-dating program named after the patriarch and not about him. The " +
+         "MODERN WORK TITLES ruling, applied to a piece of software." },
+  { text: "then Shemaryahu Talmon, then M. H. Goshen-Gottstein under the title",
+    surface: "Goshen", owner: "great-psalms-scroll", expect: null, status: "guard",
+    why: "M. H. Goshen-Gottstein. Goshen is also a region of Egypt with a map record — the " +
+         "Y. Gath case again, a modern surname swallowing a location's key." },
+  { text: "He put the case for treating the manuscript as a whole this way in an article whose " +
+          "title asks the question outright, \"4QMidrash Samuel?\", and has restated it since.",
+    surface: "Samuel", owner: "4qsamuel-a", expect: null, status: "guard",
+    why: "The title of A. Rofe's 1998 Textus article. MODERN WORK TITLES, and the article it " +
+         "sits in is about a manuscript of the book rather than about the prophet." },
+  // NOT a suppression. `temple-scroll` carries the matchName "the Temple Scroll" because matching
+  // runs left to right: where the prose reads "the Temple Scroll", the existing "the Temple" topic
+  // entry starts one character earlier and wins the position, so the article about the scroll was
+  // sending readers to the article about the building. Registering the longer wording at the same
+  // start takes the position back. If this case starts resolving to `the-temple`, the matchName
+  // has been dropped.
+  { text: "The Temple Scroll is the longest manuscript from the Qumran caves: eighteen sheets of " +
+          "parchment, three or four columns to a sheet, running to 8.146 metres.",
+    surface: "The Temple Scroll", owner: "great-isaiah-scroll", expect: "temple-scroll",
+    status: "guard",
+    why: "Read on a foreign owner so the self-link exclusion does not mask it. Without the " +
+         "matchName this resolves to the-temple." },
 ];

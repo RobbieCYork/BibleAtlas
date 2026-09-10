@@ -1489,6 +1489,7 @@ const NAME_CONTEXT_RULES: Record<string, NameContextRule[]> = {
     // for him, so this could have been a repoint; it is a suppression instead, because the whole
     // point of the ruling is that a title does not name an author.
     EPISTLE_OF, // "the Epistle of James"
+    { before: /\b[Ll]etters? of\s+$/, to: null }, // "the letter of James" — same ruling, other word
     TEXT_OF, // "both contain the complete text of James"
     POSSESSIVE_WORK, // "James's letter, written to Jewish Christians"
     // A canon list where the neighbouring "1-2 Peter" is suppressed by BOOK_NUMERAL and this one
@@ -1664,6 +1665,11 @@ const NAME_CONTEXT_RULES: Record<string, NameContextRule[]> = {
   enoch: [
     BOOK_NUMERAL, // "1 Enoch, a Jewish apocalyptic writing outside the biblical canon"
     BOOK_OF, // "the apocryphal book of Enoch", "the Book of Enoch as Scripture"
+    // "the Enoch model" is the Groningen team's 2025 handwriting-dating software, named after the
+    // patriarch and not about him. The MODERN WORK TITLES ruling below, one shelf further forward
+    // again: a product, not a book, but the same reasoning — linking makes a claim. Pinned by the
+    // exact phrase the two articles that mention it both use.
+    { phrase: "the Enoch model", to: null },
   ],
   esther: [
     BOOK_OF, // "The book of Esther opens in the Persian capital of Susa"
@@ -1673,6 +1679,9 @@ const NAME_CONTEXT_RULES: Record<string, NameContextRule[]> = {
   ],
   ezra: [
     TEXT_OF, // "The Hebrew and Aramaic text of Ezra is well preserved and stable"
+    // The Ben Ezra synagogue in Old Cairo, whose genizah produced the Damascus Document. Named for
+    // a medieval figure, not the scribe of the return. No WEB verse contains "Ben Ezra".
+    { before: /\bBen\s+$/, to: null },
   ],
   isaiah: [
     BOOK_NUMERAL, // "against critical theories of a separate 'Second Isaiah'" — a hypothesis, not a man
@@ -1682,6 +1691,8 @@ const NAME_CONTEXT_RULES: Record<string, NameContextRule[]> = {
     // "the fulfillment of Isaiah's prophecy" keeps its link: the man prophesied.
   ],
   jeremiah: [
+    BOOK_OF, // "the book of Jeremiah, which the caves preserve in two editions". Checked: no WEB
+    // verse contains "book of Jeremiah" or "books of Jeremiah", so this reaches only our own prose.
     QUMRAN_BEFORE, // "some Qumran Jeremiah fragments reflect a shorter Hebrew text-form"
     VERSION_BEFORE, // "The Septuagint's Jeremiah is roughly one-eighth shorter"
     // Both "Jeremiah's prophecy of Rachel weeping" mentions keep their links.
@@ -1753,6 +1764,17 @@ const NAME_CONTEXT_RULES: Record<string, NameContextRule[]> = {
   samuel: [
     BOOK_OF, // "the following books of Samuel", "the earlier books of Samuel and Kings"
     BOOK_NUMERAL, // "1 Samuel traces Israel's transition from the era of the judges"
+    TEXT_OF, // "the Masoretic text of Samuel", "a text of Samuel noticeably different"
+    // MODERN WORK TITLES again: "4QMidrash Samuel?" is the title of A. Rofé's 1998 Textus article,
+    // quoted on `4qsamuel-a`. The title names a manuscript, not the prophet.
+    { phrase: "4QMidrash Samuel", to: null },
+    // Mar Athanasius Yeshue Samuel, the Syriac Orthodox metropolitan in Jerusalem who bought four
+    // of the seven Cave 1 scrolls in 1947 and sold them to Israel in 1954. He is named on five
+    // manuscript articles, and without this his surname sent every reader to the prophet. Keyed on
+    // "Athanasius" rather than on "Mar", which is a word of Aramaic in its own right; no WEB verse
+    // contains "Athanasius". The articles themselves avoid the bare surname and write "the
+    // archbishop", so this rule only has to cover the full form.
+    { before: /\bAthanasius(?: Yeshue)?\s+$/, to: null },
   ],
   timothy: [
     BOOK_NUMERAL, // "1 Timothy", "2 Timothy", "1 and 2 Timothy", "1 & 2 Timothy", "1–2 Timothy"
@@ -1870,6 +1892,18 @@ const NAME_CONTEXT_RULES: Record<string, NameContextRule[]> = {
   // name is written several ways ("Trinity Southwest University", "Trinity Southwest") and
   // "Southwest" is what disambiguates all of them. The doctrine keeps every other mention it has.
   trinity: [{ after: /^\s+Southwest\b/, to: null }],
+
+  // ── ADDED WITH THE JUDEAN DESERT MANUSCRIPT ARTICLES ───────────────────────────────────────
+  //
+  // "Goshen-Gottstein" is M. H. Goshen-Gottstein, who argued against J. A. Sanders over the Great
+  // Psalms Scroll in Textus 5 (1966). Goshen is also a region of Egypt with its own map record,
+  // so this is the `Y. Gath` case again: a modern surname swallowing a location's key. Keyed on
+  // the hyphenated tail rather than on a phrase, because the surname is written both with and
+  // without initials, in this batch's own article and in the Psalms book introduction — where the
+  // link was ALREADY LIVE and wrong, and where pinning it removes one prose row.
+  goshen: [
+    { after: /^-Gottstein\b/, to: null },
+  ],
 };
 
 /** Do the words around this match say who it is — or that it is nobody?
