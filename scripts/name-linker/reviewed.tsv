@@ -15,6 +15,31 @@
 # to every book (NAME_CONTEXT_RULES in src/lib/verseAnnotations.ts, and the BOOK TITLES section of
 # cases.mjs), so a candidate of that shape is now a fault to fix rather than a verdict to record.
 # If one appears here again, the rule for that name is missing, not the ledger entry.
+#
+# ── READ THIS BEFORE YOU WRITE A CITATION ────────────────────────────────────────────────────────
+# Ruled 2026-09-10, and it extends the book-title ruling above from the canon to a bibliography:
+#
+#   A PERSON'S NAME INSIDE THE TITLE OF A MODERN BOOK, ARTICLE OR JOURNAL IS A NO-LINK.
+#
+# «Abraham in History and Tradition» (Van Seters, 1975) names a monograph, not the patriarch, and
+# pointing a reader at the patriarch's article from a bibliographic reference is wrong rather than
+# merely opinionated. The suppression is a phrase pin on the TITLE STRING in NAME_CONTEXT_RULES
+# (src/lib/verseAnnotations.ts, the MODERN WORK TITLES block), plus a prose case in cases.mjs so a
+# later rewrite cannot undo it in silence. Not a pattern: nothing in the neighbouring words says
+# "title" — they are an author's surname and a year, and a rule keyed on either would reach far
+# past titles. So this is one pin per title, written by whoever adds the citation.
+#
+# A candidate of this shape is therefore a FAULT TO FIX, never a row to add here. Do not resolve
+# one with `--update`; that records a human blessing a link that the ruling says should not exist.
+#
+# Measured over the whole linked prose corpus the day the ruling was made: 12 modern work titles
+# and journal names sit in text the app linkifies, and 2 of them carried a live link. One was the
+# Van Seters title, now suppressed. The other is deliberately left standing and is recorded here so
+# it is not silently passed over: "the Jews" inside Luther's «On the Jews and Their Lies» (1543),
+# in person.controversies on martin-luther, links to the JEWS TOPIC. It is not a person link, so
+# neither this check nor NAME_CONTEXT_RULES governs it, suppressing it would mean inventing a
+# second mechanism, and the words there do denote Jews. If that is ever to change it is a separate
+# ruling and a separate mechanism, not a widening of this one.
 ok	bookIntro.manuscripts	book-intro:Jonah	jesus-of-nazareth	Jesus	inside-capitalised-run
 ok	bookIntro.summary	book-intro:Matthew	magi	magi	lowercase-surface
 ok	location.archaeology.note	antioch-syria	simon-peter	Peter	forename-before:Saint

@@ -1447,4 +1447,38 @@ export const CASES = [
     why: "KEPT. The letter was written TO Philemon, a man in Colossae. The three Philemon phrase " +
          "pins above suppress the book inside canon lists; this is the man in the same corpus, and " +
          "the ruling does not touch him." },
+
+  // ────────────────────────────────────────────────────────────────────────────────────────────
+  // MODERN WORK TITLES. Ruled 2026-09-10, and it is the ruling directly above carried forward from
+  // the canon to a modern bibliography: a person's name inside the title of a modern book, article
+  // or journal links to no person. Stronger here than for a biblical book, because there is no
+  // reading on which the word is the man — «Abraham in History and Tradition» is a 1975 Yale
+  // monograph, and pointing a reader at the patriarch from a bibliographic reference is wrong
+  // rather than merely opinionated.
+  //
+  // The suppression is a phrase pin on the TITLE (NAME_CONTEXT_RULES in verseAnnotations.ts), not
+  // a pattern: nothing in the surrounding words says "this is a title". These cases are the whole
+  // protection that pin has, since a phrase pin is undone in silence the day someone rewords the
+  // sentence — and the two KEEPS below are the half a widened rule breaks first. Both are drawn
+  // from the SAME article as the suppression, on purpose.
+  { text: "That argument was dismantled, and it is worth saying so plainly. T. L. Thompson's The " +
+          "Historicity of the Patriarchal Narratives (1974) and J. Van Seters's Abraham in History " +
+          "and Tradition (1975) showed that the parallels were generic rather than specific",
+    surface: "Abraham", owner: "mari-tablets", expect: null, status: "guard",
+    why: "The title of John Van Seters's 1975 monograph, not the patriarch. This is the candidate " +
+         "that turned test:linker red on origin/main at 2ebb912, and the first modern-work title " +
+         "in the corpus to carry a live link." },
+  { text: "W. F. Albright, Nelson Glueck and E. A. Speiser pointed to nomadic social patterns, " +
+          "personal names of the same formation as Abraham's, and customs of adoption and " +
+          "inheritance that seemed to explain otherwise puzzling episodes in Genesis.",
+    surface: "Abraham", owner: "mari-tablets", expect: "abraham", status: "guard",
+    why: "KEPT, in the same article and two paragraphs from the suppression. This is the man: it " +
+         "is his name whose FORMATION the sentence is about. Any rule that reached this — an " +
+         "author-surname rule, a nearby-year rule — would be too wide." },
+  { text: "The second is that something real survives: Mari does not corroborate Abraham, but it " +
+          "does demonstrate that the world Genesis places him in — tribal, mobile, treaty-bound, " +
+          "literate, full of gods",
+    surface: "Abraham", owner: "mari-tablets", expect: "abraham", status: "guard",
+    why: "KEPT. The article's own conclusion about the patriarch, in a paragraph that also carries " +
+         "a modern date. The suppression is keyed to the title string alone and must not reach it." },
 ];

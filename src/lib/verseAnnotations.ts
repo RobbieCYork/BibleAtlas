@@ -1718,6 +1718,41 @@ const NAME_CONTEXT_RULES: Record<string, NameContextRule[]> = {
     { phrase: "1 and 2 Timothy, Titus, Philemon, and Revelation are absent", to: null },
     { phrase: "1–2 Timothy, Titus, Philemon, and Revelation are absent", to: null },
   ],
+
+  // ── MODERN WORK TITLES: the same ruling, one shelf further forward ──────────────────────────
+  //
+  // Ruled 2026-09-10, and it is the book-title ruling above applied to a modern bibliography
+  // rather than to the canon: **a person's name inside the title of a modern book, article or
+  // journal links to no person.** The reasoning does not change — linking makes a claim, declining
+  // to link makes none — but here it is stronger than it is for a biblical book, because there is
+  // no reading on which the word is the man. "Abraham" in J. Van Seters's «Abraham in History and
+  // Tradition» names a 1975 Yale monograph. A reader who follows that link lands on the patriarch's
+  // article from what is plainly a bibliographic reference, which is wrong rather than opinionated.
+  //
+  // These are pinned by exact phrase and NOT by a pattern, deliberately. Nothing in the surrounding
+  // words says "this is a title" — no "book of", no numeral, no possessive naming a work. The
+  // neighbours are an author's surname and a year, and a rule keyed on either would reach far past
+  // titles. The modern-name sweep can key on "Van Seters" only because it is allowed to be wrong
+  // five times out of six; a suppression rule is not. The title itself is the only durable key, so
+  // the title itself is what is pinned — and a phrase pin survives a rewrite of the sentence around
+  // it, which a rule reading the neighbours would not.
+  //
+  // Measured over the whole linked prose corpus on 2026-09-10, not estimated: 12 modern work titles
+  // and journal names appear in text the app actually linkifies, and exactly TWO of them contain a
+  // live link. One is the entry below. The other is a TOPIC link rather than a person link — "the
+  // Jews" inside Luther's «On the Jews and Their Lies» (1543), on martin-luther — and it is left
+  // standing on purpose: this table only governs person names, suppressing it would mean inventing
+  // a second mechanism, and the words there do denote Jews. It is recorded in reviewed.tsv's header
+  // rather than silently passed over.
+  //
+  // Archaeology prose will keep producing these. The rule for the next writer is written down in
+  // scripts/name-linker/reviewed.tsv's header and in scripts/name-linker/README.md.
+  abraham: [
+    // topic.section on mari-tablets. The title is the key, so the pin holds whether the sentence
+    // reads "J. Van Seters's Abraham in History and Tradition (1975)" or cites the book any other
+    // way. Nothing else about Abraham is touched: the phrase occurs once in the whole corpus.
+    { phrase: "Abraham in History and Tradition", to: null },
+  ],
 };
 
 /** Do the words around this match say who it is — or that it is nobody?
