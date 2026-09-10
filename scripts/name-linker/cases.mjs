@@ -955,4 +955,16 @@ export const CASES = [
     why: "The evangelist writing, not the Gospel being named — so this takes the Apostle rather " +
          "than the suppression the 'Gospel of John' phrases get. Same fault as the Sabbath one " +
          "above: the Baptist is the global default and every new article inherits him." },
+
+  // Two more of the same shape, on the Canaanites article, which is held on `canaanites-expansion`
+  // for a second review. Pinned here because the fault is the linker's, not the article's, and it
+  // should not have to wait for that review to be fixed.
+  { text: "At Jericho, John Garstang excavated in the 1930s and found collapsed walls he dated " +
+          "around 1400 BC.",
+    surface: "John", owner: "canaanites", expect: null, status: "guard",
+    why: "JOHN GARSTANG, the excavator of Jericho — not the Baptist. No entry to point at." },
+  { text: "Niels Peter Lemche argued from this that \"Canaanite\" is largely a label applied " +
+          "from outside.",
+    surface: "Peter", owner: "canaanites", expect: null, status: "guard",
+    why: "NIELS PETER LEMCHE, the Danish Old Testament scholar — not the apostle." },
 ];

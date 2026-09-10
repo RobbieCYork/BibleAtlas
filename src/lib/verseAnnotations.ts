@@ -756,6 +756,9 @@ const OWNER_NAME_OVERRIDES: Record<string, Record<string, string | null>> = {
     // rather than the suppression the "Gospel of John" phrases get.
     sabbath: "john-the-apostle",
     "the-christ": "john-the-apostle",
+    // The Canaanites article's only bare "John" is JOHN GARSTANG, who excavated Jericho in the
+    // 1930s. No entry, and certainly not the Baptist — suppressed rather than repointed.
+    canaanites: null,
     "sea-of-galilee": "john-the-apostle",
     "basilica-st-john": "john-the-apostle",
     "house-of-virgin-mary-ephesus": "john-the-apostle",
@@ -897,6 +900,13 @@ const OWNER_NAME_OVERRIDES: Record<string, Record<string, string | null>> = {
   // Jonah)" — and the prose path has no verse context to catch it, so it is caught by owner here.
   jonah: {
     "simon-peter": null,
+  },
+  // "Peter": the Canaanites article's only bare "Peter" is NIELS PETER LEMCHE, the Danish Old
+  // Testament scholar, cited for his argument that "Canaanite" is a label applied from outside.
+  // A modern historian's middle name is not the apostle. Same shape as Jacob Neusner above, and
+  // the reason this article's scholars need reading one at a time rather than trusting a tally.
+  peter: {
+    canaanites: null,
   },
   // "Eleazar": the only entry is the minor Eleazar of Matthew's genealogy, allowlisted to Matthew.
   // Two of the eleven prose mentions are his (Eliud's and Matthan's genealogy pages). The other

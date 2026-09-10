@@ -719,7 +719,7 @@ person	john	john-the-apostle	panel	7
 person	john	john-the-apostle	prose	48
 person	john	john-the-apostle	reader	34
 person	john	john-the-baptist	panel	107
-person	john	john-the-baptist	prose	26
+person	john	john-the-baptist	prose	25
 person	john	john-the-baptist	reader	77
 person	john	john-wesley	prose	3
 person	john calvin	john-calvin	prose	1
@@ -887,7 +887,7 @@ person	perez	perez	panel	20
 person	perez	perez	prose	7
 person	perez	perez	reader	20
 person	peter	simon-peter	panel	136
-person	peter	simon-peter	prose	184
+person	peter	simon-peter	prose	183
 person	peter	simon-peter	reader	136
 person	philemon	philemon	panel	1
 person	philemon	philemon	prose	22
