@@ -1542,6 +1542,22 @@ const NAME_CONTEXT_RULES: Record<string, NameContextRule[]> = {
   andrew: [{ after: /^\s+Steinmann\b/, to: null }],   // the Herod-dating minority view
   gideon: [{ after: /^\s+Foerster\b/, to: null }],    // the Herodium excavator
   jacob: [{ after: /^\s+Eliyahu\b/, to: null }],      // the boy who found the Siloam inscription
+  // "Nathan Melech the officer" (2 Kings 23:11) and "Nathan-Melech, servant of the king" — one of
+  // Josiah's officials, a different man from the court prophet and with no Person record of his
+  // own. The hyphenated form is registered as a matchName on `nathan-melech-bulla`, so it resolves
+  // whole; the SPACED form is how the WEB renders the verse, and bare "Nathan" was matching inside
+  // it and sending the reader to the prophet. That was live on the panel path — the verse list on
+  // the Nathan-Melech Bulla article's own page linked its own man to somebody else.
+  //
+  // Suppression rather than resolution, deliberately. The app's position (with Rollston) is that
+  // the bulla's owner is very probably the official of 2 Kings 23:11 — probably, not certainly, and
+  // the article says so at length. Pointing the verse at the bulla article would quietly upgrade
+  // "very probably" to a fact the reader is shown rather than told. No link asserts nothing, which
+  // is the same answer this file gives the contested Nathan at 1 Kings 4:5.
+  //
+  // The hyphen alternative is a belt-and-braces fallback: it can only fire where bare "Nathan"
+  // matched, which the matchName normally prevents.
+  nathan: [{ after: /^[\s-]Melech\b/, to: null }],
   solomon: [
     { after: /^\s+Stoddard\b/, to: null }, // Jonathan Edwards's grandfather
     // "the Wisdom of Solomon" (the Muratorian fragment's canon list) and "the Psalms of Solomon"

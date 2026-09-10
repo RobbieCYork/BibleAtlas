@@ -1,0 +1,30 @@
+# Flag signals that have been READ, and what the reader concluded.
+# verdict<TAB>id<TAB>flag<TAB>the phrase that tripped it
+# Regenerate with: node scripts/archaeology-validate/run.mjs --update-reviewed
+#
+# A signal absent from this file fails the run. Do not add a row you have not read: every row
+# here is a claim that a person opened that article's third section and decided the flag is
+# right as it stands. Verdicts in use:
+#   ok       the prose trips the pattern but the object genuinely is not unprovenanced /
+#            authenticity is genuinely not in question (e.g. "it is NOT a piece of the
+#            antiquities market", or the article discusses someone else's forgery).
+#   todo     the flag really should be set — left here so it is not lost, and it is a bug.
+#
+ok	hezekiah-bulla	unprovenanced	unprovenanced
+ok	shema-seal	authenticityDisputed	forgery
+ok	shema-seal	unprovenanced	unprovenanced
+#
+# The reading behind each row above, so a later reader is not asked to take it on trust:
+#
+# hezekiah-bulla / unprovenanced — the word appears because the article's whole point is the
+#   contrast: unprovenanced Hezekiah bullae had circulated on the market since the 1990s and
+#   "could not settle anything," and THIS one is the first found in a scientific excavation.
+#   The flag would say the opposite of what the article says.
+#
+# shema-seal / unprovenanced and / authenticityDisputed — the third section is about a SECOND,
+#   different object: a bulla bought at a Beersheba market around 1980 that carries the same
+#   inscription, defended by S. Ahituv's team in Tel Aviv (2023) and argued to be a forgery by
+#   R. Deutsch, A. Lemaire, G. Barkay, P. van der Veen and D. Itzhak (2024). The record's own
+#   object is the Megiddo seal Schumacher excavated in 1904, which is neither unprovenanced nor
+#   authenticity-disputed. The article says so explicitly: "The Megiddo seal is excavated and
+#   usable. The Beersheba bulla is unprovenanced, actively disputed as of 2024."

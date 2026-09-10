@@ -4837,18 +4837,18 @@ export const topics: Topic[] = [
     },
     citations: [
       {
-        tier: "institution",
+        tier: "scholarly",
         label: "E. Mazar (ed.), The Ophel Excavations to the South of the Temple Mount 2009-2013: Final Reports Volume I",
-        credit: "Eilat Mazar and the Ophel expedition, Hebrew University of Jerusalem — the excavating body's own report",
+        credit: "Eilat Mazar and the Ophel expedition, Hebrew University of Jerusalem — the excavation's own final report",
         detail: "Jerusalem, 2015. The volume with which the bulla was announced. Print only",
         supports: "The findspot, the reading and the excavation context",
       },
       {
-        tier: "reference",
+        tier: "institution",
         label: "Hebrew University press release: first seal impression of an Israelite or Judean king exposed in situ in a scientific excavation",
         url: "https://phys.org/news/2015-12-israelite-judean-king-exposed-situ.html",
-        credit: "Hebrew University of Jerusalem",
-        detail: "December 2015",
+        credit: "Hebrew University of Jerusalem — the excavating body's own announcement, carried verbatim by phys.org, which credits it as the provider",
+        detail: "December 2015. The Ophel excavations were run by the Hebrew University with the Israel Antiquities Authority",
         supports: "Efrat Greenwald's recovery of the bulla in the sifting, Reut Ben-Aryeh's identification, the measurements and the iconography",
       },
       {
@@ -5328,7 +5328,7 @@ export const topics: Topic[] = [
         supports: "The 2005 find and its context",
       },
       {
-        tier: "institution",
+        tier: "scholarly",
         label: "E. Mazar, The Palace of King David: Excavations at the Summit of the City of David, Preliminary Report of Seasons 2005-2007",
         credit: "Eilat Mazar — the excavator's own report",
         detail: "Shoham Academic Research and Publication, Jerusalem, 2009. Print only. Note that the volume's title claim about the building is itself contested; the bullae are not",

@@ -578,6 +578,17 @@ export const CASES = [
   { ref: "1 Kings 4:5", surface: "Nathan", occurrence: 1, expect: null, status: "guard",
     why: "'Azariah the son of Nathan' / 'Zabud the son of Nathan' — commentators divide over " +
          "whether this Nathan is the prophet or David's son. Left unlinked rather than guessed." },
+  { ref: "2 Kings 23:11", surface: "Nathan", path: "panel", expect: null, status: "guard",
+    why: "'Nathan Melech the officer' — one of Josiah's officials, not the court prophet. The " +
+         "reader path never linked it (2 Kings is outside Nathan's book allowlist), but the panel " +
+         "path passes no book, so it fell through to the prophet — live on the Nathan-Melech Bulla " +
+         "article's own verse list, which linked its own man to somebody else. FIXED by a " +
+         "NAME_CONTEXT_RULES pin on a following 'Melech', which works on both paths. Suppressed " +
+         "rather than pointed at nathan-melech-bulla: the app's position is that the bulla's owner " +
+         "is very probably this man, and a link would show that as certainty." },
+  { ref: "2 Kings 23:11", surface: "Nathan", expect: null, status: "guard",
+    why: "The same verse on the reader path, where it was already correct. Recorded so the fix " +
+         "above cannot be undone by widening Nathan's book allowlist instead." },
 
   // ─────────────────────────────────────────────────────────────────────────────────────────
   // Batch 3 — two kings named Joram reigning at once, and the last king of Israel.

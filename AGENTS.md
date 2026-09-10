@@ -53,6 +53,30 @@ harness was written. It was reported once as having been written *here*, in
 this file, when it had not been — which is its own reminder that a claim a
 check exists is not the check existing.
 
+## The archaeology data rules are checked by a script, not by a reviewer
+
+Every `category: "discovery"` and `category: "manuscript"` record in `src/data/topics.ts` has
+mandatory fields — §3.2 and §4.1 of `automation/manager/archaeology-scope.md`. They are checked by
+
+    npm run validate:archaeology
+
+and the same script runs inside `vite build`, so a build fails on a data fault before it bundles
+anything. That wiring is not belt-and-braces. Archaeology batch 3 shipped **five of fourteen
+articles with no institutional citation**, which §3.2 makes mandatory, and found out by scripting
+a count *after* the deploy. Rules that live in a document and are checked by eye do not hold.
+
+Read `scripts/archaeology-validate/README.md` before adding a batch, and in particular before
+writing a row into `reviewed.tsv` — every row there is a claim that a person read that article's
+third section and decided.
+
+**And it is a third kind of lie, on exactly the pattern of the two above.** It bundles the data
+with rolldown, so it strips types without checking them and goes green on a tree that does not
+compile. Three commands, three different questions:
+
+    npm run validate:archaeology   # is the data complete?
+    npm run test:linker            # did any links move?
+    npm run build                  # does it compile? exit 0, no exceptions
+
 ## A verification worktree that shares `node_modules` shares `.tsbuildinfo` too
 
 Same class of lie as `--noEmit`, one level further out: the build *runs*, exits
