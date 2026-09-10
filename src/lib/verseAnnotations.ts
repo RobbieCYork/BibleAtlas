@@ -1386,6 +1386,14 @@ const NAME_CONTEXT_RULES: Record<string, NameContextRule[]> = {
     // the son of Zebedee and is left alone.
     { phrase: "Zebedee, with his sons John and James", to: "john-the-apostle" },
 
+    // A second phrase pin, same reasoning and the same constraint: a quotation of a primary source
+    // that may not be reworded to dodge a collision. A. S. Lewis's 1894 introduction names the
+    // eighth-century monk who scraped the Old Syriac gospels off their parchment — "John the
+    // Recluse, of Beth-Mari, Kaddish" — and a bare "John" in prose defaults to the Baptist, so the
+    // sentence was sending readers to the wrong man by seven centuries. No WEB verse contains the
+    // phrase, so the pin can never reach Scripture.
+    { phrase: "John the Recluse", to: null },
+
     // ── Resolution, not suppression. Checked first: it is the most specific thing we can say.
     // "Peter and John" is the Apostle everywhere in the New Testament and everywhere in our own
     // writing — there is no passage where the pair means the Baptist. This rule exists because two
@@ -1564,6 +1572,12 @@ const NAME_CONTEXT_RULES: Record<string, NameContextRule[]> = {
   peter: [
     // Abelard, Faber (a founding Jesuit), Flint (a Dead Sea Scrolls scholar).
     { after: /^\s+(?:Abelard|Faber|Flint)\b/, to: null },
+    // A phrase pin rather than a fourth name in the list above, because this one is a comma away:
+    // the dedication page of Codex Amiatinus was altered after Ceolfrith's death, and H. A. G.
+    // Houghton's description of the alteration — quoted verbatim in codex-amiatinus, and not
+    // rewordable — ends "to Peter, abbot of the Lombards". That is an eighth-century Italian abbot,
+    // not the apostle. No WEB verse contains the phrase.
+    { phrase: "Peter, abbot of the Lombards", to: null },
     // The books. The largest single group in this ruling: 16 of the 17 are "1 Peter", "2 Peter",
     // "First Peter" or "1-2 Peter" in the two book intros and the manuscript articles, and this is
     // the shape the ruling exists for — 2 Peter's authorship is the most disputed in the New
@@ -1774,6 +1788,10 @@ const NAME_CONTEXT_RULES: Record<string, NameContextRule[]> = {
   ezekiel: [
     { phrase: "Joshua, Judges, Samuel and Kings, then Isaiah, Jeremiah, Ezekiel and the Twelve", to: null }, // a list of BOOK titles
     TEXT_OF, // "The Masoretic Hebrew text of Ezekiel contains a notable number of difficult passages"
+    // "in the book of Ezekiel and in the Twelve Prophets" — the 2026-09-09 book-title ruling
+    // applied to a name that simply had not needed it yet. Safe as a pattern rather than a pin:
+    // no WEB verse contains "book of Ezekiel", because Scripture never names its own books.
+    BOOK_OF,
   ],
   ezra: [
     TEXT_OF, // "The Hebrew and Aramaic text of Ezra is well preserved and stable"
@@ -2014,7 +2032,16 @@ const NAME_CONTEXT_RULES: Record<string, NameContextRule[]> = {
   // sentence naming a university. Keyed on the following word rather than on a phrase, because the
   // name is written several ways ("Trinity Southwest University", "Trinity Southwest") and
   // "Southwest" is what disambiguates all of them. The doctrine keeps every other mention it has.
-  trinity: [{ after: /^\s+Southwest\b/, to: null }],
+  // A second institution of the same shape, added with the versions-and-minuscules batch: W. H.
+  // Ferrar and T. K. Abbott were fellows of Trinity College Dublin, and the Codex Montfortianus is
+  // still in its library, so the manuscript articles name the college and were linking its first
+  // word to the doctrine. A phrase pin here rather than a following-word pattern, because the
+  // college is written both "Trinity College Dublin" and "Trinity College in Dublin" and "College"
+  // is what disambiguates both. No WEB verse contains "Trinity" at all.
+  trinity: [
+    { after: /^\s+Southwest\b/, to: null },
+    { phrase: "Trinity College", to: null },
+  ],
 
   // ── ADDED WITH THE JUDEAN DESERT MANUSCRIPT ARTICLES ───────────────────────────────────────
   //

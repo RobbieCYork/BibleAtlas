@@ -1851,4 +1851,44 @@ export const CASES = [
   { ref: "1 Kings 3:5", surface: "Solomon", expect: "solomon", status: "guard",
     why: "KEPT. The king at Gibeon. The Schechter rule is keyed on a following surname and the " +
          "patronymic rule on a preceding \"ben\"/\"b.\"; neither can reach Scripture." },
+  // ── THE VERSIONS, MINUSCULES AND PRINTED-TEXT ARTICLES ─────────────────────────────────────
+  //
+  // Three pins added with this batch, all found by enumerating the links the new prose renders
+  // BEFORE committing (scripts/name-linker/article-links.mjs, written for the purpose), not by
+  // reading a snapshot diff afterwards. Everything else these eight articles collided with was
+  // fixed by rewording — "the Gospel of John" for a bare "John", "the Pauline Epistles" for a bare
+  // "Paul", "M. Maynard" for "Michael Maynard", "the Gospel of Mark and the Gospel of Matthew" for
+  // "Mark and Matthew" — and those wordings must stay that way, because undoing one re-opens a
+  // link this file is guarding.
+  { text: "the alteration changed \"the donor's name from Ceolfrid, abbot of the English, to " +
+          "Peter, abbot of the Lombards.\"",
+    surface: "Peter", owner: "codex-amiatinus", expect: null, status: "guard",
+    why: "An eighth-century Italian abbot whose name was written over Ceolfrith's on the " +
+         "dedication page of Codex Amiatinus, not the Apostle. Inside a quotation from " +
+         "H. A. G. Houghton that cannot be reworded to dodge the collision." },
+  { text: "John the Recluse, of Beth-Mari, Kaddish, being in want of vellum, pulled to pieces a " +
+          "copy of the Old Syriac Gospels",
+    surface: "John", owner: "old-syriac-gospels", expect: null, status: "guard",
+    why: "The eighth-century monk who scraped the Sinaitic Palimpsest's gospel text off its " +
+         "parchment, named in A. S. Lewis's own 1894 introduction. A bare \"John\" in prose " +
+         "defaults to the Baptist; the quotation is a primary source and may not be reworded." },
+  { text: "William Hugh Ferrar, a fellow of Trinity College in Dublin, noticed that four gospel " +
+          "manuscripts kept agreeing with one another against everything else",
+    surface: "Trinity", owner: "family-1-and-family-13", expect: null, status: "guard",
+    why: "The Dublin college, not the doctrine. Same shape as Trinity Southwest University, which " +
+         "is why the pin sits beside it — but keyed on \"Trinity College\" as a phrase, because " +
+         "the college is written both with and without \"in\" before Dublin." },
+  { text: "Losing this verse costs the doctrine of the Trinity nothing, and the reason is the " +
+          "same fact that tells against the verse.",
+    surface: "the Trinity", owner: "comma-johanneum", expect: "the-trinity", status: "guard",
+    why: "KEPT. The doctrine itself, in the article that most needs the link to work. The " +
+         "\"Trinity College\" pin must never reach an ordinary mention of the doctrine." },
+  { text: "It was translated directly from Hebrew rather than from the Greek Septuagint — not " +
+          "quite everywhere, since the Gorgias dictionary says that in the book of Ezekiel and in " +
+          "the Twelve Prophets \"we have to assume some literary dependence of the Peshitta on the " +
+          "Septuagint\"",
+    surface: "Ezekiel", owner: "peshitta", expect: null, status: "guard",
+    why: "The BOOK, inside a quotation about which books of the Peshitta lean on the Septuagint. " +
+         "`ezekiel` carried TEXT_OF but not BOOK_OF until the versions batch; this is the " +
+         "2026-09-09 book-title ruling applied to a name that had not needed it before." },
 ];

@@ -15762,4 +15762,1053 @@ export const topics: Topic[] = [
     reflectionPrompt:
       "Two communities have read the same five books for two thousand years and disagreed about one mountain. What difference are you treating as bigger than it is — or smaller?",
   },
+
+  {
+    id: "comma-johanneum",
+    name: "The Comma Johanneum",
+    alternateNames: ["the Johannine Comma"],
+    // NOT registered: "Erasmus" (no record owns it, and a bare surname is the shape this project
+    // has shipped wrong links in before), "Textus Receptus" or "Vulgate" — the article discusses
+    // both at length but is not the article a reader clicking either of those words wants.
+    matchNames: ["Comma Johanneum"],
+    category: "manuscript",
+    role: "Erasmus, the Textus Receptus, and the Sentence That Is Not in the Greek",
+    summary:
+      "A sentence at 1 John 5:7 naming the Father, the Word and the Holy Spirit as three heavenly witnesses: printed in the King James Bible, absent from every modern one, and absent from every Greek manuscript copied before the fourteenth century.",
+    sections: [
+      {
+        heading: "Eight Months in Basel",
+        paragraphs: [
+          "Erasmus of Rotterdam had come to Basel in 1514; by the summer of 1515 he and the printer Johann Froben had an agreement, the presses started in August, and by March 1516 the book was out: the Novum Instrumentum omne, a New Testament in two parallel columns, Greek on one side and a fresh Latin translation on the other, with several hundred pages of Annotationes explaining the translation. His own verdict on it was praecipitatum verius quam aeditum — in Combs's rendering, \"thrown together rather than edited\". To a friend in June he wrote that he had escaped the workhouse at Basel, where he had got through \"six years work in eight months\".",
+          "It matters what the book was for, because it is almost always described backwards. H. J. de Jonge's study of the project argues that Erasmus and his contemporaries saw it first as a new Latin New Testament, not as an edition of the Greek; the Greek was printed to show that the Latin had not been invented. He never issued the Greek on its own, though he was urged to. And the Greek he printed came from what happened to be in Basel: seven manuscripts, late and mostly twelfth-century, of which two — the copies now numbered 2e and 2ap — went to the compositors as printer's copy with his corrections written between their lines.",
+          "For Revelation he had one manuscript, and it had lost its last page. So he translated the last six verses back into Greek out of the Latin Vulgate, and said so in the Annotationes. W. W. Combs, writing in the Detroit Baptist Seminary Journal, counted the result: twenty readings in those six verses that stand in the Textus Receptus to this day and have, in his words, \"no Greek manuscript support whatsoever\". A phrase at Acts 9:6 came into the Greek the same way. None of this was concealed; Erasmus wrote down what he had done. The name Textus Receptus is later still, and comes from a printer's advertisement — the preface to the Elzevir press's edition of 1633, which told the reader that he had \"the text now received by all\". Two details usually go wrong with that sentence, and Combs corrects both: the edition was edited by J. Hoelzlin, and the two Elzevirs whose names are on it were not, as H. J. de Jonge showed, brothers.",
+        ],
+      },
+      {
+        heading: "Where the Verse Is, and Where It Is Not",
+        paragraphs: [
+          "Open 1 John 5 in the King James Bible and verse 7 reads: \"For there are three that bear record in heaven, the Father, the Word, and the Holy Ghost: and these three are one.\" Open the same passage in this app's default translation, the World English Bible, and verse 7 is six words long, \"For there are three who testify\", running straight on into the Spirit, the water and the blood. Both readings are in front of you here: switch the translation to the King James in the Bible panel and the sentence appears. That difference is the whole subject, and it is one of the few places in the New Testament where the choice of text changes a sentence a reader would notice.",
+          "The clause is Latin before it is anything else. The first unambiguous citation of it is in the Liber apologeticus of Priscillian, a Spanish bishop executed in 385, and the form he cites is not the familiar one: he puts the heavenly witnesses second rather than first, says that they are one \"in Christ Jesus\", and lists the earthly three as water, flesh and blood — a reading, as G. McDonald notes in his study of the passage, \"found in no extant Greek bible\". From there it spreads through the Latin west, into the later Vulgate manuscripts, and eventually into the Latin liturgy.",
+          "In Greek it is very late. The earliest Greek Bible containing it was copied in 1362-1363 and is now Vatican Library Ottob. gr. 298; it gives Greek and Latin in parallel columns, with the Greek bent to fit the Latin. Before that, the earliest occurrence of the clause in Greek at all is not in a Bible but in a Greek translation of the Latin acts of the Fourth Lateran Council of 1215. Counts differ, and the difference does not matter. D. B. Wallace's is the shortest: \"The Comma occurs only in about 8 MSS, mostly in the margins, and all of them quite late.\" G. McDonald's list is longer, and he added to it himself — the Munich codex Wallace reported in 2010 is, on McDonald's reckoning, the fifth manuscript to carry the clause in its margin. What every list agrees on is the thing that settles it: not one of these manuscripts is early, and every one of them can be traced to a Latin exemplar or to a printed edition. The oldest argument against it is still the strongest one, and it is not about manuscripts at all: no Greek father quotes the clause, including the fathers who spent the fourth century arguing about the Trinity and would have reached for it if they had it.",
+          "Erasmus left it out of 1516 and out of 1519, and printed it in 1522. The story usually told at this point — that he had rashly promised to include it if a single Greek manuscript could be produced, and kept his word against his judgement — was examined by de Jonge in 1980 and does not survive. \"The current view that Erasmus promised to insert the Comma Johanneum if it could be shown to him in a single Greek manuscript,\" he concluded, \"has no foundation in Erasmus' works.\" Erasmus gave his own reason more than once: ne cui sit ansa calumniandi, so that nobody should have a handle for slander. Edward Lee had accused him of reviving Arianism, and a charge of heresy would have killed the book. He printed the clause and recorded in the Annotationes that he did not think it belonged there. The Greek manuscript that reached him is the Codex Montfortianus, numbered 61 and now in Dublin; J. Rendel Harris showed in 1887 that it was almost certainly written to order. De Jonge's second finding is the one usually left out: it cannot be shown that Erasmus suspected any such thing. He thought it was an ordinary Greek manuscript that had been conformed to the Vulgate, which was his standing theory about Greek copies that agreed with the Latin. That second finding is not agreed. G. McDonald, who accepts the first, notes in his own study that Erasmus described the manuscript as recent, and adds: \"I am less confident than de Jonge, 1980, 389, that Erasmus had no suspicion that Montfortianus had been prepared with the intention of deceiving him.\" B. M. Metzger's handbook printed the older version of the story and then corrected it, citing de Jonge, in an appendix to its third edition.",
+        ],
+      },
+      {
+        heading: "What the Argument Is Actually About",
+        paragraphs: [
+          "The Comma is still defended — by churches and societies committed to the Textus Receptus, and by the King James Only movement, which G. McDonald names as the argument's main modern carrier — and the case for it deserves to be read in its defenders' own words rather than in a summary by people who disagree with them. The Trinitarian Bible Society, a British publisher of the King James Version, gives the floor to three defenders — M. Henry, R. L. Dabney and E. F. Hills — and three arguments come out of it. The first is grammatical, and it is the serious one. R. L. Dabney put it this way: strike verse 7, and \"the masculine article, numeral, and particle\" of verse 8 \"are made to agree directly with three neuters\", which he called \"an insuperable and very bald grammatical difficulty\". Leave the disputed words in and they agree with two masculine nouns and one neuter, and by an ordinary rule of Greek the masculines govern. The second is that a forger would not have invented this particular wording: E. F. Hills asks why an interpolation would read \"the Father, the Word, and the Holy Spirit\" rather than the usual Father, Son and Holy Spirit — \"the singular combination, never met with elsewhere\". The third is Hills's larger claim, that the reading was preserved in the Latin-speaking church's usage and that behind that usage \"was the guiding providence of God\". M. Maynard, whom McDonald lists among the King James Only writers, set out the case at book length in 1995.",
+          "The answers are not new either. On the grammar: the three witnesses of verse 8 are being personified — put in the witness box, in what the passage plainly treats as a courtroom — and Greek regularly takes the gender from the sense in that situation. Erasmus made exactly this reply in his own Annotationes: the apostle \"pays more regard to the sense than to the words\", and \"you use the same construction if you say: 'The building is a witness to the kind of builder you are.'\" There is a further point that is easy to miss: the Latin translates the Greek participle with a relative clause, and spiritus is masculine in Latin anyway, so the claim that the Latin is grammatically tidier than the Greek is not comparing like with like. And the awkwardness cuts the other way as well. A reading that is slightly rough is the kind a copyist smooths out, not the kind he invents. As for Hills's second question, McDonald's reconstruction is that the clause began not as a forgery but as a marginal note — a reader's Trinitarian gloss on three witnesses who \"are one\", of the sort Tertullian and Cyprian had already made — which a later copyist could not tell from the text he was copying. That would explain the unusual wording rather than leave it unexplained.",
+          "One argument on the defenders' side is genuinely open and should be named as such. Cyprian, writing about 250, quotes John 10:30 and then adds that \"it is written of the Father, and of the Son, and of the Holy Spirit, 'And these three are one.'\" W. Thiele argued in 1959 that this is evidence the clause already stood in Cyprian's Latin Bible; McDonald sets Thiele's case out at length and disagrees with it, holding that Cyprian is interpreting the ordinary text of verse 8 rather than quoting a longer one. Wallace's reading is the same, and rests on a point worth weighing: Cyprian quotes only the four words that are in every text, and does not quote the wording that would have settled his argument outright. This is a real disagreement between scholars about a real piece of evidence — W. Thiele was a Vetus Latina editor, not a defender of the King James Version, and the two arguments should not be filed together. It is also not the same thing as the manuscript question, which is not close.",
+          "What is worth saying last is the thing a reader most needs and is least often told. Losing this verse costs the doctrine of the Trinity nothing, and the reason is the same fact that tells against the verse. Nicaea in 325 and Constantinople in 381 settled the Trinitarian confession without it, and no Greek father who fought those arguments ever quotes it. The doctrine was drawn instead from the texts it is still drawn from: the baptismal formula of Matthew 28:19, the Word who was with God and was God in John 1:1, \"I and the Father are one\" in John 10:30, the Spirit of truth whom the Son sends from the Father in John 15:26, and Paul's threefold blessing in 2 Corinthians 13:14. Erasmus, who took the clause out, was blunt about this: he never discussed the passage, he wrote, \"without testifying to the truth of what people gather from that passage: that the Father, Son and Holy Spirit share the very same essence\". The Catholic Church reached the same place by a road worth recording, since it was not a straight one — the Holy Office ruled in 1897 that the authenticity of the verse could not safely be denied, clarified in 1927 that this had not been meant to stop Catholic scholars from concluding against it, and the Nova Vulgata of 1979 does not print it. This app's position is the ordinary Protestant and evangelical one, and it is Erasmus's: the clause is no part of the letter as the apostle wrote it, and the confession it states is true.",
+        ],
+      },
+    ],
+    verses: [
+      { reference: "1 John 5:7-8", note: "Six words in the World English Bible; a sentence about the Trinity in the King James" },
+      { reference: "1 John 5:6", note: "The water, the blood and the Spirit, which the disputed clause interrupts" },
+      { reference: "Matthew 28:19", note: "The baptismal formula — Father, Son and Holy Spirit" },
+      { reference: "John 10:30", note: "\"I and the Father are one\" — the text Cyprian quotes beside 1 John 5" },
+      { reference: "2 Corinthians 13:14", note: "Paul's threefold blessing" },
+    ],
+    sources: [
+      { label: "H. J. de Jonge, \"Erasmus and the Comma Johanneum\" (Leiden open access)", url: "https://scholarlypublications.universiteitleiden.nl/access/item:2721790/download" },
+      { label: "G. McDonald, Raising the Ghost of Arius (Leiden dissertation, open access)", url: "https://scholarlypublications.universiteitleiden.nl/access/item:2954624/download" },
+      { label: "Trinitarian Bible Society: Why 1 John 5.7-8 is in the Bible", url: "https://www.tbsbibles.org/page/1John5verse7and8" },
+      { label: "W. W. Combs, \"Erasmus and the Textus Receptus\" (Detroit Baptist Seminary Journal)", url: "https://dbts.edu/wp-content/uploads/1996/10/Erasmus-and-the-Textus-Receptus-Combs.pdf" },
+    ],
+    manuscript: {
+      manuscriptType:
+        "Not a manuscript but a reading — a clause that entered the Latin Bible, then the first printed Greek New Testaments, and from there the King James Version",
+      language: "Latin first; Greek only from the fourteenth century, and translated from the Latin",
+      contents:
+        "1 John 5:7b-8a: \"in heaven, the Father, the Word, and the Holy Ghost: and these three are one. And there are three that bear witness in earth\" (King James wording). Five Greek manuscripts carry it in the body of the text on G. McDonald's list and four on D. B. Wallace's, with five more carrying it in the margin in a later hand; the earliest, Vatican Library Ottob. gr. 298, was copied in 1362-1363 with the Greek accommodated to a facing Latin column",
+      origin:
+        "The Latin west. First cited unambiguously in the Liber apologeticus of Priscillian (c. 380), in a form unlike the familiar one",
+      findSite: "Not applicable. Nothing was found; a clause was transmitted, printed, and then removed again",
+      foundYear: "Not applicable",
+      foundBy: "Not applicable",
+      dateAssigned:
+        "The clause by c. 380 in Latin; in a Greek Bible not before 1362-1363; in print from the Complutensian Polyglot, whose New Testament volume was printed in 1514 though the whole was not published until 1522, and from Erasmus's third edition of 1522",
+      dateCertainty: "firm",
+      currentLocation:
+        "In the King James Version and other translations that follow the Textus Receptus. Absent from every modern critical edition of the Greek New Testament, and from the Roman Catholic Nova Vulgata of 1979",
+      shelfmark: "Trinity College Dublin MS gr. 30 (Codex Montfortianus, Gregory-Aland 61) is the copy Erasmus was shown",
+    },
+    reflectionPrompt:
+      "Erasmus printed a sentence he did not believe was scripture because he was afraid of what people would say about him if he did not. What have you gone along with because disagreeing in public looked too expensive?",
+    citations: [
+      {
+        tier: "scholarly",
+        label: "H. J. de Jonge, \"Erasmus and the Comma Johanneum\"",
+        url: "https://scholarlypublications.universiteitleiden.nl/access/item:2721790/download",
+        credit: "Henk Jan de Jonge",
+        detail:
+          "Ephemerides Theologicae Lovanienses 56 (1980), fasc. 4, 381-389; open access at Leiden University and read in full here. Source of both quoted conclusions, of the Latin ne cui sit ansa calumniandi, and of the Responsio ad Annotationes Eduardi Lei passage the promise story grew out of. The English gloss \"a handle for slander\" is this article's; de Jonge's own rendering is \"so that no one would have occasion to criticise me out of malice\". He gives the manuscript as Trinity College, Dublin (A 4.21); the \"MS gr. 30\" form used here is G. McDonald's",
+        supports: "That there was no promise, and that Erasmus is not on record suspecting the manuscript was made to trap him",
+      },
+      {
+        tier: "scholarly",
+        label: "G. McDonald, Raising the Ghost of Arius (doctoral dissertation, Leiden University, 2011)",
+        url: "https://scholarlypublications.universiteitleiden.nl/access/item:2954624/download",
+        credit: "Grantley Robert McDonald",
+        detail:
+          "Open access and read in full here. Source of the Priscillian citation and its unusual form, the manuscript list with shelfmarks and Gregory-Aland numbers, the 1362-1363 date for Ottob. gr. 298, the Fourth Lateran Council as the first Greek occurrence, the Cyprian passage in Latin, W. Thiele's contrary argument, Erasmus's Annotationes on personification, and the Latin of the 1897 and 1927 Holy Office decrees",
+        supports: "The manuscript evidence, the Latin patristic evidence, and both sides of the Cyprian question",
+      },
+      {
+        tier: "reference",
+        label: "Trinitarian Bible Society, \"Why 1 John 5.7-8 is in the Bible\"",
+        url: "https://www.tbsbibles.org/page/1John5verse7and8",
+        credit: "Trinitarian Bible Society, London",
+        detail:
+          "The Society's own statement of its position, quoting M. Henry, R. L. Dabney and E. F. Hills at length. Read in full in a browser; the site refuses scripted requests. Every quotation attributed to the defenders in the third section above is taken from here rather than from a critic's summary of it",
+        supports: "The grammatical argument, the \"why this wording\" argument, and the providential-preservation argument, in their advocates' own words",
+      },
+      {
+        tier: "scholarly",
+        label: "W. W. Combs, \"Erasmus and the Textus Receptus\"",
+        url: "https://dbts.edu/wp-content/uploads/1996/10/Erasmus-and-the-Textus-Receptus-Combs.pdf",
+        credit: "William W. Combs, Detroit Baptist Theological Seminary",
+        detail:
+          "Detroit Baptist Seminary Journal 1 (Spring 1996), 35-53; free PDF, read in full. Source of the seven manuscripts and their identities, the printer's-copy detail, the count of twenty unsupported readings in the last six verses of Revelation, the Acts 9:6 insertion, the Elzevir 1633 preface, and the note that Metzger corrected the promise story in an appendix to his third edition after de Jonge",
+        supports: "What Erasmus actually had to work with, and what the Textus Receptus inherited from it",
+      },
+      {
+        tier: "institution",
+        label: "Center for the Study of New Testament Manuscripts: the Comma Johanneum in an overlooked manuscript",
+        url: "https://www.csntm.org/2010/07/02/the-comma-johanneum-in-an-overlooked-manuscript/",
+        credit: "Center for the Study of New Testament Manuscripts",
+        detail:
+          "The 2010 report of a ninth Greek manuscript with the clause in the margin — Munich, Bayerische Staatsbibliothek Cod. graec. 211, Gregory-Aland 177, an eleventh-century codex whose marginal addition is dated to the seventeenth or eighteenth century. The page carries no byline; G. McDonald's dissertation attributes the find to D. B. Wallace and cites the same report",
+        supports: "The manuscript count, and that it is still moving",
+      },
+      {
+        tier: "primary",
+        label: "O. T. Dobbin, The Codex Montfortianus: a collation of this celebrated ms. in the library of Trinity college, Dublin",
+        url: "https://archive.org/details/bub_gb_ZVM7Drma5ZwC",
+        credit: "Orlando T. Dobbin",
+        detail:
+          "S. Bagster and Sons, London, 1854; public domain and freely readable at the Internet Archive. The nineteenth-century collation of the manuscript Erasmus was shown, cited so that a reader can look at the evidence rather than take a description of it",
+        supports: "That Codex Montfortianus is at Trinity College Dublin and has been collated in public",
+      },
+      {
+        tier: "reference",
+        label: "D. B. Wallace, \"The Comma Johanneum and Cyprian\"",
+        url: "https://bible.org/article/comma-johanneum-and-cyprian",
+        credit: "Daniel B. Wallace",
+        detail:
+          "Read in full in a browser; bible.org refuses scripted requests. The byline is not printed on the page itself and the attribution to Wallace is taken from bible.org's own listing and from G. McDonald's citation of his related work. Cited for the argument about what Cyprian does and does not quote",
+        supports: "The evangelical text-critical answer to the Cyprian argument",
+      },
+      {
+        tier: "encyclopedic",
+        label: "Wikipedia: Johannine Comma",
+        url: "https://en.wikipedia.org/wiki/Johannine_Comma",
+      },
+    ],
+  },
+
+  {
+    id: "codex-amiatinus",
+    name: "Codex Amiatinus",
+    alternateNames: ["Amiatinus"],
+    // NOT registered: "Vulgate". This article discusses it at length, but the Vulgate is a
+    // translation tradition and this record is one book. Registering it would point every
+    // "Vulgate" in the 66 book introductions at a single eighth-century codex, which is the
+    // wrong destination. Flagged for Bob as a candidate for its own record.
+    category: "manuscript",
+    role: "The Oldest Complete Latin Bible, Made in Northumbria and Carried Toward Rome",
+    summary:
+      "A one-volume Latin Bible written at Wearmouth-Jarrow around AD 700 and carried south by an abbot who died on the road — the oldest surviving complete copy of the Vulgate, and an English book that most scholars took for an Italian one until the end of the nineteenth century.",
+    sections: [
+      {
+        heading: "Three Bibles, and a Journey That Ended at Langres",
+        paragraphs: [
+          "Bede tells the story in his Lives of the Abbots, and the sentence is short enough to quote whole. Ceolfrith, abbot of Wearmouth and Jarrow, \"added three Pandects of a new translation to that of the old translation which he had brought from Rome; one of them, returning to Rome in his old age, he took with him as a gift; the other two he left to the two monasteries.\" A pandect is a complete Bible in one volume, which in the eighth century was a rare and enormous thing to attempt; three of them at once meant a herd of animals, and a grant of land made to the monastery in 692 has been connected with the parchment they would have needed.",
+          "Ceolfrith set out on 4 June and got as far as the country of the Lingones — the Gallic people whose city is modern Langres, in Burgundy — where he died on 25 September, seven hours after arriving, with about eighty English companions around him. Bede gives the day exactly and the year less exactly: the translation most readers will meet prints 715, and the British Library and modern scholarship both give 716. The Bible he was carrying went on without him, and came in time to the monastery of San Salvatore on Monte Amiata in southern Tuscany, which is where its name comes from. It is in Florence now, in the Biblioteca Medicea Laurenziana, catalogued as Amiatino 1. The library has photographed all of it: 1,029 leaves of parchment, 500 by 335 millimetres, free to page through online.",
+          "One detail in the book has done more damage than any other. The dedication page names the donor, and at some point after Ceolfrith's death somebody scraped his name out and wrote another in. As H. A. G. Houghton puts it, the alteration changed \"the donor's name from Ceolfrid, abbot of the English, to Peter, abbot of the Lombards.\" That single erasure is the reason an English book sat in Italy for a thousand years being described as Italian.",
+        ],
+      },
+      {
+        heading: "What the Vulgate Actually Is",
+        paragraphs: [
+          "It is worth being exact about what this book contains, because \"the Vulgate\" is routinely described as Jerome's translation of the Bible and it is not quite that. Pope Damasus asked Jerome, around 382, to produce a revised Latin text of the Gospels, and Jerome did that by comparing the Latin in use against Greek copies. He later translated most of the Old Testament afresh from the Hebrew. The rest of the New Testament — Acts, the epistles, Revelation — is an anonymous revision by somebody else, and a handful of books came from other sources again. What became the standard Latin Bible of the west is therefore a composite, assembled over time, and it took a long time to displace the older Latin versions it was revising.",
+          "Amiatinus is the oldest copy of that composite surviving complete, which is what makes it the reference point for every critical edition of the Latin Bible. Its text is laid out per cola et commata, in sense-lines rather than continuous prose, the arrangement Jerome introduced for the Hebrew prophets and the one most modern editions of the Vulgate still use. A reader can see it: folio 843 recto, the opening of Mark 11, is a page of short lines broken where the sense breaks.",
+          "Two of its readings are worth a Bible reader's attention. The disputed clause at 1 John 5:7 about three heavenly witnesses, which the King James Version prints and modern translations do not, is not in Amiatinus. And the two sister Bibles are not entirely lost: fragments of one survive in the British Library as Additional MSS 37777 and 45025, carrying parts of what the Vulgate calls 3 and 4 Kings — the books an English Bible calls 1 and 2 Kings. Some of those leaves spent the sixteenth century as covers for property deeds.",
+        ],
+      },
+      {
+        heading: "A Book That Has Been Misread for a Thousand Years",
+        paragraphs: [
+          "Houghton's verdict on the literature is blunt: \"Scholarship on this manuscript has been beset by a number of persistent misunderstandings.\" The Italian attribution was the first and the longest-lived. A second is the assumption that Amiatinus is simply a copy of the codex grandior, the large illustrated Bible made at Cassiodorus's monastery at Vivarium in southern Italy. Ceolfrith did bring a pandect back from Rome, but it was an Old Latin book, not a Vulgate one, so it cannot have been the exemplar for Amiatinus's text; the Vulgate assembled in these three Bibles was the work of the community at Wearmouth-Jarrow itself. Houghton's own verdict runs the other way, and the second half of it is the half that matters: \"Although there is still some hesitation about the presence of the codex grandior in Northumbria, this is the simplest explanation for the format and certain features of Codex Amiatinus.\" What he is correcting is not the idea that Cassiodorus's book reached Northumbria — he thinks it probably did — but the idea that Amiatinus is a copy of it.",
+          "The famous miniature is a third. It shows a man writing in front of a bookcase holding a nine-volume Bible, and the caption in the manuscript names him Ezra. Houghton records that \"there are good reasons for thinking that it may be a depiction of Cassiodorus himself\" — the bookcase behind him holds nine volumes arranged as Cassiodorus describes his own nine-volume Bible, and the smaller book at his feet matches another of his formats. The picture is famous as an image of the scribe of Ezra 7:6 and may be a portrait of a sixth-century Italian statesman. Both readings are in print; neither is certain.",
+          "The honest limit for a reader of this app is a different one, and it is about weight rather than origin. Amiatinus is a Latin Bible, and Latin is a translation. Where it matters what the New Testament said, a Greek manuscript three centuries older carries more, and this book's own Gospels are not an independent witness even in Latin — B. Fischer's work identified them as a copy of a Neapolitan gospel book, liturgical notes included. What Amiatinus is unmatched for is something else: the shape of a complete Bible, the state of the Vulgate text around AD 700, and the astonishing fact that the best surviving copy of it was made at the far northern edge of Europe, in a kingdom that had been Christian only since the seventh century. The last figure worth giving is one this article can source only once: the British Library's own account puts the book at 35 kilograms, and no other source consulted here confirms it.",
+        ],
+      },
+    ],
+    verses: [
+      { reference: "Mark 11:1", note: "The opening of Mark 11, the page of Amiatinus the Laurenziana reproduces" },
+      { reference: "Ezra 7:6", note: "\"A skilled scribe in the law of Moses\" — the figure the codex's miniature names" },
+      { reference: "1 Kings 1:1", note: "3 Kings in the Vulgate's numbering, part of what survives from a sister Bible" },
+      { reference: "1 John 5:7", note: "The disputed clause about three heavenly witnesses, absent from this codex" },
+    ],
+    sources: [
+      { label: "Biblioteca Medicea Laurenziana: Amiatino 1, digitised in full", url: "https://tecabml.contentdm.oclc.org/digital/collection/amiatino/id/2059" },
+      { label: "Bede, Lives of the Holy Abbots of Wearmouth and Jarrow (Wikisource)", url: "https://en.wikisource.org/wiki/Lives_of_the_holy_abbots_of_Wearmouth_and_Jarrow" },
+      { label: "H. A. G. Houghton, The Latin New Testament (Oxford University Press, open access)", url: "https://pure-oai.bham.ac.uk/ws/files/101039771/9780198744733.pdf" },
+    ],
+    manuscript: {
+      siglum: "Vulgate A (Vg A)",
+      manuscriptType:
+        "Parchment pandect — a complete Bible in a single volume — in uncial script, two columns of 44 to 45 lines, laid out per cola et commata",
+      language: "Latin",
+      contents:
+        "The whole Latin Bible, Old and New Testaments, complete. The oldest surviving complete copy of the Vulgate. The disputed clause at 1 John 5:7 is absent. A prefatory quire carries an illustration of the Tabernacle across a two-page opening, and a picture of a seated copyist in front of a nine-volume Bible, captioned as Ezra",
+      origin: "The twin monasteries of Wearmouth and Jarrow, Northumbria, under Abbot Ceolfrith",
+      findSite:
+        "Not applicable. The codex was never lost and never excavated. It passed from Ceolfrith's funeral party to the monastery of San Salvatore on Monte Amiata in southern Tuscany, and from there to Florence",
+      foundYear: "Not applicable",
+      foundBy:
+        "No finder. Its Northumbrian origin was recovered by scholarship at the end of the nineteenth century, after the altered dedication page had kept it Italian for a thousand years",
+      dateAssigned:
+        "About AD 700, completed before Ceolfrith left for Rome in the summer of 715 or 716. The Laurenziana's own catalogue gives the wider range 601-800",
+      dateCertainty: "traditional",
+      currentLocation: "Biblioteca Medicea Laurenziana, Florence",
+      shelfmark: "Amiatino 1",
+      facsimileUrl: "https://tecabml.contentdm.oclc.org/digital/collection/amiatino/id/2059",
+    },
+    reflectionPrompt:
+      "Someone scraped Ceolfrith's name off the page and wrote another in, and for a thousand years the credit went elsewhere. Whose work have you been given credit for, or been quietly denied?",
+    citations: [
+      {
+        tier: "institution",
+        label: "Biblioteca Medicea Laurenziana, Teca Digitale: Amiatino 1",
+        url: "https://tecabml.contentdm.oclc.org/digital/collection/amiatino/id/2059",
+        credit: "Biblioteca Medicea Laurenziana, Florence",
+        detail:
+          "The holding library's own record and its complete digitisation — every one of the 1,029 leaves, with IIIF. Source of the shelfmark, the leaf count, the 500 x 335 mm measurement and the catalogue's date range of 601-800. The record itself carries no description, so nothing about Ceolfrith or Wearmouth-Jarrow rests on it. Images are published CC BY-NC-SA and are linked here, not reproduced",
+        supports: "The shelfmark, the physical description and the fact that a reader can look at the whole book",
+      },
+      {
+        tier: "primary",
+        label: "Bede, Lives of the Holy Abbots of Wearmouth and Jarrow, translated by J. A. Giles",
+        url: "https://en.wikisource.org/wiki/Lives_of_the_holy_abbots_of_Wearmouth_and_Jarrow",
+        credit: "Bede; translated by J. A. Giles",
+        detail:
+          "Public domain, read in full at Wikisource. Chapter 15 is quoted verbatim above for the three pandects; chapters 21 to 23 give the death among the Lingones, the departure on 4 June and the death on 25 September. Note that Bede does not name the Pope as the recipient, and that this translation prints the year as 715 where modern accounts give 716 — both points are stated as such in the article rather than smoothed over",
+        supports: "The three pandects, the journey, and the date of Ceolfrith's death",
+      },
+      {
+        tier: "scholarly",
+        label: "H. A. G. Houghton, The Latin New Testament: A Guide to its Early History, Texts, and Manuscripts",
+        url: "https://pure-oai.bham.ac.uk/ws/files/101039771/9780198744733.pdf",
+        credit: "Hugh A. G. Houghton, University of Birmingham",
+        detail:
+          "Oxford University Press, 2016; the publisher's PDF, open access under CC BY-NC-ND, read in full here. Source of the altered dedication, the persistent misunderstandings, the codex grandior question, the Cassiodorus reading of the miniature, the per cola et commata layout, B. Fischer's finding about the Neapolitan exemplar of the Gospels, the sister-Bible shelfmarks, and the absence of the Johannine clause. The licence is non-commercial, so it is linked and quoted briefly, never hosted",
+        supports: "Everything in the third section, and the account of what the Vulgate is",
+      },
+      {
+        tier: "reference",
+        label: "C. Westwell, \"King Offa and the Ceolfrith Bible\", British Library Medieval Manuscripts blog (Internet Archive capture)",
+        url: "https://web.archive.org/web/2020id_/https://blogs.bl.uk/digitisedmanuscripts/2013/05/the-ceolfrith-bible.html",
+        credit: "Chantry Westwell, The British Library",
+        detail:
+          "May 2013. The live British Library blog now returns 404 and the Library's digitised-manuscripts viewer has been offline since the 2023 cyber-attack, so this is cited from an Internet Archive capture and is the only source here for the 35 kg weight, which the article attributes rather than asserts. One sentence in the post places Monte Amiata \"in Florence\", which is wrong — it is in southern Tuscany — and that sentence is not followed here",
+        supports: "The Ceolfrith Bible fragments, the deed-covers story, and the weight",
+      },
+      {
+        tier: "encyclopedic",
+        label: "Wikipedia: Codex Amiatinus",
+        url: "https://en.wikipedia.org/wiki/Codex_Amiatinus",
+      },
+    ],
+  },
+
+  {
+    id: "vetus-latina",
+    name: "Vetus Latina",
+    alternateNames: ["the Old Latin Bible"],
+    matchNames: ["Old Latin version", "Old Latin versions", "Old Latin Bible"],
+    category: "manuscript",
+    role: "The Latin Bible Christians Read Before Jerome",
+    summary:
+      "The Latin Scriptures as they circulated before the Vulgate — surviving in a handful of battered gospel codices and in tens of thousands of quotations by Latin writers, and preserving a Greek text that in places no longer exists anywhere else.",
+    sections: [
+      {
+        heading: "The Bible Latin Christians Read First",
+        paragraphs: [
+          "Christianity reached the Latin west long before it had a Latin Bible anybody would call standard. By the middle of the third century there was a full Latin translation in use in north Africa, and it can be reconstructed in detail because Cyprian, bishop of Carthage, quoted it constantly — his two collections of proof texts, Ad Quirinum of 248 or 250 and the slightly later Ad Fortunatum, are effectively a Bible in pieces, arranged by subject. The Vetus Latina edition gives the text-type reconstructed from his quotations the siglum K, and it is the earliest complete Latin translation we can get at.",
+          "Four gospel manuscripts carry the story further, and they are worth knowing by name because the sigla appear in every critical apparatus. Codex Bobiensis, cited as k, was copied in Africa in the fourth century and survives as ninety-six small leaves carrying parts of the Gospel of Mark and the Gospel of Matthew. Codex Vercellensis, a, was written in Italy, probably at Vercelli, in the second half of the fourth century, and is now so deteriorated partly because people swore oaths on it. Codex Palatinus, e, and Codex Veronensis, b, are both fifth-century Italian books written in silver and gold on purple parchment. Bobiensis has one distinction nothing else in Greek or Latin shares: it is, in Houghton's words, \"the only gospel manuscript in Greek or Latin which has the 'shorter ending' by itself\", with no verses 9 to 20 after it.",
+          "The word for all of this is Vetus Latina, and the body that edits it is the Vetus Latina Institut, founded at Beuron in 1945 by the Benedictine monk B. Fischer and directed since by H. J. Frede, R. Gryson and, since 2014, T. J. Bauer. Its raw material is a card index begun by a Bavarian parish priest, J. Denk, which now holds a million references to Latin biblical quotations. The first attempt at the job was made by the French Benedictine P. Sabatier, who died in 1742 having assembled citations from about sixty church fathers. The modern edition is planned at twenty-seven volumes and the Institute's own estimate, after nearly sixty years of work, was that about half of it was done.",
+        ],
+      },
+      {
+        heading: "Why a Superseded Translation Still Counts",
+        paragraphs: [
+          "The obvious question is why anyone edits a Bible that was replaced. The answer, in the words of the Birmingham institute that edits this material, is that \"most of the Old Latin translations were made from Greek manuscripts which no longer exist,\" so \"the original layer preserves a witness to the Bible, especially the New Testament, which would otherwise be lost to us.\" A Latin reading of the second or third century can point back through the Latin to a Greek copy older than any Greek copy still in existence. That is a real and unusual kind of evidence, and it is why the Beuron edition lays out every page the way it does: the Greek text and its variants at the top as the starting point, the surviving Old Latin text-types beneath it, and the Vulgate at the end as the place the development arrives.",
+          "It also matters for the Vulgate, because the Vulgate was not a fresh start. Pope Damasus asked Jerome, around 382, to revise the Latin Gospels against the Greek; what became the standard Latin New Testament outside the Gospels is an anonymous revision by somebody else. Jerome describes even his own gospel work as a light revision of an existing text. The Old Latin is what was being revised, and it went on being read and copied for centuries afterwards while the Vulgate slowly won.",
+          "One consequence reaches a modern reader directly. The disputed clause at 1 John 5:7 about three heavenly witnesses is a Latin phenomenon before it is anything else. Houghton's account is that it \"appears to have originated in Latin tradition, possibly as a gloss at the end of the fourth century\", and that the Greek printed in the Textus Receptus \"is a translation of a secondary Latin form present in a handful of later Vulgate manuscripts\". If you have ever wondered how a sentence gets into one Bible and not another, this is the tradition where it happened.",
+        ],
+      },
+      {
+        heading: "One Translation, or Many?",
+        paragraphs: [
+          "The standard popular account says the Old Latin was a chaos of independent translations that Jerome cleaned up. It has two famous sentences behind it. Jerome wrote in the preface to his revised Gospels: \"si enim latinis exemplaribus fides est adhibenda, respondeant quibus: tot sunt paene quot codices\" — if trust is to be placed in Latin originals, let them tell us which ones, there are almost as many as there are manuscripts. Augustine wrote that in the earliest days anyone who got hold of a Greek manuscript and thought he had a little of both languages \"hazarded his own translation\".",
+          "Both sentences are quoted more confidently than they deserve. H. A. G. Houghton, who edits this material, argues that they will not carry the weight: Augustine's remark \"has long been overapplied\" and is about the Old Testament in context, and Jerome's may be, in Houghton's words, a \"rhetorical attempt to establish the priority of his text\" — Jerome had a new edition to sell. Set the ancient comments aside and look at the manuscripts, Houghton says, and \"the balance of probability favours the former\" of the two possibilities: one initial translation, revised many times, rather than many independent ones. He adds that \"editors of Old and New Testament books in the Vetus Latina series have reached the conclusion that in each case a single Latin translation underlies all the surviving evidence for the Old Latin tradition\", while allowing that other early translations may have been made and left no trace.",
+          "This is a live question rather than a settled one, and it is worth stating carefully in both directions. The Beuron edition itself is organised around plural text-types — K for the earliest African form, C for its later African revision, D for a European revision, I for a fourth-century Italian text — and older handbooks, and some of the introductory pages published by the same projects, still describe the Old Latin as a set of translations. Houghton's own terminology is a further caution against the tidy version: he puts quotation marks around \"European\" and prefers \"archaic\" to \"African\", because the African readings are evidence of an early stage of the translation and not of an African dialect of Latin. The honest summary for a reader is that the Latin Bible before Jerome was genuinely various, that the variety is now more often explained as revision than as multiple origins, and that the distinction between those two accounts is exactly the sort of thing a card index of a million citations exists to settle.",
+        ],
+      },
+    ],
+    verses: [
+      { reference: "Mark 16:8", note: "Codex Bobiensis prints the short ending after this verse and nothing else — the only gospel manuscript in Greek or Latin that does" },
+      { reference: "1 John 5:7-8", note: "The disputed clause, which entered the Bible through the Latin tradition" },
+      { reference: "Matthew 5:44", note: "One of the verses where the early African Latin differs from what later became standard" },
+    ],
+    sources: [
+      { label: "Vetus Latina-Institut, Beuron: the Institute and its edition", url: "https://www.herder.de/vetus-latina/institut/" },
+      { label: "ITSEE, University of Birmingham: The Old Latin Bible", url: "https://itseeweb.cal.bham.ac.uk/vetuslatina/" },
+      { label: "H. A. G. Houghton, The Latin New Testament (Oxford University Press, open access)", url: "https://pure-oai.bham.ac.uk/ws/files/101039771/9780198744733.pdf" },
+    ],
+    manuscript: {
+      manuscriptType:
+        "Not one manuscript but a tradition: a small number of parchment gospel codices, mostly fragmentary, plus the biblical quotations of Latin writers, which supply most of the evidence outside the Gospels",
+      language: "Latin, translated from Greek",
+      contents:
+        "The Latin Scriptures as they stood before Jerome's revision. The Gospels are the only part where the main text-types are represented by surviving manuscripts rather than by quotations. Four gospel codices carry most of the weight: Bobiensis (k), Vercellensis (a), Palatinus (e) and Veronensis (b)",
+      origin: "North Africa for the earliest form; Italy and elsewhere in the Latin west for the later revisions",
+      findSite:
+        "Not applicable. The manuscripts stayed in European libraries — Turin, Vercelli, Trent, Verona — and the quotations were always in print",
+      foundYear: "Not applicable",
+      foundBy:
+        "No finder. P. Sabatier assembled the first scholarly edition from patristic quotations before his death in 1742; the Vetus Latina Institut at Beuron has been editing it since 1945",
+      dateAssigned:
+        "A complete Latin translation in use in Africa by the early third century, attested in Cyprian's quotations of 248-250. The surviving gospel manuscripts run from the fourth century to the twelfth",
+      dateCertainty: "traditional",
+      currentLocation:
+        "Turin, Biblioteca Nazionale Universitaria (Bobiensis); Vercelli, Archivio Capitolare Eusebiano (Vercellensis); Trent, Museo Nazionale (Palatinus); Verona, Biblioteca Capitolare (Veronensis). The edition is published from Beuron",
+      facsimileUrl: "https://itseeweb.cal.bham.ac.uk/iohannes/vetuslatina/",
+    },
+    reflectionPrompt:
+      "For two centuries the Latin church read a Bible nobody had authorised, translated by people whose names are gone, and it was enough to make martyrs. What are you waiting to have properly in place before you start?",
+    citations: [
+      {
+        tier: "institution",
+        label: "Vetus Latina-Institut, Beuron: the Institute and its edition",
+        url: "https://www.herder.de/vetus-latina/institut/",
+        credit: "Vetus Latina-Institut, Erzabtei Beuron",
+        detail:
+          "The editing body's own pages, in German, English and French, read in full. Source of the 1945 foundation by B. Fischer, the succession of directors to T. J. Bauer in 2014, the card index begun by \"Fr Denk\" — a parish priest, which is why this article does not call him a monk — and its million references, the three-part page layout, and the Institute's own estimate of its progress. Its companion page at herder.de/vetus-latina/edition/ carries P. Sabatier, his death in 1742, his \"around 60 Church Fathers\", and the plan for 27 volumes. The Institute's old domain no longer serves HTTPS; this is the publisher-hosted address that works",
+        supports: "The Institute, the edition, and the history of the enterprise",
+      },
+      {
+        tier: "institution",
+        label: "ITSEE, University of Birmingham: The Old Latin Bible",
+        url: "https://itseeweb.cal.bham.ac.uk/vetuslatina/",
+        credit: "Institute for Textual Scholarship and Electronic Editing, University of Birmingham",
+        detail:
+          "Online since 2003. This general page, not the Iohannes edition, is the source of the two sentences quoted in the article about why the Old Latin matters as a witness to lost Greek manuscripts, and of the account of how the Vulgate was assembled. Its companion edition, Vetus Latina Iohannes, publishes free transcriptions of the Old Latin manuscripts of John and independently confirms the sigla e, a and b",
+        supports: "The evidential value of the Old Latin, and the relation of Old Latin to Vulgate",
+      },
+      {
+        tier: "scholarly",
+        label: "H. A. G. Houghton, The Latin New Testament: A Guide to its Early History, Texts, and Manuscripts",
+        url: "https://pure-oai.bham.ac.uk/ws/files/101039771/9780198744733.pdf",
+        credit: "Hugh A. G. Houghton, University of Birmingham",
+        detail:
+          "Oxford University Press, 2016; publisher's PDF, open access under CC BY-NC-ND, read in full here. Source of the one-translation argument and both quotations from it, the Latin and English of Jerome's preface, the Augustine remark and the judgement that it has been overapplied, the text-type letters K, C, D and I with his own scare quotes around \"European\", the Cyprian material, the catalogue entries for all four gospel codices, and the account of the Johannine clause. The licence is non-commercial: linked and quoted briefly, never hosted",
+        supports: "The whole of the third section, and the dating and description of the manuscripts",
+      },
+      {
+        tier: "primary",
+        label: "Jerome, Letter to Pope Damasus: Preface to the Gospels, translated by K. P. Edgecomb",
+        url: "https://www.tertullian.org/fathers/jerome_preface_gospels.htm",
+        credit: "Jerome; translated by Kevin P. Edgecomb, 1999",
+        detail:
+          "The translator released this English version into the public domain; also mirrored at Wikisource. Read in full. His rendering of the famous line is looser than Houghton's, so the article quotes Houghton's Latin and English and links this for the whole preface, which is short and worth reading beside the argument about it",
+        supports: "Jerome's own account of what Damasus asked him to do and why",
+      },
+      {
+        tier: "encyclopedic",
+        label: "Wikipedia: Vetus Latina",
+        url: "https://en.wikipedia.org/wiki/Vetus_Latina",
+      },
+    ],
+  },
+
+  {
+    id: "peshitta",
+    name: "Peshitta",
+    alternateNames: ["the Syriac Peshitta"],
+    category: "manuscript",
+    role: "The Syriac Bible, and a New Testament of Twenty-Two Books",
+    summary:
+      "The standard Bible of the Syriac-speaking churches: an Old Testament translated straight from the Hebrew in the second century, and a New Testament that has never contained Revelation, Jude, 2 Peter, or 2 and 3 John.",
+    sections: [
+      {
+        heading: "A Bible That Was Never Greek and Never Latin",
+        paragraphs: [
+          "Syriac is a dialect of Aramaic, the language Jesus spoke, and it became the literary and liturgical language of a Christianity that spread east rather than west, through Edessa and Mesopotamia and onward from there. That church had its own Bible, and the Peshitta is it. The name is the feminine passive participle of a verb meaning to stretch out or extend, and what it was meant to convey is genuinely unclear: the reference work published by Beth Mardutho records that the sense \"is no longer clear\", with candidates including \"simple\", \"widespread\" (on the analogy of the Latin vulgata), and \"single\" as against the six columns of Origen's Hexapla.",
+          "The Old Testament half is the older and the more remarkable. It was translated directly from Hebrew rather than from the Greek Septuagint — not quite everywhere, since the Gorgias dictionary says that in the book of Ezekiel and in the Twelve Prophets \"we have to assume some literary dependence of the Peshitta on the Septuagint\" — and that puts it in a very small class — the Brill edition's own description dates it \"on the basis of the Hebrew text during the second century CE\", with books outside the Hebrew canon translated later from Greek, and the study the Gorgias dictionary calls the most thorough discussion of the version's origin, M. Weitzman's, puts the work at Edessa \"from 150 onwards\". That makes the Peshitta an independent early witness to the Hebrew text, made centuries before the Masoretes fixed the vowels and the accents, and standing outside the Greek tradition that everything else in the ancient world depends on. And it turns out to agree: the Gorgias dictionary reports that the edition has made clear that \"the Hebrew model of the Peshitta must have been nearly identical with the so-called Masoretic Text\", and even reflects a vocalisation very close to the one the Masoretes wrote down many centuries later. A second-century translator in Edessa and a tenth-century scribe in Tiberias were working from nearly the same Hebrew.",
+          "The oldest complete copy of it is a single book: Milan, Biblioteca Ambrosiana, B 21 inf., which the library's own catalogue dates 501 to 600, describes as 174 parchment leaves at 370 by 270 millimetres, and records as having entered the collection in 1611. A. M. Ceriani published a photolithographic facsimile of it in 1876, which is out of copyright and free to read.",
+        ],
+      },
+      {
+        heading: "Twenty-Two Books",
+        paragraphs: [
+          "The New Testament Peshitta became the standard Syriac text around 400, and it is a revision that pulled the older Syriac gospels closer to the Greek. The striking thing about it is its table of contents. In the words of the Gorgias Encyclopedic Dictionary of the Syriac Heritage: \"The NT Peshitta contains twenty-two books; it lacks 2-3 John, 2 Peter, Jude, and Revelation.\" Those five books are printed in modern Syriac Bibles, but they were supplied from later translations; the Peshitta itself never had them. It also omits the account of the woman caught in adultery at John 7:53 to 8:11, and a few isolated verses such as Luke 22:17 and 18.",
+          "It would be easy to read that as a church rejecting five books, and it is worth resisting. The four short Catholic Epistles and Revelation were the books whose reception took longest everywhere — the Muratorian Fragment, Eusebius and the great Greek codices all show the same edge of the canon being worked out — and the Syriac tradition simply settled with a standard version that predated the settlement. What it shows is not a rival canon so much as a photograph of the process at a particular moment, taken in a language most western readers never look at.",
+          "The other thing worth knowing is how far it travelled. The Peshitta had become the authoritative Syriac Bible before the christological quarrels of the mid-fifth century split the Syriac churches; F. C. Burkitt, working the same problem from the other end in 1904, pointed out that at the relevant date the parties were not yet separate bodies at all: \"it was not till 449 AD, fifteen years after Rabbula's death, that Nestorian doctrines were formally condemned.\" That is Burkitt's reckoning; the condemnation of Nestorius himself is normally dated to the Council of Ephesus in 431, and the point survives either way. So both sides kept it. It is still the Bible of the Syriac Orthodox Church and of the Church of the East.",
+        ],
+      },
+      {
+        heading: "Who Made the New Testament Peshitta?",
+        paragraphs: [
+          "There is one confident answer in the literature and it is probably wrong. F. C. Burkitt set it out in his own conclusions in 1904, and the sentences are worth reading in full because they are the source of a claim still repeated as fact: \"The Peshitta is a revision of the Evangelion da-Mepharreshe, undertaken mainly with the object of conforming the translation more closely to the Greek text as read at Antioch early in the 5th century. It was prepared by Rabbula, bishop of Edessa from 411-435 AD, and published by his authority as a substitute for the Diatessaron.\" His argument in one line: \"Before Rabbula, no trace of the Peshitta: after Rabbula, hardly a trace of any other text.\"",
+          "The attribution did not hold. A. Vööbus, in studies published from 1951, showed that Rabbula's own writings quote the older Syriac gospels and the Diatessaron rather than the Peshitta — which is hard to explain if he had just produced it. The Gorgias dictionary's summary is that while Rabbula \"may have enforced the dissemination of the Peshitta version, the theory that he was responsible for its creation was convincingly challenged by Vööbus\". This article has not read Vööbus's volumes directly and cites the challenge at second hand, which is worth saying plainly.",
+          "What is left when the name goes is more honest and less satisfying. The New Testament Peshitta is a revision by nobody we can name, made somewhere in the Syriac-speaking world in the late fourth or early fifth century, which succeeded so completely that the version it replaced, the Old Syriac gospels, survives in exactly two manuscripts. Burkitt's evidence was real — the change of text at Edessa around Rabbula's episcopate is not in doubt — and what has gone is the inference from a change of text to a single man who made it. That is a common shape in this field, and it is worth recognising: an argument that a thing happened is much stronger than an argument about who did it, and the second is what gets repeated.",
+        ],
+      },
+    ],
+    verses: [
+      { reference: "John 7:53", note: "The start of the passage about the woman caught in adultery, which the Peshitta does not contain" },
+      { reference: "Luke 22:17-18", note: "Two verses at the Last Supper that the Peshitta omits" },
+      { reference: "2 Peter 1:1", note: "One of the five books outside the Peshitta's twenty-two" },
+      { reference: "Revelation 1:1", note: "Absent from the Peshitta, and supplied in printed Syriac Bibles from a later version" },
+    ],
+    sources: [
+      { label: "Biblioteca Ambrosiana: B 21 inf., the oldest complete Peshitta Old Testament", url: "https://ambrosiana.comperio.it/opac/detail/view/ambro:catalog:28063" },
+      { label: "F. C. Burkitt, Evangelion da-Mepharreshe, volume 2 (1904)", url: "https://archive.org/details/cu31924092359698" },
+      { label: "A. M. Ceriani's 1876 facsimile of the Ambrosian Peshitta", url: "https://archive.org/details/translatiosyrape12unse" },
+    ],
+    manuscript: {
+      manuscriptType:
+        "A translation tradition rather than a single object, surviving in hundreds of manuscripts. The oldest complete Old Testament copy is a sixth-century parchment codex of 174 leaves",
+      language: "Syriac, a dialect of Aramaic. The Old Testament translated from Hebrew, the New Testament revised against Greek",
+      contents:
+        "The Old Testament, translated from the Hebrew; and a New Testament of twenty-two books, lacking 2 Peter, 2 John, 3 John, Jude and Revelation. It also omits John 7:53-8:11 and a few isolated verses including Luke 22:17-18. Modern printed Syriac Bibles supply the missing books from later translations",
+      origin: "The Syriac-speaking world, with Edessa the usual candidate for the Old Testament",
+      findSite: "Not applicable. The Peshitta was never lost. It has been in continuous liturgical use in the Syriac churches since antiquity",
+      foundYear: "Not applicable",
+      foundBy:
+        "Unknown, and this is a real gap rather than a missing detail. The New Testament revision was long credited to Rabbula, bishop of Edessa, on F. C. Burkitt's 1904 argument; A. Vööbus's work from 1951 overturned that and no name has replaced it",
+      dateAssigned:
+        "The Old Testament in the second century AD; M. Weitzman's study of the version places the work at Edessa \"from 150 onwards\". The New Testament revision standard by about 400 and complete in the early fifth century",
+      dateCertainty: "disputed",
+      currentLocation:
+        "In use, in the Syriac Orthodox Church and the Church of the East. The critical edition is published by the Peshitta Institute, founded at Leiden; its recent volumes are credited to the Institute at the Vrije Universiteit Amsterdam",
+      shelfmark: "Milan, Biblioteca Ambrosiana, B 21 inf. (the manuscript known as 7a1), for the Old Testament",
+      facsimileUrl: "https://archive.org/details/translatiosyrape12unse",
+    },
+    reflectionPrompt:
+      "A whole church read a New Testament without Revelation in it for centuries, and produced saints and martyrs anyway. Which parts of your Bible are you actually living on?",
+    citations: [
+      {
+        tier: "institution",
+        label: "Biblioteca Ambrosiana: manuscript B 21 inf.",
+        url: "https://ambrosiana.comperio.it/opac/detail/view/ambro:catalog:28063",
+        credit: "Veneranda Biblioteca Ambrosiana, Milan",
+        detail:
+          "The holding library's own catalogue record, read in full. Source of the sixth-century date (the record reads 501-600), the collation of 174 parchment leaves, the 370 x 270 mm measurement, the identification of the contents as the Old Testament in the Peshitta version, and the acquisition date of 1611. It links a digital copy hosted by the Universita Cattolica del Sacro Cuore. The Ambrosiana's own public site has no page for this manuscript; the record exists only in the catalogue",
+        supports: "The oldest complete Peshitta Old Testament, its date, and where it is",
+      },
+      {
+        tier: "primary",
+        label: "A. M. Ceriani, Translatio Syra Pescitto Veteris Testamenti ex codice Ambrosiano sec. fere VI",
+        url: "https://archive.org/details/translatiosyrape12unse",
+        credit: "Antonio Maria Ceriani",
+        detail:
+          "Milan, 1876. A photolithographic facsimile of the Ambrosian manuscript itself, made by the Ambrosiana's own prefect; public domain and freely downloadable at the Internet Archive",
+        supports: "That the manuscript can be looked at rather than taken on description",
+      },
+      {
+        tier: "scholarly",
+        label: "F. C. Burkitt, Evangelion da-Mepharreshe, volume 2: Introduction and Notes",
+        url: "https://archive.org/details/cu31924092359698",
+        credit: "Francis Crawford Burkitt",
+        detail:
+          "Cambridge University Press, 1904; public domain, read at the Internet Archive. Source of both quotations of the Rabbula thesis in his own words, and of his answer to the objection that the Church of the East accepted a version issued by a bishop it had reason to dislike. Cited so that the argument that was overturned is stated by the man who made it, not by the people who overturned it",
+        supports: "The Rabbula attribution and its reasoning",
+      },
+      {
+        tier: "reference",
+        label: "Gorgias Encyclopedic Dictionary of the Syriac Heritage: Peshitta",
+        url: "https://gedsh.bethmardutho.org/Peshitta",
+        credit: "B. ter Haar Romeny and C. E. Morrison, for Beth Mardutho: The Syriac Institute",
+        detail:
+          "Free to read online. Source of the twenty-two-book statement quoted verbatim, the disputed meaning of the name, the omitted passages, the date of the New Testament revision, M. Weitzman's dating of the Old Testament to Edessa from 150 onwards, the finding that the Peshitta's Hebrew model was nearly identical with the Masoretic Text, and the account of A. Vööbus's challenge to Burkitt. Published under a Creative Commons Non-Commercial licence, so it is linked and cited here, never reproduced. The site refuses scripted requests and returns 403 to an automated checker while loading normally in a browser",
+        supports: "The canon, the name, and the current state of the Rabbula question",
+      },
+      {
+        tier: "scholarly",
+        label: "The Old Testament in Syriac according to the Peshitta Version (the Leiden Peshitta edition)",
+        url: "https://brill.com/display/serial/PES?language=en",
+        credit: "The Peshitta Institute, for the International Organization for the Study of the Old Testament; published by Brill",
+        detail:
+          "The publisher's series page, read for the editorial description quoted here — that the Old Testament Peshitta was \"made on the basis of the Hebrew text during the second century CE, whilst some books outside the Hebrew canon may have been translated at a later stage on the basis of a Greek text\". The volume credits on this page also show the Institute moving from Leiden to the Vrije Universiteit Amsterdam, which is why the article does not place it at Leiden in the present tense. The Leiden university page for the Institute is behind a bot wall and could not be opened",
+        supports: "The date and Hebrew source of the Old Testament Peshitta, and where the edition comes from",
+      },
+      {
+        tier: "encyclopedic",
+        label: "Wikipedia: Peshitta",
+        url: "https://en.wikipedia.org/wiki/Peshitta",
+      },
+    ],
+  },
+
+  {
+    id: "old-syriac-gospels",
+    name: "The Old Syriac Gospels",
+    alternateNames: ["the Curetonian Gospels", "the Sinaitic Palimpsest"],
+    // "Sinaitic Palimpsest" and "Curetonian Syriac" are registered in full. A bare "Sinaitic"
+    // is NOT, because Codex Sinaiticus already owns that territory and this record must not
+    // steal a mention of it. The longest-match rule keeps the two apart.
+    matchNames: ["Old Syriac", "Curetonian Syriac", "Sinaitic Syriac", "Codex Sinaiticus Syriacus", "Sinaitic Palimpsest"],
+    category: "manuscript",
+    role: "Two Manuscripts, One of Them Scraped Off and Written Over",
+    summary:
+      "The Syriac gospels as they stood before the Peshitta replaced them, surviving in exactly two books: one carried out of an Egyptian desert monastery in 1842, and one found by two Scottish sisters at Mount Sinai in 1892, underneath the lives of holy women.",
+    sections: [
+      {
+        heading: "Two Books, Fifty Years Apart",
+        paragraphs: [
+          "The first came out of the Nitrian Desert in Egypt. The British Library's own record for Additional MS 14451 says it was \"brought to the British Museum from the Convent of St Mary Deipara (Monastery of the Syrians) in Egypt by Henry Tattam (1788-1868) in 1842\", and that it is \"called the Curetonian Gospels after William Cureton (1808-1864) who was Assistant Keeper of Manuscripts at the British Museum from 1837 to 1849.\" Cureton recognised what it was and published it in 1858. The record dates the book to 450 to 470, and its foliation shows something odd at once: the Gospel of Matthew runs to folio 38, then a single leaf from the end of the Gospel of Mark, then the Gospel of John, and the Gospel of Luke last. That order is unusual, though a non-standard order is not unique to it — the Old Latin Codex Vercellensis has one of its own. It carries a note that a monk named Ḥabíb owned it in the tenth century, and it was repaired at a monastery in 1222. Three of its leaves are in Berlin.",
+          "The second was harder to see, because somebody had washed it off. In 1892 the twin sisters Agnes Smith Lewis and Margaret Dunlop Gibson, travelling at St Catherine's Monastery on Mount Sinai, found a Syriac manuscript whose upper writing was a collection of lives of women saints. Lewis describes the culprit by name in her own introduction: \"John the Recluse, of Beth-Mari, Kaddish, being in want of vellum, pulled to pieces a copy of the Old Syriac Gospels, and wrote above them his Select Narratives of Holy Women\" — Thecla, Eugenia, Pelagia and the rest. The gospel text underlies about 284 pages on 142 leaves. Reading it took the help of R. L. Bensly, J. R. Harris and F. C. Burkitt, five further journeys to the monastery and the application of a reagent; the team published the palimpsest in 1894. The manuscript is Sinai Syriac 30, and the Gorgias dictionary dates the codex under the saints' lives to the fourth or fifth century — older than the Curetonian, and the oldest Syriac gospel book there is.",
+          "That is the whole surviving corpus: two manuscripts. Everything else known about the Old Syriac gospels comes from quotations in Syriac writers and from readings that survived inside early Peshitta copies. The Syriac name for the version — Evangelion da-Mepharreshe, the gospel of the separated ones — is itself a piece of evidence, because it distinguishes four separate gospels from Tatian's Diatessaron, the single woven narrative that the Syriac church used first and then abandoned.",
+        ],
+      },
+      {
+        heading: "What Sits Underneath the Peshitta",
+        paragraphs: [
+          "These two books matter because they are older than the standard Syriac Bible and were replaced by it. The Peshitta New Testament is a revision, made around 400, that pulled the Syriac closer to the Greek being read in the Greek-speaking churches. The Old Syriac is what was there before that pull, which makes it a witness to a form of the gospel text in circulation in the second or third century, in a Semitic language, in a region a long way from Alexandria and Rome.",
+          "Its readings are not uniformly early or uniformly valuable, and both editors said so. Burkitt's edition prints the two manuscripts' disagreements on page after page, and both of them show signs of having been revised toward the Greek. What the version supplies is a genuinely independent line of descent — one that sometimes agrees with the Old Latin and Codex Bezae against everything else, and sometimes stands alone.",
+          "It also preserves omissions. The account of the woman caught in adultery at John 7:53 to 8:11 is absent from the Old Syriac, as it is from the Peshitta. That is one more early tradition, in one more language, in which the passage is simply not there.",
+        ],
+      },
+      {
+        heading: "Matthew 1:16 in the Sinai Palimpsest",
+        paragraphs: [
+          "The Sinaitic Palimpsest has one reading that has been argued over ever since Lewis published it, and an article that left it out would be hiding the most interesting thing in the manuscript. At the end of Matthew's genealogy, where the standard text reads that Jacob was the father of Joseph, the husband of Mary, of whom was born Jesus, this manuscript reads — in Lewis's own 1894 translation — \"Matthan begat Jacob; Jacob begat Joseph; Joseph, to whom was betrothed Mary the Virgin, begat Jesus, who is called the Christ.\"",
+          "Lewis did not think it a slip of the pen, and she said so: \"Had v. 16 stood alone we might have suspected a clerical error, but the occurrence of the word lek ('to thee') in v. 21, and leh ('to him') in v. 25 … makes it almost certain that the statement in v. 16 is an intentional one.\" She also did not think it denied the virgin birth, and her reasons come from the same manuscript rather than from doctrine. She wrote that \"even here Mary is called the Virgin — a title which no one unacquainted with the miraculous birth of her first-born would naturally have given her.\" The same codex reads at verse 18 that \"when they had not come near one to another, she was found with child of the Holy Ghost.\" And, she adds, \"the fact that Joseph was troubled about Mary's condition is simply inexplicable if he were the father of Jesus.\" A manuscript that meant to deny the virgin birth would have had to take out a good deal more than one verb.",
+          "Burkitt went further in a different direction, and his point is the one most often missed. \"If the Genealogy had ended with the uncompromising statement 'and Joseph begat Jesus' it would not prove that the Evangelist believed that Joseph had been the natural father of Jesus,\" he wrote. \"All that the Evangelist cares about is that Joseph accepted Jesus as his son\" — the genealogy exists to put Jesus in David's line through Joseph's legal fatherhood, and the verb in a genealogy states heirship, not biology. Burkitt also judged the reading itself to be secondary rather than original, deriving it from another known form of the text, and he noted that the Curetonian reads differently again and clumsily: \"Jacob begat Joseph, him to whom was betrothed Mary the Virgin, she who bare Jesus the Messiah\", where the doubled relative shows, in his words, that \"this text cannot be primitive.\"",
+          "The honest summary is therefore three things at once, and it is rare to meet all three together. The reading is real and deliberate, not a scribal accident. It is almost certainly not the original wording of Matthew, on the judgement of the man who edited it. And even if it were, it would not carry the weight a reader meeting it cold would give it, because of what a genealogy is for. This app's position is the historic Christian one, that Jesus was conceived by the Holy Spirit and born of the virgin Mary — and the reason that position survives contact with this manuscript is not that the manuscript has been explained away. It is that the manuscript, read whole, says so itself two verses later.",
+        ],
+      },
+    ],
+    verses: [
+      { reference: "Matthew 1:16", note: "The disputed verse; the Sinaitic Palimpsest reads \"Joseph, to whom was betrothed Mary the Virgin, begat Jesus\"" },
+      { reference: "Matthew 1:18", note: "\"She was found pregnant by the Holy Spirit\" — present in the same manuscript" },
+      { reference: "Matthew 1:25", note: "Where Lewis's second piece of internal evidence sits" },
+      { reference: "John 7:53", note: "The start of a passage the Old Syriac does not contain" },
+    ],
+    sources: [
+      { label: "British Library: Add MS 14451, the Curetonian Gospels", url: "https://searcharchives.bl.uk/catalog/040-002086117" },
+      { label: "A. S. Lewis, A Translation of the Four Gospels from the Syriac of the Sinaitic Palimpsest (1894)", url: "https://archive.org/details/cu31924029334376" },
+      { label: "F. C. Burkitt, Evangelion da-Mepharreshe, volume 2 (1904)", url: "https://archive.org/details/cu31924092359698" },
+    ],
+    manuscript: {
+      manuscriptType:
+        "Two parchment gospel codices. The Curetonian survives in 88 leaves in London, with three more in Berlin and one still at the monastery in Egypt; the Sinaitic is a palimpsest of 142 leaves whose gospel undertext was washed off in the eighth century and overwritten with lives of women saints",
+      language: "Syriac",
+      contents:
+        "The four gospels, incompletely, in both books. The Curetonian has Matthew, a fragment of the end of Mark, John and Luke, in that unusual order. The Sinaitic carries the gospel text under about 284 pages of the later writing. Neither contains John 7:53-8:11",
+      origin: "The Syriac-speaking world; the version is known in Syriac as Evangelion da-Mepharreshe, the gospel of the separated ones, as against Tatian's single woven Diatessaron",
+      findSite:
+        "The Curetonian from the Monastery of the Syrians (Deir al-Surian) in the Nitrian Desert, Egypt. The Sinaitic from St Catherine's Monastery, Mount Sinai",
+      foundYear: "1842 for the Curetonian; 1892 for the Sinaitic Palimpsest",
+      foundBy:
+        "Henry Tattam brought the Curetonian to the British Museum, and William Cureton identified and published it. Agnes Smith Lewis and her twin sister Margaret Dunlop Gibson found the Sinaitic Palimpsest, and deciphered it over five further journeys with the help of R. L. Bensly, J. R. Harris and F. C. Burkitt",
+      dateAssigned:
+        "The British Library dates the Curetonian 450-470. The Gorgias dictionary assigns the Sinaitic to the fourth or fifth century. The version behind both is older than either copy",
+      dateCertainty: "traditional",
+      currentLocation:
+        "The Curetonian in the British Library, with three leaves in Berlin. The Sinaitic still at St Catherine's Monastery, Mount Sinai",
+      shelfmark: "London, British Library, Add MS 14451; Sinai, St Catherine's Monastery, Syriac 30",
+    },
+    reflectionPrompt:
+      "A monk who needed writing material took apart the oldest Syriac gospel book in existence to make room for the lives of holy women, and both survived. What have you had to give up to make room for something else that mattered?",
+    citations: [
+      {
+        tier: "institution",
+        label: "The British Library: Add MS 14451, \"Iwangelíon\"",
+        url: "https://searcharchives.bl.uk/catalog/040-002086117",
+        credit: "The British Library, London",
+        detail:
+          "The holding library's own catalogue record, read in full. Source of the 450-470 date, the 88 leaves, the gospel order Matthew-Mark-John-Luke with its foliation, the quoted provenance naming Henry Tattam and the year 1842, the quoted explanation of the name after William Cureton, the tenth-century owner Ḥabíb, the 1222 repair and the three leaves in Berlin",
+        supports: "Everything stated about the Curetonian manuscript itself",
+      },
+      {
+        tier: "primary",
+        label: "A. S. Lewis, A Translation of the Four Gospels from the Syriac of the Sinaitic Palimpsest",
+        url: "https://archive.org/details/cu31924029334376",
+        credit: "Agnes Smith Lewis",
+        detail:
+          "Macmillan, London and New York, 1894; public domain, read at the Internet Archive. Source of the Matthew 1:16 translation quoted here and of every quotation attributed to Lewis, including her argument that the reading is deliberate and her argument that it does not deny the virgin birth. The finder's own edition, cited so the reading can be checked rather than taken on report",
+        supports: "The Matthew 1:16 reading, and Lewis's own reasoning about it",
+      },
+      {
+        tier: "scholarly",
+        label: "F. C. Burkitt, Evangelion da-Mepharreshe, volume 2: Introduction and Notes",
+        url: "https://archive.org/details/cu31924092359698",
+        credit: "Francis Crawford Burkitt",
+        detail:
+          "Cambridge University Press, 1904; public domain, read at the Internet Archive. Burkitt was on the 1893 expedition that deciphered the palimpsest. Source of his judgement that the Sinaitic reading is secondary, his rendering of the Curetonian's different and clumsier wording with the verdict that it \"cannot be primitive\", and his argument about what a genealogy is claiming. Volume 1 carries the Syriac text",
+        supports: "The text-critical judgement on Matthew 1:16 and the exegetical point about genealogies",
+      },
+      {
+        tier: "primary",
+        label: "W. Cureton, Remains of a Very Antient Recension of the Four Gospels in Syriac",
+        url: "https://archive.org/details/remainsofveryant00cure",
+        credit: "William Cureton",
+        detail:
+          "J. Murray, London, 1858; marked not in copyright at the Internet Archive. The first edition of the manuscript that carries his name. The scan is incomplete — the Archive's own note says it lacks the English translation and eighty pages of the Syriac",
+        supports: "The 1858 publication",
+      },
+      {
+        tier: "reference",
+        label: "Gorgias Encyclopedic Dictionary of the Syriac Heritage: Old Syriac Version",
+        url: "https://gedsh.bethmardutho.org/Old-Syriac-Version",
+        credit: "A. Juckel, for Beth Mardutho: The Syriac Institute",
+        detail:
+          "Free to read online, under a Creative Commons Non-Commercial licence, so linked and cited rather than reproduced. Source of the statement that the term is usually restricted to these two gospel manuscripts, of the 1892 discovery by Lewis and Gibson, and of the eighth-century overwriting. The site refuses scripted requests and returns 403 to an automated link checker while loading normally in a browser",
+        supports: "That the surviving Old Syriac is these two manuscripts, and the discovery",
+      },
+      {
+        tier: "encyclopedic",
+        label: "Wikipedia: Curetonian Gospels",
+        url: "https://en.wikipedia.org/wiki/Curetonian_Gospels",
+      },
+    ],
+  },
+
+  {
+    id: "coptic-versions",
+    name: "The Coptic Versions",
+    alternateNames: ["the Sahidic version", "the Bohairic version"],
+    // NOT registered: bare "Coptic", "Sahidic" or "Bohairic". They are adjectives, they appear
+    // 17 times in this file alone, and most of those uses are not about the Bible translations.
+    matchNames: ["Coptic version", "Coptic versions", "Sahidic Coptic", "Bohairic Coptic"],
+    category: "manuscript",
+    role: "The Bible in the Last Form of the Egyptian Language",
+    summary:
+      "The Scriptures translated into Egyptian, written in Greek letters, from the third century onward — the version an Egyptian villager was hearing read aloud when Antony walked out into the desert, and the one of the three earliest translations whose language has an indefinite article.",
+    sections: [
+      {
+        heading: "Egyptian, Written in Greek Letters",
+        paragraphs: [
+          "Coptic is the last stage of the Egyptian language, written in the Greek alphabet with a handful of extra letters kept from demotic. When Christianity spread past the Greek-speaking cities of Egypt into the villages, it needed a Bible in that language, and it got several — because Coptic was not one thing. P. Nagel, writing in the Claremont Coptic Encyclopedia, lists Akhmimic, Lycopolitan, Middle Egyptian, Fayyumic, Sahidic and Bohairic among the literary dialects, and notes that of these \"only the Sahidic (or, simplified, the Upper Egyptian) and the Bohairic (simplified, the Lower Egyptian) attained more than regional diffusion.\"",
+          "There is one date that gives the whole thing a floor, and B. M. Metzger states it in the same encyclopedia: the earliest version \"must precede about A.D. 270, the date at which Saint\" Antony \"was converted after hearing Matthew 19:16ff. read in Coptic in a village church in southern Egypt\" — the name is printed in the encyclopedia's small capitals as a cross-reference, so it is set outside the quotation here rather than silently restyled. A. Shisha-Halevy adds that Sahidic \"was probably the first Coptic dialect into which the Scriptures were translated, apparently in the third century; by the fourth, the translation was completed.\" F. Feder, whose 2023 update to the same encyclopedia is the most recent survey here, places the standardised Sahidic Bible later still, as a response to the canon list in Athanasius's festal letter of 367, most likely during the tenure of Archbishop Theophilos.",
+          "Bohairic came from the other end of the country, the western Delta, and won late. Metzger dates the changeover to \"about the eleventh century, Bohairic replaced Sahidic as the liturgical language of the church\", and Shisha-Halevy describes a spread that began after the Arab conquest and was largely complete by then. Feder's summary of where it stands now is worth quoting because it is present tense: \"The Bohairic version is the current Coptic Bible of the Coptic Church … and the Bohairic language is the only Coptic dialect still in use in the liturgy.\" The minor dialects mostly did not last — the Middle Egyptian version, Feder writes, \"did not survive the fifth century and was replaced by the Sahidic Bible.\"",
+        ],
+      },
+      {
+        heading: "Why Egyptian Evidence Counts",
+        paragraphs: [
+          "A translation is second-hand evidence for the wording of a Greek sentence, but the Coptic versions are second-hand evidence made very early and in the right place. They were translated in Egypt, where the oldest Greek manuscripts also come from, and they were translated before the great fourth-century codices were written. So where a Coptic manuscript agrees with Codex Vaticanus against the later Greek tradition, that is a second Egyptian voice for a reading.",
+          "The affiliation is not one thing, and Metzger states it carefully rather than tidily. Of the Sahidic: \"The textual affinities of the Sahidic version are mixed. Alexandrian readings predominate, but there is also a strong 'Western' element.\" Of the Bohairic: its affinities are \"chiefly with the Alexandrian type of text, with some revision toward the Byzantine text.\" And the Middle Egyptian copy of Acts in the Morgan Library, Codex Glazier, \"contains the text of Acts 1:1-15:3 in a form that presents many so-called Western readings.\" Metzger also names the limits from the other side. Coptic is \"a language of strict word order\"; it has no indirect discourse; and, in his words, \"Nor can Coptic truly represent the Greek passive voice, since it possesses only the active voice.\" There are Greek distinctions a Coptic manuscript simply cannot report.",
+          "Two individual books are worth knowing. Codex Glazier, Morgan Library MS G.67, is a small fifth-century parchment codex preserved complete, carrying the first half of Acts in the Middle Egyptian dialect. Codex Schøyen, MS 2650, is a fourth-century papyrus Matthew in the same dialect, which its owners call \"the earliest Matthew in any Coptic dialect\" — and it is contested: its first editor, H.-M. Schenke, concluded — in the summary given by the collection that owns it — that the text \"does not represent a free text transmission, but that it is a correct translation of an entirely different Gospel of Matthew\", with a lost Hebrew gospel behind it; while J. M. Leonard's Cambridge thesis reached, on the same page, \"the opposite conclusion that the Greek text is exceptionally pure, attesting to the best Greek original text so far known\". T. Baarda and M.-É. Boismard also published against Schenke. Both sides here are quoted from the owning collection's own page, which has an interest in the manuscript mattering, and the argument has not been settled.",
+        ],
+      },
+      {
+        heading: "\"A God\" at John 1:1",
+        paragraphs: [
+          "Coptic has an indefinite article, and Greek does not. That single grammatical fact is why the Sahidic version of John 1:1 gets argued about at all, because where the Greek reads theos ēn ho logos with no article on theos, the Sahidic writes the noun for God with the Coptic indefinite article. The Watchtower Bible and Tract Society has made this a plank of its case for the New World Translation's rendering, and its argument deserves to be stated from its own page rather than from a critic's summary of it. Coptic is useful, the article says, because \"Syriac and Latin, like the Greek of those days, do not have an indefinite article. Coptic, however, does\"; it quotes T. O. Lambdin's Sahidic grammar that \"the use of the Coptic articles, both definite and indefinite, corresponds closely to the use of the articles in English\"; and it concludes that the Sahidic \"uses an indefinite article with the word 'god' in the final part of John 1:1. Thus, when rendered into modern English, the translation reads: 'And the Word was a god.'\"",
+          "The first thing to say is that the observation about the manuscripts is correct. The Coptic article is there. What is at issue is what a Coptic indefinite article does, and the most useful witness on that point is the man who edited the whole Coptic New Testament, in volumes finished in 1924, long before anybody made this argument. G. Horner's Sahidic text of the Gospel of John prints the verse as: \"In the beginning was being the word, and the word was being with God, and [a] God was the word.\" The square brackets are not decoration. Horner explains his own convention in the same volume: \"Square brackets imply words used by the Coptic and not required by the English, while curved brackets supply words which are necessary to the English idiom.\" So the editor of the standard edition marked this article as present in Coptic and not required in English — and in the introduction to his Bohairic edition he had already written the rule out: \"The indefinite article … is translated 'a'; when however it represents the absence of the Greek article or belongs to adjectives … and the adverbial paraphrase …, it must be omitted.\"",
+          "B. J. Wright and T. Ricchuiti published a study of the question in the Journal of Theological Studies in 2011, and their open summary sets out the method: they collected twenty-six places where the Coptic New Testament uses the word for God in a comparable construction, found that in twenty-one of them Coptic uses the definite article where the Greek has none, and argue that the remaining cases are explained either by the numerical sense of the Coptic indefinite article or by a qualitative use — describing an entity by its quality. Their conclusion is that the Copts understood the Fourth Gospel to mean that \"'the Word' possesses the same qualities as the Christian God\". They are also fair about the strength of their own case: \"It is possible that JWs are correct about the Coptic text … Nevertheless, it does not seem probable.\" It is worth adding that they are New Testament scholars rather than Coptic specialists, which is a real qualification and not a dismissal.",
+          "Two claims that circulate on both sides of this argument should be named and set aside. Statements attributed to the Coptic grammarians B. Layton and A. Shisha-Halevy are quoted constantly by advocates on either side, and they trace back to private emails reported on blogs rather than to anything either man published; this article does not use them and neither should anyone else. What is left is a genuine and narrow question about how one language's article system maps onto another's, and it is a question the Coptic evidence sharpens rather than settles. The app's position is the historic Christian one that the Word is God, and the reason is not that the Coptic article can be argued away. It is that no translation's article system decides a Greek sentence, that the Fourth Gospel says the same thing again where no article question arises at all — Thomas, at the end of it, calls the risen Jesus \"My Lord and my God!\" — and that the Coptic-speaking church which wrote that indefinite article was itself Nicene: Wright and Ricchuiti make the point that the historic Coptic Church embraced the creed which says \"true God from true God\".",
+        ],
+      },
+    ],
+    verses: [
+      { reference: "John 1:1", note: "The disputed sentence; the Sahidic writes \"God\" here with the Coptic indefinite article" },
+      { reference: "Matthew 19:16", note: "Where the passage begins that Antony heard read in Coptic in a village church, before about AD 270" },
+      { reference: "John 5:4", note: "The angel troubling the water, absent from the Sahidic text of John" },
+      { reference: "John 7:53", note: "The start of a passage the Sahidic omits and the Bohairic manuscripts mark as imported" },
+      { reference: "John 20:28", note: "\"My Lord and my God!\" — the same claim in a sentence with no article question in it" },
+    ],
+    sources: [
+      { label: "Claremont Coptic Encyclopedia: New Testament, Coptic Versions of the", url: "https://ccdl.claremont.edu/digital/api/collection/cce/id/1432/download" },
+      { label: "F. Feder, Old Testament, Coptic Versions of the: Update (Claremont Coptic Encyclopedia, 2023)", url: "https://ccdl.claremont.edu/digital/api/collection/cce/id/2188/download" },
+      { label: "G. Horner, The Coptic Version of the New Testament in the Southern Dialect, volume 3", url: "https://archive.org/details/copticversionofn03hornuoft" },
+    ],
+    manuscript: {
+      manuscriptType:
+        "A family of translations, not one object, surviving in papyrus and parchment codices from the third or fourth century onward. Codex Glazier, a fifth-century Middle Egyptian copy of the first half of Acts, survives complete",
+      language:
+        "Coptic — the last stage of Egyptian, written in Greek letters. Sahidic and Bohairic dominate; Fayyumic, Akhmimic, Lycopolitan and Middle Egyptian survive in smaller quantities",
+      contents:
+        "The Old and New Testaments, in different dialects and to different extents. The Sahidic text of John omits John 5:4 and John 7:53-8:11 outright; the Bohairic manuscripts that carry the second passage often flag it in Arabic marginal notes as taken from elsewhere",
+      origin: "Egypt. Sahidic from the Nile valley of Upper Egypt, Bohairic from the western Delta, Middle Egyptian probably from the region of Oxyrhynchus",
+      findSite:
+        "Egypt, in many places and over two centuries of collecting rather than in one find. Codex Glazier and Codex Schøyen are both written in the Oxyrhynchite dialect, and neither has an excavated findspot; the Schøyen Collection traces its own codex to a Pachomian monastery in the Dishna region",
+      foundYear:
+        "No single year. G. Horner's editions were published 1898-1905 for Bohairic and 1911-1924 for Sahidic; major Middle Egyptian codices came to light in the twentieth century",
+      foundBy:
+        "No single finder. The Bohairic and Sahidic New Testaments were edited by G. Horner; the Coptic Old Testament is being edited now at Göttingen",
+      dateAssigned:
+        "The earliest translation before about AD 270. Sahidic complete by the fourth century, with a standardised version most likely made during the tenure of Archbishop Theophilos. Bohairic attested from the fourth century in an older form and standard from about the eleventh",
+      dateCertainty: "disputed",
+      currentLocation:
+        "Dispersed. Codex Glazier is Morgan Library MS G.67, New York; Codex Schøyen is MS 2650 in the Schøyen Collection; Coptic biblical papyri are in the Chester Beatty in Dublin and in many other collections",
+      facsimileUrl: "https://ica.themorgan.org/manuscript/page/1/77061",
+    },
+    reflectionPrompt:
+      "Antony heard one sentence of Matthew read aloud in his own language and walked out of the building and into a different life. When did something read aloud last change what you did next?",
+    citations: [
+      {
+        tier: "reference",
+        label: "B. M. Metzger, \"New Testament, Coptic Versions of the\", Claremont Coptic Encyclopedia",
+        url: "https://ccdl.claremont.edu/digital/api/collection/cce/id/1432/download",
+        credit: "Bruce M. Metzger; published by the Claremont Colleges Digital Library",
+        detail:
+          "Free PDF, read in full. Source of the Antony date and the quotation about it, the counts of surviving documents by dialect, both quoted statements of textual affinity for Sahidic and Bohairic, the description of Codex Glazier's Western readings, the eleventh-century liturgical changeover, and the quoted limits of Coptic as a witness to Greek. Note that the encyclopedia has no article under the title \"Coptic versions of the Bible\"; this is the one to use",
+        supports: "The dating, the dialects, the textual affinities and the limits of the evidence",
+      },
+      {
+        tier: "reference",
+        label: "F. Feder, \"Old Testament, Coptic Versions of the: Update\", Claremont Coptic Encyclopedia",
+        url: "https://ccdl.claremont.edu/digital/api/collection/cce/id/2188/download",
+        credit: "Frank Feder, Akademie der Wissenschaften zu Göttingen",
+        detail:
+          "Dated 22 November 2023; free PDF, read in full. The most recent survey cited here and by a scholar currently editing the Coptic Old Testament. Source of the Athanasius argument and the 385-412 window, the quoted statement about Bohairic as the Coptic Church's current Bible and its only living liturgical dialect, and the statement that the Middle Egyptian version did not survive the fifth century",
+        supports: "The current state of the field on dating and on which dialect is in use",
+      },
+      {
+        tier: "primary",
+        label: "G. Horner, The Coptic Version of the New Testament in the Southern Dialect (Sahidic), volume 3",
+        url: "https://archive.org/details/copticversionofn03hornuoft",
+        credit: "George Horner",
+        detail:
+          "Clarendon Press, Oxford, 1911-1924; public domain, read at the Internet Archive. Volume 3 carries John. Source of the printed rendering of John 1:1 with its square brackets, of the stated bracket convention in the same volume, and of the apparatus showing the Sahidic omission of John 5:4 and of John 7:53-8:11. His companion Bohairic edition is cited separately below, and is the source of the quoted rule about when the Coptic indefinite article is not translated",
+        supports: "What the Coptic actually reads at John 1:1, and what its own editor thought the article did",
+      },
+      {
+        tier: "reference",
+        label: "The Watchtower, \"Was the Word 'God' or 'a god'?\", 1 November 2008",
+        url: "https://wol.jw.org/en/wol/d/r1/lp-e/2008812",
+        credit: "Watchtower Bible and Tract Society",
+        detail:
+          "Read in full. Cited so that the argument answered in the third section is quoted from the publication that makes it, rather than from anyone who disagrees with it. Every phrase attributed to that side above comes from here",
+        supports: "The Coptic argument for \"a god\" at John 1:1, in its advocates' own words",
+      },
+      {
+        tier: "scholarly",
+        label: "B. J. Wright and T. Ricchuiti, \"Jehovah's Witnesses and John 1:1: New Evidence Advances the Discussion\"",
+        url: "https://www.equip.org/articles/jehovahs-witnesses-john-11-new-evidence-advances-discussion/",
+        credit: "Brian J. Wright and Tim Ricchuiti, Christian Research Institute",
+        detail:
+          "The authors' own popular presentation of their article \"From 'God' (theos) to 'God' (Noute)\", Journal of Theological Studies 62.2 (2011), 494-512. The journal article is paywalled and was not read here; this open version by the same two authors was read in full, and every quotation above comes from it",
+        supports: "The scholarly answer to the Coptic argument, and the honesty of its own hedging",
+        paywalled: false,
+      },
+      {
+        tier: "institution",
+        label: "The Morgan Library & Museum: Codex Glazier, MS G.67",
+        url: "https://ica.themorgan.org/manuscript/page/1/77061",
+        credit: "The Morgan Library & Museum, New York",
+        detail:
+          "The Morgan's own image server, which loads: \"Acts of the Apostles / Egypt, 5th century / MS G.67\". The Morgan's descriptive catalogue record at themorgan.org is behind a bot check and could not be opened, so the shelfmark and date are taken from this page; the extent, \"Acts 1:1-15:3\", is B. M. Metzger's, in the encyclopedia article cited above",
+        supports: "Codex Glazier's identity, date and holding institution",
+      },
+      {
+        tier: "institution",
+        label: "The Schøyen Collection: Codex Schøyen, MS 2650",
+        url: "https://www.schoyencollection.com/bible-collection-foreword/coptic-bible/codex-schoyen-ms-2650",
+        credit: "The Schøyen Collection",
+        detail:
+          "The owning collection's own page, read in full. Source of the fourth-century date, the Mesokemic dialect, the claim that it is the earliest Matthew in any Coptic dialect, and of both sides of the dispute — H.-M. Schenke's argument in the editio princeps and the quoted opposite conclusion of J. M. Leonard's Cambridge thesis, with T. Baarda's and M.-É. Boismard's published objections named on the same page",
+        supports: "Codex Schøyen and the fact that its character is disputed",
+      },
+      {
+        tier: "primary",
+        label: "G. Horner, The Coptic Version of the New Testament in the Northern Dialect (Bohairic), volume 1",
+        url: "https://archive.org/details/copticversionofn01hornuoft",
+        credit: "George Horner",
+        detail:
+          "London, 1898-1905; public domain, read at the Internet Archive. The introduction to volume 1 states his translation rule for the Coptic indefinite article, quoted in the third section above. It is cited separately from his Sahidic volumes because that rule is the load-bearing quotation of the whole section and a reader should be able to go straight to it",
+        supports: "Horner's own rule for when the Coptic indefinite article is left untranslated",
+      },
+      {
+        tier: "reference",
+        label: "A. Shisha-Halevy, \"Sahidic\" and \"Bohairic\", Claremont Coptic Encyclopedia",
+        url: "https://ccdl.claremont.edu/digital/api/collection/cce/id/2029/download",
+        credit: "Ariel Shisha-Halevy; published by the Claremont Colleges Digital Library",
+        detail:
+          "Free PDFs, both read in full and both signed by him. \"Sahidic\" (the linked file) is the source of the quoted statement that Sahidic was probably the first dialect the Scriptures were translated into, and of his caution that its reputation as the older dialect rests on its earlier documentation rather than on the language itself. His companion article \"Bohairic\" (id 2011 in the same collection) is the source of the spread beginning after the Arab conquest and being largely complete by the eleventh century",
+        supports: "Which dialect came first, and how Bohairic displaced it",
+      },
+      {
+        tier: "reference",
+        label: "P. Nagel, \"Old Testament, Coptic Translations Of\", Claremont Coptic Encyclopedia",
+        url: "https://ccdl.claremont.edu/digital/api/collection/cce/id/1480/download",
+        credit: "Peter Nagel; published by the Claremont Colleges Digital Library",
+        detail:
+          "Free PDF, read in full. Source of the list of literary dialects and of the quoted statement that only Sahidic and Bohairic \"attained more than regional diffusion\", and of the observation that Lycopolitan has so far yielded no Old Testament translations",
+        supports: "Which dialects the Bible was translated into, and which two spread beyond their regions",
+      },
+      {
+        tier: "encyclopedic",
+        label: "Wikipedia: Coptic versions of the Bible",
+        url: "https://en.wikipedia.org/wiki/Coptic_versions_of_the_Bible",
+      },
+    ],
+  },
+
+  {
+    id: "family-1-and-family-13",
+    name: "Family 1 and Family 13",
+    alternateNames: ["the Ferrar Group"],
+    // Registered in full only. "Family 1" is a substring of "Family 13", and the linker sorts
+    // names longest-first, so the longer one wins wherever both could match.
+    matchNames: ["Family 1", "Family 13", "Ferrar Group", "Lake Group"],
+    category: "manuscript",
+    role: "Two Groups of Gospel Minuscules Descended From Lost Books",
+    summary:
+      "Two clusters of medieval Greek gospel manuscripts that turned out to be cousins — copied from two lost ancestors old enough to matter, and identified because a Dublin professor noticed four books agreeing with each other in the wrong places.",
+    sections: [
+      {
+        heading: "A Professor Who Died Before He Finished",
+        paragraphs: [
+          "W. H. Ferrar, a fellow of Trinity College in Dublin, noticed that four gospel manuscripts kept agreeing with one another against everything else, and set out to collate them and prove they came from a common ancestor. He died in 1871 before he could publish. His colleague T. K. Abbott finished the work and brought it out in 1877 under both their names, and the title page says what happened plainly: the collation is \"by the late William Hugh Ferrar\", edited by Abbott, who wrote that the credit for \"the detailed and laborious comparison necessary in order to prove that they actually represent a single archetype, is due to the late Prof. Ferrar\". The group has been called the Ferrar Group ever since.",
+          "The second cluster was established by K. Lake in 1902, in a Cambridge monograph on Codex 1 and its allies. Lake demonstrated that a set of minuscules headed by manuscript 1 descended from a lost archetype of their own, and while he was at it he invented the notation everybody still uses. His own explanation of why is disarming: \"It is very cumbrous to have to write 13 — 69 — 124 — 346 — 543 — 788 — 826 — 828 every time that one wishes to quote the consensus of all the Ferrar mss.\" So he wrote fam¹³ for Ferrar's group and fam¹ for his own, and those two numerals have named the two families ever since.",
+          "The members have kept being added to. Lake's Family 1 was a handful; A. Anderson collated thirteen for Matthew; A. Welsby seventeen for the Gospel of John; the collation of that gospel published by D. Parker for the Birmingham institute in 2024 lists twenty-one. For Family 13, Lake's eight have become ten in the current lists, with a lectionary sometimes added. These are not fixed clubs, and a reader who meets fam¹ in an apparatus is reading a shorthand for whatever the editor of that edition thinks belongs in it.",
+        ],
+      },
+      {
+        heading: "What a Family Is For",
+        paragraphs: [
+          "A family is a claim about descent. If a dozen late manuscripts agree in a peculiar reading, either they all inherited it or they all invented it, and inheritance is very much likelier. So the family stands in for a book that no longer exists, and the value of a fourteenth-century copy is not its own age but the age of the ancestor it lets you reconstruct. Family 1's archetype is generally reckoned to be considerably older than any surviving member.",
+          "The clearest single piece of evidence for that is a note rather than a reading. In Codex 1, the account of the woman caught in adultery is not printed at John 7:53 where a reader expects it; it is added at the end of the gospel, after a note saying that the passage does not appear in many manuscripts and was not commented on by John Chrysostom, Cyril of Alexandria or Theodore of Mopsuestia. Welsby's study observes that the note stands in Codex 1 and in Codex 1582 \"without any significant variation\", that manuscript 565 has an abridged version, and that \"as this note is not known to exist in any other manuscripts it provides compelling evidence of an extremely close link between 1, 565 and 1582\". Somebody in the ancestry of these books had checked, and wrote down what he found.",
+          "Codex 1582 has since displaced Codex 1 at the head of the family, and it is worth knowing why: it is dated, to the year 948, and written at Vatopedi on Mount Athos. Lake thought Codex 1 the best witness to the archetype; A. Anderson, after collating both in full, \"nominated 1582 as the leading Family 1 manuscript\" and drew attention to inaccuracies in Lake's edition, and the Birmingham collation of the Gospel of John now states flatly that \"1582 is the most reliable witness to the text of the archetype\". Lake's central finding stands and his ranking does not, which is a normal and healthy thing for a hundred-and-twenty-year-old conclusion to have done.",
+        ],
+      },
+      {
+        heading: "The Rule Everybody Repeats About Family 13",
+        paragraphs: [
+          "Family 13's famous feature is that its manuscripts move the woman caught in adultery out of the Gospel of John altogether and put it after Luke 21:38. C. R. Gregory stated it in 1907 in the form still quoted: \"the interpolation about the adulteress is not at John 7:53 to 8:11, but is placed directly after Luke 21:38.\" It is a genuinely striking thing to find in a manuscript, and it is used everywhere as the test of whether a manuscript belongs to the family.",
+          "It does not work as a test, and a specialist who has studied the family at book length says so in as many words. J. Perrin's study of the family in the Gospel of John states its purpose against exactly this practice: \"Every Family 13 study to date has assumed that the location (or relocation) of the Pericope Adulterae from John 7:53-8:12 was a secure rubric for designating Family 13 constituency. This study rejects the validity of this criterion.\" His evidence is concrete in both directions. Manuscript 1689 is a member of the family on every other measure and has the passage in its ordinary place at John 7:53. Manuscripts 1141 and 2900 put the passage after John 21:25 and are not members. His own summary is that the placement after Luke 21:38 is usual in the family but that the rule is unreliable. An article that stated the Luke 21:38 fact flatly would be repeating a shibboleth a specialist has published against.",
+          "One larger claim about both families should be handled with the same care. For most of the twentieth century these manuscripts were classed together with Codex Koridethi and some of Origen's quotations as witnesses to a \"Caesarean\" text — a text-type supposedly used at Caesarea in Palestine. That hypothesis has been under attack for decades. D. Lafleur, revisiting Lake's work in 2014, writes that \"since then, the question of the «Caesarean» text-type has been a very disputed matter. It still remains an important textual issue\", and points out that Lake himself hedged in 1900 — the Caesarean origin \"cannot yet be regarded as certain\" — and then removed the sentence from later editions. It is worth being honest about the limits of this article's own reading: no published statement was found declaring the Caesarean hypothesis dead, and the two doctoral studies of these families cited below mention the term only in their bibliographies. That silence is suggestive and it is not a citation. What can be said is that a family is a demonstrable thing, a text-type is a much larger and shakier one, and the second should not be smuggled in on the strength of the first.",
+        ],
+      },
+    ],
+    verses: [
+      { reference: "John 7:53", note: "Where the account of the woman caught in adultery usually stands, and where Family 13 does not put it" },
+      { reference: "Luke 21:38", note: "Where most Family 13 manuscripts place the passage instead" },
+      { reference: "John 21:25", note: "Where two manuscripts that are not family members place it" },
+      { reference: "John 8:11", note: "The end of the disputed passage" },
+    ],
+    sources: [
+      { label: "W. H. Ferrar and T. K. Abbott, A Collation of Four Important Manuscripts of the Gospels (1877)", url: "https://archive.org/details/acollationfouri00unkngoog" },
+      { label: "K. Lake, Codex 1 of the Gospels and its Allies, in Texts and Studies VII (1902)", url: "https://archive.org/details/textsandstudies07unknuoft" },
+      { label: "ITSEE, University of Birmingham: the ECM collation of Family 1 in John", url: "https://itseeweb.cal.bham.ac.uk/iohannes/families/F1/index.html" },
+    ],
+    manuscript: {
+      manuscriptType: "Two groups of Greek gospel minuscules on parchment and paper, from the tenth century to the fifteenth",
+      language: "Koine Greek",
+      contents:
+        "The four gospels. K. Lake's Family 1 was 1, 118, 131, 205abs, 205 and 209; A. Anderson's study of Matthew worked with thirteen manuscripts and added 1582 at the head of them; the Birmingham collation of John lists twenty-one witnesses. Family 13's are 13, 69, 124, 346, 543, 788, 826, 828, 983 and 1689",
+      origin:
+        "Family 1's leading witness, Codex 1582, was written at the Vatopedi monastery on Mount Athos in 948. Family 13's members have often been assigned to southern Italy, Calabria or Sicily",
+      findSite: "Not applicable. These are library books, not excavated objects",
+      foundYear:
+        "The family relationships were established rather than found: Ferrar's collation of four manuscripts, published by T. K. Abbott in 1877, and K. Lake's study of Codex 1 in 1902",
+      foundBy: "W. H. Ferrar, who died in 1871 before publishing, and T. K. Abbott, who published for him; K. Lake, for Family 1",
+      dateAssigned:
+        "Individual members range from the ninth century (565) to the fifteenth (69); the leading witness, 1582, is dated to 948. The archetypes they descend from are older than any surviving member and have not survived",
+      dateCertainty: "traditional",
+      currentLocation:
+        "Dispersed. Codex 1 is at the Universitätsbibliothek Basel; 13 at the Bibliothèque nationale de France; 69 at the Leicestershire Record Office; 1582 at the Vatopedi monastery, Mount Athos",
+      facsimileUrl: "https://manuscripts.csntm.org/manuscript/Group/GA_1582",
+    },
+    reflectionPrompt:
+      "A scribe copying John stopped, wrote a note saying that a famous story was missing from many of his sources, and copied it anyway at the end where you could see the join. What would it cost you to show your working like that?",
+    citations: [
+      {
+        tier: "primary",
+        label: "W. H. Ferrar and T. K. Abbott, A Collation of Four Important Manuscripts of the Gospels",
+        url: "https://archive.org/details/acollationfouri00unkngoog",
+        credit: "William Hugh Ferrar and Thomas Kingsmill Abbott",
+        detail:
+          "Hodges, Foster, and Figgis, Dublin; Macmillan, London; 1877. Public domain, read at the Internet Archive. Source of the title page's own description of Ferrar as \"the late\", of Abbott's statement of what Ferrar had done, and of Abbott's judgement that the position of the passage marks the independence of the group. A second scan of the same book on the Archive is OCR'd unusably; this is the readable one",
+        supports: "Ferrar's death before publication, Abbott's role, and the original argument",
+      },
+      {
+        tier: "primary",
+        label: "K. Lake, \"Codex 1 of the Gospels and its Allies\", Texts and Studies VII.3",
+        url: "https://archive.org/details/textsandstudies07unknuoft",
+        credit: "Kirsopp Lake",
+        detail:
+          "Cambridge University Press, 1902, printed as the third part of Texts and Studies volume 7, which is the item digitised — there is no standalone scan. Public domain, read at the Internet Archive. Source of Lake's own explanation of the fam¹ and fam¹³ notation, quoted verbatim including his list of the eight Ferrar manuscripts, and of his account of the note at the end of John in Codex 1",
+        supports: "The origin of the family notation and Lake's 1902 findings",
+      },
+      {
+        tier: "institution",
+        label: "ITSEE, University of Birmingham: ECM John, Collation of Family 1",
+        url: "https://itseeweb.cal.bham.ac.uk/iohannes/families/F1/index.html",
+        credit: "D. C. Parker, Institute for Textual Scholarship and Electronic Editing, University of Birmingham",
+        detail:
+          "January 2024, built on A. Welsby's doctoral work. The current membership list of twenty-one witnesses is taken from here, as is the statement that \"1582 is the most reliable witness to the text of the archetype\"",
+        supports: "The current membership of Family 1 and the standing of Codex 1582",
+      },
+      {
+        tier: "scholarly",
+        label: "J. Perrin, \"Family 13 in Saint John's Gospel\" (doctoral thesis, University of Birmingham, 2013)",
+        url: "https://etheses.bham.ac.uk/id/eprint/4482/1/Perrin13PhD.pdf",
+        credit: "Jac Perrin, University of Birmingham",
+        detail:
+          "Open access, 497 pages. Source of the quoted rejection of the Luke 21:38 placement as a membership criterion, of manuscript 1689 as a member with the passage in situ, and of 1141 and 2900 as non-members that relocate it after John 21:25",
+        supports: "That the famous Family 13 test does not work as a test",
+      },
+      {
+        tier: "scholarly",
+        label: "A. Welsby, \"A Textual Study of Family 1 in the Gospel of John\" (doctoral thesis, University of Birmingham, 2012)",
+        url: "https://etheses.bham.ac.uk/id/eprint/3338/1/Welsby12PhD.pdf",
+        credit: "Alison Welsby, University of Birmingham",
+        detail:
+          "Open access, 336 pages; the basis of her De Gruyter volume, which is not. Source of the account of the note about the woman caught in adultery in 1, 565 and 1582 and of the quoted conclusion drawn from it, of what Lake established in 1902, and of A. Anderson's case for 1582 over Codex 1",
+        supports: "The scribal note, the link between three manuscripts, and the reordering of the family's leading witness",
+      },
+      {
+        tier: "scholarly",
+        label: "D. Lafleur, \"The «Caesarean» Text of the Gospel of Mark: Lake Revisited\"",
+        url: "https://ojs.uclouvain.be/index.php/babelao/article/download/19983/18603/37973",
+        credit: "Didier Lafleur, Institut de recherche et d'histoire des textes",
+        detail:
+          "BABELAO 3 (2014), 145-169 with an appendix to 289; open access. Source of the quoted statement that the Caesarean question remains disputed, of the observation that Lake removed his own hedged sentence from later editions, and of Lafleur's dates for Lake",
+        supports: "That the Caesarean text-type is contested rather than settled",
+      },
+      {
+        tier: "primary",
+        label: "C. R. Gregory, Canon and Text of the New Testament",
+        url: "https://archive.org/details/canonandtextnew00greguoft",
+        credit: "Caspar René Gregory",
+        detail:
+          "1907; public domain, read at the Internet Archive. Source of the quoted statement about the placement after Luke 21:38 and of the account of Ferrar's and Abbott's work. Note for anyone following the trail: this book contains no description of minuscule 33 and no mention of the \"queen of the cursives\" epithet, which are in his Textkritik of 1900 instead",
+        supports: "The Luke 21:38 placement as the standard description",
+      },
+      {
+        tier: "encyclopedic",
+        label: "Wikipedia: Family 13",
+        url: "https://en.wikipedia.org/wiki/Family_13",
+      },
+    ],
+  },
+
+  {
+    id: "minuscule-33",
+    name: "Minuscule 33",
+    alternateNames: ["the queen of the cursives"],
+    matchNames: ["Minuscule 33", "minuscule 33"],
+    category: "manuscript",
+    role: "The Ninth-Century Minuscule That an Eighteenth-Century Scholar Called a Queen",
+    summary:
+      "A ninth-century Greek manuscript in Paris carrying the prophets and the whole New Testament except Revelation, with a text so much better than its neighbours that it earned a nickname — and so badly damaged by damp that much of it has to be read backwards off the facing page.",
+    sections: [
+      {
+        heading: "Colbert's Manuscript",
+        paragraphs: [
+          "It is Grec 14 in the Bibliothèque nationale de France, and C. R. Gregory records its earlier home: it was number 2844 in the library of Jean-Baptiste Colbert, Louis XIV's minister. The library's own record describes it as parchment, 143 leaves, large format, ninth century, in ancient Greek; the whole thing has been photographed and is free to look at, page by page, under a public-domain rights statement. C. R. Gregory measured it at 37.8 by 24.8 centimetres, one column, 48 lines to the page in the Gospels and 51 or 52 elsewhere, and worked out that two hands wrote it — one for the Old Testament portion and the Gospels, and a second, a century later, for Acts, the Catholic Epistles and the Pauline Epistles.",
+          "What it contains is unusual on both ends. In front there are portions of the prophets; after them comes the New Testament entire except for Revelation, with three gaps in the Gospels where leaves are gone. And the books are in the wrong order. Gregory worked out why, and the answer is mundane and rather cheering: a binder shuffled the sections in the thirteenth or fourteenth century, before anything had yet been lost, which is how J. G. Eichhorn came to describe a manuscript that begins with the Pauline Epistles and ends with the Gospels. Eichhorn had already suspected as much, adding to his own description of the order the qualification that this was so if it did not in fact come from the binder.",
+        ],
+      },
+      {
+        heading: "Why a Late Manuscript Can Matter",
+        paragraphs: [
+          "Minuscules — Greek manuscripts in the small connected script that replaced capitals from the ninth century — number in the thousands, and the great majority carry the Byzantine form of the text, the one that stands behind the Textus Receptus and the King James Version. That is why they are usually treated in bulk. Minuscule 33 is the standing exception, and it has been recognised as one for two hundred years. Eichhorn's description of it in 1827 runs: the text \"is the Alexandrian or Hesychian, full of the most excellent and oldest readings.\" F. H. A. Scrivener put the same judgement in comparative terms: \"in text it resembles Codd. BDL more than any other cursive manuscript\" — that is, Vaticanus, Bezae and Regius, which is company no ordinary minuscule keeps.",
+          "The nickname comes from that same page of Eichhorn, and it is worth getting right because it is usually quoted without a source and in a form he did not write. Gregory's Textkritik of 1900 gives the reference: \"Eichhorn nannte diese Handschrift: 'Die Königin unter den Cursiv geschriebenen Handschriften', Einl. in das N. T. Leipzig 1827, Bd. 5, S. 217.\" Eichhorn's German is \"the queen among the manuscripts written in cursive\"; the familiar English \"queen of the cursives\" is a later compression of it. Two further honesties belong with the epithet. It is not in Gregory's better-known Canon and Text of 1907, which describes neither this manuscript nor the phrase, so anyone citing that book for it has the wrong volume. And Eichhorn awarded the crown on the same page on which he reported J. J. Griesbach's estimate that the book was of the eleventh century or the beginning of the twelfth — he thought it a very good late manuscript, not a ninth-century one.",
+        ],
+      },
+      {
+        heading: "A Manuscript You Can Hardly Read",
+        paragraphs: [
+          "The honest limit here is not a dispute about what the manuscript means. It is that a good deal of it can barely be read, and every reading attributed to it in a critical apparatus rests on somebody's decision about a mark on a page. Scrivener describes the condition without softening it: \"the ends of the leaves are much damaged, and greatly misplaced by the binder; so that the Gospels now stand last … the ink too, by reason of the damp, has often left its proper page blank, so that the writing can only be read set off on the opposite page, especially in the Acts.\" He quotes S. P. Tregelles, who collated it, saying that of all the manuscripts he had worked on \"none has ever been so wearisome to the eyes, and exhaustive of every faculty of attention.\" Gregory's independent description agrees on the substance while using a drier word — the leaves are damaged, and Tregelles read a good deal from the offset traces on the facing page — so the word \"damp\" specifically comes from Scrivener.",
+          "The date is not agreed either, and the disagreement is still live in the reference works rather than merely historical. The Bibliothèque nationale assigns the ninth century, and so does the Center for the Study of New Testament Manuscripts. Gregory wrote \"ninth or tenth century\", noting that Scholz and Martin had said eleventh. Scrivener printed an eleventh-century judgement with Gregory's ninth or tenth beside it in brackets. Eichhorn, reporting Griesbach, was later still. The article's answer is the ninth century because that is what the holding library says, with the range noted rather than hidden.",
+          "None of that makes the manuscript less valuable, and it is worth being clear about what it is valuable for. Minuscule 33 does not contain readings that overturn anything; it is not the source of a disputed verse, and no doctrine hangs on it. What it does is show that the good early text did not disappear when the Byzantine text became standard — that a scribe in the ninth century, copying with an old exemplar in front of him, could produce a book that reads like Vaticanus. That is a fact about transmission rather than about doctrine, and it is the kind of fact that only accumulates when somebody is willing to sit down with a manuscript that is exhaustive of every faculty of attention.",
+        ],
+      },
+    ],
+    verses: [
+      { reference: "Mark 9:31", note: "The start of one of three gaps in the Gospels, running to Mark 11:11" },
+      { reference: "Luke 21:38", note: "The start of another, running to Luke 23:26" },
+      { reference: "Revelation 1:1", note: "The one New Testament book this manuscript never contained" },
+      { reference: "Romans 1:1", note: "The Pauline Epistles stand first among the New Testament books as the codex is now bound, ahead of the Gospels, because a medieval binder shuffled it" },
+    ],
+    sources: [
+      { label: "Bibliothèque nationale de France: Grec 14, digitised on Gallica", url: "https://gallica.bnf.fr/ark:/12148/btv1b10723181c" },
+      { label: "C. R. Gregory, Textkritik des Neuen Testamentes, volume 1 (1900)", url: "https://archive.org/details/textkritikdesneu0001greg" },
+      { label: "F. H. A. Scrivener, A Plain Introduction to the Criticism of the New Testament, 4th edition", url: "https://archive.org/details/aplainintroducti00scriuoft" },
+    ],
+    manuscript: {
+      siglum: "33 (Gregory-Aland); formerly Colbertinus 2844",
+      manuscriptType:
+        "Parchment minuscule codex, 143 leaves, 37.8 by 24.8 cm, a single column of 48 to 52 lines, written by two hands a century apart",
+      language: "Koine Greek",
+      contents:
+        "Portions of the prophets, then the whole New Testament except Revelation. Three gaps in the Gospels as F. H. A. Scrivener lists them: Mark 9:31-11:11, Mark 13:11-14:60 and Luke 21:38-23:26. C. R. Gregory's list ends the second at 14:59 and adds a further gap at Luke 13:7-19:44. The books stand in a disordered sequence because a binder rearranged them in the thirteenth or fourteenth century",
+      origin: "Unknown",
+      findSite: "Not applicable. It was a library book in Paris, not a find",
+      foundYear:
+        "Not applicable. C. R. Gregory records it as Colbertinus 2844, from the library of Jean-Baptiste Colbert",
+      foundBy: "No finder. J. G. Eichhorn's description of 1827 is the source of its reputation",
+      dateAssigned:
+        "Ninth century, as the Bibliothèque nationale and CSNTM both assign it. C. R. Gregory gave \"ninth or tenth\"; Scholz, Martin and Scrivener preferred the eleventh; Eichhorn, reporting Griesbach, the eleventh or the beginning of the twelfth",
+      dateCertainty: "disputed",
+      currentLocation: "Bibliothèque nationale de France, Paris",
+      shelfmark: "Grec 14",
+      facsimileUrl: "https://gallica.bnf.fr/ark:/12148/btv1b10723181c",
+    },
+    reflectionPrompt:
+      "Tregelles called this book wearisome to the eyes and exhausting to every faculty of attention, and read it anyway, and we are still using what he found. What are you avoiding because it is going to be dull rather than because it is going to be hard?",
+    citations: [
+      {
+        tier: "institution",
+        label: "Bibliothèque nationale de France: Département des Manuscrits, Grec 14",
+        url: "https://gallica.bnf.fr/ark:/12148/btv1b10723181c",
+        credit: "Bibliothèque nationale de France, Paris",
+        detail:
+          "The holding library's own digitisation on Gallica: the whole codex, 150 images, published as public domain. The shelfmark, the ninth-century date (the library's record gives 0801-0900), the parchment, the 143 leaves and the contents list showing the prophets before the New Testament were read from the library's IIIF manifest and OAI record, because Gallica's viewer refuses scripted requests and has to be opened in a browser",
+        supports: "The shelfmark, the date, the extent, and that the manuscript can be looked at",
+      },
+      {
+        tier: "primary",
+        label: "C. R. Gregory, Textkritik des Neuen Testamentes, volume 1",
+        url: "https://archive.org/details/textkritikdesneu0001greg",
+        credit: "Caspar René Gregory",
+        detail:
+          "Leipzig, 1900; public domain at the Internet Archive. Source of the measurements, the line counts, the two hands, the binder's rearrangement in the thirteenth or fourteenth century, the \"ninth or tenth century\" dating with Scholz and Martin's eleventh beside it, and — the reason this volume rather than his later one is cited — the exact reference for Eichhorn's epithet, quoted here in Gregory's own German",
+        supports: "The physical description, the dating range, and the source of the nickname",
+      },
+      {
+        tier: "primary",
+        label: "J. G. Eichhorn, Einleitung in das Neue Testament, volume 5",
+        url: "https://archive.org/details/10410500bsb",
+        credit: "Johann Gottfried Eichhorn",
+        detail:
+          "Leipzig, 1827; public domain, digitised by the Bayerische Staatsbibliothek. Page 217 carries both the description of the text as \"Alexandrian or Hesychian, full of the most excellent and oldest readings\" and the phrase Gregory quotes. The German is \"die Königin unter den Cursiv geschriebenen\" manuscripts; the English \"queen of the cursives\" is a later rendering and is not what he wrote",
+        supports: "The epithet, at its source, and what Eichhorn actually said",
+      },
+      {
+        tier: "primary",
+        label: "F. H. A. Scrivener, A Plain Introduction to the Criticism of the New Testament, 4th edition",
+        url: "https://archive.org/details/aplainintroducti00scriuoft",
+        credit: "Frederick Henry Ambrose Scrivener",
+        detail:
+          "1894; public domain at the Internet Archive. Source of the quoted description of the damp damage and the misplaced leaves, of the comparison with Codices B, D and L, of the list of gospel lacunae, and of the quotation from S. P. Tregelles's own account of collating it",
+        supports: "The condition of the manuscript, its text type, and its lacunae",
+      },
+      {
+        tier: "institution",
+        label: "Center for the Study of New Testament Manuscripts: GA 33",
+        url: "https://manuscripts.csntm.org/manuscript/Group/GA_33",
+        credit: "Center for the Study of New Testament Manuscripts",
+        detail:
+          "Its record gives \"Gr. 14\", the Bibliothèque Nationale in Paris, the ninth century, parchment, 143 leaves, a single column of 48 to 52 lines, and contents covering the Gospels, the Pauline Epistles, Acts and the Catholic Epistles. Cited here as an independent institutional confirmation of the ninth-century date, since the Münster institute's own record is inconsistent on that point",
+        supports: "The ninth-century date and the physical description, from a second institution",
+      },
+      {
+        tier: "encyclopedic",
+        label: "Wikipedia: Minuscule 33",
+        url: "https://en.wikipedia.org/wiki/Minuscule_33",
+      },
+    ],
+  },
 ];

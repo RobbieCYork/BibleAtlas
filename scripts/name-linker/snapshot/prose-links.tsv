@@ -5611,6 +5611,11 @@ topic.section|chief-priests|5aac8830f8	331	Ananias	ananias-the-high-priest
 topic.section|chief-priests|e70d1b2d3f	214	Caiaphas	caiaphas
 topic.section|code-of-hammurabi|0d5c5d6ea2	539	Jesus	jesus-of-nazareth
 topic.section|code-of-hammurabi|85f43700a7	125	Moses	moses
+topic.section|codex-amiatinus|1d176bdef0	260	Jerome	jerome
+topic.section|codex-amiatinus|50c2c4bc69	152	Ezra	ezra
+topic.section|codex-amiatinus|f3cc005232	103	Jerome	jerome
+topic.section|codex-amiatinus|f3cc005232	182	Jerome	jerome
+topic.section|codex-amiatinus|f3cc005232	254	Jerome	jerome
 topic.section|codex-bezae|047095c8e5	155	Luke	luke-evangelist
 topic.section|codex-bezae|047095c8e5	339	Luke	luke-evangelist
 topic.section|codex-bezae|047095c8e5	36	Luke	luke-evangelist
@@ -5649,10 +5654,18 @@ topic.section|codex-washingtonianus|ae7525b35b	677	Luke	luke-evangelist
 topic.section|codex-washingtonianus|ae7525b35b	709	Mark	john-mark
 topic.section|codex-washingtonianus|ae7525b35b	71	Luke	luke-evangelist
 topic.section|codex-washingtonianus|ae7525b35b	77	Mark	john-mark
+topic.section|comma-johanneum|00ffa19377	564	Spirit of truth	holy-spirit
+topic.section|comma-johanneum|00ffa19377	634	Paul	paul-of-tarsus
+topic.section|comma-johanneum|470ffa7c3f	136	Holy Ghost	holy-spirit
+topic.section|comma-johanneum|537b77b13b	295	Christ Jesus	jesus-of-nazareth
+topic.section|comma-johanneum|760b6ce6a8	1084	the Holy Spirit	holy-spirit
+topic.section|comma-johanneum|e09b2465c2	201	the Holy Spirit	holy-spirit
 topic.section|community-rule|3b2f18f97d	275	John the Baptist	john-the-baptist
 topic.section|community-rule|3b2f18f97d	377	John	john-the-baptist
 topic.section|community-rule|3b2f18f97d	456	John	john-the-baptist
 topic.section|community-rule|f7655eb743	482	spirit of truth	holy-spirit
+topic.section|coptic-versions|72ba293c06	858	Thomas	thomas-apostle
+topic.section|coptic-versions|72ba293c06	900	Jesus	jesus-of-nazareth
 topic.section|crucified-man-givat-hamivtar|596d9fe46f	250	Pilate	pontius-pilate
 topic.section|crucified-man-givat-hamivtar|596d9fe46f	486	Jesus	jesus-of-nazareth
 topic.section|crucified-man-givat-hamivtar|596d9fe46f	564	Paul	paul-of-tarsus
@@ -5701,6 +5714,7 @@ topic.section|elephantine-papyri|bc07a091b4	751	Jeremiah	jeremiah
 topic.section|epic-of-gilgamesh|de015d5350	255	Abraham	abraham
 topic.section|execration-texts|0d247b2452	146	David	david
 topic.section|execration-texts|c3ae9e529e	531	David	david
+topic.section|family-1-and-family-13|bef612569c	330	John Chrysostom	john-chrysostom
 topic.section|galilee-boat|132067bc4f	273	Jesus	jesus-of-nazareth
 topic.section|galilee-boat|869b76d25c	26	Jesus	jesus-of-nazareth
 topic.section|galilee-boat|cf71193276	155	Jesus	jesus-of-nazareth
@@ -5956,6 +5970,39 @@ topic.section|nuzi-tablets|e02d8be473	285	Sarah	sarah
 topic.section|nuzi-tablets|e02d8be473	306	Hagar	hagar
 topic.section|nuzi-tablets|e02d8be473	315	Abraham	abraham
 topic.section|nuzi-tablets|e02d8be473	615	Rachel	rachel
+topic.section|old-syriac-gospels|629598c658	174	Mary	mary-mother-of-jesus
+topic.section|old-syriac-gospels|630a3a7bb9	158	Joseph	joseph-son-of-jacob
+topic.section|old-syriac-gospels|630a3a7bb9	171	Jesus	jesus-of-nazareth
+topic.section|old-syriac-gospels|630a3a7bb9	231	Joseph	joseph-son-of-jacob
+topic.section|old-syriac-gospels|630a3a7bb9	269	Jesus	jesus-of-nazareth
+topic.section|old-syriac-gospels|630a3a7bb9	332	Joseph	joseph-son-of-jacob
+topic.section|old-syriac-gospels|630a3a7bb9	348	Jesus	jesus-of-nazareth
+topic.section|old-syriac-gospels|630a3a7bb9	396	Jesus	jesus-of-nazareth
+topic.section|old-syriac-gospels|630a3a7bb9	405	David	david
+topic.section|old-syriac-gospels|630a3a7bb9	426	Joseph	joseph-son-of-jacob
+topic.section|old-syriac-gospels|630a3a7bb9	709	Jacob	jacob
+topic.section|old-syriac-gospels|630a3a7bb9	721	Joseph	joseph-son-of-jacob
+topic.section|old-syriac-gospels|630a3a7bb9	755	Mary	mary-mother-of-jesus
+topic.section|old-syriac-gospels|630a3a7bb9	785	Jesus	jesus-of-nazareth
+topic.section|old-syriac-gospels|835fb43c1e	261	Jacob	jacob
+topic.section|old-syriac-gospels|835fb43c1e	285	Joseph	joseph-son-of-jacob
+topic.section|old-syriac-gospels|835fb43c1e	308	Mary	mary-mother-of-jesus
+topic.section|old-syriac-gospels|835fb43c1e	331	Jesus	jesus-of-nazareth
+topic.section|old-syriac-gospels|835fb43c1e	397	Matthan	matthan
+topic.section|old-syriac-gospels|835fb43c1e	411	Jacob	jacob
+topic.section|old-syriac-gospels|835fb43c1e	418	Jacob	jacob
+topic.section|old-syriac-gospels|835fb43c1e	430	Joseph	joseph-son-of-jacob
+topic.section|old-syriac-gospels|835fb43c1e	438	Joseph	joseph-son-of-jacob
+topic.section|old-syriac-gospels|835fb43c1e	468	Mary	mary-mother-of-jesus
+topic.section|old-syriac-gospels|835fb43c1e	491	Jesus	jesus-of-nazareth
+topic.section|old-syriac-gospels|b05d6a8388	437	Mary	mary-mother-of-jesus
+topic.section|old-syriac-gospels|b05d6a8388	691	Holy Ghost	holy-spirit
+topic.section|old-syriac-gospels|b05d6a8388	734	Joseph	joseph-son-of-jacob
+topic.section|old-syriac-gospels|b05d6a8388	760	Mary	mary-mother-of-jesus
+topic.section|old-syriac-gospels|b05d6a8388	825	Jesus	jesus-of-nazareth
+topic.section|old-syriac-gospels|c45ce93b9e	443	Jesus	jesus-of-nazareth
+topic.section|old-syriac-gospels|c45ce93b9e	466	the Holy Spirit	holy-spirit
+topic.section|old-syriac-gospels|c45ce93b9e	505	Mary	mary-mother-of-jesus
 topic.section|oxyrhynchus-papyri|629a632848	131	Jesus	jesus-of-nazareth
 topic.section|oxyrhynchus-papyri|629a632848	462	Thomas	thomas-apostle
 topic.section|oxyrhynchus-papyri|9047c0b3d5	606	Mark	john-mark
@@ -5990,6 +6037,7 @@ topic.section|persians|0110c5e618	591	Ezra	ezra
 topic.section|persians|0110c5e618	600	Nehemiah	nehemiah
 topic.section|persians|32032b9fd6	209	Mordecai	mordecai
 topic.section|persians|32032b9fd6	359	Nehemiah	nehemiah
+topic.section|peshitta|d1830fae35	45	Jesus	jesus-of-nazareth
 topic.section|pharisees-and-sadducees-compared|1da5e652b2	343	Paul	paul-of-tarsus
 topic.section|pharisees-and-sadducees-compared|1da5e652b2	647	Paul	paul-of-tarsus
 topic.section|pharisees-and-sadducees-compared|1da5e652b2	83	Jesus	jesus-of-nazareth
@@ -6270,6 +6318,13 @@ topic.section|torah|fba21c9ca1	480	Luke	luke-evangelist
 topic.section|torah|fba21c9ca1	503	Jesus	jesus-of-nazareth
 topic.section|ugarit-tablets|b9970d49c7	134	Elijah	elijah
 topic.section|ugarit-tablets|b9970d49c7	214	Josiah	josiah
+topic.section|vetus-latina|6d63b1c051	270	Jerome	jerome
+topic.section|vetus-latina|6d63b1c051	95	Jerome	jerome
+topic.section|vetus-latina|9112a92108	780	Jerome	jerome
+topic.section|vetus-latina|c420d1e66f	244	Jerome	jerome
+topic.section|vetus-latina|c420d1e66f	345	Jerome	jerome
+topic.section|vetus-latina|d7224fd371	151	Jerome	jerome
+topic.section|vetus-latina|d7224fd371	93	Jerome	jerome
 topic.section|war-scroll|dbdfaaa763	72	Michael	michael-archangel
 topic.section|war-scroll|e5f2eb667c	277	Belial	satan
 topic.section|warrens-shaft|384d04ea9d	356	David	david
