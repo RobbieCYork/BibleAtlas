@@ -700,7 +700,7 @@ person	jehoshaphat	jehoshaphat	panel	84
 person	jehoshaphat	jehoshaphat	prose	15
 person	jehoshaphat	jehoshaphat	reader	84
 person	jeremiah	jeremiah	panel	150
-person	jeremiah	jeremiah	prose	61
+person	jeremiah	jeremiah	prose	60
 person	jeremiah	jeremiah	reader	134
 person	jerome	jerome	prose	15
 person	jerubbaal	gideon	panel	13
@@ -1219,7 +1219,7 @@ poi	pool of siloam	pool-of-siloam	panel	2
 poi	pool of siloam	pool-of-siloam	prose	7
 poi	pool of siloam	pool-of-siloam	reader	2
 poi	praetorium	antonia-fortress	prose	1
-poi	qumran	qumran	prose	98
+poi	qumran	qumran	prose	99
 poi	rhegium	rhegium	panel	1
 poi	rhegium	rhegium	prose	1
 poi	rhegium	rhegium	reader	1
@@ -1328,7 +1328,7 @@ timeline	the warring states period	wld-fe-warring-states	prose	2
 timeline	trials of jesus before the sanhedrin and pilate	bib-loc-trials-of-jesus	prose	1
 timeline	triumphal entry into jerusalem	bib-loc-triumphal-entry	prose	2
 timeline	wedding at cana	bib-loc-wedding-at-cana	prose	2
-topic	4qsam-a	4qsamuel-a	prose	2
+topic	4qsam-a	4qsamuel-a	prose	3
 topic	aleppo codex	aleppo-codex	prose	11
 topic	alexandrinus	codex-alexandrinus	prose	10
 topic	amarna letters	amarna-letters	prose	8
@@ -1466,7 +1466,7 @@ topic	gilgamesh epic	epic-of-gilgamesh	prose	1
 topic	great isaiah scroll	great-isaiah-scroll	prose	5
 topic	great psalms scroll	great-psalms-scroll	prose	1
 topic	greek	greeks	panel	15
-topic	greek	greeks	prose	315
+topic	greek	greeks	prose	316
 topic	greek	greeks	reader	15
 topic	greek minor prophets scroll	greek-minor-prophets-scroll	prose	3
 topic	greek old testament	septuagint	prose	5
@@ -1691,7 +1691,7 @@ topic	theodotus inscription	theodotus-inscription	prose	1
 topic	topheth	gehenna	panel	9
 topic	topheth	gehenna	reader	9
 topic	torah	torah	prose	36
-topic	trinitarian	the-trinity	prose	2
+topic	trinitarian	the-trinity	prose	3
 topic	ugaritic texts	ugarit-tablets	prose	1
 topic	unclean spirit	demons	panel	13
 topic	unclean spirit	demons	prose	1
@@ -1752,7 +1752,7 @@ verse	1 corinthians 6:19	-	prose	1
 verse	1 corinthians 8	-	prose	1
 verse	1 corinthians 9	-	prose	1
 verse	1 john 2:22	-	prose	1
-verse	1 john 5:7	-	prose	1
+verse	1 john 5:7	-	prose	2
 verse	1 kings 1	-	prose	3
 verse	1 kings 10:1-13	-	prose	1
 verse	1 kings 10:14-29	-	prose	1
@@ -1852,7 +1852,7 @@ verse	1 samuel 1	-	prose	1
 verse	1 samuel 10:1	-	prose	1
 verse	1 samuel 10:10	-	prose	1
 verse	1 samuel 10:20-24	-	prose	1
-verse	1 samuel 11	-	prose	1
+verse	1 samuel 11	-	prose	2
 verse	1 samuel 11:1	-	prose	1
 verse	1 samuel 11:1-11	-	prose	2
 verse	1 samuel 11:1-15	-	prose	1

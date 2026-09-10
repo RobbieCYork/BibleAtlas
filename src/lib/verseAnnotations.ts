@@ -1346,7 +1346,7 @@ const POSSESSIVE_WORK: NameContextRule = {
 };
 /** "Isaiah manuscripts", "a second Philemon papyrus". Manuscript notes name the book, never a man. */
 const MANUSCRIPT_AFTER: NameContextRule = {
-  after: /^\s+(?:manuscripts?|fragments?|papyri|papyrus|codex|scrolls?)\b/,
+  after: /^\s+(?:manuscripts?|fragments?|papyri|papyrus|codex|scrolls?|copies)\b/,
   to: null,
 };
 /** "The Qumran Daniel manuscripts", "some Qumran Jeremiah fragments". */
@@ -1798,6 +1798,11 @@ const NAME_CONTEXT_RULES: Record<string, NameContextRule[]> = {
   ],
   jeremiah: [
     { phrase: "Joshua, Judges, Samuel and Kings, then Isaiah, Jeremiah, Ezekiel and the Twelve", to: null }, // a list of BOOK titles
+    // "The Jeremiah copies from Cave 4", on `dead-sea-scrolls` — a live fault, and the reason
+    // `copies` joined MANUSCRIPT_AFTER's word list with the Masoretic manuscripts batch. It is the
+    // book that exists in two lengths at Qumran, not the man. Checked: one WEB verse contains
+    // "copies" (Hebrews 9:23) and it does not follow a name.
+    MANUSCRIPT_AFTER,
     BOOK_OF, // "the book of Jeremiah, which the caves preserve in two editions". Checked: no WEB
     // verse contains "book of Jeremiah" or "books of Jeremiah", so this reaches only our own prose.
     QUMRAN_BEFORE, // "some Qumran Jeremiah fragments reflect a shorter Hebrew text-form"

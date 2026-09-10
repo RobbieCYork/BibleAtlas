@@ -2065,6 +2065,7 @@ export const topics: Topic[] = [
         paragraphs: [
           "The claim heard most often is that the Isaiah Scroll is word-for-word identical to the Bible we read, proving the text was transmitted perfectly. That overstates it, and the true version is more interesting. The Great Isaiah Scroll agrees with the medieval Masoretic text to a remarkable degree, but it carries something on the order of 1,300 differences — overwhelmingly spelling, word order, and grammatical forms, of the kind that do not change meaning, plus a small number of genuine variants that translators note. The honest summary is that a thousand years of copying introduced far less change than anyone had a right to expect, and that this is a strong result rather than a perfect one.",
           "Two other cautions. First, the scrolls do not show one fixed text; some biblical books circulated in more than one edition. The Jeremiah copies from Cave 4 include a substantially shorter form of the book matching the Greek Septuagint — evidence that the differences between the Hebrew and Greek Bibles go back to real ancient Hebrew editions rather than to careless Greek translators. Second, there is no New Testament among the scrolls. A proposal in the 1970s that a scrap from Cave 7 preserved a few letters of Mark's Gospel attracted headlines and has been rejected by nearly all specialists. And the identification of the Qumran community with the Essenes described by Josephus and Pliny, though still the majority view, is genuinely contested.",
+          "One thing more, because everything above is written from somewhere and this app has not yet said where. These articles are written from the ordinary Protestant evangelical position, whose classic modern statement is careful about exactly this problem rather than embarrassed by it. The Chicago Statement on Biblical Inerrancy, drawn up in Chicago in October 1978 in nineteen articles, affirms that inspiration \"strictly speaking, applies only to the autographic text of Scripture, which in the providence of God can be ascertained from available manuscripts with great accuracy\", that \"copies and translations of Scripture are the Word of God to the extent that they faithfully represent the original\", and denies \"that any essential element of the Christian faith is affected by the absence of the autographs\". Notice what kind of claim that is: one about evidence, made in public, which evidence could in principle embarrass — and the writing on this page is the sort of thing that would embarrass it. Evangelical textual scholars do not hide the difficulty; P. Gurry, who works on the method behind the standard critical edition of the New Testament, opens his own summary for pastors by conceding it whole: \"Since no original document survives for the New Testament and since the existing copies disagree with one another, textual criticism is needed for all twenty-seven books.\" The Hebrew Bible is no different, and this app's own articles set the awkward cases out by name — the book of Jeremiah preserved at Qumran in two lengths, the Cave 4 scroll 4QSam-a supplying a paragraph before 1 Samuel 11 that the New Revised Standard Version prints and no Hebrew Bible has, a trinitarian sentence at 1 John 5:7 that stands in no early Greek manuscript at all. The strongest form of the objection is not that some doctrine is at risk; it is that \"the original\" may not be a single recoverable object, a question serious scholars argue about — E. J. Epp gave a 1999 study the title \"The Multivalence of the Term 'Original Text' in New Testament Textual Criticism\". So here is the argument, and it is an argument rather than an assertion: the manuscripts that show the variation are also what measure it, and measured rather than asserted, it is overwhelmingly spelling, word order and grammatical form, with a small and well-known set of longer passages that every modern translation already prints in a footnote where a reader can see it and judge. A book that had to be protected from its own manuscript evidence would be in a far worse position than this one is. Where the evidence here is awkward these articles say so, and that is not a concession made reluctantly; it is the only thing that makes the rest of what they say worth reading.",
         ],
       },
     ],
@@ -2133,6 +2134,43 @@ export const topics: Topic[] = [
         url: "https://textandcanon.org/appreciating-the-diverse-evidence-from-the-dead-sea-scrolls/",
         credit: "Text & Canon Institute, Phoenix Seminary",
         supports: "That some biblical books circulated at Qumran in more than one edition",
+      },
+      {
+        tier: "reference",
+        label: "The Chicago Statement on Biblical Inerrancy (1978)",
+        url: "https://www.alliancenet.org/the-chicago-statement-on-biblical-inerrancy",
+        credit: "International Council on Biblical Inerrancy, Chicago, October 1978",
+        detail:
+          "Article X is quoted in full in section three, and was read on this page and cross-checked word for word against a second independent host before being printed. The statement is the reference point for the position these articles are written from; it is cited, not adopted as a creed, and it is the app's business to state its own position rather than to hide it",
+        supports: "The evangelical position on inspiration, the autographs, and copies",
+      },
+      {
+        tier: "institution",
+        label: "Dallas Theological Seminary Library, Special Collections: Records of the International Council on Biblical Inerrancy",
+        url: "https://library.dts.edu/Pages/TL/Special/ICBI.shtml",
+        credit: "Dallas Theological Seminary Library",
+        detail:
+          "Read in full. The library holds the ICBI's own papers and gives the meeting's date and size: \"Summit I met in Chicago on October 26-28, 1978. Over 300 Christian leaders, theologians and pastors attended and adopted the Chicago Statement on Biblical Inerrancy, consisting of nineteen articles with brief exposition.\" Its scans of the original document are photographs without searchable text, so the wording of Article X is taken from the two hosts above rather than from them",
+        supports: "The date, size and form of the meeting that produced the statement",
+      },
+      {
+        tier: "reference",
+        label: "P. Gurry, \"What Pastors Should Know about Developments in Textual Criticism\"",
+        url: "https://textandcanon.org/what-you-should-know-about-developments-in-nt-textual-criticism/",
+        credit: "Peter J. Gurry, Text & Canon Institute; Associate Professor of New Testament, Midwestern Baptist Theological Seminary",
+        detail:
+          "4 August 2021, read in full. The sentence quoted in section three is the third sentence of his article, and it is quoted because he concedes the problem before anyone puts it to him. He is quoted here rather than a critic of the evangelical position for a deliberate reason, stated so a reader can weigh it: the point being made is that this difficulty is not news to the people who hold that position",
+        supports: "That evangelical textual scholars state the difficulty at full strength themselves",
+      },
+      {
+        tier: "scholarly",
+        label: "E. J. Epp, \"The Multivalence of the Term 'Original Text' in New Testament Textual Criticism\"",
+        url: "https://doi.org/10.1017/S0017816000019386",
+        credit: "Eldon Jay Epp, Case Western Reserve University",
+        detail:
+          "Harvard Theological Review 92:3 (1999), 245-281. PAYWALLED and NOT opened. It is cited for one thing only, and that thing is its title: that the question \"what is the original text?\" is one the discipline argues about. No argument of Epp's is stated here, because none was read",
+        supports: "That the meaning of \"the original text\" is itself contested in the field",
+        paywalled: true,
       },
     ],
   },
