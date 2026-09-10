@@ -29,15 +29,17 @@
   min-height: 54px;
 }
 
-/* min-width: 0 is load-bearing once .game-root carries the text-size `zoom` (see the --text-scale
- * rule in App.css). A flex item defaults to min-width: auto, i.e. it refuses to shrink below its
- * content, and .games-inline-icon below is an inline-flex box whose text is an anonymous flex item
- * with the same default. Measured at 375px and scale 1.8, "Scripture Memorization Challenge" held
- * the header 21px wider than the screen (document scrollWidth 396) because of exactly that. With
- * both min-widths zeroed the heading wraps inside the header instead of pushing the page sideways;
- * the mark itself stays at its intrinsic size via flex: 0 0 auto. */
+/* min-width: 0 is load-bearing at large text sizes (see the "Global text size" rule in App.css).
+ * A flex item defaults to min-width: auto, i.e. it refuses to shrink below its content, and
+ * .games-inline-icon below is an inline-flex box whose text is an anonymous flex item with the
+ * same default. Measured at 375px and scale 1.8 — back when the setting worked through `zoom` on
+ * .game-root — "Scripture Memorization Challenge" held the header 21px wider than the screen
+ * (document scrollWidth 396) because of exactly that. The implementation changed; the flex hazard
+ * did not, because the heading's intrinsic width still grows with the setting. With both
+ * min-widths zeroed the heading wraps inside the header instead of pushing the page sideways; the
+ * mark itself stays at its intrinsic size via flex: 0 0 auto. */
 .game-header h2 {
-  font-size: 17px;
+  font-size: calc(17px * var(--tsz, 1));
   min-width: 0;
 }
 
@@ -60,7 +62,7 @@
 
 .games-error {
   color: #c0392b;
-  font-size: 14px;
+  font-size: calc(14px * var(--tsz, 1));
   margin: 0 0 12px;
 }
 
@@ -123,7 +125,7 @@
    which draws well outside its font box, so a true 28px glyph came out visibly smaller than what
    it replaced — same nudge the three App.css rules needed in 3511973. */
 .game-center-card-icon {
-  font-size: 30px;
+  font-size: calc(30px * var(--tsz, 1));
   flex-shrink: 0;
   color: var(--text-h);
 }
@@ -188,13 +190,13 @@
 
 .game-center-card-tagline {
   color: var(--text-muted);
-  font-size: 13px;
+  font-size: calc(13px * var(--tsz, 1));
 }
 
 .game-center-card-chevron {
   margin-left: auto;
   color: var(--text-muted);
-  font-size: 20px;
+  font-size: calc(20px * var(--tsz, 1));
   flex-shrink: 0;
 }
 
@@ -250,12 +252,12 @@
 }
 
 .games-panel-card h3 {
-  font-size: 15px;
+  font-size: calc(15px * var(--tsz, 1));
 }
 
 .games-panel-card p {
   color: var(--text-muted);
-  font-size: 13px;
+  font-size: calc(13px * var(--tsz, 1));
 }
 
 .games-panel-card form {
@@ -296,7 +298,7 @@
   background: var(--surface-sunken);
   color: var(--text);
   font: inherit;
-  font-size: 20px;
+  font-size: calc(20px * var(--tsz, 1));
   letter-spacing: 0.15em;
   text-align: center;
   text-transform: uppercase;
@@ -312,13 +314,13 @@
 }
 
 .games-high-scores h3 {
-  font-size: 15px;
+  font-size: calc(15px * var(--tsz, 1));
   margin-bottom: 10px;
 }
 
 .games-high-scores-empty {
   color: var(--text-muted);
-  font-size: 13px;
+  font-size: calc(13px * var(--tsz, 1));
 }
 
 .games-high-scores-list {
@@ -353,7 +355,7 @@
   background: var(--surface-sunken);
   color: var(--text);
   font: inherit;
-  font-size: 15px;
+  font-size: calc(15px * var(--tsz, 1));
   font-weight: 600;
   padding: 10px 12px;
   cursor: pointer;
@@ -361,7 +363,7 @@
 
 .games-topic-description {
   color: var(--text-muted);
-  font-size: 13px;
+  font-size: calc(13px * var(--tsz, 1));
 }
 
 .games-topic-custom {
@@ -376,18 +378,18 @@
   background: var(--surface-sunken);
   color: var(--text);
   font: inherit;
-  font-size: 14px;
+  font-size: calc(14px * var(--tsz, 1));
   padding: 10px 12px;
 }
 
 .games-topic-custom-note {
   color: var(--text-muted);
-  font-size: 12px;
+  font-size: calc(12px * var(--tsz, 1));
 }
 
 .games-topic-count {
   color: var(--text-muted);
-  font-size: 13px;
+  font-size: calc(13px * var(--tsz, 1));
   font-weight: 600;
 }
 
@@ -411,11 +413,11 @@
 
 .game-lobby-code-label {
   color: var(--text-muted);
-  font-size: 13px;
+  font-size: calc(13px * var(--tsz, 1));
 }
 
 .game-lobby-code {
-  font-size: 36px;
+  font-size: calc(36px * var(--tsz, 1));
   font-weight: 700;
   letter-spacing: 0.2em;
   color: var(--accent);
@@ -424,7 +426,7 @@
 
 .game-lobby-code-hint {
   color: var(--text-muted);
-  font-size: 13px;
+  font-size: calc(13px * var(--tsz, 1));
 }
 
 .game-lobby-roster ul {
@@ -453,7 +455,7 @@
   border-radius: 6px;
   padding: 3px 10px;
   font: inherit;
-  font-size: 12px;
+  font-size: calc(12px * var(--tsz, 1));
   cursor: pointer;
   flex-shrink: 0;
 }
@@ -471,7 +473,7 @@
 
 .game-lobby-waiting {
   color: var(--text-muted);
-  font-size: 14px;
+  font-size: calc(14px * var(--tsz, 1));
 }
 
 /* --- Live gameplay (GameRoomPlay) --- */
@@ -499,7 +501,7 @@
   flex-wrap: wrap;
   align-items: center;
   gap: 8px 14px;
-  font-size: 12px;
+  font-size: calc(12px * var(--tsz, 1));
   color: var(--text-muted);
 }
 
@@ -579,12 +581,12 @@
   border: 1px solid var(--border);
   background: var(--panel-bg);
   color: var(--text);
-  font-size: 15px;
+  font-size: calc(15px * var(--tsz, 1));
   text-transform: uppercase;
 }
 
 .game-question-prompt {
-  font-size: 18px;
+  font-size: calc(18px * var(--tsz, 1));
   font-weight: 600;
   color: var(--text-h);
 }
@@ -608,7 +610,7 @@
   border-radius: 10px;
   padding: 12px 14px;
   font: inherit;
-  font-size: 14px;
+  font-size: calc(14px * var(--tsz, 1));
   text-align: left;
   cursor: pointer;
 }
@@ -653,14 +655,14 @@
 }
 
 .game-results-trophy {
-  font-size: 40px;
+  font-size: calc(40px * var(--tsz, 1));
   margin: 0;
 }
 
 .game-results-score {
   color: var(--accent);
   font-weight: 700;
-  font-size: 18px;
+  font-size: calc(18px * var(--tsz, 1));
 }
 
 .game-results-scores {
@@ -739,14 +741,14 @@
 }
 
 .game-video-fallback {
-  font-size: 20px;
+  font-size: calc(20px * var(--tsz, 1));
 }
 
 .game-video-label {
   position: absolute;
   left: 3px;
   bottom: 2px;
-  font-size: 9px;
+  font-size: calc(9px * var(--tsz, 1));
   color: #fff;
   background: rgba(0, 0, 0, 0.55);
   border-radius: 4px;
@@ -761,7 +763,7 @@
   position: absolute;
   top: 3px;
   right: 3px;
-  font-size: 11px;
+  font-size: calc(11px * var(--tsz, 1));
   font-weight: 800;
   color: #fff;
   background: rgba(0, 0, 0, 0.55);
@@ -784,7 +786,7 @@
   border-radius: 50%;
   background: rgba(46, 160, 67, 0.9);
   color: #fff;
-  font-size: 10px;
+  font-size: calc(10px * var(--tsz, 1));
   display: flex;
   align-items: center;
   justify-content: center;
@@ -800,7 +802,7 @@
   border: none;
   background: rgba(219, 40, 78, 0.85);
   color: #fff;
-  font-size: 9px;
+  font-size: calc(9px * var(--tsz, 1));
   line-height: 1;
   cursor: pointer;
   display: flex;
@@ -815,7 +817,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 20px;
+  font-size: calc(20px * var(--tsz, 1));
   font-weight: 800;
   color: #6ee787;
   text-shadow: 0 1px 4px rgba(0, 0, 0, 0.7);
@@ -859,7 +861,7 @@
   border-radius: 999px;
   padding: 6px 12px;
   font: inherit;
-  font-size: 14px;
+  font-size: calc(14px * var(--tsz, 1));
   cursor: pointer;
 }
 
@@ -870,7 +872,7 @@
 .game-video-leave {
   color: #db284e;
   border-color: #db284e;
-  font-size: 12px;
+  font-size: calc(12px * var(--tsz, 1));
   font-weight: 600;
 }
 
@@ -922,14 +924,14 @@
 }
 
 .saving-peter-status {
-  font-size: 13px;
+  font-size: calc(13px * var(--tsz, 1));
   font-weight: 600;
   color: var(--text-h);
   text-align: center;
 }
 
 .saving-peter-clue {
-  font-size: 14px;
+  font-size: calc(14px * var(--tsz, 1));
   color: var(--text);
   text-align: center;
   font-style: italic;
@@ -962,7 +964,7 @@
 }
 
 .saving-peter-reveal {
-  font-size: 13px;
+  font-size: calc(13px * var(--tsz, 1));
   color: var(--text-muted);
 }
 
@@ -992,7 +994,7 @@
   color: var(--text);
   border-radius: 6px;
   padding: 8px 0;
-  font-size: 13px;
+  font-size: calc(13px * var(--tsz, 1));
   font-weight: 600;
   cursor: pointer;
 }

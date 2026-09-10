@@ -18,7 +18,7 @@
 .crossword-photo-credit {
   align-self: center;
   color: var(--text-muted);
-  font-size: 11px;
+  font-size: calc(11px * var(--tsz, 1));
   text-decoration: none;
   opacity: 0.75;
 }
@@ -51,7 +51,7 @@
 }
 
 .crossword-level-card .game-center-card-icon {
-  font-size: 30px;
+  font-size: calc(30px * var(--tsz, 1));
 }
 
 /* --- Puzzle screen --- */
@@ -136,7 +136,7 @@
 }
 
 .crossword-current-clue-tag {
-  font-size: 11px;
+  font-size: calc(11px * var(--tsz, 1));
   font-weight: 700;
   letter-spacing: 0.04em;
   text-transform: uppercase;
@@ -152,7 +152,7 @@
  * large text sizes and covering the board it is supposed to be helping with. */
 .crossword-current-clue-text,
 .crossword-current-clue-empty {
-  font-size: 14px;
+  font-size: calc(14px * var(--tsz, 1));
   line-height: 1.3;
   display: -webkit-box;
   -webkit-line-clamp: 2;
@@ -172,7 +172,7 @@
   padding: 0;
   min-width: 44px;
   min-height: 44px;
-  font-size: 17px;
+  font-size: calc(17px * var(--tsz, 1));
   text-align: center;
 }
 
@@ -180,7 +180,7 @@
   margin: 0;
   text-align: center;
   color: var(--text-muted);
-  font-size: 12px;
+  font-size: calc(12px * var(--tsz, 1));
 }
 
 .crossword-solved-banner {
@@ -200,7 +200,7 @@
 
 .crossword-solved-banner p {
   margin: 0;
-  font-size: 16px;
+  font-size: calc(16px * var(--tsz, 1));
 }
 
 .crossword-layout {
@@ -226,15 +226,13 @@
    * it actually shrink to the space available, which is what makes max-width/overflow do anything. */
   min-width: 0;
   max-width: 100%;
-  /* `zoom` (the app's text-size setting, applied at .game-root — see App.css) scales lengths but
-   * does NOT divide viewport units, so a bare `70vh` inside the zoomed subtree renders as 70vh ×
-   * scale — 126vh at 1.8×, i.e. a nested scroll box taller than the screen whose bottom edge can
-   * never be reached. Dividing by the scale corrects that, but which of the two is right is
-   * engine-dependent (the same standardized-vs-legacy `zoom` split documented in App.css), so take
-   * the SMALLER of the two rather than picking a side: on an engine that leaves vh alone this
-   * renders at exactly 70vh, and on one that already adjusts it, it renders smaller than 70vh —
-   * never larger, and never taller than the screen, in either. */
-  max-height: min(70vh, calc(70vh / var(--text-scale, 1)));
+  /* Cap this scroll box at 70vh so its bottom edge is always reachable. This used to be
+   * `min(70vh, calc(70vh / var(--text-scale, 1)))`, from when the text-size setting worked through
+   * `zoom` on .game-root: `zoom` scaled ordinary lengths but not viewport units, so a bare 70vh
+   * rendered as 70vh × scale — 126vh at 1.8×, a nested scroll box taller than the screen. Whether
+   * an engine adjusted vh was itself engine-dependent, hence the min() of both readings. The zoom
+   * is gone (see "Global text size" in App.css); 70vh means 70vh on every engine again. */
+  max-height: 70vh;
   border: 1px solid var(--border);
   border-radius: 8px;
   background: var(--panel-bg);
@@ -283,7 +281,7 @@
   position: absolute;
   top: 0;
   left: 1px;
-  font-size: 8px;
+  font-size: calc(8px * var(--tsz, 1));
   color: var(--text-muted);
   line-height: 1;
   pointer-events: none;
@@ -341,15 +339,13 @@
    * everywhere else. Both terms resolve inside the same zoom context, so no percentage crosses a
    * zoom boundary here. */
   min-width: min(240px, 100%);
-  /* `zoom` (the app's text-size setting, applied at .game-root — see App.css) scales lengths but
-   * does NOT divide viewport units, so a bare `70vh` inside the zoomed subtree renders as 70vh ×
-   * scale — 126vh at 1.8×, i.e. a nested scroll box taller than the screen whose bottom edge can
-   * never be reached. Dividing by the scale corrects that, but which of the two is right is
-   * engine-dependent (the same standardized-vs-legacy `zoom` split documented in App.css), so take
-   * the SMALLER of the two rather than picking a side: on an engine that leaves vh alone this
-   * renders at exactly 70vh, and on one that already adjusts it, it renders smaller than 70vh —
-   * never larger, and never taller than the screen, in either. */
-  max-height: min(70vh, calc(70vh / var(--text-scale, 1)));
+  /* Cap this scroll box at 70vh so its bottom edge is always reachable. This used to be
+   * `min(70vh, calc(70vh / var(--text-scale, 1)))`, from when the text-size setting worked through
+   * `zoom` on .game-root: `zoom` scaled ordinary lengths but not viewport units, so a bare 70vh
+   * rendered as 70vh × scale — 126vh at 1.8×, a nested scroll box taller than the screen. Whether
+   * an engine adjusted vh was itself engine-dependent, hence the min() of both readings. The zoom
+   * is gone (see "Global text size" in App.css); 70vh means 70vh on every engine again. */
+  max-height: 70vh;
   overflow-y: auto;
   background: var(--panel-bg);
   border: 1px solid var(--border);
@@ -359,7 +355,7 @@
 }
 
 .crossword-clue-column h3 {
-  font-size: 14px;
+  font-size: calc(14px * var(--tsz, 1));
   margin-bottom: 8px;
   color: var(--text-h);
 }
@@ -377,7 +373,7 @@
   background: none;
   color: var(--text);
   font: inherit;
-  font-size: 13px;
+  font-size: calc(13px * var(--tsz, 1));
   text-align: left;
   padding: 4px 6px;
   border-radius: 6px;

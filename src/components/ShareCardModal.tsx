@@ -205,12 +205,15 @@ export default function ShareCardModal({ spec, filename, onClose }: ShareCardMod
     }
   };
 
-  // Portaled to document.body rather than rendered in place: BiblePanel (this modal's usual caller)
-  // has `zoom: var(--text-scale, 1)` applied for the app's text-size setting, and `zoom` scales its
-  // entire subtree including fixed-position descendants — left in place, this modal's fixed overlay
-  // would render visually bigger and mispositioned any time text-size is above 100%, cutting off the
-  // card and pushing the Share/Save button out of reach. Rendering at the document root sidesteps that
-  // ancestor entirely, matching LinkChoicePopup's own use of createPortal for the same reason.
+  // Portaled to document.body rather than rendered in place. This began as an escape from `zoom`:
+  // BiblePanel (this modal's usual caller) carried `zoom: var(--text-scale, 1)` for the text-size
+  // setting, which scaled its entire subtree including fixed-position descendants, so left in place
+  // the overlay rendered bigger and mispositioned above 100% and pushed the Share/Save button out
+  // of reach. The zoom is gone (the setting now scales real font sizes — see "Global text size" in
+  // App.css), and the portal still earns its place twice over: the card's own layout is measured in
+  // px and exported to an image at a fixed size, so it must not take the reader's text setting at
+  // all, and document.body keeps `--tsz` at 1 for exactly that. Matches LinkChoicePopup's own use
+  // of createPortal.
   return createPortal(
     <div className="share-modal-overlay" onClick={onClose}>
       <div className="share-modal share-modal-photo" onClick={(e) => e.stopPropagation()}>

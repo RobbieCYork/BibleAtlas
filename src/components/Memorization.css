@@ -13,7 +13,7 @@
   background: none;
   border: none;
   color: var(--text-muted);
-  font-size: 13px;
+  font-size: calc(13px * var(--tsz, 1));
   text-decoration: underline;
   cursor: pointer;
   padding: 0;
@@ -45,7 +45,7 @@
 }
 
 .memchallenge-category-title {
-  font-size: 13px;
+  font-size: calc(13px * var(--tsz, 1));
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.04em;
@@ -66,7 +66,7 @@
 
 .memchallenge-empty {
   color: var(--text-muted);
-  font-size: 14px;
+  font-size: calc(14px * var(--tsz, 1));
 }
 
 /* --- Ready screen --- */
@@ -82,13 +82,13 @@
 }
 
 .memchallenge-fulltext {
-  font-size: 20px;
+  font-size: calc(20px * var(--tsz, 1));
   line-height: 1.7;
   color: var(--text);
 }
 
 .memchallenge-ready-hint {
-  font-size: 13px;
+  font-size: calc(13px * var(--tsz, 1));
   color: var(--text-muted);
   max-width: 420px;
 }
@@ -108,13 +108,13 @@
 
 .memchallenge-reference {
   font-weight: 700;
-  font-size: 16px;
+  font-size: calc(16px * var(--tsz, 1));
   color: var(--text-h);
   margin: 0;
 }
 
 .memchallenge-stage-label {
-  font-size: 13px;
+  font-size: calc(13px * var(--tsz, 1));
   color: var(--text-muted);
   margin: 0;
 }
@@ -124,7 +124,7 @@
   color: #92400e;
   border-radius: 8px;
   padding: 8px 14px;
-  font-size: 13px;
+  font-size: calc(13px * var(--tsz, 1));
   font-weight: 600;
   margin: 0;
 }
@@ -134,7 +134,7 @@
   color: var(--accent);
   border-radius: 8px;
   padding: 8px 14px;
-  font-size: 13px;
+  font-size: calc(13px * var(--tsz, 1));
   font-weight: 600;
   margin: 0;
 }
@@ -160,7 +160,7 @@
 }
 
 .memchallenge-verse-text {
-  font-size: 19px;
+  font-size: calc(19px * var(--tsz, 1));
   line-height: 1.9;
   color: var(--text);
   margin: 4px 0;
@@ -206,7 +206,7 @@
 }
 
 .memchallenge-answer-reveal {
-  font-size: 12px;
+  font-size: calc(12px * var(--tsz, 1));
   color: #22c55e;
   font-weight: 600;
   margin-top: 2px;
@@ -218,7 +218,7 @@
   border: none;
   border-radius: 10px;
   padding: 10px 24px;
-  font-size: 15px;
+  font-size: calc(15px * var(--tsz, 1));
   font-weight: 600;
   cursor: pointer;
 }
@@ -230,14 +230,14 @@
 .memchallenge-result-correct {
   color: #16a34a;
   font-weight: 700;
-  font-size: 16px;
+  font-size: calc(16px * var(--tsz, 1));
   margin: 0;
 }
 
 .memchallenge-result-wrong {
   color: #e53e3e;
   font-weight: 700;
-  font-size: 16px;
+  font-size: calc(16px * var(--tsz, 1));
   margin: 0;
 }
 

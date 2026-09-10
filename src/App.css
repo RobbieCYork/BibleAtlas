@@ -86,12 +86,14 @@
   /* On devices with a notch/Dynamic Island (standalone PWA especially), the system status bar
      (clock, battery, wifi) sits on top of this header's content unless we pad for it. The fallback
      keeps ordinary padding on desktop and on phones with no inset (safe-area-inset-top: 0). */
-  /* The 14px is design padding and SHOULD grow with the text-size setting. The safe-area inset is
-     a physical property of the device and must not: .app-header carries `zoom: var(--text-scale)`,
-     which scales `env()` along with everything else, so at 80% the notch clearance would shrink to
-     0.8x and slide the header under the status bar. Dividing it back out is the same idiom
-     .auth-admin-sheet-head and .report-sheet-head already use. */
-  padding-top: calc(14px + env(safe-area-inset-top, 0px) / var(--text-scale, 1));
+  /* The safe-area inset is a physical property of the device and is used raw. It used to be
+     written `env(...) / var(--text-scale, 1)`, because .app-header carried `zoom: var(--text-scale)`
+     and `zoom` scaled `env()` along with everything else — at 80% the notch clearance would have
+     shrunk to 0.8x and slid the header under the status bar. The zoom is gone (see "Global text
+     size"), so there is nothing left to cancel and the division would now be the bug it was
+     protecting against. The header still grows with the setting: its height comes from its
+     content, and the content's type scales. */
+  padding-top: calc(14px + env(safe-area-inset-top, 0px));
   border-bottom: 1px solid var(--border);
   background: var(--panel-bg);
   /* Must clear the full-area mode takeovers (.timeline-mode / .myprofile-mode, both z-index 60):
@@ -105,7 +107,7 @@
 }
 
 .app-header h1 {
-  font-size: 19px;
+  font-size: calc(19px * var(--tsz, 1));
   white-space: nowrap;
 }
 
@@ -133,7 +135,7 @@
  * label in this app was pushed back to the sans role. */
 .brand-tagline {
   font-family: var(--sans);
-  font-size: 10px;
+  font-size: calc(10px * var(--tsz, 1));
   font-weight: 600;
   line-height: 1.1;
   text-transform: uppercase;
@@ -172,7 +174,7 @@
  * glyphs (the scope toggle, the hamburger) and keeps the tap target at 28px, which is fine for a
  * pointer on the one breakpoint this row appears at. */
 .app-header .header-social .social-links-item {
-  font-size: 16px;
+  font-size: calc(16px * var(--tsz, 1));
   padding: 6px;
 }
 
@@ -289,7 +291,7 @@ body.resizing-panels {
   border: 1px solid var(--border);
   border-radius: 100px;
   padding: 8px 16px;
-  font-size: 13px;
+  font-size: calc(13px * var(--tsz, 1));
   color: var(--text-muted);
   box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
 }
@@ -341,7 +343,7 @@ body.resizing-panels {
   border: none;
   background: var(--surface-sunken);
   color: var(--text);
-  font-size: 14px;
+  font-size: calc(14px * var(--tsz, 1));
   line-height: 1;
   padding: 8px 10px;
   cursor: pointer;
@@ -355,10 +357,11 @@ body.resizing-panels {
 .search-bar {
   position: relative;
   flex: 1;
-  /* Load-bearing once .app-header carries `zoom: var(--text-scale)`: a flex item defaults to
-     `min-width: auto`, which refuses to shrink below the input's intrinsic width. At 180% on a
-     375px phone the header has only 375/1.8 = 208 units of its own space to lay out in, so without
-     this the field pushes the account avatar off the right edge instead of giving way. */
+  /* Load-bearing at large text sizes: a flex item defaults to `min-width: auto`, which refuses to
+     shrink below the input's intrinsic width — and that width grows with the text-size setting.
+     Without this the field pushes the account avatar off the right edge instead of giving way.
+     (Written for the era when .app-header carried `zoom: var(--text-scale)` and the header had
+     only 375/1.8 = 208 units to lay out in. The zoom is gone; the flex hazard is not.) */
   min-width: 0;
   max-width: 480px;
 }
@@ -368,7 +371,7 @@ body.resizing-panels {
   padding: 9px 14px 9px 36px;
   border: 1px solid var(--border);
   border-radius: 8px;
-  font-size: 14px;
+  font-size: calc(14px * var(--tsz, 1));
   background: var(--surface-sunken);
   color: var(--text);
 }
@@ -384,7 +387,7 @@ body.resizing-panels {
   left: 12px;
   top: 50%;
   transform: translateY(-50%);
-  font-size: 15px;
+  font-size: calc(15px * var(--tsz, 1));
   line-height: 1;
   pointer-events: none;
 }
@@ -407,7 +410,7 @@ body.resizing-panels {
   padding: 9px 14px 9px 36px;
   border: 1px solid transparent;
   font-family: var(--sans);
-  font-size: 14px;
+  font-size: calc(14px * var(--tsz, 1));
   line-height: normal; /* the input's own default — not the document's 1.5 */
   white-space: pre;
   overflow: hidden;
@@ -468,7 +471,7 @@ body.resizing-panels {
 }
 
 .search-result-category {
-  font-size: 12px;
+  font-size: calc(12px * var(--tsz, 1));
   color: var(--text-muted);
   text-transform: capitalize;
 }
@@ -484,7 +487,7 @@ body.resizing-panels {
 .search-results li.people-search-result .auth-avatar {
   width: 26px;
   height: 26px;
-  font-size: 12px;
+  font-size: calc(12px * var(--tsz, 1));
 }
 
 /* Non-interactive empty-state row — shown when a query matches nothing, so the reader can tell
@@ -492,7 +495,7 @@ body.resizing-panels {
 .search-results li.search-results-empty {
   cursor: default;
   color: var(--text-muted);
-  font-size: 13px;
+  font-size: calc(13px * var(--tsz, 1));
 }
 
 .search-results li.search-results-empty:hover {
@@ -625,7 +628,7 @@ body.resizing-panels {
   border-radius: 100px;
   background: var(--accent);
   color: var(--accent-contrast);
-  font-size: 13px;
+  font-size: calc(13px * var(--tsz, 1));
   font-weight: 600;
   border: 2px solid #ffffff;
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.35);
@@ -667,7 +670,7 @@ body.resizing-panels {
   border-radius: 100px;
   background: var(--accent);
   color: var(--accent-contrast);
-  font-size: 13px;
+  font-size: calc(13px * var(--tsz, 1));
   font-weight: 600;
   white-space: nowrap;
   box-shadow: 0 4px 14px rgba(0, 0, 0, 0.3);
@@ -701,7 +704,7 @@ body.resizing-panels {
 }
 
 .layer-controls h3 {
-  font-size: 13px;
+  font-size: calc(13px * var(--tsz, 1));
   text-transform: uppercase;
   letter-spacing: 0.04em;
   color: var(--text-muted);
@@ -727,7 +730,7 @@ body.resizing-panels {
   background: transparent;
   color: var(--text-muted);
   border-radius: 50%;
-  font-size: 13px;
+  font-size: calc(13px * var(--tsz, 1));
   line-height: 1;
   cursor: pointer;
   margin-bottom: 8px;
@@ -747,7 +750,7 @@ body.resizing-panels {
   display: flex;
   align-items: center;
   gap: 8px;
-  font-size: 14px;
+  font-size: calc(14px * var(--tsz, 1));
   padding: 4px 0;
   cursor: pointer;
 }
@@ -759,7 +762,7 @@ body.resizing-panels {
 }
 
 .layer-controls-loading {
-  font-size: 12px;
+  font-size: calc(12px * var(--tsz, 1));
   color: var(--text-muted);
   padding: 2px 0 4px;
 }
@@ -776,7 +779,7 @@ body.resizing-panels {
   border: none;
   border-top: 1px solid var(--border);
   background: none;
-  font-size: 13px;
+  font-size: calc(13px * var(--tsz, 1));
   font-weight: 500;
   color: var(--text-muted);
   cursor: pointer;
@@ -797,7 +800,7 @@ body.resizing-panels {
   display: flex;
   align-items: center;
   gap: 8px;
-  font-size: 12px;
+  font-size: calc(12px * var(--tsz, 1));
   color: var(--text-muted);
 }
 
@@ -815,7 +818,7 @@ body.resizing-panels {
   border-radius: 50%;
   background: var(--accent);
   color: var(--accent-contrast);
-  font-size: 10px;
+  font-size: calc(10px * var(--tsz, 1));
   font-weight: 600;
   border: 1.5px solid #ffffff;
 }
@@ -868,7 +871,7 @@ body.resizing-panels {
 .articles-subtitle {
   margin: 0 0 16px;
   color: var(--text-muted);
-  font-size: 13px;
+  font-size: calc(13px * var(--tsz, 1));
 }
 
 /* Same look as the header's .search-bar, but sits inline in the panel's own flow rather than
@@ -884,7 +887,7 @@ body.resizing-panels {
   padding: 9px 34px 9px 36px;
   border: 1px solid var(--border);
   border-radius: 8px;
-  font-size: 14px;
+  font-size: calc(14px * var(--tsz, 1));
   background: var(--surface-sunken);
   color: var(--text);
 }
@@ -902,7 +905,7 @@ body.resizing-panels {
   border: none;
   background: none;
   color: var(--text-muted);
-  font-size: 18px;
+  font-size: calc(18px * var(--tsz, 1));
   line-height: 1;
   cursor: pointer;
   padding: 4px;
@@ -926,7 +929,7 @@ body.resizing-panels {
   border-radius: 8px;
   background: var(--surface-sunken);
   color: var(--text);
-  font-size: 14px;
+  font-size: calc(14px * var(--tsz, 1));
   font-weight: 600;
   cursor: pointer;
   text-align: left;
@@ -935,7 +938,7 @@ body.resizing-panels {
 /* Same story as .search-bar-icon: sized in em by components/Icon.tsx, and nudged up from the 15px
    that suited an emoji so the drawn mark keeps the weight the row was designed around. */
 .articles-section-icon {
-  font-size: 17px;
+  font-size: calc(17px * var(--tsz, 1));
 }
 
 .articles-section-label {
@@ -945,7 +948,7 @@ body.resizing-panels {
 .articles-section-count {
   color: var(--text-muted);
   font-weight: 400;
-  font-size: 13px;
+  font-size: calc(13px * var(--tsz, 1));
 }
 
 .articles-section-chevron {
@@ -980,7 +983,7 @@ body.resizing-panels {
   margin: 8px 0 0;
   padding: 2px 8px;
   color: var(--text-muted);
-  font-size: 12px;
+  font-size: calc(12px * var(--tsz, 1));
   font-weight: 600;
   letter-spacing: 0.04em;
   text-transform: uppercase;
@@ -988,7 +991,7 @@ body.resizing-panels {
 
 /* Same story as .articles-section-icon: sized in em by components/Icon.tsx. */
 .articles-shelf-icon {
-  font-size: 15px;
+  font-size: calc(15px * var(--tsz, 1));
 }
 
 .articles-shelf-name {
@@ -996,7 +999,7 @@ body.resizing-panels {
 }
 
 .articles-shelf-label .articles-section-count {
-  font-size: 12px;
+  font-size: calc(12px * var(--tsz, 1));
   letter-spacing: 0;
 }
 
@@ -1021,7 +1024,7 @@ body.resizing-panels {
 .articles-results li.search-results-empty {
   padding: 10px 8px;
   color: var(--text-muted);
-  font-size: 14px;
+  font-size: calc(14px * var(--tsz, 1));
 }
 
 .articles-result-row {
@@ -1043,7 +1046,7 @@ body.resizing-panels {
 }
 
 .articles-result-icon {
-  font-size: 17px;
+  font-size: calc(17px * var(--tsz, 1));
   flex-shrink: 0;
 }
 
@@ -1054,11 +1057,11 @@ body.resizing-panels {
 }
 
 .articles-result-name {
-  font-size: 14px;
+  font-size: calc(14px * var(--tsz, 1));
 }
 
 .articles-result-sublabel {
-  font-size: 12px;
+  font-size: calc(12px * var(--tsz, 1));
   color: var(--text-muted);
   text-transform: capitalize;
 }
@@ -1109,7 +1112,7 @@ body.resizing-panels {
   background: transparent;
   color: var(--text);
   font: inherit;
-  font-size: 13px;
+  font-size: calc(13px * var(--tsz, 1));
   padding: 6px 12px 6px 9px;
   border-radius: 8px;
   cursor: pointer;
@@ -1124,7 +1127,7 @@ body.resizing-panels {
   width: 14px;
   flex-shrink: 0;
   text-align: center;
-  font-size: 16px;
+  font-size: calc(16px * var(--tsz, 1));
   line-height: 1;
 }
 
@@ -1168,7 +1171,7 @@ body.resizing-panels {
 /* Transient "Saved image" feedback pill next to the button — same inline-status idiom as the
  * Friends/Groups invite-link copy confirmation. */
 .share-card-status {
-  font-size: 12px;
+  font-size: calc(12px * var(--tsz, 1));
   color: var(--text-muted);
   background: var(--surface-sunken);
   border: 1px solid var(--border);
@@ -1186,7 +1189,7 @@ body.resizing-panels {
   color: var(--text);
   border-radius: 8px;
   padding: 5px 10px;
-  font-size: 13px;
+  font-size: calc(13px * var(--tsz, 1));
   white-space: nowrap;
   cursor: pointer;
 }
@@ -1208,7 +1211,7 @@ body.resizing-panels {
 
 .category-badge {
   display: inline-block;
-  font-size: 12px;
+  font-size: calc(12px * var(--tsz, 1));
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.04em;
@@ -1232,14 +1235,14 @@ body.resizing-panels {
 }
 
 .location-panel h2 {
-  font-size: 24px;
+  font-size: calc(24px * var(--tsz, 1));
   margin-bottom: 6px;
 }
 
 .pronunciation,
 .alt-names,
 .modern-name {
-  font-size: 13px;
+  font-size: calc(13px * var(--tsz, 1));
   color: var(--text-muted);
   margin-top: 2px;
 }
@@ -1258,7 +1261,7 @@ body.resizing-panels {
   height: 20px;
   border: none;
   background: none;
-  font-size: 13px;
+  font-size: calc(13px * var(--tsz, 1));
   line-height: 1;
   cursor: pointer;
   vertical-align: middle;
@@ -1272,7 +1275,7 @@ body.resizing-panels {
 .modern-map-link {
   display: inline-block;
   margin-top: 10px;
-  font-size: 13px;
+  font-size: calc(13px * var(--tsz, 1));
   font-weight: 500;
   text-decoration: none;
 }
@@ -1289,7 +1292,7 @@ body.resizing-panels {
 }
 
 .history-field h4 {
-  font-size: 12px;
+  font-size: calc(12px * var(--tsz, 1));
   text-transform: uppercase;
   letter-spacing: 0.04em;
   color: var(--text-muted);
@@ -1298,7 +1301,7 @@ body.resizing-panels {
 
 .history-field p,
 .history-field ul {
-  font-size: 14px;
+  font-size: calc(14px * var(--tsz, 1));
   color: var(--text);
 }
 
@@ -1317,7 +1320,7 @@ body.resizing-panels {
 
 .ruler-period {
   color: var(--text-muted);
-  font-size: 13px;
+  font-size: calc(13px * var(--tsz, 1));
 }
 
 .verse-list {
@@ -1327,7 +1330,7 @@ body.resizing-panels {
 }
 
 .verse-list h4 {
-  font-size: 12px;
+  font-size: calc(12px * var(--tsz, 1));
   text-transform: uppercase;
   letter-spacing: 0.04em;
   color: var(--text-muted);
@@ -1344,7 +1347,7 @@ body.resizing-panels {
 }
 
 .verse-list li {
-  font-size: 13px;
+  font-size: calc(13px * var(--tsz, 1));
 }
 
 /* Same form-control font trap as .verse-location-link below — a verse reference is a link too, and
@@ -1396,7 +1399,7 @@ body.resizing-panels {
 }
 
 .reflection-prompt h4 {
-  font-size: 12px;
+  font-size: calc(12px * var(--tsz, 1));
   text-transform: uppercase;
   letter-spacing: 0.04em;
   color: var(--accent);
@@ -1404,7 +1407,7 @@ body.resizing-panels {
 }
 
 .reflection-prompt-text {
-  font-size: 14px;
+  font-size: calc(14px * var(--tsz, 1));
   font-style: italic;
   color: var(--text);
 }
@@ -1413,7 +1416,7 @@ body.resizing-panels {
   margin-top: 10px;
   padding: 6px 12px;
   font: inherit;
-  font-size: 13px;
+  font-size: calc(13px * var(--tsz, 1));
   font-weight: 600;
   color: var(--accent-contrast);
   border: 1px solid var(--accent);
@@ -1436,7 +1439,7 @@ body.resizing-panels {
 }
 
 .archaeology-section h4 {
-  font-size: 12px;
+  font-size: calc(12px * var(--tsz, 1));
   text-transform: uppercase;
   letter-spacing: 0.04em;
   color: var(--text-muted);
@@ -1444,7 +1447,7 @@ body.resizing-panels {
 }
 
 .archaeology-note {
-  font-size: 14px;
+  font-size: calc(14px * var(--tsz, 1));
   color: var(--text);
   margin-bottom: 12px;
 }
@@ -1473,7 +1476,7 @@ body.resizing-panels {
 
 .archaeology-caption {
   display: block;
-  font-size: 11px;
+  font-size: calc(11px * var(--tsz, 1));
   color: var(--text-muted);
   padding: 6px 8px;
   line-height: 1.3;
@@ -1483,7 +1486,7 @@ body.resizing-panels {
 
 
 .person-summary {
-  font-size: 14px;
+  font-size: calc(14px * var(--tsz, 1));
   color: var(--text);
   margin-top: 8px;
   line-height: 1.5;
@@ -1492,7 +1495,7 @@ body.resizing-panels {
 .person-tier-tag {
   display: inline-block;
   margin-top: 8px;
-  font-size: 11px;
+  font-size: calc(11px * var(--tsz, 1));
   text-transform: uppercase;
   letter-spacing: 0.04em;
   color: var(--text-muted);
@@ -1510,7 +1513,7 @@ body.resizing-panels {
 }
 
 .extra-biblical-section h4 {
-  font-size: 12px;
+  font-size: calc(12px * var(--tsz, 1));
   text-transform: uppercase;
   letter-spacing: 0.04em;
   color: var(--text-muted);
@@ -1534,7 +1537,7 @@ body.resizing-panels {
 }
 
 .extra-biblical-source {
-  font-size: 13px;
+  font-size: calc(13px * var(--tsz, 1));
   font-weight: 600;
   color: var(--text-h);
   margin-bottom: 4px;
@@ -1547,7 +1550,7 @@ body.resizing-panels {
 
 .extra-biblical-link {
   display: block;
-  font-size: 12px;
+  font-size: calc(12px * var(--tsz, 1));
   font-weight: 500;
   color: var(--accent);
   margin-top: 2px;
@@ -1559,20 +1562,20 @@ body.resizing-panels {
 }
 
 .extra-biblical-summary {
-  font-size: 13px;
+  font-size: calc(13px * var(--tsz, 1));
   color: var(--text);
   line-height: 1.5;
   margin-bottom: 6px;
 }
 
 .extra-biblical-reliability {
-  font-size: 12px;
+  font-size: calc(12px * var(--tsz, 1));
   font-style: italic;
   color: var(--text-muted);
 }
 
 .extra-biblical-none {
-  font-size: 13px;
+  font-size: calc(13px * var(--tsz, 1));
   font-style: italic;
   color: var(--text-muted);
 }
@@ -1603,7 +1606,7 @@ body.resizing-panels {
 }
 
 .artifact-fact-label {
-  font-size: 11px;
+  font-size: calc(11px * var(--tsz, 1));
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.04em;
@@ -1614,7 +1617,7 @@ body.resizing-panels {
 }
 
 .artifact-fact-value {
-  font-size: 13px;
+  font-size: calc(13px * var(--tsz, 1));
   line-height: 1.5;
   color: var(--text);
   /* `contents` fields are frequently a full clause; without this a long unbroken shelfmark or URL
@@ -1652,7 +1655,7 @@ body.resizing-panels {
   display: inline-block;
   margin-top: 10px;
   padding: 7px 12px;
-  font-size: 13px;
+  font-size: calc(13px * var(--tsz, 1));
   font-family: inherit;
   text-align: left;
   color: var(--accent);
@@ -1673,7 +1676,7 @@ body.resizing-panels {
  * tier is how a reader gets to act on that before clicking rather than after. */
 .citation-tier {
   display: inline-block;
-  font-size: 10px;
+  font-size: calc(10px * var(--tsz, 1));
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.04em;
@@ -1693,7 +1696,7 @@ body.resizing-panels {
 .citation-supports {
   display: block;
   margin-top: 2px;
-  font-size: 11px;
+  font-size: calc(11px * var(--tsz, 1));
   font-style: italic;
   color: var(--text-muted);
 }
@@ -1707,7 +1710,7 @@ body.resizing-panels {
 }
 
 .sources-section h4 {
-  font-size: 12px;
+  font-size: calc(12px * var(--tsz, 1));
   text-transform: uppercase;
   letter-spacing: 0.04em;
   color: var(--text-muted);
@@ -1724,7 +1727,7 @@ body.resizing-panels {
 }
 
 .sources-section li {
-  font-size: 12px;
+  font-size: calc(12px * var(--tsz, 1));
 }
 
 .sources-section a {
@@ -1761,7 +1764,7 @@ body.resizing-panels {
   border: none;
   border-radius: 100px;
   padding: 9px 16px;
-  font-size: 13px;
+  font-size: calc(13px * var(--tsz, 1));
   font-weight: 500;
   cursor: pointer;
   box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
@@ -1781,7 +1784,7 @@ body.resizing-panels {
   border: 1px solid var(--border);
   border-radius: 100px;
   padding: 6px 14px;
-  font-size: 12px;
+  font-size: calc(12px * var(--tsz, 1));
   color: var(--text-muted);
   box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
   pointer-events: none;
@@ -1790,7 +1793,7 @@ body.resizing-panels {
 
 @media (max-width: 640px) {
   .map-hint {
-    font-size: 11px;
+    font-size: calc(11px * var(--tsz, 1));
     padding: 5px 12px;
     bottom: 24px;
   }
@@ -1819,7 +1822,7 @@ body.resizing-panels {
   border: none;
   background: var(--surface-sunken);
   color: var(--text);
-  font-size: 13px;
+  font-size: calc(13px * var(--tsz, 1));
   padding: 6px 12px;
   cursor: pointer;
 }
@@ -1840,7 +1843,7 @@ body.resizing-panels {
   border: 1px solid var(--border);
   background: var(--surface-sunken);
   color: var(--text);
-  font-size: 16px;
+  font-size: calc(16px * var(--tsz, 1));
   width: 38px;
   height: 38px;
   border-radius: 8px;
@@ -1862,7 +1865,7 @@ body.resizing-panels {
   margin-left: auto;
   background: var(--danger);
   color: #fff;
-  font-size: 11px;
+  font-size: calc(11px * var(--tsz, 1));
   font-weight: 600;
   line-height: 1;
   padding: 2px 6px;
@@ -1890,7 +1893,7 @@ body.resizing-panels {
   display: flex;
   align-items: center;
   gap: 8px;
-  font-size: 14px;
+  font-size: calc(14px * var(--tsz, 1));
   padding: 7px 8px;
   border-radius: 6px;
   cursor: pointer;
@@ -1912,7 +1915,7 @@ body.resizing-panels {
 .panel-menu-caption {
   margin: 6px 0 0;
   padding: 0 8px;
-  font-size: 11px;
+  font-size: calc(11px * var(--tsz, 1));
   line-height: 1.35;
   min-height: 2.7em;
   color: var(--text-muted);
@@ -1958,20 +1961,20 @@ body.resizing-panels {
   width: 28px;
   height: 28px;
   background: rgba(255, 255, 255, 0.06);
-  font-size: 13px;
+  font-size: calc(13px * var(--tsz, 1));
 }
 
 .auth-trigger-label {
   /* Sits on the accent-filled pill (.auth-trigger-wide) — the gold is bright enough in dark mode
      that plain white on it falls under 2:1, so it takes the accent's own contrast pair. */
   color: var(--accent-contrast);
-  font-size: 13px;
+  font-size: calc(13px * var(--tsz, 1));
   font-weight: 600;
   white-space: nowrap;
 }
 
 .auth-benefits {
-  font-size: 12px;
+  font-size: calc(12px * var(--tsz, 1));
   color: var(--text-muted);
   line-height: 1.4;
   margin-bottom: 12px;
@@ -1988,7 +1991,7 @@ body.resizing-panels {
 }
 
 .auth-settings-label {
-  font-size: 13px;
+  font-size: calc(13px * var(--tsz, 1));
   font-weight: 600;
 }
 
@@ -2005,7 +2008,7 @@ body.resizing-panels {
 }
 
 .reading-progress-subtitle {
-  font-size: 12px;
+  font-size: calc(12px * var(--tsz, 1));
   color: var(--text-muted);
   margin: -4px 0 0;
 }
@@ -2014,13 +2017,13 @@ body.resizing-panels {
   display: flex;
   justify-content: space-between;
   gap: 10px;
-  font-size: 12px;
+  font-size: calc(12px * var(--tsz, 1));
   color: var(--text-muted);
 }
 
 .reading-progress-summary strong {
   color: var(--text-h);
-  font-size: 14px;
+  font-size: calc(14px * var(--tsz, 1));
 }
 
 .reading-progress-toggle {
@@ -2032,7 +2035,7 @@ body.resizing-panels {
   border: none;
   border-top: 1px solid var(--border);
   background: none;
-  font-size: 13px;
+  font-size: calc(13px * var(--tsz, 1));
   font-weight: 500;
   color: var(--text-muted);
   cursor: pointer;
@@ -2054,7 +2057,7 @@ body.resizing-panels {
 .reading-progress-book-header {
   display: flex;
   justify-content: space-between;
-  font-size: 11px;
+  font-size: calc(11px * var(--tsz, 1));
   margin-bottom: 3px;
 }
 
@@ -2095,7 +2098,7 @@ body.resizing-panels {
 }
 
 .reading-progress-edit-hint {
-  font-size: 12px;
+  font-size: calc(12px * var(--tsz, 1));
   color: var(--text-muted);
 }
 
@@ -2111,7 +2114,7 @@ body.resizing-panels {
   background: var(--accent);
   color: var(--accent-contrast);
   padding: 5px 12px;
-  font-size: 12px;
+  font-size: calc(12px * var(--tsz, 1));
   font-weight: 600;
   cursor: pointer;
 }
@@ -2132,14 +2135,14 @@ body.resizing-panels {
   background: none;
   color: var(--text);
   padding: 5px 12px;
-  font-size: 12px;
+  font-size: calc(12px * var(--tsz, 1));
   font-weight: 600;
   cursor: pointer;
 }
 
 .reading-progress-edit-error {
   margin: 0 0 6px;
-  font-size: 12px;
+  font-size: calc(12px * var(--tsz, 1));
   color: var(--danger);
 }
 
@@ -2155,7 +2158,7 @@ body.resizing-panels {
   background: none;
   color: var(--text-muted);
   padding: 1px 6px;
-  font-size: 11px;
+  font-size: calc(11px * var(--tsz, 1));
   cursor: pointer;
 }
 
@@ -2177,7 +2180,7 @@ body.resizing-panels {
   border-radius: 6px;
   background: none;
   color: var(--text-muted);
-  font-size: 11px;
+  font-size: calc(11px * var(--tsz, 1));
   line-height: 1;
   cursor: pointer;
 }
@@ -2201,7 +2204,7 @@ body.resizing-panels {
 }
 
 .profile-joined-inline {
-  font-size: 12px;
+  font-size: calc(12px * var(--tsz, 1));
   color: var(--text-muted);
   white-space: nowrap;
 }
@@ -2219,7 +2222,7 @@ body.resizing-panels {
   border: 1px solid var(--border);
   background: transparent;
   cursor: pointer;
-  font-size: 12px;
+  font-size: calc(12px * var(--tsz, 1));
   font-weight: 600;
   line-height: 1;
 }
@@ -2230,7 +2233,7 @@ body.resizing-panels {
 }
 
 .auth-text-size-value {
-  font-size: 11px;
+  font-size: calc(11px * var(--tsz, 1));
   color: var(--text-muted);
   min-width: 32px;
   text-align: center;
@@ -2248,7 +2251,7 @@ body.resizing-panels {
   color: var(--text);
   border-radius: 6px;
   padding: 6px 10px;
-  font-size: 12px;
+  font-size: calc(12px * var(--tsz, 1));
   font-weight: 600;
   cursor: pointer;
 }
@@ -2274,7 +2277,7 @@ body.resizing-panels {
   border-radius: 50%;
   background: var(--accent);
   color: var(--accent-contrast);
-  font-size: 15px;
+  font-size: calc(15px * var(--tsz, 1));
   font-weight: 600;
   overflow: hidden;
   flex-shrink: 0;
@@ -2298,7 +2301,7 @@ body.resizing-panels {
   color: var(--text);
   border-radius: 6px;
   padding: 6px 10px;
-  font-size: 12px;
+  font-size: calc(12px * var(--tsz, 1));
   cursor: pointer;
 }
 
@@ -2310,13 +2313,13 @@ body.resizing-panels {
 }
 
 .profile-view-field {
-  font-size: 13px;
+  font-size: calc(13px * var(--tsz, 1));
   color: var(--text);
   line-height: 1.5;
 }
 
 .profile-field-hint {
-  font-size: 12px;
+  font-size: calc(12px * var(--tsz, 1));
   color: var(--text-muted);
   margin: -4px 0 0;
 }
@@ -2335,7 +2338,7 @@ body.resizing-panels {
   color: var(--text);
   border-radius: 6px;
   padding: 6px 12px;
-  font-size: 12px;
+  font-size: calc(12px * var(--tsz, 1));
   cursor: pointer;
 }
 
@@ -2346,7 +2349,7 @@ body.resizing-panels {
 }
 
 .profile-field-visibility-note {
-  font-size: 11px;
+  font-size: calc(11px * var(--tsz, 1));
   opacity: 0.7;
 }
 
@@ -2358,7 +2361,7 @@ body.resizing-panels {
   padding: 2px 0 4px;
   border: none;
   background: none;
-  font-size: 13px;
+  font-size: calc(13px * var(--tsz, 1));
   font-weight: 500;
   color: var(--text-muted);
   cursor: pointer;
@@ -2374,7 +2377,7 @@ body.resizing-panels {
 }
 
 .profile-view-section-heading {
-  font-size: 12px;
+  font-size: calc(12px * var(--tsz, 1));
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.04em;
@@ -2392,7 +2395,7 @@ body.resizing-panels {
 }
 
 .profile-edit-section-heading {
-  font-size: 12px;
+  font-size: calc(12px * var(--tsz, 1));
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.04em;
@@ -2415,7 +2418,7 @@ body.resizing-panels {
   display: inline-flex;
   align-items: center;
   gap: 3px;
-  font-size: 13px;
+  font-size: calc(13px * var(--tsz, 1));
   color: var(--text-muted);
   cursor: pointer;
   flex-shrink: 0;
@@ -2439,14 +2442,14 @@ body.resizing-panels {
   display: flex;
   align-items: center;
   gap: 8px;
-  font-size: 13px;
+  font-size: calc(13px * var(--tsz, 1));
   color: var(--text);
   min-width: 0;
 }
 
 .profile-links-icon {
   flex-shrink: 0;
-  font-size: 14px;
+  font-size: calc(14px * var(--tsz, 1));
   line-height: 1;
 }
 
@@ -2474,7 +2477,7 @@ a.profile-links-url {
   border-radius: 999px;
   background: var(--surface-sunken);
   color: var(--text-muted);
-  font-size: 11px;
+  font-size: calc(11px * var(--tsz, 1));
   white-space: nowrap;
 }
 
@@ -2492,7 +2495,7 @@ a.profile-links-url {
   border-radius: 6px;
   background: var(--panel-bg);
   color: var(--text);
-  font-size: 12px;
+  font-size: calc(12px * var(--tsz, 1));
   font-family: inherit;
 }
 
@@ -2502,7 +2505,7 @@ a.profile-links-url {
 
 .profile-link-edit-error {
   color: var(--danger);
-  font-size: 12px;
+  font-size: calc(12px * var(--tsz, 1));
   margin: 0 0 0 22px;
 }
 
@@ -2553,7 +2556,7 @@ a.profile-links-url {
   color: var(--text);
   border-radius: 6px;
   padding: 7px 14px;
-  font-size: 13px;
+  font-size: calc(13px * var(--tsz, 1));
   cursor: pointer;
 }
 
@@ -2568,13 +2571,12 @@ a.profile-links-url {
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
   z-index: 30;
   width: 240px;
-  /* This dropdown now rides .app-header's `zoom: var(--text-scale)`, so 240px renders at 432px on
-     a 375px phone at 180%. Viewport units are the one length `zoom` does NOT divide, which makes
-     them the right tool for clamping back to the real screen: dividing by the scale converts a
-     physical screen measurement into this element's own zoomed units. The 24px is a physical
-     gutter, kept outside the division so it stays 24 real pixels at every setting. */
-  max-width: calc((100vw - 24px) / var(--text-scale, 1));
-  max-height: min(calc(70vh / var(--text-scale, 1)), 640px);
+  /* Clamped to the real screen with a 24px gutter. These two used to be divided by --text-scale,
+     because .app-header carried `zoom: var(--text-scale)` and viewport units were the one length
+     `zoom` did not scale, so a physical measurement had to be converted into this element's own
+     zoomed units. With the zoom gone, `100vw` and `70vh` already ARE this element's units. */
+  max-width: calc(100vw - 24px);
+  max-height: min(70vh, 640px);
   overflow-y: auto;
 }
 
@@ -2592,7 +2594,7 @@ a.profile-links-url {
   border: none;
   background: var(--surface-sunken);
   color: var(--text);
-  font-size: 13px;
+  font-size: calc(13px * var(--tsz, 1));
   padding: 7px 8px;
   cursor: pointer;
 }
@@ -2614,7 +2616,7 @@ a.profile-links-url {
   padding: 8px 10px;
   border: 1px solid var(--border);
   border-radius: 8px;
-  font-size: 14px;
+  font-size: calc(14px * var(--tsz, 1));
   background: var(--surface-sunken);
   color: var(--text);
 }
@@ -2623,7 +2625,7 @@ a.profile-links-url {
   display: flex;
   align-items: center;
   gap: 6px;
-  font-size: 13px;
+  font-size: calc(13px * var(--tsz, 1));
   color: var(--text-muted);
   cursor: pointer;
 }
@@ -2640,7 +2642,7 @@ a.profile-links-url {
   border: none;
   background: none;
   color: var(--accent);
-  font-size: 12px;
+  font-size: calc(12px * var(--tsz, 1));
   cursor: pointer;
   padding: 0;
 }
@@ -2658,7 +2660,7 @@ a.profile-links-url {
   color: var(--accent-contrast);
   border-radius: 8px;
   padding: 8px 10px;
-  font-size: 13px;
+  font-size: calc(13px * var(--tsz, 1));
   font-weight: 500;
   cursor: pointer;
 }
@@ -2669,7 +2671,7 @@ a.profile-links-url {
 }
 
 .auth-status {
-  font-size: 12px;
+  font-size: calc(12px * var(--tsz, 1));
   color: var(--text-muted);
   margin-top: 8px;
   line-height: 1.4;
@@ -2681,7 +2683,7 @@ a.profile-links-url {
 
 .auth-guest-divider {
   text-align: center;
-  font-size: 11px;
+  font-size: calc(11px * var(--tsz, 1));
   color: var(--text-muted);
   text-transform: uppercase;
   letter-spacing: 0.04em;
@@ -2695,7 +2697,7 @@ a.profile-links-url {
   color: var(--text);
   border-radius: 8px;
   padding: 8px 10px;
-  font-size: 13px;
+  font-size: calc(13px * var(--tsz, 1));
   cursor: pointer;
 }
 
@@ -2704,7 +2706,7 @@ a.profile-links-url {
 }
 
 .auth-current-user {
-  font-size: 14px;
+  font-size: calc(14px * var(--tsz, 1));
   font-weight: 600;
   color: var(--text-h);
   word-break: break-all;
@@ -2712,7 +2714,7 @@ a.profile-links-url {
 }
 
 .auth-guest-note {
-  font-size: 12px;
+  font-size: calc(12px * var(--tsz, 1));
   color: var(--text-muted);
   line-height: 1.4;
   margin-bottom: 12px;
@@ -2725,7 +2727,7 @@ a.profile-links-url {
   color: var(--text);
   border-radius: 8px;
   padding: 8px 10px;
-  font-size: 13px;
+  font-size: calc(13px * var(--tsz, 1));
   cursor: pointer;
 }
 
@@ -2743,7 +2745,7 @@ a.profile-links-url {
 .auth-avatar-lg {
   width: 44px;
   height: 44px;
-  font-size: 17px;
+  font-size: calc(17px * var(--tsz, 1));
   flex-shrink: 0;
 }
 
@@ -2761,7 +2763,7 @@ a.profile-links-url {
   color: var(--text);
   border-radius: 8px;
   padding: 10px 12px;
-  font-size: 14px;
+  font-size: calc(14px * var(--tsz, 1));
   cursor: pointer;
   margin-bottom: 8px;
 }
@@ -2798,136 +2800,106 @@ a.profile-links-url {
   align-items: center;
   justify-content: center;
   color: var(--text-muted);
-  font-size: 15px;
+  font-size: calc(15px * var(--tsz, 1));
 }
 
 /* --- Global text size (Settings menu) ---
-   Applies to every reading/writing panel — Bible, Details, Notes, Friends/Messages — via `zoom` on
-   each panel's root class, deliberately excluding the map. `zoom` (not font-size) is used so spacing/
-   padding scale along with the text instead of type overflowing fixed-size containers. */
+ *
+ * WHY THIS IS NOT `zoom` ANY MORE.
+ *
+ * The setting used to work by putting `zoom: var(--text-scale)` on each scaled root. `zoom` was
+ * chosen because it scales padding and gaps along with the type. On iOS/iPadOS WebKit it does not
+ * scale the GLYPHS, and that is now measured rather than argued:
+ *
+ *   On the owner's iPhone, Web Inspector attached to production, `.bible-verses`:
+ *       --text-scale 1.45  ->  getComputedStyle().fontSize = 10.344828px
+ *       --text-scale 0.8   ->  getComputedStyle().fontSize = 18.75px
+ *       body font-size 15px in both; -webkit-text-size-adjust 100% in both.
+ *
+ *   In a real WKWebView here (scripts/webkit-probe/): WebKit's getComputedStyle DIVIDES a
+ *   font-size by the effective zoom before reporting it. A descendant of `zoom: 1.45` whose
+ *   glyphs DID take the zoom reports its unzoomed 15px, and `getComputedStyle(el).zoom` reads 1
+ *   on that descendant even though an ancestor is zoomed. Both readings are reporting artefacts;
+ *   neither is evidence about the ancestor, and a `zoom` of 1 there does NOT mean no zoom.
+ *
+ *   Put those together: 10.344828 x 1.45 = 15, and 18.75 x 0.8 = 15. WebKit rendered 15px at BOTH
+ *   settings. The text was never inverted — it was FROZEN at the specified size, which is what an
+ *   earlier screenshot measurement found independently (ink height 44px at 180% and 44px at 80%,
+ *   ratio 1.000). iOS text autosizing recomputes each font size as the SPECIFIED size times
+ *   `text-size-adjust` (pinned at 100% on :root in index.css, on purpose — see there), and that
+ *   recomputation discards the factor `zoom` had already applied. Lengths keep the zoom; glyphs
+ *   do not. There was never a divide-by-scale in this stylesheet; the division was the engine's.
+ *
+ * So the setting no longer goes near `zoom`. Each root listed below does two things:
+ *
+ *     --tsz: var(--text-scale, 1);                  hands the factor to its whole subtree
+ *     font-size: calc(1em * var(--text-scale, 1));  scales the root's own inherited size
+ *
+ * and every `font-size: <n>px` in the app is written `calc(<n>px * var(--tsz, 1))`. `--tsz` is
+ * declared `1` on :root in index.css, so a rule that never sits under a scaled root renders at
+ * its literal size. That is why there is no exclusion list any more: the map, the share card and
+ * the timeline canvas are unaffected because of where they sit in the tree, not because they are
+ * named here.
+ *
+ * THIS IS IMMUNE TO THE iOS DEFECT BY CONSTRUCTION, which is the whole point. The SPECIFIED size
+ * is already the scaled size, so `specified x 100%` is still the scaled size. No engine-dependent
+ * step is left to lose it, no runtime probe can go inert on a device nobody here owns, and there
+ * is no compensating divide to get the sign wrong. `1em` on the root rather than a literal 15px
+ * means each root scales whatever it actually inherits, so this stays correct if an ancestor's
+ * size ever changes.
+ *
+ * Predicted, and confirmed in WKWebView, for `.bible-verses` — which declares no font-size of its
+ * own and inherits from .bible-panel: 15 x 1.45 = 21.75px, and 15 x 0.8 = 12px.
+ *
+ * WHAT THIS COST. `zoom` also scaled padding and gaps; real font sizes do not. That is the
+ * ordinary behaviour of a text-size control (iOS Dynamic Type works exactly this way), and the
+ * chrome carrying it — .app-header, .mobile-tab-bar — takes its height from its content, so it
+ * still grows with the type. The change also retired 29 `... / var(--text-scale, 1)` divisions
+ * scattered through this file and four others: every one existed ONLY to cancel an ancestor's
+ * zoom back out of a physical length (a safe-area inset, a viewport unit). With no zoom to
+ * cancel they were simply wrong, so they are gone. Do not reintroduce that idiom — if you find
+ * one, it is a leftover and it is a bug.
+ *
+ * EVERY ROOT LISTED HERE MUST BE OUTSIDE EVERY OTHER SCALED ROOT. Nesting applies the `1em` step
+ * twice, 1.8 x 1.8 = 3.24 on the inner root's inherited size. (The px sizes underneath do not
+ * compound — `--tsz` is the same 1.8 either way — but the inherited baseline does.) The DOM
+ * positions that make this list safe: App.tsx renders .app-header, .app-body, .walk-panel,
+ * .mobile-tab-bar and the gate overlays as siblings inside .app-shell; .auth-gate is an early
+ * return that replaces the whole tree; .auth-admin-sheet and .report-sheet are `position: fixed;
+ * inset: 0` and escape .app-shell entirely.
+ *
+ *   .app-header    also covers .search-bar, .panel-menu, .mobile-nav-menu and .auth-dropdown —
+ *                  the Settings panel the A-/A+ buttons physically sit in — which are its
+ *                  descendants, not separate roots. None of them are portaled. Do not add them.
+ *   .tl-header     the Timeline's own header. NOT .tl-root and NOT .timeline-mode: .timeline-mode
+ *                  contains .timeline-event-overlay, whose TimelineEventPanel returns
+ *                  `<div className="location-panel person-panel">` — a root already on this list.
+ *   .game-root /   NOT their parent .game-mode. Carried over unchanged from the `zoom` era along
+ *   .game-signin-prompt   with the flex-item reasoning in Game.css that put them here.
+ *
+ * Outside the setting, now simply by not sitting under a listed root: the map and its controls
+ * (their own fixed UI scale), .share-modal / .share-modal-overlay (portaled to document.body —
+ * see ShareCardModal.tsx), and .tl-canvas-viewport (labels scaled by the view's own transform,
+ * drag math reading clientX). .avatar-crop-overlay sits inside .myprofile-root and scales with
+ * it by inheritance, as it always has. */
 .bible-panel,
 .location-panel,
 .my-notes-panel,
 .friends-panel,
 .articles-panel,
 .myprofile-root,
-/* Games. Added last (e1a0482 audited the scaling and found this the one real reading surface with
-   no text sizing at all — GameCenter card titles and taglines, trivia questions, crossword clues,
-   Fill-in-the-Blank, Memorization and Punchline all read from here).
-
-   NOTE THE SELECTORS: `.game-root` and `.game-signin-prompt`, NOT their parent `.game-mode`. That
-   mirrors .myprofile-root above rather than .myprofile-mode, and for the same reason — the zoomed
-   element must be one the FLEX algorithm sizes, never one sized by a percentage or by insets
-   resolved against a containing block at a different zoom. `.game-mode` is the
-   `position: absolute; inset: 0` takeover; its two children are ordinary flex items, so they are
-   the safe place to put the zoom. Both were `width: 100%; height: 100%` in Game.css and have been
-   converted to `flex: 1; min-width: 0` + the default `align-self: stretch` as part of this change.
-   Do not move this to `.game-mode` and do not reintroduce percentage sizing on either child.
-
-   Nothing under Games is exempted — the crossword grid scales along with everything else, since it
-   already lives in a pan-able overflow box built for content wider than the screen. The two places
-   that genuinely could not take the zoom as written are fixed at the source rather than excluded:
-   the viewport-unit height caps in Crossword.css, and the min-width floors in Game.css. */
 .game-root,
-.game-signin-prompt {
-  zoom: var(--text-scale, 1);
-}
-
-/* --- The app's own chrome, scaled by the same setting ---
-   The rule above covers the reading and writing panels, which is all this setting ever governed.
-   The owner reported it as broken from an iPhone while watching the Settings panel, and he was
-   right about what he saw: the Settings panel is the surface the A-/A+ control physically sits in,
-   and it did not move at all. Neither did the header he opened it from, the tab bar, the sign-in
-   screen or the Timeline's own chrome. A control called "Text Size", in a panel that does not
-   respond to it, reads as broken no matter what the reading column does.
-
-   EVERY ROOT LISTED HERE MUST BE OUTSIDE EVERY OTHER SCALED ROOT. `zoom` compounds: a scaled root
-   inside another scaled root gets the factor twice, 1.8 x 1.8 = 3.24, which is the same runaway
-   this file already warns about under the `text-size-adjust` rule below. The DOM positions that
-   make this list safe (App.tsx renders .app-header, .app-body, .walk-panel, .mobile-tab-bar and
-   the gate overlays as siblings inside .app-shell; .auth-gate is an early return and replaces the
-   whole tree):
-
-     .app-header             also covers .search-bar, .panel-menu, .mobile-nav-menu and
-                             .auth-dropdown — the Settings panel — which are its descendants, not
-                             separate roots. None of them are portaled. Do not add them here.
-     .mobile-tab-bar         sibling of .app-header.
-     .tl-header              the Timeline's own header: title, range readout, era/lane menus, zoom
-                             buttons. NOT .tl-root and NOT .timeline-mode — see the exclusions.
-     .auth-gate              the signed-out screen; App.tsx returns it instead of the shell.
-     .walk-panel             fixed overlay, child of .app-shell.
-     .display-name-gate-overlay   used by both DisplayNameGate and ResetPasswordGate.
-
-   DELIBERATELY NOT HERE, each for a measured reason:
-
-     .timeline-mode / .tl-root   .timeline-mode contains .timeline-event-overlay, which renders
-       TimelineEventPanel — and that returns `<div className="location-panel person-panel">`, a
-       root the rule above ALREADY scales. Scaling either ancestor would compound it to 3.24x on
-       the article a reader opens from the timeline. .tl-header is a sibling of both the canvas and
-       that overlay, so it is the one part of Timeline mode that can take the zoom safely.
-     .tl-canvas-viewport   the pan/zoom canvas mixes getBoundingClientRect() with pointer clientX
-       for its drag and wheel math (see TimelineView.tsx). `zoom` changes one of those coordinate
-       spaces and not the other, so scaling it would put every drag and click at the wrong offset.
-       Its labels are already CSS-scaled by the view's own transform.
-     .avatar-crop-overlay   rendered by MyProfileControl, which lives inside .myprofile-root. It
-       ALREADY scales, inherited. Adding it here would compound it to 3.24x.
-     .share-modal / .share-modal-overlay   portaled to document.body specifically to escape this
-       zoom — see the comment in ShareCardModal.tsx. Leave it escaped.
-     The map and its controls   the original deliberate exclusion; it has its own fixed UI scale.
-
-   On iOS this makes these surfaces respond, but — until lib/glyphZoom.ts can be made to fire
-   there — it moves their spacing without moving their letters, exactly as the reading column
-   already does on that platform. That is the known open bug, not a new one. */
+.game-signin-prompt,
 .app-header,
 .mobile-tab-bar,
 .tl-header,
 .auth-gate,
 .walk-panel,
-.display-name-gate-overlay {
-  zoom: var(--text-scale, 1);
-}
-
-/* The zoom above scales the BOXES on every engine, but on iOS/iPadOS WebKit it does not scale the
-   GLYPHS: text autosizing recomputes each font size as the SPECIFIED size times `text-size-adjust`
-   (pinned at 100% on :root in index.css, on purpose — see there), which discards the factor `zoom`
-   already applied. Reported from an iPhone as "A+ grew the space between the lines and the letters
-   stayed exactly the size they were". Handing the panel's own scale to `text-size-adjust` puts the
-   glyphs back in step with the boxes; the boxes need no correction, they already carry it.
-
-   THE ATTRIBUTE SELECTOR IS THE LOAD-BEARING PART OF THIS RULE, and it is not a UA sniff. On an
-   engine that does NOT discard the zoom, this percentage lands on top of it and the two MULTIPLY —
-   measured in Chrome 148 at 375px with the rule unconditional, a 15px probe computes to 27px at
-   scale 1.8 and is then zoomed 1.8x again, 3.24x on the glyphs. lib/glyphZoom.ts measures the real
-   rendered glyph scale on the reader's own device, applies this correction to an offscreen probe,
-   RE-MEASURES, and sets `data-zoom-text-fix` only if the result landed on target rather than
-   overshooting. So this rule reaches a reader only where the corrected size has actually been
-   observed to be right. Everywhere else the attribute is absent, this never matches, and the app
-   falls back to the original bug — never to oversized text.
-
-   Same roots as the two `zoom` rules above, plus .auth-admin-sheet and .report-sheet further down
-   — every one of the four `zoom: var(--text-scale, 1)` declarations in the app is listed here,
-   because every surface carrying that zoom has this defect. If you add another scaled root, add
-   it in both places.
-
-   NOT VERIFIED ON REAL iOS — no device and no simulator here. What is verified is that the probe
-   declines to set the attribute on every engine reachable from this machine. */
-:root[data-zoom-text-fix="on"] .bible-panel,
-:root[data-zoom-text-fix="on"] .location-panel,
-:root[data-zoom-text-fix="on"] .my-notes-panel,
-:root[data-zoom-text-fix="on"] .friends-panel,
-:root[data-zoom-text-fix="on"] .articles-panel,
-:root[data-zoom-text-fix="on"] .myprofile-root,
-:root[data-zoom-text-fix="on"] .game-root,
-:root[data-zoom-text-fix="on"] .game-signin-prompt,
-:root[data-zoom-text-fix="on"] .auth-admin-sheet,
-:root[data-zoom-text-fix="on"] .report-sheet,
-:root[data-zoom-text-fix="on"] .app-header,
-:root[data-zoom-text-fix="on"] .mobile-tab-bar,
-:root[data-zoom-text-fix="on"] .tl-header,
-:root[data-zoom-text-fix="on"] .auth-gate,
-:root[data-zoom-text-fix="on"] .walk-panel,
-:root[data-zoom-text-fix="on"] .display-name-gate-overlay {
-  -webkit-text-size-adjust: calc(var(--text-scale, 1) * 100%);
+.display-name-gate-overlay,
+.auth-admin-sheet,
+.report-sheet {
+  --tsz: var(--text-scale, 1);
+  font-size: calc(1em * var(--text-scale, 1));
 }
 
 /* --- Bible panel --- */
@@ -2963,7 +2935,7 @@ a.profile-links-url {
 }
 
 .bible-panel-header h3 {
-  font-size: 16px;
+  font-size: calc(16px * var(--tsz, 1));
   flex: 1;
   min-width: 0;
   overflow: hidden;
@@ -2985,7 +2957,7 @@ a.profile-links-url {
   padding: 8px 8px;
   border: 1px solid var(--border);
   border-radius: 8px;
-  font-size: 13px;
+  font-size: calc(13px * var(--tsz, 1));
   background: var(--surface-sunken);
   color: var(--text);
 }
@@ -3138,7 +3110,7 @@ a.profile-links-url {
   min-width: 0;
   text-align: center;
   font-weight: 600;
-  font-size: 15px;
+  font-size: calc(15px * var(--tsz, 1));
   color: var(--text-h);
   overflow: hidden;
   text-overflow: ellipsis;
@@ -3168,7 +3140,7 @@ a.profile-links-url {
   background: none;
   color: var(--text-muted);
   font-family: var(--sans);
-  font-size: 10px;
+  font-size: calc(10px * var(--tsz, 1));
   font-weight: 700;
   line-height: 1;
   cursor: pointer;
@@ -3199,11 +3171,11 @@ a.profile-links-url {
 }
 
 .ref-picker-back {
-  font-size: 24px;
+  font-size: calc(24px * var(--tsz, 1));
 }
 
 .ref-picker-close {
-  font-size: 15px;
+  font-size: calc(15px * var(--tsz, 1));
 }
 
 .ref-picker-back:hover,
@@ -3222,7 +3194,7 @@ a.profile-links-url {
 
 .ref-picker-section {
   font-family: var(--sans);
-  font-size: 11px;
+  font-size: calc(11px * var(--tsz, 1));
   font-weight: 600;
   letter-spacing: var(--tracking-label);
   text-transform: uppercase;
@@ -3247,7 +3219,7 @@ a.profile-links-url {
   border-radius: 8px;
   background: none;
   color: var(--text);
-  font-size: 15px;
+  font-size: calc(15px * var(--tsz, 1));
   text-align: left;
   cursor: pointer;
 }
@@ -3264,7 +3236,7 @@ a.profile-links-url {
 
 .ref-picker-book-count {
   flex-shrink: 0;
-  font-size: 12px;
+  font-size: calc(12px * var(--tsz, 1));
   color: var(--text-muted);
 }
 
@@ -3282,7 +3254,7 @@ a.profile-links-url {
   border-radius: 8px;
   background: none;
   color: var(--text-muted);
-  font-size: 13px;
+  font-size: calc(13px * var(--tsz, 1));
   cursor: pointer;
 }
 
@@ -3308,7 +3280,7 @@ a.profile-links-url {
   border-radius: 8px;
   background: var(--surface-sunken);
   color: var(--text);
-  font-size: 15px;
+  font-size: calc(15px * var(--tsz, 1));
   cursor: pointer;
 }
 
@@ -3350,7 +3322,7 @@ a.profile-links-url {
   padding: 8px 10px;
   border: 1px solid var(--border);
   border-radius: 8px;
-  font-size: 13px;
+  font-size: calc(13px * var(--tsz, 1));
   background: var(--surface-sunken);
   color: var(--text);
 }
@@ -3361,7 +3333,7 @@ a.profile-links-url {
   color: var(--accent-contrast);
   border-radius: 8px;
   padding: 8px 14px;
-  font-size: 13px;
+  font-size: calc(13px * var(--tsz, 1));
   cursor: pointer;
 }
 
@@ -3383,7 +3355,7 @@ a.profile-links-url {
   justify-content: space-between;
   padding: 8px 10px;
   background: var(--accent-bg);
-  font-size: 12px;
+  font-size: calc(12px * var(--tsz, 1));
   color: var(--text-muted);
 }
 
@@ -3391,7 +3363,7 @@ a.profile-links-url {
   border: none;
   background: none;
   color: var(--accent);
-  font-size: 12px;
+  font-size: calc(12px * var(--tsz, 1));
   font-weight: 500;
   cursor: pointer;
   padding: 2px 4px;
@@ -3427,7 +3399,7 @@ a.profile-links-url {
 
 .bible-search-result-ref {
   display: block;
-  font-size: 12px;
+  font-size: calc(12px * var(--tsz, 1));
   font-weight: 600;
   color: var(--accent);
   margin-bottom: 2px;
@@ -3435,7 +3407,7 @@ a.profile-links-url {
 
 .bible-search-result-text {
   display: block;
-  font-size: 13px;
+  font-size: calc(13px * var(--tsz, 1));
   color: var(--text);
   line-height: 1.4;
 }
@@ -3464,7 +3436,7 @@ a.profile-links-url {
   border-radius: 8px;
   background: var(--surface-sunken);
   color: var(--text);
-  font-size: 13px;
+  font-size: calc(13px * var(--tsz, 1));
   margin-bottom: 6px;
 }
 
@@ -3491,7 +3463,7 @@ a.profile-links-url {
   border-radius: 8px;
   background: var(--surface-sunken);
   color: var(--text);
-  font-size: 13px;
+  font-size: calc(13px * var(--tsz, 1));
   font-weight: 600;
   line-height: 1;
   white-space: nowrap;
@@ -3532,7 +3504,12 @@ a.profile-links-url {
   /* 16px on purpose, and NOT inherited from the 13px chip: iOS Safari zooms the whole page when a
      form control smaller than 16px takes focus. It is invisible, so this costs the chip nothing —
      which is also why the mobile 16px rule further down can keep listing .bible-translation-select
-     without any of this having to know about it. */
+     without any of this having to know about it.
+
+     Flat 16px, deliberately NOT `calc(16px * var(--tsz, 1))` like the rest of the app: nobody
+     reads this control, so there is nothing for the text-size setting to scale, and the ONE thing
+     the number has to do is stay at or above the threshold iOS tests against — which a 0.8 setting
+     would have taken it below. */
   font-size: 16px;
 }
 
@@ -3543,7 +3520,7 @@ a.profile-links-url {
 }
 
 .bible-status {
-  font-size: 13px;
+  font-size: calc(13px * var(--tsz, 1));
   color: var(--text-muted);
 }
 
@@ -3575,7 +3552,7 @@ a.profile-links-url {
   background: var(--accent);
   color: var(--accent-contrast);
   font-family: var(--sans);
-  font-size: 14px;
+  font-size: calc(14px * var(--tsz, 1));
   font-weight: 600;
   cursor: pointer;
 }
@@ -3585,7 +3562,7 @@ a.profile-links-url {
 }
 
 .bible-welcome-text {
-  font-size: 13px;
+  font-size: calc(13px * var(--tsz, 1));
   color: var(--text-muted);
   line-height: 1.5;
 }
@@ -3602,7 +3579,7 @@ a.profile-links-url {
 }
 
 .bible-welcome-plans-title {
-  font-size: 12px;
+  font-size: calc(12px * var(--tsz, 1));
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.04em;
@@ -3621,7 +3598,7 @@ a.profile-links-url {
   background: var(--surface-sunken);
   color: var(--text);
   font: inherit;
-  font-size: 13px;
+  font-size: calc(13px * var(--tsz, 1));
   font-weight: 500;
   text-align: left;
   cursor: pointer;
@@ -3634,7 +3611,7 @@ a.profile-links-url {
 
 .bible-welcome-plan-days {
   flex-shrink: 0;
-  font-size: 11px;
+  font-size: calc(11px * var(--tsz, 1));
   font-weight: 400;
   color: var(--text-muted);
 }
@@ -3648,7 +3625,7 @@ a.profile-links-url {
   background: var(--surface-sunken);
   color: var(--text);
   cursor: pointer;
-  font-size: 12px;
+  font-size: calc(12px * var(--tsz, 1));
   font-weight: 600;
   line-height: 1;
   white-space: nowrap;
@@ -3668,7 +3645,7 @@ a.profile-links-url {
 }
 
 .bible-plans-heading {
-  font-size: 16px;
+  font-size: calc(16px * var(--tsz, 1));
   text-align: center;
 }
 
@@ -3690,7 +3667,7 @@ a.profile-links-url {
   right: 0;
   border: none;
   background: none;
-  font-size: 22px;
+  font-size: calc(22px * var(--tsz, 1));
   line-height: 1;
   color: var(--text-muted);
   cursor: pointer;
@@ -3702,14 +3679,14 @@ a.profile-links-url {
 }
 
 .bible-plans-subtitle {
-  font-size: 13px;
+  font-size: calc(13px * var(--tsz, 1));
   color: var(--text-muted);
   line-height: 1.5;
   text-align: center;
 }
 
 .bible-plans-count {
-  font-size: 12px;
+  font-size: calc(12px * var(--tsz, 1));
   color: var(--text-muted);
   text-align: center;
 }
@@ -3719,7 +3696,7 @@ a.profile-links-url {
   border: none;
   background: none;
   padding: 2px 0;
-  font-size: 13px;
+  font-size: calc(13px * var(--tsz, 1));
   font-weight: 500;
   color: var(--accent);
   cursor: pointer;
@@ -3744,19 +3721,19 @@ a.profile-links-url {
 }
 
 .bible-plan-card-title {
-  font-size: 14px;
+  font-size: calc(14px * var(--tsz, 1));
   font-weight: 600;
   color: var(--text-h);
 }
 
 .bible-plan-card-tagline {
-  font-size: 12px;
+  font-size: calc(12px * var(--tsz, 1));
   color: var(--text-muted);
   line-height: 1.5;
 }
 
 .bible-plan-card-meta {
-  font-size: 11px;
+  font-size: calc(11px * var(--tsz, 1));
   color: var(--text-muted);
 }
 
@@ -3809,7 +3786,7 @@ a.profile-links-url {
   border: 1.5px solid var(--border);
   background: var(--panel-bg);
   color: var(--accent);
-  font-size: 12px;
+  font-size: calc(12px * var(--tsz, 1));
   font-weight: 700;
   line-height: 1;
   cursor: pointer;
@@ -3851,7 +3828,7 @@ a.profile-links-url {
 }
 
 .bible-plan-day-num {
-  font-size: 11px;
+  font-size: calc(11px * var(--tsz, 1));
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.04em;
@@ -3864,19 +3841,19 @@ a.profile-links-url {
 
 .bible-plan-day-ref {
   flex-shrink: 0;
-  font-size: 12px;
+  font-size: calc(12px * var(--tsz, 1));
   font-weight: 600;
   color: var(--accent);
 }
 
 .bible-plan-day-title {
-  font-size: 13px;
+  font-size: calc(13px * var(--tsz, 1));
   font-weight: 600;
   color: var(--text-h);
 }
 
 .bible-plan-day-note {
-  font-size: 12px;
+  font-size: calc(12px * var(--tsz, 1));
   color: var(--text-muted);
   line-height: 1.45;
 }
@@ -3896,7 +3873,7 @@ a.profile-links-url {
  * so inserting it costs the height of the text itself and very little more. */
 .bible-chapters-read {
   margin: -8px 0 9px;
-  font-size: 12px;
+  font-size: calc(12px * var(--tsz, 1));
   /* Equal-width figures, so the line does not shift going from 9 chapters to 10. */
   font-variant-numeric: tabular-nums;
   color: var(--text-muted);
@@ -3908,7 +3885,7 @@ a.profile-links-url {
   align-items: center;
   justify-content: center;
   gap: 8px;
-  font-size: 13px;
+  font-size: calc(13px * var(--tsz, 1));
   color: var(--text-muted);
   cursor: pointer;
   margin: 14px 0;
@@ -3919,7 +3896,7 @@ a.profile-links-url {
 }
 
 .bible-passage h4 {
-  font-size: 16px;
+  font-size: calc(16px * var(--tsz, 1));
 }
 
 /* --- The reader's one control row ------------------------------------------------------------
@@ -3986,13 +3963,13 @@ a.profile-links-url {
 /* --- Book introduction (shown from the chapter picker's "Introduction" entry) --- */
 
 .book-intro h4 {
-  font-size: 16px;
+  font-size: calc(16px * var(--tsz, 1));
   text-align: center;
   margin-bottom: 14px;
 }
 
 .book-intro h5 {
-  font-size: 13px;
+  font-size: calc(13px * var(--tsz, 1));
   text-transform: uppercase;
   letter-spacing: 0.04em;
   color: var(--text-muted);
@@ -4000,7 +3977,7 @@ a.profile-links-url {
 }
 
 .book-intro p {
-  font-size: 14px;
+  font-size: calc(14px * var(--tsz, 1));
   line-height: 1.6;
   margin-bottom: 10px;
 }
@@ -4020,12 +3997,12 @@ a.profile-links-url {
   display: flex;
   flex-direction: column;
   gap: 2px;
-  font-size: 13px;
+  font-size: calc(13px * var(--tsz, 1));
   line-height: 1.5;
 }
 
 .book-intro-fact-label {
-  font-size: 11px;
+  font-size: calc(11px * var(--tsz, 1));
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.04em;
@@ -4050,7 +4027,7 @@ a.profile-links-url {
   border-radius: 8px;
   background: var(--surface-sunken);
   color: var(--text);
-  font-size: 13px;
+  font-size: calc(13px * var(--tsz, 1));
   cursor: pointer;
 }
 
@@ -4063,7 +4040,7 @@ a.profile-links-url {
   flex-shrink: 0;
   color: var(--accent);
   font-weight: 600;
-  font-size: 12px;
+  font-size: calc(12px * var(--tsz, 1));
 }
 
 .book-intro-manuscripts {
@@ -4072,7 +4049,7 @@ a.profile-links-url {
 }
 
 .book-intro-manuscripts li {
-  font-size: 13px;
+  font-size: calc(13px * var(--tsz, 1));
   line-height: 1.6;
   margin-bottom: 8px;
 }
@@ -4088,7 +4065,7 @@ a.profile-links-url {
   background: var(--accent-bg);
   color: var(--accent);
   border-radius: 50%;
-  font-size: 16px;
+  font-size: calc(16px * var(--tsz, 1));
   line-height: 1;
   cursor: pointer;
 }
@@ -4184,7 +4161,7 @@ a.profile-links-url {
 }
 
 .bible-translation-credit {
-  font-size: 11px;
+  font-size: calc(11px * var(--tsz, 1));
   color: var(--text-muted);
   margin-top: 12px;
   border-top: 1px solid var(--border);
@@ -4207,7 +4184,7 @@ a.profile-links-url {
   color: var(--accent);
   border-radius: 8px;
   padding: 8px 10px;
-  font-size: 13px;
+  font-size: calc(13px * var(--tsz, 1));
   font-weight: 500;
   cursor: pointer;
 }
@@ -4276,9 +4253,9 @@ a.profile-links-url {
   flex-shrink: 0;
   border-top: 1px solid var(--border);
   background: var(--panel-bg);
-  /* Divided by the scale: this bar carries `zoom: var(--text-scale)`, and the home-indicator inset
-     is a fixed physical distance, not something the text-size setting should stretch or shrink. */
-  padding-bottom: calc(env(safe-area-inset-bottom, 0px) / var(--text-scale, 1));
+  /* The home-indicator inset is a fixed physical distance and is used raw. It used to be divided
+     by --text-scale to undo this bar's `zoom: var(--text-scale)`; that zoom is gone. */
+  padding-bottom: calc(env(safe-area-inset-bottom, 0px));
 }
 
 .mobile-tab {
@@ -4341,7 +4318,7 @@ a.profile-links-url {
 }
 
 .mobile-tab-label {
-  font-size: 11px;
+  font-size: calc(11px * var(--tsz, 1));
   font-weight: 500;
   /* Kept inside its own tab. The bar splits a 375px screen into as many as seven equal slots, and
      since it started scaling with the text-size setting those slots no longer widen to hold a
@@ -4378,7 +4355,7 @@ a.profile-links-url {
     padding: 10px 12px;
     /* env() divided by the scale for the same reason as the desktop rule above — this is the one
        that runs on a phone, where the notch clearance actually exists. */
-    padding-top: calc(10px + env(safe-area-inset-top, 0px) / var(--text-scale, 1));
+    padding-top: calc(10px + env(safe-area-inset-top, 0px));
   }
 
   .app-header h1 {
@@ -4408,7 +4385,11 @@ a.profile-links-url {
 
   /* 16px prevents iOS Safari from auto-zooming the page on focus. The rule below (added later)
      already covers every input/textarea/select in the app, including these two — kept here anyway
-     since removing it buys nothing and this comment is the historical "why" for that broader one. */
+     since removing it buys nothing and this comment is the historical "why" for that broader one.
+
+     `max(16px, ...)` and not a bare product: the text-size setting may make these BIGGER, never
+     smaller. 16px is the threshold iOS tests against, so at the 0.8 setting a plain
+     `calc(16px * var(--tsz))` would resolve to 12.8px and hand the auto-zoom straight back. */
   .search-bar input,
   /* The grey completion behind the field is a div, so neither this rule's original list nor the
      app-wide `input { font-size: 16px !important }` below reaches it — and a ghost still set to the
@@ -4418,18 +4399,22 @@ a.profile-links-url {
   .bible-keyword-search input,
   .bible-nav-select,
   .bible-translation-select {
-    font-size: 16px;
+    font-size: max(16px, calc(16px * var(--tsz, 1)));
   }
 
   /* Same fix, applied app-wide: dozens of components (profile fields, comment boxes, group
      forms, etc.) each set their own smaller font-size for a tighter desktop look, and every one of
      them is small enough to trigger iOS Safari's auto-zoom-on-focus. Rather than hunting down and
      bumping each one individually, force a 16px floor for every text input on mobile — !important is
-     deliberate here since the point is to override those per-component choices unconditionally. */
+     deliberate here since the point is to override those per-component choices unconditionally.
+
+     A FLOOR, hence `max(16px, ...)`: the text-size setting scales it up but must never take it
+     below the 16px iOS tests against, or the 0.8 setting would restore the auto-zoom this exists
+     to prevent. */
   input,
   textarea,
   select {
-    font-size: 16px !important;
+    font-size: max(16px, calc(16px * var(--tsz, 1))) !important;
   }
 
   /* Panels are always full-screen (one at a time, via the tab bar) — drop the desktop
@@ -4479,7 +4464,7 @@ a.profile-links-url {
 
   .then-now-buttons button {
     padding: 8px 10px;
-    font-size: 12px;
+    font-size: calc(12px * var(--tsz, 1));
   }
 
   .layer-controls {
@@ -4491,24 +4476,24 @@ a.profile-links-url {
 
   .clear-selection-button {
     padding: 10px 18px;
-    font-size: 13px;
+    font-size: calc(13px * var(--tsz, 1));
   }
 
   /* Bigger touch targets throughout. */
   .panel-close {
-    font-size: 26px;
+    font-size: calc(26px * var(--tsz, 1));
     padding: 8px 10px;
   }
 
   .bible-chapter-nav-small {
     width: 36px;
     height: 36px;
-    font-size: 20px;
+    font-size: calc(20px * var(--tsz, 1));
   }
 
   .layer-toggle {
     padding: 10px 0;
-    font-size: 15px;
+    font-size: calc(15px * var(--tsz, 1));
   }
 
   .layer-toggle input[type="checkbox"] {
@@ -4554,7 +4539,7 @@ a.profile-links-url {
   min-width: 44px;
   min-height: 44px;
   padding: 4px 9px;
-  font-size: 15px;
+  font-size: calc(15px * var(--tsz, 1));
   font-weight: 600;
   cursor: pointer;
 }
@@ -4651,7 +4636,7 @@ a.profile-links-url {
   background: none;
   padding: 0 0 0 4px;
   margin: 0;
-  font-size: 12px;
+  font-size: calc(12px * var(--tsz, 1));
   line-height: 1;
   cursor: pointer;
   vertical-align: middle;
@@ -4670,7 +4655,7 @@ a.profile-links-url {
   background: none;
   padding: 0 0 0 4px;
   margin: 0;
-  font-size: 12px;
+  font-size: calc(12px * var(--tsz, 1));
   line-height: 1;
   cursor: pointer;
   vertical-align: middle;
@@ -4739,7 +4724,7 @@ a.profile-links-url {
   color: var(--text);
   border-radius: 8px;
   padding: 5px 10px;
-  font-size: 13px;
+  font-size: calc(13px * var(--tsz, 1));
   white-space: nowrap;
   cursor: pointer;
   flex-shrink: 0;
@@ -4755,7 +4740,7 @@ a.profile-links-url {
   color: var(--text);
   border-radius: 8px;
   padding: 5px 10px;
-  font-size: 13px;
+  font-size: calc(13px * var(--tsz, 1));
   white-space: nowrap;
   cursor: pointer;
   flex-shrink: 0;
@@ -4766,7 +4751,7 @@ a.profile-links-url {
 }
 
 .verse-popup-signin-note {
-  font-size: 12px;
+  font-size: calc(12px * var(--tsz, 1));
   color: var(--text-muted);
   padding: 0 4px;
   white-space: nowrap;
@@ -4779,7 +4764,7 @@ a.profile-links-url {
   color: var(--text);
   border-radius: 8px;
   padding: 5px 10px;
-  font-size: 13px;
+  font-size: calc(13px * var(--tsz, 1));
   white-space: nowrap;
   cursor: pointer;
   flex-shrink: 0;
@@ -4802,7 +4787,7 @@ a.profile-links-url {
   color: var(--text);
   border-radius: 100px;
   padding: 7px 14px;
-  font-size: 13px;
+  font-size: calc(13px * var(--tsz, 1));
   box-shadow: 0 4px 14px rgba(0, 0, 0, 0.15);
   pointer-events: none;
   white-space: nowrap;
@@ -4814,7 +4799,7 @@ a.profile-links-url {
   color: var(--danger);
   border-radius: 8px;
   padding: 5px 10px;
-  font-size: 13px;
+  font-size: calc(13px * var(--tsz, 1));
   white-space: nowrap;
   cursor: pointer;
 }
@@ -4829,7 +4814,7 @@ a.profile-links-url {
   border: none;
   background: none;
   color: var(--text-muted);
-  font-size: 16px;
+  font-size: calc(16px * var(--tsz, 1));
   line-height: 1;
   cursor: pointer;
   border-radius: 50%;
@@ -4848,7 +4833,7 @@ a.profile-links-url {
   color: var(--text);
   border-radius: 8px;
   padding: 7px 10px;
-  font-size: 13px;
+  font-size: calc(13px * var(--tsz, 1));
   cursor: pointer;
 }
 
@@ -4857,7 +4842,7 @@ a.profile-links-url {
 }
 
 .verse-popup-quoted {
-  font-size: 12px;
+  font-size: calc(12px * var(--tsz, 1));
   font-style: italic;
   color: var(--text-muted);
   margin-bottom: 6px;
@@ -4877,7 +4862,7 @@ a.profile-links-url {
   border: 1px solid var(--border);
   border-radius: 8px;
   font: inherit;
-  font-size: 13px;
+  font-size: calc(13px * var(--tsz, 1));
   background: var(--surface-sunken);
   color: var(--text);
   resize: vertical;
@@ -4896,7 +4881,7 @@ a.profile-links-url {
   color: var(--text);
   border-radius: 8px;
   padding: 6px 12px;
-  font-size: 13px;
+  font-size: calc(13px * var(--tsz, 1));
   cursor: pointer;
 }
 
@@ -4924,7 +4909,7 @@ a.profile-links-url {
 }
 
 .verse-popup-note-item p {
-  font-size: 13px;
+  font-size: calc(13px * var(--tsz, 1));
   color: var(--text);
   line-height: 1.4;
   margin-bottom: 6px;
@@ -4934,7 +4919,7 @@ a.profile-links-url {
   border: none;
   background: none;
   color: var(--accent);
-  font-size: 12px;
+  font-size: calc(12px * var(--tsz, 1));
   font-weight: 500;
   padding: 0;
   cursor: pointer;
@@ -4962,7 +4947,7 @@ a.profile-links-url {
   border: 1px solid var(--border);
   border-radius: 6px;
   font: inherit;
-  font-size: 13px;
+  font-size: calc(13px * var(--tsz, 1));
   background: var(--surface-sunken);
   color: var(--text);
   resize: vertical;
@@ -4971,7 +4956,7 @@ a.profile-links-url {
 
 .verse-popup-note-error {
   color: var(--danger) !important;
-  font-size: 12px !important;
+  font-size: calc(12px * var(--tsz, 1)) !important;
 }
 
 .verse-popup-tag-picker {
@@ -4996,7 +4981,7 @@ a.profile-links-url {
   color: var(--text);
   border-radius: 999px;
   padding: 4px 10px;
-  font-size: 12px;
+  font-size: calc(12px * var(--tsz, 1));
   white-space: nowrap;
   cursor: pointer;
 }
@@ -5019,7 +5004,7 @@ a.profile-links-url {
   border: 1px solid var(--border);
   border-radius: 8px;
   font: inherit;
-  font-size: 13px;
+  font-size: calc(13px * var(--tsz, 1));
   background: var(--surface-sunken);
   color: var(--text);
 }
@@ -5030,7 +5015,7 @@ a.profile-links-url {
   color: var(--text);
   border-radius: 8px;
   padding: 5px 10px;
-  font-size: 13px;
+  font-size: calc(13px * var(--tsz, 1));
   white-space: nowrap;
   cursor: pointer;
   flex-shrink: 0;
@@ -5052,7 +5037,7 @@ a.profile-links-url {
 }
 
 .my-notes-book-heading {
-  font-size: 13px;
+  font-size: calc(13px * var(--tsz, 1));
   text-transform: uppercase;
   letter-spacing: 0.04em;
   color: var(--accent);
@@ -5074,7 +5059,7 @@ a.profile-links-url {
   border: none;
   background: none;
   padding: 0;
-  font-size: 13px;
+  font-size: calc(13px * var(--tsz, 1));
   font-weight: 600;
   color: var(--accent);
   text-decoration: underline;
@@ -5085,7 +5070,7 @@ a.profile-links-url {
 }
 
 .my-notes-text {
-  font-size: 14px;
+  font-size: calc(14px * var(--tsz, 1));
   color: var(--text);
   line-height: 1.5;
   margin-bottom: 6px;
@@ -5095,7 +5080,7 @@ a.profile-links-url {
   border: none;
   background: none;
   color: var(--danger);
-  font-size: 12px;
+  font-size: calc(12px * var(--tsz, 1));
   padding: 0;
   cursor: pointer;
 }
@@ -5118,7 +5103,7 @@ a.profile-links-url {
   border: none;
   background: none;
   color: var(--accent);
-  font-size: 12px;
+  font-size: calc(12px * var(--tsz, 1));
   font-weight: 500;
   padding: 0;
   cursor: pointer;
@@ -5137,7 +5122,7 @@ a.profile-links-url {
   border: 1px solid var(--border);
   border-radius: 8px;
   font: inherit;
-  font-size: 14px;
+  font-size: calc(14px * var(--tsz, 1));
   line-height: 1.5;
   background: var(--surface-sunken);
   color: var(--text);
@@ -5156,7 +5141,7 @@ a.profile-links-url {
   color: var(--text);
   border-radius: 8px;
   padding: 5px 12px;
-  font-size: 13px;
+  font-size: calc(13px * var(--tsz, 1));
   cursor: pointer;
 }
 
@@ -5173,20 +5158,20 @@ a.profile-links-url {
 
 .my-notes-edit-error {
   color: var(--danger);
-  font-size: 12px;
+  font-size: calc(12px * var(--tsz, 1));
   margin-top: 6px;
 }
 
 .my-notes-edited-flag {
   color: var(--text-muted);
-  font-size: 12px;
+  font-size: calc(12px * var(--tsz, 1));
 }
 
 .my-notes-public-toggle {
   display: flex;
   align-items: center;
   gap: 6px;
-  font-size: 12px;
+  font-size: calc(12px * var(--tsz, 1));
   color: var(--text-muted);
   cursor: pointer;
 }
@@ -5204,7 +5189,7 @@ a.profile-links-url {
   border: none;
   background: var(--surface-sunken);
   color: var(--text);
-  font-size: 13px;
+  font-size: calc(13px * var(--tsz, 1));
   padding: 8px;
   cursor: pointer;
 }
@@ -5223,7 +5208,7 @@ a.profile-links-url {
   color: var(--accent);
   border-radius: 8px;
   padding: 10px;
-  font-size: 13px;
+  font-size: calc(13px * var(--tsz, 1));
   font-weight: 600;
   cursor: pointer;
   margin-bottom: 10px;
@@ -5259,16 +5244,16 @@ a.profile-links-url {
 
 .sermon-notes-list-title {
   font-weight: 600;
-  font-size: 13px;
+  font-size: calc(13px * var(--tsz, 1));
 }
 
 .sermon-notes-list-date {
-  font-size: 11px;
+  font-size: calc(11px * var(--tsz, 1));
   color: var(--text-muted);
 }
 
 .sermon-notes-list-snippet {
-  font-size: 12px;
+  font-size: calc(12px * var(--tsz, 1));
   color: var(--text-muted);
   overflow: hidden;
   text-overflow: ellipsis;
@@ -5289,12 +5274,12 @@ a.profile-links-url {
 }
 
 .sermon-notes-save-status {
-  font-size: 11px;
+  font-size: calc(11px * var(--tsz, 1));
   color: var(--text-muted);
 }
 
 .sermon-notes-title-input {
-  font-size: 15px;
+  font-size: calc(15px * var(--tsz, 1));
   font-weight: 600;
   padding: 9px 12px;
   border: 1px solid var(--border);
@@ -5315,7 +5300,7 @@ a.profile-links-url {
   padding: 8px 10px;
   border: 1px solid var(--border);
   border-radius: 8px;
-  font-size: 13px;
+  font-size: calc(13px * var(--tsz, 1));
   background: var(--surface-sunken);
   color: var(--text);
 }
@@ -5325,7 +5310,7 @@ a.profile-links-url {
   padding: 12px;
   border: 1px solid var(--border);
   border-radius: 8px;
-  font-size: 14px;
+  font-size: calc(14px * var(--tsz, 1));
   line-height: 1.6;
   background: var(--surface-sunken);
   color: var(--text);
@@ -5360,7 +5345,7 @@ a.profile-links-url {
   background: var(--surface-sunken);
   color: var(--text);
   font-family: inherit;
-  font-size: 13px;
+  font-size: calc(13px * var(--tsz, 1));
   font-weight: 600;
   cursor: pointer;
 }
@@ -5392,7 +5377,7 @@ a.profile-links-url {
   align-items: center;
   gap: 8px;
   margin-left: auto;
-  font-size: 12px;
+  font-size: calc(12px * var(--tsz, 1));
   color: var(--text-muted);
 }
 
@@ -5418,7 +5403,7 @@ a.profile-links-url {
 }
 
 .scripture-picker-title {
-  font-size: 12px;
+  font-size: calc(12px * var(--tsz, 1));
   font-weight: 700;
   letter-spacing: 0.04em;
   text-transform: uppercase;
@@ -5472,7 +5457,7 @@ a.profile-links-url {
 }
 
 .scripture-picker-label {
-  font-size: 10px;
+  font-size: calc(10px * var(--tsz, 1));
   letter-spacing: 0.03em;
   text-transform: uppercase;
   color: var(--text-muted);
@@ -5482,7 +5467,7 @@ a.profile-links-url {
   width: 100%;
   /* 16px so iOS Safari does not zoom the whole page in when the field takes focus — a zoomed page
      mid-sermon costs more than the two pixels of type. */
-  font-size: 16px;
+  font-size: calc(16px * var(--tsz, 1));
   font-family: inherit;
   padding: 7px 9px;
   border: 1px solid var(--border);
@@ -5510,7 +5495,7 @@ a.profile-links-url {
   background: var(--surface-sunken);
   color: var(--text);
   font-family: inherit;
-  font-size: 13px;
+  font-size: calc(13px * var(--tsz, 1));
   cursor: pointer;
 }
 
@@ -5522,7 +5507,7 @@ a.profile-links-url {
 
 .scripture-picker-error {
   margin: 0;
-  font-size: 12px;
+  font-size: calc(12px * var(--tsz, 1));
   color: var(--text-muted);
 }
 
@@ -5532,7 +5517,7 @@ a.profile-links-url {
   background: none;
   color: var(--accent);
   font-family: inherit;
-  font-size: 12px;
+  font-size: calc(12px * var(--tsz, 1));
   text-decoration: underline;
   cursor: pointer;
 }
@@ -5551,7 +5536,7 @@ a.profile-links-url {
   background: var(--accent);
   color: var(--accent-contrast);
   font-family: inherit;
-  font-size: 13px;
+  font-size: calc(13px * var(--tsz, 1));
   font-weight: 600;
   cursor: pointer;
 }
@@ -5569,7 +5554,7 @@ a.profile-links-url {
   background: var(--surface-sunken);
   color: var(--text);
   font-family: inherit;
-  font-size: 13px;
+  font-size: calc(13px * var(--tsz, 1));
   cursor: pointer;
 }
 
@@ -5579,7 +5564,7 @@ a.profile-links-url {
   color: var(--text);
   border-radius: 6px;
   padding: 6px 10px;
-  font-size: 12px;
+  font-size: calc(12px * var(--tsz, 1));
   cursor: pointer;
 }
 
@@ -5602,7 +5587,7 @@ a.profile-links-url {
 }
 
 .my-notes-filter-label {
-  font-size: 11px;
+  font-size: calc(11px * var(--tsz, 1));
   font-weight: 600;
   letter-spacing: 0.04em;
   text-transform: uppercase;
@@ -5625,7 +5610,7 @@ a.profile-links-url {
   color: var(--text);
   border-radius: 8px;
   padding: 7px 12px;
-  font-size: 13px;
+  font-size: calc(13px * var(--tsz, 1));
   cursor: pointer;
 }
 
@@ -5655,7 +5640,7 @@ a.profile-links-url {
   color: var(--text);
   border-radius: 6px;
   padding: 7px 8px;
-  font-size: 13px;
+  font-size: calc(13px * var(--tsz, 1));
   text-align: left;
   cursor: pointer;
   white-space: nowrap;
@@ -5681,14 +5666,14 @@ a.profile-links-url {
   color: var(--accent);
   border-radius: 999px;
   padding: 2px 4px 2px 10px;
-  font-size: 12px;
+  font-size: calc(12px * var(--tsz, 1));
 }
 
 .my-notes-tag-chip button {
   border: none;
   background: none;
   color: inherit;
-  font-size: 13px;
+  font-size: calc(13px * var(--tsz, 1));
   line-height: 1;
   padding: 2px 4px;
   cursor: pointer;
@@ -5721,7 +5706,7 @@ a.profile-links-url {
   border: none;
   border-radius: 999px;
   color: #1a1a1a;
-  font-size: 13px;
+  font-size: calc(13px * var(--tsz, 1));
   line-height: 1;
   cursor: pointer;
   opacity: 0.85;
@@ -5755,7 +5740,7 @@ a.profile-links-url {
   border: none;
   background: none;
   color: var(--accent);
-  font-size: 12px;
+  font-size: calc(12px * var(--tsz, 1));
   padding: 0;
   cursor: pointer;
 }
@@ -5821,13 +5806,13 @@ a.profile-links-url {
 
   .my-notes-print-title {
     display: block;
-    font-size: 20px;
+    font-size: calc(20px * var(--tsz, 1));
     margin-bottom: 16px;
   }
 
   .my-notes-ref-print {
     display: block;
-    font-size: 14px;
+    font-size: calc(14px * var(--tsz, 1));
     margin-bottom: 4px;
   }
 
@@ -5848,7 +5833,7 @@ a.profile-links-url {
   border: none;
   background: none;
   color: var(--accent);
-  font-size: 13px;
+  font-size: calc(13px * var(--tsz, 1));
   font-weight: 500;
   cursor: pointer;
   padding: 0;
@@ -5868,7 +5853,7 @@ a.profile-links-url {
   color: var(--accent);
   border-radius: 8px;
   padding: 8px 10px;
-  font-size: 13px;
+  font-size: calc(13px * var(--tsz, 1));
   font-weight: 500;
   cursor: pointer;
   margin-bottom: 4px;
@@ -5879,7 +5864,7 @@ a.profile-links-url {
 }
 
 .friends-invite-hint {
-  font-size: 12px;
+  font-size: calc(12px * var(--tsz, 1));
   color: var(--text-muted);
   margin-bottom: 14px;
 }
@@ -5890,7 +5875,7 @@ a.profile-links-url {
   padding: 8px 10px;
   border: 1px solid var(--border);
   border-radius: 8px;
-  font-size: 13px;
+  font-size: calc(13px * var(--tsz, 1));
   background: var(--surface-sunken);
   color: var(--text);
 }
@@ -5901,7 +5886,7 @@ a.profile-links-url {
   color: var(--accent-contrast);
   border-radius: 8px;
   padding: 8px 14px;
-  font-size: 13px;
+  font-size: calc(13px * var(--tsz, 1));
   font-weight: 500;
   cursor: pointer;
   white-space: nowrap;
@@ -5917,7 +5902,7 @@ a.profile-links-url {
 }
 
 .friends-section h4 {
-  font-size: 12px;
+  font-size: calc(12px * var(--tsz, 1));
   text-transform: uppercase;
   letter-spacing: 0.04em;
   color: var(--text-muted);
@@ -5942,7 +5927,7 @@ a.profile-links-url {
   border: 1px solid var(--border);
   border-radius: 8px;
   padding: 9px 12px;
-  font-size: 13px;
+  font-size: calc(13px * var(--tsz, 1));
 }
 
 .friends-list-item-clickable {
@@ -5981,7 +5966,7 @@ a.profile-links-url {
   color: var(--text);
   border-radius: 6px;
   padding: 5px 10px;
-  font-size: 12px;
+  font-size: calc(12px * var(--tsz, 1));
   font-weight: 500;
   cursor: pointer;
 }
@@ -5995,7 +5980,7 @@ a.profile-links-url {
   border: none;
   background: none;
   color: var(--accent);
-  font-size: 12px;
+  font-size: calc(12px * var(--tsz, 1));
   font-weight: 500;
   cursor: pointer;
   padding: 0;
@@ -6014,7 +5999,7 @@ a.profile-links-url {
   border-radius: 6px;
   background: var(--panel-bg);
   color: var(--text);
-  font-size: 12px;
+  font-size: calc(12px * var(--tsz, 1));
   padding: 6px 8px;
   cursor: pointer;
 }
@@ -6050,7 +6035,7 @@ a.profile-links-url {
 
 .message-preview-text {
   color: var(--text-muted);
-  font-size: 12px;
+  font-size: calc(12px * var(--tsz, 1));
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -6060,7 +6045,7 @@ a.profile-links-url {
   flex-shrink: 0;
   background: var(--danger);
   color: #fff;
-  font-size: 11px;
+  font-size: calc(11px * var(--tsz, 1));
   font-weight: 600;
   line-height: 1;
   padding: 3px 7px;
@@ -6093,19 +6078,19 @@ a.profile-links-url {
 
 .friend-profile-name {
   font-weight: 600;
-  font-size: 15px;
+  font-size: calc(15px * var(--tsz, 1));
   color: var(--text-h);
 }
 
 .friend-profile-church,
 .friend-profile-joined {
-  font-size: 12px;
+  font-size: calc(12px * var(--tsz, 1));
   color: var(--text-muted);
 }
 
 .friend-profile-verse,
 .friend-profile-bio {
-  font-size: 13px;
+  font-size: calc(13px * var(--tsz, 1));
   color: var(--text);
   line-height: 1.5;
 }
@@ -6117,7 +6102,7 @@ a.profile-links-url {
   color: var(--text);
   border-radius: 8px;
   padding: 8px 14px;
-  font-size: 13px;
+  font-size: calc(13px * var(--tsz, 1));
   font-weight: 500;
   cursor: pointer;
 }
@@ -6128,7 +6113,7 @@ a.profile-links-url {
 }
 
 .friend-profile-section h4 {
-  font-size: 13px;
+  font-size: calc(13px * var(--tsz, 1));
   margin-bottom: 8px;
 }
 
@@ -6154,20 +6139,20 @@ a.profile-links-url {
 }
 
 .friend-post-ref {
-  font-size: 12px;
+  font-size: calc(12px * var(--tsz, 1));
   font-weight: 600;
   color: var(--text-h);
   margin-bottom: 0;
 }
 
 .friend-post-date {
-  font-size: 11px;
+  font-size: calc(11px * var(--tsz, 1));
   color: var(--text-muted);
   white-space: nowrap;
 }
 
 .friend-post-text {
-  font-size: 13px;
+  font-size: calc(13px * var(--tsz, 1));
   color: var(--text);
   line-height: 1.5;
   margin-bottom: 6px;
@@ -6210,7 +6195,7 @@ a.profile-links-url {
   background: none;
   border: none;
   color: var(--text-muted);
-  font-size: 13px;
+  font-size: calc(13px * var(--tsz, 1));
   font-weight: 600;
   padding: 4px 0;
   margin-bottom: 4px;
@@ -6222,7 +6207,7 @@ a.profile-links-url {
 }
 
 .post-tagged-friends {
-  font-size: 12px;
+  font-size: calc(12px * var(--tsz, 1));
   color: var(--text-muted);
   margin-bottom: 6px;
 }
@@ -6252,7 +6237,7 @@ a.profile-links-url {
   border-radius: 6px;
   padding: 8px 10px;
   font: inherit;
-  font-size: 13px;
+  font-size: calc(13px * var(--tsz, 1));
 }
 
 .post-composer-media-preview {
@@ -6284,7 +6269,7 @@ a.profile-links-url {
   padding: 6px 10px;
   border: 1px solid var(--border);
   border-radius: 6px;
-  font-size: 12px;
+  font-size: calc(12px * var(--tsz, 1));
   color: var(--text);
 }
 
@@ -6299,7 +6284,7 @@ a.profile-links-url {
   border: 1px solid var(--border);
   background: var(--panel-bg);
   color: var(--text);
-  font-size: 12px;
+  font-size: calc(12px * var(--tsz, 1));
   padding: 0;
   cursor: pointer;
 }
@@ -6326,7 +6311,7 @@ a.profile-links-url {
   color: var(--text);
   border-radius: 6px;
   padding: 6px 10px;
-  font-size: 12px;
+  font-size: calc(12px * var(--tsz, 1));
   cursor: pointer;
 }
 
@@ -6355,7 +6340,7 @@ a.profile-links-url {
   gap: 8px;
   padding: 6px 8px;
   border-radius: 6px;
-  font-size: 13px;
+  font-size: calc(13px * var(--tsz, 1));
   color: var(--text);
   cursor: pointer;
   white-space: nowrap;
@@ -6372,7 +6357,7 @@ a.profile-links-url {
   color: var(--accent-contrast);
   border-radius: 6px;
   padding: 7px 16px;
-  font-size: 13px;
+  font-size: calc(13px * var(--tsz, 1));
   font-weight: 600;
   cursor: pointer;
 }
@@ -6392,7 +6377,7 @@ a.profile-links-url {
 }
 
 .friend-post-comment {
-  font-size: 12px;
+  font-size: calc(12px * var(--tsz, 1));
   color: var(--text);
 }
 
@@ -6408,7 +6393,7 @@ a.profile-links-url {
   cursor: pointer;
   padding: 0 4px;
   margin-left: 4px;
-  font-size: 13px;
+  font-size: calc(13px * var(--tsz, 1));
   line-height: 1;
   color: var(--text-muted);
 }
@@ -6430,7 +6415,7 @@ a.profile-links-url {
   color: var(--text);
   border-radius: 6px;
   padding: 6px 8px;
-  font-size: 12px;
+  font-size: calc(12px * var(--tsz, 1));
 }
 
 .friend-post-comment-form button {
@@ -6439,7 +6424,7 @@ a.profile-links-url {
   color: var(--text);
   border-radius: 6px;
   padding: 6px 10px;
-  font-size: 12px;
+  font-size: calc(12px * var(--tsz, 1));
   cursor: pointer;
 }
 
@@ -6449,7 +6434,7 @@ a.profile-links-url {
 }
 
 .friend-post-author {
-  font-size: 12px;
+  font-size: calc(12px * var(--tsz, 1));
   font-weight: 600;
   color: var(--accent);
   margin-bottom: 2px;
@@ -6467,7 +6452,7 @@ a.profile-links-url {
   background: none;
   color: var(--text);
   opacity: 0.6;
-  font-size: 13px;
+  font-size: calc(13px * var(--tsz, 1));
   font-weight: 600;
   padding: 6px 10px;
   cursor: pointer;
@@ -6496,7 +6481,7 @@ a.profile-links-url {
   background: none;
   padding: 0;
   font: inherit;
-  font-size: 12px;
+  font-size: calc(12px * var(--tsz, 1));
   font-weight: 600;
   color: var(--text-h);
   cursor: pointer;
@@ -6527,7 +6512,7 @@ a.profile-links-url {
   color: var(--accent-contrast);
   border-radius: 6px;
   padding: 5px 10px;
-  font-size: 12px;
+  font-size: calc(12px * var(--tsz, 1));
   cursor: pointer;
   white-space: nowrap;
 }
@@ -6571,7 +6556,7 @@ a.profile-links-url {
   border: 1px solid var(--border);
   border-radius: 14px;
   padding: 8px 28px 8px 12px;
-  font-size: 13px;
+  font-size: calc(13px * var(--tsz, 1));
   line-height: 1.4;
   white-space: pre-wrap;
   word-break: break-word;
@@ -6591,7 +6576,7 @@ a.profile-links-url {
   border: none;
   background: none;
   padding: 2px;
-  font-size: 11px;
+  font-size: calc(11px * var(--tsz, 1));
   line-height: 1;
   cursor: pointer;
   opacity: 0.35;
@@ -6615,7 +6600,7 @@ a.profile-links-url {
   padding: 8px 12px;
   background: var(--surface-sunken);
   border-bottom: 1px solid var(--border);
-  font-size: 12px;
+  font-size: calc(12px * var(--tsz, 1));
 }
 
 .pinned-message-icon {
@@ -6636,7 +6621,7 @@ a.profile-links-url {
   border: none;
   background: none;
   color: var(--accent);
-  font-size: 12px;
+  font-size: calc(12px * var(--tsz, 1));
   font-weight: 600;
   cursor: pointer;
   padding: 2px 4px;
@@ -6672,12 +6657,12 @@ a.profile-links-url {
 
 .display-name-gate-card h3 {
   margin: 0 0 8px;
-  font-size: 18px;
+  font-size: calc(18px * var(--tsz, 1));
 }
 
 .display-name-gate-card p {
   margin: 0 0 16px;
-  font-size: 13px;
+  font-size: calc(13px * var(--tsz, 1));
   color: var(--text-muted);
   line-height: 1.4;
 }
@@ -6711,7 +6696,7 @@ a.profile-links-url {
   padding: 9px 12px;
   border: 1px solid var(--border);
   border-radius: 8px;
-  font-size: 14px;
+  font-size: calc(14px * var(--tsz, 1));
   background: var(--surface-sunken);
   color: var(--text);
 }
@@ -6722,7 +6707,7 @@ a.profile-links-url {
   color: var(--accent-contrast);
   border-radius: 8px;
   padding: 9px 16px;
-  font-size: 14px;
+  font-size: calc(14px * var(--tsz, 1));
   font-weight: 600;
   cursor: pointer;
 }
@@ -6748,7 +6733,7 @@ a.profile-links-url {
   background: none;
   color: var(--text-muted);
   padding: 6px 0 0;
-  font-size: 13px;
+  font-size: calc(13px * var(--tsz, 1));
   font-weight: 400;
   text-decoration: underline;
   cursor: pointer;
@@ -6781,7 +6766,7 @@ a.profile-links-url {
   border: none;
   background: none;
   padding: 4px 6px;
-  font-size: 15px;
+  font-size: calc(15px * var(--tsz, 1));
   line-height: 1;
   cursor: pointer;
   border-radius: 6px;
@@ -6799,7 +6784,7 @@ a.profile-links-url {
 .friends-view-switcher-badge {
   background: var(--danger);
   color: #fff;
-  font-size: 10px;
+  font-size: calc(10px * var(--tsz, 1));
   font-weight: 700;
   line-height: 1;
   padding: 2px 5px;
@@ -6836,7 +6821,7 @@ a.profile-links-url {
   border-radius: 8px;
   padding: 8px;
   font: inherit;
-  font-size: 13px;
+  font-size: calc(13px * var(--tsz, 1));
   font-weight: 500;
   cursor: pointer;
 }
@@ -6863,7 +6848,7 @@ a.profile-links-url {
 }
 
 .group-message-sender {
-  font-size: 11px;
+  font-size: calc(11px * var(--tsz, 1));
   font-weight: 600;
   color: var(--text-muted);
   padding: 0 4px;
@@ -6880,7 +6865,7 @@ a.profile-links-url {
 }
 
 .group-description {
-  font-size: 13px;
+  font-size: calc(13px * var(--tsz, 1));
   color: var(--text-muted);
   line-height: 1.4;
   margin: 0 0 10px;
@@ -6899,7 +6884,7 @@ a.profile-links-url {
   border: 1px solid var(--border);
   border-radius: 8px;
   font: inherit;
-  font-size: 13px;
+  font-size: calc(13px * var(--tsz, 1));
   background: var(--surface-sunken);
   color: var(--text);
   resize: vertical;
@@ -6916,13 +6901,13 @@ a.profile-links-url {
   color: var(--accent-contrast);
   border-radius: 8px;
   padding: 7px 14px;
-  font-size: 13px;
+  font-size: calc(13px * var(--tsz, 1));
   cursor: pointer;
 }
 
 .group-role-badge {
   margin-left: 8px;
-  font-size: 10px;
+  font-size: calc(10px * var(--tsz, 1));
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.03em;
@@ -6962,7 +6947,7 @@ a.profile-links-url {
   border: 1px solid var(--border);
   border-radius: 8px;
   font: inherit;
-  font-size: 14px;
+  font-size: calc(14px * var(--tsz, 1));
   background: var(--surface-sunken);
   color: var(--text);
   resize: vertical;
@@ -6974,7 +6959,7 @@ a.profile-links-url {
   color: var(--accent-contrast);
   border-radius: 8px;
   padding: 10px;
-  font-size: 14px;
+  font-size: calc(14px * var(--tsz, 1));
   font-weight: 600;
   cursor: pointer;
 }
@@ -7007,7 +6992,7 @@ a.profile-links-url {
 }
 
 .group-friend-add-list-label {
-  font-size: 11px;
+  font-size: calc(11px * var(--tsz, 1));
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.04em;
@@ -7024,7 +7009,7 @@ a.profile-links-url {
   border-radius: 8px;
   background: var(--surface-sunken);
   color: var(--text);
-  font-size: 13px;
+  font-size: calc(13px * var(--tsz, 1));
   padding: 8px 10px;
   cursor: pointer;
 }
@@ -7044,7 +7029,7 @@ a.profile-links-url {
 /* The reflective prompt gets the same accent-quote treatment as a pull quote — it's the devotional
  * heart of the card, not fine print. */
 .daily-verse-prompt {
-  font-size: 14px;
+  font-size: calc(14px * var(--tsz, 1));
   font-style: italic;
   color: var(--text-h);
   line-height: 1.5;
@@ -7064,7 +7049,7 @@ a.profile-links-url {
 
 .daily-verse-response-input {
   font: inherit;
-  font-size: 14px;
+  font-size: calc(14px * var(--tsz, 1));
   line-height: 1.5;
   padding: 10px 12px;
   border: 1px solid var(--border);
@@ -7077,7 +7062,7 @@ a.profile-links-url {
 .daily-verse-response-submit {
   align-self: flex-end;
   font: inherit;
-  font-size: 14px;
+  font-size: calc(14px * var(--tsz, 1));
   font-weight: 600;
   border-radius: 8px;
   padding: 8px 14px;
@@ -7115,7 +7100,7 @@ a.profile-links-url {
   border: none;
   background: none;
   font: inherit;
-  font-size: 13px;
+  font-size: calc(13px * var(--tsz, 1));
   color: var(--text);
   cursor: pointer;
   padding: 3px 8px;
@@ -7144,7 +7129,7 @@ a.profile-links-url {
   border: none;
   background: none;
   color: var(--text-muted);
-  font-size: 18px;
+  font-size: calc(18px * var(--tsz, 1));
   line-height: 1;
   padding: 3px 8px;
   border-radius: 8px;
@@ -7167,8 +7152,8 @@ a.profile-links-url {
      viewport units, so inside this zoomed root a bare `100vw` renders as 100vw x the scale — at
      180% the panel's own cap would be nearly twice the screen. Same correction, and the same
      reason, as the height caps in Crossword.css. The px terms are design spacing and do scale. */
-  max-width: calc(100vw / var(--text-scale, 1) - 32px);
-  max-height: calc(100dvh / var(--text-scale, 1) - 120px);
+  max-width: calc(100vw - 32px);
+  max-height: calc(100dvh - 120px);
   overflow-y: auto;
   background: var(--panel-bg);
   background-image: linear-gradient(180deg, var(--accent-bg), transparent 40%);
@@ -7191,7 +7176,7 @@ a.profile-links-url {
 }
 
 .walk-panel-eyebrow {
-  font-size: 11px;
+  font-size: calc(11px * var(--tsz, 1));
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.08em;
@@ -7199,7 +7184,7 @@ a.profile-links-url {
 }
 
 .walk-panel-progress {
-  font-size: 12px;
+  font-size: calc(12px * var(--tsz, 1));
   color: var(--text-muted);
   margin-top: 2px;
 }
@@ -7209,7 +7194,7 @@ a.profile-links-url {
   border: none;
   background: none;
   color: var(--text-muted);
-  font-size: 20px;
+  font-size: calc(20px * var(--tsz, 1));
   line-height: 1;
   padding: 2px 8px;
   border-radius: 8px;
@@ -7222,18 +7207,18 @@ a.profile-links-url {
 }
 
 .walk-stop-label {
-  font-size: 16px;
+  font-size: calc(16px * var(--tsz, 1));
   margin: 10px 0 2px;
 }
 
 .walk-stop-reference {
-  font-size: 13px;
+  font-size: calc(13px * var(--tsz, 1));
   color: var(--text-muted);
   margin-bottom: 8px;
 }
 
 .walk-stop-blurb {
-  font-size: 13px;
+  font-size: calc(13px * var(--tsz, 1));
   line-height: 1.55;
   margin: 0 0 12px;
 }
@@ -7246,7 +7231,7 @@ a.profile-links-url {
 .walk-nav-button {
   flex: 1;
   font: inherit;
-  font-size: 13px;
+  font-size: calc(13px * var(--tsz, 1));
   font-weight: 600;
   border: 1px solid var(--border);
   background: var(--surface-sunken);
@@ -7296,7 +7281,7 @@ a.profile-links-url {
   border: none;
   background: none;
   font: inherit;
-  font-size: 13px;
+  font-size: calc(13px * var(--tsz, 1));
   color: var(--text);
   padding: 6px 8px;
   border-radius: 8px;
@@ -7323,7 +7308,7 @@ a.profile-links-url {
   border-radius: 50%;
   background: var(--accent);
   color: var(--accent-contrast);
-  font-size: 11px;
+  font-size: calc(11px * var(--tsz, 1));
   font-weight: 600;
 }
 
@@ -7334,11 +7319,12 @@ a.profile-links-url {
     right: 10px;
     width: auto;
     max-width: none;
-    /* The 67px clears the tab bar, which now scales with the text-size setting too, so that term
-       SHOULD scale along with it. The safe-area inset is a physical device distance and must not —
-       .walk-panel carries `zoom: var(--text-scale)`, so divide it back out. */
-    bottom: calc(67px + env(safe-area-inset-bottom, 0px) / var(--text-scale, 1));
-    max-height: calc(55dvh / var(--text-scale, 1));
+    /* The 67px clears the tab bar; the safe-area inset is a physical device distance. Both are
+       used raw. The inset and the 55dvh used to be divided by --text-scale to undo .walk-panel's
+       `zoom: var(--text-scale)`; that zoom is gone (see "Global text size"), so there is nothing
+       left to cancel. */
+    bottom: calc(67px + env(safe-area-inset-bottom, 0px));
+    max-height: 55dvh;
   }
 }
 
@@ -7439,7 +7425,7 @@ a.profile-links-url {
  * this whole row exists to save. */
 .bible-audio-error {
   margin-top: 4px;
-  font-size: 12px;
+  font-size: calc(12px * var(--tsz, 1));
   color: var(--text-muted);
 }
 
@@ -7465,7 +7451,7 @@ a.profile-links-url {
   background: var(--surface-sunken);
   color: var(--text);
   font: inherit;
-  font-size: 13px;
+  font-size: calc(13px * var(--tsz, 1));
   font-weight: 500;
   cursor: pointer;
 }
@@ -7606,7 +7592,7 @@ a.profile-links-url {
   background: transparent;
   color: var(--text);
   font: inherit;
-  font-size: 13px;
+  font-size: calc(13px * var(--tsz, 1));
   padding: 6px 12px 6px 9px;
   border-radius: 8px;
   cursor: pointer;
@@ -7620,7 +7606,7 @@ a.profile-links-url {
 }
 
 .myprofile-title {
-  font-size: 17px;
+  font-size: calc(17px * var(--tsz, 1));
   line-height: 1.25;
 }
 
@@ -7702,7 +7688,7 @@ a.profile-links-url {
   background: none;
   color: var(--text);
   font: inherit;
-  font-size: 13.5px;
+  font-size: calc(13.5px * var(--tsz, 1));
   padding: 8px 10px;
   border-radius: 7px;
   cursor: pointer;
@@ -7716,7 +7702,7 @@ a.profile-links-url {
 }
 
 .link-choice-icon {
-  font-size: 14px;
+  font-size: calc(14px * var(--tsz, 1));
   line-height: 1;
 }
 
@@ -7754,13 +7740,13 @@ a.profile-links-url {
 }
 
 .share-modal-header h3 {
-  font-size: 16px;
+  font-size: calc(16px * var(--tsz, 1));
 }
 
 .share-modal-close {
   border: none;
   background: none;
-  font-size: 22px;
+  font-size: calc(22px * var(--tsz, 1));
   line-height: 1;
   color: var(--text-muted);
   cursor: pointer;
@@ -7795,7 +7781,7 @@ a.profile-links-url {
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 140px;
+  font-size: calc(140px * var(--tsz, 1));
   opacity: 0.18;
   pointer-events: none;
   line-height: 1;
@@ -7810,7 +7796,7 @@ a.profile-links-url {
 }
 
 .share-card-content .share-card-badge {
-  font-size: 11px;
+  font-size: calc(11px * var(--tsz, 1));
   letter-spacing: 0.08em;
   text-transform: uppercase;
   opacity: 0.85;
@@ -7818,14 +7804,14 @@ a.profile-links-url {
 }
 
 .share-card-content .share-card-title {
-  font-size: 22px;
+  font-size: calc(22px * var(--tsz, 1));
   font-weight: 700;
   margin-bottom: 10px;
   line-height: 1.25;
 }
 
 .share-card-content .share-card-body {
-  font-size: 14px;
+  font-size: calc(14px * var(--tsz, 1));
   line-height: 1.5;
 }
 
@@ -7835,7 +7821,7 @@ a.profile-links-url {
   left: 0;
   right: 0;
   text-align: center;
-  font-size: 10px;
+  font-size: calc(10px * var(--tsz, 1));
   opacity: 0.75;
 }
 
@@ -7861,7 +7847,7 @@ a.profile-links-url {
   background: var(--surface-sunken);
   color: var(--text);
   border-radius: 6px;
-  font-size: 13px;
+  font-size: calc(13px * var(--tsz, 1));
   cursor: pointer;
   padding: 0 6px;
 }
@@ -7895,7 +7881,7 @@ a.profile-links-url {
   border: none;
   background: none;
   color: var(--text-muted);
-  font-size: 13px;
+  font-size: calc(13px * var(--tsz, 1));
   font-weight: 600;
   padding: 6px 10px;
   cursor: pointer;
@@ -7922,7 +7908,7 @@ a.profile-links-url {
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 20px;
+  font-size: calc(20px * var(--tsz, 1));
   padding: 0;
 }
 
@@ -7943,7 +7929,7 @@ a.profile-links-url {
   color: var(--text);
   border-radius: 6px;
   padding: 7px 16px;
-  font-size: 13px;
+  font-size: calc(13px * var(--tsz, 1));
   cursor: pointer;
 }
 
@@ -7953,7 +7939,7 @@ a.profile-links-url {
   color: var(--accent-contrast);
   border-radius: 6px;
   padding: 7px 16px;
-  font-size: 13px;
+  font-size: calc(13px * var(--tsz, 1));
   font-weight: 600;
   cursor: pointer;
 }
@@ -8006,7 +7992,7 @@ a.profile-links-url {
 }
 
 .notification-toast-icon {
-  font-size: 20px;
+  font-size: calc(20px * var(--tsz, 1));
   flex-shrink: 0;
   line-height: 1.3;
 }
@@ -8020,13 +8006,13 @@ a.profile-links-url {
 }
 
 .notification-toast-title {
-  font-size: 13px;
+  font-size: calc(13px * var(--tsz, 1));
   font-weight: 700;
   color: var(--text-h);
 }
 
 .notification-toast-body {
-  font-size: 12.5px;
+  font-size: calc(12.5px * var(--tsz, 1));
   color: var(--text-muted);
   overflow: hidden;
   text-overflow: ellipsis;
@@ -8040,7 +8026,7 @@ a.profile-links-url {
   border: none;
   background: none;
   color: var(--text-muted);
-  font-size: 18px;
+  font-size: calc(18px * var(--tsz, 1));
   line-height: 1;
   padding: 0 2px;
   cursor: pointer;
@@ -8114,7 +8100,7 @@ a.profile-links-url {
 }
 
 .bible-verses p {
-  font-size: 17.5px;
+  font-size: calc(17.5px * var(--tsz, 1));
   line-height: 1.68;
   margin-bottom: 11px;
   /* Long-form measure. `max-width` on the paragraphs (not the panel) keeps the chapter nav,
@@ -8124,7 +8110,7 @@ a.profile-links-url {
 
 .book-intro p,
 .book-intro-manuscripts li {
-  font-size: 15.5px;
+  font-size: calc(15.5px * var(--tsz, 1));
   line-height: 1.7;
   max-width: 32em;
 }
@@ -8132,7 +8118,7 @@ a.profile-links-url {
 .person-summary,
 .extra-biblical-summary,
 .reflection-prompt-text {
-  font-size: 15px;
+  font-size: calc(15px * var(--tsz, 1));
   line-height: 1.6;
 }
 
@@ -8161,7 +8147,7 @@ a.profile-links-url {
 /* Cormorant runs small for its nominal size — the two most prominent titles in the app take a
  * step up so the display face reads as display rather than as slightly-odd body copy. */
 .app-header h1 {
-  font-size: 23px;
+  font-size: calc(23px * var(--tsz, 1));
   font-weight: 600;
   letter-spacing: 0.01em;
 }
@@ -8179,23 +8165,23 @@ a.profile-links-url {
 .bible-welcome-wordmark {
   font-family: var(--display);
   font-weight: 600;
-  font-size: 24px;
+  font-size: calc(24px * var(--tsz, 1));
   line-height: 1.15;
   letter-spacing: 0.01em;
   color: var(--text-h);
 }
 
 .bible-welcome-brand .brand-tagline {
-  font-size: 11px;
+  font-size: calc(11px * var(--tsz, 1));
   margin-top: 3px;
 }
 
 .bible-panel-header h3 {
-  font-size: 18px;
+  font-size: calc(18px * var(--tsz, 1));
 }
 
 .book-intro h4 {
-  font-size: 21px;
+  font-size: calc(21px * var(--tsz, 1));
   font-weight: 500;
 }
 
@@ -8207,12 +8193,12 @@ a.profile-links-url {
    Scripture itself sets at 15px here — so nothing about it has stopped reading as the chapter's
    heading. */
 .bible-passage-header h4 {
-  font-size: 19px;
+  font-size: calc(19px * var(--tsz, 1));
   font-weight: 500;
 }
 
 .bible-welcome-title {
-  font-size: 20px;
+  font-size: calc(20px * var(--tsz, 1));
 }
 
 /* Inline place/person links inside Scripture are lapis, not gold. Gold is reserved for the verse
@@ -8300,7 +8286,7 @@ a.profile-links-url {
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 14px;
+  font-size: calc(14px * var(--tsz, 1));
   line-height: 1;
   font-weight: 700;
   color: #1a1a1a;
@@ -8322,7 +8308,7 @@ a.profile-links-url {
 }
 
 .verse-popup-note-highlight-label {
-  font-size: 12px;
+  font-size: calc(12px * var(--tsz, 1));
   color: var(--text-muted);
   margin-right: 2px;
 }
@@ -8356,12 +8342,12 @@ a.profile-links-url {
 
 /* Bigger than its 12px label sibling so the destructive control is a comfortable touch target. */
 .verse-popup-note-row .verse-popup-note-delete {
-  font-size: 14px;
+  font-size: calc(14px * var(--tsz, 1));
   line-height: 1;
 }
 
 .verse-popup-note-error {
-  font-size: 12px;
+  font-size: calc(12px * var(--tsz, 1));
   color: var(--danger);
   margin: 4px 0 6px;
 }
@@ -8402,7 +8388,7 @@ a.profile-links-url {
 
 .share-card-footer-mark {
   display: block;
-  font-size: 10px;
+  font-size: calc(10px * var(--tsz, 1));
   font-weight: 600;
   letter-spacing: 0.04em;
   opacity: 0.8;
@@ -8410,7 +8396,7 @@ a.profile-links-url {
 
 .share-card-footer-url {
   display: block;
-  font-size: 8.5px;
+  font-size: calc(8.5px * var(--tsz, 1));
   letter-spacing: 0.07em;
   opacity: 0.66;
 }
@@ -8513,7 +8499,7 @@ a.profile-links-url {
   padding: 2.4em 2em 6.2em;
   text-align: center;
   font-family: var(--sans);
-  font-size: 10px;
+  font-size: calc(10px * var(--tsz, 1));
 }
 
 .share-card-ink[data-safe="top"] {
@@ -8640,12 +8626,12 @@ a.profile-links-url {
 }
 
 .share-format-chip strong {
-  font-size: 12px;
+  font-size: calc(12px * var(--tsz, 1));
   font-weight: 700;
 }
 
 .share-format-chip span {
-  font-size: 9px;
+  font-size: calc(9px * var(--tsz, 1));
   letter-spacing: 0.06em;
   text-transform: uppercase;
   opacity: 0.8;
@@ -8671,7 +8657,7 @@ a.profile-links-url {
   background: var(--surface-sunken);
   color: var(--text-muted);
   border-radius: 999px;
-  font-size: 12px;
+  font-size: calc(12px * var(--tsz, 1));
   font-weight: 600;
   padding: 5px 12px;
   cursor: pointer;
@@ -8730,7 +8716,7 @@ a.profile-links-url {
   border-radius: 50%;
   background: var(--accent);
   color: var(--accent-contrast);
-  font-size: 10px;
+  font-size: calc(10px * var(--tsz, 1));
   line-height: 16px;
   text-align: center;
   opacity: 0;
@@ -8746,7 +8732,7 @@ a.profile-links-url {
   margin: 0;
   padding: 16px 8px;
   text-align: center;
-  font-size: 12px;
+  font-size: calc(12px * var(--tsz, 1));
   color: var(--text-muted);
 }
 
@@ -8766,7 +8752,7 @@ a.profile-links-url {
 
 .share-modal-size-note {
   margin-right: auto;
-  font-size: 11px;
+  font-size: calc(11px * var(--tsz, 1));
   color: var(--text-muted);
   letter-spacing: 0.03em;
 }
@@ -8801,7 +8787,7 @@ a.profile-links-url {
   }
 
   .share-modal-size-note {
-    font-size: 10px;
+    font-size: calc(10px * var(--tsz, 1));
   }
 }
 
@@ -8832,7 +8818,7 @@ a.profile-links-url {
   justify-content: space-between;
   gap: 10px;
   padding: 7px 10px;
-  font-size: 13px;
+  font-size: calc(13px * var(--tsz, 1));
   color: var(--text);
 }
 
@@ -8855,13 +8841,13 @@ a.profile-links-url {
 .auth-tabbar-icon {
   flex-shrink: 0;
   width: 20px;
-  font-size: 16px;
+  font-size: calc(16px * var(--tsz, 1));
   line-height: 1;
   color: var(--text-muted);
 }
 
 .auth-tabbar-always {
-  font-size: 11px;
+  font-size: calc(11px * var(--tsz, 1));
   font-weight: 600;
   color: var(--text-muted);
   white-space: nowrap;
@@ -8927,7 +8913,7 @@ a.profile-links-url {
 
 .auth-tabbar-limit {
   margin: 6px 0 0;
-  font-size: 11px;
+  font-size: calc(11px * var(--tsz, 1));
   line-height: 1.35;
   color: var(--danger);
 }
@@ -8940,7 +8926,7 @@ a.profile-links-url {
   color: var(--text);
   border-radius: 6px;
   padding: 6px 10px;
-  font-size: 12px;
+  font-size: calc(12px * var(--tsz, 1));
   font-weight: 600;
   cursor: pointer;
 }
@@ -8983,7 +8969,7 @@ a.profile-links-url {
   min-width: 88px;
   padding: 7px 10px;
   font-family: var(--sans);
-  font-size: 12px;
+  font-size: calc(12px * var(--tsz, 1));
   letter-spacing: 0.04em;
   border: 1px solid var(--border);
   border-radius: 8px;
@@ -9006,7 +8992,7 @@ a.profile-links-url {
 
 .admin-window-picker button {
   padding: 4px 12px;
-  font-size: 12px;
+  font-size: calc(12px * var(--tsz, 1));
   border: 1px solid var(--border);
   border-radius: 999px;
   background: transparent;
@@ -9039,28 +9025,28 @@ a.profile-links-url {
 
 .admin-stat-value {
   font-family: var(--display);
-  font-size: 24px;
+  font-size: calc(24px * var(--tsz, 1));
   line-height: 1.1;
   color: var(--text-h);
 }
 
 .admin-stat-label {
   font-family: var(--sans);
-  font-size: 11px;
+  font-size: calc(11px * var(--tsz, 1));
   letter-spacing: var(--tracking-label);
   text-transform: uppercase;
   color: var(--text-muted);
 }
 
 .admin-stat-hint {
-  font-size: 11px;
+  font-size: calc(11px * var(--tsz, 1));
   color: var(--text-muted);
   opacity: 0.8;
 }
 
 .admin-note {
   margin: 0;
-  font-size: 12px;
+  font-size: calc(12px * var(--tsz, 1));
   line-height: 1.5;
   color: var(--text-muted);
 }
@@ -9074,7 +9060,7 @@ a.profile-links-url {
 .admin-block-heading {
   margin: 0;
   font-family: var(--sans);
-  font-size: 11px;
+  font-size: calc(11px * var(--tsz, 1));
   letter-spacing: var(--tracking-label);
   text-transform: uppercase;
   color: var(--text-muted);
@@ -9095,7 +9081,7 @@ a.profile-links-url {
   display: flex;
   align-items: center;
   gap: 8px;
-  font-size: 12px;
+  font-size: calc(12px * var(--tsz, 1));
   color: var(--text);
 }
 
@@ -9179,11 +9165,11 @@ a.profile-links-url {
   flex-wrap: wrap;
   font-weight: 600;
   color: var(--text-h);
-  font-size: 14px;
+  font-size: calc(14px * var(--tsz, 1));
 }
 
 .admin-user-email {
-  font-size: 12px;
+  font-size: calc(12px * var(--tsz, 1));
   color: var(--text-muted);
   overflow-wrap: anywhere;
 }
@@ -9192,7 +9178,7 @@ a.profile-links-url {
   display: flex;
   flex-wrap: wrap;
   gap: 4px 12px;
-  font-size: 11px;
+  font-size: calc(11px * var(--tsz, 1));
   color: var(--text-muted);
 }
 
@@ -9203,7 +9189,7 @@ a.profile-links-url {
 }
 
 .admin-user-actions button {
-  font-size: 12px;
+  font-size: calc(12px * var(--tsz, 1));
   padding: 4px 10px;
 }
 
@@ -9212,7 +9198,7 @@ a.profile-links-url {
   padding: 1px 7px;
   border-radius: 999px;
   font-family: var(--sans);
-  font-size: 10px;
+  font-size: calc(10px * var(--tsz, 1));
   letter-spacing: 0.06em;
   text-transform: uppercase;
   background: var(--accent);
@@ -9230,14 +9216,14 @@ a.profile-links-url {
   align-items: center;
   gap: 8px;
   flex-wrap: wrap;
-  font-size: 11px;
+  font-size: calc(11px * var(--tsz, 1));
   color: var(--text-muted);
 }
 
 .admin-mod-author {
   color: var(--text-h);
   font-weight: 600;
-  font-size: 12px;
+  font-size: calc(12px * var(--tsz, 1));
 }
 
 .admin-mod-when {
@@ -9246,7 +9232,7 @@ a.profile-links-url {
 
 .admin-mod-body {
   margin: 0;
-  font-size: 13px;
+  font-size: calc(13px * var(--tsz, 1));
   line-height: 1.5;
   color: var(--text);
   overflow-wrap: anywhere;
@@ -9254,7 +9240,7 @@ a.profile-links-url {
 
 .admin-danger {
   align-self: flex-start;
-  font-size: 12px;
+  font-size: calc(12px * var(--tsz, 1));
   padding: 3px 10px;
   border-color: var(--danger);
   color: var(--danger);
@@ -9272,7 +9258,7 @@ a.profile-links-url {
 
 .admin-confirm p {
   margin: 0;
-  font-size: 13px;
+  font-size: calc(13px * var(--tsz, 1));
   line-height: 1.5;
 }
 
@@ -9282,20 +9268,20 @@ a.profile-links-url {
 }
 
 .admin-action-status {
-  font-size: 12px;
+  font-size: calc(12px * var(--tsz, 1));
   line-height: 1.5;
 }
 
 .admin-limits summary {
   cursor: pointer;
-  font-size: 12px;
+  font-size: calc(12px * var(--tsz, 1));
   color: var(--text-muted);
 }
 
 .admin-limits ul {
   margin: 8px 0;
   padding-left: 20px;
-  font-size: 12px;
+  font-size: calc(12px * var(--tsz, 1));
   color: var(--text);
 }
 
@@ -9353,9 +9339,9 @@ a.profile-links-url {
   position: absolute;
   top: calc(100% + 6px);
   left: 0;
-  /* Capped against the real screen — same reason as .panel-menu-dropdown: this rides
-     .app-header's `zoom: var(--text-scale)`, and min-width beats max-width in the cascade. */
-  min-width: min(200px, calc((100vw - 24px) / var(--text-scale, 1)));
+  /* Capped against the real screen — same reason as .panel-menu-dropdown, and min-width beats
+     max-width in the cascade, so the clamp goes inside the min-width itself. */
+  min-width: min(200px, calc(100vw - 24px));
   padding: 6px;
   border: 1px solid var(--border);
   border-radius: 10px;
@@ -9376,7 +9362,7 @@ a.profile-links-url {
   background: none;
   color: var(--text);
   font: inherit;
-  font-size: 15px;
+  font-size: calc(15px * var(--tsz, 1));
   text-align: left;
   cursor: pointer;
 }
@@ -9396,7 +9382,7 @@ a.profile-links-url {
 }
 
 .mobile-nav-menu-icon {
-  font-size: 16px;
+  font-size: calc(16px * var(--tsz, 1));
   line-height: 1;
   width: 20px;
   text-align: center;
@@ -9457,7 +9443,7 @@ a.profile-links-url {
   border-radius: 50%;
   background: var(--surface-sunken);
   color: var(--text-muted);
-  font-size: 19px;
+  font-size: calc(19px * var(--tsz, 1));
   line-height: 1;
 }
 
@@ -9504,7 +9490,6 @@ a.profile-links-url {
   background: var(--bg);
   color: var(--text);
   text-align: left;
-  zoom: var(--text-scale, 1);
 }
 
 .auth-admin-sheet-head {
@@ -9516,11 +9501,11 @@ a.profile-links-url {
    * why the inset is divided by --text-scale and why no other takeover needs this, is in the
    * comment on that rule. These two sheets are the app's only `position: fixed; inset: 0` heads,
    * so they are the only two places .app-header's notch padding does not reach. */
-  padding-top: calc(10px + env(safe-area-inset-top, 0px) / var(--text-scale, 1));
+  padding-top: calc(10px + env(safe-area-inset-top, 0px));
   /* And the landscape half of the same fault — see the comment on .report-sheet-head for why both
    * horizontal insets are paid when only one of them is ever non-zero. */
-  padding-left: calc(16px + env(safe-area-inset-left, 0px) / var(--text-scale, 1));
-  padding-right: calc(16px + env(safe-area-inset-right, 0px) / var(--text-scale, 1));
+  padding-left: calc(16px + env(safe-area-inset-left, 0px));
+  padding-right: calc(16px + env(safe-area-inset-right, 0px));
   border-bottom: 1px solid var(--border);
   background: var(--panel-bg);
   flex-shrink: 0;
@@ -9529,7 +9514,7 @@ a.profile-links-url {
 }
 
 .auth-admin-sheet-title {
-  font-size: 16px;
+  font-size: calc(16px * var(--tsz, 1));
   line-height: var(--sheet-head-line);
   margin: 0;
 }
@@ -9553,8 +9538,8 @@ a.profile-links-url {
    * indicator (this sheet covers the tab bar, so nothing else holds that space open — the console's
    * last row was sitting under it), the side ones clear the Dynamic Island in landscape. */
   padding: 14px 16px calc(32px + env(safe-area-inset-bottom, 0px));
-  padding-left: calc(16px + env(safe-area-inset-left, 0px) / var(--text-scale, 1));
-  padding-right: calc(16px + env(safe-area-inset-right, 0px) / var(--text-scale, 1));
+  padding-left: calc(16px + env(safe-area-inset-left, 0px));
+  padding-right: calc(16px + env(safe-area-inset-right, 0px));
   display: flex;
   flex-direction: column;
   gap: 10px;
@@ -9612,14 +9597,14 @@ a.profile-links-url {
   display: flex;
   align-items: center;
   gap: 8px;
-  font-size: 14px;
+  font-size: calc(14px * var(--tsz, 1));
   font-weight: 600;
   color: var(--text-h);
 }
 
 .admin-guest-chevron {
   color: var(--text-muted);
-  font-size: 12px;
+  font-size: calc(12px * var(--tsz, 1));
 }
 
 /* Wraps rather than scrolls: five short figures at 375px become two or three
@@ -9628,7 +9613,7 @@ a.profile-links-url {
   display: flex;
   flex-wrap: wrap;
   gap: 4px 14px;
-  font-size: 12px;
+  font-size: calc(12px * var(--tsz, 1));
   color: var(--text-muted);
 }
 
@@ -9660,16 +9645,16 @@ a.profile-links-url {
  * The checkbox group above keeps its own heading so the two kinds of entry read as two lists. */
 
 .panel-menu-dropdown {
-  /* Capped against the real screen: this dropdown rides .app-header's `zoom: var(--text-scale)`,
-     so a flat 232px renders at 418px on a 375px phone at 180%. `min-width` beats `max-width` in
-     the cascade, so the clamp has to go inside the min-width itself rather than beside it. */
-  min-width: min(232px, calc((100vw - 24px) / var(--text-scale, 1)));
+  /* Capped against the real screen: a flat 232px is wider than the gutters allow on a 375px
+     phone. `min-width` beats `max-width` in the cascade, so the clamp has to go inside the
+     min-width itself rather than beside it. */
+  min-width: min(232px, calc(100vw - 24px));
 }
 
 .panel-menu-heading {
   margin: 0 0 2px;
   padding: 0 8px;
-  font-size: 10px;
+  font-size: calc(10px * var(--tsz, 1));
   font-weight: 700;
   letter-spacing: 0.06em;
   text-transform: uppercase;
@@ -9713,7 +9698,7 @@ a.profile-links-url {
 }
 
 .panel-menu-link-icon {
-  font-size: 15px;
+  font-size: calc(15px * var(--tsz, 1));
   line-height: 1;
   width: 18px;
   text-align: center;
@@ -9727,12 +9712,12 @@ a.profile-links-url {
 }
 
 .panel-menu-link-label {
-  font-size: 14px;
+  font-size: calc(14px * var(--tsz, 1));
   font-weight: 600;
 }
 
 .panel-menu-link-blurb {
-  font-size: 11px;
+  font-size: calc(11px * var(--tsz, 1));
   line-height: 1.3;
   color: var(--text-muted);
 }
@@ -9744,7 +9729,7 @@ a.profile-links-url {
 
 .panel-menu-link-go {
   margin-left: auto;
-  font-size: 13px;
+  font-size: calc(13px * var(--tsz, 1));
   color: var(--text-muted);
 }
 
@@ -9782,7 +9767,7 @@ a.profile-links-url {
   box-shadow: 0 4px 16px rgba(0, 0, 0, 0.28);
   color: var(--text);
   font-family: var(--sans);
-  font-size: 13px;
+  font-size: calc(13px * var(--tsz, 1));
   line-height: 1.2;
 }
 
@@ -9920,7 +9905,6 @@ a.profile-links-url {
   background: var(--bg);
   color: var(--text);
   text-align: left;
-  zoom: var(--text-scale, 1);
 }
 
 .report-sheet-head {
@@ -9939,26 +9923,22 @@ a.profile-links-url {
    * takeover (.timeline-mode, .myprofile-mode, .game-mode) is a position:absolute child of the
    * shell and sits below the header for free.
    *
-   * Divided by --text-scale because .report-sheet carries `zoom: var(--text-scale, 1)`, and zoom
-   * scales this padding along with everything else in the sheet. env() reports the inset in real
-   * screen pixels, so an undivided value would be wrong in both directions: at scale 0.8 it would
-   * render 49.6px against a 62px inset — this exact bug back again at the smallest text size — and
-   * at 1.8 it would waste 50px of a phone screen. The variable is clamped to [0.8, 1.8] in
-   * lib/textSize.tsx and is never 0, so the division cannot invalidate the declaration. Division
-   * binds tighter than addition in calc(), so the 10px design padding is deliberately outside it:
-   * that part is meant to scale with the text. Crossword.css divides by the same variable for the
-   * same reason. */
-  padding-top: calc(10px + env(safe-area-inset-top, 0px) / var(--text-scale, 1));
+   * The env() term is used raw. It used to be divided by --text-scale, because .report-sheet
+   * carried `zoom: var(--text-scale, 1)` and zoom scaled this padding along with everything else
+   * in the sheet while env() kept reporting real screen pixels. That zoom is gone (see "Global
+   * text size"), so the division would now introduce exactly the error it once removed: at 0.8 it
+   * would render 77.5px against a 62px inset, and at 1.8 it would leave 34px against the same 62.
+   * Do not put it back. */
+  padding-top: calc(10px + env(safe-area-inset-top, 0px));
   /* Rotate the phone and the same intrusion moves to the side: in landscape the top inset drops to
    * 0 and the island's 59px lands on safe-area-inset-left or -right depending on which way round it
    * is held. iOS reports the inset on whichever side it is actually on and 0 on the other, so
    * paying both is correct rather than wasteful — one of them is always zero. Without this the head
    * keeps its flat 16px and "← Back", the leftmost thing in the row, is drawn straight underneath
    * the island. Measured in WebKit against the shipped stylesheet 2026-09-09: back link at x=16
-   * inside a 59px keep-out. Same /var(--text-scale) division, and for exactly the same reason, as
-   * the top inset above. */
-  padding-left: calc(16px + env(safe-area-inset-left, 0px) / var(--text-scale, 1));
-  padding-right: calc(16px + env(safe-area-inset-right, 0px) / var(--text-scale, 1));
+   * inside a 59px keep-out. Raw env(), for the same reason as the top inset above. */
+  padding-left: calc(16px + env(safe-area-inset-left, 0px));
+  padding-right: calc(16px + env(safe-area-inset-right, 0px));
   border-bottom: 1px solid var(--border);
   background: var(--panel-bg);
   flex-shrink: 0;
@@ -10000,7 +9980,7 @@ a.profile-links-url {
  * -------------------------------------------------------------------------------------------- */
 
 .report-sheet-title {
-  font-size: 16px;
+  font-size: calc(16px * var(--tsz, 1));
   line-height: var(--sheet-head-line);
   margin: 0;
   min-width: 0;
@@ -10037,8 +10017,8 @@ a.profile-links-url {
   padding: 14px 16px calc(32px + env(safe-area-inset-bottom, 0px));
   /* Landscape: the head above pays the island's side inset, and the body has to pay it too or the
    * fix stops at the title bar and every row below it still runs under the island. */
-  padding-left: calc(16px + env(safe-area-inset-left, 0px) / var(--text-scale, 1));
-  padding-right: calc(16px + env(safe-area-inset-right, 0px) / var(--text-scale, 1));
+  padding-left: calc(16px + env(safe-area-inset-left, 0px));
+  padding-right: calc(16px + env(safe-area-inset-right, 0px));
   display: flex;
   flex-direction: column;
   gap: 12px;
@@ -10055,7 +10035,7 @@ a.profile-links-url {
 
 .report-intro {
   margin: 0;
-  font-size: 14px;
+  font-size: calc(14px * var(--tsz, 1));
   line-height: 1.55;
   color: var(--text);
 }
@@ -10075,7 +10055,7 @@ a.profile-links-url {
 .report-context-line,
 .report-context-target {
   margin: 0;
-  font-size: 13px;
+  font-size: calc(13px * var(--tsz, 1));
   line-height: 1.5;
   color: var(--text-muted);
   overflow-wrap: anywhere;
@@ -10094,7 +10074,7 @@ a.profile-links-url {
   background: none;
   padding: 0;
   font: inherit;
-  font-size: 12px;
+  font-size: calc(12px * var(--tsz, 1));
   color: var(--accent);
   cursor: pointer;
   text-decoration: underline;
@@ -10108,7 +10088,7 @@ a.profile-links-url {
 
 .report-selection-head {
   margin: 0;
-  font-size: 12px;
+  font-size: calc(12px * var(--tsz, 1));
   line-height: 1.5;
   color: var(--text-muted);
 }
@@ -10122,7 +10102,7 @@ a.profile-links-url {
   border-radius: 0 8px 8px 0;
   background: var(--reading-bg);
   font-family: var(--serif);
-  font-size: 15px;
+  font-size: calc(15px * var(--tsz, 1));
   line-height: 1.5;
   color: var(--text);
   overflow-wrap: anywhere;
@@ -10148,14 +10128,14 @@ a.profile-links-url {
 
 .report-field-label {
   font-family: var(--sans);
-  font-size: 11px;
+  font-size: calc(11px * var(--tsz, 1));
   letter-spacing: var(--tracking-label);
   text-transform: uppercase;
   color: var(--text-muted);
 }
 
 .report-field-hint {
-  font-size: 12px;
+  font-size: calc(12px * var(--tsz, 1));
   line-height: 1.4;
   color: var(--text-muted);
 }
@@ -10184,7 +10164,7 @@ a.profile-links-url {
   background: var(--surface-sunken);
   color: var(--text);
   font-family: var(--sans);
-  font-size: 16px;
+  font-size: calc(16px * var(--tsz, 1));
   line-height: 1.4;
 }
 
@@ -10222,7 +10202,7 @@ a.profile-links-url {
   background: var(--panel-bg);
   color: var(--text);
   font-family: var(--sans);
-  font-size: 14px;
+  font-size: calc(14px * var(--tsz, 1));
   cursor: pointer;
 }
 
@@ -10276,7 +10256,7 @@ a.profile-links-url {
   background: transparent;
   color: var(--text-muted);
   font-family: var(--sans);
-  font-size: 13px;
+  font-size: calc(13px * var(--tsz, 1));
   text-align: left;
   cursor: pointer;
 }
@@ -10305,14 +10285,14 @@ a.profile-links-url {
 
 .report-captured-label {
   font-family: var(--sans);
-  font-size: 10px;
+  font-size: calc(10px * var(--tsz, 1));
   letter-spacing: var(--tracking-label);
   text-transform: uppercase;
   color: var(--text-muted);
 }
 
 .report-captured-value {
-  font-size: 13px;
+  font-size: calc(13px * var(--tsz, 1));
   line-height: 1.45;
   color: var(--text);
   overflow-wrap: anywhere;
@@ -10320,7 +10300,7 @@ a.profile-links-url {
 
 .report-captured-note {
   margin: 4px 0 0;
-  font-size: 12px;
+  font-size: calc(12px * var(--tsz, 1));
   line-height: 1.5;
   color: var(--text-muted);
 }
@@ -10349,7 +10329,7 @@ a.profile-links-url {
 .report-detail-title {
   margin: 0;
   font-family: var(--display);
-  font-size: 18px;
+  font-size: calc(18px * var(--tsz, 1));
   line-height: 1.25;
   color: var(--text-h);
   min-width: 0;
@@ -10357,12 +10337,12 @@ a.profile-links-url {
 }
 
 .report-detail-title {
-  font-size: 21px;
+  font-size: calc(21px * var(--tsz, 1));
 }
 
 .report-card-meta {
   margin: 0;
-  font-size: 12px;
+  font-size: calc(12px * var(--tsz, 1));
   line-height: 1.5;
   color: var(--text-muted);
   overflow-wrap: anywhere;
@@ -10370,14 +10350,14 @@ a.profile-links-url {
 
 .report-card-blurb {
   margin: 0;
-  font-size: 13px;
+  font-size: calc(13px * var(--tsz, 1));
   line-height: 1.5;
   color: var(--text);
 }
 
 .report-card-body {
   margin: 0;
-  font-size: 14px;
+  font-size: calc(14px * var(--tsz, 1));
   line-height: 1.6;
   color: var(--text);
   white-space: pre-wrap;
@@ -10389,7 +10369,7 @@ a.profile-links-url {
   padding: 8px 10px;
   border-radius: 8px;
   background: var(--accent-bg);
-  font-size: 13px;
+  font-size: calc(13px * var(--tsz, 1));
   line-height: 1.55;
   color: var(--text);
   overflow-wrap: anywhere;
@@ -10419,7 +10399,7 @@ a.profile-links-url {
   border-radius: 999px;
   background: var(--surface-sunken);
   font-family: var(--sans);
-  font-size: 11px;
+  font-size: calc(11px * var(--tsz, 1));
   letter-spacing: 0.04em;
   color: var(--text-muted);
   white-space: nowrap;
@@ -10471,7 +10451,7 @@ a.profile-links-url {
   background: transparent;
   color: var(--text-muted);
   font-family: var(--sans);
-  font-size: 12px;
+  font-size: calc(12px * var(--tsz, 1));
   cursor: pointer;
 }
 
@@ -10530,7 +10510,7 @@ a.profile-links-url {
   flex: 0 0 auto;
   min-width: 2.5em;
   font-family: var(--display);
-  font-size: 20px;
+  font-size: calc(20px * var(--tsz, 1));
   line-height: 1.2;
   color: var(--accent);
   font-variant-numeric: tabular-nums;
@@ -10547,7 +10527,7 @@ a.profile-links-url {
 }
 
 .report-queue-title {
-  font-size: 14px;
+  font-size: calc(14px * var(--tsz, 1));
   line-height: 1.4;
   color: var(--text-h);
   overflow-wrap: anywhere;
@@ -10562,7 +10542,7 @@ a.profile-links-url {
 }
 
 .report-queue-votes {
-  font-size: 12px;
+  font-size: calc(12px * var(--tsz, 1));
   color: var(--text-muted);
   white-space: nowrap;
 }
@@ -10618,7 +10598,7 @@ a.profile-links-url {
   background: var(--surface-sunken);
   color: var(--text);
   font-family: var(--sans);
-  font-size: 14px;
+  font-size: calc(14px * var(--tsz, 1));
   cursor: pointer;
 }
 
@@ -10647,7 +10627,7 @@ a.profile-links-url {
   border: 1px solid var(--border);
   border-radius: 8px;
   background: var(--panel-bg);
-  font-size: 12px;
+  font-size: calc(12px * var(--tsz, 1));
   line-height: 1.5;
   color: var(--text-muted);
   overflow-wrap: anywhere;
@@ -10655,7 +10635,7 @@ a.profile-links-url {
 
 .report-vote-mark {
   font-family: var(--sans);
-  font-size: 10px;
+  font-size: calc(10px * var(--tsz, 1));
   letter-spacing: var(--tracking-label);
   text-transform: uppercase;
 }
@@ -10687,7 +10667,7 @@ a.profile-links-url {
   display: flex;
   align-items: flex-start;
   gap: 8px;
-  font-size: 13px;
+  font-size: calc(13px * var(--tsz, 1));
   line-height: 1.45;
   color: var(--text);
   cursor: pointer;
@@ -10732,7 +10712,7 @@ a.profile-links-url {
 
 .report-role-name {
   margin: 0;
-  font-size: 14px;
+  font-size: calc(14px * var(--tsz, 1));
   color: var(--text-h);
   overflow-wrap: anywhere;
 }
@@ -10744,7 +10724,7 @@ a.profile-links-url {
   border: 1px solid var(--accent);
   border-radius: 999px;
   font-family: var(--sans);
-  font-size: 10px;
+  font-size: calc(10px * var(--tsz, 1));
   letter-spacing: var(--tracking-label);
   text-transform: uppercase;
   color: var(--text-muted);
@@ -10782,7 +10762,7 @@ a.profile-links-url {
 }
 
 .growth-fallback-note code {
-  font-size: 11px;
+  font-size: calc(11px * var(--tsz, 1));
   overflow-wrap: anywhere;
 }
 
@@ -10835,7 +10815,7 @@ a.profile-links-url {
 }
 
 .growth-row-label {
-  font-size: 13px;
+  font-size: calc(13px * var(--tsz, 1));
   color: var(--text-h);
   overflow-wrap: anywhere;
 }
@@ -10854,7 +10834,7 @@ a.profile-links-url {
   display: inline-flex;
   align-items: baseline;
   gap: 4px;
-  font-size: 12px;
+  font-size: calc(12px * var(--tsz, 1));
   color: var(--text-muted);
 }
 
@@ -10864,13 +10844,13 @@ a.profile-links-url {
 }
 
 .growth-figure strong {
-  font-size: 14px;
+  font-size: calc(14px * var(--tsz, 1));
   font-weight: 600;
   color: var(--text);
 }
 
 .growth-figure-label {
-  font-size: 10px;
+  font-size: calc(10px * var(--tsz, 1));
   letter-spacing: var(--tracking-label);
   text-transform: uppercase;
   color: var(--text-muted);
@@ -10899,7 +10879,7 @@ a.profile-links-url {
   background: transparent;
   color: var(--text-muted);
   font-family: var(--sans);
-  font-size: 12px;
+  font-size: calc(12px * var(--tsz, 1));
   cursor: pointer;
 }
 
@@ -10947,7 +10927,7 @@ a.profile-links-url {
   background: transparent;
   color: var(--text-muted);
   font-family: var(--sans);
-  font-size: 12px;
+  font-size: calc(12px * var(--tsz, 1));
   cursor: pointer;
 }
 
@@ -11016,14 +10996,14 @@ a.profile-links-url {
 .growth-tick {
   fill: var(--text-muted);
   font-family: var(--sans);
-  font-size: 10px;
+  font-size: calc(10px * var(--tsz, 1));
   font-variant-numeric: tabular-nums;
 }
 
 .growth-value-label {
   fill: var(--text);
   font-family: var(--sans);
-  font-size: 10px;
+  font-size: calc(10px * var(--tsz, 1));
   font-weight: 600;
 }
 
@@ -11057,13 +11037,13 @@ a.profile-links-url {
 
 /* Value leads, label follows — the reader already knows which series it is. */
 .growth-tooltip strong {
-  font-size: 13px;
+  font-size: calc(13px * var(--tsz, 1));
   font-variant-numeric: tabular-nums;
   color: var(--text-h);
 }
 
 .growth-tooltip span {
-  font-size: 10px;
+  font-size: calc(10px * var(--tsz, 1));
   color: var(--text-muted);
 }
 
@@ -11074,7 +11054,7 @@ a.profile-links-url {
 /* --- the table-view twin --- */
 
 .growth-table-details summary {
-  font-size: 12px;
+  font-size: calc(12px * var(--tsz, 1));
   color: var(--text-muted);
   cursor: pointer;
 }
@@ -11090,7 +11070,7 @@ a.profile-links-url {
 .growth-table {
   width: 100%;
   border-collapse: collapse;
-  font-size: 12px;
+  font-size: calc(12px * var(--tsz, 1));
   font-variant-numeric: tabular-nums;
 }
 
@@ -11105,7 +11085,7 @@ a.profile-links-url {
   position: sticky;
   top: 0;
   background: var(--panel-bg);
-  font-size: 10px;
+  font-size: calc(10px * var(--tsz, 1));
   font-weight: 600;
   letter-spacing: var(--tracking-label);
   text-transform: uppercase;
@@ -11142,7 +11122,7 @@ a.profile-links-url {
   }
 
   .growth-figure strong {
-    font-size: 13px;
+    font-size: calc(13px * var(--tsz, 1));
   }
 
   .growth-expansion {
@@ -11215,7 +11195,7 @@ a.profile-links-url {
   border-radius: 6px;
   background: none;
   color: var(--text);
-  font-size: 17px;
+  font-size: calc(17px * var(--tsz, 1));
   cursor: pointer;
 }
 
@@ -11259,7 +11239,7 @@ a.profile-links-url {
   border-radius: 6px;
   background: var(--surface-sunken);
   font-family: var(--display);
-  font-size: 17px;
+  font-size: calc(17px * var(--tsz, 1));
   font-weight: 700;
   line-height: 1;
   cursor: pointer;
@@ -11466,7 +11446,7 @@ img.sn-image,
   background: var(--surface-sunken);
   color: var(--text);
   font-family: inherit;
-  font-size: 14px;
+  font-size: calc(14px * var(--tsz, 1));
   font-weight: 600;
   cursor: pointer;
 }
@@ -11487,7 +11467,7 @@ img.sn-image,
 
 .note-image-status {
   margin: 0;
-  font-size: 13px;
+  font-size: calc(13px * var(--tsz, 1));
   color: var(--text-muted);
 }
 

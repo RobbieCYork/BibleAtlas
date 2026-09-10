@@ -20,7 +20,7 @@
 .fillblank-lives {
   display: flex;
   gap: 2px;
-  font-size: 18px;
+  font-size: calc(18px * var(--tsz, 1));
 }
 
 .fillblank-heart-lost {
@@ -70,7 +70,7 @@
 
 .fillblank-reference {
   font-weight: 700;
-  font-size: 16px;
+  font-size: calc(16px * var(--tsz, 1));
   color: var(--text-h);
   margin-bottom: 4px;
   display: flex;
@@ -79,7 +79,7 @@
 }
 
 .fillblank-testament-badge {
-  font-size: 11px;
+  font-size: calc(11px * var(--tsz, 1));
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.04em;
@@ -99,7 +99,7 @@
 }
 
 .fillblank-verse-text {
-  font-size: 19px;
+  font-size: calc(19px * var(--tsz, 1));
   line-height: 1.8;
   text-align: center;
   color: var(--text);
@@ -145,7 +145,7 @@
 }
 
 .fillblank-answer-reveal {
-  font-size: 12px;
+  font-size: calc(12px * var(--tsz, 1));
   color: #22c55e;
   font-weight: 600;
   margin-top: 2px;
@@ -157,7 +157,7 @@
   border: none;
   border-radius: 10px;
   padding: 10px 24px;
-  font-size: 15px;
+  font-size: calc(15px * var(--tsz, 1));
   font-weight: 600;
   cursor: pointer;
 }
@@ -172,7 +172,7 @@
   color: var(--text);
   border-radius: 10px;
   padding: 10px 24px;
-  font-size: 15px;
+  font-size: calc(15px * var(--tsz, 1));
   font-weight: 600;
   cursor: pointer;
 }
@@ -187,18 +187,18 @@
 .fillblank-result-correct {
   color: #16a34a;
   font-weight: 700;
-  font-size: 16px;
+  font-size: calc(16px * var(--tsz, 1));
 }
 
 .fillblank-result-wrong {
   color: #e53e3e;
   font-weight: 700;
-  font-size: 16px;
+  font-size: calc(16px * var(--tsz, 1));
 }
 
 .fillblank-missing-count {
   margin-top: 10px;
-  font-size: 12px;
+  font-size: calc(12px * var(--tsz, 1));
   color: var(--text-muted);
 }
 
@@ -212,12 +212,12 @@
 }
 
 .fillblank-gameover-icon {
-  font-size: 48px;
+  font-size: calc(48px * var(--tsz, 1));
   margin: 0;
 }
 
 .fillblank-gameover-score {
-  font-size: 16px;
+  font-size: calc(16px * var(--tsz, 1));
   color: var(--text-muted);
   margin-bottom: 12px;
 }

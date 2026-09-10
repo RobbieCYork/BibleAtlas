@@ -19,7 +19,7 @@
   justify-content: center;
   /* 20px mark + 8px either side = a 36px target, which clears the minimum for a thumb without
      turning two icons into a band. */
-  font-size: 20px;
+  font-size: calc(20px * var(--tsz, 1));
   padding: 8px;
   border-radius: 10px;
   color: inherit;

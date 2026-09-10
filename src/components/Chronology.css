@@ -20,7 +20,7 @@
 .chronology-lives {
   display: flex;
   gap: 2px;
-  font-size: 18px;
+  font-size: calc(18px * var(--tsz, 1));
 }
 
 .chronology-heart-lost {
@@ -37,7 +37,7 @@
   width: 100%;
   max-width: 640px;
   margin: 0 0 12px;
-  font-size: 14px;
+  font-size: calc(14px * var(--tsz, 1));
   color: var(--text-muted);
   text-align: center;
 }
@@ -79,7 +79,7 @@
   border-radius: 50%;
   background: var(--border);
   color: var(--text-h);
-  font-size: 12px;
+  font-size: calc(12px * var(--tsz, 1));
   font-weight: 700;
 }
 
@@ -92,7 +92,7 @@
 }
 
 .chronology-card-title {
-  font-size: 14px;
+  font-size: calc(14px * var(--tsz, 1));
   font-weight: 600;
   color: var(--text-h);
 }
@@ -102,7 +102,7 @@
   flex-wrap: wrap;
   align-items: center;
   gap: 8px;
-  font-size: 12px;
+  font-size: calc(12px * var(--tsz, 1));
   color: var(--text-muted);
 }
 
@@ -110,7 +110,7 @@
   padding: 1px 7px;
   border-radius: 100px;
   border: 1px solid var(--border);
-  font-size: 11px;
+  font-size: calc(11px * var(--tsz, 1));
 }
 
 /* Marked only after the player checks — green for a card already in its correct slot, red for one
@@ -141,7 +141,7 @@
   /* Two stacked controls per card still need a comfortable touch target on mobile. */
   min-width: 34px;
   min-height: 26px;
-  font-size: 11px;
+  font-size: calc(11px * var(--tsz, 1));
   line-height: 1;
   cursor: pointer;
 }
@@ -170,7 +170,7 @@
 
 .chronology-solution h4 {
   margin: 0 0 8px;
-  font-size: 13px;
+  font-size: calc(13px * var(--tsz, 1));
   text-transform: uppercase;
   letter-spacing: 0.04em;
   color: var(--text-muted);
@@ -185,7 +185,7 @@
 }
 
 .chronology-solution li {
-  font-size: 13px;
+  font-size: calc(13px * var(--tsz, 1));
 }
 
 .chronology-solution-title {
@@ -206,7 +206,7 @@
   border: none;
   border-radius: 10px;
   padding: 10px 24px;
-  font-size: 15px;
+  font-size: calc(15px * var(--tsz, 1));
   font-weight: 600;
   cursor: pointer;
 }
@@ -221,7 +221,7 @@
   color: var(--text);
   border-radius: 10px;
   padding: 10px 24px;
-  font-size: 15px;
+  font-size: calc(15px * var(--tsz, 1));
   font-weight: 600;
   cursor: pointer;
 }
@@ -238,18 +238,18 @@
 }
 
 .chronology-gameover-icon {
-  font-size: 48px;
+  font-size: calc(48px * var(--tsz, 1));
   margin: 0;
 }
 
 .chronology-gameover-score {
-  font-size: 16px;
+  font-size: calc(16px * var(--tsz, 1));
   color: var(--text-muted);
   margin: 0;
 }
 
 .chronology-gameover-best {
-  font-size: 14px;
+  font-size: calc(14px * var(--tsz, 1));
   color: var(--text-muted);
   margin-bottom: 12px;
 }

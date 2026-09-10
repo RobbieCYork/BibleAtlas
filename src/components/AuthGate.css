@@ -59,12 +59,12 @@
   width: 100%;
   max-width: 460px;
   margin: 0 auto;
-  /* env() divided by the text scale: .auth-gate carries `zoom: var(--text-scale)` (see the app
-     chrome rule in App.css), which would otherwise stretch or shrink the notch and home-indicator
-     clearances along with the type. The 28px design padding is meant to scale; the device insets
-     are not. */
-  padding: calc(28px + env(safe-area-inset-top, 0px) / var(--text-scale, 1)) 20px
-    calc(28px + env(safe-area-inset-bottom, 0px) / var(--text-scale, 1));
+  /* Raw env(): the notch and home-indicator clearances are physical device distances and the
+     text-size setting must not stretch or shrink them. These used to be divided by --text-scale
+     to undo .auth-gate's `zoom: var(--text-scale)`; that zoom is gone (see "Global text size" in
+     App.css) and the division would now be the error rather than the correction. */
+  padding: calc(28px + env(safe-area-inset-top, 0px)) 20px
+    calc(28px + env(safe-area-inset-bottom, 0px));
   min-height: 100%;
   box-sizing: border-box;
 }
@@ -96,7 +96,7 @@
 .auth-gate-brand-text h1 {
   margin: 0;
   font-family: var(--display);
-  font-size: 30px;
+  font-size: calc(30px * var(--tsz, 1));
   font-weight: 600;
   color: #f7f1e3;
   letter-spacing: 0.01em;
@@ -105,7 +105,7 @@
 .auth-gate-tagline {
   margin: 2px 0 0;
   font-family: var(--sans);
-  font-size: 12px;
+  font-size: calc(12px * var(--tsz, 1));
   font-weight: 600;
   letter-spacing: 0.14em;
   text-transform: uppercase;
@@ -116,7 +116,7 @@
   margin: 0;
   max-width: 38ch;
   font-family: var(--serif);
-  font-size: 16px;
+  font-size: calc(16px * var(--tsz, 1));
   line-height: 1.5;
   color: #f2ead9;
 }
@@ -157,7 +157,7 @@
   background: none;
   padding: 9px 0;
   font-family: var(--sans);
-  font-size: 14px;
+  font-size: calc(14px * var(--tsz, 1));
   font-weight: 600;
   color: #d6c7a8;
   border-radius: 7px;
@@ -176,7 +176,7 @@
 .auth-gate-free {
   margin: 0 0 12px;
   font-family: var(--sans);
-  font-size: 12.5px;
+  font-size: calc(12.5px * var(--tsz, 1));
   font-weight: 600;
   color: #e5b355;
   text-align: center;
@@ -189,7 +189,7 @@
   background: none;
   padding: 0;
   font-family: var(--sans);
-  font-size: 13px;
+  font-size: calc(13px * var(--tsz, 1));
   color: #e5b355;
   cursor: pointer;
 }
@@ -213,7 +213,7 @@
   background: rgba(0, 0, 0, 0.25);
   color: #f7f1e3;
   font-family: var(--sans);
-  font-size: 15px;
+  font-size: calc(15px * var(--tsz, 1));
 }
 
 .auth-gate-form input::placeholder {
@@ -277,7 +277,7 @@
   flex-wrap: wrap;
   gap: 2px 12px;
   font-family: var(--sans);
-  font-size: 13px;
+  font-size: calc(13px * var(--tsz, 1));
 }
 
 .auth-gate-remember-me {
@@ -319,7 +319,7 @@
   color: #e5b355;
   cursor: pointer;
   font-family: var(--sans);
-  font-size: 13px;
+  font-size: calc(13px * var(--tsz, 1));
 }
 
 .auth-gate-submit {
@@ -330,7 +330,7 @@
   background: #e5b355;
   color: #17120e;
   font-family: var(--sans);
-  font-size: 15px;
+  font-size: calc(15px * var(--tsz, 1));
   font-weight: 700;
   cursor: pointer;
 }
@@ -347,7 +347,7 @@
 .auth-gate-status {
   margin: 12px 0 0;
   font-family: var(--sans);
-  font-size: 13px;
+  font-size: calc(13px * var(--tsz, 1));
   line-height: 1.4;
   color: #f2ead9;
   text-align: center;
@@ -371,7 +371,7 @@
 .auth-gate-check-email h2 {
   margin: 0;
   font-family: var(--display);
-  font-size: 21px;
+  font-size: calc(21px * var(--tsz, 1));
   font-weight: 600;
   color: #f7f1e3;
 }
@@ -383,7 +383,7 @@
 .auth-gate-check-email p {
   margin: 0;
   font-family: var(--sans);
-  font-size: 14px;
+  font-size: calc(14px * var(--tsz, 1));
   line-height: 1.5;
   color: #f2ead9;
 }
@@ -409,7 +409,7 @@
   background: rgba(229, 179, 85, 0.12);
   border: 1px solid rgba(229, 179, 85, 0.28);
   border-radius: 10px;
-  font-size: 13px !important;
+  font-size: calc(13px * var(--tsz, 1)) !important;
   color: #e5b355 !important;
 }
 
@@ -444,7 +444,7 @@
 .auth-gate-unconfirmed p {
   margin: 0 0 6px;
   font-family: var(--sans);
-  font-size: 13px;
+  font-size: calc(13px * var(--tsz, 1));
   color: #d6c7a8;
 }
 
@@ -458,7 +458,7 @@
   padding: 0;
   color: #e5b355;
   font-family: var(--sans);
-  font-size: 13px;
+  font-size: calc(13px * var(--tsz, 1));
   font-weight: 700;
   cursor: pointer;
 }
@@ -488,7 +488,7 @@
   margin: -4px 0 0;
   max-width: 30rem;
   font-family: var(--sans);
-  font-size: 12.5px;
+  font-size: calc(12.5px * var(--tsz, 1));
   line-height: 1.5;
   color: rgba(242, 234, 217, 0.68);
   text-align: center;
@@ -517,7 +517,7 @@
 @media (max-width: 639px) {
   .auth-gate-content {
     gap: 20px;
-    padding-top: calc(20px + env(safe-area-inset-top, 0px) / var(--text-scale, 1));
+    padding-top: calc(20px + env(safe-area-inset-top, 0px));
   }
 
   .auth-gate-intro {

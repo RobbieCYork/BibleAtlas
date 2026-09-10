@@ -25,6 +25,14 @@
  * ==========================================================================*/
 
 :root {
+  /* The text-size multiplier as seen by ordinary `font-size` declarations. Declared 1 HERE, and
+   * re-declared as `var(--text-scale, 1)` on each scaled root (see "Global text size" in App.css),
+   * so `font-size: calc(<n>px * var(--tsz, 1))` renders at its literal size everywhere the setting
+   * is not meant to reach — the map, the share card, the timeline canvas — without any of them
+   * having to be named in an exclusion list. Do not set this from JS: lib/textSize.tsx sets
+   * `--text-scale` on <html>, and only the scaled roots turn that into `--tsz`. */
+  --tsz: 1;
+
   /* --- Raw pigments (theme-independent; both palettes derive from these) --- */
   --ink-900: #100c09;
   --ink-800: #17120e;
@@ -150,7 +158,14 @@
   -moz-osx-font-smoothing: grayscale;
   /* Without this, Mobile Safari auto-boosts small text inside narrow flex layouts (its built-in
    * "readability" heuristic) without reserving extra box height for it — the enlarged glyphs then
-   * get clipped by any ancestor's `overflow: hidden` (e.g. the Friends/Messages/Groups switcher). */
+   * get clipped by any ancestor's `overflow: hidden` (e.g. the Friends/Messages/Groups switcher).
+   *
+   * This pin is also what broke the text-size setting for two years, back when that setting worked
+   * through `zoom`: iOS recomputes every font size as the SPECIFIED size times this percentage,
+   * discarding the factor `zoom` had applied, so the glyphs stayed at 15px at every setting. The
+   * setting now scales the specified size itself (see "Global text size" in App.css), so
+   * `specified x 100%` IS the scaled size and the pin is harmless again. Keep it at a percentage
+   * — `auto` hands the size back to the heuristic this exists to switch off. */
   -webkit-text-size-adjust: 100%;
   text-size-adjust: 100%;
 }
