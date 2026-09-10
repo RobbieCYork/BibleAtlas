@@ -1084,4 +1084,13 @@ export const CASES = [
     why: "The imperial TITLE inside Claudius's own regnal name, linking to Octavian. Mapped to " +
          "claudius-caesar in OWNER_NAME_OVERRIDES, which the self-link exclusion then renders as " +
          "no link \u2014 so `expect` here is null, the same thing a reader sees." },
+
+  // "High Priest Joshua" \u2014 Joshua son of Jehozadak, the high priest of the return, not Joshua
+  // son of Nun five centuries earlier. Four records, six mentions; the app has no entry for him.
+  { text: "preaching urgent, specific challenges to Governor Zerubbabel and High Priest Joshua, " +
+          "promising that the LORD's presence and blessing were tied to finishing the temple.",
+    surface: "Joshua", owner: "bib-er-second-temple-completed", expect: null, status: "guard",
+    why: "Found by modern-names.mjs on the 'link covers part of a longer capitalised phrase' " +
+         "signal. The zechariah-the-prophet entry had already ruled on this man; three more " +
+         "records carried the same wrong link and two of them nobody had noticed." },
 ];

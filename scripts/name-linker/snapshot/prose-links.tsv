@@ -2479,8 +2479,6 @@ person.lifeStory|satan|038fb6dbab	229	Paul	paul-of-tarsus
 person.lifeStory|satan|038fb6dbab	316	Paul	paul-of-tarsus
 person.lifeStory|satan|038fb6dbab	662	Peter	simon-peter
 person.lifeStory|satan|038fb6dbab	747	James	james-son-of-zebedee
-person.lifeStory|satan|2122f689da	115	Joshua	joshua
-person.lifeStory|satan|2122f689da	177	Joshua	joshua
 person.lifeStory|satan|2122f689da	344	David	david
 person.lifeStory|satan|2122f689da	49	Zechariah	zechariah-the-prophet
 person.lifeStory|satan|2122f689da	499	David	david
@@ -2738,9 +2736,7 @@ person.lifeStory|zechariah-the-prophet|61b95b3b89	91	Ezra	ezra
 person.lifeStory|zerah-son-of-judah|d9f0972955	49	Perez	perez
 person.lifeStory|zerah-son-of-judah|d9f0972955	805	Asa	asa
 person.lifeStory|zerubbabel|2791651157	102	Zechariah	zechariah-the-prophet
-person.lifeStory|zerubbabel|2791651157	149	Joshua	joshua
 person.lifeStory|zerubbabel|2791651157	347	Zechariah	zechariah-the-prophet
-person.lifeStory|zerubbabel|2791651157	403	Joshua	joshua
 person.lifeStory|zerubbabel|ef958b2fe1	40	Jehoiachin	jeconiah
 person.lifeStory|zerubbabel|ef958b2fe1	410	Solomon	solomon
 person.lifespanDatingNotes|aaron|b77376d5c7	23	Moses	moses
@@ -3792,7 +3788,6 @@ timelineEvent.article|bib-er-second-temple-completed|5c35f36f0d	425	Zechariah	ze
 timelineEvent.article|bib-er-second-temple-completed|5c35f36f0d	460	Jesus	jesus-of-nazareth
 timelineEvent.article|bib-er-second-temple-completed|c6d680a82a	255	Zechariah	zechariah-the-prophet
 timelineEvent.article|bib-er-second-temple-completed|c6d680a82a	321	Zerubbabel	zerubbabel
-timelineEvent.article|bib-er-second-temple-completed|c6d680a82a	348	Joshua	joshua
 timelineEvent.article|bib-er-zerubbabels-return|10376bcab7	290	Zerubbabel	zerubbabel
 timelineEvent.article|bib-er-zerubbabels-return|10376bcab7	332	Jehoiachin	jeconiah
 timelineEvent.article|bib-er-zerubbabels-return|10376bcab7	360	David	david
@@ -4876,7 +4871,6 @@ timelineEvent.article|wld-pg-alexander-becomes-king|4e81f9b138	31	Daniel	daniel
 timelineEvent.article|wld-pg-alexander-becomes-king|66287b4fa1	57	Philip	philip-the-apostle
 timelineEvent.article|wld-pg-cyrus-decree|0ac034884e	55	Jeremiah	jeremiah
 timelineEvent.article|wld-pg-cyrus-decree|68f32b5a1e	34	David	david
-timelineEvent.article|wld-pg-cyrus-decree|68f32b5a1e	45	Joshua	joshua
 timelineEvent.article|wld-pg-cyrus-decree|68f32b5a1e	6	Zerubbabel	zerubbabel
 timelineEvent.article|wld-pg-darius-consolidation|e2c058965f	552	Zechariah	zechariah-the-prophet
 timelineEvent.article|wld-pg-death-of-alexander|7996104898	0	Daniel	daniel

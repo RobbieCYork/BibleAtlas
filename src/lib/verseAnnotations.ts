@@ -1013,10 +1013,20 @@ const OWNER_NAME_OVERRIDES: Record<string, Record<string, string | null>> = {
   // surface has no allowlist, so every "Joshua" in our prose resolves to him — including, on the
   // prophet Zechariah's page, Joshua son of Jehozadak, the high priest of the return, who is a
   // different man five centuries later with no record of his own. Suppressed here rather than
-  // linked to the wrong Joshua. (The same wrong link already sits on the satan and zerubbabel
-  // articles; those predate this table's Joshua key and are not this change's to move.)
+  // linked to the wrong Joshua.
+  //
+  // The other four were found by the modern-name sweep (scripts/name-linker/modern-names.mjs),
+  // which flags a link covering only PART of a longer capitalised phrase — "High Priest Joshua".
+  // When the Zechariah entry above landed, the satan and zerubbabel articles were noted as having
+  // the same wrong link and deliberately left; the sweep found those two again and two more
+  // nobody had seen. All six mentions across the four records are the high priest of the return
+  // — read one by one, and no record among them names Joshua son of Nun at all.
   joshua: {
     "zechariah-the-prophet": null,
+    satan: null, // Zechariah 3: "the high priest Joshua", "Joshua's filthy garments"
+    zerubbabel: null, // "Zerubbabel and the high priest Joshua"; the 'two anointed ones'
+    "bib-er-second-temple-completed": null, // "Governor Zerubbabel and High Priest Joshua"
+    "wld-pg-cyrus-decree": null, // "Joshua the high priest"
   },
 
   // ── Modern people carrying biblical first names ─────────────────────────────────────────────

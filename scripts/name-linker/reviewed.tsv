@@ -5,29 +5,89 @@
 # A candidate absent from this file fails `--check`. Do not add a row you have not read: every row
 # here is a claim that a human looked at that sentence and decided. Verdicts in use:
 #
-#   ok          Read, and the link is right. Most rows: a saint's church or a pope's own name.
-#   book-title  Read, and the link is on a BOOK rather than a man. Not fixed here, because it is
-#               one instance of a class of 119 across 42 shapes ("1 Samuel", "1-2 Peter", "the
-#               book of Ruth", "the longer ending of Mark") that the app has only ever ruled on
-#               for "John", and settling the rest touches authorship. Recorded, not decided.
-book-title	bookIntro.manuscripts	book-intro:Jeremiah	jeremiah	Jeremiah	forename-before:Septuagint's
+#   ok          Read, and the link is right. Most rows: a saint's basilica, a pope's own name, the
+#               eleven lowercase "magi", "Lord Jesus Christ", "King Agrippa II".
+#   book-title  Read, and the link is on a BOOK rather than a man. NOT fixed, because these are two
+#               instances of a class of 119 across 42 shapes ("1 Samuel", "1-2 Peter", "the book of
+#               Ruth", "the longer ending of Mark") that the app has only ever ruled on for "John",
+#               and settling the rest touches authorship. Recorded so the ledger does not claim
+#               they were read and found correct.
+book-title	bookIntro.manuscripts	book-intro:Daniel	daniel	Daniel	inside-capitalised-run
+book-title	bookIntro.manuscripts	book-intro:Jeremiah	jeremiah	Jeremiah	forename-before:Septuagint's,inside-capitalised-run
+ok	bookIntro.manuscripts	book-intro:Jonah	jesus-of-nazareth	Jesus	inside-capitalised-run
+ok	bookIntro.summary	book-intro:Matthew	magi	magi	lowercase-surface
 ok	location.archaeology.note	antioch-syria	simon-peter	Peter	forename-before:Saint
 ok	location.archaeology.note	galilee	jesus-of-nazareth	Jesus	surname-after:Boat
 ok	location.archaeology.note	patmos	john-the-apostle	John	forename-before:Saint
 ok	location.archaeology.note	sea-of-galilee	jesus-of-nazareth	Jesus	surname-after:Boat
 ok	person.extraBib.source	lysanias	caesar-augustus	Augustus	forename-before:Deified
+ok	person.lifeStory	abraham	paul-of-tarsus	Paul	inside-capitalised-run
+ok	person.lifeStory	aimee-semple-mcpherson	jesus-of-nazareth	Jesus	biblical-in-modern-article
+ok	person.lifeStory	billy-graham	martin-luther-king-jr	Martin Luther King	inside-capitalised-run
 ok	person.lifeStory	caleb	joshua	Joshua	forename-before:Addressing
+ok	person.lifeStory	george-whitefield	john-wesley	John Wesley	inside-capitalised-run
+ok	person.lifeStory	herod-the-great	magi	magi	lowercase-surface
+ok	person.lifeStory	ignatius-of-loyola	jesus-of-nazareth	Jesus	biblical-in-modern-article
+ok	person.lifeStory	isaiah	ahaz	Ahaz	inside-capitalised-run
+ok	person.lifeStory	jesus-of-nazareth	magi	magi	lowercase-surface
+ok	person.lifeStory	job	satan	satan	lowercase-surface
 ok	person.lifeStory	jonah	jesus-of-nazareth	Jesus	forename-before:Gospels
+ok	person.lifeStory	martin-luther	paul-of-tarsus	Paul	biblical-in-modern-article
+ok	person.lifeStory	martin-luther	simon-peter	Peter	saint-of-a-building,biblical-in-modern-article
+ok	person.lifeStory	martin-luther-king-jr	jesus-of-nazareth	Jesus	biblical-in-modern-article
+ok	person.lifeStory	mary-mother-of-jesus	magi	magi	lowercase-surface
 ok	person.lifeStory	nero-caesar	paul-of-tarsus	Paul	forename-before:Caesar'
+ok	person.lifeStory	porcius-festus	herod-agrippa-ii	King Agrippa	regnal-numeral
 ok	person.lifeStory	salmon-father-of-boaz	rahab	Rahab	forename-before:Matthew's
-ok	poi.archaeology.note	well-of-st-paul-tarsus	paul-of-tarsus	Paul	forename-before:Saint
+ok	person.lifeStory	teresa-of-avila	joseph-husband-of-mary	Joseph	biblical-in-modern-article
+ok	person.lifeStory	william-seymour	holy-spirit	the Holy Spirit	biblical-in-modern-article
+ok	poi.archaeology.note	circus-of-nero-rome	simon-peter	Peter	saint-of-a-building
+ok	poi.archaeology.note	circus-of-nero-rome	simon-peter	Peter	saint-of-a-building
+ok	poi.archaeology.note	well-of-st-paul-tarsus	paul-of-tarsus	Paul	forename-before:Saint,saint-of-a-building,inside-capitalised-run
 ok	poi.description	cave-of-apocalypse-patmos	john-the-apostle	John	forename-before:Saint
-ok	poi.description	gallio-inscription-delphi	gallio	Gallio	forename-before:Junius
+ok	poi.description	gallio-inscription-delphi	gallio	Gallio	forename-before:Junius,inside-capitalised-run
+ok	poi.description	megiddo-church	jesus-of-nazareth	Jesus Christ	inside-capitalised-run
+ok	poi.description	vatican-necropolis-rome	simon-peter	Peter	saint-of-a-building
+ok	poi.description	vatican-necropolis-rome	simon-peter	Peter	saint-of-a-building
+ok	seo:person.summary	elijah	jezebel	Jezebel	inside-capitalised-run
+ok	seo:person.summary	ignatius-of-loyola	jesus-of-nazareth	Jesus	biblical-in-modern-article
 ok	seo:timelineEvent.summary	augustine-confessions-397	augustine-of-hippo	Augustine of Hippo	forename-before:Bishop
+ok	seo:timelineEvent.summary	bib-ac-paul-caesarea-imprisonment	herod-agrippa-ii	King Agrippa	regnal-numeral
 ok	seo:timelineEvent.summary	bib-dki-elijah-still-small-voice	jezebel	Jezebel	forename-before:Fleeing
+ok	seo:timelineEvent.summary	bib-dki-fall-samaria-722	hoshea-king-of-israel	Hoshea	inside-capitalised-run
+ok	seo:timelineEvent.summary	civil-rights-movement-mlk-1963-1968	martin-luther-king-jr	Martin Luther King	inside-capitalised-run
 ok	seo:timelineEvent.summary	fall-of-communism-poland-1989	pope-john-paul-ii	Pope John Paul II	forename-before:Polish-born
 ok	seo:timelineEvent.summary	gregory-mission-to-england-597	gregory-the-great	Gregory the Great	modern-title-before
+ok	seo:timelineEvent.summary	gutenberg-bible-1455	johannes-gutenberg	Johannes Gutenberg	inside-capitalised-run
+ok	seo:timelineEvent.summary	society-of-jesus-founded-1540	jesus-of-nazareth	Jesus	biblical-in-modern-article
+ok	timelineEvent.article	azusa-street-revival-1906	holy-spirit	the Holy Spirit	biblical-in-modern-article
+ok	timelineEvent.article	bib-ac-paul-first-roman-imprisonment	jesus-of-nazareth	Jesus Christ	inside-capitalised-run
+ok	timelineEvent.article	bib-ac-paul-ministry	herod-agrippa-ii	King Agrippa	regnal-numeral
+ok	timelineEvent.article	bib-ac-paul-ministry	jesus-of-nazareth	Jesus Christ	inside-capitalised-run
+ok	timelineEvent.article	bib-ac-peter-martyrdom	simon-peter	Peter	saint-of-a-building
+ok	timelineEvent.article	bib-dkj-isaiah-suffering-servant	isaiah	Isaiah	inside-capitalised-run
+ok	timelineEvent.article	bib-dkj-micah-ministry	magi	magi	lowercase-surface
 ok	timelineEvent.article	bib-er-second-temple-completed	zerubbabel	Zerubbabel	forename-before:Governor
-ok	timelineEvent.article	billy-graham-crusades-1949-1957	billy-graham	Billy Graham	surname-after:Evangelistic,institution-after
+ok	timelineEvent.article	bib-loc-birth-of-jesus	magi	magi	lowercase-surface
+ok	timelineEvent.article	bib-loc-crucifixion	jesus-of-nazareth	Jesus of Nazareth	royal-style-after
+ok	timelineEvent.article	bib-loc-magi-flight-to-egypt	magi	magi	lowercase-surface
+ok	timelineEvent.article	bib-loc-magi-flight-to-egypt	magi	magi	lowercase-surface
+ok	timelineEvent.article	bib-loc-magi-flight-to-egypt	magi	magi	lowercase-surface
+ok	timelineEvent.article	billy-graham-crusades-1949-1957	billy-graham	Billy Graham	surname-after:Evangelistic,institution-after,inside-capitalised-run
+ok	timelineEvent.article	billy-graham-crusades-1949-1957	martin-luther-king-jr	Martin Luther King	inside-capitalised-run
+ok	timelineEvent.article	charlemagne-crowned-800	simon-peter	Peter	saint-of-a-building
+ok	timelineEvent.article	civil-rights-movement-mlk-1963-1968	martin-luther-king-jr	Martin Luther King	inside-capitalised-run
 ok	timelineEvent.article	council-of-ephesus-431	mary-mother-of-jesus	Mary	surname-after:Theotokos
+ok	timelineEvent.article	dietrich-bonhoeffer-german-church-struggle-1933-1945	jesus-of-nazareth	Jesus Christ	biblical-in-modern-article
 ok	timelineEvent.article	gregory-mission-to-england-597	gregory-the-great	Gregory the Great	modern-title-before
+ok	timelineEvent.article	luthers-95-theses-1517	paul-of-tarsus	Paul	biblical-in-modern-article
+ok	timelineEvent.article	luthers-95-theses-1517	simon-peter	Peter	saint-of-a-building,biblical-in-modern-article
+ok	timelineEvent.article	society-of-jesus-founded-1540	jesus-of-nazareth	Jesus	biblical-in-modern-article
+ok	timelineEvent.article	world-council-of-churches-1948	jesus-of-nazareth	Jesus Christ	biblical-in-modern-article
+ok	timelineEvent.article	wycliffe-english-bible-c1382	martin-luther	Martin Luther	inside-capitalised-run
+ok	timelineEvent.datingNotes	bib-loc-birth-of-jesus	magi	magi	lowercase-surface
+ok	timelineEvent.datingNotes	bib-loc-magi-flight-to-egypt	magi	magi	lowercase-surface
+ok	topic.section	nicene-creed	jesus-of-nazareth	Jesus Christ	inside-capitalised-run
+ok	topic.section	passover	hezekiah	Hezekiah	inside-capitalised-run
+ok	topic.section	passover	josiah	Josiah	inside-capitalised-run
+ok	topic.section	the-trinity	jesus-of-nazareth	Jesus Christ	inside-capitalised-run

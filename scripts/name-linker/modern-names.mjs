@@ -20,47 +20,71 @@
 // "excavated by Kathleen Kenyon and John Garstang" fails the check on the commit that adds it,
 // because the hit is new and unacknowledged, not because anything moved.
 //
-// ── The discriminator ─────────────────────────────────────────────────────────────────────────
-// The naive test — "is the adjacent word capitalised?" — flags 831 links, most of them "Roman
-// Senate" and "Corinth's Jewish community". Useless. What actually separates a surname from a
-// biblical continuation is VOCABULARY: "Garstang", "Naveh", "Neusner", "Lemche", "Montefiore" and
-// "Kenyon" appear nowhere in the 31,098 verses of the WEB and are no part of any registered entity
-// name, while "Christ", "Antipas", "Iscariot", "Alphaeus" and "Magdalene" all do. That one test
-// takes the candidate set from 831 to a couple of dozen and keeps every known fault. Its cost is
-// stated under LIMITS below; it is a filter for review, not a verdict.
+// ── The signals, and what they are worth ─────────────────────────────────────────
+// Eleven signals, listed separately in the output so precision can be read per signal rather than
+// as one blended figure that hides which half is doing the work. They fall into three groups.
 //
-// ── Which corpus ──────────────────────────────────────────────────────────────────────────────
-// Both linked surfaces, because they are not the same surface. `corpus.mjs` enumerates what the
-// app's panels render through LinkedVerseText. `scripts/seo/render.mjs` linkifies FIVE fields the
-// app renders as plain text — person.summary, person.occupation, topic.summary, event.summary and
-// location.rulers[].name — so those are links on ~890 public pages and links nowhere in the app,
-// and until this file they were measured by nothing at all. `seoOnlyBlocks()` below adds them.
-// If a field moves in or out of `render.mjs`'s linkify calls, change that function to match.
+// 1. VOCABULARY — the neighbouring capitalised word is a surname. The naive form of this ("is the
+//    next word capitalised?") flags 831 links, most of them "Roman Senate" and "Corinth's Jewish
+//    community", and is useless. What rescues it is that "Garstang", "Naveh", "Neusner", "Lemche"
+//    and "Montefiore" appear nowhere in the 31,098 verses of the WEB and are no part of any ANCIENT
+//    record's name, while "Christ", "Antipas", "Iscariot" and "Magdalene" all do. That single test
+//    takes 831 to 22. `surname-after`, `forename-before`, `initial-*`.
+// 2. SHAPE — the words around the link say it is not a bare ancient name at all: a regnal numeral
+//    ("Elizabeth I"), a royal style ("Mary, Queen of Scots"), a saint attached to a building ("the
+//    Convent of St. Joseph"), an institution, a US state, a modern honorific, or a link covering
+//    only PART of a longer capitalised phrase ("High Priest Joshua", "Tiberius Claudius Caesar
+//    Augustus Germanicus"). These reach what no vocabulary test can — "Protestant Elizabeth I" has
+//    the neighbours "Protestant" and "I".
+// 3. POSITION — a BIBLICAL person linked from an article whose subject is not ancient (a
+//    `kind: "church"` person, or a timeline event dated 1400+), and a lowercase surface. Neither
+//    reads the neighbouring words at all. `biblical-in-modern-article` is what catches "nineteen
+//    children of Samuel and Susanna Wesley", whose neighbours are "of" and "and".
 //
-// ── What it was measured against ──────────────────────────────────────────────────────────────
-// Fed the six faults found by eye in production plus six controls, with the link live:
+// ── Measured, not asserted ────────────────────────────────────────────────────────
+// Run against 05269f8, the tree this was written on, BEFORE any of its fixes:
 //
-//   John George Taylor  → John the Baptist    CAUGHT (surname-after:George)
-//   Joseph Naveh        → Joseph son of Jacob CAUGHT (surname-after:Naveh)
-//   Jacob Neusner       → the patriarch Jacob CAUGHT (surname-after:Neusner)
-//   Niels Peter Lemche  → Simon Peter         CAUGHT (surname-after:Lemche, forename-before:Niels)
-//   John Garstang       → John the Baptist    CAUGHT (surname-after:Garstang)
-//   Bethel, Connecticut → Bethel the POI      CAUGHT (modern-place-after)
-//   Simon Sebag Montefiore                    CAUGHT (surname-after:Sebag)
+//   92 candidates. 14 of them were genuinely wrong links — a precision of about 15%.
+//
+// Say 15% out loud rather than hiding it: five sixths of what this prints is a correct link that
+// happens to look like a modern name, and that is the price of catching the sixth. The 78 correct
+// ones are read once and recorded in `reviewed.tsv`; the recurring cost is only what a new article
+// adds. A check that flagged nothing would be worth nothing, and one that flagged everything would
+// be worth less than nothing, because nobody would read it.
+//
+// Recall is the number that matters more, and it has two forms. Of the 21 wrong links this sweep
+// removed, 14 were flagged directly. The other 7 were found by taking a flagged one and sweeping
+// its whole CLASS — one "the job" led to five, one "High Priest Joshua" led to six. Every one of
+// the 8 distinct fault classes had at least one representative flagged, which is the property that
+// actually matters: a reviewer who reads a hit and then runs `census.mjs` on its key finds the rest.
+//
+// Fed the six faults found by eye in production, plus controls, with the link live: 6 of 6 flagged.
+//
+//   John George Taylor  → John the Baptist    surname-after:George
+//   Joseph Naveh        → Joseph son of Jacob surname-after:Naveh
+//   Jacob Neusner       → the patriarch Jacob surname-after:Neusner
+//   Niels Peter Lemche  → Simon Peter         surname-after:Lemche, forename-before:Niels
+//   John Garstang       → John the Baptist    surname-after:Garstang
+//   Bethel, Connecticut → Bethel the POI      modern-place-after
+//   Simon Sebag Montefiore                    surname-after:Sebag
 //   Kathleen Kenyon / W. F. Albright / Zion Baptist Church / Israel Finkelstein
 //                                             no link fires at all — nothing to catch
 //
-// ── LIMITS — what this will not catch ─────────────────────────────────────────────────────────
-// * A modern surname that IS biblical vocabulary. "Kenneth Kitchen", "David Rohl", "Nelson Glueck"
-//   — those surnames appear capitalised in the WEB, so the discriminator clears them and no signal
-//   fires. ("John Bright's" happens to be caught, but only because the possessive makes the token
-//   "Bright's", which is not WEB vocabulary; drop the apostrophe and it is missed. Do not read that
-//   as coverage.) This is the deliberate cost of a filter with usable precision, and it is why
-//   `reviewed.tsv` records human verdicts rather than the script issuing them.
-// * A modern figure named by a bare biblical name with no adjacent surname at all — a second
-//   mention, "as Kenyon and Garstang both argued, Garstang had…" is fine, but "Wesley wrote" on a
-//   page that never gives a surname is invisible here.
-// * Anything outside the two linked surfaces above.
+// ── LIMITS — what this will not catch ────────────────────────────────────────────────
+// * A modern surname that IS biblical vocabulary, in an ancient-subject article. "Kenneth Kitchen",
+//   "David Rohl", "Nelson Glueck" — those surnames appear capitalised in the WEB, so the
+//   vocabulary group clears them, and if the article is not modern-era the position group does not
+//   fire either. ("John Bright's" happens to be caught, but only because the possessive makes the
+//   token "Bright's", which is not WEB vocabulary; drop the apostrophe and it is missed. Do not
+//   read that as coverage.) This is why `reviewed.tsv` records human verdicts rather than the
+//   script issuing them.
+// * A modern figure named by a bare biblical name with no adjacent surname — "Wesley wrote", on a
+//   page that never gives the surname.
+// * Anything outside the two linked surfaces above. In particular this measures LINKS, so a name
+//   the linker never matched is not its business.
+// * A wrong link to another ANCIENT figure, which is a different and larger bug class. Two of the
+//   fixes this file's first sweep produced were of that kind (Hoshea, and the high priest Joshua)
+//   and both were incidental — they happened to trip a shape signal.
 
 import fs from "node:fs";
 import path from "node:path";
@@ -177,6 +201,23 @@ const MODERN_PLACE =
 const MODERN_TITLE =
   /\b(?:Professor|Prof\.|Dr\.|Sir|Dame|Rev\.|Reverend|Archbishop|Cardinal|Pope|Fr\.|Mr\.|Mrs\.|Ms\.)\s+$/;
 
+/** A regnal numeral. "Protestant Elizabeth I came to the English throne" pointed at Elizabeth the
+ * mother of John the Baptist, and no vocabulary test could have seen it: the neighbours are
+ * "Protestant" and "I". Scripture numbers no one this way, so this is close to free. */
+const REGNAL_NUMERAL = /^\s+(?:I|II|III|IV|V|VI|VII|VIII|IX|X|XI|XII|XIII|XIV|XV|XVI)(?![\p{L}\d])/u;
+
+/** A royal style following the name: "the Catholic Mary, Queen of Scots" — Mary the mother of
+ * Jesus, before this. No biblical figure is styled this way in our prose. */
+const ROYAL_STYLE = /^,?\s+(?:Queen|King|Duke|Duchess|Earl|Prince|Princess|Emperor|Empress|Tsar)\s+of\b/;
+
+/** "St."/"Saint" before, a building or institution after: "the Convent of St. Joseph in Ávila",
+ * which pointed at Joseph son of Jacob rather than Joseph of Nazareth. Most hits are correct — the
+ * eight "St. Peter's Basilica"/"Square" mentions are all the right Peter — so this signal earns its
+ * place through the ledger, not through precision. */
+const SAINT_BEFORE = /\b(?:St\.|Saint|San|Santa|São)\s+$/;
+const BUILDING_AFTER =
+  /^(?:['’]s)?\s+(?:Basilica|Cathedral|Church|Chapel|Convent|Monastery|Abbey|College|Hospital|Square|Gate|Bay|Island|Seminary|School|University|Priory|Shrine)\b/;
+
 /** A year 1500 or later anywhere in the block. Never fires alone — plenty of our articles discuss a
  * biblical figure alongside a modern excavation — but it is corroboration a reviewer wants, so it
  * rides along on a hit another signal already made. Excluded from the ledger key for that reason:
@@ -199,9 +240,42 @@ function signalsFor(text, a) {
   if (INSTITUTION.test(after)) sigs.push("institution-after");
   if (MODERN_PLACE.test(after)) sigs.push("modern-place-after");
   if (MODERN_TITLE.test(before)) sigs.push("modern-title-before");
+  if (REGNAL_NUMERAL.test(after)) sigs.push("regnal-numeral");
+  if (ROYAL_STYLE.test(after)) sigs.push("royal-style-after");
+  if (SAINT_BEFORE.test(before) && BUILDING_AFTER.test(after)) sigs.push("saint-of-a-building");
 
   if (sigs.length && MODERN_YEAR.test(text)) sigs.push("modern-year-in-block");
   return { sigs, before, after };
+}
+
+/** Records whose subject is not ancient: a `kind: "church"` person, or a timeline event dated 1400
+ * or later. A link to a BIBLICAL person inside one of those articles is not automatically wrong —
+ * Luther really did study Paul's letters — but it is the population every confirmed fault came
+ * from, and it is small enough to read in full. This is the signal that catches what no vocabulary
+ * test can: "nineteen children of Samuel and Susanna Wesley", whose neighbours are "of" and "and".
+ *
+ * It fires ONLY when the link's target is biblical, so Luther linking to Wycliffe is not a hit. */
+const modernEraOwners = new Map();
+for (const p of people) {
+  if (p.kind === "church" && (p.bornYear ?? 0) >= 1400) modernEraOwners.set(p.id, `b.${p.bornYear}`);
+}
+for (const e of timelineEvents) {
+  const y = e.year ?? e.startYear;
+  if (typeof y === "number" && y >= 1400) modernEraOwners.set(e.id, String(y));
+}
+const personKind = new Map(people.map((p) => [p.id, p.kind ?? "biblical"]));
+
+/** Does this link cover only PART of a run of three or more capitalised words? A link that covers
+ * the whole run is fine ("Martin Luther King"); one that covers a slice of it means the phrase
+ * names something the link does not. */
+const CAP_RUN = /\b(?:[A-Z][\p{Ll}’'\-]+[  ]){2,}[A-Z][\p{Ll}’'\-]+\b/gu;
+function insideLongerNameRun(text, a) {
+  CAP_RUN.lastIndex = 0;
+  for (let m; (m = CAP_RUN.exec(text)) !== null; ) {
+    const s = m.index, e = s + m[0].length;
+    if (a.start >= s && a.end <= e && !(a.start === s && a.end === e)) return true;
+  }
+  return false;
 }
 
 // ── Sweep ─────────────────────────────────────────────────────────────────────────────────────
@@ -214,6 +288,23 @@ for (const b of blocks) {
     // not a misread name, and including them costs 122 false positives for no fault found.
     if (!a.id || a.kind !== "person") continue;
     const { sigs, before, after } = signalsFor(b.text, a);
+
+    // A biblical person linked from a post-1400 article. Independent of every text signal above.
+    if (modernEraOwners.has(b.owner) && personKind.get(a.id) === "biblical") {
+      sigs.push("biblical-in-modern-article");
+    }
+    // A lowercase surface is the common word, not the name — "returned to finish the job", "on the
+    // eve of his final battle". Some are genuine (the app registers "magi" and "satan" lowercase),
+    // so this is reviewed, not assumed. CAPITALISED_ONLY in verseAnnotations.ts is the fix when one
+    // of these turns out to be the common word.
+    if (/^[\p{Ll}]/u.test(a.text) && !/^(?:the|a|an)\s/i.test(a.text)) sigs.push("lowercase-surface");
+    // The link covers PART of a longer run of capitalised words, so the phrase names something the
+    // link does not: "Tiberius Claudius Caesar Augustus Germanicus" (Claudius's regnal name, with
+    // the link on "Augustus" pointing at Octavian) and "After King Hoshea's" (the king of Israel,
+    // with the link on "Hoshea" pointing at Joshua son of Nun). Neither has a modern neighbour or a
+    // modern date, so nothing else here reaches them.
+    if (insideLongerNameRun(b.text, a)) sigs.push("inside-capitalised-run");
+
     if (!sigs.length) continue;
     hits.push({
       key: [b.src, b.owner, a.id, a.text, sigs.filter((s) => !s.startsWith("modern-year")).join(",")].join("\t"),
