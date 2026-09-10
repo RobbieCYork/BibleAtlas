@@ -1,4 +1,4 @@
-import type { Topic, TopicCategory } from "../data/types";
+import type { Citation, DiscoveryFacts, ManuscriptFacts, Topic, TopicCategory } from "../data/types";
 import VerseList from "./VerseList";
 import LinkedVerseText from "./LinkedVerseText";
 import ReflectionPrompt from "./ReflectionPrompt";
@@ -29,7 +29,77 @@ const CATEGORY_LABELS: Record<TopicCategory, string> = {
   doctrine: "Doctrine",
   "people-group": "People Group",
   concept: "Concept",
+  discovery: "Discovery",
+  manuscript: "Manuscript",
 };
+
+/** The same four words TimelineEventPanel uses for a date's certainty, because DiscoveryFacts and
+ * ManuscriptFacts deliberately reuse `TimelineDateCertainty` rather than inventing a second scale.
+ * "firm" is not shown: it is the default a reader already assumes, and a badge on every article
+ * saying "we are confident" teaches them to ignore the badge on the one where we are not. */
+const CERTAINTY_NOTE: Record<string, string> = {
+  traditional: "traditional dating",
+  disputed: "disputed dating",
+  legendary: "legendary dating",
+};
+
+const dated = (value: string, certainty: string) => {
+  const note = CERTAINTY_NOTE[certainty];
+  return note ? `${value} · ${note}` : value;
+};
+
+/** How a citation's tier is named to the reader. The point of showing it at all is that a museum's
+ * own object page and a Wikipedia article are not the same kind of evidence, and a reader deciding
+ * which link to follow deserves to be told which is which. */
+const TIER_LABELS: Record<Citation["tier"], string> = {
+  institution: "Holding institution",
+  scholarly: "Scholarship",
+  primary: "Primary text",
+  reference: "Reference",
+  encyclopedic: "Encyclopedia",
+};
+
+/** Facts blocks are rendered from an ordered list of [label, value] pairs rather than from the
+ * object's key order, so the same fact sits in the same row on every article in the section — which
+ * is the entire reason these are structured fields instead of a paragraph. Empty values are dropped
+ * rather than rendered as a blank row. */
+const discoveryRows = (d: DiscoveryFacts): [string, string][] => [
+  ["Object", d.objectType],
+  ["Found at", d.findSite],
+  ["Found in", d.foundYear],
+  ["Found by", d.foundBy],
+  ["Dates from", dated(d.objectDate, d.objectDateCertainty)],
+  ["Now held at", d.currentLocation],
+];
+
+const manuscriptRows = (m: ManuscriptFacts): [string, string][] => [
+  ["Siglum", m.siglum ?? ""],
+  ["Type", m.manuscriptType],
+  ["Language", m.language],
+  ["Contents", m.contents],
+  ["Written", dated(m.dateAssigned, m.dateCertainty)],
+  ["Origin", m.origin ?? ""],
+  ["Found at", m.findSite],
+  ["Found in", m.foundYear],
+  ["Found by", m.foundBy],
+  ["Now held at", m.currentLocation],
+  ["Shelfmark", m.shelfmark ?? ""],
+];
+
+function FactsBlock({ rows }: { rows: [string, string][] }) {
+  const kept = rows.filter(([, value]) => value.trim() !== "");
+  if (kept.length === 0) return null;
+  return (
+    <div className="artifact-facts">
+      {kept.map(([label, value]) => (
+        <div className="artifact-fact" key={label}>
+          <span className="artifact-fact-label">{label}</span>
+          <span className="artifact-fact-value">{value}</span>
+        </div>
+      ))}
+    </div>
+  );
+}
 
 export default function TopicPanel({
   topic,
@@ -46,6 +116,13 @@ export default function TopicPanel({
 }: TopicPanelProps) {
   if (!topic) return null;
 
+  // Pulled out of the JSX so the narrowing survives into the click handler — reading
+  // `topic.discovery.findSiteId` inside a callback would need a non-null assertion, and an
+  // assertion is exactly the wrong tool for a field whose whole point is that it is optional.
+  const d = topic.discovery;
+  const findSite =
+    d?.findSiteId && d.findSiteKind ? { id: d.findSiteId, kind: d.findSiteKind, label: d.findSite } : null;
+
   return (
     <div className={`location-panel person-panel ${expand ? "panel-expand" : ""}`} style={expand ? undefined : style}>
       {(onBack || onClose) && (
@@ -60,7 +137,43 @@ export default function TopicPanel({
         <p className="alt-names">Also called: {topic.alternateNames.join(", ")}</p>
       )}
       <p className="person-summary">{topic.summary}</p>
-      <span className="person-tier-tag">{CATEGORY_LABELS[topic.category]}</span>
+      <div className="artifact-tags">
+        <span className="person-tier-tag">{CATEGORY_LABELS[topic.category]}</span>
+        {/* Two warnings, shown up front rather than left to the third section, because they change
+            how a reader should weigh everything below them. Neither is decoration: "authenticity
+            disputed" means specialists dispute the object itself, and "no excavation context" means
+            it surfaced on the antiquities market with no stratigraphy behind it. */}
+        {topic.discovery?.authenticityDisputed && (
+          <span className="person-tier-tag artifact-warning-tag">Authenticity disputed</span>
+        )}
+        {topic.discovery?.unprovenanced && (
+          <span className="person-tier-tag artifact-warning-tag">No excavation context</span>
+        )}
+      </div>
+
+      {topic.discovery && <FactsBlock rows={discoveryRows(topic.discovery)} />}
+      {topic.manuscript && <FactsBlock rows={manuscriptRows(topic.manuscript)} />}
+
+      {findSite && (
+        <button
+          type="button"
+          className="artifact-map-link"
+          onClick={() => (findSite.kind === "poi" ? onSelectPoi(findSite.id) : onSelectLocation(findSite.id))}
+        >
+          See {findSite.label} on the map
+        </button>
+      )}
+
+      {topic.manuscript?.facsimileUrl && (
+        <a
+          className="artifact-map-link"
+          href={topic.manuscript.facsimileUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          View the manuscript itself
+        </a>
+      )}
 
       <VerseList verses={topic.verses} onSelectVerse={onSelectVerse} />
 
@@ -92,6 +205,33 @@ export default function TopicPanel({
           </div>
         ))}
       </div>
+
+      {topic.citations && topic.citations.length > 0 && (
+        <div className="sources-section">
+          <h4>Sources</h4>
+          <ul>
+            {topic.citations.map((c, i) => (
+              <li key={c.url ?? `${c.label}-${i}`}>
+                <span className="citation-tier">{TIER_LABELS[c.tier]}</span>{" "}
+                {/* A citation with no URL is still a citation: print-only scholarship is checkable,
+                    and refusing to list it would quietly bias the section towards whatever happens
+                    to be online. */}
+                {c.url ? (
+                  <a href={c.url} target="_blank" rel="noopener noreferrer">
+                    {c.label}
+                  </a>
+                ) : (
+                  <span>{c.label}</span>
+                )}
+                {c.credit && <span className="citation-detail"> — {c.credit}</span>}
+                {c.detail && <span className="citation-detail"> {c.detail}</span>}
+                {c.paywalled && <span className="citation-detail"> (paywalled)</span>}
+                {c.supports && <span className="citation-supports">Supports: {c.supports}</span>}
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
 
       {topic.sources && topic.sources.length > 0 && (
         <div className="sources-section">

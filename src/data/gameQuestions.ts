@@ -4,7 +4,7 @@ import { pois } from "./pois";
 import { timelineEvents } from "./timelineEvents";
 import { topics } from "./topics";
 import { BOOKS } from "./bibleBooks";
-import type { LocationCategory, TimelineDateCertainty, VerseRef } from "./types";
+import type { LocationCategory, TimelineDateCertainty, Topic, VerseRef } from "./types";
 
 export type QuizDifficulty = "easy" | "moderate" | "difficult" | "impossible";
 export type QuizCategory = "people" | "places" | "history" | "theology";
@@ -404,8 +404,22 @@ function timelineOrderQuestions(): QuizQuestion[] {
  * Question *ids* are deliberately left alone ("theology-role-<topic>") even for the reclassified
  * ones — ids are opaque keys already written into existing game_rooms.question_ids rows, and
  * renaming them would break any in-flight or replayed room. */
+const TOPIC_QUIZ_CATEGORY: Record<Topic["category"], QuizCategory> = {
+  practice: "theology",
+  doctrine: "theology",
+  concept: "theology",
+  "people-group": "people",
+  // Archaeology. "Which object bears the name of Pontius Pilate?" is a history question, not a
+  // doctrine question, and filing ~150 of them under Theology would repeat exactly the failure the
+  // people-group split above was written to fix — only three times the size. Stated here rather
+  // than left to fall through a default, so a new category cannot join Theology by accident: this
+  // is a Record over the union, so adding one is a compile error until someone answers for it.
+  discovery: "history",
+  manuscript: "history",
+};
+
 function topicQuizCategory(topic: (typeof topics)[number]): QuizCategory {
-  return topic.category === "people-group" ? "people" : "theology";
+  return TOPIC_QUIZ_CATEGORY[topic.category];
 }
 
 function theologyRoleQuestions(): QuizQuestion[] {

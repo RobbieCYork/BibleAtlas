@@ -4,6 +4,19 @@ import type { Location, Person, PointOfInterest, Topic, TimelineEvent } from "..
 
 type ArticleKind = "location" | "poi" | "person" | "topic" | "timelineEvent";
 
+/** What the reader browses by, which is NOT the same thing as what the app opens.
+ *
+ * Every one of the three topic sections opens a TopicPanel — they are one record kind — but a
+ * reader looking for the Amarna Letters is not looking in the same place as a reader looking for
+ * the Trinity, and one alphabetical list cannot serve both. Splitting here rather than inventing a
+ * `Discovery` record type keeps the split where it belongs: in the browse UI, which is the only
+ * place it makes a difference.
+ *
+ * Without this, adding archaeology to the app produces a single 200-plus-entry alphabetical Topics
+ * list in which "Amarna Letters" sits between "Angels" and "Assyrians" — which would be the
+ * reader's first impression of the whole section, and a worse app than the one we started with. */
+type SectionKey = "location" | "poi" | "person" | "topic" | "discovery" | "manuscript" | "timelineEvent";
+
 interface ArticleEntry {
   kind: ArticleKind;
   id: string;
@@ -29,14 +42,33 @@ interface ArticlesPanelProps {
 }
 
 /** One browsable group in the section list below the search bar — order here is the order groups
- * render in, deliberately Places/POIs/People/Topics/Timeline (biggest map-facing categories first). */
-const SECTIONS: { kind: ArticleKind; label: string; icon: IconName }[] = [
-  { kind: "location", label: "Places", icon: "place" },
-  { kind: "poi", label: "Points of Interest", icon: "poi" },
-  { kind: "person", label: "People", icon: "people" },
-  { kind: "topic", label: "Topics", icon: "topics" },
-  { kind: "timelineEvent", label: "Timeline Events", icon: "timelineEvent" },
+ * render in, deliberately Places/POIs/People/Topics/Timeline (biggest map-facing categories first),
+ * with the two archaeology sections sitting immediately after Topics because that is what they are
+ * a specialisation of.
+ *
+ * A section with no entries is not rendered at all (see below), so this table can name a section
+ * before there is anything in it and the panel does not grow an empty row waiting for content. */
+const SECTIONS: { key: SectionKey; label: string; icon: IconName }[] = [
+  { key: "location", label: "Places", icon: "place" },
+  { key: "poi", label: "Points of Interest", icon: "poi" },
+  { key: "person", label: "People", icon: "people" },
+  { key: "topic", label: "Topics", icon: "topics" },
+  { key: "discovery", label: "Discoveries", icon: "discovery" },
+  { key: "manuscript", label: "Manuscripts", icon: "manuscript" },
+  { key: "timelineEvent", label: "Timeline Events", icon: "timelineEvent" },
 ];
+
+/** Which browse section a topic belongs in. The two archaeology categories get their own; the four
+ * that predate archaeology stay together under Topics, where 33-to-58 entries is still a list a
+ * reader can scan. */
+const SECTION_FOR_TOPIC: Record<Topic["category"], SectionKey> = {
+  practice: "topic",
+  doctrine: "topic",
+  "people-group": "topic",
+  concept: "topic",
+  discovery: "discovery",
+  manuscript: "manuscript",
+};
 
 export default function ArticlesPanel({
   locations,
@@ -57,21 +89,32 @@ export default function ArticlesPanel({
   // Which browse sections are expanded — collapsed by default since People (237+) and Timeline
   // Events (350+) are too long to dump on screen at once; a search takes over the whole panel
   // instead of needing a section open, so this only matters for pure browsing.
-  const [openSections, setOpenSections] = useState<Set<ArticleKind>>(new Set());
+  const [openSections, setOpenSections] = useState<Set<SectionKey>>(new Set());
 
-  const toggleSection = (kind: ArticleKind) => {
+  const toggleSection = (key: SectionKey) => {
     setOpenSections((prev) => {
       const next = new Set(prev);
-      if (next.has(kind)) next.delete(kind);
-      else next.add(kind);
+      if (next.has(key)) next.delete(key);
+      else next.add(key);
       return next;
     });
   };
 
-  // One flat, alphabetically-sorted list per type — built once per data change (never, in
-  // practice, since these arrays are static imports) rather than per keystroke.
-  const entriesByKind = useMemo<Record<ArticleKind, ArticleEntry[]>>(() => {
+  // One flat, alphabetically-sorted list per browse section — built once per data change (never, in
+  // practice, since these arrays are static imports) rather than per keystroke. The three
+  // topic-derived sections partition `topics` with no overlap, which is what keeps a single topic
+  // out of the search results twice.
+  const entriesBySection = useMemo<Record<SectionKey, ArticleEntry[]>>(() => {
     const sortByName = (a: ArticleEntry, b: ArticleEntry) => a.name.localeCompare(b.name);
+    const topicEntry = (t: Topic): ArticleEntry => ({
+      kind: "topic" as const,
+      id: t.id,
+      name: t.name,
+      sublabel: t.role,
+      searchNames: [t.name, ...(t.alternateNames ?? [])],
+    });
+    const topicsIn = (key: SectionKey) =>
+      topics.filter((t) => SECTION_FOR_TOPIC[t.category] === key).map(topicEntry).sort(sortByName);
     return {
       location: locations
         .map((l) => ({
@@ -100,15 +143,9 @@ export default function ArticlesPanel({
           searchNames: [p.name, ...(p.alternateNames ?? [])],
         }))
         .sort(sortByName),
-      topic: topics
-        .map((t) => ({
-          kind: "topic" as const,
-          id: t.id,
-          name: t.name,
-          sublabel: t.role,
-          searchNames: [t.name, ...(t.alternateNames ?? [])],
-        }))
-        .sort(sortByName),
+      topic: topicsIn("topic"),
+      discovery: topicsIn("discovery"),
+      manuscript: topicsIn("manuscript"),
       timelineEvent: timelineEvents
         .map((e) => ({
           kind: "timelineEvent" as const,
@@ -124,11 +161,11 @@ export default function ArticlesPanel({
   const searchResults = useMemo(() => {
     const q = query.trim().toLowerCase();
     if (!q) return [];
-    const all = SECTIONS.flatMap((s) => entriesByKind[s.kind]);
+    const all = SECTIONS.flatMap((s) => entriesBySection[s.key]);
     return all
       .filter((entry) => entry.searchNames.some((n) => n.toLowerCase().includes(q)))
       .slice(0, 40);
-  }, [query, entriesByKind]);
+  }, [query, entriesBySection]);
 
   const selectHandlers: Record<ArticleKind, (id: string) => void> = {
     location: onSelectLocation,
@@ -138,7 +175,10 @@ export default function ArticlesPanel({
     timelineEvent: onSelectTimelineEvent,
   };
 
-  const iconFor = (kind: ArticleKind): IconName => SECTIONS.find((s) => s.kind === kind)?.icon ?? "articles";
+  // Search results are flat, so a result's icon comes from its RECORD kind, not its browse section:
+  // a discovery and a doctrine are both topics and both open the same panel. Sections whose key is
+  // not a record kind fall back to the Topics mark.
+  const iconFor = (kind: ArticleKind): IconName => SECTIONS.find((s) => s.key === kind)?.icon ?? "articles";
 
   return (
     <div
@@ -192,14 +232,18 @@ export default function ArticlesPanel({
       ) : (
         <div className="articles-sections">
           {SECTIONS.map((section) => {
-            const entries = entriesByKind[section.kind];
-            const isOpen = openSections.has(section.kind);
+            const entries = entriesBySection[section.key];
+            // A section with nothing in it is not rendered. Discoveries and Manuscripts are declared
+            // here before any record carries either category, so this is what keeps the panel from
+            // showing two empty rows until the content lands.
+            if (entries.length === 0) return null;
+            const isOpen = openSections.has(section.key);
             return (
-              <div className="articles-section" key={section.kind}>
+              <div className="articles-section" key={section.key}>
                 <button
                   type="button"
                   className="articles-section-header"
-                  onClick={() => toggleSection(section.kind)}
+                  onClick={() => toggleSection(section.key)}
                   aria-expanded={isOpen}
                 >
                   <span className="articles-section-icon" aria-hidden="true">

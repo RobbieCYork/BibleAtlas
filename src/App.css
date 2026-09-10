@@ -1527,6 +1527,127 @@ body.resizing-panels {
   color: var(--text-muted);
 }
 
+/* --- Archaeology: the facts block, the two warning tags, and tiered citations ---
+ * Built on .book-intro-facts' construction rather than beside it: a labelled block of short facts
+ * on a sunken card is a shape this app already has, and a discovery article's "Found at / Found in
+ * / Found by" is the same kind of reading as a book introduction's "Written / Author". Two columns
+ * here instead of one, because these blocks carry six to eleven rows where a book intro carries
+ * two, and a single column of eleven would push the article's first paragraph off the screen. */
+
+.artifact-facts {
+  display: grid;
+  grid-template-columns: minmax(84px, auto) 1fr;
+  gap: 7px 12px;
+  padding: 11px 13px;
+  background: var(--surface-sunken);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  margin-top: 14px;
+}
+
+/* `display: contents` so each fact's label and value become direct grid items of the block above,
+ * which is what lets the labels share ONE column width across every row. Wrapping each pair in its
+ * own grid or flex row would give each row its own alignment and the column would zig-zag. */
+.artifact-fact {
+  display: contents;
+}
+
+.artifact-fact-label {
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--accent);
+  line-height: 1.5;
+  /* The value's larger line-height would otherwise leave the label sitting a pixel high in its row. */
+  padding-top: 2px;
+}
+
+.artifact-fact-value {
+  font-size: 13px;
+  line-height: 1.5;
+  color: var(--text);
+  /* `contents` fields are frequently a full clause; without this a long unbroken shelfmark or URL
+   * fragment would widen the grid column and push the panel into a horizontal scroll. */
+  overflow-wrap: anywhere;
+}
+
+/* The category tag and any warning tags share a wrapping row, so at 375px "Discovery" and
+ * "No excavation context" stack instead of overflowing. */
+.artifact-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 8px;
+}
+
+.artifact-tags .person-tier-tag {
+  margin-top: 0;
+}
+
+/* Warning tags read as warnings — same shape as the category tag so they belong to the same row,
+ * but taking --danger rather than the muted text every other tier tag uses, because "the
+ * authenticity of this object is disputed" is not a neutral label and a reader who skims past it
+ * will weigh the article wrongly. --danger rather than a new token: it is the app's one alert
+ * colour and it is already defined in both themes, and a section-local colour would be the start of
+ * a second palette. */
+.artifact-warning-tag {
+  color: var(--danger);
+  border-color: var(--danger);
+}
+
+/* Shared by "See X on the map" and "View the manuscript itself": one is a button and one is an
+ * anchor, and they must not look like two different affordances for the same kind of move. */
+.artifact-map-link {
+  display: inline-block;
+  margin-top: 10px;
+  padding: 7px 12px;
+  font-size: 13px;
+  font-family: inherit;
+  text-align: left;
+  color: var(--accent);
+  background: var(--surface-sunken);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.artifact-map-link:hover {
+  border-color: var(--accent);
+  background: var(--accent-bg);
+}
+
+/* The tier a citation belongs to, set in front of the link. The whole point of the tiers is that a
+ * museum's own object page and a Wikipedia article are not the same kind of evidence; showing the
+ * tier is how a reader gets to act on that before clicking rather than after. */
+.citation-tier {
+  display: inline-block;
+  font-size: 10px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--text-muted);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 1px 5px;
+  margin-right: 2px;
+  /* Never the thing that forces a citation line to wrap oddly — the label wraps as one unit. */
+  white-space: nowrap;
+}
+
+.citation-detail {
+  color: var(--text-muted);
+}
+
+.citation-supports {
+  display: block;
+  margin-top: 2px;
+  font-size: 11px;
+  font-style: italic;
+  color: var(--text-muted);
+}
+
 /* --- Sources section --- */
 
 .sources-section {
@@ -7730,6 +7851,8 @@ a.profile-links-url {
 .my-notes-book-heading,
 .group-friend-add-list-label,
 .book-intro-fact-label,
+.artifact-fact-label,
+.citation-tier,
 .walk-panel-eyebrow,
 .poi-badge,
 .category-badge,

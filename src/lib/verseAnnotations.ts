@@ -2,6 +2,7 @@ import { locations } from "../data/locations";
 import { pois } from "../data/pois";
 import { people } from "../data/people";
 import { topics } from "../data/topics";
+import type { TopicCategory } from "../data/types";
 import { timelineEvents } from "../data/timelineEvents";
 import { BOOKS } from "../data/bibleBooks";
 
@@ -19,6 +20,50 @@ interface NameEntry {
   id: string;
   kind: "location" | "poi" | "person" | "topic" | "timeline";
 }
+
+/**
+ * WHICH TOPIC CATEGORIES THE AUTO-LINKER REGISTERS. A switch, deliberately, not a filter.
+ *
+ * Every topic used to be registered simply because the loop below iterated `topics`. That was fine
+ * while topics were practices, doctrines, people groups and concepts. It stops being fine with
+ * archaeology, because of one measured fact:
+ *
+ *   All 66 book introductions in `data/bookIntros.ts` carry a `manuscripts: string[]` field —
+ *   318 paragraphs in total — and `BookIntroView.tsx` renders every one of them through
+ *   `LinkedVerseText`. Those paragraphs already name Qumran (58 times), the Masoretic Text (46),
+ *   the Septuagint (36), the Dead Sea Scrolls (32), Codex Vaticanus (17), Codex Sinaiticus (16)
+ *   and P46 (14), among others.
+ *
+ * So the day manuscript records are published, the Bible reader's book introductions change in 66
+ * places, with hundreds of currently-plain phrases becoming links, and nobody will have edited
+ * those pages. That is the payoff of doing this at all — a reader meeting "Codex Vaticanus" in the
+ * introduction to Hebrews can now tap it — but it is a large reader-facing change, and a large
+ * reader-facing change should be something someone turned on, not something that fell out of a
+ * `forEach`. This map is where it is turned on, and `npm run test:linker` is the instrument that
+ * measures what it did.
+ *
+ * Both archaeology categories are TRUE, which is the recommendation in the scope document and the
+ * only setting under which migrating the 25 archaeology articles that already exist (today they
+ * are `concept`, and today they are registered) leaves the linker where it found it. Setting either
+ * to false would silently un-link 25 live articles. Flip one only with the delta in hand.
+ *
+ * A `Record<TopicCategory, boolean>`, so adding a category to the union is a compile error here
+ * until someone states what it should do.
+ */
+const LINKED_TOPIC_CATEGORIES: Record<TopicCategory, boolean> = {
+  practice: true,
+  doctrine: true,
+  "people-group": true,
+  concept: true,
+  // Registered — but see the six naming rules that protect the corpus from them:
+  // never a bare personal name ("Pilate" belongs to Pontius Pilate the person, and the comment
+  // saying so already sits in the `pilate-stone` record); never a bare place name ("Lachish
+  // Letters" is safe, "Lachish" would steal every mention of the city from its own map record);
+  // and never a bare manuscript siglum — "B", "D", "A" and "01" are ordinary words and single
+  // letters. Register the unambiguous long form or nothing.
+  discovery: true,
+  manuscript: true,
+};
 
 /** Every location's (any category) primary + alternate name, every POI's name, and every person's
  * name — longest first so multi-word names win over their substrings. Where a name is shared (e.g.
@@ -45,7 +90,7 @@ const NAME_ENTRIES: NameEntry[] = (() => {
   people.forEach((person) => {
     names(person).forEach((n) => entries.push({ name: n, id: person.id, kind: "person" }));
   });
-  topics.forEach((topic) => {
+  topics.filter((topic) => LINKED_TOPIC_CATEGORIES[topic.category]).forEach((topic) => {
     names(topic).forEach((n) => entries.push({ name: n, id: topic.id, kind: "topic" }));
   });
   // Timeline events (no alternateNames field) — pushed last, so an event title would win a collision

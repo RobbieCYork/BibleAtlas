@@ -95,7 +95,11 @@ export async function generateSeo(outDir) {
     const render = RENDERERS[kind.key];
     records.forEach((record, i) => {
       const p = itemPath(kind.item, record.id);
-      write(outDir, fileForPath(p), render(record, { linkify, siblings: siblingsFor(records, i, kind.item) }));
+      // `urlFor` rides along with `linkify` so a renderer can resolve an explicit cross-reference —
+      // a discovery's `findSiteId` pointing at the Location or POI it was dug out of — under the
+      // same rule the linkifier already follows: it returns null for a record this run did not
+      // emit, so a stale id renders as plain text instead of a dead link.
+      write(outDir, fileForPath(p), render(record, { linkify, urlFor, siblings: siblingsFor(records, i, kind.item) }));
       urls.push(p);
       pages++;
     });

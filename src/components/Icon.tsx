@@ -80,6 +80,11 @@ export type IconName =
   | "games"
   | "people"
   | "topics"
+  // Archaeology's two browse sections. Both are paper-or-stone marks, so they are held apart from
+  // Bible/Articles/Topics/Notes on the same axis as those four are held apart from each other:
+  // WHAT KIND OF OBJECT. A standing carved slab; a roll.
+  | "discovery"
+  | "manuscript"
   | "timelineEvent"
   | "poi"
   | "place"
@@ -306,6 +311,34 @@ const PATHS = {
       <path d="M9.2 4.6h8.4a2 2 0 0 1 2 2v10.8a2 2 0 0 1-2 2H9.2L4 12Z" />
       <circle cx="9.4" cy="12" r="1.5" fill="currentColor" stroke="none" />
       <path d="M13.4 9.2h3.2M13.4 14.8h3.2" />
+    </>
+  ),
+
+  /* A carved stele standing in the excavation, with the ground rule cutting across its foot rather
+     than sitting under it — because the one thing every record in this section has in common is
+     that it came OUT of the ground. Round-topped and closed, which is what keeps it clear of Points
+     of Interest's arch: the arch is open under its span and stands on two piers, the stele is a
+     solid slab. The carved panel is the solid mark. */
+  discovery: (
+    <>
+      <path d="M8.2 20.4V8.2a3.8 3.8 0 0 1 7.6 0v12.2Z" />
+      <path d="M2.8 17.4h18.4" />
+      <rect x="10.1" y="9.6" width="3.8" height="3.2" rx="0.8" fill="currentColor" stroke="none" />
+    </>
+  ),
+
+  /* A roll: a written panel with a rolled rod at each end, overhanging it on both sides. The only
+     mark in the set whose silhouette is a bar-panel-bar stack, which is what tells it from Bible's
+     opened book and Articles' single flat leaf at 20px — a manuscript article is about a text that
+     was ROLLED, and the rolls are the whole silhouette. Two ruled lines of unequal length are the
+     script; the seal at the end of the second is the solid mark. */
+  manuscript: (
+    <>
+      <path d="M5.4 6.6h13.2v10.8H5.4Z" />
+      <rect x="3.4" y="3.4" width="17.2" height="3.2" rx="1.6" />
+      <rect x="3.4" y="17.4" width="17.2" height="3.2" rx="1.6" />
+      <path d="M8.2 10.2h7.4M8.2 13.8h4.4" />
+      <circle cx="15.6" cy="13.8" r="1.4" fill="currentColor" stroke="none" />
     </>
   ),
 

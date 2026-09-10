@@ -91,6 +91,9 @@ blockquote cite{display:block;margin-top:4px;font-size:14px;font-style:normal;co
 .evidence{border:1px solid var(--rule);background:var(--card);border-radius:12px;padding:14px 16px;margin:12px 0;box-shadow:var(--shadow)}
 .evidence h3{margin-top:0}
 .tag{display:inline-block;font-size:12px;letter-spacing:.04em;padding:2px 8px;border:1px solid var(--rule);border-radius:999px;color:var(--muted);margin-left:6px;vertical-align:2px}
+.tag.warn{color:var(--accent);border-color:var(--accent)}
+.cite-tier{display:inline-block;font-size:11px;letter-spacing:.04em;text-transform:uppercase;padding:1px 6px;border:1px solid var(--rule);border-radius:4px;color:var(--muted);margin-right:6px;font-family:Archivo,sans-serif}
+.cite-supports{display:block;font-size:13.5px;font-style:italic;color:var(--muted)}
 figure{margin:16px 0}
 figure img{width:100%;height:auto;border-radius:10px;display:block;background:var(--rule)}
 figcaption{font-size:13.5px;color:var(--muted);margin-top:6px;font-family:Archivo,sans-serif}
@@ -288,6 +291,85 @@ const moreSection = (label, siblings) =>
         .map((s) => `<li><a href="${s.href}">${esc(s.name)}</a></li>`)
         .join("")}</ul></div>`
     : "";
+
+/** The tier a source belongs to, spelled out for a reader. The tiers exist so a museum's own object
+ * page and a Wikipedia article do not arrive looking like the same kind of evidence; printing the
+ * tier is how that distinction reaches the person deciding which link to follow. */
+const CITATION_TIER_LABEL = {
+  institution: "Holding institution",
+  scholarly: "Scholarship",
+  primary: "Primary text",
+  reference: "Reference",
+  encyclopedic: "Encyclopedia",
+};
+
+/** `citations` is the tiered, creditable list carried by discovery and manuscript records;
+ * `sources` remains the plain further-reading list every other record type uses. Both can appear on
+ * one page, and they are two different sections on purpose — one is what the article is built on,
+ * the other is where to go next. */
+const citationsSection = (citations) =>
+  section(
+    "Sources",
+    ul(
+      (citations ?? []).map((c) => {
+        const tier = `<span class="cite-tier">${esc(CITATION_TIER_LABEL[c.tier] ?? c.tier)}</span>`;
+        // A citation with no URL is still a citation — print-only scholarship is checkable, and
+        // dropping it would quietly bias the section towards whatever happens to be online.
+        const label = c.url ? extLink(c.url, c.label) : `<strong>${esc(c.label)}</strong>`;
+        const bits = [c.credit, c.detail, c.paywalled ? "paywalled" : ""].filter(Boolean).map(esc).join(" · ");
+        return `${tier}${label}${bits ? ` <span class="note">— ${bits}</span>` : ""}${
+          c.supports ? `<span class="cite-supports">Supports: ${esc(c.supports)}</span>` : ""
+        }`;
+      })
+    )
+  );
+
+/** The facts block for a discovery, plus the two warnings that change how everything under them
+ * should be weighed. Rendered from an ordered list rather than the object's keys so the same fact
+ * sits in the same row on every article in the section. */
+const discoveryFacts = (d, ctx) => {
+  const site = d.findSiteId && d.findSiteKind ? ctx.urlFor(d.findSiteKind, d.findSiteId) : null;
+  return dl([
+    ["Object", esc(d.objectType)],
+    ["Found at", site ? `<a href="${site}">${esc(d.findSite)}</a>` : esc(d.findSite)],
+    ["Found in", esc(d.foundYear)],
+    ["Found by", esc(d.foundBy)],
+    [
+      "Dates from",
+      `${esc(d.objectDate)}${
+        d.objectDateCertainty && d.objectDateCertainty !== "firm"
+          ? ` <span class="tag">${esc(CERTAINTY_NOTE[d.objectDateCertainty] ?? d.objectDateCertainty)}</span>`
+          : ""
+      }`,
+    ],
+    ["Now held at", esc(d.currentLocation)],
+  ]);
+};
+
+const manuscriptFacts = (m) =>
+  dl([
+    ["Siglum", esc(m.siglum ?? "")],
+    ["Type", esc(m.manuscriptType)],
+    ["Language", esc(m.language)],
+    ["Contents", esc(m.contents)],
+    [
+      "Written",
+      `${esc(m.dateAssigned)}${
+        m.dateCertainty && m.dateCertainty !== "firm"
+          ? ` <span class="tag">${esc(CERTAINTY_NOTE[m.dateCertainty] ?? m.dateCertainty)}</span>`
+          : ""
+      }`,
+    ],
+    ["Origin", esc(m.origin ?? "")],
+    ["Found at", esc(m.findSite)],
+    ["Found in", esc(m.foundYear)],
+    ["Found by", esc(m.foundBy)],
+    ["Now held at", esc(m.currentLocation)],
+    ["Shelfmark", esc(m.shelfmark ?? "")],
+    // The single most valuable link a manuscript article can carry: the reader can look at the
+    // thing itself, free and legally, at full resolution.
+    ["Facsimile", m.facsimileUrl ? extLink(m.facsimileUrl, "View the manuscript") : ""],
+  ]);
 
 const heading = (title, kicker, sub) =>
   `${kicker ? `<p class="kicker">${esc(kicker)}</p>` : ""}<h1>${esc(title)}</h1>${
@@ -560,28 +642,101 @@ export function topicPage(topic, ctx) {
     { name: "Topics", path: indexPath("topics") },
     { name: topic.name, path: itemPath("topic", topic.id) },
   ];
+  const d = topic.discovery;
+  const m = topic.manuscript;
+  const warnings = [
+    d?.authenticityDisputed ? "Authenticity disputed" : "",
+    d?.unprovenanced ? "No excavation context" : "",
+  ]
+    .filter(Boolean)
+    .map((w) => `<span class="tag warn">${esc(w)}</span>`)
+    .join("");
   const body = [
     heading(
       topic.name,
       topic.role,
-      topic.alternateNames?.length ? `Also called ${esc(topic.alternateNames.join(", "))}` : ""
+      [
+        topic.alternateNames?.length ? `Also called ${esc(topic.alternateNames.join(", "))}` : "",
+        warnings,
+      ]
+        .filter(Boolean)
+        .join(" ")
     ),
     `<p class="lead">${ctx.linkify(topic.summary, topic.id)}</p>`,
+    d ? discoveryFacts(d, ctx) : "",
+    m ? manuscriptFacts(m) : "",
     (topic.sections ?? []).map((s) => section(s.heading, paras(s.paragraphs, topic.id, ctx))).join(""),
     versesSection(topic.verses),
+    citationsSection(topic.citations),
     sourcesSection(topic.sources),
     reflectSection(topic.reflectionPrompt),
     moreSection("topics", ctx.siblings),
   ].join("");
   return page({
-    title: `${topic.name} in the Bible — ${topic.role} | ${SITE_NAME}`,
+    // The headline names what the record IS. "The Tel Dan Stele in the Bible" would be wrong about
+    // an object; "in the Bible" is right for a doctrine or a practice, which is what it was written
+    // for. Same reason the `about` node below is not an Article: a page about a stone is a page
+    // about a stone.
+    title:
+      d || m
+        ? `${topic.name} — ${topic.role} | ${SITE_NAME}`
+        : `${topic.name} in the Bible — ${topic.role} | ${SITE_NAME}`,
     description,
     canonical: itemPath("topic", topic.id),
     trail,
-    jsonLd: [articleLd(`${topic.name} in the Bible`, topic.summary, itemPath("topic", topic.id))],
+    jsonLd: topicJsonLd(topic),
     body,
     current: "/topics",
   });
+}
+
+/** What the page is, in structured data.
+ *
+ * Every topic page is an Article — that much has always been true and does not change. What changes
+ * for archaeology is that the article is ABOUT a specific object, and schema.org can say so:
+ * a manuscript gets schema.org/Manuscript, an excavated object gets CreativeWork, and both are
+ * attached to the Article by `about` rather than replacing it.
+ *
+ * What is deliberately NOT emitted: `dateCreated`. These records carry human dates — "c. 840-835
+ * BC", "1993 and 1994" — with a certainty field beside them that ranges from firm to legendary, and
+ * schema.org's date fields have no way to carry "c." or a range. Emitting "-0840" would assert a
+ * precision the record does not claim, which is the same reason personPage emits no birthDate. */
+function topicJsonLd(topic) {
+  const path = itemPath("topic", topic.id);
+  const d = topic.discovery;
+  const m = topic.manuscript;
+  const headline = d || m ? `${topic.name}: ${topic.role}` : `${topic.name} in the Bible`;
+  const article = articleLd(headline, topic.summary, path);
+  if (!d && !m) return [article];
+  // Only properties whose schema.org meaning is exactly the field's meaning. A find site is NOT
+  // `locationCreated` — the Tel Dan Stele was cut in Damascus and dug up at Dan, and saying
+  // "created at Tel Dan" to a crawler would be a false statement made for the sake of a richer
+  // node. `holdingArchive` belongs to ArchiveComponent, not CreativeWork, so it is not used here
+  // either. Both facts are on the page, in the facts block, where they are true and readable.
+  const about = d
+    ? {
+        "@type": "CreativeWork",
+        name: topic.name,
+        ...(topic.alternateNames?.length ? { alternateName: topic.alternateNames } : {}),
+        description: clip(`${d.objectType}. ${topic.summary}`, 300),
+        url: absolute(path),
+      }
+    : {
+        // schema.org/Manuscript — a written witness is one of the few things in this app that has an
+        // exactly right type.
+        "@type": "Manuscript",
+        name: topic.name,
+        ...(m.siglum ? { alternateName: m.siglum } : {}),
+        description: clip(m.contents, 300),
+        inLanguage: m.language,
+        // Where it was copied, which is what `locationCreated` means and what `origin` records.
+        ...(m.origin ? { locationCreated: m.origin } : {}),
+        ...(m.shelfmark ? { identifier: m.shelfmark } : {}),
+        // A digital facsimile is another page about this same manuscript, which is what `sameAs` is.
+        ...(m.facsimileUrl ? { sameAs: m.facsimileUrl } : {}),
+        url: absolute(path),
+      };
+  return [{ ...article, about: { "@id": `${absolute(path)}#subject` } }, { "@id": `${absolute(path)}#subject`, ...about }];
 }
 
 export function eventPage(ev, ctx) {

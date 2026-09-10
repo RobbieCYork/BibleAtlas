@@ -187,8 +187,142 @@ export interface Person {
   reflectionPrompt?: string;
 }
 
-/** Drives which icon/badge a Topic gets — not map-related (topics have no coordinates). */
-export type TopicCategory = "practice" | "doctrine" | "people-group" | "concept";
+/** Drives which icon/badge a Topic gets — not map-related (topics have no coordinates).
+ *
+ * "discovery" and "manuscript" are archaeology's two categories. They are categories on the
+ * EXISTING Topic rather than two new record types on purpose: the reader-facing shape archaeology
+ * needs — heading + paragraphs, verses, sources, a reflection prompt — is byte-for-byte what Topic
+ * already is, while a sixth record kind would have to be threaded through 22 files including
+ * `lib/verseAnnotations.ts`, the one file in this repo whose last bad change shipped 50 wrong
+ * reader-facing links past both `npm run build` and `npm run test:linker`. The cheap option is also
+ * the safe one.
+ *
+ * Where the line falls between the two, because it is a judgement call and it has to be made the
+ * same way 150 times:
+ *  - "discovery"  — a specific physical object or find, where the article leads with the find story.
+ *                   A composition known only from excavated copies (Gilgamesh, Enuma Elish) belongs
+ *                   here too, because its article leads with the excavation, not the text.
+ *  - "manuscript" — a written witness to a biblical text: a specific codex or scroll, OR a named
+ *                   textual tradition of the Bible (the Septuagint, the Masoretic Text), which
+ *                   would otherwise have to be forced into a "one object" mould it does not fit.
+ *  - "concept"    — anything considered apart from any object. */
+export type TopicCategory =
+  | "practice"
+  | "doctrine"
+  | "people-group"
+  | "concept"
+  | "discovery"
+  | "manuscript";
+
+/** How a source backing an article should be weighed, so the reader can tell a museum's own object
+ * page from a Wikipedia article at a glance instead of meeting six identical-looking links.
+ *
+ * The tiers exist to be counted, not just displayed: an article on a contested object is only worth
+ * something if the dispute is cited to the actual dissenting scholarship, and "encyclopedic" is its
+ * own tier precisely so Wikipedia can be listed without being allowed to carry the article. */
+export type CitationTier =
+  /** The holding institution or the excavating body — museum object page, IAA release, excavation
+   * project site. The closest thing to a primary witness the web offers for a physical object. */
+  | "institution"
+  /** Peer-reviewed publication, excavation report or academic monograph. Worth citing even where
+   * the reader cannot open it: an unclickable checkable citation beats a clickable unverifiable
+   * one, and `paywalled` says which it is. */
+  | "scholarly"
+  /** Public-domain primary text — Wikisource, Perseus, LacusCurtius, Sefaria, archive.org. */
+  | "primary"
+  /** Reputable popular or reference writing: Bible Odyssey, Britannica, the Biblical Archaeology
+   * Society, a university press office. */
+  | "reference"
+  /** Wikipedia. */
+  | "encyclopedic";
+
+/** A tiered, creditable citation. Distinct from `SourceCitation` (a label and a link, used by the
+ * other five record types) because "give credit to the source" needs the credit itself — who is
+ * being cited, in what publication, and for which claim. */
+export interface Citation {
+  tier: CitationTier;
+  label: string;
+  /** Absent is legitimate: print-only scholarship is still checkable. */
+  url?: string;
+  /** Author or institution, as they should be credited on the page. */
+  credit?: string;
+  /** Bibliographic detail for a scholarly cite — journal, volume, year, pages. */
+  detail?: string;
+  /** True where the reader will hit a paywall, so nobody is sent into a dead end unwarned. */
+  paywalled?: boolean;
+  /** Which claim in the article this backs. Strongly encouraged on the disputes section: a dispute
+   * cited to nothing is an assertion. */
+  supports?: string;
+}
+
+/** Structured facts for `category: "discovery"`, rendered as a facts block above `sections` so the
+ * same five things sit in the same place on every discovery article instead of being buried at a
+ * different point in each one's prose. */
+export interface DiscoveryFacts {
+  /** What kind of object: "Basalt victory stele", "Clay bulla", "Limestone ossuary". "A stone" is
+   * not an answer. */
+  objectType: string;
+  /** Where it was found, as a place name written for a reader. */
+  findSite: string;
+  /** Optional id of the Location or POI record for the find site, so the panel can offer "See this
+   * place on the map". Must resolve to a real record — an unresolved id renders nothing rather
+   * than a dead control, but it is still a data bug. */
+  findSiteId?: string;
+  findSiteKind?: "location" | "poi";
+  /** Year or range the object was found: "1868", "1993 and 1994", "1947-1956". */
+  foundYear: string;
+  /** Who found it, credited as the sources credit them. "Unknown" and "credit is contested — see
+   * below" are valid values; a guess is not. */
+  foundBy: string;
+  /** When the object itself dates from: "c. 840-835 BC". */
+  objectDate: string;
+  /** How firmly. Deliberately reuses TimelineDateCertainty so the app has ONE vocabulary for "how
+   * sure are we about this date" rather than two that drift apart. */
+  objectDateCertainty: TimelineDateCertainty;
+  /** Museum or collection holding it now. "Destroyed", "Lost" and "Private collection" are
+   * legitimate values. */
+  currentLocation: string;
+  /** Set ONLY where the object's authenticity is itself seriously disputed by specialists — the
+   * James Ossuary, the Jehoash Inscription, the Shapira Scroll. Drives a visible badge; absent
+   * means "authenticity not in question". */
+  authenticityDisputed?: boolean;
+  /** Set where the object has no excavation context — it surfaced on the antiquities market. A
+   * real epistemic category rather than a slur, and one a reader deserves to be told about before
+   * they weigh what the object proves. Drives a visible badge. */
+  unprovenanced?: boolean;
+}
+
+/** Structured facts for `category: "manuscript"`. */
+export interface ManuscriptFacts {
+  /** Standard siglum where one exists: "P52", "01 / א", "1QIsaᵃ". Omitted where there is none.
+   * Shown to the reader; NOT registered with the auto-linker — see `LINKED_TOPIC_CATEGORIES` in
+   * lib/verseAnnotations.ts and the naming rules above it. */
+  siglum?: string;
+  /** "Papyrus codex", "Parchment uncial codex", "Leather scroll", "Minuscule". */
+  manuscriptType: string;
+  /** Language(s) of the text as written: "Koine Greek", "Hebrew", "Syriac", "Coptic (Sahidic)". */
+  language: string;
+  /** What is actually on it — the HONEST extent, not the ideal one. "John 18:31-33, 37-38 (both
+   * sides of one fragment)" is the right level of detail; "the Gospel of John" is the blur that
+   * produces the "we have the New Testament from AD 125" overclaim. */
+  contents: string;
+  /** Where it was written or copied. "Unknown" is a legitimate value. */
+  origin?: string;
+  findSite: string;
+  foundYear: string;
+  foundBy: string;
+  /** The conventional date: "c. AD 125-175". */
+  dateAssigned: string;
+  dateCertainty: TimelineDateCertainty;
+  currentLocation: string;
+  /** Shelfmark or inventory number, where the holding institution publishes one. Without it a
+   * citation cannot be checked, which defeats the point of citing. */
+  shelfmark?: string;
+  /** A free, legally viewable digital facsimile. The single highest-value field here: a reader can
+   * look at Sinaiticus, Vaticanus or the Great Isaiah Scroll themselves, at full resolution, for
+   * nothing. */
+  facsimileUrl?: string;
+}
 
 export interface TopicSection {
   heading: string;
@@ -222,6 +356,15 @@ export interface Topic {
   sections: TopicSection[];
   verses: VerseRef[];
   sources?: SourceCitation[];
+  /** Present iff `category === "discovery"`. Optional on the type so the topics written before
+   * archaeology existed still compile; required in practice for every discovery record. */
+  discovery?: DiscoveryFacts;
+  /** Present iff `category === "manuscript"`. */
+  manuscript?: ManuscriptFacts;
+  /** Tiered citations. Expected on every discovery/manuscript record and optional elsewhere —
+   * which is a data rule, not a compiler one, because making it required would break all 58
+   * topics that predate it. `sources` remains the general further-reading list. */
+  citations?: Citation[];
   /** Optional journaling question tied to this topic, same convention as Person/Location. */
   reflectionPrompt?: string;
 }
