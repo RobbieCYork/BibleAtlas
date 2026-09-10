@@ -8923,6 +8923,10 @@ a.profile-links-url {
    * comment on that rule. These two sheets are the app's only `position: fixed; inset: 0` heads,
    * so they are the only two places .app-header's notch padding does not reach. */
   padding-top: calc(10px + env(safe-area-inset-top, 0px) / var(--text-scale, 1));
+  /* And the landscape half of the same fault — see the comment on .report-sheet-head for why both
+   * horizontal insets are paid when only one of them is ever non-zero. */
+  padding-left: calc(16px + env(safe-area-inset-left, 0px) / var(--text-scale, 1));
+  padding-right: calc(16px + env(safe-area-inset-right, 0px) / var(--text-scale, 1));
   border-bottom: 1px solid var(--border);
   background: var(--panel-bg);
   flex-shrink: 0;
@@ -8951,7 +8955,12 @@ a.profile-links-url {
   min-height: 0;
   overflow-y: auto;
   -webkit-overflow-scrolling: touch;
-  padding: 14px 16px 32px;
+  /* Same three insets as .report-sheet-body, for the same reasons: the bottom one clears the home
+   * indicator (this sheet covers the tab bar, so nothing else holds that space open — the console's
+   * last row was sitting under it), the side ones clear the Dynamic Island in landscape. */
+  padding: 14px 16px calc(32px + env(safe-area-inset-bottom, 0px));
+  padding-left: calc(16px + env(safe-area-inset-left, 0px) / var(--text-scale, 1));
+  padding-right: calc(16px + env(safe-area-inset-right, 0px) / var(--text-scale, 1));
   display: flex;
   flex-direction: column;
   gap: 10px;
@@ -9346,6 +9355,16 @@ a.profile-links-url {
    * that part is meant to scale with the text. Crossword.css divides by the same variable for the
    * same reason. */
   padding-top: calc(10px + env(safe-area-inset-top, 0px) / var(--text-scale, 1));
+  /* Rotate the phone and the same intrusion moves to the side: in landscape the top inset drops to
+   * 0 and the island's 59px lands on safe-area-inset-left or -right depending on which way round it
+   * is held. iOS reports the inset on whichever side it is actually on and 0 on the other, so
+   * paying both is correct rather than wasteful — one of them is always zero. Without this the head
+   * keeps its flat 16px and "← Back", the leftmost thing in the row, is drawn straight underneath
+   * the island. Measured in WebKit against the shipped stylesheet 2026-09-09: back link at x=16
+   * inside a 59px keep-out. Same /var(--text-scale) division, and for exactly the same reason, as
+   * the top inset above. */
+  padding-left: calc(16px + env(safe-area-inset-left, 0px) / var(--text-scale, 1));
+  padding-right: calc(16px + env(safe-area-inset-right, 0px) / var(--text-scale, 1));
   border-bottom: 1px solid var(--border);
   background: var(--panel-bg);
   flex-shrink: 0;
@@ -9422,6 +9441,10 @@ a.profile-links-url {
    * control room to breathe — the sheet covers the tab bar, so nothing else is
    * holding that space open. */
   padding: 14px 16px calc(32px + env(safe-area-inset-bottom, 0px));
+  /* Landscape: the head above pays the island's side inset, and the body has to pay it too or the
+   * fix stops at the title bar and every row below it still runs under the island. */
+  padding-left: calc(16px + env(safe-area-inset-left, 0px) / var(--text-scale, 1));
+  padding-right: calc(16px + env(safe-area-inset-right, 0px) / var(--text-scale, 1));
   display: flex;
   flex-direction: column;
   gap: 12px;
