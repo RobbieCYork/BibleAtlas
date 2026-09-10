@@ -170,7 +170,7 @@ location	iconium	iconium	prose	2
 location	iconium	iconium	reader	6
 location	idumea	edom	prose	3
 location	jerusalem	jerusalem	panel	813
-location	jerusalem	jerusalem	prose	515
+location	jerusalem	jerusalem	prose	518
 location	jerusalem	jerusalem	reader	813
 location	jezreel	jezreel	panel	36
 location	jezreel	jezreel	prose	11
@@ -190,7 +190,7 @@ location	kadesh barnea	kadesh-barnea	prose	6
 location	kadesh barnea	kadesh-barnea	reader	10
 location	kiriath-arba	hebron	prose	2
 location	lachish	lachish	panel	24
-location	lachish	lachish	prose	30
+location	lachish	lachish	prose	31
 location	lachish	lachish	reader	24
 location	laish	dan	panel	6
 location	laish	dan	reader	6
@@ -635,7 +635,7 @@ person	herod the great	herod-the-great	prose	33
 person	herod the tetrarch	herod-antipas	panel	4
 person	herod the tetrarch	herod-antipas	reader	4
 person	hezekiah	hezekiah	panel	131
-person	hezekiah	hezekiah	prose	62
+person	hezekiah	hezekiah	prose	63
 person	hezekiah	hezekiah	reader	131
 person	hezron	hezron-son-of-perez	panel	21
 person	hezron	hezron-son-of-perez	prose	1
@@ -654,7 +654,7 @@ person	isaac	isaac	panel	132
 person	isaac	isaac	prose	75
 person	isaac	isaac	reader	132
 person	isaiah	isaiah	panel	53
-person	isaiah	isaiah	prose	52
+person	isaiah	isaiah	prose	54
 person	isaiah	isaiah	reader	53
 person	jacob	jacob	panel	381
 person	jacob	jacob	prose	134
@@ -1314,7 +1314,7 @@ timeline	trials of jesus before the sanhedrin and pilate	bib-loc-trials-of-jesus
 timeline	triumphal entry into jerusalem	bib-loc-triumphal-entry	prose	1
 timeline	wedding at cana	bib-loc-wedding-at-cana	prose	2
 topic	aleppo codex	masoretic-text	prose	5
-topic	amarna letters	amarna-letters	prose	4
+topic	amarna letters	amarna-letters	prose	5
 topic	ammonite	moabites-and-ammonites	panel	8
 topic	ammonite	moabites-and-ammonites	prose	11
 topic	ammonite	moabites-and-ammonites	reader	8
@@ -1384,7 +1384,7 @@ topic	codex sinaiticus	codex-sinaiticus	prose	18
 topic	codex vaticanus	codex-vaticanus	prose	18
 topic	cyrus cylinder	cyrus-cylinder	prose	9
 topic	day of preparation	day-of-preparation	prose	1
-topic	dead sea scrolls	dead-sea-scrolls	prose	41
+topic	dead sea scrolls	dead-sea-scrolls	prose	42
 topic	deir 'alla inscription	deir-alla-inscription	prose	1
 topic	deir alla inscription	deir-alla-inscription	prose	1
 topic	demon	demons	panel	23
