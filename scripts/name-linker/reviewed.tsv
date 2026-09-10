@@ -5,15 +5,16 @@
 # A candidate absent from this file fails `--check`. Do not add a row you have not read: every row
 # here is a claim that a human looked at that sentence and decided. Verdicts in use:
 #
-#   ok          Read, and the link is right. Most rows: a saint's basilica, a pope's own name, the
+#   ok          Read, and the link is right. Every row: a saint's basilica, a pope's own name, the
 #               eleven lowercase "magi", "Lord Jesus Christ", "King Agrippa II".
-#   book-title  Read, and the link is on a BOOK rather than a man. NOT fixed, because these are two
-#               instances of a class of 119 across 42 shapes ("1 Samuel", "1-2 Peter", "the book of
-#               Ruth", "the longer ending of Mark") that the app has only ever ruled on for "John",
-#               and settling the rest touches authorship. Recorded so the ledger does not claim
-#               they were read and found correct.
-book-title	bookIntro.manuscripts	book-intro:Daniel	daniel	Daniel	inside-capitalised-run
-book-title	bookIntro.manuscripts	book-intro:Jeremiah	jeremiah	Jeremiah	forename-before:Septuagint's,inside-capitalised-run
+#
+# The `book-title` verdict this file carried on 2026-09-09 is retired, and its two rows are gone
+# from the listing above because the links themselves are gone. It recorded a link sitting on a
+# BOOK rather than a man, held unfixed because it was two instances of a class of 126 across 25
+# names that the app had only ever ruled on for "John". That ruling has since been made and applied
+# to every book (NAME_CONTEXT_RULES in src/lib/verseAnnotations.ts, and the BOOK TITLES section of
+# cases.mjs), so a candidate of that shape is now a fault to fix rather than a verdict to record.
+# If one appears here again, the rule for that name is missing, not the ledger entry.
 ok	bookIntro.manuscripts	book-intro:Jonah	jesus-of-nazareth	Jesus	inside-capitalised-run
 ok	bookIntro.summary	book-intro:Matthew	magi	magi	lowercase-surface
 ok	location.archaeology.note	antioch-syria	simon-peter	Peter	forename-before:Saint

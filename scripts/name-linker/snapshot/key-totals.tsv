@@ -460,7 +460,7 @@ person	balaam	balaam	prose	3
 person	balaam	balaam	reader	63
 person	balaam son of beor	balaam	prose	1
 person	barnabas	barnabas	panel	29
-person	barnabas	barnabas	prose	37
+person	barnabas	barnabas	prose	36
 person	barnabas	barnabas	reader	29
 person	bartholomew	bartholomew-nathanael	panel	4
 person	bartholomew	bartholomew-nathanael	prose	1
@@ -525,7 +525,7 @@ person	counselor	holy-spirit	reader	2
 person	crispus	crispus	panel	2
 person	crispus	crispus	reader	2
 person	daniel	daniel	panel	83
-person	daniel	daniel	prose	64
+person	daniel	daniel	prose	58
 person	daniel	daniel	reader	83
 person	david	david	panel	1138
 person	david	david	prose	283
@@ -569,7 +569,7 @@ person	elizabeth	elizabeth-mother-of-john-baptist	panel	9
 person	elizabeth	elizabeth-mother-of-john-baptist	prose	11
 person	elizabeth	elizabeth-mother-of-john-baptist	reader	9
 person	enoch	enoch	panel	13
-person	enoch	enoch	prose	22
+person	enoch	enoch	prose	13
 person	enoch	enoch	reader	10
 person	epaphroditus	epaphroditus	panel	2
 person	epaphroditus	epaphroditus	prose	2
@@ -578,17 +578,17 @@ person	esau	esau	panel	102
 person	esau	esau	prose	40
 person	esau	esau	reader	102
 person	esther	esther	panel	55
-person	esther	esther	prose	33
+person	esther	esther	prose	29
 person	esther	esther	reader	55
 person	eusebius of caesarea	eusebius-of-caesarea	prose	3
 person	eve	eve	panel	4
 person	eve	eve	prose	24
 person	eve	eve	reader	4
 person	ezekiel	ezekiel	panel	2
-person	ezekiel	ezekiel	prose	27
+person	ezekiel	ezekiel	prose	26
 person	ezekiel	ezekiel	reader	2
 person	ezra	ezra	panel	25
-person	ezra	ezra	prose	32
+person	ezra	ezra	prose	30
 person	ezra	ezra	reader	25
 person	father in heaven	god-the-father	panel	4
 person	father in heaven	god-the-father	reader	4
@@ -652,14 +652,14 @@ person	isaac	isaac	panel	132
 person	isaac	isaac	prose	75
 person	isaac	isaac	reader	132
 person	isaiah	isaiah	panel	53
-person	isaiah	isaiah	prose	52
+person	isaiah	isaiah	prose	46
 person	isaiah	isaiah	reader	53
 person	jacob	jacob	panel	381
 person	jacob	jacob	prose	134
 person	jacob	jacob	reader	381
 person	james	james-brother-of-jesus	reader	10
 person	james	james-son-of-zebedee	panel	32
-person	james	james-son-of-zebedee	prose	57
+person	james	james-son-of-zebedee	prose	53
 person	james	james-son-of-zebedee	reader	22
 person	james the just	james-brother-of-jesus	prose	1
 person	james the son of alphaeus	james-son-of-alphaeus	panel	2
@@ -688,7 +688,7 @@ person	jehoshaphat	jehoshaphat	panel	84
 person	jehoshaphat	jehoshaphat	prose	15
 person	jehoshaphat	jehoshaphat	reader	84
 person	jeremiah	jeremiah	panel	150
-person	jeremiah	jeremiah	prose	48
+person	jeremiah	jeremiah	prose	46
 person	jeremiah	jeremiah	reader	134
 person	jerome	jerome	prose	8
 person	jerubbaal	gideon	panel	13
@@ -711,7 +711,7 @@ person	jezebel	jezebel	reader	23
 person	joanna	joanna-follower-of-jesus	panel	2
 person	joanna	joanna-follower-of-jesus	reader	2
 person	job	job	panel	59
-person	job	job	prose	26
+person	job	job	prose	25
 person	job	job	reader	59
 person	johannes gutenberg	johannes-gutenberg	prose	1
 person	john	john-mark	reader	2
@@ -740,7 +740,7 @@ person	john xxiii	pope-john-xxiii	prose	1
 person	john, who was called mark	john-mark	panel	1
 person	john, who was called mark	john-mark	reader	1
 person	jonah	jonah	panel	31
-person	jonah	jonah	prose	34
+person	jonah	jonah	prose	30
 person	jonah	jonah	reader	26
 person	jonah the son of amittai	jonah	panel	2
 person	jonah the son of amittai	jonah	reader	2
@@ -760,7 +760,7 @@ person	joseph	joseph-son-of-jacob	prose	136
 person	joseph	joseph-son-of-jacob	reader	223
 person	joseph of arimathea	joseph-of-arimathea	prose	7
 person	joshua	joshua	panel	220
-person	joshua	joshua	prose	70
+person	joshua	joshua	prose	67
 person	joshua	joshua	reader	191
 person	josiah	josiah	panel	55
 person	josiah	josiah	prose	20
@@ -795,7 +795,7 @@ person	lebbaeus	thaddaeus	reader	1
 person	levi	matthew-levi	panel	74
 person	levi	matthew-levi	reader	1
 person	luke	luke-evangelist	panel	3
-person	luke	luke-evangelist	prose	136
+person	luke	luke-evangelist	prose	126
 person	luke	luke-evangelist	reader	3
 person	lydia	lydia-of-thyatira	panel	2
 person	lydia	lydia-of-thyatira	prose	8
@@ -810,7 +810,7 @@ person	manasseh	manasseh-king-of-judah	panel	148
 person	manasseh	manasseh-king-of-judah	prose	24
 person	manasseh	manasseh-king-of-judah	reader	32
 person	mark	john-mark	panel	9
-person	mark	john-mark	prose	46
+person	mark	john-mark	prose	41
 person	mark	john-mark	reader	5
 person	mark antony	mark-antony	prose	7
 person	martha	martha-of-bethany	panel	13
@@ -850,7 +850,7 @@ person	mordecai	mordecai	panel	60
 person	mordecai	mordecai	prose	25
 person	mordecai	mordecai	reader	60
 person	moses	moses	panel	830
-person	moses	moses	prose	175
+person	moses	moses	prose	170
 person	moses	moses	reader	830
 person	nahshon	nahshon	panel	13
 person	nahshon	nahshon	prose	3
@@ -865,7 +865,7 @@ person	nathanael	bartholomew-nathanael	panel	6
 person	nathanael	bartholomew-nathanael	prose	4
 person	nathanael	bartholomew-nathanael	reader	6
 person	nehemiah	nehemiah	panel	8
-person	nehemiah	nehemiah	prose	30
+person	nehemiah	nehemiah	prose	29
 person	nehemiah	nehemiah	reader	8
 person	nero	nero-caesar	prose	39
 person	nicodemus	nicodemus	panel	5
@@ -882,16 +882,16 @@ person	onesimus	onesimus	panel	2
 person	onesimus	onesimus	prose	7
 person	onesimus	onesimus	reader	2
 person	paul	paul-of-tarsus	panel	161
-person	paul	paul-of-tarsus	prose	520
+person	paul	paul-of-tarsus	prose	518
 person	paul	paul-of-tarsus	reader	161
 person	perez	perez	panel	20
 person	perez	perez	prose	7
 person	perez	perez	reader	20
 person	peter	simon-peter	panel	136
-person	peter	simon-peter	prose	183
+person	peter	simon-peter	prose	164
 person	peter	simon-peter	reader	136
 person	philemon	philemon	panel	1
-person	philemon	philemon	prose	22
+person	philemon	philemon	prose	17
 person	philemon	philemon	reader	1
 person	philip	philip-the-apostle	panel	33
 person	philip	philip-the-apostle	prose	53
@@ -941,7 +941,7 @@ person	rehoboam	rehoboam	reader	52
 person	rhoda	rhoda	panel	1
 person	rhoda	rhoda	reader	1
 person	ruth	ruth	panel	13
-person	ruth	ruth	prose	40
+person	ruth	ruth	prose	36
 person	ruth	ruth	reader	13
 person	salmon	salmon-father-of-boaz	panel	5
 person	salmon	salmon-father-of-boaz	prose	1
@@ -953,7 +953,7 @@ person	samson	samson	panel	39
 person	samson	samson	prose	14
 person	samson	samson	reader	39
 person	samuel	samuel	panel	143
-person	samuel	samuel	prose	57
+person	samuel	samuel	prose	49
 person	samuel	samuel	reader	143
 person	sarah	sarah	panel	42
 person	sarah	sarah	prose	42
@@ -1007,7 +1007,7 @@ person	simon, who is also called peter	simon-peter	reader	2
 person	simon, who is called peter	simon-peter	panel	3
 person	simon, who is called peter	simon-peter	reader	3
 person	solomon	solomon	panel	306
-person	solomon	solomon	prose	104
+person	solomon	solomon	prose	102
 person	solomon	solomon	reader	306
 person	sosthenes	sosthenes	panel	2
 person	sosthenes	sosthenes	prose	1
@@ -1067,10 +1067,10 @@ person	tiberius caesar	tiberius-caesar	panel	1
 person	tiberius caesar	tiberius-caesar	prose	2
 person	tiberius caesar	tiberius-caesar	reader	1
 person	timothy	timothy	panel	24
-person	timothy	timothy	prose	40
+person	timothy	timothy	prose	31
 person	timothy	timothy	reader	24
 person	titus	titus	panel	13
-person	titus	titus	prose	27
+person	titus	titus	prose	23
 person	titus	titus	reader	13
 person	uriah the hittite	uriah-the-hittite	panel	10
 person	uriah the hittite	uriah-the-hittite	prose	3

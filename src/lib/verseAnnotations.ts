@@ -1267,6 +1267,93 @@ interface NameContextRule {
   to: string | null;
 }
 
+/** ── BOOK TITLES: the shapes that name a WORK rather than a man ────────────────────────────────
+ *
+ * Ruled 2026-09-09 and applied here: **a book title links to no person, for every book** — not
+ * only for John, which had been the sole key in this table since it was written. The escalation
+ * that asked for the ruling is in automation/manager-inbox; the reasoning is one sentence long.
+ *
+ *   Not linking a book title to a person asserts NOTHING about who wrote it. Linking is what takes
+ *   a position. "1-2 Peter" pointing at Simon Peter quietly asserts Petrine authorship of both
+ *   letters — genuinely disputed — and asserts it where no reader can see the argument. Declining
+ *   the link is the neutral move, not the opinionated one.
+ *
+ * What is suppressed is the TITLE, never the name. "Peter's vision that leads to Cornelius",
+ * "Isaiah's prophecy of a suffering servant", "Daniel's visions", "Nehemiah's account", "the Law
+ * of Moses" and "the song of Moses" all keep their links: the prose means the man. The rules are
+ * therefore keyed per name and enumerated per shape rather than generalised — the same discipline
+ * every other rule in this table is written with, and for the same reason.
+ *
+ * Two things this ruling deliberately does NOT do:
+ *
+ *  - **"the Law of Moses" keeps its link.** It names the lawgiver, not the author of five scrolls,
+ *    and it is Scripture's own phrase — 20 verses in the WEB, from Joshua 8:31 to Hebrews 10:28.
+ *    Only the PLURAL "the (five) books of Moses" is suppressed, and the plural is what makes that
+ *    safe: the WEB's own five "the book of Moses" (2 Chronicles 25:4 and 35:12, Ezra 6:18,
+ *    Nehemiah 13:1, Mark 12:26) are singular, so they keep their links and the Bible snapshot does
+ *    not move by a single row. Every other shape below was checked the same way before it was
+ *    written — "First Moses says" at Romans 10:19 is why the numeral rule is keyed per name and
+ *    not given to Moses, and the lowercase "wisdom of Solomon" at 1 Kings 4:34, 1 Kings 10:4,
+ *    2 Chronicles 9:3, Matthew 12:42 and Luke 11:31 is why that rule demands a capital W.
+ *  - **It does not reach a book title sitting bare in a list.** "Genesis, Numbers, Deuteronomy,
+ *    Isaiah, Jeremiah, Ezekiel, Daniel, and Esther" has no word around it that says "book", and a
+ *    pattern that reached it would reach every "Peter, James, and John" in Scripture. Measured:
+ *    about sixty more links of that shape across the prose corpus, needing phrase pins one
+ *    sentence at a time. That is a separate job and it is written up in the manager inbox. The
+ *    four sentences pinned below are only the ones where a rule here already removes a link from
+ *    the SAME sentence — leaving "1 and 2 Timothy, Titus, and Philemon" with two of its three
+ *    titles still linked would be a worse state than either answer.
+ *
+ * Every shape below is pinned by a prose case in scripts/name-linker/cases.mjs quoting the real
+ * copy. That is not belt-and-braces: the previous batch of these was fixed by REWORDING the
+ * offending sentences, and a later edit would have undone it silently. */
+const BOOK_NUMERAL: NameContextRule = {
+  // "1 Samuel", "2 Peter", "First Peter", "1-2 Peter", "1 and 2 Timothy", "Second Isaiah". A bare
+  // "1 John 2:1" never reaches here — NAME_PATTERN matches a reference carrying a chapter whole,
+  // as kind "verse" — so only a numbered title with no numbers after it gets this far. Given only
+  // to names that actually take a numeral: Romans 10:19 reads "First Moses says".
+  before: /(?:^|[^\p{L}])(?:[123]|First|Second|Third)\s+$/u,
+  to: null,
+};
+/** "the book of Ruth", "the books of Samuel", "the book of Enoch". */
+const BOOK_OF: NameContextRule = { before: /\b[Bb]ooks? of\s+$/, to: null };
+/** Plural only — Moses alone, so Scripture's own singular "the book of Moses" is untouched. */
+const BOOKS_OF_PLURAL: NameContextRule = { before: /\b[Bb]ooks of\s+$/, to: null };
+/** "the text of Titus", "the Masoretic Hebrew text of Ezekiel". No WEB verse contains "text of". */
+const TEXT_OF: NameContextRule = { before: /\b[Tt]exts? of\s+$/, to: null };
+/** "the scroll of Isaiah" — Acts 8 and Luke 4 as our articles retell them. */
+const SCROLL_OF: NameContextRule = { before: /\b[Ss]crolls? of\s+$/, to: null };
+/** "the Gospel of Luke", "the Gospel of Mark". No WEB verse contains "gospel of" + a name. */
+const GOSPEL_OF: NameContextRule = { before: /\b[Gg]ospels? of\s+$/, to: null };
+/** "the Epistle of James", "the Epistle of Barnabas". */
+const EPISTLE_OF: NameContextRule = { before: /\b[Ee]pistles? of\s+$/, to: null };
+/** "the Acts of Paul", "the Acts of Peter" — the apocryphal Acts. Capital A: the WEB writes
+ *  "the acts of Solomon" and "the acts of David" in lower case, and those are deeds, not books. */
+const ACTS_OF: NameContextRule = { before: /\bActs of\s+$/, to: null };
+/** "the Apocalypse of Peter". */
+const APOCALYPSE_OF: NameContextRule = { before: /\b[Aa]pocalypse of\s+$/, to: null };
+/** "Luke's Gospel", "Mark's Gospel", "Isaiah's book", "James's letter", "Isaiah's text". As narrow
+ *  as the hand-written John rule it generalises, and for the same reason: "John's baptism" and
+ *  "Daniel's visions" are the man, so only a following word that NAMES THE WORK counts. */
+const POSSESSIVE_WORK: NameContextRule = {
+  after: /^['’]s\s+(?:[Gg]ospel|[Bb]ook|[Ll]etter|[Ee]pistle|[Tt]ext|[Ss]croll)\b/,
+  to: null,
+};
+/** "Isaiah manuscripts", "a second Philemon papyrus". Manuscript notes name the book, never a man. */
+const MANUSCRIPT_AFTER: NameContextRule = {
+  after: /^\s+(?:manuscripts?|fragments?|papyri|papyrus|codex|scrolls?)\b/,
+  to: null,
+};
+/** "The Qumran Daniel manuscripts", "some Qumran Jeremiah fragments". */
+const QUMRAN_BEFORE: NameContextRule = { before: /\bQumran\s+$/, to: null };
+/** "The Septuagint's Jeremiah" — a version naming the book it contains. */
+const VERSION_BEFORE: NameContextRule = { before: /\b(?:Septuagint|LXX)['’]?s?\s+$/, to: null };
+/** "the longer ending of Mark" — a textual unit inside a book, so the book is what is named. */
+const ENDING_OF: NameContextRule = { before: /\b[Ee]nding of\s+$/, to: null };
+/** "the Wisdom of Solomon", "the Psalms of Solomon" — two works named for a man nobody claims
+ *  wrote them. Capital-initial on purpose; see the 1 Kings 4:34 note above. */
+const WISDOM_OR_PSALMS_OF: NameContextRule = { before: /\b(?:Wisdom|Psalms) of\s+$/, to: null };
+
 const NAME_CONTEXT_RULES: Record<string, NameContextRule[]> = {
   john: [
     // ── Resolution, not suppression. Checked first: it is the most specific thing we can say.
@@ -1369,6 +1456,7 @@ const NAME_CONTEXT_RULES: Record<string, NameContextRule[]> = {
   // against the whole corpus before being written, not reasoned about.
   paul: [
     { after: /^\s+(?:III|VI)\b/, to: null }, // Popes Paul III (Trent, the Jesuits) and Paul VI
+    ACTS_OF, // "the Acts of Paul", twice on grotto-of-st-paul-ephesus — a 2nd-century romance
   ],
   philip: [
     { after: /^\s+II\b/, to: null }, // Philip II of Macedon, who founded Philippi
@@ -1381,6 +1469,17 @@ const NAME_CONTEXT_RULES: Record<string, NameContextRule[]> = {
     // Ussher (the 4004 BC chronology), Hoffmeier and Sanders (modern scholars, cited as
     // authorities). Interim; records would change the answer.
     { after: /^\s+(?:Hoffmeier|Sanders|Ussher)\b/, to: null },
+    // The book. All three of these were pointing at James SON OF ZEBEDEE, who is not a candidate
+    // for the letter on anybody's account — he was executed by Herod Agrippa in AD 44 (Acts 12:2).
+    // The traditional attribution is to James the brother of Jesus and the app carries a record
+    // for him, so this could have been a repoint; it is a suppression instead, because the whole
+    // point of the ruling is that a title does not name an author.
+    EPISTLE_OF, // "the Epistle of James"
+    TEXT_OF, // "both contain the complete text of James"
+    POSSESSIVE_WORK, // "James's letter, written to Jewish Christians"
+    // A canon list where the neighbouring "1-2 Peter" is suppressed by BOOK_NUMERAL and this one
+    // has no word of its own to catch. See the note on bare-in-a-list titles above.
+    { phrase: "Hebrews, James, and 1-2 Peter are not in the surviving text", to: null },
   ],
 
   // ── Judas Maccabeus. THE priority in this batch: the leader of the Maccabean revolt was linking
@@ -1413,6 +1512,16 @@ const NAME_CONTEXT_RULES: Record<string, NameContextRule[]> = {
   peter: [
     // Abelard, Faber (a founding Jesuit), Flint (a Dead Sea Scrolls scholar).
     { after: /^\s+(?:Abelard|Faber|Flint)\b/, to: null },
+    // The books. The largest single group in this ruling: 16 of the 17 are "1 Peter", "2 Peter",
+    // "First Peter" or "1-2 Peter" in the two book intros and the manuscript articles, and this is
+    // the shape the ruling exists for — 2 Peter's authorship is the most disputed in the New
+    // Testament, and the app's own book intro says so in the sentence beside the link.
+    BOOK_NUMERAL, // "1 Peter", "2 Peter", "First Peter", "1-2 Peter", "2 Peter chapter 2"
+    APOCALYPSE_OF, // "the Apocalypse of Peter is listed as accepted by some"
+    ACTS_OF, // "the Acts of Peter", twice on appian-way-quo-vadis-rome
+    // NOT suppressed, and worth saying out loud: "Peter's vision that leads to the Gentile
+    // Cornelius" and "Peter's vision and subsequent visit to Cornelius" are the man seeing a
+    // sheet let down from heaven in Acts 10. POSSESSIVE_WORK is deliberately not given to Peter.
   ],
   michael: [
     // Servetus (burned at Geneva), Cerularius (the 1054 schism), Ballance and Rostovtzeff
@@ -1428,7 +1537,13 @@ const NAME_CONTEXT_RULES: Record<string, NameContextRule[]> = {
   andrew: [{ after: /^\s+Steinmann\b/, to: null }],   // the Herod-dating minority view
   gideon: [{ after: /^\s+Foerster\b/, to: null }],    // the Herodium excavator
   jacob: [{ after: /^\s+Eliyahu\b/, to: null }],      // the boy who found the Siloam inscription
-  solomon: [{ after: /^\s+Stoddard\b/, to: null }],   // Jonathan Edwards's grandfather
+  solomon: [
+    { after: /^\s+Stoddard\b/, to: null }, // Jonathan Edwards's grandfather
+    // "the Wisdom of Solomon" (the Muratorian fragment's canon list) and "the Psalms of Solomon"
+    // (the messianic-expectation article) — two works named for a man nobody, in any tradition,
+    // claims wrote them. The clearest case in the whole batch that a title is not an attribution.
+    WISDOM_OR_PSALMS_OF,
+  ],
   david: [{ after: /^\s+George\b/, to: null }],       // David George Hogarth, who dug at Ephesus
   salome: [{ after: /^\s+Alexandra\b/, to: null }],   // the Hasmonean queen, not Jesus's follower
   felix: [{ after: /^\s+Gemina\b/, to: null }],       // "Colonia Iulia Felix Gemina Lystra" — a title
@@ -1485,6 +1600,118 @@ const NAME_CONTEXT_RULES: Record<string, NameContextRule[]> = {
     // bookIntro.whyWritten on the book of Zechariah. Its four manuscript notes name the book,
     // which is why the record-level answer there is null too.
     { phrase: "Like Haggai, Zechariah encourages the returned exiles", to: "zechariah-the-prophet" },
+    // No book rule for Zechariah, and that is a finding rather than an omission: all three of his
+    // flagged mentions — "Mary's Magnificat and Zechariah's prophecy", "Zechariah's vision"
+    // twice — are a man prophesying or seeing, and two of them are the pins directly above.
+  ],
+
+  // ── The rest of the book-title ruling, one key per book named after a person. Every rule is one
+  // of the shared shapes defined above the table; the comment on each line quotes the copy it was
+  // written for, so a reader can check the claim without leaving the file. Read one at a time from
+  // a sweep of the whole prose corpus, not pattern-matched: 106 of the 126 flagged mentions are
+  // suppressed here and 20 are deliberately left alone, each named in cases.mjs.
+  barnabas: [
+    EPISTLE_OF, // "the Epistle of Barnabas and part of the Shepherd of Hermas" — Codex Sinaiticus
+  ],
+  daniel: [
+    BOOK_OF, // "The book of Daniel is set almost entirely within Nebuchadnezzar's Babylon"
+    QUMRAN_BEFORE, // "The Qumran Daniel manuscripts preserve the book's distinctive Hebrew–Aramaic"
+    // "Daniel's visions", "Daniel's account" keep their links — the man seeing and the man telling.
+  ],
+  enoch: [
+    BOOK_NUMERAL, // "1 Enoch, a Jewish apocalyptic writing outside the biblical canon"
+    BOOK_OF, // "the apocryphal book of Enoch", "the Book of Enoch as Scripture"
+  ],
+  esther: [
+    BOOK_OF, // "The book of Esther opens in the Persian capital of Susa"
+  ],
+  ezekiel: [
+    TEXT_OF, // "The Masoretic Hebrew text of Ezekiel contains a notable number of difficult passages"
+  ],
+  ezra: [
+    TEXT_OF, // "The Hebrew and Aramaic text of Ezra is well preserved and stable"
+  ],
+  isaiah: [
+    BOOK_NUMERAL, // "against critical theories of a separate 'Second Isaiah'" — a hypothesis, not a man
+    SCROLL_OF, // "reading aloud from the scroll of Isaiah", "Jesus read from the scroll of Isaiah"
+    POSSESSIVE_WORK, // "the second half of Isaiah's book", "independent witnesses to Isaiah's text"
+    MANUSCRIPT_AFTER, // "Multiple additional Isaiah manuscripts were found at Qumran"
+    // "the fulfillment of Isaiah's prophecy" keeps its link: the man prophesied.
+  ],
+  jeremiah: [
+    QUMRAN_BEFORE, // "some Qumran Jeremiah fragments reflect a shorter Hebrew text-form"
+    VERSION_BEFORE, // "The Septuagint's Jeremiah is roughly one-eighth shorter"
+    // Both "Jeremiah's prophecy of Rachel weeping" mentions keep their links.
+  ],
+  job: [
+    TEXT_OF, // "Fragments of the Hebrew text of Job were found among the Dead Sea Scrolls"
+  ],
+  jonah: [
+    BOOK_OF, // "The book of Jonah centers entirely on Assyria's capital, Nineveh"
+    TEXT_OF, // "a well-preserved continuous Hebrew text of Jonah"
+  ],
+  joshua: [
+    BOOK_OF, // "the books of Joshua and Judges describe", "opens directly onto the book of Joshua"
+    TEXT_OF, // "as the text of Joshua puts it (Joshua 6:22-25)"
+  ],
+  luke: [
+    GOSPEL_OF, // "both contain the complete Gospel of Luke"
+    POSSESSIVE_WORK, // "Luke's Gospel", nine times across the person and topic articles
+    // "in Luke's account", "matching Luke's account of Philippi as 'a Roman colony'" keep their
+    // links. POSSESSIVE_WORK does not list "account" for exactly this reason: an account is
+    // something a man gives, and Luke as a careful historian is what those two sentences are about.
+  ],
+  mark: [
+    GOSPEL_OF, // "the Gospel of Mark" — self-excluded today on john-mark's own page; the rule belongs
+    POSSESSIVE_WORK, // "Mark's Gospel names him first among four"
+    TEXT_OF, // "stand in the undisputed text of Mark"
+    ENDING_OF, // "the longer ending of Mark (Mark 16:9-20)" — see the ruling note below
+  ],
+  moses: [
+    // "the five books of Moses", "the books of Moses". PLURAL ONLY — this is the whole safety of
+    // the rule, and the reason is three lines up in the header comment: Scripture's own singular
+    // "the book of Moses" appears five times and keeps its link every time.
+    //
+    // Why the corpus name is suppressed at all: "the five books of Moses" is the traditional name
+    // for the Pentateuch and it names the corpus the way "the Gospel of John" names a Gospel — by
+    // its traditional author. Mosaic authorship of the Pentateuch is the most contested authorship
+    // question in the Old Testament, and evangelicals themselves range across it, from full Mosaic
+    // authorship to a Mosaic core completed by a later hand (Deuteronomy 34 records his death).
+    // A link asserts the strongest form of that where a reader cannot see the argument.
+    BOOKS_OF_PLURAL,
+    // NOT suppressed: "the written Law of Moses" and "the Song of Moses" both keep their links.
+    // The first names the lawgiver and is the Bible's own idiom; the second names a song the text
+    // says in the same breath was "sung by Moses and the people". Neither is a book title.
+  ],
+  nehemiah: [
+    BOOK_OF, // "In the book of Nehemiah, Ezra reappears as the central figure"
+    // "the post-exilic city that Nehemiah's account describes" keeps its link.
+  ],
+  philemon: [
+    TEXT_OF, // "the text of Philemon is stable and consistently attested"
+    MANUSCRIPT_AFTER, // "A second Philemon papyrus, P139, dates to the fourth century"
+    // Two canon lists where the neighbouring "1 and 2 Timothy" is suppressed by BOOK_NUMERAL.
+    { phrase: "1 and 2 Thessalonians, 1 and 2 Timothy, Titus, and Philemon", to: null },
+    { phrase: "1 and 2 Timothy, Titus, Philemon, and Revelation are absent", to: null },
+    { phrase: "1–2 Timothy, Titus, Philemon, and Revelation are absent", to: null },
+    // NOT suppressed: "the short personal letter to Philemon" is addressed to the man.
+  ],
+  ruth: [
+    BOOK_OF, // "Boaz appears in the book of Ruth as a 'man of standing'"
+  ],
+  samuel: [
+    BOOK_OF, // "the following books of Samuel", "the earlier books of Samuel and Kings"
+    BOOK_NUMERAL, // "1 Samuel traces Israel's transition from the era of the judges"
+  ],
+  timothy: [
+    BOOK_NUMERAL, // "1 Timothy", "2 Timothy", "1 and 2 Timothy", "1 & 2 Timothy", "1–2 Timothy"
+  ],
+  titus: [
+    TEXT_OF, // "especially valuable as early evidence for the text of Titus specifically"
+    // The same two canon lists as Philemon above.
+    { phrase: "1 and 2 Thessalonians, 1 and 2 Timothy, Titus, and Philemon", to: null },
+    { phrase: "1 and 2 Timothy, Titus, Philemon, and Revelation are absent", to: null },
+    { phrase: "1–2 Timothy, Titus, Philemon, and Revelation are absent", to: null },
   ],
 };
 

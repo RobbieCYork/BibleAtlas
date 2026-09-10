@@ -1093,4 +1093,358 @@ export const CASES = [
     why: "Found by modern-names.mjs on the 'link covers part of a longer capitalised phrase' " +
          "signal. The zechariah-the-prophet entry had already ruled on this man; three more " +
          "records carried the same wrong link and two of them nobody had noticed." },
+
+  // ─────────────────────────────────────────────────────────────────────────────────────────
+  // BOOK TITLES. Ruled 2026-09-09: a book title links to no person, for every book, not only for
+  // John. See the header comment above NAME_CONTEXT_RULES in verseAnnotations.ts for the reasoning
+  // and for what the ruling deliberately does NOT reach; the escalation that asked for it is in
+  // automation/manager-inbox.
+  //
+  // Measured, not asserted. A sweep of the whole prose corpus for a person-link whose surface is
+  // also the name of a book flagged 126 mentions across 25 names. All 126 were read one at a time:
+  // 117 links are now suppressed (the 106 flagged ones that were titles, plus four apocryphal
+  // "Acts of" the sweep's signals had not been written to catch, and seven bare titles pinned by
+  // phrase because a rule in the same sentence had already taken their neighbours), and 20 are
+  // deliberately left alone. Every shape has a case here, and so does every keep — the keeps are
+  // the half that a careless widening of these rules would break first.
+  //
+  // The Bible snapshot did not move by a single row, which is the constraint the shapes were
+  // designed around rather than a happy result. The four Scripture guards immediately below are
+  // the three near-misses that shaped them.
+  // ─────────────────────────────────────────────────────────────────────────────────────────
+  { ref: "Romans 10:19", surface: "Moses", expect: "moses", status: "guard",
+    why: "\"First Moses says, 'I will provoke you to jealousy'\" \u2014 why BOOK_NUMERAL is keyed per " +
+         "name and Moses does not get it. A general numeral rule would have taken this link out of " +
+         "a live verse to fix a book title in an article." },
+  { ref: "2 Chronicles 25:4", surface: "Moses", expect: "moses", status: "guard",
+    why: "\"written in the law in the book of Moses\" \u2014 why the Moses rule is BOOKS_OF_PLURAL. " +
+         "Scripture writes the SINGULAR five times (here, 2 Chronicles 35:12, Ezra 6:18, " +
+         "Nehemiah 13:1, Mark 12:26) and every one keeps its link; only \"the five books of Moses\" " +
+         "in our own prose is suppressed." },
+  { ref: "1 Kings 4:34", surface: "Solomon", expect: "solomon", status: "guard",
+    why: "\"came to hear the wisdom of Solomon\" \u2014 why WISDOM_OR_PSALMS_OF demands a capital W. " +
+         "The WEB writes the phrase in lower case five times and means the king's actual wisdom " +
+         "every time; the Wisdom of Solomon is a book." },
+  { ref: "Revelation 15:3", surface: "Moses", expect: "moses", status: "guard",
+    why: "\"They sang the song of Moses, the servant of God\" \u2014 the reason there is no rule for " +
+         "\"the Song of Moses\" at all. It is the title of a poem the text says he sang, not of a book." },
+
+  { text: "After Revelation it continues with two more works: the Epistle of Barnabas and part of the " +
+          "Shepherd of Hermas. That is worth pausing on. It is not",
+    surface: "Barnabas", owner: "codex-sinaiticus", expect: null, status: "guard",
+    why: "EPISTLE_OF. The 2nd-century Epistle of Barnabas, bound into Codex Sinaiticus after " +
+         "Revelation. Almost nobody has ever thought Paul's companion wrote it, which makes it the " +
+         "plainest illustration of the ruling: a title is not an attribution." },
+  { text: "The book of Daniel is set almost entirely within Nebuchadnezzar's Babylonian court, " +
+          "following Daniel",
+    surface: "Daniel", owner: "babylonians", expect: null, status: "guard",
+    why: "BOOK_OF. Six mentions across five records read 'the book of Daniel'; the date of that book " +
+         "is contested enough that the app argues about it on the Nabonidus cylinder page, and none " +
+         "of that argument is visible inside a link." },
+  { text: "The Qumran Daniel manuscripts preserve the book's distinctive Hebrew\u2013Aramaic transitions, " +
+          "and their",
+    surface: "Daniel", owner: "book-intro:Daniel", expect: null, status: "guard",
+    why: "QUMRAN_BEFORE. A manuscript note names the book it is a manuscript OF. Recorded in " +
+         "reviewed.tsv under the verdict 'book-title' by the modern-name sweep that raised the whole " +
+         "question." },
+  { text: "he directly quotes a prophecy attributed to Enoch, drawn from 1 Enoch, a Jewish " +
+          "apocalyptic writing outside the biblical canon. This use of",
+    surface: "Enoch", occurrence: 2, owner: "book-intro:Jude", expect: null, status: "guard",
+    why: "BOOK_NUMERAL, on the second Enoch of the sentence. The best single demonstration of the " +
+         "rule in the corpus: 'a prophecy attributed to Enoch' is the man and keeps its link, 'drawn " +
+         "from 1 Enoch' is the book and loses it, and they are eleven words apart." },
+  { text: "he directly quotes a prophecy attributed to Enoch, drawn from 1 Enoch, a Jewish " +
+          "apocalyptic writing outside the biblical canon. This use of",
+    surface: "Enoch", owner: "book-intro:Jude", expect: "enoch", status: "guard",
+    why: "The other half of the pair above, and the reason these rules read the words around the " +
+         "match rather than the key. Jude 14 attributes the prophecy to the man; the book quoted is " +
+         "a much later work." },
+  { text: "Jerome notes that 'because in it he quotes from the apocryphal book of Enoch it is " +
+          "rejected by many.'",
+    surface: "Enoch", owner: "book-intro:Jude", expect: null, status: "guard",
+    why: "BOOK_OF, inside Jerome's remark about why Jude was doubted. Nine Enoch book-titles went; " +
+         "the patriarch keeps every mention that is the man." },
+  { text: "The book of Esther is set entirely within the Persian court a century or so later, under " +
+          "King Ahasuerus",
+    surface: "Esther", owner: "persians", expect: null, status: "guard",
+    why: "BOOK_OF. Four of these, and Esther is the shape where book and woman are hardest to tell " +
+         "apart by eye, which is the argument for reading the words around the match rather than " +
+         "trusting the name." },
+  { text: "The Masoretic Hebrew text of Ezekiel contains a notable number of difficult passages and " +
+          "rare words, making",
+    surface: "Ezekiel", owner: "book-intro:Ezekiel", expect: null, status: "guard",
+    why: "TEXT_OF. No verse of the WEB contains the phrase 'text of', which is what makes this shape " +
+         "safe to key on for every book at once." },
+  { text: "The Hebrew and Aramaic text of Ezra is well preserved and stable in the Masoretic " +
+          "tradition. The one Qumran witness, 4QEzra",
+    surface: "Ezra", owner: "book-intro:Ezra", expect: null, status: "guard",
+    why: "TEXT_OF. Two on the Ezra intro, both in manuscript notes about the book." },
+  { text: "chapters 40-66, against critical theories of a separate 'Second Isaiah.'",
+    surface: "Isaiah", owner: "bib-dkj-isaiah-suffering-servant", expect: null, status: "guard",
+    why: "BOOK_NUMERAL. 'Second Isaiah' is a critical hypothesis about a section of the book, and " +
+         "this article exists to argue against it; linking the phrase to the prophet contradicted " +
+         "the sentence it sat in." },
+  { text: "\u2014 was riding in his chariot reading aloud from the scroll of Isaiah, specifically the " +
+          "passage about a sheep led silently to slaughter (Isaiah",
+    surface: "Isaiah", owner: "ethiopian-eunuch", expect: null, status: "guard",
+    why: "SCROLL_OF, retelling Acts 8. The eunuch was reading a scroll, not meeting a man." },
+  { text: "Woven through the second half of Isaiah's book are several \"Servant Songs,\" poems " +
+          "describing a chosen Servant of the",
+    surface: "Isaiah", owner: "bib-dkj-isaiah-suffering-servant", expect: null, status: "guard",
+    why: "POSSESSIVE_WORK. 'The second half of Isaiah's book' is the book, and the half in question " +
+         "is precisely the half whose authorship is argued about." },
+  { text: "Multiple additional Isaiah manuscripts were found at Qumran (including a second, more " +
+          "fragmentary scroll from",
+    surface: "Isaiah", owner: "book-intro:Isaiah", expect: null, status: "guard",
+    why: "MANUSCRIPT_AFTER. The Qumran Isaiah scrolls are copies of the book." },
+  { text: "and the assembly follows his lead (Acts 15:13-21). The Epistle of James, with its blunt " +
+          "ethical teaching (\"faith without works is dead\"), is traditionally",
+    surface: "James", owner: "james-brother-of-jesus", expect: null, status: "guard",
+    why: "EPISTLE_OF, and one of three links here that were also plainly WRONG before any ruling: " +
+         "all three pointed at James son of Zebedee, whom Herod Agrippa executed in AD 44 (Acts " +
+         "12:2) and whom no tradition names as the author. Suppressed rather than repointed to James " +
+         "the brother of Jesus, because the point of the ruling is that a title names no author." },
+  { text: "Sinaiticus and Vaticanus, both contain the complete text of James.",
+    surface: "James", owner: "book-intro:James", expect: null, status: "guard",
+    why: "TEXT_OF. Same wrong target as above; same answer." },
+  { text: "synagogue leaders soon followed too (Acts 13:42-45). James's letter, written to Jewish " +
+          "Christians, even uses 'your synagogue' as the ordinary",
+    surface: "James", owner: "synagogue", expect: null, status: "guard",
+    why: "POSSESSIVE_WORK. The third of the three." },
+  { text: "is equally plain that the edges were not settled. Hebrews, James, and 1-2 Peter are not in " +
+          "the surviving text; the Apocalypse of Peter is listed as accepted",
+    surface: "James", owner: "muratorian-fragment", expect: null, status: "guard",
+    why: "PHRASE PIN. A bare title in a canon list, with no word beside it saying 'book' - the " +
+         "neighbouring '1-2 Peter' is caught by BOOK_NUMERAL and this one has nothing to catch. " +
+         "Pinned because leaving one of the two linked inside a five-word span is worse than either " +
+         "answer. If this case fails, the sentence was rewritten: re-read it and re-pin it, do not " +
+         "delete the case." },
+  { text: "Strikingly, some Qumran Jeremiah fragments reflect a shorter Hebrew text-form that aligns " +
+          "closely with the shorter,",
+    surface: "Jeremiah", owner: "book-intro:Jeremiah", expect: null, status: "guard",
+    why: "QUMRAN_BEFORE. The 4QJer fragments are copies of the book." },
+  { text: "The Septuagint's Jeremiah is roughly one-eighth shorter than the traditional Hebrew and " +
+          "arranges",
+    surface: "Jeremiah", owner: "book-intro:Jeremiah", expect: null, status: "guard",
+    why: "VERSION_BEFORE. A version naming the book it contains - the shortest possible book title, " +
+         "and one of the two the modern-name sweep flagged." },
+  { text: "Fragments of the Hebrew text of Job were found among the Dead Sea Scrolls at Qumran, " +
+          "confirming the book's",
+    surface: "Job", owner: "book-intro:Job", expect: null, status: "guard",
+    why: "TEXT_OF. 'job' is also in CAPITALISED_ONLY, which reaches the lowercase common noun; this " +
+         "is the capitalised book title, which that test cannot see." },
+  { text: "The book of Jonah centers entirely on Assyria's capital, Nineveh \u2014 the prophet Jonah, sent " +
+          "to warn",
+    surface: "Jonah", owner: "assyrians", expect: null, status: "guard",
+    why: "BOOK_OF, on the first Jonah of the sentence - 'the prophet Jonah' six words later is the " +
+         "man and keeps its link. Another book-and-man pair inside one sentence." },
+  { text: "The book of Jonah centers entirely on Assyria's capital, Nineveh \u2014 the prophet Jonah, sent " +
+          "to warn",
+    surface: "Jonah", occurrence: 2, owner: "assyrians", expect: "jonah", status: "guard",
+    why: "The man, in the same sentence as the title above. Whether the book is history or parable " +
+         "is a question evangelicals themselves divide on, and nothing here touches it." },
+  { text: "scroll (Mur88) contains a well-preserved continuous Hebrew text of Jonah.",
+    surface: "Jonah", owner: "book-intro:Jonah", expect: null, status: "guard",
+    why: "TEXT_OF." },
+  { text: "nothing. That is recognisably the political landscape the books of Joshua and Judges " +
+          "describe, minus Israel.",
+    surface: "Joshua", owner: "amarna-letters", expect: null, status: "guard",
+    why: "BOOK_OF, plural. 'The books of Joshua and Judges describe' is the books describing, and " +
+         "Judges beside it is not a person at all." },
+  { text: "she \"dwelleth in Israel even unto this day,\" as the text of Joshua puts it (Joshua " +
+          "6:22-25).",
+    surface: "Joshua", owner: "rahab", expect: null, status: "guard",
+    why: "TEXT_OF." },
+  { text: "Codex Sinaiticus and Codex Vaticanus both contain the complete Gospel of Luke and are " +
+          "among the most important witnesses to its text.",
+    surface: "Luke", owner: "book-intro:Luke", expect: null, status: "guard",
+    why: "GOSPEL_OF - the exact shape the hand-written 'the Gospel of John' rule has had since this " +
+         "table was written, now general." },
+  { text: "Nazareth, betrothed to a carpenter named Joseph, when Luke's Gospel records that the angel " +
+          "Gabriel appeared to her and announced she would conceive",
+    surface: "Luke", owner: "mary-mother-of-jesus", expect: null, status: "guard",
+    why: "POSSESSIVE_WORK, and the largest group after Peter: nine 'Luke's Gospel's across the " +
+         "person and topic articles." },
+  { text: "Mark's Gospel adds an unusual detail: it identifies Simon as \"the father of Alexander and",
+    surface: "Mark", owner: "simon-of-cyrene", expect: null, status: "guard",
+    why: "POSSESSIVE_WORK." },
+  { text: "'He has risen; he is not here' (16:6), stand in the undisputed text of Mark, and the " +
+          "bodily resurrection and the appearances of the risen Christ are",
+    surface: "Mark", owner: "book-intro:Mark", expect: null, status: "guard",
+    why: "TEXT_OF." },
+  { text: "The manuscript also lacks two familiar passages: the longer ending of Mark (Mark 16:9-20) " +
+          "and the account of the woman caught in adultery (John 7:53-8:11).",
+    surface: "Mark", owner: "codex-sinaiticus", expect: null, status: "guard",
+    why: "ENDING_OF - one of the two shapes flagged as needing a ruling of its own. Ruled: the book. " +
+         "'The longer ending of Mark' names a textual unit INSIDE a book (Mark 16:9-20), so the word " +
+         "can only be the book; there is no reading on which it is the man. It would also be an odd " +
+         "link to leave standing, since the sentence is about a passage this very article says the " +
+         "manuscript does not contain." },
+  { text: "'law' in English Bibles) refers most precisely to the five books of Moses \u2014 Genesis, " +
+          "Exodus, Leviticus, Numbers, and Deuteronomy \u2014 and by extension",
+    surface: "Moses", owner: "torah", expect: null, status: "guard",
+    why: "BOOKS_OF_PLURAL - the other shape flagged as needing its own ruling. Ruled: suppress. 'The " +
+         "five books of Moses' is the traditional name for the Pentateuch and it names that corpus " +
+         "the way 'the Gospel of John' names a Gospel, by its traditional author. Mosaic authorship " +
+         "is the most contested authorship question in the Old Testament and evangelicals themselves " +
+         "range across it, so a link asserts the strongest form of it where no reader can see the " +
+         "argument. PLURAL ONLY: see the two guards below." },
+  { text: "In the book of Nehemiah, Ezra reappears as the central figure of a major public reading of " +
+          "the",
+    surface: "Nehemiah", owner: "ezra", expect: null, status: "guard",
+    why: "BOOK_OF." },
+  { text: "Theocleia \u2014 a scene drawn from the 2nd-century apocryphal Acts of Paul and Thecla rather " +
+          "than from the canonical New Testament text itself. Coordinates",
+    surface: "Paul", owner: "grotto-of-st-paul-ephesus", expect: null, status: "guard",
+    why: "ACTS_OF. The 2nd-century Acts of Paul and Thecla, which this POI's fresco illustrates and " +
+         "which its own sentence calls non-canonical." },
+  { text: "2 Peter was the most disputed book in the early church; the historian Eusebius counted it " +
+          "among the",
+    surface: "Peter", owner: "book-intro:2 Peter", expect: null, status: "guard",
+    why: "BOOK_NUMERAL, and the case the whole ruling was argued from. '2 Peter' pointing at Simon " +
+         "Peter asserts Petrine authorship in a hyperlink, in the same paragraph where the app's own " +
+         "prose says the early church disputed it. Sixteen of these went, and not one of them said " +
+         "anything the app was willing to say in words." },
+  { text: "James, and 1-2 Peter are not in the surviving text; the Apocalypse of Peter is listed as " +
+          "accepted by some and rejected by others; Wisdom is included.",
+    surface: "Peter", owner: "muratorian-fragment", expect: null, status: "guard",
+    why: "APOCALYPSE_OF. A 2nd-century apocalypse the Muratorian fragment itself records as " +
+         "disputed." },
+  { text: "spot where later Christian tradition, drawn from the apocryphal Acts of Peter, holds that " +
+          "the Apostle Peter, fleeing Rome to escape persecution, encountered",
+    surface: "Peter", owner: "appian-way-quo-vadis-rome", expect: null, status: "guard",
+    why: "ACTS_OF, on the first Peter of the sentence; 'the Apostle Peter, fleeing Rome' nine words " +
+         "later is the man and keeps its link." },
+  { text: "spot where later Christian tradition, drawn from the apocryphal Acts of Peter, holds that " +
+          "the Apostle Peter, fleeing Rome to escape persecution, encountered",
+    surface: "Peter", occurrence: 2, owner: "appian-way-quo-vadis-rome", expect: "simon-peter", status: "guard",
+    why: "The man, in the same sentence as the title above." },
+  { text: "Despite its brevity, the text of Philemon is stable and consistently attested across the " +
+          "Greek manuscripts and the early versions.",
+    surface: "Philemon", owner: "book-intro:Philemon", expect: null, status: "guard",
+    why: "TEXT_OF, on the book intro for the letter - a page that names both the book and the man it " +
+         "was addressed to, which is why this is a context rule and not a record-level answer." },
+  { text: "is the earliest surviving witness to the letter. A second Philemon papyrus, P139, dates to " +
+          "the fourth century. Beyond these, the letter's attestation",
+    surface: "Philemon", owner: "book-intro:Philemon", expect: null, status: "guard",
+    why: "MANUSCRIPT_AFTER." },
+  { text: "Ephesians, Philippians, Colossians, 1 and 2 Thessalonians, 1 and 2 Timothy, Titus, and " +
+          "Philemon \u2014 making him by far the most prolific New Testament author. These letters",
+    surface: "Philemon", owner: "paul-of-tarsus", expect: null, status: "guard",
+    why: "PHRASE PIN. Paul's own page lists his letters; '1 and 2 Timothy' loses its link to " +
+         "BOOK_NUMERAL and 'Titus, and Philemon' has no numeral of its own. Pinned so the list is " +
+         "not left half-linked." },
+  { text: "Ephesians, Philippians, Colossians, 1 and 2 Thessalonians, 1 and 2 Timothy, Titus, and " +
+          "Philemon \u2014 making him by far the most prolific New Testament author. These letters",
+    surface: "Titus", owner: "paul-of-tarsus", expect: null, status: "guard",
+    why: "PHRASE PIN, the same list as above." },
+  { text: "Testament breaks off in Hebrews at chapter 9 verse 14, so 1 and 2 Timothy, Titus, " +
+          "Philemon, and Revelation are absent. That absence is physical damage, not a canonical " +
+          "statement",
+    surface: "Titus", owner: "codex-vaticanus", expect: null, status: "guard",
+    why: "PHRASE PIN. Codex Vaticanus's missing final leaves, listed as books." },
+  { text: "Testament breaks off in Hebrews at chapter 9 verse 14, so 1 and 2 Timothy, Titus, " +
+          "Philemon, and Revelation are absent. That absence is physical damage, not a canonical " +
+          "statement",
+    surface: "Philemon", owner: "codex-vaticanus", expect: null, status: "guard",
+    why: "PHRASE PIN, the same list." },
+  { text: "Testament breaks off mid-word at Hebrews 9:14, so 1\u20132 Timothy, Titus, Philemon, and " +
+          "Revelation are absent from its surviving fourth-century text (a fifteenth-century",
+    surface: "Titus", owner: "book-intro:Philemon", expect: null, status: "guard",
+    why: "PHRASE PIN. The same fact told again on the Philemon intro, with an en dash where the " +
+         "other has 'and' - which is exactly why phrase pins are written one sentence at a time." },
+  { text: "Testament breaks off mid-word at Hebrews 9:14, so 1\u20132 Timothy, Titus, Philemon, and " +
+          "Revelation are absent from its surviving fourth-century text (a fifteenth-century",
+    surface: "Philemon", owner: "book-intro:Philemon", expect: null, status: "guard",
+    why: "PHRASE PIN, the same sentence." },
+  { text: "Boaz appears in the book of Ruth as a 'man of standing' (Ruth 2:1) from Bethlehem in " +
+          "Judah, a relative of Elimelech,",
+    surface: "Ruth", owner: "boaz", expect: null, status: "guard",
+    why: "BOOK_OF. Four of these, and Ruth is where the cost of the ruling is most visible: the book " +
+         "is named for a woman the app has a good record for, and a reader on Boaz's page might " +
+         "reasonably have wanted the link. It still asserted a claim about a book that the app does " +
+         "not make in words." },
+  { text: "Chronicles draws visibly on the earlier books of Samuel and Kings, and comparison of " +
+          "parallel passages lets scholars study how",
+    surface: "Samuel", owner: "book-intro:1 Chronicles", expect: null, status: "guard",
+    why: "BOOK_OF, plural. 'The books of Samuel' close with events long after the prophet's death, " +
+         "so this is closer to a plain category error than to a contested attribution." },
+  { text: "1 Samuel traces Israel's transition from the era of the judges to monarchy, centering",
+    surface: "Samuel", owner: "book-intro:1 Samuel", expect: null, status: "guard",
+    why: "BOOK_NUMERAL." },
+  { text: "of Paul, Jude, two letters of John, Revelation, and the Wisdom of Solomon. The writer " +
+          "discusses Paul's letters to seven churches as a deliberate",
+    surface: "Solomon", owner: "muratorian-fragment", expect: null, status: "guard",
+    why: "WISDOM_OR_PSALMS_OF. A book named for a man no tradition claims wrote it. Capital W on " +
+         "purpose: the WEB's five lowercase 'wisdom of Solomon's, from 1 Kings 4:34 to Luke 11:31, " +
+         "are his actual wisdom and keep their links." },
+  { text: "without any messianic person at all. Sources including the Psalms of Solomon, several Dead " +
+          "Sea Scrolls, and later rabbinic material each point in somewhat",
+    surface: "Solomon", owner: "the-christ", expect: null, status: "guard",
+    why: "WISDOM_OR_PSALMS_OF. A first-century BC collection, three centuries after Solomon." },
+  { text: "living across all groups in the church. It is a compact companion to 1 Timothy, focused on " +
+          "leadership and healthy conduct.",
+    surface: "Timothy", owner: "book-intro:Titus", expect: null, status: "guard",
+    why: "BOOK_NUMERAL. Nine of these, in every wording the corpus uses: '1 Timothy', '2 Timothy', " +
+         "'1 and 2 Timothy', '1 & 2 Timothy' and the en-dashed '1-2 Timothy'." },
+  { text: "P32 is especially valuable as early evidence for the text of Titus specifically.",
+    surface: "Titus", owner: "book-intro:Titus", expect: null, status: "guard",
+    why: "TEXT_OF." },
+
+  // The twenty kept links: the man, not the title. Each one is a boundary of a rule above.
+  { text: "agree that the Sadducees gave binding authority to the written Law of Moses and rejected " +
+          "the oral tradition the Pharisees maintained. Whether they",
+    surface: "Moses", owner: "topic-sadducees", expect: "moses", status: "guard",
+    why: "KEPT, and the boundary of the Moses ruling. 'The Law of Moses' names the lawgiver, not the " +
+         "author of five scrolls; it is Scripture's own idiom in twenty WEB verses; and this article " +
+         "is about what the Sadducees treated as binding, not about who held a pen. Only the PLURAL " +
+         "'books of Moses' is suppressed." },
+  { text: "produced one of the oldest pieces of poetry in the Bible, the Song of Moses in Exodus 15, " +
+          "sung by Moses and the people and then echoed by his sister Miriam and",
+    surface: "Moses", owner: "bib-exo-red-sea-crossing", expect: "moses", status: "guard",
+    why: "KEPT. 'The Song of Moses' is the traditional title of a poem, not of a book, and the same " +
+         "sentence says it was 'sung by Moses and the people'. Revelation 15:3 sings it too." },
+  { text: "fiercest opponent into its greatest missionary, and Peter's vision that leads to the " +
+          "Gentile Cornelius receiving the Spirit, opening the door to non-Jewish",
+    surface: "Peter", owner: "book-intro:Acts", expect: "simon-peter", status: "guard",
+    why: "KEPT. Acts 10: a sheet let down from heaven, seen by a man. POSSESSIVE_WORK is " +
+         "deliberately not given to Peter, and this is why." },
+  { text: "preached in the synagogue and declared himself the fulfillment of Isaiah's prophecy, an " +
+          "enraged crowd tried to hurl him off the cliff, only for him to pass",
+    surface: "Isaiah", owner: "mount-precipice", expect: "isaiah", status: "guard",
+    why: "KEPT. A prophecy is something a prophet utters. POSSESSIVE_WORK lists only words that NAME " +
+         "THE WORK - Gospel, book, letter, epistle, text, scroll - for exactly this reason, which is " +
+         "the same narrowness the hand-written John rule already had: 'John's Gospel' is the book, " +
+         "'John's baptism' is the man." },
+  { text: "2:16-18). Matthew frames this atrocity as fulfilling Jeremiah's prophecy of Rachel weeping " +
+          "for her children (Jeremiah 31:15), and the entire sequence",
+    surface: "Jeremiah", owner: "magi", expect: "jeremiah", status: "guard",
+    why: "KEPT, same reason." },
+  { text: "Gabriel first appears in Daniel's visions as an interpreter sent to explain what Daniel " +
+          "has seen: a heavenly voice",
+    surface: "Daniel", owner: "gabriel-archangel", expect: "daniel", status: "guard",
+    why: "KEPT. Daniel is the one who saw them, and the sentence goes on to say 'what Daniel has " +
+         "seen'." },
+  { text: "That final confession is the real point of Daniel's account: the mightiest king of the " +
+          "most religiously impressive empire on earth,",
+    surface: "Daniel", owner: "rel-ane-nebuchadnezzar-marduk-cult", expect: "daniel", status: "guard",
+    why: "KEPT, and the closest call in the batch. 'X's account' is not a title, and an account is " +
+         "something a man gives. Judged the same way for Luke and Nehemiah below so the three are " +
+         "consistent; if that reading is ever revisited it should be revisited for all three at " +
+         "once." },
+  { text: "cutting off his right ear, Jesus rebuked Peter and (in Luke's account) healed the ear " +
+          "(John 18:10, Luke 22:50-51).",
+    surface: "Luke", owner: "malchus", expect: "luke-evangelist", status: "guard",
+    why: "KEPT. 'In Luke's account' beside 'Luke 22:50-51' is the historian, not the title. 'Luke's " +
+         "Gospel' in nine other articles is suppressed, and the two cases together are the whole " +
+         "distinction." },
+  { text: "reflect the reduced scale of the post-exilic city that Nehemiah's account describes.",
+    surface: "Nehemiah", owner: "book-intro:Nehemiah", expect: "nehemiah", status: "guard",
+    why: "KEPT, same reading as the two above." },
+  { text: "Ephesians, Philippians, Colossians, and the short personal letter to Philemon - " +
+          "collectively called the \"Prison Epistles.\" These letters show a man",
+    surface: "Philemon", owner: "bib-ac-paul-first-roman-imprisonment", expect: "philemon", status: "guard",
+    why: "KEPT. The letter was written TO Philemon, a man in Colossae. The three Philemon phrase " +
+         "pins above suppress the book inside canon lists; this is the man in the same corpus, and " +
+         "the ruling does not touch him." },
 ];

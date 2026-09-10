@@ -2,7 +2,7 @@
 
 `src/lib/verseAnnotations.ts` decides which words in the Bible text — and in every article the app
 has ever written — become links to a person, place or topic. It renders **9,725 person-links across
-Scripture and 5,684 across the app's own prose**. Until this directory existed it had no tests at
+Scripture and 5,567 across the app's own prose**. Until this directory existed it had no tests at
 all, and a one-line data edit could move hundreds of them with nobody noticing.
 
     npm run test:linker
@@ -37,7 +37,7 @@ about real copy and not about a hypothetical.
       surface: "John", owner: "jesus-of-nazareth", expect: null, status: "guard", why: "…" }
 
 Prose cases exist because until they did, **the article surface could not be pinned by a named case
-at all** — every case had to be a verse, so the only cover the 5,684 prose links had was the
+at all** — every case had to be a verse, so the only cover the 5,567 prose links had was the
 snapshot. That is not the same thing: `prose-links.tsv` keys each row by a hash of its block's text,
 so editing a paragraph re-keys every link in it and any assertion about them vanishes with the old
 hash rather than failing (see the `tally.mjs` note below). A prose case survives a rewrite of the
@@ -47,12 +47,22 @@ there, because Scripture never names its own books, and are invisible to every r
 Not every rule in that table is article-only: the `"Peter and John"` rule in the same list resolves
 7 verses on both Scripture paths, so it is pinned by ordinary verse cases as well.
 
+Since 2026-09-09 that book-title rule is general rather than John's alone — a book title links to no
+person, for every book — and the BOOK TITLES section of `cases.mjs` is now the largest single group
+of prose cases here, for exactly the reason above. **117 links came out and every shape has a case**,
+because the batch before this one fixed its findings by rewording the offending sentences, and a
+later edit would have undone that silently. The twenty links deliberately KEPT — "Peter's vision",
+"Isaiah's prophecy", "the Law of Moses", "Luke's account" — have cases too, and they are the half a
+careless widening of these rules breaks first. Nothing in it moved a Bible row: the shapes were
+chosen so that Scripture's own "the book of Moses", "First Moses says" and "the wisdom of Solomon"
+keep their links, and those three near-misses are pinned as verse guards.
+
 **2. A whole-corpus snapshot** (`snapshot/*.tsv`), in three files:
 
 | file | rows | what it holds |
 |---|---:|---|
 | `bible-links.tsv` | 9,725 | every person-link in all 31,098 WEB verses, with the id each rendering path gives it |
-| `prose-links.tsv` | 5,684 | every person-link in every authored prose block the app puts through `LinkedVerseText` |
+| `prose-links.tsv` | 5,567 | every person-link in every authored prose block the app puts through `LinkedVerseText` |
 | `key-totals.tsv` | 3,630 | a tally covering **every** kind — location, POI, topic, timeline, verse reference — one row per (kind, matched text, id, path) |
 
 The first two are row-level, so a diff names the verse or the block. `key-totals.tsv` exists because
@@ -140,7 +150,7 @@ snapshot.
 `LinkedVerseText` is what PersonPanel, LocationPanel, PoiPanel, TopicPanel, BookIntroView,
 TimelineEventPanel and MyProfileView render with. Every book override, verse override and
 suppression in `verseAnnotations.ts` is invisible there. **836 links across 746 verses resolve
-differently between the two paths**, and all but a handful of the 5,684 prose links run with no
+differently between the two paths**, and all but a handful of the 5,567 prose links run with no
 disambiguation at all — `OWNER_NAME_OVERRIDES` (below) is the only correction that reaches them. A
 fix that only moves the `reader` column has fixed half the app.
 
