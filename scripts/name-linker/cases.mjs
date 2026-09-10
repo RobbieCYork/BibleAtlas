@@ -823,4 +823,96 @@ export const CASES = [
          "John's and Gabriel's pages, at Ein Karem, and in Luke's introduction — must survive. " +
          "Elizabeth's page has no owner entry, so it falls to the global default, which is right. " +
          "If a suppression above is ever widened past its owner list, this fails first." },
+
+  // ─────────────────────────────────────────────────────────────────────────────────────────
+  // The 2026-09-07 content batch: Jonah, "the Christ", Son of Man, Sabbath, the Jewish
+  // leadership topics, Gennesaret and Herod the tetrarch. Several of these turn on a
+  // deliberate decision NOT to link, and those are the ones worth pinning: a link that
+  // silently appears here would have the app assert something it has chosen not to assert.
+  // ─────────────────────────────────────────────────────────────────────────────────────────
+  { ref: "Jonah 1:1", surface: "Jonah the son of Amittai", expect: "jonah", status: "guard",
+    why: "The prophet, matched as the full registered wording rather than a bare name." },
+  { ref: "2 Kings 14:25", surface: "Jonah the son of Amittai", expect: "jonah", status: "guard",
+    why: "The one mention of the prophet outside his own book, and what dates him." },
+  { ref: "Matthew 16:17", surface: "Jonah", expect: null, status: "guard",
+    why: "'Simon Bar Jonah' names PETER'S FATHER, a different man with no entry — suppressed " +
+         "rather than mislinked to the prophet. Same fault shape as Matthew 13:55's brothers." },
+  { ref: "John 21:15", surface: "Jonah", expect: null, status: "guard",
+    why: "'Simon, son of Jonah' — Peter's father again. The bare 'Simon' here still resolves " +
+         "to Peter, and must continue to." },
+  { ref: "John 21:15", surface: "Simon Peter", expect: "simon-peter", status: "guard",
+    why: "Pins the other half of the verse: suppressing Jonah must not disturb Peter." },
+
+  { ref: "Ezekiel 2:1", surface: "Son of man", expect: null, status: "guard",
+    why: "Ezekiel's 93 occurrences are God addressing the prophet as a mortal, not a title for " +
+         "Jesus. The linker is case-insensitive, so only BOOK_NAME_ALLOWLIST keeps them out. " +
+         "If this ever links, the app is calling Ezekiel the Son of Man." },
+  { ref: "Daniel 7:13", surface: "son of man", expect: "son-of-man", status: "guard",
+    why: "CHANGED 2026-09-07 with the move to a stated Protestant evangelical position. This " +
+         "was deliberately unlinked while the app took no view of who Daniel's figure is. The " +
+         "app now takes one: that figure is the Messiah, and Jesus quoted this verse at his own " +
+         "trial (Mark 14:62). Evangelicals still differ over how Daniel 7's individual and " +
+         "corporate strands relate — the article says so — but not over whether Jesus is the one " +
+         "Daniel saw, so the link asserts only what the position holds." },
+  { ref: "Daniel 8:17", surface: "son of man", expect: null, status: "guard",
+    why: "The angel addressing DANIEL — the Ezekiel sense, a mortal. Admitting Daniel to the " +
+         "allowlist would have linked this too, which is why it is excepted by verse. If this " +
+         "ever links, the app is calling Daniel the Son of Man." },
+  { ref: "Revelation 1:13", surface: "son of man", expect: "son-of-man", status: "guard",
+    why: "The exalted Christ among the lampstands, who identifies himself two verses later as " +
+         "the one who was dead and is alive. Not disputed in the way 14:14 is." },
+  { ref: "Revelation 14:14", surface: "son of man", expect: null, status: "guard",
+    why: "DELIBERATE non-link. The figure on the cloud with a sickle is read as Christ by some " +
+         "interpreters and as an angel by others, evangelicals included. Taking a position on " +
+         "the title does not licence settling a question the position itself leaves open." },
+  { ref: "Mark 2:28", surface: "Son of Man", expect: "son-of-man", status: "guard",
+    why: "The Gospel use, which is what the article is about." },
+  { ref: "Acts 7:56", surface: "Son of Man", expect: "son-of-man", status: "guard",
+    why: "Stephen's vision — the one clear use by someone other than Jesus." },
+
+  { ref: "Matthew 16:16", surface: "the Christ", expect: "the-christ", status: "guard",
+    why: "Peter's confession. 'the Christ' is registered as the TITLE; bare 'Christ' (560 " +
+         "occurrences, mostly the name 'Jesus Christ') is deliberately not registered." },
+  { ref: "John 1:41", surface: "Messiah", expect: "the-christ", status: "guard",
+    why: "One of only two places WEB keeps 'Messiah', and the text glosses it as Christ itself." },
+
+  { ref: "Exodus 20:8", surface: "Sabbath day", expect: "sabbath", status: "guard",
+    why: "The fuller phrase must win the length tie — 'the Sabbath' is unregistered for this." },
+  { ref: "Mark 2:28", surface: "Sabbath", expect: "sabbath", status: "guard",
+    why: "Bare 'Sabbath' still covers the rest. Dropping the article form from alternateNames " +
+         "is exactly why the surface here is 'Sabbath' and not 'the Sabbath'." },
+
+  { ref: "Acts 4:5", surface: "elders", expect: "jewish-elders", status: "guard",
+    why: "Jewish elders in Acts — the sense Robbie scoped the article to." },
+  { ref: "Acts 14:23", surface: "elders", expect: null, status: "guard",
+    why: "CHRISTIAN congregational elders appointed in every assembly — a different office. " +
+         "Acts holds both senses, so these are suppressed verse by verse." },
+  { ref: "Acts 15:6", surface: "elders", expect: null, status: "guard",
+    why: "The Jerusalem council's 'apostles and elders' — the church office again." },
+  { ref: "Revelation 4:4", surface: "elders", expect: null, status: "guard",
+    why: "The twenty-four elders around the throne are a third thing entirely. Revelation is " +
+         "outside the allowlist and must stay outside it." },
+  { ref: "1 Timothy 5:17", surface: "elders", expect: null, status: "guard",
+    why: "Congregational elders who 'rule well' — explicitly out of scope per the brief." },
+
+  { ref: "Acts 4:5", surface: "scribes", expect: "scribes", status: "guard",
+    why: "Jewish legal scholars." },
+  { ref: "Esther 3:12", surface: "scribes", expect: null, status: "guard",
+    why: "'The king's scribes' are Ahasuerus's Persian imperial secretaries, not Israel's." },
+  { ref: "Matthew 27:1", surface: "chief priests", expect: "chief-priests", status: "guard",
+    why: "The plural is NT-only and always this collective. The singular 'chief priest' is " +
+         "deliberately unregistered — in the OT it names the high priest as an individual." },
+
+  { ref: "Matthew 14:34", surface: "land of Gennesaret", expect: "gennesaret", status: "guard",
+    why: "The PLAIN on the north-west shore — a place, previously unlinked entirely." },
+  { ref: "Luke 5:1", surface: "lake of Gennesaret", expect: "sea-of-galilee", status: "guard",
+    why: "The LAKE, i.e. the Sea of Galilee. Same name, different referent, and the reason the " +
+         "plain could not simply be folded into the lake's alternate names." },
+  { ref: "Mark 6:53", surface: "Gennesaret", expect: "gennesaret", status: "guard",
+    why: "Bare 'Gennesaret' after a crossing is the shore/plain they moor at." },
+  { ref: "Matthew 14:1", surface: "Herod the tetrarch", expect: "herod-antipas", status: "guard",
+    why: "Antipas. This wording produced NO link at all before — bare 'Herod' is registered to " +
+         "nobody, so all four occurrences were dead text." },
+  { ref: "Acts 13:1", surface: "Herod the tetrarch", expect: "herod-antipas", status: "guard",
+    why: "Manaen's foster brother — Antipas again, and the one outside the Gospels." },
 ];

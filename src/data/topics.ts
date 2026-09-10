@@ -109,6 +109,28 @@ export const topics: Topic[] = [
         ],
       },
       {
+        heading: "Origins and the Meaning of the Name",
+        paragraphs: [
+          "The Pharisees emerge into clear view in the 2nd century BC, during the Hasmonean period, and Josephus is the first writer to describe them as an organised party — his account of their falling-out with the Hasmonean ruler John Hyrcanus (who ruled from about 134 to 104 BC) is the earliest detailed narrative we have about them. Their beginnings before that point are genuinely obscure. A common account links them to the Hasidim, the pious resisters of the Maccabean revolt; this is plausible and often repeated, but the evidence connecting the two groups is thin, and careful historians present it as a reasonable guess rather than an established fact.",
+          "Even the name is uncertain. It is usually derived from the Hebrew perushim, 'the separated ones,' which would describe a group setting itself apart for purity — but scholars disagree about what they were separating from, and whether the label began as their own or as a jibe from opponents. An alternative derivation reads the root as 'to interpret,' making them 'the interpreters,' which fits their actual programme rather well. No source from the period settles it.",
+        ],
+      },
+      {
+        heading: "What the Ancient Writers Say",
+        paragraphs: [
+          "Almost everything known about the Pharisees comes from three bodies of writing, and each has a direction of bias worth knowing. Josephus, the Jewish historian writing for a Roman readership late in the 1st century AD, describes them in his Antiquities of the Jews and Jewish War as one of three Jewish 'schools of thought' alongside the Sadducees and Essenes; he reports that they were the most influential with the ordinary population, that they held to fate and human responsibility together, and — in Antiquities — that they numbered more than six thousand in Herod's time. He also states in his Life that he attached himself to the Pharisees as a young man, which makes him a valuable witness and an interested one.",
+          "The New Testament is the second body, and it is a polemical source: the Gospels record the Pharisees chiefly where they are in conflict with Jesus, which is a real historical memory but not a rounded portrait of a movement. The third is rabbinic literature, principally the Mishnah and later works, compiled from the 3rd century AD onward by heirs who looked back on Pharisaic teachers with approval. Notably, no document survives that was written by a Pharisee, in the period, identifying itself as Pharisaic. Historians therefore reconstruct the movement from outsiders, opponents and successors, and describe the result with corresponding caution.",
+        ],
+      },
+      {
+        heading: "How the Movement Ended, and What Continued",
+        paragraphs: [
+          "The Pharisees do not so much end as change form. The catastrophe of AD 70 destroyed the temple and with it the institutional base of the priestly Sadducees, but Pharisaic religion — centred on Torah, its interpretation, the synagogue and the home — needed no temple to continue. In the decades after the revolt a rabbinic movement consolidated at Yavneh (Jamnia) on the coastal plain, and the sages of that movement are generally regarded as the principal heirs of the Pharisees. The term 'Pharisee' itself falls out of use; the successors call themselves rabbis.",
+          "How direct that succession was is debated. The mainstream position holds a real continuity of people and ideas from the Pharisees to the early rabbis. A more cautious line, argued at length by Jacob Neusner among others, warns that rabbinic sources are late, that they had reasons to claim a Pharisaic pedigree, and that the continuity should not be assumed to be as tidy as the later tradition presents it. Both positions accept that Pharisaic emphases, rather than Sadducean ones, shaped the Judaism that survived.",
+          "For how the two parties differed from one another point by point — on Scripture, the resurrection, where their power sat, and why only one of them survived — see Pharisees and Sadducees Compared.",
+        ],
+      },
+      {
         heading: "Pharisees in the Gospels and Acts",
         paragraphs: [
           "The Gospels record repeated conflict between Jesus and the Pharisees, especially over Sabbath observance, ritual purity, and Jesus's willingness to eat with 'sinners' and tax collectors. Jesus's sharpest words are reserved for their hypocrisy — meticulously tithing garden herbs 'and have left undone the weightier matters of the law: justice, mercy, and faith' (Matthew 23:23) — condemning the substance behind the practice, not necessarily every individual Pharisee. Not all Pharisees were hostile: Nicodemus, 'a ruler of the Jews' and Pharisee, comes to Jesus by night with real questions (John 3:1-21) and later helps bury him (John 19:39-40), and the Pharisee Gamaliel counsels the Jewish council toward caution rather than violence against the apostles (Acts 5:34-39). Paul himself was 'a Pharisee, a son of Pharisees' (Acts 23:6), trained under Gamaliel (Acts 22:3), before his conversion turned his zeal toward proclaiming the very faith he had once persecuted.",
@@ -139,6 +161,27 @@ export const topics: Topic[] = [
         ],
       },
       {
+        heading: "Origins, and the Problem of the Sources",
+        paragraphs: [
+          "The Sadducees appear alongside the Pharisees in the Hasmonean period, and the name is usually derived from Zadok, the priestly line that served under David and Solomon and whose descendants held the high priesthood for centuries — a derivation that fits a party of priestly aristocrats, though the philological route from 'Zadok' to 'Sadducee' is not without difficulties and other explanations have been proposed. Josephus treats them as one of the three Jewish schools of thought alongside the Pharisees and Essenes, describing them as few in number but drawn from the highest ranks, and as having considerably less popular following than their rivals.",
+          "One fact governs everything written about them: no Sadducean writing survives. Not a letter, not a treatise, not a legal ruling. Everything known comes from people outside the party and mostly hostile to it — Josephus, the New Testament, and rabbinic literature descended from the Pharisaic side of the argument. The standard portrait is probably sound in outline, because those independent sources agree on the main points. Its sharper details are another matter, and a reader is right to hold them loosely rather than to picture the Sadducees as confidently as the sources' tone invites.",
+        ],
+      },
+      {
+        heading: "What They Held",
+        paragraphs: [
+          "Their best-attested distinctive is the denial of the resurrection, stated flatly in Acts 23:8 and dramatised in the trap they set for Jesus about the woman married successively to seven brothers. Acts adds that they denied angels and spirits as well, which is harder to square with the Torah they accepted, since angels appear there repeatedly. This app treats Luke's report as accurate — he is a careful reporter of first-century Jewish detail elsewhere, and the sentence is offered as plain description of a party his readers could still meet. The most likely sense, and the one most commentators favour, is that the Sadducees rejected the elaborate angelology and speculation about spirits that had developed in the intertestamental literature, rather than denying the existence of the angels who appear in the books of Moses. Some scholars instead read Luke as compressing a broader disagreement into a slogan; a few take the denial at full strength. The first reading is this article's, and the others are not unreasonable.",
+          "On Scripture, the ancient sources agree that the Sadducees gave binding authority to the written Law of Moses and rejected the oral tradition the Pharisees maintained. Whether they also rejected the Prophets and the Writings outright — a claim made by some later writers — is disputed; many modern historians think the stronger claim overstates a real difference in emphasis. Josephus adds that they denied fate, holding that human beings choose good and evil freely, in contrast to the Pharisees' pairing of providence and responsibility. Their conservatism was legal and this-worldly rather than pietistic: strict in the letter of the Law, sceptical of the interpretive superstructure built on it.",
+        ],
+      },
+      {
+        heading: "Why They Vanished",
+        paragraphs: [
+          "The Sadducees' standing rested on the temple, the priesthood and a working accommodation with Rome. When the revolt of AD 66-70 ended with the temple burned and the priesthood without a function, the party had nothing left to stand on, and it disappears from the record within a generation. Nothing survived them: no successor movement claimed their name, and no community preserved their books. The contrast with the Pharisees, whose Torah-centred piety travelled perfectly well without a building, is the clearest illustration in Jewish history of how much an institution's survival depends on what it is anchored to.",
+          "For a point-by-point comparison of the two parties — Scripture, the resurrection, where their power sat, and how each fared after AD 70 — see Pharisees and Sadducees Compared.",
+        ],
+      },
+      {
         heading: "Sadducees in the Gospels and Acts",
         paragraphs: [
           "The Sadducees appear less often than the Pharisees in the Gospels but in one memorable episode try to trap Jesus with a hypothetical about a woman who outlives seven brothers she successively marries, mocking the idea of resurrection — Jesus answers that they 'know neither the Scriptures, nor the power of God' (Matthew 22:23-33; Mark 12:18-27). It was chiefly the Sadducean-led temple establishment, more than the Pharisees, that moved against Jesus and later against the apostles (Acts 4:1-2; 5:17-18), likely because a popular movement proclaiming resurrection threatened both their theology and their comfortable political arrangement with Rome. Paul, on trial before a mixed council, shrewdly exploits this very division: declaring himself on trial 'concerning the hope and resurrection of the dead' immediately turns the Pharisees and Sadducees present against each other rather than united against him (Acts 23:6-10). Because their power depended entirely on the temple and its priesthood, the Sadducees vanish from history after the temple's destruction in AD 70 — unlike the Pharisees, whose emphasis on Torah and oral tradition, independent of any single building, gave rise to the rabbinic Judaism that has continued ever since.",
@@ -147,7 +190,7 @@ export const topics: Topic[] = [
     ],
     verses: [
       { reference: "Matthew 22:23-33", note: "Sadducees questioned about the resurrection" },
-      { reference: "Acts 4:1-2", note: "Sadducees, 'greatly annoyed' at the apostles preaching resurrection" },
+      { reference: "Acts 4:1-2", note: "Sadducees 'upset' at the apostles preaching resurrection" },
       { reference: "Acts 23:6-10", note: "Paul divides the council along Pharisee/Sadducee lines" },
     ],
     sources: [{ label: "Encyclopaedia Britannica: Sadducee", url: "https://www.britannica.com/topic/Sadducee" }],
@@ -2393,6 +2436,361 @@ export const topics: Topic[] = [
       { label: "Wikipedia: Code of Hammurabi", url: "https://en.wikipedia.org/wiki/Code_of_Hammurabi" },
       { label: "Louvre: the Code of Hammurabi stele", url: "https://collections.louvre.fr/en/ark:/53355/cl010174436" },
       { label: "Bible Odyssey (SBL): The Ten Commandments", url: "https://www.bibleodyssey.org/articles/the-ten-commandments/" },
+    ],
+  },
+  {
+    id: "sabbath",
+    name: "Sabbath",
+    // "the Sabbath" is deliberately NOT registered: it ties with "Sabbath day" on length, and at
+    // Exodus 20:8 ("Remember the Sabbath day") the tie was being won by the article form, leaving
+    // "day" outside the link. Dropping it lets the fuller phrase match, and bare "Sabbath" still
+    // covers everywhere else.
+    alternateNames: ["Sabbath day"],
+    category: "practice",
+    role: "The Seventh-Day Rest Commanded in the Law",
+    summary:
+      "The seventh-day rest commanded in the Ten Commandments and kept as a sign of God's covenant with Israel — the setting of several of Jesus's sharpest conflicts with the religious authorities, and the subject of a long-running and still-unsettled disagreement among Christians about what it asks of them now.",
+    sections: [
+      {
+        heading: "The Command and Its Two Reasons",
+        paragraphs: [
+          "The Sabbath command appears twice in the Law, and the two versions ground it in two different things. Exodus 20:8-11 ties it to creation: 'Remember the Sabbath day, to keep it holy... for in six days Yahweh made heaven and earth, the sea, and all that is in them, and rested the seventh day.' Deuteronomy 5:12-15 repeats the command almost word for word but gives a different reason — 'You shall remember that you were a servant in the land of Egypt, and Yahweh your God brought you out of there by a mighty hand' — grounding the rest in the exodus, and extending it pointedly to servants and livestock so that 'your male servant and your female servant may rest as well as you.' The two reasons are usually read as complementary rather than competing: the day recalls both a God who rested and a God who freed slaves.",
+          "Behind both stands Genesis 2:2-3, where God 'rested on the seventh day from all his work' and 'blessed the seventh day, and made it holy' — before any command is given to anyone. Exodus 31:13-17 then makes Sabbath-keeping a covenant sign specifically between God and Israel, 'a sign between me and you throughout your generations,' and attaches severe penalties to profaning it. Isaiah 58:13-14 frames it less as restriction than as gift, calling Israel to 'call the Sabbath a delight.'",
+        ],
+      },
+      {
+        heading: "Sabbath in Jesus's Ministry",
+        paragraphs: [
+          "The Gospels place several of Jesus's confrontations with the Pharisees and synagogue authorities on the Sabbath, and the dispute is consistently about what the day permits rather than whether it should be kept. Jesus is portrayed attending synagogue on the Sabbath as his custom, and the arguments arise when he heals there. When a synagogue ruler objects that there are six other days for healing, Jesus answers by pointing to the accepted practice of watering an ox or donkey on the Sabbath: 'Ought not this woman, being a daughter of Abraham, whom Satan had bound eighteen long years, be freed from this bondage on the Sabbath day?' (Luke 13:14-16).",
+          "Two sayings carry most of the weight in later Christian discussion. 'The Sabbath was made for man, not man for the Sabbath' (Mark 2:27) sets the day's purpose as human good rather than as an end in itself. 'The Son of Man is lord even of the Sabbath' (Mark 2:28; also Matthew 12:8 and Luke 6:5) claims an authority over the day itself. Readers across the traditions below agree these sayings are central and disagree about how far they reach — whether they interpret the commandment or transcend it is precisely the question the next section describes.",
+        ],
+      },
+      {
+        heading: "What the Sabbath Asks of Christians",
+        paragraphs: [
+          "This app writes from a Protestant evangelical position, and on the Sabbath that position rests on a distinction: the fourth commandment's abiding substance is not the same thing as the Mosaic Sabbath's ceremonial form. The substance — that time belongs to God, that human beings are made to rest as well as work, and that rest is a gift rather than a grudging allowance — stands, and it is grounded in creation itself, before Sinai and before Israel (Genesis 2:2-3). The form — the seventh day kept on pain of death as the covenant sign between God and Israel (Exodus 31:13-17) — belonged to that covenant, and the New Testament treats it as fulfilled in Christ. Colossians 2:16-17 is the load-bearing text: Sabbath days are 'a shadow of the things to come; but the body is Christ's.' Hebrews 4:9-10 completes the thought by making the rest itself the destination — 'There remains therefore a Sabbath rest for the people of God.' Christ does not abolish the Sabbath; he is what it was pointing at.",
+          "Two conclusions follow. First, no particular day binds the Christian conscience, because Paul says so directly and declines to arbitrate: 'One man esteems one day as more important. Another esteems every day alike. Let each man be fully assured in his own mind' (Romans 14:5-6). Second, Christians nevertheless gather, and they have gathered on the first day of the week since the apostolic period, in commemoration of the resurrection — the disciples breaking bread 'on the first day of the week' (Acts 20:7), and John 'in the Spirit on the Lord's day' (Revelation 1:10). Sunday is therefore kept as the Lord's Day, joyfully and by long practice, rather than as a Sabbath transferred by command.",
+          "What that asks of a Christian is not less than the commandment but something different in kind from a rule about a date: that work be laid down often enough and deliberately enough to be a standing admission that the world is upheld by God and not by us, and that the day the church gathers be given to worship rather than absorbed into everything else.",
+        ],
+      },
+      {
+        heading: "Where Evangelicals Disagree",
+        paragraphs: [
+          "The position above is this article's, and it is the majority evangelical one — but it is not the only view held by evangelicals, and the disagreement is old and serious. Both alternatives below are held by people with the same confidence in Scripture's authority, argued from the same texts, and neither is a boundary of orthodoxy. Christians on each side regard the others as brothers who have read a hard question differently, not as unbelievers.",
+          "The confessional Reformed view holds that the fourth commandment is moral law, binding on all people in every age, and that its observance was moved by apostolic authority to the first day. This is the position of the Westminster Confession, which calls the Lord's Day 'the Christian Sabbath' and asks for a day set apart from ordinary work and recreation. It is the historic Puritan and Presbyterian position and remains confessionally binding in a number of denominations. Its case against the article's position is direct: the ten commandments are given as a unit and summarise moral law, so singling out the fourth as ceremonial and expired leaves the Decalogue with a hole in it, and treats as temporary a command God grounded in creation itself.",
+          "The seventh-day view holds that the commandment was never repealed and that the day was never changed. Its argument deserves to be stated at full strength rather than summarised away. Exodus 20:8-11 grounds the Sabbath in creation, before Israel existed and before any ceremonial system was given, which tells against classing it with the shadows that passed; Exodus 31:16 calls Sabbath-keeping 'a perpetual covenant'; and the New Testament records no command anywhere transferring the day, which is a striking silence if such a change actually occurred. On Colossians 2:16-17, seventh-day interpreters answer that the 'sabbath days' in view there are the annual ceremonial sabbaths of the festival calendar listed alongside feast days and new moons, not the weekly Sabbath of the Decalogue — a reading the article above does not accept, but which is exegetical rather than evasive.",
+          "It matters to say plainly who holds this. Seventh Day Baptists have held it since the seventeenth century, and Seventh-day Adventists — who affirm the authority of Scripture, the Trinity, and salvation by grace through faith in Christ — are the largest body holding it today. It is not a sectarian curiosity outside the evangelical world but a minority position within it, and a reader should not come away from this article thinking otherwise.",
+          "One fact belongs to the disagreement rather than to either side, because all three positions use it: the New Testament contains no passage that explicitly commands a change of day. Those who keep Sunday read the transfer out of apostolic practice, and those who keep Saturday read the same silence as decisive the other way. The argument turns on inference from practice, not on an explicit instruction, and a reader deserves to know that before being told the question is easy.",
+        ],
+      },
+      {
+        heading: "How Other Traditions Read It",
+        paragraphs: [
+          "Roman Catholic teaching is frequently misrepresented on this point by Protestants, so it is worth quoting rather than characterising. The Catechism of the Catholic Church distinguishes Sunday from the sabbath 'which it follows chronologically every week,' and says that 'for Christians its ceremonial observance replaces that of the sabbath,' while also holding that 'in Christ's Passover, Sunday fulfills the spiritual truth of the Jewish sabbath and announces man's eternal rest in God' (CCC 2175). The ground given is the resurrection — Sunday as the 'first day,' which the Catechism says 'recalls the first creation,' and as the 'eighth day' following the sabbath, which 'symbolizes the new creation ushered in by Christ's Resurrection' (CCC 2174) — and the continuing moral obligation is described as one 'inscribed by nature in the human heart to render to God an outward, visible, public, and regular worship' (CCC 2176). Catholics are bound to attend Mass on Sundays and holy days. Evangelicals will disagree with the weight this places on the Church's authority to bind the practice; they should not repeat the old claim that Rome simply invented the change and admits it, because that is not what the Catechism says.",
+          "Eastern Orthodox Christianity centres its worship on Sunday as the day of the Resurrection, and has never developed a Sabbatarian doctrine transferring the fourth commandment to it. Saturday retains a real liturgical place in the Orthodox week — it is not treated as an ordinary day, and the ancient canons treat it differently from other days with respect to fasting — so the Orthodox pattern is less a transfer than a retention of both days with different meanings.",
+          "Judaism keeps Shabbat from sunset on Friday to nightfall on Saturday, and it is the only one of the appointed times written into the Ten Commandments. The rabbinic tradition defines the prohibited work through thirty-nine categories of creative labour derived from the construction of the tabernacle, and suspends them where life or health is at risk. It is worth evangelical readers understanding that observant Jews do not experience this as a burden lifted from Christians: the day is received as delight and as covenant privilege, in the sense Isaiah 58:13-14 gives it, and the home ritual of candles, blessing and meal is the centre of it. Observance varies considerably between Orthodox, Conservative and Reform communities.",
+          "Critical scholarship approaches the question differently again, treating the two versions of the commandment — Exodus 20:8-11 grounding it in creation, Deuteronomy 5:12-15 in the exodus — as evidence of distinct sources and traditions rather than two complementary reasons given by one lawgiver, and debating whether the institution has older Near Eastern antecedents. Evangelical scholarship generally reads the doublet as Moses himself supplying a second, pastoral rationale to a new generation, which is how Deuteronomy presents it.",
+        ],
+      },
+    ],
+    verses: [
+      { reference: "Genesis 2:2-3", note: "God rests on the seventh day and makes it holy" },
+      { reference: "Exodus 20:8-11", note: "The Sabbath command, grounded in creation" },
+      { reference: "Deuteronomy 5:12-15", note: "The same command, grounded in the exodus from Egypt" },
+      { reference: "Exodus 31:13-17", note: "The Sabbath as a covenant sign for Israel" },
+      { reference: "Mark 2:23-28", note: "'The Sabbath was made for man, not man for the Sabbath'" },
+      { reference: "Luke 13:10-17", note: "Jesus heals a woman on the Sabbath and answers the synagogue ruler" },
+      { reference: "Romans 14:5-6", note: "Paul declines to bind consciences over particular days" },
+      { reference: "Colossians 2:16-17", note: "Sabbath days as 'a shadow of the things to come'" },
+      { reference: "Hebrews 4:9-10", note: "'There remains therefore a Sabbath rest for the people of God'" },
+    ],
+    sources: [
+      { label: "Encyclopaedia Britannica: Sabbath", url: "https://www.britannica.com/topic/Sabbath-Judaism" },
+      { label: "Bible Odyssey (SBL): Sabbath", url: "https://www.bibleodyssey.org/articles/sabbath/" },
+      { label: "Catechism of the Catholic Church: The Lord's Day (CCC 2174-2176)", url: "https://www.vatican.va/content/catechism/en/part_three/section_two/chapter_one/article_3/ii_the_lords_day.html" },
+      { label: "Catechism of the Catholic Church: The Sabbath Day (CCC 2168-2173)", url: "https://www.vatican.va/content/catechism/en/part_three/section_two/chapter_one/article_3/i_the_sabbath_day.html" },
+      { label: "Wikipedia: Westminster Confession of Faith", url: "https://en.wikipedia.org/wiki/Westminster_Confession_of_Faith" },
+      { label: "Wikipedia: Sabbatarianism", url: "https://en.wikipedia.org/wiki/Sabbatarianism" },
+      { label: "Wikipedia: Seventh Day Baptist", url: "https://en.wikipedia.org/wiki/Seventh_Day_Baptist" },
+      { label: "Wikipedia: Seventh-day Adventist Church", url: "https://en.wikipedia.org/wiki/Seventh-day_Adventist_Church" },
+      { label: "Wikipedia: Sabbath in Christianity", url: "https://en.wikipedia.org/wiki/Sabbath_in_Christianity" },
+      { label: "Wikipedia: Shabbat", url: "https://en.wikipedia.org/wiki/Shabbat" },
+    ],
+  },
+  {
+    id: "the-christ",
+    name: "the Christ",
+    alternateNames: ["Messiah"],
+    category: "doctrine",
+    role: "The Title 'Anointed One' — Israel's Awaited Deliverer",
+    summary:
+      "Not a surname but a title: Greek Christos translates Hebrew mashiach, 'anointed one.' Used absolutely — 'the Christ' — it names the deliverer Israel awaited, and the Gospels are built around the question of whether Jesus is he.",
+    sections: [
+      {
+        heading: "A Title, Not a Name",
+        paragraphs: [
+          "'Christ' is a translation before it is anything else. The Greek Christos renders the Hebrew mashiach, 'anointed one,' and the Gospel of John twice stops to say so for readers who would not have known: Andrew tells Simon 'We have found the Messiah!' and the text adds the gloss '(which is, being interpreted, Christ)' (John 1:41), and the Samaritan woman says 'I know that Messiah comes, he who is called Christ' (John 4:25). These two verses are the only places the World English Bible keeps the Hebrew-derived word rather than translating it.",
+          "Anointing with oil marked a person as set apart for an office. Kings were anointed, and so 'Yahweh's anointed' is used repeatedly of a reigning king — David refuses to harm Saul precisely because Saul is 'Yahweh's anointed' (1 Samuel 24:6). Priests were anointed; so, occasionally, were prophets. The word therefore carries no automatic sense of a final or singular figure. When the New Testament uses it absolutely, with the article — 'the Christ' — it is drawing on a narrower and later usage, in which the title had come to name one awaited deliverer in particular.",
+        ],
+      },
+      {
+        heading: "What Was Expected",
+        paragraphs: [
+          "Second Temple Jewish expectation was not uniform, and this is worth stating carefully, because Christian retellings have often flattened it. The surviving sources describe a range of hopes rather than a single agreed programme: a Davidic king who would restore Israel's throne and drive out foreign rule; in some Qumran texts, two anointed figures, one priestly and one royal; in others, a heavenly or pre-existent figure; and in some strands of the literature, deliverance without any messianic person at all. Sources including the Psalms of Solomon, several Dead Sea Scrolls, and later rabbinic material each point in somewhat different directions.",
+          "The Gospels reflect this unsettledness in their own way. The crowd at John 12:34 objects that 'we have heard out of the law that the Christ remains forever' and cannot square that with talk of the Son of Man being lifted up. Saying the expectation was varied is not the same as saying it was empty: this app writes from a Protestant evangelical position, and holds that the Old Testament genuinely anticipates a coming deliverer and that Jesus is he. What the variety establishes is that no single tidy checklist was sitting there waiting to be ticked off, which is part of why the identification was contested at the time and why the apostles argued for it from the Scriptures rather than simply pointing.",
+        ],
+      },
+      {
+        heading: "The Question the Gospels Are Built Around",
+        paragraphs: [
+          "'The Christ' functions in the Gospels less as a description than as a question put to the reader. Jesus asks the disciples directly who they say he is, and Peter answers 'You are the Christ' (Mark 8:29) — 'the Christ, the Son of the living God' in Matthew 16:16 — and is immediately told to say nothing about it. At his trial the high priest asks 'Are you the Christ, the Son of the Blessed?' (Mark 14:61), and the answer becomes the ground of the charge against him. John states the purpose of his whole book in these terms: 'these are written, that you may believe that Jesus is the Christ, the Son of God' (John 20:31). After the resurrection Peter's Pentecost sermon puts it as a divine verdict rather than a human recognition: 'God has made him both Lord and Christ, this Jesus whom you crucified' (Acts 2:36).",
+          "One reason the identification was contested at the time is that the expectations sketched above ran mostly toward a victorious king, and a crucified claimant fit none of them. Paul says as much when he calls the message 'a stumbling block to Jews, and foolishness to Greeks.' Over the following decades the title attached to Jesus so firmly that it began to function as a name — 'Jesus Christ,' 'Christ Jesus' — which is how most English readers first meet the word, and why its force as a title has to be recovered deliberately.",
+        ],
+      },
+      {
+        heading: "How Others Read the Same Texts",
+        paragraphs: [
+          "On this article's central claim there is no Protestant distinctive to defend: Roman Catholic and Eastern Orthodox Christians confess that Jesus is the Christ in exactly the terms the creeds use, and the disagreements between those traditions and evangelicals lie elsewhere — authority, sacraments, justification — not here. The two readings that genuinely differ from this article's are Jewish interpretation and critical scholarship, and both deserve to be represented as their own adherents would recognise them.",
+          "Judaism does not accept the identification, and the reasons are principled rather than perverse. The messianic hope in Jewish tradition is tied to visible, unrealised outcomes — the ingathering of the exiles, a rebuilt temple, universal peace and knowledge of God — and on that reading a claimant who died without those things having happened has not fulfilled the office, whatever else may be said about him. Particular texts are read differently as a matter of course: the servant of Isaiah 53 is widely read in Jewish interpretation as Israel itself rather than an individual. Daniel 9:25-26's 'anointed one' is referred elsewhere too, though the strands should not be run together: candidates proposed for the prince of verse 25 include Cyrus, while the anointed one 'cut off' in verse 26 is, in mainstream critical scholarship rather than specifically Jewish tradition, generally identified with the high priest Onias III, murdered in 171/170 BC. Evangelicals disagree with these readings and argue against them from the texts; they should not describe them as evasions, and should be aware that supersessionist caricature has a long and ugly history behind it.",
+          "Critical scholarship, for its part, tends to emphasise the diversity of Second Temple expectation described above, and to treat the early church's messianic reading of the Old Testament as a retrospective interpretation developed to make sense of a crucified leader. Evangelical scholarship answers that the apostolic reading is continuous with how the texts were already being read, that Jesus himself taught it (Luke 24:27, 24:44-46), and that the resurrection is the event that makes the reading possible rather than a decoration added to it.",
+          "A note on linking, since it is visible in the app: this article deliberately does not attach itself to Daniel 9:25-26. Evangelicals overwhelmingly read that passage as messianic, but they differ sharply among themselves over the seventy weeks — how the weeks are counted, whether the seventieth is continuous with the rest or still future, and what the 'cut off' of the Anointed One dates. Linking the verses here would imply the app had settled a scheme it has not. The passage is discussed above instead.",
+        ],
+      },
+    ],
+    verses: [
+      { reference: "1 Samuel 24:6", note: "Saul as 'Yahweh's anointed' — the title used of a reigning king" },
+      { reference: "John 1:41", note: "'We have found the Messiah!' glossed as 'Christ'" },
+      { reference: "John 4:25-26", note: "The Samaritan woman on the coming Messiah" },
+      { reference: "Mark 8:29-30", note: "Peter's confession, followed by a command to silence" },
+      { reference: "Matthew 16:16", note: "'You are the Christ, the Son of the living God'" },
+      { reference: "Mark 14:61-62", note: "The high priest's question at the trial" },
+      { reference: "John 12:34", note: "The crowd's objection that 'the Christ remains forever'" },
+      { reference: "John 20:31", note: "John states the purpose of his Gospel in these terms" },
+      { reference: "Acts 2:36", note: "'God has made him both Lord and Christ'" },
+    ],
+    sources: [
+      { label: "Encyclopaedia Britannica: Messiah", url: "https://www.britannica.com/topic/messiah-religion" },
+      { label: "Wikipedia: Messiah", url: "https://en.wikipedia.org/wiki/Messiah" },
+      { label: "Wikipedia: Jewish messianism", url: "https://en.wikipedia.org/wiki/Jewish_messianism" },
+      { label: "Wikipedia: Prophecy of Seventy Weeks", url: "https://en.wikipedia.org/wiki/Prophecy_of_Seventy_Weeks" },
+    ],
+  },
+  {
+    id: "son-of-man",
+    name: "Son of Man",
+    category: "doctrine",
+    role: "The Title Jesus Most Often Uses of Himself",
+    summary:
+      "The phrase Jesus uses of himself more than any other in the Gospels — and one whose force is genuinely disputed, because in the Old Testament the same words can mean simply 'a human being,' while Daniel 7 gives them to a figure who comes with the clouds and receives an everlasting kingdom.",
+    sections: [
+      {
+        heading: "The Phrase Before the Gospels",
+        paragraphs: [
+          "In the Old Testament the phrase most often means, plainly, a human being. Psalms 8:4 sets it in poetic parallel with 'man': 'what is man, that you think of him? What is the son of man, that you care for him?' Ezekiel uses it more than ninety times, and always as God's form of address to the prophet himself — 'Son of man, stand on your feet, and I will speak with you' (Ezekiel 2:1) — where it marks Ezekiel's creatureliness over against the God who is speaking. Neither usage is a title, and neither is about Jesus — Ezekiel is being reminded that he is a man. The app does not link those occurrences here.",
+          "Daniel 7:13-14 is the exception that generates the whole discussion. In a night vision 'there came with the clouds of the sky one like a son of man,' who is brought before the Ancient of Days and given 'dominion, and glory, and a kingdom, that all the peoples, nations, and languages should serve him.' The wording is careful — 'one like a son of man,' a figure in human form rather than a man simply — and the dominion given him is everlasting. Evangelical interpretation has consistently understood this figure as the Messiah, and understood Jesus to be claiming to be him; that is the reading this article works from, and the trial scene below is the strongest reason for it. What a first-century hearer would have made of the passage, and whether Daniel's figure is an individual or a symbol, are discussed further down.",
+        ],
+      },
+      {
+        heading: "How Jesus Uses It",
+        paragraphs: [
+          "In the Gospels the phrase appears roughly eighty times and, with very few exceptions, on Jesus's own lips. No one addresses him by it, and no one else applies it to him: when the crowd uses it at John 12:34 they are repeating his words back to him and asking what he means — 'Who is this Son of Man?' Outside the Gospels it is rare; the one clear instance of someone else using it of Jesus is Stephen's dying vision, 'I see the heavens opened, and the Son of Man standing at the right hand of God' (Acts 7:56).",
+          "Interpreters commonly sort the sayings into three groups. Some concern authority in the present ministry — 'the Son of Man has authority on earth to forgive sins' (Mark 2:10), and 'the Son of Man is lord even of the Sabbath' (Mark 2:28). Some predict suffering and vindication — 'the Son of Man must suffer many things, and be rejected by the elders, the chief priests, and the scribes, and be killed, and after three days rise again' (Mark 8:31), and 'the Son of Man also came not to be served, but to serve, and to give his life as a ransom for many' (Mark 10:45). Some describe a future coming in glory — 'when the Son of Man comes in his glory, and all the holy angels with him' (Matthew 25:31).",
+          "The trial scene brings the strands together. Asked directly whether he is the Christ, Jesus answers 'I am. You will see the Son of Man sitting at the right hand of Power, and coming with the clouds of the sky' (Mark 14:62) — language drawn from Daniel 7:13 and Psalms 110:1 together. Whatever else is disputed, the narrative presents the high priest as hearing that answer as a claim serious enough to end the questioning.",
+        ],
+      },
+      {
+        heading: "What the Title Claims",
+        paragraphs: [
+          "Read from an evangelical position, 'the Son of Man' is a title and a deliberate one. The definite article is doing work — Jesus says 'the Son of Man,' not 'a son of man' — and the sayings cluster around exactly the three things Daniel 7 and the rest of Scripture would lead a reader to expect of the figure who receives an everlasting kingdom: present authority that belongs properly to God (forgiving sins, Mark 2:10; lordship over the Sabbath, Mark 2:28), a path to that kingdom through suffering and resurrection (Mark 8:31; Mark 10:45), and a return in glory to judge (Matthew 25:31).",
+          "The trial is where the claim becomes unmistakable. Asked directly whether he is the Christ, Jesus answers 'I am' and then adds Daniel 7:13 and Psalms 110:1 together: 'You will see the Son of Man sitting at the right hand of Power, and coming with the clouds of the sky' (Mark 14:62). The high priest's reaction — tearing his clothes and calling it blasphemy — is the best available evidence of how the words landed on a hostile first-century expert. A modest, self-effacing turn of phrase does not produce that response. It is also striking that the title is almost exclusively on Jesus's own lips: no one addresses him by it, and outside the Gospels only Stephen uses it of him (Acts 7:56). That distribution is itself an argument, because a title invented by the later church would be expected to show up in the letters, where it is essentially absent.",
+        ],
+      },
+      {
+        heading: "Other Readings, and an Open Question Among Evangelicals",
+        paragraphs: [
+          "A large body of critical scholarship reads the phrase differently, and the case deserves to be stated properly rather than waved at. In Aramaic, bar nasha could function as an ordinary expression for 'a human being,' or as an oblique way of saying 'someone in my position,' or possibly simply 'I.' Geza Vermes argued this case at length, and on that reading Jesus was speaking idiomatically or modestly and the titular, Danielic sense was supplied afterwards by Greek-speaking churches. Others, following a line associated with Rudolf Bultmann, divide the sayings and treat only some as authentic — commonly holding that Jesus spoke of a coming Son of Man he did not identify with himself, and that the identification came later.",
+          "The evangelical reply is not that these scholars are careless but that the evidence runs the other way. The consistent definite article tells against a generic idiom. The title's near-absence from the epistles tells against a church invention. The trial charge makes sense only if the words carried a claim — Darrell Bock's 'Blasphemy and Exaltation in Judaism: The Charge against Jesus in Mark 14:53-65' is the standard evangelical treatment, and argues the scene is historically credible in its Jewish setting. And the specific weak point in the idiom case is worth naming: the claim that the emphatic Aramaic form was used in the first century simply to mean 'I' has never been supported by an actual example in a relevant text, which is a criticism made well beyond evangelical circles.",
+          "One question inside this article is genuinely open among evangelicals, and it should not be flattened. Daniel 7:18 and 7:27 give the everlasting kingdom to 'the saints of the Most High' and to 'the people of the saints of the Most High,' which is corporate language about faithful Israel. Some evangelical interpreters read the 'one like a son of man' as an individual figure straightforwardly, with the corporate verses describing those who reign with him. Others read him representatively — an individual precisely as the head and representative of his people, so that what is given to him is given to them in him, on the pattern of Adam and of the Davidic king. A minority read the figure as primarily a corporate symbol that Jesus then takes onto himself. All three affirm that Jesus is the one Daniel saw; they differ on how the individual and corporate strands in Daniel 7 relate. This article does not choose between them.",
+        ],
+      },
+    ],
+    verses: [
+      { reference: "Psalms 8:4", note: "'Son of man' in poetic parallel with 'man' — a human being" },
+      { reference: "Ezekiel 2:1", note: "God's habitual form of address to the prophet Ezekiel" },
+      { reference: "Daniel 7:13-14", note: "'One like a son of man' given everlasting dominion" },
+      { reference: "Mark 2:10", note: "Authority on earth to forgive sins" },
+      { reference: "Mark 2:28", note: "'Lord even of the Sabbath'" },
+      { reference: "Mark 8:31", note: "The first prediction of suffering, rejection and rising" },
+      { reference: "Mark 10:45", note: "'To give his life as a ransom for many'" },
+      { reference: "Matthew 25:31", note: "The Son of Man coming in glory to judge" },
+      { reference: "Mark 14:61-62", note: "The trial answer, joining Daniel 7 and Psalms 110" },
+      { reference: "John 12:34", note: "The crowd asks 'Who is this Son of Man?'" },
+      { reference: "Acts 7:56", note: "Stephen's vision — the one clear use by someone other than Jesus" },
+    ],
+    sources: [
+      { label: "Encyclopaedia Britannica: Son of Man", url: "https://www.britannica.com/topic/Son-of-Man-Christianity" },
+      { label: "Wikipedia: Son of man (Christianity)", url: "https://en.wikipedia.org/wiki/Son_of_man_(Christianity)" },
+      { label: "Wikipedia: Son of man (the phrase across the traditions)", url: "https://en.wikipedia.org/wiki/Son_of_man" },
+      { label: "Darrell L. Bock, Blasphemy and Exaltation in Judaism (Internet Archive)", url: "https://archive.org/details/blasphemyexaltat0000darr" },
+    ],
+  },
+  {
+    id: "jewish-elders",
+    name: "elders",
+    category: "people-group",
+    role: "The Lay Senior Men of Israel's Leadership",
+    summary:
+      "The senior laymen who shared Israel's leadership from the wilderness onward, and who in the Gospels form one of the three groups — with the chief priests and the scribes — named again and again as the body that moved against Jesus.",
+    sections: [
+      {
+        heading: "Elders in Israel",
+        paragraphs: [
+          "Long before there were kings or a temple establishment, Israel had elders. Moses is told to 'gather the elders of Israel together' to hear that God has seen the affliction in Egypt (Exodus 3:16), and later to gather 'seventy men of the elders of Israel' to share the burden of leading the people (Numbers 11:16-17). Through Deuteronomy, Joshua, Judges and Ruth they appear as the settled local authority of a town — hearing disputes at the gate, witnessing legal transactions, and representing the community. The office is not priestly and not prophetic; it is the standing of senior men whose age, family and reputation gave them a recognised say.",
+        ],
+      },
+      {
+        heading: "The Elders in the Gospels",
+        paragraphs: [
+          "By the first century 'the elders' in Jerusalem denotes the lay aristocracy who sat in the council alongside the priestly leadership, and the Gospels almost always name them as part of a group rather than alone. The formula recurs with slight variations: Jesus 'must go to Jerusalem and suffer many things from the elders, chief priests, and scribes' (Matthew 16:21); he 'must suffer many things, and be rejected by the elders, the chief priests, and the scribes' (Mark 8:31). Luke 22:66 describes the body plainly — 'the assembly of the elders of the people was gathered together, both chief priests and scribes' — and it is this assembly that hands Jesus to Pilate.",
+          "The elders also stand behind the phrase 'the tradition of the elders,' the accumulated body of oral interpretation that governed matters such as ritual handwashing, and which is the point at issue when the Pharisees challenge Jesus's disciples (Matthew 15:2; Mark 7:3-5). In Acts they appear in the same coalition opposing the apostles — 'their rulers, elders, and scribes were gathered together in Jerusalem' (Acts 4:5).",
+        ],
+      },
+      {
+        heading: "A Note on the Word",
+        paragraphs: [
+          "The same English word does duty for two quite different things in the New Testament, and this article is only about the first. Alongside the Jewish elders above, the letters and the later chapters of Acts use 'elders' for an office in the Christian congregations — Paul and Barnabas 'appointed elders for them in every assembly' (Acts 14:23), Titus is told to 'appoint elders in every city' (Titus 1:5), and 1 Timothy 5:17 describes elders who 'rule well.' Revelation's twenty-four elders around the throne are a third thing again. Those senses are not covered here, and the app does not link them to this page.",
+        ],
+      },
+    ],
+    verses: [
+      { reference: "Exodus 3:16", note: "Moses told to gather the elders of Israel" },
+      { reference: "Numbers 11:16-17", note: "Seventy elders share the burden of leadership" },
+      { reference: "Matthew 15:2", note: "'The tradition of the elders'" },
+      { reference: "Matthew 16:21", note: "Elders, chief priests and scribes named together" },
+      { reference: "Mark 8:31", note: "The Son of Man rejected by the elders, chief priests and scribes" },
+      { reference: "Luke 22:66", note: "The assembly of the elders gathers at daybreak" },
+      { reference: "Acts 4:5", note: "Rulers, elders and scribes gathered against the apostles" },
+    ],
+    sources: [{ label: "Encyclopaedia Britannica: Sanhedrin", url: "https://www.britannica.com/topic/sanhedrin" }],
+  },
+  {
+    id: "chief-priests",
+    name: "chief priests",
+    // Plural only, deliberately. The plural occurs exclusively in Matthew, Mark, Luke, John and
+    // Acts, and always means this collective. The SINGULAR "chief priest" is a different thing —
+    // it names the high priest as an individual office at 2 Kings 25:18, 2 Chronicles 19:11,
+    // 24:11, 26:20, 31:10, Ezra 7:5 and Jeremiah 52:24 — so registering it would point seven Old
+    // Testament mentions of one man at an article about a first-century group.
+    category: "people-group",
+    role: "The Senior Temple Priesthood in Jerusalem",
+    summary:
+      "The senior priestly officials of the Jerusalem temple — the serving high priest, those who had held the office before him, and the heads of the priestly families — who controlled the temple and led the proceedings against Jesus and, later, the apostles.",
+    sections: [
+      {
+        heading: "Who They Were",
+        paragraphs: [
+          "'Chief priests' is a collective term rather than a single office. It covers the reigning high priest, former high priests still alive and influential (Annas, deposed by Rome but still powerful while his son-in-law Caiaphas served, is the clearest case), and the heads of the twenty-four priestly courses along with senior temple officers such as the captain of the temple. Under Roman rule the high priesthood was in the governor's gift, which tied the group's standing directly to keeping order — a pressure the Gospels show operating.",
+          "Their base was the temple and their interests were bound up with it. In Jesus's day the leading priestly families were largely Sadducean in outlook, which is why the chief priests and the Sadducees often appear together in Acts, and why the group disappears from history with the temple's destruction in AD 70.",
+        ],
+      },
+      {
+        heading: "In the Gospels and Acts",
+        paragraphs: [
+          "The chief priests appear at almost every stage of the passion narrative: taking counsel against Jesus (Matthew 27:1), receiving Judas and paying him, sending the armed party to arrest him, presenting the case before Pilate, and persuading the crowd to ask for Barabbas (Matthew 27:20). They are named with the elders and the scribes in the recurring formula for the body that rejected him (Mark 8:31).",
+          "In Acts they continue as the principal opposition to the apostles, and the reason given is specific: the priestly leadership was 'upset because they taught the people and proclaimed in Jesus the resurrection from the dead' (Acts 4:1-2), a doctrine the Sadducean party denied. Paul is brought before them, and it is the high priest Ananias who comes down to Caesarea with elders to press the charge against him (Acts 24:1).",
+        ],
+      },
+    ],
+    verses: [
+      { reference: "Matthew 26:3-4", note: "The chief priests, scribes and elders take counsel" },
+      { reference: "Matthew 27:1", note: "The chief priests and elders take counsel to put Jesus to death" },
+      { reference: "Matthew 27:20", note: "The chief priests persuade the crowd to ask for Barabbas" },
+      { reference: "Mark 14:53", note: "All the chief priests, elders and scribes assemble at the high priest's house" },
+      { reference: "Acts 4:1-2", note: "The priestly leadership annoyed at the preaching of the resurrection" },
+      { reference: "Acts 24:1", note: "The high priest Ananias brings the charge against Paul" },
+    ],
+    sources: [{ label: "Encyclopaedia Britannica: High Priest", url: "https://www.britannica.com/topic/high-priest" }],
+  },
+  {
+    id: "scribes",
+    name: "scribes",
+    category: "people-group",
+    role: "Professional Experts in the Law",
+    summary:
+      "The trained writers and legal specialists of Israel — royal secretaries and copyists in the Old Testament, and by the first century the professional interpreters of the Law whose expertise made them a standing presence in the councils that opposed Jesus.",
+    sections: [
+      {
+        heading: "From Secretaries to Scholars",
+        paragraphs: [
+          "In the Old Testament a scribe is first of all someone who writes: a royal secretary keeping the king's records, an officer mustering an army, a copyist. Baruch writes Jeremiah's dictated scroll; scribes appear in the administrations of David, Hezekiah and Josiah. The pivot toward scholarship is associated above all with Ezra, described as 'a skilled scribe in the law of Moses,' who had 'set his heart to seek Yahweh's law, and to do it, and to teach statutes and ordinances in Israel' (Ezra 7:6, 7:10).",
+          "By the New Testament period the word denotes a profession of learned interpreters of the Law — men who knew the text, its precedents and its applications, and were consulted accordingly. When Herod wants to know where the Messiah is to be born, it is 'all the chief priests and scribes of the people' he assembles to ask (Matthew 2:4), and they answer from Micah. Scribes were not a sect: they are frequently associated with the Pharisees, whose programme their expertise served, but the Gospels also speak of scribes attached to the chief priests, and the two groupings should not be collapsed into one.",
+        ],
+      },
+      {
+        heading: "In the Gospels",
+        paragraphs: [
+          "Scribes appear constantly as Jesus's questioners and critics, and they are named in the standard triad of the body that rejects him (Mark 8:31; Matthew 16:21). Mark notes at the end of the Sermon-like teaching in Capernaum that the crowds were astonished because Jesus 'taught them as having authority, and not as the scribes' — a contrast between a teacher who spoke on his own authority and a profession whose method was to cite precedent.",
+          "The Gospels' portrait is not uniformly hostile. One scribe asks which commandment is greatest, agrees warmly with the answer, and is told he is 'not far from God's Kingdom' (Mark 12:28-34). But the sustained critique in Matthew 23, delivered against 'scribes and Pharisees,' is severe, and it is directed at a gap between the meticulous knowledge of the Law and the practice of justice and mercy.",
+        ],
+      },
+    ],
+    verses: [
+      { reference: "Ezra 7:6-10", note: "Ezra, 'a skilled scribe in the law of Moses'" },
+      { reference: "Matthew 2:4", note: "Herod assembles the chief priests and scribes" },
+      { reference: "Mark 1:22", note: "Jesus taught 'as having authority, and not as the scribes'" },
+      { reference: "Mark 8:31", note: "Scribes named in the triad that rejects the Son of Man" },
+      { reference: "Mark 12:28-34", note: "A scribe told he is 'not far from God's Kingdom'" },
+      { reference: "Matthew 23:1-36", note: "The sustained rebuke of 'scribes and Pharisees'" },
+    ],
+    sources: [{ label: "Encyclopaedia Britannica: Scribe", url: "https://www.britannica.com/topic/scribe" }],
+  },
+  {
+    id: "pharisees-and-sadducees-compared",
+    name: "Pharisees and Sadducees Compared",
+    // No alternateNames. Registering "Pharisees and Sadducees" would match Matthew 3:7, 16:1, 16:6,
+    // 16:11, 16:12 and Acts 23:7 and — being the longer name — would win over "Pharisees" and
+    // "Sadducees" there, collapsing two sect links into one comparison link in the Bible reader.
+    // That is a reader-facing change to Scripture links nobody asked for. This article is reached
+    // from the two sect articles, which name it in full.
+    category: "people-group",
+    role: "The Two Great Jewish Parties Side by Side",
+    summary:
+      "The two parties are named together so often that they can blur into a single opposition bloc. They were not. They differed on what counts as Scripture, on the resurrection, on where authority sits, on who belonged to them — and only one of them survived the year 70.",
+    sections: [
+      {
+        heading: "Why They Get Confused",
+        paragraphs: [
+          "Matthew in particular pairs them — 'Pharisees and Sadducees' come together to test Jesus, and he warns the disciples against 'the yeast of the Pharisees and Sadducees' (Matthew 16:1-12) — and a reader can come away with the impression of one hostile establishment with two names. The Gospels themselves supply the correction in Acts 23, where Paul, on trial before a council containing both, says he is on trial 'concerning the hope and resurrection of the dead,' and the room divides against itself: 'an argument arose between the Pharisees and Sadducees, and the crowd was divided' (Acts 23:7). The two groups had a real and bitter quarrel, and Paul knew exactly where the fault line ran.",
+        ],
+      },
+      {
+        heading: "Where They Differed",
+        paragraphs: [
+          "Scripture. The Sadducees, by the consistent report of ancient sources, accorded full authority to the written Law of Moses and rejected the binding force of the oral tradition. The Pharisees held that an oral tradition, transmitted alongside the written Law and applying it to daily life, was authoritative too — the 'tradition of the elders' the Gospels mention (Matthew 15:2; Mark 7:3). Whether the Sadducees rejected the Prophets and Writings outright, or merely denied them the Law's authority, is disputed; the ancient testimony on the point comes largely from their opponents and from Josephus, and modern scholars read it in more than one way.",
+          "The resurrection, angels and spirits. Acts states the difference in a single sentence: 'the Sadducees say that there is no resurrection, nor angel, nor spirit; but the Pharisees confess all of these' (Acts 23:8). This is the fault line Paul exploits, and it explains why the priestly leadership was 'upset' at apostles preaching resurrection (Acts 4:1-2) in a way the Pharisees were not — Gamaliel, a Pharisee, counsels the council toward restraint instead (Acts 5:34-39).",
+          "Where their power sat. The Sadducees were an aristocratic, priestly party whose base was the temple and its administration, and whose position depended on a working arrangement with Rome. The Pharisees were a largely lay movement, closer to the synagogue and the study of the Law than to the altar, and considerably more popular with ordinary people. That difference decided their futures.",
+          "Fate after AD 70. When the temple was destroyed, the Sadducees lost the institution their identity and influence rested on, and they disappear from history. Pharisaic emphases — Torah study, oral tradition, a piety that needed no single building — carried on and are generally regarded as a principal root of the rabbinic Judaism that followed. This is the single most important thing to know about the pair, and it is invisible if they are treated as interchangeable.",
+        ],
+      },
+      {
+        heading: "Where They Overlapped",
+        paragraphs: [
+          "Both sat in the council, both belonged to the Jerusalem leadership, and both are shown opposing Jesus, though the Gospels weight them differently: the Pharisees dominate the disputes over Sabbath, purity and table fellowship during the ministry, while the Sadducean temple establishment is more prominent in the arrest and trial. Neither group was monolithic. Nicodemus and Gamaliel are Pharisees who come off well in the New Testament's own telling, and the movement Paul belonged to before his conversion was the Pharisees, not their rivals (Acts 23:6).",
+          "A caution about sources belongs here, and it cuts a particular way. Nearly everything known about the Sadducees comes from people who were not Sadducees — the New Testament, Josephus, and later rabbinic literature descended from their opponents. No Sadducean writing survives. This app takes the New Testament's account as accurate, and it is worth noting that it is corroborated at the decisive point by Josephus, who was not a Christian and had no stake in Luke's argument: he too reports the Sadducees denying the survival of the soul and rejecting the oral tradition. What the thinness of the sources should make a reader cautious about is not the main outline but the sharper characterisations — the Sadducees' inner motives, their private convictions, and how far any individual matched the party description.",
+        ],
+      },
+    ],
+    verses: [
+      { reference: "Matthew 16:1-12", note: "The two parties paired, and 'the yeast of the Pharisees and Sadducees'" },
+      { reference: "Acts 23:6-10", note: "Paul divides the council along the resurrection fault line" },
+      { reference: "Acts 23:8", note: "The doctrinal difference stated in one sentence" },
+      { reference: "Acts 4:1-2", note: "The Sadducean temple leadership annoyed at resurrection preaching" },
+      { reference: "Acts 5:34-39", note: "Gamaliel the Pharisee counsels restraint" },
+      { reference: "Matthew 15:1-9", note: "The dispute over the tradition of the elders" },
+    ],
+    sources: [
+      { label: "Encyclopaedia Britannica: Pharisee", url: "https://www.britannica.com/topic/Pharisee" },
+      { label: "Encyclopaedia Britannica: Sadducee", url: "https://www.britannica.com/topic/Sadducee" },
     ],
   },
 ];

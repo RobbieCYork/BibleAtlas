@@ -1317,7 +1317,10 @@ export const people: Person[] = [
     id: "herod-antipas",
     name: "Herod Antipas",
     pronunciation: "AN-tih-pus",
-    alternateNames: ["Antipas"],
+    // "Herod the tetrarch" is how Matthew 14:1, Luke 3:19, Luke 9:7 and Acts 13:1 name him, and it
+    // produced no link at all before — bare "Herod" is registered to nobody. Reader-facing, because
+    // it is a title he is genuinely called by, not a punctuation variant.
+    alternateNames: ["Antipas", "Herod the tetrarch"],
     tier: "significant",
     role: "Tetrarch of Galilee and Perea; executed John the Baptist",
     summary: "A son of Herod the Great who ruled Galilee for over four decades, had John the Baptist beheaded over a rash oath, and briefly interrogated Jesus before his crucifixion.",
@@ -8028,5 +8031,55 @@ export const people: Person[] = [
         url: "https://kinginstitute.stanford.edu/",
       },
     ],
+  },
+  {
+    id: "jonah",
+    name: "Jonah",
+    pronunciation: "JOH-nuh",
+    alternateNames: ["Jonah the son of Amittai"],
+    lifespanLabel: "fl. early 8th century BC",
+    lifespanCertainty: "traditional",
+    lifespanDatingNotes:
+      "Jonah is dated by a single verse outside his own book: 2 Kings 14:25 names 'his servant Jonah the son of Amittai, the prophet, who was from Gath Hepher' as having foretold Jeroboam II's restoration of Israel's borders. Jeroboam II reigned in Samaria for forty-one years, conventionally placed c. 793-753 BC, which puts Jonah in the first half of the 8th century BC. Note that this dates the man; the date of the book that bears his name is a separate and contested question, discussed below.",
+    kind: "biblical",
+    tier: "significant",
+    role: "Prophet Sent to Nineveh",
+    summary:
+      "The prophet who ran from his commission, was swallowed by a great fish, preached to Nineveh anyway, and then sulked when the city repented and was spared — the one prophetic book that ends by arguing with its own prophet.",
+    occupation: "Prophet",
+    placesLived:
+      "From Gath Hepher in the territory of Zebulun, in the northern kingdom of Israel. Fled by ship from Joppa toward Tarshish, and was finally sent to Nineveh, the Assyrian capital.",
+    lifeStory: [
+      "Jonah is the only one of the twelve Minor Prophets whose book is a story about the prophet rather than a collection of his oracles, and almost the only thing recorded of him outside it is a single line in 2 Kings 14:25, which credits him with a prophecy that Jeroboam II would restore Israel's northern border. That verse matters for reading the book, because it establishes Jonah as a prophet associated with national restoration — and then the book sends him to preach to Israel's most feared enemy.",
+      "The narrative is spare and famous. Told to go to Nineveh, Jonah goes down to Joppa and takes ship in the opposite direction, toward Tarshish, 'from the presence of Yahweh' (Jonah 1:3). A storm rises; the sailors cast lots and the lot falls on Jonah; at his own suggestion they throw him overboard, and the sea goes calm. 'Yahweh prepared a great fish to swallow up Jonah, and Jonah was in the belly of the fish three days and three nights' (Jonah 1:17). From inside it he prays a psalm of thanksgiving that ends 'Salvation belongs to Yahweh' (Jonah 2:9), and the fish puts him ashore.",
+      "Sent a second time, he walks into the city and delivers what may be the shortest sermon recorded in Scripture — seven words as the World English Bible renders it: 'In forty days, Nineveh will be overthrown!' (Jonah 3:4). The city, improbably, repents from the king down, and God relents (Jonah 3:10). This is where the book turns. Jonah is furious, and says why: he had suspected all along that God was 'a gracious God, and merciful, slow to anger, and abundant in loving kindness,' and would let Nineveh off. He goes outside the city to sulk and wait, God grows a vine to shade him and then kills it, and the book ends not with a resolution but with a question put to Jonah and left hanging: 'Shouldn't I be concerned for Nineveh, that great city, in which are more than one hundred twenty thousand persons who can't discern between their right hand and their left hand; and also much livestock?' (Jonah 4:11). Jonah does not answer, and neither does the narrator.",
+      "In the Gospels Jesus twice refers to 'the sign of Jonah' when refused-and-demanded signs are at issue. In Matthew the comparison is to the three days: 'as Jonah was three days and three nights in the belly of the whale, so will the Son of Man be three days and three nights in the heart of the earth' (Matthew 12:40). In Luke the emphasis falls instead on Nineveh's response: 'even as Jonah became a sign to the Ninevites, so will also the Son of Man be to this generation' (Luke 11:30), with the men of Nineveh rising in judgment because 'they repented at the preaching of Jonah' (Matthew 12:41; Luke 11:32).",
+      "A small point of translation is worth knowing, because it has caused a great deal of unnecessary argument. Jonah 1:17 says 'a great fish'; Matthew 12:40 in the World English Bible says 'the belly of the whale.' The Greek word there denotes a large sea creature generally, and the Hebrew simply says a great fish. Neither text is making a zoological claim, and the familiar picture of a whale comes from the translation history rather than from either author.",
+    ],
+    controversies: [
+      "How the book of Jonah should be read is a long-standing question, and this app writes from a Protestant evangelical position that takes it as historical narrative. The reasons are cumulative rather than any one knockdown argument. The book names a prophet who is independently attested in 2 Kings 14:25, in a real reign, sent to a real city. It sits among the prophets in the Hebrew canon rather than among the wisdom writings, where Israel kept its didactic material. It narrates without any of the signals a parable normally gives — no 'the kingdom of heaven is like,' no unnamed everyman. And a miraculous element is not itself a reason to reclassify a text: a reader who accepts the exodus, the resurrection or the feeding of the five thousand has no consistent ground for treating a great fish as the point at which narrative must become allegory.",
+      "Jesus's use of the book is the strongest single consideration, though it should be pressed carefully rather than overstated. He compares his own burial and resurrection — events the New Testament presents as historical — to Jonah's three days (Matthew 12:40), and he says that 'the men of Nineveh will stand up in the judgment with this generation, and will condemn it, for they repented at the preaching of Jonah' (Matthew 12:41). That second saying is doing more than the first: it places the Ninevites among real people at a real judgment. Evangelical interpreters generally take this as decisive, or nearly so.",
+      "It has to be said plainly that evangelicals do not all agree, and this is not a boundary of orthodoxy. A minority read Jonah as a didactic narrative — a true teaching in story form, in the way a parable is true — and point to features that look literary rather than reportorial: the tight symmetry of the four chapters, the comic exaggeration of livestock in sackcloth and a city three days' journey across, the unnamed king, and an ending that refuses to resolve and turns the question on the reader instead. On the appeal to Jesus they answer that an illustration drawn from a story the hearers knew works whether or not the story is a chronicle, much as a reference to the Good Samaritan asserts nothing about a particular traveller. Those holding this view affirm Scripture's full authority and locate the disagreement in genre, not in truthfulness. Readers should know the position exists and is held in good faith.",
+      "Critical scholarship generally places the book's composition in the post-exilic period, the 5th or 4th century BC, on linguistic grounds and because a polemic against national narrowness fits that setting well; on this reading the prophet of 2 Kings has been made the character in a much later story. Evangelical scholars contest the linguistic argument and note that the dating of the man and the dating of the book are separate questions, but the composition date is genuinely less secure than the historicity question and confident statements about it, in either direction, outrun the evidence.",
+    ],
+    noExtraBiblicalRecordNote:
+      "No contemporary extra-biblical record of Jonah is known, and no Assyrian source records a repentance of Nineveh — an absence that is used as an argument in the genre discussion above, though Assyrian royal inscriptions are a genre that would be unlikely to record such a thing in any case. Josephus retells the story in his Antiquities of the Jews, but he is dependent on the biblical book rather than an independent witness to it.",
+    verses: [
+      { reference: "2 Kings 14:25", note: "The one mention of Jonah outside his own book, dating him to Jeroboam II's reign" },
+      { reference: "Jonah 1:1-3", note: "The commission, and the flight toward Tarshish" },
+      { reference: "Jonah 1:17", note: "'Yahweh prepared a great fish to swallow up Jonah'" },
+      { reference: "Jonah 2:1-10", note: "Jonah's prayer from inside the fish" },
+      { reference: "Jonah 3:1-10", note: "The seven-word sermon, and Nineveh's repentance" },
+      { reference: "Jonah 4:1-11", note: "Jonah's anger, the vine, and the question the book ends on" },
+      { reference: "Matthew 12:39-41", note: "'The sign of Jonah' — the three days, and the men of Nineveh" },
+      { reference: "Luke 11:29-32", note: "The same sign, with the weight on Nineveh's repentance" },
+    ],
+    sources: [
+      { label: "Encyclopaedia Britannica: Jonah", url: "https://www.britannica.com/biography/Jonah-biblical-figure" },
+      { label: "Encyclopaedia Britannica: Book of Jonah", url: "https://www.britannica.com/topic/Book-of-Jonah" },
+      { label: "Wikipedia: Book of Jonah", url: "https://en.wikipedia.org/wiki/Book_of_Jonah" },
+    ],
+    reflectionPrompt:
+      "God's last word to Jonah is a question, and Jonah never answers it. What would your answer be?",
   },
 ];
