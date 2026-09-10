@@ -12505,7 +12505,7 @@ export const topics: Topic[] = [
         label: "E. Qimron and J. Strugnell, Qumran Cave 4.V: Miqsat Ma'ase ha-Torah",
         credit: "E. Qimron and J. Strugnell",
         detail:
-          "Discoveries in the Judaean Desert 10 (Oxford: Clarendon Press, 1994), xiv + 235 pages and viii plates — the official edition, and the reconstruction at the centre of the litigation described in section three. Print only",
+          "Discoveries in the Judaean Desert 10 (Oxford: Clarendon Press, 1994), xiv + 235 pages and viii plates — the official edition, and the source of the composite text that section three describes: a continuous letter assembled by its editors out of six damaged manuscripts. Print only",
         supports: "The editio princeps and the reconstruction's authorship",
       },
       {
@@ -12754,7 +12754,7 @@ export const topics: Topic[] = [
         url: "https://cudl.lib.cam.ac.uk/view/MS-TS-00010-K-00006/1",
         credit: "Cambridge University Library, Taylor-Schechter Genizah Collection",
         detail:
-          "The library's own catalogue: shelfmarks \"T-S 10K6\" and \"T-S 16.311\", both \"Donated by Dr S. Schechter and his patron Dr Charles Taylor in 1898\"; MS A is eight leaves of paper dated to the tenth century, MS B a single leaf the library leaves undated; and the note that \"The Genizah manuscripts of the Damascus Document exhibit differences both with each other and with the versions found at Qumran.\" The site refuses automated requests, so this record was read in a browser; its images are not openly licensed and the Genizah Research Unit must be asked before any are reproduced",
+          "The library's own catalogue: shelfmarks \"T-S 10K6\" and \"T-S 16.311\", both \"Donated by Dr Solomon Schechter and his patron Dr Charles Taylor in 1898\"; MS A is eight leaves of paper dated to the tenth century, MS B a single leaf the library leaves undated; and the note that \"The Genizah manuscripts of the Damascus Document exhibit differences both with each other and with the versions found at Qumran.\" The site refuses automated requests, so this record was read in a browser; its images are not openly licensed and the Genizah Research Unit must be asked before any are reproduced",
         supports: "The shelfmarks, the 1898 gift, the dating of MS A, and the differences between the witnesses",
       },
       {
