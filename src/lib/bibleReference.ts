@@ -81,6 +81,12 @@ export interface ReferenceSuggestion {
    * how many verses a chapter has is not something this module knows, and a verse past the end is
    * caught where it matters — the scroll gives up loudly rather than landing anywhere. */
   verse?: number;
+  /** The far end of a range the reader typed ("Romans 8:28-30"). Same deliberate lack of validation
+   * as `verse`, and only ever present alongside it. Added for the sermon-notes scripture picker,
+   * which quotes a stretch of verses rather than navigating to one; the reader's search bar ignores
+   * it and still navigates to `verse`, which is the right behaviour there — the panel loads whole
+   * chapters, so the end of a range names no separate destination. */
+  endVerse?: number;
 }
 
 /**
@@ -130,11 +136,12 @@ export function suggestReference(input: string): ReferenceSuggestion | null {
 
   // Split into "name part" and "chapter part". The leading digit of a numbered book belongs to the
   // name, so the chapter is only the digits that follow at least one letter.
-  const m = /^(\d?\s*[a-z][a-z\s]*?)\s*(\d+)?\s*(?::\s*(\d+))?$/.exec(q);
+  const m = /^(\d?\s*[a-z][a-z\s]*?)\s*(\d+)?\s*(?::\s*(\d+)(?:\s*-\s*(\d+))?)?$/.exec(q);
   if (!m) return null;
   const namePart = normalize(m[1]);
   const chapterPart = m[2];
   const versePart = m[3];
+  const endVersePart = m[4];
 
   const book = matchBook(namePart);
   if (!book) return null;
@@ -157,7 +164,41 @@ export function suggestReference(input: string): ReferenceSuggestion | null {
     // A verse only means anything alongside a chapter the reader actually typed; "john:3" is not a
     // reference anyone writes, and the regex can only reach here with a chapter in hand anyway.
     verse: versePart && chapterPart ? Math.max(parseInt(versePart, 10), 1) : undefined,
+    endVerse: endVersePart && versePart && chapterPart ? Math.max(parseInt(endVersePart, 10), 1) : undefined,
   };
+}
+
+/**
+ * Every book the typed text could still be heading for, in canonical order — the list the sermon
+ * notes picker offers under its book field.
+ *
+ * This is `matchBook` widened from "the one winner" to "all the candidates", and it deliberately
+ * lives here beside it rather than in the picker. The rules about what counts as a match are not
+ * obvious — a leading numeral is part of the name, "1cor" and "1 Cor." are the same book, "mt" and
+ * "jn" are aliases that are not prefixes of anything — and a second copy of them in a component
+ * would drift from this one the first time an alias was added.
+ *
+ * Anything after the book name is ignored, so the list still says "John" while someone is midway
+ * through typing "john 3:16" into the field.
+ */
+export function matchBooks(input: string, limit = 6): string[] {
+  // Keep only the leading name: letters, spaces, and a numeral that starts a numbered book.
+  const q = normalize(normalize(input).replace(/^(\d?\s*[a-z][a-z\s]*).*$/, "$1"));
+  if (!q) return [];
+  const names: string[] = [];
+  const alias = ALIASES[q];
+  if (alias) names.push(alias);
+  BOOKS.forEach((b) => {
+    if (names.length >= limit) return;
+    if (normalize(b.name).startsWith(q) && !names.includes(b.name)) names.push(b.name);
+  });
+  return names.slice(0, limit);
+}
+
+/** How many chapters a book has, or null if that is not a book. Lets a caller clamp a chapter box
+ * without importing BOOKS and re-deriving the name matching. */
+export function chapterCount(book: string): number | null {
+  return BOOKS.find((b) => b.name === book)?.chapters ?? null;
 }
 
 /**

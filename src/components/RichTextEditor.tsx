@@ -1,6 +1,17 @@
-import { useCallback, useEffect, useLayoutEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useImperativeHandle, useLayoutEffect, useRef, useState, type RefObject } from "react";
 import Icon from "./Icon";
 import { NOTE_COLORS, isHtmlEmpty, sanitizeNoteHtml, type NoteColorId } from "../lib/richText";
+
+/** What a parent may do to the editor's contents from outside it.
+ *
+ * Deliberately one verb. The editor is uncontrolled precisely so nothing outside it can rewrite the
+ * document under the caret (see the block comment below), and a handle that grew a `setHtml` would
+ * hand that gun straight back. Inserting AT the caret is the one operation a toolbar living outside
+ * this component — the "Insert Scripture" button under the notes box — genuinely needs. */
+export interface RichTextEditorHandle {
+  /** Drops sanitised HTML in at the caret, or at the end if the editor was never focused. */
+  insertHtml: (html: string) => void;
+}
 
 interface RichTextEditorProps {
   /** Initial HTML. Read ONCE, at mount — see the uncontrolled note below. To load a different
@@ -10,11 +21,51 @@ interface RichTextEditorProps {
   placeholder?: string;
   ariaLabel: string;
   className?: string;
+  /** Filled with the handle above. A named prop rather than the component's own `ref` so it is
+   * obvious at every call site that this is a content API, not the DOM node. */
+  apiRef?: RefObject<RichTextEditorHandle | null>;
 }
 
 /** The commands this editor issues, and the state it reads back for the pressed look. */
 const INLINE_COMMANDS = ["bold", "italic", "underline"] as const;
 const LIST_COMMANDS = ["insertUnorderedList", "insertOrderedList"] as const;
+
+/** Block-level tags a caret can sit inside. Matches BLOCK_TAGS in lib/richText.ts. */
+const BLOCK_TAGS = new Set(["p", "div", "li", "blockquote"]);
+
+/** True for a block left with nothing in it by the split around an inserted passage.
+ *
+ * Not `childNodes.length === 0`: `extractContents()` on a range that ends exactly at a block's
+ * boundary can hand back a clone holding an empty text node, which is invisible, counts as a child,
+ * and shows up in the editor as a blank line nobody asked for. A `<br>` is the exception — that is
+ * how a deliberately blank paragraph is written, and one is worth keeping. */
+function isBlankBlock(el: Element): boolean {
+  if (el.childNodes.length === 0) return true;
+  if (el.querySelector("br")) return false;
+  return el.textContent?.replace(/\u00a0/g, " ").trim() === "";
+}
+
+/** The block the caret is in, or null if it is loose in the editor root.
+ *
+ * A caret inside a list item returns the LIST, not the item. Splitting at the item would put a
+ * `<blockquote>` among the `<li>`s, which is not valid anywhere; splitting at the list gives
+ * bullets, then the quotation, then the remaining bullets in a list of their own — which is both
+ * valid and what someone quoting a verse against a bullet point actually meant. */
+function enclosingBlock(root: HTMLElement, node: Node): Element | null {
+  let el: Element | null = node.nodeType === Node.ELEMENT_NODE ? (node as Element) : node.parentElement;
+  while (el && el !== root && !BLOCK_TAGS.has(el.tagName.toLowerCase())) el = el.parentElement;
+  if (!el || el === root) return null;
+  if (el.tagName.toLowerCase() === "li") {
+    let list: Element | null = el;
+    while (list && list !== root && !["ul", "ol"].includes(list.tagName.toLowerCase())) list = list.parentElement;
+    // Keep climbing out of nested lists so the passage lands after the outermost one.
+    while (list?.parentElement && list.parentElement !== root && ["ul", "ol", "li"].includes(list.parentElement.tagName.toLowerCase())) {
+      list = list.parentElement;
+    }
+    return list && list !== root ? list : null;
+  }
+  return el;
+}
 
 /* ============================================================================
  * The formatting editor behind Sermon Notes.
@@ -50,7 +101,7 @@ const LIST_COMMANDS = ["insertUnorderedList", "insertOrderedList"] as const;
  * The parent already sanitises. This sanitises again on the way in, because the component sets
  * innerHTML and should be safe to hand any string — a caller that forgets is a bug, not a hole.
  * ==========================================================================*/
-export default function RichTextEditor({ initialHtml, onChange, placeholder, ariaLabel, className }: RichTextEditorProps) {
+export default function RichTextEditor({ initialHtml, onChange, placeholder, ariaLabel, className, apiRef }: RichTextEditorProps) {
   const ref = useRef<HTMLDivElement | null>(null);
   /** Frozen at mount so a later render can never rewrite the element's contents underneath the
    * caret. `useState` with an initialiser, not `useMemo`, because this must NOT recompute. */
@@ -112,16 +163,65 @@ export default function RichTextEditor({ initialHtml, onChange, placeholder, ari
     onChange(html);
   }, [onChange]);
 
+  /** Every character typed also re-records where the caret now is.
+   *
+   * `selectionchange` alone is not enough, and the gap it leaves is not theoretical. Clicking into a
+   * blank note remembers a range at offset 0 of an element with no children; the text typed next
+   * arrives AT that offset, and a live range's start does not move for an insertion at exactly its
+   * own offset — so the remembered caret stays pinned before everything that was written. The next
+   * "Insert Scripture" then drops the passage at the top of the note instead of where the writer
+   * was. Recording on input keeps the memory and the document in step keystroke by keystroke. */
+  const handleInput = useCallback(() => {
+    rememberSelection();
+    emit();
+  }, [emit, rememberSelection]);
+
+  /** Focuses the editor and puts the caret back where the writer left it. Returns the live selection
+   * so a caller can act on it.
+   *
+   * The ORDER here is the whole thing, and getting it wrong is a bug that looks like it works.
+   * `focus()` on a contenteditable that has no selection of its own MANUFACTURES one, at offset 0.
+   * So "is there already a selection inside the editor?" has to be asked BEFORE focusing — ask it
+   * afterwards and the answer is always yes, the fabricated caret at the top of the note wins over
+   * the remembered one, and every insertion lands above everything the writer has typed.
+   *
+   * Hence three cases, in order:
+   *   1. The editor already had focus (a toolbar button that prevented mousedown's default, so the
+   *      caret never moved) — trust the live selection, it IS the caret.
+   *   2. Focus went somewhere else entirely (the Insert Scripture panel's own fields) — restore the
+   *      range remembered on the last keystroke. Checked for containment first, because a remembered
+   *      range can outlive the nodes it points at when a command rebuilds a block, and restoring a
+   *      detached one puts the caret nowhere at all.
+   *   3. Nothing remembered — the note was opened and a control used without the text ever being
+   *      touched. The caret goes to the END of the document. Inserting a passage above someone's
+   *      existing notes because they had not clicked into them first is not a defensible default. */
+  const restoreSelection = useCallback((): Selection | null => {
+    const el = ref.current;
+    if (!el) return null;
+    const hadFocus = el === document.activeElement || el.contains(document.activeElement);
+    el.focus();
+    const sel = window.getSelection();
+    if (!sel) return null;
+    const liveInside = sel.rangeCount > 0 && el.contains(sel.getRangeAt(0).commonAncestorContainer);
+    if (hadFocus && liveInside) return sel;
+    if (savedRange.current && el.contains(savedRange.current.commonAncestorContainer)) {
+      sel.removeAllRanges();
+      sel.addRange(savedRange.current);
+      return sel;
+    }
+    if (liveInside) return sel;
+    const end = document.createRange();
+    end.selectNodeContents(el);
+    end.collapse(false);
+    sel.removeAllRanges();
+    sel.addRange(end);
+    return sel;
+  }, []);
+
   const exec = useCallback(
     (command: string, value?: string) => {
-      const el = ref.current;
-      if (!el) return;
-      el.focus();
-      const sel = window.getSelection();
-      if (sel && savedRange.current && (sel.rangeCount === 0 || !el.contains(sel.getRangeAt(0).commonAncestorContainer))) {
-        sel.removeAllRanges();
-        sel.addRange(savedRange.current);
-      }
+      if (!ref.current) return;
+      restoreSelection();
       try {
         // `false` = emit tags (<b>, <i>, <u>, <blockquote>) rather than inline styles. Tags are
         // what the allowlist in richText.ts keeps; inline styles would be stripped on save and the
@@ -136,8 +236,91 @@ export default function RichTextEditor({ initialHtml, onChange, placeholder, ari
       emit();
       refreshActive();
     },
-    [emit, refreshActive, rememberSelection]
+    [emit, refreshActive, rememberSelection, restoreSelection]
   );
+
+  /** Drops a block of already-sanitised HTML in at the caret, as a SIBLING of the block the caret
+   * is in — splitting that block if the caret is mid-sentence.
+   *
+   * ── WHY NOT execCommand("insertHTML"), when everything else here is execCommand ────────────
+   * Because Chrome rewrites what it is given. Handed
+   *   <blockquote class="sn-scripture"><span class="sn-scripture-ref">John 3:16</span> …</blockquote>
+   * with the caret inside a paragraph, it lifts the span OUT of the blockquote and replaces its
+   * class with the class's COMPUTED STYLE — `style="color: rgb(138,94,18); font-size: 0.72em; …"`.
+   * Measured here, in this app, with styleWithCSS explicitly off; it is not a setting.
+   *
+   * That is silent data loss in this codebase specifically. The sanitiser allows a class and no
+   * style attribute at all, so the quotation would look correct while it was being written and come
+   * back after the next save as unstyled text with the reference orphaned outside it — a sermon
+   * note that no longer shows which words were Scripture. Deterministic markup wins.
+   *
+   * The cost, stated plainly: this edit is not on the browser's undo stack, so ⌘Z will not lift an
+   * inserted passage back out — it will step over it to whatever was typed before. Removing a wrong
+   * quotation means selecting it and deleting it. That is worse than native undo would have been
+   * and better than a note that quietly loses its formatting.
+   *
+   * The HTML is parsed through a <template>, which is inert (nothing loads, nothing runs), and the
+   * string reaching it has been through sanitizeNoteHtml on the way in. */
+  const insertHtml = useCallback(
+    (html: string) => {
+      const el = ref.current;
+      if (!el) return;
+      const clean = sanitizeNoteHtml(html);
+      if (!clean) return;
+      const sel = restoreSelection();
+      if (!sel || sel.rangeCount === 0) return;
+
+      const template = document.createElement("template");
+      template.innerHTML = clean;
+      const fragment = template.content;
+      const last = fragment.lastChild;
+      if (!last) return;
+
+      const range = sel.getRangeAt(0);
+      range.deleteContents();
+      const block = enclosingBlock(el, range.startContainer);
+
+      if (!block) {
+        // The caret sits directly in the editor root (a brand-new note whose text is still a bare
+        // text node). Nothing to split — the blocks go straight in.
+        range.insertNode(fragment);
+      } else {
+        // Everything from the caret to the end of the block moves into a copy of it, which is put
+        // back AFTER the inserted blocks. That is what turns "insert inside the paragraph" — which
+        // would nest a blockquote inside a <p> and is not valid anywhere — into "split the
+        // paragraph around it".
+        const tailRange = range.cloneRange();
+        tailRange.setEndAfter(block);
+        const tail = tailRange.extractContents();
+        block.after(tail);
+        block.after(fragment);
+        // A caret at the very start or very end leaves one of the two halves with nothing in it.
+        // dropEmptyBlocks() would clear it on save, but not before it had shown as a blank line for
+        // the rest of the service.
+        if (isBlankBlock(block)) block.remove();
+        const tailBlock = last.nextSibling;
+        if (tailBlock && tailBlock.nodeType === Node.ELEMENT_NODE && isBlankBlock(tailBlock as Element)) {
+          tailBlock.remove();
+        }
+      }
+
+      // The caret goes INSIDE the trailing empty paragraph the passage carries with it, so the next
+      // thing typed is the writer's own line rather than an extension of the quotation.
+      const after = document.createRange();
+      if (last.nodeType === Node.ELEMENT_NODE) after.setStart(last, 0);
+      else after.setStartAfter(last);
+      after.collapse(true);
+      sel.removeAllRanges();
+      sel.addRange(after);
+
+      rememberSelection();
+      emit();
+      refreshActive();
+    },
+    [emit, refreshActive, rememberSelection, restoreSelection]
+  );
+
+  useImperativeHandle(apiRef, () => ({ insertHtml }), [insertHtml]);
 
   const applyColor = (id: NoteColorId) => {
     const entry = NOTE_COLORS.find((c) => c.id === id);
@@ -246,7 +429,7 @@ export default function RichTextEditor({ initialHtml, onChange, placeholder, ari
         aria-label={ariaLabel}
         data-empty={empty ? "true" : undefined}
         data-placeholder={placeholder}
-        onInput={emit}
+        onInput={handleInput}
         onKeyUp={rememberSelection}
         onMouseUp={rememberSelection}
         onFocus={refreshActive}

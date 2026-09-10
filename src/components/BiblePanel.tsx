@@ -7,6 +7,7 @@ import BookIntroView from "./BookIntroView";
 import ReadingPlansView from "./ReadingPlansView";
 import { BOOKS } from "../data/bibleBooks";
 import { shouldNavigate, suggestReference } from "../lib/bibleReference";
+import { fetchPassage } from "../lib/biblePassage";
 import { useTextSize } from "../lib/textSize";
 import { READING_PLANS, formatPlanDayReference, type ReadingPlan, type ReadingPlanDay } from "../data/readingPlans";
 import {
@@ -788,18 +789,16 @@ export default function BiblePanel({
     try {
       const lastVerse = chapter === 1 ? SINGLE_CHAPTER_BOOK_LAST_VERSE[book] : undefined;
       const ref = lastVerse ? `${book} 1:1-${lastVerse}` : `${book} ${chapter}`;
-      const url = `https://bible-api.com/${encodeURIComponent(ref)}?translation=${translationId}`;
-      const res = await fetch(url);
-      const data = await res.json();
-      if (!res.ok || data.error || !data.verses || data.verses.length === 0) {
-        throw new Error(data.error ?? "Chapter not found");
-      }
+      // The network call itself lives in lib/biblePassage so the sermon-notes scripture picker makes
+      // the same request rather than a second, subtly different one. Everything below it — progress,
+      // annotations, the heading — is this panel's own business and stays here.
+      const data = await fetchPassage(ref, translationId);
       setPassage({
         // The explicit "1:1-25" verse-range workaround above makes the API echo back a verbose
         // reference (e.g. "Philemon 1:1-25") — show the plain "Philemon 1" chapter heading instead.
         reference: lastVerse ? `${book} ${chapter}` : data.reference,
         verses: data.verses,
-        translationName: data.translation_name ?? translationId.toUpperCase(),
+        translationName: data.translationName,
       });
       setCurrentBook(book);
       setCurrentChapter(chapter);

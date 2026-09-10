@@ -1,9 +1,11 @@
 import { useEffect, useRef, useState } from "react";
 import { supabase, type SermonNote } from "../lib/supabase";
 import BackButton from "./BackButton";
-import RichTextEditor from "./RichTextEditor";
+import Icon from "./Icon";
+import RichTextEditor, { type RichTextEditorHandle } from "./RichTextEditor";
+import ScriptureInsertPicker from "./ScriptureInsertPicker";
 import { track } from "../lib/analytics";
-import { buildStoredBody, isHtmlEmpty, noteBodyToHtml, noteBodyToPlainText } from "../lib/richText";
+import { buildScriptureHtml, buildStoredBody, isHtmlEmpty, noteBodyToHtml, noteBodyToPlainText } from "../lib/richText";
 
 interface SermonNotesViewProps {
   userId: string | null | undefined;
@@ -60,7 +62,15 @@ export default function SermonNotesView({ userId, searchQuery }: SermonNotesView
   const [dirty, setDirty] = useState(false);
   const [saveStatus, setSaveStatus] = useState<"idle" | "saving" | "saved">("idle");
   const [confirmingDelete, setConfirmingDelete] = useState(false);
+  /** Whether the Insert Scripture panel is expanded. It sits BETWEEN the notes box and the footer
+   * rather than over them, so opening it never hides the sentence being written and closing it
+   * never has to restore anything. */
+  const [insertingScripture, setInsertingScripture] = useState(false);
   const saveTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+  /** The editor's insert-at-the-caret handle. The editor is uncontrolled on purpose — writing to it
+   * through state would put the caret back at the start on every keystroke — so a passage reaches
+   * it through this rather than through `bodyHtml`. */
+  const editorApi = useRef<RichTextEditorHandle | null>(null);
   const isNew = activeId === null;
 
   const fetchEntries = async () => {
@@ -146,6 +156,7 @@ export default function SermonNotesView({ userId, searchQuery }: SermonNotesView
     setDirty(false);
     setSaveStatus("idle");
     setConfirmingDelete(false);
+    setInsertingScripture(false);
     setScreen("editor");
   };
 
@@ -161,6 +172,7 @@ export default function SermonNotesView({ userId, searchQuery }: SermonNotesView
     setDirty(false);
     setSaveStatus("idle");
     setConfirmingDelete(false);
+    setInsertingScripture(false);
     setScreen("editor");
   };
 
@@ -262,26 +274,57 @@ export default function SermonNotesView({ userId, searchQuery }: SermonNotesView
         }}
         placeholder="Start typing your notes…"
         ariaLabel="Sermon note body"
+        apiRef={editorApi}
       />
-      {!isNew && (
-        <div className="sermon-notes-danger-zone">
-          {confirmingDelete ? (
-            <>
-              <span>Delete this sermon note?</span>
-              <button type="button" className="friends-decline" onClick={handleDelete}>
-                Yes, delete
-              </button>
-              <button type="button" onClick={() => setConfirmingDelete(false)}>
-                Cancel
-              </button>
-            </>
-          ) : (
-            <button type="button" className="friends-decline" onClick={() => setConfirmingDelete(true)}>
-              Delete
-            </button>
-          )}
-        </div>
+
+      {insertingScripture && (
+        <ScriptureInsertPicker
+          onCancel={() => setInsertingScripture(false)}
+          onInsert={(reference, passage) => {
+            setInsertingScripture(false);
+            // The markup is built and sanitised in lib/richText.ts and inserted at the caret by the
+            // editor itself. Nothing in this file assembles HTML, and nothing here writes the note
+            // body — the editor reports the result back through onChange like any other edit, which
+            // is what marks it dirty and starts the autosave.
+            editorApi.current?.insertHtml(buildScriptureHtml(reference, passage));
+            track("sermon_note.insert_scripture");
+          }}
+        />
       )}
+
+      {/* Robbie's layout: Insert Scripture bottom left, Delete moved over to the right. The row is
+          rendered even for an unsaved note (which has nothing to delete yet) so the Insert button
+          does not jump across the screen the moment the first autosave lands. */}
+      <div className="sermon-notes-footer">
+        <button
+          type="button"
+          className="sermon-notes-insert-scripture"
+          onClick={() => setInsertingScripture((open) => !open)}
+          aria-expanded={insertingScripture}
+        >
+          <Icon name="bible" inline />
+          Insert Scripture
+        </button>
+        {!isNew && (
+          <div className="sermon-notes-danger-zone">
+            {confirmingDelete ? (
+              <>
+                <span>Delete this sermon note?</span>
+                <button type="button" className="friends-decline" onClick={handleDelete}>
+                  Yes, delete
+                </button>
+                <button type="button" onClick={() => setConfirmingDelete(false)}>
+                  Cancel
+                </button>
+              </>
+            ) : (
+              <button type="button" className="friends-decline" onClick={() => setConfirmingDelete(true)}>
+                Delete
+              </button>
+            )}
+          </div>
+        )}
+      </div>
     </div>
   );
 }

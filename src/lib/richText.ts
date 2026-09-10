@@ -88,6 +88,32 @@ const COLOR_CLASSES: ReadonlySet<string> = new Set(
   NOTE_COLORS.flatMap((c) => (c.className ? [c.className as string] : []))
 );
 
+/* ── QUOTED SCRIPTURE ───────────────────────────────────────────────────────
+ * A passage inserted from the "Insert Scripture" picker is stored as a blockquote wearing
+ * `sn-scripture`, with the reference in a `sn-scripture-ref` span at its head:
+ *
+ *     <blockquote class="sn-scripture"><span class="sn-scripture-ref">John 3:16</span>For God so…</blockquote>
+ *
+ * These are the ONLY two class names besides the colour palette that survive sanitisation, and each
+ * one survives on exactly one tag — see normalizeColors(). That tag pairing is not decoration: a
+ * hand-edited row, or a paste from somewhere else, cannot borrow the quoted-scripture look for the
+ * writer's own words by putting the class on a `<b>`, because the class is dropped anywhere else.
+ *
+ * Why a CLASS and not just a plain blockquote: `execCommand("indent")` already emits bare
+ * blockquotes for ordinary indenting (App.css deliberately strips those back to a left offset), so
+ * the class is the only thing that tells an indent apart from a quotation. And it matters that they
+ * ARE told apart — these are sermon notes, and months later the reader has to be able to see at a
+ * glance which sentences are Scripture and which are their own. */
+export const SCRIPTURE_CLASS = "sn-scripture";
+export const SCRIPTURE_REF_CLASS = "sn-scripture-ref";
+
+/** Which structural class, if any, is permitted on a given tag. */
+function structureClassFor(tag: string): string | null {
+  if (tag === "blockquote") return SCRIPTURE_CLASS;
+  if (tag === "span") return SCRIPTURE_REF_CLASS;
+  return null;
+}
+
 /** "r,g,b" -> class name, for BOTH themes' values, so a note coloured in dark mode and one coloured
  * in light mode normalise to the same class. */
 const RGB_TO_CLASS = new Map<string, string>();
@@ -161,12 +187,17 @@ function normalizeColors(root: Element): void {
     if (el instanceof HTMLElement && el.style.color) el.style.removeProperty("color");
     el.removeAttribute("color");
 
-    // Anything that already carries classes is scrubbed to the palette set. A class the editor did
-    // not write (from a paste, or from a hand-edited row) is not preserved. An element carries at
-    // most one colour: an inline colour just applied wins over a class already there, and a
-    // hand-edited row claiming two palette classes keeps the first.
+    // Anything that already carries classes is scrubbed to the palette set plus, on the one tag
+    // that may wear it, the quoted-scripture marker. A class the editor did not write (from a
+    // paste, or from a hand-edited row) is not preserved. An element carries at most one colour: an
+    // inline colour just applied wins over a class already there, and a hand-edited row claiming
+    // two palette classes keeps the first.
     const kept = [...el.classList].filter((c) => COLOR_CLASSES.has(c)).slice(0, 1);
-    const next = cls ? [cls] : kept;
+    const structure = structureClassFor(el.tagName.toLowerCase());
+    const next = [
+      ...(structure && el.classList.contains(structure) ? [structure] : []),
+      ...(cls ? [cls] : kept),
+    ];
     if (next.length) el.className = next.join(" ");
     else el.removeAttribute("class");
   });
@@ -228,6 +259,43 @@ export function plainTextToHtml(text: string): string {
     .split(/\r\n|\r|\n/)
     .map((line) => (line.trim() === "" ? "<p><br></p>" : `<p>${escapeHtml(line)}</p>`))
     .join("");
+}
+
+/**
+ * A quoted passage, ready to be inserted into a note: the reference, then the words.
+ *
+ * NOTHING here is assembled as a string. Every part is a DOM node whose text goes in through
+ * `textContent`, so the words are escaped by the platform rather than by a template someone has to
+ * remember to escape — and then the whole thing goes through sanitizeNoteHtml() anyway, exactly
+ * like typed content does. That the passage came from our own Bible source is not a reason to skip
+ * either step: the fetch is a third-party HTTP response, and the day it returns something with a
+ * bracket in it is not the day to discover a note was built by concatenation.
+ *
+ * The trailing empty paragraph is the point of the whole function as far as the writer is
+ * concerned. Without it the caret lands at the end of the quotation, and the next thing they type
+ * — which is their own observation about the verse — becomes part of the Scripture. With it they
+ * are already back on their own line.
+ */
+export function buildScriptureHtml(reference: string, passage: string): string {
+  const doc = document.implementation.createHTMLDocument("");
+  const host = doc.createElement("div");
+
+  const quote = doc.createElement("blockquote");
+  quote.className = SCRIPTURE_CLASS;
+  const ref = doc.createElement("span");
+  ref.className = SCRIPTURE_REF_CLASS;
+  ref.textContent = reference;
+  quote.appendChild(ref);
+  // A space between the two, so the reference and the first word do not collide if this note is
+  // ever read somewhere that does not load App.css — a print stylesheet, a future export.
+  quote.appendChild(doc.createTextNode(` ${passage}`));
+  host.appendChild(quote);
+
+  const after = doc.createElement("p");
+  after.appendChild(doc.createElement("br"));
+  host.appendChild(after);
+
+  return sanitizeNoteHtml(host.innerHTML);
 }
 
 /** Stored body -> HTML safe to put on screen. The ONLY function that should ever feed a sermon

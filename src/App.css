@@ -5034,14 +5034,234 @@ a.profile-links-url {
   font-family: inherit;
 }
 
+/* Insert Scripture on the left, Delete on the right, both under the notes box — the owner's own
+   layout. `space-between` with the delete side absent (a brand-new note has nothing to delete)
+   still leaves the Insert button on the left, so it does not slide across the screen the moment the
+   first autosave gives the note an id. */
+.sermon-notes-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 8px;
+  padding-top: 8px;
+  border-top: 1px solid var(--border);
+}
+
+.sermon-notes-insert-scripture {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  /* 36px of height, not the 28px the text needs: this is pressed with a thumb, in a pew, while
+     looking at the preacher rather than the phone. */
+  min-height: 36px;
+  padding: 7px 12px;
+  border: 1px solid var(--border-strong);
+  border-radius: 8px;
+  background: var(--surface-sunken);
+  color: var(--text);
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.sermon-notes-insert-scripture:hover {
+  background: var(--accent-bg);
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+.sermon-notes-insert-scripture[aria-expanded="true"] {
+  background: var(--accent-bg);
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
 .sermon-notes-danger-zone {
   display: flex;
   align-items: center;
   gap: 8px;
-  padding-top: 8px;
-  border-top: 1px solid var(--border);
+  margin-left: auto;
   font-size: 12px;
   color: var(--text-muted);
+}
+
+/* ── The Insert Scripture panel ──────────────────────────────────────────────
+   Rendered in flow, between the notes box and the footer row, NOT as an overlay. That is the whole
+   design: someone typing during a sermon can still see the sentence they were half way through,
+   the caret in the editor is never disturbed, and there is nothing to restore when the panel
+   closes. A bottom sheet would have covered the note and put the keyboard somewhere else. */
+.scripture-picker {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 10px;
+  border: 1px solid var(--accent);
+  border-radius: 8px;
+  background: var(--panel-bg);
+}
+
+.scripture-picker-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.scripture-picker-title {
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+.scripture-picker-close {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  padding: 0;
+  border: 0;
+  border-radius: 6px;
+  background: none;
+  color: var(--text-muted);
+  cursor: pointer;
+}
+
+.scripture-picker-close:hover {
+  background: var(--accent-bg);
+  color: var(--accent);
+}
+
+.scripture-picker-fields {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  gap: 8px;
+}
+
+/* The book field takes whatever room is left and never drops below a readable width; the three
+   number boxes are fixed and small, because a chapter and a verse are at most three digits and a
+   wide box for three digits is a wide box a thumb has to travel across. */
+.scripture-picker-book {
+  flex: 1 1 150px;
+  min-width: 130px;
+}
+
+.scripture-picker-num {
+  flex: 0 0 auto;
+  width: 66px;
+}
+
+.scripture-picker-book,
+.scripture-picker-num {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.scripture-picker-label {
+  font-size: 10px;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+.scripture-picker input {
+  width: 100%;
+  /* 16px so iOS Safari does not zoom the whole page in when the field takes focus — a zoomed page
+     mid-sermon costs more than the two pixels of type. */
+  font-size: 16px;
+  font-family: inherit;
+  padding: 7px 9px;
+  border: 1px solid var(--border);
+  border-radius: 7px;
+  background: var(--surface-sunken);
+  color: var(--text);
+}
+
+.scripture-picker input:focus {
+  outline: none;
+  border-color: var(--accent);
+}
+
+.scripture-picker-suggestions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.scripture-picker-suggestion {
+  min-height: 32px;
+  padding: 5px 10px;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  background: var(--surface-sunken);
+  color: var(--text);
+  font-family: inherit;
+  font-size: 13px;
+  cursor: pointer;
+}
+
+.scripture-picker-suggestion:hover {
+  border-color: var(--accent);
+  background: var(--accent-bg);
+  color: var(--accent);
+}
+
+.scripture-picker-error {
+  margin: 0;
+  font-size: 12px;
+  color: var(--text-muted);
+}
+
+.scripture-picker-linkish {
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--accent);
+  font-family: inherit;
+  font-size: 12px;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.scripture-picker-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.scripture-picker-go {
+  min-height: 36px;
+  padding: 7px 16px;
+  border: 1px solid var(--accent);
+  border-radius: 8px;
+  background: var(--accent);
+  color: var(--accent-contrast);
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.scripture-picker-go:disabled {
+  opacity: 0.5;
+  cursor: default;
+}
+
+.scripture-picker-cancel {
+  min-height: 36px;
+  padding: 7px 12px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--surface-sunken);
+  color: var(--text);
+  font-family: inherit;
+  font-size: 13px;
+  cursor: pointer;
 }
 
 .sermon-notes-danger-zone button {
@@ -10741,6 +10961,40 @@ a.profile-links-url {
 
 .rte-surface u {
   text-underline-offset: 0.15em;
+}
+
+/* --- Quoted Scripture inside a note. See SCRIPTURE_CLASS in lib/richText.ts. ---
+
+   These are somebody's sermon notes, and months later the one thing they have to be able to see at
+   a glance is which sentences are Scripture and which are their own thinking about it. So a quoted
+   passage is marked three ways at once, none of which depends on the others surviving: an accent
+   rule down the left edge, the app's Scripture face (--serif, the same one the reading panel uses)
+   instead of the note's own sans, and the reference standing over it in small caps.
+
+   The `blockquote.sn-scripture` pairing is deliberate and is repeated inside .rte-surface so it
+   outranks the plain-blockquote rule above — which exists to strip execCommand("indent")'s
+   blockquotes back to a bare left indent, and would otherwise flatten this one too. */
+blockquote.sn-scripture,
+.rte-surface blockquote.sn-scripture {
+  margin: 0.65em 0;
+  padding: 4px 0 4px 12px;
+  border: 0;
+  border-left: 3px solid var(--accent);
+  font-family: var(--serif);
+  font-size: 1.06em;
+  line-height: 1.5;
+  color: var(--text);
+}
+
+.sn-scripture-ref {
+  display: block;
+  margin-bottom: 1px;
+  font-family: var(--sans);
+  font-size: 0.72em;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--accent);
 }
 
 /* --- The note colour palette. See NOTE_COLORS in lib/richText.ts and the tokens in index.css.
