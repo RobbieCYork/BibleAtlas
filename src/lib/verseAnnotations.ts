@@ -1361,6 +1361,15 @@ const WISDOM_OR_PSALMS_OF: NameContextRule = { before: /\b(?:Wisdom|Psalms) of\s
 
 const NAME_CONTEXT_RULES: Record<string, NameContextRule[]> = {
   john: [
+    // ── A phrase pin, and it must stay ahead of the pattern rules below, which is why it is here
+    // rather than appended. Willibald's eighth-century itinerary, quoted verbatim in
+    // bethsaida-candidate-sites, names "Zebedee, with his sons John and James". That John is the
+    // Apostle; the default bearer of a bare "John" in prose is the Baptist, so the quotation was
+    // sending readers to the wrong man. The text is a translation of a primary source and may not
+    // be reworded to dodge the collision. James in the same clause already resolves correctly to
+    // the son of Zebedee and is left alone.
+    { phrase: "Zebedee, with his sons John and James", to: "john-the-apostle" },
+
     // ── Resolution, not suppression. Checked first: it is the most specific thing we can say.
     // "Peter and John" is the Apostle everywhere in the New Testament and everywhere in our own
     // writing — there is no passage where the pair means the Baptist. This rule exists because two
@@ -1841,6 +1850,26 @@ const NAME_CONTEXT_RULES: Record<string, NameContextRule[]> = {
   damascus: [
     { phrase: "Damascus Gate", to: null },
   ],
+  noah: [
+    // topic.section on noahs-ark-claims. The 1996 Journal of Geoscience Education paper by
+    // L. G. Collins and D. Fasold, quoted by title. Same ruling as the Van Seters pin above: the
+    // words name a journal article, not the man. Deliberately narrow — the SAME article quotes
+    // that paper's closing sentence, "It cannot have been Noah's Ark", and that one keeps its link
+    // because there the words really do denote Noah. The two sit a few sentences apart, which is
+    // exactly why this is pinned on the title string and not on anything in the neighbourhood.
+    { phrase: "Bogus 'Noah's Ark' from Turkey Exposed as a Common Geologic Structure", to: null },
+  ],
+
+  // ── MODERN INSTITUTIONS THAT CARRY A BIBLICAL NAME ──────────────────────────────────────────
+  //
+  // Not a work title, but the same fault and the same fix: a modern body named after a person or a
+  // doctrine is not that person or that doctrine. "Trinity Southwest University" is the New Mexico
+  // institution that runs the Tall el-Hammam excavation, and it was linking the word "Trinity" to
+  // the app's article on the doctrine — a link that tells a reader something false about a
+  // sentence naming a university. Keyed on the following word rather than on a phrase, because the
+  // name is written several ways ("Trinity Southwest University", "Trinity Southwest") and
+  // "Southwest" is what disambiguates all of them. The doctrine keeps every other mention it has.
+  trinity: [{ after: /^\s+Southwest\b/, to: null }],
 };
 
 /** Do the words around this match say who it is — or that it is nobody?

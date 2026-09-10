@@ -3097,6 +3097,8 @@ poi.archaeology.note|basilica-st-paul-outside-walls-rome|b3131ec270	178	Paul	pau
 poi.archaeology.note|basilica-st-paul-outside-walls-rome|b3131ec270	560	Paul	paul-of-tarsus
 poi.archaeology.note|beersheba|813b2bd005	624	Hezekiah	hezekiah
 poi.archaeology.note|beersheba|813b2bd005	671	Josiah	josiah
+poi.archaeology.note|bethsaida|902ae483b0	783	Nero	nero-caesar
+poi.archaeology.note|bethsaida|902ae483b0	908	Peter	simon-peter
 poi.archaeology.note|caesarea-maritima|cd66de17e8	1476	Tiberius	tiberius-caesar
 poi.archaeology.note|caesarea-maritima|cd66de17e8	1565	Paul	paul-of-tarsus
 poi.archaeology.note|caesarea-maritima|cd66de17e8	1606	Felix	antonius-felix
@@ -3123,9 +3125,9 @@ poi.archaeology.note|gallio-inscription-delphi|6245415053	464	Paul	paul-of-tarsu
 poi.archaeology.note|gallio-inscription-delphi|6245415053	704	Gallio	gallio
 poi.archaeology.note|gallio-inscription-delphi|6245415053	804	Paul	paul-of-tarsus
 poi.archaeology.note|gallio-inscription-delphi|6245415053	972	Gallio	gallio
-poi.archaeology.note|garden-tomb|692d0a532c	184	Jesus	jesus-of-nazareth
-poi.archaeology.note|garden-tomb|692d0a532c	406	Jesus	jesus-of-nazareth
-poi.archaeology.note|golgotha|774a271246	496	Jesus	jesus-of-nazareth
+poi.archaeology.note|garden-tomb|2a1762c397	1304	Jesus	jesus-of-nazareth
+poi.archaeology.note|garden-tomb|2a1762c397	1406	Jesus Christ	jesus-of-nazareth
+poi.archaeology.note|garden-tomb|2a1762c397	403	Jesus	jesus-of-nazareth
 poi.archaeology.note|great-theatre-ephesus|f82790cb7a	200	Nero	nero-caesar
 poi.archaeology.note|hierapolis|46d9a2eee7	188	Philip	philip-the-apostle
 poi.archaeology.note|hierapolis|46d9a2eee7	251	Philip	philip-the-apostle
@@ -5474,6 +5476,7 @@ timelineEvent.datingNotes|wld-rom-claudius-emperor|9067ebbf87	406	Paul	paul-of-t
 timelineEvent.datingNotes|wld-rom-claudius-emperor|9067ebbf87	577	Claudius	claudius-caesar
 timelineEvent.datingNotes|wld-rom-martyrdom-peter-paul|3ec6ed9441	152	Nero	nero-caesar
 timelineEvent.datingNotes|wld-rom-martyrdom-peter-paul|3ec6ed9441	216	Peter	simon-peter
+topic.section|ai-candidate-sites|d20c311686	473	Joshua	joshua
 topic.section|alexamenos-graffito|d8dfceea10	444	Paul	paul-of-tarsus
 topic.section|angels|1acfcbaf96	164	Jacob	jacob
 topic.section|angels|1acfcbaf96	279	Jesus	jesus-of-nazareth
@@ -5522,6 +5525,24 @@ topic.section|bethlehem-bulla|db47873336	212	Manasseh	manasseh-king-of-judah
 topic.section|bethlehem-bulla|db47873336	69	Hezekiah	hezekiah
 topic.section|bethlehem-bulla|db47873336	79	Manasseh	manasseh-king-of-judah
 topic.section|bethlehem-bulla|db47873336	91	Josiah	josiah
+topic.section|bethsaida-candidate-sites|2934232a85	511	John	john-the-apostle
+topic.section|bethsaida-candidate-sites|2934232a85	520	James	james-son-of-zebedee
+topic.section|bethsaida-candidate-sites|2934232a85	604	Peter	simon-peter
+topic.section|bethsaida-candidate-sites|2934232a85	614	Andrew	andrew-apostle
+topic.section|bethsaida-candidate-sites|2934232a85	792	the devil	satan
+topic.section|bethsaida-candidate-sites|2934232a85	866	Peter	simon-peter
+topic.section|bethsaida-candidate-sites|2934232a85	876	Andrew	andrew-apostle
+topic.section|bethsaida-candidate-sites|2ff5e230aa	312	Philip the tetrarch	philip-the-tetrarch
+topic.section|bethsaida-candidate-sites|2ff5e230aa	541	Philip the tetrarch	philip-the-tetrarch
+topic.section|bethsaida-candidate-sites|2ff5e230aa	754	Philip the tetrarch	philip-the-tetrarch
+topic.section|bethsaida-candidate-sites|5eb4502f20	197	Peter	simon-peter
+topic.section|bethsaida-candidate-sites|5eb4502f20	508	Peter	simon-peter
+topic.section|bethsaida-candidate-sites|766d4f9e87	1007	Jesus	jesus-of-nazareth
+topic.section|bethsaida-candidate-sites|766d4f9e87	965	Peter	simon-peter
+topic.section|bethsaida-candidate-sites|766d4f9e87	975	Andrew	andrew-apostle
+topic.section|bethsaida-candidate-sites|766d4f9e87	986	Philip	philip-the-apostle
+topic.section|bethsaida-candidate-sites|a3bb8dd03c	420	Nero	nero-caesar
+topic.section|bethsaida-candidate-sites|b56656ea41	384	Agrippa II	herod-agrippa-ii
 topic.section|broad-wall-jerusalem|244f39100a	99	David	david
 topic.section|broad-wall-jerusalem|43f8c7f3a4	144	Uzziah	uzziah
 topic.section|broad-wall-jerusalem|43f8c7f3a4	216	Hezekiah	hezekiah
@@ -5799,6 +5820,13 @@ topic.section|moabites-and-ammonites|2fb7abb40c	430	David	david
 topic.section|moabites-and-ammonites|84d1a6e657	360	Balaam	balaam
 topic.section|mount-ebal-lead-object|45a27f2840	303	Joshua	joshua
 topic.section|mount-ebal-structure|e9023ce233	210	Joshua	joshua
+topic.section|mount-sinai-candidates|4122d42b60	165	Elijah	elijah
+topic.section|mount-sinai-candidates|4122d42b60	83	Moses	moses
+topic.section|mount-sinai-candidates|436938033a	365	Moses	moses
+topic.section|mount-sinai-candidates|5000d04bb3	356	Paul	paul-of-tarsus
+topic.section|mount-sinai-candidates|5000d04bb3	494	Moses	moses
+topic.section|mount-sinai-candidates|5000d04bb3	53	Paul	paul-of-tarsus
+topic.section|mount-sinai-candidates|5000d04bb3	76	Hagar	hagar
 topic.section|muratorian-fragment|31b5ff58f1	155	Mark	john-mark
 topic.section|muratorian-fragment|31b5ff58f1	225	Paul	paul-of-tarsus
 topic.section|muratorian-fragment|31b5ff58f1	318	Paul	paul-of-tarsus
@@ -5836,6 +5864,9 @@ topic.section|nicene-creed|aa7a298fbc	888	Pontius Pilate	pontius-pilate
 topic.section|nicene-creed|b92d0e52a2	340	Charlemagne	charlemagne
 topic.section|nicene-creed|d3e247f741	764	Photius of Constantinople	photius
 topic.section|nimrud-ivories|84bc46d88c	200	Solomon	solomon
+topic.section|noahs-ark-claims|3d048adbab	728	Noah	noah
+topic.section|noahs-ark-claims|48d704d4d4	615	Noah	noah
+topic.section|noahs-ark-claims|a6e3ec5045	1191	Noah	noah
 topic.section|nuzi-tablets|e02d8be473	119	Abraham	abraham
 topic.section|nuzi-tablets|e02d8be473	285	Sarah	sarah
 topic.section|nuzi-tablets|e02d8be473	306	Hagar	hagar
@@ -6014,6 +6045,8 @@ topic.section|tabernacle|b1d6a861c9	9	Moses	moses
 topic.section|tabernacle|f1241cf863	245	Jesus	jesus-of-nazareth
 topic.section|tabernacle|fdbff73168	195	David	david
 topic.section|tabernacle|fdbff73168	240	Solomon	solomon
+topic.section|tall-el-hammam|6bf5452c2d	938	Abraham	abraham
+topic.section|tall-el-hammam|9dddd8be3c	1535	Abraham	abraham
 topic.section|talpiot-tomb|1c8fe4c552	187	Jesus	jesus-of-nazareth
 topic.section|talpiot-tomb|41181a490e	479	Mary Magdalene	mary-magdalene
 topic.section|talpiot-tomb|5b88fe5133	127	Jesus of Nazareth	jesus-of-nazareth
@@ -6092,6 +6125,15 @@ topic.section|timna-valley-mines|7dd6f196fe	331	Solomon	solomon
 topic.section|timna-valley-mines|8b97bcc0ca	152	David	david
 topic.section|timna-valley-mines|8b97bcc0ca	161	Solomon	solomon
 topic.section|timna-valley-mines|fc39734c8c	268	Solomon	solomon
+topic.section|tomb-of-jesus-candidates|133dfe02b8	132	Jesus	jesus-of-nazareth
+topic.section|tomb-of-jesus-candidates|2daf5695be	984	Jesus	jesus-of-nazareth
+topic.section|tomb-of-jesus-candidates|a29ceef087	269	Jesus	jesus-of-nazareth
+topic.section|tomb-of-jesus-candidates|a29ceef087	371	Jesus Christ	jesus-of-nazareth
+topic.section|tomb-of-jesus-candidates|e52b00c841	440	Jesus	jesus-of-nazareth
+topic.section|tomb-of-jesus-candidates|f3473739d3	183	Luke	luke-evangelist
+topic.section|tomb-of-jesus-candidates|f3473739d3	500	Joseph of Arimathea	joseph-of-arimathea
+topic.section|tomb-of-jesus-candidates|fc310f33f6	240	Jerome	jerome
+topic.section|tomb-of-jesus-candidates|fc310f33f6	362	Jerome	jerome
 topic.section|topic-pharisees|248cbcba68	141	Jesus	jesus-of-nazareth
 topic.section|topic-pharisees|36409cb33f	125	Jesus	jesus-of-nazareth
 topic.section|topic-pharisees|36409cb33f	187	Jesus	jesus-of-nazareth

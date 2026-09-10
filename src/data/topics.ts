@@ -10408,4 +10408,1080 @@ export const topics: Topic[] = [
     reflectionPrompt:
       "Whoever took this altar down did it carefully, and then used its stones to build something ordinary. What in your life has been dismantled rather than destroyed, and what got built with the pieces?",
   },
+  {
+    id: "tall-el-hammam",
+    name: "Tall el-Hammam",
+    // NOT registered: "Sodom", "the cities of the plain", "the Kikkar". Sodom has its own Location
+    // record, and the whole subject of this article is whether the two are the same place. A
+    // linker entry claiming that name would settle in the link layer the question the prose says
+    // is open — the same rule khirbet-qeiyafa follows for "Shaaraim" and "Netaim".
+    alternateNames: ["Tall al-Hammam"],
+    // Linker-only spelling variants; "Also called" should not print three near-identical strings.
+    matchNames: ["Tell el-Hammam", "Tell el-Hammam", "Tall al-Hammam Excavation Project"],
+    category: "discovery",
+    role: "A Bronze Age City in the Jordan Valley, Excavated as Sodom",
+    summary:
+      "One of the largest Bronze Age sites in Jordan, with a burnt Middle Bronze destruction and centuries of silence after it — and a 2021 paper saying an exploding meteor did it, which Scientific Reports retracted in 2025 while eleven of its authors objected.",
+    sections: [
+      {
+        heading: "A Very Large Tell on the Jordan Disk",
+        paragraphs: [
+          "Tall el-Hammam sits about 12.6 km north-east of the Dead Sea and 11.7 km east of the Jordan River, on the eastern edge of the roughly circular alluvial plain north of the sea. The Tall al-Hammam Excavation Project has worked it since the winter of 2005/2006 as a joint undertaking of Trinity Southwest University in Albuquerque and the Department of Antiquities of the Hashemite Kingdom of Jordan, directed by S. Collins, with a five-year joint scientific agreement signed in the third season. The excavation's own preliminary report for the first four seasons was published in the Annual of the Department of Antiquities of Jordan in 2009, and its report volumes are published by Penn State Press.",
+          "The scale is not in dispute and it is genuinely impressive. The excavators put the tall proper at about 36 hectares, with a general settlement footprint well over 100 acres, and describe it as certainly one of the largest and possibly the largest Bronze Age site in Jordan. Their surveyed grid runs to more than twelve thousand squares over 43 hectares.",
+          "The occupation sequence is what the argument turns on. There is surface material suggesting a Chalcolithic presence, though the excavators are careful to say none had been confirmed in an excavated context through the fourth season. Then Early Bronze, Intermediate Bronze and Middle Bronze occupation; a fiery Middle Bronze II destruction, with a Middle Bronze house buried under about a metre of destruction matrix full of dark ash, broken mudbrick, potsherds and badly burnt roofing daub; and then, in the excavators' words, an occupational hiatus of at least five centuries, with no Late Bronze sherds evident. The site was resettled toward the end of Iron Age I and grew into a substantial Iron Age II city whose wall was laid directly over the Middle Bronze rampart.",
+        ],
+      },
+      {
+        heading: "The Case for Sodom, Stated as Its Excavator States It",
+        paragraphs: [
+          "S. Collins has published the identification with Sodom in Biblical Archaeology Review in 2013 and at book length, and the excavation project's own website is titled Digging for Sodom, so there is no mystery about what it is looking for. His argument is primarily geographical, and it is stronger than a reader who has only heard it mocked would expect. Genesis 13:10-12 puts Lot in the plain of the Jordan, well watered everywhere, and has him move his tent as far as Sodom. The Hebrew word behind \"plain\" there is kikkar, a disk or a round thing, and the alluvial fan north of the Dead Sea is in fact a roughly circular plain, well watered, immediately east of the Jordan. On that reading the text points north, not south, and the largest Bronze Age city on that plain is a reasonable place to start looking.",
+          "The second half of the case is the destruction and the gap. A large Middle Bronze city burned, and then nobody lived there for several centuries. That is the shape of Genesis 19 as a reader would picture it, and if the excavators are right about the length of the abandonment it is an unusual thing to find.",
+          "What the site shows at its own weight is this: a very large Bronze Age city on the Jordan plain burned at the end of the Middle Bronze Age and was not reoccupied for a long time. That is a real archaeological result and it is worth knowing on its own, whatever the place was called. It is not the same as having found Sodom, and the next section is why.",
+        ],
+      },
+      {
+        heading: "Two Arguments Against, and a Retracted Paper",
+        paragraphs: [
+          "The identification is disputed, and — this matters — it is disputed hardest by scholars who share the excavator's confidence in Scripture rather than by people trying to embarrass it. B. G. Wood argued in Bible and Spade in 2007 that the evidence points instead to Bab edh-Dhra, south of the Dead Sea, near Numeira; those two southern sites were excavated by W. E. Rast and R. T. Schaub from the 1970s and were the traditional candidates long before this dig began. E. H. Merrill of Dallas Theological Seminary published a chronological rebuttal whose conclusion is blunt: \"both archaeological and biblical chronological data rule out Hammam as a candidate for patriarchal Sodom,\" and it closes, \"text has had to be distorted in order to allow tall to triumph. The price is simply too high to pay!\" The chronology is the sharp end — a Middle Bronze II destruction around 1650 BC sits centuries away from where the biblical reckoning puts Abraham, and closing that gap means moving the patriarchs. S. Collins has answered Merrill in print, and a reader should know the exchange exists rather than only one half of it.",
+          "Others press the text rather than the dates. B. Schlegel argues that Genesis 13 does not confine Sodom to the Jordan kikkar, and that Genesis 14:3 puts the battle in the valley of Siddim, which the text identifies with the Salt Sea — which points south. T. Bolen has published a list of objections along the same lines. S. Turpin adds that the prophets expect Sodom to stay uninhabited, which sits awkwardly beside a large Iron Age II city on the same mound. From outside the evangelical conversation entirely, M. M. Kersel, M. S. Chesson and A. Hill wrote in SAPIENS that \"the vast majority of archaeologists working in the region do not believe that Tall el-Hammam — or the sites of Bâb adh-Dhrâʿ and Numayra, both traditionally associated with Sodom and Gomorrah — can be (or even should be) equated with these mythical biblical cities,\" and their methodological objection is the one worth hearing: that the project reverses the normal order, \"attempting to confirm a previously held belief.\" R. Mullins, who chairs biblical studies at Azusa Pacific University and is listed on the excavation's own website as a ceramic consultant, put the same point without the edge, and his sentence is worth having whole because the second half of it is the concession: \"In my opinion, this is an example of evidence being marshaled to support the identification of the site as Sodom, as opposed to letting the site speak for itself and then—if the evidence supports it—put forth a proposal of it as Sodom.\" He also noted that Genesis 18:16 has Abraham looking toward Sodom from Mamre, and \"one cannot see Hammam from the Hebron area.\" His conclusion: \"There is no question that this is an amazing site,\" and \"they are going to have to put forth more evidence that it's Sodom.\"",
+          "The second dispute is a case study in what happens when archaeology is announced by press release. In September 2021 Scientific Reports published a paper by T. E. Bunch, M. A. LeCompte, A. West, P. J. Silvia and seventeen others arguing that a Tunguska-sized airburst destroyed the city around 1650 BC, with shocked quartz, temperatures over 2000 °C and a regional abandonment; the paper hedged that the Sodom question was beyond its scope while suggesting an eyewitness memory of the event became the biblical account. It should be said clearly that S. Collins was not an author of that paper. Criticism arrived within weeks. S. J. Jaret and R. Scott Harris published a Matters Arising in the same journal in March 2022 finding no mineralogic or geochemical evidence of impact, and noting that much of the melt glass was \"closely associated with pottery; many specimens are pieces of remelted ceramics like one might find in spoils and dumps.\" Two author corrections followed, one of them after E. Bik identified image problems on PubPeer, and the journal posted an editor's note in February 2023. In April 2025 M. Boslough and A. Bruno published a second Matters Arising arguing that \"a Tunguska sized airburst cannot possibly generate the claimed temperature or wind speed effects on the ground from an air blast over the distances suggested by Bunch et al.\" Two days later, on 24 April 2025, the editors retracted the paper, writing that \"the Editors no longer have confidence that the conclusions presented are reliable.\"",
+          "The retraction is not the end of it, and reporting it as though it were would be its own kind of dishonesty. The notice records that eleven of the twenty-one authors — M. A. LeCompte, T. D. Burleigh, R. E. Hermes, W. S. Wolbach, G. Kletetschka, T. Witwer, G. A. Howard, C. R. Moore, J. P. Kennett, A. West and P. J. Silvia — disagree with the retraction; nine did not answer the editors; T. E. Bunch had died. Not one author is recorded as agreeing with it. The corresponding author's response was that \"Obviously, I and the other coauthors strongly disagree with the retraction,\" and that of the critics, \"We are simply going around them so that the debate about these extremely dangerous airbursts can continue.\" They did exactly that: an expanded version, this time with S. Collins among the authors, appeared in 2025 in Airbursts and Cratering Impacts, a journal in which this research group regularly publishes. A published defence of the original paper's peer review had already appeared in Research Ethics in 2022. A retracted paper whose authors contest the retraction is a different object from one whose authors accept it, and a reader deserves both facts.",
+          "So where does this leave a reader. The tell is real, large, and was destroyed by fire at the end of the Middle Bronze Age; that much is excavated and reported. Whether it is Sodom is contested, most sharply by scholars who take Genesis as history. Whether a meteor did it is a claim that failed peer review twice over and is still being pressed by its authors in another venue. None of those three sentences settles either of the others, and an article that ran them together would be doing the thing this section exists to name.",
+        ],
+      },
+    ],
+    verses: [
+      { reference: "Genesis 13:10-12", note: "Lot chooses the plain of the Jordan — the kikkar, the geographical heart of the northern case" },
+      { reference: "Genesis 14:2-3", note: "The five kings and the Valley of Siddim, \"also called the Salt Sea\" — the verse the southern case leans on" },
+      { reference: "Genesis 19:24-25", note: "Sulfur and fire on Sodom and Gomorrah; the cities and the whole plain overthrown" },
+      { reference: "Genesis 19:28", note: "Abraham sees the smoke of the land going up like the smoke of a furnace" },
+      { reference: "Luke 17:28-29", note: "Jesus recalls the day Lot went out of Sodom" },
+      { reference: "2 Peter 2:6", note: "Sodom and Gomorrah turned to ashes as an example" },
+    ],
+    sources: [
+      { label: "Wikipedia: Tall el-Hammam", url: "https://en.wikipedia.org/wiki/Tall_el-Hammam" },
+      { label: "The Tall el-Hammam Excavation Project's own site", url: "https://tallelhammam.com/" },
+    ],
+    discovery: {
+      objectType:
+        "A Bronze and Iron Age tell of about 36 hectares, with a settlement footprint well over 100 acres, carrying a burnt Middle Bronze II destruction layer about a metre thick",
+      findSite: "Tall el-Hammam, on the eastern side of the Jordan plain about 12.6 km north-east of the Dead Sea, Balqa Governorate, Jordan",
+      findSiteId: "sodom",
+      findSiteKind: "location",
+      foundYear:
+        "The mound has been known and surveyed since the twentieth century; excavation by the Tall al-Hammam Excavation Project began in the winter of 2005/2006 and is continuing",
+      foundBy:
+        "S. Collins, directing the Tall al-Hammam Excavation Project — a joint project of Trinity Southwest University, Albuquerque, and the Department of Antiquities of the Hashemite Kingdom of Jordan, with G. A. Byers as assistant director",
+      objectDate:
+        "Occupation from the Early Bronze Age through Middle Bronze II, with the burnt destruction placed by the excavators around 1650 BC; then a hiatus the excavators put at at least five centuries, and resettlement from the end of Iron Age I",
+      objectDateCertainty: "disputed",
+      currentLocation: "The site is in Jordan and under continuing excavation; finds are held under the Department of Antiquities of Jordan",
+    },
+    citations: [
+      {
+        tier: "institution",
+        label:
+          "S. Collins, K. Hamdan and G. A. Byers, \"Tall al-Ḥammām: Preliminary Report on Four Seasons of Excavation (2006-2009)\"",
+        url: "https://publication.doa.gov.jo/uploads/publications/66/ADAJ_2009_53-385-414.pdf",
+        credit: "The Tall al-Hammam Excavation Project and the Department of Antiquities of Jordan",
+        detail:
+          "Annual of the Department of Antiquities of Jordan 53 (2009), 385-414, published by the Jordanian Department of Antiquities and freely readable. The excavation's own report, and the source of every figure in this article for the site's size, its phases, the destruction matrix and the five-century hiatus",
+        supports: "The excavation, its auspices, the site's size and its occupation sequence",
+      },
+      {
+        tier: "scholarly",
+        label:
+          "T. E. Bunch, M. A. LeCompte, A. West, P. J. Silvia et al., \"A Tunguska sized airburst destroyed Tall el-Hammam a Middle Bronze Age city in the Jordan Valley near the Dead Sea\" — RETRACTED",
+        url: "https://doi.org/10.1038/s41598-021-97778-3",
+        credit: "Twenty-one authors; corresponding author Allen West, Comet Research Group",
+        detail:
+          "Scientific Reports 11, article 18632, published 20 September 2021; retracted 24 April 2025. Cited so a reader can read the claim in its authors' own words rather than take this article's summary of it. S. Collins was not among its authors",
+        supports: "The airburst claim as its authors made it",
+      },
+      {
+        tier: "scholarly",
+        label:
+          "Retraction Note: \"A Tunguska sized airburst destroyed Tall el-Hammam a Middle Bronze Age city in the Jordan Valley near the Dead Sea\"",
+        url: "https://doi.org/10.1038/s41598-025-99265-5",
+        credit: "The Editors, Scientific Reports",
+        detail:
+          "Scientific Reports 15, article 14291, published 24 April 2025. The source of the editors' wording quoted here, and of the list of eleven authors who disagree with the retraction, nine who did not respond, and one deceased. Open access, and also mirrored at PubMed Central as PMC12022329",
+        supports: "The retraction, its stated grounds, and the authors' recorded dissent from it",
+      },
+      {
+        tier: "scholarly",
+        label: "S. J. Jaret and R. Scott Harris, \"No mineralogic or geochemical evidence of impact at Tall el-Hammam\"",
+        url: "https://doi.org/10.1038/s41598-022-08216-x",
+        credit: "Steven J. Jaret, American Museum of Natural History, and R. Scott Harris, Fernbank Science Center",
+        detail:
+          "Scientific Reports 12, article 5189, published 25 March 2022, as a Matters Arising. Open access. The mineralogical critique, and the source of the remelted-ceramics observation quoted here",
+        supports: "The first published critique, on the mineralogy and geochemistry",
+      },
+      {
+        tier: "scholarly",
+        label:
+          "M. Boslough and A. Bruno, \"Misunderstandings about the Tunguska event, shock wave physics, and airbursts have resulted in misinterpretations of evidence at Tall el-Hammam\"",
+        url: "https://doi.org/10.1038/s41598-025-98362-9",
+        credit: "Mark Boslough, University of New Mexico, and Andy Bruno, Indiana University",
+        detail:
+          "Scientific Reports 15, article 13869, published 22 April 2025, as a Matters Arising — two days before the retraction. Open access. The physics critique, and the source of the sentence quoted here",
+        supports: "The second published critique, on the Tunguska comparison and shock-wave physics",
+      },
+      {
+        tier: "scholarly",
+        label: "J. L. Powell, \"Peer review and the pillar of salt: a case study\"",
+        url: "https://doi.org/10.1177/17470161221131491",
+        credit: "James Lawrence Powell",
+        detail:
+          "Research Ethics 19:1 (2023), 78-89, published online 1 November 2022. A peer-reviewed defence of the airburst paper and its review process, cited here so the proponents' side is represented by published scholarship and not only by an interview",
+        supports: "The published defence of the airburst paper",
+      },
+      {
+        tier: "scholarly",
+        label:
+          "M. A. LeCompte, S. Collins, P. J. Silvia et al., \"A Tunguska Sized Airburst Destroyed Tall el-Hammam a Middle Bronze Age City in the Jordan Valley Near the Dead Sea (Expanded)\"",
+        url: "https://doi.org/10.14293/ACI.2025.0003",
+        credit: "Fourteen authors, including S. Collins",
+        detail:
+          "Airbursts and Cratering Impacts 3 (2025). The expanded re-publication of the retracted paper, in a journal where this research group regularly publishes. Listed so a reader knows the claim is still being pressed and where",
+        supports: "That the authors republished rather than withdrew the claim",
+      },
+      {
+        tier: "reference",
+        label: "B. G. Wood, \"Locating Sodom: A Critique of the Northern Proposal\"",
+        url: "https://biblearchaeology.org/research/patriarchal-era/3217-locating-sodom-a-critique-of-the-northern-proposal",
+        credit: "Bryant G. Wood, Associates for Biblical Research",
+        detail:
+          "Bible and Spade 20:3 (Summer 2007), 78-84, freely readable. The case for the southern candidates, argued from within the same evangelical scholarly community as the excavation",
+        supports: "The evangelical case against the northern identification",
+      },
+      {
+        tier: "reference",
+        label: "E. H. Merrill, \"Texts, Talls, and Old Testament Chronology: Tall Hammam as a Case Study\"",
+        url: "https://www.biblicalarchaeology.org/wp-content/uploads/MerrillRebuttal.pdf",
+        credit: "Eugene H. Merrill, Dallas Theological Seminary",
+        detail:
+          "Freely readable in full. The chronological objection, and the source of both sentences quoted here. It appeared in Artifax in 2012; the volume and page numbers in circulation could not be confirmed and are therefore not given",
+        supports: "The chronological objection to the identification",
+      },
+      {
+        tier: "reference",
+        label: "M. M. Kersel, M. S. Chesson and A. Hill, \"When Biblically Inspired Pseudoscience and Clickbait Cause Looting\"",
+        url: "https://www.sapiens.org/archaeology/tall-el-hammam/",
+        credit: "Morag M. Kersel, Meredith S. Chesson and Austin Hill",
+        detail:
+          "SAPIENS, 15 December 2021, updated 6 May 2025. Three archaeologists who work in the region, and the source of both passages quoted here. Chesson is a co-editor of the final report on Numayra, one of the southern candidates",
+        supports: "The mainstream archaeological objection, and the methodological one",
+      },
+      {
+        tier: "reference",
+        label: "G. Govier, \"Sodom Destroyed by Meteor, Scientists Say. Biblical Archaeologists Not Convinced.\"",
+        url: "https://www.christianitytoday.com/2021/09/sodom-meteor-biblical-archaeology-tall-el-hammam-airburst/",
+        credit: "Gordon Govier, Christianity Today",
+        detail:
+          "24 September 2021 — four days after the airburst paper appeared. The source of R. Mullins's two quoted statements, and it also carries responses from S. Ortiz and A. Maeir",
+        supports: "The response of biblical archaeologists to the airburst paper at the time",
+      },
+      {
+        tier: "reference",
+        label: "E. Kincaid, \"Sodom comet paper to be retracted two years after editor's note acknowledging concerns\"",
+        url: "https://retractionwatch.com/2025/04/23/sodom-comet-paper-to-be-retracted-two-years-after-editors-note-acknowledging-concerns/",
+        credit: "Ellie Kincaid, Retraction Watch",
+        detail:
+          "23 April 2025, updated 24 April. The source of the corresponding author's two quoted sentences, and of the February 2023 editor's note and the PubPeer image findings",
+        supports: "The timeline of the retraction and the authors' response to it",
+      },
+      {
+        tier: "encyclopedic",
+        label: "Wikipedia: Tall el-Hammam",
+        url: "https://en.wikipedia.org/wiki/Tall_el-Hammam",
+      },
+    ],
+    reflectionPrompt:
+      "The paper was announced worldwide in a week and unravelled over four years, and almost nobody read the second story. What have you believed since the headline that you never went back and checked?",
+  },
+  {
+    id: "ai-candidate-sites",
+    name: "The Search for Ai",
+    // NOT registered: "Ai" — the city has its own Location record and this article must not take
+    // its name. NOT registered: "et-Tell" either, and that one is a trap worth writing down. Two
+    // completely different mounds in this app's subject matter are called et-Tell: this one east
+    // of Bethel, and the Bethsaida candidate above the Sea of Galilee. A bare registration would
+    // send half its links to the wrong end of the country. "Khirbet el-Maqatir" IS registered
+    // below: it is unambiguous, it has no record of its own, and it is what this article is about.
+    matchNames: ["Khirbet el-Maqatir", "Khirbet Nisya"],
+    category: "discovery",
+    role: "A Mound With No City On It, and Four Proposed Ways Out",
+    summary:
+      "The site everyone identifies with Ai had been a ruin for roughly a thousand years before any date proposed for the conquest. Either the identification is wrong or the account is, and the honest article says so rather than choosing quietly.",
+    sections: [
+      {
+        heading: "Three Excavations, One Result",
+        paragraphs: [
+          "The mound called et-Tell sits just east of Bethel, about 15 km north of Jerusalem, and it has been dug three times. J. Garstang made soundings in 1928. J. Marquet-Krause dug three seasons from 1933 to 1935 for Baron Edmond de Rothschild, and her conclusion was the one that has stood ever since: the place was unoccupied from about 2400 BC until about 1200 BC. J. A. Callaway then ran nine seasons from 1964, in the field into the early 1970s and publishing to 1976, under the joint auspices of the American Schools of Oriental Research and the Southern Baptist Theological Seminary, where he taught. He confirmed her result rather than overturning it.",
+          "What the three excavations found is a large Early Bronze city, destroyed around 2400 BC, and then nothing at all for something like a millennium — no Middle Bronze occupation, no Late Bronze occupation. Around 1200 BC a small unfortified village of roughly three acres was built over the ruins on the acropolis, and it was abandoned again around 1050 BC. There was no walled city at et-Tell after about 2400 BC.",
+          "That is a problem whichever date for the conquest a reader holds. Joshua 8 describes a king, a gate, warriors, and a city burned and made a heap. The fifteenth-century date puts that around 1400 BC, when et-Tell was already a thousand-year-old ruin; the thirteenth-century date puts it around 1200 BC, when there was an unwalled hamlet on the acropolis and nothing to take. The name itself is part of the puzzle, because Hebrew ha-Ai means \"the ruin,\" and Joshua 8:28 says Joshua made it \"a heap forever, even a desolation, to this day.\" Callaway did not hide from any of this. He proposed in 1968 that Joshua 7 and 8 preserved the capture of that unfortified Iron Age village, and then, in a 1987 essay, abandoned that thesis and acknowledged the contradiction between the narrative and the finds. Changing your mind in print about your own excavation is not a common thing and it is worth saying so.",
+        ],
+      },
+      {
+        heading: "Either the Site Is Wrong or the Account Is",
+        paragraphs: [
+          "That is the fork, and an article that blurs it is not being kind to anybody. If et-Tell is Ai, then Joshua 7-8 does not describe an event that happened at et-Tell at any proposed conquest date. If the account is describing a real capture of a real city, then Ai is somewhere other than et-Tell. There is no third option that leaves both propositions untouched, and every proposal below is a way of taking one horn or the other.",
+          "The literary answer takes the second horn about the account. M. Noth argued in 1935 that Joshua 8 is an aetiology — a story that grew up to explain a conspicuous ruin, of the kind that ends \"to this day.\" As one standard reference states the logic: with an aetiology it is normally only the thing explained that is historical, which is to say the ruin, not the explanation of it. Z. Zevit developed the literary and stratigraphic case in BASOR in 1983, and D. E. Fleming has treated it more recently. A. Mazar's synthesis reads the Iron I settlers as having built peacefully on a mound long forsaken, with nothing suggesting a conquest. This is the majority position in the field, and it is the one the app's own home position sits least comfortably with — which is exactly why it is set out here in its own terms rather than waved at.",
+          "The relocation answers take the other horn. D. Livingston proposed Khirbet Nisya, dug it for fifteen seasons from 1979 to 2002, and argued that Bethel is not Beitin either — because moving Ai forces you to move Bethel, and that is the cost of the proposal rather than a detail. B. G. Wood and Associates for Biblical Research proposed Khirbet el-Maqatir instead, about a kilometre west of et-Tell, and dug it across fourteen summer and five winter seasons between 1995 and 2016. Khirbet Haiyan and Khirbet el-Hudriya were both proposed and both eliminated by soundings in the 1960s that showed them to be Hellenistic and later. And it should be recorded that W. F. Albright, who made the et-Tell identification standard, wrote privately to Livingston in 1970 that \"there just isn't any other possibility for Ai than et-Tell and that Bethel can only have been modern Beitin. Since 1921 we have examined and reexamined the whole countryside, and there just isn't any archaeologically viable identification.\"",
+        ],
+      },
+      {
+        heading: "What Khirbet el-Maqatir Has, and Why the Field Has Not Followed",
+        paragraphs: [
+          "The Maqatir case deserves stating properly, because it is usually either swallowed or sneered at. ABR reports a fortress with a north-facing gate, only one chamber surviving, robbed in antiquity, with six lower socket stones suggesting an original four-chambered gate and a western wall about four metres thick. A scarab found in 2013 inside the fortress near the gate, on bedrock in a sealed locus with four diagnostic refired Late Bronze I sherds, they date preliminarily to the eighteenth dynasty. Much of the Late Bronze I pottery is refired — white and rock-hard — which they read as a site-wide conflagration, and they report that fourteen seasons produced no pottery relating to the fortress after about 1400 BC. On that basis they date the fall to about 1406 BC, derived from the 480 years of 1 Kings 6:1. To their credit they also report against themselves: a second scarab, found in 2014, came from a locus disturbed by looters, and they say so.",
+          "Two things count against it, and neither is a slur. The first is size. Maqatir is about one hectare; et-Tell is about eleven. Joshua 8 describes a place with a king and a gate, and a one-hectare fortress can be argued to fit that, but it is a small thing to hang a national tradition on. The second is that the identification has not been accepted. R. A. Mullins and A. M. Maeir have both published against it, the pottery dating is disputed — the sherds Wood reads as Late Bronze have been read by others as Middle Bronze — and mainstream treatments of the settlement question either reject the proposal or do not engage it. Excavation ended in 2016 and the final report has begun to appear, but the volume published so far covers the Hellenistic, Roman and Byzantine periods; no Bronze Age volume carrying the Ai argument could be traced for this article. That is not a verdict on the evidence. It is a statement about how much of it is available to be checked, which is a different and prior question.",
+          "One more fact belongs here because it shows the argument is live rather than tribal: Associates for Biblical Research was founded by D. Livingston to solve this exact problem, and ABR now publicly rejects its founder's site, stating that Khirbet Nisya did not satisfy the biblical criteria because it was unfortified in the Late Bronze Age. Two directors of the same institution, backing two different mounds, each against the other. Where the app stands: et-Tell's occupation gap is a hard, three-times-confirmed fact and no amount of goodwill dissolves it; the relocation proposals are serious attempts by serious people that have not yet persuaded the field, and the honest report is that this question is open rather than closed in either direction. Two things are worth adding for a reader who finds that uncomfortable. Some of the sharpest disagreement here is between evangelicals — B. G. Wood and J. K. Hoffmeier have argued the conquest date against each other in the Journal of the Evangelical Theological Society, and Livingston and Wood backed different sites. And a great deal of what circulates about this site, on all sides, is quotation at second hand: two sentences of Callaway's that appear in nearly every popular treatment of Ai could not be traced to a page anyone had read, and so they are not printed here.",
+        ],
+      },
+    ],
+    verses: [
+      { reference: "Genesis 12:8", note: "Abram pitches his tent with Bethel on the west and Ai on the east — the geography every candidate has to satisfy" },
+      { reference: "Joshua 7:2-5", note: "The first attack fails; Ai lies \"beside Beth Aven, on the east side of Bethel\"" },
+      { reference: "Joshua 8:1-2", note: "The ambush commanded; Ai to be treated as Jericho was" },
+      { reference: "Joshua 8:28", note: "\"So Joshua burned Ai, and made it a heap forever, even a desolation, to this day\"" },
+      { reference: "Ezra 2:28", note: "Men of Bethel and Ai among the returning exiles — the place is inhabited again by the Persian period" },
+    ],
+    sources: [
+      { label: "Wikipedia: Ai (Canaan)", url: "https://en.wikipedia.org/wiki/Ai_(Canaan)" },
+      { label: "Associates for Biblical Research — the Khirbet el-Maqatir excavation", url: "https://biblearchaeology.org/" },
+    ],
+    discovery: {
+      objectType:
+        "An unresolved site identification, and the mounds proposed for it: et-Tell, an 11-hectare Early Bronze city east of Bethel; Khirbet el-Maqatir, a 1-hectare fortress about a kilometre west of it; and Khirbet Nisya",
+      findSite: "The hill country east of Bethel, about 15 km north of Jerusalem, in the central West Bank",
+      findSiteId: "ai",
+      findSiteKind: "location",
+      foundYear:
+        "et-Tell dug in 1928 (J. Garstang), 1933-1935 (J. Marquet-Krause) and from 1964 (J. A. Callaway); Khirbet Nisya 1979-2002; Khirbet el-Maqatir 1995-2001 and 2009-2016",
+      foundBy:
+        "credit is contested — see below. The et-Tell identification is conventionally traced to nineteenth-century survey and was made standard by W. F. Albright; the excavators are J. Garstang, J. Marquet-Krause and J. A. Callaway. Khirbet Nisya is D. Livingston's proposal, Khirbet el-Maqatir B. G. Wood's, both for Associates for Biblical Research",
+      objectDate:
+        "et-Tell: a large Early Bronze city destroyed about 2400 BC, then unoccupied until a small unwalled village about 1200-1050 BC, with no Middle or Late Bronze occupation. Khirbet el-Maqatir: its excavators assign the fortress's destruction to about 1406 BC",
+      objectDateCertainty: "disputed",
+      currentLocation: "All three mounds are in Area C of the central West Bank. Excavation at Khirbet el-Maqatir ended in 2016 and its excavators reported modern development encroaching on the ruins",
+    },
+    citations: [
+      {
+        tier: "institution",
+        label: "J. A. Callaway, \"Excavating Ai (Et-Tell): 1964-1972\"",
+        url: "https://doi.org/10.2307/3209413",
+        credit: "Joseph A. Callaway, Southern Baptist Theological Seminary, for the Joint Archaeological Expedition to Ai",
+        detail:
+          "The Biblical Archaeologist 39:1 (March 1976), 18-30. The excavator's own summary of the expedition he directed for ASOR and Southern Baptist Theological Seminary. His final report appeared in the ASOR Excavation Reports series in 1980. Paywalled",
+        supports: "The et-Tell excavation, its auspices, and its stratigraphic result",
+        paywalled: true,
+      },
+      {
+        tier: "scholarly",
+        label: "J. A. Callaway, \"New Evidence on the Conquest of Ai\"",
+        url: "https://doi.org/10.2307/3263542",
+        credit: "Joseph A. Callaway",
+        detail:
+          "Journal of Biblical Literature 87:3 (September 1968), 312-320. The position Callaway later abandoned — that Joshua 7-8 preserves the capture of the unfortified Iron Age village. Cited alongside his 1987 retraction so the change is visible rather than asserted",
+        supports: "Callaway's 1968 proposal, which he subsequently withdrew",
+        paywalled: true,
+      },
+      {
+        tier: "scholarly",
+        label: "J. A. Callaway, \"Ai (et-Tell): Problem Site for Biblical Archaeologists\"",
+        credit: "Joseph A. Callaway",
+        detail:
+          "In L. G. Perdue, L. E. Toombs and G. L. Johnson (eds.), Archaeology and Biblical Interpretation (Atlanta, 1987), 87-99. Where Callaway abandons his 1968 thesis and states the contradiction between the narrative and the finds. Print only; no URL is given because none was found",
+        supports: "That the excavator himself withdrew his own harmonisation",
+      },
+      {
+        tier: "scholarly",
+        label: "B. G. Wood, \"The Search for Joshua's Ai\"",
+        url: "https://doi.org/10.1515/9781575065984-015",
+        credit: "Bryant G. Wood, Associates for Biblical Research",
+        detail:
+          "In R. S. Hess, G. A. Klingbeil and P. J. Ray Jr. (eds.), Critical Issues in Early Israelite History (Bulletin for Biblical Research Supplements 3; Eisenbrauns / Penn State University Press, 2008), 205-240. The Khirbet el-Maqatir case in a peer-reviewed volume, stated by its proponent. Paywalled",
+        supports: "The case for Khirbet el-Maqatir as its author makes it",
+        paywalled: true,
+      },
+      {
+        tier: "scholarly",
+        label: "A. M. Maeir, review of Critical Issues in Early Israelite History",
+        url: "https://doi.org/10.5615/bullamerschoorie.361.0099",
+        credit: "Aren M. Maeir, Bar-Ilan University",
+        detail:
+          "Bulletin of the American Schools of Oriental Research 361 (February 2011), 99-101. A published critical assessment of the volume containing Wood's case. Paywalled, and nothing is quoted from it here: the fragment of this review that circulates online is cut mid-sentence and was not read at source for this article",
+        supports: "That the Maqatir identification has drawn published criticism from specialists",
+        paywalled: true,
+      },
+      {
+        tier: "scholarly",
+        label: "R. A. Mullins, \"The Emergence of Israel in Retrospect\"",
+        url: "https://doi.org/10.1007/978-3-319-04768-3_41",
+        credit: "Robert A. Mullins, Azusa Pacific University",
+        detail:
+          "In T. E. Levy, T. Schneider and W. H. C. Propp (eds.), Israel's Exodus in Transdisciplinary Perspective (Springer, 2015), 517-525. Assesses the Khirbet el-Maqatir proposal and does not accept it. Paywalled; characterised here rather than quoted, because the text could not be opened",
+        supports: "The published non-acceptance of the Maqatir identification",
+        paywalled: true,
+      },
+      {
+        tier: "scholarly",
+        label: "Z. Zevit, \"Archaeological and Literary Stratigraphy in Joshua 7-8\"",
+        url: "https://doi.org/10.2307/1356824",
+        credit: "Ziony Zevit",
+        detail:
+          "Bulletin of the American Schools of Oriental Research 251 (July 1983), 23-35. The modern development of the literary reading first argued by M. Noth in Bethel und Ai, Palästinajahrbuch 31 (1935), 7-29. Paywalled",
+        supports: "The aetiological reading of Joshua 7-8",
+        paywalled: true,
+      },
+      {
+        tier: "scholarly",
+        label: "K. van Bekkum, From Conquest to Coexistence",
+        url: "https://doi.org/10.1163/ej.9789004194809.i-694",
+        credit: "Koert van Bekkum, Theological University Kampen",
+        detail:
+          "Culture and History of the Ancient Near East 45 (Brill, 2011), 41-42, where the stratigraphic position is stated plainly: \"Et-Tell, identified by most scholars with the city of Ai, was not settled between the Early Bronze and Iron Age I.\" Paywalled",
+        supports: "The current scholarly statement of the occupation gap",
+        paywalled: true,
+      },
+      {
+        tier: "scholarly",
+        label: "S. Stripling, B. Brandl and B. Peterson, \"A Scarab of Psametik I from Kh. el-Maqatir\"",
+        url: "https://doi.org/10.1080/00310328.2017.1310585",
+        credit: "Scott Stripling, Baruch Brandl and Brian Peterson",
+        detail:
+          "Palestine Exploration Quarterly 149:3 (2017). Cited because it is Associates for Biblical Research's Maqatir material appearing in a mainstream peer-reviewed journal — it concerns a seventh-century BC scarab, not the Late Bronze one that carries the Ai argument. Paywalled",
+        supports: "That the Maqatir excavation has published in peer-reviewed venues",
+        paywalled: true,
+      },
+      {
+        tier: "reference",
+        label: "S. Stripling and M. Hassler, \"The 'Problem' of Ai in Joshua 7-8\"",
+        url: "https://biblearchaeology.org/wp-content/uploads/2021/04/The-Problem-of-Ai-in-Joshua-7-8.pdf",
+        credit: "Scott Stripling and Mark Hassler, Associates for Biblical Research",
+        detail:
+          "Freely readable in full, and the source of every figure given here for the Maqatir fortress, the gate, the two scarabs, the refired pottery and the site's size. It also carries W. F. Albright's 1970 letter to D. Livingston, quoted in this article",
+        supports: "The Khirbet el-Maqatir evidence as its excavators report it",
+      },
+      {
+        tier: "reference",
+        label: "K. Koenen, \"Ai\", WiBiLex",
+        url: "https://www.die-bibel.de/ressourcen/wibilex/altes-testament/ai",
+        credit: "Klaus Koenen, for the Deutsche Bibelgesellschaft's academic Bible lexicon",
+        detail:
+          "October 2007, freely readable and academically edited with a full bibliography. The source used here for Callaway's change of position, for the elimination of Khirbet Haiyan and Khirbet el-Hudriya, and for the statement of the aetiological argument",
+        supports: "The state of scholarship on the identification, and Callaway's withdrawal of his 1968 thesis",
+      },
+      {
+        tier: "encyclopedic",
+        label: "Wikipedia: Ai (Canaan)",
+        url: "https://en.wikipedia.org/wiki/Ai_(Canaan)",
+      },
+    ],
+    reflectionPrompt:
+      "The man who dug this site for nine seasons published one answer and then, nineteen years later, published that he had been wrong. What would it cost you to do that about something you have already said out loud?",
+  },
+  {
+    id: "mount-sinai-candidates",
+    name: "The Search for Mount Sinai",
+    // NOTHING else is registered here, deliberately. "Mount Sinai", "Sinai" and "Horeb" belong to
+    // the mountain's own Location and POI records and must not be claimed by an article about the
+    // argument over which mountain it is. "Jebel Musa" is not registered either, even though it is
+    // currently unregistered and free: it is the modern name of the peak the POI record already
+    // describes, so a link on it belongs to that record if anywhere. Same for "Har Karkom" and
+    // "Jebel al-Lawz" — those are places, and this app does not let a topic quietly take a place
+    // name. No link makes no claim, which is the right outcome for an article whose subject is
+    // that nobody knows.
+    category: "discovery",
+    role: "Three Candidate Mountains, and Why None of Them Is Settled",
+    summary:
+      "The mountain where the law was given has never been located. The traditional peak rests on a fourth-century pilgrim's account rather than on anything excavated, and the two best-known rivals each have a problem their own advocates concede.",
+    sections: [
+      {
+        heading: "What the Text Asks For, and What Tradition Supplied",
+        paragraphs: [
+          "Scripture gives the mountain two names and very little geography. It is Horeb when Moses is keeping Jethro's flock and turns aside to the bush, and Horeb again when Elijah walks forty days to reach it; it is Sinai when Israel camps before it in the third month after leaving Egypt. Deuteronomy 1:2 supplies the one measurement anybody has to work with — eleven days' journey from Horeb by the way of Mount Seir to Kadesh Barnea — and even that fixes a distance rather than a direction. No Israelite writer ever says which peak it was, and no later biblical writer goes back to look.",
+          "The earliest hard evidence for the traditional identification is a pilgrim's diary. Between about 381 and 384 a western woman known as Egeria travelled to the southern Sinai peninsula and climbed the mountain she was shown, and her account is the reason the site can be dated at all. She writes that the ascent had to be made on foot, and of the top: \"In that place there is now a church, not great in size, for the place itself, that is the summit of the mountain, is not very great; nevertheless, the church itself is great in grace.\" A priest came out of his cell to meet her. She then descended into the valley to see the place of the burning bush, which was shown to her as a separate site.",
+          "Two things follow from that, and the second is the one usually left out. Egeria establishes that by the late fourth century the identification was already made, already had a church on it and already had monks living around it — this is not a medieval invention. But Egeria is describing a tradition she received, not evidence for it, and she says nothing about how the mountain came to be identified. The story that Constantine's mother Helena founded the chapel around AD 330 does not come from her or from any other fourth-century writer: it traces to Eutychius of Alexandria, writing in the tenth century, some six hundred years later. The traditional site's real credential is a very old and continuous tradition, which is worth something. It is not an archaeological credential, and the two should not be swapped.",
+        ],
+      },
+      {
+        heading: "The Three Candidates, and the Case for Each",
+        paragraphs: [
+          "Jebel Musa, in the granite mountains of the southern peninsula, is the traditional peak and still the default. Justinian's monastery at its foot — St Catherine's, conventionally dated to about 548-565 and among the oldest continuously inhabited monasteries anywhere — is described by Procopius, who is careful to say the emperor \"built this church, not on the mountain's summit, but much lower down. For it is impossible for a man to pass the night on the summit,\" and that a fortress and garrison went up at the base to keep raiders out of Palestine. What the peninsula has not produced, across decades of Israeli and Egyptian survey work, is occupation material of the second millennium BC in the places the wilderness narratives would want it. That absence is real, though it argues less than it looks: nomadic encampments leave very little behind, a point pressed by scholars on more than one side of this question.",
+          "Har Karkom, a flat-topped ridge in the Negev roughly halfway between Kadesh Barnea and Petra, has the opposite problem. E. Anati, who has surveyed and published it since the early 1980s, has documented an extraordinary concentration of cultic material there — his project reports over forty thousand rock engravings, more than three hundred sites of what he calls the Bronze Age Complex within the concession, standing pillars, altars, tumuli and platforms he reads against the biblical bamoth. His summary is that the mountain \"was a paramount cult centre and a sacred mountain beginning in the Palaeolithic Age, reaching its peak of religious activity in the third millennium BC.\" That is the difficulty stated in his own words, and he does not dodge it. His answer is to move the event rather than the mountain: if the exodus narratives rest on a historical background, he argues, \"the chronological context may refer only to the BAC period, and more precisely to phase BAC IV (2350-2000 BC).\" A reader should weigh the site knowing that accepting it means accepting a date around a thousand years earlier than either of the dates evangelical scholars usually defend.",
+          "Jebel al-Lawz and the neighbouring Jabal Maqla, in north-west Saudi Arabia, are the candidates most people have met, and the popular version and the scholarly version need separating. The popular version dates from visits by R. Wyatt and D. Fasold in 1986 and by L. Williams and B. Cornuke in 1988, and reached a wide audience through L. Williams's The Mountain of Moses in 1990. Behind it sits a much older and more serious argument for a Midianite mountain, which has nothing to do with those expeditions: J. Koenig's 1971 monograph on the al-Jaw plain proposed a volcanic peak in Midian, on the reasoning that Exodus 19's fire and smoke read like a volcano and the Sinai peninsula has none. C. J. Humphreys, a Cambridge materials scientist writing from an evangelical position, argues the same broad case in The Miracles of Exodus, and it is worth being exact that his candidate is Hala'l Badr, not Jebel al-Lawz — he is regularly and wrongly filed with the expedition literature.",
+        ],
+      },
+      {
+        heading: "Nothing Here Is Settled, and Evangelicals Are Not Agreed Either",
+        paragraphs: [
+          "The Arabian case leans hard on Galatians 4:25, where Paul writes that \"this Hagar is Mount Sinai in Arabia,\" and the weight it can bear is much less than it is usually asked to carry. G. Franz, writing for Associates for Biblical Research, makes the case against at length: ancient writers used \"Arabia\" for territory that included the Sinai peninsula, so Paul's phrase does not move the mountain east. Franz also went at the physical claims and found them to be the wrong period. The \"Cave of Moses\" he judged \"clearly a First Century AD Nabatean tomb\"; the pottery around the claimed altar and twelve pillars he reports as \"purely, and only, Nabatean\"; the famous bovine petroglyphs he dates as Neolithic and \"considerably earlier than the Exodus.\" That is a specific, checkable set of objections rather than a dismissal, and it is the strongest thing published against the Saudi sites.",
+          "Two claims that circulate on the other side of this argument are not repeated here because they could not be sourced. One is that the Saudi antiquities authorities surveyed Jebel al-Lawz and rejected the identification; the only trace of it leads to an unpublished report with no citation. The other is the body of claims made by a foundation that promotes the site, whose own website could not be reached to read them. Neither absence proves anything either way — but an article that reports a claim it has not read is doing the thing this section exists to warn about.",
+          "Where the app stands, and where it declines to. The traditional site has the best pedigree and the least evidence; Har Karkom has the most evidence and the wrong date by its own excavator's reckoning; the Arabian sites have an exegetical argument that does not hold and material remains that belong to the Nabataeans. No candidate has decisive evidence, and this is not a case where one side is merely being stubborn. It is worth adding that evangelical scholars are not lined up behind one answer here, and a reader who has been told otherwise has been misinformed: J. K. Hoffmeier argues for the southern peninsula but concludes that Gebel Safsafah or Gebel Serbal is a likelier peak than Jebel Musa itself; C. J. Humphreys argues for Midian; G. Franz argues for the traditional peninsula and against Arabia in print. Three evangelical scholars, three answers, all published. H. Shanks put the wider state of the question about as well as it can be put: \"There are almost as many opinions as there are scholars.\" The mountain is not lost in any sense that matters to a reader of Exodus. What happened there is what the text is about, and the text never thought the coordinates were the point.",
+        ],
+      },
+    ],
+    verses: [
+      { reference: "Exodus 3:1", note: "Moses at Horeb, the mountain of God, keeping Jethro's flock" },
+      { reference: "Exodus 19:1-2", note: "Israel encamps before the mountain in the wilderness of Sinai" },
+      { reference: "Exodus 19:18", note: "The mountain in smoke and fire — the verse the volcanic proposals lean on" },
+      { reference: "Deuteronomy 1:2", note: "Eleven days' journey from Horeb by Mount Seir to Kadesh Barnea — the one distance given" },
+      { reference: "1 Kings 19:8", note: "Elijah travels forty days and nights to Horeb" },
+      { reference: "Galatians 4:25", note: "\"This Hagar is Mount Sinai in Arabia\" — the text the Arabian proposals rest on" },
+    ],
+    sources: [
+      { label: "Wikipedia: Mount Sinai", url: "https://en.wikipedia.org/wiki/Mount_Sinai" },
+      { label: "The Har Karkom project's own site", url: "https://www.harkarkom.com/" },
+    ],
+    discovery: {
+      objectType:
+        "Not an object but an unsolved identification: which mountain Exodus means. The three most-argued candidates are Jebel Musa in the southern Sinai peninsula, Har Karkom in the Negev, and Jebel al-Lawz with the neighbouring Jabal Maqla in north-west Saudi Arabia",
+      findSite:
+        "Candidates lie across the southern Sinai peninsula, the Negev and north-west Arabia; sites in northern Sinai and near Kadesh Barnea have also been proposed",
+      foundYear:
+        "No candidate has been established. The traditional identification is already in place by AD 381-384, when the pilgrim Egeria found a church, a priest and monks on the mountain she was shown; E. Anati published Har Karkom from 1984; the modern Jebel al-Lawz claims date from visits in 1986 and 1988",
+      foundBy:
+        "Unknown for the traditional site — no source names who first identified it, and the attribution to Helena is a tenth-century story, not a fourth-century record. Har Karkom is E. Anati's identification; the Midianite/Arabian case in its scholarly form goes back to J. Koenig in 1971",
+      objectDate:
+        "The events of Exodus 19 are placed by different evangelical reckonings in the fifteenth or the thirteenth century BC. No candidate has produced material of either date bearing on them; Har Karkom's cultic material peaks in the third millennium BC",
+      objectDateCertainty: "disputed",
+      currentLocation:
+        "Every candidate is a mountain and stands where it stands. St Catherine's Monastery, at the foot of Jebel Musa, is a UNESCO World Heritage Site and remains in continuous monastic use",
+    },
+    citations: [
+      {
+        tier: "institution",
+        label: "The Har Karkom Archaeological Project — E. Anati's own site for the excavation and survey",
+        url: "https://www.harkarkom.com/",
+        credit: "E. Anati and the Centro Camuno di Studi Preistorici",
+        detail:
+          "The project's own pages carry its site counts, its chronological scheme and Anati's statement of the identification in his own words, including the concession totals quoted in this article and his placing of the relevant phase at 2350-2000 BC",
+        supports: "The Har Karkom evidence and Anati's own framing of the date problem",
+      },
+      {
+        tier: "scholarly",
+        label:
+          "E. Anati, \"Har Karkom: Archaeological Discoveries in a Holy Mountain in the Desert of Exodus\"",
+        url: "https://doi.org/10.1007/978-3-319-04768-3_35",
+        credit: "Emmanuel Anati, Centro Camuno di Studi Preistorici",
+        detail:
+          "In T. E. Levy, T. Schneider and W. H. C. Propp (eds.), Israel's Exodus in Transdisciplinary Perspective (Springer, 2015), 449-456. Anati's identification in a peer-reviewed volume rather than on his own site. Paywalled",
+        supports: "The Har Karkom identification as its proponent states it",
+        paywalled: true,
+      },
+      {
+        tier: "scholarly",
+        label: "I. Finkelstein, \"Raider of the Lost Mountain\"",
+        url: "https://library.biblicalarchaeology.org/article/raider-of-the-lost-mountain-an-israeli-archaeologist-looks-at-the-most-recent-attempt-to-locate-mt-sinai/",
+        credit: "Israel Finkelstein, Tel Aviv University",
+        detail:
+          "Biblical Archaeology Review 14:4 (July/August 1988) — the principal published archaeological answer to the Har Karkom identification. Body text paywalled, and this article deliberately quotes nothing from it: the lines usually attributed to Finkelstein here circulate secondhand and were not read at source for this article",
+        supports: "That the Har Karkom identification drew a substantial published rejection",
+        paywalled: true,
+      },
+      {
+        tier: "scholarly",
+        label: "G. I. Davies, \"Hagar, El-Heǧra and the Location of Mount Sinai\"",
+        url: "https://doi.org/10.1163/156853372x00316",
+        credit: "Graham I. Davies, University of Cambridge",
+        detail:
+          "Vetus Testamentum 22:2 (1972), 152-163. The serious scholarly treatment of the Galatians 4:25 Hagar/Arabia problem that the popular Arabian argument rests on. Paywalled",
+        supports: "That the Arabia question is an old scholarly problem rather than a recent discovery",
+        paywalled: true,
+      },
+      {
+        tier: "scholarly",
+        label: "J. K. Hoffmeier, Ancient Israel in Sinai: The Evidence for the Authenticity of the Wilderness Tradition",
+        url: "https://doi.org/10.1093/acprof:oso/0195155467.003.0003",
+        credit: "James K. Hoffmeier, Trinity Evangelical Divinity School",
+        detail:
+          "Oxford University Press, 2005; the chapter on Sinai is at pages 35-46. An evangelical case for the southern peninsula that nevertheless prefers Gebel Safsafah or Gebel Serbal to the traditional Jebel Musa, and answers the Gulf of Aqaba and Saudi Arabian proposals at pages 132-136. Paywalled",
+        supports: "One of the three evangelical positions this article says are genuinely held",
+        paywalled: true,
+      },
+      {
+        tier: "reference",
+        label: "G. Franz, \"Mt. Sinai Is Not at Jebel el-Lawz in Saudi Arabia\"",
+        url: "https://biblearchaeology.org/research/exodus-from-egypt/2264-mount-sinai-is-not-jebel-allawz-in-saudi-arabia",
+        credit: "Gordon Franz, Associates for Biblical Research",
+        detail:
+          "Read at the Evangelical Theological Society and Near East Archaeological Society meeting, Colorado Springs, 15 November 2001; a revised version appeared in Bible and Spade (Fall 2000), 101-113. Freely readable, and the source of the Nabataean datings quoted in this article",
+        supports: "The published evangelical case against the Saudi Arabian candidates",
+      },
+      {
+        tier: "primary",
+        label: "Egeria, The Pilgrimage of Etheria, trans. M. L. McClure and C. L. Feltoe (1919)",
+        url: "https://archive.org/details/pilgrimageofethe00mccliala",
+        credit: "M. L. McClure and C. L. Feltoe, SPCK, London, 1919",
+        detail:
+          "Public domain and freely readable. The earliest eyewitness account of the traditional site, written on a journey dated to about 381-384 by P. Devos, Analecta Bollandiana 85 (1967), 165-194. The description of the summit church quoted in this article is in the ascent narrative",
+        supports: "That the traditional identification was already established, with a church and monks, by the late fourth century",
+      },
+      {
+        tier: "primary",
+        label: "Procopius, Buildings V.viii — the monastery at Sinai",
+        url: "https://penelope.uchicago.edu/Thayer/E/Roman/Texts/Procopius/Buildings/5*.html",
+        credit: "Procopius of Caesarea, trans. H. B. Dewing, Loeb Classical Library, 1940",
+        detail:
+          "The contemporary account of Justinian's foundation, and the source of the detail that the church was built well below the summit and that a garrisoned fortress went up at the base. Procopius gives no date; the conventional bracket of about 548-565 comes from the church's roof-beam inscriptions, published in G. H. Forsyth and K. Weitzmann, The Monastery of Saint Catherine at Mount Sinai (1973)",
+        supports: "The sixth-century monastery, and what a sixth-century writer does and does not say about it",
+      },
+      {
+        tier: "reference",
+        label: "H. Shanks, \"Where Is Mount Sinai?\"",
+        url: "https://library.biblicalarchaeology.org/article/where-is-mount-sinai/",
+        credit: "Hershel Shanks, Biblical Archaeology Review",
+        detail:
+          "Biblical Archaeology Review, March/April 2014. The source of the line quoted at the end of this article on the state of the question",
+        supports: "That no candidate commands agreement",
+      },
+      {
+        tier: "encyclopedic",
+        label: "Wikipedia: Mount Sinai",
+        url: "https://en.wikipedia.org/wiki/Mount_Sinai",
+      },
+    ],
+    reflectionPrompt:
+      "Israel could see the mountain and still could not go up it. What do you want explained that you may only ever be asked to trust?",
+  },
+  {
+    id: "bethsaida-candidate-sites",
+    name: "The Search for Bethsaida",
+    // NOT registered: "Bethsaida" — the town has its own POI record and must keep its own name.
+    // NOT registered: "et-Tell", which in this app's subject matter names two different mounds
+    // four days' walk apart (see ai-candidate-sites); a bare registration would mislink half of
+    // them. "el-Araj" IS registered: unambiguous, no competing record, and it is what this
+    // article is about.
+    matchNames: ["el-Araj", "el Araj", "Bethsaida-Julias"],
+    category: "discovery",
+    role: "Two Excavations, Two Claims, Both Still Digging",
+    summary:
+      "Peter, Andrew and Philip came from Bethsaida, and two teams two kilometres apart are each excavating what they believe is the town. This one is not settled, and anyone who tells you it is has picked a side.",
+    sections: [
+      {
+        heading: "The Mound on the Hill",
+        paragraphs: [
+          "R. Arav made a ten-day probe at et-Tell, north of the Sea of Galilee, in 1987, and the Bethsaida Excavations Consortium formed around the dig in 1990, coordinated for many years through the University of Nebraska at Omaha and now running under the Nelson Glueck School of Biblical Archaeology. Nearly forty years of work have produced four peer-reviewed volumes of excavation reports, which is a serious body of published stratigraphy by any measure.",
+          "What came out of the ground is impressive and mostly not disputed. There is a monumental Iron Age gate complex, a four-room inner gatehouse about 35 by 17.5 metres with two projecting towers, built of basalt — Arav reads the town as the capital of the Aramean kingdom of Geshur and the seat of its kings. There is Hellenistic and early Roman occupation above it. There are quantities of fishing gear: lead net weights, iron anchors, needles and hooks. And there is a building about 20 by 6 metres with unusually thick walls, in which two decorated bronze incense shovels were found, which Arav identifies as a Roman temple — a reading worth flagging as a reading, since even a volume written by one of his own team members puts the word \"temple\" in quotation marks in its chapter title.",
+          "The objection to et-Tell is simple enough to state on a walk: it is not on the lake. The Gospels have Bethsaida as a fishing town, and et-Tell sits inland and above the plain — the project's own site says about 2 km from the north-eastern coast, and other figures in circulation run from about a mile to a mile and a half. The answer Arav relies on is geological, and it is a real body of work rather than a hand-wave: studies by J. F. Shroder, M. Inbar and colleagues published in the excavation's own volumes argue that earthquake landslides dammed the Jordan, that the resulting floods pushed silt out across the plain, and that a catastrophic fourth-century flood moved the shoreline south for good. Whether that mechanism has moved the water far enough, fast enough, is precisely what the other side disputes.",
+        ],
+      },
+      {
+        heading: "The Site by the Water",
+        paragraphs: [
+          "Since 2016 a second excavation has worked el-Araj, close to the ancient shore and about two kilometres from et-Tell, directed by M. Aviam of Kinneret College and R. S. Notley, now of Pillar College. Their case is that the Roman-period town is here, under later silt. They report a Roman bathhouse — identified from strong plaster and broken clay bricks including tubuli, the tubular vents of a hypocaust — a denarius of Nero dated to AD 65-66, and about twenty fishing net weights. Above that sits a Byzantine basilica about 27 by 16 metres, which they identify with the Church of the Apostles, and in 2023 they reported a first-century wall beneath its apse.",
+          "The church matters because of a text. An eighth-century pilgrim itinerary describes Willibald's journey through Galilee; it was written down by Huneberc of Heidenheim from his dictation, so Willibald is the traveller rather than the author, which is a distinction popular accounts routinely lose. The relevant chapter reads: \"And they came to that village, Capharnaum, where our Lord raised to life the ruler's daughter; and there is a house and a thick wall. And the men there said that Zebedee, with his sons John and James, had been lodged therein. And thence they proceeded to Bethsaida, whence came Peter and Andrew. There is now a church where their house was formerly. They stayed there one night, and, in the morning, went on to Corozain, where our Lord cured the demoniacs, and sent the devil into the herd of swine.\" A church at Bethsaida, on the house of Peter and Andrew, on a route between Capernaum and Chorazin.",
+          "In 2022 the el-Araj team announced a mosaic medallion in the basilica carrying a two-line Greek inscription: a donor named Constantine, described as a servant of Christ, asking the intercession of Peter, \"chief and commander of the heavenly apostles.\" It was read by L. Di Segni and J. Ashkenazi and published formally with the excavators in Liber Annuus in 2023. It is a genuine and important find, and it is worth being exact about what it shows: it establishes that this Byzantine church was dedicated to Peter. It does not establish that the church stands on his house, and it does not date the town beneath it.",
+        ],
+      },
+      {
+        heading: "Neither Side Has Conceded, and One Scholar Says Both Are Wrong",
+        paragraphs: [
+          "Both teams have published against the other, and a reader should have both. R. S. Notley published \"Et-Tell Is Not Bethsaida\" in Near Eastern Archaeology in 2007, and in 2011 the same journal ran a four-part exchange — Arav answering Notley, Shroder answering Notley on the geology, Notley replying, Arav replying again. That forum is the cleanest published statement of the disagreement in existence and it is worth reading whole rather than in summary. From the el-Araj side, the excavators note that this is not a new idea: G. Schumacher argued in 1888 that et-Tell was too far from the lake to be a fishing village and proposed el-Araj instead. They also state that el-Araj was settled from at least the end of the first century BC and was not, as had been suggested, submerged under two metres of water.",
+          "Arav's own position is more careful than it is usually reported, and misstating it would be exactly the kind of strawman this app treats as a factual error. He is not claiming et-Tell for every period. Writing in 2017 he dug at el-Araj himself in 1987 and found beach deposits under the Byzantine layer; he reads the el-Araj bathhouse as most probably belonging to a military camp of Agrippa II's mercenaries, on the ground that bathhouses of that date are known from Roman camps and Herodian palaces rather than from Jewish towns; and on the pilgrim text he answers, quoted whole: \"However, the excavators of Capernaum, Fathers Virgilio Corbo and Stanislao Loffreda maintained that description suits the discovery of Capernaum and that the monks who copied Willibald report the descriptions of Capernaum were confused with Bethsaida.\" And then the sentence that shows what he actually holds: \"If and when all these hurdles are overcome, the excavators will be able to reiterate my notion that the Byzantine Bethsaida was at el-Araj.\" His position is a two-period one — first-century Bethsaida at et-Tell, Byzantine Bethsaida at el-Araj — and an article that flattened it into \"Arav says et-Tell\" would have misreported a living scholar.",
+          "There is a third proposal, and it dissolves rather more of the problem than either dig would like. B. Pixner in 1985 and D. Urman the same year suggested not two towns but one town in two parts: a lakeside fishing village at the water — the \"Bethsaida of Galilee\" of John 12:21 — with the acropolis and the city Philip the tetrarch refounded as Julias up on the tell. That would make both excavations partly right, and it would ease a real tension in the sources, because Josephus places the Bethsaida that became Julias in the territory of Philip the tetrarch rather than in Galilee. Two points of precision there: Josephus says only that the village was \"at the lake of Gennesareth,\" and the Gaulanitis placement is an inference from the boundaries of Philip the tetrarch's realm rather than something he states; and Bethsaida appears by that name exactly once in the whole of his Antiquities and not at all in the Jewish War. Meanwhile P. Kučera has published a book-length reassessment with Brill arguing a position that would put the Gospel town at neither mound, which is a reminder that a two-horse race is a frame and not a finding.",
+          "Where this stands as of the writing of this article. el-Araj has been in the field continuously, with a season in 2026 in which its director said of the accumulating evidence, \"It's not a smoking gun. It's the gun itself.\" et-Tell's most recently published field report is for a short 2022 season, and its sponsorship has moved institutions. It would be easy to read that asymmetry as a verdict, and it is not one — it is publication history. et-Tell's case rests on four decades of peer-reviewed stratigraphy; el-Araj's on ten seasons and a handful of peer-reviewed articles; neither team has conceded and both are still working. The app takes no side here, and that is not fence-sitting: there is no evidence that would justify one, and this is a live excavation dispute that may well be settled by something dug up after this sentence was written. What is not in doubt is the thing a reader of the Gospels actually needs. There was a fishing town on this shore, Peter and Andrew and Philip came from it, Jesus healed a blind man just outside it and wept over its unbelief, and both candidate mounds are within sight of each other on the same stretch of water.",
+        ],
+      },
+    ],
+    verses: [
+      { reference: "John 1:44", note: "\"Now Philip was from Bethsaida, of the city of Andrew and Peter\" — note this verse does not add \"of Galilee\"" },
+      { reference: "John 12:21", note: "\"Philip, who was from Bethsaida of Galilee\" — the phrase that sits awkwardly beside Josephus" },
+      { reference: "Mark 6:45", note: "The disciples sent ahead by boat to Bethsaida" },
+      { reference: "Mark 8:22", note: "A blind man brought to Jesus at Bethsaida" },
+      { reference: "Luke 9:10", note: "Jesus withdraws to a deserted place belonging to the city called Bethsaida" },
+      { reference: "Matthew 11:21", note: "\"Woe to you, Chorazin! Woe to you, Bethsaida!\"" },
+    ],
+    sources: [
+      { label: "Wikipedia: Bethsaida", url: "https://en.wikipedia.org/wiki/Bethsaida" },
+      { label: "The Bethsaida Excavations Project's own site (et-Tell)", url: "https://bethsaidaarchaeology.org/" },
+      { label: "The el-Araj Excavation Project's own site", url: "https://www.bethsaida-julias.com/" },
+    ],
+    discovery: {
+      objectType:
+        "Two excavated mounds about 2 km apart, each claimed as the Gospel town: et-Tell, with an Iron Age gate complex and Hellenistic-Roman levels on a hill above the plain, and el-Araj, with a Roman bathhouse and a Byzantine basilica near the ancient shore",
+      findSite: "The north shore of the Sea of Galilee, at the mouth of the Jordan, in the Bethsaida valley",
+      findSiteId: "bethsaida",
+      findSiteKind: "poi",
+      foundYear: "et-Tell probed in 1987 and excavated from 1990; el-Araj excavated from 2016. Both projects are ongoing",
+      foundBy:
+        "R. Arav, for the Bethsaida Excavations Consortium — formerly with the University of Nebraska at Omaha, now under the Nelson Glueck School of Biblical Archaeology — at et-Tell; M. Aviam of Kinneret College and R. S. Notley, now of Pillar College, at el-Araj",
+      objectDate:
+        "et-Tell: Iron Age gate complex, with Hellenistic and Early Roman occupation above it. el-Araj: Roman-period remains including a denarius of Nero of AD 65-66, and a Byzantine basilica with a mosaic inscription published in 2023",
+      objectDateCertainty: "disputed",
+      currentLocation:
+        "Both sites are in the Bethsaida valley at the north end of the Sea of Galilee; et-Tell lies within a national park and el-Araj is under continuing excavation. Finds are held under the Israel Antiquities Authority",
+    },
+    citations: [
+      {
+        tier: "institution",
+        label: "The Bethsaida Excavations Project — et-Tell, directed by R. Arav",
+        url: "https://ngsba.org/excavations/bethsaida/",
+        credit: "R. Arav and the Bethsaida Excavations Consortium, under the Nelson Glueck School of Biblical Archaeology",
+        detail:
+          "The excavation's own current statement of its findings, and the source of the gate's dimensions, the Geshur identification, the fishing implements and the structure identified as a temple. The project's older site at bethsaidaarchaeology.org carries its publication list and its most recent field report, for the 2022 season",
+        supports: "The et-Tell excavation, its auspices and what it reports finding",
+      },
+      {
+        tier: "institution",
+        label: "The el-Araj Excavation Project — directed by M. Aviam and R. S. Notley",
+        url: "https://www.bethsaida-julias.com/home",
+        credit: "Mordechai Aviam, Kinneret College, and R. Steven Notley, Pillar College",
+        detail:
+          "The excavation's own site, and the source of the basilica's dimensions and the Church of the Apostles identification",
+        supports: "The el-Araj excavation, its directors and what it reports finding",
+      },
+      {
+        tier: "scholarly",
+        label: "R. S. Notley, \"Et-Tell Is Not Bethsaida\"",
+        url: "https://doi.org/10.1086/nea20361336",
+        credit: "R. Steven Notley",
+        detail: "Near Eastern Archaeology 70:4 (2007), 220-230. The published case against the et-Tell identification. Paywalled",
+        supports: "The el-Araj side's published objection to et-Tell",
+        paywalled: true,
+      },
+      {
+        tier: "scholarly",
+        label: "R. Arav, \"Bethsaida — A Response to Steven Notley\"",
+        url: "https://doi.org/10.5615/neareastarch.74.2.0092",
+        credit: "Rami Arav, University of Nebraska at Omaha",
+        detail:
+          "Near Eastern Archaeology 74:2 (2011), 92-100 — the opening piece of a four-part exchange in the same issue: J. F. Shroder's \"Response to Notley's Comments\" at 100-101 (doi 10.5615/neareastarch.74.2.0100), Notley's \"Reply to Arav\" at 101-103 (doi 10.5615/neareastarch.74.2.0101) and Arav's \"A Response to Notley's Reply\" at 103-104 (doi 10.5615/neareastarch.74.2.0103). Paywalled",
+        supports: "The et-Tell side's published answer, and the full published exchange between the two camps",
+        paywalled: true,
+      },
+      {
+        tier: "scholarly",
+        label: "M. Aviam and R. S. Notley, \"In Search of the City of the Apostles\"",
+        url: "https://doi.org/10.1163/15685365-12341710",
+        credit: "Mordechai Aviam and R. Steven Notley",
+        detail: "Novum Testamentum 63:2 (2021), 143-158. The el-Araj identification argued in a peer-reviewed journal. Paywalled",
+        supports: "The case for el-Araj as its excavators make it",
+        paywalled: true,
+      },
+      {
+        tier: "scholarly",
+        label: "L. Di Segni, J. Ashkenazi, M. Aviam and R. S. Notley, \"The Greek Inscriptions from 'The Church of St. Peter' at Bethsaida (el-'Araj)\"",
+        url: "https://doi.org/10.1484/j.la.5.141408",
+        credit: "Leah Di Segni (Hebrew University), Jacob Ashkenazi, Mordechai Aviam and R. Steven Notley",
+        detail:
+          "Liber Annuus 73 (2023), 365-384. The formal publication of the mosaic inscription announced in 2022, and the source of the phrase quoted in this article. Paywalled",
+        supports: "The mosaic inscription and its reading",
+        paywalled: true,
+      },
+      {
+        tier: "scholarly",
+        label: "R. Arav, \"Bethsaida\", in Archaeology and History of Eighth-Century Judah",
+        url: "https://doi.org/10.15699/9780884143482-007",
+        credit: "Rami Arav",
+        detail:
+          "SBL Press, 2010, 79-98. Arav's Iron Age case for the site, including the identification of it as the Geshurite capital. The excavation's four report volumes are R. Arav and R. A. Freund (eds.), Bethsaida: A City by the North Shore of the Sea of Galilee, 1995, 1999, 2004 and 2009",
+        supports: "The Iron Age gate and the Geshur identification",
+        paywalled: true,
+      },
+      {
+        tier: "scholarly",
+        label: "B. Pixner, \"Searching for the New Testament Site of Bethsaida\"",
+        url: "https://doi.org/10.2307/3209957",
+        credit: "Bargil Pixner",
+        detail:
+          "The Biblical Archaeologist 48:4 (December 1985), 207-216. The two-part-town proposal, published before either current excavation began; D. Urman argued a related case the same year in The Golan: A Profile of a Region during the Roman and Byzantine Periods. Paywalled",
+        supports: "The proposal that both sites are parts of one town",
+        paywalled: true,
+      },
+      {
+        tier: "scholarly",
+        label: "P. Kučera, Looking for the Bethsaida of the Gospels",
+        url: "https://doi.org/10.1163/9789004748965",
+        credit: "Peter Kučera",
+        detail:
+          "Ancient Judaism and Early Christianity 123 (Brill); Crossref records the publication year as 2026. A book-length reassessment by a scholar involved in neither excavation. Cited here as an independent third treatment; nothing is quoted from it, because the publisher's pages could not be opened for this article and its conclusions were not read at source. Paywalled",
+        supports: "That a third position exists and has been argued at length",
+        paywalled: true,
+      },
+      {
+        tier: "primary",
+        label: "The Hodoeporicon of Saint Willibald, trans. W. R. Brownlow (1895)",
+        url: "https://archive.org/details/libraryofpalesti03paleuoft",
+        credit: "Rev. Canon W. R. Brownlow, Palestine Pilgrims' Text Society, London, 1895",
+        detail:
+          "Public domain and freely readable; the passage quoted in this article is chapter XIV, quoted in full. Dictated by Willibald to Huneberc of Heidenheim. This 1895 translation is used rather than the widely linked 1954 one, which remains in copyright outside the United States",
+        supports: "The eighth-century pilgrim's report of a church at Bethsaida on the house of Peter and Andrew",
+      },
+      {
+        tier: "reference",
+        label: "R. Arav, \"Bethsaida Controversy\"",
+        url: "https://bibleinterp.arizona.edu/sites/bibleinterp.arizona.edu/files/docs/Bethsaidacontroversy.pdf",
+        credit: "Rami Arav, University of Nebraska at Omaha, August 2017",
+        detail:
+          "Freely readable, and the source of the three passages quoted from Arav in this article, including his statement that Byzantine Bethsaida was at el-Araj. Self-published on Bible and Interpretation rather than peer-reviewed, and flagged as such: a peer-reviewed response by Arav to the post-2016 el-Araj excavations could not be traced for this article",
+        supports: "Arav's own answer to the el-Araj claim, and his two-period position",
+      },
+      {
+        tier: "encyclopedic",
+        label: "Wikipedia: Bethsaida",
+        url: "https://en.wikipedia.org/wiki/Bethsaida",
+      },
+    ],
+    reflectionPrompt:
+      "Two teams have spent decades within sight of each other, each certain. What are you certain about that would look different from two kilometres away?",
+  },
+  {
+    id: "tomb-of-jesus-candidates",
+    name: "The Search for Jesus' Tomb",
+    // NOT registered: "Golgotha", "Garden Tomb", "Church of the Holy Sepulchre". All three belong
+    // to the two POI records this article is about, and those records keep their own names and
+    // their own pages; this topic carries the argument and cross-links to them. "Calvary" is not
+    // registered either — it is a name for the place, not for the question.
+    category: "discovery",
+    role: "Two Candidate Tombs, and Why Only One of Them Is an Archaeological Question",
+    summary:
+      "One of these two sites has a first-century rock-cut tomb in a disused quarry that lay outside the city, and a line of evidence running back to the fourth century. The other is an Iron Age tomb. Many readers have been told it the other way round.",
+    sections: [
+      {
+        heading: "What the Gospels Ask For",
+        paragraphs: [
+          "The requirements are unusually specific for a Gospel detail, which is what makes this answerable at all. The tomb was cut in rock, not built (Matthew 27:60, Luke 23:53). It was new — Luke says \"where no one had ever been laid,\" and John's Gospel repeats it, \"a new tomb in which no man had ever yet been laid.\" It was in a garden, in the place where he was crucified (John 19:41). The place of crucifixion was near the city (John 19:20) and outside the gate (Hebrews 13:12). And the tomb belonged to Joseph of Arimathea, a wealthy man, which is a class of tomb rather than a vague impression.",
+          "Two sites in Jerusalem are shown to visitors as this tomb, and a third first-century tomb has been argued to be the family grave of Jesus on quite different grounds — that one is treated separately in the app's Talpiot Tomb article and is not among the candidates weighed here. The Church of the Holy Sepulchre, inside the walls of the present Old City, holds a rock-cut tomb inside a fourth-century foundation. The Garden Tomb, in a quiet garden north of the Damascus Gate beneath a cliff face that looks like a skull, has been shown to Protestant pilgrims since the 1880s. They cannot both be right, and the evidence about them is not evenly balanced.",
+        ],
+      },
+      {
+        heading: "The Case for the Church of the Holy Sepulchre",
+        paragraphs: [
+          "Start with the ground, because the popular version of this argument is wrong in a way worth fixing. People are usually told that excavation found the line of the \"second wall\" and proved the site lay outside it. That is not what happened. A great east-west wall under the Lutheran Church of the Redeemer, noticed by C. Schick in 1893 and excavated by U. Lux from 1970, was long treated as a stretch of that wall — and a later re-study of the same ground by the German Protestant Institute of Archaeology, directed by D. Vieweger, disproved the identification: its lowest courses belong to Hadrianic building of AD 135. The extramural case rests on something better than a wall line, and on the same institute's own account it rests on land use. The sounding reached a quarry over which earth had been deposited around the turn of the millennium and which was used as a garden, from which the excavators concluded that the ground beneath today's Holy Sepulchre lay outside the city in Jesus's time. Nobody quarries stone or plants gardens inside a walled city, and nobody buries the dead inside one either.",
+          "The quarry is the key to the rest. V. Corbo's excavations under the church, published in three volumes in 1981-1982, found a disused quarry reused as a rock-cut cemetery of the Second Temple period — and a cemetery is the whole point, because a tomb belongs here only if this was burial ground, and burial ground belongs here only if this was outside the wall. J. E. Taylor's study in New Testament Studies in 1998 defines Golgotha as the area of a disused quarry west of first-century Jerusalem; it is worth noting that in publishing it she reversed her own earlier scepticism, which is the sort of thing that ought to count for something.",
+          "Then the twenty-first-century work, stated carefully, because the press did not. Since 2022 an excavation under the church floor directed by F. R. Stasolla of Sapienza University has reported the quarry and, above it, cultivated ground with traces of olive and vine — which was widely headlined in 2025 as confirming John 19:41's garden. Stasolla's own statement of it is more restrained and more useful: from the archaeological context and strata the layer belongs to the pre-Christian era, but radiocarbon testing has not yet been carried out, and she is explicit about keeping faith and history as two distinct fields. What makes the finding weighty is not the headline but the corroboration: a German team found a garden over a quarry at this spot decades earlier, working independently and looking for something else. Two converging lines are worth more than one dramatic one.",
+          "The written trail runs back further than any other holy site in the city. Eusebius records that a shrine of Venus stood over the tomb and was removed on Constantine's order, and that the emperor wrote to Bishop Macarius about the building; Jerome adds that it was Hadrian who put the pagan cult there, and says it stood about a hundred and eighty years — though Jerome and Eusebius disagree about which deity stood over which spot, and an honest article says so rather than blending them into one tidy account. The point that survives the discrepancy is the one that matters: fourth-century Christians did not choose a convenient empty field. They dug out a working pagan temple inside the city to get at a tomb they believed was underneath it, which is a costly and conspicuous thing to do and a strange choice if the location were guesswork. Physical confirmation of the building phase came in 2016-2017, when the Aedicule was opened for restoration and mortar from between the burial bed and the marble slab over it was dated by optically stimulated luminescence to around AD 345 — which dates the Constantinian construction, not the cutting of the tomb, and should never be reported as dating the tomb itself.",
+        ],
+      },
+      {
+        heading: "The Garden Tomb, Said Plainly and Said Kindly",
+        paragraphs: [
+          "The Garden Tomb is a genuinely beautiful place, it is quiet in a city that is not, and a great many people have met God there. None of that is in question here and none of it is affected by what follows. What is in question is a date.",
+          "G. Barkay published the study in Biblical Archaeology Review in 1986, and his conclusion deserves quoting in full rather than in the clipped form that usually circulates: \"I have concluded that the cave of the Garden Tomb was originally hewn in the Iron Age II, sometime in the eighth or seventh century B.C. It was reused for burial purposes in the Byzantine period (fifth to seventh centuries A.D.), so it could not have been the tomb of Jesus. All lines of reasoning support this conclusion.\" The Gospels require a tomb in which no one had ever been laid. A tomb cut seven centuries earlier and used since is not a new tomb, and that single point ends the archaeological question. Two details from the same study are worth knowing because they are shown to visitors as evidence: the groove beside the entrance, presented as the channel for a rolling stone, is a Crusader-period rock cutting from a period when the place was used as a stable; and the burial benches inside were recut into troughs when the cave was reused in the Byzantine period.",
+          "The identification is also younger than most visitors realise. O. Thenius noted the skull-shaped cliff in 1842, C. G. Gordon popularised the site in 1883, and the Garden Tomb Association was founded in 1894 — and, as a peer-reviewed study of that history observes, the men who promoted it were not archaeologists. It should be said that they were not frauds either. They were reading a landscape devoutly and without the tools to date what they were looking at, and there is nothing discreditable in that.",
+          "It matters what the Garden Tomb Association itself says, and it is not what critics often claim. They do not concede that the tomb is inauthentic; they still present the site positively. What they say is this, quoted whole: \"However, whether this is the same tomb that Jesus was laid in, is not important. We believe what is important is not the place, but the Person of Jesus Christ.\" That is a fair thing to say and this article has no quarrel with it. It is simply a different kind of claim from an archaeological one, and readers should be able to tell the two apart.",
+          "One more piece, because it is the fairest possible test of whether anyone still defends the site. J. R. Chadwick published a defence of the Garden Tomb in 1986. Seventeen years later, by then a field archaeologist with a doctorate, he published this: \"I must now agree that on every issue Barkay addressed concerning the Garden Tomb, he was right.\" No credentialed archaeologist appears to have defended the Garden Tomb in print since. And the same article is the reason this one will not overstate the other half: Chadwick rejects the Holy Sepulchre as the burial place too, thinking it highly unlikely, while holding that the skull escarpment may well be where the crucifixion happened. So the precise statement — the one that survives contact with the literature — is this. The Garden Tomb is excluded as the burial place by near-universal agreement, and that is about as settled as this field gets. The Holy Sepulchre is supported strongly, by several independent lines of evidence, but not unanimously. Those are two different strengths of claim and running them together would be exactly the move this app refuses elsewhere. It is also worth an evangelical reader knowing that Answers in Genesis' own journal reached the same verdict on the Garden Tomb in 2021, on the same reading of John 19:41 — this is not a conclusion that arrives from outside the faith to embarrass it.",
+        ],
+      },
+    ],
+    verses: [
+      { reference: "Matthew 27:60", note: "Joseph's own new tomb, cut out in the rock, with a great stone rolled to the door" },
+      { reference: "Luke 23:53", note: "\"a tomb that was cut in stone, where no one had ever been laid\"" },
+      { reference: "John 19:41-42", note: "A garden in the place where he was crucified, and in it a new tomb — the verse both sites are measured against" },
+      { reference: "John 19:20", note: "\"the place where Jesus was crucified was near the city\"" },
+      { reference: "Hebrews 13:12", note: "Jesus \"suffered outside of the gate\" — the requirement that rules the ground beneath the church in, not out" },
+    ],
+    sources: [
+      { label: "Wikipedia: Church of the Holy Sepulchre", url: "https://en.wikipedia.org/wiki/Church_of_the_Holy_Sepulchre" },
+      { label: "Wikipedia: Garden Tomb", url: "https://en.wikipedia.org/wiki/Garden_Tomb" },
+      { label: "The Garden Tomb Association's own site", url: "https://gardentomb.com/about-us/" },
+    ],
+    discovery: {
+      objectType:
+        "Two rock-cut tombs offered as the burial place of Jesus: one inside the Church of the Holy Sepulchre, in a disused quarry reused as a first-century cemetery, and one in a garden north of the Damascus Gate",
+      findSite: "Jerusalem — the Church of the Holy Sepulchre in the Old City, and the Garden Tomb outside the Damascus Gate",
+      findSiteId: "golgotha",
+      findSiteKind: "poi",
+      foundYear:
+        "The Holy Sepulchre tomb was uncovered under Constantine in the 320s and has been excavated repeatedly since, most recently by Sapienza University from 2022; the Garden Tomb cave was noted in the nineteenth century, its surroundings acquired and the Garden Tomb Association founded in 1894",
+      foundBy:
+        "For the Sepulchre, Constantine's builders under Bishop Macarius, as reported by Eusebius; the modern archaeology is V. Corbo's, U. Wagner-Lux's and F. R. Stasolla's. The Garden Tomb was promoted by O. Thenius from 1842 and C. G. Gordon from 1883, neither of them an archaeologist",
+      objectDate:
+        "The Holy Sepulchre tomb sits in a first-century rock-cut cemetery in a disused quarry; mortar under its marble slab dates by luminescence to about AD 345, which dates the Constantinian construction rather than the tomb. The Garden Tomb was cut in Iron Age II, the eighth or seventh century BC, and reused in the Byzantine period",
+      objectDateCertainty: "disputed",
+      currentLocation:
+        "Both are in Jerusalem and open to visitors: the Aedicule inside the Church of the Holy Sepulchre, restored in 2016-2017, and the Garden Tomb outside the Damascus Gate",
+    },
+    citations: [
+      {
+        tier: "institution",
+        label: "The Church of the Redeemer, Jerusalem — the German Protestant Institute's account of its own excavations",
+        url: "https://www.church-of-the-redeemer-jerusalem.info/exhibition/archeology",
+        credit: "The German Protestant Institute of Archaeology and the Church of the Redeemer, Jerusalem",
+        detail:
+          "The excavating institution's own statement, and the source of two facts this article corrects the popular account with: that the sounding \"disproved the assumption that the great wall of the Church of the Redeemer was a section of the 'Second City Wall'\", and that it instead reached a quarry over which earth was deposited at the turn of the millennium and used as a garden. The wall was first excavated by U. Lux, \"Vorläufiger Bericht über die Ausgrabung unter der Erlöserkirche...\", ZDPV 88 (1972), 185-201; the re-study that disproved the identification was directed by D. Vieweger",
+        supports: "That the extramural case rests on land use rather than on a located wall line",
+      },
+      {
+        tier: "scholarly",
+        label: "S. Gibson and J. E. Taylor, Beneath the Church of the Holy Sepulchre, Jerusalem",
+        url: "https://www.pef.org.uk/wp-content/uploads/2021/06/Gibson-Taylor-Beneath-the-Church-of-the-Holy-Sepulchre.pdf",
+        credit: "Shimon Gibson and Joan E. Taylor, Palestine Exploration Fund",
+        detail:
+          "PEF Monograph Series Maior 1 (1994). The Palestine Exploration Fund has put the whole volume online free; the scan carries no text layer, so it is read by eye rather than searched. The standing survey of the quarry and the rock-cut tombs beneath the church",
+        supports: "The published survey of what lies beneath the church",
+      },
+      {
+        tier: "scholarly",
+        label: "J. L. Kelley, The Church of the Holy Sepulchre in Text and Archaeology",
+        credit: "Justin L. Kelley",
+        detail:
+          "Archaeopress, 2019. Chapter 3 surveys every excavation at the site from 1960 to 2011 and chapter 4 covers the quarry and the tombs — the best single synthesis for a reader who wants to check this article's summary against the excavation literature. Print; no free URL was found",
+        supports: "A recent synthesis of the site's excavation history",
+      },
+      {
+        tier: "scholarly",
+        label: "J. E. Taylor, \"Golgotha: A Reconsideration of the Evidence for the Sites of Jesus' Crucifixion and Burial\"",
+        url: "https://doi.org/10.1017/S0028688500016465",
+        credit: "Joan E. Taylor, then of Waikato University, now King's College London",
+        detail:
+          "New Testament Studies 44:2 (1998), 180-203. Defines Golgotha as the area of a disused quarry west of first-century Jerusalem, and reverses the author's own earlier scepticism about the site. Paywalled",
+        supports: "The quarry, and the peer-reviewed case for the Holy Sepulchre's location",
+        paywalled: true,
+      },
+      {
+        tier: "scholarly",
+        label:
+          "A. Moropoulou, N. Zacharias, E. T. Delegou, M. Apostolopoulou, E. Palamara and A. Kolaiti, \"OSL mortar dating to elucidate the construction history of the Tomb Chamber of the Holy Aedicule\"",
+        url: "https://doi.org/10.1016/j.jasrep.2018.02.024",
+        credit: "Antonia Moropoulou and colleagues, National Technical University of Athens",
+        detail:
+          "Journal of Archaeological Science: Reports 19 (June 2018), 80-91. The peer-reviewed publication of the 2016-2017 restoration's dating work, identifying construction phases in the fourth, eleventh, sixteenth and nineteenth centuries. The mortar under the marble slab gives about AD 345 — the date the slab was laid over the burial bed, not the date the tomb was cut. Paywalled",
+        supports: "The luminescence dating of the Aedicule, and precisely what it dates",
+        paywalled: true,
+      },
+      {
+        tier: "scholarly",
+        label: "F. R. Stasolla, preliminary reports on the Holy Sepulchre excavations",
+        url: "https://doi.org/10.1484/J.LA.5.155239",
+        credit: "Francesca Romana Stasolla, Sapienza University of Rome",
+        detail:
+          "Liber Annuus 75 (2025), 619-716, the latest of four annual preliminary reports — 72 (2022), 385-418 in 73 (2023), 285-329 in 74 (2024) and this one. The excavation's own publication of the quarry and the cultivated layer above it. Paywalled",
+        supports: "The Sapienza excavation and what it has actually reported",
+        paywalled: true,
+      },
+      {
+        tier: "scholarly",
+        label: "S. J. Frantzman and R. Kark, \"General Gordon, the Palestine Exploration Fund and the Origins of 'Gordon's Calvary' in the Holy Land\"",
+        url: "https://doi.org/10.1179/003103208X312872",
+        credit: "Seth J. Frantzman and Ruth Kark, Hebrew University of Jerusalem",
+        detail:
+          "Palestine Exploration Quarterly 140:2 (2008), 119-136. The peer-reviewed history of the identification, confirming the Association's founding in 1894 and that the site's Victorian promoters were not archaeologists. Paywalled",
+        supports: "The history of the Garden Tomb identification",
+        paywalled: true,
+      },
+      {
+        tier: "reference",
+        label: "G. Barkay, \"The Garden Tomb — Was Jesus Buried Here?\"",
+        url: "https://library.biblicalarchaeology.org/article/the-garden-tomb-was-jesus-buried-here/",
+        credit: "Gabriel Barkay, Tel Aviv University",
+        detail:
+          "Biblical Archaeology Review 12:2 (March/April 1986). The study that settled the Garden Tomb's date, and the source of the conclusion quoted in full in this article, of the Crusader-period reading of the \"rolling stone\" groove, and of the Byzantine recutting of the benches. Body text paywalled",
+        supports: "The Iron Age II date of the Garden Tomb and the Byzantine reuse",
+        paywalled: true,
+      },
+      {
+        tier: "reference",
+        label: "J. R. Chadwick, \"Revisiting Golgotha and the Garden Tomb\"",
+        url: "https://rsc.byu.edu/vol-4-no-1-2003/revisiting-golgotha-garden-tomb",
+        credit: "Jeffrey R. Chadwick, Brigham Young University",
+        detail:
+          "The Religious Educator 4:1 (2003), 13-48, freely readable. Chadwick had defended the Garden Tomb in print in 1986 and retracts that defence here in the sentence quoted in this article. The same piece rejects the Holy Sepulchre as the burial site, which is why this article states the two conclusions at different strengths. Published by a Latter-day Saint institution",
+        supports: "That the only published modern defence of the Garden Tomb was retracted by its own author, and that the Sepulchre is not unanimously accepted",
+      },
+      {
+        tier: "primary",
+        label: "Eusebius, Life of Constantine III.25-30",
+        url: "https://en.wikisource.org/wiki/Nicene_and_Post-Nicene_Fathers:_Series_II/Volume_I/Constantine/The_Life_of_Constantine/Book_III/Chapter_26",
+        credit: "Eusebius of Caesarea, in the Nicene and Post-Nicene Fathers translation",
+        detail:
+          "Public domain on Wikisource. Chapter 26 describes the shrine of Venus over the tomb and its removal; 27-28 the excavation; 29-30 Constantine's letter to Bishop Macarius. Note that Eusebius does not name Hadrian and gives no date — those come from Jerome",
+        supports: "The fourth-century account of the tomb's recovery",
+      },
+      {
+        tier: "primary",
+        label: "Jerome, Letter 58, to Paulinus",
+        url: "https://en.wikisource.org/wiki/Nicene_and_Post-Nicene_Fathers:_Series_II/Volume_VI/The_Letters_of_St._Jerome/Letter_58",
+        credit: "Jerome, in the Nicene and Post-Nicene Fathers translation",
+        detail:
+          "Public domain on Wikisource. Jerome names Hadrian as the emperor who placed the pagan cult over the site and gives a duration of about a hundred and eighty years — and assigns the deities differently from Eusebius, a discrepancy this article reports rather than smooths over",
+        supports: "The second patristic witness, and the disagreement between the two",
+      },
+      {
+        tier: "encyclopedic",
+        label: "Wikipedia: Garden Tomb",
+        url: "https://en.wikipedia.org/wiki/Garden_Tomb",
+      },
+    ],
+    reflectionPrompt:
+      "People have prayed at the wrong tomb for a hundred and forty years, and God has met them there anyway. What does that tell you about what he actually requires of you?",
+  },
+  {
+    id: "noahs-ark-claims",
+    name: "The Search for Noah's Ark",
+    // NOT registered: "Noah", "Mount Ararat", "Ararat". The man and the mountain have their own
+    // records. The site names below are safe: nothing else in the app is called Durupınar, and
+    // both spellings are registered because the linker matches literally and the Turkish dotless
+    // ı is a different character from i.
+    matchNames: [
+      "Durupınar site",
+      "Durupinar site",
+      "Durupınar formation",
+      "Durupinar formation",
+      "the Ararat anomaly",
+    ],
+    category: "discovery",
+    role: "Sixty-Six Years of Announcements, and What the Evidence Actually Shows",
+    summary:
+      "A boat-shaped ridge in eastern Turkey and a series of expeditions up Mount Ararat have produced press conferences, documentaries and no accepted evidence — and the people who took the claims apart most decisively were mostly Christians who went looking themselves.",
+    sections: [
+      {
+        heading: "A Boat-Shaped Ridge and a Mountain",
+        paragraphs: [
+          "In October 1959 a Turkish military captain, İlhan Durupınar, noticed a large boat-shaped outline on aerial survey photographs of eastern Turkey, on a slope south of Mount Ararat near the village of Üzengili, at about two thousand metres — published distances from the peak differ, running from roughly twelve to eighteen miles, and this article does not pick one. Life magazine published the photograph in September 1960, and a team went out that month, dug and dynamited for two days, and found soil and rock. The Wyatt organisation's own website quotes Life's own verdict on that survey: it \"revealed no sign that the object was man made.\"",
+          "From 1977 R. Wyatt took the site up and made it famous, and the claims attached to it are specific enough to be tested. This article is about the site and the search; the app's separate article Ron Wyatt's Claimed Discoveries covers the rest of what he announced, and the two should be read together. His organisation reported metal-detector readings over what were described as iron rivets, laboratory assays showing aluminium, titanium and magnesium metal — with the inference, printed in capitals on their own site, that those metals are not found in nature — a deck plank said to be petrified wood, huge anchor stones with crosses carved on them at the village of Arzap, and radar scans said to reveal keels, bulkheads, animal chambers and a ramp. Turkish authorities designated the area a national park and a visitor centre was built.",
+          "Mount Ararat itself has its own literature. F. Navarra recovered worked wood from the mountain in 1955. A photographic anomaly on the north-west slope, first noticed on a United States Air Force mission of 17 June 1949, was declassified in 1995 and has been argued over since. And in April 2010 a Hong Kong expedition announced at a press conference that it had entered a wooden structure at around four thousand metres, radiocarbon dated to about 4,800 years, with one of its members saying it was \"99.9 percent\" the ark.",
+        ],
+      },
+      {
+        heading: "What the Text Actually Says About Where to Look",
+        paragraphs: [
+          "Before weighing any of that, it is worth noticing that Genesis does not name a peak. Genesis 8:4 says the ship rested \"on Ararat's mountains\" — a plural, naming the mountainous region the Assyrians called Urartu, in the Armenian highlands. That is a territory roughly the size of a country, and the text says nothing that would pick one summit out of it.",
+          "The oldest surviving traditions did not pick the mountain now called Ağrı Dağı. Berossus, a Babylonian priest writing in the third century BC, put the landing in the Gordyaean mountains — the Judi or Qardu region south-west of Lake Van. The Syriac Peshitta reads Qardu at Genesis 8:4 rather than Ararat. The Qur'an names al-Jūdī. Syriac and other eastern Christians carried that identification through late antiquity.",
+          "This is the point at which an article could get lazy and treat the whole thing as debunked, and it should not. R. W. Younker of Andrews University has published a serious case for identifying Ağrı Dağı with the biblical mountain, on the ground that the earlier and smaller Urartian heartland lay north-east of Lake Van and takes in Ağrı Dağı, while Cudi Dağı lies outside it. What makes his article worth citing here is that he states the awkward fact himself rather than around it: Ağrı Dağı, he writes, \"is thought by most scholars to have not been a serious candidate for biblical Mt. Ararat until around the 11th to 12th centuries A.D.\" A reader should know both that the traditional peak's claim is late and that a credentialed scholar has argued for it anyway on other grounds.",
+        ],
+      },
+      {
+        heading: "The Refutations, and Who Wrote Them",
+        paragraphs: [
+          "The Durupınar site has a natural explanation, and it was published in a peer-reviewed journal in 1996 by L. G. Collins, a retired professor of geology at California State University Northridge, and D. Fasold. That second name is the load-bearing one. Fasold had spent years promoting the site as the ark; he collected twelve samples of the supposed petrified wood, had them sectioned, found every one to be basalt or andesite, and ended up as co-author of the paper titled \"Bogus 'Noah's Ark' from Turkey Exposed as a Common Geologic Structure.\" Its conclusion: \"Evidence from microscopic studies and photo analyses demonstrates that the supposed Ark near Dogubayazit is a completely natural rock formation. It cannot have been Noah's Ark.\" Collins refined the mechanism in a 2016 article, attributing the boat shape to erosion of layered bedrock by landslide debris rather than to the fold he had first proposed. The metal-detector readings, he explains, are cemented grains of magnetite containing manganese and titanium, which make a detector buzz exactly as iron does; the aluminium figure is what a basalt would give, because basalt is largely plagioclase feldspar; and a thin section of an anchor stone shows anorthosite that does not occur in southern Mesopotamia at all. Collins, whose byline notes that he attends the United Methodist Church, closed by thanking Fasold, \"although he is no longer alive, for his sincere efforts to find the truth.\"",
+          "Four years before that paper, A. Snelling had reached the same conclusion from a very different direction. Snelling is a geologist and a young-earth creationist, and his 1992 report for Answers in Genesis says the site \"has a perfectly reasonable natural geological explanation\" and that \"there is no mystery about this site and its boat-shape\": earthquakes pushed up a block of basement rock, mudflow moved slowly around it, and the fault scarps make the \"walls.\" On the assays: \"the assay results of these two samples are exactly what one would expect from soil developed from basalt.\" On the anchor stones, that Noah would scarcely have used slabs of rock native to the place the ark came to rest, and that there is no wear around the tops of the holes. Answers in Genesis files that report under the heading \"Arguments to Avoid.\" A reader who has been told that only sceptics doubt this site has been told something untrue.",
+          "The Ararat claims have gone the same way and the pattern is worth naming. F. Navarra's 1955 wood was dated by four laboratories — R. Berger at UCLA, R. E. Taylor at Riverside, H. Suess at La Jolla, and England's National Physics Laboratory — and the results converge on roughly the seventh or eighth century AD, about twelve hundred years old rather than five thousand. That is not a sceptic's summary: an institute of the Seventh-day Adventist church published the same conclusion in 1980, that \"the dates for the wood converge around 700 A.D.\" and that the samples come from some other ancient structure. The 1949 anomaly was assessed by the Defense Intelligence Agency itself, whose analysis of the frames concluded that accumulated ice and snow along the precipice fall away at intervals leaving \"long linear facades,\" and that the anomaly appears to be one of them.",
+          "The 2010 Hong Kong announcement is the sharpest case, because both of the people best placed to check it were evangelicals working with the expedition. R. Price, the archaeologist on the 2008 season, wrote to supporters in April 2010 alleging a hoax, and his allegation should be quoted as he framed it — with the hedge he himself used: \"In the late summer of 2008 ten Kurdish workers hired by Parasut, the guide used by the Chinese, are said to have planted large wood beams taken from an old structure in the Black Sea area (where the photos were originally taken) at the Mt. Ararat site.\" He added that to his knowledge the expedition took no professional archaeologist or geologist who could verify or document the wood. Fairness requires the rest of it: within days Price's ministry issued a clarification that while he had reservations about the expedition's nature and procedure, \"he believes that a decision concerning this matter must wait until independent examinations of the site and the structure can be made and published.\" And then the dating. A. Snelling, the same creationist geologist, had done the expedition's radiocarbon work, and reported in 2011 that two of their four wood samples were tested at two laboratories each and certified modern — post-1950 and roughly 120 to 135 years old — and a third returned an age of about 610 years. The fourth sample, the only one behind the announced figure, was tested at a single laboratory that did not follow standard procedure, measure the carbon isotope value or report an error margin. His conclusion was that the tests \"strongly indicated that their wood samples could not have come from the Ark.\"",
+          "Work continues at Durupınar, and it deserves reporting straight rather than mocked. A team including archaeologists from Turkish universities has run ground-penetrating radar and resistivity surveys and taken soil samples, reporting rectilinear anomalies below the surface and about three times more organic material inside the formation's outline than in controls outside it, with core drilling and isotopic dating scheduled. Two things need saying about that, and the team says the second one itself. First, what a soil result of that kind can show: elevated organic carbon and potassium are consistent with decayed plant material of any origin and any date, they identify no species and no structure, and a date on sediment dates the sediment. Right-angled radar returns are likewise not unique to building — jointing, bedding and fracture intersections produce them, and Collins specifically describes a nearly rectangular joint system at this site. Nothing becomes evidence of a vessel until a core brings up worked wood, which has not happened. Second, their own statement of where they are: \"The evidence gathered over decades of fieldwork does not yet constitute definitive proof of Noah's Ark.\"",
+          "So, plainly. In sixty-six years at Durupınar and eighty on Ararat, not one of these claims has appeared in a peer-reviewed venue; the proponents' output is press releases, films, ministry publications and symposium chapters, while the peer-reviewed literature — Collins and Fasold in 1996, Taylor and Berger in 1980, L. R. Bailey in 1977 — runs the other way. That is not archaeology being closed-minded about the Bible. It is a specific body of claims that has been checked repeatedly, often by believers who wanted them to be true, and has not survived the checking. None of that touches Genesis. The flood narrative is not waiting on a photograph, and a faith that has been told it is has been set up to be disappointed by a soil sample.",
+        ],
+      },
+    ],
+    verses: [
+      { reference: "Genesis 6:15", note: "The ship's dimensions — three hundred cubits by fifty by thirty" },
+      { reference: "Genesis 8:4", note: "\"The ship rested... on Ararat's mountains\" — a plural naming a region, not a peak" },
+      { reference: "2 Kings 19:37", note: "Sennacherib's sons escape \"into the land of Ararat\" — Ararat as a territory" },
+      { reference: "Jeremiah 51:27", note: "\"The kingdoms of Ararat, Minni, and Ashkenaz\" — Ararat as a kingdom among kingdoms" },
+      { reference: "Hebrews 11:7", note: "Noah's ark presented as an act of faith, not as a locatable artefact" },
+      { reference: "1 Peter 3:20", note: "Eight souls saved through water" },
+    ],
+    sources: [
+      { label: "Wikipedia: Durupınar site", url: "https://en.wikipedia.org/wiki/Durup%C4%B1nar_site" },
+      { label: "Wikipedia: Searches for Noah's Ark", url: "https://en.wikipedia.org/wiki/Searches_for_Noah%27s_Ark" },
+    ],
+    discovery: {
+      objectType:
+        "A boat-shaped ridge of layered bedrock about 160 m long near Üzengili in eastern Turkey, together with wood samples, photographic anomalies and a reported wooden structure claimed from Mount Ararat itself",
+      findSite: "The Durupınar site, Doğubayazıt district, Ağrı Province, Turkey, south of Mount Ararat — published distances from the peak range from about twelve to eighteen miles; and the slopes of Mount Ararat itself",
+      findSiteId: "mount-ararat",
+      findSiteKind: "location",
+      foundYear:
+        "The Durupınar outline was noticed on aerial survey photographs in October 1959 and published by Life in September 1960; F. Navarra recovered wood from Ararat in 1955; the Ararat photographic anomaly is on imagery of 17 June 1949",
+      foundBy:
+        "İlhan Durupınar, a Turkish military captain, who noticed the formation on air-survey photographs; the site was promoted from 1977 by R. Wyatt, and has been worked since 2019 by a research team including archaeologists from Turkish universities",
+      objectDate:
+        "The formation is bedrock and carries no construction date. Every datable sample tested has come back far too young: F. Navarra's Ararat wood dates to roughly AD 700, and three of the four samples from the 2010 expedition returned modern, roughly 120-135 year, and about 610 year ages",
+      objectDateCertainty: "disputed",
+      currentLocation:
+        "The Durupınar formation lies where it always has, within a Turkish national park with a visitor centre; samples are held by the various expeditions and laboratories that took them",
+    },
+    citations: [
+      {
+        tier: "scholarly",
+        label: "L. G. Collins and D. Fasold, \"Bogus 'Noah's Ark' from Turkey Exposed as a Common Geologic Structure\"",
+        url: "https://doi.org/10.5408/1089-9995-44.4.439",
+        credit: "Lorence G. Collins, California State University Northridge, and David F. Fasold",
+        detail:
+          "Journal of Geoscience Education 44:4 (September 1996), 439-444. The peer-reviewed refutation, co-authored by the man who had spent years promoting the site. Full text is also posted by the author at csun.edu",
+        supports: "That the Durupınar formation is a natural rock structure, and that its best-known promoter concluded so himself",
+      },
+      {
+        tier: "scholarly",
+        label: "L. G. Collins, \"Noah's Ark near Dogubayazit, Turkey?\"",
+        url: "https://www.asa3.org/ASA/PSCF/2016/PSCF12-16Collins.pdf",
+        credit: "Lorence G. Collins",
+        detail:
+          "Perspectives on Science and Christian Faith 68:4 (December 2016), 218-228, freely readable. Collins's later and fuller treatment, in which he attributes the boat shape to landslide erosion of bedrock rather than to the fold proposed in 1996, and answers the metal, anchor-stone and petrified-wood claims point by point",
+        supports: "The geological mechanism, and the specific answers to the Wyatt-era claims",
+      },
+      {
+        tier: "scholarly",
+        label: "R. E. Taylor and R. Berger, \"The date of 'Noah's Ark'\"",
+        url: "https://doi.org/10.1017/S0003598X00042836",
+        credit: "R. E. Taylor, University of California Riverside, and Rainer Berger, UCLA",
+        detail:
+          "Antiquity 54:210 (1980), 34-36. The radiocarbon scientists' own peer-reviewed publication on F. Navarra's wood. Paywalled; the figures given in this article are taken from the reporting of their results rather than from this paper, which was not opened",
+        supports: "The dating of the Ararat wood",
+        paywalled: true,
+      },
+      {
+        tier: "scholarly",
+        label: "L. R. Bailey, \"Wood from 'Mount Ararat': Noah's Ark?\"",
+        url: "https://doi.org/10.2307/3209528",
+        credit: "Lloyd R. Bailey, Duke University",
+        detail: "The Biblical Archaeologist 40:4 (December 1977), 137-146. The scholarly treatment of the Navarra wood. Paywalled",
+        supports: "The scholarly assessment of the Ararat wood claims",
+        paywalled: true,
+      },
+      {
+        tier: "institution",
+        label: "A. Snelling, \"Special Report: Amazing 'Ark' Exposé\"",
+        url: "https://answersingenesis.org/creationism/arguments-to-avoid/special-report-amazing-ark-expose/",
+        credit: "Andrew A. Snelling, for Answers in Genesis",
+        detail:
+          "Creation 14:4 (September 1992), 26-38. A young-earth creationist geologist's refutation of the Durupınar site, published by Answers in Genesis and filed by them under \"Arguments to Avoid.\" The source of every Snelling sentence quoted here",
+        supports: "That the site is rejected by creationist geologists as well as by mainstream ones",
+      },
+      {
+        tier: "institution",
+        label: "A. Snelling, \"A Response to the Accusations of Noah's Ark Ministries International and The Media Evangelism\"",
+        url: "https://answersingenesis.org/geology/carbon-14/response-accusations-of-noahs-ark-ministries-international/",
+        credit: "Andrew A. Snelling, for Answers in Genesis",
+        detail:
+          "6 December 2011. Snelling carried out the 2010 expedition's radiocarbon dating and reports here what the four samples actually returned, and which laboratory did not follow standard procedure",
+        supports: "The radiocarbon results behind the 2010 announcement",
+      },
+      {
+        tier: "reference",
+        label: "R. W. Younker, \"The Case for Ağri Daği/Masis as the Biblical Mt. Ararat\"",
+        url: "https://www.perspectivedigest.org/archive/29-1/the-case-for-ari-daimasis-as-the-biblical-mt-ararat",
+        credit: "Randall W. Younker, Andrews University",
+        detail:
+          "Perspective Digest 29:1 (1 January 2024); also published in the Journal of the Adventist Theological Society 32:1-2 (2021), 14-34. The case FOR the traditional peak, cited here so the article does not knock down a position nobody holds, and the source of his own statement that most scholars date the identification to the eleventh or twelfth century AD",
+        supports: "The scholarly case for identifying Ağrı Dağı with the biblical mountain, and the lateness of that identification",
+      },
+      {
+        tier: "reference",
+        label: "R. D. Tkachuck, \"Wood from the Ark — a Knotty Problem\"",
+        url: "https://www.grisda.org/origins-07089",
+        credit: "Richard D. Tkachuck, Geoscience Research Institute",
+        detail:
+          "Origins 7:2 (1980), 137-146, published by an institute of the Seventh-day Adventist church and freely readable. Independently reaches the conclusion that \"the dates for the wood converge around 700 A.D.\" and answers the contamination and altitude objections",
+        supports: "A second, confessionally sympathetic assessment of the Ararat wood",
+      },
+      {
+        tier: "reference",
+        label: "J. Kovacs, \"Noah's Ark found? Not so fast, says archaeologist\"",
+        url: "https://www.wnd.com/2010/04/146941/",
+        credit: "Joe Kovacs, WorldNetDaily, 28 April 2010",
+        detail:
+          "Reproduces R. Price's dispatch of 26 April 2010 in full, which is the source of the allegation quoted in this article. Price's ministry issued a clarification days later, reported by the Christian Post on 2 May 2010, and both are represented here",
+        supports: "R. Price's allegation about the 2010 expedition, in his own words",
+      },
+      {
+        tier: "reference",
+        label: "S. Kurczy, \"Chinese explorers stand by claim of Noah's Ark find in Turkey\"",
+        url: "https://www.csmonitor.com/World/Global-Issues/2010/0430/Chinese-explorers-stand-by-claim-of-Noah-s-Ark-find-in-Turkey",
+        credit: "Stephen Kurczy, The Christian Science Monitor, 30 April 2010",
+        detail: "The 2010 claim in its claimants' own words, including the \"99.9 percent\" statement quoted here",
+        supports: "The 2010 announcement as its makers stated it",
+      },
+      {
+        tier: "encyclopedic",
+        label: "Wikipedia: Durupınar site",
+        url: "https://en.wikipedia.org/wiki/Durup%C4%B1nar_site",
+      },
+    ],
+    reflectionPrompt:
+      "Every serious refutation of these claims was written by someone who believed the flood happened. What does it cost you when someone on your own side says the evidence does not hold?",
+  },
 ];

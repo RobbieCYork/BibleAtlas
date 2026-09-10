@@ -152,7 +152,7 @@ export const pois: PointOfInterest[] = [
     description:
       "Bethsaida was a fishing village on the north shore of the Sea of Galilee named in the Gospels as the hometown of the apostles Peter, Andrew, and Philip (John 1:44). It is associated with the feeding of the 5,000 (Luke 9:10) and the healing of a blind man (Mark 8:22-26), yet Jesus also rebuked it, along with Chorazin and Capernaum, for unbelief despite witnessing his miracles.",
     archaeology: {
-      note: "The Bethsaida Excavations Project, led by Rami Arav since 1987, has excavated et-Tell and uncovered a monumental Iron Age city gate linked to the Aramean kingdom of Geshur, along with Roman-era fishing implements. Et-Tell's identification as biblical Bethsaida is genuinely contested, since the site sits roughly 1.5 km from the modern shoreline. Since 2016, a rival excavation at el-Araj, much closer to the ancient shore, has uncovered Roman-period remains leading a number of scholars to now favor it as the more likely site — the debate remains unresolved.",
+      note: "Two excavations about two kilometres apart each claim to be the Gospel town, and this is a live dispute rather than a settled one. R. Arav probed et-Tell in 1987 and the Bethsaida Excavations Consortium formed around the dig in 1990; it has uncovered a monumental Iron Age gate complex that Arav reads as the capital of the Aramean kingdom of Geshur, Hellenistic and Roman levels, and quantities of fishing gear. The standing objection is that et-Tell is not on the water — the project's own figure is about 2 km from the north-eastern coast, and other published figures differ — which Arav answers with geological work arguing the shoreline moved south. Since 2016 M. Aviam and R. S. Notley have excavated el-Araj, near the ancient shore, reporting a Roman bathhouse, a denarius of Nero of AD 65-66, and a Byzantine basilica they identify with the Church of the Apostles, with a mosaic inscription invoking Peter published in 2023. Arav's own position is a two-period one and is often misreported: he holds that first-century Bethsaida was at et-Tell and that Byzantine Bethsaida was at el-Araj. Both teams are still in the field and neither has conceded. The app's article The Search for Bethsaida sets out both cases and the published exchanges between them.",
       photos: [
         {
           url: "https://upload.wikimedia.org/wikipedia/commons/5/50/Ruins_of_Bethsaida_village_in_summer_2011_%286%29.JPG",
@@ -169,7 +169,10 @@ export const pois: PointOfInterest[] = [
     modernMapUrl: mapsUrl(32.9103, 35.6306),
     sources: [
       { label: "Bethsaida - Wikipedia", url: "https://en.wikipedia.org/wiki/Bethsaida" },
-      { label: "Bethsaida Excavations Project, University of Nebraska Omaha", url: "https://www.unomaha.edu/international-studies-and-programs/bethsaida/" },
+      { label: "The Bethsaida Excavations Project (et-Tell), under the Nelson Glueck School of Biblical Archaeology", url: "https://ngsba.org/excavations/bethsaida/" },
+      { label: "The el-Araj Excavation Project, directed by M. Aviam and R. S. Notley", url: "https://www.bethsaida-julias.com/home" },
+      { label: "R. S. Notley, \"Et-Tell Is Not Bethsaida\", Near Eastern Archaeology 70:4 (2007), 220-230", url: "https://doi.org/10.1086/nea20361336" },
+      { label: "R. Arav, \"Bethsaida - A Response to Steven Notley\", Near Eastern Archaeology 74:2 (2011), 92-100 - the opening piece of a four-part exchange", url: "https://doi.org/10.5615/neareastarch.74.2.0092" },
       { label: "John 1, Bible Gateway NIV", url: "https://www.biblegateway.com/passage/?search=John%201&version=NIV" },
       { label: "Mark 8, Bible Gateway NIV", url: "https://www.biblegateway.com/passage/?search=Mark%208&version=NIV" },
     ],
@@ -621,13 +624,17 @@ export const pois: PointOfInterest[] = [
     id: "golgotha",
     name: "Golgotha",
     pronunciation: "GOL-guh-thuh",
+    // Linker-only. The church's own name belongs to this record — it is the building over this
+    // place — rather than to the topic that argues the identification. Not shown as "Also called",
+    // because Golgotha is the hill and the church is what was later built on it.
+    matchNames: ["Church of the Holy Sepulchre"],
     tag: "Religious Site",
     modernName: "Church of the Holy Sepulchre, Old City, Jerusalem",
     coordinates: [35.2295, 31.7784],
     description:
       "Golgotha (\"place of the skull\") is where the Gospels record Jesus was crucified, and the adjacent rock-cut tomb is where he was buried (Matthew 27:33-60; Mark 15:22-46; Luke 23:33-53; John 19:17-42). The Church of the Holy Sepulchre, built by Constantine in the 4th century, has been the traditional location since antiquity, though the Garden Tomb north of the Old City is promoted by some traditions as an alternative candidate.",
     archaeology: {
-      note: "Excavations established that the site lay outside the Second Temple-period city walls at the time of the crucifixion — consistent with Gospel accounts — and had been a quarry later used as a cemetery, matching the description of a garden tomb setting. Ongoing conservation excavations since 2016, including a 2022 discovery of ancient garden soil layers beneath the church floor, have added physical support for elements of the traditional account, though the exact identification of the tomb as Jesus's specific burial site remains a matter of religious tradition rather than verifiable proof.",
+      note: "The site lay outside the city in the first century, and it is worth being exact about how that is known, because the popular version is wrong. A great wall under the nearby Church of the Redeemer was long taken for the \"second wall\" that would have run between here and the city, and a re-study by the German Protestant Institute of Archaeology disproved that identification — its lowest courses are Hadrianic, of AD 135. The extramural case rests instead on land use: the same sounding reached a quarry over which earth had been deposited around the turn of the millennium and which was used as a garden. Nobody quarried stone, planted gardens or buried the dead inside a walled city. V. Corbo's excavations under the church, published in 1981-1982, found that disused quarry reused as a rock-cut cemetery of the Second Temple period. Since 2022 an excavation directed by F. R. Stasolla of Sapienza University has been working beneath the church floor and has reported cultivated ground with olive and vine traces above the quarry; that was widely headlined in 2025 as confirming the garden of John 19:41, and Stasolla's own statement is more careful — the layer belongs to the pre-Christian era on stratigraphy, radiocarbon testing has not yet been carried out, and she keeps faith and history as distinct fields. Separately, mortar between the burial bed and the marble slab laid over it was dated by luminescence during the 2016-2017 restoration of the Aedicule to about AD 345, which dates the Constantinian construction and not the cutting of the tomb. The app's article The Search for Jesus' Tomb sets out the whole comparison with the Garden Tomb.",
       photos: [
         {
           url: "https://upload.wikimedia.org/wikipedia/commons/3/3d/Aedicule%2C_2019_%2802%29.jpg",
@@ -645,6 +652,11 @@ export const pois: PointOfInterest[] = [
     sources: [
       { label: "John 19:17-42 (crucifixion and burial) - Bible Gateway", url: "https://www.biblegateway.com/passage/?search=John%2019%3A17-42" },
       { label: "Church of the Holy Sepulchre - Wikipedia", url: "https://en.wikipedia.org/wiki/Church_of_the_Holy_Sepulchre" },
+      { label: "The German Protestant Institute of Archaeology on its own Church of the Redeemer excavations - where the \"second wall\" identification was disproved", url: "https://www.church-of-the-redeemer-jerusalem.info/exhibition/archeology" },
+      { label: "J. E. Taylor, \"Golgotha: A Reconsideration of the Evidence\", New Testament Studies 44:2 (1998), 180-203", url: "https://doi.org/10.1017/S0028688500016465" },
+      { label: "A. Moropoulou et al., OSL mortar dating of the Holy Aedicule, Journal of Archaeological Science: Reports 19 (2018), 80-91", url: "https://doi.org/10.1016/j.jasrep.2018.02.024" },
+      { label: "F. R. Stasolla, preliminary report on the Holy Sepulchre excavations, Liber Annuus 75 (2025), 619-716", url: "https://doi.org/10.1484/J.LA.5.155239" },
+      { label: "S. Gibson and J. E. Taylor, Beneath the Church of the Holy Sepulchre (PEF, 1994) - the full volume, free from the Palestine Exploration Fund", url: "https://www.pef.org.uk/wp-content/uploads/2021/06/Gibson-Taylor-Beneath-the-Church-of-the-Holy-Sepulchre.pdf" },
       { label: "Times of Israel - Traces of ancient garden found under Church of Holy Sepulchre (Sapienza University excavation)", url: "https://www.timesofisrael.com/echoing-gospel-account-traces-of-ancient-garden-found-under-church-of-holy-sepulchre/" },
       { label: "Garden Tomb - Wikipedia", url: "https://en.wikipedia.org/wiki/Garden_Tomb" },
     ],
@@ -1128,7 +1140,7 @@ export const pois: PointOfInterest[] = [
     description:
       "The Garden Tomb is a rock-cut tomb near a skull-shaped rocky outcropping outside Jerusalem's Damascus Gate, promoted since the 19th century as an alternative site to the Church of the Holy Sepulchre for Jesus's burial and resurrection — especially popular with Protestant and evangelical pilgrims.",
     archaeology: {
-      note: "Archaeological study concluded the tomb's architectural style is characteristic of the Iron Age, roughly the 8th-7th centuries BC — several centuries too early to be a \"new tomb\" from Jesus's time as described in the Gospels. By contrast, the Church of the Holy Sepulchre has a continuous veneration tradition dating to the 4th century and sits on a site archaeologists agree was outside the city walls in Jesus's time, which is why most archaeologists and mainstream churches favor it instead. The Garden Tomb's identification remains a minority, largely devotional tradition.",
+      note: "G. Barkay published the study that settled the date in Biblical Archaeology Review in 1986, and his conclusion is worth having whole: \"I have concluded that the cave of the Garden Tomb was originally hewn in the Iron Age II, sometime in the eighth or seventh century B.C. It was reused for burial purposes in the Byzantine period (fifth to seventh centuries A.D.), so it could not have been the tomb of Jesus. All lines of reasoning support this conclusion.\" Luke 23:53 and John 19:41 require a tomb in which no one had ever been laid, and a tomb cut seven centuries earlier and used since is not a new tomb. Two features shown to visitors belong to later periods: the groove beside the entrance, presented as the channel for a rolling stone, is a Crusader-period cutting from when the place was used as a stable, and the burial benches were recut into troughs during the Byzantine reuse. The identification itself is modern — O. Thenius noted the skull-shaped cliff in 1842, C. G. Gordon popularised the site in 1883, and the Garden Tomb Association was founded in 1894; its Victorian promoters were devout readers of the landscape rather than archaeologists. The Association does not claim the tomb is authentic and does not disclaim it either; what it says is that \"whether this is the same tomb that Jesus was laid in, is not important. We believe what is important is not the place, but the Person of Jesus Christ.\" This app has no quarrel with that. The site is a real place of prayer for a great many people, and none of the dating touches that. See The Search for Jesus' Tomb for the full comparison.",
       photos: [
         {
           url: "https://upload.wikimedia.org/wikipedia/commons/5/54/Entrance_to_the_Garden_Tomb_1_%284015106152%29.jpg",
@@ -1139,9 +1151,11 @@ export const pois: PointOfInterest[] = [
     },
     modernMapUrl: mapsUrl(31.7839, 35.23),
     sources: [
-      { label: "BAS Library - The Garden Tomb: Was Jesus Buried Here?", url: "https://library.biblicalarchaeology.org/article/the-garden-tomb-was-jesus-buried-here/" },
+      { label: "G. Barkay, \"The Garden Tomb - Was Jesus Buried Here?\", Biblical Archaeology Review 12:2 (March/April 1986)", url: "https://library.biblicalarchaeology.org/article/the-garden-tomb-was-jesus-buried-here/" },
+      { label: "The Garden Tomb Association's own statement of its position", url: "https://gardentomb.com/about-us/" },
+      { label: "S. J. Frantzman and R. Kark, \"General Gordon, the Palestine Exploration Fund and the Origins of 'Gordon's Calvary'\", Palestine Exploration Quarterly 140:2 (2008), 119-136", url: "https://doi.org/10.1179/003103208X312872" },
+      { label: "J. R. Chadwick, \"Revisiting Golgotha and the Garden Tomb\" (2003) - the author of the only modern published defence retracting it", url: "https://rsc.byu.edu/vol-4-no-1-2003/revisiting-golgotha-garden-tomb" },
       { label: "Wikipedia - Church of the Holy Sepulchre", url: "https://en.wikipedia.org/wiki/Church_of_the_Holy_Sepulchre" },
-      { label: "RSC BYU - Revisiting Golgotha and the Garden Tomb", url: "https://rsc.byu.edu/vol-4-no-1-2003/revisiting-golgotha-garden-tomb" },
     ],
     reflectionPrompt:
       "Whatever the exact spot, the tomb was empty — how would you live differently this week if you fully believed that?",
