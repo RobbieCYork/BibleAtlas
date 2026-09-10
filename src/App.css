@@ -11568,3 +11568,517 @@ img.sn-image,
   display: flex;
   justify-content: flex-end;
 }
+
+/* ============================================================================
+ * MODERATION — the report / hide / block control, its two sheets, the Safety &
+ * Contact screen, and the administrator's queue. See sql/028_moderation.sql and
+ * src/lib/moderationApi.ts.
+ *
+ * Everything here is built from the tokens the rest of the app already uses
+ * (--border, --surface-sunken, --accent, --danger, and every font size scaled
+ * by --tsz so the reader's text-size setting still works). No new colour is
+ * introduced: a safety control that shouts is a safety control people stop
+ * seeing, and the one place a stronger weight is earned is the Block button.
+ * ========================================================================== */
+
+.mod-menu {
+  position: relative;
+  display: inline-flex;
+  flex: 0 0 auto;
+}
+
+/* Quiet until hovered, and deliberately NOT the same weight as an owner's own
+ * Edit/Delete: this is an escape hatch, not an everyday action. Same treatment
+ * .friend-post-comment-remove already uses for the "×". */
+.mod-menu-trigger {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: none;
+  border: none;
+  color: var(--text-muted);
+  opacity: 0.55;
+  cursor: pointer;
+  padding: 2px 4px;
+  border-radius: 6px;
+  font-size: calc(12px * var(--tsz, 1));
+  line-height: 1;
+}
+
+.mod-menu-trigger:hover,
+.mod-menu-trigger:focus-visible {
+  opacity: 1;
+  color: var(--text-h);
+  background: var(--accent-bg);
+}
+
+/* A 44px tap target on a phone, without a 44px box on a desktop comment row. */
+@media (pointer: coarse) {
+  .mod-menu-trigger {
+    padding: 8px 10px;
+  }
+}
+
+.mod-menu-inline {
+  vertical-align: middle;
+  margin-left: 4px;
+}
+
+.mod-menu-header {
+  margin-left: auto;
+}
+
+.mod-menu-profile {
+  align-self: center;
+}
+
+.mod-menu-popover {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  z-index: 40;
+  min-width: 220px;
+  background: var(--panel-bg);
+  border: 1px solid var(--border-strong);
+  border-radius: 10px;
+  padding: 6px;
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.35);
+}
+
+.mod-menu-item {
+  display: block;
+  width: 100%;
+  text-align: left;
+  background: none;
+  border: none;
+  color: var(--text);
+  border-radius: 7px;
+  padding: 9px 10px;
+  font-size: calc(13px * var(--tsz, 1));
+  cursor: pointer;
+}
+
+.mod-menu-item:hover {
+  background: var(--accent-bg);
+  color: var(--text-h);
+}
+
+.mod-menu-item-strong {
+  color: var(--danger);
+}
+
+/* The two sheets are FIXED to the viewport rather than absolutely placed inside
+ * the feed. A report form opened from a comment three-quarters of the way down
+ * a scrolled list would otherwise render off-screen, which is a bug this app
+ * has already had once with a popover. */
+.mod-dialog-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 3000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+  padding-bottom: max(16px, env(safe-area-inset-bottom));
+  padding-top: max(16px, env(safe-area-inset-top));
+  background: rgba(0, 0, 0, 0.55);
+}
+
+.mod-dialog {
+  width: min(520px, 100%);
+  max-height: 100%;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  background: var(--panel-bg);
+  border: 1px solid var(--border-strong);
+  border-radius: 14px;
+  padding: 18px;
+  color: var(--text);
+}
+
+.mod-dialog-title {
+  font-family: var(--display);
+  color: var(--text-h);
+  font-size: calc(20px * var(--tsz, 1));
+  margin: 0 0 8px;
+}
+
+.mod-dialog-text {
+  font-size: calc(13.5px * var(--tsz, 1));
+  color: var(--text-muted);
+  margin: 0 0 12px;
+  line-height: 1.5;
+}
+
+.mod-dialog-error {
+  font-size: calc(13px * var(--tsz, 1));
+  color: var(--danger);
+  margin: 10px 0 0;
+}
+
+.mod-reason-list {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-bottom: 14px;
+}
+
+.mod-reason {
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+  border: 1px solid var(--border);
+  background: var(--surface-sunken);
+  border-radius: 9px;
+  padding: 10px;
+  cursor: pointer;
+}
+
+.mod-reason-on {
+  border-color: var(--accent);
+  background: var(--accent-bg);
+}
+
+.mod-reason input {
+  margin-top: 3px;
+  flex: 0 0 auto;
+}
+
+.mod-reason-label {
+  display: block;
+  color: var(--text-h);
+  font-size: calc(13.5px * var(--tsz, 1));
+  font-weight: 600;
+}
+
+.mod-reason-desc {
+  display: block;
+  color: var(--text-muted);
+  font-size: calc(12px * var(--tsz, 1));
+  margin-top: 2px;
+  line-height: 1.45;
+}
+
+.mod-field-label {
+  display: block;
+  font-size: calc(12px * var(--tsz, 1));
+  color: var(--text-muted);
+  margin: 10px 0 4px;
+  letter-spacing: var(--tracking-label);
+  text-transform: uppercase;
+}
+
+.mod-textarea {
+  width: 100%;
+  box-sizing: border-box;
+  background: var(--surface-sunken);
+  border: 1px solid var(--input-border);
+  border-radius: 8px;
+  color: var(--text);
+  padding: 8px 10px;
+  font: inherit;
+  font-size: calc(13.5px * var(--tsz, 1));
+  resize: vertical;
+}
+
+/* "Nothing is captured that the reporter is not shown" — the same rule
+ * lib/reportContext.ts states for issue reports, applied to the excerpt that
+ * travels with an abuse report. Collapsed by default, never hidden. */
+.mod-excerpt {
+  margin: 12px 0;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 8px 10px;
+  background: var(--surface-sunken);
+  font-size: calc(12.5px * var(--tsz, 1));
+}
+
+.mod-excerpt summary {
+  cursor: pointer;
+  color: var(--text-muted);
+}
+
+.mod-excerpt-body {
+  margin: 8px 0 6px;
+  color: var(--text);
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+.mod-excerpt-note {
+  margin: 0;
+  color: var(--text-muted);
+}
+
+.mod-check {
+  display: flex;
+  gap: 8px;
+  align-items: flex-start;
+  font-size: calc(13px * var(--tsz, 1));
+  color: var(--text);
+  margin: 8px 0 0;
+  cursor: pointer;
+}
+
+.mod-consequences {
+  margin: 0 0 14px;
+  padding-left: 18px;
+  font-size: calc(13px * var(--tsz, 1));
+  color: var(--text-muted);
+  line-height: 1.55;
+}
+
+.mod-consequences li {
+  margin-bottom: 5px;
+}
+
+.mod-consequences strong {
+  color: var(--text-h);
+}
+
+.mod-dialog-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  justify-content: flex-end;
+  margin-top: 16px;
+}
+
+.mod-dialog-primary,
+.mod-dialog-secondary,
+.mod-dialog-danger {
+  border-radius: 8px;
+  padding: 9px 14px;
+  font-size: calc(13.5px * var(--tsz, 1));
+  font-weight: 600;
+  cursor: pointer;
+  border: 1px solid var(--border-strong);
+}
+
+.mod-dialog-primary {
+  background: var(--accent);
+  color: var(--accent-contrast);
+  border-color: var(--accent);
+}
+
+.mod-dialog-secondary {
+  background: var(--surface-sunken);
+  color: var(--text);
+}
+
+.mod-dialog-danger {
+  background: var(--danger);
+  border-color: var(--danger);
+  color: #fff;
+}
+
+.mod-dialog-primary:disabled,
+.mod-dialog-secondary:disabled,
+.mod-dialog-danger:disabled {
+  opacity: 0.5;
+  cursor: default;
+}
+
+/* --- Safety & Contact ----------------------------------------------------- */
+
+.safety-section {
+  margin-bottom: 22px;
+}
+
+.safety-heading {
+  font-family: var(--display);
+  color: var(--text-h);
+  font-size: calc(17px * var(--tsz, 1));
+  margin: 0 0 6px;
+}
+
+.safety-text {
+  font-size: calc(13.5px * var(--tsz, 1));
+  color: var(--text);
+  line-height: 1.6;
+  margin: 0 0 10px;
+}
+
+.safety-text-muted {
+  color: var(--text-muted);
+  font-size: calc(12.5px * var(--tsz, 1));
+}
+
+.safety-contact {
+  font-size: calc(16px * var(--tsz, 1));
+  margin: 0 0 6px;
+}
+
+.safety-contact a {
+  color: var(--accent);
+  font-weight: 600;
+}
+
+.safety-block-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.safety-block-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  border: 1px solid var(--border);
+  background: var(--surface-sunken);
+  border-radius: 9px;
+  padding: 8px 10px;
+}
+
+.safety-block-name {
+  flex: 1 1 auto;
+  min-width: 0;
+  color: var(--text-h);
+  font-size: calc(13.5px * var(--tsz, 1));
+}
+
+.safety-block-date {
+  display: block;
+  color: var(--text-muted);
+  font-size: calc(12px * var(--tsz, 1));
+}
+
+.safety-unblock {
+  flex: 0 0 auto;
+  border: 1px solid var(--border-strong);
+  background: var(--panel-bg);
+  color: var(--text);
+  border-radius: 8px;
+  padding: 7px 12px;
+  font-size: calc(12.5px * var(--tsz, 1));
+  cursor: pointer;
+}
+
+.safety-unblock:hover {
+  background: var(--accent-bg);
+}
+
+/* --- The author row a feed post now carries -------------------------------- */
+
+.friend-post-author-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.friend-post-author-row .friend-post-author {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+.friend-profile-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* --- The administrator's queue -------------------------------------------- */
+
+.admin-note-warn {
+  border: 1px solid var(--danger);
+  border-radius: 9px;
+  padding: 10px 12px;
+}
+
+.mod-queue-excerpt {
+  margin: 6px 0;
+  padding: 8px 10px;
+  border-left: 3px solid var(--border-strong);
+  background: var(--surface-sunken);
+  color: var(--text);
+  font-size: calc(13px * var(--tsz, 1));
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+.mod-queue-details {
+  margin: 6px 0;
+  color: var(--text-muted);
+  font-size: calc(12.5px * var(--tsz, 1));
+}
+
+.mod-flag-count {
+  color: var(--danger);
+  font-weight: 600;
+}
+
+.mod-flag-gone {
+  color: var(--text-muted);
+}
+
+.mod-queue-toggle {
+  margin-top: 8px;
+  border: 1px solid var(--border-strong);
+  background: var(--surface-sunken);
+  color: var(--text);
+  border-radius: 8px;
+  padding: 7px 12px;
+  font-size: calc(12.5px * var(--tsz, 1));
+  cursor: pointer;
+}
+
+.mod-queue-form {
+  margin-top: 10px;
+  border-top: 1px solid var(--border);
+  padding-top: 10px;
+}
+
+.mod-queue-form select {
+  width: 100%;
+  box-sizing: border-box;
+  background: var(--surface-sunken);
+  border: 1px solid var(--input-border);
+  border-radius: 8px;
+  color: var(--text);
+  padding: 8px 10px;
+  font: inherit;
+  font-size: calc(13px * var(--tsz, 1));
+}
+
+.mod-queue-form .mod-dialog-primary {
+  margin-top: 12px;
+}
+
+.mod-queue-history {
+  margin-top: 14px;
+  font-size: calc(12.5px * var(--tsz, 1));
+  color: var(--text-muted);
+}
+
+.mod-queue-history h5 {
+  margin: 0 0 6px;
+  color: var(--text-h);
+  font-size: calc(13px * var(--tsz, 1));
+}
+
+.mod-queue-history ul {
+  margin: 0;
+  padding-left: 18px;
+  line-height: 1.5;
+}
+
+/* --- Published contact information on the sign-in card -------------------- */
+
+.auth-gate-contact {
+  margin: 10px 0 0;
+  font-size: calc(12.5px * var(--tsz, 1));
+  color: var(--text-muted);
+  text-align: center;
+}
+
+.auth-gate-contact a {
+  color: var(--text-muted);
+  text-decoration: underline;
+}
+
+.auth-gate-contact a:hover {
+  color: var(--accent);
+}

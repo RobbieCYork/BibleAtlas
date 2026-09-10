@@ -12,6 +12,8 @@ import {
   type FriendRequest,
 } from "../lib/supabase";
 import InlineTextEditor from "./InlineTextEditor";
+import ModerationMenu from "./ModerationMenu";
+import { useHiddenContent } from "../lib/moderationApi";
 import { getDailyVerse, formatDailyReference, getLocalDayKey } from "../data/dailyVerse";
 
 interface NewsfeedProps {
@@ -47,6 +49,16 @@ function refLabel(note: Note): string {
  * already dismissed for today — followed by every public post from this account's accepted friends,
  * newest first — the friends-scoped counterpart to PostsFeed's single-author "My Posts" list. */
 export default function Newsfeed({ userId, onGoToVerse }: NewsfeedProps) {
+  /* WHAT THIS DOES AND — MORE IMPORTANTLY — WHAT IT DOES NOT.
+   *
+   * `isHidden` is the reader's own "hide this post" list, filtered here in the render because
+   * sql/028 deliberately did not spend an RLS policy on a preference the reader chose and can undo.
+   *
+   * A BLOCKED account's posts are NOT filtered here, and adding a second filter for them would be
+   * actively harmful: it would suggest this line is what keeps someone safe. It isn't. Restrictive
+   * policies remove them from the response before this component sees it, so `items` never contains
+   * one — to the app, to the console, and to curl with the anon key alike. */
+  const { isHidden, hide } = useHiddenContent(userId);
   const [dailyVerse] = useState(() => getDailyVerse());
   const dailyVerseReference = formatDailyReference(dailyVerse);
   const [dailyVerseText, setDailyVerseText] = useState<string | null>(null);
@@ -473,10 +485,26 @@ export default function Newsfeed({ userId, onGoToVerse }: NewsfeedProps) {
         <div className="friend-posts">
           {items.map((item) => {
             const taggedProfiles = item.kind === "post" ? item.post.tagged_user_ids.map((id) => profiles[id]).filter(Boolean) : [];
-            const isMine = (item.kind === "note" ? item.note.user_id : item.post.user_id) === userId;
+            const authorId = item.kind === "note" ? item.note.user_id : item.post.user_id;
+            const isMine = authorId === userId;
+            if (isHidden(item.kind, item.id)) return null;
+            const bodyText = item.kind === "note" ? item.note.note_text : item.post.body;
             return (
               <div key={item.id} className="friend-post">
-                <p className="friend-post-author">{item.author ? displayFor(item.author) : "Someone"}</p>
+                <div className="friend-post-author-row">
+                  <p className="friend-post-author">{item.author ? displayFor(item.author) : "Someone"}</p>
+                  <ModerationMenu
+                    viewerId={userId}
+                    targetKind={item.kind}
+                    targetId={item.id}
+                    authorId={authorId}
+                    authorName={item.author ? displayFor(item.author) : null}
+                    excerpt={bodyText}
+                    context="Newsfeed"
+                    onHide={() => void hide(item.kind, item.id)}
+                    onBlocked={fetchFeed}
+                  />
+                </div>
                 <div className="friend-post-meta">
                   {item.kind === "note" ? <p className="friend-post-ref">{refLabel(item.note)}</p> : <span />}
                   <span className="friend-post-date">{formatPostDate(item.createdAt)}</span>
@@ -528,23 +556,39 @@ export default function Newsfeed({ userId, onGoToVerse }: NewsfeedProps) {
                 </button>
                 {openCommentIds.has(item.id) && item.comments.length > 0 && (
                   <div className="friend-post-comments">
-                    {item.comments.map((c) => (
-                      <p key={c.id} className="friend-post-comment">
-                        <strong>{profiles[c.author_id] ? displayFor(profiles[c.author_id]) : "Someone"}:</strong>{" "}
-                        {c.body}
-                        {canRemoveComment(item, c) && (
-                          <button
-                            type="button"
-                            className="friend-post-comment-remove"
-                            title="Remove this comment"
-                            aria-label="Remove this comment"
-                            onClick={() => handleRemoveComment(item, c.id)}
-                          >
-                            ×
-                          </button>
-                        )}
-                      </p>
-                    ))}
+                    {item.comments.map((c) => {
+                      const commentKind = item.kind === "note" ? "note_comment" : "post_comment";
+                      if (isHidden(commentKind, c.id)) return null;
+                      return (
+                        <p key={c.id} className="friend-post-comment">
+                          <strong>{profiles[c.author_id] ? displayFor(profiles[c.author_id]) : "Someone"}:</strong>{" "}
+                          {c.body}
+                          {canRemoveComment(item, c) && (
+                            <button
+                              type="button"
+                              className="friend-post-comment-remove"
+                              title="Remove this comment"
+                              aria-label="Remove this comment"
+                              onClick={() => handleRemoveComment(item, c.id)}
+                            >
+                              ×
+                            </button>
+                          )}
+                          <ModerationMenu
+                            viewerId={userId}
+                            targetKind={commentKind}
+                            targetId={c.id}
+                            authorId={c.author_id}
+                            authorName={profiles[c.author_id] ? displayFor(profiles[c.author_id]) : null}
+                            excerpt={c.body}
+                            context="Newsfeed comment"
+                            onHide={() => void hide(commentKind, c.id)}
+                            onBlocked={fetchFeed}
+                            className="mod-menu-inline"
+                          />
+                        </p>
+                      );
+                    })}
                   </div>
                 )}
                 <form

@@ -13,6 +13,8 @@ import {
   type FriendRequest,
 } from "../lib/supabase";
 import InlineTextEditor from "./InlineTextEditor";
+import ModerationMenu from "./ModerationMenu";
+import { useHiddenContent } from "../lib/moderationApi";
 
 interface PostsFeedProps {
   /** Whose public notes/posts to show. */
@@ -43,6 +45,9 @@ function refLabel(note: Note): string {
  * "My Posts" section of the signed-in account's own profile (which also gets a composer to start a
  * new post). */
 export default function PostsFeed({ userId, viewerId, isOwn }: PostsFeedProps) {
+  // The reader's own "hide this" list. Blocking is NOT filtered here — see the long note in
+  // Newsfeed.tsx for why a second filter would be worse than none.
+  const { isHidden, hide } = useHiddenContent(viewerId);
   const [items, setItems] = useState<FeedItem[] | null>(null);
   const [profiles, setProfiles] = useState<Record<string, Profile>>({});
   const [commentDrafts, setCommentDrafts] = useState<Record<string, string>>({});
@@ -282,6 +287,8 @@ export default function PostsFeed({ userId, viewerId, isOwn }: PostsFeedProps) {
         <div className="friend-posts">
           {items.map((item) => {
             const taggedProfiles = item.kind === "post" ? item.post.tagged_user_ids.map((id) => profiles[id]).filter(Boolean) : [];
+            if (isHidden(item.kind, item.id)) return null;
+            const bodyText = item.kind === "note" ? item.note.note_text : item.post.body;
             return (
               <div key={item.id} className="friend-post">
                 <div className="friend-post-meta">
@@ -291,6 +298,23 @@ export default function PostsFeed({ userId, viewerId, isOwn }: PostsFeedProps) {
                     <span />
                   )}
                   <span className="friend-post-date">{formatPostDate(item.createdAt)}</span>
+                  {/* This feed is ONE author's, and `userId` is that author — so the control is
+                      offered whenever a signed-in reader is looking at someone else's profile.
+                      ModerationMenu returns null on its own for your own content, so the "My Posts"
+                      rendering of this same component needs no branch here. */}
+                  {viewerId && (
+                    <ModerationMenu
+                      viewerId={viewerId}
+                      targetKind={item.kind}
+                      targetId={item.id}
+                      authorId={userId}
+                      authorName={profiles[userId] ? displayFor(profiles[userId]) : null}
+                      excerpt={bodyText}
+                      context="Profile posts"
+                      onHide={() => void hide(item.kind, item.id)}
+                      onBlocked={fetchFeed}
+                    />
+                  )}
                 </div>
                 {item.kind === "note" && item.note.quoted_text && <p className="verse-popup-quoted">"{item.note.quoted_text}"</p>}
                 {editingId === item.id ? (
@@ -374,22 +398,40 @@ export default function PostsFeed({ userId, viewerId, isOwn }: PostsFeedProps) {
                 </button>
                 {openCommentIds.has(item.id) && item.comments.length > 0 && (
                   <div className="friend-post-comments">
-                    {item.comments.map((c) => (
-                      <p key={c.id} className="friend-post-comment">
-                        <strong>{profiles[c.author_id] ? displayFor(profiles[c.author_id]) : "Someone"}:</strong> {c.body}
-                        {canRemoveComment(c) && (
-                          <button
-                            type="button"
-                            className="friend-post-comment-remove"
-                            title="Remove this comment"
-                            aria-label="Remove this comment"
-                            onClick={() => handleRemoveComment(item, c.id)}
-                          >
-                            ×
-                          </button>
-                        )}
-                      </p>
-                    ))}
+                    {item.comments.map((c) => {
+                      const commentKind = item.kind === "note" ? "note_comment" : "post_comment";
+                      if (isHidden(commentKind, c.id)) return null;
+                      return (
+                        <p key={c.id} className="friend-post-comment">
+                          <strong>{profiles[c.author_id] ? displayFor(profiles[c.author_id]) : "Someone"}:</strong> {c.body}
+                          {canRemoveComment(c) && (
+                            <button
+                              type="button"
+                              className="friend-post-comment-remove"
+                              title="Remove this comment"
+                              aria-label="Remove this comment"
+                              onClick={() => handleRemoveComment(item, c.id)}
+                            >
+                              ×
+                            </button>
+                          )}
+                          {viewerId && (
+                            <ModerationMenu
+                              viewerId={viewerId}
+                              targetKind={commentKind}
+                              targetId={c.id}
+                              authorId={c.author_id}
+                              authorName={profiles[c.author_id] ? displayFor(profiles[c.author_id]) : null}
+                              excerpt={c.body}
+                              context="Profile posts comment"
+                              onHide={() => void hide(commentKind, c.id)}
+                              onBlocked={fetchFeed}
+                              className="mod-menu-inline"
+                            />
+                          )}
+                        </p>
+                      );
+                    })}
                   </div>
                 )}
                 {viewerId && (

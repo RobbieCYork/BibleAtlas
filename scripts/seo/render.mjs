@@ -163,6 +163,19 @@ export const PUBLISHER = {
  * `canonical` is always the absolute, no-trailing-slash form, so the one URL a search engine keeps
  * is settled here rather than by whatever the edge happens to serve.
  */
+/* The footer carries two standing commitments, both of which are load-bearing rather than
+ * decorative and neither of which is a place to trim words:
+ *
+ *  1. THE EDITORIAL POSITION. Every public page states where it stands, because the articles are
+ *     written from it. AGENTS.md: "If the position moves, that string moves with it."
+ *
+ *  2. THE CONTACT ADDRESS. App Store Review Guideline 1.2 requires published contact information
+ *     for any app carrying user-generated content, and "published" cannot mean "visible once you
+ *     have an account". The same address appears on the sign-in card (AuthGate.tsx) and in the
+ *     app's Safety & Contact screen (SafetySheet.tsx), where it comes from MODERATION_CONTACT_EMAIL
+ *     in src/lib/moderationApi.ts. This generator reads src/data/*.ts and nothing else — by design,
+ *     see AGENTS.md — so it cannot import that constant, and this is the one hand-kept copy. If the
+ *     address ever changes, it changes in both places. */
 export function page({ title, description, canonical, trail, jsonLd = [], body, wide = false, current, ogType = "article" }) {
   const ogImage = `${ORIGIN}/og-default.png`;
   const graph = [breadcrumbLd(trail), ...jsonLd];
@@ -204,7 +217,7 @@ ${FONTS}
 ${crumbsHtml(trail)}
 ${body}
 <div class="cta"><p>Capstone Bible is a free interactive study app — a map of every place in this library, a zoomable timeline of biblical and church history, the Bible text with every name in it linked to its article, reading plans and personal notes.</p><a class="btn" href="/">Open Capstone Bible</a></div>
-<footer><p>Part of the <a href="/library">Capstone Bible library</a> — <a href="/places">places</a>, <a href="/sites">sites</a>, <a href="/people">people</a>, <a href="/topics">topics</a> and the <a href="/events">timeline</a>. Articles are written from a Protestant evangelical position and name other traditions' views where they differ.</p></footer>
+<footer><p>Part of the <a href="/library">Capstone Bible library</a> — <a href="/places">places</a>, <a href="/sites">sites</a>, <a href="/people">people</a>, <a href="/topics">topics</a> and the <a href="/events">timeline</a>. Articles are written from a Protestant evangelical position and name other traditions' views where they differ.</p><p>Contact: <a href="mailto:admin@capstonebible.com">admin@capstonebible.com</a></p></footer>
 </main>
 </body>
 </html>`;

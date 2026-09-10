@@ -471,6 +471,16 @@ export default function AuthGate() {
           history of the Bible, no account needed.
         </p>
 
+        {/* PUBLISHED CONTACT INFORMATION — App Store Review Guideline 1.2's fourth requirement, on
+          * the one screen every visitor sees whether or not they ever get an account. The in-app
+          * copy (account menu → Safety & Contact) is behind this gate by definition, and the
+          * pre-rendered library footer is a different site; a reviewer who stops here still has to
+          * be able to reach a person. Deliberately a plain mailto and a plain sentence: an address
+          * that needs a form to reach is not published. */}
+        <p className="auth-gate-contact">
+          Questions, or something to report? <a href="mailto:admin@capstonebible.com">admin@capstonebible.com</a>
+        </p>
+
         <SocialLinks className="auth-gate-social" />
       </div>
     </div>

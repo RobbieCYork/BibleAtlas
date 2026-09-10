@@ -13,6 +13,7 @@ import {
 } from "../lib/supabase";
 import ViewSwitcher, { type FriendsView } from "./ViewSwitcher";
 import BackButton from "./BackButton";
+import ModerationMenu from "./ModerationMenu";
 import Icon from "./Icon";
 
 type Screen = "list" | "create" | "detail";
@@ -514,6 +515,27 @@ export default function GroupsPanel({
                         >
                           <Icon name="pin" />
                         </button>
+                        {/* A group room is where Guideline 1.1.5's inflammatory religious
+                          * commentary is likeliest to turn up in a Bible study app, so the report
+                          * control belongs on every message here and not only on posts.
+                          *
+                          * Blocking from inside a room hides that member's messages from this
+                          * reader and leaves the room working for everyone else — sql/028 does not
+                          * restrict group_message INSERT, because one member's block must not
+                          * silence a person for the other ten. Nobody is ejected; we just reload. */}
+                        {userId && !own && (
+                          <ModerationMenu
+                            viewerId={userId}
+                            targetKind="group_message"
+                            targetId={m.id}
+                            authorId={m.sender_id}
+                            authorName={senderProfile ? displayFor(senderProfile) : null}
+                            excerpt={m.body}
+                            context={activeGroup ? `Group: ${activeGroup.name}` : "Group message"}
+                            onBlocked={() => fetchGroupDetail(activeGroupId as string, isAdmin)}
+                            className="mod-menu-inline"
+                          />
+                        )}
                       </div>
                     </div>
                   </div>

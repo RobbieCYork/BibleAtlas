@@ -6,6 +6,7 @@ import BackButton from "./BackButton";
 import { PROFILE_FIELD_CONFIGS, PROFILE_SECTION_LABELS, ensureUrlProtocol } from "./MyProfileView";
 import { ProfileLinksList } from "./ProfileLinks";
 import { fetchProfileLinks, type ProfileLink } from "../lib/profileLinks";
+import ModerationMenu from "./ModerationMenu";
 import Icon from "./Icon";
 
 interface FriendProfileViewProps {
@@ -114,9 +115,32 @@ export default function FriendProfileView({ friendId, viewerId, onBack, onMessag
             </div>
           )}
 
-          <button type="button" className="friend-profile-message-button" onClick={onMessage}>
-            <Icon name="messages" inline /> Message
-          </button>
+          <div className="friend-profile-actions">
+            <button type="button" className="friend-profile-message-button" onClick={onMessage}>
+              <Icon name="messages" inline /> Message
+            </button>
+            {/* Profile-level report and block, next to Message rather than buried in the feed
+              * below: this is the screen a reader is on when they decide they want nothing more to
+              * do with an account, and "report the person" is a different act from "report one of
+              * their posts".
+              *
+              * onBlocked leaves the screen, and it has to. sql/028's restrictive policy on
+              * `profiles` hides this row from the caller the moment the block lands, so staying
+              * here would re-render a profile page whose next fetch returns nothing. */}
+            {viewerId && (
+              <ModerationMenu
+                viewerId={viewerId}
+                targetKind="profile"
+                targetId={friendId}
+                authorId={friendId}
+                authorName={displayFor(profile)}
+                excerpt={[profile.bio, profile.favorite_verse, profile.church].filter(Boolean).join(" · ") || null}
+                context="Profile page"
+                onBlocked={onBack}
+                className="mod-menu-profile"
+              />
+            )}
+          </div>
 
           <div className="friend-profile-section">
             <h4>Reading Progress</h4>

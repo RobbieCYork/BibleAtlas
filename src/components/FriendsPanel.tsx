@@ -5,6 +5,7 @@ import GroupsPanel from "./GroupsPanel";
 import FriendProfileView from "./FriendProfileView";
 import ViewSwitcher, { type FriendsView } from "./ViewSwitcher";
 import BackButton from "./BackButton";
+import ModerationMenu from "./ModerationMenu";
 import Icon from "./Icon";
 
 interface ConversationSummary {
@@ -426,6 +427,22 @@ export default function FriendsPanel({
         <div className="bible-panel-header no-print">
           <BackButton onClick={() => setActiveFriendId(null)} ariaLabel="Back to friends list" />
           <h3>{friendProfile ? displayFor(friendProfile) : "Conversation"}</h3>
+          {/* Conversation-level, on the header, because "block this person" is about the person and
+            * not about one line they sent. Leaves the thread on success: sql/028's restrictive
+            * policy on `messages` hides every message in both directions the moment the block
+            * lands, so staying here would show an empty conversation with a "say hello!" prompt. */}
+          {userId && (
+            <ModerationMenu
+              viewerId={userId}
+              targetKind="profile"
+              targetId={activeFriendId}
+              authorId={activeFriendId}
+              authorName={friendProfile ? displayFor(friendProfile) : null}
+              context="Direct messages"
+              onBlocked={() => setActiveFriendId(null)}
+              className="mod-menu-header"
+            />
+          )}
         </div>
         {pinnedMessage && (
           <div className="pinned-message-banner">
@@ -451,6 +468,21 @@ export default function FriendsPanel({
                 >
                   <Icon name="pin" />
                 </button>
+                {/* Per-message, so a report carries THE message rather than "something in this
+                  * thread". No Hide: hiding one line out of a conversation leaves a hole in it. */}
+                {userId && m.sender_id !== userId && (
+                  <ModerationMenu
+                    viewerId={userId}
+                    targetKind="message"
+                    targetId={m.id}
+                    authorId={m.sender_id}
+                    authorName={friendProfile ? displayFor(friendProfile) : null}
+                    excerpt={m.body}
+                    context="Direct message"
+                    onBlocked={() => setActiveFriendId(null)}
+                    className="mod-menu-inline"
+                  />
+                )}
               </div>
             </div>
           ))}
