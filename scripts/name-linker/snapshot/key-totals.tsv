@@ -469,7 +469,7 @@ person	balaam	balaam	prose	8
 person	balaam	balaam	reader	63
 person	balaam son of beor	balaam	prose	3
 person	barnabas	barnabas	panel	29
-person	barnabas	barnabas	prose	49
+person	barnabas	barnabas	prose	47
 person	barnabas	barnabas	reader	29
 person	bartholomew	bartholomew-nathanael	panel	4
 person	bartholomew	bartholomew-nathanael	prose	1
@@ -670,7 +670,7 @@ person	jacob	jacob	prose	149
 person	jacob	jacob	reader	381
 person	james	james-brother-of-jesus	reader	10
 person	james	james-son-of-zebedee	panel	32
-person	james	james-son-of-zebedee	prose	57
+person	james	james-son-of-zebedee	prose	54
 person	james	james-son-of-zebedee	reader	22
 person	james the just	james-brother-of-jesus	prose	2
 person	james the son of alphaeus	james-son-of-alphaeus	panel	2
@@ -701,7 +701,7 @@ person	jehoshaphat	jehoshaphat	reader	84
 person	jeremiah	jeremiah	panel	150
 person	jeremiah	jeremiah	prose	61
 person	jeremiah	jeremiah	reader	134
-person	jerome	jerome	prose	14
+person	jerome	jerome	prose	15
 person	jerubbaal	gideon	panel	13
 person	jerubbaal	gideon	reader	13
 person	jesse	jesse	panel	47
@@ -730,7 +730,7 @@ person	john	john-the-apostle	panel	7
 person	john	john-the-apostle	prose	51
 person	john	john-the-apostle	reader	34
 person	john	john-the-baptist	panel	107
-person	john	john-the-baptist	prose	44
+person	john	john-the-baptist	prose	30
 person	john	john-the-baptist	reader	77
 person	john	john-wesley	prose	3
 person	john calvin	john-calvin	prose	1
@@ -807,7 +807,7 @@ person	levi	matthew-levi	panel	74
 person	levi	matthew-levi	prose	1
 person	levi	matthew-levi	reader	1
 person	luke	luke-evangelist	panel	3
-person	luke	luke-evangelist	prose	151
+person	luke	luke-evangelist	prose	150
 person	luke	luke-evangelist	reader	3
 person	lydia	lydia-of-thyatira	panel	2
 person	lydia	lydia-of-thyatira	prose	10
@@ -833,7 +833,7 @@ person	martin luther king	martin-luther-king-jr	prose	3
 person	mary	mary-magdalene	reader	3
 person	mary	mary-mother-of-james-the-less	reader	7
 person	mary	mary-mother-of-jesus	panel	42
-person	mary	mary-mother-of-jesus	prose	93
+person	mary	mary-mother-of-jesus	prose	94
 person	mary	mary-mother-of-jesus	reader	20
 person	mary	mary-of-bethany	reader	11
 person	mary magdalene	mary-magdalene	panel	11
@@ -900,7 +900,7 @@ person	perez	perez	panel	20
 person	perez	perez	prose	7
 person	perez	perez	reader	20
 person	peter	simon-peter	panel	136
-person	peter	simon-peter	prose	189
+person	peter	simon-peter	prose	184
 person	peter	simon-peter	reader	136
 person	philemon	philemon	panel	1
 person	philemon	philemon	prose	21
@@ -1409,6 +1409,7 @@ topic	codex claromontanus	codex-claromontanus	prose	1
 topic	codex ephraemi rescriptus	codex-ephraemi-rescriptus	prose	1
 topic	codex sinaiticus	codex-sinaiticus	prose	18
 topic	codex vaticanus	codex-vaticanus	prose	19
+topic	codex washingtonianus	codex-washingtonianus	prose	1
 topic	community rule	community-rule	prose	5
 topic	cyrus cylinder	cyrus-cylinder	prose	9
 topic	damascus document	damascus-document	prose	2
@@ -1431,7 +1432,7 @@ topic	edomites	edomites	panel	12
 topic	edomites	edomites	prose	1
 topic	edomites	edomites	reader	12
 topic	egyptian	egyptians	panel	30
-topic	egyptian	egyptians	prose	169
+topic	egyptian	egyptians	prose	170
 topic	egyptian	egyptians	reader	30
 topic	egyptian execration texts	execration-texts	prose	1
 topic	egyptians	egyptians	panel	93
@@ -1454,7 +1455,7 @@ topic	gehenna	gehenna	panel	12
 topic	gehenna	gehenna	reader	12
 topic	gemariah bulla	gemariah-bulla	prose	1
 topic	gentile	gentiles	panel	2
-topic	gentile	gentiles	prose	55
+topic	gentile	gentiles	prose	56
 topic	gentile	gentiles	reader	2
 topic	gentiles	gentiles	panel	83
 topic	gentiles	gentiles	prose	32
@@ -1463,7 +1464,7 @@ topic	gilgamesh epic	epic-of-gilgamesh	prose	1
 topic	great isaiah scroll	great-isaiah-scroll	prose	5
 topic	great psalms scroll	great-psalms-scroll	prose	1
 topic	greek	greeks	panel	15
-topic	greek	greeks	prose	303
+topic	greek	greeks	prose	304
 topic	greek	greeks	reader	15
 topic	greek old testament	septuagint	prose	3
 topic	greeks	greeks	panel	19
@@ -1495,10 +1496,10 @@ topic	jehoash inscription	jehoash-inscription	prose	1
 topic	jehoiachin's rations tablets	jehoiachin-ration-tablets	prose	1
 topic	jesus boat	galilee-boat	prose	3
 topic	jewish	jews	panel	7
-topic	jewish	jews	prose	369
+topic	jewish	jews	prose	370
 topic	jewish	jews	reader	7
 topic	jews	jews	panel	38
-topic	jews	jews	prose	62
+topic	jews	jews	prose	61
 topic	jews	jews	reader	38
 topic	khirbet el-maqatir	ai-candidate-sites	prose	3
 topic	khirbet en-nahas	khirbet-en-nahas	prose	2

@@ -1654,4 +1654,58 @@ export const CASES = [
     surface: "Daniel", owner: "papyrus-137-first-century-mark", expect: null, status: "guard",
     why: "Daniel B. Wallace of Dallas Theological Seminary, not the prophet. Found by " +
          "modern-names.mjs on the commit that added the article, which is what that sweep is for." },
+
+  // ── BOOK TITLES IN MANUSCRIPT ARTICLES, and the KEEPs beside them ────────────────────────────
+  //
+  // Added 2026-09-10 with the papyri-and-uncials batch, which found the fault by enumerating every
+  // link its own twelve articles rendered and reading them one by one. Fourteen bare "John"s were
+  // resolving to the BAPTIST from sentences about the Fourth Gospel — the four Gospels listed in
+  // an order, "the John gap", "P5 is John". Most were fixed by rewording; the three shapes below
+  // could not be, because two are lists whose whole content is names and one is inside a quotation.
+  { text: "The Gospels stand in what is called the Western order \u2014 Matthew, John, Luke, Mark \u2014 " +
+          "the same order Codex Bezae uses.",
+    surface: "John", owner: "codex-washingtonianus", expect: null, status: "guard",
+    why: "A Gospel in a list of Gospels, which is a book title. Without the pin this is John the " +
+         "Baptist, on an article about a codex of the four Gospels." },
+  { text: "gives the four Gospels in the order Matthew, John, Mark, Luke, then ten letters of Paul",
+    surface: "John", owner: "codex-claromontanus", expect: null, status: "guard",
+    why: "The Claromontanus canon list's own Gospel order. Pinned separately from the Western " +
+         "order above because the last two names are the other way round." },
+  { text: "H. A. Sanders concluded that W's parent \"was made up out of six separate parts\" — " +
+          "Matthew; John from 5:12 on; Luke 1-8:12; Luke from 8:13 on; Mark 1-5:30; Mark from 5:31 on",
+    surface: "John", owner: "codex-washingtonianus", expect: null, status: "guard",
+    why: "Inside a quotation the app does not own, so rewording was not available. Sanders is " +
+         "listing books, not men." },
+  { text: "the letter of James, the letters of John, the letter of Jude, the Epistle of Barnabas, " +
+          "the Apocalypse of John, Acts, the Shepherd of Hermas",
+    surface: "John", occurrence: 2, owner: "codex-claromontanus", expect: null, status: "guard",
+    why: "\"The Apocalypse of John\". APOCALYPSE_OF was on `peter` and not on `john` until this " +
+         "batch; `peter` has carried it since the Muratorian article." },
+  { text: "In 1969, for the visit of Pope Paul VI to Geneva, Martin Bodmer presented him with " +
+          "\"four papyrus sheets from a codex bearing the two Epistles of Peter\"",
+    surface: "Peter", owner: "papyrus-72", expect: null, status: "guard",
+    why: "A book title inside the Fondation Martin Bodmer's own sentence. 2 Peter's authorship is " +
+         "the most disputed in the New Testament, which is exactly why a title must not name an " +
+         "author here." },
+  { text: "with the dedication \"That the letters of Peter may return to Peter's house.\"",
+    surface: "Peter", occurrence: 2, owner: "papyrus-72", expect: "simon-peter", status: "guard",
+    why: "KEPT, and it is the whole point of the pair. The FIRST \"Peter\" in this dedication is a " +
+         "book title and is suppressed; the second is the Apostle, whose house Rome is. One " +
+         "sentence, two senses, and any rule wide enough to take the second is too wide." },
+  { text: "presented a NT comprised of an alternative list of 27 books which included 23 of the " +
+          "now-canonical NT texts... as well as Barnabas, the Shepherd, the Acts of Paul and the " +
+          "Revelation of Peter",
+    surface: "Barnabas", owner: "codex-claromontanus", expect: null, status: "guard",
+    why: "The Epistle of Barnabas, bare inside a list, in a sentence quoted verbatim from " +
+         "K. G. Rodenbiker. The article's own prose writes \"the Epistle of Barnabas\", which " +
+         "EPISTLE_OF already covers; a quotation cannot be reworded to suit the linker." },
+  { text: "the Acts of Paul and the Revelation of Peter\", and that this \"demonstrates a lasting " +
+          "interest in alternative scriptural texts",
+    surface: "Peter", owner: "codex-claromontanus", expect: null, status: "guard",
+    why: "The apocryphal Apocalypse of Peter, written \"Revelation of\" inside the same quotation." },
+  { text: "At Acts 12:10, when the angel leads Peter out of prison, Bezae adds that they went down " +
+          "seven steps.",
+    surface: "Peter", owner: "codex-bezae", expect: "simon-peter", status: "guard",
+    why: "KEPT. The Apostle, in the app's own narrative sentence about him. The three title rules " +
+         "added to `peter` with this batch must not reach an ordinary mention of the man." },
 ];

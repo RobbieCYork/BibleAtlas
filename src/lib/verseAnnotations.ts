@@ -1384,6 +1384,11 @@ const NAME_CONTEXT_RULES: Record<string, NameContextRule[]> = {
     { before: /\b[Gg]ospels? of\s+$/, to: null }, // "the Gospel of John"
     { before: /\b[Ll]etters? of\s+$/, to: null }, // "two letters of John"
     { before: /\b[Bb]ooks? of\s+$/, to: null }, // "the book of John"
+    // "the Apocalypse of John", in the Claromontanus canon list. The same ruling as the three lines
+    // above, on the one Johannine title they did not cover; `peter` has carried APOCALYPSE_OF since
+    // the Muratorian article. Safe to add as a pattern rather than a pin: no WEB verse contains
+    // "Apocalypse of", because Scripture never names its own books.
+    APOCALYPSE_OF,
     // Note how narrow the possessive is: "John's Gospel" is the book, but "John's baptism"
     // (Acts 19:3) and "John's disciples" (Matthew 9:14) are the Baptist himself and must keep
     // their links, so only a following "Gospel" counts.
@@ -1410,6 +1415,19 @@ const NAME_CONTEXT_RULES: Record<string, NameContextRule[]> = {
     // rulings recorded in automation/manager-inbox they all come out the same way — no link — but
     // for two different reasons, so they are grouped and labelled rather than lumped.
     //
+    // The four Gospels listed in an order — "Matthew, John, Luke, Mark" is the Western order that
+    // Codex Bezae and Codex Washingtonianus use, "Matthew, John, Mark, Luke" the one the
+    // Claromontanus canon list gives. Every name in such a list is a BOOK TITLE, and bare "John"
+    // was resolving to the Baptist on three manuscript articles until the papyri-and-uncials batch
+    // read its own rendered pages. Pinned by phrase, not by pattern, for the reason given in the
+    // block below: nothing in the neighbouring words says "this is a list of books" — the
+    // neighbours are other names — and a rule keyed on an adjacent Gospel name would reach into
+    // Scripture's own lists of the men.
+    { phrase: "Matthew, John, Luke, Mark", to: null },
+    { phrase: "Matthew, John, Mark, Luke", to: null },
+    // Inside a quotation this app does not own: H. A. Sanders's 1912 analysis of Codex
+    // Washingtonianus, which lists the codex's six textual blocks by book and chapter.
+    { phrase: "Matthew; John from 5:12 on", to: null },
     // They are pinned by exact phrase ON PURPOSE. A bare name inside an appositive list ("Matthew,
     // Luke, John, Acts") is precisely where a loose pattern does collateral damage, and an exact
     // phrase cannot reach a sentence nobody has read. The cost is that rewriting one of these
@@ -1536,6 +1554,15 @@ const NAME_CONTEXT_RULES: Record<string, NameContextRule[]> = {
     BOOK_NUMERAL, // "1 Peter", "2 Peter", "First Peter", "1-2 Peter", "2 Peter chapter 2"
     APOCALYPSE_OF, // "the Apocalypse of Peter is listed as accepted by some"
     ACTS_OF, // "the Acts of Peter", twice on appian-way-quo-vadis-rome
+    // The same three shapes `james` already carries, added with the papyri-and-uncials batch for
+    // the same reason: a title does not name an author, and these are titles. All four occurrences
+    // are inside quotations the app cannot reword — the Fondation Bodmer's dedication "That the
+    // letters of Peter may return to Peter's house" (where the SECOND "Peter" is the man, and
+    // rightly keeps its link) and Rodenbiker's list of the Claromontanus stichometry's contents.
+    // Safe as patterns: Scripture never names its own books, so no WEB verse contains any of them.
+    EPISTLE_OF, // "a codex bearing the two Epistles of Peter"
+    { before: /\b[Ll]etters? of\s+$/, to: null }, // "the letters of Peter"
+    { before: /\b[Rr]evelation of\s+$/, to: null }, // "the Revelation of Peter", the apocryphal book
     // NOT suppressed, and worth saying out loud: "Peter's vision that leads to the Gentile
     // Cornelius" and "Peter's vision and subsequent visit to Cornelius" are the man seeing a
     // sheet let down from heaven in Acts 10. POSSESSIVE_WORK is deliberately not given to Peter.
@@ -1678,6 +1705,11 @@ const NAME_CONTEXT_RULES: Record<string, NameContextRule[]> = {
   // suppressed here and 20 are deliberately left alone, each named in cases.mjs.
   barnabas: [
     EPISTLE_OF, // "the Epistle of Barnabas and part of the Shepherd of Hermas" — Codex Sinaiticus
+    // A bare title inside a list, in a sentence quoted verbatim from K. G. Rodenbiker's 2021 study
+    // on `codex-claromontanus`. The app's own prose around it writes "the Epistle of Barnabas",
+    // which EPISTLE_OF already covers; a quotation cannot be reworded to suit the linker, so this
+    // one is pinned on the phrase.
+    { phrase: "as well as Barnabas, the Shepherd, the Acts of Paul and the Revelation of Peter", to: null },
   ],
   daniel: [
     BOOK_OF, // "The book of Daniel is set almost entirely within Nebuchadnezzar's Babylon"
