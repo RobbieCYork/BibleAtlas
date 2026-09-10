@@ -5571,12 +5571,12 @@ topic.section|cherubim|6e23bea895	398	Ezekiel	ezekiel
 topic.section|cherubim|f99c2b95de	272	Moses	moses
 topic.section|chester-beatty-papyri|50bfa12c00	152	Paul	paul-of-tarsus
 topic.section|chester-beatty-papyri|50bfa12c00	57	Titus	titus
-topic.section|chester-beatty-papyri|5c74492df0	305	Paul	paul-of-tarsus
-topic.section|chester-beatty-papyri|5c74492df0	651	Isaiah	isaiah
-topic.section|chester-beatty-papyri|5c74492df0	659	Jeremiah	jeremiah
-topic.section|chester-beatty-papyri|5c74492df0	669	Ezekiel	ezekiel
-topic.section|chester-beatty-papyri|5c74492df0	678	Daniel	daniel
-topic.section|chester-beatty-papyri|5c74492df0	690	Esther	esther
+topic.section|chester-beatty-papyri|b67dfed009	296	Paul	paul-of-tarsus
+topic.section|chester-beatty-papyri|b67dfed009	810	Isaiah	isaiah
+topic.section|chester-beatty-papyri|b67dfed009	818	Jeremiah	jeremiah
+topic.section|chester-beatty-papyri|b67dfed009	828	Ezekiel	ezekiel
+topic.section|chester-beatty-papyri|b67dfed009	837	Daniel	daniel
+topic.section|chester-beatty-papyri|b67dfed009	849	Esther	esther
 topic.section|chester-beatty-papyri|c53f378519	91	Paul	paul-of-tarsus
 topic.section|chief-priests|035b63b523	128	Judas	judas-iscariot
 topic.section|chief-priests|035b63b523	216	Pilate	pontius-pilate
@@ -6081,7 +6081,7 @@ topic.section|philistines|d684aafc59	514	David	david
 topic.section|pilate-ring|056efcaf93	237	Pilate	pontius-pilate
 topic.section|pilate-ring|056efcaf93	252	Pilate	pontius-pilate
 topic.section|pilate-ring|14c94700b2	278	Pontius Pilate	pontius-pilate
-topic.section|pilate-ring|44a53a036f	24	Pontius Pilate	pontius-pilate
+topic.section|pilate-ring|1b6f6a8605	24	Pontius Pilate	pontius-pilate
 topic.section|pilate-ring|51d920df4d	670	Pilate	pontius-pilate
 topic.section|pilate-ring|d72595f6aa	59	Pontius Pilate	pontius-pilate
 topic.section|pilate-ring|f1ec83cdf7	706	Pilate	pontius-pilate
@@ -6160,12 +6160,15 @@ topic.section|septuagint|0adc661a23	167	Daniel	daniel
 topic.section|septuagint|95977a2c7a	326	Jeremiah	jeremiah
 topic.section|septuagint|f8b64d96b0	551	Job	job
 topic.section|sergius-paulus-inscriptions|05432f045d	117	Claudius	claudius-caesar
+topic.section|sergius-paulus-inscriptions|2c55949679	1004	Tiberius	tiberius-caesar
+topic.section|sergius-paulus-inscriptions|2c55949679	1027	Claudius	claudius-caesar
+topic.section|sergius-paulus-inscriptions|2c55949679	342	Paul	paul-of-tarsus
+topic.section|sergius-paulus-inscriptions|2c55949679	351	Barnabas	barnabas
 topic.section|sergius-paulus-inscriptions|4492fdc8a6	118	Sergius Paulus	sergius-paulus
 topic.section|sergius-paulus-inscriptions|4492fdc8a6	390	Sergius Paulus	sergius-paulus
-topic.section|sergius-paulus-inscriptions|63fec28e5e	165	Sergius Paulus	sergius-paulus
-topic.section|sergius-paulus-inscriptions|63fec28e5e	452	Sergius Paulus	sergius-paulus
-topic.section|sergius-paulus-inscriptions|756784300e	342	Paul	paul-of-tarsus
-topic.section|sergius-paulus-inscriptions|756784300e	351	Barnabas	barnabas
+topic.section|sergius-paulus-inscriptions|a4dbb468e9	1215	Sergius Paulus	sergius-paulus
+topic.section|sergius-paulus-inscriptions|a4dbb468e9	165	Sergius Paulus	sergius-paulus
+topic.section|sergius-paulus-inscriptions|a4dbb468e9	452	Sergius Paulus	sergius-paulus
 topic.section|sergius-paulus-inscriptions|c902189bc2	86	Sergius Paulus	sergius-paulus
 topic.section|sergius-paulus-inscriptions|ca3495f229	251	Luke	luke-evangelist
 topic.section|sergius-paulus-inscriptions|ddca383bed	169	Claudius	claudius-caesar
@@ -6305,8 +6308,8 @@ topic.section|timna-valley-mines|23b639a79a	663	David	david
 topic.section|timna-valley-mines|23b639a79a	673	Solomon	solomon
 topic.section|timna-valley-mines|70c03a6b3b	1069	Solomon	solomon
 topic.section|timna-valley-mines|7dd6f196fe	331	Solomon	solomon
-topic.section|timna-valley-mines|8b97bcc0ca	152	David	david
-topic.section|timna-valley-mines|8b97bcc0ca	161	Solomon	solomon
+topic.section|timna-valley-mines|e962d19ed0	152	David	david
+topic.section|timna-valley-mines|e962d19ed0	161	Solomon	solomon
 topic.section|timna-valley-mines|fc39734c8c	268	Solomon	solomon
 topic.section|tomb-of-jesus-candidates|133dfe02b8	132	Jesus	jesus-of-nazareth
 topic.section|tomb-of-jesus-candidates|a29ceef087	269	Jesus	jesus-of-nazareth

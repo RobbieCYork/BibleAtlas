@@ -1435,7 +1435,7 @@ export const topics: Topic[] = [
         heading: "The Line Everyone Argues About",
         paragraphs: [
           "The phrase is written BYTDWD, and the argument turns on it. Ancient Aramaic scribes used a small mark to separate words, and there is no separator inside BYTDWD — so, strictly, the stone says one continuous string of consonants. The large majority of epigraphers read it as bet-David, \"house of David,\" the standard ancient Near Eastern way of naming a dynasty by its founder, exactly as the same stele names Israel by the dynastic label the Assyrians used. If that reading is right, this is a hostile foreign king in roughly 840 BC referring to the ruling family of Judah as David's house — the earliest surviving reference to David outside the Bible.",
-          "A minority has pushed back. Philip Davies and others proposed that BYTDWD might be a place name (\"Bethdod\") or a phrase such as \"house of the beloved\" or \"house of the kettle,\" and argued that a dynastic reading assumes what it sets out to prove. That case has not persuaded most specialists — no such place is otherwise known, and the parallel dynastic usage in the same inscription tells against it — but it is a real scholarly position held by credentialed people, not a fringe stunt, and it deserves to be named rather than waved away. A separate accusation of forgery made shortly after the discovery has, by contrast, found essentially no support; the fragments came out of a controlled dig in datable stratigraphy.",
+          "A minority has pushed back. Philip Davies proposed that BYTDWD is a place name rather than a dynasty, on the analogy of bytlhm for Bethlehem; others have proposed that it means \"house of the kettle\" or \"house of the uncle.\" The shared argument is that a dynastic reading assumes what it sets out to prove. That case has not persuaded most specialists — no such place is otherwise known, and the parallel dynastic usage in the same inscription tells against it — but it is a real scholarly position held by credentialed people, not a fringe stunt, and it deserves to be named rather than waved away. A separate accusation of forgery made shortly after the discovery has, by contrast, found essentially no support; the fragments came out of a controlled dig in datable stratigraphy.",
         ],
       },
       {
@@ -1490,7 +1490,16 @@ export const topics: Topic[] = [
         label: "Bible Odyssey (SBL): The Tel Dan Inscription",
         url: "https://www.bibleodyssey.org/articles/the-tel-dan-inscription/",
         credit: "Society of Biblical Literature",
-        supports: "The majority reading of BYTDWD as \"house of David\", and the minority case against it",
+        detail: "Read in full. It is the source of the two alternative glosses given in this article: \"Some scholars argue that the Aramaic phrase 'BYTDWD (bet david)' may not mean 'house of David,' and they propose 'house of the kettle' or 'house of the uncle' instead. However, the majority of scholars consider 'house of David' to be the only compelling translation\"",
+        supports: "The majority reading of BYTDWD as \"house of David\", and the minority glosses of it",
+      },
+      {
+        tier: "reference",
+        label: "Biblical Archaeology Society: \"The Tel Dan Inscription: The First Historical Evidence of the King David Bible Story\"",
+        url: "https://www.biblicalarchaeology.org/daily/biblical-artifacts/artifacts-and-the-bible/the-tel-dan-inscription-the-first-historical-evidence-of-the-king-david-bible-story/",
+        credit: "Biblical Archaeology Society",
+        detail: "Read in full. The source for what Philip Davies actually proposed in Biblical Archaeology Review 20:4 (1994): that \"the Hebrew term bytdwd referred to a specific place (akin to bytlhm for Bethlehem) rather than the ancestral dynasty of David\". His own article was not opened here",
+        supports: "Davies's place-name proposal, stated as he made it",
       },
       {
         tier: "encyclopedic",
@@ -1869,7 +1878,7 @@ export const topics: Topic[] = [
         heading: "Layard's Obelisk",
         paragraphs: [
           "Austen Henry Layard's excavators uncovered the obelisk in 1846 at Nimrud, the Assyrian city the Bible calls Calah, during the digs that first brought Assyria back into European view. By Layard's own account he had just left the mound when a corner of dark stone appeared and the superintendent of the digging party ordered the spot opened up — so the moment of discovery, strictly, belongs to his workmen rather than to him. It is a slim four-sided pillar of black limestone, just under two metres tall and 45 centimetres to a face, with a stepped top, carved on all four faces with five registers of relief, each register running round the monument as a single scene of foreigners bringing tribute to Shalmaneser III. A cuneiform caption above each register says who is paying. It reached the British Museum in October 1848 and is there still.",
-          "The second register from the top shows a man prostrate on the ground before the Assyrian king, with a line of bearers behind him carrying metal vessels and bars. The caption reads: \"Tribute of Jehu, son of Omri: I received from him silver, gold, a golden bowl, a golden vase with pointed bottom, golden tumblers, golden buckets, tin, a staff for a king, and wooden puruhtu.\"",
+          "The second register from the top shows a man prostrate on the ground before the Assyrian king, with a line of bearers behind him carrying metal vessels and bars. The caption reads, in the Nimrud Project's translation: \"I received tribute from Iaua, son of Omri: silver, gold, a golden bowl, a golden tureen, golden pails, tin, the staffs 'of the king's hand' and a spear.\" Iaua is Jehu. Older renderings of the last two items differ — Luckenbill has javelins, and some print the Akkadian word untranslated — so the wording here is the one the source cited below actually gives.",
         ],
       },
       {
@@ -1912,8 +1921,8 @@ export const topics: Topic[] = [
         label: "Nimrud: Materialities of Assyrian Knowledge Production — the Black Obelisk",
         url: "https://oracc.museum.upenn.edu/nimrud/livesofobjects/blackobelisk/index.html",
         credit: "The Nimrud Project (University College London), published on Oracc",
-        detail: "\"a monument (or stela) carved from black limestone, which stands just under two metres high. It has four sides, each 45 cm wide\"; erected 825 BC; arrived at the British Museum in October 1848 as ME 118885",
-        supports: "The material, dimensions, erection date, museum number and arrival date",
+        detail: "\"a monument (or stela) carved from black limestone, which stands just under two metres high. It has four sides, each 45 cm wide\"; erected 825 BC; arrived at the British Museum in October 1848 as ME 118885. The same page carries the Scene 2 caption quoted in the second section, word for word",
+        supports: "The material, dimensions, erection date, museum number, arrival date, and the wording of the Jehu caption",
       },
       {
         tier: "institution",
@@ -2300,7 +2309,7 @@ export const topics: Topic[] = [
         heading: "A Mining Magnate's Purchase",
         paragraphs: [
           "Alfred Chester Beatty was an American-born mining engineer who made a fortune in copper and spent a great deal of it collecting manuscripts. In the early 1930s, with further leaves following in the middle of the decade, he acquired the remains of eleven papyrus codices containing Greek biblical texts. The library's own records say only that he acquired them; the widely repeated account that they came through Cairo dealers is secondary. What is not in dispute is that no excavation produced them and their scribes and place of production are recorded as unknown, which is a real limitation on what can be said about where and how they were used. Most are in the Chester Beatty in Dublin; some leaves from the same codices ended up at the University of Michigan.",
-          "Three matter most for the New Testament, and the honest way to describe them is by what survives rather than by what they once were. P45 held all four Gospels and Acts, and 30 of its original 112 leaves survive — the earliest undeniable four-gospel codex. P46 is the oldest substantially complete copy of Paul's letters: 86 of its original 112 folios survive, 56 in Dublin and 30 at Michigan. P47 preserves a continuous run of Revelation 9:10 to 17:2, and is the earliest substantial papyrus of that book. All three are dated to the third century AD. Others in the group preserve Old Testament books in Greek, including Genesis, Numbers, Deuteronomy, Isaiah, Jeremiah, Ezekiel, Daniel, and Esther.",
+          "Three matter most for the New Testament, and the honest way to describe them is by what survives rather than by what they once were. P45 held all four Gospels and Acts, and thirty of its leaves survive — the earliest undeniable four-gospel codex. P46 is the oldest substantially complete copy of Paul's letters: eighty-six leaves survive, 56 in Dublin and 30 at Michigan. How many leaves either codex originally had is a reconstruction and not a count, and the published figures differ from one another, so this article gives only what is still there. P47 preserves a continuous run of Revelation 9:10 to 17:2, and is the earliest substantial papyrus of that book. All three are dated to the third century AD. Others in the group preserve Old Testament books in Greek, including Genesis, Numbers, Deuteronomy, Isaiah, Jeremiah, Ezekiel, Daniel, and Esther.",
         ],
       },
       {
@@ -2334,7 +2343,7 @@ export const topics: Topic[] = [
       manuscriptType: "Papyrus codices, written in an uncial hand",
       language: "Koine Greek",
       contents:
-        "Eleven codices in all. P45: the four Gospels and Acts, of which 30 of the original 112 leaves survive. P46: the Pauline letters, of which 86 of the original 112 folios survive — 56 in Dublin and 30 at the University of Michigan; the surviving leaves do not include 1-2 Timothy or Titus. P47: a continuous run of Revelation 9:10-17:2. The rest preserve Old Testament books in Greek",
+        "Eleven codices in all. P45: the four Gospels and Acts, of which thirty leaves survive. P46: the Pauline letters, of which eighty-six leaves survive — 56 in Dublin and 30 at the University of Michigan; the surviving leaves do not include 1-2 Timothy or Titus. The original extent of each is a reconstruction rather than a count, and is not given here. P47: a continuous run of Revelation 9:10-17:2. The rest preserve Old Testament books in Greek",
       origin: "Unknown — the Chester Beatty records the scribe and place of production as unknown; the codices are generally taken to be Egyptian",
       findSite: "Not excavated. No findspot is recorded",
       foundYear: "Acquired in the early 1930s, with further leaves of P46 in the mid-1930s",
@@ -2351,7 +2360,7 @@ export const topics: Topic[] = [
         label: "The Chester Beatty, Dublin: catalogue records for BP I, BP II and BP III",
         url: "https://chesterbeatty.ie/",
         credit: "The Chester Beatty, Dublin",
-        detail: "The library's own catalogue descriptions give the third-century date, the surviving leaf counts (30 of 112 for P45; 86 of 112 for P46, split 56 Dublin / 30 Michigan), the extent of P47 as Revelation 9:10-17:2, and scribe and production place as \"Unknown\". Its online viewer was returning errors when this article was checked",
+        detail: "The library's own catalogue descriptions give the third-century date, the surviving leaf counts (thirty for P45; eighty-six for P46, split 56 Dublin / 30 Michigan), the extent of P47 as Revelation 9:10-17:2, and scribe and production place as \"Unknown\". Its online viewer was returning errors when this article was checked. It does not state how many leaves either codex began with, and neither does anything else that was opened here — the published reconstructions disagree — so no such figure appears in this article",
         supports: "The contents, the honest surviving extents, the date and the split with Michigan",
       },
       {
@@ -8295,7 +8304,7 @@ export const topics: Topic[] = [
         heading: "Fifty Years in a Storeroom",
         paragraphs: [
           "The ring came out of the ground at Herodium in the 1968-69 season, in the excavation directed by G. Foerster, and then did what most small metal finds do: it went into a box. It was cleaned and examined only decades later, and published in the Israel Exploration Journal in 2018 by S. Amorai-Stark, M. Hershkovitz, G. Foerster, Y. Kalman, R. Chachy and R. Porat. Their title tells you what they thought the object was — an inscribed copper-alloy finger ring depicting a krater. It is small, about 1.3 cm high, made of a cheap alloy, and engraved with a two-handled vessel framed by Greek letters. L. Di Segni read the letters as Pilato, which in that form would mean of Pilate.",
-          "The press reported that Pontius Pilate's ring had been found. The excavation report said something close to the opposite. Its authors noted that it is unlikely the powerful and wealthy prefect of Judea would have worn a thin, all copper-alloy sealing ring, and that the material and the findspot fit a Jewish owner better than a Roman one. That gap between the report and the headline is worth keeping in view for the rest of this article, because almost every popular account of the ring is downstream of the headline.",
+          "The press reported that Pontius Pilate's ring had been found. The excavation report said something close to the opposite. Its authors noted that it is unlikely the powerful and wealthy prefect of Judea would have worn a thin, all copper-alloy sealing ring — and then declined to name an owner at all, leaving it open between a Jew, a Roman, and another pagan bearing the name Pilatus. That gap between the report and the headline is worth keeping in view for the rest of this article, because almost every popular account of the ring is downstream of the headline.",
         ],
       },
       {
@@ -8347,7 +8356,7 @@ export const topics: Topic[] = [
         tier: "scholarly",
         label: "S. Amorai-Stark et al., \"An Inscribed Copper-Alloy Finger Ring from Herodium Depicting a Krater\"",
         credit: "Shua Amorai-Stark, Malka Hershkovitz, G. Foerster, Yakov Kalman, Rachel Chachy and Roi Porat",
-        detail: "Israel Exploration Journal 68/2 (2018), 208-220 — the editio princeps. It is the publication that reads the letters as Pilato and, in the same breath, judges it unlikely that the prefect himself wore a thin copper-alloy ring",
+        detail: "Israel Exploration Journal 68/2 (2018), 208-220 — the editio princeps. It is the publication that reads the letters as Pilato and, in the same breath, judges it unlikely that the prefect himself wore a thin copper-alloy ring. The journal is paywalled and was not opened here. The sentence in which the editors decline to name an owner — the ring \"might have belonged to a local individual, either a Jew, a Roman, or another pagan patron with the name Pilatus\" — is quoted from their paper in the Times of Israel report cited below, and this article takes it at that second hand rather than from the journal",
         supports: "Excavation date, material, the reading, and what the publishers did and did not claim",
         paywalled: true,
       },
@@ -8374,6 +8383,14 @@ export const topics: Topic[] = [
         credit: "University of California, Los Angeles, via Phys.org, 2 September 2026",
         detail: "The university's own account of Bonesho's article, including her reply to the 2023 objection",
         supports: "The omicron-for-omega argument and the proposed identity of the wearer",
+      },
+      {
+        tier: "reference",
+        label: "A. Borschel-Dan, \"2,000-year-old 'Pilate' ring just might have belonged to notorious Jesus judge\"",
+        url: "https://www.timesofisrael.com/2000-year-old-ring-engraved-with-pilate-may-have-belonged-to-notorious-ruler/",
+        credit: "Amanda Borschel-Dan, The Times of Israel, 29 November 2018",
+        detail: "Read in full. The report quotes the editio princeps at length, and is the route by which this article knows what the 2018 editors wrote about the ring's likely owner. The live page refuses automated requests; the copy read here was the Internet Archive's capture of it",
+        supports: "The 2018 editors' own words about who the ring might have belonged to",
       },
       {
         tier: "reference",
@@ -8574,7 +8591,7 @@ export const topics: Topic[] = [
           "Acts 13:7 places the apostles at Paphos before the proconsul of Cyprus, whom it names Sergius Paulus. The word proconsul is itself correct and worth noting in passing: Cyprus was a senatorial province in this period, and senatorial provinces were governed by proconsuls. Four inscriptions have been put forward at one time or another as naming the man himself.",
           "The first comes from Soloi on the north coast of Cyprus, catalogued as IGR III 930, a text dated by a regnal year of Claudius that mentions a proconsul Paulus. D. G. Hogarth, who published it after his archaeological survey of the island, saw no good reason to doubt the identification with the figure in Acts. T. B. Mitford, the authority on Roman Cyprus, judged on epigraphic grounds that the stone cannot be earlier than the middle of the first century and is probably considerably later. Accounts even disagree about when it was found, giving the year variously as 1877 and 1887.",
           "The second is a boundary marker of the Tiber from Rome, CIL VI 31545, recording the commissioners appointed in AD 47 to oversee the banks and channel of the river under Claudius. One of the named commissioners is L. Sergius Paullus. This is the only one of the four whose date is secure. B. Windle argued in the Near East Archaeological Society Bulletin in 2022 that the ordinary Roman career ladder makes it entirely plausible that the same man held a river commissionership at Rome and a proconsulship in Cyprus within a few years — and he is careful to call it plausible rather than demonstrated.",
-          "The third is a pair of texts from the territory of Pisidian Antioch naming senators called L. Sergius Paullus, one of them explicitly the younger; the second was copied in 1912 by W. Ramsay and J. G. C. Anderson. Ramsay proposed from them that the family held estates in the region, and the popular inference followed that the proconsul sent Paul and Barnabas on to his relatives' home town, which is where Acts 13:13 takes them next. That is a hypothesis about a family's landholdings, not an identification of a man. The fourth, IGR III 935 from Kythrea in Cyprus, is the weakest: it preserves the name Quintus Ser[gius], which is the wrong first name, has lost the part where a cognomen would sit, and probably belongs to a different emperor's reign altogether.",
+          "The third is a pair of texts from the territory of Pisidian Antioch naming senators called L. Sergius Paullus, one of them explicitly the younger; the second was copied in 1912 by W. Ramsay and J. G. C. Anderson. Ramsay proposed from them that the family held estates in the region, and the popular inference followed that the proconsul sent Paul and Barnabas on to his relatives' home town, which is where Acts 13:13 takes them next. That is a hypothesis about a family's landholdings, not an identification of a man, and T. Kennedy — writing from within evangelical archaeology — says as much himself, calling the family-ties explanation of that next journey \"possible, though unconfirmed and only a hypothesis based on circumstantial evidence.\" The fourth, IGR III 935 from Kythrea in Cyprus, is the weakest: it preserves the name Quintus Ser[gius], which is the wrong first name, has lost the part where a cognomen would sit, and has lost its emperor's name as well — the restoration is open between Tiberius, Caligula and Claudius, and only the last of the three would fit.",
         ],
       },
       {
@@ -8587,7 +8604,7 @@ export const topics: Topic[] = [
       {
         heading: "Nobody Has Closed This",
         paragraphs: [
-          "What the four candidates have in common is that each preserves a Sergius or a Paulus, and none of them names the proconsul of Acts in a way that settles the matter. Sergius Paulus was not a rare combination in a family that produced senators for generations. The candidate T. B. Mitford went out of his way to doubt is the one with the secure date — the Tiber boundary stone. His footnote of 1947 opens by warning that \"it is far from certain that the Sergius Paulus of the Acts bore the praenomen Lucius\", observes that the Tiber commissioner was a Lucius and therefore an ex-consul, and closes: \"That he is to be identified with the proconsul of Cyprus is at best a conjecture, now somewhat weakened by Myres' reading of IGR iii, 935\" — that last being the Kythrea text, the fourth candidate above. His objection to the Soloi stone is a different one, and it is the dating objection already given: on epigraphic grounds it \"cannot be earlier\" than the middle of the first century \"and is in all probability considerably later\". T. Kennedy, writing from within evangelical archaeology, reaches the same verdict from the other direction: possible, unconfirmed, a hypothesis resting on circumstantial evidence.",
+          "What the four candidates have in common is that each preserves a Sergius or a Paulus, and none of them names the proconsul of Acts in a way that settles the matter. Sergius Paulus was not a rare combination in a family that produced senators for generations. The candidate T. B. Mitford went out of his way to doubt is the one with the secure date — the Tiber boundary stone. His footnote of 1947 opens by warning that \"it is far from certain that the Sergius Paulus of the Acts bore the praenomen Lucius\", observes that the Tiber commissioner was a Lucius and therefore an ex-consul, and closes: \"That he is to be identified with the proconsul of Cyprus is at best a conjecture, now somewhat weakened by Myres' reading of IGR iii, 935\" — that last being the Kythrea text, the fourth candidate above. His objection to the Soloi stone is a different one, and it is the dating objection already given: on epigraphic grounds it \"cannot be earlier\" than the middle of the first century \"and is in all probability considerably later\". Kennedy reads the same four texts the other way, and he should be represented as saying what he says: he concludes that \"at least two, but perhaps three\" of them \"probably refer to the Sergius Paulus on Cyprus also mentioned in the book of Acts.\" That is a stronger reading than this app is prepared to give, and his own word for it is still probably.",
           "Where the app stands. The honest statement is short, and it is not a retreat. Acts names a proconsul of Cyprus called Sergius Paulus and describes the province's government correctly for the period. Roman Cyprus was governed by proconsuls of that kind, from families of that kind, and one of them may well be standing on one of these stones. But this app is not going to tell a reader that Sergius Paulus has been found, because he has not been. What has been found is a family, a plausible career pattern, and a set of texts that fit without fastening.",
           "It is worth saying what refusing the overclaim costs, because the answer is nothing. No one's faith is resting on a proconsul's career. A reader who is told unsettled loses an argument they never needed, and gains the ability to believe the next sentence this app writes about a stone. A reader who is told confirmed and then finds Mitford loses considerably more than that.",
         ],
@@ -8640,6 +8657,14 @@ export const topics: Topic[] = [
       },
       {
         tier: "reference",
+        label: "T. Kennedy, \"Sergius Paulus the Proconsul and the Apostle Paul\"",
+        url: "https://apxaioc.com/?p=20",
+        credit: "Titus Kennedy, APXAIOC Institute of Biblical Archaeology, 12 November 2014",
+        detail: "His own page, read in full — not the second-hand quotation of it that circulates. Both sentences quoted from him in this article are his, and they are about different questions: the \"possible, though unconfirmed\" hedge belongs to the Pisidian Antioch family-ties explanation for Acts 13:13, while on the identification itself he concludes for it",
+        supports: "Kennedy's actual position, with his hedge attached to the claim he hedged",
+      },
+      {
+        tier: "reference",
         label: "Bible Archaeology Report: Sergius Paulus, an archaeological biography",
         url: "https://biblearchaeologyreport.com/2019/11/15/sergius-paulus-an-archaeological-biography/",
         credit: "Bryan Windle",
@@ -8661,7 +8686,7 @@ export const topics: Topic[] = [
     category: "discovery",
     role: "A Scratched Wall Drawing of a Crucifixion, Made to Mock a Christian",
     summary:
-      "On a plastered wall in the servants' quarters of the imperial palace in Rome, somebody drew a man worshipping a crucified figure with the head of a donkey, and wrote underneath: Alexamenos worships his god. It is the earliest surviving picture of the crucifixion, and it is an insult.",
+      "On a plastered wall in the servants' quarters of the imperial palace in Rome, somebody drew a man worshipping a crucified figure with the head of a donkey, and wrote underneath: Alexamenos worships god. It is the earliest surviving picture of the crucifixion, and it is an insult.",
     sections: [
       {
         heading: "A Wall in the Palace Servants' Quarters",
@@ -8674,7 +8699,7 @@ export const topics: Topic[] = [
         heading: "The Shape of the Insult",
         paragraphs: [
           "The drawing is crude and entirely legible. A figure hangs on a cross, seen from behind, with the head of a donkey or mule. To the left a smaller figure stands with one arm raised in a gesture of worship. Between them, in irregular Greek, runs the line ALEXAMENOS SEBETE THEON — Alexamenos worships god, with the verb spelled the way it was drifting in ordinary speech rather than the way a schoolmaster would have wanted it.",
-          "Both halves of the joke need explaining now, because neither is obvious to a modern reader. Crucifixion was the death Rome kept for slaves and rebels, deliberately public and deliberately degrading; to a Roman, being told that somebody's god had been crucified was an absurdity before it was an offence. And there was a standing slander, aimed first at Jews and then at Christians, that they worshipped a donkey. Tertullian describes a caricature of a Christian with a donkey's ears being paraded around Carthage, and the same accusation is answered in the second-century Octavius. The drawing simply stacks the two insults on top of each other.",
+          "Both halves of the joke need explaining now, because neither is obvious to a modern reader. Crucifixion was the death Rome kept for slaves and rebels, deliberately public and deliberately degrading; to a Roman, being told that somebody's god had been crucified was an absurdity before it was an offence. And there was a standing slander, aimed first at Jews and then at Christians, that they worshipped a donkey. Tertullian describes a caricature of Christians with ass's ears carried about in public — \"in that city of yours\", he says, which the Ante-Nicene Fathers editors gloss as Rome rather than his own Carthage — and the same accusation is answered in the second-century Octavius. The drawing simply stacks the two insults on top of each other.",
           "In a nearby room a second graffito was found reading Alexamenos fidelis — Alexamenos is faithful. It reads like a reply, and it may be one, though nothing establishes that it is by the same hand or from the same season.",
         ],
       },
@@ -8723,6 +8748,14 @@ export const topics: Topic[] = [
         credit: "Heikki Solin and Marja Itkonen-Kaila, under the direction of Veikko Vaananen",
         detail: "Acta Instituti Romani Finlandiae III (Helsinki, 1966) — the critical publication of the graffiti scratched on the walls of the paedagogium, of which this is one. Print-only",
         supports: "The corpus publication of the Palatine graffiti",
+      },
+      {
+        tier: "primary",
+        label: "Tertullian, Ad Nationes I.14, in the Ante-Nicene Fathers",
+        url: "https://en.wikisource.org/wiki/Ante-Nicene_Fathers/Volume_III/Apologetic/Ad_Nationes/Elucidations/The_Vile_Calumny_About_Onocoetes_Retorted_on_the_Heathen_by_Tertullian",
+        credit: "Tertullian, in the Ante-Nicene Fathers translation edited by Philip Schaff; public domain, hosted at Wikisource",
+        detail: "Read in full. A man \"carried about in public a caricature of us with this label: Onocoetes. This (figure) had ass's ears, and was dressed in a toga with a book, having a hoof on one of his feet.\" Tertullian places it \"in that city of yours\", and the editors' footnote reads \"In ista civitate, Rome\" — which is why this article does not say Carthage, as popular accounts do. The parallel passage in Apology 16 says only \"in that great city\"",
+        supports: "The donkey-worship slander as a named ancient author actually reports it",
       },
       {
         tier: "reference",
@@ -9909,8 +9942,8 @@ export const topics: Topic[] = [
         label: "Biblical Archaeology Society: A. Ben-Tor and S. Zuckerman on who destroyed Canaanite Hazor",
         url: "https://www.biblicalarchaeology.org/daily/news/scorched-wheat-may-provide-answers-on-the-destruction-of-canaanite-tel-hazor/",
         credit: "Biblical Archaeology Society, 24 July 2012",
-        detail: "Ben-Tor: the Israel of the Merneptah stele \"seems to be the most likely candidate.\" Zuckerman: \"I believe it was an internal revolt within the city that was responsible for the destruction\"",
-        supports: "The two excavators' opposed readings, in their own words",
+        detail: "Read in full. It quotes two BAR articles. The first is by A. Ben-Tor and Maria Teresa Rubiato jointly — \"Excavating Hazor, Part Two: Did the Israelites Destroy the Canaanite City?\", BAR 25:3 (May/June 1999) — and their sentence is that the \"Israel\" of the Merneptah stele \"seems to be the most likely candidate for the violent destruction of Canaanite Hazor\". The second is S. Zuckerman, \"Where Is the Hazor Archive Buried?\", BAR (March/April 2006): \"I believe it was an internal revolt within the city that was responsible for the destruction\"",
+        supports: "The two directors' opposed readings, in the words of their own BAR articles",
       },
       {
         tier: "scholarly",
@@ -10187,7 +10220,7 @@ export const topics: Topic[] = [
         heading: "The Argument About Tents",
         paragraphs: [
           "The genuinely interesting thing at Timna is not a dating correction. It is a methodological challenge, and it deserves to be stated in its author's terms rather than in the form apologetics has given it. E. Ben-Yosef argues, in \"The Architectural Bias in Current Biblical Archaeology\" in Vetus Testamentum in 2019 and at length since, that the discipline reads social complexity off buildings, and that this systematically renders mobile societies invisible. The people running the Arabah copper industry were nomads. They left almost no architecture. They nevertheless operated a centralised, technologically sophisticated, industrial-scale enterprise, wore imported dyed textiles, and — because copper production happens to leave slag heaps and installations — they can be studied in a way nomads normally cannot. Timna is a rare window, not a normal case.",
-          "The inference he draws is narrow and he is careful about it, and the app is going to be careful too. He does not claim the Arabah proves anything about David or Solomon; he calls his argument \"methodological in essence.\" What it does is remove an argument. The standard case against a substantial tenth-century polity in Judah runs: no monumental architecture, therefore no state. If a tent-dwelling society can run what Timna shows it ran, that inference does not hold, and the absence of tenth-century palaces stops being decisive. Taking away an argument against something is not evidence for it. Ben-Yosef says so himself, and any presentation of him as an \"archaeology proves the Bible\" figure misrepresents him.",
+          "The inference he draws is narrow and he is careful about it, and the app is going to be careful too. He does not claim the Arabah proves anything about David or Solomon. His paper opens by saying that it \"aims at highlighting a methodological flaw in current biblical archaeology\", and it closes by asking \"biblical archaeologists to be more modest about their role in solving textual issues\". What his argument does is remove an argument. The standard case against a substantial tenth-century polity in Judah runs: no monumental architecture, therefore no state. If a tent-dwelling society can run what Timna shows it ran, that inference does not hold, and the absence of tenth-century palaces stops being decisive. Taking away an argument against something is not evidence for it. Ben-Yosef says so himself, and any presentation of him as an \"archaeology proves the Bible\" figure misrepresents him.",
           "He also has serious opposition. I. Finkelstein has answered that the point is not new, that the desert polity is not in fact devoid of stone-built remains, that Tel Masos and the Negev Highlands settlements are part of the same system, and that there is no way to know whether these people called themselves Edom rather than Midian, Amalek or Teman. P. Bienkowski has argued in the Bulletin of the American Society of Overseas Research that the nomadic-polity model has no supporting evidence, that the people buried in the nearby cemetery were mostly not the people working the furnaces, and that the kingdom of Edom did not grow out of this industry at all. That exchange is live. Where the app stands: the redating is solid and the methodological point is a real contribution that ought to change how absence-of-evidence arguments are made in this field. Neither of those is a biblical confirmation, and the honest reading of Deuteronomy 8:9 is that the land was known for its copper, which the Arabah amply demonstrates, and not that any of these mines belonged to Solomon.",
         ],
       },
@@ -10233,9 +10266,8 @@ export const topics: Topic[] = [
         label: "E. Ben-Yosef, \"The Architectural Bias in Current Biblical Archaeology\"",
         url: "https://doi.org/10.1163/15685330-12341370",
         credit: "Erez Ben-Yosef, Tel Aviv University",
-        detail: "Vetus Testamentum 69:3 (2019), 361-387. The methodological argument, restated at length with Z. Thomas in \"Complexity Without Monumentality in Biblical Times,\" Journal of Archaeological Research 32:1 (2024), 59-101",
-        supports: "The nomad argument, in its author's own publication",
-        paywalled: true,
+        detail: "Vetus Testamentum 69:3 (2019), 361-387; DOI 10.1163/15685330-12341370. Open access at Brill and read in full here, which is where both of the sentences quoted in the fourth section come from — the abstract's own statement of aim and the last paragraph's request for modesty. The argument is restated at length with Z. Thomas in \"Complexity Without Monumentality in Biblical Times,\" Journal of Archaeological Research 32:1 (2024), 59-101",
+        supports: "The nomad argument, and Ben-Yosef's own statement of what it is and is not, in his own publication",
       },
       {
         tier: "scholarly",

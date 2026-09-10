@@ -48,7 +48,7 @@ location	bethany	bethany	panel	11
 location	bethany	bethany	prose	16
 location	bethany	bethany	reader	11
 location	bethlehem	bethlehem	panel	47
-location	bethlehem	bethlehem	prose	85
+location	bethlehem	bethlehem	prose	86
 location	bethlehem	bethlehem	reader	47
 location	bethlehem of judea	bethlehem	panel	2
 location	bethlehem of judea	bethlehem	reader	2
@@ -81,7 +81,7 @@ location	crete	crete	panel	5
 location	crete	crete	prose	7
 location	crete	crete	reader	5
 location	cyprus	cyprus	panel	8
-location	cyprus	cyprus	prose	37
+location	cyprus	cyprus	prose	38
 location	cyprus	cyprus	reader	8
 location	cyrene	cyrene	panel	4
 location	cyrene	cyrene	prose	3
@@ -303,7 +303,7 @@ location	red sea	red-sea	reader	26
 location	region of the gerasenes	gadara	prose	1
 location	roman province of asia	asia-province	prose	3
 location	rome	rome	panel	9
-location	rome	rome	prose	288
+location	rome	rome	prose	289
 location	rome	rome	reader	9
 location	salt sea	dead-sea	panel	9
 location	salt sea	dead-sea	prose	1
@@ -520,7 +520,7 @@ person	christ jesus	jesus-of-nazareth	panel	84
 person	christ jesus	jesus-of-nazareth	prose	6
 person	christ jesus	jesus-of-nazareth	reader	84
 person	claudius	claudius-caesar	panel	2
-person	claudius	claudius-caesar	prose	26
+person	claudius	claudius-caesar	prose	27
 person	claudius	claudius-caesar	reader	2
 person	cleopas	cleopas	panel	1
 person	cleopas	cleopas	reader	1
@@ -993,7 +993,7 @@ person	saul of tarsus	paul-of-tarsus	prose	7
 person	saul the son of kish	saul-king-of-israel	panel	4
 person	saul the son of kish	saul-king-of-israel	reader	4
 person	sergius paulus	sergius-paulus	panel	1
-person	sergius paulus	sergius-paulus	prose	11
+person	sergius paulus	sergius-paulus	prose	12
 person	sergius paulus	sergius-paulus	reader	1
 person	shealtiel	shealtiel	panel	13
 person	shealtiel	shealtiel	reader	13
@@ -1083,7 +1083,7 @@ person	thomas	thomas-apostle	prose	9
 person	thomas	thomas-apostle	reader	11
 person	thomas aquinas	thomas-aquinas	prose	2
 person	thomas cranmer	thomas-cranmer	prose	2
-person	tiberius	tiberius-caesar	prose	19
+person	tiberius	tiberius-caesar	prose	20
 person	tiberius caesar	tiberius-caesar	panel	1
 person	tiberius caesar	tiberius-caesar	prose	2
 person	tiberius caesar	tiberius-caesar	reader	1
@@ -1509,7 +1509,7 @@ topic	jehoash inscription	jehoash-inscription	prose	1
 topic	jehoiachin's rations tablets	jehoiachin-ration-tablets	prose	1
 topic	jesus boat	galilee-boat	prose	3
 topic	jewish	jews	panel	7
-topic	jewish	jews	prose	389
+topic	jewish	jews	prose	388
 topic	jewish	jews	reader	7
 topic	jews	jews	panel	38
 topic	jews	jews	prose	63
