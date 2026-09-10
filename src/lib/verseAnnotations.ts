@@ -718,6 +718,15 @@ export const bookIntroOwnerId = (book: string) => `book-intro:${book}`;
  * itself. That is how bare "Saul" behaves on Paul's own page, and it is what it did before the
  * global default moved. */
 const OWNER_NAME_OVERRIDES: Record<string, Record<string, string | null>> = {
+  // "David": the king is the only David with a record, and he is the right answer nearly everywhere.
+  // One article names a different one. The Cairo Codex of the Prophets carries a dedication colophon
+  // by David b. Yefet, an eleventh- or fifteenth-century Cairo dignitary, and B. Outhwaite's
+  // conclusion — quoted whole in that article's third section — ends with his name. That record does
+  // not mention King David at all, so the whole-record answer is safe: no link rather than a link to
+  // the wrong man.
+  david: {
+    "cairo-codex-of-the-prophets": null,
+  },
   // "Saul": the king is now the global default (see SAUL_DEFAULT above), which is right for 100 of
   // the 126 bare "Saul"s in our prose. These are the seven records that hold the other 26 — every
   // one of them an article about the conversion, the Damascus disciple who baptised him, the man

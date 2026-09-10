@@ -75,7 +75,7 @@ location	colossae	colossae	panel	1
 location	colossae	colossae	prose	5
 location	colossae	colossae	reader	1
 location	corinth	corinth	panel	6
-location	corinth	corinth	prose	61
+location	corinth	corinth	prose	62
 location	corinth	corinth	reader	6
 location	crete	crete	panel	5
 location	crete	crete	prose	7
@@ -172,7 +172,7 @@ location	iconium	iconium	prose	2
 location	iconium	iconium	reader	6
 location	idumea	edom	prose	3
 location	jerusalem	jerusalem	panel	813
-location	jerusalem	jerusalem	prose	617
+location	jerusalem	jerusalem	prose	618
 location	jerusalem	jerusalem	reader	813
 location	jezreel	jezreel	panel	36
 location	jezreel	jezreel	prose	13
@@ -701,7 +701,7 @@ person	jehoshaphat	jehoshaphat	panel	84
 person	jehoshaphat	jehoshaphat	prose	15
 person	jehoshaphat	jehoshaphat	reader	84
 person	jeremiah	jeremiah	panel	150
-person	jeremiah	jeremiah	prose	60
+person	jeremiah	jeremiah	prose	61
 person	jeremiah	jeremiah	reader	134
 person	jerome	jerome	prose	26
 person	jerubbaal	gideon	panel	13
@@ -1330,7 +1330,7 @@ timeline	trials of jesus before the sanhedrin and pilate	bib-loc-trials-of-jesus
 timeline	triumphal entry into jerusalem	bib-loc-triumphal-entry	prose	2
 timeline	wedding at cana	bib-loc-wedding-at-cana	prose	2
 topic	4qsam-a	4qsamuel-a	prose	3
-topic	aleppo codex	aleppo-codex	prose	11
+topic	aleppo codex	aleppo-codex	prose	12
 topic	alexandrinus	codex-alexandrinus	prose	10
 topic	amarna letters	amarna-letters	prose	8
 topic	ammonite	moabites-and-ammonites	panel	8
@@ -1501,7 +1501,7 @@ topic	jehoash inscription	jehoash-inscription	prose	1
 topic	jehoiachin's rations tablets	jehoiachin-ration-tablets	prose	1
 topic	jesus boat	galilee-boat	prose	3
 topic	jewish	jews	panel	7
-topic	jewish	jews	prose	384
+topic	jewish	jews	prose	386
 topic	jewish	jews	reader	7
 topic	jews	jews	panel	38
 topic	jews	jews	prose	63
@@ -1570,7 +1570,7 @@ topic	passover	passover	panel	12
 topic	passover	passover	prose	46
 topic	passover	passover	reader	12
 topic	persian	persians	panel	2
-topic	persian	persians	prose	138
+topic	persian	persians	prose	139
 topic	persian	persians	reader	2
 topic	persians	persians	panel	5
 topic	persians	persians	prose	5
@@ -1614,7 +1614,7 @@ topic	sadducees	topic-sadducees	prose	46
 topic	sadducees	topic-sadducees	reader	14
 topic	sahidic coptic	coptic-versions	prose	1
 topic	samaritan	samaritans	panel	5
-topic	samaritan	samaritans	prose	43
+topic	samaritan	samaritans	prose	44
 topic	samaritan	samaritans	reader	5
 topic	samaritan pentateuch	samaritan-pentateuch	prose	10
 topic	samaritans	samaritans	panel	7
@@ -1635,10 +1635,10 @@ topic	soreg inscription	temple-warning-inscription	prose	1
 topic	stepped stone structure	stepped-stone-structure	prose	5
 topic	stepped street	pilgrimage-road-jerusalem	prose	1
 topic	synagogue	synagogue	panel	44
-topic	synagogue	synagogue	prose	61
+topic	synagogue	synagogue	prose	63
 topic	synagogue	synagogue	reader	44
 topic	synagogues	synagogue	panel	25
-topic	synagogues	synagogue	prose	12
+topic	synagogues	synagogue	prose	13
 topic	synagogues	synagogue	reader	25
 topic	tabernacle	tabernacle	panel	125
 topic	tabernacle	tabernacle	prose	32
@@ -1696,7 +1696,7 @@ topic	the trinity	the-trinity	prose	15
 topic	theodotus inscription	theodotus-inscription	prose	1
 topic	topheth	gehenna	panel	9
 topic	topheth	gehenna	reader	9
-topic	torah	torah	prose	36
+topic	torah	torah	prose	37
 topic	trinitarian	the-trinity	prose	6
 topic	ugaritic texts	ugarit-tablets	prose	1
 topic	unclean spirit	demons	panel	13
@@ -2548,7 +2548,7 @@ verse	deuteronomy 21:22-23	-	prose	1
 verse	deuteronomy 23:4-5	-	prose	1
 verse	deuteronomy 24:12-13	-	prose	1
 verse	deuteronomy 27	-	prose	1
-verse	deuteronomy 27:4	-	prose	2
+verse	deuteronomy 27:4	-	prose	3
 verse	deuteronomy 27:4-6	-	prose	1
 verse	deuteronomy 28:17	-	prose	1
 verse	deuteronomy 2:14	-	prose	1
