@@ -5078,6 +5078,16 @@ a.profile-links-url {
   color: var(--accent);
 }
 
+/* Insert Scripture and Add photo travel together on the left of the footer row. Wrapping is
+   allowed because at 320px the two labels do not fit side by side, and a button that has run off
+   the edge of the screen during a sermon is a button that does not exist. */
+.sermon-notes-insert-group {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
 .sermon-notes-danger-zone {
   display: flex;
   align-items: center;
@@ -11004,3 +11014,134 @@ blockquote.sn-scripture,
 .sn-c-green { color: var(--note-green); }
 .sn-c-blue { color: var(--note-blue); }
 .sn-c-violet { color: var(--note-violet); }
+
+/* --- A photographed slide inside a note. See IMAGE_CLASS in lib/richText.ts. ---
+
+   `display: block` with a bottom margin, so the writer's next sentence starts underneath the
+   picture rather than beside it on a shared baseline. Text flowing AROUND a photograph is the
+   wrong answer here: these are notes taken in a hurry on a phone, a slide is wide, and a float
+   would leave a 40px-wide column of words down one side of it.
+
+   The height cap is what keeps a note readable. An unconstrained portrait photograph fills the
+   whole screen and buries the sentences on either side of it; 320px shows the slide, keeps its
+   place in the note visible, and leaves it perfectly legible when tapped and zoomed. `width: auto`
+   with `object-fit: contain` means a landscape slide is limited by the column and a portrait one
+   by the height, without either being distorted. */
+img.sn-image,
+.rte-surface img.sn-image {
+  display: block;
+  max-width: 100%;
+  max-height: 320px;
+  width: auto;
+  height: auto;
+  margin: 0.35em 0;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  object-fit: contain;
+  /* A visible frame while the signed URL is being minted — without it an unresolved image is zero
+     pixels tall and the note jumps when the picture arrives. */
+  min-height: 60px;
+  min-width: 90px;
+  background: var(--surface-sunken);
+}
+
+/* --- The panel that appears under the note once a photo has been taken. Sits in flow, exactly
+   like the Insert Scripture picker above it and for exactly the same reason: the sentence being
+   written stays on screen and the caret is never disturbed. --- */
+.note-image-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 10px;
+  border: 1px solid var(--accent);
+  border-radius: 8px;
+  background: var(--panel-bg);
+}
+
+.note-image-panel-head {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+/* Small on purpose. This is a "yes, that is the slide I just shot" check, not a viewer — the
+   decision it supports takes under a second and the two buttons beside it are the point. */
+.note-image-thumb {
+  width: 84px;
+  height: 84px;
+  flex-shrink: 0;
+  object-fit: cover;
+  border-radius: 6px;
+  border: 1px solid var(--border);
+  background: var(--surface-sunken);
+}
+
+.note-image-thumb-empty {
+  display: block;
+}
+
+.note-image-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  flex: 1 1 190px;
+}
+
+.note-image-actions button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  /* 40px, taller than the footer's own controls. These are pressed once, under time pressure,
+     while looking at the preacher rather than the phone. */
+  min-height: 40px;
+  padding: 8px 12px;
+  border: 1px solid var(--border-strong);
+  border-radius: 8px;
+  background: var(--surface-sunken);
+  color: var(--text);
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+/* "Add text from image" is the one Robbie described first and the one that answers the actual
+   problem — the slide is gone before it can be typed — so it carries the accent and "Add image"
+   reads as the alternative. */
+.note-image-actions button.note-image-primary {
+  border-color: var(--accent);
+  background: var(--accent-bg);
+  color: var(--accent);
+}
+
+.note-image-actions button:disabled {
+  opacity: 0.55;
+  cursor: default;
+}
+
+.note-image-status {
+  margin: 0;
+  font-size: 13px;
+  color: var(--text-muted);
+}
+
+.note-image-status-warn {
+  color: var(--text);
+}
+
+.note-image-link {
+  border: 0;
+  background: none;
+  padding: 0;
+  font: inherit;
+  color: var(--accent);
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.note-image-panel-foot {
+  display: flex;
+  justify-content: flex-end;
+}

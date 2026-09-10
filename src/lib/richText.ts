@@ -107,10 +107,54 @@ const COLOR_CLASSES: ReadonlySet<string> = new Set(
 export const SCRIPTURE_CLASS = "sn-scripture";
 export const SCRIPTURE_REF_CLASS = "sn-scripture-ref";
 
+/* ── A PHOTOGRAPHED SLIDE ───────────────────────────────────────────────────
+ * A picture taken during the sermon is stored as an image wearing `sn-image`, carrying the storage
+ * object's PATH and nothing else:
+ *
+ *     <p><img class="sn-image" data-sn-src="e3b0c442-…/a1b2c3d4-….jpg"></p>
+ *
+ * ── WHY A PATH AND NOT A URL, WHICH IS THE WHOLE POINT ─────────────────────
+ * The bucket these live in is PRIVATE (sql/027_sermon_note_images.sql): an object is readable only
+ * by the account whose id is the first folder of its name. There is therefore no durable URL to
+ * store. What a browser can display is a SIGNED url, minted per session and good for an hour, and
+ * writing one of those into a note would produce a note whose pictures worked on Sunday and were
+ * dead links by Monday.
+ *
+ * So the note holds the path, and lib/noteImages.ts mints a signed URL for it at the moment it is
+ * shown. `src` is not on the attribute allowlist AT ALL, which means the sanitiser strips the live
+ * URL every time the note is saved — the resolved form exists only in the DOM, the stored form
+ * cannot rot, and this file keeps the property its opening comment claims: nothing a note can hold
+ * carries a URL, so there is still nowhere for a scheme to hide.
+ *
+ * `data-sn-src` is validated by normalizeImages() BEFORE DOMPurify runs, against a shape strict
+ * enough to be a storage key and nothing else. An <img> that fails is removed outright rather than
+ * emptied, because a borrowed or hand-edited path is not a picture this reader is entitled to and
+ * should not be asked for on their behalf. And, exactly as with `sn-scripture`, the class survives
+ * on ONE tag only. */
+export const IMAGE_CLASS = "sn-image";
+export const IMAGE_PATH_ATTR = "data-sn-src";
+
+/** `<uuid folder>/<filename>` — the only shape a stored image path may have.
+ *
+ * The first segment is the owner's account id, which is what the bucket's row-level policy matches
+ * on; the second is a generated name. Anchored, no slash in the second segment and an alphanumeric
+ * first character, so `..` and every other traversal spelling fails the test rather than being
+ * escaped and hoped about. */
+const IMAGE_PATH_RE =
+  /^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}\/[A-Za-z0-9][A-Za-z0-9._-]{0,120}$/;
+
+/** True if `path` is a storage key a note may legitimately point at. Exported so the upload side
+ * checks the same rule its result will later be sanitised against, rather than a second copy of it
+ * that can drift. */
+export function isNoteImagePath(path: string): boolean {
+  return IMAGE_PATH_RE.test(path);
+}
+
 /** Which structural class, if any, is permitted on a given tag. */
 function structureClassFor(tag: string): string | null {
   if (tag === "blockquote") return SCRIPTURE_CLASS;
   if (tag === "span") return SCRIPTURE_REF_CLASS;
+  if (tag === "img") return IMAGE_CLASS;
   return null;
 }
 
@@ -144,15 +188,20 @@ function colorToRgbKey(value: string): string | null {
 }
 
 /** The complete tag allowlist. Every one of these is a shape a note can legitimately hold, and
- * nothing here can carry a URL, load a resource, or run anything.
+ * apart from the image at the end of the list, none of them can carry a URL, load a resource, or
+ * run anything.
  *
  * `blockquote` is on the list because it is what `execCommand("indent")` produces outside a list;
  * App.css styles it as a plain left indent with no rule and no quote marks, so the reader gets the
  * indent they asked for. `div` and `font` are here because browsers emit them unbidden — `div` as
  * a line wrapper, `font` from `foreColor` — and it is better to normalise them than to have a
  * note's line breaks vanish. `font` never survives: normalizeColors() below rewrites every one of
- * them to a span (or unwraps it) before DOMPurify ever sees the markup. */
-const ALLOWED_TAGS = ["p", "div", "br", "b", "strong", "i", "em", "u", "ul", "ol", "li", "blockquote", "span", "font"];
+ * them to a span (or unwraps it) before DOMPurify ever sees the markup.
+ *
+ * `img` joins them for photographed slides, and is the one tag here that CAN load a resource — so
+ * it is also the one tag whose every attribute is thrown away and rebuilt by normalizeImages()
+ * below. `src` is never allowed through; what survives is a validated storage path. */
+const ALLOWED_TAGS = ["p", "div", "br", "b", "strong", "i", "em", "u", "ul", "ol", "li", "blockquote", "span", "font", "img"];
 
 /** Tags after which the plain-text projection starts a new line. */
 const BLOCK_TAGS = new Set(["p", "div", "li", "ul", "ol", "blockquote"]);
@@ -203,6 +252,31 @@ function normalizeColors(root: Element): void {
   });
 }
 
+/** Reduces every <img> to the one shape a note may hold: `class="sn-image"`, a validated storage
+ * path, and NOTHING else. Anything that fails the path test is removed with its wrapper untouched.
+ *
+ * Like normalizeColors(), this runs BEFORE DOMPurify, on a detached document. That ordering is what
+ * makes the result provable rather than hopeful: by the time the allowlist is applied, every `src`,
+ * `srcset`, `onerror`, `loading`, `width` and `style` an image arrived with is already gone, and the
+ * only `data-sn-src` values in the tree are ones this function checked itself. DOMPurify removes but
+ * never adds, so `ALLOWED_ATTR` downstream cannot reintroduce one.
+ *
+ * That is also why the live signed URL never reaches storage. The editor's DOM holds
+ * `<img class="sn-image" data-sn-src="…" src="https://…?token=…">` while a note is on screen; every
+ * save runs through here, and the `src` is dropped on the way past. */
+function normalizeImages(root: Element): void {
+  root.querySelectorAll("img").forEach((el) => {
+    const path = el.getAttribute(IMAGE_PATH_ATTR) ?? "";
+    if (!isNoteImagePath(path)) {
+      el.remove();
+      return;
+    }
+    [...el.attributes].forEach((attr) => el.removeAttribute(attr.name));
+    el.setAttribute("class", IMAGE_CLASS);
+    el.setAttribute(IMAGE_PATH_ATTR, path);
+  });
+}
+
 /** Drops block wrappers that ended up with nothing in them at all.
  *
  * They come from the browser, not the writer: `execCommand("insertUnorderedList")` on paragraphs
@@ -226,10 +300,20 @@ export function sanitizeNoteHtml(html: string): string {
   if (!html) return "";
   const doc = new DOMParser().parseFromString(`<body>${html}</body>`, "text/html");
   normalizeColors(doc.body);
+  // AFTER the colour pass (which would strip `sn-image` as a class it does not recognise on an
+  // <img>) and BEFORE the empty-block pass, so a paragraph left hollow by a rejected image is
+  // cleared out in the same run rather than showing as a blank line until the next save.
+  normalizeImages(doc.body);
   dropEmptyBlocks(doc.body);
   return DOMPurify.sanitize(doc.body.innerHTML, {
     ALLOWED_TAGS,
-    ALLOWED_ATTR: ["class"],
+    // `data-sn-src` is named explicitly rather than let in by ALLOW_DATA_ATTR, which stays off: this
+    // is one attribute on one tag, not an open door for every data-* a paste might carry. It is
+    // declared URI-safe because normalizeImages() has already constrained it to a storage key made
+    // of [A-Za-z0-9._-] and a slash, and because nothing ever fetches it — DOMPurify's URI check is
+    // for values a browser will dereference, and this one is only ever read by our own code.
+    ALLOWED_ATTR: ["class", IMAGE_PATH_ATTR],
+    ADD_URI_SAFE_ATTR: [IMAGE_PATH_ATTR],
     ALLOW_DATA_ATTR: false,
     ALLOW_ARIA_ATTR: false,
     ALLOW_UNKNOWN_PROTOCOLS: false,
@@ -271,10 +355,10 @@ export function plainTextToHtml(text: string): string {
  * either step: the fetch is a third-party HTTP response, and the day it returns something with a
  * bracket in it is not the day to discover a note was built by concatenation.
  *
- * The trailing empty paragraph is the point of the whole function as far as the writer is
- * concerned. Without it the caret lands at the end of the quotation, and the next thing they type
- * — which is their own observation about the verse — becomes part of the Scripture. With it they
- * are already back on their own line.
+ * The trailing empty paragraph — withTrailingLine(), shared with the other two builders below — is
+ * the point of the whole function as far as the writer is concerned. Without it the caret lands at
+ * the end of the quotation, and the next thing they type, which is their own observation about the
+ * verse, becomes part of the Scripture. With it they are already back on their own line.
  */
 export function buildScriptureHtml(reference: string, passage: string): string {
   const doc = document.implementation.createHTMLDocument("");
@@ -291,11 +375,91 @@ export function buildScriptureHtml(reference: string, passage: string): string {
   quote.appendChild(doc.createTextNode(` ${passage}`));
   host.appendChild(quote);
 
+  return withTrailingLine(host, doc);
+}
+
+/** A trailing empty paragraph, and why every builder here ends with one.
+ *
+ * Without it the caret lands at the end of whatever was just inserted, and the next thing typed —
+ * the writer's own observation — becomes part of it. With it they are already back on their own
+ * line. RichTextEditor.insertHtml() puts the caret inside the LAST node of what it is handed,
+ * which is this. */
+function withTrailingLine(host: HTMLElement, doc: Document): string {
   const after = doc.createElement("p");
   after.appendChild(doc.createElement("br"));
   host.appendChild(after);
-
   return sanitizeNoteHtml(host.innerHTML);
+}
+
+/**
+ * A photographed slide, ready to be inserted into a note.
+ *
+ * Takes the storage PATH, never a URL — see the block comment on IMAGE_CLASS. The path is checked
+ * here as well as in the sanitiser, so a caller that got one from somewhere unexpected gets an
+ * empty string back and inserts nothing, rather than an <img> that silently vanishes on the next
+ * save and takes the writer's confidence in the feature with it.
+ *
+ * The image goes inside a paragraph rather than loose in the note. A bare <img> between two blocks
+ * is something a contenteditable caret can end up on either side of in ways that differ per engine;
+ * a paragraph is the same shape as every other line in the document, so the writer's next sentence
+ * lands underneath it and behaves like a sentence.
+ */
+export function buildNoteImageHtml(path: string): string {
+  if (!isNoteImagePath(path)) return "";
+  const doc = document.implementation.createHTMLDocument("");
+  const host = doc.createElement("div");
+  const line = doc.createElement("p");
+  const img = doc.createElement("img");
+  img.className = IMAGE_CLASS;
+  img.setAttribute(IMAGE_PATH_ATTR, path);
+  line.appendChild(img);
+  host.appendChild(line);
+  return withTrailingLine(host, doc);
+}
+
+/**
+ * Text read off a photograph, ready to be inserted into a note.
+ *
+ * Deliberately UNMARKED: plain paragraphs, no class, nothing to say where it came from. Text lifted
+ * off the pastor's slide is not a quotation from Scripture and it is not a citation — it is the
+ * writer's own note, typed by a machine because they could not type it in fifteen seconds. Marking
+ * it would imply a provenance the app cannot vouch for anyway, since OCR misreads words. Plain
+ * paragraphs also mean it is immediately editable in the same way as everything around it, which is
+ * the point: the writer fixes the two words the recogniser got wrong and moves on.
+ *
+ * Every line's text goes in through `textContent`, so nothing here is assembled as a string.
+ */
+export function buildNoteTextHtml(text: string): string {
+  const lines = text.split(/\r\n|\r|\n/).map((line) => line.trim()).filter((line) => line.length > 0);
+  if (lines.length === 0) return "";
+  const doc = document.implementation.createHTMLDocument("");
+  const host = doc.createElement("div");
+  lines.forEach((line) => {
+    const p = doc.createElement("p");
+    p.textContent = line;
+    host.appendChild(p);
+  });
+  return withTrailingLine(host, doc);
+}
+
+/** Every storage path a stored body points at, in document order and without duplicates.
+ *
+ * Used for two things: telling the list screen that a wordless note still has something in it, and
+ * cleaning the objects up when the note that referenced them is deleted. It reads the SANITISED
+ * projection, so a path it returns has already passed isNoteImagePath — nothing here can be talked
+ * into naming an object outside the caller's own folder. */
+export function noteImagePaths(body: string): string[] {
+  if (!body || !isRichBody(body)) return [];
+  const doc = new DOMParser().parseFromString(
+    `<body>${sanitizeNoteHtml(body.slice(RICH_PREFIX.length))}</body>`,
+    "text/html"
+  );
+  const seen = new Set<string>();
+  doc.body.querySelectorAll(`img.${IMAGE_CLASS}`).forEach((img) => {
+    const path = img.getAttribute(IMAGE_PATH_ATTR);
+    if (path) seen.add(path);
+  });
+  return [...seen];
 }
 
 /** Stored body -> HTML safe to put on screen. The ONLY function that should ever feed a sermon
@@ -349,8 +513,14 @@ export function noteBodyToPlainText(body: string): string {
  * Deliberately a tag strip rather than a parse: it runs on every keystroke to decide whether a
  * brand-new note is still blank, and it is never used to decide what is safe to render — only
  * whether there is anything here at all. Getting it wrong costs a stray empty row, not a security
- * hole. (Everything that reaches a screen goes through sanitizeNoteHtml instead.) */
+ * hole. (Everything that reaches a screen goes through sanitizeNoteHtml instead.)
+ *
+ * The <img> test is not a nicety. Strip the tags out of a note whose entire content is a
+ * photographed slide and what is left is the empty string — so buildStoredBody() would conclude the
+ * note had been emptied and write "" over it, and the picture taken during the sermon would be gone
+ * by the next autosave. A note can consist of nothing but a photograph. That is still a note. */
 export function isHtmlEmpty(html: string): boolean {
   if (!html) return true;
+  if (/<img\b/i.test(html)) return false;
   return html.replace(/<[^>]*>/g, "").replace(/&nbsp;|\u00a0/g, " ").trim() === "";
 }

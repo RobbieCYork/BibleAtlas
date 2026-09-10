@@ -24,6 +24,16 @@ interface RichTextEditorProps {
   /** Filled with the handle above. A named prop rather than the component's own `ref` so it is
    * obvious at every call site that this is a content API, not the DOM node. */
   apiRef?: RefObject<RichTextEditorHandle | null>;
+  /** Called with the editable node whenever something replaces or adds to its contents, so an
+   * owner can give elements that store a REFERENCE rather than a value something to show — today,
+   * the `sn-image` photographs, which hold a storage path and need a signed URL minted for them
+   * (see lib/noteImages.ts).
+   *
+   * A callback rather than the editor doing it itself: this component knows about marks and carets
+   * and has no business knowing about Supabase. Whatever the owner writes into the DOM is expected
+   * to be something the sanitiser drops again on save; the editor goes on reporting its own
+   * innerHTML upward and does not care what has been added to it. */
+  onContentMounted?: (root: HTMLElement) => void;
 }
 
 /** The commands this editor issues, and the state it reads back for the pressed look. */
@@ -101,7 +111,15 @@ function enclosingBlock(root: HTMLElement, node: Node): Element | null {
  * The parent already sanitises. This sanitises again on the way in, because the component sets
  * innerHTML and should be safe to hand any string — a caller that forgets is a bug, not a hole.
  * ==========================================================================*/
-export default function RichTextEditor({ initialHtml, onChange, placeholder, ariaLabel, className, apiRef }: RichTextEditorProps) {
+export default function RichTextEditor({
+  initialHtml,
+  onChange,
+  placeholder,
+  ariaLabel,
+  className,
+  apiRef,
+  onContentMounted,
+}: RichTextEditorProps) {
   const ref = useRef<HTMLDivElement | null>(null);
   /** Frozen at mount so a later render can never rewrite the element's contents underneath the
    * caret. `useState` with an initialiser, not `useMemo`, because this must NOT recompute. */
@@ -114,12 +132,37 @@ export default function RichTextEditor({ initialHtml, onChange, placeholder, ari
    * restores this first. Without it, the first tap after the keyboard opens does nothing. */
   const savedRange = useRef<Range | null>(null);
 
+  /** Held in a ref, and this is not a style choice. The layout effect below is the ONE place that
+   * writes innerHTML, and its dependency list must stay `[mountHtml]` — put a caller's function in
+   * there and an owner who passes an inline arrow (which is every owner) re-runs it on every
+   * render, rewriting the document out from under the caret. That is the exact bug the block
+   * comment above is about. */
+  const mounted = useRef(onContentMounted);
+  mounted.current = onContentMounted;
+
   /** Writes the starting document in once, directly. See the block comment above: this is
    * deliberately not `dangerouslySetInnerHTML`. Layout effect rather than `useEffect` so the text
    * is in place before the browser paints and the note never flashes empty on open. */
   useLayoutEffect(() => {
-    if (ref.current) ref.current.innerHTML = mountHtml;
+    if (!ref.current) return;
+    ref.current.innerHTML = mountHtml;
+    mounted.current?.(ref.current);
   }, [mountHtml]);
+
+  /** Turns OFF the drag handles Chrome and Safari put on an image inside a contenteditable.
+   *
+   * Not tidiness. Dragging one of those handles sets a width and a height on the <img>, and the
+   * sanitiser's allowlist carries neither — so the note would resize on screen, look right for the
+   * rest of the service, and come back the original size after the next save. A control that
+   * appears to work and silently does not is worse than no control, and nobody needs to resize a
+   * photograph of a slide in a note that already caps its height in CSS. */
+  useEffect(() => {
+    try {
+      document.execCommand("enableObjectResizing", false, "false");
+    } catch {
+      /* Not implemented in every engine; where it is not, there are no handles to turn off. */
+    }
+  }, []);
 
   const rememberSelection = useCallback(() => {
     const sel = window.getSelection();
@@ -316,6 +359,10 @@ export default function RichTextEditor({ initialHtml, onChange, placeholder, ari
       rememberSelection();
       emit();
       refreshActive();
+      // After emit(), not before: what the owner does here (mint a signed URL for a photograph and
+      // hang it on the <img>) is asynchronous and belongs to the DOM, not to the document being
+      // saved. The HTML already reported upward is the storable form, and stays that way.
+      mounted.current?.(el);
     },
     [emit, refreshActive, rememberSelection, restoreSelection]
   );

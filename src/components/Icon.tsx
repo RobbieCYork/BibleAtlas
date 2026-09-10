@@ -58,7 +58,8 @@ import type { ReactElement } from "react";
 import {
   Ban, Baseline, Bold, Briefcase, Cake, CalendarDays, Camera, Check, Clapperboard, Crown, Eye,
   EyeOff, FileText,
-  Flag, Flame, Gem, Globe, GraduationCap, Headphones, HeartCrack, House, Italic,
+  Flag, Flame, Gem, Globe, GraduationCap, Headphones, HeartCrack, House,
+  Image as ImageIcon, Italic,
   Link as LinkIcon, List, ListIndentDecrease, ListIndentIncrease, ListOrdered, Lock,
   LogOut,
   Medal, Menu, Mic, MicOff, Moon, Music, Palette, Pause, Pin, Play, Plus, Printer, RotateCcw,
@@ -134,6 +135,7 @@ export type IconName =
   | "tv"
   | "movie"
   | "camera"
+  | "image"
   | "thumbsUp"
   | "thumbsDown"
   | "flag"
@@ -692,6 +694,7 @@ const LIBRARY = {
   tv: Tv,
   movie: Clapperboard,
   camera: Camera,
+  image: ImageIcon,
   thumbsUp: ThumbsUp,
   thumbsDown: ThumbsDown,
   flag: Flag,

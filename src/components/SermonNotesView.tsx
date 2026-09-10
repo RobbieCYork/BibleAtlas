@@ -4,8 +4,19 @@ import BackButton from "./BackButton";
 import Icon from "./Icon";
 import RichTextEditor, { type RichTextEditorHandle } from "./RichTextEditor";
 import ScriptureInsertPicker from "./ScriptureInsertPicker";
+import NoteImageCapture from "./NoteImageCapture";
 import { track } from "../lib/analytics";
-import { buildScriptureHtml, buildStoredBody, isHtmlEmpty, noteBodyToHtml, noteBodyToPlainText } from "../lib/richText";
+import {
+  buildNoteImageHtml,
+  buildNoteTextHtml,
+  buildScriptureHtml,
+  buildStoredBody,
+  isHtmlEmpty,
+  noteBodyToHtml,
+  noteBodyToPlainText,
+  noteImagePaths,
+} from "../lib/richText";
+import { deleteNoteImages, resolveNoteImages } from "../lib/noteImages";
 
 interface SermonNotesViewProps {
   userId: string | null | undefined;
@@ -27,7 +38,14 @@ function defaultTitle(): string {
 
 function snippet(body: string): string {
   const trimmed = noteBodyToPlainText(body).trim().replace(/\s+/g, " ");
-  return trimmed.length > 100 ? `${trimmed.slice(0, 100)}…` : trimmed;
+  if (trimmed) return trimmed.length > 100 ? `${trimmed.slice(0, 100)}…` : trimmed;
+  // A note can be nothing but photographed slides, and an image has no words — so the plain-text
+  // projection is honestly empty and this row would otherwise read as a blank note. The count goes
+  // in the list only; noteBodyToPlainText is left alone, because it also feeds search, and a note
+  // should not become findable under a word its writer never typed.
+  const images = noteImagePaths(body).length;
+  if (images === 0) return "";
+  return images === 1 ? "1 photo" : `${images} photos`;
 }
 
 /** Sermon Notes are standalone saved documents (one per sermon), unlike My Notes which anchor to a
@@ -66,6 +84,10 @@ export default function SermonNotesView({ userId, searchQuery }: SermonNotesView
    * rather than over them, so opening it never hides the sentence being written and closing it
    * never has to restore anything. */
   const [insertingScripture, setInsertingScripture] = useState(false);
+  /** The photograph just taken or picked, waiting for the reader to say what to do with it. Null
+   * when the capture panel is closed. */
+  const [pendingPhoto, setPendingPhoto] = useState<File | null>(null);
+  const photoInput = useRef<HTMLInputElement | null>(null);
   const saveTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
   /** The editor's insert-at-the-caret handle. The editor is uncontrolled on purpose — writing to it
    * through state would put the caret back at the start on every keystroke — so a passage reaches
@@ -157,6 +179,7 @@ export default function SermonNotesView({ userId, searchQuery }: SermonNotesView
     setSaveStatus("idle");
     setConfirmingDelete(false);
     setInsertingScripture(false);
+    setPendingPhoto(null);
     setScreen("editor");
   };
 
@@ -173,6 +196,7 @@ export default function SermonNotesView({ userId, searchQuery }: SermonNotesView
     setSaveStatus("idle");
     setConfirmingDelete(false);
     setInsertingScripture(false);
+    setPendingPhoto(null);
     setScreen("editor");
   };
 
@@ -183,9 +207,30 @@ export default function SermonNotesView({ userId, searchQuery }: SermonNotesView
 
   const handleDelete = async () => {
     if (!activeId) return;
+    // The photographs go with the note. Read out of the CURRENT editor contents rather than the
+    // last saved row, so a picture added seconds ago — before the 800ms autosave landed — is not
+    // left in the bucket forever with nothing pointing at it. Deliberately not awaited and
+    // deliberately unable to fail loudly: the reader asked to delete a note, and a storage hiccup
+    // must not turn that into an error message about something they never thought about.
+    void deleteNoteImages(noteImagePaths(buildStoredBody(bodyHtml)));
     await supabase.from("sermon_notes").delete().eq("id", activeId);
     setEntries((prev) => prev.filter((e) => e.id !== activeId));
     setScreen("list");
+  };
+
+  /** One tap from the footer button to the phone's own Camera-or-Library sheet.
+   *
+   * `accept="image/*"` with NO `capture` attribute is what produces that sheet. Adding
+   * `capture="environment"` would force the camera and remove the library, which is wrong for the
+   * reader who took the picture with their normal camera app first, or who is writing the note up
+   * on the way home. The OS offers both in one sheet; there is no reason to ask first. */
+  const handlePhotoPicked = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0] ?? null;
+    // Cleared immediately so picking the SAME file twice still fires a change event.
+    e.target.value = "";
+    if (!file) return;
+    setInsertingScripture(false);
+    setPendingPhoto(file);
   };
 
   if (!userId) {
@@ -275,6 +320,12 @@ export default function SermonNotesView({ userId, searchQuery }: SermonNotesView
         placeholder="Start typing your notes…"
         ariaLabel="Sermon note body"
         apiRef={editorApi}
+        // Photographs are stored as a path, not a URL (see IMAGE_CLASS in lib/richText.ts), so
+        // something has to turn each one into a signed URL before it can be displayed. Runs after
+        // the note is loaded and after every insert. Not awaited: an image that is slow to sign
+        // should not hold up the editor, and one that cannot be signed leaves a gap rather than an
+        // error.
+        onContentMounted={(root) => void resolveNoteImages(root)}
       />
 
       {insertingScripture && (
@@ -292,10 +343,35 @@ export default function SermonNotesView({ userId, searchQuery }: SermonNotesView
         />
       )}
 
+      {pendingPhoto && userId && (
+        <NoteImageCapture
+          file={pendingPhoto}
+          userId={userId}
+          onCancel={() => setPendingPhoto(null)}
+          onInsertText={(text) => {
+            setPendingPhoto(null);
+            // Plain paragraphs, built and sanitised in lib/richText.ts and dropped in at the caret
+            // by the editor. Exactly the same route a quoted passage takes; nothing in this file
+            // assembles markup and nothing here writes the note body.
+            editorApi.current?.insertHtml(buildNoteTextHtml(text));
+            track("sermon_note.insert_image_text");
+          }}
+          onInsertImage={(path) => {
+            setPendingPhoto(null);
+            editorApi.current?.insertHtml(buildNoteImageHtml(path));
+            track("sermon_note.insert_image");
+          }}
+        />
+      )}
+
       {/* Robbie's layout: Insert Scripture bottom left, Delete moved over to the right. The row is
           rendered even for an unsaved note (which has nothing to delete yet) so the Insert button
-          does not jump across the screen the moment the first autosave lands. */}
+          does not jump across the screen the moment the first autosave lands. Add photo sits
+          beside Insert Scripture: both are "put something in the note that is not typing". */}
       <div className="sermon-notes-footer">
+        {/* Grouped, so `space-between` on the row puts the pair on the left and Delete on the right
+            rather than spreading three items evenly across the screen. */}
+        <div className="sermon-notes-insert-group">
         <button
           type="button"
           className="sermon-notes-insert-scripture"
@@ -305,6 +381,27 @@ export default function SermonNotesView({ userId, searchQuery }: SermonNotesView
           <Icon name="bible" inline />
           Insert Scripture
         </button>
+        <button
+          type="button"
+          className="sermon-notes-insert-scripture"
+          onClick={() => photoInput.current?.click()}
+        >
+          <Icon name="camera" inline />
+          Add photo
+        </button>
+        {/* The picker itself. Hidden and driven by the button above, so the whole thing is ONE tap
+            from the note to the phone's Camera-or-Library sheet — a slide is up for about fifteen
+            seconds and every extra screen in between is a slide missed. */}
+        <input
+          ref={photoInput}
+          type="file"
+          accept="image/*"
+          hidden
+          onChange={handlePhotoPicked}
+          aria-hidden="true"
+          tabIndex={-1}
+        />
+        </div>
         {!isNew && (
           <div className="sermon-notes-danger-zone">
             {confirmingDelete ? (
