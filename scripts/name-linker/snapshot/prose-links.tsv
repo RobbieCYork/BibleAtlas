@@ -649,8 +649,11 @@ location.archaeology.note|berea|594e863071	268	Paul	paul-of-tarsus
 location.archaeology.note|bethany|5f255cd7f2	321	Lazarus	lazarus-of-bethany
 location.archaeology.note|bethlehem|ff50993e30	210	Jesus	jesus-of-nazareth
 location.archaeology.note|cana|d4b8d7e474	372	Jesus	jesus-of-nazareth
-location.archaeology.note|capernaum|383f9c6795	220	Jesus	jesus-of-nazareth
-location.archaeology.note|capernaum|383f9c6795	498	Peter	simon-peter
+location.archaeology.note|capernaum|9c74286cd4	1233	Peter	simon-peter
+location.archaeology.note|capernaum|9c74286cd4	1326	Jesus	jesus-of-nazareth
+location.archaeology.note|capernaum|9c74286cd4	1805	Peter	simon-peter
+location.archaeology.note|capernaum|9c74286cd4	2137	Peter	simon-peter
+location.archaeology.note|capernaum|9c74286cd4	439	Jesus	jesus-of-nazareth
 location.archaeology.note|cilicia|921e160cc1	297	Paul	paul-of-tarsus
 location.archaeology.note|corinth|c469c3d2f3	478	Paul	paul-of-tarsus
 location.archaeology.note|corinth|c469c3d2f3	512	Gallio	gallio
@@ -663,7 +666,6 @@ location.archaeology.note|cyprus|f36d683586	485	Paul	paul-of-tarsus
 location.archaeology.note|cyprus|f36d683586	96	Sergius Paulus	sergius-paulus
 location.archaeology.note|damascus|90ae9b1f85	365	Paul	paul-of-tarsus
 location.archaeology.note|damascus|90ae9b1f85	476	Paul	paul-of-tarsus
-location.archaeology.note|galilee|7b6714ff4d	338	Jesus	jesus-of-nazareth
 location.archaeology.note|galilee|7b6714ff4d	444	Peter	simon-peter
 location.archaeology.note|galilee|7b6714ff4d	454	Andrew	andrew-apostle
 location.archaeology.note|galilee|7b6714ff4d	516	Jesus	jesus-of-nazareth
@@ -690,7 +692,6 @@ location.archaeology.note|rome|8a361df58b	165	Peter	simon-peter
 location.archaeology.note|rome|8a361df58b	175	Paul	paul-of-tarsus
 location.archaeology.note|samaria|d3c50dcc9f	179	Augustus	caesar-augustus
 location.archaeology.note|samaria|d3c50dcc9f	79	Herod the Great	herod-the-great
-location.archaeology.note|sea-of-galilee|d3c548bfb4	105	Jesus	jesus-of-nazareth
 location.archaeology.note|sea-of-galilee|d3c548bfb4	544	Jesus	jesus-of-nazareth
 location.archaeology.note|sychar|26ea8e7f47	0	Jacob	jacob
 location.archaeology.note|tarsus|385025d3d8	552	Paul	paul-of-tarsus
@@ -2776,7 +2777,12 @@ poi.archaeology.note|basilica-st-john|b1fb87b1d9	154	John	john-the-apostle
 poi.archaeology.note|basilica-st-john|b1fb87b1d9	268	John	john-the-apostle
 poi.archaeology.note|basilica-st-paul-outside-walls-rome|b3131ec270	178	Paul	paul-of-tarsus
 poi.archaeology.note|basilica-st-paul-outside-walls-rome|b3131ec270	560	Paul	paul-of-tarsus
-poi.archaeology.note|caesarea-maritima|a39e0f20a7	426	Pontius Pilate	pontius-pilate
+poi.archaeology.note|caesarea-maritima|cd66de17e8	1476	Tiberius	tiberius-caesar
+poi.archaeology.note|caesarea-maritima|cd66de17e8	1565	Paul	paul-of-tarsus
+poi.archaeology.note|caesarea-maritima|cd66de17e8	1606	Felix	antonius-felix
+poi.archaeology.note|caesarea-maritima|cd66de17e8	1616	Festus	porcius-festus
+poi.archaeology.note|caesarea-maritima|cd66de17e8	1634	Peter	simon-peter
+poi.archaeology.note|caesarea-maritima|cd66de17e8	1669	Cornelius	cornelius-the-centurion
 poi.archaeology.note|caesarea-philippi|dad29b93e4	184	Herod the Great	herod-the-great
 poi.archaeology.note|caesarea-philippi|dad29b93e4	218	Augustus	caesar-augustus
 poi.archaeology.note|catacombs-of-priscilla-rome|781c038e61	456	Mary	mary-mother-of-jesus
@@ -2808,7 +2814,8 @@ poi.archaeology.note|house-of-virgin-mary-ephesus|e9787a8c1c	438	Mary	mary-mothe
 poi.archaeology.note|jericho|33e63b7af2	319	Joshua	joshua
 poi.archaeology.note|machaerus|5964fad5ca	169	John the Baptist	john-the-baptist
 poi.archaeology.note|machaerus|5964fad5ca	277	John	john-the-baptist
-poi.archaeology.note|magdala|a1564fea8b	416	Mary Magdalene	mary-magdalene
+poi.archaeology.note|magdala|1ed2e6226b	1619	Mary Magdalene	mary-magdalene
+poi.archaeology.note|magdala|1ed2e6226b	424	Jesus	jesus-of-nazareth
 poi.archaeology.note|mamertine-prison-rome|cf4c222561	1355	Peter	simon-peter
 poi.archaeology.note|mamertine-prison-rome|cf4c222561	1364	Paul	paul-of-tarsus
 poi.archaeology.note|mamertine-prison-rome|cf4c222561	165	Peter	simon-peter
@@ -5145,6 +5152,7 @@ timelineEvent.datingNotes|wld-rom-claudius-emperor|9067ebbf87	406	Paul	paul-of-t
 timelineEvent.datingNotes|wld-rom-claudius-emperor|9067ebbf87	577	Claudius	claudius-caesar
 timelineEvent.datingNotes|wld-rom-martyrdom-peter-paul|3ec6ed9441	152	Nero	nero-caesar
 timelineEvent.datingNotes|wld-rom-martyrdom-peter-paul|3ec6ed9441	216	Peter	simon-peter
+topic.section|alexamenos-graffito|d8dfceea10	444	Paul	paul-of-tarsus
 topic.section|angels|1acfcbaf96	164	Jacob	jacob
 topic.section|angels|1acfcbaf96	279	Jesus	jesus-of-nazareth
 topic.section|angels|1acfcbaf96	368	Jesus	jesus-of-nazareth
@@ -5178,6 +5186,8 @@ topic.section|bubastite-portal|b1f8020da7	30	Rehoboam	rehoboam
 topic.section|bubastite-portal|b1f8020da7	406	Solomon	solomon
 topic.section|bubastite-portal|c66ad548d4	274	Rehoboam	rehoboam
 topic.section|bubastite-portal|e9b0ff66ca	115	Rehoboam	rehoboam
+topic.section|caiaphas-ossuary|678d93794a	332	Jesus	jesus-of-nazareth
+topic.section|caiaphas-ossuary|75beaa5359	694	Caiaphas	caiaphas
 topic.section|canaanites|590b3c00fc	17	Abraham	abraham
 topic.section|canaanites|590b3c00fc	222	Abraham	abraham
 topic.section|canaanites|590b3c00fc	377	Joshua	joshua
@@ -5263,6 +5273,9 @@ topic.section|ekron-royal-dedicatory-inscription|4a10da3753	467	Hezekiah	hezekia
 topic.section|elephantine-papyri|59153d41af	456	Nehemiah	nehemiah
 topic.section|elephantine-papyri|bc07a091b4	751	Jeremiah	jeremiah
 topic.section|epic-of-gilgamesh|de015d5350	255	Abraham	abraham
+topic.section|galilee-boat|132067bc4f	273	Jesus	jesus-of-nazareth
+topic.section|galilee-boat|869b76d25c	26	Jesus	jesus-of-nazareth
+topic.section|galilee-boat|cf71193276	155	Jesus	jesus-of-nazareth
 topic.section|gehenna|2ebd373e2c	911	Jesus	jesus-of-nazareth
 topic.section|gehenna|4c4c505230	0	Josiah	josiah
 topic.section|gehenna|4c4c505230	8	Manasseh	manasseh-king-of-judah
@@ -5454,6 +5467,13 @@ topic.section|pharisees-and-sadducees-compared|ed876479a7	117	Moses	moses
 topic.section|philistines|d684aafc59	0	Samson	samson
 topic.section|philistines|d684aafc59	377	David	david
 topic.section|philistines|d684aafc59	514	David	david
+topic.section|pilate-ring|056efcaf93	237	Pilate	pontius-pilate
+topic.section|pilate-ring|056efcaf93	252	Pilate	pontius-pilate
+topic.section|pilate-ring|14c94700b2	278	Pontius Pilate	pontius-pilate
+topic.section|pilate-ring|44a53a036f	24	Pontius Pilate	pontius-pilate
+topic.section|pilate-ring|51d920df4d	670	Pilate	pontius-pilate
+topic.section|pilate-ring|d72595f6aa	59	Pontius Pilate	pontius-pilate
+topic.section|pilate-ring|f1ec83cdf7	706	Pilate	pontius-pilate
 topic.section|pilate-stone|05a44d050f	220	Tiberius	tiberius-caesar
 topic.section|pilate-stone|05a44d050f	394	Pilate	pontius-pilate
 topic.section|pilate-stone|69dc9ce4a3	23	Pilate	pontius-pilate
@@ -5463,6 +5483,13 @@ topic.section|pilate-stone|69dc9ce4a3	52	Luke	luke-evangelist
 topic.section|pilate-stone|e2be0f8e61	147	Pontius Pilate	pontius-pilate
 topic.section|pilate-stone|e2be0f8e61	282	Tiberius	tiberius-caesar
 topic.section|pilate-stone|fcafd15513	160	Herod the Great	herod-the-great
+topic.section|politarch-inscriptions|5913d2300e	196	Luke	luke-evangelist
+topic.section|politarch-inscriptions|72dfeb9c28	86	Luke	luke-evangelist
+topic.section|politarch-inscriptions|a42d16c2cc	41	Paul	paul-of-tarsus
+topic.section|politarch-inscriptions|a42d16c2cc	50	Silas	silas
+topic.section|politarch-inscriptions|afa367e669	56	Luke	luke-evangelist
+topic.section|politarch-inscriptions|d6a1721288	389	Luke	luke-evangelist
+topic.section|politarch-inscriptions|ee434842a9	183	Luke	luke-evangelist
 topic.section|romans|1a0b26f70d	106	Herod the Great	herod-the-great
 topic.section|romans|1a0b26f70d	175	Pontius Pilate	pontius-pilate
 topic.section|romans|1a0b26f70d	265	Caesar Augustus	caesar-augustus
@@ -5507,6 +5534,15 @@ topic.section|septuagint|0adc661a23	156	Esther	esther
 topic.section|septuagint|0adc661a23	167	Daniel	daniel
 topic.section|septuagint|95977a2c7a	326	Jeremiah	jeremiah
 topic.section|septuagint|f8b64d96b0	551	Job	job
+topic.section|sergius-paulus-inscriptions|05432f045d	117	Claudius	claudius-caesar
+topic.section|sergius-paulus-inscriptions|4492fdc8a6	118	Sergius Paulus	sergius-paulus
+topic.section|sergius-paulus-inscriptions|4492fdc8a6	390	Sergius Paulus	sergius-paulus
+topic.section|sergius-paulus-inscriptions|756784300e	342	Paul	paul-of-tarsus
+topic.section|sergius-paulus-inscriptions|756784300e	351	Barnabas	barnabas
+topic.section|sergius-paulus-inscriptions|9da496d635	165	Sergius Paulus	sergius-paulus
+topic.section|sergius-paulus-inscriptions|c902189bc2	86	Sergius Paulus	sergius-paulus
+topic.section|sergius-paulus-inscriptions|ca3495f229	251	Luke	luke-evangelist
+topic.section|sergius-paulus-inscriptions|ddca383bed	169	Claudius	claudius-caesar
 topic.section|shema-seal|fb1fddd58a	380	Solomon	solomon
 topic.section|siloam-inscription|10d06d1080	0	Hezekiah	hezekiah
 topic.section|siloam-inscription|3f6e3bad37	126	Hezekiah	hezekiah

@@ -6486,4 +6486,557 @@ export const topics: Topic[] = [
       { label: "Encyclopaedia Britannica: Sadducee", url: "https://www.britannica.com/topic/Sadducee" },
     ],
   },
+  {
+    id: "caiaphas-ossuary",
+    name: "Caiaphas Ossuary",
+    // NOT registered: "Caiaphas" — that is the high priest, who already owns it in people.ts.
+    alternateNames: ["Joseph son of Caiaphas Ossuary"],
+    category: "discovery",
+    role: "An Inscribed Limestone Bone Box from a First-Century Jerusalem Tomb",
+    summary:
+      "A carved ossuary from a tomb a bulldozer opened in 1990, inscribed twice with the family name of the high priest who handed Jesus to Pilate. Whose bones it held is a better question than most retellings allow.",
+    sections: [
+      {
+        heading: "A Bulldozer Opened It",
+        paragraphs: [
+          "In November 1990 a bulldozer cutting a road for a recreation park in the Peace Forest, on the southern edge of Jerusalem near North Talpiot, broke through the roof of a rock-cut burial cave. The construction superintendent stopped work and reported it, and the Israel Antiquities Authority sent Z. Greenhut to excavate what was left. What was left was already disturbed: twelve limestone ossuaries lay in four burial niches, six of them displaced, some by robbers in antiquity and some by the machine. A good deal of the archaeology of Jerusalem happens exactly this way, because the living city is built on top of its own cemeteries and the archaeologist arrives after the digger.",
+          "Greenhut published the tomb in the journal 'Atiqot in 1992, and R. Reich published its inscriptions in the same volume. The most elaborate of the boxes was carved with rosettes and carried a name scratched into the stone twice, once on a plain long side and once on the decorated narrow end. Inside were the remains of six people: two infants, a young child, a teenage boy, an adult woman, and a man of about sixty. The ossuary is in the Israel Museum in Jerusalem today. The bones were reburied on the Mount of Olives, as Israeli practice requires.",
+        ],
+      },
+      {
+        heading: "The Name Cut Twice",
+        paragraphs: [
+          "The two inscriptions do not spell the name the same way. One reads Yehosef bar Qafa; the other gives a fuller form of the family name, Qayafa. Both are Aramaic forms of the name that reaches the New Testament in Greek as Kaiaphas; Josephus, writing in Greek, calls the high priest of those years Ioseph, also known as Kaiaphas. Before 1990 the family was known only from texts. It is now known from a tomb as well, and the tomb is in the right city, in the right century, in the burial style the priestly families of Jerusalem used — a body left in a niche for a year, then the bones gathered into a limestone box and the niche reused.",
+          "A second object has since filled in the family picture without settling anything about this box. In 2011 the Israel Antiquities Authority authenticated an ossuary seized from antiquities robbers in the Elah Valley, inscribed for a woman named as the daughter of a son of Qayafa, and describing the family as priests of the course of Maaziah from Beth Imri. That is a priestly course, one of the twenty-four rotations that served in the temple, and it attaches the family to the temple establishment independently of the Gospels. It is also unprovenanced — taken from thieves, not from a floor — which limits what can be built on it.",
+        ],
+      },
+      {
+        heading: "Whose Bones?",
+        paragraphs: [
+          "This is where the popular retelling stops and the scholarship starts. Nothing on the box says high priest. The phrase Yehosef bar Qafa need not even mean that Qafa was his father: R. Reich has pointed out that it reads just as naturally as Yehosef of the Qafa family, a family nickname rather than a patronymic. And the high priest of the Gospels was one man in a priestly dynasty in which that first name recurs. A grandfather and a grandson would each have been a Yehosef of the Qafa family too.",
+          "E. Puech has argued against the identification on two grounds: the Aramaic word for the priest is missing from an inscription where a high priest's family might be expected to use it, and the tomb as a whole is plainer than a high-priestly family tomb ought to be. Others have questioned the reading itself, since the letters are lightly and informally cut — probably by relatives rather than by the workshop — and in a name this rare it is genuinely hard to tell a yod from a waw. On the other side, C. A. Evans, who thinks the identification likely, still writes that it could be the ossuary of the high priest, and the word carrying that sentence is could. H. K. Bond's book-length study of Caiaphas is where the whole question is set out at length rather than asserted in a line.",
+          "Here is the app's own position, and the two halves of it are not the same size. The family identification is strong and should be stated plainly: this is a burial cave of the Qafa family, and that family is the one the Gospels and Josephus name. Whether the sixty-year-old man in the decorated box is the high priest who questioned Jesus is a further step, and it is a step the evidence permits rather than compels. It is worth noticing how much the careful version still gives a reader. The Gospels put a named, datable, locatable human being at the head of the temple establishment in Jerusalem, and the ground under a public park in the same city gave up his family's bone boxes. That does not establish that anything the Gospels narrate took place. It is the ordinary texture of a real place in a real century — which is what a document telling the truth about the world it describes tends to leave lying around.",
+        ],
+      },
+    ],
+    verses: [
+      { reference: "Luke 3:2", note: "Dating the start of John's ministry by the high priesthood of Annas and Caiaphas" },
+      { reference: "Matthew 26:3", note: "The chief priests gather in the court of the high priest" },
+      { reference: "Matthew 26:57", note: "Jesus taken to Caiaphas" },
+      { reference: "John 11:49-50", note: "Better that one man die for the people" },
+      { reference: "John 18:13-14", note: "Annas as father-in-law of Caiaphas — the family, not just the man" },
+      { reference: "Acts 4:6", note: "The high-priestly family named together after the resurrection" },
+    ],
+    sources: [
+      { label: "Wikipedia: Caiaphas ossuary", url: "https://en.wikipedia.org/wiki/Caiaphas_ossuary" },
+      { label: "Israel Museum, Jerusalem: Ossuary of Caiaphas", url: "https://www.imj.org.il/en/exhibitions/ossuary-caiaphas-high-priest-18-36-ce" },
+    ],
+    discovery: {
+      objectType: "An ornately carved limestone ossuary, about 75 cm long, inscribed twice with a form of the family name Qafa / Qayafa",
+      findSite: "A rock-cut family burial cave in the Peace Forest, North Talpiot, southern Jerusalem",
+      findSiteId: "jerusalem",
+      findSiteKind: "location",
+      foundYear: "November 1990",
+      foundBy: "No archaeologist found it. A bulldozer cutting a park road broke into the tomb; the Israel Antiquities Authority then sent Z. Greenhut to excavate it",
+      objectDate: "First century AD — within the roughly ninety years when Jerusalem buried its dead in ossuaries, c. 20 BC to AD 70",
+      objectDateCertainty: "traditional",
+      currentLocation: "Israel Museum, Jerusalem. The bones it held were reburied on the Mount of Olives",
+    },
+    citations: [
+      {
+        tier: "institution",
+        label: "Israel Museum, Jerusalem — Ossuary of Caiaphas the High Priest",
+        url: "https://www.imj.org.il/en/exhibitions/ossuary-caiaphas-high-priest-18-36-ce",
+        credit: "The Israel Museum, Jerusalem",
+        detail: "The holding institution's own page, describing the object as coming from a family burial cave in southern Jerusalem bearing the name Joseph bar Caiaphas",
+        supports: "Current location and the museum's own description of the object",
+      },
+      {
+        tier: "scholarly",
+        label: "Z. Greenhut, \"The 'Caiaphas' Tomb in North Talpiyot, Jerusalem\"",
+        credit: "Zvi Greenhut, Israel Antiquities Authority",
+        detail: "'Atiqot 21 (1992), 63-71 — the excavation report. The IAA's free online 'Atiqot archive begins at much later volumes, so no URL is given rather than a guessed one",
+        supports: "Discovery circumstances, the tomb plan, the twelve ossuaries and their contents",
+      },
+      {
+        tier: "scholarly",
+        label: "R. Reich, \"Ossuary Inscriptions from the 'Caiaphas' Tomb\"",
+        credit: "Ronny Reich",
+        detail: "'Atiqot 21 (1992), 72-77 — the epigraphic publication, including the reading of the name as a family name rather than necessarily a patronymic",
+        supports: "The two spellings of the name and how the phrase should be construed",
+      },
+      {
+        tier: "scholarly",
+        label: "H. K. Bond, Caiaphas: Friend of Rome and Judge of Jesus?",
+        credit: "Helen K. Bond",
+        detail: "Westminster John Knox Press, 2004 — the standard book-length treatment, where the objections to the identification are laid out in full",
+        supports: "That the identification is treated as an open question in the scholarship, not a settled one",
+      },
+      {
+        tier: "encyclopedic",
+        label: "Wikipedia: Caiaphas ossuary",
+        url: "https://en.wikipedia.org/wiki/Caiaphas_ossuary",
+      },
+    ],
+    reflectionPrompt:
+      "The man who said it was better for one man to die for the people was more right than he knew. Where has God used a decision made for entirely the wrong reasons?",
+  },
+  {
+    id: "pilate-ring",
+    name: "Pilate Ring",
+    // NOT registered: "Pilate" — that is Pontius Pilate the person, who already owns it.
+    category: "discovery",
+    role: "A Copper-Alloy Sealing Ring with a Contested Greek Inscription",
+    summary:
+      "A cheap ring dug at Herodium in 1968, cleaned and read fifty years later as \"of Pilate\" — a reading one team of specialists rejected outright in 2023 and another defended in 2026. Even the people who published it never claimed it was Pilate's own.",
+    sections: [
+      {
+        heading: "Fifty Years in a Storeroom",
+        paragraphs: [
+          "The ring came out of the ground at Herodium in the 1968-69 season, in the excavation directed by G. Foerster, and then did what most small metal finds do: it went into a box. It was cleaned and examined only decades later, and published in the Israel Exploration Journal in 2018 by S. Amorai-Stark, M. Hershkovitz, G. Foerster, Y. Kalman, R. Chachy and R. Porat. Their title tells you what they thought the object was — an inscribed copper-alloy finger ring depicting a krater. It is small, about 1.3 cm high, made of a cheap alloy, and engraved with a two-handled vessel framed by Greek letters. L. Di Segni read the letters as Pilato, which in that form would mean of Pilate.",
+          "The press reported that Pontius Pilate's ring had been found. The excavation report said something close to the opposite. Its authors noted that it is unlikely the powerful and wealthy prefect of Judea would have worn a thin, all copper-alloy sealing ring, and that the material and the findspot fit a Jewish owner better than a Roman one. That gap between the report and the headline is worth keeping in view for the rest of this article, because almost every popular account of the ring is downstream of the headline.",
+        ],
+      },
+      {
+        heading: "What It Would Mean If the Reading Holds",
+        paragraphs: [
+          "A sealing ring is an administrative tool, not a status symbol, and it did not have to belong to the person whose name it carried. Its purpose is to press a name into wax or soft clay closing a jar, a bag or a document. A ring reading of Pilate, or for Pilate, is what a clerk, a steward or a slave in the orbit of the governor's administration would use to mark material moving to or from him. That is the reading C. E. Bonesho argued for in the Palestine Exploration Quarterly in 2026: she takes the omicron not as a misspelled Greek genitive but as the Latin dative PILATO transliterated into Greek letters by an engraver whose Latin was elementary, the Latin O and the Greek omicron being easy to confuse. On that reading the wearer was most likely an enslaved or formerly enslaved person in the household of a local Judean notable who had some part in the administrative work of Roman Judea.",
+          "It is worth being clear what this would and would not add. Pontius Pilate is not a figure whose existence depends on the ring. He is named on a limestone block found at Caesarea Maritima in 1961 that gives his office in his own lifetime, and he is described by Tacitus, Josephus and Philo. A sealing ring would add texture to that picture — an administration with paperwork, staff and seals, reaching out to a fortress-palace in the Judean desert — rather than adding a person to history. Texture is a real thing to gain. It is simply a much smaller thing than the headline promised.",
+        ],
+      },
+      {
+        heading: "The Reading Is Contested, and That Is the Story",
+        paragraphs: [
+          "In 2023 W. Eck and A. Ecker published a paper in 'Atiqot with a title that leaves nothing to interpretation: not a signet ring of Pontius Pilatus. Their objections stack. Several of the letters are of uncertain identity, so the reading Pilato is possible but not secure. The text sits in two lines around the vessel, and it is not clear the two lines form a single word at all — they suggest the possibility of two separate words, at least one of them an abbreviation. Beyond the letters, they argue that everything known about Roman provincial administration in the first half of the first century tells against a governor's name appearing in Greek in an administrative context: the Caesarea block naming Pilate is in Latin, which is what a Roman official's own inscription looks like. They add that the krater was at that period a Jewish rather than a Roman symbol, and that the workmanship is poor. They are candid that they cannot supply a better reading of their own.",
+          "Bonesho's 2026 article is a direct reply. She argues that the letter placement is a consequence of engraving around the vessel rather than evidence of two separate words, and that the spelling anomaly which looks like an error in Greek is exactly what a Latin dative rendered by a learner would look like. So the position as this is written is a live disagreement between named specialists, published in two peer-reviewed journals three years apart, over an object with no comparable parallel to settle it.",
+          "Where the app stands. This article is not going to adjudicate an epigraphic dispute between W. Eck and C. E. Bonesho, and it would be dishonest to pretend it could. What it can do is refuse to spend the ring's credibility in advance. Any page that tells you a ring belonging to Pontius Pilate has been found is telling you something its own publishers explicitly declined to say, on a reading that a serious scholar has rejected in print. The trustworthiness of Scripture is not resting on this object and never was; treating a contested reading as though it were is the kind of borrowing that has to be paid back later, usually in front of a reader who has just discovered the 2023 article.",
+        ],
+      },
+    ],
+    verses: [
+      { reference: "Luke 3:1", note: "Pilate named as governor of Judea, dating the ministry of John" },
+      { reference: "Matthew 27:1-2", note: "Jesus delivered to Pilate the governor" },
+      { reference: "John 19:19-22", note: "Pilate's own written notice, and his refusal to change it" },
+    ],
+    sources: [
+      { label: "Biblical Archaeology Society: Pontius Pilate's Ring Reexamined", url: "https://www.biblicalarchaeology.org/daily/ancient-cultures/ancient-israel/pontius-pilates-ring-reexamined/" },
+      { label: "Inscriptions of Israel/Palestine (Brown University): the Herodium ring", url: "https://search.inscriptionsisraelpalestine.org/inscriptions/hero0005" },
+    ],
+    discovery: {
+      objectType: "A small copper-alloy sealing ring, about 1.3 cm high, engraved with a two-handled vessel (a krater) framed by Greek letters",
+      findSite: "Herodium, the fortress-palace Herod built in the desert south of Bethlehem",
+      findSiteId: "herodium",
+      findSiteKind: "poi",
+      foundYear: "Excavated 1968-69; the inscription was cleaned, read and published only in 2018",
+      foundBy: "Excavated in the Herodium campaign directed by G. Foerster. Published by S. Amorai-Stark, M. Hershkovitz, G. Foerster, Y. Kalman, R. Chachy and R. Porat, with the inscription read by L. Di Segni",
+      objectDate: "First century AD; the Brown University epigraphic database dates it AD 1-50",
+      objectDateCertainty: "traditional",
+      currentLocation: "With the Herodium excavation finds. No public object number or display location could be verified, and none is invented here",
+    },
+    citations: [
+      {
+        tier: "institution",
+        label: "Inscriptions of Israel/Palestine — HERO0005, the Herodium ring",
+        url: "https://search.inscriptionsisraelpalestine.org/inscriptions/hero0005",
+        credit: "Brown University Center for Digital Scholarship; project directed by Michael L. Satlow",
+        detail: "The epigraphic database record: copper-alloy ring, Herodion, dated AD 1-50, diplomatic reading PI LATO, editorial reading Pilatou",
+        supports: "The object's dimensions, date range, and the reading as the database records it",
+      },
+      {
+        tier: "scholarly",
+        label: "S. Amorai-Stark et al., \"An Inscribed Copper-Alloy Finger Ring from Herodium Depicting a Krater\"",
+        credit: "Shua Amorai-Stark, Malka Hershkovitz, G. Foerster, Yakov Kalman, Rachel Chachy and Roi Porat",
+        detail: "Israel Exploration Journal 68/2 (2018), 208-220 — the editio princeps. It is the publication that reads the letters as Pilato and, in the same breath, judges it unlikely that the prefect himself wore a thin copper-alloy ring",
+        supports: "Excavation date, material, the reading, and what the publishers did and did not claim",
+        paywalled: true,
+      },
+      {
+        tier: "scholarly",
+        label: "W. Eck and A. Ecker, \"Not a 'Signet Ring' of Pontius Pilatus\"",
+        url: "https://publications.iaa.org.il/atiqot/vol110/iss1/8/",
+        credit: "Werner Eck (University of Cologne) and Avner Ecker (Bar-Ilan University)",
+        detail: "'Atiqot 110 (2023), article 8, published by the Israel Antiquities Authority. Argues that the reading is insecure, that the two lines may not form one word, and that Greek in a first-half-of-the-first-century provincial administrative context tells against any link to Pilate",
+        supports: "The 2023 rejection of the reading and the reasons given for it",
+      },
+      {
+        tier: "scholarly",
+        label: "C. E. Bonesho, \"The Pilate Ring: A Reconsideration\"",
+        credit: "Catherine E. Bonesho, University of California, Los Angeles",
+        detail: "Palestine Exploration Quarterly (2026), DOI 10.1080/00310328.2026.2695544. The publisher refuses automated requests, so no URL is given. Argues PILATO is a Latin dative transliterated into Greek and that the wearer was an enslaved or formerly enslaved administrative worker",
+        supports: "The 2026 defence of the reading and the dative argument",
+        paywalled: true,
+      },
+      {
+        tier: "reference",
+        label: "University of California, Los Angeles: \"What's in an 'O'?\"",
+        url: "https://phys.org/news/2026-09-unusual-greek-mystery-pontius-pilate.html",
+        credit: "University of California, Los Angeles, via Phys.org, 2 September 2026",
+        detail: "The university's own account of Bonesho's article, including her reply to the 2023 objection",
+        supports: "The omicron-for-omega argument and the proposed identity of the wearer",
+      },
+      {
+        tier: "reference",
+        label: "Biblical Archaeology Society: \"Pontius Pilate's Ring Reexamined\"",
+        url: "https://www.biblicalarchaeology.org/daily/ancient-cultures/ancient-israel/pontius-pilates-ring-reexamined/",
+        credit: "Biblical Archaeology Society",
+        detail: "A popular summary of the Eck and Ecker objections, including the Latin-versus-Greek point and the krater as a Jewish symbol",
+        supports: "The substance of the 2023 objections in accessible form",
+      },
+    ],
+    reflectionPrompt:
+      "Pilate asked what truth was and did not wait for an answer. Where are you asking a real question, and where are you asking one you would rather not have answered?",
+  },
+  {
+    id: "galilee-boat",
+    name: "Galilee Boat",
+    alternateNames: ["Ancient Galilee Boat", "Jesus Boat", "Kinneret Boat"],
+    category: "discovery",
+    role: "A First-Century Fishing Boat from the Sea of Galilee",
+    summary:
+      "A working boat from the lake Jesus taught beside, uncovered by a drought in 1986 — and given a name by the press that its excavators never used.",
+    sections: [
+      {
+        heading: "A Drought, Two Brothers and a Race Against the Water",
+        paragraphs: [
+          "The winter of 1985-86 was dry, and the Sea of Galilee fell far enough to expose stretches of lakebed that had been under water for two thousand years. In January 1986, M. and Y. Lufan, two brothers from Kibbutz Ginosar who fished the lake and hunted the shore for antiquities, saw the outline of a hull in the mud near Magdala and reported it. The Israel Department of Antiquities sent S. Wachsmann, its inspector of underwater antiquities. What followed was a rescue excavation carried out around the clock over roughly a fortnight, with the water expected back and news of the find already out; the accounts differ on whether it took ten, eleven or twelve days, which tells you something about the conditions.",
+          "Waterlogged ancient wood has the consistency of wet cardboard and disintegrates as it dries. The crew dug the hull free by hand, wrapped it in fibreglass and polyurethane foam so that the whole shell became buoyant, and floated it along the shore to Kibbutz Ginosar. It then sat in a chemical bath for over a decade while polyethylene glycol, a synthetic wax, slowly replaced the water in the cell walls. It went on permanent display in 2000 in the Yigal Allon Museum at Ginosar, under the name the museum gave it: the Ancient Galilee Boat. The full excavation report fills a whole volume of the journal 'Atiqot.",
+        ],
+      },
+      {
+        heading: "What a Hull Tells You That a Text Cannot",
+        paragraphs: [
+          "The boat is about 8.2 m long and 2.3 m wide, built shell-first with mortise-and-tenon joinery in the Mediterranean manner, and patched together from several different species of timber — a sign of scarce or salvaged wood, and of a hull repaired over a long working life. Radiocarbon puts it at about 40 BC give or take eighty years. Pottery found with it, the nails, and the construction technique point to somewhere in the range 50 BC to AD 50, and the wear suggests it stayed in service for decades before it was stripped of anything reusable and left in the shallows.",
+          "That is the kind of boat the Gospels are describing. It carried a crew of perhaps five, with room for a dozen or so people; it could be worked with oars and carried a sail; and it had a small raised stern deck, which is the detail readers reach for, because Mark 4:38 puts Jesus asleep in the stern on a cushion while the storm fills the boat. The value of the find is that it converts a set of scenes people picture vaguely into an object with dimensions. When Mark 1 has two pairs of brothers leave their nets and their father in the boat with the hired men, this is roughly the vessel and roughly the size of operation being abandoned.",
+        ],
+      },
+      {
+        heading: "It Is Not the Jesus Boat",
+        paragraphs: [
+          "The name almost everyone knows it by was not chosen by anyone who excavated it. Once word spread that a first-century boat had surfaced on the shore where Jesus taught, the international press dubbed it the Jesus Boat, and the label stuck to guidebooks, tour signage and a good deal of merchandise. The excavation report calls it an ancient boat from the Sea of Galilee. The museum that owns it calls it the Ancient Galilee Boat. This article uses those names for the same reason they do.",
+          "Nothing ties this hull to Jesus or to any person named in the Gospels. There is no inscription, no cargo, no wreck event, nothing that connects it to a narrated moment. The lake supported a substantial fishing industry with a fleet of such boats, of which this is the one that happened to be buried in mud rather than rotting away. The odds against any single surviving hull being one named in a text are enormous, and no one involved in the excavation has ever claimed otherwise. What the boat establishes is a type, not an incident.",
+          "One smaller caution, since the app cites the museum's own page. That page says the boat is made of twelve kinds of wood, all of them mentioned in the Bible. Published counts of the species differ between accounts, and the second half of the sentence is a devotional gloss rather than a finding: the woods are what a Galilean boatwright could get hold of, and the Bible mentions a great many trees. None of this touches the boat's real interest, which does not need the help.",
+        ],
+      },
+    ],
+    verses: [
+      { reference: "Mark 1:16-20", note: "Two pairs of fishing brothers, their nets, and the boat they leave behind" },
+      { reference: "Mark 4:35-41", note: "The storm, and Jesus asleep in the stern" },
+      { reference: "Luke 5:1-11", note: "Teaching from a boat pushed out from shore, and the catch that nearly sinks two of them" },
+      { reference: "John 21:3", note: "Peter goes fishing again after the resurrection" },
+    ],
+    sources: [
+      { label: "Yigal Allon Museum, Kibbutz Ginosar: The Ancient Boat", url: "https://yigal-allon-centre.org.il/en/the-museum/the-ancient-boat/" },
+      { label: "Wikipedia: Sea of Galilee Boat", url: "https://en.wikipedia.org/wiki/Sea_of_Galilee_Boat" },
+    ],
+    discovery: {
+      objectType: "A wooden fishing boat about 8.2 m long and 2.3 m wide, shell-first mortise-and-tenon construction, built and repaired from several different timbers",
+      findSite: "The exposed mud of the north-western shore of the Sea of Galilee, near Kibbutz Ginosar",
+      findSiteId: "sea-of-galilee",
+      findSiteKind: "location",
+      foundYear: "January 1986; excavated the following month",
+      foundBy: "Spotted by M. and Y. Lufan, two brothers from Kibbutz Ginosar. Excavated for the Israel Department of Antiquities under S. Wachsmann",
+      objectDate: "Radiocarbon gives c. 40 BC give or take 80 years; pottery, nails and hull construction indicate roughly 50 BC to AD 50, with decades of use before it was abandoned",
+      objectDateCertainty: "traditional",
+      currentLocation: "Yigal Allon Museum, Kibbutz Ginosar, on permanent display since 2000",
+    },
+    citations: [
+      {
+        tier: "institution",
+        label: "Yigal Allon Museum, Kibbutz Ginosar — The Ancient Boat",
+        url: "https://yigal-allon-centre.org.il/en/the-museum/the-ancient-boat/",
+        credit: "Beit Yigal Allon, Kibbutz Ginosar",
+        detail: "The holding museum's own page: found January 1986 by the Lufan brothers after the drought, excavated by the antiquities authority, conserved on site and moved to the display gallery in 2000",
+        supports: "Discovery, conservation, current location, and the museum's own name for the object",
+      },
+      {
+        tier: "scholarly",
+        label: "S. Wachsmann (ed.), The Excavations of an Ancient Boat from the Sea of Galilee (Lake Kinneret)",
+        credit: "Shelley Wachsmann and colleagues",
+        detail: "'Atiqot 19 (Israel Antiquities Authority, 1990) — an entire volume of the excavation journal given over to the boat. Print-only; no free URL exists",
+        supports: "The excavation, construction, dating evidence and the report's own naming of the object",
+      },
+      {
+        tier: "scholarly",
+        label: "S. Wachsmann, The Sea of Galilee Boat",
+        credit: "Shelley Wachsmann, Texas A&M University",
+        detail: "Ed Rachal Foundation Nautical Archaeology Series, Texas A&M University Press, 2009 (first published 1995) — the excavator's book-length account, including the press reaction during the dig",
+        supports: "The circumstances of the excavation and the origin of the popular nickname",
+      },
+      {
+        tier: "encyclopedic",
+        label: "Wikipedia: Sea of Galilee Boat",
+        url: "https://en.wikipedia.org/wiki/Sea_of_Galilee_Boat",
+      },
+    ],
+    reflectionPrompt:
+      "This is roughly the boat four fishermen walked away from. What would it cost you to leave your own livelihood on the shore?",
+  },
+  {
+    id: "politarch-inscriptions",
+    name: "Politarch Inscriptions",
+    alternateNames: ["Vardar Gate Inscription"],
+    category: "discovery",
+    role: "Greek Civic Inscriptions Naming an Office Known Otherwise Only from Acts",
+    summary:
+      "Luke calls the magistrates of Thessalonica politarchai, a word that survives in no other work of Greek literature at all. Dozens of inscriptions show it is exactly the right title in exactly that city.",
+    sections: [
+      {
+        heading: "A Word With No Literature Behind It",
+        paragraphs: [
+          "When the mob at Thessalonica cannot find Paul and Silas, it drags their host Jason before the city's magistrates instead. English versions render the officials plainly — the World English Bible has rulers of the city — but the Greek word in Acts 17:6 and 17:8 is politarchas, and that word occurs in no surviving work of Greek literature outside Acts. Its only other witnesses are inscriptions cut in stone.",
+          "In 1898 E. D. Burton collected everything then known in the American Journal of Theology, and his complaint about the state of the field is instructive: the standard commentaries and lexicons of his day cited a single inscription, often in a corrupt text, and drew wrong conclusions from the bad copy. His own catalogue ran to seventeen inscriptions attesting the office, nineteen if two probable restorations are allowed. By 1994, when G. H. R. Horsley wrote on the subject in The Book of Acts in Its Graeco-Roman Setting, the count had risen to possibly as many as seventy non-literary attestations, more than eighty per cent of them from Macedonia and something in the region of twenty-eight from Thessalonica alone.",
+          "The best known of them is a marble block from the arch that spanned the Via Egnatia at the western entrance to the city, known locally as the Vardar Gate. The arch was demolished in 1876 in the name of civic improvement. Through the efforts of P. Crosbie, a Scottish minister living in the city, and the British consul, the inscribed block was rescued from the rubble — all but five letters of it, which Burton records as lost — passed to the British consulate, and eventually to the British Museum, where it is object 1877,0511.1. It names six politarchs together with the city treasurer and the director of the gymnasium.",
+        ],
+      },
+      {
+        heading: "Stated at Full Strength",
+        paragraphs: [
+          "This one deserves to be put plainly rather than hedged, because understating a genuine find is its own kind of dishonesty. The title is right. The city is right. The number is right: Luke has a board of magistrates rather than a single official, and a plurality of politarchs is precisely what the Macedonian inscriptions show. He also gets the shape of the proceeding right — Jason is not tried but bound over, made to give security and released, which is a magistrate's action, not a governor's.",
+          "It does not stand alone either. Across the same journey Luke uses a different and correct title in each place: a proconsul in Cyprus and a proconsul in Achaia, both senatorial provinces; magistrates at the Roman colony of Philippi; the council of the Areopagus at Athens; Asiarchs at Ephesus. Roman provincial administration was not uniform, and these titles were not interchangeable. Getting them right city by city, in a narrative written for readers who mostly could not check, is the behaviour of a writer working from good information about the world he is describing.",
+        ],
+      },
+      {
+        heading: "What Getting the Title Right Does and Does Not Show",
+        paragraphs: [
+          "Two cautions, and the first is about how this story is usually told rather than about Luke. The familiar version runs: critics called this an error, and archaeology proved them wrong. That version almost never names a critic, and this article could not find one either. What the record actually shows is less dramatic and more interesting. Nineteenth-century scholarship had one badly transcribed inscription to work from, and it handled a rare word poorly; the documentation then improved enormously. Nobody needs the invented martyrdom of a nameless sceptic, because the underlying fact is strong enough standing up on its own.",
+          "The second caution matters more. Knowing what a city called its magistrates is not the same as reporting truly what happened in front of them. Accuracy about titles establishes that an author had good information about the setting — a real and substantial thing, and a reason to take his account of events seriously — but it does not by itself establish any event in Acts 17. The case for Luke as a historian is cumulative: many such details, plus the internal character of the work, plus the company he keeps with contemporary sources where they overlap. That is a durable case, and it is worth more than the shortcut version.",
+          "Where the app stands. Scripture is trustworthy, and that conviction is a theological commitment rather than a conclusion the stones force. This inscription does not create the app's confidence in Luke; it is a place where a reader can watch that confidence being independently corroborated on a point that could, in principle, have gone the other way. That is worth a great deal, and it is a different claim from saying archaeology has proved anything.",
+        ],
+      },
+    ],
+    verses: [
+      { reference: "Acts 17:5-9", note: "Jason dragged before the politarchs and bound over" },
+      { reference: "Acts 17:6", note: "The word politarchas, rendered \"rulers of the city\"" },
+      { reference: "Acts 13:7", note: "A proconsul in Cyprus — a different province, a different and correct title" },
+      { reference: "Acts 18:12", note: "Gallio as proconsul of Achaia" },
+      { reference: "Acts 19:31", note: "The Asiarchs at Ephesus" },
+    ],
+    sources: [
+      { label: "E. D. Burton, \"The Politarchs\" (1898), full text at the Internet Archive", url: "https://archive.org/details/jstor-3153438" },
+      { label: "Wikipedia: Politarch", url: "https://en.wikipedia.org/wiki/Politarch" },
+    ],
+    discovery: {
+      objectType: "Stone inscriptions — civic dedications, honorific decrees and building texts — naming magistrates called politarchai",
+      findSite: "Thessalonica above all, and across Macedonia, with a handful from beyond it",
+      findSiteId: "thessalonica",
+      findSiteKind: "location",
+      foundYear: "Recorded from the early modern period onward; the Vardar Gate block was rescued when the arch was demolished in 1876",
+      foundBy: "No single finder — the corpus is cumulative. The Vardar Gate block was saved by P. Crosbie, a Scottish minister resident in the city, together with the British consul",
+      objectDate: "Second century BC to the third century AD; the Vardar Gate text is usually dated to the second century AD",
+      objectDateCertainty: "traditional",
+      currentLocation: "Scattered across Greek museums and collections. The Vardar Gate block is in the British Museum, object 1877,0511.1",
+    },
+    citations: [
+      {
+        tier: "primary",
+        label: "E. D. Burton, \"The Politarchs\"",
+        url: "https://archive.org/details/jstor-3153438",
+        credit: "Ernest DeWitt Burton",
+        detail: "The American Journal of Theology 2/3 (July 1898), 598-632. Public domain and freely readable. The first full catalogue: seventeen inscriptions attesting the office, nineteen with two probable restorations, plus the history of the Vardar Gate stone and the loss of five letters when the arch came down",
+        supports: "The count as of 1898, the state of nineteenth-century scholarship, and the Vardar Gate stone's journey to the British Museum",
+      },
+      {
+        tier: "scholarly",
+        label: "G. H. R. Horsley, \"The Politarchs\"",
+        credit: "G. H. R. Horsley",
+        detail: "In D. W. J. Gill and C. Gempf (eds), The Book of Acts in Its Graeco-Roman Setting (The Book of Acts in Its First Century Setting 2, Eerdmans, 1994), 419-431. Counts possibly as many as seventy non-literary attestations, over eighty per cent Macedonian and some twenty-eight from Thessalonica",
+        supports: "The modern count of attestations and their distribution",
+      },
+      {
+        tier: "institution",
+        label: "British Museum, object 1877,0511.1 — the Vardar Gate block",
+        credit: "The British Museum, London",
+        detail: "The marble building block from the Thessalonica gateway, listing six politarchs with the city treasurer and gymnasiarch. No URL is given because britishmuseum.org refuses automated requests, so its object page could not be fetched and read; the museum number is given instead so a reader can look it up directly",
+        supports: "Current location of the best-known politarch inscription and the officials it names",
+      },
+      {
+        tier: "encyclopedic",
+        label: "Wikipedia: Politarch",
+        url: "https://en.wikipedia.org/wiki/Politarch",
+      },
+    ],
+    reflectionPrompt:
+      "Luke troubled to get a provincial job title right. What does that suggest about how he handled the parts of his account you cannot check?",
+  },
+  {
+    id: "sergius-paulus-inscriptions",
+    name: "Sergius Paulus Inscriptions",
+    // NOT registered: "Sergius Paulus" — that is the proconsul, who already owns it in people.ts.
+    category: "discovery",
+    role: "Four Roman Inscriptions, and the Question of Which One Is the Proconsul of Acts 13",
+    summary:
+      "Acts names the Roman governor of Cyprus who sent for Paul and Barnabas. Several inscriptions have been proposed as his over the last century and a half. Which one is his, if any, is genuinely unsettled.",
+    sections: [
+      {
+        heading: "Four Candidates",
+        paragraphs: [
+          "Acts 13:7 places the apostles at Paphos before the proconsul of Cyprus, whom it names Sergius Paulus. The word proconsul is itself correct and worth noting in passing: Cyprus was a senatorial province in this period, and senatorial provinces were governed by proconsuls. Four inscriptions have been put forward at one time or another as naming the man himself.",
+          "The first comes from Soloi on the north coast of Cyprus, catalogued as IGR III 930, a text dated by a regnal year of Claudius that mentions a proconsul Paulus. D. G. Hogarth, who published it after his archaeological survey of the island, saw no good reason to doubt the identification with the figure in Acts. T. B. Mitford, the authority on Roman Cyprus, judged on epigraphic grounds that the stone cannot be earlier than the middle of the first century and is probably considerably later. Accounts even disagree about when it was found, giving the year variously as 1877 and 1887.",
+          "The second is a boundary marker of the Tiber from Rome, CIL VI 31545, recording the commissioners appointed in AD 47 to oversee the banks and channel of the river under Claudius. One of the named commissioners is L. Sergius Paullus. This is the only one of the four whose date is secure. B. Windle argued in the Near East Archaeological Society Bulletin in 2022 that the ordinary Roman career ladder makes it entirely plausible that the same man held a river commissionership at Rome and a proconsulship in Cyprus within a few years — and he is careful to call it plausible rather than demonstrated.",
+          "The third is a pair of texts from the territory of Pisidian Antioch naming senators called L. Sergius Paullus, one of them explicitly the younger; the second was copied in 1912 by W. Ramsay and J. G. C. Anderson. Ramsay proposed from them that the family held estates in the region, and the popular inference followed that the proconsul sent Paul and Barnabas on to his relatives' home town, which is where Acts 13:13 takes them next. That is a hypothesis about a family's landholdings, not an identification of a man. The fourth, IGR III 935 from Kythrea in Cyprus, is the weakest: it preserves the name Quintus Ser[gius], which is the wrong first name, has lost the part where a cognomen would sit, and probably belongs to a different emperor's reign altogether.",
+        ],
+      },
+      {
+        heading: "Why Anyone Cares",
+        paragraphs: [
+          "The interest is not that a Roman official's existence needs propping up. It is that Acts 13 is the moment the mission turns outward, and it turns on a named Roman with a named office in a named city — the kind of claim that is checkable in principle. Luke does this constantly, and it is why his book invites this sort of scrutiny in the first place. An author who wrote only in generalities would be safe from it.",
+          "There is a second, quieter reason. The Sergii Paulli were a real senatorial family with a documented presence in exactly the eastern provinces Acts moves through. Even without a one-to-one match, the inscriptions place families of that name and rank in Cyprus and in the Anatolian interior in the middle of the first century — which is the world Acts describes, populated by the kind of people Acts says were in it.",
+        ],
+      },
+      {
+        heading: "Nobody Has Closed This",
+        paragraphs: [
+          "What the four candidates have in common is that each preserves a Sergius or a Paulus, and none of them names the proconsul of Acts in a way that settles the matter. Sergius Paulus was not a rare combination in a family that produced senators for generations. Mitford's assessment of the best-known Cyprus candidate was that identifying him with the proconsul of Cyprus is at best a conjecture, and one weakened by a later reading of the related text. T. Kennedy, writing from within evangelical archaeology, reaches the same verdict from the other direction: possible, unconfirmed, a hypothesis resting on circumstantial evidence.",
+          "Where the app stands. The honest statement is short, and it is not a retreat. Acts names a proconsul of Cyprus called Sergius Paulus and describes the province's government correctly for the period. Roman Cyprus was governed by proconsuls of that kind, from families of that kind, and one of them may well be standing on one of these stones. But this app is not going to tell a reader that Sergius Paulus has been found, because he has not been. What has been found is a family, a plausible career pattern, and a set of texts that fit without fastening.",
+          "It is worth saying what refusing the overclaim costs, because the answer is nothing. No one's faith is resting on a proconsul's career. A reader who is told unsettled loses an argument they never needed, and gains the ability to believe the next sentence this app writes about a stone. A reader who is told confirmed and then finds Mitford loses considerably more than that.",
+        ],
+      },
+    ],
+    verses: [
+      { reference: "Acts 13:6-12", note: "Paphos, the proconsul, and the confrontation with Elymas" },
+      { reference: "Acts 13:7", note: "The proconsul named, with the correct title for a senatorial province" },
+      { reference: "Acts 13:13", note: "The next leg of the journey, which the Pisidian Antioch hypothesis tries to explain" },
+    ],
+    sources: [
+      { label: "Wikipedia: Sergius Paulus", url: "https://en.wikipedia.org/wiki/Sergius_Paulus" },
+      { label: "Associates for Biblical Research: the Roman Tiber inscription and the Cypriot proconsul", url: "https://biblearchaeology.org/research-articles/the-roman-tiber-river-inscription-and-the-cypriot-proconsul-sergius-paulus/" },
+    ],
+    discovery: {
+      objectType: "Four Greek and Latin inscriptions proposed at various times as naming the proconsul of Acts 13:7",
+      findSite: "Soloi and Kythrea on Cyprus; Rome; the territory of Pisidian Antioch",
+      findSiteId: "cyprus",
+      findSiteKind: "location",
+      foundYear: "Nineteenth and early twentieth centuries. The Soloi text is dated 1877 in some accounts and 1887 in others; the second Pisidian Antioch text was copied in 1912",
+      foundBy: "Credit is contested and differs by inscription. The Soloi text is associated with D. G. Hogarth's survey of Cyprus, published in 1889; the Pisidian Antioch pair with W. Ramsay and J. G. C. Anderson",
+      objectDate: "First century AD — except that the date of the Soloi text is itself part of the dispute, and the Kythrea fragment may belong to a different reign",
+      objectDateCertainty: "disputed",
+      currentLocation: "Various, and not all of them established. No single institution holds the group; the texts are catalogued as IGR III 930 and 935 and CIL VI 31545",
+    },
+    citations: [
+      {
+        tier: "institution",
+        label: "Ohio State University Center for Epigraphical and Palaeographical Studies — CIL VI photographic collection",
+        url: "https://epigraphy.osu.edu/collections/latin-photo/cil-vi-20000-40807",
+        credit: "The Ohio State University Center for Epigraphical and Palaeographical Studies",
+        detail: "Catalogue entry for CIL VI 31545: boundary marker of the Tiber set up by the curatores riparum et alvei Tiberis, reign of Claudius, with cross-reference to the Epigraphic Database Roma",
+        supports: "The identity, character and date of the Tiber inscription",
+      },
+      {
+        tier: "scholarly",
+        label: "T. B. Mitford, \"Roman Cyprus\"",
+        credit: "Terence B. Mitford",
+        detail: "In Aufstieg und Niedergang der romischen Welt II.7.2 (1980) — the standard survey of the island's Roman epigraphy, and the source of the judgement that identifying the Soloi proconsul with the Acts figure is at best a conjecture",
+        supports: "The epigraphic dating objection and the assessment of the identification",
+      },
+      {
+        tier: "scholarly",
+        label: "B. Windle, \"The Roman Tiber River Inscription and the Cypriote Proconsul Sergius Paulus\"",
+        url: "https://biblearchaeology.org/research-articles/the-roman-tiber-river-inscription-and-the-cypriot-proconsul-sergius-paulus/",
+        credit: "Bryan Windle",
+        detail: "Near East Archaeological Society Bulletin 67 (2022). Argues from the cursus honorum that the Tiber commissioner and the Cyprus proconsul plausibly are the same man, in explicitly provisional terms",
+        supports: "The case for the Tiber inscription and the careful language in which it is made",
+      },
+      {
+        tier: "reference",
+        label: "Bible Archaeology Report: Sergius Paulus, an archaeological biography",
+        url: "https://biblearchaeologyreport.com/2019/11/15/sergius-paulus-an-archaeological-biography/",
+        credit: "Bryan Windle",
+        detail: "A survey of all four inscriptions with the assessments of D. G. Hogarth, W. Ramsay, B. Witherington and T. Kennedy, and an explicit statement that the argument is a connect-the-dots one built on indirect evidence",
+        supports: "The inventory of candidate inscriptions and the range of scholarly verdicts",
+      },
+      {
+        tier: "encyclopedic",
+        label: "Wikipedia: Sergius Paulus",
+        url: "https://en.wikipedia.org/wiki/Sergius_Paulus",
+      },
+    ],
+    reflectionPrompt:
+      "A Roman governor sent for two travelling preachers because he wanted to hear what they had to say. When did you last go looking for something you had not been told to want?",
+  },
+  {
+    id: "alexamenos-graffito",
+    name: "Alexamenos Graffito",
+    category: "discovery",
+    role: "A Scratched Wall Drawing of a Crucifixion, Made to Mock a Christian",
+    summary:
+      "On a plastered wall in the servants' quarters of the imperial palace in Rome, somebody drew a man worshipping a crucified figure with the head of a donkey, and wrote underneath: Alexamenos worships his god. It is the earliest surviving picture of the crucifixion, and it is an insult.",
+    sections: [
+      {
+        heading: "A Wall in the Palace Servants' Quarters",
+        paragraphs: [
+          "In the mid-1850s — accounts give 1856 and 1857 — excavation on the south-western slope of the Palatine Hill in Rome uncovered a building known as the domus Gelotiana. It had been absorbed into the imperial palace and was later used as a paedagogium, a training house for the boys who served in it. When the palace was extended, the street beside it was walled up and filled, which is the only reason the plaster survived at all. The graffito was cut into the wall of one of its rooms. The Palatine graffiti were published as a full corpus in 1966 by H. Solin and M. Itkonen-Kaila, under the direction of V. Vaananen, in the Acta Instituti Romani Finlandiae.",
+          "The plaster was cut from the wall and moved more than once before ending up in the Palatine Museum, part of the Parco archeologico del Colosseo, where it is displayed at eye level. One practical warning from B. Nongbri, who has photographed it: most of the images reproduced in books and on websites have been retouched to darken the lines. The actual scratches are much fainter than the pictures suggest, and a reader who arrives expecting the textbook version will be surprised.",
+        ],
+      },
+      {
+        heading: "The Shape of the Insult",
+        paragraphs: [
+          "The drawing is crude and entirely legible. A figure hangs on a cross, seen from behind, with the head of a donkey or mule. To the left a smaller figure stands with one arm raised in a gesture of worship. Between them, in irregular Greek, runs the line ALEXAMENOS SEBETE THEON — Alexamenos worships god, with the verb spelled the way it was drifting in ordinary speech rather than the way a schoolmaster would have wanted it.",
+          "Both halves of the joke need explaining now, because neither is obvious to a modern reader. Crucifixion was the death Rome kept for slaves and rebels, deliberately public and deliberately degrading; to a Roman, being told that somebody's god had been crucified was an absurdity before it was an offence. And there was a standing slander, aimed first at Jews and then at Christians, that they worshipped a donkey. Tertullian describes a caricature of a Christian with a donkey's ears being paraded around Carthage, and the same accusation is answered in the second-century Octavius. The drawing simply stacks the two insults on top of each other.",
+          "In a nearby room a second graffito was found reading Alexamenos fidelis — Alexamenos is faithful. It reads like a reply, and it may be one, though nothing establishes that it is by the same hand or from the same season.",
+        ],
+      },
+      {
+        heading: "What It Can and Cannot Carry",
+        paragraphs: [
+          "The date is not fixed. Proposals run from the late first century to the late third, and the range narrows to the late second or early third on the basis of the wall's construction phases, the painting styles around it and the letter forms. So the customary description — the earliest known depiction of the crucifixion — is accurate, provided the word known is doing its work. It is a statement about what has survived, not about what once existed.",
+          "The interpretation is not unanimous either. Nineteenth-century writers, J. P. Lundy among them, read the animal head as Anubis and the whole scene as Egyptian. More recently I. Soon has argued that it could be Christian self-parody rather than mockery from outside, and J. E. Taylor has suggested the crucified figure is being cast as a kind of demigod. The mainstream reading remains that this is a jeer, and the second graffito supports it, but a reader should know that specialists have proposed otherwise.",
+          "What it does establish is not small, and it is worth stating precisely. Within roughly a century and a half of the crucifixion, somebody attached to the household of the Roman emperor knew a man by name who worshipped a crucified god, knew it well enough to mock him for it, and expected the joke to land with whoever else read that wall. Christianity was inside the palace, and it was known for the one thing about it that made it ridiculous. Paul had said as much in advance — a stumbling block to Jews and folly to Greeks — and the peculiar value of this drawing is that it is the folly seen from the far side, by someone who found it funny. It is not evidence that the crucifixion happened; the case for that runs through the sources, not through a scratch on plaster. It is evidence of how the claim looked to people who heard it and did not believe a word of it.",
+        ],
+      },
+    ],
+    verses: [
+      { reference: "1 Corinthians 1:23", note: "A stumbling block to Jews and folly to Greeks — the reaction, described from inside" },
+      { reference: "Galatians 3:13", note: "Cursed is everyone who hangs on a tree" },
+      { reference: "Hebrews 12:2", note: "He endured the cross, despising its shame" },
+      { reference: "1 Peter 4:14", note: "Insulted for the name of Christ" },
+    ],
+    sources: [
+      { label: "Wikipedia: Alexamenos graffito", url: "https://en.wikipedia.org/wiki/Alexamenos_graffito" },
+      { label: "B. Nongbri, \"The Palatine Alexamenos Graffito\"", url: "https://brentnongbri.com/2018/06/25/the-palatine-alexamenos-graffito/" },
+    ],
+    discovery: {
+      objectType: "A graffito scratched into wall plaster — a drawing with a three-word Greek caption",
+      findSite: "A room of the paedagogium in the domus Gelotiana, south-western slope of the Palatine Hill, Rome",
+      findSiteId: "rome",
+      findSiteKind: "location",
+      foundYear: "1856 or 1857 — accounts differ, and neither is preferred here",
+      foundBy: "The excavation of the domus Gelotiana on the Palatine. No individual finder is recorded",
+      objectDate: "Proposals run from the late first century to the late third century AD; late second or early third century is the most commonly held",
+      objectDateCertainty: "disputed",
+      currentLocation: "Palatine Museum (Antiquarium del Palatino), Parco archeologico del Colosseo, Rome, on display",
+    },
+    citations: [
+      {
+        tier: "institution",
+        label: "Palatine Museum, Parco archeologico del Colosseo",
+        url: "https://colosseo.it/en/area/museums/the-museo-palatino/",
+        credit: "Parco archeologico del Colosseo, Rome",
+        detail: "The holding institution's page for the museum. It gives the museum's history and collection overview but does not itemise the graffito, so it is cited for the location only",
+        supports: "Current location",
+      },
+      {
+        tier: "scholarly",
+        label: "H. Solin and M. Itkonen-Kaila, Graffiti del Palatino I: Paedagogium",
+        credit: "Heikki Solin and Marja Itkonen-Kaila, under the direction of Veikko Vaananen",
+        detail: "Acta Instituti Romani Finlandiae III (Helsinki, 1966) — the critical publication of the graffiti scratched on the walls of the paedagogium, of which this is one. Print-only",
+        supports: "The corpus publication of the Palatine graffiti",
+      },
+      {
+        tier: "reference",
+        label: "B. Nongbri, \"The Palatine Alexamenos Graffito\"",
+        url: "https://brentnongbri.com/2018/06/25/the-palatine-alexamenos-graffito/",
+        credit: "Brent Nongbri, historian of early Christianity",
+        detail: "Includes an undoctored photograph and the warning that the images usually reproduced have been retouched; notes the customary third-century dating and the 1966 corpus publication",
+        supports: "The state of the actual plaster, the retouched-image problem, and the publication history",
+      },
+      {
+        tier: "encyclopedic",
+        label: "Wikipedia: Alexamenos graffito",
+        url: "https://en.wikipedia.org/wiki/Alexamenos_graffito",
+      },
+    ],
+    reflectionPrompt:
+      "Somebody drew this to make a Christian look ridiculous, and it survived precisely because it was scratched on a wall nobody thought mattered. What are you willing to be laughed at for?",
+  },
 ];
