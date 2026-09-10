@@ -2950,13 +2950,13 @@ export const topics: Topic[] = [
     category: "discovery",
     role: "Sixth-Century BC Babylonian Building Inscription Naming Belshazzar",
     summary:
-      "A clay foundation cylinder from the ziggurat at Ur in which the last king of Babylon prays for himself and for \"Belshazzar, my firstborn son\" — the man who, until the nineteenth century, was known only from the book of Daniel.",
+      "A clay foundation cylinder from the ziggurat at Ur in which the last king of Babylon prays for himself and for \"Belshazzar, (my) first-born son\" — the man who, until the nineteenth century, was known only from the book of Daniel.",
     sections: [
       {
         heading: "The Problem Daniel 5 Used to Have",
         paragraphs: [
           "Daniel 5 tells of a feast held by Belshazzar, king of Babylon, interrupted by a hand writing on the wall, and ending that same night with the king dead and the city in Persian hands. For a long time this was one of the standard examples of the Bible getting history wrong. Greek and Roman historians named the last king of Babylon as Nabonidus, and none of them had ever heard of a Belshazzar. Daniel also has Belshazzar offer Daniel \"the third ruler in the kingdom\" as a reward, which looked like an odd way to describe second place.",
-          "Then the cuneiform record began to be read. Clay cylinders inscribed for Nabonidus, buried in the fabric of temples he restored, turned up at Ur and elsewhere from the 1850s onward. The one that matters here came out of the ziggurat at Ur in 1854, recovered by J. G. Taylor, the British vice-consul at Basra — the same man who later found the Kurkh Monolith, and one whose initials are very often miscited as J. E. — and it closes with a prayer asking the moon god to preserve the king, and then, in the same breath: \"as for Belshazzar, my first-born son, my own offspring, have the fear of your great divinity placed in his heart.\" Belshazzar was real, and he was Nabonidus's son. It is worth being precise about which cylinder this is, because popular accounts often attach the Belshazzar prayer to Nabonidus's better-known cylinder from Sippar; that one is a different inscription and does not mention him."
+          "Then the cuneiform record began to be read. Clay cylinders inscribed for Nabonidus, buried in the fabric of temples he restored, turned up at Ur and elsewhere from the 1850s onward. The one that matters here came out of the ziggurat at Ur in 1854, recovered by J. G. Taylor, the British vice-consul at Basra — the same man who later found the Kurkh Monolith, and one whose initials are very often miscited as J. E. — and it closes with a prayer asking the moon god to preserve the king, and then, in the same breath: \"Moreover, with regard to Belshazzar, (my) first-born son, my own offspring, have the fear of your great divinity placed in his heart so that he does not commit a(ny) sin.\" Belshazzar was real, and he was Nabonidus's son. It is worth being precise about which cylinder this is, because popular accounts often attach the Belshazzar prayer to Nabonidus's better-known cylinder from Sippar; that one is a different inscription and does not mention him."
         ],
       },
       {
@@ -3001,7 +3001,7 @@ export const topics: Topic[] = [
         label: "Royal Inscriptions of Babylonia online: Nabonidus 32 (the Ur cylinder)",
         url: "https://oracc.museum.upenn.edu/ribo/babylon7/Q005429/html",
         credit: "RIBo / RINBE 2, published on Oracc (University of Pennsylvania, LMU Munich)",
-        detail: "The scholarly edition, with transliteration and translation. Column ii 23-24: \"Moreover, with regard to Belshazzar, (my) first-born son, my own offspring, have the fear of your great divinity placed in his heart\"",
+        detail: "The scholarly edition, with transliteration and translation. Column ii 23-26: \"Moreover, with regard to Belshazzar, (my) first-born son, my own offspring, have the fear of your great divinity placed in his heart so that he does not commit a(ny) sin. May he be sated with happiness in life\". The wording quoted in the first section is this one, RIBo's own",
         supports: "The wording of the Belshazzar prayer, and that it stands on the Ur cylinder specifically",
       },
       {
@@ -3420,10 +3420,10 @@ export const topics: Topic[] = [
       },
       {
         tier: "primary",
-        label: "George Smith, The Chaldean Account of Genesis",
-        url: "https://www.gutenberg.org/files/60559/60559-h/60559-h.htm",
-        credit: "George Smith; this full text is the 1880 edition revised by A. H. Sayce, of a work first published in 1876",
-        detail: "Smith's own account, including his record of the lecture \"a meeting of the Society of Biblical Archaeology, December 3rd, 1872\". Public domain",
+        label: "George Smith, The Chaldean Account of Genesis (first edition, 1876)",
+        url: "https://archive.org/details/thechaldeanaccou00smituoft",
+        credit: "George Smith",
+        detail: "Public domain, read in full at the Internet Archive. Smith's own first-person account of the announcement: \"I now had the account of the Deluge in the state in which I published it at the meeting of the Society of Biblical Archaeology, December 3rd, 1872.\" The widely circulated Gutenberg text of this book is A. H. Sayce's revision of 1880, which recasts that sentence in the third person and at \"a meeting\" — so Smith's own words are taken from the edition he wrote",
         supports: "The date and venue of Smith's announcement, and his own description of the flood text",
       },
       {
@@ -3498,7 +3498,7 @@ export const topics: Topic[] = [
         label: "Ancient Mesopotamian Gods and Goddesses: Marduk",
         url: "https://oracc.museum.upenn.edu/amgg/listofdeities/marduk/",
         credit: "Oracc (University of Pennsylvania), a peer-reviewed academic corpus project",
-        detail: "\"A ritual text dating to the Parthian period describes how Enuma elish was recited in front of Marduk's statue during the New Year's festival\"",
+        detail: "\"A ritual text dating to the Parthian period describes how Enūma eliš was recited in front of Marduk's statue during the New Year's festival, which also involved a ritual slapping of the king\"",
         supports: "The akitu recitation, and the fact that the evidence for it is a very late text",
       },
       {
@@ -4252,7 +4252,7 @@ export const topics: Topic[] = [
       {
         heading: "Champollion Reads a Wall",
         paragraphs: [
-          "Nobody discovered the Bubastite Portal. It is a gateway in the Precinct of Amun-Re at Karnak, between the temple of Ramesses III and the second pylon, and it has stood above ground and visible since the Twenty-Second Dynasty put it there. What has a date is the reading. In 1828, six years after the Rosetta breakthrough, Jean-Francois Champollion visited Karnak on his Egyptian expedition and connected the Sheshonq of the relief with the Sesonchis of the Egyptian historian Manetho and with the Shishak of 1 Kings 14 — and wrote, in the account published the following year, that the identity was confirmed.",
+          "Nobody discovered the Bubastite Portal. It is a gateway in the Precinct of Amun-Re at Karnak, between the temple of Ramesses III and the second pylon, and it has stood above ground and visible since the Twenty-Second Dynasty put it there. What has a date is the reading. In 1828, six years after the Rosetta breakthrough, Jean-Francois Champollion visited Karnak on his Egyptian expedition and connected the Sheshonq of the relief with the Sesonchis of the Egyptian historian Manetho and with the Shishak of 1 Kings 14 — and wrote, in a letter from Thebes dated 24 November 1828, that the identity was thereby confirmed in the most satisfactory manner.",
           "That connection has held for nearly two centuries and is the mainstream position of Egyptology. A second reading of Champollion's has not held, and it matters more than it looks; it is dealt with in the third section below. The standard modern record of the relief is not Champollion's but the Epigraphic Survey's, published as Reliefs and Inscriptions at Karnak, Volume III: The Bubastite Portal in 1954 — a full set of measured line drawings that anyone can consult, free, today.",
         ],
       },
@@ -4266,7 +4266,7 @@ export const topics: Topic[] = [
       {
         heading: "Jerusalem Is Not on the List, and Ring 29 Is Not Judah",
         paragraphs: [
-          "Champollion read name-ring 29 as \"Judah the Kingdom\", and that reading is rejected. The letters are now read as a place name — commonly Yad hammelek, \"Hand of the King\", or Juttah of the King — and the ring is one town among many, not a nation. More importantly, Jerusalem does not appear anywhere in the preserved list. The rings run through the lowlands and the north and pass over the central hill country of Judah as though it were not there. This is stated the wrong way round in a great deal of popular writing, and a reader who has been told that Karnak mentions Jerusalem has been told something false.",
+          "Champollion read name-ring 29 as a kingdom rather than a town: writing from Thebes on 24 November 1828 he reported finding among Sheshonq's captives, in so many words, \"Ioudahamalek, le royaume des Juifs ou de Juda\" — Judah as a nation. That reading is rejected. The letters are now read as a place name — commonly Yad hammelek, \"Hand of the King\", or Juttah of the King — and the ring is one town among many, not a nation. More importantly, Jerusalem does not appear anywhere in the preserved list. The rings run through the lowlands and the north and pass over the central hill country of Judah as though it were not there. This is stated the wrong way round in a great deal of popular writing, and a reader who has been told that Karnak mentions Jerusalem has been told something false.",
           "Four explanations are on offer and all four deserve naming. Kenneth Kitchen and others point out that the list is damaged and parts of it are lost, so Jerusalem may have stood in a missing section. A second explanation takes the biblical account at its word: 1 Kings 14 has Rehoboam buying the city off with the temple treasure, so Jerusalem submitted rather than being stormed, and a town that paid would not appear in a list of towns taken. Finkelstein argues that the omission is real and telling, and that Judah at this date was a marginal highland chiefdom not worth a pharaoh's detour. Frank Clancy has argued that the route simply avoided the hill country and Transjordan altogether. None of these has carried the field.",
           "Where the app stands. The relief and 1 Kings agree that a pharaoh whose name is Sheshonq campaigned in the land in Rehoboam's generation, and that agreement is worth something: two independent sources, one Egyptian and monumental, one Judean and literary, converging on one event. They do not confirm each other's details, and the absence of Jerusalem from the list is a real fact that needs an explanation rather than a fact to be explained away — the tribute reading is a good explanation, but it is a reading, and it should be offered as one. One thing that is not a live alternative: the New Chronology associated with D. M. Rohl, which identifies the biblical Shishak with Ramesses II instead. It is rejected by Egyptology, and presenting the Sheshonq identification as contested would misrepresent the state of the field.",
         ],
@@ -4284,15 +4284,23 @@ export const topics: Topic[] = [
     discovery: {
       objectType: "A carved temple gateway with a triumphal relief and a topographical list of about 150 name-rings, in situ",
       findSite: "The Precinct of Amun-Re at Karnak, Thebes, between the temple of Ramesses III and the second pylon",
-      // CORRECTED (scope §2.5b): Champollion's connection is datable to 1828 (published 1829). His
+      // CORRECTED (scope §2.5b): Champollion's connection is datable to his letter of 24 Nov 1828. His
       // ring-29 "Judah the Kingdom" reading is rejected — see section three.
-      foundYear: "Never buried. Connected with the biblical Shishak by Champollion in 1828, published 1829",
+      foundYear: "Never buried. Connected with the biblical Shishak by Champollion in 1828, in his seventh letter from Egypt, written at Thebes on 24 November",
       foundBy: "No discoverer — the gate has always stood above ground. Jean-Francois Champollion made the biblical identification during his Egyptian expedition",
       objectDate: "c. 925 BC, the reign of Sheshonq I",
       objectDateCertainty: "traditional",
       currentLocation: "In situ at Karnak, Luxor, Egypt",
     },
     citations: [
+      {
+        tier: "primary",
+        label: "J.-F. Champollion, Lettres écrites d'Égypte et de Nubie en 1828 et 1829 — septième lettre",
+        url: "https://archive.org/details/lettresecritesd00cham",
+        credit: "Jean-François Champollion le Jeune; collected edition, Paris: Firmin Didot Frères, 1833",
+        detail: "Public domain, read at the Internet Archive. The seventh letter is headed \"Thèbes, le 24 novembre 1828\", and p. 99 carries both of this article's Champollion claims in his own French: the name-ring read as \"Ioudahamalek, le royaume des Juifs ou de Juda\", and the identity \"entre le Scheschonk égyptien, le Sésonchis de Manéthon et le Sésac ou Schéschok de la Bible\" pronounced \"confirmée de la manière la plus satisfaisante\". The English wording in this article glosses that French rather than quoting him",
+        supports: "What Champollion himself wrote about the Shishak identification and about name-ring 29",
+      },
       {
         tier: "institution",
         label: "Reliefs and Inscriptions at Karnak, Volume III: The Bubastite Portal (OIP 74)",
@@ -4520,7 +4528,7 @@ export const topics: Topic[] = [
         heading: "Kee's Challenge, and Why the Field Did Not Follow",
         paragraphs: [
           "Howard Clark Kee argued in New Testament Studies in 1990, and in later essays, that the inscription is not first-century at all but second or third and possibly as late as the fourth. This was not a stray suggestion: it was load-bearing for a larger thesis of his that purpose-built synagogue buildings did not exist before AD 70, and that the Gospels' synagogue scenes are therefore anachronisms projected back by later writers. If Kee were right, a good deal of how the Gospels describe Jesus's public ministry would have to be re-read.",
-          "He was answered thoroughly. J. S. Kloppenborg Verbin's \"Dating Theodotos\" in the Journal of Jewish Studies in 2000 went through the paleography, the onomastics and the archaeological context and concluded for a date before 70; Rainer Riesner argued along similar lines. Kee replied, and the field did not follow him. The current position is that the inscription is pre-70, most placing it in the late first century BC or the first century AD. The wider thesis has fared no better: first-century synagogue buildings have since been excavated at Gamla, Masada, Herodium and Magdala, which is a harder kind of answer than an argument about letter forms.",
+          "He was answered thoroughly. J. S. Kloppenborg Verbin's \"Dating Theodotos\" in the Journal of Jewish Studies in 2000 went through the paleography, the onomastics and the archaeological context and concluded for a date before 70. K. Atkinson had already answered Kee in New Testament Studies itself, objecting that Kee discussed neither the inscription's letter forms nor the identity of the epigraphers he said had supplied his date. Kee replied, and the field did not follow him. The current position is that the inscription is pre-70, most placing it in the late first century BC or the first century AD. The wider thesis has fared no better: first-century synagogue buildings have since been excavated at Gamla, Masada, Herodium and Magdala, which is a harder kind of answer than an argument about letter forms.",
           "The honest note to end on is not about who won but about why the argument was possible. The stone came out of fill in a cistern with no building attached, so its date rests on letter forms, name types and the material found around it rather than on where it sat. That is a real weakness, and Kee was entitled to press it. What makes the question settled is not that his opponents shouted louder but that the paleographic case converged with the excavation of actual first-century synagogues elsewhere — two independent lines arriving at the same answer. An article that skipped straight to \"pre-70\" would have hidden the only interesting part.",
         ],
       },
@@ -4564,11 +4572,11 @@ export const topics: Topic[] = [
       },
       {
         tier: "scholarly",
-        label: "R. Riesner, \"Synagogues in Jerusalem\" and the NTS exchange with H. C. Kee",
+        label: "K. Atkinson, \"On Further Defining the First-Century CE Synagogue: Fact or Fiction? A Rejoinder to H. C. Kee\"",
         url: "https://www.cambridge.org/core/journals/new-testament-studies/article/abs/on-further-defining-the-firstcentury-ce-synagogue-fact-or-fiction-a-rejoinder-to-h-c-kee/EEF0F79A1BE17E80AB7D85A725B16DAC",
-        credit: "New Testament Studies, Cambridge University Press",
-        detail: "The published rejoinder to Kee's thesis that purpose-built synagogues did not exist before AD 70",
-        supports: "The wider dispute about first-century synagogue buildings",
+        credit: "Kenneth Atkinson; New Testament Studies, Cambridge University Press",
+        detail: "New Testament Studies 43/4 (October 1997), 491-502; DOI 10.1017/S0028688500023341. Only the free first-page extract was read here. It states Kee's redating of the Theodotus inscription to the \"mid-second to late third century CE\" and objects that he neither discusses the inscription's epigraphy nor identifies the \"number of distinguished epigraphers\" he says gave him the date. The rest of the article is behind a paywall",
+        supports: "That Kee's late dating was answered in his own journal, and on what grounds",
         paywalled: true,
       },
       {
@@ -4717,7 +4725,7 @@ export const topics: Topic[] = [
       objectType: "White marble slab with about twenty-two lines of Greek — a diatagma Kaisaros, an edict of Caesar",
       findSite: "Unknown. It has no excavation context and was acquired on the antiquities market",
       foundYear: "Acquired 1878; first published 1930",
-      foundBy: "No excavator. The collector Wilhelm Frohner acquired it in 1878; his own catalogue note reads \"marble slab sent from Nazareth in 1878\" — sent from, not found at. It was published only in 1930, by Franz Cumont",
+      foundBy: "No excavator. The collector Wilhelm Frohner acquired it in Paris in 1878; his own sparse note is the only record of where it came from, and it says only that the stone was sent from Nazareth — sent from, not found at. It was published only in 1930, by Franz Cumont",
       objectDate: "Uncertain. The stone carries no date and palaeography allows a wide range across the early empire",
       objectDateCertainty: "disputed",
       currentLocation: "Bibliotheque nationale de France, Cabinet des Medailles, Paris, on display since 1925. No shelfmark could be verified and none is given",
@@ -4727,10 +4735,10 @@ export const topics: Topic[] = [
       {
         tier: "scholarly",
         label: "K. Harper, M. McCormick et al., \"Establishing the provenance of the Nazareth Inscription\"",
+        url: "https://hal.univ-lorraine.fr/hal-02934970",
         credit: "Kyle Harper, Michael McCormick, Matthew Hamilton, Chantal Peiffert, Raymond Michels and colleagues",
-        detail: "Journal of Archaeological Science: Reports 30 (2020), 102228. Laser-ablation stable-isotope analysis matching the marble to the upper quarry on Kos. The publisher's page refuses automated requests, so no URL is given; the DOI is 10.1016/j.jasrep.2020.102228",
-        supports: "The isotope result, the Kos quarry match, and the proposed Nikias occasion",
-        paywalled: true,
+        detail: "Journal of Archaeological Science: Reports 30 (2020), 102228; DOI 10.1016/j.jasrep.2020.102228. The publisher's copy is behind a paywall, but the authors deposited the full text openly at HAL, and that is the version read here. Laser-ablation stable-isotope analysis matching the marble to the upper quarry on Kos. On Frohner's note the authors say only that \"His exiguous notes indicate that it was 'sent from Nazareth'\", citing L. Robert, Collection Froehner I (1936) — which is why this article paraphrases the note rather than quoting it: Frohner wrote in French and no page image of his wording was opened here",
+        supports: "The isotope result, the Kos quarry match, the proposed Nikias occasion, and what Frohner's note actually says",
       },
       {
         tier: "institution",
@@ -4783,7 +4791,7 @@ export const topics: Topic[] = [
         heading: "Six Writers, Twelve Authors, and What Literacy Means",
         paragraphs: [
           "In 2016 a Tel Aviv University group published a study in the Proceedings of the National Academy of Sciences applying image processing and machine learning to the handwriting on sixteen of the Arad ostraca. Their conclusion was that at least six distinct writers were at work, ranging from the fort commander down to a deputy quartermaster, and that all of them wrote with competent spelling and syntax. From this they argued for a relatively widespread literacy in Judah around 600 BC, and further, that a substantial amount of biblical literature could therefore have been compiled before the destruction of 586 BC rather than during or after the exile.",
-          "Christopher Rollston praised the method and rejected the sociological conclusion, and his objection is the one to weigh. The ostraca do not all come from a single moment: they span different strata across the seventh century and earlier, so six writers over decades is a thinner result than six writers at one desk. And six literate men at a military installation shows that the military-administrative apparatus of Judah could read and write, which nobody doubted. Literacy in an administrative elite is not literacy in the population, and the leap from one to the other is where the argument becomes an argument rather than a measurement.",
+          "Christopher Rollston praised the method and made two objections, and only one of them is ever quoted. The first runs the opposite way from what a reader expects: he thinks the study too conservative. On his reading the epigraphic evidence for trained, standardised scribal education in Israel and Judah is already there two centuries earlier, and he sums it up as \"I see your 600 and raise you 200\" — that is, back to about 800 BC. The second is the one to weigh. The ostraca do not all come from a single moment: they span different strata across the seventh century and earlier, so six writers over decades is a thinner result than six writers at one desk. And six literate men at a military installation shows that the military-administrative apparatus of Judah could read and write, which nobody doubted. Literacy in an administrative elite is not literacy in the population, and the leap from one to the other is where the argument becomes an argument rather than a measurement.",
           "One thing readers should not conflate. The same group published a follow-up in PLOS ONE in 2020 combining forensic document examination with the algorithms, after which Tel Aviv University publicised a figure of twelve authors for the Arad corpus. \"Six writers\" and \"twelve authors\" are different studies, on differently defined bodies of material, and quoting them interchangeably — as many summaries do — misrepresents both. Where the app stands: the ostraca are strong evidence that writing was an ordinary working tool of Judah's administration well before the exile, which is genuinely relevant to how the biblical books could have been written, copied and kept. They are not evidence about who could read in a village, and the more ambitious version of the claim outruns what sixteen potsherds can carry.",
         ],
       },
@@ -4827,15 +4835,15 @@ export const topics: Topic[] = [
         label: "C. Rollston, \"The Tel Aviv University PNAS Study: Some Methodological Musings\"",
         url: "http://www.rollstonepigraphy.com/?p=708",
         credit: "Christopher Rollston, George Washington University",
-        detail: "Rollston Epigraphy, April 2016",
-        supports: "The objection to the leap from six writers to widespread literacy",
+        detail: "Rollston Epigraphy, 13 April 2016, read in full. Both of the objections quoted in this article are his own words there: that the study's date of about 600 BC \"is too conservative\" because \"we have such evidence already two hundred years prior to this\" — \"I see your 600 and raise you 200\" — and that \"the sociological conclusions about the 'proliferation of literacy' in Judah is not something that can be posited on the basis of this study\". He notes that he has consulted for the Tel Aviv project and is not among the paper's authors",
+        supports: "Both halves of Rollston's response: that the date is too late, and that the leap from six writers to widespread literacy does not follow",
       },
       {
         tier: "scholarly",
-        label: "Forensic document examination and algorithmic handwriting analysis of Judahite biblical period inscriptions",
+        label: "A. Shaus, Y. Gerber et al., \"Forensic document examination and algorithmic handwriting analysis of Judahite biblical period inscriptions reveal significant literacy level\"",
         url: "https://journals.plos.org/plosone/article?id=10.1371%2Fjournal.pone.0237962",
-        credit: "Faigenbaum-Golovin and colleagues, Tel Aviv University",
-        detail: "PLOS ONE 15/9 (2020), e0237962 — the follow-up study behind the later \"twelve authors\" figure. Open access",
+        credit: "Arie Shaus, Yana Gerber, Shira Faigenbaum-Golovin, Barak Sober, Eli Piasetzky and Israel Finkelstein, Tel Aviv University — the first four contributed equally",
+        detail: "PLOS ONE 15/9 (2020), e0237962. Open access, read in full. This is the study behind the later \"twelve authors\" figure, and the figure is the forensic examiner's rather than the algorithms': the paper analyses eighteen inscriptions and reports that \"the forensic examination reveals a high probability of at least 12 writers within the analyzed corpus\", against \"4-7 writers for the same assemblage\" from the earlier algorithmic work",
         supports: "The distinction between the 2016 six-writer result and the later twelve-author figure",
       },
       {
@@ -14344,7 +14352,7 @@ export const topics: Topic[] = [
       {
         heading: "What It Gave the New Testament",
         paragraphs: [
-          "No other place has produced anything like as many early copies of the New Testament. A great many of the catalogued New Testament papyri come from this one rubbish heap, and the earliest fragments of several books are among them. P1 is a leaf of Matthew, P.Oxy. 2, published in the very first volume. P5 is a copy of John's Gospel, P13 is Hebrews, P77 is Matthew again. P90 preserves John 18:36-19:7 and was edited by T. C. Skeat, who called it \"unusually early in date (second century AD)\". P104 carries a few verses of Matthew 21 and is assigned to the late second century. P137 is the small fragment of Mark that was announced for years as first-century and published in 2018 as late second or early third.",
+          "No other place has produced anything like as many early copies of the New Testament. A great many of the catalogued New Testament papyri come from this one rubbish heap, and the earliest fragments of several books are among them. P1 is a leaf of Matthew, P.Oxy. 2, published in the very first volume. P5 is a copy of John's Gospel, P13 is Hebrews, P77 is Matthew again. P90 preserves John 18:36-19:7 and was edited by T. C. Skeat; the Oxyrhynchus project's own catalogue entry for it reads \"Unusually early in date (second century AD).\" P104 carries a few verses of Matthew 21 and is assigned to the late second century. P137 is the small fragment of Mark that was announced for years as first-century and published in 2018 as late second or early third.",
           "The most striking single reading came in P115, a papyrus of Revelation edited by J. Chapa. At Revelation 13:18 it gives the number of the beast not as 666 but as 616. The reading was already known to exist — Irenaeus mentions it in the second century in order to reject it — but here it is in a manuscript, and, as Oxford's own note on the papyrus puts it, \"this is the earliest instance that has so far been found.\" That is a good illustration of what this material does: it does not overturn the text, and it does not leave it unchanged either. It shows a real variant, already known from a Church Father's complaint about it, actually written down by a scribe.",
         ],
       },
@@ -14417,12 +14425,21 @@ export const topics: Topic[] = [
       },
       {
         tier: "institution",
-        label: "Egypt Exploration Society, statements of 14 October 2019 and 26 February 2021 (updated 24 July 2025)",
+        label: "Egypt Exploration Society, \"Professor Obbink and missing EES papyri\" (statement, 14 October 2019)",
+        url: "https://www.ees.ac.uk/news/professor-obbink-and-missing-ees-papyri",
+        credit: "The Egypt Exploration Society, London",
+        detail:
+          "Read in full. Both quotations in the third section come from this statement rather than from the 2021 one below: that thirteen texts \"were taken without authorisation from the EES\", and that the Museum of the Bible told the Society eleven of them had been \"sold to Hobby Lobby Stores by Professor Obbink\"",
+        supports: "The 2019 recoveries, and the Society's own account of what it was told",
+      },
+      {
+        tier: "institution",
+        label: "Egypt Exploration Society, \"Museum of the Bible and missing EES papyri\" (26 February 2021, updated 24 July 2025)",
         url: "https://www.ees.ac.uk/news/museum-of-the-bible-and-missing-ees-papyri",
         credit: "The Egypt Exploration Society, London",
         detail:
-          "Both read in full. The 2019 statement reports that thirteen texts \"were taken without authorisation from the EES\" and that the Museum of the Bible told the Society eleven of them had been \"sold to Hobby Lobby Stores by Professor Obbink\"; the 2021 statement adds twenty-one more, and its update of 24 July 2025 states that the police investigation continues. Every sentence in the third section about the ownership dispute rests on these two",
-        supports: "The recoveries, the Society's own account of what it was told, and the current status",
+          "Read in full. It adds twenty-one further fragments identified during 2020 and returned, and its update of 24 July 2025 states that \"Thames Valley Police is continuing its investigation into the removal of papyri from the EES collection\" — which is why this article says the matter is unresolved rather than closed",
+        supports: "The 2020 recoveries, and the current status of the police investigation",
       },
       {
         tier: "reference",
