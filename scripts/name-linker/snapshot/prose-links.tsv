@@ -5678,9 +5678,28 @@ topic.section|demons|2c6cd0dcdd	854	Paul	paul-of-tarsus
 topic.section|demons|ff47c964be	117	Satan	satan
 topic.section|demons|ff47c964be	396	Jesus	jesus-of-nazareth
 topic.section|demons|ff47c964be	542	James	james-son-of-zebedee
+topic.section|diatessaron|31c1eadee2	353	David	david
+topic.section|diatessaron|8241f0b7d0	201	David	david
+topic.section|diatessaron|8241f0b7d0	959	Jesus	jesus-of-nazareth
+topic.section|didache|39cf6c7aea	396	the Holy Spirit	holy-spirit
+topic.section|didache|70dac3ca82	300	John Chrysostom	john-chrysostom
 topic.section|ebla-tablets|5a995f0ddc	350	Abraham	abraham
 topic.section|edomites|1128678f84	27	Esau	esau
 topic.section|edomites|1128678f84	33	Jacob	jacob
+topic.section|egerton-papyrus-2|2df7d8e930	1016	Jesus	jesus-of-nazareth
+topic.section|egerton-papyrus-2|2df7d8e930	935	Isaiah	isaiah
+topic.section|egerton-papyrus-2|415144ba4c	338	Jesus	jesus-of-nazareth
+topic.section|egerton-papyrus-2|4483cd477e	271	Jesus	jesus-of-nazareth
+topic.section|egerton-papyrus-2|4483cd477e	424	Moses	moses
+topic.section|egerton-papyrus-2|4483cd477e	460	Jesus	jesus-of-nazareth
+topic.section|egerton-papyrus-2|5105e5d748	200	Jesus	jesus-of-nazareth
+topic.section|egerton-papyrus-2|622f01223e	154	Jesus	jesus-of-nazareth
+topic.section|egerton-papyrus-2|622f01223e	325	Luke	luke-evangelist
+topic.section|egerton-papyrus-2|622f01223e	45	Jesus	jesus-of-nazareth
+topic.section|egerton-papyrus-2|622f01223e	501	Caesar	tiberius-caesar
+topic.section|egerton-papyrus-2|622f01223e	514	Jesus	jesus-of-nazareth
+topic.section|egerton-papyrus-2|622f01223e	533	Isaiah	isaiah
+topic.section|egerton-papyrus-2|734f6eec88	37	Jesus	jesus-of-nazareth
 topic.section|egyptians|1de2d60e66	112	Joseph	joseph-son-of-jacob
 topic.section|egyptians|1de2d60e66	163	Jacob	jacob
 topic.section|egyptians|1de2d60e66	313	Joseph	joseph-son-of-jacob
@@ -5749,6 +5768,32 @@ topic.section|gospel-of-jesus-wife-fragment|ac93703be5	652	Jesus	jesus-of-nazare
 topic.section|gospel-of-jesus-wife-fragment|ac93703be5	778	Paul	paul-of-tarsus
 topic.section|gospel-of-jesus-wife-fragment|ac93703be5	883	Cephas	simon-peter
 topic.section|gospel-of-jesus-wife-fragment|ac93703be5	931	Paul	paul-of-tarsus
+topic.section|gospel-of-judas|0bbe0f8e17	407	Judas	judas-iscariot
+topic.section|gospel-of-judas|2613d1c8a3	145	Judas	judas-iscariot
+topic.section|gospel-of-judas|2613d1c8a3	163	Jesus	jesus-of-nazareth
+topic.section|gospel-of-judas|2613d1c8a3	266	Jesus	jesus-of-nazareth
+topic.section|gospel-of-judas|2613d1c8a3	278	Judas	judas-iscariot
+topic.section|gospel-of-judas|2613d1c8a3	426	Judas	judas-iscariot
+topic.section|gospel-of-judas|467462bbc4	107	Jesus	jesus-of-nazareth
+topic.section|gospel-of-judas|467462bbc4	235	Judas	judas-iscariot
+topic.section|gospel-of-judas|467462bbc4	435	Judas	judas-iscariot
+topic.section|gospel-of-judas|467462bbc4	91	Judas Iscariot	judas-iscariot
+topic.section|gospel-of-judas|481f6fdcfe	1050	Jesus	jesus-of-nazareth
+topic.section|gospel-of-judas|481f6fdcfe	169	Judas	judas-iscariot
+topic.section|gospel-of-judas|e1c77fad2a	106	Judas	judas-iscariot
+topic.section|gospel-of-judas|f8ac120a81	1315	Judas	judas-iscariot
+topic.section|gospel-of-thomas|094cfd3119	162	Jesus	jesus-of-nazareth
+topic.section|gospel-of-thomas|094cfd3119	253	Jesus	jesus-of-nazareth
+topic.section|gospel-of-thomas|094cfd3119	451	Jesus	jesus-of-nazareth
+topic.section|gospel-of-thomas|2d3402c37d	504	Jesus	jesus-of-nazareth
+topic.section|gospel-of-thomas|2d3402c37d	826	Jesus	jesus-of-nazareth
+topic.section|gospel-of-thomas|37e70fa84b	167	Jesus	jesus-of-nazareth
+topic.section|gospel-of-thomas|7ed209f5ec	188	Thomas	thomas-apostle
+topic.section|gospel-of-thomas|e524ad068b	318	Simon Peter	simon-peter
+topic.section|gospel-of-thomas|e524ad068b	343	Mary Magdalene	mary-magdalene
+topic.section|gospel-of-thomas|e524ad068b	454	Jesus	jesus-of-nazareth
+topic.section|gospel-of-thomas|e524ad068b	945	Jesus	jesus-of-nazareth
+topic.section|gospel-of-thomas|fda404fe0d	1142	Jesus	jesus-of-nazareth
 topic.section|great-isaiah-scroll|20eb08c9bd	469	Mark	john-mark
 topic.section|great-isaiah-scroll|3426efeac1	325	Isaiah	isaiah
 topic.section|great-isaiah-scroll|3426efeac1	354	Isaiah	isaiah
@@ -5827,6 +5872,7 @@ topic.section|jehoiachin-ration-tablets|72841bf7a6	214	Jehoiachin	jeconiah
 topic.section|jehoiachin-ration-tablets|97ed4ccc59	78	Jehoiachin	jeconiah
 topic.section|jehucal-gedaliah-bullae|966c0d54f6	239	Jeremiah	jeremiah
 topic.section|jehucal-gedaliah-bullae|966c0d54f6	64	Jeremiah	jeremiah
+topic.section|jehucal-gedaliah-bullae|a70bb2f5c3	734	Jeremiah	jeremiah
 topic.section|jehucal-gedaliah-bullae|c86b8eb48b	256	Jeremiah	jeremiah
 topic.section|jehucal-gedaliah-bullae|c86b8eb48b	54	Jeremiah	jeremiah
 topic.section|jewish-elders|85ea4d82e5	226	Jesus	jesus-of-nazareth
@@ -5916,6 +5962,8 @@ topic.section|muratorian-fragment|d694d7e9c9	415	Paul	paul-of-tarsus
 topic.section|nabonidus-cylinder|2743d09e14	193	Daniel	daniel
 topic.section|nabonidus-cylinder|8d680ee658	394	Daniel	daniel
 topic.section|nabonidus-cylinder|8d680ee658	427	Daniel	daniel
+topic.section|nag-hammadi-codices|21e35ae8eb	119	Athanasius of Alexandria	athanasius-of-alexandria
+topic.section|nag-hammadi-codices|68b1c1ea1e	418	Eusebius of Caesarea	eusebius-of-caesarea
 topic.section|nathan-melech-bulla|1f24254c2e	317	Josiah	josiah
 topic.section|nathan-melech-bulla|4bdf97d343	220	Josiah	josiah
 topic.section|nathan-melech-bulla|70b1f0906f	64	Josiah	josiah
@@ -5987,7 +6035,6 @@ topic.section|old-syriac-gospels|c1136327b1	1141	Mary	mary-mother-of-jesus
 topic.section|old-syriac-gospels|c1136327b1	721	Jesus	jesus-of-nazareth
 topic.section|old-syriac-gospels|d127739970	174	Mary	mary-mother-of-jesus
 topic.section|oxyrhynchus-papyri|629a632848	131	Jesus	jesus-of-nazareth
-topic.section|oxyrhynchus-papyri|629a632848	462	Thomas	thomas-apostle
 topic.section|oxyrhynchus-papyri|9047c0b3d5	606	Mark	john-mark
 topic.section|papyrus-137-first-century-mark|1302efc28f	22	Mark	john-mark
 topic.section|papyrus-137-first-century-mark|1302efc28f	879	Mark	john-mark
@@ -6119,9 +6166,10 @@ topic.section|septuagint|f8b64d96b0	551	Job	job
 topic.section|sergius-paulus-inscriptions|05432f045d	117	Claudius	claudius-caesar
 topic.section|sergius-paulus-inscriptions|4492fdc8a6	118	Sergius Paulus	sergius-paulus
 topic.section|sergius-paulus-inscriptions|4492fdc8a6	390	Sergius Paulus	sergius-paulus
+topic.section|sergius-paulus-inscriptions|63fec28e5e	165	Sergius Paulus	sergius-paulus
+topic.section|sergius-paulus-inscriptions|63fec28e5e	452	Sergius Paulus	sergius-paulus
 topic.section|sergius-paulus-inscriptions|756784300e	342	Paul	paul-of-tarsus
 topic.section|sergius-paulus-inscriptions|756784300e	351	Barnabas	barnabas
-topic.section|sergius-paulus-inscriptions|9da496d635	165	Sergius Paulus	sergius-paulus
 topic.section|sergius-paulus-inscriptions|c902189bc2	86	Sergius Paulus	sergius-paulus
 topic.section|sergius-paulus-inscriptions|ca3495f229	251	Luke	luke-evangelist
 topic.section|sergius-paulus-inscriptions|ddca383bed	169	Claudius	claudius-caesar
@@ -6310,10 +6358,11 @@ topic.section|vetus-latina|d7224fd371	151	Jerome	jerome
 topic.section|vetus-latina|d7224fd371	93	Jerome	jerome
 topic.section|war-scroll|dbdfaaa763	72	Michael	michael-archangel
 topic.section|war-scroll|e5f2eb667c	277	Belial	satan
+topic.section|warrens-shaft|36bf0389cf	786	David	david
+topic.section|warrens-shaft|36bf0389cf	984	David	david
 topic.section|warrens-shaft|384d04ea9d	356	David	david
 topic.section|warrens-shaft|3df13a3cf6	162	David	david
 topic.section|warrens-shaft|4a73596be3	73	David	david
-topic.section|warrens-shaft|4c85472650	780	David	david
 topic.section|warrens-shaft|70bb8ffee2	316	David	david
 topic.section|warrens-shaft|8948c5885e	430	David	david
 topic.section|young-earth-old-earth-creationism|0ad470a689	1067	Adam	adam
