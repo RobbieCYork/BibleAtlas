@@ -4783,6 +4783,1355 @@ export const topics: Topic[] = [
       "The most valuable thing Eliashib left behind was a stack of routine supply orders he never expected anyone to read. What ordinary faithfulness of yours is worth more than you think?",
   },
   {
+    id: "hezekiah-bulla",
+    name: "Hezekiah Bulla",
+    alternateNames: ["Bulla of King Hezekiah", "Hezekiah Seal Impression"],
+    category: "discovery",
+    role: "The Seal Impression of a King of Judah, from a Controlled Excavation",
+    summary:
+      "A lump of clay the size of a fingernail, stamped \"Belonging to Hezekiah, [son of] Ahaz, king of Judah\" — the first seal impression of a king of Israel or Judah ever recovered from a scientific excavation rather than bought from a dealer.",
+    sections: [
+      {
+        heading: "Found Twice — Once in the Ground, Once in a Sieve",
+        paragraphs: [
+          "The bulla came out of Area A of the Ophel excavations in 2009, in a season directed by E. Mazar at the foot of the southern wall of Temple Mount. Its immediate context was an ancient refuse dump beside a royal building that had been used for storing food — not a treasury, not an archive, a rubbish tip. Nobody saw it in the trench. It surfaced later at the Emek Tzurim wet-sifting facility run by G. Barkay and Zachi Dvira, where the excavation's earth is washed through screens, and the person who actually recovered it was Efrat Greenwald, a member of the Ophel expedition supervising the sifting.",
+          "Then it sat unrecognised for years. Reut Ben-Aryeh, preparing the Hebrew bullae from the Ophel for publication, was the first to read it as the seal of a king of Judah. The find was announced in December 2015 alongside the first volume of the Ophel final reports — six years after the clay left the ground. The object itself is tiny: a clay lump about 13 by 12 millimetres and 3 millimetres thick, carrying an oval impression of roughly 9.7 by 8.6 millimetres. Above the writing is a winged sun disk with its wings turned downward, flanked by two ankh signs.",
+        ],
+      },
+      {
+        heading: "A Name, a Father, and a Title",
+        paragraphs: [
+          "The inscription is not a name on its own. In Old Hebrew it reads lḥzqyhw ʾḥz mlk yhdh — \"belonging to Hezekiah, [son of] Ahaz, king of Judah.\" Three separate identifiers are stamped into the clay: the personal name, the father's name, and the office. That combination is what makes this find different from most of the seals and bullae in this section, where the argument has to be built out of a single common name. Hezekiah son of Ahaz who ruled Judah is one man. He is the king of 2 Kings 18-20, of Isaiah 36-39, and of 2 Chronicles 29-32, and 2 Kings 16:20 names his father exactly as the seal does.",
+          "The imagery is worth a second look, because it is Egyptian. The winged sun disk and the ankh — the sign of life — are borrowed motifs, and they sit on the personal seal of a king whose court was being lectured by an Assyrian officer for leaning on Egypt as on \"the staff of this bruised reed\" (2 Kings 18:21). The excavators suggested the winged sun replaced an earlier winged-scarab device later in the reign; that is a reading of the iconography rather than a dated fact, and it is offered here as theirs. What is not in doubt is that a Judean king's own chancery used symbols the wider Near East would have recognised at a glance.",
+        ],
+      },
+      {
+        heading: "What It Anchors, and Where It Stops",
+        paragraphs: [
+          "This one is worth stating at full strength, because most of the articles in this section have to spend their third paragraph pulling a claim back. The Hezekiah bulla puts a specific king of Judah, named with his father and his title, in his own capital, in the right century, in the debris of a royal building — and it does so from a controlled excavation with a recorded findspot. As anchors for a biblical person go, this is about as good as the material record gets outside the great royal inscriptions.",
+          "The reason it matters that it was dug rather than bought is not squeamishness. Seal impressions carrying Hezekiah's name had been circulating on the antiquities market since the middle of the 1990s, some with a winged scarab and some with a winged sun. Those objects could not settle anything, because an unprovenanced bulla has no findspot, no stratum and no chain of custody, and the market has a long record of supplying exactly what buyers of biblical antiquities want to find. E. Mazar's own framing of the 2015 announcement was precise on this point: seal impressions bearing the name were already known, and this was the first to come to light in a scientific archaeological excavation.",
+          "And here is the limit. The bulla establishes the man and his office. It corroborates no event narrated about him — not the tunnel of 2 Kings 20:20, not the wall of 2 Chronicles 32:5, not the reform, not the siege of 701 BC, not a word of what he prayed. Those stand or fall on other evidence and on other grounds. A find that fixes a person is not a find that confirms a story about that person, and collapsing the two is the most common error in popular writing about biblical archaeology. What this clay says is that Hezekiah of Judah sealed documents in Jerusalem. It says it with unusual clarity, and it says nothing else.",
+        ],
+      },
+    ],
+    verses: [
+      { reference: "2 Kings 16:20", note: "Ahaz dies and Hezekiah his son reigns — the father named on the seal" },
+      { reference: "2 Kings 18:5", note: "The estimate of Hezekiah the biblical writers give" },
+      { reference: "2 Kings 18:13", note: "Sennacherib takes the fortified cities of Judah in Hezekiah's fourteenth year" },
+      { reference: "2 Kings 18:21", note: "Egypt as a bruised reed — the alliance behind the Egyptian motifs on the seal" },
+      { reference: "2 Kings 20:20", note: "The pool and the conduit, one of the things this bulla does not corroborate" },
+    ],
+    sources: [
+      { label: "Biblical Archaeology Society: the royal seal of Hezekiah comes to light", url: "https://www.biblicalarchaeology.org/daily/news/king-hezekiah-in-the-bible-royal-seal-of-hezekiah-comes-to-light/" },
+    ],
+    discovery: {
+      objectType: "Clay bulla, c. 13 x 12 mm, carrying an oval seal impression of c. 9.7 x 8.6 mm",
+      findSite: "Area A of the Ophel excavations, in a refuse dump beside a royal building south of Temple Mount, Jerusalem",
+      findSiteId: "jerusalem",
+      findSiteKind: "location",
+      foundYear: "2009; identified 2015, announced December 2015",
+      foundBy: "Excavated by the Ophel expedition under E. Mazar. Recovered from wet-sifted earth at Emek Tzurim by Efrat Greenwald, and first identified as Hezekiah's by Reut Ben-Aryeh",
+      objectDate: "The reign of Hezekiah, conventionally c. 715-686 BC; regnal dates for Judah vary between reconstructions",
+      objectDateCertainty: "traditional",
+      currentLocation: "Ophel excavation material, Israel Antiquities Authority; published in the Ophel final reports",
+    },
+    citations: [
+      {
+        tier: "institution",
+        label: "E. Mazar (ed.), The Ophel Excavations to the South of the Temple Mount 2009-2013: Final Reports Volume I",
+        credit: "Eilat Mazar and the Ophel expedition, Hebrew University of Jerusalem — the excavating body's own report",
+        detail: "Jerusalem, 2015. The volume with which the bulla was announced. Print only",
+        supports: "The findspot, the reading and the excavation context",
+      },
+      {
+        tier: "reference",
+        label: "Hebrew University press release: first seal impression of an Israelite or Judean king exposed in situ in a scientific excavation",
+        url: "https://phys.org/news/2015-12-israelite-judean-king-exposed-situ.html",
+        credit: "Hebrew University of Jerusalem",
+        detail: "December 2015",
+        supports: "Efrat Greenwald's recovery of the bulla in the sifting, Reut Ben-Aryeh's identification, the measurements and the iconography",
+      },
+      {
+        tier: "reference",
+        label: "\"King Hezekiah in the Bible: Royal Seal of Hezekiah Comes to Light\"",
+        url: "https://www.biblicalarchaeology.org/daily/news/king-hezekiah-in-the-bible-royal-seal-of-hezekiah-comes-to-light/",
+        credit: "Biblical Archaeology Society",
+        supports: "The find, the reading, and the unprovenanced Hezekiah bullae known from the market since the 1990s",
+      },
+      {
+        tier: "encyclopedic",
+        label: "King Hezekiah bulla",
+        url: "https://en.wikipedia.org/wiki/King_Hezekiah_bulla",
+        credit: "Wikipedia",
+        supports: "General orientation and the transliteration of the inscription",
+      },
+    ],
+    reflectionPrompt:
+      "This scrap of clay was thrown out with the kitchen rubbish and found in a sieve two and a half thousand years later. What have you treated as disposable that God has not?",
+  },
+  {
+    id: "isaiah-bulla",
+    name: "Isaiah Bulla",
+    alternateNames: ["Yesha'yahu Bulla"],
+    category: "discovery",
+    role: "A Damaged Eighth-Century Seal Impression, and What It Does Not Quite Say",
+    summary:
+      "An Ophel bulla reading \"belonging to Yesha'yahu\" and then three letters, nby. Add one more letter and it would say \"the prophet\" — but that letter is not there, and whether it ever was is the whole argument.",
+    sections: [
+      {
+        heading: "Ten Feet from a King",
+        paragraphs: [
+          "The bulla was excavated in 2009 by E. Mazar's Ophel expedition, from undisturbed Iron Age material outside the south-eastern wall of a structure the excavators call the royal bakery, at the foot of the southern wall of Temple Mount. Like the Hezekiah bulla it was not spotted in the trench; it came out of wet-sifted earth. And it was found roughly three metres from where the Hezekiah bulla had come out of the same operation — close enough that the two objects plausibly belonged to the same administrative rubbish.",
+          "Nine years passed before it was published. The editio princeps was an article by E. Mazar, released online on 21 February 2018 and printed in a special double issue of Biblical Archaeology Review (March/April-May/June 2018) at pages 65-73; its title asked whether the bulla carried the prophet's signature, with a question mark. The press coverage the following morning was, with few exceptions, considerably more confident than the article it was reporting.",
+        ],
+      },
+      {
+        heading: "What Is Legible, and What Is Restored",
+        paragraphs: [
+          "The bulla has three registers and the top of it is broken away. The first register preserves no letters at all, only a fragment of a decorative element. The second register reads L-yšʿyh[w] — \"belonging to Yeshaʿyahu,\" the Hebrew name rendered in English as Isaiah, with the final letter of the divine element restored. The third register preserves three letters and no more: nun, bet, yod. That is nby.",
+          "In Hebrew the word for prophet is nbʾ — nun, bet, aleph. Restore an aleph at the end of nby and you have a spelling of \"prophet.\" Restore nothing, and you have a three-letter sequence that could be a personal name, a place of origin, or something else again. The left edge of the bulla is damaged exactly there, which is why this is an argument and not a reading. E. Mazar's own words in the announcement were careful: \"Because the bulla has been slightly damaged at end of the word nvy, it is not known if it originally ended with the Hebrew letter aleph,\" and she allowed that without it the word could simply be the name Navi. What she did claim without hedging is the first name: \"The name of Isaiah, however, is clear.\"",
+          "So the honest statement of what is on this object is short. A man whose name was Yeshaʿyahu sealed something in Jerusalem in the late eighth or early seventh century BC, and after his name stood a word beginning nby. Everything past that sentence is reconstruction, and reconstruction is not evidence.",
+        ],
+      },
+      {
+        heading: "Why This App Does Not Call It Isaiah's Seal",
+        paragraphs: [
+          "The most sustained objection came from C. Rollston of George Washington University, who published it within a day of the announcement and expanded it twice that week. His case has four legs. First, the name: the Hebrew root behind \"Isaiah\" produced names for something like twenty different people in the Bible alone, so a great many men in eighth- and seventh-century Judah were called Yeshaʿyahu or something built on the same root. Second, the missing letter: without an aleph, \"prophet\" cannot be confirmed, and Rollston does not accept the argument that the letter was simply not written. Third, the article: in the overwhelming majority of biblical occurrences the word \"prophet\" is definite — \"the prophet\" — and there is no definite article here. Mazar's drawing proposed restoring one at the end of the previous line; Rollston finds no room for it, and Anat Mendel-Geberovich, who has read the bulla, told him she agrees there is not.",
+          "Fourth, and most awkwardly, the yod. If nby is \"prophet,\" the yod is an internal vowel letter, and those are rare in Old Hebrew of this period. The one place the word \"prophet\" actually turns up in the Hebrew epigraphic record is Lachish Letter 3, line 20 — and there it is written without the yod, and with the definite article. The single closest comparison we have is spelled the other way. Rollston also lays out several ordinary personal names that fit nby perfectly well, in which case the second word would be a patronymic and the owner would not be a prophet at all.",
+          "Two things should be said in fairness on the other side. The first is that Mazar did not overclaim. Rollston went out of his way to applaud her for it — the operative word in her article, as he put it, is \"may\" — and her caution is on the record in her own quoted words. The dispute is not about her honesty; it is about whether a restoration can carry a sentence, and it cannot. The second is that nobody disputes that the object is genuine and ancient. It was excavated. The argument here is about reading, not authenticity, and those are different problems with different consequences.",
+          "Where this app stands: this is a real eighth- or seventh-century bulla belonging to a man named Yeshaʿyahu, found metres from the seal impression of Hezekiah, in a period when Scripture places a prophet named Isaiah in that king's court. That is a genuinely interesting coincidence and it is worth telling a reader about. It is not proof, it is not a signature, and it is not \"Isaiah's seal.\" A believer's confidence that Isaiah lived and served in Hezekiah's Jerusalem rests on Scripture, not on three surviving letters and a fourth that may never have existed — and pretending otherwise would put the reader's trust on a foundation that a single sentence from an epigrapher can knock over.",
+        ],
+      },
+    ],
+    verses: [
+      { reference: "Isaiah 1:1", note: "Isaiah son of Amoz, in the days of Uzziah, Jotham, Ahaz and Hezekiah — note the patronymic the bulla does not have" },
+      { reference: "Isaiah 37:2", note: "Hezekiah sends to Isaiah the prophet, the son of Amoz — the phrase with its definite article" },
+      { reference: "2 Kings 19:2", note: "The same embassy in Kings, placing prophet and king together in Jerusalem" },
+      { reference: "2 Kings 20:1", note: "Isaiah in the palace during Hezekiah's illness" },
+    ],
+    sources: [
+      { label: "Rollston Epigraphy: \"The Putative Bulla of Isaiah the Prophet: Not so Fast\"", url: "http://www.rollstonepigraphy.com/?p=796" },
+      { label: "Biblical Archaeology Society: Isaiah's signature uncovered in Jerusalem", url: "https://www.biblicalarchaeology.org/daily/news/prophet-isaiah-signature-jerusalem/" },
+    ],
+    discovery: {
+      objectType: "Clay bulla in three registers, the upper part broken away; oval seal impression c. 13 mm across",
+      findSite: "Iron Age material outside the south-eastern wall of the royal bakery, Ophel excavations, Jerusalem",
+      findSiteId: "jerusalem",
+      findSiteKind: "location",
+      foundYear: "2009; published February 2018",
+      foundBy: "Excavated by the Ophel expedition under E. Mazar and recovered from wet-sifted earth; no individual finder is recorded in the publication",
+      objectDate: "Late eighth or early seventh century BC on the script; C. Rollston states the palaeography cannot be narrowed further than that",
+      objectDateCertainty: "disputed",
+      currentLocation: "Ophel excavation material, Israel Antiquities Authority",
+    },
+    citations: [
+      {
+        tier: "scholarly",
+        label: "E. Mazar, \"Is This the Prophet Isaiah's Signature?\"",
+        credit: "Eilat Mazar, Hebrew University of Jerusalem — the editio princeps",
+        detail: "Biblical Archaeology Review, special double issue March/April-May/June 2018, pages 65-73, notes page 92. Published online 21 February 2018. Behind the BAS Library paywall, so no link is given",
+        paywalled: true,
+        supports: "The reading, the find context and Mazar's own statement of the uncertainty",
+      },
+      {
+        tier: "scholarly",
+        label: "C. Rollston, \"The Putative Bulla of Isaiah the Prophet: Not so Fast\"",
+        url: "http://www.rollstonepigraphy.com/?p=796",
+        credit: "Christopher Rollston, George Washington University",
+        detail: "Rollston Epigraphy, 22 February 2018. Served over plain http",
+        supports: "The four epigraphic objections: the commonness of the name, the missing aleph, the absent article and the anomalous yod",
+      },
+      {
+        tier: "scholarly",
+        label: "C. Rollston, \"The 'Isaiah Bulla' and the Putative Connection with Biblical Isaiah: 3.0\"",
+        url: "http://www.rollstonepigraphy.com/?p=833",
+        credit: "Christopher Rollston, George Washington University",
+        detail: "Rollston Epigraphy, 26 February 2018 — the fullest version, and the basis of a subsequent print article",
+        supports: "The palaeographic date, Anat Mendel-Geberovich on the space for the article, and the alternative readings of nby",
+      },
+      {
+        tier: "reference",
+        label: "\"An Unprecedented Find: Prophet Isaiah's Seal Mark Possibly Discovered in Jerusalem\"",
+        url: "https://www.biblicalarchaeology.org/press-release/an-unprecedented-find-prophet-isaiahs-seal-mark-possibly-discovered-in-jerusalem/",
+        credit: "Biblical Archaeology Society",
+        supports: "Mazar's quoted caution about the missing aleph and the possibility of the name Navi",
+      },
+      {
+        tier: "encyclopedic",
+        label: "Isaiah bulla",
+        url: "https://en.wikipedia.org/wiki/Isaiah_bulla",
+        credit: "Wikipedia",
+        supports: "General orientation and the summary of the objections",
+      },
+    ],
+    reflectionPrompt:
+      "One missing letter is the difference between a curiosity and a headline. Where have you wanted a piece of evidence to say more than it actually says?",
+  },
+  {
+    id: "baruch-bullae",
+    name: "Baruch Bullae",
+    alternateNames: ["Berekhyahu Bullae", "Bullae of Berekhyahu son of Neriyahu"],
+    category: "discovery",
+    role: "Two Unprovenanced Seal Impressions, and a Lesson in Why Provenance Matters",
+    summary:
+      "Two clay bullae reading \"belonging to Berekhyahu son of Neriyahu the scribe\" — the most-quoted archaeological witness to a named figure of Jeremiah's story, bought on the antiquities market, and judged modern by the laboratory study that examined them - a verdict that is itself contested.",
+    sections: [
+      {
+        heading: "A Hoard Nobody Excavated",
+        paragraphs: [
+          "In October 1975 four inscribed Hebrew bullae appeared in the shop of an antiquities dealer in East Jerusalem. They were bought by a collector, who took them to N. Avigad of the Hebrew University, then the leading Israeli authority on ancient seals. Over the following years more collectors arrived at Avigad's door with more bullae, bought from dealers in Jerusalem, in Bethlehem and in the village of Beit Sahour, and it became clear that they all came from a single hoard — pieces from different lots physically joined. The hoard eventually numbered more than 250 bullae. One collector, Yoav Sasson, ended up with nearly 200; another, Reuben Hecht, acquired 49 and gave them to the Israel Museum.",
+          "One of them read, in three lines of Old Hebrew, lbrkyhw / bn nryhw / hspr — \"belonging to Berekhyahu, son of Neriyahu, the scribe.\" Avigad published it in 1978, and the identification proposed itself immediately: Baruch son of Neriah is Jeremiah's secretary, the man who wrote the prophet's scroll at his dictation in Jeremiah 36:4, and Berekhyahu is simply the fuller Yahwistic form of the name Baruch. In 1996 a second bulla with an identical impression surfaced, this one carrying a fingerprint, and the suggestion was floated in print that the fingerprint might be Baruch's own.",
+          "Notice what is missing from all of that. No excavation. No findspot. No stratum. No layer of destruction debris around it, no pottery beside it, no record of who dug it or where. The whole corpus was surfaced by looters, divided up and sold. The claim that these bullae came from the burnt house excavated in the City of David is an inference from their appearance, not a record of their recovery.",
+        ],
+      },
+      {
+        heading: "Why the Identification Was So Attractive",
+        paragraphs: [
+          "It is worth being clear about why this object became the single most cited bulla in popular Christian writing, because the reasoning was not stupid. The match looks unusually tight on paper. The patronymic is exact: nryhw is Neriyahu, the full form of Neriah, the father named in Jeremiah 36:4. The title is exact: hspr, \"the scribe,\" is what Scripture says Baruch did for a living. Name, father's name and occupation, all three. Set against the seals in this section that carry a bare personal name and nothing else, that looks decisive.",
+          "The given name needs one qualification, because it is where the argument actually sits. The bulla does not say Baruch. It says Berekhyahu, \"Yahweh has blessed\" — and Berekhyahu is the name the English Bible renders Berechiah, borne by several other men in Scripture. The identification depends on the standard philological view that Baruch is the shortened form of Berekhyahu, the divine element dropped, the way many Judahite names appear in both a long and a short version. That view is mainstream and it is probably right. It is also worth noticing what it means: before this bulla surfaced, nobody knew that Baruch's full name was Berekhyahu. An unexcavated object that supplies a previously unknown and biblically satisfying fact is exactly the kind of object that has to be checked hardest, whichever way the check comes out.",
+          "And the underlying picture is real enough. Judah at the end of the seventh century was a state that ran on sealed documents, and Jeremiah 32 describes the practice in unusual detail: a deed of purchase in two copies, one sealed and one open, witnessed, and handed to Baruch for safekeeping in an earthenware jar. Bullae are the physical residue of exactly that world. Whatever is true of these two pieces of clay, scribes like Baruch existed, sealed things, and left bullae behind.",
+        ],
+      },
+      {
+        heading: "What the Laboratory Found, and What an Unprovenanced Object Can Carry",
+        paragraphs: [
+          "In 2014 Y. Goren and E. Arie published a materials study of both bullae in the Bulletin of the American Schools of Oriental Research. Their conclusion was blunt: the two bullae are modern creations, exhibiting a series of technological misconceptions, anachronisms and outright technological errors — that is, the clay and the manufacture do not behave the way genuine Iron Age bullae behave. C. Rollston, who had argued on epigraphic grounds since the early 2000s that a group of celebrated unprovenanced Northwest Semitic pieces were twentieth-century forgeries, treats the Baruch bullae in that company alongside the Ma'adanah seal.",
+          "The question is not closed by acclamation. In 2016 P. van der Veen, R. Deutsch and G. Barkay published a detailed rejoinder in the journal Antiguo Oriente arguing that the earlier work does not in fact demonstrate forgery, and they are serious scholars making a serious case. So the accurate statement is that the authenticity of these two bullae is contested, with the published laboratory study against them and a published rebuttal in their defence, and with much of the epigraphic community persuaded by the former. What nobody can do is settle it by examining the findspot, because there is no findspot.",
+          "That is the point of this article, and it is the reason it is here rather than quietly dropped. An unprovenanced object cannot bear the weight that popular treatments put on the Baruch bullae. Even in the best case — even if a future study vindicates them completely — an object with no excavation context can never be more than suggestive, because the one thing that would tie it to a place, a moment and a burnt layer was destroyed the day it was dug up illegally and sold. The antiquities market does not merely risk supplying fakes. It systematically destroys the information that would let anyone tell. A reader who has been told that archaeology has produced Baruch's own signature deserves to know that the object in question was bought in a shop and that the laboratory that examined it said it was made in the twentieth century.",
+          "None of that touches Baruch himself. Jeremiah 36, 43 and 45 describe a man who wrote the prophet's words, read them in the temple court, was hunted for it, and was told plainly by God that he would not get the great things he was seeking. That account stands on the text of Jeremiah. It never stood on two lumps of clay from a dealer's shop, and it does not fall with them.",
+        ],
+      },
+    ],
+    verses: [
+      { reference: "Jeremiah 36:4", note: "Jeremiah calls Baruch son of Neriah, who writes the scroll at his dictation" },
+      { reference: "Jeremiah 36:10", note: "Baruch reads the scroll in the temple, in Gemariah's room" },
+      { reference: "Jeremiah 32:12", note: "The sealed and open deeds handed to Baruch — sealing practice described from the inside" },
+      { reference: "Jeremiah 45:5", note: "God's word to Baruch: do not seek great things for yourself" },
+    ],
+    sources: [
+      { label: "Center for Online Judaic Studies: Jeremiah's scribe and the hoard of clay bullae", url: "https://cojs.org/jeremiahs-scribe-and-confidant-speaks-from-a-hoard-of-clay-bullae/" },
+    ],
+    discovery: {
+      objectType: "Two clay bullae stamped from the same seal; the first c. 17 x 16 mm, its oval impression c. 13 x 11 mm",
+      findSite: "None recorded. The hoard surfaced through antiquities dealers in East Jerusalem, Bethlehem and Beit Sahour",
+      foundYear: "Surfaced October 1975 (first bulla) and 1996 (second)",
+      foundBy: "Unknown. Recovered by looters and sold through dealers; first published by N. Avigad in 1978",
+      objectDate: "Claimed late seventh to early sixth century BC by N. Avigad; a 2014 laboratory study concluded both are modern",
+      objectDateCertainty: "disputed",
+      currentLocation: "Israel Museum, Jerusalem (Hecht collection)",
+      authenticityDisputed: true,
+      unprovenanced: true,
+    },
+    citations: [
+      {
+        tier: "scholarly",
+        label: "Y. Goren and E. Arie, \"The Authenticity of the Bullae of Berekhyahu Son of Neriyahu the Scribe\"",
+        credit: "Yuval Goren and Eran Arie, Tel Aviv University and the Israel Museum",
+        detail: "Bulletin of the American Schools of Oriental Research 372 (2014), 147-158. Hosted only on repositories that refuse automated requests, so no link is given",
+        supports: "The conclusion that both bullae are modern creations showing technological anachronisms",
+      },
+      {
+        tier: "scholarly",
+        label: "P. van der Veen, R. Deutsch and G. Barkay, \"Reconsidering the Authenticity of the Berekhyahu Bullae: A Rejoinder\"",
+        credit: "Pieter van der Veen, Robert Deutsch and Gabriel Barkay",
+        detail: "Antiguo Oriente 14 (2016), 99-136. Hosted only on repositories that refuse automated requests, so no link is given",
+        supports: "The published case that the forgery verdict is not demonstrated",
+      },
+      {
+        tier: "scholarly",
+        label: "C. Rollston, \"The Forger Among Us: The Museum of the Bible Dead Sea Scrolls and the Recent History of Epigraphic Forgeries\"",
+        url: "http://www.rollstonepigraphy.com/?p=884",
+        credit: "Christopher Rollston, George Washington University",
+        detail: "Rollston Epigraphy, 15 March 2020. Places the Baruch bullae in the recent history of Northwest Semitic forgeries. Served over plain http",
+        supports: "The epigraphic case against the bullae and its place in a wider pattern of market forgeries",
+      },
+      {
+        tier: "reference",
+        label: "H. Shanks, \"Jeremiah's Scribe and Confidant Speaks from a Hoard of Clay Bullae\"",
+        url: "https://cojs.org/jeremiahs-scribe-and-confidant-speaks-from-a-hoard-of-clay-bullae/",
+        credit: "Hershel Shanks, Biblical Archaeology Review 13:05 (September/October 1987), reproduced by the Center for Online Judaic Studies",
+        detail: "The contemporary account of how the hoard surfaced: October 1975, an East Jerusalem dealer, more than 250 bullae divided among collectors",
+        supports: "The market history, the collectors, and the absence of any excavation record",
+      },
+      {
+        tier: "institution",
+        label: "N. Avigad, \"Baruch the Scribe and Jerahmeel the King's Son\"",
+        credit: "Nahman Avigad, Hebrew University of Jerusalem — the first publication",
+        detail: "Israel Exploration Journal 28 (1978), 52-56; restated in The Biblical Archaeologist 42/2 (1979), 114-118. Print only",
+        supports: "The reading of the inscription and the original identification with Jeremiah's scribe",
+      },
+    ],
+    reflectionPrompt:
+      "Baruch was told not to seek great things for himself, and the object that made him famous may be a fake. What would be left of your faith if the evidence you lean on hardest turned out to be worth less than you thought?",
+  },
+  {
+    id: "nathan-melech-bulla",
+    name: "Nathan-Melech Bulla",
+    // "Nathan-Melech" is registered as a matchName so the linker resolves the whole hyphenated
+    // name here rather than matching bare "Nathan" inside it and sending the reader to Nathan the
+    // prophet — which is what it does without this entry. The SPACED form "Nathan Melech", which is
+    // how the WEB renders 2 Kings 23:11, is deliberately NOT registered: that verse currently
+    // mislinks to the prophet, the fault predates this batch, and fixing it here would move the
+    // Bible snapshot on a commit that has no business touching it.
+    matchNames: ["Nathan-Melech"],
+    alternateNames: ["Eved Hamelech Bulla"],
+    category: "discovery",
+    role: "A Seventh-Century Bulla Naming an Official of Josiah's Court",
+    summary:
+      "A clay seal impression from the City of David reading \"belonging to Nathan-Melech, servant of the king\" — a rare name, the right century, and a royal title, held together without a patronymic on either side.",
+    sections: [
+      {
+        heading: "An Administrative Building, and a Careful Announcement",
+        paragraphs: [
+          "The bulla was found in October 2018 in the Givati Parking Lot excavation in the City of David, a dig run jointly by Tel Aviv University and the Israel Antiquities Authority under Yuval Gadot and Yiftah Shalev. Its context is a large public building of the First Temple period, built of finely cut ashlar with a polished plaster floor, and buried under stone debris, burnt beams and charred pottery from the Babylonian destruction of 586 BC. Press coverage of two long-serving team members, Sveta Pnik and Ayyala Rodan, credits them with the find of the bulla and of a companion agate seal, though the accounts differ on which of them found which. The epigrapher who read and published it is Anat Mendel-Geberovich.",
+          "The reading is not in dispute, which in this section is worth saying out loud. Two registers, every letter clear: lntnmlk, \"belonging to Nathan-Melech,\" and ʿbd hmlk, \"servant of the king.\" There is no imagery — an aniconic seal, the normal Judahite style after the eighth century. C. Rollston, who dates the script to roughly 675-625 BC on the shapes of the nun, lamed and kaf, went out of his way to praise the excavators and the epigrapher for the sobriety of their public statements, calling it a model for the field.",
+        ],
+      },
+      {
+        heading: "Servant of the King",
+        paragraphs: [
+          "The title is the interesting half. ʿbd hmlk does not mean \"slave of the king\" in this usage; it is the designation of a senior royal official, and it is well attested. A seal from Tomb 19 at Tell en-Nasbeh reads \"belonging to Yaʾazanyahu, servant of the king.\" Lachish Ostracon 3 refers to a Tobiyahu, servant of the king. The Megiddo seal in this section names Shema as servant of Jeroboam, using the same formula with the king's own name in place of the title. So the bulla is not a private signet; it is the working seal of a man near the top of Judah's administration, found in the building where such men worked.",
+          "The name itself is the rarest thing about it. Nathan-Melech means \"the King has given,\" with \"King\" functioning as a way of referring to God, exactly as other Judahite names of the same shape use El or the divine name instead. In the whole Hebrew Bible it belongs to exactly one person: the official at whose chamber Josiah found the horses that the kings of Judah had dedicated to the sun, in 2 Kings 23:11. That is a single attestation, in the reign of a king whose dates sit squarely inside the palaeographic range of the script.",
+        ],
+      },
+      {
+        heading: "How Much Weight the Match Will Take",
+        paragraphs: [
+          "Four things converge here and it is worth naming them separately, because the strength of the case is exactly the sum of them and no more. The name is rare rather than common. The date of the script matches the reign of Josiah. The archaeological context is a royal administrative building in Jerusalem. And both the biblical figure and the seal's owner carry a royal title. Rollston's own assessment is that this makes it probable, indeed most likely, that they are the same man — and that is the assessment this app follows.",
+          "But the identification is not certain, and Rollston says why in the same breath. Neither the Bible nor the bulla supplies a patronymic, which is the ordinary way an ancient identification is nailed down. And the two titles are not actually the same word: 2 Kings 23:11 calls the biblical Nathan-Melech a saris — a royal attendant, or possibly a eunuch — while the bulla says servant of the king. It is entirely reasonable that one man held or rose to both, and equally possible that the seal belonged to a son or grandson of the same name, since Judahite families reused names across generations. Certitude, as Rollston puts it, remains just beyond reach.",
+          "The people who found it said the same thing in their own words at the time. Mendel-Geberovich's published statement was that it is not possible to determine with complete certainty that the Nathan-Melech of the Bible owned the seal, and that it is equally impossible to ignore the details linking them. She also made an argument in the object's favour that is easy to miss: the man is named without any lineage at all, which suggests he was well enough known that nobody needed it.",
+          "The honest form of the claim, then, is this: a high official of Josiah's Jerusalem, bearing a name attested only once in Scripture, sealed documents in a building that burned when the city fell — and he is very probably the man of 2 Kings 23:11. Not certainly. Very probably. That distinction is not pedantry; it is the difference between a claim that survives contact with an epigrapher and one that does not.",
+        ],
+      },
+    ],
+    verses: [
+      { reference: "2 Kings 23:11", note: "Josiah removes the horses of the sun by the room of Nathan Melech the officer" },
+      { reference: "2 Kings 22:12", note: "Another royal servant of the same court, in the same reform narrative" },
+      { reference: "2 Kings 23:4", note: "The scope of Josiah's purge of the temple" },
+      { reference: "2 Kings 25:9", note: "The burning of Jerusalem in 586 BC — the destruction layer this bulla was found in" },
+    ],
+    sources: [
+      { label: "Rollston Epigraphy: the Bible, a new Hebrew inscription from Jerusalem, and a high official of Judah", url: "http://www.rollstonepigraphy.com/?p=870" },
+    ],
+    discovery: {
+      objectType: "Aniconic clay bulla in two registers",
+      findSite: "A First Temple period administrative building in the Givati Parking Lot excavation, City of David, Jerusalem",
+      findSiteId: "city-of-david",
+      findSiteKind: "poi",
+      foundYear: "October 2018; announced March 2019",
+      foundBy: "The Givati Parking Lot excavation, directed by Yuval Gadot (Tel Aviv University) and Yiftah Shalev (Israel Antiquities Authority); read and published by Anat Mendel-Geberovich. No individual finder is recorded",
+      objectDate: "Mid-seventh to early sixth century BC per the excavation's epigrapher; C. Rollston narrows it to c. 675-625 BC and doubts the later end. The building was destroyed in 586 BC",
+      objectDateCertainty: "firm",
+      currentLocation: "Israel Antiquities Authority",
+    },
+    citations: [
+      {
+        tier: "scholarly",
+        label: "C. Rollston, \"The Bible, a New Hebrew Inscription from Jerusalem, and a High Official of Judah\"",
+        url: "http://www.rollstonepigraphy.com/?p=870",
+        credit: "Christopher Rollston, George Washington University",
+        detail: "Rollston Epigraphy, 1 April 2019. Served over plain http",
+        supports: "The reading, the palaeographic date, the meaning of the title, and the careful statement of how probable the identification is",
+      },
+      {
+        tier: "institution",
+        label: "\"Who Was 'Natan-Melech' the King's Servant?\"",
+        url: "https://cityofdavid.org.il/en/who-was-natan-melech-the-kings-servant-eng/",
+        credit: "The City of David, reporting the Israel Antiquities Authority and Tel Aviv University excavation",
+        detail: "Names Yuval Gadot and Yiftah Shalev as directors and Anat Mendel-Geberovich as the epigrapher, describes the building and its destruction debris, and carries her statement of the uncertainty in full",
+        supports: "The excavation, the building, the reading, and the excavators' own hedge about the identification",
+      },
+      {
+        tier: "scholarly",
+        label: "A. Mendel-Geberovich, Y. Shalev, E. Bocher, N. Shalom and Y. Gadot, \"A Newly Discovered Personal Seal and Bulla from the Excavations of the Giv'ati Parking Lot, Jerusalem\"",
+        credit: "Anat Mendel-Geberovich and colleagues, Hebrew University, the Israel Antiquities Authority and Tel Aviv University",
+        detail: "Israel Exploration Journal 69/2 (2019), 154-174 — the formal publication. Available only through hosts that refuse automated requests, so no link is given, and the page range is as cited in the secondary literature",
+        paywalled: true,
+        supports: "The formal publication of the bulla and the companion seal",
+      },
+      {
+        tier: "reference",
+        label: "\"Two tiny First Temple inscriptions vastly enlarge picture of ancient Jerusalem\"",
+        url: "https://www.timesofisrael.com/two-tiny-first-temple-inscriptions-vastly-enlarge-picture-of-ancient-jerusalem/",
+        credit: "The Times of Israel, March 2019",
+        detail: "The only traced source naming individual team members in connection with the find",
+        supports: "The names Sveta Pnik and Ayyala Rodan",
+      },
+    ],
+    reflectionPrompt:
+      "Nathan-Melech appears in one verse of the Bible, as a room next to a gate. What would it mean to be faithful in a role nobody will remember the details of?",
+  },
+  {
+    id: "gemariah-bulla",
+    name: "Gemariah Bulla",
+    alternateNames: ["Bulla of Gemaryahu son of Shaphan"],
+    category: "discovery",
+    role: "A Named Official of Jeremiah's Jerusalem, from a Sealed Destruction Layer",
+    summary:
+      "One of fifty-one seal impressions found in a burnt room in the City of David, reading \"belonging to Gemaryahu son of Shaphan\" — name and father's name both matching the official in whose chamber Baruch read Jeremiah's scroll.",
+    sections: [
+      {
+        heading: "The House of the Bullae",
+        paragraphs: [
+          "In the 1982 season of the City of David excavations, part of the campaign that ran from 1978 to 1985, a room in Area G produced fifty-one clay bullae under a thick layer of burning. The archive they had sealed was gone: the papyrus documents burned in the destruction of Jerusalem, and the fire that destroyed them baked the clay tags hard enough to survive. The room has been called the House of the Bullae ever since. No individual finder is recorded — the credit in the literature belongs to the excavation.",
+          "This is the best-stratified object in this whole group of articles, and that matters more than any single reading on it. The bullae lay beneath the debris of the Babylonian sack of 587 or 586 BC, in the administrative quarter of the city, in the layer that event created. Nobody has to argue about where they came from or when they were sealed, because the fire dated them. The group was first published by the excavation's own director in the Israel Exploration Journal in 1986, and given its final publication by Y. Shoham in the dig's Qedem volume in 2000; both are credited in full in the sources below.",
+        ],
+      },
+      {
+        heading: "Two Names, and Both of Them Fit",
+        paragraphs: [
+          "The bulla reads, in two registers: lgmryhw / bn spn — \"belonging to Gemaryahu, son of Shaphan.\" There is no title. Jeremiah 36:10 places Gemariah son of Shaphan the scribe in the temple in the fifth year of Jehoiakim, with a room in the upper court, and it is from that room that Baruch reads Jeremiah's scroll aloud to all the people. Jeremiah 36:12 has him sitting with the other officials when the scroll is reported to the king, and Jeremiah 36:25 has him among the three who beg Jehoiakim not to burn it. He is one of the prophet's protectors.",
+          "The shorter biblical form and the longer epigraphic form are the same name: Gemaryahu contracts to Gemariah exactly as Neriyahu contracts to Neriah. So the match here has both halves — the personal name and the patronymic — plus a findspot in the right quarter of the right city in the right decade. That is the shape of a strong ancient identification, and it is the standard against which the weaker claims in this section should be measured.",
+        ],
+      },
+      {
+        heading: "Why This One Is Allowed to Stand",
+        paragraphs: [
+          "This app spends a good deal of this section pulling claims back, so it is worth being clear where the pulling stops. Nobody serious disputes that this bulla is genuine, and it is regularly cited as one of the firm identifications of a biblical person in the epigraphic record. Excavated, stratified, published twice, and matching Scripture on both the name and the father's name: there is nothing here to argue about. The Center for Online Judaic Studies puts it bluntly by contrast — unlike the Baruch and Jerahmeel bullae bought from dealers, no doubt exists as to the authenticity of this one.",
+          "The honest limit is a different kind. What the bulla establishes is that a man called Gemaryahu son of Shaphan sealed documents in Jerusalem shortly before the city fell. It does not corroborate the scene in Jeremiah 36 — not the reading in the upper court, not the plea to Jehoiakim, not the king cutting the scroll with a penknife and feeding it to the brazier. It puts a name from that chapter into the physical record of that city at that moment, and it leaves the narrative exactly where it was. That is genuinely something. It is also less than \"archaeology confirms Jeremiah 36,\" and the difference is worth keeping.",
+          "One further caution, and it applies to every article in this section. It would be good to be able to say how common the names Gemaryahu and Shaphan were in seventh-century Judah, because the strength of any name match depends on it. No published count was traced for this pair, so this app does not assert that they were rare. What carries the identification here is the combination of two matching names with a sealed archaeological context — not a claim about frequency that nobody has checked.",
+        ],
+      },
+    ],
+    verses: [
+      { reference: "Jeremiah 36:10", note: "Baruch reads the scroll in the room of Gemariah the son of Shaphan" },
+      { reference: "Jeremiah 36:12", note: "Gemariah among the officials in the scribe's chamber of the king's house" },
+      { reference: "Jeremiah 36:25", note: "Gemariah begs the king not to burn the scroll" },
+      { reference: "2 Kings 25:9", note: "The fire that destroyed the documents and preserved their seals" },
+    ],
+    sources: [
+      { label: "City of David: the seal impression of Gemaryahu son of Shaphan", url: "https://timeline.cityofdavid.org.il/event/the-seal-of-gemaryhau-son-of-shaphan/" },
+    ],
+    discovery: {
+      objectType: "Clay bulla in two registers, aniconic, in Old Hebrew script",
+      findSite: "The House of the Bullae, Area G, City of David, Jerusalem — beneath the destruction debris of 587/586 BC",
+      findSiteId: "city-of-david",
+      findSiteKind: "poi",
+      foundYear: "1982",
+      foundBy: "The City of David excavations directed by Y. Shiloh, 1978-1985. No individual finder is recorded",
+      objectDate: "Late seventh to early sixth century BC; sealed by the Babylonian destruction of 587/586 BC",
+      objectDateCertainty: "firm",
+      currentLocation: "Israel Antiquities Authority. No inventory number has been traced",
+    },
+    citations: [
+      {
+        tier: "scholarly",
+        label: "Y. Shiloh, \"A Group of Hebrew Bullae from the City of David\"",
+        credit: "Yigal Shiloh, director of the City of David excavations",
+        detail: "Israel Exploration Journal 36/1-2 (1986), 16-38. The first publication of the hoard. Print only",
+        supports: "The find, the hoard of fifty-one bullae and the stratigraphy",
+      },
+      {
+        tier: "institution",
+        label: "Y. Shoham, \"Hebrew Bullae,\" in Excavations at the City of David 1978-1985 Directed by Yigal Shiloh, Final Report VI: Inscriptions",
+        credit: "Yair Shoham, in the volume edited by D. T. Ariel — the excavation's own final report",
+        detail: "Qedem 41, Institute of Archaeology, Hebrew University of Jerusalem, 2000, pages 29-57. Print only",
+        supports: "The final publication of the bulla and its reading",
+      },
+      {
+        tier: "institution",
+        label: "\"The Seal Impression of Gemaryhau Son of Shaphan\"",
+        url: "https://timeline.cityofdavid.org.il/event/the-seal-of-gemaryhau-son-of-shaphan/",
+        credit: "The Megalim Institute and the City of David; photograph by Clara Amit, courtesy of the Israel Antiquities Authority",
+        detail: "Confirms the 1982 season, the fifty-one bullae, and the House of the Bullae",
+        supports: "The find year, the excavation and the hoard",
+      },
+      {
+        tier: "reference",
+        label: "\"Gemaryahu Son of Shaphan Bulla\"",
+        url: "https://cojs.org/gemaryahu_son_of_shaphan_bulla-_586_bce/",
+        credit: "Center for Online Judaic Studies, drawing on T. Schneider, \"Six Biblical Signatures,\" Biblical Archaeology Review 17/4 (1991)",
+        detail: "States that, unlike the Baruch and Jerahmeel bullae, no doubt exists as to this one's authenticity, and gives the Gemaryahu/Gemariah contraction",
+        supports: "The reading, the secure stratum, and the contrast with the market bullae",
+      },
+    ],
+    reflectionPrompt:
+      "Gemariah tried to stop a king from burning a prophet's words, and failed. What has God asked you to do that you may not get to see succeed?",
+  },
+  {
+    id: "jehucal-gedaliah-bullae",
+    name: "Jehucal and Gedaliah Bullae",
+    alternateNames: ["Bullae of Yehuchal son of Shelemyahu and Gedalyahu son of Pashhur"],
+    category: "discovery",
+    role: "Two Seal Impressions Naming Two Men Who Appear in the Same Verse",
+    summary:
+      "Two bullae found three years and a few metres apart in the City of David, naming Jehucal son of Shelemiah and Gedaliah son of Pashhur — two of the four officials who ask King Zedekiah to have Jeremiah put to death.",
+    sections: [
+      {
+        heading: "Two Finds, Three Years Apart",
+        paragraphs: [
+          "The first bulla came out of E. Mazar's City of David excavation in 2005, at the summit of the ridge, in the area of the structure she identified as a royal building. It reads \"belonging to Yehuchal son of Shelemyahu.\" The second was found in August 2008, in First Temple period strata beneath the northern tower, a few metres away from the first. It reads \"belonging to Gedalyahu son of Pashhur.\" Neither publication records an individual finder.",
+          "What makes the pair unusual is not either bulla on its own but the fact that there are two of them. Mazar's own comment at the time was that finding the second was in one sense unexpected — a fragile piece of clay surviving hard excavation conditions — and in another sense entirely logical, because the two men are named side by side in Scripture as officials serving together under Zedekiah. Two names from one verse, in one administrative quarter, within a few metres of each other, is a harder coincidence to shrug off than either would be alone.",
+        ],
+      },
+      {
+        heading: "The Men Who Wanted Jeremiah Dead",
+        paragraphs: [
+          "Jeremiah 38:1 lists four men who heard what the prophet was telling the people: Shephatiah son of Mattan, Gedaliah son of Pashhur, Jucal son of Shelemiah, and Pashhur son of Malchijah. Two of those four are on these bullae, with their fathers' names matching. Jehucal appears again in Jeremiah 37:3, this time sent by Zedekiah to ask the prophet to pray for the city — the same man, on a different errand, before the mood turned.",
+          "What they wanted is in the next verses. They tell the king that Jeremiah weakens the hands of the soldiers and of all the people, that he does not seek the welfare of the nation, and that he should be put to death. Zedekiah gives way, and Jeremiah is lowered into a cistern to sink in the mud. These are not incidental names. They belong to the men who nearly killed the prophet, and two of them sealed documents in the quarter of the city where those documents were kept.",
+        ],
+      },
+      {
+        heading: "Firm, With Two Things Worth Saying Out Loud",
+        paragraphs: [
+          "Each identification rests on a name plus a patronymic — the same shape as the Gemariah bulla, and a much stronger shape than a bare name. No named scholar has published an argument against either. But the language used by the people closest to the finds is careful rather than flat: Mazar called the identification very reasonable rather than certain, and L. Mykytiuk, who maintains the standard list of biblical figures identified in inscriptions, was initially cautious about these two and moved to affirming them later. An identification that a specialist had to be talked into is worth more than one nobody examined, and the sequence is worth reporting rather than smoothing over.",
+          "The second thing is a distinction that popular coverage routinely loses. There is a genuine, sharp and continuing scholarly argument about E. Mazar's excavations at the summit of the City of David — specifically about whether the Large Stone Structure is what she called it, and about how the whole area is dated. Israel Finkelstein and others have contested it in print for years. That argument is about a building, not about these two lumps of clay, and importing it into an article about the bullae would misrepresent both. The bullae come from First Temple period strata in a destroyed city, and their late-seventh or early-sixth-century date is not what anyone is fighting about.",
+          "The limit is the familiar one. Two officials named in Jeremiah's prison narrative left their seals in the city that narrative describes. The bullae do not corroborate the conversation with Zedekiah, the accusation, the cistern, or the Ethiopian who pulled Jeremiah out of it. They put the men in the room. The story is still the text's to tell.",
+        ],
+      },
+    ],
+    verses: [
+      { reference: "Jeremiah 38:1", note: "Gedaliah the son of Pashhur and Jucal the son of Shelemiah, named in one verse" },
+      { reference: "Jeremiah 37:3", note: "Jehucal the son of Shelemiah sent by Zedekiah to ask Jeremiah to pray" },
+      { reference: "Jeremiah 38:4", note: "The officials tell the king that Jeremiah weakens the hands of the men of war" },
+      { reference: "Jeremiah 38:6", note: "Jeremiah lowered into the cistern to sink in the mire" },
+    ],
+    sources: [
+      { label: "Biblical Archaeology Society: Jeremiah, prophet of the Bible, brought back to life", url: "https://www.biblicalarchaeology.org/daily/biblical-artifacts/artifacts-and-the-bible/jeremiah-prophet-of-the-bible-brought-back-to-life/" },
+    ],
+    discovery: {
+      objectType: "Two clay bullae in Old Hebrew script, each about a centimetre across",
+      findSite: "The summit of the City of David, Jerusalem — the second beneath the northern tower, a few metres from the first",
+      findSiteId: "city-of-david",
+      findSiteKind: "poi",
+      foundYear: "2005 (Jehucal) and August 2008 (Gedaliah)",
+      foundBy: "The City of David excavations directed by E. Mazar. No individual finder is recorded for either bulla",
+      objectDate: "Late seventh to early sixth century BC — the reign of Zedekiah, c. 597-586 BC",
+      objectDateCertainty: "traditional",
+      currentLocation: "Israel Antiquities Authority. No inventory number has been traced for either bulla",
+    },
+    citations: [
+      {
+        tier: "institution",
+        label: "E. Mazar, Preliminary Report on the City of David Excavations 2005 at the Visitors Center Area",
+        credit: "Eilat Mazar, Hebrew University of Jerusalem — the excavator's own report",
+        detail: "Shalem Press, Jerusalem and New York, 2007. The publication of the 2005 season, including the Jehucal bulla. Print only",
+        supports: "The 2005 find and its context",
+      },
+      {
+        tier: "institution",
+        label: "E. Mazar, The Palace of King David: Excavations at the Summit of the City of David, Preliminary Report of Seasons 2005-2007",
+        credit: "Eilat Mazar — the excavator's own report",
+        detail: "Shoham Academic Research and Publication, Jerusalem, 2009. Print only. Note that the volume's title claim about the building is itself contested; the bullae are not",
+        supports: "The Gedaliah bulla and the excavation context",
+      },
+      {
+        tier: "reference",
+        label: "\"Jeremiah, Prophet of the Bible, Brought Back to Life\"",
+        url: "https://www.biblicalarchaeology.org/daily/biblical-artifacts/artifacts-and-the-bible/jeremiah-prophet-of-the-bible-brought-back-to-life/",
+        credit: "Biblical Archaeology Society",
+        detail: "Gives both readings, both findspots, and the note that the two men are named together as ministers of Zedekiah",
+        supports: "The readings and the relationship of the two findspots",
+      },
+      {
+        tier: "encyclopedic",
+        label: "Gedaliah, son of Pashhur",
+        url: "https://en.wikipedia.org/wiki/Gedaliah,_son_of_Pashhur",
+        credit: "Wikipedia, quoting E. Mazar in the Jerusalem Post, 31 July 2008",
+        detail: "Carries Mazar's own quoted comment on finding the second bulla metres from the first, and the August 2008 date",
+        supports: "The August 2008 date and Mazar's own framing of the pair",
+      },
+    ],
+    reflectionPrompt:
+      "Two of the men who tried to have Jeremiah killed are known to us only because they sealed some letters. What will outlast you, and will it be the part of you that you would choose?",
+  },
+  {
+    id: "bethlehem-bulla",
+    name: "Bethlehem Bulla",
+    alternateNames: ["Bethlehem Fiscal Bulla"],
+    category: "discovery",
+    role: "A Tax Docket That May Carry the Oldest Extra-Biblical Mention of Bethlehem",
+    summary:
+      "A clay seal from a shipment of tax sent to the king of Judah, reading \"in the seventh — Bethlehem — for the king.\" Recovered from sifted soil, with two of its three lines partly restored.",
+    sections: [
+      {
+        heading: "Sifted, Not Stratified",
+        paragraphs: [
+          "The Israel Antiquities Authority announced the bulla on 23 May 2012. It had come out of the sifting of soil removed from the IAA excavation on the eastern slope of the City of David, south of the Gihon Spring, directed by R. Reich and E. Shukron; the sifting operation itself runs in Emek Tzurim National Park. It is about 1.5 centimetres across, and R. Reich, publishing it in the Israel Exploration Journal later that year, measured it at 13 by 14 millimetres. No individual finder is recorded.",
+          "That word \"sifting\" carries the whole first half of this article. The bulla is a loose object recovered from a batch of earth. It has no locus, no floor and no sealed layer, and Reich's own published wording is precise about this: it was found in association with pottery sherds of the eighth to seventh centuries BC — which dates the soil, not the object. What the sifting does give it is provenance in the narrower sense. It came out of a licensed excavation at a known site, so unlike more than twenty comparable fiscal bullae, it is not a piece of the antiquities market. Reich says exactly that is the point of it: almost the whole known corpus of these tax dockets is unprovenanced, and this one and one other are not.",
+        ],
+      },
+      {
+        heading: "A Shipment to the King",
+        paragraphs: [
+          "This is not a personal seal. It is a fiscal bulla — an administrative tag sealing goods sent to the crown — and it carries three lines rather than a name and patronymic. The reading published by the excavators is bshbʿt, \"in the seventh\"; bt lhm, Bethlehem; and lmlk, \"for the king,\" of which only the final letter actually survives and the rest is restored. E. Shukron's reconstruction is that in the seventh year of some king's reign a shipment went from Bethlehem to Jerusalem, in silver or in produce, and that this docket travelled with it.",
+          "Which king is not recoverable from the object. Shukron himself named Hezekiah, Manasseh or Josiah and said it is unclear which. G. Barkay has argued that the whole corpus of fiscal bullae belongs to the reign of Manasseh. Either way the object sits in the late eighth or seventh century BC, which puts it in the world of the prophet Micah — the man who said that out of Bethlehem Ephrathah, small among the clans of Judah, would come a ruler in Israel.",
+          "The reader who arrives here from Christmas should know what the object is and is not. It is a tax receipt. It says nothing about David, nothing about Micah's prophecy, and nothing about the birth of Christ seven centuries later. What it does is put the town's name in the administrative paperwork of the kingdom of Judah, which is a small and genuine thing.",
+        ],
+      },
+      {
+        heading: "The Reading Was Challenged, and Two Words Are Restored",
+        paragraphs: [
+          "Within a day of the announcement, G. Athas of Moore Theological College published a letter-by-letter objection from the published photograph. The fourth letter of the second line looked to him like a he rather than the het that Bethlehem requires; the first letter looked more like a resh than a bet; and the first line's second letter did not look like an ayin. On that reading the bulla would not mention Bethlehem at all.",
+          "The next day he reported that S. Ahituv had examined the actual object rather than the photograph and read the first surviving letter of the second line as a yod, giving the fuller spelling byt lhm, with traces of a left vertical stroke on the last letter making it a het. Athas said he was more than happy to retract his preliminary conclusion — while adding that he would like one or two further epigraphers to inspect the bulla itself, and making the wider point that an epigraphic announcement ought to carry two independent readings from the start. No further published examination has been traced. So the accurate description is that the reading was challenged from a photograph and confirmed on direct inspection by a specialist, and that the challenge was withdrawn conditionally rather than abandoned.",
+          "Two further cautions belong here. First, restoration: the third line's \"for the king\" is mostly reconstructed, and the town name as published required a restored letter too. A reader should know how much of a three-line inscription is actually on the clay. Second, the headline claim. \"The first mention of Bethlehem outside the Bible\" was the framing of the announcement, and it may well be right — but Bethlehem has long been proposed as the Bit-Ninurta of one of the fourteenth-century Amarna letters from the king of Jerusalem, and that reading is argued rather than dead. Several rival readings of the same sign have been proposed. This app therefore says the bulla may carry the earliest extra-biblical mention of Bethlehem, and does not say that it certainly does.",
+        ],
+      },
+    ],
+    verses: [
+      { reference: "Micah 5:2", note: "Bethlehem Ephrathah, small among the clans of Judah — written in this bulla's own century" },
+      { reference: "1 Samuel 16:1", note: "Samuel sent to Jesse the Bethlehemite" },
+      { reference: "Ruth 1:1", note: "The famine that sends a Bethlehem family to Moab" },
+      { reference: "Matthew 2:1", note: "Jesus born in Bethlehem of Judea — seven centuries after this tax docket" },
+    ],
+    sources: [
+      { label: "BiblePlaces: the Israel Antiquities Authority announcement in full", url: "https://www.bibleplaces.com/blog/2012/05/seal-impression-from-bethlehem/" },
+      { label: "G. Athas: more on the so-called Bethlehem bulla", url: "https://withmeagrepowers.wordpress.com/2012/05/25/more-on-the-so-called-bethlehem-bulla/" },
+    ],
+    discovery: {
+      objectType: "Clay fiscal bulla, 13 x 14 mm, three registers in palaeo-Hebrew script",
+      findSite: "Sifted soil from the City of David excavation on the eastern slope, south of the Gihon Spring, Jerusalem",
+      findSiteId: "city-of-david",
+      findSiteKind: "poi",
+      foundYear: "Announced 23 May 2012; the excavation date is not published",
+      foundBy: "Recovered in the sifting of soil from the excavation directed by R. Reich and E. Shukron for the Israel Antiquities Authority. No individual finder is recorded",
+      objectDate: "Late eighth or seventh century BC on script and type; the regnal year on it cannot be tied to a named king",
+      objectDateCertainty: "disputed",
+      currentLocation: "Israel Antiquities Authority. No inventory number has been traced",
+    },
+    citations: [
+      {
+        tier: "scholarly",
+        label: "R. Reich, \"A fiscal bulla from the City of David, Jerusalem\"",
+        url: "https://cris.haifa.ac.il/en/publications/a-fiscal-bulla-from-the-city-of-david-jerusalem/",
+        credit: "Ronny Reich, University of Haifa — the excavator's own publication",
+        detail: "Israel Exploration Journal 62/2 (2012), 200-205. The linked page is the university's own record and carries the full abstract; the article itself is print only",
+        supports: "The measurements, the find circumstances, the wording \"in association with pottery sherds of the eighth-seventh centuries BCE,\" and the point that almost all comparable fiscal bullae are unprovenanced",
+      },
+      {
+        tier: "institution",
+        label: "Israel Antiquities Authority announcement of the Bethlehem bulla, 23 May 2012",
+        url: "https://www.bibleplaces.com/blog/2012/05/seal-impression-from-bethlehem/",
+        credit: "Israel Antiquities Authority, reproduced in full by T. Bolen at BiblePlaces",
+        detail: "Carries the three-line reading with the Hebrew, E. Shukron's quoted interpretation, and Bolen's own caution that too much can be made of the discovery",
+        supports: "The reading, the sifting, and Shukron's list of possible kings",
+      },
+      {
+        tier: "scholarly",
+        label: "G. Athas, \"A New Seal that DOES NOT refer to Bethlehem\"",
+        url: "https://withmeagrepowers.wordpress.com/2012/05/24/a-new-seal-that-does-not-refer-to-bethlehem/",
+        credit: "George Athas, Moore Theological College, Sydney",
+        detail: "24 May 2012 — the letter-by-letter objection from the published photograph",
+        supports: "The palaeographic challenge to the reading of the second register",
+      },
+      {
+        tier: "scholarly",
+        label: "G. Athas, \"More on the so-called 'Bethlehem' Bulla\"",
+        url: "https://withmeagrepowers.wordpress.com/2012/05/25/more-on-the-so-called-bethlehem-bulla/",
+        credit: "George Athas, reporting S. Ahituv's direct examination",
+        detail: "25 May 2012 — Ahituv reads yod rather than bet and het rather than he, giving byt lhm; Athas offers to retract, subject to further independent inspection",
+        supports: "The confirmation of the reading on autopsy and the conditional nature of the withdrawal",
+      },
+    ],
+    reflectionPrompt:
+      "The first time Bethlehem's name shows up outside the Bible, it is on a tax receipt. What ordinary paperwork of your life is quietly the setting for something you cannot see yet?",
+  },
+  {
+    id: "shema-seal",
+    name: "Shema Seal",
+    alternateNames: ["Seal of Shema, Servant of Jeroboam", "Megiddo Lion Seal"],
+    category: "discovery",
+    role: "A Lost Royal Official's Seal, Known Only From Casts and Photographs",
+    summary:
+      "A large jasper seal from Megiddo carved with a roaring lion and the words \"belonging to Shema, servant of Jeroboam\" — given to the Ottoman Sultan not long after it was found, and never seen again. Everything written about it since has been written from copies.",
+    sections: [
+      {
+        heading: "Found at Megiddo, Sent to Istanbul, Gone",
+        paragraphs: [
+          "G. Schumacher, a German-American engineer and architect working for the Deutscher Palästina-Verein, dug at Tell el-Mutesellim — Megiddo — between 1903 and 1905. In 1904 the excavation produced an unpierced scaraboid seal of jasper, about 37 by 27 by 17 millimetres, which is unusually large for an Israelite seal. On it a lion roars, and around it runs a two-part inscription: lšmʿ / ʿbd yrbʿm, \"belonging to Shema, servant of Jeroboam.\"",
+          "Then it disappeared. Schumacher gave the seal to the Ottoman Sultan and it went to Istanbul, and it is no longer in the Topkapi collection. A family tradition, recorded when Schumacher's daughter spoke to an Israeli archaeologist in 1966, says her father was told it had been removed from the museum and placed in Abdul Hamid II's tomb among objects representing the provinces of the empire — but that is second-hand testimony taken down more than sixty years after the fact, and no documentary record of the disposition has been traced. What is certain is that the original is lost. Every study of it since has worked from photographs, plaster casts and a bronze replica Schumacher had made before he sent it away.",
+          "The findspot is not secure either. Different accounts place it in a courtyard near the northern wall, near the southern gatehouse, or in an excavation dump, and D. Ussishkin, who restudied the object and its context, called the stratigraphic situation ambiguous. Recording standards in 1904 were not what they later became. The date of the seal rests on the shapes of its letters and on the style of the lion, not on the layer it came out of.",
+        ],
+      },
+      {
+        heading: "Whose Servant, and Which Jeroboam",
+        paragraphs: [
+          "The title is the same formula that turns up on the Nathan-Melech bulla in this section: ʿbd, servant, used not of a slave but of a senior official, with the king's own name in place of the generic \"the king.\" Shema was somebody's minister. He is also, and this is worth stating plainly because popular lists get it wrong, not a figure in the Bible. No Shema servant of Jeroboam appears in Scripture. So this object does not identify a biblical person. What it does is attest a biblical king, indirectly, by naming the man who worked for him.",
+          "Which king is a real question. The great majority read it as Jeroboam II, who ruled the northern kingdom in the first half of the eighth century BC — the reign Amos and Hosea prophesied into, and a period of northern wealth that a seal this fine would suit. The dating is palaeographic and iconographic. A minority have argued for Jeroboam I, the king who split the kingdom after Solomon; S. Yeivin and G. W. Ahlström are named in the literature as holding that view, though their arguments have not been read for this article and are reported here rather than assessed. Ussishkin's own contribution complicates it from another direction: he associated the seal with a gatehouse of a stratum conventionally dated earlier than the eighth century, which is precisely why he called the context ambiguous and why the palaeography, not the stratum, carries the consensus.",
+        ],
+      },
+      {
+        heading: "The Seal Is Fine. The Other Object Is Not.",
+        paragraphs: [
+          "There is no dispute about the authenticity of the Megiddo seal. It was excavated, drawn, cast and published in 1904 and after, and nobody has argued it was faked. Its honest limit is simply that the thing itself is gone: an object studied only through copies cannot be re-examined, cannot be tested, and cannot answer a new question. That is a permanent loss, and it is a reminder of what changed in archaeology between 1904 and now.",
+          "The more important warning concerns a second object that shares the same inscription and is constantly confused with the first. Around 1980 a scholar bought a small clay bulla — roughly 23 by 19 millimetres — at a Bedouin market in Beersheba for the price of a coffee. It bears the same words and the same lion. He assumed at the time that it was a modern forgery copied from the famous seal, which by then was on an Israeli coin. In 2023 a team led by S. Ahituv published laboratory work in the journal Tel Aviv arguing for authenticity: petrography pointing to Galilee and Golan clays, electron microscopy finding no modern materials, and isotopic analysis of the patina consistent with natural formation. Y. Goren's summary was that you cannot prove authenticity, only forgery, and that this passes the tests.",
+          "It has not settled. S. Munger noticed that the seal and the bulla share an identical small chip beneath the lion — which could be an ancient defect faithfully reproduced, or could be exactly what a forger copying a published photograph would reproduce. C. Rollston's objection is more general and applies to the whole method: laboratory testing cannot demonstrate authenticity, since a sufficiently good forgery would pass, and the inscription here is too poorly preserved for the palaeographic analysis where forgers usually give themselves away. In 2024 R. Deutsch, A. Lemaire, G. Barkay, P. van der Veen and D. Itzhak published an argument that the bulla is a forgery outright.",
+          "The rule this app follows is simple. The Megiddo seal is excavated and usable. The Beersheba bulla is unprovenanced, actively disputed as of 2024, and is not used here as evidence of anything. Where a popular article cites \"the Shema bulla\" for the reign of Jeroboam II, check which object it means.",
+        ],
+      },
+    ],
+    verses: [
+      { reference: "2 Kings 14:23", note: "Jeroboam son of Joash reigns in Samaria forty-one years — the king most read on this seal" },
+      { reference: "Amos 7:10", note: "Amaziah of Bethel reports Amos to Jeroboam king of Israel" },
+      { reference: "1 Kings 12:20", note: "The other Jeroboam, made king over all Israel after the split" },
+      { reference: "2 Kings 22:12", note: "\"The king's servant\" as a court title in Judah, the same formula this seal uses" },
+    ],
+    sources: [
+      { label: "Biblical Archaeology Society: the bulla of the servant of Jeroboam", url: "https://www.biblicalarchaeology.org/daily/ancient-cultures/ancient-israel/bulla-of-servant-of-jeroboam/" },
+    ],
+    discovery: {
+      objectType: "Unpierced scaraboid stamp seal of jasper, c. 37 x 27 x 17 mm, carved with a roaring lion and a two-part inscription",
+      findSite: "Tell el-Mutesellim (Megiddo). The precise findspot is reported three different ways and cannot be settled from the 1904 records",
+      findSiteId: "megiddo",
+      findSiteKind: "poi",
+      foundYear: "1904",
+      foundBy: "The 1903-1905 Megiddo excavation directed by G. Schumacher for the Deutscher Palastina-Verein. No individual finder is recorded",
+      objectDate: "Eighth century BC on palaeography and iconography, if the king is Jeroboam II; a minority argue for Jeroboam I in the late tenth century",
+      objectDateCertainty: "disputed",
+      currentLocation: "Lost. Given to the Ottoman Sultan and no longer in the Topkapi collection; known from photographs, plaster casts and a bronze replica",
+    },
+    citations: [
+      {
+        tier: "scholarly",
+        label: "D. Ussishkin, \"Gate 1567 at Megiddo and the Seal of Shema, Servant of Jeroboam\"",
+        credit: "David Ussishkin, Tel Aviv University",
+        detail: "In M. D. Coogan et al. (eds.), Scripture and Other Artifacts: Essays on the Bible and Archaeology in Honor of Philip J. King (Louisville, 1994), pages 410-428. Print only; the page range is as cited in the secondary literature",
+        supports: "The physical description of the seal and the judgement that its stratigraphic context is ambiguous",
+      },
+      {
+        tier: "reference",
+        label: "\"Bulla of 'Servant of Jeroboam'\"",
+        url: "https://www.biblicalarchaeology.org/daily/ancient-cultures/ancient-israel/bulla-of-servant-of-jeroboam/",
+        credit: "Biblical Archaeology Society",
+        detail: "Covers the 1904 seal, its loss, the Beersheba bulla, the 2023 laboratory study and C. Rollston's objection that such tests cannot demonstrate authenticity",
+        supports: "The loss of the original, the surviving replica, and Rollston's methodological objection",
+      },
+      {
+        tier: "reference",
+        label: "\"Fake seal impression of biblical king Jeroboam is authentic, new study says\"",
+        url: "https://www.haaretz.com/archaeology/2023-12-18/ty-article/fake-seal-impression-of-biblical-king-jeroboam-is-authentic-new-study-says/0000018c-7853-d98c-abef-fed7f4370000",
+        credit: "Haaretz, 18 December 2023, reporting the study by S. Ahituv and colleagues",
+        detail: "Gives the Topkapi disappearance, the surviving photographs, plaster casts and bronze replica, the bulla's 23 x 19 mm size, the battery of tests, Y. Goren's summary and S. Munger's identical-chip objection",
+        supports: "The fate of the original and the state of the argument over the Beersheba bulla",
+      },
+      {
+        tier: "scholarly",
+        label: "S. Ahituv, Y. Goren and colleagues, on the authenticity of the Shema bulla",
+        credit: "Shmuel Ahituv, Ben-Gurion University of the Negev, and Yuval Goren",
+        detail: "Tel Aviv: Journal of the Institute of Archaeology of Tel Aviv University (2023). The publisher refuses automated requests, so no link is given",
+        paywalled: true,
+        supports: "The 2023 petrographic, microscopic and isotopic case for the bulla's authenticity",
+      },
+      {
+        tier: "encyclopedic",
+        label: "Shema seal",
+        url: "https://en.wikipedia.org/wiki/Shema_seal",
+        credit: "Wikipedia",
+        detail: "Records the original's location as unknown and the Beersheba bulla as held at the Rockefeller Museum, Jerusalem",
+        supports: "General orientation and the present whereabouts of the disputed bulla",
+      },
+    ],
+    reflectionPrompt:
+      "The most famous Israelite seal ever found was given away as a gift and lost within a lifetime. What are you holding that you assume will still be there?",
+  },
+  {
+    id: "mesad-hashavyahu-ostracon",
+    name: "Mesad Hashavyahu Ostracon",
+    alternateNames: ["Yavne-Yam Ostracon", "The Reaper's Petition"],
+    category: "discovery",
+    role: "A Seventh-Century Labourer's Written Complaint About a Confiscated Cloak",
+    summary:
+      "Fourteen lines of ink on a potsherd, in which a farm worker at a small coastal fort asks the commander to get his garment back. It is the only surviving legal complaint by an ordinary labourer from the kingdom of Judah.",
+    sections: [
+      {
+        heading: "A Fort With No Ancient Name",
+        paragraphs: [
+          "Mesad Hashavyahu is a small Iron Age fortress of about an acre and a half on the Mediterranean coast, a little south of the harbour of Yavne-Yam and north-west of Yavne. J. Naveh excavated it in 1960 for the Israel Department of Antiquities, and the sherd came out from under the floor of a room next to the gate complex. No individual finder is recorded; the credit in the literature belongs to the excavation.",
+          "The site's ancient name is not known. \"Hashavyahu\" is a modern label, taken from a personal name that appears on one of the other ostraca found there — a small thing, but a good illustration of how much of the vocabulary of biblical archaeology is scaffolding put up by moderns rather than something the ancients wrote down. The fort was in use for only a few decades in the last third of the seventh century BC, dated by its pottery: ordinary late pre-exilic Judahite ware, mixed with East Greek pottery, which is where the argument in the third section starts.",
+        ],
+      },
+      {
+        heading: "\"Let My Lord Hear the Plea of His Servant\"",
+        paragraphs: [
+          "The letter is a petition, and the voice is the thing. A reaper says that he was working the harvest at a place called Hasar-Asam, that he finished his reaping and stored the grain, and that a supervisor then came and took his garment. He has been without it for days. His defence is that he did the work: all the men reaping beside him in the heat will vouch for him, and he is guiltless of any wrong. The end of the sherd is broken, but enough survives to show him asking for the cloak back and asking the official to see that it happens.",
+          "The name of the man who took the cloak is on the sherd, and here the published editions genuinely differ. The Israel Museum, which holds the ostracon, prints Hoshayahu ben Shabay. Older translations following W. F. Albright and J. Gibson print Hoshabyahu ben Shobi. Others render the patronymic Shobai — a name the Bible gives to a family of gatekeepers in Ezra 2:42. The petitioner himself is anonymous, and so is the official: the letter carries no address formula and no signature, which has led some to suggest it was dictated to a scribe at the door of the governor's office as a record of the plea, where the names were already known to everyone present.",
+          "What the complaint reaches for is one of the most concrete social laws in the Torah. Exodus 22:26-27 forbids keeping a neighbour's garment taken in pledge past sundown, because it is the only covering he has to sleep in, and it adds that God hears him when he cries out. Deuteronomy 24:12-13 repeats it and calls returning the pledge righteousness. Amos 2:8 indicts Israel for lying down beside altars on clothes taken in pledge. Here is a man in the seventh century BC, on the coast, crying out about exactly that.",
+        ],
+      },
+      {
+        heading: "Three Things This Sherd Is Regularly Made to Say",
+        paragraphs: [
+          "First, and most importantly: the reaper does not quote the law. He never mentions Exodus or Deuteronomy, never appeals to a commandment, and never says a garment must be returned by sundown. He argues that he does not owe anything — that he met his quota — which is a factual defence, not a legal-theological one. And the biblical law is about a garment taken as security for a loan, while this man's cloak was taken over an alleged shortfall in work. So the honest statement is that the ostracon shows the same moral world as the biblical law, and that a Judahite labourer expected an official to care about his cloak. It is not a citation of Scripture and it does not demonstrate that the written law was in his hands.",
+          "Second, the Sabbath. Line 5 is often translated \"before the Sabbath,\" and on that reading this is the earliest mention of the Sabbath outside the Bible — a claim that turns up constantly in popular writing. But the Israel Museum's own published translation of its own object renders the same words \"before stopping (work),\" with no Sabbath in it at all. The Hebrew root behind the word means to cease, and whether it is the noun for the day or a verb for knocking off is genuinely argued. This app does not print the Sabbath claim as a fact.",
+          "Third, whose fort it was. This is a real dispute among named scholars and it is not settled. J. Naveh, who dug it, held that the Hebrew inscriptions show the place was under Judahite control and suggested Josiah installed a military governor there. S. Ahituv agrees on epigraphic grounds, pointing to a trained scribal hand writing clear Hebrew. Y. Aharoni read the East Greek pottery as Greek mercenaries serving under Judean command. Israel Finkelstein, with N. A. Silberman, argues the opposite: the fort was Egyptian, garrisoned by mercenaries who may well have included Judahites, and Egypt was strong enough in those years to prevent Josiah from planting an isolated fort on the coast. A 2024 study by Q. Daniels argues along similar lines. A. Fantalkin's study of the site's material culture is the fullest treatment and is generally reported as supporting Egyptian service.",
+          "The stake is worth naming plainly, because it is why the argument is heated. If Naveh is right, Josiah's Judah reached the Mediterranean and the little kingdom was substantially larger than its critics allow. If Finkelstein is right, it did not, and a Judahite reaper on this coast was working for somebody else's empire. This app's own view is that the concentration of Hebrew ostraca and Yahwistic names at the site is a real argument for Judahite administration and that Naveh's reading remains reasonable — but the pottery is genuinely there, Finkelstein's reading of the regional balance of power is not a fringe position, and a reader who is told the question is closed has been misinformed.",
+        ],
+      },
+    ],
+    verses: [
+      { reference: "Exodus 22:26", note: "A garment taken in pledge must be returned before sundown" },
+      { reference: "Exodus 22:27", note: "It is his only covering — and God hears him when he cries out" },
+      { reference: "Deuteronomy 24:13", note: "Restore the pledge at sunset; it shall be righteousness to you" },
+      { reference: "Amos 2:8", note: "Israel indicted for lying down on clothes taken in pledge" },
+      { reference: "Ruth 2:3", note: "A gleaner in someone else's harvest field — the same world of dependent labour" },
+    ],
+    sources: [
+      { label: "Israel Museum: \"A reaper's plea\"", url: "https://artsandculture.google.com/asset/a-reaper-s-plea-unknown/zgGVcOCoV9eRzA" },
+      { label: "K. C. Hanson: the Yavneh-Yam ostracon, with Hebrew text and notes", url: "http://www.kchanson.com/ANCDOCS/westsem/yavneh.html" },
+    ],
+    discovery: {
+      objectType: "Ostracon — a large potsherd carrying a fourteen-line Hebrew letter written in ink",
+      findSite: "Mesad Hashavyahu, a small Iron Age fort on the Mediterranean coast south of Yavne-Yam",
+      foundYear: "1960",
+      foundBy: "The 1960 excavation directed by J. Naveh for the Israel Department of Antiquities. No individual finder is recorded",
+      objectDate: "Late seventh century BC, c. 630 BC; the fort's dating rests on pottery and historical inference, not on any date in the text",
+      objectDateCertainty: "traditional",
+      currentLocation: "Israel Museum, Jerusalem; the object is Israel Antiquities Authority property. No inventory number is published",
+    },
+    citations: [
+      {
+        tier: "institution",
+        label: "\"A reaper's plea\" — the Israel Museum's own record of the ostracon",
+        url: "https://artsandculture.google.com/asset/a-reaper-s-plea-unknown/zgGVcOCoV9eRzA",
+        credit: "The Israel Museum, Jerusalem; Israel Antiquities Authority",
+        detail: "Gives the museum's own English translation, the medium (ink on pottery), the dimensions (21 x 16 cm) and the find site. The museum's own website returns a bot-challenge page to automated requests, so this is the readable form of the same record",
+        supports: "The translation, the reading Hoshayahu ben Shabay, the holding institution, and the rendering of line 5 as \"before stopping (work)\" rather than \"before the Sabbath\"",
+      },
+      {
+        tier: "scholarly",
+        label: "J. Naveh, \"A Hebrew Letter from the Seventh Century B.C.\"",
+        credit: "Joseph Naveh, the excavator — the first publication",
+        detail: "Israel Exploration Journal 10/3 (1960), 129-139, with follow-ups in IEJ 12 (1962), 27-32 and IEJ 14 (1964), 158-159. Print only",
+        supports: "The find, the reading, and Naveh's own argument that the fort was under Judahite control",
+      },
+      {
+        tier: "reference",
+        label: "The Yavneh-Yam ostracon: Hebrew text, translation and philological notes",
+        url: "http://www.kchanson.com/ANCDOCS/westsem/yavneh.html",
+        credit: "K. C. Hanson, adapting the translations of W. F. Albright and J. Gibson",
+        detail: "Gives the excavation data, a line-by-line Hebrew text, and the older rendering of the offender's name",
+        supports: "The excavator and date of discovery, the alternative name readings, and the note that a reaper was typically a day-labourer",
+      },
+      {
+        tier: "reference",
+        label: "Mezad Hashavyahu Ostracon, c. 630 BCE",
+        url: "https://cojs.org/mezad_hashavyahu_ostracon-_c-_630_bce/",
+        credit: "Center for Online Judaic Studies",
+        detail: "Notes that seven inscribed items were found in 1960, that the site's ancient name is unknown, and that the petition never invokes the biblical law explicitly",
+        supports: "The absence of an address formula, the quota dispute behind the confiscation, and the Judahite-versus-Egyptian question",
+      },
+      {
+        tier: "scholarly",
+        label: "A. Fantalkin, \"Mezad Hashavyahu: Its Material Culture and Historical Background\"",
+        credit: "Alexander Fantalkin, Tel Aviv University",
+        detail: "Tel Aviv 28/1 (2001), 3-165 — the fullest study of the site. Available only through hosts that refuse automated requests, so it is cited here as reported in the secondary literature rather than quoted",
+        paywalled: true,
+        supports: "The reading of the East Greek pottery as evidence of mercenaries in Egyptian service",
+      },
+    ],
+    reflectionPrompt:
+      "A day-labourer with no name assumed that someone in authority would care that his coat had been taken, and someone wrote it down. Who is asking you for something small that matters enormously to them?",
+  },
+  {
+    id: "tell-es-safi-ostracon",
+    name: "Tell es-Safi Ostracon",
+    alternateNames: ["The Gath Ostracon", "The Alwt-Wlt Inscription"],
+    category: "discovery",
+    role: "The Earliest Deciphered Philistine Inscription, and the Headline It Never Deserved",
+    summary:
+      "Seven letters scratched on a bowl fragment at Philistine Gath, giving two non-Semitic personal names in an alphabet borrowed from the Canaanites. Reported worldwide as \"the Goliath inscription\" — a framing the excavator has publicly dropped.",
+    sections: [
+      {
+        heading: "Seven Letters on a Bowl",
+        paragraphs: [
+          "The sherd was found in the 2005 season of the Tell es-Safi/Gath Archaeological Project, directed by A. Maeir of Bar-Ilan University. The site is Tel Zafit in the Judean Shephelah, identified with Philistine Gath. No individual finder is recorded — the project runs on students and volunteers, and the person who lifted this piece out of a bucket is not named in the publication.",
+          "It is a body sherd from a ceramic bowl, and unlike the ink letters elsewhere in this section the writing here is scratched into the surface with something needle-like. Seven letters in Old Canaanite — the early alphabetic script — make two words: ALWT and WLT. Maeir dates it to the tenth to early ninth century BC on two independent grounds, the stratigraphy of the layer it came from and the typology of the bowl itself, and it lies below the destruction of Gath attributed to Hazael of Aram. It was published in 2008 by A. Maeir, S. Wimmer, A. Zukerman and A. Demsky in the Bulletin of the American Schools of Oriental Research.",
+        ],
+      },
+      {
+        heading: "What Two Names Are Worth",
+        paragraphs: [
+          "The genuine significance of this sherd has nothing to do with any individual. Both names are non-Semitic, of Indo-European type — the sort of names a population with Aegean or Anatolian roots would carry. They are written in the local Canaanite alphabet. That combination is the whole point: at Gath, in the tenth or ninth century BC, Philistines were keeping their own names and using their neighbours' writing system. It is a snapshot of a people in the middle of assimilating, taken from the century the Bible places David and the Philistine wars in.",
+          "It is also, as Maeir has stressed, one of the earliest early-alphabetic inscriptions that is both securely dated and from a clear archaeological context rather than the antiquities market — which, after the article on the Baruch bullae in this section, is a distinction a reader will recognise the value of. For the Bible's purposes it fills in background: Gath was a real Philistine city with a literate administration, and the men in it had names that did not sound Hebrew.",
+        ],
+      },
+      {
+        heading: "It Does Not Say Goliath, and the Excavator Went Further Than That",
+        paragraphs: [
+          "In 2005 and 2006 this sherd was reported around the world as the \"Goliath inscription.\" It is not. The Hebrew name Goliath is spelled glyt; neither word on the sherd is that name, or anything close to it as a spelling. The connection that was originally proposed was purely etymological: that ALWT might belong to the same family as the Lydian royal name Alyattes, which scholars going back to the 1920s had suggested as a background for the name Goliath.",
+          "That was the claim in 2006, and Maeir's own corrections at the time were already firmer than the coverage. The important development came later. In 2010, answering a proposed alternative reading, he wrote that his team had looked into the etymology themselves and found it did not hold — in his words, \"the onomastic similarity of alwt/alyattes/goliath was dropped.\" He has also stated plainly that they never claimed the sherd belonged to Goliath. He refers to it in his own writing as the so-called Goliath inscription, with the quotation marks doing exactly the work quotation marks do.",
+          "So the position is stronger than \"the link is only etymological.\" The excavator who found the object, and who first floated the etymology, has since withdrawn it. Any article that tells a reader these names are linguistically related to Goliath is repeating a claim the man best placed to test it has publicly abandoned. This app does not repeat it, and the entry in this project's own scoping document that described the link as etymological has been corrected accordingly.",
+          "There is a separate live disagreement about the reading itself, and it is a normal one. G. Hamilton proposed an additional letter, a gimel raised above the line, giving algwt — which would make the name Semitic rather than Indo-European. Maeir's published response is that the mark is not a letter but the trace left on the sherd by a plant root, a common enough thing that volunteers bring him supposed inscriptions of the same kind during pottery washing. F. M. Cross and L. E. Stager also disputed the reading and the dating in an excursus published before the inscription itself had appeared in print, and Maeir objected sharply to being criticised in advance of publication.",
+          "What is left when the headline is removed is still worth a reader's time. A Philistine at Gath, in roughly the century of David, wrote two Philistine names using Canaanite letters on a broken bowl. The Bible's picture of Philistine cities as organised, literate neighbours with foreign names is exactly what that sherd shows — which is a smaller claim than the one the newspapers ran, and unlike that one, it is true.",
+        ],
+      },
+    ],
+    verses: [
+      { reference: "1 Samuel 17:4", note: "Goliath of Gath, the champion whose name the sherd was said to carry" },
+      { reference: "Joshua 11:22", note: "Gath as one of the cities where the Anakim remained" },
+      { reference: "1 Samuel 5:8", note: "The ark carried to Gath — the city as a real administrative centre" },
+      { reference: "2 Samuel 21:19", note: "Goliath the Gittite again, in a passage with its own textual puzzle" },
+    ],
+    sources: [
+      { label: "A. Maeir: comment on Hamilton's reading of the Safi sherd", url: "https://gath.wordpress.com/2010/03/16/comment-on-hamiltons-reading-of-the-safi-sherd/" },
+      { label: "A. Maeir: comment on the news item in BAR on the \"Goliath Inscription\"", url: "https://gath.wordpress.com/2006/02/16/comment-on-the-news-item-in-bar-on-the-goliath-inscription/" },
+    ],
+    discovery: {
+      objectType: "Ostracon — a body sherd of a ceramic bowl, incised with seven letters in the Old Canaanite alphabet",
+      findSite: "Tell es-Safi (Tel Zafit), identified with Philistine Gath, in the Judean Shephelah",
+      findSiteId: "gath",
+      findSiteKind: "location",
+      foundYear: "2005; published 2008",
+      foundBy: "The Tell es-Safi/Gath Archaeological Project, directed by A. Maeir, Bar-Ilan University. No individual finder is recorded",
+      objectDate: "Tenth to early ninth century BC, dated by the stratigraphy of the layer and by the type of the bowl",
+      objectDateCertainty: "firm",
+      currentLocation: "Not published. Excavated material in Israel vests in the Israel Antiquities Authority, but no museum, storeroom or inventory number has been traced for this sherd",
+    },
+    citations: [
+      {
+        tier: "scholarly",
+        label: "A. Maeir, S. Wimmer, A. Zukerman and A. Demsky, \"A Late Iron Age I/Early Iron Age II Old Canaanite Inscription from Tell es-Safi/Gath, Israel\"",
+        credit: "Aren Maeir, Stefan Wimmer, Alexander Zukerman and Aaron Demsky",
+        detail: "Bulletin of the American Schools of Oriental Research 351 (August 2008), 39-71; DOI 10.1086/basor25609285. The publisher's site returns a challenge page rather than the article to automated requests, so no link is given",
+        paywalled: true,
+        supports: "The editio princeps: the reading, the palaeography, the dating and the historical interpretation",
+      },
+      {
+        tier: "institution",
+        label: "A. Maeir, \"Comment on Hamilton's reading of the Safi sherd\"",
+        url: "https://gath.wordpress.com/2010/03/16/comment-on-hamiltons-reading-of-the-safi-sherd/",
+        credit: "Aren M. Maeir, director of the Tell es-Safi/Gath Archaeological Project — the excavating body's own statement",
+        detail: "16 March 2010",
+        supports: "The withdrawal of the Goliath etymology, the statement that no claim was ever made about Goliath himself, and the plant-root answer to Hamilton's proposed gimel",
+      },
+      {
+        tier: "institution",
+        label: "A. Maeir, \"Comment on the news item in BAR on the 'Goliath Inscription'\"",
+        url: "https://gath.wordpress.com/2006/02/16/comment-on-the-news-item-in-bar-on-the-goliath-inscription/",
+        credit: "Aren M. Maeir, Tell es-Safi/Gath Archaeological Project",
+        detail: "16 February 2006 — the excavator's numbered corrections to the magazine report that created the popular framing",
+        supports: "The stratigraphic and typological dating, and the original form of the etymological suggestion before it was dropped",
+      },
+      {
+        tier: "institution",
+        label: "A. Maeir, \"re: nasty comments in IEJ from Cross and Stager\"",
+        url: "https://gath.wordpress.com/2007/01/09/re-nasty-comments-in-iej-from-cross-and-stager/",
+        credit: "Aren M. Maeir, Tell es-Safi/Gath Archaeological Project",
+        detail: "9 January 2007. Records the Cross and Stager excursus and Maeir's objection to being answered before publication",
+        supports: "The existence and character of the Cross and Stager dispute over the reading and dating",
+      },
+    ],
+    reflectionPrompt:
+      "The true story here is smaller than the headline and better attested. When have you preferred the bigger version of a story to the one you could actually stand behind?",
+  },
+  {
+    id: "lachish-letters",
+    name: "Lachish Letters",
+    alternateNames: ["Lachish Ostraca"],
+    category: "discovery",
+    role: "Military Correspondence From Judah's Last Weeks",
+    summary:
+      "Twenty-one inked potsherds from the gate of a Judahite fortress, most of them found in the ash of its final destruction. One of them is watching for the fire signals of Lachish because Azekah has gone dark.",
+    sections: [
+      {
+        heading: "A Guardroom Full of Ash",
+        paragraphs: [
+          "On 29 January 1935, the third season of the Wellcome-Marston expedition at Tell ed-Duweir turned up inscribed potsherds in a small room in the eastern tower of the city's outer gateway. Sixteen came out of that guardroom, lying in the upper part of a burnt ash horizon against the room's east wall, soot-blackened and mostly broken. Two more came from elsewhere in the gate approach that season: one from ballast under a later Persian roadway, one from sieving the dump heap. Three more turned up in the final season of 1938, at three separate points on the mound. Twenty-one in all.",
+          "The dig was directed by J. L. Starkey. The sherds were first spotted, according to the account drawn from the expedition's own archive, by Hasan 'Awad al-Qatshan, a Negev Bedouin excavator who had trained on Petrie's digs as a teenager and worked at Tell ed-Duweir through the 1930s; he was assistant to the expedition's G. Lankester Harding, who with O. Tufnell then went back through all the sherds from the area and found two more fragments. It is worth noting that the fullest technical study of the corpus names no individual finder at all, so the credit rests on the archival and popular record rather than on the excavation report.",
+          "The excavation did not end well. On 10 January 1938 Starkey was murdered by bandits near Beit Jibrin, on his way to the opening of the new Palestine Archaeological Museum in Jerusalem. He is buried on Mount Zion. No expedition followed. The corpus was passed to H. Torczyner, later known as N. H. Tur-Sinai, who published the first edition in 1938.",
+        ],
+      },
+      {
+        heading: "\"We Cannot See Azekah\"",
+        paragraphs: [
+          "The best-known passage is on Lachish 4, near the end of the reverse. A subordinate reports to his superior that he is doing what he was told: watching the fire signals of Lachish, according to all the signs the commander has given, because they cannot see Azekah. In the fuller readings the clause about the signs is explicit, and it matters — this is a man confirming he is following a signalling protocol, not simply staring at a horizon.",
+          "Jeremiah 34:7 describes the identical moment from the capital's end: Nebuchadnezzar's army was fighting against Jerusalem and against all the cities of Judah that were left, against Lachish and against Azekah, for these alone remained of the fortified cities of Judah. Jeremiah 6:1 has the prophet telling Benjamin to raise a signal on Beth Haccherem as the evil looks out from the north. The ostracon is the same system, in operation, written by the men operating it.",
+          "The corpus is not all letters, despite the name. Lachish 1 is a bare list of personal names. Lachish 20 is a storage-jar label with a date formula. Several are too fragmentary to classify, and five of the guardroom pieces turned out to be fragments of the same broken vessel. One piece, Lachish 19, is roughly a century older than the rest — its script is late eighth century and its layer belongs to the Assyrian destruction of 701 BC, the campaign Micah 1:13 and 2 Kings 18:14 have in view. Calling Lachish 19 one of the last letters of Judah would be wrong.",
+        ],
+      },
+      {
+        heading: "\"The Prophet\" — and Why the App Will Not Name Him",
+        paragraphs: [
+          "Lachish 3 carries a line near its end about a letter that reached one Shallum son of Yada from the prophet, saying Beware. The Hebrew is hnb', \"the prophet,\" with the definite article. It is the only certain occurrence of the word in the Hebrew epigraphic record — and it is why the word matters in the article on the Isaiah bulla, where a comparable word is spelled differently and without the article. A second alleged occurrence on Lachish 16 is widely printed but rejected in the fullest modern study of the corpus, which reads the crucial letter differently.",
+          "The prophet is not named, and the identification of him has been argued since the day the ostraca were published. Torczyner proposed Uriah son of Shemaiah, the prophet of Kiriath-jearim whom Jehoiakim had extradited from Egypt and executed in Jeremiah 26:20-23, and read the whole cache as the dossier of a court-martial arising from that affair. J. W. Jack and R. Dussaud, in the same year, proposed Jeremiah himself. S. Birnbaum objected that the Uriah reconstruction makes no sense — the danger to Uriah came from the king, so trying a subordinate for acting in line with royal policy is incoherent. M. Burrows dismissed it too.",
+          "The argument that settled the field was methodological. A 1946 review of the whole question held that nothing in the ostraca approaches proof for Jeremiah, that the prophet could be any of the other named prophets of the period or one of the many anonymous ones Scripture mentions, and that the real fault was treating twenty-one unrelated scraps as a single interrelated dossier by one sender about one theme. The fullest modern study agrees, and describes what we have as a fleeting glimpse of a shadowy figure.",
+          "So: the Lachish letters do not mention Jeremiah. An article that says they do is repeating a 1938 proposal that did not survive. What they do give a reader is better than a name — they show that in Judah's last months an army officer could write \"the prophet\" to a superior and expect to be understood, which is a great deal of context for the book of the prophet who was there.",
+          "One further live disagreement, on the famous line itself. Y. Yadin argued that the writer was tending the beacon of Lachish rather than watching for it, which would place him at Lachish and dismantle the standard reconstruction of letters sent to Lachish from an outpost. A. F. Rainey rebutted him in 1987 on the Hebrew idiom, and J. A. Emerton agreed with Rainey. The standard reading holds, but it was tested.",
+        ],
+      },
+    ],
+    verses: [
+      { reference: "Jeremiah 34:7", note: "Lachish and Azekah alone left of the fortified cities of Judah" },
+      { reference: "Jeremiah 6:1", note: "Raise a signal on Beth Haccherem — the same signalling system" },
+      { reference: "Jeremiah 26:20", note: "Uriah son of Shemaiah, the prophet Torczyner proposed and the field did not follow" },
+      { reference: "2 Kings 18:14", note: "Sennacherib at Lachish in 701 BC — the earlier destruction Lachish 19 belongs to" },
+      { reference: "Micah 1:13", note: "Lachish addressed by the prophet in the eighth century" },
+    ],
+    sources: [
+      { label: "A. Zammit, The Lachish Letters: A Reappraisal of the Ostraca (Oxford DPhil, 2016)", url: "https://ora.ox.ac.uk/objects/uuid:db71cf81-ba6c-4a91-8e51-3c694993ebfe" },
+      { label: "Biblical Archaeology Society: Eyewitness to Discovery", url: "https://www.biblicalarchaeology.org/reviews/eyewitness-to-discovery/" },
+    ],
+    discovery: {
+      objectType: "Twenty-one inscribed potsherds — fragments of storage jars and other vessels, written in ink in cursive palaeo-Hebrew",
+      findSite: "Tell ed-Duweir (Lachish), Judaean Shephelah — sixteen from the guardroom in the eastern tower of the outer gate",
+      findSiteId: "lachish",
+      findSiteKind: "location",
+      foundYear: "1935 (eighteen) and 1938 (three)",
+      foundBy: "The Wellcome-Marston expedition under J. L. Starkey. The sherds were first spotted by Hasan 'Awad al-Qatshan, assistant to G. Lankester Harding, per the account drawn from the expedition archive; the technical publication records no individual finder",
+      objectDate: "Late seventh to early sixth century BC, ending with the Babylonian destruction of c. 588/587 BC. Lachish 19 is an exception, belonging to the Assyrian destruction of c. 701 BC",
+      objectDateCertainty: "firm",
+      currentLocation: "Seventeen in the British Museum, London; four registered to the Israel Antiquities Authority, of which Lachish 3, 4 and 6 are at the Israel Museum and Lachish 19 at the Rockefeller Museum",
+    },
+    citations: [
+      {
+        tier: "scholarly",
+        label: "A. Zammit, The Lachish Letters: A Reappraisal of the Ostraca Discovered in 1935 and 1938 at Tell ed-Duweir",
+        url: "https://ora.ox.ac.uk/objects/uuid:db71cf81-ba6c-4a91-8e51-3c694993ebfe",
+        credit: "Abigail Zammit, University of Oxford",
+        detail: "DPhil thesis, 2016, in two volumes, freely downloadable from the Oxford University Research Archive. The fullest modern treatment, worked from Starkey's own unpublished reports and from physical examination of the objects",
+        supports: "The find counts and findspots, the registration numbers and museum split, the date of Lachish 19, the translation of Lachish 4, the rejection of the second \"prophet\" on Lachish 16, and the history of the identification debate",
+      },
+      {
+        tier: "scholarly",
+        label: "H. Torczyner (N. H. Tur-Sinai), Lachish I: The Lachish Letters",
+        credit: "Harry Torczyner, later Naftali Herz Tur-Sinai — the editio princeps",
+        detail: "Oxford University Press, 1938. Print only",
+        supports: "The first edition of the corpus and the proposed identification of the prophet with Uriah son of Shemaiah",
+      },
+      {
+        tier: "scholarly",
+        label: "D. Winton Thomas, on the identification of the prophet of the Lachish ostraca",
+        credit: "D. Winton Thomas, University of Cambridge",
+        detail: "1946. The argument that no identification is possible and that treating the ostraca as one interrelated dossier is methodologically unsound. Print only. His surname is given here rather than in the article text because the app's automatic name-linking would otherwise send it to Thomas the apostle",
+        supports: "The refusal to identify the prophet, and the methodological objection to Torczyner, Jack and Dussaud",
+      },
+      {
+        tier: "reference",
+        label: "\"Eyewitness to Discovery\"",
+        url: "https://www.biblicalarchaeology.org/reviews/eyewitness-to-discovery/",
+        credit: "J. D. M. Green, Bible History Daily, 26 April 2021 — a review of Olga Tufnell's 'Perfect Journey', which he co-edited",
+        detail: "Names Hasan 'Awad al-Qatshan as the man who first spotted the inscribed sherds",
+        supports: "The individual finder credit",
+      },
+      {
+        tier: "scholarly",
+        label: "A. F. Rainey, \"Watching out for the signal fires of Lachish\"",
+        credit: "Anson F. Rainey",
+        detail: "Palestine Exploration Quarterly 119/2 (1987), 149-151. Print only",
+        supports: "The rebuttal of Y. Yadin's \"tending the beacon\" reading",
+      },
+      {
+        tier: "reference",
+        label: "Lachish Ostraca",
+        url: "https://www.encyclopedia.com/religion/encyclopedias-almanacs-transcripts-and-maps/lachish-ostraca",
+        credit: "Encyclopaedia Judaica, via Encyclopedia.com",
+        detail: "Independent confirmation of the 1935 and 1938 counts and of the gate-room findspot, with translations of Lachish 3 and 4",
+        supports: "The find counts and the room adjacent to the city gate",
+      },
+    ],
+    reflectionPrompt:
+      "A soldier at a dark outpost wrote that he was still watching for the signals, exactly as instructed, while the towns around him went out one by one. What has God told you to keep doing while the news gets worse?",
+  },
+  {
+    id: "ketef-hinnom-amulets",
+    name: "Ketef Hinnom Silver Amulets",
+    alternateNames: ["Ketef Hinnom Scrolls", "The Silver Scrolls"],
+    category: "discovery",
+    role: "Two Rolled Silver Plaques Carrying the Oldest Known Copy of a Biblical Text",
+    summary:
+      "Two tiny sheets of silver foil, incised and worn on a cord, from a burial cave above the Hinnom Valley. One of them carries a form of the priestly blessing of Numbers 6 — most probably written around 600 BC, four centuries before the oldest Dead Sea Scroll.",
+    sections: [
+      {
+        heading: "A Collapsed Ceiling, and a Bored Thirteen-Year-Old",
+        paragraphs: [
+          "Ketef Hinnom means the shoulder of Hinnom — the rocky spur above the bend of the Hinnom valley, southwest of the Old City, in the grounds of a Scottish church. G. Barkay excavated a First Temple period family tomb there in 1979: five chambers around a central hall, benches with carved stone headrests, and under three of the benches a repository where bones and grave goods were swept once the flesh had gone. The tomb had been used to store rifles in Ottoman times and looked archaeologically hopeless.",
+          "The reason it was not hopeless is that the ceiling of one chamber had partly collapsed in antiquity, sealing what lay beneath. Barkay's own account of how that was discovered is disarming: the volunteers included twelve- and thirteen-year-olds from a Tel Aviv youth archaeology club, and one of them, bored with being parked in a corner, banged on the floor with a hammer and came up holding almost complete pottery vessels. That was the repository, sixty centimetres deep and holding over a thousand objects — pottery, arrowheads, needles and pins, bone and ivory, glass, gold and silver. The boy was sent home with the rest of the youngsters and the repository was excavated by students and adult volunteers. He did not find the silver plaques, and the popular version of the story in which he did is wrong.",
+          "No individual finder is recorded for the plaques themselves, but the circumstances are: the larger came from the middle of the repository, seven centimetres above the floor, and the smaller was recovered while sifting dirt from the lower half of the deposit at the innermost end. Both were rolled tight. It took about three years of experimentation to unroll them without destroying them.",
+        ],
+      },
+      {
+        heading: "What Is Actually Written On Them",
+        paragraphs: [
+          "This needs to be said precisely, because the popular summary is looser than the objects. The smaller plaque, about eleven by thirty-nine millimetres with twelve surviving lines, is the one carrying the priestly blessing. It preserves the whole of Numbers 6:24 — may Yahweh bless you and keep you. From 6:25 it preserves only the first half, make his face shine upon you; the words \"and be gracious to you\" are not on the silver. From 6:26 it preserves only the second half, and give you peace; the words \"Yahweh lift up his countenance upon you\" are not on the silver either. Its opening lines also carry a phrase with no parallel in Numbers at all, calling God the one who helps and who rebukes evil — which is why these are read as protective amulets rather than as a scripture portion.",
+          "The larger plaque, about twenty-seven by ninety-seven millimetres, is not primarily a Numbers text. Its legible lines parallel the covenant formula of Exodus 20:6 and Deuteronomy 7:9 — the great God who keeps the covenant and lovingkindness towards those who love him and keep his commandments — before turning to redemption and to God as restorer and rock. Its blessing then begins, may Yahweh bless you and keep you, may Yahweh make his face shine, and the plaque disintegrates. Whether more of the blessing followed is a reconstruction, not a reading.",
+          "So what these objects show is that the language of the priestly blessing was in circulation, in writing, in Judah, before the exile. That is a genuinely large thing. It is not the same as saying that the book of Numbers existed in its present form, and it is not the same as saying anyone at Ketef Hinnom was copying Scripture.",
+        ],
+      },
+      {
+        heading: "The Date Has Been Fought Over Twice",
+        paragraphs: [
+          "Barkay dated the plaques palaeographically to the late seventh or early sixth century BC, later revising towards the early sixth. J. Renz, in the standard German handbook of ancient Hebrew epigraphy with W. Rollig, argued the script was too poorly preserved to date with confidence and that a Hellenistic date, third or second century BC, could not be excluded — the repository had functioned as a sort of bin over centuries and did contain later material.",
+          "That challenge was answered. Between 1994 and 2004 the West Semitic Research Project at the University of Southern California re-imaged both plaques with advanced photographic techniques, and G. Barkay, A. G. Vaughn, M. J. Lundberg and B. Zuckerman published a new edition in the Bulletin of the American Schools of Oriental Research in 2004. Their conclusion was that the late pre-exilic period is the proper context: only eight late-Hellenistic vessels came from the repository and all from its uppermost layer, no letter form points to a Hellenistic date, and both plaques were separated from the Hellenistic material by three metres horizontally and twenty-five centimetres vertically. P. K. McCarter said the study should settle the controversy, and for most of the field it did.",
+          "The live challenge today is different and it is not resolved. N. Na'aman argued in the Israel Exploration Journal in 2011 for a new decipherment of the missing section of the larger plaque and, on that basis, for an early Second Temple date — not long after the rebuilding of the temple — reading the texts as expressing hopes pinned on the new temple and the return to the land. S. Ahituv published a rejoinder the following year. If Na'aman is right, the headline claim about these objects collapses. He has not persuaded the majority, and this app follows the late pre-exilic dating, but a reader should know that a serious scholar has argued otherwise in a peer-reviewed journal within the last fifteen years.",
+          "One overclaim to refuse in passing. Because the plaques carry a text also found in the Pentateuch, they are sometimes cited as proof that the five books of Moses existed in the First Temple period. That is more than the silver can carry, and specialists said so at the time — the amulets show that material also found in the Pentateuch was written down before the exile, which is a claim about a blessing, not about a book.",
+        ],
+      },
+    ],
+    verses: [
+      { reference: "Numbers 6:24", note: "Yahweh bless you and keep you — preserved in full on the smaller plaque" },
+      { reference: "Numbers 6:25", note: "Only the first half of this verse is on the silver" },
+      { reference: "Numbers 6:26", note: "Only the second half of this verse is on the silver" },
+      { reference: "Deuteronomy 7:9", note: "The covenant-and-lovingkindness formula paralleled on the larger plaque" },
+      { reference: "2 Kings 23:10", note: "Topheth in the valley of Hinnom — the ravine these tombs look down into" },
+    ],
+    sources: [
+      { label: "G. Barkay's own account of the excavation, in interview", url: "https://www.itsgila.com/highlightspriestly.htm" },
+      { label: "N. Na'aman, \"A New Appraisal of the Silver Amulets from Ketef Hinnom\" (abstract)", url: "https://cris.tau.ac.il/en/publications/a-new-appraisal-of-the-silver-amulets-from-ketef-hinnom/" },
+    ],
+    discovery: {
+      objectType: "Two rolled strips of thin beaten silver foil, incised with palaeo-Hebrew letters and worn as amulets; unrolled, c. 27 x 97 mm and c. 11 x 39 mm",
+      findSite: "The repository beneath Chamber 25 of burial Cave 24, Ketef Hinnom, above the Hinnom valley southwest of the Old City of Jerusalem",
+      findSiteId: "jerusalem",
+      findSiteKind: "location",
+      foundYear: "1979",
+      foundBy: "The Tel Aviv University excavation directed by G. Barkay. The repository was broken into by a thirteen-year-old volunteer, recorded by Barkay only as Nathan; no individual finder is recorded for the plaques themselves",
+      objectDate: "Late seventh to early sixth century BC, c. 600 BC. A Hellenistic date proposed in 1995 was answered in 2004; an early Second Temple date proposed by N. Na'aman in 2011 remains a minority view",
+      objectDateCertainty: "disputed",
+      currentLocation: "Israel Museum, Jerusalem; Israel Antiquities Authority, IAA 1980-1495 and IAA 1980-1496",
+    },
+    citations: [
+      {
+        tier: "scholarly",
+        label: "G. Barkay, A. G. Vaughn, M. J. Lundberg and B. Zuckerman, \"The Amulets from Ketef Hinnom: A New Edition and Evaluation\"",
+        credit: "Gabriel Barkay, Andrew G. Vaughn, Marilyn J. Lundberg and Bruce Zuckerman, West Semitic Research Project, University of Southern California",
+        detail: "Bulletin of the American Schools of Oriental Research 334 (2004), 41-71. The standard edition, based on new imaging. Paywalled and not reachable by automated request, so no link is given",
+        paywalled: true,
+        supports: "The readings of both plaques, and the answer to the proposed Hellenistic date",
+      },
+      {
+        tier: "scholarly",
+        label: "N. Na'aman, \"A New Appraisal of the Silver Amulets from Ketef Hinnom\"",
+        url: "https://cris.tau.ac.il/en/publications/a-new-appraisal-of-the-silver-amulets-from-ketef-hinnom/",
+        credit: "Nadav Na'aman, Tel Aviv University",
+        detail: "Israel Exploration Journal 61/2 (2011), 184-195. The linked page is the university's own record and carries the full abstract; the article is print only. S. Ahituv replied in IEJ 62 (2012), 223-232",
+        supports: "The proposed early Second Temple dating and its reasoning",
+      },
+      {
+        tier: "scholarly",
+        label: "J. D. Smoak, \"From Temple to Text: Text as Ritual Space and the Composition of Numbers 6:24-26\"",
+        url: "https://jhsonline.org/index.php/jhs/article/download/29365/21383/77617",
+        credit: "Jeremy D. Smoak, University of California, Los Angeles",
+        detail: "Journal of Hebrew Scriptures 17, article 2 (2017). Open access. Its first footnote is the cleanest bibliography of the whole dating dispute",
+        supports: "The state of scholarship on the amulets and on the blessing's composition",
+      },
+      {
+        tier: "institution",
+        label: "\"Amulets with a blessing formula from Ketef Hinnom\"",
+        url: "https://web.archive.org/web/2020id_/http://jerusalem.nottingham.ac.uk/items/show/114",
+        credit: "University of Nottingham, Jerusalem: Fall of a City - Rise of a Vision; objects courtesy of the Israel Antiquities Authority, photograph by Nachum Slapak, Israel Museum",
+        detail: "Gives the inventory numbers IAA 1980-1495 and IAA 1980-1496 and the dimensions. Cited via the Internet Archive because the exhibition site no longer accepts connections",
+        supports: "The inventory numbers, the holding institution and the dimensions",
+      },
+      {
+        tier: "reference",
+        label: "G. Barkay on the excavation of Ketef Hinnom, in interview",
+        url: "https://www.itsgila.com/highlightspriestly.htm",
+        credit: "Gabriel Barkay, interviewed by Gila Yudkin",
+        detail: "The excavator's own first-person account of the youth volunteers, the hammer, and the sequence of events at the repository",
+        supports: "The correction to the popular story that a thirteen-year-old found the silver plaques",
+      },
+    ],
+    reflectionPrompt:
+      "Someone in Jerusalem, six centuries before Christ, wore the words \"Yahweh bless you and keep you\" against their skin. What words would you want that close?",
+  },
+  {
+    id: "samaria-ostraca",
+    name: "Samaria Ostraca",
+    alternateNames: ["Samaria Ostraka"],
+    category: "discovery",
+    role: "Wine and Oil Dockets From the Court of the Northern Kingdom",
+    summary:
+      "A hundred and two inked potsherds from the royal acropolis of Samaria, recording deliveries of wine and oil to the palace. They were found in builders' rubble, and the king whose regnal years they date by has never been settled.",
+    sections: [
+      {
+        heading: "Found in the Fill",
+        paragraphs: [
+          "Harvard University excavated Samaria — the capital Omri bought and built, and the modern village of Sebastia — from 1908, and in the third season of 1910 the dig produced 102 inscribed potsherds. G. A. Reisner directed the 1909 and 1910 seasons with C. S. Fisher as his architect; D. G. Lyon reported the find publicly in 1911, and the three of them published the excavation in 1924. No individual finder is recorded.",
+          "Where they were found matters more than most things in this article. They were not lying on a floor. They were in a fill laid down to level the ground before a large building went up — building rubble, in other words, into which somebody had swept the palace's discarded paperwork. The excavators named the structure the Ostraca House after them. The consequence is blunt: the sherds are out of primary context, they cannot be tied to the room they were used in, and the archaeology cannot date them beyond saying they were already rubbish when the fill was laid.",
+          "Only 63 of the 102 are legible enough to be useful. Reisner published about sixty; I. T. Kaufman substantially enlarged the readable corpus in 1966 by working from the expedition's original glass negatives, and M. Richelle re-edited the whole set from photographs in 2022. One charming detail of the original filing system survived: oil deliveries were written on grey ware and wine deliveries on reddish sherds.",
+        ],
+      },
+      {
+        heading: "What a Docket Says",
+        paragraphs: [
+          "These are not letters. They are administrative notes of a few words: a year, a place or a clan, a name, and a commodity. Two distinct formats appear. In one, the year is spelled out in Hebrew words — the ninth year, the tenth year — and the note gives a district, a recipient and the goods, aged wine or fine oil. In the other the year is written with Egyptian hieratic numerals, and the note gives a clan, a recipient with his father's name, a second personal name, and the town within the clan, and the commodity is always wine.",
+          "The Hebrew is northern, and that is one of the corpus's quiet contributions. It shows diphthong contraction, a different spelling of the word for \"year,\" and — most diagnostically — the Yahwistic element in personal names written -yw, where Judah writes -yhw or -yh. This is the dialect of the kingdom Amos and Hosea preached into, in its own administrative hand.",
+          "The names themselves are the part readers usually hear about. Of roughly fifty-one distinct personal names in the corpus, about eleven are built on the divine name and about five on Baal, with three built on El and a further twenty-three carrying no divine element at all. Yahwistic and Baal-bearing names sat side by side in one royal bureaucracy. Given 1 Kings 16:31 and the northern kingdom's history, that is worth seeing.",
+        ],
+      },
+      {
+        heading: "Two Things the Corpus Will Not Tell You",
+        paragraphs: [
+          "The first is which king. The securely attested regnal years are the ninth, the tenth and the fifteenth — and no others. One damaged sherd, number 63, carries a hieratic numeral that has been read as 12, 14, 16 and 17 by different scholars, which means it cannot be used to narrow the field, and it is why the frequently printed claim that the ostraca date to \"years nine, ten, fifteen and seventeen\" should not be repeated. Reisner and Lyon in 1910 assigned them to Ahab, on the level at which they were found relative to an alabaster vase of Osorkon II of Egypt; that attribution has been abandoned on pottery, on stratigraphy and on script. The two live options are a single king, in which case Jeroboam II, which C. Rollston calls compelling; or two kings, most often Joash and his son Jeroboam II with the year-15 group belonging to the father, which turns on a possible co-regency. A 2020 handwriting study concluded that the most likely number of writers behind the whole corpus is two, and that the days of Joash and Jeroboam II are the most likely setting. It is not settled, and the fill context means the archaeology cannot settle it.",
+          "The second is anything about the religion of the northern kingdom as a whole. This is the point at which a reader is usually handed more than the sherds contain. Fifty-one names from the men who supplied or received wine and oil at one royal court, over about two decades, drawn from clans within a few kilometres, is an elite sample from one place — not a census. The element bʿl can be the divine name, but it can also be the ordinary Hebrew word for lord or owner, and it was sometimes applied to Israel's own God, so a count of Baal names is not a count of Baal worshippers. And Lyon's original move — reading the Baal names as evidence for Ahab's reign because Kings associates Ahab with Baal, while simultaneously using the reign to interpret the names — is circular, and should not be reproduced.",
+          "What is left is still substantial. A working northern administration, writing competently in its own dialect, moving wine and oil into a royal storehouse from named estates, in the century Amos walked into to say woe to those who are at ease in Zion and secure on the mountain of Samaria. The ostraca do not confirm a biblical episode. They furnish the room the prophets were shouting in.",
+        ],
+      },
+    ],
+    verses: [
+      { reference: "1 Kings 16:24", note: "Omri buys the hill of Samaria and builds the city" },
+      { reference: "1 Kings 16:31", note: "Ahab marries Jezebel and serves Baal — the background to the Baal-bearing names" },
+      { reference: "2 Kings 14:23", note: "Jeroboam son of Joash reigns in Samaria forty-one years" },
+      { reference: "Amos 6:1", note: "Woe to those secure on the mountain of Samaria — the world these dockets belong to" },
+    ],
+    sources: [
+      { label: "M. Suriano, \"The Samaria Ostraca\" (Bible Odyssey, Society of Biblical Literature)", url: "https://www.bibleodyssey.org/articles/the-samaria-ostraca/" },
+      { label: "M. Richelle, \"Old and New Readings in the Samaria Ostraca\"", url: "https://ojs.uclouvain.be/index.php/babelao/article/download/65023/61353/120603" },
+    ],
+    discovery: {
+      objectType: "102 inscribed potsherds — administrative dockets written in carbon ink with a reed pen in cursive palaeo-Hebrew; 63 legible",
+      findSite: "The royal acropolis of Samaria (Sebastia) — in a levelling fill beneath a building the excavators named the Ostraca House",
+      findSiteId: "samaria",
+      findSiteKind: "location",
+      foundYear: "1910",
+      foundBy: "The Harvard expedition directed by G. A. Reisner, with C. S. Fisher; reported by D. G. Lyon. No individual finder is recorded",
+      objectDate: "First half of the eighth century BC, most narrowly its second quarter. The regnal years on them cannot be tied to a single named king",
+      objectDateCertainty: "disputed",
+      currentLocation: "Reported to be in the Istanbul Archaeology Museums, under Ottoman antiquities law. No museum catalogue entry or inventory number could be verified; the research photographs are held at Harvard",
+    },
+    citations: [
+      {
+        tier: "institution",
+        label: "D. G. Lyon, \"Hebrew Ostraca from Samaria\"",
+        url: "https://archive.org/stream/jstor-1507545/1507545_djvu.txt",
+        credit: "David Gordon Lyon, Harvard University, expressly based on a special report from G. A. Reisner",
+        detail: "Harvard Theological Review, 1911. Free worldwide through JSTOR Early Journal Content. The contemporary account by the expedition itself",
+        supports: "The 1909-1910 direction of the dig, the original attribution to Ahab, the first year-readings, and the observation about Baal and Yahwistic names",
+      },
+      {
+        tier: "scholarly",
+        label: "S. B. Noegel, \"The Samaria Ostraca\"",
+        url: "https://faculty.washington.edu/snoegel/PDFs/articles/Noegel%2048%20-%20ANEHST%202006c.pdf",
+        credit: "Scott B. Noegel, University of Washington, in M. W. Chavalas (ed.), The Ancient Near East: Historical Sources in Translation (Blackwell, 2006), 396-399",
+        detail: "The author's own copy of the chapter",
+        supports: "The 102/63 counts, the two document formats, the reading of ostracon 63 as variously 12, 14, 16 or 17, and the co-regency question",
+      },
+      {
+        tier: "scholarly",
+        label: "M. Richelle, \"Old and New Readings in the Samaria Ostraca\"",
+        url: "https://ojs.uclouvain.be/index.php/babelao/article/download/65023/61353/120603",
+        credit: "Matthieu Richelle",
+        detail: "BABELAO 10-11 (2022), 379-413. Open access. A re-edition of the whole Reisner corpus with a full table of the personal names",
+        supports: "The count of distinct personal names and their classification, and the statement that only years 9, 10 and 15 are securely attested",
+      },
+      {
+        tier: "scholarly",
+        label: "S. Faigenbaum-Golovin et al., algorithmic handwriting analysis of the Samaria ostraca",
+        url: "https://journals.plos.org/plosone/article?id=10.1371%2Fjournal.pone.0227452",
+        credit: "Shira Faigenbaum-Golovin and colleagues, Tel Aviv University",
+        detail: "PLOS ONE 15/1 (2020), e0227452. Open access",
+        supports: "The finding that two writers are most likely, and the narrowing of candidate kings to Joash and Jeroboam II",
+      },
+      {
+        tier: "reference",
+        label: "M. Suriano, \"The Samaria Ostraca\"",
+        url: "https://www.bibleodyssey.org/articles/the-samaria-ostraca/",
+        credit: "Matthew J. Suriano, University of Maryland, for Bible Odyssey (Society of Biblical Literature)",
+        detail: "20 June 2017",
+        supports: "The single-king versus co-regency alternatives and the northern -yw spelling of the divine element",
+      },
+      {
+        tier: "institution",
+        label: "Harvard Expedition to Samaria, 1908-1910",
+        url: "https://web.archive.org/web/2023id_/https://curiosity.lib.harvard.edu/expeditions-and-discoveries/feature/harvard-expedition-to-samaria-1908-1910",
+        credit: "Harvard Library",
+        detail: "Cited via the Internet Archive because the live page refuses automated requests. Confirms that Harvard designated Reisner to direct the expedition and records the 1924 Reisner, Fisher and Lyon publication",
+        supports: "The direction of the expedition and its final publication",
+      },
+    ],
+    reflectionPrompt:
+      "These sherds are somebody's discarded delivery notes, swept into a builder's fill. What in your ordinary week would tell the truth about you if it were all that survived?",
+  },
+  {
+    id: "lmlk-seal-impressions",
+    name: "LMLK Seal Impressions",
+    alternateNames: ["Lmlk Stamped Jar Handles", "Royal Judahite Jar Handles"],
+    category: "discovery",
+    role: "Two Thousand Stamped Jar Handles From the Kingdom of Judah",
+    summary:
+      "Storage jars stamped on the handle, before firing, with the words \"belonging to the king,\" a winged emblem and one of four place-words. More than two thousand are known, most of them from the last decades of the eighth century BC.",
+    sections: [
+      {
+        heading: "A Stamp, Not a Seal",
+        paragraphs: [
+          "These are impressions, not seals. Somebody pressed a stamp into the wet clay of a large storage jar's handle before it was fired, and the stamp itself has never been found — the entire corpus is the marks it left. The layout is consistent: the word lmlk, \"belonging to the king,\" across the top; below it a winged emblem, either two-winged or four-winged; below that one of four words. The types are distinguished by the wing count, the place-word and the layout of the registers, and a small minority carry only the word lmlk or only a place-word.",
+          "The first was sighted by C. Warren in Jerusalem in 1868 and published by him two years later, and they have been turning up ever since, at seventy-odd sites spread across Judah, Benjamin and the southern tribal lands. More than two thousand are known, of which roughly fifteen hundred come from controlled excavation and survey rather than from the market — a count published by O. Lipschits, O. Sergi and I. Koch. The largest concentrations are at Khirbet Qeiyafa, Lachish, Jerusalem, Ramat Rahel and southern Jerusalem, with Gibeon, Mizpah and Beth Shemesh behind them. Complete jars were found in place at Lachish beneath the destruction layer, which is what makes the whole class datable at all. Found in the same contexts are several hundred so-called private stamps carrying a personal name and a patronymic — sometimes on a different handle of the very same jar.",
+        ],
+      },
+      {
+        heading: "Hebron, Ziph, Socoh, and a Word Nobody Can Read",
+        paragraphs: [
+          "Three of the four words below the emblem are Judahite towns: Hebron, Ziph and Socoh — the Socoh northwest of Hebron, not the one to its southwest. The fourth, mmst, has resisted identification since 1868. About a dozen sites have been proposed for it and none is etymologically satisfying. One older proposal took it as an abbreviation for \"government,\" meaning Jerusalem. A 2024 study by D. Vainstub argues it is not a place name at all but an expression meaning \"from the mas'et\" — a single extraordinary collection of agricultural produce which, on his reading, Hezekiah raised in preparation for the Assyrian invasion, distributed in jars stamped \"belonging to the king, from the mas'et.\" That is a proposal, not a consensus.",
+          "The connection to Scripture is administrative rather than narrative, and it is strong. 2 Chronicles 32 describes Hezekiah building up walls and towers, making weapons in abundance, and providing storehouses for grain, wine and oil. 2 Kings 18:13-14 and Isaiah 22 describe the campaign these preparations were for. The lmlk jars are what a royal supply system of exactly that kind leaves behind: standardised vessels, produced at a single centre, filled at estates, distributed to fortified towns, and marked with the king's own word.",
+        ],
+      },
+      {
+        heading: "Whose System, and For How Long",
+        paragraphs: [
+          "The version a reader usually meets is that the lmlk jars were Hezekiah's emergency war supplies for the Assyrian invasion of 701 BC. There is a great deal in that, and it is close to the majority position, but stated flatly it goes past the evidence — and the disagreement is worth a reader's time because it is a good example of a live archaeological argument being conducted in public.",
+          "What is not in dispute is the end date. The largest single group came from the destruction layer of Lachish Level III, which D. Ussishkin's renewed excavations assigned firmly to Sennacherib's campaign of 701 BC. That is a hard limit, and it also destroyed an older theory: both the two-winged and the four-winged types were found together in that layer, so one did not replace the other over time. N. Na'aman observed that the stamps cluster in exactly the regions the Assyrian assault was aimed at, and read the system as Hezekiah's preparations in the years before 701.",
+          "The disagreement is about when the system started and whether it stopped. Ussishkin holds that all of them date to shortly before 701 — one short horizon, one king. A. G. Vaughn argued that jars of this type were already in use before Hezekiah came to the throne, that stamps occur at fortified sites the Assyrians never attacked and at unfortified ones, and that the system is better read as an administrative and economic reorganisation running across Hezekiah's whole reign rather than as war preparation; most scholars followed him. O. Lipschits, O. Sergi and I. Koch then argued that the types split chronologically — some appear under the 701 destruction and some only at sites that survived it and in seventh-century layers — and that the system began when Judah became an Assyrian vassal in the last quarter of the eighth century, as a way of meeting the tax quotas the empire imposed, and continued in modified form until 586 BC. Their sharpest practical point is hard to dismiss: a system of central manufacture, distribution for filling, and redistribution to royal hubs, on this scale, is not something a small kingdom improvises in the three or four years between a rebellion and an invasion.",
+          "Ussishkin answered them, Lipschits answered back, and Ussishkin answered again; the exchange ran through four journals between 2010 and 2012. Where the field sits now is that the Hezekiah-centred reading remains the majority, with an acknowledgement that some stamping preceded the revolt, and that the Lipschits scheme is a serious and unsettled challenge. The honest sentence for a Bible reader is that these jars are the physical trace of a Judahite royal economy that was mobilised for the Assyrian crisis — and that whether the system was built for that crisis, or existed before it and was pressed into service, is exactly what specialists are still arguing about.",
+        ],
+      },
+    ],
+    verses: [
+      { reference: "2 Kings 18:13", note: "Sennacherib takes the fortified cities of Judah in Hezekiah's fourteenth year" },
+      { reference: "2 Kings 18:14", note: "Hezekiah sends to the king of Assyria at Lachish" },
+      { reference: "2 Chronicles 32:5", note: "Hezekiah repairs the wall, raises towers and makes weapons in abundance" },
+      { reference: "2 Chronicles 32:28", note: "Storehouses for grain, new wine and oil — the system these jars belong to" },
+      { reference: "Isaiah 22:10", note: "Houses broken down to fortify the wall, in the same emergency" },
+    ],
+    sources: [
+      { label: "O. Lipschits, O. Sergi and I. Koch, \"Royal Judahite Jar Handles: Reconsidering the Chronology of the lmlk Stamp Impressions\"", url: "https://humanities.tau.ac.il/sites/personal.tau.ac.il/files/media_server/1304/untitled%20folder/n.pdf" },
+      { label: "D. Vainstub, \"The Enigmatic mmst in the lmlk Stamps\"", url: "https://web.archive.org/web/20241225195440/https://jjar.huji.ac.il/sites/default/files/jjar/files/vol6-art01_lmlk_05062024_-2.pdf" },
+    ],
+    discovery: {
+      objectType: "Oval stamp impressions pressed into the handles of large storage jars before firing. No stamp seal itself has ever been found",
+      findSite: "Some seventy sites across Judah, Benjamin and Simeon, concentrated at Khirbet Qeiyafa, Lachish, Jerusalem, Ramat Rahel and southern Jerusalem",
+      findSiteId: "lachish",
+      findSiteKind: "location",
+      foundYear: "First sighted 1868; found continuously ever since",
+      foundBy: "The first was sighted by C. Warren in Jerusalem in 1868 and published by him in 1870. The corpus accumulated across a century and a half of excavation, and no individual finder attaches to it",
+      objectDate: "Chiefly the last decades of the eighth century BC, with the destruction of Lachish Level III in 701 BC as a fixed point. Whether the system began earlier, and whether it continued into the seventh century, is disputed",
+      objectDateCertainty: "disputed",
+      currentLocation: "Dispersed across many collections. Complete jars of the Hebron type are displayed at the Israel Museum, Jerusalem, and a group of impressions at the Hecht Museum, Haifa",
+    },
+    citations: [
+      {
+        tier: "scholarly",
+        label: "O. Lipschits, O. Sergi and I. Koch, \"Royal Judahite Jar Handles: Reconsidering the Chronology of the lmlk Stamp Impressions\"",
+        url: "https://humanities.tau.ac.il/sites/personal.tau.ac.il/files/media_server/1304/untitled%20folder/n.pdf",
+        credit: "Oded Lipschits, Omer Sergi and Ido Koch, Tel Aviv University",
+        detail: "Tel Aviv 37 (2010), 3-32. The author copy on the university's own server",
+        supports: "The corpus counts, the early/late type split, the Assyrian-vassal reading, and the summary of A. G. Vaughn's position",
+      },
+      {
+        tier: "scholarly",
+        label: "D. Ussishkin, \"Lmlk Seal Impressions Once Again: A Second Rejoinder to Oded Lipschits\"",
+        url: "https://repositorio.uca.edu.ar/bitstream/123456789/6574/1/lmlk-seal-impressions-rejoinder-lipschits.pdf",
+        credit: "David Ussishkin, Tel Aviv University",
+        detail: "Antiguo Oriente 10 (2012), 13-23. Open access through the Universidad Catolica Argentina repository",
+        supports: "Ussishkin's own statement that all the lmlk jars date to shortly before 701 BC",
+      },
+      {
+        tier: "scholarly",
+        label: "O. Lipschits, \"Archaeological Facts, Historical Speculations and the Date of the LMLK Storage Jars: A Rejoinder to David Ussishkin\"",
+        url: "https://jhsonline.org/index.php/jhs/article/view/18386",
+        credit: "Oded Lipschits, Tel Aviv University",
+        detail: "Journal of Hebrew Scriptures 12, article 4 (2012). Open access",
+        supports: "The chronological split of the stamp types and the objection to dating the lmlk corpus from the private-stamp contexts",
+      },
+      {
+        tier: "scholarly",
+        label: "D. Vainstub, \"The Enigmatic mmst in the lmlk Stamps\"",
+        url: "https://web.archive.org/web/20241225195440/https://jjar.huji.ac.il/sites/default/files/jjar/files/vol6-art01_lmlk_05062024_-2.pdf",
+        credit: "Daniel Vainstub, independent researcher",
+        detail: "Jerusalem Journal of Archaeology 6 (2024), 1-31; DOI 10.52486/01.00006.1. Open access, but the journal's own server and the DOI both return an error page to automated requests, so the Internet Archive copy is linked instead",
+        supports: "The 1868 first sighting by C. Warren and its publication in 1870, the four words below the emblem, the proposed reading of mmst, the rejection of Ginsberg's abbreviation proposal, and the state of the dating debate in 2024",
+      },
+      {
+        tier: "scholarly",
+        label: "A. G. Vaughn, Theology, History, and Archaeology in the Chronicler's Account of Hezekiah",
+        credit: "Andrew G. Vaughn",
+        detail: "Scholars Press, 1999. Print only",
+        supports: "The argument that the stamping system spans Hezekiah's whole reign as administrative reorganisation rather than as war preparation",
+      },
+    ],
+    reflectionPrompt:
+      "A king stamped his own word onto thousands of ordinary jars so that everyone would know whose they were. What in your life carries that mark?",
+  },
+  {
     id: "sabbath",
     name: "Sabbath",
     // "the Sabbath" is deliberately NOT registered: it ties with "Sabbath day" on length, and at
