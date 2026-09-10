@@ -8,7 +8,7 @@
     "build": "tsc -b && vite build",
     "lint": "oxlint",
     "preview": "vite preview",
-    "test:linker": "node scripts/name-linker/run.mjs"
+    "test:linker": "node scripts/name-linker/run.mjs && node scripts/name-linker/modern-names.mjs --check"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.110.8",

@@ -1229,7 +1229,6 @@ person.lifeStory|charles-wesley|52be6c0fd5	209	John	john-wesley
 person.lifeStory|charles-wesley|52be6c0fd5	69	John	john-wesley
 person.lifeStory|chloe|6cb0ce5e37	0	Paul	paul-of-tarsus
 person.lifeStory|chloe|6cb0ce5e37	338	Paul	paul-of-tarsus
-person.lifeStory|claudius-caesar|550cb1bb8e	25	Augustus	caesar-augustus
 person.lifeStory|claudius-caesar|f4bb27850d	25	Paul	paul-of-tarsus
 person.lifeStory|claudius-caesar|f4bb27850d	34	Aquila	aquila
 person.lifeStory|claudius-caesar|f4bb27850d	54	Priscilla	priscilla
@@ -1744,8 +1743,6 @@ person.lifeStory|johannes-gutenberg|f758b8c42f	269	Martin Luther	martin-luther
 person.lifeStory|john-calvin|ce5f804f9c	109	John Knox	john-knox
 person.lifeStory|john-chrysostom|24d848cfae	65	Paul	paul-of-tarsus
 person.lifeStory|john-chrysostom|4af16402c3	254	Theophilus	theophilus
-person.lifeStory|john-knox|095a330749	68	Mary	mary-mother-of-jesus
-person.lifeStory|john-knox|bc43602820	439	Elizabeth	elizabeth-mother-of-john-baptist
 person.lifeStory|john-mark|340839fd38	187	Paul	paul-of-tarsus
 person.lifeStory|john-mark|340839fd38	196	Barnabas	barnabas
 person.lifeStory|john-mark|340839fd38	231	Barnabas	barnabas
@@ -1812,7 +1809,6 @@ person.lifeStory|john-the-baptist|db24d7402a	332	Zechariah	zechariah-father-of-j
 person.lifeStory|john-the-baptist|db24d7402a	88	Zechariah	zechariah-father-of-john-baptist
 person.lifeStory|john-wesley|261d7e2a11	99	George Whitefield	george-whitefield
 person.lifeStory|john-wesley|38e8bb1e29	121	William Wilberforce	william-wilberforce
-person.lifeStory|john-wesley|fadab196b6	94	Samuel	samuel
 person.lifeStory|jonah|600a393a7b	15	Jesus	jesus-of-nazareth
 person.lifeStory|jonah|600a393a7b	321	Luke	luke-evangelist
 person.lifeStory|joram-king-of-israel|20708641fa	202	Jehoshaphat	jehoshaphat
@@ -2452,7 +2448,6 @@ person.lifeStory|samuel|0788f94b16	273	Saul	saul-king-of-israel
 person.lifeStory|samuel|0788f94b16	295	Saul	saul-king-of-israel
 person.lifeStory|samuel|0788f94b16	351	Saul	saul-king-of-israel
 person.lifeStory|samuel|6dd7832093	151	Saul	saul-king-of-israel
-person.lifeStory|samuel|6dd7832093	164	eve	eve
 person.lifeStory|samuel|6dd7832093	248	Saul	saul-king-of-israel
 person.lifeStory|samuel|95fef5a71a	175	David	david
 person.lifeStory|samuel|95fef5a71a	276	Saul	saul-king-of-israel
@@ -2635,7 +2630,7 @@ person.lifeStory|stephen-the-martyr|cf5c5a0ace	415	Paul	paul-of-tarsus
 person.lifeStory|stephen-the-martyr|cf5c5a0ace	76	Jesus	jesus-of-nazareth
 person.lifeStory|tamar-daughter-in-law-of-judah|75b2964e27	392	Perez	perez
 person.lifeStory|tamar-daughter-in-law-of-judah|75b2964e27	402	Zerah	zerah-son-of-judah
-person.lifeStory|teresa-of-avila|474fe4a6e1	43	Joseph	joseph-son-of-jacob
+person.lifeStory|teresa-of-avila|474fe4a6e1	43	Joseph	joseph-husband-of-mary
 person.lifeStory|teresa-of-avila|954ac856a2	42	John of the Cross	john-of-the-cross
 person.lifeStory|thaddaeus|40366b5fb9	203	Luke	luke-evangelist
 person.lifeStory|thaddaeus|40366b5fb9	471	Judas Iscariot	judas-iscariot
@@ -3590,7 +3585,7 @@ timelineEvent.article|bib-dki-elisha-ministry-miracles|f55ba3c14a	158	Elijah	eli
 timelineEvent.article|bib-dki-elisha-ministry-miracles|f55ba3c14a	270	Elisha	elisha
 timelineEvent.article|bib-dki-fall-samaria-722|3bebfa645a	345	Jezebel	jezebel
 timelineEvent.article|bib-dki-fall-samaria-722|3bebfa645a	609	David	david
-timelineEvent.article|bib-dki-fall-samaria-722|d3406954db	20	Hoshea	joshua
+timelineEvent.article|bib-dki-fall-samaria-722|d3406954db	20	Hoshea	hoshea-king-of-israel
 timelineEvent.article|bib-dki-jehu-anointed|4a3eed6fae	0	Elisha	elisha
 timelineEvent.article|bib-dki-jehu-anointed|4a3eed6fae	131	Jehoshaphat	jehoshaphat
 timelineEvent.article|bib-dki-jehu-anointed|4a3eed6fae	474	Jezebel	jezebel
@@ -3775,7 +3770,6 @@ timelineEvent.article|bib-er-ezras-return|c418f446b9	261	Ezra	ezra
 timelineEvent.article|bib-er-ezras-return|c418f446b9	65	Ezra	ezra
 timelineEvent.article|bib-er-ezras-return|e3a2704e7c	26	Zerubbabel	zerubbabel
 timelineEvent.article|bib-er-ezras-return|e3a2704e7c	79	Ezra	ezra
-timelineEvent.article|bib-er-fall-of-jerusalem|1b4937cc94	63	job	job
 timelineEvent.article|bib-er-fall-of-jerusalem|1b4937cc94	68	Solomon	solomon
 timelineEvent.article|bib-er-fall-of-jerusalem|899c5fcd2e	80	Moses	moses
 timelineEvent.article|bib-er-fall-of-jerusalem|899c5fcd2e	87	Jeremiah	jeremiah
@@ -3831,7 +3825,6 @@ timelineEvent.article|bib-exo-death-of-aaron|7391421517	135	Moses	moses
 timelineEvent.article|bib-exo-death-of-aaron|7391421517	172	Aaron	aaron
 timelineEvent.article|bib-exo-death-of-aaron|7391421517	277	Aaron	aaron
 timelineEvent.article|bib-exo-death-of-aaron|7391421517	511	Moses	moses
-timelineEvent.article|bib-exo-death-of-aaron|ce178bf886	300	eve	eve
 timelineEvent.article|bib-exo-death-of-aaron|ce178bf886	82	Aaron	aaron
 timelineEvent.article|bib-exo-death-of-moses|3f255fd6c5	0	Moses	moses
 timelineEvent.article|bib-exo-death-of-moses|3f255fd6c5	354	Manasseh	manasseh-king-of-judah
@@ -4908,7 +4901,6 @@ timelineEvent.article|wld-pg-rise-of-cyrus|0f8237b1c8	307	Lydia	lydia-of-thyatir
 timelineEvent.article|wld-pg-siege-of-tyre|74667cafb0	33	Ezekiel	ezekiel
 timelineEvent.article|wld-pg-xerxes-becomes-king|b59429c07d	427	Esther	esther
 timelineEvent.article|wld-pg-xerxes-becomes-king|ffd95d37cf	281	Esther	esther
-timelineEvent.article|wld-pg-xerxes-invades-greece|a7534d4da6	216	job	job
 timelineEvent.article|wld-pg-xerxes-invades-greece|a7534d4da6	415	Esther	esther
 timelineEvent.article|wld-rom-assassination-of-caesar|0788c31815	35	Caesar	tiberius-caesar
 timelineEvent.article|wld-rom-assassination-of-caesar|976c6b9028	265	Caesar	tiberius-caesar
@@ -5506,7 +5498,6 @@ topic.section|philistines|d684aafc59	0	Samson	samson
 topic.section|philistines|d684aafc59	377	David	david
 topic.section|philistines|d684aafc59	514	David	david
 topic.section|pilate-stone|05a44d050f	220	Tiberius	tiberius-caesar
-topic.section|pilate-stone|05a44d050f	266	job	job
 topic.section|pilate-stone|05a44d050f	394	Pilate	pontius-pilate
 topic.section|pilate-stone|69dc9ce4a3	23	Pilate	pontius-pilate
 topic.section|pilate-stone|69dc9ce4a3	385	Claudius	claudius-caesar
@@ -5562,7 +5553,6 @@ topic.section|septuagint|f8b64d96b0	259	Moses	moses
 topic.section|septuagint|f8b64d96b0	551	Job	job
 topic.section|siloam-inscription|10d06d1080	0	Hezekiah	hezekiah
 topic.section|siloam-inscription|3f6e3bad37	126	Hezekiah	hezekiah
-topic.section|siloam-inscription|42865f7ecf	79	job	job
 topic.section|siloam-inscription|4a9ae734bf	236	Hezekiah	hezekiah
 topic.section|siloam-inscription|751fc2bb82	19	Hezekiah	hezekiah
 topic.section|son-of-man|0410617176	358	Jesus	jesus-of-nazareth

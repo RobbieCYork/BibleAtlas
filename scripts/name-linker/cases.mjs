@@ -1026,4 +1026,62 @@ export const CASES = [
     why: "The evangelist writing, not the Gospel being named — so this takes the Apostle rather " +
          "than the suppression the 'Gospel of John' phrases get. Same fault as the Sabbath one " +
          "above: the Baptist is the global default and every new article inherits him." },
+
+  // ─────────────────────────────────────────────────────────────────────────────────────────
+  // MODERN PEOPLE CARRYING BIBLICAL FIRST NAMES, and two ordinary English words that are also
+  // names. Found by sweeping the corpus for the SHAPE rather than by noticing one on a page:
+  // scripts/name-linker/modern-names.mjs, which is the check that now guards this class.
+  //
+  // Same reason as the batch above for why the snapshot could not have told anyone: every one of
+  // these was an ADDITIVE row. They are prose cases so they survive the paragraph being rewritten,
+  // which is exactly how the last set of these got reintroduced — reworded away rather than pinned.
+  // ─────────────────────────────────────────────────────────────────────────────────────────
+  { text: "Knox repeatedly clashed directly and dramatically with the Catholic Mary, Queen of " +
+          "Scots, in a series of famous confrontations.",
+    surface: "Mary", owner: "john-knox", expect: null, status: "guard",
+    why: "MARY, QUEEN OF SCOTS — linked to Mary the mother of Jesus. Knox's page names two Tudor " +
+         "and Stuart queens called Mary and no Mary of the New Testament; neither has a record." },
+  { text: "against female rule aimed at Catholic queens, which later embarrassed him when " +
+          "Protestant Elizabeth I came to the English throne.",
+    surface: "Elizabeth", owner: "john-knox", expect: null, status: "guard",
+    why: "ELIZABETH I OF ENGLAND — linked to Elizabeth the mother of John the Baptist, the only " +
+         "Elizabeth the app has. No record for the queen, so no link is the honest answer." },
+  { text: "one of nineteen children of Samuel and Susanna Wesley, and was ordained a priest " +
+          "after studies at Oxford",
+    surface: "Samuel", owner: "john-wesley", expect: null, status: "guard",
+    why: "SAMUEL WESLEY, John Wesley's father — linked to the prophet who anointed Saul and " +
+         "David. The only Samuel on the record." },
+  { text: "In 1562, Teresa founded the Convent of St. Joseph in \u00c1vila as the first house",
+    surface: "Joseph", owner: "teresa-of-avila", expect: "joseph-husband-of-mary", status: "guard",
+    why: "The convent is named for Joseph of Nazareth; the link went to Joseph son of Jacob. " +
+         "Repoints rather than suppresses \u2014 the app has the right man, and this is the same " +
+         "call the eight 'St. Peter's Basilica' mentions already get." },
+
+  // "job" and "eve" as ordinary English words. CAPITALISED_ONLY now covers both keys, which costs
+  // nothing on either Scripture path (the WEB writes them only as names) and takes eight links out
+  // of our own prose. One case per key is enough to pin the rule; the rest are in the snapshot.
+  { text: "It is the workmen's account of their own job: while three cubits still remained to be " +
+          "cut through, each man's voice could be heard.",
+    surface: "job", owner: "siloam-inscription", expect: null, status: "guard",
+    why: "The common noun, linking to Job the patriarch. Lowercase, so CAPITALISED_ONLY reaches " +
+         "it; capitalised 'Job' on the book's own intro is untouched." },
+  { text: "it kept the sacrificial system running without interruption right up to the eve of " +
+          "the conquest of Canaan.",
+    surface: "eve", owner: "bib-exo-death-of-aaron", expect: null, status: "guard",
+    why: "'the eve of' \u2014 linked to Eve, the first woman. Same mechanism as 'job' above; the " +
+         "eleven capitalised 'Eve's in the primeval-history articles are untouched." },
+
+  // Two more from the same sweep that are not modern names but are the same shape: a bare forename
+  // registered to the wrong ancient man, on a record that names only one bearer.
+  { text: "Israel's last king, Hoshea, made the fatal mistake of withholding tribute from Assyria.",
+    surface: "Hoshea", owner: "bib-dki-fall-samaria-722", expect: "hoshea-king-of-israel",
+    status: "guard",
+    why: "HOSHEA KING OF ISRAEL, not Joshua son of Nun \u2014 the bare name is Joshua's globally " +
+         "(Numbers 13:16 renames him) and BOOK_NAME_ALLOWLIST confines it to Numbers for the " +
+         "reader, but the article surface has no allowlist. Seven centuries out." },
+  { text: "Tiberius Claudius Caesar Augustus Germanicus became emperor unexpectedly in AD 41.",
+    surface: "Augustus", owner: "claudius-caesar", expect: null, status: "guard",
+    why: "The imperial TITLE inside Claudius's own regnal name, linking to Octavian. Mapped to " +
+         "claudius-caesar in OWNER_NAME_OVERRIDES, which the self-link exclusion then renders as " +
+         "no link \u2014 so `expect` here is null, the same thing a reader sees." },
 ];

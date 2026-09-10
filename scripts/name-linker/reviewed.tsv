@@ -1,0 +1,33 @@
+# Modern-name candidates that have been READ, and what the reader concluded.
+# verdict<TAB>src<TAB>owner<TAB>linked-id<TAB>surface<TAB>signals
+# Regenerate with: node scripts/name-linker/modern-names.mjs --update
+#
+# A candidate absent from this file fails `--check`. Do not add a row you have not read: every row
+# here is a claim that a human looked at that sentence and decided. Verdicts in use:
+#
+#   ok          Read, and the link is right. Most rows: a saint's church or a pope's own name.
+#   book-title  Read, and the link is on a BOOK rather than a man. Not fixed here, because it is
+#               one instance of a class of 119 across 42 shapes ("1 Samuel", "1-2 Peter", "the
+#               book of Ruth", "the longer ending of Mark") that the app has only ever ruled on
+#               for "John", and settling the rest touches authorship. Recorded, not decided.
+book-title	bookIntro.manuscripts	book-intro:Jeremiah	jeremiah	Jeremiah	forename-before:Septuagint's
+ok	location.archaeology.note	antioch-syria	simon-peter	Peter	forename-before:Saint
+ok	location.archaeology.note	galilee	jesus-of-nazareth	Jesus	surname-after:Boat
+ok	location.archaeology.note	patmos	john-the-apostle	John	forename-before:Saint
+ok	location.archaeology.note	sea-of-galilee	jesus-of-nazareth	Jesus	surname-after:Boat
+ok	person.extraBib.source	lysanias	caesar-augustus	Augustus	forename-before:Deified
+ok	person.lifeStory	caleb	joshua	Joshua	forename-before:Addressing
+ok	person.lifeStory	jonah	jesus-of-nazareth	Jesus	forename-before:Gospels
+ok	person.lifeStory	nero-caesar	paul-of-tarsus	Paul	forename-before:Caesar'
+ok	person.lifeStory	salmon-father-of-boaz	rahab	Rahab	forename-before:Matthew's
+ok	poi.archaeology.note	well-of-st-paul-tarsus	paul-of-tarsus	Paul	forename-before:Saint
+ok	poi.description	cave-of-apocalypse-patmos	john-the-apostle	John	forename-before:Saint
+ok	poi.description	gallio-inscription-delphi	gallio	Gallio	forename-before:Junius
+ok	seo:timelineEvent.summary	augustine-confessions-397	augustine-of-hippo	Augustine of Hippo	forename-before:Bishop
+ok	seo:timelineEvent.summary	bib-dki-elijah-still-small-voice	jezebel	Jezebel	forename-before:Fleeing
+ok	seo:timelineEvent.summary	fall-of-communism-poland-1989	pope-john-paul-ii	Pope John Paul II	forename-before:Polish-born
+ok	seo:timelineEvent.summary	gregory-mission-to-england-597	gregory-the-great	Gregory the Great	modern-title-before
+ok	timelineEvent.article	bib-er-second-temple-completed	zerubbabel	Zerubbabel	forename-before:Governor
+ok	timelineEvent.article	billy-graham-crusades-1949-1957	billy-graham	Billy Graham	surname-after:Evangelistic,institution-after
+ok	timelineEvent.article	council-of-ephesus-431	mary-mother-of-jesus	Mary	surname-after:Theotokos
+ok	timelineEvent.article	gregory-mission-to-england-597	gregory-the-great	Gregory the Great	modern-title-before

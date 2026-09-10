@@ -2,7 +2,7 @@
 
 `src/lib/verseAnnotations.ts` decides which words in the Bible text — and in every article the app
 has ever written — become links to a person, place or topic. It renders **9,725 person-links across
-Scripture and 5,699 across the app's own prose**. Until this directory existed it had no tests at
+Scripture and 5,690 across the app's own prose**. Until this directory existed it had no tests at
 all, and a one-line data edit could move hundreds of them with nobody noticing.
 
     npm run test:linker
@@ -37,7 +37,7 @@ about real copy and not about a hypothetical.
       surface: "John", owner: "jesus-of-nazareth", expect: null, status: "guard", why: "…" }
 
 Prose cases exist because until they did, **the article surface could not be pinned by a named case
-at all** — every case had to be a verse, so the only cover the 5,699 prose links had was the
+at all** — every case had to be a verse, so the only cover the 5,690 prose links had was the
 snapshot. That is not the same thing: `prose-links.tsv` keys each row by a hash of its block's text,
 so editing a paragraph re-keys every link in it and any assertion about them vanishes with the old
 hash rather than failing (see the `tally.mjs` note below). A prose case survives a rewrite of the
@@ -52,13 +52,13 @@ Not every rule in that table is article-only: the `"Peter and John"` rule in the
 | file | rows | what it holds |
 |---|---:|---|
 | `bible-links.tsv` | 9,725 | every person-link in all 31,098 WEB verses, with the id each rendering path gives it |
-| `prose-links.tsv` | 5,699 | every person-link in every authored prose block the app puts through `LinkedVerseText` |
-| `key-totals.tsv` | 3,628 | a tally covering **every** kind — location, POI, topic, timeline, verse reference — one row per (kind, matched text, id, path) |
+| `prose-links.tsv` | 5,690 | every person-link in every authored prose block the app puts through `LinkedVerseText` |
+| `key-totals.tsv` | 3,630 | a tally covering **every** kind — location, POI, topic, timeline, verse reference — one row per (kind, matched text, id, path) |
 
 The first two are row-level, so a diff names the verse or the block. `key-totals.tsv` exists because
 the other two only record **people**: a change to `people.ts` can steal a key from a location, and
 adding one POI alternate name can start firing hundreds of links that no person snapshot would ever
-show. Its 3,628 rows currently break down as 2,028 verse references, 726 person, 377 location, 288
+show. Its 3,630 rows currently break down as 2,029 verse references, 727 person, 377 location, 288
 topic, 130 POI and 79 timeline.
 
 This is the half that catches what you did not think to assert. The named cases cover a few dozen
@@ -69,6 +69,22 @@ verses; the snapshot covers all of them.
 Only run `--update` once you have read the diff and can account for **every** moved row, including
 the improvements you did not intend. Commit the snapshot change together with the change that caused
 it: a reviewer should be able to read the two diffs side by side.
+
+**3. A modern-name sweep** (`modern-names.mjs`, ledger in `reviewed.tsv`). Runs as part of
+`npm run test:linker`. This one exists because **a wrong NEW link is additive**: it arrives in the
+snapshot diff as a row that was not there before, indistinguishable from the good links a new
+article brings with it. Six shipped to production in two days and every one was caught by a human
+reading a rendered page, never by this suite. So it asks a different question — not "did anything
+move?" but "does any link sit inside a modern personal name?" — and requires every YES to carry a
+verdict in `reviewed.tsv`. A new article that writes "excavated by John Garstang" fails on the
+commit that adds it. Read the header of that file for the discriminator, its measured hit rate
+against the known faults, and what it deliberately cannot see.
+
+    node scripts/name-linker/modern-names.mjs            list every candidate
+    node scripts/name-linker/modern-names.mjs --update   accept the current set as reviewed
+
+`--update` is refused when `--check` is also present, so `npm run test:linker -- --update` cannot
+bless a new candidate while accepting a snapshot move. Blessing one is its own command.
 
 ### Re-count the figures on this page when you update the snapshot
 
@@ -108,9 +124,9 @@ add its source fields to `loadProseBlocks()` in the same commit.** The blocks cu
 | `timelineEvents.ts` — article paragraphs, datingNotes | 1,338 |
 | `bookIntros.ts` — whyWritten, summary, manuscripts | 607 |
 | `locations.ts` — history fields, archaeology note | 338 |
-| `topics.ts` — section paragraphs | 333 |
+| `topics.ts` — section paragraphs | 334 |
 | `pois.ts` — description, archaeology note | 202 |
-| **total** | **4,315** |
+| **total** | **4,316** |
 
 `MyProfileView` also renders through `LinkedVerseText`, and is deliberately **not** here: what it
 passes is the user's own typed favourite-verse text, not authored content, so there is nothing to
@@ -124,7 +140,7 @@ snapshot.
 `LinkedVerseText` is what PersonPanel, LocationPanel, PoiPanel, TopicPanel, BookIntroView,
 TimelineEventPanel and MyProfileView render with. Every book override, verse override and
 suppression in `verseAnnotations.ts` is invisible there. **836 links across 746 verses resolve
-differently between the two paths**, and all but a handful of the 5,699 prose links run with no
+differently between the two paths**, and all but a handful of the 5,690 prose links run with no
 disambiguation at all — `OWNER_NAME_OVERRIDES` (below) is the only correction that reaches them. A
 fix that only moves the `reader` column has fixed half the app.
 
@@ -164,6 +180,8 @@ article that legitimately names both bearers of a name needs the longer-wording 
                                                               registers but can never reach
     node scripts/name-linker/tally.mjs <old.tsv> <new.tsv>    counts what moved between two
                                                               snapshots, per rendering path
+    node scripts/name-linker/modern-names.mjs                 every link sitting inside what
+                                                              looks like a modern personal name
 
 `tally.mjs` is how you turn "this feels like a big change" into a number you can put in a commit
 message. Get the old snapshot with `git show <sha>:scripts/name-linker/snapshot/bible-links.tsv >
@@ -190,6 +208,15 @@ scoping document twice. **Run it before claiming a change fixes N links.**
   Supabase auth gate. Anyone with a login should still eyeball Revelation 13:17, 2 Kings 17:1,
   Acts 1:13 and John the Apostle's biography page after a change lands.
 - **Any prose surface not listed in `loadProseBlocks()`.** That list is hand-maintained; see above.
+- **Five fields that are links on the PUBLIC pages and plain text in the app.** `scripts/seo/render.mjs`
+  puts `person.summary`, `person.occupation`, `topic.summary`, `timelineEvent.summary` and
+  `location.rulers[].name` through the same linker when it generates the ~890 pre-rendered pages.
+  The app renders all five as plain text, so `loadProseBlocks()` correctly does not enumerate them
+  and none of the three snapshots covers a single one — 865 blocks that a stranger can read on
+  capstonebible.com and that nothing here measures. `modern-names.mjs` sweeps them (its
+  `seoOnlyBlocks()`), which is how the wrong `Hoshea` on the fall-of-Samaria summary was found, but
+  that is a sweep for one shape, not a snapshot. Snapshotting them properly is worth doing and is
+  not done.
 - **Text the panels render WITHOUT `LinkedVerseText`** — a timeline event's `summary`, for instance,
   is plain text, so a name in it is reader-facing but never a link and never appears here.
 - **Non-person links at row level.** Location, POI, topic, timeline and verse-reference annotations

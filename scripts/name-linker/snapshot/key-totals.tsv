@@ -448,7 +448,7 @@ person	asa	asa	prose	9
 person	asa	asa	reader	60
 person	athanasius of alexandria	athanasius-of-alexandria	prose	2
 person	augustine of hippo	augustine-of-hippo	prose	1
-person	augustus	caesar-augustus	prose	37
+person	augustus	caesar-augustus	prose	36
 person	azariah	uzziah	panel	49
 person	azariah	uzziah	prose	5
 person	azariah	uzziah	reader	21
@@ -566,7 +566,7 @@ person	eliud	eliud	panel	2
 person	eliud	eliud	prose	2
 person	eliud	eliud	reader	2
 person	elizabeth	elizabeth-mother-of-john-baptist	panel	9
-person	elizabeth	elizabeth-mother-of-john-baptist	prose	12
+person	elizabeth	elizabeth-mother-of-john-baptist	prose	11
 person	elizabeth	elizabeth-mother-of-john-baptist	reader	9
 person	enoch	enoch	panel	13
 person	enoch	enoch	prose	22
@@ -582,7 +582,7 @@ person	esther	esther	prose	33
 person	esther	esther	reader	55
 person	eusebius of caesarea	eusebius-of-caesarea	prose	3
 person	eve	eve	panel	4
-person	eve	eve	prose	26
+person	eve	eve	prose	24
 person	eve	eve	reader	4
 person	ezekiel	ezekiel	panel	2
 person	ezekiel	ezekiel	prose	27
@@ -638,9 +638,9 @@ person	hezekiah	hezekiah	reader	131
 person	hezron	hezron-son-of-perez	panel	21
 person	hezron	hezron-son-of-perez	prose	1
 person	hezron	hezron-son-of-perez	reader	6
+person	hoshea	hoshea-king-of-israel	prose	1
 person	hoshea	hoshea-king-of-israel	reader	4
 person	hoshea	joshua	panel	8
-person	hoshea	joshua	prose	1
 person	hoshea	joshua	reader	2
 person	hoshea son of elah	hoshea-king-of-israel	panel	2
 person	hoshea son of elah	hoshea-king-of-israel	reader	2
@@ -711,7 +711,7 @@ person	jezebel	jezebel	reader	23
 person	joanna	joanna-follower-of-jesus	panel	2
 person	joanna	joanna-follower-of-jesus	reader	2
 person	job	job	panel	59
-person	job	job	prose	30
+person	job	job	prose	26
 person	job	job	reader	59
 person	johannes gutenberg	johannes-gutenberg	prose	1
 person	john	john-mark	reader	2
@@ -752,10 +752,11 @@ person	joram	joram-king-of-judah	reader	7
 person	joram son of ahab	joram-king-of-israel	prose	2
 person	joram the son of ahab	joram-king-of-israel	panel	5
 person	joram the son of ahab	joram-king-of-israel	reader	5
+person	joseph	joseph-husband-of-mary	prose	1
 person	joseph	joseph-husband-of-mary	reader	20
 person	joseph	joseph-of-arimathea	reader	6
 person	joseph	joseph-son-of-jacob	panel	249
-person	joseph	joseph-son-of-jacob	prose	137
+person	joseph	joseph-son-of-jacob	prose	136
 person	joseph	joseph-son-of-jacob	reader	223
 person	joseph of arimathea	joseph-of-arimathea	prose	7
 person	joshua	joshua	panel	220
@@ -820,7 +821,7 @@ person	martin luther king	martin-luther-king-jr	prose	3
 person	mary	mary-magdalene	reader	3
 person	mary	mary-mother-of-james-the-less	reader	7
 person	mary	mary-mother-of-jesus	panel	42
-person	mary	mary-mother-of-jesus	prose	89
+person	mary	mary-mother-of-jesus	prose	88
 person	mary	mary-mother-of-jesus	reader	20
 person	mary	mary-of-bethany	reader	11
 person	mary magdalene	mary-magdalene	panel	11
@@ -952,7 +953,7 @@ person	samson	samson	panel	39
 person	samson	samson	prose	14
 person	samson	samson	reader	39
 person	samuel	samuel	panel	143
-person	samuel	samuel	prose	58
+person	samuel	samuel	prose	57
 person	samuel	samuel	reader	143
 person	sarah	sarah	panel	42
 person	sarah	sarah	prose	42

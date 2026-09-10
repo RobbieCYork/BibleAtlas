@@ -1018,6 +1018,66 @@ const OWNER_NAME_OVERRIDES: Record<string, Record<string, string | null>> = {
   joshua: {
     "zechariah-the-prophet": null,
   },
+
+  // ── Modern people carrying biblical first names ─────────────────────────────────────────────
+  // Found by sweeping for the shape rather than by noticing one: scripts/name-linker/modern-names.mjs.
+  // The church-history records are where this bites, because they are the only articles in the app
+  // whose cast is post-biblical, and the bare forename is registered to somebody else in every case.
+  //
+  // These are keyed by owner rather than pinned by phrase because each record has exactly ONE
+  // answer for the name — checked by reading every occurrence of it on the record, not by reading
+  // the one sentence that flagged. A record-keyed answer survives the paragraph being rewritten;
+  // a phrase pin does not, and a snapshot row does not even survive the block being edited.
+
+  // Knox's page names two queens called Mary — "Mary I's restoration of Catholicism" and "the
+  // Catholic Mary, Queen of Scots" — and no Mary of the New Testament. The second was rendering as
+  // a link to Mary the mother of Jesus. There is no record for either Tudor or Stuart queen, so the
+  // honest answer is no link rather than a different wrong one.
+  mary: {
+    "john-knox": null,
+  },
+  // Same page, same problem, one occurrence: "Protestant Elizabeth I came to the English throne"
+  // pointed at Elizabeth the mother of John the Baptist. Elizabeth I has no record.
+  elizabeth: {
+    "john-knox": null,
+  },
+  // "one of nineteen children of Samuel and Susanna Wesley" — John Wesley's father, linking to the
+  // prophet who anointed Saul and David. The only "Samuel" on the record.
+  samuel: {
+    "john-wesley": null,
+  },
+  // "Teresa founded the Convent of St. Joseph in Ávila" — the house is named for Joseph of
+  // Nazareth, and the link went to Joseph son of Jacob. This one REPOINTS rather than suppresses,
+  // because the app has the right man and the building genuinely bears his name: the same call the
+  // eight "St. Peter's Basilica"/"St. Peter's Square" mentions already get, left pointing at Simon
+  // Peter across the Luther, Nero's-circus and Vatican-necropolis articles.
+  joseph: {
+    "teresa-of-avila": "joseph-husband-of-mary",
+  },
+
+  // ── Two more from the same sweep: a bare name that is the WRONG ancient man ──────────────────
+  // Not a modern name, but found by the same pass and the same shape — a bare forename registered
+  // to somebody else, on a record with only one bearer.
+
+  // "Hoshea" belongs to Joshua globally: Numbers 13:16 records Moses renaming him, and
+  // BOOK_NAME_ALLOWLIST keeps the bare key to Numbers on the reader path for exactly that reason.
+  // The article surface has no allowlist, so the fall-of-Samaria record's "Israel's last king,
+  // Hoshea, made the fatal mistake of withholding tribute" pointed at Joshua son of Nun, seven
+  // centuries early. The app has the right man. TWO links move, and only one of them is in the
+  // prose snapshot: the other is in `summary`, which the app renders as plain text but
+  // scripts/seo/render.mjs linkifies onto the public page. See modern-names.mjs on that surface.
+  hoshea: {
+    "bib-dki-fall-samaria-722": "hoshea-king-of-israel",
+  },
+  // "Tiberius Claudius Caesar Augustus Germanicus" — Claudius's own regnal name, in which
+  // "Augustus" is the imperial TITLE, not Octavian. Pointed at Caesar Augustus. Mapped to the
+  // record itself rather than to null, because that is what it actually is: his own name, handed
+  // back to the self-link exclusion, the same way bare "Saul" behaves on Paul's page. The only
+  // "Augustus" on the record; the other 36 in our prose, including "the Senate would grant him
+  // the title 'Augustus'", are Octavian and are untouched.
+  augustus: {
+    "claudius-caesar": "claudius-caesar",
+  },
 };
 
 const BOOK_NAME_ALLOWLIST: Record<string, string[]> = {
@@ -1110,6 +1170,16 @@ const BOOK_NAME_ALLOWLIST: Record<string, string[]> = {
  *   the counselor            1                  1                     0
  *   the adversary           15                 15                     0
  *   ram                      0                 92                     7
+ *   job                      0                  0                     5
+ *   eve                      0                  0                     3
+ *
+ * "job" and "eve" cost NOTHING on either Scripture path — the WEB writes both only as names, 59
+ * and 4 times, never as the common noun — and their whole yield is on the article surface, where
+ * our own prose uses the ordinary words: "returned to finish the job", "the workmen's account of
+ * their own job", "on the eve of his final battle", "right up to the eve of the conquest". Eight
+ * links, all of them to the patriarch and the first woman, none of them meant. They are the first
+ * entries here found by sweeping for a class rather than by someone noticing one; see
+ * scripts/name-linker/modern-names.mjs.
  *
  * "ram" is the clearest illustration: 92 is a PANEL-path number. The reader path never had those
  * links to lose — BOOK_NAME_ALLOWLIST already confines "ram" to Ruth, 1 Chronicles and Matthew —
@@ -1120,7 +1190,15 @@ const BOOK_NAME_ALLOWLIST: Record<string, string[]> = {
  * them — Revelation 12:10, "the accuser of our brothers... who accuses them before our God" — is
  * genuinely Satan. Flagging the key would take that correct link out to fix the one wrong one, so
  * Job 31:35 gets a per-verse entry instead. */
-const CAPITALISED_ONLY = new Set(["mark", "counselor", "the counselor", "the adversary", "ram"]);
+const CAPITALISED_ONLY = new Set([
+  "mark",
+  "counselor",
+  "the counselor",
+  "the adversary",
+  "ram",
+  "job",
+  "eve",
+]);
 
 /** Does this match's capitalisation mark it as a name rather than the common word?
  *
