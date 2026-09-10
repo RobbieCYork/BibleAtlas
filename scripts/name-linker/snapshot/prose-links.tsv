@@ -2730,6 +2730,8 @@ person.lifeStory|zechariah-father-of-john-baptist|c544ae9bc2	256	John	john-the-b
 person.lifeStory|zechariah-father-of-john-baptist|c544ae9bc2	343	the Holy Spirit	holy-spirit
 person.lifeStory|zechariah-the-prophet|14572cce40	355	Ezra	ezra
 person.lifeStory|zechariah-the-prophet|14572cce40	83	Zerubbabel	zerubbabel
+person.lifeStory|zechariah-the-prophet|20e079b5db	602	Satan	satan
+person.lifeStory|zechariah-the-prophet|20e079b5db	641	the accuser	satan
 person.lifeStory|zechariah-the-prophet|35abca372d	583	Judas	judas-iscariot
 person.lifeStory|zechariah-the-prophet|35abca372d	716	Isaiah	isaiah
 person.lifeStory|zechariah-the-prophet|35abca372d	869	Jeremiah	jeremiah
@@ -2738,8 +2740,6 @@ person.lifeStory|zechariah-the-prophet|61b95b3b89	417	Zerubbabel	zerubbabel
 person.lifeStory|zechariah-the-prophet|61b95b3b89	598	Jeremiah	jeremiah
 person.lifeStory|zechariah-the-prophet|61b95b3b89	611	Ezekiel	ezekiel
 person.lifeStory|zechariah-the-prophet|61b95b3b89	91	Ezra	ezra
-person.lifeStory|zechariah-the-prophet|80d0ef9799	602	Satan	satan
-person.lifeStory|zechariah-the-prophet|80d0ef9799	641	the accuser	satan
 person.lifeStory|zerah-son-of-judah|d9f0972955	49	Perez	perez
 person.lifeStory|zerah-son-of-judah|d9f0972955	805	Asa	asa
 person.lifeStory|zerubbabel|2791651157	102	Zechariah	zechariah-the-prophet
