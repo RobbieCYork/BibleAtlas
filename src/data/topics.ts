@@ -14996,7 +14996,10 @@ export const topics: Topic[] = [
     // already carries "Bar Kokhba Revolt"; registering the bare name would take mentions of the man
     // and of the war and send them here. NOT registered either: "Nahal Hever", "Cave of Letters" or
     // "Wadi Murabba'at", which are places. The two registered aliases are the two document groups.
-    alternateNames: ["Bar Kokhba letters", "Babatha archive"],
+    // Both are matchNames rather than alternateNames: the record's own name already contains the
+    // first, and printing "Also called Bar Kokhba letters, Babatha archive" under a title that
+    // reads "Bar Kokhba Letters and the Babatha Archive" is noise. They still link.
+    matchNames: ["Bar Kokhba letters", "Babatha archive"],
     category: "manuscript",
     role: "Letters and Legal Papers From the Last Jewish Revolt, AD 132-136",
     summary:
@@ -15144,7 +15147,7 @@ export const topics: Topic[] = [
       {
         heading: "What Survives, and What It Is Worth",
         paragraphs: [
-          "Two hundred leaves of it are gone — \"nearly two hundred folios (around 40 percent), including extensive parts of the beginning and end,\" as Sanders puts it, though the estimates of how many leaves it originally had range from 380 to about 500 and the surviving count of 294 is the only stable figure. The loss is not evenly spread. Almost the whole Torah is missing: the surviving text begins at the last word of Deuteronomy 28:17 and runs, with gaps, to Song of Songs 3:11. So the manuscript Maimonides used to settle the layout of the Song of the Sea no longer contains the Song of the Sea. What is left is in Jerusalem, owned by a trustee committee at the Ben-Zvi Institute and held on permanent loan in the Shrine of the Book at the Israel Museum, under the identification MSBZ 1.",
+          "Two hundred leaves of it are gone — \"nearly two hundred folios (around 40 percent), including extensive parts of the beginning and end,\" as Sanders puts it, though the estimates of how many leaves it originally had range from 380 to about 500 and the surviving count of 294 is the only stable figure. The loss is not evenly spread. Almost the whole Torah is missing: the surviving text begins at the last word of Deuteronomy 28:17 and runs, with gaps, to Song of Songs 3:11. So the manuscript Maimonides used to settle the layout of the Song of the Sea no longer contains the Song of the Sea. What is left is in Jerusalem, in the custody of a trustee committee at the Ben-Zvi Institute and on permanent loan to the Shrine of the Book at the Israel Museum, under the identification MSBZ 1. Who owns it is the last thing the third section takes up.",
           "The gap has been partly repaired by scholarship rather than by discovery. M. Breuer, denied access to the codex, reconstructed its text from the masorah, from faithful Yemenite copies and from the notes of scholars who had consulted it before 1947, and found his results matched the surviving portions almost exactly; his editions and the Jerusalem Crown of 2000 are built on that. And two leaves have come back. One page of Chronicles surfaced as a family heirloom in Israel. A fragment of Exodus — the passage about the plague of frogs — had been picked up off the synagogue floor after the riots by a man who took it to Brooklyn and would not give it up; it took years of negotiation with his family after his death to bring it to Jerusalem, and it arrived in 2007. The Ben-Zvi Institute's UNESCO nomination says openly why recognition mattered to it: \"there are missing pages whose whereabouts are unknown. Some of which may be held by collectors or by individuals as an amulet.\"",
         ],
       },
@@ -15494,8 +15497,10 @@ export const topics: Topic[] = [
     // and would collide oddly, and the phrase adds nothing the full name does not. The -h spelling
     // is a matchName rather than an alternate name because printing both to a reader as "also
     // called" would be noise: they are the same word transliterated twice.
-    alternateNames: ["Taylor-Schechter Collection"],
-    matchNames: ["Cairo Genizah"],
+    // Both matchNames. The Taylor-Schechter Collection is the Cambridge PART of this material, not
+    // another name for the whole of it, and "Also called Taylor-Schechter Collection" told a reader
+    // otherwise; the -h spelling is the same word transliterated twice.
+    matchNames: ["Taylor-Schechter Collection", "Cairo Genizah"],
     category: "manuscript",
     role: "A Thousand Years of Discarded Writing From One Synagogue Storeroom",
     summary:
@@ -15624,7 +15629,10 @@ export const topics: Topic[] = [
     // registered name wins, so "the Samaritan Pentateuch" now links here and a bare "Samaritan" or
     // "Samaritans" still links to the people. NOT registered: "Abisha" alone — 31 WEB verses and
     // five prose blocks contain it as part of "Abishai" and "Abishag". Only "Abisha Scroll".
-    alternateNames: ["Abisha Scroll"],
+    // "Abisha Scroll" is a matchName and NOT an alternateName: alternateNames print to the reader
+    // as "Also called", and the Abisha Scroll is one manuscript of this Torah rather than another
+    // name for it. Caught by opening the rendered page.
+    matchNames: ["Abisha Scroll"],
     category: "manuscript",
     role: "The Torah of a Rival Community, and the Verse That Divides It From the Jewish One",
     summary:
