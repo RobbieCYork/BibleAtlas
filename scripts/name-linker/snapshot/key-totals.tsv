@@ -27,7 +27,7 @@ location	asia	asia-province	prose	17
 location	asia	asia-province	reader	19
 location	asia minor	asia-province	prose	18
 location	athens	athens	panel	5
-location	athens	athens	prose	23
+location	athens	athens	prose	24
 location	athens	athens	reader	5
 location	azotus	ashdod	panel	1
 location	azotus	ashdod	prose	2
@@ -38,7 +38,7 @@ location	babel	babylon	panel	2
 location	babel	babylon	prose	12
 location	babel	babylon	reader	2
 location	babylon	babylon	panel	294
-location	babylon	babylon	prose	117
+location	babylon	babylon	prose	122
 location	babylon	babylon	reader	294
 location	berea	berea	prose	3
 location	beroea	berea	panel	3
@@ -59,7 +59,7 @@ location	cana	cana	panel	4
 location	cana	cana	prose	6
 location	cana	cana	reader	4
 location	capernaum	capernaum	panel	16
-location	capernaum	capernaum	prose	18
+location	capernaum	capernaum	prose	19
 location	capernaum	capernaum	reader	16
 location	cappadocia	cappadocia	panel	2
 location	cappadocia	cappadocia	reader	2
@@ -74,7 +74,7 @@ location	colossae	colossae	panel	1
 location	colossae	colossae	prose	5
 location	colossae	colossae	reader	1
 location	corinth	corinth	panel	6
-location	corinth	corinth	prose	58
+location	corinth	corinth	prose	59
 location	corinth	corinth	reader	6
 location	crete	crete	panel	5
 location	crete	crete	prose	7
@@ -86,7 +86,7 @@ location	cyrene	cyrene	panel	4
 location	cyrene	cyrene	prose	3
 location	cyrene	cyrene	reader	4
 location	damascus	damascus	panel	61
-location	damascus	damascus	prose	36
+location	damascus	damascus	prose	37
 location	damascus	damascus	reader	61
 location	dan	dan	panel	72
 location	dan	dan	prose	14
@@ -104,15 +104,15 @@ location	edom	edom	panel	112
 location	edom	edom	prose	37
 location	edom	edom	reader	101
 location	egypt	egypt	panel	618
-location	egypt	egypt	prose	257
+location	egypt	egypt	prose	261
 location	egypt	egypt	reader	618
 location	ekron	ekron	panel	22
-location	ekron	ekron	prose	2
+location	ekron	ekron	prose	7
 location	ekron	ekron	reader	22
 location	en gedi	en-gedi	panel	6
 location	en gedi	en-gedi	reader	6
 location	ephesus	ephesus	panel	17
-location	ephesus	ephesus	prose	43
+location	ephesus	ephesus	prose	44
 location	ephesus	ephesus	reader	17
 location	ephrathah	bethlehem	panel	6
 location	ephrathah	bethlehem	prose	2
@@ -154,7 +154,7 @@ location	gilgal	gilgal	panel	41
 location	gilgal	gilgal	prose	13
 location	gilgal	gilgal	reader	41
 location	gomorrah	gomorrah	panel	24
-location	gomorrah	gomorrah	prose	3
+location	gomorrah	gomorrah	prose	8
 location	gomorrah	gomorrah	reader	24
 location	goshen	goshen	panel	15
 location	goshen	goshen	prose	14
@@ -170,17 +170,17 @@ location	iconium	iconium	prose	2
 location	iconium	iconium	reader	6
 location	idumea	edom	prose	3
 location	jerusalem	jerusalem	panel	813
-location	jerusalem	jerusalem	prose	474
+location	jerusalem	jerusalem	prose	492
 location	jerusalem	jerusalem	reader	813
 location	jezreel	jezreel	panel	36
-location	jezreel	jezreel	prose	10
+location	jezreel	jezreel	prose	11
 location	jezreel	jezreel	reader	36
 location	joppa	joppa	panel	14
 location	joppa	joppa	prose	9
 location	joppa	joppa	reader	14
 location	jordan river	jordan-river	prose	1
 location	judea	judea	panel	43
-location	judea	judea	prose	102
+location	judea	judea	prose	104
 location	judea	judea	reader	43
 location	kadesh	kadesh-barnea	panel	18
 location	kadesh	kadesh-barnea	prose	6
@@ -190,7 +190,7 @@ location	kadesh barnea	kadesh-barnea	prose	6
 location	kadesh barnea	kadesh-barnea	reader	10
 location	kiriath-arba	hebron	prose	2
 location	lachish	lachish	panel	24
-location	lachish	lachish	prose	12
+location	lachish	lachish	prose	17
 location	lachish	lachish	reader	24
 location	laish	dan	panel	6
 location	laish	dan	reader	6
@@ -249,10 +249,10 @@ location	mountains of ararat	mount-ararat	prose	3
 location	nain	nain	panel	1
 location	nain	nain	reader	1
 location	nazareth	nazareth	panel	12
-location	nazareth	nazareth	prose	41
+location	nazareth	nazareth	prose	46
 location	nazareth	nazareth	reader	12
 location	nineveh	nineveh	panel	19
-location	nineveh	nineveh	prose	44
+location	nineveh	nineveh	prose	46
 location	nineveh	nineveh	reader	19
 location	pamphylia	pamphylia	panel	5
 location	pamphylia	pamphylia	prose	2
@@ -296,12 +296,12 @@ location	red sea	red-sea	prose	12
 location	red sea	red-sea	reader	26
 location	roman province of asia	asia-province	prose	3
 location	rome	rome	panel	9
-location	rome	rome	prose	259
+location	rome	rome	prose	264
 location	rome	rome	reader	9
 location	salt sea	dead-sea	panel	9
 location	salt sea	dead-sea	reader	9
 location	samaria	samaria	panel	122
-location	samaria	samaria	prose	52
+location	samaria	samaria	prose	54
 location	samaria	samaria	reader	122
 location	sardis	sardis	panel	3
 location	sardis	sardis	prose	4
@@ -329,7 +329,7 @@ location	smyrna	smyrna	panel	2
 location	smyrna	smyrna	prose	4
 location	smyrna	smyrna	reader	2
 location	sodom	sodom	panel	49
-location	sodom	sodom	prose	10
+location	sodom	sodom	prose	13
 location	sodom	sodom	reader	49
 location	spain	spain	panel	2
 location	spain	spain	prose	7
@@ -349,9 +349,10 @@ location	tarsus	tarsus	reader	5
 location	tekoa	tekoa	panel	9
 location	tekoa	tekoa	prose	1
 location	tekoa	tekoa	reader	9
+location	tel miqne	ekron	prose	1
 location	temple mount	mount-moriah	prose	1
 location	the jordan	jordan-river	panel	189
-location	the jordan	jordan-river	prose	37
+location	the jordan	jordan-river	prose	39
 location	the jordan	jordan-river	reader	189
 location	thessalonica	thessalonica	panel	6
 location	thessalonica	thessalonica	prose	12
@@ -394,7 +395,7 @@ person	abiud	abiud	panel	2
 person	abiud	abiud	prose	1
 person	abiud	abiud	reader	2
 person	abraham	abraham	panel	249
-person	abraham	abraham	prose	122
+person	abraham	abraham	prose	126
 person	abraham	abraham	reader	249
 person	abram	abraham	panel	64
 person	abram	abraham	prose	54
@@ -448,7 +449,7 @@ person	asa	asa	prose	9
 person	asa	asa	reader	60
 person	athanasius of alexandria	athanasius-of-alexandria	prose	2
 person	augustine of hippo	augustine-of-hippo	prose	1
-person	augustus	caesar-augustus	prose	36
+person	augustus	caesar-augustus	prose	37
 person	azariah	uzziah	panel	49
 person	azariah	uzziah	prose	5
 person	azariah	uzziah	reader	21
@@ -456,9 +457,9 @@ person	azor	azor	panel	2
 person	azor	azor	prose	2
 person	azor	azor	reader	2
 person	balaam	balaam	panel	63
-person	balaam	balaam	prose	3
+person	balaam	balaam	prose	6
 person	balaam	balaam	reader	63
-person	balaam son of beor	balaam	prose	1
+person	balaam son of beor	balaam	prose	2
 person	barnabas	barnabas	panel	29
 person	barnabas	barnabas	prose	36
 person	barnabas	barnabas	reader	29
@@ -509,7 +510,7 @@ person	christ jesus	jesus-of-nazareth	panel	84
 person	christ jesus	jesus-of-nazareth	prose	5
 person	christ jesus	jesus-of-nazareth	reader	84
 person	claudius	claudius-caesar	panel	2
-person	claudius	claudius-caesar	prose	25
+person	claudius	claudius-caesar	prose	24
 person	claudius	claudius-caesar	reader	2
 person	cleopas	cleopas	panel	1
 person	cleopas	cleopas	reader	1
@@ -557,7 +558,7 @@ person	eliakim	eliakim-son-of-abiud	panel	15
 person	eliakim	eliakim-son-of-abiud	prose	1
 person	eliakim	eliakim-son-of-abiud	reader	2
 person	elijah	elijah	panel	101
-person	elijah	elijah	prose	76
+person	elijah	elijah	prose	77
 person	elijah	elijah	reader	101
 person	elisha	elisha	panel	59
 person	elisha	elisha	prose	38
@@ -585,7 +586,7 @@ person	eve	eve	panel	4
 person	eve	eve	prose	24
 person	eve	eve	reader	4
 person	ezekiel	ezekiel	panel	2
-person	ezekiel	ezekiel	prose	26
+person	ezekiel	ezekiel	prose	27
 person	ezekiel	ezekiel	reader	2
 person	ezra	ezra	panel	25
 person	ezra	ezra	prose	30
@@ -603,7 +604,7 @@ person	gabriel	gabriel-archangel	panel	4
 person	gabriel	gabriel-archangel	prose	11
 person	gabriel	gabriel-archangel	reader	4
 person	gallio	gallio	panel	3
-person	gallio	gallio	prose	16
+person	gallio	gallio	prose	17
 person	gallio	gallio	reader	3
 person	gamaliel	gamaliel	panel	7
 person	gamaliel	gamaliel	prose	10
@@ -633,7 +634,7 @@ person	herod the great	herod-the-great	prose	33
 person	herod the tetrarch	herod-antipas	panel	4
 person	herod the tetrarch	herod-antipas	reader	4
 person	hezekiah	hezekiah	panel	131
-person	hezekiah	hezekiah	prose	44
+person	hezekiah	hezekiah	prose	48
 person	hezekiah	hezekiah	reader	131
 person	hezron	hezron-son-of-perez	panel	21
 person	hezron	hezron-son-of-perez	prose	1
@@ -674,7 +675,7 @@ person	jeconiah	jeconiah	panel	7
 person	jeconiah	jeconiah	prose	3
 person	jeconiah	jeconiah	reader	7
 person	jehoiachin	jeconiah	panel	14
-person	jehoiachin	jeconiah	prose	12
+person	jehoiachin	jeconiah	prose	16
 person	jehoiachin	jeconiah	reader	14
 person	jehoram	joram-king-of-israel	reader	3
 person	jehoram	joram-king-of-judah	panel	17
@@ -688,7 +689,7 @@ person	jehoshaphat	jehoshaphat	panel	84
 person	jehoshaphat	jehoshaphat	prose	15
 person	jehoshaphat	jehoshaphat	reader	84
 person	jeremiah	jeremiah	panel	150
-person	jeremiah	jeremiah	prose	46
+person	jeremiah	jeremiah	prose	48
 person	jeremiah	jeremiah	reader	134
 person	jerome	jerome	prose	8
 person	jerubbaal	gideon	panel	13
@@ -697,7 +698,7 @@ person	jesse	jesse	panel	47
 person	jesse	jesse	prose	8
 person	jesse	jesse	reader	47
 person	jesus	jesus-of-nazareth	panel	717
-person	jesus	jesus-of-nazareth	prose	720
+person	jesus	jesus-of-nazareth	prose	725
 person	jesus	jesus-of-nazareth	reader	717
 person	jesus christ	jesus-of-nazareth	panel	165
 person	jesus christ	jesus-of-nazareth	prose	19
@@ -763,7 +764,7 @@ person	joshua	joshua	panel	220
 person	joshua	joshua	prose	67
 person	joshua	joshua	reader	191
 person	josiah	josiah	panel	55
-person	josiah	josiah	prose	20
+person	josiah	josiah	prose	22
 person	josiah	josiah	reader	32
 person	jotham	jotham-king-of-judah	panel	25
 person	jotham	jotham-king-of-judah	prose	9
@@ -865,7 +866,7 @@ person	nathanael	bartholomew-nathanael	panel	6
 person	nathanael	bartholomew-nathanael	prose	4
 person	nathanael	bartholomew-nathanael	reader	6
 person	nehemiah	nehemiah	panel	8
-person	nehemiah	nehemiah	prose	29
+person	nehemiah	nehemiah	prose	30
 person	nehemiah	nehemiah	reader	8
 person	nero	nero-caesar	prose	39
 person	nicodemus	nicodemus	panel	5
@@ -882,7 +883,7 @@ person	onesimus	onesimus	panel	2
 person	onesimus	onesimus	prose	7
 person	onesimus	onesimus	reader	2
 person	paul	paul-of-tarsus	panel	161
-person	paul	paul-of-tarsus	prose	518
+person	paul	paul-of-tarsus	prose	521
 person	paul	paul-of-tarsus	reader	161
 person	perez	perez	panel	20
 person	perez	perez	prose	7
@@ -907,7 +908,7 @@ person	phoebe	phoebe	panel	1
 person	phoebe	phoebe	reader	1
 person	photius of constantinople	photius	prose	1
 person	pilate	pontius-pilate	panel	52
-person	pilate	pontius-pilate	prose	29
+person	pilate	pontius-pilate	prose	30
 person	pilate	pontius-pilate	reader	52
 person	pontius pilate	pontius-pilate	panel	4
 person	pontius pilate	pontius-pilate	prose	19
@@ -936,7 +937,7 @@ person	rebekah	rebekah	panel	31
 person	rebekah	rebekah	prose	19
 person	rebekah	rebekah	reader	31
 person	rehoboam	rehoboam	panel	52
-person	rehoboam	rehoboam	prose	15
+person	rehoboam	rehoboam	prose	18
 person	rehoboam	rehoboam	reader	52
 person	rhoda	rhoda	panel	1
 person	rhoda	rhoda	reader	1
@@ -1007,7 +1008,7 @@ person	simon, who is also called peter	simon-peter	reader	2
 person	simon, who is called peter	simon-peter	panel	3
 person	simon, who is called peter	simon-peter	reader	3
 person	solomon	solomon	panel	306
-person	solomon	solomon	prose	102
+person	solomon	solomon	prose	104
 person	solomon	solomon	reader	306
 person	sosthenes	sosthenes	panel	2
 person	sosthenes	sosthenes	prose	1
@@ -1058,7 +1059,7 @@ person	theophilus	theophilus	panel	2
 person	theophilus	theophilus	prose	5
 person	theophilus	theophilus	reader	2
 person	thomas	thomas-apostle	panel	11
-person	thomas	thomas-apostle	prose	6
+person	thomas	thomas-apostle	prose	7
 person	thomas	thomas-apostle	reader	11
 person	thomas aquinas	thomas-aquinas	prose	2
 person	thomas cranmer	thomas-cranmer	prose	2
@@ -1138,7 +1139,7 @@ poi	bethsaida	bethsaida	panel	7
 poi	bethsaida	bethsaida	prose	13
 poi	bethsaida	bethsaida	reader	7
 poi	caesarea	caesarea-maritima	panel	15
-poi	caesarea	caesarea-maritima	prose	28
+poi	caesarea	caesarea-maritima	prose	29
 poi	caesarea	caesarea-maritima	reader	15
 poi	caesarea maritima	caesarea-maritima	prose	12
 poi	caesarea philippi	caesarea-philippi	panel	2
@@ -1148,7 +1149,7 @@ poi	cave of the apocalypse	cave-of-apocalypse-patmos	prose	1
 poi	chorazin	chorazin	panel	2
 poi	chorazin	chorazin	prose	1
 poi	chorazin	chorazin	reader	2
-poi	city of david	city-of-david	prose	12
+poi	city of david	city-of-david	prose	13
 poi	dura-europos house church	dura-europos-house-church	prose	1
 poi	emmaus	emmaus	panel	1
 poi	emmaus	emmaus	prose	5
@@ -1165,7 +1166,7 @@ poi	golgotha	golgotha	reader	3
 poi	hebron	hebron	panel	72
 poi	hebron	hebron	prose	27
 poi	hebron	hebron	reader	72
-poi	herodium	herodium	prose	3
+poi	herodium	herodium	prose	4
 poi	hierapolis	hierapolis	panel	1
 poi	hierapolis	hierapolis	prose	6
 poi	hierapolis	hierapolis	reader	1
@@ -1175,13 +1176,13 @@ poi	jericho	jericho	reader	64
 poi	kursi	kursi	prose	1
 poi	machaerus	machaerus	prose	4
 poi	magdala	magdala	panel	1
-poi	magdala	magdala	prose	8
+poi	magdala	magdala	prose	9
 poi	magdala	magdala	reader	1
 poi	mamertine prison	mamertine-prison-rome	prose	1
 poi	mars hill	areopagus-athens	prose	1
-poi	masada	masada	prose	8
+poi	masada	masada	prose	9
 poi	megiddo	megiddo	panel	12
-poi	megiddo	megiddo	prose	7
+poi	megiddo	megiddo	prose	9
 poi	megiddo	megiddo	reader	12
 poi	mount of beatitudes	mount-of-beatitudes	prose	1
 poi	mount sinai	mount-sinai	panel	21
@@ -1302,7 +1303,7 @@ timeline	the last supper	bib-loc-last-supper	prose	15
 timeline	the muratorian fragment	bib-ac-muratorian-fragment	prose	4
 timeline	the olivet discourse	bib-loc-olivet-discourse	prose	5
 timeline	the resurrection	bib-loc-resurrection	panel	26
-timeline	the resurrection	bib-loc-resurrection	prose	49
+timeline	the resurrection	bib-loc-resurrection	prose	50
 timeline	the resurrection	bib-loc-resurrection	reader	26
 timeline	the table of nations	bib-prim-table-of-nations	prose	1
 timeline	the tower of babel	bib-prim-tower-of-babel	prose	4
@@ -1329,13 +1330,13 @@ topic	angels	angels	panel	91
 topic	angels	angels	prose	36
 topic	angels	angels	reader	91
 topic	assyrian	assyrians	panel	10
-topic	assyrian	assyrians	prose	96
+topic	assyrian	assyrians	prose	103
 topic	assyrian	assyrians	reader	10
 topic	assyrians	assyrians	panel	10
 topic	assyrians	assyrians	prose	3
 topic	assyrians	assyrians	reader	10
 topic	babylonian	babylonians	panel	1
-topic	babylonian	babylonians	prose	77
+topic	babylonian	babylonians	prose	78
 topic	babylonian	babylonians	reader	1
 topic	babylonian chronicle	babylonian-chronicles	prose	9
 topic	babylonian chronicles	babylonian-chronicles	prose	7
@@ -1345,8 +1346,10 @@ topic	babylonians	babylonians	reader	4
 topic	behistun inscription	behistun-inscription	prose	5
 topic	black obelisk	black-obelisk	prose	3
 topic	black obelisk of shalmaneser iii	black-obelisk	prose	2
+topic	bubastite portal	bubastite-portal	prose	1
+topic	bubastite portal at karnak	bubastite-portal	prose	1
 topic	canaanite	canaanites	panel	29
-topic	canaanite	canaanites	prose	36
+topic	canaanite	canaanites	prose	44
 topic	canaanite	canaanites	reader	29
 topic	canaanites	canaanites	panel	43
 topic	canaanites	canaanites	prose	1
@@ -1379,6 +1382,8 @@ topic	codex vaticanus	codex-vaticanus	prose	18
 topic	cyrus cylinder	cyrus-cylinder	prose	9
 topic	day of preparation	day-of-preparation	prose	1
 topic	dead sea scrolls	dead-sea-scrolls	prose	41
+topic	deir 'alla inscription	deir-alla-inscription	prose	1
+topic	deir alla inscription	deir-alla-inscription	prose	1
 topic	demon	demons	panel	23
 topic	demon	demons	prose	1
 topic	demon	demons	reader	23
@@ -1392,7 +1397,7 @@ topic	edomites	edomites	panel	12
 topic	edomites	edomites	prose	1
 topic	edomites	edomites	reader	12
 topic	egyptian	egyptians	panel	30
-topic	egyptian	egyptians	prose	115
+topic	egyptian	egyptians	prose	120
 topic	egyptian	egyptians	reader	30
 topic	egyptians	egyptians	panel	93
 topic	egyptians	egyptians	prose	4
@@ -1400,6 +1405,7 @@ topic	egyptians	egyptians	reader	93
 topic	elders	jewish-elders	panel	190
 topic	elders	jewish-elders	prose	44
 topic	elders	jewish-elders	reader	33
+topic	elephantine papyri	elephantine-papyri	prose	3
 topic	enuma elish	enuma-elish	prose	5
 topic	epic of gilgamesh	epic-of-gilgamesh	prose	4
 topic	evil spirit	demons	panel	9
@@ -1410,19 +1416,19 @@ topic	evil spirits	demons	reader	4
 topic	gehenna	gehenna	panel	12
 topic	gehenna	gehenna	reader	12
 topic	gentile	gentiles	panel	2
-topic	gentile	gentiles	prose	49
+topic	gentile	gentiles	prose	50
 topic	gentile	gentiles	reader	2
 topic	gentiles	gentiles	panel	83
-topic	gentiles	gentiles	prose	28
+topic	gentiles	gentiles	prose	29
 topic	gentiles	gentiles	reader	83
 topic	gilgamesh epic	epic-of-gilgamesh	prose	1
 topic	great isaiah scroll	dead-sea-scrolls	prose	3
 topic	greek	greeks	panel	15
-topic	greek	greeks	prose	232
+topic	greek	greeks	prose	240
 topic	greek	greeks	reader	15
 topic	greek old testament	septuagint	prose	2
 topic	greeks	greeks	panel	19
-topic	greeks	greeks	prose	6
+topic	greeks	greeks	prose	7
 topic	greeks	greeks	reader	19
 topic	hammurabi stele	code-of-hammurabi	prose	1
 topic	hammurabi's code	code-of-hammurabi	prose	1
@@ -1437,15 +1443,17 @@ topic	holy of holies	holy-of-holies	reader	1
 topic	isaiah scroll	dead-sea-scrolls	prose	1
 topic	israel stele	merneptah-stele	prose	1
 topic	israelites	israelites	panel	9
-topic	israelites	israelites	prose	23
+topic	israelites	israelites	prose	25
 topic	israelites	israelites	reader	9
+topic	jehoiachin's rations tablets	jehoiachin-ration-tablets	prose	1
 topic	jewish	jews	panel	7
-topic	jewish	jews	prose	326
+topic	jewish	jews	prose	330
 topic	jewish	jews	reader	7
 topic	jews	jews	panel	38
-topic	jews	jews	prose	48
+topic	jews	jews	prose	49
 topic	jews	jews	reader	38
 topic	kurkh monolith	kurkh-monolith	prose	3
+topic	lachish reliefs	lachish-reliefs	prose	2
 topic	leningrad codex	masoretic-text	prose	5
 topic	levite	levites	panel	29
 topic	levite	levites	prose	8
@@ -1454,6 +1462,7 @@ topic	levites	levites	panel	263
 topic	levites	levites	prose	18
 topic	levites	levites	reader	263
 topic	lxx	septuagint	prose	2
+topic	mari tablets	mari-tablets	prose	2
 topic	masoretic text	masoretic-text	prose	32
 topic	merneptah stele	merneptah-stele	prose	5
 topic	mesha stele	mesha-stele	prose	6
@@ -1481,10 +1490,10 @@ topic	nuzi tablets	nuzi-tablets	prose	3
 topic	oriental institute prism	sennacherib-prism	prose	1
 topic	p52	rylands-papyrus-p52	prose	1
 topic	passover	passover	panel	12
-topic	passover	passover	prose	41
+topic	passover	passover	prose	43
 topic	passover	passover	reader	12
 topic	persian	persians	panel	2
-topic	persian	persians	prose	131
+topic	persian	persians	prose	134
 topic	persian	persians	reader	2
 topic	persians	persians	panel	5
 topic	persians	persians	prose	5
@@ -1497,22 +1506,22 @@ topic	pharisees	topic-pharisees	prose	59
 topic	pharisees	topic-pharisees	reader	89
 topic	pharisees and sadducees compared	pharisees-and-sadducees-compared	prose	2
 topic	philistine	philistines	panel	33
-topic	philistine	philistines	prose	34
+topic	philistine	philistines	prose	35
 topic	philistine	philistines	reader	33
 topic	philistines	philistines	panel	254
-topic	philistines	philistines	prose	26
+topic	philistines	philistines	prose	27
 topic	philistines	philistines	reader	254
 topic	pilate stone	pilate-stone	prose	2
 topic	preparation day	day-of-preparation	panel	1
 topic	preparation day	day-of-preparation	reader	1
 topic	roman	romans	panel	8
-topic	roman	romans	prose	434
+topic	roman	romans	prose	437
 topic	roman	romans	reader	8
 topic	romans	romans	panel	3
 topic	romans	romans	prose	18
 topic	romans	romans	reader	3
 topic	sabbath	sabbath	panel	90
-topic	sabbath	sabbath	prose	27
+topic	sabbath	sabbath	prose	29
 topic	sabbath	sabbath	reader	90
 topic	sabbath day	sabbath	panel	46
 topic	sabbath day	sabbath	reader	46
@@ -1537,10 +1546,10 @@ topic	son of man	son-of-man	panel	197
 topic	son of man	son-of-man	prose	10
 topic	son of man	son-of-man	reader	87
 topic	synagogue	synagogue	panel	44
-topic	synagogue	synagogue	prose	38
+topic	synagogue	synagogue	prose	47
 topic	synagogue	synagogue	reader	44
 topic	synagogues	synagogue	panel	25
-topic	synagogues	synagogue	prose	8
+topic	synagogues	synagogue	prose	11
 topic	synagogues	synagogue	reader	25
 topic	tabernacle	tabernacle	panel	125
 topic	tabernacle	tabernacle	prose	27
@@ -1577,16 +1586,17 @@ topic	the passover	passover	reader	65
 topic	the preparation	day-of-preparation	panel	6
 topic	the preparation	day-of-preparation	reader	6
 topic	the romans	romans	panel	3
-topic	the romans	romans	prose	6
+topic	the romans	romans	prose	7
 topic	the romans	romans	reader	3
 topic	the temple	the-temple	panel	150
-topic	the temple	the-temple	prose	195
+topic	the temple	the-temple	prose	208
 topic	the temple	the-temple	reader	150
 topic	the trinity	the-trinity	prose	13
 topic	topheth	gehenna	panel	9
 topic	topheth	gehenna	reader	9
 topic	torah	torah	prose	29
 topic	trinitarian	the-trinity	prose	2
+topic	ugaritic texts	ugarit-tablets	prose	1
 topic	unclean spirit	demons	panel	13
 topic	unclean spirit	demons	prose	1
 topic	unclean spirit	demons	reader	13
@@ -1598,6 +1608,7 @@ topic	valley of hinnom	gehenna	reader	3
 topic	valley of the son of hinnom	gehenna	panel	9
 topic	valley of the son of hinnom	gehenna	reader	9
 topic	vaticanus	codex-vaticanus	prose	11
+topic	weidner tablets	jehoiachin-ration-tablets	prose	1
 topic	young earth and old earth creationism	young-earth-old-earth-creationism	prose	1
 verse	1 chronicles 11:41	-	prose	1
 verse	1 chronicles 21:1	-	prose	1
@@ -1655,9 +1666,11 @@ verse	1 kings 12:25-33	-	prose	1
 verse	1 kings 12:29	-	prose	1
 verse	1 kings 12:4	-	prose	1
 verse	1 kings 12:6-15	-	prose	1
+verse	1 kings 14	-	prose	2
 verse	1 kings 14:21	-	prose	1
 verse	1 kings 14:21-24	-	prose	1
 verse	1 kings 14:25	-	prose	1
+verse	1 kings 14:25-26	-	prose	1
 verse	1 kings 14:25-28	-	prose	1
 verse	1 kings 15:1-3	-	prose	1
 verse	1 kings 15:16-22	-	prose	1
@@ -1690,6 +1703,7 @@ verse	1 kings 2	-	prose	1
 verse	1 kings 20	-	prose	3
 verse	1 kings 21:1-16	-	prose	1
 verse	1 kings 21:17-29	-	prose	1
+verse	1 kings 22	-	prose	1
 verse	1 kings 22:1	-	prose	1
 verse	1 kings 22:1-33	-	prose	1
 verse	1 kings 22:42	-	prose	1
@@ -1759,6 +1773,7 @@ verse	1 samuel 3:1-10	-	prose	1
 verse	1 samuel 3:19-20	-	prose	1
 verse	1 samuel 4	-	prose	1
 verse	1 samuel 4:4	-	prose	1
+verse	1 samuel 5	-	prose	1
 verse	1 samuel 7:3-17	-	prose	1
 verse	1 samuel 8	-	prose	1
 verse	1 samuel 8:1	-	prose	1
@@ -1775,6 +1790,7 @@ verse	1 timothy 2:13-14	-	prose	2
 verse	1 timothy 4:12	-	prose	2
 verse	1 timothy 5:17	-	prose	1
 verse	2 chronicles 11:5-12	-	prose	1
+verse	2 chronicles 12	-	prose	1
 verse	2 chronicles 12:1-12	-	prose	1
 verse	2 chronicles 13:1-20	-	prose	1
 verse	2 chronicles 13:19-14	-	prose	1
@@ -1815,7 +1831,7 @@ verse	2 chronicles 32:1-8	-	prose	1
 verse	2 chronicles 32:2-4	-	prose	1
 verse	2 chronicles 32:27-33	-	prose	1
 verse	2 chronicles 32:30	-	prose	2
-verse	2 chronicles 32:9	-	prose	1
+verse	2 chronicles 32:9	-	prose	2
 verse	2 chronicles 33	-	prose	1
 verse	2 chronicles 33:10-17	-	prose	1
 verse	2 chronicles 33:11	-	prose	1
@@ -1871,14 +1887,14 @@ verse	2 kings 18	-	prose	3
 verse	2 kings 18:1-6	-	prose	1
 verse	2 kings 18:13	-	prose	2
 verse	2 kings 18:13-37	-	prose	1
-verse	2 kings 18:14	-	prose	1
+verse	2 kings 18:14	-	prose	2
 verse	2 kings 18:14-16	-	prose	1
 verse	2 kings 18:18	-	prose	1
 verse	2 kings 18:2	-	prose	1
 verse	2 kings 18:4	-	prose	1
 verse	2 kings 18:5	-	prose	1
 verse	2 kings 18:6-8	-	prose	1
-verse	2 kings 19	-	prose	1
+verse	2 kings 19	-	prose	2
 verse	2 kings 19:1-7	-	prose	1
 verse	2 kings 19:14-37	-	prose	1
 verse	2 kings 19:32-36	-	prose	1
@@ -1907,14 +1923,14 @@ verse	2 kings 23:21-23	-	prose	2
 verse	2 kings 23:29	-	prose	1
 verse	2 kings 23:29-30	-	prose	1
 verse	2 kings 23:34	-	prose	1
-verse	2 kings 24	-	prose	1
+verse	2 kings 24	-	prose	2
 verse	2 kings 24:10-16	-	prose	1
 verse	2 kings 24:10-17	-	prose	1
 verse	2 kings 24:14-16	-	prose	1
 verse	2 kings 24:17	-	prose	1
 verse	2 kings 24:8-9	-	prose	1
 verse	2 kings 25:1-21	-	prose	1
-verse	2 kings 25:27-30	-	prose	2
+verse	2 kings 25:27-30	-	prose	3
 verse	2 kings 25:8-9	-	prose	1
 verse	2 kings 2:1-14	-	prose	1
 verse	2 kings 2:19-22	-	prose	1
@@ -2079,7 +2095,6 @@ verse	acts 18	-	prose	1
 verse	acts 18:1-11	-	prose	1
 verse	acts 18:1-2	-	prose	1
 verse	acts 18:1-3	-	prose	2
-verse	acts 18:11	-	prose	1
 verse	acts 18:12	-	prose	1
 verse	acts 18:12-17	-	prose	4
 verse	acts 18:13	-	prose	1
@@ -2123,6 +2138,7 @@ verse	acts 20:24	-	prose	1
 verse	acts 20:5-15	-	prose	1
 verse	acts 20:7	-	prose	1
 verse	acts 20:7-12	-	prose	1
+verse	acts 21	-	prose	2
 verse	acts 21:1-18	-	prose	1
 verse	acts 21:1-2	-	prose	1
 verse	acts 21:13	-	prose	1
@@ -2206,6 +2222,7 @@ verse	acts 6:1-6	-	prose	4
 verse	acts 6:2-6	-	prose	1
 verse	acts 6:8	-	prose	1
 verse	acts 6:8-15	-	prose	1
+verse	acts 6:9	-	prose	1
 verse	acts 7	-	prose	2
 verse	acts 7:1-53	-	prose	1
 verse	acts 7:2-53	-	prose	1
@@ -2295,6 +2312,7 @@ verse	daniel 9:21	-	prose	1
 verse	daniel 9:24-27	-	prose	1
 verse	daniel 9:25-26	-	prose	2
 verse	deuteronomy 1	-	prose	1
+verse	deuteronomy 12	-	prose	1
 verse	deuteronomy 12:31	-	prose	1
 verse	deuteronomy 17:14-20	-	prose	1
 verse	deuteronomy 17:16-17	-	prose	1
@@ -2302,6 +2320,7 @@ verse	deuteronomy 17:17	-	prose	1
 verse	deuteronomy 18:1-2	-	prose	1
 verse	deuteronomy 18:10	-	prose	1
 verse	deuteronomy 18:15	-	prose	2
+verse	deuteronomy 21:22-23	-	prose	1
 verse	deuteronomy 23:4-5	-	prose	1
 verse	deuteronomy 2:14	-	prose	1
 verse	deuteronomy 31:6-8	-	prose	1
@@ -2325,6 +2344,7 @@ verse	ecclesiastes 3:11	-	prose	1
 verse	ecclesiastes 8:17	-	prose	1
 verse	ephesians 1:13-14	-	prose	1
 verse	ephesians 2:11-16	-	prose	1
+verse	ephesians 2:14	-	prose	2
 verse	ephesians 2:8	-	prose	1
 verse	ephesians 6:11-12	-	prose	1
 verse	ephesians 6:12	-	prose	1
@@ -2446,6 +2466,7 @@ verse	ezekiel 36:26-27	-	prose	1
 verse	ezekiel 37:1-14	-	prose	1
 verse	ezekiel 3:26-27	-	prose	1
 verse	ezekiel 40	-	prose	1
+verse	ezekiel 44:9	-	prose	1
 verse	ezekiel 8	-	prose	1
 verse	ezra 1	-	prose	3
 verse	ezra 1:1-4	-	prose	4
@@ -2483,6 +2504,7 @@ verse	galatians 2:11-13	-	prose	1
 verse	galatians 2:11-14	-	prose	4
 verse	galatians 2:9	-	prose	2
 verse	galatians 3:11	-	prose	1
+verse	galatians 3:13	-	prose	1
 verse	galatians 3:16	-	prose	1
 verse	galatians 3:17	-	prose	1
 verse	galatians 3:19-24	-	prose	1
@@ -2516,6 +2538,7 @@ verse	genesis 12:6-7	-	prose	1
 verse	genesis 13	-	prose	3
 verse	genesis 14	-	prose	1
 verse	genesis 14:18-20	-	prose	1
+verse	genesis 14:2	-	prose	1
 verse	genesis 15	-	prose	4
 verse	genesis 15:16	-	prose	1
 verse	genesis 15:18-21	-	prose	2
@@ -2827,13 +2850,14 @@ verse	jeremiah 31:15	-	prose	1
 verse	jeremiah 31:31-34	-	prose	1
 verse	jeremiah 32	-	prose	1
 verse	jeremiah 32:35	-	prose	1
-verse	jeremiah 34:7	-	prose	1
+verse	jeremiah 34:7	-	prose	2
 verse	jeremiah 36	-	prose	1
 verse	jeremiah 39	-	prose	1
 verse	jeremiah 40	-	prose	1
 verse	jeremiah 43	-	prose	1
+verse	jeremiah 44	-	prose	1
 verse	jeremiah 50:2	-	prose	1
-verse	jeremiah 52:31-34	-	prose	1
+verse	jeremiah 52:31-34	-	prose	2
 verse	jeremiah 7:31	-	prose	1
 verse	jeremiah 7:32-33	-	prose	1
 verse	job 1:1-3	-	prose	1
@@ -2892,7 +2916,7 @@ verse	john 19:24	-	prose	1
 verse	john 19:25	-	prose	2
 verse	john 19:25-27	-	prose	1
 verse	john 19:26-27	-	prose	4
-verse	john 19:31	-	prose	1
+verse	john 19:31	-	prose	2
 verse	john 19:31-36	-	prose	1
 verse	john 19:31-37	-	prose	1
 verse	john 19:33-36	-	prose	1
@@ -3044,6 +3068,7 @@ verse	judges 18	-	prose	1
 verse	judges 19	-	prose	2
 verse	judges 1:12-15	-	prose	1
 verse	judges 1:27-33	-	prose	1
+verse	judges 2	-	prose	1
 verse	judges 20:28	-	prose	1
 verse	judges 21:25	-	prose	2
 verse	judges 2:10	-	prose	1
@@ -3383,6 +3408,7 @@ verse	matthew 27:60	-	prose	1
 verse	matthew 27:61	-	prose	1
 verse	matthew 27:9	-	prose	1
 verse	matthew 27:9-10	-	prose	1
+verse	matthew 28	-	prose	1
 verse	matthew 28:1	-	prose	1
 verse	matthew 28:19	-	prose	4
 verse	matthew 28:2-7	-	prose	1
@@ -3471,7 +3497,8 @@ verse	numbers 20:14-21	-	prose	1
 verse	numbers 20:2-13	-	prose	1
 verse	numbers 20:22-29	-	prose	1
 verse	numbers 20:28	-	prose	1
-verse	numbers 22	-	prose	2
+verse	numbers 21	-	prose	1
+verse	numbers 22	-	prose	3
 verse	numbers 22:1-6	-	prose	1
 verse	numbers 22:21-35	-	prose	1
 verse	numbers 22:36-24	-	prose	1

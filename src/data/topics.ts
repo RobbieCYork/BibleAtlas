@@ -3550,6 +3550,1238 @@ export const topics: Topic[] = [
       },
     ],
   },
+  /* ---------------------------------------------------------------------------------------------
+   * ARCHAEOLOGY — BATCH 2: core inscriptions, royal records and background archives.
+   *
+   * Fourteen new `discovery` records. Two candidates from the batch list are deliberately absent —
+   * the Erastus and Gallio inscriptions already exist as POI records with map pins and public
+   * /site/ pages, and a Topic of the same name would both duplicate the page and steal the linker
+   * key (topics are pushed after pois, so the later entry wins the lowercase name). Those two were
+   * corrected in place in `pois.ts` instead. See the handoff note in the manager inbox.
+   *
+   * Every attribution below was re-checked against the verification dossier in
+   * automation/manager/archaeology-scope.md §2.5b-d rather than written from the candidate table.
+   * Six of them changed as a result, and each carries a comment saying so.
+   *
+   * Naming rule, as elsewhere in this block: never register a bare place name. "Lachish Reliefs" is
+   * safe; "Lachish" belongs to the city. And never write a modern scholar's biblical first name in
+   * prose — "David Ussishkin" links "David" to the king, which is how "John George Taylor" came to
+   * point at John the Baptist on the live site. Initials, or the surname alone.
+   * ------------------------------------------------------------------------------------------- */
+  {
+    id: "lachish-reliefs",
+    name: "Lachish Reliefs",
+    // NOT registered: "Lachish" — that is the city, which owns it in locations.ts.
+    alternateNames: ["Siege of Lachish Reliefs", "Lachish Relief"],
+    category: "discovery",
+    role: "Assyrian Palace Reliefs of the Siege of Lachish, 701 BC",
+    summary:
+      "A room-sized panorama of an Assyrian army taking a Judahite city, carved for the king who took it — the only siege in the Old Testament that anybody drew.",
+    sections: [
+      {
+        heading: "Cut Out of a Palace Wall at Nineveh",
+        paragraphs: [
+          "In 1847, in the last months of his first Nineveh campaign, Austen Henry Layard was working through the South-West Palace of Sennacherib on the mound of Kouyunjik when he opened a room since catalogued as Room XXXVI. Its walls were lined with carved gypsum panels, and unlike most Assyrian palace reliefs these did not show a generic enemy in a generic landscape. They showed one siege, in sequence, around a single room, with an epigraph naming the city.",
+          "No individual finder is recorded, and none should be invented. The digging was done by local labourers under Layard and his foreman Hormuzd Rassam, and the excavation records name nobody for this room. Rassam is often credited with the Lachish reliefs and should not be: his own celebrated discoveries at Nineveh — the North Palace, the library of Ashurbanipal — belong to 1853 and later. The panels were shipped to London and are in the British Museum, registered in the 1856,0909 series; the best known of them is BM 124911. A full inclusive range of registration numbers circulates online and could not be confirmed, so it is not repeated here.",
+        ],
+      },
+      {
+        heading: "The Siege, Drawn by the Besiegers",
+        paragraphs: [
+          "The panels run from the Assyrian camp through the assault to the aftermath. Archers and slingers advance behind wicker screens; siege engines with battering rams climb a ramp built against the city wall while defenders drop torches on them; the wall is defended and then breached. Below, a column of prisoners files out with bundles, ox-carts and children, and three men are shown impaled outside the gate. At the right end the king sits on a throne in a hilly landscape, and a cuneiform epigraph beside him reads, in the standard translation, that Sennacherib, king of the world, king of Assyria, sat on a throne while the booty of Lachish passed before him.",
+          "That is 2 Kings 18:14 from the other side of the wall. Scripture places Sennacherib at Lachish twice — Hezekiah sends his surrender payment there, and the Assyrian delegation that goes up to Jerusalem is dispatched from there — and 2 Chronicles 32:9 says plainly that the king was before Lachish with all his forces. The excavated city agrees with the picture: the siege ramp shown on the panels is a real feature at Tel Lachish, the earliest siege ramp known anywhere, and the destruction layer above it is thick with Assyrian arrowheads, sling stones and scale armour. It is very rare to have a biblical event, a contemporary enemy account, a contemporary enemy picture and the ruined site itself, and this is the clearest case of all four.",
+        ],
+      },
+      {
+        heading: "What Fixed the Date, and What the Room Does Not Say",
+        paragraphs: [
+          "All of that depends on one argument that took fifty years to settle. The destruction layer at Lachish is Level III, and the excavator J. L. Starkey, following W. F. Albright, assigned it to Nebuchadnezzar's campaign of 597 BC — more than a century after Sennacherib. Olga Tufnell, who published Starkey's material after his murder, argued for 701 BC instead, and D. Ussishkin's renewed excavations from the 1970s onward made that case decisively: the pottery of Level III belongs with the eighth century, the siege ramp is Assyrian in construction, and Level II is the layer Nebuchadnezzar burned. Ussishkin's dating is now the consensus. It is worth naming the argument rather than skipping to the answer, because until it was settled the reliefs could not be tied to any particular biblical moment at all.",
+          "Two limits on what the room proves. It is royal propaganda, commissioned by the king it flatters, and it says what he wanted said — which is why the impaled prisoners are there and why nothing in it goes wrong for Assyria. And there is a silence in it. Sennacherib decorated an entire room of his palace with the fall of Lachish and did not decorate one with the fall of Jerusalem, which his own annals never claim to have taken; his boast there is that he shut Hezekiah up like a bird in a cage. That absence fits 2 Kings 19's account of a siege that lifted, and it is a fair thing to notice. It is not the same as evidence for how the siege lifted, and an argument from what a propagandist left out will only ever be suggestive.",
+        ],
+      },
+    ],
+    verses: [
+      { reference: "2 Kings 18:13-14", note: "Sennacherib takes the fortified cities of Judah; Hezekiah sends tribute to him at Lachish" },
+      { reference: "2 Kings 18:17", note: "The Assyrian delegation to Jerusalem is sent from Lachish" },
+      { reference: "2 Chronicles 32:9", note: "\"He was before Lachish, and all his power with him\"" },
+      { reference: "Jeremiah 34:7", note: "Lachish still standing, and nearly alone, in Judah's last war" },
+    ],
+    sources: [
+      { label: "Wikipedia: Lachish reliefs", url: "https://en.wikipedia.org/wiki/Lachish_reliefs" },
+    ],
+    discovery: {
+      objectType: "Carved gypsum wall panels lining a single room, showing one siege in continuous sequence",
+      findSite: "Room XXXVI of the South-West Palace of Sennacherib at Kouyunjik, Nineveh",
+      findSiteId: "nineveh",
+      findSiteKind: "location",
+      // CORRECTED (scope §2.5b): the candidate table said "1840s, Layard". Layard's first Nineveh
+      // campaign ran 1845-1847 and the Lachish room is consistently dated 1847.
+      foundYear: "1847",
+      foundBy: "Austen Henry Layard's first Nineveh excavation. No individual finder is recorded — the work was done by local labour under Layard and his foreman Hormuzd Rassam. Rassam is often credited with these panels and should not be; his own major Nineveh discoveries begin in 1853",
+      objectDate: "c. 700-692 BC, within a decade of the campaign they depict",
+      objectDateCertainty: "traditional",
+      currentLocation: "British Museum, London — registered in the 1856,0909 series; BM 124911 is the best-known panel",
+    },
+    citations: [
+      {
+        tier: "institution",
+        label: "RINAP 3: The Royal Inscriptions of Sennacherib, King of Assyria (Oracc)",
+        url: "http://oracc.museum.upenn.edu/rinap/rinap3/",
+        credit: "Royal Inscriptions of the Neo-Assyrian Period project, University of Pennsylvania Museum",
+        detail: "The open online edition of Sennacherib's own inscriptions, including the third-campaign account of 701 BC in which Hezekiah is shut up like a bird in a cage",
+        supports: "The Assyrian account of the 701 BC campaign, and what it does and does not claim about Jerusalem",
+      },
+      {
+        tier: "institution",
+        label: "British Museum, Lachish relief panels (1856,0909 series; BM 124911)",
+        credit: "The British Museum",
+        detail: "The panels' registration series and the individual number BM 124911 are confirmed. The museum's collection database refuses automated requests, so it was not fetched for this article; a full inclusive range of panel numbers circulates online and is not repeated here because it could not be confirmed",
+        supports: "Current location and registration",
+      },
+      {
+        tier: "scholarly",
+        label: "D. Ussishkin, The Renewed Archaeological Excavations at Lachish (1973-1994)",
+        credit: "David Ussishkin, Institute of Archaeology, Tel Aviv University",
+        detail: "Monograph Series of the Institute of Archaeology 22, Tel Aviv, 2004 — the excavation report that settled the Level III dating on the 701 BC side. Print only",
+        supports: "The Level III dating dispute and the archaeology of the siege ramp",
+      },
+      {
+        tier: "encyclopedic",
+        label: "Wikipedia: Lachish reliefs",
+        url: "https://en.wikipedia.org/wiki/Lachish_reliefs",
+      },
+    ],
+    reflectionPrompt:
+      "The Assyrians carved their victory at Lachish and said nothing about Jerusalem. Where in your own life are you tempted to display only the room that flatters you?",
+  },
+  {
+    id: "jehoiachin-ration-tablets",
+    name: "Jehoiachin's Ration Tablets",
+    // NOT registered: "Jehoiachin" — that is the king, who owns it in people.ts. Every alias below
+    // is longer, so a mention of the tablets still wins over a mention of the man.
+    alternateNames: ["Jehoiachin Ration Tablets", "Weidner Tablets", "Jehoiachin's Rations Tablets"],
+    category: "discovery",
+    role: "Babylonian Palace Ration Lists Naming a Captive King of Judah",
+    summary:
+      "Clay food-issue dockets from Nebuchadnezzar's palace, listing oil for a deported king of Judah and his sons — dug up around 1900, and not read for forty years.",
+    sections: [
+      {
+        heading: "Dug Up in Babylon, Read Forty Years Later",
+        paragraphs: [
+          "Robert Koldewey's German Oriental Society expedition worked at Babylon from 1899 to 1917, and somewhere in those eighteen seasons — the exact one is not recoverable from the records — it cleared a barrel-vaulted underground building of parallel rooms near the Ishtar Gate, within the Southern Palace complex of Nebuchadnezzar II. In it was a cache of roughly three hundred administrative tablets recording issues of oil, barley and other rations to people the palace was feeding. No individual finder is named. The tablets went to Berlin with everything else and sat there.",
+          "They were identified and published in 1939 by Ernst F. Weidner, in a study contributed to a festschrift for René Dussaud, and that gap of two to four decades between the digging and the reading is the most instructive thing about them. Nothing about the find was dramatic; nobody knew what was in the box. The tablet on display in the Vorderasiatisches Museum in Berlin is VAT 16378. Excavation numbers for the other tablets are widely quoted online, could not be confirmed against any published source, and are deliberately not given here.",
+        ],
+      },
+      {
+        heading: "Rations for the King of the Land of Yahudu",
+        paragraphs: [
+          "Several of the tablets list issues to Ya'u-kinu, king of the land of Yahudu — Jehoiachin, king of Judah — together with his sons and a number of other Judeans, alongside deportees and hostages from Egypt, Elam, Persia, Philistia and elsewhere. It is a palace ledger, not a chronicle. Nobody was making a point; a clerk was recording how much oil went out.",
+          "2 Kings 24 has Jehoiachin surrendering to Nebuchadnezzar in the king of Babylon's eighth year and being carried to Babylon with his mother, his wives and his officers. Ezekiel dates his own visions by the years of Jehoiachin's captivity, which tells you the exiles reckoned time by their king rather than by the man ruling in Jerusalem after him. And 2 Kings 25:27-30 — repeated with one small difference of date in Jeremiah 52:31-34, the twenty-seventh of the month against the twenty-fifth — records that after thirty-seven years Evil-Merodach lifted up his head, gave him a seat above the other captive kings, and provided him a daily allowance for the rest of his life. The tablets are from the early part of that captivity, around Nebuchadnezzar's years ten to thirteen, roughly 595 to 592 BC. They show the ledger the last verses of 2 Kings describe the improvement of.",
+        ],
+      },
+      {
+        heading: "The Real Argument, and the One Not to Manufacture",
+        paragraphs: [
+          "It would be easy, and wrong, to write this article as a contested identification bravely defended. The identification of Ya'u-kinu of Yahudu with Jehoiachin is close to universally accepted and is not seriously disputed; there is no debate there to report. The genuine disagreements are narrower and less exciting. Was his status that of an honoured royal hostage drawing generous royal rations, or a detainee being kept alive? Are the \"five sons\" literally his sons or a household? How wide is the span of the tablets, and how much of the captivity do they cover? Specialists differ on all three, and none of them changes what the tablets show.",
+          "The honest limit is about reach rather than authenticity. These dockets place a Judean king in Babylon on palace rations in the 590s. They say nothing about the release under Evil-Merodach more than thirty years later, which remains attested only in Scripture. And one caution for readers following this up: a great many websites conflate these tablets with the so-called Nebo-Sarsekim tablet, a different object identified in the British Museum in 2007 and bearing on a different verse in Jeremiah. The two are unrelated finds and neither corroborates the other.",
+        ],
+      },
+    ],
+    verses: [
+      { reference: "2 Kings 24:12-15", note: "Jehoiachin surrenders and is carried to Babylon with his household" },
+      { reference: "2 Kings 25:27-30", note: "Thirty-seven years later, a daily allowance from the king of Babylon" },
+      { reference: "Jeremiah 52:31-34", note: "The same release, dated two days differently" },
+      { reference: "Ezekiel 1:2", note: "The exiles date their years by Jehoiachin's captivity, not by the king in Jerusalem" },
+    ],
+    sources: [
+      { label: "Wikipedia: Jehoiachin's Rations Tablets", url: "https://en.wikipedia.org/wiki/Jehoiachin%27s_Rations_Tablets" },
+    ],
+    discovery: {
+      objectType: "Clay administrative tablets in Akkadian cuneiform, from a cache of roughly 300 ration texts",
+      findSite: "A barrel-vaulted underground building of parallel rooms near the Ishtar Gate, in the Southern Palace complex of Nebuchadnezzar II at Babylon",
+      findSiteId: "babylon",
+      findSiteKind: "location",
+      foundYear: "During Robert Koldewey's excavations at Babylon, 1899-1917; the season is not recoverable",
+      foundBy: "Robert Koldewey's German Oriental Society expedition. No individual finder is recorded. The tablets were identified and published by Ernst F. Weidner in 1939",
+      objectDate: "c. 595-592 BC — Nebuchadnezzar II's years 10 to 13",
+      objectDateCertainty: "traditional",
+      currentLocation: "Vorderasiatisches Museum, Berlin. The displayed tablet is VAT 16378; the excavation numbers commonly quoted for the others are unverified and are not given here",
+    },
+    citations: [
+      {
+        tier: "institution",
+        label: "Vorderasiatisches Museum, Staatliche Museen zu Berlin — collection",
+        url: "https://www.smb.museum/en/museums-institutions/vorderasiatisches-museum/collection-research/",
+        credit: "Staatliche Museen zu Berlin",
+        detail: "The holding institution for the Babylon material from Koldewey's excavations, including VAT 16378",
+        supports: "Current location",
+      },
+      {
+        tier: "scholarly",
+        label: "E. F. Weidner, \"Jojachin, Konig von Juda, in babylonischen Keilschrifttexten\"",
+        credit: "Ernst F. Weidner",
+        detail: "In Melanges syriens offerts a Monsieur Rene Dussaud II (Bibliotheque archeologique et historique 30.2), Paris, 1939, 923-935 — the first identification and publication of the tablets, forty years after they were excavated. Print only",
+        supports: "The identification of Ya'u-kinu with Jehoiachin, and the 1939 publication date",
+      },
+      {
+        tier: "reference",
+        label: "Bible Odyssey (SBL): The Babylonian Exile",
+        url: "https://www.bibleodyssey.org/articles/babylonian-exile/",
+        credit: "Society of Biblical Literature",
+        supports: "The 597 BC deportation that put Jehoiachin and his household in Babylon",
+      },
+      {
+        tier: "encyclopedic",
+        label: "Wikipedia: Jehoiachin's Rations Tablets",
+        url: "https://en.wikipedia.org/wiki/Jehoiachin%27s_Rations_Tablets",
+      },
+    ],
+    reflectionPrompt:
+      "A clerk in Babylon wrote down an oil ration and preserved a king's name for 2,500 years. What small, unremarkable faithfulness are you being asked for today?",
+  },
+  {
+    id: "deir-alla-inscription",
+    name: "Deir Alla Inscription",
+    alternateNames: ["Deir 'Alla Inscription", "Balaam Son of Beor Inscription", "Tell Deir Alla Plaster Texts"],
+    category: "discovery",
+    role: "Plaster Wall Text Naming Balaam Son of Beor, c. 800 BC",
+    summary:
+      "Ink on fallen plaster from a building in the Jordan Valley, telling of a night vision given to Balaam son of Beor — the one figure the Bible names who also turns up in somebody else's scripture.",
+    sections: [
+      {
+        heading: "Letters on Fallen Plaster",
+        paragraphs: [
+          "On 17 March 1967, in the fifth season of the Leiden University excavations at Tell Deir Alla in the Jordan Valley, a Jordanian member of the excavation team named Ali Abdul-Rasul noticed traces of writing on small fragments of plaster coming out of a destruction layer. The dig was directed by Henk J. Franken; the find belongs to Abdul-Rasul, and this section of the app exists partly to keep that distinction visible, because it is exactly the sort of credit that gets absorbed into a director's name within a generation.",
+          "There were 119 fragments in the end, red and black ink on wall plaster that had fallen from a building and shattered. Reassembling them is still not finished: the surviving text is conventionally arranged into two \"combinations\", and even those have gaps that change the sense of whole lines. The fragments are in the Jordan Archaeological Museum in Amman, catalogued as KAI 312, and were published by the excavating team as Aramaic Texts from Deir 'Alla in 1976.",
+        ],
+      },
+      {
+        heading: "A Seer the Bible Also Knows",
+        paragraphs: [
+          "The first combination opens by announcing itself as the writing of Balaam son of Beor, a seer of the gods. The gods come to him in the night; he sees a vision and weeps in the morning, and when his people ask him why, he tells them what he has been shown — a council of gods, a decree, and a coming reversal in which the natural order runs backwards and birds and beasts change places. The second combination is more fragmentary and appears to concern death and the underworld.",
+          "This is not a copy of anything in the Bible, and it does not retell Numbers 22-24. What it does is name the same man, with the same patronymic, in the same role, in roughly the same country — the Transjordan, where Numbers places him — several centuries after the events Numbers describes. He is remembered there as a legitimate seer of the gods, with no hint of the Israelite tradition's ambivalence about him, and the text is not Israelite. The settled view among specialists is that both the Deir Alla text and the biblical narratives draw on a regional Balaam tradition rather than one depending on the other, and that is a more interesting result than a confirmation would have been: it means the Bible is naming a figure its neighbours also knew, in a story its neighbours would have recognised.",
+        ],
+      },
+      {
+        heading: "Nobody Can Agree What Language It Is",
+        paragraphs: [
+          "Fifty years on, the classification of the dialect is genuinely unresolved, and it is not a technicality — the language tells you whose tradition the text belongs to. The editors, Hoftijzer and van der Kooij, published it as Aramaic and the title of the editio princeps still says so, though one of their arguments rested on an identification of the Aramaic definite article that has since been questioned. Klaus Beyer classified it as a separate dialect he called South Gileadite; Holger Gzella reads it as an Aramaic grammatical core carrying Canaanite vocabulary and narrative style, in effect a translation. On the other side, Jo Ann Hackett argued in 1980 that it is Canaanite, on the strength of the N-stem and other features unattested in Aramaic, and Na'ama Pat-El and Aren Wilson-Wright defended a Canaanite classification again in 2015.",
+          "The reason the argument will not end is that the text really does have both. It uses suffixed nun for masculine plurals and qof where Hebrew has tsade, which look Aramaic; it also uses the waw-consecutive, which looks Canaanite. The honest report is that this is unsettled among the people best equipped to settle it, and a reader who is told otherwise has been told something the specialists do not know. A second, smaller question sits alongside it: whether the Balaam of the plaster is the same figure as the Balaam of Numbers or a parallel development of one tradition. Most would say a shared tradition; nobody can demonstrate more than that from 119 broken pieces.",
+        ],
+      },
+    ],
+    verses: [
+      { reference: "Numbers 22:5", note: "Balak sends for \"Balaam the son of Beor\" — the same name and patronymic as the plaster text" },
+      { reference: "Numbers 24:15-17", note: "Balaam's oracle: the man whose eyes are open, who sees the vision of the Almighty" },
+      { reference: "Numbers 31:8", note: "Balaam killed with the kings of Midian" },
+      { reference: "Joshua 13:22", note: "Balaam remembered as \"the soothsayer\"" },
+      { reference: "Micah 6:5", note: "Balak and Balaam invoked centuries later as something Israel is to remember" },
+    ],
+    sources: [
+      { label: "Livius: Deir 'Alla Inscription", url: "https://www.livius.org/sources/content/deir-alla-inscription/" },
+      { label: "Wikipedia: Deir Alla inscription", url: "https://en.wikipedia.org/wiki/Deir_Alla_inscription" },
+    ],
+    discovery: {
+      objectType: "119 fragments of wall plaster written in red and black ink, fallen from a building into a destruction layer",
+      findSite: "Tell Deir Alla, in the Jordan Valley east of the river",
+      // CORRECTED (scope §2.5f): the finder is named. Franken directed; Abdul-Rasul found it.
+      foundYear: "17 March 1967",
+      foundBy: "The Leiden University excavation directed by Henk J. Franken, in its fifth season. The inscribed fragments were physically spotted by Ali Abdul-Rasul, a Jordanian excavator on the team",
+      objectDate: "c. 800 BC — the date of the destruction layer the plaster fell into",
+      objectDateCertainty: "traditional",
+      currentLocation: "Jordan Archaeological Museum, Amman (KAI 312)",
+    },
+    citations: [
+      {
+        tier: "institution",
+        label: "J. Hoftijzer and G. van der Kooij, Aramaic Texts from Deir 'Alla",
+        credit: "The Leiden University excavation at Tell Deir 'Alla — the excavating body's own publication",
+        detail: "Documenta et Monumenta Orientis Antiqui 19, Brill, Leiden, 1976. The editio princeps. Cited here in place of a museum object page: the Jordan Archaeological Museum publishes none that could be fetched. Print only",
+        supports: "The find, the reconstruction of the text, and the original Aramaic classification",
+      },
+      {
+        tier: "scholarly",
+        label: "N. Pat-El and A. Wilson-Wright, \"Deir 'Alla as a Canaanite Dialect: A Vindication of Hackett\"",
+        url: "https://sites.utexas.edu/scripts/wp-content/uploads/sites/3428/2020/10/2015-AWWwPat-El-Deir...pdf",
+        credit: "Na'ama Pat-El and Aren Wilson-Wright, University of Texas at Austin",
+        detail: "In Epigraphy, Philology and the Hebrew Bible (SBL Press, 2015). Open PDF hosted by UT Austin",
+        supports: "The Canaanite side of the language dispute, and Hackett's 1980 argument",
+      },
+      {
+        tier: "reference",
+        label: "Livius: Deir 'Alla Inscription",
+        url: "https://www.livius.org/sources/content/deir-alla-inscription/",
+        credit: "Livius.org",
+        supports: "A translation of Combination I and the find circumstances",
+      },
+      {
+        tier: "encyclopedic",
+        label: "Wikipedia: Deir Alla inscription",
+        url: "https://en.wikipedia.org/wiki/Deir_Alla_inscription",
+      },
+    ],
+    reflectionPrompt:
+      "Israel's neighbours remembered Balaam as a genuine seer; Scripture remembers him as a man who knew the truth and sold it. What is the difference between hearing from God and belonging to him?",
+  },
+  {
+    id: "ekron-royal-dedicatory-inscription",
+    name: "Ekron Royal Dedicatory Inscription",
+    // NOT registered: "Ekron" — that is the Philistine city, which owns it in locations.ts.
+    alternateNames: ["Ekron Inscription", "Ekron Royal Inscription", "Tel Miqne-Ekron Inscription"],
+    category: "discovery",
+    role: "Seventh-Century BC Philistine Temple Dedication",
+    summary:
+      "Five lines cut into a limestone block, naming the city, its ruler and four generations of his fathers — and settling, in one stroke, which mound in the Shephelah was Ekron.",
+    sections: [
+      {
+        heading: "In Situ, in the Fourteenth and Final Season",
+        paragraphs: [
+          "The Tel Miqne-Ekron Excavation ran for fourteen seasons, from 1981 to 1996, directed jointly by Trude Dothan of the Hebrew University and Seymour Gitin of the W. F. Albright Institute of Archaeological Research. In the summer of the last season the dig produced a rectangular limestone block with five incised lines on it, lying in the destruction debris of the sanctuary of the building the excavators call Temple Complex 650. Press accounts at the time describe Gitin himself turning the dirt-covered stone over and seeing the writing; that detail comes from journalism rather than from the excavation report, which names no individual finder, and it is given here on that footing. Sources say only \"summer 1996\" — a month is often printed and could not be sourced.",
+          "What matters more than the finder is where it lay. The block was found in situ, in a datable destruction layer, inside the building it was cut for. Almost nothing else in this section of the app has that. An inscription bought on a market can be genuine and still be nearly weightless, because nobody can say what it was next to; this one comes with its room, its floor and its date attached. It was published the following year by Gitin, Dothan and J. Naveh in the Israel Exploration Journal, and is in the Israel Museum as IAA 1997-2912, catalogued epigraphically as KAI 286.",
+        ],
+      },
+      {
+        heading: "It Names the City, and Five of Its Kings",
+        paragraphs: [
+          "The text is a building dedication: the temple which Akhayus, son of Padi, son of Ysd, son of Ada, son of Ya'ir, ruler of Ekron, built for his lady — followed by a request that she bless him, guard him, and lengthen his days. Five rulers in a single line of descent, and the name of the city itself. Padi and Akhayus are not only known from this stone: Padi appears in Sennacherib's account of the 701 BC campaign as the king of Ekron whom the citizens handed over to Hezekiah and whom Sennacherib restored, and a ruler of Ekron with the same name as Akhayus appears in the annals of Esarhaddon and Ashurbanipal in the 670s and 660s. The stone slots into an Assyrian record that already existed.",
+          "For a Bible reader the identification is the payoff. Ekron is one of the five Philistine cities — the last stop on the ark's grim tour in 1 Samuel 5-6, the city whose god Baal-zebub Ahaziah consulted, the city Amos names in judgement. Which mound in the Shephelah it was had been argued over for a century. This inscription ended the argument by naming the place in a text found on it, which is as clean as site identification ever gets in this field.",
+        ],
+      },
+      {
+        heading: "The Third Letter of the Goddess's Name",
+        paragraphs: [
+          "The name of the deity the temple was built for is written with letters that can be read more than one way, and the reading is not settled. The editors read Ptgyh, a goddess otherwise unknown. A. Demsky proposed Ptnyh, connecting the name to the Greek potnia, \"Lady\" or \"Mistress\". Others have suggested Ptryh, which would make her Pidray, a goddess already known from the Ugaritic texts. Each reading depends on how one worn letter is taken.",
+          "That sounds like a small thing and is not, because the Greek reading is a plank in a much larger argument: that the Philistines arrived in Canaan from the Aegean world and kept something of it for centuries. If the goddess is a potnia, the stone is evidence of Aegean religion surviving in Philistia into the seventh century. If she is Pidray, it is evidence of thorough absorption into local Canaanite religion instead. The app takes no side, because the specialists have not taken one either; what a reader should carry away is that the identification of the city is secure and the identification of its goddess is not, and that those are two different kinds of claim resting on two different amounts of evidence. A smaller question runs alongside: whether the Akhayus of this stone is the same man as the Ikausu of the Assyrian annals. Most say yes; it is an inference from name and date, not a demonstration.",
+        ],
+      },
+    ],
+    verses: [
+      { reference: "Joshua 13:3", note: "Ekron listed among the five Philistine lordships" },
+      { reference: "1 Samuel 5:10", note: "The ark sent to Ekron, and the Ekronites' reaction" },
+      { reference: "1 Samuel 6:16-17", note: "One golden tumour for each of the five cities, Ekron among them" },
+      { reference: "2 Kings 1:2", note: "Ahaziah sends to \"Baal Zebub, the god of Ekron\"" },
+      { reference: "Amos 1:8", note: "\"I will turn my hand against Ekron\"" },
+    ],
+    sources: [
+      { label: "ASOR: Ekron Royal Dedicatory Inscription", url: "https://www.asor.org/resources/photo-collection/pid000287" },
+      { label: "Wikipedia: Ekron Royal Dedicatory Inscription", url: "https://en.wikipedia.org/wiki/Ekron_Royal_Dedicatory_Inscription" },
+    ],
+    discovery: {
+      objectType: "Rectangular limestone block with five incised lines in the local Canaanite script",
+      findSite: "The sanctuary of Temple Complex 650 at Tel Miqne, found in situ in the destruction debris",
+      findSiteId: "ekron",
+      findSiteKind: "location",
+      // §2.5d: "July 1996" is unsourced. Sources say only "summer 1996".
+      foundYear: "Summer 1996, the fourteenth and final season",
+      foundBy: "The Tel Miqne-Ekron Excavation, directed jointly by Trude Dothan (Hebrew University) and Seymour Gitin (W. F. Albright Institute). Press accounts have Gitin himself turning the stone; the excavation report names no individual finder",
+      objectDate: "Early seventh century BC, before the city's destruction c. 604 BC",
+      objectDateCertainty: "firm",
+      currentLocation: "Israel Museum, Jerusalem (IAA 1997-2912); KAI 286",
+    },
+    citations: [
+      {
+        tier: "institution",
+        label: "ASOR photo collection: Ekron Royal Dedicatory Inscription, Tel Miqne-Ekron",
+        url: "https://www.asor.org/resources/photo-collection/pid000287",
+        credit: "American Society of Overseas Research, the parent body of the W. F. Albright Institute that co-directed the excavation",
+        supports: "The object, the excavation and the find context",
+      },
+      {
+        tier: "scholarly",
+        label: "S. Gitin, T. Dothan and J. Naveh, \"A Royal Dedicatory Inscription from Ekron\"",
+        credit: "Seymour Gitin, Trude Dothan and Joseph Naveh",
+        detail: "Israel Exploration Journal 47/1-2 (1997), 1-16. The editio princeps, including the Ptgyh reading. Print only",
+        supports: "The text, the reading of the goddess's name, and the identification of Tel Miqne as Ekron",
+      },
+      {
+        tier: "reference",
+        label: "Archaeology Magazine: \"Ekron Identity Confirmed\"",
+        url: "https://archive.archaeology.org/9801/abstracts/ekron.html",
+        credit: "Archaeological Institute of America, Archaeology 51/1 (1998)",
+        supports: "The site identification and the 1996 find, as reported at the time",
+      },
+      {
+        tier: "encyclopedic",
+        label: "Wikipedia: Ekron Royal Dedicatory Inscription",
+        url: "https://en.wikipedia.org/wiki/Ekron_Royal_Dedicatory_Inscription",
+      },
+    ],
+    reflectionPrompt:
+      "A Philistine ruler carved four generations of his fathers into a temple wall so a goddess would lengthen his days. What are you building to be remembered by?",
+  },
+  {
+    id: "ugarit-tablets",
+    name: "Ugarit Tablets",
+    // NOT registered: bare "Ugarit". Every alias is longer than the site name, and NAME_ENTRIES is
+    // sorted longest-first, so a mention of the tablets wins and a bare "Ugarit" is left alone.
+    alternateNames: ["Ras Shamra Tablets", "Ugaritic Tablets", "Ugaritic Texts"],
+    category: "discovery",
+    role: "Late Bronze Age Canaanite Archives in Alphabetic Cuneiform",
+    summary:
+      "Thousands of tablets from a Syrian port city, written in a language a cousin of Hebrew — the only place Canaanite religion speaks for itself instead of through the Old Testament's account of it.",
+    sections: [
+      {
+        heading: "A Ploughshare, and Four Men Before the Archaeologist",
+        paragraphs: [
+          "In the spring of 1928, a local farmer ploughing near Minet el-Beida on the Syrian coast struck a slab that turned out to be the roof of a vaulted tomb, and removed what could be sold from it. He is the first finder. His name is given confidently all over the internet and in popular books; it traces to no academic source — the scholarly accounts say only that a peasant opened a tomb — and it is not printed here. Charles Virolleaud, director of the Antiquities Service under the French Mandate, sent his colleague Leon Albanese to look; Albanese examined the plundered tomb, reported Cypriot pottery from it in the journal Syria, and went on to inspect the large mound inland called Ras Shamra. Rene Dussaud at the Louvre, reading those reports, arranged for a mission. Claude F.-A. Schaeffer of Strasbourg, with Georges Chenet, opened the first campaign at Minet el-Beida in April 1929 and moved to the tell in May, where inscribed tablets began to appear. Campaigns ran until 1939 and resumed after the war.",
+          "The tablets were written in a script nobody had seen: cuneiform wedges, but only about thirty signs, which meant an alphabet rather than a syllabary. Cracking it took months and the credit is a genuine three-way tangle. Hans Bauer in Halle received Virolleaud's published photographs on 22 April 1930 and believed he had the language by the 27th; his first public sign values appeared in a Berlin newspaper on 4 June. Edouard Dhorme, director of the Ecole Biblique in Jerusalem, was working independently, was stuck until a colleague showed him Bauer's newspaper piece in mid-June, and published in the Revue Biblique that October the first list complete enough to actually read texts with, correcting several of Bauer's readings in the process; Bauer's own full alphabet appeared at almost the same moment with a note acknowledging Dhorme's corrections. Virolleaud excavated the tablets, published them, and contributed values of his own from a tablet of written-out numerals. In 1936 he published an account implying he had reached the solution first and independently; Bauer denied it, and Peggy L. Day's detailed reconstruction of the sequence concludes that Virolleaud's recollections are not trustworthy. Name all three. Nobody who has looked closely awards it to one.",
+        ],
+      },
+      {
+        heading: "Canaanite Religion in Its Own Words",
+        paragraphs: [
+          "What came out of the tell was not one text but libraries: a high priest's collection beside the temples of Baal and Dagan, palace archives, private houses. Alongside Akkadian diplomatic correspondence there are long poetic narratives in Ugaritic — the Baal Cycle, the Kirta epic, the tale of Aqhat — and ritual and offering lists that record which god got what. El is the aged head of the pantheon; Baal is the storm god who rides the clouds, dies at the hands of Mot and returns; Athirat, whose name is the same word as the Bible's Asherah, is El's consort; Anat is the violent goddess who avenges Baal.",
+          "The Old Testament argues with these gods constantly, and until 1929 it argued with them alone. Judges 2 says Israel served the Baals; Elijah's contest on Carmel is a straight confrontation between Yahweh and Baal; Josiah's reform burns the vessels made for Baal and for the Asherah. Before Ras Shamra, everything known about what those names meant to their own worshippers came through the polemic of their opponents. Now there is a body of Canaanite religious poetry, from the right region, in a language close enough to Hebrew that a student of one can work through the other, and the picture it gives is fuller and stranger than the Bible's summaries — which is what one would expect, since the Bible was not trying to describe Baal fairly. The overlaps of imagery are striking too: Yahweh in Psalm 29 thunders over the waters in language a Ugaritic poet would have recognised at once.",
+        ],
+      },
+      {
+        heading: "How Much It Explains — and Where That Argument Runs",
+        paragraphs: [
+          "That last point is where the real disagreement lives. One school reads the continuities as deep: that Israelite religion emerged out of the Canaanite world it shares a vocabulary with, that El and Yahweh were once distinguishable, and that the Asherah of the biblical texts was for many Israelites a goddess rather than a pole. M. S. Smith and Frank Moore Cross are the names to know here, and their case is built on the texts, not on hostility to them. Others urge caution about how much can be carried across a gap of four centuries and a different society, and point out that shared poetic furniture is exactly what neighbouring cultures have.",
+          "The app's position, and its reasons. The parallels are real and should be faced rather than minimised: a Bible study that pretends Psalm 29 and the Baal Cycle sound nothing alike is a study that will not survive a first-year course. But shared vocabulary is not shared theology, and the direction of the Old Testament's use of that vocabulary is consistently subversive — it takes the storm-rider imagery and gives it to Yahweh precisely to say that Baal is not the one who does this. Evangelicals themselves differ on how far to press this. Some read the shared language as deliberate polemical appropriation from the start; others accept a longer and messier history in which Israelite religion had more to unlearn than the finished text lets on, and take the prophets' furious opposition to Asherah worship as evidence that plenty of Israelites were doing it. Both readings are held by people who take Scripture as trustworthy, and the difference between them is a real one worth knowing about rather than a boundary marker.",
+        ],
+      },
+    ],
+    verses: [
+      { reference: "Judges 2:11-13", note: "Israel serves \"Baal and the Ashtaroth\" — the gods the Ugaritic texts describe from the inside" },
+      { reference: "1 Kings 18:21", note: "Elijah on Carmel: \"If Yahweh is God, follow him; but if Baal, then follow him\"" },
+      { reference: "2 Kings 23:4", note: "Josiah burns the vessels made for Baal and for the Asherah" },
+      { reference: "Psalms 29:1-3", note: "Yahweh's voice on the waters — storm-god imagery a Ugaritic poet would have recognised" },
+      { reference: "Deuteronomy 32:8-9", note: "The nations divided and Yahweh's portion, a passage read against Ugaritic parallels" },
+    ],
+    sources: [
+      { label: "Wikipedia: Ugarit", url: "https://en.wikipedia.org/wiki/Ugarit" },
+    ],
+    discovery: {
+      objectType: "Clay tablets in alphabetic cuneiform (Ugaritic) and in Akkadian — myth, ritual, administration and diplomatic correspondence",
+      findSite: "Ras Shamra and its harbour at Minet el-Beida, on the Syrian coast north of Latakia",
+      // CORRECTED (scope §2.5b): the candidate table said "1928-29 onward, Schaeffer". The tomb was
+      // opened in spring 1928 by a farmer; Schaeffer's first campaign was April 1929.
+      foundYear: "Tomb opened spring 1928; excavation from April 1929, with inscribed tablets appearing in May",
+      foundBy: "A local farmer near Minet el-Beida, spring 1928; then Leon Albanese for the French Antiquities Service; the mission was arranged by Rene Dussaud at the Louvre and directed from April 1929 by Claude F.-A. Schaeffer with Georges Chenet. A name for the farmer circulates widely and traces to no academic source; it is not repeated",
+      objectDate: "c. 1400-1190 BC, down to the city's destruction",
+      objectDateCertainty: "traditional",
+      currentLocation: "Divided between the Louvre, Paris, and Syrian collections including Damascus, Aleppo and Latakia. The condition and whereabouts of the material held in Syria since 2011 cannot be stated with confidence",
+    },
+    citations: [
+      {
+        tier: "institution",
+        label: "C. F.-A. Schaeffer, \"Les fouilles de Minet-El-Beida et de Ras Shamra (campagnes du printemps 1929)\"",
+        url: "https://www.persee.fr/doc/syria_0039-7946_1929_num_10_4_3407",
+        credit: "Claude F.-A. Schaeffer, Mission de Ras Shamra — the excavating body's own first campaign report",
+        detail: "Syria 10 (1929), 285-297. Open access at Persee",
+        supports: "The 1929 excavation, the sequence from Minet el-Beida to the tell, and the find of the first tablets",
+      },
+      {
+        tier: "primary",
+        label: "C. Virolleaud, \"Les inscriptions cuneiformes de Ras Shamra\"",
+        url: "https://www.persee.fr/doc/syria_0039-7946_1929_num_10_4_3411",
+        credit: "Charles Virolleaud",
+        detail: "Syria 10 (1929), 304-310 — the editio princeps of the first alphabetic tablets, the publication Bauer and Dhorme worked from. Open access at Persee",
+        supports: "The texts that were published for decipherment, and Virolleaud's role",
+      },
+      {
+        tier: "scholarly",
+        label: "P. L. Day, \"Dies Diem Docet: The Decipherment of Ugaritic\"",
+        url: "http://www.proyectos.cchs.csic.es/SEL/sites/default/files/06day_2a4aeb99.pdf",
+        credit: "Peggy L. Day",
+        detail: "Studi Epigrafici e Linguistici 19 (2002), 37-57. Reconstructs the decipherment week by week from the correspondence, and assesses the competing priority claims",
+        supports: "The decipherment dates and the Bauer / Dhorme / Virolleaud credit dispute",
+      },
+      {
+        tier: "encyclopedic",
+        label: "Wikipedia: Ugarit",
+        url: "https://en.wikipedia.org/wiki/Ugarit",
+      },
+    ],
+    reflectionPrompt:
+      "Psalm 29 uses a storm-god's vocabulary to say something a storm god could never say. Where has God taken something borrowed in your life and turned it to his own purpose?",
+  },
+  {
+    id: "mari-tablets",
+    name: "Mari Tablets",
+    // NOT registered: bare "Mari".
+    alternateNames: ["Mari Archives", "Mari Letters", "Tell Hariri Tablets"],
+    category: "discovery",
+    role: "Eighteenth-Century BC Royal Archive from the Middle Euphrates",
+    summary:
+      "More than 25,000 tablets from a palace on the Euphrates — including prophets delivering messages to a king who had not asked for them. The archaeologist usually credited with finding it did not find it.",
+    sections: [
+      {
+        heading: "A Grave, a Statue, and an Officer on an Inspection Tour",
+        paragraphs: [
+          "Andre Parrot's own first-campaign report tells the story, and it is not the one usually told. In the first days of August 1933, Lieutenant Cabane, an officer of the French Services speciaux and deputy inspector for the districts of Abu Kemal and Mayadin, was on an inspection tour near his station on the Euphrates when he came across a group of Bedouin on a mound. They were burying one of their own and were busy prising up stones to ornament the grave. A few days later a local man arrived at Cabane's office asking what should be done about \"the man they had found\". Cabane understood at once, went out to Tell Hariri, and found a mutilated headless statue with its hands joined on its chest. With three colleagues he got the thing — he estimated its weight at over three hundred kilograms — down to Abu Kemal, and reported it.",
+          "A report from the inspector of antiquities for northern Syria followed, Rene Dussaud immediately proposed a season of excavation, the Musees Nationaux were granted the concession, and the Louvre sent Andre Parrot, who was free because work at Larsa had stopped. The mission reached Abu Kemal in early December 1933 and began digging at the tell on 14 December, working through to the following March. In January it turned up an inscribed statue of a ruler whose name was first read Lamgi-Mari and is now read Ishqi-Mari, and that identified the site: this was Mari. Parrot dug there across twenty-one campaigns down to 1974, and his name is the one attached to the discovery. The find itself belongs to a burial party and an officer on his rounds.",
+        ],
+      },
+      {
+        heading: "A King's Post-Bag from the Age of the Patriarchs",
+        paragraphs: [
+          "The palace of Zimri-Lim yielded over twenty-five thousand cuneiform tablets, roughly three thousand of them letters and the rest administrative, economic and legal. It is one of the richest single archives ever recovered from the ancient Near East, and it lights up a world — tribal confederations moving between pasture and town on the middle Euphrates, treaties, dowries, lawsuits, a king writing to his officials about grain and about his daughters' marriages, all around 1800 to 1760 BC.",
+          "The detail with the sharpest biblical edge is prophecy. Mari's letters record men and women going to the king with messages they say a god gave them — unsolicited, sometimes unwelcome, sometimes warnings about his conduct — and officials writing anxiously to pass the message on. That is recognisably the shape of the thing 1 Kings 22 describes, where Micaiah tells Ahab what he does not want to hear and pays for it. The parallel is a shape, not a doctrine: Mari's prophets speak for gods within a court system that expects them, while the Hebrew prophets stand against the whole apparatus. But it does establish that a prophet confronting a king was a familiar feature of the region long before Israel had kings of its own.",
+        ],
+      },
+      {
+        heading: "The Claim That Mari Proved the Patriarchs",
+        paragraphs: [
+          "For about thirty years in the middle of the twentieth century, Mari was the centrepiece of an argument that archaeology had vindicated Genesis. W. F. Albright, Nelson Glueck and E. A. Speiser pointed to nomadic social patterns, personal names of the same formation as Abraham's, and customs of adoption and inheritance that seemed to explain otherwise puzzling episodes in the patriarchal narratives — and concluded that Genesis fits a real second-millennium setting so precisely that it must preserve second-millennium memory.",
+          "That argument was dismantled, and it is worth saying so plainly. T. L. Thompson's The Historicity of the Patriarchal Narratives (1974) and J. Van Seters's Abraham in History and Tradition (1975) showed that the parallels were generic rather than specific — the customs are attested across many centuries and many places, so they date nothing — and that the chronological fit had been assumed rather than demonstrated. They carried the field, and the Mari argument for the patriarchs is no longer made by specialists. The old equation of Mari's DUMU.MES-yamina, \"sons of the south\", with the biblical Benjamin has likewise been dropped as a coincidence of a common West Semitic word-formation.",
+          "Two things follow, and they point in different directions. The first is that the collapse of a bad argument for the patriarchs is not an argument against them; Thompson and Van Seters went on to draw much wider conclusions about the historicity of Genesis that this app does not share, and those conclusions do not follow from the Mari point either. The second is that something real survives: Mari does not corroborate Abraham, but it does demonstrate that the world Genesis places him in — tribal, mobile, treaty-bound, literate, full of gods speaking to kings — existed and looked broadly as Genesis assumes. That is a smaller claim than the one made in 1955, and it has the advantage of being true.",
+        ],
+      },
+    ],
+    verses: [
+      { reference: "Genesis 11:31", note: "Terah's household moves from Ur and settles at Haran, in the world these archives document" },
+      { reference: "Genesis 24:10", note: "Abraham's servant sent to Mesopotamia, to the city of Nahor" },
+      { reference: "1 Kings 22:6-8", note: "A prophet with an unwelcome message for a king — the pattern Mari's letters also record" },
+      { reference: "Amos 3:7", note: "\"He reveals his secret to his servants the prophets\"" },
+    ],
+    sources: [
+      { label: "College de France: 1933, the discovery of Mari", url: "https://www.college-de-france.fr/en/agenda/lecture/elements-for-history-of-assyriology/1933-the-discovery-of-mari" },
+      { label: "Wikipedia: Mari, Syria", url: "https://en.wikipedia.org/wiki/Mari,_Syria" },
+    ],
+    discovery: {
+      objectType: "Over 25,000 clay tablets in Akkadian cuneiform — about 3,000 letters, the rest administrative, economic and legal",
+      findSite: "Tell Hariri, on the middle Euphrates near Abu Kemal in eastern Syria",
+      // CORRECTED (scope §2.5b): the candidate table said "1933 onward, Andre Parrot". Parrot did
+      // not find it, and his own report says so. Chain restored from that report.
+      foundYear: "Statue found in the first days of August 1933; excavation began 14 December 1933",
+      foundBy: "Not Andre Parrot. A Bedouin burial party on Tell Hariri turned up a headless statue; Lieutenant Cabane of the French Services speciaux secured it and reported it; a report from the inspector of antiquities for northern Syria brought in Rene Dussaud, and the Louvre sent Parrot, whose team began digging on 14 December 1933",
+      objectDate: "c. 1800-1760 BC, chiefly from the reign of Zimri-Lim",
+      objectDateCertainty: "traditional",
+      currentLocation: "Louvre, Paris, and Syrian collections including Aleppo, Damascus and Deir ez-Zor. Mari was heavily looted after 2011 and the status of the material held in Syria cannot be stated with confidence",
+    },
+    citations: [
+      {
+        tier: "institution",
+        label: "A. Parrot, \"Les fouilles de Mari (Premiere campagne)\"",
+        url: "https://www.persee.fr/doc/syria_0039-7946_1935_num_16_1_8338",
+        credit: "Andre Parrot, for the Musees Nationaux / Louvre mission",
+        detail: "Syria 16 (1935), 1-28. The excavation's own preliminary report, whose opening page gives the Cabane narrative and the 14 December 1933 start date used above. Open access at Persee",
+        supports: "The discovery narrative, Lieutenant Cabane's part in it, and the excavation dates",
+      },
+      {
+        tier: "reference",
+        label: "College de France: \"1933: the discovery of Mari\"",
+        url: "https://www.college-de-france.fr/en/agenda/lecture/elements-for-history-of-assyriology/1933-the-discovery-of-mari",
+        credit: "College de France, Elements for a History of Assyriology",
+        supports: "The Bedouin discovery, Parrot's availability after Larsa, and the Ishqi-Mari statue that identified the site",
+      },
+      {
+        tier: "scholarly",
+        label: "T. L. Thompson, The Historicity of the Patriarchal Narratives (1974); J. Van Seters, Abraham in History and Tradition (1975)",
+        credit: "Thomas L. Thompson and John Van Seters",
+        detail: "The two monographs that dismantled the mid-century argument from Mari and Nuzi to the patriarchal narratives. Print only",
+        supports: "The refutation of the \"Mari corroborates the patriarchs\" claim in the third section",
+      },
+      {
+        tier: "encyclopedic",
+        label: "Wikipedia: Mari, Syria",
+        url: "https://en.wikipedia.org/wiki/Mari,_Syria",
+      },
+    ],
+    reflectionPrompt:
+      "A burial party found Mari and an archaeologist got the credit. Whose work in your life has been absorbed into someone else's name?",
+  },
+  {
+    id: "ebla-tablets",
+    name: "Ebla Tablets",
+    // NOT registered: bare "Ebla".
+    alternateNames: ["Ebla Archives", "Tell Mardikh Tablets"],
+    category: "discovery",
+    role: "Third-Millennium BC Palace Archive from Northern Syria",
+    summary:
+      "A vast Syrian archive from a thousand years before Abraham — and the site of the most spectacular biblical-archaeology claim of the twentieth century, which collapsed completely.",
+    sections: [
+      {
+        heading: "Shelves That Collapsed and Kept Their Order",
+        paragraphs: [
+          "Paolo Matthiae of the University of Rome began digging at Tell Mardikh, about fifty-five kilometres south-west of Aleppo, in 1964, and in 1968 an inscribed statue identified the mound as Ebla, a city known previously only from mentions in other people's records. The archives came later: forty-two tablets in 1974, and then in 1975 the main find in the rooms of Palace G — roughly 1,800 complete tablets, 4,700 fragments and thousands of smaller chips, lying where they had fallen when the wooden shelving that held them burned and gave way. Because they fell in order, the shelving's arrangement could be reconstructed from the floor.",
+          "The texts are administrative, lexical and diplomatic, in Sumerian and in a previously unknown East Semitic language now called Eblaite; they run from around 2400 BC to the destruction of the palace a century or so later. The mission's epigrapher was Giovanni Pettinato. He and Matthiae fell out, and Alfonso Archi succeeded him. The material is held in Syrian collections, chiefly the Idlib, Aleppo and Damascus museums, and their condition since 2011 cannot be stated with confidence.",
+        ],
+      },
+      {
+        heading: "What Ebla Actually Gives a Bible Reader",
+        paragraphs: [
+          "Set the famous claim aside and Ebla is still one of the great finds of the century, for reasons that have nothing to do with Genesis. It showed that a large, literate, bureaucratically organised Semitic kingdom existed in inland Syria in the middle of the third millennium BC, some seven or eight centuries before the earliest date anyone assigns to Abraham. It produced the oldest known bilingual vocabulary lists in the world. It documents treaties, international trade, and a royal administration keeping records of textiles and metals on an industrial scale.",
+          "For a reader of the Bible, the value is context and depth of field. The world of Genesis is not a world of empty land and wandering families with nothing around them; it is a world with old cities, established scribal traditions and long memories, and Ebla is a hard-edged demonstration of that. What Ebla does not do is mention any person or place from the biblical narratives. That needs saying because of what follows.",
+        ],
+      },
+      {
+        heading: "The Sodom and Gomorrah Claim Is Dead",
+        paragraphs: [
+          "On 29 October 1976, at a Society of Biblical Literature meeting in St Louis, Pettinato announced that he had found Sodom and Gomorrah in the Ebla tablets, reading si-da-mu as Sodom and i-ma-ar as Gomorrah, and — more sensationally still — that all five Cities of the Plain from Genesis 14:2 appeared in the same order the Bible gives them. D. N. Freedman amplified the claim in American scholarship and in the press, and it went round the world.",
+          "It did not survive. Alfonso Archi, Pettinato's successor as the mission's epigrapher, refuted it in print in 1979 and again in 1981. The decisive point is simple: i-mar is Emar, a well-known Syrian city on the Euphrates that turns up constantly in these archives, and has nothing to do with Gomorrah. The claimed sequence of five cities does not hold up. And the readings had been made from facsimiles that were never published, so no other scholar could check them — which is why the claim could circulate for years before it could be tested. Pettinato withdrew the Zoar reading and the supposed \"Birsha, king of Gomorrah\", and retreated from a related claim that a theophoric element at Ebla reflected an early form of the divine name Yahweh; other Assyriologists proposed the Akkadian god Ea instead, and the Yahweh reading has no standing today.",
+          "This is not a live debate with two sides, and it should not be written as one. Ebla has no bearing on Sodom and Gomorrah. Two things are worth adding rather than hiding. The affair was inflamed by the personal rupture between Matthiae and Pettinato and by Syrian government sensitivity about biblical claims made on a Syrian site, and accusations of political interference flew in both directions; none of that changes the philology. And the reason this article exists at all is that apologetics sites still cite the claim, sometimes hedged, sometimes not. A reader who meets it here should meet the correction rather than a shrug. The lesson underneath is the useful part, and it cuts every way: a reading announced from a conference platform on the basis of material nobody else can examine is not yet evidence, however welcome its conclusion.",
+        ],
+      },
+    ],
+    verses: [
+      { reference: "Genesis 14:2-3", note: "The five kings of the plain — the sequence Pettinato claimed to have found at Ebla" },
+      { reference: "Genesis 19:24-25", note: "The overthrow of Sodom and Gomorrah" },
+      { reference: "Genesis 10:19", note: "The Canaanite border traced past Sodom, Gomorrah, Admah and Zeboiim" },
+    ],
+    sources: [
+      { label: "Wikipedia: Ebla-biblical controversy", url: "https://en.wikipedia.org/wiki/Ebla%E2%80%93biblical_controversy" },
+      { label: "Wikipedia: Ebla tablets", url: "https://en.wikipedia.org/wiki/Ebla_tablets" },
+    ],
+    discovery: {
+      objectType: "Roughly 1,800 complete clay tablets, 4,700 fragments and thousands of chips, in Sumerian and Eblaite",
+      findSite: "Palace G at Tell Mardikh, about 55 km south-west of Aleppo",
+      foundYear: "42 tablets in 1974; the main archive in 1975",
+      foundBy: "The Italian expedition of the University of Rome under Paolo Matthiae, digging at Tell Mardikh since 1964. The tablets were read by the mission's epigrapher Giovanni Pettinato and, after he and Matthiae fell out, by his successor Alfonso Archi",
+      objectDate: "c. 2400-2300 BC, down to the destruction of Palace G",
+      objectDateCertainty: "traditional",
+      currentLocation: "Syrian national collections, chiefly the Idlib, Aleppo and Damascus museums. Their condition and whereabouts since 2011 cannot be stated with confidence",
+    },
+    citations: [
+      {
+        tier: "institution",
+        label: "P. Matthiae, Ebla: An Empire Rediscovered",
+        credit: "Paolo Matthiae, University of Rome — the excavation director's own account",
+        detail: "Doubleday, 1981 (English translation of Ebla: un impero ritrovato, 1977), with later editions. Cited in place of a museum object page: the Syrian holding institutions publish none. Print only",
+        supports: "The excavation from 1964, the 1968 identification of the site, and the 1974-75 archive finds",
+      },
+      {
+        tier: "scholarly",
+        label: "A. Archi, \"Are the Cities of the Plain Mentioned in the Ebla Tablets?\" and \"Ancora su Ebla e la Bibbia\"",
+        credit: "Alfonso Archi, epigrapher of the Italian mission at Ebla",
+        detail: "Biblical Archaeology Review 7/6 (1981) and Studi Eblaiti (1979-1981) — the refutation of the Cities of the Plain reading, including the identification of i-mar as Emar. Print only; the Biblical Archaeology Society's online library refuses automated requests and was not fetched",
+        supports: "The refutation of the Sodom and Gomorrah claim",
+        paywalled: true,
+      },
+      {
+        tier: "reference",
+        label: "Christianity Today (1981): \"Unearthing Ebla's Ancient Secrets\"",
+        url: "https://www.christianitytoday.com/1981/05/unearthing-eblas-ancient-secrets/",
+        credit: "Christianity Today, 8 May 1981",
+        detail: "A contemporary evangelical report of the affair as it unravelled, recording that on rechecking Pettinato found no Birsha king of Gomorrah, and that Matthiae and Archi denied the Sodom reading",
+        supports: "Pettinato's retraction and the state of the argument in 1981",
+      },
+      {
+        tier: "encyclopedic",
+        label: "Wikipedia: Ebla-biblical controversy",
+        url: "https://en.wikipedia.org/wiki/Ebla%E2%80%93biblical_controversy",
+      },
+      {
+        tier: "encyclopedic",
+        label: "Wikipedia: Ebla tablets",
+        url: "https://en.wikipedia.org/wiki/Ebla_tablets",
+      },
+    ],
+    reflectionPrompt:
+      "The Ebla claim was believed because people wanted it to be true. What do you currently believe mainly because you would like it to be so?",
+  },
+  {
+    id: "bubastite-portal",
+    name: "Bubastite Portal",
+    // NOT registered: "Shishak" — that is the pharaoh, who owns the name in people.ts.
+    alternateNames: ["Shishak Relief", "Shoshenq Relief", "Bubastite Portal at Karnak"],
+    category: "discovery",
+    role: "Egyptian Campaign Relief at Karnak, c. 925 BC",
+    summary:
+      "A pharaoh's list of the towns he claimed to have taken in Canaan, carved on a gate at Karnak — the one place where an Egyptian king's campaign and a chapter of Kings line up. Jerusalem is not on it.",
+    sections: [
+      {
+        heading: "Champollion Reads a Wall",
+        paragraphs: [
+          "Nobody discovered the Bubastite Portal. It is a gateway in the Precinct of Amun-Re at Karnak, between the temple of Ramesses III and the second pylon, and it has stood above ground and visible since the Twenty-Second Dynasty put it there. What has a date is the reading. In 1828, six years after the Rosetta breakthrough, Jean-Francois Champollion visited Karnak on his Egyptian expedition and connected the Sheshonq of the relief with the Sesonchis of the Egyptian historian Manetho and with the Shishak of 1 Kings 14 — and wrote, in the account published the following year, that the identity was confirmed.",
+          "That connection has held for nearly two centuries and is the mainstream position of Egyptology. A second reading of Champollion's has not held, and it matters more than it looks; it is dealt with in the third section below. The standard modern record of the relief is not Champollion's but the Epigraphic Survey's, published as Reliefs and Inscriptions at Karnak, Volume III: The Bubastite Portal in 1954 — a full set of measured line drawings that anyone can consult, free, today.",
+        ],
+      },
+      {
+        heading: "The One Place a Pharaoh and 1 Kings Line Up",
+        paragraphs: [
+          "The relief shows Sheshonq I before Amun, who holds ropes attached to rows of name-rings — about a hundred and fifty of them, each an oval containing a place name and topped with a bound captive's head. It is the standard Egyptian way of saying \"these places are mine\". The towns named cluster in the Negev, the Shephelah and the coastal plain, the Jezreel valley and the north.",
+          "1 Kings 14:25-26 says that in Rehoboam's fifth year Shishak king of Egypt came up against Jerusalem and took away the treasures of the temple and the palace, including Solomon's gold shields; 2 Chronicles 12 tells the same story at more length, with chariots and horsemen and the fortified cities of Judah taken first. Shishak is in Kings before that, too: he is the pharaoh who gives Jeroboam asylum when Solomon tries to kill him. So there is an Egyptian king campaigning in the land in the right generation, from both sides. One further piece of evidence anchors the campaign archaeologically: a fragment of a victory stele of Sheshonq I was picked up at Megiddo in 1925, on a spoil heap left by the earlier German excavation. It is a surface find with no stratigraphy, so it shows that a monument of this king once stood at Megiddo — not that any particular destruction layer there is his.",
+        ],
+      },
+      {
+        heading: "Jerusalem Is Not on the List, and Ring 29 Is Not Judah",
+        paragraphs: [
+          "Champollion read name-ring 29 as \"Judah the Kingdom\", and that reading is rejected. The letters are now read as a place name — commonly Yad hammelek, \"Hand of the King\", or Juttah of the King — and the ring is one town among many, not a nation. More importantly, Jerusalem does not appear anywhere in the preserved list. The rings run through the lowlands and the north and pass over the central hill country of Judah as though it were not there. This is stated the wrong way round in a great deal of popular writing, and a reader who has been told that Karnak mentions Jerusalem has been told something false.",
+          "Four explanations are on offer and all four deserve naming. Kenneth Kitchen and others point out that the list is damaged and parts of it are lost, so Jerusalem may have stood in a missing section. A second explanation takes the biblical account at its word: 1 Kings 14 has Rehoboam buying the city off with the temple treasure, so Jerusalem submitted rather than being stormed, and a town that paid would not appear in a list of towns taken. Finkelstein argues that the omission is real and telling, and that Judah at this date was a marginal highland chiefdom not worth a pharaoh's detour. Frank Clancy has argued that the route simply avoided the hill country and Transjordan altogether. None of these has carried the field.",
+          "Where the app stands. The relief and 1 Kings agree that a pharaoh whose name is Sheshonq campaigned in the land in Rehoboam's generation, and that agreement is worth something: two independent sources, one Egyptian and monumental, one Judean and literary, converging on one event. They do not confirm each other's details, and the absence of Jerusalem from the list is a real fact that needs an explanation rather than a fact to be explained away — the tribute reading is a good explanation, but it is a reading, and it should be offered as one. One thing that is not a live alternative: the New Chronology associated with D. M. Rohl, which identifies the biblical Shishak with Ramesses II instead. It is rejected by Egyptology, and presenting the Sheshonq identification as contested would misrepresent the state of the field.",
+        ],
+      },
+    ],
+    verses: [
+      { reference: "1 Kings 14:25-26", note: "Shishak takes the treasures of the temple and the palace in Rehoboam's fifth year" },
+      { reference: "2 Chronicles 12:2-4", note: "The same campaign at length — the fortified cities of Judah taken first" },
+      { reference: "2 Chronicles 12:9", note: "The gold shields Solomon made, carried off" },
+      { reference: "1 Kings 11:40", note: "Jeroboam flees to Shishak and stays until Solomon dies" },
+    ],
+    sources: [
+      { label: "Wikipedia: Bubastite Portal", url: "https://en.wikipedia.org/wiki/Bubastite_Portal" },
+    ],
+    discovery: {
+      objectType: "A carved temple gateway with a triumphal relief and a topographical list of about 150 name-rings, in situ",
+      findSite: "The Precinct of Amun-Re at Karnak, Thebes, between the temple of Ramesses III and the second pylon",
+      // CORRECTED (scope §2.5b): Champollion's connection is datable to 1828 (published 1829). His
+      // ring-29 "Judah the Kingdom" reading is rejected — see section three.
+      foundYear: "Never buried. Connected with the biblical Shishak by Champollion in 1828, published 1829",
+      foundBy: "No discoverer — the gate has always stood above ground. Jean-Francois Champollion made the biblical identification during his Egyptian expedition",
+      objectDate: "c. 925 BC, the reign of Sheshonq I",
+      objectDateCertainty: "traditional",
+      currentLocation: "In situ at Karnak, Luxor, Egypt",
+    },
+    citations: [
+      {
+        tier: "institution",
+        label: "Reliefs and Inscriptions at Karnak, Volume III: The Bubastite Portal (OIP 74)",
+        url: "https://isac.uchicago.edu/research/publications/oip/reliefs-and-inscriptions-karnak-volume-iii-bubastite-portal",
+        credit: "The Epigraphic Survey, Institute for the Study of Ancient Cultures (formerly the Oriental Institute), University of Chicago",
+        detail: "Oriental Institute Publications 74, Chicago, 1954. The standard measured record of the relief and the name-rings, available as a free PDF",
+        supports: "The content of the relief and the topographical list",
+      },
+      {
+        tier: "scholarly",
+        label: "I. Finkelstein, \"The Campaign of Shoshenq I to Palestine: A Guide to the 10th Century BCE Polity\"",
+        credit: "Israel Finkelstein, Tel Aviv University",
+        detail: "Zeitschrift des Deutschen Palastina-Vereins 118 (2002), 109-135. Print only",
+        supports: "The reading of the omission of Jerusalem as historically significant",
+      },
+      {
+        tier: "reference",
+        label: "Bible and Interpretation: \"The Campaign of Pharaoh Shoshenq I in Palestine\"",
+        url: "https://bibleinterp.arizona.edu/articles/Wilson-Campaign_of_Shoshenq_I_1",
+        credit: "Bible and Interpretation, University of Arizona",
+        supports: "The route of the campaign and the contents of the name-ring list",
+      },
+      {
+        tier: "encyclopedic",
+        label: "Wikipedia: Bubastite Portal",
+        url: "https://en.wikipedia.org/wiki/Bubastite_Portal",
+      },
+    ],
+    reflectionPrompt:
+      "Rehoboam kept his city by emptying the temple. What have you paid out of something holy to keep something safe?",
+  },
+  {
+    id: "elephantine-papyri",
+    name: "Elephantine Papyri",
+    alternateNames: ["Elephantine Papyri and Ostraca", "Assuan Papyri", "Yeb Papyri"],
+    category: "discovery",
+    role: "Fifth-Century BC Archive of a Judean Garrison Colony in Egypt",
+    summary:
+      "Letters, contracts and petitions from a Jewish military colony on an island in the Nile — which had its own temple, offered its own sacrifices, and wrote to Jerusalem for permission to rebuild it.",
+    sections: [
+      {
+        heading: "Bought Before It Was Dug",
+        paragraphs: [
+          "There is no discovery date for the Elephantine papyri, and the reason is the story. The corpus surfaced piecemeal on the antiquities market at Aswan before any scientific excavation happened. In 1893 the American collector Charles Edwin Wilbour bought papyri there, including what turned out to be the complete family archive of a Judean named Ananiah, covering roughly half a century; they stayed in his trunks unpublished for sixty years, reached the Brooklyn Museum, and were finally edited in 1953. Other early buyers included A. H. Sayce, W. Spiegelberg, Lady William Cecil and Robert Mond, and Sayce with A. E. Cowley published the first substantial group, the \"Assuan papyri\", in 1906.",
+          "Excavation followed the market rather than leading it. A German expedition under Otto Rubensohn and Friedrich Zucker dug the western mound of the island in 1906-1908, published by Eduard Sachau in 1911; French work under Charles Clermont-Ganneau on the eastern side between 1906 and 1911 produced hundreds of ostraca. The result is an archive scattered across the Staatliche Museen zu Berlin, the Brooklyn Museum, Cairo, the Bodleian and collections in London, Munich and Paris, with a large proportion of it carrying no findspot at all. That is a real limitation and it should be said before anything else: for much of this material the edition is the only context there is.",
+        ],
+      },
+      {
+        heading: "A Jewish Temple in Egypt",
+        paragraphs: [
+          "The colony was a Judean military garrison at Yeb — Elephantine, the island at the first cataract — serving under Persian rule in the fifth century BC. Its people spoke and wrote Aramaic, married, divorced, lent money, sued each other and left wills, all of which the papyri record in ordinary legal detail. They also had a temple. Not a synagogue: a temple to YHW, with an altar, at which they offered animal sacrifice, meal offerings and incense, and which by their own account had stood there before the Persian conquest of Egypt in 525 BC.",
+          "In 410 BC that temple was destroyed. The priests of Khnum, whose ram-god had a cult next door and who are usually thought to have objected to the Judeans slaughtering sheep, especially at Passover, acted in collusion with the Persian governor Vidranga, and the building was demolished. Three years later the community wrote to Bagavahya, the governor of Judah, and to the sons of Sanballat, the governor of Samaria — the same Sanballat family that opposed Nehemiah — asking for support in rebuilding. A reply appears to have authorised meal offerings and incense but not animal sacrifice. The archive also preserves the so-called Passover Papyrus of 419 BC, giving instructions about the festival."
+        ],
+      },
+      {
+        heading: "The Awkward Part, Said Plainly",
+        paragraphs: [
+          "A functioning Yahwistic sacrificial temple outside Jerusalem, run by Judeans who evidently saw nothing wrong with it and who wrote to the authorities in Jerusalem and Samaria as fellow believers, sits awkwardly beside Deuteronomy 12's insistence that sacrifice belongs at the one place God chooses. It is worth stating the awkwardness rather than managing it, and then stating the options fairly. Some hold that the colony predated the reform, or was too remote to know of it, or understood the centralisation law as applying within the land. Much critical scholarship reads it the other way: that centralisation was later, or narrower, or far less universally observed than a tidy account assumes. And Jeremiah 44 shows Judeans in Egypt doing things Jeremiah regarded as flat apostasy, so a diaspora community out of step with the law is not a new datum in Scripture's own account of itself.",
+          "Where the app stands: a command is not a report of compliance. Deuteronomy tells Israel what to do; it does not claim that every Judean in every century did it, and the prophets exist largely because they did not. A document showing disobedience is evidence about the people, not about the law. That said, the harder version of the question — whether Deuteronomy's centralisation was in force at all in the fifth century in the form the finished text gives it — is a real scholarly question and is not settled by pointing this out.",
+          "A second dispute runs alongside. Some texts name Anat-Yahu alongside YHW, and two more name deities built on the element byt'l — a Northwest Semitic god, not the town in Ephraim — and it is argued whether this shows real polytheistic syncretism in the colony, or hypostatised attributes of the one God, or simply the names of contributing sub-groups in a collection list. B. Porten, the leading editor of the corpus, takes the more conservative line; others read straightforward syncretism. Nobody has settled it, and the honest position is that the colony's theology is only partly recoverable from what happen to be, in the main, tax lists and legal contracts.",
+        ],
+      },
+    ],
+    verses: [
+      { reference: "Deuteronomy 12:5-6", note: "Sacrifice at the one place God chooses — the law Elephantine's temple sits awkwardly beside" },
+      { reference: "Isaiah 19:19", note: "\"In that day, there will be an altar to Yahweh in the middle of the land of Egypt\"" },
+      { reference: "Jeremiah 44:1", note: "Judeans settled across Egypt, in Jeremiah's own generation" },
+      { reference: "Nehemiah 2:10", note: "Sanballat the Horonite — whose sons the colony wrote to seventy years later" },
+    ],
+    sources: [
+      { label: "Texts and Scripts from Elephantine (Staatliche Museen zu Berlin)", url: "https://elephantine.smb.museum/" },
+      { label: "Wikipedia: Elephantine papyri and ostraca", url: "https://en.wikipedia.org/wiki/Elephantine_papyri_and_ostraca" },
+    ],
+    discovery: {
+      objectType: "Aramaic papyri and ostraca — letters, contracts, deeds, petitions, lists and one festival instruction",
+      findSite: "Elephantine island (ancient Yeb) at Aswan, Egypt — and, for much of the corpus, the Aswan antiquities market",
+      foundYear: "Market purchases from 1893; excavations 1906-1911",
+      foundBy: "No single discovery. Charles Edwin Wilbour bought papyri at Aswan in 1893; Sayce and Cowley published the Assuan papyri in 1906; the German expedition of Otto Rubensohn and Friedrich Zucker excavated the western mound 1906-1908 (published by Eduard Sachau, 1911); French work under Charles Clermont-Ganneau on the eastern side, 1906-1911, produced hundreds of ostraca",
+      objectDate: "Fifth century BC, chiefly c. 495-399 BC",
+      objectDateCertainty: "firm",
+      currentLocation: "Divided — Staatliche Museen zu Berlin (the largest holding), Brooklyn Museum, Egyptian Museum in Cairo, the Bodleian Library, and collections in London, Munich and Paris",
+    },
+    citations: [
+      {
+        tier: "institution",
+        label: "Elephantine: Texts and Scripts from the Egyptian Border Town",
+        url: "https://elephantine.smb.museum/",
+        credit: "Agyptisches Museum und Papyrussammlung, Staatliche Museen zu Berlin",
+        detail: "The holding institution's own project portal, publishing the objects and their editions",
+        supports: "The corpus, its holdings and the Berlin material",
+      },
+      {
+        tier: "scholarly",
+        label: "B. Porten, Archives from Elephantine: The Life of an Ancient Jewish Military Colony",
+        credit: "Bezalel Porten, Hebrew University of Jerusalem",
+        detail: "University of California Press, 1968, and the Textbook of Aramaic Documents from Ancient Egypt (with A. Yardeni, 1986-1999). The standard edition and study. Print only",
+        supports: "The temple, the 410 BC destruction, the 407 BC petition, and the reading of the syncretism question",
+      },
+      {
+        tier: "reference",
+        label: "Jewish Women's Archive: Elephantine",
+        url: "https://jwa.org/encyclopedia/article/elephantine",
+        credit: "Jewish Women's Archive encyclopedia",
+        supports: "The colony's legal and social life as the contracts record it",
+      },
+      {
+        tier: "encyclopedic",
+        label: "Wikipedia: Elephantine papyri and ostraca",
+        url: "https://en.wikipedia.org/wiki/Elephantine_papyri_and_ostraca",
+      },
+    ],
+    reflectionPrompt:
+      "A community far from Jerusalem built what it could and wrote home for permission. Where are you improvising in faith, and who should you be asking?",
+  },
+  {
+    id: "temple-warning-inscription",
+    name: "Temple Warning Inscription",
+    alternateNames: ["Soreg Inscription", "Temple Balustrade Inscription"],
+    category: "discovery",
+    role: "First-Century Greek Notice Barring Gentiles from the Inner Temple Courts",
+    summary:
+      "A block of limestone carrying the death-penalty notice that stood on the barrier around the Temple's inner courts — a sentence Paul's accusers in Acts 21 had read.",
+    sections: [
+      {
+        heading: "Found in a School Wall, and Sent to Istanbul",
+        paragraphs: [
+          "In 1871 Charles Clermont-Ganneau, working in Jerusalem for the Palestine Exploration Fund, noticed a block built into the wall of the ad-Dawadariya school, a madrasa just outside the Bab al-Atim gate on the north side of the Temple Mount. It carried seven lines of Greek. He recognised it at once as the notice Josephus describes as standing on the soreg, the low balustrade that marked the boundary of the Temple's inner courts, and published it through the Fund.",
+          "Where it went next is the detail almost everyone gets wrong. The complete tablet passed to the Ottoman authorities and is in the Istanbul Archaeological Museums, inventory 2196 T. It is not in the Israel Museum, though a great many books, websites and museum captions say so. What is in the Israel Museum is a second, fragmentary stone bearing the same text, found by J. H. Iliffe in 1936 during excavation for a road outside the Lions' Gate and published by him that year in the Quarterly of the Department of Antiquities of Palestine; it is IAA 1936-989. Some accounts give 1935 as the find year with 1936 as publication, and that is not settled.",
+        ],
+      },
+      {
+        heading: "The Dividing Wall",
+        paragraphs: [
+          "The text, in the usual translation, reads: no foreigner is to enter within the balustrade and enclosure around the Temple; whoever is caught will have himself to blame for the death that follows. Josephus says such notices stood at intervals in Greek and in Latin. The theology behind them is not a Roman invention — Ezekiel 44:9 forbids the uncircumcised foreigner entry to the sanctuary — but the stone is the sign as a first-century visitor actually met it, in the trade language of the eastern Mediterranean, at eye level.",
+          "Two New Testament passages sit directly on it. In Acts 21 the crowd that seizes Paul in the Temple accuses him of bringing Greeks past the barrier, having seen him in the city with Trophimus of Ephesus; the charge is capital, and the riot that follows is what sends Paul to Caesarea and eventually to Rome. And Ephesians 2:14 says that Christ has broken down the middle wall of partition — a phrase whose force is hard to feel until you have read a stone that made the partition explicit and attached a death sentence to crossing it.",
+        ],
+      },
+      {
+        heading: "How Much Weight the Stone Bears",
+        paragraphs: [
+          "Three honest limits. The first is the scope of the ban. Some read it as excluding all non-Jews without qualification; others argue it applied only to unconverted Gentiles, on the reasonable ground that Herod, an Idumean convert, built the thing and would hardly have barred himself and his descendants from the courts of his own Temple. The Greek word translated \"foreigner\" does not settle it, and the question is open.",
+          "The second is legal. It is debated how far Rome genuinely delegated capital jurisdiction for violations of this notice — whether a Gentile caught inside would actually have been executed by Jewish authorities with Roman blessing, or whether the sign states a threat that Rome tolerated without formally authorising. The stone asserts the penalty; it cannot tell us how it was enforced.",
+          "The third is exegetical, and the mildest. Most commentators think Ephesians 2:14 alludes to this barrier. Some read the image as purely metaphorical, drawn from a general vocabulary of walls rather than from this specific one, and note that Ephesians never mentions the Temple. That is a minority reading but not a foolish one, and it is worth knowing it exists. What the stone does not do, in any case, is prove that the events of Acts 21 happened; it shows that the accusation made there was a real accusation with a real penalty behind it, which is a different and more modest thing.",
+        ],
+      },
+    ],
+    verses: [
+      { reference: "Acts 21:27-29", note: "Paul accused of bringing Trophimus past the barrier this stone stood on" },
+      { reference: "Ephesians 2:14", note: "\"Broke down the middle wall of partition\"" },
+      { reference: "Acts 24:5-6", note: "The charge repeated before the governor: \"He even tried to profane the temple\"" },
+      { reference: "Ezekiel 44:9", note: "The older rule the notice enforced" },
+    ],
+    sources: [
+      { label: "Wikipedia: Temple Warning inscription", url: "https://en.wikipedia.org/wiki/Temple_Warning_inscription" },
+    ],
+    discovery: {
+      objectType: "Limestone block with seven incised lines of Greek",
+      findSite: "Built into the wall of the ad-Dawadariya school, just outside the Bab al-Atim gate of the Temple Mount, Jerusalem",
+      findSiteId: "jerusalem",
+      findSiteKind: "location",
+      foundYear: "1871 (the complete tablet); 1936 (a second, fragmentary stone)",
+      foundBy: "Charles Clermont-Ganneau, publishing through the Palestine Exploration Fund, found the complete tablet in 1871. The fragment was found by J. H. Iliffe in 1936 during road excavation outside the Lions' Gate; some accounts give 1935 for the find and 1936 for the publication",
+      objectDate: "Before AD 70 — from Herod's Temple",
+      objectDateCertainty: "traditional",
+      // CORRECTED (scope §2.5b, §2.5c #11): the complete tablet is in ISTANBUL, not the Israel
+      // Museum. Only the 1936 Iliffe fragment is in Jerusalem.
+      currentLocation: "The complete tablet is in the Istanbul Archaeological Museums, inv. 2196 T — not, as is very commonly stated, the Israel Museum. Only the 1936 fragment is in the Israel Museum (IAA 1936-989)",
+    },
+    citations: [
+      {
+        tier: "institution",
+        label: "Istanbul Archaeological Museums, inv. 2196 T",
+        credit: "Istanbul Archaeological Museums",
+        detail: "The complete tablet has been in the Ottoman and then Turkish state collection since it left Jerusalem in the 1870s. The museum publishes no English object page that could be fetched and confirmed, so no URL is given rather than a guessed one",
+        supports: "Current location and inventory number of the complete tablet",
+      },
+      {
+        tier: "scholarly",
+        label: "J. H. Iliffe, \"The Thanatos Inscription from Herod's Temple\"",
+        credit: "John Henry Iliffe, Palestine Archaeological Museum",
+        detail: "Quarterly of the Department of Antiquities of Palestine 6 (1936), 1-3 — publication of the second, fragmentary stone found outside the Lions' Gate. Print only",
+        supports: "The 1936 fragment, its find and its publication",
+      },
+      {
+        tier: "institution",
+        label: "Palestine Exploration Fund",
+        url: "https://www.pef.org.uk/",
+        credit: "The Palestine Exploration Fund",
+        detail: "The body through which Clermont-Ganneau published the 1871 find, in its Quarterly Statement. The Quarterly Statement itself is print",
+        supports: "The 1871 find and its first publication",
+      },
+      {
+        tier: "encyclopedic",
+        label: "Wikipedia: Temple Warning inscription",
+        url: "https://en.wikipedia.org/wiki/Temple_Warning_inscription",
+      },
+    ],
+    reflectionPrompt:
+      "Someone cut a death sentence into stone to keep people out of God's presence, and Christ took the wall down. Who are you still keeping on the far side of a barrier?",
+  },
+  {
+    id: "theodotus-inscription",
+    name: "Theodotus Inscription",
+    alternateNames: ["Theodotos Inscription", "Theodotus Synagogue Inscription"],
+    category: "discovery",
+    role: "Pre-70 Greek Synagogue Dedication from Jerusalem",
+    summary:
+      "Ten lines of Greek recording that a priest built a synagogue in Jerusalem for reading the Law, with a guest house attached — the closest thing there is to a description of a first-century synagogue by the man who paid for it.",
+    sections: [
+      {
+        heading: "Out of a Cistern, in Fill",
+        paragraphs: [
+          "In December 1913, Raymond Weill was conducting the first excavation of the southeastern hill of Jerusalem — the ridge below the Temple Mount now called the City of David, or Wadi Hilweh — when a limestone block with ten lines of incised Greek came out of a cistern. It was in fill, not in place: nobody found a synagogue attached to it, and nobody has since. That single fact about the find is what makes the third section of this article necessary, so it is worth stating first rather than last.",
+          "The stone is in the Israel Museum in Jerusalem and is catalogued in the standard corpus of Jewish inscriptions as CIJ II 1404. No published Israel Antiquities Authority inventory number could be found for it, and none is invented here.",
+        ],
+      },
+      {
+        heading: "Built for Reading the Law",
+        paragraphs: [
+          "The text names Theodotos son of Vettenos, priest and archisynagogos — ruler of the synagogue — son of an archisynagogos and grandson of an archisynagogos, and says that he built the synagogue for the reading of the Law and the teaching of the commandments, together with a guest house, rooms, and water installations for the lodging of those from abroad who need them.",
+          "Almost every phrase is worth something. Three generations of synagogue rulers means an established institution, not an improvisation. The stated purpose — reading the Law, teaching the commandments — is precisely what the Gospels show happening in synagogues: Jesus stands up to read in Nazareth, teaches on the Sabbath in Capernaum, and tells the high priest that he always taught in synagogues and in the Temple and said nothing in secret. And the guest house for visitors from abroad fits a pilgrimage city. The family name Vettenos is Latin, which has suggested to many that this was a family of freedmen descended from Jewish captives taken to Rome, and hence a possible link to the synagogue of the Freedmen named in Acts 6:9. That is a suggestion, made often and confirmed by nothing; the stone does not say it.",
+        ],
+      },
+      {
+        heading: "Kee's Challenge, and Why the Field Did Not Follow",
+        paragraphs: [
+          "Howard Clark Kee argued in New Testament Studies in 1990, and in later essays, that the inscription is not first-century at all but second or third and possibly as late as the fourth. This was not a stray suggestion: it was load-bearing for a larger thesis of his that purpose-built synagogue buildings did not exist before AD 70, and that the Gospels' synagogue scenes are therefore anachronisms projected back by later writers. If Kee were right, a good deal of how the Gospels describe Jesus's public ministry would have to be re-read.",
+          "He was answered thoroughly. J. S. Kloppenborg Verbin's \"Dating Theodotos\" in the Journal of Jewish Studies in 2000 went through the paleography, the onomastics and the archaeological context and concluded for a date before 70; Rainer Riesner argued along similar lines. Kee replied, and the field did not follow him. The current position is that the inscription is pre-70, most placing it in the late first century BC or the first century AD. The wider thesis has fared no better: first-century synagogue buildings have since been excavated at Gamla, Masada, Herodium and Magdala, which is a harder kind of answer than an argument about letter forms.",
+          "The honest note to end on is not about who won but about why the argument was possible. The stone came out of fill in a cistern with no building attached, so its date rests on letter forms, name types and the material found around it rather than on where it sat. That is a real weakness, and Kee was entitled to press it. What makes the question settled is not that his opponents shouted louder but that the paleographic case converged with the excavation of actual first-century synagogues elsewhere — two independent lines arriving at the same answer. An article that skipped straight to \"pre-70\" would have hidden the only interesting part.",
+        ],
+      },
+    ],
+    verses: [
+      { reference: "Luke 4:16-17", note: "Jesus stands up to read in the synagogue at Nazareth, \"as was his custom\"" },
+      { reference: "Mark 1:21", note: "Teaching in the synagogue at Capernaum on the Sabbath" },
+      { reference: "John 18:20", note: "\"I always taught in synagogues, and in the temple\"" },
+      { reference: "Acts 6:9", note: "The synagogue of the Freedmen — sometimes linked to Theodotos's Latin family name, though the stone does not say so" },
+    ],
+    sources: [
+      { label: "Brown University: Inscriptions of Israel/Palestine — the Theodotus dialogue", url: "https://library.brown.edu/iip/stories/theodotus/" },
+      { label: "Wikipedia: Theodotos inscription", url: "https://en.wikipedia.org/wiki/Theodotos_inscription" },
+    ],
+    discovery: {
+      objectType: "Limestone block with ten incised lines of Greek",
+      findSite: "A cistern on the southeastern hill of Jerusalem — the City of David / Wadi Hilweh — found in fill, not in architectural context",
+      findSiteId: "city-of-david",
+      findSiteKind: "poi",
+      foundYear: "December 1913",
+      foundBy: "Raymond Weill, in the first excavation of the southeastern hill",
+      objectDate: "Late first century BC or first century AD, before AD 70",
+      objectDateCertainty: "traditional",
+      currentLocation: "Israel Museum, Jerusalem; catalogued as CIJ II 1404. No published IAA inventory number was found and none is given",
+    },
+    citations: [
+      {
+        tier: "institution",
+        label: "Inscriptions of Israel/Palestine: the Theodotus dialogue",
+        url: "https://library.brown.edu/iip/stories/theodotus/",
+        credit: "Brown University Library, Inscriptions of Israel/Palestine project",
+        detail: "A scholarly edition and discussion of the inscription, including the dating argument",
+        supports: "The text, the translation and the state of the dating question",
+      },
+      {
+        tier: "scholarly",
+        label: "J. S. Kloppenborg Verbin, \"Dating Theodotos (CIJ II 1404)\"",
+        credit: "John S. Kloppenborg Verbin, University of Toronto",
+        detail: "Journal of Jewish Studies 51/2 (2000), 243-280. The detailed rebuttal of Kee's late dating. Print only",
+        supports: "The refutation of the second-to-fourth-century dating",
+      },
+      {
+        tier: "scholarly",
+        label: "R. Riesner, \"Synagogues in Jerusalem\" and the NTS exchange with H. C. Kee",
+        url: "https://www.cambridge.org/core/journals/new-testament-studies/article/abs/on-further-defining-the-firstcentury-ce-synagogue-fact-or-fiction-a-rejoinder-to-h-c-kee/EEF0F79A1BE17E80AB7D85A725B16DAC",
+        credit: "New Testament Studies, Cambridge University Press",
+        detail: "The published rejoinder to Kee's thesis that purpose-built synagogues did not exist before AD 70",
+        supports: "The wider dispute about first-century synagogue buildings",
+        paywalled: true,
+      },
+      {
+        tier: "encyclopedic",
+        label: "Wikipedia: Theodotos inscription",
+        url: "https://en.wikipedia.org/wiki/Theodotos_inscription",
+      },
+    ],
+    reflectionPrompt:
+      "Theodotos built a place for reading Scripture and a guest room for strangers, and thought of them as one project. What would it look like for your hospitality and your Bible reading to belong to each other?",
+  },
+  {
+    id: "crucified-man-givat-hamivtar",
+    name: "Crucified Man of Giv'at ha-Mivtar",
+    alternateNames: ["Yehohanan son of Hagqol", "Giv'at ha-Mivtar Crucifixion"],
+    category: "discovery",
+    role: "The Only Skeletal Evidence of Crucifixion Ever Found",
+    summary:
+      "A heel bone with an iron nail still through it, from a tomb north of Jerusalem — and a reconstruction of how he died that was overturned in 1985 and is still repeated almost everywhere.",
+    sections: [
+      {
+        heading: "A Salvage Dig Ahead of the Bulldozers",
+        paragraphs: [
+          "In June 1968, construction work in the Giv'at ha-Mivtar neighbourhood north of Jerusalem — the area also called Ras el-Masaref — broke into ancient tombs, and the Israel Department of Antiquities sent Vassilios Tzaferis, a former Greek Orthodox monk turned archaeologist, to excavate them before they were lost. In Tomb I was an ossuary inscribed with the name Yehohanan son of Hagqol; the transliterations of the father's name vary between publications. The bones inside were of a man of roughly twenty-four to twenty-eight, about five foot six, and through his right heel bone was an iron nail, bent over so that it could not be pulled out, still carrying with it a fragment of the wooden upright it had been driven into.",
+          "That bent nail is the reason this find exists at all. The Romans crucified people by the thousand across four centuries, and this is the only skeleton ever recovered that shows it. Iron was worth money and nails were routinely pulled out and reused; this one had hit a knot in the wood, curled, and stayed. The ossuary and a replica of the heel bone with its nail are displayed in the Israel Museum in Jerusalem. The remains themselves were reburied, as Israeli practice requires — and the haste of that requirement matters for what follows, because the anatomist who examined them was working against a clock set by the religious authorities.",
+        ],
+      },
+      {
+        heading: "What the Bone Establishes",
+        paragraphs: [
+          "It establishes that a man was crucified in Judea in the first century, and that at least in his case a nail was driven through the heel. It also, quietly, establishes something about burial. Under Roman practice the crucified were commonly left to rot or thrown into a common pit; the shocking thing about Yehohanan is not the nail but the ossuary. Somebody claimed the body, and it went into a family tomb and eventually into an inscribed limestone box like anyone else's.",
+          "That is because of Deuteronomy 21:22-23, which requires that a man hanged on a tree be buried the same day and not left overnight, on the ground that a hanged man is under God's curse and defiles the land. John 19:31 has the Judean leadership asking Pilate to break the legs of the crucified so the bodies would not remain over the Sabbath. Yehohanan is physical evidence that this concession was made and this custom kept, which is the background against which the Gospels' account of Jesus's burial in a tomb belonging to a member of the council should be read. Paul reaches for the same verse from Deuteronomy in Galatians 3:13 and turns it inside out: the curse is the point.",
+        ],
+      },
+      {
+        heading: "The Version Almost Everyone Still Repeats Was Retracted in 1985",
+        paragraphs: [
+          "This is the most important thing on this page. The reconstruction published by the anatomist Nicu Haas in 1970 said that the man's heels had been nailed together sideways with a single nail, that his forearms had been pierced, and that his legs had been deliberately broken. That reconstruction is in a great many books, in a great many sermon illustrations, and on the overwhelming majority of websites that discuss this find. It was overturned forty years ago.",
+          "J. Zias and E. Sekeles published \"The Crucified Man from Giv'at ha-Mivtar: A Reappraisal\" in the Israel Exploration Journal in 1985, and it dismantled the earlier account point by point. The nail is about 11.5 centimetres long — earlier reports of seventeen or eighteen centimetres were simply wrong — which is far too short to have passed through two heel bones and a plaque. So the feet were not nailed together: each foot was nailed separately, one to either side of the upright, with the man straddling the post. The mark on the forearm bone is non-traumatic and is not evidence of nailing; the arms were most likely tied. The break in the leg bones is post-mortem, and the evidence for deliberate leg-breaking is inconclusive. A talus bone in the assemblage probably belongs to a third individual entirely. Haas suffered a stroke in 1975 and never replied to any of it.",
+          "Two things follow, and both are worth being blunt about. The first is that if you have read a description of this find anywhere else, it is more likely than not to be the retracted version, and it is not a matter of scholarly taste — it is a measurement. The second is a limit on what the corrected version proves. This is one skeleton. It shows that heel-nailing happened; it does not show that heel-nailing was standard, or that every crucifixion looked like this one, and it cannot settle the question of where the nails went in Jesus's own case. Thomas asks to see the print of the nails in Jesus's hands, and this bone has nothing to say about that either way. An article that used Yehohanan to reconstruct Good Friday in detail would be doing exactly what Haas did — building more on one body than one body can carry.",
+        ],
+      },
+    ],
+    verses: [
+      { reference: "John 19:31-33", note: "The request that the legs be broken so the bodies would not remain on the Sabbath" },
+      { reference: "Deuteronomy 21:22-23", note: "Same-day burial for a man hanged on a tree — why a crucified man got a tomb at all" },
+      { reference: "Galatians 3:13", note: "Paul turns the curse of Deuteronomy 21 inside out" },
+      { reference: "John 20:25", note: "\"The print of the nails\" — a detail this bone cannot speak to" },
+    ],
+    sources: [
+      { label: "Associates for Biblical Research: Rethinking the Crucified Man from Giv'at ha-Mivtar", url: "https://biblearchaeology.org/research/new-testament-era/4185-rethinking-the-crucified-man-from-givat-hamivtar" },
+      { label: "Wikipedia: Jehohanan", url: "https://en.wikipedia.org/wiki/Jehohanan" },
+    ],
+    discovery: {
+      objectType: "A right heel bone with an iron nail of about 11.5 cm through it, and the inscribed limestone ossuary that held the remains",
+      findSite: "Tomb I at Giv'at ha-Mivtar (Ras el-Masaref), north of Jerusalem — a salvage excavation ahead of construction",
+      findSiteId: "jerusalem",
+      findSiteKind: "location",
+      foundYear: "June 1968",
+      foundBy: "Vassilios Tzaferis, for the Israel Department of Antiquities",
+      objectDate: "First century AD, before AD 70",
+      objectDateCertainty: "traditional",
+      currentLocation: "The ossuary and a replica of the heel bone with its nail are displayed in the Israel Museum, Jerusalem; the skeletal remains themselves were reburied in accordance with Israeli practice",
+    },
+    citations: [
+      {
+        tier: "scholarly",
+        label: "J. Zias and E. Sekeles, \"The Crucified Man from Giv'at ha-Mivtar: A Reappraisal\"",
+        credit: "Joseph Zias and Eliezer Sekeles, Israel Antiquities Authority / Hebrew University",
+        detail: "Israel Exploration Journal 35 (1985), 22-27. The reappraisal that overturned the 1970 reconstruction. Print only",
+        supports: "The 11.5 cm nail, the separate nailing of each foot, the non-traumatic forearm mark, and the post-mortem leg break",
+      },
+      {
+        tier: "scholarly",
+        label: "N. Haas, \"Anthropological Observations on the Skeletal Remains from Giv'at ha-Mivtar\"",
+        credit: "Nicu Haas, Hebrew University",
+        detail: "Israel Exploration Journal 20 (1970), 38-59. The original reconstruction, superseded in 1985 and cited here as the source of the version still in general circulation. Print only",
+        supports: "The retracted reconstruction, and its provenance",
+      },
+      {
+        tier: "reference",
+        label: "Associates for Biblical Research: \"Rethinking the Crucified Man from Giv'at ha-Mivtar\"",
+        url: "https://biblearchaeology.org/research/new-testament-era/4185-rethinking-the-crucified-man-from-givat-hamivtar",
+        credit: "Associates for Biblical Research",
+        supports: "A point-by-point comparison of the 1970 and 1985 readings",
+      },
+      {
+        tier: "institution",
+        label: "Israel Museum, Jerusalem — the Yehohanan ossuary and heel-bone replica",
+        credit: "The Israel Museum, Jerusalem",
+        detail: "The museum's online collection is served as a JavaScript application and could not be fetched and confirmed for this article, so no object URL is given rather than an unverified one",
+        supports: "Current location of the ossuary and the displayed replica",
+      },
+      {
+        tier: "encyclopedic",
+        label: "Wikipedia: Jehohanan",
+        url: "https://en.wikipedia.org/wiki/Jehohanan",
+      },
+    ],
+    reflectionPrompt:
+      "A wrong account of this man's death has been repeated for fifty years because it was vivid and nobody checked. What have you passed on because it moved you rather than because you knew it was true?",
+  },
+  {
+    id: "nazareth-inscription",
+    name: "Nazareth Inscription",
+    // NOT registered: "Nazareth" — that is the town, which owns it in locations.ts.
+    alternateNames: ["Nazareth Decree", "Edict of Caesar Concerning Graves"],
+    category: "discovery",
+    role: "Greek Imperial Edict Against Grave Robbery, of Unknown Provenance",
+    summary:
+      "A marble slab ordering that tombs be left undisturbed, on pain of death — bought from a dealer in 1878 and endlessly presented as a Roman reaction to the empty tomb. It is nothing of the kind.",
+    sections: [
+      {
+        heading: "Sent From Nazareth, Not Found At It",
+        paragraphs: [
+          "There is no excavation behind this stone. In 1878 the collector Wilhelm Frohner acquired a white marble slab carrying about twenty-two lines of Greek, and his own catalogue note describes it as a marble slab sent from Nazareth in 1878. Sent from, not found at. Nazareth in the late nineteenth century was a collecting point on an antiquities route, and a shipping label establishes where a dealer posted something, not where it came out of the ground. Frohner never published it. It sat unnoticed for fifty-two years until Franz Cumont edited it in 1930, by which time Frohner was long dead and no further information about its origin could be recovered.",
+          "It has been in the Bibliotheque nationale de France, in the Cabinet des Medailles in Paris, on display since 1925. No shelfmark for it could be verified, and none is invented here. This is the badge at the top of this page in practice: an object with no excavation context can be entirely genuine and still carry far less weight than a stone dug out of a dated floor, because there is no floor to argue from.",
+        ],
+      },
+      {
+        heading: "What the Stone Says",
+        paragraphs: [
+          "The text is a diatagma Kaisaros, an edict of an emperor. It orders that tombs and graves made for the worship of ancestors or family remain undisturbed in perpetuity; that anyone who destroys them, or removes the buried, or moves the sealing stones with malicious intent, be tried; and it prescribes a capital penalty for violating a tomb. It does not say which emperor issued it, and it carries no date.",
+          "Edicts of this general kind are not unusual. Grave robbery was a real and recurring problem across the Roman world, tomb violation was already a crime, and inscriptions cursing or threatening those who disturb a burial are common. What made this one famous is the combination of a capital penalty, a mention of moving stones, and a note saying it came from Nazareth — which invited the reading that a Roman emperor had heard the story in Matthew 28 of a body removed from a sealed tomb and legislated against it.",
+        ],
+      },
+      {
+        heading: "The Resurrection Claim Is Dead, and the 2020 Study Did Not Revive It",
+        paragraphs: [
+          "That reading has never had a foundation, and it is worth being precise about why rather than merely dismissing it. There is no provenance, so the Nazareth connection rests entirely on a dealer's note about a shipping point. There is no date on the stone, so the palaeographic range spans emperors on either side of the relevant decades. And the edict type is attested independently of Judea, so nothing in its content requires a Judean occasion. Three independent gaps, each fatal on its own.",
+          "In 2020 a team led by Kyle Harper and M. McCormick published a stable-isotope study of the marble in the Journal of Archaeological Science: Reports. Laser-ablation analysis found enriched carbon-13 and depleted oxygen-18, a signature matching the upper quarry on the Greek island of Kos, and from that provenance the authors proposed that the edict was issued by Augustus in response to the desecration of the tomb of Nikias, a Koan tyrant who died around 20 BC. The precise limit is this: isotopes identify the quarry the stone was cut from. They do not identify where the text was carved, where the stele stood, or when it was inscribed. Marble travelled. The Nikias identification is a plausibility argument built on the quarry result, not a demonstration, and the authors present it as a proposal.",
+          "What the study does do decisively is remove the claim's only Galilean foothold: the marble is not local stone. The apologetic claim was weak before 2020 and is weaker now, and this app states that plainly for a reason that has nothing to do with scepticism. The resurrection is not held up by this stone, and it never was. An argument that leans on it is an argument a reader will one day have taken away from them by someone better informed — and the damage that does is worse than the help the argument was ever giving.",
+        ],
+      },
+    ],
+    verses: [
+      { reference: "Matthew 27:62-66", note: "The guard at the tomb and the sealed stone" },
+      { reference: "Matthew 28:11-15", note: "The story that the disciples stole the body, \"spread abroad among the Jews\"" },
+      { reference: "John 20:25", note: "The disciples' own claim was not that the tomb was legally protected but that they had seen him" },
+    ],
+    sources: [
+      { label: "Wikipedia: Nazareth Inscription", url: "https://en.wikipedia.org/wiki/Nazareth_Inscription" },
+      { label: "Associates for Biblical Research: New study questions context of the Nazareth Inscription", url: "https://biblearchaeology.org/new-study-questions-context-of-nazareth-inscription/" },
+    ],
+    discovery: {
+      objectType: "White marble slab with about twenty-two lines of Greek — a diatagma Kaisaros, an edict of Caesar",
+      findSite: "Unknown. It has no excavation context and was acquired on the antiquities market",
+      foundYear: "Acquired 1878; first published 1930",
+      foundBy: "No excavator. The collector Wilhelm Frohner acquired it in 1878; his own catalogue note reads \"marble slab sent from Nazareth in 1878\" — sent from, not found at. It was published only in 1930, by Franz Cumont",
+      objectDate: "Uncertain. The stone carries no date and palaeography allows a wide range across the early empire",
+      objectDateCertainty: "disputed",
+      currentLocation: "Bibliotheque nationale de France, Cabinet des Medailles, Paris, on display since 1925. No shelfmark could be verified and none is given",
+      unprovenanced: true,
+    },
+    citations: [
+      {
+        tier: "scholarly",
+        label: "K. Harper, M. McCormick et al., \"Establishing the provenance of the Nazareth Inscription\"",
+        credit: "Kyle Harper, Michael McCormick, Matthew Hamilton, Chantal Peiffert, Raymond Michels and colleagues",
+        detail: "Journal of Archaeological Science: Reports 30 (2020), 102228. Laser-ablation stable-isotope analysis matching the marble to the upper quarry on Kos. The publisher's page refuses automated requests, so no URL is given; the DOI is 10.1016/j.jasrep.2020.102228",
+        supports: "The isotope result, the Kos quarry match, and the proposed Nikias occasion",
+        paywalled: true,
+      },
+      {
+        tier: "institution",
+        label: "Bibliotheque nationale de France, Cabinet des Medailles",
+        credit: "Bibliotheque nationale de France",
+        detail: "The holding institution since 1925. No object page or shelfmark could be verified, so neither is given rather than a guessed one",
+        supports: "Current location",
+      },
+      {
+        tier: "reference",
+        label: "Associates for Biblical Research: \"New Study Questions Context of Nazareth Inscription\"",
+        url: "https://biblearchaeology.org/new-study-questions-context-of-nazareth-inscription/",
+        credit: "Associates for Biblical Research",
+        detail: "An evangelical archaeology organisation's own assessment, reaching the same conclusion about the resurrection claim",
+        supports: "The collapse of the Nazareth provenance and the limits of the 2020 study",
+      },
+      {
+        tier: "encyclopedic",
+        label: "Wikipedia: Nazareth Inscription",
+        url: "https://en.wikipedia.org/wiki/Nazareth_Inscription",
+      },
+    ],
+    reflectionPrompt:
+      "The resurrection was never resting on this stone. What is your own confidence actually resting on?",
+  },
+  {
+    id: "arad-ostraca",
+    name: "Arad Ostraca",
+    alternateNames: ["Arad Inscriptions", "Arad Letters"],
+    category: "discovery",
+    role: "Hebrew Military Correspondence from a Judahite Desert Fort",
+    summary:
+      "More than a hundred inked potsherds from a small fort in the Negev — ration orders, troop movements, and a mention of the house of YHWH — written in Judah's last years.",
+    sections: [
+      {
+        heading: "A Fort's Filing System",
+        paragraphs: [
+          "Tel Arad in the eastern Negev was excavated between 1962 and 1967 in two halves: Yohanan Aharoni directed the upper mound with its Iron Age citadel, and R. Amiran directed the much older Early Bronze city on the lower slope. Aharoni's half produced something a small border fort has no business producing — more than a hundred Hebrew inscriptions written in ink on broken pottery, the ancient equivalent of scrap paper.",
+          "The best known group is the archive of Eliashib son of Eshyahu, the man in charge of stores in Stratum VI, around 600 BC. His correspondence is entirely unglamorous and that is why it is valuable: issue so much wine to the Kittim, so much flour, so much oil; send men to Ramat-Negev; do this quickly. Aharoni published the corpus as Arad Inscriptions, in Hebrew in 1975 and in English in 1981, and the material is held by the Israel Antiquities Authority and displayed in the Israel Museum.",
+        ],
+      },
+      {
+        heading: "The House of YHWH, and the Last Weeks",
+        paragraphs: [
+          "Two things in the archive reach directly into the biblical text. One is a reference to the house of YHWH — a fort clerk writing about the temple as an ordinary point of reference, in Hebrew, in Judah, before the exile. The other is the tone of the latest letters, which are the correspondence of a garrison under increasing pressure as the Babylonian advance closes in. Jeremiah 34:7 describes exactly this moment from the other end of the country, with the army of Babylon fighting against Jerusalem, against Lachish and against Azekah, and those alone left of the fortified cities of Judah. Arad is the southern edge of the same emergency.",
+          "Arad itself is in Scripture from much earlier: the Canaanite king of Arad fights Israel in Numbers 21, and Judges places the Kenites settling in the wilderness south of Arad. The citadel also contained a small sanctuary with two altars, which was dismantled and buried at some point in the fort's life — a fact often connected to the reforms of Hezekiah or Josiah described in 2 Kings, and which belongs to its own article rather than this one.",
+        ],
+      },
+      {
+        heading: "Six Writers, Twelve Authors, and What Literacy Means",
+        paragraphs: [
+          "In 2016 a Tel Aviv University group published a study in the Proceedings of the National Academy of Sciences applying image processing and machine learning to the handwriting on sixteen of the Arad ostraca. Their conclusion was that at least six distinct writers were at work, ranging from the fort commander down to a deputy quartermaster, and that all of them wrote with competent spelling and syntax. From this they argued for a relatively widespread literacy in Judah around 600 BC, and further, that a substantial amount of biblical literature could therefore have been compiled before the destruction of 586 BC rather than during or after the exile.",
+          "Christopher Rollston praised the method and rejected the sociological conclusion, and his objection is the one to weigh. The ostraca do not all come from a single moment: they span different strata across the seventh century and earlier, so six writers over decades is a thinner result than six writers at one desk. And six literate men at a military installation shows that the military-administrative apparatus of Judah could read and write, which nobody doubted. Literacy in an administrative elite is not literacy in the population, and the leap from one to the other is where the argument becomes an argument rather than a measurement.",
+          "One thing readers should not conflate. The same group published a follow-up in PLOS ONE in 2020 combining forensic document examination with the algorithms, after which Tel Aviv University publicised a figure of twelve authors for the Arad corpus. \"Six writers\" and \"twelve authors\" are different studies, on differently defined bodies of material, and quoting them interchangeably — as many summaries do — misrepresents both. Where the app stands: the ostraca are strong evidence that writing was an ordinary working tool of Judah's administration well before the exile, which is genuinely relevant to how the biblical books could have been written, copied and kept. They are not evidence about who could read in a village, and the more ambitious version of the claim outruns what sixteen potsherds can carry.",
+        ],
+      },
+    ],
+    verses: [
+      { reference: "Numbers 21:1", note: "The Canaanite king of Arad attacks Israel" },
+      { reference: "Judges 1:16", note: "The Kenites settle in the wilderness of Judah, south of Arad" },
+      { reference: "Jeremiah 34:7", note: "Lachish and Azekah alone left — the emergency the last Arad letters belong to" },
+      { reference: "2 Kings 23:8", note: "Josiah defiles the high places from Geba to Beersheba — the reform often connected with the Arad sanctuary" },
+    ],
+    sources: [
+      { label: "Rollston Epigraphy: methodological musings on the PNAS study", url: "http://www.rollstonepigraphy.com/?p=708" },
+      { label: "Tel Aviv University: the Arad texts and the twelve-author study", url: "https://english.tau.ac.il/news/Literacy-in-the-biblic-times" },
+    ],
+    discovery: {
+      objectType: "Over a hundred ostraca — Hebrew letters and lists written in ink on potsherds",
+      findSite: "The Iron Age citadel on the upper mound at Tel Arad, in the eastern Negev",
+      foundYear: "1962-1967",
+      foundBy: "Yohanan Aharoni, who directed the upper mound and the Iron Age citadel. Ruth Amiran directed the Early Bronze lower city in the same seasons",
+      objectDate: "Chiefly late seventh to early sixth century BC; the Eliashib archive is Stratum VI, c. 600 BC",
+      objectDateCertainty: "traditional",
+      currentLocation: "Israel Antiquities Authority collection; displayed at the Israel Museum, Jerusalem",
+    },
+    citations: [
+      {
+        tier: "institution",
+        label: "Y. Aharoni, Arad Inscriptions",
+        credit: "Yohanan Aharoni, for the Tel Arad excavation — the excavating body's own publication",
+        detail: "Hebrew edition 1975; English edition, Israel Exploration Society, 1981. Cited in place of a museum object page: the Israel Museum's online collection could not be fetched. Print only",
+        supports: "The corpus, the Eliashib archive and the stratigraphy",
+      },
+      {
+        tier: "scholarly",
+        label: "S. Faigenbaum-Golovin et al., \"Algorithmic handwriting analysis of Judah's military correspondence sheds light on composition of biblical texts\"",
+        credit: "Shira Faigenbaum-Golovin, Arie Shaus and colleagues, Tel Aviv University",
+        detail: "Proceedings of the National Academy of Sciences 113/17 (2016), 4664-4669; DOI 10.1073/pnas.1522200113. The publisher's site refuses automated requests, so no URL is given",
+        supports: "The six-writer result and the argument from it to pre-exilic composition",
+      },
+      {
+        tier: "scholarly",
+        label: "C. Rollston, \"The Tel Aviv University PNAS Study: Some Methodological Musings\"",
+        url: "http://www.rollstonepigraphy.com/?p=708",
+        credit: "Christopher Rollston, George Washington University",
+        detail: "Rollston Epigraphy, April 2016",
+        supports: "The objection to the leap from six writers to widespread literacy",
+      },
+      {
+        tier: "scholarly",
+        label: "Forensic document examination and algorithmic handwriting analysis of Judahite biblical period inscriptions",
+        url: "https://journals.plos.org/plosone/article?id=10.1371%2Fjournal.pone.0237962",
+        credit: "Faigenbaum-Golovin and colleagues, Tel Aviv University",
+        detail: "PLOS ONE 15/9 (2020), e0237962 — the follow-up study behind the later \"twelve authors\" figure. Open access",
+        supports: "The distinction between the 2016 six-writer result and the later twelve-author figure",
+      },
+      {
+        tier: "reference",
+        label: "Tel Aviv University: \"The texts from the biblical-period fortress at Tel Arad were written by 12 different authors\"",
+        url: "https://english.tau.ac.il/news/Literacy-in-the-biblic-times",
+        credit: "Tel Aviv University",
+        supports: "The twelve-author figure as the university itself publicised it",
+      },
+    ],
+    reflectionPrompt:
+      "The most valuable thing Eliashib left behind was a stack of routine supply orders he never expected anyone to read. What ordinary faithfulness of yours is worth more than you think?",
+  },
   {
     id: "sabbath",
     name: "Sabbath",
