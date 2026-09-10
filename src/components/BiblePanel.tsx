@@ -179,29 +179,40 @@ const SINGLE_CHAPTER_BOOK_LAST_VERSE: Record<string, number> = {
   Jude: 25,
 };
 
-/** `short` is what the picker shows once the full name stops fitting — see LABEL_SHORTENS_ABOVE.
- * The full name stays on the control as its title and aria-label at every size, so nothing is
- * lost to a screen reader, or to a hover, when the visible text shortens. */
+/** `short` is the code shown on the closed control; `label` is the full name, which is what the
+ * open list, the accessible name and the tooltip all say. They can differ because the control is
+ * a native <select> laid transparently over a chip we draw ourselves — see .bible-translation-compact
+ * in App.css. A bare <select> cannot do this: its closed text IS the selected option's text, so
+ * shortening the chip would have shortened the list to three codes with no names beside them.
+ *
+ * The full name never shortens, at any text size. It is rendered by the OS dropdown, which is sized
+ * by the OS and not by this 375px panel, so the row's width has no say in it — which is why the
+ * old LABEL_SHORTENS_ABOVE threshold (the point at which "American Standard Version (ASV)" stopped
+ * fitting the reader's own row) is gone rather than retuned. */
 const TRANSLATIONS = [
   { id: "web", label: "World English Bible (WEB)", short: "WEB" },
   { id: "kjv", label: "King James Version (KJV)", short: "KJV" },
   { id: "asv", label: "American Standard Version (ASV)", short: "ASV" },
 ];
 
-/** Above this text size the picker shows "ASV" instead of "American Standard Version (ASV)".
+/** Above this text size the reader's one control row stacks: the chapter navigation takes the full
+ * width on its own line and the translation chip and Listen sit on a second line beneath it.
  *
- * Not a taste call — it is the point where the long name stops fitting on a phone. The reading
- * panel is 375px wide whatever the text-size setting says; `zoom` scales the type without
- * widening the panel. Measured at 375px: the longest label wants 279px x the scale, a full-width
- * row offers 375 - 36 x the scale, and those cross just under 1.2. At 1.15 the long name still
- * fits once the row wraps (320.9 wanted, 333.6 offered — see .bible-toolbar in App.css); at 1.3
- * it does not (362.7 vs 328.2), and no amount of layout recovers it, because a native select
- * truncates rather than wraps. A reader who asked for large type is better served by "ASV" at the
- * size they asked for than by "American Standard Versi" at the same size.
+ * Measured, not chosen, and set where it is because of what is on either side of it. The panel is
+ * 375px whatever the text-size setting says — `zoom` scales the contents without widening the
+ * column — so the room this row has to divide shrinks as the type grows: 338px of it at 1.0, 290 at
+ * 1.15, 253 at 1.3. The three fixed controls and their gaps want 164.9 of that whatever the scale.
  *
- * All three options switch together: shortening only the one that overflows would leave the open
- * dropdown a ragged mix of full names and codes. */
-const LABEL_SHORTENS_ABOVE = 1.2;
+ * At 1.15 there is still a usable chapter chip left over, and one row with a chapter name wrapped
+ * onto two lines is SHORTER than two rows — so 1.15 stays unstacked, and the threshold sits above
+ * it. By 1.3 the fixed controls have eaten so much of the column that the chapter would be reduced
+ * to a couple of characters a line, and stacking hands it the full width back.
+ *
+ * The next steps up (1.45 through the 1.8 maximum) are where NOT stacking would actually overflow:
+ * the arrows and both chips refuse to shrink, and past about 1.45 they no longer fit the column at
+ * all. A wrap, not an overlap — this is the setting where this app has already shipped one row on
+ * top of another. */
+const ROW_STACKS_ABOVE = 1.2;
 
 const MAX_SEARCH_RESULTS = 30;
 
@@ -1626,101 +1637,56 @@ export default function BiblePanel({
           immediately above the passage — see .bible-chapters-read. It spent a few hours in the
           toolbar row below as a mark and a number; that was too small to read on a phone. */}
 
-      <div className="bible-toolbar">
-        <select
-          className="bible-translation-select"
-          value={translation}
-          onChange={(e) => handleTranslationChange(e.target.value)}
-          /* The full name regardless of what the option text is showing, so shortening the
-             visible label never costs a screen reader or a hover the actual translation. */
-          aria-label={`Translation: ${TRANSLATIONS.find((t) => t.id === translation)?.label ?? translation}`}
-          title={TRANSLATIONS.find((t) => t.id === translation)?.label}
-        >
-          {TRANSLATIONS.map((t) => (
-            <option key={t.id} value={t.id}>
-              {textScale > LABEL_SHORTENS_ABOVE ? t.short : t.label}
-            </option>
-          ))}
-        </select>
-        {/* The transport itself, not a disclosure toggle: press to play, press again to pause. The
-            native <audio> controls this replaced cost ~100px of the phone's screen above the first
-            verse, every time a reader turned the narration on. Its scrubber and elapsed/remaining
-            readout went with it — a deliberate trade for that space, not an oversight. */}
-        {audioEligible && (
-          <button
-            type="button"
-            className={`bible-plans-chip bible-listen-chip${audioState === "idle" ? "" : " bible-plans-chip-active"}`}
-            onClick={handleListenPress}
-            aria-pressed={audioState !== "idle"}
-            aria-label={
-              audioState === "playing"
-                ? "Pause the narration of this chapter"
-                : audioState === "loading"
-                  ? "Loading the narration of this chapter"
-                  : "Listen to this chapter"
-            }
-            // The full credit also lives under the chapter, where a phone can actually reach it —
-            // this tooltip is a desktop convenience, not the app's attribution.
-            title={CHAPTER_AUDIO_CREDIT}
-          >
-            {audioState === "playing" ? (
-              <>
-                <Icon name="pause" inline /> Pause
-              </>
-            ) : (
-              <>
-                {/* Buffering changes the MARK and not the word. "Loading…" here read honestly and
-                    cost 26px, which came out of the translation select beside it and clipped
-                    "World English Bible (WEB)" to "(WEB" on a 375px screen — shipped once and
-                    caught on the live site. The word stays "Listen" because that is still true:
-                    nothing is playing yet, and a press still means stop. */}
-                {audioState === "loading" ? (
-                  <span className="bible-listen-spinner" aria-hidden="true" />
-                ) : (
-                  <Icon name="volume" inline />
-                )}{" "}
-                Listen
-              </>
-            )}
-          </button>
-        )}
-        {/* Mounted for every WEB chapter and never drawn — see the src effect for why it can't wait
-            until the reader presses play. preload="none" keeps that free (verified: no request to
-            archive.org until the press). It deliberately survives an error too; unmounting it there
-            would leave the Listen button with nothing to call, i.e. dead until the chapter changed.
-            display:none, so it takes no width from the select and no place in the row's order. */}
-        {audioSrc && (
-          <audio
-            ref={audioElRef}
-            className="bible-audio-element"
-            preload="none"
-            src={audioSrc}
-            onPlay={() => {
-              isPlayingRef.current = true;
-            }}
-            onPlaying={() => {
-              continuingRef.current = false;
-              isPlayingRef.current = true;
-              setAudioState("playing");
-            }}
-            onWaiting={() => {
-              // Buffering mid-run says "loading", but must never wake a player the reader paused.
-              setAudioState((s) => (s === "idle" ? s : "loading"));
-            }}
-            onPause={() => {
-              if (continuingRef.current) return; // the src swap's own pause — see continuingRef
-              isPlayingRef.current = false;
-              setAudioState("idle");
-            }}
-            onEnded={handleAudioEnded}
-            onError={handleAudioError}
-          />
-        )}
-      </div>
+      {/* The translation picker and the Listen chip had a row of their own here. They are now on the
+          chapter-navigation row below (see .bible-passage-header), which they share with the ‹ › and
+          the chapter heading, and the row they used to occupy is gone entirely. Same trade as the
+          two above it: nothing was removed, it was folded into a line the reader already had.
+
+          What is left standing here is the <audio> element itself, which draws nothing.
+
+          Mounted for every WEB chapter and never drawn — see the src effect for why it can't wait
+          until the reader presses play. preload="none" keeps that free (verified: no request to
+          archive.org until the press). It deliberately survives an error too; unmounting it there
+          would leave the Listen button with nothing to call, i.e. dead until the chapter changed.
+
+          IT STAYS OUT HERE, ABOVE THE PASSAGE BLOCK, AND NOT BESIDE THE BUTTON THAT DRIVES IT.
+          The passage block unmounts on every chapter turn (`loading` gates it), and an <audio>
+          element that unmounts is an <audio> element that stops — which would break both continuous
+          listening across a chapter turn and the auto-advance at the end of one. Its own condition
+          (`audioSrc`) deliberately survives that window. */}
+      {audioSrc && (
+        <audio
+          ref={audioElRef}
+          className="bible-audio-element"
+          preload="none"
+          src={audioSrc}
+          onPlay={() => {
+            isPlayingRef.current = true;
+          }}
+          onPlaying={() => {
+            continuingRef.current = false;
+            isPlayingRef.current = true;
+            setAudioState("playing");
+          }}
+          onWaiting={() => {
+            // Buffering mid-run says "loading", but must never wake a player the reader paused.
+            setAudioState((s) => (s === "idle" ? s : "loading"));
+          }}
+          onPause={() => {
+            if (continuingRef.current) return; // the src swap's own pause — see continuingRef
+            isPlayingRef.current = false;
+            setAudioState("idle");
+          }}
+          onEnded={handleAudioEnded}
+          onError={handleAudioError}
+        />
+      )}
 
       {/* Only on screen when narration the reader actually asked for failed, so it costs nothing the
           rest of the time — which is the whole point of having removed the bar it used to sit in.
-          Pressing Listen again retries; see handleListenPress. */}
+          It sits above the passage rather than under the Listen chip that produced it: the chip is
+          on the chapter row now, and threading an error message into that row would put back the
+          height this change just took out. Pressing Listen again retries; see handleListenPress. */}
       {audioError && audioAsked && <p className="bible-audio-error no-print">{audioError}</p>}
 
       {searching && <p className="bible-status">Searching…</p>}
@@ -1828,45 +1794,133 @@ export default function BiblePanel({
 
       {!showPlans && !showIntro && passage && !loading && !error && !searchResults && (
         <div className="bible-passage">
-          <div className="bible-passage-header">
-            <button
-              type="button"
-              className="bible-chapter-nav-small"
-              onClick={() => goToChapter(-1)}
-              disabled={atBibleStart()}
-              aria-label="Previous chapter"
-              title="Previous chapter"
-            >
-              ‹
-            </button>
-            {/* The heading IS the navigation now — it already names the passage, so it costs no row
-                of its own. The ‹ › arrows either side stay: they're the fast path between adjacent
-                chapters and the sheet would be three taps for the same thing. */}
-            <h4 className="bible-passage-title">
+          {/* The reader's ONE control row. Translation, chapter navigation and Listen all live here
+              now; the full-width translation row that used to sit above the panel is gone, and with
+              it the last band of chrome between the top of the reader and the first verse. */}
+          <div
+            className={`bible-passage-header${textScale > ROW_STACKS_ABOVE ? " bible-passage-header-stacked" : ""}`}
+          >
+            {/* A native <select> at opacity 0, laid over a chip we draw ourselves. The chip says
+                "WEB"; the list the select opens still says "World English Bible (WEB)", because the
+                OS draws that list at its own size and this 375px row has no say in it. A plain
+                <select> cannot separate the two — its closed text is the selected option's text —
+                so the row could only have been paid for by cutting the list down to three codes.
+
+                The select is the real control: it takes focus, it takes the keyboard, it fires
+                change. Nothing here is a div pretending to be a button. The chip is aria-hidden so
+                a screen reader hears the select's own full-name label once, not twice.
+
+                Its hit area is 44px tall against a 36px chip — the same trick, and the same
+                reasoning, as .bible-passage-title-btn::after: the finger gets Apple's minimum, the
+                layout is charged for the chip. */}
+            <span className="bible-translation-compact">
+              <span className="bible-translation-compact-label" aria-hidden="true">
+                {TRANSLATIONS.find((t) => t.id === translation)?.short ?? translation.toUpperCase()}
+                <span className="bible-translation-compact-caret">▾</span>
+              </span>
+              <select
+                className="bible-translation-select bible-translation-compact-select"
+                value={translation}
+                onChange={(e) => handleTranslationChange(e.target.value)}
+                /* The full name, so neither a screen reader nor a hover ever gets only the code. */
+                aria-label={`Translation: ${TRANSLATIONS.find((t) => t.id === translation)?.label ?? translation}`}
+                title={TRANSLATIONS.find((t) => t.id === translation)?.label}
+              >
+                {TRANSLATIONS.map((t) => (
+                  <option key={t.id} value={t.id}>
+                    {t.label}
+                  </option>
+                ))}
+              </select>
+            </span>
+
+            {/* The ‹ heading › cluster, boxed so it can be centred in what the two chips leave and,
+                above ROW_STACKS_ABOVE, take a whole line of its own without the chips following it. */}
+            <div className="bible-passage-nav">
               <button
                 type="button"
-                className="bible-passage-title-btn"
-                onClick={openReferencePicker}
-                aria-haspopup="dialog"
-                aria-expanded={referencePickerOpen}
-                aria-label={`${passage.reference} — choose a different book, chapter or verse`}
+                className="bible-chapter-nav-small"
+                onClick={() => goToChapter(-1)}
+                disabled={atBibleStart()}
+                aria-label="Previous chapter"
+                title="Previous chapter"
               >
-                <span>{passage.reference}</span>
-                <span className="bible-passage-title-caret" aria-hidden="true">
-                  ▾
-                </span>
+                ‹
               </button>
-            </h4>
-            <button
-              type="button"
-              className="bible-chapter-nav-small"
-              onClick={() => goToChapter(1)}
-              disabled={atBibleEnd()}
-              aria-label="Next chapter"
-              title="Next chapter"
-            >
-              ›
-            </button>
+              {/* The heading IS the navigation now — it already names the passage, so it costs no row
+                  of its own. The ‹ › arrows either side stay: they're the fast path between adjacent
+                  chapters and the sheet would be three taps for the same thing. */}
+              <h4 className="bible-passage-title">
+                <button
+                  type="button"
+                  className="bible-passage-title-btn"
+                  onClick={openReferencePicker}
+                  aria-haspopup="dialog"
+                  aria-expanded={referencePickerOpen}
+                  aria-label={`${passage.reference} — choose a different book, chapter or verse`}
+                >
+                  <span>{passage.reference}</span>
+                  <span className="bible-passage-title-caret" aria-hidden="true">
+                    ▾
+                  </span>
+                </button>
+              </h4>
+              <button
+                type="button"
+                className="bible-chapter-nav-small"
+                onClick={() => goToChapter(1)}
+                disabled={atBibleEnd()}
+                aria-label="Next chapter"
+                title="Next chapter"
+              >
+                ›
+              </button>
+            </div>
+
+            {/* The transport itself, not a disclosure toggle: press to start, press again to pause.
+                The native <audio> controls this replaced cost ~100px of the phone's screen above the
+                first verse, every time a reader turned the narration on. Its scrubber and
+                elapsed/remaining readout went with it — a deliberate trade for that space, not an
+                oversight. It sat on a row of its own until this change; now it shares this one. */}
+            {audioEligible && (
+              <button
+                type="button"
+                className={`bible-plans-chip bible-listen-chip${audioState === "idle" ? "" : " bible-plans-chip-active"}`}
+                onClick={handleListenPress}
+                aria-pressed={audioState !== "idle"}
+                aria-label={
+                  audioState === "playing"
+                    ? "Pause the narration of this chapter"
+                    : audioState === "loading"
+                      ? "Loading the narration of this chapter"
+                      : "Listen to this chapter"
+                }
+                // The full credit also lives under the chapter, where a phone can actually reach it —
+                // this tooltip is a desktop convenience, not the app's attribution.
+                title={CHAPTER_AUDIO_CREDIT}
+              >
+                {audioState === "playing" ? (
+                  <>
+                    <Icon name="pause" inline /> <span className="bible-listen-word">Pause</span>
+                  </>
+                ) : (
+                  <>
+                    {/* Buffering changes the MARK and not the word. "Loading…" here read honestly and
+                        cost 26px, which came out of the translation control beside it and clipped
+                        "World English Bible (WEB)" to "(WEB" on a 375px screen — shipped once and
+                        caught on the live site. The word stays "Listen" because that is still true:
+                        nothing is playing yet, and a press still means stop. The row it shares is
+                        tighter than that one was; 70px is still the whole budget. */}
+                    {audioState === "loading" ? (
+                      <span className="bible-listen-spinner" aria-hidden="true" />
+                    ) : (
+                      <Icon name="volume" inline />
+                    )}{" "}
+                    <span className="bible-listen-word">Listen</span>
+                  </>
+                )}
+              </button>
+            )}
           </div>
 
           {/* Under the chapter heading, in the sentence it has always been — the owner's call, made

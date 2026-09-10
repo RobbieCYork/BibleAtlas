@@ -3013,10 +3013,10 @@ a.profile-links-url {
   position: relative;
   display: inline-flex;
   align-items: center;
-  gap: 8px;
+  gap: 6px;
   max-width: 100%;
   min-height: 36px;
-  padding: 3px 14px;
+  padding: 3px 10px;
   border: 1px solid var(--accent);
   background: var(--accent-bg);
   border-radius: 999px;
@@ -3039,10 +3039,43 @@ a.profile-links-url {
   transform: translateY(-50%);
 }
 
+/* IT WRAPS, IT DOES NOT TRUNCATE. This used to be nowrap + ellipsis, which was safe while the
+   chapter heading had a whole row to itself: 338px at 375px, minus two arrows, left 246px for a
+   name that never needed more than 203. Sharing the row with the translation chip and Listen leaves
+   it 149, and nine of the sixty-six books want more than that — "1 Corinthians 13" and "Song of
+   Solomon 8" among them. Truncating the one thing on this row that says WHICH CHAPTER YOU ARE
+   READING is not a trade worth making for a line of chrome, and this repo has shipped exactly that
+   bug once already (see .bible-listen-chip's note about "World English Bible (WEB").
+
+   So the long names take a second line, and the row grows by that line and only for those books.
+   Fifty-seven of sixty-six stay on one line and keep the whole 39px this change is worth.
+
+   `overflow-wrap: break-word` is the backstop under the backstop: at a raised text size the column
+   can get narrow enough that a single word ("Deuteronomy") does not fit any line, and a broken word
+   is still readable where a clipped one is a bug. `overflow: hidden` stays so nothing can spill out
+   of the chip's rounded edge. */
 .bible-passage-title-btn > span:first-child {
+  /* Two lines, then an ellipsis — measured on both sides. Wrapping without a cap is how the reader
+     ended up WORSE than before at the largest text sizes: at 1.8 on a 375px phone the chapter chip
+     is 88px wide, "1 Corinthians 13" took four lines in it, and the row it was supposed to shrink
+     grew past the two rows it replaced. Two lines covers every book at every size a phone can
+     actually give this row; the third line was never buying legibility, only height. */
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
   overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
+  overflow-wrap: break-word;
+}
+
+/* Stacked, the navigation has the whole column, so a long name fits one line at every size the
+   stack is used at except the very largest — and there the ellipsis is exactly what this heading
+   already did before this change (measured: the old layout clipped "1 Corinthians 13" at 1.3 and
+   above). One line here is what keeps the stacked row to two rows' worth of height instead of
+   three. */
+.bible-passage-header-stacked .bible-passage-title-btn > span:first-child {
+  -webkit-line-clamp: 1;
+  line-clamp: 1;
 }
 
 .bible-passage-title-btn:hover {
@@ -3407,6 +3440,23 @@ a.profile-links-url {
   line-height: 1.4;
 }
 
+/* --- The translation control ---------------------------------------------------------------
+ * It used to be a full-width <select> on a band of its own across the top of the reader, with the
+ * Listen chip beside it. That band is gone. The control is now a three-letter chip ("WEB") sharing
+ * the chapter-navigation row — see .bible-passage-header — which is worth ~34px of every phone
+ * screen, on a surface where scripture is the entire product.
+ *
+ * The chip is drawn here; the control is a real <select> at opacity 0 laid over it. The point of
+ * the overlay is the DROPDOWN. A bare <select> shows its selected option's text when closed, so
+ * shortening the chip to "WEB" would have shortened the open list to "WEB / KJV / ASV" too, and a
+ * reader who does not already know the codes would have had nothing to choose between. This way the
+ * closed control is three letters and the open list is still three full names.
+ *
+ * Do not "simplify" this into a styled <select>. `appearance: none` gets you the chip and not the
+ * separation, and the separation is the whole reason it is built this way. Do not replace it with a
+ * <div> and a click handler either: what is under the chip takes focus, takes the keyboard and
+ * fires `change` because it is the platform's own control. */
+
 .bible-translation-select {
   width: 100%;
   padding: 6px 8px;
@@ -3418,48 +3468,78 @@ a.profile-links-url {
   margin-bottom: 6px;
 }
 
-/* Translation picker + the "Listen" chip (when available) on one row. Text size lives in the
-   Account-menu Settings view (see useTextSize/TextSizeControl), not here. */
-.bible-toolbar {
-  display: flex;
-  align-items: stretch;
-  gap: 6px;
-  margin-bottom: 6px;
-  /* Above the default text size the translation picker takes a line of its own — see the
-     min-width on it below. At and under the default this never triggers and the row is
-     one line exactly as before. */
-  flex-wrap: wrap;
+.bible-translation-compact {
+  position: relative;
+  display: inline-flex;
+  flex-shrink: 0;
 }
 
-.bible-toolbar .bible-translation-select {
-  flex: 1;
-  margin-bottom: 0;
-  /* Gives the picker its own line above the default text size, and nothing below it.
-     `zoom` scales this row's contents without giving the row a single extra pixel — the panel
-     is 375px on a phone whatever the setting says — so the select is squeezed by whatever else
-     shares the line. Measured at 375px: the longest label needs 279px x the scale, while the
-     line offers 375 - 36 x the scale. One line stops being survivable immediately above 1.0.
+/* Three letters, whichever translation is on. The floor is measured, not guessed: "WEB" sets 5.5px
+   wider than "KJV" at 13px (57.3 against 51.8), and without a floor the chapter heading beside it
+   would step sideways every time a reader changed translation. Same reasoning, and the same kind of
+   number, as .bible-listen-chip's 70px. Any future code longer than three characters has to fit
+   it — or move this number, having measured the new one. */
+.bible-translation-compact-label {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 58px;
+  gap: 4px;
+  min-height: 36px;
+  padding: 0 8px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--surface-sunken);
+  color: var(--text);
+  font-size: 13px;
+  font-weight: 600;
+  line-height: 1;
+  white-space: nowrap;
+}
 
-     The threshold is expressed against the scale itself rather than as a fixed width, on
-     purpose. A tuned pixel floor would encode today's Listen chip and reading-count widths and
-     would silently start wrapping at the DEFAULT size the moment either of those changed. This
-     cannot: below 1.05 the calc is negative and clamps to zero, so the row is untouched at 1.0
-     and 0.8; above it the floor exceeds what the line can spare and the select wraps. `min()`
-     against 100% is what stops the floor overflowing the row once the select is alone on it —
-     without it the floor keeps growing with the scale and becomes an overflow of its own.
+/* In the accent, not in --text-muted, and not because it looks nicer. The chapter heading beside it
+   shipped once with a small muted caret and came back from an iPhone the same hour as "almost
+   invisible" — it read as decoration and not as a control (see .bible-passage-title-caret). This
+   chip is three letters with no other affordance on it at all, so it is the one mark saying the
+   letters can be tapped. It matches the heading's caret deliberately: two carets in the same colour
+   on the same row read as two controls of the same kind. */
+.bible-translation-compact-caret {
+  font-size: 0.78em;
+  line-height: 1;
+  color: var(--accent);
+}
 
-     This is not the whole fix. At 1.3 and above the longest label does not fit even a full-width
-     row (362.7px wanted, 328.2px available), which is why BiblePanel switches to the short
-     translation codes there — see TRANSLATIONS/LABEL_SHORTENS_ABOVE. Wrapping is what makes
-     1.15 correct and what gives the shortened labels room to breathe above that.
+/* 44px of touch target out of a 36px chip — the same trick, and the same reasoning, as
+   .bible-passage-title-btn::after, except that here the overlay IS the control, so the finger lands
+   on the select itself rather than on a pseudo-element in front of it. The extra 8px comes out of
+   the row's leading and not out of the layout: an absolutely-positioned box contributes no height.
 
-     The slope is deliberately far steeper than the distance it has to cover: the floor has to
-     reach the FULL row width to be any use, because a floor that only part-fills the line still
-     lets the Listen chip sit beside the select and squeeze it (measured: a 200px floor at 1.15
-     left the select on a shared line, 27px short of its label). At this slope the floor passes
-     the row's own width by about 1.065 and `min()` holds it at 100% from there, so the behaviour
-     is a step and not a ramp: one line at and below the default, its own full-width line above. */
-  min-width: min(100%, calc((var(--text-scale, 1) - 1.05) * 20000px));
+   Held to the chip's own width (left/right: 0) so it cannot swallow taps meant for the ‹ arrow
+   beside it. */
+.bible-translation-compact-select {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 50%;
+  width: auto;
+  height: 44px;
+  transform: translateY(-50%);
+  margin: 0;
+  padding: 0;
+  border-width: 0;
+  opacity: 0;
+  cursor: pointer;
+  /* 16px on purpose, and NOT inherited from the 13px chip: iOS Safari zooms the whole page when a
+     form control smaller than 16px takes focus. It is invisible, so this costs the chip nothing —
+     which is also why the mobile 16px rule further down can keep listing .bible-translation-select
+     without any of this having to know about it. */
+  font-size: 16px;
+}
+
+/* The chip has to show focus, because the thing that actually has focus cannot be seen. */
+.bible-translation-compact:focus-within .bible-translation-compact-label {
+  outline: 2px solid var(--accent);
+  outline-offset: 1px;
 }
 
 .bible-status {
@@ -3842,12 +3922,60 @@ a.profile-links-url {
   font-size: 16px;
 }
 
+/* --- The reader's one control row ------------------------------------------------------------
+ * Translation, chapter navigation and Listen, on the line the chapter heading was already using.
+ *
+ * This is the fourth and last of the collapses: the book/chapter/verse pickers folded into the
+ * heading, the audio transport folded into the Listen chip, the verse step came out of the picker,
+ * and now the translation row folds into this one. Nothing was deleted in any of them — every
+ * control still exists and still does what it did. What went is the CHROME between the top of the
+ * reader and the first verse, which on a 375px phone is the difference between opening a chapter on
+ * two verses and opening it on three.
+ *
+ * The row is three things wide: a fixed chip, a flexible middle, a fixed chip. Only the middle
+ * shrinks, and inside it only the chapter heading does — the ‹ › arrows hold 36px and the two chips
+ * hold their content, so nothing on this row can be squeezed below a thumb. */
 .bible-passage-header {
   display: flex;
   align-items: center;
-  justify-content: center;
-  gap: 10px;
+  /* 6px, not the 10px the two-arrow row used to run. Measured: at 375px the row has 338px and the
+     three fixed controls want 164.9 of it, so every pixel of gap comes straight off the chapter
+     name. 6px still reads as three separate controls; 8px cost "Matthew 21" its last two letters. */
+  gap: 6px;
   margin-bottom: 10px;
+}
+
+/* Takes whatever the two chips leave and centres the heading in it. `min-width: 0` is what lets the
+   heading's own ellipsis do the shrinking instead of the row overflowing the panel — without it a
+   flex item refuses to go below its content's width and the chips get pushed off the edge. */
+.bible-passage-nav {
+  flex: 1 1 auto;
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+}
+
+/* Above ROW_STACKS_ABOVE (see BiblePanel) the four controls stop fitting one line at 375px, and the
+   only one that can afford to lose width is the chapter name — which is the one that must not. So
+   the row wraps rather than clips: the navigation takes a full line and the two chips share the one
+   under it, pushed to opposite ends.
+
+   `order: -1` is what keeps that to TWO lines instead of three. Wrapping alone would leave the
+   translation chip stranded above a full-width navigation row with Listen below it; lifting the
+   navigation to the front of the flex order puts the chips back together on one line.
+
+   Wrapping, and not overlapping. This is the setting where this app has already shipped one row
+   sitting on top of another. */
+.bible-passage-header-stacked {
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.bible-passage-header-stacked .bible-passage-nav {
+  order: -1;
+  flex: 1 0 100%;
 }
 
 .bible-passage-header h4 {
@@ -7218,9 +7346,9 @@ a.profile-links-url {
  * There is no player bar any more. The sticky block that used to hold the native <audio> transport
  * and the narrator credit took roughly 100px off the top of a 375px screen the moment a reader
  * pressed Listen — on a phone that is two verses of scripture, paid for with a scrubber almost
- * nobody used. The Listen chip in .bible-toolbar is now the whole transport, the credit moved to
- * .bible-translation-credit under the chapter, and all that is left here is an element with no
- * appearance at all. */
+ * nobody used. The Listen chip is now the whole transport — it sits on the chapter row, see
+ * .bible-passage-header — the credit moved to .bible-translation-credit under the chapter, and all
+ * that is left here is an element with no appearance at all. */
 
 .bible-audio-element {
   display: none;
@@ -7231,15 +7359,65 @@ a.profile-links-url {
  * width of the wider of the two, and pinning it there stops even the 1px "Listen"/"Pause" twitch.
  *
  * That constraint is not fussiness. A "Loading…" label needs 92px, and the 26px came straight out
- * of the translation select beside it, on a row .bible-toolbar's own note calls out as having none
- * to give at 375px. It clipped "World English Bible (WEB)" to "World English Bible (WEB". That
- * shipped, and was caught on the live site. Any future label here has to fit 70px. */
+ * of the translation control beside it, on a row that had none to give at 375px. It clipped
+ * "World English Bible (WEB)" to "World English Bible (WEB". That shipped, and was caught on the
+ * live site. Any future label here has to fit 70px — and the row is TIGHTER now than it was then,
+ * because the chapter navigation shares it too. */
 .bible-listen-chip {
+  position: relative;
   display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: 5px;
   min-width: 70px;
+  /* Matches the ‹ › arrows and the two chips either side of them, so the row is one band of equal
+     controls. It also fixes what moving here would otherwise have cost: on its old row the chip was
+     stretched to the row's height by `align-items: stretch`, and this row centres its items, which
+     would have left a 14px-tall button — a third of what a thumb needs. */
+  min-height: 36px;
+}
+
+/* 44px of touch target out of a 36px chip. Third instance of the same trick on this row (see
+   .bible-passage-title-btn::after and .bible-translation-compact-select), and for the same reason:
+   an absolutely-positioned overlay contributes no height, so the finger gets Apple's minimum and
+   the layout is charged for 36px. */
+.bible-listen-chip::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 50%;
+  height: 44px;
+  transform: translateY(-50%);
+}
+
+/* --- Why the word goes away on a phone, and only on a phone ---
+ * The chip reads "Listen" / "Pause" wherever there is room for it, and there is room on a desktop
+ * panel. There is not on a 375px phone. Measured: the word costs 34px of a row that has 338px to
+ * divide between four controls, and those 34px come out of exactly one place — the chapter name,
+ * which is the only thing on the row that can give. Spending them on the word takes the chapter
+ * heading from fitting 57 of the 66 books on one line to fitting 15.
+ *
+ * What is left is not a bare glyph. It is the same chip, the same border, the same accent fill when
+ * it is playing, the same spinner while it buffers, and the same aria-label — "Listen to this
+ * chapter" / "Pause the narration of this chapter" — which is what a screen reader announced before
+ * this change too, because an aria-label has always overridden the visible word. Nothing was lost to
+ * assistive technology here; a sighted phone reader trades a word for two verses of Scripture.
+ *
+ * Do not delete the word from the JSX. It is what the desktop chip says, and it is what makes the
+ * mark on the phone recoverable — the title attribute and the label both still name the action. */
+@media (max-width: 768px) {
+  .bible-listen-word {
+    display: none;
+  }
+
+  .bible-listen-chip {
+    /* Square, so it matches the ‹ › arrows it now sits in line with rather than reading as a
+       stranded pill. The 70px floor is a desktop measurement (see above) and has nothing to say
+       about a chip with no word in it. */
+    min-width: 36px;
+    padding: 0 6px;
+  }
 }
 
 /* Buffering mark. 1em to match the Icon component's own em-sizing exactly, so swapping one for the
@@ -7256,7 +7434,9 @@ a.profile-links-url {
 }
 
 /* Narration failure. Only rendered when there is a failure, so it costs nothing the rest of the
- * time — sits just under the toolbar, where the bar that used to carry it was. */
+ * time — sits above the passage, where the player bar that used to carry it was. It is not on the
+ * chapter row with the chip that produced it: putting a sentence there would hand back the height
+ * this whole row exists to save. */
 .bible-audio-error {
   margin-top: 4px;
   font-size: 12px;
@@ -8014,9 +8194,20 @@ a.profile-links-url {
   font-size: 18px;
 }
 
-.bible-passage-header h4,
 .book-intro h4 {
   font-size: 21px;
+  font-weight: 500;
+}
+
+/* 19px, where the book introduction's heading beside it is still 21px, because this one is no
+   longer a heading standing alone on a line — it is the middle control of a row it shares with the
+   translation chip, the ‹ › arrows and Listen. Measured, and worth the 2px: at 21px only 48 of the
+   66 books fit the width this row can spare, at 19px 57 of them do, and the nine that still wrap
+   are the genuinely long ones. It stays comfortably the largest type on the reader's screen —
+   Scripture itself sets at 15px here — so nothing about it has stopped reading as the chapter's
+   heading. */
+.bible-passage-header h4 {
+  font-size: 19px;
   font-weight: 500;
 }
 
