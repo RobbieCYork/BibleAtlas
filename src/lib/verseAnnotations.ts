@@ -1623,6 +1623,24 @@ const NAME_CONTEXT_RULES: Record<string, NameContextRule[]> = {
   jacob: [
     { after: /^\s+Eliyahu\b/, to: null },            // the boy who found the Siloam inscription
     BEN_PATRONYMIC_BEFORE,                           // "Samuel ben Jacob", the Leningrad scribe's father
+
+    // ── ONE RECORD, ONE NAME: old-syriac-gospels ────────────────────────────────────────────
+    //
+    // The other half of the same fault; read the note under `joseph` below. Four bare "Jacob"s on
+    // that article, all of them Jacob son of Matthan of Matthew 1:15-16 and none of them the
+    // patriarch, three of the four inside quoted translations. jacob-father-of-joseph is a record
+    // of its own and says in its first line that it is not the patriarch, so these resolve rather
+    // than suppress. Phrases quoted verbatim, each unique to that one prose block and absent from
+    // every WEB verse; each pinned by a prose case in scripts/name-linker/cases.mjs.
+    { phrase: "Jacob was the father of Joseph, the husband of Mary", to: "jacob-father-of-joseph" },
+    {
+      phrase: "Matthan begat Jacob; Jacob begat Joseph; Joseph, to whom was betrothed Mary the Virgin",
+      to: "jacob-father-of-joseph",
+    },
+    {
+      phrase: "Jacob begat Joseph, him to whom was betrothed Mary the Virgin",
+      to: "jacob-father-of-joseph",
+    },
   ],
   // "Nathan Melech the officer" (2 Kings 23:11) and "Nathan-Melech, servant of the king" — one of
   // Josiah's officials, a different man from the court prophet and with no Person record of his
@@ -2000,6 +2018,43 @@ const NAME_CONTEXT_RULES: Record<string, NameContextRule[]> = {
   ],
   joseph: [
     { phrase: "Jesus son of Joseph", to: null },
+
+    // ── ONE RECORD, ONE NAME: old-syriac-gospels ────────────────────────────────────────────
+    //
+    // Bare "Joseph" resolves to the patriarch everywhere in our prose, and the Old Syriac Gospels
+    // article is about Matthew's genealogy, so every Joseph on it is Joseph the husband of Mary.
+    // Nine of them, five inside verbatim quotations of Lewis's 1894 translation and of Burkitt —
+    // primary-source translations that may not be reworded to dodge the collision. They shipped
+    // live pointing at Joseph son of Jacob, which sends a reader of Matthew 1:16 to Egypt.
+    //
+    // Resolved rather than suppressed: joseph-husband-of-mary is a real record and is the man the
+    // sentences are about, so no link would be a worse answer than the right link.
+    //
+    // Every phrase below is quoted verbatim from that article and occurs in exactly one prose
+    // block in the whole corpus and in none of the 31,098 WEB verses, so the reach of this block
+    // is that one record. It says nothing about the corpus-wide question of who bare "Joseph"
+    // should belong to, which is Robbie's and is on his list; a ruling there replaces these pins
+    // rather than fighting them. Each is pinned by a prose case in scripts/name-linker/cases.mjs.
+    { phrase: "Jacob was the father of Joseph, the husband of Mary", to: "joseph-husband-of-mary" },
+    {
+      phrase: "Matthan begat Jacob; Jacob begat Joseph; Joseph, to whom was betrothed Mary the Virgin",
+      to: "joseph-husband-of-mary",
+    },
+    { phrase: "the fact that Joseph was troubled about Mary's condition", to: "joseph-husband-of-mary" },
+    { phrase: "the uncompromising statement 'and Joseph begat Jesus'", to: "joseph-husband-of-mary" },
+    {
+      phrase: "the Evangelist believed that Joseph had been the natural father of Jesus",
+      to: "joseph-husband-of-mary",
+    },
+    {
+      phrase: "the Evangelist cares about is that Joseph accepted Jesus as his son",
+      to: "joseph-husband-of-mary",
+    },
+    { phrase: "David's line through Joseph's legal fatherhood", to: "joseph-husband-of-mary" },
+    {
+      phrase: "Jacob begat Joseph, him to whom was betrothed Mary the Virgin",
+      to: "joseph-husband-of-mary",
+    },
   ],
 
   // ── TWO MODERN SURNAMES THAT ARE ALSO PLACES ───────────────────────────────────────────────

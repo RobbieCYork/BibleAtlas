@@ -1891,4 +1891,116 @@ export const CASES = [
     why: "The BOOK, inside a quotation about which books of the Peshitta lean on the Septuagint. " +
          "`ezekiel` carried TEXT_OF but not BOOK_OF until the versions batch; this is the " +
          "2026-09-09 book-title ruling applied to a name that had not needed it before." },
+
+  // ── MATTHEW'S GENEALOGY ON THE OLD SYRIAC GOSPELS ──────────────────────────────────────────
+  //
+  // Thirteen links shipped live on `old-syriac-gospels` pointing at the wrong men: nine bare
+  // "Joseph" at the patriarch in a section about Joseph the husband of Mary, and four bare "Jacob"
+  // at the patriarch where the man is Jacob son of Matthan. Eight of the thirteen sit inside
+  // verbatim quotations of A. S. Lewis's 1894 translation and of F. C. Burkitt — primary sources
+  // that may not be reworded to dodge a collision, which is why the fix is phrase pins in
+  // NAME_CONTEXT_RULES rather than an edit to the prose.
+  //
+  // These are RESOLVED, not suppressed: `joseph-husband-of-mary` and `jacob-father-of-joseph` are
+  // both real records, and the second one's first line is that it is not the patriarch.
+  //
+  // Every occurrence has its own case, in reading order, so a later widening or narrowing of the
+  // pins cannot silently undo any part of the fix. The scope is one record. Bare "Joseph" and bare
+  // "Jacob" still belong to the patriarch everywhere else, and the guards at the end of this block
+  // are what say so; whether that corpus-wide default is right is Robbie's question and is not
+  // settled here.
+  { text: "At the end of Matthew's genealogy, where the standard text reads that Jacob was the " +
+          "father of Joseph, the husband of Mary, of whom was born Jesus, this manuscript reads",
+    surface: "Jacob", owner: "old-syriac-gospels", expect: "jacob-father-of-joseph",
+    status: "guard",
+    why: "Matthew 1:16's Jacob, son of Matthan. The app's own summary of the standard reading." },
+  { text: "At the end of Matthew's genealogy, where the standard text reads that Jacob was the " +
+          "father of Joseph, the husband of Mary, of whom was born Jesus, this manuscript reads",
+    surface: "Joseph", owner: "old-syriac-gospels", expect: "joseph-husband-of-mary",
+    status: "guard",
+    why: "The clause names him outright — the husband of Mary — and it was linking to the " +
+         "patriarch." },
+  { text: "in Lewis's own 1894 translation — \"Matthan begat Jacob; Jacob begat Joseph; Joseph, " +
+          "to whom was betrothed Mary the Virgin, begat Jesus, who is called the Christ.\"",
+    surface: "Jacob", owner: "old-syriac-gospels", expect: "jacob-father-of-joseph",
+    status: "guard",
+    why: "Inside Lewis's translation of the Sinaitic Palimpsest at Matthew 1:15-16. Matthan " +
+         "already resolved correctly; his son did not." },
+  { text: "in Lewis's own 1894 translation — \"Matthan begat Jacob; Jacob begat Joseph; Joseph, " +
+          "to whom was betrothed Mary the Virgin, begat Jesus, who is called the Christ.\"",
+    surface: "Jacob", occurrence: 2, owner: "old-syriac-gospels",
+    expect: "jacob-father-of-joseph", status: "guard",
+    why: "The same man, named twice by the genealogy's own repetition." },
+  { text: "in Lewis's own 1894 translation — \"Matthan begat Jacob; Jacob begat Joseph; Joseph, " +
+          "to whom was betrothed Mary the Virgin, begat Jesus, who is called the Christ.\"",
+    surface: "Joseph", owner: "old-syriac-gospels", expect: "joseph-husband-of-mary",
+    status: "guard",
+    why: "The disputed verse itself. A reader following this link left a quotation of Matthew " +
+         "1:16 and landed on the patriarch in Egypt." },
+  { text: "in Lewis's own 1894 translation — \"Matthan begat Jacob; Jacob begat Joseph; Joseph, " +
+          "to whom was betrothed Mary the Virgin, begat Jesus, who is called the Christ.\"",
+    surface: "Joseph", occurrence: 2, owner: "old-syriac-gospels",
+    expect: "joseph-husband-of-mary", status: "guard",
+    why: "Betrothed to Mary the Virgin in the same breath. The husband of Mary, twice over." },
+  { text: "And, she adds, \"the fact that Joseph was troubled about Mary's condition is simply " +
+          "inexplicable if he were the father of Jesus.\"",
+    surface: "Joseph", owner: "old-syriac-gospels", expect: "joseph-husband-of-mary",
+    status: "guard",
+    why: "Lewis on Matthew 1:18-19, quoted verbatim from her 1894 introduction." },
+  { text: "\"If the Genealogy had ended with the uncompromising statement 'and Joseph begat " +
+          "Jesus' it would not prove that the Evangelist believed that Joseph had been the " +
+          "natural father of Jesus,\" he wrote.",
+    surface: "Joseph", owner: "old-syriac-gospels", expect: "joseph-husband-of-mary",
+    status: "guard",
+    why: "Burkitt's hypothetical wording of Matthew 1:16, quoted verbatim." },
+  { text: "\"If the Genealogy had ended with the uncompromising statement 'and Joseph begat " +
+          "Jesus' it would not prove that the Evangelist believed that Joseph had been the " +
+          "natural father of Jesus,\" he wrote.",
+    surface: "Joseph", occurrence: 2, owner: "old-syriac-gospels",
+    expect: "joseph-husband-of-mary", status: "guard",
+    why: "The same man in the same sentence of Burkitt." },
+  { text: "\"All that the Evangelist cares about is that Joseph accepted Jesus as his son\"",
+    surface: "Joseph", owner: "old-syriac-gospels", expect: "joseph-husband-of-mary",
+    status: "guard",
+    why: "Burkitt on legal rather than natural fatherhood. Still the husband of Mary." },
+  { text: "the genealogy exists to put Jesus in David's line through Joseph's legal fatherhood, " +
+          "and the verb in a genealogy states heirship, not biology",
+    surface: "Joseph", owner: "old-syriac-gospels", expect: "joseph-husband-of-mary",
+    status: "guard",
+    why: "A possessive, and the only one of the thirteen outside a quotation mark." },
+  { text: "the genealogy exists to put Jesus in David's line through Joseph's legal fatherhood, " +
+          "and the verb in a genealogy states heirship, not biology",
+    surface: "David", owner: "old-syriac-gospels", expect: "david", status: "guard",
+    why: "KEPT, in the same sentence as the pin above. This IS the king — the clause is about " +
+         "Jesus's legal claim to his line. A pin wide enough to take it would have broken the " +
+         "sentence it was written to fix." },
+  { text: "the Curetonian reads differently again and clumsily: \"Jacob begat Joseph, him to " +
+          "whom was betrothed Mary the Virgin, she who bare Jesus the Messiah\"",
+    surface: "Jacob", owner: "old-syriac-gospels", expect: "jacob-father-of-joseph",
+    status: "guard",
+    why: "Burkitt's rendering of the Curetonian at Matthew 1:16. Different wording from Lewis's, " +
+         "so it needs its own pin." },
+  { text: "the Curetonian reads differently again and clumsily: \"Jacob begat Joseph, him to " +
+          "whom was betrothed Mary the Virgin, she who bare Jesus the Messiah\"",
+    surface: "Joseph", owner: "old-syriac-gospels", expect: "joseph-husband-of-mary",
+    status: "guard",
+    why: "The thirteenth and last of them." },
+  // The guards that hold the scope down. If any of these moves, a record-scoped fix has become a
+  // corpus-wide ruling by accident, and that ruling is Robbie's to make.
+  { ref: "Genesis 37:3", surface: "Joseph", expect: "joseph-son-of-jacob", status: "guard",
+    why: "The patriarch, in Scripture, untouched. The pins above are phrases from one article " +
+         "and occur in none of the 31,098 WEB verses." },
+  { text: "Joseph was sold into Egypt by his brothers and rose to govern it",
+    surface: "Joseph", expect: "joseph-son-of-jacob", status: "guard",
+    why: "The patriarch on the ARTICLE surface, which is where the pins live. Bare \"Joseph\" in " +
+         "prose still means the son of Jacob everywhere the pins do not reach." },
+  { ref: "Matthew 1:16", surface: "Joseph", expect: "joseph-husband-of-mary", status: "guard",
+    why: "KEPT. The Bible reader already resolved this verse correctly through " +
+         "VERSE_NAME_OVERRIDES, so the article-side fix cannot be read as having created it, and " +
+         "a later tidy-up of that table gets a failure instead of silence." },
+  { ref: "Matthew 1:16", surface: "Jacob", expect: "jacob-father-of-joseph",
+    status: "known-wrong",
+    why: "MEASURED, NOT FIXED, and out of this batch's scope. Scripture's own Matthew 1:15 and " +
+         "1:16 still send a bare Jacob to the patriarch on both rendering paths — the same fault " +
+         "as the article, one surface further out. It is written up in automation/manager-inbox." },
 ];
