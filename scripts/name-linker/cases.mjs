@@ -2817,11 +2817,55 @@ export const CASES = [
          "repointed corpus-wide — 249 Bible occurrences and 134 in our prose — and that ruling is " +
          "Robbie's, not a side effect." },
 
-  // ── A FOURTH bearer, measured and NOT fixed ─────────────────────────────────────────────────
-  // Acts 1:23's "Joseph called Barsabbas, who was also called Justus" — the man passed over for
-  // Matthias — resolves to the patriarch on both paths and in all three translations, which all
-  // read "Joseph" here. Found while fixing Acts 4:36 and deliberately left alone: he has no
-  // record, so the answer is either `null` or a new record, and that is a content decision rather
-  // than a mechanical one. Escalated 2026-09-10. NOT recorded as a `known-wrong` case, because a
-  // known-wrong asserts a settled right answer and this one is not settled.
+  // ── A FOURTH bearer, at Acts 1:23 — SUPPRESSED, 2026-09-10 ──────────────────────────────────
+  //
+  // "Joseph called Barsabbas, who was also called Justus" — the man passed over for Matthias. He is
+  // not the patriarch, not Mary's husband, not Joseph of Arimathea and not the Barnabas of 4:36
+  // thirty-one verses later, and he was resolving to Joseph son of Jacob on both paths.
+  //
+  // Measured with the previous batch and escalated rather than swept in; the ruling came back the
+  // same day: suppress, no new record. He has ONE mention in the whole of Scripture and no article,
+  // so a `joseph-barsabbas` record would be a page with nothing on it, and `null` in
+  // VERSE_NAME_OVERRIDES is precisely "a different bearer this app does not represent" — the shape
+  // `zadok`, `eleazar` and Simon Peter's father already have. That is the OPPOSITE call from 4:36
+  // directly above, which resolves rather than suppresses, and for one reason only: the app has
+  // Barnabas and does not have this man.
+  //
+  // Unlike 4:36 this one is wrong for EVERY reader. All three translations print "Joseph" here —
+  // fetched 2026-09-10 from bible-api.com, the service src/lib/biblePassage.ts asks for the text.
+  // They differ on the surname (KJV "Barsabas", WEB and ASV "Barsabbas") and nowhere else that
+  // matters; no word in the clause but "Joseph" is registered to anybody. So this entry moves a
+  // real WEB row, which 4:36's does not, and the Bible snapshot sees it.
+  { ref: "Acts 1:23", surface: "Joseph", expect: null, status: "guard",
+    why: "WEB, from the corpus. VERSE_NAME_OVERRIDES joseph.Acts[\"1:23\"] = null. Was " +
+         "joseph-son-of-jacob, sending a reader of Acts 1 to Egypt. READER PATH ONLY: the panel " +
+         "path passes no book and still says joseph-son-of-jacob, and nothing in this file can " +
+         "change that — same residual as 2 Samuel 20:14's Abel above. It is not reader-facing " +
+         "today (every LinkedVerseText call site in src/ is handed authored prose, never a " +
+         "verse's Scripture text), and no article in the app names this man, so there is no owner " +
+         "for OWNER_NAME_OVERRIDES to key on either." },
+  { ref: "Acts 1:23", translation: "ASV",
+    text: "And they put forward two, Joseph called Barsabbas, who was surnamed Justus, and Matthias.",
+    surface: "Joseph", expect: null, status: "guard",
+    why: "The reader path against the ASV literal. Same word, same suppression — this is what a " +
+         "translation-blind override looks like when the three translations AGREE, and it is the " +
+         "contrast with Acts 4:36, where only the ASV printed \"Joseph\" at all." },
+  { ref: "Acts 1:23", translation: "KJV",
+    text: "And they appointed two, Joseph called Barsabas, who was surnamed Justus, and Matthias.",
+    surface: "Joseph", expect: null, status: "guard",
+    why: "And the KJV, which spells the surname \"Barsabas\" with one b. The override is keyed on " +
+         "book/chapter/verse and on the name \"joseph\", not on the surrounding wording, so the " +
+         "spelling split costs it nothing — which is the argument for using this table here rather " +
+         "than a phrase pin." },
+
+  // ── The patriarch, still the patriarch, on BOTH sides of the suppressed verse ────────────────
+  // Acts 7:13 and 7:18 above already guard the same book for the 4:36 entry. These two are the
+  // rest of Stephen's speech, and they are here because a per-verse suppression that leaked to the
+  // book would empty the patriarch out of Acts entirely and no case above would have said so.
+  { ref: "Acts 7:9", surface: "Joseph", expect: "joseph-son-of-jacob", status: "guard",
+    why: "\"The patriarchs, moved with jealousy against Joseph, sold him into Egypt.\" Six chapters " +
+         "after the suppression, in the same book. joseph.Acts is keyed to two verses, not to Acts." },
+  { ref: "Acts 7:14", surface: "Joseph", expect: "joseph-son-of-jacob", status: "guard",
+    why: "\"Joseph sent, and summoned Jacob, his father\" — the patriarch and, in the same clause, " +
+         "the patriarch's father, who is also the bare \"Jacob\" default. Both survive." },
 ];

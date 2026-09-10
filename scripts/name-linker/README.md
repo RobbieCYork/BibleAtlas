@@ -213,7 +213,7 @@ snapshot.
 
 `LinkedVerseText` is what PersonPanel, LocationPanel, PoiPanel, TopicPanel, BookIntroView,
 TimelineEventPanel and MyProfileView render with. Every book override, verse override and
-suppression in `verseAnnotations.ts` is invisible there. **834 links across 744 verses resolve
+suppression in `verseAnnotations.ts` is invisible there. **835 links across 745 verses resolve
 differently between the two paths**, and all but a handful of the 6,370 prose links run with no
 disambiguation at all — `OWNER_NAME_OVERRIDES` (below) is the only correction that reaches them. A
 fix that only moves the `reader` column has fixed half the app.
@@ -297,7 +297,8 @@ scoping document twice. **Run it before claiming a change fixes N links.**
   identically whatever the reader has selected — including where the wording differs enough to make
   the override meaningless. See `corpus/PROVENANCE.md`. What changed on 2026-09-10 is only that a
   **named case can now assert one verse in one translation**, by carrying `text` alongside `ref`
-  (above). Three of them exist, all on Acts 4:36. That is a foothold, not coverage: nothing sweeps
+  (above). Six of them exist: three on Acts 4:36, where only the ASV prints "Joseph", and three on
+  Acts 1:23, where all three translations do. That is a foothold, not coverage: nothing sweeps
   either translation, and no count on this page includes a word of them.
 - **Whether the tree compiles.** See the warning at the top. Run `npm run build`.
 - **The running app.** These scripts call the real module with the real arguments the real components

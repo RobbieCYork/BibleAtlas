@@ -302,7 +302,15 @@ const BOOK_NAME_OVERRIDES: Record<string, Record<string, string>> = {
  *   Judas is matched as the longer registered name "Judas Iscariot" and resolves on its own.) Wrong
  *   again at Matthew 13:55, where the Judas listed is a brother of Jesus — a fourth, distinct man with
  *   no entry here, so suppressed. (Mark 6:3, the parallel passage, needs no entry: WEB renders that
- *   same brother's name "Judah," which no entry in this app claims, so it already produces no link.) */
+ *   same brother's name "Judah," which no entry in this app claims, so it already produces no link.)
+ * - "Joseph": the patriarch owns the bare key globally; Matthew's and Mark's Josephs are handled by
+ *   BOOK_NAME_OVERRIDES. Acts holds two more men and neither is him. Acts 4:36's is BARNABAS, whom the
+ *   app has, so that one RESOLVES — and it fires for the ASV alone, because WEB and KJV print "Joses"
+ *   there. Acts 1:23's "Joseph called Barsabbas, who was also called Justus" is a fourth bearer with
+ *   one mention in all of Scripture, no article and no record, so that one is SUPPRESSED, on the same
+ *   principle as "Zadok" and "Eleazar" above. All three translations read "Joseph" at 1:23, so unlike
+ *   4:36 it was wrong for every reader and its fix moves a WEB row. Nothing in either entry rules on
+ *   the corpus-wide default for a bare "Joseph", which is open. */
 const VERSE_NAME_OVERRIDES: Record<string, Record<string, Record<string, string | null>>> = {
   // "Jonah": the entry is the prophet, correct at 2 Kings 14:25 and throughout the book of Jonah,
   // and correct at every Gospel mention of "the sign of Jonah". Wrong at exactly five places, all
@@ -708,13 +716,50 @@ const VERSE_NAME_OVERRIDES: Record<string, Record<string, Record<string, string 
   // which is a better answer than no link. See OWNER_NAME_OVERRIDES below for the article half of
   // the same fault.
   //
-  // What this does NOT touch, and it is a live fault of the same shape: Acts 1:23's "Joseph called
-  // Barsabbas, who was also called Justus" — a FOURTH bearer, in all three translations, with no
-  // record of his own, still resolving to the patriarch. Measured while this was written and
-  // deliberately left alone: whether he gets a record or a `null` is a content decision, not a
-  // mechanical one, and it is escalated rather than swept in here.
+  // ── AND A FOURTH BEARER, AT Acts 1:23 — suppressed, not resolved ─────────────────────────────
+  //
+  // "They put forward two, Joseph called Barsabbas, who was also called Justus, and Matthias."
+  // That is the man passed over for Matthias, and he is a fourth distinct Joseph: not the patriarch
+  // who owns the bare key globally, not Mary's husband, not Joseph of Arimathea, and not the
+  // Barnabas of 4:36 thirty-one verses later. He was resolving to Joseph son of Jacob and sending a
+  // reader of Acts 1 to Egypt.
+  //
+  // Unlike 4:36 this one is wrong for EVERY reader, because all three of the app's translations
+  // print "Joseph" here — fetched 2026-09-10 from bible-api.com, the service src/lib/biblePassage.ts
+  // asks for the text, rather than recalled:
+  //
+  //   WEB   "They put forward two, Joseph called Barsabbas, who was also called Justus, and Matthias."
+  //   KJV   "And they appointed two, Joseph called Barsabas, who was surnamed Justus, and Matthias."
+  //   ASV   "And they put forward two, Joseph called Barsabbas, who was surnamed Justus, and Matthias."
+  //
+  // (The three differ on the SURNAME — KJV's "Barsabas" against "Barsabbas" — but not on "Joseph",
+  // and no name in that clause but "Joseph" is registered to anybody, so nothing else is at stake.)
+  // So this entry moves a real WEB row, which the 4:36 entry above deliberately does not, and the
+  // Bible snapshot sees it.
+  //
+  // `null`, not a target, and not a new record. `null` in this table means "a different bearer whom
+  // the app does not represent" — the `nathan`, `zadok`/`eleazar` and Simon Peter's father cases
+  // above and below are all this shape — and that is exactly what he is. He has ONE mention in all
+  // of Scripture and no article, and a `joseph-barsabbas` record with a single verse behind it
+  // would be a page with nothing on it. Contrast 4:36, which points AT `barnabas` precisely because
+  // the app already has that man. Ruled 2026-09-10.
+  //
+  // What this does not reach: the panel path, which passes no book and so cannot see a verse key at
+  // all. Measured rather than assumed — see the note under `Acts: {` below.
   joseph: {
-    Acts: { "4:36": "barnabas" },
+    // The panel path (LinkedVerseText, no book) still resolves both of these verses' "Joseph" to the
+    // patriarch, and nothing here can change that. It is not a reader-facing gap today: the only
+    // text LinkedVerseText is ever handed is the app's own authored prose plus a user's typed
+    // favourite-verse reference — grep LinkedVerseText across src/, every call site is a prose
+    // field — so no surface in the app renders Acts 1:23's Scripture text on that path. The `panel`
+    // column of bible-links.tsv measures what the linker WOULD do if one ever did, which is worth
+    // keeping honest and is why the residual is written down instead of papered over. The lever
+    // that reaches the panel path is OWNER_NAME_OVERRIDES, and it needs a record whose article
+    // names the man; no article in this app mentions Joseph Barsabbas at all, so there is nothing
+    // for it to key on. A phrase pin on "Joseph called Barsabbas" would fire on the article surface
+    // and nowhere else, and there is no article — so it would be a dead entry, and a dead entry
+    // reads as a live claim.
+    Acts: { "1:23": null, "4:36": "barnabas" },
   },
 };
 
