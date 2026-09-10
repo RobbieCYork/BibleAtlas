@@ -2535,7 +2535,12 @@ export const topics: Topic[] = [
   {
     id: "masoretic-text",
     name: "Masoretic Text",
-    alternateNames: ["Aleppo Codex", "Leningrad Codex"],
+    // "Aleppo Codex" and "Leningrad Codex" were registered HERE until those two manuscripts had
+    // records of their own. They MOVE to `aleppo-codex` and `leningrad-codex` rather than being
+    // added there, so the six links each already carries — in the introductions to Genesis, Hosea,
+    // Joel and Obadiah, and in two topic articles — repoint instead of multiplying. Do not add them
+    // back. Same move batch 10 made for "Great Isaiah Scroll".
+    alternateNames: [],
     category: "manuscript",
     role: "The Standard Hebrew Bible, Fixed c. AD 600-1000",
     summary:
@@ -2551,8 +2556,8 @@ export const topics: Topic[] = [
       {
         heading: "Two Manuscripts Almost Everything Rests On",
         paragraphs: [
-          "The Aleppo Codex, written around AD 930 and vocalised by Aaron ben Asher himself, was regarded as the finest copy in existence; Maimonides used it. It was kept for centuries in the synagogue at Aleppo, and in riots there in 1947 a large part of it was lost, including almost all of the Torah. What survives is in Jerusalem.",
-          "The Leningrad Codex, copied in Cairo in AD 1008 and now in the National Library of Russia in St Petersburg, is therefore the oldest complete Masoretic Bible. It is the base text of the standard scholarly edition, Biblia Hebraica Stuttgartensia, which means it stands behind the Old Testament of nearly every English Bible on a modern shelf. A reader opening Genesis in almost any translation is reading, at one remove, a manuscript finished in Egypt in the eleventh century.",
+          "The Aleppo Codex, written around AD 930 and vocalised, on the testimony of a colophon added about a century later, by Aaron ben Asher himself, was regarded as the finest copy in existence; Maimonides appears to have used it. It was kept for centuries in the synagogue at Aleppo, and in riots there in 1947 a large part of it was lost, including almost all of the Torah. What survives is in Jerusalem.",
+          "The Leningrad Codex, copied in Fustat in Egypt about AD 1008 — several translations of its colophon say Cairo, and the article on the codex sets out why that is wrong — and now in the National Library of Russia in St Petersburg, is therefore the oldest complete Masoretic Bible. It is the base text of the standard scholarly edition, Biblia Hebraica Stuttgartensia, which means it stands behind the Old Testament of nearly every English Bible on a modern shelf. A reader opening Genesis in almost any translation is reading, at one remove, a manuscript finished in Egypt in the eleventh century.",
         ],
       },
       {
@@ -2579,7 +2584,7 @@ export const topics: Topic[] = [
       language: "Hebrew, with Aramaic in parts of Daniel and Ezra",
       contents:
         "The Hebrew Bible, with the vowel points, cantillation accents and marginal masorah the Masoretes added to an inherited consonantal text. The Aleppo Codex is no longer complete — a large part of it, including almost all of the Torah, was lost in 1947 — so the Leningrad Codex is the oldest complete Masoretic Bible",
-      origin: "Tiberias, on the Sea of Galilee, and Babylonia; the Leningrad Codex itself was copied in Cairo",
+      origin: "Tiberias, on the Sea of Galilee, and Babylonia; the Leningrad Codex itself was copied in Fustat, in Egypt",
       findSite: "Not applicable. The Masoretic tradition was never lost and never found — it was copied continuously by Jewish scribes",
       foundYear: "Not applicable",
       foundBy: "Not applicable",
@@ -14426,5 +14431,1289 @@ export const topics: Topic[] = [
     ],
     reflectionPrompt:
       "Almost everything we have of this town survives because nobody thought it worth keeping. What are you throwing out that someone might one day need?",
+  },
+  {
+    id: "thanksgiving-hymns",
+    name: "Thanksgiving Hymns",
+    // NOT registered: "1QHa" (it appears nowhere in the corpus, and the two places this article
+    // writes it, it sits in brackets straight after the full name), "the Hymns", "Hodayot" alone is
+    // safe and is registered because the scholarly literature uses nothing else. "Thanksgiving
+    // Scroll" is the Israel Museum's own label for the object and a reader meeting it there should
+    // be able to tap it.
+    // "Thanksgiving Psalms" is NOT registered, and the reason is worth keeping: it was, until the
+    // link census on this batch read what the change actually did. The introduction to Psalms lists
+    // the psalm GENRES — "hymns of praise, individual and communal laments..., thanksgiving psalms,
+    // royal psalms" — and registering the phrase sent a reader looking up a biblical genre to a
+    // sectarian scroll from Qumran. Nothing but enumerating the rendered links would have shown it.
+    alternateNames: ["Hodayot", "Thanksgiving Scroll"],
+    category: "manuscript",
+    role: "The Qumran Hymn Collection, and the Longest Argument About Who Says \"I\"",
+    summary:
+      "Some thirty psalms of thanksgiving from the first Qumran cave, most of them opening \"I thank you, Lord\" — and sixty years of argument about whether the man speaking in them is one particular man.",
+    sections: [
+      {
+        heading: "Two Bundles, Bought in Jerusalem in 1947",
+        paragraphs: [
+          "E. L. Sukenik of the Hebrew University bought this scroll in Jerusalem in 1947, among the three of the first seven Cave 1 scrolls that went to him rather than to the Syriac Orthodox archbishop who bought the other four. It reached him in two separate bundles of leather, one folded and one wadded into a lump, and it was in poor condition: when Sukenik published it in 1954-55 it came out as eighteen more or less complete columns and sixty-six fragments. He gave it the name it still has, from a rabbinic word for thanksgivings, because so many of its psalms open with the same formula — 'odekha 'adonai, \"I thank you, O Lord.\" The Israel Museum catalogues the object as parchment from Qumran Cave 1, late first century BC to early first century AD, accession 95.57/1-51; the dimensions on its record, 32 cm high and 61.5 cm long, are for the catalogued piece and not for the whole roll, which was far longer.",
+          "What a reader meets today is not what Sukenik published. The scroll was reconstructed twice over, independently: H. Stegemann worked out the original order in a Heidelberg dissertation of 1963, E. Puech published his own reconstruction in 1988, and the critical edition that finally carried Stegemann's work into print — completed by E. M. Schuller after his death — appeared in 2009 as volume 40 of Discoveries in the Judaean Desert. The reconstructed roll has twenty-eight columns. This matters for anyone reading older books about it, and it is the sort of trap that quietly wrecks a footnote: column references written before 2009 are in Sukenik's numbering and do not correspond to the numbering everyone now uses. A citation of \"1QH 5\" in a book from the 1970s and a citation of the same words today will not be the same column.",
+        ],
+      },
+      {
+        heading: "What the Hymns Say",
+        paragraphs: [
+          "The psalms are the prayers of someone who thinks very little of himself and a great deal of the God he is addressing. The Israel Museum prints one of them on its own object record, and it is a fair sample of the whole: \"I thank Thee, O Lord, for Thou hast placed my soul in the bundle of the living, and hast hedged me about against all the snares of the Pit. Violent men have sought after my life because I have clung to Thy Covenant. For they, an assembly of deceit, and a horde of Belial, know not that my stand is maintained by Thee, and in Thy mercy Thou wilt save my soul since my steps proceed from Thee.\" That opening image is lifted straight out of Scripture — Abigail tells David that his life will be \"bound in the bundle of the living\" — and the hymns are made of such pickups throughout.",
+          "The texture is worth noticing because it is how these psalms think. M. Dhont's study of column 16, which is freely readable, traces one long metaphor of a garden: a shoot and a planting, which is the language of Isaiah 60:21 and 61:3, and a tree whose roots reach water, which is Jeremiah 17:8 and the opening psalm of the Psalter. There is a difference from the biblical thanksgiving psalms all the same, and M. B. Johnson puts his finger on it: the biblical ones look back on a rescue that has happened, and these look forward, thanking God for a deliverance still expected. Several of the compositions carry a heading marking them for the maskil, the instructor charged with teaching the community — an office the Community Rule describes, and a detail that will matter a great deal in the next section.",
+        ],
+      },
+      {
+        heading: "Who Is the \"I\"?",
+        paragraphs: [
+          "Sukenik himself floated the idea that these were the personal writings of the Teacher of Righteousness, the founding figure the Damascus Document and the Habakkuk Pesher both refer to, and three German dissertations turned that suggestion into a system. G. Jeremias in 1963, J. Becker in 1964 and H.-W. Kuhn in 1966 divided the collection into \"Teacher Hymns\" — a cluster of first-person compositions specific and personal enough to be the Teacher's own — and \"Community Hymns,\" the rest, taken to voice the ordinary membership. For decades that division was simply how the Hodayot were taught. It is worth saying plainly when it was built: before the scroll had been reliably reconstructed, and before the fragmentary Cave 4 copies of the same collection were available to check it against.",
+          "Both of those things arrived, and the scheme has been coming apart ever since — not into two camps, but by subtraction. A. K. Harkins argued in 2008 that the \"Community Hymns\" were not one thing and needed dividing again, and later took to calling them \"non-Teacher Hymns,\" a label that concedes they are grouped by what they lack. C. A. Newsom went further in 2021, and her own summary is worth quoting whole because it gives away as well as takes: \"While that evidence largely confirms the distinctiveness of the group of compositions associated with the Teacher, which are clustered in cols. 10-17, the evidence undermines the cogency of a category of 'Community' hodayot\" — which should, she argues, be assigned to the maskil rather than to ordinary sectarians. M. B. Johnson would drop both labels, on the ground that nothing in the scroll identifies its speaker as the Teacher at all. Notice what Newsom does not say: that the cluster in columns 10-17 is distinctive is one claim, and that the Teacher wrote it is another, and she grants the first without the second. One honest limit on this article: the case still made for the Teacher Hymns hypothesis is M. C. Douglas's, in Dead Sea Discoveries in 1999, and it could not be opened from here — so his argument is named and not characterised. And a further question sits underneath the whole debate, since A. K. Harkins has asked in print whether the two bundles Sukenik bought were ever one scroll, warning that modern editions project \"an illusory material unity that the Cave 1 hodayot did not enjoy in antiquity.\"",
+        ],
+      },
+    ],
+    verses: [
+      { reference: "1 Samuel 25:29", note: "\"Bound in the bundle of the living\" — the phrase the hymn quoted on the Israel Museum's own record opens with" },
+      { reference: "Jeremiah 17:7-8", note: "The tree planted by water, one of the images column 16 builds on" },
+      { reference: "Isaiah 60:21", note: "\"The branch of my planting\" — the shoot and planting language the hymns reuse" },
+      { reference: "Psalms 130:1-4", note: "A biblical psalm in the same key: out of the depths, and forgiveness that is with God rather than earned" },
+    ],
+    sources: [
+      { label: "The Israel Museum: The Thanksgiving Scroll (1QHa)", url: "https://www.imj.org.il/en/collections/286849" },
+      { label: "M. B. Johnson, \"The Ritualization of Psalms in the Dead Sea Scroll 1QHodayota\" (Ancient Jew Review)", url: "https://www.ancientjewreview.com/read/2022/5/5/the-ritualization-of-psalms-in-the-dead-sea-scroll-1qhodayot" },
+      { label: "Wikipedia: Thanksgiving Hymns", url: "https://en.wikipedia.org/wiki/Thanksgiving_Hymns" },
+    ],
+    manuscript: {
+      siglum: "1QHᵃ",
+      manuscriptType: "Parchment scroll, received in two bundles and reconstructed as twenty-eight columns",
+      language: "Hebrew",
+      contents:
+        "Roughly thirty psalms of thanksgiving, most opening \"I thank you, O Lord.\" Not biblical: these are compositions of the community that kept them, though they are built throughout out of biblical phrasing. Fragmentary copies of the same collection were found in Cave 4",
+      origin: "Judea. Whether these copies were made at Qumran or brought there is not known",
+      findSite: "Qumran, Cave 1",
+      foundYear: "1947",
+      foundBy:
+        "Bedouin of the Ta'amireh tribe; bought in Jerusalem by E. L. Sukenik of the Hebrew University. The Israel Museum names no individual finder, and the names given in most retellings are traditional",
+      dateAssigned:
+        "Late first century BC to early first century AD, on the Israel Museum's own record. No radiocarbon figure is given here: the published results for the Qumran scrolls have been argued to read young because of castor oil applied during 1950s conservation, and none was traced for this scroll",
+      dateCertainty: "traditional",
+      currentLocation: "The Shrine of the Book, Israel Museum, Jerusalem",
+      shelfmark: "95.57/1-51",
+    },
+    citations: [
+      {
+        tier: "institution",
+        label: "The Israel Museum, Jerusalem — The Thanksgiving Scroll (1QHa)",
+        url: "https://www.imj.org.il/en/collections/286849",
+        credit: "The Israel Museum, Jerusalem — Shrine of the Book",
+        detail:
+          "The museum's own object record: \"Written in Hebrew\", \"Qumran, Cave 1\", \"Late 1st century BCE - early 1st century CE\", \"Parchment\", \"H: 32; L: 61.5 cm\", \"Accession number: 95.57/1-51\". It also prints the translated hymn quoted in section two. The live page renders only through JavaScript and returns an empty document to any script, so this record was read through the Internet Archive's copy of it. Batch 10 cut this article partly because no accession number could be found at either holding institution; this is it",
+        supports: "The material, findspot, date, dimensions, accession number, and the hymn quoted in section two",
+      },
+      {
+        tier: "scholarly",
+        label: "M. B. Johnson, \"The Ritualization of Psalms in the Dead Sea Scroll 1QHodayotᵃ\"",
+        url: "https://www.ancientjewreview.com/read/2022/5/5/the-ritualization-of-psalms-in-the-dead-sea-scroll-1qhodayot",
+        credit: "Michael B. Johnson, Hebrew University of Jerusalem",
+        detail:
+          "Ancient Jew Review, 11 May 2022. Read in full, footnotes included; an editorially reviewed venue rather than a peer-reviewed journal, and it is a synthesis rather than a primary edition. Source for Sukenik's naming of the scroll and his suggestion about the Teacher of Righteousness (citing Sukenik, DSSHU 1955, 39), for the Jeremias/Becker/Kuhn trio and the dates of their dissertations, for the twenty-eight reconstructed columns, for the contrast between anticipatory and retrospective thanksgiving, and for Johnson's own position that both labels should go: \"there is not a sound evidential basis for identifying the author or speaker as the Teacher of Righteousness\"",
+        supports: "The naming of the scroll, the history of the Teacher Hymns hypothesis, and Johnson's own position",
+      },
+      {
+        tier: "scholarly",
+        label: "C. A. Newsom, \"A Farewell to the Hodayot of the Community\"",
+        url: "https://doi.org/10.1163/15685179-bja10002",
+        credit: "Carol A. Newsom, Emory University",
+        detail:
+          "Dead Sea Discoveries 28:1 (2021), 1-19. The body is behind Brill's paywall and was NOT opened. What is quoted in section three is her own abstract, published with the article and read in full through Crossref — including the clause granting the distinctiveness of the columns 10-17 cluster, which is the half an unfair quotation would drop. Her book The Self as Symbolic Space (Brill, 2004) was also not opened and is not characterised here",
+        supports: "Newsom's 2021 position, quoted from her own abstract",
+        paywalled: true,
+      },
+      {
+        tier: "scholarly",
+        label: "A. K. Harkins, \"Another Look at the Cave 1 Hodayot: Was CH I Materially Part of the Scroll 1QHodayotᵃ?\" and \"The Community Hymns Classification: A Proposal for Further Differentiation\"",
+        url: "https://doi.org/10.1163/15685179-12341480",
+        credit: "Angela Kim Harkins, Boston College",
+        detail:
+          "Dead Sea Discoveries 25:2 (2018), 185-216, and 15:1 (2008), 121-154. Both bodies are paywalled and were NOT opened; both author-written abstracts were read in full through Crossref, and the phrase quoted in section three — \"an illusory material unity that the Cave 1 hodayot did not enjoy in antiquity\" — is from the 2018 one. Note that the same abstract calls Stegemann and Schuller's reconstruction \"monumental\" and \"an invaluable scholarly resource\": she is qualifying it, not attacking it. Her book Reading with an \"I\" to the Heavens (De Gruyter, 2012) was not opened and is not characterised here",
+        supports: "Harkins's subdivision of the Community Hymns and her question about the scroll's material unity",
+        paywalled: true,
+      },
+      {
+        tier: "scholarly",
+        label: "M. C. Douglas, \"The Teacher Hymn Hypothesis Revisited: New Data for an Old Crux\"",
+        url: "https://doi.org/10.1163/156851799x00081",
+        credit: "Michael C. Douglas",
+        detail:
+          "Dead Sea Discoveries 6:3 (1999), 239-266. The modern defence of the hypothesis section three describes as under pressure. It could NOT be opened from here and Crossref carries no abstract for it, so this article names the argument and does not state it. That is a gap in the article and it is better recorded than papered over",
+        supports: "That a defence of the Teacher Hymns hypothesis exists in the scholarly literature",
+        paywalled: true,
+      },
+      {
+        tier: "scholarly",
+        label: "H. Stegemann and E. M. Schuller, Qumran Cave 1.III: 1QHodayotᵃ, with Incorporation of 1QHodayotᵇ and 4QHodayotᵃ⁻ᶠ",
+        credit: "Hartmut Stegemann and Eileen M. Schuller, with translation by Carol A. Newsom",
+        detail:
+          "Discoveries in the Judaean Desert 40 (Oxford: Clarendon, 2009). The critical edition and the source of the column numbering now standard. Print only, not opened here; its bibliographic detail and its relation to Stegemann's 1963 Heidelberg dissertation and E. Puech's 1988 reconstruction in the Journal of Jewish Studies are taken from Johnson's footnotes 4 and 18",
+        supports: "The reconstruction of the scroll into twenty-eight columns and the numbering used today",
+      },
+      {
+        tier: "scholarly",
+        label: "M. Dhont, \"A spring of living waters in a pool of metaphors: The metaphorical landscape of 1QHᵃ 16:5-27\"",
+        url: "https://doi.org/10.4102/hts.v77i1.6726",
+        credit: "Marieke Dhont",
+        detail:
+          "HTS Teologiese Studies / Theological Studies 77:1 (2021). Open access, read in full. Source for the garden imagery of column 16 and its allusions to Isaiah 60:21 and 61:3, Jeremiah 17:8 and the first psalm",
+        supports: "The scriptural imagery described in section two",
+      },
+      {
+        tier: "encyclopedic",
+        label: "Wikipedia: Thanksgiving Hymns",
+        url: "https://en.wikipedia.org/wiki/Thanksgiving_Hymns",
+      },
+    ],
+    reflectionPrompt:
+      "These prayers thank God for a rescue that has not happened yet. What would it change to pray that way this week?",
+  },
+  {
+    id: "genesis-apocryphon",
+    name: "Genesis Apocryphon",
+    // NOT registered: "1QapGen" and "1Q20" (neither appears anywhere in the corpus, and where this
+    // article writes them they sit in brackets beside the full name), "the Apocryphon" (it would
+    // reach nothing useful and is ambiguous with every other apocryphon in the app).
+    alternateNames: ["Genesis Apocryphon Scroll"],
+    category: "manuscript",
+    role: "An Aramaic Retelling of Genesis, and the Tail End of a Much Longer Scroll",
+    summary:
+      "The most extensive Aramaic manuscript from the Dead Sea caves: a first-person retelling of Genesis from Lamech to Abram — and, on the evidence of its own sheet numbering, all that survives of a roll perhaps four times longer.",
+    sections: [
+      {
+        heading: "The Scroll That Would Not Open",
+        paragraphs: [
+          "This was one of the four Cave 1 scrolls bought by the Syriac Orthodox archbishop in Jerusalem, and for years it was the one nobody could read: so brittle and so stuck together that it could not be unrolled at all. When it was finally opened, D. A. Machiela describes what was there — \"the most extensive Aramaic text found among the DSS, measuring 31 cm high by 2.38 m long, and containing twenty-three partially-preserved columns of text; the best preserved are columns 19-22, which were rolled at the center of the scroll.\" Counts of twenty-two and twenty-three are both in print and both are right: the difference is whether a badly damaged column at the head is numbered 0 or left out. The Israel Museum holds it as accession 95.57/20,29-39.",
+          "The first edition, by N. Avigad and Y. Yadin in 1956, gave the world five columns, and its own subtitle says which: columns II and XIX-XXII. That was the readable part. Almost forty years later M. Morgenstern, E. Qimron and D. Sivan published the rest — columns 0, I, III-VIII and X-XVII, most of them very fragmentary — working from infrared photographs and from new digital images, because in the meantime the leather itself had darkened past reading. The imaging was not incidental. A team from NASA's Jet Propulsion Laboratory tested infrared cameras on a fragment of this very scroll in 1993, and reported that at wavelengths beyond what film or ordinary digital sensors could see, \"we can make out another word of text which is invisible\" otherwise. Anyone still describing this manuscript from the 1956 edition is describing a fifth of it, and that is the commonest mistake made about it.",
+        ],
+      },
+      {
+        heading: "Genesis, Told by the People in It",
+        paragraphs: [
+          "What survives reworks Genesis 5:28 to 15:4, and the striking thing about it is the voice. Much of it is first person: Lamech speaks, then Noah, then Abram, telling their own stories. The book of Genesis reports that Abram, going down into Egypt, asked Sarai to say she was his sister; this scroll has Abram receive a dream beforehand that sanctions what he does, and then has him describe Sarai's beauty at length. It runs so close to the biblical text in places that it is nearly translation — Machiela points to column 20, lines 26-27, against Genesis 12:18-19 — and elsewhere it expands freely: the division of the earth among Noah's descendants runs for two columns where Genesis has a list, and Abram walks the length and breadth of the land, which Genesis 13 tells him to do and does not describe.",
+          "It is not a sectarian composition. Machiela states the consensus and the caution together: \"There is a broad scholarly consensus that, along with the other Aramaic DSS, the Apocryphon was not written by the group responsible for the distinctive Hebrew sectarian literary works. Nevertheless, it was presumably kept and studied by that group.\" Nor is it a Bible. It stands in the same territory as Jubilees and 1 Enoch — Jewish writing of the last centuries BC that retells Scripture rather than transmitting it — and its relation to Jubilees is itself argued over, with E. Eshel and Machiela putting this one earlier and J. Kugel and others the reverse. Reading it beside Genesis shows something a commentary cannot: what these stories sounded like to people who had them by heart and could not leave them alone.",
+        ],
+      },
+      {
+        heading: "Only the End of It",
+        paragraphs: [
+          "The most arresting thing about this manuscript is not in it. Ancient scrolls were made of sheets sewn end to end, and scribes sometimes lettered the sheets in alphabetical order. M. Morgenstern noticed the letters on this one and published what follows from them in 1996: the last surviving sheet is marked with pe, the seventeenth letter of the Hebrew alphabet. \"With five to seven columns on a sheet,\" he wrote, \"this means that the scroll is missing anything from 70 to 105 columns. The more conservative estimate still provides us with the startling fact that the remains of the Apocryphon as we have it today are only the tail-end of an enormously long scroll.\" On the width of the sheets that do survive, he reckoned the lost beginning at some nine metres.",
+          "It is worth being exact about what that does and does not establish. It is an argument from sheet lettering, published in a short note, and Morgenstern draws the honest conclusion himself: \"It is a matter of speculation what these missing columns might have contained... We shall sadly never know.\" What he does think it settles is a question that had been live — whether this is really a Genesis apocryphon or a lost Book of Noah wearing another name — since the Noah material, which dominates what survives, cannot have carried a roll of that length. Set beside the reading problem, the two facts make the same point in different directions. Even the twenty-two or twenty-three columns we have are not fully legible: \"Countless are the letters and parts of letters visible on the twenty-two surviving columns whose identification and interpretation are still uncertain.\" This is a manuscript that has to be argued about letter by letter, and any confident summary of it — including a confident summary of how much of it is gone — is running ahead of the evidence.",
+        ],
+      },
+    ],
+    verses: [
+      { reference: "Genesis 12:10-20", note: "Abram, Sarai and Pharaoh — the episode the scroll expands with a dream and a description of Sarai's beauty" },
+      { reference: "Genesis 14:18-20", note: "Melchizedek, king of Salem, who appears in column 22 of the scroll" },
+      { reference: "Genesis 13:14-17", note: "God tells Abram to walk the length and breadth of the land; the scroll narrates the walk" },
+      { reference: "Genesis 5:28-29", note: "Lamech and the birth of Noah, where the surviving text begins" },
+    ],
+    sources: [
+      { label: "Israel Antiquities Authority, Leon Levy Digital Library: 1Q20 Genesis Apocryphon", url: "https://www.deadseascrolls.org.il/explore-the-archive/manuscript/1Q20-1" },
+      { label: "Wikipedia: Genesis Apocryphon", url: "https://en.wikipedia.org/wiki/Genesis_Apocryphon" },
+    ],
+    manuscript: {
+      siglum: "1QapGen (1Q20)",
+      manuscriptType: "Parchment scroll, 31 cm high and 2.38 m long as it survives, in twenty-two or twenty-three partly preserved columns",
+      language: "Aramaic",
+      contents:
+        "A first-person retelling of Genesis 5:28-15:4, from the birth of Noah to the covenant with Abram. Columns 19-22, which lay at the centre of the rolled scroll, are the best preserved; the rest range from fragmentary to barely legible. Not a copy of Genesis and not a biblical manuscript",
+      origin: "Judea. The composition is usually dated to the second century BC; this copy is later, and is not the autograph",
+      findSite: "Qumran, Cave 1",
+      foundYear: "1947 — some accounts say late 1946",
+      foundBy:
+        "Bedouin of the Ta'amireh tribe; the scroll passed through the Bethlehem antiquities trade to Mar Athanasius Yeshue Samuel and returned to Israel in 1954. No individual finder is named by the holding institution",
+      dateAssigned: "First century BC to first century AD, on the Israel Museum's record. No radiocarbon figure is printed here — see the citations",
+      dateCertainty: "traditional",
+      currentLocation: "The Shrine of the Book, Israel Museum, Jerusalem",
+      shelfmark: "95.57/20,29-39",
+    },
+    citations: [
+      {
+        tier: "institution",
+        label: "The Israel Museum, Jerusalem — Genesis Apocryphon Scroll (1QapGen)",
+        url: "https://www.imj.org.il/en/collections/231114",
+        credit: "The Israel Museum, Jerusalem — Shrine of the Book",
+        detail:
+          "The museum's own object record: \"Qumran, Cave 1\", \"1st century BCE - 1st century CE\", \"Parchment\", \"Accession number: 95.57/20,29-39\", and the 1956 Avigad and Yadin edition given as the museum's own publication. As with the Thanksgiving Scroll, the live page renders only through JavaScript and was read through the Internet Archive's copy",
+        supports: "The findspot, date, material and accession number",
+      },
+      {
+        tier: "scholarly",
+        label: "M. Morgenstern, \"A New Clue to the Original Length of the Genesis Apocryphon\"",
+        credit: "Matthew Morgenstern, Tel Aviv University",
+        detail:
+          "Journal of Jewish Studies 47 (1996), 345-347 — the citation as it stands on the author's own university publication list, which was read directly. The article itself is on his Academia.edu page, which refuses automated requests, so it was read in a browser rather than fetched; everything quoted from it in section three is quoted whole, including his own \"We shall sadly never know\". The Journal of Jewish Studies archive was returning server errors when this was checked",
+        supports: "The sheet-letter argument, the 70-105 missing columns, the nine-metre estimate, and the judgement that this is a Genesis apocryphon rather than a Book of Noah",
+      },
+      {
+        tier: "scholarly",
+        label: "M. Morgenstern, E. Qimron and D. Sivan, \"The Hitherto Unpublished Columns of the Genesis Apocryphon\", with an appendix by G. Bearman and S. Spiro",
+        credit: "Matthew Morgenstern, Elisha Qimron and Daniel Sivan",
+        detail:
+          "Abr-Nahrain 33 (1995), pp. 30-54 — the page range given on Morgenstern's own publication list; a footnote of his own gives 30-52, and that disagreement is left standing here rather than resolved silently. The article itself is not online anywhere reachable and was NOT opened; which columns it published (0, I, III-VIII, X-XVII) is taken from a later description of it and from the 1956 edition's own subtitle, not from the article",
+        supports: "That the columns the 1956 edition left unpublished were published in 1995, and which they are",
+      },
+      {
+        tier: "scholarly",
+        label: "D. A. Machiela, \"Genesis Apocryphon (1QapGen)\", in Encyclopedia of the Bible and Its Reception",
+        credit: "Daniel A. Machiela, University of Notre Dame",
+        detail:
+          "De Gruyter, cols. 1143-1147. Read in full through the author's own uploaded copy, which is where the dimensions, the twenty-three columns, the Genesis 5:28-15:4 span, the parallel at column 20.26-27, and the two sentences on sectarian authorship quoted in section two all come from. His monograph The Dead Sea Genesis Apocryphon (Brill, STDJ 79, 2009) is behind Brill's paywall and was NOT opened; the doctoral thesis behind it is openly deposited at Notre Dame under doi 10.7274/3484zg66p76, and its abstract — but not its body — was read",
+        supports: "The physical description, the column count, the extent of the retelling, and the non-sectarian consensus",
+      },
+      {
+        tier: "primary",
+        label: "N. Avigad and Y. Yadin, A Genesis Apocryphon: A Scroll from the Wilderness of Judaea",
+        credit: "Nahman Avigad and Yigael Yadin",
+        detail:
+          "Jerusalem: Magnes Press, Hebrew University, 1956. The editio princeps. Its subtitle states its own extent — \"Description and Contents of the Scrolls, Facsimiles, Transcription and Translations of Columns II, XIX-XXII\" — which is the fact section one turns on. Print only; not opened, and the subtitle is quoted from the Israel Museum's citation of it and from a later scholar's footnote",
+        supports: "That the first edition published only columns II and XIX-XXII",
+      },
+      {
+        tier: "institution",
+        label: "Israel Antiquities Authority, Leon Levy Dead Sea Scrolls Digital Library: 1Q20 Genesis Apocryphon",
+        url: "https://www.deadseascrolls.org.il/explore-the-archive/manuscript/1Q20-1",
+        credit: "Israel Antiquities Authority",
+        detail:
+          "\"Site: Qumran, Cave 1\", \"Language: Aramaic\", \"Script: Square\", \"Period: Herodian\", \"Material: Parchment\", with eleven free images, most of them infrared negatives photographed by Najib Anton Albina in 1953 and 1961. Read in full. Note carefully what this record is: the Cave 1 FRAGMENTS published by J. T. Milik in Discoveries in the Judaean Desert 1, not the main scroll, which is Israel Museum property and is not in this library",
+        supports: "The language, script and material, and the availability of infrared images of the Cave 1 fragments",
+      },
+      {
+        tier: "institution",
+        label: "NASA Jet Propulsion Laboratory, \"Infrared imaging reveals details on Dead Sea Scrolls\"",
+        url: "https://www.jpl.nasa.gov/news/infrared-imaging-reveals-details-on-dead-sea-scrolls/",
+        credit: "Jet Propulsion Laboratory, California Institute of Technology",
+        detail:
+          "Press release of 20 November 1993, read in full. Reports G. Bearman's team testing imaging in the 1,000 to 3,000 nanometre range on a Genesis Apocryphon fragment lent by the Getty Conservation Institute, and the sentence quoted in section one. Bearman went on to write the imaging appendix to the 1995 publication",
+        supports: "That infrared imaging changed what could be read on this scroll, and when",
+      },
+      {
+        tier: "encyclopedic",
+        label: "Wikipedia: Genesis Apocryphon",
+        url: "https://en.wikipedia.org/wiki/Genesis_Apocryphon",
+      },
+    ],
+    reflectionPrompt:
+      "Seventeen sheets of this scroll are gone and nobody will ever know what was on them. What do you do with the parts of a story you cannot recover?",
+  },
+  {
+    id: "en-gedi-leviticus-scroll",
+    name: "En-Gedi Leviticus Scroll",
+    // NOT registered: "En Gedi" or "Ein Gedi" — the oasis is a Location record and owns both, and
+    // this article links to it whenever it names the place. The hyphenated "En-Gedi" the scholarly
+    // literature uses for the scroll does not match either of the location's spellings, which is
+    // why the full name here is safe. NOT registered either: "the Leviticus scroll".
+    alternateNames: ["En-Gedi Scroll"],
+    category: "manuscript",
+    role: "The Burnt Scroll That Was Read Without Being Opened",
+    summary:
+      "A lump of charcoal from the ark of a Byzantine synagogue, too fragile to unroll for forty-five years — until a scanner and a piece of software turned it back into two columns of Leviticus.",
+    sections: [
+      {
+        heading: "A Lump of Charcoal in a Synagogue Ark",
+        paragraphs: [
+          "In 1970 archaeologists digging the Byzantine synagogue at En Gedi, on the western shore of the Dead Sea, reached the Holy Ark and found charred lumps inside it. The building had burned down around AD 600, and the lumps were what was left of its scrolls. The excavation was led by D. Barag and E. Netzer of the Hebrew University with Y. Porath of the Israel Antiquities Authority; the authors of the eventual publication record that \"Y. Porath excavated the En-Gedi scroll on May 5, 1970.\" Then nothing happened, and the reason is worth stating plainly, because it is the whole point of the story: the object could not be opened. Unrolling carbonised parchment destroys it. The Israel Antiquities Authority kept the lumps for four decades while, in the words of the same paper, \"no one produced a means to overcome the irreversible damage they had suffered in situ.\"",
+          "The means arrived from computer science. P. Shor and Y. Porath of the Antiquities Authority arranged for the scroll to be scanned in three dimensions by micro-CT, and put the resulting volume in the hands of W. B. Seales of the University of Kentucky, whose team had been developing a technique they call virtual unwrapping: find the layers of the rolled sheet inside the scan, model each as a surface, flatten it, and read what is written on it. The ink cooperated for a reason the paper is careful about — its composition is unknown, because no surface is exposed to test, but \"the ink response within the micro-CT scan is denser than other materials, implying that it likely contains metal, such as iron or lead,\" and dense material is exactly what a CT scanner sees. The Antiquities Authority announced readable text at a press conference in the summer of 2015; the full technical account appeared in Science Advances in September 2016, and the textual edition in the journal Textus the same year.",
+        ],
+      },
+      {
+        heading: "Two Columns of Leviticus",
+        paragraphs: [
+          "What came out is the beginning of a Torah scroll: the first two columns of Leviticus, eighteen surviving lines out of an original thirty-five in each. Column one carries Leviticus 1:1-9 and column two Leviticus 2:1-11 — the opening of the sacrificial law, the burnt offering and the grain offering. The published segment measures 16.8 cm long and 7.8 cm high as it survives, though the editors note the fire shrank it by an unknown amount and its original size cannot be recovered. The text is unvocalised and carries no verse divisions, which is what a Hebrew scroll of this period should look like. Everything from column three onwards is still rolled up and still unread.",
+          "The finding that made headlines was about agreement with the later Hebrew Bible, and it is worth quoting at its own weight rather than at the weight the headlines gave it. The Science Advances paper says: \"The text deciphered thus far is completely identical with the consonantal framework of the medieval text of the Hebrew Bible, traditionally named the Masoretic Text, and which is the text presented in most printed editions of the Hebrew Bible.\" The edition in Textus is more precise still — the comparison was made against a named manuscript, and the paragraph divisions match too: \"Throughout the entire two columns, the text preserved of Leviticus 1-2 matches the consonantal text of the medieval MT of Leviticus precisely, and we did not find a single variant vis-à-vis MT (choosing Codex Leningrad B 19A as our point of comparison).\" Notice the two qualifications the editors themselves put on it: deciphered thus far, and consonantal framework. Vowels and accents are a later addition and are not in question here. And the editors add the deflating sentence that popular retellings drop: \"Although it does not contribute any new readings (in the two columns that have been revealed to date), it serves as a valuable witness for the state of the biblical text in an era for which we have a paucity of direct evidence.\"",
+        ],
+      },
+      {
+        heading: "Nobody Agrees How Old It Is",
+        paragraphs: [
+          "The date is genuinely open, and the editors put the disagreement in their own publication rather than resolving it quietly. Radiocarbon dating at the Weizmann Institute gave \"a probability of 68.2% that the scroll dates between 235-340 CE, and a probability of 88.9% that it dates between 210-390 CE,\" with only a 6.5% chance of the second century. The palaeographer A. Yardeni, examining the letter forms, reached a different answer: \"It seems therefore that we may safely date this scroll to about the second half of the 1st century and at latest, the beginning of the 2nd century CE.\" That is a gap of a century and a half or more. Yardeni states her own limits before she states her conclusion, and they should be quoted with it: \"Because of the very poor condition of this scroll, its image is distorted and does not reflect its precise appearance; therefore, the measurements given below are approximate and the drawings are conjectural,\" and the letters are so small that they \"do not allow a sound examination of their forms.\"",
+          "The editors' own verdict is a model of what to do with a discrepancy: \"We take note of the discrepancies between these two examinations which should lead to caution in any conclusion, but such discrepancies are not unparalleled.\" The argument has since moved on. D. Longacre reconsidered the palaeography in 2018 and argues in his abstract that \"a series of important typological developments evident in the hand of EGLev suggests a date somewhat later than the Dead Sea Scrolls of the first-second centuries,\" and that the physical evidence — a wooden roller, metallic ink, tall narrow columns — points the same way; he concludes for the third or fourth century, which would agree with the radiocarbon. Only his abstract could be read here, so his reasoning is reported and not restated. Either way the scroll does something no other manuscript does: it gives a snapshot of the Hebrew Bible from the centuries between the Judean Desert finds and the medieval codices, a stretch for which there is almost nothing else.",
+        ],
+      },
+    ],
+    verses: [
+      { reference: "Leviticus 1:1-9", note: "The text of the scroll's first column, recovered without the scroll being opened" },
+      { reference: "Leviticus 2:1-11", note: "The second column: the grain offering" },
+      { reference: "1 Samuel 24:1-2", note: "David in the wilderness of En Gedi, the oasis where the synagogue stood a thousand years later" },
+    ],
+    sources: [
+      { label: "W. B. Seales et al., \"From damage to discovery via virtual unwrapping: Reading the scroll from En-Gedi\" (Science Advances, open access)", url: "https://pmc.ncbi.nlm.nih.gov/articles/PMC5031465/" },
+      { label: "M. Segal, E. Tov et al., \"An Early Leviticus Scroll from En-Gedi: Preliminary Publication\" (Textus 26)", url: "https://openscholar.huji.ac.il/sites/default/files/he_bible_project/files/m._segal1.1.pdf" },
+      { label: "Wikipedia: En-Gedi Scroll", url: "https://en.wikipedia.org/wiki/En-Gedi_Scroll" },
+    ],
+    manuscript: {
+      manuscriptType: "Parchment scroll, carbonised by fire and never physically unrolled; read from a micro-CT scan",
+      language: "Hebrew",
+      contents:
+        "The first two columns of Leviticus — 1:1-9 and 2:1-11 — eighteen of an original thirty-five lines surviving in each. Unvocalised, with no verse divisions. The rest of the scroll is still rolled and still unread",
+      origin: "Unknown. It was in use at the En Gedi synagogue when the building burned",
+      findSite: "The Holy Ark of the Byzantine synagogue at En Gedi, on the west shore of the Dead Sea",
+      foundYear: "1970",
+      foundBy:
+        "Excavated by Y. Porath on 5 May 1970, in a dig directed by D. Barag and E. Netzer of the Hebrew University with Porath of the Israel Antiquities Authority",
+      dateAssigned:
+        "Disputed. Radiocarbon gives AD 235-340 at 68.2% probability; A. Yardeni's palaeography gives the second half of the first century or the beginning of the second; D. Longacre argued in 2018 for the third or fourth century",
+      dateCertainty: "disputed",
+      currentLocation: "Israel Antiquities Authority. No published inventory number for the scroll was traced",
+      facsimileUrl: "https://vis.uky.edu/virtual-unwrapping/engedi2016/",
+    },
+    citations: [
+      {
+        tier: "scholarly",
+        label: "W. B. Seales, C. S. Parker, M. Segal, E. Tov, P. Shor and Y. Porath, \"From damage to discovery via virtual unwrapping: Reading the scroll from En-Gedi\"",
+        url: "https://pmc.ncbi.nlm.nih.gov/articles/PMC5031465/",
+        credit: "William Brent Seales, Clifford Seth Parker, Michael Segal, Emanuel Tov, Pnina Shor and Yosef Porath",
+        detail:
+          "Science Advances 2:9 (21 September 2016), e1601247, doi 10.1126/sciadv.1601247. Open access under CC BY-NC and read in full through PubMed Central; science.org itself refuses automated requests. Source for the 1970 excavation and the AD 600 destruction, for Porath's excavation of the scroll on 5 May 1970, for the ink's likely metal content, and for the sentence about identity with the Masoretic consonantal framework quoted whole in section two. Because the licence is non-commercial, this article quotes and cites it rather than reproducing any of it",
+        supports: "The discovery, the virtual unwrapping, and the claim about agreement with the Masoretic Text",
+      },
+      {
+        tier: "scholarly",
+        label: "M. Segal, E. Tov, W. B. Seales, C. S. Parker, P. Shor and Y. Porath, with an appendix by A. Yardeni, \"An Early Leviticus Scroll from En-Gedi: Preliminary Publication\"",
+        url: "https://openscholar.huji.ac.il/sites/default/files/he_bible_project/files/m._segal1.1.pdf",
+        credit: "Michael Segal, Emanuel Tov, William Brent Seales, Clifford Seth Parker, Pnina Shor and Yosef Porath; palaeographic appendix by Ada Yardeni",
+        detail:
+          "Textus 26 (2016), 29-58. Read in full through the Hebrew University Bible Project's own copy; Brill's page for the same article refuses automated requests. This is the textual edition and it is the source that matters most here: the verse range (Leviticus 1:1-9 and 2:1-11, NOT 1:1-8, which is what the 2015 press coverage said), the eighteen of thirty-five lines, the 16.8 by 7.8 cm measurement, the comparison against Codex Leningrad B 19A, the radiocarbon probabilities in its footnote 4, Yardeni's palaeographic conclusion and her own caveats, and the editors' sentence about the discrepancy between the two datings",
+        supports: "The verse range, the dimensions, the textual comparison, and both sides of the dating dispute",
+      },
+      {
+        tier: "scholarly",
+        label: "D. Longacre, \"Reconsidering the Date of the En-Gedi Leviticus Scroll (EGLev): Exploring the Limitations of the Comparative-Typological Paleographic Method\"",
+        url: "https://doi.org/10.1163/2589255X-02701004",
+        credit: "Drew Longacre, University of Groningen",
+        detail:
+          "Textus 27:1 (2018), 44-84. The body is behind Brill's paywall and was NOT opened. What section three quotes is his own abstract, read on his university's research portal. His arguments are named from it and are not restated here",
+        supports: "The third position on the scroll's date",
+        paywalled: true,
+      },
+      {
+        tier: "institution",
+        label: "University of Kentucky, Department of Computer Science: the En-Gedi 2016 scan data",
+        url: "https://vis.uky.edu/virtual-unwrapping/engedi2016/",
+        credit: "W. B. Seales and the EduceLab team, University of Kentucky",
+        detail:
+          "The archive the published paper names as the home of \"All scan data and results from this paper\". Confirmed live. The master image of the unwrapped scroll is also deposited on the Internet Archive at archive.org/details/engedi-scroll, where it carries the paper's own non-commercial licence",
+        supports: "That the scan data behind the reading is public and inspectable",
+      },
+      {
+        tier: "reference",
+        label: "Biblical Archaeology Society, \"Book of Leviticus Verses Recovered from Burnt Hebrew Bible Scroll\"",
+        url: "https://www.biblicalarchaeology.org/daily/news/book-of-leviticus-verses-recovered-from-burnt-hebrew-bible-scroll/",
+        credit: "Biblical Archaeology Society",
+        detail:
+          "The lay account of the 2015 announcement, read in full. It is cited here for a specific reason: it carries the \"first eight verses\" figure that the 2015 press round produced and that is still repeated, and then updates itself. The primary publication says Leviticus 1:1-9",
+        supports: "Where the widely repeated \"first eight verses\" figure came from",
+      },
+      {
+        tier: "encyclopedic",
+        label: "Wikipedia: En-Gedi Scroll",
+        url: "https://en.wikipedia.org/wiki/En-Gedi_Scroll",
+      },
+    ],
+    reflectionPrompt:
+      "This scroll was unreadable for forty-five years and nobody threw it away. What are you keeping that you cannot yet make sense of?",
+  },
+  {
+    id: "greek-minor-prophets-scroll",
+    name: "Greek Minor Prophets Scroll",
+    // NOT registered: "8HevXIIgr". All three places the 66 book introductions write that siglum, it
+    // sits in brackets immediately after the full name, so registering it would put a second chip
+    // beside the first — the fault the papyri-and-uncials batch fixed for "Papyrus 46 (P46)". NOT
+    // registered either: "Minor Prophets Scroll" on its own, because the book introductions use
+    // that phrase for the HEBREW Murabba'at scroll (Mur88) five times, and it would send those
+    // readers to the wrong manuscript. Only the full "Greek Minor Prophets Scroll" is registered,
+    // and it matches the lowercase-s form the Habakkuk introduction uses as well.
+    alternateNames: ["Nahal Hever Greek Minor Prophets Scroll"],
+    category: "manuscript",
+    role: "A Greek Old Testament Being Corrected Towards the Hebrew, Before the New Testament Was Written",
+    summary:
+      "A leather scroll from a cliff cave south of Qumran, carrying six of the Minor Prophets in Greek — and showing the Septuagint already being revised, verse by verse, to match a Hebrew text like the one that became standard.",
+    sections: [
+      {
+        heading: "Bought First, Excavated Afterwards",
+        paragraphs: [
+          "This scroll reached scholarship the wrong way round. Fragments of it were sold to the Palestine Archaeological Museum in the early 1950s by clandestine diggers who said they came from Wadi Seiyal, and it was only in the spring of 1961, when Y. Aharoni's Hebrew University expedition excavated a cave in the cliffs of Nahal Hever — the Cave of Horror, so called for the human remains found in it — that matching fragments came out of the ground and settled where the scroll had actually been. That is why its siglum begins with the number of the cave. The two halves were published together in 1990, edited by E. Tov with R. A. Kraft and a palaeographic contribution from P. J. Parsons, as volume 8 of Discoveries in the Judaean Desert.",
+          "What survives is about twenty-six columns of a scroll reconstructed at something near fifty-five, carrying parts of six books: Jonah, Micah, Nahum, Habakkuk, Zephaniah and Zechariah. Two scribes wrote it. The Israel Antiquities Authority's digital library holds it as manuscript 8Hev1 with 111 photographs, and lists it plainly as parchment, Greek script, Roman period. In March 2021 the Antiquities Authority announced that a survey of the same cave, reached by rappelling some eighty metres down a cliff face, had recovered further fragments of this very scroll — text from Zechariah 8:16-17 and Nahum 1:5-6 — sixty years after the first excavation.",
+        ],
+      },
+      {
+        heading: "The Septuagint, Under Revision",
+        paragraphs: [
+          "The reason this scroll matters is what D. Barthélemy saw in it. He announced it in 1953 and published it fully in 1963 under a title that says the thesis: Les Devanciers d'Aquila, the forerunners of Aquila of Sinope. This is not a fresh translation of the Twelve into Greek, and it is not simply a copy of the Septuagint. It is the Septuagint revised — corrected, reading by reading, towards a Hebrew text of the kind that would later become the Masoretic standard. The revision has a name taken from one of its tics, the kaige recension, and it turned out to stand at the head of a line running on through the second-century Jewish translators Aquila of Sinope, Theodotion and Symmachus.",
+          "That reframes a question this app's article on the Septuagint also raises. Before these fragments, the differences between the Greek Old Testament and the Hebrew one could be put down to loose translators. This scroll shows Jewish scholars in Judea, before the New Testament existed, treating the Greek as something to be brought into line with the Hebrew — which means the differences were already visible to them, and mattered to them. P. J. Gentry states the state of play carefully: the process of making \"systematic, thoroughgoing revisions (called recensions) continued from possibly 200 bc through ad 200,\" and \"the precise line of demarcation between original Greek translations and later revisers in this corpus of texts has, in fact, not yet been clearly established.\"",
+        ],
+      },
+      {
+        heading: "The Divine Name, and What It Does Not Settle",
+        paragraphs: [
+          "The scroll's most-discussed feature is a piece of typography. Where the Hebrew has the divine name, this Greek text does not write a Greek word at all: it writes the four Hebrew letters, in the old palaeo-Hebrew script, inside the running Greek — twenty-eight times, twenty-four in one scribe's hand and four in the other's. A reader can see it on the Antiquities Authority's own plates. A. R. Meyer, who has catalogued the evidence, notes that the scribes left no gaps for it and did not go back to fill it in: \"both hands appear to write the Tetragrammaton left-to-right in scriptio continua at the same time the Greek text was copied.\"",
+          "It is regularly claimed that this shows the original Greek Old Testament wrote the divine name in Hebrew rather than translating it as kyrios, \"Lord\" — and that is more than the evidence carries. The majority position runs the other way: E. Tov's judgement is that \"all the texts transcribing the Tetragrammaton in Hebrew characters reflect early revisions, in which the employment of Hebrew characters was considered a sign of authenticity, even though this practice only entered the transmission of Greek Scriptures at a second stage.\" On that reading, the Hebrew letters are part of the correcting, not part of the original. But the argument is not closed, and Meyer names the manuscript that keeps it open: P. Oxy. 5101, a Psalms papyrus A. Pietersma regards as a genuine Old Greek witness whose \"sole recensional trait\" is the palaeo-Hebrew divine name — which, if right, breaks the link between revision and Hebrew letters that the majority case depends on. A third possibility is that the earliest Greek wrote the name as iaō, which is what the Cave 4 Greek Leviticus fragments actually have. Meyer's own conclusion is the honest one: \"the correlation itself is not decisive for understanding the role of the divine name in the textual history of the Septuagint.\"",
+        ],
+      },
+    ],
+    verses: [
+      { reference: "Habakkuk 3:9", note: "Preserved on this scroll — one of the verses that shows chapter 3 belonged to the book before the New Testament era" },
+      { reference: "Zechariah 8:16-17", note: "Recovered from the same cave in 2021, sixty years after the first excavation" },
+      { reference: "Nahum 1:5-6", note: "The other passage in the 2021 fragments" },
+      { reference: "Micah 5:2-4", note: "Among the passages where the scroll writes the divine name in Hebrew letters inside the Greek" },
+    ],
+    sources: [
+      { label: "Israel Antiquities Authority, Leon Levy Digital Library: 8Hev1 Minor Prophets", url: "https://www.deadseascrolls.org.il/explore-the-archive/manuscript/8Hev1-1" },
+      { label: "P. J. Gentry, \"The Text of the Old Testament\" (JETS 52/1)", url: "https://etsjets.org/wp-content/uploads/2010/06/www.etsjets.org_files_JETS-PDFs_52_52-1_JETS-52-1-19-45-Gentry.pdf" },
+      { label: "Wikipedia: Greek Minor Prophets Scroll from Nahal Hever", url: "https://en.wikipedia.org/wiki/Greek_Minor_Prophets_Scroll_from_Nahal_Hever" },
+    ],
+    manuscript: {
+      siglum: "8ḤevXIIgr",
+      manuscriptType: "Parchment scroll in Greek script, written by two scribes; about 26 columns survive of a reconstructed 55",
+      language: "Greek, with the divine name written in palaeo-Hebrew letters",
+      contents:
+        "Parts of six of the Minor Prophets — Jonah, Micah, Nahum, Habakkuk, Zephaniah and Zechariah — not the whole Book of the Twelve. Further fragments of Nahum and Zechariah from the same scroll were recovered in 2021",
+      origin: "Judea",
+      findSite: "The Cave of Horror, Nahal Hever, in the Judean Desert",
+      foundYear:
+        "Fragments were sold to the Palestine Archaeological Museum in the early 1950s under a false Wadi Seiyal provenance; matching fragments were excavated in the cave itself in 1961, and more in 2021",
+      foundBy:
+        "Clandestine diggers first; the 1961 excavation was by Y. Aharoni's Hebrew University expedition, and the 2021 survey by the Israel Antiquities Authority's Dead Sea Scrolls Unit",
+      dateAssigned:
+        "Palaeographically about 25 BC to AD 25 on the official edition's dating. Older estimates ranged from 50 BC-AD 50 to the end of the first century AD, and the Israel Antiquities Authority's own record gives no date at all",
+      dateCertainty: "disputed",
+      currentLocation: "Israel Antiquities Authority; the older fragments went to what is now the Rockefeller Museum, Jerusalem",
+      facsimileUrl: "https://www.deadseascrolls.org.il/explore-the-archive/manuscript/8Hev1-1",
+    },
+    citations: [
+      {
+        tier: "institution",
+        label: "Israel Antiquities Authority, Leon Levy Dead Sea Scrolls Digital Library: 8Hev1, Minor Prophets",
+        url: "https://www.deadseascrolls.org.il/explore-the-archive/manuscript/8Hev1-1",
+        credit: "Israel Antiquities Authority",
+        detail:
+          "The authority's own record: \"Minor Prophets\", \"8Hev1 - 8Hev XII\", site \"Cave of Horror\", \"Biblical Compositions\", \"Translation of Scripture\", language and script Greek, period Roman, material parchment, 111 images, and the publication given as \"Tov, Emanuel 1990. DJD 8: 1-169.\" Read in full. Note that the record itself assigns no date. Note also that the verse identifications visible on individual plate pages are comments left by site visitors, not the authority's own metadata, and are not used here",
+        supports: "The material, script, findspot, image count, and the official publication",
+      },
+      {
+        tier: "scholarly",
+        label: "E. Tov, with R. A. Kraft and a contribution by P. J. Parsons, The Greek Minor Prophets Scroll from Naḥal Ḥever (8ḤevXIIgr)",
+        credit: "Emanuel Tov, Robert A. Kraft and Peter J. Parsons",
+        detail:
+          "Discoveries in the Judaean Desert VIII (Oxford: Clarendon, 1990). The official edition, and the source of the column counts, the two hands and the palaeographic date as those are reported. It was NOT opened here: no readable copy could be reached, and the Internet Archive's scan is lending-restricted. Parsons's own palaeographic argument is therefore named and not restated, and the date given in this article's facts block is the one reported from this edition rather than one read in it",
+        supports: "The column counts, the two scribal hands, and the conventional date",
+      },
+      {
+        tier: "scholarly",
+        label: "A. R. Meyer, The Divine Name in Early Judaism: Use and Non-Use in Aramaic, Hebrew, and Greek",
+        url: "https://areopage.net/PDF/Meyer_DivineName.pdf",
+        credit: "Anthony R. Meyer, McMaster University",
+        detail:
+          "Doctoral thesis, McMaster University, 2017, supervised by D. A. Machiela; later published as Naming God in Early Judaism (Schöningh, 2022). Read in full. Source for the twenty-eight occurrences of the Tetragrammaton and their division between the two hands, for the scribes writing it without leaving gaps, for the quotation from Tov in section three (which Meyer quotes from Tov's own essay and which is therefore reported at one remove), for A. Pietersma on P. Oxy. 5101, and for Meyer's own conclusion",
+        supports: "The palaeo-Hebrew divine name, and all three positions on what it does and does not show",
+      },
+      {
+        tier: "scholarly",
+        label: "P. J. Gentry, \"The Text of the Old Testament\"",
+        url: "https://etsjets.org/wp-content/uploads/2010/06/www.etsjets.org_files_JETS-PDFs_52_52-1_JETS-52-1-19-45-Gentry.pdf",
+        credit: "Peter J. Gentry, The Southern Baptist Theological Seminary",
+        detail:
+          "Journal of the Evangelical Theological Society 52:1 (March 2009), 19-45. Freely readable and read in full. Source for the two sentences quoted in section two on the recensions and on where the line between translation and revision has not been drawn",
+        supports: "The place of the kaige recension in the history of the Greek Old Testament",
+      },
+      {
+        tier: "scholarly",
+        label: "D. Barthélemy, Les Devanciers d'Aquila",
+        credit: "Dominique Barthélemy",
+        detail:
+          "Vetus Testamentum Supplements 10 (Leiden: Brill, 1963), preceded by \"Redécouverte d'un chaînon manquant de l'histoire de la Septante\", Revue Biblique 60 (1953), 18-29. The book that identified the kaige recension. NO accessible copy could be reached and it was NOT opened; its thesis is stated here at the level its own title states it, and the wider description is taken from Gentry and Meyer rather than from Barthélemy",
+        supports: "That this scroll is a revision of the Septuagint towards the Hebrew, and the name of the recension",
+      },
+      {
+        tier: "institution",
+        label: "Israel Antiquities Authority, \"A challenging Israel Antiquities Authority operation has uncovered thrilling finds in the Judean Desert\"",
+        url: "https://www.friendsofiaa.org/news/2021/3/16/a-challenging-israel-antiquities-authority-operation-has-uncovered-thrilling-finds-in-the-judean-desert-nature-reserve",
+        credit: "Israel Antiquities Authority, reproduced by the Friends of the Israel Antiquities Authority",
+        detail:
+          "The press release of 16 March 2021, read in full in this reproduction because antiquities.org.il refuses automated requests. It reports that the new fragments \"was written, uniquely by two different scribes\", that \"despite most of the text being in Greek, the name of God appears in ancient Hebrew script\", and describes the descent into the cave. The verse identifications — Zechariah 8:16-17 and Nahum 1:5-6 — are from the Times of Israel's report of the same announcement",
+        supports: "The 2021 recovery of further fragments and which passages they carry",
+      },
+      {
+        tier: "encyclopedic",
+        label: "Wikipedia: Greek Minor Prophets Scroll from Nahal Hever",
+        url: "https://en.wikipedia.org/wiki/Greek_Minor_Prophets_Scroll_from_Nahal_Hever",
+      },
+    ],
+    reflectionPrompt:
+      "Someone sat in Judea two thousand years ago and corrected a Bible translation line by line against the Hebrew. What would you check that carefully?",
+  },
+  {
+    id: "bar-kokhba-letters",
+    name: "Bar Kokhba Letters and the Babatha Archive",
+    // NOT registered: "Bar Kokhba" on its own — it is a person's nickname, and a timeline event
+    // already carries "Bar Kokhba Revolt"; registering the bare name would take mentions of the man
+    // and of the war and send them here. NOT registered either: "Nahal Hever", "Cave of Letters" or
+    // "Wadi Murabba'at", which are places. The two registered aliases are the two document groups.
+    alternateNames: ["Bar Kokhba letters", "Babatha archive"],
+    category: "manuscript",
+    role: "Letters and Legal Papers From the Last Jewish Revolt, AD 132-136",
+    summary:
+      "Papyri hidden in cliff caves above the Dead Sea by people who did not come back for them: a rebel commander's orders to his officers, and thirty-five legal documents belonging to one woman.",
+    sections: [
+      {
+        heading: "Two Sites, Two Excavations, Two Countries",
+        paragraphs: [
+          "Two separate caches are routinely run together and should not be. The first came from Wadi Murabba'at, then in Jordanian territory, where Bedouin found caves in October 1951 and G. L. Harding and R. de Vaux excavated four of them early in 1952. The finds ran from the Chalcolithic to the Arab period and included, as a contemporary account of the dig put it, \"Biblical texts, phylacteries, profane letters, contracts, literary and historical works, administrative, civil and military documents\" in \"Hebrew, Aramaic, Greek, Latin and Arabic.\" Among them were letters from the leader of the revolt himself. The site had been an insurgent outpost, and the headquarters of one of his officers.",
+          "The second cache came from Nahal Hever, on the Israeli side, in two seasons under Y. Yadin. In March 1960 his team, working the cliffs above the ravine, found a bundle of letters tied together in a waterskin — the Bar Kokhba letters proper. In the following season they found a concealed crevice holding a leather purse with thirty-five legal documents in it, all belonging to a woman named Babatha. The cave has been called the Cave of Letters ever since. A caution on the years: the letters are consistently dated to 1960, and the Babatha purse is usually placed in the 1961 season, but the accounts available here disagree about the second date, and Yadin's own excavation report could not be opened, so this article does not state it flatly.",
+        ],
+      },
+      {
+        heading: "A Commander Who Needed Palm Branches",
+        paragraphs: [
+          "The letters are administrative, short, and startlingly ordinary. One from Wadi Murabba'at runs, in the translation published with the excavation: \"From Simeon ben Koseba to Yeshua ben Gilgola and the men of your company, greeting! I call heaven to witness against me that, if you do not break off (relations) with the Galileans whom you have liberated each and all, I will have you clapped in irons... as I have done already with Ben Aphlul. Simeon ben Koseba, Prince of Israel.\" Even that is contested — an alternative reading of the crucial clause makes it a threat on the Galileans' behalf rather than against them, and the published translator flagged the alternative himself. A second Murabba'at letter is about a disputed cow, and ends: \"What is more—alas!—the gentiles are drawing close to us.\"",
+          "The most-quoted of the Nahal Hever letters is a supply order. Shimon writes to a man at Qiryat Arabaya to send two men with two donkeys to Yehonathan son of Ba'yan and to Masabala — his officers at En Gedi — to bring back palm branches and citrons, and to gather myrtle and willow locally, \"because the population is large.\" Those are the four species carried at the Feast of Tabernacles, prescribed in Leviticus 23:40. In the middle of a losing war, a commander is arranging for his men to keep a festival. There is a Greek letter making a similar request; the writer names himself Soumaios and apologises for writing in Greek, and whether Soumaios is the commander himself is disputed. The letters were addressed to real officers at a real oasis, and the same oasis produced the burnt Leviticus scroll five centuries later.",
+        ],
+      },
+      {
+        heading: "What the Letters Do Not Prove",
+        paragraphs: [
+          "These documents are constantly enlisted to establish two things they cannot carry. The first is the leader's name. The documents themselves call him Shimon ben Kosiba and date by \"the liberation of Israel by the ministry of Simeon ben Koseba, Prince of Israel.\" \"Bar Kokhba\" is not in them. It is an epithet, and the Jewish Encyclopedia states its status precisely: \"Bar Kokba, the hero of the third war against Rome, appears under this name only among ecclesiastical writers: heathen authors do not mention him; and Jewish sources call him Ben (or Bar) Koziba or Kozba.\" The epithet is a pun on Numbers 24:17 — \"a star will come out of Jacob\" — reported as R. Akiva's, in a passage of the Jerusalem Talmud that also records the reply: \"Rabbi Yohanan ben Torta said to him, 'Akiva, grass will grow on your cheeks and still the Son of David will not have come.'\" That passage was written down generations after the events and it preserves the objection alongside the acclamation.",
+          "The second is the archive's own size and shape, which are softer than the round numbers suggest. The Babatha purse is usually said to hold thirty-five documents dated between AD 94 and 132, but the ranges given in accessible sources differ by two years at each end, and no accession number for the purse or for the letters could be traced at the holding museum. The letters are usually counted as fifteen; a scholarly catalogue of every letter from the Judean Desert lists sixteen for this group, one of them too fragmentary to edit. None of that touches what the documents are worth. Babatha's papers — marriage contracts, land registrations, a guardianship dispute over her son, kept in Greek, Aramaic and Nabataean — are the fullest surviving record of the legal life of any ordinary Jewish woman in antiquity, and she is known only because she took them into a cave and did not come out.",
+        ],
+      },
+    ],
+    verses: [
+      { reference: "Numbers 24:17", note: "\"A star will come out of Jacob\" — the verse behind the epithet Bar Kokhba, \"son of the star\"" },
+      { reference: "Leviticus 23:40", note: "The four species the commander's letter orders sent to his camp" },
+      { reference: "1 Samuel 24:1-2", note: "En Gedi, the oasis where his two officers were stationed" },
+    ],
+    sources: [
+      { label: "Jewish Encyclopedia (1901-1906): Bar Kokba and Bar Kokba War", url: "https://jewishencyclopedia.com/articles/2471-bar-kokba-and-bar-kokba-war" },
+      { label: "Center for Online Judaic Studies: Bar Kokhba Letter, 132-135 CE", url: "https://cojs.org/bar_kokhba_letter-_132-135_ce/" },
+      { label: "Wikipedia: Cave of Letters", url: "https://en.wikipedia.org/wiki/Cave_of_Letters" },
+    ],
+    manuscript: {
+      manuscriptType: "Papyrus letters, with a few on hide, ostraca and wood; the Babatha documents are papyrus, folded and tied in a leather purse",
+      language: "Hebrew, Aramaic, Greek and Nabataean; four letters from the Judean Desert are in Latin",
+      contents:
+        "Administrative letters from Shimon ben Kosiba and his officers, and the thirty-five legal documents of Babatha — marriage contracts, land registrations and a guardianship suit. Not biblical manuscripts: the biblical scrolls from the same caves are separate finds",
+      origin: "Judea and the Roman province of Arabia, AD 94-135",
+      findSite: "Wadi Murabba'at, and the Cave of Letters in Nahal Hever, in the cliffs above the Dead Sea",
+      foundYear: "1951-1952 at Wadi Murabba'at; 1960 and the following season at Nahal Hever",
+      foundBy:
+        "Bedouin of the Ta'amireh tribe found the Murabba'at caves in October 1951; G. L. Harding and R. de Vaux excavated them in 1952. Y. Yadin's expedition excavated the Cave of Letters",
+      dateAssigned: "AD 94-135, from the documents' own dating formulae",
+      dateCertainty: "firm",
+      currentLocation: "Israel Museum, Jerusalem, and the Israel Antiquities Authority. No published accession number for either group was traced",
+    },
+    citations: [
+      {
+        tier: "institution",
+        label: "Israel Exploration Society: The Documents from the Bar Kokhba Period in the Cave of Letters, vol. 2, Greek Papyri",
+        url: "https://www.israelexplorationsociety.com/product-page/the-documents-from-the-bar-kokhba-period-in-the-cave-of-the-letters",
+        credit: "Israel Exploration Society, Jerusalem",
+        detail:
+          "The excavating body's own record of the material it dug and published. Read in full. Its description: \"Documents, artifacts and human skeletal remains were found in caves in the cliffs overlooking Nahal Hever, a canyon near the Dead Sea. Among the documentary finds were letters written by Bar Kokhba, the legendary leader of the Second Jewish Revolt against Rome (ca. 132 CE) and the archive of Babata, a Jewish woman living at that time.\" The volume itself — N. Lewis, Y. Yadin and J. C. Greenfield (eds), 1989, ISBN 965-221-009-9 — is the official edition of the Greek papyri in the archive, and was NOT opened here. This is the closest thing to a holding-institution record that could be found for these documents: neither the Israel Museum nor the Israel Antiquities Authority publishes an object page for them, which is why this article carries no inventory number",
+        supports: "That the letters and the Babatha archive came from the Nahal Hever caves, and the official edition of the Greek papyri",
+      },
+      {
+        tier: "primary",
+        label: "G. Graystone, \"The Dead Sea Scrolls — II. Wadi Murabba'at\"",
+        url: "https://biblicalstudies.org.uk/pdf/scripture/07-3_066.pdf",
+        credit: "Scripture 7:3 (1955), 66-76",
+        detail:
+          "A contemporary account of the 1951-52 excavation, written two years after it, with translations of both published Murabba'at letters and of the revolt's dating formula. Read in full. The two letters quoted in section two are from here, including the translator's own note that the crucial clause of the first has an alternative reading. The scan is supplied for free educational use and may not be resold or rehosted, so it is linked and quoted briefly rather than reproduced. Its footnotes cite R. de Vaux, \"Les Grottes de Murabba'at et leurs documents\", Revue Biblique 60 (1953), 245-267, which was not opened",
+        supports: "The 1951-52 excavation, the range of the finds, and the text of the two Murabba'at letters",
+      },
+      {
+        tier: "primary",
+        label: "Jewish Encyclopedia (1901-1906), \"Bar Kokba and Bar Kokba War\"",
+        url: "https://jewishencyclopedia.com/articles/2471-bar-kokba-and-bar-kokba-war",
+        credit: "Funk and Wagnalls, New York, 1901-1906; public domain",
+        detail:
+          "Read in full. Source for the sentence quoted in section three on the name — that it \"appears under this name only among ecclesiastical writers\" while \"Jewish sources call him Ben (or Bar) Koziba or Kozba\" — and for the derivation of the epithet from R. Akiva's reading of Numbers 24:17. A gloss of Koziba as \"son of the lie\" is widely repeated and is NOT printed here: no primary or peer-reviewed source for it could be opened",
+        supports: "The forms of the name and the origin of the epithet",
+      },
+      {
+        tier: "reference",
+        label: "Center for Online Judaic Studies, \"Bar Kokhba Letter, 132-135 CE\"",
+        url: "https://cojs.org/bar_kokhba_letter-_132-135_ce/",
+        credit: "Center for Online Judaic Studies",
+        detail:
+          "Read in full. Carries the translation of the four-species letter, the object record giving the Israel Museum as its home, and the caution repeated in section two: \"The author of that letter, Soumaios, has usually been identified as Shimon bar Kosiba, but this is disputed by some scholars.\" Its translation is credited to Y. Yadin's Bar-Kokhba (1971), which is in copyright and was not opened; section two therefore paraphrases the letter's content and quotes only the short phrase \"because the population is large\"",
+        supports: "The content of the four-species letter and the dispute over the Greek one",
+      },
+      {
+        tier: "reference",
+        label: "Center for Online Judaic Studies, \"Jerusalem Talmud Ta'anit 4:6 (68d-69a): Rabbi Akiva and Bar Kokhba\"",
+        url: "https://cojs.org/jerusalem_talmud_ta-anit_4-6_-68d-69a-_rabbi_akiva_and_bar_kokhba/",
+        credit: "Center for Online Judaic Studies; translation credited on the page to S. Berrin",
+        detail:
+          "Read in full. The source of R. Yohanan ben Torta's reply quoted in section three. Two cautions carried into the article: the page's own citation of the verse is mistyped, and the correct reference is Numbers 24:17; and this is the only text of the passage that could be opened here, so it is quoted from one edition rather than checked against a second",
+        supports: "The rabbinic report of Akiva's acclamation and the objection recorded beside it",
+      },
+      {
+        tier: "scholarly",
+        label: "\"A Preliminary Survey of Letters in the Judaean Desert Documents\"",
+        url: "https://www.openstarts.units.it/server/api/core/bitstreams/b1b27648-5a8b-4ba7-923d-f1f4afa2e659/content",
+        credit: "Deposited in the University of Trieste's OpenstarTs repository; the author is not named in the body of the copy read here",
+        detail:
+          "A catalogue of all forty-two letters from the Judean Desert, entry by entry, with language, measurements, correspondents and contents. Read in full. Source for the language counts, for the sixteen entries in the Bar Kokhba group, and for the fragmentary state of the last of them. Cited with the honest caveat that no author, journal or year appears in the copy that was read",
+        supports: "The count of letters, their languages, and why the usual figure of fifteen is soft",
+      },
+      {
+        tier: "scholarly",
+        label: "Y. Yadin, The Finds from the Bar Kokhba Period in the Cave of Letters",
+        credit: "Yigael Yadin, Jerusalem: Israel Exploration Society, 1963; and Yadin, \"Expedition D — The Cave of the Letters\", Israel Exploration Journal 12 (1962)",
+        detail:
+          "The excavation reports. NEITHER was opened: the Internet Archive's copy of the 1963 volume is lending-restricted. They are cited because everything this article says about the two Nahal Hever seasons ultimately rests on them, and because the disagreement over whether the Babatha purse was found in 1960 or 1961 is exactly the kind of thing they would settle",
+        supports: "The excavation of the Cave of Letters",
+      },
+      {
+        tier: "encyclopedic",
+        label: "Wikipedia: Cave of Letters",
+        url: "https://en.wikipedia.org/wiki/Cave_of_Letters",
+      },
+    ],
+    reflectionPrompt:
+      "Babatha carried her legal papers into a cave and never came back for them. What would you have taken?",
+  },
+  {
+    id: "aleppo-codex",
+    name: "Aleppo Codex",
+    // "Aleppo Codex" was registered on `masoretic-text` until this record existed. It MOVES here
+    // rather than being added, so the six links it already carries — in the introductions to
+    // Genesis, Hosea, Joel and Obadiah and in two topic articles — repoint instead of multiplying.
+    // The same move is made for "Leningrad Codex" onto the next record. NOT registered: "the
+    // Crown", which is an ordinary word, or "Keter", which appears nowhere in the corpus.
+    alternateNames: ["Keter Aram Tzova", "Crown of Aleppo"],
+    category: "manuscript",
+    role: "The Best Hebrew Bible Ever Made, and the Two Hundred Leaves Nobody Can Find",
+    summary:
+      "Written at Tiberias about AD 930 and treated as the standard against which other Bibles were corrected — then kept in Aleppo for six centuries, and forty per cent of it went missing somewhere between a riot in 1947 and a research institute in 1958.",
+    sections: [
+      {
+        heading: "Two Men, and Only One of Them Is Usually Named",
+        paragraphs: [
+          "Popular accounts say the Aleppo Codex was written by Aaron ben Asher. Two people made it, and the division of labour is the thing worth knowing about medieval Hebrew Bibles generally. The Ben-Zvi Institute's own nomination of the codex to UNESCO's Memory of the World register puts it plainly: \"The Codex was hand written in the 10th century around the year 929 in Tiberias, today in Israel, by a Jewish scribe Shlomo Ben Boya'a. The well-known Masorete... Aharon Ben Asher added the vowels, the cantillation marks and other important notations.\" One man wrote the consonants; the other added the vowel points, the chanting accents and the masorah, the marginal counting-notes that let a copyist check himself. P. Sanders describes the result in a review for the Society of Biblical Literature: it \"was Judaism's most authoritative version of the Bible right from the moment it was produced, around 930 CE,\" and \"probably the first single volume comprising all the books of the Hebrew Bible.\"",
+          "Even that attribution is on a footing the holding institution itself qualifies in the same sentence: the information \"emerges from the dedicatory colophon in the Aleppo Codex, written about a hundred years after its completion.\" The codex went from Tiberias to the Karaite community in Jerusalem, was carried off in the Crusader conquest of 1099 and, in the institute's words, \"literally ransomed by the Jewish Jerusalem community living in Egypt at that time.\" In Egypt Maimonides consulted a manuscript he describes without naming — \"a scroll renowned in Egypt, which includes all the 24 books,\" corrected by ben Asher, on which he relied for the open and closed paragraph divisions and \"the form of the songs.\" That the manuscript he means is this one is the traditional identification, and a careful account of it says so: there is a tradition that Maimonides saw the Aleppo Codex. It reached Aleppo in the fourteenth century and stayed for close to six hundred years.",
+        ],
+      },
+      {
+        heading: "What Survives, and What It Is Worth",
+        paragraphs: [
+          "Two hundred leaves of it are gone — \"nearly two hundred folios (around 40 percent), including extensive parts of the beginning and end,\" as Sanders puts it, though the estimates of how many leaves it originally had range from 380 to about 500 and the surviving count of 294 is the only stable figure. The loss is not evenly spread. Almost the whole Torah is missing: the surviving text begins at the last word of Deuteronomy 28:17 and runs, with gaps, to Song of Songs 3:11. So the manuscript Maimonides used to settle the layout of the Song of the Sea no longer contains the Song of the Sea. What is left is in Jerusalem, owned by a trustee committee at the Ben-Zvi Institute and held on permanent loan in the Shrine of the Book at the Israel Museum, under the identification MSBZ 1.",
+          "The gap has been partly repaired by scholarship rather than by discovery. M. Breuer, denied access to the codex, reconstructed its text from the masorah, from faithful Yemenite copies and from the notes of scholars who had consulted it before 1947, and found his results matched the surviving portions almost exactly; his editions and the Jerusalem Crown of 2000 are built on that. And two leaves have come back. One page of Chronicles surfaced as a family heirloom in Israel. A fragment of Exodus — the passage about the plague of frogs — had been picked up off the synagogue floor after the riots by a man who took it to Brooklyn and would not give it up; it took years of negotiation with his family after his death to bring it to Jerusalem, and it arrived in 2007. The Ben-Zvi Institute's UNESCO nomination says openly why recognition mattered to it: \"there are missing pages whose whereabouts are unknown. Some of which may be held by collectors or by individuals as an amulet.\"",
+        ],
+      },
+      {
+        heading: "Where Did the Missing Leaves Go?",
+        paragraphs: [
+          "The story told for fifty years was that they burned. On 30 November 1947, the day after the United Nations voted to partition Palestine, a mob attacked the Jewish quarter of Aleppo and set the Great Synagogue on fire. That account is now dead, and Sanders explains why in the review already quoted: \"the surviving parts of the volume do not show any burn marks. The origin of the rumor that the codex had been burned lay with Aleppo's Jewish elders, who tried to conceal that it had been rescued, fearing that Arabs might want to destroy or sell the sacred book. In reality, the codex was kept in the storeroom of the Aleppo Jew Ibrahim Effendi Cohen. Despite the evidence, the assumption that the codex was damaged by fire can still be found in recent scholarly literature.\" It was smuggled to Israel in 1957-58 and handed to the Ben-Zvi Institute in January 1958, whose founder listed the missing sections and attributed the loss to the 1947 pogrom.",
+          "M. Friedman's 2012 book challenged that, and the challenge is serious enough to state in his own words: \"we know now that the manuscript was seen whole as late as 1952, five years later. The first description of any significant damage to the codex dates, strikingly, only to 1958—after the manuscript reached the Ben-Zvi Institute in Jerusalem.\" He names the test himself rather than naming a culprit: \"If they were already gone, the Ben-Zvi Institute is innocent. If, on the other hand, they were there when Shragai had the codex, the Ben-Zvi Institute is responsible for their disappearance.\" And he flags his own weakest evidence unprompted, explaining that he left one witness's testimony out of the book \"because I did not have a recording of this conversation or written notes made at the time.\" The institute's side has been put too. Its then director, an Aleppo native himself, told a reporter: \"I know of no community and no synagogue that could have looked after the codex better than we do at the Ben-Zvi Institute... After all, if the book had not reached Israel, it would probably be sitting right now in some museum being shelled by the guns of Bashar al-Assad.\" And Sanders, reviewing the book in a scholarly journal, endorses the method and faults one of its witnesses — in that order, and in his own words rather than in a summary of them: \"It is clear that Friedman was right in taking the voices that deviate from the predominant narrative so seriously. He regards also his own sources with suspicion... In some cases, however, Friedman could have been more critical of the witnesses who support his own reconstruction. For instance, Shahoud Baghdadi's statement that he and his father recovered virtually the complete codex except for some sheets of Deuteronomy and Isaiah is problematic, since in the surviving volume all sheets with the text of Isaiah are still present.\" Where it ends, Sanders reports accurately: \"In the end, Friedman can only speculate about who the culprit was, but he concludes with confidence that Jews bore more responsibility for the partial loss of the codex than the Arab rioters who damaged it in 1947.\" The Aleppo rabbis, in a 1960 court case, said something else again: \"It is the property of the Aleppo community, and not of the state of Israel.\" That question is not settled either.",
+        ],
+      },
+    ],
+    verses: [
+      { reference: "Deuteronomy 28:15-17", note: "The surviving text of the codex begins at the last word of verse 17; everything before it is lost" },
+      { reference: "Exodus 15:1-2", note: "The Song of the Sea, whose layout Maimonides took from the codex — and which is now in the missing part" },
+      { reference: "Exodus 8:1-6", note: "The plague of frogs: the passage on the fragment recovered from Brooklyn in 2007" },
+    ],
+    sources: [
+      { label: "Ben-Zvi Institute, UNESCO Memory of the World nomination: the Aleppo Codex", url: "https://media.unesco.org/sites/default/files/webform/mow001/2014_34_israel_aleppo_codex_en_0.pdf" },
+      { label: "P. Sanders, review of M. Friedman, The Aleppo Codex (Review of Biblical Literature)", url: "https://www.pthu.nl/over-pthu/organisatie/medewerkers/p.sanders/downloads/review-friedman-aleppo-codex-rbl.pdf" },
+      { label: "Wikipedia: Aleppo Codex", url: "https://en.wikipedia.org/wiki/Aleppo_Codex" },
+    ],
+    manuscript: {
+      manuscriptType: "Parchment codex, three columns to the page, now unbound; 294 leaves survive",
+      language: "Hebrew",
+      contents:
+        "Originally the whole Hebrew Bible in one volume. What survives runs from the last word of Deuteronomy 28:17 to Song of Songs 3:11, with gaps: almost the entire Torah and the end of the Writings are missing. Two leaves recovered separately have been reunited with it",
+      origin: "Tiberias",
+      findSite: "Not applicable. The codex was never lost and found — it was kept by the Jewish community of Aleppo for close to six hundred years",
+      foundYear: "Not applicable",
+      foundBy: "Not applicable",
+      dateAssigned:
+        "About AD 929-930. The consonants were written by Shlomo ben Buya'a and the vocalisation, accents and masorah added by Aaron ben Asher — an attribution that rests on a dedicatory colophon the holding institution itself dates about a century later",
+      dateCertainty: "traditional",
+      currentLocation:
+        "The Shrine of the Book, Israel Museum, Jerusalem, on permanent loan since 1993. Owned by a trustee committee based at the Ben-Zvi Institute",
+      shelfmark: "MSBZ 1, Ben-Zvi Manuscript Collection",
+    },
+    citations: [
+      {
+        tier: "institution",
+        label: "Ben-Zvi Institute, nomination of the Aleppo Codex to the UNESCO Memory of the World Register",
+        url: "https://media.unesco.org/sites/default/files/webform/mow001/2014_34_israel_aleppo_codex_en_0.pdf",
+        credit: "Yad Izhak Ben-Zvi, submitted 28 November 2013",
+        detail:
+          "Read in full. The holding body's own account, and the source of the scribe-and-Masorete sentence quoted in section one, of its own caveat that this \"emerges from the dedicatory colophon... written about a hundred years after its completion\", of the Karaite dedication, the 1099 ransom and the six centuries at Aleppo, of the identification \"(MSBZ 1 Ben-Zvi Manuscript Collection)\", of the ownership and custody arrangements, of \"Unfortunately one third of its pages are missing\", and of the hope that missing leaves are still in private hands. Note that the facsimile URL this document gives, aleppocodex.org, now serves only an under-construction page",
+        supports: "The scribe and the Masorete, the codex's journey, the shelfmark, the custody arrangements, and the missing leaves",
+      },
+      {
+        tier: "scholarly",
+        label: "P. Sanders, review of M. Friedman, The Aleppo Codex",
+        url: "https://www.pthu.nl/over-pthu/organisatie/medewerkers/p.sanders/downloads/review-friedman-aleppo-codex-rbl.pdf",
+        credit: "Paul Sanders, Protestant Theological University, Amsterdam",
+        detail:
+          "Review of Biblical Literature 04/2015, published by the Society of Biblical Literature; read in full. Source for the codex's status \"right from the moment it was produced\", for the division of labour between ben Buya'a and ben Asher, for the loss of \"nearly two hundred folios (around 40 percent)\" and the surviving span from Deuteronomy 28:17 to Song of Songs 3:11, for the demolition of the fire story, for the 1957-58 smuggling and the January 1958 handover, for the named witnesses on whom Friedman relies, for the criticism of Baghdadi's testimony, and for the summary of Friedman's own conclusion",
+        supports: "The making of the codex, the extent of the loss, the end of the fire theory, and a scholarly assessment of Friedman's case",
+      },
+      {
+        tier: "reference",
+        label: "M. Friedman, \"The Continuing Mysteries of the Aleppo Codex\"",
+        url: "https://www.tabletmag.com/sections/arts-letters/articles/aleppo-codex",
+        credit: "Matti Friedman, Tablet, 30 June 2014",
+        detail:
+          "The author's own restatement of the case made in his book The Aleppo Codex (Algonquin, 2012), which was NOT opened here; everything attributed to him is quoted from this essay, which he wrote. It carries the 1952 and 1958 dates, the falsifiable test he sets himself, his own caveat about the testimony he left out of the book, and the 1960 court transcript he published for the first time. Tablet refuses automated requests to any script, so the essay was read in a browser and every sentence quoted here was then confirmed a second time against the Internet Archive's capture of the same page",
+        supports: "The case that the leaves were lost after the codex reached Israel, in Friedman's own words",
+      },
+      {
+        tier: "reference",
+        label: "R. Bergman, \"The Aleppo Codex: A High Holy Whodunit\"",
+        url: "https://tmcdaniel.palmerseminary.edu/AleppoCodex.pdf",
+        credit: "Ronen Bergman, The New York Times Magazine, 29 July 2012",
+        detail:
+          "Long-form investigative journalism rather than scholarship, and read in full through a copy hosted by Palmer Seminary. It is cited for one thing this article could not get anywhere else: the Ben-Zvi Institute's own side, on the record, in the words of its then director — including the sentence quoted in section three. It also carries the first-hand accounts of the two recovered leaves",
+        supports: "The institute's own response, and the recovery of the Chronicles leaf and the Brooklyn fragment",
+      },
+      {
+        tier: "primary",
+        label: "Maimonides, Mishneh Torah, Hilkhot Sefer Torah 8:4",
+        url: "https://www.sefaria.org/api/texts/Mishneh_Torah,_Tefillin,_Mezuzah_and_the_Torah_Scroll.8.4",
+        credit: "Moses Maimonides, twelfth century; translation by Eliyahu Touger, Jerusalem: Moznaim",
+        detail:
+          "Read in full through Sefaria's text API. Maimonides writes that he relied on \"a scroll renowned in Egypt, which includes all the 24 books\", \"corrected by ben Asher\", for the open and closed sections and \"the form of the songs\". He does NOT name the Aleppo Codex, and this article does not put the identification in his mouth. The translator's own footnote on the songs identifies them as the Song of the Sea and Ha'azinu",
+        supports: "What Maimonides actually says about the manuscript he used, and what he does not say",
+      },
+      {
+        tier: "reference",
+        label: "Jewish Telegraphic Agency, \"From Maimonides to Brooklyn: the Mystery of the Aleppo Codex\"",
+        url: "https://www.jta.org/2007/12/10/archive/from-maimonides-to-brooklyn-the-mystery-of-the-aleppo-codex",
+        credit: "Jewish Telegraphic Agency, 10 December 2007",
+        detail:
+          "Read in full. Reports the return of the Exodus fragment: found on the synagogue floor after the 1947 riots, kept in Brooklyn, and released by the owner's family after his death. It identifies the text as verses from Exodus, which places it in the plague narrative",
+        supports: "The recovery of the Brooklyn fragment and what is written on it",
+      },
+      {
+        tier: "encyclopedic",
+        label: "Wikipedia: Aleppo Codex",
+        url: "https://en.wikipedia.org/wiki/Aleppo_Codex",
+      },
+    ],
+    reflectionPrompt:
+      "The most carefully made Bible in the world was lost by the people who valued it most. What are you guarding so tightly that nobody can check on it?",
+  },
+  {
+    id: "leningrad-codex",
+    name: "Leningrad Codex",
+    // "Leningrad Codex" was registered on `masoretic-text`; like "Aleppo Codex" it MOVES here, so
+    // the six links it already carries repoint rather than multiply. NOT registered: "Codex L", "L",
+    // "B19a" or "Firkovich B 19 A" — a bare letter is an ordinary word and the shelfmark forms are
+    // written nowhere in the corpus. NOT registered either: "St Petersburg Codex", which is a
+    // DIFFERENT manuscript (MS Heb B 3, the Latter Prophets, AD 916) and is a documented confusion.
+    alternateNames: ["Codex Leningradensis"],
+    category: "manuscript",
+    role: "The Oldest Complete Hebrew Bible, and the Text Behind Almost Every Modern Old Testament",
+    summary:
+      "One scribe in Fustat wrote out the whole Hebrew Bible, pointed it, added the masorah and decorated it, and finished about 1008 — and because the Aleppo Codex was out of reach, his book became the base text of the scholarly editions the world's translators use.",
+    sections: [
+      {
+        heading: "One Man Did All of It",
+        paragraphs: [
+          "Medieval Hebrew Bibles were normally made by two people, a scribe for the consonants and a punctuator for the vowels and the masorah. This one was not. Its scribe says so himself, twice, in the manuscript: \"I have written, vocalised and provided the masora of this codex,\" and again, \"Samuel b. Jacob wrote, vocalised and provided the masora.\" B. Outhwaite, who heads the Genizah Research Unit at Cambridge University Library, calls it \"a remarkable piece of solo entrepreneurship, producing single-handedly a luxury edition of the Hebrew Bible,\" and puts the raw materials at \"at least 120 sheep for the 491 leaves.\" Samuel ben Jacob was a working scribe with clients; a later contract from the Cairo Geniza has him paid twenty-five dinars for a copy of the Prophets and Writings, at a time when a middle-class family's annual rent ran to five or six.",
+          "Two things everybody says about it are wrong, and Outhwaite corrects both from the manuscript's own words. It was not written in Cairo: the colophon says Fustat, the older city beside it, and Outhwaite notes that \"some other translations of the opening of the colophon read 'Cairo'\" and that the scribe is definitely referring to Fustat. And its date is not a single number. The colophon gives the year in five different reckonings at once — from creation, from the exile of King Jehoiachin, from the Seleucid era, from the destruction of the Second Temple, and from what it calls \"the Kingdom of the Little Horn,\" a belittling name for Islam borrowed from Daniel 7:8 — and they do not agree with each other. Outhwaite works them out one by one and concludes: \"A date of 1008-1009 CE seems reasonable... We should not expect absolute calendrical exactitude in a pre-modern text, particularly when the writer was probably not a specialist in the discipline.\" One of the five systems, the Jehoiachin reckoning, was used mainly by Karaites, and the man who commissioned the book was from a Karaite family — the scribe was fitting his colophon to his customer.",
+        ],
+      },
+      {
+        heading: "How It Became the World's Hebrew Bible",
+        paragraphs: [
+          "It became the standard by default, and the reason is worth knowing because it is not the reason usually given. The Aleppo Codex is older and was regarded as better, and P. Kahle wanted it for the third edition of Biblia Hebraica in the 1920s. The community in Aleppo would not let him study it, let alone photograph it. The Leningrad Codex he could get: in 1926 he was allowed to take it to Leipzig. So the base text of Biblia Hebraica, and then of Biblia Hebraica Stuttgartensia and Biblia Hebraica Quinta, is this manuscript — which means, as Outhwaite puts it, that its \"consonants, vowels and accents... form the base text for the most widely used of scholarly editions,\" and behind those stand the Old Testaments on most English shelves. That happened twenty years before the fire in Aleppo, not because of it.",
+          "The manuscript itself passed through the hands of a nineteenth-century collector whose reputation complicates it. A. Firkovich assembled the greatest collection of Hebrew manuscripts of his day and sold it to the Imperial Public Library in St Petersburg, where the codex has been since 1863. He also, as an account in Bible Review puts it, was \"a bit of a scoundrel\": \"Some manuscripts in it are forgeries, and others contain forged emendations and interpolations—part of Firkovich's effort to establish the early settlement of the Karaites in the Crimea.\" The same account is careful about the scope — \"the forgeries constitute a small and identifiable part of the gigantic collection\" — and no source consulted here alleges that this codex's colophons are among them. What Firkovich never explained is where he got it: \"neither in his autobiography... nor in his extant letters does he tell us where, when or under what circumstances he acquired the Leningrad Codex; he does not even discuss this codex.\" The city's name changed back to St Petersburg in 1991; the National Library of Russia asked that the manuscript keep the name scholarship knows it by.",
+        ],
+      },
+      {
+        heading: "Is It Really a Ben Asher Bible?",
+        paragraphs: [
+          "The claim attached to this codex is that it was copied from manuscripts of Aaron ben Asher, the Masorete of the Aleppo Codex, and so preserves that tradition at one remove. It is a claim about a copy's parentage, and it can be tested against the manuscript's own masorah — the marginal notes that state how a word should be spelled. M. Breuer ran the test and reported the result bluntly: \"In the text of the Prophets in the Leningrad Codex there are more than 250 places in which the orthography stands in opposition to the Tiberian Masorah... Kahle's claim that the Leningrad Codex is 'ben Asher's text', is an injustice to b. Asher.\" A manuscript that contradicts its own apparatus in hundreds of places is not a clean copy of anything. M. Goshen-Gottstein's suggestion was that an existing text not following ben Asher's rules had been heavily corrected to conform to them, which would explain both the alterations visible on the page and the residue of disagreement.",
+          "None of that makes it a bad Bible, and it is important to say what the criticism is and is not. In its vocalisation and accents the codex is reckoned the best witness to the ben Asher tradition after the Aleppo Codex itself, which is precisely why it was worth arguing about. What it is not is a photograph of a lost original — and the modern editions built on it inherit that. Biblia Hebraica Stuttgartensia reproduces this manuscript diplomatically, errors included: its editors say they \"accordingly refrained from removing obvious scribal errors,\" recording them in the apparatus instead. There is a live argument about whether that is the right way to edit the Hebrew Bible at all. R. Hendel's Hebrew Bible: A Critical Edition takes the other road, printing \"the best readings according to the judgment of the editor\" rather than reproducing one manuscript, and aiming at the archetype behind the surviving copies — with his own caveat attached: \"This is not identical to the original text.\" A reader who opens an English Old Testament is standing at the end of that argument, whichever side of it they have never heard of.",
+        ],
+      },
+    ],
+    verses: [
+      { reference: "Daniel 7:8", note: "The little horn of Daniel's vision — the phrase the codex's own colophon borrows to date itself by the Islamic era. The World English Bible renders it \"another horn, a little one\"" },
+      { reference: "Genesis 1:1", note: "The first verse of the manuscript that stands behind most modern Old Testaments" },
+      { reference: "Deuteronomy 32:1-4", note: "The Song of Moses, one of the places where the manuscripts of the Hebrew Bible visibly differ" },
+    ],
+    sources: [
+      { label: "B. Outhwaite, \"Beyond the Leningrad Codex: Samuel b. Jacob in the Cairo Genizah\" (Cambridge)", url: "https://www.repository.cam.ac.uk/bitstreams/27efc952-21e0-4074-81a3-3f0ba60c09f9/download" },
+      { label: "The Unicode/XML Leningrad Codex", url: "https://tanach.us/Tanach.xml" },
+      { label: "Wikipedia: Leningrad Codex", url: "https://en.wikipedia.org/wiki/Leningrad_Codex" },
+    ],
+    manuscript: {
+      manuscriptType: "Parchment codex, 491 leaves in quires of five bifolia, with sixteen decorated carpet pages",
+      language: "Hebrew, with Aramaic in parts of Daniel and Ezra",
+      contents:
+        "The complete Hebrew Bible, with vowel points, cantillation accents and the masorah. The oldest complete Masoretic Bible in existence, and the base text of Biblia Hebraica Stuttgartensia and Biblia Hebraica Quinta",
+      origin: "Fustat, in Egypt — not Cairo, which several translations of the colophon give in error",
+      findSite: "Not applicable. Acquired by the collector A. Firkovich in the nineteenth century; where he got it he never said",
+      foundYear: "Not applicable",
+      foundBy: "Not applicable",
+      dateAssigned:
+        "About AD 1008-1009. The colophon dates itself in five different eras which do not agree; 1010 is also defended",
+      dateCertainty: "traditional",
+      currentLocation: "National Library of Russia, St Petersburg",
+      shelfmark: "Firkovich B 19 A (also cited as RNL Evr. I B19a)",
+      facsimileUrl: "https://archive.org/details/Leningrad_Codex_Color_Images",
+    },
+    citations: [
+      {
+        tier: "scholarly",
+        label: "B. Outhwaite, \"Beyond the Leningrad Codex: Samuel b. Jacob in the Cairo Genizah\"",
+        url: "https://www.repository.cam.ac.uk/bitstreams/27efc952-21e0-4074-81a3-3f0ba60c09f9/download",
+        credit: "Ben Outhwaite, Genizah Research Unit, Cambridge University Library",
+        detail:
+          "Read in full through Cambridge's institutional repository. Source for the scribe's two colophon statements, for the 491 leaves and the 120 sheep, for \"a remarkable piece of solo entrepreneurship\", for the full translation of the ownership colophon and its five dating systems, for the correction of Cairo to Fustat, for the Daniel 7:8 epithet, for the 1008-1009 conclusion, for the Karaite patron, for the 1021 copying contract and its twenty-five dinars, and for the list of modern editions built on the manuscript. The repository copy carries no journal or volume, so no formal place of publication is claimed for it here",
+        supports: "The scribe, the colophon, the date, the place of writing, and the codex's role in modern editions",
+      },
+      {
+        tier: "reference",
+        label: "J. A. Sanders and A. B. Beck, \"The Leningrad Codex\"",
+        url: "https://airtonjo.com/blog1/wp-content/uploads/2024/02/Sanders-Beck-The-Leningrad-Codex-Bible-Review-1997.pdf",
+        credit: "James A. Sanders and Astrid B. Beck, Bible Review (Biblical Archaeology Society), 1997",
+        detail:
+          "Read in full through a mirrored copy. Popular-scholarly rather than peer-reviewed, but written by participants: Beck and Sanders were involved in the 1990 photographic expedition that produced the facsimile, and Sanders sat on the Biblia Hebraica Quinta committee. Source for the 982 photographed pages (491 leaves), the sixteen carpet pages, the five dating systems and their own preferred range of 1008-1010, the Kahle-in-Aleppo story and why Biblia Hebraica ended up using this manuscript, and the passage on Firkovich quoted in section two",
+        supports: "Why this codex rather than the Aleppo Codex became the standard, and the Firkovich provenance problem",
+      },
+      {
+        tier: "scholarly",
+        label: "K. Phillips, \"A New Codex from the Scribe behind the Leningrad Codex: L17\"",
+        url: "https://doi.org/10.53751/001c.29425",
+        credit: "Kim Phillips, Cambridge University Library",
+        detail:
+          "Tyndale Bulletin 68:1 (2017), 1-29; peer-reviewed and read in full. The source of M. Breuer's judgement quoted in section three, which Phillips reproduces from Breuer's own published work — so Breuer is quoted at one remove and the words are Breuer's, not Phillips's characterisation of them",
+        supports: "The test of the ben Asher claim against the codex's own masorah",
+      },
+      {
+        tier: "primary",
+        label: "The Unicode/XML Leningrad Codex",
+        url: "https://tanach.us/Tanach.xml",
+        credit: "The Westminster Leningrad Codex project, derived from the Groves Center's WLC 4.20",
+        detail:
+          "A transcription of the manuscript itself, pointing and accents included. Its own licence page states that \"All biblical Hebrew text, in any format, may be viewed or copied without restriction\". Confirmed live",
+        supports: "That the text behind modern Old Testament translations can be inspected directly",
+      },
+      {
+        tier: "institution",
+        label: "West Semitic Research, colour photographs of the Leningrad Codex, deposited on the Internet Archive",
+        url: "https://archive.org/details/Leningrad_Codex_Color_Images",
+        credit: "Photographs by Bruce E. Zuckerman for the West Semitic Research Project; National Library of Russia, MS Evr. I B19a",
+        detail:
+          "The descendant of the 1990 expedition to Leningrad described in the Sanders and Beck article. Deposited under a Public Domain Mark, which is what makes it linkable here. The National Library of Russia's own catalogue could not be reached from here — its site returned no response on two attempts — so the shelfmark in this article's facts block rests on scholarly attestation rather than on the library's own record",
+        supports: "A free facsimile of the manuscript, and the limits of what the holding library could confirm",
+      },
+      {
+        tier: "scholarly",
+        label: "R. Hendel, \"A New Critical Edition of the Hebrew Bible\"",
+        url: "https://bibleinterp.arizona.edu/node/2664",
+        credit: "Ronald Hendel, University of California, Berkeley",
+        detail:
+          "His own bylined account of the Hebrew Bible: A Critical Edition project, August 2014, read in full. The definitions quoted in section three are his: a critical text \"contains the best readings according to the judgment of the editor\", the project aims at the archetype, and \"This is not identical to the original text\" is his own qualification, not a critic's",
+        supports: "The eclectic alternative to a diplomatic edition, stated by its own editor",
+      },
+      {
+        tier: "encyclopedic",
+        label: "Wikipedia: Leningrad Codex",
+        url: "https://en.wikipedia.org/wiki/Leningrad_Codex",
+      },
+    ],
+    reflectionPrompt:
+      "One scribe wrote every letter of this Bible, pointed it, checked it and signed it. What is the largest thing you have ever finished alone?",
+  },
+  {
+    id: "cairo-codex-of-the-prophets",
+    name: "Cairo Codex of the Prophets",
+    // NOT registered: "Codex C" or bare "C" — a single letter is an ordinary word. "Cairo Codex"
+    // on its own is registered because that is what most English writing calls it, and no other
+    // record claims the phrase; "Cairo" alone is NOT registered and belongs to nobody here.
+    alternateNames: ["Codex Cairensis", "Cairo Codex"],
+    category: "manuscript",
+    role: "A Bible Whose Own Colophons Are the Problem",
+    summary:
+      "A complete Prophets codex that says it was written by the father of the Masorete of the Aleppo Codex in AD 895 — a claim scholarship has been taking apart for seventy-five years, and which cannot now be tested because nobody will say where the book is.",
+    sections: [
+      {
+        heading: "The Whole Prophets, in One Volume",
+        paragraphs: [
+          "The Cairo Codex contains the Prophets entire — Joshua, Judges, Samuel and Kings, then Isaiah, Jeremiah, Ezekiel and the Twelve — running to 575 pages in the microfilm that is all most scholars have ever seen of it, of which thirteen are decorated carpet pages. It is written on parchment in three columns, and it carries an unusually rich masorah, the marginal apparatus of counting-notes; a full edition of its biblical text was produced by F. Pérez Castro and colleagues in eight volumes between 1979 and 1992, and D. Lyons devoted a book to its masorah alone in 2000.",
+          "Its fame rests on its colophons rather than its text. One of them claims that the codex was written and pointed by Moses ben Asher at Tiberias, in the year the colophon dates as 827 after the destruction of the Second Temple — AD 894 or 895. That name is the reason anyone cares: Moses ben Asher was the father of the Aaron ben Asher who pointed the Aleppo Codex, so a manuscript from his hand would be the earliest witness to the family's work. Other colophons say the book was dedicated to the Karaite community in Jerusalem, seized by the Crusaders in 1099 and ransomed, and later given to the Karaite synagogue in Cairo, with a curse attached to anyone who sold, bought, altered or pawned it. Another colophon names the man who paid for it: Jabez b. Solomon the Babylonian, who \"had it made for himself to study it, out of [the proceeds of] his own labour, the toil of his hands, and the sweat of his brow.\"",
+        ],
+      },
+      {
+        heading: "Why It Was Believed, and Then Was Not",
+        paragraphs: [
+          "The early authorities took the colophon at face value. R. Gottheil, describing the codex in 1905, wrote that \"there is absolutely no reason to doubt the data here given. The codex was written in the city of Tiberias by the well-known Masorite, Moses ben Asher (ninth century), in the year 897.\" P. Kahle, whose 1959 book on the Cairo Geniza shaped a generation's picture of the Hebrew Bible, was equally confident: \"We are very well acquainted with the history of the Cairo Codex of the Prophets thanks to the colophons which it contains.\" On that footing the codex became one of the anchors of the whole Tiberian story.",
+          "J. L. Teicher broke the anchor in 1950, and did it in one sentence: \"The Cairo codex was not written by Moses b. Asher.... The colophons with the names of Moses b. Asher and of Yaʿbeẓ b. Solomon were written by a scribe, who copied the colophon with M. b. Asher's name from another codex.\" Kahle argued back — and lost. C. Sirat states what is now the ordinary view: \"We read in a first colophon that Moses ben Asher wrote this codex of the entire Bible in 895-896 CE, in Tiberias. In fact, this colophon was probably that of the model copied by the scribe.\" It is worth seeing what kind of mistake that is. Nobody thinks somebody set out to deceive in the modern sense; a scribe copying an exemplar copied its colophon along with its text, the way a photocopy carries the original's date. Then, in the 2011 revision of his handbook, I. Yeivin added physical evidence: \"Some researchers have challenged the authenticity of the colophon of the manuscript, considering it to have been written in the 11th-century. Chemical analysis (C14) carried out in 1996 supports this opinion.\" A loose fragment had been taken away and dated, and it agreed with Teicher.",
+        ],
+      },
+      {
+        heading: "The Book Nobody Will Locate",
+        paragraphs: [
+          "B. Outhwaite, who heads the Genizah Research Unit at Cambridge, published a study of all the codex's colophons in 2025 and went further than the dating question. His argument is that the dedication colophons — the ones carrying the Karaite dedication in Jerusalem, the Crusader seizure and the ransom — are themselves later additions: \"While the dedications draw on information from the ownership colophon, they betray stylistic incongruities that strongly suggest they are later additions and not genuine medieval colophons, in particular in their addition of new information about the donor, his creed and his intentions.\" His summary of what is left is short enough to quote whole: \"I think we can really only reliably say the following at this stage: 1. The codex was commissioned by Jabez b. Solomon (ownership colophon), who was of Babylonian heritage. 2. The codex was dedicated to the Karaite synagogue in Cairo sometime in the fifteenth century (probably).\" To which he adds that the C14 result makes an origin in eleventh-century Egypt likely. Almost every romantic detail attached to this book, in other words, is a colophon somebody added later.",
+          "And it cannot be checked. Outhwaite's own footnote says why, and it is the reason this article carries no shelfmark: \"Its whereabouts are currently unknown or, by those who do know, unacknowledged. I am reliant on microfilm images of the codex that were produced when it was still in the care of the Karaites in Egypt. Since then, it is widely suspected that it, along with one or two others... has made its way to Israel—although this is not publicly acknowledged. The status of the book should be revealed and regularised.\" That is a working scholar saying, in print, that one of the most important Hebrew manuscripts in existence has disappeared from view. He is also careful not to overclaim against those who still defend the old attribution: on the dating he says only that \"the further technical analysis that might help convince any lingering doubters will not be possible until the codex emerges legally into the light.\" The one thing anybody can consult is a poor black-and-white microfilm made in 1971, which does not even include the illuminated pages. It is on the open web, and Outhwaite links to it himself.",
+        ],
+      },
+    ],
+    verses: [
+      { reference: "Joshua 1:1-2", note: "The first words of the codex, which begins where the Torah ends" },
+      { reference: "Isaiah 40:8", note: "\"The word of our God stands forever\" — from the section of Isaiah this codex carries" },
+      { reference: "Psalms 27:4", note: "Quoted inside the codex's own ownership colophon by the man who paid for it" },
+    ],
+    sources: [
+      { label: "B. Outhwaite, \"The Cacophony of Colophons in the Cairo Codex of the Prophets\" (open access)", url: "https://www.repository.cam.ac.uk/items/58fa4175-ae0c-40dd-a316-76e5f8c9ed8e" },
+      { label: "Microfilm facsimile of the Cairo Codex of the Prophets (Wikimedia Commons)", url: "https://en.wikipedia.org/wiki/File:Cairo-codex-nevi%27im.pdf" },
+      { label: "Wikipedia: Codex Cairensis", url: "https://en.wikipedia.org/wiki/Codex_Cairensis" },
+    ],
+    manuscript: {
+      siglum: "C",
+      manuscriptType: "Parchment codex, three columns to the page, 575 pages in the surviving microfilm, of which thirteen are decorated carpet pages",
+      language: "Hebrew",
+      contents:
+        "The Former and Latter Prophets complete — Joshua, Judges, Samuel, Kings, Isaiah, Jeremiah, Ezekiel and the Twelve — with vocalisation, accents and a full masorah. Not a whole Bible: no Torah and no Writings",
+      origin:
+        "Claimed by its own colophon for Tiberias; on the radiocarbon evidence and the current scholarly view, probably Egypt in the eleventh century",
+      findSite: "Not applicable. Held by the Karaite community in Cairo until the 1980s",
+      foundYear: "Not applicable",
+      foundBy: "Not applicable",
+      dateAssigned:
+        "AD 894/895 by its own colophon, which is now generally held to have been copied from an exemplar. Radiocarbon analysis of a loose fragment points to the eleventh century",
+      dateCertainty: "disputed",
+      currentLocation:
+        "Unknown. Held by the Karaite community in Cairo into the 1980s and not publicly accounted for since; the head of Cambridge's Genizah Research Unit wrote in 2025 that its whereabouts are \"unknown or, by those who do know, unacknowledged\"",
+      facsimileUrl: "https://en.wikipedia.org/wiki/File:Cairo-codex-nevi%27im.pdf",
+    },
+    citations: [
+      {
+        tier: "scholarly",
+        label: "B. Outhwaite, \"The Cacophony of Colophons in the Cairo Codex of the Prophets\"",
+        url: "https://www.repository.cam.ac.uk/items/58fa4175-ae0c-40dd-a316-76e5f8c9ed8e",
+        credit: "Ben Outhwaite, Genizah Research Unit, Cambridge University Library",
+        detail:
+          "In A. D. Hornkohl et al. (eds), Interconnected Traditions... A Festschrift for Geoffrey Khan, vol. 2 (Semitic Languages and Cultures 35; Cambridge: Open Book Publishers, 2025), 65-109; doi 10.11647/OBP.0464.03, open access under CC BY-NC. All forty-eight pages were read through Cambridge's repository copy; the publisher's own PDF sits behind a bot challenge. This is the source for the Gottheil, Kahle, Teicher, Sirat and Yeivin quotations in section two — each of which Outhwaite reproduces from the original publication — for his own conclusion, for his verdict on the dedication colophons, and for the footnote on the manuscript's whereabouts. Because the licence is non-commercial, this article quotes and links rather than reproducing",
+        supports: "The whole history of the attribution dispute, and the codex's present whereabouts",
+      },
+      {
+        tier: "institution",
+        label: "Microfilm facsimile of the Cairo Codex of the Prophets",
+        url: "https://en.wikipedia.org/wiki/File:Cairo-codex-nevi%27im.pdf",
+        credit: "Wikimedia Commons, from a 1971 microfilm",
+        detail:
+          "575 pages, 22.97 MB, and the only reproduction of the codex freely available anywhere — it is the copy Outhwaite directs his own readers to. Read: the file record gives the page ranges book by book (Joshua 1-37, Judges 37-74, Samuel 74-168, Kings 168-272, Isaiah 272-342, Jeremiah 343-433, Ezekiel 433-510, the Twelve 510-570, masoretic material 571-575). It is black and white and does NOT include the illuminated carpet pages",
+        supports: "The extent and contents of the codex, and what can actually be consulted",
+      },
+      {
+        tier: "primary",
+        label: "R. Gottheil, \"Some Hebrew Manuscripts in Cairo\"",
+        credit: "Richard Gottheil, Jewish Quarterly Review 17:4 (1905), 609-655",
+        detail:
+          "The description that put this codex into modern scholarship, and the source of the sentence quoted in section two. NOT opened here: no full-text copy could be reached. It is quoted from Outhwaite, who gives the page (640)",
+        supports: "The confident nineteenth- and early twentieth-century acceptance of the colophon",
+      },
+      {
+        tier: "scholarly",
+        label: "J. L. Teicher, \"The Ben Asher Bible Manuscripts\", and P. Kahle, The Cairo Geniza",
+        credit: "Jacob Leib Teicher, Journal of Jewish Studies 2 (1950), 17-25; Paul Kahle, 2nd edn, Oxford: Blackwell, 1959",
+        detail:
+          "The challenge and the position challenged. NEITHER was opened here — the Internet Archive's copy of Kahle is lending-restricted and the Teicher article is not online — and both are quoted from Outhwaite, who gives the pages (Teicher 25; Kahle 92) and who also records Kahle's reply to Teicher",
+        supports: "The 1950 challenge to the Moses ben Asher attribution and the argument that followed",
+      },
+      {
+        tier: "scholarly",
+        label: "I. Yeivin, Ha-Masora la-Miqra, and F. Pérez Castro et al., El Códice de Profetas de El Cairo",
+        credit: "Israel Yeivin, Jerusalem: The Academy of the Hebrew Language, 2011; Federico Pérez Castro and colleagues, Madrid: CSIC, 8 vols, 1979-1992",
+        detail:
+          "Yeivin's revised Hebrew handbook is where the radiocarbon result is reported; the sentence quoted in section two is Outhwaite's translation of Yeivin's page 18, and neither Yeivin's Hebrew nor the 1980 English edition was opened here. Pérez Castro's is the full edition of the codex's biblical text, print only and not opened",
+        supports: "The radiocarbon dating, and the existence of a full published edition",
+      },
+      {
+        tier: "encyclopedic",
+        label: "Wikipedia: Codex Cairensis",
+        url: "https://en.wikipedia.org/wiki/Codex_Cairensis",
+      },
+    ],
+    reflectionPrompt:
+      "This book carries a date it inherited from the book it was copied from. What have you accepted about yourself because it came with the copy?",
+  },
+  {
+    id: "cairo-geniza",
+    name: "Cairo Geniza",
+    // NOT registered: "genizah" or "geniza" alone — ordinary nouns, and the app's Damascus Document
+    // article uses them generically. NOT registered: "Ben Ezra Synagogue" — "Synagogue" is a topic
+    // and would collide oddly, and the phrase adds nothing the full name does not. The -h spelling
+    // is a matchName rather than an alternate name because printing both to a reader as "also
+    // called" would be noise: they are the same word transliterated twice.
+    alternateNames: ["Taylor-Schechter Collection"],
+    matchNames: ["Cairo Genizah"],
+    category: "manuscript",
+    role: "A Thousand Years of Discarded Writing From One Synagogue Storeroom",
+    summary:
+      "Jewish law forbids destroying a text that carries the name of God, so one Cairo congregation put its worn-out books in a room and left them there for a millennium — and the room turned out to hold the Hebrew of Ben Sira, a lost sectarian rule book, and the shopping lists of the medieval Mediterranean.",
+    sections: [
+      {
+        heading: "A Room You Put Things In and Do Not Take Out",
+        paragraphs: [
+          "A genizah is a storeroom for writing that may not be destroyed. Cambridge University Library, which holds most of this one, sets out the reasoning: \"According to rabbinic law (see, for instance, Mishna Shabbat 16:1), once a holy book can no longer be used (because it is too old, or because its text is no longer relevant) it cannot be destroyed or casually discarded: texts containing the name of God should be buried or, if burial is not possible, placed in a genizah.\" The congregation of the Ben Ezra Synagogue in Fustat, Old Cairo, had such a room, and \"at least from the early 11th century\" they filled it. What makes this one extraordinary is that they were not fussy about what counted. Cambridge's own list: \"not only the expected religious works, such as Bibles, prayer books and compendia of Jewish law, but also what we would regard as secular works and everyday documents: shopping lists, marriage contracts, divorce deeds, pages from Arabic fables, works of Sufi and Shi'ite philosophy, medical books, magical amulets, business letters and accounts, and hundreds of letters.\"",
+          "It came to Cambridge through a chain that does not begin where the name suggests. The twin sisters A. S. Lewis and M. D. Gibson bought manuscripts in Egypt on their way to and from Saint Catherine's monastery in Sinai, and — in the library's own account — \"On their return home to Cambridge, their friend Solomon Schechter was able to identify one of their purchases as the lost Hebrew original of the book of Ben Sira (known in the Christian tradition as Ecclesiasticus), a momentous discovery. He travelled to Cairo to find the source of the manuscripts, uncovering the remarkable hoard known as the Cairo Genizah.\" Schechter's own note to Lewis announcing the identification, dated 13 May 1896, is still in the library under the same shelfmark as the leaf itself. He went out with money from Charles Taylor, Master of St John's College, and \"received permission from the Jewish community of Egypt to take away what he liked (explaining later, 'I liked all')\". The collection named after the two of them holds 193,000 fragments — a figure Cambridge gives on one page while another of its own pages says 200,000, which is a fair indication of how soft any count of this material is.",
+        ],
+      },
+      {
+        heading: "What Came Out of the Room",
+        paragraphs: [
+          "Three finds changed the study of Scripture. The first was Ben Sira: the Hebrew of a book that had survived for two thousand years only in Greek, turning up on paper in a Cairo storeroom. The second was a rule book of a Jewish sect nobody could identify, which Schechter published in 1910 as a Zadokite work — and which turned out, when the Dead Sea Scrolls appeared forty years later, to be the Damascus Document, a composition the Qumran caves also held. The Genizah had produced a sectarian text from the Second Temple period and nobody had been able to place it. The third is a set of Greek palimpsests: leaves whose original writing was scraped off and reused for Hebrew liturgical poetry, and whose undertext preserves columns of Origen's Hexapla on Psalm 22 and stretches of Aquila of Sinope's Greek translation of Kings — the sixth-century remains of texts otherwise almost entirely lost.",
+          "The Hebrew Bible material matters for a subtler reason. Before the Tiberian pointing became standard there were other systems of marking vowels, and the Genizah is where they survive: Cambridge's own project on the subject describes the Palestinian system as \"less complete, less uniform, and more 'popular' in character than the dominant Tiberian system,\" and notes that it \"is found only in manuscripts from the Cairo Genizah.\" Babylonian pointing turns up too, on a Mishnah manuscript a colophon dates to AD 841. And then there is everything else — the letters, the accounts, the court records that let a historian reconstruct an entire medieval society from the inside. Cambridge has put more than 21,000 fragments online with high-resolution images, and adds hundreds a month.",
+        ],
+      },
+      {
+        heading: "Whose Room Was It?",
+        paragraphs: [
+          "The story as normally told has one hero and a passive local community, and that version has been coming apart for some years. R. Jefferson's work argues that both halves of the phrase \"the Cairo Genizah\" mislead: there were several genizot in Cairo, material had been leaving them for decades before 1896, and — in her words, as reported by a scholar reviewing her argument — the singular label \"can preclude us from truly appreciating the breadth of Jewish material culture in Cairo in all its varied manifestations over time.\" She puts the point about our own habits sharply: \"Learning about the history of the documents we use is as useful as it is interesting, because the web of commitments that built the archives continues to have an impact on our conception of the past.\" N. Posegay, who works at Cambridge, writes of the period that \"foreign 'collectors' acquired most of these manuscripts for European libraries in the second half of the nineteenth century\" — the quotation marks are his.",
+          "The larger question follows from that, and Y. Meital states it plainly: \"the race for the extraction of historical material, whether it is the remains of pharaonic temples and artifacts or worn-out fragments from genizot, and their transfer to public or private domains in Europe and North America, need to be studied in the context of colonialism... The removal of hundreds of thousands of genizah fragments from Cairo was accomplished in the high days of the British rule in Egypt.\" It is worth saying what that argument is and is not. Nobody claims the material was stolen: Schechter had the community's permission, and it is written into Cambridge's account of itself. Nor is the case for having preserved it a weak one — much of it would not have survived another century in the room. But permission granted by a community under an imperial administration is not the same transaction as permission granted between equals, and the two are worth keeping apart. The library's own telling has already moved: its current account of the Lewis-Gibson collection puts the sisters first and Schechter second, which is the order in which things actually happened.",
+        ],
+      },
+    ],
+    verses: [
+      { reference: "Psalms 22:1-2", note: "The psalm whose columns of Origen's Hexapla survive under a Genizah palimpsest" },
+      { reference: "2 Kings 23:21-25", note: "Part of the passage preserved in Aquila of Sinope's Greek in another Genizah palimpsest" },
+      { reference: "Deuteronomy 6:4-9", note: "The Shema — the sort of text the law of genizah exists to protect from being thrown away" },
+    ],
+    sources: [
+      { label: "Cambridge University Library: the Taylor-Schechter Genizah Research Unit", url: "https://www.lib.cam.ac.uk/collections/departments/taylor-schechter-genizah-research-unit" },
+      { label: "Cambridge Digital Library: the Cairo Genizah collection", url: "https://cudl.lib.cam.ac.uk/collections/genizah/1" },
+      { label: "Wikipedia: Cairo Geniza", url: "https://en.wikipedia.org/wiki/Cairo_Geniza" },
+    ],
+    manuscript: {
+      manuscriptType: "A collection, not a single object: mostly paper and parchment fragments, many of them single leaves or scraps",
+      language: "Hebrew, Judaeo-Arabic, Aramaic, Arabic, and Greek in the palimpsests",
+      contents:
+        "Roughly 193,000 fragments at Cambridge alone, out of a worldwide total usually put around 400,000. Bibles, prayer books and legal codes, and alongside them letters, accounts, marriage contracts, medical books and amulets. Among the biblical finds: the Hebrew of Ben Sira, the Damascus Document, Palestinian and Babylonian vocalisation, and palimpsests of Origen's Hexapla and Aquila of Sinope's Greek",
+      origin: "Fustat, Old Cairo, and the wider medieval Mediterranean world its documents came from",
+      findSite: "The genizah chamber of the Ben Ezra Synagogue, Fustat, Old Cairo",
+      foundYear: "1896-1897 for the Cambridge removal; material had been leaving Cairo genizot for decades before that",
+      foundBy:
+        "A. S. Lewis and M. D. Gibson brought back the fragments that started it; S. Schechter identified the Ben Sira leaf and travelled to Cairo, funded by Charles Taylor, Master of St John's College",
+      dateAssigned: "Deposited from at least the early eleventh century onwards; a few undertexts in the palimpsests are much older",
+      dateCertainty: "traditional",
+      currentLocation:
+        "Cambridge University Library holds the Taylor-Schechter, Mosseri and (with the Bodleian) Lewis-Gibson collections; the rest is dispersed across some sixty libraries",
+      shelfmark: "Cambridge University Library, T-S; the Ben Sira leaf Schechter identified is Or.1102",
+      facsimileUrl: "https://cudl.lib.cam.ac.uk/collections/genizah/1",
+    },
+    citations: [
+      {
+        tier: "institution",
+        label: "Cambridge Digital Library: the Cairo Genizah",
+        url: "https://cudl.lib.cam.ac.uk/collections/genizah/1",
+        credit: "Cambridge University Library",
+        detail:
+          "Read in full. The library's own account, and the source of the definition of a genizah quoted in section one (with its citation of Mishnah Shabbat 16:1), of \"At least from the early 11th century\", of the list of what the community deposited, and of the sentence about Schechter's permission and \"I liked all\", together with the figure of 193,000. Note that the library's Genizah Research Unit page gives 193,000 while its Lewis-Gibson page gives 200,000",
+        supports: "What a genizah is, when this one was filled, what was in it, and how it reached Cambridge",
+      },
+      {
+        tier: "institution",
+        label: "Cambridge University Library: the Lewis-Gibson Genizah Collection",
+        url: "https://www.lib.cam.ac.uk/collections/departments/taylor-schechter-genizah-research-unit/lewis-gibson-genizah-collection",
+        credit: "Cambridge University Library",
+        detail:
+          "Read in full. This is the page that gets the sequence right, and the sentence quoted in section one is taken from it word for word — including the name \"Solomon Schechter\", which is left exactly as the library wrote it. It also records that the sisters gave the Ecclesiasticus leaf to the University Library and the rest of their manuscripts to Westminster College, and that Cambridge and the Bodleian bought their collection jointly in 2013",
+        supports: "The order of events in 1896, and Cambridge's own current telling of it",
+      },
+      {
+        tier: "institution",
+        label: "Cambridge University Library, Or.1102: Ben Sira 39:15-40:8, with Schechter's letter to Mrs Lewis",
+        url: "https://cudl.lib.cam.ac.uk/view/MS-OR-01102/1",
+        credit: "Cambridge University Library, Taylor-Schechter Genizah Research Unit",
+        detail:
+          "The catalogue record notes that \"Under the same classmark is the original letter written by Solomon Schechter to Mrs Lewis announcing the discovery of the first known fragment of 'the original Hebrew of Ecclesiasticus', dated 13/5/96\". The Digital Library rate-limits repeated requests, so this record should be re-checked rather than assumed if the link ever fails",
+        supports: "The Ben Sira identification and its date",
+      },
+      {
+        tier: "institution",
+        label: "Cambridge University Library, \"The Bible of the Land of Israel: Re-Examining the Palestinian Vocalisation Tradition\"",
+        url: "https://www.lib.cam.ac.uk/collections/departments/taylor-schechter-genizah-research-unit/projects/bible-land-israel",
+        credit: "Cambridge University Library; project led by Kim Phillips",
+        detail:
+          "Read in full. The source of the description of Palestinian vocalisation quoted in section two, including that it \"is found only in manuscripts from the Cairo Genizah\"",
+        supports: "The non-Tiberian vocalisation systems the Genizah preserves",
+      },
+      {
+        tier: "scholarly",
+        label: "Y. Meital, \"'What Else There Is Still Beneath': The Multiple Dimensions of the Cairo Genizot\", on R. Jefferson's \"Deconstructing 'the Cairo Genizah'\"",
+        url: "https://katz.sas.upenn.edu/resources/blog/what-else-there-still-beneath-multiple-dimensions-cairo-genizot",
+        credit: "Yoram Meital, Ben-Gurion University of the Negev; Katz Center for Advanced Judaic Studies, 11 December 2018",
+        detail:
+          "Read in full. Meital's own words on colonialism are quoted from here. R. Jefferson's article — \"Deconstructing 'the Cairo Genizah': A Fresh Look at Genizah Manuscript Discoveries in Cairo before 1897\", Jewish Quarterly Review 108 (2018), 422-448 — is PAYWALLED and was NOT opened; the two sentences of hers quoted in section three are quoted from Meital's piece, at one remove, and are marked as such in the article",
+        supports: "The argument that the Schechter-centred account and the singular label both mislead",
+      },
+      {
+        tier: "scholarly",
+        label: "N. Posegay, \"Searching for the Last Genizah Fragment in Late Ottoman Cairo\"",
+        url: "https://doi.org/10.1017/S0020743822000356",
+        credit: "Nick Posegay, Cambridge University Library",
+        detail:
+          "International Journal of Middle East Studies 54:3 (2022), 423-441. The body is paywalled and was NOT opened; the phrase quoted in section three, scare quotes included, is from the abstract on the publisher's own page",
+        supports: "The framing of the nineteenth-century collectors",
+        paywalled: true,
+      },
+      {
+        tier: "encyclopedic",
+        label: "Wikipedia: Cairo Geniza",
+        url: "https://en.wikipedia.org/wiki/Cairo_Geniza",
+      },
+    ],
+    reflectionPrompt:
+      "A thousand years of one community's paper survived because nobody was willing to throw away a page with God's name on it. What do you treat that carefully?",
+  },
+  {
+    id: "samaritan-pentateuch",
+    name: "Samaritan Pentateuch",
+    // "Samaritan Pentateuch" was previously matching only as far as "Samaritan", which sent ten
+    // occurrences — eight of them in book introductions to the Torah — to the people-group article.
+    // Registering the full phrase EXTENDS those matches rather than adding new ones: the longest
+    // registered name wins, so "the Samaritan Pentateuch" now links here and a bare "Samaritan" or
+    // "Samaritans" still links to the people. NOT registered: "Abisha" alone — 31 WEB verses and
+    // five prose blocks contain it as part of "Abishai" and "Abishag". Only "Abisha Scroll".
+    alternateNames: ["Abisha Scroll"],
+    category: "manuscript",
+    role: "The Torah of a Rival Community, and the Verse That Divides It From the Jewish One",
+    summary:
+      "The Samaritans' own Torah, in their own script: about six thousand differences from the Jewish Hebrew text, nearly all of them trivial, and one of them the reason the two communities have worshipped on different mountains for two thousand years.",
+    sections: [
+      {
+        heading: "Six Thousand Differences, and the One That Counts",
+        paragraphs: [
+          "The Samaritan community keeps the five books of Moses and nothing else — no Prophets, no Writings — in a script descended from the old palaeo-Hebrew alphabet rather than the square letters Jews adopted after the exile. Set against the Masoretic Text it shows something like six thousand differences, a number worth handling carefully, since it comes from a seventeenth-century printed comparison and shifts depending on which manuscripts an edition is built from. The overwhelming majority are spelling, grammar and harmonisation — a scribe smoothing a narrative by importing a phrase from a parallel passage. Roughly two thousand of them agree with the Greek Septuagint against the Masoretic Text, which is itself a useful reminder that the Hebrew text was not one thing in antiquity.",
+          "One difference is not trivial. Where the Jewish text of Deuteronomy 27:4 has Israel setting up plastered stones on Mount Ebal, the Samaritan text has Mount Gerizim — the mountain above Nablus where the Samaritan temple stood and where the community still worships. And where Exodus and Deuteronomy give the Ten Commandments, the Samaritan Pentateuch adds a tenth of its own, assembled out of Deuteronomy 11:29-30 and 27:2-7, commanding an altar on Gerizim. That is not a copying slip. It is the constitutional difference between two communities, written into their Bibles.",
+        ],
+      },
+      {
+        heading: "Older Than the Samaritans",
+        paragraphs: [
+          "For centuries the obvious explanation was that the Samaritans had edited the Torah to suit themselves. The Qumran discoveries complicated that in a specific and interesting way. Some Hebrew manuscripts from the caves — the ones scholars now call pre-Samaritan — share the Samaritan Pentateuch's harmonising expansions, its emphasis on Moses, its grammatical forms and its spelling, and they are not Samaritan documents. T. Giles, writing for the Society of Biblical Literature, sets out what follows: these texts carry the editorial features \"but without the veneer of sectarian features favoring the Samaritan religious sect,\" and \"the cumulative evidence points to the conclusion that the Samaritan Pentateuch is the product of a sectarian editing of the Pre-Samaritan text type, probably produced in the first century B.C.E through the first century C.E.\" As one survey of the field puts it, phenomena \"previously ascribed to the Samaritans and their ideology turned out to be more ancient and not specifically Samaritan.\"",
+          "That is the majority view and it is not unanimous. S. Schorch has argued that even the Gerizim commandment belongs with the pre-Samaritan expansions rather than with a later sectarian layer — comparing its literary technique with theirs and concluding it comes from the same scribal circles. A reviewer of the volume it appeared in calls the argumentation strong and says so while disagreeing: he doubts \"that a scribe would insert such a commandment at such a prominent place merely for inner-textual hermeneutical reasons.\" There is a third reading, from the late G. N. Knoppers, on which the Torah's several altar laws are deliberately ambiguous because the Pentateuch was \"composed as a compromise document by Judeans and Samaritans\" — which would make the argument older than either community's final form of it. Archaeology has meanwhile given the Samaritan claim a real history: Y. Magen's excavations on Mount Gerizim between 1984 and 2006 dated the beginnings of a temple there to the mid-fifth century BC, with a large city around it by the second, destroyed by the Hasmonean John Hyrcanus about 110 BC.",
+        ],
+      },
+      {
+        heading: "Deuteronomy 27:4, and a Scroll With Its Own Signature",
+        paragraphs: [
+          "Which reading of Deuteronomy 27:4 is original is a live question, and it needs stating precisely because it is regularly got wrong. The Samaritan reading of Gerizim is supported outside the Samaritan tradition by the Old Latin and by Greek evidence, which is why J. A. Soggin could write that there \"the reading 'Gerizim' in the Samaritan Pentateuch... seems to be preferable to that of the Massoretic text.\" It is also claimed for a small Hebrew fragment published by J. H. Charlesworth in 2008-9 that reads Gerizim — and this app will not repeat that claim as evidence, because the fragment has no excavation context. It appeared on the antiquities market and is catalogued among the post-2002 \"Dead Sea Scrolls-like\" fragments; specialists are divided. A. Lange gives his reasons against and then his own limit. Writing in German — and quoted here at one remove, from a bibliography that reproduces the passage, because his book could not be opened — he objects that the fragment is in square script where an early Samaritan manuscript should be in palaeo-Hebrew, and that its letter forms are a mixture drawn from formal and semi-cursive hands of different periods; that mixture, he says, seems to him to argue for a forgery. And then the clause a careless quotation would drop: a conclusive judgement, he adds, would require examining the fragment itself, which nobody has published. E. Ulrich answers the strongest suspicion against it, that so significant a word sits so prominently on so small a scrap, by pointing to a genuine Qumran fragment of Judges that does the same. Å. Justnes holds it a forgery; B. Hensel writes that it is \"höchst wahrscheinlich echt\" — most probably genuine. Nobody has published a physical examination. A contested unprovenanced scrap cannot carry a conclusion about Deuteronomy, and the honest position is that the older witnesses can, and do, support the Samaritan reading without it.",
+          "The community's own most sacred manuscript raises the same question of what a document can be made to prove. The Abisha Scroll, kept at Nablus, is written on sewn ram parchment with rollers and a silver case, and the Samaritans hold that it was written by Abishua son of Phinehas, in the priestly line of Aaron, in the thirteenth year after Israel entered Canaan. The claim is not vague or externally imposed: it is embedded in the scroll itself, in a cryptogram running down through the columns, which the community reads as Abishua's own colophon. T. Giles states the scholarly position on such claims with the right restraint — \"These claims are difficult for modern historical scholarship to confirm or deny\" — but the codicological work has been done. A. D. Crown's study concluded the object is a composite of several scrolls of different dates, and E. Burkhardt's 2025 re-examination goes further, identifying the compiler and probable scribe of its most important component as a fourteenth-century scribe who was himself called Abisha son of Phinehas. If that is right, the scroll is neither a forgery nor what the tradition says it is: it is a medieval manuscript by a man whose own name made the identification irresistible. The oldest Samaritan Pentateuch manuscript anyone can actually open is at Cambridge, dates from the early twelfth century, and was written by five different hands.",
+        ],
+      },
+    ],
+    verses: [
+      { reference: "Deuteronomy 27:4", note: "\"On Mount Ebal\" in the Hebrew behind English Bibles; the Samaritan Torah reads Mount Gerizim" },
+      { reference: "Deuteronomy 11:29", note: "The blessing on Gerizim and the curse on Ebal — one of the two passages the Samaritan tenth commandment is built from" },
+      { reference: "Exodus 20:17", note: "Where the Samaritan text adds its own tenth commandment, on the altar at Gerizim" },
+      { reference: "John 4:19-24", note: "\"Our fathers worshiped in this mountain\" — the Samaritan woman naming the difference to Jesus" },
+    ],
+    sources: [
+      { label: "T. Giles, \"The Samaritan Pentateuch\" (Bible Odyssey, Society of Biblical Literature)", url: "https://www.bibleodyssey.org/articles/the-samaritan-pentateuch/" },
+      { label: "Cambridge University Library MS Add.1846, the earliest extant Samaritan Pentateuch", url: "https://cudl.lib.cam.ac.uk/view/MS-ADD-01846/1" },
+      { label: "Wikipedia: Samaritan Pentateuch", url: "https://en.wikipedia.org/wiki/Samaritan_Pentateuch" },
+    ],
+    manuscript: {
+      manuscriptType:
+        "A textual tradition rather than a single object, carried by parchment and paper codices and scrolls in the Samaritan script. The Abisha Scroll at Nablus is the community's most sacred copy",
+      language: "Hebrew, written in the Samaritan alphabet, a development of palaeo-Hebrew",
+      contents:
+        "The five books of Moses only. About six thousand differences from the Masoretic Text, the great majority orthographic or harmonising; the significant ones concern Mount Gerizim, including an additional tenth commandment",
+      origin: "The Samaritan community of Mount Gerizim and Nablus",
+      findSite: "Not applicable. The tradition was never lost and never found — it has been copied continuously by the Samaritan community",
+      foundYear: "Not applicable",
+      foundBy: "Not applicable",
+      dateAssigned:
+        "The text-type is ancient and is attested at Qumran in pre-Samaritan copies; the sectarian layer is usually dated to the first century BC or the first century AD. No manuscript of the Samaritan Pentateuch predates the Middle Ages",
+      dateCertainty: "disputed",
+      currentLocation:
+        "The Abisha Scroll is with the Samaritan community at Nablus. Accessible manuscripts include Cambridge University Library MS Add.1846, the John Rylands Library's Samaritan collection at Manchester, and the Chamberlain-Warren collection at Michigan State University",
+      shelfmark: "Cambridge University Library MS Add.1846 (early twelfth century, 227 leaves)",
+      facsimileUrl: "https://cudl.lib.cam.ac.uk/view/MS-ADD-01846/1",
+    },
+    citations: [
+      {
+        tier: "reference",
+        label: "T. Giles, \"The Samaritan Pentateuch\"",
+        url: "https://www.bibleodyssey.org/articles/the-samaritan-pentateuch/",
+        credit: "Terry Giles, Gannon University; Bible Odyssey, Society of Biblical Literature",
+        detail:
+          "Read in full. Giles is co-author of the standard SBL introduction to the Samaritan Pentateuch. Source for the pre-Samaritan texts carrying the editorial features \"without the veneer of sectarian features\", for the dating of the sectarian editing to the first century BC or AD, and for his own careful sentence about the community's traditional claims. Bible Odyssey is a Society of Biblical Literature project and leans to critical scholarship; it is cited here for facts",
+        supports: "The relationship between the pre-Samaritan Qumran texts and the Samaritan Pentateuch",
+      },
+      {
+        tier: "institution",
+        label: "Cambridge University Library MS Add.1846: the Samaritan Pentateuch",
+        url: "https://cudl.lib.cam.ac.uk/view/MS-ADD-01846/1",
+        credit: "Cambridge University Library",
+        detail:
+          "The library's own record: \"Add.1846 is believed to be the earliest extant manuscript of the Samaritan Pentateuch and dates from the early 12th century CE\"; 227 leaves, 270 by 210 mm, vellum, and \"The copying of the book itself is the product of five different hands.\" Fully digitised. Its recorded epigraphs are worth a reader's time — one at the end of Leviticus explains how the manuscript was saved from a fire in a manuscript store-room in 1201, and a marginal note at the end of Numbers makes a claim the library itself calls unconvincing",
+        supports: "The oldest accessible manuscript of the Samaritan Pentateuch, and its date",
+      },
+      {
+        tier: "scholarly",
+        label: "Å. Justnes, \"A Lightly Annotated Chronological Bibliography of the Post-2002 Dead Sea Scrolls-like Fragments\"",
+        url: "https://lyingpen.com/2025/02/16/a-lightly-annotated-chronological-bibliography-of-the-post-2002-dead-sea-scrolls-like-fragments/",
+        credit: "Årstein Justnes, University of Agder — The Lying Pen of Scribes project",
+        detail:
+          "Read in full. The catalogue of the disputed fragments and their literature, including J. H. Charlesworth, \"What Is a Variant? Announcing a Dead Sea Scrolls Fragment of Deuteronomy\", Maarav 16 (2009), 201-212, and the fragment's designation DSS F.154. It reproduces verbatim the passages quoted in section three from A. Lange (Handbuch der Textfunde vom Toten Meer, vol. 1, 2009, 106, and From Qumran to Aleppo, 2009, 46 n. 66), E. Ulrich (The Dead Sea Scrolls and the Developmental Composition of the Bible, 2015, 57) and B. Hensel (Juda und Samaria, 2016, 177). NONE of those four books was opened here; each is quoted at one remove from this bibliography, which prints the passages in full. Justnes himself is a party to the argument and holds the fragment a forgery, which is stated in the article",
+        supports: "That the Charlesworth fragment is unprovenanced and disputed, and the positions of the specialists on both sides",
+      },
+      {
+        tier: "scholarly",
+        label: "M. Krusche, review of M. Langlois (ed.), The Samaritan Pentateuch and the Dead Sea Scrolls",
+        url: "https://www.sblcentral.org/API/Reviews/12999_71663.pdf",
+        credit: "Marcel Krusche, Universität Hamburg; Review of Biblical Literature 07/2021, Society of Biblical Literature",
+        detail:
+          "Read in full. Source for M. Kartveit's summary that phenomena \"previously ascribed to the Samaritans and their ideology turned out to be more ancient\", for S. Schorch's argument that the Gerizim commandment belongs with the pre-Samaritan expansions, for the reviewer's own stated disagreement with it, and for the late G. N. Knoppers on the Pentateuch as a compromise document. Schorch's and Knoppers's own chapters were NOT opened; they are reported from this review",
+        supports: "The minority position on the Gerizim commandment, and the compromise-document reading",
+      },
+      {
+        tier: "reference",
+        label: "T. Wardle, \"Mount Gerizim\"",
+        url: "https://www.bibleodyssey.org/articles/mount-gerizim/",
+        credit: "Tim Wardle, Furman University; Bible Odyssey, Society of Biblical Literature",
+        detail:
+          "Read in full. Source for the dating of Y. Magen's Mount Gerizim excavations (1984-2006), the mid-fifth-century BC beginning of the temple, the second-century city and its destruction by John Hyrcanus in 110 BC. Magen's own excavation reports — Mount Gerizim Excavations, 2 vols (Israel Antiquities Authority, 2004 and 2008) — were NOT opened",
+        supports: "The archaeology of the Samaritan temple on Mount Gerizim",
+      },
+      {
+        tier: "scholarly",
+        label: "E. Burkhardt, \"The Abisha Scroll Revisited\"",
+        url: "https://doi.org/10.1163/2589255X-bja10052",
+        credit: "Evelyn Burkhardt, Research Centre for Hebrew Studies, Leucorea Foundation, Wittenberg",
+        detail:
+          "Textus 34:1 (2025), 74-100. The body is behind Brill's paywall and was NOT opened; what section three reports is her own abstract, read on the journal's page, which concludes that the scroll is \"compiled from several heterogeneous parts\" and identifies its compiler and probable principal scribe as \"Ā̊bīša ban Fī'nās ban Yūsəf, a scribe and author of piyyutim in the fourteenth century\". A. D. Crown's earlier studies — \"The Abisha Scroll of the Samaritans\", Bulletin of the John Rylands Library 58:1 (1975), 36-65, and Samaritan Scribes and Manuscripts (Mohr Siebeck, 2001) — were also not opened",
+        supports: "The current scholarly assessment of the Abisha Scroll's date and composition",
+        paywalled: true,
+      },
+      {
+        tier: "scholarly",
+        label: "J. A. Soggin, Introduction to the Old Testament: From Its Origins to the Closing of the Alexandrian Canon",
+        credit: "J. Alberto Soggin, Westminster John Knox, 1989, p. 26",
+        detail:
+          "Print, and NOT opened here; the sentence quoted in section three — that at Deuteronomy 27:4-7 the Samaritan \"Gerizim\", \"confirmed by Σ and by the Old Latin, seems to be preferable to that of the Massoretic text\" — is quoted at one remove. His sigma is left unexpanded in this article precisely because it was not possible to check what he meant by it",
+        supports: "That the Samaritan reading of Deuteronomy 27:4 has ancient non-Samaritan support",
+      },
+      {
+        tier: "encyclopedic",
+        label: "Wikipedia: Samaritan Pentateuch",
+        url: "https://en.wikipedia.org/wiki/Samaritan_Pentateuch",
+      },
+    ],
+    reflectionPrompt:
+      "Two communities have read the same five books for two thousand years and disagreed about one mountain. What difference are you treating as bigger than it is — or smaller?",
   },
 ];

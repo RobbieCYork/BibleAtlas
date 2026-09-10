@@ -5466,7 +5466,6 @@ timelineEvent.datingNotes|wld-ane-hyksos-egypt|610d9d2038	141	Jacob	jacob
 timelineEvent.datingNotes|wld-ane-thutmose-iii-empire|04f4f2f174	246	Moses	moses
 timelineEvent.datingNotes|wld-pg-cyrus-decree|6281773678	0	Ezra	ezra
 timelineEvent.datingNotes|wld-pg-rise-of-cyrus|f2fcf34120	188	Lydia	lydia-of-thyatira
-timelineEvent.datingNotes|wld-rom-bar-kokhba-revolt|31bc819606	106	Simon	simon-peter
 timelineEvent.datingNotes|wld-rom-claudius-emperor|9067ebbf87	0	Claudius	claudius-caesar
 timelineEvent.datingNotes|wld-rom-claudius-emperor|9067ebbf87	151	Priscilla	priscilla
 timelineEvent.datingNotes|wld-rom-claudius-emperor|9067ebbf87	165	Aquila	aquila
@@ -5511,6 +5510,8 @@ topic.section|babylonians|03b08ed2ee	350	Jeremiah	jeremiah
 topic.section|babylonians|03b08ed2ee	440	Jeremiah	jeremiah
 topic.section|babylonians|dcbf19bd59	439	Daniel	daniel
 topic.section|babylonians|dcbf19bd59	94	Daniel	daniel
+topic.section|bar-kokhba-letters|76b48d49b9	637	Jacob	jacob
+topic.section|bar-kokhba-letters|76b48d49b9	834	David	david
 topic.section|baruch-bullae|a8a3caaed2	274	Jeremiah	jeremiah
 topic.section|baruch-bullae|d5bb8ad8a2	237	Jeremiah	jeremiah
 topic.section|beersheba-horned-altar|08b1457574	132	Josiah	josiah
@@ -5723,6 +5724,16 @@ topic.section|gehenna|ec82c83ac9	264	Joseph	joseph-son-of-jacob
 topic.section|gehenna|f37316688c	164	Jesus	jesus-of-nazareth
 topic.section|gehenna|f37316688c	85	Jesus	jesus-of-nazareth
 topic.section|gemariah-bulla|97462acadd	293	Jeremiah	jeremiah
+topic.section|genesis-apocryphon|2ef2e7e216	138	Noah	noah
+topic.section|genesis-apocryphon|2ef2e7e216	149	Abram	abraham
+topic.section|genesis-apocryphon|2ef2e7e216	216	Abram	abraham
+topic.section|genesis-apocryphon|2ef2e7e216	252	Sarai	sarah
+topic.section|genesis-apocryphon|2ef2e7e216	301	Abram	abraham
+topic.section|genesis-apocryphon|2ef2e7e216	389	Sarai	sarah
+topic.section|genesis-apocryphon|2ef2e7e216	630	Noah	noah
+topic.section|genesis-apocryphon|2ef2e7e216	700	Abram	abraham
+topic.section|genesis-apocryphon|4d7941e221	426	Noah	noah
+topic.section|genesis-apocryphon|4d7941e221	464	Noah	noah
 topic.section|gentiles|2588b15238	0	Paul	paul-of-tarsus
 topic.section|gentiles|2588b15238	330	Paul	paul-of-tarsus
 topic.section|gentiles|2588b15238	484	Paul	paul-of-tarsus
@@ -5864,6 +5875,8 @@ topic.section|large-stone-structure|d0417ba37a	782	David	david
 topic.section|large-stone-structure|ee039a21b2	73	David	david
 topic.section|large-stone-structure|fd7a9ede8a	128	David	david
 topic.section|large-stone-structure|fd7a9ede8a	72	David	david
+topic.section|leningrad-codex|f565e06524	480	Jehoiachin	jeconiah
+topic.section|leningrad-codex|f565e06524	987	Jehoiachin	jeconiah
 topic.section|levites|0e2fc278d4	403	Aaron	aaron
 topic.section|levites|e1e8d99182	0	Jesus	jesus-of-nazareth
 topic.section|levites|e1e8d99182	280	Barnabas	barnabas
@@ -5878,7 +5891,6 @@ topic.section|lmlk-seal-impressions|fb0f80a850	179	Hezekiah	hezekiah
 topic.section|magdalen-papyrus-p64|675bd51af3	569	Luke	luke-evangelist
 topic.section|mari-tablets|3fcf959a06	420	Abraham	abraham
 topic.section|mari-tablets|593358b82a	268	Abraham	abraham
-topic.section|masoretic-text|d98167a410	57	Aaron	aaron
 topic.section|mesad-hashavyahu-ostracon|1fe6efd10a	96	Josiah	josiah
 topic.section|mesad-hashavyahu-ostracon|30e4af5a48	205	Josiah	josiah
 topic.section|mesad-hashavyahu-ostracon|30e4af5a48	640	Josiah	josiah
@@ -6050,6 +6062,8 @@ topic.section|sabbath|2131d6a1c0	551	Satan	satan
 topic.section|sabbath|307b1a790e	424	Moses	moses
 topic.section|sabbath|fe4f8d7209	515	John	john-the-apostle
 topic.section|sabbath|fe4f8d7209	89	Paul	paul-of-tarsus
+topic.section|samaritan-pentateuch|23c7bf2e0e	305	Aaron	aaron
+topic.section|samaritan-pentateuch|f8568e5470	335	Moses	moses
 topic.section|samaritans|b14363ccaa	0	Jesus	jesus-of-nazareth
 topic.section|samaritans|b14363ccaa	606	Jesus	jesus-of-nazareth
 topic.section|samaritans|b14363ccaa	719	Jesus	jesus-of-nazareth
@@ -6162,6 +6176,8 @@ topic.section|temple-scroll|345391bff7	396	Moses	moses
 topic.section|temple-scroll|e4d3daff94	355	Jesus	jesus-of-nazareth
 topic.section|temple-warning-inscription|e6e0aeba7c	266	Paul	paul-of-tarsus
 topic.section|temple-warning-inscription|e6e0aeba7c	80	Paul	paul-of-tarsus
+topic.section|thanksgiving-hymns|59a2194326	484	Belial	satan
+topic.section|thanksgiving-hymns|59a2194326	684	David	david
 topic.section|the-christ|4d78c4e744	389	Jesus	jesus-of-nazareth
 topic.section|the-christ|a2addbcd29	438	Jesus	jesus-of-nazareth
 topic.section|the-christ|a66fc78292	156	Peter	simon-peter

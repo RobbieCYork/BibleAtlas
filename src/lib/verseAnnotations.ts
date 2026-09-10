@@ -1358,6 +1358,22 @@ const ENDING_OF: NameContextRule = { before: /\b[Ee]nding of\s+$/, to: null };
 /** "the Wisdom of Solomon", "the Psalms of Solomon" — two works named for a man nobody claims
  *  wrote them. Capital-initial on purpose; see the 1 Kings 4:34 note above. */
 const WISDOM_OR_PSALMS_OF: NameContextRule = { before: /\b(?:Wisdom|Psalms) of\s+$/, to: null };
+/** "Aaron ben Asher", "Samuel ben Jacob", "Moses ben Asher", "Yeshua ben Galgula" — a Hebrew
+ *  patronymic naming a medieval or Second Temple man who is NOT the biblical bearer of the first
+ *  name. Added with the Masoretic manuscript batch, where four separate articles needed it and
+ *  every one of the four links was wrong: the scribe of the Leningrad Codex was resolving to the
+ *  prophet Samuel, the Masorete of the Aleppo Codex to Aaron the brother of Moses, and one of Bar
+ *  Kokhba's officers to Jesus.
+ *
+ *  Safe as a pattern rather than a pin: Scripture never writes " ben " as a free-standing word.
+ *  Checked against all 31,098 WEB verses — 0 hits for " ben ", and 0 for "Aaron ben", "Samuel ben",
+ *  "Moses ben", "Jacob ben", "Solomon ben" and "Joseph ben" individually. It therefore reaches only
+ *  our own prose, which is exactly where these names occur. Note it is NOT given to `simon`:
+ *  Matthew 16:17 has "Simon Bar Jonah", and a "bar" rule would take it. */
+const BEN_PATRONYMIC_AFTER: NameContextRule = { after: /^\s+(?:ben|b\.)\s+\p{Lu}/u, to: null };
+/** The other half of the same shape — the FATHER in the chain, equally not the biblical man:
+ *  "Aaron ben Moses ben Asher", "Samuel ben Jacob". */
+const BEN_PATRONYMIC_BEFORE: NameContextRule = { before: /(?:\bben|\sb\.)\s+$/, to: null };
 
 const NAME_CONTEXT_RULES: Record<string, NameContextRule[]> = {
   john: [
@@ -1393,6 +1409,7 @@ const NAME_CONTEXT_RULES: Record<string, NameContextRule[]> = {
     // (Acts 19:3) and "John's disciples" (Matthew 9:14) are the Baptist himself and must keep
     // their links, so only a following "Gospel" counts.
     { after: /^['’]s\s+[Gg]ospel/, to: null }, // "John's Gospel"
+    { after: /^['’]s College\b/, to: null }, // "St John's College", Cambridge — a building, not a man
     { after: /^\s+chapter\b/i, to: null }, // "John chapter 18"
 
     // ── Different men, by pattern.
@@ -1580,7 +1597,10 @@ const NAME_CONTEXT_RULES: Record<string, NameContextRule[]> = {
   ],
   andrew: [{ after: /^\s+Steinmann\b/, to: null }],   // the Herod-dating minority view
   gideon: [{ after: /^\s+Foerster\b/, to: null }],    // the Herodium excavator
-  jacob: [{ after: /^\s+Eliyahu\b/, to: null }],      // the boy who found the Siloam inscription
+  jacob: [
+    { after: /^\s+Eliyahu\b/, to: null },            // the boy who found the Siloam inscription
+    BEN_PATRONYMIC_BEFORE,                           // "Samuel ben Jacob", the Leningrad scribe's father
+  ],
   // "Nathan Melech the officer" (2 Kings 23:11) and "Nathan-Melech, servant of the king" — one of
   // Josiah's officials, a different man from the court prophet and with no Person record of his
   // own. The hyphenated form is registered as a matchName on `nathan-melech-bulla`, so it resolves
@@ -1598,7 +1618,16 @@ const NAME_CONTEXT_RULES: Record<string, NameContextRule[]> = {
   // matched, which the matchName normally prevents.
   nathan: [{ after: /^[\s-]Melech\b/, to: null }],
   solomon: [
+    // "Solomon Schechter", who brought the Cairo Genizah to Cambridge. Cambridge University
+    // Library's own sentences name him in full and this app quotes them verbatim — a quotation may
+    // not be reworded to suit the linker, and an earlier batch had to put his forename back inside
+    // one of them after it was trimmed. So the surname is what the rule is keyed on. The app's own
+    // prose writes "S. Schechter", per the house rule that modern scholars get initials.
+    { after: /^\s+Schechter\b/, to: null },
     { after: /^\s+Stoddard\b/, to: null }, // Jonathan Edwards's grandfather
+    // "Jabez b. Solomon the Babylonian", the eleventh-century Karaite who commissioned the Cairo
+    // Codex of the Prophets, and "Yaʿbeẓ b. Solomon" inside J. L. Teicher's quoted sentence.
+    BEN_PATRONYMIC_BEFORE,
     // "the Wisdom of Solomon" (the Muratorian fragment's canon list) and "the Psalms of Solomon"
     // (the messianic-expectation article) — two works named for a man nobody, in any tradition,
     // claims wrote them. The clearest case in the whole batch that a title is not an attribution.
@@ -1687,6 +1716,13 @@ const NAME_CONTEXT_RULES: Record<string, NameContextRule[]> = {
   // covered by prose cases in scripts/name-linker/cases.mjs: if one starts failing, the copy
   // moved. Re-read the sentence and re-pin it; do not delete the case.
   zechariah: [
+    // A list of BOOK titles: the six of the Twelve that the Greek Minor Prophets Scroll preserves.
+    // Bare "Zechariah" in it was resolving to the father of John the Baptist. Same shape, and the
+    // same remedy, as the "Matthew, John, Luke, Mark" pins in the `john` block above: pinned by
+    // exact phrase because nothing in the neighbouring words says "this is a list of books" — the
+    // neighbours are other book names — and a rule keyed on an adjacent one would reach into
+    // Scripture's own lists of men. Held by a prose case in cases.mjs.
+    { phrase: "Jonah, Micah, Nahum, Habakkuk, Zephaniah and Zechariah", to: null },
     // person.lifeStory on the `satan` record. Its `controversies` field names the BOOK in the same
     // breath as Job and 1 Chronicles, which is why the record-level answer is null.
     { phrase: "prosecutorial role in Zechariah's vision", to: "zechariah-the-prophet" },
@@ -1736,6 +1772,7 @@ const NAME_CONTEXT_RULES: Record<string, NameContextRule[]> = {
     BOOK_OF, // "The book of Esther opens in the Persian capital of Susa"
   ],
   ezekiel: [
+    { phrase: "Joshua, Judges, Samuel and Kings, then Isaiah, Jeremiah, Ezekiel and the Twelve", to: null }, // a list of BOOK titles
     TEXT_OF, // "The Masoretic Hebrew text of Ezekiel contains a notable number of difficult passages"
   ],
   ezra: [
@@ -1745,13 +1782,22 @@ const NAME_CONTEXT_RULES: Record<string, NameContextRule[]> = {
     { before: /\bBen\s+$/, to: null },
   ],
   isaiah: [
+    { phrase: "Joshua, Judges, Samuel and Kings, then Isaiah, Jeremiah, Ezekiel and the Twelve", to: null }, // a list of BOOK titles
     BOOK_NUMERAL, // "against critical theories of a separate 'Second Isaiah'" — a hypothesis, not a man
+    TEXT_OF, // "all sheets with the text of Isaiah are still present" — the book, in a quotation
+    // The same quotation, eleven words earlier: "some sheets of Deuteronomy and Isaiah". A book
+    // again, and TEXT_OF cannot reach it because the phrase is "sheets of", not "text of", with
+    // another book name in between. Pinned rather than patterned: a rule for "<unit> of <Book> and
+    // <Book>" would have to guess where the list ends, and Scripture's own "the book of Isaiah"
+    // sits one word away from the same shape.
+    { phrase: "some sheets of Deuteronomy and Isaiah", to: null },
     SCROLL_OF, // "reading aloud from the scroll of Isaiah", "Jesus read from the scroll of Isaiah"
     POSSESSIVE_WORK, // "the second half of Isaiah's book", "independent witnesses to Isaiah's text"
     MANUSCRIPT_AFTER, // "Multiple additional Isaiah manuscripts were found at Qumran"
     // "the fulfillment of Isaiah's prophecy" keeps its link: the man prophesied.
   ],
   jeremiah: [
+    { phrase: "Joshua, Judges, Samuel and Kings, then Isaiah, Jeremiah, Ezekiel and the Twelve", to: null }, // a list of BOOK titles
     BOOK_OF, // "the book of Jeremiah, which the caves preserve in two editions". Checked: no WEB
     // verse contains "book of Jeremiah" or "books of Jeremiah", so this reaches only our own prose.
     QUMRAN_BEFORE, // "some Qumran Jeremiah fragments reflect a shorter Hebrew text-form"
@@ -1762,10 +1808,13 @@ const NAME_CONTEXT_RULES: Record<string, NameContextRule[]> = {
     TEXT_OF, // "Fragments of the Hebrew text of Job were found among the Dead Sea Scrolls"
   ],
   jonah: [
+    // The other half of the same list. See the note on `zechariah` below.
+    { phrase: "Jonah, Micah, Nahum, Habakkuk, Zephaniah and Zechariah", to: null },
     BOOK_OF, // "The book of Jonah centers entirely on Assyria's capital, Nineveh"
     TEXT_OF, // "a well-preserved continuous Hebrew text of Jonah"
   ],
   joshua: [
+    { phrase: "Joshua, Judges, Samuel and Kings, then Isaiah, Jeremiah, Ezekiel and the Twelve", to: null }, // a list of BOOK titles
     BOOK_OF, // "the books of Joshua and Judges describe", "opens directly onto the book of Joshua"
     TEXT_OF, // "as the text of Joshua puts it (Joshua 6:22-25)"
   ],
@@ -1783,6 +1832,10 @@ const NAME_CONTEXT_RULES: Record<string, NameContextRule[]> = {
     ENDING_OF, // "the longer ending of Mark (Mark 16:9-20)" — see the ruling note below
   ],
   moses: [
+    // "Moses ben Asher", whose colophon the Cairo Codex of the Prophets carries, and "Aaron ben
+    // Moses ben Asher", the Masorete of the Aleppo Codex. Ninth- and tenth-century Tiberians.
+    BEN_PATRONYMIC_BEFORE,
+    BEN_PATRONYMIC_AFTER,
     // "the five books of Moses", "the books of Moses". PLURAL ONLY — this is the whole safety of
     // the rule, and the reason is three lines up in the header comment: Scripture's own singular
     // "the book of Moses" appears five times and keeps its link every time.
@@ -1823,6 +1876,10 @@ const NAME_CONTEXT_RULES: Record<string, NameContextRule[]> = {
     { before: /\b(?:Y\.|Yigal)\s+$/, to: null },
   ],
   samuel: [
+    { phrase: "Joshua, Judges, Samuel and Kings, then Isaiah, Jeremiah, Ezekiel and the Twelve", to: null }, // a list of BOOK titles
+    // "Samuel ben Jacob", the scribe who wrote, pointed and annotated the Leningrad Codex single
+    // handed in Fustat about 1008. He was resolving to the prophet.
+    BEN_PATRONYMIC_AFTER,
     BOOK_OF, // "the following books of Samuel", "the earlier books of Samuel and Kings"
     BOOK_NUMERAL, // "1 Samuel traces Israel's transition from the era of the judges"
     TEXT_OF, // "the Masoretic text of Samuel", "a text of Samuel noticeably different"
@@ -1964,6 +2021,80 @@ const NAME_CONTEXT_RULES: Record<string, NameContextRule[]> = {
   // link was ALREADY LIVE and wrong, and where pinning it removes one prose row.
   goshen: [
     { after: /^-Gottstein\b/, to: null },
+  ],
+
+  // ── ADDED WITH THE MASORETIC AND MEDIEVAL HEBREW MANUSCRIPTS ────────────────────────────────
+  //
+  // Four keys that had no block at all until this batch. Every one was found by enumerating what
+  // the new articles actually render, with scripts/name-linker/links-for.mjs, BEFORE the commit —
+  // which is the only instrument that sees a fault of this shape. The snapshot cannot: a wrong new
+  // link arrives as a row that was not there before, and so does every good one. modern-names.mjs
+  // cannot either: none of these four sits inside a modern personal name.
+  //
+  // Two of them were live faults on origin/main, not faults this batch introduced.
+
+  // Aaron ben Moses ben Asher, the Masorete who pointed the Aleppo Codex, and Moses ben Asher his
+  // father, whose colophon the Cairo Codex carries. See BEN_PATRONYMIC_AFTER above for why a
+  // pattern is safe here where a pattern usually is not.
+  aaron: [BEN_PATRONYMIC_AFTER],
+
+  // "Yeshua ben Galgula", the officer commanding at Wadi Murabba'at, to whom Shimon bar Kosiba
+  // wrote the letter quoted on `bar-kokhba-letters`. "Yeshua" is a registered alternate name for
+  // Jesus of Nazareth, so without this the rebel commander's subordinate linked to Christ.
+  yeshua: [BEN_PATRONYMIC_AFTER],
+
+  // "Simeon ben Koseba, Prince of Israel", the rebel leader's signature, quoted from the excavation
+  // publication on `bar-kokhba-letters`. The BEN rule is what fires there. The `bar Kosiba` line
+  // below fires on NOTHING in the corpus today — checked, both before and after this batch — and is
+  // here because the same article and the timeline article between them write the name four ways
+  // and only one of them is currently covered. Recorded as defensive rather than described as a
+  // fix, because it is not one.
+  simeon: [
+    BEN_PATRONYMIC_AFTER,
+    { after: /^\s+bar\s+Ko[sz]iba\b/, to: null },
+  ],
+
+  // LIVE FAULT, and one this batch did NOT introduce: the timeline article on the Bar Kokhba
+  // revolt writes "death of Simon bar Kosiba" in its dating notes, and bare "Simon" has been
+  // resolving to Simon Peter there since the article was published — one row in prose-links.tsv,
+  // measured before and after. Keyed on the patronymic itself and NOT on a bare "bar", because
+  // Matthew 16:17 reads "Simon Bar Jonah" and a loose rule would take the apostle's own verse;
+  // "bar Ko" cannot reach it. Spelled to catch Kosiba and Koziba, which the sources use
+  // interchangeably. `simon` gets no BEN_PATRONYMIC for the same reason: "Simon b." is not a shape
+  // anyone writes, and the rule would earn nothing against that risk.
+  simon: [{ after: /^\s+[Bb]ar\s+Ko[sz]iba\b/, to: null }],
+
+  // "the Jewish Encyclopedia" — the 1901-1906 reference work, quoted on `bar-kokhba-letters` for
+  // the forms of the rebel leader's name. A title, not a people, and the MODERN WORK TITLES ruling
+  // covers it: a title does not name whoever it is named after. Pinned on the phrase, for the
+  // reason that block gives — nothing in the neighbouring words says "title". Note that the same
+  // shape is live elsewhere and is NOT fixed here: "Documents of Jewish Sectaries" on
+  // `damascus-document` still links, and so do "the Jerusalem Talmud" and "the Babylonian Talmud"
+  // in four other records. Those are a corpus-wide ruling, not a content edit, and are escalated
+  // rather than swept up in a content batch.
+  // Keyed on the MATCHED SURFACE, which is "jewish" — the adjective is what `topic:jews`
+  // registers and what the linker looks up, not the record's id.
+  jewish: [{ phrase: "Jewish Encyclopedia", to: null }],
+
+  // Aquila of Sinope, the second-century Jewish translator whose very literal Greek version
+  // survives in Cairo Genizah palimpsests and stands at the end of the line the Greek Minor
+  // Prophets Scroll begins. A DIFFERENT MAN from Aquila the tentmaker of Acts 18, who owns the key
+  // and who is who the app was sending readers to from three articles. There is no record for the
+  // translator, so this is a suppression: no link says nothing, and a link to the tentmaker says
+  // something false. The second rule is the MODERN WORK TITLES ruling again — D. Barthélemy's 1963
+  // book is named for him, and a title is not a man. No WEB verse contains "Aquila of".
+  // "Aleppo's Jewish elders" — the community leaders who put about the story that the codex had
+  // burned, inside a sentence quoted verbatim from P. Sanders. `topic:jewish-elders` is the
+  // Second Temple body of Luke and Acts, not twentieth-century Syrian community leaders, and a
+  // quotation cannot be reworded to suit the linker. The app's own prose around it now writes
+  // "the community in Aleppo", which needs no rule.
+  elders: [{ phrase: "Aleppo's Jewish elders", to: null }],
+
+  "dead sea": [{ phrase: "Dead Sea Discoveries", to: null }], // the journal, not the sea
+
+  aquila: [
+    { after: /^\s+of Sinope\b/, to: null },
+    { phrase: "Les Devanciers d'Aquila", to: null },
   ],
 };
 

@@ -1708,4 +1708,147 @@ export const CASES = [
     surface: "Peter", owner: "codex-bezae", expect: "simon-peter", status: "guard",
     why: "KEPT. The Apostle, in the app's own narrative sentence about him. The three title rules " +
          "added to `peter` with this batch must not reach an ordinary mention of the man." },
+
+  // ─────────────────────────────────────────────────────────────────────────────────────────
+  // MASORETIC AND MEDIEVAL HEBREW MANUSCRIPTS, 2026-09-10. Every case below pins a rule added
+  // with that batch, and every one of those rules was found by ENUMERATING what the new articles
+  // render — scripts/name-linker/links-for.mjs — rather than by reading a snapshot diff. A wrong
+  // link in a new article is invisible to the snapshot by construction: it arrives as a row that
+  // was not there before, and so does every good link the article brings with it.
+  //
+  // The KEEPs matter as much as the suppressions here. Three of these rules are patterns rather
+  // than pins, which is unusual in this file, and the KEEPs are what stops a later widening.
+  // ─────────────────────────────────────────────────────────────────────────────────────────
+
+  // ── The Hebrew patronymic: "<Name> ben <Name>" and its abbreviation "<Name> b. <Name>" ──────
+  { text: "The well-known Masorete... Aharon Ben Asher added the vowels, the cantillation marks",
+    surface: "Aharon", owner: "aleppo-codex", expect: null, status: "guard",
+    why: "Aaron ben Asher the Masorete of Tiberias, not Aaron the brother of Moses. This link was " +
+         "LIVE on `masoretic-text` before this batch and is the one row prose-links.tsv lost." },
+  { text: "vocalised, on the testimony of a colophon added about a century later, by Aaron ben Asher himself",
+    surface: "Aaron", owner: "masoretic-text", expect: null, status: "guard",
+    why: "The same man on the umbrella article, which is where the live fault was." },
+  { text: "\"Samuel b. Jacob wrote, vocalised and provided the masora.\"",
+    surface: "Samuel", owner: "leningrad-codex", expect: null, status: "guard",
+    why: "The scribe of the Leningrad Codex, inside his own colophon as B. Outhwaite translates " +
+         "it. The abbreviated \"b.\" is why the rule covers that form: a quotation may not be " +
+         "reworded to suit the linker." },
+  { text: "\"Samuel b. Jacob wrote, vocalised and provided the masora.\"",
+    surface: "Jacob", owner: "leningrad-codex", expect: null, status: "guard",
+    why: "The other half of the same patronymic — the scribe's father, not the patriarch." },
+  { text: "The colophons with the names of Moses b. Asher and of Yacbez b. Solomon were written by a scribe",
+    surface: "Moses", owner: "cairo-codex-of-the-prophets", expect: null, status: "guard",
+    why: "Moses ben Asher of Tiberias, inside J. L. Teicher's 1950 sentence as B. Outhwaite " +
+         "reproduces it." },
+  { text: "The colophons with the names of Moses b. Asher and of Yacbez b. Solomon were written by a scribe",
+    surface: "Solomon", owner: "cairo-codex-of-the-prophets", expect: null, status: "guard",
+    why: "The eleventh-century Karaite who paid for the codex, not the king." },
+  { text: "\"From Simeon ben Koseba to Yeshua ben Gilgola and the men of your company, greeting!",
+    surface: "Yeshua", owner: "bar-kokhba-letters", expect: null, status: "guard",
+    why: "A rebel officer at Wadi Murabba'at. \"Yeshua\" is a registered alternate name for Jesus " +
+         "of Nazareth, so without the rule this letter linked its addressee to Christ." },
+  { text: "\"From Simeon ben Koseba to Yeshua ben Gilgola and the men of your company, greeting!",
+    surface: "Simeon", owner: "bar-kokhba-letters", expect: null, status: "guard",
+    why: "Shimon ben Kosiba, leader of the second revolt, not Simeon at the Temple." },
+  // KEEPs. The patronymic rules are PATTERNS, and these are what a widening breaks first.
+  { ref: "Genesis 42:24", surface: "Simeon", path: "panel", expect: "simeon-at-the-temple", status: "guard",
+    why: "KEPT. Scripture never writes \" ben \" as a free-standing word — 0 of 31,098 WEB verses " +
+         "— so the patronymic rules cannot reach a Bible verse. This is the check on that claim. " +
+         "(That bare \"Simeon\" in Genesis resolves to the man in Luke 2 is a separate, " +
+         "pre-existing panel-path fault and is not this batch's to fix.)" },
+  { ref: "Matthew 16:17", surface: "Simon", expect: "simon-peter", status: "guard",
+    why: "KEPT, and it is the reason `simon` gets a narrow \"bar Ko\" rule instead of a \"bar\" " +
+         "one: the WEB writes \"Simon Bar Jonah\" here, and a loose patronymic rule would take " +
+         "the apostle's own confession." },
+  { text: "fall of Betar and death of Simon bar Kosiba",
+    surface: "Simon", owner: "wld-rom-bar-kokhba-revolt", expect: null, status: "guard",
+    why: "The rebel leader in the timeline article's dating notes, resolving to Simon Peter since " +
+         "the article was published — one live row in prose-links.tsv, and the second of the two " +
+         "this batch removes." },
+
+  // ── Book titles listed in a row: the Prophets, as the Cairo Codex contains them ─────────────
+  { text: "The Cairo Codex contains the Prophets entire — Joshua, Judges, Samuel and Kings, then " +
+          "Isaiah, Jeremiah, Ezekiel and the Twelve",
+    surface: "Joshua", owner: "cairo-codex-of-the-prophets", expect: null, status: "guard",
+    why: "A list of BOOK titles, and five of the names in it were resolving to people. Same " +
+         "ruling and same mechanism as the \"Matthew, John, Luke, Mark\" pins in `john`: an " +
+         "exact phrase, because the only thing that says \"these are books\" is that they are in " +
+         "a list of books." },
+  { text: "The Cairo Codex contains the Prophets entire — Joshua, Judges, Samuel and Kings, then " +
+          "Isaiah, Jeremiah, Ezekiel and the Twelve",
+    surface: "Samuel", owner: "cairo-codex-of-the-prophets", expect: null, status: "guard",
+    why: "Same list." },
+  { text: "The Cairo Codex contains the Prophets entire — Joshua, Judges, Samuel and Kings, then " +
+          "Isaiah, Jeremiah, Ezekiel and the Twelve",
+    surface: "Ezekiel", owner: "cairo-codex-of-the-prophets", expect: null, status: "guard",
+    why: "Same list. Ezekiel and Jeremiah both had live person links here before the pin." },
+  { text: "carrying parts of six books: Jonah, Micah, Nahum, Habakkuk, Zephaniah and Zechariah.",
+    surface: "Jonah", owner: "greek-minor-prophets-scroll", expect: null, status: "guard",
+    why: "The six of the Twelve this scroll preserves — book titles. Bare \"Jonah\" was the " +
+         "prophet and bare \"Zechariah\" was the father of John the Baptist." },
+  { text: "carrying parts of six books: Jonah, Micah, Nahum, Habakkuk, Zephaniah and Zechariah.",
+    surface: "Zechariah", owner: "greek-minor-prophets-scroll", expect: null, status: "guard",
+    why: "Same list, and the more damaging of the two: it was resolving to Zechariah the father " +
+         "of John the Baptist, who has nothing to do with the book." },
+  { text: "the surviving volume all sheets with the text of Isaiah are still present",
+    surface: "Isaiah", owner: "aleppo-codex", expect: null, status: "guard",
+    why: "The book, inside a sentence quoted verbatim from P. Sanders. TEXT_OF, added to `isaiah` " +
+         "with this batch for exactly this quotation." },
+  { text: "recovered virtually the complete codex except for some sheets of Deuteronomy and Isaiah " +
+          "is problematic",
+    surface: "Isaiah", owner: "aleppo-codex", expect: null, status: "guard",
+    why: "The book again, eleven words earlier in the same quotation, where TEXT_OF cannot reach " +
+         "it. A phrase pin, because a rule for \"<unit> of <Book> and <Book>\" cannot tell where " +
+         "the list ends." },
+  { ref: "Isaiah 1:1", surface: "Isaiah", expect: "isaiah", status: "guard",
+    why: "KEPT. The prophet, in his own superscription. Neither addition to `isaiah` can reach " +
+         "Scripture: TEXT_OF needs \"the text of\" and the other is an exact phrase from a " +
+         "twenty-first-century book review." },
+
+  // ── Modern work titles, the ruling of 2026-09-10 carried forward ───────────────────────────
+  { text: "It is an epithet, and the Jewish Encyclopedia states its status precisely",
+    surface: "Jewish", owner: "bar-kokhba-letters", expect: null, status: "guard",
+    why: "The 1901-1906 reference work. A title does not name whoever it is named after — the " +
+         "same ruling as \"Abraham in History and Tradition\", one shelf along." },
+  { text: "and Jewish sources call him Ben (or Bar) Koziba or Kozba",
+    surface: "Jewish", owner: "bar-kokhba-letters", expect: "jews", status: "guard",
+    why: "KEPT, eleven words after the suppression, in the same quotation. Here \"Jewish\" is the " +
+         "people and the link is right. This is the check that the pin above stayed a pin: it is " +
+         "an exact phrase and cannot reach an ordinary adjective." },
+  { text: "the case still made for the Teacher Hymns hypothesis is M. C. Douglas's, in Dead Sea " +
+          "Discoveries in 1999",
+    surface: "Dead Sea", owner: "thanksgiving-hymns", expect: null, status: "guard",
+    why: "The journal, not the sea. Modern work titles again, and the first JOURNAL name in this " +
+         "corpus to have carried a live link." },
+  { text: "Les Devanciers d'Aquila, the forerunners of Aquila of Sinope",
+    surface: "Aquila", occurrence: 1, owner: "greek-minor-prophets-scroll", expect: null, status: "guard",
+    why: "D. Barthelemy's 1963 book title." },
+  { text: "Les Devanciers d'Aquila, the forerunners of Aquila of Sinope",
+    surface: "Aquila", occurrence: 2, owner: "greek-minor-prophets-scroll", expect: null, status: "guard",
+    why: "Aquila of Sinope the translator — a DIFFERENT MAN from Aquila the tentmaker of Acts 18, " +
+         "who owns the key. No record exists for the translator, so a suppression is the only " +
+         "honest answer: no link says nothing, a link to the tentmaker says something false." },
+  { ref: "Acts 18:2", surface: "Aquila", expect: "aquila", status: "guard",
+    why: "KEPT. Priscilla's husband, in his own verse. Neither `aquila` rule can reach it: " +
+         "no WEB verse contains \"Aquila of\", and the other rule is a phrase pin on a book title." },
+
+  // ── Two more that a pattern would have got wrong ────────────────────────────────────────────
+  { text: "the origin of the rumor that the codex had been burned lay with Aleppo's Jewish elders",
+    surface: "elders", owner: "aleppo-codex", expect: null, status: "guard",
+    why: "Twentieth-century Syrian community leaders, inside a sentence quoted verbatim from " +
+         "P. Sanders. `topic:jewish-elders` is the Second Temple body of Luke and Acts. The app's " +
+         "own prose around it writes \"the community in Aleppo\" and needs no rule." },
+  { text: "He went out with money from Charles Taylor, Master of St John's College",
+    surface: "John", owner: "cairo-geniza", expect: null, status: "guard",
+    why: "The Cambridge college that paid for Schechter's trip to Cairo. A building, not the " +
+         "Baptist — the same shelf as \"St Thomas Bay\" under `thomas`." },
+  { text: "their friend Solomon Schechter was able to identify one of their purchases as the lost " +
+          "Hebrew original of the book of Ben Sira",
+    surface: "Solomon", owner: "cairo-geniza", expect: null, status: "guard",
+    why: "Inside Cambridge University Library's own sentence, quoted verbatim. An earlier batch " +
+         "had to put this forename BACK after it was trimmed to suit the linker; the rule exists " +
+         "so that the quotation can stay whole." },
+  { ref: "1 Kings 3:5", surface: "Solomon", expect: "solomon", status: "guard",
+    why: "KEPT. The king at Gibeon. The Schechter rule is keyed on a following surname and the " +
+         "patronymic rule on a preceding \"ben\"/\"b.\"; neither can reach Scripture." },
 ];
