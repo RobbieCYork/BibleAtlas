@@ -1149,7 +1149,7 @@ poi	bethel	bethel	reader	69
 poi	bethesda	pool-of-bethesda	panel	1
 poi	bethesda	pool-of-bethesda	reader	1
 poi	bethsaida	bethsaida	panel	7
-poi	bethsaida	bethsaida	prose	23
+poi	bethsaida	bethsaida	prose	22
 poi	bethsaida	bethsaida	reader	7
 poi	caesarea	caesarea-maritima	panel	15
 poi	caesarea	caesarea-maritima	prose	30
@@ -1170,7 +1170,7 @@ poi	emmaus	emmaus	prose	5
 poi	emmaus	emmaus	reader	1
 poi	erastus inscription	erastus-inscription-corinth	prose	1
 poi	gallio inscription	gallio-inscription-delphi	prose	4
-poi	garden tomb	garden-tomb	prose	12
+poi	garden tomb	garden-tomb	prose	11
 poi	gethsemane	gethsemane	panel	2
 poi	gethsemane	gethsemane	prose	10
 poi	gethsemane	gethsemane	reader	2
@@ -3173,7 +3173,7 @@ verse	john 19:35	-	prose	1
 verse	john 19:37	-	prose	1
 verse	john 19:39-40	-	prose	3
 verse	john 19:39-42	-	prose	1
-verse	john 19:41	-	prose	6
+verse	john 19:41	-	prose	5
 verse	john 19:42	-	prose	1
 verse	john 19:5	-	prose	1
 verse	john 1:1	-	prose	4
@@ -3813,7 +3813,7 @@ verse	numbers 27:18-23	-	prose	1
 verse	numbers 2:3	-	prose	1
 verse	numbers 31:16	-	prose	1
 verse	numbers 31:8	-	prose	1
-verse	numbers 33	-	prose	2
+verse	numbers 33	-	prose	3
 verse	numbers 33:38	-	prose	1
 verse	numbers 33:38-39	-	prose	1
 verse	numbers 35	-	prose	1
