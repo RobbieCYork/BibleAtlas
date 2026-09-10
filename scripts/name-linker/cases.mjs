@@ -1481,4 +1481,25 @@ export const CASES = [
     surface: "Abraham", owner: "mari-tablets", expect: "abraham", status: "guard",
     why: "KEPT. The article's own conclusion about the patriarch, in a paragraph that also carries " +
          "a modern date. The suppression is keyed to the title string alone and must not reach it." },
+
+  // The second modern work title in the corpus, added with the Jerusalem archaeology batch. Same
+  // ruling, same shape of pin, same pair of KEEPs from the same article — because a rule keyed on
+  // "King" or on a nearby year would eat every other David in it, and the article is about David.
+  { text: "I. Finkelstein, L. Singer-Avitz, Z. Herzog and D. Ussishkin published a joint response " +
+          "in Tel Aviv in 2007 under the title \"Has King David's Palace in Jerusalem been Found?\" " +
+          "Their answer is no",
+    surface: "David", owner: "large-stone-structure", expect: null, status: "guard",
+    why: "The title of a 2007 Tel Aviv article, not the king. Pinned by the title string in " +
+         "NAME_CONTEXT_RULES under the MODERN WORK TITLES ruling of 2026-09-10." },
+  { text: "2 Samuel 5:11 and 1 Chronicles 14:1 both report that Hiram of Tyre sent David cedar, " +
+          "carpenters and masons, and that they built David a house.",
+    surface: "David", owner: "large-stone-structure", expect: "david", status: "guard",
+    why: "KEPT, in the same article. This is the king, in the app's own prose about him. Any rule " +
+         "wide enough to reach it would strip the article of every link it should have." },
+  { text: "even the scholars most willing to accept a tenth-century date mostly do not accept " +
+          "\"David's palace\" — because a date is not an owner",
+    surface: "David", owner: "large-stone-structure", expect: "david", status: "guard",
+    why: "KEPT. Quotation marks and the words \"David's palace\" again, but this is the app " +
+         "discussing the claim about the king, not citing a title. The pin is the full title " +
+         "string, and it must not reach this." },
 ];

@@ -7079,4 +7079,962 @@ export const topics: Topic[] = [
     reflectionPrompt:
       "Somebody drew this to make a Christian look ridiculous, and it survived precisely because it was scratched on a wall nobody thought mattered. What are you willing to be laughed at for?",
   },
+  {
+    id: "hezekiahs-tunnel",
+    name: "Hezekiah's Tunnel",
+    alternateNames: ["Siloam Tunnel"],
+    category: "discovery",
+    role: "Eighth-Century BC Rock-Cut Water Conduit Beneath the City of David",
+    summary:
+      "Five hundred and thirty-three metres of limestone cut through by hand from both ends at once, still carrying water, and still walkable end to end in about half an hour.",
+    sections: [
+      {
+        heading: "Never Lost, Only Measured",
+        paragraphs: [
+          "Most of the objects in this section had to be found. This one was never missing. The tunnel runs from the Gihon Spring, in the Kidron Valley outside the ancient wall, to the Pool of Siloam inside it, and people have waded through it for as long as there have been people in Jerusalem. What the nineteenth century added was measurement. E. Robinson traversed it in 1838 and published a description; C. Warren surveyed it for the Palestine Exploration Fund in 1867, during the same campaign that produced the shaft named after him. The tunnel is about 533 metres long. The difference in height between its two ends is roughly 30 centimetres — a gradient of about 0.06 per cent, which is to say almost nothing, and enough.",
+          "The detail that has fascinated engineers ever since is that it was cut from both ends at the same time. The two teams met in the middle, and the joint is visible: the chisel marks change direction, and there is a short section of false starts where the crews were hunting for each other through the rock. In 1880 a boy exploring the tunnel noticed six lines of paleo-Hebrew cut into a smoothed panel a few metres from the Siloam end. That is the Siloam Inscription, which this app treats in its own article, and it is the tunnellers' own account of the moment the two crews broke through.",
+        ],
+      },
+      {
+        heading: "Water Inside the Wall",
+        paragraphs: [
+          "2 Kings 20:20 credits Hezekiah with making the pool and the conduit and bringing water into the city. 2 Chronicles 32:30 is more specific: he stopped the upper spring of the waters of Gihon and brought them straight down on the west side of David's city. And 2 Chronicles 32:2-4 gives the reason — Sennacherib was coming, and the springs outside the walls were stopped so that the Assyrians would not find abundant water. Isaiah, writing at the time and not approving, describes a reservoir made between the two walls for the water of the old pool, and complains that the men who built it did not look to the one who purposed it long ago.",
+          "The tunnel matches that description at every point a description can be matched. It moves the water supply from outside the defensive line to inside it. Its course is an odd, wandering S rather than a straight line, which is what you get when speed matters more than elegance. It was cut from two directions at once, which is what you do when you are in a hurry. It is not a small work: it is among the largest engineering works surviving from the Judahite monarchy, and it still functions.",
+          "One consequence is worth naming for a reader who knows the Gospels better than the Iron Age. The pool at the tunnel's outlet is the Pool of Siloam, and the pool Jesus sends a blind man to wash in, in John 9:7, is fed by this conduit. The Second Temple pool excavated in 2004 is not the same basin Hezekiah's men filled — seven centuries lie between them — but the water arriving in it came down this tunnel.",
+        ],
+      },
+      {
+        heading: "How the Date Was Settled, and What Is Still Argued",
+        paragraphs: [
+          "The Hezekiah attribution was challenged directly. J. Rogerson and P. Davies argued in 1996 that the tunnel and its inscription were Hasmonean, some five centuries later than the usual date, chiefly on the letter forms. That proposal was answered by physical evidence rather than by argument. A. Frumkin, A. Shimron and J. Rosenbaum dated organic material sealed inside the tunnel's original plaster by radiocarbon, and the speleothems that grew on the plaster afterwards by uranium-thorium, and published the result in Nature in 2003: an Iron Age II date, around 700 BC. It was the first securely identified structure named in the Hebrew Bible to be dated radiometrically, and it is why the date can be stated at full strength here.",
+          "Two arguments remain genuinely open. The first is about a few decades. R. Reich and E. Shukron, from their long excavation at the Gihon Spring, have argued for a date somewhat earlier than Hezekiah's reign — the end of the ninth century or the first part of the eighth. That is a real disagreement between specialists, and it is a disagreement about which Judahite king, not about whether the tunnel is Iron Age. The second is about method: A. Sneh, R. Weinberger and E. Shalev argued in the Bulletin of the American Schools of Oriental Research in 2010 that the tunnellers largely followed and widened an existing natural karstic fissure, which would make the achievement a different kind of achievement. A. Shimron and A. Frumkin replied in the same journal the following year, defending the tunnel as an artificial cut. That exchange is unresolved in the sense that both papers are on the shelf; most subsequent work has followed the artificial reading.",
+          "The limit worth stating plainly is smaller than the tunnel. Nothing in it names a king. The inscription at the Siloam end describes the breakthrough and does not say who commissioned the work. The link to Hezekiah rests on the radiometric date landing in his reign, on the tunnel doing exactly what 2 Chronicles 32 says he did, and on the absence of any other candidate — a strong convergence, and still a convergence rather than a signature.",
+        ],
+      },
+    ],
+    verses: [
+      { reference: "2 Kings 20:20", note: "Hezekiah made the pool and the conduit and brought water into the city" },
+      { reference: "2 Chronicles 32:30", note: "The upper spring of Gihon stopped and brought down on the west side" },
+      { reference: "2 Chronicles 32:2-4", note: "The reason: Sennacherib coming, and the springs outside the city stopped" },
+      { reference: "Isaiah 22:11", note: "\"You also made a reservoir between the two walls for the water of the old pool\"" },
+      { reference: "John 9:6-7", note: "The pool at the tunnel's outlet, seven centuries later" },
+    ],
+    sources: [
+      { label: "Wikipedia: Siloam tunnel", url: "https://en.wikipedia.org/wiki/Siloam_tunnel" },
+      { label: "Palestine Exploration Fund", url: "https://www.pef.org.uk/history/" },
+    ],
+    discovery: {
+      objectType: "Rock-cut water conduit, about 533 m long, hand-cut through limestone from both ends",
+      findSite: "Beneath the City of David ridge, from the Gihon Spring to the Pool of Siloam, Jerusalem",
+      findSiteId: "city-of-david",
+      findSiteKind: "poi",
+      foundYear: "Never lost. Described by E. Robinson in 1838; surveyed by C. Warren in 1867",
+      foundBy: "No discoverer — the tunnel was in continuous use. Its modern survey belongs to E. Robinson (1838) and C. Warren, for the Palestine Exploration Fund (1867)",
+      objectDate: "c. 700 BC, by radiocarbon and uranium-thorium dating (Nature, 2003); some specialists argue for the late ninth or early eighth century BC",
+      objectDateCertainty: "firm",
+      currentLocation: "In situ beneath the City of David, Jerusalem. Still carries water and is open to visitors, who wade it",
+    },
+    citations: [
+      {
+        tier: "institution",
+        label: "Palestine Exploration Fund",
+        url: "https://www.pef.org.uk/history/",
+        credit: "The Palestine Exploration Fund, founded 1865",
+        detail: "The body that sponsored C. Warren's Jerusalem excavations of 1867-1870, which produced the first careful survey of the tunnel and of the shaft named after him",
+        supports: "The nineteenth-century survey history",
+      },
+      {
+        tier: "scholarly",
+        label: "A. Frumkin, A. Shimron and J. Rosenbaum, \"Radiometric dating of the Siloam Tunnel, Jerusalem\"",
+        credit: "Amos Frumkin (Hebrew University), Aryeh Shimron, Jeff Rosenbaum",
+        detail: "Nature 425 (September 2003), 169-171, doi:10.1038/nature01875. Radiocarbon on plant material in the original plaster and uranium-thorium on the overlying speleothems. Behind a publisher paywall; the bibliographic record was confirmed through Crossref",
+        supports: "The c. 700 BC date, and the refutation of a Hasmonean dating",
+        paywalled: true,
+      },
+      {
+        tier: "scholarly",
+        label: "A. Sneh, R. Weinberger and E. Shalev, \"The Why, How, and When of the Siloam Tunnel Reevaluated\", with the reply by A. Shimron and A. Frumkin",
+        credit: "Bulletin of the American Schools of Oriental Research",
+        detail: "BASOR 359 (2010), 57-65, and the reply at BASOR 364 (2011), 53-60. The exchange over whether the tunnellers followed a natural karstic fissure",
+        supports: "The live methodological dispute in the third section",
+        paywalled: true,
+      },
+      {
+        tier: "scholarly",
+        label: "J. Rogerson and P. Davies, \"Was the Siloam Tunnel Built by Hezekiah?\", and R. Reich and E. Shukron, \"The Date of the Siloam Tunnel Reconsidered\"",
+        credit: "John Rogerson and Philip R. Davies; Ronny Reich and Eli Shukron",
+        detail: "The Biblical Archaeologist 59:3 (1996), 138-149, and Tel Aviv 38:2 (2011), 147-157. The Hasmonean proposal that the radiocarbon answered, and the excavators\u2019 case for a date somewhat earlier than Hezekiah. Both records confirmed through Crossref",
+        supports: "Both dating challenges named in the third section",
+        paywalled: true,
+      },
+      {
+        tier: "encyclopedic",
+        label: "Wikipedia: Siloam tunnel",
+        url: "https://en.wikipedia.org/wiki/Siloam_tunnel",
+      },
+    ],
+    reflectionPrompt:
+      "Two crews cut toward each other for months through solid rock, unable to see or hear the far end, trusting they would meet. Where are you working toward someone you cannot yet hear?",
+  },
+  {
+    id: "broad-wall-jerusalem",
+    name: "Broad Wall",
+    alternateNames: ["Hezekiah's Wall"],
+    category: "discovery",
+    role: "Eighth-Century BC Fortification Wall in Jerusalem's Upper City",
+    summary:
+      "Seven metres of wall thickness laid straight across the foundations of the houses it demolished — and a fortification that has just been redated out from under the king it is named for.",
+    sections: [
+      {
+        heading: "Found Under the Jewish Quarter",
+        paragraphs: [
+          "After 1967 the Jewish Quarter of the Old City was rebuilt, and N. Avigad was invited to excavate ahead of the builders. His dig ran from 1969 into the early 1980s and produced a series of finds that between them rewrote how big Iron Age Jerusalem was: the Israelite Tower, the Burnt House, the Herodian mansions, the Byzantine Cardo. The wall came out in 1970.",
+          "It is about seven metres thick. Roughly 65 metres of it are exposed, standing up to about 3.3 metres high, built of large roughly dressed stones, and it runs across the western hill — ground that, on the older reconstruction of the city, was supposed to be empty countryside in the Iron Age. It was not. The wall proves a fortified western quarter, and with it a city several times larger than the narrow ridge of the City of David.",
+          "The detail that made the find famous is what lies beneath it. The builders did not clear a line and start; they drove the foundation straight across houses that were already standing, cutting through them and building over their walls. Those cut-off house foundations are still visible under the wall's course.",
+        ],
+      },
+      {
+        heading: "The Houses They Broke Down",
+        paragraphs: [
+          "Isaiah 22:9-11 describes a fortification panic in Jerusalem in almost these terms: the breaches of David's city were many, the waters of the lower pool were gathered, a reservoir was made between the two walls — and, in verse 10, \"You counted the houses of Jerusalem, and you broke down the houses to fortify the wall.\" N. Avigad read the demolished foundations under his wall against that sentence, and it is a genuinely close fit: a specific, slightly odd, easily-checkable detail of construction practice, described in a text and then found in the ground.",
+          "The wall is also a strong candidate for the fortification Nehemiah's rebuilders reached three centuries later. The World English Bible renders it \"the wide wall\" rather than \"the broad wall\" at Nehemiah 3:8 and 12:38, but it is the same Hebrew phrase, and the traditional English name of this excavated wall comes from it. If the identification holds, the wall was still standing, and still a landmark, when the returned exiles built along its line.",
+          "What the wall carries at full strength, independent of any king's name, is the scale of the city. A seven-metre wall enclosing the western hill is a state project, and the Judah that built it was not a village.",
+        ],
+      },
+      {
+        heading: "Whose Wall? The 2024 Redating, Stated Carefully",
+        paragraphs: [
+          "For fifty years this was Hezekiah's wall: built in the late eighth century BC, in the emergency that produced the tunnel, against Sennacherib. In 2024 that attribution was unsettled. J. Regev, E. Boaretto and colleagues published a radiocarbon chronology of Iron Age Jerusalem in the Proceedings of the National Academy of Sciences — 103 measurements, using a calibration correction the paper itself establishes — and concluded that the city's major eighth-century fortification programme belongs to the later years of Uzziah, in the middle of the century, rather than to Hezekiah at its end. Uzziah is credited in 2 Chronicles 26:9 with building towers in Jerusalem and fortifying them, and a devastating earthquake around 760 BC, remembered in Amos 1:1 and Zechariah 14:5, gives a reason to rebuild.",
+          "Now the caution, because the popular reporting has run ahead of the paper. That study did not date the Broad Wall. Its samples come from excavation areas on the south-eastern ridge and the Giv'ati parking lot — the City of David — and neither the Jewish Quarter nor the western hill was sampled. The wall's redating is an inference: if the city's eighth-century fortification effort as a whole sits a few decades earlier than assumed, the wall built in that effort moves with it. That is a reasonable inference from good data. It is not the same thing as a date measured on this wall, and an article that reported it as one would be overstating a real result.",
+          "So the honest position is that the wall's attribution is currently open between two Judahite kings roughly forty years apart, that the case for Uzziah rests on radiocarbon from elsewhere in the city and the case for Hezekiah on the fit with Isaiah 22 and 2 Chronicles 32:5, and that neither is presently decisive. Nothing in the dispute touches the two things the wall actually demonstrates: that Jerusalem's western hill was fortified in the eighth century BC, and that houses were demolished to do it.",
+        ],
+      },
+    ],
+    verses: [
+      { reference: "Isaiah 22:10", note: "\"You broke down the houses to fortify the wall\" — the demolished foundations under the wall's course" },
+      { reference: "Nehemiah 3:8", note: "The rebuilders fortify Jerusalem \"even to the wide wall\"" },
+      { reference: "Nehemiah 12:38", note: "The wall named again as a landmark on the procession route" },
+      { reference: "2 Chronicles 32:5", note: "Hezekiah builds up the broken wall and raises towers" },
+      { reference: "2 Chronicles 26:9", note: "Uzziah builds and fortifies towers in Jerusalem — the alternative attribution" },
+      { reference: "Amos 1:1", note: "\"Two years before the earthquake\" — the mid-eighth-century event now proposed as the trigger" },
+    ],
+    sources: [
+      { label: "Wikipedia: Broad Wall (Jerusalem)", url: "https://en.wikipedia.org/wiki/Broad_Wall_(Jerusalem)" },
+      { label: "Regev et al., Radiocarbon chronology of Iron Age Jerusalem (PNAS 2024, open access)", url: "https://pmc.ncbi.nlm.nih.gov/articles/PMC11087761/" },
+    ],
+    discovery: {
+      objectType: "Fortification wall about 7 m thick, 65 m exposed, of large roughly dressed limestone blocks",
+      findSite: "Jewish Quarter of the Old City, on Jerusalem's western hill",
+      findSiteId: "jerusalem",
+      findSiteKind: "location",
+      foundYear: "1970",
+      foundBy: "N. Avigad, in the Jewish Quarter excavations he directed from 1969 for the Hebrew University, the Israel Exploration Society and the Department of Antiquities",
+      objectDate: "Eighth century BC. Traditionally Hezekiah, late in the century; a 2024 radiocarbon study reassigns the city's eighth-century fortification programme to Uzziah, mid-century",
+      objectDateCertainty: "disputed",
+      currentLocation: "In situ and open to the public in the Jewish Quarter, Jerusalem",
+    },
+    citations: [
+      {
+        tier: "institution",
+        label: "Israel Exploration Society",
+        url: "https://israelexplorationsociety.com/",
+        credit: "The Israel Exploration Society, Jerusalem",
+        detail: "One of the three bodies under which N. Avigad's Jewish Quarter excavation ran, and the publisher of its final reports in the Qedem series",
+        supports: "The excavating body and the publication of the dig",
+      },
+      {
+        tier: "scholarly",
+        label: "J. Regev et al., \"Radiocarbon chronology of Iron Age Jerusalem reveals calibration offsets and architectural developments\"",
+        url: "https://pmc.ncbi.nlm.nih.gov/articles/PMC11087761/",
+        credit: "Johanna Regev, Yuval Gadot, Joe Uziel, Elisabetta Boaretto and colleagues",
+        detail: "PNAS 121:19 (29 April 2024), e2321024121, doi:10.1073/pnas.2321024121. Open access. Note that its sampled areas are on the south-eastern ridge, not the Jewish Quarter",
+        supports: "The redating of the eighth-century fortification programme to Uzziah, and the limit of what the study sampled",
+      },
+      {
+        tier: "scholarly",
+        label: "N. Avigad, Discovering Jerusalem",
+        credit: "Nahman Avigad, Hebrew University of Jerusalem",
+        detail: "Nashville, 1983 — the excavator's own account of the Jewish Quarter dig, including the wall and the demolished house foundations beneath it. Print only",
+        supports: "The find, the dimensions and the demolished houses",
+      },
+      {
+        tier: "encyclopedic",
+        label: "Wikipedia: Broad Wall (Jerusalem)",
+        url: "https://en.wikipedia.org/wiki/Broad_Wall_(Jerusalem)",
+      },
+    ],
+    reflectionPrompt:
+      "Someone's house was pulled down so the city could survive. What have you been asked to give up for something larger than your own plans?",
+  },
+  {
+    id: "pilgrimage-road-jerusalem",
+    name: "Pilgrimage Road",
+    // NOT registered: "Herodian Street". It is a real name for this road and far too generic to
+    // register — every paved first-century street in Jerusalem is called one, and the two the
+    // Robinson's Arch and Trumpeting articles describe are a different street at the south-west
+    // corner. Registering it put three wrong links on those two articles.
+    alternateNames: ["Stepped Street"],
+    category: "discovery",
+    role: "First-Century Monumental Street from the Pool of Siloam to the Temple Mount",
+    summary:
+      "Six hundred metres of paved, stepped street running uphill from the Pool of Siloam to the Temple — the road pilgrims actually walked, dated by the coins sealed beneath its slabs.",
+    sections: [
+      {
+        heading: "Dug Sideways, Under a Living Neighbourhood",
+        paragraphs: [
+          "Sections of a monumental Herodian street had been glimpsed for well over a century — C. Warren in the 1880s, F. Bliss and A. Dickey in the 1890s, K. Kenyon in the 1960s — and each time reburied. The systematic excavation of its full run began under the Israel Antiquities Authority in the 2000s and continued through the 2010s and into the 2020s, with R. Reich, E. Shukron, Y. Billig, J. Uziel, N. Szanton, M. Hagbi and A. Levy among the directors across its phases.",
+          "The street is about 600 metres long and about eight metres wide, paved with large flagstones and rising in a repeated rhythm of two steps and a long landing, two steps and a landing — the profile of a road built for crowds moving uphill rather than for carts. It runs from the Pool of Siloam, at the bottom of the City of David ridge, to the southern end of the Temple Mount. Drainage channels run beneath it, and shops opened onto it.",
+          "It could not be excavated from above. The modern neighbourhood of Silwan sits directly over it, so the dig proceeded horizontally, tunnelling along the line of the road under the houses, shoring the ceiling with steel and concrete as it went. That method is why the road exists to be walked today and is also the substance of the argument about it, which the last section takes up.",
+        ],
+      },
+      {
+        heading: "The Road in the Gospels' Background",
+        paragraphs: [
+          "Nothing in the New Testament names this street, and it should not be presented as though something did. What it supplies is the physical setting of a great deal that the Gospels take for granted. Luke 2:41-42 has Jesus's family going up to Jerusalem every year for Passover; John 5:1 and repeatedly elsewhere has him going up for a feast; the Songs of Ascents in Psalms 122 are pilgrimage songs about arriving at the gates. Pilgrims arriving from the south reached the city at the pool, washed, and climbed. This is the climb.",
+          "The connection to John 9 is more direct. The man born blind is sent to wash in the pool of Siloam and comes back seeing; the pool is at the foot of this road, and the way back into the city from it is this pavement.",
+          "One object found on this same ridge belongs beside the street. The Theodotus Inscription, recovered from a cistern in the City of David, records a priest who built a synagogue for the reading of the Law together with a guest house and water installations for visitors from abroad. That is the other half of what a pilgrimage city needed: a road to arrive on, and somewhere to sleep at the end of it.",
+          "The dating is the other thing the excavation supplies, and it is unusually tight. More than a hundred coins were recovered from the sealed fills directly beneath the paving. N. Szanton, M. Hagbi, J. Uziel and D. Ariel published the analysis in Tel Aviv in 2019: the latest coins under the slabs are of the year 30/31 AD, struck under Pontius Pilate, and none later appears. Since a coin cannot get under a stone laid before it was minted, the street cannot have been finished before about AD 31 — placing its completion inside Pilate's prefecture, which is to say within a few years of the ministry of Jesus.",
+        ],
+      },
+      {
+        heading: "What the Coins Prove, and What the Tunnel Costs",
+        paragraphs: [
+          "Two claims travel with this find, and they need separating. The first is the one the coins support: the street was completed no earlier than about AD 31. That is a hard result and a valuable one. The second is the headline the first became — \"Pontius Pilate built the Pilgrimage Road\" — and it goes further than the evidence. Coins sealed under a pavement give the earliest date the pavement can have been laid; they do not name a builder, do not show that construction was a single campaign, and do not rule out that most of the work was done earlier and the last slabs laid late. The excavators themselves describe a project begun around AD 20 and completed under Pilate. Pilate is the prefect in whose term the road was finished; calling him its builder is an inference, and one that has been printed far more confidently than it was argued.",
+          "The method is disputed by serious people. J. Magness has objected that horizontal excavation divorces remains from what lies above and around them, which is the information stratigraphy exists to preserve; Y. Mizrachi, of the organisation Emek Shaveh, has argued that the technique cannot generate enough data to establish securely when the road was built or how it fitted into the city, and has criticised the pace of scientific publication. The excavators answer that the tunnelling is conducted stratigraphically, section by section, and documented in three dimensions as it proceeds; A. Maeir, who directs an unrelated excavation, has publicly described the IAA team's work here as properly stratigraphic. A reader is entitled to know that this is an open methodological argument among archaeologists rather than a settled point.",
+          "There is a further dispute that is not archaeological and that this article does not adjudicate. The excavation runs beneath an inhabited Palestinian neighbourhood, within a national park operated by Elad, a private organisation that also promotes Jewish settlement in Silwan, and residents and several NGOs oppose it. Those objections are about property, planning and politics rather than about pottery, and they are a real part of this site's story even though they bear on the dating of the road not at all.",
+        ],
+      },
+    ],
+    verses: [
+      { reference: "John 9:6-7", note: "Sent to wash at the pool at the foot of this road" },
+      { reference: "Luke 2:41-42", note: "Going up to Jerusalem for Passover, every year" },
+      { reference: "Psalms 122:1-4", note: "A Song of Ascents — the tribes going up" },
+      { reference: "John 5:1", note: "Jesus goes up to Jerusalem for a feast" },
+      { reference: "Luke 13:4", note: "\"The tower in Siloam\" — the same corner of the city in Jesus's speech" },
+    ],
+    sources: [
+      { label: "Wikipedia: Stepped street (Jerusalem)", url: "https://en.wikipedia.org/wiki/Stepped_street_(Jerusalem)" },
+      { label: "The Times of Israel: on the road, the method and the dispute", url: "https://www.timesofisrael.com/on-an-ancient-road-to-the-temple-archaeological-innovation-mystery-and-dispute/" },
+    ],
+    discovery: {
+      objectType: "Paved stepped street about 600 m long and 8 m wide, with drainage channels and shops beneath and beside it",
+      findSite: "From the Pool of Siloam to the southern Temple Mount, beneath the Silwan neighbourhood, Jerusalem",
+      findSiteId: "pool-of-siloam",
+      findSiteKind: "poi",
+      foundYear: "Sections seen from the 1880s onward; systematically excavated from the 2000s through the 2020s",
+      foundBy: "Israel Antiquities Authority, across several directorships — R. Reich and E. Shukron, then Y. Billig, J. Uziel, N. Szanton, M. Hagbi and A. Levy",
+      objectDate: "Completed no earlier than AD 31, by the latest coins sealed beneath the paving; construction thought to have begun around AD 20",
+      objectDateCertainty: "firm",
+      currentLocation: "In situ beneath Silwan, Jerusalem; sections open to visitors",
+    },
+    citations: [
+      {
+        tier: "scholarly",
+        label: "N. Szanton, M. Hagbi, J. Uziel and D. Ariel, \"Pontius Pilate in Jerusalem: The Monumental Street from the Siloam Pool to the Temple Mount\"",
+        credit: "Nahshon Szanton, Moran Hagbi, Joe Uziel and Donald T. Ariel",
+        detail: "Tel Aviv 46:2 (2019), 147-166, doi:10.1080/03344355.2019.1650491. The coin analysis that dates the pavement. Publisher paywall; bibliographic record confirmed through Crossref",
+        supports: "The AD 31 terminus and the number of coins",
+        paywalled: true,
+      },
+      {
+        tier: "institution",
+        label: "Israel Antiquities Authority — the Pilgrimage Road excavation",
+        credit: "Israel Antiquities Authority",
+        detail: "The licensing and excavating body for the road from the 2000s onward. The Authority's own site refused automated retrieval, so no URL is given rather than an unchecked one",
+        supports: "Who is excavating, and under what authority",
+      },
+      {
+        tier: "reference",
+        label: "The Times of Israel: \"On an ancient road to the Temple, archaeological innovation, mystery and dispute\"",
+        url: "https://www.timesofisrael.com/on-an-ancient-road-to-the-temple-archaeological-innovation-mystery-and-dispute/",
+        credit: "The Times of Israel",
+        detail: "Reporting that quotes J. Magness and Y. Mizrachi against the method and A. Levy and A. Maeir for it",
+        supports: "The methodological dispute, stated on both sides",
+      },
+      {
+        tier: "encyclopedic",
+        label: "Wikipedia: Stepped street (Jerusalem)",
+        url: "https://en.wikipedia.org/wiki/Stepped_street_(Jerusalem)",
+      },
+    ],
+    reflectionPrompt:
+      "Pilgrims sang the Songs of Ascents on a climb that took real effort, at the end of a long journey. What in your own life is worth arriving at slowly?",
+  },
+  {
+    id: "robinsons-arch",
+    name: "Robinson's Arch",
+    category: "discovery",
+    role: "Herodian Monumental Staircase at the South-West Corner of the Temple Mount",
+    summary:
+      "The springing of a vast arch still projecting from Herod's retaining wall, and beneath it the street where the platform's own stones landed when the city fell.",
+    sections: [
+      {
+        heading: "A Bridge That Turned Out to Be a Staircase",
+        paragraphs: [
+          "In 1838 E. Robinson, an American biblical scholar walking the walls of Jerusalem, noticed three courses of large stones projecting from the western retaining wall of the Temple Mount, a little north of its south-west corner. He recognised them as the springing of an arch, and published the observation in Biblical Researches in Palestine in 1841. Reading Josephus, he took it for the remains of a bridge carrying a roadway across the central valley to the Upper City. The feature has carried his name ever since.",
+          "C. Warren dug at the foot of the wall for the Palestine Exploration Fund between 1867 and 1870 and found a great pier standing some thirteen metres out from the wall, which he took to support a series of arches. The question was settled by B. Mazar, whose excavation at the southern and south-western foot of the Temple Mount ran from 1968 to 1978 on behalf of the Hebrew University, the Israel Exploration Society and the Department of Antiquities. The pier was not one of a row: it was the western support of a single enormous arch, about 15 metres across, and the arch did not carry a bridge across the valley at all. It carried a monumental staircase that rose from the Herodian street below, turned, and entered the Royal Stoa on top of the platform. R. Reich and Y. Billig excavated the collapse debris and the street beneath in the 1990s.",
+        ],
+      },
+      {
+        heading: "Where the Stones Landed",
+        paragraphs: [
+          "The best-known thing at this corner is not the arch but what lies under it. The Herodian street that ran along the base of the western wall was found buried under a mass of fallen ashlars — large dressed blocks levered off the top of the platform and thrown down, some of which struck the pavement hard enough to shatter it. They are still lying where they fell, and the visitor walks past them.",
+          "This is the physical residue of AD 70. The Synoptic Gospels record Jesus, days before his arrest, being shown the buildings of the temple by his disciples and answering that not one stone would be left on another that would not be thrown down. Luke's version of the same week widens it to the city: the enemy will throw up a barricade, hem it in, and not leave one stone on another. Standing over that pile of blocks is the closest a reader gets to the sentence in physical form.",
+          "The arch itself carries a different and quieter interest. Herod's platform was designed for volume — for pilgrim crowds arriving in their tens of thousands at the festivals — and this staircase is part of the engineering that handled them. It also fixes the Royal Stoa, the great colonnaded hall along the platform's southern edge, at the top of a public approach. That hall is the most likely setting for a good deal of the temple activity the Gospels describe.",
+        ],
+      },
+      {
+        heading: "Two Things the Fallen Stones Do Not Say",
+        paragraphs: [
+          "The first is a matter of reading. It is often written that the collapse at this corner fulfils Matthew 24:2 exactly. It does not, quite, and the difference is instructive. The wall these stones fell from is still standing — that is the Western Wall, and it is the most visited structure in Jerusalem. What was thrown down was the superstructure on top of the platform, not the platform's retaining walls. In the Gospels the disciples are pointing at the temple buildings, not at the substructure, so the saying and the rubble line up better than a careless reading suggests and worse than a triumphant one claims. Say what is there: the temple's own buildings were demolished and their stones pushed off the platform, and these are those stones.",
+          "The second is about dating. The destruction layer at the foot of the wall is securely first century — a Roman milestone cut down from one of the staircase's handrails puts the demolition no later than AD 79, and the coins and pottery in the collapse are of the revolt. That establishes when the arch fell. It says nothing about when any Gospel was written, and the fallen stones therefore cannot be used to show that a prediction preceded its fulfilment. That question belongs to the study of the texts, not to this corner of the wall, and an article that borrowed the stones to settle it would be borrowing evidence that does not reach.",
+          "A third and smaller correction is owed to E. Robinson himself. He found the arch and he misread it, and the reading stood for 130 years until an excavation went underneath it. It is a useful reminder about identifications made from the surface, including confident ones made by careful people.",
+        ],
+      },
+    ],
+    verses: [
+      { reference: "Matthew 24:1-2", note: "\"Not one stone on another, that will not be thrown down\"" },
+      { reference: "Mark 13:1-2", note: "\"See what kind of stones and what kind of buildings!\"" },
+      { reference: "Luke 21:5-6", note: "The temple's beautiful stones and the same answer" },
+      { reference: "Luke 19:41-44", note: "The wider warning over the city, wept before it was given" },
+    ],
+    sources: [
+      { label: "Wikipedia: Robinson's Arch", url: "https://en.wikipedia.org/wiki/Robinson%27s_Arch" },
+      { label: "BiblePlaces: the southern Temple Mount excavations", url: "https://www.bibleplaces.com/southerntm/" },
+    ],
+    discovery: {
+      objectType: "Springing of a stone arch about 15 m in span, projecting from the Herodian retaining wall, with its pier and the collapsed street below",
+      findSite: "South-west corner of the Temple Mount, at the foot of the western retaining wall, Jerusalem",
+      findSiteId: "western-wall",
+      findSiteKind: "poi",
+      foundYear: "Identified 1838; pier found 1867-1870; excavated 1968-1978; collapse debris 1994-1996",
+      foundBy: "E. Robinson identified it in 1838. C. Warren found the pier for the Palestine Exploration Fund. B. Mazar's excavation of 1968-1978 established that it carried a staircase, not a bridge; R. Reich and Y. Billig dug the collapse",
+      objectDate: "Herodian — the Temple Mount expansion from about 20 BC; destroyed AD 70",
+      objectDateCertainty: "firm",
+      currentLocation: "In situ in the Jerusalem Archaeological Park, at the south-west corner of the Temple Mount",
+    },
+    citations: [
+      {
+        tier: "institution",
+        label: "Palestine Exploration Fund",
+        url: "https://www.pef.org.uk/history/",
+        credit: "The Palestine Exploration Fund",
+        detail: "The body that sponsored C. Warren's Jerusalem excavations of 1867-1870, which first exposed the pier at the foot of the wall",
+        supports: "Warren's work and its sponsor",
+      },
+      {
+        tier: "scholarly",
+        label: "B. Mazar, The Temple Mount Excavations in Jerusalem 1968-1978: Final Reports",
+        credit: "Benjamin Mazar, Hebrew University of Jerusalem; series continued by others",
+        detail: "Qedem monograph series, Institute of Archaeology, Hebrew University. The excavation that showed the arch carried a monumental staircase rather than a bridge. Print only",
+        supports: "The reinterpretation of the arch and the excavation dates",
+      },
+      {
+        tier: "reference",
+        label: "BiblePlaces: Southern Temple Mount Excavations",
+        url: "https://www.bibleplaces.com/southerntm/",
+        credit: "Todd Bolen",
+        detail: "A photographic and descriptive survey of the excavated area, including the first-century street covered by stones pushed down from the platform",
+        supports: "The fallen ashlars on the Herodian street",
+      },
+      {
+        tier: "encyclopedic",
+        label: "Wikipedia: Robinson's Arch",
+        url: "https://en.wikipedia.org/wiki/Robinson%27s_Arch",
+      },
+    ],
+    reflectionPrompt:
+      "The stones at the bottom of this wall were the pride of a generation, and they were pushed off a ledge. What are you building that will not last, and is that a reason to stop or a reason to build it well?",
+  },
+  {
+    id: "place-of-trumpeting-inscription",
+    name: "Place of Trumpeting Inscription",
+    alternateNames: ["Trumpeting Place Inscription"],
+    category: "discovery",
+    role: "First-Century Hebrew Signpost from the Top of the Temple Wall",
+    summary:
+      "A signpost from the parapet at the highest corner of Herod's Temple Mount, telling a priest where to stand to blow the trumpet — found in the rubble at the bottom of the wall it fell from.",
+    sections: [
+      {
+        heading: "Found at the Foot of the Corner It Fell From",
+        paragraphs: [
+          "In 1968, in the first season of the great excavation at the southern and south-western foot of the Temple Mount, B. Mazar's team recovered a large inscribed block from the debris beside the south-west corner. It is about 84 by 31 by 26 centimetres. Published descriptions of the stone differ on whether it is limestone or basalt, and this article does not pick between them. Its shape is the interesting part: the inscription is cut above a wide hollow worked into one face, which indicates the block was part of a parapet — a railing along the top of a wall — rather than a free-standing sign.",
+          "It carries two complete words in square Hebrew script, l-beit ha-teqi'ah, \"to the place of trumpeting\", and the beginning of a third word that is broken away. The two commonest restorations are lehakhriz, \"to announce\", and lehavdil, \"to separate\" or \"to distinguish\" — the second reading pointing to the Sabbath's boundary between holy time and ordinary time. Neither can be established from what survives, and the article names both rather than choosing.",
+          "The block was lying in the collapse layer on the Herodian street, together with the other stones levered off the platform when the city fell in AD 70. It had been at the top of the wall and it ended up at the bottom, where it stayed for nineteen centuries.",
+        ],
+      },
+      {
+        heading: "The Trumpet That Started the Sabbath",
+        paragraphs: [
+          "Josephus, writing about the temple in The Jewish War, describes the point at the corner of the roof where a priest stood to give notice by trumpet of the approach of the seventh day on the afternoon before it, and of its close on the following evening. The stone is a label for that spot. It is one of the very few objects from the Second Temple that is not a fragment of decoration or a coin but a piece of the building's working signage — the ancient equivalent of a sign on a door.",
+          "Behind it lies a long biblical practice. Numbers 10:1-10 establishes two silver trumpets, made of beaten work, blown by the sons of Aaron, to gather the congregation, to move the camp, to sound the alarm in war, and to mark the festivals and new moons. Psalms 81:3 calls for the trumpet at the new moon and the full moon on the feast day. Nehemiah, four centuries before Herod, describes ordering Jerusalem's gates shut as the Sabbath began, which is the same problem — a city needs to know, at a specific moment, that the day has changed.",
+          "This is not the only surviving piece of the temple\u2019s public signage. One other stone survives: a notice in Greek that stood on the soreg, the low balustrade around the inner courts, warning Gentiles not to pass it. That is the Soreg Inscription, treated in its own article here. Between them the two stones mark the enclosure\u2019s outer limit and its highest point, and both were meant to be read by people arriving rather than by people already inside.",
+          "There is also a small and human detail. The corner of the Temple Mount this stone stood on is the highest point of the whole enclosure, standing above the meeting of two valleys. A priest sent up there twice a week was climbing to the most exposed place in Jerusalem to be heard.",
+        ],
+      },
+      {
+        heading: "What Is Broken Off, and What Is Only Likely",
+        paragraphs: [
+          "The honest limit here is a missing word and an unfixed position. The inscription is incomplete, and its final word — the one that would say what the trumpeting was for — is exactly the part that did not survive. Everything a reader is told about the Sabbath announcement comes from Josephus and from the restoration, not from the stone, which says only \"to the place of trumpeting\" and then stops.",
+          "The stone's original location is likewise an inference. It was found in secondary position, in a collapse heap, and heaps move: it is very probable that it fell from the south-west corner directly above, since that is the nearest high point and the debris there is the platform's own, but nothing in the excavation pins it to a particular metre of parapet. Some scholars have connected the corner with the \"pinnacle of the temple\" of the temptation narrative; that connection is a guess about a Greek word, and this article does not make it.",
+          "One further piece of housekeeping. The inventory number given for the stone in many popular accounts could not be confirmed against any published museum record that would open to a check, so no number is printed here. The stone is in the Israel Museum in Jerusalem. That much is not in doubt, and a plausible catalogue number is not worth the risk of printing a wrong one.",
+        ],
+      },
+    ],
+    verses: [
+      { reference: "Numbers 10:1-10", note: "The two silver trumpets, blown by the priests for the assembly, the journey and the feasts" },
+      { reference: "Psalms 81:3", note: "\"Blow the trumpet at the New Moon, at the full moon, on our feast day\"" },
+      { reference: "Nehemiah 13:19-22", note: "The gates shut as the Sabbath begins — the same need for a public signal" },
+      { reference: "Matthew 24:1-2", note: "The buildings this parapet belonged to, and what was said about them" },
+    ],
+    sources: [
+      { label: "Wikipedia: Trumpeting Place inscription", url: "https://en.wikipedia.org/wiki/Trumpeting_Place_inscription" },
+      { label: "BiblePlaces: the southern Temple Mount excavations", url: "https://www.bibleplaces.com/southerntm/" },
+    ],
+    discovery: {
+      objectType: "Inscribed parapet block, about 84 x 31 x 26 cm, with two and a fragment of a third word in square Hebrew script; sources differ on whether the stone is limestone or basalt",
+      findSite: "Collapse debris on the Herodian street beside the south-west corner of the Temple Mount, Jerusalem",
+      findSiteId: "western-wall",
+      findSiteKind: "poi",
+      foundYear: "1968",
+      foundBy: "B. Mazar's Temple Mount excavation, for the Hebrew University, the Israel Exploration Society and the Department of Antiquities",
+      objectDate: "First century AD, before the destruction of AD 70",
+      objectDateCertainty: "firm",
+      currentLocation: "Israel Museum, Jerusalem. The inventory number given in popular accounts could not be confirmed against a published museum record and is therefore not printed here",
+    },
+    citations: [
+      {
+        tier: "institution",
+        label: "Israel Museum, Jerusalem",
+        credit: "The Israel Museum, Jerusalem",
+        detail: "The holding institution. Its online collection pages are rendered by script and returned no readable object record to an automated check, so no URL is given rather than an unverified one",
+        supports: "Current location",
+      },
+      {
+        tier: "scholarly",
+        label: "B. Mazar, The Temple Mount Excavations in Jerusalem 1968-1978: Final Reports",
+        credit: "Benjamin Mazar, Hebrew University of Jerusalem; series continued by others",
+        detail: "Qedem monograph series, Institute of Archaeology, Hebrew University. The excavation that recovered the block from the collapse layer. Print only",
+        supports: "The find, its context and its date",
+      },
+      {
+        tier: "primary",
+        label: "Josephus, The Jewish War IV.ix.12",
+        credit: "Flavius Josephus",
+        detail: "The passage describing the place on the temple where a priest signalled the beginning and end of the Sabbath by trumpet — the practice the stone labels",
+        supports: "What the sign was for",
+      },
+      {
+        tier: "encyclopedic",
+        label: "Wikipedia: Trumpeting Place inscription",
+        url: "https://en.wikipedia.org/wiki/Trumpeting_Place_inscription",
+      },
+    ],
+    reflectionPrompt:
+      "Someone had to climb to the highest, coldest corner of the city twice a week so that everyone else would know the Sabbath had begun. Whose rest depends on work you do that nobody sees?",
+  },
+  {
+    id: "stepped-stone-structure",
+    name: "Stepped Stone Structure",
+    category: "discovery",
+    role: "The Largest Iron Age Structure Standing in Jerusalem",
+    summary:
+      "An eighteen-metre wall of stepped stone terracing on the eastern slope of the City of David, dug in pieces across sixty years by three excavators who did not agree about when it was built.",
+    sections: [
+      {
+        heading: "Three Excavations, Sixty Years Apart",
+        paragraphs: [
+          "The structure is a mantle of stones laid in courses down the steep eastern slope of the City of David ridge, rising about eighteen metres, supported by a substructure of stone-filled terraces. It is the largest Iron Age construction still standing anywhere in Jerusalem, and no one has excavated all of it.",
+          "R. Macalister and J. Duncan dug the top of it in the 1920s for the Palestine Exploration Fund, called it a ramp, and assigned it to the Jebusites — the pre-Israelite inhabitants — on the assumption that anything that massive on that ridge must be the citadel David captured. K. Kenyon dug a deep trench through the slope in the 1960s and reached a different answer: the structure belonged to the beginning of Iron Age II, around 1000 to 900 BC, which put it in the era of David and Solomon rather than before it. Y. Shiloh's excavation between 1978 and 1985 worked the largest exposure yet and distinguished two things that had been treated as one — an earlier system of stone-filled terraces, and a later stone mantle laid over them — with the terracing older than the mantle.",
+          "That layered picture is the reason the argument has lasted. It is not one wall of one date. It is a slope engineered repeatedly over centuries, with each phase using and burying the last, and the deep cuts needed to date the bottom were made before modern sampling methods existed.",
+        ],
+      },
+      {
+        heading: "The Millo Question",
+        paragraphs: [
+          "The Hebrew Bible has a word for a construction in this part of Jerusalem whose meaning nobody is certain of: ha-Millo, from a root meaning \"to fill\". 2 Samuel 5:9 says David lived in the stronghold, called it David's city, and built \"around from Millo and inward\". Solomon builds the Millo in 1 Kings 9:15 and again in 1 Kings 11:27, where the same verse says he repaired the breach of his father's city. Hezekiah strengthens the Millo in 2 Chronicles 32:5 as part of the same emergency that produced the tunnel.",
+          "A stone-filled terrace system supporting a slope is a good candidate for something called \"the fill\", and the identification has been made by the excavators themselves — K. Kenyon and Y. Shiloh both proposed it, and E. Mazar worked with it. It fits the word, it fits the location, and it fits a structure that was evidently built up and repaired more than once. It is not proven and it cannot be: the biblical texts give no dimensions and no location precise enough to test, and no inscription attaches the name to these stones. The app therefore states it as a proposal made by the people who dug the structure, and not as a finding.",
+          "Whatever it is called, the structure carries one thing on its own. Terracing and mantling a slope on this scale requires organised labour, planning, and a reason. Somebody in Iron Age Jerusalem could command that, which is a statement about the city's political weight and is independent of every argument about which century it happened in.",
+        ],
+      },
+      {
+        heading: "Where the Readings Disagree",
+        paragraphs: [
+          "The disagreement is real and it is not between believers and sceptics. R. Macalister put it before David; K. Kenyon put it at the start of the tenth century; Y. Shiloh separated an earlier terrace system, which he took back into the Late Bronze or early Iron Age, from a mantle he placed in Iron I or early Iron II. E. Mazar, excavating above it after 2005, treated the mantle as the support of a tenth-century royal building and read the whole as one complex.",
+          "Against that stands the Tel Aviv University reading. I. Finkelstein, L. Singer-Avitz, Z. Herzog and D. Ussishkin argued in 2007 that most of the walls in this area belong not to the Iron Age at all but to Hellenistic buildings that R. Macalister and J. Duncan had already uncovered in the 1920s and misdated. If they are right, part of what is shown to visitors as tenth-century Jerusalem is centuries younger than the label. M. Steiner, who published K. Kenyon's Jerusalem material, reports that argument and adds one of her own that bears on it: most of this ground had been dug before, by Macalister and Duncan and then by Kenyon, which she says makes it almost impossible to establish how the walls connect or to date them. Her own position on this structure follows Kenyon rather than Finkelstein — the credit belongs where it is put here, because handing one scholar another's argument is a factual error about a living person's views and the app treats it as one.",
+          "The honest summary is this. That there is monumental Iron Age engineering on this slope is not in dispute by anyone. Its earliest phase is probably pre-monarchic or early monarchic. Its latest phase may be very much later. Which courses belong to which phase cannot presently be settled, because the excavations that would settle it were dug in the 1920s and 1960s to standards that did not record what would now be needed, and the structure cannot be dismantled to check. A reader should hold the phrase \"the largest Iron Age structure in Jerusalem\" firmly and the phrase \"David's citadel\" loosely.",
+        ],
+      },
+    ],
+    verses: [
+      { reference: "2 Samuel 5:6-9", note: "David takes the stronghold of Zion and builds \"around from Millo and inward\"" },
+      { reference: "1 Kings 9:15", note: "Solomon's levy builds the Millo and Jerusalem's wall" },
+      { reference: "1 Kings 11:27", note: "Solomon builds Millo and repairs the breach of his father's city" },
+      { reference: "2 Chronicles 32:5", note: "Hezekiah strengthens Millo in David's city" },
+    ],
+    sources: [
+      { label: "Wikipedia: Stepped Stone Structure", url: "https://en.wikipedia.org/wiki/Stepped_Stone_Structure" },
+      { label: "M. Steiner, \"The 'Palace of David' Reconsidered in the Light of Earlier Excavations\" (Bible and Interpretation)", url: "https://bibleinterp.arizona.edu/articles/palace_2468" },
+    ],
+    discovery: {
+      objectType: "Stepped stone mantle about 18 m high over a substructure of stone-filled terraces, on a steep slope",
+      findSite: "Eastern slope of the City of David ridge, Jerusalem",
+      findSiteId: "city-of-david",
+      findSiteKind: "poi",
+      foundYear: "1923-1925, 1961-1967, 1978-1985 — three separate excavations",
+      foundBy: "R. Macalister and J. Duncan in the 1920s; K. Kenyon in the 1960s; Y. Shiloh from 1978 to 1985",
+      objectDate: "Disputed. The terrace substructure is placed by most excavators in the Late Bronze or early Iron Age; the mantle in Iron I or Iron II; and the uppermost portion is argued by some to be Hellenistic",
+      objectDateCertainty: "disputed",
+      currentLocation: "In situ in the City of David archaeological park, Jerusalem",
+    },
+    citations: [
+      {
+        tier: "institution",
+        label: "Palestine Exploration Fund",
+        url: "https://www.pef.org.uk/history/",
+        credit: "The Palestine Exploration Fund",
+        detail: "Sponsor of the 1920s Ophel excavation by R. Macalister and J. Duncan, the first to expose the top of the structure",
+        supports: "The first excavation and its sponsor",
+      },
+      {
+        tier: "scholarly",
+        label: "M. Steiner, \"The 'Palace of David' Reconsidered in the Light of Earlier Excavations\"",
+        url: "https://bibleinterp.arizona.edu/articles/palace_2468",
+        credit: "Margreet L. Steiner, publisher of K. Kenyon's Jerusalem excavation material",
+        detail: "The Bible and Interpretation, University of Arizona, September 2009. Freely readable. Reports the Tel Aviv 2007 argument and sets out the difficulty created by the earlier excavations on the same ground",
+        supports: "That the ground was dug before, and who originated the Hellenistic reading",
+      },
+      {
+        tier: "scholarly",
+        label: "I. Finkelstein, L. Singer-Avitz, Z. Herzog and D. Ussishkin, \"Has King David's Palace in Jerusalem been Found?\"",
+        credit: "Israel Finkelstein, Lily Singer-Avitz, Ze'ev Herzog and David Ussishkin, Tel Aviv University",
+        detail: "Tel Aviv 34:2 (2007), 142-164, doi:10.1179/tav.2007.2007.2.142. The paper that argues most of the walls here are Hellenistic. Publisher paywall; record confirmed through Crossref",
+        supports: "The Hellenistic reading of the upper walls, credited to the people who made it",
+        paywalled: true,
+      },
+      {
+        tier: "scholarly",
+        label: "Y. Shiloh, Excavations at the City of David I: 1978-1982",
+        credit: "Yigal Shiloh, Institute of Archaeology, Hebrew University of Jerusalem",
+        detail: "Qedem 19, Jerusalem, 1984 — the interim report distinguishing the terrace substructure from the stone mantle above it. The Area G pottery on which its dating rests is being published by J. Cahill West, who supervised the excavation of the structure. Print only",
+        supports: "The two-element reading of the structure, and the Millo proposal",
+      },
+      {
+        tier: "encyclopedic",
+        label: "Wikipedia: Stepped Stone Structure",
+        url: "https://en.wikipedia.org/wiki/Stepped_Stone_Structure",
+      },
+    ],
+    reflectionPrompt:
+      "Three careful people looked at the same stones and read three different centuries in them. Where have you mistaken a strong conviction for a settled fact?",
+  },
+  {
+    id: "large-stone-structure",
+    name: "Large Stone Structure",
+    category: "discovery",
+    role: "Monumental Walls in the City of David, Claimed as David's Palace",
+    summary:
+      "Massive undressed walls at the top of the City of David ridge, announced in 2005 as the palace built for David — and disputed since, over whether they are even one building.",
+    sections: [
+      {
+        heading: "A Building Looked for Before It Was Found",
+        paragraphs: [
+          "This excavation is unusual in that the interpretation preceded the dig. E. Mazar had argued in print, years earlier, that David's palace should lie at the northern top of the City of David ridge, and her reason was a verse. 2 Samuel 5:17 says that when the Philistines came up after David's anointing, David \"went down to the stronghold\" — down, she reasoned, from a residence that must therefore have stood above the fortified ridge, north of the Stepped Stone Structure. She went to that spot to look, and in February 2005, with sponsorship from the Shalem Center, she began digging on land held by Elad, the private foundation that runs the City of David site. She announced the find on 4 August 2005.",
+          "What came out were walls of large undressed stones. The first, in 2005, ran about thirty metres east to west and was up to three metres wide; a north-south wall exposed the following season was about six metres wide, and by 2007 walls up to seven metres thick had been reported. Pottery in the fills beneath was Iron Age I; pottery in the deposits above and against was Iron Age II. On that stratigraphic sandwich E. Mazar placed the construction at the transition between them — the eleventh or tenth century BC. A bone from the complex was radiocarbon dated by E. Boaretto at the Weizmann Institute to somewhere between about 1050 and 780 BC — a range of nearly three centuries, and worth pausing on, because it reaches down into the ninth and is therefore as consistent with the date the critics propose as with hers. It rules some things out; it does not settle this. Two Phoenician-style ivory inlays were also recovered, and a Black-on-Red vessel usually dated to the later tenth century, though Black-on-Red ware is itself one of the disputed hinges of the chronology this article is about.",
+          "Later material from the same area is not in dispute and is worth its own sentence. Two clay bullae found here name Jehucal son of Shelemiah and Gedaliah son of Pashhur — two royal officials whom Jeremiah 38:1 names together, as men who heard Jeremiah's words and moved against him. Whoever built the walls, the ground they stand on was in official use in Jerusalem's last generation before 586 BC.",
+        ],
+      },
+      {
+        heading: "What Would Have to Be True",
+        paragraphs: [
+          "2 Samuel 5:11 and 1 Chronicles 14:1 both report that Hiram of Tyre sent David cedar, carpenters and masons, and that they built David a house. Phoenician craftsmen building for a king in Jerusalem is precisely what those verses describe, and Phoenician-style ivories in a monumental building on the ridge are the kind of object those verses would predict. That is a real and interesting convergence, and it is why the claim was taken seriously rather than dismissed.",
+          "Four separate things have to hold before \"David's palace\" is established, and the clearest statement of them is M. Steiner's — one of the excavation's critics — who lists the evidence that would have to be provided: that the walls belong to one and the same building; that the building dates to the tenth century BC; that it functioned as a palace; and that it was David who put his throne there. It is a fair test, it is hers rather than this app's, and the argument turns on which of the four are in evidence.",
+          "E. Mazar's strongest argument is architectural rather than scriptural, and it belongs here because the rest of this article turns on it: she held that the Large Stone Structure and the Stepped Stone Structure below it are one integrated complex, the stepped terracing serving as the retaining substructure that carries the building above. That is a claim about stones, testable against stones, and it is the claim her critics and her defenders have actually argued about.",
+          "What the excavation did not produce is a name. Nothing found there names David, names a king, or says \"palace\" — no inscription, no throne room identified as such, no royal seal from the building phase. Beyond the structural argument, the identification rests on location, on date, on scale, and on a reading of 2 Samuel 5:17 that has to carry a great deal of weight for a single preposition.",
+        ],
+      },
+      {
+        heading: "The Case Against, Stated by the People Who Make It",
+        paragraphs: [
+          "I. Finkelstein, L. Singer-Avitz, Z. Herzog and D. Ussishkin published a joint response in Tel Aviv in 2007 under the title \"Has King David's Palace in Jerusalem been Found?\" Their answer is no, and their argument is mostly about the first of the four conditions above. They contend that the walls do not form a single structure; that the western walls align with later remains including a ritual bath they date to the Hasmonean period; and that on the published evidence \"all one can safely say is that its various elements post-date the late Iron I/early Iron IIA and predate the Roman period\" — a window of roughly eight hundred years. They also argue, in as many words, that the biblical text rather than the stratigraphy drove the field operation.",
+          "M. Steiner, who published K. Kenyon's Jerusalem material and knows the earlier digs on this exact ground, made a related case in 2009. Her point is partly about the site's history: most of the area E. Mazar excavated had been dug before, by R. Macalister and J. Duncan in the 1920s and by K. Kenyon in the 1960s, which she argues makes it \"almost impossible to establish a connection between the walls and to date the walls\". She reads three separate wall complexes, assigns some of the northern remains to the Middle Bronze Age, and concludes: \"Did Eilat Mazar find king David's palace? I would say not.\"",
+          "The case is not one-sided and should not be reported as if it were — but the support must not be overstated either, and its shape is easy to get wrong. A. Mazar, a leading Iron Age archaeologist, accepted a monumental Iron Age building here and offered a different identification: the Jebusite fortress of Zion, the stronghold David took rather than the palace he built. A. Faust arrived at much the same place from the other direction. In the Zeitschrift des Deutschen Palästina-Vereins in 2010 he defended the structural half of E. Mazar's case — the Large Stone Structure and the Stepped Stone Structure are one complex, and the most impressive building of its period in the region — while dating that complex to Iron Age I and reading it as the Jebusite fortress rather than as David's palace. He agrees with her about the stones and disagrees with her about whose they were, and it would be a misuse of his paper to file him among her supporters. I. Finkelstein answered him in the same journal the following year. W. Dever has accepted a tenth-century date; J. Magness has argued the structure was built earlier still, in the twelfth century, and remained in use into the ninth.",
+          "Here is where the app stands. There is monumental construction of the Iron Age on the summit of the City of David; that much survives every critic. Whether the excavated walls are one building is genuinely unresolved and cannot be resolved from the published sections. And even the scholars most willing to accept a tenth-century date mostly do not accept \"David's palace\" — because a date is not an owner. The claim was announced with more confidence than the evidence carried, and repeating that confidence would be a disservice to a reader who will meet the Tel Aviv article sooner or later. The stones are real, the argument is live, and the honest sentence is that a monumental Iron Age building stood here and we do not know whose it was.",
+        ],
+      },
+    ],
+    verses: [
+      { reference: "2 Samuel 5:11", note: "Hiram of Tyre sends carpenters and masons, \"and they built David a house\"" },
+      { reference: "1 Chronicles 14:1", note: "The same report, with cedar, masons and carpenters" },
+      { reference: "2 Samuel 5:17", note: "David \"went down to the stronghold\" — the verse the excavation was planned around" },
+      { reference: "Jeremiah 38:1", note: "Gedaliah son of Pashhur and Jucal son of Shelemiah — both named on bullae found here" },
+      { reference: "Jeremiah 37:3", note: "The same official, spelled Jehucal, sent by Zedekiah to Jeremiah" },
+    ],
+    sources: [
+      { label: "Wikipedia: Large Stone Structure", url: "https://en.wikipedia.org/wiki/Large_Stone_Structure" },
+      { label: "M. Steiner, \"The 'Palace of David' Reconsidered in the Light of Earlier Excavations\" (Bible and Interpretation)", url: "https://bibleinterp.arizona.edu/articles/palace_2468" },
+    ],
+    discovery: {
+      objectType: "Walls of large undressed stones. The first, found in 2005, runs about 30 m east to west and is up to 3 m wide; a north-south wall exposed in 2006 is about 6 m wide, and walls up to about 7 m thick were reported by 2007",
+      findSite: "Summit of the City of David ridge, north of the Stepped Stone Structure, Jerusalem",
+      findSiteId: "city-of-david",
+      findSiteKind: "poi",
+      foundYear: "2005",
+      foundBy: "E. Mazar, sponsored by the Shalem Center, on land held by Elad, the foundation that operates the City of David site",
+      objectDate: "Contested. The excavator placed the construction in the eleventh or tenth century BC; critics argue the exposed elements can only be said to post-date late Iron I / early Iron IIA and pre-date the Roman period",
+      objectDateCertainty: "disputed",
+      currentLocation: "In situ in the City of David archaeological park, Jerusalem",
+    },
+    citations: [
+      {
+        tier: "scholarly",
+        label: "I. Finkelstein, L. Singer-Avitz, Z. Herzog and D. Ussishkin, \"Has King David's Palace in Jerusalem been Found?\"",
+        credit: "Israel Finkelstein, Lily Singer-Avitz, Ze'ev Herzog and David Ussishkin, Tel Aviv University",
+        detail: "Tel Aviv 34:2 (September 2007), 142-164, doi:10.1179/tav.2007.2007.2.142. The principal published objection. Publisher paywall; the bibliographic record was confirmed through Crossref",
+        supports: "The argument that the walls are not one building, and the eight-hundred-year date window",
+        paywalled: true,
+      },
+      {
+        tier: "scholarly",
+        label: "M. Steiner, \"The 'Palace of David' Reconsidered in the Light of Earlier Excavations\"",
+        url: "https://bibleinterp.arizona.edu/articles/palace_2468",
+        credit: "Margreet L. Steiner, publisher of K. Kenyon's Jerusalem excavation material",
+        detail: "The Bible and Interpretation, University of Arizona, September 2009. Freely readable, and the source of the quotations in the third section",
+        supports: "The three-complexes reading and the difficulty created by the earlier excavations on the same ground",
+      },
+      {
+        tier: "scholarly",
+        label: "E. Mazar, The Palace of King David: Excavations at the Summit of the City of David",
+        credit: "Eilat Mazar, Institute of Archaeology, Hebrew University of Jerusalem",
+        detail: "Preliminary report of the 2005-2007 seasons, Shoham Academic Research and Publication, Jerusalem and New York, 2009; her proposal was first put in Biblical Archaeology Review in 1997 and the find reported there in 2006. This is the excavator's own account, and it is the source of the pottery sequence, the wall dimensions, the radiocarbon result and the argument that the two structures are one complex. Print only",
+        supports: "The excavator's case, in her own publication",
+      },
+      {
+        tier: "scholarly",
+        label: "A. Faust, \"The Large Stone Structure in the City of David: A Reexamination\", with I. Finkelstein's reply",
+        credit: "Avraham Faust, Bar-Ilan University; Israel Finkelstein, Tel Aviv University",
+        detail: "Zeitschrift des Deutschen Palästina-Vereins 126 (2010), 116-130, and Finkelstein, \"The 'Large Stone Structure' in Jerusalem: Reality versus Yearning\", ZDPV 127 (2011), 1-10. Faust reads the two structures as one Iron Age I complex and identifies it as the Jebusite fortress, not David's palace. Print and subscription only; the article body could not be opened to a check, and the conclusion here is taken from the published abstract and the author's institutional record",
+        supports: "What A. Faust actually concluded, and that it is not an endorsement of the palace identification",
+        paywalled: true,
+      },
+      {
+        tier: "institution",
+        label: "Israel Antiquities Authority — excavation licence and the City of David excavations",
+        credit: "Israel Antiquities Authority",
+        detail: "The licensing authority for excavation in the City of David. The Authority's own site refused automated retrieval, so no URL is given rather than an unchecked one",
+        supports: "The regulatory context of the excavation",
+      },
+      {
+        tier: "encyclopedic",
+        label: "Wikipedia: Large Stone Structure",
+        url: "https://en.wikipedia.org/wiki/Large_Stone_Structure",
+      },
+    ],
+    reflectionPrompt:
+      "An archaeologist read a verse, decided where to dig, and found something. That is either faith rewarded or a conclusion assumed — and telling the two apart is hard from the inside. Where might you be finding what you went looking for?",
+  },
+  {
+    id: "warrens-shaft",
+    name: "Warren's Shaft",
+    alternateNames: ["Warren's Shaft System"],
+    category: "discovery",
+    role: "Natural Rock Chimney Beneath the City of David, Long Read as Joab's Way In",
+    summary:
+      "A vertical shaft above the Gihon Spring that generations were taught was how Joab took Jerusalem — a reading the excavators who dug it have since withdrawn.",
+    sections: [
+      {
+        heading: "Warren Goes Down, and a Theory Goes Up",
+        paragraphs: [
+          "C. Warren, a Royal Engineers officer digging in Jerusalem for the Palestine Exploration Fund, found the shaft in 1867 and reported it to the Fund by letter that December. It is a vertical hole about thirteen metres deep, reached from inside the ridge by a sloping stepped tunnel and a curving horizontal passage, dropping to a point near the water of the Gihon Spring. The obvious reading was that the inhabitants of the city could stand at the top and lower buckets, drawing water without leaving the walls.",
+          "From that reading a second one followed almost at once. 2 Samuel 5:8 has David, before the Jebusite stronghold, saying that whoever strikes the Jebusites should go up by the tsinnor — a Hebrew word of uncertain meaning, which the World English Bible renders \"the watercourse\". 1 Chronicles 11:6 adds that Joab went up first and was made chief. If the tsinnor was Warren's Shaft, the story becomes vivid and specific: Joab climbed the water shaft in the dark and opened the city from inside. It appeared in commentaries, study Bibles, tour guides and sermons for a hundred years.",
+        ],
+      },
+      {
+        heading: "What Is Actually Down There",
+        paragraphs: [
+          "The first of the two findings that undid the tidy reading is not the excavators' at all, and the credit is worth putting where it belongs. D. Gill, a geologist with the Geological Survey of Israel, showed in Science in 1991 that the shaft is not cut. It is a natural karstic chimney — a flaw dissolved in the limestone by water over a very long time — and the whole underground system is a set of natural karst channels that people adapted rather than quarried. Gill's own conclusion was that the adaptation produced a working water supply; the second finding is what disputes that.",
+          "R. Reich and E. Shukron excavated the Gihon Spring and its surroundings from 1995 for fifteen years, and their reading of the cutting is that the tunnel now leading to the chimney's head was not driven to reach it at all: the passage was going somewhere else and broke into the chimney by accident, around the eighth century BC, some three centuries after David. On their account the shaft was never used to draw water — its walls are too irregular for a rope and bucket, and the water at the bottom too shallow.",
+          "In place of the shaft they exposed something more impressive. Massive fortifications stand around the spring itself: a Spring Tower of very large stones enclosing the water, a second tower at the pool, and a fortified passage running from inside the city down to the protected spring. On the excavators' reading, that rather than a bucket on a rope is how the city drank under siege, and it is a far better piece of engineering than the shaft ever was. Note the qualifier: as the next section says, the date of those fortifications is itself now argued over, so which centuries this arrangement served is not a settled matter.",
+          "So the corrected picture is: a fortified spring with a defended approach; and a natural chimney which, on the excavators' reading, was found by accident and never used to draw water at all — a reading that is itself disputed, as the next section says.",
+        ],
+      },
+      {
+        heading: "A Reading Its Own Excavators Retired",
+        paragraphs: [
+          "R. Reich and E. Shukron published their conclusion in Biblical Archaeology Review in 1999, and the magazine announced on its own account that the shaft theory of David's conquest had been shattered. That headline phrasing is the editors' rather than the authors', but the substance is the excavators' own. That is a strong thing to state about a popular reading, and this app states it, because the people who dug the site are the ones who withdrew it. An article that kept Joab climbing the shaft would be teaching a reading the excavators themselves abandoned, and a reader who later opened their report would rightly wonder what else had been left in place because it made a better story.",
+          "It is not unanimous, and there are two dissents rather than one. A. Faust replied in the same magazine in 2003, arguing that the shaft was used to draw water after all: the Parker Mission of 1909-1911 demonstrably drew water up it, a tunnel was cut to bring water to its base, and cutting that tunnel required hauling the spoil out by exactly the means R. Reich and E. Shukron say was impractical. D. Gill, whose work established the karst in the first place, has likewise continued to read the shaft as part of a functioning water system, arguing that it served as a well in the Middle Bronze Age. Neither is a rehabilitation of Joab: on both readings the shaft's use is a matter of water supply, and even A. Faust accepts that it was not exposed until around 800 BC, long after David's conquest.",
+          "The date of the spring fortifications is itself now in play, and this is a live argument between named specialists. J. Regev, J. Uziel, N. Szanton and E. Boaretto radiocarbon-dated the Spring Tower and concluded that it was built in the ninth century BC — not, as had been assumed for two decades, in the Middle Bronze Age. That would make the tower Judahite work rather than Canaanite, and it would mean it was not standing when David arrived. R. Reich answered them in Tel Aviv in 2018 with three arguments, and all three deserve stating rather than the easiest one: that the dated samples could have been carried in by flooding from the Kidron Valley; that the spot sampled may be an Iron Age repair to an older structure rather than the original build; and — the substantive one — that the tower's cyclopean masonry matches Middle Bronze fortifications at Gezer, Hebron and Shechem and looks nothing like Iron Age II fortification in Judah. That argument is open, and this article does not close it.",
+          "And the word itself is unsettled. Tsinnor occurs twice in the Hebrew Bible and has been read as a shaft, a water channel, a fortified passage, a hook, a grappling iron and — on one proposal — a windpipe, making the line an instruction about throats rather than tunnels. The honest position is that nobody knows what David told his men to go up, that the shaft is not a good candidate for it, and that the fortified passage beside the spring is a better one without being a proven one.",
+        ],
+      },
+    ],
+    verses: [
+      { reference: "2 Samuel 5:6-8", note: "The tsinnor, rendered \"the watercourse\" — the verse the whole theory hangs on" },
+      { reference: "1 Chronicles 11:4-6", note: "Joab goes up first and is made chief" },
+      { reference: "1 Kings 1:33", note: "Solomon brought down to Gihon to be anointed — the same spring" },
+      { reference: "2 Chronicles 32:2-4", note: "Stopping the springs outside the city, the later solution to the same problem" },
+    ],
+    sources: [
+      { label: "Wikipedia: Warren's Shaft", url: "https://en.wikipedia.org/wiki/Warren%27s_Shaft" },
+      { label: "A. Faust, \"Warren's Shaft: Yes, It Was Used to Draw Water\" (summary, Center for Online Judaic Studies)", url: "https://cojs.org/warren-s_shaft-_avraham_faust-_bar_29-05-_sep-oct_2003/" },
+    ],
+    discovery: {
+      objectType: "Natural karstic chimney about 13 m deep, reached by a cut stepped tunnel and horizontal passage",
+      findSite: "Inside the City of David ridge above the Gihon Spring, Jerusalem",
+      findSiteId: "city-of-david",
+      findSiteKind: "poi",
+      foundYear: "1867",
+      foundBy: "C. Warren, for the Palestine Exploration Fund. Its natural karstic origin was established by D. Gill of the Geological Survey of Israel in 1991; R. Reich and E. Shukron re-excavated the spring area from 1995",
+      objectDate: "The chimney is a natural feature. The tunnel system reaching it was cut in the Iron Age; the excavators date the accidental breach into the chimney to about the eighth century BC",
+      objectDateCertainty: "disputed",
+      currentLocation: "In situ in the City of David archaeological park, Jerusalem",
+    },
+    citations: [
+      {
+        tier: "institution",
+        label: "Palestine Exploration Fund",
+        url: "https://www.pef.org.uk/history/",
+        credit: "The Palestine Exploration Fund",
+        detail: "The body that sponsored C. Warren's Jerusalem excavations of 1867-1870 and published his first report of the shaft in its Quarterly Statement",
+        supports: "The discovery, its date and its sponsor",
+      },
+      {
+        tier: "scholarly",
+        label: "R. Reich and E. Shukron, \"Light at the End of the Tunnel\"",
+        credit: "Ronny Reich, University of Haifa, and Eli Shukron, Israel Antiquities Authority",
+        detail: "Biblical Archaeology Review 25:1 (January/February 1999) — the excavators' own withdrawal of the shaft-and-conquest reading. Their full report is Excavations in the City of David, Jerusalem (1995-2010), Penn State University Press, 2021. Print and subscription only",
+        supports: "The natural origin of the shaft, the accidental breach, and the retirement of the Joab reading",
+        paywalled: true,
+      },
+      {
+        tier: "reference",
+        label: "A. Faust, \"Warren's Shaft: Yes, It Was Used to Draw Water\"",
+        url: "https://cojs.org/warren-s_shaft-_avraham_faust-_bar_29-05-_sep-oct_2003/",
+        credit: "Avraham Faust, Bar-Ilan University; summarised by the Center for Online Judaic Studies",
+        detail: "Biblical Archaeology Review 29:5 (September/October 2003) — the published dissent from R. Reich and E. Shukron's conclusion that the shaft was never a water shaft",
+        supports: "The dissenting case in the third section",
+      },
+      {
+        tier: "scholarly",
+        label: "D. Gill, \"Subterranean Waterworks of Biblical Jerusalem: Adaptation of a Karst System\"",
+        credit: "Dan Gill, Geological Survey of Israel",
+        detail: "Science 254 (6 December 1991), 1467-1471, doi:10.1126/science.254.5037.1467. The paper that established that the shaft and the passages around it are natural karst features adapted by people rather than quarried. Publisher paywall; record confirmed through Crossref",
+        supports: "The natural origin of the shaft, credited to the geologist who established it",
+        paywalled: true,
+      },
+      {
+        tier: "scholarly",
+        label: "J. Regev, J. Uziel, N. Szanton and E. Boaretto, \"Absolute Dating of the Gihon Spring Fortifications, Jerusalem\", and R. Reich's reply",
+        credit: "Johanna Regev, Joe Uziel, Nahshon Szanton and Elisabetta Boaretto; Ronny Reich, University of Haifa",
+        detail: "Radiocarbon 59:5 (2017), 1171-1193, doi:10.1017/rdc.2017.37 — the ninth-century redating of the Spring Tower. Answered by R. Reich, \"The Date of the Gihon Spring Tower in Jerusalem\", Tel Aviv 45:1 (2018), 114-119, doi:10.1080/03344355.2018.1412056. Both paywalled; both records confirmed through Crossref, and R. Reich's three arguments are summarised here from the published abstract rather than the article body",
+        supports: "Both sides of the dispute over the date of the spring fortifications",
+        paywalled: true,
+      },
+      {
+        tier: "scholarly",
+        label: "J. Regev et al., \"Radiocarbon chronology of Iron Age Jerusalem\"",
+        url: "https://pmc.ncbi.nlm.nih.gov/articles/PMC11087761/",
+        credit: "Johanna Regev, Elisabetta Boaretto and colleagues",
+        detail: "PNAS 121:19 (2024), e2321024121. Open access. Its Area C results place the Spring Tower in the tenth to ninth centuries BC rather than the Middle Bronze Age",
+        supports: "The later radiocarbon work on the spring fortifications",
+      },
+      {
+        tier: "encyclopedic",
+        label: "Wikipedia: Warren's Shaft",
+        url: "https://en.wikipedia.org/wiki/Warren%27s_Shaft",
+      },
+    ],
+    reflectionPrompt:
+      "A story everyone repeated turned out not to be true, and the people best placed to know were the ones who said so. What would it cost you to correct something you have taught for years?",
+  },
+  {
+    id: "burnt-house-jerusalem",
+    name: "Burnt House",
+    alternateNames: ["House of Bar Kathros"],
+    category: "discovery",
+    role: "A Priestly Family's House in Jerusalem, Burned in AD 70",
+    summary:
+      "A basement in Jerusalem's Upper City left exactly as the fire finished with it — ash, a spear leaning in a corner, a stone weight naming a priestly family, and a young woman's forearm on the kitchen floor.",
+    sections: [
+      {
+        heading: "One Basement, Untouched",
+        paragraphs: [
+          "N. Avigad's excavation of the Jewish Quarter, which ran from 1969 into the early 1980s, found the house in 1970 under a thick layer of ash. What survives is the basement level of a larger building: a small courtyard, four rooms, a kitchen and a stepped ritual bath, together covering about fifty-five square metres. The upper storeys are gone.",
+          "The contents were left where the fire dropped them. Stone tables and vessels, cooking pots, a set of stone weights, a stone sundial, blackened beams, and an iron spear leaning against the corner of a room. The coins in the debris were struck by Roman governors of Judea and by the Jewish rebels in the years 67 to 69, and nothing later than that turned up anywhere in the house — which brackets the destruction closely.",
+          "In the kitchen doorway lay the forearm bones of a woman in her twenties, from the fingertips to the elbow. Nothing else of her was found.",
+        ],
+      },
+      {
+        heading: "A House With a Name On It",
+        paragraphs: [
+          "Among the stone weights was a round one, about ten centimetres across, inscribed in Aramaic script: \"[of] Bar Kathros\" — son of Kathros. Kathros is a known name. The Babylonian Talmud, at Pesachim 57a, preserves a bitter lament in the name of two sages of the generation after the temple's fall, listing four high-priestly houses and what each was resented for. Of one of them it says: \"Woe is me due to the High Priests of the house of Katros; woe is me due to their pens that they use to write lies.\" The same passage names the house of Ḥanin — the family of the high priest called Annas in the Gospels, who appears with Caiaphas in Acts 4:6 — for their whispers.",
+          "So the weight ties this burnt basement to one of the priestly dynasties that ran the temple in the first century, and it does so through a source that was no friend of them. It is one of the very few points where an object from a Jerusalem house, a rabbinic complaint about temple corruption, and the Gospels' account of a high-priestly establishment all touch the same set of families.",
+          "The house also sits in the right part of the city for that. This is the Upper City, the wealthy western hill, and the neighbouring excavations produced mansions with frescoes, mosaic floors, imported tableware and multiple ritual baths. Whoever lived here was rich, observant of purity law, and — on the weight's evidence — connected to the priesthood.",
+        ],
+      },
+      {
+        heading: "How Much of the Story the Objects Carry",
+        paragraphs: [
+          "The dating is the strongest part and can be stated plainly. Coins running to the fourth year of the revolt and none after it, a destruction by intense fire, and a location in the Upper City together fit the Roman capture of the western hill in the late summer of AD 70, about a month after the temple fell, as Josephus describes it. This is physical evidence of that destruction, and it is exactly what Jesus is recorded as warning about — not a temple prophecy only, but a city surrounded, hemmed in, and thrown down.",
+          "The name is weaker than it is usually made to sound, and the difference matters. A stone weight is portable. It names a family, not an owner, and it establishes that an object belonging to the house of Kathros ended up in this basement. That is very likely because the family lived or worked there; it is not the same as a deed. Careful excavation reports say the house is associated with the family. Popular accounts say it was their house. The first is what the object supports.",
+          "The forearm has attracted the most retelling and deserves the most restraint. What the excavation found is the bones of a woman's forearm near a doorway, in a burnt building. Everything else — that she was reaching for the door, that she was trapped by falling debris, that she was young and afraid — is reconstruction. Some of it is likely. None of it is excavated. The bones are enough to make the point without embellishment: this was somebody's kitchen, and somebody died in it.",
+          "The site is preserved as a small museum in the Jewish Quarter, which shows the rooms as found and adds an audio-visual reconstruction of the family's last hours. That reconstruction is a presentation, not a finding, and a visitor is entitled to know which is which.",
+        ],
+      },
+    ],
+    verses: [
+      { reference: "Luke 21:20-24", note: "\"When you see Jerusalem surrounded by armies\" — the destruction this ash layer belongs to" },
+      { reference: "Luke 19:41-44", note: "Wept over the city: hemmed in, and not one stone left on another" },
+      { reference: "Mark 13:1-2", note: "The buildings, and what would happen to them" },
+      { reference: "Acts 4:6", note: "Annas and Caiaphas — the house the same rabbinic lament names beside Kathros" },
+    ],
+    sources: [
+      { label: "Wikipedia: Burnt House", url: "https://en.wikipedia.org/wiki/Burnt_House" },
+      { label: "Sefaria: Babylonian Talmud, Pesachim 57a", url: "https://www.sefaria.org/Pesachim.57a?lang=en" },
+    ],
+    discovery: {
+      objectType: "Burnt basement of a first-century house — courtyard, four rooms, kitchen and ritual bath — with its contents in place",
+      findSite: "Jewish Quarter, the Upper City of Jerusalem",
+      findSiteId: "jerusalem",
+      findSiteKind: "location",
+      foundYear: "1970",
+      foundBy: "N. Avigad, in the Jewish Quarter excavations he directed from 1969 for the Hebrew University, the Israel Exploration Society and the Department of Antiquities",
+      objectDate: "Destroyed by fire in AD 70; latest coins in the debris are of AD 69",
+      objectDateCertainty: "firm",
+      currentLocation: "Preserved in situ as a museum in the Jewish Quarter, Jerusalem",
+    },
+    citations: [
+      {
+        tier: "institution",
+        label: "Israel Exploration Society",
+        url: "https://israelexplorationsociety.com/",
+        credit: "The Israel Exploration Society, Jerusalem",
+        detail: "One of the bodies under which the Jewish Quarter excavation ran, and publisher of its final reports in the Qedem series",
+        supports: "The excavating body and where the dig is published",
+      },
+      {
+        tier: "scholarly",
+        label: "N. Avigad, Discovering Jerusalem",
+        credit: "Nahman Avigad, Hebrew University of Jerusalem",
+        detail: "Nashville, 1983 — the excavator's account of the Jewish Quarter dig, including the Burnt House, the weight and the skeletal remains. Print only",
+        supports: "The find, its contents and its interpretation",
+      },
+      {
+        tier: "primary",
+        label: "Babylonian Talmud, Pesachim 57a",
+        url: "https://www.sefaria.org/Pesachim.57a?lang=en",
+        credit: "Sefaria, William Davidson digital edition (CC licence)",
+        detail: "The lament naming the houses of Baitos, Ḥanin, Katros and Yishmael ben Piakhi, quoted here from the Sefaria text",
+        supports: "The Kathros family and the complaint against them",
+      },
+      {
+        tier: "encyclopedic",
+        label: "Wikipedia: Burnt House",
+        url: "https://en.wikipedia.org/wiki/Burnt_House",
+      },
+    ],
+    reflectionPrompt:
+      "A wealthy, religious, well-connected household burned down with everything in it. What are you counting on that a single bad year could take?",
+  },
+  {
+    id: "temple-mount-sifting-project",
+    name: "Temple Mount Sifting Project",
+    category: "discovery",
+    role: "Wet-Sifting of Bulldozed Debris from the Temple Mount",
+    summary:
+      "Nine thousand tons of earth were scraped off the Temple Mount by machine in 1999 and dumped in a valley. A project has been washing it through screens ever since — recovering real objects that will never have a layer to belong to.",
+    sections: [
+      {
+        heading: "Nine Thousand Tons, and No Record",
+        paragraphs: [
+          "In November 1999 the Islamic religious trust that administers the Temple Mount carried out works to open a new entrance to the underground space known as Solomon's Stables, converting it into the el-Marwani Mosque. The work was done with heavy earth-moving machinery, without a preceding salvage excavation and without archaeological supervision. Something on the order of nine thousand tons of earth were removed and trucked away — an estimated 350 lorry-loads — and dumped in the Kidron Valley near the north-eastern corner of the Old City.",
+          "In 2004 G. Barkay and Z. Dvira were licensed to recover it, under Bar-Ilan University auspices and with funding raised through the Israel Exploration Society. The debris was hauled to Emek Tzurim, dry-sifted into buckets, soaked, and then washed over screens by hand — a wet-sifting method the project adapted and scaled for this material, and which other excavations in Israel have since taken up. Finds are sorted into pottery, glass, bone and shell, mosaic tesserae, metal, and worked stone and plaster, then classified in the project's laboratory.",
+          "The funding history matters, because it is the ground of one of the objections below. In 2005, in financial difficulty, the project accepted Elad — the foundation that runs the City of David site and also promotes Jewish settlement in Silwan — as administrator of the sifting site, with G. Barkay and Z. Dvira keeping scientific control. That arrangement ended in 2017; sifting stopped, Elad kept the Emek Tzurim site, and the project resumed at Mount Scopus in June 2019. G. Barkay has said plainly that nobody told him what to find or what to ignore.",
+          "Volunteers do most of the washing, which is unusual and deliberate: the project has run on public participation from the start, and members of the public rather than staff have handled the great majority of the material.",
+        ],
+      },
+      {
+        heading: "What Has Come Out",
+        paragraphs: [
+          "The material is genuine and some of it is important. More than five hundred coins of the Second Temple period. About a hundred and thirty fragments of Iron Age Judahite clay figurines — human, animal and horse-and-rider types, the small figures that turn up all over Iron Age Judah. A further thirty came not from the platform debris but from an ancient rubbish dump on the eastern slope below it, and the two groups should not be added together, as they often are. A clay sealing — a bulla — of the seventh or sixth century BC bearing the name of the priestly family of Immer, a family named at Jeremiah 20:1 as holding office in the temple. Opus sectile floor tile fragments that have allowed a reconstruction of the paving patterns of the Herodian courts. Crusader armour scales, silver coins, Byzantine tesserae, arrowheads, weights, and a very large quantity of pottery running from the Bronze Age to the Ottoman period.",
+          "This is very nearly the only sample of material from the Temple Mount platform there is. Not quite the only one: R. W. Hamilton, director of the Mandate antiquities department, cut trenches under the Aqsa Mosque during the repairs of 1938-1942 and found a mosaic floor and a third-century relief of a centaur, most of which he never published. But no systematic excavation of the platform has ever been made, and none is going to be — the reasons are religious and political and they are not going to change. Everything else the app can say about the Temple Mount comes from digging around its base: the southern wall, the Ophel, the western wall tunnels, never the surface itself.",
+          "That scarcity is exactly why the caveat below is not a footnote to the article. It is the article.",
+        ],
+      },
+      {
+        heading: "Objects Without a Layer",
+        paragraphs: [
+          "Archaeology's evidence is not really objects; it is objects in relationships. A cooking pot means little on its own and a great deal if it lies on a floor, under a collapse, above a coin. Those relationships — stratigraphy — are how anything gets dated and how one find is connected to another. The 1999 works destroyed every relationship in nine thousand tons of earth in a matter of days. Nothing sifted from it can be dated by its context, assigned to a building, or connected to any other find, because it no longer has a context to be dated by.",
+          "That limit has been pressed hard, by three critics who press it in three different ways. I. Finkelstein doubts the premise that the debris all came from the platform's own deposits, and holds that only an extraordinary find — an inscription — could carry weight from material like this. M. Abu-Khalaf, of Al-Quds University, points out that the area worked in 1999 was itself a dump used to build up the platform, so some of the earth may have come from the surrounding valleys rather than from the Mount. Y. Mizrachi, of the organisation Emek Shaveh, argues the project has no archaeological value at all — and his objection has a second half that ought to be reported with the first, because leaving it out makes his position look merely dismissive: he holds that a project with little scientific value nonetheless has a large public effect on how the Mount is understood, and that Elad's long involvement is why that matters. None of the three is a fringe voice, and this article does not brush them aside.",
+          "The project's own answer is worth stating in its own terms rather than in a caricature. G. Barkay compares the work to an archaeological surface survey, a long-accepted method in which unstratified surface material is treated as a statistical sample of what lies below. The project argues that out-of-context finds still carry typological and quantitative information; that comparison with parallel objects from well-dated contexts elsewhere in Jerusalem lets much of the material be dated typologically; and that because the bulldozers created discrete heaps rather than mixing everything uniformly, statistical clustering within heaps may partly recover which finds came from the same original deposit. That last claim is the project's own proposal and, by its own account, awaits full classification before it can be tested.",
+          "So the balance. This material can support statements of the form \"objects of this kind and this period were present on the Temple Mount, in roughly these proportions.\" That is real knowledge and it is not nothing. It cannot support statements of the form \"this object came from this building, in this year, and therefore that event happened.\" Any claim of the second kind made from sifted material — and such claims have been made, in headlines, about several of these finds — is claiming more than the method can deliver. The badge on this article says \"no excavation context\", and it means it.",
+        ],
+      },
+    ],
+    verses: [
+      { reference: "Mark 13:1-2", note: "The buildings whose debris this is, and what was said of them" },
+      { reference: "Micah 3:12", note: "\"Zion for your sake will be plowed like a field\" — a prophet's image, and in 1999 a literal one" },
+      { reference: "Jeremiah 26:18", note: "The same oracle quoted back a century later in Jeremiah's defence" },
+      { reference: "Matthew 24:1-2", note: "Stones thrown down — the destruction layer this debris partly represents" },
+    ],
+    sources: [
+      { label: "Temple Mount Sifting Project: about the project", url: "https://tmsifting.org/en/brief-introduction-to-the-project/" },
+      { label: "Wikipedia: Temple Mount Sifting Project", url: "https://en.wikipedia.org/wiki/Temple_Mount_Sifting_Project" },
+    ],
+    discovery: {
+      objectType: "Recovered artefacts — coins, figurine fragments, bullae, floor tile, pottery, glass, metal — wet-sifted from bulldozed fill",
+      findSite: "Debris removed from the Temple Mount in 1999 and dumped in the Kidron Valley; sifted at Emek Tzurim and, since 2019, at Mount Scopus, Jerusalem",
+      findSiteId: "mount-moriah",
+      findSiteKind: "location",
+      foundYear: "2004 onward",
+      foundBy: "G. Barkay and Z. Dvira, under Bar-Ilan University auspices with Israel Exploration Society funding, and many thousands of volunteers",
+      objectDate: "Mixed. Finds run from the Bronze Age to the Ottoman period, with no stratigraphic date available for any of them individually",
+      objectDateCertainty: "disputed",
+      currentLocation: "Held by the Temple Mount Sifting Project; selected finds published and exhibited",
+      unprovenanced: true,
+    },
+    citations: [
+      {
+        tier: "institution",
+        label: "Temple Mount Sifting Project — about the project",
+        url: "https://tmsifting.org/en/brief-introduction-to-the-project/",
+        credit: "Gabriel Barkay and Zachi Dvira, Temple Mount Sifting Project",
+        detail: "The project's own account of the 1999 works, the tonnage removed, and the sifting operation",
+        supports: "The founding, the directors and the quantity of debris",
+      },
+      {
+        tier: "institution",
+        label: "Temple Mount Sifting Project — methodology",
+        url: "https://tmsifting.org/en/methodology/",
+        credit: "Temple Mount Sifting Project",
+        detail: "The project's statement of its own method, including its acknowledgement that major archaeological data was lost and its case that unstratified finds retain typological and statistical value",
+        supports: "The project's answer to the stratigraphy objection, in its own words",
+      },
+      {
+        tier: "reference",
+        label: "The Times of Israel: \"Temple Mount archaeological project yields treasure, unearths conflict\"",
+        url: "https://www.timesofisrael.com/temple-mount-project-yields-treasure-but-unearths-conflict/",
+        credit: "The Times of Israel",
+        detail: "Reporting that quotes I. Finkelstein, M. Abu-Khalaf and Y. Mizrachi against the project and G. Barkay in reply, and sets out Elad's adoption of the sifting site in 2005",
+        supports: "The three criticisms in the third section, G. Barkay's answer, and the funding history",
+      },
+      {
+        tier: "encyclopedic",
+        label: "Wikipedia: Temple Mount Sifting Project",
+        url: "https://en.wikipedia.org/wiki/Temple_Mount_Sifting_Project",
+        credit: "Wikipedia",
+        detail: "The find counts and the project's history. Note that this article carries no criticism section — the objections in the third section here are cited to the Times of Israel report above, not to it",
+        supports: "The find counts and the operational history",
+      },
+      {
+        tier: "scholarly",
+        label: "G. Barkay and Z. Dvira, reports of the Temple Mount Sifting Project",
+        credit: "Gabriel Barkay and Zachi Dvira, Bar-Ilan University",
+        detail: "Published across New Studies on Jerusalem and related conference volumes from 2006 onward. Print only",
+        supports: "The published finds",
+      },
+    ],
+    reflectionPrompt:
+      "Somebody's careless afternoon destroyed information nobody can ever recover, and other people have spent twenty years salvaging what they can. Which of those two are you being asked to be this week?",
+  },
 ];

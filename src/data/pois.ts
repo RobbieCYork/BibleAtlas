@@ -692,7 +692,7 @@ export const pois: PointOfInterest[] = [
     description:
       "The City of David is the oldest inhabited core of ancient Jerusalem, on the ridge south of the Temple Mount. Biblical tradition identifies it as the Jebusite stronghold King David conquered around 1000 BC and made his capital, and it remained the heart of Jerusalem through the era Jesus and his disciples would have known.",
     archaeology: {
-      note: "Excavations spanning over 150 years have uncovered the Gihon Spring fortifications, the Stepped Stone Structure, a \"Large Stone Structure\" some archaeologists identify as David's palace, and the Second Temple-period Pool of Siloam and pilgrim road. The identification and dating of the Large Stone Structure with a Davidic palace is genuinely contested among scholars.",
+      note: "Excavations spanning over 150 years have uncovered the Gihon Spring fortifications and Warren's Shaft, the Stepped Stone Structure, the Large Stone Structure that E. Mazar identified as David's palace, the Second Temple-period Pool of Siloam, and the Pilgrimage Road that climbed from it to the Temple Mount. Hezekiah's Tunnel runs beneath the ridge from the spring to the pool. The identification of the Large Stone Structure as a Davidic palace is genuinely contested among scholars, and so is the date of the upper part of the Stepped Stone Structure; each has its own article here.",
       photos: [
         {
           url: "https://upload.wikimedia.org/wikipedia/commons/6/61/City_of_David_-_The_Stepped_Pilgrims_Road_IMG_5939.JPG",
@@ -1092,7 +1092,7 @@ export const pois: PointOfInterest[] = [
     description:
       "The Pool of Siloam, fed by the Gihon Spring, is where in John 9 Jesus sends a man born blind to wash and receive his sight.",
     archaeology: {
-      note: "The Second Temple-period pool was rediscovered by accident in 2004 during sewer repair, and excavation uncovered a large stepped stone pool dated by coins to the 1st century BC-1st century AD — squarely in Jesus's lifetime. The smaller pool long shown to pilgrims is actually a 5th-century Byzantine construction roughly 70 yards away, meaning that site was misidentified as \"the\" biblical pool for centuries before the 2004 find. Full excavation of the newly found pool is still ongoing.",
+      note: "The Second Temple-period pool was found by accident in the autumn of 2004 during repairs to a damaged sewer line. E. Shukron of the Israel Antiquities Authority was supervising the work when a tractor struck large cut stones; he stopped the digging, and called in R. Reich, who was already excavating at the Gihon Spring nearby. The two of them then excavated the pool jointly, uncovering a large stepped stone basin dated by coins to the 1st century BC-1st century AD — squarely in Jesus's lifetime. The smaller pool long shown to pilgrims is a 5th-century Byzantine construction roughly 70 yards away, so that site was misidentified as \"the\" biblical pool for centuries before the 2004 find. Excavation of the Second Temple pool is still ongoing. Water reached it down Hezekiah's Tunnel, and the Pilgrimage Road climbs from it toward the Temple Mount.",
       photos: [
         {
           url: "https://upload.wikimedia.org/wikipedia/commons/5/53/Steps_of_the_Pool_of_Siloam_%2830259%29.jpg",

@@ -17,7 +17,6 @@ bookIntro.manuscripts|book-intro:2 Chronicles|a0545813d0	87	Manasseh	manasseh-ki
 bookIntro.manuscripts|book-intro:2 Chronicles|ee8e60336f	145	Hezekiah	hezekiah
 bookIntro.manuscripts|book-intro:2 Chronicles|ee8e60336f	94	Hezekiah	hezekiah
 bookIntro.manuscripts|book-intro:2 Kings|00688f0650	117	Hezekiah	hezekiah
-bookIntro.manuscripts|book-intro:2 Kings|00688f0650	12	Hezekiah	hezekiah
 bookIntro.manuscripts|book-intro:2 Kings|c61dda1595	121	Hezekiah	hezekiah
 bookIntro.manuscripts|book-intro:2 Kings|e372c09c32	108	Jehoiachin	jeconiah
 bookIntro.manuscripts|book-intro:2 Samuel|300b69dfd7	238	David	david
@@ -2793,7 +2792,7 @@ poi.archaeology.note|chorazin|664628df5d	260	Jesus	jesus-of-nazareth
 poi.archaeology.note|chorazin|664628df5d	315	Moses	moses
 poi.archaeology.note|circus-of-nero-rome|9c89e1a75a	227	Peter	simon-peter
 poi.archaeology.note|circus-of-nero-rome|9c89e1a75a	417	Peter	simon-peter
-poi.archaeology.note|city-of-david|490ab89a53	171	David	david
+poi.archaeology.note|city-of-david|c49f7e8151	186	David	david
 poi.archaeology.note|dominus-flevit|621fe7402b	390	Jesus	jesus-of-nazareth
 poi.archaeology.note|dormition-abbey|d39d59c090	462	Mary	mary-mother-of-jesus
 poi.archaeology.note|ein-karem|f56ab6de27	158	John the Baptist	john-the-baptist
@@ -2826,7 +2825,7 @@ poi.archaeology.note|paphos|1a46862dd2	262	Sergius Paulus	sergius-paulus
 poi.archaeology.note|paphos|1a46862dd2	321	Sergius Paulus	sergius-paulus
 poi.archaeology.note|patara|25c6bf6296	226	Nero	nero-caesar
 poi.archaeology.note|perga|3eb01adcdf	356	Paul	paul-of-tarsus
-poi.archaeology.note|pool-of-siloam|caf56a96a9	206	Jesus	jesus-of-nazareth
+poi.archaeology.note|pool-of-siloam|c1df35b74d	483	Jesus	jesus-of-nazareth
 poi.archaeology.note|rhegium|424f789ce6	318	Paul	paul-of-tarsus
 poi.archaeology.note|salamis|4b13067fc0	283	Paul	paul-of-tarsus
 poi.archaeology.note|sepphoris|62d5301ee1	427	Jesus	jesus-of-nazareth
@@ -5181,11 +5180,20 @@ topic.section|bethlehem-bulla|db47873336	212	Manasseh	manasseh-king-of-judah
 topic.section|bethlehem-bulla|db47873336	69	Hezekiah	hezekiah
 topic.section|bethlehem-bulla|db47873336	79	Manasseh	manasseh-king-of-judah
 topic.section|bethlehem-bulla|db47873336	91	Josiah	josiah
+topic.section|broad-wall-jerusalem|244f39100a	99	David	david
+topic.section|broad-wall-jerusalem|43f8c7f3a4	144	Uzziah	uzziah
+topic.section|broad-wall-jerusalem|43f8c7f3a4	216	Hezekiah	hezekiah
+topic.section|broad-wall-jerusalem|91c2e1ad6e	519	Uzziah	uzziah
+topic.section|broad-wall-jerusalem|91c2e1ad6e	572	Hezekiah	hezekiah
+topic.section|broad-wall-jerusalem|91c2e1ad6e	593	Uzziah	uzziah
+topic.section|broad-wall-jerusalem|ae61e1632c	58	Nehemiah	nehemiah
 topic.section|bubastite-portal|b1f8020da7	168	Solomon	solomon
 topic.section|bubastite-portal|b1f8020da7	30	Rehoboam	rehoboam
 topic.section|bubastite-portal|b1f8020da7	406	Solomon	solomon
 topic.section|bubastite-portal|c66ad548d4	274	Rehoboam	rehoboam
 topic.section|bubastite-portal|e9b0ff66ca	115	Rehoboam	rehoboam
+topic.section|burnt-house-jerusalem|46ec6ff0d2	403	Jesus	jesus-of-nazareth
+topic.section|burnt-house-jerusalem|59adc9239a	623	Caiaphas	caiaphas
 topic.section|caiaphas-ossuary|678d93794a	332	Jesus	jesus-of-nazareth
 topic.section|caiaphas-ossuary|75beaa5359	694	Caiaphas	caiaphas
 topic.section|canaanites|590b3c00fc	17	Abraham	abraham
@@ -5318,6 +5326,14 @@ topic.section|hezekiah-bulla|52d97dbdce	417	Hezekiah	hezekiah
 topic.section|hezekiah-bulla|52d97dbdce	433	Ahaz	ahaz
 topic.section|hezekiah-bulla|59947d8abf	105	Hezekiah	hezekiah
 topic.section|hezekiah-bulla|9a8a3481b2	519	Hezekiah	hezekiah
+topic.section|hezekiahs-tunnel|16d928275d	161	Jesus	jesus-of-nazareth
+topic.section|hezekiahs-tunnel|16d928275d	297	Hezekiah	hezekiah
+topic.section|hezekiahs-tunnel|9356a51e4e	4	Hezekiah	hezekiah
+topic.section|hezekiahs-tunnel|ce294f66dc	205	Hezekiah	hezekiah
+topic.section|hezekiahs-tunnel|dab626c0f9	189	Hezekiah	hezekiah
+topic.section|hezekiahs-tunnel|e01a608ede	22	Hezekiah	hezekiah
+topic.section|hezekiahs-tunnel|e01a608ede	241	David	david
+topic.section|hezekiahs-tunnel|e01a608ede	422	Isaiah	isaiah
 topic.section|holy-of-holies|50aa8d0846	248	the Holy Spirit	holy-spirit
 topic.section|holy-of-holies|50aa8d0846	895	Jesus	jesus-of-nazareth
 topic.section|holy-of-holies|900c0772b5	14	Jesus	jesus-of-nazareth
@@ -5373,6 +5389,19 @@ topic.section|lachish-letters|e6cf5f18bf	146	Jeremiah	jeremiah
 topic.section|lachish-letters|fe82bc1623	39	Jeremiah	jeremiah
 topic.section|lachish-reliefs|2bbc4971f2	103	Hezekiah	hezekiah
 topic.section|lachish-reliefs|e14883794d	462	Hezekiah	hezekiah
+topic.section|large-stone-structure|1533f814db	572	David	david
+topic.section|large-stone-structure|47713f7a49	122	David	david
+topic.section|large-stone-structure|47713f7a49	283	David	david
+topic.section|large-stone-structure|47713f7a49	302	David	david
+topic.section|large-stone-structure|72e318235c	365	David	david
+topic.section|large-stone-structure|72e318235c	42	David	david
+topic.section|large-stone-structure|7c64bffed3	357	David	david
+topic.section|large-stone-structure|c9b0697951	242	Jeremiah	jeremiah
+topic.section|large-stone-structure|d0417ba37a	327	David	david
+topic.section|large-stone-structure|d0417ba37a	782	David	david
+topic.section|large-stone-structure|ee039a21b2	73	David	david
+topic.section|large-stone-structure|fd7a9ede8a	128	David	david
+topic.section|large-stone-structure|fd7a9ede8a	72	David	david
 topic.section|levites|0e2fc278d4	403	Aaron	aaron
 topic.section|levites|e1e8d99182	0	Jesus	jesus-of-nazareth
 topic.section|levites|e1e8d99182	280	Barnabas	barnabas
@@ -5486,6 +5515,15 @@ topic.section|pilate-stone|69dc9ce4a3	52	Luke	luke-evangelist
 topic.section|pilate-stone|e2be0f8e61	147	Pontius Pilate	pontius-pilate
 topic.section|pilate-stone|e2be0f8e61	282	Tiberius	tiberius-caesar
 topic.section|pilate-stone|fcafd15513	160	Herod the Great	herod-the-great
+topic.section|pilgrimage-road-jerusalem|84333a913a	243	Pontius Pilate	pontius-pilate
+topic.section|pilgrimage-road-jerusalem|84333a913a	666	Pilate	pontius-pilate
+topic.section|pilgrimage-road-jerusalem|84333a913a	674	Pilate	pontius-pilate
+topic.section|pilgrimage-road-jerusalem|be4f2bdc71	334	Pontius Pilate	pontius-pilate
+topic.section|pilgrimage-road-jerusalem|be4f2bdc71	527	Pilate	pontius-pilate
+topic.section|pilgrimage-road-jerusalem|be4f2bdc71	602	Jesus	jesus-of-nazareth
+topic.section|pilgrimage-road-jerusalem|d9a0b710b6	213	Jesus	jesus-of-nazareth
+topic.section|place-of-trumpeting-inscription|e4310c8897	132	Aaron	aaron
+topic.section|place-of-trumpeting-inscription|e4310c8897	339	Nehemiah	nehemiah
 topic.section|politarch-inscriptions|5913d2300e	196	Luke	luke-evangelist
 topic.section|politarch-inscriptions|72dfeb9c28	86	Luke	luke-evangelist
 topic.section|politarch-inscriptions|a42d16c2cc	41	Paul	paul-of-tarsus
@@ -5493,6 +5531,8 @@ topic.section|politarch-inscriptions|a42d16c2cc	50	Silas	silas
 topic.section|politarch-inscriptions|afa367e669	56	Luke	luke-evangelist
 topic.section|politarch-inscriptions|d6a1721288	389	Luke	luke-evangelist
 topic.section|politarch-inscriptions|ee434842a9	183	Luke	luke-evangelist
+topic.section|robinsons-arch|2189e9d0e0	244	Luke	luke-evangelist
+topic.section|robinsons-arch|2189e9d0e0	67	Jesus	jesus-of-nazareth
 topic.section|romans|1a0b26f70d	106	Herod the Great	herod-the-great
 topic.section|romans|1a0b26f70d	175	Pontius Pilate	pontius-pilate
 topic.section|romans|1a0b26f70d	265	Caesar Augustus	caesar-augustus
@@ -5547,7 +5587,6 @@ topic.section|sergius-paulus-inscriptions|c902189bc2	86	Sergius Paulus	sergius-p
 topic.section|sergius-paulus-inscriptions|ca3495f229	251	Luke	luke-evangelist
 topic.section|sergius-paulus-inscriptions|ddca383bed	169	Claudius	claudius-caesar
 topic.section|shema-seal|fb1fddd58a	380	Solomon	solomon
-topic.section|siloam-inscription|10d06d1080	0	Hezekiah	hezekiah
 topic.section|siloam-inscription|3f6e3bad37	126	Hezekiah	hezekiah
 topic.section|siloam-inscription|4a9ae734bf	236	Hezekiah	hezekiah
 topic.section|siloam-inscription|751fc2bb82	19	Hezekiah	hezekiah
@@ -5572,6 +5611,15 @@ topic.section|son-of-man|af2dc78ff9	209	Ezekiel	ezekiel
 topic.section|son-of-man|af2dc78ff9	401	Ezekiel	ezekiel
 topic.section|son-of-man|af2dc78ff9	511	Jesus	jesus-of-nazareth
 topic.section|son-of-man|af2dc78ff9	519	Ezekiel	ezekiel
+topic.section|stepped-stone-structure|0396b2cca1	574	David	david
+topic.section|stepped-stone-structure|7b40368838	259	David	david
+topic.section|stepped-stone-structure|7b40368838	472	David	david
+topic.section|stepped-stone-structure|7b40368838	482	Solomon	solomon
+topic.section|stepped-stone-structure|ad45316bee	99	David	david
+topic.section|stepped-stone-structure|f9119a37c9	168	David	david
+topic.section|stepped-stone-structure|f9119a37c9	209	David	david
+topic.section|stepped-stone-structure|f9119a37c9	265	Solomon	solomon
+topic.section|stepped-stone-structure|f9119a37c9	405	Hezekiah	hezekiah
 topic.section|synagogue|b1fc7c8260	18	Jesus	jesus-of-nazareth
 topic.section|synagogue|b1fc7c8260	379	Isaiah	isaiah
 topic.section|synagogue|b1fc7c8260	44	Luke	luke-evangelist
@@ -5602,6 +5650,7 @@ topic.section|tel-dan-stele|836d35b34a	628	David	david
 topic.section|tel-dan-stele|9cf69ffa5f	323	David	david
 topic.section|tell-es-safi-ostracon|04f6d6650e	122	David	david
 topic.section|tell-es-safi-ostracon|dbe37c3509	520	David	david
+topic.section|temple-mount-sifting-project|3d9eb67019	154	Solomon	solomon
 topic.section|temple-warning-inscription|e6e0aeba7c	266	Paul	paul-of-tarsus
 topic.section|temple-warning-inscription|e6e0aeba7c	80	Paul	paul-of-tarsus
 topic.section|the-christ|4d78c4e744	389	Jesus	jesus-of-nazareth
@@ -5681,6 +5730,12 @@ topic.section|torah|fba21c9ca1	480	Luke	luke-evangelist
 topic.section|torah|fba21c9ca1	503	Jesus	jesus-of-nazareth
 topic.section|ugarit-tablets|b9970d49c7	134	Elijah	elijah
 topic.section|ugarit-tablets|b9970d49c7	214	Josiah	josiah
+topic.section|warrens-shaft|384d04ea9d	356	David	david
+topic.section|warrens-shaft|3df13a3cf6	162	David	david
+topic.section|warrens-shaft|4a73596be3	73	David	david
+topic.section|warrens-shaft|4c85472650	780	David	david
+topic.section|warrens-shaft|70bb8ffee2	316	David	david
+topic.section|warrens-shaft|8948c5885e	430	David	david
 topic.section|young-earth-old-earth-creationism|0ad470a689	1067	Adam	adam
 topic.section|young-earth-old-earth-creationism|0ad470a689	935	Adam	adam
 topic.section|young-earth-old-earth-creationism|4413b94443	191	Adam	adam

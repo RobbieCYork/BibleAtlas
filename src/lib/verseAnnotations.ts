@@ -1549,7 +1549,14 @@ const NAME_CONTEXT_RULES: Record<string, NameContextRule[]> = {
     // claims wrote them. The clearest case in the whole batch that a title is not an attribution.
     WISDOM_OR_PSALMS_OF,
   ],
-  david: [{ after: /^\s+George\b/, to: null }],       // David George Hogarth, who dug at Ephesus
+  david: [
+    { after: /^\s+George\b/, to: null },              // David George Hogarth, who dug at Ephesus
+    // MODERN WORK TITLES (see the block below): the title of Finkelstein, Singer-Avitz, Herzog and
+    // Ussishkin's article in Tel Aviv 34 (2007), quoted in the large-stone-structure article. The
+    // words name a journal article, not the king, so they link to nobody. Pinned by the title
+    // string for the reason given there — nothing in the neighbouring words says "title".
+    { phrase: "Has King David's Palace in Jerusalem been Found?", to: null },
+  ],
   salome: [{ after: /^\s+Alexandra\b/, to: null }],   // the Hasmonean queen, not Jesus's follower
   felix: [{ after: /^\s+Gemina\b/, to: null }],       // "Colonia Iulia Felix Gemina Lystra" — a title
 
@@ -1703,6 +1710,14 @@ const NAME_CONTEXT_RULES: Record<string, NameContextRule[]> = {
   ],
   ruth: [
     BOOK_OF, // "Boaz appears in the book of Ruth as a 'man of standing'"
+  ],
+  shiloh: [
+    // Yigal Shiloh directed the City of David excavation from 1978 to 1985 and is named in the
+    // archaeology articles. He is a modern archaeologist, not the Ephraimite town where the Tent of
+    // Meeting stood, and a link from his surname to that POI is simply wrong. Only the form
+    // preceded by his initial or forename is suppressed, so Scripture's own "Shiloh" (Joshua 18:1,
+    // 1 Samuel 1:3 and 30 more) and every article naming the place keep their links untouched.
+    { before: /\b(?:Y\.|Yigal)\s+$/, to: null },
   ],
   samuel: [
     BOOK_OF, // "the following books of Samuel", "the earlier books of Samuel and Kings"
