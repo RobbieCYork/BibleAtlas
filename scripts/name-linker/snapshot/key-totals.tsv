@@ -710,7 +710,7 @@ person	jesse	jesse	panel	47
 person	jesse	jesse	prose	8
 person	jesse	jesse	reader	47
 person	jesus	jesus-of-nazareth	panel	717
-person	jesus	jesus-of-nazareth	prose	801
+person	jesus	jesus-of-nazareth	prose	802
 person	jesus	jesus-of-nazareth	reader	717
 person	jesus christ	jesus-of-nazareth	panel	165
 person	jesus christ	jesus-of-nazareth	prose	21
@@ -1468,7 +1468,7 @@ topic	gilgamesh epic	epic-of-gilgamesh	prose	1
 topic	great isaiah scroll	great-isaiah-scroll	prose	5
 topic	great psalms scroll	great-psalms-scroll	prose	1
 topic	greek	greeks	panel	15
-topic	greek	greeks	prose	378
+topic	greek	greeks	prose	377
 topic	greek	greeks	reader	15
 topic	greek minor prophets scroll	greek-minor-prophets-scroll	prose	3
 topic	greek old testament	septuagint	prose	5

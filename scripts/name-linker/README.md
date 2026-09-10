@@ -91,7 +91,7 @@ purpose and is written up in `reviewed.tsv`'s header.
 | file | rows | what it holds |
 |---|---:|---|
 | `bible-links.tsv` | 9,724 | every person-link in all 31,098 WEB verses, with the id each rendering path gives it |
-| `prose-links.tsv` | 6,341 | every person-link in every authored prose block the app puts through `LinkedVerseText` |
+| `prose-links.tsv` | 6,343 | every person-link in every authored prose block the app puts through `LinkedVerseText` |
 | `key-totals.tsv` | 4,063 | a tally covering **every** kind — location, POI, topic, timeline, verse reference — one row per (kind, matched text, id, path) |
 
 The first two are row-level, so a diff names the verse or the block. `key-totals.tsv` exists because
@@ -197,7 +197,7 @@ snapshot.
 `LinkedVerseText` is what PersonPanel, LocationPanel, PoiPanel, TopicPanel, BookIntroView,
 TimelineEventPanel and MyProfileView render with. Every book override, verse override and
 suppression in `verseAnnotations.ts` is invisible there. **835 links across 745 verses resolve
-differently between the two paths**, and all but a handful of the 6,341 prose links run with no
+differently between the two paths**, and all but a handful of the 6,343 prose links run with no
 disambiguation at all — `OWNER_NAME_OVERRIDES` (below) is the only correction that reaches them. A
 fix that only moves the `reader` column has fixed half the app.
 
