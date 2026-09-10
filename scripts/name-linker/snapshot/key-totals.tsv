@@ -182,7 +182,7 @@ location	joppa	joppa	prose	9
 location	joppa	joppa	reader	14
 location	jordan river	jordan-river	prose	1
 location	judea	judea	panel	43
-location	judea	judea	prose	111
+location	judea	judea	prose	110
 location	judea	judea	reader	43
 location	kadesh	kadesh-barnea	panel	18
 location	kadesh	kadesh-barnea	prose	6
@@ -303,7 +303,7 @@ location	red sea	red-sea	reader	26
 location	region of the gerasenes	gadara	prose	1
 location	roman province of asia	asia-province	prose	3
 location	rome	rome	panel	9
-location	rome	rome	prose	289
+location	rome	rome	prose	290
 location	rome	rome	reader	9
 location	salt sea	dead-sea	panel	9
 location	salt sea	dead-sea	prose	1
