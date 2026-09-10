@@ -105,7 +105,7 @@ location	edom	edom	panel	112
 location	edom	edom	prose	55
 location	edom	edom	reader	101
 location	egypt	egypt	panel	618
-location	egypt	egypt	prose	342
+location	egypt	egypt	prose	343
 location	egypt	egypt	reader	618
 location	ekron	ekron	panel	22
 location	ekron	ekron	prose	8
@@ -1446,7 +1446,7 @@ topic	egyptian	egyptians	prose	178
 topic	egyptian	egyptians	reader	30
 topic	egyptian execration texts	execration-texts	prose	1
 topic	egyptians	egyptians	panel	93
-topic	egyptians	egyptians	prose	11
+topic	egyptians	egyptians	prose	12
 topic	egyptians	egyptians	reader	93
 topic	ekron royal dedicatory inscription	ekron-royal-dedicatory-inscription	prose	1
 topic	el-araj	bethsaida-candidate-sites	prose	2
