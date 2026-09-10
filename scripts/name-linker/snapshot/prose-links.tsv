@@ -5193,6 +5193,12 @@ topic.section|beersheba-horned-altar|48c1049c97	362	Isaac	isaac
 topic.section|beersheba-horned-altar|59c3c2d28d	401	Hezekiah	hezekiah
 topic.section|beersheba-horned-altar|9821b189fb	49	Hezekiah	hezekiah
 topic.section|behistun-inscription|8d9f718cd6	299	Zechariah	zechariah-the-prophet
+topic.section|beni-hasan-tomb-painting|1ccb004f54	59	Abraham	abraham
+topic.section|beni-hasan-tomb-painting|1ccb004f54	68	Jacob	jacob
+topic.section|beni-hasan-tomb-painting|1ccb004f54	77	Joseph	joseph-son-of-jacob
+topic.section|beni-hasan-tomb-painting|6590e3fdd9	283	Joseph	joseph-son-of-jacob
+topic.section|beni-hasan-tomb-painting|6590e3fdd9	307	Jacob	jacob
+topic.section|beni-hasan-tomb-painting|6590e3fdd9	71	Abram	abraham
 topic.section|bethlehem-bulla|da93cf629a	129	David	david
 topic.section|bethlehem-bulla|db47873336	212	Manasseh	manasseh-king-of-judah
 topic.section|bethlehem-bulla|db47873336	69	Hezekiah	hezekiah
@@ -5205,6 +5211,9 @@ topic.section|broad-wall-jerusalem|91c2e1ad6e	519	Uzziah	uzziah
 topic.section|broad-wall-jerusalem|91c2e1ad6e	572	Hezekiah	hezekiah
 topic.section|broad-wall-jerusalem|91c2e1ad6e	593	Uzziah	uzziah
 topic.section|broad-wall-jerusalem|ae61e1632c	58	Nehemiah	nehemiah
+topic.section|brooklyn-papyrus-35-1446|187dcb6c66	665	Jacob	jacob
+topic.section|brooklyn-papyrus-35-1446|74419f570d	219	Joseph	joseph-son-of-jacob
+topic.section|brooklyn-papyrus-35-1446|b1fd0a6efc	482	Joseph	joseph-son-of-jacob
 topic.section|bubastite-portal|b1f8020da7	168	Solomon	solomon
 topic.section|bubastite-portal|b1f8020da7	30	Rehoboam	rehoboam
 topic.section|bubastite-portal|b1f8020da7	406	Solomon	solomon
@@ -5299,6 +5308,8 @@ topic.section|ekron-royal-dedicatory-inscription|4a10da3753	467	Hezekiah	hezekia
 topic.section|elephantine-papyri|59153d41af	456	Nehemiah	nehemiah
 topic.section|elephantine-papyri|bc07a091b4	751	Jeremiah	jeremiah
 topic.section|epic-of-gilgamesh|de015d5350	255	Abraham	abraham
+topic.section|execration-texts|0d247b2452	146	David	david
+topic.section|execration-texts|c3ae9e529e	531	David	david
 topic.section|galilee-boat|132067bc4f	273	Jesus	jesus-of-nazareth
 topic.section|galilee-boat|869b76d25c	26	Jesus	jesus-of-nazareth
 topic.section|galilee-boat|cf71193276	155	Jesus	jesus-of-nazareth
@@ -5356,6 +5367,7 @@ topic.section|holy-of-holies|50aa8d0846	248	the Holy Spirit	holy-spirit
 topic.section|holy-of-holies|50aa8d0846	895	Jesus	jesus-of-nazareth
 topic.section|holy-of-holies|900c0772b5	14	Jesus	jesus-of-nazareth
 topic.section|holy-of-holies|f9f3326a99	239	Solomon	solomon
+topic.section|ipuwer-papyrus|996b05b417	54	Moses	moses
 topic.section|isaiah-bulla|18cce0bce7	149	Hezekiah	hezekiah
 topic.section|isaiah-bulla|18cce0bce7	209	Isaiah	isaiah
 topic.section|isaiah-bulla|18cce0bce7	377	Isaiah	isaiah
@@ -5490,6 +5502,7 @@ topic.section|nicene-creed|aa7a298fbc	45	Jesus Christ	jesus-of-nazareth
 topic.section|nicene-creed|aa7a298fbc	888	Pontius Pilate	pontius-pilate
 topic.section|nicene-creed|b92d0e52a2	340	Charlemagne	charlemagne
 topic.section|nicene-creed|d3e247f741	764	Photius of Constantinople	photius
+topic.section|nimrud-ivories|84bc46d88c	200	Solomon	solomon
 topic.section|nuzi-tablets|e02d8be473	119	Abraham	abraham
 topic.section|nuzi-tablets|e02d8be473	285	Sarah	sarah
 topic.section|nuzi-tablets|e02d8be473	306	Hagar	hagar
