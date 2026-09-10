@@ -303,6 +303,12 @@ const BOOK_NAME_OVERRIDES: Record<string, Record<string, string>> = {
  *   again at Matthew 13:55, where the Judas listed is a brother of Jesus — a fourth, distinct man with
  *   no entry here, so suppressed. (Mark 6:3, the parallel passage, needs no entry: WEB renders that
  *   same brother's name "Judah," which no entry in this app claims, so it already produces no link.)
+ *   Wrong a FIFTH time, and this one was live on the public site: Acts 15:22, 15:27 and 15:32 name
+ *   JUDAS CALLED BARSABBAS, sent from the Jerusalem council to Antioch with Silas. Iscariot is dead
+ *   at Acts 1:18, seven chapters earlier. Three mentions in all of Scripture, no article and no
+ *   record, so suppressed on the same principle as Acts 1:23's Joseph directly below. The article
+ *   half of the same fault — Silas's own life story — is fixed in OWNER_NAME_OVERRIDES, which is
+ *   the only lever that reaches prose.
  * - "Joseph": the patriarch owns the bare key globally; Matthew's and Mark's Josephs are handled by
  *   BOOK_NAME_OVERRIDES. Acts holds two more men and neither is him. Acts 4:36's is BARNABAS, whom the
  *   app has, so that one RESOLVES — and it fires for the ASV alone, because WEB and KJV print "Joses"
@@ -446,10 +452,76 @@ const VERSE_NAME_OVERRIDES: Record<string, Record<string, Record<string, string 
     // no longer three occurrences needing three answers, it is one.
     Acts: { "1:13": "james-son-of-zebedee" },
   },
+  //
+  // ── AND A FIFTH BEARER, AT Acts 15:22, 15:27 and 15:32 — suppressed, not resolved ─────────────
+  //
+  // "Judas called Barsabbas, and Silas, chief men among the brothers" — the two men the Jerusalem
+  // council sent to Antioch with Paul and Barnabas to carry its letter. He is a fifth distinct
+  // Judas: not Iscariot, who owns the bare key globally and who is DEAD at Acts 1:18, seven
+  // chapters earlier; not Thaddaeus; not the brother of Jesus at Matthew 13:55; and not Judas of
+  // Galilee, on whom see the residual at the bottom of this comment. All three verses were
+  // rendering "Judas" as a link to judas-iscariot, live on www.capstonebible.com.
+  //
+  // Like Acts 1:23's Joseph and unlike Acts 4:36's, this one is wrong for EVERY reader: all three
+  // of the app's translations print "Judas" at all three verses — fetched 2026-09-10 from
+  // bible-api.com, the service src/lib/biblePassage.ts asks for the text, rather than recalled:
+  //
+  //   15:22  WEB  "…send them to Antioch with Paul and Barnabas: Judas called Barsabbas, and Silas,
+  //               chief men among the brothers."
+  //          KJV  "…to Antioch with Paul and Barnabas; namely, Judas surnamed Barsabas, and Silas,
+  //               chief men among the brethren:"
+  //          ASV  "…with Paul and Barnabas; [namely], Judas called Barsabbas, and Silas, chief men
+  //               among the brethren:"
+  //   15:27  WEB  "We have sent therefore Judas and Silas, who themselves will also tell you the
+  //               same things by word of mouth."
+  //          KJV  "We have sent therefore Judas and Silas, who shall also tell you the same things
+  //               by mouth."
+  //          ASV  "We have sent therefore Judas and Silas, who themselves also shall tell you the
+  //               same things by word of mouth."
+  //   15:32  WEB  "Judas and Silas, also being prophets themselves, encouraged the brothers with
+  //               many words, and strengthened them."
+  //          KJV  "And Judas and Silas, being prophets also themselves, exhorted the brethren with
+  //               many words, and confirmed them."
+  //          ASV  "And Judas and Silas, being themselves also prophets, exhorted the brethren with
+  //               many words, and confirmed them."
+  //
+  // The three differ on the SURNAME at 15:22 — KJV's "Barsabas" against "Barsabbas" — and at 15:27
+  // and 15:32 the name is bare in all three. Nothing in these clauses but "Judas", "Silas", "Paul"
+  // and "Barnabas" is registered to anybody, and the other three are right. So a verse-keyed
+  // override, which is keyed on book/chapter/verse and on the name and not on the surrounding
+  // wording, costs the spelling split nothing — that is the argument for this table over a phrase
+  // pin, exactly as at Acts 1:23. Each of the three verses holds exactly ONE "Judas", which is what
+  // makes a per-verse answer safe: the mechanism applies one value to every match of the key in a
+  // verse.
+  //
+  // `null`, not a target, and NO new record. He has three mentions in all of Scripture and no
+  // article; a `judas-barsabbas` record would be a page with nothing on it. `null` here means "a
+  // different bearer whom the app does not represent" — the `zadok`, `eleazar`, `nathan` and Simon
+  // Peter's father shape. Ruled 2026-09-10, the same ruling as Acts 1:23 and for the same reason.
+  //
+  // What this does NOT reach, measured rather than assumed:
+  //   - The panel path, which passes no book and so cannot see a verse key at all. Re-confirmed for
+  //     this change rather than inherited: every LinkedVerseText call site in src/ is handed an
+  //     authored prose field (PersonPanel's paragraphs, placesLived, controversies, lifespanDatingNotes
+  //     and a reference's source/summary; LocationPanel's founded/population/industry/facts/archaeology
+  //     note; PoiPanel's description and archaeology note; TopicPanel's paragraphs; BookIntroView's
+  //     whyWritten/paragraphs/manuscripts; TimelineEventPanel's paragraphs and datingNotes), and
+  //     MyProfileView's one remaining call site is handed `saved.favoriteVerse`, which is the user's
+  //     typed REFERENCE — the fetched verse text beside it is rendered as plain <p>, not through the
+  //     linker. So no surface in the app renders Acts 15's Scripture text on the panel path, and
+  //     bible-links.tsv's `panel` column measures what the linker WOULD do if one ever did.
+  //   - Acts 5:37's "Judas of Galilee", the revolt leader Gamaliel names, which still resolves to
+  //     Iscariot. A sixth bearer, in the same book, with no record. Measured while this was written
+  //     and deliberately NOT swept in: it is part of a larger enumeration of second bearers (see the
+  //     2026-09-10 sweep in automation/manager-inbox) and it will be ruled on with the rest rather
+  //     than decided as a side effect here.
   judas: {
     Matthew: { "13:55": null },
     John: { "14:22": "thaddaeus" },
-    Acts: { "1:13": "thaddaeus" },
+    // 1:13 resolves to the other apostle; the three 15:* verses are Judas Barsabbas and are
+    // suppressed. Keyed to four verses, not to the book — Acts 1:16, 1:25 and 5:37's "Judas" are
+    // untouched by this entry and are pinned as cases in scripts/name-linker/cases.mjs.
+    Acts: { "1:13": "thaddaeus", "15:22": null, "15:27": null, "15:32": null },
   },
   // "John". Five different men share the bare name in the New Testament, and until this entry
   // existed the app gave all of them to the Baptist except in Acts, where a blanket book override
@@ -1006,6 +1078,25 @@ const OWNER_NAME_OVERRIDES: Record<string, Record<string, string | null>> = {
   // Of the 10 prose mentions, 2 are his (Mary's page and Anna's) and 8 are not: Simeon son of Jacob
   // in the patriarch articles, and Simeon bar Kosiba — bar Kokhba — in the Roman revolt article.
   // Neither has an entry.
+  // "Judas": Iscariot owns the bare name globally and is right at nearly every prose mention. ONE
+  // record in the whole corpus names a different bearer in a way this table can reach. Silas's life
+  // story opens "one of two 'leaders among the believers' in the Jerusalem church — alongside Judas
+  // called Barsabbas", and that "Judas" was rendering as a link to Iscariot on Silas's page — the
+  // article half of the Acts 15 fault fixed in VERSE_NAME_OVERRIDES above, and the half a reader
+  // actually met, since the panel path has no other lever.
+  //
+  // Keyed on the OWNER rather than pinned as a phrase, and the reach of both was measured before
+  // choosing: `links-for.mjs --grep "Barsabb|Barsabas"` returns exactly one block in the corpus,
+  // this one, so a phrase pin would buy nothing a whole-record answer does not — and `links-for.mjs
+  // silas` shows the record holds exactly one "Judas" in its four blocks, so the coarseness of a
+  // whole-record answer costs nothing either. Where a record legitimately named both men this entry
+  // would be wrong and the longer wording would have to do the work; this one does not.
+  //
+  // `null` and not a target, for the same reason as the verse entries: the app has no record for
+  // Judas Barsabbas and is not getting one for three verses and no article.
+  judas: {
+    silas: null,
+  },
   simeon: {
     jacob: null,
     leah: null,

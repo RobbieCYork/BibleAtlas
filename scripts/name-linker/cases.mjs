@@ -2868,4 +2868,97 @@ export const CASES = [
   { ref: "Acts 7:14", surface: "Joseph", expect: "joseph-son-of-jacob", status: "guard",
     why: "\"Joseph sent, and summoned Jacob, his father\" — the patriarch and, in the same clause, " +
          "the patriarch's father, who is also the bare \"Jacob\" default. Both survive." },
+
+  // ── JUDAS CALLED BARSABBAS — a FIFTH Judas, at Acts 15:22, 15:27 and 15:32. SUPPRESSED ───────
+  //
+  // Found live on www.capstonebible.com: `curl https://www.capstonebible.com/person/silas` returned
+  // `<a href="/person/judas-iscariot">Judas</a> called Barsabbas`. Iscariot is dead at Acts 1:18,
+  // seven chapters before the Jerusalem council sends this man to Antioch with Silas.
+  //
+  // Same ruling and same shape as Acts 1:23's Joseph above: three mentions in all of Scripture, no
+  // article, no record, so `null` in VERSE_NAME_OVERRIDES — "a different bearer this app does not
+  // represent" — rather than a `judas-barsabbas` page with nothing on it. And unlike Acts 4:36,
+  // wrong for EVERY reader: all three translations print "Judas" at all three verses, fetched
+  // 2026-09-10 from bible-api.com, the service src/lib/biblePassage.ts asks for the text. They
+  // differ only on the surname at 15:22 (KJV "Barsabas", WEB and ASV "Barsabbas") and on KJV's
+  // leading "And" at 15:32, which moves the offset off zero — neither of which a verse-keyed
+  // override can see, and that is the argument for this table over a phrase pin.
+  //
+  // Nine cases: the three verses from the WEB corpus, and the same three in ASV and KJV against
+  // literals, which is the only way to assert either translation.
+  { ref: "Acts 15:22", surface: "Judas", expect: null, status: "guard",
+    why: "WEB, from the corpus. VERSE_NAME_OVERRIDES judas.Acts[\"15:22\"] = null. Was " +
+         "judas-iscariot. \"Judas called Barsabbas, and Silas, chief men among the brothers\" — the " +
+         "two men the Jerusalem council sent to Antioch. Paul, Barnabas and Silas in the same verse " +
+         "are all correct and are untouched. READER PATH ONLY: the panel path passes no book and " +
+         "still says judas-iscariot, the same structural residual as Acts 1:23 above; the article " +
+         "half of this fault is fixed by OWNER_NAME_OVERRIDES judas.silas." },
+  { ref: "Acts 15:27", surface: "Judas", expect: null, status: "guard",
+    why: "WEB, from the corpus. \"We have sent therefore Judas and Silas\" — the same two men, and " +
+         "here the name is bare, with no surname to disambiguate it in any translation." },
+  { ref: "Acts 15:32", surface: "Judas", expect: null, status: "guard",
+    why: "WEB, from the corpus. \"Judas and Silas, also being prophets themselves\" — the sentence " +
+         "Silas's life story cites, and the reason his page said Iscariot." },
+  { ref: "Acts 15:22", translation: "ASV",
+    text: "Then it seemed good to the apostles and the elders, with the whole church, to choose men out of their company, and send them to Antioch with Paul and Barnabas; [namely], Judas called Barsabbas, and Silas, chief men among the brethren:",
+    surface: "Judas", expect: null, status: "guard",
+    why: "The ASV literal. \"church\" for \"assembly\", \"brethren\" for \"brothers\", a bracketed " +
+         "[namely] the WEB does not print — and the same \"Judas\", suppressed identically, because " +
+         "the override is keyed on book/chapter/verse and the name, not on the wording." },
+  { ref: "Acts 15:22", translation: "KJV",
+    text: "Then pleased it the apostles and elders, with the whole church, to send chosen men of their own company to Antioch with Paul and Barnabas; namely, Judas surnamed Barsabas, and Silas, chief men among the brethren:",
+    surface: "Judas", expect: null, status: "guard",
+    why: "The KJV literal, which reads \"surnamed Barsabas\" with one b where WEB and ASV read " +
+         "\"called Barsabbas\". A phrase pin on \"Judas called Barsabbas\" would have missed this " +
+         "reader entirely; the verse key does not." },
+  { ref: "Acts 15:27", translation: "ASV",
+    text: "We have sent therefore Judas and Silas, who themselves also shall tell you the same things by word of mouth.",
+    surface: "Judas", expect: null, status: "guard",
+    why: "The ASV literal at 15:27. Bare name, no surname anywhere in the verse — nothing but the " +
+         "verse key could reach it." },
+  { ref: "Acts 15:27", translation: "KJV",
+    text: "We have sent therefore Judas and Silas, who shall also tell you the same things by mouth.",
+    surface: "Judas", expect: null, status: "guard",
+    why: "The KJV literal at 15:27, which drops \"themselves\" and \"by word of\"." },
+  { ref: "Acts 15:32", translation: "ASV",
+    text: "And Judas and Silas, being themselves also prophets, exhorted the brethren with many words, and confirmed them.",
+    surface: "Judas", expect: null, status: "guard",
+    why: "The ASV literal at 15:32. Note the leading \"And\": the surface sits at offset 4 here and " +
+         "at offset 0 in the WEB case above, which is exactly the kind of drift a phrase pin or an " +
+         "offset-sensitive fix would trip on." },
+  { ref: "Acts 15:32", translation: "KJV",
+    text: "And Judas and Silas, being prophets also themselves, exhorted the brethren with many words, and confirmed them.",
+    surface: "Judas", expect: null, status: "guard",
+    why: "The KJV literal at 15:32, same leading \"And\", different word order after it." },
+
+  // ── The article half, and the guards on both sides in the same book ──────────────────────────
+  { text: "Silas first appears as one of two 'leaders among the believers' in the Jerusalem church — alongside Judas called Barsabbas — chosen to carry the Jerusalem council's decision about Gentile converts to the church in Antioch, where he is described as a prophet who encouraged and strengthened the believers there (Acts 15:22, 15:32).",
+    surface: "Judas", owner: "silas", expect: null, status: "guard",
+    why: "The PANEL/prose path, quoted verbatim from silas's lifeStory in people.ts. This is the " +
+         "sentence a reader actually met — it rendered `<a href=\"/person/judas-iscariot\">Judas</a> " +
+         "called Barsabbas` on the public page. OWNER_NAME_OVERRIDES judas.silas = null. No verse " +
+         "override can reach this surface, and no phrase pin was reached for: `links-for.mjs " +
+         "--grep \"Barsabb|Barsabas\"` returns this one block in the whole corpus, and the silas " +
+         "record holds exactly one \"Judas\", so a whole-record answer is both sufficient and exact." },
+  { ref: "Acts 1:16", surface: "Judas", expect: "judas-iscariot", status: "guard",
+    why: "\"…concerning Judas, who was guide to those who took Jesus.\" The REAL Iscariot, fourteen " +
+         "chapters before the suppression and in the same book. judas.Acts is keyed to four verses, " +
+         "not to Acts — if this ever goes to `-`, the entry has leaked to the book." },
+  { ref: "Acts 1:25", surface: "Judas", expect: "judas-iscariot", status: "guard",
+    why: "\"…this ministry and apostleship from which Judas fell away\" — Iscariot again, nine " +
+         "verses later, and the other side of the same guard." },
+  { ref: "Acts 1:13", surface: "Judas the son of James", expect: "thaddaeus", status: "guard",
+    why: "The third Judas in Acts, matched as a whole phrase and pointed at Thaddaeus by " +
+         "judas.Acts[\"1:13\"]. Duplicated deliberately from the Acts 1:13 block above: that one " +
+         "guards the apostle-list work, this one guards the Acts 15 entries landing in the same " +
+         "Record without disturbing their neighbour." },
+
+  // ── A SIXTH bearer, in the same book, MEASURED AND NOT FIXED ─────────────────────────────────
+  // Acts 5:37's "Judas of Galilee" — the revolt leader Gamaliel names beside Theudas — still
+  // resolves to Iscariot on both paths, as do the "Judas" mentions on quirinius's record that
+  // describe the same man. Found during the Acts 15 pass and deliberately left alone, on exactly
+  // the precedent Acts 1:23 set: whether he gets `null` or a record is a content decision, and it
+  // belongs to the second-bearer enumeration filed on 2026-09-10 rather than to this fix. NOT
+  // recorded as a `known-wrong` case, because a known-wrong asserts a settled right answer and this
+  // one is not settled.
 ];
