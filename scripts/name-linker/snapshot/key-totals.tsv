@@ -667,10 +667,12 @@ person	isaac	isaac	reader	132
 person	isaiah	isaiah	panel	53
 person	isaiah	isaiah	prose	63
 person	isaiah	isaiah	reader	53
-person	jacob	jacob	panel	381
+person	jacob	jacob	panel	379
 person	jacob	jacob	prose	150
-person	jacob	jacob	reader	381
+person	jacob	jacob	reader	379
+person	jacob	jacob-father-of-joseph	panel	2
 person	jacob	jacob-father-of-joseph	prose	4
+person	jacob	jacob-father-of-joseph	reader	2
 person	james	james-brother-of-jesus	reader	10
 person	james	james-son-of-zebedee	panel	32
 person	james	james-son-of-zebedee	prose	54
@@ -766,11 +768,12 @@ person	joram	joram-king-of-judah	reader	7
 person	joram son of ahab	joram-king-of-israel	prose	2
 person	joram the son of ahab	joram-king-of-israel	panel	5
 person	joram the son of ahab	joram-king-of-israel	reader	5
+person	joseph	joseph-husband-of-mary	panel	1
 person	joseph	joseph-husband-of-mary	prose	10
 person	joseph	joseph-husband-of-mary	reader	20
 person	joseph	joseph-of-arimathea	reader	6
-person	joseph	joseph-son-of-jacob	panel	249
-person	joseph	joseph-son-of-jacob	prose	143
+person	joseph	joseph-son-of-jacob	panel	248
+person	joseph	joseph-son-of-jacob	prose	124
 person	joseph	joseph-son-of-jacob	reader	223
 person	joseph of arimathea	joseph-of-arimathea	prose	8
 person	joshua	joshua	panel	220

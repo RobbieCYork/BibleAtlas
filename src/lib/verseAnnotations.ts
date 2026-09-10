@@ -662,6 +662,26 @@ const VERSE_NAME_OVERRIDES: Record<string, Record<string, Record<string, string 
       "24:1": "ananias-the-high-priest",
     },
   },
+  // "Jacob": the patriarch owns the key and is the right answer in all but two verses of the whole
+  // Bible. Those two are the last two rungs of Matthew's genealogy, and the genealogy names the man
+  // itself — "Matthan became the father of Jacob. Jacob became the father of Joseph, the husband of
+  // Mary" (Matthew 1:15-16). That is Jacob son of Matthan, who has a record of his own whose first
+  // line is that he is not the patriarch, so these RESOLVE rather than suppress: a reader standing
+  // in Matthew's genealogy was being sent to Genesis, and no link would leave him with nothing.
+  //
+  // Nothing here is a ruling on the corpus-wide default for a bare "Jacob", which is Robbie's and is
+  // open. Two verses, named one at a time, is the narrowest statement that fixes them.
+  //
+  // Why this table AND the phrase pins under `jacob` in NAME_CONTEXT_RULES below, for one fault:
+  // they reach different halves of the app and neither reaches both. This one is keyed by
+  // book/chapter/verse and is translation-blind, so it fires for KJV and ASV readers too — both of
+  // which read "Matthan begat Jacob; and Jacob begat Joseph the husband of Mary", the same two men.
+  // It needs a book, so it is invisible on the panel path. The pins are keyed on the WEB wording and
+  // are the only lever the panel path has. Matthew 1:2's "Isaac became the father of Jacob" and Acts
+  // 7:8's are the patriarch, and neither mechanism reaches them.
+  jacob: {
+    Matthew: { "1:15": "jacob-father-of-joseph", "1:16": "jacob-father-of-joseph" },
+  },
 };
 
 /** The `excludeId` a book introduction renders under.
@@ -1070,8 +1090,31 @@ const OWNER_NAME_OVERRIDES: Record<string, Record<string, string | null>> = {
   // because the app has the right man and the building genuinely bears his name: the same call the
   // eight "St. Peter's Basilica"/"St. Peter's Square" mentions already get, left pointing at Simon
   // Peter across the Luther, Nero's-circus and Vatican-necropolis articles.
+  // The three records below are a different fault from Teresa's and share one shape: THE PAGE'S OWN
+  // SUBJECT IS A JOSEPH, and every bare "Joseph" on it was resolving to the patriarch. Joseph of
+  // Arimathea's biography opens "Joseph was a wealthy man from the town of Arimathea" and sent the
+  // reader to Egypt under his own name; so did Mary's husband's, and so did Caiaphas's, whose given
+  // name was Joseph ("Joseph, who was also called Caiaphas" — Josephus, Antiquities 18.2.2).
+  //
+  // Nineteen links, enumerated one at a time and read in their own sentences before this was
+  // written: 8 on joseph-husband-of-mary, 7 on joseph-of-arimathea, 4 on caiaphas. Not one of the
+  // nineteen is the patriarch, which is why one answer per record is enough here — the coarseness
+  // that makes OWNER_NAME_OVERRIDES the wrong lever for a mixed record is no cost on a record whose
+  // every occurrence means the same man.
+  //
+  // Mapped to the record itself rather than to null, exactly as `augustus` on claudius-caesar below
+  // is, because that is what it is: the page's own subject, handed back to the self-link exclusion.
+  // A page does not link to itself, and the reason these got past that exclusion is that the id
+  // they resolved to was somebody else's.
+  //
+  // This says nothing about who a bare "Joseph" belongs to anywhere else. That question is Robbie's
+  // and is open; a ruling there leaves these three untouched, because a page still does not link to
+  // its own subject whatever the corpus-wide default turns out to be.
   joseph: {
     "teresa-of-avila": "joseph-husband-of-mary",
+    "joseph-husband-of-mary": "joseph-husband-of-mary",
+    "joseph-of-arimathea": "joseph-of-arimathea",
+    caiaphas: "caiaphas",
   },
 
   // ── Two more from the same sweep: a bare name that is the WRONG ancient man ──────────────────
@@ -1641,6 +1684,24 @@ const NAME_CONTEXT_RULES: Record<string, NameContextRule[]> = {
       phrase: "Jacob begat Joseph, him to whom was betrothed Mary the Virgin",
       to: "jacob-father-of-joseph",
     },
+
+    // ── SCRIPTURE'S OWN MATTHEW 1:15-16, ON THE PANEL PATH ──────────────────────────────────
+    //
+    // The same two men as the block above, one surface further out: the WEB text of the two verses
+    // the article was quoting. The reader path is fixed by VERSE_NAME_OVERRIDES above, which is
+    // translation-blind and so covers KJV and ASV as well; that table needs a book, and the panel
+    // path passes none, so these pins are what reach it. Both phrases were measured before they
+    // were written: each occurs in exactly ONE of the 31,098 WEB verses and in NO prose block, so
+    // their whole reach is those two verses.
+    //
+    // The narrow wording is the point. "became the father of Jacob" alone would take Matthew 1:2
+    // and Acts 7:8, where the man IS the patriarch; naming Matthan keeps it to the one rung of the
+    // genealogy that means his son. Guarded by verse cases in scripts/name-linker/cases.mjs.
+    { phrase: "Matthan became the father of Jacob", to: "jacob-father-of-joseph" },
+    {
+      phrase: "Jacob became the father of Joseph, the husband of Mary",
+      to: "jacob-father-of-joseph",
+    },
   ],
   // "Nathan Melech the officer" (2 Kings 23:11) and "Nathan-Melech, servant of the king" — one of
   // Josiah's officials, a different man from the court prophet and with no Person record of his
@@ -2055,6 +2116,17 @@ const NAME_CONTEXT_RULES: Record<string, NameContextRule[]> = {
       phrase: "Jacob begat Joseph, him to whom was betrothed Mary the Virgin",
       to: "joseph-husband-of-mary",
     },
+
+    // ── SCRIPTURE'S OWN MATTHEW 1:16, ON THE PANEL PATH ─────────────────────────────────────
+    //
+    // The reader already had this verse right, but by a different route: BOOK_NAME_OVERRIDES sends
+    // every bare "Joseph" in Matthew to Mary's husband. That table needs a book, so the panel path
+    // fell through to the global default and sent the reader to Egypt from the one verse in
+    // Scripture that names Joseph's wife in the same clause. This pin closes it, and gives the
+    // reader path the same answer it already had. Unique to Matthew 1:16 across all 31,098 WEB
+    // verses and absent from every prose block; the "Jacob" in the same phrase is pinned under
+    // `jacob` above.
+    { phrase: "Jacob became the father of Joseph, the husband of Mary", to: "joseph-husband-of-mary" },
   ],
 
   // ── TWO MODERN SURNAMES THAT ARE ALSO PLACES ───────────────────────────────────────────────

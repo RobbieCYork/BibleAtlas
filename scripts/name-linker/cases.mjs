@@ -1995,12 +1995,198 @@ export const CASES = [
     why: "The patriarch on the ARTICLE surface, which is where the pins live. Bare \"Joseph\" in " +
          "prose still means the son of Jacob everywhere the pins do not reach." },
   { ref: "Matthew 1:16", surface: "Joseph", expect: "joseph-husband-of-mary", status: "guard",
-    why: "KEPT. The Bible reader already resolved this verse correctly through " +
-         "VERSE_NAME_OVERRIDES, so the article-side fix cannot be read as having created it, and " +
-         "a later tidy-up of that table gets a failure instead of silence." },
+    why: "KEPT. The Bible reader already resolved this verse correctly before the article-side " +
+         "fix, so that fix cannot be read as having created it. (The route was " +
+         "BOOK_NAME_OVERRIDES — every bare Joseph in Matthew — not VERSE_NAME_OVERRIDES as this " +
+         "line said when it was written; corrected 2026-09-10. Since the same date the phrase pin " +
+         "in the block below settles it first and gives the same answer, which is what carries it " +
+         "onto the panel path too.)" },
   { ref: "Matthew 1:16", surface: "Jacob", expect: "jacob-father-of-joseph",
-    status: "known-wrong",
-    why: "MEASURED, NOT FIXED, and out of this batch's scope. Scripture's own Matthew 1:15 and " +
-         "1:16 still send a bare Jacob to the patriarch on both rendering paths — the same fault " +
-         "as the article, one surface further out. It is written up in automation/manager-inbox." },
+    status: "guard",
+    why: "FIXED 2026-09-10, and this line was known-wrong until then. See the block below: " +
+         "Scripture's own Matthew 1:15 and 1:16 now resolve a bare Jacob to the son of Matthan on " +
+         "both rendering paths, which is the same fault as the article one surface further out." },
+
+  // ── SCRIPTURE'S OWN MATTHEW 1:15-16 ───────────────────────────────────────────────────────────
+  //
+  // The half the block above measured and did not fix, because it was out of that batch's scope.
+  // A reader standing in Matthew's genealogy — the live Bible reading surface, not an article —
+  // clicked "Jacob" and was sent to Genesis. Three occurrences: Matthew 1:15's "Matthan became the
+  // father of Jacob", and Matthew 1:16's "Jacob became the father of Joseph". The genealogy names
+  // the man itself, so there is nothing to decide; jacob-father-of-joseph is a real record and
+  // these RESOLVE rather than suppress.
+  //
+  // Two mechanisms, because the two rendering paths have no lever in common. VERSE_NAME_OVERRIDES
+  // is keyed by book/chapter/verse and is translation-blind, so it fires for KJV and ASV readers
+  // as well — all three read the same two men. It needs a book, which the panel path never passes,
+  // so a phrase pin on the WEB wording carries that half. Each phrase occurs in exactly one of the
+  // 31,098 WEB verses and in no prose block; both were counted before they were written.
+  //
+  // Matthew 1:16's "Joseph" was already right for the reader (BOOK_NAME_OVERRIDES) and wrong on
+  // the panel path, where it fell through to the patriarch. Both paths are pinned below.
+  { ref: "Matthew 1:15", surface: "Jacob", expect: "jacob-father-of-joseph", status: "guard",
+    why: "Matthan's son, named by the verse that begets him. Was the patriarch until 2026-09-10." },
+  { ref: "Matthew 1:15", surface: "Jacob", path: "panel", expect: "jacob-father-of-joseph",
+    status: "guard",
+    why: "The same verse with no book passed — the half a reader-only fix would have missed." },
+  { ref: "Matthew 1:16", surface: "Jacob", path: "panel", expect: "jacob-father-of-joseph",
+    status: "guard",
+    why: "\"Jacob became the father of Joseph, the husband of Mary.\" The clause names the son's " +
+         "wife; the patriarch's son married nobody called Mary." },
+  { ref: "Matthew 1:16", surface: "Joseph", path: "panel", expect: "joseph-husband-of-mary",
+    status: "guard",
+    why: "The panel-path half of a verse the reader already had right. It sent a reader of " +
+         "Matthew 1:16 to Egypt, from the one verse in Scripture that names Joseph's wife in the " +
+         "same clause." },
+  // The guards that hold THIS scope down. Two verses were named, and only two: if any of these
+  // moves, a two-verse correction has become a ruling about who owns a bare "Jacob", and that
+  // ruling is Robbie's.
+  { ref: "Matthew 1:2", surface: "Jacob", expect: "jacob", status: "guard",
+    why: "\"Isaac became the father of Jacob\" — eleven verses earlier in the same genealogy, and " +
+         "the patriarch. Naming Matthan in the pin rather than \"became the father of Jacob\" is " +
+         "what keeps this line untouched." },
+  { ref: "Matthew 1:2", surface: "Jacob", occurrence: 2, path: "panel", expect: "jacob",
+    status: "guard",
+    why: "\"Jacob became the father of Judah\" — the same shape as 1:16 and still the patriarch, " +
+         "on the path the phrase pin lives on." },
+  { ref: "Acts 7:8", surface: "Jacob", expect: "jacob", status: "guard",
+    why: "Stephen's speech, twice, in the third book that writes \"became the father of Jacob\". " +
+         "The patriarch, and outside the reach of both mechanisms." },
+  { ref: "Genesis 25:26", surface: "Jacob", expect: "jacob", status: "guard",
+    why: "The patriarch being born. A bare \"Jacob\" in Scripture still means him everywhere the " +
+         "two named verses do not reach." },
+
+  // ── NINETEEN PAGES LINKING THEIR OWN SUBJECT TO SOMEBODY ELSE ─────────────────────────────────
+  //
+  // Joseph of Arimathea's own biography opened "Joseph was a wealthy man from the town of
+  // Arimathea" and sent the reader to Egypt, under his own name. So did Joseph the husband of
+  // Mary's, and so did Caiaphas's, whose given name was Joseph — Josephus writes "Joseph, who was
+  // also called Caiaphas" (Antiquities 18.2.2), and the app's own extra-biblical section quotes it.
+  //
+  // A page does not link to itself; the self-link exclusion missed these because the id they
+  // resolved to belonged to a different man. Fixed by OWNER_NAME_OVERRIDES mapping each record's
+  // "joseph" to the record itself, which hands it back to that exclusion — the same shape as
+  // `augustus` on claudius-caesar.
+  //
+  // All nineteen were read in their own sentences first, and not one is the patriarch, which is
+  // what makes one answer per record enough. Every one has its own case below, in reading order,
+  // so a later narrowing cannot undo part of the fix in silence. Nothing here rules on who a bare
+  // "Joseph" belongs to anywhere else; that is Robbie's and is open.
+  { text: "Joseph was a wealthy man from the town of Arimathea and, according to Mark and Luke, a " +
+          "member of the Sanhedrin — the very council that condemned Jesus.",
+    surface: "Joseph", owner: "joseph-of-arimathea", expect: null, status: "guard",
+    why: "The opening words of his own biography, naming him, and they linked to the patriarch." },
+  { text: "Luke is careful to note that Joseph had not consented to their decision or action " +
+          "against him.",
+    surface: "Joseph", owner: "joseph-of-arimathea", expect: null, status: "guard",
+    why: "Luke 23:51. The man the sentence is about is the man whose page it is on." },
+  { text: "John adds that Joseph was 'a disciple of Jesus, but secretly, for fear of the Jews' — " +
+          "someone who believed but had kept it quiet given his position.",
+    surface: "Joseph", owner: "joseph-of-arimathea", expect: null, status: "guard",
+    why: "John 19:38, quoted. Still Arimathea." },
+  { text: "After Jesus died on the cross, Joseph did something bold: he 'took courage and went to " +
+          "Pilate and asked for the body of Jesus' (Mark 15:43).",
+    surface: "Joseph", owner: "joseph-of-arimathea", expect: null, status: "guard",
+    why: "Mark 15:43 — the verse that BOOK_NAME_OVERRIDES already resolves correctly for a reader, " +
+         "wrong on his own page because the article surface has no book." },
+  { text: "Requesting the corpse of a man executed for sedition was not a small ask, and it " +
+          "publicly identified Joseph with a condemned criminal in front of the very authorities " +
+          "he served alongside.",
+    surface: "Joseph", owner: "joseph-of-arimathea", expect: null, status: "guard",
+    why: "The app's own comment on what the request cost him." },
+  { text: "Joseph wrapped the body in a clean linen cloth and laid it in his own new tomb, cut " +
+          "into the rock, where no one had yet been buried (Matthew 27:60, John 19:41).",
+    surface: "Joseph", owner: "joseph-of-arimathea", expect: null, status: "guard",
+    why: "The act he is remembered for, on the page about him." },
+  { text: "Joseph is not mentioned again in the New Testament after this act.",
+    surface: "Joseph", owner: "joseph-of-arimathea", expect: null, status: "guard",
+    why: "The seventh and last on this record." },
+  { text: "Joseph is introduced as a descendant of David, betrothed to Mary, and working as a " +
+          "tekton — a term usually translated \"carpenter\" but covering builders and craftsmen " +
+          "who worked in wood or stone more broadly (Matthew 13:55).",
+    surface: "Joseph", owner: "joseph-husband-of-mary", expect: null, status: "guard",
+    why: "The opening words of his own biography. Betrothed to Mary in the same clause." },
+  { text: "Both Matthew and Luke trace genealogies through him back to David, establishing " +
+          "Jesus's legal claim to David's royal line even though Joseph was not his biological " +
+          "father (Matthew 1:1-17; Luke 3:23-38).",
+    surface: "Joseph", owner: "joseph-husband-of-mary", expect: null, status: "guard",
+    why: "The genealogy question, on the page of the man it turns on." },
+  { text: "When Mary was found to be pregnant before their marriage was completed, Joseph — " +
+          "described as a righteous man unwilling to expose her to public disgrace — planned to " +
+          "quietly break the engagement.",
+    surface: "Joseph", owner: "joseph-husband-of-mary", expect: null, status: "guard",
+    why: "Matthew 1:19 in the app's own words." },
+  { text: "Joseph obeyed and took Mary home as his wife, but had no marital relations with her " +
+          "until after Jesus was born (Matthew 1:18-25).",
+    surface: "Joseph", owner: "joseph-husband-of-mary", expect: null, status: "guard",
+    why: "Matthew 1:24-25." },
+  { text: "Joseph appears at several key moments of Jesus's early life: he traveled with the " +
+          "pregnant Mary to Bethlehem for a census (Luke 2:1-7); after further angelic warnings, " +
+          "he fled with his family to Egypt to escape Herod's massacre of infants, then returned " +
+          "and settled in Nazareth once it was safe (Matthew 2:13-23); and he brought the family " +
+          "to Jerusalem for Passover, where the twelve-year-old Jesus stayed behind in the temple, " +
+          "causing Joseph and Mary a frantic search (Luke 2:41-51).",
+    surface: "Joseph", owner: "joseph-husband-of-mary", expect: null, status: "guard",
+    why: "The first of two in one sentence — and the sentence that sent a reader to Egypt is " +
+         "itself about a flight to Egypt, by a different man." },
+  { text: "Joseph appears at several key moments of Jesus's early life: he traveled with the " +
+          "pregnant Mary to Bethlehem for a census (Luke 2:1-7); after further angelic warnings, " +
+          "he fled with his family to Egypt to escape Herod's massacre of infants, then returned " +
+          "and settled in Nazareth once it was safe (Matthew 2:13-23); and he brought the family " +
+          "to Jerusalem for Passover, where the twelve-year-old Jesus stayed behind in the temple, " +
+          "causing Joseph and Mary a frantic search (Luke 2:41-51).",
+    surface: "Joseph", occurrence: 2, owner: "joseph-husband-of-mary", expect: null, status: "guard",
+    why: "The second, at Luke 2:41-51. \"Joseph and Mary\" — his wife is named beside him." },
+  { text: "After that episode, Joseph is never mentioned again in the Gospels' narrative action — " +
+          "only referenced in passing as Jesus's presumed father by townspeople (Luke 4:22; John " +
+          "6:42) or listed alongside Mary and Jesus's siblings (Matthew 13:55).",
+    surface: "Joseph", owner: "joseph-husband-of-mary", expect: null, status: "guard",
+    why: "His disappearance from the record, on his own record." },
+  { text: "His absence from the accounts of Jesus's adult ministry, along with Jesus's commending " +
+          "Mary to John's care from the cross with no mention of Joseph (John 19:26-27), has long " +
+          "led readers to conclude he died sometime before Jesus's public ministry began — though " +
+          "the Gospels never state this directly.",
+    surface: "Joseph", owner: "joseph-husband-of-mary", expect: null, status: "guard",
+    why: "The eighth and last on this record." },
+  { text: "An elaborately decorated limestone ossuary inscribed 'Joseph, son of Caiaphas' was " +
+          "found in a first-century family burial cave, containing the bones of six individuals " +
+          "including an approximately 60-year-old man.",
+    surface: "Joseph", owner: "caiaphas", expect: null, status: "guard",
+    why: "The ossuary inscription, quoted. It is Caiaphas's own name and it is his own page." },
+  { text: "Most archaeologists identify this Joseph with the high priest Caiaphas of the Gospels, " +
+          "whose full name per Josephus was 'Joseph, called Caiaphas.'",
+    surface: "Joseph", owner: "caiaphas", expect: null, status: "guard",
+    why: "\"this Joseph\" — the man in the ossuary, i.e. the subject of the page." },
+  { text: "Most archaeologists identify this Joseph with the high priest Caiaphas of the Gospels, " +
+          "whose full name per Josephus was 'Joseph, called Caiaphas.'",
+    surface: "Joseph", occurrence: 2, owner: "caiaphas", expect: null, status: "guard",
+    why: "Josephus's own naming of him, in the same sentence. Note \"Josephus\" itself is not a " +
+         "match — the word boundary saves it — so this sentence carries two links, not four." },
+  { text: "Josephus records that the Roman prefect Valerius Gratus appointed 'Joseph, who was " +
+          "also called Caiaphas' as high priest, and that he was later removed from office by the " +
+          "proconsul Vitellius around AD 36-37.",
+    surface: "Joseph", owner: "caiaphas", expect: null, status: "guard",
+    why: "Antiquities 18.2.2. The nineteenth and last of them." },
+  // The guards that hold THIS scope down. Three records were named, and only three.
+  { text: "Joseph was sold into Egypt by his brothers and rose to govern it",
+    surface: "Joseph", owner: "jacob", expect: "joseph-son-of-jacob", status: "guard",
+    why: "The patriarch on the ARTICLE surface, with an owner passed — the same context the three " +
+         "records above run in. A bare \"Joseph\" in prose still means the son of Jacob on every " +
+         "record the three entries do not name." },
+  { text: "Joseph was sold into Egypt by his brothers and rose to govern it",
+    surface: "Joseph", owner: "mary-mother-of-jesus", expect: "joseph-son-of-jacob",
+    status: "guard",
+    why: "DELIBERATELY UNCHANGED. Mary's page carries four bare \"Joseph\"s that mean her husband " +
+         "and still resolve to the patriarch. That is a real fault and it is NOT a self-link — the " +
+         "page's subject is Mary — so it was left for the corpus-wide ruling rather than fixed " +
+         "here. If this line ever moves, that ruling has been taken by accident." },
+  { text: "This Jacob appears exactly once in Scripture, named as the son of Matthan and the " +
+          "father of 'Joseph the husband of Mary, of whom was born Jesus who is called Christ' " +
+          "(Matthew 1:15-16).",
+    surface: "Jacob", owner: "jacob-father-of-joseph", expect: "jacob", status: "guard",
+    why: "DELIBERATELY UNCHANGED, and it IS wrong: \"This Jacob\" is the page's own subject and " +
+         "points at the patriarch. It is not fixable by OWNER_NAME_OVERRIDES, because the same " +
+         "record's next sentence — \"entirely distinct from the patriarch Jacob\" — genuinely " +
+         "means the patriarch, and that table gives one answer per record. It needs phrase pins " +
+         "and is written up in automation/manager-inbox." },
 ];
