@@ -92,12 +92,12 @@ purpose and is written up in `reviewed.tsv`'s header.
 |---|---:|---|
 | `bible-links.tsv` | 9,724 | every person-link in all 31,098 WEB verses, with the id each rendering path gives it |
 | `prose-links.tsv` | 6,287 | every person-link in every authored prose block the app puts through `LinkedVerseText` |
-| `key-totals.tsv` | 4,047 | a tally covering **every** kind — location, POI, topic, timeline, verse reference — one row per (kind, matched text, id, path) |
+| `key-totals.tsv` | 4,048 | a tally covering **every** kind — location, POI, topic, timeline, verse reference — one row per (kind, matched text, id, path) |
 
 The first two are row-level, so a diff names the verse or the block. `key-totals.tsv` exists because
 the other two only record **people**: a change to `people.ts` can steal a key from a location, and
 adding one POI alternate name can start firing hundreds of links that no person snapshot would ever
-show. Its 4,047 rows currently break down as 2,338 verse references, 733 person, 387 location, 379
+show. Its 4,048 rows currently break down as 2,339 verse references, 733 person, 387 location, 379
 topic, 131 POI and 79 timeline.
 
 This is the half that catches what you did not think to assert. The named cases cover a few dozen

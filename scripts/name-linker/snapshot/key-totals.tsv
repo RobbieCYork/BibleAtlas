@@ -370,7 +370,7 @@ location	thyatira	thyatira	panel	4
 location	thyatira	thyatira	prose	2
 location	thyatira	thyatira	reader	4
 location	tiberias	tiberias	panel	1
-location	tiberias	tiberias	prose	10
+location	tiberias	tiberias	prose	11
 location	tiberias	tiberias	reader	1
 location	troas	troas	panel	6
 location	troas	troas	prose	6
@@ -1610,7 +1610,7 @@ topic	sadducees	topic-sadducees	panel	14
 topic	sadducees	topic-sadducees	prose	46
 topic	sadducees	topic-sadducees	reader	14
 topic	samaritan	samaritans	panel	5
-topic	samaritan	samaritans	prose	42
+topic	samaritan	samaritans	prose	43
 topic	samaritan	samaritans	reader	5
 topic	samaritan pentateuch	samaritan-pentateuch	prose	10
 topic	samaritans	samaritans	panel	7
@@ -1620,7 +1620,7 @@ topic	scribes	scribes	panel	68
 topic	scribes	scribes	prose	39
 topic	scribes	scribes	reader	66
 topic	sennacherib's prism	sennacherib-prism	prose	5
-topic	septuagint	septuagint	prose	62
+topic	septuagint	septuagint	prose	63
 topic	siloam inscription	siloam-inscription	prose	2
 topic	siloam tunnel	hezekiahs-tunnel	prose	1
 topic	sinaiticus	codex-sinaiticus	prose	20
@@ -1655,7 +1655,7 @@ topic	the christ	the-christ	panel	54
 topic	the christ	the-christ	prose	13
 topic	the christ	the-christ	reader	54
 topic	the jews	jews	panel	215
-topic	the jews	jews	prose	63
+topic	the jews	jews	prose	64
 topic	the jews	jews	reader	215
 topic	the law and the prophets	torah	panel	4
 topic	the law and the prophets	torah	prose	4
@@ -2539,6 +2539,7 @@ verse	deuteronomy 23:4-5	-	prose	1
 verse	deuteronomy 24:12-13	-	prose	1
 verse	deuteronomy 27	-	prose	1
 verse	deuteronomy 27:4	-	prose	2
+verse	deuteronomy 27:4-6	-	prose	1
 verse	deuteronomy 28:17	-	prose	1
 verse	deuteronomy 2:14	-	prose	1
 verse	deuteronomy 31:6-8	-	prose	1
