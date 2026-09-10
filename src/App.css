@@ -2985,10 +2985,14 @@ a.profile-links-url {
   position: relative;
   display: inline-flex;
   align-items: center;
-  gap: 6px;
+  /* 4px and 7px, down from 6 and 10. Every one of those pixels is width the chapter NAME gets back,
+     and on a row it now shares at every text size that is the difference between a book wrapping
+     after its word and breaking inside it. The chip still reads as a chip: same 36px height, same
+     accent border, same well. */
+  gap: 4px;
   max-width: 100%;
   min-height: 36px;
-  padding: 3px 10px;
+  padding: 3px 7px;
   border: 1px solid var(--accent);
   background: var(--accent-bg);
   border-radius: 999px;
@@ -3040,27 +3044,18 @@ a.profile-links-url {
   overflow-wrap: break-word;
 }
 
-/* Stacked, the navigation has the whole column, so a long name fits one line at every size the
-   stack is used at except the very largest — and there the ellipsis is exactly what this heading
-   already did before this change (measured: the old layout clipped "1 Corinthians 13" at 1.3 and
-   above). One line here is what keeps the stacked row to two rows' worth of height instead of
-   three. */
-.bible-passage-header-stacked .bible-passage-title-btn > span:first-child {
-  -webkit-line-clamp: 1;
-  line-clamp: 1;
-}
-
 .bible-passage-title-btn:hover {
   background: var(--accent);
   color: var(--accent-contrast);
 }
 
 /* In em so it tracks the heading, and the reader's text-size setting with it, instead of being
-   pinned small: against the app's 21px mobile heading this is a ~15px solid triangle in the accent
-   where it was a ~10px one in --text-muted. */
+   pinned small: against the row's 19px heading this is a ~12px solid triangle in the accent where it
+   was a ~10px one in --text-muted. 0.64em, not the 0.7 it shipped at — the pixels that buys go to
+   the chapter name beside it, which is the only thing on this row allowed to wrap. */
 .bible-passage-title-caret {
   flex-shrink: 0;
-  font-size: 0.7em;
+  font-size: 0.64em;
   line-height: 1;
   color: var(--accent);
 }
@@ -3446,24 +3441,39 @@ a.profile-links-url {
   flex-shrink: 0;
 }
 
-/* Three letters, whichever translation is on. The floor is measured, not guessed: "WEB" sets 5.5px
-   wider than "KJV" at 13px (57.3 against 51.8), and without a floor the chapter heading beside it
-   would step sideways every time a reader changed translation. Same reasoning, and the same kind of
-   number, as .bible-listen-chip's 70px. Any future code longer than three characters has to fit
-   it — or move this number, having measured the new one. */
+/* Three letters, whichever translation is on. The floor is measured, not guessed — it exists so the
+   chapter heading beside it does not step sideways every time a reader changes translation, so it
+   has to be the widest of the three codes plus this chip's own padding, and nothing more. Any future
+   code longer than three characters has to fit it, or move this number having measured the new one.
+   Same reasoning, and the same kind of number, as .bible-listen-chip's 70px.
+
+   54 and 6px, down from 58 and 8px. Those 6px are the single largest thing this row could give the
+   chapter name without touching a thumb target, and the count says what they bought: three more of
+   the 66 books on one line at 1.0, and both Thessalonians epistles back from clipped to whole at
+   1.45. See .bible-passage-header for the table.
+
+   Flat 54px, deliberately NOT calc(54px * var(--row-tsz, 1)). A scaled floor holds all three codes
+   to the same width at every size and is the tidier-looking rule, and it was tried and measured and
+   rejected: it takes 2.2px back off the chapter name at 1.8, which is enough to clip
+   "2 Thessalonians 3", and below 1.0 it drops under the natural width so the codes stop matching
+   anyway (WEB 46.4, KJV 43.2 at 0.8). Flat, the widest code overhangs the floor by 0.8px at 1.45
+   and 2.1px at 1.8 — a step the reader has to change translation to see at all, and smaller than
+   the 4px one the 58px floor already had there. Nothing clipping beat it. */
 .bible-translation-compact-label {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  min-width: 58px;
+  min-width: 54px;
   gap: 4px;
   min-height: 36px;
-  padding: 0 8px;
+  padding: 0 6px;
   border: 1px solid var(--border);
   border-radius: 8px;
   background: var(--surface-sunken);
   color: var(--text);
-  font-size: calc(13px * var(--tsz, 1));
+  /* --row-tsz, not --tsz: the code is chrome on a 303px row, and every pixel it grows comes
+     straight off the chapter name beside it. See .bible-passage-header for the arithmetic. */
+  font-size: calc(13px * var(--row-tsz, var(--tsz, 1)));
   font-weight: 600;
   line-height: 1;
   white-space: nowrap;
@@ -3913,12 +3923,61 @@ a.profile-links-url {
  * shrinks, and inside it only the chapter heading does — the ‹ › arrows hold 36px and the two chips
  * hold their content, so nothing on this row can be squeezed below a thumb. */
 .bible-passage-header {
+  /* --- The row's own type scale, and why it is not simply --tsz -------------------------------
+   * ONE ROW AT EVERY TEXT SIZE. There is no stacked variant any more and there must not be one
+   * again: the threshold that used to add it (ROW_STACKS_ABOVE, see BiblePanel) sat at 1.2, the
+   * owner reads at 1.45, so the layout he actually had was the two rows this row exists to remove.
+   * He asked for one row and said he would rather read a chapter name on two lines with the
+   * controls beside it than spend a whole line of screen on a tidy row of controls.
+   *
+   * Something has to give, because the column does not widen: 303px of usable row at 375px, at
+   * every setting. What gives is the SIZE OF THE TYPE ON THIS ROW — not the reader's Scripture,
+   * which still scales 1:1, and not the controls, which still have to be thumbed.
+   *
+   * `--row-tsz` still tracks the setting, just far more slowly above 1: 0.9 + 0.1 x --tsz, floored
+   * by --tsz itself so that SHRINKING is never capped (0.8 stays 0.8 — a reader asking for smaller
+   * type has no width problem and should get exactly what they asked for). It reads
+   * 1.000 / 1.015 / 1.030 / 1.045 / 1.080 at 1.0 / 1.15 / 1.3 / 1.45 / 1.8.
+   *
+   * The number is not a taste call. Every one of the 66 books was laid out at every text size, in
+   * the real chip, at a real 375px, and the count is what set it. Chapter chip content width, and
+   * how many of the 66 references land on one line / two / more, with the two-line cap in force:
+   *
+   *     --tsz   heading   content   1 line   2 lines   clipped
+   *      0.8     15.2px    127.8      66        0         0
+   *      1.0     19.0px    126.2      65        1         0
+   *      1.45    19.9px    125.0      60        6         0
+   *      1.8     20.5px    123.5      60        6         0
+   *
+   * NOTHING CLIPS, at any size. That column is the one that matters: a heading that has lost its
+   * chapter number has stopped naming the passage. The version of this row that shipped before this
+   * change clipped "1 Thessalonians 5" and "2 Thessalonians 3" down to "1 Thessalonian…" at 1.45
+   * and above, and so did an earlier draft of it — 0.85 + 0.15 x --tsz was 1.5px too generous, and
+   * those two books were how the count found out.
+   *
+   * Do NOT write a bare `font-size: <n>px` anywhere under this row. Since 1d853ad every size in the
+   * app is `calc(<n>px * var(--tsz, 1))`; a bare px here renders frozen at one setting. On this row
+   * the multiplier is `var(--row-tsz, 1)` instead, and --row-tsz falls back to --tsz outside it. */
+  --row-tsz: min(var(--tsz, 1), calc(0.9 + 0.1 * var(--tsz, 1)));
+
+  /* The row measures ITSELF, so the one thing on it that can be dropped — the word on the Listen
+     chip — is dropped when THIS ROW is narrow rather than when the WINDOW is. That used to be a
+     `@media (max-width: 768px)`, which is a different question and got a different answer: the
+     desktop reading panel is a fixed 340px, i.e. a 303px row, narrower than the phone's 338 — and
+     it was showing the word anyway, on the narrowest row in the app. See .bible-listen-word. */
+  container-type: inline-size;
+  container-name: bible-row;
+
   display: flex;
   align-items: center;
-  /* 6px, not the 10px the two-arrow row used to run. Measured: at 375px the row has 338px and the
-     three fixed controls want 164.9 of it, so every pixel of gap comes straight off the chapter
-     name. 6px still reads as three separate controls; 8px cost "Matthew 21" its last two letters. */
-  gap: 6px;
+  /* IT DOES NOT WRAP. This is the whole change: when the row runs out of width the chapter name
+     wraps inside its own chip, and the controls stay where they are. */
+  flex-wrap: nowrap;
+  /* 5px. Measured: at 375px the row has 338px and the three fixed controls want 178 of it, so every
+     pixel of gap comes straight off the chapter name — the two gaps here are worth 2px of it, which
+     is 2px of "Thessalonians". 5px still reads as three separate controls; the 8px this was briefly
+     tried at cost "Matthew 21" its last two letters. */
+  gap: 5px;
   margin-bottom: 10px;
 }
 
@@ -3932,27 +3991,6 @@ a.profile-links-url {
   align-items: center;
   justify-content: center;
   gap: 6px;
-}
-
-/* Above ROW_STACKS_ABOVE (see BiblePanel) the four controls stop fitting one line at 375px, and the
-   only one that can afford to lose width is the chapter name — which is the one that must not. So
-   the row wraps rather than clips: the navigation takes a full line and the two chips share the one
-   under it, pushed to opposite ends.
-
-   `order: -1` is what keeps that to TWO lines instead of three. Wrapping alone would leave the
-   translation chip stranded above a full-width navigation row with Listen below it; lifting the
-   navigation to the front of the flex order puts the chips back together on one line.
-
-   Wrapping, and not overlapping. This is the setting where this app has already shipped one row
-   sitting on top of another. */
-.bible-passage-header-stacked {
-  flex-wrap: wrap;
-  justify-content: space-between;
-}
-
-.bible-passage-header-stacked .bible-passage-nav {
-  order: -1;
-  flex: 1 0 100%;
 }
 
 .bible-passage-header h4 {
@@ -4055,6 +4093,7 @@ a.profile-links-url {
 }
 
 .bible-chapter-nav-small {
+  position: relative;
   flex-shrink: 0;
   width: 26px;
   height: 26px;
@@ -4068,6 +4107,30 @@ a.profile-links-url {
   font-size: calc(16px * var(--tsz, 1));
   line-height: 1;
   cursor: pointer;
+}
+
+/* 44x44 of touch out of a 36px circle — the fourth instance of this row's overlay trick (see
+   .bible-passage-title-btn::after, .bible-translation-compact-select and .bible-listen-chip::after).
+   Hit-tested on the live DOM rather than read off the CSS: elementFromPoint at the centre of each
+   arrow, walked outwards, returned 36x36 for these two while the other three already returned 44.
+   The 5px it borrows on each side is the row's own 6px gap, which nothing else claims — the
+   neighbouring chips hold their overlays to their own boxes (left: 0/right: 0) precisely so that
+   this kind of extension cannot collide with them. It contributes no height, so the row is still
+   charged for 36px. */
+.bible-chapter-nav-small::after {
+  content: "";
+  position: absolute;
+  left: -5px;
+  right: -5px;
+  top: 50%;
+  height: 44px;
+  transform: translateY(-50%);
+}
+
+/* Nothing to grab on a chapter that does not exist — the disabled ‹ at Genesis 1 and › at
+   Revelation 22 must not swallow a tap aimed at the chapter heading beside them. */
+.bible-chapter-nav-small:disabled::after {
+  display: none;
 }
 
 .bible-chapter-nav-small:hover:not(:disabled) {
@@ -4488,7 +4551,10 @@ a.profile-links-url {
   .bible-chapter-nav-small {
     width: 36px;
     height: 36px;
-    font-size: calc(20px * var(--tsz, 1));
+    /* --row-tsz on the glyph, because the CIRCLE is a fixed 36px thumb target that does not grow.
+       At a straight --tsz of 1.8 the ‹ was set at 36px inside a 36px box and pushed against its own
+       border; the row's slower scale keeps it inside the well it sits in. */
+    font-size: calc(20px * var(--row-tsz, var(--tsz, 1)));
   }
 
   .layer-toggle {
@@ -7377,12 +7443,13 @@ a.profile-links-url {
   transform: translateY(-50%);
 }
 
-/* --- Why the word goes away on a phone, and only on a phone ---
- * The chip reads "Listen" / "Pause" wherever there is room for it, and there is room on a desktop
- * panel. There is not on a 375px phone. Measured: the word costs 34px of a row that has 338px to
- * divide between four controls, and those 34px come out of exactly one place — the chapter name,
- * which is the only thing on the row that can give. Spending them on the word takes the chapter
- * heading from fitting 57 of the 66 books on one line to fitting 15.
+/* --- Why the word goes away on a narrow row ---
+ * The chip reads "Listen" / "Pause" wherever there is room for it, and there is room on an expanded
+ * desktop panel. There is not on a 375px phone, and — measured, which is how this stopped being a
+ * viewport question — there is not in the desktop panel at its default 340px either. The word costs
+ * 34px of a row that has 338px to divide between four controls, and those 34px come out of exactly
+ * one place: the chapter name, which is the only thing on the row that can give. Spending them on
+ * the word takes the chapter heading from fitting 57 of the 66 books on one line to fitting 15.
  *
  * What is left is not a bare glyph. It is the same chip, the same border, the same accent fill when
  * it is playing, the same spinner while it buffers, and the same aria-label — "Listen to this
@@ -7390,20 +7457,32 @@ a.profile-links-url {
  * this change too, because an aria-label has always overridden the visible word. Nothing was lost to
  * assistive technology here; a sighted phone reader trades a word for two verses of Scripture.
  *
- * Do not delete the word from the JSX. It is what the desktop chip says, and it is what makes the
- * mark on the phone recoverable — the title attribute and the label both still name the action. */
-@media (max-width: 768px) {
+ * Do not delete the word from the JSX. It is what the wide chip says, and it is what makes the
+ * mark on a narrow row recoverable — the title attribute and the label both still name the action.
+ *
+ * 360px is the threshold because of what falls either side of it, measured at the row itself and not
+ * at the window: 338px on a 375px phone, 303px in the desktop panel at its fixed 340px width, 684px
+ * in the same panel expanded. The first two lose the word, the third keeps it. */
+@container bible-row (max-width: 360px) {
   .bible-listen-word {
     display: none;
   }
 
   .bible-listen-chip {
     /* Square, so it matches the ‹ › arrows it now sits in line with rather than reading as a
-       stranded pill. The 70px floor is a desktop measurement (see above) and has nothing to say
+       stranded pill. The 70px floor is a wide-row measurement (see above) and has nothing to say
        about a chip with no word in it. */
     min-width: 36px;
     padding: 0 6px;
   }
+}
+
+/* --row-tsz, not --tsz, for the same reason as the translation code beside it: this chip is chrome
+   on a row whose only flexible member is the chapter name. At a straight --tsz of 1.8 the word
+   "Listen" took the chip to 106px on a 303px row and left the chapter heading 60px — measured, on
+   the desktop panel, where the word is now dropped anyway. */
+.bible-listen-chip {
+  font-size: calc(12px * var(--row-tsz, var(--tsz, 1)));
 }
 
 /* Buffering mark. 1em to match the Icon component's own em-sizing exactly, so swapping one for the
@@ -8193,7 +8272,7 @@ a.profile-links-url {
    Scripture itself sets at 15px here — so nothing about it has stopped reading as the chapter's
    heading. */
 .bible-passage-header h4 {
-  font-size: calc(19px * var(--tsz, 1));
+  font-size: calc(19px * var(--row-tsz, var(--tsz, 1)));
   font-weight: 500;
 }
 

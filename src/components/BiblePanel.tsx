@@ -8,7 +8,6 @@ import ReadingPlansView from "./ReadingPlansView";
 import { BOOKS } from "../data/bibleBooks";
 import { shouldNavigate, suggestReference } from "../lib/bibleReference";
 import { fetchPassage } from "../lib/biblePassage";
-import { useTextSize } from "../lib/textSize";
 import { READING_PLANS, formatPlanDayReference, type ReadingPlan, type ReadingPlanDay } from "../data/readingPlans";
 import {
   supabase,
@@ -195,24 +194,21 @@ const TRANSLATIONS = [
   { id: "asv", label: "American Standard Version (ASV)", short: "ASV" },
 ];
 
-/** Above this text size the reader's one control row stacks: the chapter navigation takes the full
- * width on its own line and the translation chip and Listen sit on a second line beneath it.
+/* THE CONTROL ROW HAS NO TEXT-SIZE THRESHOLD ANY MORE, AND MUST NOT GROW ONE BACK.
  *
- * Measured, not chosen, and set where it is because of what is on either side of it. The panel is
- * 375px whatever the text-size setting says — `zoom` scales the contents without widening the
- * column — so the room this row has to divide shrinks as the type grows: 338px of it at 1.0, 290 at
- * 1.15, 253 at 1.3. The three fixed controls and their gaps want 164.9 of that whatever the scale.
+ * A `ROW_STACKS_ABOVE = 1.2` used to live here: above it the row split in two, chapter navigation
+ * full-width on its own line and the two chips sharing the line below. The owner reads at 1.45, so
+ * that is the layout he actually had — two rows of chrome, which is the exact thing the change that
+ * introduced it set out to remove. He asked for one row at every setting, and said in as many words
+ * that he would rather see a chapter name on two lines with the controls beside it than a tidy row
+ * of controls costing him a whole extra line of vertical space.
  *
- * At 1.15 there is still a usable chapter chip left over, and one row with a chapter name wrapped
- * onto two lines is SHORTER than two rows — so 1.15 stays unstacked, and the threshold sits above
- * it. By 1.3 the fixed controls have eaten so much of the column that the chapter would be reduced
- * to a couple of characters a line, and stacking hands it the full width back.
- *
- * The next steps up (1.45 through the 1.8 maximum) are where NOT stacking would actually overflow:
- * the arrows and both chips refuse to shrink, and past about 1.45 they no longer fit the column at
- * all. A wrap, not an overlap — this is the setting where this app has already shipped one row on
- * top of another. */
-const ROW_STACKS_ABOVE = 1.2;
+ * So the row is one row now, at 0.8 through 1.8, and nothing in this file knows about text size.
+ * What gives instead is the chapter NAME — it wraps, and the type on the row grows more slowly than
+ * the reader's setting so that it can. Both are `--row-tsz` in App.css; see .bible-passage-header
+ * there for the arithmetic and the measurements behind it. If this row ever needs to change shape
+ * again, change it there — a threshold here is what put two rows in front of the owner twice.
+ */
 
 const MAX_SEARCH_RESULTS = 30;
 
@@ -271,9 +267,6 @@ export default function BiblePanel({
   initializing,
 }: BiblePanelProps) {
   const [translation, setTranslation] = useState("web");
-  /** Read only to decide when the translation picker's labels shorten — see
-   * LABEL_SHORTENS_ABOVE. Everything else about text size is CSS. */
-  const { scale: textScale } = useTextSize();
   const [passage, setPassage] = useState<PassageResult | null>(null);
   const [currentBook, setCurrentBook] = useState<string | null>(null);
   const [currentChapter, setCurrentChapter] = useState<number | null>(null);
@@ -1794,12 +1787,15 @@ export default function BiblePanel({
 
       {!showPlans && !showIntro && passage && !loading && !error && !searchResults && (
         <div className="bible-passage">
-          {/* The reader's ONE control row. Translation, chapter navigation and Listen all live here
-              now; the full-width translation row that used to sit above the panel is gone, and with
-              it the last band of chrome between the top of the reader and the first verse. */}
-          <div
-            className={`bible-passage-header${textScale > ROW_STACKS_ABOVE ? " bible-passage-header-stacked" : ""}`}
-          >
+          {/* The reader's ONE control row — one row at EVERY text size, which is the whole point of
+              it. Translation on the left, chapter navigation in the middle, Listen on the right; the
+              full-width translation row that used to sit above the panel is gone, and with it the
+              last band of chrome between the top of the reader and the first verse.
+
+              When the row runs out of width the chapter NAME gives — it wraps, to two lines and no
+              further, and the type on the row grows sub-linearly with the reader's setting so that
+              it can. The controls never drop to a line of their own. See .bible-passage-header. */}
+          <div className="bible-passage-header">
             {/* A native <select> at opacity 0, laid over a chip we draw ourselves. The chip says
                 "WEB"; the list the select opens still says "World English Bible (WEB)", because the
                 OS draws that list at its own size and this 375px row has no say in it. A plain
@@ -1834,8 +1830,8 @@ export default function BiblePanel({
               </select>
             </span>
 
-            {/* The ‹ heading › cluster, boxed so it can be centred in what the two chips leave and,
-                above ROW_STACKS_ABOVE, take a whole line of its own without the chips following it. */}
+            {/* The ‹ heading › cluster, boxed so it can be centred in what the two chips leave. It
+                is the only part of the row allowed to shrink — see .bible-passage-nav. */}
             <div className="bible-passage-nav">
               <button
                 type="button"
