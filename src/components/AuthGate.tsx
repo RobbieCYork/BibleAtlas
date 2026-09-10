@@ -455,6 +455,22 @@ export default function AuthGate() {
           * column is centred (see .auth-gate-content), so a row added *below* the card lifts the
           * card slightly rather than pushing it down, which is the opposite of what a row above it
           * would have done to the phone layout that was just tightened. */}
+        {/* The one door out of this screen that isn't the form. It is NOT an auth bypass: /library
+          * is not this app at all, it is a set of static HTML documents pre-rendered at build time
+          * from src/data/*.ts (see scripts/seo/build-seo.mjs) and served straight off the edge. No
+          * pathname check runs ahead of `if (showAuthGate) return <AuthGate />` in App.tsx, so the
+          * app itself is exactly as closed as it was; this is a plain link to a neighbouring static
+          * site that happens to share the domain.
+          *
+          * It earns its place twice over. A stranger arriving from a search result or a social post
+          * can read the thing they came for instead of bouncing off a sign-in card, and it gives a
+          * crawler that starts at the domain root a path into the public pages rather than leaving
+          * the sitemap as the only way in. */}
+        <p className="auth-gate-library">
+          Or <a href="/library">browse the library</a> — free articles on the people, places and
+          history of the Bible, no account needed.
+        </p>
+
         <SocialLinks className="auth-gate-social" />
       </div>
     </div>

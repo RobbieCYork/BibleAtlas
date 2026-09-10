@@ -1,0 +1,20 @@
+# www.capstonebible.com  (the apex 308-redirects here)
+#
+# The public surface of this site is the pre-rendered article library under /library, /places,
+# /sites, /people, /topics and /events — one static document per record in src/data/*.ts, emitted
+# by scripts/seo/build-seo.mjs on every build. Everything else the app does (notes, highlights,
+# posts, groups, messages, profiles, admin) is behind sign-in and behind Supabase row-level
+# security; none of it has a URL of its own, so there is nothing private here to disallow.
+
+User-agent: *
+Allow: /
+
+# Build-fingerprint file the installed app polls to detect a new deployment. Not a page.
+Disallow: /version.json
+
+# Password-recovery and magic links arrive as query strings on the root. Nothing to index, and a
+# crawler following one would consume a single-use token.
+Disallow: /?code=
+Disallow: /?type=recovery
+
+Sitemap: https://www.capstonebible.com/sitemap.xml

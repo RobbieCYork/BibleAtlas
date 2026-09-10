@@ -480,6 +480,26 @@
  * The negative margin trims .auth-gate-content's column gap for this one child. The row is a
  * footnote to the card, not a third block of equal weight, and at the full 20px phone gap it read
  * as one. */
+/* The link out to the public static library, between the card and the social row. Sized and
+ * coloured to sit quietly: it is the alternative for someone not ready to sign up, not a competing
+ * call to action against the form above it. Same negative-margin trick as the social row below,
+ * for the same reason — it is a footnote to the card, not a block of equal weight. */
+.auth-gate-library {
+  margin: -4px 0 0;
+  max-width: 30rem;
+  font-family: var(--sans);
+  font-size: 12.5px;
+  line-height: 1.5;
+  color: rgba(242, 234, 217, 0.68);
+  text-align: center;
+}
+
+.auth-gate-library a {
+  color: #e5b355;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
 .auth-gate-social {
   margin-top: -8px;
   color: #f2ead9;

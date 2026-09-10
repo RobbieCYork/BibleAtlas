@@ -34,7 +34,63 @@
          field. This is the default on iOS Safari; declaring it explicitly pins the same behavior on
          Chrome/Android, and src/lib/viewportHeight.ts enforces the matching rule for --app-height. -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover, interactive-widget=resizes-visual" />
-    <title>Capstone Bible</title>
+    <!-- The root document is the app, and the app is entirely behind sign-in — so what a crawler
+         gets here is the auth gate, not article content. These tags exist so a brand search
+         ("capstone bible") and a link pasted into a group chat both resolve to something that
+         reads properly, and so the sitemap has a front door.
+         The ~880 pages that carry the actual content are pre-rendered as separate static documents
+         under /library, /places, /sites, /people, /topics and /events — see scripts/seo/build-seo.mjs,
+         which emits their title, description, canonical, Open Graph and JSON-LD from the data files
+         on every build. Only the root is hand-written here, so this block and the generator cannot
+         drift apart: they describe different pages. -->
+    <title>Capstone Bible — Bible Map, Timeline &amp; Study Library</title>
+    <meta
+      name="description"
+      content="A free interactive Bible study app: a map of every place in Scripture, a zoomable timeline of biblical and church history, the Bible text with every name linked to its article, reading plans and personal notes."
+    />
+    <link rel="canonical" href="https://www.capstonebible.com/" />
+    <meta name="robots" content="index,follow,max-image-preview:large" />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Capstone Bible" />
+    <meta property="og:title" content="Capstone Bible — Bible Map, Timeline &amp; Study Library" />
+    <meta
+      property="og:description"
+      content="A free interactive Bible study app: a map of every place in Scripture, a zoomable timeline of biblical and church history, the Bible text with every name linked to its article, reading plans and personal notes."
+    />
+    <meta property="og:url" content="https://www.capstonebible.com/" />
+    <meta property="og:image" content="https://www.capstonebible.com/og-default.png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="Capstone Bible" />
+    <meta property="og:locale" content="en_US" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Capstone Bible — Bible Map, Timeline &amp; Study Library" />
+    <meta
+      name="twitter:description"
+      content="A free interactive Bible study app: a map of every place in Scripture, a zoomable timeline of biblical and church history, reading plans and personal notes."
+    />
+    <meta name="twitter:image" content="https://www.capstonebible.com/og-default.png" />
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "WebSite",
+        "name": "Capstone Bible",
+        "url": "https://www.capstonebible.com/",
+        "description": "A free interactive Bible study app: an atlas of biblical places, a merged biblical and church-history timeline, and a reference library of people, places, sites, topics and dated events.",
+        "inLanguage": "en",
+        "publisher": {
+          "@type": "Organization",
+          "name": "Capstone Bible",
+          "url": "https://www.capstonebible.com/",
+          "logo": {
+            "@type": "ImageObject",
+            "url": "https://www.capstonebible.com/icon-512.png",
+            "width": 512,
+            "height": 512
+          }
+        }
+      }
+    </script>
     <!-- Last-resort recovery for a build's own assets 404ing.
          Vite content-hashes everything under /assets/, and a Vercel deploy only serves the
          hashed files belonging to the deployment currently promoted. So when this HTML is

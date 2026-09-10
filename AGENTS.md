@@ -210,3 +210,68 @@ after filtering hunks. Check the commit out somewhere clean and build that:
 The `find -delete` is not optional and it is not tidiness — see the
 `.tsbuildinfo` section above, including why it is `find` and not `rm -f` with a
 glob. The symlink on the line before it is what makes it necessary.
+
+## The public site is generated — do not hand-maintain any part of it
+
+Everything a search engine or a link preview sees at www.capstonebible.com outside
+the app itself is emitted at build time by `scripts/seo/build-seo.mjs`, from the
+same `src/data/*.ts` arrays the app renders. `vite-plugin-seo.ts` runs it at the
+end of every `vite build`, so it is not a step anyone can forget and there is no
+second list to keep in step. Adding a record to a data file publishes its page
+and its sitemap entry; deleting one withdraws both.
+
+That is the only reason the sitemap can be trusted, so the rules that keep it
+that way are worth stating plainly.
+
+**URLs are permanent once published.** `plural` is an index, `singular/id` is an
+article:
+
+    /places   /place/<id>        /sites   /site/<id>
+    /people   /person/<id>       /topics  /topic/<id>
+    /events   /event/<id>        /library
+
+The `<id>` is the record's own `id` — the key the app, `computeLinkAnnotations`
+and `primaryEntityIds` already use — never a slug derived from the display name,
+which would silently move a page's URL the day someone corrects a spelling.
+Changing a record's `id` therefore changes its URL and throws away every ranking
+and inbound link it has earned; if a rename is genuinely necessary, the old path
+needs a 301 in `vercel.json` and the change is a decision, not a tidy-up. A new
+record *type* means a new entry in `KINDS` in `scripts/seo/site.mjs` plus its
+renderer and its JSON-LD — a type with no renderer is a type with no pages.
+
+**Never fabricate structured data.** JSON-LD is emitted only where the record
+genuinely carries the fact. `Person` deliberately has no `birthDate`/`deathDate`
+even though the dataset stores signed years: those years range from "firm" to
+"legendary", and schema.org has nowhere to put "c." or "or". `Article` carries no
+`datePublished` because there was no publication event. Padding either one is how
+a site earns a manual action, and it would also be a lie, which is the more
+important half. The same goes for the prose: no keyword stuffing, no invented
+"related searches" text, no page that exists to hold a phrase rather than to say
+something true.
+
+**Every public page states where it stands.** The footer names the editorial
+position (see the master prompt) because the articles are written from it. If the
+position moves, that string moves with it.
+
+**The app is not the public site, and must not become it.** The pre-rendered
+pages carry no script, no Supabase client and no session — they are documents
+sitting beside the app, not a branch inside it. `App.tsx` returns `<AuthGate />`
+before anything else and there is **no pathname check ahead of it**; the one
+thing pointing outward is a plain `<a href="/library">` under the sign-in card.
+Keep it that way. If a future page needs personal data — notes, highlights, tags,
+posts, groups, messages, profiles, admin — it does not belong in this generator,
+which reads `src/data/*.ts` and nothing else. Widening the public surface should
+require adding a data set to `KINDS` on purpose, and never be something a change
+elsewhere can do by accident.
+
+**Checking it.** `node scripts/seo/build-seo.mjs dist` regenerates just the pages
+while iterating on a template, without sitting through a full build. After a
+deploy, look at what a crawler looks at — the raw bytes, no JavaScript:
+
+    curl -s https://www.capstonebible.com/robots.txt
+    curl -s https://www.capstonebible.com/sitemap.xml | grep -c '<loc>'
+    curl -s https://www.capstonebible.com/place/jerusalem | grep -c 'Herod'
+
+A page that renders correctly in a browser but comes back empty to `curl` is the
+failure this whole thing exists to prevent, and a browser will not show it to
+you.
