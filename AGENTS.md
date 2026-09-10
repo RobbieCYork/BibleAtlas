@@ -279,6 +279,18 @@ which reads `src/data/*.ts` and nothing else. Widening the public surface should
 require adding a data set to `KINDS` on purpose, and never be something a change
 elsewhere can do by accident.
 
+**`public/google915df36479eb3ae6.html` is load-bearing — do not delete it.** It is Google Search
+Console's ownership proof for the `www.capstonebible.com` property, copied to the site root by
+Vite like `robots.txt` is. Its entire body is the one line Google generated
+(`google-site-verification: google915df36479eb3ae6.html`) and it must stay byte-for-byte as
+issued — no comment, no header, no reformatting, since Google compares the response against the
+file it handed out. Google re-checks the URL periodically and silently un-verifies the property
+if it stops returning that body, which takes Search Console data and any tooling built on it with
+it. The SEO generator neither emits nor knows about this file: it only ever writes the paths it
+derives from `src/data/*.ts`, so it cannot clobber it — and it never enumerates or prunes the
+output directory, so it cannot strip it either. It looks like junk in a `public/` listing. It is
+not.
+
 **Checking it.** `node scripts/seo/build-seo.mjs dist` regenerates just the pages
 while iterating on a template, without sitting through a full build. After a
 deploy, look at what a crawler looks at — the raw bytes, no JavaScript:
