@@ -204,7 +204,7 @@ ${FONTS}
 ${crumbsHtml(trail)}
 ${body}
 <div class="cta"><p>Capstone Bible is a free interactive study app — a map of every place in this library, a zoomable timeline of biblical and church history, the Bible text with every name in it linked to its article, reading plans and personal notes.</p><a class="btn" href="/">Open Capstone Bible</a></div>
-<footer><p>Part of the <a href="/library">Capstone Bible library</a> — <a href="/places">places</a>, <a href="/sites">sites</a>, <a href="/people">people</a>, <a href="/topics">topics</a> and the <a href="/events">timeline</a>. Articles are written from a Protestant evangelical position and name other traditions' views where they differ.</p></footer>
+<footer><p>Part of the <a href="/library">Capstone Bible library</a> — <a href="/places">places</a>, <a href="/sites">sites</a>, <a href="/people">people</a>, <a href="/topics">topics</a> and the <a href="/events">timeline</a>. Articles are written from a Protestant evangelical position and name other traditions' views where they differ.</p><p><a href="/delete-account">Delete your account</a></p></footer>
 </main>
 </body>
 </html>`;
@@ -880,6 +880,71 @@ export function hubPage(counts, total) {
     body,
     wide: true,
     current: "/library",
+    ogType: "website",
+  });
+}
+
+// ---------------------------------------------------------------- account deletion
+/**
+ * The public account-deletion page at /delete-account.
+ *
+ * Google Play requires a deletion route reachable WITHOUT installing the app, at a public URL that
+ * explains what is deleted and how to ask for it. "Sign in and look in settings" does not satisfy
+ * that, because the reviewer checking it has not installed anything and has no account. So this is a
+ * plain document with no script and no session — the same shape as every other page this generator
+ * emits, and for the same reason: it has to be readable by something that will not run JavaScript
+ * and will not log in.
+ *
+ * It is generated rather than hand-written because the words are a promise about what
+ * `supabase/functions/delete-account/index.ts` actually does, and the in-app confirmation makes the
+ * same promise. Both read src/data/accountDeletionNotice.ts, so the two cannot drift apart — which
+ * is the whole reason AGENTS.md forbids hand-maintaining any part of the public site.
+ */
+export function deleteAccountPage(notice) {
+  const trail = [{ name: "Delete your account", path: "/delete-account" }];
+  const lines = (arr) =>
+    `<ul class="index-list">${arr
+      .map((l) => `<li><b>${esc(l.label)}</b><span>${esc(l.detail)}</span></li>`)
+      .join("")}</ul>`;
+
+  const body = [
+    heading("Delete your Capstone Bible account", "Account deletion", ""),
+    `<p class="lead">${esc(notice.ACCOUNT_DELETION_HEADLINE)}</p>`,
+    section("How to delete your account", lines(notice.HOW_TO_DELETE)),
+    section("What is deleted", lines(notice.DELETED_FOR_GOOD)),
+    section("What is not deleted, and why", lines(notice.KEPT_AND_WHY)),
+    section(
+      "How long it takes",
+      p(
+        "Deletion runs immediately when you confirm it. Your account, your files and every row listed above are removed before the request finishes — there is no queue, no grace period and no way to reverse it. A request sent by email is completed once we have confirmed it came from the address on the account."
+      )
+    ),
+    section(
+      "Questions",
+      p(
+        `Write to <a href="mailto:${esc(notice.ACCOUNT_DELETION_CONTACT)}">${esc(notice.ACCOUNT_DELETION_CONTACT)}</a> and a person will answer.`
+      )
+    ),
+  ].join("");
+
+  return page({
+    title: "Delete your Capstone Bible account",
+    description: clip(
+      "How to permanently delete your Capstone Bible account and everything in it — what is removed, what is kept and why, and how to ask if you cannot sign in."
+    ),
+    canonical: "/delete-account",
+    trail,
+    jsonLd: [
+      {
+        "@context": "https://schema.org",
+        "@type": "WebPage",
+        name: "Delete your Capstone Bible account",
+        url: absolute("/delete-account"),
+        isPartOf: { "@type": "WebSite", name: SITE_NAME, url: ORIGIN },
+      },
+    ],
+    body,
+    current: "/delete-account",
     ogType: "website",
   });
 }

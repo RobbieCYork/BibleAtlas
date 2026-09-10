@@ -26,6 +26,7 @@ export { people } from ${JSON.stringify(path.join(REPO_ROOT, "src/data/people"))
 export { topics } from ${JSON.stringify(path.join(REPO_ROOT, "src/data/topics"))};
 export { timelineEvents } from ${JSON.stringify(path.join(REPO_ROOT, "src/data/timelineEvents"))};
 export { computeLinkAnnotations } from ${JSON.stringify(path.join(REPO_ROOT, "src/lib/verseAnnotations"))};
+export * as accountDeletionNotice from ${JSON.stringify(path.join(REPO_ROOT, "src/data/accountDeletionNotice"))};
 `;
 
 let cached = null;

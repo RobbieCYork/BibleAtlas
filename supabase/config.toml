@@ -1,0 +1,15 @@
+# Supabase CLI configuration for this repo.
+#
+# The app's database is administered through the Supabase dashboard and the numbered files in
+# `sql/`; this file is here for ONE thing — so `supabase functions deploy` knows the settings each
+# Edge Function ships with, rather than depending on whoever runs the deploy remembering a flag.
+
+project_id = "capstone-bible"
+
+[functions.delete-account]
+# Explicit, not decorative. `verify_jwt = true` makes the platform gateway reject a request with no
+# bearer token before the function runs at all. It is NOT the security boundary — the gateway is
+# satisfied by the public anon key, so the function still validates the caller's own token with
+# Auth and takes the account id from that and nowhere else. This is the outer of the two doors, and
+# stating it here is what stops someone deploying with `--no-verify-jwt` and removing it by accident.
+verify_jwt = true

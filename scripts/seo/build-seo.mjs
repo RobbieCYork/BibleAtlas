@@ -30,6 +30,7 @@ import { fileURLToPath } from "node:url";
 import { loadData, REPO_ROOT } from "./loadData.mjs";
 import { KINDS, ORIGIN, absolute, fileForPath, indexPath, itemPath } from "./site.mjs";
 import {
+  deleteAccountPage,
   eventPage,
   hubPage,
   indexPage,
@@ -87,7 +88,7 @@ export async function generateSeo(outDir) {
     idsByLinkKind.get(linkKind)?.has(id) ? itemPath(itemByLinkKind.get(linkKind), id) : null;
   const linkify = makeLinkifier(data.computeLinkAnnotations, urlFor);
 
-  const urls = ["/", "/library"];
+  const urls = ["/", "/library", "/delete-account"];
   let pages = 0;
 
   for (const kind of KINDS) {
@@ -112,6 +113,13 @@ export async function generateSeo(outDir) {
   const counts = Object.fromEntries(KINDS.map((k) => [k.key, sets[k.key].length]));
   const total = Object.values(counts).reduce((a, b) => a + b, 0);
   write(outDir, fileForPath("/library"), hubPage(counts, total));
+  pages++;
+
+  // Google Play rejects an app that has no account-deletion route reachable without installing it,
+  // and GDPR/CCPA require one whether or not a store is asking. This is that route: a public page,
+  // no script, no session, generated from the same notice the in-app confirmation shows so the two
+  // cannot say different things. Linked from every page's footer.
+  write(outDir, fileForPath("/delete-account"), deleteAccountPage(data.accountDeletionNotice));
   pages++;
 
   // One sitemap file: 880-odd URLs is far inside the 50,000-URL / 50 MB limit, so an index would be

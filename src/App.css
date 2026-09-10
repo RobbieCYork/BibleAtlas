@@ -11568,3 +11568,100 @@ img.sn-image,
   display: flex;
   justify-content: flex-end;
 }
+
+/* ── Delete My Account ────────────────────────────────────────────────────────
+   The one control in the app with no undo behind it, so it is styled to read as
+   a stop sign rather than as another settings row: its own tinted card, a red
+   confirm button that stays visually distinct from the neutral Cancel beside it,
+   and a confirmation input wide enough that the typed word is unmistakable. The
+   section only expands to this after a first deliberate tap — see
+   DeleteAccountControl.tsx for why the path is four acts long. */
+.delete-account-section {
+  border: 1px solid color-mix(in srgb, var(--danger) 35%, var(--border));
+  border-radius: 10px;
+  padding: 12px;
+  background: color-mix(in srgb, var(--danger) 5%, transparent);
+}
+
+.delete-account-section .auth-settings-label {
+  color: var(--danger);
+}
+
+.delete-account-headline {
+  font-size: calc(13px * var(--tsz, 1));
+  line-height: 1.45;
+  color: var(--text);
+  font-weight: 600;
+  margin: 4px 0 10px;
+}
+
+.delete-account-heading {
+  font-size: calc(12px * var(--tsz, 1));
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--text-muted);
+  margin: 12px 0 6px;
+}
+
+.delete-account-list {
+  margin: 0 0 4px;
+  padding-left: 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-size: calc(12px * var(--tsz, 1));
+  line-height: 1.45;
+  color: var(--text-muted);
+}
+
+.delete-account-list b {
+  color: var(--text);
+}
+
+.delete-account-confirm-label {
+  font-size: calc(12px * var(--tsz, 1));
+  color: var(--text);
+  margin-top: 10px;
+}
+
+.delete-account-confirm-input {
+  width: 100%;
+  padding: 8px 10px;
+  /* --input-border + --surface-sunken: the app-wide form-control pair set out in the
+     "Form controls: inset wells" block above. */
+  border: 1px solid var(--input-border);
+  border-radius: 8px;
+  background: var(--surface-sunken);
+  color: var(--text);
+  font-size: calc(14px * var(--tsz, 1));
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.delete-account-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 10px;
+}
+
+.delete-account-danger {
+  background: var(--danger);
+  border: 1px solid var(--danger);
+  color: #fff;
+  border-radius: 8px;
+  padding: 8px 12px;
+  font-size: calc(13px * var(--tsz, 1));
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.delete-account-danger:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+.delete-account-final {
+  color: var(--danger);
+  font-weight: 600;
+}

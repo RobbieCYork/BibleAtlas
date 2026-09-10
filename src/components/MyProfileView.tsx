@@ -18,6 +18,7 @@ import {
   type ProfileLink,
 } from "../lib/profileLinks";
 import Icon, { type IconName } from "./Icon";
+import DeleteAccountControl from "./DeleteAccountControl";
 
 /** A church website is typed without a scheme half the time ("mychurch.org") — treat that as shorthand
  * for https rather than rejecting it or linking to a relative path on this app's own domain. */
@@ -731,6 +732,8 @@ export default function MyProfileView({ userId, onDisplayNameSaved, onClose, onG
               </div>
             </>
           )}
+          <div className="auth-settings-divider" />
+          <DeleteAccountControl />
         </div>
       </div>
     </section>
