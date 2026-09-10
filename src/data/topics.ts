@@ -8037,4 +8037,805 @@ export const topics: Topic[] = [
     reflectionPrompt:
       "Somebody's careless afternoon destroyed information nobody can ever recover, and other people have spent twenty years salvaging what they can. Which of those two are you being asked to be this week?",
   },
+  // ── Archaeology batch 6: sites, destructions and the big excavation debates ──────────────
+  // Appended at the end of the array rather than beside the other discovery records on purpose:
+  // four archaeology batches were writing this file at the same time, and a shared insertion
+  // anchor turns every one of them into the same merge conflict. Order in this array has no
+  // effect on anything the reader sees.
+  {
+    id: "khirbet-qeiyafa",
+    name: "Khirbet Qeiyafa",
+    // NOT registered: "Shaaraim", "Netaim", "Adithaim", "Gob". Those are the four *proposed*
+    // identifications of this site, three of them biblical place names that belong to whatever
+    // record owns them. Registering any of them here would have the app quietly settling, in its
+    // link layer, the exact question the article says is open.
+    alternateNames: ["Elah Fortress"],
+    // Linker-only: the ostracon is a find FROM the site, not another name for it, so it must not be
+    // printed to the reader as "Also called".
+    matchNames: ["Khirbet Qeiyafa Ostracon", "Qeiyafa Ostracon"],
+    category: "discovery",
+    role: "Fortified Town of about 1000 BC Above the Elah Valley, and Its Inscribed Potsherd",
+    summary:
+      "A walled town overlooking the valley where 1 Samuel puts David and Goliath, dated to around 1000 BC — with two city gates, no pig bones, and an inscription nobody can agree how to read.",
+    sections: [
+      {
+        heading: "Two Gates Above the Elah Valley",
+        paragraphs: [
+          "Khirbet Qeiyafa is a hilltop ruin in the Shephelah, on the north side of the Elah valley about 30 km south-west of Jerusalem. Y. Garfinkel of the Hebrew University and S. Ganor of the Israel Antiquities Authority dug it from 2007 to 2013. What they uncovered was a small town ringed by a casemate wall of stones weighing several tons, with houses built against the inside of the casemates, and two four-chambered gates — one west, one south. The excavation project's own summary calls it the only known city of the First Temple period with two gates.",
+          "Seventeen burnt olive pits from a storage jar in the destruction layer were dated by accelerator mass spectrometry, four of them halved between two laboratories to control for laboratory bias, and published in Radiocarbon in 2015 by Y. Garfinkel, K. Streit, S. Ganor and P. Reimer. Their conclusion on the samples is a date of about 1000 BC. The excavators also report an absence in the animal bones: no pig. Pig is common in the Philistine cities of this period and scarce at sites read as Israelite or Judahite, and that contrast is the strongest single argument anyone has made about who lived here.",
+          "On 8 July 2008 a seventeen-year-old volunteer, Oded Yair, lifted a large potsherd off a floor in Area B and dropped it in the finds bucket with everything else from that morning. The writing on it was spotted that afternoon during pottery washing by an area supervisor, Sang-Yeup Chang. It is a trapezoidal sherd about 15 by 16.5 cm carrying five lines in an early alphabetic script. Texts of any length from these centuries are extremely rare — before this one there were essentially two, the Gezer Calendar and the abecedary from Tel Zayit — which is why a faded potsherd from a small town became international news.",
+        ],
+      },
+      {
+        heading: "What a Wall Can and Cannot Settle",
+        paragraphs: [
+          "The valley below the site is the one 1 Samuel 17 names: the Philistines at Socoh and Azekah, Israel encamped in the valley of Elah, the two armies on facing slopes. Shaaraim appears three verses from the end of the chapter, on the line of the Philistine retreat, and again in the Shephelah town list of Joshua 15. A reader who stands on this hill is standing where the story is set, and that is worth something on its own.",
+          "It is worth being exact about which argument the town actually enters. It is not whether David fought a Philistine champion. Nothing at Khirbet Qeiyafa speaks to that, and no excavated object anywhere does; single combat between two men leaves no archaeological trace, and it would be strange if it did. The argument is about scale of organisation — whether anything in the southern hill country around 1000 BC could quarry, haul and lay multi-ton stones into a planned fortified town, or whether that level of administration arrives only much later. Y. Garfinkel argues the first. He named the radiocarbon paper after the king himself, and reads the site as the earliest fortified city yet known in the kingdom of Judah.",
+          "That is a substantial claim and it is his claim, not a neutral description of the evidence, which is why this article names him rather than simply repeating it. Stated at its own weight: a fortified town with monumental gates stood above the Elah valley at about the time the biblical narrative puts a king in Jerusalem, and it was built by somebody with the authority to organise the work. Who that somebody was is the next section.",
+        ],
+      },
+      {
+        heading: "Two Arguments, Not One",
+        paragraphs: [
+          "Two separate disputes attach to this site and they get blurred into one constantly. Both are live and neither has a winner. The first is the ostracon. The excavation's own account says that many of the letters are heavily faded and that the reading is problematic, and the published readings since have been incompatible with one another. H. Misgav, the project's epigrapher, read it as Hebrew and picked out words for \"do not do,\" \"judge,\" \"slave\" and \"king.\" G. Galil published a full reconstruction in 2009 as a Hebrew text about social justice — judge the slave and the widow, plead for the poor — and identified the site with Netaim of 1 Chronicles 4:23. E. Puech read it instead as a local copy of a message from the capital reporting the accession of Saul.",
+          "C. Rollston answered in 2011 that the words alleged to be diagnostic of Hebrew are either general Semitic vocabulary or are not in the text at all. A. Millard, an epigrapher writing from an evangelical position, put the limits about as carefully as they can be put: the letters are difficult to read, the language may be Hebrew, Canaanite, Phoenician or Moabite, translations range from a list of names to commands about social justice, and the simplest explanation is a list of Hebrew and Canaanite names written by somebody unused to writing. That is where it stands. No reading commands consensus, and a reader told the ostracon proves anything has been told more than the epigraphers will say. What it does support on nearly every reading — including Millard's deflationary one — is that somebody who was not a trained scribe was writing here at this date, and that is genuinely worth knowing.",
+          "The second dispute is who lived here. Y. Garfinkel and S. Ganor read the town as Judahite and identify it with Shaaraim, \"two gates,\" named in Joshua 15:36 and in 1 Samuel 17:52. I. Finkelstein and A. Fantalkin, in Tel Aviv in 2012, read the material as late Iron I and the town's affiliation as northern rather than Judahite. N. Na'aman and I. Koch have argued it is Canaanite, a local centre in the orbit of Philistine Gath or Ekron rather than a Judahite foundation at all. G. Galil's Netaim and Y. Dagan's Adithaim — the latter standing next to Shaaraim in the same verse of Joshua 15 — are two more candidates. Four identifications, three of them biblical, no agreement, and that is the honest reason this article is filed under the site's modern Arabic name rather than any of them.",
+          "Where the app stands: the fortifications and the radiocarbon are solid, and together they make it harder to maintain that nothing in tenth-century Judah could organise a building project on this scale. That is a real result and understating it would be its own dishonesty. It is not the same thing as confirming a narrative in 1 Samuel, and the two are run together so routinely that the distinction is worth holding onto.",
+        ],
+      },
+    ],
+    verses: [
+      { reference: "1 Samuel 17:1-3", note: "The Philistines at Socoh and Azekah; Israel encamped in the valley of Elah" },
+      { reference: "1 Samuel 17:52", note: "Shaaraim on the line of the Philistine retreat, toward Gath and Ekron" },
+      { reference: "Joshua 15:35-36", note: "Shaaraim and Adithaim in the Shephelah town list of Judah" },
+      { reference: "1 Chronicles 4:23", note: "Netaim — the identification G. Galil proposed from his reading of the ostracon" },
+    ],
+    sources: [
+      { label: "The Khirbet Qeiyafa Archaeological Project (Hebrew University)", url: "https://khirbet-qeiyafa.huji.ac.il/" },
+      { label: "Wikipedia: Khirbet Qeiyafa", url: "https://en.wikipedia.org/wiki/Khirbet_Qeiyafa" },
+    ],
+    discovery: {
+      objectType: "A fortified Iron Age town of about 2.3 hectares with a casemate wall and two four-chambered gates, and the inscribed potsherd found on one of its floors",
+      findSite: "Khirbet Qeiyafa, on the north side of the Elah valley in the Judaean Shephelah",
+      foundYear: "Site excavated 2007-2013; the ostracon found on 8 July 2008",
+      foundBy: "Y. Garfinkel (Hebrew University of Jerusalem) and S. Ganor (Israel Antiquities Authority). The ostracon was lifted by a seventeen-year-old volunteer, Oded Yair, and the writing on it noticed during pottery washing by an area supervisor, Sang-Yeup Chang",
+      objectDate: "c. 1000 BC — seventeen burnt olive pits from the destruction layer, dated by AMS at two laboratories",
+      objectDateCertainty: "firm",
+      currentLocation: "The site is an open archaeological park; the ostracon and the small finds are held by the Israel Antiquities Authority",
+    },
+    citations: [
+      {
+        tier: "institution",
+        label: "The Khirbet Qeiyafa Archaeological Project",
+        url: "https://khirbet-qeiyafa.huji.ac.il/",
+        credit: "Institute of Archaeology, the Hebrew University of Jerusalem",
+        detail: "The excavation's own project site, including its account of the discovery of the ostracon on 8 July 2008 and its statement that many of the letters are heavily faded and the reading problematic",
+        supports: "Excavation dates and directors, the two gates, and the excavators' own caution about the ostracon",
+      },
+      {
+        tier: "scholarly",
+        label: "Y. Garfinkel, K. Streit, S. Ganor and P. Reimer, \"King David's City at Khirbet Qeiyafa: Results of the Second Radiocarbon Dating Project\"",
+        url: "https://www.cambridge.org/core/journals/radiocarbon/article/abs/king-davids-city-at-khirbet-qeiyafa-results-of-the-second-radiocarbon-dating-project/F6BDFDFA8FA03784AAD424866E552349",
+        credit: "Yosef Garfinkel, Katharina Streit, Saar Ganor and Paula J. Reimer",
+        detail: "Radiocarbon 57:5 (2015), 881-890. Seventeen burnt olive pits, four halved between two laboratories; the dating of the samples is about 1000 BC. The title is the excavator's own reading of what the site is, and the article is cited here for the dates rather than for the title",
+        supports: "The radiocarbon date, and Garfinkel's interpretation of the site as a Judahite city",
+      },
+      {
+        tier: "scholarly",
+        label: "I. Finkelstein and A. Fantalkin, \"Khirbet Qeiyafa: An Unsensational Archaeological and Historical Interpretation\"",
+        url: "https://cris.tau.ac.il/en/publications/khirbet-qeiyafa-an-unsensational-archaeological-and-historical-in/",
+        credit: "Israel Finkelstein and Alexander Fantalkin, Tel Aviv University",
+        detail: "Tel Aviv 39:1 (2012), 38-63. Reads the site as late Iron I and disputes both the Judahite affiliation and the excavation's interpretation of the finds",
+        supports: "The northern / late Iron I reading of the site",
+      },
+      {
+        tier: "scholarly",
+        label: "C. Rollston, \"The Khirbet Qeiyafa Ostracon: Methodological Musings and Caveats\"",
+        credit: "Christopher A. Rollston",
+        detail: "Tel Aviv 38 (2011), 67-82. Argues that the vocabulary said to identify the text as Hebrew is either general Semitic or absent from the inscription. Print and subscription only",
+        supports: "The case against reading the ostracon as identifiably Hebrew",
+        paywalled: true,
+      },
+      {
+        tier: "scholarly",
+        label: "A. Millard, \"The Ostracon from the Days of David Found at Khirbet Qeiyafa\"",
+        url: "https://www.tyndalebulletin.org/article/29303-the-ostracon-from-the-days-of-david-found-at-khirbet-qeiyafa/",
+        credit: "Alan Millard, University of Liverpool",
+        detail: "Tyndale Bulletin 62:1 (2011), 1-13, freely readable. His own summary: the letters are difficult to read, the language may be Hebrew, Canaanite, Phoenician or Moabite, and the simplest explanation is a list of names written by someone unused to writing",
+        supports: "The limits of what can be read off the ostracon, stated from within the evangelical scholarly tradition",
+      },
+      {
+        tier: "scholarly",
+        label: "N. Na'aman, \"Khirbet Qeiyafa in Context\"",
+        credit: "Nadav Na'aman, Tel Aviv University",
+        detail: "Ugarit-Forschungen 42 (2010), 497-526. The case for reading the town as a Canaanite centre rather than a Judahite foundation. Print only",
+        supports: "The Canaanite reading of the site",
+      },
+      {
+        tier: "scholarly",
+        label: "G. Galil, \"The Hebrew Inscription from Khirbet Qeiyafa/Neta'im\"",
+        credit: "Gershon Galil, University of Haifa",
+        detail: "Ugarit-Forschungen 41 (2009), 193-242. The social-justice reading of the ostracon and the identification of the site with Netaim. Print only",
+        supports: "Galil's reading and identification",
+      },
+      {
+        tier: "encyclopedic",
+        label: "Wikipedia: Khirbet Qeiyafa",
+        url: "https://en.wikipedia.org/wiki/Khirbet_Qeiyafa",
+      },
+    ],
+    reflectionPrompt:
+      "Five faded lines have produced four incompatible translations by careful people. Where do you hold a reading of something more firmly than the evidence for it actually allows?",
+  },
+  {
+    id: "tel-hazor",
+    name: "Tel Hazor",
+    // NOT registered: bare "Hazor". Jeremiah 49:28-33 uses the name for settlements in Arabia,
+    // hundreds of miles from this mound, so a bare registration would mislink a whole oracle. The
+    // app has no Location record for Hazor either; adding one is a separate decision, and this
+    // topic deliberately does not pre-empt it by claiming the bare name.
+    alternateNames: ["Tell el-Qedah"],
+    matchNames: ["Tel Hatzor", "Hazor excavations"],
+    category: "discovery",
+    role: "The Largest Canaanite City in the Land, and the Burnt Layer on Top of It",
+    summary:
+      "A 200-acre Canaanite capital that burned so hot the mudbrick vitrified, with its gods and kings found beheaded — and a thirty-year argument about who did it.",
+    sections: [
+      {
+        heading: "The Head of All Those Kingdoms",
+        paragraphs: [
+          "Tel Hazor in Upper Galilee is the largest archaeological mound in Israel, an upper city on the tell with a vast walled lower city beside it. J. Garstang identified it in 1926 and put trial trenches into it in 1928, concluding wrongly that the lower city was a camp rather than a city. Y. Yadin's Rothschild Expedition for the Hebrew University dug four seasons from 1955 to 1958 and a fifth in 1968, and settled the point: the lower city was a city, and Hazor in the Late Bronze Age was on a different scale from anything else in Canaan. Renewed excavations began in 1990 as the Selz Foundation Hazor Excavations in Memory of Yigael Yadin, directed by A. Ben-Tor until his death in 2023 and now co-directed by I. Kreimerman, with the lower city dug separately by the University of Haifa under S. Bechar.",
+          "Joshua 11:10 says Hazor used to be the head of all those kingdoms, and that description is not something the biblical writer had to be told. It is what the mound looks like. The city sat on the trunk road from Egypt to Mesopotamia and it is named in the archives of Mari, in Egyptian execration texts and in the Amarna letters, which is an unusual reach for a city in Canaan.",
+        ],
+      },
+      {
+        heading: "The Burn Layer, and What Was in It",
+        paragraphs: [
+          "This is where the app should say a solid thing at full strength rather than hedging to look careful. The last Canaanite city — Stratum XIII on the upper tell, Stratum 1A in the lower city — was destroyed by fire in the thirteenth century BC, and the fire was catastrophic. The ash and charred debris lie three feet deep in places. The excavators report mudbrick walls vitrified, basalt cracked and clay vessels melted, and estimate temperatures above 2,350 degrees Fahrenheit, fed by the olive oil stored in the palace. A separate micro-archaeological study of the lower-city gate published in 2023 found the signature of a single fire event, not a slow decline.",
+          "And the statues were mutilated. Across close to thirty years of digging, fragments of eighteen different Egyptian statues have come out of Hazor, royal and private, including two sphinxes — one of them a fragment of a sphinx of the Fourth Dynasty king Menkaure, already well over a thousand years old when the city fell. All of them were found smashed and scattered, and the excavators report clear signs that most were deliberately and violently broken. Heads and hands were cut off. The largest Canaanite statue of a human figure ever found in the land, over a ton of basalt, was broken into nearly a hundred pieces. Somebody went through this city's temples and palaces destroying the images of its gods and its kings, specifically.",
+          "One correction worth making before a reader meets it elsewhere: Hazor has no royal archive. Eighteen cuneiform tablets have been recovered from the Canaanite city over the whole history of excavation — a lexical text, a legal document, a trade record, a payroll, multiplication tables, a clay liver model for divination. That makes Hazor the richest cuneiform site in the southern Levant, and the tablets do imply that an archive existed. Ten seasons were spent digging where it was predicted to be. It has not been found.",
+        ],
+      },
+      {
+        heading: "Who Burned It",
+        paragraphs: [
+          "Two Israelite generations meet Hazor in Scripture — Joshua 11, where Joshua takes it and burns it, and Judges 4, where a later Jabin of Hazor oppresses Israel and Sisera commands his chariots. Only one Late Bronze destruction is attested, which means the two accounts cannot each be matched to a burn layer on the present evidence. Worth noting on the other side: Judges 4 does not say Hazor was burned, so neither reconstruction below is by itself at odds with it.",
+          "A. Ben-Tor argued for the Israelites, and his case is an elimination. Egyptians are ruled out because the mutilated statues include Egyptian royal images. Rival Canaanite cities are ruled out because there was no comparable power nearby. The Sea Peoples are ruled out because Hazor is well inland and none of their distinctive pottery turns up in the destruction. That leaves, on his reading, the group the Merneptah stele calls Israel, and he adds a further argument: the site lay effectively abandoned for around two centuries afterwards, which a local coup does not explain. He published the case in Biblical Archaeology Review in 2013 and defended it at book length in 2016.",
+          "S. Zuckerman, who co-directed the excavation with him from the mid-2000s until her death in 2014, disagreed with her own director in print. Her reading is an internal revolt: the destruction targets the physical symbols of royal ideology precisely — statues of gods and kings, temple furniture — which is what insiders overthrowing their own elite would destroy and not what a foreign army sacking a city for plunder would prioritise. She also pointed out that there is no archaeological evidence of warfare at the site, no weapons and no human casualties, and argued that the palace had already declined before the end. I. Finkelstein has published a further reassessment of the sequence. The Egyptians and the Sea Peoples appear in the literature as options considered and rejected rather than as anybody's thesis, and it would be wrong to name a proponent for either.",
+          "Where this leaves a reader: the destruction is real, it is enormous, it is deliberate, and it is the right century for either of the main conquest chronologies. Who lit it is not established, and the two people who knew the site best took opposite views. That is a genuinely good position for the biblical account to be in — it is not contradicted by anything in the ground — and it is not the same as confirmation, which would require something naming the attackers. Nothing at Hazor does.",
+        ],
+      },
+    ],
+    verses: [
+      { reference: "Joshua 11:10-13", note: "Hazor, the head of all those kingdoms, is taken and burned — the only city on its mound that Israel burns" },
+      { reference: "Judges 4:2-3", note: "Jabin, king of Canaan, reigning in Hazor, and Sisera's nine hundred chariots of iron" },
+      { reference: "1 Kings 9:15", note: "Solomon's levy builds Hazor, Megiddo and Gezer" },
+      { reference: "2 Kings 15:29", note: "Tiglath-Pileser takes Hazor and carries the people to Assyria" },
+    ],
+    sources: [
+      { label: "The Selz Foundation Hazor Excavations", url: "https://www.hazor-excavations.org/" },
+      { label: "Wikipedia: Tel Hazor", url: "https://en.wikipedia.org/wiki/Tel_Hazor" },
+    ],
+    discovery: {
+      objectType: "A 200-acre Canaanite city — upper tell and walled lower city — with a Late Bronze destruction layer, and the smashed statuary found in it",
+      findSite: "Tel Hazor (Tell el-Qedah), Upper Galilee, north of the Sea of Galilee",
+      foundYear: "Identified 1926, trial soundings 1928; excavated 1955-58 and 1968, and continuously since 1990",
+      foundBy: "J. Garstang (soundings); Y. Yadin for the Rothschild Expedition, Hebrew University; A. Ben-Tor from 1990 until his death in 2023, with S. Zuckerman and later S. Bechar as co-directors, and I. Kreimerman co-directing since 2022",
+      objectDate: "The destroyed city is Late Bronze; the destruction is dated to the thirteenth century BC, with the excavators differing over where in it",
+      objectDateCertainty: "disputed",
+      currentLocation: "Tel Hazor National Park; finds are held by the Israel Antiquities Authority and displayed at the Israel Museum, Jerusalem",
+    },
+    citations: [
+      {
+        tier: "institution",
+        label: "Institute of Archaeology, the Hebrew University of Jerusalem: Tel Hazor",
+        url: "https://archaeology.huji.ac.il/tel-hazor",
+        credit: "The Selz Foundation Hazor Excavations in Memory of Yigael Yadin",
+        detail: "The excavating institution's own page: renewed excavation from 1990 under A. Ben-Tor, co-directed with I. Kreimerman",
+        supports: "Excavation history and current direction",
+      },
+      {
+        tier: "reference",
+        label: "Hebrew University via ScienceDaily: eighteen mutilated Egyptian statues at Hazor",
+        url: "https://www.sciencedaily.com/releases/2016/07/160725090228.htm",
+        credit: "Institute of Archaeology, the Hebrew University of Jerusalem, 25 July 2016",
+        detail: "\"fragments of 18 different Egyptian statues, both royal and private\" with \"Clear signs of mutilation\" indicating deliberate smashing during the city's destruction in the thirteenth century BC",
+        supports: "The number and condition of the smashed statuary",
+      },
+      {
+        tier: "reference",
+        label: "Biblical Archaeology Society: A. Ben-Tor and S. Zuckerman on who destroyed Canaanite Hazor",
+        url: "https://www.biblicalarchaeology.org/daily/news/scorched-wheat-may-provide-answers-on-the-destruction-of-canaanite-tel-hazor/",
+        credit: "Biblical Archaeology Society, 24 July 2012",
+        detail: "Ben-Tor: the Israel of the Merneptah stele \"seems to be the most likely candidate.\" Zuckerman: \"I believe it was an internal revolt within the city that was responsible for the destruction\"",
+        supports: "The two excavators' opposed readings, in their own words",
+      },
+      {
+        tier: "scholarly",
+        label: "S. Zuckerman, \"Anatomy of a Destruction: Crisis Architecture, Termination Rituals and the Fall of Canaanite Hazor\"",
+        credit: "Sharon Zuckerman, Institute of Archaeology, the Hebrew University of Jerusalem",
+        detail: "Journal of Mediterranean Archaeology 20:1 (2007), 3-32. The published case for an internal revolt rather than a conquest. Print and subscription only",
+        supports: "The internal-revolt reading",
+        paywalled: true,
+      },
+      {
+        tier: "reference",
+        label: "Biblical Archaeology Society: the search for the Hazor archive",
+        url: "https://www.biblicalarchaeology.org/daily/ancient-cultures/ancient-israel/royal-archives-tel-hazor/",
+        credit: "Biblical Archaeology Society, 23 March 2017",
+        detail: "\"To this day, 18 cuneiform tablets have been recovered from within the Canaanite city\" and \"So far, no archive has been discovered\"",
+        supports: "The correction that Hazor has tablets but no recovered archive",
+      },
+      {
+        tier: "encyclopedic",
+        label: "Wikipedia: Tel Hazor",
+        url: "https://en.wikipedia.org/wiki/Tel_Hazor",
+      },
+    ],
+    reflectionPrompt:
+      "The two archaeologists who knew Hazor best dug the same ground for years and came to opposite conclusions about it. Where do you need to hold a conclusion more loosely than you do?",
+  },
+  {
+    id: "arad-sanctuary",
+    name: "The Arad Sanctuary",
+    // NOT registered: "Arad" — that is the Canaanite city of Numbers 21, and the bare name must stay
+    // with whatever record owns it. Every alias below is longer, so a mention of the shrine still
+    // wins over a mention of the town. The Arad ostraca are a separate record; this is the building.
+    alternateNames: ["Arad Temple", "The Judahite Shrine at Arad"],
+    matchNames: ["Arad sanctuary", "Arad shrine", "sanctuary at Arad"],
+    category: "discovery",
+    role: "A Judahite Temple Inside a Royal Fortress in the Negev",
+    summary:
+      "A small sanctuary inside a Judahite border fort in the Negev — the only Israelite shrine yet excavated with its inner room, its standing stones and its altars still in place, and the burnt residue on those altars turned out to be frankincense and cannabis.",
+    sections: [
+      {
+        heading: "A Temple Nobody Expected to Find",
+        paragraphs: [
+          "Tel Arad sits in the eastern Negev, and it is really two sites on one hill. R. Amiran dug the great Early Bronze city on the lower slope; Y. Aharoni dug the small Iron Age citadel on the mound above it. The main seasons ran from 1962 to 1967, with further work into the 1980s, and in the very first season Aharoni found something no other excavation has produced intact: an Israelite temple inside a fortress of the kingdom of Judah, laid out on the same broad plan as the tabernacle and the Jerusalem temple, with its inner room and its furnishings still where they had been left. Other Israelite sanctuaries have been excavated since — the Iron IIA temple at Tel Moza, a few kilometres from Jerusalem, was published in 2015 — but none of them survived like this one.",
+          "It is small. A walled courtyard holds an altar built of small stones faced with unchiselled ones — Y. Aharoni measured it at five cubits square, the dimensions Exodus 27:1 gives for the altar of burnt offering, and unhewn stone is what Exodus 20:25 requires. Behind it a broadroom leads to a raised niche reached by three steps — the inner sanctuary — and in the niche stood standing stones, the massebot the Old Testament keeps telling Israel to smash. Flanking the steps were two small limestone altars, their tops still black with the residue of the last thing burned on them. The Israel Museum in Jerusalem holds the two incense altars and reconstructs the niche; the excavated fortress itself is a national park a reader can walk through.",
+        ],
+      },
+      {
+        heading: "What It Says About Judah's Religion",
+        paragraphs: [
+          "The Arad ostraca from the same fortress mention the house of YHWH as an ordinary point of administrative reference, and the shrine is the physical counterpart to that: an official installation, in a royal fort, on the state's payroll. That is the interesting part, and it cuts against a comfortable assumption rather than for one. Deuteronomy 12 restricts sacrifice to the one place the LORD chooses, and Kings measures each reign by whether the high places came down. The Arad sanctuary is what those texts are arguing with. It is Judahite, it is official, and it is nowhere near Jerusalem.",
+          "In 2020 E. Arie, B. Rosen and D. Namdar published an organic-residue analysis of the black material on the two altars in the journal Tel Aviv. Earlier attempts in the 1960s had failed to identify it. The larger altar carried boswellic acid and related triterpenes — frankincense, mixed with animal fat to make it evaporate. The smaller altar carried cannabinoids: THC, CBD and CBN, mixed with animal dung to burn at the right temperature. It is the first identification of cannabis anywhere in the ancient Near East, and it puts a real, specific, physical practice into a fortress chapel in eighth-century Judah.",
+          "Then the shrine went out of use. The altar was decommissioned, the standing stones laid flat, and the whole sacred area filled in with earth and built over. Somebody in the Judahite administration deliberately shut down a temple, and the books of Kings describe two kings who did exactly that.",
+        ],
+      },
+      {
+        heading: "Which Reform, or No Reform at All",
+        paragraphs: [
+          "This is where the argument is, and it is a genuine one. Y. Aharoni read the dismantling as two stages: the courtyard altar going out of use under Hezekiah, the shrine itself under Josiah, matching 2 Kings 18:4 and 2 Kings 23. Z. Herzog re-examined the stratigraphy and published a different reading in 2001 and 2002 — the whole sacred area was reduced and buried by the end of the eighth century, before Sennacherib's campaign of 701, and the fortress rebuilt afterwards had no temple in it at all. On Herzog's stratigraphy there is one decommissioning, not two, and it belongs to Hezekiah.",
+          "Both of those readings connect the shrine's end to a royal reform. Others do not. N. Na'aman and D. Edelman have argued that the sanctuary fell victim to the Assyrian campaign itself rather than to a reformer, which would leave the reform narratives of Kings without this particular piece of corroboration. The disagreement is about stratigraphy, and stratigraphy at a site dug in the 1960s and published slowly after its excavator's death in 1976 is not a thing that gets settled by argument alone.",
+          "So: the app does not say that Arad proves Hezekiah's reform. What Arad establishes, and establishes firmly, is that a temple to Israel's God stood inside a Judahite fortress in the Negev, that people burned frankincense and cannabis in it, and that it was deliberately and carefully shut down in the late Iron Age. That is a great deal, and it is exactly the world the reform narratives are set in. Which king shut it down, and whether a king shut it down at all, is not yet decided. Two further cautions on the cannabis in particular: the residue was analysed in 2020 from material excavated in the 1960s, so its context is the excavation's rather than the laboratory's; and the study's inference that the drug was used to induce ecstasy in worship is the authors' reading of what the chemistry implies, not something the chemistry states.",
+        ],
+      },
+    ],
+    verses: [
+      { reference: "Numbers 21:1", note: "The Canaanite king of Arad fights Israel in the Negev" },
+      { reference: "Deuteronomy 12:13-14", note: "Sacrifice only in the place the LORD chooses — the law the Arad shrine sits awkwardly beside" },
+      { reference: "2 Kings 18:4", note: "Hezekiah removes the high places and breaks the pillars" },
+      { reference: "2 Kings 23:8", note: "Josiah defiles the high places from Geba to Beersheba" },
+      { reference: "2 Chronicles 31:1", note: "The pillars broken and the high places pulled down throughout Judah" },
+    ],
+    sources: [
+      { label: "Wikipedia: Tel Arad", url: "https://en.wikipedia.org/wiki/Tel_Arad" },
+      { label: "Biblical Archaeology Society: marijuana found at an ancient temple in Israel", url: "https://www.biblicalarchaeology.org/daily/marijuana-found-at-ancient-temple-in-israel/" },
+    ],
+    discovery: {
+      objectType: "A stone-built sanctuary inside a fortress — walled courtyard with a sacrificial altar, broadroom, and a raised inner niche with standing stones and two limestone incense altars",
+      findSite: "The Iron Age citadel on the upper mound at Tel Arad, eastern Negev",
+      foundYear: "1962, in the first season; excavated through 1967 with later seasons into the 1980s",
+      foundBy: "Y. Aharoni, who directed the upper mound and the citadel. R. Amiran directed the separate Early Bronze city on the lower slope",
+      objectDate: "Built in the Iron Age II Judahite fortress; dismantled and buried in the late eighth century BC on Z. Herzog's stratigraphy, or in two stages ending in the seventh century on Y. Aharoni's",
+      objectDateCertainty: "disputed",
+      currentLocation: "Tel Arad National Park, eastern Negev, where the excavated shrine can be walked through. The two limestone incense altars are held by the Israel Museum, Jerusalem, which reconstructs the inner niche; no inventory number is given here because the museum's collection page could not be read without JavaScript",
+    },
+    citations: [
+      {
+        tier: "institution",
+        label: "Israel Nature and Parks Authority: Tel Arad National Park",
+        url: "https://en.parks.org.il/reserve-park/tel-arad-national-park/",
+        credit: "Israel Nature and Parks Authority, which manages the site",
+        detail: "The managing authority's own page for the excavated fortress and Canaanite city. The two limestone incense altars themselves are held by the Israel Museum in Jerusalem, whose collection page could not be read for this article because it requires JavaScript, so no inventory number is given",
+        supports: "The site as it stands today and the custody of the finds",
+      },
+      {
+        tier: "scholarly",
+        label: "E. Arie, B. Rosen and D. Namdar, \"Cannabis and Frankincense at the Judahite Shrine of Arad\"",
+        url: "https://cris.haifa.ac.il/en/publications/cannabis-and-frankincense-at-the-judahite-shrine-of-arad/",
+        credit: "Eran Arie, Baruch Rosen and Dvory Namdar",
+        detail: "Tel Aviv 47:1 (2020), 5-28, DOI 10.1080/03344355.2020.1732046. Cannabinoids including THC, CBD and CBN with animal dung on the smaller altar; boswellic acid and norursatriene from frankincense with animal fat on the larger",
+        supports: "The residue analysis of the two incense altars",
+      },
+      {
+        tier: "scholarly",
+        label: "Z. Herzog, \"The Fortress Mound at Tel Arad: An Interim Report\"",
+        credit: "Ze'ev Herzog, Institute of Archaeology, Tel Aviv University",
+        detail: "Tel Aviv 29:1 (2002), 3-109, with the stratigraphic argument set out earlier in \"The Date of the Temple at Arad,\" in A. Mazar (ed.), Studies in the Archaeology of the Iron Age in Israel and Jordan (Sheffield, 2001), 156-178. Print and subscription only",
+        supports: "The re-dating of the shrine's decommissioning to the end of the eighth century BC",
+        paywalled: true,
+      },
+      {
+        tier: "reference",
+        label: "S. Kleiman, \"Hezekiah's Reform: The Archaeological Evidence\"",
+        url: "https://www.thetorah.com/article/hezekiahs-reform-the-archeological-evidence",
+        credit: "Sabine Kleiman, Department of Archaeology and Near Eastern Cultures, Tel Aviv University",
+        detail: "Sets out Aharoni's staged reading, Herzog's revision, and names N. Na'aman and D. Edelman among those who attribute the shrine's end to the Assyrian campaign of 701 BC rather than to a reform",
+        supports: "The three competing explanations for why the sanctuary was shut down",
+      },
+      {
+        tier: "reference",
+        label: "Biblical Archaeology Society, \"Marijuana Found at Ancient Temple in Israel\"",
+        url: "https://www.biblicalarchaeology.org/daily/marijuana-found-at-ancient-temple-in-israel/",
+        credit: "Biblical Archaeology Society",
+        detail: "Popular report of the 2020 study, including the eighth-century date of the shrine and the authors' own hedged language about what the residue implies",
+        supports: "The date of the shrine and the limits of the cannabis interpretation",
+      },
+      {
+        tier: "encyclopedic",
+        label: "Wikipedia: Tel Arad",
+        url: "https://en.wikipedia.org/wiki/Tel_Arad",
+      },
+    ],
+    reflectionPrompt:
+      "Someone in Judah's own government carefully dismantled a place where people had met God, because a law said worship belonged elsewhere. What would it cost you to give up a practice you love for the sake of obedience?",
+  },
+  {
+    id: "mount-ebal-structure",
+    name: "The Mount Ebal Structure",
+    // NOT registered: bare "Mount Ebal", which is the mountain and belongs to whatever record owns
+    // it. "Joshua's Altar" IS registered, deliberately: it is the popular name for this object, it
+    // is longer than "Joshua" so it wins that collision, and a reader who meets the phrase should
+    // land on the article that tells them the identification is disputed.
+    alternateNames: ["Joshua's Altar", "el-Burnat"],
+    matchNames: ["Mount Ebal site", "Mount Ebal altar"],
+    category: "discovery",
+    role: "A Disputed Iron Age I Structure on the Mountain of the Curse",
+    summary:
+      "A stone structure full of burnt animal bone on the slope of Mount Ebal, published by its excavator as the altar of Joshua 8 — an identification most of the field has never accepted.",
+    sections: [
+      {
+        heading: "Found on a Survey, Dug for Eight Seasons",
+        paragraphs: [
+          "A. Zertal came across the site in 1980 while walking his long archaeological survey of the northern hill country, and excavated it across eight seasons from 1982 to 1989 for the University of Haifa and the Israel Exploration Society. The place is a rectangular structure of unworked field stones, roughly nine metres by seven, built straight onto bedrock, standing about four metres high, with two paved courtyards and a sloping wall running up to it that Zertal read as a ramp. It has no doorway and no floor. Its interior is packed with layers of ash and stone.",
+          "In the fill were burnt animal bones — cattle, goats and fallow deer — charred slowly rather than in a destruction. Two Egyptian scarabs came out of the site, and they carry the dating argument: B. Brandl assigned one to the reign of Ramesses II in the last quarter of the thirteenth century BC, reading a cartouche of Thutmose III on the other as a commemorative issue; D. Ben-Tor and P. van der Veen have since argued for the reign of Thutmose III itself or shortly after. The scarabs are the load-bearing evidence for the date and they are contested.",
+          "Zertal published his identification in Biblical Archaeology Review in 1985 under the title \"Has Joshua's Altar Been Found on Mt. Ebal?\" and gave the excavation's preliminary report in the journal Tel Aviv in 1987. He read the structure as the altar of Joshua 8:30-32, built where Deuteronomy 27 said to build it, on the mountain Deuteronomy 11:29 assigns the curse.",
+        ],
+      },
+      {
+        heading: "Why It Is Worth Taking Seriously",
+        paragraphs: [
+          "The case has real content, and dismissing it would be as lazy as swallowing it. This is an Iron Age I installation, in the right place, on a mountain named in the text, full of the burnt bone of animals that are overwhelmingly kosher, in a period when the hill country was filling up with new settlements. It is not a house and it is not a normal building: a structure with no door and no floor, filled deliberately with ash and stone, is doing something other than sheltering people.",
+          "That much has persuaded scholars who are nowhere near Zertal's conclusion. A. Mazar's assessment is worth quoting because it is exactly the shape of the honest position: Zertal \"may be wrong in the details of his interpretation, but it is tempting to accept his view concerning the basic cultic nature of the site and its possible relationship to the Biblical tradition.\" N. Na'aman accepted a cultic reading while identifying the place as a temple of El-Berith rather than Joshua's altar. Even I. Finkelstein, who rejects the identification, has said there is definitely an Iron I site there.",
+        ],
+      },
+      {
+        heading: "Why Most of the Field Has Not Accepted It",
+        paragraphs: [
+          "The identification with Joshua's altar has never carried the discipline, and that has to be said plainly rather than buried. A. Kempinski, who visited during the first season, published \"Joshua's Altar — An Iron Age I Watchtower\" in Biblical Archaeology Review in early 1986, arguing the stones were part of a watchtower and that there was no basis whatever for reading the structure as an altar; Zertal replied in the same issue. A. Rainey read it as a farmstead with an animal pen. The faunal assemblage cuts both ways: the bones are largely kosher, but fallow deer make up a substantial share of them, and fallow deer are not a sacrificial animal in the Levitical system, which is awkward for a neat fit with Joshua 8. And Zertal died in 2015; a final excavation report could not be traced for this article.",
+          "The state of play, stated as carefully as it can be: that the site had some cultic character is a serious and respectable position held by scholars well outside Zertal's camp. That it is specifically the altar Joshua built is a minority view, not accepted by most archaeologists, and it is not going to become the app's house position on the strength of one excavator's reading. It is also not fringe in the sense of being unpublished or ignored — it appeared in a peer-reviewed journal and was argued over by senior scholars in print, which is more than can be said for a good deal of what gets repeated about this site.",
+          "One thing that must not be run together with any of the above. In December 2019 a team from Associates for Biblical Research wet-sifted Zertal's spoil heaps and recovered a folded lead object about two centimetres across, announced at a press conference in Houston in March 2022 — fourteen months before it appeared in a journal — as a Late Bronze Age Hebrew curse inscription. The peer-reviewed publication followed in Heritage Science in May 2023. The response has been overwhelmingly negative from the specialists who work on early alphabetic writing. A. Maeir and C. Rollston concluded in the Israel Exploration Journal that the tomographic images \"fail to demonstrate any discernible letters\" and that the object \"is most reasonably understood as an uninscribed lead fishing-net weight\"; A. Mazar and N. Yahalom-Mack published in the same issue to similar effect; and a refutation by M. Haughwout appeared in 2024 in the same journal that had published the original claim, concluding that there is \"insufficient epigraphic evidence to conclude that writing exists\" on the lead. The object came from a spoil heap, not a stratified deposit. This app does not treat it as a find, and it has no bearing on the structure Zertal excavated.",
+        ],
+      },
+    ],
+    verses: [
+      { reference: "Deuteronomy 11:29", note: "The blessing on Mount Gerizim and the curse on Mount Ebal" },
+      { reference: "Deuteronomy 27:4-8", note: "Build an altar of uncut stones on Mount Ebal and write the law on plastered stones" },
+      { reference: "Joshua 8:30-32", note: "Joshua builds the altar on Mount Ebal and writes a copy of the law on the stones" },
+    ],
+    sources: [
+      { label: "Wikipedia: Mount Ebal site", url: "https://en.wikipedia.org/wiki/Mount_Ebal_site" },
+      { label: "A. Zertal, \"Has Joshua's Altar Been Found on Mt. Ebal?\", Biblical Archaeology Review 11:1 (1985)", url: "https://cojs.org/has-joshuas-altar-been-found-on-mt-ebal/" },
+    ],
+    discovery: {
+      objectType: "A rectangular field-stone structure about 9 by 7 metres, without door or floor, filled with layers of ash, stone and burnt animal bone, with two paved courtyards and a ramp",
+      findSite: "El-Burnat, on the north-eastern slope of Mount Ebal, above Shechem",
+      foundYear: "Found 1980 on survey; excavated across eight seasons, 1982-1989",
+      foundBy: "A. Zertal, for the University of Haifa and the Israel Exploration Society, found during his regional survey of the northern hill country",
+      objectDate: "Iron Age I. The two Egyptian scarabs anchor it: B. Brandl read one as Ramesses II, in the last quarter of the thirteenth century BC; D. Ben-Tor and P. van der Veen argue instead for the reign of Thutmose III or soon after",
+      objectDateCertainty: "disputed",
+      currentLocation: "The structure stands on Mount Ebal; the finds are held by the excavating institutions",
+    },
+    citations: [
+      {
+        tier: "institution",
+        label: "University of Haifa and the Israel Exploration Society — the excavating bodies",
+        credit: "The Zinman Institute of Archaeology, University of Haifa, and the Israel Exploration Society",
+        detail: "The excavation ran under these two bodies across eight seasons, 1982-1989. Its own published output is A. Zertal's preliminary report in Tel Aviv 14:2 (1987), cited below; no final excavation report could be traced for this article, and A. Zertal died in 2015. No institutional web page is given because none was found that the excavating bodies themselves maintain for the site",
+        supports: "Who excavated the site, under what auspices, and what the excavation itself published",
+      },
+      {
+        tier: "scholarly",
+        label: "A. Zertal, \"An Early Iron Age Cultic Site on Mount Ebal: Excavation Seasons 1982-1987: Preliminary Report\"",
+        credit: "Adam Zertal, University of Haifa",
+        detail: "Tel Aviv 14:2 (1987), 105-165, with L. K. Horwitz's faunal report at 173-189 in the same issue. The excavation's own peer-reviewed publication. Print and subscription only",
+        supports: "The excavation, the structure and Zertal's identification",
+        paywalled: true,
+      },
+      {
+        tier: "scholarly",
+        label: "A. Kempinski, \"Joshua's Altar — An Iron Age I Watchtower\"",
+        url: "https://library.biblicalarchaeology.org/article/joshuas-altar-an-iron-age-i-watchtower/",
+        credit: "Aharon Kempinski",
+        detail: "Biblical Archaeology Review 12:1 (January/February 1986), with A. Zertal's reply in the same issue. Kempinski visited the site during the first season and argued there was no basis for reading the structure as an altar. Body text paywalled",
+        supports: "The principal published objection to the altar identification",
+        paywalled: true,
+      },
+      {
+        tier: "scholarly",
+        label: "A. Maeir and C. Rollston, \"The So-Called Mount Ebal Curse Tablet: A Critical Response\"",
+        url: "https://cris.iucc.ac.il/en/publications/the-so-called-mount-ebal-curse-tablet-a-critical-response-a-criti/",
+        credit: "Aren M. Maeir (Bar-Ilan University) and Christopher Rollston (George Washington University)",
+        detail: "Israel Exploration Journal 73:2 (2023), 132-142. Their conclusion: the images \"fail to demonstrate any discernible letters\" and the object \"is most reasonably understood as an uninscribed lead fishing-net weight\"",
+        supports: "The specialist response to the lead object, which is a separate matter from the structure",
+      },
+      {
+        tier: "scholarly",
+        label: "S. Stripling, G. Galil, I. Kumpova, J. Valach, P. van der Veen and D. Vavrik, \"'You are Cursed by the God YHW': an early Hebrew inscription from Mt. Ebal\"",
+        url: "https://doi.org/10.1186/s40494-023-00920-9",
+        credit: "Associates for Biblical Research and collaborators",
+        detail: "Heritage Science 11:105, published 12 May 2023, open access. The original claim, cited here so a reader can weigh it against the responses rather than take this article's word for it",
+        supports: "The lead object's proposed reading, as its authors state it",
+      },
+      {
+        tier: "scholarly",
+        label: "M. Haughwout, \"Mt. Ebal curse tablet? A refutation of the claims regarding the so called Mt. Ebal curse tablet\"",
+        url: "https://doi.org/10.1186/s40494-023-01130-z",
+        credit: "Mark S. Haughwout, Indian Bible College",
+        detail: "Heritage Science 12, article 70, published 26 February 2024, open access — in the same journal that published the original claim. Concludes there is \"insufficient epigraphic evidence to conclude that writing exists\" on the folded lead",
+        supports: "The published refutation of the lead object's reading",
+      },
+      {
+        tier: "encyclopedic",
+        label: "Wikipedia: Mount Ebal site",
+        url: "https://en.wikipedia.org/wiki/Mount_Ebal_site",
+        detail: "Its summary of the state of opinion: many archaeologists accept early Israelite cultic activity at the site, while \"its identification with Joshua's altar is disputed\"",
+      },
+    ],
+    reflectionPrompt:
+      "A find announced at a press conference before it was reviewed did not survive review. What do you do with news that fits what you already believe?",
+  },
+  {
+    id: "timna-valley-mines",
+    name: "The Timna Copper Mines",
+    alternateNames: ["Timna Valley"],
+    matchNames: ["Timna copper mines", "Timna mines"],
+    category: "discovery",
+    role: "Ancient Copper Workings in the Arabah, Redated Twice",
+    summary:
+      "A district of ancient copper workings in the southern Arabah, called Solomon's mines, then reassigned to Egypt, then radiocarbon-dated back to the tenth century — and used to argue that the whole field reasons about nomads the wrong way.",
+    sections: [
+      {
+        heading: "Solomon's Mines, Then Not",
+        paragraphs: [
+          "The Timna valley, north of the Gulf of Aqaba in the southern Arabah, is riddled with ancient copper workings — shafts, galleries, smelting camps and slag heaps, thousands of them. N. Glueck's surveys of the 1930s tied the region's copper industry to the united monarchy, and it is his identification that fastened the phrase \"King Solomon's mines\" to the place; he set it out in print in 1940 and defended it for the rest of his life.",
+          "B. Rothenberg's Arabah Expedition began working the valley in 1959, and in 1969 it excavated Site 200 and found an Egyptian temple to the goddess Hathor. Cartouches in it ran from Seti I to Ramesses V, which put the workings in the New Kingdom, three centuries before Solomon. Rothenberg published Timna as an Egyptian operation, and the field moved. It is worth saying who conceded what: Glueck retracted his reading of the Tell el-Kheleifeh installation as a copper refinery in 1965, but he never accepted that the Arabah mines were pre-Solomonic, and he died in February 1971 still holding that position. It was W. F. Albright, shortly afterwards, who wrote that he and Glueck had both been wrong.",
+        ],
+      },
+      {
+        heading: "Then Not Egyptian Either",
+        paragraphs: [
+          "Renewed work from 2009, and from 2012 as the Central Timna Valley Project of Tel Aviv University under E. Ben-Yosef, dated the main smelting camps directly rather than by association with the Hathor sanctuary. The result moved them again. The project's own summary is that Site 30 now belongs to the early Iron Age, the eleventh to ninth centuries BC, and that the Egyptian paradigm for the valley's main sites is no longer valid. The great smelting camp at Site 34, the one nicknamed Slaves' Hill, is dated by radiocarbon to the late eleventh and early tenth centuries BC. The industry was at its peak, in other words, at exactly the period the Bible assigns to David and Solomon, and it was not being run by Egypt.",
+          "The desert also preserved things a wetter site would have destroyed. Textiles from the camps have been published by N. Sukenik, E. Ben-Yosef and colleagues in PLOS ONE — plant-dyed cloth in 2017, and in 2021 wool fibres carrying 6-monobromoindigotin and 6,6-dibromoindigotin, the chemical signature of murex-derived royal purple. They are the oldest such textiles known in the southern Levant, and they were worn by people living in tents. Note what they are and are not: this is argaman, royal purple, not the blue tekhelet of the tassel laws, and no identification of tekhelet at Timna has been published.",
+        ],
+      },
+      {
+        heading: "The Argument About Tents",
+        paragraphs: [
+          "The genuinely interesting thing at Timna is not a dating correction. It is a methodological challenge, and it deserves to be stated in its author's terms rather than in the form apologetics has given it. E. Ben-Yosef argues, in \"The Architectural Bias in Current Biblical Archaeology\" in Vetus Testamentum in 2019 and at length since, that the discipline reads social complexity off buildings, and that this systematically renders mobile societies invisible. The people running the Arabah copper industry were nomads. They left almost no architecture. They nevertheless operated a centralised, technologically sophisticated, industrial-scale enterprise, wore imported dyed textiles, and — because copper production happens to leave slag heaps and installations — they can be studied in a way nomads normally cannot. Timna is a rare window, not a normal case.",
+          "The inference he draws is narrow and he is careful about it, and the app is going to be careful too. He does not claim the Arabah proves anything about David or Solomon; he calls his argument \"methodological in essence.\" What it does is remove an argument. The standard case against a substantial tenth-century polity in Judah runs: no monumental architecture, therefore no state. If a tent-dwelling society can run what Timna shows it ran, that inference does not hold, and the absence of tenth-century palaces stops being decisive. Taking away an argument against something is not evidence for it. Ben-Yosef says so himself, and any presentation of him as an \"archaeology proves the Bible\" figure misrepresents him.",
+          "He also has serious opposition. I. Finkelstein has answered that the point is not new, that the desert polity is not in fact devoid of stone-built remains, that Tel Masos and the Negev Highlands settlements are part of the same system, and that there is no way to know whether these people called themselves Edom rather than Midian, Amalek or Teman. P. Bienkowski has argued in the Bulletin of the American Society of Overseas Research that the nomadic-polity model has no supporting evidence, that the people buried in the nearby cemetery were mostly not the people working the furnaces, and that the kingdom of Edom did not grow out of this industry at all. That exchange is live. Where the app stands: the redating is solid and the methodological point is a real contribution that ought to change how absence-of-evidence arguments are made in this field. Neither of those is a biblical confirmation, and the honest reading of Deuteronomy 8:9 is that the land was known for its copper, which the Arabah amply demonstrates, and not that any of these mines belonged to Solomon.",
+        ],
+      },
+    ],
+    verses: [
+      { reference: "Deuteronomy 8:9", note: "\"a land whose stones are iron, and out of whose hills you may dig copper\"" },
+      { reference: "Numbers 31:22", note: "Copper among the metals Israel is expected to handle in the wilderness period" },
+      { reference: "1 Kings 7:45-46", note: "Solomon's bronze vessels cast in the clay ground of the Jordan plain — not in the Arabah" },
+    ],
+    sources: [
+      { label: "The Central Timna Valley Project, Tel Aviv University", url: "https://www.tau.ac.il/~ebenyose/CTV/" },
+      { label: "Wikipedia: Timna Valley", url: "https://en.wikipedia.org/wiki/Timna_Valley" },
+    ],
+    discovery: {
+      objectType: "An ancient copper-mining and smelting district — shafts, galleries, smelting camps, slag mounds, an Egyptian temple and preserved textiles",
+      findSite: "The Timna valley, southern Arabah, north of the Gulf of Aqaba",
+      foundYear: "Surveyed by N. Glueck in the 1930s; excavated by B. Rothenberg's Arabah Expedition from 1959; re-excavated from 2009, and as the Central Timna Valley Project from 2012",
+      foundBy: "N. Glueck (survey); B. Rothenberg (Arabah Expedition); E. Ben-Yosef (Central Timna Valley Project, Tel Aviv University)",
+      objectDate: "Worked over a long span. The Hathor temple at Site 200 is New Kingdom Egyptian; the main Iron Age smelting camps are radiocarbon-dated to the eleventh to ninth centuries BC, with Site 34 in the late eleventh to early tenth",
+      objectDateCertainty: "firm",
+      currentLocation: "Timna Park, southern Israel; finds are held by Tel Aviv University and the Israel Antiquities Authority",
+    },
+    citations: [
+      {
+        tier: "institution",
+        label: "The Central Timna Valley Project",
+        url: "https://www.tau.ac.il/~ebenyose/CTV/",
+        credit: "Institute of Archaeology, Tel Aviv University; director E. Ben-Yosef",
+        detail: "The excavating project's own site. \"Site 30 is now dated to the early Iron Age (11th - 9th c. BCE)\" and \"the previously accepted 'Egyptian paradigm' ... is no longer valid\"",
+        supports: "The redating of the smelting camps and the abandonment of the Egyptian paradigm",
+      },
+      {
+        tier: "scholarly",
+        label: "E. Ben-Yosef, R. Shaar, L. Tauxe and H. Ron, \"A New Chronological Framework for Iron Age Copper Production at Timna (Israel)\"",
+        url: "https://doi.org/10.5615/bullamerschoorie.367.0031",
+        credit: "Erez Ben-Yosef, Ron Shaar, Lisa Tauxe and Hagai Ron",
+        detail: "Bulletin of the American Schools of Oriental Research 367 (2012), 31-71. The dating framework behind the redating",
+        supports: "The Iron Age dates for the Timna smelting camps",
+        paywalled: true,
+      },
+      {
+        tier: "scholarly",
+        label: "E. Ben-Yosef, \"The Architectural Bias in Current Biblical Archaeology\"",
+        url: "https://doi.org/10.1163/15685330-12341370",
+        credit: "Erez Ben-Yosef, Tel Aviv University",
+        detail: "Vetus Testamentum 69:3 (2019), 361-387. The methodological argument, restated at length with Z. Thomas in \"Complexity Without Monumentality in Biblical Times,\" Journal of Archaeological Research 32:1 (2024), 59-101",
+        supports: "The nomad argument, in its author's own publication",
+        paywalled: true,
+      },
+      {
+        tier: "scholarly",
+        label: "N. Sukenik, D. Iluz, Z. Amar, A. Varvak, O. Shamir and E. Ben-Yosef, \"Early evidence of royal purple dyed textile from Timna Valley (Israel)\"",
+        url: "https://doi.org/10.1371/journal.pone.0245897",
+        credit: "Naama Sukenik and colleagues",
+        detail: "PLOS ONE 16:1 (2021), e0245897, open access. Murex-derived royal purple — argaman, not the blue tekhelet",
+        supports: "The dyed textiles and their identification",
+      },
+      {
+        tier: "scholarly",
+        label: "P. Bienkowski, \"The Formation of Edom: An Archaeological Critique of the 'Early Edom' Hypothesis\"",
+        url: "https://doi.org/10.1086/720775",
+        credit: "Piotr Bienkowski, University of Manchester",
+        detail: "Bulletin of the American Society of Overseas Research 388 (2022), 113-132. The systematic published case against the nomadic-polity model",
+        supports: "The principal opposition to Ben-Yosef's reading",
+        paywalled: true,
+      },
+      {
+        tier: "scholarly",
+        label: "N. Glueck, The Other Side of the Jordan",
+        credit: "Nelson Glueck, American Schools of Oriental Research",
+        detail: "New Haven, 1940; second edition 1970. The survey volume in which the Arabah copper industry was tied to the united monarchy — the identification that attached \"King Solomon's mines\" to Timna, and which Glueck never withdrew. Print only",
+        supports: "Glueck's original claim, in his own publication",
+      },
+      {
+        tier: "encyclopedic",
+        label: "Wikipedia: Timna Valley",
+        url: "https://en.wikipedia.org/wiki/Timna_Valley",
+      },
+    ],
+    reflectionPrompt:
+      "For fifty years the field could not see a whole society because it was looking for buildings. What are you failing to notice because it does not come in the shape you expect?",
+  },
+  {
+    id: "khirbet-en-nahas",
+    name: "Khirbet en-Nahas",
+    alternateNames: ["Khirbat an-Nahas"],
+    matchNames: ["Khirbet en Nahas", "Khirbat en-Nahas"],
+    category: "discovery",
+    role: "An Industrial Copper Centre in Lowland Edom, and a Dating Fight",
+    summary:
+      "Ten hectares of black slag in southern Jordan, with a fortress in the middle of it — radiocarbon-dated two centuries earlier than anyone expected, and argued over ever since.",
+    sections: [
+      {
+        heading: "Black Ruin",
+        paragraphs: [
+          "The Arabic name means \"ruin of copper,\" and the site earns it: about ten hectares of ground in the Faynan district of southern Jordan, buried under slag from ancient smelting, with a square fortress standing in the middle. T. E. Levy of the University of California, San Diego began excavating there in 2002 with M. Najjar, formerly director general of Jordan's Department of Antiquities, and the final report appeared in 2014.",
+          "The reason it matters is chronological. Before this work, the standard account had the kingdom of Edom forming late — in the eighth to sixth centuries BC, under Assyrian pressure — which made every biblical reference to Edom as an organised power in David's or Solomon's day look anachronistic. Levy's team dated the copper production directly. Their 2008 paper in the Proceedings of the National Academy of Sciences reported major smelting in the tenth and ninth centuries BC, and stated plainly that \"the new radiocarbon dates push back by 2 centuries the accepted IA chronology of Edom.\"",
+        ],
+      },
+      {
+        heading: "What That Does and Does Not Settle",
+        paragraphs: [
+          "Edom appears in Scripture long before the Assyrian period. Genesis 36:31 lists kings who reigned in Edom before any king reigned over Israel. Numbers 20 has Edom refusing Israel passage and coming out against them with a strong hand — an organised polity able to field a force. 2 Samuel 8 has David garrisoning Edom, 1 Kings 11 has Hadad the Edomite as Solomon's adversary, and 2 Kings 8 has Edom revolting from Judah. For decades the standard reply to all of that was that there was nothing in Edom then to garrison or to revolt.",
+          "That reply is no longer available in the form it used to take. Something substantial and organised was operating in the Edomite lowlands in the tenth and ninth centuries BC. It is worth being exact about the shape of this result: it removes a chronological objection. It does not confirm a single biblical episode. Nothing from Faynan names Edom, names a king, mentions Israel or dates an event, and Levy's team have never claimed otherwise. The correct sentence is that an organised polity existed early enough for the biblical picture to be possible. The sentence \"archaeology confirms David's conquest of Edom\" is a considerable overreach, and the three main parties to this argument would reject it for three different reasons.",
+        ],
+      },
+      {
+        heading: "The Argument, Still Running",
+        paragraphs: [
+          "I. Finkelstein opened the objections in Tel Aviv in 2005 and, with E. Piasetzky, pressed them in Radiocarbon in 2006 and Tel Aviv in 2008: the stratigraphic provenance of some of the dated samples is insecure, and samples associated with the fortress gate gave ninth-century results. E. van der Steen and P. Bienkowski published a methodological critique of the Bayesian modelling in Antiquity in 2006, arguing that the modelled ranges came out both wider and consistently earlier than the plain calibrated dates, which is the opposite of what the method should do. Levy and Najjar answered in Tel Aviv the same year. I. Finkelstein and L. Singer-Avitz took up the pottery in 2009, and J. M. Tebes published an independent reassessment of the chronology in 2021.",
+          "P. Bienkowski has since made the most systematic published case against the whole model, in the Bulletin of the American Society of Overseas Research in 2022. His argument is not about dates alone: he holds that nomads are visible at Faynan, in the Wadi Fidan cemetery, but that their material culture is entirely unlike that of the copper-production sites, and that tooth chemistry indicates most of the people buried there did not work in the industry. The elite buildings at the site, on his reading, appear suddenly with no transition from nomadism, and a gap of about a century separates the end of Faynan's boom from the first settlement in the Edomite highlands — so the kingdom of Edom did not grow out of this at all. He locates its real origin in Assyrian-driven intensification from the late eighth century.",
+          "Where the argument now stands is worth stating carefully, because it has moved. Nobody now disputes that there was an early Iron Age industrial boom in the Arabah; I. Finkelstein has conceded that the copper industry led to the rise of a desert polity. What remains open is the precise dating of the fortress, whether the operators were local or run from the Beersheba valley, and whether any of it is Edom rather than Midian, Amalek or Teman. An article that told a reader this was settled — in either direction — would not be telling the truth.",
+        ],
+      },
+    ],
+    verses: [
+      { reference: "Genesis 36:31", note: "Kings reigned in Edom before any king reigned over Israel" },
+      { reference: "Numbers 20:14-21", note: "Edom refuses Israel passage and comes out against them with a strong hand" },
+      { reference: "2 Samuel 8:13-14", note: "David puts garrisons throughout Edom" },
+      { reference: "1 Kings 11:14-16", note: "Hadad the Edomite raised up as an adversary to Solomon" },
+      { reference: "2 Kings 8:20-22", note: "Edom revolts from under the hand of Judah and makes a king over itself" },
+    ],
+    sources: [
+      { label: "T. E. Levy's laboratory, University of California, San Diego", url: "https://levlab.ucsd.edu/" },
+      { label: "P. Bienkowski, \"The Emergence of Edom: Recent Debate\", The Ancient Near East Today", url: "https://anetoday.org/bienkowski-emergence-edom/" },
+    ],
+    discovery: {
+      objectType: "An industrial copper-smelting site of about ten hectares, with slag mounds, smelting installations and a square fortress",
+      findSite: "Khirbet en-Nahas, in the Faynan copper district of southern Jordan",
+      foundYear: "Excavated from 2002; final report published 2014",
+      foundBy: "T. E. Levy (University of California, San Diego) with M. Najjar, in partnership with Jordan's Department of Antiquities",
+      objectDate: "Main copper production dated by the excavators to the tenth and ninth centuries BC; the date of the fortress in particular is disputed, with I. Finkelstein and E. Piasetzky arguing for the ninth century",
+      objectDateCertainty: "disputed",
+      currentLocation: "The site is in the Faynan district, Jordan; finds are held by Jordan's Department of Antiquities",
+    },
+    citations: [
+      {
+        tier: "institution",
+        label: "Levantine and Cyber-Archaeology Laboratory, University of California, San Diego",
+        url: "https://levlab.ucsd.edu/",
+        credit: "T. E. Levy's laboratory at UC San Diego — the excavating body, and the home of the Edom Lowlands Regional Archaeology Project",
+        detail: "The excavating institution's own site, which hosts the project's publications. The excavation was run in partnership with Jordan's Department of Antiquities, with M. Najjar as co-director",
+        supports: "Who excavated Khirbet en-Nahas and under what auspices",
+      },
+      {
+        tier: "scholarly",
+        label: "T. E. Levy, T. Higham, C. Bronk Ramsey, N. G. Smith, E. Ben-Yosef, M. Robinson, S. Munger, K. Knabb, J. P. Schulze, M. Najjar and L. Tauxe, \"High-precision radiocarbon dating and historical biblical archaeology in southern Jordan\"",
+        url: "https://doi.org/10.1073/pnas.0804950105",
+        credit: "Thomas E. Levy and colleagues",
+        detail: "Proceedings of the National Academy of Sciences 105:43 (2008), 16460-16465. Reports major smelting in the tenth and ninth centuries BC and states that the dates \"push back by 2 centuries the accepted IA chronology of Edom\"",
+        supports: "The redating of copper production at Khirbet en-Nahas",
+      },
+      {
+        tier: "scholarly",
+        label: "T. E. Levy, R. B. Adams, M. Najjar, A. Hauptmann, J. D. Anderson, B. Brandl, M. A. Robinson and T. Higham, \"Reassessing the chronology of Biblical Edom\"",
+        url: "https://doi.org/10.1017/s0003598x0011350x",
+        credit: "Thomas E. Levy and colleagues",
+        detail: "Antiquity 78:302 (2004), 865-879. The first excavation report from the 2002 season and the opening statement of the early-Edom case",
+        supports: "The excavation and the original chronological claim",
+        paywalled: true,
+      },
+      {
+        tier: "scholarly",
+        label: "I. Finkelstein and E. Piasetzky, \"Radiocarbon and the History of Copper Production at Khirbet En-Nahas\"",
+        url: "https://doi.org/10.1179/tav.2008.2008.1.82",
+        credit: "Israel Finkelstein and Eli Piasetzky, Tel Aviv University",
+        detail: "Tel Aviv 35:1 (2008), 82-95, following Finkelstein's opening critique in Tel Aviv 32:1 (2005), 119-125. The counter-model on the dating",
+        supports: "The published objections to the tenth-century dating",
+        paywalled: true,
+      },
+      {
+        tier: "scholarly",
+        label: "P. Bienkowski, \"The Formation of Edom: An Archaeological Critique of the 'Early Edom' Hypothesis\"",
+        url: "https://doi.org/10.1086/720775",
+        credit: "Piotr Bienkowski, University of Manchester",
+        detail: "Bulletin of the American Society of Overseas Research 388 (2022), 113-132; summarised for general readers in The Ancient Near East Today 11.3 (2023)",
+        supports: "The systematic case that the kingdom of Edom did not grow out of the Faynan copper industry",
+        paywalled: true,
+      },
+      {
+        tier: "scholarly",
+        label: "T. E. Levy and M. Najjar, \"Some Thoughts on Khirbet En-Nahas, Edom, Biblical History and Anthropology: A Response to Israel Finkelstein\"",
+        url: "https://doi.org/10.1179/tav.2006.2006.1.3",
+        credit: "Thomas E. Levy and Mohammad Najjar",
+        detail: "Tel Aviv 33:1 (2006), 3-17. The excavators' reply, cited so both sides of the exchange are here",
+        supports: "The excavators' answer to the dating objections",
+        paywalled: true,
+      },
+      {
+        tier: "encyclopedic",
+        label: "Wikipedia: Khirbat en-Nahas",
+        url: "https://en.wikipedia.org/wiki/Khirbat_en-Nahas",
+      },
+    ],
+    reflectionPrompt:
+      "For years the standard objection to Edom in David's day was that nothing was there. The objection turned out to rest on nobody having dug. Where are you treating a gap in your knowledge as a settled fact?",
+  },
+  {
+    id: "beersheba-horned-altar",
+    name: "The Beersheba Horned Altar",
+    // NOT registered: bare "Beersheba", which is the town and belongs to its own Location and POI
+    // records. Every alias here is longer, so a mention of the altar still wins over a mention of
+    // the place.
+    alternateNames: ["Beersheba Altar", "Tel Be'er Sheva Horned Altar"],
+    matchNames: ["horned altar of Beersheba", "Beer-sheba horned altar"],
+    category: "discovery",
+    role: "A Dismantled Four-Horned Altar Found Built Into a Later Wall",
+    summary:
+      "A large hewn-stone altar from a Judahite town, taken apart and its blocks reused in a storehouse wall — read by some as one of the reforms of Kings, in stone.",
+    sections: [
+      {
+        heading: "Found in Pieces, in a Wall",
+        paragraphs: [
+          "Tel Be'er Sheva, the Iron Age town mound east of the modern city, was excavated from 1969 to 1976 by the Institute of Archaeology of Tel Aviv University under Y. Aharoni, with the final season directed by Z. Herzog. In 1973 the excavators noticed that some of the dressed ashlar blocks built into the wall of a Stratum II pillared storehouse were not ordinary building stone. Reassembled, they made a large four-horned altar. Three of its four horns were recovered; the fourth was reconstructed. Further blocks came from the fill of the rampart outside the gate.",
+          "Y. Aharoni published it in The Biblical Archaeologist in 1974 as \"The Horned Altar of Beer-sheba.\" It is a burnt-offering altar of the type the Old Testament describes repeatedly — the horns are the projections a fugitive grabs in 1 Kings 1 and 2 — and Aharoni observed that its measurements come out at about five cubits square, the dimensions Exodus 27:1 gives. One detail worth noting rather than smoothing: the stones are hewn, and Exodus 20:25 forbids a stone altar built of cut stones. The altar is what it is, and what it is does not perfectly match the law it was presumably built under.",
+          "One thing was not found, and its absence matters. No sanctuary building has ever been located at Beersheba. Aharoni argued a temple existed; Y. Yadin located it elsewhere, and Z. Herzog, A. F. Rainey and S. Moshkovitz answered him in a 1977 paper whose title is precisely \"The Stratigraphy at Beer-sheba and the Location of the Sanctuary.\" The altar proves there was sacrifice here. It does not prove there was a temple, and nobody has found one.",
+        ],
+      },
+      {
+        heading: "Hezekiah, Josiah, or Neither",
+        paragraphs: [
+          "Somebody took this altar apart. The stones were not broken up — they were carefully dismantled and reused as good masonry — and they went into a building of the next stratum. That means the dismantling happened before Stratum II was built, and Stratum II was destroyed, on the majority reading, by Sennacherib in 701 BC. That sequence is what makes the argument interesting, because 2 Kings 18:4 says Hezekiah removed the high places and broke the pillars, and 2 Chronicles 31:1 says the same thing about the whole country.",
+          "Y. Aharoni read it that way, and connected it to Hezekiah's reform. Z. Herzog has argued the same on the refined stratigraphy — the cult installations were dismantled one phase before the destruction associated with the 701 campaign — and A. F. Rainey, O. Borowski and others have agreed. A. Faust adds a point about method that is easy to miss and hard to unsee: the stones could have been smashed, and they were not. This was a dismantling, not a desecration, which reads more like an official decommissioning than a mob.",
+          "Y. Yadin disagreed in 1976 and put it in Josiah's reign instead, in an article titled \"Beer-sheba: The High Place Destroyed by King Josiah,\" connecting it to 2 Kings 23:8 and its high places of the gates — which requires dating the relevant remains more than a century later than the excavators did. And a substantial group of scholars rejects the whole framing: N. Na'aman has argued that no archaeological evidence of the kind of intentional destruction Kings describes has actually been found, and D. Edelman and L. S. Fried have made related cases. Herzog's own conclusion cuts across the grain in an interesting way — he holds that the archaeology supports Hezekiah's reform and that it is Josiah's whose historicity should be doubted.",
+        ],
+      },
+      {
+        heading: "What the Stones Can Carry",
+        paragraphs: [
+          "It is worth naming exactly what is and is not established. A monumental horned altar stood at Beersheba and was taken down in an orderly way before the town's next phase. That is not in dispute. Everything after it is inference: which king ordered it, whether a king ordered it at all, and whether a single dismantled altar in one Negev town can stand for a national reform described in two biblical books.",
+          "The app's position is that the reform narratives in Kings and Chronicles are reliable accounts of things that happened. That is a theological and historical judgement about the texts, and the Beersheba altar is consistent with it — a striking, physical, contemporary instance of exactly the kind of act they describe. It is not the proof of it. A reader who is told that this altar demonstrates Hezekiah's reform and then meets N. Na'aman's argument in a university library will rightly feel they were handled, and the argument is not hard to meet: it is in print, by a serious scholar, and it has not been answered to everyone's satisfaction.",
+          "Beersheba is also worth knowing about for a second reason, which the reform debate tends to crowd out. Amos names it twice as a place people travelled to in order to worship, alongside Bethel and Gilgal, and he condemns the practice. The altar is what he was talking about. The town where Abraham planted a tamarisk and called on the name of the LORD, and where Isaac built an altar, had by the eighth century become a destination the prophets told people to stay away from.",
+        ],
+      },
+    ],
+    verses: [
+      { reference: "Genesis 21:33", note: "Abraham plants a tamarisk at Beersheba and calls on the name of the LORD" },
+      { reference: "Genesis 26:23-25", note: "Isaac builds an altar at Beersheba" },
+      { reference: "2 Kings 18:4", note: "Hezekiah removes the high places and breaks the pillars" },
+      { reference: "2 Kings 23:8", note: "Josiah defiles the high places from Geba to Beersheba, and the high places of the gates" },
+      { reference: "2 Chronicles 31:1", note: "The pillars broken and the high places pulled down throughout Judah" },
+      { reference: "Amos 5:5", note: "\"don't seek Bethel, nor enter into Gilgal, and don't pass to Beersheba\"" },
+      { reference: "Amos 8:14", note: "Those who swear by \"the way of Beersheba\"" },
+    ],
+    sources: [
+      { label: "Wikipedia: Tel Be'er Sheva", url: "https://en.wikipedia.org/wiki/Tel_Be%27er_Sheva" },
+      { label: "D. R. Moulis, \"Hezekiah's Cultic Reforms according to the Archaeological Evidence\" (open PDF)", url: "https://web.etf.cuni.cz/ETFN-442-version1-moulisdr_2019_hezekiahs_cultic_reform_x.pdf" },
+    ],
+    discovery: {
+      objectType: "A four-horned burnt-offering altar of dressed ashlar blocks, recovered dismantled and reused as building stone",
+      findSite: "Tel Be'er Sheva, in the northern Negev east of modern Beersheba",
+      findSiteId: "beersheba",
+      findSiteKind: "poi",
+      foundYear: "1973, during the Tel Aviv University excavations of 1969-1976",
+      foundBy: "Y. Aharoni's expedition for the Institute of Archaeology, Tel Aviv University; no individual finder is recorded. Z. Herzog directed the final season",
+      objectDate: "Ninth century BC on the excavators' assignment to Stratum III; dismantled before the building of Stratum II",
+      objectDateCertainty: "disputed",
+      currentLocation: "Israel Museum, Jerusalem, with a replica standing at Tel Be'er Sheva National Park. No inventory number is given here because none could be verified from the holding institution",
+    },
+    citations: [
+      {
+        tier: "institution",
+        label: "Israel Nature and Parks Authority: Tel Beer Sheva National Park",
+        url: "https://en.parks.org.il/reserve-park/tel-beer-sheva-national-park/",
+        credit: "Israel Nature and Parks Authority, which manages the site",
+        detail: "The managing authority's own page for the excavated town, one of the three Biblical Tels inscribed by UNESCO in 2005. The altar itself is in the Israel Museum in Jerusalem and a replica stands on site; no inventory number is given here because none could be verified from the holding institution",
+        supports: "The site today, and where the altar is now",
+      },
+      {
+        tier: "scholarly",
+        label: "Y. Aharoni, \"The Horned Altar of Beer-sheba\"",
+        url: "https://doi.org/10.2307/3211012",
+        credit: "Yohanan Aharoni, Institute of Archaeology, Tel Aviv University — the excavator's own publication",
+        detail: "The Biblical Archaeologist 37:1 (1974), 2-6. The first publication of the altar and of the connection to Hezekiah's reform",
+        supports: "The find, its reconstruction, and Aharoni's Hezekiah reading",
+        paywalled: true,
+      },
+      {
+        tier: "scholarly",
+        label: "Y. Yadin, \"Beer-sheba: The High Place Destroyed by King Josiah\"",
+        url: "https://doi.org/10.2307/1356295",
+        credit: "Yigael Yadin",
+        detail: "Bulletin of the American Schools of Oriental Research 222 (April 1976), 5-17. The counter-case for Josiah rather than Hezekiah",
+        supports: "The Josiah reading",
+        paywalled: true,
+      },
+      {
+        tier: "scholarly",
+        label: "Z. Herzog, A. F. Rainey and S. Moshkovitz, \"The Stratigraphy at Beer-sheba and the Location of the Sanctuary\"",
+        url: "https://doi.org/10.2307/1356631",
+        credit: "Ze'ev Herzog, Anson F. Rainey and Shmuel Moshkovitz",
+        detail: "Bulletin of the American Schools of Oriental Research 225 (February 1977), 49-58. The excavators' stratigraphic reply to Yadin, and the reason the sanctuary's location is an open question rather than a settled one",
+        supports: "The dispute over the stratigraphy and over whether a sanctuary building existed",
+        paywalled: true,
+      },
+      {
+        tier: "scholarly",
+        label: "D. R. Moulis, \"Hezekiah's Cultic Reforms according to the Archaeological Evidence\"",
+        url: "https://web.etf.cuni.cz/ETFN-442-version1-moulisdr_2019_hezekiahs_cultic_reform_x.pdf",
+        credit: "Dominik Rafael Moulis, Charles University, Prague",
+        detail: "In F. Capek and O. Lipschits (eds.), The Last Century in the History of Judah (SBL Press, 2019), 167-183. Freely readable, and the clearest survey of what the Beersheba altar's find context actually was: found in 1973, dismantled, its ashlars reused in a Stratum II pillared building, three horns intact",
+        supports: "The find context, the strata, and the state of the reform debate",
+      },
+      {
+        tier: "encyclopedic",
+        label: "Wikipedia: Tel Be'er Sheva",
+        url: "https://en.wikipedia.org/wiki/Tel_Be%27er_Sheva",
+      },
+    ],
+    reflectionPrompt:
+      "Whoever took this altar down did it carefully, and then used its stones to build something ordinary. What in your life has been dismantled rather than destroyed, and what got built with the pieces?",
+  },
 ];

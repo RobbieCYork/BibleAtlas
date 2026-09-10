@@ -677,6 +677,7 @@ location.archaeology.note|jordan-river|2341c30c0c	195	Jesus	jesus-of-nazareth
 location.archaeology.note|jordan-river|2341c30c0c	214	John the Baptist	john-the-baptist
 location.archaeology.note|judea|e58bc75055	194	Jesus	jesus-of-nazareth
 location.archaeology.note|judea|e58bc75055	301	Herod the Great	herod-the-great
+location.archaeology.note|lachish|a85707a0ce	1098	Rehoboam	rehoboam
 location.archaeology.note|malta|3b297ee4ae	306	Paul	paul-of-tarsus
 location.archaeology.note|mount-nebo|2221c3f64e	23	Moses	moses
 location.archaeology.note|nazareth|5733b27bc4	301	Jesus	jesus-of-nazareth
@@ -2776,6 +2777,8 @@ poi.archaeology.note|basilica-st-john|b1fb87b1d9	154	John	john-the-apostle
 poi.archaeology.note|basilica-st-john|b1fb87b1d9	268	John	john-the-apostle
 poi.archaeology.note|basilica-st-paul-outside-walls-rome|b3131ec270	178	Paul	paul-of-tarsus
 poi.archaeology.note|basilica-st-paul-outside-walls-rome|b3131ec270	560	Paul	paul-of-tarsus
+poi.archaeology.note|beersheba|813b2bd005	624	Hezekiah	hezekiah
+poi.archaeology.note|beersheba|813b2bd005	671	Josiah	josiah
 poi.archaeology.note|caesarea-maritima|cd66de17e8	1476	Tiberius	tiberius-caesar
 poi.archaeology.note|caesarea-maritima|cd66de17e8	1565	Paul	paul-of-tarsus
 poi.archaeology.note|caesarea-maritima|cd66de17e8	1606	Felix	antonius-felix
@@ -2810,7 +2813,6 @@ poi.archaeology.note|hierapolis|46d9a2eee7	188	Philip	philip-the-apostle
 poi.archaeology.note|hierapolis|46d9a2eee7	251	Philip	philip-the-apostle
 poi.archaeology.note|house-of-ananias-damascus|671f1e1a6c	371	Ananias	ananias-and-sapphira
 poi.archaeology.note|house-of-virgin-mary-ephesus|e9787a8c1c	438	Mary	mary-mother-of-jesus
-poi.archaeology.note|jericho|33e63b7af2	319	Joshua	joshua
 poi.archaeology.note|machaerus|5964fad5ca	169	John the Baptist	john-the-baptist
 poi.archaeology.note|machaerus|5964fad5ca	277	John	john-the-baptist
 poi.archaeology.note|magdala|1ed2e6226b	1619	Mary Magdalene	mary-magdalene
@@ -2819,7 +2821,10 @@ poi.archaeology.note|mamertine-prison-rome|cf4c222561	1355	Peter	simon-peter
 poi.archaeology.note|mamertine-prison-rome|cf4c222561	1364	Paul	paul-of-tarsus
 poi.archaeology.note|mamertine-prison-rome|cf4c222561	165	Peter	simon-peter
 poi.archaeology.note|marys-well-nazareth|5cdb6aaa2b	404	Jesus	jesus-of-nazareth
-poi.archaeology.note|megiddo|aa83738f5f	200	Solomon	solomon
+poi.archaeology.note|megiddo|38b9b04918	1182	Solomon	solomon
+poi.archaeology.note|megiddo|38b9b04918	1484	Solomon	solomon
+poi.archaeology.note|megiddo|38b9b04918	1532	Solomon	solomon
+poi.archaeology.note|megiddo|38b9b04918	1966	Solomon	solomon
 poi.archaeology.note|nazareth-synagogue-church|e2a4fb4dff	342	Jesus	jesus-of-nazareth
 poi.archaeology.note|paphos|1a46862dd2	262	Sergius Paulus	sergius-paulus
 poi.archaeology.note|paphos|1a46862dd2	321	Sergius Paulus	sergius-paulus
@@ -5162,6 +5167,10 @@ topic.section|angels|f4995caf86	115	John	john-the-apostle
 topic.section|angels|f4995caf86	513	Satan	satan
 topic.section|arad-ostraca|23c2c70274	345	Hezekiah	hezekiah
 topic.section|arad-ostraca|23c2c70274	357	Josiah	josiah
+topic.section|arad-sanctuary|7be351dabb	146	Hezekiah	hezekiah
+topic.section|arad-sanctuary|7be351dabb	180	Josiah	josiah
+topic.section|arad-sanctuary|7be351dabb	581	Hezekiah	hezekiah
+topic.section|arad-sanctuary|c99addedca	42	Hezekiah	hezekiah
 topic.section|assyrians|5e2c975b43	363	Jonah	jonah
 topic.section|assyrians|5e2c975b43	79	Jonah	jonah
 topic.section|babylonian-chronicles|1d479420e3	209	Jehoiachin	jeconiah
@@ -5174,6 +5183,15 @@ topic.section|babylonians|dcbf19bd59	439	Daniel	daniel
 topic.section|babylonians|dcbf19bd59	94	Daniel	daniel
 topic.section|baruch-bullae|a8a3caaed2	274	Jeremiah	jeremiah
 topic.section|baruch-bullae|d5bb8ad8a2	237	Jeremiah	jeremiah
+topic.section|beersheba-horned-altar|08b1457574	132	Josiah	josiah
+topic.section|beersheba-horned-altar|08b1457574	41	Josiah	josiah
+topic.section|beersheba-horned-altar|08b1457574	662	Hezekiah	hezekiah
+topic.section|beersheba-horned-altar|08b1457574	695	Josiah	josiah
+topic.section|beersheba-horned-altar|1a2345126f	395	Hezekiah	hezekiah
+topic.section|beersheba-horned-altar|48c1049c97	289	Abraham	abraham
+topic.section|beersheba-horned-altar|48c1049c97	362	Isaac	isaac
+topic.section|beersheba-horned-altar|59c3c2d28d	401	Hezekiah	hezekiah
+topic.section|beersheba-horned-altar|9821b189fb	49	Hezekiah	hezekiah
 topic.section|behistun-inscription|8d9f718cd6	299	Zechariah	zechariah-the-prophet
 topic.section|bethlehem-bulla|da93cf629a	129	David	david
 topic.section|bethlehem-bulla|db47873336	212	Manasseh	manasseh-king-of-judah
@@ -5384,6 +5402,13 @@ topic.section|jews|c919196e95	214	Paul	paul-of-tarsus
 topic.section|jews|c919196e95	551	Jesus	jesus-of-nazareth
 topic.section|jews|c919196e95	72	Jesus	jesus-of-nazareth
 topic.section|jews|c919196e95	739	Jesus	jesus-of-nazareth
+topic.section|khirbet-en-nahas|0978430926	293	David	david
+topic.section|khirbet-en-nahas|0978430926	353	Solomon	solomon
+topic.section|khirbet-en-nahas|4384bb2c24	250	David	david
+topic.section|khirbet-en-nahas|4384bb2c24	261	Solomon	solomon
+topic.section|khirbet-en-nahas|e149b6a8ab	588	David	david
+topic.section|khirbet-qeiyafa|b1b03e9526	758	Saul	saul-king-of-israel
+topic.section|khirbet-qeiyafa|d59e41564c	89	David	david
 topic.section|lachish-letters|58fac08ff1	401	Jeremiah	jeremiah
 topic.section|lachish-letters|e6cf5f18bf	146	Jeremiah	jeremiah
 topic.section|lachish-letters|fe82bc1623	39	Jeremiah	jeremiah
@@ -5428,6 +5453,7 @@ topic.section|moabites-and-ammonites|2fb7abb40c	297	David	david
 topic.section|moabites-and-ammonites|2fb7abb40c	349	Jesus	jesus-of-nazareth
 topic.section|moabites-and-ammonites|2fb7abb40c	430	David	david
 topic.section|moabites-and-ammonites|84d1a6e657	360	Balaam	balaam
+topic.section|mount-ebal-structure|e9023ce233	210	Joshua	joshua
 topic.section|muratorian-fragment|31b5ff58f1	155	Mark	john-mark
 topic.section|muratorian-fragment|31b5ff58f1	225	Paul	paul-of-tarsus
 topic.section|muratorian-fragment|31b5ff58f1	318	Paul	paul-of-tarsus
@@ -5648,6 +5674,7 @@ topic.section|tel-dan-stele|836d35b34a	295	David	david
 topic.section|tel-dan-stele|836d35b34a	576	David	david
 topic.section|tel-dan-stele|836d35b34a	628	David	david
 topic.section|tel-dan-stele|9cf69ffa5f	323	David	david
+topic.section|tel-hazor|ce955579ab	69	Joshua	joshua
 topic.section|tell-es-safi-ostracon|04f6d6650e	122	David	david
 topic.section|tell-es-safi-ostracon|dbe37c3509	520	David	david
 topic.section|temple-mount-sifting-project|3d9eb67019	154	Solomon	solomon
@@ -5702,6 +5729,13 @@ topic.section|the-trinity|ff6cc0af03	915	the Holy Spirit	holy-spirit
 topic.section|the-trinity|ff6cc0af03	976	Jesus	jesus-of-nazareth
 topic.section|theodotus-inscription|cd16d812a1	260	Jesus	jesus-of-nazareth
 topic.section|theodotus-inscription|f78b5209b4	489	Jesus	jesus-of-nazareth
+topic.section|timna-valley-mines|23b639a79a	663	David	david
+topic.section|timna-valley-mines|23b639a79a	673	Solomon	solomon
+topic.section|timna-valley-mines|70c03a6b3b	1069	Solomon	solomon
+topic.section|timna-valley-mines|7dd6f196fe	331	Solomon	solomon
+topic.section|timna-valley-mines|8b97bcc0ca	152	David	david
+topic.section|timna-valley-mines|8b97bcc0ca	161	Solomon	solomon
+topic.section|timna-valley-mines|fc39734c8c	268	Solomon	solomon
 topic.section|topic-pharisees|248cbcba68	141	Jesus	jesus-of-nazareth
 topic.section|topic-pharisees|36409cb33f	125	Jesus	jesus-of-nazareth
 topic.section|topic-pharisees|36409cb33f	187	Jesus	jesus-of-nazareth

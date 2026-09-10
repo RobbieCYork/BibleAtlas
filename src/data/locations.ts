@@ -3537,9 +3537,11 @@ export const locations: Location[] = [
       population: "Ancient Neolithic Jericho may have housed a few thousand at its peak; by the Late Bronze Age it was a modest fortified town",
       industry: "Oasis agriculture (dates, balsam) fed by the spring of Ein es-Sultan; caravan stop on routes from the Jordan Valley up to the hill country",
       notableFacts: [
-        "Excavations by Kathleen Kenyon (1950s) and later the Italian-Palestinian Expedition exposed over 20 successive occupation layers on the 21-meter tell",
-        "The site includes a massive Neolithic stone tower (c. 8000 BC), among the oldest monumental structures known",
-        "Scholars sharply disagree on whether archaeological evidence supports a 15th or 13th century BC destruction matching Joshua's conquest account, or whether the relevant Late Bronze Age city was essentially unfortified/unoccupied at the proposed conquest date — this is one of the most debated questions in biblical archaeology",
+        "Excavations by K. Kenyon (1952-58) and the later Italian-Palestinian expedition exposed over 20 successive occupation layers on the 21-metre tell",
+        "The site includes a massive Neolithic stone tower (c. 8000 BC), among the oldest monumental structures known, and nothing about it is disputed",
+        "The last walled Bronze Age city on the mound — J. Garstang's City IV — burned, and the date it burned is the most argued-over question in biblical archaeology. Garstang put it at about 1400 BC; K. Kenyon redated it to the end of the Middle Bronze Age, about 1580 BC in her reckoning, and most archaeologists have followed her",
+        "B. Wood argued in 1990 that Kenyon had dated the city by pottery she did not find, and that the local wares she did excavate belong to Late Bronze I and put the fall near 1400 BC. P. Bienkowski answered him the same year, and radiocarbon dates on grain from the burnt layer were published in 1995 against the redating. Most of the field rejects it; a minority still defends it, and the question has not been closed",
+        "Kenyon also concluded that the Late Bronze town was slight and unwalled — the awkward part of the record for a reader who wants archaeology to settle Joshua 6, and this app is not going to pretend otherwise",
         "Jericho lies about 258 m below sea level, making it the lowest city on earth",
       ],
     },
@@ -3555,7 +3557,7 @@ export const locations: Location[] = [
     ],
     modernMapUrl: mapsUrl(31.8703, 35.4444),
     archaeology: {
-      note: "Tell es-Sultan (ancient Jericho) is one of the most extensively excavated sites in the Levant, with visible Neolithic and Bronze Age occupation layers still exposed on the mound.",
+      note: "Tell es-Sultan (ancient Jericho) is one of the most extensively excavated sites in the Levant, with visible Neolithic and Bronze Age occupation layers still exposed on the mound. Five expeditions have worked it — C. Warren in 1867-68, E. Sellin and C. Watzinger in 1907-09 and 1911, J. Garstang in 1930-36, K. Kenyon in 1952-58, and the Italian-Palestinian expedition of L. Nigro and H. Taha since 1997 — and the disagreement between the third and the fourth of them over when the last walled Bronze Age city fell has never been settled. The site entry for Jericho sets out both sides of it.",
       photos: [
         {
           url: "https://upload.wikimedia.org/wikipedia/commons/7/75/Jericho_-_Tel_Es-Sultan1.jpg",
@@ -3619,7 +3621,8 @@ export const locations: Location[] = [
       industry: "Center of pilgrimage and sacrificial worship; agrarian hill-country economy (vineyards, grain)",
       notableFacts: [
         "The Tabernacle and Ark of the Covenant rested at Shiloh for an extended period before the Ark's capture by the Philistines (1 Samuel 4)",
-        "Excavations (Danish expedition 1926-1932, and Israeli excavations since the 1980s under Israel Finkelstein and later Scott Stripling) uncovered Iron Age I storage buildings, cultic-associated pottery, and destruction layers consistent with a violent end to the Israelite settlement, matching Jeremiah's later reference to Shiloh's ruin (Jeremiah 7:12-14)",
+        "Excavations — Danish soundings from 1922 and three seasons in 1926, 1929 and 1932, I. Finkelstein for Bar-Ilan University in 1981-84, and Associates for Biblical Research under S. Stripling since 2017 — uncovered Iron Age I storage buildings, more than twenty grain silos and a destruction layer consistent with a violent end to the Israelite settlement, matching Jeremiah's later reference to Shiloh's ruin (Jeremiah 7:12-14)",
+        "I. Finkelstein and S. Stripling read the site very differently, and both say so openly rather than quietly. Finkelstein holds the united monarchy to be a much later literary construct; Associates for Biblical Research states its purpose as demonstrating the historical reliability of the Bible. The site entry for Shiloh sets out what each has actually claimed",
         "Samuel was raised and served at Shiloh's sanctuary under the priest Eli",
         "The annual feast at Shiloh is the setting for the abduction of the dancing women by the tribe of Benjamin in Judges 21",
       ],
@@ -4065,7 +4068,9 @@ export const locations: Location[] = [
       notableFacts: [
         "Megiddo commanded the strategic pass through the Carmel ridge on the Via Maris trade route, making it one of the most fought-over cities in the ancient Near East across many centuries",
         "Excavations have revealed monumental gate complexes, palace structures, and a sophisticated water system — a shaft and tunnel cut through bedrock to a spring outside the city walls — often associated with the Omride period",
-        "1 Kings 9:15 credits Solomon with fortifying Megiddo alongside Hazor and Gezer, though the precise stratigraphy and dating of the 'Solomonic' gates remain debated among archaeologists",
+        "1 Kings 9:15 credits Solomon with fortifying Megiddo alongside Hazor and Gezer. Y. Yadin argued in 1958 that the six-chambered gates at all three sites were that building programme; Y. Aharoni in 1972 and D. Ussishkin in 1980 showed the Megiddo gate belongs stratigraphically to a later city, and hardly anyone now dates it to Solomon. What is still argued is whether it is ninth-century or eighth",
+        "Megiddo sits at the centre of the largest dating dispute in the archaeology of Israel. I. Finkelstein proposed in 1996 that there is no secure chronological anchor in the region between the early twelfth century BC and the late eighth, and that the strata conventionally called tenth-century belong some 75 to 100 years later — on that Low Chronology the monumental Israelite Megiddo is Omride rather than Solomonic. A. Mazar's Modified Conventional Chronology holds a middle position. Two decades of radiocarbon from both sides have narrowed the gap without closing it, and nobody involved claims it is settled",
+        "A fragment of a monument of the pharaoh Shoshenq I — the Shishak of 1 Kings 14:25 — was picked out of Schumacher's old spoil heap by Chicago workmen in 1925 and recognised by J. H. Breasted. It is often reported as belonging to a particular stratum; the Chicago excavators said the opposite in print, twice, because it came from a dump and has no stratigraphic value. It corroborates that Shoshenq reached Megiddo, and nothing more precise than that",
         "The Book of Revelation (16:16) draws on Megiddo's long history as a battlefield to name 'Armageddon' (Har Megiddo, 'Mount of Megiddo') as the site of the prophesied final battle",
         "Megiddo was inscribed as a UNESCO World Heritage Site in 2005 as part of the 'Biblical Tels' listing, alongside Hazor and Beersheba",
       ],
@@ -4137,8 +4142,9 @@ export const locations: Location[] = [
       notableFacts: [
         "Joshua is recorded as conquering Lachish and its king during the Israelite conquest of Canaan (Joshua 10:31-32); it was later rebuilt as one of Judah's most heavily fortified cities",
         "Sennacherib of Assyria besieged and captured Lachish in 701 BC; the siege is depicted in extraordinary detail on the Lachish Reliefs, carved panels from his palace at Nineveh now held in the British Museum",
-        "Excavations uncovered a massive Assyrian siege ramp at Lachish — the oldest and best-preserved example of ancient siege engineering yet found — along with clear archaeological evidence of the city's violent destruction",
-        "The Lachish Letters, a group of inscribed pottery ostraca found at the site, date to just before the Babylonian conquest in 586 BC and record urgent, firsthand messages from the final days of Judah's resistance, including a note that the signal fires of Azekah could no longer be seen",
+        "Excavations uncovered a massive Assyrian siege ramp at Lachish, which its excavators describe as the only one surviving anywhere in the ancient Near East and the oldest known; Area R alone produced 859 arrowheads, an iron chain from a battering ram, iron armour scales and the perforated stones the defenders dropped on it, and inside the wall opposite it D. Ussishkin found a Judean counter-ramp raised to meet it",
+        "The dating of the destruction took fifty years to settle. J. L. Starkey, following W. F. Albright, assigned the Level III destruction to Nebuchadnezzar in 597 BC; O. Tufnell argued for Sennacherib in 701 BC, and D. Ussishkin's excavation of the siege ramp itself settled it on her side. Level III is 701 BC and Level II is 586 BC, and until that was resolved the reliefs could not be tied to any particular biblical moment",
+        "The Lachish Letters — 21 inscribed ostraca, 18 of them found by J. L. Starkey in a guardroom of the gate in 1935 and three more in 1938 — date to just before the Babylonian conquest of 586 BC. Letter 4 is the famous one: its writer is watching for the fire signals of Lachish, and says he cannot see Azekah. It is very widely quoted as 'can no longer see Azekah', which would mean Azekah had just fallen. A. Zammit's 2016 Oxford study of the ostraca points out that the 'no longer' is not in the Hebrew, and that it is what produced the dramatic reading. The resonance with Jeremiah 34:7, where Lachish and Azekah are the last fortified cities left, survives the correction; the story of watching Azekah's fires go out does not",
       ],
     },
     verses: [
@@ -4152,7 +4158,18 @@ export const locations: Location[] = [
       { reference: "Micah 1:13" },
     ],
     modernMapUrl: mapsUrl(31.5645, 34.8483),
-    sources: [{ label: "Lachish - Wikipedia", url: "https://en.wikipedia.org/wiki/Lachish" }],
+    archaeology: {
+      note: "Four expeditions have worked Tel Lachish. J. L. Starkey dug it for the Wellcome-Marston expedition from 1932 until 10 January 1938, when he was murdered on the road while travelling to the opening of the Palestine Archaeological Museum in Jerusalem; O. Tufnell then spent twenty years publishing his material, and the four Lachish volumes she brought out between 1938 and 1958 are still the foundation. Y. Aharoni dug two seasons at the Solar Shrine in 1966 and 1968. D. Ussishkin excavated for Tel Aviv University from 1973 to 1994, with the main field seasons ending in 1987, and it was his work on the Assyrian siege ramp that finally fixed the Level III destruction to Sennacherib in 701 BC rather than to Nebuchadnezzar. A fourth expedition under Y. Garfinkel, M. G. Hasel and M. G. Klingbeil worked the north-eastern corner from 2013 to 2017 and found a previously unknown Canaanite temple of the twelfth century BC, an ivory comb carrying a full early alphabetic sentence, and a Level V city wall its excavators date by radiocarbon to the last quarter of the tenth century BC and connect to Rehoboam. That last claim is contested from two directions — I. Finkelstein on the chronology, and D. Ussishkin on whether it is a Level V city wall at all — and it should be read as a claim with named opponents rather than as a settled result. Separately, S. Ganor and I. Kreimerman of the Israel Antiquities Authority published the Iron Age gate shrine, whose altar horns had been trimmed and beside which a stone toilet seat had been installed; the toilet showed no chemical trace of use, and the excavators read it as symbolic desecration in the manner of 2 Kings 10:27, tied to the reform of 2 Kings 18:4.",
+      photos: [],
+    },
+    sources: [
+      { label: "Lachish - Wikipedia", url: "https://en.wikipedia.org/wiki/Lachish" },
+      { label: "A. Zammit, The Lachish Letters: A Reappraisal of the Ostraca Discovered in 1935 and 1938 at Tell ed-Duweir (DPhil thesis, University of Oxford, 2016)", url: "https://ora.ox.ac.uk/objects/uuid:db71cf81-ba6c-4a91-8e51-3c694993ebfe" },
+      { label: "S. Ganor and I. Kreimerman, \"The Iron Age Inner City Gate and Gate Shrine at Tel Lakhish,\" 'Atiqot 111 (2023)", url: "https://publications.iaa.org.il/atiqot/vol111/iss1/15/" },
+      { label: "Southern Adventist University: the Fourth Expedition to Lachish", url: "https://www.southern.edu/administration/archaeology/lachish/index.html" },
+      { label: "Y. Vaknin, R. Shaar, E. Ben-Yosef and O. Lipschits, \"Archaeomagnetic Dating of the Outer Revetment Wall at Tel Lachish,\" Tel Aviv 51:1 (2024), 73-94 — the source for the Area R find counts", url: "https://pmc.ncbi.nlm.nih.gov/articles/PMC11090153/" },
+      { label: "Palestine Exploration Fund: James Leslie Starkey", url: "https://www.pef.org.uk/about/history/james-leslie-starkey/" },
+    ],
   },
   {
     id: "dead-sea",
