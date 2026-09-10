@@ -27,6 +27,9 @@ interface PanelMenuProps {
   /** Leave the current takeover and return to the panels — what picking the already-open
    * destination does, mirroring the old footer strip's "click the active one again to close". */
   onLeaveDestination?: () => void;
+  /** Go to Archaeology — the one "Go to" row that is not a takeover. App opens the Articles panel
+   * and sends it to its Archaeology section; see `openArchaeology` there. */
+  onGoToArchaeology?: () => void;
 }
 
 const PANEL_LABELS: Record<PanelKey, string> = {
@@ -53,10 +56,24 @@ const PANEL_GROUPS: PanelKey[][] = [
   ["articles", "notes", "friends"],
 ];
 
-/** Icons match the mobile tab bar / MobileNavMenu for these same two destinations
- * (lib/mobileTabs.tsx) so one place keeps one face on both platforms. */
-const DESTINATIONS: { key: DestinationKey; label: string; icon: IconName; blurb: string }[] = [
+/** What the "Go to" group offers, in render order. Icons match the mobile tab bar / MobileNavMenu
+ * for these same destinations (lib/mobileTabs.tsx) so one place keeps one face on both platforms,
+ * and this order matches the mobile menu's too.
+ *
+ * Archaeology sits directly below Timeline because that is where the owner asked for it, and it
+ * earns the position: it is the other way into history, and the reader who has just been offered a
+ * timeline is the reader most likely to want the objects the timeline is built out of.
+ *
+ * It is the one row here that is NOT a takeover — it opens the Articles panel at its Archaeology
+ * section rather than covering the work area — which is why `key` is a union rather than a
+ * DestinationKey, and why it never carries `aria-current`: there is no state in which the reader is
+ * "in" Archaeology and this row means "leave it". Everything else about the row (the leading mark,
+ * the blurb, the trailing "→" that reads as travel, the keyboard behaviour) is deliberately
+ * identical to its two neighbours, because from the reader's side it does the same thing they do:
+ * it takes you somewhere. */
+const GO_TO_ROWS: { key: DestinationKey | "archaeology"; label: string; icon: IconName; blurb: string }[] = [
   { key: "timeline", label: "Timeline", icon: "timeline", blurb: "Biblical & world history" },
+  { key: "archaeology", label: "Archaeology", icon: "archaeology", blurb: "Discoveries & manuscripts" },
   { key: "games", label: "Games", icon: "games", blurb: "Live trivia with friends" },
 ];
 
@@ -74,6 +91,11 @@ const DESTINATIONS: { key: DestinationKey; label: string; icon: IconName; blurb:
  * So they sit in a separate labelled group below a rule, with a leading icon, a one-line blurb
  * carried over from the footer strip these rows replace, and a trailing "→" that reads as travel.
  * The one on screen is marked `aria-current="page"` and picking it again returns to the panels.
+ *
+ * Archaeology is the exception to the second bullet and only to it: a "Go to" row that opens a
+ * panel. See GO_TO_ROWS for why it is still a row here and not a seventh checkbox — it names a
+ * SHELF inside the Articles panel, not a panel, and a checkbox would offer to open something that
+ * has no independent existence to open.
  */
 export default function PanelMenu({
   panels,
@@ -83,6 +105,7 @@ export default function PanelMenu({
   activeDestination = null,
   onNavigate,
   onLeaveDestination,
+  onGoToArchaeology,
 }: PanelMenuProps) {
   const [open, setOpen] = useState(false);
   // Swaps the caption to name the auto-closed panel for a few seconds, then falls back to the
@@ -122,10 +145,11 @@ export default function PanelMenu({
     };
   }, [open]);
 
-  const selectDestination = (key: DestinationKey) => {
+  const selectGoTo = (key: DestinationKey | "archaeology") => {
     setOpen(false);
     buttonRef.current?.focus();
-    if (key === activeDestination) onLeaveDestination?.();
+    if (key === "archaeology") onGoToArchaeology?.();
+    else if (key === activeDestination) onLeaveDestination?.();
     else onNavigate?.(key);
   };
 
@@ -136,7 +160,7 @@ export default function PanelMenu({
         ref={buttonRef}
         className="panel-menu-button"
         onClick={() => setOpen((o) => !o)}
-        aria-label="Menu — show or hide panels, or go to Timeline or Games"
+        aria-label="Menu — show or hide panels, or go to Timeline, Archaeology or Games"
         aria-expanded={open}
         aria-haspopup="menu"
         aria-controls={open ? menuId : undefined}
@@ -171,7 +195,7 @@ export default function PanelMenu({
           <div className="panel-menu-separator panel-menu-separator-strong" role="separator" />
           <div className="panel-menu-group" role="group" aria-label="Go to">
             <p className="panel-menu-heading">Go to</p>
-            {DESTINATIONS.map(({ key, label, icon, blurb }) => {
+            {GO_TO_ROWS.map(({ key, label, icon, blurb }) => {
               const isCurrent = key === activeDestination;
               return (
                 <button
@@ -180,7 +204,7 @@ export default function PanelMenu({
                   className={`panel-menu-link${isCurrent ? " active" : ""}`}
                   aria-current={isCurrent ? "page" : undefined}
                   aria-label={isCurrent ? `${label} — on screen now; return to panels` : undefined}
-                  onClick={() => selectDestination(key)}
+                  onClick={() => selectGoTo(key)}
                 >
                   <span className="panel-menu-link-icon">
                     <Icon name={icon} />

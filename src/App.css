@@ -960,6 +960,56 @@ body.resizing-panels {
   overflow-y: auto;
 }
 
+/* Archaeology is the one section holding more than one shelf, so its expanded body is a box with
+   two lists stacked inside rather than a single <ul>. It carries .articles-section-list as well, so
+   the 320px cap, the top margin and the scroller are the same ones every other section already has
+   — this rule only adds the stacking the sub-headings need. */
+.articles-section-shelves {
+  display: flex;
+  flex-direction: column;
+}
+
+/* A label for the list beneath it, not another control: no border, no hover, no tab stop, and set
+   in the same muted colour the section counts already use so nothing about it invites a click.
+   Smaller and uppercase so it reads as a shelf label rather than as a second-level section header —
+   the section header above it is the only thing in this column that opens and closes. */
+.articles-shelf-label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 8px 0 0;
+  padding: 2px 8px;
+  color: var(--text-muted);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+/* Same story as .articles-section-icon: sized in em by components/Icon.tsx. */
+.articles-shelf-icon {
+  font-size: 15px;
+}
+
+.articles-shelf-name {
+  flex: 1;
+}
+
+.articles-shelf-label .articles-section-count {
+  font-size: 12px;
+  letter-spacing: 0;
+}
+
+/* The shelf lists sit INSIDE the section's own scroller, so they must not open scrollers of their
+   own — .articles-results is written for a panel-height list and carries `flex: 1; overflow-y: auto`
+   for that. Compound selector for the reason the .bible-panel-hidden block at the top of this file
+   spells out: .articles-results is declared just below this and would otherwise win on source order
+   alone. Verified in the browser — a single-class version of this rule computed to `auto`. */
+.articles-results.articles-shelf-list {
+  flex: none;
+  overflow: visible;
+}
+
 .articles-results {
   list-style: none;
   margin: 0;

@@ -80,9 +80,10 @@ export type IconName =
   | "games"
   | "people"
   | "topics"
-  // Archaeology's two browse sections. Both are paper-or-stone marks, so they are held apart from
-  // Bible/Articles/Topics/Notes on the same axis as those four are held apart from each other:
-  // WHAT KIND OF OBJECT. A standing carved slab; a roll.
+  // Archaeology: the section, then its two shelves. All three are object marks, so they are held
+  // apart from Bible/Articles/Topics/Notes on the same axis as those four are held apart from each
+  // other: WHAT KIND OF OBJECT. A storage jar; a standing carved slab; a roll.
+  | "archaeology"
   | "discovery"
   | "manuscript"
   | "timelineEvent"
@@ -311,6 +312,34 @@ const PATHS = {
       <path d="M9.2 4.6h8.4a2 2 0 0 1 2 2v10.8a2 2 0 0 1-2 2H9.2L4 12Z" />
       <circle cx="9.4" cy="12" r="1.5" fill="currentColor" stroke="none" />
       <path d="M13.4 9.2h3.2M13.4 14.8h3.2" />
+    </>
+  ),
+
+  /* The section that holds the two below. A storage jar: narrow rim, short neck, swelling shoulder,
+     flat base — the only closed vessel in the set, and the only silhouette in it that is wider in
+     the middle than at either end.
+
+     A jar rather than a trowel, which was the first draft. A trowel is a pointed blade on a stem
+     and sat far too close to Notes' quill nib at 20px; it is also the archaeologist's tool rather
+     than the reader's subject, and nothing else in this set draws the person doing the work. The
+     jar is the one object that is honestly BOTH shelves at once — a storage jar is itself a find,
+     and it is what the Qumran scrolls came out of — so the combined entry is not one of its two
+     halves borrowed to stand for the whole.
+
+     NO GROUND RULE, and that is the considered part. Discovery's stele stands on one, and giving
+     this the same line was the obvious way to make the two read as a family. Rendered at 15 and
+     20px side by side — which is exactly how they appear, the Archaeology section header sitting
+     directly above the Discoveries shelf label inside it — a wide body on a wide rule collapsed
+     into the same blob-on-a-line the stele already is, and the ground line dominated both. The
+     spec's rule that every mark has a distinct outline at 20px, tested against the ones it sits
+     next to, beats a family resemblance that only survives at 80px. Without the rule the jar's own
+     waisted outline carries it.
+
+     The solid mark is a stamped seal impression on the shoulder, which is where a real one is. */
+  archaeology: (
+    <>
+      <path d="M9.8 3.6v2.4C9.8 7.8 6.4 8.8 6.4 12.6c0 4 .8 6.8 1.8 8.6h7.6c1-1.8 1.8-4.6 1.8-8.6 0-3.8-3.4-4.8-3.4-6.6V3.6Z" />
+      <circle cx="12" cy="12" r="1.6" fill="currentColor" stroke="none" />
     </>
   ),
 

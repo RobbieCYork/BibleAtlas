@@ -482,6 +482,10 @@ function App() {
     if (isMobile) setMobileActivePanel("bible");
     setOpenReadingPlansNonce((n) => (n ?? 0) + 1);
   };
+  // Lets the Archaeology entry in both menus send the Articles panel to its Archaeology section —
+  // same one-shot-request shape as openReadingPlansNonce above, and undefined until first used so a
+  // mounted panel never expands a section nobody asked for. See openArchaeology below.
+  const [openArchaeologyNonce, setOpenArchaeologyNonce] = useState<number | undefined>(undefined);
   // Lets the Timeline's Books-of-the-Bible band jump straight to a book's Introduction (instead of
   // its chapter 1) — same one-shot-request shape as journalRequest, carrying which book since that
   // varies per click, not just a bare nonce.
@@ -1222,6 +1226,37 @@ function App() {
     closeGame();
   };
 
+  /** The Archaeology entry, from either menu (PanelMenu's "Go to" group on desktop, MobileNavMenu's
+   * list on a phone) — the two share this for the same reason they share goToTakeover: one
+   * destination, one route, no chance of the platforms drifting apart.
+   *
+   * Archaeology is a shelf inside the Articles panel rather than a takeover of its own, so this
+   * opens Articles and hands it a one-shot request to expand and scroll to that shelf. The three
+   * lines that matter and are easy to miss:
+   *
+   *  - The takeovers have to be left first, exactly as goToTakeover leaves them — they sit at the
+   *    same z-index and would otherwise stay painted over the panel this just opened.
+   *  - The article selection has to be dropped. The Articles slot is one position with two states,
+   *    and the browse list is HIDDEN while an article is open in it (see `showArticle` and the
+   *    Articles-slot comment by the render), so without this the reader would follow "Archaeology"
+   *    and land on whatever article they last had open.
+   *  - Mobile switches the active tab to Articles; desktop opens the panel. Same split every other
+   *    router in this file makes. */
+  const openArchaeology = () => {
+    closeTimeline();
+    closeGame();
+    closeMyProfile();
+    setSelectedId(null);
+    setSelectedPoiId(null);
+    setSelectedPersonId(null);
+    setSelectedTopicId(null);
+    setSelectedTimelineEventId(null);
+    setDetailsHistory([]);
+    if (isMobile) setMobileActivePanel("articles");
+    else openPanel("articles");
+    setOpenArchaeologyNonce((n) => (n ?? 0) + 1);
+  };
+
   const goToMobileDestination = (key: MobileTabKey) => {
     if (key === "timeline" || key === "games") {
       goToTakeover(key);
@@ -1396,7 +1431,13 @@ function App() {
             wordmark). It is the escape hatch for destinations the reader has hidden from the
             customisable bottom bar — see MobileNavMenu. Desktop keeps PanelMenu below; the two are
             never on screen together. */}
-        {isMobile && <MobileNavMenu current={currentMobileTab} onNavigate={goToMobileDestination} />}
+        {isMobile && (
+          <MobileNavMenu
+            current={currentMobileTab}
+            onNavigate={goToMobileDestination}
+            onGoToArchaeology={openArchaeology}
+          />
+        )}
         <PanelMenu
           panels={panels}
           onToggle={toggleMenuPanel}
@@ -1405,6 +1446,7 @@ function App() {
           activeDestination={showTimeline ? "timeline" : showGame ? "games" : null}
           onNavigate={goToTakeover}
           onLeaveDestination={leaveTakeover}
+          onGoToArchaeology={openArchaeology}
         />
         <button type="button" className="app-logo-button" onClick={goHome} aria-label="Go to Bible">
           <img src="/favicon.svg" className="app-logo" alt="" aria-hidden="true" />
@@ -1733,6 +1775,8 @@ function App() {
             onSelectPerson={handleSelectPersonFromBible}
             onSelectTopic={handleSelectTopicFromBible}
             onSelectTimelineEvent={handleSelectTimelineEventFromArticles}
+            openSection="archaeology"
+            openSectionNonce={openArchaeologyNonce}
             expand={sideExpand}
             style={{ width: articlesWidth }}
             hidden={articlesHiddenOnMobile || showArticle}

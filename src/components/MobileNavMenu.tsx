@@ -9,7 +9,27 @@ interface MobileNavMenuProps {
   /** Navigate to a destination. App owns the actual routing, including the Timeline/Games/My
    * Profile takeovers, which are not panels. */
   onNavigate: (key: MobileTabKey) => void;
+  /** Go to Archaeology — the one row here that is not a bottom-bar destination. App opens the
+   * Articles panel at its Archaeology section; see `openArchaeology` there. */
+  onGoToArchaeology: () => void;
 }
+
+/** What this menu lists, in order: the seven bottom-bar destinations, plus Archaeology inserted
+ * directly below Timeline — the same row in the same position the desktop menu's "Go to" group puts
+ * it (see GO_TO_ROWS in PanelMenu.tsx), because a menu entry that exists on one platform and not the
+ * other is a bug, not a platform difference.
+ *
+ * Archaeology is deliberately NOT an eighth MobileTabKey. A MobileTabKey is a slot in the
+ * customisable bottom bar, with a stored visibility record and a floor of three visible tabs
+ * (lib/mobileTabs.tsx); adding one would put an eighth tab in every reader's bar, change the shape
+ * of a preference already saved on their device, and claim Archaeology is a destination on a par
+ * with Bible and Map rather than a shelf inside Articles. So it is a row in this menu and nothing
+ * else, which is exactly what it is on desktop too. */
+type Row = { kind: "tab"; key: MobileTabKey } | { kind: "archaeology" };
+
+const ROWS: Row[] = MOBILE_TAB_ORDER.flatMap<Row>((key) =>
+  key === "timeline" ? [{ kind: "tab", key }, { kind: "archaeology" }] : [{ kind: "tab", key }],
+);
 
 /** The mobile header's hamburger.
  *
@@ -29,7 +49,7 @@ interface MobileNavMenuProps {
  * tag for the hidden ones; it read as a debug string rather than as help, and the answer is one
  * glance at the bar itself, which is on screen directly below this menu the whole time it is open.
  */
-export default function MobileNavMenu({ current, onNavigate }: MobileNavMenuProps) {
+export default function MobileNavMenu({ current, onNavigate, onGoToArchaeology }: MobileNavMenuProps) {
   const [open, setOpen] = useState(false);
   const containerRef = useRef<HTMLDivElement | null>(null);
   const buttonRef = useRef<HTMLButtonElement | null>(null);
@@ -73,13 +93,19 @@ export default function MobileNavMenu({ current, onNavigate }: MobileNavMenuProp
     onNavigate(key);
   };
 
+  const selectArchaeology = () => {
+    setOpen(false);
+    buttonRef.current?.focus();
+    onGoToArchaeology();
+  };
+
   return (
     <div className="mobile-nav-menu" ref={containerRef}>
       <button
         type="button"
         ref={buttonRef}
         className="mobile-nav-menu-button"
-        aria-label="Menu — go to Bible, Map, Timeline, Notes, Articles, Social or Games"
+        aria-label="Menu — go to Bible, Map, Timeline, Archaeology, Notes, Articles, Social or Games"
         aria-expanded={open}
         aria-haspopup="menu"
         aria-controls={open ? menuId : undefined}
@@ -93,7 +119,27 @@ export default function MobileNavMenu({ current, onNavigate }: MobileNavMenuProp
       </button>
       {open && (
         <div className="mobile-nav-menu-dropdown" id={menuId} role="menu" ref={listRef}>
-          {MOBILE_TAB_ORDER.map((key) => {
+          {ROWS.map((row) => {
+            // The one row that is not a bottom-bar destination — see ROWS above. It never carries
+            // aria-current: `current` is a MobileTabKey, and while the reader is on the Archaeology
+            // shelf the destination they are actually in is Articles, which is the row that says so.
+            if (row.kind === "archaeology") {
+              return (
+                <button
+                  key="archaeology"
+                  type="button"
+                  role="menuitem"
+                  className="mobile-nav-menu-item"
+                  onClick={selectArchaeology}
+                >
+                  <span className="mobile-nav-menu-icon" aria-hidden="true">
+                    <Icon name="archaeology" />
+                  </span>
+                  <span className="mobile-nav-menu-label">Archaeology</span>
+                </button>
+              );
+            }
+            const key = row.key;
             const { label, icon } = MOBILE_TAB_META[key];
             const isCurrent = key === current;
             return (
