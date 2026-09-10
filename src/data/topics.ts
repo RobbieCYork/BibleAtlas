@@ -4928,7 +4928,7 @@ export const topics: Topic[] = [
     },
     citations: [
       {
-        tier: "scholarly",
+        tier: "institution",
         label: "E. Mazar, \"Is This the Prophet Isaiah's Signature?\"",
         credit: "Eilat Mazar, Hebrew University of Jerusalem — the editio princeps",
         detail: "Biblical Archaeology Review, special double issue March/April-May/June 2018, pages 65-73, notes page 92. Published online 21 February 2018. Behind the BAS Library paywall, so no link is given",
@@ -5049,6 +5049,13 @@ export const topics: Topic[] = [
         credit: "Christopher Rollston, George Washington University",
         detail: "Rollston Epigraphy, 15 March 2020. Served over plain http. Note that this post names the Baruch bullae in a list rather than arguing the case; the argument itself is the Eretz-Israel paper below",
         supports: "The placing of the Baruch bullae in a wider list of twentieth-century Northwest Semitic market forgeries",
+      },
+      {
+        tier: "institution",
+        label: "The Israel Museum, Jerusalem, and the S. Moussaieff collection",
+        credit: "The Israel Museum, Jerusalem (Bulla 1, Hecht collection); S. Moussaieff (Bulla 2, privately held)",
+        detail: "No object page is cited because there is none to cite: the Israel Museum's collection site returns a bot-challenge page rather than a record to any automated request, and a private collection publishes nothing at all. The custody itself is documented in the 2016 rejoinder's figure credits. That an article about provenance cannot produce an institutional object record is part of the article's own point",
+        supports: "Where each of the two bullae is held",
       },
       {
         tier: "scholarly",
@@ -5501,6 +5508,13 @@ export const topics: Topic[] = [
         supports: "The physical description of the seal and the judgement that its stratigraphic context is ambiguous",
       },
       {
+        tier: "institution",
+        label: "G. Schumacher, Tell el-Mutesellim I: Fundbericht",
+        credit: "Gottlieb Schumacher for the Deutscher Palastina-Verein - the excavating body's own report",
+        detail: "Leipzig, 1908. The excavation report of the 1903-1905 campaign that produced the seal, published four years after the original had left the country. Print only",
+        supports: "The 1904 find and the excavation that produced it",
+      },
+      {
         tier: "reference",
         label: "\"Bulla of 'Servant of Jeroboam'\"",
         url: "https://www.biblicalarchaeology.org/daily/ancient-cultures/ancient-israel/bulla-of-servant-of-jeroboam/",
@@ -5816,6 +5830,13 @@ export const topics: Topic[] = [
         supports: "The individual finder credit",
       },
       {
+        tier: "institution",
+        label: "The British Museum, London - Lachish ostraca, registration numbers BM 125701-125715 and BM 16707",
+        credit: "The British Museum, which holds seventeen of the twenty-one",
+        detail: "No link is given because britishmuseum.org refuses every automated request; the collection database opens normally in a browser, and the registration numbers above are the ones A. Zammit records from physical examination of the objects. The remaining four are registered to the Israel Antiquities Authority",
+        supports: "The whereabouts of the corpus and its registration numbers",
+      },
+      {
         tier: "scholarly",
         label: "A. F. Rainey, \"Watching out for the signal fires of Lachish\"",
         credit: "Anson F. Rainey",
@@ -6123,6 +6144,13 @@ export const topics: Topic[] = [
         credit: "Oded Lipschits, Tel Aviv University",
         detail: "Journal of Hebrew Scriptures 12, article 4 (2012). Open access",
         supports: "The chronological split of the stamp types and the objection to dating the lmlk corpus from the private-stamp contexts",
+      },
+      {
+        tier: "institution",
+        label: "D. Ussishkin, The Renewed Archaeological Excavations at Lachish (1973-1994)",
+        credit: "David Ussishkin and the Institute of Archaeology, Tel Aviv University - the excavating body's own final report",
+        detail: "Monograph Series of the Institute of Archaeology 22, Tel Aviv, 2004, in five volumes. The excavation that fixed the destruction of Level III to Sennacherib's campaign of 701 BC, which is the anchor for the whole lmlk chronology. Print only",
+        supports: "The dating of Lachish Level III to 701 BC and the stratified lmlk jars beneath it",
       },
       {
         tier: "scholarly",
