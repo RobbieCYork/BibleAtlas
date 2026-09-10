@@ -126,17 +126,28 @@ for (const c of CASES) {
   // editing a paragraph re-keys every link in it and the assertion silently disappears with it
   // (see the tally.mjs note in README.md). A prose case survives a rewrite of the article it came
   // from, which is exactly what you want from a rule like "the Gospel of John is not a person".
-  const isProse = typeof c.text === "string";
+  //
+  // `text` TOGETHER WITH `ref` is a third thing, added 2026-09-10: the reader path run against a
+  // literal you supply instead of against this corpus. The corpus is WEB only, so until now a verse
+  // whose OTHER translations read differently could not be asserted at all — and VERSE_NAME_OVERRIDES
+  // is translation-blind, so those are exactly the entries with no cover. Acts 4:36 is the case that
+  // forced it: WEB and KJV read "Joses" and ASV reads "Joseph", so the override that sends that
+  // "Joseph" to Barnabas fires for one translation and matches nothing in the WEB corpus. Quote the
+  // verse verbatim from the translation and say which one in `why`. It is strictly additive — a case
+  // with `text` and no `ref` is still a prose case and behaves exactly as before.
+  const isProse = typeof c.text === "string" && !c.ref;
+  const isSuppliedVerse = typeof c.text === "string" && !!c.ref;
   const { book, chapter, verse } = isProse ? {} : parseRef(c.ref);
   const n = c.occurrence ?? 1;
   const label = isProse
     ? `prose ${JSON.stringify(c.text.length > 52 ? c.text.slice(0, 49) + "…" : c.text)} ` +
       `${JSON.stringify(c.surface)}${n > 1 ? `#${n}` : ""} [prose${c.owner ? ` on ${c.owner}` : ""}]`
     : `${c.ref} ${JSON.stringify(c.surface)}${n > 1 ? `#${n}` : ""} ` +
-      `[${c.path ?? "reader"}${c.owner ? ` on ${c.owner}` : ""}]`;
+      `[${c.path ?? "reader"}${isSuppliedVerse ? `, ${c.translation ?? "supplied"} text` : ""}` +
+      `${c.owner ? ` on ${c.owner}` : ""}]`;
 
   let text;
-  if (isProse) {
+  if (isProse || isSuppliedVerse) {
     text = c.text;
   } else {
     const v = byRef.get(c.ref);
@@ -145,7 +156,7 @@ for (const c of CASES) {
   }
   const at = occurrenceOffset(text, c.surface, n);
   if (at === null) {
-    failures.push(`${label} — that occurrence is not in the ${isProse ? "case's own text" : "WEB text of the verse"}.\n` +
+    failures.push(`${label} — that occurrence is not in the ${isProse || isSuppliedVerse ? "case's own text" : "WEB text of the verse"}.\n` +
       `      ${DIM}${text}${OFF}`);
     fail++; continue;
   }

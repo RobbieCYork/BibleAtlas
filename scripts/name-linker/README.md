@@ -2,7 +2,7 @@
 
 `src/lib/verseAnnotations.ts` decides which words in the Bible text — and in every article the app
 has ever written — become links to a person, place or topic. It renders **9,724 person-links across
-Scripture and 6,371 across the app's own prose**. Until this directory existed it had no tests at
+Scripture and 6,370 across the app's own prose**. Until this directory existed it had no tests at
 all, and a one-line data edit could move hundreds of them with nobody noticing.
 
     npm run test:linker
@@ -35,6 +35,23 @@ about real copy and not about a hypothetical.
 
     { text: "By this point the Gospel of John records that the chief priests…",
       surface: "John", owner: "jesus-of-nazareth", expect: null, status: "guard", why: "…" }
+
+Give it **both** `text:` and `ref:` and it is a third thing, added 2026-09-10: the **reader path run
+against a literal you supply** instead of against the WEB corpus. That is the only way to assert
+anything about the KJV or the ASV, which a reader can select and which nothing here otherwise
+measures (see the bottom of this page). `VERSE_NAME_OVERRIDES` is translation-blind, so the entries
+with the least cover are exactly the verses whose three renderings differ — and a green Bible
+snapshot says nothing at all about them, because the corpus is WEB only.
+
+    { ref: "Acts 4:36", translation: "ASV",
+      text: "And Joseph, who by the apostles was surnamed Barnabas…",
+      surface: "Joseph", expect: "barnabas", status: "guard", why: "…" }
+
+Acts 4:36 is the verse that forced it. WEB and KJV read "Joses" and the ASV reads "Joseph" — a
+manuscript variant (Ἰωσῆς in the Textus Receptus, Ἰωσήφ in NA28 and SBLGNT) of one man's name, not
+two men — so the override sending that "Joseph" to Barnabas fires for one translation of the three
+and matches nothing in the corpus. Quote the verse verbatim from the translation `translation:`
+names, from `bible-api.com`, which is the service `src/lib/biblePassage.ts` asks for the text.
 
 Prose cases exist because until they did, **the article surface could not be pinned by a named case
 at all** — every case had to be a verse, so the only cover the 6,176 prose links had was the
@@ -91,7 +108,7 @@ purpose and is written up in `reviewed.tsv`'s header.
 | file | rows | what it holds |
 |---|---:|---|
 | `bible-links.tsv` | 9,724 | every person-link in all 31,098 WEB verses, with the id each rendering path gives it |
-| `prose-links.tsv` | 6,371 | every person-link in every authored prose block the app puts through `LinkedVerseText` |
+| `prose-links.tsv` | 6,370 | every person-link in every authored prose block the app puts through `LinkedVerseText` |
 | `key-totals.tsv` | 4,075 | a tally covering **every** kind — location, POI, topic, timeline, verse reference — one row per (kind, matched text, id, path) |
 
 The first two are row-level, so a diff names the verse or the block. `key-totals.tsv` exists because
@@ -197,7 +214,7 @@ snapshot.
 `LinkedVerseText` is what PersonPanel, LocationPanel, PoiPanel, TopicPanel, BookIntroView,
 TimelineEventPanel and MyProfileView render with. Every book override, verse override and
 suppression in `verseAnnotations.ts` is invisible there. **834 links across 744 verses resolve
-differently between the two paths**, and all but a handful of the 6,371 prose links run with no
+differently between the two paths**, and all but a handful of the 6,370 prose links run with no
 disambiguation at all — `OWNER_NAME_OVERRIDES` (below) is the only correction that reaches them. A
 fix that only moves the `reader` column has fixed half the app.
 
@@ -275,10 +292,13 @@ scoping document twice. **Run it before claiming a change fixes N links.**
 
 ## What this does NOT cover
 
-- **KJV and ASV.** The app offers both and neither is measured here. `VERSE_NAME_OVERRIDES` is keyed
-  by book/chapter/verse and is translation-blind, so it fires identically whatever the reader has
-  selected — including where the wording differs enough to make the override meaningless. See
-  `corpus/PROVENANCE.md`.
+- **KJV and ASV, as a corpus.** The app offers both and neither is snapshotted.
+  `VERSE_NAME_OVERRIDES` is keyed by book/chapter/verse and is translation-blind, so it fires
+  identically whatever the reader has selected — including where the wording differs enough to make
+  the override meaningless. See `corpus/PROVENANCE.md`. What changed on 2026-09-10 is only that a
+  **named case can now assert one verse in one translation**, by carrying `text` alongside `ref`
+  (above). Three of them exist, all on Acts 4:36. That is a foothold, not coverage: nothing sweeps
+  either translation, and no count on this page includes a word of them.
 - **Whether the tree compiles.** See the warning at the top. Run `npm run build`.
 - **The running app.** These scripts call the real module with the real arguments the real components
   pass, which is strong evidence but is not the same as looking at the screen. The app is behind a

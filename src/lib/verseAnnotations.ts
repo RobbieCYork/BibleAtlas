@@ -682,6 +682,40 @@ const VERSE_NAME_OVERRIDES: Record<string, Record<string, Record<string, string 
   jacob: {
     Matthew: { "1:15": "jacob-father-of-joseph", "1:16": "jacob-father-of-joseph" },
   },
+  // "Joseph" at Acts 4:36 is BARNABAS — the verse's whole content is that the apostles surnamed
+  // this Joseph "Barnabas". He is neither the patriarch, who owns the bare key globally, nor Mary's
+  // husband, and BOOK_NAME_OVERRIDES does not override `joseph` in Acts, so he was resolving to
+  // Joseph son of Jacob and sending the reader to Egypt.
+  //
+  // This one fires for exactly ONE of the app's three translations, and that is correct rather than
+  // a gap. The name is a manuscript variant, and the app's own reader shows all three renderings —
+  // fetched 2026-09-10 from bible-api.com, the service src/lib/biblePassage.ts asks for the text:
+  //
+  //   WEB   "Joses, who by the apostles was also called Barnabas…"
+  //   KJV   "And Joses, who by the apostles was surnamed Barnabas…"
+  //   ASV   "And Joseph, who by the apostles was surnamed Barnabas…"
+  //
+  // The Greek behind that split, read off the editions rather than recalled: the Textus Receptus
+  // has Ἰωσῆς, NA28 and SBLGNT have Ἰωσήφ. KJV follows the TR and WEB the Majority Text, so both
+  // print "Joses"; ASV follows the critical text and prints "Joseph". No edition disputes WHO he
+  // is. So an override keyed on the name "joseph" simply has nothing to match in WEB or KJV, where
+  // "Joses" is registered to nobody and renders as plain text, and corrects the one translation
+  // that does render the name — which is what translation-blindness is supposed to do. Contrast the
+  // `jacob` entry above, where all three translations carry the same word and all three move.
+  //
+  // Pointed at `barnabas` rather than suppressed, because the app HAS this man: on the reader path
+  // there is no excludeId, so an ASV reader of Acts 4:36 now gets a link to Barnabas's own page,
+  // which is a better answer than no link. See OWNER_NAME_OVERRIDES below for the article half of
+  // the same fault.
+  //
+  // What this does NOT touch, and it is a live fault of the same shape: Acts 1:23's "Joseph called
+  // Barsabbas, who was also called Justus" — a FOURTH bearer, in all three translations, with no
+  // record of his own, still resolving to the patriarch. Measured while this was written and
+  // deliberately left alone: whether he gets a record or a `null` is a content decision, not a
+  // mechanical one, and it is escalated rather than swept in here.
+  joseph: {
+    Acts: { "4:36": "barnabas" },
+  },
 };
 
 /** The `excludeId` a book introduction renders under.
@@ -1271,6 +1305,39 @@ const OWNER_NAME_OVERRIDES: Record<string, Record<string, string | null>> = {
     // becomes the wrong lever for it and must be replaced by a phrase pin pair, exactly as
     // `egyptians` and `jacob-father-of-joseph` already are. Recorded here so the next person
     // finds it before the snapshot does.
+
+    // ── THE THIRD JOSEPH, 2026-09-10 — and he is not a third record ──────────────────────────
+    //
+    // Barnabas's own life story opens "Barnabas is introduced in Acts as Joseph, a Levite from
+    // Cyprus, whom the apostles nicknamed 'Barnabas'" (Acts 4:36). That "Joseph" was resolving to
+    // the patriarch — wrong on any reading, and left standing as a `known-wrong` case by the
+    // nativity batch, which was not authorised to settle it.
+    //
+    // The obvious fix was a new `joseph-barnabas` person record. It is the wrong one, because
+    // THIS JOSEPH IS BARNABAS: Acts 4:36 says the apostles renamed him, and the app already has
+    // the man. A second record for the same person would split his links and need maintaining.
+    // So this is a self-link, and it belongs here mapped to the record's own id, exactly as
+    // `augustus` on claudius-caesar and the `joseph-husband-of-mary`/`joseph-of-arimathea`/
+    // `caiaphas` entries above are. NOT `null`: null in this table means "a different,
+    // unrepresented bearer", and that is precisely what he is not.
+    //
+    // The other candidate — registering a bare "Joseph" as a matchName on the barnabas record —
+    // was MEASURED before it was rejected, and it fails in both directions at once:
+    //
+    //   As written today it moves NOTHING. Zero rows in all three snapshots, and the fault above
+    //   stays. NAME_TO_ENTRY is built last-wins from a length-stable sort, so two entries spelled
+    //   "Joseph" are separated only by their order in people.ts — and `joseph-son-of-jacob` sits
+    //   at line 2973, below `barnabas` at 582. The registration loses the key and is inert.
+    //
+    //   If it ever won the key it is catastrophic. Forced to win and measured: 248 Bible rows
+    //   repoint to Barnabas, 83 prose rows repoint and 16 MORE appear (6,371 -> 6,387) as
+    //   self-link suppressions on the Josephs' own pages stop firing, key-totals repoints all
+    //   three paths, and 15 named cases fail. Every "Joseph" in Genesis becomes a Cypriot Levite.
+    //
+    // Which of those two you get depends on nothing but where a record happens to sit in a data
+    // file — the same accident SAUL_DEFAULT and edomLocationEntry above exist to take out of the
+    // hands of file order. So it is not a lever at all, and this table is.
+    barnabas: "barnabas",
   },
 
   // ── Two more from the same sweep: a bare name that is the WRONG ancient man ──────────────────

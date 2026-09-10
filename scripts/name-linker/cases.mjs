@@ -15,6 +15,14 @@
 //                              (BookIntroView is the exception — a book intro has no record id),
 //                              and it is the sole context OWNER_NAME_OVERRIDES has to work with.
 //                              Omit it and the case runs with no context at all, as before.
+//   text: "<sentence>"       — instead of `ref`, a PROSE case: a literal sentence run the way
+//                              LinkedVerseText runs one. Quote it verbatim from the data file.
+//   text: … WITH ref: …      — added 2026-09-10. The READER path run against a supplied literal
+//                              instead of against the WEB corpus, which is the only way to assert
+//                              anything about the KJV or ASV a reader can actually select. Name the
+//                              translation in `translation:` and quote the verse verbatim from it.
+//                              VERSE_NAME_OVERRIDES is translation-blind, so a verse whose three
+//                              renderings differ had no cover at all before this — see Acts 4:36.
 //
 // `status` is the part that makes this net honest:
 //   "guard"       — this resolution is CORRECT. If it changes, something has regressed.
@@ -26,7 +34,9 @@
 //                   so that an unrelated change CANNOT alter it without failing this file. Do not
 //                   "fix" a flagged case. If your change moves one, back the change out.
 //
-// Every case below was read against the WEB text of its verse, not recalled.
+// Every case below was read against the WEB text of its verse, not recalled — and the handful that
+// carry both `text` and `ref` were read against the KJV or ASV text that `translation:` names,
+// fetched from bible-api.com, which is the service the app itself asks for Scripture.
 
 export const CASES = [
   // ─────────────────────────────────────────────────────────────────────────────────────────
@@ -2733,16 +2743,85 @@ export const CASES = [
   { ref: "Matthew 1:16", surface: "Joseph", expect: "joseph-husband-of-mary", status: "guard",
     why: "And the other man in Scripture, still right, by the route he already had." },
 
-  // ── A THIRD Joseph, measured and NOT fixed ───────────────────────────────────────────────────
-  // Found by the same enumeration and left alone deliberately: it is outside the nativity/
-  // genealogy authorisation this batch was given, and the answer is not mechanical.
+  // ── A THIRD Joseph — FIXED 2026-09-10, and he needed no record of his own ────────────────────
+  //
+  // This line was `known-wrong` until then, on the reasoning that Joseph Barnabas "has no record
+  // of his own" and so `null` was the right answer. That reasoning was wrong, and the fix is the
+  // correction of it: HE IS BARNABAS. Acts 4:36 says the apostles renamed him, so the record the
+  // app already has IS his, and the entry belongs in OWNER_NAME_OVERRIDES mapped to `barnabas` —
+  // the record's own id, handed back to the self-link exclusion, exactly as `augustus` is on
+  // claudius-caesar. Not `null`, which in that table means a different, unrepresented bearer.
+  //
+  // `expect: null` is unchanged and is now what a CORRECT resolution looks like: a page does not
+  // link to itself, so the observable answer on Barnabas's own page is no link either way. The
+  // difference is why, and it is the whole point — mapped to `barnabas` this survives the sentence
+  // being rewritten and points at the right man if the text is ever quoted elsewhere.
   { text: "Barnabas is introduced in Acts as Joseph, a Levite from Cyprus, whom the apostles " +
           "nicknamed \"Barnabas,\" meaning \"son of encouragement.",
-    surface: "Joseph", owner: "barnabas", expect: null, status: "known-wrong",
-    why: "Acts 4:36 — Joseph Barnabas, a third bearer of the name who is neither the patriarch " +
-         "nor Mary's husband and has no record of his own. It resolves to Joseph son of Jacob " +
-         "today, which is wrong on any reading. `null` is recorded as the right answer on the " +
-         "same grounds as the unrepresented Eleazars and Zechariahs in OWNER_NAME_OVERRIDES, but " +
-         "NOT applied: this batch was scoped to the nativity cast, and a Barnabas record would " +
-         "be the better fix. Escalated 2026-09-10; when it is settled, flip this to `guard`." },
+    surface: "Joseph", owner: "barnabas", expect: null, status: "guard",
+    why: "Acts 4:36 — Joseph Barnabas, who is neither the patriarch nor Mary's husband. Resolved " +
+         "to Joseph son of Jacob until 2026-09-10 and sent a reader of Barnabas's own page to " +
+         "Egypt. OWNER_NAME_OVERRIDES `joseph.barnabas -> \"barnabas\"`: his own page, so the " +
+         "self-link exclusion suppresses it. ONE prose row moved and no Bible row did." },
+
+  // The reader path, all three translations, on the same verse — and they do not print the same
+  // word. Fetched 2026-09-10 from bible-api.com, the service src/lib/biblePassage.ts asks for the
+  // text; the Greek behind the split is Ἰωσῆς in the Textus Receptus against Ἰωσήφ in NA28 and
+  // SBLGNT, read off the editions. Same man in every one of them — the verse's own content is that
+  // the apostles surnamed him Barnabas — so this is a spelling variant, not a second person.
+  //
+  // These three are `text` + `ref` cases: the reader path run against a supplied literal rather
+  // than against the WEB corpus, which is the only way to assert anything about KJV or ASV. See
+  // the block in run.mjs. Without them the Acts 4:36 override has NO cover at all — it matches
+  // nothing in WEB, so the snapshot cannot see it and never will.
+  { ref: "Acts 4:36", translation: "ASV",
+    text: "And Joseph, who by the apostles was surnamed Barnabas (which is, being interpreted, " +
+          "Son of exhortation), a Levite, a man of Cyprus by race,",
+    surface: "Joseph", expect: "barnabas", status: "guard",
+    why: "The one translation of the three that prints \"Joseph\" here. VERSE_NAME_OVERRIDES " +
+         "joseph.Acts[\"4:36\"] sends it to Barnabas — a link to the right man rather than no " +
+         "link, because the app has him. Was resolving to joseph-son-of-jacob." },
+  { ref: "Acts 4:36", translation: "KJV",
+    text: "And Joses, who by the apostles was surnamed Barnabas, (which is, being interpreted, " +
+          "The son of consolation,) a Levite, and of the country of Cyprus,",
+    surface: "Barnabas", expect: "barnabas", status: "guard",
+    why: "KJV follows the TR and prints \"Joses\", which is registered to nobody, so the override " +
+         "has nothing to match and this reader sees no wrong link — the surname is asserted here " +
+         "instead. This is what a translation-blind override doing nothing looks like." },
+  { ref: "Acts 4:36", surface: "Barnabas", expect: "barnabas", status: "guard",
+    why: "And WEB, from the corpus, which also reads \"Joses\". The Bible snapshot is unchanged " +
+         "by this fix for exactly that reason, and a green snapshot is NOT evidence the ASV " +
+         "override fires." },
+
+  // ── The patriarch, still the patriarch, where he should be ──────────────────────────────────
+  // The failure mode this fix could have had is corpus-wide, so these pin the other end of it.
+  // Both mechanisms are narrow by construction: OWNER_NAME_OVERRIDES needs excludeId === "barnabas"
+  // and VERSE_NAME_OVERRIDES needs Acts 4:36 exactly.
+  { ref: "Acts 7:13", surface: "Joseph", expect: "joseph-son-of-jacob", status: "guard",
+    why: "Stephen's speech, four verses of the patriarch in the SAME BOOK as the override above. " +
+         "The override is keyed to one verse, not to Acts." },
+  { ref: "Acts 7:18", surface: "Joseph", expect: "joseph-son-of-jacob", status: "guard",
+    why: "\"until there arose a different king, who didn't know Joseph.\" Same speech, same man." },
+  { text: "Barnabas is introduced in Acts as Joseph, a Levite from Cyprus, whom the apostles " +
+          "nicknamed \"Barnabas,\" meaning \"son of encouragement.",
+    surface: "Joseph", owner: "joseph-son-of-jacob", expect: null, status: "guard",
+    why: "The SAME SENTENCE with a different owner — the patriarch's own page. No link, because " +
+         "that is the self-link exclusion, and it proves the barnabas entry is keyed on the owner " +
+         "rather than on the words. Change the owner to anything else and the patriarch comes " +
+         "back, which is the case below." },
+  { text: "Barnabas is introduced in Acts as Joseph, a Levite from Cyprus, whom the apostles " +
+          "nicknamed \"Barnabas,\" meaning \"son of encouragement.",
+    surface: "Joseph", owner: "cyprus", expect: "joseph-son-of-jacob", status: "guard",
+    why: "And the same sentence on a record with no entry in the table at all: the global default " +
+         "is untouched. If this ever stops saying joseph-son-of-jacob, a bare \"Joseph\" has been " +
+         "repointed corpus-wide — 249 Bible occurrences and 134 in our prose — and that ruling is " +
+         "Robbie's, not a side effect." },
+
+  // ── A FOURTH bearer, measured and NOT fixed ─────────────────────────────────────────────────
+  // Acts 1:23's "Joseph called Barsabbas, who was also called Justus" — the man passed over for
+  // Matthias — resolves to the patriarch on both paths and in all three translations, which all
+  // read "Joseph" here. Found while fixing Acts 4:36 and deliberately left alone: he has no
+  // record, so the answer is either `null` or a new record, and that is a content decision rather
+  // than a mechanical one. Escalated 2026-09-10. NOT recorded as a `known-wrong` case, because a
+  // known-wrong asserts a settled right answer and this one is not settled.
 ];
