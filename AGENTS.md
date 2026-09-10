@@ -37,9 +37,10 @@ compile.
 
 It is the `--noEmit` trap from the other side: that one type-checks without
 building, this one builds without type-checking. Neither tells you the app
-compiles. `cases: 91 passed` and three unchanged snapshots mean the linker
+compiles. A green `cases:` line and three unchanged snapshots mean the linker
 still resolves names the way it did — a real and valuable thing to know, and
-not this one.
+not this one. Read the count off the run, never off a document; the one that
+used to sit here had drifted by two hundred.
 
 Both, in that order, every time you touch `verseAnnotations.ts` or the data
 files feeding it:
@@ -71,7 +72,7 @@ fast, it did not happen.
 
 Delete the build info first, every time — with `find`, not a glob:
 
-    find /tmp/verify/node_modules/.tmp -name '*.tsbuildinfo' -delete
+    find /tmp/verify-<your-branch>/node_modules/.tmp -name '*.tsbuildinfo' -delete
 
 **Not `rm -f .../*.tsbuildinfo`.** This file used to say that, and it is a trap
 under zsh: an unmatched glob is an *error*, not an empty argument list, so when
@@ -199,13 +200,27 @@ anything time-based — a retry cadence, a debounce — pass
 ## Verify the commit, not the working tree
 
 A working tree that builds proves nothing about what you committed, especially
-after filtering hunks. Check the commit out somewhere clean and build that:
+after filtering hunks. Check the commit out somewhere clean and build that — in
+a directory named after your branch, because several agents run this same recipe
+at once:
 
-    git worktree add /tmp/verify <sha> --detach
-    ln -s "$PWD/node_modules" /tmp/verify/node_modules
-    find /tmp/verify/node_modules/.tmp -name '*.tsbuildinfo' -delete
-    (cd /tmp/verify && npm run build)                   # ~6.2s. ~0.5s means it skipped
-    git worktree remove /tmp/verify --force
+    git worktree add /tmp/verify-<your-branch> <sha> --detach
+    ln -s "$PWD/node_modules" /tmp/verify-<your-branch>/node_modules
+    find /tmp/verify-<your-branch>/node_modules/.tmp -name '*.tsbuildinfo' -delete
+    (cd /tmp/verify-<your-branch> && npm run build)     # ~6.2s. ~0.5s means it skipped
+    git worktree remove /tmp/verify-<your-branch> --force
+
+Write the branch name in literally, not `$$`: every command you send is a new
+shell with a new PID, so a recipe split across two of them creates one directory
+and then builds in a different one.
+
+**And never pipe `git worktree add`.** Two agents ran this recipe minutes apart
+back when it named a single shared path. The second `add` refused, correctly —
+but it was piped to `tail`, and a pipeline exits with the status of its *last*
+command, so the refusal came back 0, the `&&` chain kept going, and the build ran
+inside the first agent's worktree and overwrote their `dist/`. Same shape as the
+pathspec trap above: a command that looks like it worked and did not. If you want
+the output quiet, keep the status — `>/dev/null`, or `set -o pipefail` first.
 
 The `find -delete` is not optional and it is not tidiness — see the
 `.tsbuildinfo` section above, including why it is `find` and not `rm -f` with a
