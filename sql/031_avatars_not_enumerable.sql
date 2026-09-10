@@ -1,0 +1,194 @@
+-- ============================================================================
+-- THE AVATARS BUCKET IS ENUMERABLE BY ANYONE — close the read policy.
+--
+-- NOT APPLIED. sql/030 had Robbie's explicit word; this file does not have it
+-- yet. It is committed so it can be read before it is run. When it is approved:
+--   psql "$SUPABASE_DB_URL" -f sql/031_avatars_not_enumerable.sql
+-- or paste it into the Supabase project's SQL Editor.
+--
+-- ----------------------------------------------------------------------------
+-- WHAT IS WRONG TODAY (verified against production, 2026-09-10, from outside
+-- with nothing but the anon key that ships in the app's own JS bundle)
+-- ----------------------------------------------------------------------------
+-- The bucket carries, and still carries as of this file being written:
+--
+--     policy  avatars_public_read
+--     for select using (bucket_id = 'avatars')
+--     to      PUBLIC          -- i.e. anon as well as authenticated
+--     bucket  public = true
+--
+-- Identical in shape to what sql/030 removed from `post-media`, and sql/030's
+-- own comment named this bucket as the next one. This file is that.
+--
+-- A SELECT policy on storage.objects governs `list()`, not only object reads.
+-- So an unauthenticated caller can walk the bucket:
+--
+--     POST /storage/v1/object/list/avatars   {"prefix":"","limit":200}
+--     -> 200, two entries, each an auth user id:
+--          0fd7bd26-…-3d1801c973fd
+--          ad40e977-…-f526ddd65d28
+--
+--     POST /storage/v1/object/list/avatars   {"prefix":"<that id>"}
+--     -> 200, the object inside, with size, mime type and last-modified.
+--
+-- That is a roster of account ids, handed to a stranger with no session.
+--
+-- ----------------------------------------------------------------------------
+-- HOW BIG THE LEAK ACTUALLY IS — say the true number, not the scary one
+-- ----------------------------------------------------------------------------
+-- It is one folder per account THAT HAS UPLOADED AN AVATAR, not one per
+-- account. Counted in production on the same day: 63 rows in `public.profiles`,
+-- of which 2 have a non-null `avatar_url`, and 2 folders in the bucket. So what
+-- leaks today is 2 user ids, not 63.
+--
+-- It is still worth closing, for three reasons:
+--   * it is the ONLY anon-readable source of auth user ids left in this
+--     project. `public.profiles` is `profiles_select_own_or_related` (owner or
+--     someone you have a friend_requests row with), and an anonymous
+--     `GET /rest/v1/profiles?select=id` returns `[]` — checked. So does
+--     `rpc/find_users_by_display_name`, which gates on auth.uid(). Storage is
+--     the last door, and it is standing open.
+--   * a user id plus a photograph of a face is a stronger pairing than a bare
+--     id, and the object listing hands over both.
+--   * it grows with the app. Two ids today is an artifact of two people having
+--     set a profile picture, not of the policy being narrow.
+--
+-- ----------------------------------------------------------------------------
+-- IS A POLICY ALONE ENOUGH HERE? YES — AND THAT IS NOT TRUE OF EVERY BUCKET
+-- ----------------------------------------------------------------------------
+-- Avatar BYTES are meant to be world-readable and must stay that way. The leak
+-- is the directory, not the image. Those two things are separable here because
+-- they travel over two different endpoints:
+--
+--   /storage/v1/object/list/<bucket>    -> runs storage.search() / search_v2(),
+--                                          both SECURITY INVOKER, so it is
+--                                          RLS-checked as the calling role.
+--   /storage/v1/object/public/<bucket>/ -> served because the BUCKET is
+--                                          public = true. It does not consult
+--                                          storage.objects policies at all.
+--
+-- The second claim is the load-bearing one, so it was not taken on faith. It is
+-- already running in production as a natural experiment, courtesy of sql/030:
+-- `post-media` now has NO policy granting the anon role SELECT on anything.
+-- Measured the same day, from outside:
+--
+--     POST /object/list/post-media (anon key)     -> 200 []      (nothing)
+--     GET  /object/public/post-media/<jpeg>       -> 200, 3,709,170 bytes
+--     GET  /object/public/post-media/<mov>        -> 200, 2,322,889 bytes
+--                                                   with NO credential at all
+--
+-- Zero listable rows, full bytes still served. That is the mechanism proved on
+-- live data, not inferred from documentation.
+--
+-- And the app's read path for an avatar is exactly that endpoint. The whole
+-- tree touches this bucket in two places and only two:
+--
+--     MyProfileView.tsx:234  storage.from("avatars").upload(path, blob,
+--                              { upsert: true, contentType: "image/jpeg" })
+--     MyProfileView.tsx:240  storage.from("avatars").getPublicUrl(path)
+--
+-- `getPublicUrl` performs no request — it concatenates a string — and the
+-- resulting `/object/public/avatars/…` URL is written into
+-- `profiles.avatar_url` and rendered straight into <img src> by
+-- MyProfileView, FriendProfileView, FriendsPanel and PeopleSearchBar. There is
+-- no `list()`, no `download()`, no `createSignedUrl()` anywhere against this
+-- bucket. Nothing the app does to display an avatar goes through a policy.
+--
+-- Both URLs that production actually renders were fetched with no credential
+-- and returned complete: 2,986,879 bytes and 83,371 bytes, image/jpeg, HTTP
+-- 200. Those are the only two, and neither one changes behaviour under this
+-- file.
+--
+-- So: no app change is required alongside this migration. That is the
+-- difference from sql/030's postscript, where flipping `post-media` to
+-- `public = false` WOULD need the app to mint signed URLs first. Nothing here
+-- proposes flipping a bucket, and nothing here needs to.
+--
+-- ----------------------------------------------------------------------------
+-- WHY THE UPLOAD PATH CANNOT BREAK EITHER
+-- ----------------------------------------------------------------------------
+-- The new policy is a strict subset of the old one. `avatars_public_read`
+-- allowed every row where `bucket_id = 'avatars'`; this allows every row where
+-- `bucket_id = 'avatars'` AND the first path segment is the caller's own id.
+-- The rows removed are exactly "objects in somebody else's folder".
+--
+-- Therefore an account acting on its OWN folder has precisely the SELECT it had
+-- before, which is what the `{ upsert: true }` in MyProfileView needs: the PUT
+-- resolves against an existing row and rewrites it. `avatars_own_write`
+-- (INSERT), `avatars_own_update` (UPDATE) and `avatars_own_delete` (DELETE) are
+-- already scoped to `(storage.foldername(name))[1] = auth.uid()::text` and are
+-- not touched by this file.
+--
+-- ----------------------------------------------------------------------------
+-- WHAT THIS FILE DELIBERATELY DOES NOT DO
+-- ----------------------------------------------------------------------------
+-- * It does not change `storage.buckets.public`. The bucket stays `true`, which
+--   is what keeps every rendered avatar rendering. The consequence, stated
+--   plainly: an avatar remains fetchable by anyone who already holds its exact
+--   URL. For a profile picture that is the intent, not a defect — the same URL
+--   is already in the HTML of every page that shows the person.
+-- * It does not touch `post-media` or anything sql/030 did.
+-- * It does not add the missing `with check` to `avatars_own_update`. That
+--   policy has a `using` clause and no `with check`, which in principle lets an
+--   owner rename one of their objects INTO another account's folder. It is a
+--   real (small) hole, it is not the hole this file was written to close, and
+--   quietly widening the diff of a security migration is how a review stops
+--   being a review. Flagged for its own file.
+-- * It does not collect the orphan. Owner A's object is `avatar.jpeg`, while
+--   the current code writes `avatar.jpg` — so a re-upload by that account will
+--   leave the old file behind and stop referencing it. Cosmetic, pre-existing,
+--   not this file's business.
+--
+-- ----------------------------------------------------------------------------
+-- HOW THIS WAS TESTED BEFORE BEING WRITTEN DOWN
+-- ----------------------------------------------------------------------------
+-- Against the real production catalog inside a single `BEGIN … ROLLBACK`, with
+-- the roles simulated by `set local role` plus a `request.jwt.claims` sub, and
+-- probing three ways: a raw select, `storage.search()` and `storage.search_v2()`
+-- (the functions the list endpoint actually runs).
+--
+-- The harness was proved faithful FIRST, by reproducing the known-bad baseline
+-- against the OLD policy still in place: anon saw both folders and could walk
+-- into one and read `avatar.jpeg` — the same two ids and the same filename the
+-- HTTP probe had returned from outside. Only then was the swap applied in the
+-- same transaction and the probes repeated:
+--
+--   anon                 2 folders  ->  0
+--   signed-in stranger   2 folders  ->  0
+--   owner A              2 folders  ->  1  (their own, and only their own)
+--   owner B              2 folders  ->  1  (and 0 when walking A's folder)
+--
+-- Then ROLLBACK, and the catalog re-read to confirm `avatars_public_read` was
+-- back exactly as found. Production is unchanged by the testing.
+-- ============================================================================
+
+-- ----------------------------------------------------------------------------
+-- Out with the old.
+-- ----------------------------------------------------------------------------
+drop policy if exists "avatars_public_read" on storage.objects;
+
+-- ----------------------------------------------------------------------------
+-- In with the owner-scoped one.
+--
+-- `to authenticated` is belt and braces rather than the mechanism: auth.uid()
+-- is null for the anon role, so the predicate would be false for it in any
+-- case. Being explicit matches sql/027 and sql/030 and makes the intent
+-- readable in the catalog without evaluating anything.
+-- ----------------------------------------------------------------------------
+create policy "avatars readable only by their owner" on storage.objects
+  for select to authenticated
+  using (
+    bucket_id = 'avatars'
+    and (storage.foldername(name))[1] = auth.uid()::text
+  );
+
+-- ----------------------------------------------------------------------------
+-- AFTER THIS RUNS
+-- ----------------------------------------------------------------------------
+-- * No caller — anonymous, signed-in stranger, or otherwise — can list this
+--   bucket or discover another account's folder or filenames.
+-- * An account can still list, read, upload, overwrite and delete its own
+--   avatar, exactly as before.
+-- * Every avatar the app renders keeps rendering, for everyone including
+--   signed-out visitors, because that path never asked a policy anything.
+-- ----------------------------------------------------------------------------
