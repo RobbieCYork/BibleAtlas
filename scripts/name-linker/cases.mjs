@@ -915,4 +915,44 @@ export const CASES = [
          "nobody, so all four occurrences were dead text." },
   { ref: "Acts 13:1", surface: "Herod the tetrarch", expect: "herod-antipas", status: "guard",
     why: "Manaen's foster brother — Antipas again, and the one outside the Gospels." },
+
+  // ─────────────────────────────────────────────────────────────────────────────────────────
+  // Prose mislinks the same batch introduced, found by reading the PRE-RENDERED public pages
+  // rather than the snapshot. All four are the same shape and it is worth naming it: a wrong
+  // NEW link is additive, so it arrives in the snapshot looking exactly like an improvement.
+  // "Additive only" is not the same as "correct", and nothing in the harness can tell them
+  // apart. These are prose cases, so they survive a rewrite of the paragraph they came from.
+  // ─────────────────────────────────────────────────────────────────────────────────────────
+  { text: "A more cautious line, argued at length by Jacob Neusner among others, warns that " +
+          "rabbinic sources are late.",
+    surface: "Jacob", owner: "topic-pharisees", expect: null, status: "guard",
+    why: "JACOB NEUSNER, the 20th-century historian of rabbinic Judaism — not the patriarch. " +
+         "The article surface has no book context to catch this, so it is caught by owner." },
+  { text: "the name is usually derived from Zadok, the priestly line that served under David " +
+          "and Solomon",
+    surface: "Zadok", owner: "topic-sadducees", expect: null, status: "guard",
+    why: "Zadok the high priest, who has no entry. The only Zadok entry is the man of Matthew's " +
+         "genealogy, whose own summary says he is NOT this one. `sadducees` (the people.ts " +
+         "group) was already covered; `topic-sadducees` is the article and needed its own." },
+  { text: "it is the high priest Ananias who comes down to Caesarea with elders to press the " +
+          "charge against him (Acts 24:1).",
+    surface: "Ananias", owner: "chief-priests", expect: "ananias-the-high-priest", status: "guard",
+    why: "The bare name is registered to Ananias and Sapphira; this is a different man, and one " +
+         "the app does have an entry for — so this repoints rather than suppresses." },
+  { text: "Peter was born Simon, son of John (or Jonah), and worked as a fisherman.",
+    surface: "Jonah", owner: "simon-peter", expect: null, status: "guard",
+    why: "PETER'S FATHER, the same man VERSE_NAME_OVERRIDES suppresses at Matthew 16:17 and " +
+         "John 1:42 / 21:15-17. Adding the prophet's entry started linking him here too." },
+  { text: "the disciples breaking bread 'on the first day of the week' (Acts 20:7), and John " +
+          "'in the Spirit on the Lord's day' (Revelation 1:10).",
+    surface: "John", owner: "sabbath", expect: "john-the-apostle", status: "guard",
+    why: "Revelation 1:10's John, who is not the Baptist under any reading — he had been dead " +
+         "some sixty years. Bare 'John' belongs to the Baptist globally, so a new article that " +
+         "names him lands wrong until this table is told otherwise." },
+  { text: "John states the purpose of his whole book in these terms: 'these are written, that " +
+          "you may believe that Jesus is the Christ'.",
+    surface: "John", owner: "the-christ", expect: "john-the-apostle", status: "guard",
+    why: "The evangelist writing, not the Gospel being named — so this takes the Apostle rather " +
+         "than the suppression the 'Gospel of John' phrases get. Same fault as the Sabbath one " +
+         "above: the Baptist is the global default and every new article inherits him." },
 ];

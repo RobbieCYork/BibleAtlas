@@ -419,9 +419,10 @@ person	amon	amon-king-of-judah	reader	13
 person	amon, king of judah	amon-king-of-judah	panel	3
 person	amon, king of judah	amon-king-of-judah	reader	3
 person	ananias	ananias-and-sapphira	panel	11
-person	ananias	ananias-and-sapphira	prose	20
+person	ananias	ananias-and-sapphira	prose	19
 person	ananias	ananias-and-sapphira	reader	3
 person	ananias	ananias-of-damascus	reader	6
+person	ananias	ananias-the-high-priest	prose	1
 person	ananias	ananias-the-high-priest	reader	2
 person	ananias and sapphira	ananias-and-sapphira	prose	2
 person	andrew	andrew-apostle	panel	13
@@ -654,7 +655,7 @@ person	isaiah	isaiah	panel	53
 person	isaiah	isaiah	prose	51
 person	isaiah	isaiah	reader	53
 person	jacob	jacob	panel	381
-person	jacob	jacob	prose	135
+person	jacob	jacob	prose	134
 person	jacob	jacob	reader	381
 person	james	james-brother-of-jesus	reader	10
 person	james	james-son-of-zebedee	panel	32
@@ -715,10 +716,10 @@ person	job	job	reader	59
 person	johannes gutenberg	johannes-gutenberg	prose	1
 person	john	john-mark	reader	2
 person	john	john-the-apostle	panel	7
-person	john	john-the-apostle	prose	46
+person	john	john-the-apostle	prose	48
 person	john	john-the-apostle	reader	34
 person	john	john-the-baptist	panel	107
-person	john	john-the-baptist	prose	27
+person	john	john-the-baptist	prose	25
 person	john	john-the-baptist	reader	77
 person	john	john-wesley	prose	3
 person	john calvin	john-calvin	prose	1
@@ -739,7 +740,7 @@ person	john xxiii	pope-john-xxiii	prose	1
 person	john, who was called mark	john-mark	panel	1
 person	john, who was called mark	john-mark	reader	1
 person	jonah	jonah	panel	31
-person	jonah	jonah	prose	35
+person	jonah	jonah	prose	34
 person	jonah	jonah	reader	26
 person	jonah the son of amittai	jonah	panel	2
 person	jonah the son of amittai	jonah	reader	2
@@ -1085,7 +1086,7 @@ person	zacchaeus	zacchaeus	reader	3
 person	zacharias	zechariah-father-of-john-baptist	panel	9
 person	zacharias	zechariah-father-of-john-baptist	reader	9
 person	zadok	zadok-in-jesus-genealogy	panel	55
-person	zadok	zadok-in-jesus-genealogy	prose	4
+person	zadok	zadok-in-jesus-genealogy	prose	2
 person	zadok	zadok-in-jesus-genealogy	reader	2
 person	zechariah	zechariah-father-of-john-baptist	panel	43
 person	zechariah	zechariah-father-of-john-baptist	prose	12

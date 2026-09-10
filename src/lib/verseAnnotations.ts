@@ -748,6 +748,14 @@ const OWNER_NAME_OVERRIDES: Record<string, Record<string, string | null>> = {
     "simon-magus": "john-the-apostle",
     "salome-follower-of-jesus": "john-the-apostle",
     sadducees: "john-the-apostle",
+    // Added 2026-09-09 with the content batch that wrote these two articles. Each holds exactly
+    // one bare "John" and neither is the Baptist: the Sabbath article quotes Revelation 1:10,
+    // "John 'in the Spirit on the Lord's day'", and "the Christ" says "John states the purpose of
+    // his whole book" before quoting John 20:31. Both are the man acting — writing, seeing — not
+    // the book being named, so they take the same answer as the Revelation book override above
+    // rather than the suppression the "Gospel of John" phrases get.
+    sabbath: "john-the-apostle",
+    "the-christ": "john-the-apostle",
     "sea-of-galilee": "john-the-apostle",
     "basilica-st-john": "john-the-apostle",
     "house-of-virgin-mary-ephesus": "john-the-apostle",
@@ -861,7 +869,34 @@ const OWNER_NAME_OVERRIDES: Record<string, Record<string, string | null>> = {
   // article as "Solomon's priest".
   zadok: {
     sadducees: null,
+    // The Sadducees exist twice in this app: `sadducees` in people.ts (the group) and
+    // `topic-sadducees` in topics.ts (the article). Both derive the party's name from Zadok the
+    // priest, so both need the entry — and the genealogy Zadok's own summary says in as many
+    // words that he is "a different, otherwise-unattested person from the famous high priest
+    // Zadok who served under David and anointed Solomon", which is exactly the man being named
+    // here. Added 2026-09-09 when the topic grew an origins section.
+    "topic-sadducees": null,
     "bib-it-jonathan-maccabeus-high-priest": null,
+  },
+  // "Jacob": the entry is the patriarch, right nearly everywhere. On the Pharisees article the one
+  // occurrence is JACOB NEUSNER, the 20th-century scholar of rabbinic Judaism, cited by name for
+  // his caution about reading the rabbis back into the Pharisees. Linking a modern historian's
+  // forename to Isaac's son is simply false, and there is no entry for Neusner to link instead.
+  jacob: {
+    "topic-pharisees": null,
+  },
+  // "Ananias": the bare name is registered to Ananias and Sapphira. The chief-priests article names
+  // a different man — "the high priest Ananias" who comes down to Caesarea to press charges against
+  // Paul (Acts 24:1) — and that man DOES have an entry, so this repoints rather than suppresses.
+  ananias: {
+    "chief-priests": "ananias-the-high-priest",
+  },
+  // "Jonah": the prophet is the right answer nearly everywhere, and VERSE_NAME_OVERRIDES above
+  // already suppresses the five Scripture verses that name Simon Peter's father instead. Peter's
+  // own article says the same thing in its own words — "Peter was born Simon, son of John (or
+  // Jonah)" — and the prose path has no verse context to catch it, so it is caught by owner here.
+  jonah: {
+    "simon-peter": null,
   },
   // "Eleazar": the only entry is the minor Eleazar of Matthew's genealogy, allowlisted to Matthew.
   // Two of the eleven prose mentions are his (Eliud's and Matthan's genealogy pages). The other
