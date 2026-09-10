@@ -1073,6 +1073,34 @@ const OWNER_NAME_OVERRIDES: Record<string, Record<string, string | null>> = {
     "bib-loc-post-resurrection-appearances": null,
     "bib-ac-council-of-nicaea": null,
     "wld-rom-martyrdom-peter-paul": null,
+
+    // ── Two more of the same voice, added 2026-09-10, and BOTH ARE PUBLIC-PAGE-ONLY ───────────
+    //
+    // Neither of these two links exists inside the app. They live in `summary`, which every panel
+    // renders as plain text and which scripts/seo/render.mjs puts through this same linker when it
+    // generates capstonebible.com — so no snapshot in scripts/name-linker/snapshot/ covers either
+    // one, and the prose cases in cases.mjs are the only thing that does. That is also why they
+    // survived the "John" sweep that produced every entry above it: the sweep read the article
+    // surface, and these are not on it.
+    //
+    // Both were John the Baptist, who is the wrong man twice over — he was dead before either
+    // book was written.
+    thaddaeus: null, // "one clear moment in John's account: asking Jesus why he would reveal
+                     // himself only to the disciples" — John 14:22, the Fourth Gospel narrating.
+                     // The record's other "John" is the reference "John 14:22" itself, matched
+                     // whole as kind "verse", which never reaches this table.
+    // "he refused to welcome traveling teachers sent by John". SUPPRESSED, not repointed to the
+    // Apostle — and this is a deliberate departure from the sweep that found it, which proposed
+    // the Apostle on the strength of the app's Revelation ruling. Revelation is not the parallel:
+    // BOOK_NAME_OVERRIDES already sends Revelation's "John" to the Apostle because the app's own
+    // articles call him that in the surrounding sentence. The app's introduction to 3 John does
+    // the opposite — it says "The elder" five times and never names him — so a link here would
+    // assert an authorship the app has pointedly declined to assert, on a page a stranger can
+    // read. The record's own first sentence, "The elder writing 3 John", is the same care.
+    // No link removes the falsehood and asserts nothing, exactly as the narrating-voice group
+    // above does. The other two "John"s on the record are the book title "3 John" (BOOK_NUMERAL)
+    // and the reference "3 John 1:9-10" (kind "verse"); neither reaches this table.
+    diotrephes: null,
   },
   // "Simeon": the only entry is Simeon at the temple (Luke 2), allowlisted to Luke for the reader.
   // Of the 10 prose mentions, 2 are his (Mary's page and Anna's) and 8 are not: Simeon son of Jacob
@@ -1274,6 +1302,15 @@ const OWNER_NAME_OVERRIDES: Record<string, Record<string, string | null>> = {
   // honest answer is no link rather than a different wrong one.
   mary: {
     "john-knox": null,
+    // Not a modern name and not from that sweep — the second-bearer enumeration, 2026-09-10.
+    // Bare "Mary" belongs to the mother of Jesus globally. On Lazarus's page both occurrences are
+    // his sister: "Lazarus lived in Bethany with his sisters Martha and Mary" in the life story,
+    // and "The brother of Martha and Mary" in the summary. `mary-of-bethany` is a record of its
+    // own and resolves correctly everywhere its longer wording appears; here there is no longer
+    // wording, and the record names no other Mary at all. The second of the two is PUBLIC-PAGE-
+    // ONLY — the app renders `summary` as plain text and scripts/seo/render.mjs linkifies it —
+    // so no snapshot holds it and the prose case in cases.mjs is its only cover.
+    "lazarus-of-bethany": "mary-of-bethany",
   },
   // Same page, same problem, one occurrence: "Protestant Elizabeth I came to the English throne"
   // pointed at Elizabeth the mother of John the Baptist. Elizabeth I has no record.
@@ -1498,6 +1535,98 @@ const OWNER_NAME_OVERRIDES: Record<string, Record<string, string | null>> = {
   // the title 'Augustus'", are Octavian and are untouched.
   augustus: {
     "claudius-caesar": "claudius-caesar",
+  },
+
+  // ══ THE SECOND-BEARER SWEEP, 2026-09-10 ══════════════════════════════════════════════════════
+  //
+  // A shared name resolves to the FAMOUS bearer everywhere the linker has no context, and on the
+  // article surface it never has any. That is one fault with one shape, and it was enumerated in
+  // full rather than noticed one article at a time: every person link on all 6,677 blocks — the
+  // 5,692 the app renders through LinkedVerseText and the 985 that are links only on the
+  // pre-rendered public pages — plus all 31,098 WEB verses on both rendering paths.
+  //
+  // Two rulings govern what is written below, and neither is a new position:
+  //
+  //   REPOINT where the app already carries the right man. Mechanical.
+  //   SUPPRESS where it does not — the `zadok`/`eleazar`/Acts 1:23 shape. `null` here means "a
+  //   different, unrepresented bearer", and it is an interim, never a verdict that the man does
+  //   not deserve a page. Judas Maccabeus, Simon Maccabeus, Titus the emperor and Philip II of
+  //   Macedon are all suppressed below and all four are open questions for Robbie; a record for
+  //   any of them replaces its entry here rather than fighting it.
+  //
+  // ── THE TEN THAT ARE ONLY ON THE PUBLIC PAGES ────────────────────────────────────────────────
+  //
+  // Done first, because they are the ones nothing else can hold. `person.summary`,
+  // `person.occupation`, `topic.summary`, `timelineEvent.summary` and `location.rulers[].name`
+  // are plain text in the app and LINKS on capstonebible.com — scripts/seo/render.mjs puts all
+  // five through this same function, passing the record's own id, which is why this table reaches
+  // them at all. `loadProseBlocks()` correctly does not enumerate them, so NO snapshot covers a
+  // single one: 795 person links on 985 blocks that a stranger can read and that the regression
+  // net cannot see. Every one of the ten below is pinned by a prose case in cases.mjs quoting the
+  // summary verbatim, because that case is the only cover it will ever have.
+  //
+  // Two of the ten sit under `john` and `mary` above, with the rest of their own name's entries.
+  // The eight here are the new keys.
+
+  // "Philip": the bare name belongs to the Apostle globally, which is right in the Gospels and
+  // wrong everywhere Acts 6/8/21 is being retold. The Evangelist has his own record and the
+  // reader path already resolves him correctly at all 15 of his verses (VERSE_NAME_OVERRIDES
+  // above) — it is only the article surface, which has no verse, that sends him to the Apostle.
+  //
+  // Three records here, each carrying a summary link. Each names exactly ONE Philip, checked by
+  // scanning every occurrence of the token on the record, linked or not:
+  //   ethiopian-eunuch              8  seven in lifeStory/placesLived + the summary. The summary
+  //                                    is the sentence that made the case for doing these first:
+  //                                    "baptized by Philip the Evangelist after Philip explained
+  //                                    the 'suffering servant' passage" — the long name resolving
+  //                                    correctly and the bare one, ten words later, to a different
+  //                                    man, in one sentence on a public page.
+  //   bib-ac-philip-ethiopian-eunuch 7  six article paragraphs + the summary.
+  //   simon-magus                   2  "began following Philip around" + the summary. Its other
+  //                                    occurrence is "Philip the Evangelist", already correct.
+  philip: {
+    "ethiopian-eunuch": "philip-the-evangelist",
+    "bib-ac-philip-ethiopian-eunuch": "philip-the-evangelist",
+    "simon-magus": "philip-the-evangelist",
+  },
+
+  // "Simon": the bare name belongs to Simon Peter. Both Hasmonean articles mean SIMON MACCABEUS,
+  // last of Mattathias's five sons, high priest and ethnarch from 142 BC — a different man by two
+  // centuries, and one the app has no record for. Five links, two of them summaries:
+  //   bib-it-hasmonean-dynasty-begins  4  three article paragraphs, one datingNotes, + the summary
+  //                                       "Simon Maccabeus, last surviving son of Mattathias".
+  //   bib-it-john-hyrcanus-reign       2  "Simon's son John Hyrcanus" in the article + the summary.
+  // Neither record names Simon Peter anywhere. Suppressed rather than written: whether Simon
+  // Maccabeus earns a record is Robbie's, and it is on his list — this fixes the defect today and
+  // a record later replaces these two lines.
+  simon: {
+    "bib-it-hasmonean-dynasty-begins": null,
+    "bib-it-john-hyrcanus-reign": null,
+  },
+
+  // "Titus": the bare name belongs to Paul's Gentile co-worker, and every one of his own mentions
+  // — 2 Corinthians, Galatians, 2 Timothy 4:10, Titus 1:4, and the five in his book intro — is
+  // correct and untouched. The fall-of-Jerusalem article means TITUS THE EMPEROR, Vespasian's son,
+  // who took the city in AD 70 and burned the Temple. Six links on this record, all of them him:
+  // five in the article (the siege, the fire "against Titus's own orders", his triumph, the Arch
+  // of Titus) and the summary, "Roman forces under Titus breached Jerusalem's walls".
+  //
+  // Pointing the general who destroyed the Temple at Paul's travelling companion is the kind of
+  // error that costs a reader's confidence in everything else on the page. No record exists for
+  // the emperor; suppression is the interim and he is the largest single record-or-suppress
+  // question the sweep raised, which is Robbie's to settle.
+  titus: {
+    "wld-rom-destruction-of-jerusalem": null,
+  },
+
+  // "Joram": two kings of that name reigned at the same time, one in Israel and one in Judah, and
+  // the app has a record for each. The bare key belongs to Judah's. Jehu kills ISRAEL's Joram —
+  // the article says so in as many words, "kills King Joram of Israel with an arrow through the
+  // heart" — and the summary says "Jehu kills King Joram, Judah's King Ahaziah, and Jezebel",
+  // which names Judah's king separately in the same clause. Both links pointed at the wrong one of
+  // the two. The record names no other Joram and no "Jehoram" at all.
+  joram: {
+    "bib-dki-jehu-purge": "joram-king-of-israel",
   },
 };
 

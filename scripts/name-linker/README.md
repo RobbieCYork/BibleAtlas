@@ -2,7 +2,7 @@
 
 `src/lib/verseAnnotations.ts` decides which words in the Bible text — and in every article the app
 has ever written — become links to a person, place or topic. It renders **9,724 person-links across
-Scripture and 6,369 across the app's own prose**. Until this directory existed it had no tests at
+Scripture and 6,363 across the app's own prose**. Until this directory existed it had no tests at
 all, and a one-line data edit could move hundreds of them with nobody noticing.
 
     npm run test:linker
@@ -108,13 +108,13 @@ purpose and is written up in `reviewed.tsv`'s header.
 | file | rows | what it holds |
 |---|---:|---|
 | `bible-links.tsv` | 9,724 | every person-link in all 31,098 WEB verses, with the id each rendering path gives it |
-| `prose-links.tsv` | 6,369 | every person-link in every authored prose block the app puts through `LinkedVerseText` |
-| `key-totals.tsv` | 4,075 | a tally covering **every** kind — location, POI, topic, timeline, verse reference — one row per (kind, matched text, id, path) |
+| `prose-links.tsv` | 6,363 | every person-link in every authored prose block the app puts through `LinkedVerseText` |
+| `key-totals.tsv` | 4,079 | a tally covering **every** kind — location, POI, topic, timeline, verse reference — one row per (kind, matched text, id, path) |
 
 The first two are row-level, so a diff names the verse or the block. `key-totals.tsv` exists because
 the other two only record **people**: a change to `people.ts` can steal a key from a location, and
 adding one POI alternate name can start firing hundreds of links that no person snapshot would ever
-show. Its 4,075 rows currently break down as 2,348 verse references, 739 person, 391 topic, 387
+show. Its 4,079 rows currently break down as 2,349 verse references, 742 person, 391 topic, 387
 location, 131 POI and 79 timeline.
 
 This is the half that catches what you did not think to assert. The named cases cover a few dozen
@@ -214,7 +214,7 @@ snapshot.
 `LinkedVerseText` is what PersonPanel, LocationPanel, PoiPanel, TopicPanel, BookIntroView,
 TimelineEventPanel and MyProfileView render with. Every book override, verse override and
 suppression in `verseAnnotations.ts` is invisible there. **838 links across 748 verses resolve
-differently between the two paths**, and all but a handful of the 6,369 prose links run with no
+differently between the two paths**, and all but a handful of the 6,363 prose links run with no
 disambiguation at all — `OWNER_NAME_OVERRIDES` (below) is the only correction that reaches them. A
 fix that only moves the `reader` column has fixed half the app.
 
@@ -315,11 +315,17 @@ scoping document twice. **Run it before claiming a change fixes N links.**
   puts `person.summary`, `person.occupation`, `topic.summary`, `timelineEvent.summary` and
   `location.rulers[].name` through the same linker when it generates the ~985 pre-rendered pages.
   The app renders all five as plain text, so `loadProseBlocks()` correctly does not enumerate them
-  and none of the three snapshots covers a single one — 961 blocks that a stranger can read on
-  capstonebible.com and that nothing here measures. `modern-names.mjs` sweeps them (its
-  `seoOnlyBlocks()`), which is how the wrong `Hoshea` on the fall-of-Samaria summary was found, but
-  that is a sweep for one shape, not a snapshot. Snapshotting them properly is worth doing and is
-  not done.
+  and none of the three snapshots covers a single one — 985 blocks carrying 790 person links that a
+  stranger can read on capstonebible.com and that nothing here measures. `modern-names.mjs` sweeps
+  them (its `seoOnlyBlocks()`), which is how the wrong `Hoshea` on the fall-of-Samaria summary was
+  found, but that is a sweep for one shape, not a snapshot. Snapshotting them properly is worth
+  doing and is not done.
+
+  Until it is, a **prose case is the only cover a link on this surface can have**, and the
+  second-bearer batch of 2026-09-10 is where that stopped being theoretical: ten of its links were
+  on this surface and nothing else in this directory could see any of them. The block of cases at
+  the bottom of `cases.mjs` quotes each of those ten summaries verbatim for that reason. Write one
+  for every future fix here.
 - **Text the panels render WITHOUT `LinkedVerseText`** — a timeline event's `summary`, for instance,
   is plain text, so a name in it is reader-facing but never a link and never appears here.
 - **Non-person links at row level.** Location, POI, topic, timeline and verse-reference annotations

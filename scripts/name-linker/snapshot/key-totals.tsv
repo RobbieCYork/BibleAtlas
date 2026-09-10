@@ -761,9 +761,10 @@ person	jonah	jonah	reader	26
 person	jonah the son of amittai	jonah	panel	2
 person	jonah the son of amittai	jonah	reader	2
 person	jonathan edwards	jonathan-edwards	prose	2
+person	joram	joram-king-of-israel	prose	1
 person	joram	joram-king-of-israel	reader	15
 person	joram	joram-king-of-judah	panel	25
-person	joram	joram-king-of-judah	prose	3
+person	joram	joram-king-of-judah	prose	2
 person	joram	joram-king-of-judah	reader	7
 person	joram son of ahab	joram-king-of-israel	prose	2
 person	joram the son of ahab	joram-king-of-israel	panel	5
@@ -840,8 +841,9 @@ person	martin luther king	martin-luther-king-jr	prose	3
 person	mary	mary-magdalene	reader	3
 person	mary	mary-mother-of-james-the-less	reader	7
 person	mary	mary-mother-of-jesus	panel	42
-person	mary	mary-mother-of-jesus	prose	101
+person	mary	mary-mother-of-jesus	prose	100
 person	mary	mary-mother-of-jesus	reader	20
+person	mary	mary-of-bethany	prose	1
 person	mary	mary-of-bethany	reader	11
 person	mary magdalene	mary-magdalene	panel	11
 person	mary magdalene	mary-magdalene	prose	13
@@ -913,8 +915,9 @@ person	philemon	philemon	panel	1
 person	philemon	philemon	prose	21
 person	philemon	philemon	reader	1
 person	philip	philip-the-apostle	panel	33
-person	philip	philip-the-apostle	prose	57
+person	philip	philip-the-apostle	prose	43
 person	philip	philip-the-apostle	reader	16
+person	philip	philip-the-evangelist	prose	14
 person	philip	philip-the-evangelist	reader	14
 person	philip	philip-the-tetrarch	reader	1
 person	philip the apostle	philip-the-apostle	prose	1
@@ -1008,7 +1011,7 @@ person	simeon	simeon-at-the-temple	reader	3
 person	simon	simon-magus	reader	4
 person	simon	simon-of-cyrene	reader	1
 person	simon	simon-peter	panel	46
-person	simon	simon-peter	prose	29
+person	simon	simon-peter	prose	24
 person	simon	simon-peter	reader	29
 person	simon	simon-the-pharisee	reader	3
 person	simon of cyrene	simon-of-cyrene	panel	2
@@ -1091,7 +1094,7 @@ person	timothy	timothy	panel	24
 person	timothy	timothy	prose	32
 person	timothy	timothy	reader	24
 person	titus	titus	panel	13
-person	titus	titus	prose	25
+person	titus	titus	prose	20
 person	titus	titus	reader	13
 person	uriah the hittite	uriah-the-hittite	panel	10
 person	uriah the hittite	uriah-the-hittite	prose	4

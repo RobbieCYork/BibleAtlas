@@ -2961,4 +2961,148 @@ export const CASES = [
   // belongs to the second-bearer enumeration filed on 2026-09-10 rather than to this fix. NOT
   // recorded as a `known-wrong` case, because a known-wrong asserts a settled right answer and this
   // one is not settled.
+  // ═══════════════════════════════════════════════════════════════════════════════════════════
+  // THE SECOND-BEARER SWEEP — BATCH 1: THE TEN LINKS THAT ARE ONLY ON THE PUBLIC PAGES
+  // 2026-09-10
+  //
+  // These ten cases are not belt-and-braces. They are the ONLY cover these links will ever have.
+  // Each quotes a `summary` verbatim — a field every panel in the app renders as PLAIN TEXT and
+  // that scripts/seo/render.mjs puts through this same linker, passing the record's own id, when
+  // it generates the ~985 pre-rendered pages at capstonebible.com. `loadProseBlocks()` therefore
+  // does not enumerate them and none of the three snapshots holds a single row: 795 person links
+  // on 985 blocks that a stranger can read and that the regression net cannot see. Delete one of
+  // these cases and the assertion is gone with no diff anywhere to say so.
+  //
+  // Verified by re-running the SEO-only surface before and after: exactly ten links moved, and
+  // nothing else on that surface moved at all.
+
+  { text: "An apostle known by different names in different Gospels, with one clear moment in John's account: asking Jesus why he would reveal himself only to his followers and not to the world.",
+    surface: "John", owner: "thaddaeus", expect: null, status: "guard",
+    why: "PUBLIC PAGE ONLY — thaddaeus.summary, verbatim. Was john-the-baptist, who was dead " +
+         "before the Fourth Gospel was written. \"John's account\" is the Gospel narrating, and " +
+         "this file's standing answer to the narrating voice is suppression, not the Apostle: no " +
+         "link removes the falsehood and asserts nothing about who held the pen. " +
+         "OWNER_NAME_OVERRIDES john.thaddaeus = null." },
+  { text: "A local church leader named in 3 John as someone who loved to have first place — he refused to welcome traveling teachers sent by John and expelled from the church anyone who did, making him one of the only named, clearly negative figures in the New Testament.",
+    surface: "John", occurrence: 1, owner: "diotrephes", expect: null, status: "guard",
+    why: "PUBLIC PAGE ONLY — diotrephes.summary, verbatim. Occurrence 1 is the BOOK TITLE \"3 " +
+         "John\", suppressed by BOOK_NUMERAL in NAME_CONTEXT_RULES, which is checked before the " +
+         "owner table and is therefore unaffected by the entry the next case asserts." },
+  { text: "A local church leader named in 3 John as someone who loved to have first place — he refused to welcome traveling teachers sent by John and expelled from the church anyone who did, making him one of the only named, clearly negative figures in the New Testament.",
+    surface: "John", occurrence: 2, owner: "diotrephes", expect: null, status: "guard",
+    why: "PUBLIC PAGE ONLY — the same summary, second occurrence: \"traveling teachers sent by " +
+         "John\". Was john-the-baptist. SUPPRESSED and deliberately NOT repointed to the Apostle, " +
+         "which is where the sweep that found it wanted to send it: the app's own introduction to " +
+         "3 John says \"the elder\" throughout and never names him, and this record's own first " +
+         "sentence says \"The elder writing 3 John\". A link would assert an authorship the app " +
+         "has pointedly declined to assert, on a page a stranger can read. " +
+         "OWNER_NAME_OVERRIDES john.diotrephes = null." },
+  { text: "The brother of Martha and Mary whose death and resurrection in John's Gospel is presented as the climactic sign that provokes the religious leaders into finally moving to kill Jesus.",
+    surface: "Mary", owner: "lazarus-of-bethany", expect: "mary-of-bethany", status: "guard",
+    why: "PUBLIC PAGE ONLY — lazarus-of-bethany.summary, verbatim. Was mary-mother-of-jesus, " +
+         "because the bare key belongs to her. His sister has a record of her own; the record " +
+         "names no other Mary. OWNER_NAME_OVERRIDES mary.lazarus-of-bethany. The \"John\" in the " +
+         "same sentence is \"John's Gospel\" and stays suppressed by POSSESSIVE_WORK." },
+  { text: "A sorcerer in Samaria who amazed crowds with his magic, converted and was baptized under Philip's preaching, then tried to buy the apostles' power to impart the Holy Spirit — his name became the root of the word 'simony.'",
+    surface: "Philip", owner: "simon-magus", expect: "philip-the-evangelist", status: "guard",
+    why: "PUBLIC PAGE ONLY — simon-magus.summary, verbatim. Acts 8's Philip is the Evangelist, " +
+         "one of the seven; the reader path has had him right at all fifteen of his verses since " +
+         "VERSE_NAME_OVERRIDES was written, and the article surface has no verse to look at. " +
+         "OWNER_NAME_OVERRIDES philip.simon-magus." },
+  { text: "A court official in charge of the entire treasury of the Ethiopian queen (Candace), converted and baptized by Philip the Evangelist after Philip explained the 'suffering servant' passage of Isaiah he was reading on the road.",
+    surface: "Philip", occurrence: 1, owner: "ethiopian-eunuch", expect: "philip-the-evangelist",
+    expectSurface: "Philip the Evangelist", status: "guard",
+    why: "PUBLIC PAGE ONLY — ethiopian-eunuch.summary, verbatim, and the sentence that argued for " +
+         "doing these ten first. The LONG name is its own registered key and was always right; " +
+         "expectSurface pins that the link still covers all three words rather than shrinking to " +
+         "the forename once the owner entry lands." },
+  { text: "A court official in charge of the entire treasury of the Ethiopian queen (Candace), converted and baptized by Philip the Evangelist after Philip explained the 'suffering servant' passage of Isaiah he was reading on the road.",
+    surface: "Philip", occurrence: 2, owner: "ethiopian-eunuch", expect: "philip-the-evangelist",
+    expectSurface: "Philip", status: "guard",
+    why: "The other half of the same sentence: the BARE \"Philip\" ten words later, which resolved " +
+         "to philip-the-apostle. One sentence on a public page named the right man at length and " +
+         "a different man in shorthand, and linked both. OWNER_NAME_OVERRIDES philip." +
+         "ethiopian-eunuch." },
+  { text: "Philip explains Isaiah's suffering servant to an Ethiopian court official and baptizes him beside a desert road.",
+    surface: "Philip", owner: "bib-ac-philip-ethiopian-eunuch", expect: "philip-the-evangelist",
+    status: "guard",
+    why: "PUBLIC PAGE ONLY — bib-ac-philip-ethiopian-eunuch.summary, verbatim. The event's own " +
+         "title names the Evangelist and its summary linked the Apostle." },
+  { text: "Simon Maccabeus, last surviving son of Mattathias, secured Judea's release from Seleucid tribute and was confirmed as hereditary high priest and ruler, founding the Hasmonean dynasty and restoring Jewish self-government for the first time since the Babylonian exile.",
+    surface: "Simon", owner: "bib-it-hasmonean-dynasty-begins", expect: null, status: "guard",
+    why: "PUBLIC PAGE ONLY — bib-it-hasmonean-dynasty-begins.summary, verbatim. Was simon-peter. " +
+         "Simon Maccabeus is a different man by two centuries and the app has no record for him. " +
+         "SUPPRESSED, not written: whether he earns a record is Robbie's and is on his list, and a " +
+         "record later replaces this entry. Note the surface is the bare forename even though the " +
+         "sentence reads \"Simon Maccabeus\" — no registered key covers the pair." },
+  { text: "Simon's son John Hyrcanus ruled Judea for three decades, exploiting Seleucid weakness to expand the Hasmonean kingdom dramatically, including the forced conversion of Idumea and the destruction of the rival Samaritan temple on Mount Gerizim.",
+    surface: "Simon", owner: "bib-it-john-hyrcanus-reign", expect: null, status: "guard",
+    why: "PUBLIC PAGE ONLY — bib-it-john-hyrcanus-reign.summary, verbatim. The same man, named as " +
+         "John Hyrcanus's father. \"John Hyrcanus\" itself is already suppressed by the john " +
+         "context rules and is untouched by this." },
+  { text: "In AD 70, after a brutal months-long siege, Roman forces under Titus breached Jerusalem's walls, burned the Second Temple to the ground, and left the city in ruins — a devastating fulfillment of Jesus's own prophetic warning that not one of the Temple's stones would be left on another.",
+    surface: "Titus", owner: "wld-rom-destruction-of-jerusalem", expect: null, status: "guard",
+    why: "PUBLIC PAGE ONLY — wld-rom-destruction-of-jerusalem.summary, verbatim. Was `titus`, " +
+         "Paul's Gentile co-worker. This is Titus the emperor, Vespasian's son, who burned the " +
+         "Temple — pointing him at a companion of Paul is the kind of error that costs a reader's " +
+         "confidence in the rest of the page. No record exists for the emperor; suppression is the " +
+         "interim and the record-or-suppress question is the largest the sweep raised." },
+  { text: "In a single violent campaign, Jehu kills King Joram, Judah's King Ahaziah, and Jezebel herself, then wipes out Baal worship in Israel — fulfilling Elijah's prophecies to the letter, though only partially reforming the nation.",
+    surface: "Joram", owner: "bib-dki-jehu-purge", expect: "joram-king-of-israel", status: "guard",
+    why: "PUBLIC PAGE ONLY — bib-dki-jehu-purge.summary, verbatim. Two kings called Joram reigned " +
+         "at the same moment, one in each kingdom, and the app has a record for each; the bare key " +
+         "is Judah's. Jehu killed ISRAEL's — and this very sentence names Judah's king separately " +
+         "in the next clause. OWNER_NAME_OVERRIDES joram.bib-dki-jehu-purge." },
+
+  // ── Guards on the other side of every one of the six names above ─────────────────────────────
+  // Each asserts that the famous bearer still resolves where he should, on the surface the change
+  // touched. Negative-tested: each was flipped to the wrong target once and confirmed to fail.
+
+  { text: "In John's account, when Philip tells Nathanael he has found the Messiah in Jesus of Nazareth, Nathanael responds skeptically, \"Can anything good come out of Nazareth?\" Jesus then tells him, \"Before Philip called you, when you were under the fig tree, I saw you,\" and Nathanael immediately declares, \"Rabbi, you are the Son of God! You are the King of Israel!\" (John 1:45-51). He is later named among the disciples present at the Sea of Tiberias when the risen Jesus appears, identified there as \"Nathanael of Cana in Galilee\" (John 21:2).",
+    surface: "Philip", owner: "bartholomew-nathanael", expect: "philip-the-apostle", status: "guard",
+    why: "The ARTICLE surface, quoted from bartholomew-nathanael's lifeStory. The Apostle keeps " +
+         "the bare key everywhere the owner table says nothing, which is the whole Gospel cast. If " +
+         "a later batch ever moves the global default for \"Philip\", this fails first." },
+  { ref: "John 1:43", surface: "Philip", expect: "philip-the-apostle", status: "guard",
+    why: "The reader path, other side of the same name and in the Gospel where he belongs. The " +
+         "Evangelist's fifteen verses are all in Acts." },
+  { ref: "Acts 21:8", surface: "Philip the evangelist", expect: "philip-the-evangelist", status: "guard",
+    why: "Acts 21:8 prints the long name in lower case (\"Philip the evangelist\"), which the " +
+         "registered key matches case-insensitively — the reason the Evangelist was ever findable " +
+         "at all before the verse table was written." },
+  { text: "The first Roman emperor, whose empire-wide registration decree is named in Luke's Gospel as the reason Joseph and Mary traveled to Bethlehem, where Jesus was born.",
+    surface: "Mary", owner: "caesar-augustus", expect: "mary-mother-of-jesus", status: "guard",
+    why: "PUBLIC PAGE ONLY — caesar-augustus.summary. The bare \"Mary\" default is untouched by " +
+         "the lazarus-of-bethany entry, and this asserts it on the same uncovered surface." },
+  { text: "One of the women who followed and financially supported Jesus's ministry, present at the crucifixion and among the first to find the tomb empty; often identified as the mother of James and John.",
+    surface: "John", owner: "salome-follower-of-jesus", expect: "john-the-apostle", status: "guard",
+    why: "PUBLIC PAGE ONLY — salome-follower-of-jesus.summary. Her entry in the john owner table " +
+         "predates this batch and must survive it; the two suppressions added alongside it are " +
+         "keyed to other records." },
+  { text: "A Jerusalem temple priest struck mute for doubting an angel's promise of a son in his old age, whose voice returned at John's naming and burst into prophecy.",
+    surface: "John", owner: "zechariah-father-of-john-baptist", expect: "john-the-baptist", status: "guard",
+    why: "PUBLIC PAGE ONLY. The Baptist keeps the bare key by global default, and this is the " +
+         "sentence where he is unambiguously the right answer — his own naming, on his father's " +
+         "page. A careless widening of the john suppressions takes this first." },
+  { text: "'Christ' is a translation before it is anything else. The Greek Christos renders the Hebrew mashiach, 'anointed one,' and the Gospel of John twice stops to say so for readers who would not have known: Andrew tells Simon 'We have found the Messiah!' and the text adds the gloss '(which is, being interpreted, Christ)' (John 1:41), and the Samaritan woman says 'I know that Messiah comes, he who is called Christ' (John 4:25). These two verses are the only places the World English Bible keeps the Hebrew-derived word rather than translating it.",
+    surface: "Simon", owner: "the-christ", expect: "simon-peter", status: "guard",
+    why: "The ARTICLE surface, quoted from the-christ's section text. Bare \"Simon\" still means " +
+         "Simon Peter everywhere the owner table says nothing — the two Hasmonean suppressions " +
+         "above are keyed to two timeline events and reach nothing else." },
+  { text: "Paul had left Titus on the island of Crete to bring order to the young churches there. The letter's purpose is to instruct Titus on appointing qualified elders in every town, confronting rebellious and deceptive teachers (a problem Paul says is acute on Crete), and teaching sound doctrine that leads to godly living across all groups in the church. It is a compact companion to 1 Timothy, focused on leadership and healthy conduct.",
+    surface: "Titus", owner: "book-intro:Titus", expect: "titus", status: "guard",
+    why: "The book intro, which passes bookIntroOwnerId(\"Titus\") as its excludeId. Paul's " +
+         "companion keeps the bare key; the emperor suppression is keyed to one timeline event." },
+  { text: "Joram, more commonly called Jehoram in 2 Kings and 2 Chronicles, became king after his father Jehoshaphat and immediately consolidated power by killing all of his brothers along with some officials of Israel (2 Chronicles 21:1-4). He is not the Joram son of Ahab who ruled the northern kingdom at the same moment under the same two names; the deciding phrase in the text is almost always \"the son of Jehoshaphat\" or \"king of Judah\" in the same clause.",
+    surface: "Joram", occurrence: 2, owner: "joram-king-of-judah", expect: "joram-king-of-israel",
+    expectSurface: "Joram son of Ahab", status: "guard",
+    why: "The ARTICLE surface. The long form is its own registered key on the Israel record and " +
+         "resolves correctly on Judah's own page — the sentence whose whole point is that the two " +
+         "men are different. The first \"Joram\" in the same block is the page's own subject and " +
+         "is suppressed by the self-link exclusion." },
+  { ref: "2 Kings 8:16", surface: "Jehoram the son of Jehoshaphat", expect: "joram-king-of-judah",
+    status: "guard",
+    why: "The reader path, both kings in one verse: \"In the fifth year of Joram the son of Ahab " +
+         "king of Israel… Jehoram the son of Jehoshaphat king of Judah began to reign.\" Judah's " +
+         "king keeps his own long key. Nothing in this batch touches Scripture." },
 ];

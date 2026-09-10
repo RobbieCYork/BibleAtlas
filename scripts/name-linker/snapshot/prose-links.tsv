@@ -1646,13 +1646,13 @@ person.lifeStory|esther|3a5fb46e0a	123	Mordecai	mordecai
 person.lifeStory|esther|3a5fb46e0a	301	Mordecai	mordecai
 person.lifeStory|esther|bb93ec85eb	151	Mordecai	mordecai
 person.lifeStory|esther|bd0b020be1	291	Mordecai	mordecai
-person.lifeStory|ethiopian-eunuch|104bdf1e54	0	Philip	philip-the-apostle
-person.lifeStory|ethiopian-eunuch|104bdf1e54	103	Philip	philip-the-apostle
-person.lifeStory|ethiopian-eunuch|104bdf1e54	164	Philip	philip-the-apostle
+person.lifeStory|ethiopian-eunuch|104bdf1e54	0	Philip	philip-the-evangelist
+person.lifeStory|ethiopian-eunuch|104bdf1e54	103	Philip	philip-the-evangelist
+person.lifeStory|ethiopian-eunuch|104bdf1e54	164	Philip	philip-the-evangelist
 person.lifeStory|ethiopian-eunuch|104bdf1e54	200	Jesus	jesus-of-nazareth
-person.lifeStory|ethiopian-eunuch|104bdf1e54	312	Philip	philip-the-apostle
-person.lifeStory|ethiopian-eunuch|104bdf1e54	345	Philip	philip-the-apostle
-person.lifeStory|ethiopian-eunuch|8e6858ab88	323	Philip	philip-the-apostle
+person.lifeStory|ethiopian-eunuch|104bdf1e54	312	Philip	philip-the-evangelist
+person.lifeStory|ethiopian-eunuch|104bdf1e54	345	Philip	philip-the-evangelist
+person.lifeStory|ethiopian-eunuch|8e6858ab88	323	Philip	philip-the-evangelist
 person.lifeStory|eve|4876c995f9	256	Timothy	timothy
 person.lifeStory|eve|4876c995f9	328	Adam	adam
 person.lifeStory|eve|4876c995f9	372	Adam	adam
@@ -2163,7 +2163,7 @@ person.lifeStory|lazarus-of-bethany|da1bebcabb	174	Jesus	jesus-of-nazareth
 person.lifeStory|lazarus-of-bethany|da1bebcabb	214	Jesus	jesus-of-nazareth
 person.lifeStory|lazarus-of-bethany|da1bebcabb	353	Jesus	jesus-of-nazareth
 person.lifeStory|lazarus-of-bethany|da1bebcabb	42	Martha	martha-of-bethany
-person.lifeStory|lazarus-of-bethany|da1bebcabb	53	Mary	mary-mother-of-jesus
+person.lifeStory|lazarus-of-bethany|da1bebcabb	53	Mary	mary-of-bethany
 person.lifeStory|lazarus-of-bethany|da1bebcabb	79	Jesus	jesus-of-nazareth
 person.lifeStory|leah|7fd0e8bb41	124	Rachel	rachel
 person.lifeStory|leah|7fd0e8bb41	226	Jacob	jacob
@@ -2773,7 +2773,7 @@ person.lifeStory|simon-magus|d1c99f8c5f	5	Peter	simon-peter
 person.lifeStory|simon-magus|d1c99f8c5f	96	the Holy Spirit	holy-spirit
 person.lifeStory|simon-magus|ef16392094	143	Philip the Evangelist	philip-the-evangelist
 person.lifeStory|simon-magus|ef16392094	191	Simon	simon-peter
-person.lifeStory|simon-magus|ef16392094	241	Philip	philip-the-apostle
+person.lifeStory|simon-magus|ef16392094	241	Philip	philip-the-evangelist
 person.lifeStory|simon-magus|ef16392094	35	Simon	simon-peter
 person.lifeStory|simon-of-cyrene|05e88638e8	0	Simon	simon-peter
 person.lifeStory|simon-of-cyrene|05e88638e8	145	Jesus	jesus-of-nazareth
@@ -3025,7 +3025,7 @@ person.placesLived|cain|7e201c36c5	15	Adam	adam
 person.placesLived|cain|7e201c36c5	24	Eve	eve
 person.placesLived|drusilla|7091d675a4	33	Felix	antonius-felix
 person.placesLived|epaphroditus|9629ae1641	31	Paul	paul-of-tarsus
-person.placesLived|ethiopian-eunuch|c1b1542132	50	Philip	philip-the-apostle
+person.placesLived|ethiopian-eunuch|c1b1542132	50	Philip	philip-the-evangelist
 person.placesLived|gideon|1f85868fb5	28	Manasseh	manasseh-king-of-judah
 person.placesLived|hagar|f7d3c9f6dd	0	Abraham	abraham
 person.placesLived|james-brother-of-jesus|422f18e3f2	39	Joseph	joseph-husband-of-mary
@@ -3625,15 +3625,15 @@ timelineEvent.article|bib-ac-peter-martyrdom|fa0d2ac3fc	366	Peter	simon-peter
 timelineEvent.article|bib-ac-peter-martyrdom|fa0d2ac3fc	434	Nero	nero-caesar
 timelineEvent.article|bib-ac-philip-ethiopian-eunuch|a207016350	119	Stephen	stephen-the-martyr
 timelineEvent.article|bib-ac-philip-ethiopian-eunuch|a207016350	251	Simon	simon-peter
-timelineEvent.article|bib-ac-philip-ethiopian-eunuch|a207016350	317	Philip	philip-the-apostle
+timelineEvent.article|bib-ac-philip-ethiopian-eunuch|a207016350	317	Philip	philip-the-evangelist
 timelineEvent.article|bib-ac-philip-ethiopian-eunuch|a207016350	32	Stephen	stephen-the-martyr
-timelineEvent.article|bib-ac-philip-ethiopian-eunuch|a207016350	49	Philip	philip-the-apostle
+timelineEvent.article|bib-ac-philip-ethiopian-eunuch|a207016350	49	Philip	philip-the-evangelist
 timelineEvent.article|bib-ac-philip-ethiopian-eunuch|a207016350	570	Isaiah	isaiah
-timelineEvent.article|bib-ac-philip-ethiopian-eunuch|d160b98e62	173	Philip	philip-the-apostle
-timelineEvent.article|bib-ac-philip-ethiopian-eunuch|d160b98e62	24	Philip	philip-the-apostle
-timelineEvent.article|bib-ac-philip-ethiopian-eunuch|d160b98e62	298	Philip	philip-the-apostle
+timelineEvent.article|bib-ac-philip-ethiopian-eunuch|d160b98e62	173	Philip	philip-the-evangelist
+timelineEvent.article|bib-ac-philip-ethiopian-eunuch|d160b98e62	24	Philip	philip-the-evangelist
+timelineEvent.article|bib-ac-philip-ethiopian-eunuch|d160b98e62	298	Philip	philip-the-evangelist
 timelineEvent.article|bib-ac-philip-ethiopian-eunuch|d160b98e62	334	Jesus	jesus-of-nazareth
-timelineEvent.article|bib-ac-philip-ethiopian-eunuch|d160b98e62	435	Philip	philip-the-apostle
+timelineEvent.article|bib-ac-philip-ethiopian-eunuch|d160b98e62	435	Philip	philip-the-evangelist
 timelineEvent.article|bib-ac-stephen-martyrdom|191e1c3f3e	139	Stephen	stephen-the-martyr
 timelineEvent.article|bib-ac-stephen-martyrdom|191e1c3f3e	18	Saul of Tarsus	paul-of-tarsus
 timelineEvent.article|bib-ac-stephen-martyrdom|2bb96356f9	0	Stephen	stephen-the-martyr
@@ -3816,7 +3816,7 @@ timelineEvent.article|bib-dki-jehu-anointed|969abec9e8	127	Elijah	elijah
 timelineEvent.article|bib-dki-jehu-purge|821d31428e	240	Elijah	elijah
 timelineEvent.article|bib-dki-jehu-purge|821d31428e	345	Jezebel	jezebel
 timelineEvent.article|bib-dki-jehu-purge|821d31428e	499	Elijah	elijah
-timelineEvent.article|bib-dki-jehu-purge|821d31428e	73	Joram	joram-king-of-judah
+timelineEvent.article|bib-dki-jehu-purge|821d31428e	73	Joram	joram-king-of-israel
 timelineEvent.article|bib-dki-jeroboam-golden-calves|7fab019450	219	Rehoboam	rehoboam
 timelineEvent.article|bib-dki-jeroboam-golden-calves|7fab019450	330	David	david
 timelineEvent.article|bib-dki-jeroboam-golden-calves|7fab019450	34	Solomon	solomon
@@ -4128,15 +4128,11 @@ timelineEvent.article|bib-it-antiochus-defiles-temple|5d4a385d5b	258	Jesus	jesus
 timelineEvent.article|bib-it-division-of-alexanders-empire|62bfcb9786	12	Daniel	daniel
 timelineEvent.article|bib-it-hasmonean-dynasty-begins|1dec481dac	328	Judas	judas-iscariot
 timelineEvent.article|bib-it-hasmonean-dynasty-begins|c113f12e0f	425	Moses	moses
-timelineEvent.article|bib-it-hasmonean-dynasty-begins|c113f12e0f	74	Simon	simon-peter
-timelineEvent.article|bib-it-hasmonean-dynasty-begins|cb1eda1f4c	153	Simon	simon-peter
-timelineEvent.article|bib-it-hasmonean-dynasty-begins|cb1eda1f4c	45	Simon	simon-peter
 timelineEvent.article|bib-it-herod-the-great-rise|1eb6dcf753	135	Jesus	jesus-of-nazareth
 timelineEvent.article|bib-it-herod-the-great-rise|21e8f8700a	152	Caesar	tiberius-caesar
 timelineEvent.article|bib-it-herod-the-great-rise|3c7661f39c	205	David	david
 timelineEvent.article|bib-it-john-hyrcanus-reign|f61219cd5d	199	Herod the Great	herod-the-great
 timelineEvent.article|bib-it-john-hyrcanus-reign|f61219cd5d	572	Jesus	jesus-of-nazareth
-timelineEvent.article|bib-it-john-hyrcanus-reign|ffe24394ae	0	Simon	simon-peter
 timelineEvent.article|bib-it-jonathan-maccabeus-high-priest|397d9025bc	242	Aaron	aaron
 timelineEvent.article|bib-it-jonathan-maccabeus-high-priest|397d9025bc	263	Solomon	solomon
 timelineEvent.article|bib-it-jonathan-maccabeus-high-priest|4035fff66d	111	Simon	simon-peter
@@ -5165,11 +5161,6 @@ timelineEvent.article|wld-rom-claudius-emperor|c17cf023c9	0	Claudius	claudius-ca
 timelineEvent.article|wld-rom-council-of-nicaea|35c781a1a3	313	Arius	arius
 timelineEvent.article|wld-rom-council-of-nicaea|35c781a1a3	99	Jesus	jesus-of-nazareth
 timelineEvent.article|wld-rom-council-of-nicaea|3614556913	232	Arius	arius
-timelineEvent.article|wld-rom-destruction-of-jerusalem|9460ee2644	119	Titus	titus
-timelineEvent.article|wld-rom-destruction-of-jerusalem|9460ee2644	217	Titus	titus
-timelineEvent.article|wld-rom-destruction-of-jerusalem|9460ee2644	408	Titus	titus
-timelineEvent.article|wld-rom-destruction-of-jerusalem|9460ee2644	502	Titus	titus
-timelineEvent.article|wld-rom-destruction-of-jerusalem|f14bb2aa3f	107	Titus	titus
 timelineEvent.article|wld-rom-destruction-of-jerusalem|fb6546ea63	142	Jesus	jesus-of-nazareth
 timelineEvent.article|wld-rom-fall-of-masada|26551b930d	73	Herod the Great	herod-the-great
 timelineEvent.article|wld-rom-founding-of-republic|08aaebf928	424	Caesar	tiberius-caesar
@@ -5331,7 +5322,6 @@ timelineEvent.datingNotes|bib-exo-the-exodus|c297c145f1	190	Solomon	solomon
 timelineEvent.datingNotes|bib-it-antiochus-defiles-temple|a9523deff8	622	Daniel	daniel
 timelineEvent.datingNotes|bib-it-antiochus-defiles-temple|a9523deff8	743	Daniel	daniel
 timelineEvent.datingNotes|bib-it-antiochus-defiles-temple|a9523deff8	934	Daniel	daniel
-timelineEvent.datingNotes|bib-it-hasmonean-dynasty-begins|d40fe1b52b	142	Simon	simon-peter
 timelineEvent.datingNotes|bib-it-jonathan-maccabeus-high-priest|388f783f7b	242	Simon	simon-peter
 timelineEvent.datingNotes|bib-it-judas-maccabeus-campaigns|fc644d0e8f	39	Judas	judas-iscariot
 timelineEvent.datingNotes|bib-loc-baptism-of-jesus|e90e367c35	68	John	john-the-baptist
