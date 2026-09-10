@@ -1334,7 +1334,7 @@ export const topics: Topic[] = [
     name: "Pilate Stone",
     // NOT registered: "Pilate" — that is Pontius Pilate the person, who already owns it.
     alternateNames: ["Pilate Inscription", "Caesarea Pilate Inscription"],
-    category: "concept",
+    category: "discovery",
     role: "First-Century Latin Dedication Naming Pontius Pilate",
     summary:
       "A reused block of limestone found in the theatre at Caesarea Maritima in 1961, carrying the only inscription ever found from Pilate's own lifetime — and the one that settles what his job title actually was.",
@@ -1342,7 +1342,7 @@ export const topics: Topic[] = [
       {
         heading: "Found in a Staircase",
         paragraphs: [
-          "In the summer of 1961 an Italian expedition under Antonio Frova was clearing the Roman theatre at Caesarea Maritima, the harbour city Herod the Great built on the Judean coast and the seat of the Roman governor. In a fourth-century rebuilding of the theatre steps the masons had done what masons everywhere have always done: they took a handy piece of dressed stone from an older, ruined building and set it into the staircase face-down. When it was turned over it carried four lines of Latin, badly worn on the left where the block had been trimmed to fit.",
+          "In June 1961, in its third season, the Italian Archaeological Mission under Antonio Frova was clearing the Roman theatre at Caesarea Maritima, the harbour city Herod the Great built on the Judean coast and the seat of the Roman governor. In a fourth-century rebuilding of the theatre steps the masons had done what masons everywhere have always done: they took a handy piece of dressed stone from an older, ruined building and set it into the staircase face-down. When it was turned over it carried four lines of Latin, badly worn on the left where the block had been trimmed to fit.",
           "What survives reads, in the standard reconstruction, something like: \"...Tiberieum ... [Pont]ius Pilatus ... [praef]ectus Iuda[ea]e ... [ded]it\" — Pontius Pilate, prefect of Judea, gave or dedicated a building called a Tiberieum, presumably something named in honour of the emperor Tiberius. The stone is now in the Israel Museum in Jerusalem; a replica stands in the theatre at Caesarea where visitors see it today.",
         ],
       },
@@ -1371,6 +1371,46 @@ export const topics: Topic[] = [
       { label: "Bible Odyssey (SBL): Pontius Pilate", url: "https://www.bibleodyssey.org/articles/pontius-pilate/" },
       { label: "Wikipedia: Pilate stone", url: "https://en.wikipedia.org/wiki/Pilate_stone" },
     ],
+    discovery: {
+      objectType: "Inscribed limestone block, 82 x 65 x 20 cm, carrying four worn lines of Latin",
+      findSite: "The Roman theatre at Caesarea Maritima, reused face-down as a step in a fourth-century rebuild",
+      findSiteId: "caesarea-maritima",
+      findSiteKind: "poi",
+      foundYear: "June 1961",
+      foundBy: "The Italian Archaeological Mission at Caesarea, directed by Antonio Frova, in its third season. The published excavation report names no individual finder, and no reliable source does — a name circulating online for the discoverer traces only to an encyclopedia entry with no citation behind it",
+      objectDate: "AD 26-36, the years of Pilate's prefecture",
+      objectDateCertainty: "firm",
+      currentLocation: "Israel Museum, Jerusalem (IAA 1961-529); a replica stands in the theatre at Caesarea",
+    },
+    citations: [
+      {
+        tier: "scholarly",
+        label: "Judaism and Rome: Dedication of Pontius Pilate, Judaea (CIIP II, 1277)",
+        url: "https://www.judaism-and-rome.org/dedication-pontius-pilate-judea-ciip-ii-1277",
+        credit: "Judaism and Rome (ERC-funded research project), citing Corpus Inscriptionum Iudaeae/Palaestinae II, 1277",
+        detail: "Gives material (limestone), measurements, date 26-36 CE, and \"Actual Location: Israel Museum. Inv. no.: IAA 1961-529\"",
+        supports: "Material, dimensions, object date, current location and inventory number",
+      },
+      {
+        tier: "institution",
+        label: "Excavation report: Antonio Frova, \"L'iscrizione di Ponzio Pilato a Caesarea\"",
+        credit: "Italian Archaeological Mission at Caesarea (Università di Milano)",
+        detail: "Rendiconti dell'Istituto Lombardo 95 (1961), 419-434 — the excavating body's own first publication of the inscription; also catalogued as AE 1963, 104. Print only",
+        supports: "The 1961 find and the reading of the text",
+      },
+      {
+        tier: "reference",
+        label: "Bible Odyssey (SBL): Pontius Pilate",
+        url: "https://www.bibleodyssey.org/articles/pontius-pilate/",
+        credit: "Society of Biblical Literature",
+        supports: "The prefect/procurator distinction discussed in section two",
+      },
+      {
+        tier: "encyclopedic",
+        label: "Wikipedia: Pilate stone",
+        url: "https://en.wikipedia.org/wiki/Pilate_stone",
+      },
+    ],
   },
   {
     id: "tel-dan-stele",
@@ -1379,15 +1419,15 @@ export const topics: Topic[] = [
     // owns it. Every alias below is longer than "Tel Dan", and NAME_ENTRIES is sorted longest-first,
     // so a mention of the stele wins over the city and a bare "Tel Dan" still goes to the city.
     alternateNames: ["Tel Dan Stela", "Tel Dan Inscription", "House of David Inscription"],
-    category: "concept",
+    category: "discovery",
     role: "Ninth-Century BC Aramaic Victory Inscription",
     summary:
-      "Three fragments of a smashed basalt monument found at Tel Dan in 1993 and 1995, carrying what most scholars read as the earliest mention of David anywhere outside the Bible.",
+      "Three fragments of a smashed basalt monument found at Tel Dan in 1993 and 1994, carrying what most scholars read as the earliest mention of David anywhere outside the Bible.",
     sections: [
       {
         heading: "A Broken Monument in a City Wall",
         paragraphs: [
-          "In July 1993, a surveyor working with Avraham Biran's long-running excavation at Tel Dan noticed writing on a stone built into a wall beside the Iron Age gate. It turned out to be part of a black basalt victory stele that had been deliberately smashed and its pieces reused as ordinary building material — which is itself a clue, since that is what a conquering army did to a rival's monuments. Two more fragments surfaced in 1995. Together they preserve thirteen broken lines of Old Aramaic from the ninth century BC. The stele is on permanent display in the Israel Museum in Jerusalem.",
+          "On 21 July 1993, Gila Cook — the surveyor on Avraham Biran's long-running excavation at Tel Dan — noticed writing on a stone built into a wall beside the Iron Age gate. It turned out to be part of a black basalt victory stele that had been deliberately smashed and its pieces reused as ordinary building material — which is itself a clue, since that is what a conquering army did to a rival's monuments. Two more fragments, which join each other, were found in June 1994. Biran directed the dig and published all three with the epigrapher J. Naveh, in 1993 and 1995; the gap between finding and publishing is why the second pair is often misdated to 1995. Together the fragments preserve thirteen broken lines of Old Aramaic from the ninth century BC. The stele is on permanent display in the Israel Museum in Jerusalem.",
           "The text is a boast. An Aramean king — most scholars think Hazael of Damascus, or possibly his son — describes how his father died, how the king of Israel had invaded his land, and how the god Hadad went before him and gave him victory. He then names two men he says he killed: a king of Israel and a king of \"the house of David.\"",
         ],
       },
@@ -1408,7 +1448,7 @@ export const topics: Topic[] = [
     ],
     verses: [
       { reference: "2 Samuel 7:16", note: "The promise to David of an enduring house" },
-      { reference: "1 Kings 12:19", note: "\"Israel rebelled against the house of David\" — the phrase in Scripture's own mouth" },
+      { reference: "1 Kings 12:19", note: "\"Israel rebelled against David's house\" — the dynastic phrase in Scripture's own mouth" },
       { reference: "2 Kings 8:7-15", note: "Hazael takes the throne of Aram-Damascus" },
       { reference: "2 Kings 9:14-28", note: "Jehu kills Joram of Israel and Ahaziah of Judah — the deaths the stele's author also claims" },
       { reference: "Judges 18:27-29", note: "The city of Dan itself, where the stele was found" },
@@ -1416,6 +1456,47 @@ export const topics: Topic[] = [
     sources: [
       { label: "Bible Odyssey (SBL): The Tel Dan Inscription", url: "https://www.bibleodyssey.org/articles/the-tel-dan-inscription/" },
       { label: "Wikipedia: Tel Dan stele", url: "https://en.wikipedia.org/wiki/Tel_Dan_stele" },
+    ],
+    discovery: {
+      objectType: "Black basalt victory stele, deliberately smashed; three fragments preserving thirteen broken lines of Old Aramaic",
+      findSite: "Tel Dan, upper Galilee — in secondary use in a wall beside the Iron Age gate",
+      findSiteId: "dan",
+      findSiteKind: "location",
+      foundYear: "Fragment A on 21 July 1993; Fragments B1 and B2 in June 1994",
+      foundBy: "Gila Cook, surveyor on Avraham Biran's expedition, spotted Fragment A. Biran directed the excavation and published the fragments with Joseph Naveh",
+      objectDate: "c. 840-835 BC",
+      objectDateCertainty: "traditional",
+      currentLocation: "Israel Museum, Jerusalem",
+    },
+    citations: [
+      {
+        tier: "institution",
+        label: "Excavation report: Avraham Biran and Joseph Naveh, \"An Aramaic Stele Fragment from Tel Dan\"",
+        credit: "The Tel Dan excavation (Nelson Glueck School of Biblical Archaeology), Avraham Biran and Joseph Naveh",
+        detail: "Israel Exploration Journal 43 (1993), 81-98 — the excavating body's own first publication, of Fragment A",
+        supports: "The 1993 find and the reading of the inscription",
+        paywalled: true,
+      },
+      {
+        tier: "scholarly",
+        label: "Avraham Biran and Joseph Naveh, \"The Tel Dan Inscription: A New Fragment\"",
+        credit: "Avraham Biran and Joseph Naveh",
+        detail: "Israel Exploration Journal 45 (1995), 1-18 — the publication of Fragments B1 and B2, found in June 1994",
+        supports: "That the second and third fragments were found in 1994 and published in 1995",
+        paywalled: true,
+      },
+      {
+        tier: "reference",
+        label: "Bible Odyssey (SBL): The Tel Dan Inscription",
+        url: "https://www.bibleodyssey.org/articles/the-tel-dan-inscription/",
+        credit: "Society of Biblical Literature",
+        supports: "The majority reading of BYTDWD as \"house of David\", and the minority case against it",
+      },
+      {
+        tier: "encyclopedic",
+        label: "Wikipedia: Tel Dan stele",
+        url: "https://en.wikipedia.org/wiki/Tel_Dan_stele",
+      },
     ],
   },
   {
@@ -1426,16 +1507,16 @@ export const topics: Topic[] = [
     // Genesis 10:30 and 1 Chronicles 2:42/8:9, and the whole-word case-insensitive matcher cannot
     // tell those apart from the king.
     alternateNames: ["Mesha Stela", "Moabite Stone", "Mesha Inscription"],
-    category: "concept",
+    category: "discovery",
     role: "Ninth-Century BC Moabite Royal Inscription",
     summary:
-      "A basalt monument set up by King Mesha of Moab around 840 BC, recovered from Jordan in 1868 and then blown apart by the villagers who owned it — the only substantial text we have telling an Old Testament episode from the other side.",
+      "A basalt monument set up by King Mesha of Moab in the ninth century BC, brought to European attention in Jordan in 1868 and then broken apart by the villagers who owned it — the only substantial text we have telling an Old Testament episode from the other side.",
     sections: [
       {
         heading: "Discovered, Then Destroyed",
         paragraphs: [
-          "In 1868 a missionary named Frederick Augustus Klein was shown a large inscribed slab of black basalt lying on the mound of Dhiban in Jordan — biblical Dibon, the Moabite capital. Word of the find set off a bidding contest between European consulates, and in 1869, with the local Bedouin caught in the middle of an argument about who owned it and what the Ottoman authorities would do, the villagers heated the stone in a fire, poured cold water on it, and broke it into pieces.",
-          "It could have ended there. Before the stone was destroyed, Charles Clermont-Ganneau had arranged for a squeeze to be taken — a wet paper impression pressed onto the surface, which comes away carrying the shape of every letter. The squeeze was itself torn off the stone in haste and survives only in pieces, but between it and the recovered fragments, which were eventually bought and reassembled, most of the thirty-four lines are readable. The reconstructed stele is in the Louvre.",
+          "On the afternoon of 19 August 1868, the sheikh of the Banî Hamîdi told Frederick Augustus Klein — a German missionary working in Jordan for the British Church Missionary Society — about a large inscribed slab of basalt lying on the mound of Dhiban, biblical Dibon, the Moabite capital. Klein was shown it; he did not stumble on it. Word of the find set off a bidding contest between European consulates, and shortly afterwards, with the local Bedouin caught in the middle of an argument about who owned it and what the Ottoman authorities would do, the villagers heated the stone in a fire, poured cold water on it, and broke it into pieces.",
+          "It could have ended there. Before the stone was destroyed, Charles Clermont-Ganneau had arranged for a squeeze to be taken — a wet paper impression pressed onto the surface, which comes away carrying the shape of every letter. The squeeze was itself torn off the stone in haste and survives only in pieces, but between it and the recovered fragments — collected independently by Clermont-Ganneau and by the British officer Charles Warren, whose share of the credit is usually left out — most of the thirty-four lines are readable. Clermont-Ganneau reassembled the stone, and the Louvre bought it from him in 1873. It is on display there today.",
         ],
       },
       {
@@ -1463,12 +1544,57 @@ export const topics: Topic[] = [
       { label: "Bible Odyssey (SBL): The Mesha Stela", url: "https://www.bibleodyssey.org/articles/the-mesha-stela/" },
       { label: "Wikipedia: Mesha Stele", url: "https://en.wikipedia.org/wiki/Mesha_Stele" },
     ],
+    discovery: {
+      objectType: "Basalt victory stele with a rounded top, 125 cm high, carrying 34 lines of Moabite",
+      findSite: "Dhiban (ancient Dibon), Jordan",
+      foundYear: "19 August 1868; broken up soon afterwards, and the fragments recovered over the following years",
+      foundBy: "Shown to Frederick Augustus Klein, a German missionary working for the British Church Missionary Society, by the sheikh of the Banî Hamîdi. Charles Clermont-Ganneau had a squeeze taken in 1869, before the stone was destroyed, and he and Charles Warren independently recovered the fragments; the Louvre bought them from Clermont-Ganneau in 1873",
+      objectDate: "c. 840 BC; the Louvre's own record dates it c. 830-805 BC",
+      objectDateCertainty: "disputed",
+      currentLocation: "Musée du Louvre, Paris (AO 5066)",
+    },
+    citations: [
+      {
+        tier: "institution",
+        label: "Louvre collections: Stèle de Mesha (AO 5066)",
+        url: "https://collections.louvre.fr/en/ark:/53355/cl010120339",
+        credit: "Musée du Louvre, Département des Antiquités orientales",
+        detail: "Basalt; H. 125 cm, W. 69 cm, D. 37 cm; place of discovery Diban; purchased 1873 from Charles Clermont-Ganneau",
+        supports: "Material, dimensions, findspot, inventory number and the route by which the Louvre acquired it",
+      },
+      {
+        tier: "scholarly",
+        label: "André Lemaire, \"'House of David' Restored in Moabite Inscription\"",
+        credit: "André Lemaire",
+        detail: "Biblical Archaeology Review 20:3 (May/June 1994), 30-37 — the proposed reading of line 31. Print-only here: the BAS library copy sits behind a members' wall",
+        supports: "The contested \"house of David\" reading discussed in section three",
+        paywalled: true,
+      },
+      {
+        tier: "reference",
+        label: "Biblical Archaeology Society: The Mesha Stele and the House of David",
+        url: "https://www.biblicalarchaeology.org/daily/biblical-artifacts/inscriptions/mesha-stele/mesha-stele-and-the-house-of-david/",
+        credit: "Biblical Archaeology Society",
+        supports: "The state of the line 31 argument, including the imaging work since Lemaire",
+      },
+      {
+        tier: "reference",
+        label: "Bible Odyssey (SBL): The Mesha Stela",
+        url: "https://www.bibleodyssey.org/articles/the-mesha-stela/",
+        credit: "Society of Biblical Literature",
+      },
+      {
+        tier: "encyclopedic",
+        label: "Wikipedia: Mesha Stele",
+        url: "https://en.wikipedia.org/wiki/Mesha_Stele",
+      },
+    ],
   },
   {
     id: "merneptah-stele",
     name: "Merneptah Stele",
     alternateNames: ["Merneptah Stela", "Israel Stele", "Merneptah Inscription", "Victory Stele of Merneptah"],
-    category: "concept",
+    category: "discovery",
     role: "Egyptian Victory Monument, c. 1208 BC — the Earliest Mention of Israel",
     summary:
       "A ten-foot granite slab from a pharaoh's mortuary temple at Thebes, found by Flinders Petrie in 1896, whose last three lines contain the oldest known appearance of the name \"Israel\" outside the Bible.",
@@ -1505,20 +1631,58 @@ export const topics: Topic[] = [
       { label: "Wikipedia: Merneptah Stele", url: "https://en.wikipedia.org/wiki/Merneptah_Stele" },
       { label: "Bible Odyssey (SBL): Pharaoh", url: "https://www.bibleodyssey.org/articles/pharaoh/" },
     ],
+    discovery: {
+      objectType: "Granite victory stele over 3 m high, reused from an earlier monument of Amenhotep III",
+      findSite: "The mortuary temple of Merneptah, western Thebes, Egypt",
+      foundYear: "1896",
+      foundBy: "Flinders Petrie's excavation of the temple; the hieroglyphic text was read for Petrie by Wilhelm Spiegelberg",
+      objectDate: "c. 1208 BC (year 5 of Merneptah)",
+      objectDateCertainty: "firm",
+      currentLocation: "Egyptian Museum, Cairo (JE 31408)",
+    },
+    citations: [
+      {
+        tier: "institution",
+        label: "Excavation report: W. M. Flinders Petrie, Six Temples at Thebes, 1896 (London, 1897)",
+        url: "https://archive.org/details/sixtemplesatthe00petrgoog",
+        credit: "W. M. Flinders Petrie, with a chapter by Wilhelm Spiegelberg",
+        detail: "The excavation report in which the stele was first published; public domain, full text at the Internet Archive",
+        supports: "The find year, the findspot in Merneptah's mortuary temple, and the first publication of the Israel line",
+      },
+      {
+        tier: "scholarly",
+        label: "Michael G. Hasel, \"Israel in the Merneptah Stela\"",
+        credit: "Michael G. Hasel",
+        detail: "Bulletin of the American Schools of Oriental Research 296 (November 1994) — on the determinative and what it does and does not establish",
+        supports: "The people-determinative argument in section two",
+        paywalled: true,
+      },
+      {
+        tier: "reference",
+        label: "Bible Odyssey (SBL): Pharaoh",
+        url: "https://www.bibleodyssey.org/articles/pharaoh/",
+        credit: "Society of Biblical Literature",
+      },
+      {
+        tier: "encyclopedic",
+        label: "Wikipedia: Merneptah Stele",
+        url: "https://en.wikipedia.org/wiki/Merneptah_Stele",
+      },
+    ],
   },
   {
     id: "cyrus-cylinder",
     name: "Cyrus Cylinder",
     alternateNames: ["Cyrus Cylinder inscription"],
-    category: "concept",
+    category: "discovery",
     role: "Babylonian Foundation Inscription of Cyrus the Great, 539 BC",
     summary:
-      "A barrel-shaped clay cylinder covered in Akkadian cuneiform, found in the ruins of Babylon in 1879, in which the Persian conqueror announces that he has restored displaced gods and peoples to their homes.",
+      "A barrel-shaped baked clay cylinder covered in Akkadian cuneiform, found in the ruins of Babylon in 1879, in which the Persian conqueror announces that he has restored displaced gods and peoples to their homes.",
     sections: [
       {
         heading: "A Building Inscription, Not a Proclamation",
         paragraphs: [
-          "Hormuzd Rassam recovered the cylinder in 1879 from the foundations of the Esagila temple precinct at Babylon; it is in the British Museum. It belongs to a very well-attested Mesopotamian genre: a text buried in the fabric of a building by the king who repaired it, addressed less to the public than to posterity and to the gods. It was never a decree posted for citizens to read, and it was never meant to be read at all until someone dug up the wall.",
+          "The cylinder was found at Babylon in 1879, during Hormuzd Rassam's excavations there for the British Museum, where it has been ever since. Exactly where in Babylon is less certain than the popular accounts suggest — the standard cuneiform catalogues record no findspot for it at all, so the frequently repeated claim that it came out of the foundations of the Esagila temple precinct should be treated as a reconstruction rather than a record. What is not in doubt is the kind of text it is: a very well-attested Mesopotamian genre, buried in the fabric of a building by the king who repaired it, addressed less to the public than to posterity and to the gods. It was never a decree posted for citizens to read, and it was never meant to be read at all until someone dug up the wall.",
           "The text tells the story of Babylon's fall in 539 BC entirely from the winner's side. Nabonidus, the last Babylonian king, is described as neglecting the god Marduk and imposing improper worship; Marduk therefore looked for a righteous ruler, chose Cyrus of Anshan, and delivered Babylon into his hands without a battle. Cyrus then presents himself restoring the sanctuaries, returning the divine images Nabonidus had gathered into the capital, and sending home the peoples who had been settled there.",
         ],
       },
@@ -1549,6 +1713,54 @@ export const topics: Topic[] = [
       { label: "Bible Odyssey (SBL): Cyrus the Messiah", url: "https://www.bibleodyssey.org/articles/cyrus-the-messiah/" },
       { label: "Wikipedia: Cyrus Cylinder", url: "https://en.wikipedia.org/wiki/Cyrus_Cylinder" },
     ],
+    discovery: {
+      objectType: "Barrel-shaped baked clay foundation cylinder, about 22.5 cm long, in Akkadian cuneiform",
+      findSite: "Babylon, Iraq. The precise findspot within the city is not recorded in the standard catalogues",
+      findSiteId: "babylon",
+      findSiteKind: "location",
+      foundYear: "1879",
+      foundBy: "Found during Hormuzd Rassam's excavations at Babylon for the British Museum. Rassam directed the dig; the individual who lifted it is not recorded",
+      objectDate: "After 539 BC",
+      objectDateCertainty: "firm",
+      currentLocation: "British Museum, London (BM 90920)",
+    },
+    citations: [
+      {
+        tier: "institution",
+        label: "Cuneiform Digital Library Initiative: artifact P386349 (BM 090920)",
+        url: "https://cdli.mpiwg-berlin.mpg.de/artifacts/386349",
+        credit: "Cuneiform Digital Library Initiative, Max Planck Institute for the History of Science",
+        detail: "Records the object as a clay barrel, 225 x 100 x 100 mm, British Museum BM 090920, with the provenience field left blank",
+        supports: "Material, form, dimensions, museum number — and that no findspot within Babylon is on record",
+      },
+      {
+        tier: "reference",
+        label: "The Getty: The Cyrus Cylinder and Ancient Persia",
+        url: "https://www.getty.edu/art/exhibitions/cyrus_cylinder/",
+        credit: "The J. Paul Getty Museum",
+        detail: "Exhibition record: \"Terracotta, 22.9 x 10 cm\", \"Found at Babylon in 1879\", dated \"after 539 B.C.\"",
+        supports: "The find year, the object's date and its dimensions",
+      },
+      {
+        tier: "scholarly",
+        label: "Irving Finkel (ed.), The Cyrus Cylinder: The King of Persia's Proclamation from Ancient Babylon",
+        credit: "Irving Finkel, Keeper of Cuneiform Collections at the British Museum",
+        detail: "London: I.B. Tauris, 2013 - the standard scholarly treatment, with a full translation and the case against the \"first charter of human rights\" label. Print only",
+        supports: "The reading of the text, and the refusal of the human-rights framing in section three",
+      },
+      {
+        tier: "reference",
+        label: "Bible Odyssey (SBL): Cyrus the Messiah",
+        url: "https://www.bibleodyssey.org/articles/cyrus-the-messiah/",
+        credit: "Society of Biblical Literature",
+        supports: "The relationship between the cylinder's policy and the decree of Ezra 1",
+      },
+      {
+        tier: "encyclopedic",
+        label: "Wikipedia: Cyrus Cylinder",
+        url: "https://en.wikipedia.org/wiki/Cyrus_Cylinder",
+      },
+    ],
   },
   {
     id: "sennacherib-prism",
@@ -1561,7 +1773,7 @@ export const topics: Topic[] = [
       "Oriental Institute Prism",
       "Chicago Prism",
     ],
-    category: "concept",
+    category: "discovery",
     role: "Assyrian Royal Annals of the 701 BC Campaign Against Judah",
     summary:
       "A six-sided clay prism, surviving in three near-identical copies, on which Sennacherib of Assyria records shutting King Hezekiah up in Jerusalem \"like a bird in a cage\" — and conspicuously does not record taking the city.",
@@ -1569,7 +1781,7 @@ export const topics: Topic[] = [
       {
         heading: "Three Copies of the Same Boast",
         paragraphs: [
-          "Assyrian kings kept annals, and the grandest were inscribed on hexagonal baked-clay prisms about the size of a large jar, buried in the foundations of palaces. Three substantially complete copies of Sennacherib's survive. The Taylor Prism, acquired in 1830 and now in the British Museum, was the first known; the Oriental Institute Prism, sometimes called the Chicago Prism, was bought in 1919 and is in Chicago; a third is in the Israel Museum in Jerusalem. Their texts agree closely, which is itself informative — this was an official account, copied and distributed.",
+          "Assyrian kings kept annals, and the grandest were inscribed on six-sided baked-clay prisms roughly 37 to 38 centimetres tall, buried in the foundations of palaces. Three substantially complete copies of Sennacherib's survive, and not one of them was excavated: every one reached its museum through the antiquities market. The Taylor Prism, named for Colonel Robert Taylor, the British Resident at Baghdad who acquired it, was the first known; the British Museum bought it in 1855 from Sir Henry Rawlinson, who had himself bought it from Taylor's widow. The Chicago Prism was purchased in Baghdad in 1919 and is at the Institute for the Study of Ancient Cultures at the University of Chicago. The third, the Jerusalem Prism, came through Sotheby's and was given to the Israel Museum from the Kevorkian Collection. The Taylor and Jerusalem prisms are dated to 691 BC and the Chicago Prism to 689 BC, and their accounts of the western campaign agree closely — which is itself informative, since this was an official version, copied and distributed.",
           "The section that concerns the Bible describes the third campaign, in 701 BC, against the west. Sennacherib says he took forty-six walled cities of Judah along with countless smaller settlements, deported a very large number of people, stripped Hezekiah of territory and handed it to Philistine rulers, and confined Hezekiah himself \"like a bird in a cage\" in Jerusalem, his royal city, throwing up earthworks against it. He then lists the tribute Hezekiah sent after him to Nineveh.",
         ],
       },
@@ -1599,12 +1811,56 @@ export const topics: Topic[] = [
       { label: "Bible Odyssey (SBL): Babylonian Accounts of the Invasion of Judah", url: "https://www.bibleodyssey.org/articles/babylonian-accounts-of-the-invasion-of-judah/" },
       { label: "Wikipedia: Sennacherib's Annals", url: "https://en.wikipedia.org/wiki/Sennacherib%27s_Annals" },
     ],
+    discovery: {
+      objectType: "Six-sided baked clay prisms — the Taylor Prism 368 mm high, the Chicago Prism 380 mm",
+      findSite: "Nineveh, northern Iraq. The catalogues give the findspot only as probable, and none of the three prisms has an excavation record",
+      findSiteId: "nineveh",
+      findSiteKind: "location",
+      foundYear: "Not excavated. The Taylor Prism was in Colonel Robert Taylor's hands before 1855; the Chicago Prism was purchased in Baghdad in 1919",
+      foundBy: "No finder is recorded for any of the three. The Taylor Prism is named for its owner, not its discoverer: the British Museum bought it in 1855 from Sir Henry Rawlinson, who had bought it from Taylor's widow. He ran no excavation",
+      objectDate: "691 BC (Taylor and Jerusalem prisms); 689 BC (Chicago Prism)",
+      objectDateCertainty: "firm",
+      currentLocation: "British Museum, London (BM 91032); ISAC, University of Chicago (A2793); Israel Museum, Jerusalem (IMJ 71.72.249)",
+      unprovenanced: true,
+    },
+    citations: [
+      {
+        tier: "institution",
+        label: "ISAC, University of Chicago: 100 Highlights of the Collection — the Sennacherib Prism (A2793)",
+        url: "https://isac-idb-static.uchicago.edu/multimedia/326167/MISC_100museumhighlights.pdf",
+        credit: "Institute for the Study of Ancient Cultures, University of Chicago",
+        detail: "The museum's own label: \"Baked clay\", \"Neo-Assyrian period, reign of Sennacherib, ca. 689 bc\", \"Purchased in Baghdad, 1919\", object number A2793",
+        supports: "That the Chicago Prism was purchased rather than excavated, its date and its accession number",
+      },
+      {
+        tier: "scholarly",
+        label: "\"Who Owns the Octagonal Prism of Sennacherib, BM 103000? A Dealer's Dispute\"",
+        url: "https://www.cambridge.org/core/journals/iraq/article/making-of-a-collection/3EC89827B527628B62F1DC2808B8BEF5",
+        credit: "Reem Ait Said-Ghanem, in Iraq 85 (2023), British Institute for the Study of Iraq / Cambridge University Press",
+        detail: "On the Sennacherib prisms and the market they came through. States that in 1855 the Taylor Prism (BM 91032) \"was purchased by the British Museum from Sir Henry Rawlinson\", who \"had himself bought it from Mrs Taylor, the widow of Colonel R. Taylor\" — correcting the common claim that the Museum bought it from the widow directly",
+        supports: "The acquisition chain in section one, and that Taylor acquired rather than excavated the prism",
+      },
+      {
+        tier: "primary",
+        label: "Daniel David Luckenbill, The Annals of Sennacherib (Oriental Institute Publications 2, 1924)",
+        url: "https://isac.uchicago.edu/sites/default/files/uploads/shared/docs/oip2.pdf",
+        credit: "University of Chicago Oriental Institute",
+        detail: "The standard edition and translation, freely downloadable; dates the Taylor Prism to the limmu of Bel-emuranni (691 BC) and the Oriental Institute Prism to the limmu of Gahilu (689 BC)",
+        supports: "The text of the third campaign, and the dates of the two prisms",
+      },
+      {
+        tier: "reference",
+        label: "Bible Odyssey (SBL): Babylonian Accounts of the Invasion of Judah",
+        url: "https://www.bibleodyssey.org/articles/babylonian-accounts-of-the-invasion-of-judah/",
+        credit: "Society of Biblical Literature",
+      },
+    ],
   },
   {
     id: "black-obelisk",
     name: "Black Obelisk",
     alternateNames: ["Black Obelisk of Shalmaneser III", "Black Obelisk of Shalmaneser"],
-    category: "concept",
+    category: "discovery",
     role: "Assyrian Tribute Monument, c. 825 BC",
     summary:
       "A two-metre limestone pillar from Nimrud carrying five bands of carved tribute scenes — one of which is captioned with the name of an Israelite king, and is the only image we have of one.",
@@ -1612,7 +1868,7 @@ export const topics: Topic[] = [
       {
         heading: "Layard's Obelisk",
         paragraphs: [
-          "Austen Henry Layard found the obelisk in 1846 at Nimrud, the Assyrian city the Bible calls Calah, during the excavations that first brought Assyria back into European view. It is a slim four-sided pillar of black limestone with a stepped top, carved on all four faces with five registers of relief, each register running round the monument as a single scene of foreigners bringing tribute to Shalmaneser III. A cuneiform caption above each register says who is paying. It is in the British Museum.",
+          "Austen Henry Layard's excavators uncovered the obelisk in 1846 at Nimrud, the Assyrian city the Bible calls Calah, during the digs that first brought Assyria back into European view. By Layard's own account he had just left the mound when a corner of dark stone appeared and the superintendent of the digging party ordered the spot opened up — so the moment of discovery, strictly, belongs to his workmen rather than to him. It is a slim four-sided pillar of black limestone, just under two metres tall and 45 centimetres to a face, with a stepped top, carved on all four faces with five registers of relief, each register running round the monument as a single scene of foreigners bringing tribute to Shalmaneser III. A cuneiform caption above each register says who is paying. It reached the British Museum in October 1848 and is there still.",
           "The second register from the top shows a man prostrate on the ground before the Assyrian king, with a line of bearers behind him carrying metal vessels and bars. The caption reads: \"Tribute of Jehu, son of Omri: I received from him silver, gold, a golden bowl, a golden vase with pointed bottom, golden tumblers, golden buckets, tin, a staff for a king, and wooden puruhtu.\"",
         ],
       },
@@ -1641,6 +1897,52 @@ export const topics: Topic[] = [
       { label: "Wikipedia: Black Obelisk of Shalmaneser III", url: "https://en.wikipedia.org/wiki/Black_Obelisk_of_Shalmaneser_III" },
       { label: "Bible Odyssey (SBL): Kingdom of Israel", url: "https://www.bibleodyssey.org/articles/kingdom-of-israel/" },
     ],
+    discovery: {
+      objectType: "Four-sided black limestone obelisk with a stepped top, just under 2 m tall and 45 cm to a face, carved with five registers of tribute reliefs",
+      findSite: "The centre of the citadel mound at Nimrud (ancient Kalhu), northern Iraq",
+      foundYear: "1846",
+      foundBy: "Austen Henry Layard's excavators. Layard had left the mound when the stone was struck; the superintendent of the digging party ordered it uncovered",
+      objectDate: "Erected 825 BC",
+      objectDateCertainty: "firm",
+      currentLocation: "British Museum, London (BM 118885), where it arrived in October 1848",
+    },
+    citations: [
+      {
+        tier: "institution",
+        label: "Nimrud: Materialities of Assyrian Knowledge Production — the Black Obelisk",
+        url: "https://oracc.museum.upenn.edu/nimrud/livesofobjects/blackobelisk/index.html",
+        credit: "The Nimrud Project (University College London), published on Oracc",
+        detail: "\"a monument (or stela) carved from black limestone, which stands just under two metres high. It has four sides, each 45 cm wide\"; erected 825 BC; arrived at the British Museum in October 1848 as ME 118885",
+        supports: "The material, dimensions, erection date, museum number and arrival date",
+      },
+      {
+        tier: "institution",
+        label: "The Nimrud Project: the discovery of the Black Obelisk",
+        url: "https://oracc.museum.upenn.edu/nimrud/livesofobjects/blackobelisk/obeliskdiscovery/index.html",
+        credit: "The Nimrud Project (University College London), published on Oracc",
+        detail: "Quotes Layard's own account: he \"had scarcely left the mound, when a corner of black marble was uncovered\", noticed by \"the superintendent of the party digging\"",
+        supports: "That the find belongs to Layard's workmen, and that Layard's own word for the stone was marble",
+      },
+      {
+        tier: "primary",
+        label: "Austen Henry Layard, Nineveh and Its Remains (1849)",
+        url: "https://archive.org/details/ninevehanditsre05layagoog",
+        credit: "Austen Henry Layard",
+        detail: "The excavator's own published account of the Nimrud digs, including the discovery of the obelisk. Public domain, full text at the Internet Archive",
+        supports: "Layard's first-hand account of how the obelisk came to light",
+      },
+      {
+        tier: "reference",
+        label: "Bible Odyssey (SBL): Kingdom of Israel",
+        url: "https://www.bibleodyssey.org/articles/kingdom-of-israel/",
+        credit: "Society of Biblical Literature",
+      },
+      {
+        tier: "encyclopedic",
+        label: "Wikipedia: Black Obelisk of Shalmaneser III",
+        url: "https://en.wikipedia.org/wiki/Black_Obelisk_of_Shalmaneser_III",
+      },
+    ],
   },
   {
     id: "siloam-inscription",
@@ -1648,7 +1950,7 @@ export const topics: Topic[] = [
     // NOT registered: "Siloam" alone — the Pool of Siloam POI already owns that name, and every
     // alias here is longer, so the specific inscription still wins where it is named in full.
     alternateNames: ["Siloam Tunnel Inscription", "Shiloah Inscription"],
-    category: "concept",
+    category: "discovery",
     role: "Paleo-Hebrew Engineering Inscription, c. 700 BC",
     summary:
       "Six lines carved into the wall of Hezekiah's Tunnel under Jerusalem, describing the moment two teams of quarrymen digging from opposite ends heard each other's voices through the rock.",
@@ -1656,7 +1958,8 @@ export const topics: Topic[] = [
       {
         heading: "Found by a Boy in the Water",
         paragraphs: [
-          "Hezekiah's Tunnel runs about 533 metres under the City of David, cut through solid limestone to carry water from the Gihon Spring, outside the wall, to the Pool of Siloam inside it. People have waded it for centuries. In 1880 a boy named Jacob Eliyahu, exploring the tunnel, noticed cut letters on the wall a few metres from the Siloam end, below the waterline. They turned out to be six lines of paleo-Hebrew — the older script Israel used before the exile — in a smoothed panel prepared for the purpose.",
+          "Hezekiah's Tunnel runs about 533 metres under the City of David, cut through solid limestone to carry water from the Gihon Spring, outside the wall, to the Pool of Siloam inside it. People have waded it for centuries. In 1880 a schoolboy exploring the tunnel with a friend slipped in the water a few metres from the Siloam end and, getting up, noticed cut letters on the wall below the waterline. They turned out to be six lines of paleo-Hebrew — the older script Israel used before the exile — in a smoothed panel prepared for the purpose.",
+          "Credit for the find is worth handling carefully, because the version usually printed is tidier than the record. The boy told his teacher, the architect and surveyor Conrad Schick, who went back with him, documented the inscription properly, and published it — and it was Schick who became known as its discoverer while the boy stayed anonymous. The name now attached to the boy, Jacob Eliyahu, comes from a claim made years afterwards by Bertha Spafford Vester of the American Colony, who said the finder was her adopted brother. That is the basis for the name, and it is a later recollection rather than a contemporary record.",
           "The text is not a royal proclamation. It is the workmen's account of their own job: while three cubits still remained to be cut through, each man's voice could be heard calling to his fellow through the rock; on the day of the breakthrough the quarrymen struck each toward the other, pick against pick; and the water flowed from the spring to the pool, twelve hundred cubits, with a hundred cubits of rock above the workers' heads. It is one of the longest monumental Hebrew inscriptions known, and among the most human.",
         ],
       },
@@ -1671,7 +1974,7 @@ export const topics: Topic[] = [
         heading: "The Dating Challenge, and How It Was Settled",
         paragraphs: [
           "In 1996 John Rogerson and Philip Davies argued that the letter forms fit the Hasmonean period, some five centuries later than Hezekiah, and that the tunnel had been misdated. Almost every specialist in Hebrew epigraphy rejected the proposal — the script is a good fit for the late eighth century and a poor one for the second — but it was a serious challenge that had to be answered on more than authority. It was: in 2003 a team led by Amos Frumkin radiocarbon-dated organic material in the tunnel's original plaster and uranium-thorium-dated stalactites formed in it, and both methods placed the cutting around 700 BC. The traditional dating is now unusually well anchored for an ancient inscription.",
-          "The stone did not fare so well. In 1890 someone cut it out of the tunnel wall to sell it, breaking it in the process; the Ottoman authorities confiscated the pieces, and the inscription has been in the Istanbul Archaeology Museums ever since. Israel has repeatedly asked for its return. What visitors see in the tunnel today is the empty scar where it was.",
+          "The stone did not fare so well. About ten years after it was found, an antiquities dealer cut it out of the tunnel wall to sell it, breaking it into several pieces in the process; the Ottoman authorities tracked him down, confiscated the fragments, and sent them to Istanbul, where the inscription has been ever since. Israel has repeatedly asked for its return. What visitors see in the tunnel today is the empty scar where it was.",
         ],
       },
     ],
@@ -1686,6 +1989,49 @@ export const topics: Topic[] = [
       { label: "Wikipedia: Siloam inscription", url: "https://en.wikipedia.org/wiki/Siloam_inscription" },
       { label: "Bible Odyssey (SBL): Jerusalem", url: "https://www.bibleodyssey.org/articles/jerusalem/" },
     ],
+    discovery: {
+      objectType: "Six lines of paleo-Hebrew cut into a smoothed limestone panel in the tunnel wall",
+      findSite: "Hezekiah's Tunnel, City of David, Jerusalem — about six metres from the Pool of Siloam end",
+      findSiteId: "city-of-david",
+      findSiteKind: "poi",
+      foundYear: "1880",
+      foundBy: "A schoolboy, whose teacher Conrad Schick documented and published the find and was long credited with it. The boy is identified as Jacob Eliyahu on the later testimony of Bertha Spafford Vester, not on a contemporary record",
+      objectDate: "c. 700 BC",
+      objectDateCertainty: "firm",
+      currentLocation: "Istanbul Archaeological Museums",
+    },
+    citations: [
+      {
+        tier: "institution",
+        label: "City of David: The Siloam Inscription",
+        url: "https://cityofdavid.org.il/en/the-siloam-inscription-eng/",
+        credit: "Ir David Foundation, which operates the City of David archaeological site",
+        detail: "Gives the 1880 discovery by a schoolboy, Schick's role and fame, Bertha Spafford Vester's later identification of the boy, and the removal and transfer to Istanbul",
+        supports: "The find story, the contested credit and the inscription's present home",
+      },
+      {
+        tier: "scholarly",
+        label: "Amos Frumkin, Aryeh Shimron and Jeff Rosenbaum, \"Radiometric dating of the Siloam Tunnel, Jerusalem\"",
+        url: "https://doi.org/10.1038/nature01875",
+        credit: "Amos Frumkin, Aryeh Shimron and Jeff Rosenbaum",
+        detail: "Nature 425:6954 (2003), 169-171 — radiocarbon on plaster organics and uranium-thorium on speleothems, both giving an Iron Age II date",
+        supports: "That the tunnel dates to around 700 BC, against the proposed Hasmonean date",
+        paywalled: true,
+      },
+      {
+        tier: "scholarly",
+        label: "J. W. Rogerson and P. R. Davies, \"Was the Siloam Tunnel Built by Hezekiah?\"",
+        credit: "J. W. Rogerson and P. R. Davies",
+        detail: "The Biblical Archaeologist 59:3 (1996) — the Hasmonean redating this section describes and answers. A rejoinder by Ronald S. Hendel followed in the same journal, 59:4",
+        supports: "The dating challenge named in section three, cited to the scholarship that actually made it",
+        paywalled: true,
+      },
+      {
+        tier: "encyclopedic",
+        label: "Wikipedia: Siloam inscription",
+        url: "https://en.wikipedia.org/wiki/Siloam_inscription",
+      },
+    ],
   },
   {
     id: "dead-sea-scrolls",
@@ -1694,7 +2040,7 @@ export const topics: Topic[] = [
     // though "Isaiah" is a person entry — the two-word alias is longer, and NAME_ENTRIES is sorted
     // longest-first, so a bare "Isaiah" still resolves to the prophet.
     alternateNames: ["Qumran Scrolls", "Great Isaiah Scroll", "Isaiah Scroll"],
-    category: "concept",
+    category: "manuscript",
     role: "Jewish Manuscripts from the Judean Desert, c. 250 BC - AD 70",
     summary:
       "Roughly a thousand manuscripts recovered from eleven caves near the Dead Sea between 1947 and 1956, including copies of almost every Old Testament book a thousand years older than anything previously known.",
@@ -1733,6 +2079,61 @@ export const topics: Topic[] = [
       { label: "The Israel Museum: The Shrine of the Book", url: "https://www.imj.org.il/en/wings/shrine-book/dead-sea-scrolls" },
       { label: "The Leon Levy Dead Sea Scrolls Digital Library", url: "https://www.deadseascrolls.org.il/" },
     ],
+    manuscript: {
+      manuscriptType: "Leather and papyrus scrolls, a handful nearly complete and the rest in tens of thousands of fragments",
+      language: "Hebrew, Aramaic and Greek",
+      contents:
+        "The remains of roughly 900 to 1,000 manuscripts. About a quarter are copies of books of the Hebrew Bible, with every book except Esther represented; the rest are other Jewish writings of the period. The best preserved is the Great Isaiah Scroll, 54 columns carrying all 66 chapters of Isaiah — the only biblical scroll from the caves that is almost complete",
+      origin: "Copied in Judea; some scrolls were probably brought to the caves from elsewhere",
+      findSite: "Eleven caves in the cliffs near Qumran, above the north-west shore of the Dead Sea",
+      foundYear: "1947-1956",
+      foundBy:
+        "Bedouin shepherds of the Ta'amireh tribe found the first cave in 1947; the other ten caves were emptied over the next nine years by Bedouin and archaeologists alike. The name usually given for the first finder is traditional and is not documented by either holding institution",
+      dateAssigned: "c. 250 BC - AD 68",
+      dateCertainty: "traditional",
+      currentLocation:
+        "The Shrine of the Book at the Israel Museum, Jerusalem, and the Israel Antiquities Authority; some material is held outside Israel",
+      facsimileUrl: "https://www.deadseascrolls.org.il/",
+    },
+    citations: [
+      {
+        tier: "institution",
+        label: "Israel Antiquities Authority, Leon Levy Digital Library: Discovery and Publication",
+        url: "https://www.deadseascrolls.org.il/learn-about-the-scrolls/discovery-and-publication",
+        credit: "Israel Antiquities Authority",
+        detail: "Gives the 1947 find by a Bedouin shepherd, ten further caves over the following nine years, and the remains of over 900 manuscripts",
+        supports: "The discovery years, the number of caves and the size of the corpus",
+      },
+      {
+        tier: "institution",
+        label: "Israel Museum, The Digital Dead Sea Scrolls: The Great Isaiah Scroll",
+        url: "http://dss.collections.imj.org.il/isaiah",
+        credit: "The Israel Museum, Jerusalem — Shrine of the Book",
+        detail: "The museum's own object label: Qumran Cave 1, 1st century BCE, parchment, H 22-25 cm, L 734 cm, accession HU 95.57/27. Note that this site is served over http only",
+        supports: "The Great Isaiah Scroll's dimensions, findspot, date and accession number",
+      },
+      {
+        tier: "scholarly",
+        label: "Discoveries in the Judaean Desert, 40 volumes",
+        credit: "Oxford: Clarendon Press, 1955-2009",
+        detail: "The official edition of the scrolls, volume by volume - the publication record behind every claim made about their contents. Print only",
+        supports: "The contents of the corpus, including the two editions of Jeremiah discussed in section three",
+      },
+      {
+        tier: "reference",
+        label: "Text & Canon Institute: How Much Can the Most Famous Dead Sea Scroll Prove?",
+        url: "https://textandcanon.org/how-much-can-the-most-famous-dead-sea-scroll-prove/",
+        credit: "Text & Canon Institute, Phoenix Seminary",
+        supports: "The count of differences between the Great Isaiah Scroll and the Masoretic text in section three",
+      },
+      {
+        tier: "reference",
+        label: "Text & Canon Institute: Appreciating the Diverse Evidence from the Dead Sea Scrolls",
+        url: "https://textandcanon.org/appreciating-the-diverse-evidence-from-the-dead-sea-scrolls/",
+        credit: "Text & Canon Institute, Phoenix Seminary",
+        supports: "That some biblical books circulated at Qumran in more than one edition",
+      },
+    ],
   },
   {
     id: "rylands-papyrus-p52",
@@ -1749,7 +2150,7 @@ export const topics: Topic[] = [
       "Rylands Fragment",
       "P52",
     ],
-    category: "concept",
+    category: "manuscript",
     role: "Second-Century Greek Fragment of John's Gospel",
     summary:
       "A scrap of papyrus the size of a credit card, carrying a few lines of John 18 on both sides — for ninety years the earliest identified piece of any New Testament book.",
@@ -1757,7 +2158,7 @@ export const topics: Topic[] = [
       {
         heading: "A Scrap in a Drawer",
         paragraphs: [
-          "In 1920 Bernard Grenfell bought a batch of papyri in Egypt for the John Rylands Library in Manchester. They sat unsorted for over a decade. In 1934 a young scholar named Colin H. Roberts, working through the batch, recognised Greek text on a fragment about nine centimetres by six: on one side parts of John 18:31-33, Pilate's exchange with the Jewish leaders and his question \"Are you the King of the Jews?\"; on the other, parts of John 18:37-38, ending near \"What is truth?\"",
+          "On the standard account, Bernard Grenfell bought a batch of papyri in Egypt for the John Rylands Library in Manchester in 1920, and they sat unsorted for over a decade until Colin H. Roberts, working through them, recognised Greek text on a fragment 8.9 centimetres by 6.0. Roberts published it in 1935. The library's own catalogue record is more cautious than the retellings and credits only \"the first editor,\" without naming him or dating the purchase — a small reminder that even a famous find's backstory can be thinner than it sounds. What is on the fragment is not in doubt: on one side parts of John 18:31-33, Pilate's exchange with the Jewish leaders and his question \"Are you the King of the Jews?\"; on the other, parts of John 18:37-38, ending near \"What is truth?\"",
           "That it is written on both sides matters as much as what it says. A scroll is written on one side; a codex — a book with leaves — is written on both. So this fragment is a leaf from a bound book, in provincial Egypt, of a Gospel. Christians adopted the codex for their scriptures far earlier and far more completely than the surrounding literary culture did, and P52 is one of the pieces of evidence for how early that habit began.",
         ],
       },
@@ -1765,7 +2166,7 @@ export const topics: Topic[] = [
         heading: "The Date, and the Argument About It",
         paragraphs: [
           "Roberts dated the hand to the first half of the second century, around AD 125, comparing the letter forms to dated documentary papyri. That figure has been repeated in study Bibles and apologetics ever since, usually with the conclusion that John's Gospel must have been written and circulating well before AD 100 — which was a genuinely useful point when the fashionable scholarly dating put John in the mid-second century.",
-          "Since then the confidence has been trimmed, and by textual scholars rather than by sceptics of Christianity. In 2005 Brent Nongbri argued in detail that palaeography — dating a manuscript by the shape of its handwriting — simply cannot narrow an undated literary hand to a twenty-five-year window, and that the comparanda Roberts used are consistent with a range running from the early second century into the early third. Most specialists now cite P52 with a wider bracket than \"AD 125,\" and some are more cautious still. It remains among the earliest identified New Testament fragments; it is no longer safe to treat it as a precisely dated one.",
+          "Since then the confidence has been trimmed, and by textual scholars rather than by sceptics of Christianity. In 2005 Brent Nongbri argued in detail that palaeography — dating a manuscript by the shape of its handwriting — simply cannot narrow an undated literary hand to a twenty-five-year window, and that the comparanda Roberts used are consistent with a range running from the early second century into the early third. The John Rylands Library's own record now says the first editor's date was 100-150 CE and that \"recent research points to a date nearer to 200 CE.\" It remains among the earliest identified New Testament fragments; it is no longer safe to treat it as a precisely dated one, and the holding library has stopped doing so.",
         ],
       },
       {
@@ -1786,12 +2187,60 @@ export const topics: Topic[] = [
       { label: "The John Rylands Research Institute and Library, Manchester", url: "https://www.library.manchester.ac.uk/rylands/" },
       { label: "Wikipedia: Rylands Library Papyrus P52", url: "https://en.wikipedia.org/wiki/Rylands_Library_Papyrus_P52" },
     ],
+    manuscript: {
+      siglum: "P52 (P.Ryl. III 457)",
+      manuscriptType: "Papyrus codex leaf, 8.9 x 6.0 cm, written on both sides",
+      language: "Koine Greek",
+      contents:
+        "Parts of John 18:31-33 on one side and John 18:37-38 on the other — a few dozen legible letters in all, from a page that would have held about eighteen lines",
+      origin: "Unknown; Egypt on general grounds, but the library's record names no place of production",
+      findSite: "Not recorded. The fragment came to Manchester in a purchased batch of papyri, not from an excavation",
+      foundYear: "Acquired in Egypt about 1920 and identified in the library's holdings in the 1930s, on the standard account; the library's own record dates neither",
+      foundBy: "Recognised by Colin H. Roberts, who published it in 1935. The library's catalogue credits only \"the first editor\"",
+      dateAssigned: "Conventionally c. AD 125, from the first editor's range of AD 100-150. Manchester's own record now says recent research points to a date nearer AD 200",
+      dateCertainty: "disputed",
+      currentLocation: "The John Rylands Library, University of Manchester",
+      shelfmark: "Greek P 457",
+      facsimileUrl: "https://www.digitalcollections.manchester.ac.uk/view/MS-GREEK-P-00457/1",
+    },
+    citations: [
+      {
+        tier: "institution",
+        label: "The University of Manchester Library: Papyri, Greek P 457",
+        url: "https://www.digitalcollections.manchester.ac.uk/view/MS-GREEK-P-00457/1",
+        credit: "The John Rylands Library, University of Manchester",
+        detail:
+          "The holding library's own record and images: \"John, Chapter 18, verses 31-33 (recto) and 37-38 (verso)\", \"only measures 8.9 x 6.0 cm\", \"would have been part of a codex\", and \"Recent research points to a date nearer to 200 CE\"",
+        supports: "The contents, dimensions, codex format, shelfmark and the library's current dating",
+      },
+      {
+        tier: "scholarly",
+        label: "Brent Nongbri, \"The Use and Abuse of P52: Papyrological Pitfalls in the Dating of the Fourth Gospel\"",
+        url: "https://www.cambridge.org/core/journals/harvard-theological-review/article/abs/use-and-abuse-of-p52-papyrological-pitfalls-in-the-dating-of-the-fourth-gospel/676A4EA909EB03046F89DB8CE1F050BE",
+        credit: "Brent Nongbri",
+        detail: "Harvard Theological Review 98:1 (2005), 23-48; DOI 10.1017/S0017816005000842",
+        supports: "The argument in section two that palaeography cannot narrow this hand to a twenty-five-year window",
+        paywalled: true,
+      },
+      {
+        tier: "reference",
+        label: "Text & Canon Institute: Dating Ancient Greek Manuscripts with the Help of Modern Software",
+        url: "https://textandcanon.org/dating-ancient-greek-manuscripts-with-the-help-of-modern-software/",
+        credit: "Text & Canon Institute, Phoenix Seminary",
+        supports: "How manuscripts of this kind are dated, and how uncertain the method is",
+      },
+      {
+        tier: "encyclopedic",
+        label: "Wikipedia: Rylands Library Papyrus P52",
+        url: "https://en.wikipedia.org/wiki/Rylands_Library_Papyrus_P52",
+      },
+    ],
   },
   {
     id: "chester-beatty-papyri",
     name: "Chester Beatty Papyri",
     alternateNames: ["Chester Beatty Biblical Papyri"],
-    category: "concept",
+    category: "manuscript",
     role: "Third-Century Greek Biblical Codices",
     summary:
       "Eleven papyrus codices bought on the Egyptian antiquities market in the 1930s, which pushed the surviving manuscript evidence for the New Testament back by well over a century in a single stroke.",
@@ -1799,8 +2248,8 @@ export const topics: Topic[] = [
       {
         heading: "A Mining Magnate's Purchase",
         paragraphs: [
-          "Alfred Chester Beatty was an American-born mining engineer who made a fortune in copper and spent a great deal of it collecting manuscripts. In the early 1930s he acquired, through Cairo dealers, the remains of eleven papyrus codices containing Greek biblical texts. Their exact provenance was never established — they were purchased, not excavated, which is a real limitation on what can be said about where and how they were used. Most are in the Chester Beatty Library in Dublin; some leaves from the same codices ended up at the University of Michigan and elsewhere.",
-          "Three matter most for the New Testament. P45 contains portions of all four Gospels and Acts. P46 contains most of Paul's letters and is usually dated around AD 200. P47 contains part of Revelation. Others in the group preserve Old Testament books in Greek, including Genesis, Numbers, Deuteronomy, Isaiah, Jeremiah, Ezekiel, Daniel, and Esther.",
+          "Alfred Chester Beatty was an American-born mining engineer who made a fortune in copper and spent a great deal of it collecting manuscripts. In the early 1930s, with further leaves following in the middle of the decade, he acquired the remains of eleven papyrus codices containing Greek biblical texts. The library's own records say only that he acquired them; the widely repeated account that they came through Cairo dealers is secondary. What is not in dispute is that no excavation produced them and their scribes and place of production are recorded as unknown, which is a real limitation on what can be said about where and how they were used. Most are in the Chester Beatty in Dublin; some leaves from the same codices ended up at the University of Michigan.",
+          "Three matter most for the New Testament, and the honest way to describe them is by what survives rather than by what they once were. P45 held all four Gospels and Acts, and 30 of its original 112 leaves survive — the earliest undeniable four-gospel codex. P46 is the oldest substantially complete copy of Paul's letters: 86 of its original 112 folios survive, 56 in Dublin and 30 at Michigan. P47 preserves a continuous run of Revelation 9:10 to 17:2, and is the earliest substantial papyrus of that book. All three are dated to the third century AD. Others in the group preserve Old Testament books in Greek, including Genesis, Numbers, Deuteronomy, Isaiah, Jeremiah, Ezekiel, Daniel, and Esther.",
         ],
       },
       {
@@ -1829,12 +2278,55 @@ export const topics: Topic[] = [
       { label: "The Chester Beatty, Dublin", url: "https://chesterbeatty.ie/" },
       { label: "Wikipedia: Chester Beatty Papyri", url: "https://en.wikipedia.org/wiki/Chester_Beatty_Papyri" },
     ],
+    manuscript: {
+      siglum: "P45, P46, P47 (Chester Beatty Biblical Papyri I, II and III)",
+      manuscriptType: "Papyrus codices, written in an uncial hand",
+      language: "Koine Greek",
+      contents:
+        "Eleven codices in all. P45: the four Gospels and Acts, of which 30 of the original 112 leaves survive. P46: the Pauline letters, of which 86 of the original 112 folios survive — 56 in Dublin and 30 at the University of Michigan; the surviving leaves do not include 1-2 Timothy or Titus. P47: a continuous run of Revelation 9:10-17:2. The rest preserve Old Testament books in Greek",
+      origin: "Unknown — the Chester Beatty records the scribe and place of production as unknown; the codices are generally taken to be Egyptian",
+      findSite: "Not excavated. No findspot is recorded",
+      foundYear: "Acquired in the early 1930s, with further leaves of P46 in the mid-1930s",
+      foundBy: "Alfred Chester Beatty, by purchase. No finder or excavator is on record",
+      dateAssigned: "Third century AD",
+      dateCertainty: "traditional",
+      currentLocation: "The Chester Beatty, Dublin (CBL BP I, II and III), with 30 leaves of P46 at the University of Michigan",
+    },
+    citations: [
+      {
+        tier: "institution",
+        label: "The Chester Beatty, Dublin: catalogue records for BP I, BP II and BP III",
+        url: "https://chesterbeatty.ie/",
+        credit: "The Chester Beatty, Dublin",
+        detail: "The library's own catalogue descriptions give the third-century date, the surviving leaf counts (30 of 112 for P45; 86 of 112 for P46, split 56 Dublin / 30 Michigan), the extent of P47 as Revelation 9:10-17:2, and scribe and production place as \"Unknown\". Its online viewer was returning errors when this article was checked",
+        supports: "The contents, the honest surviving extents, the date and the split with Michigan",
+      },
+      {
+        tier: "scholarly",
+        label: "Frederic G. Kenyon, The Chester Beatty Biblical Papyri: Descriptions and Texts",
+        credit: "Frederic G. Kenyon",
+        detail: "London: Emery Walker, 1933-1941 — the first edition of the whole group, in eight fascicles. Print only",
+        supports: "The identification and first publication of the codices",
+      },
+      {
+        tier: "reference",
+        label: "Text & Canon Institute: Lessons from the \"First-Century Mark\" Saga",
+        url: "https://textandcanon.org/lessons-from-the-first-century-mark-saga/",
+        credit: "Text & Canon Institute, Phoenix Seminary",
+        supports: "Why the dating of early papyri needs to be stated carefully",
+      },
+      {
+        tier: "encyclopedic",
+        label: "Wikipedia: Chester Beatty Papyri",
+        url: "https://en.wikipedia.org/wiki/Chester_Beatty_Papyri",
+      },
+    ],
   },
   {
     id: "codex-sinaiticus",
     name: "Codex Sinaiticus",
     alternateNames: ["Sinaiticus"],
-    category: "concept",
+    category: "manuscript",
     role: "Fourth-Century Greek Bible",
     summary:
       "A parchment Bible written around the middle of the AD 300s at St Catherine's Monastery on Mount Sinai, containing the oldest surviving complete copy of the New Testament — and now divided between four institutions in four countries.",
@@ -1842,8 +2334,8 @@ export const topics: Topic[] = [
       {
         heading: "Tischendorf at Sinai",
         paragraphs: [
-          "Constantin von Tischendorf, a German scholar hunting for early biblical manuscripts, visited St Catherine's Monastery at the foot of Mount Sinai in 1844 and left with forty-three leaves of a very old Greek Bible, which he deposited at Leipzig. He returned in 1853 and found nothing more. On a third visit in 1859, backed by the Russian tsar, he was shown the bulk of the manuscript, and it travelled to St Petersburg. In 1933 the Soviet government sold the Russian portion to the British Museum for £100,000, raised partly by public subscription; it is now in the British Library.",
-          "The codex is written on fine parchment in four narrow columns to the page, in a formal script, by three or four scribes, with corrections added by later hands over centuries. It originally ran to something like 730 leaves. What survives is split: the largest part in London, the 1844 leaves in Leipzig, a portion in the National Library of Russia, and further leaves and fragments found at the monastery itself in 1975. All four holdings have been photographed and reunited digitally, so the whole book can now be read online in one place for the first time since the nineteenth century.",
+          "Constantin von Tischendorf, a German scholar hunting for early biblical manuscripts, visited St Catherine's Monastery at the foot of Mount Sinai in 1844 and left with forty-three leaves of a very old Greek Bible, which he deposited at Leipzig. He returned in 1853 and found nothing more. On a third visit in 1859, backed by the Russian tsar, he was shown the bulk of the manuscript, and it travelled to St Petersburg. In December 1933 the Soviet government sold the Russian portion to the British Museum, the purchase completed in 1934 with help from the British government and a national subscription; it is now in the British Library. The price is usually given as £100,000, a figure that comes from press reports of the sale rather than from either institution's own account of it.",
+          "The codex is written on fine parchment in a formal script by three or four scribes, with corrections added by later hands over centuries, and it is famous for its four narrow columns to the page — though not uniformly so: the poetic books from Psalms to Job are laid out in two wider columns instead. It originally ran to something like 730 leaves. What survives is split four ways: 347 leaves in London as British Library Add MS 43725, the 1844 leaves at Leipzig University Library as MS gr. 1, four separate shelfmarks in the National Library of Russia, and further leaves and fragments found at the monastery itself in 1975 — the British Library and the Codex Sinaiticus project give slightly different counts for that last group. All four holdings have been photographed and reunited digitally, so the whole book can now be read online in one place for the first time since the nineteenth century.",
         ],
       },
       {
@@ -1872,6 +2364,61 @@ export const topics: Topic[] = [
       { label: "Bible Odyssey (SBL): What Is the Oldest Bible?", url: "https://www.bibleodyssey.org/articles/what-is-the-oldest-bible/" },
       { label: "Wikipedia: Codex Sinaiticus", url: "https://en.wikipedia.org/wiki/Codex_Sinaiticus" },
     ],
+    manuscript: {
+      siglum: "Codex Sinaiticus (Gregory-Aland 01; von Soden δ 2)",
+      manuscriptType: "Parchment uncial codex, 380 x 345 mm, in four columns to the page except Psalms-Job, which are in two",
+      language: "Koine Greek",
+      contents:
+        "Around half of the Greek Old Testament and Apocrypha, heavily incomplete, and the complete New Testament — the earliest complete Greek New Testament there is. After Revelation it continues with the Epistle of Barnabas and part of the Shepherd of Hermas (1:1-27:6, 28:5-30:3). Mark 16:9-20 and John 7:53-8:11 are absent",
+      origin: "Eastern Mediterranean, possibly Palestine. The often-repeated attribution to Caesarea is not what the British Library's record says",
+      findSite: "St Catherine's Monastery, Mount Sinai, Egypt",
+      foundYear: "1844 and 1859, with further leaves and fragments found at the monastery in 1975",
+      foundBy:
+        "Constantin von Tischendorf took leaves from the monastery on three visits, in 1844, 1853 and 1859. The monastery has maintained ever since that the manuscript was lent rather than given",
+      dateAssigned: "Second to third quarter of the fourth century AD",
+      dateCertainty: "traditional",
+      currentLocation:
+        "Divided between the British Library (347 leaves), Leipzig University Library (43 leaves), the National Library of Russia and St Catherine's Monastery",
+      shelfmark: "London, British Library, Add MS 43725; Leipzig, Universitätsbibliothek, MS gr. 1",
+      facsimileUrl: "https://www.codexsinaiticus.org/en/manuscript.aspx",
+    },
+    citations: [
+      {
+        tier: "institution",
+        label: "British Library Archives and Manuscripts Catalogue: Add MS 43725",
+        url: "https://searcharchives.bl.uk/catalog/032-002169711",
+        credit: "The British Library",
+        detail:
+          "Gives the shelfmark, 347 folios, 380 x 345 mm, \"written in 4 cols (50-54 mm), except Psalms-Job (2 cols, 115-120 mm)\", origin \"Eastern Mediterranean (Palestine?)\", the Leipzig and St Petersburg shelfmarks, and the December 1933 purchase from the Soviet government",
+        supports: "The shelfmarks, the column layout, the origin, the extent and the sale",
+      },
+      {
+        tier: "institution",
+        label: "The Codex Sinaiticus Project: read the manuscript online",
+        url: "https://www.codexsinaiticus.org/en/manuscript.aspx",
+        credit: "A joint project of the British Library, Leipzig University Library, the National Library of Russia and St Catherine's Monastery",
+        detail: "The full digital facsimile with transcription and translation, free to use, reuniting all four holdings",
+        supports: "That the reader can look at the manuscript itself, and the three Tischendorf visits of 1844, 1853 and 1859",
+      },
+      {
+        tier: "scholarly",
+        label: "H. J. M. Milne and T. C. Skeat, Scribes and Correctors of the Codex Sinaiticus",
+        credit: "H. J. M. Milne and T. C. Skeat, Department of Manuscripts, British Museum",
+        detail: "London: British Museum, 1938 - the standard study of the codex's scribes and correctors, and the source the British Library's own record cites for the manuscript's origin. Print only",
+        supports: "The number of scribes, the later correcting hands, and the \"Eastern Mediterranean (Palestine?)\" origin",
+      },
+      {
+        tier: "reference",
+        label: "Bible Odyssey (SBL): What Is the Oldest Bible?",
+        url: "https://www.bibleodyssey.org/articles/what-is-the-oldest-bible/",
+        credit: "Society of Biblical Literature",
+      },
+      {
+        tier: "encyclopedic",
+        label: "Wikipedia: Codex Sinaiticus",
+        url: "https://en.wikipedia.org/wiki/Codex_Sinaiticus",
+      },
+    ],
   },
   /* Batch two of the archaeological-finds cluster — see the rule and the reasoning in the comment
    * above the Pilate Stone. These are the texts rather than the monuments: the versions and codices
@@ -1883,7 +2430,7 @@ export const topics: Topic[] = [
     id: "septuagint",
     name: "Septuagint",
     alternateNames: ["LXX", "Greek Old Testament"],
-    category: "concept",
+    category: "manuscript",
     role: "The Greek Old Testament, Third Century BC Onward",
     summary:
       "The translation of the Hebrew scriptures into Greek, begun in Alexandria around 250 BC — the version most New Testament writers quote, and the reason Catholic and Protestant Bibles have different tables of contents.",
@@ -1921,12 +2468,60 @@ export const topics: Topic[] = [
       { label: "Text & Canon Institute: The Bible Jesus Read", url: "https://textandcanon.org/bible-jesus-read/" },
       { label: "Wikipedia: Septuagint", url: "https://en.wikipedia.org/wiki/Septuagint" },
     ],
+    manuscript: {
+      siglum: "LXX",
+      manuscriptType:
+        "A translation tradition rather than a single object. It survives in hundreds of manuscripts, from second-century BC papyrus scraps and Judean Desert fragments to the great fourth-century parchment codices",
+      language: "Koine Greek, translated from Hebrew and Aramaic",
+      contents:
+        "The Hebrew scriptures in Greek, translated over roughly two centuries by many hands of very different skill — some books rendered almost word for word, others, notably Job and Proverbs, freely paraphrased and considerably shorter. Greek manuscripts also carry books not in the Hebrew Bible: Tobit, Judith, Wisdom, Sirach, Baruch, 1 and 2 Maccabees, and additions to Esther and Daniel",
+      origin: "Alexandria for the Torah; the later books were translated elsewhere by different translators over the following two centuries",
+      findSite: "Not applicable. The Septuagint was never lost and never found — it was transmitted continuously, first by Greek-speaking Jews and then by the church",
+      foundYear: "Not applicable",
+      foundBy: "Not applicable",
+      dateAssigned: "The Torah c. 250 BC; the remaining books over the following two centuries",
+      dateCertainty: "traditional",
+      currentLocation:
+        "No single object. The fullest early witnesses are Codex Vaticanus in the Vatican Library and Codex Sinaiticus in the British Library",
+      facsimileUrl: "https://digi.vatlib.it/view/MSS_Vat.gr.1209",
+    },
+    citations: [
+      {
+        tier: "institution",
+        label: "Biblioteca Apostolica Vaticana, DigiVatLib: Codex Vaticanus (Vat.gr.1209)",
+        url: "https://digi.vatlib.it/view/MSS_Vat.gr.1209",
+        credit: "Biblioteca Apostolica Vaticana",
+        detail: "One of the two fullest early witnesses to the Greek Old Testament, free to page through in full",
+        supports: "That the Septuagint can be read in a fourth-century manuscript, not only in modern editions",
+      },
+      {
+        tier: "primary",
+        label: "The Letter of Aristeas, translated by H. St. J. Thackeray",
+        url: "https://archive.org/details/letterofaristeas00thac",
+        credit: "H. St. J. Thackeray",
+        detail: "The founding legend of the translation, in a public-domain English version at the Internet Archive",
+        supports: "The Aristeas story described in section one, so a reader can weigh it themselves",
+      },
+      {
+        tier: "reference",
+        label: "Bible Odyssey (SBL): What Is the Septuagint?",
+        url: "https://www.bibleodyssey.org/articles/what-is-the-septuagint/",
+        credit: "Society of Biblical Literature",
+      },
+      {
+        tier: "reference",
+        label: "Text & Canon Institute: The Bible Jesus Read",
+        url: "https://textandcanon.org/bible-jesus-read/",
+        credit: "Text & Canon Institute, Phoenix Seminary",
+        supports: "The New Testament's use of the Greek Old Testament",
+      },
+    ],
   },
   {
     id: "masoretic-text",
     name: "Masoretic Text",
     alternateNames: ["Aleppo Codex", "Leningrad Codex"],
-    category: "concept",
+    category: "manuscript",
     role: "The Standard Hebrew Bible, Fixed c. AD 600-1000",
     summary:
       "The Hebrew text produced by generations of Jewish scribes at Tiberias and in Babylonia, who added vowels, accents, and an elaborate apparatus of counting-notes to a consonantal text they had inherited — and which almost every modern Old Testament translates.",
@@ -1955,7 +2550,7 @@ export const topics: Topic[] = [
     ],
     verses: [
       { reference: "Deuteronomy 4:2", note: "\"You shall not add to the word... neither shall you take away from it\" — the conviction the masorah was built to serve" },
-      { reference: "Psalms 119:89", note: "\"Forever, LORD, your word is settled in heaven\"" },
+      { reference: "Psalms 119:89", note: "\"Your word is settled in heaven forever\"" },
       { reference: "Isaiah 40:8", note: "\"The word of our God stands forever\"" },
     ],
     sources: [
@@ -1963,12 +2558,66 @@ export const topics: Topic[] = [
       { label: "Bible Odyssey (SBL): The Samaritan Pentateuch", url: "https://www.bibleodyssey.org/articles/the-samaritan-pentateuch/" },
       { label: "Wikipedia: Masoretic Text", url: "https://en.wikipedia.org/wiki/Masoretic_Text" },
     ],
+    manuscript: {
+      manuscriptType:
+        "A textual tradition rather than a single object, carried by parchment codices — above all the Aleppo Codex and the Leningrad Codex",
+      language: "Hebrew, with Aramaic in parts of Daniel and Ezra",
+      contents:
+        "The Hebrew Bible, with the vowel points, cantillation accents and marginal masorah the Masoretes added to an inherited consonantal text. The Aleppo Codex is no longer complete — a large part of it, including almost all of the Torah, was lost in 1947 — so the Leningrad Codex is the oldest complete Masoretic Bible",
+      origin: "Tiberias, on the Sea of Galilee, and Babylonia; the Leningrad Codex itself was copied in Cairo",
+      findSite: "Not applicable. The Masoretic tradition was never lost and never found — it was copied continuously by Jewish scribes",
+      foundYear: "Not applicable",
+      foundBy: "Not applicable",
+      dateAssigned:
+        "The consonantal text is ancient; the vocalisation, accents and masorah were developed c. AD 600-1000. The Aleppo Codex was written c. AD 930 and the Leningrad Codex in AD 1008",
+      dateCertainty: "traditional",
+      currentLocation:
+        "The Aleppo Codex, incomplete, is in Jerusalem; the Leningrad Codex is in the National Library of Russia, St Petersburg",
+      shelfmark: "Leningrad Codex: National Library of Russia, Firkovich B 19 A",
+    },
+    citations: [
+      {
+        tier: "institution",
+        label: "National Library of Russia, St Petersburg: the Leningrad Codex, Firkovich B 19 A",
+        credit: "National Library of Russia",
+        detail: "The holding library for the oldest complete Masoretic Bible, and the manuscript behind Biblia Hebraica Stuttgartensia. No URL is given here because the library's own site was not reachable when this article was checked",
+        supports: "Where the Leningrad Codex is held, and under what shelfmark",
+      },
+      {
+        tier: "primary",
+        label: "The Unicode/XML Leningrad Codex",
+        url: "https://tanach.us/Tanach.xml",
+        credit: "The Westminster Leningrad Codex project",
+        detail: "A freely available transcription of the Leningrad Codex itself, pointing, accents and all",
+        supports: "That the base text behind modern Old Testament translations can be inspected directly",
+      },
+      {
+        tier: "scholarly",
+        label: "Emanuel Tov, Textual Criticism of the Hebrew Bible",
+        credit: "Emanuel Tov",
+        detail: "Minneapolis: Fortress Press, 4th edition 2022 — the standard handbook on the Masoretic tradition and its rivals. Print only",
+        supports: "The relationship between the Masoretic Text, the Septuagint's Hebrew source and the Samaritan Pentateuch in section three",
+      },
+      {
+        tier: "reference",
+        label: "Text & Canon Institute: articles on the Masoretic Text",
+        url: "https://textandcanon.org/tag/masoretic-text/",
+        credit: "Text & Canon Institute, Phoenix Seminary",
+      },
+      {
+        tier: "reference",
+        label: "Bible Odyssey (SBL): The Samaritan Pentateuch",
+        url: "https://www.bibleodyssey.org/articles/the-samaritan-pentateuch/",
+        credit: "Society of Biblical Literature",
+        supports: "The other Hebrew text forms that circulated alongside the proto-Masoretic one",
+      },
+    ],
   },
   {
     id: "codex-vaticanus",
     name: "Codex Vaticanus",
     alternateNames: ["Vaticanus"],
-    category: "concept",
+    category: "manuscript",
     role: "Fourth-Century Greek Bible in the Vatican Library",
     summary:
       "A mid-fourth-century Greek Bible that has been in the Vatican Library since at least its first catalogue in 1475 — with Codex Sinaiticus, one of the two most important manuscripts of the New Testament.",
@@ -1976,7 +2625,7 @@ export const topics: Topic[] = [
       {
         heading: "A Book with No Discovery Story",
         paragraphs: [
-          "Unlike Codex Sinaiticus, which has a nineteenth-century adventure attached to it, Vaticanus was never found. It appears in the Vatican Library's earliest surviving catalogue, drawn up in 1475, and nobody knows where it was before that. It is written on fine parchment in a small, plain, unadorned hand, three narrow columns to the page — an austere and very early layout. Scholars date it to the middle of the fourth century, making it a near-contemporary of Sinaiticus and possibly a little earlier.",
+          "Unlike Codex Sinaiticus, which has a nineteenth-century adventure attached to it, Vaticanus was never found. It is generally said to appear in the Vatican Library's earliest surviving catalogue, drawn up in 1475 — an identification argued by T. C. Skeat in 1984 and listed in the library's own bibliography for the manuscript, rather than a fact the library states on its record — and nobody knows where the book was before that. It is written on fine parchment in a small, plain, unadorned hand, three narrow columns to the page, an austere and very early layout. The library dates it to the fourth century, which makes it a near-contemporary of Sinaiticus and possibly a little earlier.",
           "For centuries the library guarded it closely, and access was the subject of long frustration among textual scholars; Tischendorf, permitted a few days with it in 1866, was reprimanded for copying too much. That era is over. The manuscript has been photographed in full and can be paged through online, and a facsimile edition put it into libraries worldwide.",
         ],
       },
@@ -2005,12 +2654,64 @@ export const topics: Topic[] = [
       { label: "Bible Odyssey (SBL): What Is the Oldest Bible?", url: "https://www.bibleodyssey.org/articles/what-is-the-oldest-bible/" },
       { label: "Wikipedia: Codex Vaticanus", url: "https://en.wikipedia.org/wiki/Codex_Vaticanus" },
     ],
+    manuscript: {
+      siglum: "Codex Vaticanus (Gregory-Aland 03 / B)",
+      manuscriptType: "Parchment uncial codex, three columns to the page",
+      language: "Koine Greek",
+      contents:
+        "The Greek Old Testament and New Testament, imperfect at both ends. Most of Genesis and a stretch of Psalms are lost; the New Testament breaks off in Hebrews at 9:14, so 1-2 Timothy, Titus, Philemon and Revelation are absent, and the leaves that follow are a much later minuscule supplement. Mark ends at 16:8, followed by a blank column; John 7:53-8:11 is absent",
+      origin: "Unknown",
+      findSite: "Not applicable — the codex was never lost and never found. It has been in the Vatican Library for as long as its records reach",
+      foundYear: "Not applicable",
+      foundBy: "Not applicable",
+      dateAssigned: "Fourth century AD",
+      dateCertainty: "traditional",
+      currentLocation: "Biblioteca Apostolica Vaticana, Vatican City",
+      shelfmark: "Vat.gr.1209",
+      facsimileUrl: "https://digi.vatlib.it/view/MSS_Vat.gr.1209",
+    },
+    citations: [
+      {
+        tier: "institution",
+        label: "Biblioteca Apostolica Vaticana, DigiVatLib: Vat.gr.1209 in full",
+        url: "https://digi.vatlib.it/view/MSS_Vat.gr.1209",
+        credit: "Biblioteca Apostolica Vaticana",
+        detail: "The complete digital facsimile, 1,555 images, free to page through. The blank column after Mark 16:8 and the break in Hebrews 9:14 can both be seen directly",
+        supports: "The shelfmark, the three-column layout, the ending of Mark and the break at Hebrews 9:14",
+      },
+      {
+        tier: "institution",
+        label: "Vatican Library catalogue record for Vat.gr.1209",
+        url: "https://opac.vatlib.it/mss/detail/Vat.gr.1209",
+        credit: "Biblioteca Apostolica Vaticana",
+        detail: "Dates the manuscript \"sec. IV\", lists its contents book by book, and includes T. C. Skeat, \"The Codex Vaticanus in the 15th Century,\" Journal of Theological Studies (1984) in its bibliography",
+        supports: "The fourth-century date, the absent Pastorals and Revelation, and the source of the 1475 catalogue claim",
+      },
+      {
+        tier: "scholarly",
+        label: "T. C. Skeat, \"The Codex Vaticanus in the 15th Century\"",
+        credit: "T. C. Skeat",
+        detail: "Journal of Theological Studies n.s. 35 (1984), 454-465 - the argument that the codex is the manuscript listed in the Vatican Library's 1475 catalogue. Print only",
+        supports: "The 1475 catalogue identification described in section one",
+      },
+      {
+        tier: "reference",
+        label: "Bible Odyssey (SBL): What Is the Oldest Bible?",
+        url: "https://www.bibleodyssey.org/articles/what-is-the-oldest-bible/",
+        credit: "Society of Biblical Literature",
+      },
+      {
+        tier: "encyclopedic",
+        label: "Wikipedia: Codex Vaticanus",
+        url: "https://en.wikipedia.org/wiki/Codex_Vaticanus",
+      },
+    ],
   },
   {
     id: "muratorian-fragment",
     name: "Muratorian Fragment",
     alternateNames: ["Muratorian Canon", "Canon Muratori"],
-    category: "concept",
+    category: "manuscript",
     role: "The Earliest Known List of New Testament Books",
     summary:
       "Eighty-five lines of bad Latin in an eighth-century manuscript at Milan, preserving what is most likely a list of accepted Christian writings drawn up in Rome around AD 180 — the oldest such list we have.",
@@ -2046,6 +2747,54 @@ export const topics: Topic[] = [
       { label: "Wikipedia: Muratorian fragment", url: "https://en.wikipedia.org/wiki/Muratorian_fragment" },
       { label: "Text & Canon Institute: How the Two Testaments Became One Bible", url: "https://textandcanon.org/how-the-two-testaments-became-one-bible/" },
     ],
+    manuscript: {
+      manuscriptType: "Eighty-five lines of Latin on two leaves of a parchment codex of 76 leaves — folio 10 recto to folio 11 recto, line 23",
+      language: "Latin, and poor Latin at that; scholars generally agree it is a translation from a Greek original",
+      contents:
+        "A survey of Christian writings with comments on each. It begins mid-sentence, so the opening is lost, and it breaks off at the end. Luke is named third and John fourth; Acts, thirteen letters of Paul, Jude, two letters of John, Revelation and the Wisdom of Solomon are included. Hebrews, James and 1-2 Peter do not appear in what survives",
+      origin: "The list itself is generally placed in Rome; the manuscript that preserves it belonged to the monastery at Bobbio",
+      findSite: "The Biblioteca Ambrosiana, Milan",
+      foundYear: "Found by Ludovico Antonio Muratori in 1700 and published by him in 1740",
+      foundBy: "Ludovico Antonio Muratori, in the third volume of his Antiquitates Italicae Medii Aevi",
+      dateAssigned:
+        "The list itself is conventionally dated c. AD 170-200, which a serious minority disputes; the manuscript that carries it is dated 676-750 by the Ambrosiana's own catalogue",
+      dateCertainty: "disputed",
+      currentLocation: "Biblioteca Ambrosiana, Milan",
+      shelfmark: "Cod. Ambrosianus I 101 sup.",
+    },
+    citations: [
+      {
+        tier: "scholarly",
+        label: "Eckhard J. Schnabel, \"The Muratorian Fragment: The State of Research\"",
+        url: "https://etsjets.org/wp-content/uploads/2014/06/files_JETS-PDFs_57_57-2_JETS_57-2_231-64_Schnabel.pdf",
+        credit: "Eckhard J. Schnabel",
+        detail:
+          "Journal of the Evangelical Theological Society 57:2 (2014), 231-264 — freely available. Gives the shelfmark, the 85 lines, the exact folios, the Bobbio provenance, Muratori's 1740 publication, and a survey of who has and has not accepted the fourth-century redating",
+        supports: "The manuscript's shelfmark and extent, and the state of the dating debate in section three",
+      },
+      {
+        tier: "institution",
+        label: "Biblioteca Ambrosiana digital library: I 101 sup.",
+        url: "https://ambrosiana.comperio.it/biblioteca-digitale/search/lst?q=I+101+sup",
+        credit: "Veneranda Biblioteca Ambrosiana, Milan",
+        detail: "The holding library's catalogue record, dating the codex 676-750. No public digital facsimile of the manuscript was found",
+        supports: "The shelfmark and the date of the manuscript itself",
+      },
+      {
+        tier: "scholarly",
+        label: "Albert C. Sundberg, \"Canon Muratori: A Fourth Century List\"",
+        credit: "Albert C. Sundberg Jr.",
+        detail:
+          "Harvard Theological Review 66 (1973), 1-41, developed at book length by Geoffrey M. Hahneman, The Muratorian Fragment and the Development of the Canon (Oxford University Press, 1992). Print only",
+        supports: "The fourth-century redating named in section three, cited to the scholarship that argued it",
+      },
+      {
+        tier: "reference",
+        label: "Text & Canon Institute: How the Two Testaments Became One Bible",
+        url: "https://textandcanon.org/how-the-two-testaments-became-one-bible/",
+        credit: "Text & Canon Institute, Phoenix Seminary",
+      },
+    ],
   },
   {
     id: "babylonian-chronicles",
@@ -2054,7 +2803,7 @@ export const topics: Topic[] = [
     // CYLINDER is deliberately not aliased to this entry — it is a building inscription, a different
     // genre, and has its own article below.
     alternateNames: ["Babylonian Chronicle", "Jerusalem Chronicle", "Nabonidus Chronicle"],
-    category: "concept",
+    category: "discovery",
     role: "Neo-Babylonian Year-by-Year Records on Clay",
     summary:
       "A series of terse cuneiform tablets logging what happened in each year of a Babylonian king's reign — including the exact date, to the day, on which Nebuchadnezzar took Jerusalem.",
@@ -2092,21 +2841,63 @@ export const topics: Topic[] = [
       { label: "Wikipedia: Babylonian Chronicles", url: "https://en.wikipedia.org/wiki/Babylonian_Chronicles" },
       { label: "Wikipedia: Nabonidus Chronicle", url: "https://en.wikipedia.org/wiki/Nabonidus_Chronicle" },
     ],
+    discovery: {
+      objectType: "Clay tablets in Akkadian cuneiform; the tablet covering 605-594 BC is BM 21946",
+      findSite: "Babylon, on the internal evidence of the texts and of tablets acquired alongside them. No findspot is recorded",
+      findSiteId: "babylon",
+      findSiteKind: "location",
+      foundYear: "Not recorded. The tablets reached the British Museum in the nineteenth century through the antiquities trade",
+      foundBy: "No finder and no excavator is recorded for any of them",
+      objectDate: "Later Babylonian period. Wiseman's edition is explicit that the script \"does not of itself allow any precise dating\", so no date should be put on the copy itself; the events recorded on BM 21946 run from 605 to 594 BC",
+      objectDateCertainty: "disputed",
+      currentLocation: "British Museum, London (BM 21946)",
+      unprovenanced: true,
+    },
+    citations: [
+      {
+        tier: "primary",
+        label: "D. J. Wiseman, Chronicles of Chaldaean Kings (626-556 B.C.) in the British Museum (1956)",
+        url: "https://etana.org/sites/default/files/coretexts/20337.pdf",
+        credit: "D. J. Wiseman, published by the Trustees of the British Museum; scan hosted by ETANA",
+        detail: "The first publication of BM 21946, with the year-by-year summary running 605 to 594 BC, and the statement that the script permits no precise dating of the tablets themselves",
+        supports: "The tablet's contents and date range, its first publication, and the absence of a findspot",
+      },
+      {
+        tier: "institution",
+        label: "Cuneiform Digital Library Initiative: artifact P555785 (BM 021946)",
+        url: "https://cdli.mpiwg-berlin.mpg.de/artifacts/555785",
+        credit: "Cuneiform Digital Library Initiative, Max Planck Institute for the History of Science",
+        detail: "Clay tablet, British Museum BM 021946, Neo-Babylonian — with no provenience, excavation number or findspot recorded",
+        supports: "That the tablet is unprovenanced, and its museum number",
+      },
+      {
+        tier: "reference",
+        label: "Bible Odyssey (SBL): Babylonian Accounts of the Invasion of Judah",
+        url: "https://www.bibleodyssey.org/articles/babylonian-accounts-of-the-invasion-of-judah/",
+        credit: "Society of Biblical Literature",
+        supports: "The convergence between the chronicle's 597 BC entry and 2 Kings 24",
+      },
+      {
+        tier: "encyclopedic",
+        label: "Wikipedia: Babylonian Chronicles",
+        url: "https://en.wikipedia.org/wiki/Babylonian_Chronicles",
+      },
+    ],
   },
   {
     id: "nabonidus-cylinder",
     name: "Nabonidus Cylinder",
     alternateNames: ["Nabonidus Cylinders", "Cylinder of Nabonidus"],
-    category: "concept",
+    category: "discovery",
     role: "Sixth-Century BC Babylonian Building Inscription Naming Belshazzar",
     summary:
-      "Clay foundation cylinders from Ur and Sippar in which the last king of Babylon prays for himself and for \"Belshazzar, my firstborn son\" — the man who, until the nineteenth century, was known only from the book of Daniel.",
+      "A clay foundation cylinder from the ziggurat at Ur in which the last king of Babylon prays for himself and for \"Belshazzar, my firstborn son\" — the man who, until the nineteenth century, was known only from the book of Daniel.",
     sections: [
       {
         heading: "The Problem Daniel 5 Used to Have",
         paragraphs: [
           "Daniel 5 tells of a feast held by Belshazzar, king of Babylon, interrupted by a hand writing on the wall, and ending that same night with the king dead and the city in Persian hands. For a long time this was one of the standard examples of the Bible getting history wrong. Greek and Roman historians named the last king of Babylon as Nabonidus, and none of them had ever heard of a Belshazzar. Daniel also has Belshazzar offer Daniel \"the third ruler in the kingdom\" as a reward, which looked like an odd way to describe second place.",
-          "Then the cuneiform record began to be read. Clay cylinders inscribed for Nabonidus, buried in the foundations of temples he restored, turned up at Ur and elsewhere from the 1850s onward. One from Ur, recovered by J. G. Taylor, closes with a prayer asking the moon god to preserve the king — and then, in the same breath, \"and as for Belshazzar, my firstborn son, my own offspring, set the fear of your great godhead in his heart.\" Belshazzar was real, and he was Nabonidus's son."
+          "Then the cuneiform record began to be read. Clay cylinders inscribed for Nabonidus, buried in the fabric of temples he restored, turned up at Ur and elsewhere from the 1850s onward. The one that matters here came out of the ziggurat at Ur in 1854, recovered by J. G. Taylor, the British vice-consul at Basra — the same man who later found the Kurkh Monolith, and one whose initials are very often miscited as J. E. — and it closes with a prayer asking the moon god to preserve the king, and then, in the same breath: \"as for Belshazzar, my first-born son, my own offspring, have the fear of your great divinity placed in his heart.\" Belshazzar was real, and he was Nabonidus's son. It is worth being precise about which cylinder this is, because popular accounts often attach the Belshazzar prayer to Nabonidus's better-known cylinder from Sippar; that one is a different inscription and does not mention him."
         ],
       },
       {
@@ -2134,12 +2925,55 @@ export const topics: Topic[] = [
       { label: "Wikipedia: Nabonidus Chronicle", url: "https://en.wikipedia.org/wiki/Nabonidus_Chronicle" },
       { label: "Bible Odyssey (SBL): Cyrus the Messiah", url: "https://www.bibleodyssey.org/articles/cyrus-the-messiah/" },
     ],
+    discovery: {
+      objectType: "Clay foundation cylinder inscribed in Akkadian cuneiform",
+      findSite: "The ziggurat at Ur (Tell el-Muqayyar), southern Iraq",
+      findSiteId: "ur",
+      findSiteKind: "location",
+      foundYear: "1854",
+      foundBy: "John George Taylor, British vice-consul at Basra, excavating for the British Museum. He is frequently miscited as \"J. E. Taylor\"",
+      objectDate: "Reign of Nabonidus, 556-539 BC",
+      objectDateCertainty: "firm",
+      currentLocation: "British Museum, London (BM 91125)",
+    },
+    citations: [
+      {
+        tier: "primary",
+        label: "Royal Inscriptions of Babylonia online: Nabonidus 32 (the Ur cylinder)",
+        url: "https://oracc.museum.upenn.edu/ribo/babylon7/Q005429/html",
+        credit: "RIBo / RINBE 2, published on Oracc (University of Pennsylvania, LMU Munich)",
+        detail: "The scholarly edition, with transliteration and translation. Column ii 23-24: \"Moreover, with regard to Belshazzar, (my) first-born son, my own offspring, have the fear of your great divinity placed in his heart\"",
+        supports: "The wording of the Belshazzar prayer, and that it stands on the Ur cylinder specifically",
+      },
+      {
+        tier: "institution",
+        label: "Cuneiform Digital Library Initiative: artifact P393977 (BM 091125)",
+        url: "https://cdli.mpiwg-berlin.mpg.de/artifacts/393977",
+        credit: "Cuneiform Digital Library Initiative, Max Planck Institute for the History of Science",
+        detail: "Clay cylinder, provenience Ur (mod. Tell Muqayyar), British Museum BM 091125, Neo-Babylonian, dates referenced Nabonidus",
+        supports: "The object's material, findspot, museum and museum number",
+      },
+      {
+        tier: "primary",
+        label: "Royal Inscriptions of Babylonia online: Nabonidus 28 (the Sippar Ehulhul cylinder)",
+        url: "https://oracc.museum.upenn.edu/ribo/babylon7/Q005425/html",
+        credit: "RIBo / RINBE 2, published on Oracc",
+        detail: "The full edition of the Sippar cylinder, in which Belshazzar is not named — the check behind this article's warning about the two cylinders being confused",
+        supports: "That the Sippar cylinder does not carry the Belshazzar prayer",
+      },
+      {
+        tier: "reference",
+        label: "Bible Odyssey (SBL): Cyrus the Messiah",
+        url: "https://www.bibleodyssey.org/articles/cyrus-the-messiah/",
+        credit: "Society of Biblical Literature",
+      },
+    ],
   },
   {
     id: "behistun-inscription",
     name: "Behistun Inscription",
     alternateNames: ["Bisitun Inscription", "Behistun relief", "Bisotun Inscription"],
-    category: "concept",
+    category: "discovery",
     role: "Trilingual Cliff Inscription of Darius I, c. 520 BC",
     summary:
       "A vast relief and inscription cut into a limestone cliff in western Iran, in three languages and three scripts — the text that let scholars read cuneiform, and so the reason every other Mesopotamian document in this atlas can be read at all.",
@@ -2176,12 +3010,49 @@ export const topics: Topic[] = [
       { label: "Wikipedia: Behistun Inscription", url: "https://en.wikipedia.org/wiki/Behistun_Inscription" },
       { label: "Bible Odyssey (SBL): Cyrus the Messiah", url: "https://www.bibleodyssey.org/articles/cyrus-the-messiah/" },
     ],
+    discovery: {
+      objectType: "Bas-relief and trilingual cuneiform inscription — Old Persian, Elamite and Babylonian — cut into a limestone cliff about 60 m above the road",
+      findSite: "Mount Bisotun, Kermanshah Province, Iran, on the old route between the Iranian plateau and Mesopotamia",
+      foundYear: "Never lost and never found — the monument has been visible on the cliff since it was cut. It was first copied in full by Henry Creswicke Rawlinson in campaigns beginning in 1835",
+      foundBy: "Not applicable. Rawlinson, a British officer in Persia, had himself lowered on ropes to copy it; he sent a complete copy to Europe by 1847 and published his decipherment from 1846",
+      objectDate: "c. 520 BC — UNESCO dates the commission to 521 BC, and the campaigns it recounts ran through 522-520 BC",
+      objectDateCertainty: "firm",
+      currentLocation: "In situ on the cliff at the Bisotun archaeological site, Iran — a UNESCO World Heritage Site since 2006",
+    },
+    citations: [
+      {
+        tier: "institution",
+        label: "L. W. King and R. C. Thompson, The Sculptures and Inscription of Darius the Great on the Rock of Behistûn in Persia (1907)",
+        url: "https://en.wikisource.org/wiki/The_Sculptures_and_Inscription_of_Darius_the_Great_on_the_Rock_of_Behist%C3%BBn_in_Persia",
+        credit: "The British Museum expedition that made the squeezes and casts, published by L. W. King and R. C. Thompson",
+        detail: "The standard early edition and English translation, public domain, hosted in full on Wikisource",
+        supports: "The content of the inscription and Darius's account of his accession",
+      },
+      {
+        tier: "scholarly",
+        label: "H. C. Rawlinson, The Persian Cuneiform Inscription at Behistun, Decyphered and Translated (1846)",
+        credit: "Henry Creswicke Rawlinson, Royal Asiatic Society",
+        detail: "The publication that broke Old Persian open, with continuations in 1848 and 1849. Public domain and catalogued at the Internet Archive",
+        supports: "That Rawlinson's copying and decipherment is what made cuneiform readable",
+      },
+      {
+        tier: "reference",
+        label: "Bible Odyssey (SBL): Cyrus the Messiah",
+        url: "https://www.bibleodyssey.org/articles/cyrus-the-messiah/",
+        credit: "Society of Biblical Literature",
+      },
+      {
+        tier: "encyclopedic",
+        label: "Wikipedia: Behistun Inscription",
+        url: "https://en.wikipedia.org/wiki/Behistun_Inscription",
+      },
+    ],
   },
   {
     id: "kurkh-monolith",
     name: "Kurkh Monolith",
     alternateNames: ["Kurkh Monoliths", "Kurkh Stele"],
-    category: "concept",
+    category: "discovery",
     role: "Assyrian Campaign Stele Naming Ahab of Israel, 853 BC",
     summary:
       "A carved stone slab from southeastern Turkey on which Shalmaneser III lists the kings who fought him at Qarqar — among them \"Ahab the Israelite,\" the earliest Assyrian mention of an Israelite king by name.",
@@ -2189,7 +3060,7 @@ export const topics: Topic[] = [
       {
         heading: "The Battle of Qarqar",
         paragraphs: [
-          "John George Taylor found the monolith in 1861 at Kurkh, in what is now southeastern Turkey; it is in the British Museum. It shows Shalmaneser III in relief with the emblems of his gods, and carries a long account of his campaigns. The section on his sixth year describes a battle at Qarqar on the Orontes in 853 BC against a coalition of a dozen western kings who had combined to stop the Assyrian advance.",
+          "J. G. Taylor — a British consular officer excavating for the British Museum, and the son of the Colonel Taylor whose name is on Sennacherib's prism — found the monolith in October 1861 at Kurkh, near Diyarbakır in what is now southeastern Turkey, along with a companion stele of Ashurnasirpal II. He gave both to the British Museum in 1863. It is a round-topped stone stele about 2.2 metres tall showing Shalmaneser III in relief with the emblems of his gods, and it carries a long account of his campaigns. The section on his sixth year describes a battle at Qarqar on the Orontes in 853 BC against a coalition of a dozen western kings who had combined to stop the Assyrian advance.",
           "The list of the coalition names Hadadezer of Damascus, Irhuleni of Hamath, and third among them \"Ahab the Israelite,\" credited with two thousand chariots and ten thousand foot soldiers. It is the first appearance of an Israelite king by name in an Assyrian record, and it places Ahab in a specific battle in a specific year.",
         ],
       },
@@ -2218,12 +3089,57 @@ export const topics: Topic[] = [
       { label: "Wikipedia: Kurkh Monoliths", url: "https://en.wikipedia.org/wiki/Kurkh_Monoliths" },
       { label: "Bible Odyssey (SBL): Kingdom of Israel", url: "https://www.bibleodyssey.org/articles/kingdom-of-israel/" },
     ],
+    discovery: {
+      objectType: "Round-topped stone stele about 2.2 m tall, carved in relief and inscribed with Shalmaneser III's annals",
+      findSite: "Kurkh, near Diyarbakır, southeastern Turkey",
+      foundYear: "October 1861; given to the British Museum in 1863",
+      foundBy: "John George Taylor, British consular officer, excavating on commission for the British Museum",
+      objectDate: "c. 853-852 BC",
+      objectDateCertainty: "firm",
+      currentLocation: "British Museum, London (BM 118884)",
+    },
+    citations: [
+      {
+        tier: "institution",
+        label: "Cuneiform Digital Library Initiative: artifact P465006 (BM 118884)",
+        url: "https://cdli.mpiwg-berlin.mpg.de/artifacts/465006",
+        credit: "Cuneiform Digital Library Initiative, Max Planck Institute for the History of Science",
+        detail: "\"Found by John George Taylor in October 1861; Donated by John George Taylor in 1863\"; British Museum BM 118884",
+        supports: "The finder, the month and year of the find, the donation year and the museum number",
+      },
+      {
+        tier: "institution",
+        label: "Royal Asiatic Society archives: John George Taylor",
+        url: "https://royalasiaticarchives.org/index.php/taylor-john-george",
+        credit: "Royal Asiatic Society of Great Britain and Ireland",
+        detail: "\"In 1861 he recovered stelae of Ashurnasirpal II and Shalmaneser III at Kurkh near Diyarbekir, and he was commissioned to excavate in this region on behalf of the British Museum\"; also records him as the son of Colonel R. Taylor",
+        supports: "Who Taylor was, what he was doing at Kurkh, and his relation to the Taylor of the Sennacherib prism",
+      },
+      {
+        tier: "scholarly",
+        label: "A. K. Grayson, Assyrian Rulers of the Early First Millennium BC II (858-745 BC)",
+        credit: "A. Kirk Grayson",
+        detail: "Royal Inscriptions of Mesopotamia, Assyrian Periods 3 (Toronto: University of Toronto Press, 1996). The Kurkh text is RIMA 3 A.0.102.2. Print only",
+        supports: "The standard edition of the inscription, including the Qarqar coalition list and Ahab's chariot figure",
+      },
+      {
+        tier: "reference",
+        label: "Bible Odyssey (SBL): Kingdom of Israel",
+        url: "https://www.bibleodyssey.org/articles/kingdom-of-israel/",
+        credit: "Society of Biblical Literature",
+      },
+      {
+        tier: "encyclopedic",
+        label: "Wikipedia: Kurkh Monoliths",
+        url: "https://en.wikipedia.org/wiki/Kurkh_Monoliths",
+      },
+    ],
   },
   {
     id: "nuzi-tablets",
     name: "Nuzi Tablets",
     alternateNames: ["Nuzi texts", "Nuzi archives", "Nuzi tablet"],
-    category: "concept",
+    category: "discovery",
     role: "Hurrian Family and Legal Archives, Fifteenth-Fourteenth Century BC",
     summary:
       "Some five thousand cuneiform tablets from a provincial town near modern Kirkuk, once presented as decisive proof that Genesis preserves authentic second-millennium customs — a claim later scholarship has substantially withdrawn.",
@@ -2260,12 +3176,49 @@ export const topics: Topic[] = [
       { label: "Wikipedia: Nuzi", url: "https://en.wikipedia.org/wiki/Nuzi" },
       { label: "Bible Odyssey (SBL): Abraham", url: "https://www.bibleodyssey.org/articles/abraham/" },
     ],
+    discovery: {
+      objectType: "Roughly five thousand clay tablets in Akkadian cuneiform — adoptions, marriage contracts, wills, loans, lawsuits, land sales and inventories",
+      findSite: "Yorghan Tepe (ancient Nuzi), near Kirkuk, northern Iraq",
+      foundYear: "1925-1931",
+      foundBy: "Successive excavation seasons directed by Edward Chiera, Robert H. Pfeiffer and Richard F. S. Starr, under the Baghdad School of the American Schools of Oriental Research and later Harvard University and the Fogg Art Museum, with the Iraq Museum",
+      objectDate: "Fifteenth and fourteenth centuries BC",
+      objectDateCertainty: "traditional",
+      currentLocation: "Divided chiefly between the Harvard Museum of the Ancient Near East, the Institute for the Study of Ancient Cultures at Chicago, and the Iraq Museum in Baghdad",
+    },
+    citations: [
+      {
+        tier: "institution",
+        label: "Richard F. S. Starr, Nuzi: Report on the Excavations at Yorgan Tepa near Kirkuk, Iraq (Harvard University Press, 1937-1939)",
+        url: "https://commons.library.stonybrook.edu/amar/350/",
+        credit: "Richard F. S. Starr, for Harvard University and the American Schools of Oriental Research",
+        detail: "The excavating body's own final report, digitised in the Ancient Middle Archaeological Reports collection",
+        supports: "The excavation years, the site and who dug it",
+      },
+      {
+        tier: "scholarly",
+        label: "Thomas L. Thompson, The Historicity of the Patriarchal Narratives",
+        credit: "Thomas L. Thompson",
+        detail: "BZAW 133, Berlin: de Gruyter, 1974 — with John Van Seters's Abraham in History and Tradition (Yale, 1975), the pair of studies that dismantled the mid-century Nuzi parallels. Print only",
+        supports: "The walking-back described in section three, cited to the scholarship that actually did it",
+      },
+      {
+        tier: "reference",
+        label: "Bible Odyssey (SBL): Abraham",
+        url: "https://www.bibleodyssey.org/articles/abraham/",
+        credit: "Society of Biblical Literature",
+      },
+      {
+        tier: "encyclopedic",
+        label: "Wikipedia: Nuzi",
+        url: "https://en.wikipedia.org/wiki/Nuzi",
+      },
+    ],
   },
   {
     id: "amarna-letters",
     name: "Amarna Letters",
     alternateNames: ["Amarna tablets", "Tell el-Amarna letters", "el-Amarna letters"],
-    category: "concept",
+    category: "discovery",
     role: "Egyptian Diplomatic Archive, Fourteenth Century BC",
     summary:
       "Around 380 clay tablets from the abandoned Egyptian capital at Amarna — the incoming diplomatic mail of two pharaohs, and the closest thing we have to a live picture of Canaan in the century or so before Israel appears there.",
@@ -2273,7 +3226,7 @@ export const topics: Topic[] = [
       {
         heading: "A Pharaoh's In-Tray",
         paragraphs: [
-          "In 1887 a woman digging for fertiliser in the ruins of Akhetaten — the short-lived capital built by Akhenaten in Middle Egypt, now Tell el-Amarna — turned up inscribed clay tablets. Nearly four hundred were eventually recovered, most of them letters received by the Egyptian court under Amenhotep III and his son Akhenaten in the fourteenth century BC. They are written not in Egyptian but in Akkadian, the diplomatic language of the whole Near East at the time, on clay, in cuneiform, by scribes in Canaan and Syria writing to Egypt in a language native to neither.",
+          "Around 1887 local villagers digging in the ruins of Akhetaten — the short-lived capital built by Akhenaten in Middle Egypt, now Tell el-Amarna — turned up inscribed clay tablets. The story usually told, of a single peasant woman digging for fertiliser who stumbled on the pharaoh's archive, is traditional rather than documented: every version of it is secondhand and they contradict one another. What is certain is that the tablets surfaced through villagers and passed into the hands of dealers, so that the archive was scattered and some of it destroyed before scholars reached it. Nearly four hundred were eventually recovered, most of them letters received by the Egyptian court under Amenhotep III and his son Akhenaten in the fourteenth century BC. They are written not in Egyptian but in Akkadian, the diplomatic language of the whole Near East at the time, on clay, in cuneiform, by scribes in Canaan and Syria writing to Egypt in a language native to neither.",
           "Some are correspondence between great kings — Babylon, Assyria, Mitanni, the Hittites — trading gold, marriage alliances, and elaborate courtesy. The larger group is from the rulers of the small city-states of Canaan, who were Egyptian vassals. These are less dignified. They plead for troops, denounce their neighbours as traitors, complain that previous letters have gone unanswered, and protest their own loyalty at length.",
         ],
       },
@@ -2302,6 +3255,45 @@ export const topics: Topic[] = [
       { label: "Bible Odyssey (SBL): Jerusalem in the Amarna Letters", url: "https://www.bibleodyssey.org/articles/jerusalem-in-the-amarna-letters/" },
       { label: "Wikipedia: Amarna letters", url: "https://en.wikipedia.org/wiki/Amarna_letters" },
     ],
+    discovery: {
+      objectType: "Around 380 clay tablets in Akkadian cuneiform — an archive of incoming diplomatic correspondence",
+      findSite: "Tell el-Amarna (ancient Akhetaten), Middle Egypt",
+      foundYear: "c. 1887",
+      foundBy: "Local villagers, who sold the tablets on to dealers. The familiar story of a single peasant woman digging for fertiliser is traditional and unverifiable — every account of it is secondhand and they contradict one another",
+      objectDate: "Fourteenth century BC, in the reigns of Amenhotep III and Akhenaten",
+      objectDateCertainty: "firm",
+      currentLocation: "Divided between the Vorderasiatisches Museum in Berlin, the British Museum, the Egyptian Museum in Cairo, the Louvre and other collections",
+      unprovenanced: true,
+    },
+    citations: [
+      {
+        tier: "institution",
+        label: "Staatliche Museen zu Berlin: Vorderasiatisches Museum",
+        url: "https://www.smb.museum/en/museums-institutions/vorderasiatisches-museum/home/",
+        credit: "Staatliche Museen zu Berlin",
+        detail: "The museum holding the largest share of the Amarna correspondence",
+        supports: "Where the bulk of the archive is held today",
+      },
+      {
+        tier: "scholarly",
+        label: "William L. Moran, The Amarna Letters",
+        credit: "William L. Moran",
+        detail: "Johns Hopkins University Press, 1992 — the standard English edition and translation of the whole corpus. Print only",
+        supports: "The content of the letters, including Abdi-Heba's letters from Jerusalem and the 'Apiru complaints",
+      },
+      {
+        tier: "reference",
+        label: "Bible Odyssey (SBL): Jerusalem in the Amarna Letters",
+        url: "https://www.bibleodyssey.org/articles/jerusalem-in-the-amarna-letters/",
+        credit: "Society of Biblical Literature",
+        supports: "Abdi-Heba's letters and what they show about fourteenth-century Jerusalem",
+      },
+      {
+        tier: "encyclopedic",
+        label: "Wikipedia: Amarna letters",
+        url: "https://en.wikipedia.org/wiki/Amarna_letters",
+      },
+    ],
   },
   {
     id: "epic-of-gilgamesh",
@@ -2309,7 +3301,7 @@ export const topics: Topic[] = [
     // NOT registered: bare "Gilgamesh" — in this dataset it is used for the king as a character as
     // often as for the poem, and the two-word forms below cover every mention that means the text.
     alternateNames: ["Gilgamesh Epic"],
-    category: "concept",
+    category: "discovery",
     role: "Akkadian Poem, Standard Version c. 1200 BC",
     summary:
       "The great Mesopotamian poem about a king's search for immortality — whose eleventh tablet tells a flood story so close to Genesis 6-9 that its decipherment in 1872 caused a public sensation.",
@@ -2317,7 +3309,7 @@ export const topics: Topic[] = [
       {
         heading: "George Smith's Announcement",
         paragraphs: [
-          "The tablets came from the library Ashurbanipal assembled at Nineveh in the seventh century BC, excavated by Austen Henry Layard and Hormuzd Rassam and shipped in fragments to the British Museum. In 1872 George Smith, a former banknote engraver who had taught himself cuneiform while working as a museum assistant, was sorting fragments when he read an account of a flood, a ship, and a bird sent out to find land. He is said to have run about the room in his excitement. His lecture announcing it, in December 1872, made the front pages.",
+          "The tablets came from the library Ashurbanipal assembled at Nineveh in the seventh century BC. Austen Henry Layard dug the first large group out of the South-West Palace at Kuyunjik in the spring of 1850, and Hormuzd Rassam found a second group in the North Palace in late 1853; both were shipped in fragments to the British Museum, where some thirty thousand of them still are. In 1872 George Smith, a former banknote engraver who had taught himself cuneiform while working as a museum assistant, was sorting fragments when he read an account of a flood, a ship, and a bird sent out to find land. He is said to have run about the room in his excitement. His lecture announcing it, to the Society of Biblical Archaeology on 3 December 1872, made the front pages.",
           "The poem itself is much larger than the flood episode. It follows Gilgamesh, king of Uruk, and his friend Enkidu through adventure and then through Enkidu's death, after which Gilgamesh — undone by the fact of mortality — sets out to find the one man who survived the flood and was granted unending life. The standard twelve-tablet version was compiled around 1200 BC from older Sumerian and Akkadian material going back centuries further.",
         ],
       },
@@ -2347,12 +3339,52 @@ export const topics: Topic[] = [
       { label: "Bible Odyssey (SBL): Gilgamesh and the Bible", url: "https://www.bibleodyssey.org/articles/gilgamesh-and-the-bible/" },
       { label: "Wikipedia: Epic of Gilgamesh", url: "https://en.wikipedia.org/wiki/Epic_of_Gilgamesh" },
     ],
+    discovery: {
+      objectType: "Baked clay tablets in Akkadian cuneiform; the flood account is Tablet XI",
+      findSite: "Kuyunjik (Nineveh), in the library of Ashurbanipal",
+      findSiteId: "nineveh",
+      findSiteKind: "location",
+      foundYear: "Excavated from 1850 onward; the flood account recognised among the fragments in 1872",
+      foundBy: "Austen Henry Layard, who found the first large group of library tablets in spring 1850, and Hormuzd Rassam, who found a second group in late 1853. George Smith identified and translated the flood account in London in 1872 — he did not excavate it",
+      objectDate: "The Nineveh copies were written in the seventh century BC; the standard version was compiled c. 1200 BC",
+      objectDateCertainty: "traditional",
+      currentLocation: "British Museum, London (the flood tablet is K.3375, from the Kuyunjik collection)",
+    },
+    citations: [
+      {
+        tier: "institution",
+        label: "The Ashurbanipal Library Project: excavating the library",
+        url: "https://oracc.museum.upenn.edu/asbp/archaeologyofthelibrary/excavations/",
+        credit: "The British Museum's Ashurbanipal Library Project, published on Oracc (University of Pennsylvania)",
+        detail: "Dates Layard's find of the first large tablet group to March-May 1850 and Rassam's second group to late 1853; puts the library at around 32,000 tablets and fragments",
+        supports: "Who excavated the tablets, when, and how they reached London",
+      },
+      {
+        tier: "primary",
+        label: "George Smith, The Chaldean Account of Genesis",
+        url: "https://www.gutenberg.org/files/60559/60559-h/60559-h.htm",
+        credit: "George Smith; this full text is the 1880 edition revised by A. H. Sayce, of a work first published in 1876",
+        detail: "Smith's own account, including his record of the lecture \"a meeting of the Society of Biblical Archaeology, December 3rd, 1872\". Public domain",
+        supports: "The date and venue of Smith's announcement, and his own description of the flood text",
+      },
+      {
+        tier: "reference",
+        label: "Bible Odyssey (SBL): Gilgamesh and the Bible",
+        url: "https://www.bibleodyssey.org/articles/gilgamesh-and-the-bible/",
+        credit: "Society of Biblical Literature",
+      },
+      {
+        tier: "encyclopedic",
+        label: "Wikipedia: Epic of Gilgamesh",
+        url: "https://en.wikipedia.org/wiki/Epic_of_Gilgamesh",
+      },
+    ],
   },
   {
     id: "enuma-elish",
     name: "Enuma Elish",
     alternateNames: ["Enûma Eliš", "Babylonian creation epic"],
-    category: "concept",
+    category: "discovery",
     role: "Babylonian Creation Poem, Seven Tablets",
     summary:
       "The Babylonian account of how the world was made — Marduk killing the sea-goddess Tiamat and building the cosmos from her body — read alongside Genesis 1 ever since its publication in 1876.",
@@ -2360,7 +3392,7 @@ export const topics: Topic[] = [
       {
         heading: "\"When On High\"",
         paragraphs: [
-          "The poem is named for its opening words, enuma elish, \"when on high.\" It survives on seven clay tablets, mostly from Ashurbanipal's library at Nineveh, and was published by George Smith in 1876, four years after his flood discovery. It was recited annually at the Babylonian new year festival, which tells you what it was for: it is as much a civic liturgy exalting Babylon and its god as it is a story about origins.",
+          "The poem is named for its opening words, enuma elish, \"when on high.\" It survives on seven clay tablets, mostly from Ashurbanipal's library at Nineveh, and was published by George Smith in 1876, four years after his flood discovery. Smith, working from what he had, wrote only that the series ran to \"at least seven tablets\"; the seven-tablet shape now taken as standard was an inference before it was a count. A ritual text describes the poem being recited before Marduk's statue at the New Year festival, which tells you what it was for — a civic liturgy exalting Babylon and its god as much as a story about origins. That ritual text is itself very late, from the Parthian period, so the recitation is well attested for the end of Babylonian religion and inferred backwards for its beginning.",
           "It begins before anything is named, with only the mingled fresh and salt waters, Apsu and Tiamat. Younger gods are born, are noisy, and are resented; Apsu plots to destroy them and is killed first. Tiamat responds by breeding monsters and making war, and the terrified gods can find no champion until Marduk agrees — on condition that they make him supreme over all of them. He kills Tiamat, splits her body like a shellfish, and makes the sky from one half and the earth from the other; he sets the stars in their courses and fixes the calendar; and finally, so that the gods need not labour, humanity is made from the blood of the slain god who led Tiamat's revolt.",
         ],
       },
@@ -2390,6 +3422,46 @@ export const topics: Topic[] = [
       { label: "Wikipedia: Enûma Eliš", url: "https://en.wikipedia.org/wiki/En%C3%BBma_Eli%C5%A1" },
       { label: "Bible Odyssey (SBL): Gilgamesh and the Bible", url: "https://www.bibleodyssey.org/articles/gilgamesh-and-the-bible/" },
     ],
+    discovery: {
+      objectType: "Baked clay tablets in Akkadian cuneiform, the poem running to seven tablets",
+      findSite: "Kuyunjik (Nineveh), in the library of Ashurbanipal; further copies later at Ashur, Kish and Sultantepe",
+      findSiteId: "nineveh",
+      findSiteKind: "location",
+      foundYear: "Excavated in the Nineveh campaigns from 1850 onward; identified and published in 1876",
+      foundBy: "Excavated by Austen Henry Layard and Hormuzd Rassam for the British Museum; the creation text was identified and published by George Smith",
+      objectDate: "The Nineveh copies were written in the seventh century BC; when the poem itself was composed is genuinely disputed, with proposals spread across the second millennium BC",
+      objectDateCertainty: "disputed",
+      currentLocation: "British Museum, London, with further copies elsewhere",
+    },
+    citations: [
+      {
+        tier: "institution",
+        label: "Ancient Mesopotamian Gods and Goddesses: Marduk",
+        url: "https://oracc.museum.upenn.edu/amgg/listofdeities/marduk/",
+        credit: "Oracc (University of Pennsylvania), a peer-reviewed academic corpus project",
+        detail: "\"A ritual text dating to the Parthian period describes how Enuma elish was recited in front of Marduk's statue during the New Year's festival\"",
+        supports: "The akitu recitation, and the fact that the evidence for it is a very late text",
+      },
+      {
+        tier: "primary",
+        label: "George Smith, The Chaldean Account of Genesis (first published 1876)",
+        url: "https://www.gutenberg.org/files/60559/60559-h/60559-h.htm",
+        credit: "George Smith; this full text is the 1880 edition revised by A. H. Sayce",
+        detail: "Smith's own publication of the creation series, including his note that it ran to \"at least seven tablets\" and the Ashurbanipal colophon tying it to the Nineveh library. Public domain",
+        supports: "The 1876 publication, the seven-tablet structure and the Nineveh provenance",
+      },
+      {
+        tier: "reference",
+        label: "Bible Odyssey (SBL): Gilgamesh and the Bible",
+        url: "https://www.bibleodyssey.org/articles/gilgamesh-and-the-bible/",
+        credit: "Society of Biblical Literature",
+      },
+      {
+        tier: "encyclopedic",
+        label: "Wikipedia: Enûma Eliš",
+        url: "https://en.wikipedia.org/wiki/En%C3%BBma_Eli%C5%A1",
+      },
+    ],
   },
   {
     id: "code-of-hammurabi",
@@ -2398,7 +3470,7 @@ export const topics: Topic[] = [
     // his own right ("Hammurabi and the Rise of Babylon"), and linking every mention of the man to
     // his law code would be wrong more often than right.
     alternateNames: ["Hammurabi's Code", "Laws of Hammurabi", "Hammurabi Code", "Hammurabi stele"],
-    category: "concept",
+    category: "discovery",
     role: "Babylonian Law Collection, c. 1750 BC",
     summary:
       "A seven-foot pillar of black stone carrying nearly three hundred laws and the king's account of why he made them — the closest and most instructive ancient parallel to the laws of Exodus.",
@@ -2436,6 +3508,46 @@ export const topics: Topic[] = [
       { label: "Wikipedia: Code of Hammurabi", url: "https://en.wikipedia.org/wiki/Code_of_Hammurabi" },
       { label: "Louvre: the Code of Hammurabi stele", url: "https://collections.louvre.fr/en/ark:/53355/cl010174436" },
       { label: "Bible Odyssey (SBL): The Ten Commandments", url: "https://www.bibleodyssey.org/articles/the-ten-commandments/" },
+    ],
+    discovery: {
+      objectType: "Basalt stele, 2.25 m high, carved with a relief and c. 282 laws in archaic cuneiform",
+      findSite: "Susa, southwestern Iran — where it had been carried as Elamite plunder from Babylon",
+      findSiteId: "susa",
+      findSiteKind: "location",
+      foundYear: "1901-1902",
+      foundBy: "The French archaeological mission at Susa under Jacques de Morgan; first published by Jean-Vincent Scheil in 1902",
+      objectDate: "c. 1750 BC",
+      objectDateCertainty: "traditional",
+      currentLocation: "Musée du Louvre, Paris (Sb 8)",
+    },
+    citations: [
+      {
+        tier: "institution",
+        label: "Louvre collections: Code de Hammurabi, roi de Babylone (Sb 8)",
+        url: "https://collections.louvre.fr/en/ark:/53355/cl010174436",
+        credit: "Musée du Louvre, Département des Antiquités orientales",
+        detail: "Material basalt; H. 225 cm, W. 79 cm, D. 47 cm; found at Susa 1901-1902, mission de Morgan",
+        supports: "Material, dimensions, findspot, excavator and inventory number",
+      },
+      {
+        tier: "primary",
+        label: "The Code of Hammurabi, translated by Robert Francis Harper (1904)",
+        url: "https://en.wikisource.org/wiki/The_Code_of_Hammurabi_(Harper_translation)",
+        credit: "Robert Francis Harper, University of Chicago Press",
+        detail: "Public domain; prologue, 282 laws and epilogue in full",
+        supports: "The text of the prologue, the talion formula and the graded penalties described in section three",
+      },
+      {
+        tier: "reference",
+        label: "Bible Odyssey (SBL): The Ten Commandments",
+        url: "https://www.bibleodyssey.org/articles/the-ten-commandments/",
+        credit: "Society of Biblical Literature",
+      },
+      {
+        tier: "encyclopedic",
+        label: "Wikipedia: Code of Hammurabi",
+        url: "https://en.wikipedia.org/wiki/Code_of_Hammurabi",
+      },
     ],
   },
   {

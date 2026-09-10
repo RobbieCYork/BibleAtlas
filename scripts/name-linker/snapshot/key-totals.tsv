@@ -38,7 +38,7 @@ location	babel	babylon	panel	2
 location	babel	babylon	prose	12
 location	babel	babylon	reader	2
 location	babylon	babylon	panel	294
-location	babylon	babylon	prose	116
+location	babylon	babylon	prose	117
 location	babylon	babylon	reader	294
 location	berea	berea	prose	3
 location	beroea	berea	panel	3
@@ -170,7 +170,7 @@ location	iconium	iconium	prose	2
 location	iconium	iconium	reader	6
 location	idumea	edom	prose	3
 location	jerusalem	jerusalem	panel	813
-location	jerusalem	jerusalem	prose	473
+location	jerusalem	jerusalem	prose	474
 location	jerusalem	jerusalem	reader	813
 location	jezreel	jezreel	panel	36
 location	jezreel	jezreel	prose	10
@@ -711,7 +711,7 @@ person	jezebel	jezebel	reader	23
 person	joanna	joanna-follower-of-jesus	panel	2
 person	joanna	joanna-follower-of-jesus	reader	2
 person	job	job	panel	59
-person	job	job	prose	29
+person	job	job	prose	30
 person	job	job	reader	59
 person	johannes gutenberg	johannes-gutenberg	prose	1
 person	john	john-mark	reader	2
@@ -1444,7 +1444,7 @@ topic	jewish	jews	reader	7
 topic	jews	jews	panel	38
 topic	jews	jews	prose	48
 topic	jews	jews	reader	38
-topic	kurkh monolith	kurkh-monolith	prose	2
+topic	kurkh monolith	kurkh-monolith	prose	3
 topic	leningrad codex	masoretic-text	prose	5
 topic	levite	levites	panel	29
 topic	levite	levites	prose	8
@@ -1526,9 +1526,9 @@ topic	samaritans	samaritans	panel	7
 topic	samaritans	samaritans	prose	6
 topic	samaritans	samaritans	reader	7
 topic	scribes	scribes	panel	68
-topic	scribes	scribes	prose	30
+topic	scribes	scribes	prose	31
 topic	scribes	scribes	reader	66
-topic	sennacherib's prism	sennacherib-prism	prose	4
+topic	sennacherib's prism	sennacherib-prism	prose	5
 topic	septuagint	septuagint	prose	51
 topic	siloam inscription	siloam-inscription	prose	1
 topic	sinaiticus	codex-sinaiticus	prose	16
@@ -3547,6 +3547,7 @@ verse	revelation 2:8-11	-	prose	1
 verse	revelation 3	-	prose	1
 verse	revelation 3:1-6	-	prose	1
 verse	revelation 4:8	-	prose	1
+verse	revelation 9:10	-	prose	1
 verse	romans 10:9	-	prose	1
 verse	romans 11:1	-	prose	1
 verse	romans 11:11	-	prose	1

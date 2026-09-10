@@ -5292,12 +5292,12 @@ topic.section|cherubim|f99c2b95de	272	Moses	moses
 topic.section|chester-beatty-papyri|50bfa12c00	152	Paul	paul-of-tarsus
 topic.section|chester-beatty-papyri|50bfa12c00	46	Timothy	timothy
 topic.section|chester-beatty-papyri|50bfa12c00	57	Titus	titus
-topic.section|chester-beatty-papyri|bce8add8bd	114	Paul	paul-of-tarsus
-topic.section|chester-beatty-papyri|bce8add8bd	298	Isaiah	isaiah
-topic.section|chester-beatty-papyri|bce8add8bd	306	Jeremiah	jeremiah
-topic.section|chester-beatty-papyri|bce8add8bd	316	Ezekiel	ezekiel
-topic.section|chester-beatty-papyri|bce8add8bd	325	Daniel	daniel
-topic.section|chester-beatty-papyri|bce8add8bd	337	Esther	esther
+topic.section|chester-beatty-papyri|5c74492df0	305	Paul	paul-of-tarsus
+topic.section|chester-beatty-papyri|5c74492df0	651	Isaiah	isaiah
+topic.section|chester-beatty-papyri|5c74492df0	659	Jeremiah	jeremiah
+topic.section|chester-beatty-papyri|5c74492df0	669	Ezekiel	ezekiel
+topic.section|chester-beatty-papyri|5c74492df0	678	Daniel	daniel
+topic.section|chester-beatty-papyri|5c74492df0	690	Esther	esther
 topic.section|chester-beatty-papyri|c53f378519	91	Paul	paul-of-tarsus
 topic.section|chief-priests|035b63b523	128	Judas	judas-iscariot
 topic.section|chief-priests|035b63b523	216	Pilate	pontius-pilate
@@ -5309,6 +5309,7 @@ topic.section|chief-priests|5aac8830f8	331	Ananias	ananias-the-high-priest
 topic.section|chief-priests|e70d1b2d3f	214	Caiaphas	caiaphas
 topic.section|code-of-hammurabi|0d5c5d6ea2	539	Jesus	jesus-of-nazareth
 topic.section|code-of-hammurabi|85f43700a7	125	Moses	moses
+topic.section|codex-sinaiticus|28fea9501e	254	Job	job
 topic.section|codex-sinaiticus|511f8c0648	201	Barnabas	barnabas
 topic.section|codex-sinaiticus|da0fc044b7	388	Mark	john-mark
 topic.section|codex-sinaiticus|da0fc044b7	70	Mark	john-mark
@@ -5507,13 +5508,13 @@ topic.section|philistines|d684aafc59	514	David	david
 topic.section|pilate-stone|05a44d050f	220	Tiberius	tiberius-caesar
 topic.section|pilate-stone|05a44d050f	266	job	job
 topic.section|pilate-stone|05a44d050f	394	Pilate	pontius-pilate
-topic.section|pilate-stone|17b931f856	134	Herod the Great	herod-the-great
 topic.section|pilate-stone|69dc9ce4a3	23	Pilate	pontius-pilate
 topic.section|pilate-stone|69dc9ce4a3	385	Claudius	claudius-caesar
 topic.section|pilate-stone|69dc9ce4a3	425	Pilate	pontius-pilate
 topic.section|pilate-stone|69dc9ce4a3	52	Luke	luke-evangelist
 topic.section|pilate-stone|e2be0f8e61	147	Pontius Pilate	pontius-pilate
 topic.section|pilate-stone|e2be0f8e61	282	Tiberius	tiberius-caesar
+topic.section|pilate-stone|fcafd15513	160	Herod the Great	herod-the-great
 topic.section|romans|1a0b26f70d	106	Herod the Great	herod-the-great
 topic.section|romans|1a0b26f70d	175	Pontius Pilate	pontius-pilate
 topic.section|romans|1a0b26f70d	265	Caesar Augustus	caesar-augustus
@@ -5527,7 +5528,7 @@ topic.section|romans|1a0b26f70d	644	Luke	luke-evangelist
 topic.section|romans|270e0831a9	0	Paul	paul-of-tarsus
 topic.section|romans|270e0831a9	317	Caesar	tiberius-caesar
 topic.section|romans|270e0831a9	439	Paul	paul-of-tarsus
-topic.section|rylands-papyrus-p52|95937004c5	318	Pilate	pontius-pilate
+topic.section|rylands-papyrus-p52|6b7071b8a0	618	Pilate	pontius-pilate
 topic.section|sabbath|2131d6a1c0	211	Jesus	jesus-of-nazareth
 topic.section|sabbath|2131d6a1c0	29	Jesus	jesus-of-nazareth
 topic.section|sabbath|2131d6a1c0	399	Jesus	jesus-of-nazareth
@@ -5559,11 +5560,11 @@ topic.section|septuagint|0adc661a23	167	Daniel	daniel
 topic.section|septuagint|95977a2c7a	326	Jeremiah	jeremiah
 topic.section|septuagint|f8b64d96b0	259	Moses	moses
 topic.section|septuagint|f8b64d96b0	551	Job	job
+topic.section|siloam-inscription|10d06d1080	0	Hezekiah	hezekiah
 topic.section|siloam-inscription|3f6e3bad37	126	Hezekiah	hezekiah
 topic.section|siloam-inscription|42865f7ecf	79	job	job
 topic.section|siloam-inscription|4a9ae734bf	236	Hezekiah	hezekiah
 topic.section|siloam-inscription|751fc2bb82	19	Hezekiah	hezekiah
-topic.section|siloam-inscription|7e4416d1e6	0	Hezekiah	hezekiah
 topic.section|son-of-man|0410617176	358	Jesus	jesus-of-nazareth
 topic.section|son-of-man|0410617176	621	Jesus	jesus-of-nazareth
 topic.section|son-of-man|18a07518fb	381	Jesus	jesus-of-nazareth
