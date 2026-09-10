@@ -16876,4 +16876,886 @@ export const topics: Topic[] = [
       },
     ],
   },
+  {
+    id: "nag-hammadi-codices",
+    name: "Nag Hammadi Codices",
+    alternateNames: ["Nag Hammadi Library"],
+    // Registered here, deliberately, are four text titles that end in a canonical personal name.
+    // Left unregistered, the linker matches the bare name inside them and sends a reader who taps
+    // "Gospel of Philip" to the apostle Philip's page. `verseAnnotations.ts` already suppresses
+    // "Gospel of"/"Book of"/"Epistle of" for some people, but that map is a corpus-wide ruling and
+    // is not this batch's to change; pointing the whole title at the library that contains these
+    // four tractates is the in-lane fix, and it is also the more useful destination.
+    // NOT registered: bare "Nag Hammadi" — that is the town, and a town is not this record.
+    matchNames: [
+      "Gospel of Philip",
+      "Apocryphon of John",
+      "Letter of Peter to Philip",
+      "First Apocalypse of James",
+    ],
+    category: "manuscript",
+    role: "Thirteen Fourth-Century Coptic Books From Upper Egypt",
+    summary:
+      "Twelve surviving papyrus books and part of a thirteenth, dug up in Egypt in about 1945 and carrying forty-five otherwise mostly lost works of Greek-speaking Christianity's stranger edges — the single most important manuscript find for understanding the movements the early church argued with.",
+    sections: [
+      {
+        heading: "Books in a Jar, in 1945 or Thereabouts",
+        paragraphs: [
+          "The account everybody tells goes like this. In December 1945, near the cliff of Jabal al-Tarif in Upper Egypt, a farmer named Muhammad Ali al-Samman was digging for sabakh, the soft nitrous earth used as fertiliser, when his mattock struck a large sealed jar. He hesitated in case a jinn lived inside it, broke it open anyway hoping for gold, and found thirteen leather-bound papyrus books. He took them home, where some of the loose leaves went into his mother's bread oven. Weeks later he and his brothers avenged their father in a blood feud. The books reached the Cairo antiquities market, and from there the Coptic Museum.",
+          "Almost every element of that paragraph is disputed, and the second and third sections of this article are about why. What is not disputed is the outcome. The Coptic Museum in Cairo began acquiring the books in 1946 and holds the bulk of them today under inventory numbers 4851, 10544 to 10555, 10589, 10590, 11597 and 11640. Part of Codex I travelled a different route: it was bought from a dealer in Belgium by the Jung Institute of Zurich on 10 May 1952, which is why it is still called the Jung Codex, and it was returned to Cairo and reunited with the rest of Codex I in 1975 and 1976. The leather cover of Codex I and the scrap papyrus lining it belong to the Institute for Antiquity and Christianity in Claremont, California, and part of one leaf of Codex III is at Yale.",
+          "The physical facts are firmer than the story. S. Emmel, who worked on the editing project, records that what survives is \"extensive remains of eleven papyrus books in codex form with leather covers (Codices I-XI); eight leaves (as well as two large fragments that probably represent two further leaves) of a twelfth codex, the bulk and leather cover of which are assumed to have been lost since the discovery (Codex XII); and eight leaves (Codex XIII) that had been removed in antiquity from a thirteenth codex and laid inside the front cover of Codex VI.\" The original collection ran to at least 1,240 written pages, of which 1,156 are represented by at least a fragment. Seven hundred and thirteen inscribed scraps have never been placed.",
+        ],
+      },
+      {
+        heading: "What the Books Contain, and What They Are Not",
+        paragraphs: [
+          "Fifty-one texts, of which forty-five are distinct works and thirty-six were previously unknown in any form. All were composed in Greek, over the first four centuries, in various parts of the Mediterranean world, and translated into Coptic — most into Sahidic, some into a variety of Lycopolitan. The books themselves are fourth-century: one of the dated documents reused as stiffening in the cover of Codex VII shows that cover was made some time after AD 348. They are among the oldest well-preserved bound books of any kind to survive. Among them are the Gospel of Truth, the Secret Book of John, the Gospel of Philip, and the Gospel of Thomas.",
+          "None of this is a suppressed Bible. The popular \"banned books\" framing fails on the plainest evidence there is, which is dates and public records. Specialists date these works to the second century or later, with the Gospel of Thomas the one genuine argument about that — long after the four Gospels were circulating and being copied. And where the early church discusses such books, it does so openly and in writing. Eusebius of Caesarea, listing the books of his own day around AD 325, sorts them into the accepted, the disputed, the rejected, and then a fourth group he describes as \"those that are cited by the heretics under the name of the apostles\" — of which he says they \"are not to be placed even among the rejected writings, but are all of them to be cast aside as absurd and impious.\" That is a hostile verdict, and this article's position is that it was broadly the right one. But it is a published verdict in a widely-read book, naming names. Suppression is what you do when you cannot argue; cataloguing your opponents' titles in a history everyone reads is the opposite.",
+          "What the codices are is something better than a conspiracy: the best evidence anyone has for what the early church was actually arguing against. Before 1945 the teachings in these books were known almost entirely from the churchmen who attacked them, which is a poor way to learn what anyone believed. Now they can be read directly. A reader who wants to see why the New Testament's own warnings about \"what is falsely called knowledge\" were not shadow-boxing has, for the first time in sixteen centuries, the other side of the correspondence.",
+        ],
+      },
+      {
+        heading: "Nobody Can Say Where They Came From",
+        paragraphs: [
+          "These books were not excavated. There is no dig report, no stratigraphy, no photograph of them in the ground. Excavation was attempted later, at the reported spot, and produced nothing that corroborated the account — which is a harder fact than \"nobody looked\". What is known of the find comes from interviews J. M. Robinson conducted from the 1970s onward, thirty years after the event, and the objection to that method is not new: R. Kasser and M. Krause put a signed disclaimer into the introductory volume of the facsimile edition itself, stating that they \"have serious reasons to put in doubt the objective value of a number of important points\" of Robinson's account and do \"not consider as assured anything more than the core of the story (the general location and approximate date of the discovery).\" Robinson answered that his was ordinary historical method and could be checked: \"This methodical and critical investigation is what history is made of, not fable. Like scientific experiment, it can be repeated, and unless that is done with contrary results, it is unscientific to deny the validity of the result attained thus far.\" M. Goodacre, who has pressed the case against the story hardest, does not answer that on its merits: he observes that too much time has now passed for such a re-investigation to be possible at all, and that \"Robinson's critics themselves never attempted to do this, perhaps not surprisingly given the content of their criticism, which is about the unreliable nature of this kind of testimony in general.\"",
+          "Goodacre's own objection is that the story exists in irreconcilable versions — two people present in 1977, seven in 1979, eight in 1981, with the name of the first finder changing — and that the reasons it is repeated are not evidential: \"In its orientalizing representation of illiterate, ignorant, blood-thirsty peasants, it enables academics to celebrate their literacy, civilization and wealth,\" and \"pedagogical usefulness is not a barometer of truth.\" He also asks a plainly practical question: \"Should we continue to speak about 'thirteen codices' when it is clear that only twelve complete codices have survived?\" N. Denzey Lewis and J. A. Blount pressed further in 2014, arguing that a jar of papyrus could not have survived sixteen centuries of Nile flooding at the base of a cliff, and that higher up \"is hardly the place to dig for sabakh\" — so \"it is entirely reasonable to suspect that he was searching for illegal antiquities: tomb robbing.\" Denzey Lewis has since softened the part of that case aimed at Robinson personally, writing in 2018 that she is now \"less inclined to say that\" he \"himself invented this story\" and thinks instead that \"he believed a story that came together from a well-organized ring of dealers.\" Her verdict on how much is recoverable is worth quoting because it is the honest floor: \"We can only guess.\"",
+          "One further dispute follows from all this and is very much alive. If the books were not monastic property hidden after Athanasius of Alexandria's festal letter of 367 — the standard explanation for decades — then what were they? Denzey Lewis and Blount argue the monastic setting is unevidenced, that the papyrologists who examined the cover stiffening concluded against a monastic source and for a \"town rubbish heap,\" and — following D. Brakke, whose article this one has not read directly and cites at second hand through them — that the writings Athanasius's letter was aimed at were his Arian and Meletian opponents rather than anything in these books. But H. Lundhaug and L. Jenott answered in 2015 with a book-length case that the codices were made and read by monks in fourth- and fifth-century Upper Egypt, arguing from the scribal notes and colophons the books themselves carry. P. Linjamaa's 2024 survey of the whole quarrel describes the debate as \"polarised\" and reports that the sceptical case has itself \"received considerable critique.\" It is not settled, and an article that told you it was would be telling you something the specialists do not know.",
+        ],
+      },
+    ],
+    verses: [
+      { reference: "1 Timothy 6:20-21", note: "\"What is falsely called knowledge\" — gnosis is the word Paul uses" },
+      { reference: "Colossians 2:8-9", note: "Written against a teaching that set fullness of deity apart from a real body" },
+      { reference: "1 John 4:1-3", note: "The apostolic test: confessing that Jesus Christ has come in the flesh" },
+      { reference: "2 Peter 1:16", note: "Not cunningly devised fables, but eyewitness testimony — the claim these books do not make" },
+    ],
+    sources: [
+      { label: "Nag Hammadi Archive, Claremont Colleges Library", url: "https://calisphere.org/collections/26630/" },
+      { label: "M. Goodacre, \"How Reliable is the Story of the Nag Hammadi Discovery?\"", url: "https://markgoodacre.org/NagHammadiStory.pdf" },
+      { label: "P. Linjamaa, The Nag Hammadi Codices and their Ancient Readers (open access)", url: "https://doi.org/10.1017/9781009441483.001" },
+    ],
+    manuscript: {
+      manuscriptType:
+        "Papyrus codices with leather covers, single-quire except Codex I, the covers stiffened with scrap papyrus",
+      language:
+        "Coptic — mostly Sahidic, with Codices I and X and the first two texts of XI in a variety of Lycopolitan. Every text is a translation from Greek",
+      contents:
+        "Fifty-one texts, being forty-five distinct works of which thirty-six were previously unknown; at least 1,240 written pages originally, 1,156 of them now represented by at least a fragment, plus 713 unplaced scraps. Among them the Gospel of Truth, the Secret Book of John, the Gospel of Philip and the Gospel of Thomas. Popular counts of \"52 tractates\" and scholarly counts of 45 differ because several works occur twice",
+      origin:
+        "The individual works were composed in Greek across the first four centuries in various parts of the Mediterranean world; the Coptic translations and the books themselves are generally placed in the latter half of the fourth century, somewhere near where they were found",
+      findSite:
+        "Reported as the foot of the Jabal al-Tarif near Hamrah Dum, Upper Egypt — but this rests on interviews conducted thirty years later, later excavation at the spot corroborated nothing, and J. Doresse's earlier account places the find in an ancient cemetery at Qasr es-Sayyad instead. The books' only documented appearance is on the Cairo antiquities market",
+      foundYear:
+        "Conventionally December 1945. N. Denzey Lewis notes that \"neither the year nor the place of the books' discovery was initially specified\" and that early accounts range from 1945 to 1949",
+      foundBy:
+        "Credit is contested. The standard account names a farmer, Muhammad Ali al-Samman, digging for fertiliser with his brothers; the number of people present varies between two, seven and eight across Robinson's own retellings, and the excavators R. Kasser and M. Krause published a signed disclaimer against the whole reconstruction",
+      dateAssigned:
+        "The codices, fourth century — a dated document reused in the cover of Codex VII places that cover after AD 348. The works copied into them were composed at various dates over the first four centuries",
+      dateCertainty: "firm",
+      currentLocation:
+        "Coptic Museum, Cairo (the bulk). The leather cover and cover stiffening of Codex I are at the Institute for Antiquity and Christianity, Claremont, California; part of one leaf of Codex III is at the Beinecke Rare Book and Manuscript Library, Yale",
+      shelfmark: "Coptic Museum, Cairo, inv. nos. 4851, 10544-10555, 10589, 10590, 11597, 11640; Yale 1784 for the Yale leaf",
+      facsimileUrl: "https://ccdl.claremont.edu/digital/collection/nha",
+    },
+    citations: [
+      {
+        tier: "institution",
+        label: "Nag Hammadi Archive, Claremont Colleges Library",
+        url: "https://calisphere.org/collections/26630/",
+        credit: "Claremont Colleges Library, via Calisphere",
+        detail:
+          "The owning institution's own description of its photographic archive, read in full. Source of the statement that the codices are conserved at the Coptic Museum in Cairo and \"are no longer completely legible\", so that the 1970s photographs are \"one of the only means of deciphering\" them, and of the identification of the J-series negatives taken by B. Psiroukis in September 1973. The images themselves are marked \"Copyright is retained in accordance with U. S. Copyright laws\" and are linked here, not reproduced",
+        supports: "Where the codices are, their present condition, and the photographic record",
+      },
+      {
+        tier: "scholarly",
+        label: "S. Emmel, \"Nag Hammadi Library\", in The Coptic Encyclopedia",
+        url: "https://ccdl.claremont.edu/digital/api/collection/cce/id/1418/download",
+        credit: "Stephen Emmel",
+        detail:
+          "Free PDF from the Claremont Colleges Digital Library, downloaded and read in full. Written by a member of the Nag Hammadi Codices Editing Project. Source of the codex-by-codex survival figures, the page counts, the counts of 51 texts / 45 distinct works / 36 previously unknown, the Coptic dialects, the Coptic Museum inventory numbers, the Claremont and Yale holdings, the 713 unplaced fragments, and the post-348 cartonnage date for the cover of Codex VII. Emmel is himself a defender of the core of the find story, and the sentence usually clipped from him runs in full: \"Although the details of the discovery have remained unverified, despite archaeological investigation, there is little reason to doubt the eyewitness reports that the books were found in a ceramic jar hidden at the Jabal al-Tarif\"",
+        supports: "Every physical and codicological fact in the article, and the holdings",
+      },
+      {
+        tier: "scholarly",
+        label: "M. Goodacre, \"How Reliable is the Story of the Nag Hammadi Discovery?\"",
+        url: "https://markgoodacre.org/NagHammadiStory.pdf",
+        credit: "Mark Goodacre",
+        detail:
+          "Journal for the Study of the New Testament 35/4 (2013), 303-322, DOI 10.1177/0142064X13482243. The free PDF on the author's own site was downloaded and read in full; every sentence quoted from him here was compared against it. Source of the two-, seven- and eight-person versions, the Kasser and Krause disclaimer as printed in the facsimile edition's introductory volume, Robinson's reply, Goodacre's concession that the critics never repeated the investigation, and the twelve-versus-thirteen codices point",
+        supports: "The whole of the third section's account of the find story and its critics",
+      },
+      {
+        tier: "scholarly",
+        label: "N. Denzey Lewis and J. A. Blount, \"Rethinking the Origins of the Nag Hammadi Codices\"",
+        url: "https://doi.org/10.15699/jbibllite.133.2.399",
+        credit: "Nicola Denzey Lewis and Justine Ariel Blount",
+        detail:
+          "Journal of Biblical Literature 133/2 (2014), 399-419. Paywalled at the publisher; the full text was read and every quotation here byte-checked against it. Source of the sabakh objection, the tomb-robbing suggestion, the report that the cartonnage papyrologists concluded for a \"town rubbish heap\" against a Pachomian origin, and the argument that Athanasius's thirty-ninth festal letter is irrelevant to these books",
+        paywalled: true,
+        supports: "The case against the find story and against the monastic-origins explanation",
+      },
+      {
+        tier: "scholarly",
+        label: "N. Denzey Lewis, \"(Still) Rethinking the Origins of the Nag Hammadi Codices\"",
+        url: "https://themarginaliareview.com/still-rethinking-the-origins-of-the-nag-hammadi-codices/",
+        credit: "Nicola Denzey Lewis",
+        detail:
+          "The Marginalia Review of Books, 6 July 2018, free and read in full. Cited specifically because it is where she withdraws part of her earlier charge against Robinson personally, and because it carries her statements that \"Cairo is thus their only actual, known provenance\" and that on the ultimate source of the books \"we can only guess\"",
+        supports: "Her revised position, and the limits of what the provenance can show",
+      },
+      {
+        tier: "scholarly",
+        label: "P. Linjamaa, The Nag Hammadi Codices and their Ancient Readers, Introduction: The Provenance Controversy",
+        url: "https://doi.org/10.1017/9781009441483.001",
+        credit: "Paul Linjamaa",
+        detail:
+          "Cambridge University Press, 2024, pp. 1-22, open access under CC BY-NC 4.0 and read in full. A 2024 survey of the whole quarrel, cited here for the state of the question rather than for a position: it reports that A. Khosroyev's case against monastic origins has \"received considerable critique\", that H. Lundhaug and L. Jenott have reformulated the monastic hypothesis from the codices' own scribal notes and colophons, and that the debate remains \"polarised\"",
+        supports: "That the monastic-origins question is open, and the fair statement of the other side",
+      },
+      {
+        tier: "primary",
+        label: "Eusebius, Church History 3.25 (Nicene and Post-Nicene Fathers, series II, vol. I)",
+        url: "https://en.wikisource.org/wiki/Nicene_and_Post-Nicene_Fathers:_Series_II/Volume_I/Church_History_of_Eusebius/Book_III/Chapter_25",
+        credit: "Eusebius of Caesarea, translated by A. C. McGiffert",
+        detail:
+          "Public domain, hosted at Wikisource, read in full. The chapter's own title is \"The Divine Scriptures that are accepted and those that are not\". Source of the four-way classification quoted here, and of the exact wording placing the heretics' apostolic gospels below even the rejected books",
+        supports: "That such books were catalogued and refused in public, not suppressed",
+      },
+      {
+        tier: "scholarly",
+        label: "J. Zandee, \"Codex Jung\", in The Coptic Encyclopedia",
+        url: "https://ccdl.claremont.edu/digital/api/collection/cce/id/486/download",
+        credit: "Jan Zandee",
+        detail:
+          "Free PDF from the Claremont Colleges Digital Library, downloaded and read in full. The source of every date in this article for the Jung Codex: purchase from an antiquities dealer in Belgium by the Jung Institute of Zurich on 10 May 1952, the pages it contained, and its return to Cairo and reunification with the rest of Codex I in 1975 and 1976. It also gives Codex I\u2019s dialect under the older name Subakhmimic, which is the same thing Emmel calls Lycopolitan",
+        supports: "The Jung Codex, its purchase and its return",
+      },
+      {
+        tier: "encyclopedic",
+        label: "Wikipedia: Nag Hammadi library",
+        url: "https://en.wikipedia.org/wiki/Nag_Hammadi_library",
+      },
+    ],
+  },
+  {
+    id: "gospel-of-thomas",
+    name: "Gospel of Thomas",
+    // NOT registered: bare "Thomas" — that is the apostle, who owns it in people.ts. The full title
+    // is longer than the bare name and so wins the match wherever it is written out in full, which
+    // is why this article never writes "Thomas" on its own to mean the book.
+    category: "manuscript",
+    role: "A Coptic Sayings Collection, and Three Greek Scraps That Came First",
+    summary:
+      "One hundred and fourteen sayings of Jesus with no story around them — found complete in Coptic at Nag Hammadi, and recognised only afterwards as the text behind three Greek fragments that had been sitting in print, unidentified, since 1897.",
+    sections: [
+      {
+        heading: "Printed in 1897, Identified in 1952",
+        paragraphs: [
+          "On the second day of their first season digging the rubbish mounds of Oxyrhynchus, in January 1897, B. P. Grenfell and A. S. Hunt turned up a leaf carrying sayings of Jesus that were not in any Gospel. They rushed it into print the same year as a shilling pamphlet, Logia Iesou: Sayings of Our Lord from an Early Greek Papyrus, and dated the hand not much later than the year 200. Two more fragments of the same work appeared in the fourth volume of The Oxyrhynchus Papyri in 1904. Nobody knew what the work was. It was a collection of unplaced sayings with no title and no context, and it stayed that way for half a century.",
+          "The Coptic manuscript found at Nag Hammadi settled it. Working in the Coptic Museum in Cairo alongside G. Quispel in about 1952, H.-C. Puech recognised that the Oxyrhynchus fragments were pieces of the complete text in front of him; he published the identification in 1957. A. D. DeConick draws out why that mattered: it \"meant that the Coptic was a translation from an earlier Greek version of the Gospel, and since one of the Greek papyri had been dated to 200 CE, this meant that there was manuscript evidence of this Gospel 150 years older than the Coptic.\"",
+          "The three Oxyrhynchus pieces are scattered. P.Oxy. 1 is a codex leaf at the Bodleian Library, Oxford; P.Oxy. 654 is a reused roll at the British Library, with an unpublished land survey on the back; P.Oxy. 655 is six small fragments of a two-column leaf at the Houghton Library, Harvard. They do not agree with the Coptic in detail, which is itself informative — R. Cameron judges the differences \"best explained as variants resulting from the circulation of more than one Greek edition\" in antiquity, and concludes that \"the text of Gos. Thom. must be regarded as unstable.\"",
+        ],
+      },
+      {
+        heading: "A Book With No Story In It",
+        paragraphs: [
+          "S. J. Patterson describes what a reader actually meets. In contrast to the canonical gospels, he writes, this book \"has no narrative. It does not tell a story of Jesus' life. It contains only a few brief anecdotal stories. In it there are no stories of Jesus' birth, baptism, his preaching at Nazareth. There are no stories of his entry into Jerusalem, his arrest, crucifixion, or resurrection.\" What there is instead is a list, most items beginning \"Jesus said\". It opens by promising secret sayings and by making the stakes of interpretation the whole point: whoever finds their meaning \"will not experience death\".",
+          "About half the sayings have parallels in the first three Gospels. The other half were unknown before 1945. Some are close to the canonical wording, some are recognisable but turned, and some are strange — the kingdom \"spread out upon the earth\", a two-word saying, \"Become passers-by\", and a closing exchange in which Simon Peter demands that Mary Magdalene — so she is generally identified, though the text gives only the first name — be sent away, and Jesus answers that he will lead her \"in order to make her male\". That last one is the book's most-quoted sentence and the one most often used as a cudgel in both directions. It is worth reading beside the earlier saying about making the two into one, which is how specialists on every side of the dating question generally take it; and it is worth knowing that DeConick, who argues for a very early core, assigns it to the collection's latest layer rather than to anything traceable back to Jesus.",
+          "There is no evidence this book was ever a candidate for the New Testament. Hippolytus of Rome, writing between 222 and 235, quotes a saying \"occurring in the Gospel inscribed according to Thomas\" and rebuts it by pointing out that it is really a line of Hippocrates. Eusebius puts books of this kind below even his rejected category. No ancient writer argues for its inclusion; no canon list contains it; no council is recorded as debating it. One honest caution, and it comes from a scholar in the early-dating camp: Cameron warns that bare title-only references in the fathers \"must be treated with care, since they might refer to the Infancy Gospel of Thomas\", a completely different work. Hippolytus is the one citation that quotes text we can match.",
+        ],
+      },
+      {
+        heading: "How Old Is It? The Field Is Genuinely Split",
+        paragraphs: [
+          "Everything turns on one question: does this book draw on the Synoptic Gospels, or does it draw on the same older stream they drew on? Cameron states the dependency between the two questions with unusual candour, and it explains why the argument never ends: \"If Gos. Thom. is a sayings collection based on an autonomous tradition, and not a gospel harmony conflated from the NT, then a date of composition in, say, the last decades of the 1st century would be more likely than a mid-to-late-2d-century date.\" The date follows from the judgement about sources, not the other way round.",
+          "The case for independence is real and should be met at its strongest. Patterson gives three arguments: that where the same saying occurs in both, the form in this book is often the more primitive; that there is \"between them virtually no shared order\", which is not what literary borrowing usually looks like; and that its genre, the bare sayings collection, belongs to an early period \"contemporaneous with Q\". H. Koester went further, calling its material a \"direct and almost unbroken continuation of Jesus' own teaching\" — a sentence quoted here as DeConick prints it from his 1971 essay, not from a copy of Koester this article has opened. DeConick's position is more careful than either label allows: she reads the book as a \"rolling corpus\", an old core which, in her words, \"appears to have contained five speeches of Jesus\" whose contents \"point to their origin in the Jerusalem mission prior to 50 CE\" — onto which a Syrian community's later reinterpretations accumulated over generations — so that parts of it may be very early and parts of it certainly are not. She also rejects the \"Gnostic gospel\" framing outright, finding \"no distinctive feature of Gnostic mentality\" in the sayings.",
+          "The case for a second-century book that knows the Synoptics has gained substantial ground since 2012. M. Goodacre argues that the verbal agreement is sometimes too close to be anything but a literary relationship — including, in his own words, \"a 13-word verbatim agreement (Mt. 7.5 // Lk. 6.42 // Gos. Thom. 26 …)\" and \"a phrase that is never found in Greek literature until it appears in the parallel between Lk. 17.21 and Gos. Thom. 3\" — and that the decisive test is whether the redactional fingerprints of one text show up in the other, what he calls \"diagnostic shards\". His most intuitive argument is about coverage: this book has parallels to material from \"every single strand of Synoptic material\" — the double tradition, the triple tradition, and the matter peculiar to each of the three — so that if it did not know them, \"the author was able to access material from every pool of tradition that fed them\". S. Gathercole argued in parallel that the book was composed in Greek rather than translated from Aramaic or Syriac, which cuts against the reconstructions the early-dating case has leaned on; this article has not read Gathercole's volumes directly and reports his thesis at second hand, which is worth saying plainly.",
+          "Where does that leave a reader? Not with a settled answer. An early, independent book was the more common view among specialists through the 1990s and 2000s; since 2012 the case for a second-century book dependent on the Synoptics has gained ground far enough that the Society of Biblical Literature's own public reference work now presents a date of roughly AD 135 to 200. The early camp has not conceded, and Goodacre himself grants that he and Gathercole \"may sometimes give the impression\" that the relationship \"is as straightforward as the lines that students draw\" — adding, in the same breath, that \"the maps we draw and the models we make are necessarily simpler than the reality that they are attempting to represent.\" This app's own position is that the four Gospels are the trustworthy record, and that is a theological commitment held before the evidence rather than a result read off it. What the evidence itself supports is narrower and worth having on its own terms: whichever date wins, this is a real second-century document that tells us a great deal about how some Christians in Syria remembered and reworked the words of Jesus — and, as the Bible Odyssey article puts it, \"a later date for the Gospel of Thomas is not a negative judgment.\"",
+        ],
+      },
+    ],
+    verses: [
+      { reference: "Luke 17:20-21", note: "The kingdom not coming with observation — the closest canonical parallel to this book's central theme" },
+      { reference: "Matthew 7:5", note: "The beam and the speck: the thirteen-word verbatim agreement at the centre of the dependence argument" },
+      { reference: "John 20:30-31", note: "A Gospel that states its own purpose, and names it as belief rather than secret knowledge" },
+      { reference: "1 Timothy 6:20-21", note: "\"What is falsely called knowledge\" — the apostolic warning this book is usually read against" },
+    ],
+    sources: [
+      { label: "The Oxyrhynchus Papyri, University of Oxford: Location-List", url: "https://oxyrhynchus.web.ox.ac.uk/location-list" },
+      { label: "A. D. DeConick, \"The Gospel of Thomas\" (open access, Rice University)", url: "https://repository.rice.edu/server/api/core/bitstreams/e001a3e4-3823-4050-8030-d7c8befc2f89/content" },
+      { label: "M. Goodacre, \"Did Thomas Know the Synoptic Gospels?\"", url: "https://markgoodacre.org/Did%20Thomas.pdf" },
+      { label: "Bible Odyssey (SBL): When was the Gospel of Thomas written?", url: "https://www.bibleodyssey.org/articles/when-was-the-gospel-of-thomas-written/" },
+    ],
+    manuscript: {
+      manuscriptType:
+        "One Coptic papyrus codex (Nag Hammadi Codex II, second tractate) and three Greek fragments from Oxyrhynchus — a codex leaf, a reused roll, and six scraps of a two-column leaf",
+      language: "Coptic (Sahidic), translated from Greek; the three Oxyrhynchus fragments are the Greek",
+      contents:
+        "114 sayings, mostly introduced \"Jesus said\", with no narrative, no passion and no resurrection account. About half have parallels in Matthew, Mark or Luke. The Coptic is complete at Nag Hammadi Codex II pp. 32-51; the Greek fragments preserve only parts — P.Oxy. 1 has sayings 26-33 and 77b, P.Oxy. 654 the prologue through saying 7, P.Oxy. 655 sayings 24 and 36-39. The Greek and the Coptic do not agree in detail",
+      origin: "Generally placed in Syria; the surviving copies were made in Egypt",
+      findSite:
+        "The Coptic: Nag Hammadi, Upper Egypt, in about 1945 — see the Nag Hammadi Codices for how little about that is certain. The Greek: the rubbish mounds of Oxyrhynchus, Middle Egypt, in the seasons of 1897 and 1903-04",
+      foundYear: "P.Oxy. 1 in January 1897; P.Oxy. 654 and 655 published 1904; the Coptic in about 1945",
+      foundBy:
+        "The Greek fragments by B. P. Grenfell and A. S. Hunt for the Egypt Exploration Fund. The Coptic by the finders of the Nag Hammadi codices, whose identity is contested. The recognition that these are the same work was made by H.-C. Puech in about 1952, working with G. Quispel, and published in 1957",
+      dateAssigned:
+        "Disputed, and the dispute is the article. Roughly AD 70-80 on S. J. Patterson's reckoning; a first-century core with later accretions on A. D. DeConick's; early-to-middle second century on M. Goodacre's; roughly AD 135-200 in the Society of Biblical Literature's own reference work. The manuscripts themselves: P.Oxy. 1 is dated between the second century and the third, P.Oxy. 654 to about 200-250, P.Oxy. 655 to the third century, and the Coptic codex to the fourth",
+      dateCertainty: "disputed",
+      currentLocation:
+        "Coptic Museum, Cairo (Nag Hammadi Codex II); Bodleian Library, Oxford (P.Oxy. 1); British Library, London (P.Oxy. 654); Houghton Library, Harvard (P.Oxy. 655)",
+      shelfmark:
+        "Cairo, Coptic Museum, inv. 10544; Oxford, Bodleian Library, MS. Gr. th. e. 7 (P); London, British Library, Pap. 1531; Cambridge MA, Houghton Library, SM Inv. 4367",
+      facsimileUrl: "https://ccdl.claremont.edu/digital/collection/nha/id/2859",
+    },
+    citations: [
+      {
+        tier: "institution",
+        label: "The Oxyrhynchus Papyri, University of Oxford: Location-List",
+        url: "https://oxyrhynchus.web.ox.ac.uk/location-list",
+        credit: "The Oxyrhynchus Papyri project, University of Oxford",
+        detail:
+          "The project's own tabular location list, read directly rather than through a summary. It is the source of all three shelfmarks and holdings: P.Oxy. 1 at the Bodleian as Ms. Gr. Th. e 7 (P), 654 at the British Library as Inv. 1531 (its key notes the transfer from the British Museum), and 655 at the Houghton Library, Harvard, as SM Inv. 4367",
+        supports: "Where each Greek fragment is and under what shelfmark",
+      },
+      {
+        tier: "scholarly",
+        label: "A. D. DeConick, \"The Gospel of Thomas\"",
+        url: "https://repository.rice.edu/server/api/core/bitstreams/e001a3e4-3823-4050-8030-d7c8befc2f89/content",
+        credit: "April D. DeConick",
+        detail:
+          "The Expository Times 118/10 (2007), open access in Rice University's institutional repository and read in full. Source of the rolling-corpus model in her own words, of the Kernel dating and its Jerusalem setting, of her rejection of the Gnostic framing, of her placing of saying 114 among the accretions, and of the account of H.-C. Puech's identification in about 1952 and its significance",
+        supports: "The identification of 1952, the rolling-corpus position, and the layering of the sayings",
+      },
+      {
+        tier: "reference",
+        label: "S. J. Patterson, \"The Gospel of Thomas and Jesus\"",
+        url: "https://www.dialoguejournal.com/wp-content/uploads/sbi/articles/Dialogue_V28N02_131.pdf",
+        credit: "Stephen J. Patterson",
+        detail:
+          "Dialogue: A Journal of Mormon Thought 28/2, open access and read in full; his three arguments for independence and his description of what the book is are quoted from it. His dating of roughly AD 70-80 is from his monograph The Gospel of Thomas and Jesus (Polebridge, 1993), 120, which this article has not read directly",
+        supports: "The case for independence, stated by one of its principal advocates",
+      },
+      {
+        tier: "scholarly",
+        label: "M. Goodacre, \"Did Thomas Know the Synoptic Gospels? A Response to Denzey Lewis, Kloppenborg and Patterson\"",
+        url: "https://markgoodacre.org/Did%20Thomas.pdf",
+        credit: "Mark Goodacre",
+        detail:
+          "Journal for the Study of the New Testament 36/3 (2014), 282-293, DOI 10.1177/0142064X14523523. Free PDF on the author's own site, downloaded and read in full; the diagnostic-shards definition, the thirteen-word agreement, the every-pool argument and his own concession are quoted from it. His book is Thomas and the Gospels: The Case for Thomas's Familiarity with the Synoptics (Eerdmans, 2012), published in Britain by SPCK as Thomas and the Gospels: The Making of an Apocryphal Text",
+        supports: "The case for second-century dependence, stated by its principal advocate",
+      },
+      {
+        tier: "reference",
+        label: "Bible Odyssey (Society of Biblical Literature): When was the Gospel of Thomas written?",
+        url: "https://www.bibleodyssey.org/articles/when-was-the-gospel-of-thomas-written/",
+        credit: "Simeon Burke, for the Society of Biblical Literature",
+        detail:
+          "Cited for the field's current public reference position — a date of about AD 135 to 200 — and for its own statement that the question \"remains highly controversial\". Also the source of the closing observation that a later date is not a negative judgment",
+        supports: "The current state of the question, from a body with no stake in this app's position",
+      },
+      {
+        tier: "primary",
+        label: "Hippolytus, Refutation of All Heresies, book V (Ante-Nicene Fathers, vol. V)",
+        url: "https://en.wikisource.org/wiki/Ante-Nicene_Fathers/Volume_V/Hippolytus/The_Refutation_of_All_Heresies/Book_V/Part_3",
+        credit: "Hippolytus of Rome, translated by A. Roberts and J. Donaldson",
+        detail:
+          "Public domain, hosted at Wikisource, read for the passage in question. The one patristic citation that quotes matchable text: Hippolytus reports a saying from \"the Gospel inscribed according to Thomas\" and answers it by attributing the thought to Hippocrates",
+        supports: "The earliest datable external notice, and its hostility",
+      },
+      {
+        tier: "reference",
+        label: "R. Cameron, \"Thomas, Gospel of\", in The Anchor Bible Dictionary",
+        url: "https://www.earlychristianwritings.com/thomas.html",
+        credit: "Ron Cameron",
+        detail:
+          "Anchor Bible Dictionary, vol. 6, 535-540. This article has not opened the printed dictionary; every sentence quoted from Cameron here was read on the page linked, which reproduces the relevant passages with page references (dating at 536, attestation and the Hippolytus point at 535). Source of the judgement that the Greek and Coptic differences point to more than one Greek edition and that the text \"must be regarded as unstable\", of the statement that the date follows from the judgement about sources, and of his warning that title-only patristic references may mean the Infancy Gospel instead. H. Koester's sentence about unbroken continuation is NOT on this page; that one was checked in DeConick's article, which prints it from his 1971 essay",
+        supports: "The instability of the text, the logic of the dating argument, and the caution about patristic references",
+      },
+      {
+        tier: "encyclopedic",
+        label: "Wikipedia: Gospel of Thomas",
+        url: "https://en.wikipedia.org/wiki/Gospel_of_Thomas",
+      },
+    ],
+  },
+  {
+    id: "didache",
+    name: "Didache",
+    alternateNames: ["Teaching of the Twelve Apostles"],
+    matchNames: ["Codex Hierosolymitanus", "Bryennios Manuscript"],
+    category: "manuscript",
+    role: "The Earliest Surviving Christian Church Manual",
+    summary:
+      "Sixteen short chapters telling a first- or early-second-century congregation how to baptise, how to pray, how to hold the Lord's Supper and how to spot a con man claiming to be a prophet — lost for centuries and found in 1873 in a Constantinople library, in a codex a scribe signed and dated to 1056.",
+    sections: [
+      {
+        heading: "One Codex, Signed and Dated",
+        paragraphs: [
+          "In 1873 Philotheos Bryennios, then head of the Patriarchal Great School of the Nation in Constantinople and later Metropolitan of Serres and of Nicomedia, was working through the library of the Monastery of the Holy Sepulchre in the Phanar — the Jerusalem Patriarchate's dependency in the city — when he came across a Greek parchment codex. He published its two letters of Clement in 1875. The Didache he published in 1883, ten years after he first opened the book.",
+          "The manuscript is unusually well documented for its age, because the man who made it signed his work: a notary named Leon, who dated the subscription to 11 June 1056. It is 120 leaves, and the professional catalogue of Greek manuscripts lists seven works in it: a synopsis of Scripture attributed to John Chrysostom, the Epistle of Barnabas, 1 and 2 Clement, the Didache, the letters of Ignatius in their longer form, and a short piece on the genealogy of Christ through his legal father. The Didache occupies about six leaves in the middle. The codex is now in the Patriarchal Library of the Orthodox Patriarchate in Jerusalem as Panaghiou Taphou 54, and the Library of Congress microfilmed it: 123 public-domain images, freely viewable, of the only complete copy of this text that exists.",
+          "Almost everything else is scraps. Two small parchment fragments from Oxyrhynchus, catalogued P.Oxy. XV 1782 and dated to the late fourth century, carry parts of the first three chapters. A leaf in Coptic in the British Library carries part of chapters 10 to 12, and includes a thanksgiving over ointment that is in no Greek copy at all. There are Ethiopic and Latin pieces, and a Georgian version whose manuscript has since been lost and whose independence scholars dispute. For a document this important, the evidence is one book, dated 1056, plus fragments.",
+        ],
+      },
+      {
+        heading: "What a Church Actually Did",
+        paragraphs: [
+          "It opens with a catechism: \"There are two ways, one of life and one of death, and there is a great difference between the two ways.\" Then it turns practical. Baptise in running water in the threefold name if you can; in other water if you cannot; in warm water if the cold is too much; and \"if thou hast neither, then pour water on the head thrice in the name of the Father and of the Son and of the Holy Spirit.\" Both the person baptising and the person being baptised should fast first. Fast on Wednesdays and Fridays, not Mondays and Thursdays, because that is what the hypocrites do. Pray the Lord's Prayer three times a day — and note that the version given here closes with two clauses, \"for Thine is the power and the glory for ever and ever,\" without the kingdom that later liturgy adds.",
+          "The eucharistic prayers come next, cup before bread, with the image of grain scattered on the hills and gathered into one loaf as a picture of the church, and the rule that only the baptised may share it. Then the part that gives the whole document its flavour: how to handle travelling apostles and prophets. Receive an apostle as you would the Lord — but he stays one night, two if he must, and \"if he abide three days, he is a false prophet\"; he leaves with bread and nothing else, and \"if he ask money, he is a false prophet.\" A prophet who teaches the truth but does not do it is a false prophet. Genuine prophets, on the other hand, get the firstfruits, \"for they are your chief-priests\". Then a line of church order that is itself a dating argument: \"Appoint for yourselves therefore bishops and deacons worthy of the Lord\" — bishops and deacons, with no third order of presbyters between them. The last chapter turns to the end of the world, names a \"world-deceiver\" who will come as a son of God, and then simply stops: \"Then shall the world see the Lord coming upon the clouds of heaven.\" There is no judgement scene. K. Niederwimmer and others hold that the original ending is lost.",
+          "This document is the single best answer to the claim that the early church suppressed books it did not like. It was not suppressed; it was read, valued, openly ranked, and openly excluded. Eusebius, around AD 325, lists it among books he does not treat as Scripture: \"Among the rejected writings must be reckoned also the Acts of Paul, and the so-called Shepherd, and the Apocalypse of Peter, and in addition to these the extant epistle of Barnabas, and the so-called Teachings of the Apostles …\" His word there is notha, and \"rejected\" reads harder in English than he meant it — he immediately adds that \"all these may be reckoned among the disputed books\", and he keeps them well clear of the heretics' forgeries, which he says are not to be placed even among these. Athanasius, in his festal letter of 367, is more explicit still, and this is the passage that settles the question: after listing the canon he adds that \"there are other books besides these not indeed included in the Canon, but appointed by the Fathers to be read by those who newly join us\", and names among them \"that which is called the Teaching of the Apostles, and the Shepherd\", in a list that also carries the Wisdom of Solomon, the Wisdom of Sirach, the book of Esther, Judith and Tobit. A named, approved middle tier: read in church, given to new converts, and not Scripture. That is a public filing system, not a bonfire.",
+        ],
+      },
+      {
+        heading: "Nobody Agrees When It Was Written",
+        paragraphs: [
+          "The proposals run from about AD 50 to well into the second century, and the range is not posturing — it follows from the fact that the document has no author, no addressee, no place and no date in it, and shows every sign of having been assembled in layers. A. Milavec argues for AD 50 to 70 and, unusually, treats the work as a deliberate unity rather than a patchwork. K. Niederwimmer's standard commentary places the final composition in the early second century, about AD 110 to 120, and analyses it into four earlier strata: a Jewish Two Ways tract, archaic liturgical material, a tradition about receiving travelling charismatics, and an apocalypse whose ending is gone. M. W. Holmes states the middle position: compiled in its present form perhaps as late as 150, though a date near the end of the first century seems likelier to many. This article has not opened Milavec's, Niederwimmer's or Holmes's volumes and reports all three positions at second hand, which is worth saying plainly rather than dressing paraphrase as quotation.",
+          "The arguments for an early date are internal and cumulative, and a reader can check most of them in the text: prophets are still itinerant and still a live pastoral problem; the ministry is bishops and deacons with no monarchical bishop above them; no heresy is named and no persecution is mentioned; the Christology is undeveloped. The arguments for a later date turn mostly on the relationship to Matthew, and that is the second real dispute. Roughly three camps: that the Didache draws on Matthew in its finished form, argued among others by C. M. Tuckett, whose case is that parts of it presuppose the editorial work of the evangelists themselves and not merely the traditions behind them — his articles are behind paywalls this article could not open, so his position is reported and not quoted; that both draw independently on a shared body of oral teaching, the position of J. A. Draper, J. S. Kloppenborg, Niederwimmer and others; and, from A. Garrow, that the dependence runs the other way for most of the book. Both of the first two camps concede the complication that makes the question hard: if the Didache was assembled in layers, the answer may differ layer by layer.",
+          "One thing the Dead Sea Scrolls did settle. The old three-cornered question — whether the Didache took the Two Ways from the Epistle of Barnabas, or the epistle from the Didache, or both from something older — has largely resolved in favour of a common Jewish source, because the Community Rule from Qumran turned out to contain the same two-ways teaching in a pre-Christian Jewish community. That is a good illustration of what this whole section is for. Two of the three positions people argued for a century were wrong, and the thing that settled it was a manuscript nobody knew existed.",
+          "A last note, and an honest one for an app written from an evangelical position: the pouring provision in chapter seven is a passage where evangelicals themselves genuinely differ, and have for a long time. The nineteenth-century editors of the Ante-Nicene Fathers said so in their own footnote, observing that the preceding verses point to immersion while this one permits pouring in certain cases. Neither side of that argument invented the sentence, and neither side is embarrassed by it as much as the other side hopes.",
+        ],
+      },
+    ],
+    verses: [
+      { reference: "Matthew 28:19-20", note: "The threefold baptismal name the Didache prescribes" },
+      { reference: "Matthew 6:9-13", note: "The Lord's Prayer as Matthew gives it; the Didache's version drops the kingdom from the doxology and orders it three times a day" },
+      { reference: "Matthew 7:15-20", note: "Testing false prophets by their fruit — the Didache turns this into a house rule" },
+      { reference: "Acts 2:42", note: "Teaching, fellowship, breaking of bread and prayer — the same four things, arranged as a manual" },
+    ],
+    sources: [
+      { label: "Pinakes (IRHT-CNRS): Jerusalem, Patriarchikê bibliothêkê, Panaghiou Taphou 054", url: "https://pinakes.irht.cnrs.fr/notices/cote/35291/" },
+      { label: "Library of Congress: Panagios Taphos 54 (digitised)", url: "https://www.loc.gov/item/00279389694-jo/" },
+      { label: "Didache, Lightfoot translation (public domain, Wikisource)", url: "https://en.wikisource.org/wiki/Didache_(Lightfoot_translation)" },
+    ],
+    manuscript: {
+      manuscriptType: "Parchment codex of 120 leaves, minuscule, with a dated and signed subscription",
+      language: "Greek",
+      contents:
+        "Sixteen short chapters: the Two Ways catechism (1-6), baptism (7), fasting and the Lord's Prayer (8), eucharistic prayers (9-10), testing travelling apostles and prophets (11-13), the Lord's Day assembly (14), appointing bishops and deacons (15), and an apocalypse (16) that breaks off at the coming on the clouds with no judgement scene. It occupies about six leaves of a codex that also carries a synopsis of Scripture attributed to John Chrysostom, the Epistle of Barnabas, 1 and 2 Clement, the longer recension of the letters of Ignatius, and a short piece on the genealogy of Christ through his legal father",
+      origin:
+        "The text is most often placed in Syria; Egypt and Palestine have also been argued and there is no consensus. The manuscript was written in Constantinople or its orbit",
+      findSite:
+        "The library of the Monastery of the Holy Sepulchre — the Jerusalem Patriarchate's metochion — in the Phanar district of Constantinople, now Istanbul",
+      foundYear: "Found in 1873; the Didache published in 1883",
+      foundBy: "Philotheos Bryennios, then head of the Patriarchal Great School of the Nation, later Metropolitan of Serres and of Nicomedia",
+      dateAssigned:
+        "The manuscript is dated by its own scribe to 11 June 1056. The text is disputed: about AD 50-70 (A. Milavec), about AD 110-120 (K. Niederwimmer), or as late as 150 with the end of the first century more probable to many (M. W. Holmes)",
+      dateCertainty: "disputed",
+      currentLocation: "Greek Orthodox Patriarchate of Jerusalem, Patriarchal Library",
+      shelfmark: "Jerusalem, Patriarchikê bibliothêkê, Panaghiou Taphou 54",
+      facsimileUrl: "https://www.loc.gov/item/00279389694-jo/",
+    },
+    citations: [
+      {
+        tier: "institution",
+        label: "Pinakes (IRHT-CNRS): Jerusalem, Patriarchikê bibliothêkê, Panaghiou Taphou 054",
+        url: "https://pinakes.irht.cnrs.fr/notices/cote/35291/",
+        credit: "Institut de recherche et d'histoire des textes, CNRS",
+        detail:
+          "The standard professional catalogue of Greek manuscripts, and the source preferred here over the popular accounts. It gives the shelfmark, the date 1056, the scribe as Leon notarios, the note that the subscription follows on folio 120r, and the folio-by-folio contents list from which this article's account of the codex is taken, including the last item, which Pinakes titles the genealogy of Joseph, the betrothed of the Blessed Virgin Mary, and which this article renders as the genealogy of Christ through his legal father because the app's auto-linker cannot be given a bare \"Joseph\" without sending the reader to the patriarch. Popular sources and the current Wikipedia article disagree with it on the scribe's name and on whether the subscription is on 120r or 120v; Pinakes is followed here",
+        supports: "The shelfmark, the date, the scribe, and the contents of the codex",
+      },
+      {
+        tier: "institution",
+        label: "Library of Congress: Panagios Taphos 54, in Manuscripts in the Libraries of the Greek and Armenian Patriarchates in Jerusalem",
+        url: "https://www.loc.gov/item/00279389694-jo/",
+        credit: "Library of Congress",
+        detail:
+          "The catalogue record was read through the Library's own JSON interface, which confirms the title \"Panagios Taphos 54. John Chrysostom: Synopsis of the Testaments; Apostolic Fathers. 1056 A.D. 120 f.\", the date 1056, the note \"Copied on vellum\", 123 digitised images, and a rights statement placing the collection in the public domain with a requested credit line. The digitisation is of black-and-white microfilm, not colour. Note that the human-facing page refuses automated requests and has to be opened in a browser",
+        supports: "That a free facsimile of the only complete copy exists, and its extent",
+      },
+      {
+        tier: "primary",
+        label: "The Didache, translated by J. B. Lightfoot",
+        url: "https://en.wikisource.org/wiki/Didache_(Lightfoot_translation)",
+        credit: "Joseph Barber Lightfoot",
+        detail:
+          "Public domain, hosted at Wikisource under a pre-1931 tag, and read in full. Every phrase quoted from the Didache in this article was compared against it: the two ways, the pouring provision, the Wednesday and Friday fast, the two-clause doxology, the cup-before-bread eucharistic prayers, the three-day and the money tests for a false prophet, the firstfruits to the prophets, the appointment of bishops and deacons, and the abrupt ending",
+        supports: "Every quotation from the text of the Didache",
+      },
+      {
+        tier: "primary",
+        label: "Athanasius, Festal Letter 39 (Nicene and Post-Nicene Fathers, series II, vol. IV)",
+        url: "https://en.wikisource.org/wiki/Nicene_and_Post-Nicene_Fathers:_Series_II/Volume_IV/Letters/Letters/Festal_Letters/Chapter_25",
+        credit: "Athanasius of Alexandria, in the NPNF translation",
+        detail:
+          "Public domain at Wikisource, read in full. The surviving fragment is printed there as chapter 25, not 39, which is why searching for chapter 39 fails. Source of the quotation naming the Teaching of the Apostles among books \"not indeed included in the Canon, but appointed by the Fathers to be read by those who newly join us\". The NPNF editors' own footnote raises a transmission question about this section, since it survives through the Coptic Life of Theodore; that caveat is theirs and is noted here rather than suppressed",
+        supports: "That the Didache was openly classified as read-but-not-canonical",
+      },
+      {
+        tier: "primary",
+        label: "Eusebius, Church History 3.25 (Nicene and Post-Nicene Fathers, series II, vol. I)",
+        url: "https://en.wikisource.org/wiki/Nicene_and_Post-Nicene_Fathers:_Series_II/Volume_I/Church_History_of_Eusebius/Book_III/Chapter_25",
+        credit: "Eusebius of Caesarea, translated by A. C. McGiffert",
+        detail:
+          "Public domain at Wikisource, read in full, including the paragraphs either side of the one quoted — which is why this article flags that McGiffert's \"rejected writings\" renders notha more harshly than Eusebius's own next sentence supports",
+        supports: "Eusebius's classification, and the qualification he immediately adds to it",
+      },
+      {
+        tier: "institution",
+        label: "P.Oxy. XV 1782: Didache i-iii, University of Oxford",
+        url: "https://portal.sds.ox.ac.uk/articles/online_resource/P_Oxy_XV_1782_Didache_i-iii/21132967",
+        credit: "The Oxyrhynchus Papyri, University of Oxford",
+        detail:
+          "The holding institution's own record, DOI 10.25446/oxford.21132967.v2. It gives the material as parchment rather than papyrus despite the P.Oxy. series name, the format as codex, the date as late fourth century, and A. S. Hunt as editor. Its images are marked In Copyright, so they are linked here and not reproduced",
+        supports: "The fourth-century fragment, its material and its date",
+      },
+      {
+        tier: "scholarly",
+        label: "K. Niederwimmer, The Didache: A Commentary; and A. Milavec, The Didache: Faith, Hope, and Life of the Earliest Christian Communities, 50-70 C.E.",
+        credit: "Kurt Niederwimmer; Aaron Milavec",
+        detail:
+          "Niederwimmer, translated by L. M. Maloney, edited by H. W. Attridge, Hermeneia (Minneapolis: Fortress, 1998) — the standard commentary, source of the early-second-century dating, of the four-layer analysis, and of the position that the original ending is lost. Milavec (New York: Newman Press, 2003) is the sustained case for AD 50-70 and for reading the work as a unity rather than a patchwork. Print only, and this article has opened neither: both positions are reported at second hand, which is why the third section says so in its own words rather than quoting either man",
+        supports: "The two ends of the dating range, named to the scholarship that argues them",
+      },
+      {
+        tier: "scholarly",
+        label: "H. van de Sandt and D. Flusser, The Didache: Its Jewish Sources and its Place in Early Judaism and Christianity; and J. A. Draper, ed., The Didache in Modern Research",
+        credit: "Huub van de Sandt and David Flusser; Jonathan A. Draper",
+        detail:
+          "Van de Sandt and Flusser, Compendia Rerum Iudaicarum ad Novum Testamentum III/5 (Assen: Van Gorcum / Minneapolis: Fortress, 2002) is the standard reconstruction of the Jewish Two Ways source behind both the Didache and the Epistle of Barnabas, and is the scholarship behind this article\u2019s third paragraph on the Community Rule. Draper\u2019s collection, Arbeiten zur Geschichte des antiken Judentums und des Urchristentums 37 (Leiden: Brill, 1996), gathers the Didache-and-Matthew debate, including the oral-tradition position associated with Draper, J. S. Kloppenborg and Niederwimmer against the literary-dependence position of C. M. Tuckett and the reverse-dependence proposal of A. Garrow. Both print only; neither opened here. They are cited so that the named dispute points at the actual scholarship rather than at nothing",
+        supports: "The Two Ways source, and the three camps on the relationship to Matthew",
+      },
+      {
+        tier: "encyclopedic",
+        label: "Wikipedia: Didache",
+        url: "https://en.wikipedia.org/wiki/Didache",
+      },
+    ],
+  },
+  {
+    id: "gospel-of-judas",
+    name: "Gospel of Judas",
+    // NOT registered: bare "Judas" — that is Judas Iscariot, who owns it in people.ts, and this
+    // article writes the full title every time it means the book. "Codex Tchacos" and "Tchacos
+    // Codex" are match-only: the codex is the object, the gospel is one of four texts in it, so
+    // printing either as an "Also called" would tell a reader something untrue.
+    matchNames: ["Codex Tchacos", "Tchacos Codex"],
+    category: "manuscript",
+    role: "A Second-Century Gnostic Text in a Codex Wrecked by the Antiquities Trade",
+    summary:
+      "Twenty-six pages of Coptic in which Jesus takes Judas Iscariot aside and tells him he will exceed all the others — announced in 2006 as the discovery that would rewrite the betrayal, and substantially rewritten itself within two years.",
+    sections: [
+      {
+        heading: "A Book Destroyed on Its Way to Us",
+        paragraphs: [
+          "This is the worst-treated important manuscript of the modern era, and the damage is part of the evidence. A papyrus codex surfaced in Middle Egypt in the 1970s, said to have come from the Jebel Qarara hills near Maghagha, in a limestone box in a tomb. There is no excavation, no report, no context. It passed to a Cairo dealer, was stolen and taken to Geneva in 1980 and recovered in 1982, and was shown to the Coptologist S. Emmel in Geneva in 1983. Emmel found roughly thirty leaves still in reasonable condition and reported that proper conservation could preserve some sixty pages of text. Nobody bought it. It then sat in a safe deposit box on Long Island for about sixteen years.",
+          "By 2000, when the dealer F. Nussberger-Tchacos bought it, the binding had disintegrated, the pages had been reshuffled, and the book had broken into something like a thousand fragments. Yale's Beinecke Library examined it and declined to buy, the origins being what they were. She sold it on to B. Ferrini, who put it in a freezer — which separated the ink from the papyrus fibres, darkened the leaves and made a bad situation permanent. That sale collapsed into bankruptcy and litigation; she recovered most of it in 2001 and placed it with the Maecenas Foundation for Ancient Art in Basel for conservation. Restoration recovered perhaps ninety per cent of what remained, but roughly a third of the codex is now illegible, and leaves from the group are still reported in private hands in the United States.",
+          "Four texts were on it, and the page numbers survive: a Letter of Peter to Philip on pages 1 to 9, a First Apocalypse of James on 10 to 32, the Gospel of Judas on 33 to 58, and a previously unknown Book of Allogenes on 59 to 66. The first two are also known from Nag Hammadi; the last two were new. Samples went to the NSF-Arizona accelerator mass spectrometry laboratory at Tucson under A. J. T. Jull in January 2005, and McCrone Associates examined the ink, finding it consistent with inks known from third- and fourth-century Egypt. The object is genuinely ancient. Where it came from, nobody can say.",
+        ],
+      },
+      {
+        heading: "What Is Actually On It",
+        paragraphs: [
+          "It is a second-century Gnostic text, and it is about Gnostic cosmology far more than about Judas Iscariot. Jesus laughs at the disciples for giving thanks over bread, tells them they worship a god who is not the highest God, and takes Judas aside for a long revelation about aeons, luminaries and a creator called Saklas. There are only a handful of points of contact with the New Testament, and the clearest of them is a reference to Judas being replaced so that the Twelve might be completed again — which reads like knowledge of the account in Acts.",
+          "The one thing nobody on any side of the argument claims is that it tells us anything about the historical Judas. P. M. Head endorses J. M. Robinson's summary as his own conclusion: it \"is a second-century apocryphal Gospel that in all probability tells us about the Cainite gnostics of the mid-second century, not about what happened in AD 30!\"",
+          "Nor was this a suppressed book. Irenaeus of Lyon knew of a Gospel of Judas around AD 180 and wrote about it in a work everybody read, reporting that its users held that Judas, the betrayer, \"had got a thorough knowledge of these things; and he alone, knowing the truth above all the others, accomplished the mystery of the betrayal.\" Whether the book Irenaeus knew is this book is a real question; J. van Oort has argued at length, and in his own words \"contrary to most current opinions\", that Irenaeus \"in all feasibility, had first-hand knowledge of the Gospel and its contents\" and \"appears to have read the text as we now have it\" — against a majority who think he knew it only by report. Either way the pattern is the same one this section of the app keeps meeting: a text named, described and answered in print, not hidden. Head's own reading of what the text does is worth stating because it is the evangelical case made from the evidence rather than around it: the theology here \"is against the eucharist, against the Twelve, against seeing Jesus as the Son of God,\" and as Irenaeus argued, a reaction of that shape presupposes something already established to react against.",
+        ],
+      },
+      {
+        heading: "The Reading That Was Announced, Then Withdrawn",
+        paragraphs: [
+          "In April 2006 the National Geographic Society unveiled the text with a translation by R. Kasser, M. Meyer, G. Wurst and F. Gaudard, presenting a Judas who acts at Jesus's own request and is the one disciple who understands. Two readings carried most of that weight. Jesus calls Judas the thirteenth daimon, which the team rendered \"spirit\"; and a broken passage at the foot of page 46 was reconstructed and translated so that Judas ascends to the holy generation. Within eighteen months both were under sustained attack, and the story of what happened next is a good and rare thing: a public claim, publicly corrected, by the people who made it.",
+          "A. D. DeConick argued that the Coptic daimon in a Sethian text means demon, not spirit, that the verb at 46,17 means separated from rather than set apart for, and — the sharpest charge — that an emendation had removed a negative. Her own words: \"I think that the emendation of this text was a mistake, that consequently the altered reading of this text has led the public and other scholars to believe that Judas ascends to the holy generation when he does not.\" Her structural complaint was that National Geographic had held the text under non-disclosure agreements and published without peer review: \"this is what happens when our work is not vetted through the normal channels of blind peer review before publication.\"",
+          "Meyer's reply is the part usually left out, and leaving it out would misrepresent both of them. He rejected the word \"mistranslations\" — these \"are not 'mistranslations' at all, but rather they represent alternative ways of understanding a difficult text\" — and he rejected, in strong terms, any suggestion that the team had altered the Coptic to suit itself. That last exchange needs care, because DeConick had already disclaimed the charge he was answering: \"I have not made any statement of intentionality. I have left this as an open question.\" What she asserted was that the text was altered, not why. He also gave ground on the substance, in print: \"While I have indicated elsewhere that I also am increasingly inclined to translate this difficult Coptic phrase as 'set apart from,' the fact remains that either translation is possible.\" DeConick, for her part, recorded the concession and welcomed it. And the reading at the bottom of page 46 did change: the 2007 critical edition prints it as a scribal error and translates \"you will not ascend on high to the holy [generation]\" — a reversal, arrived at partly through the input of W.-P. Funk and P. Nagel, and one Meyer himself calls \"a solution of desperation.\" Meyer's own final position was neither the 2006 headline nor DeConick's: he proposed reading Judas as a figure like Sophia, \"neither a completely positive character nor a totally demonic being.\"",
+          "One more correction belongs here because it is still repeated. The familiar radiocarbon figure of AD 220 to 340 came from discarding the one sample that dated later and averaging the rest. Head listed six objections to that procedure in 2007 and concluded for \"a fourth-century date, or perhaps a little earlier\"; Jull himself told Head by email that \"our position is that the radiocarbon dates support the palaeographic interpretations (similar to the Dead Sea Scrolls, for example), not that they are superior to them or supplant them.\" C. Askeland, who obtained the actual laboratory reports, found that the popular account had also mishandled calibration, and put the properly calibrated result in \"the late third through the end of the fourth century.\" The manuscript is a little younger than the number everyone quotes.",
+        ],
+      },
+    ],
+    verses: [
+      { reference: "Matthew 26:14-16", note: "The betrayal as the Gospels record it, for money and on Judas's own initiative" },
+      { reference: "John 6:70-71", note: "Jesus's own verdict on Judas, in the Gospel this text is answering" },
+      { reference: "Acts 1:20-26", note: "The replacement of Judas and the completing of the Twelve — the clearest New Testament echo in the text" },
+      { reference: "Matthew 27:3-5", note: "Remorse and suicide: no part of this account survives in the Gnostic retelling" },
+    ],
+    sources: [
+      { label: "P. M. Head, \"The Gospel of Judas and the Qarara Codices\" (open access)", url: "https://www.tyndalebulletin.org/article/29226-the-gospel-of-judas-and-the-qarara-codices-some-preliminary-observations" },
+      { label: "J. van Oort, \"Irenaeus's knowledge of the Gospel of Judas: Real or false?\" (open access)", url: "https://scielo.org.za/scielo.php?script=sci_arttext&pid=S0259-94222013000100020" },
+      { label: "McCrone Associates: Ink Analysis, the Gospel of Judas", url: "https://www.mccrone.com/case-studies/ink-analysis-the-gospel-of-judas/" },
+    ],
+    manuscript: {
+      manuscriptType: "Papyrus codex, now fragmentary — one of four texts in what is called Codex Tchacos",
+      language: "Coptic, translated from a Greek original",
+      contents:
+        "Pages 33 to 58 of the codex: a dialogue in which Jesus laughs at the disciples' thanksgiving, tells them they worship a lesser god, and gives Judas Iscariot a private cosmological revelation. Roughly a third of the codex as a whole is now illegible, including the top of pages 55 to 58, so the end of the story between Jesus and Judas is damaged. The other three texts in the codex are a Letter of Peter to Philip (pp. 1-9), a First Apocalypse of James (pp. 10-32) and a Book of Allogenes (pp. 59-66)",
+      origin: "Composed in Greek, second century, in a Sethian or related Gnostic setting; this copy was made in Egypt",
+      findSite:
+        "Reported as the Jebel Qarara hills near Maghagha, in the El Minya region of Middle Egypt, in a limestone box in a tomb. This is not an excavation: there is no dig report and no recorded context. The codex's documented history begins with a Cairo dealer",
+      foundYear: "The 1970s. No firmer date is recoverable",
+      foundBy: "Unknown. The account of local farmers finding it comes from the antiquities trade, decades after the fact, and cannot be checked",
+      dateAssigned:
+        "The codex is fourth century, or a little earlier. The familiar AD 220-340 figure comes from an averaging procedure P. M. Head criticised in detail; C. Askeland, working from the laboratory's own reports, gives the late third through the end of the fourth century. Palaeographers have proposed the fourth century (S. Emmel; G. Wurst) and the fourth to fifth (H. Attridge; R. Kasser). The text itself is second century",
+      dateCertainty: "disputed",
+      currentLocation:
+        "Coptic Museum, Cairo. The codex was announced in 2006 for permanent deposit there, and McCrone Associates, one of the teams that worked on it, records that after conservation the manuscript \"was determined to be authentic and delivered to Egypt\" and is now on display in the Coptic Museum. Two qualifications this article cannot resolve: fragments are reported to have reached Egypt only in April 2010, and leaves from the same group of books are documented in private hands in the United States, so how complete the repatriation is remains unclear",
+      shelfmark: "None published. The codex is known by the name Codex Tchacos, after the dealer who bought it",
+    },
+    citations: [
+      {
+        tier: "scholarly",
+        label: "P. M. Head, \"The Gospel of Judas and the Qarara Codices: Some Preliminary Observations\"",
+        url: "https://www.tyndalebulletin.org/article/29226-the-gospel-of-judas-and-the-qarara-codices-some-preliminary-observations",
+        credit: "Peter M. Head",
+        detail:
+          "Tyndale Bulletin 58.1 (2007), 1-23, DOI 10.53751/001c.29226. Open access; the PDF was downloaded and read in full and every quotation here byte-checked against it. Source of the five individual radiocarbon results, the six objections to how they were averaged, Head's own fourth-century conclusion, the Jull email of 12 February 2007, the point about the text's knowledge of Acts, and both the Robinson sentence he endorses and his own closing judgement",
+        supports: "The dating of the codex, the New Testament contact, and the article's evangelical reading of the text",
+      },
+      {
+        tier: "scholarly",
+        label: "M. Meyer, \"The Thirteenth Daimon: Judas and Sophia in the Gospel of Judas\"",
+        url: "https://web.archive.org/web/2016id_/http://www.chapman.edu/wilkinson/religious-studies/_files/marv-meyer/13th-daimon-final-11408.pdf",
+        credit: "Marvin Meyer",
+        detail:
+          "The author's own paper, copyright 2008, twelve pages, read in full. It was published on his Chapman University page, which no longer resolves; the URL given is the Internet Archive's capture of that page, which is what was read, so that every quotation below can be checked. Source of Meyer's rejection of the word mistranslations, his concession on \"set apart from\", the critical edition's revised rendering of page 46, the naming of W.-P. Funk and P. Nagel, the phrase \"a solution of desperation\", and his own final middle reading of Judas",
+        supports: "The National Geographic team's own account, in its own words, including where it gave ground",
+      },
+      {
+        tier: "reference",
+        label: "A. D. DeConick, responses to Marvin Meyer, The Forbidden Gospels",
+        url: "http://forbiddengospels.blogspot.com/search/label/Response%20to%20Marvin%20Meyer:%20The%20Thirteenth%20Daimon",
+        credit: "April D. DeConick",
+        detail:
+          "Her own numbered replies of 18 January 2008, read in full, and quoted from rather than from any summary of them. Source of her statement about the emendation and the ascent, her complaint about publication without peer review, and her acknowledgement of Meyer's concession. Her book-length argument is The Thirteenth Apostle: What the Gospel of Judas Really Says (Continuum, 2007; revised 2009), which this article has not opened",
+        supports: "The critique of the 2006 translation, in the critic's own words",
+      },
+      {
+        tier: "scholarly",
+        label: "J. van Oort, \"Irenaeus's knowledge of the Gospel of Judas: Real or false? An analysis of the evidence in context\"",
+        url: "https://scielo.org.za/scielo.php?script=sci_arttext&pid=S0259-94222013000100020",
+        credit: "Johannes van Oort",
+        detail:
+          "HTS Teologiese Studies / Theological Studies 69/1 (2013), open access. Read in full. Source of van Oort's own deliberately literal translation of Against Heresies 1.31.1, quoted here from his text rather than from any summary of it, and of his conclusion, which his own abstract offers \"contrary to most current opinions\" — so it is given here as his argued minority position and not as the settled view",
+        supports: "The earliest external notice of a Gospel of Judas, and how far Irenaeus knew it",
+      },
+      {
+        tier: "institution",
+        label: "McCrone Associates: Ink Analysis, the Gospel of Judas",
+        url: "https://www.mccrone.com/case-studies/ink-analysis-the-gospel-of-judas/",
+        credit: "McCrone Associates; examination by J. G. Barabe",
+        detail:
+          "The laboratory's own account of the work it did for the National Geographic Society: polarised light microscopy, scanning and transmission electron microscopy and infrared spectroscopy, identifying a carbon black ink and an iron-containing ink, with components \"consistent with ingredients in known inks from the third and fourth centuries A.D.\" It records no resulting academic publication. Tiered as an institution because for this object there is no holding-institution page to cite: the codex has no published shelfmark and the museum that holds it has no catalogue entry for it, so the laboratory that did the primary analytical work is the closest thing to an institutional witness available",
+        supports: "That the object is ancient rather than a modern forgery",
+      },
+      {
+        tier: "reference",
+        label: "C. Askeland, \"Radiometric Dating of the Gospel of Judas\"",
+        url: "http://evangelicaltextualcriticism.blogspot.com/2015/03/radiometric-dating-of-gospel-of-judas.html",
+        credit: "Christian Askeland",
+        detail:
+          "Evangelical Textual Criticism, 10 March 2015, read in full. Askeland states there that the National Geographic Society gave the Arizona laboratory permission to send him the actual results, and reports that the popular account failed to calibrate them against tree-ring evidence. His own estimate is quoted here verbatim. P. M. Head confirms in the comment thread that the underlying argument is his, citing his Tyndale Bulletin article at pages 11-13",
+        supports: "That the widely quoted AD 220-340 range is not what the laboratory data support",
+      },
+      {
+        tier: "reference",
+        label: "B. Handwerk, \"Gospel of Judas Pages Endured Long, Strange Journey\", National Geographic",
+        url: "https://www.nationalgeographic.com/science/article/gospel-judas-pages-long-strange-journey",
+        credit: "Brian Handwerk, National Geographic",
+        detail:
+          "Published 6 April 2006 by the body that funded and published the codex — cited here for the provenance chain it sets out and for S. Emmel's 1983 observation that some thirty leaves were then still in reasonable condition. It also states the intention to return all pages permanently to the Coptic Museum in Cairo, which is an intention recorded in 2006 and not a description of where the codex is now",
+        supports: "The chain of custody and the condition of the codex over time",
+      },
+      {
+        tier: "encyclopedic",
+        label: "Wikipedia: Codex Tchacos",
+        url: "https://en.wikipedia.org/wiki/Codex_Tchacos",
+      },
+    ],
+  },
+  {
+    id: "egerton-papyrus-2",
+    name: "Egerton Papyrus 2",
+    alternateNames: ["Egerton Gospel"],
+    matchNames: ["Papyrus Egerton 2", "P.Egerton 2"],
+    category: "manuscript",
+    role: "Fragments of a Gospel Nobody Has Ever Identified",
+    summary:
+      "Three battered scraps bought from a Cairo dealer in 1934, plus a fourth found in Cologne half a century later, carrying four episodes from a gospel that is not any gospel we know — including one miracle at the Jordan that appears nowhere else in Christian literature.",
+    sections: [
+      {
+        heading: "Bought, Not Dug",
+        paragraphs: [
+          "In July 1934 the dealer M. Nahman sent a batch of papyri from Cairo to Paris, and the British Museum bought part of it. Among the pieces were three fragments of a codex leaf carrying Greek text about Jesus. H. I. Bell and T. C. Skeat published them the following year as Fragments of an Unknown Gospel and Other Early Christian Papyri, and the shelfmark has been Egerton Papyrus 2 ever since; the collection passed to the British Library when it separated from the Museum in 1973. The Library still holds the correspondence about the purchase, including the envelope, sealed by Egypt's Department of Antiquities, that the fragments travelled in.",
+          "Where they came from is unknown, and the editors said so on the page: \"Unfortunately the provenance of the fragments is unknown. They formed part of a miscellaneous collection bought from a dealer.\" They guessed Oxyrhynchus from what else came in the same purchase, and immediately qualified the guess. That is the honest position and it has not improved since.",
+          "Fifty-three years later a fourth piece turned up in a different country. M. Gronewald identified Papyrus Köln 255, in the collection of the Institut für Altertumskunde at Cologne, as part of the same codex, joining the bottom of the first fragment. It is a small thing, about five centimetres by three, and it changed the argument about the date more than anything else in the file.",
+        ],
+      },
+      {
+        heading: "Four Scenes, One of Them Unrepeatable",
+        paragraphs: [
+          "How many episodes the fragments hold depends on who is counting: this article follows the four substantial ones below, while Attridge separates the attempted stoning as a fifth and puts the scene at the Jordan before the tribute question rather than after. In the first, Jesus argues with lawyers and rulers in language that runs remarkably close to the fifth and ninth chapters of John's Gospel — searching the Scriptures, Moses as accuser, not knowing where Jesus is from — followed by an attempt to seize and stone him that fails because his hour had not yet come. The wording there is not quite that of the Fourth Gospel: it specifies the hour of his handing over, which J. W. Pryor notes reads the hour \"in a quite unjohannine way: instead of being the hour of his glorification, it is now the time of his arrest.\"",
+          "In the second a leper approaches, addressing Jesus as teacher, and explains that he caught the disease while travelling and eating with lepers at an inn. Jesus heals him and sends him to the priests. Bell and Skeat noted that the form of address is unparalleled in the Gospels and that the dismissal agrees more closely with Luke's ten lepers than with the Synoptic healing accounts. In the third, questioners ask whether it is lawful to pay to kings the things that belong to their rule — kings, not Caesar — and Jesus answers with Isaiah's line about honouring with the lips while the heart is far away.",
+          "The fourth has no parallel anywhere. Jesus stands at the edge of the Jordan, stretches out his right hand, sprinkles something on the water, and something comes up and bears fruit. Bell and Skeat were candid about how little of it can be read: \"This is the only passage to which no even possible parallel can be found in the canonical Gospels, which therefore supply no help towards filling up the lacunae; and unfortunately this is the page in which the surface of the papyrus is in the worst condition.\" What is scattered is not certain — seed and salt have both been proposed — and their own reading was that the incident is more likely symbolic than a display of power. Anyone who tells you confidently what happened at the Jordan in this text is telling you more than the papyrus does.",
+        ],
+      },
+      {
+        heading: "Two Things This Papyrus Is Used to Prove, and Neither Is Settled",
+        paragraphs: [
+          "The first is the date, and here the popular story runs in both directions and gets the editors wrong at both ends. Bell and Skeat did make a strong claim — the papyrus \"is unquestionably the earliest specifically Christian manuscript yet discovered in Egypt\" — but note how narrow that is: earliest specifically Christian, in Egypt, its rivals being Septuagint books whose Christian ownership cannot be shown. It is not the flat claim, oldest Christian text anywhere, that popular accounts put in their mouths. And they hedged hard. Palaeography was \"the sole evidence of date\" and \"always a somewhat precarious basis\"; their conclusion was that it seemed \"extremely improbable\" the manuscript was later than the middle of the second century, not that it was proven earlier.",
+          "The Cologne fragment then supplied an argument for a later date: it carries a hooked apostrophe between double consonants, which Gronewald took as a third-century practice, pushing the codex to about AD 200. His own publication is in German and behind a paywall this article could not get through, so what follows is his argument as his critic reports it, which is a weaker footing than it should be. That is now widely repeated as settled, and it is not. S. E. Porter went back to E. G. Turner, whom Gronewald was citing, and quotes what Turner actually wrote — that in the first decade of the third century the practice \"suddenly becomes extremely common and then persists\" — observing that this says the habit became common then, not that it did not exist before. Porter points to a documentary instance from AD 101 that he calls \"virtually identical\" to the Cologne example, and concludes that \"we are essentially back where we began in 1935.\" The British Library's own catalogue still dates the papyrus 130 to 170; L. R. Zelyck's 2019 critical edition gives 150 to 250. The honest statement is a range, roughly the mid-second to the mid-third century, with no agreed point inside it.",
+          "The second is dependence, and this is where the popular retelling most often makes the editors say the opposite of what they said. Bell and Skeat concluded that as far as the Synoptic Gospels go the text \"appears to represent a quite independent tradition\", and on the Fourth Gospel they leaned the other way from what a reader might expect, writing that it \"would be rash to reject off-hand\" the possibility that the Fourth Gospel depended on this papyrus rather than the reverse. They then refused to decide, in as many words, on the ground that neither of them \"can claim any wide acquaintance with this field of study\". Bell changed his mind two years later, moving toward dependence on the Fourth Gospel in a book of 1937 — a shift this article takes from Pryor's footnote and not from Bell's own volume. The independence case was pressed hardest by H. Koester and J. D. Crossan — Crossan arguing that this text's handling of the Isaiah quotation is more primitive than the version in Mark's Gospel, since here Jesus applies it to himself inside the tribute controversy while Mark's Gospel places it elsewhere and applies it to God. This article has not opened Koester's or Crossan's volumes and reports both at second hand.",
+          "Against them, J. Jeremias argued that \"the Johannine material is shot through with Synoptic phrases and the Synoptic with Johannine usage\", which would point to an author who knew all four. F. Neirynck found a common Lukan vocabulary running through the leper story. H. W. Attridge makes the sharpest version of the case: the detail that Jesus's opponents do not know where he is from \"reflects not simply a floating tradition, but a theme that structures a major portion of the Fourth Gospel,\" which \"strongly suggests that the papyrus depends on the Gospel.\" One caution belongs beside that. Pryor, whose own conclusion is that the author knew the Fourth Gospel and respected it while owing the Synoptics nothing, directly denies Jeremias's premise, writing that apart from three lines the text \"displays no tendency to mix Johannine and other traditions\" at all. The two most recent full technical treatments, by T. Nicklas and by Zelyck, both favour Johannine influence, so the ground has moved — but it has moved by argument, in public, with the editors' own hedges still on the record. That is what an unsettled question looks like when it is handled properly.",
+        ],
+      },
+    ],
+    verses: [
+      { reference: "John 5:39", note: "Searching the Scriptures — one of the closest verbal contacts in the first fragment" },
+      { reference: "John 9:29", note: "Not knowing where Jesus is from: the detail Attridge reads as decisive for dependence on John" },
+      { reference: "Mark 1:40-44", note: "The Synoptic leper, against which the papyrus's version is measured" },
+      { reference: "Isaiah 29:13", note: "Honouring with the lips while the heart is far away — quoted in the tribute scene" },
+    ],
+    sources: [
+      { label: "British Library: Egerton Papyrus 2", url: "https://searcharchives.bl.uk/catalog/040-001982504" },
+      { label: "Universität zu Köln: P.Köln VI 255 (Inv. 608)", url: "https://papyri.uni-koeln.de/stueck/tm63527" },
+      { label: "J. W. Pryor, \"Papyrus Egerton 2 and the Fourth Gospel\" (open access)", url: "https://www.biblicalstudies.org.uk/pdf/abr/37_01_pryor.pdf" },
+    ],
+    manuscript: {
+      manuscriptType: "Three fragments of leaves from a papyrus codex, mounted in glass, plus a fourth fragment of the same codex at Cologne",
+      language: "Koine Greek",
+      contents:
+        "Four episodes, none complete: a dispute with lawyers and rulers with strong verbal contact with John 5 and 9, followed by a failed attempt to seize and stone Jesus; the healing of a leper who says he caught the disease at an inn; a question about paying tribute to kings, answered with Isaiah 29:13; and a badly damaged scene at the Jordan in which Jesus sprinkles something on the water and something bears fruit — with no parallel in any known gospel. The Cologne fragment joins the foot of the first leaf",
+      origin: "Unknown. Egypt, on the evidence of survival alone",
+      findSite:
+        "None. The fragments were bought on the antiquities market; Bell and Skeat inferred Oxyrhynchus from the rest of the lot and said themselves that \"not much weight can really be attached to these arguments\"",
+      foundYear: "Acquired July to September 1934",
+      foundBy:
+        "No finder. Purchased from the Cairo dealer M. Nahman; the acquisition was handled by H. I. Bell at the British Museum. The Cologne fragment was identified as part of the same codex by M. Gronewald in 1987",
+      dateAssigned:
+        "Disputed. Bell and Skeat, 1935: not later than the middle of the second century, on palaeography alone. M. Gronewald, 1987: no earlier than about AD 200, on the hooked apostrophe in the Cologne fragment. S. E. Porter, 2013: back to the mid-second century, arguing the apostrophe evidence has been misread. The British Library's own catalogue: AD 130-170. L. R. Zelyck's 2019 critical edition: AD 150-250",
+      dateCertainty: "disputed",
+      currentLocation:
+        "British Library, London; the fourth fragment at the Institut für Altertumskunde, Universität zu Köln",
+      shelfmark: "London, British Library, Egerton Papyrus 2 (= P. Lond. Christ. 1); Cologne, Inv. 608 (= P.Köln VI 255)",
+      facsimileUrl: "https://iiif.bl.uk/uv/#?manifest=https://bl.digirati.io/iiif/ark:/81055/vdc_100059362050.0x000001",
+    },
+    citations: [
+      {
+        tier: "institution",
+        label: "British Library, Archives and Manuscripts: Egerton Papyrus 2",
+        url: "https://searcharchives.bl.uk/catalog/040-001982504",
+        credit: "The British Library",
+        detail:
+          "The holding library's own record, giving the title \"Egerton Gospel (P. Lond. Christ. 1, P. Egerton 2, TM 63527, LDAB 4736)\", three fragments of a codex mounted in glass with their measurements, the note that P. Köln VI 255 is from the same codex, the provenance line \"Possibly found at Oxyrhynchus: Bell and Skeat (1935), p. 7\", and a date of mid second century AD (130-170) — which is worth noting because it is the holding institution declining to adopt the later dating. The catalogue carries a banner explaining that it is an interim version following the 2023 cyber-attack",
+        supports: "The shelfmark, the physical description, the Cologne join, and the Library's own dating",
+      },
+      {
+        tier: "institution",
+        label: "Universität zu Köln, Institut für Altertumskunde: P.Köln VI 255 (Inv. 608)",
+        url: "https://papyri.uni-koeln.de/stueck/tm63527",
+        credit: "Institut für Altertumskunde, Universität zu Köln",
+        detail:
+          "The Cologne papyrus database's own record: inventory 608, publication P.Köln VI 255, second century, 5.5 by 3 centimetres, described as an unknown gospel or gospel harmony with Synoptic and Johannine similarities, with images of recto and verso released under Creative Commons Attribution 4.0",
+        supports: "The fourth fragment, its identification and its measurements",
+      },
+      {
+        tier: "scholarly",
+        label: "H. I. Bell and T. C. Skeat, Fragments of an Unknown Gospel and Other Early Christian Papyri",
+        credit: "Harold Idris Bell and Theodore Cressy Skeat",
+        detail:
+          "London: Trustees of the British Museum, 1935, printed by Oxford University Press. Note that the publisher is the Museum's trustees, not OUP, and not the British Library, which did not exist until 1973 — both errors are in circulation. A scan was consulted for verification and every sentence quoted here was compared against it; the volume is still in copyright and is neither hosted nor linked. Source of the provenance statement, the palaeographic hedges, the \"earliest specifically Christian manuscript\" claim in its exact scope, the note on the leper's form of address, the description of the Jordan fragment's condition, and the editors' explicit refusal to settle the question of dependence",
+        paywalled: true,
+        supports: "Everything attributed to the original editors, quoted in their own words",
+      },
+      {
+        tier: "scholarly",
+        label: "S. E. Porter, \"Recent Efforts to Reconstruct Early Christianity on the Basis of Its Papyrological Evidence\"",
+        credit: "Stanley E. Porter",
+        detail:
+          "In S. E. Porter and A. W. Pitts, eds., Christian Origins and Greco-Roman Culture (Brill, 2013), 71-84. Read in full from a copy hosted by a third party, which is why no URL is given here rather than give one this project cannot vouch for. Source of the Turner quotation and of Porter's argument that Gronewald's inference from it is invalid, of the AD 101 documentary parallel, and of his own conclusion. Porter's dating of the manuscript is early; his view of its literary relationships is not, and the article does not conflate the two",
+        supports: "That the redating to about AD 200 is contested, and on what grounds",
+      },
+      {
+        tier: "scholarly",
+        label: "J. W. Pryor, \"Papyrus Egerton 2 and the Fourth Gospel\"",
+        url: "https://www.biblicalstudies.org.uk/pdf/abr/37_01_pryor.pdf",
+        credit: "John W. Pryor",
+        detail:
+          "Australian Biblical Review 37 (1989), 1-13, free PDF, downloaded and read in full. Source of his reading of the hour of the handing over, of his own conclusion that the author knew and respected John while owing the Synoptics nothing, of his direct denial of Jeremias's mixing claim, and of the Jeremias and Neirynck positions as he reports them — this article has not opened Jeremias's or Neirynck's own publications and takes both from Pryor, who is arguing against them",
+        supports: "The third section's account of the dependence debate on both sides",
+      },
+      {
+        tier: "scholarly",
+        label: "H. W. Attridge, \"John and Other Gospels\"",
+        url: "https://yalebiblestudy.org/wp-content/uploads/2021/09/1.-JnandOtherGospels.pdf",
+        credit: "Harold W. Attridge",
+        detail:
+          "Chapter 4 of The Oxford Handbook of Johannine Studies (Oxford University Press, 2018), 44-61; the author's proof PDF is freely available and was read. Source of the summary of the four episodes and of Attridge's own argument from the where-is-he-from motif",
+        supports: "The contents of the fragments, and the strongest current argument for dependence on John",
+      },
+      {
+        tier: "encyclopedic",
+        label: "Wikipedia: Egerton Gospel",
+        url: "https://en.wikipedia.org/wiki/Egerton_Gospel",
+      },
+    ],
+  },
+  {
+    id: "diatessaron",
+    name: "Diatessaron",
+    // NOT registered: "Tatian" — no Person record owns it, so a bare mention stays plain, which is
+    // the right outcome. "Tatian's Diatessaron" is the wording the app's existing prose already
+    // uses on `peshitta` and `old-syriac-gospels`, so it is registered here to catch those.
+    matchNames: ["Tatian's Diatessaron", "Diatessaron of Tatian"],
+    category: "manuscript",
+    role: "The Four Gospels Woven Into One, and Then Almost Entirely Lost",
+    summary:
+      "About AD 170 Tatian cut and spliced the four Gospels into a single continuous narrative. It became the gospel of the Syriac-speaking church for two and a half centuries — and survives today in one Greek fragment the size of a playing card, plus translations of translations.",
+    sections: [
+      {
+        heading: "One Card-Sized Fragment",
+        paragraphs: [
+          "Tatian came from the East, called himself an Assyrian, went to Rome, became a pupil of Justin Martyr, and after Justin's death broke with the church over an austere teaching that rejected wine, meat and marriage. Somewhere around AD 170 he produced a single continuous gospel narrative out of the four. The name means \"through four\". Eusebius, writing a century and a half later, could only report it at arm's length: Tatian \"formed a certain combination and collection of the Gospels, I know not how, to which he gave the title Diatessaron, and which is still in the hands of some.\"",
+          "Nothing of it survives complete in any language. The only piece of it in Greek that anyone has ever found is a single parchment leaf about ten centimetres across, dug out of the embankment of the city wall at Dura-Europos on 5 March 1933 by the Yale and French Academy expedition, and datable simply because Dura fell in 256 or 257 and nothing was put into that embankment afterwards. Yale holds it in the Beinecke Library as P.CtYBR inv. DPg 24, and has digitised it in full; it is also known as Dura Parchment 24 and, in the register of New Testament manuscripts, as uncial 0212. The verso is blank.",
+          "Everything else is at one or more removes. There is Ephrem the Syrian's commentary on it, surviving in Armenian and — since the Chester Beatty Library acquired the manuscript in 1957 — in Syriac, published by L. Leloir in 1963 with forty-one more leaves surfacing in 1984 and 1986; between the Dublin leaves and one folio in Barcelona, about eighty per cent of that codex survives. There is an Arabic version, translated in the eleventh century from a Syriac copy made in the ninth. There is a Latin harmony, Codex Fuldensis, written for Victor of Capua in the 540s and now at Fulda. There are medieval Dutch, Persian and Old High German harmonies. As P. M. Head puts it of the Arabic, we are \"at least one translation (maybe two) away from the original Diatessaron, and several copyings.\"",
+        ],
+      },
+      {
+        heading: "Why a Bible Reader Should Care",
+        paragraphs: [
+          "The first reason is what its existence shows about the Gospels. By about AD 170 Tatian had four, and it was these four, and he treated them as the material to be harmonised rather than as four options among many. Victor of Capua, who read the whole Latin harmony closely enough to insert reference numbers throughout it, could be confident that scarcely a word in it does not come from one of the four. That is a strong piece of evidence and it deserves to be stated carefully rather than pushed: it shows the four were the authoritative gospel material in Tatian's world, which is not the same claim as a closed canon, and specialists differ on how much further it reaches. The standard recent volume on the subject, edited by M. R. Crawford and N. J. Zola, is described by its publisher as addressing a work that has been claimed both as a vindication of the fourfold gospel's early canonical status and as an argument for the canon's continuing fluidity — which is a fair summary of how widely the same evidence gets used. There are two real qualifications. Tatian appears to have had some access to material outside the four, though it is a small proportion of the whole. And Victor was reading a sixth-century Latin harmony whose text had been conformed to the Vulgate — the very witness the next section shows to be the only surviving Western one, and a compromised one. His observation is worth having; it is not a direct sight of what Tatian wrote.",
+          "The second reason is what happened to it. It was not merely edged out; it was collected up and replaced, and the bishop who did it wrote down why. Theodoret of Cyrrhus, about 453, reported that Tatian \"composed the Gospel which is called Diatessaron, cutting out the genealogies and such other passages as show the Lord to have been born of the seed of David after the flesh.\" Ordinary congregations, he says, used it innocently: it \"was in use not only among persons belonging to his sect, but also among those who follow the apostolic doctrine, as they did not perceive the mischief of the composition, but used the book in all simplicity on account of its brevity.\" Then the sentence that is quoted in every account of the Diatessaron: \"And I myself found more than two hundred such copies held in respect in the churches in our parts. All these I collected and put away, and I replaced them by the Gospels of the Four Evangelists.\"",
+          "It is worth being exact about that, because it is often told as a story about tidiness and it is not. Theodoret's stated objection is doctrinal: he thought the harmony obscured the Lord's descent from David in the flesh, which is a claim the New Testament makes in its own words. And it is a story about the four winning, in a place where they had not been the working text for generations. What survives of Tatian's own tendencies in the text is thinner than the lurid version suggests. The genealogies really are absent from Ephrem and from the Arabic, and Theodoret says so too — though some witnesses carry them and D. Plooij argued they were there originally. Head's own conclusion after examining the christology is measured: in producing the harmony \"Tatian pursued a relatively conservative procedure: including practically everything from each Gospel,\" and apart from the genealogies \"there is little other evidence of a rejection of the humanity of Jesus.\"",
+        ],
+      },
+      {
+        heading: "The Method for Recovering It Is Collapsing",
+        paragraphs: [
+          "For most of the twentieth century, scholars reconstructed Tatian's text by triangulating the surviving translations and quotations. W. L. Petersen built the standard apparatus for it and wrote the field's standard book. The governing rule was that a reading counts as Tatian's when both an Eastern and a Western witness carry it and no other source explains it. That method is now in serious trouble, and the trouble came from inside.",
+          "U. B. Schmid, building on B. Fischer and J. Rathofer, showed that the supposedly ancient Latin readings in the medieval Western harmonies were circulating in ordinary medieval commentary — in the Glossa Ordinaria and in marginal and interlinear glosses — and traced twenty-four Latin witnesses back, one by one, to Codex Fuldensis. His verdict is blunt: \"in all likelihood only one Western witness had an independent voice, and that is Codex Fuldensis itself. Forget about the rest, if you want to reconstruct Tatian's Diatessaron.\" D. C. Parker drew the consequence: \"At a sweep, therefore, the entire Western tradition is reduced to a single witness [= Codex Fuldensis]. This is a matter to which scholars will need to turn their attention rather urgently.\" N. J. Zola's summary is that \"the entire Western Diatessaronic tradition is collapsing back into a single witness: Codex Fuldensis.\"",
+          "Even the Dura fragment is contested. D. C. Parker, D. G. K. Taylor and M. Goodacre re-edited it in 1999 and concluded it is not Tatian's at all: \"We confess to having felt some surprise when five out of the eight items on which a conclusion could be reached proved to be non-Tatianic. The bulk of evidence is strongly against the fragment's being a part of Tatian's Diatessaron.\" J. Joosten answered them in 2003 and defended the identification. I. N. Mills argued the case against more strongly still in the standard 2019 collection; this article has not opened his chapter and reports it from the volume's own contents. M. Monier and J. E. Taylor, who come down in favour of the identification, nevertheless put the underlying difficulty in one sentence: \"reconstructing the Diatessaron on the basis of later versions has proven problematic, so there is no agreed-upon text with which the fragment can be compared\". Their own suggestion is that the leaf \"contains significant errors of reading, and thus it may be a writing exercise\" — an early form of Tatian's text, but not an expert copy of it. Even the original language is unresolved: T. Zahn, D. Plooij and Petersen argued for Syriac, H. Vogels, H. von Soden and Schmid for Greek, and Zola describes the field as \"split down the middle\" with a resolution unlikely without new evidence.",
+          "This article has not opened Petersen's 1994 volume, and it will not put words in his mouth: he was acutely aware of how poor the available editions were, and the one hedge of his that can be quoted with a page number is his description of the \"insurmountable obstacles\" presented by the \"poor editions and translations\" of the Arabic. It is also worth knowing the field has not stopped. Zola argues that Fuldensis may yet yield genuine Tatianic readings; J. W. Barker's 2021 study sorts the witnesses by narrative sequence rather than wording and argues the Eastern witnesses preserve Tatian's order while the Western descend from a fourth-century revision. The reason to tell a reader all this is not to be gloomy about scholarship. It is that a method which worked for eighty years turned out to be resting on medieval glosses, and the people who found that out were the specialists themselves, in print, correcting their own field.",
+        ],
+      },
+    ],
+    verses: [
+      { reference: "John 1:1-3", note: "Where the Diatessaron begins, in both Ephrem's commentary and the Arabic version" },
+      { reference: "Romans 1:3", note: "Born of the offspring of David according to the flesh — precisely Theodoret's stated objection" },
+      { reference: "Matthew 1:1", note: "One of the two genealogies absent from the Diatessaron's main witnesses" },
+      { reference: "Luke 3:23", note: "The other genealogy, and the reason a bishop went looking for two hundred copies" },
+    ],
+    sources: [
+      { label: "Yale University Library: P.CtYBR inv. DPg 24 (Dura Parchment)", url: "https://collections.library.yale.edu/catalog/33187606" },
+      { label: "Chester Beatty Library: Syc 709, Ephrem's Commentary on the Diatessaron", url: "https://viewer.cbl.ie/viewer/image/Syc_709/1/" },
+      { label: "N. J. Zola, Tatian's Diatessaron in Latin (open access)", url: "https://baylor-ir.tdl.org/items/aa5b00c1-34ae-4be5-9a74-74cde676c433" },
+      { label: "The Diatessaron of Tatian, translated by H. W. Hogg (public domain, Wikisource)", url: "https://en.wikisource.org/wiki/Ante-Nicene_Fathers/Volume_IX/The_Diatessaron_of_Tatian" },
+    ],
+    manuscript: {
+      siglum: "Uncial 0212, for the Dura fragment",
+      manuscriptType:
+        "A composition, not a single book. The one surviving Greek witness is a parchment leaf about 10.5 by 9.5 centimetres with a blank verso; everything else survives in translation, in commentary, or in later harmonies",
+      language:
+        "Composed in Greek or Syriac — the question is unresolved. Surviving witnesses are in Greek, Syriac, Armenian, Arabic, Latin, Persian, Middle Dutch and Old High German",
+      contents:
+        "A single continuous narrative of the life of Jesus assembled from Matthew, Mark, Luke and John, beginning at John 1:1. The genealogies are absent from Ephrem's commentary and from the Arabic version, though some later witnesses carry them. No copy survives complete in Greek or Syriac",
+      origin: "Composed by Tatian, probably about AD 170, in Rome or after his return east",
+      findSite:
+        "The Dura fragment: the embankment of the city wall west of Block L8 at Dura-Europos, Syria. Ephrem's Syriac commentary and the other witnesses reached scholarship through the antiquities market and monastic libraries, not excavation",
+      foundYear: "The Dura fragment on 5 March 1933; the Chester Beatty Syriac commentary acquired in 1957, with further leaves in 1984 and 1986",
+      foundBy:
+        "The Dura fragment was recovered by the Yale University and French Academy of Inscriptions expedition; the excavation was directed in the field by C. Hopkins. No single finder is recorded for the composition as a whole, because there is no single manuscript of it to find",
+      dateAssigned:
+        "The work: about AD 170, with sources ranging from the 160s to about 180 and no agreed figure. The Dura fragment: third century, and necessarily before the fall of Dura in 256 or 257. Ephrem's Syriac commentary manuscript: about AD 500. Codex Fuldensis: 546 or 547",
+      dateCertainty: "disputed",
+      currentLocation:
+        "Beinecke Rare Book and Manuscript Library, Yale University (the Dura fragment); Chester Beatty Library, Dublin (Ephrem's commentary in Syriac); Hochschul- und Landesbibliothek Fulda (Codex Fuldensis); Vatican Library (the principal Arabic manuscripts)",
+      shelfmark:
+        "New Haven, Beinecke, P.CtYBR inv. DPg 24 (also Dura Parchment 24; uncial 0212); Dublin, Chester Beatty, Syc 709 and Syc 709.1; Fulda, 100 Bonifatianus 1 (the Victor Codex)",
+      facsimileUrl: "https://collections.library.yale.edu/manifests/33187606",
+    },
+    citations: [
+      {
+        tier: "institution",
+        label: "Yale University Library: P.CtYBR inv. DPg 24, Yale Papyrus Collection",
+        url: "https://collections.library.yale.edu/catalog/33187606",
+        credit: "Beinecke Rare Book and Manuscript Library, Yale University",
+        detail:
+          "The holding library's own record, confirmed through its IIIF manifest and its LUX data record after the catalogue page proved to reject automated requests. It gives the abstract \"Tatian, Diatessaron\", the container P.CtYBR inv. DPg 24, the language as Greek, the note that the verso is blank, and full digitisation with public access. Note the shelfmark. Yale's own container is P.CtYBR inv. DPg 24; the leaf is cited in the scholarly literature as Dura Parchment 24 and, in the New Testament register, as uncial 0212. Several other numbers circulate for it and this article does not attempt to adjudicate between them, giving the holding library's own designation first",
+        supports: "The one surviving Greek witness, its shelfmark and its facsimile",
+      },
+      {
+        tier: "institution",
+        label: "Chester Beatty Library: Syc 709, Ephrem's Commentary on the Diatessaron",
+        url: "https://viewer.cbl.ie/viewer/image/Syc_709/1/",
+        credit: "Chester Beatty Library, Dublin",
+        detail:
+          "The holding library's own viewer and catalogue record: 75 folios, Syriac, about AD 500 with the first ten folios eighth or ninth century, acquired 1957 and bound in 1960. Its description supplies the chapter coverage, the companion manuscript Syc 709.1 acquired in 1984 and 1986, the single folio in Barcelona, and the calculation that about eighty per cent of the original codex survives",
+        supports: "The Syriac commentary, its extent and its acquisition history",
+      },
+      {
+        tier: "scholarly",
+        label: "N. J. Zola, Tatian's Diatessaron in Latin: A New Edition and Translation of Codex Fuldensis",
+        url: "https://baylor-ir.tdl.org/items/aa5b00c1-34ae-4be5-9a74-74cde676c433",
+        credit: "Nicholas J. Zola",
+        detail:
+          "Baylor University doctoral dissertation, open access, 196 pages, downloaded and read. Zola is co-editor of the standard 2019 volume on the Diatessaron, so this is the state of the question in a specialist's own words. Source of the collapse of the Western tradition, of the Schmid and Parker quotations as he prints them, of the account of the original-language dispute as \"split down the middle\", of Victor of Capua's own words about Tatian, and of the one Petersen hedge quoted here with its page reference",
+        supports: "The whole of the third section, and the Latin and Arabic transmission",
+      },
+      {
+        tier: "scholarly",
+        label: "P. M. Head, \"Tatian's Christology and its Influence on the Composition of the Diatessaron\"",
+        url: "https://www.tyndalebulletin.org/article/30478-tatian-s-christology-and-its-influence-on-the-composition-of-the-_diatessaron_.pdf",
+        credit: "Peter M. Head",
+        detail:
+          "Tyndale Bulletin 43.1 (1992), 121-137, DOI 10.53751/001c.30478, open access. Source of Tatian's biography with its primary references, of the observation that the removes between us and the original are at least one translation and several copyings, of the evidence about the genealogies including D. Plooij's dissent, and of Head's own conclusion that Tatian's procedure was relatively conservative",
+        supports: "Tatian himself, and what can and cannot be shown about his handling of the text",
+      },
+      {
+        tier: "scholarly",
+        label: "M. Monier and J. E. Taylor, \"Tatian's Diatessaron: The Arabic Version, the Dura Europos Fragment, and the Women Witnesses\"",
+        url: "https://academic.oup.com/jts/article/72/1/192/6472569",
+        credit: "Mina Monier and Joan E. Taylor",
+        detail:
+          "Journal of Theological Studies 72.1 (2021), 192-230, DOI 10.1093/jts/flab039. The abstract is open and was fetched and read; the full article is behind a paywall and this article has not read it. Both sentences quoted here are from that abstract. Note carefully where they stand: they argue the Arabic version aligns closely with the Dura parchment and support identifying it as an early form of Tatian's work, so they belong on the affirmative side of that dispute even though they think the leaf is an imperfect copy",
+        paywalled: true,
+        supports: "That there is no agreed text against which the Dura fragment can be tested",
+      },
+      {
+        tier: "primary",
+        label: "The Diatessaron of Tatian, translated by H. W. Hogg (Ante-Nicene Fathers, vol. IX)",
+        url: "https://en.wikisource.org/wiki/Ante-Nicene_Fathers/Volume_IX/The_Diatessaron_of_Tatian",
+        credit: "Translated by Hope W. Hogg",
+        detail:
+          "The Arabic Diatessaron in English, public domain and hosted at Wikisource in fifty-five sections. Consulted directly for the opening at John 1:1 and for the reading of the Baptist's food, where Hogg's own footnote is a useful warning: the vegetarian \"milk and honey\" reading so often attributed to Tatian is not in the surviving Arabic text but is reconstructed from other witnesses. Bear in mind throughout that this is a translation of a translation",
+        supports: "The opening of the harmony, and a caution about reconstructed readings",
+      },
+      {
+        tier: "primary",
+        label: "Theodoret of Cyrrhus on the Diatessaron, in S. Hemphill, The Diatessaron of Tatian (1888)",
+        url: "https://archive.org/details/diatessaronoftat00hempiala",
+        credit: "Theodoret of Cyrrhus, translated by Samuel Hemphill",
+        detail:
+          "Public domain at the Internet Archive; the full text was downloaded and the passage read in place. Theodoret's report is Haereticarum fabularum compendium 1.20, written about 453. Every sentence of his quoted here — the excision of the genealogies, the innocent use by orthodox congregations, and the two hundred copies — is from this translation",
+        supports: "Why the Diatessaron was withdrawn, in the words of the bishop who withdrew it",
+      },
+      {
+        tier: "primary",
+        label: "Eusebius, Church History 4.29 (Nicene and Post-Nicene Fathers, series II, vol. I)",
+        url: "https://en.wikisource.org/wiki/Nicene_and_Post-Nicene_Fathers:_Series_II/Volume_I/Church_History_of_Eusebius/Book_IV/Chapter_29",
+        credit: "Eusebius of Caesarea, translated by A. C. McGiffert",
+        detail:
+          "Public domain at Wikisource, read in place. Section 6 is the earliest surviving notice of the work by name, and the phrase \"I know not how\" is quoted here because it shows how remote a well-read bishop already was from the work in the early fourth century — he knows copies are \"still in the hands of some\" and cannot say how it was put together. That is not the same as proving he never saw one, and the article does not say it is",
+        supports: "The earliest external notice, and how remote it already was",
+      },
+      {
+        tier: "primary",
+        label: "D. C. Parker, D. G. K. Taylor and M. Goodacre, \"The Dura-Europos Gospel Harmony\", as quoted at Early Christian Writings",
+        url: "https://www.earlychristianwritings.com/dura.html",
+        credit: "D. C. Parker, David G. K. Taylor and Mark Goodacre",
+        detail:
+          "Their re-edition is in D. G. K. Taylor, ed., Studies in the Early Text of the Gospels and Acts (Birmingham: University of Birmingham Press, 1999), 192-228. This article has not opened that volume; the page linked reproduces their conclusions with page references, and it is where the sentences quoted here were read and checked, at their page 225. Flagged plainly because it is a quotation of living scholars taken from a reproduction rather than from the book",
+        supports: "The 1999 argument that the Dura leaf is not Diatessaronic",
+      },
+      {
+        tier: "scholarly",
+        label: "M. R. Crawford and N. J. Zola, eds., The Gospel of Tatian: Exploring the Nature and Text of the Diatessaron; and J. W. Barker, Tatian\u2019s Diatessaron: Composition, Redaction, Recension, and Reception",
+        credit: "Matthew R. Crawford and Nicholas J. Zola; James W. Barker",
+        detail:
+          "Crawford and Zola, The Reception of Jesus in the First Three Centuries 3 (London: T&T Clark, 2019), is the standard recent collection and carries I. N. Mills\u2019s chapter against the Diatessaronic character of the Dura leaf and U. B. Schmid\u2019s on Codex Fuldensis; the publisher\u2019s description of that volume is the source of the sentence in section two about how widely the same evidence gets used. Barker, Oxford Early Christian Studies (Oxford University Press, 2021), sorts the witnesses by narrative sequence rather than wording and argues the Eastern witnesses preserve Tatian\u2019s order while the Western descend from a fourth-century recension. Neither has been opened here and both are reported at second hand",
+        supports: "The current state of the field named in the third section",
+      },
+      {
+        tier: "encyclopedic",
+        label: "Wikipedia: Diatessaron",
+        url: "https://en.wikipedia.org/wiki/Diatessaron",
+      },
+    ],
+  },
 ];
