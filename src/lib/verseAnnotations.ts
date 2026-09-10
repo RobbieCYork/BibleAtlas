@@ -1297,9 +1297,14 @@ interface NameContextRule {
  *    2 Chronicles 9:3, Matthew 12:42 and Luke 11:31 is why that rule demands a capital W.
  *  - **It does not reach a book title sitting bare in a list.** "Genesis, Numbers, Deuteronomy,
  *    Isaiah, Jeremiah, Ezekiel, Daniel, and Esther" has no word around it that says "book", and a
- *    pattern that reached it would reach every "Peter, James, and John" in Scripture. Measured:
- *    about sixty more links of that shape across the prose corpus, needing phrase pins one
- *    sentence at a time. That is a separate job and it is written up in the manager inbox. The
+ *    pattern that reached it would reach every "Peter, James, and John" in Scripture. Measured,
+ *    with the shape stated: a sweep for a book-named surface carrying two other book names within
+ *    55 characters flags 100 surviving links, of which about 46 read as genuine titles and the
+ *    rest are "Peter, James, and John" in narrative. Treat 46 as a floor rather than a count —
+ *    that heuristic cannot see a bare reference with no book name beside it, and "Codex
+ *    Vaticanus, of roughly the same date, agrees on Mark" on the Sinaiticus article is exactly
+ *    that. They need phrase pins one sentence at a time, which is a separate job; it is written
+ *    up in automation/manager-inbox. The
  *    four sentences pinned below are only the ones where a rule here already removes a link from
  *    the SAME sentence — leaving "1 and 2 Timothy, Titus, and Philemon" with two of its three
  *    titles still linked would be a worse state than either answer.
