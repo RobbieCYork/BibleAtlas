@@ -2174,19 +2174,186 @@ export const CASES = [
          "records above run in. A bare \"Joseph\" in prose still means the son of Jacob on every " +
          "record the three entries do not name." },
   { text: "Joseph was sold into Egypt by his brothers and rose to govern it",
-    surface: "Joseph", owner: "mary-mother-of-jesus", expect: "joseph-son-of-jacob",
+    surface: "Joseph", owner: "elizabeth-mother-of-john-baptist", expect: "joseph-son-of-jacob",
     status: "guard",
-    why: "DELIBERATELY UNCHANGED. Mary's page carries four bare \"Joseph\"s that mean her husband " +
-         "and still resolve to the patriarch. That is a real fault and it is NOT a self-link — the " +
-         "page's subject is Mary — so it was left for the corpus-wide ruling rather than fixed " +
-         "here. If this line ever moves, that ruling has been taken by accident." },
+    why: "RE-OWNED 2026-09-10, from mary-mother-of-jesus, which is now in the table (see the " +
+         "MARY / MATTHAN / JACOB SON OF MATTHAN block below). The assertion it was making is the " +
+         "one that still needs making — a bare \"Joseph\" in prose is the patriarch on every " +
+         "record the entries do not name — so it moves to a nativity-adjacent record that is not " +
+         "one of them, rather than being deleted. Elizabeth's page never writes the bare name; " +
+         "the case is a probe of the default, exactly as it was before." },
+
+  // ══════════════════════════════════════════════════════════════════════════════════════════════
+  // MARY / MATTHAN / JACOB SON OF MATTHAN — 2026-09-10
+  //
+  // Three records the pass above measured, wrote up, and deliberately left, because fixing them
+  // was outside its authorisation. Sixteen Jacob/Joseph links between them, fourteen of them wrong.
+  // Every occurrence was read in its own sentence before anything moved, and two of the sixteen
+  // turned out to be the patriarch and were left exactly where they were — the trap this set was
+  // warned about, and it was live.
+  //
+  // The counts, by record and by surface. `person.summary` is the surface the app renders as plain
+  // text and scripts/seo/render.mjs linkifies onto the ~985 public pages; no snapshot covers it,
+  // so the only thing that can pin it is a prose case, which is why five of the cases below quote
+  // a summary rather than a life story:
+  //
+  //   mary-mother-of-jesus     4 links, 4 wrong  — all four her husband, all four the patriarch
+  //   matthan                  5 links, 5 wrong  — 2 Jacob + 3 Joseph, and he is neither man
+  //   jacob-father-of-joseph   7 links, 5 wrong  — the two right ones are "the patriarch Jacob"
+  //
+  // Two levers, chosen per record and not per taste. OWNER_NAME_OVERRIDES carries Mary and Matthan
+  // whole, because every occurrence on each means one man. It carries the Josephs on Jacob's page
+  // too, for the same reason. It CANNOT carry the Jacobs on Jacob's page, because that record
+  // names both men; there the record-wide answer is the page's own subject (suppressed by the
+  // self-link exclusion) and the patriarch is recovered by a context pin on "the patriarch",
+  // checked first. See the long note in verseAnnotations.ts for why that direction and not the
+  // other one.
+  //
+  // Nothing here rules on who a bare "Jacob" or "Joseph" belongs to corpus-wide. 305 such links
+  // were counted while this was written and many outside these three records are also wrong in the
+  // same direction. That ruling is Robbie's and is untouched; the guards at the end of this block
+  // are what prove it.
+
+  // ── mary-mother-of-jesus: four bare "Joseph"s, every one her husband ──────────────────────────
+  { text: "Mary was a young woman living in Nazareth, betrothed to a carpenter named Joseph, when " +
+          "Luke's Gospel records that the angel Gabriel appeared to her and announced she would " +
+          "conceive a son by the Holy Spirit who would be called \"the Son of the Most High\" " +
+          "(Luke 1:26-38).",
+    surface: "Joseph", owner: "mary-mother-of-jesus", expect: "joseph-husband-of-mary",
+    status: "guard",
+    why: "FIXED 2026-09-10; was the patriarch. The carpenter she is betrothed to, in the " +
+         "annunciation, on his wife's page. Not a self-link — the page's subject is Mary — which " +
+         "is why the exclusion rule never caught it." },
+  { text: "Joseph, learning of the pregnancy, initially planned to quietly end the engagement " +
+          "until an angel reassured him in a dream (Matthew 1:18-25).",
+    surface: "Joseph", owner: "mary-mother-of-jesus", expect: "joseph-husband-of-mary",
+    status: "guard",
+    why: "FIXED 2026-09-10. Matthew 1:19's Joseph, by name, opening the paragraph." },
+  { text: "Mary traveled with Joseph to Bethlehem for a Roman census and gave birth to Jesus " +
+          "there, laying him in a manger because there was no room for them at the inn " +
+          "(Luke 2:1-7).",
+    surface: "Joseph", owner: "mary-mother-of-jesus", expect: "joseph-husband-of-mary",
+    status: "guard",
+    why: "FIXED 2026-09-10. The nativity. The patriarch went to Egypt, not to Bethlehem." },
+  { text: "After the visit of magi from the East, Matthew records that Joseph was warned in a " +
+          "dream of Herod's plan to kill the child, and the family fled to Egypt, returning only " +
+          "after Herod's death to settle in Nazareth (Matthew 2:13-23).",
+    surface: "Joseph", owner: "mary-mother-of-jesus", expect: "joseph-husband-of-mary",
+    status: "guard",
+    why: "FIXED 2026-09-10, and the nastiest of the four: this sentence really does send the " +
+         "family to Egypt, so the wrong link read as plausible to anyone skimming. It is Matthew " +
+         "2:13's Joseph, fifteen centuries after the other one." },
+
+  // ── matthan: he is neither man, so all five are wrong the same way ────────────────────────────
+  { text: "Matthan appears exactly once in Scripture, named as the son of Eleazar and father of " +
+          "Jacob in Matthew's genealogy of Jesus (Matthew 1:15).",
+    surface: "Jacob", owner: "matthan", expect: "jacob-father-of-joseph", status: "guard",
+    why: "FIXED 2026-09-10; was the patriarch. Matthew 1:15's own words: Matthan's son. This is " +
+         "the article-surface twin of the Matthew 1:15 verse cases above." },
+  { text: "Luke's genealogy of Jesus names a different individual, Matthat son of Levi, in the " +
+          "corresponding generation before Joseph's father Heli (Luke 3:23-24), and the two lists " +
+          "do not share names through this whole postexilic stretch.",
+    surface: "Joseph", owner: "matthan", expect: "joseph-husband-of-mary", status: "guard",
+    why: "FIXED 2026-09-10; was the patriarch. Luke 3:23's Joseph, whose father Luke names as " +
+         "Heli — the husband of Mary, not the son of Jacob, who is nowhere in this article." },
+  { text: "Scholars have proposed several explanations for the broader divergence between " +
+          "Matthew's and Luke's genealogies, including that one traces Joseph's legal/royal line " +
+          "while the other traces a biological line (possibly through Mary), or that one reflects " +
+          "a levirate succession; no single theory is universally accepted, and the matter remains " +
+          "an open question in biblical scholarship rather than a settled one.",
+    surface: "Joseph", owner: "matthan", expect: "joseph-husband-of-mary", status: "guard",
+    why: "FIXED 2026-09-10. The whole sentence is about whose legal line Matthew traces to Jesus, " +
+         "which is Mary's husband's." },
+  { text: "A postexilic ancestor of Jesus named only in Matthew's genealogy as the father of " +
+          "Jacob, Joseph's father; his place in the family line is part of the long-standing " +
+          "scholarly puzzle of why Matthew's and Luke's genealogies diverge at this point.",
+    surface: "Jacob", owner: "matthan", expect: "jacob-father-of-joseph", status: "guard",
+    why: "FIXED 2026-09-10. matthan's SUMMARY, verbatim — plain text in the app and a live link " +
+         "on capstonebible.com/person/matthan. No snapshot covers this surface; this case is the " +
+         "only thing holding it." },
+  { text: "A postexilic ancestor of Jesus named only in Matthew's genealogy as the father of " +
+          "Jacob, Joseph's father; his place in the family line is part of the long-standing " +
+          "scholarly puzzle of why Matthew's and Luke's genealogies diverge at this point.",
+    surface: "Joseph", owner: "matthan", expect: "joseph-husband-of-mary", status: "guard",
+    why: "FIXED 2026-09-10. The other half of the same public-page sentence. \"Jacob, Joseph's " +
+         "father\" names two men in four words and had both of them wrong." },
+
+  // ── jacob-father-of-joseph: the record that names BOTH Jacobs ─────────────────────────────────
   { text: "This Jacob appears exactly once in Scripture, named as the son of Matthan and the " +
           "father of 'Joseph the husband of Mary, of whom was born Jesus who is called Christ' " +
           "(Matthew 1:15-16).",
+    surface: "Jacob", owner: "jacob-father-of-joseph", expect: null, status: "guard",
+    why: "FLIPPED 2026-09-10, from a guard that recorded it resolving to the patriarch. \"This " +
+         "Jacob\" is the page's own subject: no link, because the reader is already there. " +
+         "OWNER_NAME_OVERRIDES maps the name to the record itself and the self-link exclusion " +
+         "does the rest." },
+  { text: "This Jacob appears exactly once in Scripture, named as the son of Matthan and the " +
+          "father of 'Joseph the husband of Mary, of whom was born Jesus who is called Christ' " +
+          "(Matthew 1:15-16).",
+    surface: "Joseph", owner: "jacob-father-of-joseph", expect: "joseph-husband-of-mary",
+    status: "guard",
+    why: "FIXED 2026-09-10; was the patriarch. Matthew 1:16 quoted in the same sentence, which " +
+         "names the man's wife four words later." },
+  { text: "No narrative episode involving him is recorded anywhere in the Bible, and he is " +
+          "entirely distinct from the patriarch Jacob (also called Israel), son of Isaac and " +
+          "father of the twelve tribes, who belongs to a much earlier period of biblical history.",
     surface: "Jacob", owner: "jacob-father-of-joseph", expect: "jacob", status: "guard",
-    why: "DELIBERATELY UNCHANGED, and it IS wrong: \"This Jacob\" is the page's own subject and " +
-         "points at the patriarch. It is not fixable by OWNER_NAME_OVERRIDES, because the same " +
-         "record's next sentence — \"entirely distinct from the patriarch Jacob\" — genuinely " +
-         "means the patriarch, and that table gives one answer per record. It needs phrase pins " +
-         "and is written up in automation/manager-inbox." },
+    why: "UNCHANGED, and it is the trap. On the one record where a bare \"Jacob\" is suppressed " +
+         "as the page's own subject, this occurrence genuinely IS the patriarch — the sentence " +
+         "says so — and it must keep its link to him. Recovered by the \"the patriarch\" context " +
+         "pin, which is checked before OWNER_NAME_OVERRIDES. If this line ever goes null, the " +
+         "record-wide answer has swallowed the exception." },
+  { text: "Luke's genealogy names Joseph's father as Heli rather than Jacob (Luke 3:23), part of " +
+          "the same broader divergence between the two Gospel genealogies discussed under Matthan; " +
+          "proposed explanations include one Gospel tracing a legal/royal succession and the other " +
+          "a biological line, though the question remains genuinely open among scholars.",
+    surface: "Joseph", owner: "jacob-father-of-joseph", expect: "joseph-husband-of-mary",
+    status: "guard",
+    why: "FIXED 2026-09-10; was the patriarch. Luke 3:23's Joseph — this record's own son." },
+  { text: "Luke's genealogy names Joseph's father as Heli rather than Jacob (Luke 3:23), part of " +
+          "the same broader divergence between the two Gospel genealogies discussed under Matthan; " +
+          "proposed explanations include one Gospel tracing a legal/royal succession and the other " +
+          "a biological line, though the question remains genuinely open among scholars.",
+    surface: "Jacob", owner: "jacob-father-of-joseph", expect: null, status: "guard",
+    why: "FIXED 2026-09-10; was the patriarch. \"Heli rather than Jacob\" is the two evangelists " +
+         "disagreeing about THIS page's subject, so it is a self-reference like the first one and " +
+         "takes no link. Note it sits two clauses from the patriarch mention above, in the same " +
+         "paragraph — which is the whole reason this record needed two levers and not one." },
+  { text: "The father of Joseph, the husband of Mary, named only in Matthew's genealogy of Jesus; " +
+          "a distinct figure from the patriarch Jacob (Israel), son of Isaac, who lived many " +
+          "centuries earlier.",
+    surface: "Joseph", owner: "jacob-father-of-joseph", expect: "joseph-husband-of-mary",
+    status: "guard",
+    why: "FIXED 2026-09-10. jacob-father-of-joseph's SUMMARY, verbatim — a live link on " +
+         "capstonebible.com/person/jacob-father-of-joseph and covered by no snapshot. The clause " +
+         "names him \"the husband of Mary\" and linked to Egypt anyway." },
+  { text: "The father of Joseph, the husband of Mary, named only in Matthew's genealogy of Jesus; " +
+          "a distinct figure from the patriarch Jacob (Israel), son of Isaac, who lived many " +
+          "centuries earlier.",
+    surface: "Jacob", owner: "jacob-father-of-joseph", expect: "jacob", status: "guard",
+    why: "UNCHANGED — the summary's own patriarch mention, in different words from the life " +
+         "story's. Two wordings is why the pin is a pattern on \"the patriarch\" rather than two " +
+         "exact phrases; this case and its twin above are what hold that pattern honest." },
+
+  // ── The guards that hold THIS scope down. Three records were named, and only three. ───────────
+  { text: "Bethel (\"House of God\") is where the patriarch Jacob dreamed of a ladder reaching to " +
+          "heaven with angels ascending and descending, after which he set up a stone pillar and " +
+          "renamed the site (Genesis 28:10-19).",
+    surface: "Jacob", owner: "bethel", expect: "jacob", status: "guard",
+    why: "The third and only other \"the patriarch Jacob\" in the whole corpus, and the proof the " +
+         "new context pin is a no-op everywhere it was not written for: the patriarch was already " +
+         "the answer here and still is. Counted 2026-09-10 across all 31,098 WEB verses (0 hits) " +
+         "and every prose and public-page block (3 hits, the other two on jacob-father-of-joseph)." },
+  { text: "Eventually 'God remembered Rachel,' and she conceived and bore Joseph, naming him with " +
+          "the hope that God would 'add' another son (Genesis 30:22-24).",
+    surface: "Joseph", owner: "rachel", expect: "joseph-son-of-jacob", status: "guard",
+    why: "Real copy, not a probe sentence: the patriarch's birth on his mother's page. A bare " +
+         "\"Joseph\" in prose still means the son of Jacob on every record the entries do not " +
+         "name, and rachel is deliberately not one of them." },
+  { ref: "Genesis 37:3", surface: "Joseph", expect: "joseph-son-of-jacob", status: "guard",
+    why: "And in Scripture, on the reader path, untouched. None of the three record entries can " +
+         "reach a verse: OWNER_NAME_OVERRIDES needs an owner, and the Bible reader passes none." },
+  { ref: "Genesis 32:28", surface: "Jacob", expect: "jacob", status: "guard",
+    why: "The same for Jacob: \"Your name will no longer be called Jacob, but Israel.\" The " +
+         "patriarch keeps the bare key everywhere the two owner entries do not reach." },
 ];

@@ -956,8 +956,38 @@ const OWNER_NAME_OVERRIDES: Record<string, Record<string, string | null>> = {
   // occurrence is JACOB NEUSNER, the 20th-century scholar of rabbinic Judaism, cited by name for
   // his caution about reading the rabbis back into the Pharisees. Linking a modern historian's
   // forename to Isaac's son is simply false, and there is no entry for Neusner to link instead.
+  //
+  // The other two entries are the two records that name a DIFFERENT Jacob — the son of Matthan,
+  // father of Joseph the husband of Mary — and each is here for a different reason.
+  //
+  // MATTHAN is the simple case and the shape this table is for: he is neither man, every "Jacob"
+  // on his record means his own son, and one answer per record is therefore the whole answer. Two
+  // links, read in their own sentences before this was written: "named as the son of Eleazar and
+  // father of Jacob in Matthew's genealogy" in the life story, and "as the father of Jacob,
+  // Joseph's father" in the summary — which the app renders as plain text and
+  // scripts/seo/render.mjs linkifies onto the public page. Both sent a reader of Matthew 1:15 to
+  // Genesis.
+  //
+  // JACOB SON OF MATTHAN'S OWN PAGE is the hard case, because that record names BOTH men: "This
+  // Jacob appears exactly once" is its own subject, and two sentences later "entirely distinct
+  // from the patriarch Jacob" genuinely is the patriarch. One answer per record cannot serve both,
+  // so the record-wide answer here is the SAFE one — the page's own subject, handed back to the
+  // self-link exclusion, exactly as bare "Saul" behaves on Paul's page — and the two patriarch
+  // mentions are recovered by a context pin in NAME_CONTEXT_RULES, which is checked first.
+  //
+  // That direction is deliberate and is the same call the `satan` and `book-intro:Zechariah`
+  // entries above make: if the pin ever stops matching because someone rewords the sentence, the
+  // mention falls back to NO LINK — a lost correct link rather than a wrong one asserted. Pinning
+  // the two self-references instead would fail the other way: a reworded sentence would send
+  // "This Jacob" back to the patriarch, which is the fault being fixed.
+  //
+  // Neither entry rules on who a bare "Jacob" belongs to anywhere else. That question is Robbie's
+  // and is open; a ruling there leaves both untouched, because a page still does not link to its
+  // own subject and Matthan is still neither man.
   jacob: {
     "topic-pharisees": null,
+    matthan: "jacob-father-of-joseph",
+    "jacob-father-of-joseph": "jacob-father-of-joseph",
   },
   // "Ananias": the bare name is registered to Ananias and Sapphira. The chief-priests article names
   // a different man — "the high priest Ananias" who comes down to Caesarea to press charges against
@@ -1110,11 +1140,48 @@ const OWNER_NAME_OVERRIDES: Record<string, Record<string, string | null>> = {
   // This says nothing about who a bare "Joseph" belongs to anywhere else. That question is Robbie's
   // and is open; a ruling there leaves these three untouched, because a page still does not link to
   // its own subject whatever the corpus-wide default turns out to be.
+  //
+  // ── The three below are NOT self-links, and that is the whole point of listing them apart ────
+  //
+  // Added 2026-09-10 after the three records were measured link by link. None of these pages has a
+  // Joseph as its subject, so the self-link exclusion never had anything to say about them; they
+  // were simply wrong, and stayed wrong because nothing else reaches the article surface. What
+  // they share with the three above is the only property this table needs: EVERY bare "Joseph" on
+  // each of them means the same man, and that man is the husband of Mary. Each was read in its own
+  // sentence first, and the count is exact:
+  //
+  //   mary-mother-of-jesus     4  "betrothed to a carpenter named Joseph"; "Joseph, learning of
+  //                               the pregnancy"; "Mary traveled with Joseph to Bethlehem";
+  //                               "Matthew records that Joseph was warned in a dream". Her husband
+  //                               four times over, in the nativity, on his wife's page. The only
+  //                               other occurrence on the record is "Josephus", which the word
+  //                               boundary already saves, in a field the app renders as plain text.
+  //   matthan                  3  "before Joseph's father Heli (Luke 3:23-24)" and "one traces
+  //                               Joseph's legal/royal line" in the life story, plus "Joseph's
+  //                               father" in the summary. Matthan is Joseph's grandfather in
+  //                               Matthew's list; the patriarch is not in this article at all.
+  //   jacob-father-of-joseph   3  "the father of 'Joseph the husband of Mary'"; "Luke's genealogy
+  //                               names Joseph's father as Heli"; and "The father of Joseph, the
+  //                               husband of Mary" in the summary. The record's own role is that he
+  //                               fathered this Joseph — the name is in its id.
+  //
+  // Ten links, every one of which pointed at Joseph son of Jacob and sent a reader of Matthew's
+  // genealogy to Egypt. Note that the `jacob` entry above needs a context pin because that record
+  // names two Jacobs; its three JOSEPHs need no such thing, because they are all one man.
+  //
+  // Same disclaimer as above, and it matters more here because these are not self-links: this says
+  // nothing about who a bare "Joseph" belongs to anywhere else. 305 bare "Jacob"/"Joseph" links
+  // were counted across the corpus while this was written and many outside these records are also
+  // the husband rather than the patriarch. Those are the corpus-wide ruling, which is Robbie's and
+  // is open, and they are deliberately left alone.
   joseph: {
     "teresa-of-avila": "joseph-husband-of-mary",
     "joseph-husband-of-mary": "joseph-husband-of-mary",
     "joseph-of-arimathea": "joseph-of-arimathea",
     caiaphas: "caiaphas",
+    "mary-mother-of-jesus": "joseph-husband-of-mary",
+    matthan: "joseph-husband-of-mary",
+    "jacob-father-of-joseph": "joseph-husband-of-mary",
   },
 
   // ── Two more from the same sweep: a bare name that is the WRONG ancient man ──────────────────
@@ -1666,6 +1733,28 @@ const NAME_CONTEXT_RULES: Record<string, NameContextRule[]> = {
   jacob: [
     { after: /^\s+Eliyahu\b/, to: null },            // the boy who found the Siloam inscription
     BEN_PATRONYMIC_BEFORE,                           // "Samuel ben Jacob", the Leningrad scribe's father
+
+    // ── "the patriarch Jacob" — the one sentence that must survive the owner entry ────────────
+    //
+    // OWNER_NAME_OVERRIDES now answers a bare "Jacob" on jacob-father-of-joseph's page with the
+    // page's own subject, so the self-link exclusion suppresses it. That is right for two of the
+    // three occurrences on that record and wrong for the third, which says in as many words that
+    // he is "entirely distinct from the patriarch Jacob (also called Israel), son of Isaac" — and
+    // wrong for the fourth, the same clause in the summary that render.mjs linkifies onto the
+    // public page. This rule is what recovers those two, and it is checked before that table.
+    //
+    // A pattern rather than two exact pins, and the reason is the same one that lets
+    // BEN_PATRONYMIC_* be patterns while a book title may not be: the neighbouring word IS the
+    // discriminator. Nothing around a title says "title", but "the patriarch" says exactly which
+    // Jacob is meant, and there is no reading on which it means the other one.
+    //
+    // Measured before it was written, across all 31,098 WEB verses, all 5,632 prose blocks and the
+    // 985 public-page-only blocks: "the patriarch Jacob" occurs 3 times and in NO verse. Two are
+    // the sentences above; the third is the Bethel POI's "where the patriarch Jacob dreamed of a
+    // ladder", where the patriarch is already the answer and this rule is a no-op. Its whole reach
+    // is therefore the one record it was written for, and it moves no row anywhere else. Guarded
+    // by prose cases on both records in scripts/name-linker/cases.mjs, Bethel included.
+    { before: /\bthe patriarch\s+$/, to: "jacob" },
 
     // ── ONE RECORD, ONE NAME: old-syriac-gospels ────────────────────────────────────────────
     //

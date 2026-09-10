@@ -1860,12 +1860,10 @@ person.lifeStory|jacob-father-of-joseph|f4a93a8a9e	138	Jesus	jesus-of-nazareth
 person.lifeStory|jacob-father-of-joseph|f4a93a8a9e	302	Jacob	jacob
 person.lifeStory|jacob-father-of-joseph|f4a93a8a9e	337	Isaac	isaac
 person.lifeStory|jacob-father-of-joseph|f4a93a8a9e	434	Luke	luke-evangelist
-person.lifeStory|jacob-father-of-joseph|f4a93a8a9e	457	Joseph	joseph-son-of-jacob
-person.lifeStory|jacob-father-of-joseph|f4a93a8a9e	493	Jacob	jacob
-person.lifeStory|jacob-father-of-joseph|f4a93a8a9e	5	Jacob	jacob
+person.lifeStory|jacob-father-of-joseph|f4a93a8a9e	457	Joseph	joseph-husband-of-mary
 person.lifeStory|jacob-father-of-joseph|f4a93a8a9e	599	Matthan	matthan
 person.lifeStory|jacob-father-of-joseph|f4a93a8a9e	66	Matthan	matthan
-person.lifeStory|jacob-father-of-joseph|f4a93a8a9e	93	Joseph	joseph-son-of-jacob
+person.lifeStory|jacob-father-of-joseph|f4a93a8a9e	93	Joseph	joseph-husband-of-mary
 person.lifeStory|jacob|23c9081ffc	167	Rachel	rachel
 person.lifeStory|jacob|23c9081ffc	260	Joseph	joseph-son-of-jacob
 person.lifeStory|jacob|23c9081ffc	276	Rachel	rachel
@@ -2266,20 +2264,20 @@ person.lifeStory|mary-mother-of-james-the-less|38aca1a7b0	44	James	james-son-of-
 person.lifeStory|mary-mother-of-jesus|5bde7ba8d4	116	Jesus	jesus-of-nazareth
 person.lifeStory|mary-mother-of-jesus|5bde7ba8d4	240	Jesus	jesus-of-nazareth
 person.lifeStory|mary-mother-of-jesus|5bde7ba8d4	7	Jesus	jesus-of-nazareth
-person.lifeStory|mary-mother-of-jesus|9b670dbadd	0	Joseph	joseph-son-of-jacob
-person.lifeStory|mary-mother-of-jesus|9b670dbadd	161	Joseph	joseph-son-of-jacob
+person.lifeStory|mary-mother-of-jesus|9b670dbadd	0	Joseph	joseph-husband-of-mary
+person.lifeStory|mary-mother-of-jesus|9b670dbadd	161	Joseph	joseph-husband-of-mary
 person.lifeStory|mary-mother-of-jesus|9b670dbadd	218	Jesus	jesus-of-nazareth
 person.lifeStory|mary-mother-of-jesus|9b670dbadd	388	Simeon	simeon-at-the-temple
 person.lifeStory|mary-mother-of-jesus|9e80447262	124	Gabriel	gabriel-archangel
 person.lifeStory|mary-mother-of-jesus|9e80447262	190	the Holy Spirit	holy-spirit
 person.lifeStory|mary-mother-of-jesus|9e80447262	387	Elizabeth	elizabeth-mother-of-john-baptist
-person.lifeStory|mary-mother-of-jesus|9e80447262	74	Joseph	joseph-son-of-jacob
+person.lifeStory|mary-mother-of-jesus|9e80447262	74	Joseph	joseph-husband-of-mary
 person.lifeStory|mary-mother-of-jesus|c0a46a2324	193	John the Apostle	john-the-apostle
 person.lifeStory|mary-mother-of-jesus|c0a46a2324	44	Jesus	jesus-of-nazareth
 person.lifeStory|mary-mother-of-jesus|c0a46a2324	90	Jesus	jesus-of-nazareth
 person.lifeStory|mary-mother-of-jesus|c43b863688	19	magi	magi
 person.lifeStory|mary-mother-of-jesus|c43b863688	254	Jesus	jesus-of-nazareth
-person.lifeStory|mary-mother-of-jesus|c43b863688	60	Joseph	joseph-son-of-jacob
+person.lifeStory|mary-mother-of-jesus|c43b863688	60	Joseph	joseph-husband-of-mary
 person.lifeStory|mary-of-bethany|0a246c1c26	113	Jesus	jesus-of-nazareth
 person.lifeStory|mary-of-bethany|0a246c1c26	15	Jesus	jesus-of-nazareth
 person.lifeStory|mary-of-bethany|0a246c1c26	186	Judas Iscariot	judas-iscariot
@@ -2310,12 +2308,12 @@ person.lifeStory|mary-of-bethany|d3db84ee67	9	Martha	martha-of-bethany
 person.lifeStory|matthan|9a0f7cd00f	117	Jesus	jesus-of-nazareth
 person.lifeStory|matthan|9a0f7cd00f	213	Luke	luke-evangelist
 person.lifeStory|matthan|9a0f7cd00f	233	Jesus	jesus-of-nazareth
-person.lifeStory|matthan|9a0f7cd00f	329	Joseph	joseph-son-of-jacob
+person.lifeStory|matthan|9a0f7cd00f	329	Joseph	joseph-husband-of-mary
 person.lifeStory|matthan|9a0f7cd00f	535	Luke	luke-evangelist
-person.lifeStory|matthan|9a0f7cd00f	581	Joseph	joseph-son-of-jacob
+person.lifeStory|matthan|9a0f7cd00f	581	Joseph	joseph-husband-of-mary
 person.lifeStory|matthan|9a0f7cd00f	63	Eleazar	eleazar-in-jesus-genealogy
 person.lifeStory|matthan|9a0f7cd00f	666	Mary	mary-mother-of-jesus
-person.lifeStory|matthan|9a0f7cd00f	85	Jacob	jacob
+person.lifeStory|matthan|9a0f7cd00f	85	Jacob	jacob-father-of-joseph
 person.lifeStory|matthew-levi|5def0ba526	165	Jesus	jesus-of-nazareth
 person.lifeStory|matthew-levi|5def0ba526	63	Jesus	jesus-of-nazareth
 person.lifeStory|matthew-levi|775e5934f9	161	Herod Antipas	herod-antipas
