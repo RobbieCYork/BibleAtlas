@@ -1,0 +1,288 @@
+/* ============================================================================
+ * Rich text for Sermon Notes — storage format, sanitisation, and the colour palette.
+ *
+ * ── THE STORAGE FORMAT, AND WHY ────────────────────────────────────────────
+ * `sermon_notes.body` is a plain `text` column that has, until now, held plain text. Rich notes
+ * are stored in that SAME column as **sanitised HTML behind a sentinel prefix**:
+ *
+ *     <!--capstone-rich:1--><p>Grace <b>abounds</b></p><ul><li>…</li></ul>
+ *
+ * A body that does not begin with that exact prefix is plain text, full stop. That is the whole
+ * compatibility story and it is why this needs NO MIGRATION: every row written before today is
+ * missing the prefix, so it is read as plain text and rendered escaped, exactly as it always was.
+ * Nothing is rewritten until its owner actually edits it.
+ *
+ * The alternatives were weighed and rejected:
+ *
+ *   A `body_format` column would be the tidier schema, but it cannot be applied to production
+ *   without Robbie's say-so (migrations are always his call). A feature that is broken on the live
+ *   site until someone runs a migration is a worse feature. The sentinel needs no schema change
+ *   and cannot get out of sync with the data, because it IS the data.
+ *
+ *   Sniffing ("does this body contain tags?") is the trap this sentinel exists to avoid. A reader
+ *   who typed `Isaiah 40 > all` or `<-- see v.3` into a note years ago would have it silently
+ *   reinterpreted as markup. The prefix is unambiguous: present or absent, never guessed.
+ *
+ *   Markdown has no underline and no colour, and its bullets and nesting are whitespace-sensitive
+ *   — which is precisely the thing that falls apart when a phone keyboard autocorrects and
+ *   auto-capitalises someone typing fast in a pew. A structured JSON document model would be the
+ *   most rigorous choice, but it means writing and maintaining a document schema plus a renderer
+ *   for a feature whose entire requirement is "bold, bullets, indent, colour". HTML with a hard
+ *   allowlist is the smallest thing that is actually correct here, and `contenteditable` speaks it
+ *   natively, which is what keeps the mobile editing experience (selection handles, autocorrect,
+ *   native undo) working instead of being reimplemented badly.
+ *
+ * ── THE SANITISATION RULE ──────────────────────────────────────────────────
+ * Everything that enters storage goes through sanitizeNoteHtml(). Everything that leaves storage
+ * for the screen goes through it AGAIN, via noteBodyToHtml(). The stored string is never trusted,
+ * not because the server is expected to lie, but because "the client sanitised it on the way in"
+ * is a guarantee that survives exactly until someone writes to the table by another route
+ * (a restored backup, psql, a future import feature, a second client).
+ *
+ * The allowlist below is deliberately tiny and, apart from a fixed set of colour classes, carries
+ * NO attributes at all. No href, no src, no style, no data-*, no event handlers — there is nothing
+ * for a URL scheme or a CSS expression to hide in. See ALLOWED_TAGS.
+ *
+ * ── THE COLOUR PALETTE ─────────────────────────────────────────────────────
+ * Colour is stored as a CLASS, never as a value. `<span class="sn-c-red">`, never
+ * `<span style="color:#a83c24">`. This is not tidiness: this app's light and dark themes are two
+ * different palettes selected by a `data-theme` attribute (see index.css), so any hex baked into a
+ * note is right in one theme and wrong — often unreadable — in the other. A class lets index.css
+ * resolve the same "red" to #a83c24 on white and #e88a72 on near-black. Six slots, drawn from the
+ * illuminated palette's own pigments, every one measured at >= 4.5:1 against all three surfaces a
+ * note can land on in both themes.
+ * ==========================================================================*/
+
+import DOMPurify from "dompurify";
+
+/** The marker that says "the rest of this column is sanitised HTML". Anything else is plain text.
+ * Versioned so a future format change can be told apart from this one rather than guessed at. */
+const RICH_PREFIX = "<!--capstone-rich:1-->";
+
+/** One entry per swatch in the colour row.
+ *
+ * `light`/`dark` are the exact values index.css resolves each class to. They are duplicated here
+ * (rather than read from CSS) for one reason: `document.execCommand("foreColor")` takes a colour
+ * VALUE, so the editor has to hand the browser a real hex, and then map what the browser produced
+ * back to the class. Keeping both halves of that round trip in one table is what stops them
+ * drifting — if a value changes in index.css and not here, the mapping silently stops matching and
+ * the colour is dropped (safely: uncoloured text, never a wrong-theme hex in storage).
+ *
+ * The measured contrast of each value, against --surface-sunken / --panel-bg / --bg:
+ *   dark  red 7.71/6.85/7.44  gold 10.13/8.99/9.77  green 9.79/8.69/9.45  blue 7.96/7.06/7.68  violet 9.21/8.17/8.89
+ *   light red 5.06/6.29/5.63  gold  4.57/5.69/5.09  green 6.34/7.88/7.05  blue 8.04/10.00/8.94  violet 5.71/7.10/6.35
+ * The floor is gold-on-light at 4.57:1. Nothing here is below AA for body text in either theme. */
+export const NOTE_COLORS = [
+  { id: "default", label: "Default", className: null, light: "#2e251c", dark: "#ddd0b6" },
+  { id: "red", label: "Rubric red", className: "sn-c-red", light: "#a83c24", dark: "#e88a72" },
+  { id: "gold", label: "Gold", className: "sn-c-gold", light: "#8a5e12", dark: "#e5b355" },
+  { id: "green", label: "Verdigris", className: "sn-c-green", light: "#2f5a43", dark: "#7fc79c" },
+  { id: "blue", label: "Lapis blue", className: "sn-c-blue", light: "#2e3a8c", dark: "#93a2e8" },
+  { id: "violet", label: "Violet", className: "sn-c-violet", light: "#6d28d9", dark: "#b9a8f0" },
+] as const;
+
+export type NoteColorId = (typeof NOTE_COLORS)[number]["id"];
+
+/** The only class names any note may carry, in storage or on screen. */
+const COLOR_CLASSES: ReadonlySet<string> = new Set(
+  NOTE_COLORS.flatMap((c) => (c.className ? [c.className as string] : []))
+);
+
+/** "r,g,b" -> class name, for BOTH themes' values, so a note coloured in dark mode and one coloured
+ * in light mode normalise to the same class. */
+const RGB_TO_CLASS = new Map<string, string>();
+NOTE_COLORS.forEach((c) => {
+  if (!c.className) return;
+  RGB_TO_CLASS.set(hexToRgbKey(c.light), c.className);
+  RGB_TO_CLASS.set(hexToRgbKey(c.dark), c.className);
+});
+
+function hexToRgbKey(hex: string): string {
+  const n = parseInt(hex.slice(1), 16);
+  return `${(n >> 16) & 255},${(n >> 8) & 255},${n & 255}`;
+}
+
+/** Normalises whatever a browser produced for a colour — `#a83c24`, `rgb(168, 60, 36)`,
+ * `rgba(168, 60, 36, 1)` — to the "r,g,b" key used by RGB_TO_CLASS. Returns null for anything it
+ * does not recognise (named colours, hsl, colour functions), which is the safe answer: an
+ * unrecognised colour is dropped rather than preserved. */
+function colorToRgbKey(value: string): string | null {
+  const v = value.trim().toLowerCase();
+  const short = /^#([0-9a-f])([0-9a-f])([0-9a-f])$/.exec(v);
+  if (short) return `${parseInt(short[1] + short[1], 16)},${parseInt(short[2] + short[2], 16)},${parseInt(short[3] + short[3], 16)}`;
+  const long = /^#([0-9a-f]{6})$/.exec(v);
+  if (long) return hexToRgbKey(`#${long[1]}`);
+  const fn = /^rgba?\(\s*(\d+)\s*[,\s]\s*(\d+)\s*[,\s]\s*(\d+)/.exec(v);
+  if (fn) return `${Number(fn[1])},${Number(fn[2])},${Number(fn[3])}`;
+  return null;
+}
+
+/** The complete tag allowlist. Every one of these is a shape a note can legitimately hold, and
+ * nothing here can carry a URL, load a resource, or run anything.
+ *
+ * `blockquote` is on the list because it is what `execCommand("indent")` produces outside a list;
+ * App.css styles it as a plain left indent with no rule and no quote marks, so the reader gets the
+ * indent they asked for. `div` and `font` are here because browsers emit them unbidden — `div` as
+ * a line wrapper, `font` from `foreColor` — and it is better to normalise them than to have a
+ * note's line breaks vanish. `font` never survives: normalizeColors() below rewrites every one of
+ * them to a span (or unwraps it) before DOMPurify ever sees the markup. */
+const ALLOWED_TAGS = ["p", "div", "br", "b", "strong", "i", "em", "u", "ul", "ol", "li", "blockquote", "span", "font"];
+
+/** Tags after which the plain-text projection starts a new line. */
+const BLOCK_TAGS = new Set(["p", "div", "li", "ul", "ol", "blockquote"]);
+
+/** Rewrites every colour a browser applied into one of the palette classes, in place.
+ *
+ * Runs BEFORE DOMPurify, on a detached document, so that by the time the allowlist is applied the
+ * only classes present are ones from COLOR_CLASSES and the only colour information left is those
+ * classes. DOMPurify removes but never adds, so `ALLOWED_ATTR: ["class"]` downstream cannot let a
+ * class through that this pass did not put there. */
+function normalizeColors(root: Element): void {
+  root.querySelectorAll("*").forEach((el) => {
+    const raw = el.getAttribute("color") ?? (el instanceof HTMLElement ? el.style.color : "");
+    const key = raw ? colorToRgbKey(raw) : null;
+    const cls = key ? RGB_TO_CLASS.get(key) ?? null : null;
+
+    if (el.tagName === "FONT") {
+      // <font> carries face/size we do not want and is not a tag any note should keep. When it
+      // held a palette colour it becomes a span with just that class; otherwise it is unwrapped
+      // entirely. Its children are preserved either way, so no words are ever lost.
+      if (cls) {
+        const span = el.ownerDocument.createElement("span");
+        span.className = cls;
+        while (el.firstChild) span.appendChild(el.firstChild);
+        el.replaceWith(span);
+      } else {
+        el.replaceWith(...el.childNodes);
+      }
+      return;
+    }
+
+    if (el instanceof HTMLElement && el.style.color) el.style.removeProperty("color");
+    el.removeAttribute("color");
+
+    // Anything that already carries classes is scrubbed to the palette set. A class the editor did
+    // not write (from a paste, or from a hand-edited row) is not preserved. An element carries at
+    // most one colour: an inline colour just applied wins over a class already there, and a
+    // hand-edited row claiming two palette classes keeps the first.
+    const kept = [...el.classList].filter((c) => COLOR_CLASSES.has(c)).slice(0, 1);
+    const next = cls ? [cls] : kept;
+    if (next.length) el.className = next.join(" ");
+    else el.removeAttribute("class");
+  });
+}
+
+/** Drops block wrappers that ended up with nothing in them at all.
+ *
+ * They come from the browser, not the writer: `execCommand("insertUnorderedList")` on paragraphs
+ * emits `<p><ul>…</ul></p>`, which is invalid nesting, so re-parsing splits it into an empty
+ * `<p>`, the list, and another empty `<p>`. Left alone those show as stray blank lines above and
+ * below every list.
+ *
+ * A paragraph the writer deliberately left blank is `<p><br></p>` — it HAS a child — so this only
+ * removes wrappers with no child nodes whatsoever and never eats an intentional blank line. */
+function dropEmptyBlocks(root: Element): void {
+  root.querySelectorAll("p, div, blockquote").forEach((el) => {
+    if (el.childNodes.length === 0) el.remove();
+  });
+}
+
+/** The single choke point. Parse -> normalise colours and classes -> allowlist -> serialise.
+ *
+ * Called on the way INTO storage and again on the way OUT of it. Idempotent, so running it twice
+ * costs a parse and changes nothing. */
+export function sanitizeNoteHtml(html: string): string {
+  if (!html) return "";
+  const doc = new DOMParser().parseFromString(`<body>${html}</body>`, "text/html");
+  normalizeColors(doc.body);
+  dropEmptyBlocks(doc.body);
+  return DOMPurify.sanitize(doc.body.innerHTML, {
+    ALLOWED_TAGS,
+    ALLOWED_ATTR: ["class"],
+    ALLOW_DATA_ATTR: false,
+    ALLOW_ARIA_ATTR: false,
+    ALLOW_UNKNOWN_PROTOCOLS: false,
+    // Keep the words when a disallowed wrapper is dropped — a pasted <h2> should lose its heading,
+    // not its text. Scripts and styles are removed with their contents regardless (FORBID_CONTENTS
+    // defaults cover script/style/noscript/template), so this does not turn code into visible text.
+    KEEP_CONTENT: true,
+    RETURN_TRUSTED_TYPE: false,
+  });
+}
+
+/** True if this stored body is in the rich format rather than legacy plain text. */
+export function isRichBody(body: string): boolean {
+  return body.startsWith(RICH_PREFIX);
+}
+
+function escapeHtml(text: string): string {
+  return text.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
+}
+
+/** Legacy plain text -> the HTML the editor and the reader see. Escaped first, so a note that
+ * literally contains `<b>` shows those five characters rather than turning bold. Blank lines are
+ * kept as blank paragraphs so a note's existing shape survives the move. */
+export function plainTextToHtml(text: string): string {
+  if (!text) return "";
+  return text
+    .split(/\r\n|\r|\n/)
+    .map((line) => (line.trim() === "" ? "<p><br></p>" : `<p>${escapeHtml(line)}</p>`))
+    .join("");
+}
+
+/** Stored body -> HTML safe to put on screen. The ONLY function that should ever feed a sermon
+ * note into innerHTML. */
+export function noteBodyToHtml(body: string): string {
+  if (!body) return "";
+  return isRichBody(body) ? sanitizeNoteHtml(body.slice(RICH_PREFIX.length)) : plainTextToHtml(body);
+}
+
+/** Editor HTML -> the string to write to `sermon_notes.body`.
+ *
+ * An empty document is stored as the empty string, not as `<p><br></p>` behind a prefix, so a note
+ * emptied out reads as empty to every existing check (`body.trim()`, the list's snippet test) and
+ * to any future one. */
+export function buildStoredBody(html: string): string {
+  const clean = sanitizeNoteHtml(html);
+  return isHtmlEmpty(clean) ? "" : RICH_PREFIX + clean;
+}
+
+function textFromNode(node: Node): string {
+  if (node.nodeType === Node.TEXT_NODE) return node.nodeValue ?? "";
+  if (node.nodeType !== Node.ELEMENT_NODE) return "";
+  const el = node as Element;
+  const tag = el.tagName.toLowerCase();
+  if (tag === "br") return "\n";
+  let out = "";
+  el.childNodes.forEach((child) => {
+    out += textFromNode(child);
+  });
+  if (BLOCK_TAGS.has(tag)) out += "\n";
+  return out;
+}
+
+/** Stored body -> plain text, for every surface that reads a note as words rather than as markup:
+ * the list snippet, the search haystack, and anything that comes later (export, previews).
+ *
+ * This is the function that keeps a formatted note findable. A note whose only copy of the word
+ * "Habakkuk" sits inside `<b>Habakkuk</b>` must still match a search for "habakkuk", and it does,
+ * because the search matches against this projection rather than against the markup. Non-breaking
+ * spaces (which contenteditable inserts freely) are folded back to ordinary spaces for the same
+ * reason — otherwise "the Lord" typed in the editor would not match "the Lord" typed in search. */
+export function noteBodyToPlainText(body: string): string {
+  if (!body) return "";
+  if (!isRichBody(body)) return body;
+  const doc = new DOMParser().parseFromString(`<body>${sanitizeNoteHtml(body.slice(RICH_PREFIX.length))}</body>`, "text/html");
+  return textFromNode(doc.body).replace(/\u00a0/g, " ").replace(/\n{3,}/g, "\n\n").trim();
+}
+
+/** Cheap emptiness test for editor HTML.
+ *
+ * Deliberately a tag strip rather than a parse: it runs on every keystroke to decide whether a
+ * brand-new note is still blank, and it is never used to decide what is safe to render — only
+ * whether there is anything here at all. Getting it wrong costs a stray empty row, not a security
+ * hole. (Everything that reaches a screen goes through sanitizeNoteHtml instead.) */
+export function isHtmlEmpty(html: string): boolean {
+  if (!html) return true;
+  return html.replace(/<[^>]*>/g, "").replace(/&nbsp;|\u00a0/g, " ").trim() === "";
+}

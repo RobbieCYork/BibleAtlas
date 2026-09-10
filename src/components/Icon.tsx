@@ -56,12 +56,15 @@
 
 import type { ReactElement } from "react";
 import {
-  Ban, Briefcase, Cake, CalendarDays, Camera, Check, Clapperboard, Crown, Eye, EyeOff, FileText,
-  Flag, Flame, Gem, Globe, GraduationCap, Headphones, HeartCrack, House, Link as LinkIcon, Lock,
+  Ban, Baseline, Bold, Briefcase, Cake, CalendarDays, Camera, Check, Clapperboard, Crown, Eye,
+  EyeOff, FileText,
+  Flag, Flame, Gem, Globe, GraduationCap, Headphones, HeartCrack, House, Italic,
+  Link as LinkIcon, List, ListIndentDecrease, ListIndentIncrease, ListOrdered, Lock,
   LogOut,
   Medal, Menu, Mic, MicOff, Moon, Music, Palette, Pause, Pin, Play, Plus, Printer, RotateCcw,
   Settings,
-  Share2, Shield, Smartphone, Sun, ThumbsDown, ThumbsUp, Timer, Tv, Video, VideoOff, Volume2,
+  Share2, Shield, Smartphone, Sun, ThumbsDown, ThumbsUp, Timer, Tv, Underline, Video, VideoOff,
+  Volume2,
   X as XMark,
   type LucideIcon,
 } from "lucide-react";
@@ -155,7 +158,19 @@ export type IconName =
   | "heartBreak"
   | "menu"
   | "check"
-  | "flame";
+  | "flame"
+  // The Sermon Notes formatting toolbar. Lucide rather than drawn, on purpose: a formatting bar is
+  // the one surface in this app that is NOT wayfinding. Its marks have to read as the same B / I /
+  // U / bullets as every other editor on the reader's phone, and a house version of a convention
+  // that universal would cost recognition and buy nothing.
+  | "formatBold"
+  | "formatItalic"
+  | "formatUnderline"
+  | "listBullet"
+  | "listNumbered"
+  | "indent"
+  | "outdent"
+  | "textColor";
 
 interface IconProps {
   name: IconName;
@@ -702,6 +717,16 @@ const LIBRARY = {
   menu: Menu,
   check: Check,
   flame: Flame,
+  formatBold: Bold,
+  formatItalic: Italic,
+  formatUnderline: Underline,
+  listBullet: List,
+  listNumbered: ListOrdered,
+  indent: ListIndentIncrease,
+  outdent: ListIndentDecrease,
+  // `Baseline` — a letterform sitting on a rule — is the convention for "text colour" across every
+  // editor worth copying. `Palette` is already spoken for by the profile's favourite-colour row.
+  textColor: Baseline,
 } satisfies Partial<Record<IconName, LucideIcon>>;
 
 /** Every name in the union must be satisfied by one of the two maps above. Both are declared with

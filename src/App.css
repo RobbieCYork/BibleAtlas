@@ -10559,3 +10559,194 @@ a.profile-links-url {
     max-height: 220px;
   }
 }
+
+/* ============================================================================
+ * Rich text editor (Sermon Notes)
+ *
+ * ── WHERE THE TOOLBAR SITS, AND WHY IT SITS THERE ──────────────────────────
+ * Sticky to the TOP of the notes panel's scrollport, not floating above the keyboard at the
+ * bottom. Someone taking notes during a sermon is typing one-thumbed on a phone, and the obvious
+ * answer — pin the bar just above the software keyboard — cannot be built honestly here: it needs
+ * visualViewport maths that no desktop browser and no device emulator can actually exercise, and
+ * a bar that mispositions itself covers the sentence being written. Sticky-top is the version that
+ * is verifiable: one 40px row, always on screen, NEVER underneath the keyboard, and it costs the
+ * writing area a single line rather than the third of the screen a bottom sheet would.
+ *
+ * It scrolls horizontally rather than wrapping, so the writing area never changes height as tools
+ * come in and out of reach on a narrow phone.
+ * ==========================================================================*/
+
+.rte {
+  display: flex;
+  flex-direction: column;
+}
+
+.rte-toolbar {
+  position: sticky;
+  top: 0;
+  z-index: 3;
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  padding: 4px 6px;
+  margin-bottom: 6px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--panel-bg);
+  /* The notes panel has its own padding, so a stuck toolbar sits a little below the panel's top
+     edge and text scrolls through the strip above it. The shadow makes that read as a bar floating
+     over the page — which is what it is — rather than as two things colliding. */
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.14);
+  overflow-x: auto;
+  /* The bar is a rail of controls, not a scroll region to be advertised — the scrollbar would eat
+     a third of its height on the platforms that draw one in-flow. */
+  scrollbar-width: none;
+}
+
+.rte-toolbar::-webkit-scrollbar {
+  display: none;
+}
+
+.rte-tool {
+  flex: 0 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /* 34px, not the 24px an icon needs: this is the tap target, and it is the whole reason the bar
+     is usable with a thumb rather than a fingertip aimed carefully. */
+  width: 34px;
+  height: 34px;
+  padding: 0;
+  border: 1px solid transparent;
+  border-radius: 6px;
+  background: none;
+  color: var(--text);
+  font-size: 17px;
+  cursor: pointer;
+}
+
+.rte-tool:hover {
+  background: var(--accent-bg);
+}
+
+.rte-tool-active {
+  background: var(--accent-bg);
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+.rte-tool-divider {
+  flex: 0 0 auto;
+  width: 1px;
+  align-self: stretch;
+  margin: 4px 3px;
+  background: var(--border);
+}
+
+.rte-colors {
+  position: sticky;
+  top: 46px;
+  z-index: 3;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  padding: 5px 6px;
+  margin-bottom: 6px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--panel-bg);
+}
+
+.rte-swatch {
+  width: 34px;
+  height: 34px;
+  padding: 0;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  background: var(--surface-sunken);
+  font-family: var(--display);
+  font-size: 17px;
+  font-weight: 700;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.rte-swatch:hover {
+  border-color: var(--border-strong);
+}
+
+/* Each swatch is the letter A painted in the colour it applies, on the same sunken well the note
+   body uses — so the picker shows the colour AS TEXT, at text size, on the surface it will land
+   on, rather than as a filled chip that tells the reader nothing about legibility. */
+.rte-swatch-default { color: var(--text); }
+.rte-swatch-red { color: var(--note-red); }
+.rte-swatch-gold { color: var(--note-gold); }
+.rte-swatch-green { color: var(--note-green); }
+.rte-swatch-blue { color: var(--note-blue); }
+.rte-swatch-violet { color: var(--note-violet); }
+
+/* The editable surface keeps .sermon-notes-body-input as well, so it inherits that control's
+   size, padding, border and the --input-border rule at the end of this file — a contenteditable
+   div and the textarea it replaced read as the same control. */
+.rte-surface {
+  position: relative;
+  overflow-wrap: break-word;
+}
+
+.rte-surface:focus {
+  outline: none;
+  border-color: var(--accent);
+}
+
+/* Absolutely positioned, never inline: an inline ::before inside a contenteditable is content the
+   caret can be placed after, which puts the reader's first keystroke on the wrong side of the
+   placeholder. */
+.rte-surface[data-empty="true"]::before {
+  content: attr(data-placeholder);
+  position: absolute;
+  left: 12px;
+  top: 12px;
+  color: var(--text-muted);
+  pointer-events: none;
+}
+
+/* --- The marks a note can actually hold. Must match ALLOWED_TAGS in lib/richText.ts. --- */
+
+.rte-surface p {
+  margin: 0 0 0.55em;
+}
+
+.rte-surface p:last-child {
+  margin-bottom: 0;
+}
+
+.rte-surface ul,
+.rte-surface ol {
+  margin: 0.2em 0 0.55em;
+  padding-left: 1.5em;
+}
+
+.rte-surface li {
+  margin: 0.15em 0;
+}
+
+/* execCommand("indent") produces a blockquote outside a list. The reader asked for an indent, not
+   a pull quote, so it is stripped back to exactly that: left offset, no rule, no quote marks.
+   Nesting them nests the indent, which is what indent/outdent are for. */
+.rte-surface blockquote {
+  margin: 0 0 0.55em 1.6em;
+  padding: 0;
+  border: 0;
+}
+
+.rte-surface u {
+  text-underline-offset: 0.15em;
+}
+
+/* --- The note colour palette. See NOTE_COLORS in lib/richText.ts and the tokens in index.css.
+   These are the ONLY classes sanitizeNoteHtml lets through, in the editor or anywhere else. --- */
+.sn-c-red { color: var(--note-red); }
+.sn-c-gold { color: var(--note-gold); }
+.sn-c-green { color: var(--note-green); }
+.sn-c-blue { color: var(--note-blue); }
+.sn-c-violet { color: var(--note-violet); }

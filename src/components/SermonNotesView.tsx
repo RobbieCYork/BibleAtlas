@@ -1,10 +1,16 @@
 import { useEffect, useRef, useState } from "react";
 import { supabase, type SermonNote } from "../lib/supabase";
 import BackButton from "./BackButton";
+import RichTextEditor from "./RichTextEditor";
 import { track } from "../lib/analytics";
+import { buildStoredBody, isHtmlEmpty, noteBodyToHtml, noteBodyToPlainText } from "../lib/richText";
 
 interface SermonNotesViewProps {
   userId: string | null | undefined;
+  /** Free-text filter from the header search bar, shared with the My Notes tab. Matched against the
+   * title, speaker, reference and the note's PLAIN-TEXT projection — see noteBodyToPlainText — so a
+   * word that only appears inside `<b>…</b>` is still found. */
+  searchQuery?: string;
 }
 
 type Screen = "list" | "editor";
@@ -18,13 +24,18 @@ function defaultTitle(): string {
 }
 
 function snippet(body: string): string {
-  const trimmed = body.trim().replace(/\s+/g, " ");
+  const trimmed = noteBodyToPlainText(body).trim().replace(/\s+/g, " ");
   return trimmed.length > 100 ? `${trimmed.slice(0, 100)}…` : trimmed;
 }
 
 /** Sermon Notes are standalone saved documents (one per sermon), unlike My Notes which anchor to a
- * specific verse — so this is its own list-then-editor flow rather than living inline with verses. */
-export default function SermonNotesView({ userId }: SermonNotesViewProps) {
+ * specific verse — so this is its own list-then-editor flow rather than living inline with verses.
+ *
+ * The body is rich text. What is stored in `sermon_notes.body` is either legacy plain text or
+ * sanitised HTML behind a sentinel prefix; lib/richText.ts owns that format, and NOTHING in this
+ * file touches the markup directly — it converts at the two boundaries (noteBodyToHtml on the way
+ * in, buildStoredBody on the way out) and treats the stored string as opaque in between. */
+export default function SermonNotesView({ userId, searchQuery }: SermonNotesViewProps) {
   const [screen, setScreen] = useState<Screen>("list");
   const [entries, setEntries] = useState<SermonNote[]>([]);
   const [loading, setLoading] = useState(false);
@@ -33,7 +44,20 @@ export default function SermonNotesView({ userId }: SermonNotesViewProps) {
   const [title, setTitle] = useState("");
   const [speaker, setSpeaker] = useState("");
   const [scriptureRef, setScriptureRef] = useState("");
-  const [body, setBody] = useState("");
+  /** The editor's live HTML, NOT the stored body. Converted to the stored form only when saving,
+   * so sanitisation runs once per save rather than once per keystroke. */
+  const [bodyHtml, setBodyHtml] = useState("");
+  /** Bumped every time a different document is loaded into the editor, and used as its React key.
+   * The editor is uncontrolled (it owns its own DOM so the caret survives typing), so a remount is
+   * the only way to load different content into it — and `activeId` cannot serve, because it
+   * changes from null to a real id the moment a new note first autosaves, which would remount the
+   * editor mid-sentence and throw away the caret. */
+  const [editorSession, setEditorSession] = useState(0);
+  /** False until the reader actually changes something. Merely OPENING a note used to fire the
+   * autosave effect and rewrite the row — harmless when body was plain text, but with a rich body
+   * it would silently convert every note just for being looked at. Now nothing is written until
+   * something is typed. */
+  const [dirty, setDirty] = useState(false);
   const [saveStatus, setSaveStatus] = useState<"idle" | "saving" | "saved">("idle");
   const [confirmingDelete, setConfirmingDelete] = useState(false);
   const saveTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
@@ -52,17 +76,19 @@ export default function SermonNotesView({ userId }: SermonNotesViewProps) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userId]);
 
-  const isBlank = !title.trim() && !speaker.trim() && !scriptureRef.trim() && !body.trim();
+  const isBlank = !title.trim() && !speaker.trim() && !scriptureRef.trim() && isHtmlEmpty(bodyHtml);
 
   /** Debounced autosave — inserts on the first non-trivial edit to a brand-new entry (so opening
    * "+ New" and immediately backing out never creates a stray empty row), then updates in place. */
   useEffect(() => {
     if (screen !== "editor") return;
+    if (!dirty) return;
     if (saveTimer.current) clearTimeout(saveTimer.current);
     if (isBlank && isNew) return;
     setSaveStatus("saving");
     saveTimer.current = setTimeout(async () => {
       if (!userId) return;
+      const body = buildStoredBody(bodyHtml);
       if (isNew) {
         track("sermon_note.create");
         const { data, error } = await supabase
@@ -105,7 +131,7 @@ export default function SermonNotesView({ userId }: SermonNotesViewProps) {
       if (saveTimer.current) clearTimeout(saveTimer.current);
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [title, speaker, scriptureRef, body]);
+  }, [title, speaker, scriptureRef, bodyHtml, dirty]);
 
   const openNew = () => {
     setActiveId(null);
@@ -115,7 +141,9 @@ export default function SermonNotesView({ userId }: SermonNotesViewProps) {
     setTitle("");
     setSpeaker("");
     setScriptureRef("");
-    setBody("");
+    setBodyHtml("");
+    setEditorSession((n) => n + 1);
+    setDirty(false);
     setSaveStatus("idle");
     setConfirmingDelete(false);
     setScreen("editor");
@@ -126,7 +154,11 @@ export default function SermonNotesView({ userId }: SermonNotesViewProps) {
     setTitle(entry.title);
     setSpeaker(entry.speaker ?? "");
     setScriptureRef(entry.scripture_ref ?? "");
-    setBody(entry.body);
+    // A legacy plain-text body becomes escaped paragraphs here, for display only. It is not written
+    // back in the rich format unless the reader actually edits the note.
+    setBodyHtml(noteBodyToHtml(entry.body));
+    setEditorSession((n) => n + 1);
+    setDirty(false);
     setSaveStatus("idle");
     setConfirmingDelete(false);
     setScreen("editor");
@@ -149,6 +181,12 @@ export default function SermonNotesView({ userId }: SermonNotesViewProps) {
   }
 
   if (screen === "list") {
+    const trimmedSearch = searchQuery?.trim().toLowerCase() ?? "";
+    const visible = trimmedSearch
+      ? entries.filter((e) =>
+          `${e.title} ${e.speaker ?? ""} ${e.scripture_ref ?? ""} ${noteBodyToPlainText(e.body)}`.toLowerCase().includes(trimmedSearch)
+        )
+      : entries;
     return (
       <div className="sermon-notes-list-screen">
         <button type="button" className="sermon-notes-new-button" onClick={openNew}>
@@ -158,14 +196,20 @@ export default function SermonNotesView({ userId }: SermonNotesViewProps) {
         {!loading && entries.length === 0 && (
           <p className="comment-status">No sermon notes yet — start one above.</p>
         )}
+        {!loading && entries.length > 0 && visible.length === 0 && (
+          <p className="comment-status">No sermon notes match “{searchQuery?.trim()}”.</p>
+        )}
         <ul className="sermon-notes-list">
-          {entries.map((e) => (
-            <li key={e.id} className="sermon-notes-list-item" onClick={() => openEntry(e)}>
-              <span className="sermon-notes-list-title">{e.title}</span>
-              <span className="sermon-notes-list-date">{formatDate(e.created_at)}</span>
-              {e.body.trim() && <span className="sermon-notes-list-snippet">{snippet(e.body)}</span>}
-            </li>
-          ))}
+          {visible.map((e) => {
+            const preview = snippet(e.body);
+            return (
+              <li key={e.id} className="sermon-notes-list-item" onClick={() => openEntry(e)}>
+                <span className="sermon-notes-list-title">{e.title}</span>
+                <span className="sermon-notes-list-date">{formatDate(e.created_at)}</span>
+                {preview && <span className="sermon-notes-list-snippet">{preview}</span>}
+              </li>
+            );
+          })}
         </ul>
       </div>
     );
@@ -183,23 +227,41 @@ export default function SermonNotesView({ userId }: SermonNotesViewProps) {
         type="text"
         className="sermon-notes-title-input"
         value={title}
-        onChange={(e) => setTitle(e.target.value)}
+        onChange={(e) => {
+          setTitle(e.target.value);
+          setDirty(true);
+        }}
         placeholder={defaultTitle()}
       />
       <div className="sermon-notes-meta-row">
-        <input type="text" value={speaker} onChange={(e) => setSpeaker(e.target.value)} placeholder="Speaker (optional)" />
+        <input
+          type="text"
+          value={speaker}
+          onChange={(e) => {
+            setSpeaker(e.target.value);
+            setDirty(true);
+          }}
+          placeholder="Speaker (optional)"
+        />
         <input
           type="text"
           value={scriptureRef}
-          onChange={(e) => setScriptureRef(e.target.value)}
+          onChange={(e) => {
+            setScriptureRef(e.target.value);
+            setDirty(true);
+          }}
           placeholder="Scripture reference (optional)"
         />
       </div>
-      <textarea
-        className="sermon-notes-body-input"
-        value={body}
-        onChange={(e) => setBody(e.target.value)}
+      <RichTextEditor
+        key={editorSession}
+        initialHtml={bodyHtml}
+        onChange={(html) => {
+          setBodyHtml(html);
+          setDirty(true);
+        }}
         placeholder="Start typing your notes…"
+        ariaLabel="Sermon note body"
       />
       {!isNew && (
         <div className="sermon-notes-danger-zone">

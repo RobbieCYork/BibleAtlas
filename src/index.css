@@ -98,6 +98,26 @@
    * which has to read clearly at a glance before fading. */
   --verse-flash-bg: rgba(229, 179, 85, 0.24);
 
+  /* --- Sermon-note text colours ---
+   * The fixed palette the notes toolbar offers, and the reason a note stores a CLASS
+   * (`sn-c-red`) rather than a value. A hex baked into a note is right in one theme and unreadable
+   * in the other; these two blocks are what let the same note read correctly in both. Six slots,
+   * no colour picker — an arbitrary hex cannot be checked, and an unreadable note is a lost note.
+   *
+   * Every value is a pigment already in this palette (rubric, gold, verdigris, lapis, brand
+   * violet), lightened or darkened only as far as legibility required, and measured against all
+   * three surfaces a note can sit on. Dark, vs --surface-sunken / --panel-bg / --bg:
+   *   red 7.71/6.85/7.44  gold 10.13/8.99/9.77  green 9.79/8.69/9.45
+   *   blue 7.96/7.06/7.68  violet 9.21/8.17/8.89
+   * If you change one of these, change lib/richText.ts's NOTE_COLORS to match — the editor hands
+   * the browser the value from that table and maps what comes back to the class, so the two halves
+   * drifting apart means colours silently stop being applied. */
+  --note-red: #e88a72;
+  --note-gold: #e5b355;
+  --note-green: #7fc79c;
+  --note-blue: #93a2e8;
+  --note-violet: #b9a8f0;
+
   /* --- Data-viz (the admin console's Growth charts) ---
    * ONE series colour, because every chart in the console plots one series — a
    * second hue here would be decoration, and a legend with one swatch restates
@@ -174,6 +194,16 @@
   --brand-tint: #6d28d9;
   --danger: #a83c24;
   --verse-flash-bg: rgba(200, 145, 47, 0.32);
+  /* Sermon-note text colours, light. Measured against --surface-sunken / --panel-bg / --bg:
+   *   red 5.06/6.29/5.63  gold 4.57/5.69/5.09  green 6.34/7.88/7.05
+   *   blue 8.04/10.00/8.94  violet 5.71/7.10/6.35
+   * The floor is gold at 4.57:1 on a sunken well, which is the same value --accent already holds
+   * to on that surface. Nothing here is below AA for body text. */
+  --note-red: #a83c24;
+  --note-gold: #8a5e12;
+  --note-green: #2f5a43;
+  --note-blue: #2e3a8c;
+  --note-violet: #6d28d9;
 
   /* Light steps of the same lapis, chosen for this surface — see the dark block
    * above for what was validated and against what. */

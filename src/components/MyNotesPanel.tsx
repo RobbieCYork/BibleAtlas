@@ -350,7 +350,7 @@ export default function MyNotesPanel({ userId, onGoToVerse, expand, style, hidde
         </button>
       </div>
 
-      {tab === "sermon" && <SermonNotesView userId={userId} />}
+      {tab === "sermon" && <SermonNotesView userId={userId} searchQuery={searchQuery} />}
 
       {tab === "verse" && !userId && (
         <p className="bible-status no-print">Log in (or continue as guest) to write and see notes.</p>
