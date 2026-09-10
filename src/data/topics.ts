@@ -2241,6 +2241,17 @@ export const topics: Topic[] = [
     id: "chester-beatty-papyri",
     name: "Chester Beatty Papyri",
     alternateNames: ["Chester Beatty Biblical Papyri"],
+    // The three sigla are matchNames, not alternateNames: P45 is one codex out of eleven, so
+    // printing "Also called: P45" under the collection's name would be wrong, but a reader who
+    // meets "P46" in the introduction to Hebrews should still land here. Registered 2026-09-10
+    // with batch 11, which measured what they light up: 4 mentions of P45, 14 of P46 and 1 of P47
+    // across the 66 book introductions. The expanded "Papyrus 45" forms are registered alongside
+    // the sigla because the intros write "Papyrus 46 (P46)", and the rule in verseAnnotations.ts
+    // that stops that rendering as two adjacent links suppresses the bracketed half — so without
+    // the long form those nine mentions would link to nothing at all. NOT registered: "Chester
+    // Beatty" alone — it is Alfred Chester Beatty's own name, and would link the collector to the
+    // collection. NOT registered either: "P4", two characters and an ordinary token in any list.
+    matchNames: ["P45", "P46", "P47", "Papyrus 45", "Papyrus 46", "Papyrus 47"],
     category: "manuscript",
     role: "Third-Century Greek Biblical Codices",
     summary:
@@ -2275,7 +2286,7 @@ export const topics: Topic[] = [
       { reference: "2 Timothy 3:16-17", note: "From the Pastoral Epistles, whose absence from P46's surviving leaves is debated" },
     ],
     sources: [
-      { label: "Text & Canon Institute: Lessons from the \"First-Century Mark\" Saga", url: "https://textandcanon.org/lessons-from-the-first-century-mark-saga/" },
+      { label: "E. Hixson, \"Taking Stock of the 'First-Century Mark' Saga\" (Text & Canon Institute)", url: "https://textandcanon.org/lessons-from-the-first-century-mark-saga/" },
       { label: "The Chester Beatty, Dublin", url: "https://chesterbeatty.ie/" },
       { label: "Wikipedia: Chester Beatty Papyri", url: "https://en.wikipedia.org/wiki/Chester_Beatty_Papyri" },
     ],
@@ -2292,6 +2303,8 @@ export const topics: Topic[] = [
       dateAssigned: "Third century AD",
       dateCertainty: "traditional",
       currentLocation: "The Chester Beatty, Dublin (CBL BP I, II and III), with 30 leaves of P46 at the University of Michigan",
+      shelfmark: "CBL BP I (P45), BP II (P46) and BP III (P47); the Michigan leaves of P46 are P.Mich. inv. 6238",
+      facsimileUrl: "https://manuscripts.csntm.org/manuscript/Group/GA_P46",
     },
     citations: [
       {
@@ -2311,9 +2324,10 @@ export const topics: Topic[] = [
       },
       {
         tier: "reference",
-        label: "Text & Canon Institute: Lessons from the \"First-Century Mark\" Saga",
+        label: "E. Hixson, \"Taking Stock of the 'First-Century Mark' Saga\"",
         url: "https://textandcanon.org/lessons-from-the-first-century-mark-saga/",
-        credit: "Text & Canon Institute, Phoenix Seminary",
+        credit: "Elijah Hixson, Text & Canon Institute, Phoenix Seminary",
+        detail: "Published 25 January 2022. The page's own title is \"Taking Stock of the 'First-Century Mark' Saga\"; the older wording used here was taken from the URL and has been corrected",
         supports: "Why the dating of early papyri needs to be stated carefully",
       },
       {
@@ -12890,5 +12904,1401 @@ export const topics: Topic[] = [
     ],
     reflectionPrompt:
       "This scrap is probably somebody's daily prayers, carried and folded until it fell apart. What do you say often enough to wear out?",
+  },
+  {
+    id: "bodmer-papyri",
+    name: "Bodmer Papyri",
+    // NOT registered: "Bodmer" alone. It is Martin Bodmer's surname, and a bare registration would
+    // link the collector's own name to the collection named after him wherever he is mentioned.
+    // The two-word forms below are what the book introductions actually write.
+    matchNames: ["Bodmer papyrus collection", "Bodmer collection", "Dishna Papers"],
+    category: "manuscript",
+    role: "An Egyptian Codex Library Bought on the Antiquities Market",
+    summary:
+      "A library of Greek and Coptic books — Homer and Menander bound alongside John's Gospel and the letters of Peter — that surfaced in Upper Egypt in the 1950s and gave the New Testament three of its most important early copies.",
+    sections: [
+      {
+        heading: "A Jar of Books at the Foot of a Cliff",
+        paragraphs: [
+          "In the early 1950s books began appearing on the Egyptian antiquities market that were older and better preserved than almost anything then known, and the Swiss collector Martin Bodmer bought the largest share of them for his library at Cologny, outside Geneva. Others went to the Chester Beatty Library in Dublin, to Cologne, to Barcelona and Montserrat, to Mississippi and Duke, and later to the Vatican. They are known collectively as the Bodmer Papyri, and among them are three of the most valuable New Testament manuscripts in existence: P66, a near-complete copy of John's Gospel; P75, a codex of Luke and John; and P72, the earliest substantial copy of 1 and 2 Peter and Jude.",
+          "Where they came from was worked out afterwards, and by asking people. J. M. Robinson — the same scholar who reconstructed the discovery of the Nag Hammadi codices — spent interviews across 1974, 1975, 1976, 1978 and 1980 in the Dishna plain of Upper Egypt, and on 11 August 1981 located the man he concluded had found them. On Robinson's account the discovery was made late in 1952 by Hasan Muhammad al-Samman and Muhammad Khalil al-Azzuz of Abu Mana Bahri, who were digging for sabakh — soil used as fertiliser — about three hundred metres out from the foot of the cliff Jabal Abu Mana, five and a half kilometres north-west of Dishna. Hasan struck a large earthen jar full of books and broke it open with his mattock. Some of what came out was burned on the spot; some leaves of a large papyrus book were crushed up to light a water pipe. The books were then sold on piecemeal through dealers, the bulk reaching Bodmer and Chester Beatty around 1956.",
+        ],
+      },
+      {
+        heading: "Not a Bible — a Library",
+        paragraphs: [
+          "The most interesting thing about this collection is how mixed it is, and popular accounts of it almost always leave that out. Alongside the biblical codices are classical Greek texts: a codex of the comedies of Menander, and another that carries part of Book 6 of Thucydides bound together with the Greek book of Daniel. There is a Coptic codex containing John's Gospel and part of Genesis. There are Christian works that are in nobody's canon — the Protevangelium of James, the correspondence known as 3 Corinthians, an Ode of Solomon, Melito of Sardis on the Passover, the Apology of Phileas.",
+          "One codex in the group makes the point on its own. The book usually catalogued as P.Bodmer V, X, XI, VII, XIII, XII, XX, IX and VIII is a single composite volume containing, in order, the Protevangelium, 3 Corinthians, the eleventh Ode of Solomon, the letter of Jude, Melito on the Passover, a hymn, the Apology of Phileas, Psalms 33 and 34, and 1 and 2 Peter. Its New Testament portion is what scholars call P72, and whether the Phileas and Psalms leaves really belong to it has lately been questioned. Whoever bound that volume was not assembling a New Testament; he was assembling a reader's shelf, and canonical and non-canonical works sat on it together. That is a real datum about how early Christians used books, and it is more informative than the tidier story usually told.",
+          "The collection's date range is also wider than the famous items suggest. Most of the Bodmer codices are assigned to the third, fourth and fifth centuries, with the largest cluster in the fourth — which matters, because it is the context in which the dating of the individual New Testament codices has to be argued.",
+        ],
+      },
+      {
+        heading: "How Much of This Is Actually Known",
+        paragraphs: [
+          "Nothing here was excavated. There is no findspot recorded by an archaeologist, no stratigraphy, no register of what was in the jar. What exists is Robinson's reconstruction, built from interviews conducted more than twenty years after the event, and he was candid about the method: \"Obviously in such repeated interviews there are minor fluctuations and contradictions, at times protestations of innocence and self-serving interpretations, but in the cross-examination procedure the basic facts were again and again confirmed.\" That is a claim about convergent testimony, not about documentary proof, and this article states it as what it is.",
+          "The original editors did not say Dishna. V. Martin's first volume, in 1954, named Panopolis; his 1958 volume gave the place of discovery as unknown; R. Kasser in 1961 favoured the neighbourhood of Thebes. Nor is Robinson's answer the only one now. B. Nongbri, surveying the question in the Journal of Biblical Literature in 2016, records that there is consensus only that the books belong to Upper Egypt: Robinson places them at Jabal Abu Mana and identifies them with the library of the nearby Pachomian monastery at Pbow; J.-L. Fournet argues for Panopolis and an educational rather than monastic setting; C. Mela - who was Bodmer's own assistant and helped arrange the purchases — argues for Asyut. Even the size of the find is unsettled: Kasser counted nineteen codices, Robinson considerably more, and Robinson's own published lists do not agree with each other.",
+          "None of this makes the manuscripts less valuable, and none of it puts their text in doubt. It does mean that the sentence \"the Bodmer papyri came from the Pachomian monastery library at Dishna\" is a scholarly reconstruction that a reader deserves to be told is one. It also means that when the date of P66 or P75 is argued from the character of the collection they belong to — which is exactly how the argument now runs — the collection itself is being reconstructed at the same time.",
+        ],
+      },
+    ],
+    verses: [
+      { reference: "John 1:1", note: "P66 and P75 both preserve John's opening" },
+      { reference: "Luke 1:1-4", note: "P75's Gospel of Luke begins from 3:18; Luke's preface states his own method" },
+      { reference: "1 Peter 1:1", note: "P72 carries 1 Peter complete, bound with works outside the canon" },
+      { reference: "Jude 1:3", note: "Jude, also complete in the same composite codex" },
+    ],
+    sources: [
+      { label: "Bodmer Lab (University of Geneva and Fondation Martin Bodmer): the Papyri", url: "https://bodmerlab.unige.ch/fr/constellations/papyri" },
+      { label: "B. Nongbri, \"Reconsidering the Place of Papyrus Bodmer XIV-XV (P75)\"", url: "https://brentnongbri.com/wp-content/uploads/2020/01/nongbri-pbodmer-xiv-xv-jbl-2016-offprint.pdf" },
+      { label: "Wikipedia: Dishna Papers", url: "https://en.wikipedia.org/wiki/Dishna_Papers" },
+    ],
+    manuscript: {
+      siglum: "P.Bodmer I-LVIII and related codices; the New Testament members are P66, P72, P73, P74 and P75",
+      manuscriptType: "A group of papyrus and parchment codices, Greek and Coptic, of varying size and quality",
+      language: "Greek and Coptic",
+      contents:
+        "A mixed library rather than a Bible. Biblical books in Greek and Coptic (John, Luke, Genesis, Daniel, Psalms, 1-2 Peter, Jude), Christian works outside the canon (the Protevangelium of James, 3 Corinthians, an Ode of Solomon, Melito's On Pascha, the Apology of Phileas), and classical literature (Menander's comedies, Homer, Thucydides Book 6)",
+      origin: "Egypt. Beyond that, disputed — see the third section",
+      findSite:
+        "Not excavated and not recorded at the time. J. M. Robinson's reconstruction places the find at the foot of the cliff Jabal Abu Mana near al-Qurnah, about 5.5 km north-west of Dishna in Upper Egypt; J.-L. Fournet argues for Panopolis and C. Mela for Asyut, and the first editors variously named Panopolis, \"unknown\" and the neighbourhood of Thebes",
+      foundYear:
+        "Late in 1952 on Robinson's reconstruction, worked out from interviews conducted between 1974 and 1981. No contemporary record exists",
+      foundBy:
+        "Hasan Muhammad al-Samman and Muhammad Khalil al-Azzuz, digging for fertiliser, on Robinson's reconstruction. No excavator; the books reached collections through dealers",
+      dateAssigned:
+        "Third to fifth centuries AD, clustering in the fourth, across the collection as a whole. Individual codices are dated separately and several of those dates are disputed",
+      dateCertainty: "disputed",
+      currentLocation:
+        "Dispersed. Fondation Martin Bodmer, Cologny-Geneva (the largest share); the Chester Beatty, Dublin; the University of Cologne; Barcelona and Montserrat; the University of Mississippi and Duke; the Biblioteca Apostolica Vaticana (P75); the Schoyen Collection",
+      shelfmark: "\"P.Bodmer\" numerals for the Geneva holdings; Bodmer Lab catalogues them as PB 1, PB 2, PB 3 and so on",
+      facsimileUrl: "https://bodmerlab.unige.ch/fr/constellations/papyri",
+    },
+    citations: [
+      {
+        tier: "institution",
+        label: "Bodmer Lab (University of Geneva and Fondation Martin Bodmer): the Papyri constellation",
+        url: "https://bodmerlab.unige.ch/fr/constellations/papyri",
+        credit: "Bodmer Lab, Universite de Geneve and Fondation Martin Bodmer",
+        detail:
+          "The holding institution's own catalogue and image project. It states that \"the majority of these were acquired by Martin Bodmer in the 1950s and early 1960s\", and describes the collection's mixed character, naming the Menander codex and the codex carrying Daniel in Greek with Book 6 of Thucydides. The English path returns 404; use the /fr/ path",
+        supports: "The acquisition dates, the mixed contents, and the current Geneva holdings",
+      },
+      {
+        tier: "scholarly",
+        label: "B. Nongbri, \"Reconsidering the Place of Papyrus Bodmer XIV-XV (P75) in the Textual Criticism of the New Testament\"",
+        url: "https://brentnongbri.com/wp-content/uploads/2020/01/nongbri-pbodmer-xiv-xv-jbl-2016-offprint.pdf",
+        credit: "Brent Nongbri, Macquarie University",
+        detail:
+          "Journal of Biblical Literature 135:2 (2016), 405-437; DOI 10.15699/jbl.1352.2016.2803. The author's own open-access offprint. Section III surveys the find-site question: \"The exact area of the find and the extent of the collection are not entirely clear. There is consensus that the books are to be associated with Upper Egypt.\" Nongbri names Robinson, Fournet and Mela as holding different answers, and notes that Robinson's own inventories disagree",
+        supports: "The three competing find-site proposals, and that the extent of the collection is unsettled",
+      },
+      {
+        tier: "scholarly",
+        label: "J. M. Robinson, The Pachomian Monastic Library at the Chester Beatty Library and the Bibliotheque Bodmer",
+        url: "https://archive.org/stream/RobinsonThePachomianMonasticLibraryAtTheChesterBeattyLibrary/PachomianLibraryRobinson_djvu.txt",
+        credit: "J. M. Robinson",
+        detail:
+          "Institute for Antiquity and Christianity Occasional Papers 19 (Claremont, 1990), freely readable at the Internet Archive. Section 2 gives the find account and the Postscript gives the method, including Robinson's own caution about the interviews quoted in this article. The scan's OCR is rough; the passages quoted here were read against it directly",
+        supports: "The find account, the finders' names, the 1952 date, and Robinson's own statement of how it was established",
+      },
+      {
+        tier: "encyclopedic",
+        label: "Wikipedia: Dishna Papers",
+        url: "https://en.wikipedia.org/wiki/Dishna_Papers",
+      },
+    ],
+    reflectionPrompt:
+      "Someone lit a water pipe with pages of a fourth-century book because nobody had told him what it was. What is in front of you that you have not yet learned to value?",
+  },
+  {
+    id: "papyrus-66",
+    name: "Papyrus 66",
+    alternateNames: ["P66", "Papyrus Bodmer II"],
+    category: "manuscript",
+    role: "An Early Greek Codex of John's Gospel, Corrected 450 Times",
+    summary:
+      "A nearly complete papyrus copy of John, and the most heavily corrected early manuscript of the New Testament we have — which is why it tells us more about how ancient copying actually worked than almost anything else.",
+    sections: [
+      {
+        heading: "A Whole Gospel, Almost",
+        paragraphs: [
+          "Most early New Testament papyri are scraps. P66 is a book. Seventy-five identifiable leaves survive, plus numerous fragments, from a codex that once held the whole of John's Gospel. The Fondation Martin Bodmer, which holds the bulk of it, describes the state of the survival precisely: the first four quires and most of the fifth — John 1:1 to 14:26 — are preserved as an intact book block, while the remaining leaves, carrying portions of John 14:29 to 21:9, are conserved between glass plates. So \"P66 contains the Gospel of John\" is nearly true for the first fourteen chapters and steadily less true after that.",
+          "The pages are small: 14.2 by 16.2 centimetres, one column, fourteen to twenty-five lines to a page, written in soot-based black ink in a single hand. The scribe numbered his own pages up to 99; the numbers above 100 appear to be in a different hand. B. van Regemorter noticed that the codex had been bound twice. Not all of it is in Geneva — one leaf is at the Chester Beatty in Dublin, and further pieces are at the Institute for Ancient Studies in Cologne. Like the rest of the Bodmer group it was not excavated; the bulk of it reached Geneva in 1955 by purchase.",
+        ],
+      },
+      {
+        heading: "The Scribe and His Second Thoughts",
+        paragraphs: [
+          "P66 carries roughly 450 corrections. G. D. Fee counted them for his 1966 doctoral thesis and found that the majority — about 235 — are simple repairs of slips, while the rest alter the text in ways where both the original and the corrected reading are found in other important manuscripts. His verdict on the copyist is blunt and worth quoting whole: \"Both their quantity and the nature of the errors lead to one conclusion: The scribe was a careless and ineffective workman.\" E. C. Colwell, working on the same material a year earlier, had written that \"Wildness in copying is the outstanding characteristic of P66.\"",
+          "But the corrections are almost all the copyist's own. V. Martin, who first published the codex, judged that the repair of the omissions was in all probability the work of the original scribe and that nothing compelled attributing them to another hand; Fee agreed, while noting one place — the addition at John 13:19 — where the letter forms seem to demand a second hand. J. R. Royse's study of scribal habits in the early papyri reaches the same conclusion, and the Bodmer Lab's own catalogue summarises it: nearly all the corrections can be attributed to the copyist of the manuscript. Fee was careful to add that he had probably been too confident on this point himself, and that the question belonged to an experienced palaeographer.",
+          "The picture that emerges is not flattering to the scribe and is very useful to everyone else: a bad copyist who reread his own work and fixed it, without — in Fee's phrase — apparent controls, and giving no sign of having been a textual critic. Royse's larger finding across the six most extensive early papyri is that the general tendency of these scribes was to omit rather than to add. That is worth knowing, because it is the opposite of what a reader who has been told that manuscripts \"grew\" over time would expect.",
+        ],
+      },
+      {
+        heading: "The Date Has Moved, and Not by a Little",
+        paragraphs: [
+          "P66 is usually given as \"about AD 200\". That figure is V. Martin's, assigned in 1956 on the basis of the handwriting, and it is not the only one on offer. The holding institution's own catalogue prints the whole spread, with each date attached to the scholar who proposed it: early second century (H. Hunger); about 200 (V. Martin); third century (E. G. Turner); third to fourth century (P. Orsini); fourth century (B. Nongbri). The official Liste maintained at Munster assigns the early third century. When the library that owns a manuscript publishes a range of two hundred years, a study Bible that prints one number is not reporting the state of knowledge.",
+          "Nongbri's argument, in Museum Helveticum in 2014, is the furthest-reaching. His abstract states it exactly: palaeographic estimates have ranged from the early second century to the first half of the third, \"There are, however, equally convincing palaeographic parallels among papyri securely dated to as late as the fourth century,\" and so the range \"needs to be broadened to include the fourth century\". His claim is a two-step one, and collapsing it misrepresents him: the palaeographic range must be widened, and once the codicology and the rest of the Bodmer find are weighed, the later end becomes the likelier. He does not claim to have proved a fourth-century date, and in his own later summary he puts it as \"more likely\", not as settled.",
+          "What survives all of this is what the manuscript actually shows. A complete Gospel of John was being copied as a bound book in Egypt, by an ordinary and rather poor scribe who cared enough to go back over his own work several hundred times, at a date somewhere in a window running from the second century into the fourth. The text he produced is recognisably the text we read. That is a real and modest claim, and it does not need the earliest possible date to be worth making.",
+        ],
+      },
+    ],
+    verses: [
+      { reference: "John 1:1", note: "The codex opens here, in the intact book block" },
+      { reference: "John 14:26", note: "Where the intact block ends; what follows survives in fragments" },
+      { reference: "John 7:53", note: "The account of the woman caught in adultery is absent from P66" },
+      { reference: "John 13:19", note: "The one correction Fee thought was made by a second hand" },
+    ],
+    sources: [
+      { label: "Bodmer Lab: PB 2 (P.Bodmer II)", url: "https://bodmerlab.unige.ch/fr/constellations/papyri/barcode/1072205287" },
+      { label: "G. D. Fee, \"The Significance of Papyrus Bodmer II and Papyrus Bodmer XIV-XV for Methodology in New Testament Textual Criticism\"", url: "https://ia801801.us.archive.org/3/items/TheSignificanceOfP66AndP75ForMethodologyInNtTextualCriticism/Thesis-Fee.pdf" },
+      { label: "Wikipedia: Papyrus 66", url: "https://en.wikipedia.org/wiki/Papyrus_66" },
+    ],
+    manuscript: {
+      siglum: "P66 (P.Bodmer II)",
+      manuscriptType:
+        "Papyrus codex, 75 identifiable leaves and numerous fragments, single column, 14-25 lines per page, page 14.2 x 16.2 cm, soot-based black ink; evidence of two successive bindings",
+      language: "Koine Greek",
+      contents:
+        "The Gospel of John, partially. John 1:1-14:26 survives as an intact book block; portions of John 14:29-21:9 survive as separate leaves under glass. The codex originally held the whole Gospel",
+      origin: "Unknown. Egypt on general grounds; no institution asserts a place of copying",
+      findSite:
+        "Not excavated. Part of the Bodmer group, whose find site is reconstructed rather than recorded — see the Bodmer Papyri article",
+      foundYear:
+        "Not recorded. The bulk of the codex arrived in Geneva in 1955 by purchase",
+      foundBy:
+        "No finder or excavator on record. Acquired by Martin Bodmer through the antiquities trade",
+      dateAssigned:
+        "Conventionally c. AD 200 (V. Martin, 1956). The holding institution publishes the full range: early 2nd century (H. Hunger), c. 200 (Martin), 3rd century (E. Turner), 3rd-4th century (P. Orsini), 4th century (B. Nongbri). The Munster Liste assigns the early 3rd century",
+      dateCertainty: "disputed",
+      currentLocation:
+        "Fondation Martin Bodmer, Cologny-Geneva, with one leaf at the Chester Beatty, Dublin, and further fragments at the Institut fur Altertumskunde, Cologne",
+      shelfmark: "P. Bodmer II (Bodmer Lab: PB 2); Chester Beatty BP XIX; Cologne Inv. 4274/4298 (P.Koln V 214)",
+      facsimileUrl: "https://bodmerlab.unige.ch/fr/constellations/papyri/mirador/1072205287",
+    },
+    citations: [
+      {
+        tier: "institution",
+        label: "Bodmer Lab: PB 2 (P.Bodmer II) catalogue record and Mirador viewer",
+        url: "https://bodmerlab.unige.ch/fr/constellations/papyri/barcode/1072205287",
+        credit: "Bodmer Lab, Universite de Geneve and Fondation Martin Bodmer",
+        detail:
+          "The holding institution's own record. It supplies the extent (\"The first four quires and most of the fifth quire (containing John 1:1-14:26) are conserved as an intact book block. The remaining folios (containing portions of John 14:29-21:9) have been conserved between glass plates.\"), the measurements, the two bindings, the pagination in two hands, the other holding institutions, the 1955 arrival in Geneva, and the full list of proposed dates with the scholar attached to each. 163 scans are viewable free",
+        supports: "Every physical fact in this article, the honest extent, and the dating range",
+      },
+      {
+        tier: "scholarly",
+        label: "G. D. Fee, \"The Significance of Papyrus Bodmer II and Papyrus Bodmer XIV-XV for Methodology in New Testament Textual Criticism\"",
+        url: "https://ia801801.us.archive.org/3/items/TheSignificanceOfP66AndP75ForMethodologyInNtTextualCriticism/Thesis-Fee.pdf",
+        credit: "Gordon D. Fee",
+        detail:
+          "PhD dissertation, University of Southern California, 1966; freely readable at the Internet Archive. The count of the corrections, the figure of approximately 235 simple slips, the judgement on the scribe, the John 13:19 exception, and Fee's own retraction of his earlier confidence are all at pp. 167-170. Fee's published monograph on P66 (Studies and Documents 34, 1968) is a different work and is not the source of these figures",
+        supports: "The 450 corrections, the assessment of the scribe, and the second-hand correction at John 13:19",
+      },
+      {
+        tier: "scholarly",
+        label: "B. Nongbri, \"The Limits of Palaeographic Dating of Literary Papyri: Some Observations on the Date and Provenance of P.Bodmer II (P66)\"",
+        url: "https://researchers.mq.edu.au/en/publications/the-limits-of-palaeographic-dating-of-literary-papyri-some-observ/",
+        credit: "Brent Nongbri, Macquarie University",
+        detail:
+          "Museum Helveticum 71:1 (2014), 1-35. The linked page is Macquarie University's repository record, which carries the abstract quoted in this article; the article itself is behind a subscription and the Swiss open-access host was gated when this was checked, so the body text was not read here",
+        supports: "The argument that the palaeographic range must be broadened to include the fourth century",
+        paywalled: true,
+      },
+      {
+        tier: "reference",
+        label: "J. R. Royse, Scribal Habits in Early Greek New Testament Papyri",
+        url: "https://cart.sbl-site.org/books/069551P",
+        credit: "James R. Royse",
+        detail:
+          "New Testament Tools, Studies and Documents 36 (Brill, 2008); the publisher's description states that it studies \"P45, P46, P47, P66, P72, and P75, the six most extensive early New Testament manuscripts\" and that \"the general tendency of these early scribes was to omit rather than to add\". Royse's treatment of P66 is at pp. 399-544. The book itself is behind a paywall and was not read here; his conclusion that nearly all P66's corrections are the copyist's own is quoted from the Bodmer Lab catalogue, which cites those pages",
+        supports: "That the corrections are the copyist's own, and the omission tendency of early scribes",
+      },
+      {
+        tier: "encyclopedic",
+        label: "Wikipedia: Papyrus 66",
+        url: "https://en.wikipedia.org/wiki/Papyrus_66",
+      },
+    ],
+  },
+  {
+    id: "papyrus-75",
+    name: "Papyrus 75",
+    alternateNames: ["P75", "Papyrus Bodmer XIV-XV", "Hanna Papyrus 1"],
+    category: "manuscript",
+    role: "The Luke and John Codex That Changed How Vaticanus Was Read",
+    summary:
+      "An early codex of Luke and John whose text turned out to be almost identical to Codex Vaticanus — evidence that was taken to settle one of the great questions of textual criticism, and that is now being reopened.",
+    sections: [
+      {
+        heading: "Half of Luke and Half of John",
+        paragraphs: [
+          "P75 is a single-quire papyrus codex, about 13 centimetres wide and 26 tall, written in one column of 38 to 45 lines. Its editors, V. Martin and R. Kasser, calculated that it originally ran to 144 pages, of which more than 100 survive. What is on those pages is Luke followed by John — and the honest extent has gaps in it: Luke 3:18-4:2, 4:34-5:10, 5:37-18:18, 22:4-24:53, then John 1:1-11:45, 11:48-57, 12:3-13:10 and 14:8-15:10. Luke 18:18 to 22:4 is missing entirely, and nothing survives after John 15:10.",
+          "That Luke and John stand together in one book is itself worth noticing. It is among the earliest evidence for Gospels being bound as a set rather than circulating singly, and the order — Luke, then John — is the one the codex's scribe chose. The Vatican Library, which now holds it, notes that it preserves the Lord's Prayer in Luke's shorter form.",
+          "Like the rest of the Bodmer group, it was not excavated. It surfaced through the antiquities trade in the 1950s. Additional fragments were recovered from the codex's own leather cover at the British Museum in the 1970s, and further pieces have been published since.",
+        ],
+      },
+      {
+        heading: "Why It Was Called the Most Important Papyrus Ever Found",
+        paragraphs: [
+          "Before P75, the earliest substantial copies of the Gospels were the great fourth-century parchment Bibles, and a serious body of scholarship held that the text of Codex Vaticanus was not simply ancient but edited — the product of a fourth-century revision. K. Clark summed up that position in 1954: \"The most influential factor in recent criticism is the general view that the Neutral text is itself a derived text which has passed through a process of revision.\" If that were right, Vaticanus would be a good witness to the fourth century and a poor one to the second.",
+          "P75 disturbed that. Its text agrees with Vaticanus to a degree no other pair of early New Testament manuscripts approaches. Measured against the Munster test passages, P75 and Vaticanus agree in 86.1 per cent of readings in Luke and 79.1 per cent in John, where Vaticanus and Sinaiticus — themselves close relatives — agree in only 67.9 and 41.3 per cent. B. Metzger drew the conclusion in 1962: \"Hitherto scholars lacked clear and unambiguous evidence that [the 'B Text'] existed earlier than the fourth century codices Vaticanus and Sinaiticus. Now it is proved that the scribes (or editors) of these two great parchment codices did not create this type of text, but transmitted it.\" K. and B. Aland put it more strongly still, calling the recension theory \"no longer defensible\" and one of its main pillars \"demolished\".",
+          "G. D. Fee, who did the detailed collation, was more careful than the summaries of him usually are. He wrote that the relationship between P75 and Vaticanus in John \"is far closer than the relationship between any two other New Testament MSS of any kind in the first four Christian centuries\", and that this affirmed Hort's judgement that Vaticanus preserves a very ancient text. On the second half of Hort's claim — that it is also a very pure line of that text — he declined to go further than his evidence, adding that if the text-type is a recension, \"it is a recension which was created in the second century\".",
+        ],
+      },
+      {
+        heading: "The Argument Being Reopened",
+        paragraphs: [
+          "Every one of those conclusions rests on P75 being early. V. Martin and R. Kasser assigned it to AD 175-225 by comparing its hand with five Oxyrhynchus papyri. B. Nongbri's objection, published in the Journal of Biblical Literature in 2016, is that those five papyri were themselves dated only by their handwriting: \"Yet all of these papyri were themselves dated only on the basis of paleography and are thus of no independent value for establishing the date of p75.\" His general point is that the method \"can become completely circular when an undated manuscript is assigned a date based on paleographic similarity to manuscripts that were themselves dated only by means of paleography, with no tether to a secure date anywhere in the process.\"",
+          "Nongbri then turns the famous agreement with Vaticanus around: if P75's script and codicology are also consistent with a fourth-century date, then its closeness to a fourth-century Bible may be evidence for a fourth-century date for P75, rather than evidence for a second-century date for Vaticanus's text. He is explicit about how far this goes: \"While one cannot absolutely rule out a late-second- or early-third-century date for p75 on the basis of the evidence presently available, the materials analyzed in this essay point toward the fourth century as an equally likely, if not more likely, date for this codex.\" That is a proposal, not a demonstration, and it should not be reported as one. Others have assigned dates in between — P. Orsini and W. Clarysse gave 200-250 in 2012, and Orsini later moved to the third or fourth century.",
+          "There was an earlier and sharper complaint. W. Petersen argued that the whole framing was self-serving: P75, he wrote, \"is often regarded as having the 'purest' text of the early papyri,\" but \"this claim is made, of course, only because P75's text is closer to our modern, critically reconstructed text. If it were the text of Clement of Alexandria that came closest to our modern critical text, then it would be Clement who would be hailed as the preserver of the 'true text,' and not P75. A more unscientific, hubris-filled, and self-serving approach to scholarship is hard to imagine.\" That is a hard thing to have said and it deserves to be heard in full rather than paraphrased away. It does not dissolve the agreement figures, which are real; it questions what is being inferred from them.",
+        ],
+      },
+    ],
+    verses: [
+      { reference: "Luke 3:18", note: "Where the surviving text of P75 begins" },
+      { reference: "Luke 11:1-4", note: "The Lord's Prayer in Luke's shorter form, preserved here" },
+      { reference: "John 1:1", note: "John follows Luke in the same codex" },
+      { reference: "John 15:10", note: "Where the surviving text breaks off" },
+    ],
+    sources: [
+      { label: "Vatican Library: the Hanna Papyrus 1 (Mater Verbi)", url: "https://www.vaticanlibrary.va/en/multimedia/papiro-hanna-1.html" },
+      { label: "B. Nongbri, \"Reconsidering the Place of Papyrus Bodmer XIV-XV (P75)\"", url: "https://brentnongbri.com/wp-content/uploads/2020/01/nongbri-pbodmer-xiv-xv-jbl-2016-offprint.pdf" },
+      { label: "Wikipedia: Papyrus 75", url: "https://en.wikipedia.org/wiki/Papyrus_75" },
+    ],
+    manuscript: {
+      siglum: "P75 (P.Bodmer XIV-XV); the Vatican now calls it Hanna Papyrus 1 (Mater Verbi)",
+      manuscriptType:
+        "Single-quire papyrus codex, about 13 x 26 cm, single column of 38-45 lines. The editors calculated 144 original pages, of which more than 100 survive",
+      language: "Koine Greek",
+      contents:
+        "Luke and John, both partially: Luke 3:18-4:2, 4:34-5:10, 5:37-18:18, 22:4-24:53; John 1:1-11:45, 11:48-57, 12:3-13:10, 14:8-15:10. Luke 18:18-22:4 is missing, and nothing survives after John 15:10",
+      origin: "Unknown. Egypt on general grounds",
+      findSite:
+        "Not excavated. Part of the Bodmer group; see the Bodmer Papyri article for why its find site is a reconstruction",
+      foundYear: "Not recorded; in Martin Bodmer's collection by the 1950s",
+      foundBy: "No finder or excavator on record. Acquired through the antiquities trade",
+      dateAssigned:
+        "V. Martin and R. Kasser assigned AD 175-225; the Vatican says early third century and the Munster Liste early third; P. Orsini and W. Clarysse gave 200-250 in 2012 and Orsini later 3rd-4th century; B. Nongbri argues the fourth century is equally or more likely",
+      dateCertainty: "disputed",
+      currentLocation:
+        "Biblioteca Apostolica Vaticana, Vatican City. Sold through Christie's in 2006 for an undisclosed sum to Frank J. Hanna III on behalf of a consortium, and donated to the Vatican Library in January 2007 by the Hanna family and the Solidarity Association",
+      shelfmark: "Pap.Hanna.1(Mater.Verbi)",
+      facsimileUrl: "https://digi.vatlib.it/view/MSS_Pap.Hanna.1(Mater.Verbi)",
+    },
+    citations: [
+      {
+        tier: "institution",
+        label: "Biblioteca Apostolica Vaticana: Pap.Hanna.1(Mater.Verbi), DigiVatLib",
+        url: "https://digi.vatlib.it/view/MSS_Pap.Hanna.1(Mater.Verbi)",
+        credit: "Biblioteca Apostolica Vaticana",
+        detail:
+          "The holding library's own digitisation, 108 plates, free to view. Its IIIF manifest publishes the shelfmark exactly as given here. The library's separate feature page dates the donation to January 2007 and credits the Hanna family and the Solidarity Association. Images are stamped \"ALL RIGHTS RESERVED\" and are linked, not reproduced",
+        supports: "The shelfmark, the current location, and the terms of the 2007 donation",
+      },
+      {
+        tier: "scholarly",
+        label: "B. Nongbri, \"Reconsidering the Place of Papyrus Bodmer XIV-XV (P75) in the Textual Criticism of the New Testament\"",
+        url: "https://brentnongbri.com/wp-content/uploads/2020/01/nongbri-pbodmer-xiv-xv-jbl-2016-offprint.pdf",
+        credit: "Brent Nongbri, Macquarie University",
+        detail:
+          "Journal of Biblical Literature 135:2 (2016), 405-437; DOI 10.15699/jbl.1352.2016.2803. The author's own open-access offprint, read in full for this article. Source of the circularity argument (pp. 408-409), the 2006 Christie's sale (p. 406), the Text und Textwert agreement figures (p. 435 n. 71), the Clark, Metzger, Aland, Fee and Petersen quotations, and the conclusion at p. 437",
+        supports: "The dating challenge, the agreement figures, and every quotation in the second and third sections",
+      },
+      {
+        tier: "scholarly",
+        label: "G. D. Fee, \"The Significance of Papyrus Bodmer II and Papyrus Bodmer XIV-XV for Methodology in New Testament Textual Criticism\"",
+        url: "https://ia801801.us.archive.org/3/items/TheSignificanceOfP66AndP75ForMethodologyInNtTextualCriticism/Thesis-Fee.pdf",
+        credit: "Gordon D. Fee",
+        detail:
+          "PhD dissertation, University of Southern California, 1966; freely readable at the Internet Archive. Fee's own statement of the P75-Vaticanus relationship and his refusal to go beyond it are at pp. 192-193, and are quoted here from that text rather than from later summaries of him",
+        supports: "Fee's assessment of the relationship between P75 and Codex Vaticanus, in his own words",
+      },
+      {
+        tier: "scholarly",
+        label: "C. L. Porter, \"Papyrus Bodmer XV (P75) and the Text of Codex Vaticanus\"",
+        credit: "Calvin L. Porter",
+        detail:
+          "Journal of Biblical Literature 81 (1962), 363-376; DOI 10.2307/3265091. The study that first established the closeness of P75 to Vaticanus in John. Cited here from Nongbri's and Fee's references; the article itself was not opened, and no free copy was found",
+        supports: "The original demonstration of the P75-Vaticanus relationship",
+        paywalled: true,
+      },
+      {
+        tier: "encyclopedic",
+        label: "Wikipedia: Papyrus 75",
+        url: "https://en.wikipedia.org/wiki/Papyrus_75",
+      },
+    ],
+    reflectionPrompt:
+      "A discovery that seemed to settle a question is now being used to reopen it. Where have you treated a settled answer as though it could never be revisited?",
+  },
+  {
+    id: "magdalen-papyrus-p64",
+    name: "The Magdalen Papyrus",
+    // "P4" is deliberately NOT registered: two characters, and an ordinary token in any numbered
+    // list. "P64" and "P67" are unambiguous. See the note on bare sigla in verseAnnotations.ts.
+    alternateNames: ["P64", "P67", "Magdalen Greek 17"],
+    category: "manuscript",
+    role: "Three Fragments of Matthew, and a Date That Has Moved Three Centuries",
+    summary:
+      "Five small scraps of Matthew's Gospel, split between Oxford and Barcelona, whose date has been put in the fourth century, the second, and the first — the last of those by a scholar whose case papyrologists rejected, after it had already reached the front pages.",
+    sections: [
+      {
+        heading: "Three Scraps in Oxford, Two in Barcelona",
+        paragraphs: [
+          "In 1901 C. B. Huleatt, an Oxford-educated clergyman, bought three small papyrus fragments from a dealer in Luxor, recognised them as Matthew's Gospel, and gave them to Magdalen College, Oxford, where he had been a scholar. No findspot came with them. The envelope he kept them in carries the note \"these found year after but evidently from same leaf\", which suggests either two purchases or further pieces since lost. They are Magdalen Greek 17, catalogued in the Gregory-Aland list as P64, and they carry parts of Matthew 26:7-8, 10, 14-15, 22-23 and 31-33 — six written sides in all, from a book laid out in two columns of about fifteen or sixteen letters and thirty-five lines each.",
+          "In 1956 R. Roca-Puig published two further fragments in Barcelona, carrying Matthew 3:9, 15 and 5:20-22, 25-28; they are now catalogued as P.Monts.Roca inv. 1 in the Roca-Puig collection at the Abbey of Montserrat, and the catalogue there records them as being from the same manuscript as the Oxford leaf. C. H. Roberts, who had published the Oxford pieces, and Roca-Puig agreed that the two sets came from the same manuscript, and they have been treated as one ever since: P64 and P67 are two halves of a single codex of Matthew. A third manuscript, P4 — fragments of Luke in the Bibliotheque nationale de France, found with a codex of Philo, though accounts differ over whether they were in its binding or between its pages — is similar in size and layout, and whether it belongs with them is a separate and still-open question.",
+          "The date has never sat still. Huleatt himself suggested the third century. The Oxford librarian reported that A. S. Hunt - the Hunt of Grenfell and Hunt — preferred the fourth, and because of who he was, that stood for half a century. C. H. Roberts published the fragments properly in 1953, argued that Hunt's date rested on the outdated assumption that codices had to be late, and placed the hand \"in the later second century\", with H. I. Bell, T. C. Skeat and E. G. Turner agreeing. That was the settled position for forty years.",
+        ],
+      },
+      {
+        heading: "The First-Century Claim",
+        paragraphs: [
+          "In 1994 and 1995 C. P. Thiede reopened it. His article, published in the Zeitschrift fur Papyrologie und Epigraphik and reprinted in the Tyndale Bulletin, offered a fresh transcription of all six sides and then argued for a much earlier date by comparing the hand with manuscripts that had become available since Roberts wrote — material from Qumran, from Herculaneum, from the Judean desert. His own conclusion is more careful than the coverage it received, and deserves to be quoted as he wrote it: the fragments \"remain the oldest extant papyrus of that gospel; but it may be argued that it could be redated from the late second to the late first century, some time after the destruction of the Temple in Jerusalem.\" Asked directly, he was more specific, writing to P. M. Head in January 1995: \"I do not give a precise date, but suggest a date in the last third of the first century: The 'starting point' is the middle of the century; I allow for a variation of c. 20 years + / - and then opt for the later end, 'soon after A.D. 70'.\"",
+          "The public version was less hedged. Matthew d'Ancona's report in The Times on 24 December 1994 spoke of the mid-first century, and Head records that at a public lecture in London the following month Thiede \"referred repeatedly to 'a first-century date'\". A popular book by Thiede and d'Ancona followed. If the fragments were from the 60s, they would be within living memory of the events they describe, and that is why the story travelled as far as it did.",
+        ],
+      },
+      {
+        heading: "What the Papyrologists Said, and Why It Matters Who Said It",
+        paragraphs: [
+          "The case did not hold. K. Wachtel, of the Institute for New Testament Textual Research at Munster, answered it in the same journal Thiede had published in, and his conclusion is worth having in full: \"C. P. Thiede deserves credit for having prompted a review of the dating and the extent of the oldest direct manuscript witness to the Gospel of Matthew, even though he brings less than half of P64/67 into the investigation. In every discipline it is useful from time to time to reassure oneself of its material foundations. Thiede's argument for a first-century dating of P64/67 must, however, be rejected as methodologically inadequate and factually wrong. The conventional dating to around 200, by contrast, has proved to be well founded.\" The most detailed response came from P. M. Head in the Tyndale Bulletin — the journal of Tyndale House in Cambridge, an evangelical research institute — and his verdict is worth reading in full because of how it is phrased: \"Although we recognise the service that he has performed in facilitating a re-examination of methodological presuppositions, our verdict on his claims is a negative one. The very early manuscripts to which Thiede appealed for close parallels to P64 turned out to be not as close as the somewhat later ones which he had overlooked. Although there is no absolutely definite evidence by which P. Magd. Gr. 17 = P64 can be dated with certainty, the available evidence points to a date around AD 200. To be on the safe side I would suggest plus or minus fifty years as the possible range.\" Magdalen College's own page says the same thing more briefly: Thiede's claim \"has prompted much discussion, however it has not been widely accepted by the academic community.\"",
+          "Two things follow, and both are uncomfortable in the right way. The first is that the correction came from inside evangelical scholarship, not from outside it — Head's article is the definitive refutation and it was published in an evangelical journal by an evangelical scholar. Christians who care whether things are true have generally been the ones doing this work, and saying so is a stronger argument than any early date would have been. The second is that a claim can be technically hedged in a journal and unhedged everywhere else. Thiede wrote \"it may be argued that it could be redated\"; the newspaper wrote \"the mid-first century AD\". Both are on the record, and a reader who has only ever met the second version has been misinformed by the process rather than by the paper.",
+          "There is also a separate question that is still genuinely open, and it should not be confused with the dating one. T. C. Skeat argued in 1997 that P4, P64 and P67 all come from a single codex of all four Gospels — which, if true, would make it the oldest four-Gospel book known. Head answered him in 2005 and current opinion tends to keep P4 apart from P64 and P67, partly on grounds Thiede himself had published: differences of papyrus colour and fibre, of letter formation, and of how the lines are set out. The disagreement is narrower than it looks: Head and S. Charlesworth argue against one codex on codicological grounds while accepting Skeat's palaeographic case that the same scribe wrote all three. It is about how the sheets were folded rather than about dates, nobody's faith rests on it, and it has not been settled. C. P. Thiede died on 14 December 2004, at fifty-two.",
+        ],
+      },
+    ],
+    verses: [
+      { reference: "Matthew 26:7", note: "The anointing at Bethany — the first surviving words of P64" },
+      { reference: "Matthew 26:14-15", note: "Judas goes to the chief priests; preserved on fragment 3" },
+      { reference: "Matthew 26:31", note: "\"All of you will be made to stumble\" — the last surviving passage" },
+      { reference: "Matthew 3:15", note: "Preserved by P67, the Barcelona half of the same codex" },
+      { reference: "Matthew 5:20-22", note: "Also on the Barcelona fragments" },
+    ],
+    sources: [
+      { label: "Magdalen College, Oxford: the Magdalen Papyrus P64", url: "https://www.magd.ox.ac.uk/blog/the-magdalen-papyrus-p64-possibly-the-earliest-known-fragments-of-the-new-testament-or-of-a-book/" },
+      { label: "P. M. Head, \"The Date of the Magdalen Papyrus of Matthew: A Response to C. P. Thiede\"", url: "https://www.tyndalebulletin.org/article/31625-the-date-of-the-magdalen-papyrus-of-matthew-_p-magd-gr-_-17-p64-a-response-to-cp-thiede.pdf" },
+      { label: "C. P. Thiede, \"Papyrus Magdalen Greek 17 (Gregory-Aland P64): A Reappraisal\"", url: "https://www.tyndalebulletin.org/article/30393-papyrus-magdalen-greek-17-gregory-aland-p64-a-reappraisal.pdf" },
+    ],
+    manuscript: {
+      siglum: "P64 (P. Magdalen Greek 17) and P67 (P. Barcelona Inv. 1), two halves of one codex; the related P4 is Paris, BnF Suppl. gr. 1120",
+      manuscriptType:
+        "Papyrus codex fragments, written in two columns of about 15-16 letters and 35-36 lines; five small pieces in all, three at Oxford and two at Barcelona. Roberts estimated the complete codex of Matthew at about 150 pages",
+      language: "Koine Greek",
+      contents:
+        "Matthew only, and very little of it. P64: Matthew 26:7-8, 10, 14-15, 22-23, 31-33, on six written sides of three fragments. P67: Matthew 3:9, 15 and 5:20-22, 25-28. P4, if it belongs, adds fragments of Luke",
+      origin: "Unknown. Egypt on general grounds",
+      findSite:
+        "Not recorded for P64; the Montserrat catalogue gives P67's provenance as unknown. Neither was excavated. P4 is reported to have come from Coptos in Upper Egypt, though the year given varies between accounts",
+      foundYear:
+        "P64 purchased in 1901; P67 published in 1956, having been acquired earlier",
+      foundBy:
+        "P64: bought from a dealer in Luxor by the Revd Charles B. Huleatt (1863-1908), who identified the text and gave the fragments to Magdalen College in 1901. No finder is on record",
+      dateAssigned:
+        "Around AD 200, plus or minus fifty years, on the current scholarly consensus (P. M. Head, 1995). Earlier proposals: 4th century (A. S. Hunt), 3rd (C. B. Huleatt), later 2nd (C. H. Roberts, 1953), last third of the 1st century (C. P. Thiede, 1995 - rejected by papyrologists)",
+      dateCertainty: "disputed",
+      currentLocation:
+        "P64: the Old Library, Magdalen College, Oxford. P67: the Roca-Puig collection at the Abbey of Montserrat, Barcelona (published for many years under Roca-Puig's own foundation as P. Barc. Inv. 1). P4: Bibliotheque nationale de France, Paris",
+      shelfmark: "Magdalen College MS Gr. 17 (Oxford); P.Monts.Roca inv. 1 (Montserrat); Supplement grec 1120 (Paris)",
+      facsimileUrl: "https://digital.bodleian.ox.ac.uk/objects/29fc0a57-e9f0-466b-b225-a697022c8de6/",
+    },
+    citations: [
+      {
+        tier: "institution",
+        label: "Magdalen College, Oxford: \"The Magdalen Papyrus P64\"",
+        url: "https://www.magd.ox.ac.uk/blog/the-magdalen-papyrus-p64-possibly-the-earliest-known-fragments-of-the-new-testament-or-of-a-book/",
+        credit: "Magdalen College, University of Oxford",
+        detail:
+          "The holding college's own page, 30 October 2013, with images. It gives the shelfmark as \"Magd. MS. Gr. 17\", the contents as passages of Matthew 26, an estimated text block of 10.5 x 16.8 cm, a date of \"the late second century or c.200 A.D.\", and the gift by Charles Bousfield Huleatt in 1901. On Thiede it says his claim \"has prompted much discussion, however it has not been widely accepted by the academic community\"",
+        supports: "The shelfmark, the acquisition, the current date, and the college's own view of the first-century claim",
+      },
+      {
+        tier: "scholarly",
+        label: "P. M. Head, \"The Date of the Magdalen Papyrus of Matthew (P. Magd. Gr. 17 = P64): A Response to C. P. Thiede\"",
+        url: "https://www.tyndalebulletin.org/article/31625-the-date-of-the-magdalen-papyrus-of-matthew-_p-magd-gr-_-17-p64-a-response-to-cp-thiede.pdf",
+        credit: "Peter M. Head, Tyndale House, Cambridge",
+        detail:
+          "Tyndale Bulletin 46.2 (1995), 251-285; DOI 10.53751/001c.31625; open access and read in full for this article. Source of the acquisition history, the Hunt and Roberts dates, Thiede's private clarification of 20 January 1995, the report of his London lecture, and the conclusion quoted here",
+        supports: "The refutation of the first-century date, and the history of the fragments before 1994",
+      },
+      {
+        tier: "scholarly",
+        label: "C. P. Thiede, \"Papyrus Magdalen Greek 17 (Gregory-Aland P64): A Reappraisal\"",
+        url: "https://www.tyndalebulletin.org/article/30393-papyrus-magdalen-greek-17-gregory-aland-p64-a-reappraisal.pdf",
+        credit: "Carsten Peter Thiede",
+        detail:
+          "Tyndale Bulletin 46.1 (1995), 29-42; DOI 10.53751/001c.30393; reprinted with minor corrections from Zeitschrift fur Papyrologie und Epigraphik 105 (1995), 13-20. Open access and read in full, so that the claim is quoted from Thiede's own page rather than from his critics' summaries of it",
+        supports: "Thiede's proposal in his own words, and his own transcription of the fragments",
+      },
+      {
+        tier: "scholarly",
+        label: "K. Wachtel, \"P64/67: Fragmente des Matthausevangeliums aus dem 1. Jahrhundert?\"",
+        url: "https://www.uni-koeln.de/phil-fak/ifa/zpe/downloads/1995/107pdf/107073.pdf",
+        credit: "Klaus Wachtel, Institut fur Neutestamentliche Textforschung, Munster",
+        detail:
+          "Zeitschrift fur Papyrologie und Epigraphik 107 (1995), 73-80. The journal's own open-access offprint, read in full. The concluding paragraph quoted in this article is translated from the German; the original reads \"Thiedes Argumentation fur eine Datierung des P64/67 ins 1. Jahrhundert ist jedoch als methodisch unzulanglich und sachlich falsch zuruckzuweisen. Die herkommliche Datierung in die Zeit um 200 hingegen hat sich als gut begrundet erwiesen.\"",
+        supports: "The Munster institute's published verdict on the first-century dating",
+      },
+      {
+        tier: "institution",
+        label: "DVCTVS: P.Monts.Roca inv. 1 (P67), Fondo Roca-Puig, Abadia de Montserrat",
+        url: "https://dvctvs.upf.edu/catalogue/p-monts-roca-inv-1/",
+        credit: "DVCTVS, Universitat Pompeu Fabra, for the Abadia de Montserrat",
+        detail:
+          "The catalogue of the holding collection. It gives the current inventory number, a date of \"II AD\", the contents as Matthew 3:9, 15 and 5:20-22, 25-28, the fragment dimensions (1.1 x 1.8 cm and 5 x 4.9 cm), the hand as biblical uncial, the provenance as unknown, and \"Same MS as Oxford, Magdalen College Gr. 17\"",
+        supports: "P67's current shelfmark, extent, date and its identity with the Oxford fragments",
+      },
+      {
+        tier: "reference",
+        label: "Deutsche Nationalbibliothek, GND authority record 11558126X: Carsten Peter Thiede",
+        url: "https://d-nb.info/gnd/11558126X/about/lds.jsonld",
+        credit: "Deutsche Nationalbibliothek",
+        detail:
+          "The German national library's authority file gives 8 August 1952 and 14 December 2004; the Bibliotheque nationale de France's own record (data.bnf.fr, ark 123725546) gives the same years. The linked address is the machine-readable form, which is what resolved when this was checked; the human-readable d-nb.info page was returning a server error. Two national libraries are used here rather than an obituary because both newspaper obituaries were unreachable from this project",
+        supports: "Thiede's dates",
+      },
+      {
+        tier: "scholarly",
+        label: "T. C. Skeat, \"The Oldest Manuscript of the Four Gospels?\" and P. M. Head's reply",
+        credit: "T. C. Skeat; Peter M. Head",
+        detail:
+          "Skeat, New Testament Studies 43:1 (1997), 1-34, DOI 10.1017/s0028688500022475; Head, \"Is P4, P64 and P67 the Oldest Manuscript of the Four Gospels? A Response to T. C. Skeat,\" New Testament Studies 51:3 (2005), 450-457, DOI 10.1017/s0028688505000238; S. D. Charlesworth, \"T. C. Skeat, P64+67 and P4, and the Problem of Fibre Orientation in Codicological Reconstruction,\" New Testament Studies 53 (2007), 582-604. The Skeat and Head citations were verified against the Crossref registry and the Charlesworth citation against the Montserrat catalogue's bibliography; none of the three articles was opened, and this article reports only the shape of the disagreement, not any author's detailed argument",
+        supports: "That whether P4 belongs with P64 and P67 is a live and separate question",
+        paywalled: true,
+      },
+      {
+        tier: "encyclopedic",
+        label: "Wikipedia: Magdalen papyrus",
+        url: "https://en.wikipedia.org/wiki/Magdalen_papyrus",
+      },
+    ],
+    reflectionPrompt:
+      "The correction to this story came from people who wanted it to be true and checked anyway. What would it cost you to check something you would rather not have to?",
+  },
+  {
+    id: "papyrus-137-first-century-mark",
+    name: "Papyrus 137",
+    alternateNames: ["P137", "P.Oxy. 5345"],
+    // "First-Century Mark" is a matchName rather than an alternateName on purpose: it is the popular
+    // label this article exists to correct, so it should catch a reader who meets the phrase
+    // elsewhere without being printed under "Also called" as though the app endorsed it. It is
+    // longer than "Mark", so the longest-match rule keeps it off the Evangelist.
+    matchNames: ["First-Century Mark", "first-century Mark"],
+    category: "manuscript",
+    role: "The Mark Fragment Announced as First-Century and Published as Third",
+    summary:
+      "A scrap of Mark's Gospel the size of a postage stamp, publicly claimed for six years to be the earliest New Testament manuscript in existence, and dated by its editors when it finally appeared to the late second or early third century.",
+    sections: [
+      {
+        heading: "An Announcement in a Debate",
+        paragraphs: [
+          "On 1 February 2012, in his third public debate with B. D. Ehrman at the University of North Carolina at Chapel Hill, the New Testament scholar D. B. Wallace said that a fragment of Mark's Gospel had been identified and dated to the first century. If that were right it would be the earliest copy of any part of the New Testament by half a century or more, and the claim spread accordingly. Wallace could say nothing further; later in 2012 he signed a non-disclosure agreement in order to be allowed to see the fragment, and for six years, at every speaking engagement where he was asked, that was the only answer he could give.",
+          "The fragment was published in 2018 as P.Oxy. LXXXIII 5345, edited by D. Obbink and D. Colomo, and catalogued as P137. It is a single small piece of a papyrus codex carrying, on its two sides, parts of Mark 1:7-9 and Mark 1:16-18. The Egypt Exploration Society, which owns it, put the date plainly in its own statement of 4 June 2018: \"After rigorous comparison with other objectively dated texts, the hand of this papyrus is now assigned to the late second to early third century AD.\"",
+        ],
+      },
+      {
+        heading: "What the Owning Institution Says Happened",
+        paragraphs: [
+          "The Egypt Exploration Society's statement is unusually full and it is the primary source for this whole affair. The fragment was excavated by Grenfell and Hunt at Oxyrhynchus, probably in 1903; its inventory number is 101/14(b), and the Society apologised for a typographical error in the published volume. Its record card, made by R. Coles in the early 1980s to help the editors choose texts for publication, is marked \"I/II\" — a provisional guess at a first- or early-second-century date, made without detailed study and, in the Society's words, \"without access to today's online search tools\". R. Coles did not identify the text as Mark; the clearest clue is a word on the abraded side that a quick inspection would not have caught.",
+          "The identification as Mark was made in 2011 by a researcher working for Professor Obbink, then one of the General Editors of the Oxyrhynchus series, and Obbink decided to prepare it for publication himself. The Society says this is \"the same text that Professor Obbink showed to some visitors to Oxford in 2011/12, which some of them reported in talks and on social media as possibly dating to the late first century AD on the basis of a provisional dating when the text was catalogued many years ago.\" On the question everybody asked, it is categorical: the papyrus \"has never been for sale, whatever claims may have been made arising from individual conversations in the past\". On the non-disclosure agreement it is equally direct: \"The EES has no knowledge of, and has never seen, the NDA which Professor Daniel Wallace says someone required him to sign about the unpublished Mark fragment. Professor Obbink too says he has no knowledge of it.\"",
+        ],
+      },
+      {
+        heading: "Where the Accounts Do Not Agree",
+        paragraphs: [
+          "Two of those points are contested by name, and an article that printed only the institution's version would be misleading its reader. Wallace replied on 11 June 2018. He accepts that he signed nothing with the Society: \"It is true that I never signed an NDA with the EES. The NDA I signed was with Jerry Pattengale, who represented a major collection that was interested in purchasing the papyrus.\" He dates it: \"I signed the NDA in early October 2012; I still possess my copy of it along with the email it was attached to - an email that explicitly speaks of the purchase as the reason for the NDA.\" And on the sale he is blunt: \"So far as I know, the fragment was most certainly for sale in 2012. This was confirmed to me by several individuals, Dr. Pattengale included.\" So \"never for sale\" and \"most certainly for sale\" both stand on the public record, from people with direct knowledge, and neither has withdrawn. What nobody disputes is that the fragment never actually left the Society's collection.",
+          "A much larger controversy about Oxyrhynchus papyri surrounds Professor Obbink, and it has to be stated carefully because it concerns a living man against whom nothing has been proved in court. The Society's statement of 14 October 2019 says that thirteen texts \"were taken without authorisation from the EES\" and were then held by the Museum of the Bible, and that the Museum told the Society eleven of them had been \"sold to Hobby Lobby Stores by Professor Obbink, most of them in two batches in 2010\"; a further twenty-one were identified during 2020 and returned. Obbink denies it, and his statement through his lawyers belongs beside the allegation every time it is printed: \"The allegations made against me that I have stolen, removed or sold items owned by the Egyptian Exploration Society collection at the University of Oxford are entirely false. I would never betray the trust of my colleagues and the values which I have sought to protect and uphold throughout my academic career in the way that has been alleged. I am aware that there are documents being used against me which I believe have been fabricated in a malicious attempt to harm my reputation and career. I am working with my legal team in this regard.\" On the Society's own most recent word, an update dated 24 July 2025, the police investigation is still open and no charges have been announced. None of it touches this fragment: the Society is explicit that the texts named in the 2013 contract remained in its collection and that two of them were published as P.Oxy. LXXXIII 5345 and 5346.",
+          "What Wallace himself wrote when publication released him is the part worth reading slowly: \"In my debate with Bart, I mentioned that I had it on good authority that this was definitely a first-century fragment of Mark. A representative for who I understood was the owner of FCM urged me to make the announcement at the debate, which they realized would make this go viral. However, the information I received and was assured to have been vetted was incorrect. It was my fault for being naive enough to trust that the data I got was unquestionable, as it was presented to me. So, I must first apologize to Bart Ehrman, and to everyone else, for giving misleading information about this discovery.\" He had never seen the fragment before making the announcement, had not discovered it and was not editing it, and believed the group that approached him owned it - \"had I known otherwise, I never would have made the public announcement.\" He also reported that \"the world-class papyrologist who dated the fragment to the first century had already, prior to my debate with Ehrman, adjusted his views.\"",
+          "So be precise about what went wrong, because the popular version gets it wrong in both directions. This was not a forgery: the fragment is genuine, excavated, and owned by a scholarly society. It was not an institutional deception: the Society never dated it to the first century. What happened is that a provisional pencil note on a catalogue card from the early 1980s, made by someone who had not read the text, escaped into public advocacy through a chain of people none of whom had checked it, and was then defended by silence for six years. The scholars who have written this up most carefully are evangelicals - E. Hixson forced it into the open in May 2018 and wrote the post-mortem, and the volume he edited with P. Gurry made the wider point: overstated manuscript claims damage the case they are meant to serve, because the correction always arrives eventually and it arrives with the church's name on it. Hixson also says the thing that is easiest to forget: \"P137 is still an amazing discovery! It is probably the oldest manuscript of Mark in existence.\"",
+        ],
+      },
+    ],
+    verses: [
+      { reference: "Mark 1:7-9", note: "Preserved on one side of the fragment" },
+      { reference: "Mark 1:16-18", note: "Preserved on the other" },
+      { reference: "Proverbs 12:22", note: "\"Lying lips are an abomination to Yahweh, but those who do the truth are his delight\"" },
+    ],
+    sources: [
+      { label: "Egypt Exploration Society: statement regarding P.Oxy LXXXIII 5345", url: "https://www.ees.ac.uk/news/poxy-lxxxiii-5345" },
+      { label: "D. B. Wallace, \"First-Century Mark Fragment Update\"", url: "https://danielbwallace.com/2018/05/23/first-century-mark-fragment-update/" },
+      { label: "E. Hixson, \"Taking Stock of the 'First-Century Mark' Saga\" (Text & Canon Institute)", url: "https://textandcanon.org/lessons-from-the-first-century-mark-saga/" },
+    ],
+    manuscript: {
+      siglum: "P137 (P.Oxy. LXXXIII 5345)",
+      manuscriptType: "A single small fragment of a papyrus codex, written on both sides",
+      language: "Koine Greek",
+      contents:
+        "Brief traces of Mark 1:7-9 on one side and Mark 1:16-18 on the other. Nothing else",
+      origin: "Egypt — Oxyrhynchus, from the ancient rubbish mounds",
+      findSite: "Oxyrhynchus (modern el-Bahnasa), Egypt",
+      foundYear:
+        "Excavated by B. P. Grenfell and A. S. Hunt, probably in 1903 on the basis of its inventory number, though the Egypt Exploration Society says the season is uncertain",
+      foundBy: "B. P. Grenfell and A. S. Hunt, for the Egypt Exploration Fund",
+      dateAssigned:
+        "Late second to early third century AD, assigned by the editors on publication in 2018. A record card made in the early 1980s carried a provisional \"I/II\", which is the origin of the first-century claim",
+      dateCertainty: "traditional",
+      currentLocation:
+        "The Egypt Exploration Society collection, housed in the Sackler Library, Oxford. It has never been sold",
+      shelfmark: "P.Oxy. inv. 101/14(b)",
+    },
+    citations: [
+      {
+        tier: "institution",
+        label: "Egypt Exploration Society, \"P.Oxy LXXXIII 5345\" (statement, 4 June 2018)",
+        url: "https://www.ees.ac.uk/news/poxy-lxxxiii-5345",
+        credit: "The Egypt Exploration Society, London",
+        detail:
+          "The owning society's own account, read in full. Source of the date assigned on publication, the 1903 excavation, the corrected inventory number 101/14(b), Revel Coles's \"I/II\" record card, the 2011 identification, the statement that the fragment has never been for sale, and the Society's position on the non-disclosure agreement",
+        supports: "Every factual claim in the first two sections",
+      },
+      {
+        tier: "institution",
+        label: "Egypt Exploration Society, \"Professor Obbink and missing EES papyri\" (statement, 14 October 2019)",
+        url: "https://www.ees.ac.uk/news/professor-obbink-and-missing-ees-papyri",
+        credit: "The Egypt Exploration Society, London",
+        detail:
+          "The Society's update on the wider affair, read in full. It states that \"the four texts specified in the handwritten list made public alongside the 2013 contract, which are probably the texts of that contract, remain in the EES collection, and two have been published as P.Oxy. LXXXIII 5345 and 5346\" - which is why this article does not say that this fragment was sold",
+        supports: "That P.Oxy. 5345 remained in the Society's collection throughout",
+      },
+      {
+        tier: "primary",
+        label: "D. B. Wallace, \"First-Century Mark Fragment Update\"",
+        url: "https://danielbwallace.com/2018/05/23/first-century-mark-fragment-update/",
+        credit: "Daniel B. Wallace, Dallas Theological Seminary",
+        detail:
+          "23 May 2018, on his own site; read in full so that his account and his apology are quoted whole rather than in fragments. Source of the debate date and venue, the non-disclosure agreement, the apology, and his statement that he had not seen the fragment before the announcement",
+        supports: "Wallace's own account of what he said and why, in his own words",
+      },
+      {
+        tier: "reference",
+        label: "P. Gurry, \"Dirk Obbink Denies Wrongdoing\" (Evangelical Textual Criticism)",
+        url: "https://evangelicaltextualcriticism.blogspot.com/2019/10/dirk-obbink-denies-wrongdoing.html",
+        credit: "Peter Gurry, quoting the Waco Tribune-Herald",
+        detail:
+          "19 October 2019. Carries Professor Obbink's statement, issued through his attorneys to the Waco Tribune-Herald, in full. It is quoted here from this page, which was opened and read; the newspaper's own article was not reachable. The denial is reproduced in this article without omission",
+        supports: "Professor Obbink's denial, in his own words",
+      },
+      {
+        tier: "primary",
+        label: "D. B. Wallace, \"'First-Century' Mark Fragment: Second Update\"",
+        url: "https://danielbwallace.com/2018/06/11/first-century-mark-fragment-second-update/",
+        credit: "Daniel B. Wallace, Dallas Theological Seminary",
+        detail:
+          "11 June 2018, on his own site; read in full. His direct reply to the Egypt Exploration Society's statement, naming Jerry Pattengale as the counterparty to the non-disclosure agreement, dating it to early October 2012, and disputing the Society's account of whether the fragment was for sale",
+        supports: "That the Society's \"never for sale\" statement is contested on the record by a named scholar",
+      },
+      {
+        tier: "institution",
+        label: "Egypt Exploration Society, \"Museum of the Bible and missing EES papyri\" (26 February 2021, updated 24 July 2025)",
+        url: "https://www.ees.ac.uk/news/museum-of-the-bible-and-missing-ees-papyri",
+        credit: "The Egypt Exploration Society, London",
+        detail:
+          "The Society's latest published word, read in full. It reports a further twenty-one fragments identified during 2020, and its update of 24 July 2025 states that \"Thames Valley Police is continuing its investigation into the removal of papyri from the EES collection\" - which is why this article says the matter is unresolved rather than concluded",
+        supports: "The current status of the police investigation, and that no charges have been announced",
+      },
+      {
+        tier: "reference",
+        label: "E. Hixson, \"Taking Stock of the 'First-Century Mark' Saga\"",
+        url: "https://textandcanon.org/lessons-from-the-first-century-mark-saga/",
+        credit: "Elijah Hixson, Text & Canon Institute, Phoenix Seminary",
+        detail:
+          "Published 25 January 2022 and read in full. Hixson traces the affair from Scott Carroll's tweet of 1 December 2011 onward and draws the lessons quoted here, including that thirty-four papyri were returned to the Egypt Exploration Society. The page's own title is \"Taking Stock\", not \"Lessons from\", which is only its URL",
+        supports: "The evangelical scholarly reckoning with the affair, and what the fragment is still worth",
+      },
+      {
+        tier: "encyclopedic",
+        label: "Wikipedia: Papyrus 137",
+        url: "https://en.wikipedia.org/wiki/Papyrus_137",
+      },
+    ],
+    reflectionPrompt:
+      "A good man repeated something he had not checked because he wanted it to be true, and then said so publicly. Which is harder for you: not repeating it, or saying so afterwards?",
+  },
+  {
+    id: "papyrus-72",
+    name: "Papyrus 72",
+    alternateNames: ["P72", "Papyrus Bodmer VII-VIII"],
+    matchNames: ["Bodmer Miscellaneous Codex", "Bodmer miscellaneous codex", "Bodmer Composite Codex"],
+    category: "manuscript",
+    role: "1 and 2 Peter and Jude, Bound Into a Christian Reader's Anthology",
+    summary:
+      "The earliest complete copy of 1 Peter, 2 Peter and Jude — and not a New Testament manuscript at all, but the biblical part of a home-made book that also carried the Protevangelium of James, 3 Corinthians and a sermon of Melito.",
+    sections: [
+      {
+        heading: "Three Letters, Complete",
+        paragraphs: [
+          "P72 is unusual among early papyri in that nothing is missing. It carries 1 Peter, 2 Peter and Jude entire, and it is the earliest known manuscript of all three. For letters whose place in the canon was debated longer than almost any others — 2 Peter especially — that is a substantial fact: they were being copied out in full, by one hand, in Egypt, in the third or fourth century.",
+          "The scribe wrote all three, and he was not a professional. T. Wasserman's study of the codex describes \"the informal and personal character of the scribe's hand, and the many errors and irregularities in his text\", and concludes that \"at least these parts of the codex were probably produced for private, rather than liturgical, use\". This is somebody's own book, not a church's lectern copy — which makes it a rarer and more interesting kind of witness than a fine display Bible.",
+          "The pages are now in two countries. Jude, as Papyrus Bodmer VII, stayed with the Fondation Martin Bodmer in Cologny; 1 and 2 Peter, as Papyrus Bodmer VIII, are in the Vatican Library, which digitises them under that shelfmark. How they got there began as a gesture: the Fondation records that in 1969, for the visit of Pope Paul VI to Geneva, Martin Bodmer presented him with \"four papyrus sheets from a codex bearing the two Epistles of Peter\", with the dedication \"That the letters of Peter may return to Peter's house.\" The whole Petrine portion is in Rome now; the Fondation's account covers only that first gift.",
+        ],
+      },
+      {
+        heading: "What Else Is in the Book",
+        paragraphs: [
+          "This is the part that popular accounts leave out, and Wasserman says so at the top of his article: \"Unfortunately, NT scholars have tended to focus only on the text of P72, disregarding the rest of the codex.\" The volume the three letters sit in contains, in order, the Protevangelium of James (a second-century story of Mary's birth and childhood), the apocryphal correspondence between Paul and the Corinthians known as 3 Corinthians, the eleventh Ode of Solomon, the letter of Jude, Melito of Sardis's homily On the Passover, a hymn fragment, the Apology of Phileas, Psalms 33 and 34 in Greek, and finally 1 and 2 Peter.",
+          "Nothing here is a canon list and nothing here is a heresy. It is what one Christian household or small congregation in Egypt actually had bound together: two letters attributed to Peter and one to Jude, next to a devotional legend about Mary, next to a letter nobody now thinks Paul wrote, next to a genuine second-century Passover sermon by a bishop of Sardis. Reading it as a New Testament misreads it; reading it as evidence that early Christians could not tell the difference misreads it too. It is a reader's shelf, bound.",
+          "How the book was assembled is itself a subject. Its pages carry several separate ancient numbering sequences, which means smaller booklets were joined into one volume at some point. T. Wasserman, correcting an earlier reconstruction by checking the fibre direction against the facsimile, found that \"another text, now lost, probably followed 2 Peter\" — so even the contents list above is incomplete. Whether the Apology of Phileas and the Psalms belonged to this codex at all has recently been questioned by B. Nongbri, on the grounds that those leaves are a slightly different shape and lack the distinctive pattern of holes shared by the rest.",
+        ],
+      },
+      {
+        heading: "What Held It Together, and Why the Answer Matters for the Date",
+        paragraphs: [
+          "Scholars have proposed several unifying themes: V. Martin thought the collection apologetic; K. Haines-Eitzen singled out the body; Wasserman argued for a high Christology, pointing among other things to the scribe's reading at Jude 5; D. Horrell counted pages and found that most of the surviving codex concerns the suffering of Christ and of his people. Wasserman is the most cautious, and his caution is the honest position: \"Since the final codex is probably made up of earlier collections, an identification of one single pervasive theme seems problematic.\" A book assembled out of booklets does not have to have had a single idea behind it, and a reader should be suspicious of any account that finds one too easily.",
+          "There is a live terminological argument alongside it — whether to call this a \"miscellany\", implying a designed collection, or a \"composite\" codex, implying accretion. E. G. Turner thought scribes simply did not waste writing material and filled up spare pages; B. C. Jones concluded that \"The term composite, in my opinion, better represents these codices for what they are — multi-text codices with no common theme.\" That is not a quarrel about words. It is a disagreement about whether an early Christian sat down and chose these texts, or whether the book grew.",
+          "It also bears on the date. The usual figure for P72 is the third or fourth century, and one reason the later end is preferred is that the Apology of Phileas describes a trial that took place between AD 303 and 307, so the codex as a whole cannot be earlier. But if Nongbri is right that the Phileas leaves were never part of this book, that anchor comes loose and the codex could be earlier than usually said. Nothing here changes the text of the three letters; it does mean the confident date printed in reference works rests on an assumption currently under review.",
+        ],
+      },
+    ],
+    verses: [
+      { reference: "1 Peter 1:1", note: "The letter is preserved complete here, its earliest full copy" },
+      { reference: "2 Peter 1:1", note: "Also complete — earlier than any other surviving copy" },
+      { reference: "Jude 1:3", note: "Jude stands earlier in the codex, between an Ode of Solomon and Melito's sermon" },
+      { reference: "Jude 1:5", note: "The verse whose reading in this manuscript is cited in arguments about its scribe's theology" },
+    ],
+    sources: [
+      { label: "Biblioteca Apostolica Vaticana: Pap.Bodmer.VIII", url: "https://digi.vatlib.it/view/MSS_Pap.Bodmer.VIII" },
+      { label: "T. Wasserman, \"Papyrus 72 and the Bodmer Miscellaneous Codex\"", url: "https://lup.lub.lu.se/search/files/2970491/625327.pdf" },
+      { label: "Wikipedia: Papyrus 72", url: "https://en.wikipedia.org/wiki/Papyrus_72" },
+    ],
+    manuscript: {
+      siglum: "P72 (P.Bodmer VII for Jude and P.Bodmer VIII for 1-2 Peter)",
+      manuscriptType:
+        "Papyrus codex, leaves about 14 x 15.5 cm, assembled from several smaller booklets and carrying more than one ancient page-numbering sequence; the New Testament portion is copied by a single informal hand",
+      language: "Greek, with some Coptic marginalia by the same scribe",
+      contents:
+        "1 Peter, 2 Peter and Jude, all three complete — the earliest surviving copy of each. They are bound in a composite volume whose other contents are the Protevangelium of James, 3 Corinthians, the eleventh Ode of Solomon, Melito of Sardis On the Passover, a hymn fragment, the Apology of Phileas, and Psalms 33-34; a further text, now lost, probably followed 2 Peter",
+      origin: "Egypt",
+      findSite:
+        "Not excavated. Part of the Bodmer group, whose find site is a reconstruction rather than a record — see the Bodmer Papyri article",
+      foundYear: "Not recorded; acquired by Martin Bodmer in the 1950s",
+      foundBy: "No finder or excavator on record. Acquired through the antiquities trade",
+      dateAssigned:
+        "Third to fourth century AD. The later end rests partly on the Apology of Phileas, which describes a trial of AD 303-307 — an anchor that loses its force if those leaves do not belong to this codex, as B. Nongbri has argued",
+      dateCertainty: "disputed",
+      currentLocation:
+        "Split: 1 and 2 Peter (P.Bodmer VIII) are in the Biblioteca Apostolica Vaticana; Jude (P.Bodmer VII) and the rest of the codex remain at the Fondation Martin Bodmer, Cologny-Geneva",
+      shelfmark: "Pap.Bodmer.VIII (Vatican); P.Bodmer VII and the remaining numbers (Cologny)",
+      facsimileUrl: "https://digi.vatlib.it/view/MSS_Pap.Bodmer.VIII",
+    },
+    citations: [
+      {
+        tier: "institution",
+        label: "Biblioteca Apostolica Vaticana: Pap.Bodmer.VIII, DigiVatLib",
+        url: "https://digi.vatlib.it/view/MSS_Pap.Bodmer.VIII",
+        credit: "Biblioteca Apostolica Vaticana",
+        detail:
+          "The Vatican's digitisation of the 1 and 2 Peter portion, free to view. Its IIIF manifest publishes the shelfmark as given here and covers pages 2-36, which is exactly the Petrine page-numbering sequence; the library holds no manifest for the other Bodmer numbers in this codex, which is consistent with their remaining in Geneva. The viewer's rights notice restricts free use to personal or study purposes, so the images are linked here and not reproduced",
+        supports: "The shelfmark, and that only the Petrine part is in Rome",
+      },
+      {
+        tier: "scholarly",
+        label: "T. Wasserman, \"Papyrus 72 and the Bodmer Miscellaneous Codex\"",
+        url: "https://lup.lub.lu.se/search/files/2970491/625327.pdf",
+        credit: "Tommy Wasserman",
+        detail:
+          "New Testament Studies 51:1 (2005), 137-154; DOI 10.1017/S0028688505000081. The author's accepted manuscript, deposited openly by Lund University and read in full for this article. Source of the codex contents and order, the split holding, the scribe's character, the lost text after 2 Peter, and the caution about a single unifying theme",
+        supports: "Everything in the second section, and Wasserman's own conclusions in his own words",
+      },
+      {
+        tier: "scholarly",
+        label: "B. C. Jones, \"The Bodmer 'Miscellaneous' Codex and the Crosby-Schoyen Codex MS 193: A New Proposal\"",
+        url: "https://jgrchj.net/volume8/JGRChJ8-2_Jones.pdf",
+        credit: "Brice C. Jones",
+        detail:
+          "Journal of Greco-Roman Christianity and Judaism 8 (2011-12), 9-20; open access. Surveys the proposed unifying themes (Martin, Haines-Eitzen, Wasserman, Horrell) and argues for \"composite\" over \"miscellany\". The proposals of Martin, Haines-Eitzen and Horrell are reported here from Jones's survey rather than from their own publications, which were not opened",
+        supports: "The range of proposed themes, and the composite-versus-miscellany argument",
+      },
+      {
+        tier: "institution",
+        label: "Fondation Martin Bodmer: Martin Bodmer",
+        url: "https://fondationbodmer.ch/en/martinbodmer/",
+        credit: "Fondation Martin Bodmer, Cologny-Geneva",
+        detail:
+          "The Fondation's own page on its founder, which records the 1969 presentation to Pope Paul VI of papyrus sheets from the codex bearing the two letters of Peter, with the dedication quoted in this article",
+        supports: "How the Petrine leaves came to be in Rome",
+      },
+      {
+        tier: "encyclopedic",
+        label: "Wikipedia: Papyrus 72",
+        url: "https://en.wikipedia.org/wiki/Papyrus_72",
+      },
+    ],
+    reflectionPrompt:
+      "Somebody bound Peter and Jude next to a story about Mary's childhood and a sermon on the Passover, because those were the things he wanted to be able to read. What is actually on your shelf, and what does it say you want?",
+  },
+  {
+    id: "codex-claromontanus",
+    name: "Codex Claromontanus",
+    alternateNames: ["Claromontanus"],
+    matchNames: ["Catalogus Claromontanus", "Claromontanus stichometry"],
+    category: "manuscript",
+    role: "A Greek-Latin Paul, With a Canon List Slipped Inside It",
+    summary:
+      "A bilingual sixth-century copy of Paul's letters, remembered less for its text than for the list a later scribe copied into its blank pages — a Bible with Barnabas, the Shepherd and the Apocalypse of Peter in it, and Philippians left out.",
+    sections: [
+      {
+        heading: "Paul in Two Columns",
+        paragraphs: [
+          "Codex Claromontanus is a parchment codex of the Pauline letters written in Greek and Latin, the Greek on the left-hand page and its Latin translation facing it on the right. It is laid out per cola et commata — in sense lines rather than continuous text — which is why a book containing only Paul runs to well over five hundred leaves. It is catalogued as D in the list of manuscripts of Paul, and this is a standing source of confusion: Codex Bezae is also called D, but Bezae is D 05 and covers the Gospels and Acts, while Claromontanus is D 06 and covers Paul. They are different books in different libraries, and they only share a letter because Theodore Beza once owned both.",
+          "Beza said his copy came from Clermont, which is where the name comes from, and it passed afterwards into the French royal library. It is now in the Bibliotheque nationale de France as Grec 107, with a supplementary volume as Grec 107 A. C. von Tischendorf published a transcription of it in 1852, and that edition became the one everybody used — a fact that turns out to matter a great deal.",
+        ],
+      },
+      {
+        heading: "The List Between Philemon and Hebrews",
+        paragraphs: [
+          "Four pages separate Philemon from Hebrews in this codex, and a later scribe — a different hand, different ink — filled two and a half of them with a Latin list headed VERSUS SCRIBTURARUM SANCTARUM, \"the lines of the holy scriptures\". It is a stichometry: a scribe's working tool giving each book with the number of standard lines in it, so that a copyist could work out how much parchment to buy. Because it lists what a Bible contained, it is also, incidentally, one of the earliest canon lists we have, and it is usually called the Catalogus Claromontanus.",
+          "What it lists is not the Bible as later fixed. On the New Testament side it gives the four Gospels in the order Matthew, John, Mark, Luke, then Paul's letters, then two books titled ad petrum, then James, the letters of John, Jude, the Epistle of Barnabas, the Revelation of John, Acts, the Shepherd of Hermas, the Acts of Paul and the Revelation of Peter. Twenty-seven books — but not the twenty-seven. Four works that no later canon kept are simply in the list, and four that every later canon kept are missing: Philippians, 1 and 2 Thessalonians, and Hebrews.",
+          "The omissions are almost certainly a copying accident. The scribe's eye seems to have jumped from Ephesians to 1 Timothy, and the standard explanation is that the Greek titles for Hebrews and Ephesians look alike — Hebraious and Ephesious — with the confusion compounded by translation from a Greek exemplar into Latin. The codex itself contains all four of the missing letters, which is the strongest argument that the list, not the church behind it, lost them.",
+        ],
+      },
+      {
+        heading: "The Dashes Nobody Looked At",
+        paragraphs: [
+          "Alongside some of the titles a later hand has drawn a short horizontal stroke, an obelus, and for a century and a half these have been read as marking the four books that did not make the canon: Barnabas, the Shepherd, the Acts of Paul and the Revelation of Peter. On that reading the list is nearly the familiar New Testament, with the intruders already flagged as second-rate. Almost every reference work says so.",
+          "K. G. Rodenbiker went back to the manuscript and found that the reading descends from a single footnote. C. von Tischendorf printed none of the marks in his 1852 transcription and mentioned only four of them in a note — and there are six. The other two stand beside Judith in the Old Testament and beside ad petrum prima, the odd title for 1 Peter. Why he named four rather than six, she writes, \"remains a mystery\", and the effect has been that generations of scholars cited Tischendorf rather than the page. Physically the marks are a later addition: \"while the main list is in brown ink and clearly inscribed with neatness and care, the obeli appear to be written in a darker ink and to have been penned more hastily, as their width and length appear uneven.\"",
+          "If she is right, the inference usually drawn is backwards. The obeli are not the original compiler ranking his books; they are a later reader annotating a list he found puzzling — the mark beside 1 Peter most plausibly noting the strange title rather than doubting the letter. Her conclusion is that the stichometry \"originally (at least in its sixth-century context) presented a NT comprised of an alternative list of 27 books which included 23 of the now-canonical NT texts... as well as Barnabas, the Shepherd, the Acts of Paul and the Revelation of Peter\", and that this \"demonstrates a lasting interest in alternative scriptural texts and the continuing elasticity of the NT canon.\" That is a real and slightly uncomfortable finding, and it is better met than avoided: the boundaries of the New Testament were settled by the church over time and with argument, not handed down complete, and a sixth-century scribe's book list is evidence of the process rather than a scandal to it.",
+        ],
+      },
+    ],
+    verses: [
+      { reference: "Philemon 1:25", note: "Where the codex's text of Paul pauses; the canon list follows on the next leaves" },
+      { reference: "Hebrews 1:1", note: "Hebrews resumes after the list — and is one of the books the list itself omits" },
+      { reference: "Philippians 1:1", note: "Present in the codex, absent from its canon list" },
+      { reference: "2 Peter 1:1", note: "Listed as \"ad petrum II\", one of the two oddly titled Petrine entries" },
+    ],
+    sources: [
+      { label: "K. G. Rodenbiker, \"The Claromontanus Stichometry and its Canonical Implications\"", url: "https://eprints.gla.ac.uk/237368/1/237368.pdf" },
+      { label: "CSNTM: Manuscript GA 06 (Codex Claromontanus)", url: "https://manuscripts.csntm.org/manuscript/Group/GA_06" },
+      { label: "Wikipedia: Codex Claromontanus", url: "https://en.wikipedia.org/wiki/Codex_Claromontanus" },
+    ],
+    manuscript: {
+      siglum: "D 06 (D^p) — not to be confused with Codex Bezae, D 05",
+      manuscriptType:
+        "Parchment codex, Greek and Latin on facing pages, written per cola et commata in a single column of about 21 lines; 533 leaves",
+      language: "Greek and Latin",
+      contents:
+        "The Pauline letters, including Hebrews. Between Philemon and Hebrews a later hand added a Latin stichometric list of the books of the Bible, the Catalogus Claromontanus, occupying two and a half of the four intervening pages (fols. 467v-468v)",
+      origin: "Uncertain; not established",
+      findSite: "Not applicable. The codex was never lost and never excavated; it passed through libraries",
+      foundYear:
+        "Not applicable. In Theodore Beza's possession in the sixteenth century; in the French royal library thereafter",
+      foundBy:
+        "No finder. Beza reported that it came from Clermont, which gave the codex its name",
+      dateAssigned: "Fifth or sixth century AD, most commonly the sixth. The canon list copied into it is generally taken to be older than the codex",
+      dateCertainty: "traditional",
+      currentLocation: "Bibliotheque nationale de France, Paris",
+      shelfmark: "Grec 107, with Grec 107 A",
+      facsimileUrl: "https://manuscripts.csntm.org/manuscript/Group/GA_06",
+    },
+    citations: [
+      {
+        tier: "scholarly",
+        label: "K. G. Rodenbiker, \"The Claromontanus Stichometry and its Canonical Implications\"",
+        url: "https://eprints.gla.ac.uk/237368/1/237368.pdf",
+        credit: "Kelsie G. Rodenbiker, University of Glasgow",
+        detail:
+          "Journal for the Study of the New Testament 44:2 (2021), 240-253; DOI 10.1177/0142064X211055647. The author's open-access copy at Glasgow, read in full for this article. Source of the list's location on fols. 467v-468v, its heading, its full contents, the six obeli against Tischendorf's four, the ink and hand evidence, and the conclusions quoted here",
+        supports: "The whole of the second and third sections",
+      },
+      {
+        tier: "institution",
+        label: "Bibliotheque nationale de France, Grec 107 and Grec 107 A",
+        credit: "Bibliotheque nationale de France, Paris",
+        detail:
+          "The holding library. No URL is given here because the BnF's Gallica service refused every automated request from this project and served a bot-verification challenge to a browser as well, so no link could be confirmed by opening it. The library's digitisation of the codex does exist: Rodenbiker's article cites the Gallica identifier ark:/12148/btv1b84683111 for it, and a reader in an ordinary browser should reach it",
+        supports: "The shelfmark and the holding institution",
+      },
+      {
+        tier: "institution",
+        label: "CSNTM: Manuscript GA 06",
+        url: "https://manuscripts.csntm.org/manuscript/Group/GA_06",
+        credit: "Center for the Study of New Testament Manuscripts",
+        detail:
+          "Free page images. CSNTM's own record gives the shelf number as \"Gr 107 and 107 A\", the date as sixth century, the contents as Paul, the format as a Greek-Latin diglot in a single column of 21 lines, and the extent as 533 leaves",
+        supports: "The physical description and the date",
+      },
+      {
+        tier: "primary",
+        label: "C. von Tischendorf, Codex Claromontanus sive epistulae Pauli omnes graece et latine",
+        credit: "Constantin von Tischendorf",
+        detail:
+          "Leipzig, 1852; the stichometry is transcribed at pp. 468-469 with a note at p. 589. Print only, and not opened here; it is cited because Rodenbiker's argument is precisely about what this edition did and did not print",
+        supports: "The 1852 transcription whose footnote shaped the later reading of the obeli",
+      },
+      {
+        tier: "encyclopedic",
+        label: "Wikipedia: Codex Claromontanus",
+        url: "https://en.wikipedia.org/wiki/Codex_Claromontanus",
+      },
+    ],
+    reflectionPrompt:
+      "For a hundred and fifty years scholars repeated a footnote instead of looking at the page. Where are you repeating something you have never checked?",
+  },
+  {
+    id: "codex-washingtonianus",
+    name: "Codex Washingtonianus",
+    alternateNames: ["Freer Gospels", "Washington Manuscript of the Gospels", "Codex Washingtonensis"],
+    matchNames: ["Washingtonianus", "Freer Logion", "Freer logion"],
+    category: "manuscript",
+    role: "A Fourth- or Fifth-Century Four-Gospel Book With Words in It Found Nowhere Else",
+    summary:
+      "The four Gospels on parchment, bought from a dealer in Giza in 1906 — carrying, after Mark 16:14, a saying of the risen Christ that survives in no other Greek manuscript on earth.",
+    sections: [
+      {
+        heading: "Bought in Giza, in December 1906",
+        paragraphs: [
+          "On 19 December 1906 the American industrialist and collector C. L. Freer bought a parchment codex from a dealer named Ali Arabi in Giza. It held the four Gospels complete, in one volume, with painted board covers: 187 leaves, 372 written pages, one column of thirty lines to the page, in a small sloping uncial. It is now in the Smithsonian's National Museum of Asian Art in Washington as F1906.274, and it is catalogued there as Washington Manuscript III.",
+          "The Gospels stand in what is called the Western order — Matthew, John, Luke, Mark — the same order Codex Bezae uses. The museum's own description reads the layout as made for reading aloud: \"Its careful layout suggests it was for public, liturgical reading. But it was apparently compiled from a number of different and probably fragmentary sources, perhaps caused by the Great Persecution when Diocletian ordered the destruction of Christian books.\" That second sentence is the manuscript's other famous feature, and its editor made the case in detail. H. A. Sanders concluded that W's parent \"was made up out of six separate parts\" - Matthew; John from 5:12 on; Luke 1-8:12; Luke from 8:13 on; Mark 1-5:30; Mark from 5:31 on - and that these had been corrected against different textual standards before ever reaching this book, so that \"it seems likely that the different parts of the parent ms had been corrected to agree with different text traditions.\" Later scholarship calls that block mixture. A single volume, and no single text behind it.",
+          "It was not excavated. The museum's provenance record traces it to Ali Arabi and no further back, noting only that it was \"Possibly once in the possession of the Monastery of the Vinedresser, near Giza, Egypt\" — a suggestion resting on a curatorial note from 1957, not on a findspot. It came to the Freer Gallery as part of Freer's bequest and was received in 1920.",
+        ],
+      },
+      {
+        heading: "The Freer Logion",
+        paragraphs: [
+          "Mark's Gospel ends, in the earliest manuscripts, at 16:8, with the women fleeing the empty tomb and saying nothing to anyone. Most later manuscripts carry a longer ending, verses 9 to 20. Codex Washingtonianus carries that longer ending — and inserts into it, after verse 14, a passage found in no other Greek copy. It is known as the Freer Logion.",
+          "In it the eleven answer Jesus's rebuke by pleading the state of the world, and he replies. H. A. Sanders, who published the manuscript, gave the first English translation in 1908, prefacing it honestly with the words \"As emended we may translate\" - he had restored damaged Greek before rendering it, and the translation is a reconstruction rather than a transcript: \"And they answered, saying, 'This age of unrighteousness and unbelief is under the (power of) Satan, which does not permit the things which are (made) impure by the (evil) spirits to comprehend the truth of God (and) his power. For this reason reveal thy righteousness now,' they said to Christ, and Christ replied to them: 'The limit of the years of the power of Satan has been fulfilled, but other terrible things are near at hand; and I was delivered unto death on behalf of those who sinned, in order that they may return to the truth and sin no more, to the end that they may inherit the spiritual and incorruptible glory of righteousness (which is) in heaven. But go ye into all the world,' etc.\"",
+          "The passage is not a modern surprise. Jerome quotes the opening of it in Latin in his Dialogue against the Pelagians, at book 2 chapter 15, and says he had found the extra verse in some manuscripts, especially Greek ones. Sanders noted that Jerome's wording differs slightly from the Greek here and concluded he was probably quoting from memory. That places the passage in circulation in Latin in the late fourth century - before this codex, and a long way from Egypt. So the Freer Logion is not one scribe's invention; it is a piece of early Christian text that was genuinely about, and that almost every other copyist either never saw or chose not to include.",
+        ],
+      },
+      {
+        heading: "What It Is Evidence Of, and What It Is Not",
+        paragraphs: [
+          "A reader meeting this for the first time may find it unsettling, so it is worth being exact about what it shows. It shows that the ending of Mark was unstable. That is not a new discovery and not a concealed one: it is why modern translations bracket Mark 16:9-20 and print a note, and why the note is there rather than hidden. The manuscript evidence for the last twelve verses is genuinely divided, and this codex is a witness to just how divided — it has the longer ending, and then something more on top.",
+          "What the Freer Logion is not is a lost saying of Jesus that the church suppressed. Nothing about its transmission fits that story. It appears in one Greek manuscript out of thousands, inside a passage that is itself a later addition, and the one early writer who knew it — Jerome — mentions it in passing while arguing about something else. Its most natural reading is as a second-century or later expansion, written to soften the disciples' failure in verse 14 by giving them an answer, and preserved in a corner of the tradition. That is an honest and rather human thing to have happened, and treating it as either scandal or scripture misses it.",
+          "The wider lesson is about how textual criticism works. Nobody had to be told about the Freer Logion by a critic of Christianity; it was published by the scholars who bought and studied the manuscript, printed in the apparatus of every critical Greek New Testament since, and put on a museum label. The discipline that identifies a passage as an addition is the same discipline that establishes the rest of the text, and it is carried out in the open by people most of whom are Christians. A reader who finds this unnerving is meeting the method, not an exception to it.",
+        ],
+      },
+    ],
+    verses: [
+      { reference: "Mark 16:8", note: "Where the earliest manuscripts of Mark end" },
+      { reference: "Mark 16:14", note: "The verse this codex expands, inserting the Freer Logion after it" },
+      { reference: "Mark 16:15", note: "The Great Commission in Mark's longer ending, which resumes after the insertion" },
+      { reference: "John 1:1", note: "John stands second in this codex, not fourth" },
+    ],
+    sources: [
+      { label: "National Museum of Asian Art, Smithsonian: Washington Manuscript III, F1906.274", url: "https://asia.si.edu/object/F1906.274/" },
+      { label: "CSNTM: Manuscript GA 032", url: "https://manuscripts.csntm.org/manuscript/Group/GA_032" },
+      { label: "Wikipedia: Codex Washingtonianus", url: "https://en.wikipedia.org/wiki/Codex_Washingtonianus" },
+    ],
+    manuscript: {
+      siglum: "W (Gregory-Aland 032)",
+      manuscriptType:
+        "Parchment codex in painted board covers, 187 leaves and 372 written pages, single column of 30 lines, small sloping uncial in dark brown ink, 20.8 x 14.3 cm",
+      language: "Koine Greek",
+      contents:
+        "The four Gospels in the Western order - Matthew, John, Luke, Mark - originally complete, now with lacunae. After Mark 16:14 it inserts the passage known as the Freer Logion, which appears in no other Greek manuscript",
+      origin: "Egypt. The museum notes a suggestion, not a record, that it was once at the Monastery of the Vinedresser near Giza",
+      findSite: "Not excavated and no findspot recorded. It was bought in Giza",
+      foundYear: "Purchased 19 December 1906",
+      foundBy:
+        "No finder or excavator. Bought by C. L. Freer from the dealer Ali Arabi in Giza; given by Freer to the gallery that bears his name and received in 1920",
+      dateAssigned: "Late fourth to early fifth century AD, on the holding museum's own dating",
+      dateCertainty: "traditional",
+      currentLocation: "Freer Gallery of Art, National Museum of Asian Art, Smithsonian Institution, Washington DC",
+      shelfmark: "F1906.274 (covers F1906.297-298)",
+      facsimileUrl: "https://asia.si.edu/object/F1906.274/",
+    },
+    citations: [
+      {
+        tier: "institution",
+        label: "National Museum of Asian Art, Smithsonian Institution: Washington Manuscript III, F1906.274",
+        url: "https://asia.si.edu/object/F1906.274/",
+        credit: "Freer Gallery of Art, Smithsonian Institution",
+        detail:
+          "The holding museum's own object record, with 373 images, read in a browser - asia.si.edu refuses scripted requests, so a reader should open it normally rather than conclude it is dead. Source of the accession number, the date of \"late 4th-early 5th century\", the dimensions, the collation (\"372 written pages on 187 leaves\", \"one column; 30 lines to the page\"), the Western order of the Gospels, the purchase from Ali Arabi in Giza on 19 December 1906, and the museum's own partial translation of the Freer Logion quoted in this article",
+        supports: "Every physical and provenance fact here, and the wording of the Freer Logion quoted",
+      },
+      {
+        tier: "institution",
+        label: "CSNTM: Manuscript GA 032",
+        url: "https://manuscripts.csntm.org/manuscript/Group/GA_032",
+        credit: "Center for the Study of New Testament Manuscripts",
+        detail: "Free page images and a catalogue record for the codex under its Gregory-Aland number",
+        supports: "The siglum and a second set of images",
+      },
+      {
+        tier: "primary",
+        label: "H. A. Sanders, \"Four Newly Discovered Biblical Manuscripts\"",
+        url: "https://archive.org/details/sim_biblical-world_1908-02_31_2",
+        credit: "Henry A. Sanders, University of Michigan",
+        detail:
+          "The Biblical World 31 (February 1908), 137-142. Public domain and read in full at the Internet Archive. The English translation of the Freer Logion quoted in this article is his, at p. 141, and so is his own prefatory \"As emended we may translate\" and his note on Jerome quoting from memory",
+        supports: "The text of the Freer Logion, and the Jerome reference",
+      },
+      {
+        tier: "scholarly",
+        label: "H. A. Sanders, The New Testament Manuscripts in the Freer Collection, Part I: The Washington Manuscript of the Four Gospels",
+        url: "https://archive.org/details/newtestamentman00artgoog",
+        credit: "Henry A. Sanders",
+        detail:
+          "University of Michigan Studies, Humanistic Series IX (Macmillan, 1912) - the editio princeps, named as the full description on the Smithsonian's own record. Public domain and read at the Internet Archive. The six-part analysis of the codex's parent quoted in this article is Sanders's own summary in chapter IV",
+        supports: "The block-mixture analysis, in the editor's own words",
+      },
+      {
+        tier: "primary",
+        label: "Jerome, Against the Pelagians, in Nicene and Post-Nicene Fathers, Second Series, Volume VI",
+        url: "https://en.wikisource.org/wiki/Nicene_and_Post-Nicene_Fathers:_Series_II/Volume_VI/Treatises/Against_the_Pelagians/Book_II",
+        credit: "Jerome, translated in the Nicene and Post-Nicene Fathers",
+        detail:
+          "Public domain, hosted at Wikisource. A caution for anyone following this link: the standard English translation is heavily abridged through the middle of Book II, and chapter 15 - the chapter that carries the quotation - is reduced to a bare index line, \"Mark xvi. 14. Even the Apostles showed unbelief and hardness of heart.\" The Latin is not there. Jerome's own words are quoted in Sanders's 1908 article above",
+        supports: "Where Jerome cites Mark 16:14; not the text of the quotation itself",
+      },
+      {
+        tier: "encyclopedic",
+        label: "Wikipedia: Codex Washingtonianus",
+        url: "https://en.wikipedia.org/wiki/Codex_Washingtonianus",
+      },
+    ],
+    reflectionPrompt:
+      "The disciples in this passage answer a rebuke by explaining that the world made it hard. Is that an excuse, an honest description, or both?",
+  },
+  {
+    id: "codex-alexandrinus",
+    name: "Codex Alexandrinus",
+    alternateNames: ["Alexandrinus"],
+    category: "manuscript",
+    role: "A Fifth-Century Greek Bible in Four Volumes, With Clement Inside the Canon",
+    summary:
+      "One of the oldest near-complete Greek Bibles in existence, given to an English king in 1627 — and the clearest proof that a manuscript does not simply belong to one kind of text.",
+    sections: [
+      {
+        heading: "The Whole Bible, in Four Books",
+        paragraphs: [
+          "Codex Alexandrinus is a fifth-century parchment Bible in Greek, written in two columns of about fifty lines to the page, and bound today as four volumes in the British Library: Royal MS 1 D V to VIII. Seven hundred and seventy-three ancient leaves survive; F. G. Kenyon reckoned the complete book at about eight hundred and twenty. The first three volumes carry the Old Testament in Greek, ending with the Wisdom books; the fourth carries the New Testament, then 1 Clement, then 2 Clement.",
+          "It is nearly complete, which is rare, and the gaps are worth naming because they are large. Matthew is missing up to 25:6 - twenty-five leaves gone from the front. John 6:50 to 8:52 is missing, and so is 2 Corinthians 4:13 to 12:6. One leaf of 1 Clement has gone, and 2 Clement breaks off in mid-sentence at chapter 12. There is a nice consequence of the John gap that Kenyon spotted: \"a calculation of the extent of space missing shows that the section on the woman taken in adultery, vii. 53-viii. 11, can never have formed part of the MS.\" The missing leaves are not enough to have held it.",
+          "How it reached England is usually told wrong. Cyril Lucar, patriarch first of Alexandria and then of Constantinople, brought it from Egypt to Constantinople in 1621. He offered it in 1625 through Sir Thomas Roe, the English ambassador, as a New Year's gift to King James - who died before the gift took effect, so that, in Kenyon's words, it \"was actually received by Charles I. in 1627\". Nor did it enter the British Museum in 1753, the year the Museum was founded: it came with the Old Royal Library, which George II presented to the nation in 1757. Earlier still, an Arabic note in the first volume records the codex bound to the patriarchal cell in Alexandria, with a curse on whoever removed it.",
+        ],
+      },
+      {
+        heading: "One Book, Two Kinds of Text",
+        paragraphs: [
+          "The most useful thing about this manuscript is something a reader would never guess from the way text-types are usually described. Alexandrinus does not have one sort of text. Kenyon put it plainly: \"In character the text of the Codex Alexandrinus in the New Testament presents a curious phenomenon; for whereas in the Gospels it belongs emphatically to the a-type, and indeed is the best representative of that family, having the text in a purer form than that which appears in our Textus Receptus, in the Acts and Epistles, and still more in the Apocalypse, it belongs rather to the b-type.\" In modern terms: Byzantine in the Gospels, Alexandrian everywhere else. In Revelation it is the single best witness we have.",
+          "His explanation is as good as the observation. \"When codices first superseded papyrus rolls, and it became possible to unite all the books of the New Testament in a single volume, the texts of different parts of such volumes would necessarily be taken from different rolls; and it might easily happen, as has been the case here, that different books, or groups of books, would be copied from rolls containing different types of text.\" A whole-Bible codex is an anthology of exemplars. So the sentence \"manuscript X is Byzantine\" is, quite often, not a fact about a manuscript but a fact about part of one, and this codex is where that is easiest to see.",
+        ],
+      },
+      {
+        heading: "Where Its Own Scribe Drew the Line",
+        paragraphs: [
+          "Alexandrinus contains two books that are not in anyone's New Testament: the letter known as 1 Clement, written from the church at Rome to the church at Corinth in the 90s, and the sermon conventionally called 2 Clement. For a long time this was the only known copy of either, and they were published from it in the seventeenth century. The Old Testament volumes likewise include 3 and 4 Maccabees, a letter of Athanasius and a preface by Eusebius before the Psalms, and fourteen Odes after them.",
+          "That is sometimes offered as evidence that the fifth-century church had no settled canon. The manuscript itself answers more precisely than that, and the detail is Kenyon's again. Its table of contents once listed the Psalms of Solomon at the very end - and \"its title is distinctly separated by a space from those of the canonical books. The Epistles of Clement, on the other hand, are included with the canonical books, following the Apocalypse in the list of contents without break or distinction.\" So the scribe did draw a line, and drew it in the layout of his own contents page. He put the Psalms of Solomon outside it, and 1 and 2 Clement inside. The Psalms of Solomon are now entirely lost from the codex; only the title survives to prove they were ever there.",
+          "This is the honest shape of canon history, and it is neither of the two things people usually want it to be. The New Testament was not handed down as a sealed list; nor was it a free-for-all until a council closed it. It was a settled core with a contested edge, and here is a scribe in the fifth century placing a first-century letter from Rome on the inside of that edge - a judgement the church as a whole did not finally follow. Where the codex came from is itself unsettled: the British Library's own record says only \"Eastern Mediterranean\", Kenyon argued for Alexandria, T. C. Skeat for Constantinople, and a 2025 study in Novum Testamentum has argued the Alexandrian case again from Arabic notes in the book. The one thing nobody claims is certainty.",
+        ],
+      },
+    ],
+    verses: [
+      { reference: "Matthew 25:6", note: "Where the surviving text of Matthew begins; twenty-five leaves are lost before it" },
+      { reference: "John 7:53", note: "The account of the woman caught in adultery, which the lost leaves were never large enough to have held" },
+      { reference: "2 Corinthians 4:13", note: "The start of a three-leaf gap running to 12:6" },
+      { reference: "Revelation 22:21", note: "Revelation ends here, and 1 Clement follows in the codex" },
+    ],
+    sources: [
+      { label: "British Library: Royal MS 1 D V (Codex Alexandrinus, volume 1 of 4)", url: "https://searcharchives.bl.uk/catalog/040-001614686" },
+      { label: "F. G. Kenyon, Handbook to the Textual Criticism of the New Testament", url: "https://archive.org/details/handbooktotextua00kenyuoft" },
+      { label: "CSNTM: Manuscript GA 02", url: "https://manuscripts.csntm.org/manuscript/Group/GA_02" },
+    ],
+    manuscript: {
+      siglum: "A (Gregory-Aland 02; Rahlfs A for the Greek Old Testament)",
+      manuscriptType:
+        "Parchment codex in four volumes, 773 surviving ancient leaves of an estimated 820, two columns of 50-51 lines, uncial, about 320 x 280 mm; the first lines of each book in red ink",
+      language: "Koine Greek",
+      contents:
+        "The Greek Old and New Testaments, nearly complete, plus 3 and 4 Maccabees, Athanasius's letter to Marcellinus, Eusebius's preface to the Psalms, the fourteen Odes, and 1 and 2 Clement. Gaps in the New Testament: Matthew 1:1-25:6, John 6:50-8:52, 2 Corinthians 4:13-12:6, 1 Clement 57:7-63:4; 2 Clement breaks off at 12:5. The Psalms of Solomon are listed in the table of contents but are entirely lost",
+      origin:
+        "Disputed. The British Library's record says only \"Eastern Mediterranean\". Alexandria (F. G. Kenyon; and again M. Monier, 2025), Constantinople (T. C. Skeat, 1955), Ephesus and Palestine have all been argued",
+      findSite: "Not applicable. The codex was never lost and never excavated; it passed between libraries",
+      foundYear:
+        "Not applicable. Brought from Egypt to Constantinople by Cyril Lucar in 1621; offered to England in 1625 and received by Charles I in 1627",
+      foundBy:
+        "No finder. Given by Cyril Lucar, patriarch of Alexandria and then of Constantinople, through Sir Thomas Roe",
+      dateAssigned: "Fifth century AD",
+      dateCertainty: "traditional",
+      currentLocation:
+        "The British Library, London. It came to the British Museum with the Old Royal Library, presented to the nation by George II in 1757 - not in 1753, the year the Museum was founded",
+      shelfmark: "Royal MS 1 D V, VI, VII and VIII",
+      facsimileUrl: "https://manuscripts.csntm.org/manuscript/Group/GA_02",
+    },
+    citations: [
+      {
+        tier: "institution",
+        label: "The British Library: Royal MS 1 D V-VIII, Codex Alexandrinus",
+        url: "https://searcharchives.bl.uk/catalog/040-001614686",
+        credit: "The British Library, London",
+        detail:
+          "The holding library's own catalogue record, read for all four volumes. Source of the shelfmarks, the fifth-century date, the collation, the volume-by-volume contents and lacunae, the \"Eastern Mediterranean\" origin, the Arabic ownership note, and the custodial history from Cyril Lucar to George II. The library's Digitised Manuscripts viewer is offline following the 2023 cyber-attack and its own record now marks the images \"currently unavailable\", so no image link is given here",
+        supports: "The shelfmark, the extent, the lacunae and the provenance",
+      },
+      {
+        tier: "scholarly",
+        label: "F. G. Kenyon, Handbook to the Textual Criticism of the New Testament, 2nd edition",
+        url: "https://archive.org/details/handbooktotextua00kenyuoft",
+        credit: "Frederic G. Kenyon",
+        detail:
+          "Macmillan, 1912; public domain and read in full at the Internet Archive. Source of the estimate of 820 original leaves, the argument that the lost John leaves cannot have held the pericope adulterae, the account of the gift to James I and Charles I, the 1757 date, and both quotations about the two text-types and the table of contents (pp. 72-77)",
+        supports: "The text-type observation, the canon-list detail, and the provenance corrections",
+      },
+      {
+        tier: "institution",
+        label: "CSNTM: Manuscript GA 02",
+        url: "https://manuscripts.csntm.org/manuscript/Group/GA_02",
+        credit: "Center for the Study of New Testament Manuscripts",
+        detail:
+          "Free images of the whole codex, taken from the British Museum's own photographic facsimiles of 1879-1883 and 1909. The complete 1883 facsimile is also freely readable at the Internet Archive under a Public Domain Mark",
+        supports: "Page images, in the absence of a working British Library viewer",
+      },
+      {
+        tier: "scholarly",
+        label: "M. Monier, \"The History of Codex Alexandrinus: New Evidence from Arabic Paratexts\"",
+        url: "https://brill.com/view/journals/nt/67/4/article-p501_5.xml",
+        credit: "Mina Monier",
+        detail:
+          "Novum Testamentum 67:4 (2025), 501-526; DOI 10.1163/15685365-bja10103. Only the abstract was readable from here; it states that the article \"provides new paratextual evidence that supports an Alexandrian provenance\" and \"challenges scholarship favouring Constantinople as the codex's home until the 14th century\". Cited to show that the origin question is live in 2025, not to report the argument",
+        supports: "That the codex's origin remains disputed",
+        paywalled: true,
+      },
+      {
+        tier: "encyclopedic",
+        label: "Wikipedia: Codex Alexandrinus",
+        url: "https://en.wikipedia.org/wiki/Codex_Alexandrinus",
+      },
+    ],
+  },
+  {
+    id: "codex-bezae",
+    name: "Codex Bezae",
+    alternateNames: ["Codex Bezae Cantabrigiensis"],
+    category: "manuscript",
+    role: "A Greek-and-Latin Gospels and Acts With a Text Unlike Any Other",
+    summary:
+      "A bilingual copy of the Gospels and Acts from about AD 400 whose text departs from every other manuscript so often — and so interestingly — that scholars have argued for a century about what it actually is.",
+    sections: [
+      {
+        heading: "Greek on the Left, Latin on the Right",
+        paragraphs: [
+          "Codex Bezae is a parchment codex of about AD 400 in which every opening shows the Greek text on the left-hand page and a Latin version facing it on the right, written in a single column of thirty-three lines, in sense-lines, without accents or breathings. Cambridge University Library, which has held it since 1581, catalogues it as MS Nn.2.41. Four hundred and fifteen leaves survive of an original that ran to over five hundred; nine of the survivors are ninth-century replacements.",
+          "Its contents are the four Gospels in the Western order - Matthew, John, Luke, Mark - then a single page carrying the last verses of 3 John in Latin only, then Acts. D. C. Parker, who wrote the standard study of it and whose description Cambridge publishes with its images, notes that \"The only book that is complete is the Gospel of Luke, since there are pages missing from all the others\", and that between Mark and 3 John the book may originally have held Revelation and the rest of John's letters. The single scribe was, on the evidence of his own habits, trained mainly to copy Latin: he drops the Greek article, his Greek abbreviations for sacred names are old-fashioned for his date while his Latin ones are current, and his upsilon looks like a Latin Y.",
+          "The Latin half matters as much as the Greek. It is, in Parker's words, \"one of the small handful of manuscripts which are the most important witnesses to the development of a Latin version before Jerome's famous Vulgate of 382\". The book's later history is Lyonnais: the ninth-century replacement leaves are written in bluish ink characteristic of Lyon, and it seems to have sat in the monastery of St Irenaeus there. Theodore Beza acquired it after the city was sacked in 1562 and sent it to Cambridge with a letter dated 6 December 1581. Where it was made is genuinely unknown - Cambridge's own record simply lists the proposals, \"including southern France, Egypt, northern Africa, Palestine and Beirut\" - and Parker adds, in the first person, \"I have proposed Berytus (Beirut).\"",
+        ],
+      },
+      {
+        heading: "The Readings Nobody Else Has",
+        paragraphs: [
+          "Bezae's text is not a variant here and there. In the Gospels it harmonises constantly; in Acts it is a running rewrite. Some of its individual readings are famous. After Luke 6:4 it inserts a story told nowhere else: seeing a man working on the Sabbath, Jesus says to him that if he knows what he is doing he is blessed, and if he does not, he is accursed and a breaker of the law. In Luke's genealogy it does not simply reverse Luke's list - it substitutes Matthew's, run backwards. At Acts 12:10, when the angel leads Peter out of prison, Bezae adds that they went down seven steps. It is the oldest manuscript to carry the story of the woman caught in adultery, and the oldest to carry the longer ending of Mark, though only as far as verse 15 before its pages give out.",
+          "In Acts the accumulation is what strikes people: the book is noticeably longer here than in the tradition behind modern translations. The figure usually quoted is 8.5 per cent, and it is worth knowing where that comes from, because it is not a comparison of manuscripts. P. Gurry traced it: it is F. G. Kenyon's 1939 figure, arrived at by comparing two printed editions - Westcott and Hort's against A. C. Clark's. Comparing actual manuscripts gives slightly less: Gurry's own count of Bezae against Sinaiticus came to 7.9 per cent, and J. Read-Heimerdinger's word-count against Vaticanus to 6.6. Around a twelfth longer is the safe way to put it.",
+        ],
+      },
+      {
+        heading: "What Is It? Four Answers, and One From the Expert",
+        paragraphs: [
+          "The oldest serious proposal is that Luke wrote twice. F. Blass argued at the end of the nineteenth century - following a suggestion of Jean Leclerc - that Luke issued two editions of each of his works, and, importantly, that the priority runs in opposite directions in the two books: the Bezan form is the earlier in Acts and the later in Luke. Kenyon set the theory out fairly and then rejected it, and his reason is the strong one: \"Changes which are possible to a careless scribe, or to a writer indifferent as to the precise wording of his text, are incomprehensible as the work of an author transcribing his own composition.\" He asked whether Luke would really have struck a clause out of the Jerusalem Council's letter. A later two-edition theory, running the other way, was argued by M.-E. Boismard and A. Lamouille in 1984.",
+          "A second position doubts the question. W. A. Strange opens his study of the problem by asking \"Is there, indeed, any homogeneous entity to be recognised as 'the Western text of Acts', or have we to do rather with ill-defined collections of readings which have been misleadingly called 'Western'?\" B. Metzger, no sceptic about the category, still wrote that this form of text \"is not and never was a unity\". Strange's own proposal is that the distinctive material came from \"an extensive and meticulous process of annotation which took place at an early stage in the book's history\" - marginal notes that got copied into the text.",
+          "A third argument is about theology. E. J. Epp argued in 1962 and 1966 that Bezae's Acts shows a heightened hostility to Jews. J. Rius-Camps and J. Read-Heimerdinger have argued at length against him: Epp \"discussed only a small number of the variant readings of Codex Bezae and overlooked a great deal of evidence which shows that the inner perspective of the Bezan text is thoroughly Jewish\", and criticism of a Judaism that does not accept Jesus as Messiah \"does not make it the work of Gentile revisers\". Reviewing them, T. Nicklas neither took sides nor pretended to: he reports that they contend the Bezan text \"is written from the perspective of an author who was well-acquainted with ancient Judaism\", objects that their main criterion - that the more coherent and vivid text is the older - \"is at least problematic\", and adds that he still favours the more common view while appreciating the book very much. That is where the argument stands.",
+          "The fourth answer is the one a reader most needs, and it comes from the person best placed to give it. Parker, opening the standard monograph on this manuscript, warns that anyone who writes at length on it may be suspected of bias in its favour, and then says: \"Although some years of frequent communion have given me a peculiar affection, which would often seek to exculpate, for this manuscript, the fact is that the longer I have studied it, the more I have become convinced that its many unique readings only very rarely deserve serious consideration if one is trying to establish the best available text.\" The man who has spent longest with Codex Bezae thinks its singular readings are almost never original. It is a priceless window onto how the Gospels and Acts were read, retold and expanded in the early Latin West. It is not a suppressed alternative Bible, and the person most entitled to say so has said so.",
+        ],
+      },
+    ],
+    verses: [
+      { reference: "Luke 6:4", note: "The story of the man working on the Sabbath is inserted after this verse" },
+      { reference: "Luke 6:5", note: "\"The Son of Man is lord of the Sabbath\" - the verse the addition displaces" },
+      { reference: "Acts 12:10", note: "Bezae adds that Peter and the angel went down seven steps" },
+      { reference: "John 7:53", note: "Bezae is the oldest manuscript containing the account that begins here" },
+      { reference: "Acts 8:36", note: "One of the places where the Western text supplies words the earliest manuscripts do not have" },
+    ],
+    sources: [
+      { label: "Cambridge Digital Library: Codex Bezae, MS Nn.2.41", url: "https://cudl.lib.cam.ac.uk/view/MS-NN-00002-00041/1" },
+      { label: "P. Gurry, \"Just How Much Longer Is Codex Bezae's Text in Acts?\"", url: "https://evangelicaltextualcriticism.blogspot.com/2016/06/just-how-much-longer-is-codex-bezaes.html" },
+      { label: "F. G. Kenyon, Handbook to the Textual Criticism of the New Testament", url: "https://archive.org/details/handbooktotextua00kenyuoft" },
+    ],
+    manuscript: {
+      siglum: "D (Gregory-Aland 05); the Old Latin siglum d. Not to be confused with Codex Claromontanus, D 06",
+      manuscriptType:
+        "Parchment codex, Greek and Latin on facing leaves, single column of 33 lines written in sense-lines without accents or breathings; 415 leaves survive of an original of over 500, nine of them ninth-century replacements; leaves 260 mm tall",
+      language: "Greek and Latin",
+      contents:
+        "The four Gospels in the order Matthew, John, Luke, Mark; a single page of 3 John 11-15 in Latin only; and Acts, breaking off at 22:29 in the Greek. Only Luke is complete. Revelation and the rest of John's letters may once have stood between Mark and 3 John",
+      origin:
+        "Unknown. Cambridge's record lists southern France, Egypt, northern Africa, Palestine and Beirut as proposals; D. C. Parker argues for Berytus (Beirut)",
+      findSite: "Not applicable. Probably at the monastery of St Irenaeus in Lyon from the ninth century",
+      foundYear:
+        "Not applicable. Acquired by Theodore Beza after the sacking of Lyon in 1562 and sent to Cambridge with a letter dated 6 December 1581",
+      foundBy: "No finder. Given by Theodore Beza, whose name it carries",
+      dateAssigned: "About AD 400 - the end of the fourth or the beginning of the fifth century",
+      dateCertainty: "traditional",
+      currentLocation: "Cambridge University Library",
+      shelfmark: "MS Nn.2.41",
+      facsimileUrl: "https://cudl.lib.cam.ac.uk/view/MS-NN-00002-00041/1",
+    },
+    citations: [
+      {
+        tier: "institution",
+        label: "Cambridge Digital Library: Codex Bezae, MS Nn.2.41",
+        url: "https://cudl.lib.cam.ac.uk/view/MS-NN-00002-00041/1",
+        credit: "Cambridge University Library; description by D. C. Parker, March 2012",
+        detail:
+          "The holding library's own digitisation, 856 images, free to view. Its catalogue record supplies the classmark, the extent, the layout, the evidence that the scribe was Latin-trained, the acquisition on 6 December 1581, the Lyon provenance and the list of proposed origins. Its description is signed by Professor D. C. Parker, and every sentence attributed to him in this article is quoted from it. Images are licensed CC BY-NC and are linked here, not reproduced",
+        supports: "The physical description, the contents, the provenance, and Parker's own statements",
+      },
+      {
+        tier: "scholarly",
+        label: "D. C. Parker, Codex Bezae: An Early Christian Manuscript and its Text",
+        credit: "David C. Parker, University of Birmingham",
+        detail:
+          "Cambridge University Press, 1992; DOI 10.1017/CBO9780511470479. The standard monograph. The judgement on the manuscript's unique readings quoted in the third section is from the Introduction, pp. 1-4, which the publisher makes freely available. No URL is given because the publisher's page for the book was returning a server error when this was checked, and the rest of the book is behind a paywall",
+        supports: "Parker's verdict that Bezae's singular readings rarely deserve serious consideration",
+        paywalled: true,
+      },
+      {
+        tier: "scholarly",
+        label: "F. G. Kenyon, Handbook to the Textual Criticism of the New Testament, 2nd edition",
+        url: "https://archive.org/details/handbooktotextua00kenyuoft",
+        credit: "Frederic G. Kenyon",
+        detail:
+          "Macmillan, 1912; public domain and read in full. Kenyon sets out F. Blass's two-editions theory at pp. 341-342, including the point that Blass made the Bezan form earlier in Acts and later in Luke, and gives the rebuttal quoted here",
+        supports: "Blass's theory as stated and as answered",
+      },
+      {
+        tier: "reference",
+        label: "P. Gurry, \"Just How Much Longer Is Codex Bezae's Text in Acts?\"",
+        url: "https://evangelicaltextualcriticism.blogspot.com/2016/06/just-how-much-longer-is-codex-bezaes.html",
+        credit: "Peter Gurry, Evangelical Textual Criticism",
+        detail:
+          "27 June 2016, read in full. Traces the 8.5 per cent figure to F. G. Kenyon's The Western Text in the Gospels and Acts (1939), notes that Kenyon was comparing two printed editions rather than two manuscripts, and reports Gurry's own manuscript count of 7.9 per cent (Bezae 71,872 characters against Sinaiticus 66,594)",
+        supports: "Where the length figure comes from, and what it actually measures",
+      },
+      {
+        tier: "encyclopedic",
+        label: "Wikipedia: Codex Bezae",
+        url: "https://en.wikipedia.org/wiki/Codex_Bezae",
+      },
+    ],
+    reflectionPrompt:
+      "The scholar who has spent longest with this manuscript, and loves it, concluded that its unique readings are almost never original. What would it take for you to reach a conclusion like that about something you love?",
+  },
+  {
+    id: "codex-ephraemi-rescriptus",
+    name: "Codex Ephraemi Rescriptus",
+    alternateNames: ["Codex Ephraemi"],
+    category: "manuscript",
+    role: "A Greek Bible Scraped Off and Written Over, and Then Chemically Burned",
+    summary:
+      "A great Greek Bible whose text was erased in the Middle Ages so the parchment could carry sermons instead — and which was then damaged past repair in 1834 by a chemical applied to bring the old writing back.",
+    sections: [
+      {
+        heading: "A Book Used Twice",
+        paragraphs: [
+          "Parchment was expensive, and a book nobody could read any longer was raw material. Some time in the twelfth or thirteenth century a scribe took a Greek Bible several hundred years old, scraped the ink off its leaves, cut and rearranged them, and wrote across them a collection of Greek sermons and treatises of Ephrem the Syrian. That is what a palimpsest is - a manuscript written again - and this one is Codex Ephraemi Rescriptus, now Grec 9 in the Bibliotheque nationale de France.",
+          "What lies underneath is a Bible of about the fifth century, written in a single column of some forty-one lines - the only one of the four great Greek Bibles laid out that way. Two hundred and eight leaves survive of it. Sixty-four carry Old Testament text and they preserve nothing but fragments of six Wisdom books: Job, Proverbs, Ecclesiastes, the Song of Songs, Wisdom and Sirach. The remaining leaves carry parts of every New Testament book except 2 Thessalonians and 2 John, which have vanished entirely - roughly three-fifths of the New Testament in all, and unevenly: Colossians and 2 Timothy nearly whole, 1 Thessalonians barely present.",
+          "Because the leaves were reused out of order, the original arrangement of the Bible cannot be read off the book. A. Rahlfs stated the limit flatly: the original sequence of the books cannot be determined. The codex reached Paris by a route that is documented and is not the one usually told: it belonged to Cardinal Niccolo Ridolfi, then to Piero Strozzi, then to Catherine de' Medici, and entered the royal library in 1599 - ten years after her death, so it was not part of her marriage dowry.",
+        ],
+      },
+      {
+        heading: "The Tincture",
+        paragraphs: [
+          "The undertext was noticed as early as the late seventeenth century and collated in the eighteenth, but reading a scraped page is slow work, and in the nineteenth century chemistry offered a shortcut. The Giobert tincture - water, hydrochloric acid and a small quantity of potassium ferrocyanide - reacts with the iron in old ink and turns it a strong Prussian blue. Applied to a palimpsest it makes the lower writing leap out. It also eats the parchment.",
+          "It was used on this codex, and the result is visible in every photograph: large blue-green stains across the written area, and text that faded further as the years passed. F. Albrecht, surveying the use of chemical reagents on manuscripts, singles this book out - \"A sad example of its use is the Codex Ephraemi Syri rescriptus\" - and illustrates the damage from folio 58 of this very manuscript. The Bibliotheque nationale now allows the original to be consulted only by special permission; readers are given microfilm.",
+          "The blame is almost always laid on C. von Tischendorf, who published the undertext, and it is misplaced. C. R. Gregory set the record straight in 1900: in 1834 the Leipzig professor Ferdinand Florens Fleck asked for the treatment, the librarian Karl Benedict Hase permitted it, and a man named Simonin applied it - and Gregory adds that this has \"wrongly been laid to Tischendorf's charge, who in 1834 was only passing from school to university.\" Tischendorf came to the manuscript later, found it already stained, and said so: he wanted his facsimile to show \"those stains which every page took on when the chemical tincture was applied\", and noted elsewhere that the tincture had eaten the writing. He published the New Testament portion in 1843 and the Old Testament in 1845.",
+        ],
+      },
+      {
+        heading: "What a Damaged Witness Can and Cannot Tell You",
+        paragraphs: [
+          "This manuscript carries a limit that the other great codices do not. With Sinaiticus or Vaticanus, a scholar disputing a reading can go and look at the page. Here the page may be a blue stain over a scraped surface under a layer of thirteenth-century sermon, and what the editor reports is partly what the editor could make out. A. Ceriani said as much in 1888: he had \"some doubt whether Dr Tischendorf's edition is accurate enough, and whether it does not first require a complete revision.\" R. W. Lyon made extensive corrections to it in 1959, and P. Malik, writing in 2021, describes the situation without softening it: \"Being a palimpsest, however, Ephraemi's wording exhibits an inherent measure of uncertainty, as evinced by Robert W. Lyon's extensive corrections to Constantin Tischendorf's editio princeps.\"",
+          "That uncertainty is honest information and it belongs in the open. A reader who is told that a fifth-century manuscript \"reads\" something has a right to know whether anyone can check it. Multispectral imaging - photographing a page at wavelengths the eye cannot see - now recovers erased writing without touching it, and Malik reports that such images of this codex have been made and open up \"a new opportunity to put this codex under closer scrutiny\". They do not appear to be publicly available, and the article does not say who produced them.",
+          "There is one more thing worth saying about dates. Every catalogue gives the undertext as fifth-century, and that is the figure to print - but it is not unanimous among specialists. P. Andrist, who examined the codex in 2018, follows G. Cavallo in dating it to the sixth century and remarks that the traditional fifth-century date is \"still too often retained\". The place of writing is unknown; Palestine and Mesopotamia have both been proposed. Where the popular account of this manuscript is confident - fifth century, Egypt, Tischendorf's chemical, Catherine de' Medici's dowry - the record is thinner than the confidence, and in one case the record flatly contradicts it.",
+        ],
+      },
+    ],
+    verses: [
+      { reference: "Job 1:1", note: "One of the six Wisdom books of which fragments survive in the Old Testament leaves" },
+      { reference: "Proverbs 1:1", note: "Another; nothing of the Law, the Prophets or the Psalms survives here" },
+      { reference: "2 Thessalonians 1:1", note: "One of the two New Testament books that have vanished from the codex entirely" },
+      { reference: "2 John 1:1", note: "The other" },
+    ],
+    sources: [
+      { label: "C. R. Gregory, Textkritik des Neuen Testamentes (on who applied the reagent, and when)", url: "https://archive.org/details/textkritikdesneu0001greg" },
+      { label: "C. R. Gregory, Textkritik des Neuen Testamentes", url: "https://archive.org/details/textkritikdesneu0001greg" },
+      { label: "CSNTM: Manuscript GA 04", url: "https://manuscripts.csntm.org/manuscript/Group/GA_04" },
+    ],
+    manuscript: {
+      siglum: "C (Gregory-Aland 04; Rahlfs C for the Greek Old Testament)",
+      manuscriptType:
+        "Parchment palimpsest codex. The biblical undertext is fifth-century, a single column of about 41 lines - the only one of the four great Greek Bibles in one column. The overtext is a twelfth- or thirteenth-century copy of works of Ephrem the Syrian in Greek. 208 leaves survive; one further leaf disappeared in the nineteenth century",
+      language: "Greek, in both layers",
+      contents:
+        "64 leaves of Old Testament: fragments of Job, Proverbs, Ecclesiastes, the Song of Songs, Wisdom and Sirach only. 145 leaves of New Testament, preserving part of every book except 2 Thessalonians and 2 John, which are entirely absent - roughly three-fifths of the New Testament, very unevenly distributed. The original order of the books cannot be recovered, because the leaves were reused out of sequence",
+      origin:
+        "Unknown. Palestine and Mesopotamia have both been proposed; no institution asserts a place",
+      findSite: "Not applicable. The codex passed through private and royal libraries; it was never excavated",
+      foundYear:
+        "Not applicable. The erased biblical text was noticed in the late seventeenth century - by Jean Boivin on one account, Pierre Allix on another - and collated by Wettstein in 1716",
+      foundBy:
+        "No finder. Owned by Cardinal Niccolo Ridolfi, then Piero Strozzi, then Catherine de' Medici; entered the French royal library in 1599",
+      dateAssigned:
+        "Fifth century AD on every catalogue's reckoning, including the holding library's. G. Cavallo dated it to the sixth, and P. Andrist reports that palaeographers generally follow him",
+      dateCertainty: "disputed",
+      currentLocation:
+        "Bibliotheque nationale de France, Paris. The original is consultable only by special permission; readers are supplied with microfilm",
+      shelfmark: "Grec 9",
+      facsimileUrl: "https://manuscripts.csntm.org/manuscript/Group/GA_04",
+    },
+    citations: [
+      {
+        tier: "scholarly",
+        label: "C. R. Gregory, Textkritik des Neuen Testamentes, volume 1",
+        url: "https://archive.org/details/textkritikdesneu0001greg",
+        credit: "Caspar Rene Gregory",
+        detail:
+          "Leipzig, 1900, p. 42; public domain. Gregory names Fleck as the requester, Hase as the permitting librarian and Simonin as the applier, in 1834, and says the charge has been laid against Tischendorf \"falschlich\" - wrongly. The passage quoted here is translated from his German",
+        supports: "That Tischendorf did not apply the reagent, and who did",
+      },
+      {
+        tier: "scholarly",
+        label: "F. Albrecht, \"Between Boon and Bane: The Use of Chemical Reagents in Palimpsest Research in the Nineteenth Century\"",
+        credit: "Felix Albrecht",
+        detail:
+          "In M. J. Driscoll (ed.), Care and Conservation of Manuscripts 13 (Copenhagen: Museum Tusculanum Press, 2012), 147-165. Gives the composition of the Giobert tincture, names this codex as \"a sad example of its use\", and illustrates the damage from folio 58 of this manuscript. No URL is given: the copy this project could reach is on a site that refused access when the link was checked",
+        supports: "What the reagent was, and what it did to this book",
+      },
+      {
+        tier: "institution",
+        label: "Bibliotheque nationale de France, Grec 9",
+        credit: "Bibliotheque nationale de France, Paris",
+        detail:
+          "The holding library, which dates the upper script to the thirteenth century and the lower to the fifth and restricts consultation of the original. No URL is given because the BnF's Gallica service refused every automated request from this project and served a bot-verification challenge to a browser as well, so no link could be confirmed by opening it; the library's digitisation does exist and a reader in an ordinary browser should reach it",
+        supports: "The shelfmark, the two dates, and the access restriction",
+      },
+      {
+        tier: "institution",
+        label: "CSNTM: Manuscript GA 04",
+        url: "https://manuscripts.csntm.org/manuscript/Group/GA_04",
+        credit: "Center for the Study of New Testament Manuscripts",
+        detail:
+          "Free page images, re-served from the Bibliotheque nationale's own digitisation and credited to it. CSNTM's record gives the shelf number as Gr. 9, the date as fifth century, and the extent as 145 leaves with 41-44 lines per column",
+        supports: "Page images and the physical description",
+      },
+      {
+        tier: "encyclopedic",
+        label: "Wikipedia: Codex Ephraemi Rescriptus",
+        url: "https://en.wikipedia.org/wiki/Codex_Ephraemi_Rescriptus",
+      },
+    ],
+    reflectionPrompt:
+      "Someone tried to recover this text and destroyed part of it in the attempt, meaning well. Where might your urgency to get at something be costing the thing itself?",
+  },
+  {
+    id: "oxyrhynchus-papyri",
+    name: "Oxyrhynchus Papyri",
+    matchNames: ["Oxyrhynchus papyrus", "Oxyrhynchus finds", "Oxyrhynchus collection", "Oxyrhynchus Papyrus"],
+    category: "manuscript",
+    role: "Half a Million Fragments From an Egyptian Rubbish Heap",
+    summary:
+      "Two Oxford classicists spent eleven winters digging the rubbish mounds of a provincial Egyptian town, and recovered more early copies of the New Testament than any other site on earth — most of them still unpublished.",
+    sections: [
+      {
+        heading: "The Rubbish Mounds",
+        paragraphs: [
+          "Oxyrhynchus was an ordinary Greek-speaking town in Middle Egypt, on a canal off the Nile, known today as el-Bahnasa. Its distinction is that it is dry, and that for a thousand years its inhabitants carried their waste out beyond the houses and piled it up. Paper in that town was papyrus, and papyrus thrown on a dry heap does not rot. In the winter of 1896-97 B. P. Grenfell and A. S. Hunt, two young Oxford classicists working for the Egypt Exploration Fund, began digging those heaps. The project's own account is unromantic about what they found: \"What Grenfell and Hunt found was the rubbish of Oxyrhynchus, which had been carried out and piled into a heap until it became more convenient to start another heap elsewhere, and so on.\"",
+          "They dug there over six seasons between 1896 and 1907, and the Egypt Exploration Society, which still owns the collection, describes it as \"over 500,000 fragments... dating from the third century BC to the seventh century AD\". They are tax returns, private letters, contracts, shopping lists, school exercises, lost plays, and scripture. About six thousand texts have been published in the volumes of The Oxyrhynchus Papyri - the eighty-eighth appeared in 2025, at roughly one a year - which means that after a hundred and twenty-five years the great majority of the find has still never been read by anyone. The collection is housed at Oxford, in what was until recently the Sackler Library and is now the Bodleian Art, Archaeology and Ancient World Library.",
+          "On the second day of digging they found the piece that made the site famous. It was a page from a papyrus book carrying sayings of Jesus that were not in the Gospels, and they rushed it into print in 1897, a year ahead of the first volume. Grenfell and Hunt took it for an independent collection of sayings, possibly first-century. The project's own history records the outcome carefully: \"Later research has identified the text as from the apocryphal Gospel of Thomas, known from a Coptic version.\" Two more fragments of the same work turned up in the fourth volume.",
+        ],
+      },
+      {
+        heading: "What It Gave the New Testament",
+        paragraphs: [
+          "No other place has produced anything like as many early copies of the New Testament. A great many of the catalogued New Testament papyri come from this one rubbish heap, and the earliest fragments of several books are among them. P1 is a leaf of Matthew, P.Oxy. 2, published in the very first volume. P5 is John, P13 is Hebrews, P77 is Matthew again. P90 preserves John 18:36-19:7 and was edited by T. C. Skeat, who called it \"unusually early in date (second century AD)\". P104 carries a few verses of Matthew 21 and is assigned to the late second century. P137 is the small fragment of Mark that was announced for years as first-century and published in 2018 as late second or early third.",
+          "The most striking single reading came in P115, a papyrus of Revelation edited by J. Chapa. At Revelation 13:18 it gives the number of the beast not as 666 but as 616. The reading was already known to exist - Irenaeus mentions it in the second century in order to reject it - but here it is in a manuscript, and, as Oxford's own note on the papyrus puts it, \"this is the earliest instance that has so far been found.\" That is a good illustration of what this material does: it does not overturn the text, and it does not leave it unchanged either. It shows a real variant, already known from a Church Father's complaint about it, actually written down by a scribe.",
+        ],
+      },
+      {
+        heading: "Two Kinds of Honesty This Site Demands",
+        paragraphs: [
+          "The first is about dates. Almost every date attached to these papyri rests on handwriting alone, because a literary papyrus carries no year. B. Nongbri has pressed the methodological point hardest, and it is worth stating in his own terms: this kind of dating \"cannot reliably produce such a narrow window of possible dates for Greek literary writing of the Roman era\", and \"Date ranges of more than a century are sensible when attempting to establish dates for Greek literary manuscripts of the Roman period solely on paleographic grounds.\" His sharpest objection concerns codices specifically: \"the pool of securely dated or datable samples of literary writing contains almost no codices\" - and every New Testament papyrus is a codex. He is not alone in resisting early dates, and not everyone who resists them agrees with him: P. Orsini and W. Clarysse defend comparative palaeography as a method while concluding that \"There are no first-century New Testament papyri and only very few papyri can be attributed to the (second half of the) second century.\" The editors of P137 were candid about their own difficulty: \"Dating this hand presents even more difficulties than usual, since the sample is so small and damaged and the scribe inconsistent.\"",
+          "The second is about ownership. Since 2019 the Egypt Exploration Society has published a series of statements about papyri removed from its collection without authorisation and sold on. It has recovered thirteen items identified in 2019 and twenty-one more in 2020, all returned by the Museum of the Bible, which had bought them from Hobby Lobby. The Society has named Professor Dirk Obbink, formerly one of the general editors of the series, in connection with those sales; he was arrested in 2020 on suspicion of theft and fraud and released under investigation, and he has publicly and categorically denied the allegations. No charging decision has ever been publicly reported, and the only judgment against him is a civil default judgment in the United States, which he did not contest and which therefore decided nothing on the merits. The Society's own most recent word, an update dated 24 July 2025, says that \"Thames Valley Police is continuing its investigation into the removal of papyri from the EES collection\". The honest statement is that the matter is unresolved.",
+          "Both of these bear on how a reader should hold this material. A collection of half a million fragments, mostly unread, in the care of a scholarly society and a university, is an extraordinary inheritance - and it is being published slowly, argued over publicly, and policed imperfectly by people who are still working out how to do it. That is what real evidence looks like while it is still being handled. The Society's own statement in 2019 about what remains unpublished is the right note to end on: \"Some twenty New Testament inedita have been identified, none of them apparently earlier than the late 2nd to early 3rd century AD.\" No first-century Gospel is waiting in the boxes.",
+        ],
+      },
+    ],
+    verses: [
+      { reference: "Revelation 13:18", note: "P115 gives the number as 616 here, the earliest manuscript instance of that reading" },
+      { reference: "John 18:36", note: "Where the text of P90 begins" },
+      { reference: "Matthew 21:34", note: "Among the few verses preserved by P104" },
+      { reference: "Mark 1:7", note: "One side of P137, the fragment announced as first-century and published as later" },
+    ],
+    sources: [
+      { label: "The Oxyrhynchus Papyri, University of Oxford", url: "https://oxyrhynchus.web.ox.ac.uk/introduction" },
+      { label: "Egypt Exploration Society: The Oxyrhynchus Papyri", url: "https://www.ees.ac.uk/collections/papyri.html" },
+      { label: "A. Luijendijk and B. Nongbri, \"Christian Papyri from Oxyrhynchus\"", url: "https://dlib.nyu.edu/awdl/isaw/isaw-papers/29-3/" },
+    ],
+    manuscript: {
+      siglum: "P.Oxy. — a running series of numbers, now past 5,000",
+      manuscriptType:
+        "Papyrus and parchment fragments of every kind, literary and documentary: rolls, codex leaves, scraps. Most are very small",
+      language: "Mostly Greek; also Latin, Coptic, Hebrew, Arabic and Egyptian scripts",
+      contents:
+        "Over 500,000 fragments from the third century BC to the seventh century AD, of which about 6,000 have been published. Documentary texts vastly outnumber literary ones. Among them are more early New Testament papyri than from any other site, and the Greek fragments of the Gospel of Thomas",
+      origin: "Oxyrhynchus itself, and its rubbish",
+      findSite: "The ancient rubbish mounds of Oxyrhynchus, modern el-Bahnasa, Middle Egypt",
+      foundYear: "Excavated over six seasons between the winter of 1896-97 and 1907",
+      foundBy: "B. P. Grenfell and A. S. Hunt, for the Egypt Exploration Fund, now the Egypt Exploration Society",
+      dateAssigned:
+        "Third century BC to the seventh century AD across the collection. Individual literary pieces are dated by handwriting alone, which is why several of the New Testament dates are contested",
+      dateCertainty: "disputed",
+      currentLocation:
+        "The Egypt Exploration Society's collection, housed in the Bodleian Art, Archaeology and Ancient World Library, Oxford - formerly the Sackler Library. Papyri distributed by the Society in the early years are in institutions worldwide",
+      shelfmark: "P.Oxy. numbers, plus inventory numbers of the form 101/14(b)",
+      facsimileUrl: "https://www.sds.ox.ac.uk/oxyrhynchus-papyri",
+    },
+    citations: [
+      {
+        tier: "institution",
+        label: "The Oxyrhynchus Papyri, University of Oxford: Introduction and Publications",
+        url: "https://oxyrhynchus.web.ox.ac.uk/introduction",
+        credit: "The Oxyrhynchus Papyri project, University of Oxford",
+        detail:
+          "The project's own history, by John Rea. Source of the modern name el-Bahnasa, the 1896-97 season, the description of the rubbish mounds, the second-day discovery of the sayings of Jesus and its later identification as the Gospel of Thomas. The publications page gives volume LXXXVIII (2025) as the latest and about one volume a year. The older POxy site at papyrology.ox.ac.uk now redirects here and its https address does not resolve",
+        supports: "The excavation, the site, and P.Oxy. 1",
+      },
+      {
+        tier: "institution",
+        label: "Egypt Exploration Society: The Oxyrhynchus Papyri",
+        url: "https://www.ees.ac.uk/collections/papyri.html",
+        credit: "The Egypt Exploration Society, London",
+        detail:
+          "The owning society's own page: \"over 500,000 fragments... dating from the third century BC to the seventh century AD\", about 6,000 published, six excavation seasons 1896-1907. Its separate statement of 26 February 2021, updated 24 July 2025, is the source for the recoveries and the current status of the police investigation",
+        supports: "The size of the collection, and the ownership dispute",
+      },
+      {
+        tier: "scholarly",
+        label: "A. Luijendijk and B. Nongbri, \"Christian Papyri from Oxyrhynchus\"",
+        url: "https://dlib.nyu.edu/awdl/isaw/isaw-papers/29-3/",
+        credit: "AnneMarie Luijendijk and Brent Nongbri",
+        detail:
+          "ISAW Papers 29.3 (2025), open access under CC BY and read in full. Gives the independent estimate of the collection's size, the figure of roughly six thousand published texts, and quotes the Egypt Exploration Society's March 2019 statement that \"Some twenty New Testament inedita have been identified, none of them apparently earlier than the late 2nd to early 3rd century AD\"",
+        supports: "The published proportion, and what remains unpublished",
+      },
+      {
+        tier: "scholarly",
+        label: "B. Nongbri, \"Palaeographic Analysis of Codices from the Early Christian Period: A Point of Method\"",
+        url: "https://brentnongbri.com/wp-content/uploads/2024/12/nongbri-palaeography-and-codices-jsnt-2019.pdf",
+        credit: "Brent Nongbri, Macquarie University",
+        detail:
+          "Journal for the Study of the New Testament 42:1 (2019), 84-97; the author's own free copy, read in full. Source of the argument about codices quoted here. His earlier statements about date ranges are quoted from his article in the Journal of Biblical Literature 135 (2016), also read in full",
+        supports: "The methodological objection to narrow palaeographic dates",
+      },
+      {
+        tier: "primary",
+        label: "B. P. Grenfell and A. S. Hunt, The Oxyrhynchus Papyri, Part I",
+        url: "https://archive.org/details/oxyrhynchuspapyr01gren",
+        credit: "Bernard P. Grenfell and Arthur S. Hunt",
+        detail:
+          "London: Egypt Exploration Fund, 1898. Public domain and freely readable at the Internet Archive; the first volume of the series, containing P.Oxy. 1 and the leaf of Matthew catalogued as P1",
+        supports: "The first publication of the earliest finds",
+      },
+      {
+        tier: "encyclopedic",
+        label: "Wikipedia: Oxyrhynchus Papyri",
+        url: "https://en.wikipedia.org/wiki/Oxyrhynchus_Papyri",
+      },
+    ],
+    reflectionPrompt:
+      "Almost everything we have of this town survives because nobody thought it worth keeping. What are you throwing out that someone might one day need?",
   },
 ];

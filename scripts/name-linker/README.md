@@ -2,7 +2,7 @@
 
 `src/lib/verseAnnotations.ts` decides which words in the Bible text — and in every article the app
 has ever written — become links to a person, place or topic. It renders **9,724 person-links across
-Scripture and 6,214 across the app's own prose**. Until this directory existed it had no tests at
+Scripture and 6,294 across the app's own prose**. Until this directory existed it had no tests at
 all, and a one-line data edit could move hundreds of them with nobody noticing.
 
     npm run test:linker
@@ -91,13 +91,13 @@ purpose and is written up in `reviewed.tsv`'s header.
 | file | rows | what it holds |
 |---|---:|---|
 | `bible-links.tsv` | 9,724 | every person-link in all 31,098 WEB verses, with the id each rendering path gives it |
-| `prose-links.tsv` | 6,214 | every person-link in every authored prose block the app puts through `LinkedVerseText` |
-| `key-totals.tsv` | 3,987 | a tally covering **every** kind — location, POI, topic, timeline, verse reference — one row per (kind, matched text, id, path) |
+| `prose-links.tsv` | 6,294 | every person-link in every authored prose block the app puts through `LinkedVerseText` |
+| `key-totals.tsv` | 4,027 | a tally covering **every** kind — location, POI, topic, timeline, verse reference — one row per (kind, matched text, id, path) |
 
 The first two are row-level, so a diff names the verse or the block. `key-totals.tsv` exists because
 the other two only record **people**: a change to `people.ts` can steal a key from a location, and
 adding one POI alternate name can start firing hundreds of links that no person snapshot would ever
-show. Its 3,987 rows currently break down as 2,304 verse references, 733 person, 386 location, 354
+show. Its 4,027 rows currently break down as 2,324 verse references, 733 person, 386 location, 374
 topic, 131 POI and 79 timeline.
 
 This is the half that catches what you did not think to assert. The named cases cover a few dozen
@@ -181,9 +181,9 @@ you rename a data field, grep `corpus.mjs` for the old name.** The blocks curren
 | `timelineEvents.ts` — article paragraphs, datingNotes | 1,338 |
 | `bookIntros.ts` — whyWritten, summary, manuscripts | 607 |
 | `locations.ts` — history fields, notable facts, archaeology note | 724 |
-| `topics.ts` — section paragraphs | 1,028 |
+| `topics.ts` — section paragraphs | 1,129 |
 | `pois.ts` — description, archaeology note | 202 |
-| **total** | **5,396** |
+| **total** | **5,497** |
 
 `MyProfileView` also renders through `LinkedVerseText`, and is deliberately **not** here: what it
 passes is the user's own typed favourite-verse text, not authored content, so there is nothing to
@@ -197,7 +197,7 @@ snapshot.
 `LinkedVerseText` is what PersonPanel, LocationPanel, PoiPanel, TopicPanel, BookIntroView,
 TimelineEventPanel and MyProfileView render with. Every book override, verse override and
 suppression in `verseAnnotations.ts` is invisible there. **835 links across 745 verses resolve
-differently between the two paths**, and all but a handful of the 6,214 prose links run with no
+differently between the two paths**, and all but a handful of the 6,294 prose links run with no
 disambiguation at all — `OWNER_NAME_OVERRIDES` (below) is the only correction that reaches them. A
 fix that only moves the `reader` column has fixed half the app.
 
@@ -269,9 +269,9 @@ scoping document twice. **Run it before claiming a change fixes N links.**
 - **Any prose surface not listed in `loadProseBlocks()`.** That list is hand-maintained; see above.
 - **Five fields that are links on the PUBLIC pages and plain text in the app.** `scripts/seo/render.mjs`
   puts `person.summary`, `person.occupation`, `topic.summary`, `timelineEvent.summary` and
-  `location.rulers[].name` through the same linker when it generates the ~970 pre-rendered pages.
+  `location.rulers[].name` through the same linker when it generates the ~985 pre-rendered pages.
   The app renders all five as plain text, so `loadProseBlocks()` correctly does not enumerate them
-  and none of the three snapshots covers a single one — 949 blocks that a stranger can read on
+  and none of the three snapshots covers a single one — 961 blocks that a stranger can read on
   capstonebible.com and that nothing here measures. `modern-names.mjs` sweeps them (its
   `seoOnlyBlocks()`), which is how the wrong `Hoshea` on the fall-of-Samaria summary was found, but
   that is a sweep for one shape, not a snapshot. Snapshotting them properly is worth doing and is

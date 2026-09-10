@@ -1614,4 +1614,44 @@ export const CASES = [
     status: "guard",
     why: "Read on a foreign owner so the self-link exclusion does not mask it. Without the " +
          "matchName this resolves to the-temple." },
+
+  // ─────────────────────────────────────────────────────────────────────────────────────────────
+  // MANUSCRIPT SIGLA, and one scholar's name inside a quotation. Added with the papyri-and-uncials
+  // batch, 2026-09-10.
+  //
+  // The 66 book introductions write these papyri as "Papyrus 46 (P46)", and both halves are
+  // registered names of the same record. Without the rules in NAME_CONTEXT_RULES the reader gets
+  // two adjacent links to the same article. The pins suppress the bracketed siglum and leave the
+  // longer form linked; these cases are the only thing that would notice if either half moved.
+  { text: "Papyrus 46 (P46), the Chester Beatty biblical papyrus dated to roughly around AD 200, " +
+          "is the earliest substantial manuscript of the Pauline letters",
+    surface: "Papyrus 46", owner: "book-intro:Romans", expect: "chester-beatty-papyri",
+    status: "guard",
+    why: "The expanded form carries the link. Registered as a matchName on the Chester Beatty " +
+         "record because P46 is one codex of eleven — it is not an \"also called\" for the group." },
+  { text: "Papyrus 46 (P46), the Chester Beatty biblical papyrus dated to roughly around AD 200, " +
+          "is the earliest substantial manuscript of the Pauline letters",
+    surface: "P46", owner: "book-intro:Romans", expect: null, status: "guard",
+    why: "The bracketed siglum immediately after its own expanded name. Suppressed so the sentence " +
+         "renders one link and not two. If this starts resolving, the book introductions have " +
+         "gone back to double-linking nine of their fourteen P46 mentions." },
+  { text: "Significantly, the words 'in Ephesus' in the opening verse are absent from several of " +
+          "the earliest and most important witnesses, including P46 and the original hands of " +
+          "Codex Sinaiticus and Codex Vaticanus",
+    surface: "P46", owner: "book-intro:Ephesians", expect: "chester-beatty-papyri", status: "guard",
+    why: "KEPT. A BARE siglum, not preceded by its expanded name, so the pin must not reach it. " +
+         "This is the half that a rule keyed on anything looser than the exact phrase breaks." },
+  { text: "The story of the woman caught in adultery (traditionally John 7:53-8:11) is absent " +
+          "from the earliest and best manuscripts, including P66, P75, Sinaiticus, and Vaticanus",
+    surface: "P75", owner: "book-intro:John", expect: "papyrus-75", status: "guard",
+    why: "KEPT, in the same shape as the Ephesians case and for the same reason." },
+  // A living New Testament scholar's forename, inside a sentence quoted verbatim from the Egypt
+  // Exploration Society. The article's own prose writes him "D. B. Wallace" per the house rule
+  // that scholars get initials, which fixed every other occurrence; a quotation cannot be
+  // reworded to suit the linker, so this one is pinned on the phrase.
+  { text: "The EES has no knowledge of, and has never seen, the NDA which Professor Daniel " +
+          "Wallace says someone required him to sign about the unpublished Mark fragment.",
+    surface: "Daniel", owner: "papyrus-137-first-century-mark", expect: null, status: "guard",
+    why: "Daniel B. Wallace of Dallas Theological Seminary, not the prophet. Found by " +
+         "modern-names.mjs on the commit that added the article, which is what that sweep is for." },
 ];

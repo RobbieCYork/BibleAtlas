@@ -1521,8 +1521,10 @@ const NAME_CONTEXT_RULES: Record<string, NameContextRule[]> = {
   // reach every "Simon Peter", "Mary Magdalene" and "James the son of Zebedee" in Scripture.
   thomas: [
     // More and Cromwell (Henry VIII's court), Clarkson (abolition), Thompson (the Nuzi parallels),
-    // and St Thomas Bay, which is a place in Malta rather than a man at all.
-    { after: /^\s+(?:More|Cromwell|Clarkson|Thompson|Bay)\b/, to: null },
+    // and St Thomas Bay, which is a place in Malta rather than a man at all. Roe is Sir Thomas Roe,
+    // James I's ambassador to the Porte, who carried Codex Alexandrinus to England — added with the
+    // papyri-and-uncials batch, 2026-09-10, and found by modern-names.mjs on that commit.
+    { after: /^\s+(?:More|Cromwell|Clarkson|Thompson|Bay|Roe)\b/, to: null },
   ],
   peter: [
     // Abelard, Faber (a founding Jesuit), Flint (a Dead Sea Scrolls scholar).
@@ -1590,6 +1592,26 @@ const NAME_CONTEXT_RULES: Record<string, NameContextRule[]> = {
     { phrase: "Has King David's Palace in Jerusalem been Found?", to: null },
   ],
   salome: [{ after: /^\s+Alexandra\b/, to: null }],   // the Hasmonean queen, not Jesus's follower
+
+  // ── A MANUSCRIPT SIGLUM INSIDE ITS OWN EXPANDED NAME LINKS ONCE, NOT TWICE ──────────────────
+  //
+  // The 66 book introductions write these papyri as "Papyrus 46 (P46)" — eighteen times across
+  // the manuscripts field. Both halves are registered names of the same record, and the matcher
+  // is non-overlapping and left-to-right, so without these rules the reader gets two adjacent
+  // links to the same article: "Papyrus 46 (P46)". Suppressing the parenthesised siglum keeps the
+  // longer, more readable form as the link and loses nothing — the record is still reachable from
+  // that sentence, and every BARE "P46" in the same paragraphs still links.
+  //
+  // Pinned one name at a time, keyed on the exact expanded form, for the same reason the modern
+  // work titles below are: nothing in the surrounding words says "this is a siglum in brackets",
+  // and a rule general enough to spot that would reach far past these six.
+  p45: [{ before: /\bPapyrus 45 \($/, to: null }],
+  p46: [{ before: /\bPapyrus 46 \($/, to: null }],
+  p47: [{ before: /\bPapyrus 47 \($/, to: null }],
+  p66: [{ before: /\bPapyrus 66 \($/, to: null }],
+  p72: [{ before: /\bPapyrus 72 \($/, to: null }],
+  p75: [{ before: /\bPapyrus 75 \($/, to: null }],
+
   felix: [{ after: /^\s+Gemina\b/, to: null }],       // "Colonia Iulia Felix Gemina Lystra" — a title
 
   // Roman name-chains. A full imperial name is several registered names in a row, so each piece was
@@ -1661,6 +1683,13 @@ const NAME_CONTEXT_RULES: Record<string, NameContextRule[]> = {
     BOOK_OF, // "The book of Daniel is set almost entirely within Nebuchadnezzar's Babylon"
     QUMRAN_BEFORE, // "The Qumran Daniel manuscripts preserve the book's distinctive Hebrew–Aramaic"
     // "Daniel's visions", "Daniel's account" keep their links — the man seeing and the man telling.
+    // A living New Testament scholar, inside a sentence the app quotes verbatim from the Egypt
+    // Exploration Society's statement of 4 June 2018 in `papyrus-137-first-century-mark`. The
+    // article's own prose writes him "D. B. Wallace", per the house rule that scholars get
+    // initials, and that fixed every other occurrence — but a quotation may not be reworded to
+    // suit the linker, so this one is pinned on the phrase. Same mechanism, and same reason, as
+    // the quoted ossuary readings in `talpiot-tomb`: the words are someone else's.
+    { phrase: "Professor Daniel Wallace", to: null },
   ],
   enoch: [
     BOOK_NUMERAL, // "1 Enoch, a Jewish apocalyptic writing outside the biblical canon"
