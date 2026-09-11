@@ -37,10 +37,20 @@ compile.
 
 It is the `--noEmit` trap from the other side: that one type-checks without
 building, this one builds without type-checking. Neither tells you the app
-compiles. A green `cases:` line and three unchanged snapshots mean the linker
+compiles. A green `cases:` line and four unchanged snapshots mean the linker
 still resolves names the way it did — a real and valuable thing to know, and
 not this one. Read the count off the run, never off a document; the one that
 used to sit here had drifted by two hundred.
+
+**Four, since 2026-09-10, and the fourth is the whole point of it.**
+`snapshot/bible-links.tsv` covers the World English Bible, and `BiblePanel` also
+offers the KJV and the ASV. For two of the three translations a reader can
+select, `snapshot/bible: unchanged` was no evidence whatever — which is how
+"Judaea" went unregistered and KJV and ASV readers silently lost all 85 Judea
+links in Scripture while WEB readers kept every one.
+`snapshot/translation-divergence.tsv`, plus the `reader:kjv` and `reader:asv`
+paths in `key-totals.tsv`, close that. **Never report a green Bible snapshot as
+though it said anything about the KJV or the ASV.**
 
 Both, in that order, every time you touch `verseAnnotations.ts` or the data
 files feeding it:

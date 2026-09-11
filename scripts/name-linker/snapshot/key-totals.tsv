@@ -1,642 +1,1068 @@
 location	achaia	achaia	panel	11
 location	achaia	achaia	prose	14
 location	achaia	achaia	reader	11
+location	achaia	achaia	reader:asv	10
+location	achaia	achaia	reader:kjv	11
 location	ai	ai	panel	37
 location	ai	ai	prose	21
 location	ai	ai	reader	37
+location	ai	ai	reader:asv	37
+location	ai	ai	reader:kjv	36
 location	alexandria	alexandria	panel	2
 location	alexandria	alexandria	prose	38
 location	alexandria	alexandria	reader	2
+location	alexandria	alexandria	reader:asv	2
+location	alexandria	alexandria	reader:kjv	3
 location	alexandria troas	troas	prose	2
 location	ammon	ammon	panel	106
 location	ammon	ammon	prose	10
 location	ammon	ammon	reader	106
+location	ammon	ammon	reader:asv	106
+location	ammon	ammon	reader:kjv	91
 location	antioch	antioch-syria	panel	18
 location	antioch	antioch-syria	prose	40
 location	antioch	antioch-syria	reader	18
+location	antioch	antioch-syria	reader:asv	18
+location	antioch	antioch-syria	reader:kjv	19
 location	antioch of pisidia	antioch-pisidia	panel	1
 location	antioch of pisidia	antioch-pisidia	reader	1
+location	antioch of pisidia	antioch-pisidia	reader:asv	1
 location	ashdod	ashdod	panel	21
 location	ashdod	ashdod	prose	2
 location	ashdod	ashdod	reader	21
+location	ashdod	ashdod	reader:asv	21
+location	ashdod	ashdod	reader:kjv	21
 location	ashkelon	ashkelon	panel	12
 location	ashkelon	ashkelon	prose	5
 location	ashkelon	ashkelon	reader	12
+location	ashkelon	ashkelon	reader:asv	12
+location	ashkelon	ashkelon	reader:kjv	9
 location	asia	asia-province	panel	19
 location	asia	asia-province	prose	17
 location	asia	asia-province	reader	19
+location	asia	asia-province	reader:asv	20
+location	asia	asia-province	reader:kjv	21
 location	asia minor	asia-province	prose	18
 location	athens	athens	panel	5
 location	athens	athens	prose	25
 location	athens	athens	reader	5
+location	athens	athens	reader:asv	5
+location	athens	athens	reader:kjv	5
 location	azotus	ashdod	panel	1
 location	azotus	ashdod	prose	2
 location	azotus	ashdod	reader	1
+location	azotus	ashdod	reader:asv	1
+location	azotus	ashdod	reader:kjv	1
 location	azzah	gaza	panel	1
 location	azzah	gaza	reader	1
+location	azzah	gaza	reader:asv	1
+location	azzah	gaza	reader:kjv	3
 location	babel	babylon	panel	2
 location	babel	babylon	prose	12
 location	babel	babylon	reader	2
+location	babel	babylon	reader:asv	2
+location	babel	babylon	reader:kjv	2
 location	babylon	babylon	panel	294
 location	babylon	babylon	prose	126
 location	babylon	babylon	reader	294
+location	babylon	babylon	reader:asv	294
+location	babylon	babylon	reader:kjv	295
 location	be'er sheva	beersheba	prose	1
 location	berea	berea	prose	3
+location	berea	berea	reader:kjv	3
 location	beroea	berea	panel	3
 location	beroea	berea	reader	3
+location	beroea	berea	reader:asv	3
 location	bethany	bethany	panel	11
 location	bethany	bethany	prose	16
 location	bethany	bethany	reader	11
+location	bethany	bethany	reader:asv	10
+location	bethany	bethany	reader:kjv	11
 location	bethlehem	bethlehem	panel	47
 location	bethlehem	bethlehem	prose	86
 location	bethlehem	bethlehem	reader	47
+location	bethlehem	bethlehem	reader:asv	9
+location	bethlehem	bethlehem	reader:kjv	39
 location	bethlehem of judea	bethlehem	panel	2
 location	bethlehem of judea	bethlehem	reader	2
 location	bethphage	bethphage	prose	1
+location	bethphage	bethphage	reader:asv	3
+location	bethphage	bethphage	reader:kjv	3
 location	bithynia	bithynia	panel	2
 location	bithynia	bithynia	prose	5
 location	bithynia	bithynia	reader	2
+location	bithynia	bithynia	reader:asv	2
+location	bithynia	bithynia	reader:kjv	2
 location	cana	cana	panel	4
 location	cana	cana	prose	6
 location	cana	cana	reader	4
+location	cana	cana	reader:asv	4
+location	cana	cana	reader:kjv	4
 location	capernaum	capernaum	panel	16
 location	capernaum	capernaum	prose	23
 location	capernaum	capernaum	reader	16
+location	capernaum	capernaum	reader:asv	16
+location	capernaum	capernaum	reader:kjv	16
 location	cappadocia	cappadocia	panel	2
 location	cappadocia	cappadocia	reader	2
+location	cappadocia	cappadocia	reader:asv	2
+location	cappadocia	cappadocia	reader:kjv	2
 location	cenchreae	cenchreae	panel	2
 location	cenchreae	cenchreae	prose	3
 location	cenchreae	cenchreae	reader	2
+location	cenchreae	cenchreae	reader:asv	2
+location	charran	haran	reader:kjv	2
 location	cilicia	cilicia	panel	8
 location	cilicia	cilicia	prose	6
 location	cilicia	cilicia	reader	8
+location	cilicia	cilicia	reader:asv	8
+location	cilicia	cilicia	reader:kjv	8
 location	city of palms	jericho	prose	1
 location	colossae	colossae	panel	1
 location	colossae	colossae	prose	5
 location	colossae	colossae	reader	1
+location	colossae	colossae	reader:asv	1
 location	corinth	corinth	panel	6
 location	corinth	corinth	prose	62
 location	corinth	corinth	reader	6
+location	corinth	corinth	reader:asv	6
+location	corinth	corinth	reader:kjv	6
 location	crete	crete	panel	5
 location	crete	crete	prose	7
 location	crete	crete	reader	5
+location	crete	crete	reader:asv	5
+location	crete	crete	reader:kjv	5
 location	cyprus	cyprus	panel	8
 location	cyprus	cyprus	prose	38
 location	cyprus	cyprus	reader	8
+location	cyprus	cyprus	reader:asv	8
+location	cyprus	cyprus	reader:kjv	8
 location	cyrene	cyrene	panel	4
 location	cyrene	cyrene	prose	3
 location	cyrene	cyrene	reader	4
+location	cyrene	cyrene	reader:asv	4
+location	cyrene	cyrene	reader:kjv	4
 location	damascus	damascus	panel	61
 location	damascus	damascus	prose	38
 location	damascus	damascus	reader	61
+location	damascus	damascus	reader:asv	60
+location	damascus	damascus	reader:kjv	60
 location	dan	dan	panel	72
 location	dan	dan	prose	16
 location	dan	dan	reader	72
+location	dan	dan	reader:asv	72
+location	dan	dan	reader:kjv	72
 location	dead sea	dead-sea	prose	32
 location	decapolis	decapolis	panel	3
 location	decapolis	decapolis	prose	2
 location	decapolis	decapolis	reader	3
+location	decapolis	decapolis	reader:asv	3
+location	decapolis	decapolis	reader:kjv	3
 location	derbe	derbe	panel	4
 location	derbe	derbe	prose	3
 location	derbe	derbe	reader	4
+location	derbe	derbe	reader:asv	4
+location	derbe	derbe	reader:kjv	4
 location	eastern sea	dead-sea	panel	2
 location	eastern sea	dead-sea	reader	2
+location	eastern sea	dead-sea	reader:asv	2
 location	edom	edom	panel	112
 location	edom	edom	prose	55
 location	edom	edom	reader	101
+location	edom	edom	reader:asv	103
+location	edom	edom	reader:kjv	76
 location	egypt	egypt	panel	618
 location	egypt	egypt	prose	343
 location	egypt	egypt	reader	618
+location	egypt	egypt	reader:asv	623
+location	egypt	egypt	reader:kjv	612
 location	ekron	ekron	panel	22
 location	ekron	ekron	prose	8
 location	ekron	ekron	reader	22
+location	ekron	ekron	reader:asv	22
+location	ekron	ekron	reader:kjv	22
 location	en gedi	en-gedi	panel	6
 location	en gedi	en-gedi	prose	2
 location	en gedi	en-gedi	reader	6
+location	en-mishpat	kadesh-barnea	reader:asv	1
+location	engedi	en-gedi	reader:kjv	6
 location	ephesus	ephesus	panel	17
 location	ephesus	ephesus	prose	48
 location	ephesus	ephesus	reader	17
+location	ephesus	ephesus	reader:asv	18
+location	ephesus	ephesus	reader:kjv	17
 location	ephrathah	bethlehem	panel	6
 location	ephrathah	bethlehem	prose	3
 location	ephrathah	bethlehem	reader	6
+location	ephrathah	bethlehem	reader:asv	6
 location	ethiopia	ethiopia	panel	17
 location	ethiopia	ethiopia	prose	4
 location	ethiopia	ethiopia	reader	17
+location	ethiopia	ethiopia	reader:asv	19
+location	ethiopia	ethiopia	reader:kjv	22
 location	gadara	gadara	prose	1
 location	galatia	galatia	panel	6
 location	galatia	galatia	prose	7
 location	galatia	galatia	reader	6
+location	galatia	galatia	reader:asv	6
+location	galatia	galatia	reader:kjv	6
 location	galilee	galilee	panel	66
 location	galilee	galilee	prose	49
 location	galilee	galilee	reader	66
+location	galilee	galilee	reader:asv	65
+location	galilee	galilee	reader:kjv	66
 location	garden of eden	eden	panel	5
 location	garden of eden	eden	prose	5
 location	garden of eden	eden	reader	5
+location	garden of eden	eden	reader:asv	5
+location	garden of eden	eden	reader:kjv	5
 location	gath	gath	panel	42
 location	gath	gath	prose	17
 location	gath	gath	reader	42
+location	gath	gath	reader:asv	39
+location	gath	gath	reader:kjv	32
 location	gath of the philistines	gath	panel	1
 location	gath of the philistines	gath	reader	1
+location	gath of the philistines	gath	reader:asv	1
+location	gath of the philistines	gath	reader:kjv	1
 location	gaza	gaza	panel	21
 location	gaza	gaza	prose	13
 location	gaza	gaza	reader	21
+location	gaza	gaza	reader:asv	21
+location	gaza	gaza	reader:kjv	19
 location	gennesaret	gennesaret	panel	1
 location	gennesaret	gennesaret	reader	1
+location	gennesaret	gennesaret	reader:asv	2
 location	gibeah	gibeah	panel	39
 location	gibeah	gibeah	prose	4
 location	gibeah	gibeah	reader	39
+location	gibeah	gibeah	reader:asv	39
+location	gibeah	gibeah	reader:kjv	44
 location	gibeah of saul	gibeah	panel	4
 location	gibeah of saul	gibeah	reader	4
+location	gibeah of saul	gibeah	reader:asv	4
+location	gibeah of saul	gibeah	reader:kjv	4
 location	gibeath	gibeah	panel	1
 location	gibeath	gibeah	reader	1
+location	gibeath	gibeah	reader:asv	1
+location	gibeath	gibeah	reader:kjv	1
 location	gibeon	gibeon	panel	37
 location	gibeon	gibeon	prose	10
 location	gibeon	gibeon	reader	37
+location	gibeon	gibeon	reader:asv	37
+location	gibeon	gibeon	reader:kjv	37
 location	gilgal	gilgal	panel	41
 location	gilgal	gilgal	prose	14
 location	gilgal	gilgal	reader	41
+location	gilgal	gilgal	reader:asv	41
+location	gilgal	gilgal	reader:kjv	41
 location	gomorrah	gomorrah	panel	24
 location	gomorrah	gomorrah	prose	14
 location	gomorrah	gomorrah	reader	24
+location	gomorrah	gomorrah	reader:asv	23
+location	gomorrah	gomorrah	reader:kjv	19
 location	goshen	goshen	panel	15
 location	goshen	goshen	prose	13
 location	goshen	goshen	reader	15
+location	goshen	goshen	reader:asv	15
+location	goshen	goshen	reader:kjv	15
+location	hai	ai	reader:kjv	2
 location	haran	haran	panel	22
 location	haran	haran	prose	16
 location	haran	haran	reader	22
+location	haran	haran	reader:asv	22
+location	haran	haran	reader:kjv	19
 location	horeb	mount-sinai	panel	17
 location	horeb	mount-sinai	prose	10
 location	horeb	mount-sinai	reader	17
+location	horeb	mount-sinai	reader:asv	17
+location	horeb	mount-sinai	reader:kjv	17
 location	iconium	iconium	panel	6
 location	iconium	iconium	prose	2
 location	iconium	iconium	reader	6
+location	iconium	iconium	reader:asv	6
+location	iconium	iconium	reader:kjv	6
 location	idumea	edom	prose	3
+location	idumea	edom	reader:kjv	4
 location	jerusalem	jerusalem	panel	813
 location	jerusalem	jerusalem	prose	622
 location	jerusalem	jerusalem	reader	813
+location	jerusalem	jerusalem	reader:asv	811
+location	jerusalem	jerusalem	reader:kjv	816
 location	jezreel	jezreel	panel	36
 location	jezreel	jezreel	prose	13
 location	jezreel	jezreel	reader	36
+location	jezreel	jezreel	reader:asv	36
+location	jezreel	jezreel	reader:kjv	36
 location	joppa	joppa	panel	14
 location	joppa	joppa	prose	9
 location	joppa	joppa	reader	14
+location	joppa	joppa	reader:asv	14
+location	joppa	joppa	reader:kjv	13
 location	jordan river	jordan-river	prose	1
 location	judaea	judea	prose	2
+location	judaea	judea	reader:asv	42
+location	judaea	judea	reader:kjv	43
 location	judea	judea	panel	43
 location	judea	judea	prose	110
 location	judea	judea	reader	43
+location	judea	judea	reader:asv	3
+location	judea	judea	reader:kjv	2
 location	kadesh	kadesh-barnea	panel	18
 location	kadesh	kadesh-barnea	prose	6
 location	kadesh	kadesh-barnea	reader	18
+location	kadesh	kadesh-barnea	reader:asv	28
+location	kadesh	kadesh-barnea	reader:kjv	18
 location	kadesh barnea	kadesh-barnea	panel	10
 location	kadesh barnea	kadesh-barnea	prose	8
 location	kadesh barnea	kadesh-barnea	reader	10
 location	kiriath-arba	hebron	prose	2
+location	kiriath-arba	hebron	reader:asv	9
 location	lachish	lachish	panel	24
 location	lachish	lachish	prose	31
 location	lachish	lachish	reader	24
+location	lachish	lachish	reader:asv	24
+location	lachish	lachish	reader:kjv	24
 location	laish	dan	panel	6
 location	laish	dan	prose	1
 location	laish	dan	reader	6
+location	laish	dan	reader:asv	6
+location	laish	dan	reader:kjv	7
 location	lake of gennesaret	sea-of-galilee	panel	1
 location	lake of gennesaret	sea-of-galilee	prose	1
 location	lake of gennesaret	sea-of-galilee	reader	1
+location	lake of gennesaret	sea-of-galilee	reader:asv	1
+location	lake of gennesaret	sea-of-galilee	reader:kjv	1
 location	land of gennesaret	gennesaret	panel	1
 location	land of gennesaret	gennesaret	reader	1
+location	land of gennesaret	gennesaret	reader:kjv	2
 location	land of rameses	goshen	panel	1
 location	land of rameses	goshen	reader	1
+location	land of rameses	goshen	reader:asv	1
+location	land of rameses	goshen	reader:kjv	1
 location	laodicea	laodicea	panel	6
 location	laodicea	laodicea	prose	3
 location	laodicea	laodicea	reader	6
+location	laodicea	laodicea	reader:asv	6
+location	laodicea	laodicea	reader:kjv	5
 location	leshem	dan	panel	2
 location	leshem	dan	reader	2
+location	leshem	dan	reader:asv	2
+location	leshem	dan	reader:kjv	2
 location	lod	lydda	panel	4
 location	lod	lydda	reader	4
+location	lod	lydda	reader:asv	4
+location	lod	lydda	reader:kjv	4
 location	lydda	lydda	panel	3
 location	lydda	lydda	prose	1
 location	lydda	lydda	reader	3
+location	lydda	lydda	reader:asv	3
+location	lydda	lydda	reader:kjv	3
 location	lystra	lystra	panel	6
 location	lystra	lystra	prose	12
 location	lystra	lystra	reader	6
+location	lystra	lystra	reader:asv	6
+location	lystra	lystra	reader:kjv	6
 location	macedonia	macedonia	panel	26
 location	macedonia	macedonia	prose	14
 location	macedonia	macedonia	reader	26
+location	macedonia	macedonia	reader:asv	26
+location	macedonia	macedonia	reader:kjv	26
 location	malta	malta	panel	1
 location	malta	malta	prose	10
 location	malta	malta	reader	1
+location	melita	malta	reader:asv	1
+location	melita	malta	reader:kjv	1
 location	miletus	miletus	panel	3
 location	miletus	miletus	prose	5
 location	miletus	miletus	reader	3
+location	miletus	miletus	reader:asv	3
+location	miletus	miletus	reader:kjv	2
 location	mizpah	mizpah	panel	44
 location	mizpah	mizpah	prose	7
 location	mizpah	mizpah	reader	44
+location	mizpah	mizpah	reader:asv	40
+location	mizpah	mizpah	reader:kjv	23
 location	mizpeh	mizpah	panel	3
 location	mizpeh	mizpah	reader	3
+location	mizpeh	mizpah	reader:asv	7
+location	mizpeh	mizpah	reader:kjv	23
 location	moab	moab	panel	171
 location	moab	moab	prose	42
 location	moab	moab	reader	171
+location	moab	moab	reader:asv	177
+location	moab	moab	reader:kjv	168
 location	mount ararat	mount-ararat	prose	2
 location	mount carmel	mount-carmel	panel	4
 location	mount carmel	mount-carmel	prose	7
 location	mount carmel	mount-carmel	reader	4
+location	mount carmel	mount-carmel	reader:asv	4
+location	mount carmel	mount-carmel	reader:kjv	4
 location	mount gilboa	mount-gilboa	panel	5
 location	mount gilboa	mount-gilboa	prose	8
 location	mount gilboa	mount-gilboa	reader	5
+location	mount gilboa	mount-gilboa	reader:asv	5
+location	mount gilboa	mount-gilboa	reader:kjv	5
 location	mount moriah	mount-moriah	panel	1
 location	mount moriah	mount-moriah	prose	1
 location	mount moriah	mount-moriah	reader	1
+location	mount moriah	mount-moriah	reader:asv	1
+location	mount moriah	mount-moriah	reader:kjv	1
 location	mount nebo	mount-nebo	panel	2
 location	mount nebo	mount-nebo	prose	3
 location	mount nebo	mount-nebo	reader	2
+location	mount nebo	mount-nebo	reader:asv	2
+location	mount nebo	mount-nebo	reader:kjv	1
+location	mount of god	mount-sinai	reader:asv	3
+location	mount of god	mount-sinai	reader:kjv	4
 location	mount of olives	mount-of-olives	panel	12
 location	mount of olives	mount-of-olives	prose	18
 location	mount of olives	mount-of-olives	reader	12
+location	mount of olives	mount-of-olives	reader:asv	12
+location	mount of olives	mount-of-olives	reader:kjv	13
 location	mountains of ararat	mount-ararat	prose	3
+location	mountains of ararat	mount-ararat	reader:asv	1
+location	mountains of ararat	mount-ararat	reader:kjv	1
 location	nain	nain	panel	1
 location	nain	nain	reader	1
+location	nain	nain	reader:asv	1
+location	nain	nain	reader:kjv	1
 location	nazareth	nazareth	panel	12
 location	nazareth	nazareth	prose	48
 location	nazareth	nazareth	reader	12
+location	nazareth	nazareth	reader:asv	12
+location	nazareth	nazareth	reader:kjv	12
 location	nineveh	nineveh	panel	19
 location	nineveh	nineveh	prose	47
 location	nineveh	nineveh	reader	19
+location	nineveh	nineveh	reader:asv	19
+location	nineveh	nineveh	reader:kjv	18
 location	pamphylia	pamphylia	panel	5
 location	pamphylia	pamphylia	prose	2
 location	pamphylia	pamphylia	reader	5
+location	pamphylia	pamphylia	reader:asv	5
+location	pamphylia	pamphylia	reader:kjv	5
 location	patmos	patmos	panel	1
 location	patmos	patmos	prose	7
 location	patmos	patmos	reader	1
+location	patmos	patmos	reader:asv	1
+location	patmos	patmos	reader:kjv	1
 location	peniel	peniel	panel	2
 location	peniel	peniel	prose	1
 location	peniel	peniel	reader	2
+location	peniel	peniel	reader:asv	1
+location	peniel	peniel	reader:kjv	1
 location	penuel	peniel	panel	7
 location	penuel	peniel	reader	7
+location	penuel	peniel	reader:asv	8
+location	penuel	peniel	reader:kjv	8
 location	pergamon	pergamum	prose	1
 location	pergamum	pergamum	panel	2
 location	pergamum	pergamum	prose	2
 location	pergamum	pergamum	reader	2
+location	pergamum	pergamum	reader:asv	2
 location	philadelphia	philadelphia-asia	panel	2
 location	philadelphia	philadelphia-asia	prose	4
 location	philadelphia	philadelphia-asia	reader	2
+location	philadelphia	philadelphia-asia	reader:asv	2
+location	philadelphia	philadelphia-asia	reader:kjv	2
 location	philippi	philippi	panel	4
 location	philippi	philippi	prose	20
 location	philippi	philippi	reader	4
+location	philippi	philippi	reader:asv	4
+location	philippi	philippi	reader:kjv	4
 location	phrygia	phrygia	panel	3
 location	phrygia	phrygia	prose	6
 location	phrygia	phrygia	reader	3
+location	phrygia	phrygia	reader:asv	3
+location	phrygia	phrygia	reader:kjv	3
 location	pisidian antioch	antioch-pisidia	prose	4
 location	pontus	pontus	panel	3
 location	pontus	pontus	prose	6
 location	pontus	pontus	reader	3
+location	pontus	pontus	reader:asv	3
+location	pontus	pontus	reader:kjv	3
 location	puteoli	puteoli	panel	1
 location	puteoli	puteoli	prose	3
 location	puteoli	puteoli	reader	1
+location	puteoli	puteoli	reader:asv	1
+location	puteoli	puteoli	reader:kjv	1
 location	rabbah	rabbah	panel	15
 location	rabbah	rabbah	prose	7
 location	rabbah	rabbah	reader	15
+location	rabbah	rabbah	reader:asv	15
+location	rabbah	rabbah	reader:kjv	12
+location	rabbah of the ammonites	rabbah	reader:kjv	1
 location	rabbath-ammon	rabbah	prose	5
 location	ramah	ramah	panel	37
 location	ramah	ramah	prose	8
 location	ramah	ramah	reader	37
+location	ramah	ramah	reader:asv	38
+location	ramah	ramah	reader:kjv	36
+location	ramathaim-zophim	ramah	reader:asv	1
 location	red sea	red-sea	panel	26
 location	red sea	red-sea	prose	12
 location	red sea	red-sea	reader	26
+location	red sea	red-sea	reader:asv	26
+location	red sea	red-sea	reader:kjv	28
 location	region of the gerasenes	gadara	prose	1
 location	roman province of asia	asia-province	prose	3
 location	rome	rome	panel	9
 location	rome	rome	prose	290
 location	rome	rome	reader	9
+location	rome	rome	reader:asv	9
+location	rome	rome	reader:kjv	9
 location	salt sea	dead-sea	panel	9
 location	salt sea	dead-sea	prose	1
 location	salt sea	dead-sea	reader	9
+location	salt sea	dead-sea	reader:asv	9
+location	salt sea	dead-sea	reader:kjv	9
 location	samaria	samaria	panel	122
 location	samaria	samaria	prose	58
 location	samaria	samaria	reader	122
+location	samaria	samaria	reader:asv	122
+location	samaria	samaria	reader:kjv	124
 location	sardis	sardis	panel	3
 location	sardis	sardis	prose	8
 location	sardis	sardis	reader	3
+location	sardis	sardis	reader:asv	3
+location	sardis	sardis	reader:kjv	3
 location	sea of galilee	sea-of-galilee	panel	5
 location	sea of galilee	sea-of-galilee	prose	47
 location	sea of galilee	sea-of-galilee	reader	5
+location	sea of galilee	sea-of-galilee	reader:asv	5
+location	sea of galilee	sea-of-galilee	reader:kjv	5
 location	sea of reeds	red-sea	prose	1
 location	sea of the arabah	dead-sea	panel	5
 location	sea of the arabah	dead-sea	reader	5
+location	sea of the arabah	dead-sea	reader:asv	5
 location	sea of tiberias	sea-of-galilee	panel	2
 location	sea of tiberias	sea-of-galilee	prose	2
 location	sea of tiberias	sea-of-galilee	reader	2
+location	sea of tiberias	sea-of-galilee	reader:asv	2
+location	sea of tiberias	sea-of-galilee	reader:kjv	2
 location	seir	edom	panel	39
 location	seir	edom	prose	7
 location	seir	edom	reader	39
+location	seir	edom	reader:asv	39
+location	seir	edom	reader:kjv	39
 location	shunem	shunem	panel	3
 location	shunem	shunem	reader	3
+location	shunem	shunem	reader:asv	3
+location	shunem	shunem	reader:kjv	3
 location	shushan	susa	panel	11
 location	shushan	susa	reader	11
+location	shushan	susa	reader:asv	22
+location	shushan	susa	reader:kjv	21
+location	sichem	shechem	reader:kjv	1
 location	sidon	sidon	panel	35
 location	sidon	sidon	prose	7
 location	sidon	sidon	reader	35
+location	sidon	sidon	reader:asv	35
+location	sidon	sidon	reader:kjv	14
 location	smyrna	smyrna	panel	2
 location	smyrna	smyrna	prose	6
 location	smyrna	smyrna	reader	2
+location	smyrna	smyrna	reader:asv	2
+location	smyrna	smyrna	reader:kjv	2
 location	sodom	sodom	panel	49
 location	sodom	sodom	prose	33
 location	sodom	sodom	reader	49
+location	sodom	sodom	reader:asv	48
+location	sodom	sodom	reader:kjv	48
 location	spain	spain	panel	2
 location	spain	spain	prose	7
 location	spain	spain	reader	2
+location	spain	spain	reader:asv	2
+location	spain	spain	reader:kjv	2
 location	succoth	succoth	panel	19
 location	succoth	succoth	prose	1
 location	succoth	succoth	reader	19
+location	succoth	succoth	reader:asv	19
+location	succoth	succoth	reader:kjv	18
 location	susa	susa	panel	10
 location	susa	susa	prose	18
 location	susa	susa	reader	10
+location	susa	susa	reader:kjv	2
 location	sychar	sychar	panel	1
 location	sychar	sychar	reader	1
+location	sychar	sychar	reader:asv	1
+location	sychar	sychar	reader:kjv	1
 location	syrian antioch	antioch-syria	prose	1
 location	tarsus	tarsus	panel	5
 location	tarsus	tarsus	prose	13
 location	tarsus	tarsus	reader	5
+location	tarsus	tarsus	reader:asv	5
+location	tarsus	tarsus	reader:kjv	5
 location	tekoa	tekoa	panel	9
 location	tekoa	tekoa	prose	1
 location	tekoa	tekoa	reader	9
+location	tekoa	tekoa	reader:asv	9
+location	tekoa	tekoa	reader:kjv	6
 location	tel miqne	ekron	prose	1
 location	tell es-safi	gath	prose	1
 location	temple mount	mount-moriah	prose	3
 location	the jordan	jordan-river	panel	189
 location	the jordan	jordan-river	prose	59
 location	the jordan	jordan-river	reader	189
+location	the jordan	jordan-river	reader:asv	186
+location	the river jordan	jordan-river	reader:asv	2
 location	thessalonica	thessalonica	panel	6
 location	thessalonica	thessalonica	prose	15
 location	thessalonica	thessalonica	reader	6
+location	thessalonica	thessalonica	reader:asv	6
+location	thessalonica	thessalonica	reader:kjv	6
 location	thyatira	thyatira	panel	4
 location	thyatira	thyatira	prose	2
 location	thyatira	thyatira	reader	4
+location	thyatira	thyatira	reader:asv	4
+location	thyatira	thyatira	reader:kjv	4
 location	tiberias	tiberias	panel	1
 location	tiberias	tiberias	prose	12
 location	tiberias	tiberias	reader	1
+location	tiberias	tiberias	reader:asv	1
+location	tiberias	tiberias	reader:kjv	1
 location	troas	troas	panel	6
 location	troas	troas	prose	6
 location	troas	troas	reader	6
+location	troas	troas	reader:asv	6
+location	troas	troas	reader:kjv	6
 location	tyre	tyre	panel	59
 location	tyre	tyre	prose	17
 location	tyre	tyre	reader	59
+location	tyre	tyre	reader:asv	59
+location	tyre	tyre	reader:kjv	37
 location	ur	ur	panel	5
 location	ur	ur	prose	26
 location	ur	ur	reader	5
+location	ur	ur	reader:asv	5
+location	ur	ur	reader:kjv	5
 location	ur of the chaldeans	ur	prose	6
 location	yam suph	red-sea	prose	1
 location	ziklag	ziklag	panel	15
 location	ziklag	ziklag	reader	15
+location	ziklag	ziklag	reader:asv	15
+location	ziklag	ziklag	reader:kjv	15
 person	aaron	aaron	panel	352
 person	aaron	aaron	prose	45
 person	aaron	aaron	reader	352
+person	aaron	aaron	reader:asv	352
+person	aaron	aaron	reader:kjv	350
 person	abba	god-the-father	panel	1
 person	abba	god-the-father	reader	1
 person	abba, father	god-the-father	panel	2
 person	abba, father	god-the-father	reader	2
+person	abba, father	god-the-father	reader:asv	3
+person	abba, father	god-the-father	reader:kjv	3
 person	abel	abel	panel	14
 person	abel	abel	prose	20
 person	abel	abel	reader	12
+person	abel	abel	reader:asv	22
+person	abel	abel	reader:kjv	14
 person	abijah	abijah-king-of-judah	panel	28
 person	abijah	abijah-king-of-judah	prose	1
 person	abijah	abijah-king-of-judah	reader	18
+person	abijah	abijah-king-of-judah	reader:asv	18
+person	abijah	abijah-king-of-judah	reader:kjv	16
 person	abijam	abijah-king-of-judah	panel	5
 person	abijam	abijah-king-of-judah	reader	5
+person	abijam	abijah-king-of-judah	reader:asv	5
+person	abijam	abijah-king-of-judah	reader:kjv	5
 person	abiud	abiud	panel	2
 person	abiud	abiud	prose	1
 person	abiud	abiud	reader	2
+person	abiud	abiud	reader:asv	2
+person	abiud	abiud	reader:kjv	2
 person	abraham	abraham	panel	249
 person	abraham	abraham	prose	138
 person	abraham	abraham	reader	249
+person	abraham	abraham	reader:asv	248
+person	abraham	abraham	reader:kjv	249
 person	abram	abraham	panel	64
 person	abram	abraham	prose	62
 person	abram	abraham	reader	64
+person	abram	abraham	reader:asv	61
+person	abram	abraham	reader:kjv	61
 person	achim	achim	panel	2
 person	achim	achim	prose	2
 person	achim	achim	reader	2
+person	achim	achim	reader:asv	2
+person	achim	achim	reader:kjv	2
 person	adam	adam	panel	21
 person	adam	adam	prose	39
 person	adam	adam	reader	21
+person	adam	adam	reader:asv	21
+person	adam	adam	reader:kjv	31
 person	agrippa i	herod-agrippa-i	prose	2
 person	agrippa ii	herod-agrippa-ii	prose	8
 person	ahaz	ahaz	panel	44
 person	ahaz	ahaz	prose	24
 person	ahaz	ahaz	reader	37
+person	ahaz	ahaz	reader:asv	37
+person	ahaz	ahaz	reader:kjv	35
 person	amminadab	amminadab	panel	16
 person	amminadab	amminadab	prose	2
 person	amminadab	amminadab	reader	5
+person	amminadab	amminadab	reader:asv	5
+person	amminadab	amminadab	reader:kjv	3
 person	amon	amon-king-of-judah	panel	18
 person	amon	amon-king-of-judah	prose	2
 person	amon	amon-king-of-judah	reader	13
+person	amon	amon-king-of-judah	reader:asv	13
+person	amon	amon-king-of-judah	reader:kjv	13
 person	amon, king of judah	amon-king-of-judah	panel	3
 person	amon, king of judah	amon-king-of-judah	reader	3
+person	amon, king of judah	amon-king-of-judah	reader:asv	3
+person	amon, king of judah	amon-king-of-judah	reader:kjv	1
 person	ananias	ananias-and-sapphira	panel	11
 person	ananias	ananias-and-sapphira	reader	3
+person	ananias	ananias-and-sapphira	reader:asv	3
+person	ananias	ananias-and-sapphira	reader:kjv	3
 person	ananias	ananias-of-damascus	prose	5
 person	ananias	ananias-of-damascus	reader	6
+person	ananias	ananias-of-damascus	reader:asv	6
+person	ananias	ananias-of-damascus	reader:kjv	6
 person	ananias	ananias-the-high-priest	prose	1
 person	ananias	ananias-the-high-priest	reader	2
+person	ananias	ananias-the-high-priest	reader:asv	2
+person	ananias	ananias-the-high-priest	reader:kjv	1
 person	ananias and sapphira	ananias-and-sapphira	prose	2
+person	ananias the high priest	ananias-the-high-priest	reader:kjv	1
 person	andrew	andrew-apostle	panel	13
 person	andrew	andrew-apostle	prose	13
 person	andrew	andrew-apostle	reader	13
+person	andrew	andrew-apostle	reader:asv	13
+person	andrew	andrew-apostle	reader:kjv	13
 person	anna	anna-the-prophetess	panel	1
 person	anna	anna-the-prophetess	reader	1
+person	anna	anna-the-prophetess	reader:asv	1
+person	anna	anna-the-prophetess	reader:kjv	1
 person	antipas	herod-antipas	panel	1
 person	antipas	herod-antipas	prose	8
 person	antipas	herod-antipas	reader	1
+person	antipas	herod-antipas	reader:asv	1
+person	antipas	herod-antipas	reader:kjv	1
 person	apollos	apollos	panel	10
 person	apollos	apollos	prose	3
 person	apollos	apollos	reader	10
+person	apollos	apollos	reader:asv	10
+person	apollos	apollos	reader:kjv	10
 person	aquila	aquila	panel	6
 person	aquila	aquila	prose	11
 person	aquila	aquila	reader	6
+person	aquila	aquila	reader:asv	6
+person	aquila	aquila	reader:kjv	6
 person	archelaus	herod-archelaus	panel	1
 person	archelaus	herod-archelaus	prose	3
 person	archelaus	herod-archelaus	reader	1
+person	archelaus	herod-archelaus	reader:asv	1
+person	archelaus	herod-archelaus	reader:kjv	1
 person	arius	arius	prose	9
 person	asa	asa	panel	60
 person	asa	asa	prose	10
 person	asa	asa	reader	60
+person	asa	asa	reader:asv	60
+person	asa	asa	reader:kjv	60
 person	athanasius of alexandria	athanasius-of-alexandria	prose	3
 person	augustine of hippo	augustine-of-hippo	prose	1
 person	augustus	caesar-augustus	prose	37
+person	augustus	caesar-augustus	reader:kjv	3
 person	azariah	uzziah	panel	49
 person	azariah	uzziah	prose	1
 person	azariah	uzziah	reader	8
+person	azariah	uzziah	reader:asv	8
+person	azariah	uzziah	reader:kjv	8
 person	azor	azor	panel	2
 person	azor	azor	prose	2
 person	azor	azor	reader	2
+person	azor	azor	reader:asv	2
+person	azor	azor	reader:kjv	2
 person	balaam	balaam	panel	63
 person	balaam	balaam	prose	8
 person	balaam	balaam	reader	63
+person	balaam	balaam	reader:asv	63
+person	balaam	balaam	reader:kjv	63
 person	balaam son of beor	balaam	prose	3
 person	barnabas	barnabas	panel	29
 person	barnabas	barnabas	prose	47
 person	barnabas	barnabas	reader	29
+person	barnabas	barnabas	reader:asv	28
+person	barnabas	barnabas	reader:kjv	29
 person	bartholomew	bartholomew-nathanael	panel	4
 person	bartholomew	bartholomew-nathanael	prose	1
 person	bartholomew	bartholomew-nathanael	reader	4
+person	bartholomew	bartholomew-nathanael	reader:asv	4
+person	bartholomew	bartholomew-nathanael	reader:kjv	4
 person	bathsheba	bathsheba	panel	11
 person	bathsheba	bathsheba	prose	17
 person	bathsheba	bathsheba	reader	11
+person	bathsheba	bathsheba	reader:kjv	11
+person	beelzebub	satan	reader:asv	7
+person	beelzebub	satan	reader:kjv	7
 person	beelzebul	satan	panel	7
 person	beelzebul	satan	reader	7
 person	belial	satan	panel	1
 person	belial	satan	prose	2
 person	belial	satan	reader	1
+person	belial	satan	reader:asv	1
+person	belial	satan	reader:kjv	17
 person	bernice	bernice	panel	3
 person	bernice	bernice	prose	3
 person	bernice	bernice	reader	3
+person	bernice	bernice	reader:asv	3
+person	bernice	bernice	reader:kjv	3
 person	billy graham	billy-graham	prose	2
 person	boanerges	james-son-of-zebedee	panel	1
 person	boanerges	james-son-of-zebedee	prose	1
 person	boanerges	james-son-of-zebedee	reader	1
+person	boanerges	james-son-of-zebedee	reader:asv	1
+person	boanerges	james-son-of-zebedee	reader:kjv	1
 person	boaz	boaz	panel	27
 person	boaz	boaz	prose	28
 person	boaz	boaz	reader	22
+person	boaz	boaz	reader:asv	22
+person	boaz	boaz	reader:kjv	20
 person	caesar	claudius-caesar	reader	1
+person	caesar	claudius-caesar	reader:asv	1
+person	caesar	claudius-caesar	reader:kjv	1
 person	caesar	nero-caesar	reader	10
+person	caesar	nero-caesar	reader:asv	10
+person	caesar	nero-caesar	reader:kjv	10
 person	caesar	tiberius-caesar	panel	27
 person	caesar	tiberius-caesar	prose	39
 person	caesar	tiberius-caesar	reader	16
+person	caesar	tiberius-caesar	reader:asv	16
+person	caesar	tiberius-caesar	reader:kjv	16
 person	caesar augustus	caesar-augustus	panel	1
 person	caesar augustus	caesar-augustus	prose	5
 person	caesar augustus	caesar-augustus	reader	1
+person	caesar augustus	caesar-augustus	reader:asv	1
+person	caesar augustus	caesar-augustus	reader:kjv	1
 person	caiaphas	caiaphas	panel	9
 person	caiaphas	caiaphas	prose	10
 person	caiaphas	caiaphas	reader	9
+person	caiaphas	caiaphas	reader:asv	9
+person	caiaphas	caiaphas	reader:kjv	9
 person	cain	cain	panel	22
 person	cain	cain	prose	24
 person	cain	cain	reader	22
+person	cain	cain	reader:asv	21
+person	cain	cain	reader:kjv	20
 person	caleb	caleb	panel	36
 person	caleb	caleb	prose	16
 person	caleb	caleb	reader	36
+person	caleb	caleb	reader:asv	37
+person	caleb	caleb	reader:kjv	36
 person	cephas	simon-peter	panel	6
 person	cephas	simon-peter	prose	2
 person	cephas	simon-peter	reader	6
+person	cephas	simon-peter	reader:asv	9
+person	cephas	simon-peter	reader:kjv	6
 person	charlemagne	charlemagne	prose	7
 person	chloe	chloe	panel	1
 person	chloe	chloe	reader	1
+person	chloe	chloe	reader:asv	1
+person	chloe	chloe	reader:kjv	1
 person	christ jesus	jesus-of-nazareth	panel	84
 person	christ jesus	jesus-of-nazareth	prose	6
 person	christ jesus	jesus-of-nazareth	reader	84
+person	christ jesus	jesus-of-nazareth	reader:asv	86
+person	christ jesus	jesus-of-nazareth	reader:kjv	58
 person	claudius	claudius-caesar	panel	2
 person	claudius	claudius-caesar	prose	27
 person	claudius	claudius-caesar	reader	2
+person	claudius	claudius-caesar	reader:asv	2
+person	claudius	claudius-caesar	reader:kjv	1
+person	claudius caesar	claudius-caesar	reader:kjv	1
 person	cleopas	cleopas	panel	1
 person	cleopas	cleopas	reader	1
+person	cleopas	cleopas	reader:asv	1
+person	cleopas	cleopas	reader:kjv	1
 person	coniah	jeconiah	panel	3
 person	coniah	jeconiah	reader	3
+person	coniah	jeconiah	reader:asv	3
+person	coniah	jeconiah	reader:kjv	3
 person	constantine the great	constantine-the-great	prose	1
 person	cornelius	cornelius-the-centurion	panel	9
 person	cornelius	cornelius-the-centurion	prose	11
 person	cornelius	cornelius-the-centurion	reader	9
+person	cornelius	cornelius-the-centurion	reader:asv	8
+person	cornelius	cornelius-the-centurion	reader:kjv	9
+person	cornelius the centurion	cornelius-the-centurion	reader:kjv	1
 person	counselor	holy-spirit	panel	3
 person	counselor	holy-spirit	prose	1
 person	counselor	holy-spirit	reader	2
 person	crispus	crispus	panel	2
 person	crispus	crispus	reader	2
+person	crispus	crispus	reader:asv	2
+person	crispus	crispus	reader:kjv	2
 person	daniel	daniel	panel	83
 person	daniel	daniel	prose	59
 person	daniel	daniel	reader	83
+person	daniel	daniel	reader:asv	82
+person	daniel	daniel	reader:kjv	83
 person	david	david	panel	1138
 person	david	david	prose	349
 person	david	david	reader	1138
+person	david	david	reader:asv	1091
+person	david	david	reader:kjv	1092
 person	deborah	deborah	panel	10
 person	deborah	deborah	prose	10
 person	deborah	deborah	reader	9
+person	deborah	deborah	reader:asv	9
+person	deborah	deborah	reader:kjv	9
 person	delilah	delilah	panel	6
 person	delilah	delilah	prose	3
 person	delilah	delilah	reader	6
+person	delilah	delilah	reader:asv	6
+person	delilah	delilah	reader:kjv	6
 person	demas	demas	panel	3
 person	demas	demas	reader	3
+person	demas	demas	reader:asv	3
+person	demas	demas	reader:kjv	3
 person	didymus	thomas-apostle	panel	3
 person	didymus	thomas-apostle	reader	3
+person	didymus	thomas-apostle	reader:asv	3
+person	didymus	thomas-apostle	reader:kjv	3
 person	dietrich bonhoeffer	dietrich-bonhoeffer	prose	1
 person	diotrephes	diotrephes	panel	1
 person	diotrephes	diotrephes	prose	3
 person	diotrephes	diotrephes	reader	1
+person	diotrephes	diotrephes	reader:asv	1
+person	diotrephes	diotrephes	reader:kjv	1
 person	dorcas	dorcas-tabitha	panel	2
 person	dorcas	dorcas-tabitha	prose	1
 person	dorcas	dorcas-tabitha	reader	2
+person	dorcas	dorcas-tabitha	reader:asv	2
+person	dorcas	dorcas-tabitha	reader:kjv	2
 person	drusilla	drusilla	panel	1
 person	drusilla	drusilla	prose	2
 person	drusilla	drusilla	reader	1
+person	drusilla	drusilla	reader:asv	1
+person	drusilla	drusilla	reader:kjv	1
 person	edom	esau	reader	11
+person	edom	esau	reader:asv	11
+person	edom	esau	reader:kjv	11
 person	eleazar	eleazar-in-jesus-genealogy	panel	74
 person	eleazar	eleazar-in-jesus-genealogy	prose	2
 person	eleazar	eleazar-in-jesus-genealogy	reader	2
+person	eleazar	eleazar-in-jesus-genealogy	reader:asv	2
+person	eleazar	eleazar-in-jesus-genealogy	reader:kjv	2
 person	eliakim	eliakim-son-of-abiud	panel	15
 person	eliakim	eliakim-son-of-abiud	prose	1
 person	eliakim	eliakim-son-of-abiud	reader	2
+person	eliakim	eliakim-son-of-abiud	reader:asv	2
+person	eliakim	eliakim-son-of-abiud	reader:kjv	2
 person	elijah	elijah	panel	101
 person	elijah	elijah	prose	84
 person	elijah	elijah	reader	101
+person	elijah	elijah	reader:asv	100
+person	elijah	elijah	reader:kjv	69
+person	elisabeth	elizabeth-mother-of-john-baptist	reader:asv	9
+person	elisabeth	elizabeth-mother-of-john-baptist	reader:kjv	9
 person	elisha	elisha	panel	59
 person	elisha	elisha	prose	39
 person	elisha	elisha	reader	59
+person	elisha	elisha	reader:asv	59
+person	elisha	elisha	reader:kjv	58
 person	eliud	eliud	panel	2
 person	eliud	eliud	prose	2
 person	eliud	eliud	reader	2
+person	eliud	eliud	reader:asv	2
+person	eliud	eliud	reader:kjv	2
 person	elizabeth	elizabeth-mother-of-john-baptist	panel	9
 person	elizabeth	elizabeth-mother-of-john-baptist	prose	11
 person	elizabeth	elizabeth-mother-of-john-baptist	reader	9
 person	enoch	enoch	panel	13
 person	enoch	enoch	prose	13
 person	enoch	enoch	reader	10
+person	enoch	enoch	reader:asv	10
+person	enoch	enoch	reader:kjv	9
 person	epaphroditus	epaphroditus	panel	2
 person	epaphroditus	epaphroditus	prose	2
 person	epaphroditus	epaphroditus	reader	2
+person	epaphroditus	epaphroditus	reader:asv	2
+person	epaphroditus	epaphroditus	reader:kjv	2
 person	esau	esau	panel	102
 person	esau	esau	prose	41
 person	esau	esau	reader	102
+person	esau	esau	reader:asv	100
+person	esau	esau	reader:kjv	100
 person	esther	esther	panel	55
 person	esther	esther	prose	30
 person	esther	esther	reader	55
+person	esther	esther	reader:asv	55
+person	esther	esther	reader:kjv	60
 person	eusebius of caesarea	eusebius-of-caesarea	prose	4
 person	eve	eve	panel	4
 person	eve	eve	prose	24
 person	eve	eve	reader	4
+person	eve	eve	reader:asv	4
+person	eve	eve	reader:kjv	4
 person	ezekiel	ezekiel	panel	2
 person	ezekiel	ezekiel	prose	27
 person	ezekiel	ezekiel	reader	2
+person	ezekiel	ezekiel	reader:asv	2
+person	ezekiel	ezekiel	reader:kjv	2
 person	ezra	ezra	panel	25
 person	ezra	ezra	prose	31
 person	ezra	ezra	reader	25
+person	ezra	ezra	reader:asv	25
+person	ezra	ezra	reader:kjv	26
 person	father in heaven	god-the-father	panel	4
 person	father in heaven	god-the-father	reader	4
 person	felix	antonius-felix	panel	9
 person	felix	antonius-felix	prose	16
 person	felix	antonius-felix	reader	9
+person	felix	antonius-felix	reader:asv	9
+person	felix	antonius-felix	reader:kjv	9
 person	festus	porcius-festus	panel	12
 person	festus	porcius-festus	prose	12
 person	festus	porcius-festus	reader	12
+person	festus	porcius-festus	reader:asv	12
+person	festus	porcius-festus	reader:kjv	12
 person	francis of assisi	francis-of-assisi	prose	1
 person	gabriel	gabriel-archangel	panel	4
 person	gabriel	gabriel-archangel	prose	11
 person	gabriel	gabriel-archangel	reader	4
+person	gabriel	gabriel-archangel	reader:asv	4
+person	gabriel	gabriel-archangel	reader:kjv	4
 person	gallio	gallio	panel	3
 person	gallio	gallio	prose	17
 person	gallio	gallio	reader	3
+person	gallio	gallio	reader:asv	3
+person	gallio	gallio	reader:kjv	3
 person	gamaliel	gamaliel	panel	7
 person	gamaliel	gamaliel	prose	10
 person	gamaliel	gamaliel	reader	2
+person	gamaliel	gamaliel	reader:asv	2
+person	gamaliel	gamaliel	reader:kjv	2
 person	george whitefield	george-whitefield	prose	2
 person	gideon	gideon	panel	40
 person	gideon	gideon	prose	16
 person	gideon	gideon	reader	40
+person	gideon	gideon	reader:asv	40
+person	gideon	gideon	reader:kjv	39
 person	god the father	god-the-father	panel	14
 person	god the father	god-the-father	prose	4
 person	god the father	god-the-father	reader	14
+person	god the father	god-the-father	reader:asv	15
+person	god the father	god-the-father	reader:kjv	12
 person	gregory the great	gregory-the-great	prose	7
 person	hadassah	esther	panel	1
 person	hadassah	esther	prose	3
 person	hadassah	esther	reader	1
+person	hadassah	esther	reader:asv	1
+person	hadassah	esther	reader:kjv	1
 person	hagar	hagar	panel	14
 person	hagar	hagar	prose	29
 person	hagar	hagar	reader	14
+person	hagar	hagar	reader:asv	14
+person	hagar	hagar	reader:kjv	12
 person	heavenly father	god-the-father	panel	6
 person	heavenly father	god-the-father	reader	6
+person	heavenly father	god-the-father	reader:asv	7
+person	heavenly father	god-the-father	reader:kjv	6
 person	henry viii	henry-viii	prose	2
 person	herod agrippa i	herod-agrippa-i	prose	8
 person	herod agrippa ii	herod-agrippa-ii	prose	1
@@ -645,46 +1071,76 @@ person	herod archelaus	herod-archelaus	prose	3
 person	herod the great	herod-the-great	prose	36
 person	herod the tetrarch	herod-antipas	panel	4
 person	herod the tetrarch	herod-antipas	reader	4
+person	herod the tetrarch	herod-antipas	reader:asv	4
+person	herod the tetrarch	herod-antipas	reader:kjv	4
 person	hezekiah	hezekiah	panel	131
 person	hezekiah	hezekiah	prose	77
 person	hezekiah	hezekiah	reader	131
+person	hezekiah	hezekiah	reader:asv	131
+person	hezekiah	hezekiah	reader:kjv	128
 person	hezron	hezron-son-of-perez	panel	21
 person	hezron	hezron-son-of-perez	prose	1
 person	hezron	hezron-son-of-perez	reader	6
+person	hezron	hezron-son-of-perez	reader:asv	6
+person	hezron	hezron-son-of-perez	reader:kjv	4
 person	holy ghost	holy-spirit	prose	2
+person	holy ghost	holy-spirit	reader:kjv	90
 person	hoshea	hoshea-king-of-israel	prose	1
 person	hoshea	hoshea-king-of-israel	reader	4
+person	hoshea	hoshea-king-of-israel	reader:asv	4
+person	hoshea	hoshea-king-of-israel	reader:kjv	4
 person	hoshea	joshua	panel	8
 person	hoshea	joshua	reader	2
+person	hoshea	joshua	reader:asv	2
 person	hoshea son of elah	hoshea-king-of-israel	panel	2
 person	hoshea son of elah	hoshea-king-of-israel	reader	2
+person	hoshea son of elah	hoshea-king-of-israel	reader:asv	2
+person	hoshea son of elah	hoshea-king-of-israel	reader:kjv	2
 person	hoshea the son of elah	hoshea-king-of-israel	panel	2
 person	hoshea the son of elah	hoshea-king-of-israel	reader	2
+person	hoshea the son of elah	hoshea-king-of-israel	reader:asv	2
+person	hoshea the son of elah	hoshea-king-of-israel	reader:kjv	2
 person	huldrych zwingli	huldrych-zwingli	prose	1
 person	ignatius of loyola	ignatius-of-loyola	prose	1
 person	isaac	isaac	panel	132
 person	isaac	isaac	prose	79
 person	isaac	isaac	reader	132
+person	isaac	isaac	reader:asv	132
+person	isaac	isaac	reader:kjv	132
 person	isaiah	isaiah	panel	53
 person	isaiah	isaiah	prose	65
 person	isaiah	isaiah	reader	53
+person	isaiah	isaiah	reader:asv	54
+person	isaiah	isaiah	reader:kjv	32
 person	jacob	jacob	panel	379
 person	jacob	jacob	prose	147
 person	jacob	jacob	reader	379
+person	jacob	jacob	reader:asv	374
+person	jacob	jacob	reader:kjv	375
 person	jacob	jacob-father-of-joseph	panel	2
 person	jacob	jacob-father-of-joseph	prose	5
 person	jacob	jacob-father-of-joseph	reader	2
+person	jacob	jacob-father-of-joseph	reader:asv	2
+person	jacob	jacob-father-of-joseph	reader:kjv	2
 person	james	james-brother-of-jesus	panel	1
 person	james	james-brother-of-jesus	prose	8
 person	james	james-brother-of-jesus	reader	9
+person	james	james-brother-of-jesus	reader:asv	9
+person	james	james-brother-of-jesus	reader:kjv	9
 person	james	james-son-of-zebedee	panel	31
 person	james	james-son-of-zebedee	prose	14
 person	james	james-son-of-zebedee	reader	19
+person	james	james-son-of-zebedee	reader:asv	19
+person	james	james-son-of-zebedee	reader:kjv	21
 person	james the just	james-brother-of-jesus	prose	2
 person	james the son of alphaeus	james-son-of-alphaeus	panel	2
 person	james the son of alphaeus	james-son-of-alphaeus	reader	2
+person	james the son of alphaeus	james-son-of-alphaeus	reader:asv	4
+person	james the son of alphaeus	james-son-of-alphaeus	reader:kjv	4
 person	james the son of zebedee	james-son-of-zebedee	panel	4
 person	james the son of zebedee	james-son-of-zebedee	reader	4
+person	james the son of zebedee	james-son-of-zebedee	reader:asv	4
+person	james the son of zebedee	james-son-of-zebedee	reader:kjv	4
 person	james, son of zebedee	james-son-of-zebedee	prose	2
 person	james, the son of alphaeus	james-son-of-alphaeus	panel	2
 person	james, the son of alphaeus	james-son-of-alphaeus	reader	2
@@ -692,54 +1148,95 @@ person	jan hus	jan-hus	prose	2
 person	jeconiah	jeconiah	panel	7
 person	jeconiah	jeconiah	prose	3
 person	jeconiah	jeconiah	reader	7
+person	jeconiah	jeconiah	reader:asv	7
+person	jeconiah	jeconiah	reader:kjv	7
 person	jehoiachin	jeconiah	panel	14
 person	jehoiachin	jeconiah	prose	18
 person	jehoiachin	jeconiah	reader	14
+person	jehoiachin	jeconiah	reader:asv	14
+person	jehoiachin	jeconiah	reader:kjv	11
 person	jehoram	joram-king-of-israel	reader	3
+person	jehoram	joram-king-of-israel	reader:asv	3
+person	jehoram	joram-king-of-israel	reader:kjv	3
 person	jehoram	joram-king-of-judah	panel	17
 person	jehoram	joram-king-of-judah	prose	5
 person	jehoram	joram-king-of-judah	reader	13
+person	jehoram	joram-king-of-judah	reader:asv	13
+person	jehoram	joram-king-of-judah	reader:kjv	14
 person	jehoram the son of ahab	joram-king-of-israel	panel	3
 person	jehoram the son of ahab	joram-king-of-israel	reader	3
+person	jehoram the son of ahab	joram-king-of-israel	reader:asv	3
+person	jehoram the son of ahab	joram-king-of-israel	reader:kjv	3
 person	jehoram the son of jehoshaphat	joram-king-of-judah	panel	2
 person	jehoram the son of jehoshaphat	joram-king-of-judah	reader	2
+person	jehoram the son of jehoshaphat	joram-king-of-judah	reader:asv	2
+person	jehoram the son of jehoshaphat	joram-king-of-judah	reader:kjv	2
 person	jehoshaphat	jehoshaphat	panel	84
 person	jehoshaphat	jehoshaphat	prose	14
 person	jehoshaphat	jehoshaphat	reader	84
+person	jehoshaphat	jehoshaphat	reader:asv	84
+person	jehoshaphat	jehoshaphat	reader:kjv	83
+person	jehoshua	joshua	reader:kjv	2
 person	jeremiah	jeremiah	panel	150
 person	jeremiah	jeremiah	prose	62
 person	jeremiah	jeremiah	reader	134
+person	jeremiah	jeremiah	reader:asv	134
+person	jeremiah	jeremiah	reader:kjv	131
 person	jerome	jerome	prose	26
 person	jerubbaal	gideon	panel	13
 person	jerubbaal	gideon	reader	13
+person	jerubbaal	gideon	reader:asv	14
+person	jerubbaal	gideon	reader:kjv	14
 person	jesse	jesse	panel	47
 person	jesse	jesse	prose	8
 person	jesse	jesse	reader	47
+person	jesse	jesse	reader:asv	47
+person	jesse	jesse	reader:kjv	47
 person	jesus	jesus-of-nazareth	panel	717
 person	jesus	jesus-of-nazareth	prose	825
 person	jesus	jesus-of-nazareth	reader	716
+person	jesus	jesus-of-nazareth	reader:asv	680
+person	jesus	jesus-of-nazareth	reader:kjv	706
+person	jesus	joshua	reader:kjv	2
 person	jesus christ	jesus-of-nazareth	panel	165
 person	jesus christ	jesus-of-nazareth	prose	21
 person	jesus christ	jesus-of-nazareth	reader	165
+person	jesus christ	jesus-of-nazareth	reader:asv	142
+person	jesus christ	jesus-of-nazareth	reader:kjv	198
+person	jesus of galilee	jesus-of-nazareth	reader:kjv	1
 person	jesus of nazareth	jesus-of-nazareth	panel	12
 person	jesus of nazareth	jesus-of-nazareth	prose	7
 person	jesus of nazareth	jesus-of-nazareth	reader	12
+person	jesus of nazareth	jesus-of-nazareth	reader:asv	11
+person	jesus of nazareth	jesus-of-nazareth	reader:kjv	17
 person	jezebel	jezebel	panel	23
 person	jezebel	jezebel	prose	24
 person	jezebel	jezebel	reader	23
+person	jezebel	jezebel	reader:asv	23
+person	jezebel	jezebel	reader:kjv	23
 person	joanna	joanna-follower-of-jesus	panel	2
 person	joanna	joanna-follower-of-jesus	reader	2
+person	joanna	joanna-follower-of-jesus	reader:asv	2
+person	joanna	joanna-follower-of-jesus	reader:kjv	3
 person	job	job	panel	59
 person	job	job	prose	26
 person	job	job	reader	59
+person	job	job	reader:asv	59
+person	job	job	reader:kjv	60
 person	johannes gutenberg	johannes-gutenberg	prose	1
 person	john	john-mark	reader	2
+person	john	john-mark	reader:asv	3
+person	john	john-mark	reader:kjv	2
 person	john	john-the-apostle	panel	7
 person	john	john-the-apostle	prose	54
 person	john	john-the-apostle	reader	34
+person	john	john-the-apostle	reader:asv	34
+person	john	john-the-apostle	reader:kjv	35
 person	john	john-the-baptist	panel	107
 person	john	john-the-baptist	prose	27
 person	john	john-the-baptist	reader	77
+person	john	john-the-baptist	reader:asv	77
+person	john	john-the-baptist	reader:kjv	79
 person	john	john-wesley	prose	3
 person	john calvin	john-calvin	prose	1
 person	john chrysostom	john-chrysostom	prose	3
@@ -749,364 +1246,601 @@ person	john of the cross	john-of-the-cross	prose	1
 person	john paul ii	pope-john-paul-ii	prose	3
 person	john the apostle	john-the-apostle	prose	1
 person	john the baptist	john-the-baptist	prose	34
+person	john the baptist	john-the-baptist	reader:asv	12
+person	john the baptist	john-the-baptist	reader:kjv	13
 person	john the baptizer	john-the-baptist	panel	15
 person	john the baptizer	john-the-baptist	reader	15
+person	john the baptizer	john-the-baptist	reader:asv	2
 person	john wesley	john-wesley	prose	4
 person	john who was called mark	john-mark	panel	2
 person	john who was called mark	john-mark	reader	2
+person	john whose surname was mark	john-mark	reader:asv	2
 person	john wycliffe	john-wycliffe	prose	3
 person	john xxiii	pope-john-xxiii	prose	1
 person	john, who was called mark	john-mark	panel	1
 person	john, who was called mark	john-mark	reader	1
+person	john, whose surname was mark	john-mark	reader:kjv	3
 person	jonah	jonah	panel	31
 person	jonah	jonah	prose	31
 person	jonah	jonah	reader	26
+person	jonah	jonah	reader:asv	26
+person	jonah	jonah	reader:kjv	18
 person	jonah the son of amittai	jonah	panel	2
 person	jonah the son of amittai	jonah	reader	2
+person	jonah the son of amittai	jonah	reader:asv	2
+person	jonah the son of amittai	jonah	reader:kjv	1
 person	jonathan edwards	jonathan-edwards	prose	2
 person	joram	joram-king-of-israel	prose	3
 person	joram	joram-king-of-israel	reader	15
+person	joram	joram-king-of-israel	reader:asv	15
+person	joram	joram-king-of-israel	reader:kjv	14
 person	joram	joram-king-of-judah	panel	25
 person	joram	joram-king-of-judah	reader	7
+person	joram	joram-king-of-judah	reader:asv	7
+person	joram	joram-king-of-judah	reader:kjv	7
 person	joram son of ahab	joram-king-of-israel	prose	2
 person	joram the son of ahab	joram-king-of-israel	panel	5
 person	joram the son of ahab	joram-king-of-israel	reader	5
+person	joram the son of ahab	joram-king-of-israel	reader:asv	5
+person	joram the son of ahab	joram-king-of-israel	reader:kjv	5
+person	joseph	barnabas	reader:asv	1
 person	joseph	joseph-husband-of-mary	panel	1
 person	joseph	joseph-husband-of-mary	prose	50
 person	joseph	joseph-husband-of-mary	reader	16
+person	joseph	joseph-husband-of-mary	reader:asv	15
+person	joseph	joseph-husband-of-mary	reader:kjv	16
 person	joseph	joseph-of-arimathea	prose	1
 person	joseph	joseph-of-arimathea	reader	8
+person	joseph	joseph-of-arimathea	reader:asv	8
+person	joseph	joseph-of-arimathea	reader:kjv	8
 person	joseph	joseph-son-of-jacob	panel	248
 person	joseph	joseph-son-of-jacob	prose	82
 person	joseph	joseph-son-of-jacob	reader	222
+person	joseph	joseph-son-of-jacob	reader:asv	222
+person	joseph	joseph-son-of-jacob	reader:kjv	223
 person	joseph of arimathea	joseph-of-arimathea	prose	8
 person	joshua	joshua	panel	220
 person	joshua	joshua	prose	77
 person	joshua	joshua	reader	191
+person	joshua	joshua	reader:asv	190
+person	joshua	joshua	reader:kjv	187
 person	josiah	josiah	panel	55
 person	josiah	josiah	prose	34
 person	josiah	josiah	reader	32
+person	josiah	josiah	reader:asv	32
+person	josiah	josiah	reader:kjv	30
 person	jotham	jotham-king-of-judah	panel	25
 person	jotham	jotham-king-of-judah	prose	9
 person	jotham	jotham-king-of-judah	reader	15
+person	jotham	jotham-king-of-judah	reader:asv	15
+person	jotham	jotham-king-of-judah	reader:kjv	13
 person	judas	judas-iscariot	panel	21
 person	judas	judas-iscariot	prose	13
 person	judas	judas-iscariot	reader	15
+person	judas	judas-iscariot	reader:asv	17
+person	judas	judas-iscariot	reader:kjv	17
 person	judas	thaddaeus	reader	1
+person	judas	thaddaeus	reader:asv	1
+person	judas	thaddaeus	reader:kjv	2
 person	judas iscariot	judas-iscariot	panel	7
 person	judas iscariot	judas-iscariot	prose	7
 person	judas iscariot	judas-iscariot	reader	7
+person	judas iscariot	judas-iscariot	reader:asv	7
+person	judas iscariot	judas-iscariot	reader:kjv	9
 person	judas the son of james	thaddaeus	panel	2
 person	judas the son of james	thaddaeus	reader	2
+person	judas the son of james	thaddaeus	reader:asv	2
 person	junia	junia	panel	1
 person	junia	junia	reader	1
+person	junia	junia	reader:kjv	1
 person	karl barth	karl-barth	prose	1
 person	king agrippa	herod-agrippa-ii	panel	7
 person	king agrippa	herod-agrippa-ii	prose	4
 person	king agrippa	herod-agrippa-ii	reader	7
+person	king agrippa	herod-agrippa-ii	reader:asv	5
+person	king agrippa	herod-agrippa-ii	reader:kjv	7
 person	lazarus	lazarus-of-bethany	panel	15
 person	lazarus	lazarus-of-bethany	prose	20
 person	lazarus	lazarus-of-bethany	reader	11
+person	lazarus	lazarus-of-bethany	reader:asv	10
+person	lazarus	lazarus-of-bethany	reader:kjv	11
 person	lazarus of bethany	lazarus-of-bethany	prose	1
+person	lazarus of bethany	lazarus-of-bethany	reader:asv	1
 person	leah	leah	panel	34
 person	leah	leah	prose	17
 person	leah	leah	reader	34
+person	leah	leah	reader:asv	34
+person	leah	leah	reader:kjv	34
 person	lebbaeus	thaddaeus	panel	1
 person	lebbaeus	thaddaeus	reader	1
+person	lebbaeus	thaddaeus	reader:kjv	1
 person	levi	matthew-levi	panel	74
 person	levi	matthew-levi	reader	1
+person	levi	matthew-levi	reader:asv	1
+person	levi	matthew-levi	reader:kjv	1
+person	lucifer	satan	reader:kjv	1
 person	luke	luke-evangelist	panel	3
 person	luke	luke-evangelist	prose	151
 person	luke	luke-evangelist	reader	3
+person	luke	luke-evangelist	reader:asv	3
+person	luke	luke-evangelist	reader:kjv	2
 person	lydia	lydia-of-thyatira	panel	2
 person	lydia	lydia-of-thyatira	prose	10
 person	lydia	lydia-of-thyatira	reader	2
+person	lydia	lydia-of-thyatira	reader:asv	2
+person	lydia	lydia-of-thyatira	reader:kjv	3
 person	lysanias	lysanias	panel	1
 person	lysanias	lysanias	reader	1
+person	lysanias	lysanias	reader:asv	1
+person	lysanias	lysanias	reader:kjv	1
 person	magi	magi	prose	12
 person	malchus	malchus	panel	1
 person	malchus	malchus	prose	1
 person	malchus	malchus	reader	1
+person	malchus	malchus	reader:asv	1
+person	malchus	malchus	reader:kjv	1
 person	manasseh	manasseh-king-of-judah	panel	148
 person	manasseh	manasseh-king-of-judah	prose	27
 person	manasseh	manasseh-king-of-judah	reader	32
+person	manasseh	manasseh-king-of-judah	reader:asv	32
+person	manasseh	manasseh-king-of-judah	reader:kjv	30
 person	mark	john-mark	panel	9
 person	mark	john-mark	prose	53
 person	mark	john-mark	reader	5
+person	mark	john-mark	reader:asv	8
+person	mark	john-mark	reader:kjv	4
 person	mark antony	mark-antony	prose	7
 person	martha	martha-of-bethany	panel	13
 person	martha	martha-of-bethany	prose	9
 person	martha	martha-of-bethany	reader	13
+person	martha	martha-of-bethany	reader:asv	13
+person	martha	martha-of-bethany	reader:kjv	13
 person	martin luther	martin-luther	prose	6
 person	martin luther king	martin-luther-king-jr	prose	3
 person	mary	mary-magdalene	reader	3
+person	mary	mary-magdalene	reader:asv	3
+person	mary	mary-magdalene	reader:kjv	3
 person	mary	mary-mother-of-james-the-less	reader	7
+person	mary	mary-mother-of-james-the-less	reader:asv	7
+person	mary	mary-mother-of-james-the-less	reader:kjv	7
 person	mary	mary-mother-of-jesus	panel	42
 person	mary	mary-mother-of-jesus	prose	90
 person	mary	mary-mother-of-jesus	reader	19
+person	mary	mary-mother-of-jesus	reader:asv	19
+person	mary	mary-mother-of-jesus	reader:kjv	20
 person	mary	mary-of-bethany	prose	1
 person	mary	mary-of-bethany	reader	11
+person	mary	mary-of-bethany	reader:asv	11
+person	mary	mary-of-bethany	reader:kjv	11
 person	mary magdalene	mary-magdalene	panel	11
 person	mary magdalene	mary-magdalene	prose	13
 person	mary magdalene	mary-magdalene	reader	11
+person	mary magdalene	mary-magdalene	reader:asv	11
+person	mary magdalene	mary-magdalene	reader:kjv	11
 person	mary of bethany	mary-of-bethany	prose	3
 person	mary the wife of clopas	mary-mother-of-james-the-less	panel	1
 person	mary the wife of clopas	mary-mother-of-james-the-less	reader	1
+person	mary the wife of clopas	mary-mother-of-james-the-less	reader:asv	1
 person	mary, mother of jesus	mary-mother-of-jesus	prose	2
 person	matthan	matthan	panel	2
 person	matthan	matthan	prose	4
 person	matthan	matthan	reader	2
+person	matthan	matthan	reader:asv	2
+person	matthan	matthan	reader:kjv	2
 person	matthew the tax collector	matthew-levi	panel	1
 person	matthew the tax collector	matthew-levi	reader	1
 person	melchizedek	melchizedek	panel	11
 person	melchizedek	melchizedek	prose	4
 person	melchizedek	melchizedek	reader	11
+person	melchizedek	melchizedek	reader:asv	10
+person	melchizedek	melchizedek	reader:kjv	2
 person	michael	michael-archangel	panel	15
 person	michael	michael-archangel	prose	2
 person	michael	michael-archangel	reader	15
+person	michael	michael-archangel	reader:asv	14
+person	michael	michael-archangel	reader:kjv	14
 person	michael the archangel	michael-archangel	prose	1
+person	michael the archangel	michael-archangel	reader:asv	1
+person	michael the archangel	michael-archangel	reader:kjv	1
 person	miriam	miriam	panel	15
 person	miriam	miriam	prose	7
 person	miriam	miriam	reader	15
+person	miriam	miriam	reader:asv	15
+person	miriam	miriam	reader:kjv	15
 person	mordecai	mordecai	panel	60
 person	mordecai	mordecai	prose	25
 person	mordecai	mordecai	reader	60
+person	mordecai	mordecai	reader:asv	60
+person	mordecai	mordecai	reader:kjv	60
 person	moses	moses	panel	830
 person	moses	moses	prose	189
 person	moses	moses	reader	830
+person	moses	moses	reader:asv	827
+person	moses	moses	reader:kjv	827
 person	nahshon	nahshon	panel	13
 person	nahshon	nahshon	prose	3
 person	nahshon	nahshon	reader	13
+person	nahshon	nahshon	reader:asv	13
+person	nahshon	nahshon	reader:kjv	9
 person	naomi	naomi	panel	21
 person	naomi	naomi	prose	30
 person	naomi	naomi	reader	21
+person	naomi	naomi	reader:asv	21
+person	naomi	naomi	reader:kjv	21
 person	nathan	nathan-the-prophet	panel	43
 person	nathan	nathan-the-prophet	prose	18
 person	nathan	nathan-the-prophet	reader	30
+person	nathan	nathan-the-prophet	reader:asv	30
+person	nathan	nathan-the-prophet	reader:kjv	30
 person	nathanael	bartholomew-nathanael	panel	6
 person	nathanael	bartholomew-nathanael	prose	6
 person	nathanael	bartholomew-nathanael	reader	6
+person	nathanael	bartholomew-nathanael	reader:asv	6
+person	nathanael	bartholomew-nathanael	reader:kjv	6
 person	nehemiah	nehemiah	panel	8
 person	nehemiah	nehemiah	prose	33
 person	nehemiah	nehemiah	reader	8
+person	nehemiah	nehemiah	reader:asv	8
+person	nehemiah	nehemiah	reader:kjv	8
 person	nero	nero-caesar	prose	42
 person	nicodemus	nicodemus	panel	5
 person	nicodemus	nicodemus	prose	7
 person	nicodemus	nicodemus	reader	5
+person	nicodemus	nicodemus	reader:asv	5
+person	nicodemus	nicodemus	reader:kjv	5
 person	noah	noah	panel	58
 person	noah	noah	prose	43
 person	noah	noah	reader	58
+person	noah	noah	reader:asv	58
+person	noah	noah	reader:kjv	53
 person	obed	obed	panel	33
 person	obed	obed	prose	9
 person	obed	obed	reader	33
+person	obed	obed	reader:asv	33
+person	obed	obed	reader:kjv	13
 person	octavian	caesar-augustus	prose	14
 person	onesimus	onesimus	panel	2
 person	onesimus	onesimus	prose	8
 person	onesimus	onesimus	reader	2
+person	onesimus	onesimus	reader:asv	2
+person	onesimus	onesimus	reader:kjv	2
 person	paul	paul-of-tarsus	panel	161
 person	paul	paul-of-tarsus	prose	616
 person	paul	paul-of-tarsus	reader	161
+person	paul	paul-of-tarsus	reader:asv	157
+person	paul	paul-of-tarsus	reader:kjv	162
 person	perez	perez	panel	20
 person	perez	perez	prose	7
 person	perez	perez	reader	20
+person	perez	perez	reader:asv	22
+person	perez	perez	reader:kjv	3
 person	peter	simon-peter	panel	136
 person	peter	simon-peter	prose	184
 person	peter	simon-peter	reader	136
+person	peter	simon-peter	reader:asv	134
+person	peter	simon-peter	reader:kjv	141
 person	philemon	philemon	panel	1
 person	philemon	philemon	prose	21
 person	philemon	philemon	reader	1
+person	philemon	philemon	reader:asv	1
+person	philemon	philemon	reader:kjv	1
 person	philip	philip-the-apostle	panel	33
 person	philip	philip-the-apostle	prose	11
 person	philip	philip-the-apostle	reader	16
+person	philip	philip-the-apostle	reader:asv	16
+person	philip	philip-the-apostle	reader:kjv	18
 person	philip	philip-the-evangelist	prose	21
 person	philip	philip-the-evangelist	reader	14
+person	philip	philip-the-evangelist	reader:asv	14
+person	philip	philip-the-evangelist	reader:kjv	14
 person	philip	philip-the-tetrarch	prose	4
 person	philip	philip-the-tetrarch	reader	1
+person	philip	philip-the-tetrarch	reader:asv	1
+person	philip	philip-the-tetrarch	reader:kjv	1
 person	philip the apostle	philip-the-apostle	prose	1
 person	philip the evangelist	philip-the-evangelist	panel	1
 person	philip the evangelist	philip-the-evangelist	prose	4
 person	philip the evangelist	philip-the-evangelist	reader	1
+person	philip the evangelist	philip-the-evangelist	reader:asv	1
+person	philip the evangelist	philip-the-evangelist	reader:kjv	1
 person	philip the tetrarch	philip-the-tetrarch	prose	4
 person	phoebe	phoebe	panel	1
 person	phoebe	phoebe	prose	1
 person	phoebe	phoebe	reader	1
+person	phoebe	phoebe	reader:asv	1
 person	photius of constantinople	photius	prose	1
 person	pilate	pontius-pilate	panel	52
 person	pilate	pontius-pilate	prose	37
 person	pilate	pontius-pilate	reader	52
+person	pilate	pontius-pilate	reader:asv	53
+person	pilate	pontius-pilate	reader:kjv	52
 person	pontius pilate	pontius-pilate	panel	4
 person	pontius pilate	pontius-pilate	prose	24
 person	pontius pilate	pontius-pilate	reader	4
+person	pontius pilate	pontius-pilate	reader:asv	3
+person	pontius pilate	pontius-pilate	reader:kjv	4
 person	pope gregory i	gregory-the-great	prose	1
 person	pope john paul ii	pope-john-paul-ii	prose	3
 person	pope john xxiii	pope-john-xxiii	prose	1
 person	porcius festus	porcius-festus	panel	1
 person	porcius festus	porcius-festus	prose	4
 person	porcius festus	porcius-festus	reader	1
+person	porcius festus	porcius-festus	reader:asv	1
+person	porcius festus	porcius-festus	reader:kjv	1
 person	priscilla	priscilla	panel	4
 person	priscilla	priscilla	prose	11
 person	priscilla	priscilla	reader	4
+person	priscilla	priscilla	reader:asv	3
+person	priscilla	priscilla	reader:kjv	5
 person	quirinius	quirinius	panel	1
 person	quirinius	quirinius	reader	1
+person	quirinius	quirinius	reader:asv	1
 person	rachel	rachel	panel	48
 person	rachel	rachel	prose	25
 person	rachel	rachel	reader	48
+person	rachel	rachel	reader:asv	48
+person	rachel	rachel	reader:kjv	47
 person	rahab	rahab	panel	14
 person	rahab	rahab	prose	10
 person	rahab	rahab	reader	8
+person	rahab	rahab	reader:asv	8
+person	rahab	rahab	reader:kjv	7
 person	ram	ram-son-of-hezron	panel	9
 person	ram	ram-son-of-hezron	prose	3
 person	ram	ram-son-of-hezron	reader	8
+person	ram	ram-son-of-hezron	reader:asv	8
+person	ram	ram-son-of-hezron	reader:kjv	6
 person	rebekah	rebekah	panel	31
 person	rebekah	rebekah	prose	20
 person	rebekah	rebekah	reader	31
+person	rebekah	rebekah	reader:asv	30
+person	rebekah	rebekah	reader:kjv	30
 person	rehoboam	rehoboam	panel	52
 person	rehoboam	rehoboam	prose	21
 person	rehoboam	rehoboam	reader	52
+person	rehoboam	rehoboam	reader:asv	52
+person	rehoboam	rehoboam	reader:kjv	50
 person	rhoda	rhoda	panel	1
 person	rhoda	rhoda	reader	1
+person	rhoda	rhoda	reader:asv	1
+person	rhoda	rhoda	reader:kjv	1
 person	ruth	ruth	panel	13
 person	ruth	ruth	prose	37
 person	ruth	ruth	reader	13
+person	ruth	ruth	reader:asv	13
+person	ruth	ruth	reader:kjv	13
 person	salmon	salmon-father-of-boaz	panel	5
 person	salmon	salmon-father-of-boaz	prose	1
 person	salmon	salmon-father-of-boaz	reader	5
+person	salmon	salmon-father-of-boaz	reader:asv	5
+person	salmon	salmon-father-of-boaz	reader:kjv	6
 person	salome	salome-follower-of-jesus	panel	2
 person	salome	salome-follower-of-jesus	prose	3
 person	salome	salome-follower-of-jesus	reader	2
+person	salome	salome-follower-of-jesus	reader:asv	2
+person	salome	salome-follower-of-jesus	reader:kjv	2
 person	samson	samson	panel	39
 person	samson	samson	prose	16
 person	samson	samson	reader	39
+person	samson	samson	reader:asv	39
+person	samson	samson	reader:kjv	39
 person	samuel	samuel	panel	143
 person	samuel	samuel	prose	56
 person	samuel	samuel	reader	143
+person	samuel	samuel	reader:asv	142
+person	samuel	samuel	reader:kjv	141
 person	sarah	sarah	panel	42
 person	sarah	sarah	prose	44
 person	sarah	sarah	reader	42
+person	sarah	sarah	reader:asv	42
+person	sarah	sarah	reader:kjv	42
 person	sarai	sarah	panel	17
 person	sarai	sarah	prose	19
 person	sarai	sarah	reader	17
+person	sarai	sarah	reader:asv	17
+person	sarai	sarah	reader:kjv	17
 person	satan	satan	panel	55
 person	satan	satan	prose	21
 person	satan	satan	reader	55
+person	satan	satan	reader:asv	54
+person	satan	satan	reader:kjv	56
 person	saul	paul-of-tarsus	prose	26
 person	saul	paul-of-tarsus	reader	25
+person	saul	paul-of-tarsus	reader:asv	23
+person	saul	paul-of-tarsus	reader:kjv	26
 person	saul	saul-king-of-israel	panel	416
 person	saul	saul-king-of-israel	prose	100
 person	saul	saul-king-of-israel	reader	391
+person	saul	saul-king-of-israel	reader:asv	391
+person	saul	saul-king-of-israel	reader:kjv	392
 person	saul of tarsus	paul-of-tarsus	prose	7
 person	saul the son of kish	saul-king-of-israel	panel	4
 person	saul the son of kish	saul-king-of-israel	reader	4
+person	saul the son of kish	saul-king-of-israel	reader:asv	4
+person	saul the son of kish	saul-king-of-israel	reader:kjv	3
 person	sergius paulus	sergius-paulus	panel	1
 person	sergius paulus	sergius-paulus	prose	12
 person	sergius paulus	sergius-paulus	reader	1
+person	sergius paulus	sergius-paulus	reader:asv	1
+person	sergius paulus	sergius-paulus	reader:kjv	1
 person	shealtiel	shealtiel	panel	13
 person	shealtiel	shealtiel	reader	13
+person	shealtiel	shealtiel	reader:asv	13
+person	shealtiel	shealtiel	reader:kjv	9
 person	silas	silas	panel	12
 person	silas	silas	prose	12
 person	silas	silas	reader	12
+person	silas	silas	reader:asv	12
+person	silas	silas	reader:kjv	13
 person	silvanus	silas	panel	4
 person	silvanus	silas	reader	4
+person	silvanus	silas	reader:asv	4
+person	silvanus	silas	reader:kjv	4
 person	simeon	simeon-at-the-temple	panel	49
 person	simeon	simeon-at-the-temple	prose	2
 person	simeon	simeon-at-the-temple	reader	2
+person	simeon	simeon-at-the-temple	reader:asv	2
+person	simeon	simeon-at-the-temple	reader:kjv	2
 person	simon	simon-magus	prose	1
 person	simon	simon-magus	reader	4
+person	simon	simon-magus	reader:asv	4
+person	simon	simon-magus	reader:kjv	4
 person	simon	simon-of-cyrene	prose	1
 person	simon	simon-of-cyrene	reader	1
+person	simon	simon-of-cyrene	reader:asv	1
+person	simon	simon-of-cyrene	reader:kjv	1
 person	simon	simon-peter	panel	46
 person	simon	simon-peter	prose	1
 person	simon	simon-peter	reader	28
+person	simon	simon-peter	reader:asv	31
+person	simon	simon-peter	reader:kjv	34
 person	simon	simon-the-pharisee	reader	3
+person	simon	simon-the-pharisee	reader:asv	3
+person	simon	simon-the-pharisee	reader:kjv	3
 person	simon	simon-the-zealot	reader	1
+person	simon	simon-the-zealot	reader:kjv	1
 person	simon of cyrene	simon-of-cyrene	panel	2
 person	simon of cyrene	simon-of-cyrene	reader	2
+person	simon of cyrene	simon-of-cyrene	reader:asv	2
 person	simon peter	simon-peter	panel	20
 person	simon peter	simon-peter	prose	6
 person	simon peter	simon-peter	reader	20
+person	simon peter	simon-peter	reader:asv	20
+person	simon peter	simon-peter	reader:kjv	20
+person	simon the cananaean	simon-the-zealot	reader:asv	2
 person	simon the leper	simon-the-leper	panel	2
 person	simon the leper	simon-the-leper	prose	1
 person	simon the leper	simon-the-leper	reader	2
+person	simon the leper	simon-the-leper	reader:asv	2
+person	simon the leper	simon-the-leper	reader:kjv	2
 person	simon the sorcerer	simon-magus	prose	1
 person	simon the zealot	simon-the-zealot	panel	2
 person	simon the zealot	simon-the-zealot	reader	2
+person	simon the zealot	simon-the-zealot	reader:asv	1
 person	simon, who is also called peter	simon-peter	panel	2
 person	simon, who is also called peter	simon-peter	reader	2
 person	simon, who is called peter	simon-peter	panel	3
 person	simon, who is called peter	simon-peter	reader	3
+person	simon, who is called peter	simon-peter	reader:asv	1
+person	simon, who is called peter	simon-peter	reader:kjv	1
 person	solomon	solomon	panel	306
 person	solomon	solomon	prose	129
 person	solomon	solomon	reader	306
+person	solomon	solomon	reader:asv	305
+person	solomon	solomon	reader:kjv	306
 person	sosthenes	sosthenes	panel	2
 person	sosthenes	sosthenes	prose	1
 person	sosthenes	sosthenes	reader	2
+person	sosthenes	sosthenes	reader:asv	2
+person	sosthenes	sosthenes	reader:kjv	2
 person	spirit of god	holy-spirit	panel	15
 person	spirit of god	holy-spirit	prose	3
 person	spirit of god	holy-spirit	reader	15
+person	spirit of god	holy-spirit	reader:asv	26
+person	spirit of god	holy-spirit	reader:kjv	25
 person	spirit of the lord	holy-spirit	panel	4
 person	spirit of the lord	holy-spirit	prose	5
 person	spirit of the lord	holy-spirit	reader	4
+person	spirit of the lord	holy-spirit	reader:asv	5
+person	spirit of the lord	holy-spirit	reader:kjv	31
 person	spirit of truth	holy-spirit	panel	4
 person	spirit of truth	holy-spirit	prose	3
 person	spirit of truth	holy-spirit	reader	4
+person	spirit of truth	holy-spirit	reader:asv	4
+person	spirit of truth	holy-spirit	reader:kjv	4
 person	stephen	stephen-the-martyr	panel	7
 person	stephen	stephen-the-martyr	prose	19
 person	stephen	stephen-the-martyr	reader	7
+person	stephen	stephen-the-martyr	reader:asv	7
+person	stephen	stephen-the-martyr	reader:kjv	7
 person	tabitha	dorcas-tabitha	panel	2
 person	tabitha	dorcas-tabitha	prose	1
 person	tabitha	dorcas-tabitha	reader	2
+person	tabitha	dorcas-tabitha	reader:asv	2
+person	tabitha	dorcas-tabitha	reader:kjv	2
 person	teresa of ávila	teresa-of-avila	prose	1
 person	thaddaeus	thaddaeus	panel	2
 person	thaddaeus	thaddaeus	reader	2
+person	thaddaeus	thaddaeus	reader:asv	2
+person	thaddaeus	thaddaeus	reader:kjv	2
 person	the accuser	satan	panel	2
 person	the accuser	satan	prose	5
 person	the accuser	satan	reader	1
+person	the accuser	satan	reader:asv	1
+person	the accuser	satan	reader:kjv	1
 person	the comforter	holy-spirit	panel	1
 person	the comforter	holy-spirit	reader	1
+person	the comforter	holy-spirit	reader:asv	4
+person	the comforter	holy-spirit	reader:kjv	4
 person	the counselor	holy-spirit	panel	3
 person	the counselor	holy-spirit	reader	3
 person	the devil	satan	panel	34
 person	the devil	satan	prose	8
 person	the devil	satan	reader	34
+person	the devil	satan	reader:asv	33
+person	the devil	satan	reader:kjv	46
 person	the dragon	satan	panel	11
 person	the dragon	satan	prose	6
 person	the dragon	satan	reader	11
+person	the dragon	satan	reader:asv	10
+person	the dragon	satan	reader:kjv	14
 person	the ethiopian eunuch	ethiopian-eunuch	prose	5
 person	the evil one	satan	panel	13
 person	the evil one	satan	reader	13
+person	the evil one	satan	reader:asv	12
 person	the holy spirit	holy-spirit	panel	90
 person	the holy spirit	holy-spirit	prose	47
 person	the holy spirit	holy-spirit	reader	90
+person	the holy spirit	holy-spirit	reader:asv	91
+person	the holy spirit	holy-spirit	reader:kjv	2
 person	the nazarene	jesus-of-nazareth	panel	4
 person	the nazarene	jesus-of-nazareth	reader	4
+person	the nazarene	jesus-of-nazareth	reader:asv	4
 person	the old serpent	satan	panel	2
 person	the old serpent	satan	reader	2
+person	the old serpent	satan	reader:asv	2
 person	the tempter	satan	panel	2
 person	the tempter	satan	reader	2
+person	the tempter	satan	reader:asv	2
+person	the tempter	satan	reader:kjv	2
 person	theophilus	theophilus	panel	2
 person	theophilus	theophilus	prose	5
 person	theophilus	theophilus	reader	2
+person	theophilus	theophilus	reader:asv	2
+person	theophilus	theophilus	reader:kjv	2
 person	thomas	thomas-apostle	panel	11
 person	thomas	thomas-apostle	prose	6
 person	thomas	thomas-apostle	reader	11
+person	thomas	thomas-apostle	reader:asv	11
+person	thomas	thomas-apostle	reader:kjv	12
 person	thomas aquinas	thomas-aquinas	prose	2
 person	thomas cranmer	thomas-cranmer	prose	2
 person	tiberius	tiberius-caesar	prose	20
 person	tiberius caesar	tiberius-caesar	panel	1
 person	tiberius caesar	tiberius-caesar	prose	2
 person	tiberius caesar	tiberius-caesar	reader	1
+person	tiberius caesar	tiberius-caesar	reader:asv	1
+person	tiberius caesar	tiberius-caesar	reader:kjv	1
 person	timothy	timothy	panel	24
 person	timothy	timothy	prose	32
 person	timothy	timothy	reader	24
+person	timothy	timothy	reader:asv	24
+person	timothy	timothy	reader:kjv	7
 person	titus	titus	panel	13
 person	titus	titus	prose	8
 person	titus	titus	reader	13
+person	titus	titus	reader:asv	14
+person	titus	titus	reader:kjv	13
 person	uriah the hittite	uriah-the-hittite	panel	10
 person	uriah the hittite	uriah-the-hittite	prose	4
 person	uriah the hittite	uriah-the-hittite	reader	10
+person	uriah the hittite	uriah-the-hittite	reader:asv	10
+person	uriah the hittite	uriah-the-hittite	reader:kjv	10
 person	uzziah	uzziah	panel	29
 person	uzziah	uzziah	prose	16
 person	uzziah	uzziah	reader	29
+person	uzziah	uzziah	reader:asv	29
+person	uzziah	uzziah	reader:kjv	27
 person	william carey	william-carey	prose	1
 person	william j. seymour	william-seymour	prose	1
 person	william wilberforce	william-wilberforce	prose	2
@@ -1114,8 +1848,12 @@ person	yeshua	jesus-of-nazareth	prose	1
 person	zacchaeus	zacchaeus	panel	3
 person	zacchaeus	zacchaeus	prose	1
 person	zacchaeus	zacchaeus	reader	3
+person	zacchaeus	zacchaeus	reader:asv	3
+person	zacchaeus	zacchaeus	reader:kjv	3
 person	zacharias	zechariah-father-of-john-baptist	panel	9
 person	zacharias	zechariah-father-of-john-baptist	reader	9
+person	zacharias	zechariah-father-of-john-baptist	reader:asv	9
+person	zacharias	zechariah-father-of-john-baptist	reader:kjv	10
 person	zadok	zadok-in-jesus-genealogy	panel	55
 person	zadok	zadok-in-jesus-genealogy	prose	2
 person	zadok	zadok-in-jesus-genealogy	reader	2
@@ -1124,28 +1862,46 @@ person	zechariah	zechariah-father-of-john-baptist	prose	12
 person	zechariah	zechariah-the-prophet	prose	11
 person	zechariah the son of berechiah	zechariah-the-prophet	panel	2
 person	zechariah the son of berechiah	zechariah-the-prophet	reader	2
+person	zechariah the son of berechiah	zechariah-the-prophet	reader:asv	2
 person	zechariah the son of iddo	zechariah-the-prophet	panel	2
 person	zechariah the son of iddo	zechariah-the-prophet	reader	2
+person	zechariah the son of iddo	zechariah-the-prophet	reader:asv	2
+person	zechariah the son of iddo	zechariah-the-prophet	reader:kjv	2
 person	zerah	zerah-son-of-judah	panel	22
 person	zerah	zerah-son-of-judah	prose	4
 person	zerah	zerah-son-of-judah	reader	11
+person	zerah	zerah-son-of-judah	reader:asv	11
+person	zerah	zerah-son-of-judah	reader:kjv	10
 person	zerubbabel	zerubbabel	panel	25
 person	zerubbabel	zerubbabel	prose	23
 person	zerubbabel	zerubbabel	reader	25
+person	zerubbabel	zerubbabel	reader:asv	25
+person	zerubbabel	zerubbabel	reader:kjv	22
 poi	amphipolis	amphipolis	panel	1
 poi	amphipolis	amphipolis	prose	1
 poi	amphipolis	amphipolis	reader	1
+poi	amphipolis	amphipolis	reader:asv	1
+poi	amphipolis	amphipolis	reader:kjv	1
 poi	ancient agora of athens	ancient-agora-athens	prose	1
 poi	antipatris	antipatris	panel	1
 poi	antipatris	antipatris	reader	1
+poi	antipatris	antipatris	reader:asv	1
+poi	antipatris	antipatris	reader:kjv	1
 poi	antonia fortress	antonia-fortress	prose	1
 poi	apollonia	apollonia-macedonia	panel	1
 poi	apollonia	apollonia-macedonia	reader	1
+poi	apollonia	apollonia-macedonia	reader:asv	1
+poi	apollonia	apollonia-macedonia	reader:kjv	1
 poi	areopagus	areopagus-athens	panel	2
 poi	areopagus	areopagus-athens	prose	9
 poi	areopagus	areopagus-athens	reader	2
+poi	areopagus	areopagus-athens	reader:asv	2
+poi	areopagus	areopagus-athens	reader:kjv	1
+poi	armageddon	megiddo	reader:kjv	1
 poi	assos	assos	panel	2
 poi	assos	assos	reader	2
+poi	assos	assos	reader:asv	2
+poi	assos	assos	reader:kjv	2
 poi	bab kisan	bab-kisan-damascus	prose	1
 poi	basilica of st. john	basilica-st-john	prose	1
 poi	basilica of st. paul outside the walls	basilica-st-paul-outside-walls-rome	prose	1
@@ -1153,114 +1909,176 @@ poi	basilica of the annunciation	basilica-of-annunciation-nazareth	prose	2
 poi	beersheba	beersheba	panel	34
 poi	beersheba	beersheba	prose	16
 poi	beersheba	beersheba	reader	34
+poi	beersheba	beersheba	reader:kjv	34
 poi	beth shean	beth-shean	panel	6
 poi	beth shean	beth-shean	prose	1
 poi	beth shean	beth-shean	reader	6
+poi	bethabara	al-maghtas	reader:kjv	1
 poi	bethany beyond the jordan	al-maghtas	panel	1
 poi	bethany beyond the jordan	al-maghtas	prose	2
 poi	bethany beyond the jordan	al-maghtas	reader	1
+poi	bethany beyond the jordan	al-maghtas	reader:asv	1
 poi	bethel	bethel	panel	69
 poi	bethel	bethel	prose	24
 poi	bethel	bethel	reader	69
+poi	bethel	bethel	reader:kjv	66
 poi	bethesda	pool-of-bethesda	panel	1
 poi	bethesda	pool-of-bethesda	reader	1
+poi	bethesda	pool-of-bethesda	reader:asv	1
+poi	bethesda	pool-of-bethesda	reader:kjv	1
 poi	bethsaida	bethsaida	panel	7
 poi	bethsaida	bethsaida	prose	22
 poi	bethsaida	bethsaida	reader	7
+poi	bethsaida	bethsaida	reader:asv	7
+poi	bethsaida	bethsaida	reader:kjv	7
 poi	caesarea	caesarea-maritima	panel	15
 poi	caesarea	caesarea-maritima	prose	31
 poi	caesarea	caesarea-maritima	reader	15
+poi	caesarea	caesarea-maritima	reader:asv	15
+poi	caesarea	caesarea-maritima	reader:kjv	15
 poi	caesarea maritima	caesarea-maritima	prose	13
 poi	caesarea philippi	caesarea-philippi	panel	2
 poi	caesarea philippi	caesarea-philippi	prose	11
 poi	caesarea philippi	caesarea-philippi	reader	2
+poi	caesarea philippi	caesarea-philippi	reader:asv	2
+poi	caesarea philippi	caesarea-philippi	reader:kjv	2
 poi	cave of the apocalypse	cave-of-apocalypse-patmos	prose	2
 poi	chorazin	chorazin	panel	2
 poi	chorazin	chorazin	prose	2
 poi	chorazin	chorazin	reader	2
+poi	chorazin	chorazin	reader:asv	2
+poi	chorazin	chorazin	reader:kjv	2
 poi	church of the holy sepulchre	golgotha	prose	4
 poi	city of david	city-of-david	prose	29
+poi	city of david	city-of-david	reader:asv	46
+poi	city of david	city-of-david	reader:kjv	46
 poi	dura-europos house church	dura-europos-house-church	prose	1
 poi	emmaus	emmaus	panel	1
 poi	emmaus	emmaus	prose	5
 poi	emmaus	emmaus	reader	1
+poi	emmaus	emmaus	reader:asv	1
+poi	emmaus	emmaus	reader:kjv	1
 poi	erastus inscription	erastus-inscription-corinth	prose	1
 poi	gallio inscription	gallio-inscription-delphi	prose	4
 poi	garden tomb	garden-tomb	prose	11
 poi	gethsemane	gethsemane	panel	2
 poi	gethsemane	gethsemane	prose	10
 poi	gethsemane	gethsemane	reader	2
+poi	gethsemane	gethsemane	reader:asv	2
+poi	gethsemane	gethsemane	reader:kjv	2
 poi	golgotha	golgotha	panel	3
 poi	golgotha	golgotha	prose	4
 poi	golgotha	golgotha	reader	3
+poi	golgotha	golgotha	reader:asv	3
+poi	golgotha	golgotha	reader:kjv	3
 poi	hebron	hebron	panel	72
 poi	hebron	hebron	prose	32
 poi	hebron	hebron	reader	72
+poi	hebron	hebron	reader:asv	72
+poi	hebron	hebron	reader:kjv	73
 poi	herodium	herodium	prose	5
 poi	hierapolis	hierapolis	panel	1
 poi	hierapolis	hierapolis	prose	6
 poi	hierapolis	hierapolis	reader	1
+poi	hierapolis	hierapolis	reader:asv	1
+poi	hierapolis	hierapolis	reader:kjv	1
 poi	jericho	jericho	panel	64
 poi	jericho	jericho	prose	44
 poi	jericho	jericho	reader	64
+poi	jericho	jericho	reader:asv	64
+poi	jericho	jericho	reader:kjv	64
 poi	kursi	kursi	prose	2
 poi	machaerus	machaerus	prose	4
 poi	magdala	magdala	panel	1
 poi	magdala	magdala	prose	10
 poi	magdala	magdala	reader	1
+poi	magdala	magdala	reader:kjv	1
 poi	mamertine prison	mamertine-prison-rome	prose	1
 poi	mars hill	areopagus-athens	prose	1
 poi	masada	masada	prose	9
 poi	megiddo	megiddo	panel	12
 poi	megiddo	megiddo	prose	13
 poi	megiddo	megiddo	reader	12
+poi	megiddo	megiddo	reader:asv	11
+poi	megiddo	megiddo	reader:kjv	11
 poi	mount of beatitudes	mount-of-beatitudes	prose	1
 poi	mount sinai	mount-sinai	panel	21
 poi	mount sinai	mount-sinai	prose	12
 poi	mount sinai	mount-sinai	reader	21
+poi	mount sinai	mount-sinai	reader:asv	21
+poi	mount sinai	mount-sinai	reader:kjv	19
 poi	neapolis	neapolis-philippi-port	panel	1
 poi	neapolis	neapolis-philippi-port	reader	1
+poi	neapolis	neapolis-philippi-port	reader:asv	1
+poi	neapolis	neapolis-philippi-port	reader:kjv	1
 poi	paphos	paphos	panel	2
 poi	paphos	paphos	prose	3
 poi	paphos	paphos	reader	2
+poi	paphos	paphos	reader:asv	2
+poi	paphos	paphos	reader:kjv	2
 poi	patara	patara	panel	1
 poi	patara	patara	reader	1
+poi	patara	patara	reader:asv	1
+poi	patara	patara	reader:kjv	1
 poi	perga	perga	panel	3
 poi	perga	perga	prose	1
 poi	perga	perga	reader	3
+poi	perga	perga	reader:asv	3
+poi	perga	perga	reader:kjv	3
 poi	pool of bethesda	pool-of-bethesda	prose	1
 poi	pool of siloam	pool-of-siloam	panel	2
 poi	pool of siloam	pool-of-siloam	prose	7
 poi	pool of siloam	pool-of-siloam	reader	2
+poi	pool of siloam	pool-of-siloam	reader:asv	1
+poi	pool of siloam	pool-of-siloam	reader:kjv	2
 poi	praetorium	antonia-fortress	prose	1
+poi	praetorium	antonia-fortress	reader:kjv	1
 poi	qumran	qumran	prose	100
 poi	rhegium	rhegium	panel	1
 poi	rhegium	rhegium	prose	1
 poi	rhegium	rhegium	reader	1
+poi	rhegium	rhegium	reader:asv	1
+poi	rhegium	rhegium	reader:kjv	1
 poi	salamis	salamis	panel	1
 poi	salamis	salamis	prose	1
 poi	salamis	salamis	reader	1
+poi	salamis	salamis	reader:asv	1
+poi	salamis	salamis	reader:kjv	1
 poi	sepphoris	sepphoris	prose	1
 poi	shechem	shechem	panel	68
 poi	shechem	shechem	prose	25
 poi	shechem	shechem	reader	68
+poi	shechem	shechem	reader:asv	68
+poi	shechem	shechem	reader:kjv	64
 poi	shiloh	shiloh	panel	33
 poi	shiloh	shiloh	prose	11
 poi	shiloh	shiloh	reader	33
+poi	shiloh	shiloh	reader:asv	34
+poi	shiloh	shiloh	reader:kjv	33
 poi	siloam	pool-of-siloam	panel	1
 poi	siloam	pool-of-siloam	prose	4
 poi	siloam	pool-of-siloam	reader	1
+poi	siloam	pool-of-siloam	reader:asv	2
+poi	siloam	pool-of-siloam	reader:kjv	1
 poi	straight street	straight-street-damascus	prose	1
 poi	street called straight	straight-street-damascus	prose	2
+poi	sychem	shechem	reader:kjv	2
 poi	syracuse	syracuse	panel	1
 poi	syracuse	syracuse	prose	1
 poi	syracuse	syracuse	reader	1
+poi	syracuse	syracuse	reader:asv	1
+poi	syracuse	syracuse	reader:kjv	1
 poi	the praetorium	antonia-fortress	panel	6
 poi	the praetorium	antonia-fortress	reader	6
+poi	the praetorium	antonia-fortress	reader:asv	6
 poi	tomb of lazarus	tomb-of-lazarus-bethany	prose	1
+poi	tower of david	tower-of-david	reader:asv	1
+poi	tower of david	tower-of-david	reader:kjv	1
 poi	upper room	upper-room	panel	13
 poi	upper room	upper-room	prose	5
 poi	upper room	upper-room	reader	13
+poi	upper room	upper-room	reader:asv	6
+poi	upper room	upper-room	reader:kjv	3
 poi	via recta	straight-street-damascus	prose	1
 poi	western wall	western-wall	prose	8
 timeline	absalom's rebellion	bib-um-absaloms-rebellion	prose	1
@@ -1288,6 +2106,8 @@ timeline	noah's flood	bib-prim-flood	prose	2
 timeline	parable of the good samaritan	bib-loc-parable-good-samaritan	prose	3
 timeline	parable of the prodigal son	bib-loc-parable-prodigal-son	prose	1
 timeline	parable of the sower	bib-loc-parable-of-the-sower	prose	1
+timeline	parable of the sower	bib-loc-parable-of-the-sower	reader:asv	1
+timeline	parable of the sower	bib-loc-parable-of-the-sower	reader:kjv	1
 timeline	paul's arrest in jerusalem	bib-ac-paul-arrest-jerusalem	prose	2
 timeline	paul's first missionary journey	bib-ac-paul-first-journey	prose	2
 timeline	paul's first roman imprisonment	bib-ac-paul-first-roman-imprisonment	prose	1
@@ -1304,6 +2124,7 @@ timeline	second vatican council	vatican-ii-1962	prose	3
 timeline	sermon on the mount	bib-loc-sermon-on-the-mount	prose	6
 timeline	stephen's martyrdom	bib-ac-stephen-martyrdom	prose	2
 timeline	temptation in the wilderness	bib-loc-temptation-wilderness	prose	1
+timeline	temptation in the wilderness	bib-loc-temptation-wilderness	reader:kjv	2
 timeline	the ascension	bib-loc-ascension	prose	7
 timeline	the battle of actium	wld-rom-battle-of-actium	prose	1
 timeline	the binding of isaac	bib-pat-binding-isaac	prose	1
@@ -1316,8 +2137,12 @@ timeline	the crucifixion	bib-loc-crucifixion	prose	33
 timeline	the davidic covenant	bib-um-davidic-covenant	prose	2
 timeline	the death of abraham	bib-pat-death-abraham	panel	2
 timeline	the death of abraham	bib-pat-death-abraham	reader	2
+timeline	the death of abraham	bib-pat-death-abraham	reader:asv	2
+timeline	the death of abraham	bib-pat-death-abraham	reader:kjv	2
 timeline	the death of joshua	bib-cj-death-of-joshua	panel	1
 timeline	the death of joshua	bib-cj-death-of-joshua	reader	1
+timeline	the death of joshua	bib-cj-death-of-joshua	reader:asv	1
+timeline	the death of joshua	bib-cj-death-of-joshua	reader:kjv	1
 timeline	the destruction of sodom and gomorrah	bib-pat-sodom-gomorrah	prose	2
 timeline	the early jerusalem church	bib-ac-jerusalem-church-community	prose	1
 timeline	the exodus from egypt	bib-exo-the-exodus	prose	4
@@ -1335,6 +2160,8 @@ timeline	the olivet discourse	bib-loc-olivet-discourse	prose	6
 timeline	the resurrection	bib-loc-resurrection	panel	26
 timeline	the resurrection	bib-loc-resurrection	prose	52
 timeline	the resurrection	bib-loc-resurrection	reader	26
+timeline	the resurrection	bib-loc-resurrection	reader:asv	26
+timeline	the resurrection	bib-loc-resurrection	reader:kjv	25
 timeline	the table of nations	bib-prim-table-of-nations	prose	1
 timeline	the tower of babel	bib-prim-tower-of-babel	prose	5
 timeline	the transfiguration	bib-loc-transfiguration	prose	5
@@ -1349,25 +2176,39 @@ topic	amarna letters	amarna-letters	prose	8
 topic	ammonite	moabites-and-ammonites	panel	8
 topic	ammonite	moabites-and-ammonites	prose	17
 topic	ammonite	moabites-and-ammonites	reader	8
+topic	ammonite	moabites-and-ammonites	reader:asv	9
+topic	ammonite	moabites-and-ammonites	reader:kjv	9
 topic	ammonites	moabites-and-ammonites	panel	8
 topic	ammonites	moabites-and-ammonites	prose	10
 topic	ammonites	moabites-and-ammonites	reader	8
+topic	ammonites	moabites-and-ammonites	reader:asv	8
+topic	ammonites	moabites-and-ammonites	reader:kjv	22
 topic	an angel	angels	panel	36
 topic	an angel	angels	prose	30
 topic	an angel	angels	reader	36
+topic	an angel	angels	reader:asv	35
+topic	an angel	angels	reader:kjv	35
 topic	angel	angels	panel	92
 topic	angel	angels	prose	11
 topic	angel	angels	reader	92
+topic	angel	angels	reader:asv	34
+topic	angel	angels	reader:kjv	41
 topic	angels	angels	panel	91
 topic	angels	angels	prose	37
 topic	angels	angels	reader	91
+topic	angels	angels	reader:asv	91
+topic	angels	angels	reader:kjv	94
 topic	arad ostraca	arad-ostraca	prose	1
 topic	assyrian	assyrians	panel	10
 topic	assyrian	assyrians	prose	121
 topic	assyrian	assyrians	reader	10
+topic	assyrian	assyrians	reader:asv	12
+topic	assyrian	assyrians	reader:kjv	13
 topic	assyrians	assyrians	panel	10
 topic	assyrians	assyrians	prose	6
 topic	assyrians	assyrians	reader	10
+topic	assyrians	assyrians	reader:asv	9
+topic	assyrians	assyrians	reader:kjv	10
 topic	babylonian	babylonians	panel	1
 topic	babylonian	babylonians	prose	88
 topic	babylonian	babylonians	reader	1
@@ -1376,6 +2217,8 @@ topic	babylonian chronicles	babylonian-chronicles	prose	7
 topic	babylonians	babylonians	panel	4
 topic	babylonians	babylonians	prose	11
 topic	babylonians	babylonians	reader	4
+topic	babylonians	babylonians	reader:asv	4
+topic	babylonians	babylonians	reader:kjv	4
 topic	baruch bullae	baruch-bullae	prose	1
 topic	behistun inscription	behistun-inscription	prose	5
 topic	beni hasan tomb painting	beni-hasan-tomb-painting	prose	1
@@ -1384,6 +2227,8 @@ topic	black obelisk	black-obelisk	prose	5
 topic	black obelisk of shalmaneser iii	black-obelisk	prose	2
 topic	bodmer collection	bodmer-papyri	prose	1
 topic	bodmer papyri	bodmer-papyri	prose	1
+topic	broad wall	broad-wall-jerusalem	reader:asv	2
+topic	broad wall	broad-wall-jerusalem	reader:kjv	2
 topic	brooklyn papyrus 35.1446	brooklyn-papyrus-35-1446	prose	1
 topic	bubastite portal	bubastite-portal	prose	1
 topic	bubastite portal at karnak	bubastite-portal	prose	1
@@ -1393,32 +2238,51 @@ topic	cairo geniza	cairo-geniza	prose	2
 topic	canaanite	canaanites	panel	29
 topic	canaanite	canaanites	prose	64
 topic	canaanite	canaanites	reader	29
+topic	canaanite	canaanites	reader:asv	30
+topic	canaanite	canaanites	reader:kjv	14
 topic	canaanites	canaanites	panel	43
 topic	canaanites	canaanites	prose	1
 topic	canaanites	canaanites	reader	43
+topic	canaanites	canaanites	reader:asv	38
+topic	canaanites	canaanites	reader:kjv	55
 topic	cast lots	casting-lots	panel	21
 topic	cast lots	casting-lots	prose	3
 topic	cast lots	casting-lots	reader	21
+topic	cast lots	casting-lots	reader:asv	21
+topic	cast lots	casting-lots	reader:kjv	20
 topic	casting lots	casting-lots	panel	2
 topic	casting lots	casting-lots	prose	2
 topic	casting lots	casting-lots	reader	2
+topic	casting lots	casting-lots	reader:asv	2
+topic	casting lots	casting-lots	reader:kjv	2
 topic	chaldean	babylonians	panel	4
 topic	chaldean	babylonians	prose	2
 topic	chaldean	babylonians	reader	4
+topic	chaldean	babylonians	reader:asv	3
+topic	chaldean	babylonians	reader:kjv	2
 topic	chaldeans	babylonians	panel	74
 topic	chaldeans	babylonians	prose	6
 topic	chaldeans	babylonians	reader	74
+topic	chaldeans	babylonians	reader:asv	75
+topic	chaldeans	babylonians	reader:kjv	66
 topic	cherub	cherubim	panel	29
 topic	cherub	cherubim	reader	29
+topic	cherub	cherubim	reader:asv	30
+topic	cherub	cherubim	reader:kjv	30
 topic	cherubim	cherubim	panel	65
 topic	cherubim	cherubim	prose	5
 topic	cherubim	cherubim	reader	65
+topic	cherubim	cherubim	reader:asv	65
 topic	chief priests	chief-priests	panel	63
 topic	chief priests	chief-priests	prose	22
 topic	chief priests	chief-priests	reader	63
+topic	chief priests	chief-priests	reader:asv	63
+topic	chief priests	chief-priests	reader:kjv	65
 topic	children of israel	israelites	panel	643
 topic	children of israel	israelites	prose	1
 topic	children of israel	israelites	reader	643
+topic	children of israel	israelites	reader:asv	639
+topic	children of israel	israelites	reader:kjv	647
 topic	codex alexandrinus	codex-alexandrinus	prose	3
 topic	codex bezae	codex-bezae	prose	4
 topic	codex claromontanus	codex-claromontanus	prose	1
@@ -1437,38 +2301,54 @@ topic	deir alla inscription	deir-alla-inscription	prose	2
 topic	demon	demons	panel	23
 topic	demon	demons	prose	2
 topic	demon	demons	reader	23
+topic	demon	demons	reader:asv	23
 topic	demons	demons	panel	56
 topic	demons	demons	prose	9
 topic	demons	demons	reader	56
+topic	demons	demons	reader:asv	55
 topic	diatessaron	diatessaron	prose	4
 topic	durupinar site	noahs-ark-claims	prose	2
 topic	durupınar formation	noahs-ark-claims	prose	1
 topic	edomite	edomites	panel	7
 topic	edomite	edomites	prose	7
 topic	edomite	edomites	reader	7
+topic	edomite	edomites	reader:asv	7
+topic	edomite	edomites	reader:kjv	7
 topic	edomites	edomites	panel	12
 topic	edomites	edomites	prose	1
 topic	edomites	edomites	reader	12
+topic	edomites	edomites	reader:asv	11
+topic	edomites	edomites	reader:kjv	13
 topic	egyptian	egyptians	panel	30
 topic	egyptian	egyptians	prose	178
 topic	egyptian	egyptians	reader	30
+topic	egyptian	egyptians	reader:asv	27
+topic	egyptian	egyptians	reader:kjv	27
 topic	egyptian execration texts	execration-texts	prose	1
 topic	egyptians	egyptians	panel	93
 topic	egyptians	egyptians	prose	12
 topic	egyptians	egyptians	reader	93
+topic	egyptians	egyptians	reader:asv	95
+topic	egyptians	egyptians	reader:kjv	98
 topic	ekron royal dedicatory inscription	ekron-royal-dedicatory-inscription	prose	1
 topic	el-araj	bethsaida-candidate-sites	prose	2
 topic	elders	jewish-elders	panel	190
 topic	elders	jewish-elders	prose	46
 topic	elders	jewish-elders	reader	33
+topic	elders	jewish-elders	reader:asv	32
+topic	elders	jewish-elders	reader:kjv	33
 topic	elephantine papyri	elephantine-papyri	prose	4
 topic	enuma elish	enuma-elish	prose	5
 topic	epic of gilgamesh	epic-of-gilgamesh	prose	5
 topic	evil spirit	demons	panel	9
 topic	evil spirit	demons	reader	9
+topic	evil spirit	demons	reader:asv	10
+topic	evil spirit	demons	reader:kjv	10
 topic	evil spirits	demons	panel	4
 topic	evil spirits	demons	prose	2
 topic	evil spirits	demons	reader	4
+topic	evil spirits	demons	reader:asv	4
+topic	evil spirits	demons	reader:kjv	4
 topic	first apocalypse of james	nag-hammadi-codices	prose	1
 topic	gehenna	gehenna	panel	12
 topic	gehenna	gehenna	reader	12
@@ -1476,9 +2356,13 @@ topic	gemariah bulla	gemariah-bulla	prose	1
 topic	gentile	gentiles	panel	2
 topic	gentile	gentiles	prose	56
 topic	gentile	gentiles	reader	2
+topic	gentile	gentiles	reader:asv	1
+topic	gentile	gentiles	reader:kjv	2
 topic	gentiles	gentiles	panel	83
 topic	gentiles	gentiles	prose	33
 topic	gentiles	gentiles	reader	83
+topic	gentiles	gentiles	reader:asv	103
+topic	gentiles	gentiles	reader:kjv	131
 topic	gilgamesh epic	epic-of-gilgamesh	prose	1
 topic	gospel of thomas	gospel-of-thomas	prose	3
 topic	great isaiah scroll	great-isaiah-scroll	prose	5
@@ -1486,11 +2370,15 @@ topic	great psalms scroll	great-psalms-scroll	prose	1
 topic	greek	greeks	panel	15
 topic	greek	greeks	prose	390
 topic	greek	greeks	reader	15
+topic	greek	greeks	reader:asv	14
+topic	greek	greeks	reader:kjv	12
 topic	greek minor prophets scroll	greek-minor-prophets-scroll	prose	3
 topic	greek old testament	septuagint	prose	5
 topic	greeks	greeks	panel	19
 topic	greeks	greeks	prose	8
 topic	greeks	greeks	reader	19
+topic	greeks	greeks	reader:asv	17
+topic	greeks	greeks	reader:kjv	14
 topic	habakkuk commentary	habakkuk-pesher	prose	1
 topic	habakkuk pesher	habakkuk-pesher	prose	5
 topic	hammurabi stele	code-of-hammurabi	prose	1
@@ -1502,9 +2390,12 @@ topic	hezekiah's tunnel	hezekiahs-tunnel	prose	5
 topic	hinnom	gehenna	panel	1
 topic	hinnom	gehenna	prose	5
 topic	hinnom	gehenna	reader	1
+topic	hinnom	gehenna	reader:asv	1
+topic	hinnom	gehenna	reader:kjv	1
 topic	holy of holies	holy-of-holies	panel	1
 topic	holy of holies	holy-of-holies	prose	3
 topic	holy of holies	holy-of-holies	reader	1
+topic	holy of holies	holy-of-holies	reader:asv	1
 topic	ipuwer papyrus	ipuwer-papyrus	prose	2
 topic	isaiah bulla	isaiah-bulla	prose	1
 topic	isaiah scroll	great-isaiah-scroll	prose	4
@@ -1512,6 +2403,8 @@ topic	israel stele	merneptah-stele	prose	1
 topic	israelites	israelites	panel	9
 topic	israelites	israelites	prose	30
 topic	israelites	israelites	reader	9
+topic	israelites	israelites	reader:asv	10
+topic	israelites	israelites	reader:kjv	18
 topic	james ossuary	james-ossuary	prose	2
 topic	jehoash inscription	jehoash-inscription	prose	1
 topic	jehoiachin's rations tablets	jehoiachin-ration-tablets	prose	1
@@ -1519,9 +2412,13 @@ topic	jesus boat	galilee-boat	prose	3
 topic	jewish	jews	panel	7
 topic	jewish	jews	prose	388
 topic	jewish	jews	reader	7
+topic	jewish	jews	reader:asv	1
+topic	jewish	jews	reader:kjv	1
 topic	jews	jews	panel	38
 topic	jews	jews	prose	63
 topic	jews	jews	reader	38
+topic	jews	jews	reader:asv	36
+topic	jews	jews	reader:kjv	27
 topic	khirbet el-maqatir	ai-candidate-sites	prose	3
 topic	khirbet en-nahas	khirbet-en-nahas	prose	2
 topic	khirbet nisya	ai-candidate-sites	prose	2
@@ -1535,9 +2432,13 @@ topic	letter of peter to philip	nag-hammadi-codices	prose	1
 topic	levite	levites	panel	29
 topic	levite	levites	prose	9
 topic	levite	levites	reader	29
+topic	levite	levites	reader:asv	29
+topic	levite	levites	reader:kjv	29
 topic	levites	levites	panel	263
 topic	levites	levites	prose	18
 topic	levites	levites	reader	263
+topic	levites	levites	reader:asv	263
+topic	levites	levites	reader:kjv	265
 topic	lmlk seal impressions	lmlk-seal-impressions	prose	1
 topic	lxx	septuagint	prose	2
 topic	mari tablets	mari-tablets	prose	2
@@ -1547,13 +2448,19 @@ topic	mesha stele	mesha-stele	prose	8
 topic	messiah	the-christ	panel	2
 topic	messiah	the-christ	prose	37
 topic	messiah	the-christ	reader	2
+topic	messiah	the-christ	reader:asv	2
+topic	messiah	the-christ	reader:kjv	2
 topic	moabite	moabites-and-ammonites	panel	4
 topic	moabite	moabites-and-ammonites	prose	18
 topic	moabite	moabites-and-ammonites	reader	4
+topic	moabite	moabites-and-ammonites	reader:asv	3
+topic	moabite	moabites-and-ammonites	reader:kjv	3
 topic	moabite stone	mesha-stele	prose	6
 topic	moabites	moabites-and-ammonites	panel	16
 topic	moabites	moabites-and-ammonites	prose	4
 topic	moabites	moabites-and-ammonites	reader	16
+topic	moabites	moabites-and-ammonites	reader:asv	16
+topic	moabites	moabites-and-ammonites	reader:kjv	19
 topic	most holy place	holy-of-holies	panel	1
 topic	most holy place	holy-of-holies	prose	2
 topic	most holy place	holy-of-holies	reader	1
@@ -1562,10 +2469,13 @@ topic	nabonidus cylinder	nabonidus-cylinder	prose	2
 topic	nag hammadi codices	nag-hammadi-codices	prose	2
 topic	nahal hever greek minor prophets scroll	greek-minor-prophets-scroll	prose	7
 topic	nash papyrus	nash-papyrus	prose	1
+topic	nathan-melech	nathan-melech-bulla	reader:asv	1
 topic	nathan-melech bulla	nathan-melech-bulla	prose	1
 topic	new covenant	new-covenant	panel	10
 topic	new covenant	new-covenant	prose	7
 topic	new covenant	new-covenant	reader	10
+topic	new covenant	new-covenant	reader:asv	8
+topic	new covenant	new-covenant	reader:kjv	4
 topic	nicene creed	nicene-creed	prose	6
 topic	nicene-constantinopolitan creed	nicene-creed	prose	1
 topic	nuzi tablets	nuzi-tablets	prose	3
@@ -1587,60 +2497,91 @@ topic	papyrus 75	papyrus-75	prose	2
 topic	passover	passover	panel	12
 topic	passover	passover	prose	46
 topic	passover	passover	reader	12
+topic	passover	passover	reader:asv	12
+topic	passover	passover	reader:kjv	14
 topic	persian	persians	panel	2
 topic	persian	persians	prose	140
 topic	persian	persians	reader	2
+topic	persian	persians	reader:asv	2
+topic	persian	persians	reader:kjv	3
 topic	persians	persians	panel	5
 topic	persians	persians	prose	5
 topic	persians	persians	reader	5
+topic	persians	persians	reader:asv	5
+topic	persians	persians	reader:kjv	7
 topic	peshitta	peshitta	prose	4
 topic	pharisee	topic-pharisees	panel	12
 topic	pharisee	topic-pharisees	prose	13
 topic	pharisee	topic-pharisees	reader	12
+topic	pharisee	topic-pharisees	reader:asv	12
+topic	pharisee	topic-pharisees	reader:kjv	13
 topic	pharisees	topic-pharisees	panel	89
 topic	pharisees	topic-pharisees	prose	59
 topic	pharisees	topic-pharisees	reader	89
+topic	pharisees	topic-pharisees	reader:asv	86
+topic	pharisees	topic-pharisees	reader:kjv	87
 topic	pharisees and sadducees compared	pharisees-and-sadducees-compared	prose	2
 topic	philistine	philistines	panel	33
 topic	philistine	philistines	prose	52
 topic	philistine	philistines	reader	33
+topic	philistine	philistines	reader:asv	33
+topic	philistine	philistines	reader:kjv	33
 topic	philistines	philistines	panel	254
 topic	philistines	philistines	prose	37
 topic	philistines	philistines	reader	254
+topic	philistines	philistines	reader:asv	254
+topic	philistines	philistines	reader:kjv	254
 topic	pilate ring	pilate-ring	prose	1
 topic	pilate stone	pilate-stone	prose	2
 topic	pilgrimage road	pilgrimage-road-jerusalem	prose	2
 topic	preparation day	day-of-preparation	panel	1
 topic	preparation day	day-of-preparation	reader	1
+topic	preparation day	day-of-preparation	reader:kjv	1
 topic	qumran scrolls	dead-sea-scrolls	prose	2
 topic	roman	romans	panel	8
 topic	roman	romans	prose	481
 topic	roman	romans	reader	8
+topic	roman	romans	reader:asv	7
+topic	roman	romans	reader:kjv	5
 topic	romans	romans	panel	3
 topic	romans	romans	prose	21
 topic	romans	romans	reader	3
+topic	romans	romans	reader:asv	3
+topic	romans	romans	reader:kjv	3
 topic	ron wyatt's claimed discoveries	ron-wyatt-claimed-discoveries	prose	1
 topic	sabbath	sabbath	panel	90
 topic	sabbath	sabbath	prose	39
 topic	sabbath	sabbath	reader	90
+topic	sabbath	sabbath	reader:asv	92
+topic	sabbath	sabbath	reader:kjv	81
 topic	sabbath day	sabbath	panel	46
 topic	sabbath day	sabbath	prose	1
 topic	sabbath day	sabbath	reader	46
+topic	sabbath day	sabbath	reader:asv	45
+topic	sabbath day	sabbath	reader:kjv	56
 topic	sadducee	topic-sadducees	prose	1
 topic	sadducees	topic-sadducees	panel	14
 topic	sadducees	topic-sadducees	prose	46
 topic	sadducees	topic-sadducees	reader	14
+topic	sadducees	topic-sadducees	reader:asv	14
+topic	sadducees	topic-sadducees	reader:kjv	14
 topic	sahidic coptic	coptic-versions	prose	1
 topic	samaritan	samaritans	panel	5
 topic	samaritan	samaritans	prose	44
 topic	samaritan	samaritans	reader	5
+topic	samaritan	samaritans	reader:asv	5
+topic	samaritan	samaritans	reader:kjv	3
 topic	samaritan pentateuch	samaritan-pentateuch	prose	10
 topic	samaritans	samaritans	panel	7
 topic	samaritans	samaritans	prose	12
 topic	samaritans	samaritans	reader	7
+topic	samaritans	samaritans	reader:asv	7
+topic	samaritans	samaritans	reader:kjv	7
 topic	scribes	scribes	panel	68
 topic	scribes	scribes	prose	39
 topic	scribes	scribes	reader	66
+topic	scribes	scribes	reader:asv	62
+topic	scribes	scribes	reader:kjv	66
 topic	sennacherib's prism	sennacherib-prism	prose	5
 topic	septuagint	septuagint	prose	66
 topic	siloam inscription	siloam-inscription	prose	2
@@ -1649,18 +2590,26 @@ topic	sinaiticus	codex-sinaiticus	prose	20
 topic	son of man	son-of-man	panel	197
 topic	son of man	son-of-man	prose	10
 topic	son of man	son-of-man	reader	87
+topic	son of man	son-of-man	reader:asv	84
+topic	son of man	son-of-man	reader:kjv	88
 topic	soreg inscription	temple-warning-inscription	prose	1
 topic	stepped stone structure	stepped-stone-structure	prose	5
 topic	stepped street	pilgrimage-road-jerusalem	prose	1
 topic	synagogue	synagogue	panel	44
 topic	synagogue	synagogue	prose	64
 topic	synagogue	synagogue	reader	44
+topic	synagogue	synagogue	reader:asv	44
+topic	synagogue	synagogue	reader:kjv	45
 topic	synagogues	synagogue	panel	25
 topic	synagogues	synagogue	prose	13
 topic	synagogues	synagogue	reader	25
+topic	synagogues	synagogue	reader:asv	26
+topic	synagogues	synagogue	reader:kjv	24
 topic	tabernacle	tabernacle	panel	125
 topic	tabernacle	tabernacle	prose	32
 topic	tabernacle	tabernacle	reader	125
+topic	tabernacle	tabernacle	reader:asv	147
+topic	tabernacle	tabernacle	reader:kjv	328
 topic	tall el-hammam	tall-el-hammam	prose	6
 topic	talpiot tomb	talpiot-tomb	prose	2
 topic	tatian's diatessaron	diatessaron	prose	1
@@ -1670,37 +2619,58 @@ topic	tel hazor	tel-hazor	prose	2
 topic	tent of meeting	tabernacle	panel	146
 topic	tent of meeting	tabernacle	prose	1
 topic	tent of meeting	tabernacle	reader	146
+topic	tent of meeting	tabernacle	reader:asv	146
 topic	the angel	angels	panel	67
 topic	the angel	angels	prose	23
 topic	the angel	angels	reader	67
+topic	the angel	angels	reader:asv	123
+topic	the angel	angels	reader:kjv	128
 topic	the beersheba horned altar	beersheba-horned-altar	prose	1
 topic	the christ	the-christ	panel	54
 topic	the christ	the-christ	prose	14
 topic	the christ	the-christ	reader	54
+topic	the christ	the-christ	reader:asv	50
+topic	the christ	the-christ	reader:kjv	19
 topic	the jews	jews	panel	215
 topic	the jews	jews	prose	64
 topic	the jews	jews	reader	215
+topic	the jews	jews	reader:asv	218
+topic	the jews	jews	reader:kjv	233
 topic	the law and the prophets	torah	panel	4
 topic	the law and the prophets	torah	prose	4
 topic	the law and the prophets	torah	reader	4
+topic	the law and the prophets	torah	reader:asv	4
+topic	the law and the prophets	torah	reader:kjv	5
 topic	the law of moses	torah	panel	20
 topic	the law of moses	torah	prose	10
 topic	the law of moses	torah	reader	20
+topic	the law of moses	torah	reader:asv	21
+topic	the law of moses	torah	reader:kjv	21
 topic	the lot	casting-lots	panel	24
 topic	the lot	casting-lots	prose	1
 topic	the lot	casting-lots	reader	24
+topic	the lot	casting-lots	reader:asv	25
+topic	the lot	casting-lots	reader:kjv	22
 topic	the most holy place	holy-of-holies	panel	11
 topic	the most holy place	holy-of-holies	prose	4
 topic	the most holy place	holy-of-holies	reader	11
+topic	the most holy place	holy-of-holies	reader:asv	8
+topic	the most holy place	holy-of-holies	reader:kjv	10
 topic	the old syriac gospels	old-syriac-gospels	prose	1
 topic	the passover	passover	panel	65
 topic	the passover	passover	prose	21
 topic	the passover	passover	reader	65
+topic	the passover	passover	reader:asv	65
+topic	the passover	passover	reader:kjv	62
 topic	the preparation	day-of-preparation	panel	6
 topic	the preparation	day-of-preparation	reader	6
+topic	the preparation	day-of-preparation	reader:asv	6
+topic	the preparation	day-of-preparation	reader:kjv	6
 topic	the romans	romans	panel	3
 topic	the romans	romans	prose	10
 topic	the romans	romans	reader	3
+topic	the romans	romans	reader:asv	3
+topic	the romans	romans	reader:kjv	3
 topic	the search for ai	ai-candidate-sites	prose	1
 topic	the search for bethsaida	bethsaida-candidate-sites	prose	1
 topic	the search for jesus' tomb	tomb-of-jesus-candidates	prose	2
@@ -1710,24 +2680,36 @@ topic	the syriac peshitta	peshitta	prose	1
 topic	the temple	the-temple	panel	150
 topic	the temple	the-temple	prose	263
 topic	the temple	the-temple	reader	150
+topic	the temple	the-temple	reader:asv	158
+topic	the temple	the-temple	reader:kjv	174
 topic	the temple scroll	temple-scroll	prose	1
 topic	the trinity	the-trinity	prose	16
 topic	theodotus inscription	theodotus-inscription	prose	1
 topic	topheth	gehenna	panel	9
 topic	topheth	gehenna	reader	9
+topic	topheth	gehenna	reader:asv	10
+topic	topheth	gehenna	reader:kjv	1
 topic	torah	torah	prose	37
 topic	trinitarian	the-trinity	prose	6
 topic	ugaritic texts	ugarit-tablets	prose	1
 topic	unclean spirit	demons	panel	13
 topic	unclean spirit	demons	prose	1
 topic	unclean spirit	demons	reader	13
+topic	unclean spirit	demons	reader:asv	13
+topic	unclean spirit	demons	reader:kjv	11
 topic	unclean spirits	demons	panel	10
 topic	unclean spirits	demons	prose	1
 topic	unclean spirits	demons	reader	10
+topic	unclean spirits	demons	reader:asv	10
+topic	unclean spirits	demons	reader:kjv	10
 topic	valley of hinnom	gehenna	panel	3
 topic	valley of hinnom	gehenna	reader	3
+topic	valley of hinnom	gehenna	reader:asv	3
+topic	valley of hinnom	gehenna	reader:kjv	3
 topic	valley of the son of hinnom	gehenna	panel	9
 topic	valley of the son of hinnom	gehenna	reader	9
+topic	valley of the son of hinnom	gehenna	reader:asv	9
+topic	valley of the son of hinnom	gehenna	reader:kjv	9
 topic	vaticanus	codex-vaticanus	prose	24
 topic	vetus latina	vetus-latina	prose	1
 topic	warren's shaft	warrens-shaft	prose	1

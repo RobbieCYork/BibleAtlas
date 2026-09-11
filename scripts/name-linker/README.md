@@ -103,19 +103,24 @@ with `--update`. Measured the day the ruling was made: 12 modern titles and jour
 linked prose and 2 carried a live link. One was the Van Seters title. The other is left standing on
 purpose and is written up in `reviewed.tsv`'s header.
 
-**2. A whole-corpus snapshot** (`snapshot/*.tsv`), in three files:
+**2. A whole-corpus snapshot** (`snapshot/*.tsv`), in four files:
 
 | file | rows | what it holds |
 |---|---:|---|
 | `bible-links.tsv` | 9,724 | every person-link in all 31,098 WEB verses, with the id each rendering path gives it |
 | `prose-links.tsv` | 6,227 | every person-link in every authored prose block the app puts through `LinkedVerseText` |
-| `key-totals.tsv` | 4,084 | a tally covering **every** kind — location, POI, topic, timeline, verse reference — one row per (kind, matched text, id, path) |
+| `key-totals.tsv` | 5,066 | a tally covering **every** kind and **all three translations** — one row per (kind, matched text, id, path) |
+| `translation-divergence.tsv` | 1,841 | every verse where the WEB, the KJV and the ASV do not produce the same links |
 
 The first two are row-level, so a diff names the verse or the block. `key-totals.tsv` exists because
 the other two only record **people**: a change to `people.ts` can steal a key from a location, and
 adding one POI alternate name can start firing hundreds of links that no person snapshot would ever
-show. Its 4,084 rows currently break down as 2,349 verse references, 746 person, 391 topic, 388
-location, 131 POI and 79 timeline.
+show. Its 5,066 rows break down by kind as 2,349 verse references, 1,234 person, 645 location, 546
+topic, 204 POI and 88 timeline; and by path as 3,098 prose, 503 `reader`, 494 `reader:asv`, 488
+`reader:kjv` and 483 `panel`.
+
+The fourth file, and those two extra `key-totals` paths, are what cover the KJV and the ASV — see
+**All three translations** below.
 
 This is the half that catches what you did not think to assert. The named cases cover a few dozen
 verses; the snapshot covers all of them.
@@ -187,6 +192,74 @@ and the five records called Simon. That sweep had checked those records and repo
 "resolve correctly wherever their longer wording appears", which was true and was a different
 question.
 
+## All three translations
+
+`BiblePanel` offers **WEB (the default), KJV and ASV**. Until 2026-09-10 the corpus was WEB only,
+and the line `snapshot/bible: unchanged` was therefore **no evidence at all** about two of the three
+translations a reader can select. What that blind spot cost was measured the day before it was
+closed: "Judaea" was not a registered name, so **KJV and ASV readers silently lost every Judea link
+in Scripture — 85 of them** — while WEB readers saw them all, and nothing here could say so.
+
+`corpus/kjv-bible.json.gz` and `corpus/asv-bible.json.gz` now sit beside the WEB file; see
+`corpus/PROVENANCE.md` for where they came from, what was stripped, and how they compare against
+`bible-api.com`, which is what the reader's panel actually fetches.
+
+**Two files carry the coverage, and neither is another copy of `bible-links.tsv`.**
+
+`key-totals.tsv` gains two paths, `reader:kjv` and `reader:asv` — 486 and 494 rows. Its key is
+(kind, matched surface, id, path), so any KJV or ASV link that vanishes, repoints, or merely grows
+to cover a longer phrase moves a row. That is **the regression net**, and it covers every annotation
+kind rather than people alone.
+
+`translation-divergence.tsv` holds one row per (verse, kind, resolved id) whose link **count** is
+not identical in all three, carrying the surface each translation matched:
+
+    1 Chronicles 7:28  poi  bethel  WEB=1:Bethel  KJV=1:Bethel  ASV=0
+
+`n/a` means the verse is not in that translation at all (the KJV carries 109 verses the WEB critical
+text does not; the ASV is 13 short of it). It is keyed by **resolved id, not by surface**, so "the
+angel" against "angel" — same record, both linked, one span a word longer — is not a divergence;
+keying on the surface instead more than doubles the file with that noise.
+
+Three reasons it is shaped that way rather than as two more row-level person snapshots:
+
+1. **The fault that prompted it was a location.** `bible-links.tsv` records only person links. Two
+   more files of that shape would not have shown one of the 85 Judaea links.
+2. **The fault never moved.** It had been there since the records were written, so a
+   per-translation snapshot would have baselined it as correct and stayed green forever. A file
+   whose subject is *disagreement between translations* makes a standing fault visible the day it is
+   first written — the same argument `self-name.mjs` is built on.
+3. **Size.** 1,841 rows and 122KB, against roughly 19,000 rows and 840KB for two more
+   `bible-links.tsv` files. A snapshot nobody can read in a diff is worse than none.
+
+**The one thing this pair cannot see** is a link whose *span* changes in one translation only while
+its kind, id and count all stay equal across the three — that produces no divergence row. It is
+`key-totals.tsv`'s two new paths that cover it, which is why both files exist.
+
+    node scripts/name-linker/translations.mjs --ref "Matthew 2:1"   all three, words and links
+    node scripts/name-linker/translations.mjs --diverge --id bethel  one record's divergences
+    node scripts/name-linker/translations.mjs --grep "Beth-el" --in ASV
+
+**Read a divergence with `--ref` before calling it a bug.** Three things that are NOT bugs and look
+like them:
+
+- **A phrase pin absorbing a name.** The WEB's "David's city" gives three person links at
+  1 Chronicles 11:5; the KJV's "the city of David" gives two, because the third is inside one
+  `city-of-david` POI link. Both are right. Same shape as "Bethlehem of Judea", which the WEB pins
+  as a single `bethlehem` link while the KJV's "Bethlehem of Judaea" links town and region
+  separately. 134 rows are this.
+- **Different words.** The KJV writes "devils" where the other two write "demons", "Holy Ghost" for
+  "Holy Spirit", "tabernacle" where the ASV writes "tent". `Joses` against `Joseph` at Acts 4:36 is
+  a manuscript variant of one man's name. None of these is a defect, and 902 rows are this.
+- **A verse one translation does not have.** 39 rows.
+
+What is left — **766 rows** — is a reader on one translation losing a correct link or getting a
+wrong one, and it is a real population. The pass that built this file enumerated it and deliberately
+fixed none of it. **265 of those rows are confirmed against bible-api.com** (that reader really is
+served that word, unlinked), **29 are contradicted by it** and are corpus artefacts rather than app
+faults, and 472 are in chapters the partial diff has not reached. Written up in the escalation of
+2026-09-10.
+
 ### Re-count the figures on this page when you update the snapshot
 
 Every number above and below is counted from the snapshot files, and this page has been the last
@@ -196,10 +269,13 @@ thing to hear about a change more than once. It had drifted for four commits bef
 them came back here — so the headline totals sat 13 Bible rows and 80 prose rows behind the files
 they describe. Nothing catches that but doing it:
 
-    wc -l scripts/name-linker/snapshot/*.tsv                                 # the three totals
+    wc -l scripts/name-linker/snapshot/*.tsv                                 # the four totals
     cut -f1 scripts/name-linker/snapshot/key-totals.tsv | sort | uniq -c     # the kind breakdown
+    cut -f4 scripts/name-linker/snapshot/key-totals.tsv | sort | uniq -c     # the path breakdown
     awk -F'\t' '$4!=$5 {n++; v[$1]=1} END {print n, length(v)}' \
       scripts/name-linker/snapshot/bible-links.tsv                           # reader/panel divergence
+    cut -f2 scripts/name-linker/snapshot/translation-divergence.tsv | sort | uniq -c
+    cut -f1 scripts/name-linker/snapshot/translation-divergence.tsv | sort -u | wc -l
 
 The block table further down is the one figure not in a snapshot file; `loadProseBlocks().length`
 is where it comes from.
@@ -289,6 +365,9 @@ article that legitimately names both bearers of a name needs the longer-wording 
 
 ## Tools
 
+    node scripts/name-linker/translations.mjs --ref "Acts 1:13"   one verse in all THREE
+    node scripts/name-linker/translations.mjs --diverge           where they disagree, grouped
+    node scripts/name-linker/corpus/build.mjs --verify        re-prove the WEB corpus
     node scripts/name-linker/run.mjs --ref "Acts 1:13"        one verse, both paths
     node scripts/name-linker/run.mjs --ref "Acts 1:13;John 1:6"    several (";"-separated)
     node scripts/name-linker/run.mjs --grep "mark of the beast"    every verse matching a pattern
@@ -339,11 +418,17 @@ scoping document twice. **Run it before claiming a change fixes N links.**
 
 ## What this does NOT cover
 
-- **KJV and ASV, as a corpus.** The app offers both and neither is snapshotted.
-  `VERSE_NAME_OVERRIDES` is keyed by book/chapter/verse and is translation-blind, so it fires
+- **The KJV and ASV corpora against what the reader is served.** They are snapshotted now (see
+  **All three translations**), but the corpus is bolls' and the reader's panel fetches
+  `bible-api.com`, and the diff between the two is **partial** — 31% of KJV chapters and 27% of ASV
+  chapters as of 2026-09-10, agreeing on 96.0% and 96.9% of the verses it reached. It has already found that bolls' KJV hyphenates compound proper nouns
+  differently from bible-api.com (`Obededom` against `Obed-edom`), which makes **29 divergence rows
+  artefacts of the corpus rather than anything a reader sees**. `corpus/PROVENANCE.md` has the
+  numbers and the list. Until the diff is complete, check any KJV finding that turns on a hyphen
+  with `translations.mjs --ref` before acting on it.
+- **`VERSE_NAME_OVERRIDES` is still translation-blind.** Keyed by book/chapter/verse, it fires
   identically whatever the reader has selected — including where the wording differs enough to make
-  the override meaningless. See `corpus/PROVENANCE.md`. What changed on 2026-09-10 is only that a
-  **named case can now assert one verse in one translation**, by carrying `text` alongside `ref`
+  the override meaningless. A **named case can assert one verse in one translation**, by carrying `text` alongside `ref`
   (above). **Twenty-one** of them exist, recounted off the file on 2026-09-10 with
   `CASES.filter(c => c.text && c.ref).length`: two on Acts 4:36, where only the ASV prints
   "Joseph"; two on Acts 1:23, where all three translations do; six on Acts 15:22, 15:27 and
@@ -354,19 +439,21 @@ scoping document twice. **Run it before claiming a change fixes N links.**
   the ASV reads "Simon the **Cananaean**". That verse is the argument for keying on the verse in
   one line: registering either wording would have fixed one or two translations of three and left
   the rest wrong, with nothing in this directory able to say so. The same batch added six more,
-  and those six are a different thing again: **three faults that exist in only one translation and
-  move no snapshot row at all.** The ASV's Luke 3:30 reads "the [son] of Judas" where the WEB reads
-  "Judah" — a link to Iscariot from Jesus's genealogy, in one translation, invisible here. The
-  KJV's Acts 7:45 and Hebrews 4:8 read "Jesus" where the WEB and ASV read "Joshua", so a KJV
-  reader was shown Jesus of Nazareth leading the conquest. Acts 4:36 from the other side: there an
+  and those six are a different thing again: **three faults that exist in only one translation.**
+  The ASV's Luke 3:30 reads "the [son] of Judas" where the WEB reads "Judah" — a link to Iscariot
+  from Jesus's genealogy, in one translation. The KJV's Acts 7:45 and Hebrews 4:8 read "Jesus"
+  where the WEB and ASV read "Joshua", so a KJV reader was shown Jesus of Nazareth leading the
+  conquest. When that batch wrote this, all three moved no snapshot row at all and a named case was
+  the only thing that could hold them; `translation-divergence.tsv`, added hours later, now carries
+  a row for each, which is the same argument arriving from the other end. Acts 4:36 from the other side: there an
   override fired for one translation and matched nothing in the corpus, here a FAULT lives in one
   translation and matches nothing in it. Reading a batch's verses in all three is the only way any
   of the three could have been found, and it is worth doing for every batch that touches
   `VERSE_NAME_OVERRIDES`. (This line read "six … three and three" until
   the recount. It was wrong: the third case in each of those groups is the WEB *corpus* case, which
   carries `ref` and no `text` and is therefore an ordinary verse case. Two per verse, one per
-  non-WEB translation, is the shape.) That is a foothold, not coverage: nothing sweeps either
-  translation, and no count on this page includes a word of them.
+  non-WEB translation, is the shape.) These cases used to be the only cover the other two
+  translations had anywhere; they are now a way to pin one verse precisely, not the whole net.
 - **Whether the tree compiles.** See the warning at the top. Run `npm run build`.
 - **The running app.** These scripts call the real module with the real arguments the real components
   pass, which is strong evidence but is not the same as looking at the screen. The app is behind a
