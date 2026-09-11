@@ -21,6 +21,7 @@ import ArticlesPanel from "./components/ArticlesPanel";
 import FriendsPanel from "./components/FriendsPanel";
 import ThenNowToggle, { type MapMode } from "./components/ThenNowToggle";
 import PanelMenu, { type PanelKey } from "./components/PanelMenu";
+import type { FriendsView } from "./components/ViewSwitcher";
 import MobileTabBar from "./components/MobileTabBar";
 import ResizeHandle from "./components/ResizeHandle";
 import AuthButton from "./components/AuthButton";
@@ -35,6 +36,7 @@ import DisplayNameGate from "./components/DisplayNameGate";
 import ResetPasswordGate from "./components/ResetPasswordGate";
 import AuthGate from "./components/AuthGate";
 import { supabase, setRememberMe } from "./lib/supabase";
+import { isChurchesAvailable, requestToJoinChurch } from "./lib/churchApi";
 import {
   clearRememberedSelection,
   installSelectionCapture,
@@ -382,6 +384,56 @@ function App() {
     });
   }, [session]);
 
+  // A church's QR code and "Copy invite link" produce "?joinChurch=<church id>" — the same
+  // convention as the two links above, and the reason Capstone for Churches needed no routing work
+  // at all. Persisted through signup for the same reason: a brand-new visitor has to confirm an
+  // email before they have a real session, and that redirect drops the query string.
+  useEffect(() => {
+    const churchId = new URLSearchParams(window.location.search).get("joinChurch");
+    if (churchId) {
+      localStorage.setItem("pending-join-church", churchId);
+      const url = new URL(window.location.href);
+      url.searchParams.delete("joinChurch");
+      window.history.replaceState({}, "", url.pathname + url.search);
+    }
+  }, []);
+
+  // Unlike the group link, this one can put someone straight IN — a church's open_join defaults to
+  // true, because a QR code on a bulletin has to work for two hundred people in one morning. The
+  // database decides which of the two happens (request_to_join_church), not this effect.
+  //
+  // Guarded on the migration being applied: with sql/033 unrun the RPC does not exist, the probe
+  // says so, and the pending id is left in localStorage untouched rather than being consumed by a
+  // call that cannot work. Someone who scans a QR code before the migration lands still joins when
+  // it does.
+  useEffect(() => {
+    if (!session || session.user.is_anonymous) return;
+    const churchId = localStorage.getItem("pending-join-church");
+    if (!churchId) return;
+    let cancelled = false;
+    void isChurchesAvailable().then(async (ok) => {
+      if (!ok || cancelled) return;
+      try {
+        await requestToJoinChurch(churchId);
+        localStorage.removeItem("pending-join-church");
+        if (cancelled) return;
+        setOpenChurchId(churchId);
+        if (isMobile) setMobileActivePanel("friends");
+        else openPanel("friends");
+        handleSelectFriendsView("church");
+      } catch {
+        // A dead link, a suspended church, or a guest upgrade mid-flight. The invite is dropped
+        // rather than retried on every session: a link that failed once will fail again, and
+        // ChurchPanel's own empty state already tells someone how to get in.
+        localStorage.removeItem("pending-join-church");
+      }
+    });
+    return () => {
+      cancelled = true;
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [session]);
+
   // Pending incoming friend requests — badges the Friends entry point (mobile "More" tab, desktop
   // panel menu) so a new request is noticeable without opening the Friends panel first. Refetches
   // live via Realtime rather than polling, since friend_requests changes are rare.
@@ -468,8 +520,14 @@ function App() {
   // Which top-level view the Friends panel should jump to when opened from the mobile "More" sheet
   // (Friends, Messages, or Groups) — nonce increments on every tap so re-selecting the same view
   // while the panel is already open still resets it to that view's list (rather than a no-op).
-  const [friendsView, setFriendsView] = useState<"friends" | "messages" | "groups">("friends");
+  const [friendsView, setFriendsView] = useState<FriendsView>("friends");
   const [friendsViewNonce, setFriendsViewNonce] = useState(0);
+  // A church to open the moment the Social panel shows its Church list — set after a `?joinChurch=`
+  // invite has actually been honoured, so the person lands inside the church they were invited to
+  // rather than on a list they have to read. Cleared by ChurchPanel once consumed.
+  const [openChurchId, setOpenChurchId] = useState<string | null>(null);
+  // A sermon note just forked from a church's outline, on its way to My Notes → Sermon Notes.
+  const [openSermonNoteId, setOpenSermonNoteId] = useState<string | null>(null);
   // Lets the mobile "More" sheet's "My Profile" entry pop open the full-screen My Profile view (or,
   // for a guest with no profile page, the account menu's Settings view instead — see AuthButton's
   // effect) — stays undefined until first triggered so mounting doesn't pop anything open unprompted.
@@ -539,14 +597,14 @@ function App() {
   const closeGame = () => setShowGame(false);
   /** Shared by the mobile "More" sheet and the in-panel view switcher (so it works on desktop too,
    * where there's no "More" sheet to reach Messages/Groups from otherwise). */
-  const handleSelectFriendsView = (targetView: "friends" | "messages" | "groups") => {
+  const handleSelectFriendsView = (targetView: FriendsView) => {
     setFriendsView(targetView);
     setFriendsViewNonce((n) => n + 1);
   };
   /** My Profile's Friends/Messages/Groups links (and tapping a NotificationToasts banner) — leave
    * whatever full-screen mode is showing, same as the mobile tab bar's own panel-switching does, then
    * open Friends to the requested list. */
-  const openFriendsFromProfile = (targetView: "friends" | "messages" | "groups") => {
+  const openFriendsFromProfile = (targetView: FriendsView) => {
     closeMyProfile();
     closeTimeline();
     closeGame();
@@ -1657,6 +1715,8 @@ function App() {
             hidden={notesHiddenOnMobile}
             refreshKey={notesVersion}
             searchQuery={notesSearchQuery}
+            openSermonNoteId={openSermonNoteId}
+            onOpenedSermonNote={() => setOpenSermonNoteId(null)}
           />
         )}
         {friendsMounted && (
@@ -1671,6 +1731,15 @@ function App() {
             friendsBadgeCount={pendingFriendRequests}
             messagesBadgeCount={unreadMessages}
             groupsBadgeCount={groupsBadgeCount}
+            openChurchId={openChurchId}
+            onOpenedChurch={() => setOpenChurchId(null)}
+            onOpenSermonNote={(noteId) => {
+              // A fork belongs in My Notes → Sermon Notes with everything else the reader has
+              // written, not in a church-shaped corner of its own. So the panel changes.
+              setOpenSermonNoteId(noteId);
+              if (isMobile) setMobileActivePanel("notes");
+              else openPanel("notes");
+            }}
           />
         )}
         {/* --- The Articles slot ------------------------------------------------------------------

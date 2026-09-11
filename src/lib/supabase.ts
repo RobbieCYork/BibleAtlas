@@ -170,6 +170,27 @@ export interface SermonNote {
   body: string;
   created_at: string;
   updated_at: string;
+
+  // --- Provenance, added by sql/033 (Capstone for Churches). Five nullable columns and NOT ONE
+  // new policy — the table's RLS stays `auth.uid() = user_id`, which is what makes "a church can
+  // never delete or alter a member's notes" a fact about the schema rather than a promise about
+  // the UI. Null on every note that was typed rather than forked, which is almost all of them.
+  //
+  // A fork is a SNAPSHOT taken at the moment "Take notes on this" was tapped. It is never
+  // live-linked: the church editing its outline afterwards does not change one character here.
+  /** The outline this note was forked from. Goes NULL if that outline is ever hard-deleted — the FK
+   * is `on delete set null`, deliberately not cascade, because cascade would delete a member's
+   * notes when a church tidied up its library. */
+  source_church_sermon_id?: string | null;
+  /** church_sermons.version at the moment of the fork. Stage 2's "the church updated this" banner
+   * compares against it; Stage 1 only records it. */
+  source_version?: number | null;
+  /** SNAPSHOT of the church's name as plain text, not a join. This and the title below are what let
+   * the note go on saying where it came from after the church has deleted the outline, renamed
+   * itself, or left the platform entirely. */
+  source_church_name?: string | null;
+  source_sermon_title?: string | null;
+  forked_at?: string | null;
 }
 
 export interface VerseTag {

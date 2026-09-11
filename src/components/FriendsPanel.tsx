@@ -2,6 +2,8 @@ import { useEffect, useRef, useState } from "react";
 import type { Session } from "@supabase/supabase-js";
 import { supabase, displayFor, type FriendRequest, type GroupSummary, type Message, type Profile } from "../lib/supabase";
 import GroupsPanel from "./GroupsPanel";
+import ChurchPanel from "./ChurchPanel";
+import { useChurchesAvailable } from "../lib/churchApi";
 import FriendProfileView from "./FriendProfileView";
 import ViewSwitcher, { type FriendsView } from "./ViewSwitcher";
 import BackButton from "./BackButton";
@@ -34,6 +36,12 @@ interface FriendsPanelProps {
   friendsBadgeCount?: number;
   messagesBadgeCount?: number;
   groupsBadgeCount?: number;
+  /** A church to open straight away, set by App when a `?joinChurch=` invite has just been
+   * honoured. Passed through to ChurchPanel. */
+  openChurchId?: string | null;
+  onOpenedChurch?: () => void;
+  /** Hands a freshly forked sermon note over to My Notes → Sermon Notes. See ChurchPanel. */
+  onOpenSermonNote?: (noteId: string) => void;
 }
 
 export default function FriendsPanel({
@@ -47,11 +55,18 @@ export default function FriendsPanel({
   friendsBadgeCount,
   messagesBadgeCount,
   groupsBadgeCount,
+  openChurchId,
+  onOpenedChurch,
+  onOpenSermonNote,
 }: FriendsPanelProps) {
   const userId = session?.user.id;
   const canUseFriends = !!session && !session.user.is_anonymous;
 
   const [view, setView] = useState<FriendsView>("friends");
+  /** null while the one cached probe is in flight; false when sql/033 is not applied. Either way
+   * no Church tab is drawn and `view === "church"` falls back to Friends, so nothing church-shaped
+   * can be reached before the migration lands. */
+  const churchesAvailable = useChurchesAvailable();
   const [requests, setRequests] = useState<FriendRequest[]>([]);
   const [profiles, setProfiles] = useState<Record<string, Profile>>({});
   const [conversations, setConversations] = useState<ConversationSummary[]>([]);
@@ -385,6 +400,25 @@ export default function FriendsPanel({
     }
   };
 
+  if (view === "church" && churchesAvailable) {
+    return (
+      <ChurchPanel
+        session={session}
+        expand={expand}
+        style={style}
+        hidden={hidden}
+        openViewNonce={openViewNonce}
+        onSelectView={onSelectView}
+        friendsBadgeCount={friendsBadgeCount}
+        messagesBadgeCount={messagesBadgeCount}
+        groupsBadgeCount={groupsBadgeCount}
+        openChurchId={openChurchId}
+        onOpenedChurch={onOpenedChurch}
+        onOpenSermonNote={onOpenSermonNote}
+      />
+    );
+  }
+
   if (view === "groups") {
     return (
       <GroupsPanel
@@ -510,11 +544,12 @@ export default function FriendsPanel({
         <h3>{view === "messages" ? "Messages" : "Friends"}</h3>
       </div>
       <ViewSwitcher
-        active={view}
+        active={view === "church" ? "friends" : view}
         onSelectView={onSelectView}
         friendsBadge={friendsBadgeCount}
         messagesBadge={messagesBadgeCount}
         groupsBadge={groupsBadgeCount}
+        showChurch={churchesAvailable === true}
       />
 
       {!canUseFriends && (

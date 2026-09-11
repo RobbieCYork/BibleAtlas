@@ -17,6 +17,11 @@ interface MyNotesPanelProps {
   /** Free-text filter from the header search bar (only shown while Notes is the active panel) —
    * matched live against each entry's note/quote text, no submit needed. */
   searchQuery?: string;
+  /** A sermon note to open immediately — set when someone taps "Take notes on this" on a church's
+   * outline. Forces the Sermon Notes tab on the way, because the note that was just created lives
+   * there and dropping them on the verse-notes tab would be a dead end. */
+  openSermonNoteId?: string | null;
+  onOpenedSermonNote?: () => void;
 }
 
 interface Entry {
@@ -56,8 +61,24 @@ function escapeHtml(text: string): string {
   return text.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
 }
 
-export default function MyNotesPanel({ userId, onGoToVerse, expand, style, hidden, refreshKey, searchQuery }: MyNotesPanelProps) {
+export default function MyNotesPanel({
+  userId,
+  onGoToVerse,
+  expand,
+  style,
+  hidden,
+  refreshKey,
+  searchQuery,
+  openSermonNoteId,
+  onOpenedSermonNote,
+}: MyNotesPanelProps) {
   const [tab, setTab] = useState<NotesTab>("verse");
+
+  // A fork arriving from ChurchPanel has to land on the Sermon Notes tab — the row it just created
+  // is there, and leaving the reader on the verse-notes tab would look like nothing happened.
+  useEffect(() => {
+    if (openSermonNoteId) setTab("sermon");
+  }, [openSermonNoteId]);
   const [notes, setNotes] = useState<Note[]>([]);
   const [tags, setTags] = useState<Tag[]>([]);
   const [verseTags, setVerseTags] = useState<VerseTag[]>([]);
@@ -350,7 +371,14 @@ export default function MyNotesPanel({ userId, onGoToVerse, expand, style, hidde
         </button>
       </div>
 
-      {tab === "sermon" && <SermonNotesView userId={userId} searchQuery={searchQuery} />}
+      {tab === "sermon" && (
+        <SermonNotesView
+          userId={userId}
+          searchQuery={searchQuery}
+          openNoteId={openSermonNoteId}
+          onOpenedNote={onOpenedSermonNote}
+        />
+      )}
 
       {tab === "verse" && !userId && (
         <p className="bible-status no-print">Log in (or continue as guest) to write and see notes.</p>

@@ -12,6 +12,7 @@ import {
   type PublicGroupResult,
 } from "../lib/supabase";
 import ViewSwitcher, { type FriendsView } from "./ViewSwitcher";
+import { useChurchesAvailable } from "../lib/churchApi";
 import BackButton from "./BackButton";
 import ModerationMenu from "./ModerationMenu";
 import Icon from "./Icon";
@@ -47,6 +48,9 @@ export default function GroupsPanel({
 }: GroupsPanelProps) {
   const userId = session?.user.id;
   const canUse = !!session && !session.user.is_anonymous;
+  // So the Church tab does not vanish from the switcher while the reader is standing in Groups.
+  // One cached probe, shared with every other caller — see src/lib/churchApi.ts.
+  const churchesAvailable = useChurchesAvailable();
 
   const [screen, setScreen] = useState<Screen>("list");
   const [groups, setGroups] = useState<GroupSummary[]>([]);
@@ -773,6 +777,7 @@ export default function GroupsPanel({
         friendsBadge={friendsBadgeCount}
         messagesBadge={messagesBadgeCount}
         groupsBadge={groupsBadgeCount}
+        showChurch={churchesAvailable === true}
       />
 
       {!canUse && (
