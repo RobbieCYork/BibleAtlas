@@ -1584,10 +1584,74 @@ const OWNER_NAME_OVERRIDES: Record<string, Record<string, string | null>> = {
   //   bib-ac-philip-ethiopian-eunuch 7  six article paragraphs + the summary.
   //   simon-magus                   2  "began following Philip around" + the summary. Its other
   //                                    occurrence is "Philip the Evangelist", already correct.
+  // ── THE WHOLE PHILIP CLUSTER ─────────────────────────────────────────────────────────────────
+  //
+  // 61 bare "Philip" links on the article and public-page surfaces. 12 are the Apostle and are
+  // correct — the Gospel cast (andrew-apostle, bartholomew-nathanael ×4,
+  // bib-loc-calling-first-disciples), Bethsaida's two records, and the Hierapolis martyrium, which
+  // names him "the Apostle Philip" in its own sentence. Those 12 are untouched and four of them
+  // are guarded by named cases. The other 49 were three different men:
+  //
+  //   30  Philip the Evangelist, one of the seven (Acts 6, 8, 21)
+  //   15  Philip the Tetrarch — 11 of them on his own page, and 5 of those 11 are a THIRD Philip
+  //    4  Philip II of Macedon, who has no record
+  //
+  // The tell worth naming, because it repeats across this whole sweep: A RECORD'S OWN PAGE IS THE
+  // COMMONEST FAILURE SITE. The self-link exclusion only fires when the resolved id IS the owner,
+  // so a page whose subject shares a name with a more famous man links its own subject's name to
+  // that other man, on every mention. Every "Philip" in the Evangelist's life story pointed at the
+  // Apostle; every "Philip" on the Tetrarch's page did too. scripts/name-linker/self-name.mjs now
+  // sweeps for that shape.
+  //
+  // OWNER_NAME_OVERRIDES throughout rather than phrase pins, and the test was applied per record,
+  // not assumed: every occurrence of the token on the record — linked or not — was read in its own
+  // sentence, and every record below holds exactly one Philip. A record-keyed answer survives the
+  // paragraph being rewritten; a pin does not.
   philip: {
-    "ethiopian-eunuch": "philip-the-evangelist",
-    "bib-ac-philip-ethiopian-eunuch": "philip-the-evangelist",
-    "simon-magus": "philip-the-evangelist",
+    // ── The Evangelist, 30 links. The reader path has had him right at all 15 of his verses since
+    // VERSE_NAME_OVERRIDES above was written; only the article surface, which has no verse to look
+    // at, sent him to the Apostle.
+    "ethiopian-eunuch": "philip-the-evangelist", // 8: seven in lifeStory/placesLived + the summary
+    "bib-ac-philip-ethiopian-eunuch": "philip-the-evangelist", // 7: six article paragraphs + summary
+    "simon-magus": "philip-the-evangelist", // 2: "began following Philip around" + the summary
+    // His own page — the worst-hit record in the sweep. All six "Philip"s in his life story, from
+    // "Philip was one of seven men" onward, linked to the Apostle. Mapped to himself so the
+    // self-link exclusion suppresses them, exactly as bare "Saul" behaves on Paul's page.
+    "philip-the-evangelist": "philip-the-evangelist", // 6
+    "anna-the-prophetess": "philip-the-evangelist", // 1: "figures like Philip's daughters (Acts 21:9)"
+    isaiah: "philip-the-evangelist", // 1: the eunuch reading Isaiah 53 "when Philip meets him"
+    ethiopia: "philip-the-evangelist", // 1: "Where Philip evangelized and baptized the eunuch"
+    ashdod: "philip-the-evangelist", // 1: "the deacon Philip appeared there" — the sentence says which man
+    gaza: "philip-the-evangelist", // 1: "the setting for Philip's encounter with the Ethiopian eunuch"
+    greeks: "philip-the-evangelist", // 1: "appointing seven men (including Stephen and Philip)" — Acts 6:1-6.
+                                     // Checked because this topic is the one place the Apostle could
+                                     // plausibly appear (John 12:20-22, the Greeks who ask for him):
+                                     // the record holds exactly one "Philip" and it is the Seven.
+    "bib-dkj-isaiah-suffering-servant": "philip-the-evangelist", // 1: "Philip uses it to explain the gospel to the Ethiopian eunuch"
+
+    // ── The Tetrarch, 15 links.
+    //
+    // His own page takes ONE answer for eleven mentions, and it is worth spelling out why that is
+    // exact rather than merely convenient. Six of the eleven are the Tetrarch himself. The other
+    // five are a THIRD Philip — "sometimes called Herod Philip", Herodias's first husband, the man
+    // Mark 6:17 and Matthew 14:3 call simply "Philip" — whom the article discusses at length
+    // precisely in order to distinguish him from its own subject, and for whom the app has no
+    // record. Both answers render as NO LINK: the first by the self-link exclusion, the second
+    // because there is nobody to link to. So the record-wide answer serves all eleven and no pin
+    // is needed. If the app ever gains a record for Herod Philip I, this entry becomes the wrong
+    // lever for those five and they need phrase pins.
+    "philip-the-tetrarch": "philip-the-tetrarch", // 11
+    "herod-archelaus": "philip-the-tetrarch", // 1: "while Antipas and Philip received smaller tetrarchies"
+    lysanias: "philip-the-tetrarch", // 1: Luke 3:1's list of rulers, which is the Tetrarch's own verse
+    "bib-loc-john-baptist-ministry-begins": "philip-the-tetrarch", // 1: the same Luke 3:1 list
+    "bib-loc-confession-caesarea-philippi": "philip-the-tetrarch", // 1: "built up by Herod's son Philip"
+
+    // ── Philip II of Macedon, 4 links, and no record. NAME_CONTEXT_RULES already suppresses
+    // "Philip II" by its numeral, which is why the two occurrences written that way are unlinked
+    // and these four — the bare name, in the very next sentence — were not. Suppressed on the same
+    // interim as the rule above it: a record for him would replace both.
+    "wld-pg-philip-of-macedon": null, // 3: "Philip defeated the combined forces of Athens, Thebes"; "Philip began planning"; "Philip was assassinated in 336 BC"
+    "wld-pg-alexander-becomes-king": null, // 1: "Alexander inherited his father Philip's throne"
   },
 
   // "Simon": the bare name belongs to Simon Peter. Both Hasmonean articles mean SIMON MACCABEUS,

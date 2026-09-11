@@ -716,7 +716,7 @@ location.history.facts|antioch-pisidia|1eed263a1b	9	Barnabas	barnabas
 location.history.facts|antioch-pisidia|a8acdf25bc	6	Paul	paul-of-tarsus
 location.history.facts|antioch-syria|9e53fd7bbf	31	Paul	paul-of-tarsus
 location.history.facts|ashdod|13c7b6b2a8	0	Uzziah	uzziah
-location.history.facts|ashdod|f31b69268d	59	Philip	philip-the-apostle
+location.history.facts|ashdod|f31b69268d	59	Philip	philip-the-evangelist
 location.history.facts|ashdod|f31b69268d	97	the Ethiopian eunuch	ethiopian-eunuch
 location.history.facts|ashkelon|9815056882	106	Jeremiah	jeremiah
 location.history.facts|asia-province|ddbe2e2907	0	Paul	paul-of-tarsus
@@ -800,7 +800,7 @@ location.history.facts|ephesus|1cfabd2348	13	Paul	paul-of-tarsus
 location.history.facts|ephesus|69961e8f32	0	Paul	paul-of-tarsus
 location.history.facts|ethiopia|1d1d7e328d	110	Isaiah	isaiah
 location.history.facts|ethiopia|1d1d7e328d	38	the Ethiopian eunuch	ethiopian-eunuch
-location.history.facts|ethiopia|1d1d7e328d	6	Philip	philip-the-apostle
+location.history.facts|ethiopia|1d1d7e328d	6	Philip	philip-the-evangelist
 location.history.facts|gadara|1a0647daa8	20	Jesus	jesus-of-nazareth
 location.history.facts|galatia|25b0a5c9f9	0	Paul	paul-of-tarsus
 location.history.facts|galatia|517451b1a9	13	Paul	paul-of-tarsus
@@ -813,7 +813,7 @@ location.history.facts|gath|de6f886fbe	87	David	david
 location.history.facts|gaza|2a186a2f11	0	Samson	samson
 location.history.facts|gaza|33c588acbf	94	Joshua	joshua
 location.history.facts|gaza|839ff8b3da	0	Samson	samson
-location.history.facts|gaza|db6a88b317	51	Philip	philip-the-apostle
+location.history.facts|gaza|db6a88b317	51	Philip	philip-the-evangelist
 location.history.facts|gaza|db6a88b317	75	the Ethiopian eunuch	ethiopian-eunuch
 location.history.facts|gennesaret|3f430f8489	0	Jesus	jesus-of-nazareth
 location.history.facts|gibeah|0634213a15	11	Saul	saul-king-of-israel
@@ -1194,7 +1194,6 @@ person.extraBib.summary|nicodemus|6d1e72b507	182	Jesus	jesus-of-nazareth
 person.extraBib.summary|nicodemus|6d1e72b507	89	Jesus	jesus-of-nazareth
 person.extraBib.summary|paul-of-tarsus|66bb499591	245	Nero	nero-caesar
 person.extraBib.summary|philip-the-tetrarch|80a6728d0c	161	Salome	salome-follower-of-jesus
-person.extraBib.summary|philip-the-tetrarch|80a6728d0c	19	Philip	philip-the-apostle
 person.extraBib.summary|philip-the-tetrarch|80a6728d0c	322	Agrippa II	herod-agrippa-ii
 person.extraBib.summary|pontius-pilate|c091b6f052	14	Nero	nero-caesar
 person.extraBib.summary|pontius-pilate|c091b6f052	197	Tiberius	tiberius-caesar
@@ -1340,7 +1339,7 @@ person.lifeStory|andrew-apostle|73a47b1fa4	390	Jesus	jesus-of-nazareth
 person.lifeStory|andrew-apostle|73a47b1fa4	545	Jesus	jesus-of-nazareth
 person.lifeStory|anna-the-prophetess|49608da0f5	0	Luke	luke-evangelist
 person.lifeStory|anna-the-prophetess|cd7e0e9a6b	31	Simeon	simeon-at-the-temple
-person.lifeStory|anna-the-prophetess|cd7e0e9a6b	359	Philip	philip-the-apostle
+person.lifeStory|anna-the-prophetess|cd7e0e9a6b	359	Philip	philip-the-evangelist
 person.lifeStory|anna-the-prophetess|cd7e0e9a6b	62	Jesus	jesus-of-nazareth
 person.lifeStory|antonius-felix|319806dd65	268	Drusilla	drusilla
 person.lifeStory|antonius-felix|319806dd65	312	Herod Agrippa I	herod-agrippa-i
@@ -1753,7 +1752,7 @@ person.lifeStory|herod-antipas|ef8cd7b973	79	Jesus	jesus-of-nazareth
 person.lifeStory|herod-archelaus|5324342708	114	Herod the Great	herod-the-great
 person.lifeStory|herod-archelaus|5324342708	25	Herod the Great	herod-the-great
 person.lifeStory|herod-archelaus|5324342708	270	Antipas	herod-antipas
-person.lifeStory|herod-archelaus|5324342708	282	Philip	philip-the-apostle
+person.lifeStory|herod-archelaus|5324342708	282	Philip	philip-the-tetrarch
 person.lifeStory|herod-archelaus|5324342708	94	Herod Antipas	herod-antipas
 person.lifeStory|herod-archelaus|5505c574dc	110	Augustus	caesar-augustus
 person.lifeStory|herod-archelaus|5505c574dc	172	Augustus	caesar-augustus
@@ -1850,7 +1849,7 @@ person.lifeStory|isaiah|716a6fea3f	397	Jesus	jesus-of-nazareth
 person.lifeStory|isaiah|716a6fea3f	83	Ahaz	ahaz
 person.lifeStory|isaiah|80f3750839	255	Hezekiah	hezekiah
 person.lifeStory|isaiah|80f3750839	7	Hezekiah	hezekiah
-person.lifeStory|isaiah|f4c49b3172	154	Philip	philip-the-apostle
+person.lifeStory|isaiah|f4c49b3172	154	Philip	philip-the-evangelist
 person.lifeStory|isaiah|f4c49b3172	211	Jesus	jesus-of-nazareth
 person.lifeStory|isaiah|f4c49b3172	242	Paul	paul-of-tarsus
 person.lifeStory|isaiah|f4c49b3172	56	the Ethiopian eunuch	ethiopian-eunuch
@@ -2207,7 +2206,7 @@ person.lifeStory|lysanias|79764dbe08	81	Luke	luke-evangelist
 person.lifeStory|lysanias|79a3d83a7e	106	Tiberius	tiberius-caesar
 person.lifeStory|lysanias|79a3d83a7e	126	Pilate	pontius-pilate
 person.lifeStory|lysanias|79a3d83a7e	134	Herod Antipas	herod-antipas
-person.lifeStory|lysanias|79a3d83a7e	153	Philip	philip-the-apostle
+person.lifeStory|lysanias|79a3d83a7e	153	Philip	philip-the-tetrarch
 person.lifeStory|magi|ab9432110a	246	Joseph	joseph-husband-of-mary
 person.lifeStory|magi|ab9432110a	296	Mary	mary-mother-of-jesus
 person.lifeStory|magi|ab9432110a	685	Jeremiah	jeremiah
@@ -2478,35 +2477,19 @@ person.lifeStory|philip-the-apostle|775fba9fb7	44	Andrew	andrew-apostle
 person.lifeStory|philip-the-apostle|775fba9fb7	55	Peter	simon-peter
 person.lifeStory|philip-the-apostle|775fba9fb7	85	Jesus	jesus-of-nazareth
 person.lifeStory|philip-the-evangelist|1c96be4125	174	Isaiah	isaiah
-person.lifeStory|philip-the-evangelist|1c96be4125	23	Philip	philip-the-apostle
-person.lifeStory|philip-the-evangelist|1c96be4125	235	Philip	philip-the-apostle
 person.lifeStory|philip-the-evangelist|1c96be4125	280	Jesus	jesus-of-nazareth
-person.lifeStory|philip-the-evangelist|1c96be4125	394	Philip	philip-the-apostle
 person.lifeStory|philip-the-evangelist|7ea7cfeb52	303	Simon the sorcerer	simon-magus
-person.lifeStory|philip-the-evangelist|7ea7cfeb52	79	Philip	philip-the-apostle
-person.lifeStory|philip-the-evangelist|e7fa3b1500	0	Philip	philip-the-apostle
 person.lifeStory|philip-the-evangelist|e7fa3b1500	319	Luke	luke-evangelist
-person.lifeStory|philip-the-evangelist|f92c7b66b8	0	Philip	philip-the-apostle
 person.lifeStory|philip-the-evangelist|f92c7b66b8	221	Paul	paul-of-tarsus
 person.lifeStory|philip-the-evangelist|f92c7b66b8	34	Luke	luke-evangelist
-person.lifeStory|philip-the-tetrarch|3b5ed1c96d	118	Philip	philip-the-apostle
-person.lifeStory|philip-the-tetrarch|3b5ed1c96d	265	Philip	philip-the-apostle
 person.lifeStory|philip-the-tetrarch|3b5ed1c96d	331	John	john-the-baptist
-person.lifeStory|philip-the-tetrarch|3b5ed1c96d	398	Philip	philip-the-apostle
-person.lifeStory|philip-the-tetrarch|3b5ed1c96d	455	Philip	philip-the-apostle
-person.lifeStory|philip-the-tetrarch|3b5ed1c96d	730	Philip	philip-the-apostle
 person.lifeStory|philip-the-tetrarch|3b5ed1c96d	78	Herod the Great	herod-the-great
-person.lifeStory|philip-the-tetrarch|48fbcf015c	0	Philip	philip-the-apostle
-person.lifeStory|philip-the-tetrarch|48fbcf015c	134	Philip	philip-the-apostle
 person.lifeStory|philip-the-tetrarch|48fbcf015c	20	Herod the Great	herod-the-great
 person.lifeStory|philip-the-tetrarch|48fbcf015c	522	Archelaus	herod-archelaus
 person.lifeStory|philip-the-tetrarch|48fbcf015c	536	Antipas	herod-antipas
-person.lifeStory|philip-the-tetrarch|e6f9bbee2c	0	Philip	philip-the-apostle
 person.lifeStory|philip-the-tetrarch|e6f9bbee2c	119	Augustus	caesar-augustus
 person.lifeStory|philip-the-tetrarch|e6f9bbee2c	280	Augustus	caesar-augustus
 person.lifeStory|philip-the-tetrarch|e6f9bbee2c	381	John the Baptist	john-the-baptist
-person.lifeStory|philip-the-tetrarch|e6f9bbee2c	417	Philip	philip-the-apostle
-person.lifeStory|philip-the-tetrarch|e6f9bbee2c	482	Philip	philip-the-apostle
 person.lifeStory|philip-the-tetrarch|e6f9bbee2c	497	Salome	salome-follower-of-jesus
 person.lifeStory|philip-the-tetrarch|e6f9bbee2c	584	Herod Antipas	herod-antipas
 person.lifeStory|philip-the-tetrarch|e6f9bbee2c	610	John the Baptist	john-the-baptist
@@ -3882,7 +3865,7 @@ timelineEvent.article|bib-dkj-isaiah-call|feada683bb	81	Ahaz	ahaz
 timelineEvent.article|bib-dkj-isaiah-call|feada683bb	91	Hezekiah	hezekiah
 timelineEvent.article|bib-dkj-isaiah-suffering-servant|316080e39e	229	Jesus Christ	jesus-of-nazareth
 timelineEvent.article|bib-dkj-isaiah-suffering-servant|316080e39e	71	Isaiah	isaiah
-timelineEvent.article|bib-dkj-isaiah-suffering-servant|71e9f1f849	388	Philip	philip-the-apostle
+timelineEvent.article|bib-dkj-isaiah-suffering-servant|71e9f1f849	388	Philip	philip-the-evangelist
 timelineEvent.article|bib-dkj-isaiah-suffering-servant|71e9f1f849	428	the Ethiopian eunuch	ethiopian-eunuch
 timelineEvent.article|bib-dkj-isaiah-suffering-servant|71e9f1f849	454	Peter	simon-peter
 timelineEvent.article|bib-dkj-jehoshaphat-reign|0ec04d1c8a	0	Jehoshaphat	jehoshaphat
@@ -4209,7 +4192,7 @@ timelineEvent.article|bib-loc-calming-the-storm|1ae08cbc4c	447	Jesus	jesus-of-na
 timelineEvent.article|bib-loc-calming-the-storm|9b3718baea	193	Jesus	jesus-of-nazareth
 timelineEvent.article|bib-loc-calming-the-storm|9b3718baea	30	Jesus	jesus-of-nazareth
 timelineEvent.article|bib-loc-confession-caesarea-philippi|444fb627d8	0	Jesus	jesus-of-nazareth
-timelineEvent.article|bib-loc-confession-caesarea-philippi|444fb627d8	132	Philip	philip-the-apostle
+timelineEvent.article|bib-loc-confession-caesarea-philippi|444fb627d8	132	Philip	philip-the-tetrarch
 timelineEvent.article|bib-loc-confession-caesarea-philippi|444fb627d8	287	Jesus	jesus-of-nazareth
 timelineEvent.article|bib-loc-confession-caesarea-philippi|444fb627d8	365	John the Baptist	john-the-baptist
 timelineEvent.article|bib-loc-confession-caesarea-philippi|444fb627d8	383	Elijah	elijah
@@ -4265,7 +4248,7 @@ timelineEvent.article|bib-loc-john-baptist-ministry-begins|94a93a39ce	0	Luke	luk
 timelineEvent.article|bib-loc-john-baptist-ministry-begins|94a93a39ce	108	Tiberius Caesar	tiberius-caesar
 timelineEvent.article|bib-loc-john-baptist-ministry-begins|94a93a39ce	152	Pontius Pilate	pontius-pilate
 timelineEvent.article|bib-loc-john-baptist-ministry-begins|94a93a39ce	199	Herod Antipas	herod-antipas
-timelineEvent.article|bib-loc-john-baptist-ministry-begins|94a93a39ce	228	Philip	philip-the-apostle
+timelineEvent.article|bib-loc-john-baptist-ministry-begins|94a93a39ce	228	Philip	philip-the-tetrarch
 timelineEvent.article|bib-loc-john-baptist-ministry-begins|94a93a39ce	24	John	john-the-baptist
 timelineEvent.article|bib-loc-john-baptist-ministry-begins|94a93a39ce	291	John the Baptist	john-the-baptist
 timelineEvent.article|bib-loc-john-baptist-ministry-begins|94a93a39ce	328	Zechariah	zechariah-father-of-john-baptist
@@ -5084,7 +5067,6 @@ timelineEvent.article|wld-fe-indus-valley-flourishing|d36da02c2b	463	Abraham	abr
 timelineEvent.article|wld-fe-indus-valley-flourishing|ef1e013ca8	24	Noah	noah
 timelineEvent.article|wld-fe-xia-dynasty|1d5a21872a	483	Noah	noah
 timelineEvent.article|wld-pg-alexander-becomes-king|4e81f9b138	31	Daniel	daniel
-timelineEvent.article|wld-pg-alexander-becomes-king|66287b4fa1	57	Philip	philip-the-apostle
 timelineEvent.article|wld-pg-cyrus-decree|0ac034884e	55	Jeremiah	jeremiah
 timelineEvent.article|wld-pg-cyrus-decree|68f32b5a1e	34	David	david
 timelineEvent.article|wld-pg-cyrus-decree|68f32b5a1e	6	Zerubbabel	zerubbabel
@@ -5102,9 +5084,6 @@ timelineEvent.article|wld-pg-esther-saves-her-people|c0d4b65a7c	54	Esther	esther
 timelineEvent.article|wld-pg-fall-of-babylon|b68be9b7e9	245	Daniel	daniel
 timelineEvent.article|wld-pg-fall-of-babylon|b68be9b7e9	722	Daniel	daniel
 timelineEvent.article|wld-pg-hellenistic-kingdoms|476db20a80	302	Daniel	daniel
-timelineEvent.article|wld-pg-philip-of-macedon|9da038379e	335	Philip	philip-the-apostle
-timelineEvent.article|wld-pg-philip-of-macedon|cff5d4d461	184	Philip	philip-the-apostle
-timelineEvent.article|wld-pg-philip-of-macedon|cff5d4d461	29	Philip	philip-the-apostle
 timelineEvent.article|wld-pg-rise-of-cyrus|0dd1069ed0	177	Isaiah	isaiah
 timelineEvent.article|wld-pg-rise-of-cyrus|0f8237b1c8	307	Lydia	lydia-of-thyatira
 timelineEvent.article|wld-pg-siege-of-tyre|74667cafb0	33	Ezekiel	ezekiel
@@ -5790,7 +5769,7 @@ topic.section|great-isaiah-scroll|df7439e274	791	Isaiah	isaiah
 topic.section|great-psalms-scroll|22c4e92703	753	Isaiah	isaiah
 topic.section|great-psalms-scroll|d979b5e7b0	545	David	david
 topic.section|greeks|9918be58bc	331	Stephen	stephen-the-martyr
-topic.section|greeks|9918be58bc	343	Philip	philip-the-apostle
+topic.section|greeks|9918be58bc	343	Philip	philip-the-evangelist
 topic.section|greeks|9918be58bc	392	Paul	paul-of-tarsus
 topic.section|greeks|afe7bda811	328	Paul	paul-of-tarsus
 topic.section|habakkuk-pesher|8eed0c586c	104	Paul	paul-of-tarsus

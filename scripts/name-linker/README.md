@@ -2,7 +2,7 @@
 
 `src/lib/verseAnnotations.ts` decides which words in the Bible text — and in every article the app
 has ever written — become links to a person, place or topic. It renders **9,724 person-links across
-Scripture and 6,363 across the app's own prose**. Until this directory existed it had no tests at
+Scripture and 6,342 across the app's own prose**. Until this directory existed it had no tests at
 all, and a one-line data edit could move hundreds of them with nobody noticing.
 
     npm run test:linker
@@ -108,13 +108,13 @@ purpose and is written up in `reviewed.tsv`'s header.
 | file | rows | what it holds |
 |---|---:|---|
 | `bible-links.tsv` | 9,724 | every person-link in all 31,098 WEB verses, with the id each rendering path gives it |
-| `prose-links.tsv` | 6,363 | every person-link in every authored prose block the app puts through `LinkedVerseText` |
-| `key-totals.tsv` | 4,079 | a tally covering **every** kind — location, POI, topic, timeline, verse reference — one row per (kind, matched text, id, path) |
+| `prose-links.tsv` | 6,342 | every person-link in every authored prose block the app puts through `LinkedVerseText` |
+| `key-totals.tsv` | 4,080 | a tally covering **every** kind — location, POI, topic, timeline, verse reference — one row per (kind, matched text, id, path) |
 
 The first two are row-level, so a diff names the verse or the block. `key-totals.tsv` exists because
 the other two only record **people**: a change to `people.ts` can steal a key from a location, and
 adding one POI alternate name can start firing hundreds of links that no person snapshot would ever
-show. Its 4,079 rows currently break down as 2,349 verse references, 742 person, 391 topic, 387
+show. Its 4,080 rows currently break down as 2,349 verse references, 743 person, 391 topic, 387
 location, 131 POI and 79 timeline.
 
 This is the half that catches what you did not think to assert. The named cases cover a few dozen
@@ -141,6 +141,44 @@ against the known faults, and what it deliberately cannot see.
 
 `--update` is refused when `--check` is also present, so `npm run test:linker -- --update` cannot
 bless a new candidate while accepting a snapshot move. Blessing one is its own command.
+
+**4. A self-name sweep** (`self-name.mjs`, ledger in `self-name-reviewed.tsv`). Added 2026-09-10
+by the second-bearer batch, and it asks a fourth question none of the three above can:
+
+> Does a record's OWN name link to somebody else, on its own page?
+
+`computeLinkAnnotations` excludes a record's page from linking to itself, but the exclusion is
+`id !== excludeId` — it only fires when the resolved id **is** the owner. Where a page's subject
+shares a bare name with a more famous bearer, the name resolves to the other man, the exclusion
+never sees it, and the page hands its own subject's name to somebody else on every mention.
+
+It is the single commonest failure site in the second-bearer enumeration, and nothing else here
+could see it. The **snapshot is green**, because these links have sat there since the records were
+written and a fault that never moves produces no diff. `modern-names.mjs` is silent, because
+"Philip" and "Ananias" are not modern names. `links-for.mjs` would show it to somebody who ran it
+on the right record and read the output — this is that, swept.
+
+    node scripts/name-linker/self-name.mjs            list every candidate, with an example
+    node scripts/name-linker/self-name.mjs --check    exit 1 if any candidate is unreviewed
+
+"Its own name" is the **first word** of the person record's `name`, after an honorific: `Philip the
+Evangelist` → Philip, `Joram, King of Judah` → Joram, `Mark (John Mark)` → Mark. Not every word of
+the name — "James, brother of Jesus" would otherwise flag its own correct `Jesus` links, and the
+value of this check is that it has almost nothing to wade through. The cost is real and worth
+stating: it cannot see a record whose subject is known by a name that is not the first word of that
+field.
+
+The ledger is hand-written and there is deliberately **no `--update`**. A candidate here is a fault
+until somebody argues otherwise, so a row costs a sentence of typing and a row with no note is
+refused outright — the opposite default from `modern-names.mjs`, where most candidates are correct
+links and blessing in bulk is sane.
+
+What it found on the day it was written, with the Philip cluster already fixed: **14 shapes, 62
+links, of which 60 were faults.** Six of the fourteen were not in the sweep that prompted the file
+— `mary-magdalene`, `mary-of-bethany`, `james-son-of-alphaeus`, `thomas-aquinas`, `caesar-augustus`
+and the five records called Simon. That sweep had checked those records and reported that they
+"resolve correctly wherever their longer wording appears", which was true and was a different
+question.
 
 ### Re-count the figures on this page when you update the snapshot
 
@@ -214,7 +252,7 @@ snapshot.
 `LinkedVerseText` is what PersonPanel, LocationPanel, PoiPanel, TopicPanel, BookIntroView,
 TimelineEventPanel and MyProfileView render with. Every book override, verse override and
 suppression in `verseAnnotations.ts` is invisible there. **838 links across 748 verses resolve
-differently between the two paths**, and all but a handful of the 6,363 prose links run with no
+differently between the two paths**, and all but a handful of the 6,342 prose links run with no
 disambiguation at all — `OWNER_NAME_OVERRIDES` (below) is the only correction that reaches them. A
 fix that only moves the `reader` column has fixed half the app.
 
@@ -261,6 +299,8 @@ article that legitimately names both bearers of a name needs the longer-wording 
                                                               snapshots, per rendering path
     node scripts/name-linker/modern-names.mjs                 every link sitting inside what
                                                               looks like a modern personal name
+    node scripts/name-linker/self-name.mjs                   every record whose OWN name links
+                                                              to a different record
 
 `links-for.mjs` is `probe.mjs` for prose already written rather than for a sentence about to be
 written, and it exists because **a wrong link in a NEW article is invisible to everything else

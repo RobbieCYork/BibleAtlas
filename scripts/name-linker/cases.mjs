@@ -3105,4 +3105,87 @@ export const CASES = [
     why: "The reader path, both kings in one verse: \"In the fifth year of Joram the son of Ahab " +
          "king of Israel… Jehoram the son of Jehoshaphat king of Judah began to reign.\" Judah's " +
          "king keeps his own long key. Nothing in this batch touches Scripture." },
+  // ═══════════════════════════════════════════════════════════════════════════════════════════
+  // SECOND-BEARER BATCH 2: THE WHOLE PHILIP CLUSTER, 2026-09-10
+  //
+  // 49 wrong links across three different men, and the largest single group is the one nothing
+  // here could ever have caught: A RECORD'S OWN PAGE. Every "Philip" in the Evangelist's life
+  // story pointed at the Apostle, and every "Philip" on the Tetrarch's page did too, because the
+  // self-link exclusion is `id !== excludeId` and only fires when the resolved id IS the owner.
+  // The snapshot was green throughout — the links never moved, so there was never a diff.
+  // scripts/name-linker/self-name.mjs now sweeps for exactly that shape.
+  //
+  // Scripture is untouched: the reader path has had all three Philips right since
+  // VERSE_NAME_OVERRIDES was written. The verse guards below are the proof of that, on both sides.
+
+  { text: "Philip was one of seven men — 'full of the Spirit and of wisdom' — chosen by the Jerusalem church to oversee the daily distribution of food to widows, freeing the apostles to focus on prayer and teaching the word (Acts 6:1-6). Scripture nowhere calls these seven 'deacons' by title, but the role and the qualifications Luke describes are why the office has traditionally been read that way.",
+    surface: "Philip", owner: "philip-the-evangelist", expect: null, status: "guard",
+    why: "THE RECORD'S OWN PAGE, first sentence of philip-the-evangelist's lifeStory. It linked to " +
+         "philip-the-apostle — the page's own subject, handed to a different man, on all six " +
+         "mentions. OWNER_NAME_OVERRIDES philip.philip-the-evangelist maps to the record itself, " +
+         "so the self-link exclusion suppresses it, exactly as bare \"Saul\" behaves on Paul's page." },
+  { text: "Philip was a son of Herod the Great and his wife Cleopatra of Jerusalem (not the famous Egyptian queen). After Herod's death in 4 BC, Philip received the smallest but most stable share of his father's kingdom: the largely non-Jewish territories of Iturea, Trachonitis, Gaulanitis, Batanea, and Auranitis, northeast of the Sea of Galilee.",
+    surface: "Philip", owner: "philip-the-tetrarch", expect: null, status: "guard",
+    why: "The same shape on the Tetrarch's own page, and the reason his eleven mentions can take " +
+         "ONE record-wide answer: six of them are him and the other five are a third Philip with " +
+         "no record, and both answers render as no link." },
+  { text: "Philip the Tetrarch should be carefully distinguished from a different son of Herod the Great, sometimes called Herod Philip (or Herod II), the son of Herod's wife Mariamne II. This other son is identified in the Gospels as Herodias's first husband, called simply 'Philip' in Mark 6:17 and Matthew 14:3 ('Herod had sent and seized John and bound him in prison for the sake of Herodias, his brother Philip's wife'). Josephus, however, never calls this man Philip — he calls him Herod, and states he lived as a private citizen in Rome without ever holding territory or a title (Antiquities 18.5.1, 4). Scholars generally reconcile this by noting Herodian princes commonly bore multiple names (this brother may well have been 'Herod Philip'), though the exact naming remains a point of scholarly discussion; in any case, he is a distinct individual from Philip the Tetrarch, who never married Herodias.",
+    surface: "Philip", occurrence: 4, owner: "philip-the-tetrarch", expect: null, status: "guard",
+    why: "THE THIRD PHILIP, in the paragraph written to distinguish him: \"his brother Philip's " +
+         "wife\", quoting Mark 6:17. Herod Philip I, Herodias's first husband, whom the app has no " +
+         "record for. It resolved to the Apostle. This is the occurrence that would have needed a " +
+         "phrase pin if the record-wide answer pointed anywhere but at no link — recorded here so " +
+         "that if a record for Herod Philip I is ever written, this case is what fails." },
+  { text: "Philip the Tetrarch should be carefully distinguished from a different son of Herod the Great, sometimes called Herod Philip (or Herod II), the son of Herod's wife Mariamne II. This other son is identified in the Gospels as Herodias's first husband, called simply 'Philip' in Mark 6:17 and Matthew 14:3 ('Herod had sent and seized John and bound him in prison for the sake of Herodias, his brother Philip's wife'). Josephus, however, never calls this man Philip — he calls him Herod, and states he lived as a private citizen in Rome without ever holding territory or a title (Antiquities 18.5.1, 4). Scholars generally reconcile this by noting Herodian princes commonly bore multiple names (this brother may well have been 'Herod Philip'), though the exact naming remains a point of scholarly discussion; in any case, he is a distinct individual from Philip the Tetrarch, who never married Herodias.",
+    surface: "Philip", occurrence: 1, owner: "philip-the-tetrarch", expect: null, status: "guard",
+    why: "The same block, occurrence 1: \"Philip the Tetrarch\" is a registered key of its own, the " +
+         "annotation covers all three words, and it resolves to the owner — so the self-link " +
+         "exclusion suppresses it and always did. Asserted so that a future edit to the owner " +
+         "table cannot turn the record's own long name into a link to somebody else." },
+  { text: "Archelaus was the son of Herod the Great and his Samaritan wife Malthace, and full brother of Herod Antipas. When Herod the Great died in 4 BC, his will named Archelaus as successor to the bulk of the kingdom — Judea, Samaria, and Idumea — with the title of king, while Antipas and Philip received smaller tetrarchies to the north. Archelaus's reign began badly: Josephus records that he sent troops into the Jerusalem temple to suppress a protest during Passover, and roughly 3,000 people were killed (Antiquities 17.9.3; Jewish War 2.1.3).",
+    surface: "Philip", owner: "herod-archelaus", expect: "philip-the-tetrarch", status: "guard",
+    why: "Herod's will divided the kingdom between three sons; this Philip is the third of them. " +
+         "The app has his record. OWNER_NAME_OVERRIDES philip.herod-archelaus." },
+  { text: "Luke 3:1 lists 'Lysanias tetrarch of Abilene' among the regional rulers reigning in the fifteenth year of Tiberius, alongside Pilate, Herod Antipas, and Philip — placing him as ruler of Abilene, a small territory northwest of Damascus, around AD 28-29.",
+    surface: "Philip", owner: "lysanias", expect: "philip-the-tetrarch", status: "guard",
+    why: "The article surface quoting Luke 3:1, which is the Tetrarch's own verse — the reader " +
+         "path has resolved it correctly for as long as VERSE_NAME_OVERRIDES has existed, and the " +
+         "article retelling it did not." },
+  { text: "Renamed Azotus in the Hellenistic/Roman period; the deacon Philip appeared there after baptizing the Ethiopian eunuch (Acts 8:40)",
+    surface: "Philip", owner: "ashdod", expect: "philip-the-evangelist", status: "guard",
+    why: "A location notableFact. The sentence names which man — \"the deacon Philip\" — and linked " +
+         "the other one. These 385 location blocks were outside the harness entirely until " +
+         "2026-09-10, when corpus.mjs stopped reading a field name no record has ever had." },
+  { text: "Acts distinguishes 'Hellenists' — Greek-speaking Jews, often from the wider Mediterranean Dispersion — from Aramaic-speaking, more traditionally Judean 'Hebrews' within the earliest Jerusalem church, a distinction that surfaces in a dispute over the fair distribution of food to widows, resolved by appointing seven men (including Stephen and Philip) specifically to oversee it (Acts 6:1-6). Paul's own missionary strategy repeatedly engages the Greek intellectual world directly, most memorably reasoning with Epicurean and Stoic philosophers at Athens's Areopagus, quoting Greek poets to make his case for the God 'in whom we live, and move, and have our being' (Acts 17:16-34).",
+    surface: "Philip", owner: "greeks", expect: "philip-the-evangelist", status: "guard",
+    why: "The Greeks topic, and the one record in the cluster where the APOSTLE could plausibly " +
+         "have appeared — John 12:20-22 is Greeks asking for him by name. Checked rather than " +
+         "assumed: the record holds exactly one \"Philip\" and it is Acts 6's. If a later edit adds " +
+         "the John 12 episode here, this entry becomes the wrong lever and needs a phrase pin." },
+  { text: "With Greece finally unified, Philip began planning a great invasion of the Persian Empire, framed as revenge for Xerxes' invasion generations earlier. He never lived to carry it out — Philip was assassinated in 336 BC, and the throne, the army, and the Persian campaign all passed to his twenty-year-old son, Alexander.",
+    surface: "Philip", occurrence: 2, owner: "wld-pg-philip-of-macedon", expect: null, status: "guard",
+    why: "Philip II of Macedon, 336 BC, resolving to an apostle of Jesus. NAME_CONTEXT_RULES " +
+         "already suppressed \"Philip II\" by its numeral, so the two occurrences written that way " +
+         "were unlinked and the three bare ones in the next sentences were not — a rule that " +
+         "catches the formal name and misses the shorthand is the shape worth watching for. " +
+         "Suppressed on the same interim: a record for him replaces both." },
+  { text: "At just twenty years old, Alexander inherited his father Philip's throne, army, and unfinished ambitions. He moved quickly to secure Macedon and Greece, crushing the rebellious city of Thebes to make an example of any resistance, before turning his attention to the campaign against Persia that his father had planned.",
+    surface: "Philip", owner: "wld-pg-alexander-becomes-king", expect: null, status: "guard",
+    why: "\"his father Philip's throne\" — the same Macedonian king, on the next event in the " +
+         "timeline." },
+
+  // ── Guards: the Apostle keeps the bare key, and Scripture never moved ────────────────────────
+  { text: "Hierapolis was a Hellenistic-Roman city in Phrygia near Colossae and Laodicea, part of the cluster of Lycus Valley churches named in Colossians 4:13. By tradition the Apostle Philip was martyred here in the late 1st century AD.",
+    surface: "Philip", owner: "hierapolis", expect: "philip-the-apostle", status: "guard",
+    why: "The POI surface. The sentence says \"the Apostle Philip\" and the link agrees with it. " +
+         "Eleven bare \"Philip\"s in our prose are the Apostle and stay that way; this is the one " +
+         "whose own sentence names him, so it is the clearest statement that the default survived." },
+  { ref: "Acts 6:5", surface: "Philip", expect: "philip-the-evangelist", status: "guard",
+    why: "The reader path at the Seven's appointment — correct before this batch and after it. " +
+         "Note the panel column of this same verse gives the Apostle, which is not a defect: no " +
+         "verse override reaches LinkedVerseText, and no call site in src/ hands it a verse." },
+  { ref: "Mark 6:17", surface: "Philip", expect: null, status: "guard",
+    why: "\"his brother Philip's wife\" — Herod Philip I, already suppressed on the reader path by " +
+         "VERSE_NAME_OVERRIDES. The prose case above is the article half of the same man, and this " +
+         "is the half that was already right; if the two ever disagree, one of them is wrong." },
 ];

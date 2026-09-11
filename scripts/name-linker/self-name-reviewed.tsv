@@ -1,0 +1,18 @@
+# Accepted results of `node scripts/name-linker/self-name.mjs` — a record whose OWN name resolves
+# to a DIFFERENT record on its own page.
+#
+# A row here is a claim that a person read the sentences on that record and decided the link is
+# RIGHT. It is not a to-do marker and it is not a way to quiet the check: almost every candidate
+# this sweep produces is a fault, which is why there is no `--update` and why a row with an empty
+# note is refused outright. If you cannot write the sentence, the answer is a fix in
+# src/lib/verseAnnotations.ts, not a row here.
+#
+# Columns, tab-separated:
+#   owner     the record whose page the text is on
+#   surface   the matched words — always the first word of that record's own `name`
+#   target    the person id the link resolves to
+#   verdict   one word: correct
+#   note      why, in a sentence. Required.
+#
+# Delete a row when it stops firing; the script reports rows that no longer match.
+jacob-father-of-joseph	Jacob	jacob	correct	The record's whole point is that he is not the patriarch, and one sentence says so in as many words — "entirely distinct from the patriarch Jacob (also called Israel), son of Isaac" — with the same clause repeated in the summary that render.mjs linkifies onto the public page. Those two mentions genuinely are the patriarch and are recovered by the "the patriarch Jacob" pin in NAME_CONTEXT_RULES, which is checked before the owner table that suppresses the record's other two. See the note under `jacob` in verseAnnotations.ts.
