@@ -4257,6 +4257,49 @@ export const CASES = [
     why: "\"Roman-era\" is a modifier compound and the link is correct. 27 blocks say \"Roman-era\" " +
          "and 14 say \"Greek-speaking\"; a hyphen-aware word boundary removes every one of them." },
 
+  // ── THE PUBLIC PAGES: FOUR LINKS NOTHING HERE HAD EVER MEASURED ─────────────────────────────
+  //
+  // Added 2026-09-10 with `snapshot/seo-only-links.tsv`, which is the first thing in this
+  // directory to enumerate the fields `scripts/seo/render.mjs` linkifies onto the pre-rendered
+  // pages and the app renders as plain text. All four of these were live at capstonebible.com,
+  // visible to anyone with no login, from the day their record was written.
+  //
+  // They are written as PROSE CASES even though the new snapshot now covers them, for the same
+  // reason the BOOK TITLES block is: a snapshot row keyed on a record and a field disappears the
+  // day somebody rewords the sentence, taking the assertion with it. A case quoting the string
+  // fails instead. The seo-only snapshot keys on (field, record, index) rather than on a hash of
+  // the text precisely to narrow that gap — but it does not close it, and these four rules are
+  // pins on exact strings, so the string is what has to be asserted.
+
+  { text: "Renamed Philadelphia under Ptolemy II Philadelphus", surface: "Philadelphia", owner: "rabbah",
+    expect: null, status: "guard",
+    why: "location.history.rulers[].name on `rabbah` — a public-page-only surface. Rabbah of the " +
+         "Ammonites (modern Amman) was refounded as Philadelphia in the Transjordan by Ptolemy II. " +
+         "The app's only Philadelphia record is the Lydian city of Revelation 3, 1,100km away, and " +
+         "/place/rabbah was linking there. Found by the first run of the seo-only snapshot, on the " +
+         "ruler field, which NOTHING had enumerated: modern-names.mjs read `l.rulers` where the " +
+         "type is `LocationHistory.rulers`, so its sweep of this field had always matched nothing." },
+  { text: "Roman colonia (Colonia Caesarea Antiochia), refounded by Augustus c. 25 BC and the leading city of southern Galatia province — the provincial capital was Ancyra (modern Ankara)",
+    surface: "Caesarea", owner: "antioch-pisidia", expect: null, status: "guard",
+    why: "The same field on `antioch-pisidia`. \"Colonia Caesarea Antiochia\" is Pisidian Antioch's " +
+         "own Latin name; the \"Caesarea\" inside it is the honorific, not the port on the " +
+         "Mediterranean 700km away, which is where the link went. Same shape as a name inside a " +
+         "book title. The `Augustus` and `Galatia` links in the same string are CORRECT and this " +
+         "case pins the sentence they sit in." },
+  { text: "Temple priest of the division of Abijah", surface: "Abijah",
+    owner: "zechariah-father-of-john-baptist", expect: null, status: "guard",
+    why: "person.occupation — public-page-only. Luke 1:5 puts Zechariah in the eighth of the " +
+         "twenty-four priestly courses of 1 Chronicles 24:10, named for a descendant of Aaron. The " +
+         "dataset's only Abijah is the king of Judah. The phrase pin that fixes this ALSO removed " +
+         "one Bible row (Luke 1:5, panel path — the reader path was already covered by a book " +
+         "override) and one prose row on this record's own lifeStory, so the fault was live on " +
+         "three surfaces and only one of them was measured." },
+  { text: "A reluctant judge from Manasseh who tore down his family's altar to Baal, tested God with the sign of a fleece, and routed a vastly larger Midianite army with only 300 men — then refused Israel's offer to make him king.",
+    surface: "Manasseh", owner: "gideon", expect: null, status: "guard",
+    why: "person.summary — public-page-only, and the FIRST sentence of /person/gideon. Judges 6:15 " +
+         "makes Gideon a Manassite: the tribe of Manasseh, Joseph's son. The dataset's only " +
+         "Manasseh is the king of Judah, five centuries later. No tribe record exists, so no link." },
+
   // ── WHAT IS NOT HERE, AND WHY ───────────────────────────────────────────────────────────────
   // James 1:1 and Jude 1:1 both still resolve to Zebedee's son, which is wrong on anybody's
   // account. The sweep asked for both to be repointed to the Lord's brother; the attempt failed

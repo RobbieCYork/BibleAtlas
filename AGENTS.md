@@ -37,12 +37,12 @@ compile.
 
 It is the `--noEmit` trap from the other side: that one type-checks without
 building, this one builds without type-checking. Neither tells you the app
-compiles. A green `cases:` line and four unchanged snapshots mean the linker
+compiles. A green `cases:` line and five unchanged snapshots mean the linker
 still resolves names the way it did — a real and valuable thing to know, and
 not this one. Read the count off the run, never off a document; the one that
 used to sit here had drifted by two hundred.
 
-**Four, since 2026-09-10, and the fourth is the whole point of it.**
+**Five, both added on 2026-09-10, and each one is the whole point of itself.**
 `snapshot/bible-links.tsv` covers the World English Bible, and `BiblePanel` also
 offers the KJV and the ASV. For two of the three translations a reader can
 select, `snapshot/bible: unchanged` was no evidence whatever — which is how
@@ -51,6 +51,21 @@ links in Scripture while WEB readers kept every one.
 `snapshot/translation-divergence.tsv`, plus the `reader:kjv` and `reader:asv`
 paths in `key-totals.tsv`, close that. **Never report a green Bible snapshot as
 though it said anything about the KJV or the ASV.**
+
+The fifth, `snapshot/seo-only-links.tsv`, covers the other blind spot of the same
+shape: the five fields `scripts/seo/render.mjs` turns into links on the ~1,000
+pre-rendered public pages and the APP renders as plain text — `person.summary`,
+`person.occupation`, `topic.summary`, `timelineEvent.summary` and
+`location.history.rulers[].name`. 1,071 blocks, 1,748 links, on the one surface
+of this project a stranger or a crawler can read without a login, and not one of
+them was in any snapshot until then. Its first run found four wrong links that
+had been public since the records were written, two of them on the ruler field —
+which nothing had ever enumerated, because `modern-names.mjs` kept a second copy
+of the block list and that copy read `l.rulers` where the type is
+`LocationHistory.rulers`. The `h.facts` bug again, in a different file. There is
+now one copy of that list, in `corpus.mjs`. **If you add or remove a
+`ctx.linkify(...)` call in `render.mjs`, change `loadSeoOnlyBlocks()` in the same
+commit.**
 
 Both, in that order, every time you touch `verseAnnotations.ts` or the data
 files feeding it:

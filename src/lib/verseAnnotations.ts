@@ -3627,6 +3627,46 @@ const NAME_CONTEXT_RULES: Record<string, NameContextRule[]> = {
     { after: /^\s+of Sinope\b/, to: null },
     { phrase: "Les Devanciers d'Aquila", to: null },
   ],
+
+  // ── FOUR FOUND ON THE PUBLIC PAGES, WHICH NOTHING HERE HAD EVER MEASURED ────────────────────
+  //
+  // Added 2026-09-10 with `snapshot/seo-only-links.tsv`. All four are on the surface
+  // `scripts/seo/render.mjs` linkifies and the app renders as plain text — `person.summary`,
+  // `person.occupation` and `location.history.rulers[].name` — so every one of them had been live
+  // at www.capstonebible.com, readable by anyone with no login, since the record was written. The
+  // snapshot that now covers that surface would have baselined all four as correct, which is why
+  // they are fixed in the commit that adds it rather than after it. Two of the four are on the
+  // ruler names, a field NOTHING enumerated until this commit: `modern-names.mjs` read `l.rulers`
+  // where the type is `LocationHistory.rulers`, so its sweep of that field matched nothing, every
+  // time it ran.
+  //
+  // Each is a phrase pin, not a pattern, for the reason the MODERN WORK TITLES block gives: the
+  // words around them say nothing that means "this is a title" or "this is a different place", so
+  // anything broader would reach past the sentence it is meant to fix. Each has a prose case in
+  // cases.mjs quoting the string verbatim, because a prose case is the only cover a link on this
+  // surface can have that survives a rewrite of the sentence.
+
+  // Rabbah of the Ammonites — modern Amman — was refounded as PHILADELPHIA by Ptolemy II
+  // Philadelphus, in the Transjordan. `philadelphia-asia` is the Lydian city of Revelation 3,
+  // 1,100km away, and that is where the reader of /place/rabbah was being sent.
+  philadelphia: [{ phrase: "Renamed Philadelphia under Ptolemy II Philadelphus", to: null }],
+
+  // "Colonia Caesarea Antiochia" is Pisidian Antioch's OWN Latin name after Augustus refounded it.
+  // The "Caesarea" in it is the honorific inside that name, not Caesarea Maritima on the coast —
+  // the same shape as a name inside a book title, and on the ruler line of /place/antioch-pisidia
+  // it was sending readers 700km to the wrong city.
+  caesarea: [{ phrase: "Colonia Caesarea Antiochia", to: null }],
+
+  // Luke 1:5 puts Zechariah in "the division of Abijah" — the eighth of the twenty-four priestly
+  // courses of 1 Chronicles 24:10, named for a descendant of Aaron. Not Abijah king of Judah, who
+  // is the only Abijah the dataset has a record for, and who is who /person/zechariah-father-of-
+  // john-baptist has been sending readers to under "Occupation". No record, so: no link.
+  abijah: [{ phrase: "division of Abijah", to: null }],
+
+  // Judges 6:15 makes Gideon a Manassite — the TRIBE of Manasseh, Joseph's son. The dataset's only
+  // Manasseh is the king of Judah, who lived some five centuries later, and /person/gideon opened
+  // by sending readers to him. There is no tribe record to point at, so this is a suppression.
+  manasseh: [{ phrase: "A reluctant judge from Manasseh", to: null }],
 };
 
 /** Do the words around this match say who it is — or that it is nobody?

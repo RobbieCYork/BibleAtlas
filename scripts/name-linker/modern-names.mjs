@@ -90,7 +90,7 @@ import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { loadLinker, stripMarkup } from "./loadLinker.mjs";
-import { loadBible, loadProseBlocks } from "./corpus.mjs";
+import { loadBible, loadProseBlocks, loadSeoOnlyBlocks } from "./corpus.mjs";
 
 const HERE = path.dirname(fileURLToPath(import.meta.url));
 const REVIEWED = path.join(HERE, "reviewed.tsv");
@@ -141,7 +141,11 @@ for (const p of people) {
 for (const l of locations) {
   addName(l.name);
   (l.alternateNames ?? []).forEach(addName);
-  (l.rulers ?? []).forEach((r) => addName(r.name));
+  // `l.history.rulers`, not `l.rulers`. This line read the latter — a field no location record
+  // has ever carried — so no ruler's name was ever registered here, and every ruler surname the
+  // dataset knows looked "foreign" to `isForeignToken` below. Same bug as the `h.facts` one in
+  // corpus.mjs, and the same fix.
+  (l.history?.rulers ?? []).forEach((r) => addName(r.name));
 }
 for (const p of pois) { addName(p.name); (p.alternateNames ?? []).forEach(addName); }
 for (const t of topics) { addName(t.name); addName(t.title); }
@@ -165,25 +169,6 @@ function isForeignToken(w) {
   if (!w) return false;
   const lw = w.toLowerCase();
   return !bibleCaps.has(lw) && !registered.has(lw) && !EDITORIAL.has(lw);
-}
-
-// ── Corpus ────────────────────────────────────────────────────────────────────────────────────
-/** The five fields `scripts/seo/render.mjs` puts through `linkify` that the app renders as plain
- * text, and which `corpus.mjs` therefore does not enumerate. These are live links on the public
- * pages. Keep in step with the `ctx.linkify(...)` call sites in render.mjs. */
-function seoOnlyBlocks() {
-  const blocks = [];
-  const add = (src, owner, text) => {
-    if (typeof text === "string" && text.trim()) blocks.push({ src, owner, text });
-  };
-  people.forEach((p) => {
-    add("seo:person.summary", p.id, p.summary);
-    add("seo:person.occupation", p.id, p.occupation);
-  });
-  topics.forEach((t) => add("seo:topic.summary", t.id, t.summary));
-  timelineEvents.forEach((e) => add("seo:timelineEvent.summary", e.id, e.summary));
-  locations.forEach((l) => (l.rulers ?? []).forEach((r) => add("seo:location.ruler.name", l.id, r.name)));
-  return blocks;
 }
 
 // ── Signals ───────────────────────────────────────────────────────────────────────────────────
@@ -279,7 +264,13 @@ function insideLongerNameRun(text, a) {
 }
 
 // ── Sweep ─────────────────────────────────────────────────────────────────────────────────────
-const blocks = [...(await loadProseBlocks()), ...seoOnlyBlocks()];
+// The public-page-only surface is enumerated ONCE, in corpus.mjs, and imported here. It used to be
+// a second copy of that list living in this file, and the copy had drifted: it read `l.rulers`
+// where render.mjs reads `loc.history.rulers`, so the ruler branch enumerated NOTHING at all and
+// this sweep ran over 985 blocks believing it covered the whole surface. It is 1,071.
+// `snapshot/seo-only-links.tsv` is built from the same function, so the sweep and the snapshot
+// cannot disagree about what the surface is.
+const blocks = [...(await loadProseBlocks()), ...(await loadSeoOnlyBlocks())];
 const hits = [];
 for (const b of blocks) {
   for (const a of computeLinkAnnotations(b.text, b.owner)) {

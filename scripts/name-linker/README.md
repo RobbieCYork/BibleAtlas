@@ -1,8 +1,9 @@
 # The name linker's regression net
 
 `src/lib/verseAnnotations.ts` decides which words in the Bible text — and in every article the app
-has ever written — become links to a person, place or topic. It renders **9,698 person-links across
-Scripture and 6,211 across the app's own prose**. Until this directory existed it had no tests at
+has ever written — become links to a person, place or topic. It renders **9,697 person-links across
+Scripture, 6,210 across the app's own prose, and 814 more on the pre-rendered public pages alone**.
+Until this directory existed it had no tests at
 all, and a one-line data edit could move hundreds of them with nobody noticing.
 
     npm run test:linker
@@ -54,7 +55,7 @@ and matches nothing in the corpus. Quote the verse verbatim from the translation
 names, from `bible-api.com`, which is the service `src/lib/biblePassage.ts` asks for the text.
 
 Prose cases exist because until they did, **the article surface could not be pinned by a named case
-at all** — every case had to be a verse, so the only cover the 6,211 prose links had was the
+at all** — every case had to be a verse, so the only cover the 6,210 prose links had was the
 snapshot. That is not the same thing: `prose-links.tsv` keys each row by a hash of its block's text,
 so editing a paragraph re-keys every link in it and any assertion about them vanishes with the old
 hash rather than failing (see the `tally.mjs` note below). A prose case survives a rewrite of the
@@ -103,20 +104,21 @@ with `--update`. Measured the day the ruling was made: 12 modern titles and jour
 linked prose and 2 carried a live link. One was the Van Seters title. The other is left standing on
 purpose and is written up in `reviewed.tsv`'s header.
 
-**2. A whole-corpus snapshot** (`snapshot/*.tsv`), in four files:
+**2. A whole-corpus snapshot** (`snapshot/*.tsv`), in five files:
 
 | file | rows | what it holds |
 |---|---:|---|
-| `bible-links.tsv` | 9,698 | every person-link in all 31,098 WEB verses, with the id each rendering path gives it |
-| `prose-links.tsv` | 6,211 | every person-link in every authored prose block the app puts through `LinkedVerseText` |
-| `key-totals.tsv` | 5,067 | a tally covering **every** kind and **all three translations** — one row per (kind, matched text, id, path) |
+| `bible-links.tsv` | 9,697 | every person-link in all 31,098 WEB verses, with the id each rendering path gives it |
+| `prose-links.tsv` | 6,210 | every person-link in every authored prose block the app puts through `LinkedVerseText` |
+| `key-totals.tsv` | 5,066 | a tally covering **every** kind and **all three translations** — one row per (kind, matched text, id, path) |
 | `translation-divergence.tsv` | 1,776 | every verse where the WEB, the KJV and the ASV do not produce the same links |
+| `seo-only-links.tsv` | 1,748 | every link, of **every** kind, that only the pre-rendered public pages print — see **The public pages** below |
 
 The first two are row-level, so a diff names the verse or the block. `key-totals.tsv` exists because
 the other two only record **people**: a change to `people.ts` can steal a key from a location, and
 adding one POI alternate name can start firing hundreds of links that no person snapshot would ever
-show. Its 5,067 rows break down by kind as 2,349 verse references, 1,235 person, 645 location, 546
-topic, 204 POI and 88 timeline; and by path as 3,099 prose, 503 `reader`, 494 `reader:asv`, 488
+show. Its 5,066 rows break down by kind as 2,349 verse references, 1,234 person, 645 location, 546
+topic, 204 POI and 88 timeline; and by path as 3,098 prose, 503 `reader`, 494 `reader:asv`, 488
 `reader:kjv` and 483 `panel`.
 
 The fourth file, and those two extra `key-totals` paths, are what cover the KJV and the ASV — see
@@ -291,6 +293,96 @@ links the snapshot could not see**. The ASV corpus does it once in reverse: it r
 fault in the corpus only. **A divergence row is a claim about our corpora, never about the reader —
 confirm it against bible-api.com before acting on it, in either direction.**
 
+## The public pages
+
+The app is behind a Supabase auth gate. The ~1,000 pre-rendered article pages at
+www.capstonebible.com are not: they carry no script and no session, and they are the **one surface
+of this project a stranger or a crawler can read**. `scripts/seo/render.mjs` generates them from the
+same `src/data/*.ts` arrays the app renders, and it puts five fields through the same
+`computeLinkAnnotations` — fields the APP prints as plain text:
+
+| field | blocks | links printed |
+|---|---:|---:|
+| `person.summary` | 242 | 568 |
+| `person.occupation` | 200 | 86 |
+| `topic.summary` | 185 | 267 |
+| `timelineEvent.summary` | 358 | 744 |
+| `location.history.rulers[].name` | 86 | 83 |
+| **total** | **1,071** | **1,748** |
+
+`loadProseBlocks()` correctly does not enumerate them — the app really does render them unlinked —
+so until 2026-09-10 **not one of them was in any snapshot**. `loadSeoOnlyBlocks()` in `corpus.mjs`
+enumerates them, `modern-names.mjs` sweeps them, and `snapshot/seo-only-links.tsv` now holds one row
+per link.
+
+**Why a snapshot and not a reviewed ledger.** `self-name.mjs` refuses `--update` because its
+fourteen candidates were standing faults a baseline would have blessed forever. That argument does
+not carry here: this is 1,748 links, most of them correct, and a hand-written verdict per row is not
+a file anybody would maintain — the same reason `modern-names.mjs` has `--update` and
+`self-name.mjs` does not. The standing-fault half of the job is `modern-names.mjs`, which reads
+these blocks; this file is the "did anything move?" half, which nothing did at all. The honest
+version of that trade is that **somebody has to read the baseline once before it is committed**, and
+the commit that added this file is that reading: all 814 person links and every distinct
+(surface → id) pair among the 934 others. It found four wrong links, and all four are fixed in that
+same commit rather than baselined — see the block at the end of `cases.mjs`.
+
+**Why all five kinds and not people only.** `prose-links.tsv` records person links alone because
+`key-totals.tsv` carries the other kinds for that surface. Nothing carried any kind here, so a
+person-only file plus a new `key-totals` path would be two files doing one file's work. The extra
+934 rows buy the location, topic, POI and timeline links — and the ruler field is, by construction,
+mostly locations. Two of the four faults found were on it.
+
+**Why keyed by field + record + index rather than by a hash of the text.** `prose-links.tsv` hashes
+each block, so editing a paragraph re-keys every row in it and any assertion about them vanishes with
+the old hash instead of failing. That is the right trade for an article of many paragraphs. It is the
+wrong one here: these blocks are one per record per field, or a short indexed list, so the position is
+stable and a reworded summary shows up as a **changed link row** rather than as a silent re-key.
+
+**Size.** 1,748 rows and 124KB — between `translation-divergence.tsv` (1,776 rows, 114KB) and nothing,
+and a seventh of `prose-links.tsv`. A diff names the field and the record. That was the bar
+`translation-divergence.tsv` set: a snapshot nobody can review in a diff is worse than none.
+
+### What turning it on found
+
+Four genuine wrong links, all live on capstonebible.com since their record was written, all fixed
+with the commit that added the file:
+
+| page | field | link | should be |
+|---|---|---|---|
+| `/place/rabbah` | ruler name | "Philadelphia" → `philadelphia-asia` | Rabbah's own Ptolemaic name, in the Transjordan — not the Lydian city of Revelation 3 |
+| `/place/antioch-pisidia` | ruler name | "Caesarea" → `caesarea-maritima` | inside "Colonia Caesarea Antiochia", Pisidian Antioch's own Latin name |
+| `/person/zechariah-father-of-john-baptist` | occupation | "Abijah" → `abijah-king-of-judah` | the priestly course of 1 Chronicles 24:10, not the king |
+| `/person/gideon` | summary | "Manasseh" → `manasseh-king-of-judah` | the tribe, not the king five centuries later |
+
+**Two of the four are on the ruler field, and that field had never been enumerated by anything.**
+`modern-names.mjs` kept its own copy of the block list and read `l.rulers`, where the type is
+`LocationHistory.rulers` and `render.mjs` reads `loc.history?.rulers` — so the ruler branch matched
+nothing, silently, every time the sweep ran. Exactly the `h.facts` bug `loadProseBlocks()` describes,
+in a second copy of the same list. That is why there is now one copy, in `corpus.mjs`, imported by
+both. The sweep believed it covered 985 blocks; the surface is 1,071.
+
+**The Abijah pin reached two further surfaces nobody had asked about.** "the division of Abijah" is
+Luke 1:5's own wording, so the same phrase pin removed one Bible row (Luke 1:5, panel path — the
+reader path already had a book override) and one prose row on that record's `lifeStory`. The fault
+was live on three surfaces and only one of them was being measured.
+
+Four more links are **correct but arguably unwanted**, and are deliberately left standing rather than
+ruled on by an agent: "the Society of Jesus" links to Jesus of Nazareth on `/person/ignatius-of-loyola`
+and `/event/society-of-jesus-founded-1540` (a name inside an institution's proper name — the same
+shape the `trinity`/`Trinity College` pin suppresses), and "the resurrection" of the dead links to the
+timeline event `bib-loc-resurrection` on `/person/pharisees` and `/person/sadducees`, where the words
+name the doctrine rather than the event. Escalated, not fixed.
+
+**The first thing this file caught was somebody else's fix.** The compound-proper-noun batch
+landed while this one was in flight, and rebasing onto it moved exactly one row here: the "Ur"
+inside "Ur-Nammu" on `/event/wld-ane-third-dynasty-ur` stopped linking to the city of Ur. That is
+their fix reaching a surface their own run could not see, and it is the whole argument for this file
+in one row.
+
+Nothing that an earlier pass fixed on this surface had regressed: `Hoshea` on the fall-of-Samaria
+summary, the Caesar cluster's emperor summaries, the nativity records and every second-bearer record
+(three Ananiases, four Simons, two Philips, the Marys) all resolve correctly.
+
 ### Re-count the figures on this page when you update the snapshot
 
 Every number above and below is counted from the snapshot files, and this page has been the last
@@ -365,8 +457,8 @@ snapshot.
 
 `LinkedVerseText` is what PersonPanel, LocationPanel, PoiPanel, TopicPanel, BookIntroView,
 TimelineEventPanel and MyProfileView render with. Every book override, verse override and
-suppression in `verseAnnotations.ts` is invisible there. **859 links across 760 verses resolve
-differently between the two paths**, and all but a handful of the 6,211 prose links run with no
+suppression in `verseAnnotations.ts` is invisible there. **858 links across 759 verses resolve
+differently between the two paths**, and all but a handful of the 6,210 prose links run with no
 disambiguation at all — `OWNER_NAME_OVERRIDES` (below) is the only correction that reaches them. A
 fix that only moves the `reader` column has fixed half the app.
 
@@ -491,21 +583,12 @@ scoping document twice. **Run it before claiming a change fixes N links.**
   Supabase auth gate. Anyone with a login should still eyeball Revelation 13:17, 2 Kings 17:1,
   Acts 1:13 and John the Apostle's biography page after a change lands.
 - **Any prose surface not listed in `loadProseBlocks()`.** That list is hand-maintained; see above.
-- **Five fields that are links on the PUBLIC pages and plain text in the app.** `scripts/seo/render.mjs`
-  puts `person.summary`, `person.occupation`, `topic.summary`, `timelineEvent.summary` and
-  `location.rulers[].name` through the same linker when it generates the ~985 pre-rendered pages.
-  The app renders all five as plain text, so `loadProseBlocks()` correctly does not enumerate them
-  and none of the three snapshots covers a single one — 985 blocks carrying 790 person links that a
-  stranger can read on capstonebible.com and that nothing here measures. `modern-names.mjs` sweeps
-  them (its `seoOnlyBlocks()`), which is how the wrong `Hoshea` on the fall-of-Samaria summary was
-  found, but that is a sweep for one shape, not a snapshot. Snapshotting them properly is worth
-  doing and is not done.
-
-  Until it is, a **prose case is the only cover a link on this surface can have**, and the
-  second-bearer batch of 2026-09-10 is where that stopped being theoretical: ten of its links were
-  on this surface and nothing else in this directory could see any of them. The block of cases at
-  the bottom of `cases.mjs` quotes each of those ten summaries verbatim for that reason. Write one
-  for every future fix here.
+- **The public-page-only surface is covered now** (`snapshot/seo-only-links.tsv`, 2026-09-10), so it
+  is no longer on this list. See **The public pages** below for what it is and what turning it on
+  found. What is still NOT covered there: `location.archaeology.note` and `poi.archaeology.note`
+  run through `LinkedVerseText` in the app and are printed with `esc()` — deliberately unlinked — on
+  the public pages, so the public rendering of those two fields is intentionally poorer than the
+  app's and nothing asserts that it stays that way.
 - **Text the panels render WITHOUT `LinkedVerseText`** — a timeline event's `summary`, for instance,
   is plain text, so a name in it is reader-facing but never a link and never appears here.
 - **Non-person links at row level.** Location, POI, topic, timeline and verse-reference annotations
