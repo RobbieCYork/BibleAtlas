@@ -2,7 +2,7 @@
 
 `src/lib/verseAnnotations.ts` decides which words in the Bible text — and in every article the app
 has ever written — become links to a person, place or topic. It renders **9,724 person-links across
-Scripture and 6,237 across the app's own prose**. Until this directory existed it had no tests at
+Scripture and 6,212 across the app's own prose**. Until this directory existed it had no tests at
 all, and a one-line data edit could move hundreds of them with nobody noticing.
 
     npm run test:linker
@@ -178,6 +178,17 @@ value of this check is that it has almost nothing to wade through. The cost is r
 stating: it cannot see a record whose subject is known by a name that is not the first word of that
 field.
 
+**That cost has now been paid once, and it is worth knowing what it looked like.** The Caesar
+cluster of 2026-09-10 found five links on `nero-caesar`'s own page — including the sentence that
+says *"he is the unnamed 'Caesar' Paul repeatedly invokes"* — all pointing at **Tiberius**. The
+record's `name` is "Nero Caesar", so this sweep checked "Nero", found nothing, and was correctly
+silent; the fault was on the second word. The snapshot was green for the usual reason (a fault that
+never moves produces no diff), `modern-names.mjs` saw nothing modern, and nothing else here could
+have said so. It was found by enumerating one name across the whole corpus by hand. If a record's
+subject is commonly called by a *later* word of its `name` — "Nero **Caesar**", "Tiberius
+**Caesar**", "Claudius **Caesar**" — that word is outside this check, and the only way to see it is
+`links-for.mjs` on the record or a census of the name.
+
 The ledger is hand-written and there is deliberately **no `--update`**. A candidate here is a fault
 until somebody argues otherwise, so a row costs a sentence of typing and a row with no note is
 refused outright — the opposite default from `modern-names.mjs`, where most candidates are correct
@@ -335,7 +346,7 @@ snapshot.
 `LinkedVerseText` is what PersonPanel, LocationPanel, PoiPanel, TopicPanel, BookIntroView,
 TimelineEventPanel and MyProfileView render with. Every book override, verse override and
 suppression in `verseAnnotations.ts` is invisible there. **860 links across 761 verses resolve
-differently between the two paths**, and all but a handful of the 6,237 prose links run with no
+differently between the two paths**, and all but a handful of the 6,212 prose links run with no
 disambiguation at all — `OWNER_NAME_OVERRIDES` (below) is the only correction that reaches them. A
 fix that only moves the `reader` column has fixed half the app.
 

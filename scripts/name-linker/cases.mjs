@@ -3542,7 +3542,176 @@ export const CASES = [
   // ── Guards: the bare keys the four suppressions above did NOT take ──────────────────────────
   { ref: "Matthew 22:21", surface: "Caesar", expect: "tiberius-caesar", status: "guard",
     why: "\"Render therefore to Caesar the things that are Caesar's.\" The bare key keeps Tiberius " +
-         "on the reader path; the `caesar` owner entries reach two records and no verse." },
+         "on the reader path; the `caesar` owner entries reach records and no verse." },
+
+  // ═══════════════════════════════════════════════════════════════════════════════════════════
+  // THE REST OF THE CAESAR CLUSTER, 2026-09-10
+  //
+  // Re-enumerated over all 6,677 blocks rather than taken from the previous batch's estimate of
+  // 39: 63 occurrences of the word, 55 linked, 41 of those wrong — 23 JULIUS and 18 NERO. Six of
+  // the 41 are on the public-page-only surface, which is why the count came out above the
+  // estimate and why nine of the cases below are the only cover their link will ever have.
+  //
+  // JULIUS is SUPPRESSED (no record, standing interim) and NERO is REPOINTED (he has one). No
+  // record mixes a wrong "Caesar" with a correct bare TIBERIUS, so every lever is an owner entry;
+  // the five correct Tiberius mentions are guarded at the bottom of this block, which is how we
+  // know the split still holds. Two records hold a wrong bare "Caesar" AND a correct "Caesar
+  // Augustus" — mark-antony and wld-rom-augustus-becomes-emperor — and both sides are asserted.
+
+  // ── Julius: suppressed ──────────────────────────────────────────────────────────────────────
+  { text: "Marcus Antonius was a Roman soldier and politician who rose under Julius Caesar in Gaul and in the civil war, and was serving as consul beside him in 44 BC when the dictator was assassinated.",
+    surface: "Caesar", owner: "mark-antony", expect: null, status: "guard",
+    why: "Antony's own page. Julius, who has no record — suppressed, not repointed, the same " +
+         "answer the three earlier `caesar` entries already gave. Caught by BOTH the new " +
+         "`before: /Julius /` context rule and the mark-antony owner entry; the rule fires first." },
+  { text: "Antony and Cleopatra took their own lives in Alexandria the following year, leaving Octavian sole ruler of the Roman world — the Caesar Augustus of Luke 2:1.",
+    surface: "Caesar", owner: "mark-antony", expect: "caesar-augustus", expectSurface: "Caesar Augustus",
+    status: "guard",
+    why: "THE OTHER SIDE OF THE SAME RECORD, and the reason the owner entry above is safe: this is " +
+         "a different registered key (`caesar augustus`), matched as one phrase, which an entry on " +
+         "`caesar` cannot reach. If this case ever fails, someone reworded it to a bare \"Caesar\" " +
+         "and the answer became no link — the safe direction, but re-read it." },
+  { text: "An ancient Greek city destroyed by Rome in 146 BC, refounded as a Roman colony by Julius Caesar in 44 BC",
+    surface: "Caesar", owner: "corinth", expect: null, status: "guard",
+    why: "Corinth's refoundation, in the year Julius died. The whole of location.history.founded " +
+         "for that record — and a field that was outside the harness entirely until 2026-09-10." },
+  { text: "Leading the revolt was a nobleman named Brutus, whose name would echo five centuries later in the family of another Brutus who helped assassinate Julius Caesar for strikingly similar reasons — a fear of one-man rule.",
+    surface: "Caesar", owner: "wld-rom-founding-of-republic", expect: null, status: "guard",
+    why: "509 BC looking forward to 44 BC. Julius, five hundred years before Tiberius was born." },
+  { text: "For nearly a decade, Julius Caesar had built an extraordinary reputation and a fiercely loyal army through his conquest of Gaul.",
+    surface: "Caesar", owner: "wld-rom-caesar-crosses-rubicon", expect: null, status: "guard",
+    why: "THE FORENAME SHAPE, and the case that pins the new context rule: \"Julius\" before the " +
+         "name rather than a qualifier after it, which is why the split-name sweep that found " +
+         "\"Philip II\" and \"Paul VI\" could not see this class at all." },
+  { text: "Caesar refused. Roman law forbade any general from bringing an army across the Rubicon, a small river marking the boundary between his province and Italy proper; to cross it under arms was to declare war on the Republic itself.",
+    surface: "Caesar", owner: "wld-rom-caesar-crosses-rubicon", expect: null, status: "guard",
+    why: "The same man with NO forename, two sentences later — which is why the context rule alone " +
+         "is not enough and the record needs an owner entry. Most of this article's eight are " +
+         "this shape." },
+  { text: "The conspirators badly misjudged the public mood. Caesar's ally Mark Antony turned Caesar's funeral into a piece of political theater that whipped the Roman crowd into fury against the assassins",
+    surface: "Caesar", occurrence: 1, owner: "wld-rom-assassination-of-caesar", expect: null, status: "guard",
+    why: "The Ides of March article, bare and possessive. Occurrence 2 in the same sentence takes " +
+         "the same answer from the same entry." },
+  { text: "Caesar's assassination did not restore the Republic — it simply set his heirs against each other.",
+    surface: "Caesar", owner: "wld-rom-battle-of-actium", expect: null, status: "guard",
+    why: "Actium, 31 BC, opening on the murder that caused it. Julius." },
+  { text: "After his victory at Actium, Octavian faced the same problem Julius Caesar had never solved: how does one man hold supreme power in Rome without simply becoming a hated king?",
+    surface: "Caesar", owner: "wld-rom-augustus-becomes-emperor", expect: null, status: "guard",
+    why: "Julius, on the article about his heir. The record's other mention is the correct " +
+         "\"Caesar Augustus\", asserted next." },
+  { text: "It is this same Augustus whom Luke names at the opening of his account of Christ's birth: 'In those days a decree went out from Caesar Augustus that all the world should be registered' (Luke 2:1).",
+    surface: "Caesar", owner: "wld-rom-augustus-becomes-emperor", expect: "caesar-augustus",
+    expectSurface: "Caesar Augustus", status: "guard",
+    why: "The other side of that record — the same both-keys pairing as mark-antony above." },
+  { text: "Julius Caesar's lieutenant and one of the three men who divided the Roman world after his murder — the Roman power who had Herod the Great made king of Judea, and who lost the East, and his life, to Octavian at Actium.",
+    surface: "Caesar", owner: "mark-antony", expect: null, status: "guard",
+    why: "PUBLIC PAGE ONLY — mark-antony.summary. No snapshot covers this surface, so this case is " +
+         "its only cover." },
+  { text: "In January 49 BC, Julius Caesar led his loyal legions across the Rubicon River into Italy in open defiance of the Roman Senate, an irreversible act of civil war summed up in his own reported words, 'the die is cast.'",
+    surface: "Caesar", owner: "wld-rom-caesar-crosses-rubicon", expect: null, status: "guard",
+    why: "PUBLIC PAGE ONLY — the timeline event's summary, which the app renders as plain text and " +
+         "scripts/seo/render.mjs linkifies." },
+  { text: "On the Ides of March, 44 BC, a conspiracy of senators led by Brutus and Cassius stabbed Julius Caesar to death in the Senate house, hoping to save the Republic from one-man rule — but his murder only triggered another, final round of civil wars.",
+    surface: "Caesar", owner: "wld-rom-assassination-of-caesar", expect: null, status: "guard",
+    why: "PUBLIC PAGE ONLY. Same." },
+
+  // ── Nero: repointed ─────────────────────────────────────────────────────────────────────────
+  { text: "Nero never appears by name in the New Testament, but he is the unnamed 'Caesar' Paul repeatedly invokes near the end of Acts.",
+    surface: "Caesar", owner: "nero-caesar", expect: null, status: "guard",
+    why: "HIS OWN PAGE, and the sentence that says in as many words which man it means while " +
+         "linking to Tiberius. Mapped to himself so the self-link exclusion suppresses it — five " +
+         "on this record. self-name.mjs cannot see this shape: it keys on the FIRST word of a " +
+         "record's name (\"Nero\" of \"Nero Caesar\") and the fault is on the second word." },
+  { text: "before exercising his right as a Roman citizen to appeal directly to Caesar (Acts 25:11)",
+    surface: "Caesar", owner: "paul-of-tarsus", expect: "nero-caesar", status: "guard",
+    why: "Acts 25:11, on Paul's own page. The reader path has said Nero here all along — " +
+         "BOOK_NAME_OVERRIDES sends every bare \"Caesar\" in Acts to him — so the article was " +
+         "disagreeing with the verse it cites." },
+  { text: "Agrippa concludes privately that Paul had done nothing deserving death or imprisonment, and that he could have been set free had he not appealed to Caesar.",
+    surface: "Caesar", owner: "herod-agrippa-ii", expect: "nero-caesar", status: "guard",
+    why: "Acts 26:32, AD 59-60. Nero, not the emperor who died in AD 37." },
+  { text: "Paul, aware of the danger and asserting his rights as a Roman citizen, responded, 'I appeal to Caesar' (Acts 25:9-11) — a formal legal move that, once made, obligated Festus to send him to Rome.",
+    surface: "Caesar", owner: "porcius-festus", expect: "nero-caesar", status: "guard",
+    why: "Festus's own page. Festus took office c. AD 59; the emperor is Nero either way." },
+  { text: "The Roman governor who succeeded Felix, inherited the unresolved case against Paul, and — after Paul appealed to Caesar as a Roman citizen's right — set the events of Paul's journey to Rome in motion.",
+    surface: "Caesar", owner: "porcius-festus", expect: "nero-caesar", status: "guard",
+    why: "PUBLIC PAGE ONLY — porcius-festus.summary." },
+  { text: "uses his right as a citizen to appeal his case directly to Caesar rather than face trial before a hostile Jerusalem crowd, a decision that sends him to Rome itself (Acts 25:10-12)",
+    surface: "Caesar", owner: "romans", expect: "nero-caesar", status: "guard",
+    why: "The Romans topic. Its OTHER mention is the correct \"Caesar Augustus\", asserted next — " +
+         "the third record in this batch holding both keys." },
+  { text: "This is the political backdrop for essentially the entire New Testament: Caesar Augustus's census brings Joseph and Mary to Bethlehem (Luke 2:1-7)",
+    surface: "Caesar", owner: "romans", expect: "caesar-augustus", expectSurface: "Caesar Augustus",
+    status: "guard",
+    why: "The other side of the Romans topic. A record-wide answer of Nero must not take this." },
+  { text: "he exercised the one right no provincial governor could overrule and appealed to Caesar.",
+    surface: "Caesar", owner: "bib-ac-paul-ministry", expect: "nero-caesar", status: "guard",
+    why: "Paul's ministry, the timeline article." },
+  { text: "From the Damascus road to a Roman execution block, Paul spent roughly thirty years planting churches from Antioch to Corinth, writing the letters that carry the bulk of the New Testament's doctrine, and defending the gospel before magistrates, kings and finally Caesar himself.",
+    surface: "Caesar", owner: "bib-ac-paul-ministry", expect: "nero-caesar", status: "guard",
+    why: "PUBLIC PAGE ONLY — the same event's summary." },
+  { text: "Even in chains, Paul's Roman citizenship, invoked repeatedly through this ordeal, entitled him to protections that repeatedly kept him alive and would eventually secure him a hearing before Caesar himself.",
+    surface: "Caesar", owner: "bib-ac-paul-arrest-jerusalem", expect: "nero-caesar", status: "guard",
+    why: "The arrest article. The hearing he is being kept alive for is Nero's." },
+  { text: "Agrippa's verdict - \"This man could have been set free if he had not appealed to Caesar\" (Acts 26:32) - underlines the irony of the whole two-year ordeal",
+    surface: "Caesar", owner: "bib-ac-paul-caesarea-imprisonment", expect: "nero-caesar", status: "guard",
+    why: "Acts 26:32 again, on the Caesarea imprisonment article. Three links on this record." },
+  { text: "Paul spends two years in Roman custody at Caesarea, defends himself before Felix, Festus, and King Agrippa II, and appeals to Caesar.",
+    surface: "Caesar", owner: "bib-ac-paul-caesarea-imprisonment", expect: "nero-caesar", status: "guard",
+    why: "PUBLIC PAGE ONLY — that event's summary." },
+  { text: "Under house arrest in Rome, Paul preaches freely and writes several of his letters while awaiting a hearing before Caesar.",
+    surface: "Caesar", owner: "bib-ac-paul-first-roman-imprisonment", expect: "nero-caesar", status: "guard",
+    why: "PUBLIC PAGE ONLY, and the whole of that record's Caesar population — the event has no " +
+         "article mention at all, so without this case the link has no cover of any kind." },
+  { text: "The final section recounts Paul's arrest in Jerusalem, his defenses before Roman and Jewish authorities, his appeal to Caesar, and a dramatic sea voyage that ends in shipwreck on Malta.",
+    surface: "Caesar", owner: "book-intro:Acts", expect: "nero-caesar", status: "guard",
+    why: "The introduction to Acts, agreeing at last with Acts's own book override." },
+
+  // ── Tiberius: the five bare mentions that are RIGHT, and must not move ──────────────────────
+  { text: "Despite this, under pressure from the crowd and facing the accusation that releasing Jesus would make him no friend of Caesar, Pilate hands Jesus over to be crucified",
+    surface: "Caesar", owner: "pontius-pilate", expect: "tiberius-caesar", status: "guard",
+    why: "John 19:12, AD 30-33. Tiberius, and the bare key's correct answer. This is the half of " +
+         "the cluster a record-wide sweep would have broken." },
+  { text: "They press him on divorce (Matthew 19:3-9), fasting (Matthew 9:14-17), paying taxes to Caesar (Matthew 22:15-22), and above all on ritual purity",
+    surface: "Caesar", owner: "pharisees", expect: "tiberius-caesar", status: "guard",
+    why: "\"Render to Caesar\", Matthew 22. Tiberius, correctly." },
+  { text: "In the third, questioners ask whether it is lawful to pay to kings the things that belong to their rule — kings, not Caesar — and Jesus answers with Isaiah's line about honouring with the lips while the heart is far away.",
+    surface: "Caesar", owner: "egerton-papyrus-2", expect: "tiberius-caesar", status: "guard",
+    why: "The Egerton papyrus's variant of the tribute question — the same Caesar the Synoptics " +
+         "mean, which is the point the sentence is making." },
+  { text: "Lacking authority to execute anyone, the Jewish leaders bring Jesus to the Roman governor Pontius Pilate, reframing the charge as political treason: claiming to be a king who opposes Caesar.",
+    surface: "Caesar", owner: "bib-loc-trials-of-jesus", expect: "tiberius-caesar", status: "guard",
+    why: "The trials of Jesus. Tiberius, correctly." },
+  { text: "When Jesus was asked about paying taxes to Caesar and asked to see a coin, the denarius handed to him almost certainly bore Tiberius's own image (Matthew 22:15-21)",
+    surface: "Caesar", owner: "wld-rom-tiberius-emperor", expect: "tiberius-caesar", status: "guard",
+    why: "The sentence names Tiberius twelve words later. Correct, and untouched." },
+  { text: "It is Tiberius's reign that Luke uses to date the beginning of the New Testament story with striking historical precision: 'In the fifteenth year of the reign of Tiberius Caesar... the word of God came to John' the Baptist in the wilderness (Luke 3:1-2).",
+    surface: "Caesar", owner: "wld-rom-tiberius-emperor", expect: "tiberius-caesar",
+    expectSurface: "Tiberius Caesar", status: "guard",
+    why: "Luke 3:1 quoted in an article — the registered longer key, matched as one phrase." },
+
+  // ── The reader path, which this batch does not touch and must not move ──────────────────────
+  { ref: "Acts 25:11", surface: "Caesar", expect: "nero-caesar", status: "guard",
+    why: "\"I appeal to Caesar!\" — already right before this batch, by BOOK_NAME_OVERRIDES on Acts. " +
+         "WEB, KJV and ASV all read \"Caesar\" (bible-api.com, 2026-09-10), and the book override is " +
+         "translation-blind, so all three readers get Nero." },
+  { ref: "Philippians 4:22", surface: "Caesar", expect: "nero-caesar", status: "guard",
+    why: "\"those who are of Caesar's household\" — the book override's other half. All three " +
+         "translations read \"Caesar's\" (the ASV prints a backtick for the apostrophe, which the " +
+         "word-boundary match does not care about)." },
+  { ref: "Acts 17:7", surface: "Caesar", expect: "claudius-caesar", status: "guard",
+    why: "The one bare \"Caesar\" in Acts that is NOT Nero — Thessalonica, inside Claudius's reign — " +
+         "and a per-verse override that the Acts book override would otherwise swallow. No article " +
+         "quotes it, so no owner entry in this batch can reach it." },
+  { ref: "Acts 27:1", surface: "Julius", expect: null, status: "guard",
+    why: "THE NEGATIVE TEST FOR THE NEW `before: /Julius /` RULE, in Scripture. \"a centurion named " +
+         "Julius, of the Augustan band\" — the only two WEB verses containing \"Julius\" are this and " +
+         "27:3, both the centurion, and neither is followed by \"Caesar\" in WEB, KJV or ASV " +
+         "(checked at bible-api.com, 2026-09-10). The rule therefore reaches no verse at all. The " +
+         "centurion has no record and links to nobody, which is correct and is what this asserts." },
+  { ref: "Luke 2:1", surface: "Caesar", expect: "caesar-augustus", expectSurface: "Caesar Augustus",
+    status: "guard",
+    why: "The nativity's \"Caesar Augustus\" — the longer registered key, untouched by any of this." },
   { text: "A Jerusalem temple priest struck mute for doubting an angel's promise of a son in his old age, whose voice returned at John's naming and burst into prophecy.",
     surface: "John", owner: "zechariah-father-of-john-baptist", expect: "john-the-baptist", status: "guard",
     why: "Repeated from batch 1 on purpose: four batches of suppressions later, the Baptist still " +

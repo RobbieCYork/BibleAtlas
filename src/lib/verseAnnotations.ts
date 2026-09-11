@@ -1841,23 +1841,96 @@ const OWNER_NAME_OVERRIDES: Record<string, Record<string, string | null>> = {
   //
   // A miss the existing split-name machinery could not have caught, and worth saying why: the
   // sweep for "a biblical name FOLLOWED by a qualifier" is what catches "Philip II" and "Paul VI",
-  // and this is a biblical name PRECEDED by a forename. Suppressed on the standing interim; a
-  // record for Julius Caesar would replace both entries. Augustus's own "Caesar Augustus"
-  // mentions match his registered name and are untouched.
+  // and this is a biblical name PRECEDED by a forename. Suppressed on the standing interim.
+  // Augustus's own "Caesar Augustus" mentions match his registered name and are untouched.
+  // (The forename shape now also has a class fix — see `caesar` in NAME_CONTEXT_RULES below — and
+  // the rest of the cluster is enumerated and fixed in the block that follows these two entries.)
   //
-  // ⚠ THIS ENTRY IS NOT THE WHOLE CAESAR PROBLEM, and the next person here should be told the size
-  // of what is left rather than discover it. Measured 2026-09-10, after these three were fixed:
-  // 39 bare "Caesar" links remain in our prose and on the public pages, and only about five of
-  // them are Tiberius. Roughly twenty-two more are JULIUS — the Rubicon, the assassination,
-  // Actium, Antony's rise, Corinth's refounding in 44 BC — and roughly seventeen are NERO, every
-  // one of them Paul's "I appeal to Caesar" (Acts 25), including four on Nero's own page, which is
-  // the self-name shape again. The reader path already gets the Nero half right: BOOK_NAME_OVERRIDES
-  // above sends "Caesar" in Acts and Philippians to Nero, and only the article surface, which has
-  // no book, disagrees with it. That cluster was NOT in the second-bearer sweep, it is larger than
-  // several clusters that were, and it is not fixed here.
+  // ── THE REST OF THE CAESAR CLUSTER, FIXED 2026-09-10 ─────────────────────────────────────────
+  //
+  // The entry above used to carry a warning that it was not the whole problem, with an estimate of
+  // 39 links left. RE-ENUMERATED from scratch rather than taken from that note, over all 6,677
+  // blocks — the 5,692 the app renders through LinkedVerseText plus the 985 that are links only on
+  // the pre-rendered public pages — and the estimate was low, as every recount on this workstream
+  // has been. The measured shape:
+  //
+  //   63 occurrences of the word "Caesar" in authored prose; 55 of them carry a link.
+  //   14 are right and are untouched:
+  //        6 match the registered key "Caesar Augustus" (mark-antony, romans,
+  //          bib-it-pompey-conquers-jerusalem, wld-rom-pompey-conquers-jerusalem,
+  //          wld-rom-augustus-becomes-emperor and its public-page summary);
+  //        3 match "Tiberius Caesar" (bib-loc-john-baptist-ministry-begins, wld-rom-tiberius-
+  //          emperor and its summary);
+  //        5 are a bare "Caesar" that genuinely IS Tiberius — pontius-pilate ("no friend of
+  //          Caesar", John 19:12), pharisees and wld-rom-tiberius-emperor ("taxes to Caesar",
+  //          Matthew 22), egerton-papyrus-2 ("kings, not Caesar") and bib-loc-trials-of-jesus
+  //          ("a king who opposes Caesar"). Jesus's whole ministry falls in Tiberius's reign.
+  //   41 were WRONG: 23 Julius and 18 Nero. Not 22 and 17 — the extra pair, and six of the 41
+  //          altogether, are on the public-page-only surface that no snapshot covers.
+  //   8 occurrences carry no link at all already and are left alone.
+  //
+  // NO RECORD MIXES A CORRECT TIBERIUS WITH A WRONG ONE, which is why every lever below is an
+  // owner entry and none is a context rule: the five correct bare Tiberius mentions sit on five
+  // records that appear nowhere in this table. Two records DO hold both a wrong bare "Caesar" and
+  // a correct "Caesar Augustus" — mark-antony and wld-rom-augustus-becomes-emperor — and that is
+  // safe because those are two different keys: the longer registered name matches first and an
+  // entry on `caesar` cannot reach it. It also degrades the right way. If someone rewords
+  // "Caesar Augustus" to a bare "Caesar" on either record, the answer becomes no link rather than
+  // Julius, and a case below asserts the pairing on both sides.
+  //
+  // TWO LAYERS, DELIBERATELY OVERLAPPING. NAME_CONTEXT_RULES below now carries
+  // `before: /\bJulius\s+$/`, which suppresses the nine occurrences that actually carry the
+  // forename; the seven Julius entries here answer the fourteen that do NOT ("Caesar refused",
+  // "Caesar's funeral", "Caesar's adopted grandnephew"). Measured both ways: with the context rule
+  // deleted every case below still passes on the owner entries alone, and with the owner entries
+  // flipped the context rule still holds the forename cases. That redundancy is the point — four
+  // of these records (corinth, mark-antony, wld-rom-founding-of-republic,
+  // wld-rom-augustus-becomes-emperor) currently have the forename on every mention, so the rule is
+  // doing the work today and the entry exists for the day someone rewords one to a bare "Caesar".
+  // Without it that rewording would silently resolve to TIBERIUS; with it, to no link. Degrade to
+  // nothing, never to the wrong man.
+  //
+  // JULIUS — SUPPRESSED, because he has no record. Same ruling as the three entries above and as
+  // zadok/eleazar/Acts 1:23 across this file: `null` means "a different, unrepresented bearer",
+  // and it is an interim, not a verdict that the man does not matter. A record for Julius Caesar
+  // would replace all nine of these entries at once. Do NOT write him one as a side effect of a
+  // link fix.
   caesar: {
     "caesar-augustus": null,
     "bib-it-herod-the-great-rise": null,
+    // The four Roman timeline articles that ARE Julius from end to end. 19 links.
+    "wld-rom-caesar-crosses-rubicon": null,     // 8: the Rubicon, Pharsalus, "Caesar crossed anyway"
+    "wld-rom-assassination-of-caesar": null,    // 7: the Ides of March, the funeral, the Triumvirate
+    "wld-rom-battle-of-actium": null,           // 2: "Caesar's assassination", "Caesar's adopted grandnephew"
+    "wld-rom-founding-of-republic": null,       // 2: the later Brutus, "Julius Caesar's rise"
+    // Corinth's refoundation as a Roman colony in 44 BC — Julius, in the year he died. 1 link.
+    corinth: null,
+    // Two records that hold BOTH a bare Julius and a correct "Caesar Augustus" (a different key,
+    // matched first — see the note above). 3 links between them.
+    "mark-antony": null,                        // 2: "rose under Julius Caesar"; the public summary's "Julius Caesar's lieutenant"
+    "wld-rom-augustus-becomes-emperor": null,   // 1: "the same problem Julius Caesar had never solved"
+
+    // NERO — REPOINTED, because he has a record (nero-caesar). Every one of these 18 is Paul's
+    // appeal and its aftermath: Acts 25:8-12, 25:21, 26:32, 27:24, 28:19 and Philippians 4:22,
+    // all inside AD 54-68. The READER PATH ALREADY AGREES: BOOK_NAME_OVERRIDES above sends a bare
+    // "Caesar" in Acts and in Philippians to Nero, so every one of these articles has been
+    // disagreeing with the Bible page it cites. Acts 17:7 is the one earlier exception and is
+    // Claudius, handled per-verse; it appears in no article, so nothing below can reach it.
+    "nero-caesar": "nero-caesar",               // 5, HIS OWN PAGE — mapped to himself so the
+                                                // self-link exclusion suppresses them. The
+                                                // self-name shape, and one self-name.mjs cannot
+                                                // see: it keys on the FIRST word of a record's
+                                                // name ("Nero"), and the fault is on the second.
+    "paul-of-tarsus": "nero-caesar",            // 1: "appeal directly to Caesar (Acts 25:11)"
+    "herod-agrippa-ii": "nero-caesar",          // 1: "set free had he not appealed to Caesar" (Acts 26:32)
+    "porcius-festus": "nero-caesar",            // 2: lifeStory, and the public-page summary
+    romans: "nero-caesar",                      // 1: "appeal his case directly to Caesar"
+    "bib-ac-paul-ministry": "nero-caesar",      // 2: the article and its public-page summary
+    "bib-ac-paul-arrest-jerusalem": "nero-caesar",       // 1: "a hearing before Caesar himself"
+    "bib-ac-paul-caesarea-imprisonment": "nero-caesar",  // 3: two in the article, one in the summary
+    "bib-ac-paul-first-roman-imprisonment": "nero-caesar", // 1: public-page summary only
+    "book-intro:Acts": "nero-caesar",           // 1: "his appeal to Caesar" — and Acts's own book
+                                                // override already says Nero on the reader path.
   },
 
   // ══ THE SECOND-BEARER SWEEP, 2026-09-10 ══════════════════════════════════════════════════════
@@ -2895,7 +2968,22 @@ const NAME_CONTEXT_RULES: Record<string, NameContextRule[]> = {
   // linking to a different emperor than the man being named. "Tiberius Claudius Caesar Augustus
   // Germanicus" is Claudius, not Tiberius and not Augustus.
   augustus: [{ after: /^\s+Klein\b/, to: null }],     // Frederick Augustus Klein, the Mesha stele
-  caesar: [{ after: /^\s+Octavianus\b/, to: null }],  // "Gaius Julius Caesar Octavianus" — Augustus
+  caesar: [
+    { after: /^\s+Octavianus\b/, to: null },  // "Gaius Julius Caesar Octavianus" — Augustus
+    // THE FORENAME SHAPE, added 2026-09-10 with the Caesar cluster. Everything else in this list
+    // catches a biblical name FOLLOWED by a qualifier — "Philip II", "Paul VI", "Claudius Lysias".
+    // "Julius Caesar" is the mirror image: the qualifier comes FIRST, so the split-name sweep that
+    // found most of those could not see it by construction, and 23 wrong links accumulated behind
+    // that blind spot. This is the class fix; the owner entries in OWNER_NAME_OVERRIDES handle the
+    // bare "Caesar" mentions in the same articles, which have no forename to key on.
+    //
+    // Safe in Scripture, measured rather than assumed: "Julius" occurs in exactly two WEB verses,
+    // Acts 27:1 and 27:3, and both name the centurion of the Augustan band who escorts Paul — not
+    // one verse in the corpus reads "Julius Caesar". Checked in the KJV and the ASV too
+    // (bible-api.com, 2026-09-10): Acts 27:1 reads "one named Julius, a centurion" in the KJV and
+    // "a centurion named Julius" in the ASV, so the next word is a comma in all three.
+    { before: /\bJulius\s+$/, to: null },
+  ],
   tiberius: [
     { after: /^\s+(?:Claudius|Alexander)\b/, to: null }, // Claudius's regnal name; the procurator
   ],
