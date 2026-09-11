@@ -229,6 +229,30 @@ ${body}
  * a real internal link. Reusing `computeLinkAnnotations` rather than re-implementing name matching
  * means the public pages cross-link exactly where the app cross-links, and the linker's existing
  * snapshot suite already guards the result.
+ *
+ * ── DO NOT LINKIFY A CITATION. ──────────────────────────────────────────────────────────────
+ *
+ * `credit`, `detail` and `supports` on a citation are deliberately NOT put through this function,
+ * and `TopicPanel` renders all three as plain `<span>`s for the same reason. They are a
+ * bibliography: the names in them are modern scholars, and the linker matches on bare forenames.
+ *
+ * Counted by running this very function over every one of them on 2026-09-10, not estimated:
+ * 2,266 citation strings, which between them would fire 246 person links across 59 distinct
+ * (surface -> person) pairs. Some are correct — Jerome, Eusebius of Caesarea, John Knox and
+ * Johannes Gutenberg all have records and are matched by their full names. Most are a bare
+ * forename belonging to somebody else entirely, read in its own citation: Joseph Naveh becomes
+ * Joseph son of Jacob (five citations), John Van Seters and John S. Kloppenborg Verbin become John
+ * the Baptist, James Tabor becomes James son of Zebedee, Titus Kennedy becomes Paul's companion,
+ * Philip J. King and Philip Schaff become the apostle, Thomas L. Thompson the apostle Thomas, and
+ * Aaron Demsky the brother of Moses.
+ *
+ * They would also arrive invisibly. A new wrong link is ADDITIVE — it appears in the snapshot diff
+ * as a row that was not there before, which is exactly what every good link in a new article looks
+ * like. `scripts/name-linker/modern-names.mjs` is the one check that would catch them, and it
+ * would catch them by the dozen on the commit that wired them up.
+ *
+ * If a citation ever genuinely needs a link, link the one thing that has a page — the institution
+ * or the artefact — by hand, in the citation itself. Not the author's forename.
  */
 export function makeLinkifier(computeLinkAnnotations, urlFor) {
   return function linkify(text, excludeId) {
