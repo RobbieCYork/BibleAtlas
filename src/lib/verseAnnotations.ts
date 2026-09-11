@@ -1683,6 +1683,79 @@ const OWNER_NAME_OVERRIDES: Record<string, Record<string, string | null>> = {
     "wld-rom-destruction-of-jerusalem": null,
   },
 
+  // ── THE JAMES CLUSTER ────────────────────────────────────────────────────────────────────────
+  //
+  // 58 bare "James" links in our prose and on the public pages. 19 are James son of Zebedee and
+  // are correct — the Gospel cast, Agrippa's execution of him, Salome as his mother, the Sea of
+  // Galilee's fishing trade, Willibald's itinerary. 39 were not, and nearly all of them were the
+  // Lord's brother, who has his own record: the bare key belongs to Zebedee's son, who was dead by
+  // AD 44 (Acts 12:2) and is a candidate for none of it.
+  //
+  // The self-name shape again, and worse than Philip's: ALL FOURTEEN "James"es on
+  // james-brother-of-jesus's own page pointed at Zebedee's son, including the sentence quoting
+  // Galatians 1:19 — "meets specifically with 'James, the Lord's brother'" — which names the man
+  // it was getting wrong. Three more on james-son-of-alphaeus's page did the same thing, and the
+  // sweep that produced this batch did not have them; scripts/name-linker/self-name.mjs did.
+  //
+  // THREE RECORDS NAME BOTH MEN and are deliberately NOT in this table: simon-peter,
+  // john-the-apostle and bib-ac-jerusalem-council. One answer per record cannot serve them, the
+  // majority on each is Zebedee (who already owns the key by default), and the exceptions are
+  // recovered by the two context patterns added to NAME_CONTEXT_RULES above. That direction is
+  // chosen, not incidental: pinning the exceptions leaves a reworded sentence with a LOST correct
+  // link, where pinning the majority would leave it asserting the wrong man on the two mentions
+  // that were already right.
+  //
+  // Scripture is not touched by any of this. Four Bible verses are wrong about James — Acts 12:2,
+  // James 1:1, Jude 1:1 and the four "Mary the mother of James" verses — and they are per-verse
+  // fixes in VERSE_NAME_OVERRIDES, in their own batch.
+  james: {
+    // His own page, all fourteen, mapped to himself so the self-link exclusion suppresses them.
+    "james-brother-of-jesus": "james-brother-of-jesus",
+    // Alphaeus's son, three of his four. The fourth — "and from James, the Lord's brother" — is
+    // genuinely the other man and is recovered by the context pattern above, which is checked
+    // first. The record's "James, son of Zebedee" mentions already resolve by their own long key.
+    "james-son-of-alphaeus": "james-son-of-alphaeus",
+    // The letter's author, six times across whyWritten and summary. The app already does exactly
+    // this for every other book intro — "Paul" links on book-intro:Romans five times, "Peter" on
+    // book-intro:1 Peter four — and this introduction's own `author` field states the traditional
+    // attribution to James the brother of Jesus and names the critical dissent beside it, which is
+    // the app's editorial standard. The three sentences in the same record that name the BOOK
+    // rather than the man are taken back out by the three title rules added above, which are
+    // checked before this table.
+    //
+    // The direction is worth stating because the usual preference in this file is the other one.
+    // Where a record holds two MEN, the record-wide answer is the safe one and the exception gets
+    // the pin, so a rewrite costs a correct link rather than asserting a wrong man (see `jacob`
+    // and `book-intro:Zechariah`). This record holds one man and three titles: the fallback if a
+    // title rule stops matching is a link to the man the same page already names as the letter's
+    // traditional author, which is a much weaker claim than the wrong-person fallback those
+    // entries guard against — and pinning the other way would put six correct links behind rules
+    // to protect three. Reversible in one line if that judgment is ever revisited.
+    "book-intro:James": "james-brother-of-jesus",
+    // Josephus, Antiquities 20.9.1, quoted twice in Jesus's extra-biblical sources: "the brother
+    // of Jesus, who was called Christ, whose name was James". The sentence says who he is.
+    "jesus-of-nazareth": "james-brother-of-jesus",
+    // Five records that quote the epistle by its author's name. Each holds exactly one "James",
+    // and it is the same answer the app gives "Paul" and "Peter" in the same position.
+    rahab: "james-brother-of-jesus", // "James cites her works" — James 2:25
+    satan: "james-brother-of-jesus", // "James instructs believers to 'resist the devil'" — James 4:7
+    demons: "james-brother-of-jesus", // "James notes flatly that even 'the demons… believe'" — James 2:19
+    "bib-dki-elijah-still-small-voice": "james-brother-of-jesus", // "as James later puts it, a man
+                                       // with feelings like ours" — James 5:17. The record's other
+                                       // "James" is "the King James Version", already suppressed by
+                                       // the King rule above, which is checked first.
+    // Acts 15 and Acts 21, the man presiding rather than the letter speaking.
+    gentiles: "james-brother-of-jesus", // "James cites the prophets' own promise" — Acts 15:13-18
+    "bib-ac-paul-arrest-jerusalem": "james-brother-of-jesus", // "At the urging of James and the Jerusalem elders" — Acts 21:18
+    // ── The one suppression, and it is a refusal to take a side ───────────────────────────────
+    // "Mary, mother of James the Less (also called James the Younger) and of Joses". That second
+    // "James" is her son, and the natural repoint is james-son-of-alphaeus — the traditional
+    // identification of James the Less with Alphaeus's son. It is ALSO genuinely disputed, and
+    // this record's own page is where the app has so far declined to settle it. No link, which
+    // asserts nothing; the same four verses in Scripture get the same answer, for the same reason.
+    "mary-mother-of-james-the-less": null,
+  },
+
   // "Joram": two kings of that name reigned at the same time, one in Israel and one in Judah, and
   // the app has a record for each. The bare key belongs to Judah's. Jehu kills ISRAEL's Joram —
   // the article says so in as many words, "kills King Joram of Israel with an arrow through the
@@ -2142,6 +2215,52 @@ const NAME_CONTEXT_RULES: Record<string, NameContextRule[]> = {
     // A canon list where the neighbouring "1-2 Peter" is suppressed by BOOK_NUMERAL and this one
     // has no word of its own to catch. See the note on bare-in-a-list titles above.
     { phrase: "Hebrews, James, and 1-2 Peter are not in the surviving text", to: null },
+
+    // ── Three more titles, added with the second-bearer batch, 2026-09-10 ─────────────────────
+    // All three are in book-intro:James's manuscript notes, where OWNER_NAME_OVERRIDES below now
+    // answers a bare "James" with the letter's traditional author — right for the six mentions of
+    // the man, wrong for these three, which name the BOOK. These rules are checked first and take
+    // them back out. A fourth in the same field, "the complete text of James", is already handled
+    // by TEXT_OF above.
+    //
+    // Patterns rather than exact phrases, which is the narrower choice here rather than the wider
+    // one: the neighbouring words ARE the discriminator in all three — "portions of", "among the
+    // books", "one of the 'General'/'Catholic' epistles" each say that a work is being named, the
+    // way "the patriarch Jacob" says which Jacob. Checked against all 31,098 WEB verses before
+    // being written: "portions of <Capital>" and "was among the books" occur in NO verse, and the
+    // third is anchored on the two words that follow it. A phrase pin would have been more
+    // fragile, not less — it breaks when the sentence around it is reworded, and these sentences
+    // are exactly the kind that get reworded when a manuscript is re-dated.
+    { before: /\b[Pp]ortions of\s+$/, to: null }, // "papyrus witnesses that preserve portions of James"
+    { after: /^\s+was among the books\b/, to: null }, // "James was among the books whose canonical status was discussed"
+    { after: /^\s+is one of the ['‘]?(?:General|Catholic)\b/, to: null }, // "James is one of the 'General' or 'Catholic' epistles"
+
+    // ── And two that RECOVER a link rather than removing one ──────────────────────────────────
+    //
+    // Three records name BOTH Jameses — Zebedee's son and the Lord's brother — so one answer per
+    // record cannot serve any of them, and on each the MAJORITY is Zebedee, who already owns the
+    // bare key. So the record-wide default is left alone and the exception is recovered here,
+    // which is also the only arrangement on which a reworded sentence costs a correct link rather
+    // than asserting a wrong one on the two that are right.
+    //
+    // Both are patterns for the same reason as the three above: the words are the discriminator.
+    // "the Lord's brother" and "(the brother of Jesus)" name which James in as many words, and
+    // there is no reading of either on which the man is Zebedee's son. Measured first: "James,
+    // the Lord's brother" occurs in ONE WEB verse, Galatians 1:19, where the reader path already
+    // gives the brother by book override — so this rule moves no Bible row and merely makes the
+    // panel path agree with it. "(the brother of Jesus)" occurs in no verse at all.
+    { after: /^,?\s*the Lord['’]s brother\b/, to: "james-brother-of-jesus" },
+    { after: /^\s*\(the brother of Jesus\)/, to: "james-brother-of-jesus" },
+    // Galatians 2:12, on Simon Peter's page: "he drew back from eating with Gentile Christians
+    // once certain men from James arrived". The one James on that record who is not Zebedee's son;
+    // the other two are "James and John" and are correct. No WEB verse reads "men from" followed
+    // by a name at all — Galatians 2:12 itself reads "came from James" — so this reaches only our
+    // own prose, which is where the fault is.
+    { before: /\bmen from\s+$/, to: "james-brother-of-jesus" },
+    // The apocryphal infancy gospel, quoted by name on marys-well-nazareth: "an episode from the
+    // apocryphal 2nd-century Protoevangelium of James". A work, not a man — the same ruling the
+    // modern-title pins carry, applied to an ancient one. One pin per title, as that ruling says.
+    { phrase: "Protoevangelium of James", to: null },
   ],
 
   // ── Judas Maccabeus. THE priority in this batch: the leader of the Maccabean revolt was linking

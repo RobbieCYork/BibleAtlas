@@ -61,9 +61,6 @@ bookIntro.manuscripts|book-intro:Galatians|ecabaef8d6	0	Paul	paul-of-tarsus
 bookIntro.manuscripts|book-intro:Hebrews|7228a600d1	137	Paul	paul-of-tarsus
 bookIntro.manuscripts|book-intro:Isaiah|9d7eb4c852	166	Isaiah	isaiah
 bookIntro.manuscripts|book-intro:Isaiah|ee21162672	231	Hezekiah	hezekiah
-bookIntro.manuscripts|book-intro:James|2e6234f51a	0	James	james-son-of-zebedee
-bookIntro.manuscripts|book-intro:James|514a880cb9	94	James	james-son-of-zebedee
-bookIntro.manuscripts|book-intro:James|e4cf52f807	0	James	james-son-of-zebedee
 bookIntro.manuscripts|book-intro:Jeremiah|4a54bf410f	13	Jeremiah	jeremiah
 bookIntro.manuscripts|book-intro:Jeremiah|56ae0d2838	255	Jeremiah	jeremiah
 bookIntro.manuscripts|book-intro:Jeremiah|5e2667b1c3	231	Jeremiah	jeremiah
@@ -304,19 +301,19 @@ bookIntro.summary|book-intro:Hebrews|d6fa734df1	146	Jesus	jesus-of-nazareth
 bookIntro.summary|book-intro:Hebrews|f5eceacdd2	275	Moses	moses
 bookIntro.summary|book-intro:Isaiah|c863ac53b8	217	Ahaz	ahaz
 bookIntro.summary|book-intro:Isaiah|c863ac53b8	64	Isaiah	isaiah
-bookIntro.summary|book-intro:James|10b542fa21	178	James	james-son-of-zebedee
+bookIntro.summary|book-intro:James|10b542fa21	178	James	james-brother-of-jesus
 bookIntro.summary|book-intro:James|43c7af4ba1	1090	Christ Jesus	jesus-of-nazareth
 bookIntro.summary|book-intro:James|43c7af4ba1	375	Paul	paul-of-tarsus
 bookIntro.summary|book-intro:James|43c7af4ba1	460	Paul	paul-of-tarsus
-bookIntro.summary|book-intro:James|43c7af4ba1	593	James	james-son-of-zebedee
-bookIntro.summary|book-intro:James|43c7af4ba1	62	James	james-son-of-zebedee
+bookIntro.summary|book-intro:James|43c7af4ba1	593	James	james-brother-of-jesus
+bookIntro.summary|book-intro:James|43c7af4ba1	62	James	james-brother-of-jesus
 bookIntro.summary|book-intro:James|43c7af4ba1	747	Abraham	abraham
 bookIntro.summary|book-intro:James|43c7af4ba1	777	Paul	paul-of-tarsus
 bookIntro.summary|book-intro:James|43c7af4ba1	795	Abraham	abraham
-bookIntro.summary|book-intro:James|43c7af4ba1	850	James	james-son-of-zebedee
+bookIntro.summary|book-intro:James|43c7af4ba1	850	James	james-brother-of-jesus
 bookIntro.summary|book-intro:James|43c7af4ba1	869	Abraham	abraham
 bookIntro.summary|book-intro:James|43c7af4ba1	928	Paul	paul-of-tarsus
-bookIntro.summary|book-intro:James|eae45b62cc	0	James	james-son-of-zebedee
+bookIntro.summary|book-intro:James|eae45b62cc	0	James	james-brother-of-jesus
 bookIntro.summary|book-intro:Jeremiah|05c0e4ce1f	91	Jeremiah	jeremiah
 bookIntro.summary|book-intro:Jeremiah|af353bd4b2	20	Jeremiah	jeremiah
 bookIntro.summary|book-intro:Jeremiah|af353bd4b2	265	Jeremiah	jeremiah
@@ -582,7 +579,7 @@ bookIntro.whyWritten|book-intro:Haggai|7484752c22	364	Joshua	joshua
 bookIntro.whyWritten|book-intro:Hebrews|ee95703987	205	Jesus	jesus-of-nazareth
 bookIntro.whyWritten|book-intro:Hebrews|ee95703987	268	Moses	moses
 bookIntro.whyWritten|book-intro:Isaiah|ef34e99b74	0	Isaiah	isaiah
-bookIntro.whyWritten|book-intro:James|b3fcdb5940	0	James	james-son-of-zebedee
+bookIntro.whyWritten|book-intro:James|b3fcdb5940	0	James	james-brother-of-jesus
 bookIntro.whyWritten|book-intro:Jeremiah|a35f085ea1	0	Jeremiah	jeremiah
 bookIntro.whyWritten|book-intro:Job|34cf18a4fc	0	Job	job
 bookIntro.whyWritten|book-intro:Job|34cf18a4fc	256	Job	job
@@ -1135,7 +1132,7 @@ person.controversies|shealtiel|17c9d54c7a	114	Ezra	ezra
 person.controversies|shealtiel|17c9d54c7a	172	Zerubbabel	zerubbabel
 person.controversies|shealtiel|17c9d54c7a	24	Zerubbabel	zerubbabel
 person.controversies|simon-peter|78a98ba86c	0	Paul	paul-of-tarsus
-person.controversies|simon-peter|78a98ba86c	159	James	james-son-of-zebedee
+person.controversies|simon-peter|78a98ba86c	159	James	james-brother-of-jesus
 person.controversies|simon-peter|ac0d1151d5	21	Jesus	jesus-of-nazareth
 person.controversies|stephen-the-martyr|ab8b7cd54a	188	Paul	paul-of-tarsus
 person.controversies|stephen-the-martyr|ab8b7cd54a	46	Saul of Tarsus	paul-of-tarsus
@@ -1170,14 +1167,12 @@ person.extraBib.summary|herod-the-great|bcb0e26f4d	68	Augustus	caesar-augustus
 person.extraBib.summary|isaiah|fe7a0f0081	112	Hezekiah	hezekiah
 person.extraBib.summary|jacob|d4fddf869c	357	Isaac	isaac
 person.extraBib.summary|jacob|d4fddf869c	375	Rachel	rachel
-person.extraBib.summary|james-brother-of-jesus|054e290ca8	65	James	james-son-of-zebedee
 person.extraBib.summary|james-brother-of-jesus|d2aebf1977	101	Jesus	jesus-of-nazareth
-person.extraBib.summary|james-brother-of-jesus|d2aebf1977	77	James	james-son-of-zebedee
 person.extraBib.summary|jesus-of-nazareth|22c8c1aaf5	179	Pilate	pontius-pilate
 person.extraBib.summary|jesus-of-nazareth|b5c8755f28	172	Tiberius	tiberius-caesar
 person.extraBib.summary|jesus-of-nazareth|b5c8755f28	256	Nero	nero-caesar
-person.extraBib.summary|jesus-of-nazareth|b86abc04c0	134	James	james-son-of-zebedee
-person.extraBib.summary|jesus-of-nazareth|b86abc04c0	153	James	james-son-of-zebedee
+person.extraBib.summary|jesus-of-nazareth|b86abc04c0	134	James	james-brother-of-jesus
+person.extraBib.summary|jesus-of-nazareth|b86abc04c0	153	James	james-brother-of-jesus
 person.extraBib.summary|john-mark|4e0d32a4e5	129	Peter	simon-peter
 person.extraBib.summary|john-mark|4e0d32a4e5	153	Jesus	jesus-of-nazareth
 person.extraBib.summary|john-mark|4e0d32a4e5	64	Peter	simon-peter
@@ -1888,34 +1883,20 @@ person.lifeStory|jacob|fea8a1e781	398	Abraham	abraham
 person.lifeStory|jacob|fea8a1e781	407	Sarah	sarah
 person.lifeStory|jacob|fea8a1e781	414	Isaac	isaac
 person.lifeStory|jacob|fea8a1e781	425	Rebekah	rebekah
-person.lifeStory|james-brother-of-jesus|3e1387f0a3	0	James	james-son-of-zebedee
-person.lifeStory|james-brother-of-jesus|3e1387f0a3	107	James	james-son-of-zebedee
 person.lifeStory|james-brother-of-jesus|3e1387f0a3	121	Judas	judas-iscariot
 person.lifeStory|james-brother-of-jesus|3e1387f0a3	132	Simon	simon-peter
 person.lifeStory|james-brother-of-jesus|3e1387f0a3	287	Jesus	jesus-of-nazareth
-person.lifeStory|james-brother-of-jesus|3e1387f0a3	375	James	james-son-of-zebedee
 person.lifeStory|james-brother-of-jesus|3e1387f0a3	46	Jesus	jesus-of-nazareth
-person.lifeStory|james-brother-of-jesus|88bfe4b363	0	James	james-son-of-zebedee
-person.lifeStory|james-brother-of-jesus|88bfe4b363	166	James	james-son-of-zebedee
 person.lifeStory|james-brother-of-jesus|9a1ab0db7a	112	Jesus	jesus-of-nazareth
-person.lifeStory|james-brother-of-jesus|9a1ab0db7a	131	James	james-son-of-zebedee
-person.lifeStory|james-brother-of-jesus|9a1ab0db7a	250	James	james-son-of-zebedee
-person.lifeStory|james-brother-of-jesus|9a1ab0db7a	291	James	james-son-of-zebedee
 person.lifeStory|james-brother-of-jesus|9a1ab0db7a	363	Peter	simon-peter
-person.lifeStory|james-brother-of-jesus|9a1ab0db7a	442	James	james-son-of-zebedee
 person.lifeStory|james-brother-of-jesus|9a1ab0db7a	467	Paul	paul-of-tarsus
-person.lifeStory|james-brother-of-jesus|9a1ab0db7a	518	James	james-son-of-zebedee
 person.lifeStory|james-brother-of-jesus|9a1ab0db7a	54	Paul	paul-of-tarsus
 person.lifeStory|james-brother-of-jesus|9a1ab0db7a	590	Peter	simon-peter
 person.lifeStory|james-brother-of-jesus|9a1ab0db7a	600	John	john-the-apostle
-person.lifeStory|james-brother-of-jesus|ae407a5edb	0	James	james-son-of-zebedee
 person.lifeStory|james-brother-of-jesus|ae407a5edb	178	Peter	simon-peter
 person.lifeStory|james-brother-of-jesus|ae407a5edb	193	Paul	paul-of-tarsus
 person.lifeStory|james-brother-of-jesus|ae407a5edb	202	Barnabas	barnabas
-person.lifeStory|james-brother-of-jesus|ae407a5edb	224	James	james-son-of-zebedee
-person.lifeStory|james-son-of-alphaeus|0340259cfa	149	James	james-son-of-zebedee
 person.lifeStory|james-son-of-alphaeus|0340259cfa	196	James, son of Zebedee	james-son-of-zebedee
-person.lifeStory|james-son-of-alphaeus|7a99fbfa9a	50	James	james-son-of-zebedee
 person.lifeStory|james-son-of-alphaeus|7a99fbfa9a	83	Mary	mary-mother-of-jesus
 person.lifeStory|james-son-of-zebedee|2c9eb6ebf6	113	Jesus	jesus-of-nazareth
 person.lifeStory|james-son-of-zebedee|2c9eb6ebf6	14	Peter	simon-peter
@@ -2034,7 +2015,7 @@ person.lifeStory|john-the-apostle|6be9e03285	262	Mark	john-mark
 person.lifeStory|john-the-apostle|6be9e03285	272	Luke	luke-evangelist
 person.lifeStory|john-the-apostle|e5d19f06af	244	Paul	paul-of-tarsus
 person.lifeStory|john-the-apostle|e5d19f06af	278	Peter	simon-peter
-person.lifeStory|john-the-apostle|e5d19f06af	288	James	james-son-of-zebedee
+person.lifeStory|john-the-apostle|e5d19f06af	288	James	james-brother-of-jesus
 person.lifeStory|john-the-apostle|e5d19f06af	310	Jesus	jesus-of-nazareth
 person.lifeStory|john-the-apostle|e5d19f06af	44	Peter	simon-peter
 person.lifeStory|john-the-baptist|7bb0b28ead	184	Elijah	elijah
@@ -2258,7 +2239,6 @@ person.lifeStory|mary-magdalene|e373336d03	341	Jesus	jesus-of-nazareth
 person.lifeStory|mary-magdalene|e373336d03	449	Jesus	jesus-of-nazareth
 person.lifeStory|mary-mother-of-james-the-less|38aca1a7b0	133	Jesus	jesus-of-nazareth
 person.lifeStory|mary-mother-of-james-the-less|38aca1a7b0	294	Jesus	jesus-of-nazareth
-person.lifeStory|mary-mother-of-james-the-less|38aca1a7b0	44	James	james-son-of-zebedee
 person.lifeStory|mary-mother-of-jesus|5bde7ba8d4	116	Jesus	jesus-of-nazareth
 person.lifeStory|mary-mother-of-jesus|5bde7ba8d4	240	Jesus	jesus-of-nazareth
 person.lifeStory|mary-mother-of-jesus|5bde7ba8d4	7	Jesus	jesus-of-nazareth
@@ -2554,7 +2534,7 @@ person.lifeStory|rachel|d5e6bf7190	96	Jacob	jacob
 person.lifeStory|rahab|0ba8e1f77d	102	Joshua	joshua
 person.lifeStory|rahab|75fd3a0228	151	David	david
 person.lifeStory|rahab|75fd3a0228	187	Jesus	jesus-of-nazareth
-person.lifeStory|rahab|75fd3a0228	372	James	james-son-of-zebedee
+person.lifeStory|rahab|75fd3a0228	372	James	james-brother-of-jesus
 person.lifeStory|rahab|75fd3a0228	54	Salmon	salmon-father-of-boaz
 person.lifeStory|rahab|75fd3a0228	75	Boaz	boaz
 person.lifeStory|rahab|fd2cc002f4	58	Joshua	joshua
@@ -2686,7 +2666,7 @@ person.lifeStory|satan|038fb6dbab	0	Paul	paul-of-tarsus
 person.lifeStory|satan|038fb6dbab	163	Paul	paul-of-tarsus
 person.lifeStory|satan|038fb6dbab	229	Paul	paul-of-tarsus
 person.lifeStory|satan|038fb6dbab	316	Paul	paul-of-tarsus
-person.lifeStory|satan|038fb6dbab	747	James	james-son-of-zebedee
+person.lifeStory|satan|038fb6dbab	747	James	james-brother-of-jesus
 person.lifeStory|satan|2122f689da	344	David	david
 person.lifeStory|satan|2122f689da	49	Zechariah	zechariah-the-prophet
 person.lifeStory|satan|2122f689da	499	David	david
@@ -2964,8 +2944,7 @@ person.lifespanDatingNotes|isaiah|905c4faf44	231	Manasseh	manasseh-king-of-judah
 person.lifespanDatingNotes|isaiah|905c4faf44	36	Uzziah	uzziah
 person.lifespanDatingNotes|jacob|f06c6ab42c	10	Isaac	isaac
 person.lifespanDatingNotes|james-brother-of-jesus|c1d127cd87	7	Jesus	jesus-of-nazareth
-person.lifespanDatingNotes|james-son-of-alphaeus|7b18768310	107	James	james-son-of-zebedee
-person.lifespanDatingNotes|james-son-of-alphaeus|7b18768310	18	James	james-son-of-zebedee
+person.lifespanDatingNotes|james-son-of-alphaeus|7b18768310	107	James	james-brother-of-jesus
 person.lifespanDatingNotes|james-son-of-alphaeus|7b18768310	405	James the Just	james-brother-of-jesus
 person.lifespanDatingNotes|james-son-of-alphaeus|7b18768310	75	James, son of Zebedee	james-son-of-zebedee
 person.lifespanDatingNotes|james-son-of-zebedee|5c5386790e	181	Agrippa I	herod-agrippa-i
@@ -3273,7 +3252,6 @@ poi.description|mamertine-prison-rome|93ae1b8990	292	Paul	paul-of-tarsus
 poi.description|mamertine-prison-rome|93ae1b8990	360	Nero	nero-caesar
 poi.description|martyrdom-site-polycarp-smyrna|da2885a3b3	57	John	john-the-apostle
 poi.description|marys-well-nazareth|7fda6a302e	121	Mary	mary-mother-of-jesus
-poi.description|marys-well-nazareth|7fda6a302e	249	James	james-son-of-zebedee
 poi.description|marys-well-nazareth|7fda6a302e	348	Gabriel	gabriel-archangel
 poi.description|marys-well-nazareth|7fda6a302e	95	Gabriel	gabriel-archangel
 poi.description|masada|91aa0aa827	50	Herod the Great	herod-the-great
@@ -3425,7 +3403,7 @@ timelineEvent.article|bib-ac-jerusalem-council|4229cecdc5	136	Cornelius	corneliu
 timelineEvent.article|bib-ac-jerusalem-council|4229cecdc5	194	Paul	paul-of-tarsus
 timelineEvent.article|bib-ac-jerusalem-council|4229cecdc5	203	Barnabas	barnabas
 timelineEvent.article|bib-ac-jerusalem-council|4229cecdc5	23	Peter	simon-peter
-timelineEvent.article|bib-ac-jerusalem-council|4229cecdc5	294	James	james-son-of-zebedee
+timelineEvent.article|bib-ac-jerusalem-council|4229cecdc5	294	James	james-brother-of-jesus
 timelineEvent.article|bib-ac-john-exile-revelation|11582682e0	272	the dragon	satan
 timelineEvent.article|bib-ac-john-exile-revelation|61ab54eb5c	101	John	john-the-apostle
 timelineEvent.article|bib-ac-john-exile-revelation|61ab54eb5c	318	Nero	nero-caesar
@@ -3445,7 +3423,7 @@ timelineEvent.article|bib-ac-nero-fire-persecution|cfa19413f5	66	Paul	paul-of-ta
 timelineEvent.article|bib-ac-nero-fire-persecution|cfa19413f5	75	Peter	simon-peter
 timelineEvent.article|bib-ac-paul-arrest-jerusalem|08bcb396ff	0	Paul	paul-of-tarsus
 timelineEvent.article|bib-ac-paul-arrest-jerusalem|08bcb396ff	255	Jesus	jesus-of-nazareth
-timelineEvent.article|bib-ac-paul-arrest-jerusalem|08bcb396ff	293	James	james-son-of-zebedee
+timelineEvent.article|bib-ac-paul-arrest-jerusalem|08bcb396ff	293	James	james-brother-of-jesus
 timelineEvent.article|bib-ac-paul-arrest-jerusalem|08bcb396ff	325	Paul	paul-of-tarsus
 timelineEvent.article|bib-ac-paul-arrest-jerusalem|bd9e7e519c	114	Paul	paul-of-tarsus
 timelineEvent.article|bib-ac-paul-arrest-jerusalem|bd9e7e519c	354	Paul	paul-of-tarsus
@@ -3763,7 +3741,7 @@ timelineEvent.article|bib-dki-elijah-still-small-voice|7f713a8afe	43	Elijah	elij
 timelineEvent.article|bib-dki-elijah-still-small-voice|7f713a8afe	456	Elijah	elijah
 timelineEvent.article|bib-dki-elijah-still-small-voice|c4c8ca78dd	121	Jezebel	jezebel
 timelineEvent.article|bib-dki-elijah-still-small-voice|c4c8ca78dd	17	Elijah	elijah
-timelineEvent.article|bib-dki-elijah-still-small-voice|c4c8ca78dd	387	James	james-son-of-zebedee
+timelineEvent.article|bib-dki-elijah-still-small-voice|c4c8ca78dd	387	James	james-brother-of-jesus
 timelineEvent.article|bib-dki-elijah-widow-zarephath|00f2c463de	166	Elijah	elijah
 timelineEvent.article|bib-dki-elijah-widow-zarephath|669e4e9011	0	Jesus	jesus-of-nazareth
 timelineEvent.article|bib-dki-elijah-widow-zarephath|669e4e9011	134	Elijah	elijah
@@ -5642,7 +5620,7 @@ topic.section|demons|2c6cd0dcdd	66	Jesus	jesus-of-nazareth
 topic.section|demons|2c6cd0dcdd	854	Paul	paul-of-tarsus
 topic.section|demons|ff47c964be	117	Satan	satan
 topic.section|demons|ff47c964be	396	Jesus	jesus-of-nazareth
-topic.section|demons|ff47c964be	542	James	james-son-of-zebedee
+topic.section|demons|ff47c964be	542	James	james-brother-of-jesus
 topic.section|diatessaron|31c1eadee2	353	David	david
 topic.section|diatessaron|8241f0b7d0	201	David	david
 topic.section|diatessaron|8241f0b7d0	959	Jesus	jesus-of-nazareth
@@ -5716,7 +5694,7 @@ topic.section|genesis-apocryphon|4d7941e221	464	Noah	noah
 topic.section|gentiles|2588b15238	0	Paul	paul-of-tarsus
 topic.section|gentiles|2588b15238	330	Paul	paul-of-tarsus
 topic.section|gentiles|2588b15238	484	Paul	paul-of-tarsus
-topic.section|gentiles|6857f372f3	152	James	james-son-of-zebedee
+topic.section|gentiles|6857f372f3	152	James	james-brother-of-jesus
 topic.section|gentiles|6857f372f3	440	Paul	paul-of-tarsus
 topic.section|gentiles|6857f372f3	79	Peter	simon-peter
 topic.section|gentiles|6857f372f3	86	Paul	paul-of-tarsus

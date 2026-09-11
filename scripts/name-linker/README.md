@@ -2,7 +2,7 @@
 
 `src/lib/verseAnnotations.ts` decides which words in the Bible text — and in every article the app
 has ever written — become links to a person, place or topic. It renders **9,724 person-links across
-Scripture and 6,342 across the app's own prose**. Until this directory existed it had no tests at
+Scripture and 6,320 across the app's own prose**. Until this directory existed it had no tests at
 all, and a one-line data edit could move hundreds of them with nobody noticing.
 
     npm run test:linker
@@ -108,13 +108,13 @@ purpose and is written up in `reviewed.tsv`'s header.
 | file | rows | what it holds |
 |---|---:|---|
 | `bible-links.tsv` | 9,724 | every person-link in all 31,098 WEB verses, with the id each rendering path gives it |
-| `prose-links.tsv` | 6,342 | every person-link in every authored prose block the app puts through `LinkedVerseText` |
-| `key-totals.tsv` | 4,080 | a tally covering **every** kind — location, POI, topic, timeline, verse reference — one row per (kind, matched text, id, path) |
+| `prose-links.tsv` | 6,320 | every person-link in every authored prose block the app puts through `LinkedVerseText` |
+| `key-totals.tsv` | 4,082 | a tally covering **every** kind — location, POI, topic, timeline, verse reference — one row per (kind, matched text, id, path) |
 
 The first two are row-level, so a diff names the verse or the block. `key-totals.tsv` exists because
 the other two only record **people**: a change to `people.ts` can steal a key from a location, and
 adding one POI alternate name can start firing hundreds of links that no person snapshot would ever
-show. Its 4,080 rows currently break down as 2,349 verse references, 743 person, 391 topic, 387
+show. Its 4,082 rows currently break down as 2,349 verse references, 745 person, 391 topic, 387
 location, 131 POI and 79 timeline.
 
 This is the half that catches what you did not think to assert. The named cases cover a few dozen
@@ -174,7 +174,8 @@ refused outright — the opposite default from `modern-names.mjs`, where most ca
 links and blessing in bulk is sane.
 
 What it found on the day it was written, with the Philip cluster already fixed: **14 shapes, 62
-links, of which 60 were faults.** Six of the fourteen were not in the sweep that prompted the file
+links, of which 60 were faults** — 13 shapes and 45 links after the James batch that followed.
+Six of the fourteen were not in the sweep that prompted the file
 — `mary-magdalene`, `mary-of-bethany`, `james-son-of-alphaeus`, `thomas-aquinas`, `caesar-augustus`
 and the five records called Simon. That sweep had checked those records and reported that they
 "resolve correctly wherever their longer wording appears", which was true and was a different
@@ -251,8 +252,8 @@ snapshot.
 
 `LinkedVerseText` is what PersonPanel, LocationPanel, PoiPanel, TopicPanel, BookIntroView,
 TimelineEventPanel and MyProfileView render with. Every book override, verse override and
-suppression in `verseAnnotations.ts` is invisible there. **838 links across 748 verses resolve
-differently between the two paths**, and all but a handful of the 6,342 prose links run with no
+suppression in `verseAnnotations.ts` is invisible there. **837 links across 747 verses resolve
+differently between the two paths**, and all but a handful of the 6,320 prose links run with no
 disambiguation at all — `OWNER_NAME_OVERRIDES` (below) is the only correction that reaches them. A
 fix that only moves the `reader` column has fixed half the app.
 

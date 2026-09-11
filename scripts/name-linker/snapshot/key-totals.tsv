@@ -673,9 +673,11 @@ person	jacob	jacob	reader	379
 person	jacob	jacob-father-of-joseph	panel	2
 person	jacob	jacob-father-of-joseph	prose	5
 person	jacob	jacob-father-of-joseph	reader	2
+person	james	james-brother-of-jesus	panel	1
+person	james	james-brother-of-jesus	prose	18
 person	james	james-brother-of-jesus	reader	10
-person	james	james-son-of-zebedee	panel	32
-person	james	james-son-of-zebedee	prose	54
+person	james	james-son-of-zebedee	panel	31
+person	james	james-son-of-zebedee	prose	14
 person	james	james-son-of-zebedee	reader	22
 person	james the just	james-brother-of-jesus	prose	2
 person	james the son of alphaeus	james-son-of-alphaeus	panel	2

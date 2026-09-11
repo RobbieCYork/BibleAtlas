@@ -3188,4 +3188,125 @@ export const CASES = [
     why: "\"his brother Philip's wife\" — Herod Philip I, already suppressed on the reader path by " +
          "VERSE_NAME_OVERRIDES. The prose case above is the article half of the same man, and this " +
          "is the half that was already right; if the two ever disagree, one of them is wrong." },
+  // ═══════════════════════════════════════════════════════════════════════════════════════════
+  // SECOND-BEARER BATCH 3: THE JAMES CLUSTER, 2026-09-10
+  //
+  // 39 wrong links. The bare key belongs to James son of Zebedee, who was executed in AD 44 and is
+  // a candidate for almost none of it; nearly every one was James the Lord's brother, who has a
+  // record. Nineteen bare "James"es in our prose genuinely ARE Zebedee's son and are untouched;
+  // four of those nineteen are guarded below.
+  //
+  // Three records name BOTH men — simon-peter, john-the-apostle, bib-ac-jerusalem-council — and
+  // take no owner entry at all. The record-wide default stays with Zebedee, who is the majority on
+  // each, and the exception is recovered by a context pattern. Every one of those three records is
+  // asserted here on BOTH sides, which is the only way to know the split still holds.
+
+  { text: "James appears in the Gospels simply as one of Jesus's brothers — Mark's Gospel names him first among four (James, Joses, Judas, and Simon) when the people of Nazareth question how a hometown carpenter's family produced such a teacher (Mark 6:3). John's Gospel states plainly that during Jesus's ministry, \"even his own brothers did not believe in him\" (John 7:5), suggesting James was among the skeptics.",
+    surface: "James", owner: "james-brother-of-jesus", expect: null, status: "guard",
+    why: "THE RECORD'S OWN PAGE. All fourteen \"James\"es on james-brother-of-jesus linked to " +
+         "Zebedee's son — including, elsewhere on the same record, the sentence quoting Galatians " +
+         "1:19, \"meets specifically with 'James, the Lord's brother'\", which names the man it was " +
+         "getting wrong. Mapped to himself so the self-link exclusion suppresses it." },
+  { text: "Sometimes called 'James the Less' (cf. Mark 15:40) to distinguish him from James, son of Zebedee, and from James, the Lord's brother — a distinction worth keeping straight, since ancient sources occasionally conflate them. Very little reliable information survives about his later life or death; be aware that the commonly repeated c. AD 62 death date almost certainly originates from conflating him with James the Just, whose stoning in AD 62 Josephus records. Other late traditions (e.g., martyrdom at Ostrakine in Egypt) supply no usable year, so treat this date as a placeholder.",
+    surface: "James", occurrence: 1, owner: "james-son-of-alphaeus", expect: null, status: "guard",
+    why: "\"James the Less\" — the page's own subject, which linked to Zebedee's son. Found by " +
+         "scripts/name-linker/self-name.mjs, not by the sweep, which had checked this record and " +
+         "reported correctly that its LONGER wordings resolve right." },
+  { text: "Sometimes called 'James the Less' (cf. Mark 15:40) to distinguish him from James, son of Zebedee, and from James, the Lord's brother — a distinction worth keeping straight, since ancient sources occasionally conflate them. Very little reliable information survives about his later life or death; be aware that the commonly repeated c. AD 62 death date almost certainly originates from conflating him with James the Just, whose stoning in AD 62 Josephus records. Other late traditions (e.g., martyrdom at Ostrakine in Egypt) supply no usable year, so treat this date as a placeholder.",
+    surface: "James", occurrence: 3, owner: "james-son-of-alphaeus", expect: "james-brother-of-jesus",
+    status: "guard",
+    why: "The SAME SENTENCE, third occurrence: \"and from James, the Lord's brother\". One record, " +
+         "three different men in one clause, and the record-wide answer above can only serve one " +
+         "of them — this is the exception, recovered by the \"the Lord's brother\" pattern in " +
+         "NAME_CONTEXT_RULES, which is checked first. Occurrence 2, \"James, son of Zebedee\", is " +
+         "its own registered key and was always right." },
+  { text: "Paul's letter to the Galatians describes confronting Peter \"to his face\" at Antioch for pulling back from eating with Gentile Christians once certain men from James arrived, calling his behavior hypocrisy (Galatians 2:11-14) — a rare glimpse of open conflict between two apostolic leaders.",
+    surface: "James", owner: "simon-peter", expect: "james-brother-of-jesus", status: "guard",
+    why: "Galatians 2:12's \"men from James\" — the Jerusalem leader, not the apostle Agrippa had " +
+         "killed twelve years earlier. Recovered by a `before: /men from/` pattern rather than an " +
+         "owner entry, because Simon Peter's page names BOTH men and the other two are Zebedee's " +
+         "son. No WEB verse reads \"men from\" followed by a name; Galatians 2:12 itself reads " +
+         "\"came from James\"." },
+  { text: "Peter was born Simon, son of John (or Jonah), and worked as a fisherman on the Sea of Galilee alongside his brother Andrew, in partnership with James and John, the sons of Zebedee. Jesus called the two brothers while they were casting their nets, telling them he would make them \"fishers of men,\" and Peter left his boats to follow him (Matthew 4:18-20).",
+    surface: "James", owner: "simon-peter", expect: "james-son-of-zebedee", status: "guard",
+    why: "The other side of the same record, and the reason it has no owner entry: this \"James\" " +
+         "is Zebedee's son and must stay that way. A record-wide answer would have taken it." },
+  { text: "In the book of Acts, John appears alongside Peter as a leader of the Jerusalem church in its earliest years — the two together heal a lame beggar at the temple gate and are subsequently arrested and questioned by the Jewish council (Acts 3-4). Paul later names John, along with Peter and James (the brother of Jesus), as one of the reputed \"pillars\" of the Jerusalem church (Galatians 2:9).",
+    surface: "James", owner: "john-the-apostle", expect: "james-brother-of-jesus", status: "guard",
+    why: "Galatians 2:9's three pillars, on John the Apostle's own page — a sentence that says " +
+         "which James in a parenthesis and linked the other one anyway. Recovered by the " +
+         "\"(the brother of Jesus)\" pattern; the record's three other \"James\"es are his own " +
+         "brother and are untouched." },
+  { text: "James writes to Jewish Christians scattered abroad, offering practical, down-to-earth guidance on how genuine faith should shape everyday conduct. Its concern is that belief which produces no change in behavior is worthless; real faith shows itself in patience under trial, care for the poor, control of the tongue, and impartial love. The letter reads much like the wisdom literature of the Old Testament, packed with vivid images and blunt moral exhortation.",
+    surface: "James", owner: "book-intro:James", expect: "james-brother-of-jesus", status: "guard",
+    why: "The letter's author, on its own introduction, which passes bookIntroOwnerId(\"James\"). " +
+         "The app already does exactly this elsewhere — \"Paul\" links five times on " +
+         "book-intro:Romans and \"Peter\" four times on book-intro:1 Peter — and this intro's own " +
+         "`author` field states the traditional attribution to the Lord's brother and names the " +
+         "critical dissent beside it. Was Zebedee's son, whom nobody proposes." },
+  { text: "Papyrus 20 and Papyrus 23 are early (3rd-century) papyrus witnesses that preserve portions of James.",
+    surface: "James", owner: "book-intro:James", expect: null, status: "guard",
+    why: "The BOOK, in the same record whose owner entry answers \"the author\". Suppressed by a " +
+         "`before: /portions of/` pattern in NAME_CONTEXT_RULES, checked first. No WEB verse " +
+         "contains \"portions of\" followed by a capitalised word." },
+  { text: "James is one of the 'General' or 'Catholic' epistles that circulated together in early manuscript collections of the non-Pauline letters.",
+    surface: "James", owner: "book-intro:James", expect: null, status: "guard",
+    why: "The book again, named as one of a class of books. `after: /is one of the 'General|Catholic/`." },
+  { text: "James was among the books whose canonical status was discussed in the early centuries; the church historian Eusebius listed it among the 'disputed' writings, though it was ultimately and widely accepted as Scripture.",
+    surface: "James", owner: "book-intro:James", expect: null, status: "guard",
+    why: "The book a third time — \"among the books\" says so in as many words. The fourth in this " +
+         "field, \"the complete text of James\", was already handled by TEXT_OF." },
+  { text: "The Greek Orthodox counter-tradition to the Basilica of the Annunciation, this site holds that Gabriel first appeared to Mary while she was drawing water from Nazareth's ancient spring — an episode from the apocryphal 2nd-century Protoevangelium of James, not found in the canonical Luke 1:26-38 account, which names no location. The Church of St. Gabriel was built directly over the spring's source, with the water still flowing through the crypt beneath the altar. A separate public well structure in the plaza, fed by the same spring, served as Nazareth's only water source for centuries.",
+    surface: "James", owner: "marys-well-nazareth", expect: null, status: "guard",
+    why: "An apocryphal infancy gospel, named by title, pointing at an apostle. One pin per title, " +
+         "as the modern-work-title ruling requires — the same rule applied to an ancient work." },
+  { text: "Mary, mother of James the Less (also called James the Younger) and of Joses, is named among the women who had followed and supported Jesus's ministry in Galilee and who stood watching, at a distance, when he was crucified (Mark 15:40, Matthew 27:56). She was also among the women who saw where Jesus was buried and returned to the tomb on the first day of the week with spices, becoming one of the first witnesses to the resurrection (Mark 16:1, Matthew 28:1, Luke 24:10). Some scholars identify her with \"Mary the wife of Clopas,\" who John places at the foot of the cross (John 19:25), though the Gospels never explicitly connect the two names, so the identification remains a reasonable guess rather than a certainty.",
+    surface: "James", occurrence: 2, owner: "mary-mother-of-james-the-less", expect: null, status: "guard",
+    why: "\"also called James the Younger\" — her son, linked to Zebedee's son, on a page whose own " +
+         "name says whose mother she is. SUPPRESSED rather than repointed to james-son-of-alphaeus: " +
+         "identifying James the Less with Alphaeus's son is the traditional reading and is " +
+         "genuinely disputed, and no link takes no side. Occurrence 1 is inside the record's own " +
+         "registered name and is already self-excluded." },
+  { text: "In a passage about the high priest Ananus, Josephus refers in passing to \"the brother of Jesus, who was called Christ, whose name was James,\" describing James's execution around AD 62.",
+    surface: "James", occurrence: 2, owner: "jesus-of-nazareth", expect: "james-brother-of-jesus",
+    status: "guard",
+    why: "Josephus, Antiquities 20.9.1, on Jesus's own page — the sentence names the man in the " +
+         "words either side of the link and sent the reader to a different apostle. Occurrence 1 " +
+         "sits inside the quotation and takes the same answer." },
+  { text: "The Jerusalem Council (Acts 15) settled the question decisively. After hearing Peter, Paul, and Barnabas testify to God's work among Gentile believers, James cites the prophets' own promise that 'all the Gentiles who are called by my name' would seek the Lord (Acts 15:17, quoting Amos 9:11-12), and the council concludes 'we don't trouble those from among the Gentiles who turn to God' with the burden of the full Mosaic law (Acts 15:19). Paul's letter to the Ephesians describes the result theologically: Gentile believers, once 'far off,' 'strangers from the covenants of promise,' are now brought near by Christ's blood, who 'made both one, and broke down the middle wall of separation' — abolishing in his own flesh the hostility between Jew and Gentile, creating 'one new man' out of the two (Ephesians 2:11-16).",
+    surface: "James", owner: "gentiles", expect: "james-brother-of-jesus", status: "guard",
+    why: "Acts 15:13-18 — the man presiding at the council, not the letter speaking. Acts 15:13 " +
+         "already resolves to him on the reader path; this is the article telling the same story." },
+  { text: "One might expect Elijah to be riding high after Carmel's spectacular vindication, but instead a single death threat from Jezebel sends him running for his life into the wilderness, where he collapses under a broom tree and asks God to let him die. It is one of the Bible's most honest portraits of a spiritual high followed by a devastating crash — even the greatest of prophets was, as James later puts it, a man with feelings like ours.",
+    surface: "James", owner: "bib-dki-elijah-still-small-voice", expect: "james-brother-of-jesus",
+    status: "guard",
+    why: "James 5:17, quoted by its author's name nine centuries out of period. The same event's " +
+         "next paragraph says \"the King James Version\", which the `before: /King /` rule has " +
+         "always suppressed and which this owner entry cannot reach, because NAME_CONTEXT_RULES is " +
+         "checked first — the case below asserts that." },
+  { text: "After food, rest, and a forty-day journey, Elijah arrives at Horeb — the same mountain, also called Sinai, where God gave the Law to Moses — and takes shelter in a cave. There the Lord passes by, but not in the way Elijah might have expected after Carmel's fire from heaven: not in the powerful wind, not in the earthquake, not in the fire, but in what the King James Version famously calls \"a still small voice\" — a low whisper, a gentle sound that draws Elijah out of the cave to stand before God.",
+    surface: "James", owner: "bib-dki-elijah-still-small-voice", expect: null, status: "guard",
+    why: "\"the King James Version\" — a translation, not a man, on the SAME RECORD whose owner " +
+         "entry now resolves a bare \"James\" to the Lord's brother. This is the case that proves " +
+         "the precedence order holds: NAME_CONTEXT_RULES first, OWNER_NAME_OVERRIDES after." },
+
+  // ── Guards: Zebedee's son keeps the bare key ────────────────────────────────────────────────
+  { text: "A grandson of Herod the Great who executed the apostle James, imprisoned Peter, and — in an account independently echoed by the Jewish historian Josephus — died suddenly after accepting a crowd's acclamation of him as a god.",
+    surface: "James", owner: "herod-agrippa-i", expect: "james-son-of-zebedee", status: "guard",
+    why: "PUBLIC PAGE ONLY — herod-agrippa-i.summary. Acts 12:2, the one James Agrippa killed, and " +
+         "the bare key's correct answer. On a surface no snapshot covers, so this case is its only " +
+         "cover." },
+  { ref: "Matthew 17:1", surface: "James", expect: "james-son-of-zebedee", status: "guard",
+    why: "The reader path at the Transfiguration. Nothing in this batch touches Scripture except " +
+         "Galatians 1:19's panel column, below." },
+  { ref: "Galatians 1:19", surface: "James", expect: "james-brother-of-jesus", status: "guard",
+    why: "\"except James, the Lord's brother.\" The reader path has been right here for as long as " +
+         "BOOK_NAME_OVERRIDES has had a Galatians entry." },
+  { ref: "Galatians 1:19", surface: "James", path: "panel", expect: "james-brother-of-jesus",
+    status: "guard",
+    why: "THE ONE BIBLE ROW THIS BATCH MOVES, and it moves into agreement with the line above. The " +
+         "panel path passes no book, so it gave Zebedee's son; the new \"the Lord's brother\" " +
+         "pattern reaches it because NAME_CONTEXT_RULES needs no context at all. It was added for " +
+         "three prose sentences and this verse is its whole reach into Scripture — measured across " +
+         "all 31,098 WEB verses before it was written." },
 ];
