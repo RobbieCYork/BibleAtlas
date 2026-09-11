@@ -502,11 +502,7 @@ export const CASES = [
   { ref: "Isaiah 9:6", surface: "Counselor", expect: "holy-spirit", status: "flagged",
     why: "§7.3 — 'Wonderful, Counselor'. Most Christian readings take this as a title of the " +
          "Messiah; the app currently says Holy Spirit. Changing it is a doctrinal statement." },
-  { ref: "James 1:1", surface: "James", expect: "james-son-of-zebedee", status: "flagged",
-    why: "§7.1 — who wrote the epistle. Almost no tradition holds Zebedee's son (dead in Acts 12:2), " +
-         "but choosing James of Jerusalem takes a position the app does not currently take." },
-  { ref: "Jude 1:1", surface: "James", expect: "james-son-of-zebedee", status: "flagged",
-    why: "§7.2 — 'brother of James'. Same question, plus whether Jude is an apostle." },
+  // §7.1 and §7.2 are RESOLVED and have moved out of this block — see AUTHORSHIP OF JAMES below.
   { ref: "Mark 2:14", surface: "Levi", expect: "matthew-levi", status: "flagged",
     why: "§7.7 — the app asserts Levi the tax collector is Matthew the apostle. Traditional and " +
          "widely held, but not universal. Batch 1 makes the same entry reachable as 'Matthew'; " +
@@ -3237,14 +3233,42 @@ export const CASES = [
          "which James in a parenthesis and linked the other one anyway. Recovered by the " +
          "\"(the brother of Jesus)\" pattern; the record's three other \"James\"es are his own " +
          "brother and are untouched." },
+  // ── AUTHORSHIP OF JAMES — §7.1 and §7.2, RULED BY ROBBIE 2026-09-10 ─────────────────────────
+  //
+  // These were `flagged`. They are `guard` now, and they assert the traditional attribution:
+  // James the brother of Jesus, leader of the Jerusalem church. The reasoning is written out in
+  // full beside James 1:1 in VERSE_NAME_OVERRIDES in src/lib/verseAnnotations.ts; in one line, the
+  // pre-ruling state was false rather than neutral (Zebedee's son was executed in AD 44 and is
+  // nobody's candidate), the 2026-09-07 editorial position is to write from the Protestant
+  // evangelical stance with the dissent named beside it, and bookIntros.ts's `author` field for
+  // James already does exactly that in prose.
+  //
+  // THE RULING DEPENDS ON THAT SENTENCE STILL BEING THERE. If someone deletes the critical dissent
+  // from bookIntros.ts's James `author` field, these links stop being defensible — raise it, do
+  // not quietly keep them.
+  { ref: "James 1:1", surface: "James", expect: "james-brother-of-jesus", status: "guard",
+    why: "§7.1, RULED 2026-09-10. 'James, a servant of God and of the Lord Jesus Christ.' WEB, KJV " +
+         "and ASV all read 'James' (bible-api.com, 2026-09-10), so the translation-blind verse " +
+         "override is right in all three. Was james-son-of-zebedee, who died in Acts 12:2." },
+  { ref: "Jude 1:1", surface: "James", expect: "james-brother-of-jesus", status: "guard",
+    why: "§7.2, RULED 2026-09-10. 'Jude… and brother of James' — WEB, KJV and ASV all read " +
+         "'James'. This asserts the JAMES surface only: Zebedee's sons were James and John, so no " +
+         "reading makes Jude his brother, and even scholars who hold the letter pseudonymous agree " +
+         "the James it claims is James of Jerusalem. §7.2's other half — whether Jude is an " +
+         "apostle — is UNTOUCHED and still open: 'Jude' is not a registered key, this verse renders " +
+         "no link on it, and nothing here says anything about him." },
+
   { text: "James writes to Jewish Christians scattered abroad, offering practical, down-to-earth guidance on how genuine faith should shape everyday conduct. Its concern is that belief which produces no change in behavior is worthless; real faith shows itself in patience under trial, care for the poor, control of the tongue, and impartial love. The letter reads much like the wisdom literature of the Old Testament, packed with vivid images and blunt moral exhortation.",
-    surface: "James", owner: "book-intro:James", expect: null, status: "guard",
-    why: "The letter's author, on its own introduction, SUPPRESSED rather than repointed. It was " +
-         "first pointed at the Lord's brother — which is what the app does for every other intro " +
-         "and what this one's own `author` field states in prose — and that was backed out: §7.1 " +
-         "flags the authorship of James as Robbie's to settle, and James 1:1 and Jude 1:1 are " +
-         "`flagged` cases for the same reason. No link removes the falsehood (Zebedee's son, dead " +
-         "by AD 44) and asserts nothing. Escalated 2026-09-10." },
+    surface: "James", owner: "book-intro:James", expect: "james-brother-of-jesus", status: "guard",
+    why: "The letter's author, on its own introduction. Was Zebedee's son, then suppressed under " +
+         "the §7.1 flag, and repointed 2026-09-10 on Robbie's ruling. This is the same thing the " +
+         "app already does with 'Paul' on book-intro:Romans (five links) and 'Peter' on " +
+         "book-intro:1 Peter (four)." },
+  { text: "A major thread is the relationship between hearing and doing. James insists that his readers be 'doers of the word and not hearers only,' warning against a religion that is all talk.",
+    surface: "James", owner: "book-intro:James", expect: "james-brother-of-jesus", status: "guard",
+    why: "The same ruling on the summary field rather than whyWritten. Quoted from the opening of " +
+         "bookIntros.ts's second James summary paragraph; the paragraph carries two more bare " +
+         "'James'es further on, which take the same owner answer." },
   { text: "Papyrus 20 and Papyrus 23 are early (3rd-century) papyrus witnesses that preserve portions of James.",
     surface: "James", owner: "book-intro:James", expect: null, status: "guard",
     why: "The BOOK, in the same record whose owner entry answers \"the author\". Suppressed by a " +
@@ -3274,18 +3298,33 @@ export const CASES = [
     why: "Josephus, Antiquities 20.9.1, on Jesus's own page — the sentence names the man in the " +
          "words either side of the link and sent the reader to a different apostle. Occurrence 1 " +
          "sits inside the quotation and takes the same answer." },
+  // The three remaining records that quote the epistle by its author's name. Each holds exactly
+  // one bare "James"; all three were Zebedee's son, then null under the flag, then repointed on
+  // the 2026-09-10 ruling. Quoted from the sentence in the data file, not paraphrased.
+  { text: "Hebrews cites her faith (\"by faith the harlot Rahab perished not with them that believed not\"), and James cites her works (\"was not Rahab the harlot justified by works, when she had received the messengers, and had sent them out another way?\") as a case study of faith proven through action (Hebrews 11:31; James 2:25).",
+    surface: "James", owner: "rahab", expect: "james-brother-of-jesus", status: "guard",
+    why: "James 2:25, on Rahab's own page. The letter speaking, so the authorship ruling of " +
+         "2026-09-10 answers it. Note the trailing \"James 2:25\" is a verse citation, not a " +
+         "person-link, and is deliberately not linkified." },
+  { text: "First Peter compares him to \"a roaring lion, seeking someone to devour\" (1 Peter 5:8), and James instructs believers to \"resist the devil,\" promising that he will then flee (James 4:7).",
+    surface: "James", owner: "satan", expect: "james-brother-of-jesus", status: "guard",
+    why: "James 4:7, on Satan's page. Same ruling, same answer." },
+  { text: "they speak, they beg (Mark 5:10-12), and James notes flatly that even 'the demons... believe' God is one 'and shudder' (James 2:19) — correct theology without any of the trust or obedience that would make it saving faith.",
+    surface: "James", owner: "demons", expect: "james-brother-of-jesus", status: "guard",
+    why: "James 2:19, on the demons topic. Same ruling, same answer." },
+
   { text: "The Jerusalem Council (Acts 15) settled the question decisively. After hearing Peter, Paul, and Barnabas testify to God's work among Gentile believers, James cites the prophets' own promise that 'all the Gentiles who are called by my name' would seek the Lord (Acts 15:17, quoting Amos 9:11-12), and the council concludes 'we don't trouble those from among the Gentiles who turn to God' with the burden of the full Mosaic law (Acts 15:19). Paul's letter to the Ephesians describes the result theologically: Gentile believers, once 'far off,' 'strangers from the covenants of promise,' are now brought near by Christ's blood, who 'made both one, and broke down the middle wall of separation' — abolishing in his own flesh the hostility between Jew and Gentile, creating 'one new man' out of the two (Ephesians 2:11-16).",
     surface: "James", owner: "gentiles", expect: "james-brother-of-jesus", status: "guard",
     why: "Acts 15:13-18 — the man presiding at the council, not the letter speaking. Acts 15:13 " +
          "already resolves to him on the reader path; this is the article telling the same story." },
   { text: "One might expect Elijah to be riding high after Carmel's spectacular vindication, but instead a single death threat from Jezebel sends him running for his life into the wilderness, where he collapses under a broom tree and asks God to let him die. It is one of the Bible's most honest portraits of a spiritual high followed by a devastating crash — even the greatest of prophets was, as James later puts it, a man with feelings like ours.",
-    surface: "James", owner: "bib-dki-elijah-still-small-voice", expect: null,
+    surface: "James", owner: "bib-dki-elijah-still-small-voice", expect: "james-brother-of-jesus",
     status: "guard",
-    why: "James 5:17, quoted by its author's name nine centuries out of period — suppressed, not " +
-         "repointed, under the §7.1 flag (see book-intro:James above). The same event's " +
+    why: "James 5:17, quoted by its author's name nine centuries out of period. Repointed " +
+         "2026-09-10 on Robbie's ruling (see book-intro:James above). The same event's " +
          "next paragraph says \"the King James Version\", which the `before: /King /` rule has " +
          "always suppressed and which this owner entry cannot reach, because NAME_CONTEXT_RULES is " +
-         "checked first — the case below asserts that." },
+         "checked first — the case below asserts that, and is the negative test for this one." },
   { text: "After food, rest, and a forty-day journey, Elijah arrives at Horeb — the same mountain, also called Sinai, where God gave the Law to Moses — and takes shelter in a cave. There the Lord passes by, but not in the way Elijah might have expected after Carmel's fire from heaven: not in the powerful wind, not in the earthquake, not in the fire, but in what the King James Version famously calls \"a still small voice\" — a low whisper, a gentle sound that draws Elijah out of the cave to stand before God.",
     surface: "James", owner: "bib-dki-elijah-still-small-voice", expect: null, status: "guard",
     why: "\"the King James Version\" — a translation, not a man, on the SAME RECORD whose owner " +

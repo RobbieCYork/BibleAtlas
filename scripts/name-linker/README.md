@@ -2,7 +2,7 @@
 
 `src/lib/verseAnnotations.ts` decides which words in the Bible text — and in every article the app
 has ever written — become links to a person, place or topic. It renders **9,724 person-links across
-Scripture and 6,227 across the app's own prose**. Until this directory existed it had no tests at
+Scripture and 6,237 across the app's own prose**. Until this directory existed it had no tests at
 all, and a one-line data edit could move hundreds of them with nobody noticing.
 
     npm run test:linker
@@ -108,7 +108,7 @@ purpose and is written up in `reviewed.tsv`'s header.
 | file | rows | what it holds |
 |---|---:|---|
 | `bible-links.tsv` | 9,724 | every person-link in all 31,098 WEB verses, with the id each rendering path gives it |
-| `prose-links.tsv` | 6,227 | every person-link in every authored prose block the app puts through `LinkedVerseText` |
+| `prose-links.tsv` | 6,237 | every person-link in every authored prose block the app puts through `LinkedVerseText` |
 | `key-totals.tsv` | 5,066 | a tally covering **every** kind and **all three translations** — one row per (kind, matched text, id, path) |
 | `translation-divergence.tsv` | 1,841 | every verse where the WEB, the KJV and the ASV do not produce the same links |
 
@@ -334,8 +334,8 @@ snapshot.
 
 `LinkedVerseText` is what PersonPanel, LocationPanel, PoiPanel, TopicPanel, BookIntroView,
 TimelineEventPanel and MyProfileView render with. Every book override, verse override and
-suppression in `verseAnnotations.ts` is invisible there. **858 links across 759 verses resolve
-differently between the two paths**, and all but a handful of the 6,227 prose links run with no
+suppression in `verseAnnotations.ts` is invisible there. **860 links across 761 verses resolve
+differently between the two paths**, and all but a handful of the 6,237 prose links run with no
 disambiguation at all — `OWNER_NAME_OVERRIDES` (below) is the only correction that reaches them. A
 fix that only moves the `reader` column has fixed half the app.
 

@@ -488,19 +488,44 @@ const VERSE_NAME_OVERRIDES: Record<string, Record<string, Record<string, string 
     Matthew: { "13:55": "james-brother-of-jesus", "27:56": null },
     Mark: { "6:3": "james-brother-of-jesus", "15:40": null, "16:1": null },
     Luke: { "24:10": null },
-    // ── James 1:1 and Jude 1:1 are NOT here, and the omission is the point ──────────────────────
+    // ── James 1:1 and Jude 1:1 — RULED 2026-09-10, and the ruling lives here ────────────────────
     //
-    // Both currently resolve to Zebedee's son, which is wrong on anybody's account — he was dead
-    // by AD 44 and no tradition names him. The second-bearer sweep proposed repointing both to the
-    // Lord's brother. THEY ARE FLAGGED CASES: §7.1 and §7.2 of
-    // automation/manager/name-linker-scope.md record that choosing James of Jerusalem is a
-    // confessional position the app has not taken, and scripts/name-linker/cases.mjs pins both
-    // verses as `status: "flagged"` precisely so that a batch aimed at something else cannot take
-    // that position on Robbie's behalf.
+    // Both resolved to Zebedee's son, which is wrong on anybody's account: Herod Agrippa killed
+    // him in AD 44 (Acts 12:2) and no tradition and no critical scholar names him as the author of
+    // either letter. §7.1 and §7.2 of automation/manager/name-linker-scope.md flagged the repoint
+    // as a confessional position, cases.mjs pinned both verses `flagged`, and the second-bearer
+    // sweep of 2026-09-10 duly backed its own change out and escalated.
     //
-    // It was attempted here, the two flagged cases failed, and the change was backed out — which
-    // is the flag doing exactly what it was built for. Escalated to Robbie through Bob on
-    // 2026-09-10 with a recommendation; a ruling lands here and in the four owner entries below.
+    // ROBBIE RULED FOR THE TRADITIONAL ATTRIBUTION, 2026-09-10. His reasoning, recorded so the
+    // next agent reads it rather than re-litigating it:
+    //   1. The pre-ruling state was not neutral, it was false. Zebedee's son is the one answer
+    //      nobody holds, so "no position" was never on offer here — only a wrong one.
+    //   2. The standing editorial position settles it (CLAUDE.md, 2026-09-07): articles are
+    //      written from a Protestant evangelical stance with other views named fairly beside them.
+    //      The traditional attribution IS that stance, and bookIntros.ts's `author` field for
+    //      James already states it in prose AND names the critical dissent — "Some critical
+    //      scholars question this because of the letter's polished Greek and its lack of
+    //      biographical detail, while others find no compelling reason to doubt it". The link now
+    //      agrees with the page it sits on, and the dissent is still on that page. If that
+    //      sentence is ever deleted, this ruling loses its footing — do not delete it.
+    //   3. The app already does this for harder cases: "Paul" links five times on
+    //      book-intro:Romans and "Peter" four on book-intro:1 Peter, and 1 Peter's authorship is
+    //      more disputed than James's. Declining only for James was the inconsistency.
+    //   4. The §7 flags predate the 2026-09-07 editorial ruling; these two were stale.
+    //
+    // James 1:1 — "James, a servant of God and of the Lord Jesus Christ". WEB, KJV and ASV all
+    // read "James"; the override is translation-blind and correct in all three (checked against
+    // bible-api.com, 2026-09-10).
+    //
+    // Jude 1:1 — "Jude, a servant of Jesus Christ, and brother of James". WEB, KJV and ASV again
+    // all read "James". This entry answers the JAMES surface only. §7.2's second question —
+    // whether Jude is an apostle — is untouched and stays open, because "Jude" is not a registered
+    // key: the verse renders no link on it at all, so there is nothing here that could assert it.
+    // No reading makes Jude the brother of Zebedee's son (Zebedee's sons are James and John), and
+    // even scholars who hold the letter pseudonymous agree the James it CLAIMS is James of
+    // Jerusalem. The referent is not the disputed part.
+    James: { "1:1": "james-brother-of-jesus" },
+    Jude: { "1:1": "james-brother-of-jesus" },
   },
   //
   // ── AND A FIFTH BEARER, AT Acts 15:22, 15:27 and 15:32 — suppressed, not resolved ─────────────
@@ -2049,9 +2074,10 @@ const OWNER_NAME_OVERRIDES: Record<string, Record<string, string | null>> = {
   // link, where pinning the majority would leave it asserting the wrong man on the two mentions
   // that were already right.
   //
-  // Scripture is not touched by any of this. Four Bible verses are wrong about James — Acts 12:2,
-  // James 1:1, Jude 1:1 and the four "Mary the mother of James" verses — and they are per-verse
-  // fixes in VERSE_NAME_OVERRIDES, in their own batch.
+  // Scripture is not touched by any of this, and is handled per-verse in VERSE_NAME_OVERRIDES:
+  // Acts 12:2 and the four "Mary the mother of James" verses landed with the Scripture batch, and
+  // James 1:1 and Jude 1:1 landed on 2026-09-10 with Robbie's authorship ruling — the reasoning is
+  // written out beside them there.
   james: {
     // His own page, all fourteen, mapped to himself so the self-link exclusion suppresses them.
     "james-brother-of-jesus": "james-brother-of-jesus",
@@ -2059,41 +2085,46 @@ const OWNER_NAME_OVERRIDES: Record<string, Record<string, string | null>> = {
     // genuinely the other man and is recovered by the context pattern above, which is checked
     // first. The record's "James, son of Zebedee" mentions already resolve by their own long key.
     "james-son-of-alphaeus": "james-son-of-alphaeus",
-    // ── THE EPISTLE'S VOICE: SUPPRESSED, BECAUSE ITS AUTHORSHIP IS A FLAGGED QUESTION ─────────
+    // ── THE EPISTLE'S VOICE: JAMES THE BROTHER OF JESUS, RULED 2026-09-10 ─────────────────────
     //
-    // Nine links on the introduction to James and four more on records that quote the letter by
-    // its author's name. All thirteen pointed at Zebedee's son, who was dead by AD 44 (Acts 12:2)
-    // and whom no tradition names. They were first repointed to the Lord's brother — which is what
-    // the app does for every other introduction ("Paul" links five times on book-intro:Romans,
-    // "Peter" four on book-intro:1 Peter) and what this introduction's own `author` field states
-    // in prose, with the critical dissent named beside it.
+    // Nine bare "James"es on the introduction to James and four more on records that quote the
+    // letter by its author's name. All thirteen pointed at Zebedee's son, who was dead by AD 44
+    // (Acts 12:2) and whom no tradition names. The second-bearer sweep repointed them to the
+    // Lord's brother, hit the §7.1 flag, backed the change out, and escalated.
     //
-    // THAT WAS BACKED OUT. §7.1 of automation/manager/name-linker-scope.md flags the authorship of
-    // James as Robbie's to settle, and cases.mjs pins James 1:1 and Jude 1:1 as `flagged` for
-    // exactly that reason. The prose surface is the same question as the verse, so a link here
-    // asserts the same thing. No link removes the falsehood and asserts nothing about who held the
-    // pen — the identical answer this file already gives the Fourth Gospel's narrating voice.
+    // ROBBIE RULED FOR THE TRADITIONAL ATTRIBUTION, 2026-09-10. The reasoning is written out in
+    // full beside James 1:1 in VERSE_NAME_OVERRIDES above and is not repeated here; the short
+    // version is that the pre-ruling state was false rather than neutral, that the standing
+    // editorial position (CLAUDE.md, 2026-09-07) is to write from the Protestant evangelical
+    // stance and name the dissent beside it, that bookIntros.ts's `author` field for James already
+    // does exactly that in prose, and that the app already links "Paul" on book-intro:Romans and
+    // "Peter" on book-intro:1 Peter in the same position.
     //
-    // Escalated to Robbie through Bob on 2026-09-10, with a recommendation. If he rules for the
-    // traditional attribution, these five entries and the two verse entries above change together
-    // and the three title rules stay: a title still names no author.
+    // THE THREE TITLE RULES STAY. NAME_CONTEXT_RULES is checked BEFORE this table, so "the Epistle
+    // of James", "the complete text of James", "portions of James", "James is one of the
+    // 'General'…" and "James was among the books…" are still no link: a title names a book, not an
+    // author, and that ruling is independent of this one. Five of the nine intro mentions are
+    // suppressed that way; this entry answers the other four plus two in the summary.
     //
-    // gentiles and bib-ac-paul-arrest-jerusalem are NOT part of this and keep their links: Acts 15
-    // and Acts 21:18 are the man presiding in Jerusalem, not the letter speaking, and the reader
-    // path already resolves both of those verses to him.
-    "book-intro:James": null,
+    // gentiles and bib-ac-paul-arrest-jerusalem were never part of this and always kept their
+    // links: Acts 15 and Acts 21:18 are the man presiding in Jerusalem, not the letter speaking,
+    // and the reader path already resolves both of those verses to him.
+    "book-intro:James": "james-brother-of-jesus",
     // Josephus, Antiquities 20.9.1, quoted twice in Jesus's extra-biblical sources: "the brother
     // of Jesus, who was called Christ, whose name was James". The sentence says who he is.
     "jesus-of-nazareth": "james-brother-of-jesus",
-    // Five records that quote the epistle by its author's name. Each holds exactly one "James",
-    // and it is the same answer the app gives "Paul" and "Peter" in the same position.
-    rahab: null, // "James cites her works" — James 2:25
-    satan: null, // "James instructs believers to 'resist the devil'" — James 4:7
-    demons: null, // "James notes flatly that even 'the demons… believe'" — James 2:19
-    "bib-dki-elijah-still-small-voice": null, // "as James later puts it, a man
+    // Four records that quote the epistle by its author's name. Each holds exactly one bare
+    // "James", and it is the same answer the app gives "Paul" and "Peter" in the same position.
+    // Repointed under the 2026-09-10 ruling above, from null (the interim) and before that from
+    // james-son-of-zebedee (the falsehood).
+    rahab: "james-brother-of-jesus", // "James cites her works" — James 2:25
+    satan: "james-brother-of-jesus", // "James instructs believers to 'resist the devil'" — James 4:7
+    demons: "james-brother-of-jesus", // "James notes flatly that even 'the demons… believe'" — James 2:19
+    "bib-dki-elijah-still-small-voice": "james-brother-of-jesus", // "as James later puts it, a man
                                        // with feelings like ours" — James 5:17. The record's other
-                                       // "James" is "the King James Version", already suppressed by
-                                       // the King rule above, which is checked first.
+                                       // "James" is "the King James Version", suppressed by the
+                                       // King rule above, which is checked first — that precedence
+                                       // is what makes this entry safe, and cases.mjs asserts it.
     // Acts 15 and Acts 21, the man presiding rather than the letter speaking.
     gentiles: "james-brother-of-jesus", // "James cites the prophets' own promise" — Acts 15:13-18
     "bib-ac-paul-arrest-jerusalem": "james-brother-of-jesus", // "At the urging of James and the Jerusalem elders" — Acts 21:18
