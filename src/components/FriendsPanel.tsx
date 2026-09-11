@@ -1,6 +1,17 @@
 import { useEffect, useRef, useState } from "react";
 import type { Session } from "@supabase/supabase-js";
-import { supabase, displayFor, type FriendRequest, type GroupSummary, type Message, type Profile } from "../lib/supabase";
+import {
+  supabase,
+  displayFor,
+  searchPeopleByName,
+  isSearchablePeopleQuery,
+  PEOPLE_SEARCH_MIN_QUERY,
+  type FriendRequest,
+  type GroupSummary,
+  type Message,
+  type PersonMatch,
+  type Profile,
+} from "../lib/supabase";
 import GroupsPanel from "./GroupsPanel";
 import ChurchPanel from "./ChurchPanel";
 import { useChurchesAvailable } from "../lib/churchApi";
@@ -75,7 +86,7 @@ export default function FriendsPanel({
   const [addStatus, setAddStatus] = useState<string | null>(null);
   /** Multiple hits from a name search (see handleAddFriend) — lets the reader pick which person they
    * meant instead of guessing which of several same-named accounts to request. */
-  const [nameMatches, setNameMatches] = useState<{ id: string; display_name: string; avatar_url: string | null }[] | null>(
+  const [nameMatches, setNameMatches] = useState<PersonMatch[] | null>(
     null
   );
   const [adding, setAdding] = useState(false);
@@ -253,11 +264,17 @@ export default function FriendsPanel({
       return;
     }
 
-    // Name search: opt-in on the other side (profiles.discoverable_by_name), so this can turn up
+    // Name search: governed on the other side by profiles.discoverable_by_name, so this can turn up
     // zero, one, or several people — only auto-sends the request when there's exactly one match.
-    const { data: matches, error: nameErr } = await supabase.rpc("find_users_by_display_name", { query });
-    const rows = (matches as { id: string; display_name: string; avatar_url: string | null }[] | null) ?? [];
-    if (nameErr || rows.length === 0) {
+    // Goes through searchPeopleByName() so this surface gets the same minimum-query and
+    // LIKE-wildcard guard the header search bar has; a one-character or "%%" query is not a search.
+    if (!isSearchablePeopleQuery(query)) {
+      setAddStatus(`Type at least ${PEOPLE_SEARCH_MIN_QUERY} letters of a name, or a full email or phone number.`);
+      setAdding(false);
+      return;
+    }
+    const rows = await searchPeopleByName(query, userId);
+    if (rows.length === 0) {
       setAddStatus("No one found by that name, email, or phone number.");
       setAdding(false);
       return;

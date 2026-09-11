@@ -1,12 +1,6 @@
 import { useEffect, useRef, useState } from "react";
-import { supabase } from "../lib/supabase";
+import { isSearchablePeopleQuery, searchPeopleByName, type PersonMatch } from "../lib/supabase";
 import Icon from "./Icon";
-
-interface PersonMatch {
-  id: string;
-  display_name: string;
-  avatar_url: string | null;
-}
 
 interface PeopleSearchBarProps {
   /** The signed-in account — filtered out of its own results, which are never useful. */
@@ -23,10 +17,11 @@ interface PeopleSearchBarProps {
  * search it should always have had.
  *
  * Deliberately reuses the same `find_users_by_display_name` RPC the Friends panel's "Search People"
- * form already calls, so discovery stays governed by exactly one rule in exactly one place: the
- * profiles.discoverable_by_name opt-in ("Let people find me by searching my name" in the profile
- * editor). Nothing here can surface someone who hasn't opted in, and no new query or policy was
- * added to make this work.
+ * form already calls — through lib/supabase's searchPeopleByName(), which is now the single call
+ * site — so discovery stays governed by exactly one rule in exactly one place:
+ * profiles.discoverable_by_name ("Let people find me by searching my name" in the profile editor).
+ * Nothing here can surface someone who has opted out, and no new query or policy was added to make
+ * this work. A result carries a name and a photo and nothing else.
  *
  * Same dropdown-as-you-type idiom (`.search-bar` / `.search-results`) as SearchBar and
  * TimelineSearchBar, but the results come from the network, so the query is debounced and each
@@ -41,7 +36,8 @@ export default function PeopleSearchBar({ viewerId, onSelect }: PeopleSearchBarP
 
   useEffect(() => {
     const q = query.trim();
-    if (q.length < 2) {
+    // Rejects the too-short AND the LIKE-wildcard-only ("%%") queries — see isSearchablePeopleQuery.
+    if (!isSearchablePeopleQuery(q)) {
       setResults([]);
       setSearching(false);
       return;
@@ -49,11 +45,10 @@ export default function PeopleSearchBar({ viewerId, onSelect }: PeopleSearchBarP
     setSearching(true);
     const id = ++requestId.current;
     const timer = setTimeout(async () => {
-      const { data } = await supabase.rpc("find_users_by_display_name", { query: q });
+      const rows = await searchPeopleByName(q, viewerId);
       // A response from a query the reader has already typed past is stale — drop it.
       if (id !== requestId.current) return;
-      const rows = (data as PersonMatch[] | null) ?? [];
-      setResults(rows.filter((r) => r.id !== viewerId));
+      setResults(rows);
       setSearching(false);
     }, 300);
     return () => clearTimeout(timer);
@@ -83,7 +78,7 @@ export default function PeopleSearchBar({ viewerId, onSelect }: PeopleSearchBarP
         onFocus={() => setOpen(true)}
         onBlur={() => setTimeout(() => setOpen(false), 150)}
       />
-      {open && query.trim().length >= 2 && (
+      {open && isSearchablePeopleQuery(query) && (
         <ul className="search-results">
           {searching ? (
             <li className="search-results-empty">Searching…</li>

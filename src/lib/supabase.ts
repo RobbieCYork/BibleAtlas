@@ -265,10 +265,61 @@ export interface Profile {
    * false is private. MyProfileView always shows every filled-in field regardless, since that's the
    * owner's own view; this only governs what a friend sees. */
   profile_visibility: Record<string, boolean>;
-  /** Opt-in — lets someone find this account by display name (a partial, possibly-ambiguous match)
-   * via find_users_by_display_name, alongside the always-on exact email/phone lookups. Defaults to
-   * off since a name search is more exposing than an exact match. */
+  /** Lets someone find this account by display name (a partial, possibly-ambiguous match) via
+   * find_users_by_display_name, alongside the always-on exact email/phone lookups. Surfaced as
+   * "Let people find me by searching my name" in the profile editor.
+   *
+   * The column default is being changed to TRUE by sql/036 — new accounts are discoverable and opt
+   * OUT, which is what "search people like on Facebook" means. Accounts created before that
+   * migration is applied keep whatever they have; nothing flips them. Read the value, never assume
+   * a default here. */
   discoverable_by_name: boolean;
+}
+
+/** One person the name search turned up. Name and photo only — deliberately not the rest of the
+ * profile row. A search result is a pointer to a profile, not a copy of one, and everything else
+ * (email, phone, church, city) stays behind the profile's own RLS. */
+export interface PersonMatch {
+  id: string;
+  display_name: string;
+  avatar_url: string | null;
+}
+
+/** The minimum a people-search query has to be before it is worth sending. Two real characters.
+ *
+ * Not a nicety — at 20 rows a page and an alphabetical sort, a one-character query is a usable way
+ * to walk the whole user table, and an empty one used to return everybody. sql/036 puts this same
+ * minimum inside find_users_by_display_name(), which is the enforcement that actually counts since
+ * the RPC is reachable with nothing but the anon key. This copy is the UI half of it and holds even
+ * with that migration unapplied. */
+export const PEOPLE_SEARCH_MIN_QUERY = 2;
+
+/** True if `query` is worth sending to the people search.
+ *
+ * Two conditions, and the second is the interesting one. The RPC pastes the query into a LIKE
+ * pattern, so `%` and `_` are wildcards: `%%` is two characters, clears any naive length check, and
+ * matches every discoverable name in the table. So the length test counts only characters that are
+ * not LIKE metacharacters. sql/036 escapes them server-side as well; this keeps the shipped UI from
+ * being the tool, migration or no migration. */
+export function isSearchablePeopleQuery(query: string): boolean {
+  return query.trim().replace(/[%_]/g, "").length >= PEOPLE_SEARCH_MIN_QUERY;
+}
+
+/** The one place the app calls find_users_by_display_name().
+ *
+ * Every people-search surface goes through here so the guard above cannot be forgotten by the next
+ * one, and so there is a single answer to "what can a search return" — see PersonMatch. Returns []
+ * on a rejected query or an error: a search box that quietly finds nobody is the right failure, and
+ * this is also what makes the feature safe to ship ahead of sql/036.
+ *
+ * Discoverability, self-exclusion and blocking in both directions (sql/032) are all enforced inside
+ * the SECURITY DEFINER function, not here — the caller filter below is belt-and-braces on the one
+ * case a client can actually check. */
+export async function searchPeopleByName(query: string, viewerId: string): Promise<PersonMatch[]> {
+  if (!isSearchablePeopleQuery(query)) return [];
+  const { data, error } = await supabase.rpc("find_users_by_display_name", { query: query.trim() });
+  if (error) return [];
+  return ((data as PersonMatch[] | null) ?? []).filter((r) => r.id !== viewerId);
 }
 
 /** ISO timestamp before which a chapter_reads row no longer counts as "read", per an account's
