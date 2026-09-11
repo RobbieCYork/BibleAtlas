@@ -14240,7 +14240,7 @@ export const topics: Topic[] = [
         credit: "Bruce M. Metzger",
         detail:
           "United Bible Societies; the discussion of the text of Acts is at pp. 259-272 in the 1975 edition, and the length figure appears in a footnote at p. 223 of the second edition. Print only and not opened here: the sentence quoted is taken from a verbatim reproduction of those pages. M.-E. Boismard and A. Lamouille's contrary two-edition theory is in Le texte occidental des Actes des Apotres, 2 vols (Paris, 1984), which was also not opened; this article reports only that they argued it, not how",
-        supports: "That the Western text is not a unity, and that a second two-edition theory exists",
+        supports: "Metzger's three levels of Western variation — the first stratum not a unity, the second the hand of a reviser — and that a second two-edition theory exists",
       },
       {
         tier: "reference",
