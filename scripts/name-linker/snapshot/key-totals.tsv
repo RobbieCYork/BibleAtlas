@@ -825,11 +825,12 @@ person	boaz	boaz	reader:kjv	20
 person	caesar	claudius-caesar	reader	1
 person	caesar	claudius-caesar	reader:asv	1
 person	caesar	claudius-caesar	reader:kjv	1
+person	caesar	nero-caesar	prose	9
 person	caesar	nero-caesar	reader	10
 person	caesar	nero-caesar	reader:asv	10
 person	caesar	nero-caesar	reader:kjv	10
 person	caesar	tiberius-caesar	panel	27
-person	caesar	tiberius-caesar	prose	39
+person	caesar	tiberius-caesar	prose	5
 person	caesar	tiberius-caesar	reader	16
 person	caesar	tiberius-caesar	reader:asv	16
 person	caesar	tiberius-caesar	reader:kjv	16
@@ -1123,15 +1124,15 @@ person	jacob	jacob-father-of-joseph	reader	2
 person	jacob	jacob-father-of-joseph	reader:asv	2
 person	jacob	jacob-father-of-joseph	reader:kjv	2
 person	james	james-brother-of-jesus	panel	1
-person	james	james-brother-of-jesus	prose	8
-person	james	james-brother-of-jesus	reader	9
-person	james	james-brother-of-jesus	reader:asv	9
-person	james	james-brother-of-jesus	reader:kjv	9
+person	james	james-brother-of-jesus	prose	18
+person	james	james-brother-of-jesus	reader	11
+person	james	james-brother-of-jesus	reader:asv	11
+person	james	james-brother-of-jesus	reader:kjv	11
 person	james	james-son-of-zebedee	panel	31
 person	james	james-son-of-zebedee	prose	14
-person	james	james-son-of-zebedee	reader	19
-person	james	james-son-of-zebedee	reader:asv	19
-person	james	james-son-of-zebedee	reader:kjv	21
+person	james	james-son-of-zebedee	reader	17
+person	james	james-son-of-zebedee	reader:asv	17
+person	james	james-son-of-zebedee	reader:kjv	19
 person	james the just	james-brother-of-jesus	prose	2
 person	james the son of alphaeus	james-son-of-alphaeus	panel	2
 person	james the son of alphaeus	james-son-of-alphaeus	reader	2

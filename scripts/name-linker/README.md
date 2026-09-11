@@ -108,15 +108,15 @@ purpose and is written up in `reviewed.tsv`'s header.
 | file | rows | what it holds |
 |---|---:|---|
 | `bible-links.tsv` | 9,724 | every person-link in all 31,098 WEB verses, with the id each rendering path gives it |
-| `prose-links.tsv` | 6,237 | every person-link in every authored prose block the app puts through `LinkedVerseText` |
-| `key-totals.tsv` | 5,066 | a tally covering **every** kind and **all three translations** — one row per (kind, matched text, id, path) |
+| `prose-links.tsv` | 6,212 | every person-link in every authored prose block the app puts through `LinkedVerseText` |
+| `key-totals.tsv` | 5,067 | a tally covering **every** kind and **all three translations** — one row per (kind, matched text, id, path) |
 | `translation-divergence.tsv` | 1,841 | every verse where the WEB, the KJV and the ASV do not produce the same links |
 
 The first two are row-level, so a diff names the verse or the block. `key-totals.tsv` exists because
 the other two only record **people**: a change to `people.ts` can steal a key from a location, and
 adding one POI alternate name can start firing hundreds of links that no person snapshot would ever
-show. Its 5,066 rows break down by kind as 2,349 verse references, 1,234 person, 645 location, 546
-topic, 204 POI and 88 timeline; and by path as 3,098 prose, 503 `reader`, 494 `reader:asv`, 488
+show. Its 5,067 rows break down by kind as 2,349 verse references, 1,235 person, 645 location, 546
+topic, 204 POI and 88 timeline; and by path as 3,099 prose, 503 `reader`, 494 `reader:asv`, 488
 `reader:kjv` and 483 `panel`.
 
 The fourth file, and those two extra `key-totals` paths, are what cover the KJV and the ASV — see
