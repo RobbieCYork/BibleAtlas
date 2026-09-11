@@ -3506,4 +3506,127 @@ export const CASES = [
     surface: "John", owner: "zechariah-father-of-john-baptist", expect: "john-the-baptist", status: "guard",
     why: "Repeated from batch 1 on purpose: four batches of suppressions later, the Baptist still " +
          "owns the bare key. PUBLIC PAGE ONLY, so nothing else holds it." },
+  // ═══════════════════════════════════════════════════════════════════════════════════════════
+  // SECOND-BEARER BATCH 5: THE PROSE SINGLETONS — TITUS, JUDAS, AZARIAH, AND SIX MORE, 2026-09-10
+  //
+  // 34 rows out, 5 repointed. Nine names, each with a small population and a clear answer, and two
+  // of them found while reading the neighbours rather than by the sweep: the prophet Azariah son
+  // of Oded on bib-dkj-asa-reforms, and Elisha's "four kings — Joram, Jehu, Jehoahaz, and Jehoash",
+  // all four of whom are kings of Israel.
+
+  // ── Titus the emperor, 9 more links, and the two book titles ────────────────────────────────
+  { text: "Outside the New Testament, Bernice is one of the better-documented women connected to the Gospels. The Jewish historian Josephus discusses her marriages, her time as Agrippa's live-in sister, and the persistent rumors of an incestuous relationship between them. Roman historians Tacitus and Suetonius separately record her later liaison with the future emperor Titus, whom she reportedly hoped to marry before political pressure in Rome forced him to send her away.",
+    surface: "Titus", owner: "bernice", expect: null, status: "guard",
+    why: "Bernice's whole extra-biblical story is her affair with the emperor, and all four of her " +
+         "\"Titus\"es pointed at Paul's Gentile co-worker. No record for the emperor; suppressed on " +
+         "the standing interim, and he is the largest record-or-suppress question the sweep raised." },
+  { text: "The Temple was destroyed by Roman forces under Titus in AD 70, within a generation of Jesus's ministry",
+    surface: "Titus", owner: "jerusalem", expect: null, status: "guard",
+    why: "Jerusalem's own notableFact. A location block — the surface that was outside the harness " +
+         "entirely until corpus.mjs's field name was corrected on 2026-09-10." },
+  { text: "Papyrus 32 (P32), a small fragment dated to roughly the late second or early third century, preserves parts of Titus and is one of the earliest surviving witnesses to any of the Pastoral Epistles.",
+    surface: "Titus", owner: "book-intro:Titus", expect: null, status: "guard",
+    why: "The BOOK, on the record whose other five \"Titus\"es are the man Paul left on Crete — which " +
+         "is why book-intro:Titus takes no owner entry and these two take title rules instead. " +
+         "`before: /parts of/`; \"parts of <Capital>\" occurs in five WEB verses and none has a Titus." },
+  { text: "Titus is contained in the great fourth- and fifth-century uncial codices Sinaiticus and Alexandrinus.",
+    surface: "Titus", owner: "book-intro:Titus", expect: null, status: "guard",
+    why: "The same, other shape. \"is contained in\" occurs in one WEB verse (1 Peter 2:6) and it " +
+         "has no Titus. A third in the same field, \"the text of Titus\", was already TEXT_OF's." },
+  { text: "Paul left Titus here to organize the church and appoint elders in every town (Titus 1:5)",
+    surface: "Titus", occurrence: 1, owner: "crete", expect: "titus", status: "guard",
+    why: "THE GUARD ON THE OTHER SIDE, and on the record where the two men are likeliest to be " +
+         "confused: Crete is where Paul's Titus was left, and Crete also has an archaeology note " +
+         "about his traditional seat. Both keep their links. Occurrence 2 is the reference " +
+         "\"Titus 1:5\", matched whole as kind \"verse\"." },
+
+  // ── Judas: four other men, twelve links ─────────────────────────────────────────────────────
+  { text: "Mattathias died within the year, in 166 BC, passing leadership to his son Judas, nicknamed \"Maccabeus\" — likely meaning \"the Hammer\" — who would lead the next and most dramatic phase of the revolt.",
+    surface: "Judas", owner: "bib-it-maccabean-revolt-begins", expect: null, status: "guard",
+    why: "JUDAS MACCABEUS. The existing rule suppresses \"Judas Maccabeus\" written in full; this is " +
+         "the bare shorthand in the sentence that introduces the nickname, which the rule cannot " +
+         "see — the same near miss \"Philip II\" had. The strongest candidate in the whole sweep " +
+         "for a record of his own, which is Robbie's call and not this file's." },
+  { text: "By late 164 BC, Judas's forces had fought their way to Jerusalem itself, controlling the city apart from a Seleucid garrison holed up in the fortress known as the Akra — clearing the way, at last, to reclaim the desecrated Temple.",
+    surface: "Judas", owner: "bib-it-judas-maccabeus-campaigns", expect: null, status: "guard",
+    why: "The man who cleansed the Temple, pointing at the man who betrayed Jesus, on the event " +
+         "named after him. Of everything in this sweep it is the likeliest to cost a reader's trust." },
+  { text: "Publius Sulpicius Quirinius was a Roman senator and military commander who held a series of provincial commands and honors under Augustus, including a consulship in 12 BC and later the governorship of the province of Syria. Josephus records that Quirinius was sent to Syria around AD 6 specifically to oversee the annexation of Judea as a Roman province after Augustus deposed Herod Archelaus, and that he conducted a census there for taxation purposes at that time — a census that provoked a Jewish uprising led by Judas of Galilee (Antiquities 18.1.1).",
+    surface: "Judas", owner: "quirinius", expect: null, status: "guard",
+    why: "JUDAS OF GALILEE, whom Gamaliel names in Acts 5:37 — a failed messianic revolt handed to " +
+         "Iscariot. One of the two findings in this sweep that are theologically serious rather " +
+         "than merely wrong. The verse itself is fixed per-verse in the Scripture batch." },
+  { text: "The old Roman decumanus maximus of Damascus, running roughly 1,500 meters east-west through the Old City. In Acts 9:11, the Lord tells Ananias to go to \"the street called Straight\" to find Saul of Tarsus, praying in the house of Judas, so that his sight could be restored. Today the western half is called Midhat Pasha Street and the eastern half Bab Sharqi Street, and it remains a functioning market street.",
+    surface: "Judas", owner: "straight-street-damascus", expect: null, status: "guard",
+    why: "JUDAS OF STRAIGHT STREET, Acts 9:11 — Saul's host. Same block as the Ananias case in " +
+         "batch 4, and the two were wrong in the same sentence for the same reason." },
+  { text: "This apostle gets one moment of individual dialogue: at the Last Supper, after Jesus says he will show himself to his disciples but not to the world, \"Judas (not Iscariot) said to him, 'Lord, how is it that you will manifest yourself to us, and not to the world?'\" (John 14:22). Jesus's answer is about those who love him keeping his word — but the New Testament records nothing further about Thaddaeus individually.",
+    surface: "Judas", owner: "thaddaeus", expect: null, status: "guard",
+    why: "AND ONE THE SWEEP MIS-FILED. It listed this under \"Jude, the brother of Jesus — no " +
+         "record\". It is not: John 14:22's \"Judas (not Iscariot)\" is THADDAEUS, the page's own " +
+         "subject, whose record is titled \"Thaddaeus (Judas, son of James)\". Mapped to the record " +
+         "rather than to null, so this is the self-link exclusion. It renders the same and it says " +
+         "something different, which is the whole reason the two values are distinguished." },
+  { text: "After Judas's betrayal and death, the remaining apostles wanted to fill the gap he left. Two candidates were put forward — Joseph called Barsabbas (also known as Justus) and Matthias — and after praying, the eleven cast lots. The lot fell on Matthias, and he was numbered with the eleven apostles (Acts 1:15-26).",
+    surface: "Judas", owner: "casting-lots", expect: "judas-iscariot", status: "guard",
+    why: "THE GUARD. Iscariot keeps the bare key in thirteen of our twenty-five prose mentions, and " +
+         "this is one of them. The same block's \"Joseph called Barsabbas\" is deliberately not a " +
+         "link — Acts 1:23's fourth Joseph, suppressed by an earlier batch — so this one paragraph " +
+         "holds both halves of the ruling." },
+
+  // ── Azariah, Antipas, Jehoshaphat, Joram, Mary, John ────────────────────────────────────────
+  { text: "But Uzziah's success bred pride. He entered the Temple to burn incense on the altar himself, a duty reserved for the priests alone, and when the priest Azariah and eighty others confronted him, Uzziah grew angry rather than repentant. Leprosy broke out on his forehead as he stood there, and he lived the rest of his life isolated in a separate house, with his son Jotham governing in his place.",
+    surface: "Azariah", owner: "bib-dkj-uzziah-reign", expect: null, status: "guard",
+    why: "THE PRIEST Azariah of 2 Chronicles 26:17, resolving to the king he is confronting — in an " +
+         "article whose subject is that king, and which also calls him Azariah two paragraphs " +
+         "earlier. A mixed record: the owner entry answers no link, and the king's own mention is " +
+         "recovered by an exact phrase pin checked before it." },
+  { text: "Uzziah (also called Azariah) came to the throne as a teenager and reigned longer than almost any king of Judah. \"As long as he sought the LORD, God prospered him\" — he rebuilt towns, strengthened Jerusalem's defenses with towers and engineered weapons, expanded Judah's territory, and developed agriculture across the land. It was, by any measure, one of the high-water marks of Judah's national strength since Solomon.",
+    surface: "Azariah", owner: "bib-dkj-uzziah-reign", expect: "uzziah", status: "guard",
+    why: "The other half, and the one the record-wide `null` must not take: 2 Kings really does " +
+         "give the king both names, and the sweep confirmed this link as correct. The pin is on " +
+         "THIS sentence rather than on the priest's, so that a rewrite loses a correct link instead " +
+         "of promoting a priest to a king." },
+  { text: "The prophet Azariah son of Oded met Asa afterward with a message that became something of a motto for the whole era: \"The LORD is with you when you are with Him. If you seek Him, He will be found by you.\" Asa responded by leading Judah into a covenant renewal, and the land had peace for years.",
+    surface: "Azariah", owner: "bib-dkj-asa-reforms", expect: null, status: "guard",
+    why: "AZARIAH SON OF ODED, 2 Chronicles 15:1 — a prophet, not a king, and NOT in the sweep, " +
+         "which enumerated 2 Chronicles' verses and the priest but not this article. Found by " +
+         "reading the record's neighbours. No record; no link." },
+  { text: "Daniel was among the young Judean nobles taken to Babylon after Nebuchadnezzar's first siege of Jerusalem, around 605 BC, and selected along with three companions — Hananiah, Mishael, and Azariah, renamed Belteshazzar, Shadrach, Meshach, and Abednego — for training in the Babylonian royal court (Daniel 1:1-7). He resolved not to defile himself with the king's food, requesting a diet of vegetables and water instead, and the four were found healthier and wiser than their peers at the end of the trial period (Daniel 1:8-20).",
+    surface: "Azariah", owner: "daniel", expect: null, status: "guard",
+    why: "ABEDNEGO, on Daniel's own page — a fourth Azariah, five centuries and one exile from the " +
+         "king of Judah he linked to." },
+  { text: "The letters to the seven churches in Revelation 2-3 reflect exactly this kind of pressure: believers in Smyrna facing coming imprisonment and told to be \"faithful unto death\" (Revelation 2:10), a martyr named Antipas already killed in Pergamum, \"where Satan's throne is\" (Revelation 2:13), and churches wrestling with how far to compromise with the surrounding pagan culture to avoid trouble. Whether the persecution under Domitian was as systematic as some later sources suggest, or a more localized and uneven pressure, is debated among historians - but John's own exile to Patmos during this period is itself a clear, undisputed data point.",
+    surface: "Antipas", owner: "bib-ac-domitian-persecution", expect: null, status: "guard",
+    why: "ANTIPAS OF PERGAMUM, Revelation 2:13 — a martyr under Domitian, resolving to Herod " +
+         "Antipas, who died in exile sixty years earlier. The other eight \"Antipas\"es in our prose " +
+         "are the tetrarch and are untouched. The \"John\" in the same paragraph is the Apostle by " +
+         "this record's existing owner entry, and the case below holds it." },
+  { text: "The letters to the seven churches in Revelation 2-3 reflect exactly this kind of pressure: believers in Smyrna facing coming imprisonment and told to be \"faithful unto death\" (Revelation 2:10), a martyr named Antipas already killed in Pergamum, \"where Satan's throne is\" (Revelation 2:13), and churches wrestling with how far to compromise with the surrounding pagan culture to avoid trouble. Whether the persecution under Domitian was as systematic as some later sources suggest, or a more localized and uneven pressure, is debated among historians - but John's own exile to Patmos during this period is itself a clear, undisputed data point.",
+    surface: "John", owner: "bib-ac-domitian-persecution", expect: "john-the-apostle", status: "guard",
+    why: "Same paragraph, different name, opposite answer — the clearest single demonstration that " +
+         "these entries are per name AND per record, not per record alone." },
+  { text: "Elisha sends one of the sons of the prophets to Ramoth-Gilead with a flask of oil and an urgent, secret mission: find Jehu, son of Jehoshaphat, son of Nimshi, an army commander among Israel's officers, pull him away from his companions into an inner room, and anoint him king over Israel. The message accompanying the anointing is a direct commission to carry out God's long-delayed judgment on the house of Ahab, avenging the blood of the Lord's prophets and servants that Jezebel had shed.",
+    surface: "Jehoshaphat", owner: "bib-dki-jehu-anointed", expect: null, status: "guard",
+    why: "A PATRONYMIC, 2 Kings 9:2 — Jehu's own father, not Judah's king, and he has no record and " +
+         "no other mention anywhere. Seventeen of our eighteen \"Jehoshaphat\" links are the king " +
+         "and stay that way." },
+  { text: "Elisha's independent ministry runs from Elijah's ascension (c. 852 BC) to his deathbed prophecy to Jehoash of Israel (2 Kings 13:14-20); Jehoash's reign began in 798 BC, so Elisha's death falls c. 797-795 BC. The span covers roughly fifty years and four kings — Joram, Jehu, Jehoahaz, and Jehoash. This composite entry covers a representative range of his miracles rather than pinning each to an exact year.",
+    surface: "Joram", owner: "bib-dki-elisha-ministry-miracles", expect: "joram-king-of-israel",
+    status: "guard",
+    why: "NOT IN THE SWEEP — found while checking the elijah-ascension note beside it. The list " +
+         "names Elisha's four kings, and Jehu, Jehoahaz and Jehoash are all kings of ISRAEL, so " +
+         "the Joram at the head of it is too. It was resolving to Judah's Joram, who reigned at " +
+         "the same moment under the same two names, which is exactly why this pair is dangerous." },
+  { text: "Mark, also called John, was the son of a woman named Mary whose house in Jerusalem served as a meeting place for the early church — Peter went there directly after his miraculous release from prison (Acts 12:12). He was a cousin of Barnabas (Colossians 4:10), which likely explains how he came to join Barnabas and Paul on their first missionary journey as a helper (Acts 12:25, 13:5).",
+    surface: "Mary", owner: "john-mark", expect: null, status: "guard",
+    why: "MARY THE MOTHER OF JOHN MARK, Acts 12:12 — a fourth Mary, with no record. Scripture's own " +
+         "Acts 12:12 already suppressed her, so the two articles telling that story contradicted " +
+         "the verse they were telling it from. Now they agree." },
+  { text: "One of the seven churches of Revelation, one of only two (with Philadelphia) to receive no criticism from John, only encouragement amid coming persecution (Revelation 2:8-11)",
+    surface: "John", owner: "smyrna", expect: "john-the-apostle", status: "guard",
+    why: "Revelation's John, on a map record, pointing at the Baptist. The app's standing ruling " +
+         "sends Revelation's John to the Apostle — BOOK_NAME_OVERRIDES does it for the text and " +
+         "five records already do it for the articles — and these three location facts were simply " +
+         "outside every one of those levers." },
 ];

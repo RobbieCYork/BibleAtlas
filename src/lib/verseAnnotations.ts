@@ -1043,6 +1043,13 @@ const OWNER_NAME_OVERRIDES: Record<string, Record<string, string | null>> = {
     patmos: "john-the-apostle",
     "bib-ac-domitian-persecution": "john-the-apostle",
     angels: "john-the-apostle",
+    // Two more of the same, added 2026-09-10: the letters to the seven churches, on the churches'
+    // own map records. Smyrna's two ("no criticism from John", "a bishop tied by tradition to the
+    // apostle John") and Pergamum's one ("some scholars connect to John's 'Satan's throne'
+    // language") all pointed at the Baptist. These are location.history.notableFacts — 385 blocks
+    // that were outside the harness entirely until corpus.mjs's field name was corrected.
+    smyrna: "john-the-apostle",
+    pergamum: "john-the-apostle",
 
     // The Fourth Gospel's narrating voice — "John notes", "John tells us", "John alone records",
     // "Placed by John". These are references to the book speaking, not to a man being introduced,
@@ -1129,6 +1136,37 @@ const OWNER_NAME_OVERRIDES: Record<string, Record<string, string | null>> = {
   // Judas Barsabbas and is not getting one for three verses and no article.
   judas: {
     silas: null,
+
+    // ── The rest of the Judases, 2026-09-10 ───────────────────────────────────────────────────
+    // Iscariot owns the bare key and keeps it in 13 of our 25 prose mentions — Gethsemane, the
+    // chief priests, the casting of lots, Zechariah's thirty pieces of silver, and all eight in the
+    // Gospel of Judas article, where he is exactly who is meant. These twelve are four other men.
+    //
+    // JUDAS MACCABEUS, 5 links. NAME_CONTEXT_RULES already suppresses "Judas Maccabeus" written in
+    // full; these are the bare shorthand in the next sentence, the same near miss "Philip II" had.
+    // Suppressed on the standing interim — he is the strongest candidate in the whole sweep for a
+    // record of his own, and that is Robbie's call, not this file's.
+    "bib-it-maccabean-revolt-begins": null, // 2: "his five sons — Judas, Jonathan, Simon, John, and
+                                            // Eleazar"; "passing leadership to his son Judas,
+                                            // nicknamed 'Maccabeus'"
+    "bib-it-judas-maccabeus-campaigns": null, // 2: the article and its datingNotes
+    "bib-it-hasmonean-dynasty-begins": null, // 1: "the piety of Mattathias and Judas"
+    // JUDAS OF GALILEE, the census revolt leader Gamaliel names in Acts 5:37. Handing a failed
+    // messianic revolt to Iscariot is one of the two findings in this sweep that are theologically
+    // serious rather than merely wrong; Acts 5:37 itself is fixed per-verse.
+    quirinius: null, // 2: the life story and the extra-biblical summary
+    // JUDAS OF STRAIGHT STREET, Acts 9:11 — the man in whose house Saul was praying.
+    "ananias-of-damascus": null,
+    "straight-street-damascus": null, // 2: the description and the archaeology note
+    // JUDAS THE BROTHER OF JESUS, from Mark 6:3's list of four. Matthew 13:55 is already suppressed
+    // on the reader path, so this makes the article agree with Scripture.
+    "james-brother-of-jesus": null,
+    // And one that is NOT a suppression and was mis-filed as one by the sweep that found it.
+    // Thaddaeus's page quotes John 14:22 — "Judas (not Iscariot) said to him" — and that Judas is
+    // THADDAEUS HIMSELF, the page's own subject, whose record is even titled "Thaddaeus (Judas,
+    // son of James)". Mapped to the record, so the self-link exclusion suppresses it. It renders
+    // the same as `null` would and it says something different, which is the point.
+    thaddaeus: "thaddaeus",
   },
   simeon: {
     shechem: null, // the other half of Genesis 34's sentence — see `levi` above
@@ -1348,6 +1386,12 @@ const OWNER_NAME_OVERRIDES: Record<string, Record<string, string | null>> = {
     // their own and were always right, which is exactly what the sweep had checked.
     "mary-magdalene": "mary-magdalene", // 2
     "mary-of-bethany": "mary-of-bethany", // 6
+    // MARY THE MOTHER OF JOHN MARK, Acts 12:12, whose house the church was praying in. A fourth
+    // woman, with no record. Scripture's Acts 12:12 already suppresses her, so until now the two
+    // articles that tell that story contradicted the verse they were telling it from.
+    "john-mark": null, // "the son of a woman named Mary whose house in Jerusalem served as a
+                       // meeting place"
+    rhoda: null, // "gathered at the Jerusalem house of Mary, mother of John Mark"
   },
   // Same page, same problem, one occurrence: "Protestant Elizabeth I came to the English throne"
   // pointed at Elizabeth the mother of John the Baptist. Elizabeth I has no record.
@@ -1785,7 +1829,20 @@ const OWNER_NAME_OVERRIDES: Record<string, Record<string, string | null>> = {
   // the emperor; suppression is the interim and he is the largest single record-or-suppress
   // question the sweep raised, which is Robbie's to settle.
   titus: {
-    "wld-rom-destruction-of-jerusalem": null,
+    "wld-rom-destruction-of-jerusalem": null, // 6: five article paragraphs + the summary
+    // The other nine emperor links, 2026-09-10. Every one of them is Vespasian's son: the siege,
+    // the Temple, the Arch, and Bernice, whose whole extra-biblical story is her affair with him.
+    // The app has no record for the emperor and the four record-or-suppress candidates are
+    // Robbie's; a record replaces all seven lines here.
+    bernice: null, // 4: lifeStory, controversies, and both extraBib summary blocks
+    jerusalem: null, // "The Temple was destroyed by Roman forces under Titus in AD 70"
+    "the-temple": null, // "when Roman forces under Titus destroyed the Second Temple"
+    "bib-loc-olivet-discourse": null, // "when Roman forces under Titus razed Jerusalem"
+    "bib-ac-fall-of-jerusalem": null, // "the future Roman emperor Titus laid siege to Jerusalem"
+    "wld-rom-jewish-revolt-begins": null, // "Vespasian, with his son Titus serving alongside him"
+    // Paul's Titus is untouched everywhere else — crete (2), jewish-elders, and the five in his own
+    // book introduction, which is why book-intro:Titus is NOT in this table: it holds five correct
+    // mentions of the man and two of the BOOK, and the two are taken out by title rules instead.
   },
 
   // ── THE JAMES CLUSTER ────────────────────────────────────────────────────────────────────────
@@ -1868,7 +1925,44 @@ const OWNER_NAME_OVERRIDES: Record<string, Record<string, string | null>> = {
   // which names Judah's king separately in the same clause. Both links pointed at the wrong one of
   // the two. The record names no other Joram and no "Jehoram" at all.
   joram: {
-    "bib-dki-jehu-purge": "joram-king-of-israel",
+    "bib-dki-jehu-purge": "joram-king-of-israel", // 2: the article and the summary
+    // Two dating notes that name Israel's king and linked Judah's. The second was not in the sweep
+    // — found while checking the first: "four kings — Joram, Jehu, Jehoahaz, and Jehoash" lists
+    // Elisha's four, and Jehu, Jehoahaz and Jehoash are all kings of ISRAEL, so the Joram beside
+    // them is too. Neither record names Judah's Joram at all.
+    "bib-dki-elijah-ascension": "joram-king-of-israel", // "fought early in Joram of Israel's reign"
+    "bib-dki-elisha-ministry-miracles": "joram-king-of-israel",
+  },
+  // "Jehoshaphat": Judah's king owns the key and is right in 17 of our 18 prose mentions. The
+  // eighteenth is a DIFFERENT man in a patronymic — 2 Kings 9:2's "Jehu, son of Jehoshaphat, son of
+  // Nimshi", Jehu's own father, who has no record and no other mention anywhere. Suppressed.
+  jehoshaphat: {
+    "bib-dki-jehu-anointed": null,
+  },
+  // "Azariah" is a registered alternate name of Uzziah, king of Judah, which is right for all eight
+  // of Scripture's 2 Kings occurrences and for the article that says "Uzziah (also called
+  // Azariah)". It is wrong for four other men in our prose, none of whom has a record:
+  azariah: {
+    daniel: null, // Hananiah, Mishael and AZARIAH — Abednego, one of Daniel's three companions
+    "book-intro:Daniel": null, // "the Prayer of Azariah and Song of the Three" — a deuterocanonical
+                               // addition, so a WORK as well as a different man
+    "bib-dkj-asa-reforms": null, // "The prophet Azariah son of Oded met Asa afterward". NOT in the
+                                 // sweep, which enumerated only 2 Chronicles' verses and the priest
+                                 // below; found while reading this record's neighbours.
+    // MIXED RECORD, and the entry is the safe half. bib-dkj-uzziah-reign holds two "Azariah"s: the
+    // king himself — "Uzziah (also called Azariah) came to the throne as a teenager" — and the
+    // PRIEST Azariah who confronts him for burning incense, in the same article, a different man.
+    // The record-wide answer is no link, and the king's own mention is recovered by an exact phrase
+    // pin in NAME_CONTEXT_RULES, which is checked first. That direction is the one this file uses
+    // for every mixed record: if the pinned sentence is ever reworded the mention falls back to no
+    // link, which is a lost correct link rather than a priest asserted to be a king.
+    "bib-dkj-uzziah-reign": null,
+  },
+  // "Antipas": Herod Antipas owns the key and is right in eight of nine prose mentions. The ninth
+  // is ANTIPAS OF PERGAMUM, the martyr of Revelation 2:13 — "a martyr named Antipas already killed
+  // in Pergamum, 'where Satan's throne is'" — who is not a Herod and has no record.
+  antipas: {
+    "bib-ac-domitian-persecution": null,
   },
 };
 
@@ -2426,6 +2520,14 @@ const NAME_CONTEXT_RULES: Record<string, NameContextRule[]> = {
     // Cornelius" and "Peter's vision and subsequent visit to Cornelius" are the man seeing a
     // sheet let down from heaven in Acts 10. POSSESSIVE_WORK is deliberately not given to Peter.
   ],
+  azariah: [
+    // The one sentence the record-wide `null` on bib-dkj-uzziah-reign must not take. That article
+    // names both the KING — "Uzziah (also called Azariah) came to the throne as a teenager" — and
+    // the PRIEST who confronts him over the incense, a different man with no record, a few
+    // sentences later. Pinned rather than answered per record, and pinned on the correct half so
+    // that a rewrite costs this link rather than promoting the priest.
+    { phrase: "Uzziah (also called Azariah)", to: "uzziah" },
+  ],
   michael: [
     // Servetus (burned at Geneva), Cerularius (the 1054 schism), Ballance and Rostovtzeff
     // (excavators). All were linking to Michael the archangel.
@@ -2812,6 +2914,19 @@ const NAME_CONTEXT_RULES: Record<string, NameContextRule[]> = {
     { phrase: "1 and 2 Thessalonians, 1 and 2 Timothy, Titus, and Philemon", to: null },
     { phrase: "1 and 2 Timothy, Titus, Philemon, and Revelation are absent", to: null },
     { phrase: "1–2 Timothy, Titus, Philemon, and Revelation are absent", to: null },
+
+    // ── Three more, second-bearer sweep, 2026-09-10 ──────────────────────────────────────────
+    // The emperor is handled per record in OWNER_NAME_OVERRIDES; these name the LETTER, and they
+    // sit on records that cannot take a whole-record answer. book-intro:Titus holds five correct
+    // mentions of the man Paul left on Crete and two of the book, so the two get rules instead.
+    // Both patterns were measured against all 31,098 WEB verses first: "parts of <Capital>"
+    // occurs in five verses and "is contained in" in one, and none of the six contains "Titus".
+    { before: /\b[Pp]arts of\s+$/, to: null }, // "P32 … preserves parts of Titus"
+    { after: /^\s+is contained in\b/, to: null }, // "Titus is contained in the great … uncials"
+    // A third canon list, on chester-beatty-papyri. The neighbouring "1 and 2 Timothy" is caught
+    // by BOOK_NUMERAL on Timothy's own key; the numerals sit before Timothy, not before this, so
+    // this one has no word of its own and needs a pin. One pin per title, as the ruling says.
+    { phrase: "1 and 2 Timothy or Titus", to: null },
   ],
 
   // ── MODERN WORK TITLES: the same ruling, one shelf further forward ──────────────────────────

@@ -442,7 +442,7 @@ person	andrew	andrew-apostle	reader	13
 person	anna	anna-the-prophetess	panel	1
 person	anna	anna-the-prophetess	reader	1
 person	antipas	herod-antipas	panel	1
-person	antipas	herod-antipas	prose	9
+person	antipas	herod-antipas	prose	8
 person	antipas	herod-antipas	reader	1
 person	apollos	apollos	panel	10
 person	apollos	apollos	prose	3
@@ -461,7 +461,7 @@ person	athanasius of alexandria	athanasius-of-alexandria	prose	3
 person	augustine of hippo	augustine-of-hippo	prose	1
 person	augustus	caesar-augustus	prose	37
 person	azariah	uzziah	panel	49
-person	azariah	uzziah	prose	5
+person	azariah	uzziah	prose	1
 person	azariah	uzziah	reader	21
 person	azor	azor	panel	2
 person	azor	azor	prose	2
@@ -704,7 +704,7 @@ person	jehoram the son of ahab	joram-king-of-israel	reader	3
 person	jehoram the son of jehoshaphat	joram-king-of-judah	panel	2
 person	jehoram the son of jehoshaphat	joram-king-of-judah	reader	2
 person	jehoshaphat	jehoshaphat	panel	84
-person	jehoshaphat	jehoshaphat	prose	15
+person	jehoshaphat	jehoshaphat	prose	14
 person	jehoshaphat	jehoshaphat	reader	84
 person	jeremiah	jeremiah	panel	150
 person	jeremiah	jeremiah	prose	62
@@ -735,10 +735,10 @@ person	job	job	reader	59
 person	johannes gutenberg	johannes-gutenberg	prose	1
 person	john	john-mark	reader	2
 person	john	john-the-apostle	panel	7
-person	john	john-the-apostle	prose	51
+person	john	john-the-apostle	prose	54
 person	john	john-the-apostle	reader	34
 person	john	john-the-baptist	panel	107
-person	john	john-the-baptist	prose	30
+person	john	john-the-baptist	prose	27
 person	john	john-the-baptist	reader	77
 person	john	john-wesley	prose	3
 person	john calvin	john-calvin	prose	1
@@ -764,10 +764,9 @@ person	jonah	jonah	reader	26
 person	jonah the son of amittai	jonah	panel	2
 person	jonah the son of amittai	jonah	reader	2
 person	jonathan edwards	jonathan-edwards	prose	2
-person	joram	joram-king-of-israel	prose	1
+person	joram	joram-king-of-israel	prose	3
 person	joram	joram-king-of-israel	reader	15
 person	joram	joram-king-of-judah	panel	25
-person	joram	joram-king-of-judah	prose	2
 person	joram	joram-king-of-judah	reader	7
 person	joram son of ahab	joram-king-of-israel	prose	2
 person	joram the son of ahab	joram-king-of-israel	panel	5
@@ -791,7 +790,7 @@ person	jotham	jotham-king-of-judah	panel	25
 person	jotham	jotham-king-of-judah	prose	9
 person	jotham	jotham-king-of-judah	reader	15
 person	judas	judas-iscariot	panel	21
-person	judas	judas-iscariot	prose	25
+person	judas	judas-iscariot	prose	13
 person	judas	judas-iscariot	reader	16
 person	judas	thaddaeus	reader	1
 person	judas iscariot	judas-iscariot	panel	7
@@ -843,7 +842,7 @@ person	martin luther king	martin-luther-king-jr	prose	3
 person	mary	mary-magdalene	reader	3
 person	mary	mary-mother-of-james-the-less	reader	7
 person	mary	mary-mother-of-jesus	panel	42
-person	mary	mary-mother-of-jesus	prose	92
+person	mary	mary-mother-of-jesus	prose	90
 person	mary	mary-mother-of-jesus	reader	20
 person	mary	mary-of-bethany	prose	1
 person	mary	mary-of-bethany	reader	11
@@ -1099,7 +1098,7 @@ person	timothy	timothy	panel	24
 person	timothy	timothy	prose	32
 person	timothy	timothy	reader	24
 person	titus	titus	panel	13
-person	titus	titus	prose	20
+person	titus	titus	prose	8
 person	titus	titus	reader	13
 person	uriah the hittite	uriah-the-hittite	panel	10
 person	uriah the hittite	uriah-the-hittite	prose	4
