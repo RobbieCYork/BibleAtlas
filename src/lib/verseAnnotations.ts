@@ -389,6 +389,10 @@ const VERSE_NAME_OVERRIDES: Record<string, Record<string, Record<string, string 
       "20:16": "mary-magdalene",
     },
     Acts: { "12:12": null },
+    // Romans 16:6 — "Greet Mary, who labored much for us." A fifth Mary, in Paul's list of Roman
+    // greetings, with no record and nothing known of her beyond this line. She was resolving to
+    // the mother of Jesus, who is not in Romans at all. Added 2026-09-10.
+    Romans: { "16:6": null },
   },
   philip: {
     Luke: { "3:1": "philip-the-tetrarch" },
@@ -417,7 +421,16 @@ const VERSE_NAME_OVERRIDES: Record<string, Record<string, Record<string, string 
     // Matthew 27:32 words it "a man of Cyrene, Simon by name", so the registered key "Simon of
     // Cyrene" — which does resolve Mark 15:21 and Luke 23:26 correctly — cannot reach it, and the
     // man who carried the cross rendered as Simon Peter.
-    Matthew: { "13:55": null, "27:32": "simon-of-cyrene" },
+    Matthew: { "13:55": null, "27:32": "simon-of-cyrene",
+      // 10:4 — the apostle list's SECOND Simon. Mark 3:18, Luke 6:15 and Acts 1:13 print "Simon the
+      // Zealot", which is a registered key and has always resolved correctly; Matthew alone prints
+      // "Simon the Canaanite" (WEB and KJV) or "Simon the Cananaean" (ASV), which nothing matches,
+      // so the bare key won and the Twelve contained Simon Peter twice. Fixed per verse rather
+      // than by registering the wording, precisely BECAUSE the wording differs between
+      // translations — a verse key is translation-blind and the phrase is not. The identification
+      // itself is not a judgment call: qan'ana is the Aramaic for "zealot", which is why Luke
+      // translates it. Added 2026-09-10.
+      "10:4": "simon-the-zealot" },
     Mark: { "6:3": null },
     // Luke 7:36-50, the anointing at the Pharisee's house: the host is named Simon three times and
     // is not Peter. simon-the-pharisee has an entry; the text never gives it a longer wording.
@@ -443,14 +456,51 @@ const VERSE_NAME_OVERRIDES: Record<string, Record<string, Record<string, string 
     },
   },
   james: {
-    Matthew: { "13:55": "james-brother-of-jesus" },
-    Mark: { "6:3": "james-brother-of-jesus" },
     // Acts 1:13's apostle list names three different men called James. Two of them are now matched
     // as whole phrases — "James the son of Alphaeus", and the "James" inside "Judas the son of
     // James" — leaving exactly one bare "James", the son of Zebedee, which the Acts book override
     // would otherwise send to the brother of Jesus. That is what makes this verse fixable: it is
     // no longer three occurrences needing three answers, it is one.
-    Acts: { "1:13": "james-son-of-zebedee" },
+    Acts: { "1:13": "james-son-of-zebedee",
+      // 12:2 — "He killed James, the brother of John, with the sword." The verse names his brother,
+      // and BOOK_NAME_OVERRIDES.james sends every bare "James" in Acts to the LORD'S BROTHER, which
+      // is right at 12:17, 15:13 and 21:18 and wrong here, twelve verses before the first of them.
+      // Added 2026-09-10 with the second-bearer sweep. This is the verse every article that says
+      // "Zebedee's son was dead by AD 44" cites, so it is also the verse that must be right if that
+      // argument is to hold anywhere else in this file.
+      "12:2": "james-son-of-zebedee" },
+    // ── The four "Mary the mother of James" verses — SUPPRESSED, and deliberately not resolved ──
+    //
+    // In every one of these the app already resolves the MOTHER correctly, by the `mary` entries
+    // above, and gave her SON to Zebedee — internally contradictory inside a single clause, since
+    // Zebedee's son's mother is Salome, who is named separately in two of the four.
+    //
+    // The natural repoint is james-son-of-alphaeus: identifying James the Less (Mark 15:40's own
+    // wording) with Alphaeus's son is the traditional reading, and the app carries a record for
+    // him. It is also GENUINELY DISPUTED, and this file does not settle a disputed identification
+    // as a side effect of fixing a different fault — the same answer it already gives the
+    // contested Nathan at 1 Kings 4:5. No link asserts nothing. Alphaeus's son keeps every verse
+    // where Scripture spells out "James the son of Alphaeus", which is where the app does make the
+    // identification it is willing to make.
+    //
+    // The one prose instance of the same phrase, on mary-mother-of-james-the-less's own record,
+    // takes the same answer through OWNER_NAME_OVERRIDES so the two surfaces agree.
+    Matthew: { "13:55": "james-brother-of-jesus", "27:56": null },
+    Mark: { "6:3": "james-brother-of-jesus", "15:40": null, "16:1": null },
+    Luke: { "24:10": null },
+    // ── James 1:1 and Jude 1:1 are NOT here, and the omission is the point ──────────────────────
+    //
+    // Both currently resolve to Zebedee's son, which is wrong on anybody's account — he was dead
+    // by AD 44 and no tradition names him. The second-bearer sweep proposed repointing both to the
+    // Lord's brother. THEY ARE FLAGGED CASES: §7.1 and §7.2 of
+    // automation/manager/name-linker-scope.md record that choosing James of Jerusalem is a
+    // confessional position the app has not taken, and scripts/name-linker/cases.mjs pins both
+    // verses as `status: "flagged"` precisely so that a batch aimed at something else cannot take
+    // that position on Robbie's behalf.
+    //
+    // It was attempted here, the two flagged cases failed, and the change was backed out — which
+    // is the flag doing exactly what it was built for. Escalated to Robbie through Bob on
+    // 2026-09-10 with a recommendation; a ruling lands here and in the four owner entries below.
   },
   //
   // ── AND A FIFTH BEARER, AT Acts 15:22, 15:27 and 15:32 — suppressed, not resolved ─────────────
@@ -518,10 +568,35 @@ const VERSE_NAME_OVERRIDES: Record<string, Record<string, Record<string, string 
   judas: {
     Matthew: { "13:55": null },
     John: { "14:22": "thaddaeus" },
-    // 1:13 resolves to the other apostle; the three 15:* verses are Judas Barsabbas and are
-    // suppressed. Keyed to four verses, not to the book — Acts 1:16, 1:25 and 5:37's "Judas" are
-    // untouched by this entry and are pinned as cases in scripts/name-linker/cases.mjs.
-    Acts: { "1:13": "thaddaeus", "15:22": null, "15:27": null, "15:32": null },
+    // ── Luke 3:30, AND IT EXISTS ONLY IN THE ASV ───────────────────────────────────────────────
+    //
+    // Found 2026-09-10 by reading the second-bearer sweep's verses in all three translations
+    // instead of trusting the WEB corpus, which is the only one this repo snapshots. Luke's
+    // genealogy at 3:30 reads "the son of Judah" in the WEB and "the son of Juda" in the KJV —
+    // neither of which is a registered key, so neither renders a link. The ASV reads "the [son] of
+    // JUDAS", which is, and an ASV reader was being told that an ancestor thirty-six generations
+    // before Jesus was Judas Iscariot. Nothing in scripts/name-linker/ could have seen it: the
+    // corpus is WEB only, the fault does not exist there, and the snapshot is green either way.
+    //
+    // Exactly the Acts 4:36 shape from the other side — there an override fired for one
+    // translation and matched nothing in the corpus; here a FAULT exists in one translation and
+    // matches nothing in the corpus. A verse key handles both, because it is translation-blind.
+    // Pinned by a named case carrying the ASV literal, which is the only cover it can have.
+    Luke: { "3:30": null },
+    // 1:13 resolves to the other apostle; the three 15:* verses are Judas Barsabbas and 5:37 is
+    // Judas of Galilee, all suppressed. Keyed to five verses, not to the book — Acts 1:16 and
+    // 1:25's "Judas" are untouched by this entry and are pinned as cases in
+    // scripts/name-linker/cases.mjs.
+    Acts: { "1:13": "thaddaeus", "15:22": null, "15:27": null, "15:32": null,
+      // 5:37 — "Judas of Galilee rose up in the days of the enrollment". Gamaliel's second example
+      // of a failed messianic movement, the census revolt of AD 6, and a SIXTH bearer in this one
+      // book. He was measured and deliberately left by the Acts 15 batch, which was not authorised
+      // to settle him; this is that batch's own note being closed. Suppressed, not resolved: he has
+      // no record, and handing a failed messianic revolt to Iscariot is one of the two findings in
+      // the second-bearer sweep that are theologically serious rather than merely wrong. The two
+      // prose mentions of the same man, on quirinius, take the same answer through
+      // OWNER_NAME_OVERRIDES, so the article and the verse agree.
+      "5:37": null },
   },
   // "John". Five different men share the bare name in the New Testament, and until this entry
   // existed the app gave all of them to the Baptist except in Acts, where a blanket book override
@@ -615,6 +690,90 @@ const VERSE_NAME_OVERRIDES: Record<string, Record<string, Record<string, string 
   // "Enoch": the patriarch (Genesis 5, Hebrews 11:5, Jude 1:14-15) is the default owner of bare
   // "Enoch," but Genesis 4:17-18, one chapter earlier, names a completely different Enoch — Cain's
   // son, after whom Cain named a city — so those two verses are suppressed rather than mislinked.
+  // ── "Azariah" in 2 Chronicles: eight different men, none of them the king ────────────────────
+  //
+  // The bare key is a registered alternate name of UZZIAH, king of Judah, and BOOK_NAME_ALLOWLIST
+  // confines it to 2 Kings, 2 Chronicles and Matthew. That is right in 2 Kings, where all eight
+  // occurrences are the king (2 Kings 14:21 says in as many words that Azariah is who the people
+  // made king). It is wrong in every one of 2 Chronicles' thirteen, which Chronicles spreads
+  // across eight other men — and Chronicles names the king "Uzziah" throughout, never "Azariah",
+  // which is what makes this whole book answerable verse by verse.
+  //
+  // Read one at a time, with the patronymic Chronicles supplies in the same clause:
+  //   15:1   Azariah son of Oded, the prophet who meets Asa
+  //   21:2   two of Jehoshaphat's sons, both called Azariah, in one verse
+  //   22:6   a variant reading of Ahaziah king of Judah (the WEB prints "Azariah the son of
+  //          Jehoram king of Judah"; the Hebrew has Azariah and the parallel 2 Kings 8:29 has
+  //          Ahaziah). A different man from Uzziah on any reading of it.
+  //   23:1   two captains of hundreds, son of Jeroham and son of Obed
+  //   26:17, 26:20  AZARIAH THE PRIEST, who confronts Uzziah for burning incense — in the same
+  //          chapter as the king, under the king's other name, on opposite sides of the altar.
+  //          The most consequential of the thirteen, and the one the article half also had wrong.
+  //   28:12  an Ephraimite chief, son of Johanan
+  //   29:12  two Levites in Hezekiah's cleansing of the temple
+  //   31:10  Azariah the chief priest, of the house of Zadok
+  //   31:13  Azariah the ruler of God's house
+  // None has a record and none is getting one for a patronymic; suppression is the answer this
+  // file already gives Zadok, Eleazar and Acts 1:23's fourth Joseph. Added 2026-09-10. A verse
+  // answers all of its occurrences, which is exact here: no verse in the list holds both the king
+  // and somebody else.
+  azariah: {
+    "2 Chronicles": {
+      "15:1": null,
+      "21:2": null,
+      "22:6": null,
+      "23:1": null,
+      "26:17": null,
+      "26:20": null,
+      "28:12": null,
+      "29:12": null,
+      "31:10": null,
+      "31:13": null,
+    },
+  },
+  // "Simeon" at Luke 3:30 — the genealogy again. The only record is Simeon at the temple (Luke 2),
+  // and BOOK_NAME_ALLOWLIST keeps the key to Luke for exactly that reason, which is what lets this
+  // one slip through: it is in Luke, thirty-six generations early. The same verse's "Joseph" is
+  // suppressed under `joseph` above.
+  simeon: {
+    Luke: { "3:30": null },
+  },
+  // ── Colossians 4:11, and it is the worst single link the sweep found ─────────────────────────
+  //
+  // "and Jesus who is called Justus." Paul's Jewish co-worker in Rome, greeting the Colossians in
+  // the same breath as Aristarchus and Mark — rendered on the reader path as a link to JESUS OF
+  // NAZARETH. Ἰησοῦς is an ordinary first-century Jewish name (the Greek for Joshua) and Paul
+  // distinguishes this man by his Roman cognomen in the same clause, which is why the verse says
+  // "who is called Justus" at all.
+  //
+  // Suppressed rather than resolved: the app has no record for him, "Justus" produces no person
+  // link anywhere in the app today, and one verse does not earn a record. What it does earn is
+  // not being told that Paul's fellow worker is the Lord. This is the only occurrence of the name
+  // in the WEB that means anybody but Jesus of Nazareth — checked across all 31,098 verses — so
+  // the entry is one verse wide and cannot leak.
+  jesus: {
+    Colossians: { "4:11": null },
+    // ── AND TWO THAT EXIST ONLY IN THE KING JAMES ─────────────────────────────────────────────
+    //
+    // Ἰησοῦς is the Greek for Joshua, and at Acts 7:45 and Hebrews 4:8 it means Joshua son of Nun.
+    // The WEB and the ASV translate it "Joshua" at both, so both already link correctly to the
+    // right man and this entry never fires for them. The KJV transliterates: "brought in with
+    // JESUS into the possession of the Gentiles" and "if JESUS had given them rest". A reader who
+    // switches to the KJV — which the app offers — was being shown Jesus of Nazareth leading the
+    // conquest and being contrasted with the rest that remains.
+    //
+    // Checked, not assumed: all three translations of both verses were fetched from
+    // bible-api.com on 2026-09-10 and are quoted verbatim in the cases that pin them. The second-
+    // bearer sweep named these two specifically as worth checking and could not check them,
+    // because the harness corpus is WEB only.
+    //
+    // REPOINTED rather than suppressed, and that is not a judgment call: the KJV's own margin and
+    // every commentary read it as Joshua, Hebrews 4:8's whole argument depends on it being Joshua,
+    // and the app has his record. The two verses are the only ones in the New Testament where the
+    // KJV does this.
+    Acts: { "7:45": "joshua" },
+    Hebrews: { "4:8": "joshua" },
+  },
   enoch: {
     Genesis: { "4:17": null, "4:18": null },
   },
@@ -832,6 +991,29 @@ const VERSE_NAME_OVERRIDES: Record<string, Record<string, Record<string, string 
     // and nowhere else, and there is no article — so it would be a dead entry, and a dead entry
     // reads as a live claim.
     Acts: { "1:23": null, "4:36": "barnabas" },
+    // ── Joseph of Arimathea, the two verses that do not spell out where he is from ─────────────
+    //
+    // BOOK_NAME_OVERRIDES sends a bare "Joseph" in Mark and John to Arimathea and in Matthew and
+    // Luke to Mary's husband, which is right for the nativity and the genealogy and wrong for the
+    // burial. Mark 15:43 and John 19:38 were never affected: the WEB prints "Joseph of Arimathaea"
+    // there and that whole phrase is a registered key of its own. These two verses print only the
+    // bare name, so the book default won, and a reader of the burial narrative was sent to the
+    // carpenter of Nazareth. Added 2026-09-10.
+    //
+    // Independent of the corpus-wide question of who a bare "Joseph" belongs to, which is open and
+    // is Robbie's: these two verses name a specific man and say what distinguishes him in the same
+    // clause — "a rich man from Arimathaea" and "a member of the council".
+    Matthew: { "27:57": "joseph-of-arimathea" },
+    Luke: {
+      "23:50": "joseph-of-arimathea",
+      // ── And two in Luke's genealogy, which is neither man ────────────────────────────────────
+      // Luke 3:26's "the son of Joseph" and 3:30's are ancestors in the chain from Jesus back to
+      // Adam, forty and thirty-six generations before Mary's husband. No record; no link. The same
+      // verses' "Simeon" is suppressed under `simeon` below, and their "Judah" already links to
+      // nobody.
+      "3:26": null,
+      "3:30": null,
+    },
   },
 };
 
@@ -1877,32 +2059,38 @@ const OWNER_NAME_OVERRIDES: Record<string, Record<string, string | null>> = {
     // genuinely the other man and is recovered by the context pattern above, which is checked
     // first. The record's "James, son of Zebedee" mentions already resolve by their own long key.
     "james-son-of-alphaeus": "james-son-of-alphaeus",
-    // The letter's author, six times across whyWritten and summary. The app already does exactly
-    // this for every other book intro — "Paul" links on book-intro:Romans five times, "Peter" on
-    // book-intro:1 Peter four — and this introduction's own `author` field states the traditional
-    // attribution to James the brother of Jesus and names the critical dissent beside it, which is
-    // the app's editorial standard. The three sentences in the same record that name the BOOK
-    // rather than the man are taken back out by the three title rules added above, which are
-    // checked before this table.
+    // ── THE EPISTLE'S VOICE: SUPPRESSED, BECAUSE ITS AUTHORSHIP IS A FLAGGED QUESTION ─────────
     //
-    // The direction is worth stating because the usual preference in this file is the other one.
-    // Where a record holds two MEN, the record-wide answer is the safe one and the exception gets
-    // the pin, so a rewrite costs a correct link rather than asserting a wrong man (see `jacob`
-    // and `book-intro:Zechariah`). This record holds one man and three titles: the fallback if a
-    // title rule stops matching is a link to the man the same page already names as the letter's
-    // traditional author, which is a much weaker claim than the wrong-person fallback those
-    // entries guard against — and pinning the other way would put six correct links behind rules
-    // to protect three. Reversible in one line if that judgment is ever revisited.
-    "book-intro:James": "james-brother-of-jesus",
+    // Nine links on the introduction to James and four more on records that quote the letter by
+    // its author's name. All thirteen pointed at Zebedee's son, who was dead by AD 44 (Acts 12:2)
+    // and whom no tradition names. They were first repointed to the Lord's brother — which is what
+    // the app does for every other introduction ("Paul" links five times on book-intro:Romans,
+    // "Peter" four on book-intro:1 Peter) and what this introduction's own `author` field states
+    // in prose, with the critical dissent named beside it.
+    //
+    // THAT WAS BACKED OUT. §7.1 of automation/manager/name-linker-scope.md flags the authorship of
+    // James as Robbie's to settle, and cases.mjs pins James 1:1 and Jude 1:1 as `flagged` for
+    // exactly that reason. The prose surface is the same question as the verse, so a link here
+    // asserts the same thing. No link removes the falsehood and asserts nothing about who held the
+    // pen — the identical answer this file already gives the Fourth Gospel's narrating voice.
+    //
+    // Escalated to Robbie through Bob on 2026-09-10, with a recommendation. If he rules for the
+    // traditional attribution, these five entries and the two verse entries above change together
+    // and the three title rules stay: a title still names no author.
+    //
+    // gentiles and bib-ac-paul-arrest-jerusalem are NOT part of this and keep their links: Acts 15
+    // and Acts 21:18 are the man presiding in Jerusalem, not the letter speaking, and the reader
+    // path already resolves both of those verses to him.
+    "book-intro:James": null,
     // Josephus, Antiquities 20.9.1, quoted twice in Jesus's extra-biblical sources: "the brother
     // of Jesus, who was called Christ, whose name was James". The sentence says who he is.
     "jesus-of-nazareth": "james-brother-of-jesus",
     // Five records that quote the epistle by its author's name. Each holds exactly one "James",
     // and it is the same answer the app gives "Paul" and "Peter" in the same position.
-    rahab: "james-brother-of-jesus", // "James cites her works" — James 2:25
-    satan: "james-brother-of-jesus", // "James instructs believers to 'resist the devil'" — James 4:7
-    demons: "james-brother-of-jesus", // "James notes flatly that even 'the demons… believe'" — James 2:19
-    "bib-dki-elijah-still-small-voice": "james-brother-of-jesus", // "as James later puts it, a man
+    rahab: null, // "James cites her works" — James 2:25
+    satan: null, // "James instructs believers to 'resist the devil'" — James 4:7
+    demons: null, // "James notes flatly that even 'the demons… believe'" — James 2:19
+    "bib-dki-elijah-still-small-voice": null, // "as James later puts it, a man
                                        // with feelings like ours" — James 5:17. The record's other
                                        // "James" is "the King James Version", already suppressed by
                                        // the King rule above, which is checked first.

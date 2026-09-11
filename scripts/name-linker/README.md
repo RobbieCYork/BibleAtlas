@@ -2,7 +2,7 @@
 
 `src/lib/verseAnnotations.ts` decides which words in the Bible text — and in every article the app
 has ever written — become links to a person, place or topic. It renders **9,724 person-links across
-Scripture and 6,237 across the app's own prose**. Until this directory existed it had no tests at
+Scripture and 6,227 across the app's own prose**. Until this directory existed it had no tests at
 all, and a one-line data edit could move hundreds of them with nobody noticing.
 
     npm run test:linker
@@ -108,13 +108,13 @@ purpose and is written up in `reviewed.tsv`'s header.
 | file | rows | what it holds |
 |---|---:|---|
 | `bible-links.tsv` | 9,724 | every person-link in all 31,098 WEB verses, with the id each rendering path gives it |
-| `prose-links.tsv` | 6,237 | every person-link in every authored prose block the app puts through `LinkedVerseText` |
-| `key-totals.tsv` | 4,083 | a tally covering **every** kind — location, POI, topic, timeline, verse reference — one row per (kind, matched text, id, path) |
+| `prose-links.tsv` | 6,227 | every person-link in every authored prose block the app puts through `LinkedVerseText` |
+| `key-totals.tsv` | 4,084 | a tally covering **every** kind — location, POI, topic, timeline, verse reference — one row per (kind, matched text, id, path) |
 
 The first two are row-level, so a diff names the verse or the block. `key-totals.tsv` exists because
 the other two only record **people**: a change to `people.ts` can steal a key from a location, and
 adding one POI alternate name can start firing hundreds of links that no person snapshot would ever
-show. Its 4,083 rows currently break down as 2,349 verse references, 745 person, 391 topic, 388
+show. Its 4,084 rows currently break down as 2,349 verse references, 746 person, 391 topic, 388
 location, 131 POI and 79 timeline.
 
 This is the half that catches what you did not think to assert. The named cases cover a few dozen
@@ -258,8 +258,8 @@ snapshot.
 
 `LinkedVerseText` is what PersonPanel, LocationPanel, PoiPanel, TopicPanel, BookIntroView,
 TimelineEventPanel and MyProfileView render with. Every book override, verse override and
-suppression in `verseAnnotations.ts` is invisible there. **837 links across 747 verses resolve
-differently between the two paths**, and all but a handful of the 6,237 prose links run with no
+suppression in `verseAnnotations.ts` is invisible there. **858 links across 759 verses resolve
+differently between the two paths**, and all but a handful of the 6,227 prose links run with no
 disambiguation at all — `OWNER_NAME_OVERRIDES` (below) is the only correction that reaches them. A
 fix that only moves the `reader` column has fixed half the app.
 
@@ -344,12 +344,25 @@ scoping document twice. **Run it before claiming a change fixes N links.**
   identically whatever the reader has selected — including where the wording differs enough to make
   the override meaningless. See `corpus/PROVENANCE.md`. What changed on 2026-09-10 is only that a
   **named case can now assert one verse in one translation**, by carrying `text` alongside `ref`
-  (above). **Thirteen** of them exist, recounted off the file on 2026-09-10 with
+  (above). **Twenty-one** of them exist, recounted off the file on 2026-09-10 with
   `CASES.filter(c => c.text && c.ref).length`: two on Acts 4:36, where only the ASV prints
   "Joseph"; two on Acts 1:23, where all three translations do; six on Acts 15:22, 15:27 and
-  15:32, Judas called Barsabbas, likewise unanimous; and three added with the `Judaea` alternate
+  15:32, Judas called Barsabbas, likewise unanimous; three added with the `Judaea` alternate
   (KJV and ASV Acts 1:8, KJV Matthew 2:1), which are the first of these to assert a LOCATION and
-  the only cover the 85 KJV/ASV "Judaea" links have. (This line read "six … three and three" until
+  the only cover the 85 KJV/ASV "Judaea" links have; and two added with the second-bearer batch on
+  Matthew 10:4, the apostle list's second Simon, where WEB and KJV read "Simon the Canaanite" and
+  the ASV reads "Simon the **Cananaean**". That verse is the argument for keying on the verse in
+  one line: registering either wording would have fixed one or two translations of three and left
+  the rest wrong, with nothing in this directory able to say so. The same batch added six more,
+  and those six are a different thing again: **three faults that exist in only one translation and
+  move no snapshot row at all.** The ASV's Luke 3:30 reads "the [son] of Judas" where the WEB reads
+  "Judah" — a link to Iscariot from Jesus's genealogy, in one translation, invisible here. The
+  KJV's Acts 7:45 and Hebrews 4:8 read "Jesus" where the WEB and ASV read "Joshua", so a KJV
+  reader was shown Jesus of Nazareth leading the conquest. Acts 4:36 from the other side: there an
+  override fired for one translation and matched nothing in the corpus, here a FAULT lives in one
+  translation and matches nothing in it. Reading a batch's verses in all three is the only way any
+  of the three could have been found, and it is worth doing for every batch that touches
+  `VERSE_NAME_OVERRIDES`. (This line read "six … three and three" until
   the recount. It was wrong: the third case in each of those groups is the WEB *corpus* case, which
   carries `ref` and no `text` and is therefore an ordinary verse case. Two per verse, one per
   non-WEB translation, is the shape.) That is a foothold, not coverage: nothing sweeps either

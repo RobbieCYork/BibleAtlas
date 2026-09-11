@@ -462,7 +462,7 @@ person	augustine of hippo	augustine-of-hippo	prose	1
 person	augustus	caesar-augustus	prose	37
 person	azariah	uzziah	panel	49
 person	azariah	uzziah	prose	1
-person	azariah	uzziah	reader	21
+person	azariah	uzziah	reader	8
 person	azor	azor	panel	2
 person	azor	azor	prose	2
 person	azor	azor	reader	2
@@ -675,11 +675,11 @@ person	jacob	jacob-father-of-joseph	panel	2
 person	jacob	jacob-father-of-joseph	prose	5
 person	jacob	jacob-father-of-joseph	reader	2
 person	james	james-brother-of-jesus	panel	1
-person	james	james-brother-of-jesus	prose	18
-person	james	james-brother-of-jesus	reader	10
+person	james	james-brother-of-jesus	prose	8
+person	james	james-brother-of-jesus	reader	9
 person	james	james-son-of-zebedee	panel	31
 person	james	james-son-of-zebedee	prose	14
-person	james	james-son-of-zebedee	reader	22
+person	james	james-son-of-zebedee	reader	19
 person	james the just	james-brother-of-jesus	prose	2
 person	james the son of alphaeus	james-son-of-alphaeus	panel	2
 person	james the son of alphaeus	james-son-of-alphaeus	reader	2
@@ -717,7 +717,7 @@ person	jesse	jesse	prose	8
 person	jesse	jesse	reader	47
 person	jesus	jesus-of-nazareth	panel	717
 person	jesus	jesus-of-nazareth	prose	825
-person	jesus	jesus-of-nazareth	reader	717
+person	jesus	jesus-of-nazareth	reader	716
 person	jesus christ	jesus-of-nazareth	panel	165
 person	jesus christ	jesus-of-nazareth	prose	21
 person	jesus christ	jesus-of-nazareth	reader	165
@@ -773,9 +773,9 @@ person	joram the son of ahab	joram-king-of-israel	panel	5
 person	joram the son of ahab	joram-king-of-israel	reader	5
 person	joseph	joseph-husband-of-mary	panel	1
 person	joseph	joseph-husband-of-mary	prose	50
-person	joseph	joseph-husband-of-mary	reader	20
+person	joseph	joseph-husband-of-mary	reader	16
 person	joseph	joseph-of-arimathea	prose	1
-person	joseph	joseph-of-arimathea	reader	6
+person	joseph	joseph-of-arimathea	reader	8
 person	joseph	joseph-son-of-jacob	panel	248
 person	joseph	joseph-son-of-jacob	prose	82
 person	joseph	joseph-son-of-jacob	reader	222
@@ -791,7 +791,7 @@ person	jotham	jotham-king-of-judah	prose	9
 person	jotham	jotham-king-of-judah	reader	15
 person	judas	judas-iscariot	panel	21
 person	judas	judas-iscariot	prose	13
-person	judas	judas-iscariot	reader	16
+person	judas	judas-iscariot	reader	15
 person	judas	thaddaeus	reader	1
 person	judas iscariot	judas-iscariot	panel	7
 person	judas iscariot	judas-iscariot	prose	7
@@ -843,7 +843,7 @@ person	mary	mary-magdalene	reader	3
 person	mary	mary-mother-of-james-the-less	reader	7
 person	mary	mary-mother-of-jesus	panel	42
 person	mary	mary-mother-of-jesus	prose	90
-person	mary	mary-mother-of-jesus	reader	20
+person	mary	mary-mother-of-jesus	reader	19
 person	mary	mary-of-bethany	prose	1
 person	mary	mary-of-bethany	reader	11
 person	mary magdalene	mary-magdalene	panel	11
@@ -1009,15 +1009,16 @@ person	silvanus	silas	panel	4
 person	silvanus	silas	reader	4
 person	simeon	simeon-at-the-temple	panel	49
 person	simeon	simeon-at-the-temple	prose	2
-person	simeon	simeon-at-the-temple	reader	3
+person	simeon	simeon-at-the-temple	reader	2
 person	simon	simon-magus	prose	1
 person	simon	simon-magus	reader	4
 person	simon	simon-of-cyrene	prose	1
 person	simon	simon-of-cyrene	reader	1
 person	simon	simon-peter	panel	46
 person	simon	simon-peter	prose	1
-person	simon	simon-peter	reader	29
+person	simon	simon-peter	reader	28
 person	simon	simon-the-pharisee	reader	3
+person	simon	simon-the-zealot	reader	1
 person	simon of cyrene	simon-of-cyrene	panel	2
 person	simon of cyrene	simon-of-cyrene	reader	2
 person	simon peter	simon-peter	panel	20

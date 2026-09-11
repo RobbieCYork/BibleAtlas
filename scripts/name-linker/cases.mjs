@@ -3238,12 +3238,13 @@ export const CASES = [
          "\"(the brother of Jesus)\" pattern; the record's three other \"James\"es are his own " +
          "brother and are untouched." },
   { text: "James writes to Jewish Christians scattered abroad, offering practical, down-to-earth guidance on how genuine faith should shape everyday conduct. Its concern is that belief which produces no change in behavior is worthless; real faith shows itself in patience under trial, care for the poor, control of the tongue, and impartial love. The letter reads much like the wisdom literature of the Old Testament, packed with vivid images and blunt moral exhortation.",
-    surface: "James", owner: "book-intro:James", expect: "james-brother-of-jesus", status: "guard",
-    why: "The letter's author, on its own introduction, which passes bookIntroOwnerId(\"James\"). " +
-         "The app already does exactly this elsewhere — \"Paul\" links five times on " +
-         "book-intro:Romans and \"Peter\" four times on book-intro:1 Peter — and this intro's own " +
-         "`author` field states the traditional attribution to the Lord's brother and names the " +
-         "critical dissent beside it. Was Zebedee's son, whom nobody proposes." },
+    surface: "James", owner: "book-intro:James", expect: null, status: "guard",
+    why: "The letter's author, on its own introduction, SUPPRESSED rather than repointed. It was " +
+         "first pointed at the Lord's brother — which is what the app does for every other intro " +
+         "and what this one's own `author` field states in prose — and that was backed out: §7.1 " +
+         "flags the authorship of James as Robbie's to settle, and James 1:1 and Jude 1:1 are " +
+         "`flagged` cases for the same reason. No link removes the falsehood (Zebedee's son, dead " +
+         "by AD 44) and asserts nothing. Escalated 2026-09-10." },
   { text: "Papyrus 20 and Papyrus 23 are early (3rd-century) papyrus witnesses that preserve portions of James.",
     surface: "James", owner: "book-intro:James", expect: null, status: "guard",
     why: "The BOOK, in the same record whose owner entry answers \"the author\". Suppressed by a " +
@@ -3278,9 +3279,10 @@ export const CASES = [
     why: "Acts 15:13-18 — the man presiding at the council, not the letter speaking. Acts 15:13 " +
          "already resolves to him on the reader path; this is the article telling the same story." },
   { text: "One might expect Elijah to be riding high after Carmel's spectacular vindication, but instead a single death threat from Jezebel sends him running for his life into the wilderness, where he collapses under a broom tree and asks God to let him die. It is one of the Bible's most honest portraits of a spiritual high followed by a devastating crash — even the greatest of prophets was, as James later puts it, a man with feelings like ours.",
-    surface: "James", owner: "bib-dki-elijah-still-small-voice", expect: "james-brother-of-jesus",
+    surface: "James", owner: "bib-dki-elijah-still-small-voice", expect: null,
     status: "guard",
-    why: "James 5:17, quoted by its author's name nine centuries out of period. The same event's " +
+    why: "James 5:17, quoted by its author's name nine centuries out of period — suppressed, not " +
+         "repointed, under the §7.1 flag (see book-intro:James above). The same event's " +
          "next paragraph says \"the King James Version\", which the `before: /King /` rule has " +
          "always suppressed and which this owner entry cannot reach, because NAME_CONTEXT_RULES is " +
          "checked first — the case below asserts that." },
@@ -3629,4 +3631,202 @@ export const CASES = [
          "sends Revelation's John to the Apostle — BOOK_NAME_OVERRIDES does it for the text and " +
          "five records already do it for the articles — and these three location facts were simply " +
          "outside every one of those levers." },
+  // ═══════════════════════════════════════════════════════════════════════════════════════════
+  // SECOND-BEARER BATCH 6: SCRIPTURE — 27 VERSES ON THE READER PATH, 2026-09-10
+  //
+  // Every Scripture fault the sweep found, minus two that a flagged case stopped (see the bottom
+  // of this block). Each is a VERSE_NAME_OVERRIDES entry, which is translation-blind — so each was
+  // checked against the KJV and ASV as well as the WEB before being written, from bible-api.com,
+  // the service the app itself asks for Scripture. Where the three differ, the difference is
+  // quoted in a case of its own.
+
+  // ── Azariah in 2 Chronicles: eight men, thirteen occurrences, none of them the king ──────────
+  { ref: "2 Chronicles 15:1", surface: "Azariah", expect: null, status: "guard",
+    why: "Azariah son of Oded, the prophet who meets Asa. The bare key is Uzziah's registered " +
+         "alternate name and the book allowlist lets it into Chronicles, where the king is called " +
+         "Uzziah throughout and never Azariah — which is what makes the whole book answerable. " +
+         "WEB, KJV and ASV all read \"Azariah the son of Oded\"." },
+  { ref: "2 Chronicles 21:2", surface: "Azariah", occurrence: 2, expect: null, status: "guard",
+    why: "TWO of Jehoshaphat's sons are called Azariah in this one verse, in all three " +
+         "translations, and a verse override answers both — which is exact here, because no verse " +
+         "in the list holds the king and somebody else. Occurrence 2 is asserted rather than " +
+         "occurrence 1 so that the entry cannot be satisfied by the first alone." },
+  { ref: "2 Chronicles 26:17", surface: "Azariah", expect: null, status: "guard",
+    why: "AZARIAH THE PRIEST, who goes in after Uzziah to stop him burning incense — the same " +
+         "chapter as the king, under the king's other name, on opposite sides of the altar. The " +
+         "most consequential of the thirteen, and the article half was wrong in the same way." },
+  { ref: "2 Chronicles 31:13", surface: "Azariah", expect: null, status: "guard",
+    why: "\"Azariah the ruler of God's house\", under Hezekiah — three kings after Uzziah, and the " +
+         "last of the thirteen. Asserted as the far end of the range." },
+  { ref: "2 Kings 14:21", surface: "Azariah", expect: "uzziah", status: "guard",
+    why: "THE GUARD, in the neighbouring book: \"All the people of Judah took Azariah, who was " +
+         "sixteen years old, and made him king.\" 2 Kings really does give Uzziah this name — all " +
+         "eight of its occurrences are him — and the fix above is keyed to 2 Chronicles alone. If " +
+         "this ever goes to `-`, the entry has leaked to the wrong book." },
+
+  // ── Joseph of Arimathea, and Luke's genealogy ───────────────────────────────────────────────
+  { ref: "Matthew 27:57", surface: "Joseph", expect: "joseph-of-arimathea", status: "guard",
+    why: "\"a rich man from Arimathaea, named Joseph\". BOOK_NAME_OVERRIDES sends a bare \"Joseph\" " +
+         "in Matthew to Mary's husband — right for the nativity and the genealogy, wrong for the " +
+         "burial. Mark 15:43 and John 19:38 were never affected because the WEB prints the whole " +
+         "phrase \"Joseph of Arimathaea\", which is a registered key; these two verses print only " +
+         "the bare name. ASV reads \"there came a rich man from Arimathaea, named Joseph\"." },
+  { ref: "Luke 23:50", surface: "Joseph", expect: "joseph-of-arimathea", status: "guard",
+    why: "\"a man named Joseph, who was a member of the council\". KJV: \"there was a man named " +
+         "Joseph, a counsellor\". ASV: \"a man named Joseph, who was a councillor\". All three print " +
+         "the bare name and nothing else, which is the whole reason this verse needed an entry." },
+  { ref: "Luke 3:30", surface: "Joseph", expect: null, status: "guard",
+    why: "Luke's genealogy — an ancestor thirty-six generations before Mary's husband. Suppressed " +
+         "along with 3:26's. Independent of the corpus-wide bare-\"Joseph\" question, which is open " +
+         "and Robbie's: these two verses are neither candidate." },
+  { ref: "Luke 3:30", surface: "Simeon", expect: null, status: "guard",
+    why: "The same verse's Simeon, and the reason the allowlist could not catch it: the only " +
+         "record is Simeon at the temple, BOOK_NAME_ALLOWLIST confines the key to Luke, and this " +
+         "IS Luke — thirty-six generations early." },
+  { ref: "Luke 2:25", surface: "Simeon", expect: "simeon-at-the-temple", status: "guard",
+    why: "The guard on the other side, in the same book: the man in the temple who takes the " +
+         "infant Jesus in his arms. The suppression above is one verse wide." },
+
+  // ── Acts 12:2 and Matthew 10:4 ──────────────────────────────────────────────────────────────
+  { ref: "Acts 12:2", surface: "James", expect: "james-son-of-zebedee", status: "guard",
+    why: "\"He killed James, the brother of John, with the sword.\" The verse names his brother. " +
+         "BOOK_NAME_OVERRIDES.james sends every bare \"James\" in Acts to the Lord's brother, which " +
+         "is right at 12:17, 15:13 and 21:18 and wrong twelve verses earlier. KJV and ASV both " +
+         "read \"he killed James the brother of John with the sword\". This is the verse every " +
+         "argument in this file about Zebedee's son being dead by AD 44 rests on." },
+  { ref: "Acts 12:17", surface: "James", expect: "james-brother-of-jesus", status: "guard",
+    why: "Fifteen verses later, the other James, in the same book — \"report this to James\". The " +
+         "guard that says the 12:2 entry is one verse wide and the book override still stands." },
+  { ref: "Matthew 10:4", surface: "Simon", expect: "simon-the-zealot", status: "guard",
+    why: "The apostle list's SECOND Simon, which resolved to Simon Peter — the Twelve containing " +
+         "him twice. Mark 3:18, Luke 6:15 and Acts 1:13 print \"Simon the Zealot\", a registered " +
+         "key that has always worked; Matthew alone does not. qan'ana is the Aramaic for zealot, " +
+         "which is why Luke translates it, so the identification is not a judgment call." },
+  { ref: "Matthew 10:4", translation: "ASV",
+    text: "Simon the Cananaean, and Judas Iscariot, who also betrayed him.",
+    surface: "Simon", expect: "simon-the-zealot", status: "guard",
+    why: "AND THE REASON IT IS A VERSE KEY RATHER THAN A REGISTERED PHRASE. WEB and KJV read " +
+         "\"Simon the Canaanite\"; the ASV reads \"Simon the CANANAEAN\". Registering either wording " +
+         "would have fixed one or two translations of three and left the rest wrong with nothing " +
+         "in this directory able to say so, because the corpus is WEB only. The verse key is " +
+         "translation-blind and catches all three. Quoted verbatim from bible-api.com." },
+  { ref: "Matthew 10:4", translation: "KJV",
+    text: "Simon the Canaanite, and Judas Iscariot, who also betrayed him.",
+    surface: "Simon", expect: "simon-the-zealot", status: "guard",
+    why: "The KJV literal — same wording as the WEB but for the punctuation after \"Canaanite\", " +
+         "which is exactly the kind of difference an offset-sensitive or phrase-based fix trips on." },
+  { ref: "Mark 3:18", surface: "Simon the Zealot", expect: "simon-the-zealot", status: "guard",
+    why: "The guard: the same apostle in the same list in another Gospel, matched as a whole " +
+         "registered phrase. Untouched by the verse entry above." },
+
+  // ── The four "Mary the mother of James" verses ──────────────────────────────────────────────
+  { ref: "Mark 15:40", surface: "James", expect: null, status: "guard",
+    why: "\"Mary the mother of James the less and of Joses\" — the app resolved the MOTHER " +
+         "correctly and gave her SON to Zebedee, whose mother Salome is named separately three " +
+         "words later, in the same verse. Internally contradictory inside one clause. SUPPRESSED " +
+         "rather than repointed to james-son-of-alphaeus: identifying James the Less with " +
+         "Alphaeus's son is the traditional reading and is genuinely disputed, and this file does " +
+         "not settle a disputed identification as a side effect of fixing a different fault. KJV " +
+         "and ASV both read \"Mary the mother of James the less and of Joses, and Salome\"." },
+  { ref: "Mark 15:40", surface: "Mary", occurrence: 2, expect: "mary-mother-of-james-the-less",
+    status: "guard",
+    why: "The other half of the same clause, and the half that was already right — she keeps her " +
+         "link. All three translations print \"Mary the mother of James\"." },
+  { ref: "Luke 24:10", surface: "James", expect: null, status: "guard",
+    why: "The same phrase at the empty tomb. The ASV prints \"Mary the [mother] of James\" with " +
+         "bracketed supply and the KJV prints it without; the verse key does not care, which is " +
+         "the argument for keying on the verse." },
+  { ref: "Matthew 27:56", surface: "James", expect: null, status: "guard",
+    why: "The third of the four. Salome appears here as \"the mother of the sons of Zebedee\" " +
+         "(KJV: \"the mother of Zebedee's children\") in the same verse — the clearest statement " +
+         "in Scripture that this James is not hers." },
+  { ref: "Mark 3:17", surface: "James the son of Zebedee", expect: "james-son-of-zebedee",
+    status: "guard",
+    why: "The guard: where Scripture spells out whose son he is, he keeps his link, by a " +
+         "registered phrase no verse entry touches." },
+
+  // ── The two theologically serious single verses ─────────────────────────────────────────────
+  { ref: "Colossians 4:11", surface: "Jesus", expect: null, status: "guard",
+    why: "\"and Jesus who is called Justus.\" PAUL'S JEWISH CO-WORKER IN ROME, rendered as a link " +
+         "to Jesus of Nazareth on the reader path — the worst single link the sweep found. Iesous " +
+         "is the ordinary Greek for Joshua and an ordinary first-century name, and Paul " +
+         "distinguishes this man by his Roman cognomen in the same clause. Suppressed: the app has " +
+         "no record for him, \"Justus\" produces no person link anywhere in the app, and one verse " +
+         "does not earn a record. Checked across all 31,098 WEB verses: this is the only \"Jesus\" " +
+         "in the corpus that means anybody else, so the entry is one verse wide and cannot leak." },
+  { ref: "Acts 5:37", surface: "Judas", expect: null, status: "guard",
+    why: "\"Judas of Galilee rose up in the days of the enrollment\" — Gamaliel's second example of " +
+         "a failed messianic movement, the census revolt of AD 6, handed to Iscariot. A SIXTH " +
+         "bearer in Acts, measured and deliberately left by the Acts 15 batch, which was not " +
+         "authorised to settle him; this closes that batch's own note. The two prose mentions on " +
+         "quirinius take the same answer through OWNER_NAME_OVERRIDES." },
+  { ref: "Acts 1:16", surface: "Judas", expect: "judas-iscariot", status: "guard",
+    why: "The guard, four chapters earlier in the same book: \"concerning Judas, who was guide to " +
+         "those who took Jesus.\" judas.Acts is now keyed to five verses and not to the book." },
+  { ref: "Romans 16:6", surface: "Mary", expect: null, status: "guard",
+    why: "\"Greet Mary, who labored much for us.\" A fifth Mary, in Paul's list of Roman greetings, " +
+         "with nothing known of her beyond this line and no record. She was resolving to the " +
+         "mother of Jesus, who is not in Romans at all." },
+
+  // ── THREE FAULTS THAT EXIST IN ONLY ONE TRANSLATION, AND MOVE NO SNAPSHOT ROW ───────────────
+  //
+  // Found by reading every verse in this batch in the KJV and the ASV as well as the WEB, which
+  // the brief required and which turned out to be the highest-yield part of it. The corpus here
+  // is WEB only, so a fault that exists in another translation is invisible to all three
+  // snapshots — they are green before and after these three fixes. These cases are the only cover
+  // any of them will ever have.
+  //
+  // It is the Acts 4:36 problem from the other side. There an OVERRIDE fired for one translation
+  // and matched nothing in the corpus; here a FAULT lives in one translation and matches nothing
+  // in the corpus. A verse key answers both, because it is keyed on book/chapter/verse and the
+  // name, never on the wording.
+
+  { ref: "Luke 3:30", translation: "ASV",
+    text: "the [son] of Symeon, the [son] of Judas, the [son] of Joseph, the [son] of Jonam, the [son] of Eliakim,",
+    surface: "Judas", expect: null, status: "guard",
+    why: "ASV ONLY. The WEB reads \"the son of Judah\" here and the KJV \"the son of Juda\" — neither " +
+         "is a registered key, so neither renders a link. The ASV reads \"the [son] of JUDAS\", " +
+         "which is, and an ASV reader was told that an ancestor thirty-six generations before " +
+         "Jesus was Judas Iscariot. Note the same verse's \"Symeon\": the ASV's spelling is not a " +
+         "registered key either, which is why the `simeon` suppression on this verse is a WEB/KJV " +
+         "fix and this is an ASV one." },
+  { ref: "Luke 3:30", translation: "KJV",
+    text: "Which was the son of Simeon, which was the son of Juda, which was the son of Joseph, which was the son of Jonan, which was the son of Eliakim,",
+    surface: "Simeon", expect: null, status: "guard",
+    why: "The KJV literal of the same verse, asserting the OTHER half: \"Simeon\" spelled as the WEB " +
+         "spells it, suppressed by the same verse key. Between this case and the one above, all " +
+         "three translations of Luke 3:30 are pinned." },
+  { ref: "Acts 7:45", translation: "KJV",
+    text: "Which also our fathers that came after brought in with Jesus into the possession of the Gentiles, whom God drave out before the face of our fathers, unto the days of David;",
+    surface: "Jesus", expect: "joshua", status: "guard",
+    why: "KJV ONLY, and the sweep named this verse as worth checking without being able to check " +
+         "it. Iesous is the Greek for Joshua; the WEB and ASV translate it \"Joshua\" and already " +
+         "link correctly, and the KJV transliterates it. Stephen is describing the conquest, and a " +
+         "KJV reader was being shown Jesus of Nazareth leading it. Repointed, not suppressed — " +
+         "the app has Joshua's record and no reading of the verse is anyone else." },
+  { ref: "Hebrews 4:8", translation: "KJV",
+    text: "For if Jesus had given them rest, then would he not afterward have spoken of another day.",
+    surface: "Jesus", expect: "joshua", status: "guard",
+    why: "The second of the two, and the one where it matters most: Hebrews 4's whole argument is " +
+         "that the rest Joshua gave was not the final one. Pointing that \"Jesus\" at Jesus of " +
+         "Nazareth inverts the passage. WEB and ASV both read \"Joshua\" and are untouched." },
+  { ref: "Hebrews 4:8", translation: "WEB",
+    text: "For if Joshua had given them rest, he would not have spoken afterward of another day.",
+    surface: "Joshua", expect: "joshua", status: "guard",
+    why: "The same verse in the translation that does not need the fix, asserting that the entry " +
+         "above changes nothing for a WEB or ASV reader — the `jesus` key simply never matches. " +
+         "This is the half a careless generalisation of the rule would break." },
+  { ref: "Colossians 4:11", translation: "KJV",
+    text: "And Jesus, which is called Justus, who are of the circumcision. These only are my fellow workers unto the kingdom of God, which have been a comfort unto me.",
+    surface: "Jesus", expect: null, status: "guard",
+    why: "The KJV literal of the worst link the sweep found, confirming the verse key reaches it " +
+         "in a translation the corpus does not contain. ASV: \"and Jesus that is called Justus\" — " +
+         "all three print the bare name, so all three had the fault and all three are fixed." },
+
+  // ── WHAT IS NOT HERE, AND WHY ───────────────────────────────────────────────────────────────
+  // James 1:1 and Jude 1:1 both still resolve to Zebedee's son, which is wrong on anybody's
+  // account. The sweep asked for both to be repointed to the Lord's brother; the attempt failed
+  // the two `flagged` cases above (§7.1 and §7.2) and was BACKED OUT, along with ten prose links
+  // on book-intro:James and four records quoting the epistle that asserted the same thing.
+  // Escalated to Robbie through Bob on 2026-09-10. Do not "fix" those two cases.
 ];

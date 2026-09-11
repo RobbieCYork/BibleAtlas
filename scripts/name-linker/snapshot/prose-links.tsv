@@ -298,19 +298,14 @@ bookIntro.summary|book-intro:Hebrews|d6fa734df1	146	Jesus	jesus-of-nazareth
 bookIntro.summary|book-intro:Hebrews|f5eceacdd2	275	Moses	moses
 bookIntro.summary|book-intro:Isaiah|c863ac53b8	217	Ahaz	ahaz
 bookIntro.summary|book-intro:Isaiah|c863ac53b8	64	Isaiah	isaiah
-bookIntro.summary|book-intro:James|10b542fa21	178	James	james-brother-of-jesus
 bookIntro.summary|book-intro:James|43c7af4ba1	1090	Christ Jesus	jesus-of-nazareth
 bookIntro.summary|book-intro:James|43c7af4ba1	375	Paul	paul-of-tarsus
 bookIntro.summary|book-intro:James|43c7af4ba1	460	Paul	paul-of-tarsus
-bookIntro.summary|book-intro:James|43c7af4ba1	593	James	james-brother-of-jesus
-bookIntro.summary|book-intro:James|43c7af4ba1	62	James	james-brother-of-jesus
 bookIntro.summary|book-intro:James|43c7af4ba1	747	Abraham	abraham
 bookIntro.summary|book-intro:James|43c7af4ba1	777	Paul	paul-of-tarsus
 bookIntro.summary|book-intro:James|43c7af4ba1	795	Abraham	abraham
-bookIntro.summary|book-intro:James|43c7af4ba1	850	James	james-brother-of-jesus
 bookIntro.summary|book-intro:James|43c7af4ba1	869	Abraham	abraham
 bookIntro.summary|book-intro:James|43c7af4ba1	928	Paul	paul-of-tarsus
-bookIntro.summary|book-intro:James|eae45b62cc	0	James	james-brother-of-jesus
 bookIntro.summary|book-intro:Jeremiah|05c0e4ce1f	91	Jeremiah	jeremiah
 bookIntro.summary|book-intro:Jeremiah|af353bd4b2	20	Jeremiah	jeremiah
 bookIntro.summary|book-intro:Jeremiah|af353bd4b2	265	Jeremiah	jeremiah
@@ -576,7 +571,6 @@ bookIntro.whyWritten|book-intro:Haggai|7484752c22	364	Joshua	joshua
 bookIntro.whyWritten|book-intro:Hebrews|ee95703987	205	Jesus	jesus-of-nazareth
 bookIntro.whyWritten|book-intro:Hebrews|ee95703987	268	Moses	moses
 bookIntro.whyWritten|book-intro:Isaiah|ef34e99b74	0	Isaiah	isaiah
-bookIntro.whyWritten|book-intro:James|b3fcdb5940	0	James	james-brother-of-jesus
 bookIntro.whyWritten|book-intro:Jeremiah|a35f085ea1	0	Jeremiah	jeremiah
 bookIntro.whyWritten|book-intro:Job|34cf18a4fc	0	Job	job
 bookIntro.whyWritten|book-intro:Job|34cf18a4fc	256	Job	job
@@ -2492,7 +2486,6 @@ person.lifeStory|rachel|d5e6bf7190	96	Jacob	jacob
 person.lifeStory|rahab|0ba8e1f77d	102	Joshua	joshua
 person.lifeStory|rahab|75fd3a0228	151	David	david
 person.lifeStory|rahab|75fd3a0228	187	Jesus	jesus-of-nazareth
-person.lifeStory|rahab|75fd3a0228	372	James	james-brother-of-jesus
 person.lifeStory|rahab|75fd3a0228	54	Salmon	salmon-father-of-boaz
 person.lifeStory|rahab|75fd3a0228	75	Boaz	boaz
 person.lifeStory|rahab|fd2cc002f4	58	Joshua	joshua
@@ -2623,7 +2616,6 @@ person.lifeStory|satan|038fb6dbab	0	Paul	paul-of-tarsus
 person.lifeStory|satan|038fb6dbab	163	Paul	paul-of-tarsus
 person.lifeStory|satan|038fb6dbab	229	Paul	paul-of-tarsus
 person.lifeStory|satan|038fb6dbab	316	Paul	paul-of-tarsus
-person.lifeStory|satan|038fb6dbab	747	James	james-brother-of-jesus
 person.lifeStory|satan|2122f689da	344	David	david
 person.lifeStory|satan|2122f689da	49	Zechariah	zechariah-the-prophet
 person.lifeStory|satan|2122f689da	499	David	david
@@ -3675,7 +3667,6 @@ timelineEvent.article|bib-dki-elijah-still-small-voice|7f713a8afe	43	Elijah	elij
 timelineEvent.article|bib-dki-elijah-still-small-voice|7f713a8afe	456	Elijah	elijah
 timelineEvent.article|bib-dki-elijah-still-small-voice|c4c8ca78dd	121	Jezebel	jezebel
 timelineEvent.article|bib-dki-elijah-still-small-voice|c4c8ca78dd	17	Elijah	elijah
-timelineEvent.article|bib-dki-elijah-still-small-voice|c4c8ca78dd	387	James	james-brother-of-jesus
 timelineEvent.article|bib-dki-elijah-widow-zarephath|00f2c463de	166	Elijah	elijah
 timelineEvent.article|bib-dki-elijah-widow-zarephath|669e4e9011	0	Jesus	jesus-of-nazareth
 timelineEvent.article|bib-dki-elijah-widow-zarephath|669e4e9011	134	Elijah	elijah
@@ -5538,7 +5529,6 @@ topic.section|demons|2c6cd0dcdd	66	Jesus	jesus-of-nazareth
 topic.section|demons|2c6cd0dcdd	854	Paul	paul-of-tarsus
 topic.section|demons|ff47c964be	117	Satan	satan
 topic.section|demons|ff47c964be	396	Jesus	jesus-of-nazareth
-topic.section|demons|ff47c964be	542	James	james-brother-of-jesus
 topic.section|diatessaron|31c1eadee2	353	David	david
 topic.section|diatessaron|8241f0b7d0	201	David	david
 topic.section|diatessaron|8241f0b7d0	959	Jesus	jesus-of-nazareth
