@@ -2,7 +2,7 @@
 
 `src/lib/verseAnnotations.ts` decides which words in the Bible text — and in every article the app
 has ever written — become links to a person, place or topic. It renders **9,724 person-links across
-Scripture and 6,320 across the app's own prose**. Until this directory existed it had no tests at
+Scripture and 6,269 across the app's own prose**. Until this directory existed it had no tests at
 all, and a one-line data edit could move hundreds of them with nobody noticing.
 
     npm run test:linker
@@ -108,13 +108,13 @@ purpose and is written up in `reviewed.tsv`'s header.
 | file | rows | what it holds |
 |---|---:|---|
 | `bible-links.tsv` | 9,724 | every person-link in all 31,098 WEB verses, with the id each rendering path gives it |
-| `prose-links.tsv` | 6,320 | every person-link in every authored prose block the app puts through `LinkedVerseText` |
-| `key-totals.tsv` | 4,083 | a tally covering **every** kind — location, POI, topic, timeline, verse reference — one row per (kind, matched text, id, path) |
+| `prose-links.tsv` | 6,269 | every person-link in every authored prose block the app puts through `LinkedVerseText` |
+| `key-totals.tsv` | 4,084 | a tally covering **every** kind — location, POI, topic, timeline, verse reference — one row per (kind, matched text, id, path) |
 
 The first two are row-level, so a diff names the verse or the block. `key-totals.tsv` exists because
 the other two only record **people**: a change to `people.ts` can steal a key from a location, and
 adding one POI alternate name can start firing hundreds of links that no person snapshot would ever
-show. Its 4,083 rows currently break down as 2,349 verse references, 745 person, 391 topic, 388
+show. Its 4,084 rows currently break down as 2,349 verse references, 746 person, 391 topic, 388
 location, 131 POI and 79 timeline.
 
 This is the half that catches what you did not think to assert. The named cases cover a few dozen
@@ -161,6 +161,11 @@ on the right record and read the output — this is that, swept.
     node scripts/name-linker/self-name.mjs            list every candidate, with an example
     node scripts/name-linker/self-name.mjs --check    exit 1 if any candidate is unreviewed
 
+`--check` runs as the third command in `npm run test:linker`, from the commit that cleared the
+last of the 60 faults. A new record whose subject shares a bare name with a more famous one now
+fails on the commit that adds it, the way `modern-names.mjs` already fails on a new "excavated by
+John Garstang".
+
 "Its own name" is the **first word** of the person record's `name`, after an honorific: `Philip the
 Evangelist` → Philip, `Joram, King of Judah` → Joram, `Mark (John Mark)` → Mark. Not every word of
 the name — "James, brother of Jesus" would otherwise flag its own correct `Jesus` links, and the
@@ -174,7 +179,8 @@ refused outright — the opposite default from `modern-names.mjs`, where most ca
 links and blessing in bulk is sane.
 
 What it found on the day it was written, with the Philip cluster already fixed: **14 shapes, 62
-links, of which 60 were faults** — 13 shapes and 45 links after the James batch that followed.
+links, of which 60 were faults** — 2 shapes and 3 links once the last of the four batches landed,
+both of them accepted in the ledger.
 Six of the fourteen were not in the sweep that prompted the file
 — `mary-magdalene`, `mary-of-bethany`, `james-son-of-alphaeus`, `thomas-aquinas`, `caesar-augustus`
 and the five records called Simon. That sweep had checked those records and reported that they
@@ -253,7 +259,7 @@ snapshot.
 `LinkedVerseText` is what PersonPanel, LocationPanel, PoiPanel, TopicPanel, BookIntroView,
 TimelineEventPanel and MyProfileView render with. Every book override, verse override and
 suppression in `verseAnnotations.ts` is invisible there. **837 links across 747 verses resolve
-differently between the two paths**, and all but a handful of the 6,320 prose links run with no
+differently between the two paths**, and all but a handful of the 6,269 prose links run with no
 disambiguation at all — `OWNER_NAME_OVERRIDES` (below) is the only correction that reaches them. A
 fix that only moves the `reader` column has fixed half the app.
 

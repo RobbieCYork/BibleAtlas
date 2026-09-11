@@ -430,8 +430,8 @@ person	amon	amon-king-of-judah	reader	13
 person	amon, king of judah	amon-king-of-judah	panel	3
 person	amon, king of judah	amon-king-of-judah	reader	3
 person	ananias	ananias-and-sapphira	panel	11
-person	ananias	ananias-and-sapphira	prose	19
 person	ananias	ananias-and-sapphira	reader	3
+person	ananias	ananias-of-damascus	prose	5
 person	ananias	ananias-of-damascus	reader	6
 person	ananias	ananias-the-high-priest	prose	1
 person	ananias	ananias-the-high-priest	reader	2
@@ -497,7 +497,7 @@ person	boaz	boaz	reader	22
 person	caesar	claudius-caesar	reader	1
 person	caesar	nero-caesar	reader	10
 person	caesar	tiberius-caesar	panel	27
-person	caesar	tiberius-caesar	prose	42
+person	caesar	tiberius-caesar	prose	39
 person	caesar	tiberius-caesar	reader	16
 person	caesar augustus	caesar-augustus	panel	1
 person	caesar augustus	caesar-augustus	prose	5
@@ -815,7 +815,6 @@ person	leah	leah	reader	34
 person	lebbaeus	thaddaeus	panel	1
 person	lebbaeus	thaddaeus	reader	1
 person	levi	matthew-levi	panel	74
-person	levi	matthew-levi	prose	1
 person	levi	matthew-levi	reader	1
 person	luke	luke-evangelist	panel	3
 person	luke	luke-evangelist	prose	151
@@ -844,7 +843,7 @@ person	martin luther king	martin-luther-king-jr	prose	3
 person	mary	mary-magdalene	reader	3
 person	mary	mary-mother-of-james-the-less	reader	7
 person	mary	mary-mother-of-jesus	panel	42
-person	mary	mary-mother-of-jesus	prose	100
+person	mary	mary-mother-of-jesus	prose	92
 person	mary	mary-mother-of-jesus	reader	20
 person	mary	mary-of-bethany	prose	1
 person	mary	mary-of-bethany	reader	11
@@ -1010,12 +1009,14 @@ person	silas	silas	reader	12
 person	silvanus	silas	panel	4
 person	silvanus	silas	reader	4
 person	simeon	simeon-at-the-temple	panel	49
-person	simeon	simeon-at-the-temple	prose	3
+person	simeon	simeon-at-the-temple	prose	2
 person	simeon	simeon-at-the-temple	reader	3
+person	simon	simon-magus	prose	1
 person	simon	simon-magus	reader	4
+person	simon	simon-of-cyrene	prose	1
 person	simon	simon-of-cyrene	reader	1
 person	simon	simon-peter	panel	46
-person	simon	simon-peter	prose	24
+person	simon	simon-peter	prose	1
 person	simon	simon-peter	reader	29
 person	simon	simon-the-pharisee	reader	3
 person	simon of cyrene	simon-of-cyrene	panel	2
@@ -1086,7 +1087,7 @@ person	theophilus	theophilus	panel	2
 person	theophilus	theophilus	prose	5
 person	theophilus	theophilus	reader	2
 person	thomas	thomas-apostle	panel	11
-person	thomas	thomas-apostle	prose	9
+person	thomas	thomas-apostle	prose	6
 person	thomas	thomas-apostle	reader	11
 person	thomas aquinas	thomas-aquinas	prose	2
 person	thomas cranmer	thomas-cranmer	prose	2

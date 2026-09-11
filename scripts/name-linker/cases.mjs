@@ -3375,4 +3375,135 @@ export const CASES = [
          "the tree are of this shape — mostly the series title Discoveries in the Judaean Desert, " +
          "which is a modern work's title as well. If a future widening reaches the adjective, this " +
          "is the case that fails." },
+  // ═══════════════════════════════════════════════════════════════════════════════════════════
+  // SECOND-BEARER BATCH 4: ANANIAS, SIMON, AND THE REST OF THE SELF-NAME SWEEP, 2026-09-10
+  //
+  // 58 links out, 7 repointed. Three of the four groups below were never in the sweep that
+  // started this work: the five records called Simon, the two called Mary, and Thomas Aquinas all
+  // came out of scripts/name-linker/self-name.mjs, which this batch also wires into
+  // `npm run test:linker` now that its ledger is clean — 2 shapes, 3 links, both accepted.
+  //
+  // Scripture is untouched again. All three men called Ananias have resolved correctly on the
+  // reader path since the verse table was written; only the articles were wrong.
+
+  // ── Ananias, 19 links, 14 of them self-name ─────────────────────────────────────────────────
+  { text: "Ananias is introduced simply as \"a disciple\" living in Damascus. After Saul of Tarsus was struck blind on the road to Damascus during his famous encounter with the risen Christ, the Lord appeared to Ananias in a vision and instructed him to go to the house of Judas on Straight Street and ask for Saul, who was praying and had himself seen a vision of a man named Ananias coming to restore his sight (Acts 9:10-12).",
+    surface: "Ananias", owner: "ananias-of-damascus", expect: null, status: "guard",
+    why: "THE RECORD'S OWN PAGE, nine times over. Every \"Ananias\" in the Damascus disciple's life " +
+         "story pointed at the man who dropped dead in Acts 5. Mapped to himself for the self-link " +
+         "exclusion. The \"Judas\" in the same sentence is Saul's host on Straight Street and is " +
+         "still wrong; that is a later batch." },
+  { text: "Ananias served as high priest during Paul's final arrest and trials in Jerusalem, a position he held (per Josephus) from roughly AD 47 to 59. When Paul, standing trial before the Jewish council, declared he had 'lived before God in all good conscience,' Ananias 'commanded those who stood by him to strike him on the mouth' — an act Paul, apparently unaware this was the high priest, sharply rebuked as unlawful before backing down once he learned the man's office (Acts 23:1-5).",
+    surface: "Ananias", owner: "ananias-the-high-priest", expect: null, status: "guard",
+    why: "The same shape on the third Ananias's page. Five links, including his extraBib summary's " +
+         "\"Ananias son of Nedebaeus\"." },
+  { text: "On the road to Damascus, Saul was reportedly confronted by a blinding light and the voice of the risen Jesus asking, \"Saul, Saul, why do you persecute me?\" He was struck blind for three days until a disciple named Ananias, initially wary given Saul's reputation, restored his sight and baptized him (Acts 9:1-19). This conversion transformed Paul, as he became known, from Christianity's most dangerous opponent into one of its central architects.",
+    surface: "Ananias", owner: "paul-of-tarsus", expect: "ananias-of-damascus", status: "guard",
+    why: "Paul's own page. The \"Saul\"s in the same sentence were fixed by an earlier batch through " +
+         "this same table; this is the Ananias half of it, five commits later." },
+  { text: "The old Roman decumanus maximus of Damascus, running roughly 1,500 meters east-west through the Old City. In Acts 9:11, the Lord tells Ananias to go to \"the street called Straight\" to find Saul of Tarsus, praying in the house of Judas, so that his sight could be restored. Today the western half is called Midhat Pasha Street and the eastern half Bab Sharqi Street, and it remains a functioning market street.",
+    surface: "Ananias", owner: "straight-street-damascus", expect: "ananias-of-damascus", status: "guard",
+    why: "The POI surface, quoting Acts 9:11 — the verse the reader path has always had right." },
+  { ref: "Acts 5:1", surface: "Ananias", expect: "ananias-and-sapphira", status: "guard",
+    why: "The couple, on the reader path, and the reason they own the bare key. Nothing in this " +
+         "batch touches Scripture." },
+  { ref: "Acts 9:10", surface: "Ananias", expect: "ananias-of-damascus", status: "guard",
+    why: "The Damascus disciple, on the reader path, already right — the article surface has spent " +
+         "the whole time disagreeing with this verse." },
+  { ref: "Acts 23:2", surface: "Ananias", expect: "ananias-the-high-priest", status: "guard",
+    why: "The high priest, third man, third correct verse." },
+
+  // ── Simon: five men with no record, two repoints, and five self-name records ────────────────
+  { text: "Before the gospel reached Samaria, Simon had the whole city convinced he was 'the power of God that is called Great' through his sorcery. When Philip the Evangelist arrived preaching Christ, Simon believed, was baptized, and began following Philip around, astonished by the miracles he witnessed (Acts 8:9-13).",
+    surface: "Simon", owner: "simon-magus", expect: null, status: "guard",
+    why: "THE RECORD'S OWN PAGE. Not in the sweep — found by self-name.mjs. Five links; the sweep " +
+         "had checked this record and reported its longer wording resolves right, which it does " +
+         "and which is a different question." },
+  { text: "Simon was from Cyrene, a city in North Africa (modern-day Libya) with a significant Jewish population. All three synoptic Gospels record that as Jesus, weakened from the beating, struggled toward the execution site, Roman soldiers seized Simon — who was simply passing by, in from the countryside — and forced him to carry the cross the rest of the way (Matthew 27:32, Mark 15:21, Luke 23:26).",
+    surface: "Simon", owner: "simon-of-cyrene", expect: null, status: "guard",
+    why: "The same, on the man who carried the cross. Four links." },
+  { text: "Hometown of Simon, the man forced to carry Jesus's cross to Golgotha (Matthew 27:32; Mark 15:21; Luke 23:26)",
+    surface: "Simon", owner: "cyrene", expect: "simon-of-cyrene", status: "guard",
+    why: "Cyrene's own notableFact naming its most famous son and linking Simon Peter instead. The " +
+         "sentence describes the man exactly. A location block — a surface that was outside the " +
+         "harness entirely until corpus.mjs's field name was corrected on 2026-09-10." },
+  { text: "Peter stayed with a tanner named Simon here, whose house by the sea is still pointed out to visitors by tradition",
+    surface: "Simon", owner: "joppa", expect: null, status: "guard",
+    why: "Simon the tanner, Acts 9:43 — a different man, in a sentence that names Peter separately " +
+         "two words earlier. Scripture's own Acts 10:32 already suppressed him, so until now the " +
+         "location article contradicted the reader. No record; no link." },
+  { text: "When a royal officer arrived at the village of Modein to enforce Antiochus IV's decree of pagan sacrifice, an aging priest named Mattathias refused. When another Jew stepped forward to comply in his place, Mattathias killed both the compliant Jew and the king's officer, tore down the pagan altar, and cried out, \"Let everyone who is zealous for the law...come out with me!\" — deliberately echoing Moses's own call after the golden calf (Exodus 32:26). With his five sons — Judas, Jonathan, Simon, John, and Eleazar — he fled to the hill country to organize armed resistance.",
+    surface: "Simon", owner: "bib-it-maccabean-revolt-begins", expect: null, status: "guard",
+    why: "Mattathias's five sons. \"Simon\" is Simon Maccabeus and \"Judas\" is Judas Maccabeus — the " +
+         "second is already suppressed by the `judas` Maccabeus rule, and this is the first. " +
+         "\"John\" and \"Eleazar\" in the same list are already suppressed by owner entries of their " +
+         "own, which is what four brothers in one clause requires." },
+  { text: "Jonathan was murdered through Seleucid treachery in 143 BC, and leadership fell to the last surviving brother, Simon, who would soon achieve full political independence for Judea.",
+    surface: "Simon", owner: "bib-it-jonathan-maccabeus-high-priest", expect: null, status: "guard",
+    why: "The same man, one event earlier in the Hasmonean sequence. Three links on this record." },
+  { text: "James appears in the Gospels simply as one of Jesus's brothers — Mark's Gospel names him first among four (James, Joses, Judas, and Simon) when the people of Nazareth question how a hometown carpenter's family produced such a teacher (Mark 6:3). John's Gospel states plainly that during Jesus's ministry, \"even his own brothers did not believe in him\" (John 7:5), suggesting James was among the skeptics.",
+    surface: "Simon", owner: "james-brother-of-jesus", expect: null, status: "guard",
+    why: "Simon the brother of Jesus, from Mark 6:3's list of four. The app has no record for him " +
+         "and Matthew 13:55 is already suppressed on the reader path, so this makes the article " +
+         "agree with Scripture. The same sentence's \"James\" is the page's own subject and the " +
+         "batch-3 case above asserts it." },
+  { text: "'Christ' is a translation before it is anything else. The Greek Christos renders the Hebrew mashiach, 'anointed one,' and the Gospel of John twice stops to say so for readers who would not have known: Andrew tells Simon 'We have found the Messiah!' and the text adds the gloss '(which is, being interpreted, Christ)' (John 1:41), and the Samaritan woman says 'I know that Messiah comes, he who is called Christ' (John 4:25). These two verses are the only places the World English Bible keeps the Hebrew-derived word rather than translating it.",
+    surface: "Simon", owner: "the-christ", expect: "simon-peter", status: "guard",
+    why: "THE LAST BARE \"Simon\" IN THE WHOLE PROSE CORPUS THAT STILL RESOLVES TO SIMON PETER — " +
+         "key-totals records exactly one. Duplicated from batch 1 deliberately: that copy guarded " +
+         "the two Hasmonean suppressions, this one guards eleven more entries landing on the same " +
+         "key. If a future widening of `simon` takes this, it takes the only one left." },
+
+  // ── Simeon and Levi at Shechem, Mary on her own page, Aquinas, Julius Caesar ────────────────
+  { text: "Jacob purchased land here, dug a well (later 'Jacob's Well'), and his sons Simeon and Levi massacred the men of the city after the assault on Dinah (Genesis 33-34)",
+    surface: "Simeon", owner: "shechem", expect: null, status: "guard",
+    why: "Genesis 34, on Shechem's own page. \"Simeon\" pointed at the old man who blessed the " +
+         "infant Jesus in Luke 2 and \"Levi\" at Matthew the tax collector — two of Jacob's sons, " +
+         "neither of whom has a record. Both allowlists already confine these keys on the reader " +
+         "path; the article surface has no allowlist." },
+  { text: "Jacob purchased land here, dug a well (later 'Jacob's Well'), and his sons Simeon and Levi massacred the men of the city after the assault on Dinah (Genesis 33-34)",
+    surface: "Levi", owner: "shechem", expect: null, status: "guard",
+    why: "The other half of the same clause. Asserted separately because the two are different " +
+         "keys in different entries and a fix to one says nothing about the other." },
+  { text: "Mary lived in Bethany with her sister Martha and brother Lazarus, and their home appears as a place Jesus visited and stayed. In one well-known scene, while Martha busied herself with the work of hosting, Mary sat at Jesus's feet listening to his teaching; when Martha complained that her sister had left her to serve alone, Jesus gently defended Mary, saying she had \"chosen what is better\" (Luke 10:38-42).",
+    surface: "Mary", owner: "mary-of-bethany", expect: null, status: "guard",
+    why: "THE RECORD'S OWN PAGE, six links, not in the sweep. Bare \"Mary\" belongs to the mother of " +
+         "Jesus, so Mary of Bethany's biography handed her own name to a different woman at every " +
+         "mention. The record's cross-links to Mary Magdalene use the long key and are untouched." },
+  { text: "On the first day of the week, Mary Magdalene went to the tomb and found the stone rolled away; in John's account, she runs to tell Peter and John, then remains weeping outside the empty tomb after they leave, where she encounters a figure she initially mistakes for the gardener (John 20:1-15). When he says her name, \"Mary,\" she recognizes Jesus and calls him \"Rabboni\" (Teacher), becoming the first person recorded to see and speak with the risen Jesus, who then commissions her to go and tell the other disciples (John 20:16-18) — an episode that has led many later writers to call her \"the apostle to the apostles.\"",
+    surface: "Mary", occurrence: 2, owner: "mary-magdalene", expect: null, status: "guard",
+    why: "John 20:16 quoted on Magdalene's own page — the one word the risen Jesus says to her, " +
+         "linked to the mother of Jesus. Occurrence 1 is \"Mary Magdalene\", her own registered key. " +
+         "The \"John\" in the same block is the Apostle by the \"Peter and John\" rule, and the " +
+         "record's `john` entry is null, which is why that rule has to be checked first." },
+  { text: "Born to a noble family near Aquino in southern Italy, Thomas was sent as a child oblate to the great abbey of Monte Cassino before studying at the University of Naples, where he encountered the newly translated works of Aristotle ",
+    surface: "Thomas", owner: "thomas-aquinas", expect: null, status: "guard",
+    why: "Aquinas's own page, three links, all to the apostle. Quoted from the opening of his " +
+         "lifeStory; the case's text is a prefix of that paragraph, which is all a prose case " +
+         "needs. Found by self-name.mjs, and invisible to modern-names.mjs, which flags a link " +
+         "inside a modern personal name and sees a bare \"Thomas\" as nothing of the kind." },
+  { text: "Born Gaius Octavius in 63 BC, he was the grand-nephew and posthumously adopted heir of Julius Caesar, taking the name Gaius Julius Caesar Octavianus (rendered in English as 'Octavian') after Caesar's assassination in 44 BC. After more than a decade of civil war and shifting alliances — including the Second Triumvirate with Mark Antony and Lepidus — Octavian defeated the combined forces of Antony and Cleopatra at the Battle of Actium in 31 BC, leaving him sole master of the Roman world.",
+    surface: "Caesar", occurrence: 1, owner: "caesar-augustus", expect: null, status: "guard",
+    why: "JULIUS Caesar, on Augustus's own page, resolving to Tiberius — his great-uncle pointed at " +
+         "his successor. Not a self-link, which is why self-name.mjs found it and the exclusion " +
+         "never could. No record for Julius; suppressed on the standing interim. A miss the " +
+         "existing split-name machinery could not catch: that sweep enumerates a biblical name " +
+         "FOLLOWED by a qualifier (\"Philip II\", \"Paul VI\"), and this is one PRECEDED by a forename." },
+  { text: "Born Gaius Octavius in 63 BC, he was the grand-nephew and posthumously adopted heir of Julius Caesar, taking the name Gaius Julius Caesar Octavianus (rendered in English as 'Octavian') after Caesar's assassination in 44 BC. After more than a decade of civil war and shifting alliances — including the Second Triumvirate with Mark Antony and Lepidus — Octavian defeated the combined forces of Antony and Cleopatra at the Battle of Actium in 31 BC, leaving him sole master of the Roman world.",
+    surface: "Caesar", occurrence: 3, owner: "caesar-augustus", expect: null, status: "guard",
+    why: "\"after Caesar's assassination in 44 BC\" — the same man, bare, thirty words later. " +
+         "Occurrence 2 sits inside Augustus's own regnal name and was already unlinked." },
+  { text: "Herod was the son of Antipater, an Idumean who had risen to influence as a close advisor to the Hasmonean ruler Hyrcanus II and won the favor of Julius Caesar. Herod inherited his father's political skill, and amid the chaos of Rome's own civil wars he maneuvered his way into the Roman Senate's favor: in 40 BC the Senate declared him \"King of the Jews\" — a title he did not yet actually hold on the ground in Judea.",
+    surface: "Caesar", owner: "bib-it-herod-the-great-rise", expect: null, status: "guard",
+    why: "The third Julius, on the timeline. The bare \"Herod\" in the same sentence links to nobody " +
+         "and is correct to — 40 of the 44 in our prose are suppressed." },
+
+  // ── Guards: the bare keys the four suppressions above did NOT take ──────────────────────────
+  { ref: "Matthew 22:21", surface: "Caesar", expect: "tiberius-caesar", status: "guard",
+    why: "\"Render therefore to Caesar the things that are Caesar's.\" The bare key keeps Tiberius " +
+         "on the reader path; the `caesar` owner entries reach two records and no verse." },
+  { text: "A Jerusalem temple priest struck mute for doubting an angel's promise of a son in his old age, whose voice returned at John's naming and burst into prophecy.",
+    surface: "John", owner: "zechariah-father-of-john-baptist", expect: "john-the-baptist", status: "guard",
+    why: "Repeated from batch 1 on purpose: four batches of suppressions later, the Baptist still " +
+         "owns the bare key. PUBLIC PAGE ONLY, so nothing else holds it." },
 ];

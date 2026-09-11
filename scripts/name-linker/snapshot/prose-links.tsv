@@ -771,7 +771,7 @@ location.history.facts|crete|42ef16bb65	10	Titus	titus
 location.history.facts|crete|6047804b2a	0	Paul	paul-of-tarsus
 location.history.facts|cyprus|8ce7253a41	73	Sergius Paulus	sergius-paulus
 location.history.facts|cyprus|fedacd58e5	15	Barnabas	barnabas
-location.history.facts|cyrene|e8138bf9be	12	Simon	simon-peter
+location.history.facts|cyrene|e8138bf9be	12	Simon	simon-of-cyrene
 location.history.facts|cyrene|e8138bf9be	43	Jesus	jesus-of-nazareth
 location.history.facts|damascus|270f93b04c	0	Saul	saul-king-of-israel
 location.history.facts|damascus|d4155075fd	8	Saul of Tarsus	paul-of-tarsus
@@ -852,7 +852,6 @@ location.history.facts|jezreel|249329f44a	95	Jezebel	jezebel
 location.history.facts|jezreel|cf9aa5e652	145	Elijah	elijah
 location.history.facts|jezreel|cf9aa5e652	73	Jezebel	jezebel
 location.history.facts|joppa|086da3515b	0	Peter	simon-peter
-location.history.facts|joppa|086da3515b	33	Simon	simon-peter
 location.history.facts|joppa|7d959a7375	124	Cornelius	cornelius-the-centurion
 location.history.facts|joppa|7d959a7375	6	Peter	simon-peter
 location.history.facts|joppa|e7bfdfaa92	19	Tabitha	dorcas-tabitha
@@ -965,8 +964,6 @@ location.history.facts|samaria|9c30ccb354	11	Jesus	jesus-of-nazareth
 location.history.facts|shechem|482c8b2208	18	Gideon	gideon
 location.history.facts|shechem|494c8f43c8	0	Jacob	jacob
 location.history.facts|shechem|494c8f43c8	46	Jacob	jacob
-location.history.facts|shechem|494c8f43c8	75	Simeon	simeon-at-the-temple
-location.history.facts|shechem|494c8f43c8	86	Levi	matthew-levi
 location.history.facts|shechem|535be069c1	0	Abraham	abraham
 location.history.facts|shechem|6340b0b95b	0	Joseph	joseph-son-of-jacob
 location.history.facts|shechem|6340b0b95b	73	Jacob	jacob
@@ -1148,7 +1145,6 @@ person.extraBib.source|nicodemus|cbf870d6c6	49	Pilate	pontius-pilate
 person.extraBib.source|simon-peter|65815b6ad3	0	Eusebius of Caesarea	eusebius-of-caesarea
 person.extraBib.summary|abraham|c3cf950927	250	Sarah	sarah
 person.extraBib.summary|abraham|c3cf950927	260	Hagar	hagar
-person.extraBib.summary|ananias-the-high-priest|3024dcfb70	19	Ananias	ananias-and-sapphira
 person.extraBib.summary|aquila|e934429e21	35	Claudius	claudius-caesar
 person.extraBib.summary|bernice|71037615b5	65	Agrippa II	herod-agrippa-ii
 person.extraBib.summary|bernice|8a64417f7f	123	Titus	titus
@@ -1286,36 +1282,23 @@ person.lifeStory|ananias-and-sapphira|14d1e0c7a2	403	Peter	simon-peter
 person.lifeStory|ananias-and-sapphira|14d1e0c7a2	48	Peter	simon-peter
 person.lifeStory|ananias-and-sapphira|db8caa37bf	189	Peter	simon-peter
 person.lifeStory|ananias-and-sapphira|db8caa37bf	88	Peter	simon-peter
-person.lifeStory|ananias-of-damascus|8ca24f1082	0	Ananias	ananias-and-sapphira
 person.lifeStory|ananias-of-damascus|8ca24f1082	179	Saul	paul-of-tarsus
-person.lifeStory|ananias-of-damascus|8ca24f1082	216	Ananias	ananias-and-sapphira
 person.lifeStory|ananias-of-damascus|8ca24f1082	238	Saul	paul-of-tarsus
-person.lifeStory|ananias-of-damascus|8ca24f1082	300	Ananias	ananias-and-sapphira
 person.lifeStory|ananias-of-damascus|8ca24f1082	340	Paul	paul-of-tarsus
 person.lifeStory|ananias-of-damascus|8ca24f1082	42	Saul	paul-of-tarsus
-person.lifeStory|ananias-of-damascus|8ca24f1082	446	Ananias	ananias-and-sapphira
 person.lifeStory|ananias-of-damascus|8ca24f1082	72	Saul	paul-of-tarsus
-person.lifeStory|ananias-of-damascus|b47d44ba5a	0	Ananias	ananias-and-sapphira
 person.lifeStory|ananias-of-damascus|b47d44ba5a	181	Jesus	jesus-of-nazareth
 person.lifeStory|ananias-of-damascus|b47d44ba5a	219	Saul	paul-of-tarsus
-person.lifeStory|ananias-of-damascus|b47d44ba5a	313	Ananias	ananias-and-sapphira
 person.lifeStory|ananias-of-damascus|b47d44ba5a	330	Saul	paul-of-tarsus
 person.lifeStory|ananias-of-damascus|b47d44ba5a	62	Saul	paul-of-tarsus
-person.lifeStory|ananias-of-damascus|ceb2de2932	0	Ananias	ananias-and-sapphira
-person.lifeStory|ananias-of-damascus|ceb2de2932	199	Ananias	ananias-and-sapphira
 person.lifeStory|ananias-of-damascus|ceb2de2932	260	Judas	judas-iscariot
 person.lifeStory|ananias-of-damascus|ceb2de2932	297	Saul	paul-of-tarsus
-person.lifeStory|ananias-of-damascus|ceb2de2932	364	Ananias	ananias-and-sapphira
 person.lifeStory|ananias-of-damascus|ceb2de2932	71	Saul of Tarsus	paul-of-tarsus
 person.lifeStory|ananias-the-high-priest|9d09de9d8b	165	Paul	paul-of-tarsus
 person.lifeStory|ananias-the-high-priest|9d09de9d8b	190	Felix	antonius-felix
-person.lifeStory|ananias-the-high-priest|9d09de9d8b	310	Ananias	ananias-and-sapphira
 person.lifeStory|ananias-the-high-priest|9d09de9d8b	5	Paul	paul-of-tarsus
-person.lifeStory|ananias-the-high-priest|9d09de9d8b	56	Ananias	ananias-and-sapphira
 person.lifeStory|ananias-the-high-priest|9d09de9d8b	647	Paul	paul-of-tarsus
-person.lifeStory|ananias-the-high-priest|a37c338de9	0	Ananias	ananias-and-sapphira
 person.lifeStory|ananias-the-high-priest|a37c338de9	147	Paul	paul-of-tarsus
-person.lifeStory|ananias-the-high-priest|a37c338de9	254	Ananias	ananias-and-sapphira
 person.lifeStory|ananias-the-high-priest|a37c338de9	333	Paul	paul-of-tarsus
 person.lifeStory|ananias-the-high-priest|a37c338de9	37	Paul	paul-of-tarsus
 person.lifeStory|andrew-apostle|603a569f02	224	Jesus	jesus-of-nazareth
@@ -1452,9 +1435,7 @@ person.lifeStory|caesar-augustus|0504338f85	234	David	david
 person.lifeStory|caesar-augustus|0504338f85	282	Mary	mary-mother-of-jesus
 person.lifeStory|caesar-augustus|0504338f85	382	Luke	luke-evangelist
 person.lifeStory|caesar-augustus|0504338f85	490	Jesus	jesus-of-nazareth
-person.lifeStory|caesar-augustus|65e0b11f3a	191	Caesar	tiberius-caesar
 person.lifeStory|caesar-augustus|65e0b11f3a	325	Mark Antony	mark-antony
-person.lifeStory|caesar-augustus|65e0b11f3a	94	Caesar	tiberius-caesar
 person.lifeStory|caiaphas|1c2b20b097	169	Jesus	jesus-of-nazareth
 person.lifeStory|caiaphas|1c2b20b097	201	Jesus	jesus-of-nazareth
 person.lifeStory|caiaphas|1c2b20b097	283	Jesus	jesus-of-nazareth
@@ -1884,7 +1865,6 @@ person.lifeStory|jacob|fea8a1e781	407	Sarah	sarah
 person.lifeStory|jacob|fea8a1e781	414	Isaac	isaac
 person.lifeStory|jacob|fea8a1e781	425	Rebekah	rebekah
 person.lifeStory|james-brother-of-jesus|3e1387f0a3	121	Judas	judas-iscariot
-person.lifeStory|james-brother-of-jesus|3e1387f0a3	132	Simon	simon-peter
 person.lifeStory|james-brother-of-jesus|3e1387f0a3	287	Jesus	jesus-of-nazareth
 person.lifeStory|james-brother-of-jesus|3e1387f0a3	46	Jesus	jesus-of-nazareth
 person.lifeStory|james-brother-of-jesus|9a1ab0db7a	112	Jesus	jesus-of-nazareth
@@ -2228,13 +2208,11 @@ person.lifeStory|martin-luther|77ce0b8881	104	Paul	paul-of-tarsus
 person.lifeStory|martin-luther|ccbc5caf94	83	Peter	simon-peter
 person.lifeStory|mary-magdalene|5e25c6ac39	155	Jesus	jesus-of-nazareth
 person.lifeStory|mary-magdalene|5e25c6ac39	249	Jesus	jesus-of-nazareth
-person.lifeStory|mary-magdalene|5e25c6ac39	25	Mary	mary-mother-of-jesus
 person.lifeStory|mary-magdalene|8f31f906ae	166	Jesus	jesus-of-nazareth
 person.lifeStory|mary-magdalene|8f31f906ae	271	Joseph of Arimathea	joseph-of-arimathea
 person.lifeStory|mary-magdalene|8f31f906ae	65	Jesus	jesus-of-nazareth
 person.lifeStory|mary-magdalene|e373336d03	131	Peter	simon-peter
 person.lifeStory|mary-magdalene|e373336d03	141	John	john-the-apostle
-person.lifeStory|mary-magdalene|e373336d03	319	Mary	mary-mother-of-jesus
 person.lifeStory|mary-magdalene|e373336d03	341	Jesus	jesus-of-nazareth
 person.lifeStory|mary-magdalene|e373336d03	449	Jesus	jesus-of-nazareth
 person.lifeStory|mary-mother-of-james-the-less|38aca1a7b0	133	Jesus	jesus-of-nazareth
@@ -2260,28 +2238,22 @@ person.lifeStory|mary-of-bethany|0a246c1c26	113	Jesus	jesus-of-nazareth
 person.lifeStory|mary-of-bethany|0a246c1c26	15	Jesus	jesus-of-nazareth
 person.lifeStory|mary-of-bethany|0a246c1c26	186	Judas Iscariot	judas-iscariot
 person.lifeStory|mary-of-bethany|0a246c1c26	235	Jesus	jesus-of-nazareth
-person.lifeStory|mary-of-bethany|0a246c1c26	60	Mary	mary-mother-of-jesus
-person.lifeStory|mary-of-bethany|4b4454edba	0	Mary	mary-mother-of-jesus
 person.lifeStory|mary-of-bethany|4b4454edba	100	Jesus	jesus-of-nazareth
 person.lifeStory|mary-of-bethany|4b4454edba	157	Martha	martha-of-bethany
-person.lifeStory|mary-of-bethany|4b4454edba	205	Mary	mary-mother-of-jesus
 person.lifeStory|mary-of-bethany|4b4454edba	217	Jesus	jesus-of-nazareth
 person.lifeStory|mary-of-bethany|4b4454edba	262	Martha	martha-of-bethany
 person.lifeStory|mary-of-bethany|4b4454edba	325	Jesus	jesus-of-nazareth
-person.lifeStory|mary-of-bethany|4b4454edba	347	Mary	mary-mother-of-jesus
 person.lifeStory|mary-of-bethany|4b4454edba	38	Martha	martha-of-bethany
 person.lifeStory|mary-of-bethany|4b4454edba	57	Lazarus	lazarus-of-bethany
 person.lifeStory|mary-of-bethany|a369727f15	160	Mary Magdalene	mary-magdalene
 person.lifeStory|mary-of-bethany|a369727f15	223	Jesus	jesus-of-nazareth
 person.lifeStory|mary-of-bethany|a369727f15	373	Mary Magdalene	mary-magdalene
-person.lifeStory|mary-of-bethany|d3db84ee67	0	Mary	mary-mother-of-jesus
 person.lifeStory|mary-of-bethany|d3db84ee67	111	Jesus	jesus-of-nazareth
 person.lifeStory|mary-of-bethany|d3db84ee67	204	Jesus	jesus-of-nazareth
 person.lifeStory|mary-of-bethany|d3db84ee67	293	Jesus	jesus-of-nazareth
 person.lifeStory|mary-of-bethany|d3db84ee67	321	Jesus	jesus-of-nazareth
 person.lifeStory|mary-of-bethany|d3db84ee67	339	Lazarus	lazarus-of-bethany
 person.lifeStory|mary-of-bethany|d3db84ee67	53	Lazarus	lazarus-of-bethany
-person.lifeStory|mary-of-bethany|d3db84ee67	80	Mary	mary-mother-of-jesus
 person.lifeStory|mary-of-bethany|d3db84ee67	9	Martha	martha-of-bethany
 person.lifeStory|matthan|9a0f7cd00f	117	Jesus	jesus-of-nazareth
 person.lifeStory|matthan|9a0f7cd00f	213	Luke	luke-evangelist
@@ -2411,7 +2383,7 @@ person.lifeStory|onesimus|e5b4d48aa2	231	Paul	paul-of-tarsus
 person.lifeStory|onesimus|e5b4d48aa2	36	Philemon	philemon
 person.lifeStory|onesimus|e5b4d48aa2	9	Paul	paul-of-tarsus
 person.lifeStory|paul-of-tarsus|1b642cf583	103	Jesus	jesus-of-nazareth
-person.lifeStory|paul-of-tarsus|1b642cf583	214	Ananias	ananias-and-sapphira
+person.lifeStory|paul-of-tarsus|1b642cf583	214	Ananias	ananias-of-damascus
 person.lifeStory|paul-of-tarsus|4f297c16b3	261	Nero	nero-caesar
 person.lifeStory|paul-of-tarsus|51074dcdea	491	Peter	simon-peter
 person.lifeStory|paul-of-tarsus|9990be62d2	367	Felix	antonius-felix
@@ -2726,25 +2698,16 @@ person.lifeStory|simeon-at-the-temple|794a5353eb	510	Joseph	joseph-husband-of-ma
 person.lifeStory|simeon-at-the-temple|794a5353eb	533	Mary	mary-mother-of-jesus
 person.lifeStory|simeon-at-the-temple|cb76c063ea	0	Luke	luke-evangelist
 person.lifeStory|simeon-at-the-temple|cb76c063ea	121	the Holy Spirit	holy-spirit
-person.lifeStory|simon-magus|d1c99f8c5f	113	Simon	simon-peter
 person.lifeStory|simon-magus|d1c99f8c5f	15	John	john-the-apostle
 person.lifeStory|simon-magus|d1c99f8c5f	158	Peter	simon-peter
-person.lifeStory|simon-magus|d1c99f8c5f	291	Simon	simon-peter
-person.lifeStory|simon-magus|d1c99f8c5f	339	Simon	simon-peter
 person.lifeStory|simon-magus|d1c99f8c5f	361	Peter	simon-peter
 person.lifeStory|simon-magus|d1c99f8c5f	5	Peter	simon-peter
 person.lifeStory|simon-magus|d1c99f8c5f	96	the Holy Spirit	holy-spirit
 person.lifeStory|simon-magus|ef16392094	143	Philip the Evangelist	philip-the-evangelist
-person.lifeStory|simon-magus|ef16392094	191	Simon	simon-peter
 person.lifeStory|simon-magus|ef16392094	241	Philip	philip-the-evangelist
-person.lifeStory|simon-magus|ef16392094	35	Simon	simon-peter
-person.lifeStory|simon-of-cyrene|05e88638e8	0	Simon	simon-peter
 person.lifeStory|simon-of-cyrene|05e88638e8	145	Jesus	jesus-of-nazareth
-person.lifeStory|simon-of-cyrene|05e88638e8	238	Simon	simon-peter
 person.lifeStory|simon-of-cyrene|45d25d0c60	104	Mark	john-mark
-person.lifeStory|simon-of-cyrene|45d25d0c60	188	Simon	simon-peter
 person.lifeStory|simon-of-cyrene|45d25d0c60	273	Mark	john-mark
-person.lifeStory|simon-of-cyrene|45d25d0c60	52	Simon	simon-peter
 person.lifeStory|simon-of-cyrene|45d25d0c60	552	Paul	paul-of-tarsus
 person.lifeStory|simon-peter|07947cfb43	367	Cornelius	cornelius-the-centurion
 person.lifeStory|simon-peter|07947cfb43	524	Paul	paul-of-tarsus
@@ -2766,21 +2729,15 @@ person.lifeStory|simon-peter|d340c4c943	542	Malchus	malchus
 person.lifeStory|simon-peter|d340c4c943	555	Jesus	jesus-of-nazareth
 person.lifeStory|simon-the-leper|3222cd9806	12	Mark	john-mark
 person.lifeStory|simon-the-leper|3222cd9806	250	Jesus	jesus-of-nazareth
-person.lifeStory|simon-the-leper|3222cd9806	389	Simon	simon-peter
 person.lifeStory|simon-the-leper|3222cd9806	40	Jesus	jesus-of-nazareth
 person.lifeStory|simon-the-leper|3222cd9806	609	Jesus	jesus-of-nazareth
 person.lifeStory|simon-the-pharisee|34fdf543fd	129	Jesus	jesus-of-nazareth
-person.lifeStory|simon-the-pharisee|34fdf543fd	201	Simon	simon-peter
 person.lifeStory|simon-the-pharisee|34fdf543fd	214	Jesus	jesus-of-nazareth
 person.lifeStory|simon-the-pharisee|34fdf543fd	27	Jesus	jesus-of-nazareth
 person.lifeStory|simon-the-pharisee|34fdf543fd	310	Jesus	jesus-of-nazareth
-person.lifeStory|simon-the-pharisee|34fdf543fd	415	Simon	simon-peter
-person.lifeStory|simon-the-pharisee|34fdf543fd	565	Simon	simon-peter
 person.lifeStory|simon-the-pharisee|34fdf543fd	679	Simon Peter	simon-peter
 person.lifeStory|simon-the-pharisee|34fdf543fd	700	Simon the Leper	simon-the-leper
-person.lifeStory|simon-the-zealot|0d1e121cb7	0	Simon	simon-peter
 person.lifeStory|simon-the-zealot|0d1e121cb7	209	Luke	luke-evangelist
-person.lifeStory|simon-the-zealot|0d1e121cb7	262	Simon	simon-peter
 person.lifeStory|simon-the-zealot|0d1e121cb7	64	Mark	john-mark
 person.lifeStory|solomon|1bc45ad530	110	David	david
 person.lifeStory|solomon|3f9e7f2cdb	75	Rehoboam	rehoboam
@@ -2831,9 +2788,6 @@ person.lifeStory|thomas-apostle|61f8924119	225	Lazarus	lazarus-of-bethany
 person.lifeStory|thomas-apostle|61f8924119	371	Jesus	jesus-of-nazareth
 person.lifeStory|thomas-apostle|a36e5bfe17	258	Jesus	jesus-of-nazareth
 person.lifeStory|thomas-apostle|a36e5bfe17	88	Jesus	jesus-of-nazareth
-person.lifeStory|thomas-aquinas|416a6c4e34	54	Thomas	thomas-apostle
-person.lifeStory|thomas-aquinas|823548e01a	14	Thomas	thomas-apostle
-person.lifeStory|thomas-aquinas|9e1f6f1173	0	Thomas	thomas-apostle
 person.lifeStory|thomas-cranmer|ec277a52e5	87	Henry VIII	henry-viii
 person.lifeStory|tiberius-caesar|39ee330f0f	137	Augustus	caesar-augustus
 person.lifeStory|tiberius-caesar|39ee330f0f	195	Augustus	caesar-augustus
@@ -3070,7 +3024,7 @@ poi.archaeology.note|garden-tomb|2a1762c397	403	Jesus	jesus-of-nazareth
 poi.archaeology.note|great-theatre-ephesus|f82790cb7a	200	Nero	nero-caesar
 poi.archaeology.note|hierapolis|46d9a2eee7	188	Philip	philip-the-apostle
 poi.archaeology.note|hierapolis|46d9a2eee7	251	Philip	philip-the-apostle
-poi.archaeology.note|house-of-ananias-damascus|671f1e1a6c	371	Ananias	ananias-and-sapphira
+poi.archaeology.note|house-of-ananias-damascus|671f1e1a6c	371	Ananias	ananias-of-damascus
 poi.archaeology.note|house-of-virgin-mary-ephesus|e9787a8c1c	438	Mary	mary-mother-of-jesus
 poi.archaeology.note|machaerus|5964fad5ca	169	John the Baptist	john-the-baptist
 poi.archaeology.note|machaerus|5964fad5ca	277	John	john-the-baptist
@@ -3230,7 +3184,7 @@ poi.description|herod-winter-palace-jericho|0e97fbc126	154	Herod the Great	herod
 poi.description|herodium|a8b6265d43	166	Jesus	jesus-of-nazareth
 poi.description|herodium|a8b6265d43	40	Herod the Great	herod-the-great
 poi.description|hierapolis|422144d584	175	Philip	philip-the-apostle
-poi.description|house-of-ananias-damascus|c60c637c2c	123	Ananias	ananias-and-sapphira
+poi.description|house-of-ananias-damascus|c60c637c2c	123	Ananias	ananias-of-damascus
 poi.description|house-of-ananias-damascus|c60c637c2c	210	Saul	paul-of-tarsus
 poi.description|house-of-virgin-mary-ephesus|5695d04445	133	Mary	mary-mother-of-jesus
 poi.description|house-of-virgin-mary-ephesus|5695d04445	194	John	john-the-apostle
@@ -3299,7 +3253,7 @@ poi.description|st-pauls-bay-malta|a1442309d0	63	Paul	paul-of-tarsus
 poi.description|st-peter-gallicantu|226e52a1d6	158	Caiaphas	caiaphas
 poi.description|st-peter-gallicantu|226e52a1d6	196	Jesus	jesus-of-nazareth
 poi.description|st-peter-gallicantu|226e52a1d6	233	Peter	simon-peter
-poi.description|straight-street-damascus|bdac5ca8da	135	Ananias	ananias-and-sapphira
+poi.description|straight-street-damascus|bdac5ca8da	135	Ananias	ananias-of-damascus
 poi.description|straight-street-damascus|bdac5ca8da	189	Saul of Tarsus	paul-of-tarsus
 poi.description|straight-street-damascus|bdac5ca8da	229	Judas	judas-iscariot
 poi.description|syracuse|81f0f6e87c	145	Paul	paul-of-tarsus
@@ -3462,7 +3416,7 @@ timelineEvent.article|bib-ac-paul-conversion|f2c2b97ad9	146	Saul	paul-of-tarsus
 timelineEvent.article|bib-ac-paul-conversion|f2c2b97ad9	222	Saul	paul-of-tarsus
 timelineEvent.article|bib-ac-paul-conversion|f2c2b97ad9	257	Jesus	jesus-of-nazareth
 timelineEvent.article|bib-ac-paul-conversion|f2c2b97ad9	409	Paul	paul-of-tarsus
-timelineEvent.article|bib-ac-paul-conversion|f2c2b97ad9	64	Ananias	ananias-and-sapphira
+timelineEvent.article|bib-ac-paul-conversion|f2c2b97ad9	64	Ananias	ananias-of-damascus
 timelineEvent.article|bib-ac-paul-first-journey|10faf5a7c8	268	Paul	paul-of-tarsus
 timelineEvent.article|bib-ac-paul-first-journey|10faf5a7c8	41	Paul	paul-of-tarsus
 timelineEvent.article|bib-ac-paul-first-journey|10faf5a7c8	410	Paul	paul-of-tarsus
@@ -3585,7 +3539,7 @@ timelineEvent.article|bib-ac-peter-martyrdom|fa0d2ac3fc	360	Paul	paul-of-tarsus
 timelineEvent.article|bib-ac-peter-martyrdom|fa0d2ac3fc	366	Peter	simon-peter
 timelineEvent.article|bib-ac-peter-martyrdom|fa0d2ac3fc	434	Nero	nero-caesar
 timelineEvent.article|bib-ac-philip-ethiopian-eunuch|a207016350	119	Stephen	stephen-the-martyr
-timelineEvent.article|bib-ac-philip-ethiopian-eunuch|a207016350	251	Simon	simon-peter
+timelineEvent.article|bib-ac-philip-ethiopian-eunuch|a207016350	251	Simon	simon-magus
 timelineEvent.article|bib-ac-philip-ethiopian-eunuch|a207016350	317	Philip	philip-the-evangelist
 timelineEvent.article|bib-ac-philip-ethiopian-eunuch|a207016350	32	Stephen	stephen-the-martyr
 timelineEvent.article|bib-ac-philip-ethiopian-eunuch|a207016350	49	Philip	philip-the-evangelist
@@ -4090,20 +4044,16 @@ timelineEvent.article|bib-it-division-of-alexanders-empire|62bfcb9786	12	Daniel	
 timelineEvent.article|bib-it-hasmonean-dynasty-begins|1dec481dac	328	Judas	judas-iscariot
 timelineEvent.article|bib-it-hasmonean-dynasty-begins|c113f12e0f	425	Moses	moses
 timelineEvent.article|bib-it-herod-the-great-rise|1eb6dcf753	135	Jesus	jesus-of-nazareth
-timelineEvent.article|bib-it-herod-the-great-rise|21e8f8700a	152	Caesar	tiberius-caesar
 timelineEvent.article|bib-it-herod-the-great-rise|3c7661f39c	205	David	david
 timelineEvent.article|bib-it-john-hyrcanus-reign|f61219cd5d	199	Herod the Great	herod-the-great
 timelineEvent.article|bib-it-john-hyrcanus-reign|f61219cd5d	572	Jesus	jesus-of-nazareth
 timelineEvent.article|bib-it-jonathan-maccabeus-high-priest|397d9025bc	242	Aaron	aaron
 timelineEvent.article|bib-it-jonathan-maccabeus-high-priest|397d9025bc	263	Solomon	solomon
-timelineEvent.article|bib-it-jonathan-maccabeus-high-priest|4035fff66d	111	Simon	simon-peter
-timelineEvent.article|bib-it-jonathan-maccabeus-high-priest|f78f05220e	375	Simon	simon-peter
 timelineEvent.article|bib-it-judas-maccabeus-campaigns|2a5a78ba0c	16	Judas	judas-iscariot
 timelineEvent.article|bib-it-judas-maccabeus-campaigns|bb60dff0b5	186	Gideon	gideon
 timelineEvent.article|bib-it-judas-maccabeus-campaigns|bb60dff0b5	230	David	david
 timelineEvent.article|bib-it-maccabean-revolt-begins|83a323ec93	398	Moses	moses
 timelineEvent.article|bib-it-maccabean-revolt-begins|83a323ec93	474	Judas	judas-iscariot
-timelineEvent.article|bib-it-maccabean-revolt-begins|83a323ec93	491	Simon	simon-peter
 timelineEvent.article|bib-it-maccabean-revolt-begins|9e85e11495	511	Jesus	jesus-of-nazareth
 timelineEvent.article|bib-it-maccabean-revolt-begins|c025dcd255	74	Judas	judas-iscariot
 timelineEvent.article|bib-it-pharisees-sadducees-essenes-rise|5e2a91a17f	347	John the Baptist	john-the-baptist
@@ -5279,7 +5229,6 @@ timelineEvent.datingNotes|bib-exo-the-exodus|c297c145f1	190	Solomon	solomon
 timelineEvent.datingNotes|bib-it-antiochus-defiles-temple|a9523deff8	622	Daniel	daniel
 timelineEvent.datingNotes|bib-it-antiochus-defiles-temple|a9523deff8	743	Daniel	daniel
 timelineEvent.datingNotes|bib-it-antiochus-defiles-temple|a9523deff8	934	Daniel	daniel
-timelineEvent.datingNotes|bib-it-jonathan-maccabeus-high-priest|388f783f7b	242	Simon	simon-peter
 timelineEvent.datingNotes|bib-it-judas-maccabeus-campaigns|fc644d0e8f	39	Judas	judas-iscariot
 timelineEvent.datingNotes|bib-loc-baptism-of-jesus|e90e367c35	68	John	john-the-baptist
 timelineEvent.datingNotes|bib-loc-birth-of-jesus|589d0053ff	131	magi	magi

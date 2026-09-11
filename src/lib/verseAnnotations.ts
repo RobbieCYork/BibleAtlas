@@ -929,6 +929,11 @@ const OWNER_NAME_OVERRIDES: Record<string, Record<string, string | null>> = {
   // no link. Keyed by owner rather than suppressed globally so the apostle's own pages are
   // untouched — none of them writes the bare name.
   levi: {
+    // Genesis 34, on Shechem's own page: "his sons Simeon and Levi massacred the men of the city
+    // after the assault on Dinah". Jacob's sons, pointing at Matthew the tax collector and at
+    // Simeon in the temple. Added 2026-09-10 with the second-bearer sweep; the `simeon` entry
+    // below carries the other half of the same sentence.
+    shechem: null,
     melchizedek: null,
     jacob: null,
     leah: null,
@@ -1126,6 +1131,7 @@ const OWNER_NAME_OVERRIDES: Record<string, Record<string, string | null>> = {
     silas: null,
   },
   simeon: {
+    shechem: null, // the other half of Genesis 34's sentence — see `levi` above
     jacob: null,
     leah: null,
     "joseph-son-of-jacob": null,
@@ -1192,6 +1198,28 @@ const OWNER_NAME_OVERRIDES: Record<string, Record<string, string | null>> = {
   // Paul (Acts 24:1) — and that man DOES have an entry, so this repoints rather than suppresses.
   ananias: {
     "chief-priests": "ananias-the-high-priest",
+
+    // ── The rest of the Ananias cluster, second-bearer sweep, 2026-09-10 ──────────────────────
+    //
+    // 19 more links, and SCRIPTURE HAD ALL THREE MEN RIGHT THE WHOLE TIME — Acts 5 gives the
+    // couple, Acts 9 and 22:12 the Damascus disciple, Acts 23:2 and 24:1 the high priest, on the
+    // reader path, by verse override. Only the articles were wrong, because the article surface
+    // has no verse and this table was the only lever that reaches it.
+    //
+    // Both other Ananiases link their OWN name to the couple on their OWN pages — the shape
+    // scripts/name-linker/self-name.mjs now sweeps for — which accounts for 14 of the 19. The
+    // Damascus disciple's page says "Ananias objected", "Ananias went as instructed", "Ananias
+    // baptized him", nine times over, and every one of them pointed at a man who dropped dead in
+    // Acts 5. Mapped to themselves so the self-link exclusion suppresses them.
+    "ananias-of-damascus": "ananias-of-damascus", // 9
+    "ananias-the-high-priest": "ananias-the-high-priest", // 5, including extraBib.summary's
+                                                          // "Ananias son of Nedebaeus"
+    // Five more that mean the Damascus disciple and say so in their own sentences. Each record
+    // holds exactly one "Ananias".
+    "paul-of-tarsus": "ananias-of-damascus", // "a disciple named Ananias, initially wary given Saul's reputation"
+    "bib-ac-paul-conversion": "ananias-of-damascus", // "until a disciple named Ananias, obeying a direct vision"
+    "straight-street-damascus": "ananias-of-damascus", // "the Lord tells Ananias to go to 'the street called Straight'"
+    "house-of-ananias-damascus": "ananias-of-damascus", // 2: the POI is named for him
   },
   // "Jonah": the prophet is the right answer nearly everywhere, and VERSE_NAME_OVERRIDES above
   // already suppresses the five Scripture verses that name Simon Peter's father instead. Peter's
@@ -1311,6 +1339,15 @@ const OWNER_NAME_OVERRIDES: Record<string, Record<string, string | null>> = {
     // ONLY — the app renders `summary` as plain text and scripts/seo/render.mjs linkifies it —
     // so no snapshot holds it and the prose case in cases.mjs is its only cover.
     "lazarus-of-bethany": "mary-of-bethany",
+    // Their own pages, found by self-name.mjs rather than by the sweep. Bare "Mary" belongs to the
+    // mother of Jesus, so both women's articles handed their own subject's name to her: Magdalene's
+    // "when he says her name, 'Mary'" (John 20:16, the recognition at the tomb) and all six on
+    // mary-of-bethany, from "Mary lived in Bethany with her sister Martha" onward. Mapped to
+    // themselves for the self-link exclusion. Neither entry touches the cross-links the two
+    // records make to EACH OTHER — "Mary Magdalene" and "Mary of Bethany" are registered keys of
+    // their own and were always right, which is exactly what the sweep had checked.
+    "mary-magdalene": "mary-magdalene", // 2
+    "mary-of-bethany": "mary-of-bethany", // 6
   },
   // Same page, same problem, one occurrence: "Protestant Elizabeth I came to the English throne"
   // pointed at Elizabeth the mother of John the Baptist. Elizabeth I has no record.
@@ -1536,6 +1573,41 @@ const OWNER_NAME_OVERRIDES: Record<string, Record<string, string | null>> = {
   augustus: {
     "claudius-caesar": "claudius-caesar",
   },
+  // "Thomas": the apostle owns the bare key. Thomas Aquinas's own article uses his forename three
+  // times — "Thomas was sent as a child oblate to Monte Cassino", "Thomas studied under Albertus
+  // Magnus", "In late 1273, Thomas experienced a profound mystical episode" — and every one linked
+  // to the apostle. The same shape as the five Simons and the two Marys below, and found the same
+  // way, by scripts/name-linker/self-name.mjs. Mapped to himself; the record names no other Thomas.
+  // NAME_CONTEXT_RULES already handles Thomas More, Cromwell, Clarkson, Thompson and Roe.
+  thomas: {
+    "thomas-aquinas": "thomas-aquinas",
+  },
+  // "Caesar": the bare key belongs to Tiberius, which is right for the Gospels' "render to Caesar"
+  // and for Acts's appeals. Three prose mentions are JULIUS Caesar, who has no record: two on
+  // Augustus's own page — "the grand-nephew and posthumously adopted heir of Julius Caesar" and
+  // "after Caesar's assassination in 44 BC" — and one on Herod's rise, "won the favor of Julius
+  // Caesar". Not a self-link, even on Augustus's page: the man being named is his great-uncle.
+  //
+  // A miss the existing split-name machinery could not have caught, and worth saying why: the
+  // sweep for "a biblical name FOLLOWED by a qualifier" is what catches "Philip II" and "Paul VI",
+  // and this is a biblical name PRECEDED by a forename. Suppressed on the standing interim; a
+  // record for Julius Caesar would replace both entries. Augustus's own "Caesar Augustus"
+  // mentions match his registered name and are untouched.
+  //
+  // ⚠ THIS ENTRY IS NOT THE WHOLE CAESAR PROBLEM, and the next person here should be told the size
+  // of what is left rather than discover it. Measured 2026-09-10, after these three were fixed:
+  // 39 bare "Caesar" links remain in our prose and on the public pages, and only about five of
+  // them are Tiberius. Roughly twenty-two more are JULIUS — the Rubicon, the assassination,
+  // Actium, Antony's rise, Corinth's refounding in 44 BC — and roughly seventeen are NERO, every
+  // one of them Paul's "I appeal to Caesar" (Acts 25), including four on Nero's own page, which is
+  // the self-name shape again. The reader path already gets the Nero half right: BOOK_NAME_OVERRIDES
+  // above sends "Caesar" in Acts and Philippians to Nero, and only the article surface, which has
+  // no book, disagrees with it. That cluster was NOT in the second-bearer sweep, it is larger than
+  // several clusters that were, and it is not fixed here.
+  caesar: {
+    "caesar-augustus": null,
+    "bib-it-herod-the-great-rise": null,
+  },
 
   // ══ THE SECOND-BEARER SWEEP, 2026-09-10 ══════════════════════════════════════════════════════
   //
@@ -1664,8 +1736,41 @@ const OWNER_NAME_OVERRIDES: Record<string, Record<string, string | null>> = {
   // Maccabeus earns a record is Robbie's, and it is on his list — this fixes the defect today and
   // a record later replaces these two lines.
   simon: {
-    "bib-it-hasmonean-dynasty-begins": null,
-    "bib-it-john-hyrcanus-reign": null,
+    // ── Simon Maccabeus, 11 links across four Hasmonean articles ──────────────────────────────
+    // Last of Mattathias's five sons, high priest and ethnarch from 142 BC; a different man from
+    // Simon Peter by two centuries, and one the app has no record for. Suppressed, not written:
+    // whether he earns a record is Robbie's and is on his list, and a record replaces these four
+    // lines. None of the four records names Simon Peter at all.
+    "bib-it-hasmonean-dynasty-begins": null, // 5: three article paragraphs, datingNotes, summary
+    "bib-it-john-hyrcanus-reign": null, // 2: "Simon's son John Hyrcanus" + the summary
+    "bib-it-maccabean-revolt-begins": null, // 1: "his five sons — Judas, Jonathan, Simon, John, and Eleazar"
+    "bib-it-jonathan-maccabeus-high-priest": null, // 3: "his brother Simon", "the last surviving
+                                                   // brother, Simon", and the Wicked Priest note
+
+    // ── Three more men with no record ─────────────────────────────────────────────────────────
+    // SIMON THE TANNER, whose house Peter lodged in at Joppa (Acts 9:43, 10:6). Scripture's own
+    // Acts 10:32 already suppresses him; until now the location article contradicted the reader.
+    joppa: null,
+    // SIMON THE BROTHER OF JESUS — "Mark's Gospel names him first among four (James, Joses, Judas,
+    // and Simon)". Matches Scripture, where Matthew 13:55 is already suppressed.
+    "james-brother-of-jesus": null,
+
+    // ── Two repoints, where the app has the right man and the sentence says which ──────────────
+    cyrene: "simon-of-cyrene", // "Hometown of Simon, the man forced to carry Jesus's cross"
+    "bib-ac-philip-ethiopian-eunuch": "simon-magus", // "even the sorcerer Simon believed and was baptized"
+
+    // ── FIVE RECORDS THAT LINKED THEIR OWN SUBJECT'S NAME TO SIMON PETER ──────────────────────
+    //
+    // None of these was in the sweep that produced this batch; all five came out of
+    // scripts/name-linker/self-name.mjs on the commit that added it. The sweep had checked these
+    // records and reported, correctly, that they "resolve correctly wherever their longer wording
+    // appears" — which was a different question from what the BARE name does on the page whose
+    // subject it is. Fifteen links, every one of them the page's own subject.
+    "simon-magus": "simon-magus", // 5
+    "simon-of-cyrene": "simon-of-cyrene", // 4
+    "simon-the-pharisee": "simon-the-pharisee", // 3
+    "simon-the-zealot": "simon-the-zealot", // 2
+    "simon-the-leper": "simon-the-leper", // 1
   },
 
   // "Titus": the bare name belongs to Paul's Gentile co-worker, and every one of his own mentions
