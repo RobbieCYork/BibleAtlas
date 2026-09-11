@@ -9,13 +9,14 @@ by a read-only dump of the live database on that date).
 
 ---
 
-## The next free number is 034
+## The next free number is 036
 
 | Number | Status |
 |---|---|
 | **033** | **TAKEN — Capstone for Churches.** Claimed 2026-09-11 while that migration was being written. Do not take it. |
 | **034** | `034_pin_search_path.sql` — committed, **not applied**. See below. |
-| **035** | Next genuinely free number. |
+| **035** | `035_revoke_default_grants_moderation.sql` — committed, **not applied**. See below. |
+| **036** | Next genuinely free number. |
 
 ### Numbers that are TAKEN but MISSING from this directory
 
@@ -31,7 +32,7 @@ The full list present on `main`:
 
 ```
 001 002 003 004 005 007 008 009 010 011 012 013 014 015 016 017 018 019
-021 022 023 024 025 026 027 028 030 031 032 034
+021 022 023 024 025 026 027 028 030 031 032 034 035
 ```
 
 `000_baseline.sql` is **not** a migration. It is a photograph of the live schema, numbered `000`
@@ -55,6 +56,7 @@ Verified against the live database on 2026-09-11:
 | 031 avatars not enumerable | **APPLIED** | owner-only avatar select policy is live |
 | 032 search respects blocks | **APPLIED** | the three `find_*` functions call `is_blocked_between` |
 | 034 pin search_path | **NOT APPLIED** | written and committed only; needs Robbie's explicit word |
+| 035 revoke default grants (028's five tables) | **NOT APPLIED** | written and committed only; needs Robbie's explicit word |
 
 **Regenerate `000_baseline.sql` when a migration is APPLIED, not when one is committed.** A
 baseline regenerated off a commit would record a schema that does not exist.
@@ -62,6 +64,55 @@ baseline regenerated off a commit would record a schema that does not exist.
 ---
 
 ## Things that will bite you if you clone the groups pattern
+
+### Every new table starts fully granted to `anon` and `authenticated`
+
+This is the one that has already bitten a migration in this directory. Supabase ships the project
+with a default ACL:
+
+```
+pg_default_acl, role postgres, schema public, object type "r":
+  anon=arwdDxtm/postgres | authenticated=arwdDxtm/postgres
+```
+
+`arwdDxtm` is every table privilege there is — INSERT, SELECT, UPDATE, DELETE, TRUNCATE,
+REFERENCES, TRIGGER, MAINTAIN — applied at `create table` time. **So a `grant select, insert on t
+to authenticated` in a new migration changes nothing.** It re-grants what is already there and
+leaves UPDATE, DELETE and TRUNCATE standing. The file then reads as a description of a grant set
+the database does not have, which is worse than having written nothing.
+
+**Revoke to zero first, then grant back:**
+
+```sql
+revoke all on t from anon, authenticated;
+grant select, insert on t to authenticated;
+```
+
+Verified against production on 2026-09-10: **43 of the 44 tables carry the full default set for
+both client roles.** `messages` is the only exception, because `sql/024` revoked UPDATE and
+granted back a single column.
+
+Two migrations get the pattern right, and for different reasons: `033_churches` revokes all four
+of its tables to zero first and uses column-level grants, and `024_message_update_columns` revokes
+UPDATE before granting `update (read_at)`. Every other table-creating migration —
+`001`, `008`, `011`, `017`, `018`, `019`, `025`, `028` — granted without revoking. (`019`, `021`,
+`025` and `026` do contain `revoke`s, but every one of them is `revoke execute on function`, which
+is a different and unrelated trap: Postgres grants function EXECUTE to `PUBLIC` by default, so
+functions need revoking too.)
+
+**RLS is what has been holding this, and it has held.** On all five `028` tables an UPDATE or
+DELETE from a signed-in user plans as `One-Time Filter: false` — no policy applies, zero rows.
+Nothing was ever exposed. But note what the second layer is worth: add one permissive `for all`
+policy to a table later and the UPDATE grant already sitting there goes live in the same
+statement, to `anon` as well, with no GRANT in the diff for anyone to review.
+
+And note the one privilege RLS would *not* catch: **TRUNCATE is not subject to row security.** It
+is not reachable through PostgREST, and `anon` and `authenticated` are both NOLOGIN so nobody can
+open a session as them — but it is the reason "RLS covers it" is not a complete answer.
+
+`sql/035` fixes the five tables `028` created. The other 38 are untouched and fixing them is a
+separate decision — it means deriving the right grant set for every table from its policies and
+its call sites, and getting one wrong takes a working feature off the live site.
 
 ### `is_group_member` / `is_group_admin` are the load-bearing helpers
 
