@@ -3309,4 +3309,70 @@ export const CASES = [
          "pattern reaches it because NAME_CONTEXT_RULES needs no context at all. It was added for " +
          "three prose sentences and this verse is its whole reach into Scripture — measured across " +
          "all 31,098 WEB verses before it was written." },
+
+  // ══ "Judaea", THE KJV/ASV SPELLING, 2026-09-10 ═══════════════════════════════════════════════
+  //
+  // `locations.ts` registered only "Judea". WEB spells it that way in all 45 of its verses and the
+  // Bible snapshot is WEB-only, so the 43 KJV and 42 ASV verses that print "Judaea" rendered NO
+  // link at all — a reader who switches translation lost every Judea link on the page, and nothing
+  // here could have said so.
+  //
+  // Measured before the alternate was added, with the real computeLinkAnnotations and the exact
+  // arguments VerseText.tsx passes (text, undefined, book, chapter, verse), over every verse of
+  // both translations: 43 KJV + 42 ASV occurrences, 0 linked. After: 85 linked, every one of them
+  // to `judea`, and every one in a verse where the WEB reader ALREADY had the identical link. The
+  // ASV verse set is identical to WEB's 45; KJV differs only in reading "Jewry" at Luke 23:5 and
+  // John 7:1 and "Judea" (already registered) at Ezra 5:8. No verse gains a link the default
+  // translation does not already carry.
+  //
+  // On the article surface it fires exactly twice, both correct, and key-totals took 0 rows out.
+  // The 22 "Judaean" strings in the tree — "Discoveries in the Judaean Desert", "the Judaean
+  // Shephelah" — are a different word and the word boundary keeps them out; the last case below is
+  // what says so.
+  { ref: "Acts 1:8", translation: "KJV",
+    text: "But ye shall receive power, after that the Holy Ghost is come upon you: and ye shall be " +
+          "witnesses unto me both in Jerusalem, and in all Judaea, and in Samaria, and unto the " +
+          "uttermost part of the earth.",
+    surface: "Judaea", expect: "judea", status: "guard",
+    why: "The KJV spelling, which matches nothing in the WEB corpus. A green Bible snapshot is NOT " +
+         "evidence this fires — the snapshot has no KJV in it." },
+  { ref: "Acts 1:8", translation: "ASV",
+    text: "But ye shall receive power, when the Holy Spirit is come upon you: and ye shall be my " +
+          "witnesses both in Jerusalem, and in all Judaea and Samaria, and unto the uttermost part " +
+          "of the earth.",
+    surface: "Judaea", expect: "judea", status: "guard",
+    why: "The ASV, same spelling, same verse. Quoted verbatim from bible-api.com, which is the " +
+         "service src/lib/biblePassage.ts asks for the reader's text." },
+  { ref: "Acts 1:8", surface: "Judea", expect: "judea", status: "guard",
+    why: "And WEB, from the corpus. The existing key is unmoved by the alternate — this is the " +
+         "other end of the same verse and the reason the Bible snapshot is unchanged." },
+  { ref: "Matthew 2:1", surface: "Judea", expect: "bethlehem",
+    expectSurface: "Bethlehem of Judea", status: "guard",
+    why: "The longer key on the bethlehem record still swallows \"Judea\" here. Adding a Judaea " +
+         "alternate to the region must not break the phrase pin that sends this to the town." },
+  { ref: "Matthew 2:1", translation: "KJV",
+    text: "Now when Jesus was born in Bethlehem of Judaea in the days of Herod the king, behold, " +
+          "there came wise men from the east to Jerusalem,",
+    surface: "Judaea", expect: "judea", status: "guard",
+    why: "The KJV spells the same phrase \"Bethlehem of Judaea\", which the bethlehem phrase pin " +
+         "does not cover, so the town and the region link separately here. Both are right; the " +
+         "divergence from WEB's single link is a consequence of the phrase pin being spelt one way " +
+         "and is recorded rather than hidden." },
+  { text: "The press reported that Pontius Pilate's ring had been found. The excavation report said something close to the opposite. Its authors wrote that \"it is therefore unlikely that Pontius Pilatus, the powerful and rich prefect of Judaea, would have worn a thin, all copper-alloy sealing ring\" — and then declined to name an owner at all, leaving it open between a Jew, a Roman, and another pagan bearing the name Pilatus.",
+    surface: "Judaea", owner: "pilate-ring", expect: "judea", status: "guard",
+    why: "The ARTICLE surface. Quoting the excavation report's own spelling is what dropped this " +
+         "link (judea's prose count went 111 -> 110); the quotation is not editable, so the " +
+         "alternate is the only lever that reaches it — OWNER_NAME_OVERRIDES can repoint or " +
+         "suppress a name the linker already knows, never create one." },
+  { text: "The revolt's outbreak in AD 132 is secure. The traditional end date is AD 135 (fall of Betar and death of Simon bar Kosiba), but epigraphic work by Werner Eck — reconstructing Hadrian's second imperatorial acclamation and the triumphal honors granted to the governors of Judaea, Syria, and Arabia — has persuaded many scholars that fighting was not finally suppressed until early AD 136, and many references now print 132-135/136.",
+    surface: "Judaea", owner: "wld-rom-bar-kokhba-revolt", expect: "judea", status: "guard",
+    why: "The second and last article-surface occurrence, on timelineEvent.datingNotes. The Roman " +
+         "province, named alongside Syria and Arabia — right, and the reason the measured prose " +
+         "delta is 2 rather than 1." },
+  { text: "J. A. Sanders published it in 1965 as the fourth volume of Discoveries in the Judaean Desert. It is the most extensive Psalms manuscript from any of the caves, and Psalms was the most-copied book at Qumran.",
+    surface: "Judaean", owner: "great-psalms-scroll", expect: null, status: "guard",
+    why: "\"Judaean\" is not \"Judaea\" and the word boundary must keep it that way. 22 strings in " +
+         "the tree are of this shape — mostly the series title Discoveries in the Judaean Desert, " +
+         "which is a modern work's title as well. If a future widening reaches the adjective, this " +
+         "is the case that fails." },
 ];

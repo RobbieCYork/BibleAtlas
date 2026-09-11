@@ -109,12 +109,12 @@ purpose and is written up in `reviewed.tsv`'s header.
 |---|---:|---|
 | `bible-links.tsv` | 9,724 | every person-link in all 31,098 WEB verses, with the id each rendering path gives it |
 | `prose-links.tsv` | 6,320 | every person-link in every authored prose block the app puts through `LinkedVerseText` |
-| `key-totals.tsv` | 4,082 | a tally covering **every** kind — location, POI, topic, timeline, verse reference — one row per (kind, matched text, id, path) |
+| `key-totals.tsv` | 4,083 | a tally covering **every** kind — location, POI, topic, timeline, verse reference — one row per (kind, matched text, id, path) |
 
 The first two are row-level, so a diff names the verse or the block. `key-totals.tsv` exists because
 the other two only record **people**: a change to `people.ts` can steal a key from a location, and
 adding one POI alternate name can start firing hundreds of links that no person snapshot would ever
-show. Its 4,082 rows currently break down as 2,349 verse references, 745 person, 391 topic, 387
+show. Its 4,083 rows currently break down as 2,349 verse references, 745 person, 391 topic, 388
 location, 131 POI and 79 timeline.
 
 This is the half that catches what you did not think to assert. The named cases cover a few dozen
@@ -338,10 +338,12 @@ scoping document twice. **Run it before claiming a change fixes N links.**
   identically whatever the reader has selected — including where the wording differs enough to make
   the override meaningless. See `corpus/PROVENANCE.md`. What changed on 2026-09-10 is only that a
   **named case can now assert one verse in one translation**, by carrying `text` alongside `ref`
-  (above). **Ten** of them exist, counted off the file on 2026-09-10 with
+  (above). **Thirteen** of them exist, recounted off the file on 2026-09-10 with
   `CASES.filter(c => c.text && c.ref).length`: two on Acts 4:36, where only the ASV prints
-  "Joseph"; two on Acts 1:23, where all three translations do; and six on Acts 15:22, 15:27 and
-  15:32, Judas called Barsabbas, likewise unanimous. (This line read "six … three and three" until
+  "Joseph"; two on Acts 1:23, where all three translations do; six on Acts 15:22, 15:27 and
+  15:32, Judas called Barsabbas, likewise unanimous; and three added with the `Judaea` alternate
+  (KJV and ASV Acts 1:8, KJV Matthew 2:1), which are the first of these to assert a LOCATION and
+  the only cover the 85 KJV/ASV "Judaea" links have. (This line read "six … three and three" until
   the recount. It was wrong: the third case in each of those groups is the WEB *corpus* case, which
   carries `ref` and no `text` and is therefore an ordinary verse case. Two per verse, one per
   non-WEB translation, is the shape.) That is a foothold, not coverage: nothing sweeps either

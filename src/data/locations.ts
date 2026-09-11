@@ -291,6 +291,7 @@ export const locations: Location[] = [
   {
     id: "judea",
     name: "Judea",
+    alternateNames: ["Judaea"],
     pronunciation: "joo-DEE-uh",
     category: "region",
     modernName: "Judea region, Israel/West Bank",
