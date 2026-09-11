@@ -158,7 +158,7 @@ const blockKey = (b) =>
  * makes this file the regression NET for the other two translations rather than only the default
  * one: the key carries the matched surface as well as the kind and the id, so a KJV link that
  * vanishes, repoints, or merely grows to cover a longer phrase moves a row here. It costs about 980
- * rows — the two translations have 486 and 494 distinct keys between them — against the ~840KB two
+ * rows — the two translations have 488 and 494 distinct keys between them — against the ~840KB two
  * more `bible-links.tsv` files would have cost for person links alone. Neither extra translation
  * gets a `panel` path: `LinkedVerseText` never renders a Bible verse, the panel column over
  * Scripture exists to measure the gap between the two code paths, and that measurement is already

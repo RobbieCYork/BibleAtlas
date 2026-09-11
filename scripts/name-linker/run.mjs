@@ -11,7 +11,7 @@
 // cases in cases.mjs, then regenerates the whole-corpus snapshot (all 31,098 WEB verses and every
 // authored prose block, on both rendering paths) and diffs it against the committed baseline.
 //
-// The snapshot is the part that matters. 9,725 Bible links and 5,684 prose links are far more than
+// The snapshot is the part that matters. 9,698 Bible links and 6,211 prose links are far more than
 // anyone has read; the diff is what tells you that a one-line data edit moved 400 of them. `--update`
 // is how you accept a deliberate move — the snapshot diff then lands in the same commit as the
 // change that caused it, and a reviewer can read every moved row.

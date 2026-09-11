@@ -10,31 +10,14 @@
 1 Chronicles 12:15	location	jordan-river	WEB=1:the Jordan	KJV=0	ASV=1:the Jordan
 1 Chronicles 12:27	person	aaron	WEB=1:Aaron	KJV=0	ASV=1:Aaron
 1 Chronicles 12:37	location	jordan-river	WEB=1:the Jordan	KJV=0	ASV=1:the Jordan
-1 Chronicles 13:11	person	perez	WEB=0	KJV=0	ASV=1:Perez
-1 Chronicles 13:13	location	edom	WEB=1:Edom	KJV=0	ASV=1:edom
 1 Chronicles 13:13	person	david	WEB=2:David	KJV=1:David	ASV=1:David
-1 Chronicles 13:13	person	obed	WEB=1:Obed	KJV=0	ASV=1:Obed
 1 Chronicles 13:13	poi	city-of-david	WEB=0	KJV=1:city of David	ASV=1:city of David
-1 Chronicles 13:14	location	edom	WEB=2:Edom	KJV=0	ASV=2:edom
-1 Chronicles 13:14	person	obed	WEB=2:Obed	KJV=0	ASV=2:Obed
 1 Chronicles 13:6	topic	cherubim	WEB=1:cherubim	KJV=0	ASV=1:cherubim
 1 Chronicles 15:1	person	david	WEB=2:David	KJV=1:David	ASV=1:David
 1 Chronicles 15:1	poi	city-of-david	WEB=0	KJV=1:city of David	ASV=1:city of David
-1 Chronicles 15:18	location	edom	WEB=1:Edom	KJV=0	ASV=1:edom
-1 Chronicles 15:18	person	obed	WEB=1:Obed	KJV=0	ASV=1:Obed
-1 Chronicles 15:21	location	edom	WEB=1:Edom	KJV=0	ASV=1:edom
-1 Chronicles 15:21	person	obed	WEB=1:Obed	KJV=0	ASV=1:Obed
-1 Chronicles 15:24	location	edom	WEB=1:Edom	KJV=0	ASV=1:edom
 1 Chronicles 15:24	person	jehoshaphat	WEB=0	KJV=1:Jehoshaphat	ASV=0
-1 Chronicles 15:24	person	obed	WEB=1:Obed	KJV=0	ASV=1:Obed
-1 Chronicles 15:25	location	edom	WEB=1:Edom	KJV=0	ASV=1:edom
-1 Chronicles 15:25	person	obed	WEB=1:Obed	KJV=0	ASV=1:Obed
 1 Chronicles 15:29	person	david	WEB=2:David	KJV=1:David	ASV=1:David
 1 Chronicles 15:29	poi	city-of-david	WEB=0	KJV=1:city of David	ASV=1:city of David
-1 Chronicles 16:38	location	edom	WEB=2:Edom	KJV=0	ASV=2:edom
-1 Chronicles 16:38	person	obed	WEB=2:Obed	KJV=0	ASV=2:Obed
-1 Chronicles 16:5	location	edom	WEB=1:Edom	KJV=0	ASV=1:edom
-1 Chronicles 16:5	person	obed	WEB=1:Obed	KJV=0	ASV=1:Obed
 1 Chronicles 17:5	topic	tabernacle	WEB=0	KJV=1:tabernacle	ASV=1:tabernacle
 1 Chronicles 18:6	location	damascus	WEB=1:Damascus	KJV=0	ASV=1:Damascus
 1 Chronicles 19:17	location	jordan-river	WEB=1:the Jordan	KJV=0	ASV=1:the Jordan
@@ -44,21 +27,13 @@
 1 Chronicles 23:27	topic	levites	WEB=0	KJV=1:Levites	ASV=0
 1 Chronicles 23:4	person	david	WEB=1:David	KJV=0	ASV=0
 1 Chronicles 23:5	person	david	WEB=0	KJV=1:David	ASV=1:David
-1 Chronicles 26:15	location	edom	WEB=1:Edom	KJV=0	ASV=1:edom
-1 Chronicles 26:15	person	obed	WEB=1:Obed	KJV=0	ASV=1:Obed
 1 Chronicles 26:16	topic	casting-lots	WEB=0	KJV=1:the lot	ASV=0
 1 Chronicles 26:30	location	jordan-river	WEB=1:the Jordan	KJV=0	ASV=1:the Jordan
-1 Chronicles 26:4	location	edom	WEB=1:Edom	KJV=0	ASV=1:edom
-1 Chronicles 26:4	person	obed	WEB=1:Obed	KJV=0	ASV=1:Obed
-1 Chronicles 26:8	location	edom	WEB=2:Edom	KJV=0	ASV=2:edom
-1 Chronicles 26:8	person	obed	WEB=2:Obed	KJV=0	ASV=2:Obed
 1 Chronicles 27:17	person	aaron	WEB=1:Aaron	KJV=0	ASV=1:Aaron
 1 Chronicles 27:17	topic	levites	WEB=0	KJV=1:Levites	ASV=0
 1 Chronicles 28:11	topic	the-temple	WEB=1:the temple	KJV=0	ASV=1:the temple
 1 Chronicles 28:18	topic	cherubim	WEB=1:cherubim	KJV=0	ASV=1:cherubim
 1 Chronicles 29:29	person	samuel	WEB=1:Samuel	KJV=0	ASV=1:Samuel
-1 Chronicles 2:24	location	bethlehem	WEB=1:Ephrathah	KJV=0	ASV=1:ephrathah
-1 Chronicles 2:24	person	caleb	WEB=0	KJV=0	ASV=1:Caleb
 1 Chronicles 2:4	person	perez	WEB=1:Perez	KJV=0	ASV=1:Perez
 1 Chronicles 2:5	person	perez	WEB=1:Perez	KJV=0	ASV=1:Perez
 1 Chronicles 2:50	location	bethlehem	WEB=1:Ephrathah	KJV=0	ASV=1:Ephrathah
@@ -75,7 +50,6 @@
 1 Chronicles 6:33	person	samuel	WEB=1:Samuel	KJV=0	ASV=1:Samuel
 1 Chronicles 6:49	topic	holy-of-holies	WEB=1:the most holy place	KJV=0	ASV=1:the most holy place
 1 Chronicles 6:54	topic	casting-lots	WEB=0	KJV=1:the lot	ASV=0
-1 Chronicles 6:69	location	gath	WEB=1:Gath	KJV=0	ASV=1:Gath
 1 Chronicles 6:77	topic	levites	WEB=1:Levites	KJV=0	ASV=1:Levites
 1 Chronicles 6:78	location	jordan-river	WEB=2:the Jordan	KJV=0	ASV=2:the Jordan
 1 Chronicles 7:27	person	joshua	WEB=0	KJV=1:Jehoshua	ASV=0
@@ -132,7 +106,6 @@
 1 Kings 13:4	poi	bethel	WEB=1:Bethel	KJV=1:Bethel	ASV=0
 1 Kings 14:31	person	david	WEB=1:David	KJV=0	ASV=0
 1 Kings 14:31	poi	city-of-david	WEB=0	KJV=1:city of David	ASV=1:city of David
-1 Kings 15:20	person	abel	WEB=0	KJV=0	ASV=1:Abel
 1 Kings 15:24	person	david	WEB=1:David	KJV=0	ASV=0
 1 Kings 15:24	poi	city-of-david	WEB=0	KJV=1:city of David	ASV=1:city of David
 1 Kings 15:8	person	david	WEB=1:David	KJV=0	ASV=0
@@ -141,7 +114,6 @@
 1 Kings 17:5	location	jordan-river	WEB=1:the Jordan	KJV=0	ASV=1:the Jordan
 1 Kings 17:9	location	sidon	WEB=1:Sidon	KJV=0	ASV=1:Sidon
 1 Kings 18:12	person	holy-spirit	WEB=0	KJV=1:Spirit of the LORD	ASV=0
-1 Kings 19:16	person	abel	WEB=0	KJV=0	ASV=1:Abel
 1 Kings 19:20	person	elisha	WEB=1:Elisha	KJV=0	ASV=0
 1 Kings 19:3	poi	beersheba	WEB=1:Beersheba	KJV=1:Beersheba	ASV=0
 1 Kings 19:8	location	mount-sinai	WEB=1:Horeb	KJV=2:Horeb|mount of God	ASV=2:Horeb|mount of God
@@ -168,7 +140,6 @@
 1 Kings 2:8	location	jordan-river	WEB=1:the Jordan	KJV=0	ASV=1:the Jordan
 1 Kings 3:1	person	david	WEB=1:David	KJV=0	ASV=0
 1 Kings 3:1	poi	city-of-david	WEB=0	KJV=1:city of David	ASV=1:city of David
-1 Kings 4:12	person	abel	WEB=0	KJV=0	ASV=1:Abel
 1 Kings 4:12	poi	beth-shean	WEB=2:Beth Shean	KJV=0	ASV=0
 1 Kings 4:25	poi	beersheba	WEB=1:Beersheba	KJV=1:Beersheba	ASV=0
 1 Kings 6:23	topic	cherubim	WEB=1:cherubim	KJV=0	ASV=1:cherubim
@@ -254,7 +225,6 @@
 2 Chronicles 14:1	poi	city-of-david	WEB=0	KJV=1:city of David	ASV=1:city of David
 2 Chronicles 16:14	person	david	WEB=1:David	KJV=0	ASV=0
 2 Chronicles 16:14	poi	city-of-david	WEB=0	KJV=1:city of David	ASV=1:city of David
-2 Chronicles 16:4	person	abel	WEB=0	KJV=0	ASV=1:Abel
 2 Chronicles 16:6	location	ramah	WEB=0	KJV=1:Ramah	ASV=1:Ramah
 2 Chronicles 18:23	person	holy-spirit	WEB=0	KJV=1:Spirit of the LORD	ASV=0
 2 Chronicles 19:4	poi	beersheba	WEB=1:Beersheba	KJV=1:Beersheba	ASV=0
@@ -277,8 +247,6 @@
 2 Chronicles 24:6	topic	tabernacle	WEB=0	KJV=1:tabernacle	ASV=0
 2 Chronicles 25:19	location	edom	WEB=1:Edom	KJV=0	ASV=1:Edom
 2 Chronicles 25:19	topic	edomites	WEB=0	KJV=1:Edomites	ASV=0
-2 Chronicles 25:24	location	edom	WEB=1:Edom	KJV=0	ASV=1:edom
-2 Chronicles 25:24	person	obed	WEB=1:Obed	KJV=0	ASV=1:Obed
 2 Chronicles 26:16	topic	the-temple	WEB=0	KJV=1:the temple	ASV=1:the temple
 2 Chronicles 27:2	topic	the-temple	WEB=0	KJV=1:the temple	ASV=1:the temple
 2 Chronicles 27:5	location	ammon	WEB=3:Ammon	KJV=2:Ammon	ASV=3:Ammon
@@ -330,10 +298,8 @@
 2 Kings 14:20	person	david	WEB=1:David	KJV=0	ASV=0
 2 Kings 14:20	poi	city-of-david	WEB=0	KJV=1:city of David	ASV=1:city of David
 2 Kings 14:25	location	dead-sea	WEB=1:sea of the Arabah	KJV=0	ASV=1:sea of the Arabah
-2 Kings 14:25	location	gath	WEB=1:Gath	KJV=0	ASV=1:Gath
 2 Kings 14:7	location	edom	WEB=0	KJV=1:Edom	ASV=1:Edom
 2 Kings 14:7	topic	edomites	WEB=1:Edomites	KJV=0	ASV=0
-2 Kings 15:29	person	abel	WEB=0	KJV=0	ASV=1:Abel
 2 Kings 15:38	person	david	WEB=1:David	KJV=0	ASV=0
 2 Kings 15:38	poi	city-of-david	WEB=0	KJV=1:city of David	ASV=1:city of David
 2 Kings 15:7	person	david	WEB=1:David	KJV=0	ASV=0
@@ -341,7 +307,6 @@
 2 Kings 16:20	person	david	WEB=1:David	KJV=0	ASV=0
 2 Kings 16:20	poi	city-of-david	WEB=0	KJV=1:city of David	ASV=1:city of David
 2 Kings 17:28	poi	bethel	WEB=1:Bethel	KJV=1:Bethel	ASV=0
-2 Kings 17:30	location	succoth	WEB=1:Succoth	KJV=0	ASV=1:Succoth
 2 Kings 18:16	topic	the-temple	WEB=0	KJV=1:the temple	ASV=1:the temple
 2 Kings 19:15	topic	cherubim	WEB=1:cherubim	KJV=0	ASV=1:cherubim
 2 Kings 19:24	location	egypt	WEB=1:Egypt	KJV=0	ASV=1:Egypt
@@ -421,7 +386,6 @@
 2 Samuel 24:15	poi	beersheba	WEB=1:Beersheba	KJV=1:Beersheba	ASV=0
 2 Samuel 24:2	poi	beersheba	WEB=1:Beersheba	KJV=1:Beersheba	ASV=0
 2 Samuel 24:5	location	jordan-river	WEB=1:the Jordan	KJV=0	ASV=1:the Jordan
-2 Samuel 24:6	location	dan	WEB=1:Dan	KJV=0	ASV=1:Dan
 2 Samuel 24:6	location	sidon	WEB=1:Sidon	KJV=0	ASV=1:Sidon
 2 Samuel 24:7	poi	beersheba	WEB=1:Beersheba	KJV=1:Beersheba	ASV=0
 2 Samuel 2:29	location	jordan-river	WEB=1:the Jordan	KJV=0	ASV=1:the Jordan
@@ -431,15 +395,9 @@
 2 Samuel 5:7	poi	city-of-david	WEB=0	KJV=1:city of David	ASV=1:city of David
 2 Samuel 5:9	person	david	WEB=3:David	KJV=2:David	ASV=2:David
 2 Samuel 5:9	poi	city-of-david	WEB=0	KJV=1:city of David	ASV=1:city of David
-2 Samuel 6:10	location	edom	WEB=1:Edom	KJV=0	ASV=1:edom
 2 Samuel 6:10	person	david	WEB=3:David	KJV=2:David	ASV=2:David
-2 Samuel 6:10	person	obed	WEB=1:Obed	KJV=0	ASV=1:Obed
 2 Samuel 6:10	poi	city-of-david	WEB=0	KJV=1:city of David	ASV=1:city of David
-2 Samuel 6:11	location	edom	WEB=2:Edom	KJV=0	ASV=2:edom
-2 Samuel 6:11	person	obed	WEB=2:Obed	KJV=0	ASV=2:Obed
-2 Samuel 6:12	location	edom	WEB=2:Edom	KJV=0	ASV=2:edom
 2 Samuel 6:12	person	david	WEB=3:David	KJV=2:David	ASV=2:David
-2 Samuel 6:12	person	obed	WEB=2:Obed	KJV=0	ASV=2:Obed
 2 Samuel 6:12	poi	city-of-david	WEB=0	KJV=1:city of David	ASV=1:city of David
 2 Samuel 6:16	person	david	WEB=2:David	KJV=1:David	ASV=1:David
 2 Samuel 6:16	poi	city-of-david	WEB=0	KJV=1:city of David	ASV=1:city of David
@@ -447,7 +405,6 @@
 2 Samuel 6:2	topic	cherubim	WEB=1:cherubim	KJV=0	ASV=1:cherubim
 2 Samuel 6:3	location	gibeah	WEB=0	KJV=1:Gibeah	ASV=0
 2 Samuel 6:4	location	gibeah	WEB=0	KJV=1:Gibeah	ASV=0
-2 Samuel 6:8	person	perez	WEB=0	KJV=0	ASV=1:Perez
 2 Samuel 8:14	location	edom	WEB=2:Edom	KJV=3:Edom	ASV=2:Edom
 2 Samuel 8:14	topic	edomites	WEB=1:Edomites	KJV=0	ASV=1:Edomites
 2 Thessalonians 1:1	person	timothy	WEB=1:Timothy	KJV=0	ASV=1:Timothy
@@ -476,7 +433,6 @@ Acts 13:42	topic	gentiles	WEB=1:Gentiles	KJV=1:Gentiles	ASV=0
 Acts 13:42	topic	jews	WEB=1:the Jews	KJV=1:the Jews	ASV=0
 Acts 13:42	topic	synagogue	WEB=1:synagogue	KJV=1:synagogue	ASV=0
 Acts 13:43	topic	synagogue	WEB=1:synagogue	KJV=0	ASV=1:synagogue
-Acts 13:6	person	jesus-of-nazareth	WEB=1:Jesus	KJV=0	ASV=1:jesus
 Acts 14:27	topic	gentiles	WEB=0	KJV=1:Gentiles	ASV=1:Gentiles
 Acts 15:12	topic	gentiles	WEB=0	KJV=1:Gentiles	ASV=1:Gentiles
 Acts 15:14	topic	gentiles	WEB=0	KJV=1:Gentiles	ASV=1:Gentiles
@@ -778,13 +734,11 @@ Ezekiel 48:28	location	egypt	WEB=0	KJV=0	ASV=1:Egypt
 Ezekiel 4:13	topic	gentiles	WEB=0	KJV=1:Gentiles	ASV=0
 Ezekiel 8:16	topic	the-temple	WEB=0	KJV=2:the temple	ASV=2:the temple
 Ezra 10:26	person	elijah	WEB=1:Elijah	KJV=0	ASV=1:Elijah
-Ezra 10:30	location	moab	WEB=0	KJV=0	ASV=1:moab
 Ezra 10:5	topic	chief-priests	WEB=0	KJV=1:chief priests	ASV=0
 Ezra 2:21	location	bethlehem	WEB=1:Bethlehem	KJV=1:Bethlehem	ASV=0
 Ezra 2:28	poi	bethel	WEB=1:Bethel	KJV=1:Bethel	ASV=0
 Ezra 2:43	topic	the-temple	WEB=1:The temple	KJV=0	ASV=0
 Ezra 2:58	topic	the-temple	WEB=1:the temple	KJV=0	ASV=0
-Ezra 2:6	location	moab	WEB=0	KJV=0	ASV=1:moab
 Ezra 2:70	topic	the-temple	WEB=1:the temple	KJV=0	ASV=0
 Ezra 3:10	topic	the-temple	WEB=0	KJV=1:the temple	ASV=1:the temple
 Ezra 3:6	topic	the-temple	WEB=0	KJV=1:the temple	ASV=1:the temple
@@ -794,7 +748,6 @@ Ezra 5:8	location	judea	WEB=0	KJV=1:Judea	ASV=0
 Ezra 7:7	topic	the-temple	WEB=1:the temple	KJV=0	ASV=0
 Ezra 8:17	topic	the-temple	WEB=1:the temple	KJV=0	ASV=0
 Ezra 8:20	topic	the-temple	WEB=1:the temple	KJV=0	ASV=0
-Ezra 8:4	location	moab	WEB=0	KJV=0	ASV=1:moab
 Galatians 1:16	topic	gentiles	WEB=1:Gentiles	KJV=0	ASV=1:Gentiles
 Galatians 2:9	topic	gentiles	WEB=1:Gentiles	KJV=0	ASV=1:Gentiles
 Galatians 3:8	topic	gentiles	WEB=1:Gentiles	KJV=0	ASV=1:Gentiles
@@ -866,10 +819,8 @@ Genesis 49:10	poi	shiloh	WEB=0	KJV=1:Shiloh	ASV=1:Shiloh
 Genesis 49:13	location	sidon	WEB=1:Sidon	KJV=0	ASV=1:Sidon
 Genesis 4:1	person	adam	WEB=0	KJV=1:Adam	ASV=0
 Genesis 4:2	person	cain	WEB=2:Cain	KJV=1:Cain	ASV=1:Cain
-Genesis 4:22	person	cain	WEB=2:Cain	KJV=0	ASV=2:cain
 Genesis 50:10	location	jordan-river	WEB=1:the Jordan	KJV=0	ASV=1:the Jordan
 Genesis 50:11	location	jordan-river	WEB=1:the Jordan	KJV=0	ASV=1:the Jordan
-Genesis 50:11	person	abel	WEB=0	KJV=0	ASV=1:Abel
 Genesis 8:4	location	mount-ararat	WEB=0	KJV=1:mountains of Ararat	ASV=1:mountains of Ararat
 Haggai 2:15	topic	the-temple	WEB=0	KJV=1:the temple	ASV=1:the temple
 Hebrews 11:11	person	sarah	WEB=1:Sarah	KJV=0	ASV=1:Sarah
@@ -1085,7 +1036,6 @@ Joshua 12:7	location	jordan-river	WEB=1:the Jordan	KJV=0	ASV=1:the Jordan
 Joshua 12:9	poi	bethel	WEB=1:Bethel	KJV=1:Bethel	ASV=0
 Joshua 13:13	topic	israelites	WEB=1:children of Israel	KJV=2:Israelites|children of Israel	ASV=1:children of Israel
 Joshua 13:23	location	jordan-river	WEB=1:the Jordan	KJV=0	ASV=1:the Jordan
-Joshua 13:26	location	mizpah	WEB=1:Mizpeh	KJV=0	ASV=1:mizpeh
 Joshua 13:27	location	jordan-river	WEB=2:the Jordan	KJV=0	ASV=2:the Jordan
 Joshua 13:32	location	jordan-river	WEB=1:the Jordan	KJV=0	ASV=1:the Jordan
 Joshua 13:6	topic	israelites	WEB=1:children of Israel	KJV=2:Israelites|children of Israel	ASV=1:children of Israel
@@ -1106,7 +1056,6 @@ Joshua 15:62	location	en-gedi	WEB=1:En Gedi	KJV=1:Engedi	ASV=0
 Joshua 16:1	location	jordan-river	WEB=1:the Jordan	KJV=0	ASV=1:the Jordan
 Joshua 16:1	poi	bethel	WEB=1:Bethel	KJV=1:Bethel	ASV=0
 Joshua 16:2	poi	bethel	WEB=1:Bethel	KJV=1:Bethel	ASV=0
-Joshua 16:6	poi	shiloh	WEB=1:Shiloh	KJV=0	ASV=1:shiloh
 Joshua 16:7	location	jordan-river	WEB=1:the Jordan	KJV=0	ASV=1:the Jordan
 Joshua 17:1	topic	casting-lots	WEB=1:the lot	KJV=0	ASV=1:the lot
 Joshua 17:11	poi	beth-shean	WEB=1:Beth Shean	KJV=0	ASV=0
@@ -1119,14 +1068,12 @@ Joshua 18:19	location	jordan-river	WEB=1:the Jordan	KJV=0	ASV=1:the Jordan
 Joshua 18:20	location	jordan-river	WEB=1:The Jordan	KJV=0	ASV=1:the Jordan
 Joshua 18:22	poi	bethel	WEB=1:Bethel	KJV=1:Bethel	ASV=0
 Joshua 18:7	location	jordan-river	WEB=1:the Jordan	KJV=0	ASV=1:the Jordan
-Joshua 19:13	location	gath	WEB=1:Gath	KJV=0	ASV=1:Gath
 Joshua 19:2	poi	beersheba	WEB=1:Beersheba	KJV=1:Beersheba	ASV=0
 Joshua 19:22	location	jordan-river	WEB=1:the Jordan	KJV=0	ASV=1:the Jordan
 Joshua 19:28	location	sidon	WEB=1:Sidon	KJV=0	ASV=1:Sidon
 Joshua 19:28	poi	hebron	WEB=0	KJV=1:Hebron	ASV=0
 Joshua 19:33	location	jordan-river	WEB=1:the Jordan	KJV=0	ASV=1:the Jordan
 Joshua 19:34	location	jordan-river	WEB=1:the Jordan	KJV=0	ASV=1:the Jordan
-Joshua 19:45	location	gath	WEB=1:Gath	KJV=0	ASV=1:Gath
 Joshua 19:46	location	joppa	WEB=1:Joppa	KJV=0	ASV=1:Joppa
 Joshua 19:8	location	ramah	WEB=1:Ramah	KJV=0	ASV=1:Ramah
 Joshua 1:14	location	jordan-river	WEB=1:the Jordan	KJV=0	ASV=1:the Jordan
@@ -1134,8 +1081,6 @@ Joshua 1:15	location	jordan-river	WEB=1:the Jordan	KJV=0	ASV=1:the Jordan
 Joshua 20:7	location	hebron	WEB=0	KJV=0	ASV=1:Kiriath-arba
 Joshua 20:8	location	jordan-river	WEB=1:the Jordan	KJV=0	ASV=1:the Jordan
 Joshua 21:11	location	hebron	WEB=0	KJV=0	ASV=1:Kiriath-arba
-Joshua 21:24	location	gath	WEB=1:Gath	KJV=0	ASV=1:Gath
-Joshua 21:25	location	gath	WEB=1:Gath	KJV=0	ASV=1:Gath
 Joshua 22:10	location	jordan-river	WEB=2:the Jordan	KJV=0	ASV=2:the Jordan
 Joshua 22:11	location	jordan-river	WEB=1:the Jordan	KJV=0	ASV=1:the Jordan
 Joshua 22:25	location	jordan-river	WEB=1:the Jordan	KJV=0	ASV=1:the Jordan
@@ -1191,11 +1136,11 @@ Judges 10:9	location	jordan-river	WEB=1:the Jordan	KJV=0	ASV=1:the Jordan
 Judges 11:13	location	jordan-river	WEB=1:the Jordan	KJV=0	ASV=1:the Jordan
 Judges 11:22	location	jordan-river	WEB=1:the Jordan	KJV=0	ASV=1:the Jordan
 Judges 11:29	person	holy-spirit	WEB=0	KJV=1:Spirit of the LORD	ASV=0
-Judges 11:33	person	abel	WEB=0	KJV=0	ASV=1:Abel
 Judges 12:10	location	bethlehem	WEB=1:Bethlehem	KJV=1:Bethlehem	ASV=0
 Judges 12:5	location	jordan-river	WEB=1:the Jordan	KJV=0	ASV=1:the Jordan
 Judges 12:6	location	jordan-river	WEB=1:the Jordan	KJV=0	ASV=1:the Jordan
 Judges 12:8	location	bethlehem	WEB=1:Bethlehem	KJV=1:Bethlehem	ASV=0
+Judges 13:25	location	dan	WEB=0	KJV=1:Dan	ASV=0
 Judges 13:25	person	holy-spirit	WEB=0	KJV=1:Spirit of the LORD	ASV=0
 Judges 14:19	person	holy-spirit	WEB=0	KJV=1:Spirit of the LORD	ASV=0
 Judges 14:6	person	holy-spirit	WEB=0	KJV=1:Spirit of the LORD	ASV=0
@@ -1203,7 +1148,6 @@ Judges 15:14	person	holy-spirit	WEB=0	KJV=1:Spirit of the LORD	ASV=0
 Judges 17:7	location	bethlehem	WEB=1:Bethlehem	KJV=0	ASV=0
 Judges 17:8	location	bethlehem	WEB=1:Bethlehem	KJV=0	ASV=0
 Judges 17:9	location	bethlehem	WEB=1:Bethlehem	KJV=0	ASV=0
-Judges 18:12	location	dan	WEB=1:Dan	KJV=0	ASV=1:dan
 Judges 18:28	location	sidon	WEB=1:Sidon	KJV=0	ASV=1:Sidon
 Judges 18:30	location	dan	WEB=1:Dan	KJV=2:Dan	ASV=1:Dan
 Judges 18:30	person	moses	WEB=1:Moses	KJV=0	ASV=1:Moses
@@ -1246,7 +1190,6 @@ Judges 4:5	topic	israelites	WEB=1:children of Israel	KJV=1:children of Israel	AS
 Judges 5:17	location	jordan-river	WEB=1:the Jordan	KJV=0	ASV=1:the Jordan
 Judges 6:32	person	gideon	WEB=0	KJV=1:Jerubbaal	ASV=1:Jerubbaal
 Judges 6:34	person	holy-spirit	WEB=0	KJV=1:Spirit of the LORD	ASV=0
-Judges 7:22	person	abel	WEB=0	KJV=0	ASV=1:Abel
 Judges 7:24	location	jordan-river	WEB=2:the Jordan	KJV=0	ASV=2:the Jordan
 Judges 7:25	location	jordan-river	WEB=1:the Jordan	KJV=0	ASV=1:the Jordan
 Judges 8:4	location	jordan-river	WEB=1:the Jordan	KJV=0	ASV=1:the Jordan
@@ -1614,7 +1557,6 @@ Matthew 9:32	topic	demons	WEB=1:demon	KJV=0	ASV=1:demon
 Matthew 9:33	person	satan	WEB=0	KJV=1:the devil	ASV=0
 Matthew 9:33	topic	demons	WEB=1:demon	KJV=0	ASV=1:demon
 Matthew 9:34	topic	demons	WEB=2:demons	KJV=0	ASV=2:demons
-Micah 1:14	location	gath	WEB=1:Gath	KJV=0	ASV=1:gath
 Micah 2:7	person	holy-spirit	WEB=0	KJV=1:spirit of the LORD	ASV=0
 Micah 3:12	topic	the-temple	WEB=1:the temple	KJV=0	ASV=0
 Micah 3:8	person	holy-spirit	WEB=0	KJV=1:spirit of the LORD	ASV=0
@@ -1623,7 +1565,6 @@ Micah 5:5	topic	assyrians	WEB=0	KJV=1:Assyrian	ASV=1:Assyrian
 Micah 5:8	topic	gentiles	WEB=0	KJV=1:Gentiles	ASV=0
 Micah 7:12	location	egypt	WEB=2:Egypt	KJV=0	ASV=2:Egypt
 Nahum 3:9	location	ethiopia	WEB=0	KJV=1:Ethiopia	ASV=1:Ethiopia
-Nehemiah 10:14	location	moab	WEB=0	KJV=0	ASV=1:moab
 Nehemiah 10:17	person	hezekiah	WEB=1:Hezekiah	KJV=0	ASV=1:Hezekiah
 Nehemiah 10:28	topic	the-temple	WEB=1:the temple	KJV=0	ASV=0
 Nehemiah 10:34	topic	casting-lots	WEB=1:cast lots	KJV=0	ASV=1:cast lots
@@ -1639,13 +1580,11 @@ Nehemiah 12:38	topic	broad-wall-jerusalem	WEB=0	KJV=1:broad wall	ASV=1:broad wal
 Nehemiah 2:13	person	satan	WEB=0	KJV=1:the dragon	ASV=0
 Nehemiah 2:19	topic	moabites-and-ammonites	WEB=0	KJV=1:Ammonite	ASV=1:Ammonite
 Nehemiah 2:8	topic	the-temple	WEB=1:the temple	KJV=0	ASV=0
-Nehemiah 3:11	location	moab	WEB=0	KJV=0	ASV=1:moab
 Nehemiah 3:15	person	david	WEB=1:David	KJV=0	ASV=0
 Nehemiah 3:15	poi	city-of-david	WEB=0	KJV=1:city of David	ASV=1:city of David
 Nehemiah 3:26	topic	the-temple	WEB=1:the temple	KJV=0	ASV=0
 Nehemiah 3:31	topic	the-temple	WEB=1:the temple	KJV=0	ASV=0
 Nehemiah 3:8	topic	broad-wall-jerusalem	WEB=0	KJV=1:broad wall	ASV=1:broad wall
-Nehemiah 7:11	location	moab	WEB=0	KJV=0	ASV=1:moab
 Nehemiah 7:26	location	bethlehem	WEB=1:Bethlehem	KJV=1:Bethlehem	ASV=0
 Nehemiah 7:32	poi	bethel	WEB=1:Bethel	KJV=1:Bethel	ASV=0
 Nehemiah 7:46	topic	the-temple	WEB=1:The temple	KJV=0	ASV=0
@@ -1683,14 +1622,10 @@ Numbers 32:19	location	jordan-river	WEB=2:the Jordan	KJV=0	ASV=2:the Jordan
 Numbers 32:21	location	jordan-river	WEB=1:the Jordan	KJV=0	ASV=1:the Jordan
 Numbers 32:29	location	jordan-river	WEB=1:the Jordan	KJV=0	ASV=1:the Jordan
 Numbers 32:32	location	jordan-river	WEB=1:the Jordan	KJV=0	ASV=1:the Jordan
-Numbers 32:36	location	haran	WEB=1:Haran	KJV=0	ASV=1:haran
 Numbers 32:5	location	jordan-river	WEB=1:the Jordan	KJV=0	ASV=1:the Jordan
 Numbers 32:8	location	kadesh-barnea	WEB=1:Kadesh Barnea	KJV=0	ASV=1:Kadesh
-Numbers 33:19	person	perez	WEB=1:Perez	KJV=0	ASV=1:perez
-Numbers 33:20	person	perez	WEB=1:Perez	KJV=0	ASV=1:perez
 Numbers 33:48	location	jordan-river	WEB=1:the Jordan	KJV=0	ASV=1:the Jordan
 Numbers 33:49	location	jordan-river	WEB=1:the Jordan	KJV=0	ASV=1:the Jordan
-Numbers 33:49	person	abel	WEB=0	KJV=0	ASV=1:Abel
 Numbers 33:50	location	jordan-river	WEB=1:the Jordan	KJV=0	ASV=1:the Jordan
 Numbers 33:51	location	jordan-river	WEB=1:the Jordan	KJV=0	ASV=1:the Jordan
 Numbers 33:54	topic	casting-lots	WEB=1:the lot	KJV=0	ASV=1:the lot

@@ -1,8 +1,8 @@
 # The name linker's regression net
 
 `src/lib/verseAnnotations.ts` decides which words in the Bible text — and in every article the app
-has ever written — become links to a person, place or topic. It renders **9,724 person-links across
-Scripture and 6,212 across the app's own prose**. Until this directory existed it had no tests at
+has ever written — become links to a person, place or topic. It renders **9,698 person-links across
+Scripture and 6,211 across the app's own prose**. Until this directory existed it had no tests at
 all, and a one-line data edit could move hundreds of them with nobody noticing.
 
     npm run test:linker
@@ -54,7 +54,7 @@ and matches nothing in the corpus. Quote the verse verbatim from the translation
 names, from `bible-api.com`, which is the service `src/lib/biblePassage.ts` asks for the text.
 
 Prose cases exist because until they did, **the article surface could not be pinned by a named case
-at all** — every case had to be a verse, so the only cover the 6,176 prose links had was the
+at all** — every case had to be a verse, so the only cover the 6,211 prose links had was the
 snapshot. That is not the same thing: `prose-links.tsv` keys each row by a hash of its block's text,
 so editing a paragraph re-keys every link in it and any assertion about them vanishes with the old
 hash rather than failing (see the `tally.mjs` note below). A prose case survives a rewrite of the
@@ -107,10 +107,10 @@ purpose and is written up in `reviewed.tsv`'s header.
 
 | file | rows | what it holds |
 |---|---:|---|
-| `bible-links.tsv` | 9,724 | every person-link in all 31,098 WEB verses, with the id each rendering path gives it |
-| `prose-links.tsv` | 6,212 | every person-link in every authored prose block the app puts through `LinkedVerseText` |
+| `bible-links.tsv` | 9,698 | every person-link in all 31,098 WEB verses, with the id each rendering path gives it |
+| `prose-links.tsv` | 6,211 | every person-link in every authored prose block the app puts through `LinkedVerseText` |
 | `key-totals.tsv` | 5,067 | a tally covering **every** kind and **all three translations** — one row per (kind, matched text, id, path) |
-| `translation-divergence.tsv` | 1,841 | every verse where the WEB, the KJV and the ASV do not produce the same links |
+| `translation-divergence.tsv` | 1,776 | every verse where the WEB, the KJV and the ASV do not produce the same links |
 
 The first two are row-level, so a diff names the verse or the block. `key-totals.tsv` exists because
 the other two only record **people**: a change to `people.ts` can steal a key from a location, and
@@ -217,7 +217,7 @@ in Scripture — 85 of them** — while WEB readers saw them all, and nothing he
 
 **Two files carry the coverage, and neither is another copy of `bible-links.tsv`.**
 
-`key-totals.tsv` gains two paths, `reader:kjv` and `reader:asv` — 486 and 494 rows. Its key is
+`key-totals.tsv` gains two paths, `reader:kjv` and `reader:asv` — 488 and 494 rows. Its key is
 (kind, matched surface, id, path), so any KJV or ASV link that vanishes, repoints, or merely grows
 to cover a longer phrase moves a row. That is **the regression net**, and it covers every annotation
 kind rather than people alone.
@@ -240,7 +240,7 @@ Three reasons it is shaped that way rather than as two more row-level person sna
    per-translation snapshot would have baselined it as correct and stayed green forever. A file
    whose subject is *disagreement between translations* makes a standing fault visible the day it is
    first written — the same argument `self-name.mjs` is built on.
-3. **Size.** 1,841 rows and 122KB, against roughly 19,000 rows and 840KB for two more
+3. **Size.** 1,776 rows and 117KB, against roughly 19,000 rows and 840KB for two more
    `bible-links.tsv` files. A snapshot nobody can read in a diff is worse than none.
 
 **The one thing this pair cannot see** is a link whose *span* changes in one translation only while
@@ -264,12 +264,32 @@ like them:
   a manuscript variant of one man's name. None of these is a defect, and 902 rows are this.
 - **A verse one translation does not have.** 39 rows.
 
-What is left — **766 rows** — is a reader on one translation losing a correct link or getting a
-wrong one, and it is a real population. The pass that built this file enumerated it and deliberately
-fixed none of it. **265 of those rows are confirmed against bible-api.com** (that reader really is
-served that word, unlinked), **29 are contradicted by it** and are corpus artefacts rather than app
-faults, and 472 are in chapters the partial diff has not reached. Written up in the escalation of
-2026-09-10.
+What is left — **700 rows** — is a reader on one translation losing a correct link or getting a
+wrong one, and it is a real population. The pass that built this file enumerated 766 of them and
+deliberately fixed none: **265 were confirmed against bible-api.com** (that reader really is served
+that word, unlinked), **29 were contradicted by it** and were corpus artefacts rather than app
+faults, and 472 were in chapters the partial diff had not reached. Written up in the escalation of
+2026-09-10. That three-way split is the pre-batch measurement and has not been re-derived since.
+
+**66 of those 766 were the compound proper nouns** — "Obed-edom", "Bar-jesus", "Tubal-cain",
+"Abel-mizraim" and fourteen more — and they left the file on 2026-09-10 when the COMPOUND PROPER
+NOUNS block of `NAME_CONTEXT_RULES` was widened from `\s+` to `[\s-]`. **One row arrived**, and it
+is worth reading, because it is a divergence the fix made visible rather than one it caused:
+
+    Judges 13:25  location  dan  WEB=0  KJV=1:Dan  ASV=0
+
+The WEB and the ASV read "Mahaneh-dan" and are now suppressed; bible-api.com's KJV reads "the camp
+of Dan", a bare name this block cannot and should not reach. Whether that bare "Dan" ought to link
+to the northern city is a separate question about bare names, not about compounds.
+
+**The corpus artefacts run in BOTH directions, and that is the trap in this file.** `corpus/`'s KJV
+comes from bolls, which closes these compounds up — "Obededom", "Barjesus", "Tubalcain",
+"Pahathmoab" — so the harness reported the KJV clean while bible-api.com, which is what
+`src/lib/biblePassage.ts` fetches, served "Obed-edom" and "Bar-jesus" and the reader had **69 wrong
+links the snapshot could not see**. The ASV corpus does it once in reverse: it reads
+"Abel-cheramim" at Judges 11:33 where bible-api.com reads "Abelcheramim", so that one row was a
+fault in the corpus only. **A divergence row is a claim about our corpora, never about the reader —
+confirm it against bible-api.com before acting on it, in either direction.**
 
 ### Re-count the figures on this page when you update the snapshot
 
@@ -345,8 +365,8 @@ snapshot.
 
 `LinkedVerseText` is what PersonPanel, LocationPanel, PoiPanel, TopicPanel, BookIntroView,
 TimelineEventPanel and MyProfileView render with. Every book override, verse override and
-suppression in `verseAnnotations.ts` is invisible there. **860 links across 761 verses resolve
-differently between the two paths**, and all but a handful of the 6,212 prose links run with no
+suppression in `verseAnnotations.ts` is invisible there. **859 links across 760 verses resolve
+differently between the two paths**, and all but a handful of the 6,211 prose links run with no
 disambiguation at all — `OWNER_NAME_OVERRIDES` (below) is the only correction that reaches them. A
 fix that only moves the `reader` column has fixed half the app.
 

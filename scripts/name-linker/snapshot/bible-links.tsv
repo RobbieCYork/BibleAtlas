@@ -27,8 +27,6 @@ Genesis 4:17	0	Cain	cain	cain
 Genesis 4:17	53	Enoch	-	enoch
 Genesis 4:17	137	Enoch	-	enoch
 Genesis 4:18	3	Enoch	-	enoch
-Genesis 4:22	32	Cain	cain	cain
-Genesis 4:22	102	Cain	cain	cain
 Genesis 4:24	3	Cain	cain	cain
 Genesis 4:25	0	Adam	adam	adam
 Genesis 4:25	126	Abel	abel	abel
@@ -2166,8 +2164,6 @@ Numbers 32:41	16	Manasseh	-	manasseh-king-of-judah
 Numbers 33:1	124	Moses	moses	moses
 Numbers 33:1	134	Aaron	aaron	aaron
 Numbers 33:2	0	Moses	moses	moses
-Numbers 33:19	51	Perez	perez	perez
-Numbers 33:20	26	Perez	perez	perez
 Numbers 33:38	0	Aaron	aaron	aaron
 Numbers 33:39	0	Aaron	aaron	aaron
 Numbers 33:50	16	Moses	moses	moses
@@ -3737,13 +3733,8 @@ Ruth 4:22	68	David	david	david
 2 Samuel 6:10	3	David	david	david
 2 Samuel 6:10	55	David	david	david
 2 Samuel 6:10	73	David	david	david
-2 Samuel 6:10	101	Obed	obed	obed
-2 Samuel 6:11	25	Obed	obed	obed
-2 Samuel 6:11	88	Obed	obed	obed
 2 Samuel 6:12	5	David	david	david
-2 Samuel 6:12	54	Obed	obed	obed
 2 Samuel 6:12	120	David	david	david
-2 Samuel 6:12	174	Obed	obed	obed
 2 Samuel 6:12	189	David	david	david
 2 Samuel 6:14	0	David	david	david
 2 Samuel 6:14	51	David	david	david
@@ -5012,9 +5003,6 @@ Ruth 4:22	68	David	david	david
 1 Chronicles 13:12	0	David	david	david
 1 Chronicles 13:13	3	David	david	david
 1 Chronicles 13:13	43	David	david	david
-1 Chronicles 13:13	83	Obed	obed	obed
-1 Chronicles 13:14	38	Obed	obed	obed
-1 Chronicles 13:14	94	Obed	obed	obed
 1 Chronicles 14:1	38	David	david	david
 1 Chronicles 14:2	0	David	david	david
 1 Chronicles 14:3	0	David	david	david
@@ -5044,13 +5032,9 @@ Ruth 4:22	68	David	david	david
 1 Chronicles 15:15	81	Moses	moses	moses
 1 Chronicles 15:16	0	David	david	david
 1 Chronicles 15:18	49	Zechariah	-	zechariah-father-of-john-baptist
-1 Chronicles 15:18	161	Obed	obed	obed
 1 Chronicles 15:20	4	Zechariah	-	zechariah-father-of-john-baptist
-1 Chronicles 15:21	38	Obed	obed	obed
 1 Chronicles 15:24	40	Zechariah	-	zechariah-father-of-john-baptist
-1 Chronicles 15:24	126	Obed	obed	obed
 1 Chronicles 15:25	3	David	david	david
-1 Chronicles 15:25	131	Obed	obed	obed
 1 Chronicles 15:27	0	David	david	david
 1 Chronicles 15:27	153	David	david	david
 1 Chronicles 15:29	40	David	david	david
@@ -5059,14 +5043,11 @@ Ruth 4:22	68	David	david	david
 1 Chronicles 16:1	69	David	david	david
 1 Chronicles 16:2	5	David	david	david
 1 Chronicles 16:5	35	Zechariah	-	zechariah-father-of-john-baptist
-1 Chronicles 16:5	107	Obed	obed	obed
 1 Chronicles 16:7	17	David	david	david
 1 Chronicles 16:13	53	Jacob	jacob	jacob
 1 Chronicles 16:16	32	Abraham	abraham	abraham
 1 Chronicles 16:16	53	Isaac	isaac	isaac
 1 Chronicles 16:17	25	Jacob	jacob	jacob
-1 Chronicles 16:38	4	Obed	obed	obed
-1 Chronicles 16:38	48	Obed	obed	obed
 1 Chronicles 16:39	4	Zadok	-	zadok-in-jesus-genealogy
 1 Chronicles 16:43	52	David	david	david
 1 Chronicles 17:1	5	David	david	david
@@ -5206,13 +5187,9 @@ Ruth 4:22	68	David	david	david
 1 Chronicles 25:2	30	Joseph	joseph-son-of-jacob	joseph-son-of-jacob
 1 Chronicles 25:9	40	Joseph	joseph-son-of-jacob	joseph-son-of-jacob
 1 Chronicles 26:2	22	Zechariah	-	zechariah-father-of-john-baptist
-1 Chronicles 26:4	0	Obed	obed	obed
 1 Chronicles 26:7	38	Obed	obed	obed
-1 Chronicles 26:8	30	Obed	obed	obed
-1 Chronicles 26:8	132	Obed	obed	obed
 1 Chronicles 26:11	44	Zechariah	-	zechariah-father-of-john-baptist
 1 Chronicles 26:14	45	Zechariah	-	zechariah-father-of-john-baptist
-1 Chronicles 26:15	3	Obed	obed	obed
 1 Chronicles 26:24	43	Moses	moses	moses
 1 Chronicles 26:25	70	Joram	-	joram-king-of-judah
 1 Chronicles 26:26	91	David	david	david
@@ -5564,7 +5541,6 @@ Ruth 4:22	68	David	david	david
 2 Chronicles 24:20	26	Zechariah	-	zechariah-father-of-john-baptist
 2 Chronicles 24:25	211	David	david	david
 2 Chronicles 25:4	112	Moses	moses	moses
-2 Chronicles 25:24	89	Obed	obed	obed
 2 Chronicles 26:1	29	Uzziah	uzziah	uzziah
 2 Chronicles 26:3	0	Uzziah	uzziah	uzziah
 2 Chronicles 26:5	42	Zechariah	-	zechariah-father-of-john-baptist
@@ -6796,7 +6772,6 @@ Micah 6:5	66	Balaam	balaam	balaam
 Micah 7:20	23	Jacob	jacob	jacob
 Micah 7:20	43	Abraham	abraham	abraham
 Nahum 2:2	38	Jacob	jacob	jacob
-Nahum 3:8	23	Amon	-	amon-king-of-judah
 Zephaniah 1:1	109	Hezekiah	hezekiah	hezekiah
 Zephaniah 1:1	134	Josiah	-	josiah
 Zephaniah 1:1	153	Amon, king of Judah	amon-king-of-judah	amon-king-of-judah
@@ -8740,7 +8715,6 @@ Acts 13:2	68	Barnabas	barnabas	barnabas
 Acts 13:2	81	Saul	paul-of-tarsus	saul-king-of-israel
 Acts 13:4	22	the Holy Spirit	holy-spirit	holy-spirit
 Acts 13:5	99	John	john-mark	john-the-baptist
-Acts 13:6	123	Jesus	jesus-of-nazareth	jesus-of-nazareth
 Acts 13:7	28	Sergius Paulus	sergius-paulus	sergius-paulus
 Acts 13:7	86	Barnabas	barnabas	barnabas
 Acts 13:7	99	Saul	paul-of-tarsus	saul-king-of-israel

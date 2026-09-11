@@ -2993,22 +2993,121 @@ const NAME_CONTEXT_RULES: Record<string, NameContextRule[]> = {
     { after: /^\s+(?:Lysias|Caecus)\b/, to: null },
   ],
 
-  // ── Place names that begin with a person's name. A different fault from the ones above and a
-  // worse one, because it is in the biblical text itself: "Abel" in "Abel Meholah" is not Adam's
-  // son but the Hebrew word for a meadow, and it was linking every one of these towns to the first
-  // murder victim. The app has no location record for any of them, so no link is the answer; if one
-  // is ever added, register the compound name on the LOCATION and delete the rule.
+  // ── COMPOUND PROPER NOUNS WHOSE HALVES ARE REGISTERED NAMES ─────────────────────────────────
+  //
+  // A different fault from the ones above and a worse one, because it is in the biblical text
+  // itself: "Abel" in "Abel Meholah" is not Adam's son but the Hebrew word for a meadow, and it
+  // was linking every one of these towns to the first murder victim. The app has no record for any
+  // of these compounds, so no link is the answer; if one is ever added, register the compound name
+  // on that record and delete the rule.
+  //
+  // **THE SEPARATOR IS `[\s-]`, AND THAT IS THE WHOLE POINT OF THIS BLOCK.** Until 2026-09-10 every
+  // rule here was written `\s+`, against the WEB — and the three translations `BiblePanel` offers
+  // spell the SAME compound three different ways:
+  //
+  //     WEB   Tubal Cain     Obed-Edom     Pahathmoab     (space, mostly)
+  //     ASV   Tubal-cain     Obed-edom     Pahath-moab    (hyphen, second element lowercased)
+  //     KJV   Tubalcain      Obed-edom     Pahathmoab     (closed up in our corpus; see below)
+  //
+  // So a `\s+` rule corrects the default translation and leaves the ASV reader with both halves of
+  // a proper name linked to two unrelated records — "Obed-edom the Gittite" sending one reader to
+  // Ruth's grandson and the nation of Edom, in twenty verses. The enumeration below was measured
+  // across all three corpora and covers **205 wrong links**: 59 on the WEB reader path, 78 on the
+  // ASV's, 61 on the panel path (the key-verse lists, which pass no book), and 6 in our own prose.
+  //
+  // A general fix was measured first and rejected, and the measurement is worth keeping because it
+  // is counter-intuitive. Making the linker's word boundary hyphen-aware — so "Obed" stops matching
+  // inside "Obed-Edom" — touches 326 links and gets exactly half of them wrong: it removes 163
+  // faults and 163 CORRECT links, because our own articles use the hyphen as a modifier joint
+  // ("Roman-era", "Greek-speaking", "Neo-Babylonian", "Jewish-Samaritan", 147 of those) and because
+  // "Genesis 1-2" is a chapter range whose first half is the link. It also could not reach the
+  // other 42 faults at all, since the WEB writes most of these compounds with a space. **The hyphen
+  // is not the axis of this fault; the compound name is.** Hence one rule per compound, covering
+  // every separator it is written with.
+  //
+  // What this block deliberately does NOT touch: the ASV's own hyphenated place names — 162
+  // occurrences of "Beth-el", "Beer-sheba", "Beth-lehem", "Bath-sheba" and "En-gedi", which today
+  // carry no link at all and want MORE linking, not less. None of them names a registered name on
+  // either side of the hyphen, so no rule here can reach them, and the fix for them (registering
+  // the hyphenated spelling on the location) stays available and unaffected.
+  //
+  // One corpus caveat. `corpus/kjv-bible.json.gz` comes from bolls, which closes these compounds up
+  // — "Obededom", "Barjesus", "Tubalcain" — so they match nothing and the harness reports the KJV
+  // as clean. **bible-api.com, which is what `src/lib/biblePassage.ts` actually fetches, hyphenates
+  // them**: it serves "Obed-edom the Gittite" at 2 Samuel 6:10 and "Bar-jesus" at Acts 13:6. The
+  // real KJV reader has these faults too; our corpus simply cannot see them. The rules below are
+  // translation-blind and fix that reader as well, which was verified against live bible-api.com
+  // text rather than against the corpus.
   //
   // Abel son of Adam keeps all nine of his own mentions (Genesis 4, Matthew 23:35, Luke 11:51,
-  // Hebrews 11:4 and 12:24) — none of them is followed by any of these words.
+  // Hebrews 11:4 and 12:24) — none of them is followed by any of these words. Every other rule here
+  // is the same shape: the compound is suppressed, the bare name is untouched.
   abel: [
-    { after: /^\s+(?:Mizraim|Shittim|Meholah|Maim|Beth Maacah|of Beth Maacah)\b/, to: null },
+    // "Abel Mizraim" (Gen 50:11), "Abel Shittim" (Num 33:49), "Abel Meholah" (Judg 7:22,
+    // 1 Kgs 4:12, 19:16), "Abel Maim" (2 Chr 16:4), "Abel-cheramim" (Judg 11:33, ASV only),
+    // "Abel Beth Maacah" (1 Kgs 15:20, 2 Kgs 15:29). Case-insensitive because the ASV lowercases
+    // the second element of every one of them.
+    { after: /^[\s-](?:Mizraim|Shittim|Meholah|Maim|Cheramim|Beth[\s-]Maacah|of Beth Maacah)\b/i, to: null },
   ],
   perez: [
-    { after: /^\s+Uzzah?\b/, to: null }, // "Perez Uzzah"/"Perez Uzza" — the place David named
+    { after: /^[\s-]Uzzah?\b/i, to: null }, // "Perez Uzzah"/"Perez-uzza" — the place David named
+    { before: /\bRimmon[\s-]$/i, to: null }, // "Rimmon Perez", a wilderness camp (Num 33:19-20)
   ],
   caleb: [
-    { after: /^\s+Ephrathah\b/, to: null }, // 1 Chronicles 2:24 — a place, not the spy
+    { after: /^[\s-]Ephrathah\b/i, to: null }, // 1 Chronicles 2:24 — a place, not the spy
+  ],
+  ephrathah: [
+    // The other half of the same verse. "Ephrathah" on its own is Bethlehem and keeps that link
+    // everywhere else; inside "Caleb-ephrathah" it is part of one place name, not a second one.
+    { before: /\bCaleb[\s-]$/i, to: null },
+  ],
+  obed: [
+    // "Obed-Edom the Gittite", the Levite who housed the ark — not Ruth and Boaz's son. Twenty
+    // verses, and both halves were linking: this half to Obed, the other to the nation of Edom.
+    { after: /^[\s-]Edom\b/i, to: null },
+  ],
+  edom: [{ before: /\bObed[\s-]$/i, to: null }],
+  cain: [
+    // "Tubal-cain", Lamech's son by Zillah (Gen 4:22) — the forger of bronze and iron, not the
+    // first murderer. Cain keeps every one of his own mentions.
+    { before: /\bTubal[\s-]?$/i, to: null },
+  ],
+  moab: [
+    // "Pahath-moab" — "governor of Moab", a post-exilic family head (Ezra 2:6, 8:4, 10:30,
+    // Neh 3:11, 7:11, 10:14). A clan, not the country; the WEB and our KJV corpus close it up.
+    { before: /\bPahath[\s-]$/i, to: null },
+  ],
+  haran: [
+    // "Beth-haran", a fortified town in Gad (Num 32:36). Haran is in Mesopotamia, 500 miles away.
+    { before: /\bBeth[\s-]$/i, to: null },
+  ],
+  succoth: [
+    // 2 Kings 17:30 — "the men of Babylon made Succoth-benoth", an object of Babylonian worship,
+    // not the Succoth of Jacob and the Exodus.
+    { after: /^[\s-]Benoth\b/i, to: null },
+  ],
+  mizpeh: [
+    // "Ramath-mizpeh" in Gad (Josh 13:26), which is not the Mizpah of Samuel and Gedaliah.
+    { before: /\bRamath[\s-]$/i, to: null },
+  ],
+  amon: [
+    // Nahum 3:8's "No-Amon" is Thebes — the Egyptian city, named for its god — and it was linking
+    // to Amon king of Judah. The reader path already suppressed it through the book allowlist; the
+    // panel path, which passes no book, did not.
+    { before: /\bNo[\s-]$/, to: null },
+  ],
+  dan: [
+    // "Mahaneh-dan", the camp of Dan between Zorah and Eshtaol (Judg 13:25, 18:12) — named for the
+    // tribe, and nowhere near the northern city. "Dan-jaan" (2 Sam 24:6) is a place the text names
+    // as a compound; whether it is the city of Dan is disputed, and half a proper noun is not the
+    // place to assert it either way. "Ashur-dan" is an Assyrian king, in our own prose.
+    { before: /\b(?:Mahaneh|Ashur)[\s-]$/i, to: null },
+    { after: /^[\s-]Jaan\b/i, to: null },
+  ],
+  ur: [
+    // "Ur-Nammu", the king who founded the Third Dynasty of Ur — a man, not the city, in the
+    // ziggurat articles.
+    { after: /^[\s-]Nammu\b/, to: null },
   ],
 
   // ── Two records name both the prophet Zechariah and the book named after him, and
@@ -3192,6 +3291,9 @@ const NAME_CONTEXT_RULES: Record<string, NameContextRule[]> = {
     // preceded by his initial or forename is suppressed, so Scripture's own "Shiloh" (Joshua 18:1,
     // 1 Samuel 1:3 and 30 more) and every article naming the place keep their links untouched.
     { before: /\b(?:Y\.|Yigal)\s+$/, to: null },
+    // "Taanath-shiloh" (Josh 16:6) is a town on Ephraim's eastern border, not the sanctuary town.
+    // Per the COMPOUND PROPER NOUNS block above; the WEB writes it "Taanath Shiloh".
+    { before: /\bTaanath[\s-]$/i, to: null },
   ],
   samuel: [
     { phrase: "Joshua, Judges, Samuel and Kings, then Isaiah, Jeremiah, Ezekiel and the Twelve", to: null }, // a list of BOOK titles
@@ -3296,6 +3398,13 @@ const NAME_CONTEXT_RULES: Record<string, NameContextRule[]> = {
     { phrase: "Jesus son of Joseph", to: null },
     { phrase: "Judah son of Jesus", to: null },
     { phrase: "The Lost Tomb of Jesus", to: null },
+    // Acts 13:6 — "a certain sorcerer, a false prophet, a Jew, whose name was Bar-jesus". Elymas
+    // the magician, whom Paul strikes blind three verses later, and the app was linking the second
+    // half of his name to Jesus of Nazareth. Every translation a reader can select writes it
+    // differently — WEB "Bar Jesus", ASV "Bar-jesus", and bible-api.com's KJV "Bar-jesus" (our
+    // bolls-derived KJV corpus closes it to "Barjesus" and so cannot see the fault) — which is
+    // why the separator is `[\s-]` and not a space. See the COMPOUND PROPER NOUNS block above.
+    { before: /\bBar[\s-]$/, to: null },
   ],
   joseph: [
     { phrase: "Jesus son of Joseph", to: null },
@@ -3393,6 +3502,12 @@ const NAME_CONTEXT_RULES: Record<string, NameContextRule[]> = {
   // ever since. One prose row leaves the snapshot as a result, and that is the row.
   gath: [
     { phrase: "Y. Gath", to: null },
+    // Compound towns that are not Philistine Gath, per the COMPOUND PROPER NOUNS block above:
+    // "Gath Hepher" in Zebulun, Jonah's home town (Josh 19:13, 2 Kgs 14:25), and the Levitical
+    // "Gath Rimmon" (Josh 19:45, 21:24-25, 1 Chr 6:69). "Moresheth-gath" is Micah's town (Mic
+    // 1:14) — the qualifier is what makes it a different place, so the half-name is not a link.
+    { after: /^[\s-](?:Hepher|Rimmon)\b/i, to: null },
+    { before: /\bMoresheth[\s-]$/i, to: null },
   ],
   damascus: [
     { phrase: "Damascus Gate", to: null },

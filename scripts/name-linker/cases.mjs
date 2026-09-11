@@ -4031,6 +4031,232 @@ export const CASES = [
          "in a translation the corpus does not contain. ASV: \"and Jesus that is called Justus\" — " +
          "all three print the bare name, so all three had the fault and all three are fixed." },
 
+  // ── COMPOUND PROPER NOUNS: "Obed-Edom" IS NOT OBED AND EDOM ─────────────────────────────────
+  //
+  // Added 2026-09-10. A hyphenated or space-joined biblical compound was being split and each half
+  // linked separately — "Obed-Edom the Gittite" sending a reader to Ruth's grandson and to the
+  // nation of Edom, in twenty verses; ASV "Bar-jesus", the magician Elymas, sending one to Jesus of
+  // Nazareth. 205 links in the corpora and 206 measured live against bible-api.com. The rules are
+  // in the COMPOUND PROPER NOUNS block of NAME_CONTEXT_RULES.
+  //
+  // Half of these cases are KEEP guards on the bare name, and they are the half that matters: the
+  // general fix that was measured and rejected — making the linker's word boundary hyphen-aware —
+  // would have taken 163 correct links with it. Each suppression below was negative-tested by
+  // pointing its rule at a wrong target and confirming that this case, and only this case, failed.
+
+  // The fault, on the default translation's reader path (the WEB corpus).
+  { ref: "2 Samuel 6:10", surface: "Obed", expect: null, status: "guard",
+    why: "\"Obed-Edom the Gittite\" is the Levite who housed the ark, not Ruth and Boaz's son. " +
+         "Both halves were linking, in all twenty of his verses." },
+  { ref: "2 Samuel 6:10", surface: "Edom", expect: null, status: "guard",
+    why: "The other half of the same name. Not the nation — there is no Edom in this verse." },
+  { ref: "Genesis 4:22", surface: "Cain", expect: null, status: "guard",
+    why: "WEB \"Tubal Cain\", Lamech's son by Zillah and the forger of bronze and iron — not the " +
+         "first murderer, who is four verses and one genealogy away." },
+  { ref: "Numbers 33:19", surface: "Perez", expect: null, status: "guard",
+    why: "WEB \"Rimmon Perez\", a wilderness camp on the wandering itinerary, not Judah's son." },
+  { ref: "Acts 13:6", surface: "Jesus", expect: null, status: "guard",
+    why: "WEB \"Bar Jesus\" — Elymas the sorcerer, whom Paul strikes blind two verses later. The " +
+         "worst link in this family: a magician opposing the gospel, linked to Christ." },
+  { ref: "2 Kings 14:25", surface: "Gath", expect: null, status: "guard",
+    why: "\"Gath Hepher\" in Zebulun is Jonah's home town, not Philistine Gath in the south." },
+  { ref: "Joshua 21:24", surface: "Gath", expect: null, status: "guard",
+    why: "\"Gath Rimmon\", a Levitical town of Dan. Same word, different place." },
+  { ref: "Micah 1:14", surface: "Gath", expect: null, status: "guard",
+    why: "\"Moresheth Gath\" is Micah's own town; the qualifier is what distinguishes it from Gath." },
+  { ref: "2 Kings 17:30", surface: "Succoth", expect: null, status: "guard",
+    why: "\"Succoth Benoth\" is an object of Babylonian worship the resettled colonists made, not " +
+         "the Succoth of Jacob and the Exodus." },
+  { ref: "Joshua 16:6", surface: "Shiloh", expect: null, status: "guard",
+    why: "\"Taanath Shiloh\" is a town on Ephraim's eastern border, not the sanctuary at Shiloh." },
+  { ref: "Joshua 13:26", surface: "Mizpeh", expect: null, status: "guard",
+    why: "\"Ramath Mizpeh\" in Gad, not the Mizpah of Samuel and Gedaliah." },
+  { ref: "Numbers 32:36", surface: "Haran", expect: null, status: "guard",
+    why: "\"Beth Haran\" is a fortified town in Gad. Haran is in Mesopotamia, five hundred miles off." },
+  { ref: "2 Samuel 24:6", surface: "Dan", expect: null, status: "guard",
+    why: "\"Dan Jaan\" is named by the census itinerary as a compound. Whether it is the northern " +
+         "city of Dan is disputed, and half a proper noun is not the place to assert it either way." },
+  { ref: "Judges 18:12", surface: "Dan", expect: null, status: "guard",
+    why: "\"Mahaneh Dan\" — the camp of Dan, behind Kiriath Jearim in Judah, named for the tribe " +
+         "and nowhere near the northern city." },
+  { ref: "1 Chronicles 2:24", surface: "Ephrathah", expect: null, status: "guard",
+    why: "\"Caleb Ephrathah\" is one place name. Bare \"Ephrathah\" is Bethlehem and keeps its link." },
+  { ref: "Nahum 3:8", surface: "Amon", path: "panel", expect: null, status: "guard",
+    why: "\"No-Amon\" is Thebes, named for its god, and it was linking to Amon king of Judah. The " +
+         "reader path already suppressed it through the book allowlist; the panel path, which " +
+         "passes no book, did not — so this is a panel case on purpose." },
+
+  // The KEEP side. Every bare name above still resolves, which is the whole argument for one rule
+  // per compound instead of a hyphen-aware word boundary.
+  { ref: "Ruth 4:17", surface: "Obed", expect: "obed", status: "guard",
+    why: "Bare \"Obed\" — Ruth and Boaz's son, Jesse's father. Thirteen of these survive the fix." },
+  { ref: "Genesis 4:8", surface: "Cain", expect: "cain", status: "guard",
+    why: "Bare \"Cain\" in the murder itself. Untouched: the rule needs \"Tubal\" before it." },
+  { ref: "Genesis 4:4", surface: "Abel", expect: "abel", status: "guard",
+    why: "Bare \"Abel\", the man. All nine of his own mentions keep their link." },
+  { ref: "Genesis 38:29", surface: "Perez", expect: "perez", status: "guard",
+    why: "Bare \"Perez\", Judah's son, at his birth." },
+  { ref: "Numbers 13:6", surface: "Caleb", expect: "caleb", status: "guard",
+    why: "Bare \"Caleb\" the spy, untouched by the Caleb-Ephrathah rule." },
+  { ref: "1 Samuel 17:4", surface: "Gath", expect: "gath", status: "guard",
+    why: "Goliath \"of Gath\" — the Philistine city itself, which keeps every bare mention it has." },
+  { ref: "Genesis 11:31", surface: "Haran", expect: "haran", status: "guard",
+    why: "Terah's family settles at Haran in Mesopotamia. Only \"Beth Haran\" is suppressed." },
+  { ref: "Genesis 33:17", surface: "Succoth", expect: "succoth", status: "guard",
+    why: "Jacob at Succoth. Only \"Succoth Benoth\" is suppressed." },
+  { ref: "Judges 21:12", surface: "Shiloh", expect: "shiloh", status: "guard",
+    why: "The sanctuary at Shiloh. Only \"Taanath Shiloh\" is suppressed." },
+  { ref: "Obadiah 1:1", surface: "Edom", expect: "edom", status: "guard",
+    why: "The nation of Edom, the subject of the whole book. Only \"Obed-Edom\" is suppressed." },
+  { ref: "Numbers 22:1", surface: "Moab", expect: "moab", status: "guard",
+    why: "The plains of Moab. Only \"Pahath-moab\", the post-exilic family, is suppressed." },
+  { ref: "Micah 5:2", surface: "Ephrathah", expect: "bethlehem", status: "guard",
+    why: "\"Bethlehem Ephrathah\" — the town, and the link a reader most wants here." },
+  { ref: "Judges 20:1", surface: "Dan", expect: "dan", status: "guard",
+    why: "\"from Dan even to Beersheba\" — the northern city, the idiom's whole point." },
+
+  // ── THE SAME VERSES IN THE OTHER TWO TRANSLATIONS ───────────────────────────────────────────
+  //
+  // Quoted verbatim from bible-api.com, which is what src/lib/biblePassage.ts fetches. This is the
+  // only cover these have: the WEB corpus cannot see them, and our KJV corpus comes from bolls,
+  // which CLOSES these compounds up ("Obededom", "Barjesus", "Tubalcain") where bible-api.com
+  // hyphenates them. The KJV reader therefore had faults the harness reported as clean — 69 of
+  // them, measured live — and these cases are what stops that happening again.
+  { ref: "2 Samuel 6:10", translation: "ASV",
+    text: "So David would not remove the ark of Jehovah unto him into the city of David; but David carried it aside into the house of Obed-edom the Gittite.",
+    surface: "Obed", expect: null, status: "guard",
+    why: "The ASV hyphenates and lowercases the second element. The `[\\s-]` separator is what " +
+         "reaches it; the old `\\s+` rules corrected the WEB alone." },
+  { ref: "2 Samuel 6:10", translation: "ASV",
+    text: "So David would not remove the ark of Jehovah unto him into the city of David; but David carried it aside into the house of Obed-edom the Gittite.",
+    surface: "edom", expect: null, status: "guard",
+    why: "The other half, lowercase, in the ASV. It was resolving to the nation of Edom." },
+  { ref: "2 Samuel 6:10", translation: "KJV",
+    text: "So David would not remove the ark of the LORD unto him into the city of David: but David carried it aside into the house of Obed-edom the Gittite.",
+    surface: "Obed", expect: null, status: "guard",
+    why: "bible-api.com's KJV reads \"Obed-edom\" and our bolls corpus reads \"Obededom\", so the " +
+         "harness saw a clean KJV and the reader saw the fault. Twenty verses, forty links." },
+  { ref: "2 Samuel 6:10", translation: "KJV",
+    text: "So David would not remove the ark of the LORD unto him into the city of David: but David carried it aside into the house of Obed-edom the Gittite.",
+    surface: "edom", expect: null, status: "guard",
+    why: "The other half of the KJV spelling the corpus cannot see." },
+  { ref: "Acts 13:6", translation: "ASV",
+    text: "And when they had gone through the whole island unto Paphos, they found a certain sorcerer, a false prophet, a Jew, whose name was Bar-jesus;",
+    surface: "jesus", expect: null, status: "guard",
+    why: "Elymas the magician. All three translations spell his name differently and two of the " +
+         "three linked it to Christ." },
+  { ref: "Acts 13:6", translation: "KJV",
+    text: "And when they had gone through the isle unto Paphos, they found a certain sorcerer, a false prophet, a Jew, whose name was Bar-jesus:",
+    surface: "jesus", expect: null, status: "guard",
+    why: "The KJV as bible-api.com serves it. Our corpus reads \"Barjesus\" and matched nothing." },
+  { ref: "Genesis 4:22", translation: "ASV",
+    text: "And Zillah, she also bare Tubal-cain, the forger of every cutting instrument of brass and iron: and the sister of Tubal-cain was Naamah.",
+    surface: "cain", expect: null, status: "guard",
+    why: "Both occurrences in the ASV's hyphenated, lowercased spelling." },
+  { ref: "Genesis 4:22", translation: "KJV",
+    text: "And Zillah, she also bare Tubal-cain, an instructer of every artificer in brass and iron: and the sister of Tubal-cain was Naamah.",
+    surface: "cain", expect: null, status: "guard",
+    why: "The KJV as bible-api.com serves it; our corpus reads \"Tubalcain\"." },
+  { ref: "Genesis 50:11", translation: "ASV",
+    text: "And when the inhabitants of the land, the Canaanites, saw the mourning in the floor of Atad, they said, This is a grievous mourning to the Egyptians: wherefore the name of it was called Abel-mizraim, which is beyond the Jordan.",
+    surface: "Abel", expect: null, status: "guard",
+    why: "\"Abel\" here is the Hebrew for a meadow. The WEB's \"Abel Mizraim\" was already " +
+         "suppressed; the ASV's hyphen escaped the rule for as long as it read `\\s+`." },
+  { ref: "Numbers 33:49", translation: "ASV",
+    text: "And they encamped by the Jordan, from Beth-jeshimoth even unto Abel-shittim in the plains of Moab.",
+    surface: "Abel", expect: null, status: "guard",
+    why: "\"Abel-shittim\", the last camp before the Jordan crossing." },
+  { ref: "1 Chronicles 2:24", translation: "ASV",
+    text: "And after that Hezron was dead in Caleb-ephrathah, then Abijah Hezron`s wife bare him Ashhur the father of Tekoa.",
+    surface: "Caleb", expect: null, status: "guard",
+    why: "A place, not the spy. The KJV spells it \"Caleb-ephratah\" and matches neither key." },
+  { ref: "1 Chronicles 2:24", translation: "ASV",
+    text: "And after that Hezron was dead in Caleb-ephrathah, then Abijah Hezron`s wife bare him Ashhur the father of Tekoa.",
+    surface: "ephrathah", expect: null, status: "guard",
+    why: "The other half of the same place name, which had been resolving to Bethlehem." },
+  { ref: "Ezra 2:6", translation: "ASV",
+    text: "The children of Pahath-moab, of the children of Jeshua [and] Joab, two thousand eight hundred and twelve.",
+    surface: "moab", expect: null, status: "guard",
+    why: "\"Pahath-moab\" is a post-exilic family head — \"governor of Moab\" — not the country. " +
+         "Six verses in Ezra and Nehemiah." },
+  { ref: "Ezra 2:6", translation: "KJV",
+    text: "The children of Pahath-moab, of the children of Jeshua and Joab, two thousand eight hundred and twelve.",
+    surface: "moab", expect: null, status: "guard",
+    why: "bible-api.com's KJV hyphenates this one too; our corpus closes it to \"Pahathmoab\"." },
+  { ref: "2 Samuel 6:8", translation: "ASV",
+    text: "And David was displeased, because Jehovah had broken forth upon Uzzah; and he called that place Perez-uzzah, unto this day.",
+    surface: "Perez", expect: null, status: "guard",
+    why: "\"The breach of Uzzah\" — the place David named after the man struck down, not Judah's son." },
+  { ref: "Numbers 33:19", translation: "ASV",
+    text: "And they journeyed from Rithmah, and encamped in Rimmon-perez.",
+    surface: "perez", expect: null, status: "guard",
+    why: "The ASV's hyphenated spelling of the camp. The KJV reads \"Rimmon-parez\" and matches nothing." },
+  { ref: "Judges 18:12", translation: "ASV",
+    text: "And they went up, and encamped in Kiriath-jearim, in Judah: wherefore they called that place Mahaneh-dan, unto this day; behold, it is behind Kiriath-jearim.",
+    surface: "dan", expect: null, status: "guard",
+    why: "The camp of Dan, in Judah. Note the same verse's \"Kiriath-jearim\" — neither half of " +
+         "that is a registered name, so nothing here reaches it, which is the point." },
+  { ref: "2 Kings 14:25", translation: "ASV",
+    text: "He restored the border of Israel from the entrance of Hamath unto the sea of the Arabah, according to the word of Jehovah, the God of Israel, which he spake by his servant Jonah the son of Amittai, the prophet, who was of Gath-hepher.",
+    surface: "Gath", expect: null, status: "guard",
+    why: "Jonah's home town in Zebulun, hyphenated in the ASV and in bible-api.com's KJV." },
+  { ref: "2 Kings 17:30", translation: "ASV",
+    text: "And the men of Babylon made Succoth-benoth, and the men of Cuth made Nergal, and the men of Hamath made Ashima,",
+    surface: "Succoth", expect: null, status: "guard",
+    why: "The Babylonian cult object, hyphenated in both the ASV and bible-api.com's KJV." },
+  { ref: "Joshua 16:6", translation: "ASV",
+    text: "and the border went out westward at Michmethath on the north; and the border turned about eastward unto Taanath-shiloh, and passed along it on the east of Janoah;",
+    surface: "shiloh", expect: null, status: "guard",
+    why: "The Ephraimite border town, not the sanctuary." },
+  { ref: "Joshua 13:26", translation: "ASV",
+    text: "and from Heshbon unto Ramath-mizpeh, and Betonim; and from Mahanaim unto the border of Debir;",
+    surface: "mizpeh", expect: null, status: "guard",
+    why: "Ramath-mizpeh in Gad." },
+  { ref: "Numbers 32:36", translation: "ASV",
+    text: "and Beth-nimrah, and Beth-haran: fortified cities, and folds for sheep.",
+    surface: "haran", expect: null, status: "guard",
+    why: "Beth-haran in Gad. Note \"Beth-nimrah\" in the same verse, which links to nothing now and " +
+         "linked to nothing before — no rule here can reach a compound whose halves are not " +
+         "registered names, which is exactly why the ASV's \"Beth-el\" and \"Beer-sheba\" are " +
+         "untouched by this batch." },
+  { ref: "Micah 1:14", translation: "ASV",
+    text: "Therefore shalt thou give a parting gift to Moresheth-gath: the houses of Achzib shall be a deceitful thing unto the kings of Israel.",
+    surface: "gath", expect: null, status: "guard",
+    why: "Micah's town, the second element this time." },
+  { ref: "2 Samuel 24:6", translation: "ASV",
+    text: "then they came to Gilead, and to the land of Tahtim-hodshi; and they came to Dan-jaan, and round about to Sidon,",
+    surface: "Dan", expect: null, status: "guard",
+    why: "Dan-jaan on the census route. Disputed as an identification and not asserted either way." },
+  { ref: "1 Samuel 17:4", translation: "KJV",
+    text: "And there went out a champion out of the camp of the Philistines, named Goliath, of Gath, whose height was six cubits and a span.",
+    surface: "Gath", expect: "gath", status: "guard",
+    why: "The KEEP side in the KJV: bare \"Gath\" still links. This is the half a hyphen-aware " +
+         "word boundary, or a careless widening of the Gath rules, breaks first." },
+
+  // ── THE SAME FAULT IN OUR OWN PROSE ─────────────────────────────────────────────────────────
+  { text: "His court magician, Elymas (also called Bar-Jesus), tried to keep him from believing (Acts 13:6-8).",
+    owner: "sergius-paulus", surface: "Jesus", expect: null, status: "guard",
+    why: "The one prose instance of the Acts 13:6 fault, on the Sergius Paulus article — a " +
+         "sentence that names Elymas twice and linked the second name to Christ." },
+  { text: "The Great Ziggurat of Ur, built by Ur-Nammu c. 2100 BC, has been partially reconstructed and remains one of the best-preserved ziggurats in Mesopotamia",
+    owner: "ur", surface: "Ur", occurrence: 2, expect: null, status: "guard",
+    why: "Ur-Nammu founded the Third Dynasty of Ur; he is a man, not the city. The first \"Ur\" in " +
+         "this sentence is the city and is excluded only because the block sits on Ur's own page." },
+  { text: "Assyria contracted sharply for roughly a century under Aramean pressure before reviving under Ashur-dan II (934-912 BC)",
+    owner: "wld-ane-rise-of-assyria", surface: "dan", expect: null, status: "guard",
+    why: "Ashur-dan II is an Assyrian king. The second half of his name was linking to the city of Dan." },
+  { text: "From Gath Hepher in the territory of Zebulun, in the northern kingdom of Israel.",
+    owner: "jonah", surface: "Gath", expect: null, status: "guard",
+    why: "Jonah's own record, naming his home town. Space-separated, and the same fault." },
+
+  // The prose KEEP side, and the measurement that rejected the general fix in one line: our
+  // articles use the hyphen as a modifier joint, and 147 correct links of this shape would have
+  // gone with a hyphen-aware word boundary.
+  { text: "in 2011 archaeologists excavating Hierapolis identified a Roman-era tomb and adjoining church they believe was venerated by early Christians as Philip's burial site",
+    owner: "philip-the-apostle", surface: "Roman", expect: "romans", status: "guard",
+    why: "\"Roman-era\" is a modifier compound and the link is correct. 27 blocks say \"Roman-era\" " +
+         "and 14 say \"Greek-speaking\"; a hyphen-aware word boundary removes every one of them." },
+
   // ── WHAT IS NOT HERE, AND WHY ───────────────────────────────────────────────────────────────
   // James 1:1 and Jude 1:1 both still resolve to Zebedee's son, which is wrong on anybody's
   // account. The sweep asked for both to be repointed to the Lord's brother; the attempt failed
