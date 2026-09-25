@@ -234,9 +234,17 @@ export async function sendPasswordReset(email: string): Promise<void> {
 
 /** Admin capabilities that were considered and deliberately NOT built, because each one requires the
  * Supabase service_role key — which cannot exist in a client bundle without handing over the whole
- * database. Surfaced in the console itself so the boundary is visible rather than mysterious. */
+ * database. Surfaced in the console itself so the boundary is visible rather than mysterious.
+ *
+ * The list used to open with "deleting an account outright", and that entry moved rather than
+ * disappearing. Account deletion now exists, but it lives in an Edge Function
+ * (supabase/functions/delete-account), where the service_role key sits on Supabase's servers instead
+ * of in this bundle — and it will only ever delete the account whose token made the call. So an
+ * admin still cannot delete somebody else's account from here; a person can delete their own, from
+ * My Profile. The constraint below did not loosen. The capability was built on the other side of
+ * it. */
 export const ADMIN_ACTIONS_NOT_BUILT = [
-  "Deleting an account outright (auth.admin.deleteUser)",
+  "Deleting someone ELSE's account (a person deletes their own from My Profile)",
   "Changing someone's email address",
   "Manually confirming an unverified email",
   "Signing in as another user to reproduce a bug",

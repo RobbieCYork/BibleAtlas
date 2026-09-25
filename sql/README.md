@@ -26,15 +26,16 @@ by a read-only dump of the live database on that date).
 
 - **006** — history. Never reuse.
 - **020** — history. Never reuse.
-- **029** — `029_account_deletion_fk_hygiene.sql` **exists on the unmerged `account-deletion`
-  branch**, not on `main`. This is the one most likely to be reused by mistake, because on `main`
-  it looks identical to an accidental gap. It is not. Never reuse.
+
+(**029** used to be listed here, when it lived only on the unmerged `account-deletion` branch. That
+branch has been merged, so `029_account_deletion_fk_hygiene.sql` is now in this directory like
+any other migration — committed, not applied; see the table below.)
 
 The full list present on `main`:
 
 ```
 001 002 003 004 005 007 008 009 010 011 012 013 014 015 016 017 018 019
-021 022 023 024 025 026 027 028 030 031 032 034 035 036 037
+021 022 023 024 025 026 027 028 029 030 031 032 034 035 036 037
 ```
 
 `000_baseline.sql` is **not** a migration. It is a photograph of the live schema, numbered `000`
@@ -53,7 +54,7 @@ Verified against the live database on 2026-09-11:
 |---|---|---|
 | 027 sermon-note images | **NOT APPLIED** | no `sermon-note-images` storage bucket exists |
 | 028 moderation | **APPLIED** | `user_blocks` + the `*_block_filter` policies are live |
-| 029 account-deletion FK hygiene | **NOT APPLIED** | and not on `main`; both `winner_id` FKs still `NO ACTION` |
+| 029 account-deletion FK hygiene | **NOT APPLIED** | committed only; both `winner_id` FKs still `NO ACTION`. In-app deletion does not need it (the Edge Function nulls both columns first); it fixes every *other* route to deleting a user, e.g. the Supabase dashboard's Delete User button |
 | 030 post-media not enumerable | **APPLIED** | the scoped storage select policy is live |
 | 031 avatars not enumerable | **APPLIED** | owner-only avatar select policy is live |
 | 032 search respects blocks | **APPLIED** | the three `find_*` functions call `is_blocked_between` |
