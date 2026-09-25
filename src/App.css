@@ -5327,6 +5327,113 @@ a.profile-links-url {
   margin-top: 2px;
 }
 
+/* --- Prayer List --- */
+
+.prayer-list-new-button {
+  width: 100%;
+  border: 1px dashed var(--border);
+  background: var(--surface-sunken);
+  color: var(--accent);
+  border-radius: 8px;
+  padding: 10px;
+  font-size: calc(13px * var(--tsz, 1));
+  font-weight: 600;
+  cursor: pointer;
+  margin-bottom: 10px;
+}
+
+.prayer-list-new-button:hover {
+  background: var(--accent-bg);
+}
+
+.prayer-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.prayer-list-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  background: var(--surface-sunken);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 10px 12px;
+}
+
+.prayer-list-item-answered {
+  opacity: 0.65;
+}
+
+.prayer-list-checkbox {
+  display: flex;
+  align-items: center;
+  padding-top: 1px;
+  cursor: pointer;
+}
+
+.prayer-list-checkbox input {
+  width: 17px;
+  height: 17px;
+  cursor: pointer;
+}
+
+.prayer-list-item-body {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  flex: 1;
+  min-width: 0;
+  cursor: pointer;
+}
+
+.prayer-list-item-title {
+  font-weight: 600;
+  font-size: calc(13px * var(--tsz, 1));
+}
+
+.prayer-list-item-answered .prayer-list-item-title {
+  text-decoration: line-through;
+  color: var(--text-muted);
+}
+
+.prayer-editor-meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin: 2px 0 8px;
+}
+
+.prayer-editor-answered {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: calc(13px * var(--tsz, 1));
+  cursor: pointer;
+}
+
+.prayer-editor-answered input {
+  width: 17px;
+  height: 17px;
+  cursor: pointer;
+}
+
+.prayer-editor-answered-date {
+  color: var(--text-muted);
+}
+
+.prayer-editor-hint {
+  font-size: calc(12px * var(--tsz, 1));
+  color: var(--text-muted);
+  margin: 0 0 8px;
+}
+
 .sermon-notes-editor {
   display: flex;
   flex-direction: column;

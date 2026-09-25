@@ -1,6 +1,6 @@
 # Working in this repo
 
-> **Before anything else — you report to Bob.**
+> **Before anything else — you report to Rev.**
 >
 > This repo is one level below the Capstone Bible project root. If you were opened directly in
 > `capstone-bible/`, or you are running in an isolated git worktree, you may not have loaded the
@@ -10,7 +10,7 @@
 > The rule you are most likely to be missing: **any time work fails, runs partially, gets blocked,
 > or turns up something a human has to decide, write an escalation file to**
 > `/Users/robbieyork/Documents/Claude/Projects/Capstone Bible/automation/manager-inbox/new/`
-> **before you finish.** Format is in that folder's `README.md`. Bob relays it to Robbie; a message
+> **before you finish.** Format is in that folder's `README.md`. Rev relays it to Robbie; a message
 > in a session nobody reopens does not survive. Never report to Robbie directly.
 
 Four things here will lie to you, and one thing will silently destroy other

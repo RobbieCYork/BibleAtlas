@@ -193,6 +193,22 @@ export interface SermonNote {
   forked_at?: string | null;
 }
 
+/** A row of `prayer_items` (sql/037) — the reader's own prayer list. `notes` holds the exact same
+ * shape SermonNote.body does (legacy plain text, or sanitised rich-text behind the
+ * `<!--capstone-rich:1-->` sentinel — see lib/richText.ts), so it goes through the same
+ * noteBodyToHtml / buildStoredBody / noteBodyToPlainText helpers. Owner-only: RLS is
+ * `auth.uid() = user_id` on all four operations, nobody else can ever read a row here. */
+export interface PrayerItem {
+  id: string;
+  user_id: string;
+  item: string;
+  notes: string;
+  answered: boolean;
+  answered_at: string | null;
+  created_at: string;
+  updated_at: string;
+}
+
 export interface VerseTag {
   id: string;
   book: string;

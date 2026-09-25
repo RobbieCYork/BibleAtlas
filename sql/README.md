@@ -17,7 +17,8 @@ by a read-only dump of the live database on that date).
 | **034** | `034_pin_search_path.sql` — committed, **not applied**. See below. |
 | **035** | `035_revoke_default_grants_moderation.sql` — committed, **not applied**. See below. |
 | **036** | `036_people_search_discoverable_default.sql` — committed, **not applied**. See below. |
-| **037** | Next genuinely free number. |
+| **037** | `037_prayer_list.sql` — committed, **not applied**. See below. |
+| **038** | Next genuinely free number. |
 
 ### Numbers that are TAKEN but MISSING from this directory
 
@@ -33,7 +34,7 @@ The full list present on `main`:
 
 ```
 001 002 003 004 005 007 008 009 010 011 012 013 014 015 016 017 018 019
-021 022 023 024 025 026 027 028 030 031 032 034 035 036
+021 022 023 024 025 026 027 028 030 031 032 034 035 036 037
 ```
 
 `000_baseline.sql` is **not** a migration. It is a photograph of the live schema, numbered `000`
@@ -59,6 +60,7 @@ Verified against the live database on 2026-09-11:
 | 034 pin search_path | **NOT APPLIED** | written and committed only; needs Robbie's explicit word |
 | 035 revoke default grants (028's five tables) | **NOT APPLIED** | written and committed only; needs Robbie's explicit word |
 | 036 people search: default discoverable + LIKE escaping + min query | **NOT APPLIED** | written and committed only; needs Robbie's explicit word. Until it runs, new accounts still default to `discoverable_by_name = false` and `find_users_by_display_name` still treats a typed `%` as a wildcard — the shipped app guards its own call sites (`searchPeopleByName` in `src/lib/supabase.ts`), which is a UI guard, not enforcement. |
+| 037 prayer list (new `prayer_items` table) | **NOT APPLIED** | written and committed only; needs Robbie's explicit word. The Prayer List tab in the app has nothing to read or write until this runs — the UI is shipped, the table is not. |
 
 **Regenerate `000_baseline.sql` when a migration is APPLIED, not when one is committed.** A
 baseline regenerated off a commit would record a schema that does not exist.

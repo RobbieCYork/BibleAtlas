@@ -3,9 +3,10 @@ import { supabase, HIGHLIGHT_COLORS, type Highlight, type HighlightColor, type N
 import { BOOKS } from "../data/bibleBooks";
 import TagPicker from "./TagPicker";
 import SermonNotesView from "./SermonNotesView";
+import PrayerListView from "./PrayerListView";
 import Icon from "./Icon";
 
-type NotesTab = "verse" | "sermon";
+type NotesTab = "verse" | "sermon" | "prayer";
 
 interface MyNotesPanelProps {
   userId: string | null | undefined;
@@ -369,6 +370,9 @@ export default function MyNotesPanel({
         <button type="button" className={tab === "sermon" ? "active" : ""} onClick={() => setTab("sermon")}>
           Sermon Notes
         </button>
+        <button type="button" className={tab === "prayer" ? "active" : ""} onClick={() => setTab("prayer")}>
+          Prayer List
+        </button>
       </div>
 
       {tab === "sermon" && (
@@ -379,6 +383,8 @@ export default function MyNotesPanel({
           onOpenedNote={onOpenedSermonNote}
         />
       )}
+
+      {tab === "prayer" && <PrayerListView userId={userId} searchQuery={searchQuery} />}
 
       {tab === "verse" && !userId && (
         <p className="bible-status no-print">Log in (or continue as guest) to write and see notes.</p>
