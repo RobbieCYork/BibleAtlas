@@ -163,6 +163,22 @@ export const PUBLISHER = {
  * `canonical` is always the absolute, no-trailing-slash form, so the one URL a search engine keeps
  * is settled here rather than by whatever the edge happens to serve.
  */
+/* The footer carries three standing commitments, all of which are load-bearing rather than
+ * decorative and none of which is a place to trim words:
+ *
+ *  1. THE EDITORIAL POSITION. Every public page states where it stands, because the articles are
+ *     written from it. AGENTS.md: "If the position moves, that string moves with it."
+ *
+ *  2. THE CONTACT ADDRESS. App Store Review Guideline 1.2 requires published contact information
+ *     for any app carrying user-generated content, and "published" cannot mean "visible once you
+ *     have an account". The same address appears on the sign-in card (AuthGate.tsx) and in the
+ *     app's Safety & Contact screen (SafetySheet.tsx), where it comes from MODERATION_CONTACT_EMAIL
+ *     in src/lib/moderationApi.ts. This generator reads src/data/*.ts and nothing else — by design,
+ *     see AGENTS.md — so it cannot import that constant, and this is the one hand-kept copy. If the
+ *     address ever changes, it changes in both places.
+ *
+ *  3. THE DELETION ROUTE. Google Play requires an account-deletion route reachable without
+ *     installing the app, so every public page links /delete-account (see build-seo.mjs). */
 export function page({ title, description, canonical, trail, jsonLd = [], body, wide = false, current, ogType = "article" }) {
   const ogImage = `${ORIGIN}/og-default.png`;
   const graph = [breadcrumbLd(trail), ...jsonLd];
@@ -204,7 +220,7 @@ ${FONTS}
 ${crumbsHtml(trail)}
 ${body}
 <div class="cta"><p>Capstone Bible is a free interactive study app — a map of every place in this library, a zoomable timeline of biblical and church history, the Bible text with every name in it linked to its article, reading plans and personal notes.</p><a class="btn" href="/">Open Capstone Bible</a></div>
-<footer><p>Part of the <a href="/library">Capstone Bible library</a> — <a href="/places">places</a>, <a href="/sites">sites</a>, <a href="/people">people</a>, <a href="/topics">topics</a> and the <a href="/events">timeline</a>. Articles are written from a Protestant evangelical position and name other traditions' views where they differ.</p><p><a href="/delete-account">Delete your account</a></p></footer>
+<footer><p>Part of the <a href="/library">Capstone Bible library</a> — <a href="/places">places</a>, <a href="/sites">sites</a>, <a href="/people">people</a>, <a href="/topics">topics</a> and the <a href="/events">timeline</a>. Articles are written from a Protestant evangelical position and name other traditions' views where they differ.</p><p>Contact: <a href="mailto:admin@capstonebible.com">admin@capstonebible.com</a></p><p><a href="/delete-account">Delete your account</a></p></footer>
 </main>
 </body>
 </html>`;
@@ -216,6 +232,30 @@ ${body}
  * a real internal link. Reusing `computeLinkAnnotations` rather than re-implementing name matching
  * means the public pages cross-link exactly where the app cross-links, and the linker's existing
  * snapshot suite already guards the result.
+ *
+ * ── DO NOT LINKIFY A CITATION. ──────────────────────────────────────────────────────────────
+ *
+ * `credit`, `detail` and `supports` on a citation are deliberately NOT put through this function,
+ * and `TopicPanel` renders all three as plain `<span>`s for the same reason. They are a
+ * bibliography: the names in them are modern scholars, and the linker matches on bare forenames.
+ *
+ * Counted by running this very function over every one of them on 2026-09-10, not estimated:
+ * 2,266 citation strings, which between them would fire 246 person links across 59 distinct
+ * (surface -> person) pairs. Some are correct — Jerome, Eusebius of Caesarea, John Knox and
+ * Johannes Gutenberg all have records and are matched by their full names. Most are a bare
+ * forename belonging to somebody else entirely, read in its own citation: Joseph Naveh becomes
+ * Joseph son of Jacob (five citations), John Van Seters and John S. Kloppenborg Verbin become John
+ * the Baptist, James Tabor becomes James son of Zebedee, Titus Kennedy becomes Paul's companion,
+ * Philip J. King and Philip Schaff become the apostle, Thomas L. Thompson the apostle Thomas, and
+ * Aaron Demsky the brother of Moses.
+ *
+ * They would also arrive invisibly. A new wrong link is ADDITIVE — it appears in the snapshot diff
+ * as a row that was not there before, which is exactly what every good link in a new article looks
+ * like. `scripts/name-linker/modern-names.mjs` is the one check that would catch them, and it
+ * would catch them by the dozen on the commit that wired them up.
+ *
+ * If a citation ever genuinely needs a link, link the one thing that has a page — the institution
+ * or the artefact — by hand, in the citation itself. Not the author's forename.
  */
 export function makeLinkifier(computeLinkAnnotations, urlFor) {
   return function linkify(text, excludeId) {

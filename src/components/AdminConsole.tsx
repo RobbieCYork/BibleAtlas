@@ -26,12 +26,26 @@ import {
   type AdminUserRow,
 } from "../lib/adminApi";
 import GrowthPanel from "./GrowthPanel";
+import ModerationQueuePanel from "./ModerationQueuePanel";
 import Icon from "./Icon";
 
 /** Every section loads on demand, so opening the console costs one small query (the overview) rather
  * than eight. `AdminSection` is both the tab key and the loader key. */
-type AdminSection = "overview" | "growth" | "users" | "engagement" | "features" | "content" | "moderation";
+type AdminSection =
+  | "overview"
+  | "growth"
+  | "users"
+  | "engagement"
+  | "features"
+  | "content"
+  | "moderation"
+  | "safety";
 
+/** "Moderation" and "Safety" are deliberately two tabs, not one, because they answer two different
+ * questions. Moderation is a BROWSE — the most recent public posts and comments, whether or not
+ * anyone has complained about them, which is how you find something nobody reported. Safety is a
+ * QUEUE — the things readers actually flagged, oldest open first, each with a decision to make and
+ * an audit trail behind it (sql/028). Folding the queue into the browse would bury the reports. */
 const SECTION_LABELS: Record<AdminSection, string> = {
   overview: "Overview",
   growth: "Growth",
@@ -40,6 +54,7 @@ const SECTION_LABELS: Record<AdminSection, string> = {
   features: "Features",
   content: "Content",
   moderation: "Moderation",
+  safety: "Safety",
 };
 
 const WINDOW_OPTIONS = [7, 30, 90] as const;
@@ -575,6 +590,11 @@ export default function AdminConsole() {
       )}
 
       {/* ------------------------------------------------------------ MODERATION */}
+      {/* Loads itself — it has its own availability probe, its own filters and its own error state,
+          and it must be able to say "sql/028 hasn't been run" without this console knowing that is
+          a thing that can happen. */}
+      {section === "safety" && <ModerationQueuePanel />}
+
       {section === "moderation" && moderation && (
         <>
           <p className="admin-note">

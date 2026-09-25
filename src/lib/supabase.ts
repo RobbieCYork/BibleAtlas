@@ -170,6 +170,43 @@ export interface SermonNote {
   body: string;
   created_at: string;
   updated_at: string;
+
+  // --- Provenance, added by sql/033 (Capstone for Churches). Five nullable columns and NOT ONE
+  // new policy — the table's RLS stays `auth.uid() = user_id`, which is what makes "a church can
+  // never delete or alter a member's notes" a fact about the schema rather than a promise about
+  // the UI. Null on every note that was typed rather than forked, which is almost all of them.
+  //
+  // A fork is a SNAPSHOT taken at the moment "Take notes on this" was tapped. It is never
+  // live-linked: the church editing its outline afterwards does not change one character here.
+  /** The outline this note was forked from. Goes NULL if that outline is ever hard-deleted — the FK
+   * is `on delete set null`, deliberately not cascade, because cascade would delete a member's
+   * notes when a church tidied up its library. */
+  source_church_sermon_id?: string | null;
+  /** church_sermons.version at the moment of the fork. Stage 2's "the church updated this" banner
+   * compares against it; Stage 1 only records it. */
+  source_version?: number | null;
+  /** SNAPSHOT of the church's name as plain text, not a join. This and the title below are what let
+   * the note go on saying where it came from after the church has deleted the outline, renamed
+   * itself, or left the platform entirely. */
+  source_church_name?: string | null;
+  source_sermon_title?: string | null;
+  forked_at?: string | null;
+}
+
+/** A row of `prayer_items` (sql/037) — the reader's own prayer list. `notes` holds the exact same
+ * shape SermonNote.body does (legacy plain text, or sanitised rich-text behind the
+ * `<!--capstone-rich:1-->` sentinel — see lib/richText.ts), so it goes through the same
+ * noteBodyToHtml / buildStoredBody / noteBodyToPlainText helpers. Owner-only: RLS is
+ * `auth.uid() = user_id` on all four operations, nobody else can ever read a row here. */
+export interface PrayerItem {
+  id: string;
+  user_id: string;
+  item: string;
+  notes: string;
+  answered: boolean;
+  answered_at: string | null;
+  created_at: string;
+  updated_at: string;
 }
 
 export interface VerseTag {
@@ -244,10 +281,61 @@ export interface Profile {
    * false is private. MyProfileView always shows every filled-in field regardless, since that's the
    * owner's own view; this only governs what a friend sees. */
   profile_visibility: Record<string, boolean>;
-  /** Opt-in — lets someone find this account by display name (a partial, possibly-ambiguous match)
-   * via find_users_by_display_name, alongside the always-on exact email/phone lookups. Defaults to
-   * off since a name search is more exposing than an exact match. */
+  /** Lets someone find this account by display name (a partial, possibly-ambiguous match) via
+   * find_users_by_display_name, alongside the always-on exact email/phone lookups. Surfaced as
+   * "Let people find me by searching my name" in the profile editor.
+   *
+   * The column default is being changed to TRUE by sql/036 — new accounts are discoverable and opt
+   * OUT, which is what "search people like on Facebook" means. Accounts created before that
+   * migration is applied keep whatever they have; nothing flips them. Read the value, never assume
+   * a default here. */
   discoverable_by_name: boolean;
+}
+
+/** One person the name search turned up. Name and photo only — deliberately not the rest of the
+ * profile row. A search result is a pointer to a profile, not a copy of one, and everything else
+ * (email, phone, church, city) stays behind the profile's own RLS. */
+export interface PersonMatch {
+  id: string;
+  display_name: string;
+  avatar_url: string | null;
+}
+
+/** The minimum a people-search query has to be before it is worth sending. Two real characters.
+ *
+ * Not a nicety — at 20 rows a page and an alphabetical sort, a one-character query is a usable way
+ * to walk the whole user table, and an empty one used to return everybody. sql/036 puts this same
+ * minimum inside find_users_by_display_name(), which is the enforcement that actually counts since
+ * the RPC is reachable with nothing but the anon key. This copy is the UI half of it and holds even
+ * with that migration unapplied. */
+export const PEOPLE_SEARCH_MIN_QUERY = 2;
+
+/** True if `query` is worth sending to the people search.
+ *
+ * Two conditions, and the second is the interesting one. The RPC pastes the query into a LIKE
+ * pattern, so `%` and `_` are wildcards: `%%` is two characters, clears any naive length check, and
+ * matches every discoverable name in the table. So the length test counts only characters that are
+ * not LIKE metacharacters. sql/036 escapes them server-side as well; this keeps the shipped UI from
+ * being the tool, migration or no migration. */
+export function isSearchablePeopleQuery(query: string): boolean {
+  return query.trim().replace(/[%_]/g, "").length >= PEOPLE_SEARCH_MIN_QUERY;
+}
+
+/** The one place the app calls find_users_by_display_name().
+ *
+ * Every people-search surface goes through here so the guard above cannot be forgotten by the next
+ * one, and so there is a single answer to "what can a search return" — see PersonMatch. Returns []
+ * on a rejected query or an error: a search box that quietly finds nobody is the right failure, and
+ * this is also what makes the feature safe to ship ahead of sql/036.
+ *
+ * Discoverability, self-exclusion and blocking in both directions (sql/032) are all enforced inside
+ * the SECURITY DEFINER function, not here — the caller filter below is belt-and-braces on the one
+ * case a client can actually check. */
+export async function searchPeopleByName(query: string, viewerId: string): Promise<PersonMatch[]> {
+  if (!isSearchablePeopleQuery(query)) return [];
+  const { data, error } = await supabase.rpc("find_users_by_display_name", { query: query.trim() });
+  if (error) return [];
+  return ((data as PersonMatch[] | null) ?? []).filter((r) => r.id !== viewerId);
 }
 
 /** ISO timestamp before which a chapter_reads row no longer counts as "read", per an account's

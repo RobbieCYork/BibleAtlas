@@ -1,0 +1,263 @@
+-- ============================================================================
+-- REVOKE THE SUPABASE DEFAULT TABLE GRANTS FROM THE FIVE sql/028 TABLES
+--
+-- Not auto-applied by anything in this repo (there is no migrations tooling
+-- here yet) — run this once, by hand:
+--   psql "$SUPABASE_DB_URL" -f sql/035_revoke_default_grants_moderation.sql
+-- or paste it into the Supabase project's SQL Editor.
+--
+-- ----------------------------------------------------------------------------
+-- WHAT IS WRONG
+-- ----------------------------------------------------------------------------
+-- Supabase ships this project with a default ACL:
+--
+--   pg_default_acl, role postgres, schema public, object type "r":
+--     anon=arwdDxtm/postgres | authenticated=arwdDxtm/postgres
+--
+-- `arwdDxtm` is every table privilege there is — INSERT, SELECT, UPDATE,
+-- DELETE, TRUNCATE, REFERENCES, TRIGGER, MAINTAIN. It is applied at CREATE
+-- TABLE time to every table `postgres` creates in `public`. There is no way to
+-- create a table in this database that does not start life fully granted to
+-- both client roles.
+--
+-- `sql/028_moderation.sql` created five tables and then wrote what it believed
+-- were their grants:
+--
+--   grant select, insert, delete on user_blocks        to authenticated;
+--   grant select, insert, delete on content_hides      to authenticated;
+--   grant select                 on moderation_reasons to anon, authenticated;
+--   grant insert                 on moderation_reports to authenticated;
+--   (moderation_actions: nothing)
+--
+-- Every one of those lines was a no-op. GRANT only ever adds, and the default
+-- ACL had already added everything. Verified against production on 2026-09-10
+-- by a read-only query — all five tables carry the full `arwdDxtm` set for
+-- both `anon` and `authenticated`, including UPDATE, DELETE and TRUNCATE on
+-- the moderation audit trail.
+--
+-- `sql/033_churches.sql` is the only migration in this directory that revokes
+-- before it grants, which is why the contrast was visible at all.
+--
+-- ----------------------------------------------------------------------------
+-- WHAT IS *NOT* WRONG — READ THIS BEFORE CALLING IT A BREACH
+-- ----------------------------------------------------------------------------
+-- A GRANT is only half of the access decision. A privilege is reachable only
+-- if an RLS policy also admits the row, and on these five tables it does not.
+-- Every one of the five has RLS ENABLED, and none of them has an UPDATE or
+-- DELETE policy except where it was written on purpose.
+--
+-- Planned on production as role `authenticated` with a JWT claim set, using
+-- EXPLAIN (which plans but does not execute), 2026-09-10:
+--
+--   moderation_reasons UPDATE   -> Result / One-Time Filter: false
+--   moderation_reasons DELETE   -> Result / One-Time Filter: false
+--   moderation_reports UPDATE   -> Result / One-Time Filter: false
+--   moderation_reports DELETE   -> Result / One-Time Filter: false
+--   moderation_actions UPDATE   -> Result / One-Time Filter: false
+--   moderation_actions DELETE   -> Result / One-Time Filter: false
+--   user_blocks        UPDATE   -> Result / One-Time Filter: false
+--
+-- `One-Time Filter: false` is Postgres saying: RLS found no policy for this
+-- command on this table, so the statement is constant-false and touches zero
+-- rows. Nothing an ordinary signed-in user can send through PostgREST reaches
+-- any of these privileges today. **This migration is hardening, not a patch
+-- for a live hole.** Do not write it up as one.
+--
+-- The two writes that DO plan a real scan are both correct and intended:
+--   user_blocks   DELETE -> scoped to blocker_id = auth.uid()  (028 granted it)
+--   content_hides UPDATE -> scoped to user_id   = auth.uid()
+-- The second is the one genuine extra privilege the default handed out here,
+-- and all it permits is rewriting a row of your own "hide this post" list,
+-- which your own INSERT and DELETE already let you do.
+--
+-- ----------------------------------------------------------------------------
+-- SO WHY BOTHER
+-- ----------------------------------------------------------------------------
+-- Three reasons, in order of how much they matter.
+--
+-- 1. TRUNCATE IS NOT SUBJECT TO RLS. Row security governs SELECT, INSERT,
+--    UPDATE, DELETE and MERGE. TRUNCATE is governed by the TRUNCATE privilege
+--    alone, and both client roles hold it on all five tables. It is not
+--    reachable today — PostgREST emits no TRUNCATE, and `anon` and
+--    `authenticated` are both NOLOGIN so nobody can open a direct session as
+--    them (verified, `pg_roles.rolcanlogin = false` for both). But it is the
+--    one privilege in the set that RLS would not catch if a path to raw SQL
+--    ever appeared, and it is sitting on the moderation audit trail.
+--
+-- 2. THE DEFENCE IS ENTIRELY SINGLE-LAYER RIGHT NOW. Every one of those
+--    `One-Time Filter: false` results comes from the *absence* of a policy.
+--    Add one permissive `for all` policy to any of these tables later —
+--    a plausible thing to write while building an admin editor for the reason
+--    taxonomy — and the UPDATE grant that is already there goes live in the
+--    same statement, to `anon` as well as `authenticated`, with nobody
+--    reviewing a GRANT because none was typed. Revoking now means that future
+--    mistake needs two errors instead of one.
+--
+-- 3. THE FILE SHOULD MEAN WHAT IT SAYS. `sql/028` documents a grant set it
+--    never achieved, and the client code was written against the documented
+--    set, not the real one — `moderationApi.ts` passes
+--    `ignoreDuplicates: true` on its content_hides upsert with a comment
+--    explaining that 028 "deliberately" withheld UPDATE so a DO UPDATE upsert
+--    would be refused. It would not have been refused. Anyone reasoning about
+--    this schema from the migrations is reasoning about a database that does
+--    not exist.
+--
+-- ----------------------------------------------------------------------------
+-- SCOPE — WHY ONLY FIVE TABLES
+-- ----------------------------------------------------------------------------
+-- 43 of the 44 tables on production have the full default ACL for both client
+-- roles. `messages` is the sole exception, because `sql/024` revoked UPDATE
+-- and granted back a single column. This file does NOT try to fix the other
+-- 38. Sweeping the whole schema means deriving the correct grant set for
+-- every table from its policies and its call sites, and getting one wrong
+-- takes a working feature off the live site. That is a separate, larger
+-- change and it needs Robbie's word on its own merits.
+--
+-- What this file does is bring the five tables `sql/028` created into line
+-- with what `sql/028` said it was doing, and nothing else.
+--
+-- ----------------------------------------------------------------------------
+-- CAN APPLYING THIS BREAK ANYTHING
+-- ----------------------------------------------------------------------------
+-- The grant set below is exactly 028's stated intent, and the client was
+-- written against that intent, so applying it should be invisible. Checked,
+-- rather than assumed:
+--
+--   * Direct PostgREST access. Only two of the five tables are ever named in
+--     a `.from()` call: `content_hides` (select / upsert-ignore-duplicates /
+--     delete) and `moderation_reasons` (select). Both keep every privilege
+--     they use. `user_blocks`, `moderation_reports` and `moderation_actions`
+--     are never read or written directly by the client at all.
+--
+--   * The RPCs. block_user, unblock_user, list_my_blocks, is_blocked_between,
+--     unfiltered_content_owner, moderation_queue, moderation_counts,
+--     moderation_history, moderation_resolve and
+--     moderation_recent_report_count are all SECURITY DEFINER owned by
+--     `postgres`, so they run on the owner's privileges and are untouched by
+--     anything below. Verified on production, not inferred from the file.
+--
+--   * The one exception, and the reason `insert` on moderation_reports stays.
+--     `moderation_report_submit()` is SECURITY **INVOKER** — deliberately, so
+--     its insert goes through the `moderation_reports_insert_own` policy as
+--     the caller. It needs, as the caller: INSERT on moderation_reports, and
+--     SELECT on moderation_reasons for its `p_reason` validity check. Both are
+--     granted below. It performs no SELECT on moderation_reports; its
+--     duplicate handling catches a unique violation, which needs no privilege.
+--
+--   * Realtime. None of these five tables is in the `supabase_realtime`
+--     publication, so no subscription depends on a client-role SELECT.
+--
+--   * The restrictive `*_block_filter` policies on posts, post_comments,
+--     notes, note_comments, messages, group_messages, profiles and
+--     friend_requests read `user_blocks` only through `is_blocked_between()`,
+--     which is SECURITY DEFINER. Revoking the caller's SELECT on `user_blocks`
+--     does not weaken or break blocking.
+--
+-- The realistic failure mode is the opposite one: a privilege that was being
+-- used *by accident* through the default grant, on a path nobody wrote down.
+-- The greps above found none. If one exists, the symptom will be a PostgREST
+-- 42501 "permission denied for table ..." in the console, and the fix is one
+-- targeted `grant` — not a re-widening of the whole set.
+--
+-- Reversible in full: `grant all on <table> to anon, authenticated;` restores
+-- the current state exactly.
+-- ============================================================================
+
+begin;
+
+-- ----------------------------------------------------------------------------
+-- 1. user_blocks — who has blocked whom.
+--    Never touched directly by the client; every path is a SECURITY DEFINER
+--    RPC. The grant is kept anyway because 028 wrote it and narrowing past a
+--    migration's stated intent is a different decision from honouring it.
+--    UPDATE has no policy behind it and is dropped.
+-- ----------------------------------------------------------------------------
+revoke all on user_blocks from anon, authenticated;
+grant select, insert, delete on user_blocks to authenticated;
+
+-- ----------------------------------------------------------------------------
+-- 2. content_hides — each user's own "hide this post" list.
+--    The policy is `for all` scoped to user_id = auth.uid(), so UPDATE is the
+--    one privilege here that RLS would actually admit. It buys a user nothing
+--    they cannot already do with INSERT + DELETE on their own rows, and
+--    moderationApi.ts is written on the assumption it is absent.
+-- ----------------------------------------------------------------------------
+revoke all on content_hides from anon, authenticated;
+grant select, insert, delete on content_hides to authenticated;
+
+-- ----------------------------------------------------------------------------
+-- 3. moderation_reasons — the report-reason taxonomy. 11 rows.
+--    A reference table with `select using (true)`. This is the one the
+--    original finding was most worried about, and correctly: a readable
+--    reference table with a stray UPDATE grant is a defacement path if RLS
+--    ever admits the write. It does not today — there is no UPDATE policy —
+--    but this is the table where the second layer is most clearly worth
+--    having, because an admin editor for this taxonomy is an obvious thing to
+--    build and it would arrive as a policy, not as a grant.
+--    anon keeps SELECT exactly as 028 granted it.
+-- ----------------------------------------------------------------------------
+revoke all on moderation_reasons from anon, authenticated;
+grant select on moderation_reasons to anon, authenticated;
+
+-- ----------------------------------------------------------------------------
+-- 4. moderation_reports — user-submitted reports.
+--    INSERT is load-bearing: moderation_report_submit() is SECURITY INVOKER
+--    and inserts as the caller through moderation_reports_insert_own.
+--    SELECT is not: the admin queue reads through moderation_queue(), which is
+--    SECURITY DEFINER. The moderation_reports_select_admin policy stays in
+--    place and simply stops being the only thing standing between a
+--    non-admin's SELECT and the report table.
+-- ----------------------------------------------------------------------------
+revoke all on moderation_reports from anon, authenticated;
+grant insert on moderation_reports to authenticated;
+
+-- ----------------------------------------------------------------------------
+-- 5. moderation_actions — the moderation audit trail.
+--    028 granted this table nothing at all, and meant it: every write is
+--    through moderation_resolve() and every read through moderation_history(),
+--    both SECURITY DEFINER. It currently carries UPDATE, DELETE and TRUNCATE
+--    for anon and authenticated by default. Nothing is granted back.
+-- ----------------------------------------------------------------------------
+revoke all on moderation_actions from anon, authenticated;
+
+commit;
+
+-- ============================================================================
+-- AFTER APPLYING
+-- ============================================================================
+-- 1. Confirm the grants are what this file says. Expect exactly five rows on
+--    the left and nothing else — no UPDATE, no DELETE except user_blocks and
+--    content_hides, and no TRUNCATE anywhere:
+--
+--      select table_name, grantee,
+--             string_agg(distinct privilege_type, ', ' order by privilege_type)
+--        from information_schema.role_table_grants
+--       where table_schema = 'public'
+--         and grantee in ('anon', 'authenticated')
+--         and table_name in ('user_blocks', 'content_hides',
+--                            'moderation_reasons', 'moderation_reports',
+--                            'moderation_actions')
+--       group by 1, 2 order by 1, 2;
+--
+--    Expected:
+--      content_hides        authenticated  DELETE, INSERT, SELECT
+--      moderation_reasons   anon           SELECT
+--      moderation_reasons   authenticated  SELECT
+--      moderation_reports   authenticated  INSERT
+--      user_blocks          authenticated  DELETE, INSERT, SELECT
+--    and no row at all for moderation_actions.
+--
+-- 2. Walk the features from the outside, signed in as a real account. A saved
+--    grant is not a working system:
+--      * open the report sheet on a post — the reason list must populate
+--        (moderation_reasons SELECT)
+--      * submit a report — must succeed (moderation_report_submit INSERT)
+--      * hide a post, reload, confirm it is still hidden, unhide it
+--        (content_hides select / insert / delete)
+--      * block a user and unblock them (the SECURITY DEFINER RPCs)
+--      * as an administrator, open the moderation queue and resolve something
+--        (moderation_queue / moderation_resolve / moderation_history)
+--
+-- 3. Regenerate sql/000_baseline.sql — this changes the grants it records —
+--    and update the "Committed is not applied" table in sql/README.md.
+-- ============================================================================

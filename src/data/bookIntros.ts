@@ -49,7 +49,7 @@ export const bookIntros: BookIntro[] = [
     ],
     manuscripts: [
       "Fragments of Genesis were found among the Dead Sea Scrolls at Qumran (designated 4QGen and others), dating to roughly the last two centuries BC, confirming the substantial stability of the text over two millennia.",
-      "The Masoretic Text, preserved by medieval Jewish scribes (the Masoretes) and represented in codices such as the Aleppo Codex and Leningrad Codex, is the standard Hebrew text underlying most translations of Genesis.",
+      "The Masoretic Text, preserved by medieval Jewish scribes (the Masoretes), is the standard Hebrew text underlying most translations of Genesis. Its two great codices are the Aleppo Codex and the Leningrad Codex — but almost the whole Torah was lost from the Aleppo Codex in the twentieth century, so for Genesis the oldest complete Hebrew witness is the Leningrad Codex, finished about AD 1008.",
       "The Samaritan Pentateuch preserves an independent Hebrew version of Genesis with some notable variants, and the Greek Septuagint (LXX), translated in the last few centuries BC, offers an early witness whose numbers in the genealogies sometimes differ from the Hebrew.",
       "Ancient Near Eastern parallels illuminate Genesis's cultural world: Mesopotamian creation and flood narratives such as the Enuma Elish and the Epic of Gilgamesh (with its flood account) share themes and structures that scholars compare and contrast with the biblical text.",
       "Second-millennium legal and social customs attested in archives such as the Nuzi and Mari tablets have been cited in discussions of the patriarchal narratives' background, though scholars debate how directly they bear on Genesis's dating."

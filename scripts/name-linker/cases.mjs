@@ -15,6 +15,14 @@
 //                              (BookIntroView is the exception — a book intro has no record id),
 //                              and it is the sole context OWNER_NAME_OVERRIDES has to work with.
 //                              Omit it and the case runs with no context at all, as before.
+//   text: "<sentence>"       — instead of `ref`, a PROSE case: a literal sentence run the way
+//                              LinkedVerseText runs one. Quote it verbatim from the data file.
+//   text: … WITH ref: …      — added 2026-09-10. The READER path run against a supplied literal
+//                              instead of against the WEB corpus, which is the only way to assert
+//                              anything about the KJV or ASV a reader can actually select. Name the
+//                              translation in `translation:` and quote the verse verbatim from it.
+//                              VERSE_NAME_OVERRIDES is translation-blind, so a verse whose three
+//                              renderings differ had no cover at all before this — see Acts 4:36.
 //
 // `status` is the part that makes this net honest:
 //   "guard"       — this resolution is CORRECT. If it changes, something has regressed.
@@ -26,7 +34,9 @@
 //                   so that an unrelated change CANNOT alter it without failing this file. Do not
 //                   "fix" a flagged case. If your change moves one, back the change out.
 //
-// Every case below was read against the WEB text of its verse, not recalled.
+// Every case below was read against the WEB text of its verse, not recalled — and the handful that
+// carry both `text` and `ref` were read against the KJV or ASV text that `translation:` names,
+// fetched from bible-api.com, which is the service the app itself asks for Scripture.
 
 export const CASES = [
   // ─────────────────────────────────────────────────────────────────────────────────────────
@@ -492,11 +502,7 @@ export const CASES = [
   { ref: "Isaiah 9:6", surface: "Counselor", expect: "holy-spirit", status: "flagged",
     why: "§7.3 — 'Wonderful, Counselor'. Most Christian readings take this as a title of the " +
          "Messiah; the app currently says Holy Spirit. Changing it is a doctrinal statement." },
-  { ref: "James 1:1", surface: "James", expect: "james-son-of-zebedee", status: "flagged",
-    why: "§7.1 — who wrote the epistle. Almost no tradition holds Zebedee's son (dead in Acts 12:2), " +
-         "but choosing James of Jerusalem takes a position the app does not currently take." },
-  { ref: "Jude 1:1", surface: "James", expect: "james-son-of-zebedee", status: "flagged",
-    why: "§7.2 — 'brother of James'. Same question, plus whether Jude is an apostle." },
+  // §7.1 and §7.2 are RESOLVED and have moved out of this block — see AUTHORSHIP OF JAMES below.
   { ref: "Mark 2:14", surface: "Levi", expect: "matthew-levi", status: "flagged",
     why: "§7.7 — the app asserts Levi the tax collector is Matthew the apostle. Traditional and " +
          "widely held, but not universal. Batch 1 makes the same entry reachable as 'Matthew'; " +
@@ -1708,4 +1714,2596 @@ export const CASES = [
     surface: "Peter", owner: "codex-bezae", expect: "simon-peter", status: "guard",
     why: "KEPT. The Apostle, in the app's own narrative sentence about him. The three title rules " +
          "added to `peter` with this batch must not reach an ordinary mention of the man." },
+
+  // ─────────────────────────────────────────────────────────────────────────────────────────
+  // MASORETIC AND MEDIEVAL HEBREW MANUSCRIPTS, 2026-09-10. Every case below pins a rule added
+  // with that batch, and every one of those rules was found by ENUMERATING what the new articles
+  // render — scripts/name-linker/links-for.mjs — rather than by reading a snapshot diff. A wrong
+  // link in a new article is invisible to the snapshot by construction: it arrives as a row that
+  // was not there before, and so does every good link the article brings with it.
+  //
+  // The KEEPs matter as much as the suppressions here. Three of these rules are patterns rather
+  // than pins, which is unusual in this file, and the KEEPs are what stops a later widening.
+  // ─────────────────────────────────────────────────────────────────────────────────────────
+
+  // ── The Hebrew patronymic: "<Name> ben <Name>" and its abbreviation "<Name> b. <Name>" ──────
+  { text: "The well-known Masorete... Aharon Ben Asher added the vowels, the cantillation marks",
+    surface: "Aharon", owner: "aleppo-codex", expect: null, status: "guard",
+    why: "Aaron ben Asher the Masorete of Tiberias, not Aaron the brother of Moses. This link was " +
+         "LIVE on `masoretic-text` before this batch and is the one row prose-links.tsv lost." },
+  { text: "vocalised, on the testimony of a colophon added about a century later, by Aaron ben Asher himself",
+    surface: "Aaron", owner: "masoretic-text", expect: null, status: "guard",
+    why: "The same man on the umbrella article, which is where the live fault was." },
+  { text: "\"Samuel b. Jacob wrote, vocalised and provided the masora.\"",
+    surface: "Samuel", owner: "leningrad-codex", expect: null, status: "guard",
+    why: "The scribe of the Leningrad Codex, inside his own colophon as B. Outhwaite translates " +
+         "it. The abbreviated \"b.\" is why the rule covers that form: a quotation may not be " +
+         "reworded to suit the linker." },
+  { text: "\"Samuel b. Jacob wrote, vocalised and provided the masora.\"",
+    surface: "Jacob", owner: "leningrad-codex", expect: null, status: "guard",
+    why: "The other half of the same patronymic — the scribe's father, not the patriarch." },
+  { text: "The colophons with the names of Moses b. Asher and of Yacbez b. Solomon were written by a scribe",
+    surface: "Moses", owner: "cairo-codex-of-the-prophets", expect: null, status: "guard",
+    why: "Moses ben Asher of Tiberias, inside J. L. Teicher's 1950 sentence as B. Outhwaite " +
+         "reproduces it." },
+  { text: "The colophons with the names of Moses b. Asher and of Yacbez b. Solomon were written by a scribe",
+    surface: "Solomon", owner: "cairo-codex-of-the-prophets", expect: null, status: "guard",
+    why: "The eleventh-century Karaite who paid for the codex, not the king." },
+  { text: "\"From Simeon ben Koseba to Yeshua ben Gilgola and the men of your company, greeting!",
+    surface: "Yeshua", owner: "bar-kokhba-letters", expect: null, status: "guard",
+    why: "A rebel officer at Wadi Murabba'at. \"Yeshua\" is a registered alternate name for Jesus " +
+         "of Nazareth, so without the rule this letter linked its addressee to Christ." },
+  { text: "\"From Simeon ben Koseba to Yeshua ben Gilgola and the men of your company, greeting!",
+    surface: "Simeon", owner: "bar-kokhba-letters", expect: null, status: "guard",
+    why: "Shimon ben Kosiba, leader of the second revolt, not Simeon at the Temple." },
+  // KEEPs. The patronymic rules are PATTERNS, and these are what a widening breaks first.
+  { ref: "Genesis 42:24", surface: "Simeon", path: "panel", expect: "simeon-at-the-temple", status: "guard",
+    why: "KEPT. Scripture never writes \" ben \" as a free-standing word — 0 of 31,098 WEB verses " +
+         "— so the patronymic rules cannot reach a Bible verse. This is the check on that claim. " +
+         "(That bare \"Simeon\" in Genesis resolves to the man in Luke 2 is a separate, " +
+         "pre-existing panel-path fault and is not this batch's to fix.)" },
+  { ref: "Matthew 16:17", surface: "Simon", expect: "simon-peter", status: "guard",
+    why: "KEPT, and it is the reason `simon` gets a narrow \"bar Ko\" rule instead of a \"bar\" " +
+         "one: the WEB writes \"Simon Bar Jonah\" here, and a loose patronymic rule would take " +
+         "the apostle's own confession." },
+  { text: "fall of Betar and death of Simon bar Kosiba",
+    surface: "Simon", owner: "wld-rom-bar-kokhba-revolt", expect: null, status: "guard",
+    why: "The rebel leader in the timeline article's dating notes, resolving to Simon Peter since " +
+         "the article was published — one live row in prose-links.tsv, and the second of the two " +
+         "this batch removes." },
+
+  // ── Book titles listed in a row: the Prophets, as the Cairo Codex contains them ─────────────
+  { text: "The Cairo Codex contains the Prophets entire — Joshua, Judges, Samuel and Kings, then " +
+          "Isaiah, Jeremiah, Ezekiel and the Twelve",
+    surface: "Joshua", owner: "cairo-codex-of-the-prophets", expect: null, status: "guard",
+    why: "A list of BOOK titles, and five of the names in it were resolving to people. Same " +
+         "ruling and same mechanism as the \"Matthew, John, Luke, Mark\" pins in `john`: an " +
+         "exact phrase, because the only thing that says \"these are books\" is that they are in " +
+         "a list of books." },
+  { text: "The Cairo Codex contains the Prophets entire — Joshua, Judges, Samuel and Kings, then " +
+          "Isaiah, Jeremiah, Ezekiel and the Twelve",
+    surface: "Samuel", owner: "cairo-codex-of-the-prophets", expect: null, status: "guard",
+    why: "Same list." },
+  { text: "The Cairo Codex contains the Prophets entire — Joshua, Judges, Samuel and Kings, then " +
+          "Isaiah, Jeremiah, Ezekiel and the Twelve",
+    surface: "Ezekiel", owner: "cairo-codex-of-the-prophets", expect: null, status: "guard",
+    why: "Same list. Ezekiel and Jeremiah both had live person links here before the pin." },
+  { text: "carrying parts of six books: Jonah, Micah, Nahum, Habakkuk, Zephaniah and Zechariah.",
+    surface: "Jonah", owner: "greek-minor-prophets-scroll", expect: null, status: "guard",
+    why: "The six of the Twelve this scroll preserves — book titles. Bare \"Jonah\" was the " +
+         "prophet and bare \"Zechariah\" was the father of John the Baptist." },
+  { text: "carrying parts of six books: Jonah, Micah, Nahum, Habakkuk, Zephaniah and Zechariah.",
+    surface: "Zechariah", owner: "greek-minor-prophets-scroll", expect: null, status: "guard",
+    why: "Same list, and the more damaging of the two: it was resolving to Zechariah the father " +
+         "of John the Baptist, who has nothing to do with the book." },
+  { text: "the surviving volume all sheets with the text of Isaiah are still present",
+    surface: "Isaiah", owner: "aleppo-codex", expect: null, status: "guard",
+    why: "The book, inside a sentence quoted verbatim from P. Sanders. TEXT_OF, added to `isaiah` " +
+         "with this batch for exactly this quotation." },
+  { text: "recovered virtually the complete codex except for some sheets of Deuteronomy and Isaiah " +
+          "is problematic",
+    surface: "Isaiah", owner: "aleppo-codex", expect: null, status: "guard",
+    why: "The book again, eleven words earlier in the same quotation, where TEXT_OF cannot reach " +
+         "it. A phrase pin, because a rule for \"<unit> of <Book> and <Book>\" cannot tell where " +
+         "the list ends." },
+  { ref: "Isaiah 1:1", surface: "Isaiah", expect: "isaiah", status: "guard",
+    why: "KEPT. The prophet, in his own superscription. Neither addition to `isaiah` can reach " +
+         "Scripture: TEXT_OF needs \"the text of\" and the other is an exact phrase from a " +
+         "twenty-first-century book review." },
+
+  // ── Modern work titles, the ruling of 2026-09-10 carried forward ───────────────────────────
+  { text: "It is an epithet, and the Jewish Encyclopedia states its status precisely",
+    surface: "Jewish", owner: "bar-kokhba-letters", expect: null, status: "guard",
+    why: "The 1901-1906 reference work. A title does not name whoever it is named after — the " +
+         "same ruling as \"Abraham in History and Tradition\", one shelf along." },
+  { text: "and Jewish sources call him Ben (or Bar) Koziba or Kozba",
+    surface: "Jewish", owner: "bar-kokhba-letters", expect: "jews", status: "guard",
+    why: "KEPT, eleven words after the suppression, in the same quotation. Here \"Jewish\" is the " +
+         "people and the link is right. This is the check that the pin above stayed a pin: it is " +
+         "an exact phrase and cannot reach an ordinary adjective." },
+  { text: "the case still made for the Teacher Hymns hypothesis is M. C. Douglas's, in Dead Sea " +
+          "Discoveries in 1999",
+    surface: "Dead Sea", owner: "thanksgiving-hymns", expect: null, status: "guard",
+    why: "The journal, not the sea. Modern work titles again, and the first JOURNAL name in this " +
+         "corpus to have carried a live link." },
+  { text: "Les Devanciers d'Aquila, the forerunners of Aquila of Sinope",
+    surface: "Aquila", occurrence: 1, owner: "greek-minor-prophets-scroll", expect: null, status: "guard",
+    why: "D. Barthelemy's 1963 book title." },
+  { text: "Les Devanciers d'Aquila, the forerunners of Aquila of Sinope",
+    surface: "Aquila", occurrence: 2, owner: "greek-minor-prophets-scroll", expect: null, status: "guard",
+    why: "Aquila of Sinope the translator — a DIFFERENT MAN from Aquila the tentmaker of Acts 18, " +
+         "who owns the key. No record exists for the translator, so a suppression is the only " +
+         "honest answer: no link says nothing, a link to the tentmaker says something false." },
+  { ref: "Acts 18:2", surface: "Aquila", expect: "aquila", status: "guard",
+    why: "KEPT. Priscilla's husband, in his own verse. Neither `aquila` rule can reach it: " +
+         "no WEB verse contains \"Aquila of\", and the other rule is a phrase pin on a book title." },
+
+  // ── Two more that a pattern would have got wrong ────────────────────────────────────────────
+  { text: "the origin of the rumor that the codex had been burned lay with Aleppo's Jewish elders",
+    surface: "elders", owner: "aleppo-codex", expect: null, status: "guard",
+    why: "Twentieth-century Syrian community leaders, inside a sentence quoted verbatim from " +
+         "P. Sanders. `topic:jewish-elders` is the Second Temple body of Luke and Acts. The app's " +
+         "own prose around it writes \"the community in Aleppo\" and needs no rule." },
+  { text: "He went out with money from Charles Taylor, Master of St John's College",
+    surface: "John", owner: "cairo-geniza", expect: null, status: "guard",
+    why: "The Cambridge college that paid for Schechter's trip to Cairo. A building, not the " +
+         "Baptist — the same shelf as \"St Thomas Bay\" under `thomas`." },
+  { text: "their friend Solomon Schechter was able to identify one of their purchases as the lost " +
+          "Hebrew original of the book of Ben Sira",
+    surface: "Solomon", owner: "cairo-geniza", expect: null, status: "guard",
+    why: "Inside Cambridge University Library's own sentence, quoted verbatim. An earlier batch " +
+         "had to put this forename BACK after it was trimmed to suit the linker; the rule exists " +
+         "so that the quotation can stay whole." },
+  { ref: "1 Kings 3:5", surface: "Solomon", expect: "solomon", status: "guard",
+    why: "KEPT. The king at Gibeon. The Schechter rule is keyed on a following surname and the " +
+         "patronymic rule on a preceding \"ben\"/\"b.\"; neither can reach Scripture." },
+  // ── THE VERSIONS, MINUSCULES AND PRINTED-TEXT ARTICLES ─────────────────────────────────────
+  //
+  // Three pins added with this batch, all found by enumerating the links the new prose renders
+  // BEFORE committing (scripts/name-linker/article-links.mjs, written for the purpose), not by
+  // reading a snapshot diff afterwards. Everything else these eight articles collided with was
+  // fixed by rewording — "the Gospel of John" for a bare "John", "the Pauline Epistles" for a bare
+  // "Paul", "M. Maynard" for "Michael Maynard", "the Gospel of Mark and the Gospel of Matthew" for
+  // "Mark and Matthew" — and those wordings must stay that way, because undoing one re-opens a
+  // link this file is guarding.
+  { text: "the alteration changed \"the donor's name from Ceolfrid, abbot of the English, to " +
+          "Peter, abbot of the Lombards.\"",
+    surface: "Peter", owner: "codex-amiatinus", expect: null, status: "guard",
+    why: "An eighth-century Italian abbot whose name was written over Ceolfrith's on the " +
+         "dedication page of Codex Amiatinus, not the Apostle. Inside a quotation from " +
+         "H. A. G. Houghton that cannot be reworded to dodge the collision." },
+  { text: "John the Recluse, of Beth-Mari, Kaddish, being in want of vellum, pulled to pieces a " +
+          "copy of the Old Syriac Gospels",
+    surface: "John", owner: "old-syriac-gospels", expect: null, status: "guard",
+    why: "The eighth-century monk who scraped the Sinaitic Palimpsest's gospel text off its " +
+         "parchment, named in A. S. Lewis's own 1894 introduction. A bare \"John\" in prose " +
+         "defaults to the Baptist; the quotation is a primary source and may not be reworded." },
+  { text: "William Hugh Ferrar, a fellow of Trinity College in Dublin, noticed that four gospel " +
+          "manuscripts kept agreeing with one another against everything else",
+    surface: "Trinity", owner: "family-1-and-family-13", expect: null, status: "guard",
+    why: "The Dublin college, not the doctrine. Same shape as Trinity Southwest University, which " +
+         "is why the pin sits beside it — but keyed on \"Trinity College\" as a phrase, because " +
+         "the college is written both with and without \"in\" before Dublin." },
+  { text: "Losing this verse costs the doctrine of the Trinity nothing, and the reason is the " +
+          "same fact that tells against the verse.",
+    surface: "the Trinity", owner: "comma-johanneum", expect: "the-trinity", status: "guard",
+    why: "KEPT. The doctrine itself, in the article that most needs the link to work. The " +
+         "\"Trinity College\" pin must never reach an ordinary mention of the doctrine." },
+  { text: "It was translated directly from Hebrew rather than from the Greek Septuagint — not " +
+          "quite everywhere, since the Gorgias dictionary says that in the book of Ezekiel and in " +
+          "the Twelve Prophets \"we have to assume some literary dependence of the Peshitta on the " +
+          "Septuagint\"",
+    surface: "Ezekiel", owner: "peshitta", expect: null, status: "guard",
+    why: "The BOOK, inside a quotation about which books of the Peshitta lean on the Septuagint. " +
+         "`ezekiel` carried TEXT_OF but not BOOK_OF until the versions batch; this is the " +
+         "2026-09-09 book-title ruling applied to a name that had not needed it before." },
+
+  // ── MATTHEW'S GENEALOGY ON THE OLD SYRIAC GOSPELS ──────────────────────────────────────────
+  //
+  // Thirteen links shipped live on `old-syriac-gospels` pointing at the wrong men: nine bare
+  // "Joseph" at the patriarch in a section about Joseph the husband of Mary, and four bare "Jacob"
+  // at the patriarch where the man is Jacob son of Matthan. Eight of the thirteen sit inside
+  // verbatim quotations of A. S. Lewis's 1894 translation and of F. C. Burkitt — primary sources
+  // that may not be reworded to dodge a collision, which is why the fix is phrase pins in
+  // NAME_CONTEXT_RULES rather than an edit to the prose.
+  //
+  // These are RESOLVED, not suppressed: `joseph-husband-of-mary` and `jacob-father-of-joseph` are
+  // both real records, and the second one's first line is that it is not the patriarch.
+  //
+  // Every occurrence has its own case, in reading order, so a later widening or narrowing of the
+  // pins cannot silently undo any part of the fix. The scope is one record. Bare "Joseph" and bare
+  // "Jacob" still belong to the patriarch everywhere else, and the guards at the end of this block
+  // are what say so; whether that corpus-wide default is right is Robbie's question and is not
+  // settled here.
+  { text: "At the end of Matthew's genealogy, where the standard text reads that Jacob was the " +
+          "father of Joseph, the husband of Mary, of whom was born Jesus, this manuscript reads",
+    surface: "Jacob", owner: "old-syriac-gospels", expect: "jacob-father-of-joseph",
+    status: "guard",
+    why: "Matthew 1:16's Jacob, son of Matthan. The app's own summary of the standard reading." },
+  { text: "At the end of Matthew's genealogy, where the standard text reads that Jacob was the " +
+          "father of Joseph, the husband of Mary, of whom was born Jesus, this manuscript reads",
+    surface: "Joseph", owner: "old-syriac-gospels", expect: "joseph-husband-of-mary",
+    status: "guard",
+    why: "The clause names him outright — the husband of Mary — and it was linking to the " +
+         "patriarch." },
+  { text: "in Lewis's own 1894 translation — \"Matthan begat Jacob; Jacob begat Joseph; Joseph, " +
+          "to whom was betrothed Mary the Virgin, begat Jesus, who is called the Christ.\"",
+    surface: "Jacob", owner: "old-syriac-gospels", expect: "jacob-father-of-joseph",
+    status: "guard",
+    why: "Inside Lewis's translation of the Sinaitic Palimpsest at Matthew 1:15-16. Matthan " +
+         "already resolved correctly; his son did not." },
+  { text: "in Lewis's own 1894 translation — \"Matthan begat Jacob; Jacob begat Joseph; Joseph, " +
+          "to whom was betrothed Mary the Virgin, begat Jesus, who is called the Christ.\"",
+    surface: "Jacob", occurrence: 2, owner: "old-syriac-gospels",
+    expect: "jacob-father-of-joseph", status: "guard",
+    why: "The same man, named twice by the genealogy's own repetition." },
+  { text: "in Lewis's own 1894 translation — \"Matthan begat Jacob; Jacob begat Joseph; Joseph, " +
+          "to whom was betrothed Mary the Virgin, begat Jesus, who is called the Christ.\"",
+    surface: "Joseph", owner: "old-syriac-gospels", expect: "joseph-husband-of-mary",
+    status: "guard",
+    why: "The disputed verse itself. A reader following this link left a quotation of Matthew " +
+         "1:16 and landed on the patriarch in Egypt." },
+  { text: "in Lewis's own 1894 translation — \"Matthan begat Jacob; Jacob begat Joseph; Joseph, " +
+          "to whom was betrothed Mary the Virgin, begat Jesus, who is called the Christ.\"",
+    surface: "Joseph", occurrence: 2, owner: "old-syriac-gospels",
+    expect: "joseph-husband-of-mary", status: "guard",
+    why: "Betrothed to Mary the Virgin in the same breath. The husband of Mary, twice over." },
+  { text: "And, she adds, \"the fact that Joseph was troubled about Mary's condition is simply " +
+          "inexplicable if he were the father of Jesus.\"",
+    surface: "Joseph", owner: "old-syriac-gospels", expect: "joseph-husband-of-mary",
+    status: "guard",
+    why: "Lewis on Matthew 1:18-19, quoted verbatim from her 1894 introduction." },
+  { text: "\"If the Genealogy had ended with the uncompromising statement 'and Joseph begat " +
+          "Jesus' it would not prove that the Evangelist believed that Joseph had been the " +
+          "natural father of Jesus,\" he wrote.",
+    surface: "Joseph", owner: "old-syriac-gospels", expect: "joseph-husband-of-mary",
+    status: "guard",
+    why: "Burkitt's hypothetical wording of Matthew 1:16, quoted verbatim." },
+  { text: "\"If the Genealogy had ended with the uncompromising statement 'and Joseph begat " +
+          "Jesus' it would not prove that the Evangelist believed that Joseph had been the " +
+          "natural father of Jesus,\" he wrote.",
+    surface: "Joseph", occurrence: 2, owner: "old-syriac-gospels",
+    expect: "joseph-husband-of-mary", status: "guard",
+    why: "The same man in the same sentence of Burkitt." },
+  { text: "\"All that the Evangelist cares about is that Joseph accepted Jesus as his son\"",
+    surface: "Joseph", owner: "old-syriac-gospels", expect: "joseph-husband-of-mary",
+    status: "guard",
+    why: "Burkitt on legal rather than natural fatherhood. Still the husband of Mary." },
+  { text: "the genealogy exists to put Jesus in David's line through Joseph's legal fatherhood, " +
+          "and the verb in a genealogy states heirship, not biology",
+    surface: "Joseph", owner: "old-syriac-gospels", expect: "joseph-husband-of-mary",
+    status: "guard",
+    why: "A possessive, and the only one of the thirteen outside a quotation mark." },
+  { text: "the genealogy exists to put Jesus in David's line through Joseph's legal fatherhood, " +
+          "and the verb in a genealogy states heirship, not biology",
+    surface: "David", owner: "old-syriac-gospels", expect: "david", status: "guard",
+    why: "KEPT, in the same sentence as the pin above. This IS the king — the clause is about " +
+         "Jesus's legal claim to his line. A pin wide enough to take it would have broken the " +
+         "sentence it was written to fix." },
+  { text: "the Curetonian reads differently again and clumsily: \"Jacob begat Joseph, him to " +
+          "whom was betrothed Mary the Virgin, she who bare Jesus the Messiah\"",
+    surface: "Jacob", owner: "old-syriac-gospels", expect: "jacob-father-of-joseph",
+    status: "guard",
+    why: "Burkitt's rendering of the Curetonian at Matthew 1:16. Different wording from Lewis's, " +
+         "so it needs its own pin." },
+  { text: "the Curetonian reads differently again and clumsily: \"Jacob begat Joseph, him to " +
+          "whom was betrothed Mary the Virgin, she who bare Jesus the Messiah\"",
+    surface: "Joseph", owner: "old-syriac-gospels", expect: "joseph-husband-of-mary",
+    status: "guard",
+    why: "The thirteenth and last of them." },
+  // The guards that hold the scope down. If any of these moves, a record-scoped fix has become a
+  // corpus-wide ruling by accident, and that ruling is Robbie's to make.
+  { ref: "Genesis 37:3", surface: "Joseph", expect: "joseph-son-of-jacob", status: "guard",
+    why: "The patriarch, in Scripture, untouched. The pins above are phrases from one article " +
+         "and occur in none of the 31,098 WEB verses." },
+  { text: "Joseph was sold into Egypt by his brothers and rose to govern it",
+    surface: "Joseph", expect: "joseph-son-of-jacob", status: "guard",
+    why: "The patriarch on the ARTICLE surface, which is where the pins live. Bare \"Joseph\" in " +
+         "prose still means the son of Jacob everywhere the pins do not reach." },
+  { ref: "Matthew 1:16", surface: "Joseph", expect: "joseph-husband-of-mary", status: "guard",
+    why: "KEPT. The Bible reader already resolved this verse correctly before the article-side " +
+         "fix, so that fix cannot be read as having created it. (The route was " +
+         "BOOK_NAME_OVERRIDES — every bare Joseph in Matthew — not VERSE_NAME_OVERRIDES as this " +
+         "line said when it was written; corrected 2026-09-10. Since the same date the phrase pin " +
+         "in the block below settles it first and gives the same answer, which is what carries it " +
+         "onto the panel path too.)" },
+  { ref: "Matthew 1:16", surface: "Jacob", expect: "jacob-father-of-joseph",
+    status: "guard",
+    why: "FIXED 2026-09-10, and this line was known-wrong until then. See the block below: " +
+         "Scripture's own Matthew 1:15 and 1:16 now resolve a bare Jacob to the son of Matthan on " +
+         "both rendering paths, which is the same fault as the article one surface further out." },
+
+  // ── SCRIPTURE'S OWN MATTHEW 1:15-16 ───────────────────────────────────────────────────────────
+  //
+  // The half the block above measured and did not fix, because it was out of that batch's scope.
+  // A reader standing in Matthew's genealogy — the live Bible reading surface, not an article —
+  // clicked "Jacob" and was sent to Genesis. Three occurrences: Matthew 1:15's "Matthan became the
+  // father of Jacob", and Matthew 1:16's "Jacob became the father of Joseph". The genealogy names
+  // the man itself, so there is nothing to decide; jacob-father-of-joseph is a real record and
+  // these RESOLVE rather than suppress.
+  //
+  // Two mechanisms, because the two rendering paths have no lever in common. VERSE_NAME_OVERRIDES
+  // is keyed by book/chapter/verse and is translation-blind, so it fires for KJV and ASV readers
+  // as well — all three read the same two men. It needs a book, which the panel path never passes,
+  // so a phrase pin on the WEB wording carries that half. Each phrase occurs in exactly one of the
+  // 31,098 WEB verses and in no prose block; both were counted before they were written.
+  //
+  // Matthew 1:16's "Joseph" was already right for the reader (BOOK_NAME_OVERRIDES) and wrong on
+  // the panel path, where it fell through to the patriarch. Both paths are pinned below.
+  { ref: "Matthew 1:15", surface: "Jacob", expect: "jacob-father-of-joseph", status: "guard",
+    why: "Matthan's son, named by the verse that begets him. Was the patriarch until 2026-09-10." },
+  { ref: "Matthew 1:15", surface: "Jacob", path: "panel", expect: "jacob-father-of-joseph",
+    status: "guard",
+    why: "The same verse with no book passed — the half a reader-only fix would have missed." },
+  { ref: "Matthew 1:16", surface: "Jacob", path: "panel", expect: "jacob-father-of-joseph",
+    status: "guard",
+    why: "\"Jacob became the father of Joseph, the husband of Mary.\" The clause names the son's " +
+         "wife; the patriarch's son married nobody called Mary." },
+  { ref: "Matthew 1:16", surface: "Joseph", path: "panel", expect: "joseph-husband-of-mary",
+    status: "guard",
+    why: "The panel-path half of a verse the reader already had right. It sent a reader of " +
+         "Matthew 1:16 to Egypt, from the one verse in Scripture that names Joseph's wife in the " +
+         "same clause." },
+  // The guards that hold THIS scope down. Two verses were named, and only two: if any of these
+  // moves, a two-verse correction has become a ruling about who owns a bare "Jacob", and that
+  // ruling is Robbie's.
+  { ref: "Matthew 1:2", surface: "Jacob", expect: "jacob", status: "guard",
+    why: "\"Isaac became the father of Jacob\" — eleven verses earlier in the same genealogy, and " +
+         "the patriarch. Naming Matthan in the pin rather than \"became the father of Jacob\" is " +
+         "what keeps this line untouched." },
+  { ref: "Matthew 1:2", surface: "Jacob", occurrence: 2, path: "panel", expect: "jacob",
+    status: "guard",
+    why: "\"Jacob became the father of Judah\" — the same shape as 1:16 and still the patriarch, " +
+         "on the path the phrase pin lives on." },
+  { ref: "Acts 7:8", surface: "Jacob", expect: "jacob", status: "guard",
+    why: "Stephen's speech, twice, in the third book that writes \"became the father of Jacob\". " +
+         "The patriarch, and outside the reach of both mechanisms." },
+  { ref: "Genesis 25:26", surface: "Jacob", expect: "jacob", status: "guard",
+    why: "The patriarch being born. A bare \"Jacob\" in Scripture still means him everywhere the " +
+         "two named verses do not reach." },
+
+  // ── NINETEEN PAGES LINKING THEIR OWN SUBJECT TO SOMEBODY ELSE ─────────────────────────────────
+  //
+  // Joseph of Arimathea's own biography opened "Joseph was a wealthy man from the town of
+  // Arimathea" and sent the reader to Egypt, under his own name. So did Joseph the husband of
+  // Mary's, and so did Caiaphas's, whose given name was Joseph — Josephus writes "Joseph, who was
+  // also called Caiaphas" (Antiquities 18.2.2), and the app's own extra-biblical section quotes it.
+  //
+  // A page does not link to itself; the self-link exclusion missed these because the id they
+  // resolved to belonged to a different man. Fixed by OWNER_NAME_OVERRIDES mapping each record's
+  // "joseph" to the record itself, which hands it back to that exclusion — the same shape as
+  // `augustus` on claudius-caesar.
+  //
+  // All nineteen were read in their own sentences first, and not one is the patriarch, which is
+  // what makes one answer per record enough. Every one has its own case below, in reading order,
+  // so a later narrowing cannot undo part of the fix in silence. Nothing here rules on who a bare
+  // "Joseph" belongs to anywhere else; that is Robbie's and is open.
+  { text: "Joseph was a wealthy man from the town of Arimathea and, according to Mark and Luke, a " +
+          "member of the Sanhedrin — the very council that condemned Jesus.",
+    surface: "Joseph", owner: "joseph-of-arimathea", expect: null, status: "guard",
+    why: "The opening words of his own biography, naming him, and they linked to the patriarch." },
+  { text: "Luke is careful to note that Joseph had not consented to their decision or action " +
+          "against him.",
+    surface: "Joseph", owner: "joseph-of-arimathea", expect: null, status: "guard",
+    why: "Luke 23:51. The man the sentence is about is the man whose page it is on." },
+  { text: "John adds that Joseph was 'a disciple of Jesus, but secretly, for fear of the Jews' — " +
+          "someone who believed but had kept it quiet given his position.",
+    surface: "Joseph", owner: "joseph-of-arimathea", expect: null, status: "guard",
+    why: "John 19:38, quoted. Still Arimathea." },
+  { text: "After Jesus died on the cross, Joseph did something bold: he 'took courage and went to " +
+          "Pilate and asked for the body of Jesus' (Mark 15:43).",
+    surface: "Joseph", owner: "joseph-of-arimathea", expect: null, status: "guard",
+    why: "Mark 15:43 — the verse that BOOK_NAME_OVERRIDES already resolves correctly for a reader, " +
+         "wrong on his own page because the article surface has no book." },
+  { text: "Requesting the corpse of a man executed for sedition was not a small ask, and it " +
+          "publicly identified Joseph with a condemned criminal in front of the very authorities " +
+          "he served alongside.",
+    surface: "Joseph", owner: "joseph-of-arimathea", expect: null, status: "guard",
+    why: "The app's own comment on what the request cost him." },
+  { text: "Joseph wrapped the body in a clean linen cloth and laid it in his own new tomb, cut " +
+          "into the rock, where no one had yet been buried (Matthew 27:60, John 19:41).",
+    surface: "Joseph", owner: "joseph-of-arimathea", expect: null, status: "guard",
+    why: "The act he is remembered for, on the page about him." },
+  { text: "Joseph is not mentioned again in the New Testament after this act.",
+    surface: "Joseph", owner: "joseph-of-arimathea", expect: null, status: "guard",
+    why: "The seventh and last on this record." },
+  { text: "Joseph is introduced as a descendant of David, betrothed to Mary, and working as a " +
+          "tekton — a term usually translated \"carpenter\" but covering builders and craftsmen " +
+          "who worked in wood or stone more broadly (Matthew 13:55).",
+    surface: "Joseph", owner: "joseph-husband-of-mary", expect: null, status: "guard",
+    why: "The opening words of his own biography. Betrothed to Mary in the same clause." },
+  { text: "Both Matthew and Luke trace genealogies through him back to David, establishing " +
+          "Jesus's legal claim to David's royal line even though Joseph was not his biological " +
+          "father (Matthew 1:1-17; Luke 3:23-38).",
+    surface: "Joseph", owner: "joseph-husband-of-mary", expect: null, status: "guard",
+    why: "The genealogy question, on the page of the man it turns on." },
+  { text: "When Mary was found to be pregnant before their marriage was completed, Joseph — " +
+          "described as a righteous man unwilling to expose her to public disgrace — planned to " +
+          "quietly break the engagement.",
+    surface: "Joseph", owner: "joseph-husband-of-mary", expect: null, status: "guard",
+    why: "Matthew 1:19 in the app's own words." },
+  { text: "Joseph obeyed and took Mary home as his wife, but had no marital relations with her " +
+          "until after Jesus was born (Matthew 1:18-25).",
+    surface: "Joseph", owner: "joseph-husband-of-mary", expect: null, status: "guard",
+    why: "Matthew 1:24-25." },
+  { text: "Joseph appears at several key moments of Jesus's early life: he traveled with the " +
+          "pregnant Mary to Bethlehem for a census (Luke 2:1-7); after further angelic warnings, " +
+          "he fled with his family to Egypt to escape Herod's massacre of infants, then returned " +
+          "and settled in Nazareth once it was safe (Matthew 2:13-23); and he brought the family " +
+          "to Jerusalem for Passover, where the twelve-year-old Jesus stayed behind in the temple, " +
+          "causing Joseph and Mary a frantic search (Luke 2:41-51).",
+    surface: "Joseph", owner: "joseph-husband-of-mary", expect: null, status: "guard",
+    why: "The first of two in one sentence — and the sentence that sent a reader to Egypt is " +
+         "itself about a flight to Egypt, by a different man." },
+  { text: "Joseph appears at several key moments of Jesus's early life: he traveled with the " +
+          "pregnant Mary to Bethlehem for a census (Luke 2:1-7); after further angelic warnings, " +
+          "he fled with his family to Egypt to escape Herod's massacre of infants, then returned " +
+          "and settled in Nazareth once it was safe (Matthew 2:13-23); and he brought the family " +
+          "to Jerusalem for Passover, where the twelve-year-old Jesus stayed behind in the temple, " +
+          "causing Joseph and Mary a frantic search (Luke 2:41-51).",
+    surface: "Joseph", occurrence: 2, owner: "joseph-husband-of-mary", expect: null, status: "guard",
+    why: "The second, at Luke 2:41-51. \"Joseph and Mary\" — his wife is named beside him." },
+  { text: "After that episode, Joseph is never mentioned again in the Gospels' narrative action — " +
+          "only referenced in passing as Jesus's presumed father by townspeople (Luke 4:22; John " +
+          "6:42) or listed alongside Mary and Jesus's siblings (Matthew 13:55).",
+    surface: "Joseph", owner: "joseph-husband-of-mary", expect: null, status: "guard",
+    why: "His disappearance from the record, on his own record." },
+  { text: "His absence from the accounts of Jesus's adult ministry, along with Jesus's commending " +
+          "Mary to John's care from the cross with no mention of Joseph (John 19:26-27), has long " +
+          "led readers to conclude he died sometime before Jesus's public ministry began — though " +
+          "the Gospels never state this directly.",
+    surface: "Joseph", owner: "joseph-husband-of-mary", expect: null, status: "guard",
+    why: "The eighth and last on this record." },
+  { text: "An elaborately decorated limestone ossuary inscribed 'Joseph, son of Caiaphas' was " +
+          "found in a first-century family burial cave, containing the bones of six individuals " +
+          "including an approximately 60-year-old man.",
+    surface: "Joseph", owner: "caiaphas", expect: null, status: "guard",
+    why: "The ossuary inscription, quoted. It is Caiaphas's own name and it is his own page." },
+  { text: "Most archaeologists identify this Joseph with the high priest Caiaphas of the Gospels, " +
+          "whose full name per Josephus was 'Joseph, called Caiaphas.'",
+    surface: "Joseph", owner: "caiaphas", expect: null, status: "guard",
+    why: "\"this Joseph\" — the man in the ossuary, i.e. the subject of the page." },
+  { text: "Most archaeologists identify this Joseph with the high priest Caiaphas of the Gospels, " +
+          "whose full name per Josephus was 'Joseph, called Caiaphas.'",
+    surface: "Joseph", occurrence: 2, owner: "caiaphas", expect: null, status: "guard",
+    why: "Josephus's own naming of him, in the same sentence. Note \"Josephus\" itself is not a " +
+         "match — the word boundary saves it — so this sentence carries two links, not four." },
+  { text: "Josephus records that the Roman prefect Valerius Gratus appointed 'Joseph, who was " +
+          "also called Caiaphas' as high priest, and that he was later removed from office by the " +
+          "proconsul Vitellius around AD 36-37.",
+    surface: "Joseph", owner: "caiaphas", expect: null, status: "guard",
+    why: "Antiquities 18.2.2. The nineteenth and last of them." },
+  // The guards that hold THIS scope down. Three records were named, and only three.
+  { text: "Joseph was sold into Egypt by his brothers and rose to govern it",
+    surface: "Joseph", owner: "jacob", expect: "joseph-son-of-jacob", status: "guard",
+    why: "The patriarch on the ARTICLE surface, with an owner passed — the same context the three " +
+         "records above run in. A bare \"Joseph\" in prose still means the son of Jacob on every " +
+         "record the three entries do not name." },
+  { text: "Joseph was sold into Egypt by his brothers and rose to govern it",
+    surface: "Joseph", owner: "elizabeth-mother-of-john-baptist", expect: "joseph-son-of-jacob",
+    status: "guard",
+    why: "RE-OWNED 2026-09-10, from mary-mother-of-jesus, which is now in the table (see the " +
+         "MARY / MATTHAN / JACOB SON OF MATTHAN block below). The assertion it was making is the " +
+         "one that still needs making — a bare \"Joseph\" in prose is the patriarch on every " +
+         "record the entries do not name — so it moves to a nativity-adjacent record that is not " +
+         "one of them, rather than being deleted. Elizabeth's page never writes the bare name; " +
+         "the case is a probe of the default, exactly as it was before." },
+
+  // ══════════════════════════════════════════════════════════════════════════════════════════════
+  // MARY / MATTHAN / JACOB SON OF MATTHAN — 2026-09-10
+  //
+  // Three records the pass above measured, wrote up, and deliberately left, because fixing them
+  // was outside its authorisation. Sixteen Jacob/Joseph links between them, fourteen of them wrong.
+  // Every occurrence was read in its own sentence before anything moved, and two of the sixteen
+  // turned out to be the patriarch and were left exactly where they were — the trap this set was
+  // warned about, and it was live.
+  //
+  // The counts, by record and by surface. `person.summary` is the surface the app renders as plain
+  // text and scripts/seo/render.mjs linkifies onto the ~985 public pages; no snapshot covers it,
+  // so the only thing that can pin it is a prose case, which is why five of the cases below quote
+  // a summary rather than a life story:
+  //
+  //   mary-mother-of-jesus     4 links, 4 wrong  — all four her husband, all four the patriarch
+  //   matthan                  5 links, 5 wrong  — 2 Jacob + 3 Joseph, and he is neither man
+  //   jacob-father-of-joseph   7 links, 5 wrong  — the two right ones are "the patriarch Jacob"
+  //
+  // Two levers, chosen per record and not per taste. OWNER_NAME_OVERRIDES carries Mary and Matthan
+  // whole, because every occurrence on each means one man. It carries the Josephs on Jacob's page
+  // too, for the same reason. It CANNOT carry the Jacobs on Jacob's page, because that record
+  // names both men; there the record-wide answer is the page's own subject (suppressed by the
+  // self-link exclusion) and the patriarch is recovered by a context pin on "the patriarch",
+  // checked first. See the long note in verseAnnotations.ts for why that direction and not the
+  // other one.
+  //
+  // Nothing here rules on who a bare "Jacob" or "Joseph" belongs to corpus-wide. 305 such links
+  // were counted while this was written and many outside these three records are also wrong in the
+  // same direction. That ruling is Robbie's and is untouched; the guards at the end of this block
+  // are what prove it.
+
+  // ── mary-mother-of-jesus: four bare "Joseph"s, every one her husband ──────────────────────────
+  { text: "Mary was a young woman living in Nazareth, betrothed to a carpenter named Joseph, when " +
+          "Luke's Gospel records that the angel Gabriel appeared to her and announced she would " +
+          "conceive a son by the Holy Spirit who would be called \"the Son of the Most High\" " +
+          "(Luke 1:26-38).",
+    surface: "Joseph", owner: "mary-mother-of-jesus", expect: "joseph-husband-of-mary",
+    status: "guard",
+    why: "FIXED 2026-09-10; was the patriarch. The carpenter she is betrothed to, in the " +
+         "annunciation, on his wife's page. Not a self-link — the page's subject is Mary — which " +
+         "is why the exclusion rule never caught it." },
+  { text: "Joseph, learning of the pregnancy, initially planned to quietly end the engagement " +
+          "until an angel reassured him in a dream (Matthew 1:18-25).",
+    surface: "Joseph", owner: "mary-mother-of-jesus", expect: "joseph-husband-of-mary",
+    status: "guard",
+    why: "FIXED 2026-09-10. Matthew 1:19's Joseph, by name, opening the paragraph." },
+  { text: "Mary traveled with Joseph to Bethlehem for a Roman census and gave birth to Jesus " +
+          "there, laying him in a manger because there was no room for them at the inn " +
+          "(Luke 2:1-7).",
+    surface: "Joseph", owner: "mary-mother-of-jesus", expect: "joseph-husband-of-mary",
+    status: "guard",
+    why: "FIXED 2026-09-10. The nativity. The patriarch went to Egypt, not to Bethlehem." },
+  { text: "After the visit of magi from the East, Matthew records that Joseph was warned in a " +
+          "dream of Herod's plan to kill the child, and the family fled to Egypt, returning only " +
+          "after Herod's death to settle in Nazareth (Matthew 2:13-23).",
+    surface: "Joseph", owner: "mary-mother-of-jesus", expect: "joseph-husband-of-mary",
+    status: "guard",
+    why: "FIXED 2026-09-10, and the nastiest of the four: this sentence really does send the " +
+         "family to Egypt, so the wrong link read as plausible to anyone skimming. It is Matthew " +
+         "2:13's Joseph, fifteen centuries after the other one." },
+
+  // ── matthan: he is neither man, so all five are wrong the same way ────────────────────────────
+  { text: "Matthan appears exactly once in Scripture, named as the son of Eleazar and father of " +
+          "Jacob in Matthew's genealogy of Jesus (Matthew 1:15).",
+    surface: "Jacob", owner: "matthan", expect: "jacob-father-of-joseph", status: "guard",
+    why: "FIXED 2026-09-10; was the patriarch. Matthew 1:15's own words: Matthan's son. This is " +
+         "the article-surface twin of the Matthew 1:15 verse cases above." },
+  { text: "Luke's genealogy of Jesus names a different individual, Matthat son of Levi, in the " +
+          "corresponding generation before Joseph's father Heli (Luke 3:23-24), and the two lists " +
+          "do not share names through this whole postexilic stretch.",
+    surface: "Joseph", owner: "matthan", expect: "joseph-husband-of-mary", status: "guard",
+    why: "FIXED 2026-09-10; was the patriarch. Luke 3:23's Joseph, whose father Luke names as " +
+         "Heli — the husband of Mary, not the son of Jacob, who is nowhere in this article." },
+  { text: "Scholars have proposed several explanations for the broader divergence between " +
+          "Matthew's and Luke's genealogies, including that one traces Joseph's legal/royal line " +
+          "while the other traces a biological line (possibly through Mary), or that one reflects " +
+          "a levirate succession; no single theory is universally accepted, and the matter remains " +
+          "an open question in biblical scholarship rather than a settled one.",
+    surface: "Joseph", owner: "matthan", expect: "joseph-husband-of-mary", status: "guard",
+    why: "FIXED 2026-09-10. The whole sentence is about whose legal line Matthew traces to Jesus, " +
+         "which is Mary's husband's." },
+  { text: "A postexilic ancestor of Jesus named only in Matthew's genealogy as the father of " +
+          "Jacob, Joseph's father; his place in the family line is part of the long-standing " +
+          "scholarly puzzle of why Matthew's and Luke's genealogies diverge at this point.",
+    surface: "Jacob", owner: "matthan", expect: "jacob-father-of-joseph", status: "guard",
+    why: "FIXED 2026-09-10. matthan's SUMMARY, verbatim — plain text in the app and a live link " +
+         "on capstonebible.com/person/matthan. No snapshot covers this surface; this case is the " +
+         "only thing holding it." },
+  { text: "A postexilic ancestor of Jesus named only in Matthew's genealogy as the father of " +
+          "Jacob, Joseph's father; his place in the family line is part of the long-standing " +
+          "scholarly puzzle of why Matthew's and Luke's genealogies diverge at this point.",
+    surface: "Joseph", owner: "matthan", expect: "joseph-husband-of-mary", status: "guard",
+    why: "FIXED 2026-09-10. The other half of the same public-page sentence. \"Jacob, Joseph's " +
+         "father\" names two men in four words and had both of them wrong." },
+
+  // ── jacob-father-of-joseph: the record that names BOTH Jacobs ─────────────────────────────────
+  { text: "This Jacob appears exactly once in Scripture, named as the son of Matthan and the " +
+          "father of 'Joseph the husband of Mary, of whom was born Jesus who is called Christ' " +
+          "(Matthew 1:15-16).",
+    surface: "Jacob", owner: "jacob-father-of-joseph", expect: null, status: "guard",
+    why: "FLIPPED 2026-09-10, from a guard that recorded it resolving to the patriarch. \"This " +
+         "Jacob\" is the page's own subject: no link, because the reader is already there. " +
+         "OWNER_NAME_OVERRIDES maps the name to the record itself and the self-link exclusion " +
+         "does the rest." },
+  { text: "This Jacob appears exactly once in Scripture, named as the son of Matthan and the " +
+          "father of 'Joseph the husband of Mary, of whom was born Jesus who is called Christ' " +
+          "(Matthew 1:15-16).",
+    surface: "Joseph", owner: "jacob-father-of-joseph", expect: "joseph-husband-of-mary",
+    status: "guard",
+    why: "FIXED 2026-09-10; was the patriarch. Matthew 1:16 quoted in the same sentence, which " +
+         "names the man's wife four words later." },
+  { text: "No narrative episode involving him is recorded anywhere in the Bible, and he is " +
+          "entirely distinct from the patriarch Jacob (also called Israel), son of Isaac and " +
+          "father of the twelve tribes, who belongs to a much earlier period of biblical history.",
+    surface: "Jacob", owner: "jacob-father-of-joseph", expect: "jacob", status: "guard",
+    why: "UNCHANGED, and it is the trap. On the one record where a bare \"Jacob\" is suppressed " +
+         "as the page's own subject, this occurrence genuinely IS the patriarch — the sentence " +
+         "says so — and it must keep its link to him. Recovered by the \"the patriarch\" context " +
+         "pin, which is checked before OWNER_NAME_OVERRIDES. If this line ever goes null, the " +
+         "record-wide answer has swallowed the exception." },
+  { text: "Luke's genealogy names Joseph's father as Heli rather than Jacob (Luke 3:23), part of " +
+          "the same broader divergence between the two Gospel genealogies discussed under Matthan; " +
+          "proposed explanations include one Gospel tracing a legal/royal succession and the other " +
+          "a biological line, though the question remains genuinely open among scholars.",
+    surface: "Joseph", owner: "jacob-father-of-joseph", expect: "joseph-husband-of-mary",
+    status: "guard",
+    why: "FIXED 2026-09-10; was the patriarch. Luke 3:23's Joseph — this record's own son." },
+  { text: "Luke's genealogy names Joseph's father as Heli rather than Jacob (Luke 3:23), part of " +
+          "the same broader divergence between the two Gospel genealogies discussed under Matthan; " +
+          "proposed explanations include one Gospel tracing a legal/royal succession and the other " +
+          "a biological line, though the question remains genuinely open among scholars.",
+    surface: "Jacob", owner: "jacob-father-of-joseph", expect: null, status: "guard",
+    why: "FIXED 2026-09-10; was the patriarch. \"Heli rather than Jacob\" is the two evangelists " +
+         "disagreeing about THIS page's subject, so it is a self-reference like the first one and " +
+         "takes no link. Note it sits two clauses from the patriarch mention above, in the same " +
+         "paragraph — which is the whole reason this record needed two levers and not one." },
+  { text: "The father of Joseph, the husband of Mary, named only in Matthew's genealogy of Jesus; " +
+          "a distinct figure from the patriarch Jacob (Israel), son of Isaac, who lived many " +
+          "centuries earlier.",
+    surface: "Joseph", owner: "jacob-father-of-joseph", expect: "joseph-husband-of-mary",
+    status: "guard",
+    why: "FIXED 2026-09-10. jacob-father-of-joseph's SUMMARY, verbatim — a live link on " +
+         "capstonebible.com/person/jacob-father-of-joseph and covered by no snapshot. The clause " +
+         "names him \"the husband of Mary\" and linked to Egypt anyway." },
+  { text: "The father of Joseph, the husband of Mary, named only in Matthew's genealogy of Jesus; " +
+          "a distinct figure from the patriarch Jacob (Israel), son of Isaac, who lived many " +
+          "centuries earlier.",
+    surface: "Jacob", owner: "jacob-father-of-joseph", expect: "jacob", status: "guard",
+    why: "UNCHANGED — the summary's own patriarch mention, in different words from the life " +
+         "story's. Two wordings is why the pin is a pattern on \"the patriarch\" rather than two " +
+         "exact phrases; this case and its twin above are what hold that pattern honest." },
+
+  // ── The guards that hold THIS scope down. Three records were named, and only three. ───────────
+  { text: "Bethel (\"House of God\") is where the patriarch Jacob dreamed of a ladder reaching to " +
+          "heaven with angels ascending and descending, after which he set up a stone pillar and " +
+          "renamed the site (Genesis 28:10-19).",
+    surface: "Jacob", owner: "bethel", expect: "jacob", status: "guard",
+    why: "The third and only other \"the patriarch Jacob\" in the whole corpus, and the proof the " +
+         "new context pin is a no-op everywhere it was not written for: the patriarch was already " +
+         "the answer here and still is. Counted 2026-09-10 across all 31,098 WEB verses (0 hits) " +
+         "and every prose and public-page block (3 hits, the other two on jacob-father-of-joseph)." },
+  { text: "Eventually 'God remembered Rachel,' and she conceived and bore Joseph, naming him with " +
+          "the hope that God would 'add' another son (Genesis 30:22-24).",
+    surface: "Joseph", owner: "rachel", expect: "joseph-son-of-jacob", status: "guard",
+    why: "Real copy, not a probe sentence: the patriarch's birth on his mother's page. A bare " +
+         "\"Joseph\" in prose still means the son of Jacob on every record the entries do not " +
+         "name, and rachel is deliberately not one of them." },
+  { ref: "Genesis 37:3", surface: "Joseph", expect: "joseph-son-of-jacob", status: "guard",
+    why: "And in Scripture, on the reader path, untouched. None of the three record entries can " +
+         "reach a verse: OWNER_NAME_OVERRIDES needs an owner, and the Bible reader passes none." },
+  { ref: "Genesis 32:28", surface: "Jacob", expect: "jacob", status: "guard",
+    why: "The same for Jacob: \"Your name will no longer be called Jacob, but Israel.\" The " +
+         "patriarch keeps the bare key everywhere the two owner entries do not reach." },
+
+  // ── THE REST OF THE NATIVITY CAST ────────────────────────────────────────────────────────────
+  //
+  // 2026-09-10. Every bare "Joseph"/"Jacob" link in the corpus was enumerated — all 6,677 blocks,
+  // the 985 public-page-only ones included — and read in its own sentence. 321 of them. Outside
+  // the records already fixed, the nativity cast was wrong in one direction throughout: a bare
+  // "Joseph" in a sentence about the birth, the census, the magi, the flight, the return to
+  // Nazareth or Matthew's genealogy resolved to Joseph son of Jacob and sent the reader to Egypt.
+  //
+  // 37 links moved across 28 records. 33 of them are in prose-links.tsv. THE OTHER FOUR ARE IN NO
+  // SNAPSHOT AT ALL — they are `summary` fields, which the app renders as plain text and
+  // scripts/seo/render.mjs linkifies onto capstonebible.com, and a case is the only thing in this
+  // directory that can hold one. They are marked SUMMARY below.
+  //
+  // The lever is OWNER_NAME_OVERRIDES on 27 of the 28, because on each of those every occurrence
+  // of the name means one man — measured per record, by reading every "Joseph"/"Jacob" token on
+  // it, linked or not. `egyptians` is the exception and is a phrase pin, because it names both.
+  //
+  // This settles nothing about who a bare "Joseph" belongs to anywhere else. That is Robbie's
+  // question and is open. The guards at the end of the block are what hold the scope down.
+
+  { text: "This decree is presented as the reason Joseph, of the house of David, traveled " +
+          "from Nazareth to Bethlehem with Mary to be registered, 'and while they were there, " +
+          "the time came for her to give birth' (Luke 2:6).",
+    surface: "Joseph", owner: "caesar-augustus", expect: "joseph-husband-of-mary",
+    status: "guard",
+    why: "Luke 2:4-6, on the emperor whose decree moved him. 'Of the house of David' and 'with " +
+         "Mary' both say which Joseph, and it was linking to the other one." },
+  { text: "The first Roman emperor, whose empire-wide registration decree is named in Luke's " +
+          "Gospel as the reason Joseph and Mary traveled to Bethlehem, where Jesus was born.",
+    surface: "Joseph", owner: "caesar-augustus", expect: "joseph-husband-of-mary",
+    status: "guard",
+    why: "SUMMARY — a link only on the public page at /person/caesar-augustus, in no snapshot. " +
+         "This case is the only thing holding it." },
+  { text: "Luke 2:1-2 places the census that brought Joseph and Mary to Bethlehem 'while " +
+          "Quirinius was governor of Syria,' during the reign of Herod the Great, whose death " +
+          "is conventionally dated to 4 BC.",
+    surface: "Joseph", owner: "quirinius", expect: "joseph-husband-of-mary",
+    status: "guard",
+    why: "The census article's own sentence. Named beside Mary and dated to Herod's reign." },
+  { text: "The Roman governor of Syria named in Luke's account of the census that brought " +
+          "Joseph and Mary to Bethlehem — a reference that raises a genuine, long-debated " +
+          "chronological question among historians.",
+    surface: "Joseph", owner: "quirinius", expect: "joseph-husband-of-mary",
+    status: "guard",
+    why: "SUMMARY — public page only, no snapshot." },
+  { text: "Matthew's Gospel places one final act of violence at the very end of Herod's " +
+          "reign: alarmed by magi from the East asking about a newborn \"king of the Jews,\" " +
+          "Herod ordered the killing of all boys age two and under in Bethlehem and its " +
+          "vicinity, a massacre Joseph and Mary escaped only by fleeing with the infant Jesus " +
+          "to Egypt (Matthew 2:1-18).",
+    surface: "Joseph", owner: "herod-the-great", expect: "joseph-husband-of-mary",
+    status: "guard",
+    why: "Matthew 2:13-16. The sentence is about fleeing TO Egypt and the link pointed at the " +
+         "man who was sold INTO it." },
+  { text: "Herod died shortly afterward in 4 BC of a painful illness, after which his kingdom " +
+          "was divided among three of his surviving sons, including Herod Antipas, who would " +
+          "later have John the Baptist executed and question Jesus before his crucifixion, " +
+          "and Herod Archelaus, whose harsh rule over Judea led Joseph to settle instead in " +
+          "Nazareth (Matthew 2:19-23).",
+    surface: "Joseph", owner: "herod-the-great", expect: "joseph-husband-of-mary",
+    status: "guard",
+    why: "Matthew 2:22-23, the second of the two on this record. Both are the husband, which is " +
+         "why one answer per record serves here." },
+  { text: "This is the political backdrop for Matthew 2:22, where Joseph, returning from " +
+          "Egypt, hears that 'Archelaus was reigning over Judea in place of his father Herod' " +
+          "and is afraid to go there, withdrawing instead to the district of Galilee and " +
+          "settling in Nazareth.",
+    surface: "Joseph", owner: "herod-archelaus", expect: "joseph-husband-of-mary",
+    status: "guard",
+    why: "Matthew 2:22 named in the sentence. Archelaus's record says the verse number out loud." },
+  { text: "His violent suppression of the Passover protest at the very start of his reign, " +
+          "and the broader reputation for cruelty that led Joseph to avoid Judea in Matthew " +
+          "2:22.",
+    surface: "Joseph", owner: "herod-archelaus", expect: "joseph-husband-of-mary",
+    status: "guard",
+    why: "The same verse in the controversies field." },
+  { text: "Son of Herod the Great whose harsh and unstable rule over Judea after his father's " +
+          "death caused Joseph to avoid settling there with Mary and Jesus, choosing Nazareth " +
+          "in Galilee instead.",
+    surface: "Joseph", owner: "herod-archelaus", expect: "joseph-husband-of-mary",
+    status: "guard",
+    why: "SUMMARY — public page only, no snapshot. Third of three on this record." },
+  { text: "When Mary and Joseph brought the infant Jesus to the temple for the customary " +
+          "purification rites and to present him to the Lord, Simeon was moved by the Spirit " +
+          "to come into the temple courts at that exact moment.",
+    surface: "Joseph", owner: "simeon-at-the-temple", expect: "joseph-husband-of-mary",
+    status: "guard",
+    why: "Luke 2:27. Named beside Mary, carrying the infant Jesus." },
+  { text: "He then blessed Mary and Joseph and, turning to Mary specifically, prophesied that " +
+          "the child was destined to cause the falling and rising of many in Israel, and that " +
+          "a sword would pierce her own soul too (Luke 2:33-35).",
+    surface: "Joseph", owner: "simeon-at-the-temple", expect: "joseph-husband-of-mary",
+    status: "guard",
+    why: "Luke 2:33-34, the second on this record." },
+  { text: "The account closes with two warnings delivered in dreams that shape the rest of " +
+          "the infancy narrative: the magi, 'being warned in a dream not to return to Herod, " +
+          "departed to their own country by another way' (Matthew 2:12), and shortly " +
+          "afterward Joseph is likewise warned in a dream to flee with Mary and the child to " +
+          "Egypt (Matthew 2:13-15).",
+    surface: "Joseph", owner: "magi", expect: "joseph-husband-of-mary",
+    status: "guard",
+    why: "Matthew 2:13. The dream is his, on the magi's own page." },
+  { text: "In taking a human body, the eternal Son also took on real human growth and " +
+          "dependence, raised in the Galilean village of Nazareth by Mary and her husband " +
+          "Joseph; the only childhood episode recorded is a visit to the Jerusalem temple at " +
+          "age twelve, where he was already found discussing Scripture with the religious " +
+          "teachers (Luke 2:41-51).",
+    surface: "Joseph", owner: "jesus-of-nazareth", expect: "joseph-husband-of-mary",
+    status: "guard",
+    why: "\"Mary and her husband Joseph\" — the sentence names the relationship, on the page of " +
+         "the child being raised. This was live on the app's single most-read biography." },
+  { text: "Raised in Nazareth in the household of Joseph and Mary; based in Jerusalem as " +
+          "leader of the church there from shortly after the resurrection until his death " +
+          "around AD 62.",
+    surface: "Joseph", owner: "james-brother-of-jesus", expect: "joseph-husband-of-mary",
+    status: "guard",
+    why: "The household James grew up in. His own family, and the link went to Egypt." },
+  { text: "Philip's first act as a disciple was to find Nathanael and tell him, \"We have " +
+          "found him of whom Moses in the Law and also the prophets wrote, Jesus of Nazareth, " +
+          "the son of Joseph\" (John 1:43-46).",
+    surface: "Joseph", owner: "philip-the-apostle", expect: "joseph-husband-of-mary",
+    status: "guard",
+    why: "John 1:45 quoted verbatim. The only Joseph on the record, and the one man the clause " +
+         "can mean." },
+  { text: "No narrative episode involving Azor is recorded anywhere in the Bible — he is " +
+          "known only as a name in the chain linking the postexilic descendants of Zerubbabel " +
+          "to Joseph, the husband of Mary.",
+    surface: "Joseph", owner: "azor", expect: "joseph-husband-of-mary",
+    status: "guard",
+    why: "Matthew 1:13-14. The clause says \"the husband of Mary\" in as many words, and the " +
+         "link pointed at the patriarch." },
+  { text: "No narrative episode involving Achim is recorded anywhere in the Bible — he is " +
+          "known only as a name in the chain linking the postexilic descendants of Zerubbabel " +
+          "to Joseph, the husband of Mary.",
+    surface: "Joseph", owner: "achim", expect: "joseph-husband-of-mary",
+    status: "guard",
+    why: "The same sentence on the next rung of Matthew 1." },
+  { text: "No narrative episode involving Eliud is recorded anywhere in the Bible — he is " +
+          "known only as a name in the chain linking the postexilic descendants of Zerubbabel " +
+          "to Joseph, the husband of Mary.",
+    surface: "Joseph", owner: "eliud", expect: "joseph-husband-of-mary",
+    status: "guard",
+    why: "And again. Three stubs share this wording, so a later rewrite of one leaves the other " +
+         "two asserted." },
+  { text: "No episode or detail about his life is recorded, and he should not be confused " +
+          "with the far more prominent Eleazar, son of Aaron, who succeeded his father as " +
+          "high priest and oversaw the division of the land of Canaan (Numbers 20:28; Joshua " +
+          "14:1) — that Eleazar lived many centuries earlier and is unrelated to this " +
+          "genealogical figure in Joseph's ancestry.",
+    surface: "Joseph", owner: "eleazar-in-jesus-genealogy", expect: "joseph-husband-of-mary",
+    status: "guard",
+    why: "Matthew 1:15. A sentence whose whole point is not confusing two men of one name was " +
+         "itself linking to the wrong man of another." },
+  { text: "No episode or detail about his life is recorded, and he should not be confused " +
+          "with the far more prominent Zadok who served as high priest under David and " +
+          "Solomon and anointed Solomon king at Gihon (1 Kings 1:38-39) — that Zadok lived " +
+          "many generations earlier and belongs to the priestly line of Eleazar and Aaron, " +
+          "unrelated to this genealogical figure in Joseph's ancestry.",
+    surface: "Joseph", owner: "zadok-in-jesus-genealogy", expect: "joseph-husband-of-mary",
+    status: "guard",
+    why: "Matthew 1:14. A FIFTH genealogy stub — the sweep that scoped this work named four, and " +
+         "this one is why the enumeration was redone rather than worked from the list." },
+  { text: "Despite Jeremiah's judgment on his direct royal succession, Jeconiah is listed as " +
+          "an ancestor of Jesus through Joseph in Matthew's genealogy.",
+    surface: "Joseph", owner: "jeconiah", expect: "joseph-husband-of-mary",
+    status: "guard",
+    why: "Matthew 1:11-12. Jeconiah's record sits in a genealogy that elsewhere runs through the " +
+         "patriarch, so it was read token by token first; neither of its two Josephs is him." },
+  { text: "Jeremiah's judgment that none of Coniah's offspring would 'sit on the throne of " +
+          "David' (Jeremiah 22:30) sits alongside Jeconiah's continued appearance in Jesus's " +
+          "legal genealogy through Joseph in Matthew 1:11-12, a tension that has drawn " +
+          "various explanations across Jewish and Christian interpretive traditions, " +
+          "including proposals that the curse applied only to the immediate royal throne in " +
+          "the collapsed kingdom rather than to all future descendants absolutely.",
+    surface: "Joseph", owner: "jeconiah", expect: "joseph-husband-of-mary",
+    status: "guard",
+    why: "The Jeconiah curse in controversies. The whole argument is about the line that reaches " +
+         "Jesus through this Joseph." },
+  { text: "When the emperor Augustus called for an empire-wide census, God used a Roman " +
+          "bureaucratic decree to move Joseph and Mary from Nazareth in Galilee to Bethlehem " +
+          "in Judea, the ancestral town of David.",
+    surface: "Joseph", owner: "bib-loc-birth-of-jesus", expect: "joseph-husband-of-mary",
+    status: "guard",
+    why: "The birth-of-Jesus timeline article. Luke 2:1-5." },
+  { text: "Joseph, likewise warned in a dream, takes Mary and the child and flees by night to " +
+          "Egypt, a natural refuge just across the border with its own large Jewish " +
+          "community.",
+    surface: "Joseph", owner: "bib-loc-magi-flight-to-egypt", expect: "joseph-husband-of-mary",
+    status: "guard",
+    why: "Matthew 2:13-14. THE record where both men could most plausibly appear, and the reason " +
+         "the owner entry was written only after every token on it was read: it names one " +
+         "Joseph, once, and he is the husband. If the patriarch is ever added here, the entry " +
+         "becomes the wrong lever and must be split into pins." },
+  { text: "Joseph and Mary make their customary Passover pilgrimage to Jerusalem, and on the " +
+          "journey home discover that the twelve-year-old Jesus isn't among the caravan of " +
+          "relatives and friends.",
+    surface: "Joseph", owner: "bib-loc-jesus-in-temple-age-twelve", expect: "joseph-husband-of-mary",
+    status: "guard",
+    why: "Luke 2:41-43." },
+  { text: "With Herod the Great dead, an angel again instructs Joseph in a dream to bring " +
+          "Mary and Jesus back from Egypt.",
+    surface: "Joseph", owner: "bib-loc-return-nazareth-childhood", expect: "joseph-husband-of-mary",
+    status: "guard",
+    why: "Matthew 2:19-20, the first of three on the record with the most of them." },
+  { text: "Learning that Herod's son Archelaus now ruled Judea with a reputation nearly as " +
+          "ruthless as his father's, Joseph is warned once more and steers the family north " +
+          "to Galilee, settling in Nazareth — the same small, unremarkable town Mary had " +
+          "called home before the annunciation.",
+    surface: "Joseph", owner: "bib-loc-return-nazareth-childhood", expect: "joseph-husband-of-mary",
+    status: "guard",
+    why: "Matthew 2:22." },
+  { text: "Luke simply tells us the boy \"grew and became strong, filled with wisdom, and the " +
+          "favor of God was upon him\" — a childhood of quiet, faithful obedience within " +
+          "Joseph's carpentry trade rather than public ministry.",
+    surface: "Joseph", owner: "bib-loc-return-nazareth-childhood", expect: "joseph-husband-of-mary",
+    status: "guard",
+    why: "A possessive, and the third. The carpentry trade is his." },
+  { text: "Within a few years the Senate would grant him the title 'Augustus,' inaugurating " +
+          "the age of the emperors — and it is this same man, ruling in unchallenged peace " +
+          "after Actium, who would one day order the census mentioned in Luke 2:1 that " +
+          "brought Joseph and Mary to Bethlehem.",
+    surface: "Joseph", owner: "wld-rom-battle-of-actium", expect: "joseph-husband-of-mary",
+    status: "guard",
+    why: "A Roman-history article reaching the census from the other end. Not on the scoping " +
+         "list either; found by the enumeration." },
+  { text: "In 27 BC the Roman Senate granted Octavian the title 'Augustus,' inaugurating the " +
+          "age of the Roman emperors and a long era of relative peace and order known as the " +
+          "Pax Romana — the same 'Caesar Augustus' whose census decree, according to Luke " +
+          "2:1, brought Joseph and Mary to Bethlehem for the birth of Jesus.",
+    surface: "Joseph", owner: "wld-rom-augustus-becomes-emperor", expect: "joseph-husband-of-mary",
+    status: "guard",
+    why: "SUMMARY — public page only, no snapshot, and the record's ONLY Joseph link. Without " +
+         "this case nothing in this directory would ever mention it again." },
+  { text: "Given this proximity, some scholars suggest Joseph and the young Jesus, as a " +
+          "craftsman, may have found work in the city during its Herodian building boom, " +
+          "though the New Testament never mentions Jesus visiting Sepphoris directly.",
+    surface: "Joseph", owner: "sepphoris", expect: "joseph-husband-of-mary",
+    status: "guard",
+    why: "The Sepphoris POI. The craftsman beside the young Jesus is his adoptive father." },
+  { text: "Where Joseph, Mary, and the infant Jesus fled to escape Herod's massacre, " +
+          "fulfilling the prophecy \"out of Egypt I called my son\" (Matthew 2:13-15)",
+    surface: "Joseph", owner: "egypt", expect: "joseph-husband-of-mary",
+    status: "guard",
+    why: "A notable fact on the Egypt location record — a surface that was enumerated by nothing " +
+         "at all until 2026-09-10. The same warning as bib-loc-magi-flight-to-egypt applies: one " +
+         "Joseph today, and he is the husband, but this is the article a patriarch mention is " +
+         "most likely to be added to." },
+  { text: "This is the political backdrop for essentially the entire New Testament: Caesar " +
+          "Augustus's census brings Joseph and Mary to Bethlehem (Luke 2:1-7); Roman soldiers " +
+          "ultimately carry out Jesus's crucifixion, a distinctly Roman method of execution, " +
+          "under the authority of the Roman governor Pilate (John 19:1-16); and the New " +
+          "Testament's own dating markers (Tiberius's regnal years, various emperors and " +
+          "governors named) are all Roman administrative facts Luke uses to anchor Gospel and " +
+          "Acts events in verifiable history (Luke 3:1-2).",
+    surface: "Joseph", owner: "romans", expect: "joseph-husband-of-mary",
+    status: "guard",
+    why: "The Romans topic. Its only Joseph, in the census clause." },
+  { text: "Matthew opens with a genealogy tracing Jesus back to Abraham and David, anchoring " +
+          "him in Israel's royal and covenant history, followed by the birth narrative: the " +
+          "angelic message to Joseph, the virgin birth, the visit of the magi, and the flight " +
+          "to Egypt to escape Herod.",
+    surface: "Joseph", owner: "book-intro:Matthew", expect: "joseph-husband-of-mary",
+    status: "guard",
+    why: "Matthew's own introduction, keyed on the synthesised book-intro owner. The reader path " +
+         "already had every bare Joseph in Matthew right via BOOK_NAME_OVERRIDES; the " +
+         "introduction is not a verse and had nothing." },
+  { text: "It contains beloved songs such as Mary's Magnificat and Zechariah's prophecy, the " +
+          "census that brings Joseph and Mary to Bethlehem, the manger, and the angels " +
+          "announcing the birth to shepherds.",
+    surface: "Joseph", owner: "book-intro:Luke", expect: "joseph-husband-of-mary",
+    status: "guard",
+    why: "The same for Luke. Per-book, not per-testament — see the Genesis guard below." },
+
+  // ── The one that is NOT the husband ──────────────────────────────────────────────────────────
+  { text: "The two men wrap Jesus's body in clean linen cloths with the spices, according to " +
+          "Jewish burial custom, and lay it in Joseph's own new tomb, cut into rock in a " +
+          "garden near the crucifixion site, one in which no one had yet been buried.",
+    surface: "Joseph", owner: "bib-loc-burial-of-jesus", expect: "joseph-of-arimathea",
+    status: "guard",
+    why: "NOT Mary's husband, and the reason every one of these was read in its own sentence " +
+         "instead of being swept by rule. The article opens \"Joseph of Arimathea — a wealthy " +
+         "member of the Sanhedrin\"; this is the tomb owner, named briefly the second time. " +
+         "Applying the nativity rule here would have swapped one wrong man for another." },
+
+  // ── The one record that names both men, and is pinned rather than owned ─────────────────────
+  { text: "Most strikingly, Matthew records that Joseph fled with Mary and the infant Jesus " +
+          "to Egypt to escape Herod's massacre of Bethlehem's infants, seeing in it a " +
+          "fulfillment of Hosea's words, 'Out of Egypt I called my son' (Matthew 2:13-15; " +
+          "Hosea 11:1) — the nation once defined by Israel's oppression becoming, one final " +
+          "time, the place where God's own greater Son found safety.",
+    surface: "Joseph", owner: "egyptians", expect: "joseph-husband-of-mary",
+    status: "guard",
+    why: "Matthew 2:13-15 on the Egyptians topic — the ONE record in the sweep that names both " +
+         "Josephs, two paragraphs apart. A phrase pin, not an owner entry, because an owner " +
+         "entry has one answer per record and would have taken the two correct patriarch links " +
+         "in the guards immediately below." },
+  { text: "Egypt's central role in Israel's story is bound up entirely with the book of " +
+          "Exodus: what began as refuge, when Joseph rose to power there and welcomed his " +
+          "father Jacob's family during a famine (Genesis 46-47), turned generations later " +
+          "into brutal slavery once 'there arose a new king over Egypt, who didn't know " +
+          "Joseph' (Exodus 1:8-14).",
+    surface: "Joseph", owner: "egyptians", expect: "joseph-son-of-jacob", status: "guard",
+    why: "KEPT — Genesis 41-47, the patriarch's son, on the same record as the pin above and " +
+         "correct before and after it. This is the link an owner entry would have broken." },
+  { text: "Egypt's central role in Israel's story is bound up entirely with the book of " +
+          "Exodus: what began as refuge, when Joseph rose to power there and welcomed his " +
+          "father Jacob's family during a famine (Genesis 46-47), turned generations later " +
+          "into brutal slavery once 'there arose a new king over Egypt, who didn't know " +
+          "Joseph' (Exodus 1:8-14).",
+    surface: "Joseph", occurrence: 2, owner: "egyptians", expect: "joseph-son-of-jacob",
+    status: "guard",
+    why: "KEPT — Exodus 1:8, the second patriarch link in the same sentence, and the one that " +
+         "sits closest to the pin. Two of the three Josephs on this record are the patriarch, " +
+         "which is what makes it the only pinned record in the batch." },
+  { text: "Egypt's central role in Israel's story is bound up entirely with the book of " +
+          "Exodus: what began as refuge, when Joseph rose to power there and welcomed his " +
+          "father Jacob's family during a famine (Genesis 46-47), turned generations later " +
+          "into brutal slavery once 'there arose a new king over Egypt, who didn't know " +
+          "Joseph' (Exodus 1:8-14).",
+    surface: "Jacob", owner: "egyptians", expect: "jacob", status: "guard",
+    why: "KEPT — and the patriarch Jacob, in the same clause, untouched by any of this." },
+
+  // ── The guards that hold the scope down ──────────────────────────────────────────────────────
+  // 28 records were named and only 28. If any line below moves, a record-scoped fix has become a
+  // corpus-wide ruling by accident, and that ruling is Robbie's to make.
+  { text: "In Egypt, Joseph is bought by Potiphar, an officer of Pharaoh, and Genesis repeats " +
+          "a phrase across this whole ordeal like a drumbeat: \"the LORD was with Joseph.",
+    surface: "Joseph", owner: "bib-pat-joseph-slavery-prison", expect: "joseph-son-of-jacob",
+    status: "guard",
+    why: "Real copy, not a probe sentence: the patriarch's son on the timeline article about " +
+         "him. Roughly 150 links across the Genesis articles still resolve to him and are still " +
+         "right; this is one of them." },
+  { text: "That same theory offers a plausible explanation for Exodus 1:8's ominous line, " +
+          "\"Now there arose a new king over Egypt, who did not know Joseph.",
+    surface: "Joseph", owner: "wld-ane-hyksos-egypt", expect: "joseph-son-of-jacob",
+    status: "guard",
+    why: "An EGYPT article that is deliberately not in the list. The `egypt` and " +
+         "`bib-loc-magi-flight-to-egypt` entries are keyed to their own records and cannot " +
+         "reach this one." },
+  { text: "The narrative follows the patriarchs across four generations — Abraham, Isaac, " +
+          "Jacob, and finally Joseph — through covenant, testing, family conflict, and " +
+          "reconciliation.",
+    surface: "Joseph", owner: "book-intro:Genesis", expect: "joseph-son-of-jacob",
+    status: "guard",
+    why: "A BOOK INTRO that is deliberately not in the list. `book-intro:Matthew` and " +
+         "`book-intro:Luke` are two keys, not a rule about introductions." },
+  { text: "The narrative follows the patriarchs across four generations — Abraham, Isaac, " +
+          "Jacob, and finally Joseph — through covenant, testing, family conflict, and " +
+          "reconciliation.",
+    surface: "Jacob", owner: "book-intro:Genesis", expect: "jacob", status: "guard",
+    why: "And his father, in the same clause. Bare \"Jacob\" moved nowhere in this batch: 173 " +
+         "of its links were enumerated and every one already pointed at the right man." },
+  { text: "Joseph settled his father Jacob and brothers in Goshen because it was good " +
+          "pastureland and separate from the main Egyptian population, who considered " +
+          "shepherds detestable (Genesis 46:31-34; 47:1-6)",
+    surface: "Joseph", owner: "goshen", expect: "joseph-son-of-jacob", status: "guard",
+    why: "A LOCATION notable fact that is deliberately not in the list, on the same surface as " +
+         "the `egypt` entry and the same field. One record, one key." },
+  { text: "Joseph's bones, carried out of Egypt, were buried at Shechem in the plot Jacob had " +
+          "purchased (Joshua 24:32)",
+    surface: "Joseph", owner: "shechem", expect: "joseph-son-of-jacob", status: "guard",
+    why: "And another. Joshua 24:32." },
+  { text: "He was buried in a nearby rock-cut tomb belonging to Joseph of Arimathea (Matthew " +
+          "27:57-60).",
+    surface: "Joseph of Arimathea", owner: "jesus-of-nazareth", expect: "joseph-of-arimathea",
+    status: "guard",
+    why: "The proof that an owner entry keyed on `joseph` cannot reach a longer registered name: " +
+         "the lookup is by the WHOLE matched string, so \"Joseph of Arimathea\" is a different " +
+         "key. jesus-of-nazareth names both men and needed no pin for that reason." },
+  { ref: "Genesis 41:41", surface: "Joseph", expect: "joseph-son-of-jacob", status: "guard",
+    why: "Scripture, on the reader path, untouched. None of the 27 owner entries can reach a " +
+         "verse — OWNER_NAME_OVERRIDES needs an owner and the Bible reader passes none — and the " +
+         "one phrase pin was measured against all 31,098 WEB verses and hits none of them." },
+  { ref: "Matthew 1:16", surface: "Joseph", expect: "joseph-husband-of-mary", status: "guard",
+    why: "And the other man in Scripture, still right, by the route he already had." },
+
+  // ── A THIRD Joseph — FIXED 2026-09-10, and he needed no record of his own ────────────────────
+  //
+  // This line was `known-wrong` until then, on the reasoning that Joseph Barnabas "has no record
+  // of his own" and so `null` was the right answer. That reasoning was wrong, and the fix is the
+  // correction of it: HE IS BARNABAS. Acts 4:36 says the apostles renamed him, so the record the
+  // app already has IS his, and the entry belongs in OWNER_NAME_OVERRIDES mapped to `barnabas` —
+  // the record's own id, handed back to the self-link exclusion, exactly as `augustus` is on
+  // claudius-caesar. Not `null`, which in that table means a different, unrepresented bearer.
+  //
+  // `expect: null` is unchanged and is now what a CORRECT resolution looks like: a page does not
+  // link to itself, so the observable answer on Barnabas's own page is no link either way. The
+  // difference is why, and it is the whole point — mapped to `barnabas` this survives the sentence
+  // being rewritten and points at the right man if the text is ever quoted elsewhere.
+  { text: "Barnabas is introduced in Acts as Joseph, a Levite from Cyprus, whom the apostles " +
+          "nicknamed \"Barnabas,\" meaning \"son of encouragement.",
+    surface: "Joseph", owner: "barnabas", expect: null, status: "guard",
+    why: "Acts 4:36 — Joseph Barnabas, who is neither the patriarch nor Mary's husband. Resolved " +
+         "to Joseph son of Jacob until 2026-09-10 and sent a reader of Barnabas's own page to " +
+         "Egypt. OWNER_NAME_OVERRIDES `joseph.barnabas -> \"barnabas\"`: his own page, so the " +
+         "self-link exclusion suppresses it. ONE prose row moved and no Bible row did." },
+
+  // The reader path, all three translations, on the same verse — and they do not print the same
+  // word. Fetched 2026-09-10 from bible-api.com, the service src/lib/biblePassage.ts asks for the
+  // text; the Greek behind the split is Ἰωσῆς in the Textus Receptus against Ἰωσήφ in NA28 and
+  // SBLGNT, read off the editions. Same man in every one of them — the verse's own content is that
+  // the apostles surnamed him Barnabas — so this is a spelling variant, not a second person.
+  //
+  // These three are `text` + `ref` cases: the reader path run against a supplied literal rather
+  // than against the WEB corpus, which is the only way to assert anything about KJV or ASV. See
+  // the block in run.mjs. Without them the Acts 4:36 override has NO cover at all — it matches
+  // nothing in WEB, so the snapshot cannot see it and never will.
+  { ref: "Acts 4:36", translation: "ASV",
+    text: "And Joseph, who by the apostles was surnamed Barnabas (which is, being interpreted, " +
+          "Son of exhortation), a Levite, a man of Cyprus by race,",
+    surface: "Joseph", expect: "barnabas", status: "guard",
+    why: "The one translation of the three that prints \"Joseph\" here. VERSE_NAME_OVERRIDES " +
+         "joseph.Acts[\"4:36\"] sends it to Barnabas — a link to the right man rather than no " +
+         "link, because the app has him. Was resolving to joseph-son-of-jacob." },
+  { ref: "Acts 4:36", translation: "KJV",
+    text: "And Joses, who by the apostles was surnamed Barnabas, (which is, being interpreted, " +
+          "The son of consolation,) a Levite, and of the country of Cyprus,",
+    surface: "Barnabas", expect: "barnabas", status: "guard",
+    why: "KJV follows the TR and prints \"Joses\", which is registered to nobody, so the override " +
+         "has nothing to match and this reader sees no wrong link — the surname is asserted here " +
+         "instead. This is what a translation-blind override doing nothing looks like." },
+  { ref: "Acts 4:36", surface: "Barnabas", expect: "barnabas", status: "guard",
+    why: "And WEB, from the corpus, which also reads \"Joses\". The Bible snapshot is unchanged " +
+         "by this fix for exactly that reason, and a green snapshot is NOT evidence the ASV " +
+         "override fires." },
+
+  // ── The patriarch, still the patriarch, where he should be ──────────────────────────────────
+  // The failure mode this fix could have had is corpus-wide, so these pin the other end of it.
+  // Both mechanisms are narrow by construction: OWNER_NAME_OVERRIDES needs excludeId === "barnabas"
+  // and VERSE_NAME_OVERRIDES needs Acts 4:36 exactly.
+  { ref: "Acts 7:13", surface: "Joseph", expect: "joseph-son-of-jacob", status: "guard",
+    why: "Stephen's speech, four verses of the patriarch in the SAME BOOK as the override above. " +
+         "The override is keyed to one verse, not to Acts." },
+  { ref: "Acts 7:18", surface: "Joseph", expect: "joseph-son-of-jacob", status: "guard",
+    why: "\"until there arose a different king, who didn't know Joseph.\" Same speech, same man." },
+  { text: "Barnabas is introduced in Acts as Joseph, a Levite from Cyprus, whom the apostles " +
+          "nicknamed \"Barnabas,\" meaning \"son of encouragement.",
+    surface: "Joseph", owner: "joseph-son-of-jacob", expect: null, status: "guard",
+    why: "The SAME SENTENCE with a different owner — the patriarch's own page. No link, because " +
+         "that is the self-link exclusion, and it proves the barnabas entry is keyed on the owner " +
+         "rather than on the words. Change the owner to anything else and the patriarch comes " +
+         "back, which is the case below." },
+  { text: "Barnabas is introduced in Acts as Joseph, a Levite from Cyprus, whom the apostles " +
+          "nicknamed \"Barnabas,\" meaning \"son of encouragement.",
+    surface: "Joseph", owner: "cyprus", expect: "joseph-son-of-jacob", status: "guard",
+    why: "And the same sentence on a record with no entry in the table at all: the global default " +
+         "is untouched. If this ever stops saying joseph-son-of-jacob, a bare \"Joseph\" has been " +
+         "repointed corpus-wide — 249 Bible occurrences and 134 in our prose — and that ruling is " +
+         "Robbie's, not a side effect." },
+
+  // ── A FOURTH bearer, at Acts 1:23 — SUPPRESSED, 2026-09-10 ──────────────────────────────────
+  //
+  // "Joseph called Barsabbas, who was also called Justus" — the man passed over for Matthias. He is
+  // not the patriarch, not Mary's husband, not Joseph of Arimathea and not the Barnabas of 4:36
+  // thirty-one verses later, and he was resolving to Joseph son of Jacob on both paths.
+  //
+  // Measured with the previous batch and escalated rather than swept in; the ruling came back the
+  // same day: suppress, no new record. He has ONE mention in the whole of Scripture and no article,
+  // so a `joseph-barsabbas` record would be a page with nothing on it, and `null` in
+  // VERSE_NAME_OVERRIDES is precisely "a different bearer this app does not represent" — the shape
+  // `zadok`, `eleazar` and Simon Peter's father already have. That is the OPPOSITE call from 4:36
+  // directly above, which resolves rather than suppresses, and for one reason only: the app has
+  // Barnabas and does not have this man.
+  //
+  // Unlike 4:36 this one is wrong for EVERY reader. All three translations print "Joseph" here —
+  // fetched 2026-09-10 from bible-api.com, the service src/lib/biblePassage.ts asks for the text.
+  // They differ on the surname (KJV "Barsabas", WEB and ASV "Barsabbas") and nowhere else that
+  // matters; no word in the clause but "Joseph" is registered to anybody. So this entry moves a
+  // real WEB row, which 4:36's does not, and the Bible snapshot sees it.
+  { ref: "Acts 1:23", surface: "Joseph", expect: null, status: "guard",
+    why: "WEB, from the corpus. VERSE_NAME_OVERRIDES joseph.Acts[\"1:23\"] = null. Was " +
+         "joseph-son-of-jacob, sending a reader of Acts 1 to Egypt. READER PATH ONLY: the panel " +
+         "path passes no book and still says joseph-son-of-jacob, and nothing in this file can " +
+         "change that — same residual as 2 Samuel 20:14's Abel above. It is not reader-facing " +
+         "today (every LinkedVerseText call site in src/ is handed authored prose, never a " +
+         "verse's Scripture text), and no article in the app names this man, so there is no owner " +
+         "for OWNER_NAME_OVERRIDES to key on either." },
+  { ref: "Acts 1:23", translation: "ASV",
+    text: "And they put forward two, Joseph called Barsabbas, who was surnamed Justus, and Matthias.",
+    surface: "Joseph", expect: null, status: "guard",
+    why: "The reader path against the ASV literal. Same word, same suppression — this is what a " +
+         "translation-blind override looks like when the three translations AGREE, and it is the " +
+         "contrast with Acts 4:36, where only the ASV printed \"Joseph\" at all." },
+  { ref: "Acts 1:23", translation: "KJV",
+    text: "And they appointed two, Joseph called Barsabas, who was surnamed Justus, and Matthias.",
+    surface: "Joseph", expect: null, status: "guard",
+    why: "And the KJV, which spells the surname \"Barsabas\" with one b. The override is keyed on " +
+         "book/chapter/verse and on the name \"joseph\", not on the surrounding wording, so the " +
+         "spelling split costs it nothing — which is the argument for using this table here rather " +
+         "than a phrase pin." },
+
+  // ── The patriarch, still the patriarch, on BOTH sides of the suppressed verse ────────────────
+  // Acts 7:13 and 7:18 above already guard the same book for the 4:36 entry. These two are the
+  // rest of Stephen's speech, and they are here because a per-verse suppression that leaked to the
+  // book would empty the patriarch out of Acts entirely and no case above would have said so.
+  { ref: "Acts 7:9", surface: "Joseph", expect: "joseph-son-of-jacob", status: "guard",
+    why: "\"The patriarchs, moved with jealousy against Joseph, sold him into Egypt.\" Six chapters " +
+         "after the suppression, in the same book. joseph.Acts is keyed to two verses, not to Acts." },
+  { ref: "Acts 7:14", surface: "Joseph", expect: "joseph-son-of-jacob", status: "guard",
+    why: "\"Joseph sent, and summoned Jacob, his father\" — the patriarch and, in the same clause, " +
+         "the patriarch's father, who is also the bare \"Jacob\" default. Both survive." },
+
+  // ── JUDAS CALLED BARSABBAS — a FIFTH Judas, at Acts 15:22, 15:27 and 15:32. SUPPRESSED ───────
+  //
+  // Found live on www.capstonebible.com: `curl https://www.capstonebible.com/person/silas` returned
+  // `<a href="/person/judas-iscariot">Judas</a> called Barsabbas`. Iscariot is dead at Acts 1:18,
+  // seven chapters before the Jerusalem council sends this man to Antioch with Silas.
+  //
+  // Same ruling and same shape as Acts 1:23's Joseph above: three mentions in all of Scripture, no
+  // article, no record, so `null` in VERSE_NAME_OVERRIDES — "a different bearer this app does not
+  // represent" — rather than a `judas-barsabbas` page with nothing on it. And unlike Acts 4:36,
+  // wrong for EVERY reader: all three translations print "Judas" at all three verses, fetched
+  // 2026-09-10 from bible-api.com, the service src/lib/biblePassage.ts asks for the text. They
+  // differ only on the surname at 15:22 (KJV "Barsabas", WEB and ASV "Barsabbas") and on KJV's
+  // leading "And" at 15:32, which moves the offset off zero — neither of which a verse-keyed
+  // override can see, and that is the argument for this table over a phrase pin.
+  //
+  // Nine cases: the three verses from the WEB corpus, and the same three in ASV and KJV against
+  // literals, which is the only way to assert either translation.
+  { ref: "Acts 15:22", surface: "Judas", expect: null, status: "guard",
+    why: "WEB, from the corpus. VERSE_NAME_OVERRIDES judas.Acts[\"15:22\"] = null. Was " +
+         "judas-iscariot. \"Judas called Barsabbas, and Silas, chief men among the brothers\" — the " +
+         "two men the Jerusalem council sent to Antioch. Paul, Barnabas and Silas in the same verse " +
+         "are all correct and are untouched. READER PATH ONLY: the panel path passes no book and " +
+         "still says judas-iscariot, the same structural residual as Acts 1:23 above; the article " +
+         "half of this fault is fixed by OWNER_NAME_OVERRIDES judas.silas." },
+  { ref: "Acts 15:27", surface: "Judas", expect: null, status: "guard",
+    why: "WEB, from the corpus. \"We have sent therefore Judas and Silas\" — the same two men, and " +
+         "here the name is bare, with no surname to disambiguate it in any translation." },
+  { ref: "Acts 15:32", surface: "Judas", expect: null, status: "guard",
+    why: "WEB, from the corpus. \"Judas and Silas, also being prophets themselves\" — the sentence " +
+         "Silas's life story cites, and the reason his page said Iscariot." },
+  { ref: "Acts 15:22", translation: "ASV",
+    text: "Then it seemed good to the apostles and the elders, with the whole church, to choose men out of their company, and send them to Antioch with Paul and Barnabas; [namely], Judas called Barsabbas, and Silas, chief men among the brethren:",
+    surface: "Judas", expect: null, status: "guard",
+    why: "The ASV literal. \"church\" for \"assembly\", \"brethren\" for \"brothers\", a bracketed " +
+         "[namely] the WEB does not print — and the same \"Judas\", suppressed identically, because " +
+         "the override is keyed on book/chapter/verse and the name, not on the wording." },
+  { ref: "Acts 15:22", translation: "KJV",
+    text: "Then pleased it the apostles and elders, with the whole church, to send chosen men of their own company to Antioch with Paul and Barnabas; namely, Judas surnamed Barsabas, and Silas, chief men among the brethren:",
+    surface: "Judas", expect: null, status: "guard",
+    why: "The KJV literal, which reads \"surnamed Barsabas\" with one b where WEB and ASV read " +
+         "\"called Barsabbas\". A phrase pin on \"Judas called Barsabbas\" would have missed this " +
+         "reader entirely; the verse key does not." },
+  { ref: "Acts 15:27", translation: "ASV",
+    text: "We have sent therefore Judas and Silas, who themselves also shall tell you the same things by word of mouth.",
+    surface: "Judas", expect: null, status: "guard",
+    why: "The ASV literal at 15:27. Bare name, no surname anywhere in the verse — nothing but the " +
+         "verse key could reach it." },
+  { ref: "Acts 15:27", translation: "KJV",
+    text: "We have sent therefore Judas and Silas, who shall also tell you the same things by mouth.",
+    surface: "Judas", expect: null, status: "guard",
+    why: "The KJV literal at 15:27, which drops \"themselves\" and \"by word of\"." },
+  { ref: "Acts 15:32", translation: "ASV",
+    text: "And Judas and Silas, being themselves also prophets, exhorted the brethren with many words, and confirmed them.",
+    surface: "Judas", expect: null, status: "guard",
+    why: "The ASV literal at 15:32. Note the leading \"And\": the surface sits at offset 4 here and " +
+         "at offset 0 in the WEB case above, which is exactly the kind of drift a phrase pin or an " +
+         "offset-sensitive fix would trip on." },
+  { ref: "Acts 15:32", translation: "KJV",
+    text: "And Judas and Silas, being prophets also themselves, exhorted the brethren with many words, and confirmed them.",
+    surface: "Judas", expect: null, status: "guard",
+    why: "The KJV literal at 15:32, same leading \"And\", different word order after it." },
+
+  // ── The article half, and the guards on both sides in the same book ──────────────────────────
+  { text: "Silas first appears as one of two 'leaders among the believers' in the Jerusalem church — alongside Judas called Barsabbas — chosen to carry the Jerusalem council's decision about Gentile converts to the church in Antioch, where he is described as a prophet who encouraged and strengthened the believers there (Acts 15:22, 15:32).",
+    surface: "Judas", owner: "silas", expect: null, status: "guard",
+    why: "The PANEL/prose path, quoted verbatim from silas's lifeStory in people.ts. This is the " +
+         "sentence a reader actually met — it rendered `<a href=\"/person/judas-iscariot\">Judas</a> " +
+         "called Barsabbas` on the public page. OWNER_NAME_OVERRIDES judas.silas = null. No verse " +
+         "override can reach this surface, and no phrase pin was reached for: `links-for.mjs " +
+         "--grep \"Barsabb|Barsabas\"` returns this one block in the whole corpus, and the silas " +
+         "record holds exactly one \"Judas\", so a whole-record answer is both sufficient and exact." },
+  { ref: "Acts 1:16", surface: "Judas", expect: "judas-iscariot", status: "guard",
+    why: "\"…concerning Judas, who was guide to those who took Jesus.\" The REAL Iscariot, fourteen " +
+         "chapters before the suppression and in the same book. judas.Acts is keyed to four verses, " +
+         "not to Acts — if this ever goes to `-`, the entry has leaked to the book." },
+  { ref: "Acts 1:25", surface: "Judas", expect: "judas-iscariot", status: "guard",
+    why: "\"…this ministry and apostleship from which Judas fell away\" — Iscariot again, nine " +
+         "verses later, and the other side of the same guard." },
+  { ref: "Acts 1:13", surface: "Judas the son of James", expect: "thaddaeus", status: "guard",
+    why: "The third Judas in Acts, matched as a whole phrase and pointed at Thaddaeus by " +
+         "judas.Acts[\"1:13\"]. Duplicated deliberately from the Acts 1:13 block above: that one " +
+         "guards the apostle-list work, this one guards the Acts 15 entries landing in the same " +
+         "Record without disturbing their neighbour." },
+
+  // ── A SIXTH bearer, in the same book, MEASURED AND NOT FIXED ─────────────────────────────────
+  // Acts 5:37's "Judas of Galilee" — the revolt leader Gamaliel names beside Theudas — still
+  // resolves to Iscariot on both paths, as do the "Judas" mentions on quirinius's record that
+  // describe the same man. Found during the Acts 15 pass and deliberately left alone, on exactly
+  // the precedent Acts 1:23 set: whether he gets `null` or a record is a content decision, and it
+  // belongs to the second-bearer enumeration filed on 2026-09-10 rather than to this fix. NOT
+  // recorded as a `known-wrong` case, because a known-wrong asserts a settled right answer and this
+  // one is not settled.
+  // ═══════════════════════════════════════════════════════════════════════════════════════════
+  // THE SECOND-BEARER SWEEP — BATCH 1: THE TEN LINKS THAT ARE ONLY ON THE PUBLIC PAGES
+  // 2026-09-10
+  //
+  // These ten cases are not belt-and-braces. They are the ONLY cover these links will ever have.
+  // Each quotes a `summary` verbatim — a field every panel in the app renders as PLAIN TEXT and
+  // that scripts/seo/render.mjs puts through this same linker, passing the record's own id, when
+  // it generates the ~985 pre-rendered pages at capstonebible.com. `loadProseBlocks()` therefore
+  // does not enumerate them and none of the three snapshots holds a single row: 795 person links
+  // on 985 blocks that a stranger can read and that the regression net cannot see. Delete one of
+  // these cases and the assertion is gone with no diff anywhere to say so.
+  //
+  // Verified by re-running the SEO-only surface before and after: exactly ten links moved, and
+  // nothing else on that surface moved at all.
+
+  { text: "An apostle known by different names in different Gospels, with one clear moment in John's account: asking Jesus why he would reveal himself only to his followers and not to the world.",
+    surface: "John", owner: "thaddaeus", expect: null, status: "guard",
+    why: "PUBLIC PAGE ONLY — thaddaeus.summary, verbatim. Was john-the-baptist, who was dead " +
+         "before the Fourth Gospel was written. \"John's account\" is the Gospel narrating, and " +
+         "this file's standing answer to the narrating voice is suppression, not the Apostle: no " +
+         "link removes the falsehood and asserts nothing about who held the pen. " +
+         "OWNER_NAME_OVERRIDES john.thaddaeus = null." },
+  { text: "A local church leader named in 3 John as someone who loved to have first place — he refused to welcome traveling teachers sent by John and expelled from the church anyone who did, making him one of the only named, clearly negative figures in the New Testament.",
+    surface: "John", occurrence: 1, owner: "diotrephes", expect: null, status: "guard",
+    why: "PUBLIC PAGE ONLY — diotrephes.summary, verbatim. Occurrence 1 is the BOOK TITLE \"3 " +
+         "John\", suppressed by BOOK_NUMERAL in NAME_CONTEXT_RULES, which is checked before the " +
+         "owner table and is therefore unaffected by the entry the next case asserts." },
+  { text: "A local church leader named in 3 John as someone who loved to have first place — he refused to welcome traveling teachers sent by John and expelled from the church anyone who did, making him one of the only named, clearly negative figures in the New Testament.",
+    surface: "John", occurrence: 2, owner: "diotrephes", expect: null, status: "guard",
+    why: "PUBLIC PAGE ONLY — the same summary, second occurrence: \"traveling teachers sent by " +
+         "John\". Was john-the-baptist. SUPPRESSED and deliberately NOT repointed to the Apostle, " +
+         "which is where the sweep that found it wanted to send it: the app's own introduction to " +
+         "3 John says \"the elder\" throughout and never names him, and this record's own first " +
+         "sentence says \"The elder writing 3 John\". A link would assert an authorship the app " +
+         "has pointedly declined to assert, on a page a stranger can read. " +
+         "OWNER_NAME_OVERRIDES john.diotrephes = null." },
+  { text: "The brother of Martha and Mary whose death and resurrection in John's Gospel is presented as the climactic sign that provokes the religious leaders into finally moving to kill Jesus.",
+    surface: "Mary", owner: "lazarus-of-bethany", expect: "mary-of-bethany", status: "guard",
+    why: "PUBLIC PAGE ONLY — lazarus-of-bethany.summary, verbatim. Was mary-mother-of-jesus, " +
+         "because the bare key belongs to her. His sister has a record of her own; the record " +
+         "names no other Mary. OWNER_NAME_OVERRIDES mary.lazarus-of-bethany. The \"John\" in the " +
+         "same sentence is \"John's Gospel\" and stays suppressed by POSSESSIVE_WORK." },
+  { text: "A sorcerer in Samaria who amazed crowds with his magic, converted and was baptized under Philip's preaching, then tried to buy the apostles' power to impart the Holy Spirit — his name became the root of the word 'simony.'",
+    surface: "Philip", owner: "simon-magus", expect: "philip-the-evangelist", status: "guard",
+    why: "PUBLIC PAGE ONLY — simon-magus.summary, verbatim. Acts 8's Philip is the Evangelist, " +
+         "one of the seven; the reader path has had him right at all fifteen of his verses since " +
+         "VERSE_NAME_OVERRIDES was written, and the article surface has no verse to look at. " +
+         "OWNER_NAME_OVERRIDES philip.simon-magus." },
+  { text: "A court official in charge of the entire treasury of the Ethiopian queen (Candace), converted and baptized by Philip the Evangelist after Philip explained the 'suffering servant' passage of Isaiah he was reading on the road.",
+    surface: "Philip", occurrence: 1, owner: "ethiopian-eunuch", expect: "philip-the-evangelist",
+    expectSurface: "Philip the Evangelist", status: "guard",
+    why: "PUBLIC PAGE ONLY — ethiopian-eunuch.summary, verbatim, and the sentence that argued for " +
+         "doing these ten first. The LONG name is its own registered key and was always right; " +
+         "expectSurface pins that the link still covers all three words rather than shrinking to " +
+         "the forename once the owner entry lands." },
+  { text: "A court official in charge of the entire treasury of the Ethiopian queen (Candace), converted and baptized by Philip the Evangelist after Philip explained the 'suffering servant' passage of Isaiah he was reading on the road.",
+    surface: "Philip", occurrence: 2, owner: "ethiopian-eunuch", expect: "philip-the-evangelist",
+    expectSurface: "Philip", status: "guard",
+    why: "The other half of the same sentence: the BARE \"Philip\" ten words later, which resolved " +
+         "to philip-the-apostle. One sentence on a public page named the right man at length and " +
+         "a different man in shorthand, and linked both. OWNER_NAME_OVERRIDES philip." +
+         "ethiopian-eunuch." },
+  { text: "Philip explains Isaiah's suffering servant to an Ethiopian court official and baptizes him beside a desert road.",
+    surface: "Philip", owner: "bib-ac-philip-ethiopian-eunuch", expect: "philip-the-evangelist",
+    status: "guard",
+    why: "PUBLIC PAGE ONLY — bib-ac-philip-ethiopian-eunuch.summary, verbatim. The event's own " +
+         "title names the Evangelist and its summary linked the Apostle." },
+  { text: "Simon Maccabeus, last surviving son of Mattathias, secured Judea's release from Seleucid tribute and was confirmed as hereditary high priest and ruler, founding the Hasmonean dynasty and restoring Jewish self-government for the first time since the Babylonian exile.",
+    surface: "Simon", owner: "bib-it-hasmonean-dynasty-begins", expect: null, status: "guard",
+    why: "PUBLIC PAGE ONLY — bib-it-hasmonean-dynasty-begins.summary, verbatim. Was simon-peter. " +
+         "Simon Maccabeus is a different man by two centuries and the app has no record for him. " +
+         "SUPPRESSED, not written: whether he earns a record is Robbie's and is on his list, and a " +
+         "record later replaces this entry. Note the surface is the bare forename even though the " +
+         "sentence reads \"Simon Maccabeus\" — no registered key covers the pair." },
+  { text: "Simon's son John Hyrcanus ruled Judea for three decades, exploiting Seleucid weakness to expand the Hasmonean kingdom dramatically, including the forced conversion of Idumea and the destruction of the rival Samaritan temple on Mount Gerizim.",
+    surface: "Simon", owner: "bib-it-john-hyrcanus-reign", expect: null, status: "guard",
+    why: "PUBLIC PAGE ONLY — bib-it-john-hyrcanus-reign.summary, verbatim. The same man, named as " +
+         "John Hyrcanus's father. \"John Hyrcanus\" itself is already suppressed by the john " +
+         "context rules and is untouched by this." },
+  { text: "In AD 70, after a brutal months-long siege, Roman forces under Titus breached Jerusalem's walls, burned the Second Temple to the ground, and left the city in ruins — a devastating fulfillment of Jesus's own prophetic warning that not one of the Temple's stones would be left on another.",
+    surface: "Titus", owner: "wld-rom-destruction-of-jerusalem", expect: null, status: "guard",
+    why: "PUBLIC PAGE ONLY — wld-rom-destruction-of-jerusalem.summary, verbatim. Was `titus`, " +
+         "Paul's Gentile co-worker. This is Titus the emperor, Vespasian's son, who burned the " +
+         "Temple — pointing him at a companion of Paul is the kind of error that costs a reader's " +
+         "confidence in the rest of the page. No record exists for the emperor; suppression is the " +
+         "interim and the record-or-suppress question is the largest the sweep raised." },
+  { text: "In a single violent campaign, Jehu kills King Joram, Judah's King Ahaziah, and Jezebel herself, then wipes out Baal worship in Israel — fulfilling Elijah's prophecies to the letter, though only partially reforming the nation.",
+    surface: "Joram", owner: "bib-dki-jehu-purge", expect: "joram-king-of-israel", status: "guard",
+    why: "PUBLIC PAGE ONLY — bib-dki-jehu-purge.summary, verbatim. Two kings called Joram reigned " +
+         "at the same moment, one in each kingdom, and the app has a record for each; the bare key " +
+         "is Judah's. Jehu killed ISRAEL's — and this very sentence names Judah's king separately " +
+         "in the next clause. OWNER_NAME_OVERRIDES joram.bib-dki-jehu-purge." },
+
+  // ── Guards on the other side of every one of the six names above ─────────────────────────────
+  // Each asserts that the famous bearer still resolves where he should, on the surface the change
+  // touched. Negative-tested: each was flipped to the wrong target once and confirmed to fail.
+
+  { text: "In John's account, when Philip tells Nathanael he has found the Messiah in Jesus of Nazareth, Nathanael responds skeptically, \"Can anything good come out of Nazareth?\" Jesus then tells him, \"Before Philip called you, when you were under the fig tree, I saw you,\" and Nathanael immediately declares, \"Rabbi, you are the Son of God! You are the King of Israel!\" (John 1:45-51). He is later named among the disciples present at the Sea of Tiberias when the risen Jesus appears, identified there as \"Nathanael of Cana in Galilee\" (John 21:2).",
+    surface: "Philip", owner: "bartholomew-nathanael", expect: "philip-the-apostle", status: "guard",
+    why: "The ARTICLE surface, quoted from bartholomew-nathanael's lifeStory. The Apostle keeps " +
+         "the bare key everywhere the owner table says nothing, which is the whole Gospel cast. If " +
+         "a later batch ever moves the global default for \"Philip\", this fails first." },
+  { ref: "John 1:43", surface: "Philip", expect: "philip-the-apostle", status: "guard",
+    why: "The reader path, other side of the same name and in the Gospel where he belongs. The " +
+         "Evangelist's fifteen verses are all in Acts." },
+  { ref: "Acts 21:8", surface: "Philip the evangelist", expect: "philip-the-evangelist", status: "guard",
+    why: "Acts 21:8 prints the long name in lower case (\"Philip the evangelist\"), which the " +
+         "registered key matches case-insensitively — the reason the Evangelist was ever findable " +
+         "at all before the verse table was written." },
+  { text: "The first Roman emperor, whose empire-wide registration decree is named in Luke's Gospel as the reason Joseph and Mary traveled to Bethlehem, where Jesus was born.",
+    surface: "Mary", owner: "caesar-augustus", expect: "mary-mother-of-jesus", status: "guard",
+    why: "PUBLIC PAGE ONLY — caesar-augustus.summary. The bare \"Mary\" default is untouched by " +
+         "the lazarus-of-bethany entry, and this asserts it on the same uncovered surface." },
+  { text: "One of the women who followed and financially supported Jesus's ministry, present at the crucifixion and among the first to find the tomb empty; often identified as the mother of James and John.",
+    surface: "John", owner: "salome-follower-of-jesus", expect: "john-the-apostle", status: "guard",
+    why: "PUBLIC PAGE ONLY — salome-follower-of-jesus.summary. Her entry in the john owner table " +
+         "predates this batch and must survive it; the two suppressions added alongside it are " +
+         "keyed to other records." },
+  { text: "A Jerusalem temple priest struck mute for doubting an angel's promise of a son in his old age, whose voice returned at John's naming and burst into prophecy.",
+    surface: "John", owner: "zechariah-father-of-john-baptist", expect: "john-the-baptist", status: "guard",
+    why: "PUBLIC PAGE ONLY. The Baptist keeps the bare key by global default, and this is the " +
+         "sentence where he is unambiguously the right answer — his own naming, on his father's " +
+         "page. A careless widening of the john suppressions takes this first." },
+  { text: "'Christ' is a translation before it is anything else. The Greek Christos renders the Hebrew mashiach, 'anointed one,' and the Gospel of John twice stops to say so for readers who would not have known: Andrew tells Simon 'We have found the Messiah!' and the text adds the gloss '(which is, being interpreted, Christ)' (John 1:41), and the Samaritan woman says 'I know that Messiah comes, he who is called Christ' (John 4:25). These two verses are the only places the World English Bible keeps the Hebrew-derived word rather than translating it.",
+    surface: "Simon", owner: "the-christ", expect: "simon-peter", status: "guard",
+    why: "The ARTICLE surface, quoted from the-christ's section text. Bare \"Simon\" still means " +
+         "Simon Peter everywhere the owner table says nothing — the two Hasmonean suppressions " +
+         "above are keyed to two timeline events and reach nothing else." },
+  { text: "Paul had left Titus on the island of Crete to bring order to the young churches there. The letter's purpose is to instruct Titus on appointing qualified elders in every town, confronting rebellious and deceptive teachers (a problem Paul says is acute on Crete), and teaching sound doctrine that leads to godly living across all groups in the church. It is a compact companion to 1 Timothy, focused on leadership and healthy conduct.",
+    surface: "Titus", owner: "book-intro:Titus", expect: "titus", status: "guard",
+    why: "The book intro, which passes bookIntroOwnerId(\"Titus\") as its excludeId. Paul's " +
+         "companion keeps the bare key; the emperor suppression is keyed to one timeline event." },
+  { text: "Joram, more commonly called Jehoram in 2 Kings and 2 Chronicles, became king after his father Jehoshaphat and immediately consolidated power by killing all of his brothers along with some officials of Israel (2 Chronicles 21:1-4). He is not the Joram son of Ahab who ruled the northern kingdom at the same moment under the same two names; the deciding phrase in the text is almost always \"the son of Jehoshaphat\" or \"king of Judah\" in the same clause.",
+    surface: "Joram", occurrence: 2, owner: "joram-king-of-judah", expect: "joram-king-of-israel",
+    expectSurface: "Joram son of Ahab", status: "guard",
+    why: "The ARTICLE surface. The long form is its own registered key on the Israel record and " +
+         "resolves correctly on Judah's own page — the sentence whose whole point is that the two " +
+         "men are different. The first \"Joram\" in the same block is the page's own subject and " +
+         "is suppressed by the self-link exclusion." },
+  { ref: "2 Kings 8:16", surface: "Jehoram the son of Jehoshaphat", expect: "joram-king-of-judah",
+    status: "guard",
+    why: "The reader path, both kings in one verse: \"In the fifth year of Joram the son of Ahab " +
+         "king of Israel… Jehoram the son of Jehoshaphat king of Judah began to reign.\" Judah's " +
+         "king keeps his own long key. Nothing in this batch touches Scripture." },
+  // ═══════════════════════════════════════════════════════════════════════════════════════════
+  // SECOND-BEARER BATCH 2: THE WHOLE PHILIP CLUSTER, 2026-09-10
+  //
+  // 49 wrong links across three different men, and the largest single group is the one nothing
+  // here could ever have caught: A RECORD'S OWN PAGE. Every "Philip" in the Evangelist's life
+  // story pointed at the Apostle, and every "Philip" on the Tetrarch's page did too, because the
+  // self-link exclusion is `id !== excludeId` and only fires when the resolved id IS the owner.
+  // The snapshot was green throughout — the links never moved, so there was never a diff.
+  // scripts/name-linker/self-name.mjs now sweeps for exactly that shape.
+  //
+  // Scripture is untouched: the reader path has had all three Philips right since
+  // VERSE_NAME_OVERRIDES was written. The verse guards below are the proof of that, on both sides.
+
+  { text: "Philip was one of seven men — 'full of the Spirit and of wisdom' — chosen by the Jerusalem church to oversee the daily distribution of food to widows, freeing the apostles to focus on prayer and teaching the word (Acts 6:1-6). Scripture nowhere calls these seven 'deacons' by title, but the role and the qualifications Luke describes are why the office has traditionally been read that way.",
+    surface: "Philip", owner: "philip-the-evangelist", expect: null, status: "guard",
+    why: "THE RECORD'S OWN PAGE, first sentence of philip-the-evangelist's lifeStory. It linked to " +
+         "philip-the-apostle — the page's own subject, handed to a different man, on all six " +
+         "mentions. OWNER_NAME_OVERRIDES philip.philip-the-evangelist maps to the record itself, " +
+         "so the self-link exclusion suppresses it, exactly as bare \"Saul\" behaves on Paul's page." },
+  { text: "Philip was a son of Herod the Great and his wife Cleopatra of Jerusalem (not the famous Egyptian queen). After Herod's death in 4 BC, Philip received the smallest but most stable share of his father's kingdom: the largely non-Jewish territories of Iturea, Trachonitis, Gaulanitis, Batanea, and Auranitis, northeast of the Sea of Galilee.",
+    surface: "Philip", owner: "philip-the-tetrarch", expect: null, status: "guard",
+    why: "The same shape on the Tetrarch's own page, and the reason his eleven mentions can take " +
+         "ONE record-wide answer: six of them are him and the other five are a third Philip with " +
+         "no record, and both answers render as no link." },
+  { text: "Philip the Tetrarch should be carefully distinguished from a different son of Herod the Great, sometimes called Herod Philip (or Herod II), the son of Herod's wife Mariamne II. This other son is identified in the Gospels as Herodias's first husband, called simply 'Philip' in Mark 6:17 and Matthew 14:3 ('Herod had sent and seized John and bound him in prison for the sake of Herodias, his brother Philip's wife'). Josephus, however, never calls this man Philip — he calls him Herod, and states he lived as a private citizen in Rome without ever holding territory or a title (Antiquities 18.5.1, 4). Scholars generally reconcile this by noting Herodian princes commonly bore multiple names (this brother may well have been 'Herod Philip'), though the exact naming remains a point of scholarly discussion; in any case, he is a distinct individual from Philip the Tetrarch, who never married Herodias.",
+    surface: "Philip", occurrence: 4, owner: "philip-the-tetrarch", expect: null, status: "guard",
+    why: "THE THIRD PHILIP, in the paragraph written to distinguish him: \"his brother Philip's " +
+         "wife\", quoting Mark 6:17. Herod Philip I, Herodias's first husband, whom the app has no " +
+         "record for. It resolved to the Apostle. This is the occurrence that would have needed a " +
+         "phrase pin if the record-wide answer pointed anywhere but at no link — recorded here so " +
+         "that if a record for Herod Philip I is ever written, this case is what fails." },
+  { text: "Philip the Tetrarch should be carefully distinguished from a different son of Herod the Great, sometimes called Herod Philip (or Herod II), the son of Herod's wife Mariamne II. This other son is identified in the Gospels as Herodias's first husband, called simply 'Philip' in Mark 6:17 and Matthew 14:3 ('Herod had sent and seized John and bound him in prison for the sake of Herodias, his brother Philip's wife'). Josephus, however, never calls this man Philip — he calls him Herod, and states he lived as a private citizen in Rome without ever holding territory or a title (Antiquities 18.5.1, 4). Scholars generally reconcile this by noting Herodian princes commonly bore multiple names (this brother may well have been 'Herod Philip'), though the exact naming remains a point of scholarly discussion; in any case, he is a distinct individual from Philip the Tetrarch, who never married Herodias.",
+    surface: "Philip", occurrence: 1, owner: "philip-the-tetrarch", expect: null, status: "guard",
+    why: "The same block, occurrence 1: \"Philip the Tetrarch\" is a registered key of its own, the " +
+         "annotation covers all three words, and it resolves to the owner — so the self-link " +
+         "exclusion suppresses it and always did. Asserted so that a future edit to the owner " +
+         "table cannot turn the record's own long name into a link to somebody else." },
+  { text: "Archelaus was the son of Herod the Great and his Samaritan wife Malthace, and full brother of Herod Antipas. When Herod the Great died in 4 BC, his will named Archelaus as successor to the bulk of the kingdom — Judea, Samaria, and Idumea — with the title of king, while Antipas and Philip received smaller tetrarchies to the north. Archelaus's reign began badly: Josephus records that he sent troops into the Jerusalem temple to suppress a protest during Passover, and roughly 3,000 people were killed (Antiquities 17.9.3; Jewish War 2.1.3).",
+    surface: "Philip", owner: "herod-archelaus", expect: "philip-the-tetrarch", status: "guard",
+    why: "Herod's will divided the kingdom between three sons; this Philip is the third of them. " +
+         "The app has his record. OWNER_NAME_OVERRIDES philip.herod-archelaus." },
+  { text: "Luke 3:1 lists 'Lysanias tetrarch of Abilene' among the regional rulers reigning in the fifteenth year of Tiberius, alongside Pilate, Herod Antipas, and Philip — placing him as ruler of Abilene, a small territory northwest of Damascus, around AD 28-29.",
+    surface: "Philip", owner: "lysanias", expect: "philip-the-tetrarch", status: "guard",
+    why: "The article surface quoting Luke 3:1, which is the Tetrarch's own verse — the reader " +
+         "path has resolved it correctly for as long as VERSE_NAME_OVERRIDES has existed, and the " +
+         "article retelling it did not." },
+  { text: "Renamed Azotus in the Hellenistic/Roman period; the deacon Philip appeared there after baptizing the Ethiopian eunuch (Acts 8:40)",
+    surface: "Philip", owner: "ashdod", expect: "philip-the-evangelist", status: "guard",
+    why: "A location notableFact. The sentence names which man — \"the deacon Philip\" — and linked " +
+         "the other one. These 385 location blocks were outside the harness entirely until " +
+         "2026-09-10, when corpus.mjs stopped reading a field name no record has ever had." },
+  { text: "Acts distinguishes 'Hellenists' — Greek-speaking Jews, often from the wider Mediterranean Dispersion — from Aramaic-speaking, more traditionally Judean 'Hebrews' within the earliest Jerusalem church, a distinction that surfaces in a dispute over the fair distribution of food to widows, resolved by appointing seven men (including Stephen and Philip) specifically to oversee it (Acts 6:1-6). Paul's own missionary strategy repeatedly engages the Greek intellectual world directly, most memorably reasoning with Epicurean and Stoic philosophers at Athens's Areopagus, quoting Greek poets to make his case for the God 'in whom we live, and move, and have our being' (Acts 17:16-34).",
+    surface: "Philip", owner: "greeks", expect: "philip-the-evangelist", status: "guard",
+    why: "The Greeks topic, and the one record in the cluster where the APOSTLE could plausibly " +
+         "have appeared — John 12:20-22 is Greeks asking for him by name. Checked rather than " +
+         "assumed: the record holds exactly one \"Philip\" and it is Acts 6's. If a later edit adds " +
+         "the John 12 episode here, this entry becomes the wrong lever and needs a phrase pin." },
+  { text: "With Greece finally unified, Philip began planning a great invasion of the Persian Empire, framed as revenge for Xerxes' invasion generations earlier. He never lived to carry it out — Philip was assassinated in 336 BC, and the throne, the army, and the Persian campaign all passed to his twenty-year-old son, Alexander.",
+    surface: "Philip", occurrence: 2, owner: "wld-pg-philip-of-macedon", expect: null, status: "guard",
+    why: "Philip II of Macedon, 336 BC, resolving to an apostle of Jesus. NAME_CONTEXT_RULES " +
+         "already suppressed \"Philip II\" by its numeral, so the two occurrences written that way " +
+         "were unlinked and the three bare ones in the next sentences were not — a rule that " +
+         "catches the formal name and misses the shorthand is the shape worth watching for. " +
+         "Suppressed on the same interim: a record for him replaces both." },
+  { text: "At just twenty years old, Alexander inherited his father Philip's throne, army, and unfinished ambitions. He moved quickly to secure Macedon and Greece, crushing the rebellious city of Thebes to make an example of any resistance, before turning his attention to the campaign against Persia that his father had planned.",
+    surface: "Philip", owner: "wld-pg-alexander-becomes-king", expect: null, status: "guard",
+    why: "\"his father Philip's throne\" — the same Macedonian king, on the next event in the " +
+         "timeline." },
+
+  // ── Guards: the Apostle keeps the bare key, and Scripture never moved ────────────────────────
+  { text: "Hierapolis was a Hellenistic-Roman city in Phrygia near Colossae and Laodicea, part of the cluster of Lycus Valley churches named in Colossians 4:13. By tradition the Apostle Philip was martyred here in the late 1st century AD.",
+    surface: "Philip", owner: "hierapolis", expect: "philip-the-apostle", status: "guard",
+    why: "The POI surface. The sentence says \"the Apostle Philip\" and the link agrees with it. " +
+         "Eleven bare \"Philip\"s in our prose are the Apostle and stay that way; this is the one " +
+         "whose own sentence names him, so it is the clearest statement that the default survived." },
+  { ref: "Acts 6:5", surface: "Philip", expect: "philip-the-evangelist", status: "guard",
+    why: "The reader path at the Seven's appointment — correct before this batch and after it. " +
+         "Note the panel column of this same verse gives the Apostle, which is not a defect: no " +
+         "verse override reaches LinkedVerseText, and no call site in src/ hands it a verse." },
+  { ref: "Mark 6:17", surface: "Philip", expect: null, status: "guard",
+    why: "\"his brother Philip's wife\" — Herod Philip I, already suppressed on the reader path by " +
+         "VERSE_NAME_OVERRIDES. The prose case above is the article half of the same man, and this " +
+         "is the half that was already right; if the two ever disagree, one of them is wrong." },
+  // ═══════════════════════════════════════════════════════════════════════════════════════════
+  // SECOND-BEARER BATCH 3: THE JAMES CLUSTER, 2026-09-10
+  //
+  // 39 wrong links. The bare key belongs to James son of Zebedee, who was executed in AD 44 and is
+  // a candidate for almost none of it; nearly every one was James the Lord's brother, who has a
+  // record. Nineteen bare "James"es in our prose genuinely ARE Zebedee's son and are untouched;
+  // four of those nineteen are guarded below.
+  //
+  // Three records name BOTH men — simon-peter, john-the-apostle, bib-ac-jerusalem-council — and
+  // take no owner entry at all. The record-wide default stays with Zebedee, who is the majority on
+  // each, and the exception is recovered by a context pattern. Every one of those three records is
+  // asserted here on BOTH sides, which is the only way to know the split still holds.
+
+  { text: "James appears in the Gospels simply as one of Jesus's brothers — Mark's Gospel names him first among four (James, Joses, Judas, and Simon) when the people of Nazareth question how a hometown carpenter's family produced such a teacher (Mark 6:3). John's Gospel states plainly that during Jesus's ministry, \"even his own brothers did not believe in him\" (John 7:5), suggesting James was among the skeptics.",
+    surface: "James", owner: "james-brother-of-jesus", expect: null, status: "guard",
+    why: "THE RECORD'S OWN PAGE. All fourteen \"James\"es on james-brother-of-jesus linked to " +
+         "Zebedee's son — including, elsewhere on the same record, the sentence quoting Galatians " +
+         "1:19, \"meets specifically with 'James, the Lord's brother'\", which names the man it was " +
+         "getting wrong. Mapped to himself so the self-link exclusion suppresses it." },
+  { text: "Sometimes called 'James the Less' (cf. Mark 15:40) to distinguish him from James, son of Zebedee, and from James, the Lord's brother — a distinction worth keeping straight, since ancient sources occasionally conflate them. Very little reliable information survives about his later life or death; be aware that the commonly repeated c. AD 62 death date almost certainly originates from conflating him with James the Just, whose stoning in AD 62 Josephus records. Other late traditions (e.g., martyrdom at Ostrakine in Egypt) supply no usable year, so treat this date as a placeholder.",
+    surface: "James", occurrence: 1, owner: "james-son-of-alphaeus", expect: null, status: "guard",
+    why: "\"James the Less\" — the page's own subject, which linked to Zebedee's son. Found by " +
+         "scripts/name-linker/self-name.mjs, not by the sweep, which had checked this record and " +
+         "reported correctly that its LONGER wordings resolve right." },
+  { text: "Sometimes called 'James the Less' (cf. Mark 15:40) to distinguish him from James, son of Zebedee, and from James, the Lord's brother — a distinction worth keeping straight, since ancient sources occasionally conflate them. Very little reliable information survives about his later life or death; be aware that the commonly repeated c. AD 62 death date almost certainly originates from conflating him with James the Just, whose stoning in AD 62 Josephus records. Other late traditions (e.g., martyrdom at Ostrakine in Egypt) supply no usable year, so treat this date as a placeholder.",
+    surface: "James", occurrence: 3, owner: "james-son-of-alphaeus", expect: "james-brother-of-jesus",
+    status: "guard",
+    why: "The SAME SENTENCE, third occurrence: \"and from James, the Lord's brother\". One record, " +
+         "three different men in one clause, and the record-wide answer above can only serve one " +
+         "of them — this is the exception, recovered by the \"the Lord's brother\" pattern in " +
+         "NAME_CONTEXT_RULES, which is checked first. Occurrence 2, \"James, son of Zebedee\", is " +
+         "its own registered key and was always right." },
+  { text: "Paul's letter to the Galatians describes confronting Peter \"to his face\" at Antioch for pulling back from eating with Gentile Christians once certain men from James arrived, calling his behavior hypocrisy (Galatians 2:11-14) — a rare glimpse of open conflict between two apostolic leaders.",
+    surface: "James", owner: "simon-peter", expect: "james-brother-of-jesus", status: "guard",
+    why: "Galatians 2:12's \"men from James\" — the Jerusalem leader, not the apostle Agrippa had " +
+         "killed twelve years earlier. Recovered by a `before: /men from/` pattern rather than an " +
+         "owner entry, because Simon Peter's page names BOTH men and the other two are Zebedee's " +
+         "son. No WEB verse reads \"men from\" followed by a name; Galatians 2:12 itself reads " +
+         "\"came from James\"." },
+  { text: "Peter was born Simon, son of John (or Jonah), and worked as a fisherman on the Sea of Galilee alongside his brother Andrew, in partnership with James and John, the sons of Zebedee. Jesus called the two brothers while they were casting their nets, telling them he would make them \"fishers of men,\" and Peter left his boats to follow him (Matthew 4:18-20).",
+    surface: "James", owner: "simon-peter", expect: "james-son-of-zebedee", status: "guard",
+    why: "The other side of the same record, and the reason it has no owner entry: this \"James\" " +
+         "is Zebedee's son and must stay that way. A record-wide answer would have taken it." },
+  { text: "In the book of Acts, John appears alongside Peter as a leader of the Jerusalem church in its earliest years — the two together heal a lame beggar at the temple gate and are subsequently arrested and questioned by the Jewish council (Acts 3-4). Paul later names John, along with Peter and James (the brother of Jesus), as one of the reputed \"pillars\" of the Jerusalem church (Galatians 2:9).",
+    surface: "James", owner: "john-the-apostle", expect: "james-brother-of-jesus", status: "guard",
+    why: "Galatians 2:9's three pillars, on John the Apostle's own page — a sentence that says " +
+         "which James in a parenthesis and linked the other one anyway. Recovered by the " +
+         "\"(the brother of Jesus)\" pattern; the record's three other \"James\"es are his own " +
+         "brother and are untouched." },
+  // ── AUTHORSHIP OF JAMES — §7.1 and §7.2, RULED BY ROBBIE 2026-09-10 ─────────────────────────
+  //
+  // These were `flagged`. They are `guard` now, and they assert the traditional attribution:
+  // James the brother of Jesus, leader of the Jerusalem church. The reasoning is written out in
+  // full beside James 1:1 in VERSE_NAME_OVERRIDES in src/lib/verseAnnotations.ts; in one line, the
+  // pre-ruling state was false rather than neutral (Zebedee's son was executed in AD 44 and is
+  // nobody's candidate), the 2026-09-07 editorial position is to write from the Protestant
+  // evangelical stance with the dissent named beside it, and bookIntros.ts's `author` field for
+  // James already does exactly that in prose.
+  //
+  // THE RULING DEPENDS ON THAT SENTENCE STILL BEING THERE. If someone deletes the critical dissent
+  // from bookIntros.ts's James `author` field, these links stop being defensible — raise it, do
+  // not quietly keep them.
+  { ref: "James 1:1", surface: "James", expect: "james-brother-of-jesus", status: "guard",
+    why: "§7.1, RULED 2026-09-10. 'James, a servant of God and of the Lord Jesus Christ.' WEB, KJV " +
+         "and ASV all read 'James' (bible-api.com, 2026-09-10), so the translation-blind verse " +
+         "override is right in all three. Was james-son-of-zebedee, who died in Acts 12:2." },
+  { ref: "Jude 1:1", surface: "James", expect: "james-brother-of-jesus", status: "guard",
+    why: "§7.2, RULED 2026-09-10. 'Jude… and brother of James' — WEB, KJV and ASV all read " +
+         "'James'. This asserts the JAMES surface only: Zebedee's sons were James and John, so no " +
+         "reading makes Jude his brother, and even scholars who hold the letter pseudonymous agree " +
+         "the James it claims is James of Jerusalem. §7.2's other half — whether Jude is an " +
+         "apostle — is UNTOUCHED and still open: 'Jude' is not a registered key, this verse renders " +
+         "no link on it, and nothing here says anything about him." },
+
+  { text: "James writes to Jewish Christians scattered abroad, offering practical, down-to-earth guidance on how genuine faith should shape everyday conduct. Its concern is that belief which produces no change in behavior is worthless; real faith shows itself in patience under trial, care for the poor, control of the tongue, and impartial love. The letter reads much like the wisdom literature of the Old Testament, packed with vivid images and blunt moral exhortation.",
+    surface: "James", owner: "book-intro:James", expect: "james-brother-of-jesus", status: "guard",
+    why: "The letter's author, on its own introduction. Was Zebedee's son, then suppressed under " +
+         "the §7.1 flag, and repointed 2026-09-10 on Robbie's ruling. This is the same thing the " +
+         "app already does with 'Paul' on book-intro:Romans (five links) and 'Peter' on " +
+         "book-intro:1 Peter (four)." },
+  { text: "A major thread is the relationship between hearing and doing. James insists that his readers be 'doers of the word and not hearers only,' warning against a religion that is all talk.",
+    surface: "James", owner: "book-intro:James", expect: "james-brother-of-jesus", status: "guard",
+    why: "The same ruling on the summary field rather than whyWritten. Quoted from the opening of " +
+         "bookIntros.ts's second James summary paragraph; the paragraph carries two more bare " +
+         "'James'es further on, which take the same owner answer." },
+  { text: "Papyrus 20 and Papyrus 23 are early (3rd-century) papyrus witnesses that preserve portions of James.",
+    surface: "James", owner: "book-intro:James", expect: null, status: "guard",
+    why: "The BOOK, in the same record whose owner entry answers \"the author\". Suppressed by a " +
+         "`before: /portions of/` pattern in NAME_CONTEXT_RULES, checked first. No WEB verse " +
+         "contains \"portions of\" followed by a capitalised word." },
+  { text: "James is one of the 'General' or 'Catholic' epistles that circulated together in early manuscript collections of the non-Pauline letters.",
+    surface: "James", owner: "book-intro:James", expect: null, status: "guard",
+    why: "The book again, named as one of a class of books. `after: /is one of the 'General|Catholic/`." },
+  { text: "James was among the books whose canonical status was discussed in the early centuries; the church historian Eusebius listed it among the 'disputed' writings, though it was ultimately and widely accepted as Scripture.",
+    surface: "James", owner: "book-intro:James", expect: null, status: "guard",
+    why: "The book a third time — \"among the books\" says so in as many words. The fourth in this " +
+         "field, \"the complete text of James\", was already handled by TEXT_OF." },
+  { text: "The Greek Orthodox counter-tradition to the Basilica of the Annunciation, this site holds that Gabriel first appeared to Mary while she was drawing water from Nazareth's ancient spring — an episode from the apocryphal 2nd-century Protoevangelium of James, not found in the canonical Luke 1:26-38 account, which names no location. The Church of St. Gabriel was built directly over the spring's source, with the water still flowing through the crypt beneath the altar. A separate public well structure in the plaza, fed by the same spring, served as Nazareth's only water source for centuries.",
+    surface: "James", owner: "marys-well-nazareth", expect: null, status: "guard",
+    why: "An apocryphal infancy gospel, named by title, pointing at an apostle. One pin per title, " +
+         "as the modern-work-title ruling requires — the same rule applied to an ancient work." },
+  { text: "Mary, mother of James the Less (also called James the Younger) and of Joses, is named among the women who had followed and supported Jesus's ministry in Galilee and who stood watching, at a distance, when he was crucified (Mark 15:40, Matthew 27:56). She was also among the women who saw where Jesus was buried and returned to the tomb on the first day of the week with spices, becoming one of the first witnesses to the resurrection (Mark 16:1, Matthew 28:1, Luke 24:10). Some scholars identify her with \"Mary the wife of Clopas,\" who John places at the foot of the cross (John 19:25), though the Gospels never explicitly connect the two names, so the identification remains a reasonable guess rather than a certainty.",
+    surface: "James", occurrence: 2, owner: "mary-mother-of-james-the-less", expect: null, status: "guard",
+    why: "\"also called James the Younger\" — her son, linked to Zebedee's son, on a page whose own " +
+         "name says whose mother she is. SUPPRESSED rather than repointed to james-son-of-alphaeus: " +
+         "identifying James the Less with Alphaeus's son is the traditional reading and is " +
+         "genuinely disputed, and no link takes no side. Occurrence 1 is inside the record's own " +
+         "registered name and is already self-excluded." },
+  { text: "In a passage about the high priest Ananus, Josephus refers in passing to \"the brother of Jesus, who was called Christ, whose name was James,\" describing James's execution around AD 62.",
+    surface: "James", occurrence: 2, owner: "jesus-of-nazareth", expect: "james-brother-of-jesus",
+    status: "guard",
+    why: "Josephus, Antiquities 20.9.1, on Jesus's own page — the sentence names the man in the " +
+         "words either side of the link and sent the reader to a different apostle. Occurrence 1 " +
+         "sits inside the quotation and takes the same answer." },
+  // The three remaining records that quote the epistle by its author's name. Each holds exactly
+  // one bare "James"; all three were Zebedee's son, then null under the flag, then repointed on
+  // the 2026-09-10 ruling. Quoted from the sentence in the data file, not paraphrased.
+  { text: "Hebrews cites her faith (\"by faith the harlot Rahab perished not with them that believed not\"), and James cites her works (\"was not Rahab the harlot justified by works, when she had received the messengers, and had sent them out another way?\") as a case study of faith proven through action (Hebrews 11:31; James 2:25).",
+    surface: "James", owner: "rahab", expect: "james-brother-of-jesus", status: "guard",
+    why: "James 2:25, on Rahab's own page. The letter speaking, so the authorship ruling of " +
+         "2026-09-10 answers it. Note the trailing \"James 2:25\" is a verse citation, not a " +
+         "person-link, and is deliberately not linkified." },
+  { text: "First Peter compares him to \"a roaring lion, seeking someone to devour\" (1 Peter 5:8), and James instructs believers to \"resist the devil,\" promising that he will then flee (James 4:7).",
+    surface: "James", owner: "satan", expect: "james-brother-of-jesus", status: "guard",
+    why: "James 4:7, on Satan's page. Same ruling, same answer." },
+  { text: "they speak, they beg (Mark 5:10-12), and James notes flatly that even 'the demons... believe' God is one 'and shudder' (James 2:19) — correct theology without any of the trust or obedience that would make it saving faith.",
+    surface: "James", owner: "demons", expect: "james-brother-of-jesus", status: "guard",
+    why: "James 2:19, on the demons topic. Same ruling, same answer." },
+
+  { text: "The Jerusalem Council (Acts 15) settled the question decisively. After hearing Peter, Paul, and Barnabas testify to God's work among Gentile believers, James cites the prophets' own promise that 'all the Gentiles who are called by my name' would seek the Lord (Acts 15:17, quoting Amos 9:11-12), and the council concludes 'we don't trouble those from among the Gentiles who turn to God' with the burden of the full Mosaic law (Acts 15:19). Paul's letter to the Ephesians describes the result theologically: Gentile believers, once 'far off,' 'strangers from the covenants of promise,' are now brought near by Christ's blood, who 'made both one, and broke down the middle wall of separation' — abolishing in his own flesh the hostility between Jew and Gentile, creating 'one new man' out of the two (Ephesians 2:11-16).",
+    surface: "James", owner: "gentiles", expect: "james-brother-of-jesus", status: "guard",
+    why: "Acts 15:13-18 — the man presiding at the council, not the letter speaking. Acts 15:13 " +
+         "already resolves to him on the reader path; this is the article telling the same story." },
+  { text: "One might expect Elijah to be riding high after Carmel's spectacular vindication, but instead a single death threat from Jezebel sends him running for his life into the wilderness, where he collapses under a broom tree and asks God to let him die. It is one of the Bible's most honest portraits of a spiritual high followed by a devastating crash — even the greatest of prophets was, as James later puts it, a man with feelings like ours.",
+    surface: "James", owner: "bib-dki-elijah-still-small-voice", expect: "james-brother-of-jesus",
+    status: "guard",
+    why: "James 5:17, quoted by its author's name nine centuries out of period. Repointed " +
+         "2026-09-10 on Robbie's ruling (see book-intro:James above). The same event's " +
+         "next paragraph says \"the King James Version\", which the `before: /King /` rule has " +
+         "always suppressed and which this owner entry cannot reach, because NAME_CONTEXT_RULES is " +
+         "checked first — the case below asserts that, and is the negative test for this one." },
+  { text: "After food, rest, and a forty-day journey, Elijah arrives at Horeb — the same mountain, also called Sinai, where God gave the Law to Moses — and takes shelter in a cave. There the Lord passes by, but not in the way Elijah might have expected after Carmel's fire from heaven: not in the powerful wind, not in the earthquake, not in the fire, but in what the King James Version famously calls \"a still small voice\" — a low whisper, a gentle sound that draws Elijah out of the cave to stand before God.",
+    surface: "James", owner: "bib-dki-elijah-still-small-voice", expect: null, status: "guard",
+    why: "\"the King James Version\" — a translation, not a man, on the SAME RECORD whose owner " +
+         "entry now resolves a bare \"James\" to the Lord's brother. This is the case that proves " +
+         "the precedence order holds: NAME_CONTEXT_RULES first, OWNER_NAME_OVERRIDES after." },
+
+  // ── Guards: Zebedee's son keeps the bare key ────────────────────────────────────────────────
+  { text: "A grandson of Herod the Great who executed the apostle James, imprisoned Peter, and — in an account independently echoed by the Jewish historian Josephus — died suddenly after accepting a crowd's acclamation of him as a god.",
+    surface: "James", owner: "herod-agrippa-i", expect: "james-son-of-zebedee", status: "guard",
+    why: "PUBLIC PAGE ONLY — herod-agrippa-i.summary. Acts 12:2, the one James Agrippa killed, and " +
+         "the bare key's correct answer. On a surface no snapshot covers, so this case is its only " +
+         "cover." },
+  { ref: "Matthew 17:1", surface: "James", expect: "james-son-of-zebedee", status: "guard",
+    why: "The reader path at the Transfiguration. Nothing in this batch touches Scripture except " +
+         "Galatians 1:19's panel column, below." },
+  { ref: "Galatians 1:19", surface: "James", expect: "james-brother-of-jesus", status: "guard",
+    why: "\"except James, the Lord's brother.\" The reader path has been right here for as long as " +
+         "BOOK_NAME_OVERRIDES has had a Galatians entry." },
+  { ref: "Galatians 1:19", surface: "James", path: "panel", expect: "james-brother-of-jesus",
+    status: "guard",
+    why: "THE ONE BIBLE ROW THIS BATCH MOVES, and it moves into agreement with the line above. The " +
+         "panel path passes no book, so it gave Zebedee's son; the new \"the Lord's brother\" " +
+         "pattern reaches it because NAME_CONTEXT_RULES needs no context at all. It was added for " +
+         "three prose sentences and this verse is its whole reach into Scripture — measured across " +
+         "all 31,098 WEB verses before it was written." },
+
+  // ══ "Judaea", THE KJV/ASV SPELLING, 2026-09-10 ═══════════════════════════════════════════════
+  //
+  // `locations.ts` registered only "Judea". WEB spells it that way in all 45 of its verses and the
+  // Bible snapshot is WEB-only, so the 43 KJV and 42 ASV verses that print "Judaea" rendered NO
+  // link at all — a reader who switches translation lost every Judea link on the page, and nothing
+  // here could have said so.
+  //
+  // Measured before the alternate was added, with the real computeLinkAnnotations and the exact
+  // arguments VerseText.tsx passes (text, undefined, book, chapter, verse), over every verse of
+  // both translations: 43 KJV + 42 ASV occurrences, 0 linked. After: 85 linked, every one of them
+  // to `judea`, and every one in a verse where the WEB reader ALREADY had the identical link. The
+  // ASV verse set is identical to WEB's 45; KJV differs only in reading "Jewry" at Luke 23:5 and
+  // John 7:1 and "Judea" (already registered) at Ezra 5:8. No verse gains a link the default
+  // translation does not already carry.
+  //
+  // On the article surface it fires exactly twice, both correct, and key-totals took 0 rows out.
+  // The 22 "Judaean" strings in the tree — "Discoveries in the Judaean Desert", "the Judaean
+  // Shephelah" — are a different word and the word boundary keeps them out; the last case below is
+  // what says so.
+  { ref: "Acts 1:8", translation: "KJV",
+    text: "But ye shall receive power, after that the Holy Ghost is come upon you: and ye shall be " +
+          "witnesses unto me both in Jerusalem, and in all Judaea, and in Samaria, and unto the " +
+          "uttermost part of the earth.",
+    surface: "Judaea", expect: "judea", status: "guard",
+    why: "The KJV spelling, which matches nothing in the WEB corpus. A green Bible snapshot is NOT " +
+         "evidence this fires — the snapshot has no KJV in it." },
+  { ref: "Acts 1:8", translation: "ASV",
+    text: "But ye shall receive power, when the Holy Spirit is come upon you: and ye shall be my " +
+          "witnesses both in Jerusalem, and in all Judaea and Samaria, and unto the uttermost part " +
+          "of the earth.",
+    surface: "Judaea", expect: "judea", status: "guard",
+    why: "The ASV, same spelling, same verse. Quoted verbatim from bible-api.com, which is the " +
+         "service src/lib/biblePassage.ts asks for the reader's text." },
+  { ref: "Acts 1:8", surface: "Judea", expect: "judea", status: "guard",
+    why: "And WEB, from the corpus. The existing key is unmoved by the alternate — this is the " +
+         "other end of the same verse and the reason the Bible snapshot is unchanged." },
+  { ref: "Matthew 2:1", surface: "Judea", expect: "bethlehem",
+    expectSurface: "Bethlehem of Judea", status: "guard",
+    why: "The longer key on the bethlehem record still swallows \"Judea\" here. Adding a Judaea " +
+         "alternate to the region must not break the phrase pin that sends this to the town." },
+  { ref: "Matthew 2:1", translation: "KJV",
+    text: "Now when Jesus was born in Bethlehem of Judaea in the days of Herod the king, behold, " +
+          "there came wise men from the east to Jerusalem,",
+    surface: "Judaea", expect: "judea", status: "guard",
+    why: "The KJV spells the same phrase \"Bethlehem of Judaea\", which the bethlehem phrase pin " +
+         "does not cover, so the town and the region link separately here. Both are right; the " +
+         "divergence from WEB's single link is a consequence of the phrase pin being spelt one way " +
+         "and is recorded rather than hidden." },
+  { text: "The press reported that Pontius Pilate's ring had been found. The excavation report said something close to the opposite. Its authors wrote that \"it is therefore unlikely that Pontius Pilatus, the powerful and rich prefect of Judaea, would have worn a thin, all copper-alloy sealing ring\" — and then declined to name an owner at all, leaving it open between a Jew, a Roman, and another pagan bearing the name Pilatus.",
+    surface: "Judaea", owner: "pilate-ring", expect: "judea", status: "guard",
+    why: "The ARTICLE surface. Quoting the excavation report's own spelling is what dropped this " +
+         "link (judea's prose count went 111 -> 110); the quotation is not editable, so the " +
+         "alternate is the only lever that reaches it — OWNER_NAME_OVERRIDES can repoint or " +
+         "suppress a name the linker already knows, never create one." },
+  { text: "The revolt's outbreak in AD 132 is secure. The traditional end date is AD 135 (fall of Betar and death of Simon bar Kosiba), but epigraphic work by Werner Eck — reconstructing Hadrian's second imperatorial acclamation and the triumphal honors granted to the governors of Judaea, Syria, and Arabia — has persuaded many scholars that fighting was not finally suppressed until early AD 136, and many references now print 132-135/136.",
+    surface: "Judaea", owner: "wld-rom-bar-kokhba-revolt", expect: "judea", status: "guard",
+    why: "The second and last article-surface occurrence, on timelineEvent.datingNotes. The Roman " +
+         "province, named alongside Syria and Arabia — right, and the reason the measured prose " +
+         "delta is 2 rather than 1." },
+  { text: "J. A. Sanders published it in 1965 as the fourth volume of Discoveries in the Judaean Desert. It is the most extensive Psalms manuscript from any of the caves, and Psalms was the most-copied book at Qumran.",
+    surface: "Judaean", owner: "great-psalms-scroll", expect: null, status: "guard",
+    why: "\"Judaean\" is not \"Judaea\" and the word boundary must keep it that way. 22 strings in " +
+         "the tree are of this shape — mostly the series title Discoveries in the Judaean Desert, " +
+         "which is a modern work's title as well. If a future widening reaches the adjective, this " +
+         "is the case that fails." },
+  // ═══════════════════════════════════════════════════════════════════════════════════════════
+  // SECOND-BEARER BATCH 4: ANANIAS, SIMON, AND THE REST OF THE SELF-NAME SWEEP, 2026-09-10
+  //
+  // 58 links out, 7 repointed. Three of the four groups below were never in the sweep that
+  // started this work: the five records called Simon, the two called Mary, and Thomas Aquinas all
+  // came out of scripts/name-linker/self-name.mjs, which this batch also wires into
+  // `npm run test:linker` now that its ledger is clean — 2 shapes, 3 links, both accepted.
+  //
+  // Scripture is untouched again. All three men called Ananias have resolved correctly on the
+  // reader path since the verse table was written; only the articles were wrong.
+
+  // ── Ananias, 19 links, 14 of them self-name ─────────────────────────────────────────────────
+  { text: "Ananias is introduced simply as \"a disciple\" living in Damascus. After Saul of Tarsus was struck blind on the road to Damascus during his famous encounter with the risen Christ, the Lord appeared to Ananias in a vision and instructed him to go to the house of Judas on Straight Street and ask for Saul, who was praying and had himself seen a vision of a man named Ananias coming to restore his sight (Acts 9:10-12).",
+    surface: "Ananias", owner: "ananias-of-damascus", expect: null, status: "guard",
+    why: "THE RECORD'S OWN PAGE, nine times over. Every \"Ananias\" in the Damascus disciple's life " +
+         "story pointed at the man who dropped dead in Acts 5. Mapped to himself for the self-link " +
+         "exclusion. The \"Judas\" in the same sentence is Saul's host on Straight Street and is " +
+         "still wrong; that is a later batch." },
+  { text: "Ananias served as high priest during Paul's final arrest and trials in Jerusalem, a position he held (per Josephus) from roughly AD 47 to 59. When Paul, standing trial before the Jewish council, declared he had 'lived before God in all good conscience,' Ananias 'commanded those who stood by him to strike him on the mouth' — an act Paul, apparently unaware this was the high priest, sharply rebuked as unlawful before backing down once he learned the man's office (Acts 23:1-5).",
+    surface: "Ananias", owner: "ananias-the-high-priest", expect: null, status: "guard",
+    why: "The same shape on the third Ananias's page. Five links, including his extraBib summary's " +
+         "\"Ananias son of Nedebaeus\"." },
+  { text: "On the road to Damascus, Saul was reportedly confronted by a blinding light and the voice of the risen Jesus asking, \"Saul, Saul, why do you persecute me?\" He was struck blind for three days until a disciple named Ananias, initially wary given Saul's reputation, restored his sight and baptized him (Acts 9:1-19). This conversion transformed Paul, as he became known, from Christianity's most dangerous opponent into one of its central architects.",
+    surface: "Ananias", owner: "paul-of-tarsus", expect: "ananias-of-damascus", status: "guard",
+    why: "Paul's own page. The \"Saul\"s in the same sentence were fixed by an earlier batch through " +
+         "this same table; this is the Ananias half of it, five commits later." },
+  { text: "The old Roman decumanus maximus of Damascus, running roughly 1,500 meters east-west through the Old City. In Acts 9:11, the Lord tells Ananias to go to \"the street called Straight\" to find Saul of Tarsus, praying in the house of Judas, so that his sight could be restored. Today the western half is called Midhat Pasha Street and the eastern half Bab Sharqi Street, and it remains a functioning market street.",
+    surface: "Ananias", owner: "straight-street-damascus", expect: "ananias-of-damascus", status: "guard",
+    why: "The POI surface, quoting Acts 9:11 — the verse the reader path has always had right." },
+  { ref: "Acts 5:1", surface: "Ananias", expect: "ananias-and-sapphira", status: "guard",
+    why: "The couple, on the reader path, and the reason they own the bare key. Nothing in this " +
+         "batch touches Scripture." },
+  { ref: "Acts 9:10", surface: "Ananias", expect: "ananias-of-damascus", status: "guard",
+    why: "The Damascus disciple, on the reader path, already right — the article surface has spent " +
+         "the whole time disagreeing with this verse." },
+  { ref: "Acts 23:2", surface: "Ananias", expect: "ananias-the-high-priest", status: "guard",
+    why: "The high priest, third man, third correct verse." },
+
+  // ── Simon: five men with no record, two repoints, and five self-name records ────────────────
+  { text: "Before the gospel reached Samaria, Simon had the whole city convinced he was 'the power of God that is called Great' through his sorcery. When Philip the Evangelist arrived preaching Christ, Simon believed, was baptized, and began following Philip around, astonished by the miracles he witnessed (Acts 8:9-13).",
+    surface: "Simon", owner: "simon-magus", expect: null, status: "guard",
+    why: "THE RECORD'S OWN PAGE. Not in the sweep — found by self-name.mjs. Five links; the sweep " +
+         "had checked this record and reported its longer wording resolves right, which it does " +
+         "and which is a different question." },
+  { text: "Simon was from Cyrene, a city in North Africa (modern-day Libya) with a significant Jewish population. All three synoptic Gospels record that as Jesus, weakened from the beating, struggled toward the execution site, Roman soldiers seized Simon — who was simply passing by, in from the countryside — and forced him to carry the cross the rest of the way (Matthew 27:32, Mark 15:21, Luke 23:26).",
+    surface: "Simon", owner: "simon-of-cyrene", expect: null, status: "guard",
+    why: "The same, on the man who carried the cross. Four links." },
+  { text: "Hometown of Simon, the man forced to carry Jesus's cross to Golgotha (Matthew 27:32; Mark 15:21; Luke 23:26)",
+    surface: "Simon", owner: "cyrene", expect: "simon-of-cyrene", status: "guard",
+    why: "Cyrene's own notableFact naming its most famous son and linking Simon Peter instead. The " +
+         "sentence describes the man exactly. A location block — a surface that was outside the " +
+         "harness entirely until corpus.mjs's field name was corrected on 2026-09-10." },
+  { text: "Peter stayed with a tanner named Simon here, whose house by the sea is still pointed out to visitors by tradition",
+    surface: "Simon", owner: "joppa", expect: null, status: "guard",
+    why: "Simon the tanner, Acts 9:43 — a different man, in a sentence that names Peter separately " +
+         "two words earlier. Scripture's own Acts 10:32 already suppressed him, so until now the " +
+         "location article contradicted the reader. No record; no link." },
+  { text: "When a royal officer arrived at the village of Modein to enforce Antiochus IV's decree of pagan sacrifice, an aging priest named Mattathias refused. When another Jew stepped forward to comply in his place, Mattathias killed both the compliant Jew and the king's officer, tore down the pagan altar, and cried out, \"Let everyone who is zealous for the law...come out with me!\" — deliberately echoing Moses's own call after the golden calf (Exodus 32:26). With his five sons — Judas, Jonathan, Simon, John, and Eleazar — he fled to the hill country to organize armed resistance.",
+    surface: "Simon", owner: "bib-it-maccabean-revolt-begins", expect: null, status: "guard",
+    why: "Mattathias's five sons. \"Simon\" is Simon Maccabeus and \"Judas\" is Judas Maccabeus — the " +
+         "second is already suppressed by the `judas` Maccabeus rule, and this is the first. " +
+         "\"John\" and \"Eleazar\" in the same list are already suppressed by owner entries of their " +
+         "own, which is what four brothers in one clause requires." },
+  { text: "Jonathan was murdered through Seleucid treachery in 143 BC, and leadership fell to the last surviving brother, Simon, who would soon achieve full political independence for Judea.",
+    surface: "Simon", owner: "bib-it-jonathan-maccabeus-high-priest", expect: null, status: "guard",
+    why: "The same man, one event earlier in the Hasmonean sequence. Three links on this record." },
+  { text: "James appears in the Gospels simply as one of Jesus's brothers — Mark's Gospel names him first among four (James, Joses, Judas, and Simon) when the people of Nazareth question how a hometown carpenter's family produced such a teacher (Mark 6:3). John's Gospel states plainly that during Jesus's ministry, \"even his own brothers did not believe in him\" (John 7:5), suggesting James was among the skeptics.",
+    surface: "Simon", owner: "james-brother-of-jesus", expect: null, status: "guard",
+    why: "Simon the brother of Jesus, from Mark 6:3's list of four. The app has no record for him " +
+         "and Matthew 13:55 is already suppressed on the reader path, so this makes the article " +
+         "agree with Scripture. The same sentence's \"James\" is the page's own subject and the " +
+         "batch-3 case above asserts it." },
+  { text: "'Christ' is a translation before it is anything else. The Greek Christos renders the Hebrew mashiach, 'anointed one,' and the Gospel of John twice stops to say so for readers who would not have known: Andrew tells Simon 'We have found the Messiah!' and the text adds the gloss '(which is, being interpreted, Christ)' (John 1:41), and the Samaritan woman says 'I know that Messiah comes, he who is called Christ' (John 4:25). These two verses are the only places the World English Bible keeps the Hebrew-derived word rather than translating it.",
+    surface: "Simon", owner: "the-christ", expect: "simon-peter", status: "guard",
+    why: "THE LAST BARE \"Simon\" IN THE WHOLE PROSE CORPUS THAT STILL RESOLVES TO SIMON PETER — " +
+         "key-totals records exactly one. Duplicated from batch 1 deliberately: that copy guarded " +
+         "the two Hasmonean suppressions, this one guards eleven more entries landing on the same " +
+         "key. If a future widening of `simon` takes this, it takes the only one left." },
+
+  // ── Simeon and Levi at Shechem, Mary on her own page, Aquinas, Julius Caesar ────────────────
+  { text: "Jacob purchased land here, dug a well (later 'Jacob's Well'), and his sons Simeon and Levi massacred the men of the city after the assault on Dinah (Genesis 33-34)",
+    surface: "Simeon", owner: "shechem", expect: null, status: "guard",
+    why: "Genesis 34, on Shechem's own page. \"Simeon\" pointed at the old man who blessed the " +
+         "infant Jesus in Luke 2 and \"Levi\" at Matthew the tax collector — two of Jacob's sons, " +
+         "neither of whom has a record. Both allowlists already confine these keys on the reader " +
+         "path; the article surface has no allowlist." },
+  { text: "Jacob purchased land here, dug a well (later 'Jacob's Well'), and his sons Simeon and Levi massacred the men of the city after the assault on Dinah (Genesis 33-34)",
+    surface: "Levi", owner: "shechem", expect: null, status: "guard",
+    why: "The other half of the same clause. Asserted separately because the two are different " +
+         "keys in different entries and a fix to one says nothing about the other." },
+  { text: "Mary lived in Bethany with her sister Martha and brother Lazarus, and their home appears as a place Jesus visited and stayed. In one well-known scene, while Martha busied herself with the work of hosting, Mary sat at Jesus's feet listening to his teaching; when Martha complained that her sister had left her to serve alone, Jesus gently defended Mary, saying she had \"chosen what is better\" (Luke 10:38-42).",
+    surface: "Mary", owner: "mary-of-bethany", expect: null, status: "guard",
+    why: "THE RECORD'S OWN PAGE, six links, not in the sweep. Bare \"Mary\" belongs to the mother of " +
+         "Jesus, so Mary of Bethany's biography handed her own name to a different woman at every " +
+         "mention. The record's cross-links to Mary Magdalene use the long key and are untouched." },
+  { text: "On the first day of the week, Mary Magdalene went to the tomb and found the stone rolled away; in John's account, she runs to tell Peter and John, then remains weeping outside the empty tomb after they leave, where she encounters a figure she initially mistakes for the gardener (John 20:1-15). When he says her name, \"Mary,\" she recognizes Jesus and calls him \"Rabboni\" (Teacher), becoming the first person recorded to see and speak with the risen Jesus, who then commissions her to go and tell the other disciples (John 20:16-18) — an episode that has led many later writers to call her \"the apostle to the apostles.\"",
+    surface: "Mary", occurrence: 2, owner: "mary-magdalene", expect: null, status: "guard",
+    why: "John 20:16 quoted on Magdalene's own page — the one word the risen Jesus says to her, " +
+         "linked to the mother of Jesus. Occurrence 1 is \"Mary Magdalene\", her own registered key. " +
+         "The \"John\" in the same block is the Apostle by the \"Peter and John\" rule, and the " +
+         "record's `john` entry is null, which is why that rule has to be checked first." },
+  { text: "Born to a noble family near Aquino in southern Italy, Thomas was sent as a child oblate to the great abbey of Monte Cassino before studying at the University of Naples, where he encountered the newly translated works of Aristotle ",
+    surface: "Thomas", owner: "thomas-aquinas", expect: null, status: "guard",
+    why: "Aquinas's own page, three links, all to the apostle. Quoted from the opening of his " +
+         "lifeStory; the case's text is a prefix of that paragraph, which is all a prose case " +
+         "needs. Found by self-name.mjs, and invisible to modern-names.mjs, which flags a link " +
+         "inside a modern personal name and sees a bare \"Thomas\" as nothing of the kind." },
+  { text: "Born Gaius Octavius in 63 BC, he was the grand-nephew and posthumously adopted heir of Julius Caesar, taking the name Gaius Julius Caesar Octavianus (rendered in English as 'Octavian') after Caesar's assassination in 44 BC. After more than a decade of civil war and shifting alliances — including the Second Triumvirate with Mark Antony and Lepidus — Octavian defeated the combined forces of Antony and Cleopatra at the Battle of Actium in 31 BC, leaving him sole master of the Roman world.",
+    surface: "Caesar", occurrence: 1, owner: "caesar-augustus", expect: null, status: "guard",
+    why: "JULIUS Caesar, on Augustus's own page, resolving to Tiberius — his great-uncle pointed at " +
+         "his successor. Not a self-link, which is why self-name.mjs found it and the exclusion " +
+         "never could. No record for Julius; suppressed on the standing interim. A miss the " +
+         "existing split-name machinery could not catch: that sweep enumerates a biblical name " +
+         "FOLLOWED by a qualifier (\"Philip II\", \"Paul VI\"), and this is one PRECEDED by a forename." },
+  { text: "Born Gaius Octavius in 63 BC, he was the grand-nephew and posthumously adopted heir of Julius Caesar, taking the name Gaius Julius Caesar Octavianus (rendered in English as 'Octavian') after Caesar's assassination in 44 BC. After more than a decade of civil war and shifting alliances — including the Second Triumvirate with Mark Antony and Lepidus — Octavian defeated the combined forces of Antony and Cleopatra at the Battle of Actium in 31 BC, leaving him sole master of the Roman world.",
+    surface: "Caesar", occurrence: 3, owner: "caesar-augustus", expect: null, status: "guard",
+    why: "\"after Caesar's assassination in 44 BC\" — the same man, bare, thirty words later. " +
+         "Occurrence 2 sits inside Augustus's own regnal name and was already unlinked." },
+  { text: "Herod was the son of Antipater, an Idumean who had risen to influence as a close advisor to the Hasmonean ruler Hyrcanus II and won the favor of Julius Caesar. Herod inherited his father's political skill, and amid the chaos of Rome's own civil wars he maneuvered his way into the Roman Senate's favor: in 40 BC the Senate declared him \"King of the Jews\" — a title he did not yet actually hold on the ground in Judea.",
+    surface: "Caesar", owner: "bib-it-herod-the-great-rise", expect: null, status: "guard",
+    why: "The third Julius, on the timeline. The bare \"Herod\" in the same sentence links to nobody " +
+         "and is correct to — 40 of the 44 in our prose are suppressed." },
+
+  // ── Guards: the bare keys the four suppressions above did NOT take ──────────────────────────
+  { ref: "Matthew 22:21", surface: "Caesar", expect: "tiberius-caesar", status: "guard",
+    why: "\"Render therefore to Caesar the things that are Caesar's.\" The bare key keeps Tiberius " +
+         "on the reader path; the `caesar` owner entries reach records and no verse." },
+
+  // ═══════════════════════════════════════════════════════════════════════════════════════════
+  // THE REST OF THE CAESAR CLUSTER, 2026-09-10
+  //
+  // Re-enumerated over all 6,677 blocks rather than taken from the previous batch's estimate of
+  // 39: 63 occurrences of the word, 55 linked, 41 of those wrong — 23 JULIUS and 18 NERO. Six of
+  // the 41 are on the public-page-only surface, which is why the count came out above the
+  // estimate and why nine of the cases below are the only cover their link will ever have.
+  //
+  // JULIUS is SUPPRESSED (no record, standing interim) and NERO is REPOINTED (he has one). No
+  // record mixes a wrong "Caesar" with a correct bare TIBERIUS, so every lever is an owner entry;
+  // the five correct Tiberius mentions are guarded at the bottom of this block, which is how we
+  // know the split still holds. Two records hold a wrong bare "Caesar" AND a correct "Caesar
+  // Augustus" — mark-antony and wld-rom-augustus-becomes-emperor — and both sides are asserted.
+
+  // ── Julius: suppressed ──────────────────────────────────────────────────────────────────────
+  { text: "Marcus Antonius was a Roman soldier and politician who rose under Julius Caesar in Gaul and in the civil war, and was serving as consul beside him in 44 BC when the dictator was assassinated.",
+    surface: "Caesar", owner: "mark-antony", expect: null, status: "guard",
+    why: "Antony's own page. Julius, who has no record — suppressed, not repointed, the same " +
+         "answer the three earlier `caesar` entries already gave. Caught by BOTH the new " +
+         "`before: /Julius /` context rule and the mark-antony owner entry; the rule fires first." },
+  { text: "Antony and Cleopatra took their own lives in Alexandria the following year, leaving Octavian sole ruler of the Roman world — the Caesar Augustus of Luke 2:1.",
+    surface: "Caesar", owner: "mark-antony", expect: "caesar-augustus", expectSurface: "Caesar Augustus",
+    status: "guard",
+    why: "THE OTHER SIDE OF THE SAME RECORD, and the reason the owner entry above is safe: this is " +
+         "a different registered key (`caesar augustus`), matched as one phrase, which an entry on " +
+         "`caesar` cannot reach. If this case ever fails, someone reworded it to a bare \"Caesar\" " +
+         "and the answer became no link — the safe direction, but re-read it." },
+  { text: "An ancient Greek city destroyed by Rome in 146 BC, refounded as a Roman colony by Julius Caesar in 44 BC",
+    surface: "Caesar", owner: "corinth", expect: null, status: "guard",
+    why: "Corinth's refoundation, in the year Julius died. The whole of location.history.founded " +
+         "for that record — and a field that was outside the harness entirely until 2026-09-10." },
+  { text: "Leading the revolt was a nobleman named Brutus, whose name would echo five centuries later in the family of another Brutus who helped assassinate Julius Caesar for strikingly similar reasons — a fear of one-man rule.",
+    surface: "Caesar", owner: "wld-rom-founding-of-republic", expect: null, status: "guard",
+    why: "509 BC looking forward to 44 BC. Julius, five hundred years before Tiberius was born." },
+  { text: "For nearly a decade, Julius Caesar had built an extraordinary reputation and a fiercely loyal army through his conquest of Gaul.",
+    surface: "Caesar", owner: "wld-rom-caesar-crosses-rubicon", expect: null, status: "guard",
+    why: "THE FORENAME SHAPE, and the case that pins the new context rule: \"Julius\" before the " +
+         "name rather than a qualifier after it, which is why the split-name sweep that found " +
+         "\"Philip II\" and \"Paul VI\" could not see this class at all." },
+  { text: "Caesar refused. Roman law forbade any general from bringing an army across the Rubicon, a small river marking the boundary between his province and Italy proper; to cross it under arms was to declare war on the Republic itself.",
+    surface: "Caesar", owner: "wld-rom-caesar-crosses-rubicon", expect: null, status: "guard",
+    why: "The same man with NO forename, two sentences later — which is why the context rule alone " +
+         "is not enough and the record needs an owner entry. Most of this article's eight are " +
+         "this shape." },
+  { text: "The conspirators badly misjudged the public mood. Caesar's ally Mark Antony turned Caesar's funeral into a piece of political theater that whipped the Roman crowd into fury against the assassins",
+    surface: "Caesar", occurrence: 1, owner: "wld-rom-assassination-of-caesar", expect: null, status: "guard",
+    why: "The Ides of March article, bare and possessive. Occurrence 2 in the same sentence takes " +
+         "the same answer from the same entry." },
+  { text: "Caesar's assassination did not restore the Republic — it simply set his heirs against each other.",
+    surface: "Caesar", owner: "wld-rom-battle-of-actium", expect: null, status: "guard",
+    why: "Actium, 31 BC, opening on the murder that caused it. Julius." },
+  { text: "After his victory at Actium, Octavian faced the same problem Julius Caesar had never solved: how does one man hold supreme power in Rome without simply becoming a hated king?",
+    surface: "Caesar", owner: "wld-rom-augustus-becomes-emperor", expect: null, status: "guard",
+    why: "Julius, on the article about his heir. The record's other mention is the correct " +
+         "\"Caesar Augustus\", asserted next." },
+  { text: "It is this same Augustus whom Luke names at the opening of his account of Christ's birth: 'In those days a decree went out from Caesar Augustus that all the world should be registered' (Luke 2:1).",
+    surface: "Caesar", owner: "wld-rom-augustus-becomes-emperor", expect: "caesar-augustus",
+    expectSurface: "Caesar Augustus", status: "guard",
+    why: "The other side of that record — the same both-keys pairing as mark-antony above." },
+  { text: "Julius Caesar's lieutenant and one of the three men who divided the Roman world after his murder — the Roman power who had Herod the Great made king of Judea, and who lost the East, and his life, to Octavian at Actium.",
+    surface: "Caesar", owner: "mark-antony", expect: null, status: "guard",
+    why: "PUBLIC PAGE ONLY — mark-antony.summary. No snapshot covers this surface, so this case is " +
+         "its only cover." },
+  { text: "In January 49 BC, Julius Caesar led his loyal legions across the Rubicon River into Italy in open defiance of the Roman Senate, an irreversible act of civil war summed up in his own reported words, 'the die is cast.'",
+    surface: "Caesar", owner: "wld-rom-caesar-crosses-rubicon", expect: null, status: "guard",
+    why: "PUBLIC PAGE ONLY — the timeline event's summary, which the app renders as plain text and " +
+         "scripts/seo/render.mjs linkifies." },
+  { text: "On the Ides of March, 44 BC, a conspiracy of senators led by Brutus and Cassius stabbed Julius Caesar to death in the Senate house, hoping to save the Republic from one-man rule — but his murder only triggered another, final round of civil wars.",
+    surface: "Caesar", owner: "wld-rom-assassination-of-caesar", expect: null, status: "guard",
+    why: "PUBLIC PAGE ONLY. Same." },
+
+  // ── Nero: repointed ─────────────────────────────────────────────────────────────────────────
+  { text: "Nero never appears by name in the New Testament, but he is the unnamed 'Caesar' Paul repeatedly invokes near the end of Acts.",
+    surface: "Caesar", owner: "nero-caesar", expect: null, status: "guard",
+    why: "HIS OWN PAGE, and the sentence that says in as many words which man it means while " +
+         "linking to Tiberius. Mapped to himself so the self-link exclusion suppresses it — five " +
+         "on this record. self-name.mjs cannot see this shape: it keys on the FIRST word of a " +
+         "record's name (\"Nero\" of \"Nero Caesar\") and the fault is on the second word." },
+  { text: "before exercising his right as a Roman citizen to appeal directly to Caesar (Acts 25:11)",
+    surface: "Caesar", owner: "paul-of-tarsus", expect: "nero-caesar", status: "guard",
+    why: "Acts 25:11, on Paul's own page. The reader path has said Nero here all along — " +
+         "BOOK_NAME_OVERRIDES sends every bare \"Caesar\" in Acts to him — so the article was " +
+         "disagreeing with the verse it cites." },
+  { text: "Agrippa concludes privately that Paul had done nothing deserving death or imprisonment, and that he could have been set free had he not appealed to Caesar.",
+    surface: "Caesar", owner: "herod-agrippa-ii", expect: "nero-caesar", status: "guard",
+    why: "Acts 26:32, AD 59-60. Nero, not the emperor who died in AD 37." },
+  { text: "Paul, aware of the danger and asserting his rights as a Roman citizen, responded, 'I appeal to Caesar' (Acts 25:9-11) — a formal legal move that, once made, obligated Festus to send him to Rome.",
+    surface: "Caesar", owner: "porcius-festus", expect: "nero-caesar", status: "guard",
+    why: "Festus's own page. Festus took office c. AD 59; the emperor is Nero either way." },
+  { text: "The Roman governor who succeeded Felix, inherited the unresolved case against Paul, and — after Paul appealed to Caesar as a Roman citizen's right — set the events of Paul's journey to Rome in motion.",
+    surface: "Caesar", owner: "porcius-festus", expect: "nero-caesar", status: "guard",
+    why: "PUBLIC PAGE ONLY — porcius-festus.summary." },
+  { text: "uses his right as a citizen to appeal his case directly to Caesar rather than face trial before a hostile Jerusalem crowd, a decision that sends him to Rome itself (Acts 25:10-12)",
+    surface: "Caesar", owner: "romans", expect: "nero-caesar", status: "guard",
+    why: "The Romans topic. Its OTHER mention is the correct \"Caesar Augustus\", asserted next — " +
+         "the third record in this batch holding both keys." },
+  { text: "This is the political backdrop for essentially the entire New Testament: Caesar Augustus's census brings Joseph and Mary to Bethlehem (Luke 2:1-7)",
+    surface: "Caesar", owner: "romans", expect: "caesar-augustus", expectSurface: "Caesar Augustus",
+    status: "guard",
+    why: "The other side of the Romans topic. A record-wide answer of Nero must not take this." },
+  { text: "he exercised the one right no provincial governor could overrule and appealed to Caesar.",
+    surface: "Caesar", owner: "bib-ac-paul-ministry", expect: "nero-caesar", status: "guard",
+    why: "Paul's ministry, the timeline article." },
+  { text: "From the Damascus road to a Roman execution block, Paul spent roughly thirty years planting churches from Antioch to Corinth, writing the letters that carry the bulk of the New Testament's doctrine, and defending the gospel before magistrates, kings and finally Caesar himself.",
+    surface: "Caesar", owner: "bib-ac-paul-ministry", expect: "nero-caesar", status: "guard",
+    why: "PUBLIC PAGE ONLY — the same event's summary." },
+  { text: "Even in chains, Paul's Roman citizenship, invoked repeatedly through this ordeal, entitled him to protections that repeatedly kept him alive and would eventually secure him a hearing before Caesar himself.",
+    surface: "Caesar", owner: "bib-ac-paul-arrest-jerusalem", expect: "nero-caesar", status: "guard",
+    why: "The arrest article. The hearing he is being kept alive for is Nero's." },
+  { text: "Agrippa's verdict - \"This man could have been set free if he had not appealed to Caesar\" (Acts 26:32) - underlines the irony of the whole two-year ordeal",
+    surface: "Caesar", owner: "bib-ac-paul-caesarea-imprisonment", expect: "nero-caesar", status: "guard",
+    why: "Acts 26:32 again, on the Caesarea imprisonment article. Three links on this record." },
+  { text: "Paul spends two years in Roman custody at Caesarea, defends himself before Felix, Festus, and King Agrippa II, and appeals to Caesar.",
+    surface: "Caesar", owner: "bib-ac-paul-caesarea-imprisonment", expect: "nero-caesar", status: "guard",
+    why: "PUBLIC PAGE ONLY — that event's summary." },
+  { text: "Under house arrest in Rome, Paul preaches freely and writes several of his letters while awaiting a hearing before Caesar.",
+    surface: "Caesar", owner: "bib-ac-paul-first-roman-imprisonment", expect: "nero-caesar", status: "guard",
+    why: "PUBLIC PAGE ONLY, and the whole of that record's Caesar population — the event has no " +
+         "article mention at all, so without this case the link has no cover of any kind." },
+  { text: "The final section recounts Paul's arrest in Jerusalem, his defenses before Roman and Jewish authorities, his appeal to Caesar, and a dramatic sea voyage that ends in shipwreck on Malta.",
+    surface: "Caesar", owner: "book-intro:Acts", expect: "nero-caesar", status: "guard",
+    why: "The introduction to Acts, agreeing at last with Acts's own book override." },
+
+  // ── Tiberius: the five bare mentions that are RIGHT, and must not move ──────────────────────
+  { text: "Despite this, under pressure from the crowd and facing the accusation that releasing Jesus would make him no friend of Caesar, Pilate hands Jesus over to be crucified",
+    surface: "Caesar", owner: "pontius-pilate", expect: "tiberius-caesar", status: "guard",
+    why: "John 19:12, AD 30-33. Tiberius, and the bare key's correct answer. This is the half of " +
+         "the cluster a record-wide sweep would have broken." },
+  { text: "They press him on divorce (Matthew 19:3-9), fasting (Matthew 9:14-17), paying taxes to Caesar (Matthew 22:15-22), and above all on ritual purity",
+    surface: "Caesar", owner: "pharisees", expect: "tiberius-caesar", status: "guard",
+    why: "\"Render to Caesar\", Matthew 22. Tiberius, correctly." },
+  { text: "In the third, questioners ask whether it is lawful to pay to kings the things that belong to their rule — kings, not Caesar — and Jesus answers with Isaiah's line about honouring with the lips while the heart is far away.",
+    surface: "Caesar", owner: "egerton-papyrus-2", expect: "tiberius-caesar", status: "guard",
+    why: "The Egerton papyrus's variant of the tribute question — the same Caesar the Synoptics " +
+         "mean, which is the point the sentence is making." },
+  { text: "Lacking authority to execute anyone, the Jewish leaders bring Jesus to the Roman governor Pontius Pilate, reframing the charge as political treason: claiming to be a king who opposes Caesar.",
+    surface: "Caesar", owner: "bib-loc-trials-of-jesus", expect: "tiberius-caesar", status: "guard",
+    why: "The trials of Jesus. Tiberius, correctly." },
+  { text: "When Jesus was asked about paying taxes to Caesar and asked to see a coin, the denarius handed to him almost certainly bore Tiberius's own image (Matthew 22:15-21)",
+    surface: "Caesar", owner: "wld-rom-tiberius-emperor", expect: "tiberius-caesar", status: "guard",
+    why: "The sentence names Tiberius twelve words later. Correct, and untouched." },
+  { text: "It is Tiberius's reign that Luke uses to date the beginning of the New Testament story with striking historical precision: 'In the fifteenth year of the reign of Tiberius Caesar... the word of God came to John' the Baptist in the wilderness (Luke 3:1-2).",
+    surface: "Caesar", owner: "wld-rom-tiberius-emperor", expect: "tiberius-caesar",
+    expectSurface: "Tiberius Caesar", status: "guard",
+    why: "Luke 3:1 quoted in an article — the registered longer key, matched as one phrase." },
+
+  // ── The reader path, which this batch does not touch and must not move ──────────────────────
+  { ref: "Acts 25:11", surface: "Caesar", expect: "nero-caesar", status: "guard",
+    why: "\"I appeal to Caesar!\" — already right before this batch, by BOOK_NAME_OVERRIDES on Acts. " +
+         "WEB, KJV and ASV all read \"Caesar\" (bible-api.com, 2026-09-10), and the book override is " +
+         "translation-blind, so all three readers get Nero." },
+  { ref: "Philippians 4:22", surface: "Caesar", expect: "nero-caesar", status: "guard",
+    why: "\"those who are of Caesar's household\" — the book override's other half. All three " +
+         "translations read \"Caesar's\" (the ASV prints a backtick for the apostrophe, which the " +
+         "word-boundary match does not care about)." },
+  { ref: "Acts 17:7", surface: "Caesar", expect: "claudius-caesar", status: "guard",
+    why: "The one bare \"Caesar\" in Acts that is NOT Nero — Thessalonica, inside Claudius's reign — " +
+         "and a per-verse override that the Acts book override would otherwise swallow. No article " +
+         "quotes it, so no owner entry in this batch can reach it." },
+  { ref: "Acts 27:1", surface: "Julius", expect: null, status: "guard",
+    why: "THE NEGATIVE TEST FOR THE NEW `before: /Julius /` RULE, in Scripture. \"a centurion named " +
+         "Julius, of the Augustan band\" — the only two WEB verses containing \"Julius\" are this and " +
+         "27:3, both the centurion, and neither is followed by \"Caesar\" in WEB, KJV or ASV " +
+         "(checked at bible-api.com, 2026-09-10). The rule therefore reaches no verse at all. The " +
+         "centurion has no record and links to nobody, which is correct and is what this asserts." },
+  { ref: "Luke 2:1", surface: "Caesar", expect: "caesar-augustus", expectSurface: "Caesar Augustus",
+    status: "guard",
+    why: "The nativity's \"Caesar Augustus\" — the longer registered key, untouched by any of this." },
+  { text: "A Jerusalem temple priest struck mute for doubting an angel's promise of a son in his old age, whose voice returned at John's naming and burst into prophecy.",
+    surface: "John", owner: "zechariah-father-of-john-baptist", expect: "john-the-baptist", status: "guard",
+    why: "Repeated from batch 1 on purpose: four batches of suppressions later, the Baptist still " +
+         "owns the bare key. PUBLIC PAGE ONLY, so nothing else holds it." },
+  // ═══════════════════════════════════════════════════════════════════════════════════════════
+  // SECOND-BEARER BATCH 5: THE PROSE SINGLETONS — TITUS, JUDAS, AZARIAH, AND SIX MORE, 2026-09-10
+  //
+  // 34 rows out, 5 repointed. Nine names, each with a small population and a clear answer, and two
+  // of them found while reading the neighbours rather than by the sweep: the prophet Azariah son
+  // of Oded on bib-dkj-asa-reforms, and Elisha's "four kings — Joram, Jehu, Jehoahaz, and Jehoash",
+  // all four of whom are kings of Israel.
+
+  // ── Titus the emperor, 9 more links, and the two book titles ────────────────────────────────
+  { text: "Outside the New Testament, Bernice is one of the better-documented women connected to the Gospels. The Jewish historian Josephus discusses her marriages, her time as Agrippa's live-in sister, and the persistent rumors of an incestuous relationship between them. Roman historians Tacitus and Suetonius separately record her later liaison with the future emperor Titus, whom she reportedly hoped to marry before political pressure in Rome forced him to send her away.",
+    surface: "Titus", owner: "bernice", expect: null, status: "guard",
+    why: "Bernice's whole extra-biblical story is her affair with the emperor, and all four of her " +
+         "\"Titus\"es pointed at Paul's Gentile co-worker. No record for the emperor; suppressed on " +
+         "the standing interim, and he is the largest record-or-suppress question the sweep raised." },
+  { text: "The Temple was destroyed by Roman forces under Titus in AD 70, within a generation of Jesus's ministry",
+    surface: "Titus", owner: "jerusalem", expect: null, status: "guard",
+    why: "Jerusalem's own notableFact. A location block — the surface that was outside the harness " +
+         "entirely until corpus.mjs's field name was corrected on 2026-09-10." },
+  { text: "Papyrus 32 (P32), a small fragment dated to roughly the late second or early third century, preserves parts of Titus and is one of the earliest surviving witnesses to any of the Pastoral Epistles.",
+    surface: "Titus", owner: "book-intro:Titus", expect: null, status: "guard",
+    why: "The BOOK, on the record whose other five \"Titus\"es are the man Paul left on Crete — which " +
+         "is why book-intro:Titus takes no owner entry and these two take title rules instead. " +
+         "`before: /parts of/`; \"parts of <Capital>\" occurs in five WEB verses and none has a Titus." },
+  { text: "Titus is contained in the great fourth- and fifth-century uncial codices Sinaiticus and Alexandrinus.",
+    surface: "Titus", owner: "book-intro:Titus", expect: null, status: "guard",
+    why: "The same, other shape. \"is contained in\" occurs in one WEB verse (1 Peter 2:6) and it " +
+         "has no Titus. A third in the same field, \"the text of Titus\", was already TEXT_OF's." },
+  { text: "Paul left Titus here to organize the church and appoint elders in every town (Titus 1:5)",
+    surface: "Titus", occurrence: 1, owner: "crete", expect: "titus", status: "guard",
+    why: "THE GUARD ON THE OTHER SIDE, and on the record where the two men are likeliest to be " +
+         "confused: Crete is where Paul's Titus was left, and Crete also has an archaeology note " +
+         "about his traditional seat. Both keep their links. Occurrence 2 is the reference " +
+         "\"Titus 1:5\", matched whole as kind \"verse\"." },
+
+  // ── Judas: four other men, twelve links ─────────────────────────────────────────────────────
+  { text: "Mattathias died within the year, in 166 BC, passing leadership to his son Judas, nicknamed \"Maccabeus\" — likely meaning \"the Hammer\" — who would lead the next and most dramatic phase of the revolt.",
+    surface: "Judas", owner: "bib-it-maccabean-revolt-begins", expect: null, status: "guard",
+    why: "JUDAS MACCABEUS. The existing rule suppresses \"Judas Maccabeus\" written in full; this is " +
+         "the bare shorthand in the sentence that introduces the nickname, which the rule cannot " +
+         "see — the same near miss \"Philip II\" had. The strongest candidate in the whole sweep " +
+         "for a record of his own, which is Robbie's call and not this file's." },
+  { text: "By late 164 BC, Judas's forces had fought their way to Jerusalem itself, controlling the city apart from a Seleucid garrison holed up in the fortress known as the Akra — clearing the way, at last, to reclaim the desecrated Temple.",
+    surface: "Judas", owner: "bib-it-judas-maccabeus-campaigns", expect: null, status: "guard",
+    why: "The man who cleansed the Temple, pointing at the man who betrayed Jesus, on the event " +
+         "named after him. Of everything in this sweep it is the likeliest to cost a reader's trust." },
+  { text: "Publius Sulpicius Quirinius was a Roman senator and military commander who held a series of provincial commands and honors under Augustus, including a consulship in 12 BC and later the governorship of the province of Syria. Josephus records that Quirinius was sent to Syria around AD 6 specifically to oversee the annexation of Judea as a Roman province after Augustus deposed Herod Archelaus, and that he conducted a census there for taxation purposes at that time — a census that provoked a Jewish uprising led by Judas of Galilee (Antiquities 18.1.1).",
+    surface: "Judas", owner: "quirinius", expect: null, status: "guard",
+    why: "JUDAS OF GALILEE, whom Gamaliel names in Acts 5:37 — a failed messianic revolt handed to " +
+         "Iscariot. One of the two findings in this sweep that are theologically serious rather " +
+         "than merely wrong. The verse itself is fixed per-verse in the Scripture batch." },
+  { text: "The old Roman decumanus maximus of Damascus, running roughly 1,500 meters east-west through the Old City. In Acts 9:11, the Lord tells Ananias to go to \"the street called Straight\" to find Saul of Tarsus, praying in the house of Judas, so that his sight could be restored. Today the western half is called Midhat Pasha Street and the eastern half Bab Sharqi Street, and it remains a functioning market street.",
+    surface: "Judas", owner: "straight-street-damascus", expect: null, status: "guard",
+    why: "JUDAS OF STRAIGHT STREET, Acts 9:11 — Saul's host. Same block as the Ananias case in " +
+         "batch 4, and the two were wrong in the same sentence for the same reason." },
+  { text: "This apostle gets one moment of individual dialogue: at the Last Supper, after Jesus says he will show himself to his disciples but not to the world, \"Judas (not Iscariot) said to him, 'Lord, how is it that you will manifest yourself to us, and not to the world?'\" (John 14:22). Jesus's answer is about those who love him keeping his word — but the New Testament records nothing further about Thaddaeus individually.",
+    surface: "Judas", owner: "thaddaeus", expect: null, status: "guard",
+    why: "AND ONE THE SWEEP MIS-FILED. It listed this under \"Jude, the brother of Jesus — no " +
+         "record\". It is not: John 14:22's \"Judas (not Iscariot)\" is THADDAEUS, the page's own " +
+         "subject, whose record is titled \"Thaddaeus (Judas, son of James)\". Mapped to the record " +
+         "rather than to null, so this is the self-link exclusion. It renders the same and it says " +
+         "something different, which is the whole reason the two values are distinguished." },
+  { text: "After Judas's betrayal and death, the remaining apostles wanted to fill the gap he left. Two candidates were put forward — Joseph called Barsabbas (also known as Justus) and Matthias — and after praying, the eleven cast lots. The lot fell on Matthias, and he was numbered with the eleven apostles (Acts 1:15-26).",
+    surface: "Judas", owner: "casting-lots", expect: "judas-iscariot", status: "guard",
+    why: "THE GUARD. Iscariot keeps the bare key in thirteen of our twenty-five prose mentions, and " +
+         "this is one of them. The same block's \"Joseph called Barsabbas\" is deliberately not a " +
+         "link — Acts 1:23's fourth Joseph, suppressed by an earlier batch — so this one paragraph " +
+         "holds both halves of the ruling." },
+
+  // ── Azariah, Antipas, Jehoshaphat, Joram, Mary, John ────────────────────────────────────────
+  { text: "But Uzziah's success bred pride. He entered the Temple to burn incense on the altar himself, a duty reserved for the priests alone, and when the priest Azariah and eighty others confronted him, Uzziah grew angry rather than repentant. Leprosy broke out on his forehead as he stood there, and he lived the rest of his life isolated in a separate house, with his son Jotham governing in his place.",
+    surface: "Azariah", owner: "bib-dkj-uzziah-reign", expect: null, status: "guard",
+    why: "THE PRIEST Azariah of 2 Chronicles 26:17, resolving to the king he is confronting — in an " +
+         "article whose subject is that king, and which also calls him Azariah two paragraphs " +
+         "earlier. A mixed record: the owner entry answers no link, and the king's own mention is " +
+         "recovered by an exact phrase pin checked before it." },
+  { text: "Uzziah (also called Azariah) came to the throne as a teenager and reigned longer than almost any king of Judah. \"As long as he sought the LORD, God prospered him\" — he rebuilt towns, strengthened Jerusalem's defenses with towers and engineered weapons, expanded Judah's territory, and developed agriculture across the land. It was, by any measure, one of the high-water marks of Judah's national strength since Solomon.",
+    surface: "Azariah", owner: "bib-dkj-uzziah-reign", expect: "uzziah", status: "guard",
+    why: "The other half, and the one the record-wide `null` must not take: 2 Kings really does " +
+         "give the king both names, and the sweep confirmed this link as correct. The pin is on " +
+         "THIS sentence rather than on the priest's, so that a rewrite loses a correct link instead " +
+         "of promoting a priest to a king." },
+  { text: "The prophet Azariah son of Oded met Asa afterward with a message that became something of a motto for the whole era: \"The LORD is with you when you are with Him. If you seek Him, He will be found by you.\" Asa responded by leading Judah into a covenant renewal, and the land had peace for years.",
+    surface: "Azariah", owner: "bib-dkj-asa-reforms", expect: null, status: "guard",
+    why: "AZARIAH SON OF ODED, 2 Chronicles 15:1 — a prophet, not a king, and NOT in the sweep, " +
+         "which enumerated 2 Chronicles' verses and the priest but not this article. Found by " +
+         "reading the record's neighbours. No record; no link." },
+  { text: "Daniel was among the young Judean nobles taken to Babylon after Nebuchadnezzar's first siege of Jerusalem, around 605 BC, and selected along with three companions — Hananiah, Mishael, and Azariah, renamed Belteshazzar, Shadrach, Meshach, and Abednego — for training in the Babylonian royal court (Daniel 1:1-7). He resolved not to defile himself with the king's food, requesting a diet of vegetables and water instead, and the four were found healthier and wiser than their peers at the end of the trial period (Daniel 1:8-20).",
+    surface: "Azariah", owner: "daniel", expect: null, status: "guard",
+    why: "ABEDNEGO, on Daniel's own page — a fourth Azariah, five centuries and one exile from the " +
+         "king of Judah he linked to." },
+  { text: "The letters to the seven churches in Revelation 2-3 reflect exactly this kind of pressure: believers in Smyrna facing coming imprisonment and told to be \"faithful unto death\" (Revelation 2:10), a martyr named Antipas already killed in Pergamum, \"where Satan's throne is\" (Revelation 2:13), and churches wrestling with how far to compromise with the surrounding pagan culture to avoid trouble. Whether the persecution under Domitian was as systematic as some later sources suggest, or a more localized and uneven pressure, is debated among historians - but John's own exile to Patmos during this period is itself a clear, undisputed data point.",
+    surface: "Antipas", owner: "bib-ac-domitian-persecution", expect: null, status: "guard",
+    why: "ANTIPAS OF PERGAMUM, Revelation 2:13 — a martyr under Domitian, resolving to Herod " +
+         "Antipas, who died in exile sixty years earlier. The other eight \"Antipas\"es in our prose " +
+         "are the tetrarch and are untouched. The \"John\" in the same paragraph is the Apostle by " +
+         "this record's existing owner entry, and the case below holds it." },
+  { text: "The letters to the seven churches in Revelation 2-3 reflect exactly this kind of pressure: believers in Smyrna facing coming imprisonment and told to be \"faithful unto death\" (Revelation 2:10), a martyr named Antipas already killed in Pergamum, \"where Satan's throne is\" (Revelation 2:13), and churches wrestling with how far to compromise with the surrounding pagan culture to avoid trouble. Whether the persecution under Domitian was as systematic as some later sources suggest, or a more localized and uneven pressure, is debated among historians - but John's own exile to Patmos during this period is itself a clear, undisputed data point.",
+    surface: "John", owner: "bib-ac-domitian-persecution", expect: "john-the-apostle", status: "guard",
+    why: "Same paragraph, different name, opposite answer — the clearest single demonstration that " +
+         "these entries are per name AND per record, not per record alone." },
+  { text: "Elisha sends one of the sons of the prophets to Ramoth-Gilead with a flask of oil and an urgent, secret mission: find Jehu, son of Jehoshaphat, son of Nimshi, an army commander among Israel's officers, pull him away from his companions into an inner room, and anoint him king over Israel. The message accompanying the anointing is a direct commission to carry out God's long-delayed judgment on the house of Ahab, avenging the blood of the Lord's prophets and servants that Jezebel had shed.",
+    surface: "Jehoshaphat", owner: "bib-dki-jehu-anointed", expect: null, status: "guard",
+    why: "A PATRONYMIC, 2 Kings 9:2 — Jehu's own father, not Judah's king, and he has no record and " +
+         "no other mention anywhere. Seventeen of our eighteen \"Jehoshaphat\" links are the king " +
+         "and stay that way." },
+  { text: "Elisha's independent ministry runs from Elijah's ascension (c. 852 BC) to his deathbed prophecy to Jehoash of Israel (2 Kings 13:14-20); Jehoash's reign began in 798 BC, so Elisha's death falls c. 797-795 BC. The span covers roughly fifty years and four kings — Joram, Jehu, Jehoahaz, and Jehoash. This composite entry covers a representative range of his miracles rather than pinning each to an exact year.",
+    surface: "Joram", owner: "bib-dki-elisha-ministry-miracles", expect: "joram-king-of-israel",
+    status: "guard",
+    why: "NOT IN THE SWEEP — found while checking the elijah-ascension note beside it. The list " +
+         "names Elisha's four kings, and Jehu, Jehoahaz and Jehoash are all kings of ISRAEL, so " +
+         "the Joram at the head of it is too. It was resolving to Judah's Joram, who reigned at " +
+         "the same moment under the same two names, which is exactly why this pair is dangerous." },
+  { text: "Mark, also called John, was the son of a woman named Mary whose house in Jerusalem served as a meeting place for the early church — Peter went there directly after his miraculous release from prison (Acts 12:12). He was a cousin of Barnabas (Colossians 4:10), which likely explains how he came to join Barnabas and Paul on their first missionary journey as a helper (Acts 12:25, 13:5).",
+    surface: "Mary", owner: "john-mark", expect: null, status: "guard",
+    why: "MARY THE MOTHER OF JOHN MARK, Acts 12:12 — a fourth Mary, with no record. Scripture's own " +
+         "Acts 12:12 already suppressed her, so the two articles telling that story contradicted " +
+         "the verse they were telling it from. Now they agree." },
+  { text: "One of the seven churches of Revelation, one of only two (with Philadelphia) to receive no criticism from John, only encouragement amid coming persecution (Revelation 2:8-11)",
+    surface: "John", owner: "smyrna", expect: "john-the-apostle", status: "guard",
+    why: "Revelation's John, on a map record, pointing at the Baptist. The app's standing ruling " +
+         "sends Revelation's John to the Apostle — BOOK_NAME_OVERRIDES does it for the text and " +
+         "five records already do it for the articles — and these three location facts were simply " +
+         "outside every one of those levers." },
+  // ═══════════════════════════════════════════════════════════════════════════════════════════
+  // SECOND-BEARER BATCH 6: SCRIPTURE — 27 VERSES ON THE READER PATH, 2026-09-10
+  //
+  // Every Scripture fault the sweep found, minus two that a flagged case stopped (see the bottom
+  // of this block). Each is a VERSE_NAME_OVERRIDES entry, which is translation-blind — so each was
+  // checked against the KJV and ASV as well as the WEB before being written, from bible-api.com,
+  // the service the app itself asks for Scripture. Where the three differ, the difference is
+  // quoted in a case of its own.
+
+  // ── Azariah in 2 Chronicles: eight men, thirteen occurrences, none of them the king ──────────
+  { ref: "2 Chronicles 15:1", surface: "Azariah", expect: null, status: "guard",
+    why: "Azariah son of Oded, the prophet who meets Asa. The bare key is Uzziah's registered " +
+         "alternate name and the book allowlist lets it into Chronicles, where the king is called " +
+         "Uzziah throughout and never Azariah — which is what makes the whole book answerable. " +
+         "WEB, KJV and ASV all read \"Azariah the son of Oded\"." },
+  { ref: "2 Chronicles 21:2", surface: "Azariah", occurrence: 2, expect: null, status: "guard",
+    why: "TWO of Jehoshaphat's sons are called Azariah in this one verse, in all three " +
+         "translations, and a verse override answers both — which is exact here, because no verse " +
+         "in the list holds the king and somebody else. Occurrence 2 is asserted rather than " +
+         "occurrence 1 so that the entry cannot be satisfied by the first alone." },
+  { ref: "2 Chronicles 26:17", surface: "Azariah", expect: null, status: "guard",
+    why: "AZARIAH THE PRIEST, who goes in after Uzziah to stop him burning incense — the same " +
+         "chapter as the king, under the king's other name, on opposite sides of the altar. The " +
+         "most consequential of the thirteen, and the article half was wrong in the same way." },
+  { ref: "2 Chronicles 31:13", surface: "Azariah", expect: null, status: "guard",
+    why: "\"Azariah the ruler of God's house\", under Hezekiah — three kings after Uzziah, and the " +
+         "last of the thirteen. Asserted as the far end of the range." },
+  { ref: "2 Kings 14:21", surface: "Azariah", expect: "uzziah", status: "guard",
+    why: "THE GUARD, in the neighbouring book: \"All the people of Judah took Azariah, who was " +
+         "sixteen years old, and made him king.\" 2 Kings really does give Uzziah this name — all " +
+         "eight of its occurrences are him — and the fix above is keyed to 2 Chronicles alone. If " +
+         "this ever goes to `-`, the entry has leaked to the wrong book." },
+
+  // ── Joseph of Arimathea, and Luke's genealogy ───────────────────────────────────────────────
+  { ref: "Matthew 27:57", surface: "Joseph", expect: "joseph-of-arimathea", status: "guard",
+    why: "\"a rich man from Arimathaea, named Joseph\". BOOK_NAME_OVERRIDES sends a bare \"Joseph\" " +
+         "in Matthew to Mary's husband — right for the nativity and the genealogy, wrong for the " +
+         "burial. Mark 15:43 and John 19:38 were never affected because the WEB prints the whole " +
+         "phrase \"Joseph of Arimathaea\", which is a registered key; these two verses print only " +
+         "the bare name. ASV reads \"there came a rich man from Arimathaea, named Joseph\"." },
+  { ref: "Luke 23:50", surface: "Joseph", expect: "joseph-of-arimathea", status: "guard",
+    why: "\"a man named Joseph, who was a member of the council\". KJV: \"there was a man named " +
+         "Joseph, a counsellor\". ASV: \"a man named Joseph, who was a councillor\". All three print " +
+         "the bare name and nothing else, which is the whole reason this verse needed an entry." },
+  { ref: "Luke 3:30", surface: "Joseph", expect: null, status: "guard",
+    why: "Luke's genealogy — an ancestor thirty-six generations before Mary's husband. Suppressed " +
+         "along with 3:26's. Independent of the corpus-wide bare-\"Joseph\" question, which is open " +
+         "and Robbie's: these two verses are neither candidate." },
+  { ref: "Luke 3:30", surface: "Simeon", expect: null, status: "guard",
+    why: "The same verse's Simeon, and the reason the allowlist could not catch it: the only " +
+         "record is Simeon at the temple, BOOK_NAME_ALLOWLIST confines the key to Luke, and this " +
+         "IS Luke — thirty-six generations early." },
+  { ref: "Luke 2:25", surface: "Simeon", expect: "simeon-at-the-temple", status: "guard",
+    why: "The guard on the other side, in the same book: the man in the temple who takes the " +
+         "infant Jesus in his arms. The suppression above is one verse wide." },
+
+  // ── Acts 12:2 and Matthew 10:4 ──────────────────────────────────────────────────────────────
+  { ref: "Acts 12:2", surface: "James", expect: "james-son-of-zebedee", status: "guard",
+    why: "\"He killed James, the brother of John, with the sword.\" The verse names his brother. " +
+         "BOOK_NAME_OVERRIDES.james sends every bare \"James\" in Acts to the Lord's brother, which " +
+         "is right at 12:17, 15:13 and 21:18 and wrong twelve verses earlier. KJV and ASV both " +
+         "read \"he killed James the brother of John with the sword\". This is the verse every " +
+         "argument in this file about Zebedee's son being dead by AD 44 rests on." },
+  { ref: "Acts 12:17", surface: "James", expect: "james-brother-of-jesus", status: "guard",
+    why: "Fifteen verses later, the other James, in the same book — \"report this to James\". The " +
+         "guard that says the 12:2 entry is one verse wide and the book override still stands." },
+  { ref: "Matthew 10:4", surface: "Simon", expect: "simon-the-zealot", status: "guard",
+    why: "The apostle list's SECOND Simon, which resolved to Simon Peter — the Twelve containing " +
+         "him twice. Mark 3:18, Luke 6:15 and Acts 1:13 print \"Simon the Zealot\", a registered " +
+         "key that has always worked; Matthew alone does not. qan'ana is the Aramaic for zealot, " +
+         "which is why Luke translates it, so the identification is not a judgment call." },
+  { ref: "Matthew 10:4", translation: "ASV",
+    text: "Simon the Cananaean, and Judas Iscariot, who also betrayed him.",
+    surface: "Simon", expect: "simon-the-zealot", status: "guard",
+    why: "AND THE REASON IT IS A VERSE KEY RATHER THAN A REGISTERED PHRASE. WEB and KJV read " +
+         "\"Simon the Canaanite\"; the ASV reads \"Simon the CANANAEAN\". Registering either wording " +
+         "would have fixed one or two translations of three and left the rest wrong with nothing " +
+         "in this directory able to say so, because the corpus is WEB only. The verse key is " +
+         "translation-blind and catches all three. Quoted verbatim from bible-api.com." },
+  { ref: "Matthew 10:4", translation: "KJV",
+    text: "Simon the Canaanite, and Judas Iscariot, who also betrayed him.",
+    surface: "Simon", expect: "simon-the-zealot", status: "guard",
+    why: "The KJV literal — same wording as the WEB but for the punctuation after \"Canaanite\", " +
+         "which is exactly the kind of difference an offset-sensitive or phrase-based fix trips on." },
+  { ref: "Mark 3:18", surface: "Simon the Zealot", expect: "simon-the-zealot", status: "guard",
+    why: "The guard: the same apostle in the same list in another Gospel, matched as a whole " +
+         "registered phrase. Untouched by the verse entry above." },
+
+  // ── The four "Mary the mother of James" verses ──────────────────────────────────────────────
+  { ref: "Mark 15:40", surface: "James", expect: null, status: "guard",
+    why: "\"Mary the mother of James the less and of Joses\" — the app resolved the MOTHER " +
+         "correctly and gave her SON to Zebedee, whose mother Salome is named separately three " +
+         "words later, in the same verse. Internally contradictory inside one clause. SUPPRESSED " +
+         "rather than repointed to james-son-of-alphaeus: identifying James the Less with " +
+         "Alphaeus's son is the traditional reading and is genuinely disputed, and this file does " +
+         "not settle a disputed identification as a side effect of fixing a different fault. KJV " +
+         "and ASV both read \"Mary the mother of James the less and of Joses, and Salome\"." },
+  { ref: "Mark 15:40", surface: "Mary", occurrence: 2, expect: "mary-mother-of-james-the-less",
+    status: "guard",
+    why: "The other half of the same clause, and the half that was already right — she keeps her " +
+         "link. All three translations print \"Mary the mother of James\"." },
+  { ref: "Luke 24:10", surface: "James", expect: null, status: "guard",
+    why: "The same phrase at the empty tomb. The ASV prints \"Mary the [mother] of James\" with " +
+         "bracketed supply and the KJV prints it without; the verse key does not care, which is " +
+         "the argument for keying on the verse." },
+  { ref: "Matthew 27:56", surface: "James", expect: null, status: "guard",
+    why: "The third of the four. Salome appears here as \"the mother of the sons of Zebedee\" " +
+         "(KJV: \"the mother of Zebedee's children\") in the same verse — the clearest statement " +
+         "in Scripture that this James is not hers." },
+  { ref: "Mark 3:17", surface: "James the son of Zebedee", expect: "james-son-of-zebedee",
+    status: "guard",
+    why: "The guard: where Scripture spells out whose son he is, he keeps his link, by a " +
+         "registered phrase no verse entry touches." },
+
+  // ── The two theologically serious single verses ─────────────────────────────────────────────
+  { ref: "Colossians 4:11", surface: "Jesus", expect: null, status: "guard",
+    why: "\"and Jesus who is called Justus.\" PAUL'S JEWISH CO-WORKER IN ROME, rendered as a link " +
+         "to Jesus of Nazareth on the reader path — the worst single link the sweep found. Iesous " +
+         "is the ordinary Greek for Joshua and an ordinary first-century name, and Paul " +
+         "distinguishes this man by his Roman cognomen in the same clause. Suppressed: the app has " +
+         "no record for him, \"Justus\" produces no person link anywhere in the app, and one verse " +
+         "does not earn a record. Checked across all 31,098 WEB verses: this is the only \"Jesus\" " +
+         "in the corpus that means anybody else, so the entry is one verse wide and cannot leak." },
+  { ref: "Acts 5:37", surface: "Judas", expect: null, status: "guard",
+    why: "\"Judas of Galilee rose up in the days of the enrollment\" — Gamaliel's second example of " +
+         "a failed messianic movement, the census revolt of AD 6, handed to Iscariot. A SIXTH " +
+         "bearer in Acts, measured and deliberately left by the Acts 15 batch, which was not " +
+         "authorised to settle him; this closes that batch's own note. The two prose mentions on " +
+         "quirinius take the same answer through OWNER_NAME_OVERRIDES." },
+  { ref: "Acts 1:16", surface: "Judas", expect: "judas-iscariot", status: "guard",
+    why: "The guard, four chapters earlier in the same book: \"concerning Judas, who was guide to " +
+         "those who took Jesus.\" judas.Acts is now keyed to five verses and not to the book." },
+  { ref: "Romans 16:6", surface: "Mary", expect: null, status: "guard",
+    why: "\"Greet Mary, who labored much for us.\" A fifth Mary, in Paul's list of Roman greetings, " +
+         "with nothing known of her beyond this line and no record. She was resolving to the " +
+         "mother of Jesus, who is not in Romans at all." },
+
+  // ── THREE FAULTS THAT EXIST IN ONLY ONE TRANSLATION, AND MOVE NO SNAPSHOT ROW ───────────────
+  //
+  // Found by reading every verse in this batch in the KJV and the ASV as well as the WEB, which
+  // the brief required and which turned out to be the highest-yield part of it. The corpus here
+  // is WEB only, so a fault that exists in another translation is invisible to all three
+  // snapshots — they are green before and after these three fixes. These cases are the only cover
+  // any of them will ever have.
+  //
+  // It is the Acts 4:36 problem from the other side. There an OVERRIDE fired for one translation
+  // and matched nothing in the corpus; here a FAULT lives in one translation and matches nothing
+  // in the corpus. A verse key answers both, because it is keyed on book/chapter/verse and the
+  // name, never on the wording.
+
+  { ref: "Luke 3:30", translation: "ASV",
+    text: "the [son] of Symeon, the [son] of Judas, the [son] of Joseph, the [son] of Jonam, the [son] of Eliakim,",
+    surface: "Judas", expect: null, status: "guard",
+    why: "ASV ONLY. The WEB reads \"the son of Judah\" here and the KJV \"the son of Juda\" — neither " +
+         "is a registered key, so neither renders a link. The ASV reads \"the [son] of JUDAS\", " +
+         "which is, and an ASV reader was told that an ancestor thirty-six generations before " +
+         "Jesus was Judas Iscariot. Note the same verse's \"Symeon\": the ASV's spelling is not a " +
+         "registered key either, which is why the `simeon` suppression on this verse is a WEB/KJV " +
+         "fix and this is an ASV one." },
+  { ref: "Luke 3:30", translation: "KJV",
+    text: "Which was the son of Simeon, which was the son of Juda, which was the son of Joseph, which was the son of Jonan, which was the son of Eliakim,",
+    surface: "Simeon", expect: null, status: "guard",
+    why: "The KJV literal of the same verse, asserting the OTHER half: \"Simeon\" spelled as the WEB " +
+         "spells it, suppressed by the same verse key. Between this case and the one above, all " +
+         "three translations of Luke 3:30 are pinned." },
+  { ref: "Acts 7:45", translation: "KJV",
+    text: "Which also our fathers that came after brought in with Jesus into the possession of the Gentiles, whom God drave out before the face of our fathers, unto the days of David;",
+    surface: "Jesus", expect: "joshua", status: "guard",
+    why: "KJV ONLY, and the sweep named this verse as worth checking without being able to check " +
+         "it. Iesous is the Greek for Joshua; the WEB and ASV translate it \"Joshua\" and already " +
+         "link correctly, and the KJV transliterates it. Stephen is describing the conquest, and a " +
+         "KJV reader was being shown Jesus of Nazareth leading it. Repointed, not suppressed — " +
+         "the app has Joshua's record and no reading of the verse is anyone else." },
+  { ref: "Hebrews 4:8", translation: "KJV",
+    text: "For if Jesus had given them rest, then would he not afterward have spoken of another day.",
+    surface: "Jesus", expect: "joshua", status: "guard",
+    why: "The second of the two, and the one where it matters most: Hebrews 4's whole argument is " +
+         "that the rest Joshua gave was not the final one. Pointing that \"Jesus\" at Jesus of " +
+         "Nazareth inverts the passage. WEB and ASV both read \"Joshua\" and are untouched." },
+  { ref: "Hebrews 4:8", translation: "WEB",
+    text: "For if Joshua had given them rest, he would not have spoken afterward of another day.",
+    surface: "Joshua", expect: "joshua", status: "guard",
+    why: "The same verse in the translation that does not need the fix, asserting that the entry " +
+         "above changes nothing for a WEB or ASV reader — the `jesus` key simply never matches. " +
+         "This is the half a careless generalisation of the rule would break." },
+  { ref: "Colossians 4:11", translation: "KJV",
+    text: "And Jesus, which is called Justus, who are of the circumcision. These only are my fellow workers unto the kingdom of God, which have been a comfort unto me.",
+    surface: "Jesus", expect: null, status: "guard",
+    why: "The KJV literal of the worst link the sweep found, confirming the verse key reaches it " +
+         "in a translation the corpus does not contain. ASV: \"and Jesus that is called Justus\" — " +
+         "all three print the bare name, so all three had the fault and all three are fixed." },
+
+  // ── COMPOUND PROPER NOUNS: "Obed-Edom" IS NOT OBED AND EDOM ─────────────────────────────────
+  //
+  // Added 2026-09-10. A hyphenated or space-joined biblical compound was being split and each half
+  // linked separately — "Obed-Edom the Gittite" sending a reader to Ruth's grandson and to the
+  // nation of Edom, in twenty verses; ASV "Bar-jesus", the magician Elymas, sending one to Jesus of
+  // Nazareth. 205 links in the corpora and 206 measured live against bible-api.com. The rules are
+  // in the COMPOUND PROPER NOUNS block of NAME_CONTEXT_RULES.
+  //
+  // Half of these cases are KEEP guards on the bare name, and they are the half that matters: the
+  // general fix that was measured and rejected — making the linker's word boundary hyphen-aware —
+  // would have taken 163 correct links with it. Each suppression below was negative-tested by
+  // pointing its rule at a wrong target and confirming that this case, and only this case, failed.
+
+  // The fault, on the default translation's reader path (the WEB corpus).
+  { ref: "2 Samuel 6:10", surface: "Obed", expect: null, status: "guard",
+    why: "\"Obed-Edom the Gittite\" is the Levite who housed the ark, not Ruth and Boaz's son. " +
+         "Both halves were linking, in all twenty of his verses." },
+  { ref: "2 Samuel 6:10", surface: "Edom", expect: null, status: "guard",
+    why: "The other half of the same name. Not the nation — there is no Edom in this verse." },
+  { ref: "Genesis 4:22", surface: "Cain", expect: null, status: "guard",
+    why: "WEB \"Tubal Cain\", Lamech's son by Zillah and the forger of bronze and iron — not the " +
+         "first murderer, who is four verses and one genealogy away." },
+  { ref: "Numbers 33:19", surface: "Perez", expect: null, status: "guard",
+    why: "WEB \"Rimmon Perez\", a wilderness camp on the wandering itinerary, not Judah's son." },
+  { ref: "Acts 13:6", surface: "Jesus", expect: null, status: "guard",
+    why: "WEB \"Bar Jesus\" — Elymas the sorcerer, whom Paul strikes blind two verses later. The " +
+         "worst link in this family: a magician opposing the gospel, linked to Christ." },
+  { ref: "2 Kings 14:25", surface: "Gath", expect: null, status: "guard",
+    why: "\"Gath Hepher\" in Zebulun is Jonah's home town, not Philistine Gath in the south." },
+  { ref: "Joshua 21:24", surface: "Gath", expect: null, status: "guard",
+    why: "\"Gath Rimmon\", a Levitical town of Dan. Same word, different place." },
+  { ref: "Micah 1:14", surface: "Gath", expect: null, status: "guard",
+    why: "\"Moresheth Gath\" is Micah's own town; the qualifier is what distinguishes it from Gath." },
+  { ref: "2 Kings 17:30", surface: "Succoth", expect: null, status: "guard",
+    why: "\"Succoth Benoth\" is an object of Babylonian worship the resettled colonists made, not " +
+         "the Succoth of Jacob and the Exodus." },
+  { ref: "Joshua 16:6", surface: "Shiloh", expect: null, status: "guard",
+    why: "\"Taanath Shiloh\" is a town on Ephraim's eastern border, not the sanctuary at Shiloh." },
+  { ref: "Joshua 13:26", surface: "Mizpeh", expect: null, status: "guard",
+    why: "\"Ramath Mizpeh\" in Gad, not the Mizpah of Samuel and Gedaliah." },
+  { ref: "Numbers 32:36", surface: "Haran", expect: null, status: "guard",
+    why: "\"Beth Haran\" is a fortified town in Gad. Haran is in Mesopotamia, five hundred miles off." },
+  { ref: "2 Samuel 24:6", surface: "Dan", expect: null, status: "guard",
+    why: "\"Dan Jaan\" is named by the census itinerary as a compound. Whether it is the northern " +
+         "city of Dan is disputed, and half a proper noun is not the place to assert it either way." },
+  { ref: "Judges 18:12", surface: "Dan", expect: null, status: "guard",
+    why: "\"Mahaneh Dan\" — the camp of Dan, behind Kiriath Jearim in Judah, named for the tribe " +
+         "and nowhere near the northern city." },
+  { ref: "1 Chronicles 2:24", surface: "Ephrathah", expect: null, status: "guard",
+    why: "\"Caleb Ephrathah\" is one place name. Bare \"Ephrathah\" is Bethlehem and keeps its link." },
+  { ref: "Nahum 3:8", surface: "Amon", path: "panel", expect: null, status: "guard",
+    why: "\"No-Amon\" is Thebes, named for its god, and it was linking to Amon king of Judah. The " +
+         "reader path already suppressed it through the book allowlist; the panel path, which " +
+         "passes no book, did not — so this is a panel case on purpose." },
+
+  // The KEEP side. Every bare name above still resolves, which is the whole argument for one rule
+  // per compound instead of a hyphen-aware word boundary.
+  { ref: "Ruth 4:17", surface: "Obed", expect: "obed", status: "guard",
+    why: "Bare \"Obed\" — Ruth and Boaz's son, Jesse's father. Thirteen of these survive the fix." },
+  { ref: "Genesis 4:8", surface: "Cain", expect: "cain", status: "guard",
+    why: "Bare \"Cain\" in the murder itself. Untouched: the rule needs \"Tubal\" before it." },
+  { ref: "Genesis 4:4", surface: "Abel", expect: "abel", status: "guard",
+    why: "Bare \"Abel\", the man. All nine of his own mentions keep their link." },
+  { ref: "Genesis 38:29", surface: "Perez", expect: "perez", status: "guard",
+    why: "Bare \"Perez\", Judah's son, at his birth." },
+  { ref: "Numbers 13:6", surface: "Caleb", expect: "caleb", status: "guard",
+    why: "Bare \"Caleb\" the spy, untouched by the Caleb-Ephrathah rule." },
+  { ref: "1 Samuel 17:4", surface: "Gath", expect: "gath", status: "guard",
+    why: "Goliath \"of Gath\" — the Philistine city itself, which keeps every bare mention it has." },
+  { ref: "Genesis 11:31", surface: "Haran", expect: "haran", status: "guard",
+    why: "Terah's family settles at Haran in Mesopotamia. Only \"Beth Haran\" is suppressed." },
+  { ref: "Genesis 33:17", surface: "Succoth", expect: "succoth", status: "guard",
+    why: "Jacob at Succoth. Only \"Succoth Benoth\" is suppressed." },
+  { ref: "Judges 21:12", surface: "Shiloh", expect: "shiloh", status: "guard",
+    why: "The sanctuary at Shiloh. Only \"Taanath Shiloh\" is suppressed." },
+  { ref: "Obadiah 1:1", surface: "Edom", expect: "edom", status: "guard",
+    why: "The nation of Edom, the subject of the whole book. Only \"Obed-Edom\" is suppressed." },
+  { ref: "Numbers 22:1", surface: "Moab", expect: "moab", status: "guard",
+    why: "The plains of Moab. Only \"Pahath-moab\", the post-exilic family, is suppressed." },
+  { ref: "Micah 5:2", surface: "Ephrathah", expect: "bethlehem", status: "guard",
+    why: "\"Bethlehem Ephrathah\" — the town, and the link a reader most wants here." },
+  { ref: "Judges 20:1", surface: "Dan", expect: "dan", status: "guard",
+    why: "\"from Dan even to Beersheba\" — the northern city, the idiom's whole point." },
+
+  // ── THE SAME VERSES IN THE OTHER TWO TRANSLATIONS ───────────────────────────────────────────
+  //
+  // Quoted verbatim from bible-api.com, which is what src/lib/biblePassage.ts fetches. This is the
+  // only cover these have: the WEB corpus cannot see them, and our KJV corpus comes from bolls,
+  // which CLOSES these compounds up ("Obededom", "Barjesus", "Tubalcain") where bible-api.com
+  // hyphenates them. The KJV reader therefore had faults the harness reported as clean — 69 of
+  // them, measured live — and these cases are what stops that happening again.
+  { ref: "2 Samuel 6:10", translation: "ASV",
+    text: "So David would not remove the ark of Jehovah unto him into the city of David; but David carried it aside into the house of Obed-edom the Gittite.",
+    surface: "Obed", expect: null, status: "guard",
+    why: "The ASV hyphenates and lowercases the second element. The `[\\s-]` separator is what " +
+         "reaches it; the old `\\s+` rules corrected the WEB alone." },
+  { ref: "2 Samuel 6:10", translation: "ASV",
+    text: "So David would not remove the ark of Jehovah unto him into the city of David; but David carried it aside into the house of Obed-edom the Gittite.",
+    surface: "edom", expect: null, status: "guard",
+    why: "The other half, lowercase, in the ASV. It was resolving to the nation of Edom." },
+  { ref: "2 Samuel 6:10", translation: "KJV",
+    text: "So David would not remove the ark of the LORD unto him into the city of David: but David carried it aside into the house of Obed-edom the Gittite.",
+    surface: "Obed", expect: null, status: "guard",
+    why: "bible-api.com's KJV reads \"Obed-edom\" and our bolls corpus reads \"Obededom\", so the " +
+         "harness saw a clean KJV and the reader saw the fault. Twenty verses, forty links." },
+  { ref: "2 Samuel 6:10", translation: "KJV",
+    text: "So David would not remove the ark of the LORD unto him into the city of David: but David carried it aside into the house of Obed-edom the Gittite.",
+    surface: "edom", expect: null, status: "guard",
+    why: "The other half of the KJV spelling the corpus cannot see." },
+  { ref: "Acts 13:6", translation: "ASV",
+    text: "And when they had gone through the whole island unto Paphos, they found a certain sorcerer, a false prophet, a Jew, whose name was Bar-jesus;",
+    surface: "jesus", expect: null, status: "guard",
+    why: "Elymas the magician. All three translations spell his name differently and two of the " +
+         "three linked it to Christ." },
+  { ref: "Acts 13:6", translation: "KJV",
+    text: "And when they had gone through the isle unto Paphos, they found a certain sorcerer, a false prophet, a Jew, whose name was Bar-jesus:",
+    surface: "jesus", expect: null, status: "guard",
+    why: "The KJV as bible-api.com serves it. Our corpus reads \"Barjesus\" and matched nothing." },
+  { ref: "Genesis 4:22", translation: "ASV",
+    text: "And Zillah, she also bare Tubal-cain, the forger of every cutting instrument of brass and iron: and the sister of Tubal-cain was Naamah.",
+    surface: "cain", expect: null, status: "guard",
+    why: "Both occurrences in the ASV's hyphenated, lowercased spelling." },
+  { ref: "Genesis 4:22", translation: "KJV",
+    text: "And Zillah, she also bare Tubal-cain, an instructer of every artificer in brass and iron: and the sister of Tubal-cain was Naamah.",
+    surface: "cain", expect: null, status: "guard",
+    why: "The KJV as bible-api.com serves it; our corpus reads \"Tubalcain\"." },
+  { ref: "Genesis 50:11", translation: "ASV",
+    text: "And when the inhabitants of the land, the Canaanites, saw the mourning in the floor of Atad, they said, This is a grievous mourning to the Egyptians: wherefore the name of it was called Abel-mizraim, which is beyond the Jordan.",
+    surface: "Abel", expect: null, status: "guard",
+    why: "\"Abel\" here is the Hebrew for a meadow. The WEB's \"Abel Mizraim\" was already " +
+         "suppressed; the ASV's hyphen escaped the rule for as long as it read `\\s+`." },
+  { ref: "Numbers 33:49", translation: "ASV",
+    text: "And they encamped by the Jordan, from Beth-jeshimoth even unto Abel-shittim in the plains of Moab.",
+    surface: "Abel", expect: null, status: "guard",
+    why: "\"Abel-shittim\", the last camp before the Jordan crossing." },
+  { ref: "1 Chronicles 2:24", translation: "ASV",
+    text: "And after that Hezron was dead in Caleb-ephrathah, then Abijah Hezron`s wife bare him Ashhur the father of Tekoa.",
+    surface: "Caleb", expect: null, status: "guard",
+    why: "A place, not the spy. The KJV spells it \"Caleb-ephratah\" and matches neither key." },
+  { ref: "1 Chronicles 2:24", translation: "ASV",
+    text: "And after that Hezron was dead in Caleb-ephrathah, then Abijah Hezron`s wife bare him Ashhur the father of Tekoa.",
+    surface: "ephrathah", expect: null, status: "guard",
+    why: "The other half of the same place name, which had been resolving to Bethlehem." },
+  { ref: "Ezra 2:6", translation: "ASV",
+    text: "The children of Pahath-moab, of the children of Jeshua [and] Joab, two thousand eight hundred and twelve.",
+    surface: "moab", expect: null, status: "guard",
+    why: "\"Pahath-moab\" is a post-exilic family head — \"governor of Moab\" — not the country. " +
+         "Six verses in Ezra and Nehemiah." },
+  { ref: "Ezra 2:6", translation: "KJV",
+    text: "The children of Pahath-moab, of the children of Jeshua and Joab, two thousand eight hundred and twelve.",
+    surface: "moab", expect: null, status: "guard",
+    why: "bible-api.com's KJV hyphenates this one too; our corpus closes it to \"Pahathmoab\"." },
+  { ref: "2 Samuel 6:8", translation: "ASV",
+    text: "And David was displeased, because Jehovah had broken forth upon Uzzah; and he called that place Perez-uzzah, unto this day.",
+    surface: "Perez", expect: null, status: "guard",
+    why: "\"The breach of Uzzah\" — the place David named after the man struck down, not Judah's son." },
+  { ref: "Numbers 33:19", translation: "ASV",
+    text: "And they journeyed from Rithmah, and encamped in Rimmon-perez.",
+    surface: "perez", expect: null, status: "guard",
+    why: "The ASV's hyphenated spelling of the camp. The KJV reads \"Rimmon-parez\" and matches nothing." },
+  { ref: "Judges 18:12", translation: "ASV",
+    text: "And they went up, and encamped in Kiriath-jearim, in Judah: wherefore they called that place Mahaneh-dan, unto this day; behold, it is behind Kiriath-jearim.",
+    surface: "dan", expect: null, status: "guard",
+    why: "The camp of Dan, in Judah. Note the same verse's \"Kiriath-jearim\" — neither half of " +
+         "that is a registered name, so nothing here reaches it, which is the point." },
+  { ref: "2 Kings 14:25", translation: "ASV",
+    text: "He restored the border of Israel from the entrance of Hamath unto the sea of the Arabah, according to the word of Jehovah, the God of Israel, which he spake by his servant Jonah the son of Amittai, the prophet, who was of Gath-hepher.",
+    surface: "Gath", expect: null, status: "guard",
+    why: "Jonah's home town in Zebulun, hyphenated in the ASV and in bible-api.com's KJV." },
+  { ref: "2 Kings 17:30", translation: "ASV",
+    text: "And the men of Babylon made Succoth-benoth, and the men of Cuth made Nergal, and the men of Hamath made Ashima,",
+    surface: "Succoth", expect: null, status: "guard",
+    why: "The Babylonian cult object, hyphenated in both the ASV and bible-api.com's KJV." },
+  { ref: "Joshua 16:6", translation: "ASV",
+    text: "and the border went out westward at Michmethath on the north; and the border turned about eastward unto Taanath-shiloh, and passed along it on the east of Janoah;",
+    surface: "shiloh", expect: null, status: "guard",
+    why: "The Ephraimite border town, not the sanctuary." },
+  { ref: "Joshua 13:26", translation: "ASV",
+    text: "and from Heshbon unto Ramath-mizpeh, and Betonim; and from Mahanaim unto the border of Debir;",
+    surface: "mizpeh", expect: null, status: "guard",
+    why: "Ramath-mizpeh in Gad." },
+  { ref: "Numbers 32:36", translation: "ASV",
+    text: "and Beth-nimrah, and Beth-haran: fortified cities, and folds for sheep.",
+    surface: "haran", expect: null, status: "guard",
+    why: "Beth-haran in Gad. Note \"Beth-nimrah\" in the same verse, which links to nothing now and " +
+         "linked to nothing before — no rule here can reach a compound whose halves are not " +
+         "registered names, which is exactly why the ASV's \"Beth-el\" and \"Beer-sheba\" are " +
+         "untouched by this batch." },
+  { ref: "Micah 1:14", translation: "ASV",
+    text: "Therefore shalt thou give a parting gift to Moresheth-gath: the houses of Achzib shall be a deceitful thing unto the kings of Israel.",
+    surface: "gath", expect: null, status: "guard",
+    why: "Micah's town, the second element this time." },
+  { ref: "2 Samuel 24:6", translation: "ASV",
+    text: "then they came to Gilead, and to the land of Tahtim-hodshi; and they came to Dan-jaan, and round about to Sidon,",
+    surface: "Dan", expect: null, status: "guard",
+    why: "Dan-jaan on the census route. Disputed as an identification and not asserted either way." },
+  { ref: "1 Samuel 17:4", translation: "KJV",
+    text: "And there went out a champion out of the camp of the Philistines, named Goliath, of Gath, whose height was six cubits and a span.",
+    surface: "Gath", expect: "gath", status: "guard",
+    why: "The KEEP side in the KJV: bare \"Gath\" still links. This is the half a hyphen-aware " +
+         "word boundary, or a careless widening of the Gath rules, breaks first." },
+
+  // ── THE SAME FAULT IN OUR OWN PROSE ─────────────────────────────────────────────────────────
+  { text: "His court magician, Elymas (also called Bar-Jesus), tried to keep him from believing (Acts 13:6-8).",
+    owner: "sergius-paulus", surface: "Jesus", expect: null, status: "guard",
+    why: "The one prose instance of the Acts 13:6 fault, on the Sergius Paulus article — a " +
+         "sentence that names Elymas twice and linked the second name to Christ." },
+  { text: "The Great Ziggurat of Ur, built by Ur-Nammu c. 2100 BC, has been partially reconstructed and remains one of the best-preserved ziggurats in Mesopotamia",
+    owner: "ur", surface: "Ur", occurrence: 2, expect: null, status: "guard",
+    why: "Ur-Nammu founded the Third Dynasty of Ur; he is a man, not the city. The first \"Ur\" in " +
+         "this sentence is the city and is excluded only because the block sits on Ur's own page." },
+  { text: "Assyria contracted sharply for roughly a century under Aramean pressure before reviving under Ashur-dan II (934-912 BC)",
+    owner: "wld-ane-rise-of-assyria", surface: "dan", expect: null, status: "guard",
+    why: "Ashur-dan II is an Assyrian king. The second half of his name was linking to the city of Dan." },
+  { text: "From Gath Hepher in the territory of Zebulun, in the northern kingdom of Israel.",
+    owner: "jonah", surface: "Gath", expect: null, status: "guard",
+    why: "Jonah's own record, naming his home town. Space-separated, and the same fault." },
+
+  // The prose KEEP side, and the measurement that rejected the general fix in one line: our
+  // articles use the hyphen as a modifier joint, and 147 correct links of this shape would have
+  // gone with a hyphen-aware word boundary.
+  { text: "in 2011 archaeologists excavating Hierapolis identified a Roman-era tomb and adjoining church they believe was venerated by early Christians as Philip's burial site",
+    owner: "philip-the-apostle", surface: "Roman", expect: "romans", status: "guard",
+    why: "\"Roman-era\" is a modifier compound and the link is correct. 27 blocks say \"Roman-era\" " +
+         "and 14 say \"Greek-speaking\"; a hyphen-aware word boundary removes every one of them." },
+
+  // ── THE PUBLIC PAGES: FOUR LINKS NOTHING HERE HAD EVER MEASURED ─────────────────────────────
+  //
+  // Added 2026-09-10 with `snapshot/seo-only-links.tsv`, which is the first thing in this
+  // directory to enumerate the fields `scripts/seo/render.mjs` linkifies onto the pre-rendered
+  // pages and the app renders as plain text. All four of these were live at capstonebible.com,
+  // visible to anyone with no login, from the day their record was written.
+  //
+  // They are written as PROSE CASES even though the new snapshot now covers them, for the same
+  // reason the BOOK TITLES block is: a snapshot row keyed on a record and a field disappears the
+  // day somebody rewords the sentence, taking the assertion with it. A case quoting the string
+  // fails instead. The seo-only snapshot keys on (field, record, index) rather than on a hash of
+  // the text precisely to narrow that gap — but it does not close it, and these four rules are
+  // pins on exact strings, so the string is what has to be asserted.
+
+  { text: "Renamed Philadelphia under Ptolemy II Philadelphus", surface: "Philadelphia", owner: "rabbah",
+    expect: null, status: "guard",
+    why: "location.history.rulers[].name on `rabbah` — a public-page-only surface. Rabbah of the " +
+         "Ammonites (modern Amman) was refounded as Philadelphia in the Transjordan by Ptolemy II. " +
+         "The app's only Philadelphia record is the Lydian city of Revelation 3, 1,100km away, and " +
+         "/place/rabbah was linking there. Found by the first run of the seo-only snapshot, on the " +
+         "ruler field, which NOTHING had enumerated: modern-names.mjs read `l.rulers` where the " +
+         "type is `LocationHistory.rulers`, so its sweep of this field had always matched nothing." },
+  { text: "Roman colonia (Colonia Caesarea Antiochia), refounded by Augustus c. 25 BC and the leading city of southern Galatia province — the provincial capital was Ancyra (modern Ankara)",
+    surface: "Caesarea", owner: "antioch-pisidia", expect: null, status: "guard",
+    why: "The same field on `antioch-pisidia`. \"Colonia Caesarea Antiochia\" is Pisidian Antioch's " +
+         "own Latin name; the \"Caesarea\" inside it is the honorific, not the port on the " +
+         "Mediterranean 700km away, which is where the link went. Same shape as a name inside a " +
+         "book title. The `Augustus` and `Galatia` links in the same string are CORRECT and this " +
+         "case pins the sentence they sit in." },
+  { text: "Temple priest of the division of Abijah", surface: "Abijah",
+    owner: "zechariah-father-of-john-baptist", expect: null, status: "guard",
+    why: "person.occupation — public-page-only. Luke 1:5 puts Zechariah in the eighth of the " +
+         "twenty-four priestly courses of 1 Chronicles 24:10, named for a descendant of Aaron. The " +
+         "dataset's only Abijah is the king of Judah. The phrase pin that fixes this ALSO removed " +
+         "one Bible row (Luke 1:5, panel path — the reader path was already covered by a book " +
+         "override) and one prose row on this record's own lifeStory, so the fault was live on " +
+         "three surfaces and only one of them was measured." },
+  { text: "A reluctant judge from Manasseh who tore down his family's altar to Baal, tested God with the sign of a fleece, and routed a vastly larger Midianite army with only 300 men — then refused Israel's offer to make him king.",
+    surface: "Manasseh", owner: "gideon", expect: null, status: "guard",
+    why: "person.summary — public-page-only, and the FIRST sentence of /person/gideon. Judges 6:15 " +
+         "makes Gideon a Manassite: the tribe of Manasseh, Joseph's son. The dataset's only " +
+         "Manasseh is the king of Judah, five centuries later. No tribe record exists, so no link." },
+
+  // ── WHAT IS NOT HERE, AND WHY ───────────────────────────────────────────────────────────────
+  // James 1:1 and Jude 1:1 both still resolve to Zebedee's son, which is wrong on anybody's
+  // account. The sweep asked for both to be repointed to the Lord's brother; the attempt failed
+  // the two `flagged` cases above (§7.1 and §7.2) and was BACKED OUT, along with ten prose links
+  // on book-intro:James and four records quoting the epistle that asserted the same thing.
+  // Escalated to Robbie through Bob on 2026-09-10. Do not "fix" those two cases.
 ];

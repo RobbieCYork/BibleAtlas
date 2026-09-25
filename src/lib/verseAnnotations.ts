@@ -302,7 +302,21 @@ const BOOK_NAME_OVERRIDES: Record<string, Record<string, string>> = {
  *   Judas is matched as the longer registered name "Judas Iscariot" and resolves on its own.) Wrong
  *   again at Matthew 13:55, where the Judas listed is a brother of Jesus — a fourth, distinct man with
  *   no entry here, so suppressed. (Mark 6:3, the parallel passage, needs no entry: WEB renders that
- *   same brother's name "Judah," which no entry in this app claims, so it already produces no link.) */
+ *   same brother's name "Judah," which no entry in this app claims, so it already produces no link.)
+ *   Wrong a FIFTH time, and this one was live on the public site: Acts 15:22, 15:27 and 15:32 name
+ *   JUDAS CALLED BARSABBAS, sent from the Jerusalem council to Antioch with Silas. Iscariot is dead
+ *   at Acts 1:18, seven chapters earlier. Three mentions in all of Scripture, no article and no
+ *   record, so suppressed on the same principle as Acts 1:23's Joseph directly below. The article
+ *   half of the same fault — Silas's own life story — is fixed in OWNER_NAME_OVERRIDES, which is
+ *   the only lever that reaches prose.
+ * - "Joseph": the patriarch owns the bare key globally; Matthew's and Mark's Josephs are handled by
+ *   BOOK_NAME_OVERRIDES. Acts holds two more men and neither is him. Acts 4:36's is BARNABAS, whom the
+ *   app has, so that one RESOLVES — and it fires for the ASV alone, because WEB and KJV print "Joses"
+ *   there. Acts 1:23's "Joseph called Barsabbas, who was also called Justus" is a fourth bearer with
+ *   one mention in all of Scripture, no article and no record, so that one is SUPPRESSED, on the same
+ *   principle as "Zadok" and "Eleazar" above. All three translations read "Joseph" at 1:23, so unlike
+ *   4:36 it was wrong for every reader and its fix moves a WEB row. Nothing in either entry rules on
+ *   the corpus-wide default for a bare "Joseph", which is open. */
 const VERSE_NAME_OVERRIDES: Record<string, Record<string, Record<string, string | null>>> = {
   // "Jonah": the entry is the prophet, correct at 2 Kings 14:25 and throughout the book of Jonah,
   // and correct at every Gospel mention of "the sign of Jonah". Wrong at exactly five places, all
@@ -375,6 +389,10 @@ const VERSE_NAME_OVERRIDES: Record<string, Record<string, Record<string, string 
       "20:16": "mary-magdalene",
     },
     Acts: { "12:12": null },
+    // Romans 16:6 — "Greet Mary, who labored much for us." A fifth Mary, in Paul's list of Roman
+    // greetings, with no record and nothing known of her beyond this line. She was resolving to
+    // the mother of Jesus, who is not in Romans at all. Added 2026-09-10.
+    Romans: { "16:6": null },
   },
   philip: {
     Luke: { "3:1": "philip-the-tetrarch" },
@@ -403,7 +421,16 @@ const VERSE_NAME_OVERRIDES: Record<string, Record<string, Record<string, string 
     // Matthew 27:32 words it "a man of Cyrene, Simon by name", so the registered key "Simon of
     // Cyrene" — which does resolve Mark 15:21 and Luke 23:26 correctly — cannot reach it, and the
     // man who carried the cross rendered as Simon Peter.
-    Matthew: { "13:55": null, "27:32": "simon-of-cyrene" },
+    Matthew: { "13:55": null, "27:32": "simon-of-cyrene",
+      // 10:4 — the apostle list's SECOND Simon. Mark 3:18, Luke 6:15 and Acts 1:13 print "Simon the
+      // Zealot", which is a registered key and has always resolved correctly; Matthew alone prints
+      // "Simon the Canaanite" (WEB and KJV) or "Simon the Cananaean" (ASV), which nothing matches,
+      // so the bare key won and the Twelve contained Simon Peter twice. Fixed per verse rather
+      // than by registering the wording, precisely BECAUSE the wording differs between
+      // translations — a verse key is translation-blind and the phrase is not. The identification
+      // itself is not a judgment call: qan'ana is the Aramaic for "zealot", which is why Luke
+      // translates it. Added 2026-09-10.
+      "10:4": "simon-the-zealot" },
     Mark: { "6:3": null },
     // Luke 7:36-50, the anointing at the Pharisee's house: the host is named Simon three times and
     // is not Peter. simon-the-pharisee has an entry; the text never gives it a longer wording.
@@ -429,19 +456,172 @@ const VERSE_NAME_OVERRIDES: Record<string, Record<string, Record<string, string 
     },
   },
   james: {
-    Matthew: { "13:55": "james-brother-of-jesus" },
-    Mark: { "6:3": "james-brother-of-jesus" },
     // Acts 1:13's apostle list names three different men called James. Two of them are now matched
     // as whole phrases — "James the son of Alphaeus", and the "James" inside "Judas the son of
     // James" — leaving exactly one bare "James", the son of Zebedee, which the Acts book override
     // would otherwise send to the brother of Jesus. That is what makes this verse fixable: it is
     // no longer three occurrences needing three answers, it is one.
-    Acts: { "1:13": "james-son-of-zebedee" },
+    Acts: { "1:13": "james-son-of-zebedee",
+      // 12:2 — "He killed James, the brother of John, with the sword." The verse names his brother,
+      // and BOOK_NAME_OVERRIDES.james sends every bare "James" in Acts to the LORD'S BROTHER, which
+      // is right at 12:17, 15:13 and 21:18 and wrong here, twelve verses before the first of them.
+      // Added 2026-09-10 with the second-bearer sweep. This is the verse every article that says
+      // "Zebedee's son was dead by AD 44" cites, so it is also the verse that must be right if that
+      // argument is to hold anywhere else in this file.
+      "12:2": "james-son-of-zebedee" },
+    // ── The four "Mary the mother of James" verses — SUPPRESSED, and deliberately not resolved ──
+    //
+    // In every one of these the app already resolves the MOTHER correctly, by the `mary` entries
+    // above, and gave her SON to Zebedee — internally contradictory inside a single clause, since
+    // Zebedee's son's mother is Salome, who is named separately in two of the four.
+    //
+    // The natural repoint is james-son-of-alphaeus: identifying James the Less (Mark 15:40's own
+    // wording) with Alphaeus's son is the traditional reading, and the app carries a record for
+    // him. It is also GENUINELY DISPUTED, and this file does not settle a disputed identification
+    // as a side effect of fixing a different fault — the same answer it already gives the
+    // contested Nathan at 1 Kings 4:5. No link asserts nothing. Alphaeus's son keeps every verse
+    // where Scripture spells out "James the son of Alphaeus", which is where the app does make the
+    // identification it is willing to make.
+    //
+    // The one prose instance of the same phrase, on mary-mother-of-james-the-less's own record,
+    // takes the same answer through OWNER_NAME_OVERRIDES so the two surfaces agree.
+    Matthew: { "13:55": "james-brother-of-jesus", "27:56": null },
+    Mark: { "6:3": "james-brother-of-jesus", "15:40": null, "16:1": null },
+    Luke: { "24:10": null },
+    // ── James 1:1 and Jude 1:1 — RULED 2026-09-10, and the ruling lives here ────────────────────
+    //
+    // Both resolved to Zebedee's son, which is wrong on anybody's account: Herod Agrippa killed
+    // him in AD 44 (Acts 12:2) and no tradition and no critical scholar names him as the author of
+    // either letter. §7.1 and §7.2 of automation/manager/name-linker-scope.md flagged the repoint
+    // as a confessional position, cases.mjs pinned both verses `flagged`, and the second-bearer
+    // sweep of 2026-09-10 duly backed its own change out and escalated.
+    //
+    // ROBBIE RULED FOR THE TRADITIONAL ATTRIBUTION, 2026-09-10. His reasoning, recorded so the
+    // next agent reads it rather than re-litigating it:
+    //   1. The pre-ruling state was not neutral, it was false. Zebedee's son is the one answer
+    //      nobody holds, so "no position" was never on offer here — only a wrong one.
+    //   2. The standing editorial position settles it (CLAUDE.md, 2026-09-07): articles are
+    //      written from a Protestant evangelical stance with other views named fairly beside them.
+    //      The traditional attribution IS that stance, and bookIntros.ts's `author` field for
+    //      James already states it in prose AND names the critical dissent — "Some critical
+    //      scholars question this because of the letter's polished Greek and its lack of
+    //      biographical detail, while others find no compelling reason to doubt it". The link now
+    //      agrees with the page it sits on, and the dissent is still on that page. If that
+    //      sentence is ever deleted, this ruling loses its footing — do not delete it.
+    //   3. The app already does this for harder cases: "Paul" links five times on
+    //      book-intro:Romans and "Peter" four on book-intro:1 Peter, and 1 Peter's authorship is
+    //      more disputed than James's. Declining only for James was the inconsistency.
+    //   4. The §7 flags predate the 2026-09-07 editorial ruling; these two were stale.
+    //
+    // James 1:1 — "James, a servant of God and of the Lord Jesus Christ". WEB, KJV and ASV all
+    // read "James"; the override is translation-blind and correct in all three (checked against
+    // bible-api.com, 2026-09-10).
+    //
+    // Jude 1:1 — "Jude, a servant of Jesus Christ, and brother of James". WEB, KJV and ASV again
+    // all read "James". This entry answers the JAMES surface only. §7.2's second question —
+    // whether Jude is an apostle — is untouched and stays open, because "Jude" is not a registered
+    // key: the verse renders no link on it at all, so there is nothing here that could assert it.
+    // No reading makes Jude the brother of Zebedee's son (Zebedee's sons are James and John), and
+    // even scholars who hold the letter pseudonymous agree the James it CLAIMS is James of
+    // Jerusalem. The referent is not the disputed part.
+    James: { "1:1": "james-brother-of-jesus" },
+    Jude: { "1:1": "james-brother-of-jesus" },
   },
+  //
+  // ── AND A FIFTH BEARER, AT Acts 15:22, 15:27 and 15:32 — suppressed, not resolved ─────────────
+  //
+  // "Judas called Barsabbas, and Silas, chief men among the brothers" — the two men the Jerusalem
+  // council sent to Antioch with Paul and Barnabas to carry its letter. He is a fifth distinct
+  // Judas: not Iscariot, who owns the bare key globally and who is DEAD at Acts 1:18, seven
+  // chapters earlier; not Thaddaeus; not the brother of Jesus at Matthew 13:55; and not Judas of
+  // Galilee, on whom see the residual at the bottom of this comment. All three verses were
+  // rendering "Judas" as a link to judas-iscariot, live on www.capstonebible.com.
+  //
+  // Like Acts 1:23's Joseph and unlike Acts 4:36's, this one is wrong for EVERY reader: all three
+  // of the app's translations print "Judas" at all three verses — fetched 2026-09-10 from
+  // bible-api.com, the service src/lib/biblePassage.ts asks for the text, rather than recalled:
+  //
+  //   15:22  WEB  "…send them to Antioch with Paul and Barnabas: Judas called Barsabbas, and Silas,
+  //               chief men among the brothers."
+  //          KJV  "…to Antioch with Paul and Barnabas; namely, Judas surnamed Barsabas, and Silas,
+  //               chief men among the brethren:"
+  //          ASV  "…with Paul and Barnabas; [namely], Judas called Barsabbas, and Silas, chief men
+  //               among the brethren:"
+  //   15:27  WEB  "We have sent therefore Judas and Silas, who themselves will also tell you the
+  //               same things by word of mouth."
+  //          KJV  "We have sent therefore Judas and Silas, who shall also tell you the same things
+  //               by mouth."
+  //          ASV  "We have sent therefore Judas and Silas, who themselves also shall tell you the
+  //               same things by word of mouth."
+  //   15:32  WEB  "Judas and Silas, also being prophets themselves, encouraged the brothers with
+  //               many words, and strengthened them."
+  //          KJV  "And Judas and Silas, being prophets also themselves, exhorted the brethren with
+  //               many words, and confirmed them."
+  //          ASV  "And Judas and Silas, being themselves also prophets, exhorted the brethren with
+  //               many words, and confirmed them."
+  //
+  // The three differ on the SURNAME at 15:22 — KJV's "Barsabas" against "Barsabbas" — and at 15:27
+  // and 15:32 the name is bare in all three. Nothing in these clauses but "Judas", "Silas", "Paul"
+  // and "Barnabas" is registered to anybody, and the other three are right. So a verse-keyed
+  // override, which is keyed on book/chapter/verse and on the name and not on the surrounding
+  // wording, costs the spelling split nothing — that is the argument for this table over a phrase
+  // pin, exactly as at Acts 1:23. Each of the three verses holds exactly ONE "Judas", which is what
+  // makes a per-verse answer safe: the mechanism applies one value to every match of the key in a
+  // verse.
+  //
+  // `null`, not a target, and NO new record. He has three mentions in all of Scripture and no
+  // article; a `judas-barsabbas` record would be a page with nothing on it. `null` here means "a
+  // different bearer whom the app does not represent" — the `zadok`, `eleazar`, `nathan` and Simon
+  // Peter's father shape. Ruled 2026-09-10, the same ruling as Acts 1:23 and for the same reason.
+  //
+  // What this does NOT reach, measured rather than assumed:
+  //   - The panel path, which passes no book and so cannot see a verse key at all. Re-confirmed for
+  //     this change rather than inherited: every LinkedVerseText call site in src/ is handed an
+  //     authored prose field (PersonPanel's paragraphs, placesLived, controversies, lifespanDatingNotes
+  //     and a reference's source/summary; LocationPanel's founded/population/industry/facts/archaeology
+  //     note; PoiPanel's description and archaeology note; TopicPanel's paragraphs; BookIntroView's
+  //     whyWritten/paragraphs/manuscripts; TimelineEventPanel's paragraphs and datingNotes), and
+  //     MyProfileView's one remaining call site is handed `saved.favoriteVerse`, which is the user's
+  //     typed REFERENCE — the fetched verse text beside it is rendered as plain <p>, not through the
+  //     linker. So no surface in the app renders Acts 15's Scripture text on the panel path, and
+  //     bible-links.tsv's `panel` column measures what the linker WOULD do if one ever did.
+  //   - Acts 5:37's "Judas of Galilee", the revolt leader Gamaliel names, which still resolves to
+  //     Iscariot. A sixth bearer, in the same book, with no record. Measured while this was written
+  //     and deliberately NOT swept in: it is part of a larger enumeration of second bearers (see the
+  //     2026-09-10 sweep in automation/manager-inbox) and it will be ruled on with the rest rather
+  //     than decided as a side effect here.
   judas: {
     Matthew: { "13:55": null },
     John: { "14:22": "thaddaeus" },
-    Acts: { "1:13": "thaddaeus" },
+    // ── Luke 3:30, AND IT EXISTS ONLY IN THE ASV ───────────────────────────────────────────────
+    //
+    // Found 2026-09-10 by reading the second-bearer sweep's verses in all three translations
+    // instead of trusting the WEB corpus, which is the only one this repo snapshots. Luke's
+    // genealogy at 3:30 reads "the son of Judah" in the WEB and "the son of Juda" in the KJV —
+    // neither of which is a registered key, so neither renders a link. The ASV reads "the [son] of
+    // JUDAS", which is, and an ASV reader was being told that an ancestor thirty-six generations
+    // before Jesus was Judas Iscariot. Nothing in scripts/name-linker/ could have seen it: the
+    // corpus is WEB only, the fault does not exist there, and the snapshot is green either way.
+    //
+    // Exactly the Acts 4:36 shape from the other side — there an override fired for one
+    // translation and matched nothing in the corpus; here a FAULT exists in one translation and
+    // matches nothing in the corpus. A verse key handles both, because it is translation-blind.
+    // Pinned by a named case carrying the ASV literal, which is the only cover it can have.
+    Luke: { "3:30": null },
+    // 1:13 resolves to the other apostle; the three 15:* verses are Judas Barsabbas and 5:37 is
+    // Judas of Galilee, all suppressed. Keyed to five verses, not to the book — Acts 1:16 and
+    // 1:25's "Judas" are untouched by this entry and are pinned as cases in
+    // scripts/name-linker/cases.mjs.
+    Acts: { "1:13": "thaddaeus", "15:22": null, "15:27": null, "15:32": null,
+      // 5:37 — "Judas of Galilee rose up in the days of the enrollment". Gamaliel's second example
+      // of a failed messianic movement, the census revolt of AD 6, and a SIXTH bearer in this one
+      // book. He was measured and deliberately left by the Acts 15 batch, which was not authorised
+      // to settle him; this is that batch's own note being closed. Suppressed, not resolved: he has
+      // no record, and handing a failed messianic revolt to Iscariot is one of the two findings in
+      // the second-bearer sweep that are theologically serious rather than merely wrong. The two
+      // prose mentions of the same man, on quirinius, take the same answer through
+      // OWNER_NAME_OVERRIDES, so the article and the verse agree.
+      "5:37": null },
   },
   // "John". Five different men share the bare name in the New Testament, and until this entry
   // existed the app gave all of them to the Baptist except in Acts, where a blanket book override
@@ -535,6 +715,90 @@ const VERSE_NAME_OVERRIDES: Record<string, Record<string, Record<string, string 
   // "Enoch": the patriarch (Genesis 5, Hebrews 11:5, Jude 1:14-15) is the default owner of bare
   // "Enoch," but Genesis 4:17-18, one chapter earlier, names a completely different Enoch — Cain's
   // son, after whom Cain named a city — so those two verses are suppressed rather than mislinked.
+  // ── "Azariah" in 2 Chronicles: eight different men, none of them the king ────────────────────
+  //
+  // The bare key is a registered alternate name of UZZIAH, king of Judah, and BOOK_NAME_ALLOWLIST
+  // confines it to 2 Kings, 2 Chronicles and Matthew. That is right in 2 Kings, where all eight
+  // occurrences are the king (2 Kings 14:21 says in as many words that Azariah is who the people
+  // made king). It is wrong in every one of 2 Chronicles' thirteen, which Chronicles spreads
+  // across eight other men — and Chronicles names the king "Uzziah" throughout, never "Azariah",
+  // which is what makes this whole book answerable verse by verse.
+  //
+  // Read one at a time, with the patronymic Chronicles supplies in the same clause:
+  //   15:1   Azariah son of Oded, the prophet who meets Asa
+  //   21:2   two of Jehoshaphat's sons, both called Azariah, in one verse
+  //   22:6   a variant reading of Ahaziah king of Judah (the WEB prints "Azariah the son of
+  //          Jehoram king of Judah"; the Hebrew has Azariah and the parallel 2 Kings 8:29 has
+  //          Ahaziah). A different man from Uzziah on any reading of it.
+  //   23:1   two captains of hundreds, son of Jeroham and son of Obed
+  //   26:17, 26:20  AZARIAH THE PRIEST, who confronts Uzziah for burning incense — in the same
+  //          chapter as the king, under the king's other name, on opposite sides of the altar.
+  //          The most consequential of the thirteen, and the one the article half also had wrong.
+  //   28:12  an Ephraimite chief, son of Johanan
+  //   29:12  two Levites in Hezekiah's cleansing of the temple
+  //   31:10  Azariah the chief priest, of the house of Zadok
+  //   31:13  Azariah the ruler of God's house
+  // None has a record and none is getting one for a patronymic; suppression is the answer this
+  // file already gives Zadok, Eleazar and Acts 1:23's fourth Joseph. Added 2026-09-10. A verse
+  // answers all of its occurrences, which is exact here: no verse in the list holds both the king
+  // and somebody else.
+  azariah: {
+    "2 Chronicles": {
+      "15:1": null,
+      "21:2": null,
+      "22:6": null,
+      "23:1": null,
+      "26:17": null,
+      "26:20": null,
+      "28:12": null,
+      "29:12": null,
+      "31:10": null,
+      "31:13": null,
+    },
+  },
+  // "Simeon" at Luke 3:30 — the genealogy again. The only record is Simeon at the temple (Luke 2),
+  // and BOOK_NAME_ALLOWLIST keeps the key to Luke for exactly that reason, which is what lets this
+  // one slip through: it is in Luke, thirty-six generations early. The same verse's "Joseph" is
+  // suppressed under `joseph` above.
+  simeon: {
+    Luke: { "3:30": null },
+  },
+  // ── Colossians 4:11, and it is the worst single link the sweep found ─────────────────────────
+  //
+  // "and Jesus who is called Justus." Paul's Jewish co-worker in Rome, greeting the Colossians in
+  // the same breath as Aristarchus and Mark — rendered on the reader path as a link to JESUS OF
+  // NAZARETH. Ἰησοῦς is an ordinary first-century Jewish name (the Greek for Joshua) and Paul
+  // distinguishes this man by his Roman cognomen in the same clause, which is why the verse says
+  // "who is called Justus" at all.
+  //
+  // Suppressed rather than resolved: the app has no record for him, "Justus" produces no person
+  // link anywhere in the app today, and one verse does not earn a record. What it does earn is
+  // not being told that Paul's fellow worker is the Lord. This is the only occurrence of the name
+  // in the WEB that means anybody but Jesus of Nazareth — checked across all 31,098 verses — so
+  // the entry is one verse wide and cannot leak.
+  jesus: {
+    Colossians: { "4:11": null },
+    // ── AND TWO THAT EXIST ONLY IN THE KING JAMES ─────────────────────────────────────────────
+    //
+    // Ἰησοῦς is the Greek for Joshua, and at Acts 7:45 and Hebrews 4:8 it means Joshua son of Nun.
+    // The WEB and the ASV translate it "Joshua" at both, so both already link correctly to the
+    // right man and this entry never fires for them. The KJV transliterates: "brought in with
+    // JESUS into the possession of the Gentiles" and "if JESUS had given them rest". A reader who
+    // switches to the KJV — which the app offers — was being shown Jesus of Nazareth leading the
+    // conquest and being contrasted with the rest that remains.
+    //
+    // Checked, not assumed: all three translations of both verses were fetched from
+    // bible-api.com on 2026-09-10 and are quoted verbatim in the cases that pin them. The second-
+    // bearer sweep named these two specifically as worth checking and could not check them,
+    // because the harness corpus is WEB only.
+    //
+    // REPOINTED rather than suppressed, and that is not a judgment call: the KJV's own margin and
+    // every commentary read it as Joshua, Hebrews 4:8's whole argument depends on it being Joshua,
+    // and the app has his record. The two verses are the only ones in the New Testament where the
+    // KJV does this.
+    Acts: { "7:45": "joshua" },
+    Hebrews: { "4:8": "joshua" },
+  },
   enoch: {
     Genesis: { "4:17": null, "4:18": null },
   },
@@ -662,6 +926,120 @@ const VERSE_NAME_OVERRIDES: Record<string, Record<string, Record<string, string 
       "24:1": "ananias-the-high-priest",
     },
   },
+  // "Jacob": the patriarch owns the key and is the right answer in all but two verses of the whole
+  // Bible. Those two are the last two rungs of Matthew's genealogy, and the genealogy names the man
+  // itself — "Matthan became the father of Jacob. Jacob became the father of Joseph, the husband of
+  // Mary" (Matthew 1:15-16). That is Jacob son of Matthan, who has a record of his own whose first
+  // line is that he is not the patriarch, so these RESOLVE rather than suppress: a reader standing
+  // in Matthew's genealogy was being sent to Genesis, and no link would leave him with nothing.
+  //
+  // Nothing here is a ruling on the corpus-wide default for a bare "Jacob", which is Robbie's and is
+  // open. Two verses, named one at a time, is the narrowest statement that fixes them.
+  //
+  // Why this table AND the phrase pins under `jacob` in NAME_CONTEXT_RULES below, for one fault:
+  // they reach different halves of the app and neither reaches both. This one is keyed by
+  // book/chapter/verse and is translation-blind, so it fires for KJV and ASV readers too — both of
+  // which read "Matthan begat Jacob; and Jacob begat Joseph the husband of Mary", the same two men.
+  // It needs a book, so it is invisible on the panel path. The pins are keyed on the WEB wording and
+  // are the only lever the panel path has. Matthew 1:2's "Isaac became the father of Jacob" and Acts
+  // 7:8's are the patriarch, and neither mechanism reaches them.
+  jacob: {
+    Matthew: { "1:15": "jacob-father-of-joseph", "1:16": "jacob-father-of-joseph" },
+  },
+  // "Joseph" at Acts 4:36 is BARNABAS — the verse's whole content is that the apostles surnamed
+  // this Joseph "Barnabas". He is neither the patriarch, who owns the bare key globally, nor Mary's
+  // husband, and BOOK_NAME_OVERRIDES does not override `joseph` in Acts, so he was resolving to
+  // Joseph son of Jacob and sending the reader to Egypt.
+  //
+  // This one fires for exactly ONE of the app's three translations, and that is correct rather than
+  // a gap. The name is a manuscript variant, and the app's own reader shows all three renderings —
+  // fetched 2026-09-10 from bible-api.com, the service src/lib/biblePassage.ts asks for the text:
+  //
+  //   WEB   "Joses, who by the apostles was also called Barnabas…"
+  //   KJV   "And Joses, who by the apostles was surnamed Barnabas…"
+  //   ASV   "And Joseph, who by the apostles was surnamed Barnabas…"
+  //
+  // The Greek behind that split, read off the editions rather than recalled: the Textus Receptus
+  // has Ἰωσῆς, NA28 and SBLGNT have Ἰωσήφ. KJV follows the TR and WEB the Majority Text, so both
+  // print "Joses"; ASV follows the critical text and prints "Joseph". No edition disputes WHO he
+  // is. So an override keyed on the name "joseph" simply has nothing to match in WEB or KJV, where
+  // "Joses" is registered to nobody and renders as plain text, and corrects the one translation
+  // that does render the name — which is what translation-blindness is supposed to do. Contrast the
+  // `jacob` entry above, where all three translations carry the same word and all three move.
+  //
+  // Pointed at `barnabas` rather than suppressed, because the app HAS this man: on the reader path
+  // there is no excludeId, so an ASV reader of Acts 4:36 now gets a link to Barnabas's own page,
+  // which is a better answer than no link. See OWNER_NAME_OVERRIDES below for the article half of
+  // the same fault.
+  //
+  // ── AND A FOURTH BEARER, AT Acts 1:23 — suppressed, not resolved ─────────────────────────────
+  //
+  // "They put forward two, Joseph called Barsabbas, who was also called Justus, and Matthias."
+  // That is the man passed over for Matthias, and he is a fourth distinct Joseph: not the patriarch
+  // who owns the bare key globally, not Mary's husband, not Joseph of Arimathea, and not the
+  // Barnabas of 4:36 thirty-one verses later. He was resolving to Joseph son of Jacob and sending a
+  // reader of Acts 1 to Egypt.
+  //
+  // Unlike 4:36 this one is wrong for EVERY reader, because all three of the app's translations
+  // print "Joseph" here — fetched 2026-09-10 from bible-api.com, the service src/lib/biblePassage.ts
+  // asks for the text, rather than recalled:
+  //
+  //   WEB   "They put forward two, Joseph called Barsabbas, who was also called Justus, and Matthias."
+  //   KJV   "And they appointed two, Joseph called Barsabas, who was surnamed Justus, and Matthias."
+  //   ASV   "And they put forward two, Joseph called Barsabbas, who was surnamed Justus, and Matthias."
+  //
+  // (The three differ on the SURNAME — KJV's "Barsabas" against "Barsabbas" — but not on "Joseph",
+  // and no name in that clause but "Joseph" is registered to anybody, so nothing else is at stake.)
+  // So this entry moves a real WEB row, which the 4:36 entry above deliberately does not, and the
+  // Bible snapshot sees it.
+  //
+  // `null`, not a target, and not a new record. `null` in this table means "a different bearer whom
+  // the app does not represent" — the `nathan`, `zadok`/`eleazar` and Simon Peter's father cases
+  // above and below are all this shape — and that is exactly what he is. He has ONE mention in all
+  // of Scripture and no article, and a `joseph-barsabbas` record with a single verse behind it
+  // would be a page with nothing on it. Contrast 4:36, which points AT `barnabas` precisely because
+  // the app already has that man. Ruled 2026-09-10.
+  //
+  // What this does not reach: the panel path, which passes no book and so cannot see a verse key at
+  // all. Measured rather than assumed — see the note under `Acts: {` below.
+  joseph: {
+    // The panel path (LinkedVerseText, no book) still resolves both of these verses' "Joseph" to the
+    // patriarch, and nothing here can change that. It is not a reader-facing gap today: the only
+    // text LinkedVerseText is ever handed is the app's own authored prose plus a user's typed
+    // favourite-verse reference — grep LinkedVerseText across src/, every call site is a prose
+    // field — so no surface in the app renders Acts 1:23's Scripture text on that path. The `panel`
+    // column of bible-links.tsv measures what the linker WOULD do if one ever did, which is worth
+    // keeping honest and is why the residual is written down instead of papered over. The lever
+    // that reaches the panel path is OWNER_NAME_OVERRIDES, and it needs a record whose article
+    // names the man; no article in this app mentions Joseph Barsabbas at all, so there is nothing
+    // for it to key on. A phrase pin on "Joseph called Barsabbas" would fire on the article surface
+    // and nowhere else, and there is no article — so it would be a dead entry, and a dead entry
+    // reads as a live claim.
+    Acts: { "1:23": null, "4:36": "barnabas" },
+    // ── Joseph of Arimathea, the two verses that do not spell out where he is from ─────────────
+    //
+    // BOOK_NAME_OVERRIDES sends a bare "Joseph" in Mark and John to Arimathea and in Matthew and
+    // Luke to Mary's husband, which is right for the nativity and the genealogy and wrong for the
+    // burial. Mark 15:43 and John 19:38 were never affected: the WEB prints "Joseph of Arimathaea"
+    // there and that whole phrase is a registered key of its own. These two verses print only the
+    // bare name, so the book default won, and a reader of the burial narrative was sent to the
+    // carpenter of Nazareth. Added 2026-09-10.
+    //
+    // Independent of the corpus-wide question of who a bare "Joseph" belongs to, which is open and
+    // is Robbie's: these two verses name a specific man and say what distinguishes him in the same
+    // clause — "a rich man from Arimathaea" and "a member of the council".
+    Matthew: { "27:57": "joseph-of-arimathea" },
+    Luke: {
+      "23:50": "joseph-of-arimathea",
+      // ── And two in Luke's genealogy, which is neither man ────────────────────────────────────
+      // Luke 3:26's "the son of Joseph" and 3:30's are ancestors in the chain from Jesus back to
+      // Adam, forty and thirty-six generations before Mary's husband. No record; no link. The same
+      // verses' "Simeon" is suppressed under `simeon` below, and their "Judah" already links to
+      // nobody.
+      "3:26": null,
+      "3:30": null,
+    },
+  },
 };
 
 /** The `excludeId` a book introduction renders under.
@@ -718,6 +1096,15 @@ export const bookIntroOwnerId = (book: string) => `book-intro:${book}`;
  * itself. That is how bare "Saul" behaves on Paul's own page, and it is what it did before the
  * global default moved. */
 const OWNER_NAME_OVERRIDES: Record<string, Record<string, string | null>> = {
+  // "David": the king is the only David with a record, and he is the right answer nearly everywhere.
+  // One article names a different one. The Cairo Codex of the Prophets carries a dedication colophon
+  // by David b. Yefet, an eleventh- or fifteenth-century Cairo dignitary, and B. Outhwaite's
+  // conclusion — quoted whole in that article's third section — ends with his name. That record does
+  // not mention King David at all, so the whole-record answer is safe: no link rather than a link to
+  // the wrong man.
+  david: {
+    "cairo-codex-of-the-prophets": null,
+  },
   // "Saul": the king is now the global default (see SAUL_DEFAULT above), which is right for 100 of
   // the 126 bare "Saul"s in our prose. These are the seven records that hold the other 26 — every
   // one of them an article about the conversion, the Damascus disciple who baptised him, the man
@@ -749,6 +1136,11 @@ const OWNER_NAME_OVERRIDES: Record<string, Record<string, string | null>> = {
   // no link. Keyed by owner rather than suppressed globally so the apostle's own pages are
   // untouched — none of them writes the bare name.
   levi: {
+    // Genesis 34, on Shechem's own page: "his sons Simeon and Levi massacred the men of the city
+    // after the assault on Dinah". Jacob's sons, pointing at Matthew the tax collector and at
+    // Simeon in the temple. Added 2026-09-10 with the second-bearer sweep; the `simeon` entry
+    // below carries the other half of the same sentence.
+    shechem: null,
     melchizedek: null,
     jacob: null,
     leah: null,
@@ -858,6 +1250,13 @@ const OWNER_NAME_OVERRIDES: Record<string, Record<string, string | null>> = {
     patmos: "john-the-apostle",
     "bib-ac-domitian-persecution": "john-the-apostle",
     angels: "john-the-apostle",
+    // Two more of the same, added 2026-09-10: the letters to the seven churches, on the churches'
+    // own map records. Smyrna's two ("no criticism from John", "a bishop tied by tradition to the
+    // apostle John") and Pergamum's one ("some scholars connect to John's 'Satan's throne'
+    // language") all pointed at the Baptist. These are location.history.notableFacts — 385 blocks
+    // that were outside the harness entirely until corpus.mjs's field name was corrected.
+    smyrna: "john-the-apostle",
+    pergamum: "john-the-apostle",
 
     // The Fourth Gospel's narrating voice — "John notes", "John tells us", "John alone records",
     // "Placed by John". These are references to the book speaking, not to a man being introduced,
@@ -893,12 +1292,91 @@ const OWNER_NAME_OVERRIDES: Record<string, Record<string, string | null>> = {
     "bib-loc-post-resurrection-appearances": null,
     "bib-ac-council-of-nicaea": null,
     "wld-rom-martyrdom-peter-paul": null,
+
+    // ── Two more of the same voice, added 2026-09-10, and BOTH ARE PUBLIC-PAGE-ONLY ───────────
+    //
+    // Neither of these two links exists inside the app. They live in `summary`, which every panel
+    // renders as plain text and which scripts/seo/render.mjs puts through this same linker when it
+    // generates capstonebible.com — so no snapshot in scripts/name-linker/snapshot/ covers either
+    // one, and the prose cases in cases.mjs are the only thing that does. That is also why they
+    // survived the "John" sweep that produced every entry above it: the sweep read the article
+    // surface, and these are not on it.
+    //
+    // Both were John the Baptist, who is the wrong man twice over — he was dead before either
+    // book was written.
+    thaddaeus: null, // "one clear moment in John's account: asking Jesus why he would reveal
+                     // himself only to the disciples" — John 14:22, the Fourth Gospel narrating.
+                     // The record's other "John" is the reference "John 14:22" itself, matched
+                     // whole as kind "verse", which never reaches this table.
+    // "he refused to welcome traveling teachers sent by John". SUPPRESSED, not repointed to the
+    // Apostle — and this is a deliberate departure from the sweep that found it, which proposed
+    // the Apostle on the strength of the app's Revelation ruling. Revelation is not the parallel:
+    // BOOK_NAME_OVERRIDES already sends Revelation's "John" to the Apostle because the app's own
+    // articles call him that in the surrounding sentence. The app's introduction to 3 John does
+    // the opposite — it says "The elder" five times and never names him — so a link here would
+    // assert an authorship the app has pointedly declined to assert, on a page a stranger can
+    // read. The record's own first sentence, "The elder writing 3 John", is the same care.
+    // No link removes the falsehood and asserts nothing, exactly as the narrating-voice group
+    // above does. The other two "John"s on the record are the book title "3 John" (BOOK_NUMERAL)
+    // and the reference "3 John 1:9-10" (kind "verse"); neither reaches this table.
+    diotrephes: null,
   },
   // "Simeon": the only entry is Simeon at the temple (Luke 2), allowlisted to Luke for the reader.
   // Of the 10 prose mentions, 2 are his (Mary's page and Anna's) and 8 are not: Simeon son of Jacob
   // in the patriarch articles, and Simeon bar Kosiba — bar Kokhba — in the Roman revolt article.
   // Neither has an entry.
+  // "Judas": Iscariot owns the bare name globally and is right at nearly every prose mention. ONE
+  // record in the whole corpus names a different bearer in a way this table can reach. Silas's life
+  // story opens "one of two 'leaders among the believers' in the Jerusalem church — alongside Judas
+  // called Barsabbas", and that "Judas" was rendering as a link to Iscariot on Silas's page — the
+  // article half of the Acts 15 fault fixed in VERSE_NAME_OVERRIDES above, and the half a reader
+  // actually met, since the panel path has no other lever.
+  //
+  // Keyed on the OWNER rather than pinned as a phrase, and the reach of both was measured before
+  // choosing: `links-for.mjs --grep "Barsabb|Barsabas"` returns exactly one block in the corpus,
+  // this one, so a phrase pin would buy nothing a whole-record answer does not — and `links-for.mjs
+  // silas` shows the record holds exactly one "Judas" in its four blocks, so the coarseness of a
+  // whole-record answer costs nothing either. Where a record legitimately named both men this entry
+  // would be wrong and the longer wording would have to do the work; this one does not.
+  //
+  // `null` and not a target, for the same reason as the verse entries: the app has no record for
+  // Judas Barsabbas and is not getting one for three verses and no article.
+  judas: {
+    silas: null,
+
+    // ── The rest of the Judases, 2026-09-10 ───────────────────────────────────────────────────
+    // Iscariot owns the bare key and keeps it in 13 of our 25 prose mentions — Gethsemane, the
+    // chief priests, the casting of lots, Zechariah's thirty pieces of silver, and all eight in the
+    // Gospel of Judas article, where he is exactly who is meant. These twelve are four other men.
+    //
+    // JUDAS MACCABEUS, 5 links. NAME_CONTEXT_RULES already suppresses "Judas Maccabeus" written in
+    // full; these are the bare shorthand in the next sentence, the same near miss "Philip II" had.
+    // Suppressed on the standing interim — he is the strongest candidate in the whole sweep for a
+    // record of his own, and that is Robbie's call, not this file's.
+    "bib-it-maccabean-revolt-begins": null, // 2: "his five sons — Judas, Jonathan, Simon, John, and
+                                            // Eleazar"; "passing leadership to his son Judas,
+                                            // nicknamed 'Maccabeus'"
+    "bib-it-judas-maccabeus-campaigns": null, // 2: the article and its datingNotes
+    "bib-it-hasmonean-dynasty-begins": null, // 1: "the piety of Mattathias and Judas"
+    // JUDAS OF GALILEE, the census revolt leader Gamaliel names in Acts 5:37. Handing a failed
+    // messianic revolt to Iscariot is one of the two findings in this sweep that are theologically
+    // serious rather than merely wrong; Acts 5:37 itself is fixed per-verse.
+    quirinius: null, // 2: the life story and the extra-biblical summary
+    // JUDAS OF STRAIGHT STREET, Acts 9:11 — the man in whose house Saul was praying.
+    "ananias-of-damascus": null,
+    "straight-street-damascus": null, // 2: the description and the archaeology note
+    // JUDAS THE BROTHER OF JESUS, from Mark 6:3's list of four. Matthew 13:55 is already suppressed
+    // on the reader path, so this makes the article agree with Scripture.
+    "james-brother-of-jesus": null,
+    // And one that is NOT a suppression and was mis-filed as one by the sweep that found it.
+    // Thaddaeus's page quotes John 14:22 — "Judas (not Iscariot) said to him" — and that Judas is
+    // THADDAEUS HIMSELF, the page's own subject, whose record is even titled "Thaddaeus (Judas,
+    // son of James)". Mapped to the record, so the self-link exclusion suppresses it. It renders
+    // the same as `null` would and it says something different, which is the point.
+    thaddaeus: "thaddaeus",
+  },
   simeon: {
+    shechem: null, // the other half of Genesis 34's sentence — see `levi` above
     jacob: null,
     leah: null,
     "joseph-son-of-jacob": null,
@@ -927,14 +1405,66 @@ const OWNER_NAME_OVERRIDES: Record<string, Record<string, string | null>> = {
   // occurrence is JACOB NEUSNER, the 20th-century scholar of rabbinic Judaism, cited by name for
   // his caution about reading the rabbis back into the Pharisees. Linking a modern historian's
   // forename to Isaac's son is simply false, and there is no entry for Neusner to link instead.
+  //
+  // The other two entries are the two records that name a DIFFERENT Jacob — the son of Matthan,
+  // father of Joseph the husband of Mary — and each is here for a different reason.
+  //
+  // MATTHAN is the simple case and the shape this table is for: he is neither man, every "Jacob"
+  // on his record means his own son, and one answer per record is therefore the whole answer. Two
+  // links, read in their own sentences before this was written: "named as the son of Eleazar and
+  // father of Jacob in Matthew's genealogy" in the life story, and "as the father of Jacob,
+  // Joseph's father" in the summary — which the app renders as plain text and
+  // scripts/seo/render.mjs linkifies onto the public page. Both sent a reader of Matthew 1:15 to
+  // Genesis.
+  //
+  // JACOB SON OF MATTHAN'S OWN PAGE is the hard case, because that record names BOTH men: "This
+  // Jacob appears exactly once" is its own subject, and two sentences later "entirely distinct
+  // from the patriarch Jacob" genuinely is the patriarch. One answer per record cannot serve both,
+  // so the record-wide answer here is the SAFE one — the page's own subject, handed back to the
+  // self-link exclusion, exactly as bare "Saul" behaves on Paul's page — and the two patriarch
+  // mentions are recovered by a context pin in NAME_CONTEXT_RULES, which is checked first.
+  //
+  // That direction is deliberate and is the same call the `satan` and `book-intro:Zechariah`
+  // entries above make: if the pin ever stops matching because someone rewords the sentence, the
+  // mention falls back to NO LINK — a lost correct link rather than a wrong one asserted. Pinning
+  // the two self-references instead would fail the other way: a reworded sentence would send
+  // "This Jacob" back to the patriarch, which is the fault being fixed.
+  //
+  // Neither entry rules on who a bare "Jacob" belongs to anywhere else. That question is Robbie's
+  // and is open; a ruling there leaves both untouched, because a page still does not link to its
+  // own subject and Matthan is still neither man.
   jacob: {
     "topic-pharisees": null,
+    matthan: "jacob-father-of-joseph",
+    "jacob-father-of-joseph": "jacob-father-of-joseph",
   },
   // "Ananias": the bare name is registered to Ananias and Sapphira. The chief-priests article names
   // a different man — "the high priest Ananias" who comes down to Caesarea to press charges against
   // Paul (Acts 24:1) — and that man DOES have an entry, so this repoints rather than suppresses.
   ananias: {
     "chief-priests": "ananias-the-high-priest",
+
+    // ── The rest of the Ananias cluster, second-bearer sweep, 2026-09-10 ──────────────────────
+    //
+    // 19 more links, and SCRIPTURE HAD ALL THREE MEN RIGHT THE WHOLE TIME — Acts 5 gives the
+    // couple, Acts 9 and 22:12 the Damascus disciple, Acts 23:2 and 24:1 the high priest, on the
+    // reader path, by verse override. Only the articles were wrong, because the article surface
+    // has no verse and this table was the only lever that reaches it.
+    //
+    // Both other Ananiases link their OWN name to the couple on their OWN pages — the shape
+    // scripts/name-linker/self-name.mjs now sweeps for — which accounts for 14 of the 19. The
+    // Damascus disciple's page says "Ananias objected", "Ananias went as instructed", "Ananias
+    // baptized him", nine times over, and every one of them pointed at a man who dropped dead in
+    // Acts 5. Mapped to themselves so the self-link exclusion suppresses them.
+    "ananias-of-damascus": "ananias-of-damascus", // 9
+    "ananias-the-high-priest": "ananias-the-high-priest", // 5, including extraBib.summary's
+                                                          // "Ananias son of Nedebaeus"
+    // Five more that mean the Damascus disciple and say so in their own sentences. Each record
+    // holds exactly one "Ananias".
+    "paul-of-tarsus": "ananias-of-damascus", // "a disciple named Ananias, initially wary given Saul's reputation"
+    "bib-ac-paul-conversion": "ananias-of-damascus", // "until a disciple named Ananias, obeying a direct vision"
+    "straight-street-damascus": "ananias-of-damascus", // "the Lord tells Ananias to go to 'the street called Straight'"
+    "house-of-ananias-damascus": "ananias-of-damascus", // 2: the POI is named for him
   },
   // "Jonah": the prophet is the right answer nearly everywhere, and VERSE_NAME_OVERRIDES above
   // already suppresses the five Scripture verses that name Simon Peter's father instead. Peter's
@@ -1045,6 +1575,30 @@ const OWNER_NAME_OVERRIDES: Record<string, Record<string, string | null>> = {
   // honest answer is no link rather than a different wrong one.
   mary: {
     "john-knox": null,
+    // Not a modern name and not from that sweep — the second-bearer enumeration, 2026-09-10.
+    // Bare "Mary" belongs to the mother of Jesus globally. On Lazarus's page both occurrences are
+    // his sister: "Lazarus lived in Bethany with his sisters Martha and Mary" in the life story,
+    // and "The brother of Martha and Mary" in the summary. `mary-of-bethany` is a record of its
+    // own and resolves correctly everywhere its longer wording appears; here there is no longer
+    // wording, and the record names no other Mary at all. The second of the two is PUBLIC-PAGE-
+    // ONLY — the app renders `summary` as plain text and scripts/seo/render.mjs linkifies it —
+    // so no snapshot holds it and the prose case in cases.mjs is its only cover.
+    "lazarus-of-bethany": "mary-of-bethany",
+    // Their own pages, found by self-name.mjs rather than by the sweep. Bare "Mary" belongs to the
+    // mother of Jesus, so both women's articles handed their own subject's name to her: Magdalene's
+    // "when he says her name, 'Mary'" (John 20:16, the recognition at the tomb) and all six on
+    // mary-of-bethany, from "Mary lived in Bethany with her sister Martha" onward. Mapped to
+    // themselves for the self-link exclusion. Neither entry touches the cross-links the two
+    // records make to EACH OTHER — "Mary Magdalene" and "Mary of Bethany" are registered keys of
+    // their own and were always right, which is exactly what the sweep had checked.
+    "mary-magdalene": "mary-magdalene", // 2
+    "mary-of-bethany": "mary-of-bethany", // 6
+    // MARY THE MOTHER OF JOHN MARK, Acts 12:12, whose house the church was praying in. A fourth
+    // woman, with no record. Scripture's Acts 12:12 already suppresses her, so until now the two
+    // articles that tell that story contradicted the verse they were telling it from.
+    "john-mark": null, // "the son of a woman named Mary whose house in Jerusalem served as a
+                       // meeting place"
+    rhoda: null, // "gathered at the Jerusalem house of Mary, mother of John Mark"
   },
   // Same page, same problem, one occurrence: "Protestant Elizabeth I came to the English throne"
   // pointed at Elizabeth the mother of John the Baptist. Elizabeth I has no record.
@@ -1061,8 +1615,190 @@ const OWNER_NAME_OVERRIDES: Record<string, Record<string, string | null>> = {
   // because the app has the right man and the building genuinely bears his name: the same call the
   // eight "St. Peter's Basilica"/"St. Peter's Square" mentions already get, left pointing at Simon
   // Peter across the Luther, Nero's-circus and Vatican-necropolis articles.
+  // The three records below are a different fault from Teresa's and share one shape: THE PAGE'S OWN
+  // SUBJECT IS A JOSEPH, and every bare "Joseph" on it was resolving to the patriarch. Joseph of
+  // Arimathea's biography opens "Joseph was a wealthy man from the town of Arimathea" and sent the
+  // reader to Egypt under his own name; so did Mary's husband's, and so did Caiaphas's, whose given
+  // name was Joseph ("Joseph, who was also called Caiaphas" — Josephus, Antiquities 18.2.2).
+  //
+  // Nineteen links, enumerated one at a time and read in their own sentences before this was
+  // written: 8 on joseph-husband-of-mary, 7 on joseph-of-arimathea, 4 on caiaphas. Not one of the
+  // nineteen is the patriarch, which is why one answer per record is enough here — the coarseness
+  // that makes OWNER_NAME_OVERRIDES the wrong lever for a mixed record is no cost on a record whose
+  // every occurrence means the same man.
+  //
+  // Mapped to the record itself rather than to null, exactly as `augustus` on claudius-caesar below
+  // is, because that is what it is: the page's own subject, handed back to the self-link exclusion.
+  // A page does not link to itself, and the reason these got past that exclusion is that the id
+  // they resolved to was somebody else's.
+  //
+  // This says nothing about who a bare "Joseph" belongs to anywhere else. That question is Robbie's
+  // and is open; a ruling there leaves these three untouched, because a page still does not link to
+  // its own subject whatever the corpus-wide default turns out to be.
+  //
+  // ── The three below are NOT self-links, and that is the whole point of listing them apart ────
+  //
+  // Added 2026-09-10 after the three records were measured link by link. None of these pages has a
+  // Joseph as its subject, so the self-link exclusion never had anything to say about them; they
+  // were simply wrong, and stayed wrong because nothing else reaches the article surface. What
+  // they share with the three above is the only property this table needs: EVERY bare "Joseph" on
+  // each of them means the same man, and that man is the husband of Mary. Each was read in its own
+  // sentence first, and the count is exact:
+  //
+  //   mary-mother-of-jesus     4  "betrothed to a carpenter named Joseph"; "Joseph, learning of
+  //                               the pregnancy"; "Mary traveled with Joseph to Bethlehem";
+  //                               "Matthew records that Joseph was warned in a dream". Her husband
+  //                               four times over, in the nativity, on his wife's page. The only
+  //                               other occurrence on the record is "Josephus", which the word
+  //                               boundary already saves, in a field the app renders as plain text.
+  //   matthan                  3  "before Joseph's father Heli (Luke 3:23-24)" and "one traces
+  //                               Joseph's legal/royal line" in the life story, plus "Joseph's
+  //                               father" in the summary. Matthan is Joseph's grandfather in
+  //                               Matthew's list; the patriarch is not in this article at all.
+  //   jacob-father-of-joseph   3  "the father of 'Joseph the husband of Mary'"; "Luke's genealogy
+  //                               names Joseph's father as Heli"; and "The father of Joseph, the
+  //                               husband of Mary" in the summary. The record's own role is that he
+  //                               fathered this Joseph — the name is in its id.
+  //
+  // Ten links, every one of which pointed at Joseph son of Jacob and sent a reader of Matthew's
+  // genealogy to Egypt. Note that the `jacob` entry above needs a context pin because that record
+  // names two Jacobs; its three JOSEPHs need no such thing, because they are all one man.
+  //
+  // Same disclaimer as above, and it matters more here because these are not self-links: this says
+  // nothing about who a bare "Joseph" belongs to anywhere else. 305 bare "Jacob"/"Joseph" links
+  // were counted across the corpus while this was written and many outside these records are also
+  // the husband rather than the patriarch. Those are the corpus-wide ruling, which is Robbie's and
+  // is open, and they are deliberately left alone.
   joseph: {
     "teresa-of-avila": "joseph-husband-of-mary",
+    "joseph-husband-of-mary": "joseph-husband-of-mary",
+    "joseph-of-arimathea": "joseph-of-arimathea",
+    caiaphas: "caiaphas",
+    "mary-mother-of-jesus": "joseph-husband-of-mary",
+    matthan: "joseph-husband-of-mary",
+    "jacob-father-of-joseph": "joseph-husband-of-mary",
+
+    // ── THE REST OF THE NATIVITY CAST, 2026-09-10 ────────────────────────────────────────────
+    //
+    // Same fault as the three above and the same shape, swept rather than noticed one at a time.
+    // Every bare "Joseph"/"Jacob" link in the corpus was enumerated across all 6,677 blocks — the
+    // 5,692 the app renders through LinkedVerseText AND the 985 that are links only on the
+    // pre-rendered public pages, which no snapshot covers — and read in its own sentence. 321 of
+    // them. Outside the records already listed above, the nativity cast was wrong in one
+    // direction throughout: a bare "Joseph" in a sentence about the birth, the census, the magi,
+    // the flight, the return to Nazareth or Matthew's genealogy resolved to Joseph son of Jacob
+    // and sent the reader to Egypt.
+    //
+    // The rule applied, and its whole extent: ON A RECORD WHOSE SUBJECT BELONGS TO THE NATIVITY
+    // OR TO MATTHEW'S GENEALOGY, A BARE "Joseph" IS THE HUSBAND OF MARY. That is a statement
+    // about these records, not about the corpus. It is safe here because the sentences name the
+    // man themselves — "Joseph and Mary traveled to Bethlehem", "Joseph is warned in a dream",
+    // "Joseph, the husband of Mary" — so no reading of any of them is the patriarch.
+    //
+    // It settles nothing about who a bare "Joseph" belongs to ANYWHERE ELSE. That question is
+    // Robbie's and is open; the 284 links outside this list are deliberately untouched, including
+    // every one of the ~150 in the Genesis patriarch articles, which are already right.
+    //
+    // OWNER_NAME_OVERRIDES rather than a phrase pin for all of these, and the test was the same
+    // every time: EVERY occurrence of the name on the record means one man. That was measured per
+    // record, not assumed — a regex over every "Joseph"/"Jacob" token on each record's blocks,
+    // linked or not, read in context. A record-keyed answer survives the paragraph being
+    // rewritten, which a pin does not and a snapshot row does not. The one record here that names
+    // both men is `egyptians`, and it is pinned by phrase in NAME_CONTEXT_RULES instead.
+    //
+    // Counts are exact and were read off the enumeration, not estimated. Where the count includes
+    // a `summary`, that link exists ONLY on capstonebible.com — the app renders those fields as
+    // plain text and scripts/seo/render.mjs linkifies them — so no snapshot can hold it and the
+    // prose case in cases.mjs is the only thing that does.
+
+    // Nativity people. Each names Mary in the same clause or the same paragraph.
+    "caesar-augustus": "joseph-husband-of-mary", // 2: "the reason Joseph, of the house of David, traveled from Nazareth"; summary
+    quirinius: "joseph-husband-of-mary", // 2: "the census that brought Joseph and Mary to Bethlehem"; summary
+    "herod-the-great": "joseph-husband-of-mary", // 2: the Bethlehem massacre "Joseph and Mary escaped"; "led Joseph to settle instead in Nazareth"
+    "herod-archelaus": "joseph-husband-of-mary", // 3: Matthew 2:22 in lifeStory, controversies and summary
+    "simeon-at-the-temple": "joseph-husband-of-mary", // 2: "Mary and Joseph brought the infant Jesus"; "blessed Mary and Joseph"
+    magi: "joseph-husband-of-mary", // 1: "Joseph is likewise warned in a dream to flee with Mary and the child"
+    "jesus-of-nazareth": "joseph-husband-of-mary", // 1: "raised… by Mary and her husband Joseph". The record's OTHER Joseph is "Joseph of Arimathea", which is a longer registered name and a different key, so this entry cannot reach it.
+    "james-brother-of-jesus": "joseph-husband-of-mary", // 1: "Raised in Nazareth in the household of Joseph and Mary"
+    "philip-the-apostle": "joseph-husband-of-mary", // 1: John 1:45 quoted — "Jesus of Nazareth, the son of Joseph"
+
+    // Matthew's genealogy. Five stubs whose only content is that they are a name in the chain, and
+    // Jeconiah, whose whole controversy is that the line runs through this Joseph.
+    azor: "joseph-husband-of-mary", // 1: "the chain linking… to Joseph, the husband of Mary"
+    achim: "joseph-husband-of-mary", // 1: same sentence
+    eliud: "joseph-husband-of-mary", // 1: same sentence
+    "eleazar-in-jesus-genealogy": "joseph-husband-of-mary", // 1: "this genealogical figure in Joseph's ancestry"
+    "zadok-in-jesus-genealogy": "joseph-husband-of-mary", // 1: same clause
+    jeconiah: "joseph-husband-of-mary", // 2: "an ancestor of Jesus through Joseph in Matthew's genealogy"; the same point in controversies
+
+    // The nativity timeline events, and the two Roman ones that reach the census from the other end.
+    "bib-loc-birth-of-jesus": "joseph-husband-of-mary", // 1: "move Joseph and Mary from Nazareth… to Bethlehem"
+    "bib-loc-magi-flight-to-egypt": "joseph-husband-of-mary", // 1: "Joseph, likewise warned in a dream, takes Mary and the child and flees by night to Egypt"
+    "bib-loc-jesus-in-temple-age-twelve": "joseph-husband-of-mary", // 1: "Joseph and Mary make their customary Passover pilgrimage"
+    "bib-loc-return-nazareth-childhood": "joseph-husband-of-mary", // 3: the angel's instruction, the warning about Archelaus, "Joseph's carpentry trade"
+    "wld-rom-battle-of-actium": "joseph-husband-of-mary", // 1: "the census mentioned in Luke 2:1 that brought Joseph and Mary to Bethlehem"
+    "wld-rom-augustus-becomes-emperor": "joseph-husband-of-mary", // 1, SUMMARY ONLY — public page, no snapshot: "brought Joseph and Mary to Bethlehem"
+
+    // Two places and a book intro pair, where the nativity is what the record says about them.
+    sepphoris: "joseph-husband-of-mary", // 1: "some scholars suggest Joseph and the young Jesus… may have found work"
+    egypt: "joseph-husband-of-mary", // 1: "Where Joseph, Mary, and the infant Jesus fled to escape Herod's massacre"
+    romans: "joseph-husband-of-mary", // 1: "Caesar Augustus's census brings Joseph and Mary to Bethlehem"
+    "book-intro:Matthew": "joseph-husband-of-mary", // 1: "the angelic message to Joseph, the virgin birth"
+    "book-intro:Luke": "joseph-husband-of-mary", // 1: "the census that brings Joseph and Mary to Bethlehem"
+
+    // ── The one that is NOT the husband, and the reason to read sentences instead of lists ────
+    //
+    // bib-loc-burial-of-jesus was measured as a nativity-adjacent record with one wrong "Joseph",
+    // and the assumption would have been the husband. It is not. The article opens "Joseph of
+    // Arimathea — a wealthy member of the Sanhedrin", and the bare mention three sentences later
+    // is "lay it in Joseph's own new tomb" — the same man, the tomb owner, named at length once
+    // and briefly afterwards. Both other occurrences on the record already resolve correctly
+    // because "Joseph of Arimathea" is its own registered name and its own key, which this entry
+    // does not touch. Mary's husband is not in this article at all.
+    "bib-loc-burial-of-jesus": "joseph-of-arimathea", // 1: "Joseph's own new tomb"
+
+    // ── Where the pin has to do it instead ───────────────────────────────────────────────────
+    //
+    // `egypt` and `bib-loc-magi-flight-to-egypt` are the two records above where a future editor
+    // is most likely to add the patriarch — the article is about Egypt, and he is the man Egypt
+    // is otherwise about. Measured today, neither names him: one "Joseph" each, both the husband,
+    // which is what this table requires. If either ever gains a patriarch mention, this entry
+    // becomes the wrong lever for it and must be replaced by a phrase pin pair, exactly as
+    // `egyptians` and `jacob-father-of-joseph` already are. Recorded here so the next person
+    // finds it before the snapshot does.
+
+    // ── THE THIRD JOSEPH, 2026-09-10 — and he is not a third record ──────────────────────────
+    //
+    // Barnabas's own life story opens "Barnabas is introduced in Acts as Joseph, a Levite from
+    // Cyprus, whom the apostles nicknamed 'Barnabas'" (Acts 4:36). That "Joseph" was resolving to
+    // the patriarch — wrong on any reading, and left standing as a `known-wrong` case by the
+    // nativity batch, which was not authorised to settle it.
+    //
+    // The obvious fix was a new `joseph-barnabas` person record. It is the wrong one, because
+    // THIS JOSEPH IS BARNABAS: Acts 4:36 says the apostles renamed him, and the app already has
+    // the man. A second record for the same person would split his links and need maintaining.
+    // So this is a self-link, and it belongs here mapped to the record's own id, exactly as
+    // `augustus` on claudius-caesar and the `joseph-husband-of-mary`/`joseph-of-arimathea`/
+    // `caiaphas` entries above are. NOT `null`: null in this table means "a different,
+    // unrepresented bearer", and that is precisely what he is not.
+    //
+    // The other candidate — registering a bare "Joseph" as a matchName on the barnabas record —
+    // was MEASURED before it was rejected, and it fails in both directions at once:
+    //
+    //   As written today it moves NOTHING. Zero rows in all three snapshots, and the fault above
+    //   stays. NAME_TO_ENTRY is built last-wins from a length-stable sort, so two entries spelled
+    //   "Joseph" are separated only by their order in people.ts — and `joseph-son-of-jacob` sits
+    //   at line 2973, below `barnabas` at 582. The registration loses the key and is inert.
+    //
+    //   If it ever won the key it is catastrophic. Forced to win and measured: 248 Bible rows
+    //   repoint to Barnabas, 83 prose rows repoint and 16 MORE appear (6,371 -> 6,387) as
+    //   self-link suppressions on the Josephs' own pages stop firing, key-totals repoints all
+    //   three paths, and 15 named cases fail. Every "Joseph" in Genesis becomes a Cypriot Levite.
+    //
+    // Which of those two you get depends on nothing but where a record happens to sit in a data
+    // file — the same accident SAUL_DEFAULT and edomLocationEntry above exist to take out of the
+    // hands of file order. So it is not a lever at all, and this table is.
+    barnabas: "barnabas",
   },
 
   // ── Two more from the same sweep: a bare name that is the WRONG ancient man ──────────────────
@@ -1087,6 +1823,438 @@ const OWNER_NAME_OVERRIDES: Record<string, Record<string, string | null>> = {
   // the title 'Augustus'", are Octavian and are untouched.
   augustus: {
     "claudius-caesar": "claudius-caesar",
+  },
+  // "Thomas": the apostle owns the bare key. Thomas Aquinas's own article uses his forename three
+  // times — "Thomas was sent as a child oblate to Monte Cassino", "Thomas studied under Albertus
+  // Magnus", "In late 1273, Thomas experienced a profound mystical episode" — and every one linked
+  // to the apostle. The same shape as the five Simons and the two Marys below, and found the same
+  // way, by scripts/name-linker/self-name.mjs. Mapped to himself; the record names no other Thomas.
+  // NAME_CONTEXT_RULES already handles Thomas More, Cromwell, Clarkson, Thompson and Roe.
+  thomas: {
+    "thomas-aquinas": "thomas-aquinas",
+  },
+  // "Caesar": the bare key belongs to Tiberius, which is right for the Gospels' "render to Caesar"
+  // and for Acts's appeals. Three prose mentions are JULIUS Caesar, who has no record: two on
+  // Augustus's own page — "the grand-nephew and posthumously adopted heir of Julius Caesar" and
+  // "after Caesar's assassination in 44 BC" — and one on Herod's rise, "won the favor of Julius
+  // Caesar". Not a self-link, even on Augustus's page: the man being named is his great-uncle.
+  //
+  // A miss the existing split-name machinery could not have caught, and worth saying why: the
+  // sweep for "a biblical name FOLLOWED by a qualifier" is what catches "Philip II" and "Paul VI",
+  // and this is a biblical name PRECEDED by a forename. Suppressed on the standing interim.
+  // Augustus's own "Caesar Augustus" mentions match his registered name and are untouched.
+  // (The forename shape now also has a class fix — see `caesar` in NAME_CONTEXT_RULES below — and
+  // the rest of the cluster is enumerated and fixed in the block that follows these two entries.)
+  //
+  // ── THE REST OF THE CAESAR CLUSTER, FIXED 2026-09-10 ─────────────────────────────────────────
+  //
+  // The entry above used to carry a warning that it was not the whole problem, with an estimate of
+  // 39 links left. RE-ENUMERATED from scratch rather than taken from that note, over all 6,677
+  // blocks — the 5,692 the app renders through LinkedVerseText plus the 985 that are links only on
+  // the pre-rendered public pages — and the estimate was low, as every recount on this workstream
+  // has been. The measured shape:
+  //
+  //   63 occurrences of the word "Caesar" in authored prose; 55 of them carry a link.
+  //   14 are right and are untouched:
+  //        6 match the registered key "Caesar Augustus" (mark-antony, romans,
+  //          bib-it-pompey-conquers-jerusalem, wld-rom-pompey-conquers-jerusalem,
+  //          wld-rom-augustus-becomes-emperor and its public-page summary);
+  //        3 match "Tiberius Caesar" (bib-loc-john-baptist-ministry-begins, wld-rom-tiberius-
+  //          emperor and its summary);
+  //        5 are a bare "Caesar" that genuinely IS Tiberius — pontius-pilate ("no friend of
+  //          Caesar", John 19:12), pharisees and wld-rom-tiberius-emperor ("taxes to Caesar",
+  //          Matthew 22), egerton-papyrus-2 ("kings, not Caesar") and bib-loc-trials-of-jesus
+  //          ("a king who opposes Caesar"). Jesus's whole ministry falls in Tiberius's reign.
+  //   41 were WRONG: 23 Julius and 18 Nero. Not 22 and 17 — the extra pair, and six of the 41
+  //          altogether, are on the public-page-only surface that no snapshot covers.
+  //   8 occurrences carry no link at all already and are left alone.
+  //
+  // NO RECORD MIXES A CORRECT TIBERIUS WITH A WRONG ONE, which is why every lever below is an
+  // owner entry and none is a context rule: the five correct bare Tiberius mentions sit on five
+  // records that appear nowhere in this table. Two records DO hold both a wrong bare "Caesar" and
+  // a correct "Caesar Augustus" — mark-antony and wld-rom-augustus-becomes-emperor — and that is
+  // safe because those are two different keys: the longer registered name matches first and an
+  // entry on `caesar` cannot reach it. It also degrades the right way. If someone rewords
+  // "Caesar Augustus" to a bare "Caesar" on either record, the answer becomes no link rather than
+  // Julius, and a case below asserts the pairing on both sides.
+  //
+  // TWO LAYERS, DELIBERATELY OVERLAPPING. NAME_CONTEXT_RULES below now carries
+  // `before: /\bJulius\s+$/`, which suppresses the nine occurrences that actually carry the
+  // forename; the seven Julius entries here answer the fourteen that do NOT ("Caesar refused",
+  // "Caesar's funeral", "Caesar's adopted grandnephew"). Measured both ways: with the context rule
+  // deleted every case below still passes on the owner entries alone, and with the owner entries
+  // flipped the context rule still holds the forename cases. That redundancy is the point — four
+  // of these records (corinth, mark-antony, wld-rom-founding-of-republic,
+  // wld-rom-augustus-becomes-emperor) currently have the forename on every mention, so the rule is
+  // doing the work today and the entry exists for the day someone rewords one to a bare "Caesar".
+  // Without it that rewording would silently resolve to TIBERIUS; with it, to no link. Degrade to
+  // nothing, never to the wrong man.
+  //
+  // JULIUS — SUPPRESSED, because he has no record. Same ruling as the three entries above and as
+  // zadok/eleazar/Acts 1:23 across this file: `null` means "a different, unrepresented bearer",
+  // and it is an interim, not a verdict that the man does not matter. A record for Julius Caesar
+  // would replace all nine of these entries at once. Do NOT write him one as a side effect of a
+  // link fix.
+  caesar: {
+    "caesar-augustus": null,
+    "bib-it-herod-the-great-rise": null,
+    // The four Roman timeline articles that ARE Julius from end to end. 19 links.
+    "wld-rom-caesar-crosses-rubicon": null,     // 8: the Rubicon, Pharsalus, "Caesar crossed anyway"
+    "wld-rom-assassination-of-caesar": null,    // 7: the Ides of March, the funeral, the Triumvirate
+    "wld-rom-battle-of-actium": null,           // 2: "Caesar's assassination", "Caesar's adopted grandnephew"
+    "wld-rom-founding-of-republic": null,       // 2: the later Brutus, "Julius Caesar's rise"
+    // Corinth's refoundation as a Roman colony in 44 BC — Julius, in the year he died. 1 link.
+    corinth: null,
+    // Two records that hold BOTH a bare Julius and a correct "Caesar Augustus" (a different key,
+    // matched first — see the note above). 3 links between them.
+    "mark-antony": null,                        // 2: "rose under Julius Caesar"; the public summary's "Julius Caesar's lieutenant"
+    "wld-rom-augustus-becomes-emperor": null,   // 1: "the same problem Julius Caesar had never solved"
+
+    // NERO — REPOINTED, because he has a record (nero-caesar). Every one of these 18 is Paul's
+    // appeal and its aftermath: Acts 25:8-12, 25:21, 26:32, 27:24, 28:19 and Philippians 4:22,
+    // all inside AD 54-68. The READER PATH ALREADY AGREES: BOOK_NAME_OVERRIDES above sends a bare
+    // "Caesar" in Acts and in Philippians to Nero, so every one of these articles has been
+    // disagreeing with the Bible page it cites. Acts 17:7 is the one earlier exception and is
+    // Claudius, handled per-verse; it appears in no article, so nothing below can reach it.
+    "nero-caesar": "nero-caesar",               // 5, HIS OWN PAGE — mapped to himself so the
+                                                // self-link exclusion suppresses them. The
+                                                // self-name shape, and one self-name.mjs cannot
+                                                // see: it keys on the FIRST word of a record's
+                                                // name ("Nero"), and the fault is on the second.
+    "paul-of-tarsus": "nero-caesar",            // 1: "appeal directly to Caesar (Acts 25:11)"
+    "herod-agrippa-ii": "nero-caesar",          // 1: "set free had he not appealed to Caesar" (Acts 26:32)
+    "porcius-festus": "nero-caesar",            // 2: lifeStory, and the public-page summary
+    romans: "nero-caesar",                      // 1: "appeal his case directly to Caesar"
+    "bib-ac-paul-ministry": "nero-caesar",      // 2: the article and its public-page summary
+    "bib-ac-paul-arrest-jerusalem": "nero-caesar",       // 1: "a hearing before Caesar himself"
+    "bib-ac-paul-caesarea-imprisonment": "nero-caesar",  // 3: two in the article, one in the summary
+    "bib-ac-paul-first-roman-imprisonment": "nero-caesar", // 1: public-page summary only
+    "book-intro:Acts": "nero-caesar",           // 1: "his appeal to Caesar" — and Acts's own book
+                                                // override already says Nero on the reader path.
+  },
+
+  // ══ THE SECOND-BEARER SWEEP, 2026-09-10 ══════════════════════════════════════════════════════
+  //
+  // A shared name resolves to the FAMOUS bearer everywhere the linker has no context, and on the
+  // article surface it never has any. That is one fault with one shape, and it was enumerated in
+  // full rather than noticed one article at a time: every person link on all 6,677 blocks — the
+  // 5,692 the app renders through LinkedVerseText and the 985 that are links only on the
+  // pre-rendered public pages — plus all 31,098 WEB verses on both rendering paths.
+  //
+  // Two rulings govern what is written below, and neither is a new position:
+  //
+  //   REPOINT where the app already carries the right man. Mechanical.
+  //   SUPPRESS where it does not — the `zadok`/`eleazar`/Acts 1:23 shape. `null` here means "a
+  //   different, unrepresented bearer", and it is an interim, never a verdict that the man does
+  //   not deserve a page. Judas Maccabeus, Simon Maccabeus, Titus the emperor and Philip II of
+  //   Macedon are all suppressed below and all four are open questions for Robbie; a record for
+  //   any of them replaces its entry here rather than fighting it.
+  //
+  // ── THE TEN THAT ARE ONLY ON THE PUBLIC PAGES ────────────────────────────────────────────────
+  //
+  // Done first, because they are the ones nothing else can hold. `person.summary`,
+  // `person.occupation`, `topic.summary`, `timelineEvent.summary` and `location.rulers[].name`
+  // are plain text in the app and LINKS on capstonebible.com — scripts/seo/render.mjs puts all
+  // five through this same function, passing the record's own id, which is why this table reaches
+  // them at all. `loadProseBlocks()` correctly does not enumerate them, so NO snapshot covers a
+  // single one: 795 person links on 985 blocks that a stranger can read and that the regression
+  // net cannot see. Every one of the ten below is pinned by a prose case in cases.mjs quoting the
+  // summary verbatim, because that case is the only cover it will ever have.
+  //
+  // Two of the ten sit under `john` and `mary` above, with the rest of their own name's entries.
+  // The eight here are the new keys.
+
+  // "Philip": the bare name belongs to the Apostle globally, which is right in the Gospels and
+  // wrong everywhere Acts 6/8/21 is being retold. The Evangelist has his own record and the
+  // reader path already resolves him correctly at all 15 of his verses (VERSE_NAME_OVERRIDES
+  // above) — it is only the article surface, which has no verse, that sends him to the Apostle.
+  //
+  // Three records here, each carrying a summary link. Each names exactly ONE Philip, checked by
+  // scanning every occurrence of the token on the record, linked or not:
+  //   ethiopian-eunuch              8  seven in lifeStory/placesLived + the summary. The summary
+  //                                    is the sentence that made the case for doing these first:
+  //                                    "baptized by Philip the Evangelist after Philip explained
+  //                                    the 'suffering servant' passage" — the long name resolving
+  //                                    correctly and the bare one, ten words later, to a different
+  //                                    man, in one sentence on a public page.
+  //   bib-ac-philip-ethiopian-eunuch 7  six article paragraphs + the summary.
+  //   simon-magus                   2  "began following Philip around" + the summary. Its other
+  //                                    occurrence is "Philip the Evangelist", already correct.
+  // ── THE WHOLE PHILIP CLUSTER ─────────────────────────────────────────────────────────────────
+  //
+  // 61 bare "Philip" links on the article and public-page surfaces. 12 are the Apostle and are
+  // correct — the Gospel cast (andrew-apostle, bartholomew-nathanael ×4,
+  // bib-loc-calling-first-disciples), Bethsaida's two records, and the Hierapolis martyrium, which
+  // names him "the Apostle Philip" in its own sentence. Those 12 are untouched and four of them
+  // are guarded by named cases. The other 49 were three different men:
+  //
+  //   30  Philip the Evangelist, one of the seven (Acts 6, 8, 21)
+  //   15  Philip the Tetrarch — 11 of them on his own page, and 5 of those 11 are a THIRD Philip
+  //    4  Philip II of Macedon, who has no record
+  //
+  // The tell worth naming, because it repeats across this whole sweep: A RECORD'S OWN PAGE IS THE
+  // COMMONEST FAILURE SITE. The self-link exclusion only fires when the resolved id IS the owner,
+  // so a page whose subject shares a name with a more famous man links its own subject's name to
+  // that other man, on every mention. Every "Philip" in the Evangelist's life story pointed at the
+  // Apostle; every "Philip" on the Tetrarch's page did too. scripts/name-linker/self-name.mjs now
+  // sweeps for that shape.
+  //
+  // OWNER_NAME_OVERRIDES throughout rather than phrase pins, and the test was applied per record,
+  // not assumed: every occurrence of the token on the record — linked or not — was read in its own
+  // sentence, and every record below holds exactly one Philip. A record-keyed answer survives the
+  // paragraph being rewritten; a pin does not.
+  philip: {
+    // ── The Evangelist, 30 links. The reader path has had him right at all 15 of his verses since
+    // VERSE_NAME_OVERRIDES above was written; only the article surface, which has no verse to look
+    // at, sent him to the Apostle.
+    "ethiopian-eunuch": "philip-the-evangelist", // 8: seven in lifeStory/placesLived + the summary
+    "bib-ac-philip-ethiopian-eunuch": "philip-the-evangelist", // 7: six article paragraphs + summary
+    "simon-magus": "philip-the-evangelist", // 2: "began following Philip around" + the summary
+    // His own page — the worst-hit record in the sweep. All six "Philip"s in his life story, from
+    // "Philip was one of seven men" onward, linked to the Apostle. Mapped to himself so the
+    // self-link exclusion suppresses them, exactly as bare "Saul" behaves on Paul's page.
+    "philip-the-evangelist": "philip-the-evangelist", // 6
+    "anna-the-prophetess": "philip-the-evangelist", // 1: "figures like Philip's daughters (Acts 21:9)"
+    isaiah: "philip-the-evangelist", // 1: the eunuch reading Isaiah 53 "when Philip meets him"
+    ethiopia: "philip-the-evangelist", // 1: "Where Philip evangelized and baptized the eunuch"
+    ashdod: "philip-the-evangelist", // 1: "the deacon Philip appeared there" — the sentence says which man
+    gaza: "philip-the-evangelist", // 1: "the setting for Philip's encounter with the Ethiopian eunuch"
+    greeks: "philip-the-evangelist", // 1: "appointing seven men (including Stephen and Philip)" — Acts 6:1-6.
+                                     // Checked because this topic is the one place the Apostle could
+                                     // plausibly appear (John 12:20-22, the Greeks who ask for him):
+                                     // the record holds exactly one "Philip" and it is the Seven.
+    "bib-dkj-isaiah-suffering-servant": "philip-the-evangelist", // 1: "Philip uses it to explain the gospel to the Ethiopian eunuch"
+
+    // ── The Tetrarch, 15 links.
+    //
+    // His own page takes ONE answer for eleven mentions, and it is worth spelling out why that is
+    // exact rather than merely convenient. Six of the eleven are the Tetrarch himself. The other
+    // five are a THIRD Philip — "sometimes called Herod Philip", Herodias's first husband, the man
+    // Mark 6:17 and Matthew 14:3 call simply "Philip" — whom the article discusses at length
+    // precisely in order to distinguish him from its own subject, and for whom the app has no
+    // record. Both answers render as NO LINK: the first by the self-link exclusion, the second
+    // because there is nobody to link to. So the record-wide answer serves all eleven and no pin
+    // is needed. If the app ever gains a record for Herod Philip I, this entry becomes the wrong
+    // lever for those five and they need phrase pins.
+    "philip-the-tetrarch": "philip-the-tetrarch", // 11
+    "herod-archelaus": "philip-the-tetrarch", // 1: "while Antipas and Philip received smaller tetrarchies"
+    lysanias: "philip-the-tetrarch", // 1: Luke 3:1's list of rulers, which is the Tetrarch's own verse
+    "bib-loc-john-baptist-ministry-begins": "philip-the-tetrarch", // 1: the same Luke 3:1 list
+    "bib-loc-confession-caesarea-philippi": "philip-the-tetrarch", // 1: "built up by Herod's son Philip"
+
+    // ── Philip II of Macedon, 4 links, and no record. NAME_CONTEXT_RULES already suppresses
+    // "Philip II" by its numeral, which is why the two occurrences written that way are unlinked
+    // and these four — the bare name, in the very next sentence — were not. Suppressed on the same
+    // interim as the rule above it: a record for him would replace both.
+    "wld-pg-philip-of-macedon": null, // 3: "Philip defeated the combined forces of Athens, Thebes"; "Philip began planning"; "Philip was assassinated in 336 BC"
+    "wld-pg-alexander-becomes-king": null, // 1: "Alexander inherited his father Philip's throne"
+  },
+
+  // "Simon": the bare name belongs to Simon Peter. Both Hasmonean articles mean SIMON MACCABEUS,
+  // last of Mattathias's five sons, high priest and ethnarch from 142 BC — a different man by two
+  // centuries, and one the app has no record for. Five links, two of them summaries:
+  //   bib-it-hasmonean-dynasty-begins  4  three article paragraphs, one datingNotes, + the summary
+  //                                       "Simon Maccabeus, last surviving son of Mattathias".
+  //   bib-it-john-hyrcanus-reign       2  "Simon's son John Hyrcanus" in the article + the summary.
+  // Neither record names Simon Peter anywhere. Suppressed rather than written: whether Simon
+  // Maccabeus earns a record is Robbie's, and it is on his list — this fixes the defect today and
+  // a record later replaces these two lines.
+  simon: {
+    // ── Simon Maccabeus, 11 links across four Hasmonean articles ──────────────────────────────
+    // Last of Mattathias's five sons, high priest and ethnarch from 142 BC; a different man from
+    // Simon Peter by two centuries, and one the app has no record for. Suppressed, not written:
+    // whether he earns a record is Robbie's and is on his list, and a record replaces these four
+    // lines. None of the four records names Simon Peter at all.
+    "bib-it-hasmonean-dynasty-begins": null, // 5: three article paragraphs, datingNotes, summary
+    "bib-it-john-hyrcanus-reign": null, // 2: "Simon's son John Hyrcanus" + the summary
+    "bib-it-maccabean-revolt-begins": null, // 1: "his five sons — Judas, Jonathan, Simon, John, and Eleazar"
+    "bib-it-jonathan-maccabeus-high-priest": null, // 3: "his brother Simon", "the last surviving
+                                                   // brother, Simon", and the Wicked Priest note
+
+    // ── Three more men with no record ─────────────────────────────────────────────────────────
+    // SIMON THE TANNER, whose house Peter lodged in at Joppa (Acts 9:43, 10:6). Scripture's own
+    // Acts 10:32 already suppresses him; until now the location article contradicted the reader.
+    joppa: null,
+    // SIMON THE BROTHER OF JESUS — "Mark's Gospel names him first among four (James, Joses, Judas,
+    // and Simon)". Matches Scripture, where Matthew 13:55 is already suppressed.
+    "james-brother-of-jesus": null,
+
+    // ── Two repoints, where the app has the right man and the sentence says which ──────────────
+    cyrene: "simon-of-cyrene", // "Hometown of Simon, the man forced to carry Jesus's cross"
+    "bib-ac-philip-ethiopian-eunuch": "simon-magus", // "even the sorcerer Simon believed and was baptized"
+
+    // ── FIVE RECORDS THAT LINKED THEIR OWN SUBJECT'S NAME TO SIMON PETER ──────────────────────
+    //
+    // None of these was in the sweep that produced this batch; all five came out of
+    // scripts/name-linker/self-name.mjs on the commit that added it. The sweep had checked these
+    // records and reported, correctly, that they "resolve correctly wherever their longer wording
+    // appears" — which was a different question from what the BARE name does on the page whose
+    // subject it is. Fifteen links, every one of them the page's own subject.
+    "simon-magus": "simon-magus", // 5
+    "simon-of-cyrene": "simon-of-cyrene", // 4
+    "simon-the-pharisee": "simon-the-pharisee", // 3
+    "simon-the-zealot": "simon-the-zealot", // 2
+    "simon-the-leper": "simon-the-leper", // 1
+  },
+
+  // "Titus": the bare name belongs to Paul's Gentile co-worker, and every one of his own mentions
+  // — 2 Corinthians, Galatians, 2 Timothy 4:10, Titus 1:4, and the five in his book intro — is
+  // correct and untouched. The fall-of-Jerusalem article means TITUS THE EMPEROR, Vespasian's son,
+  // who took the city in AD 70 and burned the Temple. Six links on this record, all of them him:
+  // five in the article (the siege, the fire "against Titus's own orders", his triumph, the Arch
+  // of Titus) and the summary, "Roman forces under Titus breached Jerusalem's walls".
+  //
+  // Pointing the general who destroyed the Temple at Paul's travelling companion is the kind of
+  // error that costs a reader's confidence in everything else on the page. No record exists for
+  // the emperor; suppression is the interim and he is the largest single record-or-suppress
+  // question the sweep raised, which is Robbie's to settle.
+  titus: {
+    "wld-rom-destruction-of-jerusalem": null, // 6: five article paragraphs + the summary
+    // The other nine emperor links, 2026-09-10. Every one of them is Vespasian's son: the siege,
+    // the Temple, the Arch, and Bernice, whose whole extra-biblical story is her affair with him.
+    // The app has no record for the emperor and the four record-or-suppress candidates are
+    // Robbie's; a record replaces all seven lines here.
+    bernice: null, // 4: lifeStory, controversies, and both extraBib summary blocks
+    jerusalem: null, // "The Temple was destroyed by Roman forces under Titus in AD 70"
+    "the-temple": null, // "when Roman forces under Titus destroyed the Second Temple"
+    "bib-loc-olivet-discourse": null, // "when Roman forces under Titus razed Jerusalem"
+    "bib-ac-fall-of-jerusalem": null, // "the future Roman emperor Titus laid siege to Jerusalem"
+    "wld-rom-jewish-revolt-begins": null, // "Vespasian, with his son Titus serving alongside him"
+    // Paul's Titus is untouched everywhere else — crete (2), jewish-elders, and the five in his own
+    // book introduction, which is why book-intro:Titus is NOT in this table: it holds five correct
+    // mentions of the man and two of the BOOK, and the two are taken out by title rules instead.
+  },
+
+  // ── THE JAMES CLUSTER ────────────────────────────────────────────────────────────────────────
+  //
+  // 58 bare "James" links in our prose and on the public pages. 19 are James son of Zebedee and
+  // are correct — the Gospel cast, Agrippa's execution of him, Salome as his mother, the Sea of
+  // Galilee's fishing trade, Willibald's itinerary. 39 were not, and nearly all of them were the
+  // Lord's brother, who has his own record: the bare key belongs to Zebedee's son, who was dead by
+  // AD 44 (Acts 12:2) and is a candidate for none of it.
+  //
+  // The self-name shape again, and worse than Philip's: ALL FOURTEEN "James"es on
+  // james-brother-of-jesus's own page pointed at Zebedee's son, including the sentence quoting
+  // Galatians 1:19 — "meets specifically with 'James, the Lord's brother'" — which names the man
+  // it was getting wrong. Three more on james-son-of-alphaeus's page did the same thing, and the
+  // sweep that produced this batch did not have them; scripts/name-linker/self-name.mjs did.
+  //
+  // THREE RECORDS NAME BOTH MEN and are deliberately NOT in this table: simon-peter,
+  // john-the-apostle and bib-ac-jerusalem-council. One answer per record cannot serve them, the
+  // majority on each is Zebedee (who already owns the key by default), and the exceptions are
+  // recovered by the two context patterns added to NAME_CONTEXT_RULES above. That direction is
+  // chosen, not incidental: pinning the exceptions leaves a reworded sentence with a LOST correct
+  // link, where pinning the majority would leave it asserting the wrong man on the two mentions
+  // that were already right.
+  //
+  // Scripture is not touched by any of this, and is handled per-verse in VERSE_NAME_OVERRIDES:
+  // Acts 12:2 and the four "Mary the mother of James" verses landed with the Scripture batch, and
+  // James 1:1 and Jude 1:1 landed on 2026-09-10 with Robbie's authorship ruling — the reasoning is
+  // written out beside them there.
+  james: {
+    // His own page, all fourteen, mapped to himself so the self-link exclusion suppresses them.
+    "james-brother-of-jesus": "james-brother-of-jesus",
+    // Alphaeus's son, three of his four. The fourth — "and from James, the Lord's brother" — is
+    // genuinely the other man and is recovered by the context pattern above, which is checked
+    // first. The record's "James, son of Zebedee" mentions already resolve by their own long key.
+    "james-son-of-alphaeus": "james-son-of-alphaeus",
+    // ── THE EPISTLE'S VOICE: JAMES THE BROTHER OF JESUS, RULED 2026-09-10 ─────────────────────
+    //
+    // Nine bare "James"es on the introduction to James and four more on records that quote the
+    // letter by its author's name. All thirteen pointed at Zebedee's son, who was dead by AD 44
+    // (Acts 12:2) and whom no tradition names. The second-bearer sweep repointed them to the
+    // Lord's brother, hit the §7.1 flag, backed the change out, and escalated.
+    //
+    // ROBBIE RULED FOR THE TRADITIONAL ATTRIBUTION, 2026-09-10. The reasoning is written out in
+    // full beside James 1:1 in VERSE_NAME_OVERRIDES above and is not repeated here; the short
+    // version is that the pre-ruling state was false rather than neutral, that the standing
+    // editorial position (CLAUDE.md, 2026-09-07) is to write from the Protestant evangelical
+    // stance and name the dissent beside it, that bookIntros.ts's `author` field for James already
+    // does exactly that in prose, and that the app already links "Paul" on book-intro:Romans and
+    // "Peter" on book-intro:1 Peter in the same position.
+    //
+    // THE THREE TITLE RULES STAY. NAME_CONTEXT_RULES is checked BEFORE this table, so "the Epistle
+    // of James", "the complete text of James", "portions of James", "James is one of the
+    // 'General'…" and "James was among the books…" are still no link: a title names a book, not an
+    // author, and that ruling is independent of this one. Five of the nine intro mentions are
+    // suppressed that way; this entry answers the other four plus two in the summary.
+    //
+    // gentiles and bib-ac-paul-arrest-jerusalem were never part of this and always kept their
+    // links: Acts 15 and Acts 21:18 are the man presiding in Jerusalem, not the letter speaking,
+    // and the reader path already resolves both of those verses to him.
+    "book-intro:James": "james-brother-of-jesus",
+    // Josephus, Antiquities 20.9.1, quoted twice in Jesus's extra-biblical sources: "the brother
+    // of Jesus, who was called Christ, whose name was James". The sentence says who he is.
+    "jesus-of-nazareth": "james-brother-of-jesus",
+    // Four records that quote the epistle by its author's name. Each holds exactly one bare
+    // "James", and it is the same answer the app gives "Paul" and "Peter" in the same position.
+    // Repointed under the 2026-09-10 ruling above, from null (the interim) and before that from
+    // james-son-of-zebedee (the falsehood).
+    rahab: "james-brother-of-jesus", // "James cites her works" — James 2:25
+    satan: "james-brother-of-jesus", // "James instructs believers to 'resist the devil'" — James 4:7
+    demons: "james-brother-of-jesus", // "James notes flatly that even 'the demons… believe'" — James 2:19
+    "bib-dki-elijah-still-small-voice": "james-brother-of-jesus", // "as James later puts it, a man
+                                       // with feelings like ours" — James 5:17. The record's other
+                                       // "James" is "the King James Version", suppressed by the
+                                       // King rule above, which is checked first — that precedence
+                                       // is what makes this entry safe, and cases.mjs asserts it.
+    // Acts 15 and Acts 21, the man presiding rather than the letter speaking.
+    gentiles: "james-brother-of-jesus", // "James cites the prophets' own promise" — Acts 15:13-18
+    "bib-ac-paul-arrest-jerusalem": "james-brother-of-jesus", // "At the urging of James and the Jerusalem elders" — Acts 21:18
+    // ── The one suppression, and it is a refusal to take a side ───────────────────────────────
+    // "Mary, mother of James the Less (also called James the Younger) and of Joses". That second
+    // "James" is her son, and the natural repoint is james-son-of-alphaeus — the traditional
+    // identification of James the Less with Alphaeus's son. It is ALSO genuinely disputed, and
+    // this record's own page is where the app has so far declined to settle it. No link, which
+    // asserts nothing; the same four verses in Scripture get the same answer, for the same reason.
+    "mary-mother-of-james-the-less": null,
+  },
+
+  // "Joram": two kings of that name reigned at the same time, one in Israel and one in Judah, and
+  // the app has a record for each. The bare key belongs to Judah's. Jehu kills ISRAEL's Joram —
+  // the article says so in as many words, "kills King Joram of Israel with an arrow through the
+  // heart" — and the summary says "Jehu kills King Joram, Judah's King Ahaziah, and Jezebel",
+  // which names Judah's king separately in the same clause. Both links pointed at the wrong one of
+  // the two. The record names no other Joram and no "Jehoram" at all.
+  joram: {
+    "bib-dki-jehu-purge": "joram-king-of-israel", // 2: the article and the summary
+    // Two dating notes that name Israel's king and linked Judah's. The second was not in the sweep
+    // — found while checking the first: "four kings — Joram, Jehu, Jehoahaz, and Jehoash" lists
+    // Elisha's four, and Jehu, Jehoahaz and Jehoash are all kings of ISRAEL, so the Joram beside
+    // them is too. Neither record names Judah's Joram at all.
+    "bib-dki-elijah-ascension": "joram-king-of-israel", // "fought early in Joram of Israel's reign"
+    "bib-dki-elisha-ministry-miracles": "joram-king-of-israel",
+  },
+  // "Jehoshaphat": Judah's king owns the key and is right in 17 of our 18 prose mentions. The
+  // eighteenth is a DIFFERENT man in a patronymic — 2 Kings 9:2's "Jehu, son of Jehoshaphat, son of
+  // Nimshi", Jehu's own father, who has no record and no other mention anywhere. Suppressed.
+  jehoshaphat: {
+    "bib-dki-jehu-anointed": null,
+  },
+  // "Azariah" is a registered alternate name of Uzziah, king of Judah, which is right for all eight
+  // of Scripture's 2 Kings occurrences and for the article that says "Uzziah (also called
+  // Azariah)". It is wrong for four other men in our prose, none of whom has a record:
+  azariah: {
+    daniel: null, // Hananiah, Mishael and AZARIAH — Abednego, one of Daniel's three companions
+    "book-intro:Daniel": null, // "the Prayer of Azariah and Song of the Three" — a deuterocanonical
+                               // addition, so a WORK as well as a different man
+    "bib-dkj-asa-reforms": null, // "The prophet Azariah son of Oded met Asa afterward". NOT in the
+                                 // sweep, which enumerated only 2 Chronicles' verses and the priest
+                                 // below; found while reading this record's neighbours.
+    // MIXED RECORD, and the entry is the safe half. bib-dkj-uzziah-reign holds two "Azariah"s: the
+    // king himself — "Uzziah (also called Azariah) came to the throne as a teenager" — and the
+    // PRIEST Azariah who confronts him for burning incense, in the same article, a different man.
+    // The record-wide answer is no link, and the king's own mention is recovered by an exact phrase
+    // pin in NAME_CONTEXT_RULES, which is checked first. That direction is the one this file uses
+    // for every mixed record: if the pinned sentence is ever reworded the mention falls back to no
+    // link, which is a lost correct link rather than a priest asserted to be a king.
+    "bib-dkj-uzziah-reign": null,
+  },
+  // "Antipas": Herod Antipas owns the key and is right in eight of nine prose mentions. The ninth
+  // is ANTIPAS OF PERGAMUM, the martyr of Revelation 2:13 — "a martyr named Antipas already killed
+  // in Pergamum, 'where Satan's throne is'" — who is not a Herod and has no record.
+  antipas: {
+    "bib-ac-domitian-persecution": null,
   },
 };
 
@@ -1346,7 +2514,7 @@ const POSSESSIVE_WORK: NameContextRule = {
 };
 /** "Isaiah manuscripts", "a second Philemon papyrus". Manuscript notes name the book, never a man. */
 const MANUSCRIPT_AFTER: NameContextRule = {
-  after: /^\s+(?:manuscripts?|fragments?|papyri|papyrus|codex|scrolls?)\b/,
+  after: /^\s+(?:manuscripts?|fragments?|papyri|papyrus|codex|scrolls?|copies)\b/,
   to: null,
 };
 /** "The Qumran Daniel manuscripts", "some Qumran Jeremiah fragments". */
@@ -1358,6 +2526,22 @@ const ENDING_OF: NameContextRule = { before: /\b[Ee]nding of\s+$/, to: null };
 /** "the Wisdom of Solomon", "the Psalms of Solomon" — two works named for a man nobody claims
  *  wrote them. Capital-initial on purpose; see the 1 Kings 4:34 note above. */
 const WISDOM_OR_PSALMS_OF: NameContextRule = { before: /\b(?:Wisdom|Psalms) of\s+$/, to: null };
+/** "Aaron ben Asher", "Samuel ben Jacob", "Moses ben Asher", "Yeshua ben Galgula" — a Hebrew
+ *  patronymic naming a medieval or Second Temple man who is NOT the biblical bearer of the first
+ *  name. Added with the Masoretic manuscript batch, where four separate articles needed it and
+ *  every one of the four links was wrong: the scribe of the Leningrad Codex was resolving to the
+ *  prophet Samuel, the Masorete of the Aleppo Codex to Aaron the brother of Moses, and one of Bar
+ *  Kokhba's officers to Jesus.
+ *
+ *  Safe as a pattern rather than a pin: Scripture never writes " ben " as a free-standing word.
+ *  Checked against all 31,098 WEB verses — 0 hits for " ben ", and 0 for "Aaron ben", "Samuel ben",
+ *  "Moses ben", "Jacob ben", "Solomon ben" and "Joseph ben" individually. It therefore reaches only
+ *  our own prose, which is exactly where these names occur. Note it is NOT given to `simon`:
+ *  Matthew 16:17 has "Simon Bar Jonah", and a "bar" rule would take it. */
+const BEN_PATRONYMIC_AFTER: NameContextRule = { after: /^\s+(?:ben|b\.)\s+\p{Lu}/u, to: null };
+/** The other half of the same shape — the FATHER in the chain, equally not the biblical man:
+ *  "Aaron ben Moses ben Asher", "Samuel ben Jacob". */
+const BEN_PATRONYMIC_BEFORE: NameContextRule = { before: /(?:\bben|\sb\.)\s+$/, to: null };
 
 const NAME_CONTEXT_RULES: Record<string, NameContextRule[]> = {
   john: [
@@ -1369,6 +2553,14 @@ const NAME_CONTEXT_RULES: Record<string, NameContextRule[]> = {
     // be reworded to dodge the collision. James in the same clause already resolves correctly to
     // the son of Zebedee and is left alone.
     { phrase: "Zebedee, with his sons John and James", to: "john-the-apostle" },
+
+    // A second phrase pin, same reasoning and the same constraint: a quotation of a primary source
+    // that may not be reworded to dodge a collision. A. S. Lewis's 1894 introduction names the
+    // eighth-century monk who scraped the Old Syriac gospels off their parchment — "John the
+    // Recluse, of Beth-Mari, Kaddish" — and a bare "John" in prose defaults to the Baptist, so the
+    // sentence was sending readers to the wrong man by seven centuries. No WEB verse contains the
+    // phrase, so the pin can never reach Scripture.
+    { phrase: "John the Recluse", to: null },
 
     // ── Resolution, not suppression. Checked first: it is the most specific thing we can say.
     // "Peter and John" is the Apostle everywhere in the New Testament and everywhere in our own
@@ -1393,6 +2585,7 @@ const NAME_CONTEXT_RULES: Record<string, NameContextRule[]> = {
     // (Acts 19:3) and "John's disciples" (Matthew 9:14) are the Baptist himself and must keep
     // their links, so only a following "Gospel" counts.
     { after: /^['’]s\s+[Gg]ospel/, to: null }, // "John's Gospel"
+    { after: /^['’]s College\b/, to: null }, // "St John's College", Cambridge — a building, not a man
     { after: /^\s+chapter\b/i, to: null }, // "John chapter 18"
 
     // ── Different men, by pattern.
@@ -1513,6 +2706,52 @@ const NAME_CONTEXT_RULES: Record<string, NameContextRule[]> = {
     // A canon list where the neighbouring "1-2 Peter" is suppressed by BOOK_NUMERAL and this one
     // has no word of its own to catch. See the note on bare-in-a-list titles above.
     { phrase: "Hebrews, James, and 1-2 Peter are not in the surviving text", to: null },
+
+    // ── Three more titles, added with the second-bearer batch, 2026-09-10 ─────────────────────
+    // All three are in book-intro:James's manuscript notes, where OWNER_NAME_OVERRIDES below now
+    // answers a bare "James" with the letter's traditional author — right for the six mentions of
+    // the man, wrong for these three, which name the BOOK. These rules are checked first and take
+    // them back out. A fourth in the same field, "the complete text of James", is already handled
+    // by TEXT_OF above.
+    //
+    // Patterns rather than exact phrases, which is the narrower choice here rather than the wider
+    // one: the neighbouring words ARE the discriminator in all three — "portions of", "among the
+    // books", "one of the 'General'/'Catholic' epistles" each say that a work is being named, the
+    // way "the patriarch Jacob" says which Jacob. Checked against all 31,098 WEB verses before
+    // being written: "portions of <Capital>" and "was among the books" occur in NO verse, and the
+    // third is anchored on the two words that follow it. A phrase pin would have been more
+    // fragile, not less — it breaks when the sentence around it is reworded, and these sentences
+    // are exactly the kind that get reworded when a manuscript is re-dated.
+    { before: /\b[Pp]ortions of\s+$/, to: null }, // "papyrus witnesses that preserve portions of James"
+    { after: /^\s+was among the books\b/, to: null }, // "James was among the books whose canonical status was discussed"
+    { after: /^\s+is one of the ['‘]?(?:General|Catholic)\b/, to: null }, // "James is one of the 'General' or 'Catholic' epistles"
+
+    // ── And two that RECOVER a link rather than removing one ──────────────────────────────────
+    //
+    // Three records name BOTH Jameses — Zebedee's son and the Lord's brother — so one answer per
+    // record cannot serve any of them, and on each the MAJORITY is Zebedee, who already owns the
+    // bare key. So the record-wide default is left alone and the exception is recovered here,
+    // which is also the only arrangement on which a reworded sentence costs a correct link rather
+    // than asserting a wrong one on the two that are right.
+    //
+    // Both are patterns for the same reason as the three above: the words are the discriminator.
+    // "the Lord's brother" and "(the brother of Jesus)" name which James in as many words, and
+    // there is no reading of either on which the man is Zebedee's son. Measured first: "James,
+    // the Lord's brother" occurs in ONE WEB verse, Galatians 1:19, where the reader path already
+    // gives the brother by book override — so this rule moves no Bible row and merely makes the
+    // panel path agree with it. "(the brother of Jesus)" occurs in no verse at all.
+    { after: /^,?\s*the Lord['’]s brother\b/, to: "james-brother-of-jesus" },
+    { after: /^\s*\(the brother of Jesus\)/, to: "james-brother-of-jesus" },
+    // Galatians 2:12, on Simon Peter's page: "he drew back from eating with Gentile Christians
+    // once certain men from James arrived". The one James on that record who is not Zebedee's son;
+    // the other two are "James and John" and are correct. No WEB verse reads "men from" followed
+    // by a name at all — Galatians 2:12 itself reads "came from James" — so this reaches only our
+    // own prose, which is where the fault is.
+    { before: /\bmen from\s+$/, to: "james-brother-of-jesus" },
+    // The apocryphal infancy gospel, quoted by name on marys-well-nazareth: "an episode from the
+    // apocryphal 2nd-century Protoevangelium of James". A work, not a man — the same ruling the
+    // modern-title pins carry, applied to an ancient one. One pin per title, as that ruling says.
+    { phrase: "Protoevangelium of James", to: null },
   ],
 
   // ── Judas Maccabeus. THE priority in this batch: the leader of the Maccabean revolt was linking
@@ -1547,6 +2786,12 @@ const NAME_CONTEXT_RULES: Record<string, NameContextRule[]> = {
   peter: [
     // Abelard, Faber (a founding Jesuit), Flint (a Dead Sea Scrolls scholar).
     { after: /^\s+(?:Abelard|Faber|Flint)\b/, to: null },
+    // A phrase pin rather than a fourth name in the list above, because this one is a comma away:
+    // the dedication page of Codex Amiatinus was altered after Ceolfrith's death, and H. A. G.
+    // Houghton's description of the alteration — quoted verbatim in codex-amiatinus, and not
+    // rewordable — ends "to Peter, abbot of the Lombards". That is an eighth-century Italian abbot,
+    // not the apostle. No WEB verse contains the phrase.
+    { phrase: "Peter, abbot of the Lombards", to: null },
     // The books. The largest single group in this ruling: 16 of the 17 are "1 Peter", "2 Peter",
     // "First Peter" or "1-2 Peter" in the two book intros and the manuscript articles, and this is
     // the shape the ruling exists for — 2 Peter's authorship is the most disputed in the New
@@ -1567,6 +2812,14 @@ const NAME_CONTEXT_RULES: Record<string, NameContextRule[]> = {
     // Cornelius" and "Peter's vision and subsequent visit to Cornelius" are the man seeing a
     // sheet let down from heaven in Acts 10. POSSESSIVE_WORK is deliberately not given to Peter.
   ],
+  azariah: [
+    // The one sentence the record-wide `null` on bib-dkj-uzziah-reign must not take. That article
+    // names both the KING — "Uzziah (also called Azariah) came to the throne as a teenager" — and
+    // the PRIEST who confronts him over the incense, a different man with no record, a few
+    // sentences later. Pinned rather than answered per record, and pinned on the correct half so
+    // that a rewrite costs this link rather than promoting the priest.
+    { phrase: "Uzziah (also called Azariah)", to: "uzziah" },
+  ],
   michael: [
     // Servetus (burned at Geneva), Cerularius (the 1054 schism), Ballance and Rostovtzeff
     // (excavators). All were linking to Michael the archangel.
@@ -1580,7 +2833,68 @@ const NAME_CONTEXT_RULES: Record<string, NameContextRule[]> = {
   ],
   andrew: [{ after: /^\s+Steinmann\b/, to: null }],   // the Herod-dating minority view
   gideon: [{ after: /^\s+Foerster\b/, to: null }],    // the Herodium excavator
-  jacob: [{ after: /^\s+Eliyahu\b/, to: null }],      // the boy who found the Siloam inscription
+  jacob: [
+    { after: /^\s+Eliyahu\b/, to: null },            // the boy who found the Siloam inscription
+    BEN_PATRONYMIC_BEFORE,                           // "Samuel ben Jacob", the Leningrad scribe's father
+
+    // ── "the patriarch Jacob" — the one sentence that must survive the owner entry ────────────
+    //
+    // OWNER_NAME_OVERRIDES now answers a bare "Jacob" on jacob-father-of-joseph's page with the
+    // page's own subject, so the self-link exclusion suppresses it. That is right for two of the
+    // three occurrences on that record and wrong for the third, which says in as many words that
+    // he is "entirely distinct from the patriarch Jacob (also called Israel), son of Isaac" — and
+    // wrong for the fourth, the same clause in the summary that render.mjs linkifies onto the
+    // public page. This rule is what recovers those two, and it is checked before that table.
+    //
+    // A pattern rather than two exact pins, and the reason is the same one that lets
+    // BEN_PATRONYMIC_* be patterns while a book title may not be: the neighbouring word IS the
+    // discriminator. Nothing around a title says "title", but "the patriarch" says exactly which
+    // Jacob is meant, and there is no reading on which it means the other one.
+    //
+    // Measured before it was written, across all 31,098 WEB verses, all 5,632 prose blocks and the
+    // 985 public-page-only blocks: "the patriarch Jacob" occurs 3 times and in NO verse. Two are
+    // the sentences above; the third is the Bethel POI's "where the patriarch Jacob dreamed of a
+    // ladder", where the patriarch is already the answer and this rule is a no-op. Its whole reach
+    // is therefore the one record it was written for, and it moves no row anywhere else. Guarded
+    // by prose cases on both records in scripts/name-linker/cases.mjs, Bethel included.
+    { before: /\bthe patriarch\s+$/, to: "jacob" },
+
+    // ── ONE RECORD, ONE NAME: old-syriac-gospels ────────────────────────────────────────────
+    //
+    // The other half of the same fault; read the note under `joseph` below. Four bare "Jacob"s on
+    // that article, all of them Jacob son of Matthan of Matthew 1:15-16 and none of them the
+    // patriarch, three of the four inside quoted translations. jacob-father-of-joseph is a record
+    // of its own and says in its first line that it is not the patriarch, so these resolve rather
+    // than suppress. Phrases quoted verbatim, each unique to that one prose block and absent from
+    // every WEB verse; each pinned by a prose case in scripts/name-linker/cases.mjs.
+    { phrase: "Jacob was the father of Joseph, the husband of Mary", to: "jacob-father-of-joseph" },
+    {
+      phrase: "Matthan begat Jacob; Jacob begat Joseph; Joseph, to whom was betrothed Mary the Virgin",
+      to: "jacob-father-of-joseph",
+    },
+    {
+      phrase: "Jacob begat Joseph, him to whom was betrothed Mary the Virgin",
+      to: "jacob-father-of-joseph",
+    },
+
+    // ── SCRIPTURE'S OWN MATTHEW 1:15-16, ON THE PANEL PATH ──────────────────────────────────
+    //
+    // The same two men as the block above, one surface further out: the WEB text of the two verses
+    // the article was quoting. The reader path is fixed by VERSE_NAME_OVERRIDES above, which is
+    // translation-blind and so covers KJV and ASV as well; that table needs a book, and the panel
+    // path passes none, so these pins are what reach it. Both phrases were measured before they
+    // were written: each occurs in exactly ONE of the 31,098 WEB verses and in NO prose block, so
+    // their whole reach is those two verses.
+    //
+    // The narrow wording is the point. "became the father of Jacob" alone would take Matthew 1:2
+    // and Acts 7:8, where the man IS the patriarch; naming Matthan keeps it to the one rung of the
+    // genealogy that means his son. Guarded by verse cases in scripts/name-linker/cases.mjs.
+    { phrase: "Matthan became the father of Jacob", to: "jacob-father-of-joseph" },
+    {
+      phrase: "Jacob became the father of Joseph, the husband of Mary",
+      to: "jacob-father-of-joseph",
+    },
+  ],
   // "Nathan Melech the officer" (2 Kings 23:11) and "Nathan-Melech, servant of the king" — one of
   // Josiah's officials, a different man from the court prophet and with no Person record of his
   // own. The hyphenated form is registered as a matchName on `nathan-melech-bulla`, so it resolves
@@ -1598,7 +2912,16 @@ const NAME_CONTEXT_RULES: Record<string, NameContextRule[]> = {
   // matched, which the matchName normally prevents.
   nathan: [{ after: /^[\s-]Melech\b/, to: null }],
   solomon: [
+    // "Solomon Schechter", who brought the Cairo Genizah to Cambridge. Cambridge University
+    // Library's own sentences name him in full and this app quotes them verbatim — a quotation may
+    // not be reworded to suit the linker, and an earlier batch had to put his forename back inside
+    // one of them after it was trimmed. So the surname is what the rule is keyed on. The app's own
+    // prose writes "S. Schechter", per the house rule that modern scholars get initials.
+    { after: /^\s+Schechter\b/, to: null },
     { after: /^\s+Stoddard\b/, to: null }, // Jonathan Edwards's grandfather
+    // "Jabez b. Solomon the Babylonian", the eleventh-century Karaite who commissioned the Cairo
+    // Codex of the Prophets, and "Yaʿbeẓ b. Solomon" inside J. L. Teicher's quoted sentence.
+    BEN_PATRONYMIC_BEFORE,
     // "the Wisdom of Solomon" (the Muratorian fragment's canon list) and "the Psalms of Solomon"
     // (the messianic-expectation article) — two works named for a man nobody, in any tradition,
     // claims wrote them. The clearest case in the whole batch that a title is not an attribution.
@@ -1645,7 +2968,22 @@ const NAME_CONTEXT_RULES: Record<string, NameContextRule[]> = {
   // linking to a different emperor than the man being named. "Tiberius Claudius Caesar Augustus
   // Germanicus" is Claudius, not Tiberius and not Augustus.
   augustus: [{ after: /^\s+Klein\b/, to: null }],     // Frederick Augustus Klein, the Mesha stele
-  caesar: [{ after: /^\s+Octavianus\b/, to: null }],  // "Gaius Julius Caesar Octavianus" — Augustus
+  caesar: [
+    { after: /^\s+Octavianus\b/, to: null },  // "Gaius Julius Caesar Octavianus" — Augustus
+    // THE FORENAME SHAPE, added 2026-09-10 with the Caesar cluster. Everything else in this list
+    // catches a biblical name FOLLOWED by a qualifier — "Philip II", "Paul VI", "Claudius Lysias".
+    // "Julius Caesar" is the mirror image: the qualifier comes FIRST, so the split-name sweep that
+    // found most of those could not see it by construction, and 23 wrong links accumulated behind
+    // that blind spot. This is the class fix; the owner entries in OWNER_NAME_OVERRIDES handle the
+    // bare "Caesar" mentions in the same articles, which have no forename to key on.
+    //
+    // Safe in Scripture, measured rather than assumed: "Julius" occurs in exactly two WEB verses,
+    // Acts 27:1 and 27:3, and both name the centurion of the Augustan band who escorts Paul — not
+    // one verse in the corpus reads "Julius Caesar". Checked in the KJV and the ASV too
+    // (bible-api.com, 2026-09-10): Acts 27:1 reads "one named Julius, a centurion" in the KJV and
+    // "a centurion named Julius" in the ASV, so the next word is a comma in all three.
+    { before: /\bJulius\s+$/, to: null },
+  ],
   tiberius: [
     { after: /^\s+(?:Claudius|Alexander)\b/, to: null }, // Claudius's regnal name; the procurator
   ],
@@ -1655,22 +2993,121 @@ const NAME_CONTEXT_RULES: Record<string, NameContextRule[]> = {
     { after: /^\s+(?:Lysias|Caecus)\b/, to: null },
   ],
 
-  // ── Place names that begin with a person's name. A different fault from the ones above and a
-  // worse one, because it is in the biblical text itself: "Abel" in "Abel Meholah" is not Adam's
-  // son but the Hebrew word for a meadow, and it was linking every one of these towns to the first
-  // murder victim. The app has no location record for any of them, so no link is the answer; if one
-  // is ever added, register the compound name on the LOCATION and delete the rule.
+  // ── COMPOUND PROPER NOUNS WHOSE HALVES ARE REGISTERED NAMES ─────────────────────────────────
+  //
+  // A different fault from the ones above and a worse one, because it is in the biblical text
+  // itself: "Abel" in "Abel Meholah" is not Adam's son but the Hebrew word for a meadow, and it
+  // was linking every one of these towns to the first murder victim. The app has no record for any
+  // of these compounds, so no link is the answer; if one is ever added, register the compound name
+  // on that record and delete the rule.
+  //
+  // **THE SEPARATOR IS `[\s-]`, AND THAT IS THE WHOLE POINT OF THIS BLOCK.** Until 2026-09-10 every
+  // rule here was written `\s+`, against the WEB — and the three translations `BiblePanel` offers
+  // spell the SAME compound three different ways:
+  //
+  //     WEB   Tubal Cain     Obed-Edom     Pahathmoab     (space, mostly)
+  //     ASV   Tubal-cain     Obed-edom     Pahath-moab    (hyphen, second element lowercased)
+  //     KJV   Tubalcain      Obed-edom     Pahathmoab     (closed up in our corpus; see below)
+  //
+  // So a `\s+` rule corrects the default translation and leaves the ASV reader with both halves of
+  // a proper name linked to two unrelated records — "Obed-edom the Gittite" sending one reader to
+  // Ruth's grandson and the nation of Edom, in twenty verses. The enumeration below was measured
+  // across all three corpora and covers **205 wrong links**: 59 on the WEB reader path, 78 on the
+  // ASV's, 61 on the panel path (the key-verse lists, which pass no book), and 6 in our own prose.
+  //
+  // A general fix was measured first and rejected, and the measurement is worth keeping because it
+  // is counter-intuitive. Making the linker's word boundary hyphen-aware — so "Obed" stops matching
+  // inside "Obed-Edom" — touches 326 links and gets exactly half of them wrong: it removes 163
+  // faults and 163 CORRECT links, because our own articles use the hyphen as a modifier joint
+  // ("Roman-era", "Greek-speaking", "Neo-Babylonian", "Jewish-Samaritan", 147 of those) and because
+  // "Genesis 1-2" is a chapter range whose first half is the link. It also could not reach the
+  // other 42 faults at all, since the WEB writes most of these compounds with a space. **The hyphen
+  // is not the axis of this fault; the compound name is.** Hence one rule per compound, covering
+  // every separator it is written with.
+  //
+  // What this block deliberately does NOT touch: the ASV's own hyphenated place names — 162
+  // occurrences of "Beth-el", "Beer-sheba", "Beth-lehem", "Bath-sheba" and "En-gedi", which today
+  // carry no link at all and want MORE linking, not less. None of them names a registered name on
+  // either side of the hyphen, so no rule here can reach them, and the fix for them (registering
+  // the hyphenated spelling on the location) stays available and unaffected.
+  //
+  // One corpus caveat. `corpus/kjv-bible.json.gz` comes from bolls, which closes these compounds up
+  // — "Obededom", "Barjesus", "Tubalcain" — so they match nothing and the harness reports the KJV
+  // as clean. **bible-api.com, which is what `src/lib/biblePassage.ts` actually fetches, hyphenates
+  // them**: it serves "Obed-edom the Gittite" at 2 Samuel 6:10 and "Bar-jesus" at Acts 13:6. The
+  // real KJV reader has these faults too; our corpus simply cannot see them. The rules below are
+  // translation-blind and fix that reader as well, which was verified against live bible-api.com
+  // text rather than against the corpus.
   //
   // Abel son of Adam keeps all nine of his own mentions (Genesis 4, Matthew 23:35, Luke 11:51,
-  // Hebrews 11:4 and 12:24) — none of them is followed by any of these words.
+  // Hebrews 11:4 and 12:24) — none of them is followed by any of these words. Every other rule here
+  // is the same shape: the compound is suppressed, the bare name is untouched.
   abel: [
-    { after: /^\s+(?:Mizraim|Shittim|Meholah|Maim|Beth Maacah|of Beth Maacah)\b/, to: null },
+    // "Abel Mizraim" (Gen 50:11), "Abel Shittim" (Num 33:49), "Abel Meholah" (Judg 7:22,
+    // 1 Kgs 4:12, 19:16), "Abel Maim" (2 Chr 16:4), "Abel-cheramim" (Judg 11:33, ASV only),
+    // "Abel Beth Maacah" (1 Kgs 15:20, 2 Kgs 15:29). Case-insensitive because the ASV lowercases
+    // the second element of every one of them.
+    { after: /^[\s-](?:Mizraim|Shittim|Meholah|Maim|Cheramim|Beth[\s-]Maacah|of Beth Maacah)\b/i, to: null },
   ],
   perez: [
-    { after: /^\s+Uzzah?\b/, to: null }, // "Perez Uzzah"/"Perez Uzza" — the place David named
+    { after: /^[\s-]Uzzah?\b/i, to: null }, // "Perez Uzzah"/"Perez-uzza" — the place David named
+    { before: /\bRimmon[\s-]$/i, to: null }, // "Rimmon Perez", a wilderness camp (Num 33:19-20)
   ],
   caleb: [
-    { after: /^\s+Ephrathah\b/, to: null }, // 1 Chronicles 2:24 — a place, not the spy
+    { after: /^[\s-]Ephrathah\b/i, to: null }, // 1 Chronicles 2:24 — a place, not the spy
+  ],
+  ephrathah: [
+    // The other half of the same verse. "Ephrathah" on its own is Bethlehem and keeps that link
+    // everywhere else; inside "Caleb-ephrathah" it is part of one place name, not a second one.
+    { before: /\bCaleb[\s-]$/i, to: null },
+  ],
+  obed: [
+    // "Obed-Edom the Gittite", the Levite who housed the ark — not Ruth and Boaz's son. Twenty
+    // verses, and both halves were linking: this half to Obed, the other to the nation of Edom.
+    { after: /^[\s-]Edom\b/i, to: null },
+  ],
+  edom: [{ before: /\bObed[\s-]$/i, to: null }],
+  cain: [
+    // "Tubal-cain", Lamech's son by Zillah (Gen 4:22) — the forger of bronze and iron, not the
+    // first murderer. Cain keeps every one of his own mentions.
+    { before: /\bTubal[\s-]?$/i, to: null },
+  ],
+  moab: [
+    // "Pahath-moab" — "governor of Moab", a post-exilic family head (Ezra 2:6, 8:4, 10:30,
+    // Neh 3:11, 7:11, 10:14). A clan, not the country; the WEB and our KJV corpus close it up.
+    { before: /\bPahath[\s-]$/i, to: null },
+  ],
+  haran: [
+    // "Beth-haran", a fortified town in Gad (Num 32:36). Haran is in Mesopotamia, 500 miles away.
+    { before: /\bBeth[\s-]$/i, to: null },
+  ],
+  succoth: [
+    // 2 Kings 17:30 — "the men of Babylon made Succoth-benoth", an object of Babylonian worship,
+    // not the Succoth of Jacob and the Exodus.
+    { after: /^[\s-]Benoth\b/i, to: null },
+  ],
+  mizpeh: [
+    // "Ramath-mizpeh" in Gad (Josh 13:26), which is not the Mizpah of Samuel and Gedaliah.
+    { before: /\bRamath[\s-]$/i, to: null },
+  ],
+  amon: [
+    // Nahum 3:8's "No-Amon" is Thebes — the Egyptian city, named for its god — and it was linking
+    // to Amon king of Judah. The reader path already suppressed it through the book allowlist; the
+    // panel path, which passes no book, did not.
+    { before: /\bNo[\s-]$/, to: null },
+  ],
+  dan: [
+    // "Mahaneh-dan", the camp of Dan between Zorah and Eshtaol (Judg 13:25, 18:12) — named for the
+    // tribe, and nowhere near the northern city. "Dan-jaan" (2 Sam 24:6) is a place the text names
+    // as a compound; whether it is the city of Dan is disputed, and half a proper noun is not the
+    // place to assert it either way. "Ashur-dan" is an Assyrian king, in our own prose.
+    { before: /\b(?:Mahaneh|Ashur)[\s-]$/i, to: null },
+    { after: /^[\s-]Jaan\b/i, to: null },
+  ],
+  ur: [
+    // "Ur-Nammu", the king who founded the Third Dynasty of Ur — a man, not the city, in the
+    // ziggurat articles.
+    { after: /^[\s-]Nammu\b/, to: null },
   ],
 
   // ── Two records name both the prophet Zechariah and the book named after him, and
@@ -1687,6 +3124,13 @@ const NAME_CONTEXT_RULES: Record<string, NameContextRule[]> = {
   // covered by prose cases in scripts/name-linker/cases.mjs: if one starts failing, the copy
   // moved. Re-read the sentence and re-pin it; do not delete the case.
   zechariah: [
+    // A list of BOOK titles: the six of the Twelve that the Greek Minor Prophets Scroll preserves.
+    // Bare "Zechariah" in it was resolving to the father of John the Baptist. Same shape, and the
+    // same remedy, as the "Matthew, John, Luke, Mark" pins in the `john` block above: pinned by
+    // exact phrase because nothing in the neighbouring words says "this is a list of books" — the
+    // neighbours are other book names — and a rule keyed on an adjacent one would reach into
+    // Scripture's own lists of men. Held by a prose case in cases.mjs.
+    { phrase: "Jonah, Micah, Nahum, Habakkuk, Zephaniah and Zechariah", to: null },
     // person.lifeStory on the `satan` record. Its `controversies` field names the BOOK in the same
     // breath as Job and 1 Chronicles, which is why the record-level answer is null.
     { phrase: "prosecutorial role in Zechariah's vision", to: "zechariah-the-prophet" },
@@ -1736,7 +3180,12 @@ const NAME_CONTEXT_RULES: Record<string, NameContextRule[]> = {
     BOOK_OF, // "The book of Esther opens in the Persian capital of Susa"
   ],
   ezekiel: [
+    { phrase: "Joshua, Judges, Samuel and Kings, then Isaiah, Jeremiah, Ezekiel and the Twelve", to: null }, // a list of BOOK titles
     TEXT_OF, // "The Masoretic Hebrew text of Ezekiel contains a notable number of difficult passages"
+    // "in the book of Ezekiel and in the Twelve Prophets" — the 2026-09-09 book-title ruling
+    // applied to a name that simply had not needed it yet. Safe as a pattern rather than a pin:
+    // no WEB verse contains "book of Ezekiel", because Scripture never names its own books.
+    BOOK_OF,
   ],
   ezra: [
     TEXT_OF, // "The Hebrew and Aramaic text of Ezra is well preserved and stable"
@@ -1745,13 +3194,27 @@ const NAME_CONTEXT_RULES: Record<string, NameContextRule[]> = {
     { before: /\bBen\s+$/, to: null },
   ],
   isaiah: [
+    { phrase: "Joshua, Judges, Samuel and Kings, then Isaiah, Jeremiah, Ezekiel and the Twelve", to: null }, // a list of BOOK titles
     BOOK_NUMERAL, // "against critical theories of a separate 'Second Isaiah'" — a hypothesis, not a man
+    TEXT_OF, // "all sheets with the text of Isaiah are still present" — the book, in a quotation
+    // The same quotation, eleven words earlier: "some sheets of Deuteronomy and Isaiah". A book
+    // again, and TEXT_OF cannot reach it because the phrase is "sheets of", not "text of", with
+    // another book name in between. Pinned rather than patterned: a rule for "<unit> of <Book> and
+    // <Book>" would have to guess where the list ends, and Scripture's own "the book of Isaiah"
+    // sits one word away from the same shape.
+    { phrase: "some sheets of Deuteronomy and Isaiah", to: null },
     SCROLL_OF, // "reading aloud from the scroll of Isaiah", "Jesus read from the scroll of Isaiah"
     POSSESSIVE_WORK, // "the second half of Isaiah's book", "independent witnesses to Isaiah's text"
     MANUSCRIPT_AFTER, // "Multiple additional Isaiah manuscripts were found at Qumran"
     // "the fulfillment of Isaiah's prophecy" keeps its link: the man prophesied.
   ],
   jeremiah: [
+    { phrase: "Joshua, Judges, Samuel and Kings, then Isaiah, Jeremiah, Ezekiel and the Twelve", to: null }, // a list of BOOK titles
+    // "The Jeremiah copies from Cave 4", on `dead-sea-scrolls` — a live fault, and the reason
+    // `copies` joined MANUSCRIPT_AFTER's word list with the Masoretic manuscripts batch. It is the
+    // book that exists in two lengths at Qumran, not the man. Checked: one WEB verse contains
+    // "copies" (Hebrews 9:23) and it does not follow a name.
+    MANUSCRIPT_AFTER,
     BOOK_OF, // "the book of Jeremiah, which the caves preserve in two editions". Checked: no WEB
     // verse contains "book of Jeremiah" or "books of Jeremiah", so this reaches only our own prose.
     QUMRAN_BEFORE, // "some Qumran Jeremiah fragments reflect a shorter Hebrew text-form"
@@ -1762,10 +3225,13 @@ const NAME_CONTEXT_RULES: Record<string, NameContextRule[]> = {
     TEXT_OF, // "Fragments of the Hebrew text of Job were found among the Dead Sea Scrolls"
   ],
   jonah: [
+    // The other half of the same list. See the note on `zechariah` below.
+    { phrase: "Jonah, Micah, Nahum, Habakkuk, Zephaniah and Zechariah", to: null },
     BOOK_OF, // "The book of Jonah centers entirely on Assyria's capital, Nineveh"
     TEXT_OF, // "a well-preserved continuous Hebrew text of Jonah"
   ],
   joshua: [
+    { phrase: "Joshua, Judges, Samuel and Kings, then Isaiah, Jeremiah, Ezekiel and the Twelve", to: null }, // a list of BOOK titles
     BOOK_OF, // "the books of Joshua and Judges describe", "opens directly onto the book of Joshua"
     TEXT_OF, // "as the text of Joshua puts it (Joshua 6:22-25)"
   ],
@@ -1783,6 +3249,10 @@ const NAME_CONTEXT_RULES: Record<string, NameContextRule[]> = {
     ENDING_OF, // "the longer ending of Mark (Mark 16:9-20)" — see the ruling note below
   ],
   moses: [
+    // "Moses ben Asher", whose colophon the Cairo Codex of the Prophets carries, and "Aaron ben
+    // Moses ben Asher", the Masorete of the Aleppo Codex. Ninth- and tenth-century Tiberians.
+    BEN_PATRONYMIC_BEFORE,
+    BEN_PATRONYMIC_AFTER,
     // "the five books of Moses", "the books of Moses". PLURAL ONLY — this is the whole safety of
     // the rule, and the reason is three lines up in the header comment: Scripture's own singular
     // "the book of Moses" appears five times and keeps its link every time.
@@ -1821,8 +3291,15 @@ const NAME_CONTEXT_RULES: Record<string, NameContextRule[]> = {
     // preceded by his initial or forename is suppressed, so Scripture's own "Shiloh" (Joshua 18:1,
     // 1 Samuel 1:3 and 30 more) and every article naming the place keep their links untouched.
     { before: /\b(?:Y\.|Yigal)\s+$/, to: null },
+    // "Taanath-shiloh" (Josh 16:6) is a town on Ephraim's eastern border, not the sanctuary town.
+    // Per the COMPOUND PROPER NOUNS block above; the WEB writes it "Taanath Shiloh".
+    { before: /\bTaanath[\s-]$/i, to: null },
   ],
   samuel: [
+    { phrase: "Joshua, Judges, Samuel and Kings, then Isaiah, Jeremiah, Ezekiel and the Twelve", to: null }, // a list of BOOK titles
+    // "Samuel ben Jacob", the scribe who wrote, pointed and annotated the Leningrad Codex single
+    // handed in Fustat about 1008. He was resolving to the prophet.
+    BEN_PATRONYMIC_AFTER,
     BOOK_OF, // "the following books of Samuel", "the earlier books of Samuel and Kings"
     BOOK_NUMERAL, // "1 Samuel traces Israel's transition from the era of the judges"
     TEXT_OF, // "the Masoretic text of Samuel", "a text of Samuel noticeably different"
@@ -1846,6 +3323,19 @@ const NAME_CONTEXT_RULES: Record<string, NameContextRule[]> = {
     { phrase: "1 and 2 Thessalonians, 1 and 2 Timothy, Titus, and Philemon", to: null },
     { phrase: "1 and 2 Timothy, Titus, Philemon, and Revelation are absent", to: null },
     { phrase: "1–2 Timothy, Titus, Philemon, and Revelation are absent", to: null },
+
+    // ── Three more, second-bearer sweep, 2026-09-10 ──────────────────────────────────────────
+    // The emperor is handled per record in OWNER_NAME_OVERRIDES; these name the LETTER, and they
+    // sit on records that cannot take a whole-record answer. book-intro:Titus holds five correct
+    // mentions of the man Paul left on Crete and two of the book, so the two get rules instead.
+    // Both patterns were measured against all 31,098 WEB verses first: "parts of <Capital>"
+    // occurs in five verses and "is contained in" in one, and none of the six contains "Titus".
+    { before: /\b[Pp]arts of\s+$/, to: null }, // "P32 … preserves parts of Titus"
+    { after: /^\s+is contained in\b/, to: null }, // "Titus is contained in the great … uncials"
+    // A third canon list, on chester-beatty-papyri. The neighbouring "1 and 2 Timothy" is caught
+    // by BOOK_NUMERAL on Timothy's own key; the numerals sit before Timothy, not before this, so
+    // this one has no word of its own and needs a pin. One pin per title, as the ruling says.
+    { phrase: "1 and 2 Timothy or Titus", to: null },
   ],
 
   // ── MODERN WORK TITLES: the same ruling, one shelf further forward ──────────────────────────
@@ -1908,9 +3398,92 @@ const NAME_CONTEXT_RULES: Record<string, NameContextRule[]> = {
     { phrase: "Jesus son of Joseph", to: null },
     { phrase: "Judah son of Jesus", to: null },
     { phrase: "The Lost Tomb of Jesus", to: null },
+    // Acts 13:6 — "a certain sorcerer, a false prophet, a Jew, whose name was Bar-jesus". Elymas
+    // the magician, whom Paul strikes blind three verses later, and the app was linking the second
+    // half of his name to Jesus of Nazareth. Every translation a reader can select writes it
+    // differently — WEB "Bar Jesus", ASV "Bar-jesus", and bible-api.com's KJV "Bar-jesus" (our
+    // bolls-derived KJV corpus closes it to "Barjesus" and so cannot see the fault) — which is
+    // why the separator is `[\s-]` and not a space. See the COMPOUND PROPER NOUNS block above.
+    { before: /\bBar[\s-]$/, to: null },
   ],
   joseph: [
     { phrase: "Jesus son of Joseph", to: null },
+
+    // ── ONE RECORD, ONE NAME: old-syriac-gospels ────────────────────────────────────────────
+    //
+    // Bare "Joseph" resolves to the patriarch everywhere in our prose, and the Old Syriac Gospels
+    // article is about Matthew's genealogy, so every Joseph on it is Joseph the husband of Mary.
+    // Nine of them, five inside verbatim quotations of Lewis's 1894 translation and of Burkitt —
+    // primary-source translations that may not be reworded to dodge the collision. They shipped
+    // live pointing at Joseph son of Jacob, which sends a reader of Matthew 1:16 to Egypt.
+    //
+    // Resolved rather than suppressed: joseph-husband-of-mary is a real record and is the man the
+    // sentences are about, so no link would be a worse answer than the right link.
+    //
+    // Every phrase below is quoted verbatim from that article and occurs in exactly one prose
+    // block in the whole corpus and in none of the 31,098 WEB verses, so the reach of this block
+    // is that one record. It says nothing about the corpus-wide question of who bare "Joseph"
+    // should belong to, which is Robbie's and is on his list; a ruling there replaces these pins
+    // rather than fighting them. Each is pinned by a prose case in scripts/name-linker/cases.mjs.
+    { phrase: "Jacob was the father of Joseph, the husband of Mary", to: "joseph-husband-of-mary" },
+    {
+      phrase: "Matthan begat Jacob; Jacob begat Joseph; Joseph, to whom was betrothed Mary the Virgin",
+      to: "joseph-husband-of-mary",
+    },
+    { phrase: "the fact that Joseph was troubled about Mary's condition", to: "joseph-husband-of-mary" },
+    { phrase: "the uncompromising statement 'and Joseph begat Jesus'", to: "joseph-husband-of-mary" },
+    {
+      phrase: "the Evangelist believed that Joseph had been the natural father of Jesus",
+      to: "joseph-husband-of-mary",
+    },
+    {
+      phrase: "the Evangelist cares about is that Joseph accepted Jesus as his son",
+      to: "joseph-husband-of-mary",
+    },
+    { phrase: "David's line through Joseph's legal fatherhood", to: "joseph-husband-of-mary" },
+    {
+      phrase: "Jacob begat Joseph, him to whom was betrothed Mary the Virgin",
+      to: "joseph-husband-of-mary",
+    },
+
+    // ── THE ONE MIXED RECORD IN THE NATIVITY SWEEP: `egyptians` ─────────────────────────────
+    //
+    // The Egyptians topic names BOTH men, which is exactly what OWNER_NAME_OVERRIDES cannot do:
+    // "when Joseph rose to power there and welcomed his father Jacob's family during a famine"
+    // and "a new king over Egypt, who didn't know Joseph" are the patriarch's son and are already
+    // right, and "Matthew records that Joseph fled with Mary and the infant Jesus to Egypt to
+    // escape Herod's massacre" is Mary's husband and was pointing at the other man — on the one
+    // record in the app where the two are a paragraph apart.
+    //
+    // So the record-wide answer is left alone (the global default, the patriarch, which is right
+    // for two of the three) and the exception is recovered here, checked before that table.
+    //
+    // Read what this costs, because it is the opposite of the direction the `jacob-father-of-
+    // joseph` and `book-intro:Zechariah` pins get, and it cannot be helped. There the record-wide
+    // answer renders NO link, so a reworded sentence loses a correct link. Here the record-wide
+    // answer is a real link to the patriarch, so if this sentence is ever reworded the mention
+    // degrades to the WRONG man rather than to nothing. The alternative — an owner entry of
+    // `null` plus this pin — would buy that safety by killing the two correct patriarch links on
+    // the same record, which is a worse trade. Anyone rewording that paragraph must move this pin
+    // with it; the prose case in cases.mjs is what will say so.
+    //
+    // Measured before it was written, across all 31,098 WEB verses and all 6,677 blocks (the 985
+    // public-page-only ones included): this phrase occurs in exactly ONE block and in NO verse.
+    {
+      phrase: "Matthew records that Joseph fled with Mary and the infant Jesus to Egypt",
+      to: "joseph-husband-of-mary",
+    },
+
+    // ── SCRIPTURE'S OWN MATTHEW 1:16, ON THE PANEL PATH ─────────────────────────────────────
+    //
+    // The reader already had this verse right, but by a different route: BOOK_NAME_OVERRIDES sends
+    // every bare "Joseph" in Matthew to Mary's husband. That table needs a book, so the panel path
+    // fell through to the global default and sent the reader to Egypt from the one verse in
+    // Scripture that names Joseph's wife in the same clause. This pin closes it, and gives the
+    // reader path the same answer it already had. Unique to Matthew 1:16 across all 31,098 WEB
+    // verses and absent from every prose block; the "Jacob" in the same phrase is pinned under
+    // `jacob` above.
+    { phrase: "Jacob became the father of Joseph, the husband of Mary", to: "joseph-husband-of-mary" },
   ],
 
   // ── TWO MODERN SURNAMES THAT ARE ALSO PLACES ───────────────────────────────────────────────
@@ -1929,6 +3502,12 @@ const NAME_CONTEXT_RULES: Record<string, NameContextRule[]> = {
   // ever since. One prose row leaves the snapshot as a result, and that is the row.
   gath: [
     { phrase: "Y. Gath", to: null },
+    // Compound towns that are not Philistine Gath, per the COMPOUND PROPER NOUNS block above:
+    // "Gath Hepher" in Zebulun, Jonah's home town (Josh 19:13, 2 Kgs 14:25), and the Levitical
+    // "Gath Rimmon" (Josh 19:45, 21:24-25, 1 Chr 6:69). "Moresheth-gath" is Micah's town (Mic
+    // 1:14) — the qualifier is what makes it a different place, so the half-name is not a link.
+    { after: /^[\s-](?:Hepher|Rimmon)\b/i, to: null },
+    { before: /\bMoresheth[\s-]$/i, to: null },
   ],
   damascus: [
     { phrase: "Damascus Gate", to: null },
@@ -1952,7 +3531,16 @@ const NAME_CONTEXT_RULES: Record<string, NameContextRule[]> = {
   // sentence naming a university. Keyed on the following word rather than on a phrase, because the
   // name is written several ways ("Trinity Southwest University", "Trinity Southwest") and
   // "Southwest" is what disambiguates all of them. The doctrine keeps every other mention it has.
-  trinity: [{ after: /^\s+Southwest\b/, to: null }],
+  // A second institution of the same shape, added with the versions-and-minuscules batch: W. H.
+  // Ferrar and T. K. Abbott were fellows of Trinity College Dublin, and the Codex Montfortianus is
+  // still in its library, so the manuscript articles name the college and were linking its first
+  // word to the doctrine. A phrase pin here rather than a following-word pattern, because the
+  // college is written both "Trinity College Dublin" and "Trinity College in Dublin" and "College"
+  // is what disambiguates both. No WEB verse contains "Trinity" at all.
+  trinity: [
+    { after: /^\s+Southwest\b/, to: null },
+    { phrase: "Trinity College", to: null },
+  ],
 
   // ── ADDED WITH THE JUDEAN DESERT MANUSCRIPT ARTICLES ───────────────────────────────────────
   //
@@ -1965,6 +3553,120 @@ const NAME_CONTEXT_RULES: Record<string, NameContextRule[]> = {
   goshen: [
     { after: /^-Gottstein\b/, to: null },
   ],
+
+  // ── ADDED WITH THE MASORETIC AND MEDIEVAL HEBREW MANUSCRIPTS ────────────────────────────────
+  //
+  // Four keys that had no block at all until this batch. Every one was found by enumerating what
+  // the new articles actually render, with scripts/name-linker/links-for.mjs, BEFORE the commit —
+  // which is the only instrument that sees a fault of this shape. The snapshot cannot: a wrong new
+  // link arrives as a row that was not there before, and so does every good one. modern-names.mjs
+  // cannot either: none of these four sits inside a modern personal name.
+  //
+  // Two of them were live faults on origin/main, not faults this batch introduced.
+
+  // Aaron ben Moses ben Asher, the Masorete who pointed the Aleppo Codex, and Moses ben Asher his
+  // father, whose colophon the Cairo Codex carries. See BEN_PATRONYMIC_AFTER above for why a
+  // pattern is safe here where a pattern usually is not.
+  aaron: [BEN_PATRONYMIC_AFTER],
+
+  // "Yeshua ben Galgula", the officer commanding at Wadi Murabba'at, to whom Shimon bar Kosiba
+  // wrote the letter quoted on `bar-kokhba-letters`. "Yeshua" is a registered alternate name for
+  // Jesus of Nazareth, so without this the rebel commander's subordinate linked to Christ.
+  yeshua: [BEN_PATRONYMIC_AFTER],
+
+  // "Simeon ben Koseba, Prince of Israel", the rebel leader's signature, quoted from the excavation
+  // publication on `bar-kokhba-letters`. The BEN rule is what fires there. The `bar Kosiba` line
+  // below fires on NOTHING in the corpus today — checked, both before and after this batch — and is
+  // here because the same article and the timeline article between them write the name four ways
+  // and only one of them is currently covered. Recorded as defensive rather than described as a
+  // fix, because it is not one.
+  simeon: [
+    BEN_PATRONYMIC_AFTER,
+    { after: /^\s+bar\s+Ko[sz]iba\b/, to: null },
+  ],
+
+  // LIVE FAULT, and one this batch did NOT introduce: the timeline article on the Bar Kokhba
+  // revolt writes "death of Simon bar Kosiba" in its dating notes, and bare "Simon" has been
+  // resolving to Simon Peter there since the article was published — one row in prose-links.tsv,
+  // measured before and after. Keyed on the patronymic itself and NOT on a bare "bar", because
+  // Matthew 16:17 reads "Simon Bar Jonah" and a loose rule would take the apostle's own verse;
+  // "bar Ko" cannot reach it. Spelled to catch Kosiba and Koziba, which the sources use
+  // interchangeably. `simon` gets no BEN_PATRONYMIC for the same reason: "Simon b." is not a shape
+  // anyone writes, and the rule would earn nothing against that risk.
+  simon: [{ after: /^\s+[Bb]ar\s+Ko[sz]iba\b/, to: null }],
+
+  // "the Jewish Encyclopedia" — the 1901-1906 reference work, quoted on `bar-kokhba-letters` for
+  // the forms of the rebel leader's name. A title, not a people, and the MODERN WORK TITLES ruling
+  // covers it: a title does not name whoever it is named after. Pinned on the phrase, for the
+  // reason that block gives — nothing in the neighbouring words says "title". Note that the same
+  // shape is live elsewhere and is NOT fixed here: "Documents of Jewish Sectaries" on
+  // `damascus-document` still links, and so do "the Jerusalem Talmud" and "the Babylonian Talmud"
+  // in four other records. Those are a corpus-wide ruling, not a content edit, and are escalated
+  // rather than swept up in a content batch.
+  // Keyed on the MATCHED SURFACE, which is "jewish" — the adjective is what `topic:jews`
+  // registers and what the linker looks up, not the record's id.
+  jewish: [{ phrase: "Jewish Encyclopedia", to: null }],
+
+  // Aquila of Sinope, the second-century Jewish translator whose very literal Greek version
+  // survives in Cairo Genizah palimpsests and stands at the end of the line the Greek Minor
+  // Prophets Scroll begins. A DIFFERENT MAN from Aquila the tentmaker of Acts 18, who owns the key
+  // and who is who the app was sending readers to from three articles. There is no record for the
+  // translator, so this is a suppression: no link says nothing, and a link to the tentmaker says
+  // something false. The second rule is the MODERN WORK TITLES ruling again — D. Barthélemy's 1963
+  // book is named for him, and a title is not a man. No WEB verse contains "Aquila of".
+  // "Aleppo's Jewish elders" — the community leaders who put about the story that the codex had
+  // burned, inside a sentence quoted verbatim from P. Sanders. `topic:jewish-elders` is the
+  // Second Temple body of Luke and Acts, not twentieth-century Syrian community leaders, and a
+  // quotation cannot be reworded to suit the linker. The app's own prose around it now writes
+  // "the community in Aleppo", which needs no rule.
+  elders: [{ phrase: "Aleppo's Jewish elders", to: null }],
+
+  "dead sea": [{ phrase: "Dead Sea Discoveries", to: null }], // the journal, not the sea
+
+  aquila: [
+    { after: /^\s+of Sinope\b/, to: null },
+    { phrase: "Les Devanciers d'Aquila", to: null },
+  ],
+
+  // ── FOUR FOUND ON THE PUBLIC PAGES, WHICH NOTHING HERE HAD EVER MEASURED ────────────────────
+  //
+  // Added 2026-09-10 with `snapshot/seo-only-links.tsv`. All four are on the surface
+  // `scripts/seo/render.mjs` linkifies and the app renders as plain text — `person.summary`,
+  // `person.occupation` and `location.history.rulers[].name` — so every one of them had been live
+  // at www.capstonebible.com, readable by anyone with no login, since the record was written. The
+  // snapshot that now covers that surface would have baselined all four as correct, which is why
+  // they are fixed in the commit that adds it rather than after it. Two of the four are on the
+  // ruler names, a field NOTHING enumerated until this commit: `modern-names.mjs` read `l.rulers`
+  // where the type is `LocationHistory.rulers`, so its sweep of that field matched nothing, every
+  // time it ran.
+  //
+  // Each is a phrase pin, not a pattern, for the reason the MODERN WORK TITLES block gives: the
+  // words around them say nothing that means "this is a title" or "this is a different place", so
+  // anything broader would reach past the sentence it is meant to fix. Each has a prose case in
+  // cases.mjs quoting the string verbatim, because a prose case is the only cover a link on this
+  // surface can have that survives a rewrite of the sentence.
+
+  // Rabbah of the Ammonites — modern Amman — was refounded as PHILADELPHIA by Ptolemy II
+  // Philadelphus, in the Transjordan. `philadelphia-asia` is the Lydian city of Revelation 3,
+  // 1,100km away, and that is where the reader of /place/rabbah was being sent.
+  philadelphia: [{ phrase: "Renamed Philadelphia under Ptolemy II Philadelphus", to: null }],
+
+  // "Colonia Caesarea Antiochia" is Pisidian Antioch's OWN Latin name after Augustus refounded it.
+  // The "Caesarea" in it is the honorific inside that name, not Caesarea Maritima on the coast —
+  // the same shape as a name inside a book title, and on the ruler line of /place/antioch-pisidia
+  // it was sending readers 700km to the wrong city.
+  caesarea: [{ phrase: "Colonia Caesarea Antiochia", to: null }],
+
+  // Luke 1:5 puts Zechariah in "the division of Abijah" — the eighth of the twenty-four priestly
+  // courses of 1 Chronicles 24:10, named for a descendant of Aaron. Not Abijah king of Judah, who
+  // is the only Abijah the dataset has a record for, and who is who /person/zechariah-father-of-
+  // john-baptist has been sending readers to under "Occupation". No record, so: no link.
+  abijah: [{ phrase: "division of Abijah", to: null }],
+
+  // Judges 6:15 makes Gideon a Manassite — the TRIBE of Manasseh, Joseph's son. The dataset's only
+  // Manasseh is the king of Judah, who lived some five centuries later, and /person/gideon opened
+  // by sending readers to him. There is no tribe record to point at, so this is a suppression.
+  manasseh: [{ phrase: "A reluctant judge from Manasseh", to: null }],
 };
 
 /** Do the words around this match say who it is — or that it is nobody?

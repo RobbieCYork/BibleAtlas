@@ -1393,7 +1393,7 @@ export const topics: Topic[] = [
       },
       {
         tier: "institution",
-        label: "Excavation report: Antonio Frova, \"L'iscrizione di Ponzio Pilato a Caesarea\"",
+        label: "Excavation report: Antonio Frova, \"L'iscrizione di Ponzio Pilato a Cesarea\"",
         credit: "Italian Archaeological Mission at Caesarea (Università di Milano)",
         detail: "Rendiconti dell'Istituto Lombardo 95 (1961), 419-434 — the excavating body's own first publication of the inscription; also catalogued as AE 1963, 104. Print only",
         supports: "The 1961 find and the reading of the text",
@@ -1435,7 +1435,7 @@ export const topics: Topic[] = [
         heading: "The Line Everyone Argues About",
         paragraphs: [
           "The phrase is written BYTDWD, and the argument turns on it. Ancient Aramaic scribes used a small mark to separate words, and there is no separator inside BYTDWD — so, strictly, the stone says one continuous string of consonants. The large majority of epigraphers read it as bet-David, \"house of David,\" the standard ancient Near Eastern way of naming a dynasty by its founder, exactly as the same stele names Israel by the dynastic label the Assyrians used. If that reading is right, this is a hostile foreign king in roughly 840 BC referring to the ruling family of Judah as David's house — the earliest surviving reference to David outside the Bible.",
-          "A minority has pushed back. Philip Davies and others proposed that BYTDWD might be a place name (\"Bethdod\") or a phrase such as \"house of the beloved\" or \"house of the kettle,\" and argued that a dynastic reading assumes what it sets out to prove. That case has not persuaded most specialists — no such place is otherwise known, and the parallel dynastic usage in the same inscription tells against it — but it is a real scholarly position held by credentialed people, not a fringe stunt, and it deserves to be named rather than waved away. A separate accusation of forgery made shortly after the discovery has, by contrast, found essentially no support; the fragments came out of a controlled dig in datable stratigraphy.",
+          "A minority has pushed back. Philip Davies proposed that BYTDWD is a place name rather than a dynasty, on the analogy of bytlhm for Bethlehem; others have proposed that it means \"house of the kettle\" or \"house of the uncle.\" The shared argument is that a dynastic reading assumes what it sets out to prove. That case has not persuaded most specialists — no such place is otherwise known, and the parallel dynastic usage in the same inscription tells against it — but it is a real scholarly position held by credentialed people, not a fringe stunt, and it deserves to be named rather than waved away. A separate accusation of forgery made shortly after the discovery has, by contrast, found essentially no support; the fragments came out of a controlled dig in datable stratigraphy.",
         ],
       },
       {
@@ -1490,7 +1490,16 @@ export const topics: Topic[] = [
         label: "Bible Odyssey (SBL): The Tel Dan Inscription",
         url: "https://www.bibleodyssey.org/articles/the-tel-dan-inscription/",
         credit: "Society of Biblical Literature",
-        supports: "The majority reading of BYTDWD as \"house of David\", and the minority case against it",
+        detail: "Read in full. It is the source of the two alternative glosses given in this article: \"Some scholars argue that the Aramaic phrase 'BYTDWD (bet david)' may not mean 'house of David,' and they propose 'house of the kettle' or 'house of the uncle' instead. However, the majority of scholars consider 'house of David' to be the only compelling translation\"",
+        supports: "The majority reading of BYTDWD as \"house of David\", and the minority glosses of it",
+      },
+      {
+        tier: "reference",
+        label: "Biblical Archaeology Society: \"The Tel Dan Inscription: The First Historical Evidence of the King David Bible Story\"",
+        url: "https://www.biblicalarchaeology.org/daily/biblical-artifacts/artifacts-and-the-bible/the-tel-dan-inscription-the-first-historical-evidence-of-the-king-david-bible-story/",
+        credit: "Biblical Archaeology Society",
+        detail: "Read in full. The source for what Philip Davies actually proposed in Biblical Archaeology Review 20:4 (1994): that \"the Hebrew term bytdwd referred to a specific place (akin to bytlhm for Bethlehem) rather than the ancestral dynasty of David\". His own article was not opened here",
+        supports: "Davies's place-name proposal, stated as he made it",
       },
       {
         tier: "encyclopedic",
@@ -1836,7 +1845,7 @@ export const topics: Topic[] = [
         tier: "scholarly",
         label: "\"Who Owns the Octagonal Prism of Sennacherib, BM 103000? A Dealer's Dispute\"",
         url: "https://www.cambridge.org/core/journals/iraq/article/making-of-a-collection/3EC89827B527628B62F1DC2808B8BEF5",
-        credit: "Reem Ait Said-Ghanem, in Iraq 85 (2023), British Institute for the Study of Iraq / Cambridge University Press",
+        credit: "Nadia Ait Said-Ghanem, in Iraq 85 (2023), 11-28, British Institute for the Study of Iraq / Cambridge University Press; open access under CC BY",
         detail: "On the Sennacherib prisms and the market they came through. States that in 1855 the Taylor Prism (BM 91032) \"was purchased by the British Museum from Sir Henry Rawlinson\", who \"had himself bought it from Mrs Taylor, the widow of Colonel R. Taylor\" — correcting the common claim that the Museum bought it from the widow directly",
         supports: "The acquisition chain in section one, and that Taylor acquired rather than excavated the prism",
       },
@@ -1869,7 +1878,7 @@ export const topics: Topic[] = [
         heading: "Layard's Obelisk",
         paragraphs: [
           "Austen Henry Layard's excavators uncovered the obelisk in 1846 at Nimrud, the Assyrian city the Bible calls Calah, during the digs that first brought Assyria back into European view. By Layard's own account he had just left the mound when a corner of dark stone appeared and the superintendent of the digging party ordered the spot opened up — so the moment of discovery, strictly, belongs to his workmen rather than to him. It is a slim four-sided pillar of black limestone, just under two metres tall and 45 centimetres to a face, with a stepped top, carved on all four faces with five registers of relief, each register running round the monument as a single scene of foreigners bringing tribute to Shalmaneser III. A cuneiform caption above each register says who is paying. It reached the British Museum in October 1848 and is there still.",
-          "The second register from the top shows a man prostrate on the ground before the Assyrian king, with a line of bearers behind him carrying metal vessels and bars. The caption reads: \"Tribute of Jehu, son of Omri: I received from him silver, gold, a golden bowl, a golden vase with pointed bottom, golden tumblers, golden buckets, tin, a staff for a king, and wooden puruhtu.\"",
+          "The second register from the top shows a man prostrate on the ground before the Assyrian king, with a line of bearers behind him carrying metal vessels and bars. The caption reads, in the Nimrud Project's translation: \"I received tribute from Iaua, son of Omri: silver, gold, a golden bowl, a golden tureen, golden pails, tin, the staffs 'of the king's hand' and a spear.\" Iaua is Jehu. Older renderings of the last two items differ — Luckenbill has javelins, and some print the Akkadian word untranslated — so the wording here is the one the source cited below actually gives.",
         ],
       },
       {
@@ -1912,8 +1921,8 @@ export const topics: Topic[] = [
         label: "Nimrud: Materialities of Assyrian Knowledge Production — the Black Obelisk",
         url: "https://oracc.museum.upenn.edu/nimrud/livesofobjects/blackobelisk/index.html",
         credit: "The Nimrud Project (University College London), published on Oracc",
-        detail: "\"a monument (or stela) carved from black limestone, which stands just under two metres high. It has four sides, each 45 cm wide\"; erected 825 BC; arrived at the British Museum in October 1848 as ME 118885",
-        supports: "The material, dimensions, erection date, museum number and arrival date",
+        detail: "\"a monument (or stela) carved from black limestone, which stands just under two metres high. It has four sides, each 45 cm wide\"; erected 825 BC; arrived at the British Museum in October 1848 as ME 118885. The same page carries the Scene 2 caption quoted in the second section, word for word",
+        supports: "The material, dimensions, erection date, museum number, arrival date, and the wording of the Jehu caption",
       },
       {
         tier: "institution",
@@ -2063,8 +2072,10 @@ export const topics: Topic[] = [
       {
         heading: "Being Careful About What They Prove",
         paragraphs: [
-          "The claim heard most often is that the Isaiah Scroll is word-for-word identical to the Bible we read, proving the text was transmitted perfectly. That overstates it, and the true version is more interesting. The Great Isaiah Scroll agrees with the medieval Masoretic text to a remarkable degree, but it carries something on the order of 1,300 differences — overwhelmingly spelling, word order, and grammatical forms, of the kind that do not change meaning, plus a small number of genuine variants that translators note. The honest summary is that a thousand years of copying introduced far less change than anyone had a right to expect, and that this is a strong result rather than a perfect one.",
+          "The claim heard most often is that the Isaiah Scroll is word-for-word identical to the Bible we read, proving the text was transmitted perfectly. That overstates it, and the true version is more interesting. The Great Isaiah Scroll agrees with the medieval Masoretic text to a remarkable degree, and the differences it does carry are overwhelmingly spelling, word order, and grammatical forms of the kind that do not change meaning, plus a small number of genuine variants that translators note. Totals for how many differences there are circulate widely, and no total is given here: none of the sources behind this article supplies one, and E. Tov's survey of the scholarship on the scroll notes that even the fullest study of its readings, Kutscher's, describes them rather than counting them. The honest summary is that a thousand years of copying introduced far less change than anyone had a right to expect, and that this is a strong result rather than a perfect one.",
           "Two other cautions. First, the scrolls do not show one fixed text; some biblical books circulated in more than one edition. The Jeremiah copies from Cave 4 include a substantially shorter form of the book matching the Greek Septuagint — evidence that the differences between the Hebrew and Greek Bibles go back to real ancient Hebrew editions rather than to careless Greek translators. Second, there is no New Testament among the scrolls. A proposal in the 1970s that a scrap from Cave 7 preserved a few letters of Mark's Gospel attracted headlines and has been rejected by nearly all specialists. And the identification of the Qumran community with the Essenes described by Josephus and Pliny, though still the majority view, is genuinely contested.",
+          "One thing more, because everything above is written from somewhere and this app has not yet said where. These articles are written from the ordinary Protestant evangelical position, whose classic modern statement is careful about exactly this problem rather than embarrassed by it. The Chicago Statement on Biblical Inerrancy, drawn up in Chicago in October 1978 in nineteen articles, affirms that inspiration \"strictly speaking, applies only to the autographic text of Scripture, which in the providence of God can be ascertained from available manuscripts with great accuracy\", that \"copies and translations of Scripture are the Word of God to the extent that they faithfully represent the original\", and denies both \"that any essential element of the Christian faith is affected by the absence of the autographs\" and \"that this absence renders the assertion of Biblical inerrancy invalid or irrelevant\". That statement is one evangelical statement rather than the evangelical creed: it was framed by a particular council in 1978, evangelicals have never all subscribed to it, and nothing argued below depends on its stronger form. Notice what kind of claim it is: one about evidence, made in public, which evidence could in principle embarrass — and the writing on this page is the sort of thing that would embarrass it. Evangelical textual scholars do not hide the difficulty; P. Gurry, who works on the method behind the standard critical edition of the New Testament, concedes it whole in the opening section of his own summary for pastors: \"Since no original document survives for the New Testament and since the existing copies disagree with one another, textual criticism is needed for all twenty-seven books.\" The Hebrew Bible is no different, and this app's own articles set the awkward cases out by name — the book of Jeremiah preserved at Qumran in two lengths, the Cave 4 scroll 4QSam-a supplying a paragraph before 1 Samuel 11 that the New Revised Standard Version prints and no Hebrew Bible has, a trinitarian sentence at 1 John 5:7 that stands in no early Greek manuscript at all. Two different objections live inside that, and they take different answers. The ordinary one is a question of quantity: if the copies disagree, how much is in doubt? To that the manuscripts give their own answer, because the manuscripts that show the variation are also what measure it, and measured rather than asserted it is overwhelmingly spelling, word order and grammatical form, with a small and well-known set of longer passages that every modern translation already prints in a footnote where a reader can see it and judge.",
+          "The second objection is not a question of quantity at all, and counting variants does not touch it. It is that \"the original\" may not be a single recoverable object — that a book which grew over time may have had several states with an equal claim to the word, so that it is not obvious which one textual criticism is even trying to reach. E. J. Epp gave a 1999 study the title \"The Multivalence of the Term 'Original Text' in New Testament Textual Criticism\"; the article itself is behind a paywall and was not read here, so nothing of his argument is reported, only that the question is one the field argues about. This app does not claim to have settled it, and the paragraph above should not be read as if it had. What can honestly be said is narrower, and it is three things. For most books the question is not live: a letter dictated once in Corinth has one original, and the manuscripts of it are copies of that. Where it is live — the two lengths of Jeremiah are the clearest case in this app — the difficulty is real, and evangelicals differ among themselves about how to describe it. And the position stated above is not in fact a claim about a lost archetype only: the same article that ties inspiration to the autographs says in its next breath that copies and translations are the Word of God so far as they faithfully represent the original, which is a claim about the book a reader is actually holding. That is where the weight sits, and a reader is entitled to know that it is a theological answer offered to a textual question rather than a textual answer that closes it. A book that had to be protected from its own manuscript evidence would be in a far worse position than this one is. Where the evidence here is awkward these articles say so, and that is not a concession made reluctantly; it is the only thing that makes the rest of what they say worth reading.",
         ],
       },
     ],
@@ -2124,8 +2135,17 @@ export const topics: Topic[] = [
         tier: "reference",
         label: "Text & Canon Institute: How Much Can the Most Famous Dead Sea Scroll Prove?",
         url: "https://textandcanon.org/how-much-can-the-most-famous-dead-sea-scroll-prove/",
-        credit: "Text & Canon Institute, Phoenix Seminary",
-        supports: "The count of differences between the Great Isaiah Scroll and the Masoretic text in section three",
+        credit: "Anthony Ferguson, Text & Canon Institute, Phoenix Seminary",
+        detail: "11 January 2022, read in full. Ferguson's point is the one the third section makes: early scholars stressed how close 1QIsaa is to the Masoretic Text and current scholars stress the differences, and \"when one removes the minor differences such as spellings, the text of 1QIsaa is quite close to the Masoretic Text\". He gives no count of those differences, and neither does anything else cited here",
+        supports: "The character of the differences between the Great Isaiah Scroll and the Masoretic text in section three",
+      },
+      {
+        tier: "scholarly",
+        label: "E. Tov, \"The Text of Isaiah at Qumran\"",
+        url: "http://www.emanueltov.info/docs/papers/05.isaiah.2008.pdf",
+        credit: "Emanuel Tov, Hebrew University of Jerusalem",
+        detail: "In Hebrew Bible, Greek Bible, and Qumran: Collected Essays (Mohr Siebeck, 2008), 42-56; the author's own free copy, read in full. His survey of the literature on 1QIsaa is the basis for the third section's refusal to give a number: he notes that \"there is no monograph that analyzes all or most of the readings of the scroll comprehensively\", and that E. Y. Kutscher's, which comes closest, \"probably mentions all or most of the differences between MT and the scroll, but describes them mainly on the linguistic level\"",
+        supports: "That no published total of the scroll's differences from the Masoretic text stands behind the ones in circulation",
       },
       {
         tier: "reference",
@@ -2133,6 +2153,43 @@ export const topics: Topic[] = [
         url: "https://textandcanon.org/appreciating-the-diverse-evidence-from-the-dead-sea-scrolls/",
         credit: "Text & Canon Institute, Phoenix Seminary",
         supports: "That some biblical books circulated at Qumran in more than one edition",
+      },
+      {
+        tier: "reference",
+        label: "The Chicago Statement on Biblical Inerrancy (1978)",
+        url: "https://www.alliancenet.org/the-chicago-statement-on-biblical-inerrancy",
+        credit: "International Council on Biblical Inerrancy, Chicago, October 1978",
+        detail:
+          "Article X is quoted in full in section three, and was read on this page and cross-checked word for word against a second independent host before being printed. The statement is the reference point for the position these articles are written from; it is cited, not adopted as a creed, and it is the app's business to state its own position rather than to hide it",
+        supports: "The evangelical position on inspiration, the autographs, and copies",
+      },
+      {
+        tier: "institution",
+        label: "Dallas Theological Seminary Library, Special Collections: Records of the International Council on Biblical Inerrancy",
+        url: "https://library.dts.edu/Pages/TL/Special/ICBI.shtml",
+        credit: "Dallas Theological Seminary Library",
+        detail:
+          "Read in full. The library holds the ICBI's own papers and gives the meeting's date and size: \"Summit I met in Chicago on October 26-28, 1978. Over 300 Christian leaders, theologians and pastors attended and adopted the Chicago Statement on Biblical Inerrancy, consisting of nineteen articles with brief exposition.\" Its scans of the original document are photographs without searchable text, so the wording of Article X is taken from the two hosts above rather than from them",
+        supports: "The date, size and form of the meeting that produced the statement",
+      },
+      {
+        tier: "reference",
+        label: "P. Gurry, \"What Pastors Should Know about Developments in Textual Criticism\"",
+        url: "https://textandcanon.org/what-you-should-know-about-developments-in-nt-textual-criticism/",
+        credit: "Peter J. Gurry, Text & Canon Institute; Associate Professor of New Testament, Midwestern Baptist Theological Seminary",
+        detail:
+          "4 August 2021, read in full. The sentence quoted in section three comes in his opening explanation of what textual criticism is and why it matters, before he turns to what is new, and it is quoted because he concedes the problem before anyone puts it to him. It is not the article's first sentence and the article does not open with it. He is quoted here rather than a critic of the evangelical position for a deliberate reason, stated so a reader can weigh it: the point being made is that this difficulty is not news to the people who hold that position",
+        supports: "That evangelical textual scholars state the difficulty at full strength themselves",
+      },
+      {
+        tier: "scholarly",
+        label: "E. J. Epp, \"The Multivalence of the Term 'Original Text' in New Testament Textual Criticism\"",
+        url: "https://doi.org/10.1017/s0017816000003394",
+        credit: "Eldon Jay Epp, Case Western Reserve University",
+        detail:
+          "Harvard Theological Review 92:3 (1999), 245-281. PAYWALLED and NOT opened. It is cited for one thing only, and that thing is its title: that the question \"what is the original text?\" is one the discipline argues about. No argument of Epp's is stated here, because none was read. The DOI above was checked against Crossref rather than copied from another citation, and it resolves to this article. That is worth saying about a link nobody following the note would ever click",
+        supports: "That the meaning of \"the original text\" is itself contested in the field",
+        paywalled: true,
       },
     ],
   },
@@ -2167,7 +2224,7 @@ export const topics: Topic[] = [
         heading: "The Date, and the Argument About It",
         paragraphs: [
           "Roberts dated the hand to the first half of the second century, around AD 125, comparing the letter forms to dated documentary papyri. That figure has been repeated in study Bibles and apologetics ever since, usually with the conclusion that John's Gospel must have been written and circulating well before AD 100 — which was a genuinely useful point when the fashionable scholarly dating put John in the mid-second century.",
-          "Since then the confidence has been trimmed, and by textual scholars rather than by sceptics of Christianity. In 2005 Brent Nongbri argued in detail that palaeography — dating a manuscript by the shape of its handwriting — simply cannot narrow an undated literary hand to a twenty-five-year window, and that the comparanda Roberts used are consistent with a range running from the early second century into the early third. The John Rylands Library's own record now says the first editor's date was 100-150 CE and that \"recent research points to a date nearer to 200 CE.\" It remains among the earliest identified New Testament fragments; it is no longer safe to treat it as a precisely dated one, and the holding library has stopped doing so.",
+          "Since then the confidence has been trimmed, and by textual scholars rather than by sceptics of Christianity. In 2005 Brent Nongbri argued in detail that palaeography — dating a manuscript by the shape of its handwriting — simply cannot narrow an undated literary hand to a twenty-five-year window, and that the comparanda Roberts used are consistent with a range running from the early second century into the early third. The John Rylands Library's own record now says the first editor's date was 100-150 CE and then, in one sentence, both halves of where that leaves things: \"Recent research points to a date nearer to 200 CE, but there is as yet no convincing evidence that any earlier fragments from the New Testament survive.\" It remains among the earliest identified New Testament fragments; it is no longer safe to treat it as a precisely dated one, and the holding library has stopped doing so.",
         ],
       },
       {
@@ -2211,7 +2268,7 @@ export const topics: Topic[] = [
         url: "https://www.digitalcollections.manchester.ac.uk/view/MS-GREEK-P-00457/1",
         credit: "The John Rylands Library, University of Manchester",
         detail:
-          "The holding library's own record and images: \"John, Chapter 18, verses 31-33 (recto) and 37-38 (verso)\", \"only measures 8.9 x 6.0 cm\", \"would have been part of a codex\", and \"Recent research points to a date nearer to 200 CE\"",
+          "The holding library's own record and images, read in the raw page: \"John, Chapter 18, verses 31-33 (recto) and 37-38 (verso)\", \"only measures 8.9 x 6.0 cm\", \"would have been part of a codex\", and \"Recent research points to a date nearer to 200 CE, but there is as yet no convincing evidence that any earlier fragments from the New Testament survive\" — a sentence given whole here, because its second half is the library's own qualification of its first",
         supports: "The contents, dimensions, codex format, shelfmark and the library's current dating",
       },
       {
@@ -2261,7 +2318,7 @@ export const topics: Topic[] = [
         heading: "A Mining Magnate's Purchase",
         paragraphs: [
           "Alfred Chester Beatty was an American-born mining engineer who made a fortune in copper and spent a great deal of it collecting manuscripts. In the early 1930s, with further leaves following in the middle of the decade, he acquired the remains of eleven papyrus codices containing Greek biblical texts. The library's own records say only that he acquired them; the widely repeated account that they came through Cairo dealers is secondary. What is not in dispute is that no excavation produced them and their scribes and place of production are recorded as unknown, which is a real limitation on what can be said about where and how they were used. Most are in the Chester Beatty in Dublin; some leaves from the same codices ended up at the University of Michigan.",
-          "Three matter most for the New Testament, and the honest way to describe them is by what survives rather than by what they once were. P45 held all four Gospels and Acts, and 30 of its original 112 leaves survive — the earliest undeniable four-gospel codex. P46 is the oldest substantially complete copy of Paul's letters: 86 of its original 112 folios survive, 56 in Dublin and 30 at Michigan. P47 preserves a continuous run of Revelation 9:10 to 17:2, and is the earliest substantial papyrus of that book. All three are dated to the third century AD. Others in the group preserve Old Testament books in Greek, including Genesis, Numbers, Deuteronomy, Isaiah, Jeremiah, Ezekiel, Daniel, and Esther.",
+          "Three matter most for the New Testament, and the honest way to describe them is by what survives rather than by what they once were. P45 held all four Gospels and Acts, and thirty of its leaves survive — the earliest undeniable four-gospel codex. P46 is the oldest substantially complete copy of Paul's letters: eighty-six leaves survive, 56 in Dublin and 30 at Michigan. How many leaves either codex originally had is a reconstruction and not a count, and the published figures differ from one another, so this article gives only what is still there. P47 preserves a continuous run of Revelation 9:10 to 17:2, and is the earliest substantial papyrus of that book. All three are dated to the third century AD. Others in the group preserve Old Testament books in Greek, including Genesis, Numbers, Deuteronomy, Isaiah, Jeremiah, Ezekiel, Daniel, and Esther.",
         ],
       },
       {
@@ -2295,7 +2352,7 @@ export const topics: Topic[] = [
       manuscriptType: "Papyrus codices, written in an uncial hand",
       language: "Koine Greek",
       contents:
-        "Eleven codices in all. P45: the four Gospels and Acts, of which 30 of the original 112 leaves survive. P46: the Pauline letters, of which 86 of the original 112 folios survive — 56 in Dublin and 30 at the University of Michigan; the surviving leaves do not include 1-2 Timothy or Titus. P47: a continuous run of Revelation 9:10-17:2. The rest preserve Old Testament books in Greek",
+        "Eleven codices in all. P45: the four Gospels and Acts, of which thirty leaves survive. P46: the Pauline letters, of which eighty-six leaves survive — 56 in Dublin and 30 at the University of Michigan; the surviving leaves do not include 1-2 Timothy or Titus. The original extent of each is a reconstruction rather than a count, and is not given here. P47: a continuous run of Revelation 9:10-17:2. The rest preserve Old Testament books in Greek",
       origin: "Unknown — the Chester Beatty records the scribe and place of production as unknown; the codices are generally taken to be Egyptian",
       findSite: "Not excavated. No findspot is recorded",
       foundYear: "Acquired in the early 1930s, with further leaves of P46 in the mid-1930s",
@@ -2312,7 +2369,7 @@ export const topics: Topic[] = [
         label: "The Chester Beatty, Dublin: catalogue records for BP I, BP II and BP III",
         url: "https://chesterbeatty.ie/",
         credit: "The Chester Beatty, Dublin",
-        detail: "The library's own catalogue descriptions give the third-century date, the surviving leaf counts (30 of 112 for P45; 86 of 112 for P46, split 56 Dublin / 30 Michigan), the extent of P47 as Revelation 9:10-17:2, and scribe and production place as \"Unknown\". Its online viewer was returning errors when this article was checked",
+        detail: "The library's own catalogue descriptions give the third-century date, the surviving leaf counts (thirty for P45; eighty-six for P46, split 56 Dublin / 30 Michigan), the extent of P47 as Revelation 9:10-17:2, and scribe and production place as \"Unknown\". Its online viewer was returning errors when this article was checked. It does not state how many leaves either codex began with, and neither does anything else that was opened here — the published reconstructions disagree — so no such figure appears in this article",
         supports: "The contents, the honest surviving extents, the date and the split with Michigan",
       },
       {
@@ -2535,7 +2592,12 @@ export const topics: Topic[] = [
   {
     id: "masoretic-text",
     name: "Masoretic Text",
-    alternateNames: ["Aleppo Codex", "Leningrad Codex"],
+    // "Aleppo Codex" and "Leningrad Codex" were registered HERE until those two manuscripts had
+    // records of their own. They MOVE to `aleppo-codex` and `leningrad-codex` rather than being
+    // added there, so the six links each already carries — in the introductions to Genesis, Hosea,
+    // Joel and Obadiah, and in two topic articles — repoint instead of multiplying. Do not add them
+    // back. Same move batch 10 made for "Great Isaiah Scroll".
+    alternateNames: [],
     category: "manuscript",
     role: "The Standard Hebrew Bible, Fixed c. AD 600-1000",
     summary:
@@ -2551,8 +2613,8 @@ export const topics: Topic[] = [
       {
         heading: "Two Manuscripts Almost Everything Rests On",
         paragraphs: [
-          "The Aleppo Codex, written around AD 930 and vocalised by Aaron ben Asher himself, was regarded as the finest copy in existence; Maimonides used it. It was kept for centuries in the synagogue at Aleppo, and in riots there in 1947 a large part of it was lost, including almost all of the Torah. What survives is in Jerusalem.",
-          "The Leningrad Codex, copied in Cairo in AD 1008 and now in the National Library of Russia in St Petersburg, is therefore the oldest complete Masoretic Bible. It is the base text of the standard scholarly edition, Biblia Hebraica Stuttgartensia, which means it stands behind the Old Testament of nearly every English Bible on a modern shelf. A reader opening Genesis in almost any translation is reading, at one remove, a manuscript finished in Egypt in the eleventh century.",
+          "The Aleppo Codex, written around AD 930 and vocalised, on the testimony of a colophon added about a century later, by Aaron ben Asher himself, was regarded as the finest copy in existence; Maimonides appears to have used it. It was kept for centuries in the synagogue at Aleppo, and in riots there in 1947 a large part of it was lost, including almost all of the Torah. What survives is in Jerusalem.",
+          "The Leningrad Codex, copied in Fustat in Egypt about AD 1008 — several translations of its colophon say Cairo, and the article on the codex sets out why that is wrong — and now in the National Library of Russia in St Petersburg, is therefore the oldest complete Masoretic Bible. It is the base text of the standard scholarly edition, Biblia Hebraica Stuttgartensia, which means it stands behind the Old Testament of nearly every English Bible on a modern shelf. A reader opening Genesis in almost any translation is reading, at one remove, a manuscript finished in Egypt in the eleventh century.",
         ],
       },
       {
@@ -2579,7 +2641,7 @@ export const topics: Topic[] = [
       language: "Hebrew, with Aramaic in parts of Daniel and Ezra",
       contents:
         "The Hebrew Bible, with the vowel points, cantillation accents and marginal masorah the Masoretes added to an inherited consonantal text. The Aleppo Codex is no longer complete — a large part of it, including almost all of the Torah, was lost in 1947 — so the Leningrad Codex is the oldest complete Masoretic Bible",
-      origin: "Tiberias, on the Sea of Galilee, and Babylonia; the Leningrad Codex itself was copied in Cairo",
+      origin: "Tiberias, on the Sea of Galilee, and Babylonia; the Leningrad Codex itself was copied in Fustat, in Egypt",
       findSite: "Not applicable. The Masoretic tradition was never lost and never found — it was copied continuously by Jewish scribes",
       foundYear: "Not applicable",
       foundBy: "Not applicable",
@@ -2748,7 +2810,7 @@ export const topics: Topic[] = [
       {
         heading: "The Date Is Disputed",
         paragraphs: [
-          "The traditional dating, around AD 170-200, rests on the writer's remark that the Shepherd of Hermas was composed \"very recently, in our own times,\" during his brother's episcopate — which places the author within a generation of the 140s or 150s. That reading has been standard since the nineteenth century.",
+          "The traditional dating, around AD 170-200, rests on the writer's remark that the Shepherd of Hermas was written \"very recently, in our times, in the city of Rome\" — the translation is E. Schnabel's — during his brother's episcopate — which places the author within a generation of the 140s or 150s. That reading has been standard since the nineteenth century.",
           "It is not unanimous. Albert Sundberg in 1973 and Geoffrey Hahneman in 1992 argued that the fragment fits far better among fourth-century Eastern canon lists, and that the Hermas remark could have been copied from an earlier source. Most specialists have not been persuaded and the second-century Roman dating remains the majority view, but the alternative is a serious scholarly position, and an argument that leans hard on this document as second-century evidence should acknowledge that it is doing so."
         ],
       },
@@ -2863,7 +2925,7 @@ export const topics: Topic[] = [
       findSiteKind: "location",
       foundYear: "Not recorded. The tablets reached the British Museum in the nineteenth century through the antiquities trade",
       foundBy: "No finder and no excavator is recorded for any of them",
-      objectDate: "Later Babylonian period. Wiseman's edition is explicit that the script \"does not of itself allow any precise dating\", so no date should be put on the copy itself; the events recorded on BM 21946 run from 605 to 594 BC",
+      objectDate: "Later Babylonian period. Wiseman's edition is explicit that the script \"does not of itself allow any precise dating\", so no precise date belongs on the copy itself — though he does give an outer bracket for the copies, \"from any time almost contemporary with the events themselves to the end of the Achaemenid rule\". The events recorded on BM 21946 run from 605 to 594 BC",
       objectDateCertainty: "disputed",
       currentLocation: "British Museum, London (BM 21946)",
       unprovenanced: true,
@@ -2874,7 +2936,7 @@ export const topics: Topic[] = [
         label: "D. J. Wiseman, Chronicles of Chaldaean Kings (626-556 B.C.) in the British Museum (1956)",
         url: "https://etana.org/sites/default/files/coretexts/20337.pdf",
         credit: "D. J. Wiseman, published by the Trustees of the British Museum; scan hosted by ETANA",
-        detail: "The first publication of BM 21946, with the year-by-year summary running 605 to 594 BC, and the statement that the script permits no precise dating of the tablets themselves",
+        detail: "The first publication of BM 21946, with the year-by-year summary running 605 to 594 BC. Page 4 carries the sentence quoted here whole: the Neo-Babylonian Chronicle texts \"are written in a small script of a type which does not of itself allow any precise dating but which can mean that they were written from any time almost contemporary with the events themselves to the end of the Achaemenid rule\"",
         supports: "The tablet's contents and date range, its first publication, and the absence of a findspot",
       },
       {
@@ -2906,13 +2968,13 @@ export const topics: Topic[] = [
     category: "discovery",
     role: "Sixth-Century BC Babylonian Building Inscription Naming Belshazzar",
     summary:
-      "A clay foundation cylinder from the ziggurat at Ur in which the last king of Babylon prays for himself and for \"Belshazzar, my firstborn son\" — the man who, until the nineteenth century, was known only from the book of Daniel.",
+      "A clay foundation cylinder from the ziggurat at Ur in which the last king of Babylon prays for himself and for \"Belshazzar, (my) first-born son\" — the man who, until the nineteenth century, was known only from the book of Daniel.",
     sections: [
       {
         heading: "The Problem Daniel 5 Used to Have",
         paragraphs: [
           "Daniel 5 tells of a feast held by Belshazzar, king of Babylon, interrupted by a hand writing on the wall, and ending that same night with the king dead and the city in Persian hands. For a long time this was one of the standard examples of the Bible getting history wrong. Greek and Roman historians named the last king of Babylon as Nabonidus, and none of them had ever heard of a Belshazzar. Daniel also has Belshazzar offer Daniel \"the third ruler in the kingdom\" as a reward, which looked like an odd way to describe second place.",
-          "Then the cuneiform record began to be read. Clay cylinders inscribed for Nabonidus, buried in the fabric of temples he restored, turned up at Ur and elsewhere from the 1850s onward. The one that matters here came out of the ziggurat at Ur in 1854, recovered by J. G. Taylor, the British vice-consul at Basra — the same man who later found the Kurkh Monolith, and one whose initials are very often miscited as J. E. — and it closes with a prayer asking the moon god to preserve the king, and then, in the same breath: \"as for Belshazzar, my first-born son, my own offspring, have the fear of your great divinity placed in his heart.\" Belshazzar was real, and he was Nabonidus's son. It is worth being precise about which cylinder this is, because popular accounts often attach the Belshazzar prayer to Nabonidus's better-known cylinder from Sippar; that one is a different inscription and does not mention him."
+          "Then the cuneiform record began to be read. Clay cylinders inscribed for Nabonidus, buried in the fabric of temples he restored, turned up at Ur and elsewhere from the 1850s onward. The one that matters here came out of the ziggurat at Ur in 1854, recovered by J. G. Taylor, the British vice-consul at Basra — the same man who later found the Kurkh Monolith, and one whose initials are very often miscited as J. E. — and it closes with a prayer asking the moon god to preserve the king, and then, in the same breath: \"Moreover, with regard to Belshazzar, (my) first-born son, my own offspring, have the fear of your great divinity placed in his heart so that he does not commit a(ny) sin.\" Belshazzar was real, and he was Nabonidus's son. It is worth being precise about which cylinder this is, because popular accounts often attach the Belshazzar prayer to Nabonidus's better-known cylinder from Sippar; that one is a different inscription and does not mention him."
         ],
       },
       {
@@ -2957,7 +3019,7 @@ export const topics: Topic[] = [
         label: "Royal Inscriptions of Babylonia online: Nabonidus 32 (the Ur cylinder)",
         url: "https://oracc.museum.upenn.edu/ribo/babylon7/Q005429/html",
         credit: "RIBo / RINBE 2, published on Oracc (University of Pennsylvania, LMU Munich)",
-        detail: "The scholarly edition, with transliteration and translation. Column ii 23-24: \"Moreover, with regard to Belshazzar, (my) first-born son, my own offspring, have the fear of your great divinity placed in his heart\"",
+        detail: "The scholarly edition, with transliteration and translation. Column ii 23-26: \"Moreover, with regard to Belshazzar, (my) first-born son, my own offspring, have the fear of your great divinity placed in his heart so that he does not commit a(ny) sin. May he be sated with happiness in life\". The wording quoted in the first section is this one, RIBo's own",
         supports: "The wording of the Belshazzar prayer, and that it stands on the Ur cylinder specifically",
       },
       {
@@ -3376,10 +3438,10 @@ export const topics: Topic[] = [
       },
       {
         tier: "primary",
-        label: "George Smith, The Chaldean Account of Genesis",
-        url: "https://www.gutenberg.org/files/60559/60559-h/60559-h.htm",
-        credit: "George Smith; this full text is the 1880 edition revised by A. H. Sayce, of a work first published in 1876",
-        detail: "Smith's own account, including his record of the lecture \"a meeting of the Society of Biblical Archaeology, December 3rd, 1872\". Public domain",
+        label: "George Smith, The Chaldean Account of Genesis (first edition, 1876)",
+        url: "https://archive.org/details/thechaldeanaccou00smituoft",
+        credit: "George Smith",
+        detail: "Public domain, read in full at the Internet Archive. Smith's own first-person account of the announcement: \"I now had the account of the Deluge in the state in which I published it at the meeting of the Society of Biblical Archaeology, December 3rd, 1872.\" The widely circulated Gutenberg text of this book is A. H. Sayce's revision of 1880, which recasts that sentence in the third person and at \"a meeting\" — so Smith's own words are taken from the edition he wrote",
         supports: "The date and venue of Smith's announcement, and his own description of the flood text",
       },
       {
@@ -3407,7 +3469,7 @@ export const topics: Topic[] = [
       {
         heading: "\"When On High\"",
         paragraphs: [
-          "The poem is named for its opening words, enuma elish, \"when on high.\" It survives on seven clay tablets, mostly from Ashurbanipal's library at Nineveh, and was published by George Smith in 1876, four years after his flood discovery. Smith, working from what he had, wrote only that the series ran to \"at least seven tablets\"; the seven-tablet shape now taken as standard was an inference before it was a count. A ritual text describes the poem being recited before Marduk's statue at the New Year festival, which tells you what it was for — a civic liturgy exalting Babylon and its god as much as a story about origins. That ritual text is itself very late, from the Parthian period, so the recitation is well attested for the end of Babylonian religion and inferred backwards for its beginning.",
+          "The poem is named for its opening words, enuma elish, \"when on high.\" It survives on seven clay tablets, mostly from Ashurbanipal's library at Nineveh, and was published by George Smith in 1876, four years after his flood discovery. The seven is worth pausing on, because Smith did not write it. From the fragments he had he concluded that \"the series included at least twelve tablets\", counting among them \"fragments of three tablets on the creation and fall of man\" and fragments \"relating to the war between the gods and evil spirits\". It was A. H. Sayce, revising the book in 1880 — four years after Smith's death — who struck those two groups out and wrote, in the same sentence frame, that the series included \"at least seven tablets\". The number everyone now uses is a later editor's subtraction rather than the discoverer's count, and it happens to be the one that held. A ritual text describes the poem being recited before Marduk's statue at the New Year festival, which tells you what it was for — a civic liturgy exalting Babylon and its god as much as a story about origins. That ritual text is itself very late, from the Parthian period, so the recitation is well attested for the end of Babylonian religion and inferred backwards for its beginning.",
           "It begins before anything is named, with only the mingled fresh and salt waters, Apsu and Tiamat. Younger gods are born, are noisy, and are resented; Apsu plots to destroy them and is killed first. Tiamat responds by breeding monsters and making war, and the terrified gods can find no champion until Marduk agrees — on condition that they make him supreme over all of them. He kills Tiamat, splits her body like a shellfish, and makes the sky from one half and the earth from the other; he sets the stars in their courses and fixes the calendar; and finally, so that the gods need not labour, humanity is made from the blood of the slain god who led Tiamat's revolt.",
         ],
       },
@@ -3454,16 +3516,24 @@ export const topics: Topic[] = [
         label: "Ancient Mesopotamian Gods and Goddesses: Marduk",
         url: "https://oracc.museum.upenn.edu/amgg/listofdeities/marduk/",
         credit: "Oracc (University of Pennsylvania), a peer-reviewed academic corpus project",
-        detail: "\"A ritual text dating to the Parthian period describes how Enuma elish was recited in front of Marduk's statue during the New Year's festival\"",
+        detail: "\"A ritual text dating to the Parthian period describes how Enūma eliš was recited in front of Marduk's statue during the New Year's festival, which also involved a ritual slapping of the king\"",
         supports: "The akitu recitation, and the fact that the evidence for it is a very late text",
       },
       {
         tier: "primary",
-        label: "George Smith, The Chaldean Account of Genesis (first published 1876)",
+        label: "G. Smith, The Chaldean Account of Genesis (London: Sampson Low, 1876)",
+        url: "https://archive.org/details/thechaldeanaccou00smituoft",
+        credit: "George Smith, Department of Oriental Antiquities, British Museum — the first edition, published in the year he died",
+        detail: "Public domain, read in full at the Internet Archive. Smith sorts the creation fragments into seven groups and concludes that \"these fragments indicate that the series included at least twelve tablets, the writing on each tablet being in one column on the front and back\". The two groups Sayce afterwards removed — \"fragments of three tablets on the creation and fall of man\" and \"fragments of tablets relating to the war between the gods and evil spirits\" — are still standing here",
+        supports: "The 1876 publication, and Smith's own count of the tablets in his own words",
+      },
+      {
+        tier: "primary",
+        label: "The Chaldean Account of Genesis, a new edition revised by A. H. Sayce (1880)",
         url: "https://www.gutenberg.org/files/60559/60559-h/60559-h.htm",
-        credit: "George Smith; this full text is the 1880 edition revised by A. H. Sayce",
-        detail: "Smith's own publication of the creation series, including his note that it ran to \"at least seven tablets\" and the Ashurbanipal colophon tying it to the Nineveh library. Public domain",
-        supports: "The 1876 publication, the seven-tablet structure and the Nineveh provenance",
+        credit: "A. H. Sayce, then Deputy-Professor of Comparative Philology at Oxford, revising Smith's book; his preface is dated 21 May 1880",
+        detail: "Public domain, read in full. This is the edition that says \"at least seven tablets\": Sayce deleted Smith's last two groups of fragments and changed the number in the sentence that survived them, leaving the rest of Smith's wording standing. It also carries the Ashurbanipal colophon tying the series to the Nineveh library. Smith's own text is in the 1876 edition above, and a sentence found only here belongs to his editor",
+        supports: "The seven-tablet structure, which is Sayce's revision rather than Smith's count, and the Nineveh provenance",
       },
       {
         tier: "reference",
@@ -4200,7 +4270,7 @@ export const topics: Topic[] = [
       {
         heading: "Champollion Reads a Wall",
         paragraphs: [
-          "Nobody discovered the Bubastite Portal. It is a gateway in the Precinct of Amun-Re at Karnak, between the temple of Ramesses III and the second pylon, and it has stood above ground and visible since the Twenty-Second Dynasty put it there. What has a date is the reading. In 1828, six years after the Rosetta breakthrough, Jean-Francois Champollion visited Karnak on his Egyptian expedition and connected the Sheshonq of the relief with the Sesonchis of the Egyptian historian Manetho and with the Shishak of 1 Kings 14 — and wrote, in the account published the following year, that the identity was confirmed.",
+          "Nobody discovered the Bubastite Portal. It is a gateway in the Precinct of Amun-Re at Karnak, between the temple of Ramesses III and the second pylon, and it has stood above ground and visible since the Twenty-Second Dynasty put it there. What has a date is the reading. In 1828, six years after the Rosetta breakthrough, Jean-Francois Champollion visited Karnak on his Egyptian expedition and connected the Sheshonq of the relief with the Sesonchis of the Egyptian historian Manetho and with the Shishak of 1 Kings 14 — and wrote, in a letter from Thebes dated 24 November 1828, that the identity was thereby confirmed in the most satisfactory manner.",
           "That connection has held for nearly two centuries and is the mainstream position of Egyptology. A second reading of Champollion's has not held, and it matters more than it looks; it is dealt with in the third section below. The standard modern record of the relief is not Champollion's but the Epigraphic Survey's, published as Reliefs and Inscriptions at Karnak, Volume III: The Bubastite Portal in 1954 — a full set of measured line drawings that anyone can consult, free, today.",
         ],
       },
@@ -4214,7 +4284,7 @@ export const topics: Topic[] = [
       {
         heading: "Jerusalem Is Not on the List, and Ring 29 Is Not Judah",
         paragraphs: [
-          "Champollion read name-ring 29 as \"Judah the Kingdom\", and that reading is rejected. The letters are now read as a place name — commonly Yad hammelek, \"Hand of the King\", or Juttah of the King — and the ring is one town among many, not a nation. More importantly, Jerusalem does not appear anywhere in the preserved list. The rings run through the lowlands and the north and pass over the central hill country of Judah as though it were not there. This is stated the wrong way round in a great deal of popular writing, and a reader who has been told that Karnak mentions Jerusalem has been told something false.",
+          "Champollion read name-ring 29 as a kingdom rather than a town: writing from Thebes on 24 November 1828 he reported finding among Sheshonq's captives, in so many words, \"Ioudahamalek, le royaume des Juifs ou de Juda\" — Judah as a nation. That reading is rejected. The letters are now read as a place name — commonly Yad hammelek, \"Hand of the King\", or Juttah of the King — and the ring is one town among many, not a nation. More importantly, Jerusalem does not appear anywhere in the preserved list. The rings run through the lowlands and the north and pass over the central hill country of Judah as though it were not there. This is stated the wrong way round in a great deal of popular writing, and a reader who has been told that Karnak mentions Jerusalem has been told something false.",
           "Four explanations are on offer and all four deserve naming. Kenneth Kitchen and others point out that the list is damaged and parts of it are lost, so Jerusalem may have stood in a missing section. A second explanation takes the biblical account at its word: 1 Kings 14 has Rehoboam buying the city off with the temple treasure, so Jerusalem submitted rather than being stormed, and a town that paid would not appear in a list of towns taken. Finkelstein argues that the omission is real and telling, and that Judah at this date was a marginal highland chiefdom not worth a pharaoh's detour. Frank Clancy has argued that the route simply avoided the hill country and Transjordan altogether. None of these has carried the field.",
           "Where the app stands. The relief and 1 Kings agree that a pharaoh whose name is Sheshonq campaigned in the land in Rehoboam's generation, and that agreement is worth something: two independent sources, one Egyptian and monumental, one Judean and literary, converging on one event. They do not confirm each other's details, and the absence of Jerusalem from the list is a real fact that needs an explanation rather than a fact to be explained away — the tribute reading is a good explanation, but it is a reading, and it should be offered as one. One thing that is not a live alternative: the New Chronology associated with D. M. Rohl, which identifies the biblical Shishak with Ramesses II instead. It is rejected by Egyptology, and presenting the Sheshonq identification as contested would misrepresent the state of the field.",
         ],
@@ -4232,15 +4302,23 @@ export const topics: Topic[] = [
     discovery: {
       objectType: "A carved temple gateway with a triumphal relief and a topographical list of about 150 name-rings, in situ",
       findSite: "The Precinct of Amun-Re at Karnak, Thebes, between the temple of Ramesses III and the second pylon",
-      // CORRECTED (scope §2.5b): Champollion's connection is datable to 1828 (published 1829). His
+      // CORRECTED (scope §2.5b): Champollion's connection is datable to his letter of 24 Nov 1828. His
       // ring-29 "Judah the Kingdom" reading is rejected — see section three.
-      foundYear: "Never buried. Connected with the biblical Shishak by Champollion in 1828, published 1829",
+      foundYear: "Never buried. Connected with the biblical Shishak by Champollion in 1828, in his seventh letter from Egypt, written at Thebes on 24 November",
       foundBy: "No discoverer — the gate has always stood above ground. Jean-Francois Champollion made the biblical identification during his Egyptian expedition",
       objectDate: "c. 925 BC, the reign of Sheshonq I",
       objectDateCertainty: "traditional",
       currentLocation: "In situ at Karnak, Luxor, Egypt",
     },
     citations: [
+      {
+        tier: "primary",
+        label: "J.-F. Champollion, Lettres écrites d'Égypte et de Nubie en 1828 et 1829 — septième lettre",
+        url: "https://archive.org/details/lettresecritesd00cham",
+        credit: "Jean-François Champollion le Jeune; collected edition, Paris: Firmin Didot Frères, 1833",
+        detail: "Public domain, read at the Internet Archive. The seventh letter is headed \"Thèbes, le 24 novembre 1828\", and p. 99 carries both of this article's Champollion claims in his own French: the name-ring read as \"Ioudahamalek, le royaume des Juifs ou de Juda\", and the identity \"entre le Scheschonk égyptien, le Sésonchis de Manéthon et le Sésac ou Schéschok de la Bible\" pronounced \"confirmée de la manière la plus satisfaisante\". The English wording in this article glosses that French rather than quoting him",
+        supports: "What Champollion himself wrote about the Shishak identification and about name-ring 29",
+      },
       {
         tier: "institution",
         label: "Reliefs and Inscriptions at Karnak, Volume III: The Bubastite Portal (OIP 74)",
@@ -4468,7 +4546,7 @@ export const topics: Topic[] = [
         heading: "Kee's Challenge, and Why the Field Did Not Follow",
         paragraphs: [
           "Howard Clark Kee argued in New Testament Studies in 1990, and in later essays, that the inscription is not first-century at all but second or third and possibly as late as the fourth. This was not a stray suggestion: it was load-bearing for a larger thesis of his that purpose-built synagogue buildings did not exist before AD 70, and that the Gospels' synagogue scenes are therefore anachronisms projected back by later writers. If Kee were right, a good deal of how the Gospels describe Jesus's public ministry would have to be re-read.",
-          "He was answered thoroughly. J. S. Kloppenborg Verbin's \"Dating Theodotos\" in the Journal of Jewish Studies in 2000 went through the paleography, the onomastics and the archaeological context and concluded for a date before 70; Rainer Riesner argued along similar lines. Kee replied, and the field did not follow him. The current position is that the inscription is pre-70, most placing it in the late first century BC or the first century AD. The wider thesis has fared no better: first-century synagogue buildings have since been excavated at Gamla, Masada, Herodium and Magdala, which is a harder kind of answer than an argument about letter forms.",
+          "He was answered thoroughly. J. S. Kloppenborg Verbin's \"Dating Theodotos\" in the Journal of Jewish Studies in 2000 went through the paleography, the onomastics and the archaeological context and concluded for a date before 70. K. Atkinson had already answered Kee in New Testament Studies itself, objecting that Kee discussed neither the inscription's letter forms nor the identity of the epigraphers he said had supplied his date. Kee replied, and the field did not follow him. The current position is that the inscription is pre-70, most placing it in the late first century BC or the first century AD. The wider thesis has fared no better: first-century synagogue buildings have since been excavated at Gamla, Masada, Herodium and Magdala, which is a harder kind of answer than an argument about letter forms.",
           "The honest note to end on is not about who won but about why the argument was possible. The stone came out of fill in a cistern with no building attached, so its date rests on letter forms, name types and the material found around it rather than on where it sat. That is a real weakness, and Kee was entitled to press it. What makes the question settled is not that his opponents shouted louder but that the paleographic case converged with the excavation of actual first-century synagogues elsewhere — two independent lines arriving at the same answer. An article that skipped straight to \"pre-70\" would have hidden the only interesting part.",
         ],
       },
@@ -4512,11 +4590,11 @@ export const topics: Topic[] = [
       },
       {
         tier: "scholarly",
-        label: "R. Riesner, \"Synagogues in Jerusalem\" and the NTS exchange with H. C. Kee",
+        label: "K. Atkinson, \"On Further Defining the First-Century CE Synagogue: Fact or Fiction? A Rejoinder to H. C. Kee\"",
         url: "https://www.cambridge.org/core/journals/new-testament-studies/article/abs/on-further-defining-the-firstcentury-ce-synagogue-fact-or-fiction-a-rejoinder-to-h-c-kee/EEF0F79A1BE17E80AB7D85A725B16DAC",
-        credit: "New Testament Studies, Cambridge University Press",
-        detail: "The published rejoinder to Kee's thesis that purpose-built synagogues did not exist before AD 70",
-        supports: "The wider dispute about first-century synagogue buildings",
+        credit: "Kenneth Atkinson; New Testament Studies, Cambridge University Press",
+        detail: "New Testament Studies 43/4 (October 1997), 491-502; DOI 10.1017/S0028688500023341. Only the free first-page extract was read here. It states Kee's redating of the Theodotus inscription to the \"mid-second to late third century CE\" and objects that he neither discusses the inscription's epigraphy nor identifies the \"number of distinguished epigraphers\" he says gave him the date. The rest of the article is behind a paywall",
+        supports: "That Kee's late dating was answered in his own journal, and on what grounds",
         paywalled: true,
       },
       {
@@ -4665,7 +4743,7 @@ export const topics: Topic[] = [
       objectType: "White marble slab with about twenty-two lines of Greek — a diatagma Kaisaros, an edict of Caesar",
       findSite: "Unknown. It has no excavation context and was acquired on the antiquities market",
       foundYear: "Acquired 1878; first published 1930",
-      foundBy: "No excavator. The collector Wilhelm Frohner acquired it in 1878; his own catalogue note reads \"marble slab sent from Nazareth in 1878\" — sent from, not found at. It was published only in 1930, by Franz Cumont",
+      foundBy: "No excavator. The collector Wilhelm Frohner acquired it in Paris in 1878; his own sparse note is the only record of where it came from, and it says only that the stone was sent from Nazareth — sent from, not found at. It was published only in 1930, by Franz Cumont",
       objectDate: "Uncertain. The stone carries no date and palaeography allows a wide range across the early empire",
       objectDateCertainty: "disputed",
       currentLocation: "Bibliotheque nationale de France, Cabinet des Medailles, Paris, on display since 1925. No shelfmark could be verified and none is given",
@@ -4675,10 +4753,10 @@ export const topics: Topic[] = [
       {
         tier: "scholarly",
         label: "K. Harper, M. McCormick et al., \"Establishing the provenance of the Nazareth Inscription\"",
+        url: "https://hal.univ-lorraine.fr/hal-02934970",
         credit: "Kyle Harper, Michael McCormick, Matthew Hamilton, Chantal Peiffert, Raymond Michels and colleagues",
-        detail: "Journal of Archaeological Science: Reports 30 (2020), 102228. Laser-ablation stable-isotope analysis matching the marble to the upper quarry on Kos. The publisher's page refuses automated requests, so no URL is given; the DOI is 10.1016/j.jasrep.2020.102228",
-        supports: "The isotope result, the Kos quarry match, and the proposed Nikias occasion",
-        paywalled: true,
+        detail: "Journal of Archaeological Science: Reports 30 (2020), 102228; DOI 10.1016/j.jasrep.2020.102228. The publisher's copy is behind a paywall, but the authors deposited the full text openly at HAL, and that is the version read here. Laser-ablation stable-isotope analysis matching the marble to the upper quarry on Kos. On Frohner's note the authors say only that \"His exiguous notes indicate that it was 'sent from Nazareth'\", citing L. Robert, Collection Froehner I (1936) — which is why this article paraphrases the note rather than quoting it: Frohner wrote in French and no page image of his wording was opened here",
+        supports: "The isotope result, the Kos quarry match, the proposed Nikias occasion, and what Frohner's note actually says",
       },
       {
         tier: "institution",
@@ -4731,7 +4809,7 @@ export const topics: Topic[] = [
         heading: "Six Writers, Twelve Authors, and What Literacy Means",
         paragraphs: [
           "In 2016 a Tel Aviv University group published a study in the Proceedings of the National Academy of Sciences applying image processing and machine learning to the handwriting on sixteen of the Arad ostraca. Their conclusion was that at least six distinct writers were at work, ranging from the fort commander down to a deputy quartermaster, and that all of them wrote with competent spelling and syntax. From this they argued for a relatively widespread literacy in Judah around 600 BC, and further, that a substantial amount of biblical literature could therefore have been compiled before the destruction of 586 BC rather than during or after the exile.",
-          "Christopher Rollston praised the method and rejected the sociological conclusion, and his objection is the one to weigh. The ostraca do not all come from a single moment: they span different strata across the seventh century and earlier, so six writers over decades is a thinner result than six writers at one desk. And six literate men at a military installation shows that the military-administrative apparatus of Judah could read and write, which nobody doubted. Literacy in an administrative elite is not literacy in the population, and the leap from one to the other is where the argument becomes an argument rather than a measurement.",
+          "Christopher Rollston praised the method and made two objections, and only one of them is ever quoted. The first runs the opposite way from what a reader expects: he thinks the study too conservative. On his reading the epigraphic evidence for trained, standardised scribal education in Israel and Judah is already there two centuries earlier, and he sums it up as \"I see your 600 and raise you 200\" — that is, back to about 800 BC. The second is the one to weigh. The ostraca do not all come from a single moment: they span different strata across the seventh century and earlier, so six writers over decades is a thinner result than six writers at one desk. And six literate men at a military installation shows that the military-administrative apparatus of Judah could read and write, which nobody doubted. Literacy in an administrative elite is not literacy in the population, and the leap from one to the other is where the argument becomes an argument rather than a measurement.",
           "One thing readers should not conflate. The same group published a follow-up in PLOS ONE in 2020 combining forensic document examination with the algorithms, after which Tel Aviv University publicised a figure of twelve authors for the Arad corpus. \"Six writers\" and \"twelve authors\" are different studies, on differently defined bodies of material, and quoting them interchangeably — as many summaries do — misrepresents both. Where the app stands: the ostraca are strong evidence that writing was an ordinary working tool of Judah's administration well before the exile, which is genuinely relevant to how the biblical books could have been written, copied and kept. They are not evidence about who could read in a village, and the more ambitious version of the claim outruns what sixteen potsherds can carry.",
         ],
       },
@@ -4775,15 +4853,15 @@ export const topics: Topic[] = [
         label: "C. Rollston, \"The Tel Aviv University PNAS Study: Some Methodological Musings\"",
         url: "http://www.rollstonepigraphy.com/?p=708",
         credit: "Christopher Rollston, George Washington University",
-        detail: "Rollston Epigraphy, April 2016",
-        supports: "The objection to the leap from six writers to widespread literacy",
+        detail: "Rollston Epigraphy, 13 April 2016, read in full. Both of the objections quoted in this article are his own words there: that the study's date of about 600 BC \"is too conservative\" because \"we have such evidence already two hundred years prior to this\" — \"I see your 600 and raise you 200\" — and that \"the sociological conclusions about the 'proliferation of literacy' in Judah is not something that can be posited on the basis of this study\". He notes that he has consulted for the Tel Aviv project and is not among the paper's authors",
+        supports: "Both halves of Rollston's response: that the date is too late, and that the leap from six writers to widespread literacy does not follow",
       },
       {
         tier: "scholarly",
-        label: "Forensic document examination and algorithmic handwriting analysis of Judahite biblical period inscriptions",
+        label: "A. Shaus, Y. Gerber et al., \"Forensic document examination and algorithmic handwriting analysis of Judahite biblical period inscriptions reveal significant literacy level\"",
         url: "https://journals.plos.org/plosone/article?id=10.1371%2Fjournal.pone.0237962",
-        credit: "Faigenbaum-Golovin and colleagues, Tel Aviv University",
-        detail: "PLOS ONE 15/9 (2020), e0237962 — the follow-up study behind the later \"twelve authors\" figure. Open access",
+        credit: "Arie Shaus, Yana Gerber, Shira Faigenbaum-Golovin, Barak Sober, Eli Piasetzky and Israel Finkelstein, Tel Aviv University — the first four contributed equally",
+        detail: "PLOS ONE 15/9 (2020), e0237962. Open access, read in full. This is the study behind the later \"twelve authors\" figure, and the figure is the forensic examiner's rather than the algorithms': the paper analyses eighteen inscriptions and reports that \"the forensic examination reveals a high probability of at least 12 writers within the analyzed corpus\", against \"4-7 writers for the same assemblage\" from the earlier algorithmic work",
         supports: "The distinction between the 2016 six-writer result and the later twelve-author figure",
       },
       {
@@ -5308,7 +5386,7 @@ export const topics: Topic[] = [
       {
         heading: "Firm, With Two Things Worth Saying Out Loud",
         paragraphs: [
-          "Each identification rests on a name plus a patronymic — the same shape as the Gemariah bulla, and a much stronger shape than a bare name. No named scholar has published an argument against either. But the language used by the people closest to the finds is careful rather than flat: Mazar called the identification very reasonable rather than certain, and L. Mykytiuk, who maintains the standard list of biblical figures identified in inscriptions, was initially cautious about these two and moved to affirming them later. An identification that a specialist had to be talked into is worth more than one nobody examined, and the sequence is worth reporting rather than smoothing over.",
+          "Each identification rests on a name plus a patronymic — the same shape as the Gemariah bulla, and a much stronger shape than a bare name. What makes the pair worth the space is that the specialist who keeps the standard list of biblical figures identified in inscriptions has published his working on them twice, eight years apart, and changed his mind in between. L. Mykytiuk examined both bullae in 2009 and would not make either identification firm. His objection was not to the names; it was to the inference everyone draws from the findspots. The two were found metres apart but not in an archive, so \"one must keep in mind the real possibility that one or both bullae could refer to a father-and-son pair besides those to which Jeremiah chapters 37 and 38 refer\", and the association of the seal owners that would strengthen each identification \"turns out to be quite tenuous\". He therefore left them at grade 2 on his own scale — reasonable but uncertain, \"strong enough to make reasonable hypotheses but not strong enough to be considered reliable\" — and refused to raise them to the grade he keeps for the virtually certain. Then, in 2017, he affirmed them, and said in as many words why: \"After cautiously observing publications and withholding judgment for several years, I am now affirming the four identifications... because I am now convinced that this bulla is a remnant from an administrative center in the City of David.\" What convinced him was setting E. Mazar's published description and photographs of the immediate context beside the excavated administrative contexts of other Judahite bullae. An identification a specialist argued himself out of and then back into is worth more than one nobody examined, and the sequence is worth reporting rather than smoothing over.",
           "The second thing is a distinction that popular coverage routinely loses. There is a genuine, sharp and continuing scholarly argument about E. Mazar's excavations at the summit of the City of David — specifically about whether the Large Stone Structure is what she called it, and about how the whole area is dated. Israel Finkelstein and others have contested it in print for years. That argument is about a building, not about these two lumps of clay, and importing it into an article about the bullae would misrepresent both. The bullae come from First Temple period strata in a destroyed city, and their late-seventh or early-sixth-century date is not what anyone is fighting about.",
           "The limit is the familiar one. Two officials named in Jeremiah's prison narrative left their seals in the city that narrative describes. The bullae do not corroborate the conversation with Zedekiah, the accusation, the cistern, or the Ethiopian who pulled Jeremiah out of it. They put the men in the room. The story is still the text's to tell.",
         ],
@@ -5356,6 +5434,22 @@ export const topics: Topic[] = [
         credit: "Biblical Archaeology Society",
         detail: "Gives both readings, both findspots, and the note that the two men are named together as ministers of Zedekiah",
         supports: "The readings and the relationship of the two findspots",
+      },
+      {
+        tier: "scholarly",
+        label: "L. J. Mykytiuk, \"Corrections and Updates to 'Identifying Biblical Persons in Northwest Semitic Inscriptions of 1200-539 B.C.E.'\"",
+        url: "https://docs.lib.purdue.edu/lib_research/129/",
+        credit: "Lawrence J. Mykytiuk, Purdue University",
+        detail: "Maarav 16.1 (2009), 49-132; deposited open access in Purdue e-Pubs and read in full there. The two bullae are worked through at pages 85-100, and this is the cautious half of section three: the grade 2 rating, the definition of that grade, the warning that the names could belong to another father and son, and the judgement that the association of the two seal owners \"turns out to be quite tenuous\". A sentence calling these identifications \"very reasonable\" and \"entirely plausible\" circulates in reference works with this article attached to it. It is not in this article. \"Very reasonable\" appears once in the whole of it, and of something else entirely — M. G. Amadasi Guzzo's suggestion about a stele fragment from Tell Afis — and \"entirely plausible\" does not appear at all",
+        supports: "Mykytiuk's 2009 reasons for withholding judgement, in his own words",
+      },
+      {
+        tier: "scholarly",
+        label: "L. J. Mykytiuk, \"53 People in the [Hebrew] Bible Confirmed Archaeologically\"",
+        url: "https://docs.lib.purdue.edu/lib_fsdocs/182/",
+        credit: "Lawrence J. Mykytiuk, Purdue University; the web supplement to his Biblical Archaeology Review articles, 12 April 2017",
+        detail: "Deposited open access in Purdue e-Pubs and read in full there. Jehucal, his father Shelemiah, Gedaliah and his father Pashhur are numbers 31 to 34 on the list, and the endnote to them carries the change of mind quoted in section three, including his own statement that \"this article is my first affirmation of four identifications\" and his reason for it. The same supplement is on the Biblical Archaeology Society's site with a few slight differences of wording",
+        supports: "Mykytiuk's 2017 affirmation of all four identifications, and what changed his mind",
       },
       {
         tier: "encyclopedic",
@@ -6310,7 +6404,7 @@ export const topics: Topic[] = [
         paragraphs: [
           "Nobody in this scene is anyone in the Bible. Abisha is not Abraham, Jacob or Joseph; no biblical person is named, no biblical event is depicted, and Year 6 of Senwosret II is not the date of any episode in Genesis. The painting is atmospheric evidence, not evidential evidence, and it should be presented that way. Where it is reproduced under a caption suggesting that Egypt painted the patriarchs, the caption is wrong, and a reader who later learns this will be right to feel handled. Held at its own weight, the scene is still valuable, and the honest version is more interesting than the inflated one.",
           "One detail gets over-read in particular. Abisha's title, heka-khasut, is the Egyptian phrase that Greek writers later turned into the word Hyksos, so the caption is regularly translated \"Abisha the Hyksos.\" That is a literal rendering of the words and a misleading rendering of the man. The Hyksos rulers who took the Egyptian Delta did so more than two centuries after this wall was painted. Abisha carries a job description - the head of a foreign group - not a dynastic membership, and reading the later dynasty back into a Twelfth Dynasty trade caption imports a history the wall does not carry.",
-          "There is a second limit, and it is about the image itself. The tomb has never been lost, so it was never found: it was described by E. Jomard's team for the Napoleonic survey in 1798, copied by J. Burton in 1825, by the Franco-Tuscan expedition under J.-F. Champollion and I. Rosellini in 1828, by R. Hay in the same year with his copies coloured by Dupuy in 1833, by J. G. Wilkinson in 1838 and by K. R. Lepsius in 1842, before P. E. Newberry published it for the Egypt Exploration Fund in 1893. Newberry recorded that by his own survey the paintings had faded badly, partly because of the preparations earlier copyists had used to bring the colours out, and that in 1888 or 1889 a thief had mutilated the tomb's Great Inscription to remove the royal names. His plate of the Aamu group is credited in his own list of plates as drawn after Hay - a redrawing of a copy made sixty-five years earlier, not a record of the wall as it then stood. The Australian Centre for Egyptology re-recorded the tomb and published it in 2014 under N. Kanawati and L. Evans, and reported that the older records of Lepsius and Newberry are frequently inaccurate, that some material was deliberately omitted, and that Newberry's line drawings render figures, hieroglyphs and objects in solid black in a way that obscures significant detail. The scene is real and its inscription is secure. The famous colour image of it is a Victorian interpretation of a wall that has been deteriorating for two hundred years, and it is worth knowing which one you are looking at.",
+          "There is a second limit, and it is about the image itself. The tomb has never been lost, so it was never found: it was described by E. Jomard's team for the Napoleonic survey in 1798, copied by J. Burton in 1826, by the Franco-Tuscan expedition under J.-F. Champollion and I. Rosellini in 1828, by R. Hay in the same year with his copies coloured by Dupuy in 1833, by J. G. Wilkinson in 1838 and by K. R. Lepsius in 1842, before P. E. Newberry published it for the Egypt Exploration Fund in 1893. Newberry recorded that by his own survey the paintings had faded badly, partly because of the preparations earlier copyists had used to bring the colours out, and that in 1888 or 1889 a thief had mutilated the tomb's Great Inscription to remove the royal names. His plate of the Aamu group is credited in his own list of plates as drawn after Hay - a redrawing of a copy made sixty-five years earlier, not a record of the wall as it then stood. The Australian Centre for Egyptology re-recorded the tomb and published it in 2014 under N. Kanawati and L. Evans, and reported that the older records of Lepsius and Newberry are frequently inaccurate, that some material was deliberately omitted, and that Newberry's line drawings render figures, hieroglyphs and objects in solid black in a way that obscures significant detail. The scene is real and its inscription is secure. The famous colour image of it is a Victorian interpretation of a wall that has been deteriorating for two hundred years, and it is worth knowing which one you are looking at.",
         ],
       },
     ],
@@ -6323,8 +6417,8 @@ export const topics: Topic[] = [
     discovery: {
       objectType: "Painted wall register in a rock-cut tomb chapel, with hieroglyphic captions naming the year, the commodity, the number of foreigners and the name and title of their leader",
       findSite: "Tomb 3 (the tomb of Khnumhotep II) at Beni Hasan, Middle Egypt, on the east bank of the Nile",
-      foundYear: "Never lost. Described in 1798 for the Napoleonic survey; copied repeatedly between 1825 and 1842; published in 1893; re-recorded and republished in 2014",
-      foundBy: "No discoverer. The earliest description is E. Jomard's for the Description de l'Egypte (1798); copies were made by J. Burton (1825), J.-F. Champollion and I. Rosellini (1828), R. Hay (1828), J. G. Wilkinson (1838) and K. R. Lepsius (1842); P. E. Newberry published the tomb for the Egypt Exploration Fund in 1893, and N. Kanawati and L. Evans re-recorded it for the Australian Centre for Egyptology in 2014",
+      foundYear: "Never lost. Described in 1798 for the Napoleonic survey; copied repeatedly between 1826 and 1842; published in 1893; re-recorded and republished in 2014",
+      foundBy: "No discoverer. The earliest description is E. Jomard's for the Description de l'Egypte (1798); copies were made by J. Burton (1826), J.-F. Champollion and I. Rosellini (1828), R. Hay (1828), J. G. Wilkinson (1838) and K. R. Lepsius (1842); P. E. Newberry published the tomb for the Egypt Exploration Fund in 1893, and N. Kanawati and L. Evans re-recorded it for the Australian Centre for Egyptology in 2014",
       objectDate: "Year 6 of Senwosret II, c. 1890 BC. The regnal year is written on the wall; the absolute date follows Egyptian chronology",
       objectDateCertainty: "firm",
       currentLocation: "In situ at Beni Hasan. Facsimile copies are held by museums, including a 1:1 tempera facsimile of the group's leaders made by N. de Garis Davies on the Metropolitan Museum's graphic expedition of 1931",
@@ -6336,7 +6430,7 @@ export const topics: Topic[] = [
         url: "https://archive.org/details/benihasan00grifgoog",
         credit: "Percy E. Newberry for the Egypt Exploration Fund, 1893",
         detail: "Public domain, full text at the Internet Archive. Pages 69-70 carry the scene description and the translation of both inscriptions; the tomb's list of former descriptions and copies is on the pages introducing Tomb No. 3; the plate list credits the Aamu group plate as drawn after Hay",
-        supports: "The wording of both inscriptions, the number 37, the commodity mesdemt, the names Neferhotep, Kheti and Abesha, the title heka-khasut, the recording history from 1798 to 1842, the fading of the paintings, the 1888-89 mutilation of the Great Inscription, and the fact that the Aamu group plate is a redrawing of Hay's copy",
+        supports: "The wording of both inscriptions, the number 37, the commodity mesdemt, the names Neferhotep, Kheti and Abesha, the title heka-khasut, the recording history from 1798 to 1842 — including Burton's copy, which Newberry dates to 1826 and published in 1830 — the fading of the paintings, the 1888-89 mutilation of the Great Inscription, and the fact that the Aamu group plate is a redrawing of Hay's copy",
       },
       {
         tier: "scholarly",
@@ -6591,7 +6685,7 @@ export const topics: Topic[] = [
         heading: "What The Text Actually Says",
         paragraphs: [
           "Ipuwer speaks before a figure called the Lord of All, and what he describes is a society inverted. Gardiner's translation, with his own query marks kept, since they mark readings he was not sure of: \"The plague is throughout the land. Blood is everywhere. Death is not lacking(?).\" Tombs are plundered and the king's own burial desecrated; there is no respect for law; cattle stray with nobody to gather them; corn has perished on every side; gold and lapis lazuli hang about the necks of slave-girls; and, again and again, the poor of the land have become rich while the man who owned property has become one who has nothing.",
-          "There are foreigners in it too. Gardiner's summary of the relevant passages: \"A foreign tribe from abroad has come to Egypt. The Delta is overrun by Asiatics,\" who have settled so deeply that they are skilled in the crafts of the marshlands. The complaint is that Egypt has stopped being Egypt - that order, the thing an Egyptian text exists to celebrate, has given way to chaos, and that the man who ought to be holding it together is not.",
+          "There are foreigners in it too, and it is worth keeping the papyrus's words and its editor's apart. Gardiner's own summarising sentences are that \"Egypt has also to face the aggression of foreign invaders from the North\" and that \"The Delta is overrun by Asiatics\", and that \"So deep a root have these barbarians taken in the land, that they are no longer distinguishable from true Egyptians\". The lines he is summarising are Ipuwer's: at 3,1, \"The Desert is throughout the Land. The nomes are laid waste. A foreign tribe from abroad has come to Egypt\"; at 4,8, \"The Asiatics are skilled in the crafts of the Marshlands\". The complaint is that Egypt has stopped being Egypt - that order, the thing an Egyptian text exists to celebrate, has given way to chaos, and that the man who ought to be holding it together is not.",
         ],
       },
       {
@@ -6600,7 +6694,7 @@ export const topics: Topic[] = [
           "The identification of this text with Exodus was made popular by I. Velikovsky in 1952, and it circulates now mostly as a two-column table with Ipuwer's lines on the left and Exodus verses on the right. Velikovsky's own case was more coherent than the tables descended from it, and it deserves to be stated as he made it rather than as the tables leave it. He held that Ipuwer describes the plagues; that the Asiatics arriving in its ruined Egypt are the Hyksos; and that the Hyksos are the Amalekites, moving into the vacuum Israel's departure left behind. On his reading the incoming foreigners are not an awkwardness to be explained away - they are load-bearing. So the objection that Ipuwer's foreigners are arriving while Exodus is about a people leaving, which is the first thing most rebuttals reach for, does not touch him at all.",
           "What his whole structure needs is his other proposal: moving Egyptian chronology by roughly five centuries so that the collapse of the Middle Kingdom lands on the exodus. That is where the argument actually has to be met, and it is where it fails. No Egyptologist accepts the redating. The conventional chronology is held in place by king lists, astronomical observations and a dense web of synchronisms with Assyria, Babylonia and the Hittites, and Velikovsky had to discard all of it at once. Without the redating there is no chronology for the identification to stand on at either end: the manuscript is a Nineteenth Dynasty copy, the composition is Middle Kingdom on the evidence of its own language, and evangelicals themselves differ over the exodus date - an early date of about 1446 BC and a late date of about 1260 BC both have serious defenders - with Ipuwer's composition sitting well before both.",
           "The famous line is also quoted short. Gardiner's 2,10 runs in full: \"Forsooth, the river is blood, and (yet) men drink of it. Men shrink from(?) [tasting(?)] human beings, and thirst after water.\" The tables normally stop at \"men drink of it\" and set it beside Exodus 7:20, where the waters of the river are turned to blood, and there it fits. Quoted whole it is more interesting and less useful to them: Exodus 7:21 has the Egyptians unable to drink the river and Exodus 7:24 has them digging beside it for water, so one clause of Gardiner's sentence agrees with Exodus and the clause before it contradicts the same passage. Egyptologists read the image itself either as the red silt of a catastrophic Nile flood or as a poetic figure for turmoil. That is what a generic picture of disaster looks like when it is asked to do the work of a report.",
-          "The wider list of parallels is thinner than it looks, and one of its best-known items is drawn from destroyed text. Proponents point to darkness over Egypt at Ipuwer 9,11. Gardiner's edition of that passage records nine squares lost in one line and about six in another, calls the section from 9,11 to 10,2 sadly mutilated, describes part of it as wholly obscure and another part as quite untranslateable, and reconstructs its subject as the deprivations of the poor. There is no darkness in it. The other items - straying cattle, ruined grain, the great stripped of their wealth - are all really there, and they are cheap: any text describing a country in total collapse will produce them, and in Ipuwer each one is embedded in a complaint about the poor becoming rich and the rich being ruined, which is not what Exodus is about.",
+          "The wider list of parallels is thinner than it looks, and its best-known item is worth following to the page. Proponents point to darkness over Egypt at Ipuwer 9,11, and the clause is really there: Gardiner prints it whole and translates it, as the last line of his block 9,8-9,11 — \"The land is not light because of it.\" What has gone is everything around it that would tell a reader what \"it\" is. Gardiner opens that block by recording about fourteen squares lost, and what he can translate of it runs \"Destroyed is (?) his ... in that time. [Every] man looks upon ... [as] his adversary (?). The infirm man brings coolness [to that which is hot] ... fear ... Poor men ... The land is not light because of it\" — broken sentences about enmity, the infirm, fear and the poor, and then the line the tables lift out of them. The block immediately after it, 9,11 to 10,2, is in worse shape still: Gardiner records nine squares lost in one line and about six in another, calls part of it wholly obscure and another part quite untranslateable, and takes the subject of its opening to be the deprivations of the poor. Whether a line surviving in that company can be set against three days of darkness in Exodus 10 is now a question a reader can weigh, which is more than the tables allow. The other items - straying cattle, ruined grain, the great stripped of their wealth - are all really there, and they are cheap: any text describing a country in total collapse will produce them, and in Ipuwer each one is embedded in a complaint about the poor becoming rich and the rich being ruined, which is not what Exodus is about.",
           "The text also names nobody. No Israel, no Hebrews, no Moses, no sea, no death of firstborn sons, and no king who let anyone go. Set beside a document like the Merneptah Stele, which names Israel in one line and settles a real question, that silence is the measure of the difference between evidence and resemblance.",
           "None of this is a concession, and none of it is archaeology disagreeing with Scripture. Exodus is not made more or less likely by a papyrus that is not about it. What is at stake is smaller and more practical: a reader who is handed a bad argument will meet somebody who takes it apart, and will reasonably wonder what else they were told. The honest sentence is short. The Ipuwer Papyrus is a Middle Kingdom Egyptian lament, copied out centuries later by a scribe who found it worth copying, and it is not evidence for the exodus.",
         ],
@@ -6628,8 +6722,8 @@ export const topics: Topic[] = [
         label: "A. H. Gardiner, The Admonitions of an Egyptian Sage from a Hieratic Papyrus in Leiden",
         url: "https://archive.org/details/admonitionsofegy00gard",
         credit: "Alan H. Gardiner, 1909",
-        detail: "Public domain, full text at the Internet Archive. The physical description is on the opening pages of the introduction; the translations of 2,5-6 and 2,10 and the summary of the Asiatic passages are in the commentary, as is the note on the mutilated state of 9,11-10,2",
-        supports: "The Anastasi provenance and the 1828 purchase, the dimensions and condition, the seventeen recto pages and the solar hymns on the verso, the Nineteenth Dynasty floor for the writing with an older exemplar behind it, the Middle Kingdom language, every line quoted in the article including the query marks, and the state of the passage the darkness parallel is drawn from",
+        detail: "Public domain, full text at the Internet Archive. The physical description is on the opening pages of the introduction. The translations of 2,5-6, 2,10, 3,1 and 4,8 are in the commentary; the three sentences given here as Gardiner's own — the invaders from the North, the Delta overrun, the barbarians rooted deep — are from his survey of the book's contents, where he sets his prose against Ipuwer's in italic, and this article keeps that division. So is the darkness line: Gardiner splits line 9,11 between two blocks, and \"The land is not light because of it\" closes the earlier one, 9,8-9,11, where he prints it whole. His note on 9,8 is what establishes the division — the paragraphs each begin with hd, at 9,8, 9,11, [9,14] and 10,2 — and his note on the later block, 9,11-10,2, is where the losses and the untranslateable stretches are described. The phrase occurs once in the volume",
+        supports: "The Anastasi provenance and the 1828 purchase, the dimensions and condition, the seventeen recto pages and the solar hymns on the verso, the Nineteenth Dynasty floor for the writing with an older exemplar behind it, the Middle Kingdom language, every line quoted in the article including the query marks and the lacunae, and the text and setting of the line the darkness parallel is drawn from",
       },
       {
         tier: "institution",
@@ -7365,7 +7459,7 @@ export const topics: Topic[] = [
       {
         heading: "Being Specific Instead of Being Loud",
         paragraphs: [
-          "The temptation with this one runs in both directions and both should be resisted. The tomb is not a hoax; it was excavated by the state, catalogued, published and stored, and nine of the ossuaries were catalogued into the state collection and are held by the Israel Antiquities Authority. The tenth has generated an argument of its own, and it is settled by numbers rather than by suspicion. It is IAA 80.509; the excavation report records it as plain and gives its dimensions as 60 by 26 by 30 cm; the 1994 published catalogue of the state collection left it out, describing it as a plain, broken specimen. The makers of The Lost Tomb of Jesus proposed that it was the James Ossuary, which had surfaced separately on the market — but that box was published at 50.5 cm along its base and 25 cm wide, which is a different object, and A. Feuerverger, who did the statistical work on this tomb, wrote in 2008 that in his opinion there is no credible evidence tying that box to it. J. Tabor has continued to argue the other way since, and his own collected writing on the tomb is linked below. Nothing about the case requires anyone to have hidden anything.",
+          "The temptation with this one runs in both directions and both should be resisted. The tomb is not a hoax; it was excavated by the state, catalogued, published and stored, and nine of the ossuaries were catalogued into the state collection and are held by the Israel Antiquities Authority. The tenth has generated an argument of its own, and it is settled by numbers rather than by suspicion. It is IAA 80.509; the excavation report records it as plain and gives its dimensions as 60 by 26 by 30 cm; the 1994 published catalogue of the state collection left it out, describing it as a plain, broken specimen. The makers of The Lost Tomb of Jesus proposed that it was the James Ossuary, which had surfaced separately on the market — but that box was published at 50.5 cm along its base and 25 cm wide, which is a different object, and A. Feuerverger, who did the statistical work on this tomb, wrote in 2008 that \"in my opinion there is at present no credible evidence to tie that ossuary to the Talpiyot tomb.\" J. Tabor has continued to argue the other way since, and his own collected writing on the tomb is linked below. Nothing about the case requires anyone to have hidden anything.",
           "Equally, the claim is not accepted, and the reason is not that scholars found it theologically unwelcome. It is that the inference asks a common cluster of common names to carry an identification, and the discipline's answer — argued out in a statistics journal rather than a pulpit — is that it cannot. J. Tabor of the University of North Carolina at Charlotte continues to argue the other way in print and has published further work on the site; that is a live minority position held by a credentialed scholar, and readers should know it exists rather than hear only that everyone disagrees.",
           "For a Christian reader the theological stakes are lower than the headlines implied, and it is worth naming why. The resurrection as the New Testament presents it is bodily; an ossuary of Jesus containing his bones would contradict it directly, which is precisely why the claim was newsworthy. But the argument never reached the point where that mattered. It failed at the identification, on ordinary evidential grounds that a first-year archaeology student can follow, and it would have failed there whatever anyone believed about Easter.",
         ],
@@ -7398,7 +7492,7 @@ export const topics: Topic[] = [
         url: "https://arxiv.org/pdf/0804.0103",
         credit: "Andrey Feuerverger, University of Toronto, and more than a dozen discussants",
         detail: "The Annals of Applied Statistics 2/1 (2008); the rejoinder is at 99-112 and is open access. The link goes to the rejoinder, where the author states the limits of his own paper",
-        supports: "That the author does not claim the tomb is most likely the New Testament family's, that the result depends on assumptions supplied from outside statistics, and that there is no credible evidence tying the James Ossuary to this tomb",
+        supports: "That the author does not claim the tomb is most likely the New Testament family's, that the result depends on assumptions supplied from outside statistics, and that in his opinion there is at present no credible evidence tying the James Ossuary to this tomb",
       },
       {
         tier: "reference",
@@ -7449,7 +7543,7 @@ export const topics: Topic[] = [
         paragraphs: [
           "The provenance of this object needs stating before anything else, because almost every account of it skips past the detail that matters. It was not dug up. A. Zertal excavated on Mount Ebal between 1982 and 1989, and found there a structure he interpreted as an altar, which he connected with the altar Joshua is said to have built. The material he removed and discarded sat in dump piles on the mountain. In December 2019 a team led by S. Stripling, director of the Archaeological Studies Institute at The Bible Seminary in Katy, Texas, working with the Associates for Biblical Research, put material from the east dump pile through a wet-sifting process, and a small folded piece of lead came out of it.",
           "Wet sifting is a genuinely valuable technique and it recovers small objects that dry sifting misses. What it cannot recover is stratigraphy. An object that comes out of a spoil heap has no layer, no associated pottery, no floor level and no sealed context — nothing that would allow anyone to date it independently of the object itself. Everything asserted about this piece of lead's age rests on where the dirt it was sitting in is thought to have come from, and on the reading of what is said to be written inside it.",
-          "The team announced the find at a press conference at the Lanier Theological Library in Houston on 24 March 2022, before any scholarly publication. Their claim was that the object carried a Late Bronze Age curse formula in Hebrew, that it was centuries older than any known Hebrew inscription, and — in the words used at the conference — that no one could any longer maintain that the biblical text was written only in the Persian or Hellenistic period. No images from the scans were shown."
+          "The team announced the find at a press conference at the Lanier Theological Library in Houston on 24 March 2022, before any scholarly publication. Their claim was that the object carried a Late Bronze Age curse formula in Hebrew, that it was centuries older than any known Hebrew inscription, and — in S. Stripling's own words at the conference — that \"One can no longer argue with a straight face that the biblical text was not written until the Persian period or the Hellenistic period, as many higher critics have done, when we clearly do have the ability to write the entire text [of the Bible] at a much, much earlier date.\" G. Galil made the same point his own way: \"The scribe that wrote this ancient text, believe me, he could write every chapter in the Bible.\" No images from the scans were shown."
         ],
       },
       {
@@ -7458,7 +7552,7 @@ export const topics: Topic[] = [
           "The scholarly article appeared on 12 May 2023 in Heritage Science, by S. Stripling, G. Galil, I. Kumpova, J. Valach, P. G. van der Veen and D. Vavrik. The lead object is still folded and cannot be opened without destroying it, so the team used X-ray tomography at the Czech Academy of Sciences and processed the reconstructed data to look for writing on the interior surfaces. Their epigraphic reading, by G. Galil of the University of Haifa and P. G. van der Veen of Mainz, is a formulaic curse invoking the divine name, arranged as a chiasm and dated to Late Bronze Age II.",
           "The response was concentrated and it was not about theology. In December 2023 the Israel Exploration Journal ran three articles on the object. A. M. Maeir of Bar-Ilan University and C. Rollston of George Washington University concluded that the tomographic images fail to demonstrate any discernible letters, and that the object is most reasonably understood as an uninscribed lead fishing-net weight. A. Mazar argued the same identification independently. N. Yahalom-Mack examined the source of the lead itself. A further refutation by M. S. Haughwout appeared in February 2024 in the same journal that had published the original article, concluding that there is at present insufficient epigraphic evidence to conclude that any writing exists on the object at all.",
           "The specific complaints are worth knowing because they are checkable. The published drawings do not match the published images, so the reading is not anchored to the data a reader can see. The lead surface shows random scratches, striations, pitting and indentations of the kind lead develops as it corrodes. Rollston had already noted, when the claim was first made, that the words involved — god, cursed, die — are Common Semitic and occur across several ancient languages, so even if they were there they would not establish that the language is Hebrew. And he pointed out the leap from four root words to a claim about who could write the Bible.",
-          "The team did not stay behind the reading either, and that is the part of this story most accounts leave out. Two epigraphers worked on it: G. Galil of the University of Haifa, who deciphered most of the letters and arrived at forty-eight of them, and P. G. van der Veen of Mainz. In June 2023, a month after publication, S. Stripling made public that Galil had been removed from the project, and Stripling has since spoken of forty letters rather than forty-eight. Van der Veen went further. In an email of July 2023, quoted in the published refutation, he wrote that he doubts Galil's forty-eight and would be happy with a maximum of ten to fifteen on the inside, that there may be fewer still because the scans do not always yield the evidence one wishes to see, and — flatly — that Galil's interpretation is not acceptable. He has not abandoned the object: he still holds that there is writing on it, and writing to A. M. Maeir in December 2023 he set out what he believes can be made out on the outside, in Proto-Canaanite letters, calling his own reading of the exterior far more sobering than Galil's reading of the interior. Maeir published his letter and his photograph in full on his own site, answered that what he sees is incisions rather than letters, and said he would change his mind for clear evidence. Galil, for his part, published a book-length defence of the original reading in 2024."
+          "The team did not stay behind the reading either, and that is the part of this story most accounts leave out. Two epigraphers worked on it: G. Galil of the University of Haifa, who deciphered most of the letters and arrived at forty-eight of them, and P. G. van der Veen of Mainz. In June 2023, a month after publication, S. Stripling made public that Galil had been removed from the project, and Stripling has since spoken of forty letters rather than forty-eight. Van der Veen went further. In an email of July 2023, quoted in the published refutation, he wrote that he doubts Galil's forty-eight and would be happy with a maximum of ten to fifteen on the inside, that there may be fewer still because the scans do not always yield the evidence one wishes to see, and — flatly — that Galil's interpretation is not acceptable. He has not abandoned the object: he still holds that there is writing on it, and in December 2023 he sent A. M. Maeir an account of what he believes can be made out on the outside, in Proto-Canaanite letters. Commenting under Maeir's posting of it, he set his own reading against his co-author's in his own words: \"the reading of the outside will be much more sobering than Galil's fantasy reading of the inside, where many of his letters appear in the central fold created by something hard that hit the object\". Maeir published his letter and his photograph in full on his own site, answered that what he sees is incisions rather than letters, and said he would change his mind for clear evidence. Galil, for his part, published a book-length defence of the original reading in 2024."
         ],
       },
       {
@@ -7527,7 +7621,7 @@ export const topics: Topic[] = [
         label: "A. M. Maeir, \"Peter van der Veen on the exterior of the Mount Ebal lead object\" and \"Mount Ebal Inscription publication by Gershon Galil\"",
         url: "https://gath.wordpress.com/2023/12/08/peter-van-der-veen-on-the-exterior-of-the-mount-ebal-lead-object/",
         credit: "Aren M. Maeir, Bar-Ilan University, publishing P. G. van der Veen's letter and photograph in full on his own site",
-        detail: "8 December 2023 and 15 September 2024. The first carries van der Veen's defence in his own words; the second records the arrival of G. Galil's book-length defence, The Mount Ebal Inscription (Jerusalem: Megillat Sefer, 2024), and Maeir's own account of reading it hoping to be proved wrong",
+        detail: "8 December 2023 and 15 September 2024. The first carries van der Veen's defence in his own words, including the comment he left under it, which is where the sentence quoted in this article comes from; the second records the arrival of G. Galil's book-length defence, The Mount Ebal Inscription (Jerusalem: Megillat Sefer, 2024), and Maeir's own account of reading it hoping to be proved wrong",
         supports: "That the team continues to defend the reading in print, and what their case actually says",
       },
       {
@@ -7535,7 +7629,7 @@ export const topics: Topic[] = [
         label: "Biblical Archaeology Society, \"An Early Israelite Curse Inscription from Mt. Ebal?\"",
         url: "https://www.biblicalarchaeology.org/daily/biblical-artifacts/inscriptions/mt_ebal_inscription/",
         credit: "Biblical Archaeology Society",
-        detail: "Carries S. Stripling's press-conference statement verbatim, and G. Galil's, and sets out why scholars remained sceptical",
+        detail: "Read in full. It carries both press-conference statements quoted in this article verbatim — S. Stripling's \"One can no longer argue with a straight face...\" and G. Galil's \"The scribe that wrote this ancient text, believe me, he could write every chapter in the Bible\" — and sets out why scholars remained sceptical",
         supports: "The wording of the claims made at the March 2022 press conference",
       },
       {
@@ -7607,7 +7701,7 @@ export const topics: Topic[] = [
     citations: [
       {
         tier: "institution",
-        label: "A. Snelling, \"Special Report: Amazing 'Ark' Expose\"",
+        label: "A. Snelling, \"Special Report: Amazing 'Ark' Exposé\"",
         url: "https://answersingenesis.org/creationism/arguments-to-avoid/special-report-amazing-ark-expose/",
         credit: "Andrew Snelling, geologist, for Answers in Genesis - published under 'arguments to avoid'",
         detail: "First published in Creation magazine, 1992. A claim-by-claim evaluation by a creationist ministry that would have every reason to want the site to be genuine",
@@ -8219,13 +8313,13 @@ export const topics: Topic[] = [
         heading: "Fifty Years in a Storeroom",
         paragraphs: [
           "The ring came out of the ground at Herodium in the 1968-69 season, in the excavation directed by G. Foerster, and then did what most small metal finds do: it went into a box. It was cleaned and examined only decades later, and published in the Israel Exploration Journal in 2018 by S. Amorai-Stark, M. Hershkovitz, G. Foerster, Y. Kalman, R. Chachy and R. Porat. Their title tells you what they thought the object was — an inscribed copper-alloy finger ring depicting a krater. It is small, about 1.3 cm high, made of a cheap alloy, and engraved with a two-handled vessel framed by Greek letters. L. Di Segni read the letters as Pilato, which in that form would mean of Pilate.",
-          "The press reported that Pontius Pilate's ring had been found. The excavation report said something close to the opposite. Its authors noted that it is unlikely the powerful and wealthy prefect of Judea would have worn a thin, all copper-alloy sealing ring, and that the material and the findspot fit a Jewish owner better than a Roman one. That gap between the report and the headline is worth keeping in view for the rest of this article, because almost every popular account of the ring is downstream of the headline.",
+          "The press reported that Pontius Pilate's ring had been found. The excavation report said something close to the opposite. Its authors wrote that \"it is therefore unlikely that Pontius Pilatus, the powerful and rich prefect of Judaea, would have worn a thin, all copper-alloy sealing ring\" — and then declined to name an owner at all, leaving it open between a Jew, a Roman, and another pagan bearing the name Pilatus. That gap between the report and the headline is worth keeping in view for the rest of this article, because almost every popular account of the ring is downstream of the headline.",
         ],
       },
       {
         heading: "What It Would Mean If the Reading Holds",
         paragraphs: [
-          "A sealing ring is an administrative tool, not a status symbol, and it did not have to belong to the person whose name it carried. Its purpose is to press a name into wax or soft clay closing a jar, a bag or a document. A ring reading of Pilate, or for Pilate, is what a clerk, a steward or a slave in the orbit of the governor's administration would use to mark material moving to or from him. That is the reading C. E. Bonesho argued for in the Palestine Exploration Quarterly in 2026: she takes the omicron not as a misspelled Greek genitive but as the Latin dative PILATO transliterated into Greek letters by an engraver whose Latin was elementary, the Latin O and the Greek omicron being easy to confuse. On that reading the wearer was most likely an enslaved or formerly enslaved person in the household of a local Judean notable who had some part in the administrative work of Roman Judea.",
+          "A sealing ring is an administrative tool, not a status symbol, and it did not have to belong to the person whose name it carried. Its purpose is to press a name into wax or soft clay closing a jar, a bag or a document. A ring reading of Pilate, or for Pilate, is what a clerk, a steward or a slave in the orbit of the governor's administration would use to mark material moving to or from him. That is the reading C. E. Bonesho argued for in the Palestine Exploration Quarterly in 2026: she takes the omicron not as a misspelled Greek genitive but as the Latin dative PILATO transliterated into Greek letters by an engraver whose Latin was elementary, the Latin O and the Greek omicron being easy to confuse. On that reading the ring, in the words of her university's account of her article, \"likely was worn by an enslaved or formerly enslaved person employed by a local Judean elite who somehow participated in the administrative work of Roman Judea.\"",
           "It is worth being clear what this would and would not add. Pontius Pilate is not a figure whose existence depends on the ring. He is named on a limestone block found at Caesarea Maritima in 1961 that gives his office in his own lifetime, and he is described by Tacitus, Josephus and Philo. A sealing ring would add texture to that picture — an administration with paperwork, staff and seals, reaching out to a fortress-palace in the Judean desert — rather than adding a person to history. Texture is a real thing to gain. It is simply a much smaller thing than the headline promised.",
         ],
       },
@@ -8271,7 +8365,7 @@ export const topics: Topic[] = [
         tier: "scholarly",
         label: "S. Amorai-Stark et al., \"An Inscribed Copper-Alloy Finger Ring from Herodium Depicting a Krater\"",
         credit: "Shua Amorai-Stark, Malka Hershkovitz, G. Foerster, Yakov Kalman, Rachel Chachy and Roi Porat",
-        detail: "Israel Exploration Journal 68/2 (2018), 208-220 — the editio princeps. It is the publication that reads the letters as Pilato and, in the same breath, judges it unlikely that the prefect himself wore a thin copper-alloy ring",
+        detail: "Israel Exploration Journal 68/2 (2018), 208-220 — the editio princeps. It is the publication that reads the letters as Pilato and, in the same breath, judges it unlikely that the prefect himself wore a thin copper-alloy ring. The journal is paywalled and was not opened here. The sentence in which the editors decline to name an owner — the ring \"might have belonged to a local individual, either a Jew, a Roman, or another pagan patron with the name Pilatus\" — is quoted from their paper in the Times of Israel report cited below, and this article takes it at that second hand rather than from the journal",
         supports: "Excavation date, material, the reading, and what the publishers did and did not claim",
         paywalled: true,
       },
@@ -8296,8 +8390,16 @@ export const topics: Topic[] = [
         label: "University of California, Los Angeles: \"What's in an 'O'?\"",
         url: "https://phys.org/news/2026-09-unusual-greek-mystery-pontius-pilate.html",
         credit: "University of California, Los Angeles, via Phys.org, 2 September 2026",
-        detail: "The university's own account of Bonesho's article, including her reply to the 2023 objection",
+        detail: "The university's own account of Bonesho's article, read in full, including her reply to the 2023 objection. It is the source of the sentence about the wearer quoted in the second section, and of the suggestion that \"The wearer might have used it to imprint Pilate's name in wax or clay that sealed materials intended to be sent to Pilate and his associates.\" Her own article is behind a paywall and was not opened, so nothing is attributed to her beyond what this page prints",
         supports: "The omicron-for-omega argument and the proposed identity of the wearer",
+      },
+      {
+        tier: "reference",
+        label: "A. Borschel-Dan, \"2,000-year-old 'Pilate' ring just might have belonged to notorious Jesus judge\"",
+        url: "https://www.timesofisrael.com/2000-year-old-ring-engraved-with-pilate-may-have-belonged-to-notorious-ruler/",
+        credit: "Amanda Borschel-Dan, The Times of Israel, 29 November 2018",
+        detail: "Read in full. The report quotes the editio princeps at length, and is the route by which this article knows what the 2018 editors wrote about the ring's likely owner. The live page refuses automated requests; the copy read here was the Internet Archive's capture of it",
+        supports: "The 2018 editors' own words about who the ring might have belonged to",
       },
       {
         tier: "reference",
@@ -8498,7 +8600,7 @@ export const topics: Topic[] = [
           "Acts 13:7 places the apostles at Paphos before the proconsul of Cyprus, whom it names Sergius Paulus. The word proconsul is itself correct and worth noting in passing: Cyprus was a senatorial province in this period, and senatorial provinces were governed by proconsuls. Four inscriptions have been put forward at one time or another as naming the man himself.",
           "The first comes from Soloi on the north coast of Cyprus, catalogued as IGR III 930, a text dated by a regnal year of Claudius that mentions a proconsul Paulus. D. G. Hogarth, who published it after his archaeological survey of the island, saw no good reason to doubt the identification with the figure in Acts. T. B. Mitford, the authority on Roman Cyprus, judged on epigraphic grounds that the stone cannot be earlier than the middle of the first century and is probably considerably later. Accounts even disagree about when it was found, giving the year variously as 1877 and 1887.",
           "The second is a boundary marker of the Tiber from Rome, CIL VI 31545, recording the commissioners appointed in AD 47 to oversee the banks and channel of the river under Claudius. One of the named commissioners is L. Sergius Paullus. This is the only one of the four whose date is secure. B. Windle argued in the Near East Archaeological Society Bulletin in 2022 that the ordinary Roman career ladder makes it entirely plausible that the same man held a river commissionership at Rome and a proconsulship in Cyprus within a few years — and he is careful to call it plausible rather than demonstrated.",
-          "The third is a pair of texts from the territory of Pisidian Antioch naming senators called L. Sergius Paullus, one of them explicitly the younger; the second was copied in 1912 by W. Ramsay and J. G. C. Anderson. Ramsay proposed from them that the family held estates in the region, and the popular inference followed that the proconsul sent Paul and Barnabas on to his relatives' home town, which is where Acts 13:13 takes them next. That is a hypothesis about a family's landholdings, not an identification of a man. The fourth, IGR III 935 from Kythrea in Cyprus, is the weakest: it preserves the name Quintus Ser[gius], which is the wrong first name, has lost the part where a cognomen would sit, and probably belongs to a different emperor's reign altogether.",
+          "The third is a pair of texts from the territory of Pisidian Antioch naming senators called L. Sergius Paullus, one of them explicitly the younger; the second was copied in 1912 by W. Ramsay and J. G. C. Anderson. Ramsay proposed from them that the family held estates in the region, and the popular inference followed that the proconsul sent Paul and Barnabas on to his relatives' home town, which is where Acts 13:13 takes them next. That is a hypothesis about a family's landholdings, not an identification of a man, and T. Kennedy — writing from within evangelical archaeology — says as much himself, calling the family-ties explanation of that next journey \"possible, though unconfirmed and only a hypothesis based on circumstantial evidence.\" The fourth, IGR III 935 from Kythrea in Cyprus, is the weakest: it preserves the name Quintus Ser[gius], which is the wrong first name, has lost the part where a cognomen would sit, and has lost its emperor's name as well — the restoration is open between Tiberius, Caligula and Claudius, and only the last of the three would fit.",
         ],
       },
       {
@@ -8511,7 +8613,7 @@ export const topics: Topic[] = [
       {
         heading: "Nobody Has Closed This",
         paragraphs: [
-          "What the four candidates have in common is that each preserves a Sergius or a Paulus, and none of them names the proconsul of Acts in a way that settles the matter. Sergius Paulus was not a rare combination in a family that produced senators for generations. Mitford's assessment of the best-known Cyprus candidate was that identifying him with the proconsul of Cyprus is at best a conjecture, and one weakened by a later reading of the related text. T. Kennedy, writing from within evangelical archaeology, reaches the same verdict from the other direction: possible, unconfirmed, a hypothesis resting on circumstantial evidence.",
+          "What the four candidates have in common is that each preserves a Sergius or a Paulus, and none of them names the proconsul of Acts in a way that settles the matter. Sergius Paulus was not a rare combination in a family that produced senators for generations. The candidate T. B. Mitford went out of his way to doubt is the one with the secure date — the Tiber boundary stone. His footnote of 1947 opens by warning that \"it is far from certain that the Sergius Paulus of the Acts bore the praenomen Lucius\", observes that the Tiber commissioner was a Lucius and therefore an ex-consul, and closes: \"That he is to be identified with the proconsul of Cyprus is at best a conjecture, now somewhat weakened by Myres' reading of IGR iii, 935\" — that last being the Kythrea text, the fourth candidate above. His objection to the Soloi stone is a different one, and it is the dating objection already given: on epigraphic grounds it \"cannot be earlier\" than the middle of the first century \"and is in all probability considerably later\". Kennedy reads the same four texts the other way, and he should be represented as saying what he says: he concludes that \"at least two, but perhaps three\" of them \"probably refer to the Sergius Paulus on Cyprus also mentioned in the book of Acts.\" That is a stronger reading than this app is prepared to give, and his own word for it is still probably.",
           "Where the app stands. The honest statement is short, and it is not a retreat. Acts names a proconsul of Cyprus called Sergius Paulus and describes the province's government correctly for the period. Roman Cyprus was governed by proconsuls of that kind, from families of that kind, and one of them may well be standing on one of these stones. But this app is not going to tell a reader that Sergius Paulus has been found, because he has not been. What has been found is a family, a plausible career pattern, and a set of texts that fit without fastening.",
           "It is worth saying what refusing the overclaim costs, because the answer is nothing. No one's faith is resting on a proconsul's career. A reader who is told unsettled loses an argument they never needed, and gains the ability to believe the next sentence this app writes about a stone. A reader who is told confirmed and then finds Mitford loses considerably more than that.",
         ],
@@ -8548,10 +8650,11 @@ export const topics: Topic[] = [
       },
       {
         tier: "scholarly",
-        label: "T. B. Mitford, \"Roman Cyprus\"",
-        credit: "Terence B. Mitford",
-        detail: "In Aufstieg und Niedergang der romischen Welt II.7.2 (1980) — the standard survey of the island's Roman epigraphy, and the source of the judgement that identifying the Soloi proconsul with the Acts figure is at best a conjecture",
-        supports: "The epigraphic dating objection and the assessment of the identification",
+        label: "T. B. Mitford, \"Notes on Some Published Inscriptions from Roman Cyprus\"",
+        url: "https://archive.org/details/in.gov.ignca.3831",
+        credit: "Terence B. Mitford, Annual of the British School at Athens 42 (1947), 201-230",
+        detail: "Read in the scanned volume at the Internet Archive. Mitford opens the article with the Soloi stone, IGR III 930, and puts the epigraphic dating objection on page 205: the inscription \"cannot be earlier\" than the middle of the first century \"and is in all probability considerably later\". His \"at best a conjecture\" is a separate judgement in a footnote on page 206, note 22, and it is about the Tiber stone, not this one — the whole note is about whether the proconsul of Acts was a Lucius at all. His own footnote on the Soloi identification is worth reading beside D. G. Hogarth: \"Hogarth stoutly supports the identification; but no other authority is prepared to commit himself.\" Mitford's later survey of Roman Cyprus in Aufstieg und Niedergang der romischen Welt II.7.2 (1980) is the work usually cited for him and was not opened here; neither judgement quoted in this article comes from it",
+        supports: "The dating objection to the Soloi stone, and Mitford's doubt about the Tiber candidate, each attached to the inscription he actually wrote it about",
       },
       {
         tier: "scholarly",
@@ -8560,6 +8663,14 @@ export const topics: Topic[] = [
         credit: "Bryan Windle",
         detail: "Near East Archaeological Society Bulletin 67 (2022). Argues from the cursus honorum that the Tiber commissioner and the Cyprus proconsul plausibly are the same man, in explicitly provisional terms",
         supports: "The case for the Tiber inscription and the careful language in which it is made",
+      },
+      {
+        tier: "reference",
+        label: "T. Kennedy, \"Sergius Paulus the Proconsul and the Apostle Paul\"",
+        url: "https://apxaioc.com/?p=20",
+        credit: "Titus Kennedy, APXAIOC Institute of Biblical Archaeology, 12 November 2014",
+        detail: "His own page, read in full — not the second-hand quotation of it that circulates. Both sentences quoted from him in this article are his, and they are about different questions: the \"possible, though unconfirmed\" hedge belongs to the Pisidian Antioch family-ties explanation for Acts 13:13, while on the identification itself he concludes for it",
+        supports: "Kennedy's actual position, with his hedge attached to the claim he hedged",
       },
       {
         tier: "reference",
@@ -8584,7 +8695,7 @@ export const topics: Topic[] = [
     category: "discovery",
     role: "A Scratched Wall Drawing of a Crucifixion, Made to Mock a Christian",
     summary:
-      "On a plastered wall in the servants' quarters of the imperial palace in Rome, somebody drew a man worshipping a crucified figure with the head of a donkey, and wrote underneath: Alexamenos worships his god. It is the earliest surviving picture of the crucifixion, and it is an insult.",
+      "On a plastered wall in the servants' quarters of the imperial palace in Rome, somebody drew a man worshipping a crucified figure with the head of a donkey, and wrote underneath: Alexamenos worships [his] god. It is the earliest surviving picture of the crucifixion, and it is an insult.",
     sections: [
       {
         heading: "A Wall in the Palace Servants' Quarters",
@@ -8596,8 +8707,8 @@ export const topics: Topic[] = [
       {
         heading: "The Shape of the Insult",
         paragraphs: [
-          "The drawing is crude and entirely legible. A figure hangs on a cross, seen from behind, with the head of a donkey or mule. To the left a smaller figure stands with one arm raised in a gesture of worship. Between them, in irregular Greek, runs the line ALEXAMENOS SEBETE THEON — Alexamenos worships god, with the verb spelled the way it was drifting in ordinary speech rather than the way a schoolmaster would have wanted it.",
-          "Both halves of the joke need explaining now, because neither is obvious to a modern reader. Crucifixion was the death Rome kept for slaves and rebels, deliberately public and deliberately degrading; to a Roman, being told that somebody's god had been crucified was an absurdity before it was an offence. And there was a standing slander, aimed first at Jews and then at Christians, that they worshipped a donkey. Tertullian describes a caricature of a Christian with a donkey's ears being paraded around Carthage, and the same accusation is answered in the second-century Octavius. The drawing simply stacks the two insults on top of each other.",
+          "The drawing is crude and entirely legible. A figure hangs on a cross, seen from behind, with the head of a donkey or mule. To the left a smaller figure stands with one arm raised in a gesture of worship. Between them, in irregular Greek, runs the line ALEXAMENOS SEBETE THEON — Alexamenos worships [his] god, the bracket marking a word the original does not have, with the verb spelled the way it was drifting in ordinary speech rather than the way a schoolmaster would have wanted it.",
+          "Both halves of the joke need explaining now, because neither is obvious to a modern reader. Crucifixion was the death Rome kept for slaves and rebels, deliberately public and deliberately degrading; to a Roman, being told that somebody's god had been crucified was an absurdity before it was an offence. And there was a standing slander, aimed first at Jews and then at Christians, that they worshipped a donkey. Tertullian describes a caricature of Christians with ass's ears carried about in public — \"in that city of yours\", he says, which the Ante-Nicene Fathers editors gloss as Rome rather than his own Carthage — and the same accusation is answered in the second-century Octavius. The drawing simply stacks the two insults on top of each other.",
           "In a nearby room a second graffito was found reading Alexamenos fidelis — Alexamenos is faithful. It reads like a reply, and it may be one, though nothing establishes that it is by the same hand or from the same season.",
         ],
       },
@@ -8646,6 +8757,14 @@ export const topics: Topic[] = [
         credit: "Heikki Solin and Marja Itkonen-Kaila, under the direction of Veikko Vaananen",
         detail: "Acta Instituti Romani Finlandiae III (Helsinki, 1966) — the critical publication of the graffiti scratched on the walls of the paedagogium, of which this is one. Print-only",
         supports: "The corpus publication of the Palatine graffiti",
+      },
+      {
+        tier: "primary",
+        label: "Tertullian, Ad Nationes I.14, in the Ante-Nicene Fathers",
+        url: "https://en.wikisource.org/wiki/Ante-Nicene_Fathers/Volume_III/Apologetic/Ad_Nationes/Elucidations/The_Vile_Calumny_About_Onocoetes_Retorted_on_the_Heathen_by_Tertullian",
+        credit: "Tertullian, in the Ante-Nicene Fathers translation edited by Philip Schaff; public domain, hosted at Wikisource",
+        detail: "Read in full. A man \"carried about in public a caricature of us with this label: Onocoetes. This (figure) had ass's ears, and was dressed in a toga with a book, having a hoof on one of his feet.\" Tertullian places it \"in that city of yours\", and the editors' footnote reads \"In ista civitate, Rome\" — which is why this article does not say Carthage, as popular accounts do. The parallel passage in Apology 16 says only \"in that great city\"",
+        supports: "The donkey-worship slander as a named ancient author actually reports it",
       },
       {
         tier: "reference",
@@ -8885,7 +9004,7 @@ export const topics: Topic[] = [
         heading: "What the Coins Prove, and What the Tunnel Costs",
         paragraphs: [
           "Two claims travel with this find, and they need separating. The first is the one the coins support: the street was completed no earlier than about AD 31. That is a hard result and a valuable one. The second is the headline the first became — \"Pontius Pilate built the Pilgrimage Road\" — and it goes further than the evidence. Coins sealed under a pavement give the earliest date the pavement can have been laid; they do not name a builder, do not show that construction was a single campaign, and do not rule out that most of the work was done earlier and the last slabs laid late. The excavators themselves describe a project begun around AD 20 and completed under Pilate. Pilate is the prefect in whose term the road was finished; calling him its builder is an inference, and one that has been printed far more confidently than it was argued.",
-          "The method is disputed by serious people. J. Magness has objected that horizontal excavation divorces remains from what lies above and around them, which is the information stratigraphy exists to preserve; Y. Mizrachi, of the organisation Emek Shaveh, has argued that the technique cannot generate enough data to establish securely when the road was built or how it fitted into the city, and has criticised the pace of scientific publication. The excavators answer that the tunnelling is conducted stratigraphically, section by section, and documented in three dimensions as it proceeds; A. Maeir, who directs an unrelated excavation, has publicly described the IAA team's work here as properly stratigraphic. A reader is entitled to know that this is an open methodological argument among archaeologists rather than a settled point.",
+          "The method is disputed by serious people. J. Magness has objected that horizontal excavation divorces remains from what lies above and around them, which is the information stratigraphy exists to preserve; Y. Mizrachi, of the organisation Emek Shaveh, has argued that the technique \"cannot provide us enough data to understand what we find and the dating of the structures\", and his organisation's own statement adds a second objection, that the horizontal method together with \"the paucity of scientific publications\" leaves it impossible to establish with certainty when the road was built and how it fitted into the layout of the city. The excavators answer that the tunnelling is conducted stratigraphically, section by section, and documented in three dimensions as it proceeds; A. Maeir, who directs an unrelated excavation, has publicly described the IAA team's work here as properly stratigraphic. A reader is entitled to know that this is an open methodological argument among archaeologists rather than a settled point.",
           "There is a further dispute that is not archaeological and that this article does not adjudicate. The excavation runs beneath an inhabited Palestinian neighbourhood, within a national park operated by Elad, a private organisation that also promotes Jewish settlement in Silwan, and residents and several NGOs oppose it. Those objections are about property, planning and politics rather than about pottery, and they are a real part of this site's story even though they bear on the dating of the road not at all.",
         ],
       },
@@ -8933,8 +9052,16 @@ export const topics: Topic[] = [
         label: "The Times of Israel: \"On an ancient road to the Temple, archaeological innovation, mystery and dispute\"",
         url: "https://www.timesofisrael.com/on-an-ancient-road-to-the-temple-archaeological-innovation-mystery-and-dispute/",
         credit: "The Times of Israel",
-        detail: "Reporting that quotes J. Magness and Y. Mizrachi against the method and A. Levy and A. Maeir for it",
+        detail: "Read in full. It carries J. Magness and Y. Mizrachi against the method and A. Levy and A. Maeir for it, and it is the source of Mizrachi's own sentence quoted here. It says nothing about the pace of publication; that objection belongs to his organisation's statement, cited separately below",
         supports: "The methodological dispute, stated on both sides",
+      },
+      {
+        tier: "reference",
+        label: "Emek Shaveh: \"The Pilgrimage Road Dedication Ceremony\"",
+        url: "https://emekshaveh.org/en/the-pilgrimage-road-dedication-ceremony/",
+        credit: "Emek Shaveh, an Israeli archaeological organisation",
+        detail: "The organisation's own unsigned statement, read in full, and the source of its second objection to the excavation: that the site is presented as part of the first-century pilgrimage route \"in spite of the fact that the horizontal excavation method and the paucity of scientific publications does not enable us to establish with certainty when the road was built and how it fit into the layout of the city of Jerusalem\". It is cited separately from the Times of Israel report because that objection is the organisation's and not a sentence of Y. Mizrachi's, and the rest of the statement is about Israeli policy in Jerusalem rather than about method",
+        supports: "Emek Shaveh's published objection to the excavation method and to the pace of publication",
       },
       {
         tier: "encyclopedic",
@@ -9241,7 +9368,7 @@ export const topics: Topic[] = [
       {
         heading: "The Case Against, Stated by the People Who Make It",
         paragraphs: [
-          "I. Finkelstein, L. Singer-Avitz, Z. Herzog and D. Ussishkin published a joint response in Tel Aviv in 2007 under the title \"Has King David's Palace in Jerusalem been Found?\" Their answer is no, and their argument is mostly about the first of the four conditions above. They contend that the walls do not form a single structure; that the western walls align with later remains including a ritual bath they date to the Hasmonean period; and that on the published evidence \"all one can safely say is that its various elements post-date the late Iron I/early Iron IIA and predate the Roman period\" — a window of roughly eight hundred years. They also argue, in as many words, that the biblical text rather than the stratigraphy drove the field operation.",
+          "I. Finkelstein, L. Singer-Avitz, Z. Herzog and D. Ussishkin published a joint response in Tel Aviv in 2007 under the title \"Has King David's Palace in Jerusalem been Found?\" Their answer is no, and their argument is mostly about the first of the four conditions above. They contend that the walls do not form a single structure; that the western walls align with later remains including a ritual bath they date to the Hasmonean period; and that on the published evidence \"all one can safely say is that its various elements post-date the late Iron I/early Iron IIA and predate the Roman period\" — a window of roughly eight hundred years. That sentence is often quoted on its own, and the one immediately after it in their conclusion narrows the window sharply: \"Circumstantial evidence seems to suggest the dating of most elements to the late Hellenistic period.\" Their published abstract says the same, that the more elaborate walls \"should possibly be dated to the Hellenistic period\". They also argue, in as many words, that the biblical text rather than the stratigraphy drove the field operation: \"The biblical text dominates this field operation, not archaeology.\"",
           "M. Steiner, who published K. Kenyon's Jerusalem material and knows the earlier digs on this exact ground, made a related case in 2009. Her point is partly about the site's history: most of the area E. Mazar excavated had been dug before, by R. Macalister and J. Duncan in the 1920s and by K. Kenyon in the 1960s, which she argues makes it \"almost impossible to establish a connection between the walls and to date the walls\". She reads three separate wall complexes, assigns some of the northern remains to the Middle Bronze Age, and concludes: \"Did Eilat Mazar find king David's palace? I would say not.\"",
           "The case is not one-sided and should not be reported as if it were — but the support must not be overstated either, and its shape is easy to get wrong. A. Mazar, a leading Iron Age archaeologist, accepted a monumental Iron Age building here and offered a different identification: the Jebusite fortress of Zion, the stronghold David took rather than the palace he built. A. Faust arrived at much the same place from the other direction. In the Zeitschrift des Deutschen Palästina-Vereins in 2010 he defended the structural half of E. Mazar's case — the Large Stone Structure and the Stepped Stone Structure are one complex, and the most impressive building of its period in the region — while dating that complex to Iron Age I and reading it as the Jebusite fortress rather than as David's palace. He agrees with her about the stones and disagrees with her about whose they were, and it would be a misuse of his paper to file him among her supporters. I. Finkelstein answered him in the same journal the following year. W. Dever has accepted a tenth-century date; J. Magness has argued the structure was built earlier still, in the twelfth century, and remained in use into the ninth.",
           "Here is where the app stands. There is monumental construction of the Iron Age on the summit of the City of David; that much survives every critic. Whether the excavated walls are one building is genuinely unresolved and cannot be resolved from the published sections. And even the scholars most willing to accept a tenth-century date mostly do not accept \"David's palace\" — because a date is not an owner. The claim was announced with more confidence than the evidence carried, and repeating that confidence would be a disservice to a reader who will meet the Tel Aviv article sooner or later. The stones are real, the argument is live, and the honest sentence is that a monumental Iron Age building stood here and we do not know whose it was.",
@@ -9275,8 +9402,8 @@ export const topics: Topic[] = [
         tier: "scholarly",
         label: "I. Finkelstein, L. Singer-Avitz, Z. Herzog and D. Ussishkin, \"Has King David's Palace in Jerusalem been Found?\"",
         credit: "Israel Finkelstein, Lily Singer-Avitz, Ze'ev Herzog and David Ussishkin, Tel Aviv University",
-        detail: "Tel Aviv 34:2 (September 2007), 142-164, doi:10.1179/tav.2007.2007.2.142. The principal published objection. Publisher paywall; the bibliographic record was confirmed through Crossref",
-        supports: "The argument that the walls are not one building, and the eight-hundred-year date window",
+        detail: "Tel Aviv 34:2 (September 2007), 142-164, doi:10.1179/tav.2007.2007.2.142. The principal published objection. The publisher's copy is behind a paywall and was not opened. The abstract was read in full at Tel Aviv University's own research record, cris.tau.ac.il, and the concluding paragraph quoted here was read where it is reproduced verbatim in a January 2008 post at bibleplaces.com; the two agree, and the abstract independently carries the Hellenistic dating. The quotations are given at that second hand rather than from the journal, and the sentence about circumstantial evidence is included because quoting only the eight-hundred-year window understates what these authors concluded",
+        supports: "The argument that the walls are not one building, the eight-hundred-year window, and the late-Hellenistic dating the same paragraph proposes",
         paywalled: true,
       },
       {
@@ -9346,8 +9473,8 @@ export const topics: Topic[] = [
       {
         heading: "A Reading Its Own Excavators Retired",
         paragraphs: [
-          "R. Reich and E. Shukron published their conclusion in Biblical Archaeology Review in 1999, and the magazine announced on its own account that the shaft theory of David's conquest had been shattered. That headline phrasing is the editors' rather than the authors', but the substance is the excavators' own. That is a strong thing to state about a popular reading, and this app states it, because the people who dug the site are the ones who withdrew it. An article that kept Joab climbing the shaft would be teaching a reading the excavators themselves abandoned, and a reader who later opened their report would rightly wonder what else had been left in place because it made a better story.",
-          "It is not unanimous, and there are two dissents rather than one. A. Faust replied in the same magazine in 2003, arguing that the shaft was used to draw water after all: the Parker Mission of 1909-1911 demonstrably drew water up it, a tunnel was cut to bring water to its base, and cutting that tunnel required hauling the spoil out by exactly the means R. Reich and E. Shukron say was impractical. D. Gill, whose work established the karst in the first place, has likewise continued to read the shaft as part of a functioning water system, arguing that it served as a well in the Middle Bronze Age. Neither is a rehabilitation of Joab: on both readings the shaft's use is a matter of water supply, and even A. Faust accepts that it was not exposed until around 800 BC, long after David's conquest.",
+          "R. Reich and E. Shukron published their conclusion in Biblical Archaeology Review in 1999, and the article's printed subtitle says flatly that the shaft theory of David's conquest is shattered. That wording is not an editorial flourish beside their piece; it is the subtitle of the piece, under their own byline. That is a strong thing to state about a popular reading, and this app states it, because the people who dug the site are the ones who withdrew it. An article that kept Joab climbing the shaft would be teaching a reading the excavators themselves abandoned, and a reader who later opened their report would rightly wonder what else had been left in place because it made a better story.",
+          "It is not unanimous, and there are two dissents rather than one. A. Faust replied in the same magazine in 2003, arguing that the shaft was used to draw water after all: the Parker Mission of 1909-1911 demonstrably drew water up it, a tunnel was cut to bring water to its base, and cutting that tunnel required hauling the spoil out by exactly the means R. Reich and E. Shukron say was impractical. D. Gill, whose work established the karst in the first place, has likewise continued to read the shaft as part of a functioning water system, arguing that it served as a well in the Middle Bronze Age. A. Faust's dissent is not a rehabilitation of Joab: on his reading too the shaft's use is a matter of water supply, and he accepts that it was not exposed until around 800 BC, long after David's conquest. D. Gill leaves rather more open than that, and it is fairer to him to say so. His 1991 paper ends by remarking that \"knowledge of the subterranean access may have played a role in David's capture of the Jebusite city\" — which is a door held open rather than shut. Note what it does not say: it is about knowing the underground system, not about anybody climbing this shaft, and it is a may rather than a did.",
           "The date of the spring fortifications is itself now in play, and this is a live argument between named specialists. J. Regev, J. Uziel, N. Szanton and E. Boaretto radiocarbon-dated the Spring Tower and concluded that it was built in the ninth century BC — not, as had been assumed for two decades, in the Middle Bronze Age. That would make the tower Judahite work rather than Canaanite, and it would mean it was not standing when David arrived. R. Reich answered them in Tel Aviv in 2018 with three arguments, and all three deserve stating rather than the easiest one: that the dated samples could have been carried in by flooding from the Kidron Valley; that the spot sampled may be an Iron Age repair to an older structure rather than the original build; and — the substantive one — that the tower's cyclopean masonry matches Middle Bronze fortifications at Gezer, Hebron and Shechem and looks nothing like Iron Age II fortification in Judah. That argument is open, and this article does not close it.",
           "And the word itself is unsettled. Tsinnor occurs twice in the Hebrew Bible and has been read as a shaft, a water channel, a fortified passage, a hook, a grappling iron and — on one proposal — a windpipe, making the line an instruction about throats rather than tunnels. The honest position is that nobody knows what David told his men to go up, that the shaft is not a good candidate for it, and that the fortified passage beside the spring is a better one without being a proven one.",
         ],
@@ -9385,9 +9512,9 @@ export const topics: Topic[] = [
       },
       {
         tier: "scholarly",
-        label: "R. Reich and E. Shukron, \"Light at the End of the Tunnel\"",
+        label: "R. Reich and E. Shukron, \"Light at the End of the Tunnel: Warren's Shaft Theory of David's Conquest Shattered\"",
         credit: "Ronny Reich, University of Haifa, and Eli Shukron, Israel Antiquities Authority",
-        detail: "Biblical Archaeology Review 25:1 (January/February 1999) — the excavators' own withdrawal of the shaft-and-conquest reading. Their full report is Excavations in the City of David, Jerusalem (1995-2010), Penn State University Press, 2021. Print and subscription only",
+        detail: "Biblical Archaeology Review 25:1 (January/February 1999), 22-33, 72 — the excavators' own withdrawal of the shaft-and-conquest reading, and the \"shattered\" is the printed subtitle of their own article rather than an editorial flourish beside it. Their full report is Excavations in the City of David, Jerusalem (1995-2010), Penn State University Press, 2021. Print and subscription only",
         supports: "The natural origin of the shaft, the accidental breach, and the retirement of the Joab reading",
         paywalled: true,
       },
@@ -9403,8 +9530,8 @@ export const topics: Topic[] = [
         tier: "scholarly",
         label: "D. Gill, \"Subterranean Waterworks of Biblical Jerusalem: Adaptation of a Karst System\"",
         credit: "Dan Gill, Geological Survey of Israel",
-        detail: "Science 254 (6 December 1991), 1467-1471, doi:10.1126/science.254.5037.1467. The paper that established that the shaft and the passages around it are natural karst features adapted by people rather than quarried. Publisher paywall; record confirmed through Crossref",
-        supports: "The natural origin of the shaft, credited to the geologist who established it",
+        detail: "Science 254 (6 December 1991), 1467-1471, doi:10.1126/science.254.5037.1467. The paper that established that the shaft and the passages around it are natural karst features adapted by people rather than quarried. The body of the article is behind the publisher's paywall and was not read here; the closing sentence quoted in section three is from the abstract Science itself deposited with Crossref, which is the whole of what could be checked",
+        supports: "The natural origin of the shaft, credited to the geologist who established it, and his own closing remark about David's capture of the city",
         paywalled: true,
       },
       {
@@ -9550,7 +9677,7 @@ export const topics: Topic[] = [
         heading: "Objects Without a Layer",
         paragraphs: [
           "Archaeology's evidence is not really objects; it is objects in relationships. A cooking pot means little on its own and a great deal if it lies on a floor, under a collapse, above a coin. Those relationships — stratigraphy — are how anything gets dated and how one find is connected to another. The 1999 works destroyed every relationship in nine thousand tons of earth in a matter of days. Nothing sifted from it can be dated by its context, assigned to a building, or connected to any other find, because it no longer has a context to be dated by.",
-          "That limit has been pressed hard, by three critics who press it in three different ways. I. Finkelstein doubts the premise that the debris all came from the platform's own deposits, and holds that only an extraordinary find — an inscription — could carry weight from material like this. M. Abu-Khalaf, of Al-Quds University, points out that the area worked in 1999 was itself a dump used to build up the platform, so some of the earth may have come from the surrounding valleys rather than from the Mount. Y. Mizrachi, of the organisation Emek Shaveh, argues the project has no archaeological value at all — and his objection has a second half that ought to be reported with the first, because leaving it out makes his position look merely dismissive: he holds that a project with little scientific value nonetheless has a large public effect on how the Mount is understood, and that Elad's long involvement is why that matters. None of the three is a fringe voice, and this article does not brush them aside.",
+          "That limit has been pressed hard, by three critics who press it in three different ways. I. Finkelstein doubts the premise that the debris all came from the platform's own deposits, and holds that only an extraordinary find — an inscription — could carry weight from material like this. M. Abu-Khalaf, of Al-Quds University, points out that the area worked in 1999 was itself a dump used to build up the platform, so some of the earth may have come from the surrounding valleys rather than from the Mount. Y. Mizrachi, of the organisation Emek Shaveh, argues the project \"doesn't have any archaeological value\" at all — and his objection has a second half that ought to be reported with the first, because leaving it out makes his position look merely dismissive: he holds that a project with little scientific value nonetheless has \"a lot of impact\" on the modern narrative around the Mount, and that even an inscription naming Solomon and a temple would, on this material, \"raise more questions than answers\". None of the three is a fringe voice, and this article does not brush them aside.",
           "The project's own answer is worth stating in its own terms rather than in a caricature. G. Barkay compares the work to an archaeological surface survey, a long-accepted method in which unstratified surface material is treated as a statistical sample of what lies below. The project argues that out-of-context finds still carry typological and quantitative information; that comparison with parallel objects from well-dated contexts elsewhere in Jerusalem lets much of the material be dated typologically; and that because the bulldozers created discrete heaps rather than mixing everything uniformly, statistical clustering within heaps may partly recover which finds came from the same original deposit. That last claim is the project's own proposal and, by its own account, awaits full classification before it can be tested.",
           "So the balance. This material can support statements of the form \"objects of this kind and this period were present on the Temple Mount, in roughly these proportions.\" That is real knowledge and it is not nothing. It cannot support statements of the form \"this object came from this building, in this year, and therefore that event happened.\" Any claim of the second kind made from sifted material — and such claims have been made, in headlines, about several of these finds — is claiming more than the method can deliver. The badge on this article says \"no excavation context\", and it means it.",
         ],
@@ -9832,8 +9959,8 @@ export const topics: Topic[] = [
         label: "Biblical Archaeology Society: A. Ben-Tor and S. Zuckerman on who destroyed Canaanite Hazor",
         url: "https://www.biblicalarchaeology.org/daily/news/scorched-wheat-may-provide-answers-on-the-destruction-of-canaanite-tel-hazor/",
         credit: "Biblical Archaeology Society, 24 July 2012",
-        detail: "Ben-Tor: the Israel of the Merneptah stele \"seems to be the most likely candidate.\" Zuckerman: \"I believe it was an internal revolt within the city that was responsible for the destruction\"",
-        supports: "The two excavators' opposed readings, in their own words",
+        detail: "Read in full. It quotes two BAR articles. The first is by A. Ben-Tor and Maria Teresa Rubiato jointly — \"Excavating Hazor, Part Two: Did the Israelites Destroy the Canaanite City?\", BAR 25:3 (May/June 1999) — and their sentence is that the \"Israel\" of the Merneptah stele \"seems to be the most likely candidate for the violent destruction of Canaanite Hazor\". The second is S. Zuckerman, \"Where Is the Hazor Archive Buried?\", BAR (March/April 2006): \"I believe it was an internal revolt within the city that was responsible for the destruction\"",
+        supports: "The two directors' opposed readings, in the words of their own BAR articles",
       },
       {
         tier: "scholarly",
@@ -10001,7 +10128,7 @@ export const topics: Topic[] = [
         paragraphs: [
           "The identification with Joshua's altar has never carried the discipline, and that has to be said plainly rather than buried. A. Kempinski, who visited during the first season, published \"Joshua's Altar — An Iron Age I Watchtower\" in Biblical Archaeology Review in early 1986, arguing the stones were part of a watchtower and that there was no basis whatever for reading the structure as an altar; Zertal replied in the same issue. A. Rainey read it as a farmstead with an animal pen. The faunal assemblage cuts both ways: the bones are largely kosher, but fallow deer make up a substantial share of them, and fallow deer are not a sacrificial animal in the Levitical system, which is awkward for a neat fit with Joshua 8. And Zertal died in 2015; a final excavation report could not be traced for this article.",
           "The state of play, stated as carefully as it can be: that the site had some cultic character is a serious and respectable position held by scholars well outside Zertal's camp. That it is specifically the altar Joshua built is a minority view, not accepted by most archaeologists, and it is not going to become the app's house position on the strength of one excavator's reading. It is also not fringe in the sense of being unpublished or ignored — it appeared in a peer-reviewed journal and was argued over by senior scholars in print, which is more than can be said for a good deal of what gets repeated about this site.",
-          "One thing that must not be run together with any of the above. In December 2019 a team from Associates for Biblical Research wet-sifted Zertal's spoil heaps and recovered a folded lead object about two centimetres across, announced at a press conference in Houston in March 2022 — fourteen months before it appeared in a journal — as a Late Bronze Age Hebrew curse inscription. The peer-reviewed publication followed in Heritage Science in May 2023. The response has been overwhelmingly negative from the specialists who work on early alphabetic writing. A. Maeir and C. Rollston concluded in the Israel Exploration Journal that the tomographic images \"fail to demonstrate any discernible letters\" and that the object \"is most reasonably understood as an uninscribed lead fishing-net weight\"; A. Mazar and N. Yahalom-Mack published in the same issue to similar effect; and a refutation by M. Haughwout appeared in 2024 in the same journal that had published the original claim, concluding that there is \"insufficient epigraphic evidence to conclude that writing exists\" on the lead. The object came from a spoil heap, not a stratified deposit. This app does not treat it as a find, and it has no bearing on the structure Zertal excavated.",
+          "One thing that must not be run together with any of the above. In December 2019 a team from Associates for Biblical Research wet-sifted Zertal's spoil heaps and recovered a folded lead object about two centimetres across, announced at a press conference in Houston in March 2022 — fourteen months before it appeared in a journal — as a Late Bronze Age Hebrew curse inscription. The peer-reviewed publication followed in Heritage Science in May 2023. The response has been overwhelmingly negative from the specialists who work on early alphabetic writing. A. Maeir and C. Rollston concluded in the Israel Exploration Journal that the tomographic images \"fail to demonstrate any discernible letters\" and that the object \"is most reasonably understood as an uninscribed lead fishing-net weight\"; A. Mazar and N. Yahalom-Mack published in the same issue to similar effect; and a refutation by M. Haughwout appeared in 2024 in the same journal that had published the original claim, concluding that there is \"currently insufficient epigraphic evidence to conclude that writing exists on the interior or exterior of this folded piece of lead\". The object came from a spoil heap, not a stratified deposit. This app does not treat it as a find, and it has no bearing on the structure Zertal excavated.",
         ],
       },
     ],
@@ -10069,7 +10196,7 @@ export const topics: Topic[] = [
         label: "M. Haughwout, \"Mt. Ebal curse tablet? A refutation of the claims regarding the so called Mt. Ebal curse tablet\"",
         url: "https://doi.org/10.1186/s40494-023-01130-z",
         credit: "Mark S. Haughwout, Indian Bible College",
-        detail: "Heritage Science 12, article 70, published 26 February 2024, open access — in the same journal that published the original claim. Concludes there is \"insufficient epigraphic evidence to conclude that writing exists\" on the folded lead",
+        detail: "Heritage Science 12, article 70, published 26 February 2024, open access — in the same journal that published the original claim. Read in full. Concludes that there is \"currently insufficient epigraphic evidence to conclude that writing exists on the interior or exterior of this folded piece of lead\". The \"currently\" is his and is kept: it makes the verdict time-indexed rather than final",
         supports: "The published refutation of the lead object's reading",
       },
       {
@@ -10110,7 +10237,7 @@ export const topics: Topic[] = [
         heading: "The Argument About Tents",
         paragraphs: [
           "The genuinely interesting thing at Timna is not a dating correction. It is a methodological challenge, and it deserves to be stated in its author's terms rather than in the form apologetics has given it. E. Ben-Yosef argues, in \"The Architectural Bias in Current Biblical Archaeology\" in Vetus Testamentum in 2019 and at length since, that the discipline reads social complexity off buildings, and that this systematically renders mobile societies invisible. The people running the Arabah copper industry were nomads. They left almost no architecture. They nevertheless operated a centralised, technologically sophisticated, industrial-scale enterprise, wore imported dyed textiles, and — because copper production happens to leave slag heaps and installations — they can be studied in a way nomads normally cannot. Timna is a rare window, not a normal case.",
-          "The inference he draws is narrow and he is careful about it, and the app is going to be careful too. He does not claim the Arabah proves anything about David or Solomon; he calls his argument \"methodological in essence.\" What it does is remove an argument. The standard case against a substantial tenth-century polity in Judah runs: no monumental architecture, therefore no state. If a tent-dwelling society can run what Timna shows it ran, that inference does not hold, and the absence of tenth-century palaces stops being decisive. Taking away an argument against something is not evidence for it. Ben-Yosef says so himself, and any presentation of him as an \"archaeology proves the Bible\" figure misrepresents him.",
+          "The inference he draws is narrow and he is careful about it, and the app is going to be careful too. He does not claim the Arabah proves anything about David or Solomon. His paper opens by saying that it \"aims at highlighting a methodological flaw in current biblical archaeology\", and it closes by asking \"biblical archaeologists to be more modest about their role in solving textual issues\". What his argument does is remove an argument. The standard case against a substantial tenth-century polity in Judah runs: no monumental architecture, therefore no state. If a tent-dwelling society can run what Timna shows it ran, that inference does not hold, and the absence of tenth-century palaces stops being decisive. Taking away an argument against something is not evidence for it. Ben-Yosef says so himself, and any presentation of him as an \"archaeology proves the Bible\" figure misrepresents him.",
           "He also has serious opposition. I. Finkelstein has answered that the point is not new, that the desert polity is not in fact devoid of stone-built remains, that Tel Masos and the Negev Highlands settlements are part of the same system, and that there is no way to know whether these people called themselves Edom rather than Midian, Amalek or Teman. P. Bienkowski has argued in the Bulletin of the American Society of Overseas Research that the nomadic-polity model has no supporting evidence, that the people buried in the nearby cemetery were mostly not the people working the furnaces, and that the kingdom of Edom did not grow out of this industry at all. That exchange is live. Where the app stands: the redating is solid and the methodological point is a real contribution that ought to change how absence-of-evidence arguments are made in this field. Neither of those is a biblical confirmation, and the honest reading of Deuteronomy 8:9 is that the land was known for its copper, which the Arabah amply demonstrates, and not that any of these mines belonged to Solomon.",
         ],
       },
@@ -10156,9 +10283,8 @@ export const topics: Topic[] = [
         label: "E. Ben-Yosef, \"The Architectural Bias in Current Biblical Archaeology\"",
         url: "https://doi.org/10.1163/15685330-12341370",
         credit: "Erez Ben-Yosef, Tel Aviv University",
-        detail: "Vetus Testamentum 69:3 (2019), 361-387. The methodological argument, restated at length with Z. Thomas in \"Complexity Without Monumentality in Biblical Times,\" Journal of Archaeological Research 32:1 (2024), 59-101",
-        supports: "The nomad argument, in its author's own publication",
-        paywalled: true,
+        detail: "Vetus Testamentum 69:3 (2019), 361-387; DOI 10.1163/15685330-12341370. Open access at Brill and read in full here, which is where both of the sentences quoted in the fourth section come from — the abstract's own statement of aim and the last paragraph's request for modesty. The argument is restated at length with Z. Thomas in \"Complexity Without Monumentality in Biblical Times,\" Journal of Archaeological Research 32:1 (2024), 59-101",
+        supports: "The nomad argument, and Ben-Yosef's own statement of what it is and is not, in his own publication",
       },
       {
         tier: "scholarly",
@@ -10790,7 +10916,7 @@ export const topics: Topic[] = [
         url: "https://doi.org/10.1163/ej.9789004194809.i-694",
         credit: "Koert van Bekkum, Theological University Kampen",
         detail:
-          "Culture and History of the Ancient Near East 45 (Brill, 2011), 41-42, where the stratigraphic position is stated plainly: \"Et-Tell, identified by most scholars with the city of Ai, was not settled between the Early Bronze and Iron Age I.\" Paywalled",
+          "Culture and History of the Ancient Near East 45 (Brill, 2011), 41-42, where the stratigraphic position is stated plainly: \"Et-Tell, identified by most scholars with the city of Ai, was not settled between the Early Bronze and Iron Age I.\" The book is paywalled and was not opened here, so the sentence and its page range are quoted at second hand — the same standard that keeps A. M. Maeir unquoted in this record",
         supports: "The current scholarly statement of the occupation gap",
         paywalled: true,
       },
@@ -10866,7 +10992,7 @@ export const topics: Topic[] = [
       {
         heading: "Nothing Here Is Settled, and Evangelicals Are Not Agreed Either",
         paragraphs: [
-          "The Arabian case leans hard on Galatians 4:25, where Paul writes that \"this Hagar is Mount Sinai in Arabia,\" and the weight it can bear is much less than it is usually asked to carry. G. Franz, writing for Associates for Biblical Research, makes the case against at length: ancient writers used \"Arabia\" for territory that included the Sinai peninsula, so Paul's phrase does not move the mountain east. Franz also went at the physical claims and found them to be the wrong period. The \"Cave of Moses\" he judged \"clearly a First Century AD Nabatean tomb\"; the pottery around the claimed altar and twelve pillars he reports as \"purely, and only, Nabatean\"; the famous bovine petroglyphs he dates as Neolithic and \"considerably earlier than the Exodus.\" That is a specific, checkable set of objections rather than a dismissal, and it is the strongest thing published against the Saudi sites.",
+          "The Arabian case leans hard on Galatians 4:25, where Paul writes that \"this Hagar is Mount Sinai in Arabia,\" and the weight it can bear is much less than it is usually asked to carry. G. Franz, writing for Associates for Biblical Research, makes the case against at length: ancient writers used \"Arabia\" for territory that included the Sinai peninsula, so Paul's phrase does not move the mountain east. Franz also went at the physical claims and found them to be the wrong period. The \"Cave of Moses\" he judged \"clearly a first-century AD Nabatean tomb\"; the pottery around the claimed altar and twelve pillars he reports as \"purely, and only, Nabatean\"; and of the famous bovine petroglyphs he reports what a Saudi archaeologist who wrote his doctorate on the region's rock art told him, that they \"dated to the Neolithic period, considerably earlier than the Exodus and wilderness wanderings.\" That is a specific, checkable set of objections rather than a dismissal, and it is the strongest thing published against the Saudi sites.",
           "Two claims that circulate on the other side of this argument are not repeated here because they could not be sourced. One is that the Saudi antiquities authorities surveyed Jebel al-Lawz and rejected the identification; the only trace of it leads to an unpublished report with no citation. The other is the body of claims made by a foundation that promotes the site, whose own website could not be reached to read them. Neither absence proves anything either way — but an article that reports a claim it has not read is doing the thing this section exists to warn about.",
           "Where the app stands, and where it declines to. The traditional site has the best pedigree and the least evidence; Har Karkom has the most evidence and the wrong date by its own excavator's reckoning; the Jebel al-Lawz sites have an exegetical argument that does not hold and material remains that belong to the Nabataeans, while the wider Midianite proposal is better described as untested than as refuted. No candidate has decisive evidence, and this is not a case where one side is merely being stubborn. It is worth adding that evangelical scholars are not lined up behind one answer here, and a reader who has been told otherwise has been misinformed: J. K. Hoffmeier argues for the southern peninsula, and — on the account of R. S. Hess, reviewing the book — prefers Gebel Safsafah or Gebel Serbal to the traditional Jebel Musa itself; C. J. Humphreys argues for Midian; G. Franz argues for the traditional peninsula and against Arabia in print. Three evangelical scholars, three answers, all published. F. M. Cross, quoted by H. Shanks, put the wider state of exodus geography about as well as it can be put: \"A mountain of paper has been expended in attempting to locate the stations of the Exodus in Numbers 33. There are almost as many opinions as there are scholars.\" The mountain is not lost in any sense that matters to a reader of Exodus. What happened there is what the text is about, and the text never thought the coordinates were the point.",
         ],
@@ -11380,7 +11506,7 @@ export const topics: Topic[] = [
       {
         heading: "A Boat-Shaped Ridge and a Mountain",
         paragraphs: [
-          "In October 1959 a Turkish military captain, İlhan Durupınar, noticed a large boat-shaped outline on aerial survey photographs of eastern Turkey, on a slope south of Mount Ararat near the village of Üzengili, at about two thousand metres — published distances from the peak differ, running from roughly twelve to eighteen miles, and this article does not pick one. Life magazine published the photograph in September 1960, and a team went out that month, dug and dynamited for two days, and found soil and rock. The Wyatt organisation's own website quotes Life's own verdict on that survey: it \"revealed no sign that the object was man made.\"",
+          "In October 1959 a Turkish military captain, İlhan Durupınar, noticed a large boat-shaped outline on aerial survey photographs of eastern Turkey, on a slope south of Mount Ararat near the village of Üzengili, at about two thousand metres — published distances from the peak differ, running from roughly twelve to twenty miles, and this article does not pick one. Life magazine published the photograph in September 1960, and a team went out that month, dug and dynamited for two days, and found soil and rock. The magazine's caption, reproduced in full on the Wyatt organisation's own website, does not settle it either way, and all three of its closing sentences belong together: \"A quick two-day survey revealed no sign that the object was man made. Yet a scientist in the group says nothing in nature could create such a symmetrical shape. A thorough excavation may be made another year to solve the mystery.\"",
           "From 1977 R. Wyatt took the site up and made it famous, and the claims attached to it are specific enough to be tested. This article is about the site and the search; the app's separate article Ron Wyatt's Claimed Discoveries covers the rest of what he announced, and the two should be read together. His organisation reported metal-detector readings over what were described as iron rivets, laboratory assays showing aluminium, titanium and magnesium metal — with the inference, printed in capitals on their own site, that those metals are not found in nature — a deck plank said to be petrified wood, huge anchor stones with crosses carved on them at the village of Arzap, and radar scans said to reveal keels, bulkheads, animal chambers and a ramp. Turkish authorities designated the area a national park and a visitor centre was built.",
           "Mount Ararat itself has its own literature. F. Navarra recovered worked wood from the mountain in 1955. A photographic anomaly on the north-west slope, first noticed on a United States Air Force mission of 17 June 1949, was declassified in 1995 and has been argued over since. And in April 2010 a Hong Kong expedition announced at a press conference that it had entered a wooden structure at around four thousand metres, radiocarbon dated to about 4,800 years, with one of its members saying it was \"99.9 percent\" the ark.",
         ],
@@ -11400,7 +11526,7 @@ export const topics: Topic[] = [
           "Four years before that paper, A. Snelling had reached the same conclusion from a very different direction. Snelling is a geologist and a young-earth creationist, and his 1992 report for Answers in Genesis says the site \"has a perfectly reasonable natural geological explanation\" and that \"there is no mystery about this site and its boat-shape\": earthquakes pushed up a block of basement rock, mudflow moved slowly around it, and the fault scarps make the \"walls.\" On the assays: \"the assay results of these two samples are exactly what one would expect from soil developed from basalt.\" On the anchor stones, that Noah would scarcely have used slabs of rock native to the place the ark came to rest, and that there is no wear around the tops of the holes. Answers in Genesis files that report under the heading \"Arguments to Avoid.\" A reader who has been told that only sceptics doubt this site has been told something untrue.",
           "The Ararat claims have gone the same way and the pattern is worth naming. F. Navarra's 1955 wood was dated by four laboratories — R. Berger at UCLA, R. E. Taylor at Riverside, H. Suess at La Jolla, and England's National Physics Laboratory — and the results converge on roughly the seventh or eighth century AD, about twelve hundred years old rather than five thousand. That is not a sceptic's summary either: reviewing those very papers in 1980, a research institute of the Seventh-day Adventist church accepted their result, that \"the dates for the wood converge around 700 A.D.\" and that the samples come from some other ancient structure. The 1949 anomaly was assessed by the Defense Intelligence Agency itself, whose analysis of the frames concluded that accumulated ice and snow along the precipice fall away at intervals leaving \"long linear facades,\" and that the anomaly appears to be one of them.",
           "The 2010 Hong Kong announcement is the sharpest case, because both of the people best placed to check it were evangelicals working with the expedition. R. Price, the archaeologist on the 2008 season, wrote to supporters in April 2010 alleging a hoax, and his allegation should be quoted as he framed it — with the hedge he himself used: \"In the late summer of 2008 ten Kurdish workers hired by Parasut, the guide used by the Chinese, are said to have planted large wood beams taken from an old structure in the Black Sea area (where the photos were originally taken) at the Mt. Ararat site.\" He added that to his knowledge the expedition took no professional archaeologist or geologist who could verify or document the wood. Fairness requires the rest of it: within days Price's ministry issued a clarification that while he had reservations about the expedition's nature and procedure, \"he believes that a decision concerning this matter must wait until independent examinations of the site and the structure can be made and published.\" And then the dating. A. Snelling, the same creationist geologist, was given the expedition's radiocarbon results by the ministry itself and published all of them in 2011, reporting that two of their four wood samples were tested at two laboratories each and certified modern — post-1950 and roughly 120 to 135 years old — and a third returned an age of about 610 years. The fourth sample, the only one behind the announced figure, was tested at a single laboratory that did not follow standard procedure, measure the carbon isotope value or report an error margin. His conclusion was that the tests \"strongly indicated that their wood samples could not have come from the Ark.\"",
-          "Work continues at Durupınar, and it deserves reporting straight rather than mocked. A team including archaeologists from Turkish universities has run ground-penetrating radar and resistivity surveys and taken soil samples, reporting rectilinear anomalies below the surface and about three times more organic material inside the formation's outline than in controls outside it, with core drilling and isotopic dating scheduled. Two things need saying about that, and the team says the second one itself. First, what a soil result of that kind can show: elevated organic carbon and potassium are consistent with decayed plant material of any origin and any date, they identify no species and no structure, and a date on sediment dates the sediment. Right-angled radar returns are likewise not unique to building — jointing, bedding and fracture intersections produce them, and Collins specifically describes a nearly rectangular joint system at this site. Nothing becomes evidence of a vessel until a core brings up worked wood, which has not happened. Second, their own statement of where they are: \"The evidence gathered over decades of fieldwork does not yet constitute definitive proof of Noah's Ark.\"",
+          "Work continues at Durupınar, and it deserves reporting straight rather than mocked. A team including archaeologists from Turkish universities has run ground-penetrating radar and resistivity surveys and taken soil samples, reporting rectilinear anomalies below the surface and about three times more organic material inside the formation's outline than in controls outside it, with core drilling and isotopic dating scheduled. Two things need saying about that, and the team says the second one itself. First, what a soil result of that kind can show: elevated organic carbon and potassium are consistent with decayed plant material of any origin and any date, they identify no species and no structure, and a date on sediment dates the sediment. Right-angled radar returns are likewise not unique to building — jointing, bedding and fracture intersections produce them, and Collins specifically describes a nearly rectangular joint system at this site. Nothing becomes evidence of a vessel until a core brings up worked wood, which has not happened. Second, their own statement of where they are — given whole, because the claim in its second half is part of the sentence: \"The evidence gathered over decades of fieldwork does not yet constitute definitive proof of Noah's Ark, but it presents a collection of anomalies that are difficult to reconcile with purely natural geological explanations.\"",
           "So, plainly. In sixty-six years at Durupınar and seventy on Ararat, no claim among them could be found in a peer-reviewed venue; the proponents' output is press releases, films, ministry publications and symposium chapters, while the peer-reviewed literature — Collins and Fasold in 1996, Taylor and Berger in 1980, L. R. Bailey in 1977 — runs the other way. That is not archaeology being closed-minded about the Bible. It is a specific body of claims that has been checked repeatedly, often by believers who wanted them to be true, and has not survived the checking. None of that touches Genesis. The flood narrative is not waiting on a photograph, and a faith that has been told it is has been set up to be disappointed by a soil sample.",
         ],
       },
@@ -11491,6 +11617,14 @@ export const topics: Topic[] = [
       },
       {
         tier: "reference",
+        label: "Wyatt Archaeological Research: \"NOAH'S ARK - The Early Years\"",
+        url: "https://wyattmuseum.com/noahs-ark-the-early-years/2011-697",
+        credit: "Wyatt Archaeological Research, reproducing the Life caption of September 1960",
+        detail: "The promoters' own page, read in full, and the only place the 1960 caption could be read here. It reproduces the caption entire, which is why this article quotes all three of its closing sentences rather than the first: the survey found no sign the object was man-made, a scientist in the party said nothing in nature could produce the shape, and Life left the question for a later excavation. The same caption puts the formation \"20 miles south of Mt. Ararat\" at 7,000 feet",
+        supports: "What Life actually printed in September 1960, and the range of published distances from the peak",
+      },
+      {
+        tier: "reference",
         label: "The Noah's Ark Scans research team's own statement of its evidence",
         url: "https://www.noahsarkscans.com/noahs-ark-evidence",
         credit: "The Mount Ararat and Noah's Ark Research Team",
@@ -11566,8 +11700,8 @@ export const topics: Topic[] = [
       {
         heading: "Dating It, and Counting the Hands",
         paragraphs: [
-          "The conventional date is about 125 BC, argued from the shape of the letters — a formal Hasmonaean hand. Two radiocarbon runs have been done on it: one reported in 1991 gave 199-120 BC, and one in 1995 gave 335-122 BC. Both brackets contain the palaeographic date rather than overturning it, and both are wide. There is also a complication that has nothing to do with antiquity: many scroll fragments were treated with castor oil in the 1950s to make them easier to read, and a 2009 study by K. L. Rasmussen and colleagues concluded that the cleaning method used in those two runs could not remove it, which would pull the measured dates towards the present by an unknown amount.",
-          "Two recent studies have gone at the scroll from the handwriting instead. In 2021 M. Popović, M. A. Dhali and L. Schomaker ran a pattern-recognition analysis over the fifty-four columns and concluded that two scribes wrote it, dividing between columns 27 and 28 — the same point at which the manuscript carries what they call a three-line lacuna at the foot of column 27, and where a new sheet begins. In 2025 the same group published the Enoch model, trained on radiocarbon-dated manuscripts, which dates both halves of this scroll consistently between 180 and 100 BC. Their headline finding was that many Qumran manuscripts are older than palaeography had assumed; this one is not among them. In the earlier of the two papers the same team set the limit themselves: these techniques \"do not give certainty of identification but statistically proven probabilities\".",
+          "The conventional date is about 125 BC, argued from the shape of the letters — a formal Hasmonaean hand. Two radiocarbon runs have been done on it: one reported in 1991 gave 199-120 BC, and one in 1995 gave 335-122 BC. Both brackets contain the palaeographic date rather than overturning it, and both are wide. There is also a complication that has nothing to do with antiquity: many scroll fragments were treated with castor oil in the late 1950s to make them easier to read, and K. L. Rasmussen and colleagues showed in 2001 that the standard pretreatment used in those two runs cannot be relied on to remove it, so that any contaminated sample was \"most likely reported with ages that are too young by an unknown amount\". Their sequel of 2009 runs the other way and is worth knowing about for that reason: it sets out three cleaning protocols that do remove castor oil, recommends one of them, and proposes a list of scrolls to redate so the earlier results can be checked.",
+          "Two recent studies have gone at the scroll from the handwriting instead. In 2021 M. Popović, M. A. Dhali and L. Schomaker ran a pattern-recognition analysis over the fifty-four columns and concluded that two scribes wrote it, dividing between columns 27 and 28 — the same point at which the manuscript carries what they call a three-line lacuna at the foot of column 27, and where a new sheet begins. In 2025 the same group published the Enoch model, trained on radiocarbon-dated manuscripts, which dates both halves of this scroll consistently between 180 and 100 BC. Their headline finding was that many Qumran manuscripts are older than palaeography had assumed; this one is not among them. In the earlier of the two papers the same team stated the limits of the method themselves — and stated them as a defence rather than a retreat. The discussion of the variables, they write, \"is not to cast doubt on our study's outcome, which remains inherently sturdy, but reminds us that the techniques from pattern recognition and artificial intelligence do not give certainty of identification but statistically proven probabilities that can help the human expert understand and decide between different possibilities.\"",
         ],
       },
       {
@@ -11641,7 +11775,7 @@ export const topics: Topic[] = [
         url: "https://doi.org/10.1371/journal.pone.0249769",
         credit: "Mladen Popović, Maruf A. Dhali and Lambert Schomaker, University of Groningen",
         detail:
-          "PLOS ONE 16:4 (2021), e0249769. Open access. Concludes that \"two main scribes, each showing different writing patterns, were responsible for the Great Isaiah Scroll\", dividing between columns 27 and 28, where there is \"a three-line lacuna at the bottom of column 27\" and a change of sheet. Also the source of the caveat quoted in section two, that such techniques \"do not give certainty of identification but statistically proven probabilities\"",
+          "PLOS ONE 16:4 (2021), e0249769. Open access. Concludes that \"two main scribes, each showing different writing patterns, were responsible for the Great Isaiah Scroll\", dividing between columns 27 and 28, where there is \"a three-line lacuna at the bottom of column 27\" and a change of sheet. Also the source of the caveat quoted in section two, which is quoted with the clause that introduces it: the discussion of the variables \"is not to cast doubt on our study's outcome, which remains inherently sturdy, but reminds us that the techniques from pattern recognition and artificial intelligence do not give certainty of identification but statistically proven probabilities\"",
         supports: "The two-scribe finding and the location of the division",
       },
       {
@@ -11655,12 +11789,19 @@ export const topics: Topic[] = [
       },
       {
         tier: "scholarly",
+        label: "K. L. Rasmussen et al., \"The Effects of Possible Contamination on the Radiocarbon Dating of the Dead Sea Scrolls I: Castor Oil\"",
+        url: "https://doi.org/10.1017/S0033822200031702",
+        credit: "Kaare Lund Rasmussen, Jan Gunneweg, Johannes van der Plicht and colleagues",
+        detail: "Radiocarbon 43:1 (2001), 127-132; the publisher's PDF is free. This is the paper that carries the finding, and its abstract states it: \"not all oil contamination can be expected to have been removed by the acid-alkaline-acid (AAA) pretreatment\", so that the earlier ages \"cannot be guaranteed to be correct\" and any contaminated sample was \"most likely reported with ages that are too young by an unknown amount\"",
+        supports: "The caveat attached to the 1991 and 1995 radiocarbon results",
+      },
+      {
+        tier: "scholarly",
         label: "K. L. Rasmussen et al., \"The Effects of Possible Contamination on the Radiocarbon Dating of the Dead Sea Scrolls II: Empirical Methods to Remove Castor Oil and Suggestions for Redating\"",
         url: "https://doi.org/10.1017/S0033822200034081",
         credit: "Kaare Lund Rasmussen, Johannes van der Plicht, Gregory Doudna, Frederik Nielsen, Peter Højrup, Erling Halfdan Stenby and Carl Th. Pedersen",
-        detail: "Radiocarbon 51:3 (2009), 1005-1022. Concludes that if castor oil \"is not removed prior to dating, the 14C dates will be skewed artificially towards modern values\"",
-        supports: "The caveat attached to the 1991 and 1995 radiocarbon results",
-        paywalled: true,
+        detail: "Radiocarbon 51:3 (2009), 1005-1022; the publisher's PDF is free. The sequel, and it attributes the AAA finding to the 2001 paper above rather than claiming it: \"In Rasmussen et al. (2001), it was shown that the standard AAA pretreatment procedure used in the 2 previous studies dating Dead Sea Scroll samples ... is not capable of removing castor oil from parchment samples.\" Its own contribution is three protocols that do remove it, a recommendation of the Soxhlet method, and a proposed list of scrolls to redate",
+        supports: "That a workable decontamination method exists, and that its authors asked for the earlier dates to be checked",
       },
       {
         tier: "encyclopedic",
@@ -12205,7 +12346,7 @@ export const topics: Topic[] = [
         heading: "Two Reasons the Old Argument Has Moved",
         paragraphs: [
           "The first is that the question itself has been challenged. William Yarchin argued in the Journal of Biblical Literature in 2015 that the either/or is unfounded: since no standard configuration of the Hebrew Psalter can be shown to have existed in the period, asking whether a Qumran scroll is a true psalter or a secondary collection assumes the very thing that is missing. Presenting the debate as a straight two-sided contest between Sanders and Talmon is now about a decade out of date, and a reader who meets it that way and then reads further will notice.",
-          "The second is the date. The Library of Congress, exhibiting the scroll, gives its copying as about AD 30 to 50, from the handwriting. In 2025 the Groningen team that built the Enoch model reported that this manuscript is one of only two in their set whose palaeographic estimate is older than its radiocarbon result, and that the style-based estimate for it comes out \"above 100 CE.\" They say what follows without softening it: that \"may go against historical reconstructions according to which the scrolls were hidden in the Qumran caves before the summer of 68 CE.\" They did not force the model to respect that deadline. Nothing here is settled, and a reader is better served knowing that than being handed either side's version as the answer. What is comparatively settled is the wording: across the Qumran Psalms manuscripts the text of the individual psalms is stable to a degree that surprised everyone, and the argument is overwhelmingly about which psalms and in what order rather than about what they say.",
+          "The second is the date. The Library of Congress, exhibiting the scroll, gives its copying as about AD 30 to 50, from the handwriting. In 2025 the Groningen team that built the Enoch model reported that this manuscript is one of only two in their set whose palaeographic estimate is older than its radiocarbon result — \"although there is an overlap with the 14C results\", as the same sentence goes on to say — and that the style-based estimate for it comes out \"above 100 CE.\" They print the consequence rather than burying it: that \"may go against historical reconstructions according to which the scrolls were hidden in the Qumran caves before the summer of 68 CE.\" They did not force the model to respect that deadline, and they say why — they wanted to \"examine the possibility of style continuation after 70 CE.\" Nothing here is settled, and a reader is better served knowing that than being handed either side's version as the answer. What is comparatively settled is the wording: across the Qumran Psalms manuscripts the text of the individual psalms is stable to a degree that surprised everyone, and the argument is overwhelmingly about which psalms and in what order rather than about what they say.",
         ],
       },
     ],
@@ -12290,7 +12431,7 @@ export const topics: Topic[] = [
         url: "https://doi.org/10.1371/journal.pone.0323185",
         credit: "Mladen Popović, Maruf A. Dhali, Lambert Schomaker and colleagues, University of Groningen",
         detail:
-          "PLOS ONE 20:6 (2025), e0323185. Open access. Reports that \"Only 4Q201 and 11Q5 have older palaeographic date estimates\" than their radiocarbon results, that for 11Q5 \"a fairly certain style-based date estimate above 100 CE can also be achieved\", and that this \"may go against historical reconstructions according to which the scrolls were hidden in the Qumran caves before the summer of 68 CE\"",
+          "PLOS ONE 20:6 (2025), e0323185. Open access, read in full. Reports that \"Only 4Q201 and 11Q5 have older palaeographic date estimates, although there is an overlap with the 14C results\" — the concessive clause is theirs and is kept here — that for 11Q5 \"a fairly certain style-based date estimate above 100 CE can also be achieved\", that this \"may go against historical reconstructions according to which the scrolls were hidden in the Qumran caves before the summer of 68 CE\", and that they nonetheless \"did not impose here a chronological limit on the model\", in order to \"examine the possibility of style continuation after 70 CE\"",
         supports: "The dating tension in section three",
       },
       {
@@ -12593,7 +12734,7 @@ export const topics: Topic[] = [
         heading: "Nahash the Ammonite",
         paragraphs: [
           "The most-discussed single feature of the scroll comes just before 1 Samuel 11:1. The Masoretic Text moves straight from Saul's detractors at the end of chapter 10 to \"Then Nahash the Ammonite came up, and encamped against Jabesh Gilead.\" This manuscript has a paragraph in between: Nahash, king of the Ammonites, had been oppressing the Gadites and Reubenites, gouging out the right eye of every man among them, and a body of men who escaped him had gone to Jabesh-gilead. That supplies something the Masoretic Text does not. In the next verse Nahash offers Jabesh terms — he will make a covenant with them on condition that he puts out every right eye — and in the Hebrew as it stands the demand arrives from nowhere. With the extra paragraph it is a practice he is already known for, and the men of Jabesh know it.",
-          "The editors of the official edition explain the difference as loss rather than addition: a scribe's eye skipped from one occurrence of a word or phrase to a similar one further on and dropped what lay between. There is independent support, because Josephus tells the story in the first century with the same material in it. On this reading a Hebrew Bible has been missing a paragraph for two thousand years and a cave gave it back — which is why the New Revised Standard Version prints it, as an unnumbered paragraph between 10:27 and 11:1, under a note that names both witnesses: \"Q Ms Compare Josephus, Antiquities VI.68-71: MT lacks Now Nahash . . . entered Jabesh-gilead.\"",
+          "The editors of the official edition explain the difference as loss rather than addition: a scribe's eye skipped from one occurrence of a word or phrase to a similar one further on and dropped what lay between. There is independent support, because Josephus tells the story in the first century with the same material in it. On this reading a Hebrew Bible has been missing a paragraph for two thousand years and a cave gave it back — which is why the New Revised Standard Version prints it, as an unnumbered paragraph between 10:27 and 11:1, under a note that names both witnesses: \"Q Ms Compare Josephus, Antiquities VI.v.1 (68–71): MT lacks Now Nahash . . . entered Jabesh-gilead.\"",
         ],
       },
       {
@@ -12818,7 +12959,7 @@ export const topics: Topic[] = [
       {
         heading: "Not a Page of a Bible",
         paragraphs: [
-          "The most interesting thing about the Nash Papyrus is what it is not. Its Decalogue is not the text of Exodus 20 and it is not the text of Deuteronomy 5; it is a mixture. It begins the fourth commandment with \"Remember\" as Exodus does and keeps Exodus's reason drawn from creation, but it lists \"thy ox and thy ass\" and adds \"that it may be well with thee\" as Deuteronomy does, and then it runs on into the Shema, which is Deuteronomy alone. Burkitt's conclusion in 1903 was that it is \"impossible to resist the impression that the Papyrus gives a text containing elements both from Exodus and from Deuteronomy, just such a text as might be formed in a liturgical work based indeed upon the Pentateuch, yet not a direct transcript either of Exodus or of Deuteronomy.\" Cambridge's catalogue says the same: it was identified as a lectionary for liturgical use, and \"it has been suggested that it is from a phylactery,\" which would put it beside the tefillin later found at Qumran.",
+          "The most interesting thing about the Nash Papyrus is what it is not. Its Decalogue is not the text of Exodus 20 and it is not the text of Deuteronomy 5; it is a mixture. It begins the fourth commandment with \"Remember\" as Exodus does and keeps Exodus's reason drawn from creation, but it lists \"thy ox and thy ass\" and adds \"that it may be well with thee\" as Deuteronomy does, and then it runs on into the Shema, which is Deuteronomy alone. Burkitt reached that conclusion in 1903, and he hedged it himself: \"It is, I venture to think, impossible to resist the impression that the Papyrus gives a text containing elements both from Exodus and from Deuteronomy, just such a text as might be formed in a liturgical work based indeed upon the Pentateuch, yet not a direct transcript either of Exodus or of Deuteronomy.\" Cambridge's catalogue says the same: it was identified as a lectionary for liturgical use, and \"it has been suggested that it is from a phylactery,\" which would put it beside the tefillin later found at Qumran.",
           "It also agrees with the Greek Septuagint against the Hebrew text that became standard, and in ways a reader of the New Testament will recognise. It orders the commandments adultery, murder, theft — the order found in some Septuagint manuscripts and in Philo, and the order used by the Gospel of Luke, by Romans and by the letter of James, where Matthew has murder first. It writes \"seventh day\" where the Masoretic Text has \"Sabbath day.\" And it carries the introductory line before the Shema that stands in the Greek of Deuteronomy 6:4 and not in the Hebrew. Cambridge offers two explanations and does not choose between them: the mixture \"may reflect the fluidity of the biblical text at this early date, or it may have resulted from it being composed from memory, rather than copied from a written Vorlage.\" Either way, the point to hold on to is that a devotional sheet is weaker evidence about the wording of the Bible than a Bible manuscript would be — and richer evidence about how a Jew in Egypt actually prayed.",
         ],
       },
@@ -12864,10 +13005,20 @@ export const topics: Topic[] = [
       {
         tier: "primary",
         label: "F. C. Burkitt, \"The Hebrew Papyrus of the Ten Commandments\"",
+        url: "https://archive.org/details/jstor-1450625",
         credit: "F. C. Burkitt, University of Cambridge",
         detail:
-          "Jewish Quarterly Review 15 (1903), 392-408; out of copyright and readable in the journal's own back run. No stable link is given because the one in circulation for it points at a different article. The first full study. Source for the early dating — \"The nearest parallel of all is to be found in a Nabataean inscription of A. D. 55\" — for the liturgical conclusion quoted in section three, for the apportionment of the Decalogue between Exodus and Deuteronomy set out in the same section, and for the specific agreements with the Septuagint against the Masoretic Text, including the commandment order and the preface to the Shema. Burkitt lists Mark among the New Testament witnesses to that order; the World English Bible this app renders puts murder first at Mark 10:19, so the article names only Luke, Romans and James, which it does not",
+          "Jewish Quarterly Review 15 (1903), 392-408. Out of copyright, and the page scan is freely readable at the Internet Archive as part of JSTOR's Early Journal Content; every Burkitt quotation in this article was checked against it rather than against a re-keyed transcription. The first full study. Source for the early dating — \"The nearest parallel of all is to be found in a Nabataean inscription of A. D. 55\" — for the liturgical conclusion quoted in section three, for the apportionment of the Decalogue between Exodus and Deuteronomy set out in the same section, and for the specific agreements with the Septuagint against the Masoretic Text, including the commandment order and the preface to the Shema. Burkitt lists Mark among the New Testament witnesses to that order; the World English Bible this app renders puts murder first at Mark 10:19, so the article names only Luke, Romans and James, which it does not",
         supports: "The original first-century AD dating, the liturgical reading, and the Septuagint agreements",
+      },
+      {
+        tier: "reference",
+        label: "B. Nongbri, \"A Cambridge Papyrus of the Odyssey and the Nash Papyrus\"",
+        url: "https://brentnongbri.com/2026/08/03/a-cambridge-papyrus-of-the-odyssey-and-the-nash-papyrus/",
+        credit: "Brent Nongbri, MF Norwegian School of Theology",
+        detail:
+          "3 August 2026 — a different post from his \"Early Publications\" piece cited below, and the one that describes Albright's 1937 article as \"the classic article that redated the Nash Papyrus from the second century CE to the second century BCE\". It also carries Burkitt's fuller 1903 account of the purchase, alongside \"some very early uncial fragments of the Odyssey\"",
+        supports: "The standing of Albright's redating, and the papyrus's purchase history",
       },
       {
         tier: "scholarly",
@@ -12893,7 +13044,7 @@ export const topics: Topic[] = [
         url: "https://brentnongbri.com/2026/08/06/early-publications-on-the-nash-papyrus/",
         credit: "Brent Nongbri, MF Norwegian School of Theology",
         detail:
-          "Traces the contemporary evidence for the 1902 purchase, quoting Burkitt in The Cambridge Review (1903): the fragments \"came into the possession of Mr. W. L. Nash ... in the course of 1902, having been bought in Egypt from a native dealer together with some papyrus fragments of the twelfth book of the Odyssey\". Also describes Albright's 1937 paper as the one that \"redated the Nash Papyrus from the second century CE to the second century BCE\"",
+          "6 August 2026. Traces the contemporary evidence for the 1902 purchase, quoting Burkitt in The Cambridge Review (1903): the fragments \"came into the possession of Mr. W. L. Nash ... in the course of 1902, having been bought in Egypt from a native dealer together with some papyrus fragments of the twelfth book of the Odyssey\"",
         supports: "The purchase year and the significance of Albright's article",
       },
       {
@@ -13263,7 +13414,7 @@ export const topics: Topic[] = [
       {
         heading: "What the Papyrologists Said, and Why It Matters Who Said It",
         paragraphs: [
-          "The case did not hold. K. Wachtel, of the Institute for New Testament Textual Research at Munster, answered it in the same journal Thiede had published in, and his conclusion is worth having in full: \"C. P. Thiede deserves credit for having prompted a review of the dating and the extent of the oldest direct manuscript witness to the Gospel of Matthew, even though he brings less than half of P64/67 into the investigation. In every discipline it is useful from time to time to reassure oneself of its material foundations. Thiede's argument for a first-century dating of P64/67 must, however, be rejected as methodologically inadequate and factually wrong. The conventional dating to around 200, by contrast, has proved to be well founded.\" The most detailed response came from P. M. Head in the Tyndale Bulletin — the journal of Tyndale House in Cambridge, an evangelical research institute — and his verdict is worth reading in full because of how it is phrased: \"Although we recognise the service that he has performed in facilitating a re-examination of methodological presuppositions, our verdict on his claims is a negative one. The very early manuscripts to which Thiede appealed for close parallels to P64 turned out to be not as close as the somewhat later ones which he had overlooked. Although there is no absolutely definite evidence by which P. Magd. Gr. 17 = P64 can be dated with certainty, the available evidence points to a date around AD 200. To be on the safe side I would suggest plus or minus fifty years as the possible range.\" Magdalen College's own page says the same thing more briefly: Thiede's claim \"has prompted much discussion, however it has not been widely accepted by the academic community.\"",
+          "The case did not hold. K. Wachtel, of the Institute for New Testament Textual Research at Munster, answered it in the same journal Thiede had published in. He wrote in German; his closing section is given here whole, in this article's English: \"C. P. Thiede deserves credit for having prompted a review of the dating and the extent of the oldest direct manuscript witness to the Gospel of Matthew, even though he brings less than half of P64/67 into the investigation. In every discipline it is useful from time to time to reassure oneself of its material foundations. Thiede's argument for a first-century dating of P64/67 must, however, be rejected as methodologically inadequate and factually wrong. The conventional dating to around 200, by contrast, has proved to be well founded. In the list of New Testament manuscripts, only the inventory number under which the Magdalen fragments are now kept will need changing. The suggestion that Matthew 26:22 in P64 might be read otherwise than Roberts read it requires checking against the original; at that place there is in any case no occasion for constituting the text differently.\" The most detailed response came from P. M. Head in the Tyndale Bulletin — the journal of Tyndale House in Cambridge, an evangelical research institute — and his verdict is worth reading in full because of how it is phrased: \"Although we recognise the service that he has performed in facilitating a re-examination of methodological presuppositions, our verdict on his claims is a negative one. The very early manuscripts to which Thiede appealed for close parallels to P64 turned out to be not as close as the somewhat later ones which he had overlooked. Although there is no absolutely definite evidence by which P. Magd. Gr. 17 = P64 can be dated with certainty, the available evidence points to a date around AD 200. To be on the safe side I would suggest plus or minus fifty years as the possible range.\" Magdalen College's own page says the same thing more briefly: Thiede's claim \"has prompted much discussion, however it has not been widely accepted by the academic community.\"",
           "Two things follow, and both are uncomfortable in the right way. The first is that the correction came from inside evangelical scholarship, not from outside it. Head's article is the definitive refutation, it appeared in an evangelical journal, and that journal printed Thiede's claim and its answer in consecutive issues — saying so in print at the end of Thiede's own article. That is worth more than an early date would have been. The second is that a claim can be technically hedged in a journal and unhedged everywhere else. Thiede wrote \"it may be argued that it could be redated\"; the newspaper wrote \"the mid-first century AD\". Both are on the record, and a reader who has only ever met the second version has been misinformed by the process rather than by the paper. Whether Thiede accepted the verdict is not reported here. He died on 14 December 2004, at fifty-two.",
           "There is also a separate question that is still genuinely open, and it should not be confused with the dating one. T. C. Skeat argued in 1997 that P4, P64 and P67 all come from a single codex of all four Gospels — which, if true, would make it the oldest four-Gospel book known. Head answered him in 2005 and current opinion tends to keep P4 apart from P64 and P67, partly on grounds Thiede himself had published. His own stated reason, in the article quoted above, was that the Paris codex \"is written on much darker, brownish papyrus and is considerably later (by up to one hundred years)\"; Head's footnote credits a fuller set of codicological objections, including fibre and letter formation, to a companion note Thiede published in the same issue, which this article has not read. The disagreement is narrower than it looks: Head and S. Charlesworth argue against one codex on codicological grounds while accepting Skeat's palaeographic case that the same scribe wrote all three. It is about how the sheets were folded rather than about dates, nobody's faith rests on it, and it has not been settled.",
         ],
@@ -13337,7 +13488,7 @@ export const topics: Topic[] = [
         url: "https://www.uni-koeln.de/phil-fak/ifa/zpe/downloads/1995/107pdf/107073.pdf",
         credit: "Klaus Wachtel, Institut fur Neutestamentliche Textforschung, Munster",
         detail:
-          "Zeitschrift fur Papyrologie und Epigraphik 107 (1995), 73-80. The journal's own open-access offprint, read in full. The concluding paragraph quoted in this article is translated from the German; the original reads \"Thiedes Argumentation fur eine Datierung des P64/67 ins 1. Jahrhundert ist jedoch als methodisch unzulanglich und sachlich falsch zuruckzuweisen. Die herkommliche Datierung in die Zeit um 200 hingegen hat sich als gut begrundet erwiesen.\"",
+          "Zeitschrift fur Papyrologie und Epigraphik 107 (1995), 73-80. The journal's own open-access offprint, read in full. The passage quoted in this article is his closing section, headed FAZIT, entire — both of its paragraphs and all six of its sentences — rendered into English here. The German of the two sentences that carry the verdict reads \"Thiedes Argumentation fur eine Datierung des P64/67 ins 1. Jahrhundert ist jedoch als methodisch unzulanglich und sachlich falsch zuruckzuweisen. Die herkommliche Datierung in die Zeit um 200 hingegen hat sich als gut begrundet erwiesen.\" Wachtel prints the siglum with the papyrological P, which this article writes as P64/67",
         supports: "The Munster institute's published verdict on the first-century dating",
       },
       {
@@ -13993,7 +14144,7 @@ export const topics: Topic[] = [
         heading: "What Is It? Four Answers",
         paragraphs: [
           "The oldest serious proposal is that Luke wrote twice. F. Blass argued at the end of the nineteenth century — following a suggestion of Jean Leclerc — that Luke issued two editions of each of his works, and, importantly, that the priority runs in opposite directions in the two books: the Bezan form is the earlier in Acts and the later in Luke. Kenyon set the theory out fairly and then rejected it, and his reason is the strong one: \"Changes which are possible to a careless scribe, or to a writer indifferent as to the precise wording of his text, are incomprehensible as the work of an author transcribing his own composition.\" He asked whether Luke would really have struck a clause out of the Jerusalem Council's letter. A later two-edition theory, running the other way, was argued by M.-E. Boismard and A. Lamouille in 1984.",
-          "A second position doubts the question. W. A. Strange opens his study of the problem by asking \"Is there, indeed, any homogeneous entity to be recognised as 'the Western text of Acts', or have we to do rather with ill-defined collections of readings which have been misleadingly called 'Western'?\" B. Metzger, no sceptic about the category, still wrote that this form of text \"is not and never was a unity\". Strange's own proposal is that the distinctive material came from \"an extensive and meticulous process of annotation which took place at an early stage in the book's history\" — marginal notes that got copied into the text.",
+          "A second position doubts the question. W. A. Strange opens his study of the problem by asking \"Is there, indeed, any homogeneous entity to be recognised as 'the Western text of Acts', or have we to do rather with ill-defined collections of readings which have been misleadingly called 'Western'?\" B. Metzger, following Haenchen, separated Western variation into three levels, and it is the first of them — the broad early stratum of minor clarifying readings, found in the Gospels and the Pauline corpus as well as in Acts — that he said \"cannot be regarded as a 'recension,' for it is not and never was a unity\"; the second level, the substantive additions \"peculiar to the Western text of Acts\", he held did \"reveal the hand of a reviser\" who was \"a meticulous and well-informed scholar\". Strange's own proposal is that the distinctive material came from \"an extensive and meticulous process of annotation which took place at an early stage in the book's history\" — marginal notes that got copied into the text.",
           "A third argument is about theology. E. J. Epp, in The Theological Tendency of Codex Bezae Cantabrigiensis in Acts (1966), argued that the Bezan text of Acts carries a consistent anti-Judaic tendency — sharpening Jewish responsibility for the death of Jesus and for the opposition the apostles met — and that this points to a Gentile Christian reviser rather than to Luke. The book is a standard treatment and has been in print for sixty years. J. Rius-Camps and J. Read-Heimerdinger have argued at length against him: Epp \"discussed only a small number of the variant readings of Codex Bezae and overlooked a great deal of evidence which shows that the inner perspective of the Bezan text is thoroughly Jewish\", and criticism of a Judaism that does not accept Jesus as Messiah \"does not make it the work of Gentile revisers\". Reviewing them, T. Nicklas neither took sides nor pretended to: he reports that they contend the Bezan text \"is written from the perspective of an author who was well-acquainted with ancient Judaism\", objects that their main criterion — that the more coherent and vivid text is the older — \"is at least problematic\", and adds that he still favours the more common view while appreciating the book very much. That is where the argument stands.",
           "The fourth answer comes from the scholar who wrote the standard monograph on the manuscript. Parker, opening it, warns that anyone who writes at length on it may be suspected of bias in its favour, and then says: \"Although some years of frequent communion have given me a peculiar affection, which would often seek to exculpate, for this manuscript, the fact is that the longer I have studied it, the more I have become convinced that its many unique readings only very rarely deserve serious consideration if one is trying to establish the best available text.\" Whether any of its singular readings is original is still argued — Rius-Camps and Read-Heimerdinger have written four volumes on Bezan Acts on the other side. But the scholar who wrote the standard study of this manuscript, and loves it, thinks almost none is. It is a priceless window onto how the Gospels and Acts were read, retold and expanded in the early Latin West, and that is a large enough claim to be worth making accurately.",
         ],
@@ -14089,7 +14240,7 @@ export const topics: Topic[] = [
         credit: "Bruce M. Metzger",
         detail:
           "United Bible Societies; the discussion of the text of Acts is at pp. 259-272 in the 1975 edition, and the length figure appears in a footnote at p. 223 of the second edition. Print only and not opened here: the sentence quoted is taken from a verbatim reproduction of those pages. M.-E. Boismard and A. Lamouille's contrary two-edition theory is in Le texte occidental des Actes des Apotres, 2 vols (Paris, 1984), which was also not opened; this article reports only that they argued it, not how",
-        supports: "That the Western text is not a unity, and that a second two-edition theory exists",
+        supports: "Metzger's three levels of Western variation — the first stratum not a unity, the second the hand of a reviser — and that a second two-edition theory exists",
       },
       {
         tier: "reference",
@@ -14131,13 +14282,13 @@ export const topics: Topic[] = [
         paragraphs: [
           "The undertext was noticed as early as the late seventeenth century and collated in the eighteenth — Wettstein went over it in 1716 for Bentley — but reading a scraped page is slow work, and in the nineteenth century chemistry offered a shortcut. The Giobert tincture — water, hydrochloric acid and a small quantity of potassium ferrocyanide — reacts with the iron in old ink and turns it a strong Prussian blue. Applied to a palimpsest it makes the lower writing leap out. It also eats the parchment.",
           "It was used on this codex, and the result is visible in every photograph: large blue-green stains across the written area, and text that faded further as the years passed. F. Albrecht, surveying the use of chemical reagents on manuscripts, singles this book out — \"A sad example of its use is the Codex Ephraemi Syri rescriptus\" — and illustrates the damage from folio 58 of this very manuscript. The Bibliotheque nationale now allows the original to be consulted only by special permission; readers are given microfilm.",
-          "The blame is almost always laid on C. von Tischendorf, who published the undertext, and it is misplaced. C. R. Gregory set the record straight in 1900: in 1834 the Leipzig professor Ferdinand Florens Fleck asked for the treatment, the librarian Karl Benedict Hase permitted it, and a man named Simonin applied it — and Gregory adds that this has \"wrongly been laid to Tischendorf's charge, who in 1834 was only passing from school to university.\" Tischendorf came to the manuscript later, found it already stained, and said so: he wanted his facsimile to show \"those stains which every page took on when the chemical tincture was applied\", and noted elsewhere that the tincture had eaten the writing. He published the New Testament portion in 1843 and the Old Testament in 1845.",
+          "The blame is almost always laid on C. von Tischendorf, who published the undertext, and for the treatment of 1834 it is misplaced. C. R. Gregory set the record straight in 1900: the Leipzig professor Ferdinand Florens Fleck asked for the treatment, the librarian Karl Benedict Hase permitted it, and a man named Simonin applied it. Gregory's German is not quoted here, because seven years later he put the same correction into his own English: \"It has sometimes been said that Tischendorf spoiled this manuscript by using a bad reagent to draw forth the old letters that had grown so pale. That was a mistake. Simonin put Gioberti tincture on some of them with the librarian's permission in 1834, and that was the year at which Tischendorf left school and went to the university.\" Tischendorf came to the manuscript later, found it already stained, and said so: he wanted his facsimile to show \"those stains which every page took on when the chemical tincture was applied\", and noted elsewhere that the tincture had eaten the writing. He published the New Testament portion in 1843 and the Old Testament in 1845.",
         ],
       },
       {
         heading: "What a Damaged Witness Can and Cannot Tell You",
         paragraphs: [
-          "This manuscript carries a limit that the other great codices do not. With Sinaiticus or Vaticanus, a scholar disputing a reading can go and look at the page. Here the page may be a blue stain over a scraped surface under a layer of thirteenth-century sermon, and what the editor reports is partly what the editor could make out. A. Ceriani said as much in 1888: he had \"some doubt whether Dr Tischendorf's edition is accurate enough, and whether it does not first require a complete revision.\" R. W. Lyon made extensive corrections to it in 1959, and P. Malik, writing in 2021, describes the situation without softening it: \"Being a palimpsest, however, Ephraemi's wording exhibits an inherent measure of uncertainty, as evinced by Robert W. Lyon's extensive corrections to Constantin Tischendorf's editio princeps.\"",
+          "This manuscript carries a limit that the other great codices do not. With Sinaiticus or Vaticanus, a scholar disputing a reading can go and look at the page. Here the page may be a blue stain over a scraped surface under a layer of thirteenth-century sermon, and what the editor reports is partly what the editor could make out. A. Ceriani said as much in 1888, doubting whether Tischendorf's edition was accurate enough and whether it did not first need a complete revision. His words are not quoted here: he wrote in Italian, his paper is print only, and no page of it was opened for this article. R. W. Lyon made extensive corrections to it in 1959, and P. Malik, writing in 2021, describes the situation without softening it: \"Being a palimpsest, however, Ephraemi's wording exhibits an inherent measure of uncertainty, as evinced by Robert W. Lyon's extensive corrections to Constantin Tischendorf's editio princeps.\"",
           "That uncertainty is honest information and it belongs in the open. A reader who is told that a fifth-century manuscript \"reads\" something has a right to know whether anyone can check it. Multispectral imaging — photographing a page at wavelengths the eye cannot see — now recovers erased writing without touching it, and Malik reports that such images of this codex have been made and open up \"a new opportunity to put this codex under closer scrutiny\". They do not appear to be publicly available, and the article does not say who produced them.",
           "There is one more thing worth saying about dates. Every catalogue gives the undertext as fifth-century, and that is the figure to print — but it is not unanimous among specialists. P. Andrist, who examined the codex in 2018, follows G. Cavallo in dating it to the sixth century and remarks that the traditional fifth-century date is \"still too often retained\". The place of writing is unknown; Palestine and Mesopotamia have both been proposed. Four things are commonly said about this manuscript with more confidence than the record supports: that it is fifth-century, that it came from Egypt, that Tischendorf applied the chemical, and that Catherine de' Medici brought it to France in her dowry. The last is contradicted by the dates and the third by Gregory, who wrote the correction down in 1900.",
         ],
@@ -14182,8 +14333,17 @@ export const topics: Topic[] = [
         url: "https://archive.org/details/textkritikdesneu0001greg",
         credit: "Caspar Rene Gregory",
         detail:
-          "Leipzig, 1900, p. 42; public domain and read in the original German at the Internet Archive, in two independent scans, for this article. Gregory names Fleck as the requester, Hase as the permitting librarian and Simonin as the applier, in 1834, and says the charge has been laid against Tischendorf \"falschlich\" — wrongly. The same page gives the ownership chain from Ridolfi through Strozzi to Catherine de' Medici, the 1602 binding, and Allix, Boivin and Wettstein. The passage quoted here is translated from his German",
-        supports: "That Tischendorf did not apply the reagent, and who did",
+          "Leipzig, 1900, p. 42; public domain and read in the original German at the Internet Archive, in two independent scans, for this article. Gregory names Fleck as the requester, Hase as the permitting librarian and Simonin as the applier, in 1834, and says the charge has been laid against Tischendorf \"falschlich\" — wrongly. The same page gives the ownership chain from Ridolfi through Strozzi to Catherine de' Medici, the 1602 binding, and Allix, Boivin and Wettstein. Nothing is quoted from it in translation, because Gregory wrote the correction out again in English himself; see the next entry",
+        supports: "That Tischendorf did not apply the reagent, who did, and the ownership chain",
+      },
+      {
+        tier: "scholarly",
+        label: "C. R. Gregory, Canon and Text of the New Testament",
+        url: "https://archive.org/details/canonandtextnew01greggoog",
+        credit: "Caspar Rene Gregory",
+        detail:
+          "New York: Charles Scribner's Sons, 1907, 348-350; public domain and read at the Internet Archive. Gregory's own English account of this manuscript, and the source of the passage quoted in the second section. He is writing for a general reader here rather than for textual critics, and he says the same thing he had said in the Textkritik seven years before, which is why this article quotes his English rather than translating his German",
+        supports: "Gregory's correction about the reagent, in his own English",
       },
       {
         tier: "scholarly",
@@ -14275,7 +14435,7 @@ export const topics: Topic[] = [
       {
         heading: "What It Gave the New Testament",
         paragraphs: [
-          "No other place has produced anything like as many early copies of the New Testament. A great many of the catalogued New Testament papyri come from this one rubbish heap, and the earliest fragments of several books are among them. P1 is a leaf of Matthew, P.Oxy. 2, published in the very first volume. P5 is a copy of John's Gospel, P13 is Hebrews, P77 is Matthew again. P90 preserves John 18:36-19:7 and was edited by T. C. Skeat, who called it \"unusually early in date (second century AD)\". P104 carries a few verses of Matthew 21 and is assigned to the late second century. P137 is the small fragment of Mark that was announced for years as first-century and published in 2018 as late second or early third.",
+          "No other place has produced anything like as many early copies of the New Testament. A great many of the catalogued New Testament papyri come from this one rubbish heap, and the earliest fragments of several books are among them. P1 is a leaf of Matthew, P.Oxy. 2, published in the very first volume. P5 is a copy of John's Gospel, P13 is Hebrews, P77 is Matthew again. P90 preserves John 18:36-19:7 and was edited by T. C. Skeat; the Oxyrhynchus project's own catalogue entry for it reads \"Unusually early in date (second century AD).\" P104 carries a few verses of Matthew 21 and is assigned to the late second century. P137 is the small fragment of Mark that was announced for years as first-century and published in 2018 as late second or early third.",
           "The most striking single reading came in P115, a papyrus of Revelation edited by J. Chapa. At Revelation 13:18 it gives the number of the beast not as 666 but as 616. The reading was already known to exist — Irenaeus mentions it in the second century in order to reject it — but here it is in a manuscript, and, as Oxford's own note on the papyrus puts it, \"this is the earliest instance that has so far been found.\" That is a good illustration of what this material does: it does not overturn the text, and it does not leave it unchanged either. It shows a real variant, already known from a Church Father's complaint about it, actually written down by a scribe.",
         ],
       },
@@ -14348,12 +14508,21 @@ export const topics: Topic[] = [
       },
       {
         tier: "institution",
-        label: "Egypt Exploration Society, statements of 14 October 2019 and 26 February 2021 (updated 24 July 2025)",
+        label: "Egypt Exploration Society, \"Professor Obbink and missing EES papyri\" (statement, 14 October 2019)",
+        url: "https://www.ees.ac.uk/news/professor-obbink-and-missing-ees-papyri",
+        credit: "The Egypt Exploration Society, London",
+        detail:
+          "Read in full. Both quotations in the third section come from this statement rather than from the 2021 one below: that thirteen texts \"were taken without authorisation from the EES\", and that the Museum of the Bible told the Society eleven of them had been \"sold to Hobby Lobby Stores by Professor Obbink\"",
+        supports: "The 2019 recoveries, and the Society's own account of what it was told",
+      },
+      {
+        tier: "institution",
+        label: "Egypt Exploration Society, \"Museum of the Bible and missing EES papyri\" (26 February 2021, updated 24 July 2025)",
         url: "https://www.ees.ac.uk/news/museum-of-the-bible-and-missing-ees-papyri",
         credit: "The Egypt Exploration Society, London",
         detail:
-          "Both read in full. The 2019 statement reports that thirteen texts \"were taken without authorisation from the EES\" and that the Museum of the Bible told the Society eleven of them had been \"sold to Hobby Lobby Stores by Professor Obbink\"; the 2021 statement adds twenty-one more, and its update of 24 July 2025 states that the police investigation continues. Every sentence in the third section about the ownership dispute rests on these two",
-        supports: "The recoveries, the Society's own account of what it was told, and the current status",
+          "Read in full. It adds twenty-one further fragments identified during 2020 and returned, and its update of 24 July 2025 states that \"Thames Valley Police is continuing its investigation into the removal of papyri from the EES collection\" — which is why this article says the matter is unresolved rather than closed",
+        supports: "The 2020 recoveries, and the current status of the police investigation",
       },
       {
         tier: "reference",
@@ -14426,5 +14595,3310 @@ export const topics: Topic[] = [
     ],
     reflectionPrompt:
       "Almost everything we have of this town survives because nobody thought it worth keeping. What are you throwing out that someone might one day need?",
+  },
+  {
+    id: "thanksgiving-hymns",
+    name: "Thanksgiving Hymns",
+    // NOT registered: "1QHa" (it appears nowhere in the corpus, and the two places this article
+    // writes it, it sits in brackets straight after the full name), "the Hymns", "Hodayot" alone is
+    // safe and is registered because the scholarly literature uses nothing else. "Thanksgiving
+    // Scroll" is the Israel Museum's own label for the object and a reader meeting it there should
+    // be able to tap it.
+    // "Thanksgiving Psalms" is NOT registered, and the reason is worth keeping: it was, until the
+    // link census on this batch read what the change actually did. The introduction to Psalms lists
+    // the psalm GENRES — "hymns of praise, individual and communal laments..., thanksgiving psalms,
+    // royal psalms" — and registering the phrase sent a reader looking up a biblical genre to a
+    // sectarian scroll from Qumran. Nothing but enumerating the rendered links would have shown it.
+    alternateNames: ["Hodayot", "Thanksgiving Scroll"],
+    category: "manuscript",
+    role: "The Qumran Hymn Collection, and the Longest Argument About Who Says \"I\"",
+    summary:
+      "Some thirty psalms of thanksgiving from the first Qumran cave, most of them opening \"I thank you, Lord\" — and sixty years of argument about whether the man speaking in them is one particular man.",
+    sections: [
+      {
+        heading: "Bought in Jerusalem in 1947, in Two Lots",
+        paragraphs: [
+          "E. L. Sukenik of the Hebrew University bought this scroll in Jerusalem in 1947, among the three of the first seven Cave 1 scrolls that went to him rather than to the Syriac Orthodox archbishop who bought the other four. It reached him in two separate lots and in poor condition, and what Sukenik published in 1954-55 was a partly legible thing: a run of columns and a heap of loose fragments. The exact tally usually repeated — so many columns in the first group, so many plus sixty-six fragments in the second — traces only to an encyclopedia article and is not printed here as a figure. He gave it the name it still has, from a rabbinic word for thanksgivings, because so many of its psalms open with the same formula — 'odekha 'adonai, \"I thank you, O Lord.\" The Israel Museum catalogues the object as parchment from Qumran Cave 1, late first century BC to early first century AD, accession 95.57/1-51; the dimensions on its record, 32 cm high and 61.5 cm long, are for the catalogued piece and not for the whole roll, which was far longer.",
+          "What a reader meets today is not what Sukenik published. The scroll was reconstructed twice over, independently: H. Stegemann worked out the original order in a Heidelberg dissertation of 1963, E. Puech published his own reconstruction in 1988, and the critical edition that finally carried Stegemann's work into print — completed by E. M. Schuller after his death — appeared in 2009 as volume 40 of Discoveries in the Judaean Desert. The reconstructed roll has twenty-eight columns. This matters for anyone reading older books about it, and it is the sort of trap that quietly wrecks a footnote: column references written before 2009 are in Sukenik's numbering and do not correspond to the numbering everyone now uses. A citation of \"1QH 5\" in a book from the 1970s and a citation of the same words today will not be the same column.",
+        ],
+      },
+      {
+        heading: "What the Hymns Say",
+        paragraphs: [
+          "The psalms are the prayers of someone who thinks very little of himself and a great deal of the God he is addressing. The Israel Museum prints one of them on its own object record, and it is a fair sample of the whole: \"I thank Thee, O Lord, for Thou hast placed my soul in the bundle of the living, and hast hedged me about against all the snares of the Pit. Violent men have sought after my life because I have clung to Thy Covenant. For they, an assembly of deceit, and a horde of Belial, know not that my stand is maintained by Thee, and in Thy mercy Thou wilt save my soul since my steps proceed from Thee.\" That opening image is lifted straight out of Scripture — Abigail tells David that his life will be \"bound in the bundle of the living\" — and the hymns are made of such pickups throughout.",
+          "The texture is worth noticing because it is how these psalms think. M. Dhont's study of column 16, which is freely readable, traces one long metaphor of a garden: a shoot and a planting, which is the language of Isaiah 60:21 and 61:3, and a tree whose roots reach water, which is Jeremiah 17:8 and the opening psalm of the Psalter. There is a difference from the biblical thanksgiving psalms all the same, and M. B. Johnson puts his finger on it: the biblical ones look back on a rescue that has happened, and these look forward, thanking God for a deliverance still expected. Several of the compositions carry a heading marking them for the maskil, the instructor charged with teaching the community — an office the Community Rule describes, and a detail that will matter a great deal in the next section.",
+        ],
+      },
+      {
+        heading: "Who Is the \"I\"?",
+        paragraphs: [
+          "Sukenik himself floated the idea that these were the personal writings of the Teacher of Righteousness, the founding figure the Damascus Document and the Habakkuk Pesher both refer to, and three German dissertations turned that suggestion into a system. G. Jeremias in 1963, J. Becker in 1964 and H.-W. Kuhn in 1966 divided the collection into \"Teacher Hymns\" — a cluster of first-person compositions specific and personal enough to be the Teacher's own — and \"Community Hymns,\" the rest, taken to voice the ordinary membership. For decades that division was simply how the Hodayot were taught. It is worth saying plainly when it was built: before the scroll had been reliably reconstructed, and before the fragmentary Cave 4 copies of the same collection were available to check it against.",
+          "Both of those things arrived, and the scheme has been under sustained pressure since — not from an opposing camp, but by subtraction. One limit on what follows should come first rather than last: the article that still defends the Teacher Hymns hypothesis, M. C. Douglas's in Dead Sea Discoveries in 1999, could not be opened from here, and Crossref carries no abstract for it. So this is an account of the pressure, from the people applying it, and not a fair fight staged between two sides. A. K. Harkins argued in 2008 that the \"Community Hymns\" were not one thing and needed dividing again, and later took to calling them \"non-Teacher Hymns,\" a label that names them by what they lack. C. A. Newsom went further in 2021, and her own summary is worth quoting whole because it gives away as well as takes: \"While that evidence largely confirms the distinctiveness of the group of compositions associated with the Teacher, which are clustered in cols. 10-17, the evidence undermines the cogency of a category of 'Community' hodayot\" — which should, she argues, be assigned to the maskil rather than to ordinary sectarians. M. B. Johnson would drop both labels, on the ground that nothing in the scroll identifies its speaker as the Teacher at all. Notice what Newsom does not say: that the cluster in columns 10-17 is distinctive is one claim, and that the Teacher wrote it is another, and she grants the first without the second. A further question sits underneath the whole debate. A. K. Harkins has asked in print whether the first group of Community Hymns was ever materially part of this scroll at all — that is the question her 2018 article puts in its own title — and warns that the run of modern editions projects \"an illusory material unity that the Cave 1 hodayot did not enjoy in antiquity.\"",
+        ],
+      },
+    ],
+    verses: [
+      { reference: "1 Samuel 25:29", note: "\"Bound in the bundle of the living\" — the phrase the hymn quoted on the Israel Museum's own record opens with" },
+      { reference: "Jeremiah 17:7-8", note: "The tree planted by water, one of the images column 16 builds on" },
+      { reference: "Isaiah 60:21", note: "\"The branch of my planting\" — the shoot and planting language the hymns reuse" },
+      { reference: "Psalms 130:1-4", note: "A biblical psalm in the same key: out of the depths, and forgiveness that is with God rather than earned" },
+    ],
+    sources: [
+      { label: "The Israel Museum: The Thanksgiving Scroll (1QHa)", url: "https://www.imj.org.il/en/collections/286849" },
+      { label: "M. B. Johnson, \"The Ritualization of Psalms in the Dead Sea Scroll 1QHodayota\" (Ancient Jew Review)", url: "https://www.ancientjewreview.com/read/2022/5/5/the-ritualization-of-psalms-in-the-dead-sea-scroll-1qhodayot" },
+      { label: "Wikipedia: Thanksgiving Hymns", url: "https://en.wikipedia.org/wiki/Thanksgiving_Hymns" },
+    ],
+    manuscript: {
+      siglum: "1QHᵃ",
+      manuscriptType: "Parchment scroll, received in two lots and reconstructed as twenty-eight columns",
+      language: "Hebrew",
+      contents:
+        "Roughly thirty psalms of thanksgiving, most opening \"I thank you, O Lord.\" Not biblical: these are compositions of the community that kept them, though they are built throughout out of biblical phrasing. Fragmentary copies of the same collection were found in Cave 4",
+      origin: "Judea. Whether these copies were made at Qumran or brought there is not known",
+      findSite: "Qumran, Cave 1",
+      foundYear: "1947",
+      foundBy:
+        "Bedouin of the Ta'amireh tribe; bought in Jerusalem by E. L. Sukenik of the Hebrew University. The Israel Museum names no individual finder, and the names given in most retellings are traditional",
+      dateAssigned:
+        "Late first century BC to early first century AD, on the Israel Museum's own record. No radiocarbon figure is given here: the published results for the Qumran scrolls have been argued to read young because of castor oil applied during 1950s conservation, and none was traced for this scroll",
+      dateCertainty: "traditional",
+      currentLocation: "The Shrine of the Book, Israel Museum, Jerusalem",
+      shelfmark: "95.57/1-51",
+    },
+    citations: [
+      {
+        tier: "institution",
+        label: "The Israel Museum, Jerusalem — The Thanksgiving Scroll (1QHa)",
+        url: "https://www.imj.org.il/en/collections/286849",
+        credit: "The Israel Museum, Jerusalem — Shrine of the Book",
+        detail:
+          "The museum's own object record: \"Written in Hebrew\", \"Qumran, Cave 1\", \"Late 1st century BCE - early 1st century CE\", \"Parchment\", \"H: 32; L: 61.5 cm\", \"Accession number: 95.57/1-51\". It also prints the translated hymn quoted in section two. The live page renders only through JavaScript and returns an empty document to any script, so this record was read through the Internet Archive's copy of it. Batch 10 cut this article partly because no accession number could be found at either holding institution; this is it",
+        supports: "The material, findspot, date, dimensions, accession number, and the hymn quoted in section two",
+      },
+      {
+        tier: "scholarly",
+        label: "M. B. Johnson, \"The Ritualization of Psalms in the Dead Sea Scroll 1QHodayotᵃ\"",
+        url: "https://www.ancientjewreview.com/read/2022/5/5/the-ritualization-of-psalms-in-the-dead-sea-scroll-1qhodayot",
+        credit: "Michael B. Johnson, Hebrew University of Jerusalem",
+        detail:
+          "Ancient Jew Review, 11 May 2022. Read in full, footnotes included; an editorially reviewed venue rather than a peer-reviewed journal, and it is a synthesis rather than a primary edition. Source for Sukenik's naming of the scroll and his suggestion about the Teacher of Righteousness (citing Sukenik, DSSHU 1955, 39), for the Jeremias/Becker/Kuhn trio and the dates of their dissertations, for the twenty-eight reconstructed columns, for the contrast between anticipatory and retrospective thanksgiving, and for Johnson's own position that both labels should go: \"there is not a sound evidential basis for identifying the author or speaker as the Teacher of Righteousness\"",
+        supports: "The naming of the scroll, the history of the Teacher Hymns hypothesis, and Johnson's own position",
+      },
+      {
+        tier: "scholarly",
+        label: "C. A. Newsom, \"A Farewell to the Hodayot of the Community\"",
+        url: "https://doi.org/10.1163/15685179-bja10002",
+        credit: "Carol A. Newsom, Emory University",
+        detail:
+          "Dead Sea Discoveries 28:1 (2021), 1-19. The body is behind Brill's paywall and was NOT opened. What is quoted in section three is her own abstract, published with the article and read in full through Crossref — including the clause granting the distinctiveness of the columns 10-17 cluster, which is the half an unfair quotation would drop. Her book The Self as Symbolic Space (Brill, 2004) was also not opened and is not characterised here",
+        supports: "Newsom's 2021 position, quoted from her own abstract",
+        paywalled: true,
+      },
+      {
+        tier: "scholarly",
+        label: "A. K. Harkins, \"Another Look at the Cave 1 Hodayot: Was CH I Materially Part of the Scroll 1QHodayotᵃ?\" and \"The Community Hymns Classification: A Proposal for Further Differentiation\"",
+        url: "https://doi.org/10.1163/15685179-12341480",
+        credit: "Angela Kim Harkins, Boston College",
+        detail:
+          "Dead Sea Discoveries 25:2 (2018), 185-216, and 15:1 (2008), 121-154. Both bodies are paywalled and were NOT opened; both author-written abstracts were read in full through Crossref, and the phrase quoted in section three — \"an illusory material unity that the Cave 1 hodayot did not enjoy in antiquity\" — is from the 2018 one, whose title asks \"Was CH I Materially Part of the Scroll 1QHodayota?\" and is reported here in those terms rather than glossed into a question about Sukenik's two lots, which the abstract does not raise. Note that the same abstract calls Stegemann and Schuller's reconstruction \"monumental\" and \"an invaluable scholarly resource\": she is qualifying it, not attacking it. Her book Reading with an \"I\" to the Heavens (De Gruyter, 2012) was not opened and is not characterised here",
+        supports: "Harkins's subdivision of the Community Hymns and her question about the scroll's material unity",
+        paywalled: true,
+      },
+      {
+        tier: "scholarly",
+        label: "M. C. Douglas, \"The Teacher Hymn Hypothesis Revisited: New Data for an Old Crux\"",
+        url: "https://doi.org/10.1163/156851799x00081",
+        credit: "Michael C. Douglas",
+        detail:
+          "Dead Sea Discoveries 6:3 (1999), 239-266. The modern defence of the hypothesis section three describes as under pressure. It could NOT be opened from here and Crossref carries no abstract for it, so this article names the argument and does not state it. That is a gap in the article and it is better recorded than papered over",
+        supports: "That a defence of the Teacher Hymns hypothesis exists in the scholarly literature",
+        paywalled: true,
+      },
+      {
+        tier: "scholarly",
+        label: "H. Stegemann and E. M. Schuller, Qumran Cave 1.III: 1QHodayotᵃ, with Incorporation of 1QHodayotᵇ and 4QHodayotᵃ⁻ᶠ",
+        credit: "Hartmut Stegemann and Eileen M. Schuller, with translation by Carol A. Newsom",
+        detail:
+          "Discoveries in the Judaean Desert 40 (Oxford: Clarendon, 2009). The critical edition and the source of the column numbering now standard. Print only, not opened here; its bibliographic detail and its relation to Stegemann's 1963 Heidelberg dissertation and E. Puech's 1988 reconstruction in the Journal of Jewish Studies are taken from Johnson's footnotes 4 and 18",
+        supports: "The reconstruction of the scroll into twenty-eight columns and the numbering used today",
+      },
+      {
+        tier: "scholarly",
+        label: "M. Dhont, \"A spring of living waters in a pool of metaphors: The metaphorical landscape of 1QHᵃ 16:5-27\"",
+        url: "https://doi.org/10.4102/hts.v77i1.6726",
+        credit: "Marieke Dhont",
+        detail:
+          "HTS Teologiese Studies / Theological Studies 77:1 (2021). Open access, read in full. Source for the garden imagery of column 16 and its allusions to Isaiah 60:21 and 61:3, Jeremiah 17:8 and the first psalm",
+        supports: "The scriptural imagery described in section two",
+      },
+      {
+        tier: "encyclopedic",
+        label: "Wikipedia: Thanksgiving Hymns",
+        url: "https://en.wikipedia.org/wiki/Thanksgiving_Hymns",
+        detail:
+          "Read. It is the only place any of this article's sources describes the physical state of the scroll as Sukenik received it — \"two different groupings of textual evidence\", the first of twelve columns and the second of \"six columns and sixty-six fragments\" — citing E. H. Merrill. Because that is a single encyclopedic source and because the count as commonly retold fuses the two groups into one figure, section one describes the state of the scroll without printing the numbers",
+        supports: "The two groups in which the scroll reached Sukenik, and why no column or fragment count is printed",
+      },
+    ],
+    reflectionPrompt:
+      "These prayers thank God for a rescue that has not happened yet. What would it change to pray that way this week?",
+  },
+  {
+    id: "genesis-apocryphon",
+    name: "Genesis Apocryphon",
+    // NOT registered: "1QapGen" and "1Q20" (neither appears anywhere in the corpus, and where this
+    // article writes them they sit in brackets beside the full name), "the Apocryphon" (it would
+    // reach nothing useful and is ambiguous with every other apocryphon in the app).
+    alternateNames: ["Genesis Apocryphon Scroll"],
+    category: "manuscript",
+    role: "An Aramaic Retelling of Genesis, and the Tail End of a Much Longer Scroll",
+    summary:
+      "The most extensive Aramaic manuscript from the Dead Sea caves: a first-person retelling of Genesis from Lamech to Abram — and, on the evidence of its own sheet numbering, all that survives of a roll perhaps four times longer.",
+    sections: [
+      {
+        heading: "The Scroll That Would Not Open",
+        paragraphs: [
+          "This was one of the four Cave 1 scrolls bought by the Syriac Orthodox archbishop in Jerusalem, and for years it was the one nobody could read: so brittle and so stuck together that it could not be unrolled at all. When it was finally opened, D. A. Machiela describes what was there — \"the most extensive Aramaic text found among the DSS, measuring 31 cm high by 2.38 m long, and containing twenty-three partially-preserved columns of text; the best preserved are columns 19-22, which were rolled at the center of the scroll.\" Counts of twenty-two and twenty-three are both in print and both are right: the difference is whether a badly damaged column at the head is numbered 0 or left out. The Israel Museum holds it as accession 95.57/20,29-39.",
+          "The first edition, by N. Avigad and Y. Yadin in 1956, gave the world five columns, and its own subtitle says which: columns II and XIX-XXII. That was the readable part. Almost forty years later M. Morgenstern, E. Qimron and D. Sivan published the rest — columns 0, I, III-VIII and X-XVII, most of them very fragmentary — working from infrared photographs and from new digital images, because in the meantime the leather itself had darkened past reading. The imaging was not incidental. A team from NASA's Jet Propulsion Laboratory tested infrared cameras on a fragment of this very scroll in 1993, and reported that at wavelengths beyond what film or ordinary digital sensors could see, \"we can make out another word of text which is invisible\" otherwise. Anyone still describing this manuscript from the 1956 edition is describing a fifth of it, and that is the commonest mistake made about it.",
+        ],
+      },
+      {
+        heading: "Genesis, Told by the People in It",
+        paragraphs: [
+          "What survives reworks Genesis 5:28 to 15:4, and the striking thing about it is the voice. Much of it is first person: Lamech speaks, then Noah, then Abram, telling their own stories. The book of Genesis reports that Abram, going down into Egypt, asked Sarai to say she was his sister; this scroll has Abram receive a dream beforehand that sanctions what he does, and then has him describe Sarai's beauty at length. It runs so close to the biblical text in places that it is nearly translation — Machiela points to column 20, lines 26-27, against Genesis 12:18-19 — and elsewhere it expands freely: the division of the earth among Noah's descendants runs for two columns where Genesis has a list, and Abram walks the length and breadth of the land, which Genesis 13 tells him to do and does not describe.",
+          "It is not a sectarian composition. Machiela states the consensus and the caution together: \"There is a broad scholarly consensus that, along with the other Aramaic DSS, the Apocryphon was not written by the group responsible for the distinctive Hebrew sectarian literary works. Nevertheless, it was presumably kept and studied by that group.\" Nor is it a Bible. It stands in the same territory as Jubilees and 1 Enoch — Jewish writing of the last centuries BC that retells Scripture rather than transmitting it — and its relation to Jubilees is itself argued over — Machiela's own summary of the field names E. Eshel and himself as putting this one earlier and J. Kugel \"and others\" as arguing the opposite. Reading it beside Genesis shows something a commentary cannot: what these stories sounded like to people who had them by heart and could not leave them alone.",
+        ],
+      },
+      {
+        heading: "Only the End of It",
+        paragraphs: [
+          "The most arresting thing about this manuscript is not in it. Ancient scrolls were made of sheets sewn end to end, and scribes sometimes lettered the sheets in alphabetical order. M. Morgenstern noticed the letters on this one and published what follows from them in 1996: the last surviving sheet is marked with pe, the seventeenth letter of the Hebrew alphabet. \"With five to seven columns on a sheet,\" he wrote, \"this means that the scroll is missing anything from 70 to 105 columns. The more conservative estimate still provides us with the startling fact that the remains of the Apocryphon as we have it today are only the tail-end of an enormously long scroll.\" On the width of the sheets that do survive, he reckoned the lost beginning at some nine metres.",
+          "It is worth being exact about what that does and does not establish. It is an argument from sheet lettering, published in a short note, and Morgenstern draws the honest conclusion himself: \"It is a matter of speculation what these missing columns might have contained... We shall sadly never know.\" What he does think it settles is a question that had been live — whether this is really a Genesis apocryphon or a lost Book of Noah wearing another name — since the Noah material, which dominates what survives, cannot have carried a roll of that length. Set beside the reading problem, the two facts make the same point in different directions. Even the twenty-two or twenty-three columns we have are not fully legible: \"Countless are the letters and parts of letters visible on the twenty-two surviving columns whose identification and interpretation are still uncertain.\" This is a manuscript that has to be argued about letter by letter, and any confident summary of it — including a confident summary of how much of it is gone — is running ahead of the evidence.",
+        ],
+      },
+    ],
+    verses: [
+      { reference: "Genesis 12:10-20", note: "Abram, Sarai and Pharaoh — the episode the scroll expands with a dream and a description of Sarai's beauty" },
+      { reference: "Genesis 14:18-20", note: "Melchizedek, king of Salem, who appears in column 22 of the scroll" },
+      { reference: "Genesis 13:14-17", note: "God tells Abram to walk the length and breadth of the land; the scroll narrates the walk" },
+      { reference: "Genesis 5:28-29", note: "Lamech and the birth of Noah, where the surviving text begins" },
+    ],
+    sources: [
+      { label: "Israel Antiquities Authority, Leon Levy Digital Library: 1Q20 Genesis Apocryphon", url: "https://www.deadseascrolls.org.il/explore-the-archive/manuscript/1Q20-1" },
+      { label: "Wikipedia: Genesis Apocryphon", url: "https://en.wikipedia.org/wiki/Genesis_Apocryphon" },
+    ],
+    manuscript: {
+      siglum: "1QapGen (1Q20)",
+      manuscriptType: "Parchment scroll, 31 cm high and 2.38 m long as it survives, in twenty-two or twenty-three partly preserved columns",
+      language: "Aramaic",
+      contents:
+        "A first-person retelling of Genesis 5:28-15:4, from the birth of Noah to the covenant with Abram. Columns 19-22, which lay at the centre of the rolled scroll, are the best preserved; the rest range from fragmentary to barely legible. Not a copy of Genesis and not a biblical manuscript",
+      origin: "Judea. The composition is usually dated to the second century BC; this copy is later, and is not the autograph",
+      findSite: "Qumran, Cave 1",
+      foundYear: "1947 — some accounts say late 1946",
+      foundBy:
+        "Bedouin of the Ta'amireh tribe; the scroll passed through the Bethlehem antiquities trade to Mar Athanasius Yeshue Samuel, who advertised it for sale, and was bought on behalf of the State of Israel in 1954. No individual finder is named by the holding institution",
+      dateAssigned: "First century BC to first century AD, on the Israel Museum's record. No radiocarbon figure is printed here — see the citations",
+      dateCertainty: "traditional",
+      currentLocation: "The Shrine of the Book, Israel Museum, Jerusalem",
+      shelfmark: "95.57/20,29-39",
+    },
+    citations: [
+      {
+        tier: "institution",
+        label: "The Israel Museum, Jerusalem — Genesis Apocryphon Scroll (1QapGen)",
+        url: "https://www.imj.org.il/en/collections/231114",
+        credit: "The Israel Museum, Jerusalem — Shrine of the Book",
+        detail:
+          "The museum's own object record: \"Qumran, Cave 1\", \"1st century BCE - 1st century CE\", \"Parchment\", \"Accession number: 95.57/20,29-39\", and the 1956 Avigad and Yadin edition given as the museum's own publication. As with the Thanksgiving Scroll, the live page renders only through JavaScript and was read through the Internet Archive's copy",
+        supports: "The findspot, date, material and accession number",
+      },
+      {
+        tier: "scholarly",
+        label: "M. Morgenstern, \"A New Clue to the Original Length of the Genesis Apocryphon\"",
+        url: "https://doi.org/10.18647/1905/jjs-1996",
+        credit: "Matthew Morgenstern, Tel Aviv University",
+        detail:
+          "Journal of Jewish Studies 47:2 (1996), 345-347 — issue number and page range confirmed against Crossref on this pass; the DOI resolves to the publisher's page, which refuses automated requests — the citation as it stands on the author's own university publication list, which was read directly. The article itself is on his Academia.edu page, which refuses automated requests, so it was read in a browser rather than fetched; everything quoted from it in section three is quoted whole, including his own \"We shall sadly never know\". The Journal of Jewish Studies archive was returning server errors when this was checked",
+        supports: "The sheet-letter argument, the 70-105 missing columns, the nine-metre estimate, and the judgement that this is a Genesis apocryphon rather than a Book of Noah",
+      },
+      {
+        tier: "scholarly",
+        label: "M. Morgenstern, E. Qimron and D. Sivan, \"The Hitherto Unpublished Columns of the Genesis Apocryphon\", with an appendix by G. Bearman and S. Spiro",
+        url: "https://doi.org/10.2143/anes.33.0.525749",
+        credit: "Matthew Morgenstern, Elisha Qimron and Daniel Sivan",
+        detail:
+          "Abr-Nahrain 33 (1995), 30-54; the journal is now Ancient Near Eastern Studies, and the publisher's own record of the article, reached through the DOI above, gives 30-54 and carries an abstract. A footnote of Morgenstern's own gives 30-52; that disagreement is now resolved in favour of the publisher rather than left standing. The article itself is not online anywhere reachable and was NOT opened; which columns it published (0, I, III-VIII, X-XVII) is taken from a later description of it and from the 1956 edition's own subtitle, not from the article",
+        supports: "That the columns the 1956 edition left unpublished were published in 1995, and which they are",
+      },
+      {
+        tier: "scholarly",
+        label: "D. A. Machiela, \"Genesis Apocryphon (1QapGen)\", in Encyclopedia of the Bible and Its Reception",
+        url: "https://doi.org/10.1515/ebr.genesisapocryphon1qapgen",
+        credit: "Daniel A. Machiela, University of Notre Dame",
+        detail:
+          "De Gruyter, cols. 1143-1147. Read in full through the author's own uploaded copy, which is where the dimensions, the twenty-three columns, the Genesis 5:28-15:4 span, the parallel at column 20.26-27, and the two sentences on sectarian authorship quoted in section two all come from. The DOI above was checked against Crossref, which gives the author, the title and De Gruyter's Encyclopedia of the Bible Online, and it resolves to the publisher's entry — but the publisher's page and the author's upload both refuse automated requests, so none of what is quoted from this entry could be re-checked here. Crossref records no column numbers, so \"cols. 1143-1147\" rests on the printed edition and is unconfirmed. His monograph The Dead Sea Genesis Apocryphon (Brill, STDJ 79, 2009) is behind Brill's paywall and was NOT opened; the doctoral thesis behind it is openly deposited at Notre Dame under doi 10.7274/3484zg66p76, and its abstract — but not its body — was read",
+        supports: "The physical description, the column count, the extent of the retelling, and the non-sectarian consensus",
+      },
+      {
+        tier: "primary",
+        label: "N. Avigad and Y. Yadin, A Genesis Apocryphon: A Scroll from the Wilderness of Judaea",
+        credit: "Nahman Avigad and Yigael Yadin",
+        detail:
+          "Jerusalem: The Magnes Press of the Hebrew University and Heikhal ha-Sefer, 1956. The editio princeps. Its subtitle states its own extent — \"Description and contents of the scroll, facsimiles, transcription and translation of columns II, XIX-XXII\" — which is the fact section one turns on. Print only and not opened here; the subtitle is taken from the Bulletin of the School of Oriental and African Studies' review of the volume, which prints the title in full, and it is singular in both places where this article once had it plural",
+        supports: "That the first edition published only columns II and XIX-XXII",
+      },
+      {
+        tier: "institution",
+        label: "Israel Antiquities Authority, Leon Levy Dead Sea Scrolls Digital Library: 1Q20 Genesis Apocryphon",
+        url: "https://www.deadseascrolls.org.il/explore-the-archive/manuscript/1Q20-1",
+        credit: "Israel Antiquities Authority",
+        detail:
+          "\"Site: Qumran, Cave 1\", \"Language: Aramaic\", \"Script: Square\", \"Period: Herodian\", \"Material: Parchment\", with eleven free images, most of them infrared negatives photographed by Najib Anton Albina in 1953 and 1961. Read in full. Note carefully what this record is: the Cave 1 FRAGMENTS published by J. T. Milik in Discoveries in the Judaean Desert 1, not the main scroll, which is Israel Museum property and is not in this library",
+        supports: "The language, script and material, and the availability of infrared images of the Cave 1 fragments",
+      },
+      {
+        tier: "institution",
+        label: "NASA Jet Propulsion Laboratory, \"Infrared imaging reveals details on Dead Sea Scrolls\"",
+        url: "https://www.jpl.nasa.gov/news/infrared-imaging-reveals-details-on-dead-sea-scrolls/",
+        credit: "Jet Propulsion Laboratory, California Institute of Technology",
+        detail:
+          "Press release of 20 November 1993, read in full. Reports G. Bearman's team testing imaging in the 1,000 to 3,000 nanometre range on a Genesis Apocryphon fragment lent by the Getty Conservation Institute, and the sentence quoted in section one. Bearman went on to write the imaging appendix to the 1995 publication",
+        supports: "That infrared imaging changed what could be read on this scroll, and when",
+      },
+      {
+        tier: "encyclopedic",
+        label: "Wikipedia: Genesis Apocryphon",
+        url: "https://en.wikipedia.org/wiki/Genesis_Apocryphon",
+      },
+    ],
+    reflectionPrompt:
+      "Most of this scroll is gone — seventy columns at the very least, on its own scribe's sheet-lettering — and nobody will ever know what was on them. What do you do with the parts of a story you cannot recover?",
+  },
+  {
+    id: "en-gedi-leviticus-scroll",
+    name: "En-Gedi Leviticus Scroll",
+    // NOT registered: "En Gedi" or "Ein Gedi" — the oasis is a Location record and owns both, and
+    // this article links to it whenever it names the place. The hyphenated "En-Gedi" the scholarly
+    // literature uses for the scroll does not match either of the location's spellings, which is
+    // why the full name here is safe. NOT registered either: "the Leviticus scroll".
+    alternateNames: ["En-Gedi Scroll"],
+    category: "manuscript",
+    role: "The Burnt Scroll That Was Read Without Being Opened",
+    summary:
+      "A lump of charcoal from the ark of a Byzantine synagogue, too fragile to unroll for forty-five years — until a scanner and a piece of software turned it back into two columns of Leviticus.",
+    sections: [
+      {
+        heading: "A Lump of Charcoal in a Synagogue Ark",
+        paragraphs: [
+          "In 1970 archaeologists digging the Byzantine synagogue at En Gedi, on the western shore of the Dead Sea, reached the Holy Ark and found charred lumps inside it. The building had burned down around AD 600, and the lumps were what was left of its scrolls. The excavation was led by D. Barag and E. Netzer of the Hebrew University with Y. Porath of the Israel Antiquities Authority; the authors of the eventual publication set down, in their own statement of who did what, that \"Y.P.\" — Y. Porath — \"excavated the En-Gedi scroll on May 5, 1970.\" Then nothing happened, and the reason is worth stating plainly, because it is the whole point of the story: the object could not be opened. Unrolling carbonised parchment destroys it. The Israel Antiquities Authority kept the lumps for four decades while, in the words of the same paper, \"no one produced a means to overcome the irreversible damage they had suffered in situ.\"",
+          "The means arrived from computer science. P. Shor and Y. Porath of the Antiquities Authority arranged for the scroll to be scanned in three dimensions by micro-CT, and put the resulting volume in the hands of W. B. Seales of the University of Kentucky, whose team had been developing a technique they call virtual unwrapping: find the layers of the rolled sheet inside the scan, model each as a surface, flatten it, and read what is written on it. The ink cooperated for a reason the paper is careful about — its composition is unknown, because no surface is exposed to test, but \"the ink response within the micro-CT scan is denser than other materials, implying that it likely contains metal, such as iron or lead,\" and dense material is exactly what a CT scanner sees. The Antiquities Authority announced readable text at a press conference in the summer of 2015; the full technical account appeared in Science Advances in September 2016, and the textual edition in the journal Textus the same year.",
+        ],
+      },
+      {
+        heading: "Two Columns of Leviticus",
+        paragraphs: [
+          "What came out is the beginning of a Torah scroll: the first two columns of Leviticus, eighteen surviving lines out of an original thirty-five in each. Column one carries Leviticus 1:1-9 and column two Leviticus 2:1-11 — the opening of the sacrificial law, the burnt offering and the grain offering. The published segment measures 16.8 cm long and 7.8 cm high as it survives, though the editors note the fire shrank it by an unknown amount and its original size cannot be recovered. The text is unvocalised and carries no verse divisions, which is what a Hebrew scroll of this period should look like. Everything from column three onwards is still rolled up and still unread.",
+          "The finding that made headlines was about agreement with the later Hebrew Bible, and it is worth quoting at its own weight rather than at the weight the headlines gave it. The Science Advances paper says: \"The text deciphered thus far is completely identical with the consonantal framework of the medieval text of the Hebrew Bible, traditionally named the Masoretic Text, and which is the text presented in most printed editions of the Hebrew Bible.\" The edition in Textus is more precise still — the comparison was made against a named manuscript, and the paragraph divisions match too: \"Throughout the entire two columns, the text preserved of Leviticus 1-2 matches the consonantal text of the medieval MT of Leviticus precisely, and we did not find a single variant vis-à-vis MT (choosing Codex Leningrad B 19A as our point of comparison).\" Notice the two qualifications the editors themselves put on it: deciphered thus far, and consonantal framework. Vowels and accents are a later addition and are not in question here. And the editors add the deflating sentence that popular retellings drop: \"Although it does not contribute any new readings (in the two columns that have been revealed to date), it serves as a valuable witness for the state of the biblical text in an era for which we have a paucity of direct evidence.\"",
+        ],
+      },
+      {
+        heading: "Nobody Agrees How Old It Is",
+        paragraphs: [
+          "The date is genuinely open, and the editors put the disagreement in their own publication rather than resolving it quietly. Radiocarbon dating at the Weizmann Institute gave \"a probability of 68.2% that the scroll dates between 235-340 CE, and a probability of 88.9% that it dates between 210-390 CE,\" with only a 6.5% chance of the second century. The palaeographer A. Yardeni, examining the letter forms, reached a different answer: \"It seems therefore that we may safely date this scroll to about the second half of the 1st century and at latest, the beginning of the 2nd century CE.\" That is a gap of a century and a half or more. Yardeni states her own limits before she states her conclusion, and they should be quoted with it: \"Because of the very poor condition of this scroll, its image is distorted and does not reflect its precise appearance; therefore, the measurements given below are approximate and the drawings are conjectural,\" and the letters are so small that they \"do not allow a sound examination of their forms.\"",
+          "The editors' own verdict is a model of what to do with a discrepancy: \"We take note of the discrepancies between these two examinations which should lead to caution in any conclusion, but such discrepancies are not unparalleled.\" The argument has since moved on. D. Longacre reconsidered the palaeography in 2018 and argues in his abstract that \"a series of important typological developments evident in the hand of EGLev suggests a date somewhat later than the Dead Sea Scrolls of the first-second centuries,\" and that the physical evidence — a wooden roller, metallic ink, tall narrow columns — points the same way; he concludes for the third or fourth century, which would agree with the radiocarbon. Only his abstract could be read here, so his reasoning is reported and not restated. What follows from the answer is worth stating, because it is why the argument matters: on the later dating the scroll is a witness to the Hebrew Bible from the centuries between the Judean Desert finds and the medieval codices, a stretch for which there is very little else; on Yardeni's it is contemporary with the latest of the Judean Desert manuscripts and fills no gap at all.",
+        ],
+      },
+    ],
+    verses: [
+      { reference: "Leviticus 1:1-9", note: "The text of the scroll's first column, recovered without the scroll being opened" },
+      { reference: "Leviticus 2:1-11", note: "The second column: the grain offering" },
+      { reference: "1 Samuel 24:1-2", note: "David in the wilderness of En Gedi, the oasis where the synagogue stood a thousand years later" },
+    ],
+    sources: [
+      { label: "W. B. Seales et al., \"From damage to discovery via virtual unwrapping: Reading the scroll from En-Gedi\" (Science Advances, open access)", url: "https://pmc.ncbi.nlm.nih.gov/articles/PMC5031465/" },
+      { label: "M. Segal, E. Tov et al., \"An Early Leviticus Scroll from En-Gedi: Preliminary Publication\" (Textus 26)", url: "https://openscholar.huji.ac.il/sites/default/files/he_bible_project/files/m._segal1.1.pdf" },
+      { label: "Wikipedia: En-Gedi Scroll", url: "https://en.wikipedia.org/wiki/En-Gedi_Scroll" },
+    ],
+    manuscript: {
+      manuscriptType: "Parchment scroll, carbonised by fire and never physically unrolled; read from a micro-CT scan",
+      language: "Hebrew",
+      contents:
+        "The first two columns of Leviticus — 1:1-9 and 2:1-11 — eighteen of an original thirty-five lines surviving in each. Unvocalised, with no verse divisions. The rest of the scroll is still rolled and still unread",
+      origin: "Unknown. It was in use at the En Gedi synagogue when the building burned",
+      findSite: "The Holy Ark of the Byzantine synagogue at En Gedi, on the west shore of the Dead Sea",
+      foundYear: "1970",
+      foundBy:
+        "Excavated by Y. Porath on 5 May 1970, in a dig directed by D. Barag and E. Netzer of the Hebrew University with Porath of the Israel Antiquities Authority",
+      dateAssigned:
+        "Disputed. Radiocarbon gives AD 235-340 at 68.2% probability; A. Yardeni's palaeography gives the second half of the first century or the beginning of the second; D. Longacre argued in 2018 for the third or fourth century",
+      dateCertainty: "disputed",
+      currentLocation: "Israel Antiquities Authority. No published inventory number for the scroll was traced",
+      facsimileUrl: "https://vis.uky.edu/virtual-unwrapping/engedi2016/",
+    },
+    citations: [
+      {
+        tier: "scholarly",
+        label: "W. B. Seales, C. S. Parker, M. Segal, E. Tov, P. Shor and Y. Porath, \"From damage to discovery via virtual unwrapping: Reading the scroll from En-Gedi\"",
+        url: "https://pmc.ncbi.nlm.nih.gov/articles/PMC5031465/",
+        credit: "William Brent Seales, Clifford Seth Parker, Michael Segal, Emanuel Tov, Pnina Shor and Yosef Porath",
+        detail:
+          "Science Advances 2:9 (21 September 2016), e1601247, doi 10.1126/sciadv.1601247. Open access under CC BY-NC and read in full through PubMed Central; science.org itself refuses automated requests. Source for the 1970 excavation and the AD 600 destruction, for Porath's excavation of the scroll on 5 May 1970 — a sentence that stands in the paper's author-contributions note rather than in its body, and that names him by his initials, \"Y.P.\", not in full — for the ink's likely metal content, and for the sentence about identity with the Masoretic consonantal framework quoted whole in section two. Because the licence is non-commercial, this article quotes and cites it rather than reproducing any of it",
+        supports: "The discovery, the virtual unwrapping, and the claim about agreement with the Masoretic Text",
+      },
+      {
+        tier: "scholarly",
+        label: "M. Segal, E. Tov, W. B. Seales, C. S. Parker, P. Shor and Y. Porath, with an appendix by A. Yardeni, \"An Early Leviticus Scroll from En-Gedi: Preliminary Publication\"",
+        url: "https://openscholar.huji.ac.il/sites/default/files/he_bible_project/files/m._segal1.1.pdf",
+        credit: "Michael Segal, Emanuel Tov, William Brent Seales, Clifford Seth Parker, Pnina Shor and Yosef Porath; palaeographic appendix by Ada Yardeni",
+        detail:
+          "Textus 26 (2016), 29-58. Read in full through the Hebrew University Bible Project's own copy; Brill's page for the same article refuses automated requests. This is the textual edition and it is the source that matters most here: the verse range (Leviticus 1:1-9 and 2:1-11, NOT 1:1-8, which is what the 2015 press coverage said), the eighteen of thirty-five lines, the 16.8 by 7.8 cm measurement, the comparison against Codex Leningrad B 19A, the radiocarbon probabilities in its footnote 4, Yardeni's palaeographic conclusion and her own caveats, and the editors' sentence about the discrepancy between the two datings. The excavation-date sentence quoted in section one is NOT here; it is in the Science Advances paper only",
+        supports: "The verse range, the dimensions, the textual comparison, and both sides of the dating dispute",
+      },
+      {
+        tier: "scholarly",
+        label: "D. Longacre, \"Reconsidering the Date of the En-Gedi Leviticus Scroll (EGLev): Exploring the Limitations of the Comparative-Typological Paleographic Method\"",
+        url: "https://doi.org/10.1163/2589255X-02701004",
+        credit: "Drew Longacre, University of Groningen",
+        detail:
+          "Textus 27:1 (2018), 44-84. The body is behind Brill's paywall and was NOT opened. What section three quotes is his own abstract, read on his university's research portal. His arguments are named from it and are not restated here",
+        supports: "The third position on the scroll's date",
+        paywalled: true,
+      },
+      {
+        tier: "institution",
+        label: "University of Kentucky, Department of Computer Science: the En-Gedi 2016 scan data",
+        url: "https://vis.uky.edu/virtual-unwrapping/engedi2016/",
+        credit: "W. B. Seales and the EduceLab team, University of Kentucky",
+        detail:
+          "The archive the published paper names as the home of \"All scan data and results from this paper\". Confirmed live. The master image of the unwrapped scroll is also deposited on the Internet Archive at archive.org/details/engedi-scroll, where it carries the paper's own non-commercial licence",
+        supports: "That the scan data behind the reading is public and inspectable",
+      },
+      {
+        tier: "reference",
+        label: "Biblical Archaeology Society, \"Book of Leviticus Verses Recovered from Burnt Hebrew Bible Scroll\"",
+        url: "https://www.biblicalarchaeology.org/daily/news/book-of-leviticus-verses-recovered-from-burnt-hebrew-bible-scroll/",
+        credit: "Biblical Archaeology Society",
+        detail:
+          "The lay account of the 2015 announcement, read in full. It is cited here for a specific reason: it carries the \"first eight verses\" figure that the 2015 press round produced and that is still repeated, and then updates itself. The primary publication says Leviticus 1:1-9",
+        supports: "Where the widely repeated \"first eight verses\" figure came from",
+      },
+      {
+        tier: "encyclopedic",
+        label: "Wikipedia: En-Gedi Scroll",
+        url: "https://en.wikipedia.org/wiki/En-Gedi_Scroll",
+      },
+    ],
+    reflectionPrompt:
+      "This scroll was unreadable for forty-five years and nobody threw it away. What are you keeping that you cannot yet make sense of?",
+  },
+  {
+    id: "greek-minor-prophets-scroll",
+    name: "Greek Minor Prophets Scroll",
+    // NOT registered: "8HevXIIgr". All three places the 66 book introductions write that siglum, it
+    // sits in brackets immediately after the full name, so registering it would put a second chip
+    // beside the first — the fault the papyri-and-uncials batch fixed for "Papyrus 46 (P46)". NOT
+    // registered either: "Minor Prophets Scroll" on its own, because the book introductions use
+    // that phrase for the HEBREW Murabba'at scroll (Mur88) five times, and it would send those
+    // readers to the wrong manuscript. Only the full "Greek Minor Prophets Scroll" is registered,
+    // and it matches the lowercase-s form the Habakkuk introduction uses as well.
+    alternateNames: ["Nahal Hever Greek Minor Prophets Scroll"],
+    category: "manuscript",
+    role: "A Greek Old Testament Being Corrected Towards the Hebrew, Before the New Testament Was Written",
+    summary:
+      "A leather scroll from a cliff cave south of Qumran, carrying six of the Minor Prophets in Greek — and showing the Septuagint already being revised, verse by verse, to match a Hebrew text like the one that became standard.",
+    sections: [
+      {
+        heading: "Bought First, Excavated Afterwards",
+        paragraphs: [
+          "This scroll reached scholarship the wrong way round. Fragments of it were sold to the Palestine Archaeological Museum in the early 1950s by clandestine diggers who said they came from Wadi Seiyal, and it was only in 1961, when Y. Aharoni's expedition excavated a cave in the cliffs of Nahal Hever known as the Cave of Horror, that matching fragments came out of the ground and settled where the scroll had actually been. That is why its siglum begins with the number of the cave. The two halves were published together in 1990, edited by E. Tov with R. A. Kraft and a palaeographic contribution from P. J. Parsons, as volume 8 of Discoveries in the Judaean Desert.",
+          "What survives is about twenty-six columns of a scroll reconstructed at something near fifty-five, carrying parts of six books: Jonah, Micah, Nahum, Habakkuk, Zephaniah and Zechariah. Two scribes wrote it. The Israel Antiquities Authority's digital library holds it as manuscript 8Hev1 with 111 photographs, and lists it plainly as parchment, Greek script, Roman period. In March 2021 the Antiquities Authority announced that a survey of the same cave, reached by rappelling some eighty metres down a cliff face, had recovered further fragments of this very scroll — text from Zechariah 8:16-17 and Nahum 1:5-6 — sixty years after the first excavation.",
+        ],
+      },
+      {
+        heading: "The Septuagint, Under Revision",
+        paragraphs: [
+          "The reason this scroll matters is what D. Barthélemy saw in it. He announced it in 1953 and published it fully in 1963 under a title that says the thesis: Les Devanciers d'Aquila, the forerunners of Aquila of Sinope. This is not a fresh translation of the Twelve into Greek, and it is not simply a copy of the Septuagint. It is the Septuagint revised — corrected, reading by reading, towards a Hebrew text of the kind that would later become the Masoretic standard. The revision has a name taken from one of its tics, the kaige recension, and it turned out to stand at the head of a line running on through the second-century Jewish translators Aquila of Sinope, Theodotion and Symmachus.",
+          "That reframes a question this app's article on the Septuagint also raises. The differences between the Greek Old Testament and the Hebrew one were often put down to loose translators, and this app's article on the Septuagint sets out how the Judean Desert finds changed that. This scroll shows Jewish scholars in Judea, before the New Testament existed, treating the Greek as something to be brought into line with the Hebrew — which means the differences were already visible to them, and mattered to them. P. J. Gentry states the state of play carefully: the process of making \"systematic, thoroughgoing revisions (called recensions) continued from possibly 200 bc through ad 200,\" and \"the precise line of demarcation between original Greek translations and later revisers in this corpus of texts has, in fact, not yet been clearly established.\"",
+        ],
+      },
+      {
+        heading: "The Divine Name, and What It Does Not Settle",
+        paragraphs: [
+          "The scroll's most-discussed feature is a piece of typography. Where the Hebrew has the divine name, this Greek text does not write a Greek word at all: it writes the four Hebrew letters, in the old palaeo-Hebrew script, inside the running Greek — twenty-eight times, twenty-four in one scribe's hand and four in the other's. A reader can see it on the Antiquities Authority's own plates. A. R. Meyer, who has catalogued the evidence, notes that the scribes left no gaps for it and did not go back to fill it in: \"both hands appear to write the Tetragrammaton left-to-right in scriptio continua at the same time the Greek text was copied.\"",
+          "The claim usually built on that in popular writing is that it shows the original Greek Old Testament wrote the divine name in Hebrew rather than translating it as kyrios, \"Lord\" — and that is more than the evidence carries. The majority position runs the other way: E. Tov's judgement is that \"all the texts transcribing the Tetragrammaton in Hebrew characters reflect early revisions, in which the employment of Hebrew characters was considered a sign of authenticity, even though this practice only entered the transmission of Greek Scriptures at a second stage.\" On that reading, the Hebrew letters are part of the correcting, not part of the original. But the argument is not closed, and Meyer names the manuscript that keeps it open: P. Oxy. 5101, a Psalms papyrus A. Pietersma regards as a genuine Old Greek witness whose \"sole recensional trait\" is the palaeo-Hebrew divine name — which, if right, breaks the link between revision and Hebrew letters that the majority case depends on. A third possibility is that the earliest Greek wrote the name as iaō, which is what the Cave 4 Greek Leviticus fragments actually have. Meyer's own conclusion is the honest one: \"the correlation itself is not decisive for understanding the role of the divine name in the textual history of the Septuagint.\"",
+        ],
+      },
+    ],
+    verses: [
+      { reference: "Habakkuk 3:9", note: "Preserved on this scroll — one of the verses that shows chapter 3 belonged to the book before the New Testament era" },
+      { reference: "Zechariah 8:16-17", note: "Recovered from the same cave in 2021, sixty years after the first excavation" },
+      { reference: "Nahum 1:5-6", note: "The other passage in the 2021 fragments" },
+      { reference: "Micah 5:4-5", note: "One of the passages where the scroll writes the divine name in Hebrew letters inside the Greek — twice in verse 4. Hebrew Bibles number these verses 5:3-4, which is how the scholarly literature cites them" },
+    ],
+    sources: [
+      { label: "Israel Antiquities Authority, Leon Levy Digital Library: 8Hev1 Minor Prophets", url: "https://www.deadseascrolls.org.il/explore-the-archive/manuscript/8Hev1-1" },
+      { label: "P. J. Gentry, \"The Text of the Old Testament\" (JETS 52/1)", url: "https://etsjets.org/wp-content/uploads/2010/06/www.etsjets.org_files_JETS-PDFs_52_52-1_JETS-52-1-19-45-Gentry.pdf" },
+      { label: "Wikipedia: Greek Minor Prophets Scroll from Nahal Hever", url: "https://en.wikipedia.org/wiki/Greek_Minor_Prophets_Scroll_from_Nahal_Hever" },
+    ],
+    manuscript: {
+      siglum: "8ḤevXIIgr",
+      manuscriptType: "Parchment scroll in Greek script, written by two scribes; about 26 columns survive of a reconstructed 55",
+      language: "Greek, with the divine name written in palaeo-Hebrew letters",
+      contents:
+        "Parts of six of the Minor Prophets — Jonah, Micah, Nahum, Habakkuk, Zephaniah and Zechariah — not the whole Book of the Twelve. Further fragments of Nahum and Zechariah from the same scroll were recovered in 2021",
+      origin: "Judea",
+      findSite: "The Cave of Horror, Nahal Hever, in the Judean Desert",
+      foundYear:
+        "Fragments were sold to the Palestine Archaeological Museum in the early 1950s under a false Wadi Seiyal provenance; matching fragments were excavated in the cave itself in 1961, and more in 2021",
+      foundBy:
+        "Clandestine diggers first; the 1961 excavation of the Cave of Horror was Y. Aharoni's, published in the Israel Exploration Journal the following year, and the 2021 survey was the Israel Antiquities Authority's Dead Sea Scrolls Unit",
+      dateAssigned:
+        "Palaeographically about 25 BC to AD 25 on the official edition's dating. Older estimates ranged from 50 BC-AD 50 to the end of the first century AD, and the Israel Antiquities Authority's own record gives no date at all",
+      dateCertainty: "disputed",
+      currentLocation: "Israel Antiquities Authority; the older fragments went to what is now the Rockefeller Museum, Jerusalem",
+      facsimileUrl: "https://www.deadseascrolls.org.il/explore-the-archive/manuscript/8Hev1-1",
+    },
+    citations: [
+      {
+        tier: "institution",
+        label: "Israel Antiquities Authority, Leon Levy Dead Sea Scrolls Digital Library: 8Hev1, Minor Prophets",
+        url: "https://www.deadseascrolls.org.il/explore-the-archive/manuscript/8Hev1-1",
+        credit: "Israel Antiquities Authority",
+        detail:
+          "The authority's own record: \"Minor Prophets\", \"8Hev1 - 8Hev XII\", site \"Cave of Horror\", \"Biblical Compositions\", \"Translation of Scripture\", language and script Greek, period Roman, material parchment, 111 images, and the publication given as \"Tov, Emanuel 1990. DJD 8: 1-169.\" Read in full. Note that the record itself assigns no date. Note also that the verse identifications visible on individual plate pages are comments left by site visitors, not the authority's own metadata, and are not used here",
+        supports: "The material, script, findspot, image count, and the official publication",
+      },
+      {
+        tier: "scholarly",
+        label: "E. Tov, with R. A. Kraft and a contribution by P. J. Parsons, The Greek Minor Prophets Scroll from Naḥal Ḥever (8ḤevXIIgr)",
+        credit: "Emanuel Tov, Robert A. Kraft and Peter J. Parsons",
+        detail:
+          "Discoveries in the Judaean Desert VIII (Oxford: Clarendon, 1990). The official edition, and the source of the column counts, the two hands and the palaeographic date as those are reported. It was NOT opened here: no readable copy could be reached, and the Internet Archive's scan is lending-restricted. Parsons's own palaeographic argument is therefore named and not restated, and the date given in this article's facts block is the one reported from this edition rather than one read in it",
+        supports: "The column counts, the two scribal hands, and the conventional date",
+      },
+      {
+        tier: "scholarly",
+        label: "A. R. Meyer, The Divine Name in Early Judaism: Use and Non-Use in Aramaic, Hebrew, and Greek",
+        url: "https://areopage.net/PDF/Meyer_DivineName.pdf",
+        credit: "Anthony R. Meyer, McMaster University",
+        detail:
+          "Doctoral thesis, McMaster University, 2017, supervised by D. A. Machiela; later published as Naming God in Early Judaism (Schöningh, 2022). Read in full. Source for the twenty-eight occurrences of the Tetragrammaton and their division between the two hands, for the scribes writing it without leaving gaps, for the quotation from Tov in section three (which Meyer quotes from Tov's own essay and which is therefore reported at one remove), for A. Pietersma on P. Oxy. 5101, and for Meyer's own conclusion",
+        supports: "The palaeo-Hebrew divine name, and all three positions on what it does and does not show",
+      },
+      {
+        tier: "scholarly",
+        label: "P. J. Gentry, \"The Text of the Old Testament\"",
+        url: "https://etsjets.org/wp-content/uploads/2010/06/www.etsjets.org_files_JETS-PDFs_52_52-1_JETS-52-1-19-45-Gentry.pdf",
+        credit: "Peter J. Gentry, The Southern Baptist Theological Seminary",
+        detail:
+          "Journal of the Evangelical Theological Society 52:1 (March 2009), 19-45. Freely readable and read in full. Source for the two sentences quoted in section two on the recensions and on where the line between translation and revision has not been drawn",
+        supports: "The place of the kaige recension in the history of the Greek Old Testament",
+      },
+      {
+        tier: "scholarly",
+        label: "D. Barthélemy, Les Devanciers d'Aquila",
+        credit: "Dominique Barthélemy",
+        detail:
+          "Vetus Testamentum Supplements 10 (Leiden: Brill, 1963), preceded by \"Redécouverte d'un chaînon manquant de l'histoire de la Septante\", Revue Biblique 60 (1953), 18-29. The book that identified the kaige recension. NO accessible copy could be reached and it was NOT opened; its thesis is stated here at the level its own title states it, and the wider description is taken from Gentry and Meyer rather than from Barthélemy",
+        supports: "That this scroll is a revision of the Septuagint towards the Hebrew, and the name of the recension",
+      },
+      {
+        tier: "institution",
+        label: "Israel Antiquities Authority, \"A challenging Israel Antiquities Authority operation has uncovered thrilling finds in the Judean Desert\"",
+        url: "https://www.friendsofiaa.org/news/2021/3/16/a-challenging-israel-antiquities-authority-operation-has-uncovered-thrilling-finds-in-the-judean-desert-nature-reserve",
+        credit: "Israel Antiquities Authority, reproduced by the Friends of the Israel Antiquities Authority",
+        detail:
+          "The press release of 16 March 2021, read in full in this reproduction because antiquities.org.il refuses automated requests. It reports that the new fragments \"was written, uniquely by two different scribes\", that \"despite most of the text being in Greek, the name of God appears in ancient Hebrew script\", and describes the descent into the cave. The verse identifications — Zechariah 8:16-17 and Nahum 1:5-6 — are from the Times of Israel's report of the same announcement",
+        supports: "The 2021 recovery of further fragments and which passages they carry",
+      },
+      {
+        tier: "encyclopedic",
+        label: "Wikipedia: Greek Minor Prophets Scroll from Nahal Hever",
+        url: "https://en.wikipedia.org/wiki/Greek_Minor_Prophets_Scroll_from_Nahal_Hever",
+      },
+    ],
+    reflectionPrompt:
+      "Someone sat in Judea two thousand years ago and corrected a Bible translation line by line against the Hebrew. What would you check that carefully?",
+  },
+  {
+    id: "bar-kokhba-letters",
+    name: "Bar Kokhba Letters and the Babatha Archive",
+    // NOT registered: "Bar Kokhba" on its own — it is a person's nickname, and a timeline event
+    // already carries "Bar Kokhba Revolt"; registering the bare name would take mentions of the man
+    // and of the war and send them here. NOT registered either: "Nahal Hever", "Cave of Letters" or
+    // "Wadi Murabba'at", which are places. The two registered aliases are the two document groups.
+    // Both are matchNames rather than alternateNames: the record's own name already contains the
+    // first, and printing "Also called Bar Kokhba letters, Babatha archive" under a title that
+    // reads "Bar Kokhba Letters and the Babatha Archive" is noise. They still link.
+    matchNames: ["Bar Kokhba letters", "Babatha archive"],
+    category: "manuscript",
+    role: "Letters and Legal Papers From the Last Jewish Revolt, AD 132-136",
+    summary:
+      "Papyri hidden in cliff caves above the Dead Sea by people who did not come back for them: a rebel commander's orders to his officers, and thirty-five legal documents belonging to one woman.",
+    sections: [
+      {
+        heading: "Two Sites, Two Excavations, Two Countries",
+        paragraphs: [
+          "Two separate caches are routinely run together and should not be. The first came from Wadi Murabba'at, then in Jordanian territory, where the Ta'amireh Bedouin found the caves in October 1951 and four of them were explored in January and February 1952, in a dig whose full account R. de Vaux published. The finds ran from the Chalcolithic to the Arab period and included, as a contemporary account of the dig put it, \"Biblical texts, phylacteries, profane letters, contracts, literary and historical works, administrative, civil and military documents\" in \"Hebrew, Aramaic, Greek, Latin and Arabic.\" Among them were letters from the leader of the revolt himself. The site had been an insurgent outpost, and the headquarters of one of his officers.",
+          "The second cache came from Nahal Hever, on the Israeli side, in two seasons under Y. Yadin. In March 1960 his team, working the cliffs above the ravine, found a bundle of letters tied together in a waterskin — the Bar Kokhba letters proper. In the following season they found a concealed crevice holding a leather purse with thirty-five legal documents in it, all belonging to a woman named Babatha. The cave has been called the Cave of Letters ever since. A caution on the years: the letters are consistently dated to 1960, and the Babatha purse is usually placed in the 1961 season, but the accounts available here disagree about the second date, and Yadin's own excavation report could not be opened, so this article does not state it flatly.",
+        ],
+      },
+      {
+        heading: "A Commander Who Needed Palm Branches",
+        paragraphs: [
+          "The letters are administrative, short, and startlingly ordinary. One from Wadi Murabba'at runs, in the translation published with the excavation: \"From Simeon ben Koseba to Yeshua ben Gilgola and the men of your company, greeting! I call heaven to witness against me that, if you do not break off (relations) with the Galileans whom you have liberated each and all, I will have you clapped in irons... as I have done already with Ben Aphlul. Simeon ben Koseba, Prince of Israel.\" Even that is contested — an alternative reading of the crucial clause makes it a threat on the Galileans' behalf rather than against them, and the published translator flagged the alternative himself. A second Murabba'at letter, from the administrators of Beit Mashko, is about a disputed cow, and it is usually quoted only for one line of it: \"What is more—alas!—the gentiles are drawing close to us.\" It does not end there. It goes on: \"I would have gone up and rendered you assistance—yet, because you ever send good news, I did not do so. Farewell to you and all the house of Israel!\" Six men then sign it.",
+          "The most-quoted of the Nahal Hever letters is a supply order. Shimon writes to a man at Qiryat Arabaya to send two men with two donkeys to Yehonathan son of Ba'yan and to Masabala — his officers at En Gedi — to bring back palm branches and citrons, and to gather myrtle and willow locally, \"because the population is large.\" Those are the four species carried at the Feast of Tabernacles, prescribed in Leviticus 23:40. In the middle of a losing war, a commander is arranging for his men to keep a festival. There is a Greek letter making a similar request; the writer names himself Soumaios and apologises for writing in Greek, and whether Soumaios is the commander himself is disputed. The letters were addressed to real officers at a real oasis, and the same oasis produced the burnt Leviticus scroll five centuries later.",
+        ],
+      },
+      {
+        heading: "What the Letters Do Not Prove",
+        paragraphs: [
+          "These documents are constantly enlisted to establish two things they cannot carry. The first is the leader's name. The documents themselves call him Shimon ben Kosiba and date by \"the liberation of Israel by the ministry of Simeon ben Koseba, Prince of Israel.\" \"Bar Kokhba\" is not in them. It is an epithet, and the Jewish Encyclopedia states its status precisely: \"Bar Kokba, the hero of the third war against Rome, appears under this name only among ecclesiastical writers: heathen authors do not mention him; and Jewish sources call him Ben (or Bar) Koziba or Kozba.\" The epithet is a pun on Numbers 24:17 — \"a star will come out of Jacob\" — reported as R. Akiva's, in a passage of the Jerusalem Talmud that also records the reply: \"Rabbi Yohanan ben Torta said to him, 'Akiva, grass will grow on your cheeks and still the Son of David will not have come.'\" That passage was written down generations after the events and it preserves the objection alongside the acclamation.",
+          "The second is the archive's own size and shape, which are softer than the round numbers suggest. The Babatha purse is usually said to hold thirty-five documents dated between AD 94 and 132, but the ranges given in accessible sources differ by two years at each end, and no accession number for the purse or for the letters could be traced at the holding museum. The letters are usually counted as fifteen; a scholarly catalogue of every letter from the Judean Desert lists sixteen for this group, one of them too fragmentary to edit. None of that touches what the documents are worth. Babatha's papers — marriage contracts, land registrations, a guardianship dispute over her son, kept in Greek, Aramaic and Nabataean — are the fullest surviving record of the legal life of any ordinary Jewish woman in antiquity, and she is known only because she took them into a cave and did not come out.",
+        ],
+      },
+    ],
+    verses: [
+      { reference: "Numbers 24:17", note: "\"A star will come out of Jacob\" — the verse behind the epithet Bar Kokhba, \"son of the star\"" },
+      { reference: "Leviticus 23:40", note: "The four species the commander's letter orders sent to his camp" },
+      { reference: "1 Samuel 24:1-2", note: "En Gedi, the oasis where his two officers were stationed" },
+    ],
+    sources: [
+      { label: "Jewish Encyclopedia (1901-1906): Bar Kokba and Bar Kokba War", url: "https://jewishencyclopedia.com/articles/2471-bar-kokba-and-bar-kokba-war" },
+      { label: "Center for Online Judaic Studies: Bar Kokhba Letter, 132-135 CE", url: "https://cojs.org/bar_kokhba_letter-_132-135_ce/" },
+      { label: "Wikipedia: Cave of Letters", url: "https://en.wikipedia.org/wiki/Cave_of_Letters" },
+    ],
+    manuscript: {
+      manuscriptType: "Papyrus letters, with a few on hide, ostraca and wood; the Babatha documents are papyrus, folded and tied in a leather purse",
+      language: "Hebrew, Aramaic, Greek and Nabataean; four letters from the Judean Desert are in Latin",
+      contents:
+        "Administrative letters from Shimon ben Kosiba and his officers, and the thirty-five legal documents of Babatha — marriage contracts, land registrations and a guardianship suit. Not biblical manuscripts: the biblical scrolls from the same caves are separate finds",
+      origin: "Judea and the Roman province of Arabia, AD 94-135",
+      findSite: "Wadi Murabba'at, and the Cave of Letters in Nahal Hever, in the cliffs above the Dead Sea",
+      foundYear: "1951-1952 at Wadi Murabba'at; 1960 and the following season at Nahal Hever",
+      foundBy:
+        "Bedouin of the Ta'amireh tribe found the Murabba'at caves in October 1951; R. de Vaux published the excavation of January and February 1952. Y. Yadin's expedition excavated the Cave of Letters at Nahal Hever",
+      dateAssigned: "AD 94-135, from the documents' own dating formulae",
+      dateCertainty: "firm",
+      currentLocation: "Israel Museum, Jerusalem, and the Israel Antiquities Authority. No published accession number for either group was traced",
+    },
+    citations: [
+      {
+        tier: "institution",
+        label: "Israel Exploration Society: The Documents from the Bar Kokhba Period in the Cave of Letters, vol. 2, Greek Papyri",
+        url: "https://www.israelexplorationsociety.com/product-page/the-documents-from-the-bar-kokhba-period-in-the-cave-of-the-letters",
+        credit: "Israel Exploration Society, Jerusalem",
+        detail:
+          "The excavating body's own record of the material it dug and published. Read in full. Its description: \"Documents, artifacts and human skeletal remains were found in caves in the cliffs overlooking Nahal Hever, a canyon near the Dead Sea. Among the documentary finds were letters written by Bar Kokhba, the legendary leader of the Second Jewish Revolt against Rome (ca. 132 CE) and the archive of Babata, a Jewish woman living at that time.\" The volume itself — N. Lewis, Y. Yadin and J. C. Greenfield (eds), 1989, ISBN 965-221-009-9 — is the official edition of the Greek papyri in the archive, and was NOT opened here. This is the closest thing to a holding-institution record that could be found for these documents: neither the Israel Museum nor the Israel Antiquities Authority publishes an object page for them, which is why this article carries no inventory number",
+        supports: "That the letters and the Babatha archive came from the Nahal Hever caves, and the official edition of the Greek papyri",
+      },
+      {
+        tier: "primary",
+        label: "G. Graystone, \"The Dead Sea Scrolls — II. Wadi Murabba'at\"",
+        url: "https://biblicalstudies.org.uk/pdf/scripture/07-3_066.pdf",
+        credit: "Scripture 7:3 (1955), 66-76",
+        detail:
+          "A contemporary account of the 1951-52 excavation, written two years after it, with translations of both published Murabba'at letters and of the revolt's dating formula. Read in full. The two letters quoted in section two are from here, including the translator's own note that the crucial clause of the first has an alternative reading. The scan is supplied for free educational use and may not be resold or rehosted, so it is linked and quoted briefly rather than reproduced. Its footnotes cite R. de Vaux, \"Les Grottes de Murabba'at et leurs documents\", Revue Biblique 60 (1953), 245-267, which was not opened",
+        supports: "The 1951-52 excavation, the range of the finds, and the text of the two Murabba'at letters, including the close of the second one and its six signatures",
+      },
+      {
+        tier: "primary",
+        label: "Jewish Encyclopedia (1901-1906), \"Bar Kokba and Bar Kokba War\"",
+        url: "https://jewishencyclopedia.com/articles/2471-bar-kokba-and-bar-kokba-war",
+        credit: "Funk and Wagnalls, New York, 1901-1906; public domain",
+        detail:
+          "Read in full. Source for the sentence quoted in section three on the name — that it \"appears under this name only among ecclesiastical writers\" while \"Jewish sources call him Ben (or Bar) Koziba or Kozba\" — and for the derivation of the epithet from R. Akiva's reading of Numbers 24:17. A gloss of Koziba as \"son of the lie\" is widely repeated and is NOT printed in the article, though this source does carry it. What it says is that \"Others believe that Bar Koziba was a contumelious appellation ('Son of Lies') bestowed after the unfortunate issue of the revolt\", while judging it \"more likely that it was simply the name of his father\". It is left out of the article because the same source prefers the other derivation, not because nobody prints it",
+        supports: "The forms of the name and the origin of the epithet",
+      },
+      {
+        tier: "reference",
+        label: "Center for Online Judaic Studies, \"Bar Kokhba Letter, 132-135 CE\"",
+        url: "https://cojs.org/bar_kokhba_letter-_132-135_ce/",
+        credit: "Center for Online Judaic Studies",
+        detail:
+          "Read in full. Carries the translation of the four-species letter, the object record giving the Israel Museum as its home, and the caution repeated in section two: \"The author of that letter, Soumaios, has usually been identified as Shimon bar Kosiba, but this is disputed by some scholars.\" Its translation is credited to Y. Yadin's Bar-Kokhba (1971), which is in copyright and was not opened; section two therefore paraphrases the letter's content and quotes only the short phrase \"because the population is large\"",
+        supports: "The content of the four-species letter and the dispute over the Greek one",
+      },
+      {
+        tier: "reference",
+        label: "Center for Online Judaic Studies, \"Jerusalem Talmud Ta'anit 4:6 (68d-69a): Rabbi Akiva and Bar Kokhba\"",
+        url: "https://cojs.org/jerusalem_talmud_ta-anit_4-6_-68d-69a-_rabbi_akiva_and_bar_kokhba/",
+        credit: "Center for Online Judaic Studies; translation credited on the page to S. Berrin",
+        detail:
+          "Read in full. The source of R. Yohanan ben Torta's reply quoted in section three. Two cautions carried into the article: the page's own citation of the verse is mistyped, and the correct reference is Numbers 24:17; and this is the only text of the passage that could be opened here, so it is quoted from one edition rather than checked against a second",
+        supports: "The rabbinic report of Akiva's acclamation and the objection recorded beside it",
+      },
+      {
+        tier: "scholarly",
+        label: "\"A Preliminary Survey of Letters in the Judaean Desert Documents\"",
+        url: "https://www.openstarts.units.it/server/api/core/bitstreams/b1b27648-5a8b-4ba7-923d-f1f4afa2e659/content",
+        credit: "Deposited in the University of Trieste's OpenstarTs repository; the author is not named in the body of the copy read here",
+        detail:
+          "A catalogue of all forty-two letters from the Judean Desert, entry by entry, with language, measurements, correspondents and contents. Read in full. Source for the language counts, for the sixteen entries in the Bar Kokhba group, and for the fragmentary state of the last of them. Cited with the honest caveat that no author, journal or year appears in the copy that was read",
+        supports: "The count of letters, their languages, and why the usual figure of fifteen is soft",
+      },
+      {
+        tier: "scholarly",
+        label: "Y. Yadin, The Finds from the Bar Kokhba Period in the Cave of Letters",
+        credit: "Yigael Yadin, Jerusalem: Israel Exploration Society, 1963; and Yadin, \"Expedition D — The Cave of the Letters\", Israel Exploration Journal 12 (1962)",
+        detail:
+          "The excavation reports. NEITHER was opened: the Internet Archive's copy of the 1963 volume is lending-restricted. They are cited because everything this article says about the two Nahal Hever seasons ultimately rests on them, and because the disagreement over whether the Babatha purse was found in 1960 or 1961 is exactly the kind of thing they would settle",
+        supports: "The excavation of the Cave of Letters",
+      },
+      {
+        tier: "encyclopedic",
+        label: "Wikipedia: Cave of Letters",
+        url: "https://en.wikipedia.org/wiki/Cave_of_Letters",
+      },
+    ],
+    reflectionPrompt:
+      "Babatha carried her legal papers into a cave and never came back for them. What would you have taken?",
+  },
+  {
+    id: "aleppo-codex",
+    name: "Aleppo Codex",
+    // "Aleppo Codex" was registered on `masoretic-text` until this record existed. It MOVES here
+    // rather than being added, so the six links it already carries — in the introductions to
+    // Genesis, Hosea, Joel and Obadiah and in two topic articles — repoint instead of multiplying.
+    // The same move is made for "Leningrad Codex" onto the next record. NOT registered: "the
+    // Crown", which is an ordinary word, or "Keter", which appears nowhere in the corpus.
+    alternateNames: ["Keter Aram Tzova", "Crown of Aleppo"],
+    category: "manuscript",
+    role: "The Most Authoritative Hebrew Bible Ever Made, and the Leaves Nobody Can Find",
+    summary:
+      "Written at Tiberias about AD 930 and treated as the standard against which other Bibles were corrected — then kept in Aleppo for six centuries, and close to two hundred of its leaves are gone, with no agreement on when, where, or at whose hands.",
+    sections: [
+      {
+        heading: "Two Men, and Only One of Them Is Usually Named",
+        paragraphs: [
+          "Popular accounts say the Aleppo Codex was written by Aaron ben Asher. Two people made it, and the division of labour is the thing worth knowing about medieval Hebrew Bibles generally. The Ben-Zvi Institute's own nomination of the codex to UNESCO's Memory of the World register puts it plainly: \"The Codex was hand written in the 10th century around the year 929 in Tiberias, today in Israel, by a Jewish scribe Shlomo Ben Boya'a. The well-known Masorete... Aharon Ben Asher added the vowels, the cantillation marks and other important notations.\" One man wrote the consonants; the other added the vowel points, the chanting accents and the masorah, the marginal counting-notes that let a copyist check himself. P. Sanders describes the result in a review for the Society of Biblical Literature: it \"was Judaism's most authoritative version of the Bible right from the moment it was produced, around 930 CE,\" and \"probably the first single volume comprising all the books of the Hebrew Bible.\"",
+          "Even that attribution is on a footing the holding institution itself qualifies in the same sentence: the information \"emerges from the dedicatory colophon in the Aleppo Codex, written about a hundred years after its completion.\" The codex went from Tiberias to the Karaite community in Jerusalem, was carried off in the Crusader conquest of 1099 and, in the institute's words, \"literally ransomed by the Jewish Jerusalem community living in Egypt at that time.\" In Egypt Maimonides consulted a manuscript he describes without naming — \"a scroll renowned in Egypt, which includes all the 24 books,\" corrected by ben Asher, on which he relied for the open and closed paragraph divisions and \"the form of the songs.\" That the manuscript he means is this one is the traditional identification, and a careful account of it says so: there is a tradition that Maimonides saw the Aleppo Codex. It reached Aleppo in the fourteenth century and stayed for close to six hundred years — not as a library book but as the community's own trust, kept under a written curse on anyone who moved it and, in the Ben-Zvi Institute's own words, \"revered especially by the Jews of Syrian origin as a source of protection for their community\" and \"connected with numerous cultural taboos\". That is the frame every later custody question has to be read inside.",
+        ],
+      },
+      {
+        heading: "What Survives, and What It Is Worth",
+        paragraphs: [
+          "Two hundred leaves of it are gone — \"nearly two hundred folios (around 40 percent), including extensive parts of the beginning and end,\" as P. Sanders puts it. The 294 surviving leaves are the only figure nobody disputes; how many there were to begin with is not settled, and the sources do not agree. J. A. Sanders and A. B. Beck write that \"294 of the Aleppo Codex's 380 leaves were recovered,\" which would make the loss under a quarter; P. Sanders's \"nearly two hundred\" missing implies an original nearer five hundred. The holding institution gives a third answer and says only that \"one third of its pages are missing.\" The loss is not evenly spread. Almost the whole Torah is missing: the surviving text begins at the last word of Deuteronomy 28:17 and runs, with gaps, to Song of Songs 3:11. So the manuscript Maimonides used to settle the layout of the Song of the Sea no longer contains the Song of the Sea. What is left is in Jerusalem, in the custody of a trustee committee at the Ben-Zvi Institute and on permanent loan to the Shrine of the Book at the Israel Museum, under the identification MSBZ 1. Who owns it is the last thing the third section takes up.",
+          "The gap has been partly repaired by scholarship rather than by discovery, and P. Sanders states what is recoverable and what is not: \"Thanks to the Masorah, faithful Yemenite copies, and the notes of medieval and later scholars who consulted the authoritative codex, it is possible to reconstruct most of the text and part of the sectional division of the Torah,\" while \"much less is known of the rest of the missing sections.\" And two leaves have come back. The first is known from two accounts that do not obviously join up. R. Bergman describes a man who went into the smouldering ruins of the synagogue a few days after the 1947 attack, found \"a page with scripture on it\", pocketed it, and passed it through his family to a relative in Jerusalem; the Jewish Telegraphic Agency records only \"an additional page presented by a Syrian Jewish family in the 1980s\". Neither says what is written on it, and the identification of it as a page of Chronicles that circulates elsewhere is not printed here. A fragment of Exodus — the passage about the plague of frogs — had been picked up off the synagogue floor after the riots by a man who took it to Brooklyn and would not give it up; it took years of negotiation with his family after his death to bring it to Jerusalem, and it arrived in 2007. The Ben-Zvi Institute's UNESCO nomination says openly why recognition mattered to it: \"there are missing pages whose whereabouts are unknown. Some of which may be held by collectors or by individuals as an amulet.\"",
+        ],
+      },
+      {
+        heading: "Where Did the Missing Leaves Go?",
+        paragraphs: [
+          "The story told for fifty years was that they burned. On 30 November 1947, the day after the United Nations voted to partition Palestine, a mob attacked the Jewish quarter of Aleppo and set the Great Synagogue on fire. That account is now dead, and Sanders explains why in the review already quoted: \"the surviving parts of the volume do not show any burn marks. The origin of the rumor that the codex had been burned lay with Aleppo's Jewish elders, who tried to conceal that it had been rescued, fearing that Arabs might want to destroy or sell the sacred book. In reality, the codex was kept in the storeroom of the Aleppo Jew Ibrahim Effendi Cohen. Despite the evidence, the assumption that the codex was damaged by fire can still be found in recent scholarly literature.\" It was smuggled to Israel in 1957-58 and handed to the Ben-Zvi Institute in January 1958, whose founder listed the missing sections and attributed the loss to the 1947 pogrom.",
+          "M. Friedman's 2012 book challenged that, and the challenge is serious enough to state in his own words: \"we know now that the manuscript was seen whole as late as 1952, five years later. The first description of any significant damage to the codex dates, strikingly, only to 1958—after the manuscript reached the Ben-Zvi Institute in Jerusalem.\" He names the test himself rather than naming a culprit: \"If they were already gone, the Ben-Zvi Institute is innocent. If, on the other hand, they were there when Shragai had the codex, the Ben-Zvi Institute is responsible for their disappearance.\" And he flags his own weakest evidence unprompted, explaining that he left one witness's testimony out of the book \"because I did not have a recording of this conversation or written notes made at the time.\" The institute's side has been put too. Its then director, an Aleppo native himself, told a reporter: \"I know of no community and no synagogue that could have looked after the codex better than we do at the Ben-Zvi Institute... After all, if the book had not reached Israel, it would probably be sitting right now in some museum being shelled by the guns of Bashar al-Assad.\" And Sanders, reviewing the book in a scholarly journal, endorses the method and faults one of its witnesses — in that order, and in his own words rather than in a summary of them: \"It is clear that Friedman was right in taking the voices that deviate from the predominant narrative so seriously. He regards also his own sources with suspicion... In some cases, however, Friedman could have been more critical of the witnesses who support his own reconstruction. For instance, Shahoud Baghdadi's statement that he and his father recovered virtually the complete codex except for some sheets of Deuteronomy and Isaiah is problematic, since in the surviving volume all sheets with the text of Isaiah are still present.\" Where it ends, Sanders summarises it: \"In the end, Friedman can only speculate about who the culprit was, but he concludes with confidence that Jews bore more responsibility for the partial loss of the codex than the Arab rioters who damaged it in 1947.\" And underneath the question of where the leaves went is a question about the book itself that nobody has settled. The Aleppo rabbis told an Israeli court in 1960 that the codex had been entrusted to a courier for one purpose and handed to another: \"We gave an object to a man who betrayed his mission,\" one of them said, and the other, \"It is the property of the Aleppo community, and not of the state of Israel.\" The court decided in 1962 that the codex would stay at the Ben-Zvi Institute — and, Sanders records, \"it declared also that the account of the Aleppo rabbis was trustworthy.\"",
+        ],
+      },
+    ],
+    verses: [
+      { reference: "Deuteronomy 28:15-17", note: "The surviving text of the codex begins at the last word of verse 17; everything before it is lost" },
+      { reference: "Exodus 15:1-2", note: "The Song of the Sea, whose layout Maimonides took from the codex — and which is now in the missing part" },
+      { reference: "Exodus 8:1-6", note: "The plague of frogs: the passage on the fragment recovered from Brooklyn in 2007" },
+    ],
+    sources: [
+      { label: "Ben-Zvi Institute, UNESCO Memory of the World nomination: the Aleppo Codex", url: "https://media.unesco.org/sites/default/files/webform/mow001/2014_34_israel_aleppo_codex_en_0.pdf" },
+      { label: "P. Sanders, review of M. Friedman, The Aleppo Codex (Review of Biblical Literature)", url: "https://www.pthu.nl/over-pthu/organisatie/medewerkers/p.sanders/downloads/review-friedman-aleppo-codex-rbl.pdf" },
+      { label: "Wikipedia: Aleppo Codex", url: "https://en.wikipedia.org/wiki/Aleppo_Codex" },
+    ],
+    manuscript: {
+      manuscriptType: "Parchment codex, three columns to the page, now unbound; 294 leaves survive",
+      language: "Hebrew",
+      contents:
+        "Originally the whole Hebrew Bible in one volume. What survives runs from the last word of Deuteronomy 28:17 to Song of Songs 3:11, with gaps: almost the entire Torah and the end of the Writings are missing. Two leaves recovered separately have been reunited with it",
+      origin: "Tiberias",
+      findSite: "Not applicable. The codex was never lost and found — it was kept by the Jewish community of Aleppo for close to six hundred years",
+      foundYear: "Not applicable",
+      foundBy: "Not applicable",
+      dateAssigned:
+        "About AD 929-930. The consonants were written by Shlomo ben Buya'a and the vocalisation, accents and masorah added by Aaron ben Asher — an attribution that rests on a dedicatory colophon the holding institution itself dates about a century later",
+      dateCertainty: "traditional",
+      currentLocation:
+        "The Shrine of the Book, Israel Museum, Jerusalem, on permanent loan since 1993, in the custody of a trustee committee based at the Ben-Zvi Institute. Ownership itself is contested — the Aleppo community told an Israeli court in 1960 that the codex is theirs — and the third section sets that out",
+      shelfmark: "MSBZ 1, Ben-Zvi Manuscript Collection",
+    },
+    citations: [
+      {
+        tier: "institution",
+        label: "Ben-Zvi Institute, nomination of the Aleppo Codex to the UNESCO Memory of the World Register",
+        url: "https://media.unesco.org/sites/default/files/webform/mow001/2014_34_israel_aleppo_codex_en_0.pdf",
+        credit: "Yad Izhak Ben-Zvi, submitted 28 November 2013",
+        detail:
+          "Read in full. The holding body's own account, and the source of the scribe-and-Masorete sentence quoted in section one, of its own caveat that this \"emerges from the dedicatory colophon... written about a hundred years after its completion\", of the Karaite dedication, the 1099 ransom and the six centuries at Aleppo, of the identification \"(MSBZ 1 Ben-Zvi Manuscript Collection)\", of the ownership and custody arrangements, of \"Unfortunately one third of its pages are missing\", and of the hope that missing leaves are still in private hands. Note that the facsimile URL this document gives, aleppocodex.org, now serves only an under-construction page",
+        supports: "The scribe and the Masorete, the codex's journey, the shelfmark, the custody arrangements, and the missing leaves",
+      },
+      {
+        tier: "scholarly",
+        label: "P. Sanders, review of M. Friedman, The Aleppo Codex",
+        url: "https://www.pthu.nl/over-pthu/organisatie/medewerkers/p.sanders/downloads/review-friedman-aleppo-codex-rbl.pdf",
+        credit: "Paul Sanders, Protestant Theological University, Amsterdam",
+        detail:
+          "Review of Biblical Literature 04/2015, published by the Society of Biblical Literature; read in full. Source for the codex's status \"right from the moment it was produced\", for the division of labour between ben Buya'a and ben Asher, for the loss of \"nearly two hundred folios (around 40 percent)\" and the surviving span from Deuteronomy 28:17 to Song of Songs 3:11, for the demolition of the fire story, for the 1957-58 smuggling and the January 1958 handover, for the named witnesses on whom Friedman relies, for the criticism of Baghdadi's testimony, and for the summary of Friedman's own conclusion",
+        supports: "The making of the codex, the extent of the loss, the end of the fire theory, and a scholarly assessment of Friedman's case",
+      },
+      {
+        tier: "reference",
+        label: "J. A. Sanders and A. B. Beck, \"The Leningrad Codex\"",
+        url: "https://airtonjo.com/blog1/wp-content/uploads/2024/02/Sanders-Beck-The-Leningrad-Codex-Bible-Review-1997.pdf",
+        credit: "James A. Sanders and Astrid B. Beck, Bible Review (Biblical Archaeology Society), 1997",
+        detail:
+          "Read in full through a mirrored copy; popular-scholarly rather than peer-reviewed. Cited on this record for one sentence only — \"294 of the Aleppo Codex's 380 leaves were recovered\" — which is the lower of the two estimates section two sets side by side. Note that these are a different J. A. Sanders and the P. Sanders whose review is cited above: two scholars of the same surname, and the article distinguishes them by initial for that reason",
+        supports: "The lower estimate of how many leaves the codex originally had",
+      },
+      {
+        tier: "reference",
+        label: "M. Friedman, \"The Continuing Mysteries of the Aleppo Codex\"",
+        url: "https://www.tabletmag.com/sections/arts-letters/articles/aleppo-codex",
+        credit: "Matti Friedman, Tablet, 30 June 2014",
+        detail:
+          "The author's own restatement of the case made in his book The Aleppo Codex (Algonquin, 2012), which was NOT opened here; everything attributed to him is quoted from this essay, which he wrote. It carries the 1952 and 1958 dates, the falsifiable test he sets himself, his own caveat about the testimony he left out of the book, and the 1960 court transcript he published for the first time. Tablet refuses automated requests to any script, so the essay was read in a browser and every sentence quoted here was then confirmed a second time against the Internet Archive's capture of the same page",
+        supports: "The case that the leaves were lost after the codex reached Israel, in Friedman's own words",
+      },
+      {
+        tier: "reference",
+        label: "R. Bergman, \"The Aleppo Codex: A High Holy Whodunit\"",
+        url: "https://tmcdaniel.palmerseminary.edu/AleppoCodex.pdf",
+        credit: "Ronen Bergman, The New York Times Magazine, 29 July 2012",
+        detail:
+          "Long-form investigative journalism rather than scholarship, and read in full through a copy hosted by Palmer Seminary. It is cited for one thing this article could not get anywhere else: the Ben-Zvi Institute's own side, on the record, in the words of its then director — including the sentence quoted in section three. It also carries the first-hand accounts of the two recovered leaves: L. Tawil finding \"a page with scripture on it\" in the ruins and the leaf passing through his family, and M. Ben-Sasson locating the Exodus fragment with S. Sebbagh in Brooklyn in 1988 and the family releasing it only after his death. Bergman nowhere says what book the first leaf is from — the word \"Chronicles\" does not appear in his article — and section two therefore does not name it",
+        supports: "The institute's own response, and the first-hand account of the leaf recovered from the synagogue ruins",
+      },
+      {
+        tier: "primary",
+        label: "Maimonides, Mishneh Torah, Hilkhot Sefer Torah 8:4",
+        url: "https://www.sefaria.org/api/texts/Mishneh_Torah,_Tefillin,_Mezuzah_and_the_Torah_Scroll.8.4",
+        credit: "Moses Maimonides, twelfth century; translation by Eliyahu Touger, Jerusalem: Moznaim",
+        detail:
+          "Read in full through Sefaria's text API. Maimonides writes that he relied on \"a scroll renowned in Egypt, which includes all the 24 books\", \"corrected by ben Asher\", for the open and closed sections and \"the form of the songs\". He does NOT name the Aleppo Codex, and this article does not put the identification in his mouth. The translator's own footnote on the songs identifies them as the Song of the Sea and Ha'azinu",
+        supports: "What Maimonides actually says about the manuscript he used, and what he does not say",
+      },
+      {
+        tier: "reference",
+        label: "Jewish Telegraphic Agency, \"From Maimonides to Brooklyn: the Mystery of the Aleppo Codex\"",
+        url: "https://www.jta.org/2007/12/10/archive/from-maimonides-to-brooklyn-the-mystery-of-the-aleppo-codex",
+        credit: "Jewish Telegraphic Agency, 10 December 2007",
+        detail:
+          "Read in full. Reports the return of the Exodus fragment: found on the synagogue floor after the 1947 riots, kept in Brooklyn, and released by the owner's family after his death. It identifies the text as \"a few lines of verse from the Book of Exodus\" and names one of them — \"Let my people go, that they may serve me\" — which fixes it at Exodus 8, the passage Bergman describes as the plague of frogs. It also reports that the finder kept it in his wallet and that it took \"several years of negotiation after his death in 2000\" before his family released it",
+        supports: "The recovery of the Brooklyn fragment and what is written on it",
+      },
+      {
+        tier: "encyclopedic",
+        label: "Wikipedia: Aleppo Codex",
+        url: "https://en.wikipedia.org/wiki/Aleppo_Codex",
+      },
+    ],
+    reflectionPrompt:
+      "Two hundred leaves of this book are missing and nobody has been able to establish where they went. What would it take for you to keep asking a question nobody can answer?",
+  },
+  {
+    id: "leningrad-codex",
+    name: "Leningrad Codex",
+    // "Leningrad Codex" was registered on `masoretic-text`; like "Aleppo Codex" it MOVES here, so
+    // the six links it already carries repoint rather than multiply. NOT registered: "Codex L", "L",
+    // "B19a" or "Firkovich B 19 A" — a bare letter is an ordinary word and the shelfmark forms are
+    // written nowhere in the corpus. NOT registered either: "St Petersburg Codex", which is a
+    // DIFFERENT manuscript (MS Heb B 3, the Latter Prophets, AD 916) and is a documented confusion.
+    alternateNames: ["Codex Leningradensis"],
+    category: "manuscript",
+    role: "The Oldest Complete Hebrew Bible, and the Text Behind Almost Every Modern Old Testament",
+    summary:
+      "One scribe in Fustat wrote out the whole Hebrew Bible, pointed it, added the masorah and decorated it, and finished about 1008 — and because the Aleppo Codex was out of reach, his book became the base text of the scholarly editions the world's translators use.",
+    sections: [
+      {
+        heading: "One Man Did All of It",
+        paragraphs: [
+          "Medieval Hebrew Bibles were normally made by two people, a scribe for the consonants and a punctuator for the vowels and the masorah. This one was not. Its scribe says so himself, twice, in the manuscript: \"I have written, vocalised and provided the masora of this codex,\" and again, \"Samuel b. Jacob wrote, vocalised and provided the masora.\" B. Outhwaite, who heads the Genizah Research Unit at Cambridge University Library, calls it \"a remarkable piece of solo entrepreneurship, producing single-handedly a luxury edition of the Hebrew Bible,\" and puts the raw materials at \"at least 120 sheep for the 491 leaves.\" Samuel ben Jacob was a working scribe with clients; a later contract from the Cairo Geniza has him paid twenty-five dinars for a copy of the Prophets and Writings, at a time when a middle-class family's annual rent ran to five or six.",
+          "Two things everybody says about it are wrong, and Outhwaite corrects both from the manuscript's own words. It was not written in Cairo: the colophon says Fustat, the older city beside it, and Outhwaite notes that \"some other translations of the opening of the colophon read 'Cairo'\" and that the scribe is definitely referring to Fustat. And its date is not a single number. The colophon gives the year in five different reckonings at once — from creation, from the exile of King Jehoiachin, from the Seleucid era, from the destruction of the Second Temple, and from what it calls \"the Kingdom of the Little Horn,\" a belittling name for Islam borrowed from Daniel 7:8 — and they do not agree with each other. Outhwaite works them out one by one and concludes: \"A date of 1008-1009 CE seems reasonable... We should not expect absolute calendrical exactitude in a pre-modern text, particularly when the writer was probably not a specialist in the discipline.\" One of the five systems, the Jehoiachin reckoning, was used mainly by Karaites, and the man who commissioned the book probably came from a Karaite family — Outhwaite puts it no more strongly than that, and reports an open disagreement underneath it: \"S. D. Goitein believes that Mevorak was a Karaite; E. Bareket, who also wrote about the case, suggests that there is not enough evidence to be sure.\" What tips it for Outhwaite is a Karaite legal deed of 1004 naming the patron's father in a position of trust in Karaite society, which \"strongly suggests that the Ibn Yazdad family were themselves Persian Karaites\" and would explain the scribe fitting his colophon to his customer.",
+        ],
+      },
+      {
+        heading: "How It Became the World's Hebrew Bible",
+        paragraphs: [
+          "It became the standard by default, and the reason is worth knowing because it is not the reason usually given. The Aleppo Codex is older and was regarded as better, and P. Kahle wanted it for the third edition of Biblia Hebraica in the 1920s. The community in Aleppo would not let him study it, let alone photograph it. J. A. Sanders and A. B. Beck, who tell that story, give no reason for the refusal: they say only that he could not persuade the synagogue officials. The reason usually attached to it is a general one about the whole period rather than about Kahle's visit, and P. Sanders of the Protestant Theological University states it without deriding it — through the decades before 1947 even rabbis and scholars of good reputation were hardly ever allowed to consult the book, \"because the holders feared that it might be stolen or damaged.\" The two Sanderses are unrelated, and this article keeps them apart by initial throughout, because a bare surname here sends a reader to the wrong man. The Leningrad Codex he could get: in 1926 he was allowed to take it to Leipzig. So the base text of Biblia Hebraica, and then of Biblia Hebraica Stuttgartensia and Biblia Hebraica Quinta, is this manuscript — which means, as Outhwaite puts it, that its \"consonants, vowels and accents... form the base text for the most widely used of scholarly editions,\" and behind those stand the Old Testaments on most English shelves. That happened twenty years before the fire in Aleppo, not because of it.",
+          "The manuscript itself passed through the hands of a nineteenth-century collector whose reputation complicates it. A. Firkovich — a Karaite leader of standing, and by Sanders and Beck's account a prosperous and renowned one — assembled the greatest collection of Hebrew manuscripts of his day and sold it to the Imperial Public Library in St Petersburg, where the codex has been since 1863. He also, as an account in Bible Review puts it, was \"a bit of a scoundrel\": \"Some manuscripts in it are forgeries, and others contain forged emendations and interpolations—part of Firkovich's effort to establish the early settlement of the Karaites in the Crimea.\" The same account is careful about the scope — \"the forgeries constitute a small and identifiable part of the gigantic collection\" — and no source consulted here alleges that this codex's colophons are among them. What Firkovich never explained is where he got it: \"neither in his autobiography... nor in his extant letters does he tell us where, when or under what circumstances he acquired the Leningrad Codex; he does not even discuss this codex.\" The city's name changed back to St Petersburg in 1991; the National Library of Russia asked that the manuscript keep the name scholarship knows it by.",
+        ],
+      },
+      {
+        heading: "Is It Really a Ben Asher Bible?",
+        paragraphs: [
+          "The claim attached to this codex is that it was copied from manuscripts of Aaron ben Asher, the Masorete of the Aleppo Codex, and so preserves that tradition at one remove. It is a claim about a copy's parentage, and it can be tested against the manuscript's own masorah — the marginal notes that state how a word should be spelled. M. Breuer ran the test and reported the result bluntly. He wrote in Hebrew, and the English here is K. Phillips's: \"In the text of the Prophets in the Leningrad Codex there are more than 250 places in which the orthography stands in opposition to the Tiberian Masorah... Kahle's claim that the Leningrad Codex is 'ben Asher's text', is an injustice to b. Asher. Dotan's claim, that the Leningrad Codex matches b. Asher's tradition, is simply incomprehensible.\" A manuscript that contradicts its own apparatus in hundreds of places is not a clean copy of anything. M. Goshen-Gottstein's suggestion was that an existing text not following ben Asher's rules had been heavily corrected to conform to them, which would explain both the alterations visible on the page and the residue of disagreement.",
+          "None of that makes it a bad Bible, and it is important to say what the criticism is and is not. In its vocalisation and accents the codex is reckoned the best witness to the ben Asher tradition after the Aleppo Codex itself, which is precisely why it was worth arguing about. What it is not is a photograph of a lost original — and the modern editions built on it inherit that. Biblia Hebraica Stuttgartensia reproduces this manuscript diplomatically, errors included: its editors say they \"accordingly refrained from removing obvious scribal errors,\" recording them in the apparatus instead. There is a live argument about whether that is the right way to edit the Hebrew Bible at all. R. Hendel's Hebrew Bible: A Critical Edition takes the other road, printing \"the best readings according to the judgment of the editor\" rather than reproducing one manuscript, and aiming at the archetype behind the surviving copies — with his own caveat attached: \"This is not identical to the original text.\" A reader who opens an English Old Testament is standing at the end of that argument, whichever side of it they have never heard of.",
+        ],
+      },
+    ],
+    verses: [
+      { reference: "Daniel 7:8", note: "The little horn of Daniel's vision. An eleventh-century Jewish scribe in Egypt borrowed the phrase, disparagingly, as a name for the Islamic era, and used it to date his own manuscript. The World English Bible renders the phrase \"another horn, a little one\"" },
+      { reference: "Genesis 1:1", note: "The first verse of the manuscript that stands behind most modern Old Testaments" },
+      { reference: "Deuteronomy 32:1-4", note: "The Song of Moses, one of the places where the manuscripts of the Hebrew Bible visibly differ" },
+    ],
+    sources: [
+      { label: "B. Outhwaite, \"Beyond the Leningrad Codex: Samuel b. Jacob in the Cairo Genizah\" (Cambridge)", url: "https://www.repository.cam.ac.uk/bitstreams/27efc952-21e0-4074-81a3-3f0ba60c09f9/download" },
+      { label: "The Unicode/XML Leningrad Codex", url: "https://tanach.us/Tanach.xml" },
+      { label: "Wikipedia: Leningrad Codex", url: "https://en.wikipedia.org/wiki/Leningrad_Codex" },
+    ],
+    manuscript: {
+      manuscriptType: "Parchment codex, 491 leaves in quires of five bifolia, with sixteen decorated carpet pages",
+      language: "Hebrew, with Aramaic in parts of Daniel and Ezra",
+      contents:
+        "The complete Hebrew Bible, with vowel points, cantillation accents and the masorah. The oldest complete Masoretic Bible in existence, and the base text of Biblia Hebraica Stuttgartensia and Biblia Hebraica Quinta",
+      origin: "Fustat, in Egypt — not Cairo, which several translations of the colophon give in error",
+      findSite: "Not applicable. Acquired by the collector A. Firkovich in the nineteenth century; where he got it he never said",
+      foundYear: "Not applicable",
+      foundBy: "Not applicable",
+      dateAssigned:
+        "About AD 1008-1009. The colophon dates itself in five different eras which do not agree; 1010 is also defended",
+      dateCertainty: "traditional",
+      currentLocation: "National Library of Russia, St Petersburg",
+      shelfmark: "Firkovich B 19 A (also cited as RNL Evr. I B19a)",
+      facsimileUrl: "https://archive.org/details/Leningrad_Codex_Color_Images",
+    },
+    citations: [
+      {
+        tier: "scholarly",
+        label: "B. Outhwaite, \"Beyond the Leningrad Codex: Samuel b. Jacob in the Cairo Genizah\"",
+        url: "https://www.repository.cam.ac.uk/bitstreams/27efc952-21e0-4074-81a3-3f0ba60c09f9/download",
+        credit: "Ben Outhwaite, Genizah Research Unit, Cambridge University Library",
+        detail:
+          "Read in full through Cambridge's institutional repository. Source for the scribe's two colophon statements, for the 491 leaves and the 120 sheep, for \"a remarkable piece of solo entrepreneurship\", for the full translation of the ownership colophon and its five dating systems, for the correction of Cairo to Fustat, for the Daniel 7:8 epithet, for the 1008-1009 conclusion, for the Karaite patron — including his own hedge, \"strongly suggests\", and the Goitein-Bareket disagreement he reports, both of which section one now carries — for the 1021 copying contract and its twenty-five dinars, and for the list of modern editions built on the manuscript. The repository copy carries no journal or volume, so no formal place of publication is claimed for it here",
+        supports: "The scribe, the colophon, the date, the place of writing, and the codex's role in modern editions",
+      },
+      {
+        tier: "reference",
+        label: "J. A. Sanders and A. B. Beck, \"The Leningrad Codex\"",
+        url: "https://airtonjo.com/blog1/wp-content/uploads/2024/02/Sanders-Beck-The-Leningrad-Codex-Bible-Review-1997.pdf",
+        credit: "James A. Sanders and Astrid B. Beck, Bible Review (Biblical Archaeology Society), 1997",
+        detail:
+          "Read in full through a mirrored copy. Popular-scholarly rather than peer-reviewed, but written by participants: Beck and Sanders were involved in the 1990 photographic expedition that produced the facsimile, and Sanders sat on the Biblia Hebraica Quinta committee. Source for the 982 photographed pages (491 leaves), the sixteen carpet pages, the five dating systems and their own preferred range of 1008-1010, the Kahle-in-Aleppo story and why Biblia Hebraica ended up using this manuscript, and the passage on Firkovich quoted in section two",
+        supports: "Why this codex rather than the Aleppo Codex became the standard, and the Firkovich provenance problem",
+      },
+      {
+        tier: "scholarly",
+        label: "P. Sanders, review of M. Friedman, The Aleppo Codex",
+        url: "https://www.pthu.nl/over-pthu/organisatie/medewerkers/p.sanders/downloads/review-friedman-aleppo-codex-rbl.pdf",
+        credit: "Paul Sanders, Protestant Theological University, Amsterdam",
+        detail:
+          "Review of Biblical Literature 04/2015, published by the Society of Biblical Literature; read in full. Cited on this record for one sentence, which section two quotes: \"During the last decades before 1947, even rabbis or scholars with a good reputation were hardly ever allowed to consult it, because the holders feared that it might be stolen or damaged.\" He is describing the whole period rather than P. Kahle's particular rebuff, and the book he is reviewing is about the Aleppo Codex rather than this one. He is not the J. A. Sanders of the Bible Review article also cited here; the two are unrelated and this article distinguishes them by initial throughout, because a bare \"Sanders\" sends a reader checking the quotation to the wrong man",
+        supports: "Why the Aleppo Codex was closed to scholars in the decades before 1947, in the words of the scholar who wrote the sentence",
+      },
+      {
+        tier: "scholarly",
+        label: "K. Phillips, \"A New Codex from the Scribe behind the Leningrad Codex: L17\"",
+        url: "https://doi.org/10.53751/001c.29425",
+        credit: "Kim Phillips, Cambridge University Library",
+        detail:
+          "Tyndale Bulletin 68:1 (2017), 1-29; peer-reviewed, open access, and read in full. The source of M. Breuer's judgement quoted in section three. The judgement is Breuer's own, from his Keter Aram Tsova (1976), p. 6 — Phillips's footnote 58 gives the page — but Breuer wrote in Hebrew and the English is Phillips's rendering of him, unmarked as a translation there and marked as one here",
+        supports: "The test of the ben Asher claim against the codex's own masorah",
+      },
+      {
+        tier: "primary",
+        label: "The Unicode/XML Leningrad Codex",
+        url: "https://tanach.us/Tanach.xml",
+        credit: "The Westminster Leningrad Codex project, derived from the Groves Center's WLC 4.20",
+        detail:
+          "A transcription of the manuscript itself, pointing and accents included. Its own licence page states that \"All biblical Hebrew text, in any format, may be viewed or copied without restriction\". Confirmed live",
+        supports: "That the text behind modern Old Testament translations can be inspected directly",
+      },
+      {
+        tier: "institution",
+        label: "West Semitic Research, colour photographs of the Leningrad Codex, deposited on the Internet Archive",
+        url: "https://archive.org/details/Leningrad_Codex_Color_Images",
+        credit: "Photographs by Bruce E. Zuckerman for the West Semitic Research Project; National Library of Russia, MS Evr. I B19a",
+        detail:
+          "The descendant of the 1990 expedition to Leningrad described in the Sanders and Beck article. Deposited under a Public Domain Mark, which is what makes it linkable here. The National Library of Russia's own catalogue could not be reached from here — its site returned no response on two attempts — so the shelfmark in this article's facts block rests on scholarly attestation rather than on the library's own record",
+        supports: "A free facsimile of the manuscript, and the limits of what the holding library could confirm",
+      },
+      {
+        tier: "scholarly",
+        label: "R. Hendel, \"A New Critical Edition of the Hebrew Bible\"",
+        url: "https://bibleinterp.arizona.edu/node/2664",
+        credit: "Ronald Hendel, University of California, Berkeley",
+        detail:
+          "His own bylined account of the Hebrew Bible: A Critical Edition project, August 2014, read in full. The definitions quoted in section three are his: a critical text \"contains the best readings according to the judgment of the editor\", the project aims at the archetype, and \"This is not identical to the original text\" is his own qualification, not a critic's",
+        supports: "The eclectic alternative to a diplomatic edition, stated by its own editor",
+      },
+      {
+        tier: "encyclopedic",
+        label: "Wikipedia: Leningrad Codex",
+        url: "https://en.wikipedia.org/wiki/Leningrad_Codex",
+      },
+    ],
+    reflectionPrompt:
+      "One scribe wrote every letter of this Bible, pointed it, checked it and signed it. What is the largest thing you have ever finished alone?",
+  },
+  {
+    id: "cairo-codex-of-the-prophets",
+    name: "Cairo Codex of the Prophets",
+    // NOT registered: "Codex C" or bare "C" — a single letter is an ordinary word. "Cairo Codex"
+    // on its own is registered because that is what most English writing calls it, and no other
+    // record claims the phrase; "Cairo" alone is NOT registered and belongs to nobody here.
+    alternateNames: ["Codex Cairensis", "Cairo Codex"],
+    category: "manuscript",
+    role: "A Bible Whose Own Colophons Are the Problem",
+    summary:
+      "A complete Prophets codex that says it was written by the father of the Masorete of the Aleppo Codex in AD 895 — a claim scholarship has been taking apart for seventy-five years, and which cannot now be tested because nobody will say where the book is.",
+    sections: [
+      {
+        heading: "The Whole Prophets, in One Volume",
+        paragraphs: [
+          "The Cairo Codex contains the Prophets entire — Joshua, Judges, Samuel and Kings, then Isaiah, Jeremiah, Ezekiel and the Twelve — running to 575 pages in the microfilm that is all most scholars have ever seen of it. It is reported to carry thirteen decorated carpet pages; that figure traces to a single popular source and neither Outhwaite nor any institutional record consulted here gives a count, so it is repeated as a report rather than printed as a fact. It is written on parchment in three columns, and it carries an unusually rich masorah, the marginal apparatus of counting-notes; a full edition of its biblical text was produced by F. Pérez Castro and colleagues in eight volumes between 1979 and 1992, and D. Lyons devoted a book to its masorah alone in 2000.",
+          "Its fame rests on its colophons rather than its text. One of them claims that the codex was written and pointed by Moses ben Asher at Tiberias, in the year the colophon dates as 827 after the destruction of the Second Temple — AD 894 or 895. That name is the reason anyone cares: Moses ben Asher was the father of the Aaron ben Asher who pointed the Aleppo Codex, so a manuscript from his hand would be the earliest witness to the family's work. Other colophons say the book was dedicated to the Karaite community in Jerusalem, and later given to the Karaite synagogue in Cairo, with a curse attached to anyone who sold, bought, altered or pawned it. The Crusader story usually told with them is not in them. No colophon says \"Crusaders\" and none says 1099; what one of them says is that the dedication was made \"after its redemption\", and reading those two words as a ransom from the Franks is a scholarly inference, made by P. Kahle and repeated since. B. Outhwaite, who has gone through every colophon in the book, is blunt about it: \"There is no external history for this particular codex in the Middle Ages. Instead, these details have been derived from the ownership colophon... and from the dedication colophons.\" Another colophon names the man who paid for it: Jabez b. Solomon the Babylonian, who \"had it made for himself to study it, out of [the proceeds of] his own labour, the toil of his hands, and the sweat of his brow.\"",
+        ],
+      },
+      {
+        heading: "Why It Was Believed, and Then Was Not",
+        paragraphs: [
+          "The early authorities took the colophon at face value. R. Gottheil, describing the codex in 1905, wrote that \"there is absolutely no reason to doubt the data here given. The codex was written in the city of Tiberias by the well-known Masorite, Moses ben Asher (ninth century), in the year 897.\" P. Kahle, whose 1959 book on the Cairo Geniza shaped a generation's picture of the Hebrew Bible, was equally confident: \"We are very well acquainted with the history of the Cairo Codex of the Prophets thanks to the colophons which it contains.\" On that footing the codex became one of the anchors of the whole Tiberian story.",
+          "J. L. Teicher broke the anchor in 1950, and did it in one sentence: \"The Cairo codex was not written by Moses b. Asher.... The colophons with the names of Moses b. Asher and of Yaʿbeẓ b. Solomon were written by a scribe, who copied the colophon with M. b. Asher's name from another codex.\" Kahle argued back — his own case rested on the colophons being what they say they are, and Outhwaite records that he replied to Teicher on all four of the manuscripts he had built on them — and the field went with Teicher. C. Sirat states what is now the ordinary view, in Nicholas de Lange's published English of her book: \"We read in a first colophon that Moses ben Asher wrote this codex of the entire Bible in 895-896 CE, in Tiberias. In fact, this colophon was probably that of the model copied by the scribe.\" It is worth seeing what kind of mistake that is. Nobody thinks somebody set out to deceive in the modern sense; a scribe copying an exemplar copied its colophon along with its text, the way a photocopy carries the original's date. Then, in the 2011 revision of his handbook, I. Yeivin added physical evidence. That revision is in Hebrew and has not been translated; the English below is Outhwaite's, and he says so: \"Some researchers have challenged the authenticity of the colophon of the manuscript, considering it to have been written in the 11th-century. Chemical analysis (C14) carried out in 1996 supports this opinion.\" A loose fragment had been taken away and dated, and it agreed with Teicher.",
+        ],
+      },
+      {
+        heading: "The Book Nobody Can Find",
+        paragraphs: [
+          "B. Outhwaite, who heads the Genizah Research Unit at Cambridge, published a study of all the codex's colophons in 2025 and went further than the dating question. His argument is that the dedication colophons — the ones carrying the Karaite dedication in Jerusalem — are themselves later additions: \"While the dedications draw on information from the ownership colophon, they betray stylistic incongruities that strongly suggest they are later additions and not genuine medieval colophons, in particular in their addition of new information about the donor, his creed and his intentions.\" His summary of what is left is short enough to quote whole: \"I think we can really only reliably say the following at this stage: 1. The codex was commissioned by Jabez b. Solomon (ownership colophon), who was of Babylonian heritage. 2. The codex was dedicated to the Karaite synagogue in Cairo sometime in the fifteenth century (probably), by a dignitary, David b. Yefet.\" To which he adds that the C14 result makes an origin in eleventh-century Egypt likely. What survives that scrutiny is less than the story usually told, and it is not nothing: Outhwaite keeps the ownership colophon and the fifteenth-century Cairo dedication, and it is the Tiberias attribution and the Jerusalem dedications that he thinks were copied or written in later. The Crusader journey he treats differently again, and it is worth being exact, because he does not date it late — he rejects it. Of the colophon everyone has read that way he writes: \"the book was redeemed from the Crusaders. But a tremendous leap needs to be taken to read it this way\" — the hand is at least two centuries later than 1099, and \"as is far more likely, the reference has nothing to do with the Crusader seizure of books.\" His own preferred explanation is a Mamluk one: the same colophon speaks of the Cairo synagogue being rebuilt and allows the book to be removed \"out of need\", and in fifteenth-century Cairo synagogues were being closed, confiscated and torn down, so a redemption of the book from that is the likelier occasion. Of the repair note dated 1129-1130 that others have used to date the ransom, he says flatly: \"There is no reason at all to connect it with the redemption of the book, and especially not with the Crusaders.\"",
+          "And it cannot be checked. Outhwaite's own footnote says why, and it is the reason this article carries no shelfmark: \"Its whereabouts are currently unknown or, by those who do know, unacknowledged. I am reliant on microfilm images of the codex that were produced when it was still in the care of the Karaites in Egypt. Since then, it is widely suspected that it, along with one or two others... has made its way to Israel—although this is not publicly acknowledged. The status of the book should be revealed and regularised.\" That is a working scholar saying, in print, that one of the most important Hebrew manuscripts in existence has disappeared from view. He is also careful not to overclaim against those who still defend the old attribution: on the dating he says only that \"the further technical analysis that might help convince any lingering doubters will not be possible until the codex emerges legally into the light.\" The one thing anybody can consult is a poor black-and-white microfilm made in 1971, which does not even include the illuminated pages. It is on the open web, and Outhwaite links to it himself.",
+        ],
+      },
+    ],
+    verses: [
+      { reference: "Joshua 1:1-2", note: "The first words of the codex, which begins where the Torah ends" },
+      { reference: "Isaiah 40:8", note: "\"The word of our God stands forever\" — from the section of Isaiah this codex carries" },
+      { reference: "Psalms 27:4", note: "Quoted inside the codex's own ownership colophon by the man who paid for it" },
+    ],
+    sources: [
+      { label: "B. Outhwaite, \"The Cacophony of Colophons in the Cairo Codex of the Prophets\" (open access)", url: "https://www.repository.cam.ac.uk/items/58fa4175-ae0c-40dd-a316-76e5f8c9ed8e" },
+      { label: "Microfilm facsimile of the Cairo Codex of the Prophets (Wikimedia Commons)", url: "https://en.wikipedia.org/wiki/File:Cairo-codex-nevi%27im.pdf" },
+      { label: "Wikipedia: Codex Cairensis", url: "https://en.wikipedia.org/wiki/Codex_Cairensis" },
+    ],
+    manuscript: {
+      siglum: "C",
+      manuscriptType: "Parchment codex, three columns to the page; the freely available microfilm facsimile runs to 575 pages. Thirteen decorated carpet pages are reported, on one popular source only",
+      language: "Hebrew",
+      contents:
+        "The Former and Latter Prophets complete — Joshua, Judges, Samuel, Kings, Isaiah, Jeremiah, Ezekiel and the Twelve — with vocalisation, accents and a full masorah. Not a whole Bible: no Torah and no Writings",
+      origin:
+        "Claimed by its own colophon for Tiberias; on the radiocarbon evidence and the current scholarly view, probably Egypt in the eleventh century",
+      findSite: "Not applicable. Held by the Karaite community in Cairo until the 1980s",
+      foundYear: "Not applicable",
+      foundBy: "Not applicable",
+      dateAssigned:
+        "AD 894/895 by its own colophon, which is now generally held to have been copied from an exemplar. Radiocarbon analysis of a loose fragment points to the eleventh century",
+      dateCertainty: "disputed",
+      currentLocation:
+        "Unknown. Held by the Karaite community in Cairo into the 1980s and not publicly accounted for since; the head of Cambridge's Genizah Research Unit wrote in 2025 that its whereabouts are \"unknown or, by those who do know, unacknowledged\"",
+      facsimileUrl: "https://en.wikipedia.org/wiki/File:Cairo-codex-nevi%27im.pdf",
+    },
+    citations: [
+      {
+        tier: "scholarly",
+        label: "B. Outhwaite, \"The Cacophony of Colophons in the Cairo Codex of the Prophets\"",
+        url: "https://www.repository.cam.ac.uk/items/58fa4175-ae0c-40dd-a316-76e5f8c9ed8e",
+        credit: "Ben Outhwaite, Genizah Research Unit, Cambridge University Library",
+        detail:
+          "In A. D. Hornkohl et al. (eds), Interconnected Traditions... A Festschrift for Geoffrey Khan, vol. 2 (Semitic Languages and Cultures 35; Cambridge: Open Book Publishers, 2025), 65-109; doi 10.11647/OBP.0464.03, open access under CC BY-NC. All forty-eight pages were read through Cambridge's repository copy; the publisher's own PDF sits behind a bot challenge. This is the source for the Gottheil, Kahle, Teicher, Sirat and Yeivin quotations in section two. Outhwaite reproduces Gottheil, Kahle and Teicher from their own English; Sirat he quotes from Nicholas de Lange's published translation of her Hebrew Manuscripts of the Middle Ages (2002); and Yeivin's 2011 revision is Hebrew, so that quotation is Outhwaite's own translation, marked in his text \"my translation\" and marked as a translation here too. for his own conclusion, quoted whole in section three down to the clause naming David b. Yefet as the donor, for his verdict on the dedication colophons, for his rejection of the Crusader reading (\"a tremendous leap needs to be taken to read it this way\"; \"There is no reason at all to connect it with the redemption of the book, and especially not with the Crusaders\") and his Mamluk-era alternative, and for the footnote on the manuscript's whereabouts. Because the licence is non-commercial, this article quotes and links rather than reproducing",
+        supports: "The whole history of the attribution dispute, and the codex's present whereabouts",
+      },
+      {
+        tier: "institution",
+        label: "Microfilm facsimile of the Cairo Codex of the Prophets",
+        url: "https://en.wikipedia.org/wiki/File:Cairo-codex-nevi%27im.pdf",
+        credit: "Wikimedia Commons, from a 1971 microfilm",
+        detail:
+          "575 pages, 22.97 MB, and the only reproduction of the codex freely available anywhere — it is the copy Outhwaite directs his own readers to. Read, and the page count confirmed at 575 through Wikimedia's own API. The file record gives the page ranges book by book (Joshua 1-37, Judges 37-74, Samuel 74-168, Kings 168-272, Isaiah 272-342, Jeremiah 343-433, Ezekiel 433-510, the Twelve 510-570, masoretic material 571-575) — a breakdown which accounts for all 575 pages without mentioning carpet pages. The images are black and white. Whether it reproduces the illuminated pages could not be settled here. Outhwaite points towards yes, writing of Avrin's study of the codex's \"splendid illuminations (which we can see at the moment only in black and white microfilm imagery)\" and citing carpet pages by folio himself. Note also that his folio numbers run past 575 — he cites folios 576 and 584 — so his microfilm and this file are not numbered alike",
+        supports: "The extent and contents of the codex, and what can actually be consulted",
+      },
+      {
+        tier: "primary",
+        label: "R. Gottheil, \"Some Hebrew Manuscripts in Cairo\"",
+        credit: "Richard Gottheil, Jewish Quarterly Review 17:4 (1905), 609-655",
+        detail:
+          "The description that put this codex into modern scholarship, and the source of the sentence quoted in section two. NOT opened here: no full-text copy could be reached. It is quoted from Outhwaite, who gives the page (640)",
+        supports: "The confident nineteenth- and early twentieth-century acceptance of the colophon",
+      },
+      {
+        tier: "scholarly",
+        label: "J. L. Teicher, \"The Ben Asher Bible Manuscripts\", and P. Kahle, The Cairo Geniza",
+        credit: "Jacob Leib Teicher, Journal of Jewish Studies 2 (1950), 17-25; Paul Kahle, 2nd edn, Oxford: Blackwell, 1959",
+        detail:
+          "The challenge and the position challenged. NEITHER was opened here — the Internet Archive's copy of Kahle is lending-restricted and the Teicher article is not online — and both are quoted from Outhwaite, who gives the pages (Teicher 25; Kahle 92) and who also records Kahle's reply to Teicher",
+        supports: "The 1950 challenge to the Moses ben Asher attribution and the argument that followed",
+      },
+      {
+        tier: "scholarly",
+        label: "I. Yeivin, Ha-Masora la-Miqra, and F. Pérez Castro et al., El Códice de Profetas de El Cairo",
+        credit: "Israel Yeivin, Jerusalem: The Academy of the Hebrew Language, 2011; Federico Pérez Castro and colleagues, Madrid: CSIC, 8 vols, 1979-1992",
+        detail:
+          "Yeivin's revised Hebrew handbook is where the radiocarbon result is reported; the sentence quoted in section two is Outhwaite's translation of Yeivin's page 18, and neither Yeivin's Hebrew nor the 1980 English edition was opened here. Pérez Castro's is the full edition of the codex's biblical text, print only and not opened",
+        supports: "The radiocarbon dating, and the existence of a full published edition",
+      },
+      {
+        tier: "encyclopedic",
+        label: "Wikipedia: Codex Cairensis",
+        url: "https://en.wikipedia.org/wiki/Codex_Cairensis",
+      },
+    ],
+    reflectionPrompt:
+      "This book carries a date it inherited from the book it was copied from. What have you accepted about yourself because it came with the copy?",
+  },
+  {
+    id: "cairo-geniza",
+    name: "Cairo Geniza",
+    // NOT registered: "genizah" or "geniza" alone — ordinary nouns, and the app's Damascus Document
+    // article uses them generically. NOT registered: "Ben Ezra Synagogue" — "Synagogue" is a topic
+    // and would collide oddly, and the phrase adds nothing the full name does not. The -h spelling
+    // is a matchName rather than an alternate name because printing both to a reader as "also
+    // called" would be noise: they are the same word transliterated twice.
+    // Both matchNames. The Taylor-Schechter Collection is the Cambridge PART of this material, not
+    // another name for the whole of it, and "Also called Taylor-Schechter Collection" told a reader
+    // otherwise; the -h spelling is the same word transliterated twice.
+    matchNames: ["Taylor-Schechter Collection", "Cairo Genizah"],
+    category: "manuscript",
+    role: "A Thousand Years of Discarded Writing From One Synagogue Storeroom",
+    summary:
+      "Jewish law forbids destroying a text that carries the name of God, so one Cairo congregation put its worn-out books in a room and left them there for a millennium — and the room turned out to hold the Hebrew of Ben Sira, a lost sectarian rule book, and the shopping lists of the medieval Mediterranean.",
+    sections: [
+      {
+        heading: "A Room You Put Things In and Do Not Take Out",
+        paragraphs: [
+          "A genizah is a storeroom for writing that may not be destroyed. Cambridge University Library, which holds most of this one, sets out the reasoning: \"According to rabbinic law (see, for instance, Mishna Shabbat 16:1), once a holy book can no longer be used (because it is too old, or because its text is no longer relevant) it cannot be destroyed or casually discarded: texts containing the name of God should be buried or, if burial is not possible, placed in a genizah.\" The congregation of the Ben Ezra Synagogue in Fustat, Old Cairo, had such a room, and \"at least from the early 11th century\" they filled it. What makes this one extraordinary is that they were not fussy about what counted. Cambridge's own list: \"not only the expected religious works, such as Bibles, prayer books and compendia of Jewish law, but also what we would regard as secular works and everyday documents: shopping lists, marriage contracts, divorce deeds, pages from Arabic fables, works of Sufi and Shi'ite philosophy, medical books, magical amulets, business letters and accounts, and hundreds of letters.\"",
+          "It came to Cambridge through a chain that does not begin where the name suggests. The twin sisters A. S. Lewis and M. D. Gibson bought manuscripts in Egypt on their way to and from Saint Catherine's monastery in Sinai, and — in the library's own account — \"On their return home to Cambridge, their friend Solomon Schechter was able to identify one of their purchases as the lost Hebrew original of the book of Ben Sira (known in the Christian tradition as Ecclesiasticus), a momentous discovery. He travelled to Cairo to find the source of the manuscripts, uncovering the remarkable hoard known as the Cairo Genizah.\" Schechter's own note to Lewis announcing the identification, dated 13 May 1896, is still in the library under the same shelfmark as the leaf itself. He went out with money from Charles Taylor, Master of St John's College, and \"received permission from the Jewish community of Egypt to take away what he liked (explaining later, 'I liked all')\" — a line the library still prints with affection, and one the third section of this article comes back to. The collection named after the two of them holds 193,000 fragments — a figure Cambridge gives on one page while another of its own pages says 200,000, which is a fair indication of how soft any count of this material is.",
+        ],
+      },
+      {
+        heading: "What Came Out of the Room",
+        paragraphs: [
+          "Three finds changed the study of Scripture. The first was Ben Sira: the Hebrew of a book that had survived for two thousand years only in Greek, turning up on paper in a Cairo storeroom. The second was a rule book of a Jewish sect nobody could identify, which Schechter published in 1910 as a Zadokite work — and which turned out, when the Dead Sea Scrolls appeared forty years later, to be the Damascus Document, a composition the Qumran caves also held. The Genizah had produced a sectarian text from the Second Temple period and nobody had been able to place it. The third is a set of Greek palimpsests: leaves whose original writing was scraped off and reused for Hebrew liturgical poetry, and whose undertext preserves columns of Origen's Hexapla on Psalm 22 and stretches of Aquila of Sinope's Greek translation of Kings — the sixth-century remains of texts otherwise almost entirely lost.",
+          "The Hebrew Bible material matters for a subtler reason. Before the Tiberian pointing became standard there were other systems of marking vowels, and the Genizah is where they survive: Cambridge's own project on the subject describes the Palestinian system as \"less complete, less uniform, and more 'popular' in character than the dominant Tiberian system,\" and notes that it \"is found only in manuscripts from the Cairo Genizah.\" Babylonian pointing turns up too, on a Mishnah manuscript whose colophon dates it to the year 1152 of the Seleucid era — 840 or 841 — which makes it, on Cambridge's account, not only the earliest dated manuscript of the Mishnah but the earliest medieval Hebrew book dated by a scribal colophon at all. And then there is everything else — the letters, the accounts, the court records that let a historian reconstruct an entire medieval society from the inside. Cambridge has put more than 21,000 fragments online with high-resolution images, and adds hundreds a month.",
+        ],
+      },
+      {
+        heading: "Who Tells This Story",
+        paragraphs: [
+          "The story as normally told has one hero and a passive local community, and that version has been coming apart for some years. R. Jefferson's work — which could only be read here at one remove, through a scholar summarising it, and that limit belongs in the sentence rather than in a footnote — argues that both halves of the phrase \"the Cairo Genizah\" mislead: there were several genizot in Cairo, material had been leaving them for decades before 1896, and — in her words, as reported by a scholar reviewing her argument — the singular label \"can preclude us from truly appreciating the breadth of Jewish material culture in Cairo in all its varied manifestations over time.\" She puts the point about our own habits sharply: \"Learning about the history of the documents we use is as useful as it is interesting, because the web of commitments that built the archives continues to have an impact on our conception of the past.\" N. Posegay, who works at Cambridge, writes of the period that \"foreign 'collectors' acquired most of these manuscripts for European libraries in the second half of the nineteenth century\" — the quotation marks are his.",
+          "The larger question follows from that, and Y. Meital states it plainly: \"the race for the extraction of historical material, whether it is the remains of pharaonic temples and artifacts or worn-out fragments from genizot, and their transfer to public or private domains in Europe and North America, need to be studied in the context of colonialism... The removal of hundreds of thousands of genizah fragments from Cairo was accomplished in the high days of the British rule in Egypt.\" It is worth saying what that argument is and is not. Schechter had the Cairo community's permission for what he took, and Cambridge writes it into its own account. Other removals in the same decades did not go through that door, which is part of R. Jefferson's point. Nor is the case for having preserved it a weak one — the collection has been conserved, catalogued and, for more than twenty-one thousand fragments so far, photographed and published free to anyone, which is not what would have happened to it in the room. But permission granted by a community under an imperial administration is not the same transaction as permission granted between equals, and the two are worth keeping apart. The library's own telling has already moved: its current account of the Lewis-Gibson collection puts the sisters first and Schechter second, which is the order in which things actually happened.",
+        ],
+      },
+    ],
+    verses: [
+      { reference: "Psalms 22:1-2", note: "The psalm whose columns of Origen's Hexapla survive under a Genizah palimpsest" },
+      { reference: "2 Kings 23:21-25", note: "Part of the passage preserved in Aquila of Sinope's Greek in another Genizah palimpsest" },
+      { reference: "Deuteronomy 6:4-9", note: "The Shema — the sort of text the law of genizah exists to protect from being thrown away" },
+    ],
+    sources: [
+      { label: "Cambridge University Library: the Taylor-Schechter Genizah Research Unit", url: "https://www.lib.cam.ac.uk/collections/departments/taylor-schechter-genizah-research-unit" },
+      { label: "Cambridge Digital Library: the Cairo Genizah collection", url: "https://cudl.lib.cam.ac.uk/collections/genizah/1" },
+      { label: "Wikipedia: Cairo Geniza", url: "https://en.wikipedia.org/wiki/Cairo_Geniza" },
+    ],
+    manuscript: {
+      manuscriptType: "A collection, not a single object: mostly paper and parchment fragments, many of them single leaves or scraps",
+      language: "Hebrew, Judaeo-Arabic, Aramaic, Arabic, and Greek in the palimpsests",
+      contents:
+        "Roughly 193,000 fragments at Cambridge alone, out of a worldwide total for which the best available count is about 400,000 — a figure its own author says rests on no agreed method of counting. Bibles, prayer books and legal codes, and alongside them letters, accounts, marriage contracts, medical books and amulets. Among the biblical finds: the Hebrew of Ben Sira, the Damascus Document, Palestinian and Babylonian vocalisation, and palimpsests of Origen's Hexapla and Aquila of Sinope's Greek",
+      origin: "Fustat, Old Cairo, and the wider medieval Mediterranean world its documents came from",
+      findSite: "The genizah chamber of the Ben Ezra Synagogue, Fustat, Old Cairo",
+      foundYear: "1896-1897 for the Cambridge removal; material had been leaving Cairo genizot for decades before that",
+      foundBy:
+        "A. S. Lewis and M. D. Gibson brought back the fragments that started it; S. Schechter identified the Ben Sira leaf and travelled to Cairo, funded by Charles Taylor, Master of St John's College",
+      dateAssigned: "Deposited from at least the early eleventh century onwards; a few undertexts in the palimpsests are much older",
+      dateCertainty: "traditional",
+      currentLocation:
+        "Cambridge University Library holds the Taylor-Schechter, Mosseri and (with the Bodleian) Lewis-Gibson collections; the rest is dispersed among many other libraries, among them the Jewish Theological Seminary of America, the Bodleian Library and the John Rylands Library. No reliable count of how many institutions hold Genizah material was found",
+      shelfmark: "Cambridge University Library, T-S; the Ben Sira leaf Schechter identified is Or.1102",
+      facsimileUrl: "https://cudl.lib.cam.ac.uk/collections/genizah/1",
+    },
+    citations: [
+      {
+        tier: "institution",
+        label: "Cambridge Digital Library: the Cairo Genizah",
+        url: "https://cudl.lib.cam.ac.uk/collections/genizah/1",
+        credit: "Cambridge University Library",
+        detail:
+          "Read in full. The library's own account, and the source of the definition of a genizah quoted in section one (with its citation of Mishnah Shabbat 16:1), of \"At least from the early 11th century\", of the list of what the community deposited, and of the sentence about Schechter's permission and \"I liked all\", together with the figure of 193,000. Note that the library's Genizah Research Unit page gives 193,000 while its Lewis-Gibson page gives 200,000",
+        supports: "What a genizah is, when this one was filled, what was in it, and how it reached Cambridge",
+      },
+      {
+        tier: "institution",
+        label: "Cambridge University Library: the Lewis-Gibson Genizah Collection",
+        url: "https://www.lib.cam.ac.uk/collections/departments/taylor-schechter-genizah-research-unit/lewis-gibson-genizah-collection",
+        credit: "Cambridge University Library",
+        detail:
+          "Read in full. This is the page that gets the sequence right, and the sentence quoted in section one is taken from it word for word — including the name \"Solomon Schechter\", which is left exactly as the library wrote it. It also records that the sisters gave the Ecclesiasticus leaf to the University Library and the rest of their manuscripts to Westminster College, and that Cambridge and the Bodleian bought their collection jointly in 2013",
+        supports: "The order of events in 1896, and Cambridge's own current telling of it",
+      },
+      {
+        tier: "institution",
+        label: "Cambridge University Library, Or.1102: Ben Sira 39:15-40:8, with Schechter's letter to Mrs Lewis",
+        url: "https://cudl.lib.cam.ac.uk/view/MS-OR-01102/1",
+        credit: "Cambridge University Library, Taylor-Schechter Genizah Research Unit",
+        detail:
+          "The catalogue record notes that \"Under the same classmark is the original letter written by Solomon Schechter to Mrs Lewis announcing the discovery of the first known fragment of 'the original Hebrew of Ecclesiasticus', dated 13/5/96\". The Digital Library rate-limits repeated requests, so this record should be re-checked rather than assumed if the link ever fails",
+        supports: "The Ben Sira identification and its date",
+      },
+      {
+        tier: "institution",
+        label: "J. Olszowy-Schlanger, \"The oldest Hebrew manuscript dated by its colophon: a leaf of a Mishna manuscript with Babylonian vocalization in Toronto\"",
+        url: "https://www.lib.cam.ac.uk/collections/departments/taylor-schechter-genizah-research-unit/fragment-month/fotm-2023/fragment-4",
+        credit: "Judith Olszowy-Schlanger; Taylor-Schechter Genizah Research Unit, Cambridge University Library, Fragment of the Month, June 2023",
+        detail:
+          "Read. Source for the date of the Babylonian-vocalised Mishnah manuscript in section two: the colophon gives \"the year 1152 of the Seleucid era\", which \"corresponds to 840 or 841 of the Julian calendar\", and the author's claim that \"This date of 840-841 CE not only makes of 'MS A' the earliest dated manuscript of the Mishna, but also the very earliest medieval Hebrew book explicitly dated by scribal colophon.\" Note the range: a Seleucid year straddles two Julian ones, so the flat \"AD 841\" often printed for this manuscript is half of an answer. Also deposited in Cambridge's repository at repository.cam.ac.uk/items/67e26356-604a-4fdf-85ae-a17f26e34769",
+        supports: "The date of the Babylonian-pointed Mishnah manuscript named in section two",
+      },
+      {
+        tier: "institution",
+        label: "Cambridge University Library, \"The Bible of the Land of Israel: Re-Examining the Palestinian Vocalisation Tradition\"",
+        url: "https://www.lib.cam.ac.uk/collections/departments/taylor-schechter-genizah-research-unit/projects/bible-land-israel",
+        credit: "Cambridge University Library; project led by Kim Phillips",
+        detail:
+          "Read in full. The source of the description of Palestinian vocalisation quoted in section two, including that it \"is found only in manuscripts from the Cairo Genizah\"",
+        supports: "The non-Tiberian vocalisation systems the Genizah preserves",
+      },
+      {
+        tier: "scholarly",
+        label: "Y. Meital, \"'What Else There Is Still Beneath': The Multiple Dimensions of the Cairo Genizot\", on R. Jefferson's \"Deconstructing 'the Cairo Genizah'\"",
+        url: "https://katz.sas.upenn.edu/resources/blog/what-else-there-still-beneath-multiple-dimensions-cairo-genizot",
+        credit: "Yoram Meital, Ben-Gurion University of the Negev; Katz Center for Advanced Judaic Studies, 11 December 2018",
+        detail:
+          "Read in full. Meital's own words on colonialism are quoted from here. R. Jefferson's article — \"Deconstructing 'the Cairo Genizah': A Fresh Look at Genizah Manuscript Discoveries in Cairo before 1897\", Jewish Quarterly Review 108 (2018), 422-448 — is PAYWALLED and was NOT opened; the two sentences of hers quoted in section three are quoted from Meital's piece, at one remove, and are marked as such in the article",
+        supports: "The argument that the Schechter-centred account and the singular label both mislead",
+      },
+      {
+        tier: "scholarly",
+        label: "N. Posegay, \"Searching for the Last Genizah Fragment in Late Ottoman Cairo\"",
+        url: "https://doi.org/10.1017/S0020743822000356",
+        credit: "Nick Posegay, Cambridge University Library",
+        detail:
+          "International Journal of Middle East Studies 54:3 (2022), 423-441. The body is paywalled and was NOT opened; the phrase quoted in section three, scare quotes included, is from the abstract on the publisher's own page",
+        supports: "The framing of the nineteenth-century collectors",
+        paywalled: true,
+      },
+      {
+        tier: "encyclopedic",
+        label: "Wikipedia: Cairo Geniza",
+        url: "https://en.wikipedia.org/wiki/Cairo_Geniza",
+        detail:
+          "Read. The only source consulted here for the worldwide total of about 400,000 fragments, which it takes from M. Rustow, The Lost Archive (2020), 451, together with her own caveat: \"There is no universally agreed-on methodology for counting Cairo Geniza fragments.... Nonetheless, four hundred thousand is the best count we currently have.\" Rustow's book was NOT opened; the figure is reported at two removes and the facts block says so. It is also the source for the other holding libraries named there. No source consulted here gives a count of how many institutions hold Genizah material, so the facts block gives none",
+        supports: "The worldwide total of Genizah fragments, at two removes, and the other libraries holding them",
+      },
+    ],
+    reflectionPrompt:
+      "A thousand years of one community's paper survived because nobody was willing to throw away a page with God's name on it. What do you treat that carefully?",
+  },
+  {
+    id: "samaritan-pentateuch",
+    name: "Samaritan Pentateuch",
+    // "Samaritan Pentateuch" was previously matching only as far as "Samaritan", which sent ten
+    // occurrences — eight of them in book introductions to the Torah — to the people-group article.
+    // Registering the full phrase EXTENDS those matches rather than adding new ones: the longest
+    // registered name wins, so "the Samaritan Pentateuch" now links here and a bare "Samaritan" or
+    // "Samaritans" still links to the people. NOT registered: "Abisha" alone — 31 WEB verses and
+    // five prose blocks contain it as part of "Abishai" and "Abishag". Only "Abisha Scroll".
+    // "Abisha Scroll" is a matchName and NOT an alternateName: alternateNames print to the reader
+    // as "Also called", and the Abisha Scroll is one manuscript of this Torah rather than another
+    // name for it. Caught by opening the rendered page.
+    matchNames: ["Abisha Scroll"],
+    category: "manuscript",
+    role: "The Torah of a Rival Community, and the Verse That Divides It From the Jewish One",
+    summary:
+      "The Samaritans' own Torah, in their own script: about six thousand differences from the Jewish Hebrew text, nearly all of them trivial, and one of them the reason the two communities have worshipped on different mountains for two thousand years.",
+    sections: [
+      {
+        heading: "Six Thousand Differences, and the One That Counts",
+        paragraphs: [
+          "The Samaritan community keeps the five books of Moses as its whole Scripture, in a script descended from the old palaeo-Hebrew alphabet rather than the square letters Jews adopted after the exile. Set against the Masoretic Text it shows something like six thousand differences, a number worth handling carefully, since it comes from a seventeenth-century printed comparison and shifts depending on which manuscripts an edition is built from. The overwhelming majority are spelling, grammar and harmonisation — a scribe smoothing a narrative by importing a phrase from a parallel passage. Roughly two thousand of them agree with the Greek Septuagint against the Masoretic Text, which is itself a useful reminder that the Hebrew text was not one thing in antiquity.",
+          "One difference is not trivial. Where the Jewish text of Deuteronomy 27:4 has Israel setting up plastered stones on Mount Ebal, the Samaritan text has Mount Gerizim — the mountain above Nablus where the Samaritan temple stood and where the community still worships. And where Exodus and Deuteronomy give the Ten Commandments, the Samaritan Pentateuch adds a tenth of its own, assembled out of Deuteronomy 11:29-30 and 27:2-7, commanding an altar on Gerizim. That is not a copying slip. It is the constitutional difference between two communities, written into their Bibles.",
+        ],
+      },
+      {
+        heading: "Older Than the Samaritans",
+        paragraphs: [
+          "For centuries the obvious explanation was that the Samaritans had edited the Torah to suit themselves. The Qumran discoveries complicated that in a specific and interesting way. Some Hebrew manuscripts from the caves — the ones scholars now call pre-Samaritan — share the Samaritan Pentateuch's harmonising expansions, its emphasis on Moses, its grammatical forms and its spelling, and they are not Samaritan documents. T. Giles, writing for the Society of Biblical Literature, sets out what follows: these texts carry the editorial features \"but without the veneer of sectarian features favoring the Samaritan religious sect,\" and \"the cumulative evidence points to the conclusion that the Samaritan Pentateuch is the product of a sectarian editing of the Pre-Samaritan text type, probably produced in the first century B.C.E through the first century C.E.\" M. Kartveit has traced the history of research on exactly this, and his reviewer M. Krusche sums up where it came out: phenomena \"previously ascribed to the Samaritans and their ideology turned out to be more ancient and not specifically Samaritan.\"",
+          "That is the majority view and it is not unanimous. S. Schorch has argued that even the Gerizim commandment belongs with the pre-Samaritan expansions rather than with a later sectarian layer — comparing its literary technique with theirs and concluding it comes from the same scribal circles. A reviewer of the volume it appeared in calls the argumentation strong and says so while disagreeing: he doubts \"that a scribe would insert such a commandment at such a prominent place merely for inner-textual hermeneutical reasons.\" There is a third reading, from the late G. N. Knoppers, on which the Torah's several altar laws are deliberately ambiguous; his reviewer sums up the point as indicating that the Pentateuch was \"composed as a compromise document by Judeans and Samaritans\" — the wording is the reviewer's, not Knoppers's — which would make the argument older than either community's final form of it. Archaeology has meanwhile given the Samaritan claim a real history: Y. Magen's excavations on Mount Gerizim between 1984 and 2006 dated the beginnings of a temple there to the mid-fifth century BC, with a large city around it by the second, destroyed by the Hasmonean John Hyrcanus about 110 BC.",
+        ],
+      },
+      {
+        heading: "Deuteronomy 27:4, and a Scroll With Its Own Signature",
+        paragraphs: [
+          "Which reading of Deuteronomy 27:4 is original is a live question, and it needs stating precisely because it is regularly got wrong. The Samaritan reading of Gerizim is supported outside the Samaritan tradition by the Old Latin and by Greek evidence, which is why a standard introduction to the Old Testament — J. A. Soggin's — has long been cited for the judgement that at Deuteronomy 27:4 the Samaritan reading is preferable to the Masoretic one. No sentence of Soggin's is quoted here. The book is print only and could not be opened, and the two versions of his sentence this article previously carried, one in the body and one in the citation, did not match each other; rather than choose between two unverified wordings, his position is reported and his words are not. A small Hebrew fragment of Deuteronomy 27:4-6 that reads Gerizim is also brought forward: J. H. Charlesworth announced it in 2008 and published it in the journal Maarav in 2009 as a genuine ancient witness, and has not withdrawn that. His own article could not be opened here, so his case is named and not stated. This app does not use the fragment as evidence, for a reason that has nothing to do with his judgement: it has no excavation context. It appeared on the antiquities market and is catalogued among the post-2002 \"Dead Sea Scrolls-like\" fragments; specialists are divided. A. Lange gives his reasons against and then his own limit. Writing in German — and quoted here at one remove, from a bibliography that reproduces the passage, because his book could not be opened — he objects that the fragment is in square script where an early Samaritan manuscript should be in palaeo-Hebrew, and that its letter forms are a mixture drawn from formal and semi-cursive hands of different periods; that mixture, together with the square script and the fragment's partial use of scriptio continua, seems to him to argue for a forgery. And then the clause a careless quotation would drop: a conclusive judgement, he adds, would require examining the fragment itself, which nobody has published. E. Ulrich answers the strongest suspicion against it, that so significant a word sits so prominently on so small a scrap, by pointing to a genuine Qumran fragment of Judges that does the same. Å. Justnes holds it a forgery; B. Hensel writes that it is \"höchst wahrscheinlich echt\" — most probably genuine. Nobody has published a physical examination. A contested unprovenanced scrap cannot carry a conclusion about Deuteronomy either way. What is left is a genuinely open question, and it is worth a reader knowing that it is open: the reading behind every English Bible is Ebal, the Samaritan reading has ancient non-Samaritan support, and each reading gives the other community an obvious motive for having changed it. This app does not settle it, and nothing here should be read as though it had.",
+          "The community's own most sacred manuscript raises the same question of what a document can be made to prove. The Abisha Scroll, kept at Nablus, is written on sewn ram parchment with rollers and a silver case, and the Samaritans hold that it was written by Abishua son of Phinehas, in the priestly line of Aaron, in the thirteenth year after Israel entered Canaan. The claim is not vague or externally imposed: it is embedded in the scroll itself, in a cryptogram running down through the columns, which the community reads as Abishua's own colophon. T. Giles states the scholarly position on such claims with the right restraint — \"These claims are difficult for modern historical scholarship to confirm or deny\" — but the codicological work has been done. A. D. Crown's study concluded the object is a composite of several scrolls of different dates, and E. Burkhardt's 2025 re-examination goes further, identifying the compiler and probable scribe of its most important component as a fourteenth-century scribe who was himself called Abisha son of Phinehas. If that is right, the scroll is neither a forgery nor what the tradition says it is. The oldest Samaritan Pentateuch manuscript anyone can actually open is at Cambridge, dates from the early twelfth century, and was written by five different hands.",
+        ],
+      },
+    ],
+    verses: [
+      { reference: "Deuteronomy 27:4", note: "\"On Mount Ebal\" in the Hebrew behind English Bibles; the Samaritan Torah reads Mount Gerizim" },
+      { reference: "Deuteronomy 11:29", note: "The blessing on Gerizim and the curse on Ebal — one of the two passages the Samaritan tenth commandment is built from" },
+      { reference: "Exodus 20:17", note: "Where the Samaritan text adds its own tenth commandment, on the altar at Gerizim" },
+      { reference: "John 4:19-24", note: "\"Our fathers worshiped in this mountain\" — the Samaritan woman naming the difference to Jesus" },
+    ],
+    sources: [
+      { label: "T. Giles, \"The Samaritan Pentateuch\" (Bible Odyssey, Society of Biblical Literature)", url: "https://www.bibleodyssey.org/articles/the-samaritan-pentateuch/" },
+      { label: "Cambridge University Library MS Add.1846, the earliest extant Samaritan Pentateuch", url: "https://cudl.lib.cam.ac.uk/view/MS-ADD-01846/1" },
+      { label: "Wikipedia: Samaritan Pentateuch", url: "https://en.wikipedia.org/wiki/Samaritan_Pentateuch" },
+    ],
+    manuscript: {
+      manuscriptType:
+        "A textual tradition rather than a single object, carried by parchment and paper codices and scrolls in the Samaritan script. The Abisha Scroll at Nablus is the community's most sacred copy",
+      language: "Hebrew, written in the Samaritan alphabet, a development of palaeo-Hebrew",
+      contents:
+        "The five books of Moses only. About six thousand differences from the Masoretic Text, the great majority orthographic or harmonising; the significant ones concern Mount Gerizim, including an additional tenth commandment",
+      origin: "The Samaritan community of Mount Gerizim and Nablus",
+      findSite: "Not applicable. The tradition was never lost and never found — it has been copied continuously by the Samaritan community",
+      foundYear: "Not applicable",
+      foundBy: "Not applicable",
+      dateAssigned:
+        "The text-type is ancient and is attested at Qumran in pre-Samaritan copies; the sectarian layer is usually dated to the first century BC or the first century AD. No manuscript of the Samaritan Pentateuch predates the Middle Ages",
+      dateCertainty: "disputed",
+      currentLocation:
+        "The Abisha Scroll is with the Samaritan community at Nablus. Accessible manuscripts include Cambridge University Library MS Add.1846, the John Rylands Library's Samaritan collection at Manchester, and the Chamberlain-Warren collection at Michigan State University",
+      shelfmark: "Cambridge University Library MS Add.1846 (early twelfth century, 227 leaves)",
+      facsimileUrl: "https://cudl.lib.cam.ac.uk/view/MS-ADD-01846/1",
+    },
+    citations: [
+      {
+        tier: "reference",
+        label: "T. Giles, \"The Samaritan Pentateuch\"",
+        url: "https://www.bibleodyssey.org/articles/the-samaritan-pentateuch/",
+        credit: "Terry Giles, Gannon University; Bible Odyssey, Society of Biblical Literature",
+        detail:
+          "Read in full. Giles is co-author of the standard SBL introduction to the Samaritan Pentateuch. Source for the pre-Samaritan texts carrying the editorial features \"without the veneer of sectarian features\", for the dating of the sectarian editing to the first century BC or AD, and for his own careful sentence about the community's traditional claims. Bible Odyssey is a Society of Biblical Literature project and leans to critical scholarship; it is cited here for facts",
+        supports: "The relationship between the pre-Samaritan Qumran texts and the Samaritan Pentateuch",
+      },
+      {
+        tier: "institution",
+        label: "Cambridge University Library MS Add.1846: the Samaritan Pentateuch",
+        url: "https://cudl.lib.cam.ac.uk/view/MS-ADD-01846/1",
+        credit: "Cambridge University Library",
+        detail:
+          "The library's own record: \"Add.1846 is believed to be the earliest extant manuscript of the Samaritan Pentateuch and dates from the early 12th century CE\"; 227 leaves, 270 by 210 mm, vellum, and \"The copying of the book itself is the product of five different hands.\" Fully digitised. Its recorded epigraphs are worth a reader's time — one at the end of Leviticus explains how the manuscript was saved from a fire in a manuscript store-room in 1201, and a marginal note at the end of Numbers makes a claim the library itself calls unconvincing",
+        supports: "The oldest accessible manuscript of the Samaritan Pentateuch, and its date",
+      },
+      {
+        tier: "scholarly",
+        label: "Å. Justnes, \"A Lightly Annotated Chronological Bibliography of the Post-2002 Dead Sea Scrolls-like Fragments\"",
+        url: "https://lyingpen.com/2025/02/16/a-lightly-annotated-chronological-bibliography-of-the-post-2002-dead-sea-scrolls-like-fragments/",
+        credit: "Årstein Justnes, University of Agder — The Lying Pen of Scribes project",
+        detail:
+          "Read in full. The catalogue of the disputed fragments and their literature, including J. H. Charlesworth, \"What Is a Variant? Announcing a Dead Sea Scrolls Fragment of Deuteronomy\", Maarav 16 (2009), 201-212, and the fragment's designation DSS F.154. It reproduces verbatim the passages quoted in section three from A. Lange (Handbuch der Textfunde vom Toten Meer, vol. 1, 2009, 106, and From Qumran to Aleppo, 2009, 46 n. 66), E. Ulrich (The Dead Sea Scrolls and the Developmental Composition of the Bible, 2015, 57) and B. Hensel (Juda und Samaria, 2016, 177). NONE of those four books was opened here; each is quoted at one remove from this bibliography, which prints the passages in full. Justnes himself is a party to the argument and holds the fragment a forgery, which is stated in the article",
+        supports: "That the Charlesworth fragment is unprovenanced and disputed, and the positions of the specialists on both sides",
+      },
+      {
+        tier: "scholarly",
+        label: "M. Krusche, review of M. Langlois (ed.), The Samaritan Pentateuch and the Dead Sea Scrolls",
+        url: "https://www.sblcentral.org/API/Reviews/12999_71663.pdf",
+        credit: "Marcel Krusche, Universität Hamburg; Review of Biblical Literature 07/2021, Society of Biblical Literature",
+        detail:
+          "Read in full. Two of the sentences quoted in section three are Krusche's own rather than the authors' he is describing, and this article says so where it uses them: that phenomena \"previously ascribed to the Samaritans and their ideology turned out to be more ancient and not specifically Samaritan\" is his summary of M. Kartveit's opening essay, and that the ambiguity of the altar laws \"indicates that the Pentateuch was composed as a compromise document by Judeans and Samaritans\" is his summary of the late G. N. Knoppers's chapter. The review is also the source for S. Schorch's argument about the Gerizim commandment and for Krusche's own stated disagreement with it. Neither Schorch's chapter nor Knoppers's was opened here; both are reported from this review",
+        supports: "The minority position on the Gerizim commandment, and the compromise-document reading",
+      },
+      {
+        tier: "reference",
+        label: "T. Wardle, \"Mount Gerizim\"",
+        url: "https://www.bibleodyssey.org/articles/mount-gerizim/",
+        credit: "Tim Wardle, Furman University; Bible Odyssey, Society of Biblical Literature",
+        detail:
+          "Read in full. Source for the dating of Y. Magen's Mount Gerizim excavations (1984-2006), the mid-fifth-century BC beginning of the temple, the second-century city and its destruction by John Hyrcanus in 110 BC. Magen's own excavation reports — Mount Gerizim Excavations, 2 vols (Israel Antiquities Authority, 2004 and 2008) — were NOT opened",
+        supports: "The archaeology of the Samaritan temple on Mount Gerizim",
+      },
+      {
+        tier: "scholarly",
+        label: "E. Burkhardt, \"The Abisha Scroll Revisited\"",
+        url: "https://doi.org/10.1163/2589255X-bja10052",
+        credit: "Evelyn Burkhardt, Research Centre for Hebrew Studies, Leucorea Foundation, Wittenberg",
+        detail:
+          "Textus 34:1 (2025), 74-100. The body is behind Brill's paywall and was NOT opened; what section three reports is her own abstract, read on the journal's page, which concludes that the scroll is \"compiled from several heterogeneous parts\" and identifies its compiler and probable principal scribe as \"Ā̊bīša ban Fī'nās ban Yūsəf, a scribe and author of piyyutim in the fourteenth century\". A. D. Crown's earlier studies — \"The Abisha Scroll of the Samaritans\", Bulletin of the John Rylands Library 58:1 (1975), 36-65, and Samaritan Scribes and Manuscripts (Mohr Siebeck, 2001) — were also not opened",
+        supports: "The current scholarly assessment of the Abisha Scroll's date and composition",
+        paywalled: true,
+      },
+      {
+        tier: "scholarly",
+        label: "J. A. Soggin, Introduction to the Old Testament: From Its Origins to the Closing of the Alexandrian Canon",
+        credit: "J. Alberto Soggin, Westminster John Knox, 1989, p. 26",
+        detail:
+          "Print, and NOT opened here. Two differently worded versions of the same sentence of his were in circulation on this record, in the body and in this note, and neither could be checked against the page: the 1989 third edition is not on the Internet Archive in a readable copy and a phrase search returns nothing. No wording of his is printed anywhere here. What is reported is only that his introduction is a standard place this judgement is cited from, and even that should be checked against the page by anyone who can reach it",
+        supports: "That the judgement in favour of the Samaritan reading of Deuteronomy 27:4 has a standard citation in the introductory literature — reported, not quoted",
+      },
+      {
+        tier: "encyclopedic",
+        label: "Wikipedia: Samaritan Pentateuch",
+        url: "https://en.wikipedia.org/wiki/Samaritan_Pentateuch",
+      },
+    ],
+    reflectionPrompt:
+      "Two communities have read the same five books for two thousand years and disagreed about one mountain. What difference are you treating as bigger than it is — or smaller?",
+  },
+
+  {
+    id: "comma-johanneum",
+    name: "The Comma Johanneum",
+    alternateNames: ["the Johannine Comma"],
+    // NOT registered: "Erasmus" (no record owns it, and a bare surname is the shape this project
+    // has shipped wrong links in before), "Textus Receptus" or "Vulgate" — the article discusses
+    // both at length but is not the article a reader clicking either of those words wants.
+    matchNames: ["Comma Johanneum"],
+    category: "manuscript",
+    role: "Erasmus, the Textus Receptus, and the Sentence That Is Not in the Greek",
+    summary:
+      "A sentence at 1 John 5:7 naming the Father, the Word and the Holy Spirit as three heavenly witnesses: printed in the King James Bible, absent from every modern one, and absent from every Greek manuscript copied before the fourteenth century.",
+    sections: [
+      {
+        heading: "Eight Months in Basel",
+        paragraphs: [
+          "Erasmus of Rotterdam had come to Basel in 1514; by the summer of 1515 he and the printer Johann Froben had an agreement, the presses started in August, and by March 1516 the book was out: the Novum Instrumentum omne, a New Testament in two parallel columns, Greek on one side and a fresh Latin translation on the other, with a body of Annotationes, printed on their own pages, explaining the translation. His own verdict on it was praecipitatum verius quam aeditum — in Combs's rendering, \"thrown together rather than edited\". To a friend in June he wrote that he had escaped the workhouse at Basel, where he had got through \"six years work in eight months\".",
+          "It matters what the book was for, because it is almost always described backwards. H. J. de Jonge's study of the project argues that Erasmus and his contemporaries saw it first as a new Latin New Testament, not as an edition of the Greek; the Greek was printed to show that the Latin had not been invented. He never issued the Greek on its own, though he was urged to. And the Greek he printed came from what happened to be in Basel: seven manuscripts, none of them earlier than the eleventh century and most of them twelfth, of which two — the copies now numbered 2e and 2ap — went to the compositors as printer's copy with his corrections written between their lines.",
+          "For Revelation he had one manuscript, and it had lost its last page. So he translated the last six verses back into Greek out of the Latin Vulgate, and said so in the Annotationes. W. W. Combs, writing in the Detroit Baptist Seminary Journal, counted the result: twenty readings in those six verses that stand in the Textus Receptus to this day and have, in his words, \"no Greek manuscript support whatsoever\". A phrase at Acts 9:6 came into the Greek the same way. None of this was concealed; Erasmus wrote down what he had done. The name Textus Receptus is later still, and comes from a printer's advertisement — the preface to the Elzevir press's edition of 1633, which told the reader that he had \"the text now received by all\". Two details usually go wrong with that sentence, and Combs corrects both: the edition was edited by J. Hoelzlin, and the two Elzevirs whose names are on it were not, as H. J. de Jonge showed, brothers.",
+        ],
+      },
+      {
+        heading: "Where the Verse Is, and Where It Is Not",
+        paragraphs: [
+          "Open 1 John 5 in the King James Bible and verse 7 reads: \"For there are three that bear record in heaven, the Father, the Word, and the Holy Ghost: and these three are one.\" Open the same passage in this app's default translation, the World English Bible, and verse 7 is six words long, \"For there are three who testify\", running straight on into the Spirit, the water and the blood. Both readings are in front of you here: switch the translation to the King James in the Bible panel and the sentence appears. That difference is the whole subject, and it is one of the few places in the New Testament where the choice of text changes a sentence a reader would notice.",
+          "The clause is Latin before it is anything else. The first unambiguous citation of it is in the Liber apologeticus of Priscillian, a Spanish bishop executed in 385, and the form he cites is not the familiar one: he puts the heavenly witnesses second rather than first, says that they are one \"in Christ Jesus\", and lists the earthly three as water, flesh and blood — a reading, as G. McDonald notes in his study of the passage, \"found in no extant Greek bible\". From there it spreads through the Latin west, into the later Vulgate manuscripts, and eventually into the Latin liturgy.",
+          "In Greek it is very late. The earliest Greek Bible containing it was copied in 1362-1363 and is now Vatican Library Ottob. gr. 298; it gives Greek and Latin in parallel columns, with the Greek bent to fit the Latin. Before that, the earliest occurrence of the clause in Greek at all is not in a Bible but in a Greek translation of the Latin acts of the Fourth Lateran Council of 1215. Counts differ, and the difference does not matter. D. B. Wallace's is the shortest: \"The Comma occurs only in about 8 MSS, mostly in the margins, and all of them quite late.\" G. McDonald's list is longer, and he added to it himself — the Munich codex Wallace reported in 2010 is, on McDonald's reckoning, the fifth manuscript to carry the clause in its margin. What every list agrees on is the thing that settles it: not one of these manuscripts is early, and every one of them can be traced to a Latin exemplar or to a printed edition. The oldest argument against it is still the strongest one, and it is not about manuscripts at all: no Greek father quotes the clause, including the fathers who spent the fourth century arguing about the Trinity and would have reached for it if they had it.",
+          "Erasmus left it out of 1516 and out of 1519, and printed it in 1522. The story usually told at this point — that he had rashly promised to include it if a single Greek manuscript could be produced, and kept his word against his judgement — was examined by de Jonge in 1980 and does not survive. \"The current view that Erasmus promised to insert the Comma Johanneum if it could be shown to him in a single Greek manuscript,\" he concluded, \"has no foundation in Erasmus' works.\" Erasmus gave his own reason more than once: ne cui sit ansa calumniandi, so that nobody should have a handle for slander. Edward Lee had accused him of reviving Arianism, and a charge of heresy would have killed the book. He printed the clause and recorded in the Annotationes that he did not think it belonged there. The Greek manuscript that reached him is the Codex Montfortianus, numbered 61 and now in Dublin. J. Rendel Harris argued in 1887 that it was written for the occasion — in W. W. Combs's summary of him, that it was \"probably produced at the time of the controversy for the purpose of refuting Erasmus\". Harris went further and named a scribe, the Franciscan William Roy, and was careful about how much that could carry: it was, he wrote, \"the best speculation we can make\". De Jonge's second finding is the one usually left out: it cannot be shown that Erasmus suspected any such thing. He thought it was an ordinary Greek manuscript that had been conformed to the Vulgate, which was his standing theory about Greek copies that agreed with the Latin. That second finding is not agreed. G. McDonald, who accepts the first, notes in his own study that Erasmus described the manuscript as recent, and adds: \"I am less confident than de Jonge, 1980, 389, that Erasmus had no suspicion that Montfortianus had been prepared with the intention of deceiving him.\" B. M. Metzger's handbook printed the older version of the story and then corrected it, citing de Jonge, in an appendix to its third edition.",
+        ],
+      },
+      {
+        heading: "What the Argument Is Actually About",
+        paragraphs: [
+          "The Comma is still defended — by churches and societies committed to the Textus Receptus, and by the King James Only movement, which G. McDonald names as the argument's main modern carrier — and the case for it deserves to be read in its defenders' own words rather than in a summary by people who disagree with them. The Trinitarian Bible Society, a British publisher of the King James Version, gives the floor to three defenders — M. Henry, R. L. Dabney and E. F. Hills — and five arguments come out of it. One thing belongs in front of them, because the Society's extract leaves it out and Dabney's own page does not. He is not claiming the clause is genuine. On the page before the grammatical argument he writes: \"Neither do we absolutely assert its genuineness, but we present the arguments in favor of its claim for the purpose of showing that they do carry a good degree of probability... Our object is to keep it an open question.\" His own editor makes the same point in the volume's preface, and adds the thing that keeps happening to him: the disclaimer \"is overlooked in the mass of reasoning which is gathered around the assertion of its probable genuineness.\" The first argument is grammatical, and it is the serious one. R. L. Dabney put it this way: strike verse 7, and \"the masculine article, numeral, and participle\" of verse 8 — οἱ τρεῖς μαρτυροῦντες — \"are made to agree directly with three neuters\", which he called \"an insuperable and very bald grammatical difficulty\". Leave the disputed words in and they agree with two masculine nouns and one neuter, and by an ordinary rule of Greek the masculines govern. The obvious objection is that verse 8's masculines still sit over three neuters even with the clause in, and both men answer it rather than leave it standing. Dabney's answer is that those masculines \"may be accounted for by the power of attraction, so well known in Greek syntax\", the Spirit having just stood in a masculine group and carried something of it over. Hills makes the repair differently: retain the clause and the masculine forms of verse 8 are \"due to the influence of the nouns Father and Word, which are masculine\". Hills also answers in advance the reply this article makes below — that the three are personified — on the ground that personification cannot be what changes the gender, since the Spirit of verse 6 is plainly a person and is neuter there all the same. The second argument is that a forger would not have invented this particular wording: Hills asks why an interpolation would read \"the Father, the Word, and the Holy Spirit\" rather than the usual Father, Son and Holy Spirit — \"the singular combination, never met with elsewhere\". The third is Hills's larger claim, that the reading was preserved in the Latin-speaking church's usage and that behind that usage \"was the guiding providence of God\". The fourth is M. Henry's, and it turns on verse 8 rather than verse 7: many copies say the three bear record \"upon the earth\", and that distinctive phrase, he argues, \"bears a visible opposition to some witness or witnesses elsewhere\" — witnesses the shorter text never supplies. The fifth is Dabney's again. Cut verse 7 and the clause that closes verse 8, καὶ οἱ τρεῖς εἰς τὸ ἕν εἰσιν, \"and these three agree in one\", loses the thing it points at: the definite article marks a unity the reader has already been shown, and without the heavenly witnesses, Dabney says, \"there is none\". M. Maynard, whom McDonald lists among the King James Only writers, set out the case at book length in 1995.",
+          "The answers are not new either. On the grammar: the three witnesses of verse 8 are being personified — put in the witness box, in what the passage plainly treats as a courtroom — and Greek regularly takes the gender from the sense in that situation. Erasmus made exactly this reply in his own Annotationes, in G. McDonald's rendering: the apostle \"pays more regard to the sense than to the words\", and \"you use the same construction if you say: 'The building is a witness to the kind of builder you are.'\" Hills's rejoinder — that the Spirit of verse 6 is a person and neuter — has an answer in what the personification is actually attached to on this reading: not personhood as such, but the forensic role of three witnesses standing together before what McDonald calls \"the tribunal of our belief\", which is not what verse 6 is doing. And the awkwardness cuts the other way as well. A reading that is slightly rough is the kind a copyist smooths out, not the kind he invents. On Dabney's closing phrase, McDonald answers him by name: εἰς τὸ ἕν εἰσιν does not announce the unity of the Trinity but says that the evidence of the water, the blood and the Spirit \"is directed towards the same end\", \"that it is unanimous, and thus legally compelling\" — which is what a passage arguing a case before a tribunal needs the sentence to do, and a sudden declaration of the shared essence of Father, Son and Spirit would, on McDonald's reading, sit strangely in it. On Henry's \"upon the earth\", the answer is that the phrase is not in the shorter text either: the copies that omit verse 7 omit \"on earth\" from verse 8 as well, McDonald notes, \"since there is no need to contrast the witness of the water, the Spirit and the blood with three witnesses in heaven\". The opposition Henry hears is real; both halves of it entered the text together. As for Hills's second question, McDonald's reconstruction is that the clause began not as a forgery but as a marginal note — a reader's Trinitarian gloss on three witnesses who \"are one\", of the sort Tertullian and Cyprian had already made — which a later copyist could not tell from the text he was copying. That would explain the unusual wording rather than leave it unexplained.",
+          "One argument on the defenders' side is genuinely open and should be named as such. Cyprian, writing about 250, quotes John 10:30 and then adds that \"it is written of the Father, and of the Son, and of the Holy Spirit, 'And these three are one.'\" W. Thiele argued in 1959 that this is evidence the clause already stood in Cyprian's Latin Bible; McDonald sets Thiele's case out at length and disagrees with it, holding that Cyprian is interpreting the ordinary text of verse 8 rather than quoting a longer one. Wallace's reading is the same, and rests on a point worth weighing: Cyprian quotes only the one clause that is in every text — \"and these three are one\" — and does not quote the wording that would have settled his argument outright. This is a real disagreement between scholars about a real piece of evidence — W. Thiele was a Vetus Latina editor, not a defender of the King James Version, and the two arguments should not be filed together. It is also not the same thing as the manuscript question, which is not close.",
+          "What is worth saying last is the thing a reader most needs and is least often told. Losing this verse costs the doctrine of the Trinity nothing, and the reason is the same fact that tells against the verse. Nicaea in 325 and Constantinople in 381 settled the Trinitarian confession without it, and no Greek father who fought those arguments ever quotes it. The doctrine was drawn instead from the texts it is still drawn from: the baptismal formula of Matthew 28:19, the Word who was with God and was God in John 1:1, \"I and the Father are one\" in John 10:30, the Spirit of truth whom the Son sends from the Father in John 15:26, and Paul's threefold blessing in 2 Corinthians 13:14. Erasmus, who never believed it belonged there, was blunt about this: he never discussed the passage, he wrote, \"without testifying to the truth of what people gather from that passage: that the Father, Son and Holy Spirit share the very same essence\". The Catholic Church reached the same place by a road worth recording, since it was not a straight one — the Holy Office ruled in 1897 that the authenticity of the verse could not safely be denied, clarified in 1927 that this had not been meant to stop Catholic scholars from concluding against it, and the Nova Vulgata of 1979 does not print it. This app's position is the ordinary Protestant and evangelical one, and it is Erasmus's: the clause is no part of the letter as the apostle wrote it, and the confession it states is true.",
+        ],
+      },
+    ],
+    verses: [
+      { reference: "1 John 5:7-8", note: "Six words in the World English Bible; a sentence about the Trinity in the King James" },
+      { reference: "1 John 5:6", note: "The water, the blood and the Spirit, which the disputed clause interrupts" },
+      { reference: "Matthew 28:19", note: "The baptismal formula — Father, Son and Holy Spirit" },
+      { reference: "John 10:30", note: "\"I and the Father are one\" — the text Cyprian quotes beside 1 John 5" },
+      { reference: "2 Corinthians 13:14", note: "Paul's threefold blessing" },
+    ],
+    sources: [
+      { label: "H. J. de Jonge, \"Erasmus and the Comma Johanneum\" (Leiden open access)", url: "https://scholarlypublications.universiteitleiden.nl/access/item:2721790/download" },
+      { label: "G. McDonald, Raising the Ghost of Arius (Leiden dissertation, open access)", url: "https://scholarlypublications.universiteitleiden.nl/access/item:2954624/download" },
+      { label: "Trinitarian Bible Society: Why 1 John 5.7-8 is in the Bible", url: "https://www.tbsbibles.org/page/1John5verse7and8" },
+      { label: "R. L. Dabney, Discussions, vol. 1 (1890) — the grammatical argument at pp. 377-379 (Internet Archive)", url: "https://archive.org/details/discussions01dabn" },
+      { label: "W. W. Combs, \"Erasmus and the Textus Receptus\" (Detroit Baptist Seminary Journal)", url: "https://dbts.edu/wp-content/uploads/1996/10/Erasmus-and-the-Textus-Receptus-Combs.pdf" },
+    ],
+    manuscript: {
+      manuscriptType:
+        "Not a manuscript but a reading — a clause that entered the Latin Bible, then the first printed Greek New Testaments, and from there the King James Version",
+      language: "Latin first; Greek only from the fourteenth century, and translated from the Latin",
+      contents:
+        "1 John 5:7b-8a: \"in heaven, the Father, the Word, and the Holy Ghost: and these three are one. And there are three that bear witness in earth\" (King James wording). Five Greek manuscripts carry it in the body of the text on G. McDonald's list and four on D. B. Wallace's, with five more carrying it in the margin in a later hand; the earliest, Vatican Library Ottob. gr. 298, was copied in 1362-1363 with the Greek accommodated to a facing Latin column",
+      origin:
+        "The Latin west. First cited unambiguously in the Liber apologeticus of Priscillian (c. 380), in a form unlike the familiar one",
+      findSite: "Not applicable. Nothing was found; a clause was transmitted, printed, and then removed again",
+      foundYear: "Not applicable",
+      foundBy: "Not applicable",
+      dateAssigned:
+        "The clause by c. 380 in Latin; in a Greek Bible not before 1362-1363; in print from the Complutensian Polyglot, whose New Testament volume was printed in 1514 though the whole was not published until 1522, and from Erasmus's third edition of 1522",
+      dateCertainty: "firm",
+      currentLocation:
+        "In the King James Version and other translations that follow the Textus Receptus. Absent from every modern critical edition of the Greek New Testament, and from the Roman Catholic Nova Vulgata of 1979",
+      shelfmark: "Trinity College Dublin MS gr. 30 (Codex Montfortianus, Gregory-Aland 61) is the copy Erasmus was shown",
+    },
+    reflectionPrompt:
+      "Erasmus printed a sentence he did not believe was scripture to protect his good name and, with it, the book he had staked everything on. What have you gone along with because holding the line would have cost more than just you?",
+    citations: [
+      {
+        tier: "scholarly",
+        label: "H. J. de Jonge, \"Erasmus and the Comma Johanneum\"",
+        url: "https://scholarlypublications.universiteitleiden.nl/access/item:2721790/download",
+        credit: "Henk Jan de Jonge",
+        detail:
+          "Ephemerides Theologicae Lovanienses 56 (1980), fasc. 4, 381-389; open access at Leiden University and read in full here. Source of both quoted conclusions, of the Latin ne cui sit ansa calumniandi, and of the Responsio ad Annotationes Eduardi Lei passage the promise story grew out of. The English gloss \"a handle for slander\" is this article's; de Jonge's own rendering is \"so that no one would have occasion to criticise me out of malice\". He gives the manuscript as Trinity College, Dublin (A 4.21); the \"MS gr. 30\" form used here is G. McDonald's",
+        supports: "That there was no promise, and that Erasmus is not on record suspecting the manuscript was made to trap him",
+      },
+      {
+        tier: "primary",
+        label: "J. Rendel Harris, The Origin of the Leicester Codex of the New Testament",
+        url: "https://archive.org/details/originofleiceste00harruoft",
+        credit: "James Rendel Harris",
+        detail:
+          "London: C. J. Clay and Sons, 1887; public domain and read at the Internet Archive. Pages 46-53 carry the argument about the Codex Montfortianus, and the hedge quoted with it is on p. 48: the Franciscan William Roy was, \"according to the best speculation we can make\", the man who wrote the codex \"or at all events was its owner at a time extremely close to that when it must have been written\". Harris is firmer about the clause than about the scribe: in his introduction the codex is a manuscript that \"contained a passage fabricated to order\", and 1 John 5:7 in it is \"the forgery\"",
+        supports: "What Harris argued about the Codex Montfortianus, and how firmly he argued it",
+      },
+      {
+        tier: "primary",
+        label: "R. L. Dabney's own disclaimer, Discussions, vol. 1, p. 377",
+        url: "https://archive.org/details/discussions01dabn",
+        credit: "Robert Lewis Dabney; the volume's preface and biographical sketch are by his editor C. R. Vaughan",
+        detail:
+          "Read from the same Internet Archive scan as the grammatical argument on p. 378. The disclaimer quoted in the third section stands on the page before that argument, between the running heads for 376 and 378, and Vaughan's biographical sketch at the front of the volume says the same thing of it: Dabney \"expressly disclaims doing more than keeping this an open question; but the disclaimer is overlooked in the mass of reasoning which is gathered around the assertion of its probable genuineness\"",
+        supports: "That Dabney argues for the clause without asserting it, in his own words and his editor's",
+      },
+      {
+        tier: "scholarly",
+        label: "G. McDonald, Raising the Ghost of Arius (doctoral dissertation, Leiden University, 2011)",
+        url: "https://scholarlypublications.universiteitleiden.nl/access/item:2954624/download",
+        credit: "Grantley Robert McDonald",
+        detail:
+          "Open access and read in full here. Source of the Priscillian citation and its unusual form, the manuscript list with shelfmarks and Gregory-Aland numbers, the 1362-1363 date for Ottob. gr. 298, the Fourth Lateran Council as the first Greek occurrence, the Cyprian passage in Latin, W. Thiele's contrary argument, Erasmus's Annotationes on personification, the answers to Dabney (p. 21) and to Henry (p. 68) given above, and the Latin of the 1897 and 1927 Holy Office decrees. One caution for a future editor: McDonald's prose on p. 292 calls the body that ruled on 13 January 1897 \"the Vatican's Biblical Commission\", but the Denzinger text he himself quotes at §3681 reads \"S. Officium ad hoc dubium 13. Ian. 1897 Responsum dederat: Negative\", and the Pontifical Biblical Commission was not constituted until Leo XIII's Vigilantiae studiique of 30 October 1902. The article says Holy Office on purpose. It is not an error to be corrected against the loose phrase in the source",
+        supports: "The manuscript evidence, the Latin patristic evidence, and both sides of the Cyprian question",
+      },
+      {
+        tier: "reference",
+        label: "Trinitarian Bible Society, \"Why 1 John 5.7-8 is in the Bible\"",
+        url: "https://www.tbsbibles.org/page/1John5verse7and8",
+        credit: "Trinitarian Bible Society, London",
+        detail:
+          "The Society's own statement of its position, quoting M. Henry, R. L. Dabney and E. F. Hills at length. Read in full in a browser; the site refuses scripted requests. Every quotation attributed to the defenders in the third section above is taken from here rather than from a critic's summary of it, with one deliberate exception and one correction. The exception: the Society's Dabney extract elides his answer about \"the power of attraction\", which is quoted above from Dabney's own Discussions 1:378. The correction: the Society's text prints \"the masculine article, numeral, and particle\", but Dabney, Discussions 1:378, reads \"participle\" — which is what οἱ τρεῖς μαρτυροῦντες requires, there being no particle in the phrase. The article prints Dabney's word, not the Society's typo",
+        supports: "The grammatical argument, Henry's \"upon the earth\" argument, Dabney's argument from the definite article, the \"why this wording\" argument, and the providential-preservation argument, in their advocates' own words",
+      },
+      {
+        tier: "scholarly",
+        label: "W. W. Combs, \"Erasmus and the Textus Receptus\"",
+        url: "https://dbts.edu/wp-content/uploads/1996/10/Erasmus-and-the-Textus-Receptus-Combs.pdf",
+        credit: "William W. Combs, Detroit Baptist Theological Seminary",
+        detail:
+          "Detroit Baptist Seminary Journal 1 (Spring 1996), 35-53; free PDF, read in full. Source of the seven manuscripts and their identities, the printer's-copy detail, the count of twenty unsupported readings in the last six verses of Revelation, the Acts 9:6 insertion, the Elzevir 1633 preface, and the note that Metzger corrected the promise story in an appendix to his third edition after de Jonge",
+        supports: "What Erasmus actually had to work with, and what the Textus Receptus inherited from it",
+      },
+      {
+        tier: "institution",
+        label: "Center for the Study of New Testament Manuscripts: the Comma Johanneum in an overlooked manuscript",
+        url: "https://www.csntm.org/2010/07/02/the-comma-johanneum-in-an-overlooked-manuscript/",
+        credit: "Center for the Study of New Testament Manuscripts",
+        detail:
+          "The 2010 report of a ninth Greek manuscript with the clause in the margin — Munich, Bayerische Staatsbibliothek Cod. graec. 211, Gregory-Aland 177, an eleventh-century codex whose marginal addition is dated to the seventeenth or eighteenth century. The page carries no byline; G. McDonald's dissertation attributes the find to D. B. Wallace and cites the same report",
+        supports: "The manuscript count, and that it is still moving",
+      },
+      {
+        tier: "primary",
+        label: "R. L. Dabney, \"The Doctrinal Various Readings of the New Testament Greek\", in Discussions, vol. 1: Theological and Evangelical",
+        url: "https://archive.org/details/discussions01dabn",
+        credit: "Robert Lewis Dabney",
+        detail:
+          "Edited by C. R. Vaughan; Richmond, Va.: Presbyterian Committee of Publication, 1890. Public domain and freely readable at the Internet Archive, digitised from the Princeton Theological Seminary copy. Consulted because the Trinitarian Bible Society quotes this essay and prints \"particle\" where Dabney, p. 378, wrote \"participle\". Also the source of the sentence the Society's extract elides — that the masculines of verse 8 \"may be accounted for by the power of attraction, so well known in Greek syntax\" — and of Dabney's third argument, that without verse 7 the τὸ ἓν of verse 8 \"has no antecedent presence in the passage\"",
+        supports: "Dabney's grammatical argument in his own words, and the two parts of it the Society's extract leaves out",
+      },
+      {
+        tier: "primary",
+        label: "O. T. Dobbin, The Codex Montfortianus: a collation of this celebrated ms. in the library of Trinity college, Dublin",
+        url: "https://archive.org/details/bub_gb_ZVM7Drma5ZwC",
+        credit: "Orlando T. Dobbin",
+        detail:
+          "S. Bagster and Sons, London, 1854; public domain and freely readable at the Internet Archive. The nineteenth-century collation of the manuscript Erasmus was shown, cited so that a reader can look at the evidence rather than take a description of it",
+        supports: "That Codex Montfortianus is at Trinity College Dublin and has been collated in public",
+      },
+      {
+        tier: "reference",
+        label: "D. B. Wallace, \"The Comma Johanneum and Cyprian\"",
+        url: "https://bible.org/article/comma-johanneum-and-cyprian",
+        credit: "Daniel B. Wallace",
+        detail:
+          "Read in full in a browser; bible.org refuses scripted requests. Daniel B. Wallace is bylined on the page, which carries his biography and a \"More from this author\" link and is dated 25 June 2004. Cited for the argument about what Cyprian does and does not quote",
+        supports: "The evangelical text-critical answer to the Cyprian argument",
+      },
+      {
+        tier: "encyclopedic",
+        label: "Wikipedia: Johannine Comma",
+        url: "https://en.wikipedia.org/wiki/Johannine_Comma",
+      },
+    ],
+  },
+
+  {
+    id: "codex-amiatinus",
+    name: "Codex Amiatinus",
+    alternateNames: ["Amiatinus"],
+    // NOT registered: "Vulgate". This article discusses it at length, but the Vulgate is a
+    // translation tradition and this record is one book. Registering it would point every
+    // "Vulgate" in the 66 book introductions at a single eighth-century codex, which is the
+    // wrong destination. Flagged for Bob as a candidate for its own record.
+    category: "manuscript",
+    role: "The Oldest Complete Latin Bible, Made in Northumbria and Carried Toward Rome",
+    summary:
+      "A one-volume Latin Bible written at Wearmouth-Jarrow around AD 700 and carried south by an abbot who died on the road — the oldest surviving complete copy of the Vulgate, and an English book that most scholars took for an Italian one until the end of the nineteenth century.",
+    sections: [
+      {
+        heading: "Three Bibles, and a Journey That Ended at Langres",
+        paragraphs: [
+          "Bede tells the story in his Lives of the Abbots, and the sentence is short enough to quote whole. Ceolfrith, abbot of Wearmouth and Jarrow, \"added three Pandects of a new translation to that of the old translation which he had brought from Rome; one of them, returning to Rome in his old age, he took with him as a gift; the other two he left to the two monasteries.\" A pandect is a complete Bible in one volume, which in the eighth century was a rare and enormous thing to attempt; three of them at once meant a herd of animals, and a grant of land made to the monastery in 692 has been connected with the parchment they would have needed.",
+          "Ceolfrith set out on 4 June and got as far as the country of the Lingones — the Gallic people whose city is modern Langres, in Burgundy — where he died on 25 September, seven hours after arriving, with about eighty English companions around him. Bede gives the day exactly and the year less exactly: the translation most readers will meet prints 715, and the British Library and modern scholarship both give 716. The Bible he was carrying went on without him, and came in time to the monastery of San Salvatore on Monte Amiata in southern Tuscany, which is where its name comes from. It is in Florence now, in the Biblioteca Medicea Laurenziana, catalogued as Amiatino 1. The library has photographed all of it: 1,029 leaves of parchment, 500 by 335 millimetres, free to page through online.",
+          "One detail in the book has done more damage than any other. The dedication page names the donor, and at some point after Ceolfrith's death somebody scraped his name out and wrote another in. As H. A. G. Houghton puts it, the alteration changed \"the donor's name from Ceolfrid, abbot of the English, to Peter, abbot of the Lombards.\" That single erasure is the reason an English book sat in Italy for a thousand years being described as Italian.",
+        ],
+      },
+      {
+        heading: "What the Vulgate Actually Is",
+        paragraphs: [
+          "It is worth being exact about what this book contains, because \"the Vulgate\" is routinely described as Jerome's translation of the Bible and it is not quite that. Pope Damasus asked Jerome, around 382, to produce a revised Latin text of the Gospels, and Jerome did that by comparing the Latin in use against Greek copies. He later translated most of the Old Testament afresh from the Hebrew. The rest of the New Testament — Acts, the epistles, Revelation — is an anonymous revision by somebody else, and a handful of books came from other sources again. What became the standard Latin Bible of the west is therefore a composite, assembled over time, and it took a long time to displace the older Latin versions it was revising.",
+          "Amiatinus is the oldest copy of that composite surviving complete, which is what makes it the reference point for every critical edition of the Latin Bible. Its text is laid out per cola et commata, in sense-lines rather than continuous prose, the arrangement Jerome introduced for the Hebrew prophets and the one most modern editions of the Vulgate still use. A reader can see it: folio 843 recto, the opening of Mark 11, is a page of short lines broken where the sense breaks.",
+          "Two of its readings are worth a Bible reader's attention. The disputed clause at 1 John 5:7 about three heavenly witnesses, which the King James Version prints and modern translations do not, is not in Amiatinus — G. McDonald's study of that clause names this codex among \"several important manuscripts\" of its date from which it is absent. And the two sister Bibles are not entirely lost: fragments of one survive in the British Library as Additional MSS 37777 and 45025, carrying parts of what the Vulgate calls 3 and 4 Kings — the books an English Bible calls 1 and 2 Kings. Some of those leaves spent the sixteenth century as covers for property deeds.",
+        ],
+      },
+      {
+        heading: "A Book That Has Been Misread for a Thousand Years",
+        paragraphs: [
+          "Houghton's verdict on the literature is blunt: \"Scholarship on this manuscript has been beset by a number of persistent misunderstandings.\" The Italian attribution was the first and the longest-lived. A second is the assumption that Amiatinus is simply a copy of the codex grandior, the large illustrated Bible made at Cassiodorus's monastery at Vivarium in southern Italy. Ceolfrith did bring a pandect back from Rome, but it was an Old Latin book, not a Vulgate one, so it cannot have been the exemplar for Amiatinus's text; the Vulgate assembled in these three Bibles was the work of the community at Wearmouth-Jarrow itself. Houghton's own verdict runs the other way, and the second half of it is the half that matters: \"Although there is still some hesitation about the presence of the codex grandior in Northumbria, this is the simplest explanation for the format and certain features of Codex Amiatinus.\" What he is correcting is not the idea that Cassiodorus's book reached Northumbria — he thinks it probably did — but the idea that Amiatinus is a copy of it.",
+          "The famous miniature is a third. It shows a man writing in front of a bookcase holding a nine-volume Bible, and the caption in the manuscript names him Ezra. Houghton records that \"there are good reasons for thinking that it may be a depiction of Cassiodorus himself\" — the bookcase behind him holds nine volumes arranged as Cassiodorus describes his own nine-volume Bible, and the smaller book at his feet matches another of his formats. The picture is famous as an image of the scribe of Ezra 7:6 and may be a portrait of a sixth-century Italian statesman. Both readings are in print; neither is certain.",
+          "The honest limit for a reader of this app is a different one, and it is about weight rather than origin. Amiatinus is a Latin Bible, and Latin is a translation. Where it matters what the New Testament said, a Greek manuscript three centuries older carries more, and this book's own Gospels are not an independent witness even in Latin — B. Fischer's work identified them as a copy of a Neapolitan gospel book, liturgical notes included. What Amiatinus is unmatched for is something else: the shape of a complete Bible, the state of the Vulgate text around AD 700, and the astonishing fact that the best surviving copy of it was made at the far northern edge of Europe, in a kingdom that had been Christian only since the seventh century. The last figure worth giving is one this article can source only once: the British Library's own account puts the book at 35 kilograms, and no other source consulted here confirms it.",
+        ],
+      },
+    ],
+    verses: [
+      { reference: "Mark 11:1", note: "The opening of Mark 11, the page of Amiatinus the Laurenziana reproduces" },
+      { reference: "Ezra 7:6", note: "\"A skilled scribe in the law of Moses\" — the figure the codex's miniature names" },
+      { reference: "1 Kings 1:1", note: "3 Kings in the Vulgate's numbering, part of what survives from a sister Bible" },
+      { reference: "1 John 5:7", note: "The disputed clause about three heavenly witnesses, absent from this codex" },
+    ],
+    sources: [
+      { label: "Biblioteca Medicea Laurenziana: Amiatino 1, digitised in full", url: "https://tecabml.contentdm.oclc.org/digital/collection/amiatino/id/2059" },
+      { label: "Bede, Lives of the Holy Abbots of Wearmouth and Jarrow (Wikisource)", url: "https://en.wikisource.org/wiki/Lives_of_the_holy_abbots_of_Wearmouth_and_Jarrow" },
+      { label: "H. A. G. Houghton, The Latin New Testament (Oxford University Press, open access)", url: "https://pure-oai.bham.ac.uk/ws/files/101039771/9780198744733.pdf" },
+    ],
+    manuscript: {
+      siglum: "Vulgate A (Vg A)",
+      manuscriptType:
+        "Parchment pandect — a complete Bible in a single volume — in uncial script, two columns of 44 to 45 lines, laid out per cola et commata",
+      language: "Latin",
+      contents:
+        "The whole Latin Bible, Old and New Testaments, complete. The oldest surviving complete copy of the Vulgate. The disputed clause at 1 John 5:7 is absent. A prefatory quire carries an illustration of the Tabernacle across a two-page opening, and a picture of a seated copyist in front of a nine-volume Bible, captioned as Ezra",
+      origin: "The twin monasteries of Wearmouth and Jarrow, Northumbria, under Abbot Ceolfrith",
+      findSite:
+        "Not applicable. The codex was never lost and never excavated. It passed from Ceolfrith's funeral party to the monastery of San Salvatore on Monte Amiata in southern Tuscany, and from there to Florence",
+      foundYear: "Not applicable",
+      foundBy:
+        "No finder. Its Northumbrian origin was recovered by scholarship at the end of the nineteenth century, after the altered dedication page had kept it Italian for a thousand years",
+      dateAssigned:
+        "About AD 700, completed before Ceolfrith left for Rome in the summer of 715 or 716. The Laurenziana's own catalogue gives the wider range 601-800",
+      dateCertainty: "traditional",
+      currentLocation: "Biblioteca Medicea Laurenziana, Florence",
+      shelfmark: "Amiatino 1",
+      facsimileUrl: "https://tecabml.contentdm.oclc.org/digital/collection/amiatino/id/2059",
+    },
+    reflectionPrompt:
+      "Someone scraped Ceolfrith's name off the page and wrote another in, and for a thousand years the credit went elsewhere. Whose work have you been given credit for, or been quietly denied?",
+    citations: [
+      {
+        tier: "institution",
+        label: "Biblioteca Medicea Laurenziana, Teca Digitale: Amiatino 1",
+        url: "https://tecabml.contentdm.oclc.org/digital/collection/amiatino/id/2059",
+        credit: "Biblioteca Medicea Laurenziana, Florence",
+        detail:
+          "The holding library's own record and its complete digitisation — every one of the 1,029 leaves, with IIIF. Source of the shelfmark, the leaf count, the 500 x 335 mm measurement and the catalogue's date range of 601-800. The record itself carries no description, so nothing about Ceolfrith or Wearmouth-Jarrow rests on it. Images are published CC BY-NC-SA and are linked here, not reproduced",
+        supports: "The shelfmark, the physical description and the fact that a reader can look at the whole book",
+      },
+      {
+        tier: "primary",
+        label: "Bede, Lives of the Holy Abbots of Wearmouth and Jarrow, translated by J. A. Giles",
+        url: "https://en.wikisource.org/wiki/Lives_of_the_holy_abbots_of_Wearmouth_and_Jarrow",
+        credit: "Bede; translated by J. A. Giles",
+        detail:
+          "Public domain, read in full at Wikisource. Chapter 15 is quoted verbatim above for the three pandects; chapters 21 to 23 give the death among the Lingones, the departure on 4 June and the death on 25 September. Note that Bede does not name the Pope as the recipient, and that this translation prints the year as 715 where modern accounts give 716 — both points are stated as such in the article rather than smoothed over",
+        supports: "The three pandects, the journey, and the date of Ceolfrith's death",
+      },
+      {
+        tier: "scholarly",
+        label: "H. A. G. Houghton, The Latin New Testament: A Guide to its Early History, Texts, and Manuscripts",
+        url: "https://pure-oai.bham.ac.uk/ws/files/101039771/9780198744733.pdf",
+        credit: "Hugh A. G. Houghton, University of Birmingham",
+        detail:
+          "Oxford University Press, 2016; the publisher's PDF, open access under CC BY-NC-ND, read in full here. Source of the altered dedication, the persistent misunderstandings, the codex grandior question, the Cassiodorus reading of the miniature, the per cola et commata layout, B. Fischer's finding about the Neapolitan exemplar of the Gospels, and the sister-Bible shelfmarks. Houghton is not a source for the absence of the Johannine clause from this codex: he says that of Codex Fuldensis, on page 56, and his catalogue entry for Amiatinus on pages 253-4 does not mention the clause at all. For that fact, see the McDonald dissertation below. The licence is non-commercial, so it is linked and quoted briefly, never hosted",
+        supports: "Everything in the third section, and the account of what the Vulgate is",
+      },
+      {
+        tier: "scholarly",
+        label: "G. McDonald, Raising the Ghost of Arius (doctoral dissertation, Leiden University, 2011)",
+        url: "https://scholarlypublications.universiteitleiden.nl/access/item:2954624/download",
+        credit: "Grantley Robert McDonald",
+        detail:
+          "Open access at Leiden University. Page 45 lists the Latin Bibles that do not carry the disputed clause at 1 John 5:7 and names this one among them: it is \"absent from several important manuscripts of a later date, such as codex Amiatinus\", alongside the Lectionary of Luxeuil, Codex Harleianus, the Book of Armagh and Codex Sangermanensis. The same dissertation is the backbone of this app\u2019s article on the Comma Johanneum. The Leiden viewer turns away some automated requests; the file downloads normally in a browser",
+        supports: "That the disputed clause at 1 John 5:7 is absent from this codex",
+      },
+      {
+        tier: "reference",
+        label: "C. Westwell, \"King Offa and the Ceolfrith Bible\", British Library Medieval Manuscripts blog (Internet Archive capture)",
+        url: "https://web.archive.org/web/2020id_/https://blogs.bl.uk/digitisedmanuscripts/2013/05/the-ceolfrith-bible.html",
+        credit: "Chantry Westwell, The British Library",
+        detail:
+          "May 2013. The live British Library blog now returns 404 and the Library's digitised-manuscripts viewer has been offline since the 2023 cyber-attack, so this is cited from an Internet Archive capture and is the only source here for the 35 kg weight, which the article attributes rather than asserts. One sentence in the post places Monte Amiata \"in Florence\", which is wrong — it is in southern Tuscany — and that sentence is not followed here",
+        supports: "The Ceolfrith Bible fragments, the deed-covers story, and the weight",
+      },
+      {
+        tier: "encyclopedic",
+        label: "Wikipedia: Codex Amiatinus",
+        url: "https://en.wikipedia.org/wiki/Codex_Amiatinus",
+      },
+    ],
+  },
+
+  {
+    id: "vetus-latina",
+    name: "Vetus Latina",
+    alternateNames: ["the Old Latin Bible"],
+    matchNames: ["Old Latin version", "Old Latin versions", "Old Latin Bible"],
+    category: "manuscript",
+    role: "The Latin Bible Christians Read Before Jerome",
+    summary:
+      "The Latin Scriptures as they circulated before the Vulgate — surviving in a handful of battered gospel codices and in tens of thousands of quotations by Latin writers, and preserving a Greek text that in places no longer exists anywhere else.",
+    sections: [
+      {
+        heading: "The Bible Latin Christians Read First",
+        paragraphs: [
+          "Christianity reached the Latin west long before it had a Latin Bible anybody would call standard. By the middle of the third century there was a full Latin translation in use in north Africa, and it can be reconstructed in detail because Cyprian, bishop of Carthage, quoted it constantly — his two collections of proof texts, Ad Quirinum of 248 or 250 and the slightly later Ad Fortunatum, are effectively a Bible in pieces, arranged by subject. The Vetus Latina edition gives the text-type reconstructed from his quotations the siglum K, and it is the earliest complete Latin translation we can get at.",
+          "Four gospel manuscripts carry the story further, and they are worth knowing by name because the sigla appear in every critical apparatus. Codex Bobiensis, cited as k, was copied in Africa in the fourth century and survives as ninety-six small leaves carrying parts of the Gospel of Mark and the Gospel of Matthew. Codex Vercellensis, a, was written in Italy, probably at Vercelli, in the second half of the fourth century, and is now so deteriorated partly because people swore oaths on it. Codex Palatinus, e, and Codex Veronensis, b, are both fifth-century Italian books written in silver and gold on purple parchment. Bobiensis has one distinction nothing else in Greek or Latin shares: it is, in Houghton's words, \"the only gospel manuscript in Greek or Latin which has the 'shorter ending' by itself\", with no verses 9 to 20 after it.",
+          "The word for all of this is Vetus Latina, and the body that edits it is the Vetus Latina Institut, founded at Beuron in 1945 by the Benedictine monk B. Fischer and directed since by H. J. Frede, R. Gryson and, since 2014, T. J. Bauer. Its raw material is a card index begun by a Bavarian parish priest, J. Denk, which now holds a million references to Latin biblical quotations. The first attempt at the job was made by the French Benedictine P. Sabatier, who died in 1742 having assembled citations from about sixty church fathers. The modern edition is planned at twenty-seven volumes and the Institute's own estimate, after nearly sixty years of work, was that about half of it was done.",
+        ],
+      },
+      {
+        heading: "Why a Superseded Translation Still Counts",
+        paragraphs: [
+          "The obvious question is why anyone edits a Bible that was replaced. The answer, in the words of the Birmingham institute that edits this material, is that \"most of the Old Latin translations were made from Greek manuscripts which no longer exist,\" so \"the original layer preserves a witness to the Bible, especially the New Testament, which would otherwise be lost to us.\" A Latin reading of the second or third century can point back through the Latin to a Greek copy older than any Greek copy still in existence. That is a real and unusual kind of evidence, and it is why the Beuron edition lays out every page the way it does: the Greek text and its variants at the top as the starting point, the surviving Old Latin text-types beneath it, and the Vulgate at the end as the place the development arrives.",
+          "It also matters for the Vulgate, because the Vulgate was not a fresh start. Pope Damasus asked Jerome, around 382, to revise the Latin Gospels against the Greek; what became the standard Latin New Testament outside the Gospels is an anonymous revision by somebody else. Jerome describes even his own gospel work as a light revision of an existing text. The Old Latin is what was being revised, and it went on being read and copied for centuries afterwards while the Vulgate slowly won.",
+          "One consequence reaches a modern reader directly. The disputed clause at 1 John 5:7 about three heavenly witnesses is a Latin phenomenon before it is anything else. Houghton's account is that it \"appears to have originated in Latin tradition, possibly as a gloss at the end of the fourth century\", and that the Greek printed in the Textus Receptus \"is a translation of a secondary Latin form present in a handful of later Vulgate manuscripts\". If you have ever wondered how a sentence gets into one Bible and not another, this is the tradition where it happened.",
+        ],
+      },
+      {
+        heading: "One Translation, or Many?",
+        paragraphs: [
+          "The standard popular account says the Old Latin was a chaos of independent translations that Jerome cleaned up. It has two famous sentences behind it. Jerome wrote in the preface to his revised Gospels: \"si enim latinis exemplaribus fides est adhibenda, respondeant quibus: tot sunt paene quot codices\" — if trust is to be placed in Latin originals, let them tell us which ones, there are almost as many as there are manuscripts. Augustine wrote that in the earliest days anyone who got hold of a Greek manuscript and thought he had a little of both languages \"hazarded his own translation\".",
+          "Both sentences are quoted more confidently than they deserve. H. A. G. Houghton, who edits this material, argues that they will not carry the weight: Augustine's remark \"has long been overapplied\" and is about the Old Testament in context, and Jerome's may be, in Houghton's words, a \"rhetorical attempt to establish the priority of his text\" — Jerome had a new edition to sell. Set the ancient comments aside and look at the manuscripts, Houghton says, and \"the balance of probability favours the former\" of the two possibilities: one initial translation, revised many times, rather than many independent ones. He adds that \"editors of Old and New Testament books in the Vetus Latina series have reached the conclusion that in each case a single Latin translation underlies all the surviving evidence for the Old Latin tradition\", while allowing that other early translations may have been made and left no trace.",
+          "This is a live question rather than a settled one, and it is worth stating carefully in both directions. The Beuron edition itself is organised around plural text-types — K for the earliest African form, C for its later African revision, D for a European revision, I for a fourth-century Italian text — and older handbooks, and some of the introductory pages published by the same projects, still describe the Old Latin as a set of translations. Houghton's own terminology is a further caution against the tidy version: he puts quotation marks around \"European\" and prefers \"archaic\" to \"African\", because the African readings are evidence of an early stage of the translation and not of an African dialect of Latin. The honest summary for a reader is that the Latin Bible before Jerome was genuinely various, that the variety is now more often explained as revision than as multiple origins, and that the distinction between those two accounts is exactly the sort of thing a card index of a million citations exists to settle.",
+        ],
+      },
+    ],
+    verses: [
+      { reference: "Mark 16:8", note: "Codex Bobiensis prints the short ending after this verse and nothing else — the only gospel manuscript in Greek or Latin that does" },
+      { reference: "1 John 5:7-8", note: "The disputed clause, which entered the Bible through the Latin tradition" },
+      { reference: "Matthew 5:44", note: "One of the verses where the early African Latin differs from what later became standard" },
+    ],
+    sources: [
+      { label: "Vetus Latina-Institut, Beuron: the Institute and its edition", url: "https://www.herder.de/vetus-latina/institut/" },
+      { label: "ITSEE, University of Birmingham: The Old Latin Bible", url: "https://itseeweb.cal.bham.ac.uk/vetuslatina/" },
+      { label: "H. A. G. Houghton, The Latin New Testament (Oxford University Press, open access)", url: "https://pure-oai.bham.ac.uk/ws/files/101039771/9780198744733.pdf" },
+    ],
+    manuscript: {
+      manuscriptType:
+        "Not one manuscript but a tradition: a small number of parchment gospel codices, mostly fragmentary, plus the biblical quotations of Latin writers, which supply most of the evidence outside the Gospels",
+      language: "Latin, translated from Greek",
+      contents:
+        "The Latin Scriptures as they stood before Jerome's revision. The Gospels are the only part where the main text-types are represented by surviving manuscripts rather than by quotations. Four gospel codices carry most of the weight: Bobiensis (k), Vercellensis (a), Palatinus (e) and Veronensis (b)",
+      origin: "North Africa for the earliest form; Italy and elsewhere in the Latin west for the later revisions",
+      findSite:
+        "Not applicable. The manuscripts stayed in European libraries — Turin, Vercelli, Trent, Verona — and the quotations were always in print",
+      foundYear: "Not applicable",
+      foundBy:
+        "No finder. P. Sabatier assembled the first scholarly edition from patristic quotations before his death in 1742; the Vetus Latina Institut at Beuron has been editing it since 1945",
+      dateAssigned:
+        "A complete Latin translation in use in Africa by the early third century, attested in Cyprian's quotations of 248-250. The surviving gospel manuscripts run from the fourth century to the twelfth",
+      dateCertainty: "traditional",
+      currentLocation:
+        "Turin, Biblioteca Nazionale Universitaria (Bobiensis); Vercelli, Archivio Capitolare Eusebiano (Vercellensis); Trent, Museo Nazionale (Palatinus); Verona, Biblioteca Capitolare (Veronensis). The edition is published from Beuron",
+      facsimileUrl: "https://itseeweb.cal.bham.ac.uk/iohannes/vetuslatina/",
+    },
+    reflectionPrompt:
+      "For two centuries the Latin church read a Bible nobody had authorised, translated by people whose names are gone, and it was enough to make martyrs. What are you waiting to have properly in place before you start?",
+    citations: [
+      {
+        tier: "institution",
+        label: "Vetus Latina-Institut, Beuron: the Institute and its edition",
+        url: "https://www.herder.de/vetus-latina/institut/",
+        credit: "Vetus Latina-Institut, Erzabtei Beuron",
+        detail:
+          "The editing body's own pages, in German, English and French, read in full. Source of the 1945 foundation by B. Fischer, the succession of directors to T. J. Bauer in 2014, the card index begun by \"Fr Denk\" — a parish priest, which is why this article does not call him a monk — and its million references, the three-part page layout, and the Institute's own estimate of its progress. Its companion page at herder.de/vetus-latina/edition/ carries P. Sabatier, his death in 1742, his \"around 60 Church Fathers\", and the plan for 27 volumes. The Institute's old domain no longer serves HTTPS; this is the publisher-hosted address that works",
+        supports: "The Institute, the edition, and the history of the enterprise",
+      },
+      {
+        tier: "institution",
+        label: "ITSEE, University of Birmingham: The Old Latin Bible",
+        url: "https://itseeweb.cal.bham.ac.uk/vetuslatina/",
+        credit: "Institute for Textual Scholarship and Electronic Editing, University of Birmingham",
+        detail:
+          "Online since 2003. This general page, not the Iohannes edition, is the source of the two sentences quoted in the article about why the Old Latin matters as a witness to lost Greek manuscripts, and of the account of how the Vulgate was assembled. Its companion edition, Vetus Latina Iohannes, publishes free transcriptions of the Old Latin manuscripts of John and independently confirms the sigla e, a and b",
+        supports: "The evidential value of the Old Latin, and the relation of Old Latin to Vulgate",
+      },
+      {
+        tier: "scholarly",
+        label: "H. A. G. Houghton, The Latin New Testament: A Guide to its Early History, Texts, and Manuscripts",
+        url: "https://pure-oai.bham.ac.uk/ws/files/101039771/9780198744733.pdf",
+        credit: "Hugh A. G. Houghton, University of Birmingham",
+        detail:
+          "Oxford University Press, 2016; publisher's PDF, open access under CC BY-NC-ND, read in full here. Source of the one-translation argument and both quotations from it, the Latin and English of Jerome's preface, the Augustine remark and the judgement that it has been overapplied, the text-type letters K, C, D and I with his own scare quotes around \"European\", the Cyprian material, the catalogue entries for all four gospel codices, and the account of the Johannine clause. The licence is non-commercial: linked and quoted briefly, never hosted",
+        supports: "The whole of the third section, and the dating and description of the manuscripts",
+      },
+      {
+        tier: "primary",
+        label: "Jerome, Letter to Pope Damasus: Preface to the Gospels, translated by K. P. Edgecomb",
+        url: "https://www.tertullian.org/fathers/jerome_preface_gospels.htm",
+        credit: "Jerome; translated by Kevin P. Edgecomb, 1999",
+        detail:
+          "The translator released this English version into the public domain; also mirrored at Wikisource. Read in full. His rendering of the famous line is looser than Houghton's, so the article quotes Houghton's Latin and English and links this for the whole preface, which is short and worth reading beside the argument about it",
+        supports: "Jerome's own account of what Damasus asked him to do and why",
+      },
+      {
+        tier: "encyclopedic",
+        label: "Wikipedia: Vetus Latina",
+        url: "https://en.wikipedia.org/wiki/Vetus_Latina",
+      },
+    ],
+  },
+
+  {
+    id: "peshitta",
+    name: "Peshitta",
+    alternateNames: ["the Syriac Peshitta"],
+    category: "manuscript",
+    role: "The Syriac Bible, and a New Testament of Twenty-Two Books",
+    summary:
+      "The standard Bible of the Syriac-speaking churches: an Old Testament translated straight from the Hebrew in the second century, and a New Testament that has never contained Revelation, Jude, 2 Peter, or 2 and 3 John.",
+    sections: [
+      {
+        heading: "A Bible That Was Never Greek and Never Latin",
+        paragraphs: [
+          "Syriac is a dialect of Aramaic, the language Jesus spoke, and it became the literary and liturgical language of a Christianity that spread east rather than west, through Edessa and Mesopotamia and onward from there. That church had its own Bible, and the Peshitta is it. The name is the feminine passive participle of a verb meaning to stretch out or extend, and what it was meant to convey is genuinely unclear: the reference work published by Beth Mardutho records that the sense \"is no longer clear\", with candidates including \"simple\", \"widespread\" (on the analogy of the Latin vulgata), and \"single\" as against the six columns of Origen's Hexapla.",
+          "The Old Testament half is the older and the more remarkable. It was translated directly from Hebrew rather than from the Greek Septuagint — not quite everywhere, since the Gorgias dictionary says that in the book of Ezekiel and in the Twelve Prophets \"we have to assume some literary dependence of the Peshitta on the Septuagint\" — and that puts it in a very small class — the Brill edition's own description dates it \"on the basis of the Hebrew text during the second century CE\", with books outside the Hebrew canon translated later from Greek, and the study the Gorgias dictionary calls the most thorough discussion of the version's origin, M. Weitzman's, puts the work at Edessa \"from 150 onwards\". That makes the Peshitta an independent early witness to the Hebrew text, made centuries before the Masoretes fixed the vowels and the accents, and standing outside the Greek tradition that everything else in the ancient world depends on. And it turns out to agree: the Gorgias dictionary reports that the edition has made clear that \"the Hebrew model of the Peshitta must have been nearly identical with the so-called Masoretic Text\", and even reflects a vocalisation very close to the one the Masoretes wrote down many centuries later. A second-century translator in Edessa and a tenth-century scribe in Tiberias were working from nearly the same Hebrew.",
+          "The oldest complete copy of it is a single book: Milan, Biblioteca Ambrosiana, B 21 inf., which the library's own catalogue dates 501 to 600, describes as 174 parchment leaves at 370 by 270 millimetres, and records as having entered the collection in 1611. A. M. Ceriani published a photolithographic facsimile of it in 1876, which is out of copyright and free to read.",
+        ],
+      },
+      {
+        heading: "Twenty-Two Books",
+        paragraphs: [
+          "The New Testament Peshitta became the standard Syriac text around 400, and it is a revision that pulled the older Syriac gospels closer to the Greek. The striking thing about it is its table of contents. In the words of the Gorgias Encyclopedic Dictionary of the Syriac Heritage: \"The NT Peshitta contains twenty-two books; it lacks 2-3 John, 2 Peter, Jude, and Revelation.\" Those five books are printed in modern Syriac Bibles, but they were supplied from later translations; the Peshitta itself never had them. It also omits the account of the woman caught in adultery at John 7:53 to 8:11, and a few isolated verses such as Luke 22:17 and 18.",
+          "It would be easy to read that as a church rejecting five books, and it is worth resisting. The four short Catholic Epistles and Revelation were the books whose reception took longest everywhere — the Muratorian Fragment, Eusebius and the great Greek codices all show the same edge of the canon being worked out — and the Syriac tradition simply settled with a standard version that predated the settlement. What it shows is not a rival canon so much as a photograph of the process at a particular moment, taken in a language most western readers never look at.",
+          "The other thing worth knowing is how far it travelled. The Peshitta had become the authoritative Syriac Bible before the christological quarrels of the mid-fifth century split the Syriac churches; F. C. Burkitt, working the same problem from the other end in 1904, pointed out that at the relevant date the parties were not yet separate bodies at all: \"it was not till 449 AD, fifteen years after Rabbula's death, that Nestorian doctrines were formally condemned.\" That is Burkitt's reckoning; the condemnation of Nestorius himself is normally dated to the Council of Ephesus in 431, and the point survives either way. So both sides kept it. It is still the Bible of the Syriac Orthodox Church and of the Church of the East.",
+        ],
+      },
+      {
+        heading: "Who Made the New Testament Peshitta?",
+        paragraphs: [
+          "There is one confident answer in the literature and it is probably wrong. F. C. Burkitt set it out in his own conclusions in 1904, and the sentences are worth reading in full because they are the source of a claim still repeated as fact: \"The Peshitta is a revision of the Evangelion da-Mepharreshe, undertaken mainly with the object of conforming the translation more closely to the Greek text as read at Antioch early in the 5th century. It was prepared by Rabbula, bishop of Edessa from 411-435 AD, and published by his authority as a substitute for the Diatessaron.\" His argument in one line: \"Before Rabbula, no trace of the Peshitta: after Rabbula, hardly a trace of any other text.\"",
+          "The attribution did not hold. A. Vööbus, in studies published from 1951, showed that Rabbula's own writings quote the older Syriac gospels and the Diatessaron rather than the Peshitta — which is hard to explain if he had just produced it. The Gorgias dictionary's summary is that while Rabbula \"may have enforced the dissemination of the Peshitta version, the theory that he was responsible for its creation was convincingly challenged by Vööbus\". This article has not read Vööbus's volumes directly and cites the challenge at second hand, which is worth saying plainly.",
+          "What is left when the name goes is more honest and less satisfying. The New Testament Peshitta is a revision by nobody we can name, made somewhere in the Syriac-speaking world in the late fourth or early fifth century, which succeeded so completely that the version it replaced, the Old Syriac gospels, survives in exactly two manuscripts. Burkitt's evidence was real — the change of text at Edessa around Rabbula's episcopate is not in doubt — and what has gone is the inference from a change of text to a single man who made it. That is a common shape in this field, and it is worth recognising: an argument that a thing happened is much stronger than an argument about who did it, and the second is what gets repeated.",
+        ],
+      },
+    ],
+    verses: [
+      { reference: "John 7:53", note: "The start of the passage about the woman caught in adultery, which the Peshitta does not contain" },
+      { reference: "Luke 22:17-18", note: "Two verses at the Last Supper that the Peshitta omits" },
+      { reference: "2 Peter 1:1", note: "One of the five books outside the Peshitta's twenty-two" },
+      { reference: "Revelation 1:1", note: "Absent from the Peshitta, and supplied in printed Syriac Bibles from a later version" },
+    ],
+    sources: [
+      { label: "Biblioteca Ambrosiana: B 21 inf., the oldest complete Peshitta Old Testament", url: "https://ambrosiana.comperio.it/opac/detail/view/ambro:catalog:28063" },
+      { label: "F. C. Burkitt, Evangelion da-Mepharreshe, volume 2 (1904)", url: "https://archive.org/details/cu31924092359698" },
+      { label: "A. M. Ceriani's 1876 facsimile of the Ambrosian Peshitta", url: "https://archive.org/details/translatiosyrape12unse" },
+    ],
+    manuscript: {
+      manuscriptType:
+        "A translation tradition rather than a single object, surviving in hundreds of manuscripts. The oldest complete Old Testament copy is a sixth-century parchment codex of 174 leaves",
+      language: "Syriac, a dialect of Aramaic. The Old Testament translated from Hebrew, the New Testament revised against Greek",
+      contents:
+        "The Old Testament, translated from the Hebrew; and a New Testament of twenty-two books, lacking 2 Peter, 2 John, 3 John, Jude and Revelation. It also omits John 7:53-8:11 and a few isolated verses including Luke 22:17-18. Modern printed Syriac Bibles supply the missing books from later translations",
+      origin: "The Syriac-speaking world, with Edessa the usual candidate for the Old Testament",
+      findSite: "Not applicable. The Peshitta was never lost. It has been in continuous liturgical use in the Syriac churches since antiquity",
+      foundYear: "Not applicable",
+      foundBy:
+        "Unknown, and this is a real gap rather than a missing detail. The New Testament revision was long credited to Rabbula, bishop of Edessa, on F. C. Burkitt's 1904 argument; A. Vööbus's work from 1951 overturned that and no name has replaced it",
+      dateAssigned:
+        "The Old Testament in the second century AD; M. Weitzman's study of the version places the work at Edessa \"from 150 onwards\". The New Testament revision standard by about 400 and complete in the early fifth century",
+      dateCertainty: "disputed",
+      currentLocation:
+        "In use, in the Syriac Orthodox Church and the Church of the East. The critical edition is published by the Peshitta Institute, founded at Leiden; its recent volumes are credited to the Institute at the Vrije Universiteit Amsterdam",
+      shelfmark: "Milan, Biblioteca Ambrosiana, B 21 inf. (the manuscript known as 7a1), for the Old Testament",
+      facsimileUrl: "https://archive.org/details/translatiosyrape12unse",
+    },
+    reflectionPrompt:
+      "A whole church read a New Testament without Revelation in it for centuries, and produced saints and martyrs anyway. Which parts of your Bible are you actually living on?",
+    citations: [
+      {
+        tier: "institution",
+        label: "Biblioteca Ambrosiana: manuscript B 21 inf.",
+        url: "https://ambrosiana.comperio.it/opac/detail/view/ambro:catalog:28063",
+        credit: "Veneranda Biblioteca Ambrosiana, Milan",
+        detail:
+          "The holding library's own catalogue record, read in full. Source of the sixth-century date (the record reads 501-600), the collation of 174 parchment leaves, the 370 x 270 mm measurement, the identification of the contents as the Old Testament in the Peshitta version, and the acquisition date of 1611. It links a digital copy hosted by the Universita Cattolica del Sacro Cuore. The Ambrosiana's own public site has no page for this manuscript; the record exists only in the catalogue",
+        supports: "The oldest complete Peshitta Old Testament, its date, and where it is",
+      },
+      {
+        tier: "primary",
+        label: "A. M. Ceriani, Translatio Syra Pescitto Veteris Testamenti ex codice Ambrosiano sec. fere VI",
+        url: "https://archive.org/details/translatiosyrape12unse",
+        credit: "Antonio Maria Ceriani",
+        detail:
+          "Milan, 1876. A photolithographic facsimile of the Ambrosian manuscript itself, made by the Ambrosiana's own prefect; public domain and freely downloadable at the Internet Archive",
+        supports: "That the manuscript can be looked at rather than taken on description",
+      },
+      {
+        tier: "scholarly",
+        label: "F. C. Burkitt, Evangelion da-Mepharreshe, volume 2: Introduction and Notes",
+        url: "https://archive.org/details/cu31924092359698",
+        credit: "Francis Crawford Burkitt",
+        detail:
+          "Cambridge University Press, 1904; public domain, read at the Internet Archive. Source of both quotations of the Rabbula thesis in his own words, and of his answer to the objection that the Church of the East accepted a version issued by a bishop it had reason to dislike. Cited so that the argument that was overturned is stated by the man who made it, not by the people who overturned it",
+        supports: "The Rabbula attribution and its reasoning",
+      },
+      {
+        tier: "reference",
+        label: "Gorgias Encyclopedic Dictionary of the Syriac Heritage: Peshitta",
+        url: "https://gedsh.bethmardutho.org/Peshitta",
+        credit: "B. ter Haar Romeny and C. E. Morrison, for Beth Mardutho: The Syriac Institute",
+        detail:
+          "Free to read online. Source of the twenty-two-book statement quoted verbatim, the disputed meaning of the name, the omitted passages, the date of the New Testament revision, M. Weitzman's dating of the Old Testament to Edessa from 150 onwards, the finding that the Peshitta's Hebrew model was nearly identical with the Masoretic Text, and the account of A. Vööbus's challenge to Burkitt. Published under a Creative Commons Non-Commercial licence, so it is linked and cited here, never reproduced. The site refuses scripted requests and returns 403 to an automated checker while loading normally in a browser",
+        supports: "The canon, the name, and the current state of the Rabbula question",
+      },
+      {
+        tier: "scholarly",
+        label: "The Old Testament in Syriac according to the Peshitta Version (the Leiden Peshitta edition)",
+        url: "https://brill.com/display/serial/PES?language=en",
+        credit: "The Peshitta Institute, for the International Organization for the Study of the Old Testament; published by Brill",
+        detail:
+          "The publisher's series page, read for the editorial description quoted here — that the Old Testament Peshitta was \"made on the basis of the Hebrew text during the second century CE, whilst some books outside the Hebrew canon may have been translated at a later stage on the basis of a Greek text\". The volume credits on this page also show the Institute moving from Leiden to the Vrije Universiteit Amsterdam, which is why the article does not place it at Leiden in the present tense. The Leiden university page for the Institute is behind a bot wall and could not be opened",
+        supports: "The date and Hebrew source of the Old Testament Peshitta, and where the edition comes from",
+      },
+      {
+        tier: "encyclopedic",
+        label: "Wikipedia: Peshitta",
+        url: "https://en.wikipedia.org/wiki/Peshitta",
+      },
+    ],
+  },
+
+  {
+    id: "old-syriac-gospels",
+    name: "The Old Syriac Gospels",
+    alternateNames: ["the Curetonian Gospels", "the Sinaitic Palimpsest"],
+    // "Sinaitic Palimpsest" and "Curetonian Syriac" are registered in full. A bare "Sinaitic"
+    // is NOT, because Codex Sinaiticus already owns that territory and this record must not
+    // steal a mention of it. The longest-match rule keeps the two apart.
+    matchNames: ["Old Syriac", "Curetonian Syriac", "Sinaitic Syriac", "Codex Sinaiticus Syriacus", "Sinaitic Palimpsest"],
+    category: "manuscript",
+    role: "Two Manuscripts, One of Them Scraped Off and Written Over",
+    summary:
+      "The Syriac gospels as they stood before the Peshitta replaced them, surviving in exactly two books: one carried out of an Egyptian desert monastery in 1842, and one found by two Scottish sisters at Mount Sinai in 1892, underneath the lives of holy women.",
+    sections: [
+      {
+        heading: "Two Books, Fifty Years Apart",
+        paragraphs: [
+          "The first came out of the Nitrian Desert in Egypt. The British Library's own record for Additional MS 14451 says it was \"brought to the British Museum from the Convent of St Mary Deipara (Monastery of the Syrians) in Egypt by Henry Tattam (1788-1868) in 1842\", and that it is \"called the Curetonian Gospels after William Cureton (1808-1864) who was Assistant Keeper of Manuscripts at the British Museum from 1837 to 1849.\" Cureton recognised what it was and published it in 1858. The record dates the book to 450 to 470, and its foliation shows something odd at once: the Gospel of Matthew runs to folio 38, then a single leaf from the end of the Gospel of Mark, then the Gospel of John, and the Gospel of Luke last. That order is unusual, and it is worth being exact about how. Codex Vercellensis and most other Old Latin codices put the Gospel of Matthew first, then the Gospel of John, then the Gospel of Luke, and the Gospel of Mark last — a sequence H. A. G. Houghton calls \"the standard Old Latin order\" rather than an eccentricity of any one book. It is the Curetonian, with the Gospel of Mark second and the Gospel of Luke last, that is the genuinely odd one. It carries a note that a monk named Ḥabíb owned it in the tenth century, and it was repaired at a monastery in 1222. Three of its leaves are in Berlin.",
+          "The second was harder to see, because somebody had washed it off. In 1892 the twin sisters Agnes Smith Lewis and Margaret Dunlop Gibson, travelling at St Catherine's Monastery on Mount Sinai, found a Syriac manuscript whose upper writing was a collection of lives of women saints. Lewis describes the culprit by name in her own introduction: \"John the Recluse, of Beth-Mari, Kaddish, being in want of vellum, pulled to pieces a copy of the Old Syriac Gospels, and wrote above them his Select Narratives of Holy Women\" — Thecla, Eugenia, Pelagia and the rest. The gospel text underlies about 284 pages on 142 leaves. Reading it took a second expedition, in the early part of 1893, with R. L. Bensly, J. R. Harris and F. C. Burkitt transcribing directly from the manuscript over forty days while Lewis brought up the faded writing with a chemical reagent — hydro-sulphide of ammonia, recommended to her by a conservator at the British Museum. The team published the palimpsest in 1894. Lewis kept going back: the Gorgias dictionary counts five further journeys to Sinai in all, and her own standard edition of the manuscript did not appear until 1910. The manuscript is Sinai Syriac 30, and the Gorgias dictionary dates the codex under the saints' lives to the fourth or fifth century — older than the Curetonian, and the oldest Syriac gospel book there is.",
+          "That is the whole surviving corpus: two manuscripts. Everything else known about the Old Syriac gospels comes from quotations in Syriac writers and from readings that survived inside early Peshitta copies. The Syriac name for the version — Evangelion da-Mepharreshe, the gospel of the separated ones — is itself a piece of evidence, because it distinguishes four separate gospels from Tatian's Diatessaron, the single woven narrative that the Syriac church used first and then abandoned.",
+        ],
+      },
+      {
+        heading: "What Sits Underneath the Peshitta",
+        paragraphs: [
+          "These two books matter because they are older than the standard Syriac Bible and were replaced by it. The Peshitta New Testament is a revision, made around 400, that pulled the Syriac closer to the Greek being read in the Greek-speaking churches. The Old Syriac is what was there before that pull, which makes it a witness to a form of the gospel text whose beginnings the Gorgias dictionary places, carefully, in the third century — \"the first attempts to produce Separate Gospels may have started in the 3rd cent.\" — in a Semitic language, in a region a long way from Alexandria and Rome. The second-century Syriac gospel text is not this one. That is the Diatessaron, which is the thing the Old Syriac is defined against.",
+          "Its readings are not uniformly early or uniformly valuable. Burkitt's edition prints the two manuscripts' disagreements on page after page, and the Gorgias dictionary's account of the relation between them is that they are \"independent traditions of the same version\" which \"reflect a revisional development\" — the version was still being revised while it was being copied. What the version supplies is a genuinely independent line of descent — one that sometimes agrees with the Old Latin and Codex Bezae against everything else, and sometimes stands alone.",
+          "It also preserves omissions. The account of the woman caught in adultery at John 7:53 to 8:11 is absent from the Old Syriac, as it is from the Peshitta. That is one more early tradition, in one more language, in which the passage is simply not there.",
+        ],
+      },
+      {
+        heading: "Matthew 1:16 in the Sinai Palimpsest",
+        paragraphs: [
+          "The Sinaitic Palimpsest has one reading that has been argued over ever since Lewis published it, and an article that left it out would be hiding the most interesting thing in the manuscript. At the end of Matthew's genealogy, where the standard text reads that Jacob was the father of Joseph, the husband of Mary, of whom was born Jesus, this manuscript reads — in Lewis's own 1894 translation — \"Matthan begat Jacob; Jacob begat Joseph; Joseph, to whom was betrothed Mary the Virgin, begat Jesus, who is called the Christ.\"",
+          "Lewis did not think it a slip of the pen, and she said so: \"Had v. 16 stood alone we might have suspected a clerical error, but the occurrence of the word lek ('to thee') in v. 21, and leh ('to him') in v. 25 … makes it almost certain that the statement in v. 16 is an intentional one.\" She also did not think it denied the virgin birth, and her reasons come from the same manuscript rather than from doctrine. She wrote that \"even here Mary is called the Virgin — a title which no one unacquainted with the miraculous birth of her first-born would naturally have given her.\" The same codex reads at verse 18 that \"when they had not come near one to another, she was found with child of the Holy Ghost.\" And, she adds, \"the fact that Joseph was troubled about Mary's condition is simply inexplicable if he were the father of Jesus.\" A manuscript that meant to deny the virgin birth would have had to take out a good deal more than one verb.",
+          "Burkitt went further in a different direction, and his point is the one most often missed. \"If the Genealogy had ended with the uncompromising statement 'and Joseph begat Jesus' it would not prove that the Evangelist believed that Joseph had been the natural father of Jesus,\" he wrote. \"All that the Evangelist cares about is that Joseph accepted Jesus as his son\" — the genealogy exists to put Jesus in David's line through Joseph's legal fatherhood, and the verb in a genealogy states heirship, not biology. Burkitt also judged the reading itself to be secondary rather than original, deriving it from another known form of the text, and he noted that the Curetonian reads differently again and clumsily: \"Jacob begat Joseph, him to whom was betrothed Mary the Virgin, she who bare Jesus the Messiah\", where the doubled relative shows, in his words, that \"this text cannot be primitive.\"",
+          "The honest summary is therefore three things at once, and it is rare to meet all three together. The reading is real and deliberate, not a scribal accident. It is almost certainly not the original wording of Matthew, on the judgement of the man who edited it — and that judgement was a judgement, argued against by others at the time. Burkitt states their case himself before answering it: \"some critics, believing that this Genealogy must have been based on an earlier document, have acclaimed the texts that contain or seem to contain the statement\" this section opened with \"as the representatives of an earlier form than the received text, and as genuine relics of the (supposed) naturalistic account of the birth of Jesus which they conjecture to stand behind\" the opening chapters of Matthew. That is a position in critical scholarship, reasoned from the text, and not a beginner's mistake. And even if the reading were original, it would not carry the weight it is usually given, because of what a genealogy is for. This app's position is the historic Christian one, that Jesus was conceived by the Holy Spirit and born of the virgin Mary — and the reason that position survives contact with this manuscript is not that the manuscript has been explained away. It is that the manuscript, read whole, says so itself two verses later.",
+        ],
+      },
+    ],
+    verses: [
+      { reference: "Matthew 1:16", note: "The disputed verse; the Sinaitic Palimpsest reads \"Joseph, to whom was betrothed Mary the Virgin, begat Jesus\"" },
+      { reference: "Matthew 1:18", note: "\"She was found pregnant by the Holy Spirit\" — present in the same manuscript" },
+      { reference: "Matthew 1:25", note: "Where Lewis's second piece of internal evidence sits" },
+      { reference: "John 7:53", note: "The start of a passage the Old Syriac does not contain" },
+    ],
+    sources: [
+      { label: "British Library: Add MS 14451, the Curetonian Gospels", url: "https://searcharchives.bl.uk/catalog/040-002086117" },
+      { label: "A. S. Lewis, A Translation of the Four Gospels from the Syriac of the Sinaitic Palimpsest (1894)", url: "https://archive.org/details/cu31924029334376" },
+      { label: "F. C. Burkitt, Evangelion da-Mepharreshe, volume 2 (1904)", url: "https://archive.org/details/cu31924092359698" },
+    ],
+    manuscript: {
+      manuscriptType:
+        "Two parchment gospel codices. The Curetonian survives in 88 leaves in London, with three more in Berlin and one still at the monastery in Egypt; the Sinaitic is a palimpsest of 142 leaves whose gospel undertext was washed off in the eighth century and overwritten with lives of women saints",
+      language: "Syriac",
+      contents:
+        "The four gospels, incompletely, in both books. The Curetonian has Matthew, a fragment of the end of Mark, John and Luke, in that unusual order. The Sinaitic carries the gospel text under about 284 pages of the later writing. Neither contains John 7:53-8:11",
+      origin: "The Syriac-speaking world; the version is known in Syriac as Evangelion da-Mepharreshe, the gospel of the separated ones, as against Tatian's single woven Diatessaron",
+      findSite:
+        "The Curetonian from the Monastery of the Syrians (Deir al-Surian) in the Nitrian Desert, Egypt. The Sinaitic from St Catherine's Monastery, Mount Sinai",
+      foundYear: "1842 for the Curetonian; 1892 for the Sinaitic Palimpsest",
+      foundBy:
+        "Henry Tattam brought the Curetonian to the British Museum, and William Cureton identified and published it. Agnes Smith Lewis and her twin sister Margaret Dunlop Gibson found the Sinaitic Palimpsest in 1892 and deciphered it on a second expedition in 1893 with the help of R. L. Bensly, J. R. Harris and F. C. Burkitt, the team publishing in 1894; five further journeys to Sinai in all stand behind Lewis's standard edition of 1910",
+      dateAssigned:
+        "The British Library dates the Curetonian 450-470. The Gorgias dictionary assigns the Sinaitic to the fourth or fifth century. The version behind both is older than either copy",
+      dateCertainty: "traditional",
+      currentLocation:
+        "The Curetonian in the British Library, with three leaves in Berlin. The Sinaitic still at St Catherine's Monastery, Mount Sinai",
+      shelfmark: "London, British Library, Add MS 14451; Sinai, St Catherine's Monastery, Syriac 30",
+    },
+    reflectionPrompt:
+      "A monk who needed writing material took apart the oldest Syriac gospel book in existence to make room for the lives of holy women, and both survived. What have you had to give up to make room for something else that mattered?",
+    citations: [
+      {
+        tier: "institution",
+        label: "The British Library: Add MS 14451, \"Iwangelíon\"",
+        url: "https://searcharchives.bl.uk/catalog/040-002086117",
+        credit: "The British Library, London",
+        detail:
+          "The holding library's own catalogue record, read in full. Source of the 450-470 date, the 88 leaves, the gospel order Matthew-Mark-John-Luke with its foliation, the quoted provenance naming Henry Tattam and the year 1842, the quoted explanation of the name after William Cureton, the tenth-century owner Ḥabíb, the 1222 repair and the three leaves in Berlin",
+        supports: "Everything stated about the Curetonian manuscript itself",
+      },
+      {
+        tier: "primary",
+        label: "A. S. Lewis, A Translation of the Four Gospels from the Syriac of the Sinaitic Palimpsest",
+        url: "https://archive.org/details/cu31924029334376",
+        credit: "Agnes Smith Lewis",
+        detail:
+          "Macmillan, London and New York, 1894; public domain, read at the Internet Archive. Source of the Matthew 1:16 translation quoted here and of every quotation attributed to Lewis, including her argument that the reading is deliberate and her argument that it does not deny the virgin birth. Her introduction, pages xii to xiv, describes the second expedition of early 1893 — the forty days of transcription, the division of the photographs between Rendel Harris, Burkitt and Bensly, and the hydro-sulphide of ammonia — which is the one further journey behind this edition. The larger count of five journeys belongs to the whole decipherment, down to her fuller edition of 1910. The finder's own edition, cited so the reading can be checked rather than taken on report",
+        supports: "The Matthew 1:16 reading, and Lewis's own reasoning about it",
+      },
+      {
+        tier: "scholarly",
+        label: "F. C. Burkitt, Evangelion da-Mepharreshe, volume 2: Introduction and Notes",
+        url: "https://archive.org/details/cu31924092359698",
+        credit: "Francis Crawford Burkitt",
+        detail:
+          "Cambridge University Press, 1904; public domain, read at the Internet Archive. Burkitt was on the 1893 expedition that deciphered the palimpsest. Source of his judgement that the Sinaitic reading is secondary, his rendering of the Curetonian's different and clumsier wording with the verdict that it \"cannot be primitive\", and his argument about what a genealogy is claiming. His notes on Matthew 1:16-25, at volume 2 pages 260 to 265, are also where he sets out the contrary reading of the evidence in his own words, so that the critics who took the shorter statement for a relic of an earlier document can be met with their case rather than without it. Volume 1 carries the Syriac text",
+        supports: "The text-critical judgement on Matthew 1:16 and the exegetical point about genealogies",
+      },
+      {
+        tier: "primary",
+        label: "W. Cureton, Remains of a Very Antient Recension of the Four Gospels in Syriac",
+        url: "https://archive.org/details/remainsofveryant00cure",
+        credit: "William Cureton",
+        detail:
+          "J. Murray, London, 1858; marked not in copyright at the Internet Archive. The first edition of the manuscript that carries his name. The scan is incomplete — the Archive's own note says it lacks the English translation and eighty pages of the Syriac",
+        supports: "The 1858 publication",
+      },
+      {
+        tier: "reference",
+        label: "Gorgias Encyclopedic Dictionary of the Syriac Heritage: Old Syriac Version",
+        url: "https://gedsh.bethmardutho.org/Old-Syriac-Version",
+        credit: "A. Juckel, for Beth Mardutho: The Syriac Institute",
+        detail:
+          "Free to read online, under a Creative Commons Non-Commercial licence, so linked and cited rather than reproduced. Source of the statement that the term is usually restricted to these two gospel manuscripts, of the 1892 discovery by Lewis and Gibson, and of the eighth-century overwriting. It is also the source of the five journeys to Sinai, which it counts across the whole decipherment rather than before the edition of 1894; of Lewis's standard edition of 1910; of the third-century dating quoted here, which is as early as this entry will go, the second-century Syriac gospel text being the Diatessaron; and of the judgement that the two manuscripts are independent traditions of one version reflecting a revisional development. The site refuses scripted requests and returns 403 to an automated link checker while loading normally in a browser",
+        supports: "That the surviving Old Syriac is these two manuscripts, the discovery, the dating, and the relation between the two copies",
+      },
+      {
+        tier: "scholarly",
+        label: "H. A. G. Houghton, The Latin New Testament: A Guide to its Early History, Texts, and Manuscripts",
+        url: "https://pure-oai.bham.ac.uk/ws/files/101039771/9780198744733.pdf",
+        credit: "Hugh A. G. Houghton, University of Birmingham",
+        detail:
+          "Oxford University Press, 2016; the publisher\u2019s PDF, open access under CC BY-NC-ND. Cited here for one point: Matthew, John, Luke, Mark is \"the standard Old Latin order\" — his phrase, at page 26, describing Codex Vercellensis — and it stands in \"the majority of Old Latin codices\" (page 12). That is what makes the Curetonian\u2019s sequence the unusual one and not Vercellensis\u2019. The licence is non-commercial, so it is linked and quoted briefly, never hosted",
+        supports: "That the Curetonian\u2019s gospel order is the odd one, and Vercellensis\u2019 the norm",
+      },
+      {
+        tier: "encyclopedic",
+        label: "Wikipedia: Curetonian Gospels",
+        url: "https://en.wikipedia.org/wiki/Curetonian_Gospels",
+      },
+    ],
+  },
+
+  {
+    id: "coptic-versions",
+    name: "The Coptic Versions",
+    alternateNames: ["the Sahidic version", "the Bohairic version"],
+    // NOT registered: bare "Coptic", "Sahidic" or "Bohairic". They are adjectives, they appear
+    // 17 times in this file alone, and most of those uses are not about the Bible translations.
+    matchNames: ["Coptic version", "Coptic versions", "Sahidic Coptic", "Bohairic Coptic"],
+    category: "manuscript",
+    role: "The Bible in the Last Form of the Egyptian Language",
+    summary:
+      "The Scriptures translated into Egyptian, written in Greek letters, from the third century onward — the version an Egyptian villager was hearing read aloud when Antony walked out into the desert, and the one of the three earliest translations whose language has an indefinite article.",
+    sections: [
+      {
+        heading: "Egyptian, Written in Greek Letters",
+        paragraphs: [
+          "Coptic is the last stage of the Egyptian language, written in the Greek alphabet with a handful of extra letters kept from demotic. When Christianity spread past the Greek-speaking cities of Egypt into the villages, it needed a Bible in that language, and it got several — because Coptic was not one thing. P. Nagel, writing in the Claremont Coptic Encyclopedia, lists Akhmimic, Lycopolitan, Middle Egyptian, Fayyumic, Sahidic and Bohairic among the literary dialects, and notes that of these \"only the Sahidic (or, simplified, the Upper Egyptian) and the Bohairic (simplified, the Lower Egyptian) attained more than regional diffusion.\"",
+          "There is one date that gives the whole thing a floor, and B. M. Metzger states it in the same encyclopedia: the earliest version \"must precede about A.D. 270, the date at which Saint\" Antony \"was converted after hearing Matthew 19:16ff. read in Coptic in a village church in southern Egypt\" — the name is printed in the encyclopedia's small capitals as a cross-reference, so it is set outside the quotation here rather than silently restyled. A. Shisha-Halevy adds that Sahidic \"was probably the first Coptic dialect into which the Scriptures were translated, apparently in the third century; by the fourth, the translation was completed.\" F. Feder, whose 2023 update to the same encyclopedia is the most recent survey here, places the standardised Sahidic Bible later still, as a response to the canon list in Athanasius's festal letter of 367, most likely during the tenure of Archbishop Theophilos.",
+          "Bohairic came from the other end of the country, the western Delta, and won late. Metzger dates the changeover to \"about the eleventh century, Bohairic replaced Sahidic as the liturgical language of the church\", and Shisha-Halevy describes a spread that began after the Arab conquest and was largely complete by then. Feder's summary of where it stands now is worth quoting because it is present tense: \"The Bohairic version is the current Coptic Bible of the Coptic Church … and the Bohairic language is the only Coptic dialect still in use in the liturgy.\" The minor dialects mostly did not last — the Middle Egyptian version, Feder writes, \"did not survive the fifth century and was replaced by the Sahidic Bible.\"",
+        ],
+      },
+      {
+        heading: "Why Egyptian Evidence Counts",
+        paragraphs: [
+          "A translation is second-hand evidence for the wording of a Greek sentence, but the Coptic versions are second-hand evidence made very early and in the right place. They were translated in Egypt, where the oldest Greek manuscripts also come from, and they were translated before the great fourth-century codices were written. So where a Coptic manuscript agrees with Codex Vaticanus against the later Greek tradition, that is a second Egyptian voice for a reading.",
+          "The affiliation is not one thing, and Metzger states it carefully rather than tidily. Of the Sahidic: \"The textual affinities of the Sahidic version are mixed. Alexandrian readings predominate, but there is also a strong 'Western' element.\" Of the Bohairic: its affinities are \"chiefly with the Alexandrian type of text, with some revision toward the Byzantine text.\" And the Middle Egyptian copy of Acts in the Morgan Library, Codex Glazier, \"contains the text of Acts 1:1-15:3 in a form that presents many so-called Western readings.\" Metzger also names the limits from the other side. Coptic is \"a language of strict word order\"; it has no indirect discourse; and, in his words, \"Nor can Coptic truly represent the Greek passive voice, since it possesses only the active voice.\" There are Greek distinctions a Coptic manuscript simply cannot report.",
+          "Two individual books are worth knowing. Codex Glazier, Morgan Library MS G.67, is a small fifth-century parchment codex preserved complete, carrying the first half of Acts in the Middle Egyptian dialect. Codex Schøyen, MS 2650, is a fourth-century papyrus Matthew in the same dialect, which its owners call \"the earliest Matthew in any Coptic dialect\" — and it is contested: its first editor, H.-M. Schenke, concluded — in the summary given by the collection that owns it — that the text \"does not represent a free text transmission, but that it is a correct translation of an entirely different Gospel of Matthew\", with a lost Hebrew gospel behind it; while J. M. Leonard's Cambridge thesis reached, on the same page, \"the opposite conclusion that the Greek text is exceptionally pure, attesting to the best Greek original text so far known\". T. Baarda and M.-É. Boismard also published against Schenke. Both sides here are quoted from the owning collection's own page, which has an interest in the manuscript mattering, and the argument has not been settled.",
+        ],
+      },
+      {
+        heading: "\"A God\" at John 1:1",
+        paragraphs: [
+          "Coptic has an indefinite article, and Greek does not. That single grammatical fact is why the Sahidic version of John 1:1 gets argued about at all, because where the Greek reads theos ēn ho logos with no article on theos, the Sahidic writes the noun for God with the Coptic indefinite article. The Watchtower Bible and Tract Society has made this a plank of its case for the New World Translation's rendering, and its argument deserves to be stated from its own page rather than from a critic's summary of it. Coptic is useful, the article says, because \"Syriac and Latin, like the Greek of those days, do not have an indefinite article. Coptic, however, does\"; it quotes T. O. Lambdin's Sahidic grammar that \"the use of the Coptic articles, both definite and indefinite, corresponds closely to the use of the articles in English\"; and it concludes that the Sahidic \"uses an indefinite article with the word 'god' in the final part of John 1:1. Thus, when rendered into modern English, the translation reads: 'And the Word was a god.'\"",
+          "The first thing to say is that the observation about the manuscripts is correct. The Coptic article is there. What is at issue is what a Coptic indefinite article does, and the most useful witness on that point is the man who edited the whole Coptic New Testament, in volumes finished in 1924, long before anybody made this argument. G. Horner's Sahidic text of the Gospel of John prints the verse as: \"In the beginning was being the word, and the word was being with God, and [a] God was the word.\" The square brackets are not decoration. Horner explains his own convention in the same volume: \"Square brackets imply words used by the Coptic and not required by the English, while curved brackets supply words which are necessary to the English idiom.\" So the editor of the standard edition marked this article as present in Coptic and not required in English — and in the introduction to his Bohairic edition he had already written the rule out: \"The indefinite article … is translated 'a'; when however it represents the absence of the Greek article or belongs to adjectives … and the adverbial paraphrase …, it must be omitted.\"",
+          "B. J. Wright and T. Ricchuiti published a study of the question in the Journal of Theological Studies in 2011, and their open summary sets out the method: they collected twenty-six places where the Coptic New Testament uses the word for God in a comparable construction, found that in twenty-one of them Coptic uses the definite article where the Greek has none, and argue that the remaining cases are explained either by the numerical sense of the Coptic indefinite article or by a qualitative use — describing an entity by its quality. Their conclusion is that the Copts understood the Fourth Gospel to mean that \"'the Word' possesses the same qualities as the Christian God\". They are also fair about the strength of their own case: \"It is possible that JWs are correct about the Coptic text … Nevertheless, it does not seem probable.\" It is worth adding that they are New Testament scholars rather than Coptic specialists, which is a real qualification and not a dismissal.",
+          "Two claims that circulate on both sides of this argument should be named and set aside. Statements attributed to the Coptic grammarians B. Layton and A. Shisha-Halevy are quoted constantly by advocates on either side, and they trace back to private emails reported on blogs rather than to anything either man published; this article does not use them and neither should anyone else. What is left is a genuine and narrow question about how one language's article system maps onto another's, and it is a question the Coptic evidence sharpens rather than settles. The app's position is the historic Christian one that the Word is God, and the reason is not that the Coptic article can be argued away. It is that no translation's article system decides a Greek sentence, that the Fourth Gospel says the same thing again where no article question arises at all — Thomas, at the end of it, calls the risen Jesus \"My Lord and my God!\" — and that the Coptic-speaking church which wrote that indefinite article was itself Nicene: Wright and Ricchuiti make the point that the historic Coptic Church embraced the creed which says \"true God from true God\".",
+        ],
+      },
+    ],
+    verses: [
+      { reference: "John 1:1", note: "The disputed sentence; the Sahidic writes \"God\" here with the Coptic indefinite article" },
+      { reference: "Matthew 19:16", note: "Where the passage begins that Antony heard read in Coptic in a village church, before about AD 270" },
+      { reference: "John 5:4", note: "The angel troubling the water, absent from the Sahidic text of John" },
+      { reference: "John 7:53", note: "The start of a passage the Sahidic omits and the Bohairic manuscripts mark as imported" },
+      { reference: "John 20:28", note: "\"My Lord and my God!\" — the same claim in a sentence with no article question in it" },
+    ],
+    sources: [
+      { label: "Claremont Coptic Encyclopedia: New Testament, Coptic Versions of the", url: "https://ccdl.claremont.edu/digital/api/collection/cce/id/1432/download" },
+      { label: "F. Feder, Old Testament, Coptic Versions of the: Update (Claremont Coptic Encyclopedia, 2023)", url: "https://ccdl.claremont.edu/digital/api/collection/cce/id/2188/download" },
+      { label: "G. Horner, The Coptic Version of the New Testament in the Southern Dialect, volume 3", url: "https://archive.org/details/copticversionofn03hornuoft" },
+    ],
+    manuscript: {
+      manuscriptType:
+        "A family of translations, not one object, surviving in papyrus and parchment codices from the third or fourth century onward. Codex Glazier, a fifth-century Middle Egyptian copy of the first half of Acts, survives complete",
+      language:
+        "Coptic — the last stage of Egyptian, written in Greek letters. Sahidic and Bohairic dominate; Fayyumic, Akhmimic, Lycopolitan and Middle Egyptian survive in smaller quantities",
+      contents:
+        "The Old and New Testaments, in different dialects and to different extents. The Sahidic text of John omits John 5:4 and John 7:53-8:11 outright; the Bohairic manuscripts that carry the second passage often flag it in Arabic marginal notes as taken from elsewhere",
+      origin: "Egypt. Sahidic from the Nile valley of Upper Egypt, Bohairic from the western Delta, Middle Egyptian probably from the region of Oxyrhynchus",
+      findSite:
+        "Egypt, in many places and over two centuries of collecting rather than in one find. Codex Glazier and Codex Schøyen are both written in the Oxyrhynchite dialect, and neither has an excavated findspot; the Schøyen Collection traces its own codex to a Pachomian monastery in the Dishna region",
+      foundYear:
+        "No single year. G. Horner's editions were published 1898-1905 for Bohairic and 1911-1924 for Sahidic; major Middle Egyptian codices came to light in the twentieth century",
+      foundBy:
+        "No single finder. The Bohairic and Sahidic New Testaments were edited by G. Horner; the Coptic Old Testament is being edited now at Göttingen",
+      dateAssigned:
+        "The earliest translation before about AD 270. Sahidic complete by the fourth century, with a standardised version most likely made during the tenure of Archbishop Theophilos. Bohairic attested from the fourth century in an older form and standard from about the eleventh",
+      dateCertainty: "disputed",
+      currentLocation:
+        "Dispersed. Codex Glazier is Morgan Library MS G.67, New York; Codex Schøyen is MS 2650 in the Schøyen Collection; Coptic biblical papyri are in the Chester Beatty in Dublin and in many other collections",
+      facsimileUrl: "https://ica.themorgan.org/manuscript/page/1/77061",
+    },
+    reflectionPrompt:
+      "Antony heard one sentence of Matthew read aloud in his own language and walked out of the building and into a different life. When did something read aloud last change what you did next?",
+    citations: [
+      {
+        tier: "reference",
+        label: "B. M. Metzger, \"New Testament, Coptic Versions of the\", Claremont Coptic Encyclopedia",
+        url: "https://ccdl.claremont.edu/digital/api/collection/cce/id/1432/download",
+        credit: "Bruce M. Metzger; published by the Claremont Colleges Digital Library",
+        detail:
+          "Free PDF, read in full. Source of the Antony date and the quotation about it, the counts of surviving documents by dialect, both quoted statements of textual affinity for Sahidic and Bohairic, the description of Codex Glazier's Western readings, the eleventh-century liturgical changeover, and the quoted limits of Coptic as a witness to Greek. Note that the encyclopedia has no article under the title \"Coptic versions of the Bible\"; this is the one to use",
+        supports: "The dating, the dialects, the textual affinities and the limits of the evidence",
+      },
+      {
+        tier: "reference",
+        label: "F. Feder, \"Old Testament, Coptic Versions of the: Update\", Claremont Coptic Encyclopedia",
+        url: "https://ccdl.claremont.edu/digital/api/collection/cce/id/2188/download",
+        credit: "Frank Feder, Akademie der Wissenschaften zu Göttingen",
+        detail:
+          "Dated 22 November 2023; free PDF, read in full. The most recent survey cited here and by a scholar currently editing the Coptic Old Testament. Source of the Athanasius argument and the 385-412 window, the quoted statement about Bohairic as the Coptic Church's current Bible and its only living liturgical dialect, and the statement that the Middle Egyptian version did not survive the fifth century",
+        supports: "The current state of the field on dating and on which dialect is in use",
+      },
+      {
+        tier: "primary",
+        label: "G. Horner, The Coptic Version of the New Testament in the Southern Dialect (Sahidic), volume 3",
+        url: "https://archive.org/details/copticversionofn03hornuoft",
+        credit: "George Horner",
+        detail:
+          "Clarendon Press, Oxford, 1911-1924; public domain, read at the Internet Archive. Volume 3 carries John. Source of the printed rendering of John 1:1 with its square brackets, of the stated bracket convention in the same volume, and of the apparatus showing the Sahidic omission of John 5:4 and of John 7:53-8:11. His companion Bohairic edition is cited separately below, and is the source of the quoted rule about when the Coptic indefinite article is not translated",
+        supports: "What the Coptic actually reads at John 1:1, and what its own editor thought the article did",
+      },
+      {
+        tier: "reference",
+        label: "The Watchtower, \"Was the Word 'God' or 'a god'?\", 1 November 2008",
+        url: "https://wol.jw.org/en/wol/d/r1/lp-e/2008812",
+        credit: "Watchtower Bible and Tract Society",
+        detail:
+          "Read in full. Cited so that the argument answered in the third section is quoted from the publication that makes it, rather than from anyone who disagrees with it. Every phrase attributed to that side above comes from here",
+        supports: "The Coptic argument for \"a god\" at John 1:1, in its advocates' own words",
+      },
+      {
+        tier: "scholarly",
+        label: "B. J. Wright and T. Ricchuiti, \"Jehovah's Witnesses and John 1:1: New Evidence Advances the Discussion\"",
+        url: "https://www.equip.org/articles/jehovahs-witnesses-john-11-new-evidence-advances-discussion/",
+        credit: "Brian J. Wright and Tim Ricchuiti, Christian Research Institute",
+        detail:
+          "The authors' own popular presentation of their article \"From 'God' (theos) to 'God' (Noute)\", Journal of Theological Studies 62.2 (2011), 494-512. The journal article is paywalled and was not read here; this open version by the same two authors was read in full, and every quotation above comes from it",
+        supports: "The scholarly answer to the Coptic argument, and the honesty of its own hedging",
+        paywalled: false,
+      },
+      {
+        tier: "institution",
+        label: "The Morgan Library & Museum: Codex Glazier, MS G.67",
+        url: "https://ica.themorgan.org/manuscript/page/1/77061",
+        credit: "The Morgan Library & Museum, New York",
+        detail:
+          "The Morgan's own image server, which loads: \"Acts of the Apostles / Egypt, 5th century / MS G.67\". The Morgan's descriptive catalogue record at themorgan.org is behind a bot check and could not be opened, so the shelfmark and date are taken from this page; the extent, \"Acts 1:1-15:3\", is B. M. Metzger's, in the encyclopedia article cited above",
+        supports: "Codex Glazier's identity, date and holding institution",
+      },
+      {
+        tier: "institution",
+        label: "The Schøyen Collection: Codex Schøyen, MS 2650",
+        url: "https://www.schoyencollection.com/bible-collection-foreword/coptic-bible/codex-schoyen-ms-2650",
+        credit: "The Schøyen Collection",
+        detail:
+          "The owning collection's own page, read in full. Source of the fourth-century date, the Mesokemic dialect, the claim that it is the earliest Matthew in any Coptic dialect, and of both sides of the dispute — H.-M. Schenke's argument in the editio princeps and the quoted opposite conclusion of J. M. Leonard's Cambridge thesis, with T. Baarda's and M.-É. Boismard's published objections named on the same page",
+        supports: "Codex Schøyen and the fact that its character is disputed",
+      },
+      {
+        tier: "primary",
+        label: "G. Horner, The Coptic Version of the New Testament in the Northern Dialect (Bohairic), volume 1",
+        url: "https://archive.org/details/copticversionofn01hornuoft",
+        credit: "George Horner",
+        detail:
+          "London, 1898-1905; public domain, read at the Internet Archive. The introduction to volume 1 states his translation rule for the Coptic indefinite article, quoted in the third section above. It is cited separately from his Sahidic volumes because that rule is the load-bearing quotation of the whole section and a reader should be able to go straight to it",
+        supports: "Horner's own rule for when the Coptic indefinite article is left untranslated",
+      },
+      {
+        tier: "reference",
+        label: "A. Shisha-Halevy, \"Sahidic\" and \"Bohairic\", Claremont Coptic Encyclopedia",
+        url: "https://ccdl.claremont.edu/digital/api/collection/cce/id/2029/download",
+        credit: "Ariel Shisha-Halevy; published by the Claremont Colleges Digital Library",
+        detail:
+          "Free PDFs, both read in full and both signed by him. \"Sahidic\" (the linked file) is the source of the quoted statement that Sahidic was probably the first dialect the Scriptures were translated into, and of his caution that its reputation as the older dialect rests on its earlier documentation rather than on the language itself. His companion article \"Bohairic\" (id 2011 in the same collection) is the source of the spread beginning after the Arab conquest and being largely complete by the eleventh century",
+        supports: "Which dialect came first, and how Bohairic displaced it",
+      },
+      {
+        tier: "reference",
+        label: "P. Nagel, \"Old Testament, Coptic Translations Of\", Claremont Coptic Encyclopedia",
+        url: "https://ccdl.claremont.edu/digital/api/collection/cce/id/1480/download",
+        credit: "Peter Nagel; published by the Claremont Colleges Digital Library",
+        detail:
+          "Free PDF, read in full. Source of the list of literary dialects and of the quoted statement that only Sahidic and Bohairic \"attained more than regional diffusion\", and of the observation that Lycopolitan has so far yielded no Old Testament translations",
+        supports: "Which dialects the Bible was translated into, and which two spread beyond their regions",
+      },
+      {
+        tier: "encyclopedic",
+        label: "Wikipedia: Coptic versions of the Bible",
+        url: "https://en.wikipedia.org/wiki/Coptic_versions_of_the_Bible",
+      },
+    ],
+  },
+
+  {
+    id: "family-1-and-family-13",
+    name: "Family 1 and Family 13",
+    alternateNames: ["the Ferrar Group"],
+    // Registered in full only. "Family 1" is a substring of "Family 13", and the linker sorts
+    // names longest-first, so the longer one wins wherever both could match.
+    matchNames: ["Family 1", "Family 13", "Ferrar Group", "Lake Group"],
+    category: "manuscript",
+    role: "Two Groups of Gospel Minuscules Descended From Lost Books",
+    summary:
+      "Two clusters of medieval Greek gospel manuscripts that turned out to be cousins — copied from two lost ancestors old enough to matter, and identified because a Dublin professor noticed four books agreeing with each other in the wrong places.",
+    sections: [
+      {
+        heading: "A Professor Who Died Before He Finished",
+        paragraphs: [
+          "W. H. Ferrar, a fellow of Trinity College in Dublin, noticed that four gospel manuscripts kept agreeing with one another against everything else, and set out to collate them and prove they came from a common ancestor. He died in 1871 before he could publish. His colleague T. K. Abbott finished the work and brought it out in 1877 under both their names, and the title page says what happened plainly: the collation is \"by the late William Hugh Ferrar\", edited by Abbott, who wrote that the credit for \"the detailed and laborious comparison necessary in order to prove that they actually represent a single archetype, is due to the late Prof. Ferrar\". The group has been called the Ferrar Group ever since.",
+          "The second cluster was established by K. Lake in 1902, in a Cambridge monograph on Codex 1 and its allies. Lake demonstrated that a set of minuscules headed by manuscript 1 descended from a lost archetype of their own, and while he was at it he invented the notation everybody still uses. His own explanation of why is disarming: \"It is very cumbrous to have to write 13 — 69 — 124 — 346 — 543 — 788 — 826 — 828 every time that one wishes to quote the consensus of all the Ferrar mss.\" So he wrote fam¹³ for Ferrar's group and fam¹ for his own, and those two numerals have named the two families ever since.",
+          "The members have kept being added to. Lake's Family 1 was a handful; A. Anderson collated thirteen for Matthew; A. Welsby seventeen for the Gospel of John; the collation of that gospel published by D. Parker for the Birmingham institute in 2024 lists twenty-one. For Family 13, Lake's eight have become ten in the current lists, with a lectionary sometimes added. These are not fixed clubs, and a reader who meets fam¹ in an apparatus is reading a shorthand for whatever the editor of that edition thinks belongs in it.",
+        ],
+      },
+      {
+        heading: "What a Family Is For",
+        paragraphs: [
+          "A family is a claim about descent. If a dozen late manuscripts agree in a peculiar reading, either they all inherited it or they all invented it, and inheritance is very much likelier. So the family stands in for a book that no longer exists, and the value of a fourteenth-century copy is not its own age but the age of the ancestor it lets you reconstruct. Family 1's archetype is generally reckoned to be considerably older than any surviving member.",
+          "The clearest single piece of evidence for that is a note rather than a reading. In Codex 1, the account of the woman caught in adultery is not printed at John 7:53 where a reader expects it; it is added at the end of the gospel, after a note saying that the passage does not appear in many manuscripts and was not commented on by John Chrysostom, Cyril of Alexandria or Theodore of Mopsuestia. Welsby's study observes that the note stands in Codex 1 and in Codex 1582 \"without any significant variation\", that manuscript 565 has an abridged version, and that \"as this note is not known to exist in any other manuscripts it provides compelling evidence of an extremely close link between 1, 565 and 1582\". Somebody in the ancestry of these books had checked, and wrote down what he found.",
+          "Codex 1582 has since displaced Codex 1 at the head of the family, and it is worth knowing why: it is dated, by a colophon on folio 287r, to the year 948, and that colophon names the monk Ephraim as the scribe. Where the book was made is a separate question from where it sits now, and the two are easily run together, because a shelfmark records where a manuscript is and never where it was written. Codex 1582 is Vatopedi 949 on Mount Athos today; A. Welsby's summary of the scholarship is that \"most scholars agree, based on 1582's quality and fine script, that it was a product of Constantinople\", and that \"little is known of 1582's previous owners before it came to the Vatopedi monastery\". The colophon survives only in a later hand's transcription of it, but the date it gives is generally accepted and the script agrees with it. Lake thought Codex 1 the best witness to the archetype; A. Anderson, after collating both in full, \"nominated 1582 as the leading Family 1 manuscript\" and drew attention to inaccuracies in Lake's edition, and the Birmingham collation of the Gospel of John now states flatly that \"1582 is the most reliable witness to the text of the archetype\". Lake's central finding stands and his ranking does not, which is a normal and healthy thing for a hundred-and-twenty-year-old conclusion to have done.",
+        ],
+      },
+      {
+        heading: "The Rule Everybody Repeats About Family 13",
+        paragraphs: [
+          "Family 13's famous feature is that its manuscripts move the woman caught in adultery out of the Gospel of John altogether and put it after Luke 21:38. C. R. Gregory stated it in 1907 in the form still quoted — though what he was describing was one manuscript and not a family. Writing of minuscule 13 itself, immediately before noting that Ferrar had seen its likeness to 69, 124 and 346, he says that \"the interpolation about the adulteress is not at John 7:53 to 8:11, but is placed directly after Luke 21:38.\" The sentence has been generalised to the whole group ever since. It is a genuinely striking thing to find in a manuscript, and it is used everywhere as the test of whether a manuscript belongs to the family.",
+          "It does not work as a test, and a specialist who has studied the family at book length says so in as many words. J. Perrin's study of the family in the Gospel of John states its purpose against exactly this practice: \"Every Family 13 study to date has assumed that the location (or relocation) of the Pericope Adulterae from John 7:53-8:12 was a secure rubric for designating Family 13 constituency. This study rejects the validity of this criterion.\" His evidence is concrete in both directions. Manuscript 1689 is a member of the family on every other measure and has the passage in its ordinary place at John 7:53. Manuscripts 1141 and 2900 put the passage after John 21:25 and are not members. His own summary is that the placement after Luke 21:38 is usual in the family but that the rule is unreliable. An article that stated the Luke 21:38 fact flatly would be repeating a shibboleth a specialist has published against.",
+          "One larger claim about both families should be handled with the same care. For most of the twentieth century these manuscripts were classed together with Codex Koridethi and some of Origen's quotations as witnesses to a \"Caesarean\" text — a text-type supposedly used at Caesarea in Palestine. That hypothesis has been under attack for decades. D. Lafleur, revisiting Lake's work in 2014, writes that \"since then, the question of the «Caesarean» text-type has been a very disputed matter. It still remains an important textual issue\", and points out that Lake himself hedged in 1900 — the Caesarean origin \"cannot yet be regarded as certain\" — and then removed the sentence from later editions. It is worth being honest about the limits of this article's own reading: no published statement was found declaring the Caesarean hypothesis dead, and the two doctoral studies of these families cited below mention the term only in their bibliographies. That silence is suggestive and it is not a citation. What can be said is that a family is a demonstrable thing, a text-type is a much larger and shakier one, and the second should not be smuggled in on the strength of the first.",
+        ],
+      },
+    ],
+    verses: [
+      { reference: "John 7:53", note: "Where the account of the woman caught in adultery usually stands, and where Family 13 does not put it" },
+      { reference: "Luke 21:38", note: "Where most Family 13 manuscripts place the passage instead" },
+      { reference: "John 21:25", note: "Where two manuscripts that are not family members place it" },
+      { reference: "John 8:11", note: "The end of the disputed passage" },
+    ],
+    sources: [
+      { label: "W. H. Ferrar and T. K. Abbott, A Collation of Four Important Manuscripts of the Gospels (1877)", url: "https://archive.org/details/acollationfouri00unkngoog" },
+      { label: "K. Lake, Codex 1 of the Gospels and its Allies, in Texts and Studies VII (1902)", url: "https://archive.org/details/textsandstudies07unknuoft" },
+      { label: "ITSEE, University of Birmingham: the ECM collation of Family 1 in John", url: "https://itseeweb.cal.bham.ac.uk/iohannes/families/F1/index.html" },
+    ],
+    manuscript: {
+      manuscriptType: "Two groups of Greek gospel minuscules on parchment and paper, from the tenth century to the fifteenth",
+      language: "Koine Greek",
+      contents:
+        "The four gospels. K. Lake's Family 1 was 1, 118, 131 and 209 — he looked at 205 at Venice, judged it a copy of 209 and took no further notice of it; A. Anderson's study of Matthew worked with thirteen manuscripts and added 1582 at the head of them; the Birmingham collation of John lists twenty-one witnesses, 205 among them and 205abs under the number it has since been given, 2886. Family 13's are 13, 69, 124, 346, 543, 788, 826, 828, 983 and 1689",
+      origin:
+        "Family 1's leading witness, Codex 1582, was copied in 948 by the monk Ephraim, most probably at Constantinople; it is now Vatopedi 949 on Mount Athos, which is where it is kept and not where it was made. Family 13's members have often been assigned to southern Italy, Calabria or Sicily",
+      findSite: "Not applicable. These are library books, not excavated objects",
+      foundYear:
+        "The family relationships were established rather than found: Ferrar's collation of four manuscripts, published by T. K. Abbott in 1877, and K. Lake's study of Codex 1 in 1902",
+      foundBy: "W. H. Ferrar, who died in 1871 before publishing, and T. K. Abbott, who published for him; K. Lake, for Family 1",
+      dateAssigned:
+        "Individual members range from the ninth century (565) to the fifteenth (69); the leading witness, 1582, is dated to 948. The archetypes they descend from are older than any surviving member and have not survived",
+      dateCertainty: "traditional",
+      currentLocation:
+        "Dispersed. Codex 1 is at the Universitätsbibliothek Basel; 13 at the Bibliothèque nationale de France; 69 at the Leicestershire Record Office; 1582 at the Vatopedi monastery, Mount Athos",
+      facsimileUrl: "https://manuscripts.csntm.org/manuscript/Group/GA_1582",
+    },
+    reflectionPrompt:
+      "A scribe copying John stopped, wrote a note saying that a famous story was missing from many of his sources, and copied it anyway at the end where you could see the join. What would it cost you to show your working like that?",
+    citations: [
+      {
+        tier: "primary",
+        label: "W. H. Ferrar and T. K. Abbott, A Collation of Four Important Manuscripts of the Gospels",
+        url: "https://archive.org/details/acollationfouri00unkngoog",
+        credit: "William Hugh Ferrar and Thomas Kingsmill Abbott",
+        detail:
+          "Hodges, Foster, and Figgis, Dublin; Macmillan, London; 1877. Public domain, read at the Internet Archive. Source of the title page's own description of Ferrar as \"the late\", of Abbott's statement of what Ferrar had done, and of Abbott's judgement that the position of the passage marks the independence of the group. A second scan of the same book on the Archive is OCR'd unusably; this is the readable one",
+        supports: "Ferrar's death before publication, Abbott's role, and the original argument",
+      },
+      {
+        tier: "primary",
+        label: "K. Lake, \"Codex 1 of the Gospels and its Allies\", Texts and Studies VII.3",
+        url: "https://archive.org/details/textsandstudies07unknuoft",
+        credit: "Kirsopp Lake",
+        detail:
+          "Cambridge University Press, 1902, printed as the third part of Texts and Studies volume 7, which is the item digitised — there is no standalone scan. Public domain, read at the Internet Archive. Source of Lake's own explanation of the fam¹ and fam¹³ notation, quoted verbatim including his list of the eight Ferrar manuscripts, and of his account of the note at the end of John in Codex 1. It is also the source of his own membership list, which runs to four manuscripts: his second chapter is headed \"The relations subsisting between 1 118 131 209\", and page xxii sets 205 aside in as many words — \"I was convinced when I studied the question at Venice that 205 was a copy of 209... It is for this reason that no further notice has been taken of 205\"",
+        supports: "The origin of the family notation and Lake's 1902 findings",
+      },
+      {
+        tier: "institution",
+        label: "ITSEE, University of Birmingham: ECM John, Collation of Family 1",
+        url: "https://itseeweb.cal.bham.ac.uk/iohannes/families/F1/index.html",
+        credit: "D. C. Parker, Institute for Textual Scholarship and Electronic Editing, University of Birmingham",
+        detail:
+          "January 2024, built on A. Welsby's doctoral work. The current membership list of twenty-one witnesses is taken from here, as is the statement that \"1582 is the most reliable witness to the text of the archetype\"",
+        supports: "The current membership of Family 1 and the standing of Codex 1582",
+      },
+      {
+        tier: "scholarly",
+        label: "J. Perrin, \"Family 13 in Saint John's Gospel\" (doctoral thesis, University of Birmingham, 2013)",
+        url: "https://etheses.bham.ac.uk/id/eprint/4482/1/Perrin13PhD.pdf",
+        credit: "Jac Perrin, University of Birmingham",
+        detail:
+          "Open access, 497 pages. Source of the quoted rejection of the Luke 21:38 placement as a membership criterion, of manuscript 1689 as a member with the passage in situ, and of 1141 and 2900 as non-members that relocate it after John 21:25",
+        supports: "That the famous Family 13 test does not work as a test",
+      },
+      {
+        tier: "scholarly",
+        label: "A. Welsby, \"A Textual Study of Family 1 in the Gospel of John\" (doctoral thesis, University of Birmingham, 2012)",
+        url: "https://etheses.bham.ac.uk/id/eprint/3338/1/Welsby12PhD.pdf",
+        credit: "Alison Welsby, University of Birmingham",
+        detail:
+          "Open access, 336 pages; the basis of her De Gruyter volume, which is not. Source of the account of the note about the woman caught in adultery in 1, 565 and 1582 and of the quoted conclusion drawn from it, of what Lake established in 1902, and of A. Anderson's case for 1582 over Codex 1. Section 2.1.4, pages 19 and 21, carries the colophon of 948 naming the monk Ephraim, the note that it survives in a later transcription, and both quoted sentences on provenance. Worth keeping straight while reading it: Vatopedi 949 is a shelfmark and answers only where the book is kept — where it was made is Welsby's argument from its script and quality, not the monastery's record",
+        supports: "The scribal note, the link between three manuscripts, and the reordering of the family's leading witness",
+      },
+      {
+        tier: "scholarly",
+        label: "D. Lafleur, \"The «Caesarean» Text of the Gospel of Mark: Lake Revisited\"",
+        url: "https://ojs.uclouvain.be/index.php/babelao/article/download/19983/18603/37973",
+        credit: "Didier Lafleur, Institut de recherche et d'histoire des textes",
+        detail:
+          "BABELAO 3 (2014), 145-169 with an appendix to 289; open access. Source of the quoted statement that the Caesarean question remains disputed, of the observation that Lake removed his own hedged sentence from later editions, and of Lafleur's dates for Lake",
+        supports: "That the Caesarean text-type is contested rather than settled",
+      },
+      {
+        tier: "primary",
+        label: "C. R. Gregory, Canon and Text of the New Testament",
+        url: "https://archive.org/details/canonandtextnew00greguoft",
+        credit: "Caspar René Gregory",
+        detail:
+          "1907; public domain, read at the Internet Archive. Source of the quoted statement about the placement after Luke 21:38 and of the account of Ferrar's and Abbott's work. That sentence stands on page 372 inside Gregory's description of the single manuscript 13, so it is a statement about one book rather than the family-wide rule it is usually quoted as. Note for anyone following the trail: this book contains no description of minuscule 33 and no mention of the \"queen of the cursives\" epithet, which are in his Textkritik of 1900 instead",
+        supports: "The Luke 21:38 placement as the standard description, and that Gregory said it of manuscript 13",
+      },
+      {
+        tier: "encyclopedic",
+        label: "Wikipedia: Family 13",
+        url: "https://en.wikipedia.org/wiki/Family_13",
+      },
+    ],
+  },
+
+  {
+    id: "minuscule-33",
+    name: "Minuscule 33",
+    alternateNames: ["the queen of the cursives"],
+    matchNames: ["Minuscule 33", "minuscule 33"],
+    category: "manuscript",
+    role: "The Ninth-Century Minuscule That an Eighteenth-Century Scholar Called a Queen",
+    summary:
+      "A ninth-century Greek manuscript in Paris carrying the prophets and the whole New Testament except Revelation, with a text so much better than its neighbours that it earned a nickname — and so badly damaged by damp that much of it has to be read backwards off the facing page.",
+    sections: [
+      {
+        heading: "Colbert's Manuscript",
+        paragraphs: [
+          "It is Grec 14 in the Bibliothèque nationale de France, and C. R. Gregory records its earlier home: it was number 2844 in the library of Jean-Baptiste Colbert, Louis XIV's minister. The library's own record describes it as parchment, 143 leaves, large format, ninth century, in ancient Greek; the whole thing has been photographed and is free to look at, page by page, under a public-domain rights statement. C. R. Gregory measured it at 37.8 by 24.8 centimetres, one column, 48 lines to the page in the Gospels and 51 or 52 elsewhere, and worked out that two hands wrote it — one for the Old Testament portion and the Gospels, and a second, a century later, for Acts, the Catholic Epistles and the Pauline Epistles.",
+          "What it contains is unusual on both ends. In front there are portions of the prophets; after them comes the New Testament entire except for Revelation, with three gaps in the Gospels where leaves are gone. And the books are in the wrong order. Gregory worked out why, and the answer is mundane and rather cheering: a binder shuffled the sections in the thirteenth or fourteenth century, before anything had yet been lost, which is how J. G. Eichhorn came to describe a manuscript that begins with the Pauline Epistles and ends with the Gospels. Eichhorn had already suspected as much, adding to his own description of the order the qualification that this was so if it did not in fact come from the binder.",
+        ],
+      },
+      {
+        heading: "Why a Late Manuscript Can Matter",
+        paragraphs: [
+          "Minuscules — Greek manuscripts in the small connected script that replaced capitals from the ninth century — number in the thousands, and the great majority carry the Byzantine form of the text, the one that stands behind the Textus Receptus and the King James Version. That is why they are usually treated in bulk. Minuscule 33 is the standing exception, and it has been recognised as one for two hundred years. Eichhorn's description of it in 1827 runs, in translation: the text \"is the Alexandrian or Hesychian, full of the most excellent and oldest readings.\" What he wrote was \"Der Text ist der Alexandrinische oder Hesychische, voll der vortrefflichsten und ältesten Lesarten\"; the English is this article's own rendering, as with the epithet two sentences below. F. H. A. Scrivener put the same judgement in comparative terms: \"in text it resembles Codd. BDL more than any other cursive manuscript\" — that is, Vaticanus, Bezae and Regius, which is company no ordinary minuscule keeps.",
+          "The nickname comes from that same page of Eichhorn, and it is worth getting right because it is usually quoted without a source and in a form he did not write. Gregory's Textkritik of 1900 gives the reference: \"Eichhorn nannte diese Handschrift: 'Die Königin unter den Cursiv geschriebenen Handschriften', Einl. in das N. T. Leipzig 1827, Bd. 5, S. 217.\" Eichhorn's German is \"the queen among the manuscripts written in cursive\"; the familiar English \"queen of the cursives\" is a later compression of it. Two further honesties belong with the epithet. It is not in Gregory's better-known Canon and Text of 1907, which describes neither this manuscript nor the phrase, so anyone citing that book for it has the wrong volume. And Eichhorn awarded the crown on the same page on which he reported J. J. Griesbach's estimate that the book was of the eleventh century or the beginning of the twelfth — he thought it a very good late manuscript, not a ninth-century one.",
+        ],
+      },
+      {
+        heading: "A Manuscript You Can Hardly Read",
+        paragraphs: [
+          "The honest limit here is not a dispute about what the manuscript means. It is that a good deal of it can barely be read, and every reading attributed to it in a critical apparatus rests on somebody's decision about a mark on a page. Scrivener describes the condition without softening it: \"the ends of the leaves are much damaged, and greatly misplaced by the binder; so that the Gospels now stand last … the ink too, by reason of the damp, has often left its proper page blank, so that the writing can only be read set off on the opposite page, especially in the Acts.\" He quotes S. P. Tregelles, who collated it, saying that of all the manuscripts he had worked on \"none has ever been so wearisome to the eyes, and exhaustive of every faculty of attention.\" Gregory's independent description agrees on the substance while using a drier word — the leaves are damaged, and Tregelles read a good deal from the offset traces on the facing page — so the word \"damp\" specifically comes from Scrivener.",
+          "The date is not agreed either, and the disagreement is still live in the reference works rather than merely historical. The Bibliothèque nationale assigns the ninth century, and so does the Center for the Study of New Testament Manuscripts. Gregory wrote \"ninth or tenth century\", noting that Scholz and Martin had said eleventh. Scrivener printed an eleventh-century judgement with Gregory's ninth or tenth beside it in brackets. Eichhorn, reporting Griesbach, was later still. The article's answer is the ninth century because that is what the holding library says, with the range noted rather than hidden.",
+          "None of that makes the manuscript less valuable, and it is worth being clear about what it is valuable for. Minuscule 33 does not contain readings that overturn anything; it is not the source of a disputed verse, and no doctrine hangs on it. What it does is show that the good early text did not disappear when the Byzantine text became standard — that a scribe in the ninth century, copying with an old exemplar in front of him, could produce a book that reads like Vaticanus. That is a fact about transmission rather than about doctrine, and it is the kind of fact that only accumulates when somebody is willing to sit down with a manuscript that is exhaustive of every faculty of attention.",
+        ],
+      },
+    ],
+    verses: [
+      { reference: "Mark 9:31", note: "The start of one of three gaps in the Gospels, running to Mark 11:11" },
+      { reference: "Luke 21:38", note: "The start of another, running to Luke 23:26" },
+      { reference: "Revelation 1:1", note: "The one New Testament book this manuscript never contained" },
+      { reference: "Romans 1:1", note: "Romans stands last of the epistles as the codex is now bound, at folio 95v, immediately before the Gospels — the rest of Paul begins the New Testament back at folio 51, because a medieval binder shuffled the sections" },
+    ],
+    sources: [
+      { label: "Bibliothèque nationale de France: Grec 14, digitised on Gallica", url: "https://gallica.bnf.fr/ark:/12148/btv1b10723181c" },
+      { label: "C. R. Gregory, Textkritik des Neuen Testamentes, volume 1 (1900)", url: "https://archive.org/details/textkritikdesneu0001greg" },
+      { label: "F. H. A. Scrivener, A Plain Introduction to the Criticism of the New Testament, 4th edition", url: "https://archive.org/details/aplainintroducti00scriuoft" },
+    ],
+    manuscript: {
+      siglum: "33 (Gregory-Aland); formerly Colbertinus 2844",
+      manuscriptType:
+        "Parchment minuscule codex, 143 leaves, 37.8 by 24.8 cm, a single column of 48 to 52 lines, written by two hands a century apart",
+      language: "Koine Greek",
+      contents:
+        "Portions of the prophets, then the whole New Testament except Revelation. Three gaps in the Gospels as F. H. A. Scrivener lists them: Mark 9:31-11:11, Mark 13:11-14:60 and Luke 21:38-23:26. C. R. Gregory's list ends the second at 14:59 and adds a further gap at Luke 13:7-19:44. The books stand in a disordered sequence because a binder rearranged them in the thirteenth or fourteenth century",
+      origin: "Unknown",
+      findSite: "Not applicable. It was a library book in Paris, not a find",
+      foundYear:
+        "Not applicable. C. R. Gregory records it as Colbertinus 2844, from the library of Jean-Baptiste Colbert",
+      foundBy: "No finder. J. G. Eichhorn's description of 1827 is the source of its reputation",
+      dateAssigned:
+        "Ninth century, as the Bibliothèque nationale and CSNTM both assign it. C. R. Gregory gave \"ninth or tenth\"; Scholz, Martin and Scrivener preferred the eleventh; Eichhorn, reporting Griesbach, the eleventh or the beginning of the twelfth",
+      dateCertainty: "disputed",
+      currentLocation: "Bibliothèque nationale de France, Paris",
+      shelfmark: "Grec 14",
+      facsimileUrl: "https://gallica.bnf.fr/ark:/12148/btv1b10723181c",
+    },
+    reflectionPrompt:
+      "Tregelles called this book wearisome to the eyes and exhausting to every faculty of attention, and read it anyway, and we are still using what he found. What are you avoiding because it is going to be dull rather than because it is going to be hard?",
+    citations: [
+      {
+        tier: "institution",
+        label: "Bibliothèque nationale de France: Département des Manuscrits, Grec 14",
+        url: "https://gallica.bnf.fr/ark:/12148/btv1b10723181c",
+        credit: "Bibliothèque nationale de France, Paris",
+        detail:
+          "The holding library's own digitisation on Gallica: the whole codex, 150 images, published as public domain. The shelfmark, the ninth-century date (the library's record gives 0801-0900), the parchment, the 143 leaves and the contents list showing the prophets before the New Testament were read from the library's IIIF manifest and OAI record. That folio list is also what settles the order of the shuffled sections: Paul begins at folio 51 with 1 Corinthians, Acts stands at 76v and the Catholic Epistles at 90, Romans alone sits at 95v, and the Gospels begin at 101, because Gallica's viewer refuses scripted requests and has to be opened in a browser",
+        supports: "The shelfmark, the date, the extent, and that the manuscript can be looked at",
+      },
+      {
+        tier: "primary",
+        label: "C. R. Gregory, Textkritik des Neuen Testamentes, volume 1",
+        url: "https://archive.org/details/textkritikdesneu0001greg",
+        credit: "Caspar René Gregory",
+        detail:
+          "Leipzig, 1900; public domain at the Internet Archive. Source of the measurements, the line counts, the two hands, the binder's rearrangement in the thirteenth or fourteenth century, the \"ninth or tenth century\" dating with Scholz and Martin's eleventh beside it, and — the reason this volume rather than his later one is cited — the exact reference for Eichhorn's epithet, quoted here in Gregory's own German",
+        supports: "The physical description, the dating range, and the source of the nickname",
+      },
+      {
+        tier: "primary",
+        label: "J. G. Eichhorn, Einleitung in das Neue Testament, volume 5",
+        url: "https://archive.org/details/10410500bsb",
+        credit: "Johann Gottfried Eichhorn",
+        detail:
+          "Leipzig, 1827; public domain, digitised by the Bayerische Staatsbibliothek. Page 217 carries both the description of the text — \"Der Text ist der Alexandrinische oder Hesychische, voll der vortrefflichsten und ältesten Lesarten\", which this article renders into English and says so — and the phrase Gregory quotes. The German is \"die Königin unter den Cursiv geschriebenen\" manuscripts; the English \"queen of the cursives\" is a later rendering and is not what he wrote",
+        supports: "The epithet, at its source, and what Eichhorn actually said",
+      },
+      {
+        tier: "primary",
+        label: "F. H. A. Scrivener, A Plain Introduction to the Criticism of the New Testament, 4th edition",
+        url: "https://archive.org/details/aplainintroducti00scriuoft",
+        credit: "Frederick Henry Ambrose Scrivener",
+        detail:
+          "1894; public domain at the Internet Archive. Source of the quoted description of the damp damage and the misplaced leaves, of the comparison with Codices B, D and L, of the list of gospel lacunae, and of the quotation from S. P. Tregelles's own account of collating it",
+        supports: "The condition of the manuscript, its text type, and its lacunae",
+      },
+      {
+        tier: "institution",
+        label: "Center for the Study of New Testament Manuscripts: GA 33",
+        url: "https://manuscripts.csntm.org/manuscript/Group/GA_33",
+        credit: "Center for the Study of New Testament Manuscripts",
+        detail:
+          "Its record gives \"Gr. 14\", the Bibliothèque Nationale in Paris, the ninth century, parchment, 143 leaves, a single column of 48 to 52 lines, and contents covering the Gospels, the Pauline Epistles, Acts and the Catholic Epistles. Cited here as an independent institutional confirmation of the ninth-century date, since the Münster institute's own record is inconsistent on that point",
+        supports: "The ninth-century date and the physical description, from a second institution",
+      },
+      {
+        tier: "encyclopedic",
+        label: "Wikipedia: Minuscule 33",
+        url: "https://en.wikipedia.org/wiki/Minuscule_33",
+      },
+    ],
+  },
+  {
+    id: "nag-hammadi-codices",
+    name: "Nag Hammadi Codices",
+    alternateNames: ["Nag Hammadi Library"],
+    // Registered here, deliberately, are four text titles that end in a canonical personal name.
+    // Left unregistered, the linker matches the bare name inside them and sends a reader who taps
+    // "Gospel of Philip" to the apostle Philip's page. `verseAnnotations.ts` already suppresses
+    // "Gospel of"/"Book of"/"Epistle of" for some people, but that map is a corpus-wide ruling and
+    // is not this batch's to change; pointing the whole title at the library that contains these
+    // four tractates is the in-lane fix, and it is also the more useful destination.
+    // NOT registered: bare "Nag Hammadi" — that is the town, and a town is not this record.
+    matchNames: [
+      "Gospel of Philip",
+      "Apocryphon of John",
+      "Letter of Peter to Philip",
+      "First Apocalypse of James",
+    ],
+    category: "manuscript",
+    role: "Thirteen Fourth-Century Coptic Books From Upper Egypt",
+    summary:
+      "Twelve surviving papyrus books and part of a thirteenth, dug up in Egypt in about 1945 and carrying forty-five otherwise mostly lost works of Greek-speaking Christianity's stranger edges — the single most important manuscript find for understanding the movements the early church argued with.",
+    sections: [
+      {
+        heading: "Books in a Jar, in 1945 or Thereabouts",
+        paragraphs: [
+          "The account everybody tells goes like this. In December 1945, near the cliff of Jabal al-Tarif in Upper Egypt, a farmer named Muhammad Ali al-Samman was digging for sabakh, the soft nitrous earth used as fertiliser, when his mattock struck a large sealed jar. He hesitated in case a jinn lived inside it, broke it open anyway hoping for gold, and found thirteen leather-bound papyrus books. He took them home, where some of the loose leaves went into his mother's bread oven. Weeks later he and his brothers avenged their father in a blood feud. The books reached the Cairo antiquities market, and from there the Coptic Museum.",
+          "Almost every element of that paragraph is disputed, and the second and third sections of this article are about why. What is not disputed is the outcome. The Coptic Museum in Cairo began acquiring the books in 1946 and holds the bulk of them today under inventory numbers 4851, 10544 to 10555, 10589, 10590, 11597 and 11640. Part of Codex I travelled a different route: it was bought from a dealer in Belgium by the Jung Institute of Zurich on 10 May 1952, which is why it is still called the Jung Codex, and it was returned to Cairo and reunited with the rest of Codex I in 1975 and 1976. The leather cover of Codex I and the scrap papyrus lining it belong to the Institute for Antiquity and Christianity in Claremont, California, and part of one leaf of Codex III is at Yale.",
+          "The physical facts are firmer than the story. S. Emmel, who worked on the editing project, records that what survives is \"extensive remains of eleven papyrus books in codex form with leather covers (Codices I-XI); eight leaves (as well as two large fragments that probably represent two further leaves) of a twelfth codex, the bulk and leather cover of which are assumed to have been lost since the discovery (Codex XII); and eight leaves (Codex XIII) that had been removed in antiquity from a thirteenth codex and laid inside the front cover of Codex VI.\" The original collection ran to at least 1,240 written pages, of which 1,156 are represented by at least a fragment. Seven hundred and thirteen inscribed scraps have never been placed.",
+        ],
+      },
+      {
+        heading: "What the Books Contain, and What They Are Not",
+        paragraphs: [
+          "Fifty-one texts, of which forty-five are distinct works and thirty-six were previously unknown in any form. All were composed in Greek, over the first four centuries, in various parts of the Mediterranean world, and translated into Coptic — most into Sahidic, some into a variety of Lycopolitan. The books themselves are fourth-century: one of the dated documents reused as stiffening in the cover of Codex VII shows that cover was made some time after AD 348. They are among the oldest well-preserved bound books of any kind to survive. Among them are the Gospel of Truth, the Secret Book of John, the Gospel of Philip, and the Gospel of Thomas.",
+          "None of this is a suppressed Bible. The popular \"banned books\" framing fails on the plainest evidence there is, which is dates and public records. Specialists date these works to the second century or later, with the Gospel of Thomas the one genuine argument about that — long after the four Gospels were circulating and being copied. And where the early church discusses such books, it does so openly and in writing. Eusebius of Caesarea, listing the books of his own day around AD 325, sorts them into the accepted, the disputed, the rejected, and then a fourth group he describes as \"those that are cited by the heretics under the name of the apostles\" — of which he says they \"are not to be placed even among the rejected writings, but are all of them to be cast aside as absurd and impious.\" That is a hostile verdict, and this article's position is that it was broadly the right one. But it is a published verdict in a widely-read book, naming names. Suppression is what you do when you cannot argue; cataloguing your opponents' titles in a history everyone reads is the opposite.",
+          "What the codices are is something better than a conspiracy: the best evidence anyone has for what the early church was actually arguing against. Before 1945 the teachings in these books were known almost entirely from the churchmen who attacked them, which is a poor way to learn what anyone believed. Now they can be read directly. A reader who wants to see why the New Testament's own warnings about \"what is falsely called knowledge\" were not shadow-boxing has, for the first time in sixteen centuries, the other side of the correspondence.",
+        ],
+      },
+      {
+        heading: "Nobody Can Say Where They Came From",
+        paragraphs: [
+          "These books were not excavated. There is no dig report, no stratigraphy, no photograph of them in the ground. Excavation was attempted later, at the reported spot, and produced nothing that corroborated the account — which is a harder fact than \"nobody looked\". What is known of the find comes from interviews J. M. Robinson conducted from the 1970s onward, thirty years after the event, and the objection to that method is not new: R. Kasser and M. Krause put a signed disclaimer into the introductory volume of the facsimile edition itself, stating that they \"have serious reasons to put in doubt the objective value of a number of important points\" of Robinson's account and do \"not consider as assured anything more than the core of the story (the general location and approximate date of the discovery).\" Robinson answered that his was ordinary historical method and could be checked: \"This methodical and critical investigation is what history is made of, not fable. Like scientific experiment, it can be repeated, and unless that is done with contrary results, it is unscientific to deny the validity of the result attained thus far.\" M. Goodacre, who has pressed the case against the story hardest, does not answer that on its merits: he observes that too much time has now passed for such a re-investigation to be possible at all, and that \"Robinson's critics themselves never attempted to do this, perhaps not surprisingly given the content of their criticism, which is about the unreliable nature of this kind of testimony in general.\"",
+          "Goodacre's own objection is that the story exists in irreconcilable versions — two people present in 1977, seven in 1979, eight in 1981, with the name of the first finder changing — and that the reasons it is repeated are not evidential: \"In its orientalizing representation of illiterate, ignorant, blood-thirsty peasants, it enables academics to celebrate their literacy, civilization and wealth,\" and \"pedagogical usefulness is not a barometer of truth.\" He also asks a plainly practical question: \"Should we continue to speak about 'thirteen codices' when it is clear that only twelve complete codices have survived?\" N. Denzey Lewis and J. A. Blount pressed further in 2014, arguing that a jar of papyrus could not have survived sixteen centuries of Nile flooding at the base of a cliff, and that higher up \"is hardly the place to dig for sabakh\" — so \"it is entirely reasonable to suspect that he was searching for illegal antiquities: tomb robbing.\" Denzey Lewis has since softened the part of that case aimed at Robinson personally, writing in 2018 that she is now \"less inclined to say that\" he \"himself invented this story\" and thinks instead that \"he believed a story that came together from a well-organized ring of dealers.\" Her verdict on how much is recoverable is worth quoting because it is the honest floor: \"We can only guess.\"",
+          "One further dispute follows from all this and is very much alive. If the books were not monastic property hidden after Athanasius of Alexandria's festal letter of 367 — the standard explanation for decades — then what were they? Denzey Lewis and Blount argue the monastic setting is unevidenced, that the papyrologists who examined the cover stiffening concluded against a monastic source and for a \"town rubbish heap,\" and — following D. Brakke, whose article this one has not read directly and cites at second hand through them — that the writings Athanasius's letter was aimed at were his Arian and Meletian opponents rather than anything in these books. But H. Lundhaug and L. Jenott answered in 2015 with a book-length case that the codices were made and read by monks in fourth- and fifth-century Upper Egypt, arguing from the scribal notes and colophons the books themselves carry. P. Linjamaa's 2024 survey of the whole quarrel describes the debate as \"polarised\" and reports that the sceptical case has itself \"received considerable critique.\" It is not settled, and an article that told you it was would be telling you something the specialists do not know.",
+        ],
+      },
+    ],
+    verses: [
+      { reference: "1 Timothy 6:20-21", note: "\"What is falsely called knowledge\" — gnosis is the word Paul uses" },
+      { reference: "Colossians 2:8-9", note: "Written against a teaching that set fullness of deity apart from a real body" },
+      { reference: "1 John 4:1-3", note: "The apostolic test: confessing that Jesus Christ has come in the flesh" },
+      { reference: "2 Peter 1:16", note: "Not cunningly devised fables, but eyewitness testimony — the claim these books do not make" },
+    ],
+    sources: [
+      { label: "Nag Hammadi Archive, Claremont Colleges Library", url: "https://calisphere.org/collections/26630/" },
+      { label: "M. Goodacre, \"How Reliable is the Story of the Nag Hammadi Discovery?\"", url: "https://markgoodacre.org/NagHammadiStory.pdf" },
+      { label: "P. Linjamaa, The Nag Hammadi Codices and their Ancient Readers (open access)", url: "https://doi.org/10.1017/9781009441483.001" },
+    ],
+    manuscript: {
+      manuscriptType:
+        "Papyrus codices with leather covers, single-quire except Codex I, the covers stiffened with scrap papyrus",
+      language:
+        "Coptic — mostly Sahidic, with Codices I and X and the first two texts of XI in a variety of Lycopolitan. Every text is a translation from Greek",
+      contents:
+        "Fifty-one texts, being forty-five distinct works of which thirty-six were previously unknown; at least 1,240 written pages originally, 1,156 of them now represented by at least a fragment, plus 713 unplaced scraps. Among them the Gospel of Truth, the Secret Book of John, the Gospel of Philip and the Gospel of Thomas. Popular counts of \"52 tractates\" and scholarly counts of 45 differ because several works occur twice",
+      origin:
+        "The individual works were composed in Greek across the first four centuries in various parts of the Mediterranean world; the Coptic translations and the books themselves are generally placed in the latter half of the fourth century, somewhere near where they were found",
+      findSite:
+        "Reported as the foot of the Jabal al-Tarif near Hamrah Dum, Upper Egypt — but this rests on interviews conducted thirty years later, later excavation at the spot corroborated nothing, and J. Doresse's earlier account places the find in an ancient cemetery at Qasr es-Sayyad instead. The books' only documented appearance is on the Cairo antiquities market",
+      foundYear:
+        "Conventionally December 1945. N. Denzey Lewis notes that \"neither the year nor the place of the books' discovery was initially specified\" and that early accounts range from 1945 to 1949",
+      foundBy:
+        "Credit is contested. The standard account names a farmer, Muhammad Ali al-Samman, digging for fertiliser with his brothers; the number of people present varies between two, seven and eight across Robinson's own retellings, and the excavators R. Kasser and M. Krause published a signed disclaimer against the whole reconstruction",
+      dateAssigned:
+        "The codices, fourth century — a dated document reused in the cover of Codex VII places that cover after AD 348. The works copied into them were composed at various dates over the first four centuries",
+      dateCertainty: "firm",
+      currentLocation:
+        "Coptic Museum, Cairo (the bulk). The leather cover and cover stiffening of Codex I are at the Institute for Antiquity and Christianity, Claremont, California; part of one leaf of Codex III is at the Beinecke Rare Book and Manuscript Library, Yale",
+      shelfmark: "Coptic Museum, Cairo, inv. nos. 4851, 10544-10555, 10589, 10590, 11597, 11640; Yale 1784 for the Yale leaf",
+      facsimileUrl: "https://ccdl.claremont.edu/digital/collection/nha",
+    },
+    citations: [
+      {
+        tier: "institution",
+        label: "Nag Hammadi Archive, Claremont Colleges Library",
+        url: "https://calisphere.org/collections/26630/",
+        credit: "Claremont Colleges Library, via Calisphere",
+        detail:
+          "The owning institution's own description of its photographic archive, read in full. Source of the statement that the codices are conserved at the Coptic Museum in Cairo and \"are no longer completely legible\", so that the 1970s photographs are \"one of the only means of deciphering\" them, and of the identification of the J-series negatives taken by B. Psiroukis in September 1973. The images themselves are marked \"Copyright is retained in accordance with U. S. Copyright laws\" and are linked here, not reproduced",
+        supports: "Where the codices are, their present condition, and the photographic record",
+      },
+      {
+        tier: "scholarly",
+        label: "S. Emmel, \"Nag Hammadi Library\", in The Coptic Encyclopedia",
+        url: "https://ccdl.claremont.edu/digital/api/collection/cce/id/1418/download",
+        credit: "Stephen Emmel",
+        detail:
+          "Free PDF from the Claremont Colleges Digital Library, downloaded and read in full. Written by a member of the Nag Hammadi Codices Editing Project. Source of the codex-by-codex survival figures, the page counts, the counts of 51 texts / 45 distinct works / 36 previously unknown, the Coptic dialects, the Coptic Museum inventory numbers, the Claremont and Yale holdings, the 713 unplaced fragments, and the post-348 cartonnage date for the cover of Codex VII. Emmel is himself a defender of the core of the find story, and the sentence usually clipped from him runs in full: \"Although the details of the discovery have remained unverified, despite archaeological investigation, there is little reason to doubt the eyewitness reports that the books were found in a ceramic jar hidden at the Jabal al-Tarif\"",
+        supports: "Every physical and codicological fact in the article, and the holdings",
+      },
+      {
+        tier: "scholarly",
+        label: "M. Goodacre, \"How Reliable is the Story of the Nag Hammadi Discovery?\"",
+        url: "https://markgoodacre.org/NagHammadiStory.pdf",
+        credit: "Mark Goodacre",
+        detail:
+          "Journal for the Study of the New Testament 35/4 (2013), 303-322, DOI 10.1177/0142064X13482243. The free PDF on the author's own site was downloaded and read in full; every sentence quoted from him here was compared against it. Source of the two-, seven- and eight-person versions, the Kasser and Krause disclaimer as printed in the facsimile edition's introductory volume, Robinson's reply, Goodacre's concession that the critics never repeated the investigation, and the twelve-versus-thirteen codices point",
+        supports: "The whole of the third section's account of the find story and its critics",
+      },
+      {
+        tier: "scholarly",
+        label: "N. Denzey Lewis and J. A. Blount, \"Rethinking the Origins of the Nag Hammadi Codices\"",
+        url: "https://doi.org/10.15699/jbibllite.133.2.399",
+        credit: "Nicola Denzey Lewis and Justine Ariel Blount",
+        detail:
+          "Journal of Biblical Literature 133/2 (2014), 399-419. Paywalled at the publisher; the full text was read and every quotation here byte-checked against it. Source of the sabakh objection, the tomb-robbing suggestion, the report that the cartonnage papyrologists concluded for a \"town rubbish heap\" against a Pachomian origin, and the argument that Athanasius's thirty-ninth festal letter is irrelevant to these books",
+        paywalled: true,
+        supports: "The case against the find story and against the monastic-origins explanation",
+      },
+      {
+        tier: "scholarly",
+        label: "N. Denzey Lewis, \"(Still) Rethinking the Origins of the Nag Hammadi Codices\"",
+        url: "https://themarginaliareview.com/still-rethinking-the-origins-of-the-nag-hammadi-codices/",
+        credit: "Nicola Denzey Lewis",
+        detail:
+          "The Marginalia Review of Books, 6 July 2018, free and read in full. Cited specifically because it is where she withdraws part of her earlier charge against Robinson personally, and because it carries her statements that \"Cairo is thus their only actual, known provenance\" and that on the ultimate source of the books \"we can only guess\"",
+        supports: "Her revised position, and the limits of what the provenance can show",
+      },
+      {
+        tier: "scholarly",
+        label: "P. Linjamaa, The Nag Hammadi Codices and their Ancient Readers, Introduction: The Provenance Controversy",
+        url: "https://doi.org/10.1017/9781009441483.001",
+        credit: "Paul Linjamaa",
+        detail:
+          "Cambridge University Press, 2024, pp. 1-22, open access under CC BY-NC 4.0 and read in full. A 2024 survey of the whole quarrel, cited here for the state of the question rather than for a position: it reports that A. Khosroyev's case against monastic origins has \"received considerable critique\", that H. Lundhaug and L. Jenott have reformulated the monastic hypothesis from the codices' own scribal notes and colophons, and that the debate remains \"polarised\"",
+        supports: "That the monastic-origins question is open, and the fair statement of the other side",
+      },
+      {
+        tier: "primary",
+        label: "Eusebius, Church History 3.25 (Nicene and Post-Nicene Fathers, series II, vol. I)",
+        url: "https://en.wikisource.org/wiki/Nicene_and_Post-Nicene_Fathers:_Series_II/Volume_I/Church_History_of_Eusebius/Book_III/Chapter_25",
+        credit: "Eusebius of Caesarea, translated by A. C. McGiffert",
+        detail:
+          "Public domain, hosted at Wikisource, read in full. The chapter's own title is \"The Divine Scriptures that are accepted and those that are not\". Source of the four-way classification quoted here, and of the exact wording placing the heretics' apostolic gospels below even the rejected books",
+        supports: "That such books were catalogued and refused in public, not suppressed",
+      },
+      {
+        tier: "scholarly",
+        label: "J. Zandee, \"Codex Jung\", in The Coptic Encyclopedia",
+        url: "https://ccdl.claremont.edu/digital/api/collection/cce/id/486/download",
+        credit: "Jan Zandee",
+        detail:
+          "Free PDF from the Claremont Colleges Digital Library, downloaded and read in full. The source of every date in this article for the Jung Codex: purchase from an antiquities dealer in Belgium by the Jung Institute of Zurich on 10 May 1952, the pages it contained, and its return to Cairo and reunification with the rest of Codex I in 1975 and 1976. It also gives Codex I\u2019s dialect under the older name Subakhmimic, which is the same thing Emmel calls Lycopolitan",
+        supports: "The Jung Codex, its purchase and its return",
+      },
+      {
+        tier: "encyclopedic",
+        label: "Wikipedia: Nag Hammadi library",
+        url: "https://en.wikipedia.org/wiki/Nag_Hammadi_library",
+      },
+    ],
+  },
+  {
+    id: "gospel-of-thomas",
+    name: "Gospel of Thomas",
+    // NOT registered: bare "Thomas" — that is the apostle, who owns it in people.ts. The full title
+    // is longer than the bare name and so wins the match wherever it is written out in full, which
+    // is why this article never writes "Thomas" on its own to mean the book.
+    category: "manuscript",
+    role: "A Coptic Sayings Collection, and Three Greek Scraps That Came First",
+    summary:
+      "One hundred and fourteen sayings of Jesus with no story around them — found complete in Coptic at Nag Hammadi, and recognised only afterwards as the text behind three Greek fragments that had been sitting in print, unidentified, since 1897.",
+    sections: [
+      {
+        heading: "Printed in 1897, Identified in 1952",
+        paragraphs: [
+          "On the second day of their first season digging the rubbish mounds of Oxyrhynchus, in January 1897, B. P. Grenfell and A. S. Hunt turned up a leaf carrying sayings of Jesus that were not in any Gospel. They rushed it into print the same year as a shilling pamphlet, Logia Iesou: Sayings of Our Lord from an Early Greek Papyrus, and dated the hand not much later than the year 200. Two more fragments of the same work appeared in the fourth volume of The Oxyrhynchus Papyri in 1904. Nobody knew what the work was. It was a collection of unplaced sayings with no title and no context, and it stayed that way for half a century.",
+          "The Coptic manuscript found at Nag Hammadi settled it. Working in the Coptic Museum in Cairo alongside G. Quispel in about 1952, H.-C. Puech recognised that the Oxyrhynchus fragments were pieces of the complete text in front of him; he published the identification in 1957. A. D. DeConick draws out why that mattered: it \"meant that the Coptic was a translation from an earlier Greek version of the Gospel, and since one of the Greek papyri had been dated to 200 CE, this meant that there was manuscript evidence of this Gospel 150 years older than the Coptic.\"",
+          "The three Oxyrhynchus pieces are scattered. P.Oxy. 1 is a codex leaf at the Bodleian Library, Oxford; P.Oxy. 654 is a reused roll at the British Library, with an unpublished land survey on the back; P.Oxy. 655 is six small fragments of a two-column leaf at the Houghton Library, Harvard. They do not agree with the Coptic in detail, which is itself informative — R. Cameron judges the differences \"best explained as variants resulting from the circulation of more than one Greek edition\" in antiquity, and concludes that \"the text of Gos. Thom. must be regarded as unstable.\"",
+        ],
+      },
+      {
+        heading: "A Book With No Story In It",
+        paragraphs: [
+          "S. J. Patterson describes what a reader actually meets. In contrast to the canonical gospels, he writes, this book \"has no narrative. It does not tell a story of Jesus' life. It contains only a few brief anecdotal stories. In it there are no stories of Jesus' birth, baptism, his preaching at Nazareth. There are no stories of his entry into Jerusalem, his arrest, crucifixion, or resurrection.\" What there is instead is a list, most items beginning \"Jesus said\". It opens by promising secret sayings and by making the stakes of interpretation the whole point: whoever finds their meaning \"will not experience death\".",
+          "About half the sayings have parallels in the first three Gospels. The other half were unknown before 1945. Some are close to the canonical wording, some are recognisable but turned, and some are strange — the kingdom \"spread out upon the earth\", a two-word saying, \"Become passers-by\", and a closing exchange in which Simon Peter demands that Mary Magdalene — so she is generally identified, though the text gives only the first name — be sent away, and Jesus answers that he will lead her \"in order to make her male\". That last one is the book's most-quoted sentence and the one most often used as a cudgel in both directions. It is worth reading beside the earlier saying about making the two into one, which is how specialists on every side of the dating question generally take it; and it is worth knowing that DeConick, who argues for a very early core, assigns it to the collection's latest layer rather than to anything traceable back to Jesus.",
+          "There is no evidence this book was ever a candidate for the New Testament. Hippolytus of Rome, writing between 222 and 235, quotes a saying \"occurring in the Gospel inscribed according to Thomas\" and rebuts it by pointing out that it is really a line of Hippocrates. Eusebius puts books of this kind below even his rejected category. No ancient writer argues for its inclusion; no canon list contains it; no council is recorded as debating it. One honest caution, and it comes from a scholar in the early-dating camp: Cameron warns that bare title-only references in the fathers \"must be treated with care, since they might refer to the Infancy Gospel of Thomas\", a completely different work. Hippolytus is the one citation that quotes text we can match.",
+        ],
+      },
+      {
+        heading: "How Old Is It? The Field Is Genuinely Split",
+        paragraphs: [
+          "Everything turns on one question: does this book draw on the Synoptic Gospels, or does it draw on the same older stream they drew on? Cameron states the dependency between the two questions with unusual candour, and it explains why the argument never ends: \"If Gos. Thom. is a sayings collection based on an autonomous tradition, and not a gospel harmony conflated from the NT, then a date of composition in, say, the last decades of the 1st century would be more likely than a mid-to-late-2d-century date.\" The date follows from the judgement about sources, not the other way round.",
+          "The case for independence is real and should be met at its strongest. Patterson gives three arguments: that where the same saying occurs in both, the form in this book is often the more primitive; that there is \"between them virtually no shared order\", which is not what literary borrowing usually looks like; and that its genre, the bare sayings collection, belongs to an early period \"contemporaneous with Q\". H. Koester went further, calling its material a \"direct and almost unbroken continuation of Jesus' own teaching\" — a sentence quoted here as DeConick prints it from his 1971 essay, not from a copy of Koester this article has opened. DeConick's position is more careful than either label allows: she reads the book as a \"rolling corpus\", an old core which, in her words, \"appears to have contained five speeches of Jesus\" whose contents \"point to their origin in the Jerusalem mission prior to 50 CE\" — onto which a Syrian community's later reinterpretations accumulated over generations — so that parts of it may be very early and parts of it certainly are not. She also rejects the \"Gnostic gospel\" framing outright, finding \"no distinctive feature of Gnostic mentality\" in the sayings.",
+          "The case for a second-century book that knows the Synoptics has gained substantial ground since 2012. M. Goodacre argues that the verbal agreement is sometimes too close to be anything but a literary relationship — including, in his own words, \"a 13-word verbatim agreement (Mt. 7.5 // Lk. 6.42 // Gos. Thom. 26 …)\" and \"a phrase that is never found in Greek literature until it appears in the parallel between Lk. 17.21 and Gos. Thom. 3\" — and that the decisive test is whether the redactional fingerprints of one text show up in the other, what he calls \"diagnostic shards\". His most intuitive argument is about coverage: this book has parallels to material from \"every single strand of Synoptic material\" — the double tradition, the triple tradition, and the matter peculiar to each of the three — so that if it did not know them, \"the author was able to access material from every pool of tradition that fed them\". S. Gathercole argued in parallel that the book was composed in Greek rather than translated from Aramaic or Syriac, which cuts against the reconstructions the early-dating case has leaned on; this article has not read Gathercole's volumes directly and reports his thesis at second hand, which is worth saying plainly.",
+          "Where does that leave a reader? Not with a settled answer. An early, independent book was the more common view among specialists through the 1990s and 2000s; since 2012 the case for a second-century book dependent on the Synoptics has gained ground far enough that the Society of Biblical Literature's own public reference work now presents a date of roughly AD 135 to 200. The early camp has not conceded, and Goodacre himself grants that he and Gathercole \"may sometimes give the impression\" that the relationship \"is as straightforward as the lines that students draw\" — adding, in the same breath, that \"the maps we draw and the models we make are necessarily simpler than the reality that they are attempting to represent.\" This app's own position is that the four Gospels are the trustworthy record, and that is a theological commitment held before the evidence rather than a result read off it. What the evidence itself supports is narrower and worth having on its own terms: whichever date wins, this is a real second-century document that tells us a great deal about how some Christians in Syria remembered and reworked the words of Jesus — and, as the Bible Odyssey article puts it, \"a later date for the Gospel of Thomas is not a negative judgment.\"",
+        ],
+      },
+    ],
+    verses: [
+      { reference: "Luke 17:20-21", note: "The kingdom not coming with observation — the closest canonical parallel to this book's central theme" },
+      { reference: "Matthew 7:5", note: "The beam and the speck: the thirteen-word verbatim agreement at the centre of the dependence argument" },
+      { reference: "John 20:30-31", note: "A Gospel that states its own purpose, and names it as belief rather than secret knowledge" },
+      { reference: "1 Timothy 6:20-21", note: "\"What is falsely called knowledge\" — the apostolic warning this book is usually read against" },
+    ],
+    sources: [
+      { label: "The Oxyrhynchus Papyri, University of Oxford: Location-List", url: "https://oxyrhynchus.web.ox.ac.uk/location-list" },
+      { label: "A. D. DeConick, \"The Gospel of Thomas\" (open access, Rice University)", url: "https://repository.rice.edu/server/api/core/bitstreams/e001a3e4-3823-4050-8030-d7c8befc2f89/content" },
+      { label: "M. Goodacre, \"Did Thomas Know the Synoptic Gospels?\"", url: "https://markgoodacre.org/Did%20Thomas.pdf" },
+      { label: "Bible Odyssey (SBL): When was the Gospel of Thomas written?", url: "https://www.bibleodyssey.org/articles/when-was-the-gospel-of-thomas-written/" },
+    ],
+    manuscript: {
+      manuscriptType:
+        "One Coptic papyrus codex (Nag Hammadi Codex II, second tractate) and three Greek fragments from Oxyrhynchus — a codex leaf, a reused roll, and six scraps of a two-column leaf",
+      language: "Coptic (Sahidic), translated from Greek; the three Oxyrhynchus fragments are the Greek",
+      contents:
+        "114 sayings, mostly introduced \"Jesus said\", with no narrative, no passion and no resurrection account. About half have parallels in Matthew, Mark or Luke. The Coptic is complete at Nag Hammadi Codex II pp. 32-51; the Greek fragments preserve only parts — P.Oxy. 1 has sayings 26-33 and 77b, P.Oxy. 654 the prologue through saying 7, P.Oxy. 655 sayings 24 and 36-39. The Greek and the Coptic do not agree in detail",
+      origin: "Generally placed in Syria; the surviving copies were made in Egypt",
+      findSite:
+        "The Coptic: Nag Hammadi, Upper Egypt, in about 1945 — see the Nag Hammadi Codices for how little about that is certain. The Greek: the rubbish mounds of Oxyrhynchus, Middle Egypt, in the seasons of 1897 and 1903-04",
+      foundYear: "P.Oxy. 1 in January 1897; P.Oxy. 654 and 655 published 1904; the Coptic in about 1945",
+      foundBy:
+        "The Greek fragments by B. P. Grenfell and A. S. Hunt for the Egypt Exploration Fund. The Coptic by the finders of the Nag Hammadi codices, whose identity is contested. The recognition that these are the same work was made by H.-C. Puech in about 1952, working with G. Quispel, and published in 1957",
+      dateAssigned:
+        "Disputed, and the dispute is the article. Roughly AD 70-80 on S. J. Patterson's reckoning; a first-century core with later accretions on A. D. DeConick's; early-to-middle second century on M. Goodacre's; roughly AD 135-200 in the Society of Biblical Literature's own reference work. The manuscripts themselves: P.Oxy. 1 is dated between the second century and the third, P.Oxy. 654 to about 200-250, P.Oxy. 655 to the third century, and the Coptic codex to the fourth",
+      dateCertainty: "disputed",
+      currentLocation:
+        "Coptic Museum, Cairo (Nag Hammadi Codex II); Bodleian Library, Oxford (P.Oxy. 1); British Library, London (P.Oxy. 654); Houghton Library, Harvard (P.Oxy. 655)",
+      shelfmark:
+        "Cairo, Coptic Museum, inv. 10544; Oxford, Bodleian Library, MS. Gr. th. e. 7 (P); London, British Library, Pap. 1531; Cambridge MA, Houghton Library, SM Inv. 4367",
+      facsimileUrl: "https://ccdl.claremont.edu/digital/collection/nha/id/2859",
+    },
+    citations: [
+      {
+        tier: "institution",
+        label: "The Oxyrhynchus Papyri, University of Oxford: Location-List",
+        url: "https://oxyrhynchus.web.ox.ac.uk/location-list",
+        credit: "The Oxyrhynchus Papyri project, University of Oxford",
+        detail:
+          "The project's own tabular location list, read directly rather than through a summary. It is the source of all three shelfmarks and holdings: P.Oxy. 1 at the Bodleian as Ms. Gr. Th. e 7 (P), 654 at the British Library as Inv. 1531 (its key notes the transfer from the British Museum), and 655 at the Houghton Library, Harvard, as SM Inv. 4367",
+        supports: "Where each Greek fragment is and under what shelfmark",
+      },
+      {
+        tier: "scholarly",
+        label: "A. D. DeConick, \"The Gospel of Thomas\"",
+        url: "https://repository.rice.edu/server/api/core/bitstreams/e001a3e4-3823-4050-8030-d7c8befc2f89/content",
+        credit: "April D. DeConick",
+        detail:
+          "The Expository Times 118/10 (2007), open access in Rice University's institutional repository and read in full. Source of the rolling-corpus model in her own words, of the Kernel dating and its Jerusalem setting, of her rejection of the Gnostic framing, of her placing of saying 114 among the accretions, and of the account of H.-C. Puech's identification in about 1952 and its significance",
+        supports: "The identification of 1952, the rolling-corpus position, and the layering of the sayings",
+      },
+      {
+        tier: "reference",
+        label: "S. J. Patterson, \"The Gospel of Thomas and Jesus\"",
+        url: "https://www.dialoguejournal.com/wp-content/uploads/sbi/articles/Dialogue_V28N02_131.pdf",
+        credit: "Stephen J. Patterson",
+        detail:
+          "Dialogue: A Journal of Mormon Thought 28/2, open access and read in full; his three arguments for independence and his description of what the book is are quoted from it. His dating of roughly AD 70-80 is from his monograph The Gospel of Thomas and Jesus (Polebridge, 1993), 120, which this article has not read directly",
+        supports: "The case for independence, stated by one of its principal advocates",
+      },
+      {
+        tier: "scholarly",
+        label: "M. Goodacre, \"Did Thomas Know the Synoptic Gospels? A Response to Denzey Lewis, Kloppenborg and Patterson\"",
+        url: "https://markgoodacre.org/Did%20Thomas.pdf",
+        credit: "Mark Goodacre",
+        detail:
+          "Journal for the Study of the New Testament 36/3 (2014), 282-293, DOI 10.1177/0142064X14523523. Free PDF on the author's own site, downloaded and read in full; the diagnostic-shards definition, the thirteen-word agreement, the every-pool argument and his own concession are quoted from it. His book is Thomas and the Gospels: The Case for Thomas's Familiarity with the Synoptics (Eerdmans, 2012), published in Britain by SPCK as Thomas and the Gospels: The Making of an Apocryphal Text",
+        supports: "The case for second-century dependence, stated by its principal advocate",
+      },
+      {
+        tier: "reference",
+        label: "Bible Odyssey (Society of Biblical Literature): When was the Gospel of Thomas written?",
+        url: "https://www.bibleodyssey.org/articles/when-was-the-gospel-of-thomas-written/",
+        credit: "Simeon Burke, for the Society of Biblical Literature",
+        detail:
+          "Cited for the field's current public reference position — a date of about AD 135 to 200 — and for its own statement that the question \"remains highly controversial\". Also the source of the closing observation that a later date is not a negative judgment",
+        supports: "The current state of the question, from a body with no stake in this app's position",
+      },
+      {
+        tier: "primary",
+        label: "Hippolytus, Refutation of All Heresies, book V (Ante-Nicene Fathers, vol. V)",
+        url: "https://en.wikisource.org/wiki/Ante-Nicene_Fathers/Volume_V/Hippolytus/The_Refutation_of_All_Heresies/Book_V/Part_3",
+        credit: "Hippolytus of Rome, translated by A. Roberts and J. Donaldson",
+        detail:
+          "Public domain, hosted at Wikisource, read for the passage in question. The one patristic citation that quotes matchable text: Hippolytus reports a saying from \"the Gospel inscribed according to Thomas\" and answers it by attributing the thought to Hippocrates",
+        supports: "The earliest datable external notice, and its hostility",
+      },
+      {
+        tier: "reference",
+        label: "R. Cameron, \"Thomas, Gospel of\", in The Anchor Bible Dictionary",
+        url: "https://www.earlychristianwritings.com/thomas.html",
+        credit: "Ron Cameron",
+        detail:
+          "Anchor Bible Dictionary, vol. 6, 535-540. This article has not opened the printed dictionary; every sentence quoted from Cameron here was read on the page linked, which reproduces the relevant passages with page references (dating at 536, attestation and the Hippolytus point at 535). Source of the judgement that the Greek and Coptic differences point to more than one Greek edition and that the text \"must be regarded as unstable\", of the statement that the date follows from the judgement about sources, and of his warning that title-only patristic references may mean the Infancy Gospel instead. H. Koester's sentence about unbroken continuation is NOT on this page; that one was checked in DeConick's article, which prints it from his 1971 essay",
+        supports: "The instability of the text, the logic of the dating argument, and the caution about patristic references",
+      },
+      {
+        tier: "encyclopedic",
+        label: "Wikipedia: Gospel of Thomas",
+        url: "https://en.wikipedia.org/wiki/Gospel_of_Thomas",
+      },
+    ],
+  },
+  {
+    id: "didache",
+    name: "Didache",
+    alternateNames: ["Teaching of the Twelve Apostles"],
+    matchNames: ["Codex Hierosolymitanus", "Bryennios Manuscript"],
+    category: "manuscript",
+    role: "The Earliest Surviving Christian Church Manual",
+    summary:
+      "Sixteen short chapters telling a first- or early-second-century congregation how to baptise, how to pray, how to hold the Lord's Supper and how to spot a con man claiming to be a prophet — lost for centuries and found in 1873 in a Constantinople library, in a codex a scribe signed and dated to 1056.",
+    sections: [
+      {
+        heading: "One Codex, Signed and Dated",
+        paragraphs: [
+          "In 1873 Philotheos Bryennios, then head of the Patriarchal Great School of the Nation in Constantinople and later Metropolitan of Serres and of Nicomedia, was working through the library of the Monastery of the Holy Sepulchre in the Phanar — the Jerusalem Patriarchate's dependency in the city — when he came across a Greek parchment codex. He published its two letters of Clement in 1875. The Didache he published in 1883, ten years after he first opened the book.",
+          "The manuscript is unusually well documented for its age, because the man who made it signed his work: a notary named Leon, who dated the subscription to 11 June 1056. It is 120 leaves, and the professional catalogue of Greek manuscripts lists seven works in it: a synopsis of Scripture attributed to John Chrysostom, the Epistle of Barnabas, 1 and 2 Clement, the Didache, the letters of Ignatius in their longer form, and a short piece on the genealogy of Christ through his legal father. The Didache occupies about six leaves in the middle. The codex is now in the Patriarchal Library of the Orthodox Patriarchate in Jerusalem as Panaghiou Taphou 54, and the Library of Congress microfilmed it: 123 public-domain images, freely viewable, of the only complete copy of this text that exists.",
+          "Almost everything else is scraps. Two small parchment fragments from Oxyrhynchus, catalogued P.Oxy. XV 1782 and dated to the late fourth century, carry parts of the first three chapters. A leaf in Coptic in the British Library carries part of chapters 10 to 12, and includes a thanksgiving over ointment that is in no Greek copy at all. There are Ethiopic and Latin pieces, and a Georgian version whose manuscript has since been lost and whose independence scholars dispute. For a document this important, the evidence is one book, dated 1056, plus fragments.",
+        ],
+      },
+      {
+        heading: "What a Church Actually Did",
+        paragraphs: [
+          "It opens with a catechism: \"There are two ways, one of life and one of death, and there is a great difference between the two ways.\" Then it turns practical. Baptise in running water in the threefold name if you can; in other water if you cannot; in warm water if the cold is too much; and \"if thou hast neither, then pour water on the head thrice in the name of the Father and of the Son and of the Holy Spirit.\" Both the person baptising and the person being baptised should fast first. Fast on Wednesdays and Fridays, not Mondays and Thursdays, because that is what the hypocrites do. Pray the Lord's Prayer three times a day — and note that the version given here closes with two clauses, \"for Thine is the power and the glory for ever and ever,\" without the kingdom that later liturgy adds.",
+          "The eucharistic prayers come next, cup before bread, with the image of grain scattered on the hills and gathered into one loaf as a picture of the church, and the rule that only the baptised may share it. Then the part that gives the whole document its flavour: how to handle travelling apostles and prophets. Receive an apostle as you would the Lord — but he stays one night, two if he must, and \"if he abide three days, he is a false prophet\"; he leaves with bread and nothing else, and \"if he ask money, he is a false prophet.\" A prophet who teaches the truth but does not do it is a false prophet. Genuine prophets, on the other hand, get the firstfruits, \"for they are your chief-priests\". Then a line of church order that is itself a dating argument: \"Appoint for yourselves therefore bishops and deacons worthy of the Lord\" — bishops and deacons, with no third order of presbyters between them. The last chapter turns to the end of the world, names a \"world-deceiver\" who will come as a son of God, and then simply stops: \"Then shall the world see the Lord coming upon the clouds of heaven.\" There is no judgement scene. K. Niederwimmer and others hold that the original ending is lost.",
+          "This document is the single best answer to the claim that the early church suppressed books it did not like. It was not suppressed; it was read, valued, openly ranked, and openly excluded. Eusebius, around AD 325, lists it among books he does not treat as Scripture: \"Among the rejected writings must be reckoned also the Acts of Paul, and the so-called Shepherd, and the Apocalypse of Peter, and in addition to these the extant epistle of Barnabas, and the so-called Teachings of the Apostles …\" His word there is notha, and \"rejected\" reads harder in English than he meant it — he immediately adds that \"all these may be reckoned among the disputed books\", and he keeps them well clear of the heretics' forgeries, which he says are not to be placed even among these. Athanasius, in his festal letter of 367, is more explicit still, and this is the passage that settles the question: after listing the canon he adds that \"there are other books besides these not indeed included in the Canon, but appointed by the Fathers to be read by those who newly join us\", and names among them \"that which is called the Teaching of the Apostles, and the Shepherd\", in a list that also carries the Wisdom of Solomon, the Wisdom of Sirach, the book of Esther, Judith and Tobit. A named, approved middle tier: read in church, given to new converts, and not Scripture. That is a public filing system, not a bonfire.",
+        ],
+      },
+      {
+        heading: "Nobody Agrees When It Was Written",
+        paragraphs: [
+          "The proposals run from about AD 50 to well into the second century, and the range is not posturing — it follows from the fact that the document has no author, no addressee, no place and no date in it, and shows every sign of having been assembled in layers. A. Milavec argues for AD 50 to 70 and, unusually, treats the work as a deliberate unity rather than a patchwork. K. Niederwimmer's standard commentary places the final composition in the early second century, about AD 110 to 120, and analyses it into four earlier strata: a Jewish Two Ways tract, archaic liturgical material, a tradition about receiving travelling charismatics, and an apocalypse whose ending is gone. M. W. Holmes states the middle position: compiled in its present form perhaps as late as 150, though a date near the end of the first century seems likelier to many. This article has not opened Milavec's, Niederwimmer's or Holmes's volumes and reports all three positions at second hand, which is worth saying plainly rather than dressing paraphrase as quotation.",
+          "The arguments for an early date are internal and cumulative, and a reader can check most of them in the text: prophets are still itinerant and still a live pastoral problem; the ministry is bishops and deacons with no monarchical bishop above them; no heresy is named and no persecution is mentioned; the Christology is undeveloped. The arguments for a later date turn mostly on the relationship to Matthew, and that is the second real dispute. Roughly three camps: that the Didache draws on Matthew in its finished form, argued among others by C. M. Tuckett, whose case is that parts of it presuppose the editorial work of the evangelists themselves and not merely the traditions behind them — his articles are behind paywalls this article could not open, so his position is reported and not quoted; that both draw independently on a shared body of oral teaching, the position of J. A. Draper, J. S. Kloppenborg, Niederwimmer and others; and, from A. Garrow, that the dependence runs the other way for most of the book. Both of the first two camps concede the complication that makes the question hard: if the Didache was assembled in layers, the answer may differ layer by layer.",
+          "One thing the Dead Sea Scrolls did settle. The old three-cornered question — whether the Didache took the Two Ways from the Epistle of Barnabas, or the epistle from the Didache, or both from something older — has largely resolved in favour of a common Jewish source, because the Community Rule from Qumran turned out to contain the same two-ways teaching in a pre-Christian Jewish community. That is a good illustration of what this whole section is for. Two of the three positions people argued for a century were wrong, and the thing that settled it was a manuscript nobody knew existed.",
+          "A last note, and an honest one for an app written from an evangelical position: the pouring provision in chapter seven is a passage where evangelicals themselves genuinely differ, and have for a long time. The nineteenth-century editors of the Ante-Nicene Fathers said so in their own footnote, observing that the preceding verses point to immersion while this one permits pouring in certain cases. Neither side of that argument invented the sentence, and neither side is embarrassed by it as much as the other side hopes.",
+        ],
+      },
+    ],
+    verses: [
+      { reference: "Matthew 28:19-20", note: "The threefold baptismal name the Didache prescribes" },
+      { reference: "Matthew 6:9-13", note: "The Lord's Prayer as Matthew gives it; the Didache's version drops the kingdom from the doxology and orders it three times a day" },
+      { reference: "Matthew 7:15-20", note: "Testing false prophets by their fruit — the Didache turns this into a house rule" },
+      { reference: "Acts 2:42", note: "Teaching, fellowship, breaking of bread and prayer — the same four things, arranged as a manual" },
+    ],
+    sources: [
+      { label: "Pinakes (IRHT-CNRS): Jerusalem, Patriarchikê bibliothêkê, Panaghiou Taphou 054", url: "https://pinakes.irht.cnrs.fr/notices/cote/35291/" },
+      { label: "Library of Congress: Panagios Taphos 54 (digitised)", url: "https://www.loc.gov/item/00279389694-jo/" },
+      { label: "Didache, Lightfoot translation (public domain, Wikisource)", url: "https://en.wikisource.org/wiki/Didache_(Lightfoot_translation)" },
+    ],
+    manuscript: {
+      manuscriptType: "Parchment codex of 120 leaves, minuscule, with a dated and signed subscription",
+      language: "Greek",
+      contents:
+        "Sixteen short chapters: the Two Ways catechism (1-6), baptism (7), fasting and the Lord's Prayer (8), eucharistic prayers (9-10), testing travelling apostles and prophets (11-13), the Lord's Day assembly (14), appointing bishops and deacons (15), and an apocalypse (16) that breaks off at the coming on the clouds with no judgement scene. It occupies about six leaves of a codex that also carries a synopsis of Scripture attributed to John Chrysostom, the Epistle of Barnabas, 1 and 2 Clement, the longer recension of the letters of Ignatius, and a short piece on the genealogy of Christ through his legal father",
+      origin:
+        "The text is most often placed in Syria; Egypt and Palestine have also been argued and there is no consensus. The manuscript was written in Constantinople or its orbit",
+      findSite:
+        "The library of the Monastery of the Holy Sepulchre — the Jerusalem Patriarchate's metochion — in the Phanar district of Constantinople, now Istanbul",
+      foundYear: "Found in 1873; the Didache published in 1883",
+      foundBy: "Philotheos Bryennios, then head of the Patriarchal Great School of the Nation, later Metropolitan of Serres and of Nicomedia",
+      dateAssigned:
+        "The manuscript is dated by its own scribe to 11 June 1056. The text is disputed: about AD 50-70 (A. Milavec), about AD 110-120 (K. Niederwimmer), or as late as 150 with the end of the first century more probable to many (M. W. Holmes)",
+      dateCertainty: "disputed",
+      currentLocation: "Greek Orthodox Patriarchate of Jerusalem, Patriarchal Library",
+      shelfmark: "Jerusalem, Patriarchikê bibliothêkê, Panaghiou Taphou 54",
+      facsimileUrl: "https://www.loc.gov/item/00279389694-jo/",
+    },
+    citations: [
+      {
+        tier: "institution",
+        label: "Pinakes (IRHT-CNRS): Jerusalem, Patriarchikê bibliothêkê, Panaghiou Taphou 054",
+        url: "https://pinakes.irht.cnrs.fr/notices/cote/35291/",
+        credit: "Institut de recherche et d'histoire des textes, CNRS",
+        detail:
+          "The standard professional catalogue of Greek manuscripts, and the source preferred here over the popular accounts. It gives the shelfmark, the date 1056, the scribe as Leon notarios, the note that the subscription follows on folio 120r, and the folio-by-folio contents list from which this article's account of the codex is taken, including the last item, which Pinakes titles the genealogy of Joseph, the betrothed of the Blessed Virgin Mary, and which this article renders as the genealogy of Christ through his legal father because the app's auto-linker cannot be given a bare \"Joseph\" without sending the reader to the patriarch. Popular sources and the current Wikipedia article disagree with it on the scribe's name and on whether the subscription is on 120r or 120v; Pinakes is followed here",
+        supports: "The shelfmark, the date, the scribe, and the contents of the codex",
+      },
+      {
+        tier: "institution",
+        label: "Library of Congress: Panagios Taphos 54, in Manuscripts in the Libraries of the Greek and Armenian Patriarchates in Jerusalem",
+        url: "https://www.loc.gov/item/00279389694-jo/",
+        credit: "Library of Congress",
+        detail:
+          "The catalogue record was read through the Library's own JSON interface, which confirms the title \"Panagios Taphos 54. John Chrysostom: Synopsis of the Testaments; Apostolic Fathers. 1056 A.D. 120 f.\", the date 1056, the note \"Copied on vellum\", 123 digitised images, and a rights statement placing the collection in the public domain with a requested credit line. The digitisation is of black-and-white microfilm, not colour. Note that the human-facing page refuses automated requests and has to be opened in a browser",
+        supports: "That a free facsimile of the only complete copy exists, and its extent",
+      },
+      {
+        tier: "primary",
+        label: "The Didache, translated by J. B. Lightfoot",
+        url: "https://en.wikisource.org/wiki/Didache_(Lightfoot_translation)",
+        credit: "Joseph Barber Lightfoot",
+        detail:
+          "Public domain, hosted at Wikisource under a pre-1931 tag, and read in full. Every phrase quoted from the Didache in this article was compared against it: the two ways, the pouring provision, the Wednesday and Friday fast, the two-clause doxology, the cup-before-bread eucharistic prayers, the three-day and the money tests for a false prophet, the firstfruits to the prophets, the appointment of bishops and deacons, and the abrupt ending",
+        supports: "Every quotation from the text of the Didache",
+      },
+      {
+        tier: "primary",
+        label: "Athanasius, Festal Letter 39 (Nicene and Post-Nicene Fathers, series II, vol. IV)",
+        url: "https://en.wikisource.org/wiki/Nicene_and_Post-Nicene_Fathers:_Series_II/Volume_IV/Letters/Letters/Festal_Letters/Chapter_25",
+        credit: "Athanasius of Alexandria, in the NPNF translation",
+        detail:
+          "Public domain at Wikisource, read in full. The surviving fragment is printed there as chapter 25, not 39, which is why searching for chapter 39 fails. Source of the quotation naming the Teaching of the Apostles among books \"not indeed included in the Canon, but appointed by the Fathers to be read by those who newly join us\". The NPNF editors' own footnote raises a transmission question about this section, since it survives through the Coptic Life of Theodore; that caveat is theirs and is noted here rather than suppressed",
+        supports: "That the Didache was openly classified as read-but-not-canonical",
+      },
+      {
+        tier: "primary",
+        label: "Eusebius, Church History 3.25 (Nicene and Post-Nicene Fathers, series II, vol. I)",
+        url: "https://en.wikisource.org/wiki/Nicene_and_Post-Nicene_Fathers:_Series_II/Volume_I/Church_History_of_Eusebius/Book_III/Chapter_25",
+        credit: "Eusebius of Caesarea, translated by A. C. McGiffert",
+        detail:
+          "Public domain at Wikisource, read in full, including the paragraphs either side of the one quoted — which is why this article flags that McGiffert's \"rejected writings\" renders notha more harshly than Eusebius's own next sentence supports",
+        supports: "Eusebius's classification, and the qualification he immediately adds to it",
+      },
+      {
+        tier: "institution",
+        label: "P.Oxy. XV 1782: Didache i-iii, University of Oxford",
+        url: "https://portal.sds.ox.ac.uk/articles/online_resource/P_Oxy_XV_1782_Didache_i-iii/21132967",
+        credit: "The Oxyrhynchus Papyri, University of Oxford",
+        detail:
+          "The holding institution's own record, DOI 10.25446/oxford.21132967.v2. It gives the material as parchment rather than papyrus despite the P.Oxy. series name, the format as codex, the date as late fourth century, and A. S. Hunt as editor. Its images are marked In Copyright, so they are linked here and not reproduced",
+        supports: "The fourth-century fragment, its material and its date",
+      },
+      {
+        tier: "scholarly",
+        label: "K. Niederwimmer, The Didache: A Commentary; and A. Milavec, The Didache: Faith, Hope, and Life of the Earliest Christian Communities, 50-70 C.E.",
+        credit: "Kurt Niederwimmer; Aaron Milavec",
+        detail:
+          "Niederwimmer, translated by L. M. Maloney, edited by H. W. Attridge, Hermeneia (Minneapolis: Fortress, 1998) — the standard commentary, source of the early-second-century dating, of the four-layer analysis, and of the position that the original ending is lost. Milavec (New York: Newman Press, 2003) is the sustained case for AD 50-70 and for reading the work as a unity rather than a patchwork. Print only, and this article has opened neither: both positions are reported at second hand, which is why the third section says so in its own words rather than quoting either man",
+        supports: "The two ends of the dating range, named to the scholarship that argues them",
+      },
+      {
+        tier: "scholarly",
+        label: "H. van de Sandt and D. Flusser, The Didache: Its Jewish Sources and its Place in Early Judaism and Christianity; and J. A. Draper, ed., The Didache in Modern Research",
+        credit: "Huub van de Sandt and David Flusser; Jonathan A. Draper",
+        detail:
+          "Van de Sandt and Flusser, Compendia Rerum Iudaicarum ad Novum Testamentum III/5 (Assen: Van Gorcum / Minneapolis: Fortress, 2002) is the standard reconstruction of the Jewish Two Ways source behind both the Didache and the Epistle of Barnabas, and is the scholarship behind this article\u2019s third paragraph on the Community Rule. Draper\u2019s collection, Arbeiten zur Geschichte des antiken Judentums und des Urchristentums 37 (Leiden: Brill, 1996), gathers the Didache-and-Matthew debate, including the oral-tradition position associated with Draper, J. S. Kloppenborg and Niederwimmer against the literary-dependence position of C. M. Tuckett and the reverse-dependence proposal of A. Garrow. Both print only; neither opened here. They are cited so that the named dispute points at the actual scholarship rather than at nothing",
+        supports: "The Two Ways source, and the three camps on the relationship to Matthew",
+      },
+      {
+        tier: "encyclopedic",
+        label: "Wikipedia: Didache",
+        url: "https://en.wikipedia.org/wiki/Didache",
+      },
+    ],
+  },
+  {
+    id: "gospel-of-judas",
+    name: "Gospel of Judas",
+    // NOT registered: bare "Judas" — that is Judas Iscariot, who owns it in people.ts, and this
+    // article writes the full title every time it means the book. "Codex Tchacos" and "Tchacos
+    // Codex" are match-only: the codex is the object, the gospel is one of four texts in it, so
+    // printing either as an "Also called" would tell a reader something untrue.
+    matchNames: ["Codex Tchacos", "Tchacos Codex"],
+    category: "manuscript",
+    role: "A Second-Century Gnostic Text in a Codex Wrecked by the Antiquities Trade",
+    summary:
+      "Twenty-six pages of Coptic in which Jesus takes Judas Iscariot aside and tells him he will exceed all the others — announced in 2006 as the discovery that would rewrite the betrayal, and substantially rewritten itself within two years.",
+    sections: [
+      {
+        heading: "A Book Destroyed on Its Way to Us",
+        paragraphs: [
+          "This is the worst-treated important manuscript of the modern era, and the damage is part of the evidence. A papyrus codex surfaced in Middle Egypt in the 1970s, said to have come from the Jebel Qarara hills near Maghagha, in a limestone box in a tomb. There is no excavation, no report, no context. It passed to a Cairo dealer, was stolen and taken to Geneva in 1980 and recovered in 1982, and was shown to the Coptologist S. Emmel in Geneva in 1983. Emmel found roughly thirty leaves still in reasonable condition and reported that proper conservation could preserve some sixty pages of text. Nobody bought it. It then sat in a safe deposit box on Long Island for about sixteen years.",
+          "By 2000, when the dealer F. Nussberger-Tchacos bought it, the binding had disintegrated, the pages had been reshuffled, and the book had broken into something like a thousand fragments. Yale's Beinecke Library examined it and declined to buy, the origins being what they were. She sold it on to B. Ferrini, who put it in a freezer — which separated the ink from the papyrus fibres, darkened the leaves and made a bad situation permanent. That sale collapsed into bankruptcy and litigation; she recovered most of it in 2001 and placed it with the Maecenas Foundation for Ancient Art in Basel for conservation. Restoration recovered perhaps ninety per cent of what remained, but roughly a third of the codex is now illegible, and leaves from the group are still reported in private hands in the United States.",
+          "Four texts were on it, and the page numbers survive: a Letter of Peter to Philip on pages 1 to 9, a First Apocalypse of James on 10 to 32, the Gospel of Judas on 33 to 58, and a previously unknown Book of Allogenes on 59 to 66. The first two are also known from Nag Hammadi; the last two were new. Samples went to the NSF-Arizona accelerator mass spectrometry laboratory at Tucson under A. J. T. Jull in January 2005, and McCrone Associates examined the ink, finding it consistent with inks known from third- and fourth-century Egypt. The object is genuinely ancient. Where it came from, nobody can say.",
+        ],
+      },
+      {
+        heading: "What Is Actually On It",
+        paragraphs: [
+          "It is a second-century Gnostic text, and it is about Gnostic cosmology far more than about Judas Iscariot. Jesus laughs at the disciples for giving thanks over bread, tells them they worship a god who is not the highest God, and takes Judas aside for a long revelation about aeons, luminaries and a creator called Saklas. There are only a handful of points of contact with the New Testament, and the clearest of them is a reference to Judas being replaced so that the Twelve might be completed again — which reads like knowledge of the account in Acts.",
+          "The one thing nobody on any side of the argument claims is that it tells us anything about the historical Judas. P. M. Head endorses J. M. Robinson's summary as his own conclusion: it \"is a second-century apocryphal Gospel that in all probability tells us about the Cainite gnostics of the mid-second century, not about what happened in AD 30!\"",
+          "Nor was this a suppressed book. Irenaeus of Lyon knew of a Gospel of Judas around AD 180 and wrote about it in a work everybody read, reporting that its users held that Judas, the betrayer, \"had got a thorough knowledge of these things; and he alone, knowing the truth above all the others, accomplished the mystery of the betrayal.\" Whether the book Irenaeus knew is this book is a real question; J. van Oort has argued at length, and in his own words \"contrary to most current opinions\", that Irenaeus \"in all feasibility, had first-hand knowledge of the Gospel and its contents\" and \"appears to have read the text as we now have it\" — against a majority who think he knew it only by report. Either way the pattern is the same one this section of the app keeps meeting: a text named, described and answered in print, not hidden. Head's own reading of what the text does is worth stating because it is the evangelical case made from the evidence rather than around it: the theology here \"is against the eucharist, against the Twelve, against seeing Jesus as the Son of God,\" and as Irenaeus argued, a reaction of that shape presupposes something already established to react against.",
+        ],
+      },
+      {
+        heading: "The Reading That Was Announced, Then Withdrawn",
+        paragraphs: [
+          "In April 2006 the National Geographic Society unveiled the text with a translation by R. Kasser, M. Meyer, G. Wurst and F. Gaudard, presenting a Judas who acts at Jesus's own request and is the one disciple who understands. Two readings carried most of that weight. Jesus calls Judas the thirteenth daimon, which the team rendered \"spirit\"; and a broken passage at the foot of page 46 was reconstructed and translated so that Judas ascends to the holy generation. Within eighteen months both were under sustained attack, and the story of what happened next is a good and rare thing: a public claim, publicly corrected, by the people who made it.",
+          "A. D. DeConick argued that the Coptic daimon in a Sethian text means demon, not spirit, that the verb at 46,17 means separated from rather than set apart for, and — the sharpest charge — that an emendation had removed a negative. Her own words: \"I think that the emendation of this text was a mistake, that consequently the altered reading of this text has led the public and other scholars to believe that Judas ascends to the holy generation when he does not.\" Her structural complaint was that National Geographic had held the text under non-disclosure agreements and published without peer review: \"this is what happens when our work is not vetted through the normal channels of blind peer review before publication.\"",
+          "Meyer's reply is the part usually left out, and leaving it out would misrepresent both of them. He rejected the word \"mistranslations\" — these \"are not 'mistranslations' at all, but rather they represent alternative ways of understanding a difficult text\" — and he rejected, in strong terms, any suggestion that the team had altered the Coptic to suit itself. That last exchange needs care, because DeConick had already disclaimed the charge he was answering: \"I have not made any statement of intentionality. I have left this as an open question.\" What she asserted was that the text was altered, not why. He also gave ground on the substance, in print: \"While I have indicated elsewhere that I also am increasingly inclined to translate this difficult Coptic phrase as 'set apart from,' the fact remains that either translation is possible.\" DeConick, for her part, recorded the concession and welcomed it. And the reading at the bottom of page 46 did change: the 2007 critical edition prints it as a scribal error and translates \"you will not ascend on high to the holy [generation]\" — a reversal, arrived at partly through the input of W.-P. Funk and P. Nagel, and one Meyer himself calls \"a solution of desperation.\" Meyer's own final position was neither the 2006 headline nor DeConick's: he proposed reading Judas as a figure like Sophia, \"neither a completely positive character nor a totally demonic being.\"",
+          "One more correction belongs here because it is still repeated. The familiar radiocarbon figure of AD 220 to 340 came from discarding the one sample that dated later and averaging the rest. Head listed six objections to that procedure in 2007 and concluded for \"a fourth-century date, or perhaps a little earlier\"; Jull himself told Head by email that \"our position is that the radiocarbon dates support the palaeographic interpretations (similar to the Dead Sea Scrolls, for example), not that they are superior to them or supplant them.\" C. Askeland, who obtained the actual laboratory reports, found that the popular account had also mishandled calibration, and put the properly calibrated result in \"the late third through the end of the fourth century.\" The manuscript is a little younger than the number everyone quotes.",
+        ],
+      },
+    ],
+    verses: [
+      { reference: "Matthew 26:14-16", note: "The betrayal as the Gospels record it, for money and on Judas's own initiative" },
+      { reference: "John 6:70-71", note: "Jesus's own verdict on Judas, in the Gospel this text is answering" },
+      { reference: "Acts 1:20-26", note: "The replacement of Judas and the completing of the Twelve — the clearest New Testament echo in the text" },
+      { reference: "Matthew 27:3-5", note: "Remorse and suicide: no part of this account survives in the Gnostic retelling" },
+    ],
+    sources: [
+      { label: "P. M. Head, \"The Gospel of Judas and the Qarara Codices\" (open access)", url: "https://www.tyndalebulletin.org/article/29226-the-gospel-of-judas-and-the-qarara-codices-some-preliminary-observations" },
+      { label: "J. van Oort, \"Irenaeus's knowledge of the Gospel of Judas: Real or false?\" (open access)", url: "https://scielo.org.za/scielo.php?script=sci_arttext&pid=S0259-94222013000100020" },
+      { label: "McCrone Associates: Ink Analysis, the Gospel of Judas", url: "https://www.mccrone.com/case-studies/ink-analysis-the-gospel-of-judas/" },
+    ],
+    manuscript: {
+      manuscriptType: "Papyrus codex, now fragmentary — one of four texts in what is called Codex Tchacos",
+      language: "Coptic, translated from a Greek original",
+      contents:
+        "Pages 33 to 58 of the codex: a dialogue in which Jesus laughs at the disciples' thanksgiving, tells them they worship a lesser god, and gives Judas Iscariot a private cosmological revelation. Roughly a third of the codex as a whole is now illegible, including the top of pages 55 to 58, so the end of the story between Jesus and Judas is damaged. The other three texts in the codex are a Letter of Peter to Philip (pp. 1-9), a First Apocalypse of James (pp. 10-32) and a Book of Allogenes (pp. 59-66)",
+      origin: "Composed in Greek, second century, in a Sethian or related Gnostic setting; this copy was made in Egypt",
+      findSite:
+        "Reported as the Jebel Qarara hills near Maghagha, in the El Minya region of Middle Egypt, in a limestone box in a tomb. This is not an excavation: there is no dig report and no recorded context. The codex's documented history begins with a Cairo dealer",
+      foundYear: "The 1970s. No firmer date is recoverable",
+      foundBy: "Unknown. The account of local farmers finding it comes from the antiquities trade, decades after the fact, and cannot be checked",
+      dateAssigned:
+        "The codex is fourth century, or a little earlier. The familiar AD 220-340 figure comes from an averaging procedure P. M. Head criticised in detail; C. Askeland, working from the laboratory's own reports, gives the late third through the end of the fourth century. Palaeographers have proposed the fourth century (S. Emmel; G. Wurst) and the fourth to fifth (H. Attridge; R. Kasser). The text itself is second century",
+      dateCertainty: "disputed",
+      currentLocation:
+        "Coptic Museum, Cairo. The codex was announced in 2006 for permanent deposit there, and McCrone Associates, one of the teams that worked on it, records that after conservation the manuscript \"was determined to be authentic and delivered to Egypt\" and is now on display in the Coptic Museum. Two qualifications this article cannot resolve: fragments are reported to have reached Egypt only in April 2010, and leaves from the same group of books are documented in private hands in the United States, so how complete the repatriation is remains unclear",
+      shelfmark: "None published. The codex is known by the name Codex Tchacos, after the dealer who bought it",
+    },
+    citations: [
+      {
+        tier: "scholarly",
+        label: "P. M. Head, \"The Gospel of Judas and the Qarara Codices: Some Preliminary Observations\"",
+        url: "https://www.tyndalebulletin.org/article/29226-the-gospel-of-judas-and-the-qarara-codices-some-preliminary-observations",
+        credit: "Peter M. Head",
+        detail:
+          "Tyndale Bulletin 58.1 (2007), 1-23, DOI 10.53751/001c.29226. Open access; the PDF was downloaded and read in full and every quotation here byte-checked against it. Source of the five individual radiocarbon results, the six objections to how they were averaged, Head's own fourth-century conclusion, the Jull email of 12 February 2007, the point about the text's knowledge of Acts, and both the Robinson sentence he endorses and his own closing judgement",
+        supports: "The dating of the codex, the New Testament contact, and the article's evangelical reading of the text",
+      },
+      {
+        tier: "scholarly",
+        label: "M. Meyer, \"The Thirteenth Daimon: Judas and Sophia in the Gospel of Judas\"",
+        url: "https://web.archive.org/web/2016id_/http://www.chapman.edu/wilkinson/religious-studies/_files/marv-meyer/13th-daimon-final-11408.pdf",
+        credit: "Marvin Meyer",
+        detail:
+          "The author's own paper, copyright 2008, twelve pages, read in full. It was published on his Chapman University page, which no longer resolves; the URL given is the Internet Archive's capture of that page, which is what was read, so that every quotation below can be checked. Source of Meyer's rejection of the word mistranslations, his concession on \"set apart from\", the critical edition's revised rendering of page 46, the naming of W.-P. Funk and P. Nagel, the phrase \"a solution of desperation\", and his own final middle reading of Judas",
+        supports: "The National Geographic team's own account, in its own words, including where it gave ground",
+      },
+      {
+        tier: "reference",
+        label: "A. D. DeConick, responses to Marvin Meyer, The Forbidden Gospels",
+        url: "http://forbiddengospels.blogspot.com/search/label/Response%20to%20Marvin%20Meyer:%20The%20Thirteenth%20Daimon",
+        credit: "April D. DeConick",
+        detail:
+          "Her own numbered replies of 18 January 2008, read in full, and quoted from rather than from any summary of them. Source of her statement about the emendation and the ascent, her complaint about publication without peer review, and her acknowledgement of Meyer's concession. Her book-length argument is The Thirteenth Apostle: What the Gospel of Judas Really Says (Continuum, 2007; revised 2009), which this article has not opened",
+        supports: "The critique of the 2006 translation, in the critic's own words",
+      },
+      {
+        tier: "scholarly",
+        label: "J. van Oort, \"Irenaeus's knowledge of the Gospel of Judas: Real or false? An analysis of the evidence in context\"",
+        url: "https://scielo.org.za/scielo.php?script=sci_arttext&pid=S0259-94222013000100020",
+        credit: "Johannes van Oort",
+        detail:
+          "HTS Teologiese Studies / Theological Studies 69/1 (2013), open access. Read in full. Source of van Oort's own deliberately literal translation of Against Heresies 1.31.1, quoted here from his text rather than from any summary of it, and of his conclusion, which his own abstract offers \"contrary to most current opinions\" — so it is given here as his argued minority position and not as the settled view",
+        supports: "The earliest external notice of a Gospel of Judas, and how far Irenaeus knew it",
+      },
+      {
+        tier: "institution",
+        label: "McCrone Associates: Ink Analysis, the Gospel of Judas",
+        url: "https://www.mccrone.com/case-studies/ink-analysis-the-gospel-of-judas/",
+        credit: "McCrone Associates; examination by J. G. Barabe",
+        detail:
+          "The laboratory's own account of the work it did for the National Geographic Society: polarised light microscopy, scanning and transmission electron microscopy and infrared spectroscopy, identifying a carbon black ink and an iron-containing ink, with components \"consistent with ingredients in known inks from the third and fourth centuries A.D.\" It records no resulting academic publication. Tiered as an institution because for this object there is no holding-institution page to cite: the codex has no published shelfmark and the museum that holds it has no catalogue entry for it, so the laboratory that did the primary analytical work is the closest thing to an institutional witness available",
+        supports: "That the object is ancient rather than a modern forgery",
+      },
+      {
+        tier: "reference",
+        label: "C. Askeland, \"Radiometric Dating of the Gospel of Judas\"",
+        url: "http://evangelicaltextualcriticism.blogspot.com/2015/03/radiometric-dating-of-gospel-of-judas.html",
+        credit: "Christian Askeland",
+        detail:
+          "Evangelical Textual Criticism, 10 March 2015, read in full. Askeland states there that the National Geographic Society gave the Arizona laboratory permission to send him the actual results, and reports that the popular account failed to calibrate them against tree-ring evidence. His own estimate is quoted here verbatim. P. M. Head confirms in the comment thread that the underlying argument is his, citing his Tyndale Bulletin article at pages 11-13",
+        supports: "That the widely quoted AD 220-340 range is not what the laboratory data support",
+      },
+      {
+        tier: "reference",
+        label: "B. Handwerk, \"Gospel of Judas Pages Endured Long, Strange Journey\", National Geographic",
+        url: "https://www.nationalgeographic.com/science/article/gospel-judas-pages-long-strange-journey",
+        credit: "Brian Handwerk, National Geographic",
+        detail:
+          "Published 6 April 2006 by the body that funded and published the codex — cited here for the provenance chain it sets out and for S. Emmel's 1983 observation that some thirty leaves were then still in reasonable condition. It also states the intention to return all pages permanently to the Coptic Museum in Cairo, which is an intention recorded in 2006 and not a description of where the codex is now",
+        supports: "The chain of custody and the condition of the codex over time",
+      },
+      {
+        tier: "encyclopedic",
+        label: "Wikipedia: Codex Tchacos",
+        url: "https://en.wikipedia.org/wiki/Codex_Tchacos",
+      },
+    ],
+  },
+  {
+    id: "egerton-papyrus-2",
+    name: "Egerton Papyrus 2",
+    alternateNames: ["Egerton Gospel"],
+    matchNames: ["Papyrus Egerton 2", "P.Egerton 2"],
+    category: "manuscript",
+    role: "Fragments of a Gospel Nobody Has Ever Identified",
+    summary:
+      "Three battered scraps bought from a Cairo dealer in 1934, plus a fourth found in Cologne half a century later, carrying four episodes from a gospel that is not any gospel we know — including one miracle at the Jordan that appears nowhere else in Christian literature.",
+    sections: [
+      {
+        heading: "Bought, Not Dug",
+        paragraphs: [
+          "In July 1934 the dealer M. Nahman sent a batch of papyri from Cairo to Paris, and the British Museum bought part of it. Among the pieces were three fragments of a codex leaf carrying Greek text about Jesus. H. I. Bell and T. C. Skeat published them the following year as Fragments of an Unknown Gospel and Other Early Christian Papyri, and the shelfmark has been Egerton Papyrus 2 ever since; the collection passed to the British Library when it separated from the Museum in 1973. The Library still holds the correspondence about the purchase, including the envelope, sealed by Egypt's Department of Antiquities, that the fragments travelled in.",
+          "Where they came from is unknown, and the editors said so on the page: \"Unfortunately the provenance of the fragments is unknown. They formed part of a miscellaneous collection bought from a dealer.\" They guessed Oxyrhynchus from what else came in the same purchase, and immediately qualified the guess. That is the honest position and it has not improved since.",
+          "Fifty-three years later a fourth piece turned up in a different country. M. Gronewald identified Papyrus Köln 255, in the collection of the Institut für Altertumskunde at Cologne, as part of the same codex, joining the bottom of the first fragment. It is a small thing, about five centimetres by three, and it changed the argument about the date more than anything else in the file.",
+        ],
+      },
+      {
+        heading: "Four Scenes, One of Them Unrepeatable",
+        paragraphs: [
+          "How many episodes the fragments hold depends on who is counting: this article follows the four substantial ones below, while Attridge separates the attempted stoning as a fifth and puts the scene at the Jordan before the tribute question rather than after. In the first, Jesus argues with lawyers and rulers in language that runs remarkably close to the fifth and ninth chapters of John's Gospel — searching the Scriptures, Moses as accuser, not knowing where Jesus is from — followed by an attempt to seize and stone him that fails because his hour had not yet come. The wording there is not quite that of the Fourth Gospel: it specifies the hour of his handing over, which J. W. Pryor notes reads the hour \"in a quite unjohannine way: instead of being the hour of his glorification, it is now the time of his arrest.\"",
+          "In the second a leper approaches, addressing Jesus as teacher, and explains that he caught the disease while travelling and eating with lepers at an inn. Jesus heals him and sends him to the priests. Bell and Skeat noted that the form of address is unparalleled in the Gospels and that the dismissal agrees more closely with Luke's ten lepers than with the Synoptic healing accounts. In the third, questioners ask whether it is lawful to pay to kings the things that belong to their rule — kings, not Caesar — and Jesus answers with Isaiah's line about honouring with the lips while the heart is far away.",
+          "The fourth has no parallel anywhere. Jesus stands at the edge of the Jordan, stretches out his right hand, sprinkles something on the water, and something comes up and bears fruit. Bell and Skeat were candid about how little of it can be read: \"This is the only passage to which no even possible parallel can be found in the canonical Gospels, which therefore supply no help towards filling up the lacunae; and unfortunately this is the page in which the surface of the papyrus is in the worst condition.\" What is scattered is not certain — seed and salt have both been proposed — and their own reading was that the incident is more likely symbolic than a display of power. Anyone who tells you confidently what happened at the Jordan in this text is telling you more than the papyrus does.",
+        ],
+      },
+      {
+        heading: "Two Things This Papyrus Is Used to Prove, and Neither Is Settled",
+        paragraphs: [
+          "The first is the date, and here the popular story runs in both directions and gets the editors wrong at both ends. Bell and Skeat did make a strong claim — the papyrus \"is unquestionably the earliest specifically Christian manuscript yet discovered in Egypt\" — but note how narrow that is: earliest specifically Christian, in Egypt, its rivals being Septuagint books whose Christian ownership cannot be shown. It is not the flat claim, oldest Christian text anywhere, that popular accounts put in their mouths. And they hedged hard. Palaeography was \"the sole evidence of date\" and \"always a somewhat precarious basis\"; their conclusion was that it seemed \"extremely improbable\" the manuscript was later than the middle of the second century, not that it was proven earlier.",
+          "The Cologne fragment then supplied an argument for a later date: it carries a hooked apostrophe between double consonants, which Gronewald took as a third-century practice, pushing the codex to about AD 200. His own publication is in German and behind a paywall this article could not get through, so what follows is his argument as his critic reports it, which is a weaker footing than it should be. That is now widely repeated as settled, and it is not. S. E. Porter went back to E. G. Turner, whom Gronewald was citing, and quotes what Turner actually wrote — that in the first decade of the third century the practice \"suddenly becomes extremely common and then persists\" — observing that this says the habit became common then, not that it did not exist before. Porter points to a documentary instance from AD 101 that he calls \"virtually identical\" to the Cologne example, and concludes that \"we are essentially back where we began in 1935.\" The British Library's own catalogue still dates the papyrus 130 to 170; L. R. Zelyck's 2019 critical edition gives 150 to 250. The honest statement is a range, roughly the mid-second to the mid-third century, with no agreed point inside it.",
+          "The second is dependence, and this is where the popular retelling most often makes the editors say the opposite of what they said. Bell and Skeat concluded that as far as the Synoptic Gospels go the text \"appears to represent a quite independent tradition\", and on the Fourth Gospel they leaned the other way from what a reader might expect, writing that it \"would be rash to reject off-hand\" the possibility that the Fourth Gospel depended on this papyrus rather than the reverse. They then refused to decide, in as many words, on the ground that neither of them \"can claim any wide acquaintance with this field of study\". Bell changed his mind two years later, moving toward dependence on the Fourth Gospel in a book of 1937 — a shift this article takes from Pryor's footnote and not from Bell's own volume. The independence case was pressed hardest by H. Koester and J. D. Crossan — Crossan arguing that this text's handling of the Isaiah quotation is more primitive than the version in Mark's Gospel, since here Jesus applies it to himself inside the tribute controversy while Mark's Gospel places it elsewhere and applies it to God. This article has not opened Koester's or Crossan's volumes and reports both at second hand.",
+          "Against them, J. Jeremias argued that \"the Johannine material is shot through with Synoptic phrases and the Synoptic with Johannine usage\", which would point to an author who knew all four. F. Neirynck found a common Lukan vocabulary running through the leper story. H. W. Attridge makes the sharpest version of the case: the detail that Jesus's opponents do not know where he is from \"reflects not simply a floating tradition, but a theme that structures a major portion of the Fourth Gospel,\" which \"strongly suggests that the papyrus depends on the Gospel.\" One caution belongs beside that. Pryor, whose own conclusion is that the author knew the Fourth Gospel and respected it while owing the Synoptics nothing, directly denies Jeremias's premise, writing that apart from three lines the text \"displays no tendency to mix Johannine and other traditions\" at all. The two most recent full technical treatments, by T. Nicklas and by Zelyck, both favour Johannine influence, so the ground has moved — but it has moved by argument, in public, with the editors' own hedges still on the record. That is what an unsettled question looks like when it is handled properly.",
+        ],
+      },
+    ],
+    verses: [
+      { reference: "John 5:39", note: "Searching the Scriptures — one of the closest verbal contacts in the first fragment" },
+      { reference: "John 9:29", note: "Not knowing where Jesus is from: the detail Attridge reads as decisive for dependence on John" },
+      { reference: "Mark 1:40-44", note: "The Synoptic leper, against which the papyrus's version is measured" },
+      { reference: "Isaiah 29:13", note: "Honouring with the lips while the heart is far away — quoted in the tribute scene" },
+    ],
+    sources: [
+      { label: "British Library: Egerton Papyrus 2", url: "https://searcharchives.bl.uk/catalog/040-001982504" },
+      { label: "Universität zu Köln: P.Köln VI 255 (Inv. 608)", url: "https://papyri.uni-koeln.de/stueck/tm63527" },
+      { label: "J. W. Pryor, \"Papyrus Egerton 2 and the Fourth Gospel\" (open access)", url: "https://www.biblicalstudies.org.uk/pdf/abr/37_01_pryor.pdf" },
+    ],
+    manuscript: {
+      manuscriptType: "Three fragments of leaves from a papyrus codex, mounted in glass, plus a fourth fragment of the same codex at Cologne",
+      language: "Koine Greek",
+      contents:
+        "Four episodes, none complete: a dispute with lawyers and rulers with strong verbal contact with John 5 and 9, followed by a failed attempt to seize and stone Jesus; the healing of a leper who says he caught the disease at an inn; a question about paying tribute to kings, answered with Isaiah 29:13; and a badly damaged scene at the Jordan in which Jesus sprinkles something on the water and something bears fruit — with no parallel in any known gospel. The Cologne fragment joins the foot of the first leaf",
+      origin: "Unknown. Egypt, on the evidence of survival alone",
+      findSite:
+        "None. The fragments were bought on the antiquities market; Bell and Skeat inferred Oxyrhynchus from the rest of the lot and said themselves that \"not much weight can really be attached to these arguments\"",
+      foundYear: "Acquired July to September 1934",
+      foundBy:
+        "No finder. Purchased from the Cairo dealer M. Nahman; the acquisition was handled by H. I. Bell at the British Museum. The Cologne fragment was identified as part of the same codex by M. Gronewald in 1987",
+      dateAssigned:
+        "Disputed. Bell and Skeat, 1935: not later than the middle of the second century, on palaeography alone. M. Gronewald, 1987: no earlier than about AD 200, on the hooked apostrophe in the Cologne fragment. S. E. Porter, 2013: back to the mid-second century, arguing the apostrophe evidence has been misread. The British Library's own catalogue: AD 130-170. L. R. Zelyck's 2019 critical edition: AD 150-250",
+      dateCertainty: "disputed",
+      currentLocation:
+        "British Library, London; the fourth fragment at the Institut für Altertumskunde, Universität zu Köln",
+      shelfmark: "London, British Library, Egerton Papyrus 2 (= P. Lond. Christ. 1); Cologne, Inv. 608 (= P.Köln VI 255)",
+      facsimileUrl: "https://iiif.bl.uk/uv/#?manifest=https://bl.digirati.io/iiif/ark:/81055/vdc_100059362050.0x000001",
+    },
+    citations: [
+      {
+        tier: "institution",
+        label: "British Library, Archives and Manuscripts: Egerton Papyrus 2",
+        url: "https://searcharchives.bl.uk/catalog/040-001982504",
+        credit: "The British Library",
+        detail:
+          "The holding library's own record, giving the title \"Egerton Gospel (P. Lond. Christ. 1, P. Egerton 2, TM 63527, LDAB 4736)\", three fragments of a codex mounted in glass with their measurements, the note that P. Köln VI 255 is from the same codex, the provenance line \"Possibly found at Oxyrhynchus: Bell and Skeat (1935), p. 7\", and a date of mid second century AD (130-170) — which is worth noting because it is the holding institution declining to adopt the later dating. The catalogue carries a banner explaining that it is an interim version following the 2023 cyber-attack",
+        supports: "The shelfmark, the physical description, the Cologne join, and the Library's own dating",
+      },
+      {
+        tier: "institution",
+        label: "Universität zu Köln, Institut für Altertumskunde: P.Köln VI 255 (Inv. 608)",
+        url: "https://papyri.uni-koeln.de/stueck/tm63527",
+        credit: "Institut für Altertumskunde, Universität zu Köln",
+        detail:
+          "The Cologne papyrus database's own record: inventory 608, publication P.Köln VI 255, second century, 5.5 by 3 centimetres, described as an unknown gospel or gospel harmony with Synoptic and Johannine similarities, with images of recto and verso released under Creative Commons Attribution 4.0",
+        supports: "The fourth fragment, its identification and its measurements",
+      },
+      {
+        tier: "scholarly",
+        label: "H. I. Bell and T. C. Skeat, Fragments of an Unknown Gospel and Other Early Christian Papyri",
+        credit: "Harold Idris Bell and Theodore Cressy Skeat",
+        detail:
+          "London: Trustees of the British Museum, 1935, printed by Oxford University Press. Note that the publisher is the Museum's trustees, not OUP, and not the British Library, which did not exist until 1973 — both errors are in circulation. A scan was consulted for verification and every sentence quoted here was compared against it; the volume is still in copyright and is neither hosted nor linked. Source of the provenance statement, the palaeographic hedges, the \"earliest specifically Christian manuscript\" claim in its exact scope, the note on the leper's form of address, the description of the Jordan fragment's condition, and the editors' explicit refusal to settle the question of dependence",
+        paywalled: true,
+        supports: "Everything attributed to the original editors, quoted in their own words",
+      },
+      {
+        tier: "scholarly",
+        label: "S. E. Porter, \"Recent Efforts to Reconstruct Early Christianity on the Basis of Its Papyrological Evidence\"",
+        credit: "Stanley E. Porter",
+        detail:
+          "In S. E. Porter and A. W. Pitts, eds., Christian Origins and Greco-Roman Culture (Brill, 2013), 71-84. Read in full from a copy hosted by a third party, which is why no URL is given here rather than give one this project cannot vouch for. Source of the Turner quotation and of Porter's argument that Gronewald's inference from it is invalid, of the AD 101 documentary parallel, and of his own conclusion. Porter's dating of the manuscript is early; his view of its literary relationships is not, and the article does not conflate the two",
+        supports: "That the redating to about AD 200 is contested, and on what grounds",
+      },
+      {
+        tier: "scholarly",
+        label: "J. W. Pryor, \"Papyrus Egerton 2 and the Fourth Gospel\"",
+        url: "https://www.biblicalstudies.org.uk/pdf/abr/37_01_pryor.pdf",
+        credit: "John W. Pryor",
+        detail:
+          "Australian Biblical Review 37 (1989), 1-13, free PDF, downloaded and read in full. Source of his reading of the hour of the handing over, of his own conclusion that the author knew and respected John while owing the Synoptics nothing, of his direct denial of Jeremias's mixing claim, and of the Jeremias and Neirynck positions as he reports them — this article has not opened Jeremias's or Neirynck's own publications and takes both from Pryor, who is arguing against them",
+        supports: "The third section's account of the dependence debate on both sides",
+      },
+      {
+        tier: "scholarly",
+        label: "H. W. Attridge, \"John and Other Gospels\"",
+        url: "https://yalebiblestudy.org/wp-content/uploads/2021/09/1.-JnandOtherGospels.pdf",
+        credit: "Harold W. Attridge",
+        detail:
+          "Chapter 4 of The Oxford Handbook of Johannine Studies (Oxford University Press, 2018), 44-61; the author's proof PDF is freely available and was read. Source of the summary of the four episodes and of Attridge's own argument from the where-is-he-from motif",
+        supports: "The contents of the fragments, and the strongest current argument for dependence on John",
+      },
+      {
+        tier: "encyclopedic",
+        label: "Wikipedia: Egerton Gospel",
+        url: "https://en.wikipedia.org/wiki/Egerton_Gospel",
+      },
+    ],
+  },
+  {
+    id: "diatessaron",
+    name: "Diatessaron",
+    // NOT registered: "Tatian" — no Person record owns it, so a bare mention stays plain, which is
+    // the right outcome. "Tatian's Diatessaron" is the wording the app's existing prose already
+    // uses on `peshitta` and `old-syriac-gospels`, so it is registered here to catch those.
+    matchNames: ["Tatian's Diatessaron", "Diatessaron of Tatian"],
+    category: "manuscript",
+    role: "The Four Gospels Woven Into One, and Then Almost Entirely Lost",
+    summary:
+      "About AD 170 Tatian cut and spliced the four Gospels into a single continuous narrative. It became the gospel of the Syriac-speaking church for two and a half centuries — and survives today in one Greek fragment the size of a playing card, plus translations of translations.",
+    sections: [
+      {
+        heading: "One Card-Sized Fragment",
+        paragraphs: [
+          "Tatian came from the East, called himself an Assyrian, went to Rome, became a pupil of Justin Martyr, and after Justin's death broke with the church over an austere teaching that rejected wine, meat and marriage. Somewhere around AD 170 he produced a single continuous gospel narrative out of the four. The name means \"through four\". Eusebius, writing a century and a half later, could only report it at arm's length: Tatian \"formed a certain combination and collection of the Gospels, I know not how, to which he gave the title Diatessaron, and which is still in the hands of some.\"",
+          "Nothing of it survives complete in any language. The only piece of it in Greek that anyone has ever found is a single parchment leaf about ten centimetres across, dug out of the embankment of the city wall at Dura-Europos on 5 March 1933 by the Yale and French Academy expedition, and datable simply because Dura fell in 256 or 257 and nothing was put into that embankment afterwards. Yale holds it in the Beinecke Library as P.CtYBR inv. DPg 24, and has digitised it in full; it is also known as Dura Parchment 24 and, in the register of New Testament manuscripts, as uncial 0212. The verso is blank.",
+          "Everything else is at one or more removes. There is Ephrem the Syrian's commentary on it, surviving in Armenian and — since the Chester Beatty Library acquired the manuscript in 1957 — in Syriac, published by L. Leloir in 1963 with forty-one more leaves surfacing in 1984 and 1986; between the Dublin leaves and one folio in Barcelona, about eighty per cent of that codex survives. There is an Arabic version, translated in the eleventh century from a Syriac copy made in the ninth. There is a Latin harmony, Codex Fuldensis, written for Victor of Capua in the 540s and now at Fulda. There are medieval Dutch, Persian and Old High German harmonies. As P. M. Head puts it of the Arabic, we are \"at least one translation (maybe two) away from the original Diatessaron, and several copyings.\"",
+        ],
+      },
+      {
+        heading: "Why a Bible Reader Should Care",
+        paragraphs: [
+          "The first reason is what its existence shows about the Gospels. By about AD 170 Tatian had four, and it was these four, and he treated them as the material to be harmonised rather than as four options among many. Victor of Capua, who read the whole Latin harmony closely enough to insert reference numbers throughout it, could be confident that scarcely a word in it does not come from one of the four. That is a strong piece of evidence and it deserves to be stated carefully rather than pushed: it shows the four were the authoritative gospel material in Tatian's world, which is not the same claim as a closed canon, and specialists differ on how much further it reaches. The standard recent volume on the subject, edited by M. R. Crawford and N. J. Zola, is described by its publisher as addressing a work that has been claimed both as a vindication of the fourfold gospel's early canonical status and as an argument for the canon's continuing fluidity — which is a fair summary of how widely the same evidence gets used. There are two real qualifications. Tatian appears to have had some access to material outside the four, though it is a small proportion of the whole. And Victor was reading a sixth-century Latin harmony whose text had been conformed to the Vulgate — the very witness the next section shows to be the only surviving Western one, and a compromised one. His observation is worth having; it is not a direct sight of what Tatian wrote.",
+          "The second reason is what happened to it. It was not merely edged out; it was collected up and replaced, and the bishop who did it wrote down why. Theodoret of Cyrrhus, about 453, reported that Tatian \"composed the Gospel which is called Diatessaron, cutting out the genealogies and such other passages as show the Lord to have been born of the seed of David after the flesh.\" Ordinary congregations, he says, used it innocently: it \"was in use not only among persons belonging to his sect, but also among those who follow the apostolic doctrine, as they did not perceive the mischief of the composition, but used the book in all simplicity on account of its brevity.\" Then the sentence that is quoted in every account of the Diatessaron: \"And I myself found more than two hundred such copies held in respect in the churches in our parts. All these I collected and put away, and I replaced them by the Gospels of the Four Evangelists.\"",
+          "It is worth being exact about that, because it is often told as a story about tidiness and it is not. Theodoret's stated objection is doctrinal: he thought the harmony obscured the Lord's descent from David in the flesh, which is a claim the New Testament makes in its own words. And it is a story about the four winning, in a place where they had not been the working text for generations. What survives of Tatian's own tendencies in the text is thinner than the lurid version suggests. The genealogies really are absent from Ephrem and from the Arabic, and Theodoret says so too — though some witnesses carry them and D. Plooij argued they were there originally. Head's own conclusion after examining the christology is measured: in producing the harmony \"Tatian pursued a relatively conservative procedure: including practically everything from each Gospel,\" and apart from the genealogies \"there is little other evidence of a rejection of the humanity of Jesus.\"",
+        ],
+      },
+      {
+        heading: "The Method for Recovering It Is Collapsing",
+        paragraphs: [
+          "For most of the twentieth century, scholars reconstructed Tatian's text by triangulating the surviving translations and quotations. W. L. Petersen built the standard apparatus for it and wrote the field's standard book. The governing rule was that a reading counts as Tatian's when both an Eastern and a Western witness carry it and no other source explains it. That method is now in serious trouble, and the trouble came from inside.",
+          "U. B. Schmid, building on B. Fischer and J. Rathofer, showed that the supposedly ancient Latin readings in the medieval Western harmonies were circulating in ordinary medieval commentary — in the Glossa Ordinaria and in marginal and interlinear glosses — and traced twenty-four Latin witnesses back, one by one, to Codex Fuldensis. His verdict is blunt: \"in all likelihood only one Western witness had an independent voice, and that is Codex Fuldensis itself. Forget about the rest, if you want to reconstruct Tatian's Diatessaron.\" D. C. Parker drew the consequence: \"At a sweep, therefore, the entire Western tradition is reduced to a single witness [= Codex Fuldensis]. This is a matter to which scholars will need to turn their attention rather urgently.\" N. J. Zola's summary is that \"the entire Western Diatessaronic tradition is collapsing back into a single witness: Codex Fuldensis.\"",
+          "Even the Dura fragment is contested. D. C. Parker, D. G. K. Taylor and M. Goodacre re-edited it in 1999 and concluded it is not Tatian's at all: \"We confess to having felt some surprise when five out of the eight items on which a conclusion could be reached proved to be non-Tatianic. The bulk of evidence is strongly against the fragment's being a part of Tatian's Diatessaron.\" J. Joosten answered them in 2003 and defended the identification. I. N. Mills argued the case against more strongly still in the standard 2019 collection; this article has not opened his chapter and reports it from the volume's own contents. M. Monier and J. E. Taylor, who come down in favour of the identification, nevertheless put the underlying difficulty in one sentence: \"reconstructing the Diatessaron on the basis of later versions has proven problematic, so there is no agreed-upon text with which the fragment can be compared\". Their own suggestion is that the leaf \"contains significant errors of reading, and thus it may be a writing exercise\" — an early form of Tatian's text, but not an expert copy of it. Even the original language is unresolved: T. Zahn, D. Plooij and Petersen argued for Syriac, H. Vogels, H. von Soden and Schmid for Greek, and Zola describes the field as \"split down the middle\" with a resolution unlikely without new evidence.",
+          "This article has not opened Petersen's 1994 volume, and it will not put words in his mouth: he was acutely aware of how poor the available editions were, and the one hedge of his that can be quoted with a page number is his description of the \"insurmountable obstacles\" presented by the \"poor editions and translations\" of the Arabic. It is also worth knowing the field has not stopped. Zola argues that Fuldensis may yet yield genuine Tatianic readings; J. W. Barker's 2021 study sorts the witnesses by narrative sequence rather than wording and argues the Eastern witnesses preserve Tatian's order while the Western descend from a fourth-century revision. The reason to tell a reader all this is not to be gloomy about scholarship. It is that a method which worked for eighty years turned out to be resting on medieval glosses, and the people who found that out were the specialists themselves, in print, correcting their own field.",
+        ],
+      },
+    ],
+    verses: [
+      { reference: "John 1:1-3", note: "Where the Diatessaron begins, in both Ephrem's commentary and the Arabic version" },
+      { reference: "Romans 1:3", note: "Born of the offspring of David according to the flesh — precisely Theodoret's stated objection" },
+      { reference: "Matthew 1:1", note: "One of the two genealogies absent from the Diatessaron's main witnesses" },
+      { reference: "Luke 3:23", note: "The other genealogy, and the reason a bishop went looking for two hundred copies" },
+    ],
+    sources: [
+      { label: "Yale University Library: P.CtYBR inv. DPg 24 (Dura Parchment)", url: "https://collections.library.yale.edu/catalog/33187606" },
+      { label: "Chester Beatty Library: Syc 709, Ephrem's Commentary on the Diatessaron", url: "https://viewer.cbl.ie/viewer/image/Syc_709/1/" },
+      { label: "N. J. Zola, Tatian's Diatessaron in Latin (open access)", url: "https://baylor-ir.tdl.org/items/aa5b00c1-34ae-4be5-9a74-74cde676c433" },
+      { label: "The Diatessaron of Tatian, translated by H. W. Hogg (public domain, Wikisource)", url: "https://en.wikisource.org/wiki/Ante-Nicene_Fathers/Volume_IX/The_Diatessaron_of_Tatian" },
+    ],
+    manuscript: {
+      siglum: "Uncial 0212, for the Dura fragment",
+      manuscriptType:
+        "A composition, not a single book. The one surviving Greek witness is a parchment leaf about 10.5 by 9.5 centimetres with a blank verso; everything else survives in translation, in commentary, or in later harmonies",
+      language:
+        "Composed in Greek or Syriac — the question is unresolved. Surviving witnesses are in Greek, Syriac, Armenian, Arabic, Latin, Persian, Middle Dutch and Old High German",
+      contents:
+        "A single continuous narrative of the life of Jesus assembled from Matthew, Mark, Luke and John, beginning at John 1:1. The genealogies are absent from Ephrem's commentary and from the Arabic version, though some later witnesses carry them. No copy survives complete in Greek or Syriac",
+      origin: "Composed by Tatian, probably about AD 170, in Rome or after his return east",
+      findSite:
+        "The Dura fragment: the embankment of the city wall west of Block L8 at Dura-Europos, Syria. Ephrem's Syriac commentary and the other witnesses reached scholarship through the antiquities market and monastic libraries, not excavation",
+      foundYear: "The Dura fragment on 5 March 1933; the Chester Beatty Syriac commentary acquired in 1957, with further leaves in 1984 and 1986",
+      foundBy:
+        "The Dura fragment was recovered by the Yale University and French Academy of Inscriptions expedition; the excavation was directed in the field by C. Hopkins. No single finder is recorded for the composition as a whole, because there is no single manuscript of it to find",
+      dateAssigned:
+        "The work: about AD 170, with sources ranging from the 160s to about 180 and no agreed figure. The Dura fragment: third century, and necessarily before the fall of Dura in 256 or 257. Ephrem's Syriac commentary manuscript: about AD 500. Codex Fuldensis: 546 or 547",
+      dateCertainty: "disputed",
+      currentLocation:
+        "Beinecke Rare Book and Manuscript Library, Yale University (the Dura fragment); Chester Beatty Library, Dublin (Ephrem's commentary in Syriac); Hochschul- und Landesbibliothek Fulda (Codex Fuldensis); Vatican Library (the principal Arabic manuscripts)",
+      shelfmark:
+        "New Haven, Beinecke, P.CtYBR inv. DPg 24 (also Dura Parchment 24; uncial 0212); Dublin, Chester Beatty, Syc 709 and Syc 709.1; Fulda, 100 Bonifatianus 1 (the Victor Codex)",
+      facsimileUrl: "https://collections.library.yale.edu/manifests/33187606",
+    },
+    citations: [
+      {
+        tier: "institution",
+        label: "Yale University Library: P.CtYBR inv. DPg 24, Yale Papyrus Collection",
+        url: "https://collections.library.yale.edu/catalog/33187606",
+        credit: "Beinecke Rare Book and Manuscript Library, Yale University",
+        detail:
+          "The holding library's own record, confirmed through its IIIF manifest and its LUX data record after the catalogue page proved to reject automated requests. It gives the abstract \"Tatian, Diatessaron\", the container P.CtYBR inv. DPg 24, the language as Greek, the note that the verso is blank, and full digitisation with public access. Note the shelfmark. Yale's own container is P.CtYBR inv. DPg 24; the leaf is cited in the scholarly literature as Dura Parchment 24 and, in the New Testament register, as uncial 0212. Several other numbers circulate for it and this article does not attempt to adjudicate between them, giving the holding library's own designation first",
+        supports: "The one surviving Greek witness, its shelfmark and its facsimile",
+      },
+      {
+        tier: "institution",
+        label: "Chester Beatty Library: Syc 709, Ephrem's Commentary on the Diatessaron",
+        url: "https://viewer.cbl.ie/viewer/image/Syc_709/1/",
+        credit: "Chester Beatty Library, Dublin",
+        detail:
+          "The holding library's own viewer and catalogue record: 75 folios, Syriac, about AD 500 with the first ten folios eighth or ninth century, acquired 1957 and bound in 1960. Its description supplies the chapter coverage, the companion manuscript Syc 709.1 acquired in 1984 and 1986, the single folio in Barcelona, and the calculation that about eighty per cent of the original codex survives",
+        supports: "The Syriac commentary, its extent and its acquisition history",
+      },
+      {
+        tier: "scholarly",
+        label: "N. J. Zola, Tatian's Diatessaron in Latin: A New Edition and Translation of Codex Fuldensis",
+        url: "https://baylor-ir.tdl.org/items/aa5b00c1-34ae-4be5-9a74-74cde676c433",
+        credit: "Nicholas J. Zola",
+        detail:
+          "Baylor University doctoral dissertation, open access, 196 pages, downloaded and read. Zola is co-editor of the standard 2019 volume on the Diatessaron, so this is the state of the question in a specialist's own words. Source of the collapse of the Western tradition, of the Schmid and Parker quotations as he prints them, of the account of the original-language dispute as \"split down the middle\", of Victor of Capua's own words about Tatian, and of the one Petersen hedge quoted here with its page reference",
+        supports: "The whole of the third section, and the Latin and Arabic transmission",
+      },
+      {
+        tier: "scholarly",
+        label: "P. M. Head, \"Tatian's Christology and its Influence on the Composition of the Diatessaron\"",
+        url: "https://www.tyndalebulletin.org/article/30478-tatian-s-christology-and-its-influence-on-the-composition-of-the-_diatessaron_.pdf",
+        credit: "Peter M. Head",
+        detail:
+          "Tyndale Bulletin 43.1 (1992), 121-137, DOI 10.53751/001c.30478, open access. Source of Tatian's biography with its primary references, of the observation that the removes between us and the original are at least one translation and several copyings, of the evidence about the genealogies including D. Plooij's dissent, and of Head's own conclusion that Tatian's procedure was relatively conservative",
+        supports: "Tatian himself, and what can and cannot be shown about his handling of the text",
+      },
+      {
+        tier: "scholarly",
+        label: "M. Monier and J. E. Taylor, \"Tatian's Diatessaron: The Arabic Version, the Dura Europos Fragment, and the Women Witnesses\"",
+        url: "https://academic.oup.com/jts/article/72/1/192/6472569",
+        credit: "Mina Monier and Joan E. Taylor",
+        detail:
+          "Journal of Theological Studies 72.1 (2021), 192-230, DOI 10.1093/jts/flab039. The abstract is open and was fetched and read; the full article is behind a paywall and this article has not read it. Both sentences quoted here are from that abstract. Note carefully where they stand: they argue the Arabic version aligns closely with the Dura parchment and support identifying it as an early form of Tatian's work, so they belong on the affirmative side of that dispute even though they think the leaf is an imperfect copy",
+        paywalled: true,
+        supports: "That there is no agreed text against which the Dura fragment can be tested",
+      },
+      {
+        tier: "primary",
+        label: "The Diatessaron of Tatian, translated by H. W. Hogg (Ante-Nicene Fathers, vol. IX)",
+        url: "https://en.wikisource.org/wiki/Ante-Nicene_Fathers/Volume_IX/The_Diatessaron_of_Tatian",
+        credit: "Translated by Hope W. Hogg",
+        detail:
+          "The Arabic Diatessaron in English, public domain and hosted at Wikisource in fifty-five sections. Consulted directly for the opening at John 1:1 and for the reading of the Baptist's food, where Hogg's own footnote is a useful warning: the vegetarian \"milk and honey\" reading so often attributed to Tatian is not in the surviving Arabic text but is reconstructed from other witnesses. Bear in mind throughout that this is a translation of a translation",
+        supports: "The opening of the harmony, and a caution about reconstructed readings",
+      },
+      {
+        tier: "primary",
+        label: "Theodoret of Cyrrhus on the Diatessaron, in S. Hemphill, The Diatessaron of Tatian (1888)",
+        url: "https://archive.org/details/diatessaronoftat00hempiala",
+        credit: "Theodoret of Cyrrhus, translated by Samuel Hemphill",
+        detail:
+          "Public domain at the Internet Archive; the full text was downloaded and the passage read in place. Theodoret's report is Haereticarum fabularum compendium 1.20, written about 453. Every sentence of his quoted here — the excision of the genealogies, the innocent use by orthodox congregations, and the two hundred copies — is from this translation",
+        supports: "Why the Diatessaron was withdrawn, in the words of the bishop who withdrew it",
+      },
+      {
+        tier: "primary",
+        label: "Eusebius, Church History 4.29 (Nicene and Post-Nicene Fathers, series II, vol. I)",
+        url: "https://en.wikisource.org/wiki/Nicene_and_Post-Nicene_Fathers:_Series_II/Volume_I/Church_History_of_Eusebius/Book_IV/Chapter_29",
+        credit: "Eusebius of Caesarea, translated by A. C. McGiffert",
+        detail:
+          "Public domain at Wikisource, read in place. Section 6 is the earliest surviving notice of the work by name, and the phrase \"I know not how\" is quoted here because it shows how remote a well-read bishop already was from the work in the early fourth century — he knows copies are \"still in the hands of some\" and cannot say how it was put together. That is not the same as proving he never saw one, and the article does not say it is",
+        supports: "The earliest external notice, and how remote it already was",
+      },
+      {
+        tier: "primary",
+        label: "D. C. Parker, D. G. K. Taylor and M. Goodacre, \"The Dura-Europos Gospel Harmony\", as quoted at Early Christian Writings",
+        url: "https://www.earlychristianwritings.com/dura.html",
+        credit: "D. C. Parker, David G. K. Taylor and Mark Goodacre",
+        detail:
+          "Their re-edition is in D. G. K. Taylor, ed., Studies in the Early Text of the Gospels and Acts (Birmingham: University of Birmingham Press, 1999), 192-228. This article has not opened that volume; the page linked reproduces their conclusions with page references, and it is where the sentences quoted here were read and checked, at their page 225. Flagged plainly because it is a quotation of living scholars taken from a reproduction rather than from the book",
+        supports: "The 1999 argument that the Dura leaf is not Diatessaronic",
+      },
+      {
+        tier: "scholarly",
+        label: "M. R. Crawford and N. J. Zola, eds., The Gospel of Tatian: Exploring the Nature and Text of the Diatessaron; and J. W. Barker, Tatian\u2019s Diatessaron: Composition, Redaction, Recension, and Reception",
+        credit: "Matthew R. Crawford and Nicholas J. Zola; James W. Barker",
+        detail:
+          "Crawford and Zola, The Reception of Jesus in the First Three Centuries 3 (London: T&T Clark, 2019), is the standard recent collection and carries I. N. Mills\u2019s chapter against the Diatessaronic character of the Dura leaf and U. B. Schmid\u2019s on Codex Fuldensis; the publisher\u2019s description of that volume is the source of the sentence in section two about how widely the same evidence gets used. Barker, Oxford Early Christian Studies (Oxford University Press, 2021), sorts the witnesses by narrative sequence rather than wording and argues the Eastern witnesses preserve Tatian\u2019s order while the Western descend from a fourth-century recension. Neither has been opened here and both are reported at second hand",
+        supports: "The current state of the field named in the third section",
+      },
+      {
+        tier: "encyclopedic",
+        label: "Wikipedia: Diatessaron",
+        url: "https://en.wikipedia.org/wiki/Diatessaron",
+      },
+    ],
   },
 ];

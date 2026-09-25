@@ -223,6 +223,14 @@ export default function TopicPanel({
                 ) : (
                   <span>{c.label}</span>
                 )}
+                {/* credit / detail / supports are PLAIN TEXT on purpose — not LinkedVerseText.
+                    They are a bibliography, and the linker matches bare forenames: putting the
+                    2,266 citation strings in this tree through it would fire 246 person links,
+                    most of them a modern scholar's forename (Joseph Naveh becoming the patriarch,
+                    James Tabor becoming Zebedee's son, Titus Kennedy becoming Paul's companion).
+                    Counted by running the linker over all of them on 2026-09-10; the reasoning is
+                    written out beside `makeLinkifier` in scripts/seo/render.mjs, which leaves them
+                    out for the same reason. */}
                 {c.credit && <span className="citation-detail"> — {c.credit}</span>}
                 {c.detail && <span className="citation-detail"> {c.detail}</span>}
                 {c.paywalled && <span className="citation-detail"> (paywalled)</span>}

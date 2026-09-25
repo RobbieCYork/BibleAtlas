@@ -1,10 +1,24 @@
 import { useEffect, useRef, useState } from "react";
 import type { Session } from "@supabase/supabase-js";
-import { supabase, displayFor, type FriendRequest, type GroupSummary, type Message, type Profile } from "../lib/supabase";
+import {
+  supabase,
+  displayFor,
+  searchPeopleByName,
+  isSearchablePeopleQuery,
+  PEOPLE_SEARCH_MIN_QUERY,
+  type FriendRequest,
+  type GroupSummary,
+  type Message,
+  type PersonMatch,
+  type Profile,
+} from "../lib/supabase";
 import GroupsPanel from "./GroupsPanel";
+import ChurchPanel from "./ChurchPanel";
+import { useChurchesAvailable } from "../lib/churchApi";
 import FriendProfileView from "./FriendProfileView";
 import ViewSwitcher, { type FriendsView } from "./ViewSwitcher";
 import BackButton from "./BackButton";
+import ModerationMenu from "./ModerationMenu";
 import Icon from "./Icon";
 
 interface ConversationSummary {
@@ -33,6 +47,12 @@ interface FriendsPanelProps {
   friendsBadgeCount?: number;
   messagesBadgeCount?: number;
   groupsBadgeCount?: number;
+  /** A church to open straight away, set by App when a `?joinChurch=` invite has just been
+   * honoured. Passed through to ChurchPanel. */
+  openChurchId?: string | null;
+  onOpenedChurch?: () => void;
+  /** Hands a freshly forked sermon note over to My Notes → Sermon Notes. See ChurchPanel. */
+  onOpenSermonNote?: (noteId: string) => void;
 }
 
 export default function FriendsPanel({
@@ -46,11 +66,18 @@ export default function FriendsPanel({
   friendsBadgeCount,
   messagesBadgeCount,
   groupsBadgeCount,
+  openChurchId,
+  onOpenedChurch,
+  onOpenSermonNote,
 }: FriendsPanelProps) {
   const userId = session?.user.id;
   const canUseFriends = !!session && !session.user.is_anonymous;
 
   const [view, setView] = useState<FriendsView>("friends");
+  /** null while the one cached probe is in flight; false when sql/033 is not applied. Either way
+   * no Church tab is drawn and `view === "church"` falls back to Friends, so nothing church-shaped
+   * can be reached before the migration lands. */
+  const churchesAvailable = useChurchesAvailable();
   const [requests, setRequests] = useState<FriendRequest[]>([]);
   const [profiles, setProfiles] = useState<Record<string, Profile>>({});
   const [conversations, setConversations] = useState<ConversationSummary[]>([]);
@@ -59,7 +86,7 @@ export default function FriendsPanel({
   const [addStatus, setAddStatus] = useState<string | null>(null);
   /** Multiple hits from a name search (see handleAddFriend) — lets the reader pick which person they
    * meant instead of guessing which of several same-named accounts to request. */
-  const [nameMatches, setNameMatches] = useState<{ id: string; display_name: string; avatar_url: string | null }[] | null>(
+  const [nameMatches, setNameMatches] = useState<PersonMatch[] | null>(
     null
   );
   const [adding, setAdding] = useState(false);
@@ -237,11 +264,17 @@ export default function FriendsPanel({
       return;
     }
 
-    // Name search: opt-in on the other side (profiles.discoverable_by_name), so this can turn up
+    // Name search: governed on the other side by profiles.discoverable_by_name, so this can turn up
     // zero, one, or several people — only auto-sends the request when there's exactly one match.
-    const { data: matches, error: nameErr } = await supabase.rpc("find_users_by_display_name", { query });
-    const rows = (matches as { id: string; display_name: string; avatar_url: string | null }[] | null) ?? [];
-    if (nameErr || rows.length === 0) {
+    // Goes through searchPeopleByName() so this surface gets the same minimum-query and
+    // LIKE-wildcard guard the header search bar has; a one-character or "%%" query is not a search.
+    if (!isSearchablePeopleQuery(query)) {
+      setAddStatus(`Type at least ${PEOPLE_SEARCH_MIN_QUERY} letters of a name, or a full email or phone number.`);
+      setAdding(false);
+      return;
+    }
+    const rows = await searchPeopleByName(query, userId);
+    if (rows.length === 0) {
       setAddStatus("No one found by that name, email, or phone number.");
       setAdding(false);
       return;
@@ -384,6 +417,25 @@ export default function FriendsPanel({
     }
   };
 
+  if (view === "church" && churchesAvailable) {
+    return (
+      <ChurchPanel
+        session={session}
+        expand={expand}
+        style={style}
+        hidden={hidden}
+        openViewNonce={openViewNonce}
+        onSelectView={onSelectView}
+        friendsBadgeCount={friendsBadgeCount}
+        messagesBadgeCount={messagesBadgeCount}
+        groupsBadgeCount={groupsBadgeCount}
+        openChurchId={openChurchId}
+        onOpenedChurch={onOpenedChurch}
+        onOpenSermonNote={onOpenSermonNote}
+      />
+    );
+  }
+
   if (view === "groups") {
     return (
       <GroupsPanel
@@ -426,6 +478,22 @@ export default function FriendsPanel({
         <div className="bible-panel-header no-print">
           <BackButton onClick={() => setActiveFriendId(null)} ariaLabel="Back to friends list" />
           <h3>{friendProfile ? displayFor(friendProfile) : "Conversation"}</h3>
+          {/* Conversation-level, on the header, because "block this person" is about the person and
+            * not about one line they sent. Leaves the thread on success: sql/028's restrictive
+            * policy on `messages` hides every message in both directions the moment the block
+            * lands, so staying here would show an empty conversation with a "say hello!" prompt. */}
+          {userId && (
+            <ModerationMenu
+              viewerId={userId}
+              targetKind="profile"
+              targetId={activeFriendId}
+              authorId={activeFriendId}
+              authorName={friendProfile ? displayFor(friendProfile) : null}
+              context="Direct messages"
+              onBlocked={() => setActiveFriendId(null)}
+              className="mod-menu-header"
+            />
+          )}
         </div>
         {pinnedMessage && (
           <div className="pinned-message-banner">
@@ -451,6 +519,21 @@ export default function FriendsPanel({
                 >
                   <Icon name="pin" />
                 </button>
+                {/* Per-message, so a report carries THE message rather than "something in this
+                  * thread". No Hide: hiding one line out of a conversation leaves a hole in it. */}
+                {userId && m.sender_id !== userId && (
+                  <ModerationMenu
+                    viewerId={userId}
+                    targetKind="message"
+                    targetId={m.id}
+                    authorId={m.sender_id}
+                    authorName={friendProfile ? displayFor(friendProfile) : null}
+                    excerpt={m.body}
+                    context="Direct message"
+                    onBlocked={() => setActiveFriendId(null)}
+                    className="mod-menu-inline"
+                  />
+                )}
               </div>
             </div>
           ))}
@@ -478,11 +561,12 @@ export default function FriendsPanel({
         <h3>{view === "messages" ? "Messages" : "Friends"}</h3>
       </div>
       <ViewSwitcher
-        active={view}
+        active={view === "church" ? "friends" : view}
         onSelectView={onSelectView}
         friendsBadge={friendsBadgeCount}
         messagesBadge={messagesBadgeCount}
         groupsBadge={groupsBadgeCount}
+        showChurch={churchesAvailable === true}
       />
 
       {!canUseFriends && (

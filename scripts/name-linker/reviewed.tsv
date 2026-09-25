@@ -138,6 +138,7 @@ ok	timelineEvent.datingNotes	bib-loc-magi-flight-to-egypt	magi	magi	lowercase-su
 ok	topic.section	community-rule	holy-spirit	spirit of truth	lowercase-surface
 ok	topic.section	great-isaiah-scroll	john-mark	Mark	inside-capitalised-run
 ok	topic.section	nicene-creed	jesus-of-nazareth	Jesus Christ	inside-capitalised-run
+ok	topic.section	old-syriac-gospels	mary-mother-of-jesus	Mary	surname-after:Deipara,inside-capitalised-run
 ok	topic.section	passover	hezekiah	Hezekiah	inside-capitalised-run
 ok	topic.section	passover	josiah	Josiah	inside-capitalised-run
 ok	topic.section	the-trinity	jesus-of-nazareth	Jesus Christ	inside-capitalised-run

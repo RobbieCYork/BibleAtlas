@@ -11,8 +11,10 @@
 // cases in cases.mjs, then regenerates the whole-corpus snapshot (all 31,098 WEB verses and every
 // authored prose block, on both rendering paths) and diffs it against the committed baseline.
 //
-// The snapshot is the part that matters. 9,725 Bible links and 5,684 prose links are far more than
-// anyone has read; the diff is what tells you that a one-line data edit moved 400 of them. `--update`
+// The snapshot is the part that matters. 9,697 Bible links, 6,210 prose links and 1,748 links that
+// only the public pages print are far more than anyone has read (recount them off the files, not off
+// this comment — it had drifted by 500 before 2026-09-10);
+// the diff is what tells you that a one-line data edit moved 400 of them. `--update`
 // is how you accept a deliberate move — the snapshot diff then lands in the same commit as the
 // change that caused it, and a reviewer can read every moved row.
 //
@@ -22,13 +24,22 @@ import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { loadLinker, stripMarkup } from "./loadLinker.mjs";
-import { loadBible, loadProseBlocks, snapshotBible, snapshotProse, snapshotKeyTotals } from "./corpus.mjs";
+import { loadBible, loadAllTranslations, loadProseBlocks, loadSeoOnlyBlocks, snapshotBible,
+         snapshotProse, snapshotKeyTotals, snapshotTranslationDivergence,
+         snapshotSeoOnly } from "./corpus.mjs";
 import { CASES } from "./cases.mjs";
 
 const HERE = path.dirname(fileURLToPath(import.meta.url));
 const SNAP_BIBLE = path.join(HERE, "snapshot/bible-links.tsv");
 const SNAP_PROSE = path.join(HERE, "snapshot/prose-links.tsv");
 const SNAP_KEYS = path.join(HERE, "snapshot/key-totals.tsv");
+const SNAP_XLAT = path.join(HERE, "snapshot/translation-divergence.tsv");
+// The fifth snapshot, added 2026-09-10. The four above cover what the APP renders; this one covers
+// the fields that are links ONLY on the pre-rendered public pages — `person.summary`,
+// `person.occupation`, `topic.summary`, `timelineEvent.summary` and `location.history.rulers[].name`.
+// They are the one surface here that an anonymous reader and a search engine can see without a
+// login, and until this file existed nothing measured a single one of them.
+const SNAP_SEO = path.join(HERE, "snapshot/seo-only-links.tsv");
 
 const argv = process.argv.slice(2);
 const has = (f) => argv.includes(f);
@@ -126,17 +137,28 @@ for (const c of CASES) {
   // editing a paragraph re-keys every link in it and the assertion silently disappears with it
   // (see the tally.mjs note in README.md). A prose case survives a rewrite of the article it came
   // from, which is exactly what you want from a rule like "the Gospel of John is not a person".
-  const isProse = typeof c.text === "string";
+  //
+  // `text` TOGETHER WITH `ref` is a third thing, added 2026-09-10: the reader path run against a
+  // literal you supply instead of against this corpus. The corpus is WEB only, so until now a verse
+  // whose OTHER translations read differently could not be asserted at all — and VERSE_NAME_OVERRIDES
+  // is translation-blind, so those are exactly the entries with no cover. Acts 4:36 is the case that
+  // forced it: WEB and KJV read "Joses" and ASV reads "Joseph", so the override that sends that
+  // "Joseph" to Barnabas fires for one translation and matches nothing in the WEB corpus. Quote the
+  // verse verbatim from the translation and say which one in `why`. It is strictly additive — a case
+  // with `text` and no `ref` is still a prose case and behaves exactly as before.
+  const isProse = typeof c.text === "string" && !c.ref;
+  const isSuppliedVerse = typeof c.text === "string" && !!c.ref;
   const { book, chapter, verse } = isProse ? {} : parseRef(c.ref);
   const n = c.occurrence ?? 1;
   const label = isProse
     ? `prose ${JSON.stringify(c.text.length > 52 ? c.text.slice(0, 49) + "…" : c.text)} ` +
       `${JSON.stringify(c.surface)}${n > 1 ? `#${n}` : ""} [prose${c.owner ? ` on ${c.owner}` : ""}]`
     : `${c.ref} ${JSON.stringify(c.surface)}${n > 1 ? `#${n}` : ""} ` +
-      `[${c.path ?? "reader"}${c.owner ? ` on ${c.owner}` : ""}]`;
+      `[${c.path ?? "reader"}${isSuppliedVerse ? `, ${c.translation ?? "supplied"} text` : ""}` +
+      `${c.owner ? ` on ${c.owner}` : ""}]`;
 
   let text;
-  if (isProse) {
+  if (isProse || isSuppliedVerse) {
     text = c.text;
   } else {
     const v = byRef.get(c.ref);
@@ -145,7 +167,7 @@ for (const c of CASES) {
   }
   const at = occurrenceOffset(text, c.surface, n);
   if (at === null) {
-    failures.push(`${label} — that occurrence is not in the ${isProse ? "case's own text" : "WEB text of the verse"}.\n` +
+    failures.push(`${label} — that occurrence is not in the ${isProse || isSuppliedVerse ? "case's own text" : "WEB text of the verse"}.\n` +
       `      ${DIM}${text}${OFF}`);
     fail++; continue;
   }
@@ -203,15 +225,26 @@ let snapshotChanged = false;
 if (full) {
   const t0 = Date.now();
   const blocks = await loadProseBlocks();
+  const corpora = loadAllTranslations();
+  const { KJV, ASV } = corpora;
   const bibleRows = await snapshotBible(verses);
   const proseRows = await snapshotProse(blocks);
-  const keyRows = await snapshotKeyTotals(verses, blocks);
-  console.log(`\n${DIM}corpus: ${verses.length} verses -> ${bibleRows.length} person-link rows; ` +
+  const keyRows = await snapshotKeyTotals(verses, blocks, { KJV, ASV });
+  const xlatRows = await snapshotTranslationDivergence(corpora);
+  const seoBlocks = await loadSeoOnlyBlocks();
+  const seoRows = await snapshotSeoOnly(seoBlocks);
+  console.log(`\n${DIM}corpus: ${verses.length} WEB verses -> ${bibleRows.length} person-link rows; ` +
     `prose -> ${proseRows.length} person-link rows; ${keyRows.length} key totals across all kinds ` +
     `(${((Date.now() - t0) / 1000).toFixed(1)}s)${OFF}`);
+  console.log(`${DIM}translations: +${KJV.length} KJV, +${ASV.length} ASV verses -> ` +
+    `${xlatRows.length} rows where the three do not agree${OFF}`);
+  console.log(`${DIM}public pages: ${seoBlocks.length} blocks the app renders as plain text -> ` +
+    `${seoRows.length} links printed only on www.capstonebible.com${OFF}`);
 
   for (const [file, rows, label] of [[SNAP_BIBLE, bibleRows, "bible"], [SNAP_PROSE, proseRows, "prose"],
-                                     [SNAP_KEYS, keyRows, "key-totals"]]) {
+                                     [SNAP_KEYS, keyRows, "key-totals"],
+                                     [SNAP_XLAT, xlatRows, "translation-divergence"],
+                                     [SNAP_SEO, seoRows, "seo-only"]]) {
     const next = rows.join("\n") + "\n";
     if (update) { fs.mkdirSync(path.dirname(file), { recursive: true }); fs.writeFileSync(file, next); continue; }
     if (!fs.existsSync(file)) { console.log(`${RED}no baseline snapshot at ${file} — run with --update${OFF}`); snapshotChanged = true; continue; }

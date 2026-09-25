@@ -8,6 +8,7 @@ import AdminConsole from "./AdminConsole";
 import ReportIssueSheet from "./ReportIssueSheet";
 import MyReportsSheet from "./MyReportsSheet";
 import ReportsDashboard from "./ReportsDashboard";
+import SafetySheet from "./SafetySheet";
 import { useIsAdmin } from "../lib/adminApi";
 import { fetchReportCounts, hasRoleAtLeast, useCurrentRole } from "../lib/reportsApi";
 import type { ReportSurface } from "../lib/reportContext";
@@ -228,12 +229,30 @@ function ReadingResetControl({ userId }: { userId: string }) {
   );
 }
 
-type MenuView = "menu" | "settings" | "admin" | "report" | "myReports" | "reports";
+type MenuView = "menu" | "settings" | "admin" | "report" | "myReports" | "reports" | "safety";
 
 /** Fallback for the one render where App hasn't told us where the reader is. A report filed against
  * it is still a valid report — it just says less. Never left blank: `route`/`page_title` are what a
  * triager reads first. */
 const UNKNOWN_SURFACE: ReportSurface = { route: "app", title: "Capstone Bible", target: null };
+
+/** Shortest password Supabase will accept for a *new* account, checked here so signup can say so
+ * instead of making the round trip.
+ *
+ * WHY THIS IS A CHECK IN handleSubmit AND NOT `minLength` ON THE INPUT. This is the same finding
+ * AuthGate.tsx already carries, on the surviving second copy of the same form. There is ONE
+ * password field here and all three modes share it, so a `minLength` attribute applied to Log In
+ * as well — and a login form has no business enforcing a password policy. The credential either
+ * matches what is stored or it does not; a client-side minimum only locks out accounts whose
+ * password predates the rule, which is exactly what happened to a real account on this site (a
+ * five-character password that had been working stopped being accepted).
+ *
+ * Worse, `minLength` fails SILENTLY as far as this component is concerned: the browser blocks the
+ * submit, handleSubmit never runs, no error state is ever set, and all the reader gets is a native
+ * bubble that fades in a few seconds. That is why it went unnoticed here long after the identical
+ * bug was fixed in AuthGate. Enforcing it below means the rule applies to signup only, and that
+ * failing it produces a message that stays on screen. */
+const MIN_NEW_PASSWORD_LENGTH = 6;
 
 export default function AuthButton({
   session,
@@ -369,6 +388,13 @@ export default function AuthButton({
         setEmail("");
         setPassword("");
       } else {
+        // Checked before the display-name lookup so the reader gets the cheapest failure first, and
+        // before signUp so a password Supabase would reject anyway never costs a round trip. Same
+        // order, and the same reasoning, as AuthGate's copy.
+        if (password.length < MIN_NEW_PASSWORD_LENGTH) {
+          setError(`That password is too short — use at least ${MIN_NEW_PASSWORD_LENGTH} characters.`);
+          return;
+        }
         const trimmedName = displayName.trim();
         const { data: available } = await supabase.rpc("is_display_name_available", { p_name: trimmedName });
         if (available === false) {
@@ -477,6 +503,14 @@ export default function AuthButton({
                 <Icon name="doc" inline /> My Reports
               </button>
             )}
+            {/* App Store Review Guideline 1.2 asks for published contact information and a visible
+                account for how reporting and blocking work. This is where a reviewer — and a reader
+                who has just been harassed — is meant to find both, two taps from anywhere in the
+                app. It stays for guests too: the sheet reads fine without an account, and the
+                contact address is the part a guest is most likely to need. */}
+            <button type="button" className="auth-menu-item" onClick={() => setMenuView("safety")}>
+              <Icon name="shield" inline /> Safety &amp; Contact
+            </button>
             <button type="button" className="auth-menu-item auth-signout" onClick={handleSignOut}>
               Log Out
             </button>
@@ -531,6 +565,7 @@ export default function AuthButton({
         {/* Gated on the resolved role, never on `reportsRole` being merely non-null: canSeeReports
             is false while the check is still in flight, so a slow network shows nothing privileged
             rather than a dashboard that then empties itself. */}
+        {open && menuView === "safety" && <SafetySheet onClose={() => setMenuView("menu")} />}
         {open && menuView === "reports" && canSeeReports && reportsRole && (
           <ReportsDashboard role={reportsRole} viewerId={session.user.id} onClose={() => setMenuView("menu")} />
         )}
@@ -635,7 +670,9 @@ export default function AuthButton({
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   required
-                  minLength={6}
+                  /* No minLength — see MIN_NEW_PASSWORD_LENGTH at the top of this file. One field
+                     serves Log In and Sign Up, and a length rule on Log In locks out legacy
+                     passwords with no error anyone can see. */
                   autoComplete={mode === "login" ? "current-password" : "new-password"}
                 />
                 <button
