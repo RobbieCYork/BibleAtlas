@@ -5434,6 +5434,41 @@ a.profile-links-url {
   margin: 0 0 8px;
 }
 
+.prayer-list-reorder-hint {
+  font-size: calc(12px * var(--tsz, 1));
+  color: var(--text-muted);
+  margin: 0 0 8px;
+}
+
+.prayer-list-reorder {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  flex-shrink: 0;
+}
+
+.prayer-list-reorder-btn {
+  border: 1px solid var(--border);
+  background: var(--surface-sunken);
+  color: var(--text-muted);
+  border-radius: 6px;
+  width: 26px;
+  height: 22px;
+  font-size: 10px;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.prayer-list-reorder-btn:hover:not(:disabled) {
+  background: var(--accent-bg);
+  color: var(--accent);
+}
+
+.prayer-list-reorder-btn:disabled {
+  opacity: 0.35;
+  cursor: default;
+}
+
 .sermon-notes-editor {
   display: flex;
   flex-direction: column;
