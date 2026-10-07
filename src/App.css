@@ -3057,6 +3057,28 @@ a.profile-links-url {
   color: var(--accent);
 }
 
+/* Long names ("1 Thessalonians 5") already fill the chip to its cap, so a check beside the label
+   would push them onto a second line. There it is a corner badge instead and takes no width. */
+.bible-passage-title-check.is-badge {
+  position: absolute;
+  top: -3px;
+  left: -1px;
+  width: 15px;
+  height: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: var(--accent);
+  color: var(--accent-contrast);
+  font-size: 10px;
+}
+
+.bible-passage-title-btn:hover .bible-passage-title-check.is-badge {
+  background: var(--accent-contrast);
+  color: var(--accent);
+}
+
 .bible-passage-title-btn:hover .bible-passage-title-check {
   color: var(--accent-contrast);
 }

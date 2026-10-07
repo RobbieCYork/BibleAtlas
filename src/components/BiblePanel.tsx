@@ -1857,10 +1857,14 @@ export default function BiblePanel({
                   title={chapterMarkedRead ? `${passage.reference} — read` : undefined}
                 >
                   {/* Read state lives in the chip itself so it costs no row: the check only exists
-                      (and the chip only widens) once chapterMarkedRead is true — the same state the
+                      (and the chip only widens, except for long names, where it is a corner badge so the
+                      row never gains a line) once chapterMarkedRead is true — the same state the
                       checkbox at the foot of the chapter drives. */}
                   {chapterMarkedRead && (
-                    <span className="bible-passage-title-check" aria-hidden="true">
+                    <span
+                      className={`bible-passage-title-check${passage.reference.length >= 13 ? " is-badge" : ""}`}
+                      aria-hidden="true"
+                    >
                       ✓
                     </span>
                   )}
