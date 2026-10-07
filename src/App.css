@@ -3030,7 +3030,7 @@ a.profile-links-url {
    can get narrow enough that a single word ("Deuteronomy") does not fit any line, and a broken word
    is still readable where a clipped one is a bug. `overflow: hidden` stays so nothing can spill out
    of the chip's rounded edge. */
-.bible-passage-title-btn > span:first-child {
+.bible-passage-title-btn > .bible-passage-title-label {
   /* Two lines, then an ellipsis — measured on both sides. Wrapping without a cap is how the reader
      ended up WORSE than before at the largest text sizes: at 1.8 on a 375px phone the chapter chip
      is 88px wide, "1 Corinthians 13" took four lines in it, and the row it was supposed to shrink
@@ -3042,6 +3042,23 @@ a.profile-links-url {
   line-clamp: 2;
   overflow: hidden;
   overflow-wrap: break-word;
+}
+
+/* Read state: the chip widens just enough for a check and takes a slightly firmer well. No height. */
+.bible-passage-title-btn.is-read {
+  background: color-mix(in srgb, var(--accent) 22%, var(--accent-bg));
+}
+
+.bible-passage-title-check {
+  flex-shrink: 0;
+  font-size: 0.8em;
+  font-weight: 700;
+  line-height: 1;
+  color: var(--accent);
+}
+
+.bible-passage-title-btn:hover .bible-passage-title-check {
+  color: var(--accent-contrast);
 }
 
 .bible-passage-title-btn:hover {

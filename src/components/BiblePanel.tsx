@@ -1849,13 +1849,22 @@ export default function BiblePanel({
               <h4 className="bible-passage-title">
                 <button
                   type="button"
-                  className="bible-passage-title-btn"
+                  className={`bible-passage-title-btn${chapterMarkedRead ? " is-read" : ""}`}
                   onClick={openReferencePicker}
                   aria-haspopup="dialog"
                   aria-expanded={referencePickerOpen}
-                  aria-label={`${passage.reference} — choose a different book, chapter or verse`}
+                  aria-label={`${passage.reference}${chapterMarkedRead ? " — read" : ""} — choose a different book, chapter or verse`}
+                  title={chapterMarkedRead ? `${passage.reference} — read` : undefined}
                 >
-                  <span>{passage.reference}</span>
+                  {/* Read state lives in the chip itself so it costs no row: the check only exists
+                      (and the chip only widens) once chapterMarkedRead is true — the same state the
+                      checkbox at the foot of the chapter drives. */}
+                  {chapterMarkedRead && (
+                    <span className="bible-passage-title-check" aria-hidden="true">
+                      ✓
+                    </span>
+                  )}
+                  <span className="bible-passage-title-label">{passage.reference}</span>
                   <span className="bible-passage-title-caret" aria-hidden="true">
                     ▾
                   </span>
