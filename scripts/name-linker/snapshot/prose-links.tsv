@@ -1041,6 +1041,10 @@ person.controversies|antonius-felix|1b1eedb16f	399	Paul	paul-of-tarsus
 person.controversies|apollos|b10aaff7af	153	Paul	paul-of-tarsus
 person.controversies|apollos|b10aaff7af	161	Peter	simon-peter
 person.controversies|apollos|b10aaff7af	196	Paul	paul-of-tarsus
+person.controversies|barabbas|296c23fe08	187	Jesus	jesus-of-nazareth
+person.controversies|barabbas|296c23fe08	201	Jesus	jesus-of-nazareth
+person.controversies|barabbas|296c23fe08	611	Jesus	jesus-of-nazareth
+person.controversies|barabbas|296c23fe08	831	Jesus	jesus-of-nazareth
 person.controversies|barnabas|d4bda19860	184	Paul	paul-of-tarsus
 person.controversies|barnabas|d4bda19860	210	Peter	simon-peter
 person.controversies|barnabas|d4bda19860	217	Paul	paul-of-tarsus
@@ -1104,6 +1108,7 @@ person.controversies|pharisees|c49103835c	570	Nicodemus	nicodemus
 person.controversies|pharisees|c49103835c	581	Gamaliel	gamaliel
 person.controversies|pharisees|c49103835c	591	Paul	paul-of-tarsus
 person.controversies|philip-the-evangelist|cba3ebee7a	98	Philip the Apostle	philip-the-apostle
+person.controversies|pontius-pilate|915eeeb725	104	Barabbas	barabbas
 person.controversies|pontius-pilate|915eeeb725	94	Jesus	jesus-of-nazareth
 person.controversies|rebekah|2ca920ceb6	124	Esau	esau
 person.controversies|rebekah|2ca920ceb6	280	Jacob	jacob
@@ -1351,6 +1356,20 @@ person.lifeStory|azor|264a0bf004	326	Mary	mary-mother-of-jesus
 person.lifeStory|azor|264a0bf004	60	Eliakim	eliakim-son-of-abiud
 person.lifeStory|azor|264a0bf004	82	Zadok	zadok-in-jesus-genealogy
 person.lifeStory|balaam|f2316cfe6c	242	Jacob	jacob
+person.lifeStory|barabbas|47e898afc6	129	Jesus	jesus-of-nazareth
+person.lifeStory|barabbas|47e898afc6	208	Mark	john-mark
+person.lifeStory|barabbas|47e898afc6	217	Luke	luke-evangelist
+person.lifeStory|barabbas|47e898afc6	42	Pilate	pontius-pilate
+person.lifeStory|barabbas|c536891681	183	Pilate	pontius-pilate
+person.lifeStory|barabbas|c536891681	260	Jesus	jesus-of-nazareth
+person.lifeStory|barabbas|cb087d7063	0	Pilate	pontius-pilate
+person.lifeStory|barabbas|cb087d7063	118	Jesus	jesus-of-nazareth
+person.lifeStory|barabbas|cb087d7063	277	Jesus	jesus-of-nazareth
+person.lifeStory|barabbas|cb087d7063	406	Jesus	jesus-of-nazareth
+person.lifeStory|barabbas|cb087d7063	457	Pilate	pontius-pilate
+person.lifeStory|barabbas|cb087d7063	518	Jesus	jesus-of-nazareth
+person.lifeStory|barabbas|cb087d7063	636	Jesus	jesus-of-nazareth
+person.lifeStory|barabbas|cb087d7063	711	Jesus	jesus-of-nazareth
 person.lifeStory|barnabas|5d5bdb8001	139	John Mark	john-mark
 person.lifeStory|barnabas|5d5bdb8001	205	Paul	paul-of-tarsus
 person.lifeStory|barnabas|5d5bdb8001	309	Mark	john-mark
@@ -2912,6 +2931,7 @@ person.lifespanDatingNotes|timothy|37ed45bd64	0	Paul	paul-of-tarsus
 person.lifespanDatingNotes|timothy|37ed45bd64	453	Paul	paul-of-tarsus
 person.placesLived|abel|251abda820	15	Adam	adam
 person.placesLived|abel|251abda820	24	Eve	eve
+person.placesLived|barabbas|48a68ee0b6	51	Jesus	jesus-of-nazareth
 person.placesLived|cain|7e201c36c5	15	Adam	adam
 person.placesLived|cain|7e201c36c5	24	Eve	eve
 person.placesLived|drusilla|7091d675a4	33	Felix	antonius-felix
@@ -4258,6 +4278,7 @@ timelineEvent.article|bib-loc-trials-of-jesus|6afd57e023	276	Herod Antipas	herod
 timelineEvent.article|bib-loc-trials-of-jesus|6afd57e023	338	Jesus	jesus-of-nazareth
 timelineEvent.article|bib-loc-trials-of-jesus|6afd57e023	376	Pilate	pontius-pilate
 timelineEvent.article|bib-loc-trials-of-jesus|6afd57e023	414	Jesus	jesus-of-nazareth
+timelineEvent.article|bib-loc-trials-of-jesus|6afd57e023	580	Barabbas	barabbas
 timelineEvent.article|bib-loc-trials-of-jesus|6afd57e023	601	Jesus	jesus-of-nazareth
 timelineEvent.article|bib-loc-trials-of-jesus|6afd57e023	62	Jesus	jesus-of-nazareth
 timelineEvent.article|bib-loc-trials-of-jesus|6afd57e023	90	Pontius Pilate	pontius-pilate
@@ -5418,6 +5439,7 @@ topic.section|chester-beatty-papyri|b67dfed009	849	Esther	esther
 topic.section|chester-beatty-papyri|c53f378519	91	Paul	paul-of-tarsus
 topic.section|chief-priests|035b63b523	128	Judas	judas-iscariot
 topic.section|chief-priests|035b63b523	216	Pilate	pontius-pilate
+topic.section|chief-priests|035b63b523	260	Barabbas	barabbas
 topic.section|chief-priests|035b63b523	96	Jesus	jesus-of-nazareth
 topic.section|chief-priests|580ccd4eb8	72	Jesus	jesus-of-nazareth
 topic.section|chief-priests|5aac8830f8	185	Jesus	jesus-of-nazareth

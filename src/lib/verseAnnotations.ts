@@ -1016,19 +1016,24 @@ const VERSE_NAME_OVERRIDES: Record<string, Record<string, Record<string, string 
     // and nowhere else, and there is no article — so it would be a dead entry, and a dead entry
     // reads as a live claim.
     Acts: { "1:23": null, "4:36": "barnabas" },
-    // ── Joseph of Arimathea, the two verses that do not spell out where he is from ─────────────
+    // ── Joseph of Arimathea, the verses that do not spell out where he is from ──────────────────
     //
     // BOOK_NAME_OVERRIDES sends a bare "Joseph" in Mark and John to Arimathea and in Matthew and
     // Luke to Mary's husband, which is right for the nativity and the genealogy and wrong for the
     // burial. Mark 15:43 and John 19:38 were never affected: the WEB prints "Joseph of Arimathaea"
-    // there and that whole phrase is a registered key of its own. These two verses print only the
-    // bare name, so the book default won, and a reader of the burial narrative was sent to the
+    // there and that whole phrase is a registered key of its own. These verses print only the bare
+    // name, so the book default won, and a reader of the burial narrative was sent to the
     // carpenter of Nazareth. Added 2026-09-10.
     //
+    // Matthew 27:59 ("Joseph took the body...") was missed in that first pass — only 27:57 was
+    // entered, so the verse right after the one that introduces him was still resolving to
+    // joseph-husband-of-mary. Measured with `run.mjs --ref "Matthew 27:59"` before this entry
+    // existed: `reader joseph-husband-of-mary`. Same fix, same reasoning, one verse later.
+    //
     // Independent of the corpus-wide question of who a bare "Joseph" belongs to, which is open and
-    // is Robbie's: these two verses name a specific man and say what distinguishes him in the same
-    // clause — "a rich man from Arimathaea" and "a member of the council".
-    Matthew: { "27:57": "joseph-of-arimathea" },
+    // is Robbie's: these verses name a specific man and say what distinguishes him in the same
+    // clause, or — for 27:59 — in the sentence immediately before it.
+    Matthew: { "27:57": "joseph-of-arimathea", "27:59": "joseph-of-arimathea" },
     Luke: {
       "23:50": "joseph-of-arimathea",
       // ── And two in Luke's genealogy, which is neither man ────────────────────────────────────
@@ -1096,6 +1101,13 @@ export const bookIntroOwnerId = (book: string) => `book-intro:${book}`;
  * itself. That is how bare "Saul" behaves on Paul's own page, and it is what it did before the
  * global default moved. */
 const OWNER_NAME_OVERRIDES: Record<string, Record<string, string | null>> = {
+  // "Abba" is registered as a bare matchName on god-the-father (people.ts) because Mark 14:36,
+  // Romans 8:15 and Galatians 4:6 all genuinely invoke God that way. barabbas's own article is the
+  // one place "abba"/"Abba" appears for a different reason entirely: discussing the Aramaic word
+  // bar abba itself, and separately noting that Abba is independently attested as an ordinary
+  // personal name on a first-century ossuary. Neither mention addresses God, so both are
+  // suppressed here rather than linked. Added together with the barabbas record, 2026-10-16.
+  abba: { barabbas: null },
   // "David": the king is the only David with a record, and he is the right answer nearly everywhere.
   // One article names a different one. The Cairo Codex of the Prophets carries a dedication colophon
   // by David b. Yefet, an eleventh- or fifteenth-century Cairo dignitary, and B. Outhwaite's

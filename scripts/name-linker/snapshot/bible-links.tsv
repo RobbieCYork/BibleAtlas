@@ -7247,12 +7247,17 @@ Matthew 27:9	35	Jeremiah	jeremiah	jeremiah
 Matthew 27:11	4	Jesus	jesus-of-nazareth	jesus-of-nazareth
 Matthew 27:11	105	Jesus	jesus-of-nazareth	jesus-of-nazareth
 Matthew 27:13	5	Pilate	pontius-pilate	pontius-pilate
+Matthew 27:16	41	Barabbas	barabbas	barabbas
 Matthew 27:17	44	Pilate	pontius-pilate	pontius-pilate
+Matthew 27:17	105	Barabbas	barabbas	barabbas
 Matthew 27:17	118	Jesus	jesus-of-nazareth	jesus-of-nazareth
+Matthew 27:20	73	Barabbas	barabbas	barabbas
 Matthew 27:20	95	Jesus	jesus-of-nazareth	jesus-of-nazareth
+Matthew 27:21	97	Barabbas	barabbas	barabbas
 Matthew 27:22	0	Pilate	pontius-pilate	pontius-pilate
 Matthew 27:22	46	Jesus	jesus-of-nazareth	jesus-of-nazareth
 Matthew 27:24	8	Pilate	pontius-pilate	pontius-pilate
+Matthew 27:26	25	Barabbas	barabbas	barabbas
 Matthew 27:26	39	Jesus	jesus-of-nazareth	jesus-of-nazareth
 Matthew 27:27	34	Jesus	jesus-of-nazareth	jesus-of-nazareth
 Matthew 27:32	46	Simon	simon-of-cyrene	simon-peter
@@ -7271,7 +7276,7 @@ Matthew 27:57	86	Jesus	jesus-of-nazareth	jesus-of-nazareth
 Matthew 27:58	17	Pilate	pontius-pilate	pontius-pilate
 Matthew 27:58	39	Jesus	jesus-of-nazareth	jesus-of-nazareth
 Matthew 27:58	57	Pilate	pontius-pilate	pontius-pilate
-Matthew 27:59	0	Joseph	joseph-husband-of-mary	joseph-son-of-jacob
+Matthew 27:59	0	Joseph	joseph-of-arimathea	joseph-son-of-jacob
 Matthew 27:61	0	Mary Magdalene	mary-magdalene	mary-magdalene
 Matthew 27:61	40	Mary	mary-mother-of-james-the-less	mary-mother-of-jesus
 Matthew 27:62	128	Pilate	pontius-pilate	pontius-pilate
@@ -7505,10 +7510,13 @@ Mark 15:2	0	Pilate	pontius-pilate	pontius-pilate
 Mark 15:4	0	Pilate	pontius-pilate	pontius-pilate
 Mark 15:5	4	Jesus	jesus-of-nazareth	jesus-of-nazareth
 Mark 15:5	42	Pilate	pontius-pilate	pontius-pilate
+Mark 15:7	21	Barabbas	barabbas	barabbas
 Mark 15:9	0	Pilate	pontius-pilate	pontius-pilate
+Mark 15:11	71	Barabbas	barabbas	barabbas
 Mark 15:12	0	Pilate	pontius-pilate	pontius-pilate
 Mark 15:14	0	Pilate	pontius-pilate	pontius-pilate
 Mark 15:15	0	Pilate	pontius-pilate	pontius-pilate
+Mark 15:15	50	Barabbas	barabbas	barabbas
 Mark 15:15	84	Jesus	jesus-of-nazareth	jesus-of-nazareth
 Mark 15:21	56	Simon of Cyrene	simon-of-cyrene	simon-of-cyrene
 Mark 15:34	18	Jesus	jesus-of-nazareth	jesus-of-nazareth
@@ -7902,6 +7910,7 @@ Luke 23:8	19	Jesus	jesus-of-nazareth	jesus-of-nazareth
 Luke 23:11	113	Pilate	pontius-pilate	pontius-pilate
 Luke 23:12	10	Pilate	pontius-pilate	pontius-pilate
 Luke 23:13	0	Pilate	pontius-pilate	pontius-pilate
+Luke 23:18	76	Barabbas	barabbas	barabbas
 Luke 23:20	5	Pilate	pontius-pilate	pontius-pilate
 Luke 23:20	52	Jesus	jesus-of-nazareth	jesus-of-nazareth
 Luke 23:24	0	Pilate	pontius-pilate	pontius-pilate
@@ -8310,6 +8319,8 @@ John 18:36	0	Jesus	jesus-of-nazareth	jesus-of-nazareth
 John 18:37	0	Pilate	pontius-pilate	pontius-pilate
 John 18:37	53	Jesus	jesus-of-nazareth	jesus-of-nazareth
 John 18:38	0	Pilate	pontius-pilate	pontius-pilate
+John 18:40	56	Barabbas	barabbas	barabbas
+John 18:40	71	Barabbas	barabbas	barabbas
 John 19:1	3	Pilate	pontius-pilate	pontius-pilate
 John 19:1	20	Jesus	jesus-of-nazareth	jesus-of-nazareth
 John 19:4	5	Pilate	pontius-pilate	pontius-pilate

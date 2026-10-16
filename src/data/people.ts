@@ -2139,6 +2139,40 @@ export const people: Person[] = [
     ],
   },
   {
+    id: "barabbas",
+    name: "Barabbas",
+    pronunciation: "buh-RAB-us",
+    tier: "notable",
+    role: "Prisoner released by Pilate in Jesus's place",
+    summary: "A convicted insurrectionist and murderer whose release the crowd demanded at Jesus's trial, so that Pilate freed him and sent Jesus to be crucified instead.",
+    lifeStory: [
+      "All four Gospels record that at the feast Pilate had a custom of releasing one prisoner the crowd chose, and that in the year of Jesus's trial the man in custody was Barabbas (Matthew 27:15-16, Mark 15:6-7). Mark and Luke describe him as one of a group of rebels jailed for an insurrection in which a killing had taken place — not a common thief, but a man held for murder committed in a political uprising against Roman rule (Mark 15:7, Luke 23:19). John's Gospel states it more simply: \"Barabbas was a robber\" (John 18:40). Matthew calls him only \"a notable prisoner\" (Matthew 27:16), letting the reputation speak for itself without spelling out the charge.",
+      "Pilate, who both Matthew's and the Fourth Gospel's accounts indicate recognized that the religious leaders had handed Jesus over out of envy rather than any real crime (Matthew 27:18, John 18:38), offered the crowd gathered that morning a choice: release Barabbas, or release \"Jesus, who is called Christ\" (Matthew 27:17). The chief priests and elders persuaded the crowd to ask for Barabbas and to demand Jesus's death instead (Matthew 27:20, Mark 15:11). Pilate, by his own account finding no capital charge against Jesus, pressed the crowd three times to explain what evil he had done, but was met each time with louder demands that Jesus be crucified (Luke 23:22). He gave in, released Barabbas, and handed Jesus over to be flogged and crucified (Matthew 27:26, Mark 15:15).",
+      "The name itself has long drawn comment from readers and commentators: \"Barabbas\" transliterates the Aramaic bar abba, ordinarily read as \"son of the father.\" Read that way, the scene Pilate stages — asking a crowd to choose between \"the son of the father\" and Jesus, whom the Gospels present as the Father's own Son — has struck many readers as a pointed irony, whether or not Matthew intended his readers to catch it. The Aramaic is not perfectly settled, though: some philologists derive the name instead from bar rabban, \"son of our master/rabbi,\" in which case it would say nothing about a father at all. Abba is independently attested as an ordinary personal name in this period — it appears on a first-century ossuary found at Giv'at ha-Mivtar near Jerusalem — so \"Barabbas\" may simply mean \"son of a man named Abba,\" with no wordplay intended.",
+    ],
+    controversies: [
+      "A small number of Greek manuscripts and early versions of Matthew 27:16-17 (including the Syriac Sinaiticus and a handful of later Greek witnesses) give the prisoner's own first name as \"Jesus\" too — \"Jesus Barabbas.\" The third-century scholar Origen knew of copies that read this way and argued against them, on the grounds that it seemed unfitting for a condemned criminal to share the Savior's name; it is his testimony, more than the manuscripts themselves, that has led some textual critics to treat the longer reading as the more original one, on the logic that a scribe would be far more likely to drop \"Jesus\" from Barabbas's name out of reverence than to add it. Others judge Origen's evidence for the reading thinner than it has been given credit for. Current critical Greek New Testaments (the Nestle-Aland text) print \"Jesus Barabbas\" in Matthew 27:16-17, but in square brackets — the editors' way of flagging real, unresolved doubt rather than settling the question. No Bible translation in this app's library follows the longer reading in its main text.",
+    ],
+    placesLived: "Unknown; held in a Jerusalem prison at the time of Jesus's trial.",
+    noExtraBiblicalRecordNote: "No extra-biblical record of Barabbas himself survives outside the Gospels. The custom Pilate is said to have observed — releasing a prisoner of the crowd's choosing at the feast — is likewise unattested in any surviving Roman or Jewish source describing Judea specifically, which is part of why some historians question whether the Gospels' account of it is accurate reporting or a later embellishment; see the Pontius Pilate article for that debate.",
+    verses: [
+      { reference: "Matthew 27:15-26", note: "Pilate offers the crowd a choice; they demand Barabbas and Jesus's crucifixion" },
+      { reference: "Mark 15:6-15", note: "Identified as jailed with fellow rebels \"who had committed murder in the insurrection\"" },
+      { reference: "Luke 23:18-25", note: "The crowd shouts for his release; Pilate hands Jesus over to their will" },
+      { reference: "John 18:39-40", note: "Identified simply as \"a robber\"" },
+    ],
+    sources: [
+      {
+        label: "Dirk Jongkind, Tyndale House: \"Was Barabbas called 'Jesus Barabbas'?\"",
+        url: "https://tyndale.cam.ac.uk/research/the-greek-new-testament/jesus-barabbas-matthew-27/",
+        note: "textual-criticism analysis of the Matthew 27:16-17 variant",
+      },
+      { label: "International Standard Bible Encyclopedia: Barabbas", url: "https://www.internationalstandardbible.com/B/barabbas.html" },
+    ],
+    reflectionPrompt:
+      "A guilty man went free because an innocent one was condemned in his place — where has someone else's sacrifice given you a freedom you didn't earn?",
+  },
+  {
     id: "joanna-follower-of-jesus",
     name: "Joanna",
     tier: "notable",
