@@ -23,6 +23,12 @@ function snippet(notes: string): string {
   return trimmed.length > 100 ? `${trimmed.slice(0, 100)}…` : trimmed;
 }
 
+/** Every entry sharing `answered`'s value, in manual order — the one grouping rule both moveItem()
+ * and the render's edge-detection share, so they can never disagree about who is adjacent to whom. */
+function sortedGroup(entries: PrayerItem[], answered: boolean): PrayerItem[] {
+  return entries.filter((e) => e.answered === answered).sort((a, b) => a.sort_order - b.sort_order);
+}
+
 /** A prayer list is nobody's business but its owner's — sql/037 gives `prayer_items` exactly one
  * policy shape, four times: `auth.uid() = user_id`. No church, no advisor, no reveal toggle;
  * nothing else in this codebase can ever read a row here.
@@ -44,14 +50,15 @@ export default function PrayerListView({ userId, searchQuery }: PrayerListViewPr
   const fetchEntries = async () => {
     if (!userId) return;
     setLoading(true);
-    // Unanswered first (still being prayed for), newest of each group first — an item just
-    // checked off does not need to keep top billing over what is still open.
+    // Unanswered first (still being prayed for), then by the reader's own manual order within
+    // each group — an item just checked off does not need to keep top billing over what is still
+    // open, but does not lose its place among other answered ones either.
     const { data } = await supabase
       .from("prayer_items")
       .select("*")
       .eq("user_id", userId)
       .order("answered", { ascending: true })
-      .order("created_at", { ascending: false });
+      .order("sort_order", { ascending: true });
     setEntries((data as PrayerItem[] | null) ?? []);
     setLoading(false);
   };
@@ -88,11 +95,43 @@ export default function PrayerListView({ userId, searchQuery }: PrayerListViewPr
     await supabase.from("prayer_items").update({ answered: nextAnswered, answered_at: nextAnsweredAt }).eq("id", row.id);
   };
 
+  /** Swaps this entry with its neighbour one step toward `direction`, within its OWN group
+   * (answered items and unanswered items each have their own order, never mixed) — found by
+   * sorting the full `entries` array, not the search-filtered `visible` one, so a move made while
+   * filtered still swaps with the row that is actually adjacent in the real list. That is also why
+   * the buttons that call this are hidden while a filter is active: "adjacent in this search" and
+   * "adjacent in the whole list" can disagree, and showing a control that would sometimes jump an
+   * item past rows the search is hiding is worse than not offering it there at all.
+   *
+   * Persists by swapping just the two `sort_order` VALUES rather than renumbering the whole group,
+   * so a move only ever writes the two rows it actually changed. */
+  const moveItem = async (entry: PrayerItem, direction: "up" | "down") => {
+    const group = sortedGroup(entries, entry.answered);
+    const index = group.findIndex((e) => e.id === entry.id);
+    const neighborIndex = direction === "up" ? index - 1 : index + 1;
+    if (index === -1 || neighborIndex < 0 || neighborIndex >= group.length) return;
+    const neighbor = group[neighborIndex];
+    const [a, b] = [entry.sort_order, neighbor.sort_order];
+    setEntries((prev) =>
+      prev.map((e) => (e.id === entry.id ? { ...e, sort_order: b } : e.id === neighbor.id ? { ...e, sort_order: a } : e))
+    );
+    track("prayer_item.reorder");
+    await Promise.all([
+      supabase.from("prayer_items").update({ sort_order: b }).eq("id", entry.id),
+      supabase.from("prayer_items").update({ sort_order: a }).eq("id", neighbor.id),
+    ]);
+  };
+
   const handleDelete = async (id: string) => {
     await supabase.from("prayer_items").delete().eq("id", id);
     setEntries((prev) => prev.filter((e) => e.id !== id));
     setScreen("list");
   };
+
+  // Where a brand-new item's sort_order starts — one below the lowest existing value, so it takes
+  // top billing in its group the same way "newest first" used to. Computed here, not inside the
+  // "list" screen below, because the editor screen (where the insert actually happens) needs it too.
+  const minSortOrder = entries.length ? Math.min(...entries.map((e) => e.sort_order)) : 0;
 
   if (!userId) {
     return <p className="bible-status no-print">Log in (or continue as guest) to keep a prayer list.</p>;
@@ -103,6 +142,14 @@ export default function PrayerListView({ userId, searchQuery }: PrayerListViewPr
     const visible = trimmedSearch
       ? entries.filter((e) => `${e.item} ${noteBodyToPlainText(e.notes)}`.toLowerCase().includes(trimmedSearch))
       : entries;
+    // Which end of ITS OWN group (unanswered vs. answered) each row sits at — moveItem() groups
+    // the same way, so "first in its group" here always matches "has no up neighbour" there.
+    const groupEdge = new Map<string, { first: boolean; last: boolean }>();
+    for (const answered of [false, true]) {
+      const group = sortedGroup(entries, answered);
+      group.forEach((e, i) => groupEdge.set(e.id, { first: i === 0, last: i === group.length - 1 }));
+    }
+    const reorderable = !trimmedSearch;
     return (
       <div className="prayer-list-screen">
         <button type="button" className="prayer-list-new-button" onClick={openNew}>
@@ -115,9 +162,13 @@ export default function PrayerListView({ userId, searchQuery }: PrayerListViewPr
         {!loading && entries.length > 0 && visible.length === 0 && (
           <p className="comment-status">Nothing matches “{searchQuery?.trim()}”.</p>
         )}
+        {trimmedSearch && visible.length > 1 && (
+          <p className="prayer-list-reorder-hint">Clear the search to reorder items.</p>
+        )}
         <ul className="prayer-list">
           {visible.map((e) => {
             const preview = snippet(e.notes);
+            const edge = groupEdge.get(e.id);
             return (
               <li key={e.id} className={`prayer-list-item ${e.answered ? "prayer-list-item-answered" : ""}`}>
                 <label className="prayer-list-checkbox no-print" onClick={(ev) => ev.stopPropagation()}>
@@ -131,6 +182,28 @@ export default function PrayerListView({ userId, searchQuery }: PrayerListViewPr
                   </span>
                   {preview && <span className="sermon-notes-list-snippet">{preview}</span>}
                 </div>
+                {reorderable && (
+                  <div className="prayer-list-reorder no-print" onClick={(ev) => ev.stopPropagation()}>
+                    <button
+                      type="button"
+                      className="prayer-list-reorder-btn"
+                      disabled={edge?.first}
+                      onClick={() => moveItem(e, "up")}
+                      aria-label={`Move "${e.item}" up`}
+                    >
+                      ▲
+                    </button>
+                    <button
+                      type="button"
+                      className="prayer-list-reorder-btn"
+                      disabled={edge?.last}
+                      onClick={() => moveItem(e, "down")}
+                      aria-label={`Move "${e.item}" down`}
+                    >
+                      ▼
+                    </button>
+                  </div>
+                )}
               </li>
             );
           })}
@@ -144,6 +217,7 @@ export default function PrayerListView({ userId, searchQuery }: PrayerListViewPr
       key={editorSession}
       userId={userId}
       entry={active}
+      newItemSortOrder={minSortOrder - 1}
       onBack={() => setScreen("list")}
       onSaved={(saved, isNew) => {
         setActiveId(saved.id);
@@ -160,6 +234,10 @@ interface PrayerItemEditorProps {
   userId: string;
   /** Null for a brand-new, not-yet-saved item. */
   entry: PrayerItem | null;
+  /** The sort_order a brand-new item gets on its first save — one below the lowest value already
+   * in the list, so it takes top billing in its group. Unused when `entry` is set (an existing
+   * item keeps whatever sort_order it already has; only moveItem() changes that). */
+  newItemSortOrder: number;
   onBack: () => void;
   onSaved: (saved: PrayerItem, isNew: boolean) => void;
   onToggleAnswered: (row: PrayerItem) => void;
@@ -173,7 +251,7 @@ interface PrayerItemEditorProps {
  * a prayer-shaped disguise. What IS shared, on purpose, is the rich-text engine underneath —
  * RichTextEditor and lib/richText.ts's storage format are feature-agnostic, so this gets bold,
  * underline and bullets for free instead of a second implementation of them. */
-function PrayerItemEditor({ userId, entry, onBack, onSaved, onToggleAnswered, onDelete }: PrayerItemEditorProps) {
+function PrayerItemEditor({ userId, entry, newItemSortOrder, onBack, onSaved, onToggleAnswered, onDelete }: PrayerItemEditorProps) {
   const [item, setItem] = useState(entry?.item ?? "");
   const [notesHtml, setNotesHtml] = useState(() => noteBodyToHtml(entry?.notes ?? ""));
   const [dirty, setDirty] = useState(false);
@@ -197,7 +275,7 @@ function PrayerItemEditor({ userId, entry, onBack, onSaved, onToggleAnswered, on
         track("prayer_item.create");
         const { data, error } = await supabase
           .from("prayer_items")
-          .insert({ user_id: userId, ...fields })
+          .insert({ user_id: userId, sort_order: newItemSortOrder, ...fields })
           .select()
           .single();
         if (error || !data) {
