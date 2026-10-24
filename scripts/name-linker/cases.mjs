@@ -3879,6 +3879,26 @@ export const CASES = [
          "burial. Mark 15:43 and John 19:38 were never affected because the WEB prints the whole " +
          "phrase \"Joseph of Arimathaea\", which is a registered key; these two verses print only " +
          "the bare name. ASV reads \"there came a rich man from Arimathaea, named Joseph\"." },
+  { ref: "Matthew 27:59", surface: "Joseph", expect: "joseph-of-arimathea", status: "guard",
+    why: "\"Joseph took the body, and wrapped it...\". Reported live 2026-10-16: this verse's bare " +
+         "\"Joseph\" was resolving to Mary's husband. The 27:57 entry above fixes the verse that " +
+         "introduces him by name; this is the very next verse, about the same man, and was missed " +
+         "in the original pass — a second entry was needed, not a different kind of fix." },
+  // ── Barabbas ─────────────────────────────────────────────────────────────────────────────────
+  { ref: "Matthew 27:16", surface: "Barabbas", expect: "barabbas", status: "guard",
+    why: "The base registration — a brand-new, unambiguous record name with nothing else to " +
+         "collide with. Added 2026-10-16." },
+  { text: "The Aramaic is not perfectly settled, though: some philologists derive the name instead " +
+          "from bar rabban, \"son of our master/rabbi,\" in which case it would say nothing about " +
+          "a father at all. Abba is independently attested as an ordinary personal name in this " +
+          "period",
+    surface: "Abba", owner: "barabbas", expect: null, status: "guard",
+    why: "\"Abba\" is a registered matchName on god-the-father (Mark 14:36, Romans 8:15, " +
+         "Galatians 4:6 all genuinely invoke God that way). This sentence is explaining the word " +
+         "itself as a personal name attested on a first-century ossuary — not addressing God — so " +
+         "OWNER_NAME_OVERRIDES suppresses it on barabbas's own page. Without the suppression this " +
+         "read as a link from a note about Aramaic naming conventions to the First Person of the " +
+         "Trinity." },
   { ref: "Luke 23:50", surface: "Joseph", expect: "joseph-of-arimathea", status: "guard",
     why: "\"a man named Joseph, who was a member of the council\". KJV: \"there was a man named " +
          "Joseph, a counsellor\". ASV: \"a man named Joseph, who was a councillor\". All three print " +
