@@ -26,13 +26,17 @@ interface BibleTriviaViewProps {
   /** Returns to GameCenter — called directly from the entry screen's Back, or after leaving a room
    * first if one's currently joined (see handleBack below). */
   onBack: () => void;
+  /** False when this game's stage hides it from this viewer (GameView decides, via useFeature).
+   * A room already joined carries on; once there is no room, this view hands back to Game Center
+   * instead of offering create / join / solo. */
+  available: boolean;
 }
 
 /** The Bible Trivia game's own flow — extracted out of GameView so that component can stay a thin
  * router across multiple games (see CrosswordView for the other one). Owns which room the player is
  * currently in and drives it through lobby -> active -> finished by watching game_rooms/game_players/
  * game_buzzes over one shared realtime channel (see subscribeToRoom). */
-export default function BibleTriviaView({ session, onBack }: BibleTriviaViewProps) {
+export default function BibleTriviaView({ session, onBack, available }: BibleTriviaViewProps) {
   const userId = session.user.id;
   const [roomId, setRoomId] = useState<string | null>(() => sessionStorage.getItem(ACTIVE_ROOM_KEY));
   const [room, setRoom] = useState<GameRoom | null>(null);
@@ -84,6 +88,11 @@ export default function BibleTriviaView({ session, onBack }: BibleTriviaViewProp
     return unsubscribe;
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [roomId]);
+
+  useEffect(() => {
+    if (!available && !roomId) onBack();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [available, roomId]);
 
   // Solo play has no one to video-chat with — <= 1 rather than === 1 so this also covers the moment
   // right after a room's created, before its player list has loaded, avoiding a camera-permission
@@ -167,7 +176,7 @@ export default function BibleTriviaView({ session, onBack }: BibleTriviaViewProp
       <div className="game-body">
         {loadError && <p className="games-error">{loadError}</p>}
         {!roomId || !room ? (
-          <GamesPanel onRoomReady={setActiveRoom} />
+          available ? <GamesPanel onRoomReady={setActiveRoom} /> : <p className="games-high-scores-empty">Loading…</p>
         ) : room.status === "lobby" ? (
           <GameLobby
             room={room}

@@ -1,5 +1,5 @@
-import { useState } from "react";
-import { FEATURES, setFeatureStage, setTestView, useFeatureAdmin, type FeatureKey } from "../lib/features";
+import { useState, type ReactNode } from "react";
+import { FEATURES, setFeatureStage, setTestView, useFeatureAdmin, type FeatureDef, type FeatureKey } from "../lib/features";
 import { formatWhen } from "../lib/adminApi";
 
 /* ============================================================================
@@ -67,9 +67,10 @@ export function LiveTestSwitch() {
   );
 }
 
-/** Admin Console → Features. Owner only. One row per feature, each with a dot that flips it. */
+/** Admin Console → Features. Owner only. One row per feature, each with a dot that flips it. Child
+ * features (each game under Games & Trivia) are listed nested beneath their parent's row. */
 export function FeatureStagesPanel() {
-  const { isOwner, testView, live, updatedAt, loaded, loadFailed } = useFeatureAdmin();
+  const { isOwner, testView, live, updatedAt, loaded, loadFailed, present } = useFeatureAdmin();
   const [pending, setPending] = useState<FeatureKey | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [status, setStatus] = useState<string | null>(null);
@@ -97,6 +98,47 @@ export function FeatureStagesPanel() {
     }
   };
 
+  // One row. A child (an individual game) also says when its parent is hiding it regardless, and when
+  // its own row doesn't exist yet (sql/040 not applied — it is treated as Live until then).
+  const renderRow = ({ key, label, where, parent }: FeatureDef, nested: ReactNode) => {
+    const isLive = live[key] !== false;
+    const stage = isLive ? "Live" : "Testing";
+    const parentDef = parent ? FEATURES.find((p) => p.key === parent) : undefined;
+    const parentTesting = parent !== undefined && live[parent] === false;
+    const missingRow = parent !== undefined && loaded && !loadFailed && !present[key];
+    return (
+      <li key={key} className={`release-row${parent ? " release-row-child" : ""}`}>
+        <button
+          type="button"
+          className="release-flip"
+          onClick={() => void flip(key, label)}
+          disabled={pending !== null}
+          aria-label={`${label}: ${stage}. Switch to ${isLive ? "Testing" : "Live"}.`}
+          title={`Switch to ${isLive ? "Testing" : "Live"}`}
+        >
+          <span className={`release-dot ${parent ? "" : "release-dot-lg "}${isLive ? "release-dot-live" : "release-dot-test"}`} aria-hidden="true" />
+        </button>
+        <div className="release-row-text">
+          <span className="release-row-head">
+            <span className="release-row-label">{label}</span>
+            <span className={`release-stage ${isLive ? "release-stage-live" : "release-stage-test"}`}>
+              {pending === key ? "Saving…" : stage}
+            </span>
+          </span>
+          <span className="release-row-where">{where}</span>
+          {parentTesting && isLive && (
+            <span className="release-row-where">Hidden from everyone but you anyway, because {parentDef?.label ?? "its section"} is in Testing.</span>
+          )}
+          {missingRow && (
+            <span className="release-row-where">Not stored yet — the per-game migration (sql/040) hasn't been applied, so this game follows {parentDef?.label ?? "its section"}.</span>
+          )}
+          {updatedAt[key] && <span className="release-row-when">Changed {formatWhen(updatedAt[key])}</span>}
+        </div>
+        {nested}
+      </li>
+    );
+  };
+
   return (
     <div className="release-panel">
       <p className="admin-note">
@@ -116,33 +158,13 @@ export function FeatureStagesPanel() {
       {!loaded && <p className="admin-note">Loading…</p>}
 
       <ul className="release-list">
-        {FEATURES.map(({ key, label, where }) => {
-          const isLive = live[key] !== false;
-          const stage = isLive ? "Live" : "Testing";
-          return (
-            <li key={key} className="release-row">
-              <button
-                type="button"
-                className="release-flip"
-                onClick={() => void flip(key, label)}
-                disabled={pending !== null}
-                aria-label={`${label}: ${stage}. Switch to ${isLive ? "Testing" : "Live"}.`}
-                title={`Switch to ${isLive ? "Testing" : "Live"}`}
-              >
-                <span className={`release-dot release-dot-lg ${isLive ? "release-dot-live" : "release-dot-test"}`} aria-hidden="true" />
-              </button>
-              <div className="release-row-text">
-                <span className="release-row-head">
-                  <span className="release-row-label">{label}</span>
-                  <span className={`release-stage ${isLive ? "release-stage-live" : "release-stage-test"}`}>
-                    {pending === key ? "Saving…" : stage}
-                  </span>
-                </span>
-                <span className="release-row-where">{where}</span>
-                {updatedAt[key] && <span className="release-row-when">Changed {formatWhen(updatedAt[key])}</span>}
-              </div>
-            </li>
-          );
+        {FEATURES.filter((f) => !f.parent).map((f) => {
+          const children = FEATURES.filter((c) => c.parent === f.key);
+          return renderRow(f, children.length > 0 && (
+            <ul className="release-list release-sublist" aria-label={`${f.label} — individual stages`}>
+              {children.map((c) => renderRow(c, null))}
+            </ul>
+          ));
         })}
       </ul>
 

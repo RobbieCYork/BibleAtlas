@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import type { Session } from "@supabase/supabase-js";
 import SavingPeterView from "./SavingPeterView";
 import SavingPeterMultiplayerView from "./SavingPeterMultiplayerView";
@@ -8,16 +8,26 @@ import Icon from "./Icon";
 interface SavingPeterHubProps {
   session: Session;
   onBack: () => void;
+  /** False when Saving Peter's stage hides it from this viewer (GameView decides, via useFeature).
+   * Solo and this choice screen hand straight back; multiplayer hands back once out of any room. */
+  available: boolean;
 }
 
 /** Saving Peter's own entry point — choose Solo (the original single-player hangman) or Multiplayer
  * (up to 4 players with video chat, race to answer). Mirrors GameView's own thin-router pattern one
  * level down, so GameView itself doesn't need to know Saving Peter has two modes. */
-export default function SavingPeterHub({ session, onBack }: SavingPeterHubProps) {
+export default function SavingPeterHub({ session, onBack, available }: SavingPeterHubProps) {
   const [mode, setMode] = useState<"pick" | "solo" | "multiplayer">("pick");
 
+  useEffect(() => {
+    if (!available && mode !== "multiplayer") onBack();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [available, mode]);
+
+  if (mode === "multiplayer")
+    return <SavingPeterMultiplayerView session={session} onBack={() => (available ? setMode("pick") : onBack())} available={available} />;
+  if (!available) return null;
   if (mode === "solo") return <SavingPeterView session={session} onBack={() => setMode("pick")} />;
-  if (mode === "multiplayer") return <SavingPeterMultiplayerView session={session} onBack={() => setMode("pick")} />;
 
   return (
     <div className="game-root">

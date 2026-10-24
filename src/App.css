@@ -12675,6 +12675,30 @@ img.sn-image,
   color: var(--text-muted);
 }
 
+/* The individual games, nested under the Games & Trivia row: full width beneath its text, indented,
+ * plainer rows so the parent still reads as the section. */
+.release-row:has(> .release-sublist) {
+  flex-wrap: wrap;
+}
+
+.release-sublist {
+  flex: 1 1 100%;
+  margin-left: 18px;
+  padding-left: 10px;
+  border-left: 2px solid var(--border);
+}
+
+.release-row-child {
+  padding: 4px 6px;
+  border: none;
+  background: transparent;
+}
+
+.release-row-child .release-flip {
+  width: 30px;
+  height: 30px;
+}
+
 /* The Testing marker on a mobile tab: same shape as the unread dot, but orange and on the opposite
  * corner so the two can never be mistaken for each other. */
 .mobile-tab-dot.release-tab-testing {

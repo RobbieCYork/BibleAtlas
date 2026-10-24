@@ -24,12 +24,16 @@ const ACTIVE_ROOM_KEY = "bible-atlas-active-saving-peter-room";
 interface SavingPeterMultiplayerViewProps {
   session: Session;
   onBack: () => void;
+  /** False when Saving Peter's stage hides it from this viewer — see BibleTriviaView's prop of the
+   * same name. A room already joined carries on; with no room, this hands back instead of offering
+   * create / join. */
+  available: boolean;
 }
 
 /** Saving Peter's multiplayer flow — up to 4 players, video chat, one shared word per round, only the
  * first correct guess scores. Mirrors BibleTriviaView.tsx's lobby -> active -> finished room lifecycle
  * one-for-one, just against the saving_peter_* tables/RPCs instead of game_*. */
-export default function SavingPeterMultiplayerView({ session, onBack }: SavingPeterMultiplayerViewProps) {
+export default function SavingPeterMultiplayerView({ session, onBack, available }: SavingPeterMultiplayerViewProps) {
   const userId = session.user.id;
   const [roomId, setRoomId] = useState<string | null>(() => sessionStorage.getItem(ACTIVE_ROOM_KEY));
   const [room, setRoom] = useState<SavingPeterRoom | null>(null);
@@ -79,6 +83,11 @@ export default function SavingPeterMultiplayerView({ session, onBack }: SavingPe
     return unsubscribe;
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [roomId]);
+
+  useEffect(() => {
+    if (!available && !roomId) onBack();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [available, roomId]);
 
   const isSolo = players.length <= 1;
   const webrtc = useGameWebRTC(isSolo ? null : roomId, userId);
@@ -152,7 +161,7 @@ export default function SavingPeterMultiplayerView({ session, onBack }: SavingPe
       <div className="game-body">
         {loadError && <p className="games-error">{loadError}</p>}
         {!roomId || !room ? (
-          <SavingPeterMultiplayerPanel onRoomReady={setActiveRoom} />
+          available ? <SavingPeterMultiplayerPanel onRoomReady={setActiveRoom} /> : <p className="games-high-scores-empty">Loading…</p>
         ) : room.status === "lobby" ? (
           <GameLobby
             room={room}

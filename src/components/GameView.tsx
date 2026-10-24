@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import type { Session } from "@supabase/supabase-js";
-import GameCenter from "./GameCenter";
+import GameCenter, { GAMES } from "./GameCenter";
+import { useFeatures } from "../lib/features";
 import BibleTriviaView from "./BibleTriviaView";
 import CrosswordView from "./CrosswordView";
 import SavingPeterHub from "./SavingPeterHub";
@@ -19,6 +20,8 @@ interface GameViewProps {
    * jump back to Game Center instead of silently doing nothing. */
   gameCenterNonce: number;
 }
+
+const GAME_FEATURE_KEYS = GAMES.map((g) => g.feature);
 
 /** Full-screen "Games" takeover — same pattern as TimelineView/MyProfileView (a boolean in App.tsx
  * renders this over the whole app body; the map/Bible layout underneath stays mounted). A thin router:
@@ -47,9 +50,25 @@ export default function GameView({ session, onClose, gameCenterNonce }: GameView
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [gameCenterNonce]);
 
-  if (activeGame === "bible-trivia") return <BibleTriviaView session={session} onBack={backToCenter} />;
+  // Per-game stages (lib/features.ts). GameCenter hides a game's card; this handles a game that is
+  // already open when it stops being visible to this viewer (in practice: the owner switching from
+  // Test view to Live view, or flipping it to Testing, while inside it). A solo game goes straight
+  // back to Game Center. The two multiplayer games are told instead, and leave only once the player
+  // is not in a room — a lobby or match already under way is never cut off; only creating, joining
+  // or starting a fresh room from their entry screens is gated.
+  const stages = useFeatures(GAME_FEATURE_KEYS);
+  const activeDef = GAMES.find((g) => g.key === activeGame);
+  const activeVisible = activeDef ? stages[activeDef.feature].visible : true;
+  const isMultiplayerGame = activeGame === "bible-trivia" || activeGame === "saving-peter";
+  useEffect(() => {
+    if (activeGame && !activeVisible && !isMultiplayerGame) backToCenter();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [activeGame, activeVisible, isMultiplayerGame]);
+  if (activeGame && !activeVisible && !isMultiplayerGame) return null;
+
+  if (activeGame === "bible-trivia") return <BibleTriviaView session={session} onBack={backToCenter} available={activeVisible} />;
   if (activeGame === "crossword") return <CrosswordView onBack={backToCenter} />;
-  if (activeGame === "saving-peter") return <SavingPeterHub session={session} onBack={backToCenter} />;
+  if (activeGame === "saving-peter") return <SavingPeterHub session={session} onBack={backToCenter} available={activeVisible} />;
   if (activeGame === "fill-blank") return <FillBlankView onBack={backToCenter} />;
   if (activeGame === "memorization") return <MemorizationView onBack={backToCenter} />;
   if (activeGame === "punchline") return <PunchlineView onBack={backToCenter} />;
