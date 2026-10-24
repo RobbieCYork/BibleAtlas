@@ -54,6 +54,8 @@ import { timelineEvents } from "./data/timelineEvents";
 import { formatWalkStopReference, getActiveSeasonalWalk, getWalkDismissKey } from "./data/seasonalWalks";
 import SeasonalWalkPanel from "./components/SeasonalWalkPanel";
 import Icon from "./components/Icon";
+import { TestViewStrip } from "./components/FeatureRelease";
+import { useFeature } from "./lib/features";
 import "./App.css";
 
 const MIN_PANEL_WIDTH = 240;
@@ -896,6 +898,11 @@ function App() {
   // Entered from the desktop footer strip, the mobile Timeline tab, or a link-choice popup's "View
   // in Timeline"; left via the view's Back button (or, on mobile, by picking another tab).
   const [showTimeline, setShowTimeline] = useState(false);
+  // Feature stages (lib/features.ts). The menus and tab bar gate their own entry points; these two
+  // only make sure a takeover that is already on screen closes if its feature stops being visible
+  // to this viewer — the owner switching from Test view back to Live view while inside it.
+  const timelineFeatureVisible = useFeature("timeline").visible;
+  const gamesFeatureVisible = useFeature("games_trivia").visible;
   // The live pan/zoom view inside Timeline mode, lifted up here so it survives Timeline unmounting —
   // TimelineView reports every change via onViewChange, and reads it back via initialView so
   // reopening (however it's reached) resumes the last view instead of resetting to the cold-start
@@ -937,6 +944,11 @@ function App() {
     setTimelineOverlayEventId(null);
     setTimelineFocusEntityId(null);
   };
+  useEffect(() => {
+    if (!timelineFeatureVisible && showTimeline) closeTimeline();
+    if (!gamesFeatureVisible && showGame) setShowGame(false);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [timelineFeatureVisible, gamesFeatureVisible, showTimeline, showGame]);
   // showTimeline mirrored in a ref so the stable link-choice handlers below always see the live
   // value without needing to be recreated per render.
   const showTimelineRef = useRef(showTimeline);
@@ -1619,6 +1631,8 @@ function App() {
           reportSurface={reportSurface}
         />
       </header>
+      {/* Owner-only, and only in Test view — renders nothing for everyone else. */}
+      <TestViewStrip />
       {/* Seasonal walk banner — a slim pill strip under the header (not a modal; see the walk state
           block above). Hidden while the walk view itself is open to avoid saying it twice. */}
       {activeWalk && !walkBannerDismissed && !walkOpen && (

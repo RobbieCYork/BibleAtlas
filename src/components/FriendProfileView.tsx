@@ -8,6 +8,8 @@ import { ProfileLinksList } from "./ProfileLinks";
 import { fetchProfileLinks, type ProfileLink } from "../lib/profileLinks";
 import ModerationMenu from "./ModerationMenu";
 import Icon from "./Icon";
+import { TestingMarker } from "./FeatureRelease";
+import { useFeature } from "../lib/features";
 
 interface FriendProfileViewProps {
   friendId: string;
@@ -26,6 +28,7 @@ interface FriendProfileViewProps {
 export default function FriendProfileView({ friendId, viewerId, onBack, onMessage, expand, style, hidden }: FriendProfileViewProps) {
   const [profile, setProfile] = useState<Profile | null>(null);
   const [loaded, setLoaded] = useState(false);
+  const postsFeature = useFeature("posts_newsfeed");
   // Only the links this viewer is allowed to see ever arrive — the RLS policy in
   // sql/017_profile_links.sql filters by each row's own visibility, so a private (or friends-only,
   // to a non-friend) link isn't in the response at all. Nothing here needs to hide anything.
@@ -147,10 +150,15 @@ export default function FriendProfileView({ friendId, viewerId, onBack, onMessag
             <ReadingProgressGrid userId={friendId} displayName={displayFor(profile)} />
           </div>
 
-          <div className="friend-profile-section">
-            <h4>Posts</h4>
-            <PostsFeed userId={friendId} viewerId={viewerId} />
-          </div>
+          {postsFeature.visible && (
+            <div className="friend-profile-section">
+              <h4>
+                Posts
+                <TestingMarker show={postsFeature.inTesting} />
+              </h4>
+              <PostsFeed userId={friendId} viewerId={viewerId} />
+            </div>
+          )}
         </div>
       )}
     </div>

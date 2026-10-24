@@ -7,6 +7,7 @@ import { TextSizeProvider } from './lib/textSize.tsx'
 import { ThemeProvider } from './lib/theme.tsx'
 import { MobileTabsProvider } from './lib/mobileTabs.tsx'
 import { startUpdateChecks } from './lib/updateCheck'
+import { startFeatureRelease } from './lib/features'
 
 // Applied synchronously, before the first paint, so a reader who chose "dark" doesn't see a flash
 // of the default light theme first — ThemeProvider's own effect (same localStorage key) takes over
@@ -14,6 +15,9 @@ import { startUpdateChecks } from './lib/updateCheck'
 document.documentElement.setAttribute('data-theme', localStorage.getItem('app-theme') === 'dark' ? 'dark' : 'light')
 
 startUpdateChecks()
+
+// Testing / Live feature stages (sql/039). Loads once, fails open to Live — see lib/features.ts.
+startFeatureRelease()
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>

@@ -2,6 +2,7 @@ import type { CSSProperties } from "react";
 import type { PanelKey } from "./PanelMenu";
 import Icon from "./Icon";
 import { MOBILE_TAB_META, useMobileTabs, type MobileTabKey } from "../lib/mobileTabs";
+import { useFeature, type FeatureVisibility } from "../lib/features";
 
 type FriendsView = "friends" | "messages" | "groups";
 
@@ -70,7 +71,15 @@ export default function MobileTabBar({
   myProfileActive = false,
   onOpenSocial,
 }: MobileTabBarProps) {
-  const { visibleTabs } = useMobileTabs();
+  const { visibleTabs: chosenTabs } = useMobileTabs();
+  // Feature stages (lib/features.ts) on top of the reader's own tab choice: a tab whose feature this
+  // viewer can't see is omitted in place, exactly like a tab the reader hid.
+  const timelineFeature = useFeature("timeline");
+  const gamesFeature = useFeature("games_trivia");
+  const articlesFeature = useFeature("library_articles");
+  const tabFeature = (key: MobileTabKey): FeatureVisibility | null =>
+    key === "timeline" ? timelineFeature : key === "games" ? gamesFeature : key === "articles" ? articlesFeature : null;
+  const visibleTabs = chosenTabs.filter((key) => tabFeature(key)?.visible !== false);
   const isSocialActive = active === "friends" || myProfileActive;
   const totalBadgeCount = friendsBadgeCount + messagesBadgeCount + groupsBadgeCount;
 
@@ -113,8 +122,14 @@ export default function MobileTabBar({
         <span className="mobile-tab-icon" aria-hidden="true">
           <Icon name={icon} />
           {key === "social" && totalBadgeCount > 0 && <span className="mobile-tab-dot" />}
+          {tabFeature(key)?.inTesting && (
+            <span className="mobile-tab-dot release-tab-testing" title="Testing — only you can see this" />
+          )}
         </span>
-        <span className="mobile-tab-label">{label}</span>
+        <span className="mobile-tab-label">
+          {label}
+          {tabFeature(key)?.inTesting && <span className="sr-only"> (Testing — only you can see this)</span>}
+        </span>
       </button>
     );
   };

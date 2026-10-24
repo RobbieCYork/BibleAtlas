@@ -19,6 +19,8 @@ import {
 } from "../lib/profileLinks";
 import Icon, { type IconName } from "./Icon";
 import DeleteAccountControl from "./DeleteAccountControl";
+import { TestingMarker } from "./FeatureRelease";
+import { useFeature } from "../lib/features";
 
 /** A church website is typed without a scheme half the time ("mychurch.org") — treat that as shorthand
  * for https rather than rejecting it or linking to a relative path on this app's own domain. */
@@ -140,6 +142,9 @@ function MyProfileControl({
   const [saving, setSaving] = useState(false);
   const [status, setStatus] = useState<string | null>(null);
   const fileInputRef = useRef<HTMLInputElement | null>(null);
+  // Profile photos' upload entry point follows the feature's stage (lib/features.ts). Existing
+  // photos keep displaying everywhere — only "Change Photo" is gated.
+  const avatarFeature = useFeature("avatars");
   // Social links live in their own table (sql/017_profile_links.sql) rather than as more `profiles`
   // columns, because their per-link visibility has to be enforced by RLS and RLS is row-level — a
   // hidden *column* would still be shipped to whoever may read the row. So they load and save on
@@ -435,10 +440,15 @@ function MyProfileControl({
             <span className="auth-avatar auth-avatar-lg" aria-hidden="true">
               {draft.avatarUrl ? <img src={draft.avatarUrl} alt="" /> : <Icon name="people" />}
             </span>
-            <button type="button" onClick={() => fileInputRef.current?.click()} disabled={uploading}>
-              {uploading ? "Uploading…" : "Change Photo"}
-            </button>
-            <input ref={fileInputRef} type="file" accept="image/*" hidden onChange={handlePhotoSelected} />
+            {avatarFeature.visible && (
+              <>
+                <button type="button" onClick={() => fileInputRef.current?.click()} disabled={uploading}>
+                  {uploading ? "Uploading…" : "Change Photo"}
+                  <TestingMarker show={avatarFeature.inTesting} />
+                </button>
+                <input ref={fileInputRef} type="file" accept="image/*" hidden onChange={handlePhotoSelected} />
+              </>
+            )}
           </div>
           <input
             type="text"
@@ -651,6 +661,9 @@ interface MyProfileViewProps {
  * account flyout to an internal "profile" view. */
 export default function MyProfileView({ userId, onDisplayNameSaved, onClose, onGoToVerse, onOpenFriends }: MyProfileViewProps) {
   const [postsTab, setPostsTab] = useState<"newsfeed" | "mine">("newsfeed");
+  // Feature stages (lib/features.ts) — each hides its own entry point and nothing else.
+  const postsFeature = useFeature("posts_newsfeed");
+  const deletionFeature = useFeature("account_deletion");
   // Whether to DRAW the Admin Console section. Not the access control: every query the console makes
   // is refused server-side for a non-admin (see sql/019 — each admin_* function raises before doing
   // any work, and analytics_events' RLS grants SELECT to admins only). A client that flipped this
@@ -686,6 +699,8 @@ export default function MyProfileView({ userId, onDisplayNameSaved, onClose, onG
             <span className="auth-settings-label">My Reading</span>
             <ReadingProgressGrid userId={userId} isOwn />
           </div>
+          {postsFeature.visible && (
+          <>
           <div className="auth-settings-divider" />
           <div className="auth-settings-section auth-settings-section-stacked">
             <div className="myprofile-posts-tabs" role="tablist">
@@ -697,6 +712,7 @@ export default function MyProfileView({ userId, onDisplayNameSaved, onClose, onG
                 onClick={() => setPostsTab("newsfeed")}
               >
                 Newsfeed
+                <TestingMarker show={postsFeature.inTesting} />
               </button>
               <button
                 type="button"
@@ -714,6 +730,8 @@ export default function MyProfileView({ userId, onDisplayNameSaved, onClose, onG
               <PostsFeed userId={userId} viewerId={userId} isOwn />
             )}
           </div>
+          </>
+          )}
           <div className="auth-settings-divider" />
           <DataExportControl userId={userId} />
           {isAdmin && (
@@ -732,8 +750,12 @@ export default function MyProfileView({ userId, onDisplayNameSaved, onClose, onG
               </div>
             </>
           )}
-          <div className="auth-settings-divider" />
-          <DeleteAccountControl />
+          {deletionFeature.visible && (
+            <>
+              <div className="auth-settings-divider" />
+              <DeleteAccountControl />
+            </>
+          )}
         </div>
       </div>
     </section>

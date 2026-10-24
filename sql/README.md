@@ -19,7 +19,8 @@ by a read-only dump of the live database on that date).
 | **036** | `036_people_search_discoverable_default.sql` — committed, **not applied**. See below. |
 | **037** | `037_prayer_list.sql` — committed, **APPLIED 2026-09-26**. See below. |
 | **038** | `038_prayer_list_reorder.sql` — committed, **not applied**. See below. |
-| **039** | Next genuinely free number. |
+| **039** | `039_feature_release.sql` — committed, **not applied**. See below. |
+| **040** | Next genuinely free number. |
 
 ### Numbers that are TAKEN but MISSING from this directory
 
@@ -64,6 +65,7 @@ Verified against the live database on 2026-09-11:
 | 036 people search: default discoverable + LIKE escaping + min query | **NOT APPLIED** | written and committed only; needs Robbie's explicit word. Until it runs, new accounts still default to `discoverable_by_name = false` and `find_users_by_display_name` still treats a typed `%` as a wildcard — the shipped app guards its own call sites (`searchPeopleByName` in `src/lib/supabase.ts`), which is a UI guard, not enforcement. |
 | 037 prayer list (new `prayer_items` table) | **APPLIED** | Robbie ran the full file in the Supabase SQL Editor 2026-09-26 and it reported "Success. No rows returned" with no error — the read-only follow-up check (RLS on, 4 policies, `authenticated`-only grants) was sent but its result hasn't come back yet. |
 | 038 prayer list manual ordering (`sort_order` column) | **NOT APPLIED** | written and committed only; needs Robbie's explicit word. The app now selects and writes `sort_order` on `prayer_items` — until this runs, every Prayer List read and write fails with "column sort_order does not exist", not just the reorder buttons. Same shape as 037 before it ran: don't ship the UI change to a production build ahead of this one. |
+| 039 feature release stages (`feature_release`, `feature_release_log`, `set_feature_stage`, `current_user_is_owner`) | **NOT APPLIED** | written and committed only; needs Robbie's explicit word. Rehearsed on a local PGlite (not staging — none exists). Safe to ship the app ahead of it: the client fails open (every feature Live) while the table is missing, and seeds all eight as Live when it runs. |
 
 **Regenerate `000_baseline.sql` when a migration is APPLIED, not when one is committed.** A
 baseline regenerated off a commit would record a schema that does not exist.

@@ -1,5 +1,7 @@
 import { Fragment, useEffect, useId, useRef, useState } from "react";
 import Icon, { type IconName } from "./Icon";
+import { TestingMarker } from "./FeatureRelease";
+import { useFeature, type FeatureVisibility } from "../lib/features";
 
 /** The panel slots the layout can show. There is deliberately no separate "details" slot: a single
  * article (a place/person/topic/POI/timeline event) is a *state* of the Articles panel, not a panel
@@ -114,6 +116,18 @@ export default function PanelMenu({
   const containerRef = useRef<HTMLDivElement | null>(null);
   const buttonRef = useRef<HTMLButtonElement | null>(null);
   const menuId = useId();
+  // Feature stages (lib/features.ts). A Testing feature's rows are simply not drawn for anyone who
+  // can't see it; for the owner in Test view they carry the orange marker.
+  const timelineFeature = useFeature("timeline");
+  const gamesFeature = useFeature("games_trivia");
+  const articlesFeature = useFeature("library_articles");
+  const goToFeature: Record<DestinationKey | "archaeology", FeatureVisibility> = {
+    timeline: timelineFeature,
+    games: gamesFeature,
+    // Archaeology is a shelf of the Articles panel, so it follows Articles' stage.
+    archaeology: articlesFeature,
+  };
+  const panelFeature = (key: PanelKey): FeatureVisibility | null => (key === "articles" ? articlesFeature : null);
 
   useEffect(() => {
     if (!lastAutoClosed) return;
@@ -175,10 +189,11 @@ export default function PanelMenu({
             {PANEL_GROUPS.map((group, groupIndex) => (
               <Fragment key={groupIndex}>
                 {groupIndex > 0 && <div className="panel-menu-separator" role="separator" />}
-                {group.map((key) => (
+                {group.filter((key) => panelFeature(key)?.visible !== false).map((key) => (
                   <label key={key} className="panel-menu-item">
                     <input type="checkbox" checked={panels[key]} onChange={() => onToggle(key)} />
                     {PANEL_LABELS[key]}
+                    <TestingMarker show={!!panelFeature(key)?.inTesting} />
                     {key === "friends" && friendsBadgeCount > 0 && (
                       <span className="panel-menu-item-badge">{friendsBadgeCount}</span>
                     )}
@@ -195,7 +210,7 @@ export default function PanelMenu({
           <div className="panel-menu-separator panel-menu-separator-strong" role="separator" />
           <div className="panel-menu-group" role="group" aria-label="Go to">
             <p className="panel-menu-heading">Go to</p>
-            {GO_TO_ROWS.map(({ key, label, icon, blurb }) => {
+            {GO_TO_ROWS.filter(({ key }) => goToFeature[key].visible).map(({ key, label, icon, blurb }) => {
               const isCurrent = key === activeDestination;
               return (
                 <button
@@ -210,7 +225,10 @@ export default function PanelMenu({
                     <Icon name={icon} />
                   </span>
                   <span className="panel-menu-link-text">
-                    <span className="panel-menu-link-label">{label}</span>
+                    <span className="panel-menu-link-label">
+                      {label}
+                      <TestingMarker show={goToFeature[key].inTesting} />
+                    </span>
                     <span className="panel-menu-link-blurb">{isCurrent ? "On screen — return to panels" : blurb}</span>
                   </span>
                   <span className="panel-menu-link-go" aria-hidden="true">

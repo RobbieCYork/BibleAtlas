@@ -4,6 +4,7 @@ import { createPortal } from "react-dom";
 import type { TimelineEvent } from "../data/types";
 import { getTimelineEventsForEntity } from "../lib/timelineLinks";
 import Icon from "./Icon";
+import { useFeature } from "../lib/features";
 
 /* ============================================================================
  * LinkChoicePopup — the small anchored "View X / View in Timeline" chooser.
@@ -56,7 +57,12 @@ interface ChoiceState {
  * - linkChoicePopup: render this once alongside the component's output (portals to <body>).
  */
 export function useLinkChoice() {
-  const handlers = useContext(TimelineLinkContext);
+  const contextHandlers = useContext(TimelineLinkContext);
+  // While Timeline is in Testing for this viewer, "View in Timeline" is not offered at all: with no
+  // handlers, every click below falls straight through to its direct navigation, as it does for a
+  // name with no timeline association.
+  const timelineFeature = useFeature("timeline");
+  const handlers = timelineFeature.visible ? contextHandlers : null;
   const [choice, setChoice] = useState<ChoiceState | null>(null);
 
   const interceptLinkClick = (

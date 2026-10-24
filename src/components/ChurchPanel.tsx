@@ -4,6 +4,8 @@ import { supabase } from "../lib/supabase";
 import ViewSwitcher, { type FriendsView } from "./ViewSwitcher";
 import BackButton from "./BackButton";
 import Icon from "./Icon";
+import { TestingMarker } from "./FeatureRelease";
+import { useFeature } from "../lib/features";
 import SermonNoteEditor, { type SermonEditorDraft } from "./SermonNoteEditor";
 import { noteBodyToHtml, sanitizeNoteHtml } from "../lib/richText";
 import { resolveNoteImages } from "../lib/noteImages";
@@ -191,6 +193,9 @@ export default function ChurchPanel({
   const [sermonDate, setSermonDate] = useState("");
   const [sermonSeries, setSermonSeries] = useState("");
   const [forking, setForking] = useState(false);
+  // "Take notes on this" lands in My Notes → Sermon Notes, so it is an entry point of that feature
+  // and follows its stage (lib/features.ts).
+  const sermonFeature = useFeature("sermon_notes");
 
   const summary = churches.find((c) => c.church_id === activeChurchId) ?? null;
   const myRole: ChurchRole | null = summary?.my_role ?? null;
@@ -595,10 +600,12 @@ export default function ChurchPanel({
           </p>
           {activeSermon?.scripture_ref && <p className="church-sermon-ref">{activeSermon.scripture_ref}</p>}
           <SermonBodyView body={activeSermon?.body ?? ""} />
+          {sermonFeature.visible && (
           <div className="church-fork-cta">
             <button type="button" disabled={forking} onClick={() => activeSermon && handleFork(activeSermon)}>
               <Icon name="pencil" inline />
               {forking ? "…" : alreadyForked ? "Take notes on this again" : "Take notes on this"}
+              <TestingMarker show={sermonFeature.inTesting} />
             </button>
             <p className="comment-status">
               {alreadyForked
@@ -606,6 +613,7 @@ export default function ChurchPanel({
                 : "This makes your own copy, in My Notes → Sermon Notes. It is yours: the church can't see it, change it, or delete it, and you keep it even if you leave."}
             </p>
           </div>
+          )}
           {status && <p className="auth-status auth-error">{status}</p>}
         </div>
       </div>

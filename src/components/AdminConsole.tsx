@@ -28,6 +28,8 @@ import {
 import GrowthPanel from "./GrowthPanel";
 import ModerationQueuePanel from "./ModerationQueuePanel";
 import Icon from "./Icon";
+import { FeatureStagesPanel, LiveTestSwitch } from "./FeatureRelease";
+import { useFeatureAdmin } from "../lib/features";
 
 /** Every section loads on demand, so opening the console costs one small query (the overview) rather
  * than eight. `AdminSection` is both the tab key and the loader key. */
@@ -39,7 +41,8 @@ type AdminSection =
   | "features"
   | "content"
   | "moderation"
-  | "safety";
+  | "safety"
+  | "release";
 
 /** "Moderation" and "Safety" are deliberately two tabs, not one, because they answer two different
  * questions. Moderation is a BROWSE — the most recent public posts and comments, whether or not
@@ -51,10 +54,14 @@ const SECTION_LABELS: Record<AdminSection, string> = {
   growth: "Growth",
   users: "Users",
   engagement: "Engagement",
-  features: "Features",
+  // The usage ranking. Was labelled "Features" until the owner's Testing/Live controls arrived and
+  // needed that name — two tabs both called "Features" would mean two different things.
+  features: "Usage",
   content: "Content",
   moderation: "Moderation",
   safety: "Safety",
+  // Testing / Live stages (sql/039). Owner only — the tab is not drawn for anyone else.
+  release: "Features",
 };
 
 const WINDOW_OPTIONS = [7, 30, 90] as const;
@@ -95,6 +102,8 @@ function AnalyticsSinceNote({ since }: { since: string | null | undefined }) {
 
 export default function AdminConsole() {
   const [section, setSection] = useState<AdminSection>("overview");
+  const { isOwner } = useFeatureAdmin();
+  const sectionKeys = (Object.keys(SECTION_LABELS) as AdminSection[]).filter((k) => k !== "release" || isOwner);
   const [days, setDays] = useState<number>(30);
   const [error, setError] = useState<string | null>(null);
 
@@ -195,8 +204,12 @@ export default function AdminConsole() {
 
   return (
     <div className="admin-console">
+      {/* Owner only (renders nothing otherwise). Kept above the tabs so the view can be switched
+          from any section without hunting for it. */}
+      <LiveTestSwitch />
+
       <div className="admin-tabs" role="tablist" aria-label="Admin sections">
-        {(Object.keys(SECTION_LABELS) as AdminSection[]).map((key) => (
+        {sectionKeys.map((key) => (
           <button
             key={key}
             type="button"
@@ -594,6 +607,9 @@ export default function AdminConsole() {
           and it must be able to say "sql/028 hasn't been run" without this console knowing that is
           a thing that can happen. */}
       {section === "safety" && <ModerationQueuePanel />}
+
+      {/* -------------------------------------------------------------- RELEASE */}
+      {section === "release" && isOwner && <FeatureStagesPanel />}
 
       {section === "moderation" && moderation && (
         <>

@@ -5,6 +5,8 @@ import TagPicker from "./TagPicker";
 import SermonNotesView from "./SermonNotesView";
 import PrayerListView from "./PrayerListView";
 import Icon from "./Icon";
+import { TestingMarker } from "./FeatureRelease";
+import { useFeature } from "../lib/features";
 
 type NotesTab = "verse" | "sermon" | "prayer";
 
@@ -73,7 +75,15 @@ export default function MyNotesPanel({
   openSermonNoteId,
   onOpenedSermonNote,
 }: MyNotesPanelProps) {
-  const [tab, setTab] = useState<NotesTab>("verse");
+  const [selectedTab, setTab] = useState<NotesTab>("verse");
+  // Feature stages (lib/features.ts). A tab whose feature is in Testing is not drawn, and if it was
+  // the selected one the panel falls back to My Notes rather than rendering a tab that isn't there.
+  const sermonFeature = useFeature("sermon_notes");
+  const prayerFeature = useFeature("prayer_list");
+  const tab: NotesTab =
+    (selectedTab === "sermon" && !sermonFeature.visible) || (selectedTab === "prayer" && !prayerFeature.visible)
+      ? "verse"
+      : selectedTab;
 
   // A fork arriving from ChurchPanel has to land on the Sermon Notes tab — the row it just created
   // is there, and leaving the reader on the verse-notes tab would look like nothing happened.
@@ -367,12 +377,18 @@ export default function MyNotesPanel({
         <button type="button" className={tab === "verse" ? "active" : ""} onClick={() => setTab("verse")}>
           My Notes
         </button>
-        <button type="button" className={tab === "sermon" ? "active" : ""} onClick={() => setTab("sermon")}>
-          Sermon Notes
-        </button>
-        <button type="button" className={tab === "prayer" ? "active" : ""} onClick={() => setTab("prayer")}>
-          Prayer List
-        </button>
+        {sermonFeature.visible && (
+          <button type="button" className={tab === "sermon" ? "active" : ""} onClick={() => setTab("sermon")}>
+            Sermon Notes
+            <TestingMarker show={sermonFeature.inTesting} />
+          </button>
+        )}
+        {prayerFeature.visible && (
+          <button type="button" className={tab === "prayer" ? "active" : ""} onClick={() => setTab("prayer")}>
+            Prayer List
+            <TestingMarker show={prayerFeature.inTesting} />
+          </button>
+        )}
       </div>
 
       {tab === "sermon" && (

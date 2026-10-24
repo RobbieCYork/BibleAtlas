@@ -1,5 +1,7 @@
 import { useState } from "react";
 import Icon from "./Icon";
+import { TestingMarker } from "./FeatureRelease";
+import { useFeature } from "../lib/features";
 import { AccountDeletionError, deleteMyAccount, endSessionAfterDeletion } from "../lib/accountDeletion";
 import {
   ACCOUNT_DELETION_CONFIRM_WORD,
@@ -45,6 +47,11 @@ export default function DeleteAccountControl() {
   const [stage, setStage] = useState<Stage>("closed");
   const [typed, setTyped] = useState("");
   const [error, setError] = useState<string | null>(null);
+  // Feature stage (lib/features.ts). My Profile already omits this control while account deletion
+  // is in Testing for this viewer; the checks here keep the flow itself from running even if the
+  // control is mounted some other way. The server-side refusal is in the delete-account Edge
+  // Function, which reads the same flag.
+  const deletionFeature = useFeature("account_deletion");
 
   const wordMatches = typed.trim().toUpperCase() === ACCOUNT_DELETION_CONFIRM_WORD;
 
@@ -55,6 +62,10 @@ export default function DeleteAccountControl() {
   };
 
   const handleDelete = async () => {
+    if (!deletionFeature.visible) {
+      setError("Account deletion isn't available right now. Nothing was deleted.");
+      return;
+    }
     setStage("deleting");
     setError(null);
     try {
@@ -83,10 +94,13 @@ export default function DeleteAccountControl() {
     );
   }
 
+  if (!deletionFeature.visible) return null;
+
   return (
     <div className="auth-settings-section auth-settings-section-stacked delete-account-section">
       <span className="auth-settings-label">
         <Icon name="ban" inline /> Delete My Account
+        <TestingMarker show={deletionFeature.inTesting} />
       </span>
 
       {stage === "closed" ? (

@@ -150,6 +150,14 @@
   --growth-axis: #524634;
   --growth-boundary: #6b5c42;
 
+  /* Feature release stages (lib/features.ts, the owner's Admin Console → Features). Green = Live,
+   * ORANGE = Testing — deliberately orange, not red: red/green is the pair the most common colour
+   * vision deficiency confuses, and orange vs green stays apart on luminance as well as hue. The
+   * dot is never the only signal; every one carries a text label or title too. */
+  --release-live: #5cc187;
+  --release-test: #f59e0b;
+  --release-test-bg: rgba(245, 158, 11, 0.16);
+
   color-scheme: dark;
   color: var(--text);
   background: var(--bg);
@@ -227,6 +235,11 @@
   --growth-grid: #e6e2db;
   --growth-axis: #c4bdb1;
   --growth-boundary: #b0a693;
+
+  /* Feature release stages — see the dark block. */
+  --release-live: #2f8a4f;
+  --release-test: #b45309;
+  --release-test-bg: rgba(217, 119, 6, 0.12);
 
   color-scheme: light;
 }

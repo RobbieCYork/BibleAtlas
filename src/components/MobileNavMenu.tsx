@@ -1,6 +1,8 @@
 import { useEffect, useId, useRef, useState } from "react";
 import { MOBILE_TAB_ORDER, MOBILE_TAB_META, type MobileTabKey } from "../lib/mobileTabs";
 import Icon from "./Icon";
+import { TestingMarker } from "./FeatureRelease";
+import { useFeature, type FeatureVisibility } from "../lib/features";
 
 interface MobileNavMenuProps {
   /** Which of the seven destinations is on screen right now (App derives this in the same
@@ -55,6 +57,20 @@ export default function MobileNavMenu({ current, onNavigate, onGoToArchaeology }
   const buttonRef = useRef<HTMLButtonElement | null>(null);
   const listRef = useRef<HTMLDivElement | null>(null);
   const menuId = useId();
+  // Feature stages (lib/features.ts). Rows for a feature this viewer can't see are not drawn.
+  const timelineFeature = useFeature("timeline");
+  const gamesFeature = useFeature("games_trivia");
+  const articlesFeature = useFeature("library_articles");
+  const rowFeature = (row: Row): FeatureVisibility | null =>
+    row.kind === "archaeology"
+      ? articlesFeature
+      : row.key === "timeline"
+        ? timelineFeature
+        : row.key === "games"
+          ? gamesFeature
+          : row.key === "articles"
+            ? articlesFeature
+            : null;
 
   useEffect(() => {
     if (!open) return;
@@ -119,7 +135,8 @@ export default function MobileNavMenu({ current, onNavigate, onGoToArchaeology }
       </button>
       {open && (
         <div className="mobile-nav-menu-dropdown" id={menuId} role="menu" ref={listRef}>
-          {ROWS.map((row) => {
+          {ROWS.filter((row) => rowFeature(row)?.visible !== false).map((row) => {
+            const inTesting = !!rowFeature(row)?.inTesting;
             // The one row that is not a bottom-bar destination — see ROWS above. It never carries
             // aria-current: `current` is a MobileTabKey, and while the reader is on the Archaeology
             // shelf the destination they are actually in is Articles, which is the row that says so.
@@ -135,7 +152,10 @@ export default function MobileNavMenu({ current, onNavigate, onGoToArchaeology }
                   <span className="mobile-nav-menu-icon" aria-hidden="true">
                     <Icon name="archaeology" />
                   </span>
-                  <span className="mobile-nav-menu-label">Archaeology</span>
+                  <span className="mobile-nav-menu-label">
+                    Archaeology
+                    <TestingMarker show={inTesting} />
+                  </span>
                 </button>
               );
             }
@@ -154,7 +174,10 @@ export default function MobileNavMenu({ current, onNavigate, onGoToArchaeology }
                 <span className="mobile-nav-menu-icon" aria-hidden="true">
                   <Icon name={icon} />
                 </span>
-                <span className="mobile-nav-menu-label">{label}</span>
+                <span className="mobile-nav-menu-label">
+                  {label}
+                  <TestingMarker show={inTesting} />
+                </span>
               </button>
             );
           })}

@@ -115,6 +115,10 @@ const ANONYMISE: Array<{ table: string; column: string }> = [
   { table: "reports", column: "assigned_to" },
   { table: "user_roles", column: "granted_by" },
   { table: "app_settings", column: "updated_by" },
+  // sql/039 feature stages. Both columns are also ON DELETE SET NULL; nulled here explicitly for the
+  // same reason as the rest of this list.
+  { table: "feature_release", column: "updated_by" },
+  { table: "feature_release_log", column: "changed_by" },
   { table: "game_rooms", column: "winner_id" },
   { table: "saving_peter_rooms", column: "winner_id" },
 ];
@@ -281,6 +285,18 @@ Deno.serve(async (req: Request) => {
         409
       );
     }
+  }
+
+  // ── 3b. Feature stage (sql/039) ───────────────────────────────────────────────────────────────
+  // While `account_deletion` is in Testing, only the owner may use it. The app already hides the
+  // control; this is the server half, so a direct call is refused too. Read with the service key
+  // (feature_release is world-readable anyway). If the row or table is missing — sql/039 not
+  // applied — this check is skipped, matching the app, which treats a missing flag as Live.
+  // Checked before anything is destroyed.
+  const stage = await admin.from("feature_release").select("live").eq("feature", "account_deletion").maybeSingle();
+  const callerIsOwner = !roleRow.error && roleRow.data?.role === "owner";
+  if (!stage.error && stage.data?.live === false && !callerIsOwner) {
+    return json({ error: "Account deletion isn't available yet. Nothing was deleted." }, 403);
   }
 
   // ── 4. Everything except the account row itself ───────────────────────────────────────────────
