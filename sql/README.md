@@ -4,8 +4,8 @@ Read this before you write a migration. It exists because the same three facts h
 rediscovered from scratch more than once, each time by counting files in this directory — which
 is exactly the thing that gives you the wrong answer.
 
-Last verified against production: **2026-09-11** (from `sql/000_baseline.sql`, which was generated
-by a read-only dump of the live database on that date).
+Last verified against production: **2026-10-24** (read-only catalog queries for 027, 029, 033-039).
+`sql/000_baseline.sql` is a separate photograph from 2026-09-11 and predates 037-039.
 
 ---
 
@@ -13,12 +13,12 @@ by a read-only dump of the live database on that date).
 
 | Number | Status |
 |---|---|
-| **033** | **TAKEN — Capstone for Churches.** Claimed 2026-09-11 while that migration was being written. Do not take it. |
+| **033** | `033_churches.sql` — Capstone for Churches, committed, **not applied** (no `churches` tables exist on production). |
 | **034** | `034_pin_search_path.sql` — committed, **not applied**. See below. |
 | **035** | `035_revoke_default_grants_moderation.sql` — committed, **not applied**. See below. |
 | **036** | `036_people_search_discoverable_default.sql` — committed, **not applied**. See below. |
 | **037** | `037_prayer_list.sql` — committed, **APPLIED 2026-09-26**. See below. |
-| **038** | `038_prayer_list_reorder.sql` — committed, **not applied**. See below. |
+| **038** | `038_prayer_list_reorder.sql` — committed, **APPLIED** (verified 2026-10-24; date applied not recorded). See below. |
 | **039** | `039_feature_release.sql` — committed, **APPLIED 2026-10-24**. See below. |
 | **040** | Next genuinely free number. |
 
@@ -37,7 +37,7 @@ The full list present on `main`:
 
 ```
 001 002 003 004 005 007 008 009 010 011 012 013 014 015 016 017 018 019
-021 022 023 024 025 026 027 028 029 030 031 032 034 035 036 037
+021 022 023 024 025 026 027 028 029 030 031 032 033 034 035 036 037 038 039
 ```
 
 `000_baseline.sql` is **not** a migration. It is a photograph of the live schema, numbered `000`
@@ -50,21 +50,23 @@ so a partial run would silently overwrite live functions.
 ## Committed is not applied
 
 A file sitting in this directory is **not** evidence that it has been run against production.
-Verified against the live database on 2026-09-11:
+Verified against the live database on 2026-09-11, and re-verified read-only on 2026-10-24 for
+027, 029, 033-039:
 
 | Migration | On production? | Evidence |
 |---|---|---|
-| 027 sermon-note images | **NOT APPLIED** | no `sermon-note-images` storage bucket exists |
+| 027 sermon-note images | **NOT APPLIED** | no `sermon-note-images` storage bucket exists (re-checked 2026-10-24) |
 | 028 moderation | **APPLIED** | `user_blocks` + the `*_block_filter` policies are live |
-| 029 account-deletion FK hygiene | **NOT APPLIED** | committed only; both `winner_id` FKs still `NO ACTION`. In-app deletion does not need it (the Edge Function nulls both columns first); it fixes every *other* route to deleting a user, e.g. the Supabase dashboard's Delete User button |
+| 029 account-deletion FK hygiene | **NOT APPLIED** | committed only; both `winner_id` FKs still `NO ACTION` (re-checked 2026-10-24). In-app deletion does not need it (the Edge Function nulls both columns first); it fixes every *other* route to deleting a user, e.g. the Supabase dashboard's Delete User button |
 | 030 post-media not enumerable | **APPLIED** | the scoped storage select policy is live |
 | 031 avatars not enumerable | **APPLIED** | owner-only avatar select policy is live |
 | 032 search respects blocks | **APPLIED** | the three `find_*` functions call `is_blocked_between` |
-| 034 pin search_path | **NOT APPLIED** | written and committed only; needs Robbie's explicit word |
-| 035 revoke default grants (028's five tables) | **NOT APPLIED** | written and committed only; needs Robbie's explicit word |
-| 036 people search: default discoverable + LIKE escaping + min query | **NOT APPLIED** | written and committed only; needs Robbie's explicit word. Until it runs, new accounts still default to `discoverable_by_name = false` and `find_users_by_display_name` still treats a typed `%` as a wildcard — the shipped app guards its own call sites (`searchPeopleByName` in `src/lib/supabase.ts`), which is a UI guard, not enforcement. |
-| 037 prayer list (new `prayer_items` table) | **APPLIED** | Robbie ran the full file in the Supabase SQL Editor 2026-09-26 and it reported "Success. No rows returned" with no error — the read-only follow-up check (RLS on, 4 policies, `authenticated`-only grants) was sent but its result hasn't come back yet. |
-| 038 prayer list manual ordering (`sort_order` column) | **NOT APPLIED** | written and committed only; needs Robbie's explicit word. The app now selects and writes `sort_order` on `prayer_items` — until this runs, every Prayer List read and write fails with "column sort_order does not exist", not just the reorder buttons. Same shape as 037 before it ran: don't ship the UI change to a production build ahead of this one. |
+| 033 churches | **NOT APPLIED** | no `church%` tables exist on production (checked 2026-10-24); needs Robbie's explicit word |
+| 034 pin search_path | **NOT APPLIED** | written and committed only; needs Robbie's explicit word. Re-checked 2026-10-24: all 18 target functions still have no `search_path` set. |
+| 035 revoke default grants (028's five tables) | **NOT APPLIED** | written and committed only; needs Robbie's explicit word. Re-checked 2026-10-24: all five tables still carry the full default grant set for `anon` and `authenticated`. |
+| 036 people search: default discoverable + LIKE escaping + min query | **NOT APPLIED** | written and committed only; needs Robbie's explicit word. Re-checked 2026-10-24: `profiles.discoverable_by_name` still defaults to `false`, `find_users_by_display_name` has no `escape` clause, and `anon` still has EXECUTE. Until it runs, new accounts still default to `discoverable_by_name = false` and `find_users_by_display_name` still treats a typed `%` as a wildcard — the shipped app guards its own call sites (`searchPeopleByName` in `src/lib/supabase.ts`), which is a UI guard, not enforcement. |
+| 037 prayer list (new `prayer_items` table) | **APPLIED** | Robbie ran the full file in the Supabase SQL Editor 2026-09-26 and it reported "Success. No rows returned" with no error — the table exists on production (re-checked 2026-10-24); the RLS / policies / grants detail was not re-verified. |
+| 038 prayer list manual ordering (`sort_order` column) | **APPLIED** | `prayer_items.sort_order` exists on production (verified 2026-10-24); the date it was applied is not recorded here. The app selects and writes `sort_order`, so the column had to be live before that UI shipped. |
 | 039 feature release stages (`feature_release`, `feature_release_log`, `set_feature_stage`, `current_user_is_owner`) | **APPLIED** | Applied 2026-10-24 by capstone-infra on Robbie's explicit word (whole file, one transaction, COMMIT). Verified read-only afterwards: 8 rows, all `live = true`; grants exactly anon/authenticated SELECT on `feature_release` and authenticated SELECT on `feature_release_log`; `set_feature_stage` not executable by anon (REST call refused 42501); anon REST UPDATE on `feature_release` refused 42501; `feature_release_log` empty. |
 
 **Regenerate `000_baseline.sql` when a migration is APPLIED, not when one is committed.** A
