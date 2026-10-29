@@ -246,6 +246,40 @@ anything time-based — a retry cadence, a debounce — pass
 `--disable-background-timer-throttling --disable-renderer-backgrounding
 --disable-backgrounding-occluded-windows`, as `run.sh` does.
 
+## Signed-in UI is verified with the signed-in harness — never hand it to Robbie
+
+The whole app sits behind `AuthGate`, and the only real backend is production, so "signed-in app not
+driven" used to end crew reports. **That is no longer an acceptable ending.** Robbie, 2026-10-29: *"You
+need to make a way for you to sign in and check what should be checked...not ask me to do it."*
+
+`scripts/signed-in-harness/` builds the real app against a **fake Supabase**, seeds a fake session for
+a persona (`member`, `advisor`, `administrator`, `owner`, `guest`, `signedout`), and drives it in real
+Chrome over CDP, with no npm dependencies and a network that is closed three ways: nothing can reach
+production, and every run prints `requests that reached the REAL Supabase host: 0`.
+
+    node scripts/signed-in-harness/run.mjs --persona owner --viewport 375x667 --script my-checks.mjs
+
+Read its `README.md`, copy a script from `examples/`, and write assertions against the DOM
+(`h.assert`, `h.rect`, `h.evaluate`) — the fake backend's `h.requests` / `h.audit` are the evidence for
+what the app asked for. It covers the Admin Console, the Features tab and Test view, article panels,
+Game Center, menus, anything a role changes.
+
+- **Use it for any change a signed-in persona sees.** If your report says "signed-in not driven", you
+  skipped this. The only acceptable "not verified" is one of the limits below, named.
+- **Never sign in, create an account or write a row against production Supabase to verify UI.** Not
+  with your own credentials and not with Robbie's. The harness is the sanctioned way; it needs no
+  credential at all.
+- **Read the `fixture gaps` line.** An empty answer from a fixture nobody wrote is not a pass. Add the
+  fixture, or say the check was not meaningful.
+- **What it cannot prove, and you must say so when it matters:** real RLS and real database logic
+  (the fake re-implements what the client expects, so a policy bug or an unapplied migration is
+  invisible); real auth flows (confirmation, PKCE, reset, refresh); storage and uploads; realtime and
+  multiplayer (the websocket cannot connect); external content (Bible text, map tiles and fonts are
+  blocked). A server-side rule needs a staging Supabase project, which needs Robbie's account.
+- It follows this file's other rules: it verifies a **production build of your working tree** (not the
+  shared dev server), kills only its own PIDs (never `pkill`), and uses a fresh `mktemp` Chrome profile.
+  A screenshot from it is still a hint; assert on the DOM.
+
 ## Verify the commit, not the working tree
 
 A working tree that builds proves nothing about what you committed, especially

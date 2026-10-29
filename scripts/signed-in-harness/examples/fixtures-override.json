@@ -1,0 +1,9 @@
+{
+  "tables": {
+    "profiles": [{ "id": "00000000-0000-4000-8000-000000000001", "display_name": "Overridden Name", "role": "user", "discoverable": true }],
+    "feature_release": [
+      { "feature": "games_trivia", "live": false, "updated_at": "2026-10-01T00:00:00Z", "updated_by": null }
+    ]
+  },
+  "rpc": { "count_unread_group_messages": 7 }
+}

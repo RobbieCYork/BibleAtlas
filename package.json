@@ -9,7 +9,8 @@
     "lint": "oxlint",
     "preview": "vite preview",
     "test:linker": "node scripts/name-linker/run.mjs && node scripts/name-linker/modern-names.mjs --check && node scripts/name-linker/self-name.mjs --check",
-    "validate:archaeology": "node scripts/archaeology-validate/run.mjs"
+    "validate:archaeology": "node scripts/archaeology-validate/run.mjs",
+    "verify:signed-in": "node scripts/signed-in-harness/run.mjs"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.110.8",
