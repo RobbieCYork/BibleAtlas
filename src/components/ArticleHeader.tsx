@@ -14,6 +14,8 @@ interface ArticleHeaderProps {
   /** Number of controls in `actions`, so both side slots can be sized equally (keeps the title
    * truly centred). */
   actionCount?: number;
+  /** Rendered inside the <h2>, after the title text — the "marked read" check (ArticleReadCheck). */
+  titleAdornment?: ReactNode;
 }
 
 /** The ONE header row shared by every details article: Back (icon-only) at the start, the title
@@ -31,6 +33,7 @@ export default function ArticleHeader({
   onClose,
   actions,
   actionCount = 0,
+  titleAdornment,
 }: ArticleHeaderProps) {
   const endCount = actionCount + (onClose ? 1 : 0);
   const slots = Math.max(onBack ? 1 : 0, endCount);
@@ -38,7 +41,10 @@ export default function ArticleHeader({
     <header className="article-head" style={{ ["--ah-side" as string]: `${slots * 44}px` }}>
       <div className="article-head-start">{onBack && <BackButton onClick={onBack} iconOnly />}</div>
       <div className="article-head-title">
-        <h2>{title}</h2>
+        <h2>
+          {title}
+          {titleAdornment}
+        </h2>
         {subtitle && (
           <p className="article-head-sub" title={subtitle}>
             {subtitle}

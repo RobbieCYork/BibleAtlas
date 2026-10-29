@@ -8,6 +8,7 @@ import PronunciationAudioButton from "./PronunciationAudioButton";
 import ArticleHeader from "./ArticleHeader";
 import Icon from "./Icon";
 import { placeCardSpec, shareFilename } from "../lib/shareCard";
+import { ArticleReadCheck, ArticleReadToggle } from "./ArticleReadToggle";
 
 interface LocationPanelProps {
   location: Location | null;
@@ -76,6 +77,7 @@ export default function LocationPanel({
         onClose={onClose}
         actionCount={1}
         actions={<ShareCardButton spec={placeCardSpec(location)} filename={shareFilename(location.name)} className="panel-share panel-share--icon" label={<Icon name="share" inline />} />}
+        titleAdornment={<ArticleReadCheck kind="place" id={location.id} />}
       />
       {location.pronunciation && (
         <p className="pronunciation">
@@ -237,6 +239,7 @@ export default function LocationPanel({
           </ul>
         </div>
       )}
+      <ArticleReadToggle kind="place" id={location.id} />
     </div>
   );
 }

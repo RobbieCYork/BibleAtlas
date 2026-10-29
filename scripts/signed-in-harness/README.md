@@ -77,6 +77,10 @@ different account signing in looks like.
 - **Overrides per run:** `--fixtures file.json` with `{ "tables": { name: [rows] }, "rpc": { name: value } }`.
   A table in the file **replaces** that table. See `examples/fixtures-override.json`. From a script:
   `h.backend.setTable(name, rows)`, `h.backend.setRpc(name, fnOrValue)`.
+- **A table that fails:** `h.backend.setTableError("article_reads", { status: 404, code: "42P01" })` makes
+  every request to it answer that PostgREST error (a migration written but not applied); `null` clears it.
+- **Upserts** resolve on `on_conflict` when the client sends it, else on the table's entry in
+  `PRIMARY_KEYS` (backend.mjs), else on `id`. Add a table there when a check upserts into one keyed otherwise.
 
 ## The script API
 
@@ -90,6 +94,7 @@ h.type(sel, text)                            focus, select, insert text
 h.waitFor(sel, {timeout, visible})           throws on timeout          h.exists(sel)  h.count(sel)
 h.text(sel)  h.rect(sel)                     visible text / getBoundingClientRect of the first match
 h.goto(path) h.reload() h.sleep(ms)
+h.addInitScript(source)                      run before the app on every later load: in-page stubs (e.g. bible-api.com)
 h.setViewport(w, hgt)  h.setTheme("dark")    both reload; theme is the app's own `app-theme` key
 h.asPersona(name)                            become someone else, same fake database
 h.screenshot("name.png")                     returns the path. A hint, not evidence (see below)
@@ -110,6 +115,7 @@ Selectors live there so a rename is one edit.
 |---|---|
 | `features-testing-live.mjs` | Features tab exists for owner, not for administrator, and member has no Admin Console; flipping Games to Testing hides it for the owner in Live view and for a member, shows it with the orange marker in Test view, and writes an audit entry |
 | `article-header-compact.mjs` | Demons article header from commit 6b1290d: icon-only Back, centred title, no Concept pill, one row, in light and dark at 375px and 1280px |
+| `article-read-checkbox.mjs` | "Mark this article as read" (sql/041) on a topic, person, place, site, event and book intro: last thing in the article, tick upserts `{kind, article_id}` and shows the title check, survives a reload, untick deletes that row; table missing (404/42P01) draws nothing; signed out never asks |
 | `game-toggles-nesting.mjs` | the 7 per-game toggles nest under Games & Trivia in order, a Testing parent explains itself on Live children, one game in Testing reaches Game Center correctly for member and owner |
 | `network-closed.mjs` | self-test of the closed network |
 | `fixtures-override.mjs` | `--fixtures` |

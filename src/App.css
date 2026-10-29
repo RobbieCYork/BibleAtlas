@@ -3940,6 +3940,23 @@ a.profile-links-url {
   margin: 14px 0;
 }
 
+/* "Mark this article as read" (ArticleReadToggle.tsx) wears .bible-mark-read above so it looks
+   exactly like the chapter checkbox. The one addition: a 44px-tall row, so the whole label is a
+   full-size touch target on a phone without changing how it looks. */
+.article-mark-read {
+  min-height: 44px;
+}
+
+/* The ✓ beside an article heading while it is marked read — the twin of .bible-passage-title-check on
+   the chapter chip: accent colour, bold, smaller than the title, and no width at all when absent. */
+.article-title-check {
+  font-size: 0.7em;
+  font-weight: 700;
+  line-height: 1;
+  vertical-align: 0.15em;
+  color: var(--accent);
+}
+
 .bible-error {
   color: var(--danger);
 }

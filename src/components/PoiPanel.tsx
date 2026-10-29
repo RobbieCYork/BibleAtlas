@@ -7,6 +7,7 @@ import PronunciationAudioButton from "./PronunciationAudioButton";
 import ArticleHeader from "./ArticleHeader";
 import Icon from "./Icon";
 import { placeCardSpec, shareFilename } from "../lib/shareCard";
+import { ArticleReadCheck, ArticleReadToggle } from "./ArticleReadToggle";
 
 interface PoiPanelProps {
   poi: PointOfInterest | null;
@@ -49,6 +50,7 @@ export default function PoiPanel({
         onClose={onClose}
         actionCount={1}
         actions={<ShareCardButton spec={placeCardSpec(poi)} filename={shareFilename(poi.name)} className="panel-share panel-share--icon" label={<Icon name="share" inline />} />}
+        titleAdornment={<ArticleReadCheck kind="site" id={poi.id} />}
       />
       {poi.pronunciation && (
         <p className="pronunciation">
@@ -131,6 +133,7 @@ export default function PoiPanel({
           </ul>
         </div>
       )}
+      <ArticleReadToggle kind="site" id={poi.id} />
     </div>
   );
 }

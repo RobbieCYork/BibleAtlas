@@ -9,7 +9,7 @@ Last verified against production: **2026-10-24** (read-only catalog queries for 
 
 ---
 
-## The next free number is 040
+## The next free number is 042
 
 | Number | Status |
 |---|---|
@@ -21,7 +21,8 @@ Last verified against production: **2026-10-24** (read-only catalog queries for 
 | **038** | `038_prayer_list_reorder.sql` — committed, **APPLIED** (verified 2026-10-24; date applied not recorded). See below. |
 | **039** | `039_feature_release.sql` — committed, **APPLIED 2026-10-24**. See below. |
 | **040** | `040_feature_release_games.sql` — per-game stages (seven `game_*` rows, all Live), committed on branch `feature-release-games`, **not applied**. |
-| **041** | Next genuinely free number. |
+| **041** | `041_article_reads.sql` — "Mark this article as read" (new owner-only `article_reads` table), committed on branch `article-read-checkbox`, **not applied**. |
+| **042** | Next genuinely free number. |
 
 ### Numbers that are TAKEN but MISSING from this directory
 
@@ -38,7 +39,7 @@ The full list present on `main`:
 
 ```
 001 002 003 004 005 007 008 009 010 011 012 013 014 015 016 017 018 019
-021 022 023 024 025 026 027 028 029 030 031 032 033 034 035 036 037 038 039 040
+021 022 023 024 025 026 027 028 029 030 031 032 033 034 035 036 037 038 039 040 041
 ```
 
 `000_baseline.sql` is **not** a migration. It is a photograph of the live schema, numbered `000`
@@ -70,6 +71,7 @@ Verified against the live database on 2026-09-11, and re-verified read-only on 2
 | 038 prayer list manual ordering (`sort_order` column) | **APPLIED** | `prayer_items.sort_order` exists on production (verified 2026-10-24); the date it was applied is not recorded here. The app selects and writes `sort_order`, so the column had to be live before that UI shipped. |
 | 039 feature release stages (`feature_release`, `feature_release_log`, `set_feature_stage`, `current_user_is_owner`) | **APPLIED** | Applied 2026-10-24 by capstone-infra on Robbie's explicit word (whole file, one transaction, COMMIT). Verified read-only afterwards: 8 rows, all `live = true`; grants exactly anon/authenticated SELECT on `feature_release` and authenticated SELECT on `feature_release_log`; `set_feature_stage` not executable by anon (REST call refused 42501); anon REST UPDATE on `feature_release` refused 42501; `feature_release_log` empty. |
 | 040 per-game release stages (seven `game_*` rows in `feature_release`) | **NOT APPLIED** | written and committed only; needs Robbie's explicit word. Insert-only: no function, policy or grant changes. Until it runs the app treats every game as Live (fails open) and the owner's Features tab says the per-game rows aren't stored yet. |
+| 041 article read marks (new `article_reads` table) | **NOT APPLIED** | written and committed only; needs Robbie's explicit word. One new owner-only table, revoke-to-zero then grant to `authenticated`; no functions. Until it runs the app draws no "Mark this article as read" checkbox and no title check (it detects the missing table and renders nothing). Rehearsed in PGlite 2026-10-29: idempotent, RLS isolates users, `anon` refused. |
 
 **Regenerate `000_baseline.sql` when a migration is APPLIED, not when one is committed.** A
 baseline regenerated off a commit would record a schema that does not exist.

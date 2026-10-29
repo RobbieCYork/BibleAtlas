@@ -8,6 +8,7 @@ import PronunciationAudioButton from "./PronunciationAudioButton";
 import ArticleHeader from "./ArticleHeader";
 import Icon from "./Icon";
 import { personCardSpec, shareFilename } from "../lib/shareCard";
+import { ArticleReadCheck, ArticleReadToggle } from "./ArticleReadToggle";
 
 interface PersonPanelProps {
   person: Person | null;
@@ -71,6 +72,7 @@ export default function PersonPanel({
         onClose={onClose}
         actionCount={1}
         actions={<ShareCardButton spec={personCardSpec(person)} filename={shareFilename(person.name)} className="panel-share panel-share--icon" label={<Icon name="share" inline />} />}
+        titleAdornment={<ArticleReadCheck kind="person" id={person.id} />}
       />
       {person.pronunciation && (
         <p className="pronunciation">
@@ -274,6 +276,7 @@ export default function PersonPanel({
           </ul>
         </div>
       )}
+      <ArticleReadToggle kind="person" id={person.id} />
     </div>
   );
 }

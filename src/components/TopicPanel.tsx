@@ -3,6 +3,7 @@ import VerseList from "./VerseList";
 import LinkedVerseText from "./LinkedVerseText";
 import ReflectionPrompt from "./ReflectionPrompt";
 import ArticleHeader from "./ArticleHeader";
+import { ArticleReadCheck, ArticleReadToggle } from "./ArticleReadToggle";
 
 interface TopicPanelProps {
   topic: Topic | null;
@@ -115,7 +116,7 @@ export default function TopicPanel({
 
   return (
     <div className={`location-panel person-panel ${expand ? "panel-expand" : ""}`} style={expand ? undefined : style}>
-      <ArticleHeader title={topic.name} subtitle={topic.role} onBack={onBack} onClose={onClose} />
+      <ArticleHeader title={topic.name} subtitle={topic.role} onBack={onBack} onClose={onClose} titleAdornment={<ArticleReadCheck kind="topic" id={topic.id} />} />
       {topic.alternateNames && topic.alternateNames.length > 0 && (
         <p className="alt-names">Also called: {topic.alternateNames.join(", ")}</p>
       )}
@@ -242,6 +243,7 @@ export default function TopicPanel({
           </ul>
         </div>
       )}
+      <ArticleReadToggle kind="topic" id={topic.id} />
     </div>
   );
 }

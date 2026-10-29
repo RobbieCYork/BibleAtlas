@@ -2,6 +2,7 @@ import type { TimelineEvent, TimelineDateCertainty } from "../data/types";
 import { timelineEvents } from "../data/timelineEvents";
 import LinkedVerseText from "./LinkedVerseText";
 import ArticleHeader from "./ArticleHeader";
+import { ArticleReadCheck, ArticleReadToggle } from "./ArticleReadToggle";
 
 interface TimelineEventPanelProps {
   event: TimelineEvent | null;
@@ -96,7 +97,7 @@ export default function TimelineEventPanel({
 
   return (
     <div className={`location-panel person-panel ${expand ? "panel-expand" : ""}`} style={expand ? undefined : style}>
-      <ArticleHeader title={event.title} subtitle={event.era} onBack={onBack} onClose={onClose} />
+      <ArticleHeader title={event.title} subtitle={event.era} onBack={onBack} onClose={onClose} titleAdornment={<ArticleReadCheck kind="event" id={event.id} />} />
       <p className="alt-names">
         {event.dateLabel}
         {certaintyBadge && <span className="person-tier-tag">{certaintyBadge}</span>}
@@ -197,6 +198,7 @@ export default function TimelineEventPanel({
           </ul>
         </div>
       )}
+      <ArticleReadToggle kind="event" id={event.id} />
     </div>
   );
 }

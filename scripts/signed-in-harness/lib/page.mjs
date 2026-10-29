@@ -64,6 +64,10 @@ export function createPage({ tab, backend, ledger, consoleErrors, outDir, meta }
       }
     },
     async reload() { await tab.send("Page.reload"); await sleep(300); await page.waitFor("#root > *", { timeout: 20000 }); },
+    /** Run `source` in the page before the app's own code on every later load (takes effect at the
+     * next reload/goto). For in-page stubs of blocked external content, e.g. a fake window.fetch for
+     * bible-api.com. It cannot open the network: the request never leaves the page. */
+    async addInitScript(source) { await tab.send("Page.addScriptToEvaluateOnNewDocument", { source }); },
     sleep,
     /** Resolves when a matching, visible element exists. selector: CSS, "text=Exact text", or {css, text}. */
     async waitFor(selector, { timeout = 10000, visible = true } = {}) {

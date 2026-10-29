@@ -19,6 +19,10 @@ const err = (status, code, message) => json(status, { code, message, details: nu
 
 const ROLE_RANK = { user: 0, advisor: 1, administrator: 2, owner: 3 };
 
+/** Tables whose primary key is not `id`: an upsert with no on_conflict resolves on these columns, as
+ * PostgREST does on the real primary key. Add a table here when a check upserts into it. */
+const PRIMARY_KEYS = { article_reads: ["user_id", "kind", "article_id"] };
+
 export function createBackend({ persona, overrides = {} }) {
   let me = persona ? PERSONAS[persona] : null;
   const tables = structuredClone(defaultTables(me));
@@ -27,6 +31,8 @@ export function createBackend({ persona, overrides = {} }) {
   const log = { requests: [], gaps: [], writes: [], audit: [], preflights: 0 };
   let session = me ? personaSession(me) : null;
   let seq = 1000;
+  /** table -> {status, code, message}: every request to that table fails with this PostgREST error. */
+  const tableErrors = {};
 
   const myRank = () => ROLE_RANK[me?.role ?? "user"] ?? 0;
 
@@ -116,6 +122,12 @@ export function createBackend({ persona, overrides = {} }) {
   function handleRest(method, path, params, headers, bodyText) {
     const table = path.replace(/^\/rest\/v1\//, "");
     if (table.startsWith("rpc/")) return handleRpc(table.slice(4), bodyText, method, params);
+    if (tableErrors[table]) {
+      // A table forced to fail (setTableError): e.g. a migration that is written but not applied.
+      log.requests.at(-1).how = "forced-error";
+      const e = tableErrors[table];
+      return err(e.status ?? 404, e.code ?? "42P01", e.message ?? `relation "public.${table}" does not exist`);
+    }
     const rows = (tables[table] ??= []);
     const known = table in defaultTables(me) || (overrides.tables && table in overrides.tables) || rows.length > 0;
     const prefer = headers["prefer"] ?? "";
@@ -141,8 +153,9 @@ export function createBackend({ persona, overrides = {} }) {
     if (method === "POST") {
       const incoming = (Array.isArray(body) ? body : [body]).map((r) => ({ id: r.id ?? `00000000-0000-4000-9000-${String(seq++).padStart(12, "0")}`, created_at: new Date().toISOString(), ...r }));
       const upsert = /resolution=(merge|ignore)-duplicates/.test(prefer);
+      const conflictCols = params.get("on_conflict")?.split(",") ?? PRIMARY_KEYS[table] ?? ["id"];
       for (const r of incoming) {
-        const at = upsert ? rows.findIndex((x) => x.id === r.id) : -1;
+        const at = upsert ? rows.findIndex((x) => conflictCols.every((c) => eq(x[c], r[c]))) : -1;
         if (at >= 0) rows[at] = { ...rows[at], ...r }; else rows.push(r);
       }
       log.writes.push({ table, op: upsert ? "upsert" : "insert", rows: incoming });
@@ -240,6 +253,9 @@ export function createBackend({ persona, overrides = {} }) {
     },
     /** Replace a table's rows at run time (from a check script). */
     setTable: (name, rows) => { tables[name] = structuredClone(rows); },
+    /** Make every request to a table fail, e.g. setTableError("article_reads", {status: 404, code: "42P01"})
+     * for a migration not yet applied. Pass null to clear. */
+    setTableError: (name, e) => { if (e) tableErrors[name] = e; else delete tableErrors[name]; },
     /** Replace or add an rpc handler at run time: setRpc("list_my_groups", () => [...]). */
     setRpc: (name, fn) => { rpcs[name] = typeof fn === "function" ? fn : () => fn; },
     featureKeys: FEATURE_KEYS,

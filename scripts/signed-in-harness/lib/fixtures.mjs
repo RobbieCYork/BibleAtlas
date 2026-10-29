@@ -15,6 +15,7 @@ export function defaultTables(me) {
     admin_users: me?.admin ? [{ user_id: me.id, note: "harness" }] : [],
     reading_progress: [],
     chapter_reads: [],
+    article_reads: [],
     notes: [], highlights: [], tags: [], verse_tags: [], posts: [], post_comments: [], note_comments: [],
     friend_requests: [], messages: [], groups: [], group_members: [], group_messages: [], group_join_requests: [],
     prayer_items: [], sermon_notes: [], reading_plan_progress: [], profile_links: [], content_hides: [],

@@ -2,6 +2,8 @@ import { bookIntros } from "../data/bookIntros";
 import { bookIntroOwnerId } from "../lib/verseAnnotations";
 import LinkedVerseText from "./LinkedVerseText";
 import BackButton from "./BackButton";
+import { ArticleReadToggle } from "./ArticleReadToggle";
+import { useArticleRead } from "../lib/articleReads";
 
 interface BookIntroViewProps {
   book: string;
@@ -33,6 +35,8 @@ export default function BookIntroView({ book, onJumpToChapter, onBack, onChangeP
    * entry is written against the key. */
   const linkHandlers = { onSelectLocation, onSelectPoi, onSelectPerson, onSelectTopic, excludeId: bookIntroOwnerId(book) };
   const intro = bookIntros.find((b) => b.book === book);
+  // Keyed on the book's canonical name — an introduction has no record id (see bookIntroOwnerId above).
+  const { read: introRead } = useArticleRead("book-intro", intro?.book);
 
   /** The intro's heading, doubling as the reference picker's trigger when there is one — the same
    * control the chapter heading uses, so the two surfaces open the picker the same way. */
@@ -41,11 +45,18 @@ export default function BookIntroView({ book, onJumpToChapter, onBack, onChangeP
       <h4 className="bible-passage-title">
         <button
           type="button"
-          className="bible-passage-title-btn"
+          className={`bible-passage-title-btn${introRead ? " is-read" : ""}`}
           onClick={onChangePassage}
           aria-haspopup="dialog"
-          aria-label={`${text} — choose a different book or chapter`}
+          aria-label={`${text}${introRead ? " — read" : ""} — choose a different book or chapter`}
+          title={introRead ? `${text} — read` : undefined}
         >
+          {/* Same chip, same check, same rule as the chapter heading in BiblePanel. */}
+          {introRead && (
+            <span className={`bible-passage-title-check${text.length >= 13 ? " is-badge" : ""}`} aria-hidden="true">
+              ✓
+            </span>
+          )}
           <span>{text}</span>
           <span className="bible-passage-title-caret" aria-hidden="true">
             ▾
@@ -53,7 +64,18 @@ export default function BookIntroView({ book, onJumpToChapter, onBack, onChangeP
         </button>
       </h4>
     ) : (
-      <h4>{text}</h4>
+      <h4>
+        {text}
+        {introRead && (
+          <>
+            {" "}
+            <span className="article-title-check" aria-hidden="true" title="Read">
+              ✓
+            </span>
+            <span className="sr-only">, read</span>
+          </>
+        )}
+      </h4>
     );
 
   if (!intro) {
@@ -127,6 +149,7 @@ export default function BookIntroView({ book, onJumpToChapter, onBack, onChangeP
           </li>
         ))}
       </ul>
+      <ArticleReadToggle kind="book-intro" id={intro.book} />
     </div>
   );
 }
