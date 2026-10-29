@@ -1359,10 +1359,10 @@ person	leah	leah	reader:kjv	34
 person	lebbaeus	thaddaeus	panel	1
 person	lebbaeus	thaddaeus	reader	1
 person	lebbaeus	thaddaeus	reader:kjv	1
-person	levi	matthew-levi	panel	74
-person	levi	matthew-levi	reader	1
-person	levi	matthew-levi	reader:asv	1
-person	levi	matthew-levi	reader:kjv	1
+person	levi	matthew-levi	panel	3
+person	levi	matthew-levi	reader	3
+person	levi	matthew-levi	reader:asv	3
+person	levi	matthew-levi	reader:kjv	3
 person	lucifer	satan	reader:kjv	1
 person	luke	luke-evangelist	panel	3
 person	luke	luke-evangelist	prose	152
@@ -1432,6 +1432,13 @@ person	matthan	matthan	prose	4
 person	matthan	matthan	reader	2
 person	matthan	matthan	reader:asv	2
 person	matthan	matthan	reader:kjv	2
+person	matthew	matthew-levi	panel	4
+person	matthew	matthew-levi	prose	2
+person	matthew	matthew-levi	reader	4
+person	matthew	matthew-levi	reader:asv	4
+person	matthew	matthew-levi	reader:kjv	4
+person	matthew the publican	matthew-levi	reader:asv	1
+person	matthew the publican	matthew-levi	reader:kjv	1
 person	matthew the tax collector	matthew-levi	panel	1
 person	matthew the tax collector	matthew-levi	reader	1
 person	melchizedek	melchizedek	panel	11

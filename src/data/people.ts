@@ -864,17 +864,31 @@ export const people: Person[] = [
     id: "matthew-levi",
     name: "Matthew (Levi)",
     pronunciation: "MATH-yoo",
-    // The bracket in the display name makes "Matthew (Levi)" unmatchable, so the apostle's own name
-    // links nowhere. Bare "Matthew" was tried and REVERTED: all five Scripture occurrences
-    // (Matthew 9:9, 10:3; Mark 3:18; Luke 6:15; Acts 1:13) really are this man, but it also fired
-    // on 85 mentions in our own articles — "Matthew's account", "Matthew and Luke", "Matthew's
-    // genealogy" — every one of which means the Gospel, not the person. Linking those to the
-    // apostle would assert Matthean authorship in 85 places, which is not a claim this app makes
-    // and is next door to a question flagged for Robbie. The prose surface passes no book or verse,
-    // so there is no way to allow the name in Scripture and refuse it in our own writing.
-    // Matthew 10:3's "Matthew the tax collector" is registered because that phrase is unambiguous.
+    // The bracket in the display name makes "Matthew (Levi)" unmatchable, so bare "Matthew" is
+    // registered here in matchNames — but it is a CONTEXT-ONLY key. Its entry in NAME_CONTEXT_RULES
+    // (verseAnnotations.ts, `matthew`) ends in DEFAULT_NO_LINK, so a bare "Matthew" links to this
+    // man only where the words beside it say it is the man: "the apostle Matthew", "Matthew the tax
+    // collector", "Matthew, a former tax collector", "Matthew (Levi)", the call scene at 9:9 ("Matthew
+    // sitting at the..."), and a list of the Twelve (Bartholomew before it, or "Thomas, James" after
+    // it). That reaches all five Scripture occurrences — Matthew 9:9, 10:3; Mark 3:18; Luke 6:15;
+    // Acts 1:13 — in all three translations, on the reader AND the panel path.
+    //
+    // Everything else stays unlinked, which is almost all of our own writing: "Matthew's account",
+    // "Matthew and Luke", "Matthew's genealogy", "Matthew records" mean the GOSPEL or its narrating
+    // voice, and linking them to the apostle would assert Matthean authorship — disputed (see
+    // `controversies` below) and not a claim this app makes by link. Bare "Matthew" was once
+    // registered with a normal default and reverted for exactly that reason; the context-only rule is
+    // what lets Scripture and our prose be answered differently without a book or verse to go on.
+    // A chapter-and-verse reference ("Matthew 5:3") never reaches the name at all: NAME_PATTERN
+    // matches it whole as a verse first.
+    //
+    // "Levi" is context-only the same way, because the bare name is usually the patriarch or tribe:
+    // it links here only on "Levi, the son of Alphaeus" (Mark 2:14), "a tax collector / publican,
+    // named Levi" (Luke 5:27) and "Levi made (him) a great feast" (Luke 5:29). "Matthew the
+    // publican" is the KJV and ASV wording of 10:3 and is registered so all three translations link
+    // the same span.
     alternateNames: ["Levi"],
-    matchNames: ["Matthew the tax collector"],
+    matchNames: ["Matthew", "Matthew the tax collector", "Matthew the publican"],
     diedYear: 60,
     lifespanLabel: "d. c. AD 60 (tradition varies)",
     lifespanCertainty: "legendary",

@@ -1,8 +1,9 @@
 # The name linker's regression net
 
 `src/lib/verseAnnotations.ts` decides which words in the Bible text — and in every article the app
-has ever written — become links to a person, place or topic. It renders **9,697 person-links across
-Scripture, 6,210 across the app's own prose, and 814 more on the pre-rendered public pages alone**.
+has ever written — become links to a person, place or topic. It renders **9,641 person-links across
+Scripture, 6,234 across the app's own prose, and 817 more on the pre-rendered public pages alone**
+(recounted 2026-10-29).
 Until this directory existed it had no tests at
 all, and a one-line data edit could move hundreds of them with nobody noticing.
 
@@ -75,6 +76,20 @@ careless widening of these rules breaks first. Nothing in it moved a Bible row: 
 chosen so that Scripture's own "the book of Moses", "First Moses says" and "the wisdom of Solomon"
 keep their links, and those three near-misses are pinned as verse guards.
 
+#### A context-only key: "Matthew" and "Levi" link only on a positive signal
+
+Added 2026-10-29. Some bare names usually mean something OTHER than the record they belong to:
+"Matthew" in our prose is the Gospel about 145 times for every 4 times it is the man, and "Levi" in
+Scripture is the patriarch or the tribe 71 times out of 74. For those, the key's entry in
+`NAME_CONTEXT_RULES` ends in `DEFAULT_NO_LINK`, a rule that matches everything, so the name links
+**only** where an earlier rule finds words that say it is the man ("the apostle Matthew", "Matthew
+the tax collector", a list of the Twelve, "Levi, the son of Alphaeus"). Nothing else in the file
+had a "link only if" shape — every other rule either suppresses or repoints a link that would
+otherwise be made. Before reaching for one, measure both directions with `census.mjs` and the
+prose blocks: it is the right tool only when the default answer would be wrong most of the time
+on BOTH surfaces. The MATTHEW AND LEVI block at the end of `cases.mjs` pins every rule on both
+paths in all three translations.
+
 #### A modern book or journal title is a no-link too — read this before you write a citation
 
 Ruled 2026-09-10, extending the same principle from the canon to a bibliography: **a person's name
@@ -108,18 +123,18 @@ purpose and is written up in `reviewed.tsv`'s header.
 
 | file | rows | what it holds |
 |---|---:|---|
-| `bible-links.tsv` | 9,697 | every person-link in all 31,098 WEB verses, with the id each rendering path gives it |
-| `prose-links.tsv` | 6,210 | every person-link in every authored prose block the app puts through `LinkedVerseText` |
-| `key-totals.tsv` | 5,066 | a tally covering **every** kind and **all three translations** — one row per (kind, matched text, id, path) |
-| `translation-divergence.tsv` | 1,776 | every verse where the WEB, the KJV and the ASV do not produce the same links |
-| `seo-only-links.tsv` | 1,748 | every link, of **every** kind, that only the pre-rendered public pages print — see **The public pages** below |
+| `bible-links.tsv` | 9,641 | every person-link in all 31,098 WEB verses, with the id each rendering path gives it |
+| `prose-links.tsv` | 6,234 | every person-link in every authored prose block the app puts through `LinkedVerseText` |
+| `key-totals.tsv` | 5,092 | a tally covering **every** kind and **all three translations** — one row per (kind, matched text, id, path) |
+| `translation-divergence.tsv` | 1,775 | every verse where the WEB, the KJV and the ASV do not produce the same links |
+| `seo-only-links.tsv` | 1,751 | every link, of **every** kind, that only the pre-rendered public pages print — see **The public pages** below |
 
 The first two are row-level, so a diff names the verse or the block. `key-totals.tsv` exists because
 the other two only record **people**: a change to `people.ts` can steal a key from a location, and
 adding one POI alternate name can start firing hundreds of links that no person snapshot would ever
-show. Its 5,066 rows break down by kind as 2,349 verse references, 1,234 person, 645 location, 546
-topic, 204 POI and 88 timeline; and by path as 3,098 prose, 503 `reader`, 494 `reader:asv`, 488
-`reader:kjv` and 483 `panel`.
+show. Its 5,092 rows break down by kind as 2,363 verse references, 1,246 person, 645 location, 546
+topic, 204 POI and 88 timeline; and by path as 3,114 prose, 505 `reader`, 497 `reader:asv`, 491
+`reader:kjv` and 485 `panel` (recounted 2026-10-29).
 
 The fourth file, and those two extra `key-totals` paths, are what cover the KJV and the ASV — see
 **All three translations** below.
@@ -457,8 +472,8 @@ snapshot.
 
 `LinkedVerseText` is what PersonPanel, LocationPanel, PoiPanel, TopicPanel, BookIntroView,
 TimelineEventPanel and MyProfileView render with. Every book override, verse override and
-suppression in `verseAnnotations.ts` is invisible there. **858 links across 759 verses resolve
-differently between the two paths**, and all but a handful of the 6,210 prose links run with no
+suppression in `verseAnnotations.ts` is invisible there. **785 links across 700 verses resolve
+differently between the two paths** (2026-10-29), and all but a handful of the 6,234 prose links run with no
 disambiguation at all — `OWNER_NAME_OVERRIDES` (below) is the only correction that reaches them. A
 fix that only moves the `reader` column has fixed half the app.
 

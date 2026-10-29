@@ -1406,7 +1406,6 @@ Mark 9:5	person	elijah	WEB=1:Elijah	KJV=0	ASV=1:Elijah
 Matthew 10:15	location	gomorrah	WEB=1:Gomorrah	KJV=0	ASV=1:Gomorrah
 Matthew 10:18	topic	gentiles	WEB=0	KJV=1:Gentiles	ASV=1:Gentiles
 Matthew 10:28	topic	gehenna	WEB=1:Gehenna	KJV=0	ASV=0
-Matthew 10:3	person	matthew-levi	WEB=1:Matthew the tax collector	KJV=0	ASV=0
 Matthew 10:3	person	thaddaeus	WEB=2:Lebbaeus|Thaddaeus	KJV=2:Lebbaeus|Thaddaeus	ASV=1:Thaddaeus
 Matthew 10:4	topic	canaanites	WEB=1:Canaanite	KJV=1:Canaanite	ASV=0
 Matthew 10:8	topic	demons	WEB=1:demons	KJV=0	ASV=1:demons

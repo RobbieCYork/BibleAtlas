@@ -1147,6 +1147,10 @@ const OWNER_NAME_OVERRIDES: Record<string, Record<string, string | null>> = {
   // apostle. There is no entry for the patriarch, so the least-wrong answer is the allowlist's own:
   // no link. Keyed by owner rather than suppressed globally so the apostle's own pages are
   // untouched — none of them writes the bare name.
+  //
+  // Since 2026-10-29 these entries are no longer reached: `levi` in NAME_CONTEXT_RULES links the
+  // name only on a positive signal for the tax collector and otherwise ends in DEFAULT_NO_LINK,
+  // which is checked before this table. They are kept as the record of what each article means.
   levi: {
     // Genesis 34, on Shechem's own page: "his sons Simeon and Levi massacred the men of the city
     // after the assault on Dinah". Jacob's sons, pointing at Matthew the tax collector and at
@@ -2292,7 +2296,8 @@ const BOOK_NAME_ALLOWLIST: Record<string, string[]> = {
   // Exceptions inside Acts are handled verse by verse in VERSE_NAME_OVERRIDES above.
   elders: ["Matthew", "Mark", "Luke", "Acts"],
   manasseh: ["2 Kings", "2 Chronicles", "Matthew"],
-  levi: ["Matthew", "Mark"],
+  // `levi` was here (["Matthew", "Mark"]) until 2026-10-29. Its NAME_CONTEXT_RULES entry now ends in
+  // DEFAULT_NO_LINK, which is checked first, so an allowlist line for it could never be reached.
   simeon: ["Luke"],
   zechariah: ["Luke"],
   zacharias: ["Luke"],
@@ -2538,6 +2543,13 @@ const ENDING_OF: NameContextRule = { before: /\b[Ee]nding of\s+$/, to: null };
 /** "the Wisdom of Solomon", "the Psalms of Solomon" — two works named for a man nobody claims
  *  wrote them. Capital-initial on purpose; see the 1 Kings 4:34 note above. */
 const WISDOM_OR_PSALMS_OF: NameContextRule = { before: /\b(?:Wisdom|Psalms) of\s+$/, to: null };
+/** Matches every occurrence, so as the LAST rule in a key's list it makes that key's default "no
+ *  link": the name links only where an earlier rule in the list found a positive signal. For a
+ *  name whose bare form usually means something other than the record it is registered on —
+ *  `matthew` (the Gospel) and `levi` (the patriarch and tribe). See those two entries below.
+ *  Checked after VERSE_NAME_OVERRIDES and before OWNER_NAME_OVERRIDES, like every rule here, so a
+ *  per-verse answer still wins and a record-wide owner answer cannot reopen the default. */
+const DEFAULT_NO_LINK: NameContextRule = { after: /^/, to: null };
 /** "Aaron ben Asher", "Samuel ben Jacob", "Moses ben Asher", "Yeshua ben Galgula" — a Hebrew
  *  patronymic naming a medieval or Second Temple man who is NOT the biblical bearer of the first
  *  name. Added with the Masoretic manuscript batch, where four separate articles needed it and
@@ -3679,6 +3691,99 @@ const NAME_CONTEXT_RULES: Record<string, NameContextRule[]> = {
   // Manasseh is the king of Judah, who lived some five centuries later, and /person/gideon opened
   // by sending readers to him. There is no tribe record to point at, so this is a suppression.
   manasseh: [{ phrase: "A reluctant judge from Manasseh", to: null }],
+
+  // ── MATTHEW AND LEVI: names that link ONLY where the words say it is the man ────────────────
+  //
+  // Added 2026-10-29. "Matthew" is both the apostle and the title of the first Gospel, and in our
+  // own writing the title wins by a mile. Counted 2026-10-29 over every linked prose block and every
+  // public-page-only block: 400 bare mentions, of which 242 are a chapter-and-verse reference (a
+  // verse link, never a person — NAME_PATTERN matches those whole first). Of the other 158, 145 are
+  // the BOOK or its narrating voice, 8 sit on the apostle's own page (self-excluded), 1 is a modern
+  // journalist (Matthew d'Ancona), and only 4 mean the man anywhere else. Scripture is the other
+  // way round: all five of its "Matthew"s (Matthew 9:9, 10:3; Mark 3:18; Luke 6:15; Acts 1:13, in
+  // all three translations) are the apostle. The prose surface passes no book or verse, so a
+  // default owner either way is wrong somewhere — which is why the name was unregistered until now.
+  //
+  // So the key is registered (`matchNames` on `matthew-levi`) and its DEFAULT IS NO LINK: the last
+  // rule in the list, DEFAULT_NO_LINK, matches everything. A mention links to the apostle only when
+  // a rule above it finds a positive signal that the words mean the man:
+  //
+  //   - a title or descriptor beside the name: "the apostle Matthew", "Matthew the tax
+  //     collector", "Matthew, a former tax collector", "the tax collector Matthew";
+  //   - the call scene at Matthew 9:9: "...called Matthew sitting at the tax collection office"
+  //     (WEB), "...named Matthew, sitting at the receipt of custom" (KJV), "...at the place of
+  //     toll" (ASV);
+  //   - the double name: "Matthew (Levi)", "Levi (Matthew)";
+  //   - a list of the Twelve: Bartholomew immediately before (Mark 3:18, Acts 1:13), or "Thomas,
+  //     James" immediately after (Mark 3:18, Luke 6:15). "Thomas" alone is NOT enough: "Matthew and
+  //     Thomas" can be two gospels, one canonical and one from Nag Hammadi. Bartholomew has no book.
+  //
+  // The book shapes come FIRST, so a title beats any man-signal that happens to sit beside it. They
+  // are redundant with the default today, and are there so that a later widening of the man-rules
+  // cannot resurrect a link on "the Gospel of Matthew" or "Matthew's Gospel".
+  //
+  // What is deliberately left unlinked. The narrating voice — "Matthew records", "Matthew notes",
+  // "Matthew writes to a largely Jewish-Christian audience" — is the BOOK, for the reason the John
+  // rules at the top of this table give: linking the narrator to the apostle asserts Matthean
+  // authorship, which is disputed (see the controversy note on `matthew-levi`) and is not a claim
+  // this app makes by link. Two sentences in book-intro:Matthew name the man in the act of
+  // discussing authorship — "also affirm that Matthew is the Gospel's author" and Papias's "that
+  // Matthew compiled the sayings" — and stay unlinked, because no lexical signal separates them from
+  // the narrator shape. That costs two links and risks nothing. Precision over recall.
+  //
+  // Scripture needs no verse overrides: each of the five verses carries one of these signals in all
+  // three translations, so the reader path and the panel path resolve identically, and the KJV and
+  // ASV are covered by their own words rather than by a translation-blind table.
+  matthew: [
+    GOSPEL_OF,
+    POSSESSIVE_WORK,
+    BOOK_OF,
+    TEXT_OF,
+    MANUSCRIPT_AFTER,
+    { before: /\b[Aa]postle\s+$/, to: "matthew-levi" }, // "the apostle Matthew"
+    { before: /\b[Dd]isciple\s+$/, to: "matthew-levi" }, // "the disciple Matthew"
+    { before: /\b(?:tax|toll)[- ]collector\s+$/, to: "matthew-levi" }, // "the tax collector Matthew"
+    { after: /^\s+the\s+(?:[Aa]postle|[Dd]isciple|(?:tax|toll)[- ]collector|publican)\b/, to: "matthew-levi" },
+    { after: /^,\s+(?:a|the)\s+(?:former\s+)?(?:tax|toll)[- ]collector\b/, to: "matthew-levi" },
+    { after: /^,?\s+sitting at the\b/, to: "matthew-levi" }, // Matthew 9:9, all three translations
+    { after: /^\s*\((?:also called\s+)?Levi\)/, to: "matthew-levi" }, // "Matthew (Levi)"
+    { before: /\bLevi\s*\(\s*$/, to: "matthew-levi" }, // "Levi (Matthew)"
+    { before: /\bBartholomew[,;]?\s+(?:and\s+)?$/, to: "matthew-levi" }, // Mark 3:18, Acts 1:13
+    { after: /^[,;]?\s+(?:and\s+)?Thomas[,;]?\s+(?:and\s+)?James\b/, to: "matthew-levi" }, // Luke 6:15
+    DEFAULT_NO_LINK,
+  ],
+
+  // "Levi" is the same problem with the proportions reversed. In Scripture the bare name is Jacob's
+  // third son or the tribe descended from him almost everywhere, plus two different men in Luke's
+  // genealogy (Luke 3:24, 3:29); in our prose it is the patriarch or the tribe in every mention off
+  // the apostle's own page. Only Mark 2:14 and Luke 5:27-29 are the tax collector, and each says so
+  // in the words beside the name in all three translations: "Levi, the son of Alphaeus" (WEB) /
+  // "Levi the son of Alphaeus" (KJV, ASV); "a tax collector named Levi" / "a publican, named Levi";
+  // "Levi made a great feast" / "Levi made him a great feast".
+  //
+  // Before this the key defaulted to the apostle. BOOK_NAME_ALLOWLIST confined it to Matthew and
+  // Mark on the reader path, and OWNER_NAME_OVERRIDES suppressed it record by record on the article
+  // surface, but the PANEL path over Scripture had neither — so every "Simeon and Levi", "the
+  // tribe of Levi" and "sons of Levi" a verse list showed was a link to Matthew the tax collector.
+  // The default is now no link. That makes the allowlist line dead, so it is removed; the owner
+  // entries stay, as a record of what each of those articles means by the name.
+  //
+  // Mark 2:14 is §7.7 in cases.mjs, flagged: that the Levi of the call story is Matthew. This keeps
+  // that verse exactly where it was on both paths. Luke 5:27-29 is the SAME call story about the
+  // SAME tax collector, so linking it takes no position that the record and Mark 2:14 do not already
+  // take — and it was escalated on 2026-10-29 so it can be vetoed in one line if Robbie disagrees.
+  levi: [
+    // Mark 2:14. The bracket is the ASV as bible-api.com SERVES it — "Levi the [son] of Alphaeus",
+    // the translators' italics for a supplied word — which is what the reader actually renders. The
+    // ASV corpus in scripts/name-linker has no brackets, so no snapshot would see this one fail.
+    { after: /^,?\s+(?:the\s+)?\[?(?:the\s+)?son\]?\s+of\s+Alph(?:a|æ)?eus\b/, to: "matthew-levi" },
+    { before: /\b(?:(?:tax|toll)[- ]collector|publican),?\s+(?:named|called)\s+$/, to: "matthew-levi" }, // Luke 5:27
+    { after: /^\s+made\s+(?:him\s+)?a great feast\b/, to: "matthew-levi" }, // Luke 5:29
+    { after: /^\s+the\s+(?:(?:tax|toll)[- ]collector|publican)\b/, to: "matthew-levi" },
+    { before: /\b(?:tax|toll)[- ]collector\s+$/, to: "matthew-levi" },
+    { after: /^\s*\((?:also called\s+)?Matthew\)/, to: "matthew-levi" }, // "Levi (Matthew)"
+    DEFAULT_NO_LINK,
+  ],
 };
 
 /** Do the words around this match say who it is — or that it is nobody?

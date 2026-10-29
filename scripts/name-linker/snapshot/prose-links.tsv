@@ -115,6 +115,7 @@ bookIntro.manuscripts|book-intro:Matthew|6a0957b3ac	280	Jesus	jesus-of-nazareth
 bookIntro.manuscripts|book-intro:Matthew|6a0957b3ac	34	Mark	john-mark
 bookIntro.manuscripts|book-intro:Matthew|6a0957b3ac	44	Luke	luke-evangelist
 bookIntro.manuscripts|book-intro:Matthew|6a0957b3ac	816	Luke	luke-evangelist
+bookIntro.manuscripts|book-intro:Matthew|a3a0662d50	42	Matthew	matthew-levi
 bookIntro.manuscripts|book-intro:Micah|e6888bfadb	95	Jesus	jesus-of-nazareth
 bookIntro.manuscripts|book-intro:Nehemiah|0888454258	0	Ezra	ezra
 bookIntro.manuscripts|book-intro:Nehemiah|0888454258	9	Nehemiah	nehemiah
@@ -2925,6 +2926,7 @@ person.lifespanDatingNotes|samuel|c0bd163b58	245	Saul	saul-king-of-israel
 person.lifespanDatingNotes|simon-peter|699ec17677	111	Jesus	jesus-of-nazareth
 person.lifespanDatingNotes|simon-peter|699ec17677	156	Jesus	jesus-of-nazareth
 person.lifespanDatingNotes|simon-peter|699ec17677	320	Nero	nero-caesar
+person.lifespanDatingNotes|simon-the-zealot|fd42d4ce69	150	Matthew	matthew-levi
 person.lifespanDatingNotes|stephen-the-martyr|998087162c	179	Paul	paul-of-tarsus
 person.lifespanDatingNotes|thaddaeus|0a8b11c37e	158	Bartholomew	bartholomew-nathanael
 person.lifespanDatingNotes|timothy|37ed45bd64	0	Paul	paul-of-tarsus
