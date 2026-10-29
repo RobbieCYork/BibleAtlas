@@ -1,9 +1,8 @@
-import type { Citation, DiscoveryFacts, ManuscriptFacts, Topic, TopicCategory } from "../data/types";
+import type { Citation, DiscoveryFacts, ManuscriptFacts, Topic } from "../data/types";
 import VerseList from "./VerseList";
 import LinkedVerseText from "./LinkedVerseText";
 import ReflectionPrompt from "./ReflectionPrompt";
-import BackButton from "./BackButton";
-import CloseButton from "./CloseButton";
+import ArticleHeader from "./ArticleHeader";
 
 interface TopicPanelProps {
   topic: Topic | null;
@@ -23,15 +22,6 @@ interface TopicPanelProps {
   expand?: boolean;
   style?: React.CSSProperties;
 }
-
-const CATEGORY_LABELS: Record<TopicCategory, string> = {
-  practice: "Practice",
-  doctrine: "Doctrine",
-  "people-group": "People Group",
-  concept: "Concept",
-  discovery: "Discovery",
-  manuscript: "Manuscript",
-};
 
 /** The same four words TimelineEventPanel uses for a date's certainty, because DiscoveryFacts and
  * ManuscriptFacts deliberately reuse `TimelineDateCertainty` rather than inventing a second scale.
@@ -125,20 +115,13 @@ export default function TopicPanel({
 
   return (
     <div className={`location-panel person-panel ${expand ? "panel-expand" : ""}`} style={expand ? undefined : style}>
-      {(onBack || onClose) && (
-        <div className="panel-back-row">
-          {onBack && <BackButton onClick={onBack} />}
-          {onClose && <CloseButton onClick={onClose} ariaLabel="Close article" />}
-        </div>
-      )}
-      <span className="category-badge person-badge">{topic.role}</span>
-      <h2>{topic.name}</h2>
+      <ArticleHeader title={topic.name} subtitle={topic.role} onBack={onBack} onClose={onClose} />
       {topic.alternateNames && topic.alternateNames.length > 0 && (
         <p className="alt-names">Also called: {topic.alternateNames.join(", ")}</p>
       )}
       <p className="person-summary">{topic.summary}</p>
+      {(topic.discovery?.authenticityDisputed || topic.discovery?.unprovenanced) && (
       <div className="artifact-tags">
-        <span className="person-tier-tag">{CATEGORY_LABELS[topic.category]}</span>
         {/* Two warnings, shown up front rather than left to the third section, because they change
             how a reader should weigh everything below them. Neither is decoration: "authenticity
             disputed" means specialists dispute the object itself, and "no excavation context" means
@@ -150,6 +133,7 @@ export default function TopicPanel({
           <span className="person-tier-tag artifact-warning-tag">No excavation context</span>
         )}
       </div>
+      )}
 
       {topic.discovery && <FactsBlock rows={discoveryRows(topic.discovery)} />}
       {topic.manuscript && <FactsBlock rows={manuscriptRows(topic.manuscript)} />}

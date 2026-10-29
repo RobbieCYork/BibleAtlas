@@ -1,12 +1,12 @@
-import type { Person, PersonTier } from "../data/types";
+import type { Person } from "../data/types";
 import VerseList from "./VerseList";
 import LinkedVerseText from "./LinkedVerseText";
 import ReflectionPrompt from "./ReflectionPrompt";
 import ShareCardButton from "./ShareCardButton";
 import ProfileAudioPlayer from "./ProfileAudioPlayer";
 import PronunciationAudioButton from "./PronunciationAudioButton";
-import BackButton from "./BackButton";
-import CloseButton from "./CloseButton";
+import ArticleHeader from "./ArticleHeader";
+import Icon from "./Icon";
 import { personCardSpec, shareFilename } from "../lib/shareCard";
 
 interface PersonPanelProps {
@@ -29,12 +29,6 @@ interface PersonPanelProps {
   expand?: boolean;
   style?: React.CSSProperties;
 }
-
-const TIER_LABELS: Record<PersonTier, string> = {
-  major: "Major Figure",
-  significant: "Significant Figure",
-  notable: "Notable Figure",
-};
 
 /** Small badge shown beside the lifespan whenever it isn't firmly established — same scale and
  * convention as TimelineEventPanel's CERTAINTY_BADGES: "firm" gets no badge, so anchored dates
@@ -70,17 +64,14 @@ export default function PersonPanel({
 
   return (
     <div className={`location-panel person-panel ${expand ? "panel-expand" : ""}`} style={expand ? undefined : style}>
-      {(onBack || onClose) && (
-        <div className="panel-back-row">
-          {onBack && <BackButton onClick={onBack} />}
-          {onClose && <CloseButton onClick={onClose} ariaLabel="Close article" />}
-        </div>
-      )}
-      <div className="panel-header-row">
-        <span className="category-badge person-badge">{person.role}</span>
-        <ShareCardButton spec={personCardSpec(person)} filename={shareFilename(person.name)} />
-      </div>
-      <h2>{person.name}</h2>
+      <ArticleHeader
+        title={person.name}
+        subtitle={person.role}
+        onBack={onBack}
+        onClose={onClose}
+        actionCount={1}
+        actions={<ShareCardButton spec={personCardSpec(person)} filename={shareFilename(person.name)} className="panel-share panel-share--icon" label={<Icon name="share" inline />} />}
+      />
       {person.pronunciation && (
         <p className="pronunciation">
           Pronounced: {person.pronunciation}
@@ -97,7 +88,6 @@ export default function PersonPanel({
         <p className="alt-names">Also called: {person.alternateNames.join(", ")}</p>
       )}
       <p className="person-summary">{person.summary}</p>
-      <span className="person-tier-tag">{TIER_LABELS[person.tier]}</span>
 
       <ProfileAudioPlayer kind="person" id={person.id} />
 

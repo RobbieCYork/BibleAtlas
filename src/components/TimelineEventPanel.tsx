@@ -1,8 +1,7 @@
-import type { TimelineEvent, TimelineEventCategory, TimelineDateCertainty } from "../data/types";
+import type { TimelineEvent, TimelineDateCertainty } from "../data/types";
 import { timelineEvents } from "../data/timelineEvents";
 import LinkedVerseText from "./LinkedVerseText";
-import BackButton from "./BackButton";
-import CloseButton from "./CloseButton";
+import ArticleHeader from "./ArticleHeader";
 
 interface TimelineEventPanelProps {
   event: TimelineEvent | null;
@@ -22,14 +21,6 @@ interface TimelineEventPanelProps {
   expand?: boolean;
   style?: React.CSSProperties;
 }
-
-const CATEGORY_LABELS: Record<TimelineEventCategory, string> = {
-  biblical: "Biblical History",
-  church: "Church History",
-  world: "World History",
-  movement: "Movements & Revivals",
-  religion: "World Religions",
-};
 
 /** Small badge shown beside the date whenever it isn't firmly established — "firm" gets no badge,
  * so anchored dates read plainly and everything else is visibly qualified. */
@@ -105,20 +96,12 @@ export default function TimelineEventPanel({
 
   return (
     <div className={`location-panel person-panel ${expand ? "panel-expand" : ""}`} style={expand ? undefined : style}>
-      {(onBack || onClose) && (
-        <div className="panel-back-row">
-          {onBack && <BackButton onClick={onBack} />}
-          {onClose && <CloseButton onClick={onClose} ariaLabel="Close article" />}
-        </div>
-      )}
-      <span className="category-badge person-badge">{event.era}</span>
-      <h2>{event.title}</h2>
+      <ArticleHeader title={event.title} subtitle={event.era} onBack={onBack} onClose={onClose} />
       <p className="alt-names">
         {event.dateLabel}
         {certaintyBadge && <span className="person-tier-tag">{certaintyBadge}</span>}
       </p>
       <p className="person-summary">{event.summary}</p>
-      <span className="person-tier-tag">{CATEGORY_LABELS[event.category]}</span>
 
       <div className="history-section">
         <div className="history-field">

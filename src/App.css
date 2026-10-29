@@ -12706,3 +12706,87 @@ img.sn-image,
   left: -7px;
   background: var(--release-test);
 }
+
+/* --- Compact article header (ArticleHeader.tsx) ---
+ * One row: icon-only Back at the start, title centred, end controls (Share, Close) at the end, the
+ * subtitle (role / category / era) a small muted line directly under the title. Both side slots
+ * share the width in --ah-side (44px per control, set inline) so the title is centred on the row,
+ * not on whatever the buttons leave over. */
+.article-head {
+  display: grid;
+  grid-template-columns: var(--ah-side, 44px) minmax(0, 1fr) var(--ah-side, 44px);
+  align-items: start;
+  column-gap: 4px;
+  margin: -14px -8px 6px;
+}
+
+.article-head-start,
+.article-head-end {
+  display: flex;
+  align-items: center;
+  min-height: 44px;
+}
+
+.article-head-end {
+  justify-content: flex-end;
+}
+
+.article-head-title {
+  min-width: 0;
+  min-height: 44px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
+  padding: 2px 0;
+}
+
+.location-panel .article-head-title h2 {
+  margin: 0;
+  line-height: 1.2;
+  overflow-wrap: anywhere;
+  text-wrap: balance;
+}
+
+.article-head-sub {
+  margin: 2px 0 0;
+  font-size: calc(11px * var(--tsz, 1));
+  line-height: 1.3;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--text-muted);
+  overflow-wrap: anywhere;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  overflow: hidden;
+}
+
+.back-btn--icon,
+.panel-close-btn--icon,
+.panel-share--icon {
+  width: 44px;
+  height: 44px;
+  min-width: 44px;
+  padding: 0;
+  justify-content: center;
+  border-color: transparent;
+  border-radius: 10px;
+}
+
+.panel-close-btn--icon .panel-close-btn-glyph {
+  font-size: calc(24px * var(--tsz, 1));
+}
+
+.back-btn--icon:focus-visible,
+.panel-share--icon:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: -2px;
+}
+
+.panel-share--icon {
+  background: transparent;
+  font-size: calc(16px * var(--tsz, 1));
+}

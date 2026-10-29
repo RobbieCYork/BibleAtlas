@@ -9,6 +9,8 @@ interface CloseButtonProps {
    * that doesn't contain the visible text breaks voice control, which matches on what it can see. */
   ariaLabel: string;
   className?: string;
+  /** Just the ×, in a 44px touch target; ariaLabel carries the meaning. */
+  iconOnly?: boolean;
 }
 
 /** The counterpart to BackButton (see BackButton.tsx) for "dismiss this panel", and the first
@@ -38,18 +40,19 @@ export default function CloseButton({
   label = "Close",
   ariaLabel,
   className,
+  iconOnly,
 }: CloseButtonProps) {
   return (
     <button
       type="button"
-      className={className ? `panel-close-btn ${className}` : "panel-close-btn"}
+      className={["panel-close-btn", iconOnly ? "panel-close-btn--icon" : "", className ?? ""].filter(Boolean).join(" ")}
       onClick={onClick}
       aria-label={ariaLabel}
     >
       <span className="panel-close-btn-glyph" aria-hidden="true">
         ×
       </span>
-      <span>{label}</span>
+      {!iconOnly && <span>{label}</span>}
     </button>
   );
 }

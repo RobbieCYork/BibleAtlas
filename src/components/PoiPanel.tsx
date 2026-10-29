@@ -4,8 +4,8 @@ import ReflectionPrompt from "./ReflectionPrompt";
 import ShareCardButton from "./ShareCardButton";
 import ProfileAudioPlayer from "./ProfileAudioPlayer";
 import PronunciationAudioButton from "./PronunciationAudioButton";
-import BackButton from "./BackButton";
-import CloseButton from "./CloseButton";
+import ArticleHeader from "./ArticleHeader";
+import Icon from "./Icon";
 import { placeCardSpec, shareFilename } from "../lib/shareCard";
 
 interface PoiPanelProps {
@@ -42,17 +42,14 @@ export default function PoiPanel({
 
   return (
     <div className={`location-panel ${expand ? "panel-expand" : ""}`} style={expand ? undefined : style}>
-      {(onBack || onClose) && (
-        <div className="panel-back-row">
-          {onBack && <BackButton onClick={onBack} />}
-          {onClose && <CloseButton onClick={onClose} ariaLabel="Close article" />}
-        </div>
-      )}
-      <div className="panel-header-row">
-        <span className="category-badge poi-badge">{poi.tag}</span>
-        <ShareCardButton spec={placeCardSpec(poi)} filename={shareFilename(poi.name)} />
-      </div>
-      <h2>{poi.name}</h2>
+      <ArticleHeader
+        title={poi.name}
+        subtitle={poi.tag}
+        onBack={onBack}
+        onClose={onClose}
+        actionCount={1}
+        actions={<ShareCardButton spec={placeCardSpec(poi)} filename={shareFilename(poi.name)} className="panel-share panel-share--icon" label={<Icon name="share" inline />} />}
+      />
       {poi.pronunciation && (
         <p className="pronunciation">
           Pronounced: {poi.pronunciation}

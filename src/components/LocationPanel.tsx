@@ -5,8 +5,8 @@ import ReflectionPrompt from "./ReflectionPrompt";
 import ShareCardButton from "./ShareCardButton";
 import ProfileAudioPlayer from "./ProfileAudioPlayer";
 import PronunciationAudioButton from "./PronunciationAudioButton";
-import BackButton from "./BackButton";
-import CloseButton from "./CloseButton";
+import ArticleHeader from "./ArticleHeader";
+import Icon from "./Icon";
 import { placeCardSpec, shareFilename } from "../lib/shareCard";
 
 interface LocationPanelProps {
@@ -69,17 +69,14 @@ export default function LocationPanel({
 
   return (
     <div className={`location-panel ${expand ? "panel-expand" : ""}`} style={expand ? undefined : style}>
-      {(onBack || onClose) && (
-        <div className="panel-back-row">
-          {onBack && <BackButton onClick={onBack} />}
-          {onClose && <CloseButton onClick={onClose} ariaLabel="Close article" />}
-        </div>
-      )}
-      <div className="panel-header-row">
-        <span className="category-badge">{CATEGORY_LABELS[location.category]}</span>
-        <ShareCardButton spec={placeCardSpec(location)} filename={shareFilename(location.name)} />
-      </div>
-      <h2>{location.name}</h2>
+      <ArticleHeader
+        title={location.name}
+        subtitle={CATEGORY_LABELS[location.category]}
+        onBack={onBack}
+        onClose={onClose}
+        actionCount={1}
+        actions={<ShareCardButton spec={placeCardSpec(location)} filename={shareFilename(location.name)} className="panel-share panel-share--icon" label={<Icon name="share" inline />} />}
+      />
       {location.pronunciation && (
         <p className="pronunciation">
           Pronounced: {location.pronunciation}
