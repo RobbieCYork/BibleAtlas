@@ -2026,6 +2026,106 @@ body.resizing-panels {
   font-size: calc(14px * var(--tsz, 1));
 }
 
+/* --- Chapters read per month, last 12 months (MonthlyReadingChart.tsx) ---
+ * Single series in --accent, the same colour that marks a read chapter in the grid below, so the
+ * two read as one measure. Grid and axis stay recessive; the data is the only loud thing. */
+
+.monthly-reading {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.monthly-reading-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 8px;
+  font-size: calc(12px * var(--tsz, 1));
+  color: var(--text-muted);
+}
+
+.monthly-reading-readout strong {
+  color: var(--text-h);
+  font-size: calc(14px * var(--tsz, 1));
+}
+
+.monthly-reading-plot {
+  position: relative;
+  height: 96px;
+  margin-left: 22px; /* gutter for the axis value, so a full-height first bar never sits under it */
+  border-top: 1px dashed var(--border);
+  border-bottom: 1px solid var(--border-strong);
+}
+
+.monthly-reading-axis-top {
+  position: absolute;
+  top: 0;
+  right: calc(100% + 4px);
+  transform: translateY(-50%);
+  font-size: calc(10px * var(--tsz, 1));
+  color: var(--text-muted);
+  pointer-events: none;
+}
+
+.monthly-reading-bars,
+.monthly-reading-labels {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  gap: 2px;
+}
+
+.monthly-reading-bars {
+  height: 100%;
+  align-items: end;
+}
+
+.monthly-reading-col {
+  height: 100%;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  padding: 0;
+  border: none;
+  background: none;
+  cursor: pointer;
+}
+
+.monthly-reading-bar {
+  display: block;
+  width: min(70%, 22px);
+  background: var(--accent);
+  border-radius: 4px 4px 0 0;
+  opacity: 0.75;
+}
+
+.monthly-reading-col:hover .monthly-reading-bar,
+.monthly-reading-col-selected .monthly-reading-bar {
+  opacity: 1;
+}
+
+.monthly-reading-col-selected {
+  background: var(--accent-bg);
+  border-radius: 4px 4px 0 0;
+}
+
+.monthly-reading-labels {
+  margin-left: 22px;
+}
+
+.monthly-reading-labels span {
+  text-align: center;
+  font-size: calc(10px * var(--tsz, 1));
+  color: var(--text-muted);
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.monthly-reading-labels .monthly-reading-label-selected {
+  color: var(--text-h);
+  font-weight: 600;
+}
+
 .reading-progress-toggle {
   display: flex;
   align-items: center;

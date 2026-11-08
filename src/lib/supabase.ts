@@ -411,6 +411,47 @@ export async function chaptersReadThisMonth(userId: string): Promise<number> {
   return count ?? 0;
 }
 
+export interface MonthlyChapterCount {
+  /** Local-time first instant of the month. */
+  monthStart: Date;
+  count: number;
+}
+
+/** Chapters read in each of the last `months` calendar months (local time), oldest first, the
+ * current month last — so its final entry always agrees with chaptersReadThisMonth.
+ *
+ * Same counting rule as chaptersReadThisMonth: a chapter counts once, in the month its `read_at`
+ * currently sits in. Re-reading moves it forward, and a hand-edited backfill lands in the month it
+ * was saved. Months with no reads are present with count 0. Paged, because a busy year can exceed
+ * PostgREST's default 1000-row response cap. Throws on failure — a failed read is not a zero. */
+export async function chaptersReadByMonth(userId: string, months = 12): Promise<MonthlyChapterCount[]> {
+  const now = new Date();
+  const buckets: MonthlyChapterCount[] = Array.from({ length: months }, (_, i) => ({
+    monthStart: new Date(now.getFullYear(), now.getMonth() - (months - 1) + i, 1),
+    count: 0,
+  }));
+  const from = buckets[0].monthStart;
+  const PAGE = 1000;
+  for (let offset = 0; ; offset += PAGE) {
+    const { data, error } = await supabase
+      .from("chapter_reads")
+      .select("read_at")
+      .eq("user_id", userId)
+      .gte("read_at", from.toISOString())
+      .order("read_at", { ascending: true })
+      .range(offset, offset + PAGE - 1);
+    if (error) throw error;
+    const rows = (data as { read_at: string }[] | null) ?? [];
+    for (const r of rows) {
+      const d = new Date(r.read_at);
+      const i = (d.getFullYear() - from.getFullYear()) * 12 + (d.getMonth() - from.getMonth());
+      if (i >= 0 && i < months) buckets[i].count++;
+    }
+    if (rows.length < PAGE) break;
+  }
+  return buckets;
+}
+
 /** "42 sec" below a minute, "3 min" at or above one — so a reading session shorter than a minute still
  * shows real progress instead of floor-dividing to a flat, misleadingly-looking-broken "0 mins". */
 export function formatReadingTime(totalSeconds: number): string {

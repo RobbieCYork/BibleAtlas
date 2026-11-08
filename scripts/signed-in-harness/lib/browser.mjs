@@ -15,7 +15,8 @@ import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { FAKE_HOST } from "./personas.mjs";
 
-const CHROME = "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome";
+/** macOS Google Chrome by default; CHROME_PATH overrides it (e.g. a cloud box's Chromium). */
+const CHROME = process.env.CHROME_PATH || "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome";
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 
 export async function launchChrome() {
@@ -25,6 +26,8 @@ export async function launchChrome() {
     "--headless=new", "--use-gl=angle", "--use-angle=swiftshader", "--enable-unsafe-swiftshader", "--ignore-gpu-blocklist", "--no-first-run", "--no-default-browser-check",
     "--disable-background-timer-throttling", "--disable-renderer-backgrounding", "--disable-backgrounding-occluded-windows",
     "--host-resolver-rules=MAP * ~NOTFOUND , EXCLUDE 127.0.0.1",
+    // Chrome will not start as root with its sandbox on (cloud containers run as root).
+    ...(process.getuid?.() === 0 ? ["--no-sandbox"] : []),
     `--user-data-dir=${profile}`, "--remote-debugging-port=0", "about:blank",
   ], { stdio: "ignore" });
   const portFile = join(profile, "DevToolsActivePort");

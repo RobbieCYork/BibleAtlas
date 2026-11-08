@@ -1,7 +1,15 @@
 import { useEffect, useState } from "react";
-import { supabase, chapterReadCutoff, chaptersReadThisMonth, type Profile } from "../lib/supabase";
+import {
+  supabase,
+  chapterReadCutoff,
+  chaptersReadThisMonth,
+  chaptersReadByMonth,
+  type MonthlyChapterCount,
+  type Profile,
+} from "../lib/supabase";
 import { BOOKS } from "../data/bibleBooks";
 import Icon from "./Icon";
+import MonthlyReadingChart from "./MonthlyReadingChart";
 
 interface ReadingProgressGridProps {
   userId: string;
@@ -37,6 +45,10 @@ export default function ReadingProgressGrid({ userId, displayName, isOwn }: Read
   const [monthChapters, setMonthChapters] = useState<number | null>(null);
   const [resetSetting, setResetSetting] = useState<Profile["chapter_read_reset"]>("never");
   const [booksOpen, setBooksOpen] = useState(false);
+  /** null while loading or after a failed read — the chart is then simply not shown, never drawn
+   * as twelve empty months. Bumping historyVersion refetches it after a hand-edit save. */
+  const [monthly, setMonthly] = useState<MonthlyChapterCount[] | null>(null);
+  const [historyVersion, setHistoryVersion] = useState(0);
 
   /** Non-null only while editing — the staged copy every toggle mutates, so Cancel is just
    * throwing it away and `readSet` stays the last known server state until Save succeeds. */
@@ -70,6 +82,20 @@ export default function ReadingProgressGrid({ userId, displayName, isOwn }: Read
       cancelled = true;
     };
   }, [userId]);
+
+  useEffect(() => {
+    let cancelled = false;
+    chaptersReadByMonth(userId)
+      .then((m) => {
+        if (!cancelled) setMonthly(m);
+      })
+      .catch(() => {
+        if (!cancelled) setMonthly(null);
+      });
+    return () => {
+      cancelled = true;
+    };
+  }, [userId, historyVersion]);
 
   const startEdit = () => {
     if (!readSet) return;
@@ -174,6 +200,9 @@ export default function ReadingProgressGrid({ userId, displayName, isOwn }: Read
     }
     setReadSet(new Set(draft));
     setDraft(null);
+    // Edits re-date chapters to now, so this month's figures moved.
+    setHistoryVersion((v) => v + 1);
+    chaptersReadThisMonth(userId).then(setMonthChapters).catch(() => {});
   };
 
   if (!readSet) return <p className="comment-status">Loading reading progress…</p>;
@@ -200,6 +229,7 @@ export default function ReadingProgressGrid({ userId, displayName, isOwn }: Read
           {monthChapters === 1 ? "chapter" : "chapters"} {isOwn ? "read this month" : "this month"}
         </span>
       </div>
+      {monthly && <MonthlyReadingChart months={monthly} />}
       <button
         type="button"
         className="reading-progress-toggle"

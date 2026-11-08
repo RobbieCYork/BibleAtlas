@@ -11,6 +11,8 @@ node scripts/signed-in-harness/run.mjs --persona owner --viewport 375x667 --scri
 ```
 
 Requires Node 24+ and Google Chrome at `/Applications/Google Chrome.app`. **No npm dependencies.**
+Elsewhere (a Linux cloud container, say) point `CHROME_PATH` at any Chrome/Chromium binary; as root the
+runner adds `--no-sandbox`, which Chrome otherwise refuses to start without.
 Needs `node_modules` installed (it runs `vite build` and `vite preview` from there).
 
 ## What one run does
@@ -113,6 +115,7 @@ Selectors live there so a rename is one edit.
 | `game-toggles-nesting.mjs` | the 7 per-game toggles nest under Games & Trivia in order, a Testing parent explains itself on Live children, one game in Testing reaches Game Center correctly for member and owner |
 | `network-closed.mjs` | self-test of the closed network |
 | `fixtures-override.mjs` | `--fixtures` |
+| `monthly-reading-chart.mjs` | My Profile → My Reading: the 12-month bar chart counts seeded `chapter_reads` per month (excluding older rows), agrees with "chapters read this month", a tapped bar shows its figure, and it fits 375px |
 
 ## Reading the evidence
 
