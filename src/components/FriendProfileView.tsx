@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { supabase, displayFor, formatJoinDate, type Profile } from "../lib/supabase";
+import { displayFor, fetchProfileCards, formatJoinDate, type Profile } from "../lib/supabase";
 import ReadingProgressGrid from "./ReadingProgressGrid";
 import PostsFeed from "./PostsFeed";
 import BackButton from "./BackButton";
@@ -40,15 +40,12 @@ export default function FriendProfileView({ friendId, viewerId, onBack, onMessag
 
   useEffect(() => {
     setLoaded(false);
-    supabase
-      .from("profiles")
-      .select("*")
-      .eq("id", friendId)
-      .single()
-      .then(({ data }) => {
-        setProfile(data as Profile | null);
-        setLoaded(true);
-      });
+    // Masked per viewer by get_profile_cards (sql/042): only the fields this friend's
+    // profile_visibility allows ever arrive. The rendering below still checks the toggles too.
+    fetchProfileCards([friendId]).then(([data]) => {
+      setProfile(data ?? null);
+      setLoaded(true);
+    });
   }, [friendId]);
 
   return (
@@ -79,7 +76,7 @@ export default function FriendProfileView({ friendId, viewerId, onBack, onMessag
                   )}
                 </p>
               )}
-              <p className="friend-profile-joined">Joined {formatJoinDate(profile.created_at)}</p>
+              {profile.created_at && <p className="friend-profile-joined">Joined {formatJoinDate(profile.created_at)}</p>}
             </div>
           </div>
           {profile.favorite_verse && (

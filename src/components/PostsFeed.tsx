@@ -11,6 +11,7 @@ import {
   type Post as PostRow,
   type PostComment,
   type FriendRequest,
+  fetchProfileCards,
 } from "../lib/supabase";
 import InlineTextEditor from "./InlineTextEditor";
 import ModerationMenu from "./ModerationMenu";
@@ -125,9 +126,9 @@ export default function PostsFeed({ userId, viewerId, isOwn }: PostsFeedProps) {
     postComments.forEach((c) => profileIds.add(c.author_id));
     posts.forEach((p) => p.tagged_user_ids.forEach((id) => profileIds.add(id)));
     if (profileIds.size > 0) {
-      const { data: profilesData } = await supabase.from("profiles").select("*").in("id", Array.from(profileIds));
+      const profilesData = await fetchProfileCards(Array.from(profileIds));
       const map: Record<string, Profile> = {};
-      (profilesData as Profile[] | null)?.forEach((p) => (map[p.id] = p));
+      profilesData.forEach((p) => (map[p.id] = p));
       setProfiles(map);
     }
   };
@@ -499,8 +500,7 @@ function PostComposer({ userId, onPosted }: { userId: string; onPosted: () => vo
         r.sender_id === userId ? r.receiver_id : r.sender_id
       );
       if (friendIds.length === 0) return;
-      const { data: profilesData } = await supabase.from("profiles").select("*").in("id", friendIds);
-      setFriends((profilesData as Profile[] | null) ?? []);
+      setFriends(await fetchProfileCards(friendIds));
     };
     loadFriends();
   }, [userId]);

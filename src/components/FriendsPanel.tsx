@@ -11,6 +11,7 @@ import {
   type Message,
   type PersonMatch,
   type Profile,
+  fetchProfileCards,
 } from "../lib/supabase";
 import GroupsPanel from "./GroupsPanel";
 import ChurchPanel from "./ChurchPanel";
@@ -127,9 +128,9 @@ export default function FriendsPanel({
 
     const otherIds = [...new Set(reqs.map((r) => (r.sender_id === userId ? r.receiver_id : r.sender_id)))];
     if (otherIds.length > 0) {
-      const { data: profileData } = await supabase.from("profiles").select("*").in("id", otherIds);
+      const profileData = await fetchProfileCards(otherIds);
       const map: Record<string, Profile> = {};
-      ((profileData as Profile[] | null) ?? []).forEach((p) => (map[p.id] = p));
+      profileData.forEach((p) => (map[p.id] = p));
       setProfiles(map);
     }
     setLoading(false);

@@ -10,6 +10,7 @@ import {
   type GroupSummary,
   type Profile,
   type PublicGroupResult,
+  fetchProfileCards,
 } from "../lib/supabase";
 import ViewSwitcher, { type FriendsView } from "./ViewSwitcher";
 import { useChurchesAvailable } from "../lib/churchApi";
@@ -99,8 +100,7 @@ export default function GroupsPanel({
   const fetchProfilesFor = async (ids: string[]) => {
     const missing = ids.filter((id) => !profiles[id]);
     if (missing.length === 0) return;
-    const { data } = await supabase.from("profiles").select("*").in("id", missing);
-    const found = (data as Profile[] | null) ?? [];
+    const found = await fetchProfileCards(missing);
     if (found.length === 0) return;
     setProfiles((prev) => {
       const next = { ...prev };
@@ -264,8 +264,7 @@ export default function GroupsPanel({
       setFriendOptions([]);
       return;
     }
-    const { data: profileData } = await supabase.from("profiles").select("*").in("id", friendIds);
-    setFriendOptions((profileData as Profile[] | null) ?? []);
+    setFriendOptions(await fetchProfileCards(friendIds));
   };
 
   const startCreate = () => {

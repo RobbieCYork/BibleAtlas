@@ -10,6 +10,7 @@ import {
   type Post as PostRow,
   type PostComment,
   type FriendRequest,
+  fetchProfileCards,
 } from "../lib/supabase";
 import InlineTextEditor from "./InlineTextEditor";
 import ModerationMenu from "./ModerationMenu";
@@ -304,9 +305,9 @@ export default function Newsfeed({ userId, onGoToVerse }: NewsfeedProps) {
     noteComments.forEach((c) => profileIds.add(c.author_id));
     postComments.forEach((c) => profileIds.add(c.author_id));
     posts.forEach((p) => p.tagged_user_ids.forEach((id) => profileIds.add(id)));
-    const { data: profilesData } = await supabase.from("profiles").select("*").in("id", Array.from(profileIds));
+    const profilesData = await fetchProfileCards(Array.from(profileIds));
     const map: Record<string, Profile> = {};
-    (profilesData as Profile[] | null)?.forEach((p) => (map[p.id] = p));
+    profilesData.forEach((p) => (map[p.id] = p));
     setProfiles(map);
 
     const merged: FeedItem[] = [

@@ -77,6 +77,9 @@ export function createBackend({ persona, overrides = {} }) {
     report_counts: () => ({ untriaged: 0, new: 0, triaged: 0, total: 0 }),
     moderation_queue: () => [], moderation_history: () => [], moderation_counts: () => ({}),
     find_users_by_display_name: () => [], find_public_groups_by_name: () => [],
+    // sql/042. Unmasked here: the fake does not model friendship; a check that cares about the
+    // masking replaces this (see examples/profile-cards.mjs).
+    get_profile_cards: ({ p_ids }) => (tables.profiles ?? []).filter((p) => (p_ids ?? []).includes(p.id)),
   };
   for (const [name, value] of Object.entries(overrides.rpc ?? {})) rpcs[name] = () => value;
 

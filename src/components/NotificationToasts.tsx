@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import type { Session } from "@supabase/supabase-js";
-import { supabase, displayFor, type Profile } from "../lib/supabase";
+import { supabase, displayFor, fetchProfileCards, type Profile } from "../lib/supabase";
 import Icon, { type IconName } from "./Icon";
 
 interface Toast {
@@ -41,10 +41,10 @@ export default function NotificationToasts({
   const nameFor = async (userId: string): Promise<string> => {
     const cached = profileCache.current[userId];
     if (cached) return displayFor(cached);
-    const { data } = await supabase.from("profiles").select("*").eq("id", userId).single();
+    const [data] = await fetchProfileCards([userId]);
     if (data) {
-      profileCache.current[userId] = data as Profile;
-      return displayFor(data as Profile);
+      profileCache.current[userId] = data;
+      return displayFor(data);
     }
     return "Someone";
   };

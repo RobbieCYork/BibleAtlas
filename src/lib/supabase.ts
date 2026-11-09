@@ -227,14 +227,40 @@ export interface VerseTag {
 }
 
 export interface ProfileLike {
-  email: string;
+  /** Null on a card for someone you are not friends with yet (see fetchProfileCards / sql/042). */
+  email: string | null;
   display_name: string | null;
 }
 
 /** Falls back to email for the small number of accounts that existed before display names did and
- * haven't logged in yet to set one (see DisplayNameGate) — display_name is otherwise required. */
+ * haven't logged in yet to set one (see DisplayNameGate) — display_name is otherwise required. A
+ * pending requester's card carries no email (sql/042), hence the last fallback. */
 export function displayFor(profile: ProfileLike): string {
-  return profile.display_name ?? profile.email;
+  return profile.display_name ?? profile.email ?? "A Capstone member";
+}
+
+/** The one way the app reads OTHER people's profiles.
+ *
+ * sql/042 makes the profiles table owner-only and adds get_profile_cards(), which returns the same
+ * columns masked per viewer: an accepted friend gets the public fields plus whatever the owner's
+ * profile_visibility allows; someone with a pending friend request either way gets only id,
+ * display_name and avatar_url; anyone else (and anyone blocked either way) gets no row. Your own
+ * id comes back complete.
+ *
+ * Until sql/042 is applied the function does not exist (PostgREST PGRST202) and this falls back
+ * to the old direct select, so this code is safe to ship before the migration. Once it is
+ * applied the fallback never runs. Any other error answers [] — a name that does not load is the
+ * right failure, not a crash. */
+export async function fetchProfileCards(ids: string[]): Promise<Profile[]> {
+  const unique = [...new Set(ids)].filter(Boolean);
+  if (unique.length === 0) return [];
+  const { data, error } = await supabase.rpc("get_profile_cards", { p_ids: unique });
+  if (!error) return (data as Profile[] | null) ?? [];
+  if (error.code === "PGRST202" || error.code === "42883") {
+    const fallback = await supabase.from("profiles").select("*").in("id", unique);
+    return (fallback.data as Profile[] | null) ?? [];
+  }
+  return [];
 }
 
 export interface Profile {
