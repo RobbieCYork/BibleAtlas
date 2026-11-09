@@ -79,7 +79,9 @@ function ensureSatelliteLayer(map: maplibregl.Map) {
       "https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}",
     ],
     tileSize: 256,
-    attribution: "Esri, Maxar, Earthstar Geographics",
+    // Esri's own copyrightText for World_Imagery (services.arcgisonline.com ...MapServer?f=pjson).
+    attribution:
+      '<a href="https://goto.arcgisonline.com/maps/World_Imagery" target="_blank" rel="noopener">Source: Esri, Vantor, Earthstar Geographics, and the GIS User Community</a>',
   });
 
   const layers = map.getStyle()?.layers ?? [];
@@ -723,6 +725,16 @@ export default function MapView({
       style: STYLE_URL,
       center: DEFAULT_CENTER,
       zoom: DEFAULT_ZOOM,
+      // Required credits: OpenFreeMap / OpenMapTiles / OpenStreetMap (ODbL) via customAttribution;
+      // Natural Earth via the style source; Esri via the satellite source's `attribution`. Compact = an (i) button that
+      // expands on tap/hover, so it never crowds the phone layout. Keep it visible, never remove.
+      // customAttribution is the exact string OpenFreeMap's TileJSON serves, so it shows even when
+      // the TileJSON is slow or blocked, and MapLibre drops the duplicate once the TileJSON loads.
+      attributionControl: {
+        compact: true,
+        customAttribution:
+          '<a href="https://openfreemap.org" target="_blank">OpenFreeMap</a> <a href="https://www.openmaptiles.org/" target="_blank">&copy; OpenMapTiles</a> Data from <a href="https://www.openstreetmap.org/copyright" target="_blank">OpenStreetMap</a>',
+      },
     });
     map.addControl(new maplibregl.NavigationControl(), "top-right");
     mapRef.current = map;

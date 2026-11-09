@@ -9,6 +9,7 @@
  "sprite": "https://tiles.openfreemap.org/sprites/ofm_f384/ofm",
  "sources": {
   "ne2_shaded": {
+   "attribution": "Made with Natural Earth",
    "maxzoom": 6,
    "tileSize": 256,
    "tiles": [
