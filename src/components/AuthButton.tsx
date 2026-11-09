@@ -583,6 +583,13 @@ export default function AuthButton({
                 <ReadingResetControl userId={session.user.id} />
               </>
             )}
+            <div className="auth-settings-divider" />
+            {/* Static public pages, not app routes — a new tab keeps the reader's place in the app. */}
+            <p className="auth-legal-links">
+              <a href="/terms" target="_blank" rel="noopener noreferrer">Terms of Service</a>
+              <span aria-hidden="true"> · </span>
+              <a href="/privacy" target="_blank" rel="noopener noreferrer">Privacy Policy</a>
+            </p>
           </div>
         )}
       </div>

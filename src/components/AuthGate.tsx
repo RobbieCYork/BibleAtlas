@@ -416,6 +416,18 @@ export default function AuthGate() {
                 <button type="submit" className="auth-gate-submit" disabled={loading}>
                   {loading ? "…" : mode === "login" ? "Log In" : mode === "signup" ? "Create Free Account" : "Send Reset Link"}
                 </button>
+                {/* The agreement notice, at the action it applies to. Sign-up only: a returning reader
+                  * agreed when they made the account. New tab, so following a link does not throw
+                  * away a half-filled form. No checkbox and no database column — the act of creating
+                  * the account is the agreement, and the text says so in plain words. */}
+                {mode === "signup" && (
+                  <p className="auth-gate-legal-notice">
+                    By creating an account, you agree to the{" "}
+                    <a href="/terms" target="_blank" rel="noopener noreferrer">Terms of Service</a> and{" "}
+                    <a href="/privacy" target="_blank" rel="noopener noreferrer">Privacy Policy</a>, and confirm you
+                    are at least 13 years old.
+                  </p>
+                )}
               </form>
               {error && (
                 <p className="auth-gate-status auth-gate-error" role="alert">
@@ -479,6 +491,9 @@ export default function AuthGate() {
           * that needs a form to reach is not published. */}
         <p className="auth-gate-contact">
           Questions, or something to report? <a href="mailto:admin@capstonebible.com">admin@capstonebible.com</a>
+        </p>
+        <p className="auth-gate-contact">
+          <a href="/terms">Terms of Service</a> · <a href="/privacy">Privacy Policy</a>
         </p>
 
         <SocialLinks className="auth-gate-social" />

@@ -178,7 +178,9 @@ export const PUBLISHER = {
  *     address ever changes, it changes in both places.
  *
  *  3. THE DELETION ROUTE. Google Play requires an account-deletion route reachable without
- *     installing the app, so every public page links /delete-account (see build-seo.mjs). */
+ *     installing the app, so every public page links /delete-account (see build-seo.mjs). The
+ *     Terms of Service and Privacy Policy sit on the same line for the same reason: they have to be
+ *     readable by someone who has no account. */
 export function page({ title, description, canonical, trail, jsonLd = [], body, wide = false, current, ogType = "article" }) {
   const ogImage = `${ORIGIN}/og-default.png`;
   const graph = [breadcrumbLd(trail), ...jsonLd];
@@ -220,7 +222,7 @@ ${FONTS}
 ${crumbsHtml(trail)}
 ${body}
 <div class="cta"><p>Capstone Bible is a free interactive study app — a map of every place in this library, a zoomable timeline of biblical and church history, the Bible text with every name in it linked to its article, reading plans and personal notes.</p><a class="btn" href="/">Open Capstone Bible</a></div>
-<footer><p>Part of the <a href="/library">Capstone Bible library</a> — <a href="/places">places</a>, <a href="/sites">sites</a>, <a href="/people">people</a>, <a href="/topics">topics</a> and the <a href="/events">timeline</a>. Articles are written from a Protestant evangelical position and name other traditions' views where they differ.</p><p>Contact: <a href="mailto:admin@capstonebible.com">admin@capstonebible.com</a></p><p><a href="/delete-account">Delete your account</a></p></footer>
+<footer><p>Part of the <a href="/library">Capstone Bible library</a> — <a href="/places">places</a>, <a href="/sites">sites</a>, <a href="/people">people</a>, <a href="/topics">topics</a> and the <a href="/events">timeline</a>. Articles are written from a Protestant evangelical position and name other traditions' views where they differ.</p><p>Contact: <a href="mailto:admin@capstonebible.com">admin@capstonebible.com</a></p><p><a href="/terms">Terms of Service</a> · <a href="/privacy">Privacy Policy</a> · <a href="/delete-account">Delete your account</a></p></footer>
 </main>
 </body>
 </html>`;
@@ -985,6 +987,55 @@ export function deleteAccountPage(notice) {
     ],
     body,
     current: "/delete-account",
+    ogType: "website",
+  });
+}
+
+// ---------------------------------------------------------------- terms and privacy
+/**
+ * The public Terms of Service (/terms) and Privacy Policy (/privacy).
+ *
+ * Generated, not hand-written, for the same reason as /delete-account: the Privacy Policy is a
+ * promise about what the app and its database actually do, and AGENTS.md forbids hand-maintaining
+ * any part of the public site. The words live in src/data/legalDocuments.ts, which also holds the
+ * single LEGAL_ENTITY constant the operator's legal name and address go into.
+ *
+ * The data uses two pieces of inline markup and nothing more: `[text](href)` and `**bold**`. Text is
+ * escaped FIRST and the markup applied to the escaped string, so nothing in the data can open a tag;
+ * an href is only honoured if it is site-relative, mailto: or https:.
+ */
+function legalInline(raw) {
+  return esc(raw)
+    .replace(/\*\*(.+?)\*\*/g, "<strong>$1</strong>")
+    .replace(/\[([^\]]+)\]\(((?:\/|mailto:|https:\/\/)[^)\s]*)\)/g, (_m, text, href) => `<a href="${href}">${text}</a>`);
+}
+
+export function legalPage(doc, { path, effectiveDate }) {
+  const trail = [{ name: doc.title, path }];
+  const block = (b) =>
+    Array.isArray(b) ? `<ul>${b.map((li) => `<li>${legalInline(li)}</li>`).join("")}</ul>` : p(legalInline(b));
+  const body = [
+    heading(doc.title, "Capstone Bible", `Effective ${esc(effectiveDate)}`),
+    ...doc.intro.map((t) => `<section>${p(legalInline(t))}</section>`),
+    ...doc.sections.map((s) => section(s.heading, s.body.map(block).join(""))),
+  ].join("");
+
+  return page({
+    title: `${doc.title} — Capstone Bible`,
+    description: clip(doc.description),
+    canonical: path,
+    trail,
+    jsonLd: [
+      {
+        "@context": "https://schema.org",
+        "@type": "WebPage",
+        name: `Capstone Bible ${doc.title}`,
+        url: absolute(path),
+        isPartOf: { "@type": "WebSite", name: SITE_NAME, url: ORIGIN },
+      },
+    ],
+    body,
+    current: path,
     ogType: "website",
   });
 }

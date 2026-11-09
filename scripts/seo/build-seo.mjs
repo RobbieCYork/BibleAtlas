@@ -34,6 +34,7 @@ import {
   eventPage,
   hubPage,
   indexPage,
+  legalPage,
   locationPage,
   makeLinkifier,
   personPage,
@@ -88,7 +89,7 @@ export async function generateSeo(outDir) {
     idsByLinkKind.get(linkKind)?.has(id) ? itemPath(itemByLinkKind.get(linkKind), id) : null;
   const linkify = makeLinkifier(data.computeLinkAnnotations, urlFor);
 
-  const urls = ["/", "/library", "/delete-account"];
+  const urls = ["/", "/library", "/delete-account", "/terms", "/privacy"];
   let pages = 0;
 
   for (const kind of KINDS) {
@@ -121,6 +122,14 @@ export async function generateSeo(outDir) {
   // cannot say different things. Linked from every page's footer.
   write(outDir, fileForPath("/delete-account"), deleteAccountPage(data.accountDeletionNotice));
   pages++;
+
+  // The Terms of Service and Privacy Policy. Public for the same reason as the deletion page — a
+  // person deciding whether to sign up, and an app-store reviewer, must be able to read both without
+  // an account — and generated from src/data/legalDocuments.ts so there is one copy of the words.
+  const legal = data.legalDocuments;
+  write(outDir, fileForPath("/terms"), legalPage(legal.TERMS_OF_SERVICE, { path: "/terms", effectiveDate: legal.LEGAL_EFFECTIVE_DATE }));
+  write(outDir, fileForPath("/privacy"), legalPage(legal.PRIVACY_POLICY, { path: "/privacy", effectiveDate: legal.LEGAL_EFFECTIVE_DATE }));
+  pages += 2;
 
   // One sitemap file: 880-odd URLs is far inside the 50,000-URL / 50 MB limit, so an index would be
   // a second thing to keep in step for no benefit. No <lastmod>, <priority> or <changefreq> — we

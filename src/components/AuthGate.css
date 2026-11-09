@@ -339,6 +339,31 @@
   background: #f7d590;
 }
 
+/* "By creating an account, you agree to…" — under the sign-up button. Small, but not hidden: it
+   is the notice the agreement rests on, so it keeps full contrast against the card in both themes. */
+.auth-gate-legal-notice {
+  margin: 2px 0 0;
+  font-family: var(--sans);
+  font-size: calc(12px * var(--tsz, 1));
+  line-height: 1.45;
+  color: #d6c7a8;
+  text-align: center;
+}
+
+.auth-gate-legal-notice a {
+  color: #e5b355;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+:root[data-theme="light"] .auth-gate-legal-notice {
+  color: #6e5f48;
+}
+
+:root[data-theme="light"] .auth-gate-legal-notice a {
+  color: #8a5e12;
+}
+
 .auth-gate-submit:disabled {
   opacity: 0.6;
   cursor: default;
