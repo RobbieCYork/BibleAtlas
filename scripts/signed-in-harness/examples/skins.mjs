@@ -11,13 +11,13 @@
  *                      Also dumps computed styles (DUMP=path.json) so a run against origin/main and a
  *                      run against this tree can be diffed: the default look must not move.
  *
- * Env: SKINS=default,sticker,clarity,midnight  SCREENS=reader,map,...  DUMP=/path/out.json
+ * Env: SKINS=default,sticker,clarity,midnight,sage,skyreader,trailhead,highlighter  SCREENS=reader,map,plans,library,dialog,...  DUMP=/path/out.json
  */
 import { writeFileSync, readFileSync } from "node:fs";
 import { openAdminConsole, openArticle, MENU_BUTTON } from "../lib/app.mjs";
 
-const SKINS = (process.env.SKINS ?? "default,sticker,clarity,midnight").split(",");
-const SCREENS = (process.env.SCREENS ?? "reader,map,timeline,notes,article,social,games,admin").split(",");
+const SKINS = (process.env.SKINS ?? "default,sticker,clarity,midnight,sage,skyreader,trailhead,highlighter").split(",");
+const SCREENS = (process.env.SCREENS ?? "reader,map,timeline,notes,article,social,games,admin,plans,library,dialog").split(",");
 const VERSES = JSON.parse(readFileSync(process.env.MARK8 ?? new URL("./mark8-web.json", import.meta.url), "utf8"));
 
 // bible-api.com is blocked in the harness; answer it in-page with Mark 8:1-12 (WEB, public domain).
@@ -60,6 +60,23 @@ const SCREEN_FNS = {
   article: async (h) => { await openArticle(h, "Demons"); await h.sleep(500); },
   social: async (h) => { await goTo(h, "Social", "Social"); },
   games: async (h) => { await goTo(h, "Games"); },
+  // Reading Plans: phone = More sheet is not a tab, so use the account menu entry the desktop uses (both layouts have it).
+  plans: async (h) => {
+    await h.click('[aria-label="Settings and account"]'); await h.sleep(300);
+    await h.click("text=Reading Plans"); await h.sleep(900);
+  },
+  // "Library" = the Articles panel (searchable list of articles).
+  library: async (h) => {
+    if (await isPhone(h)) await h.click({ css: ".mobile-tab", text: "Articles" });
+    else { await h.click(MENU_BUTTON); await h.click({ css: ".panel-menu-item", text: "Articles" }); await closeMenus(h); }
+    await h.sleep(900);
+  },
+  // A dialog: the passage picker opened from the chapter title.
+  dialog: async (h) => {
+    if (await isPhone(h)) await h.click({ css: ".mobile-tab", text: "Bible" });
+    await h.sleep(600);
+    await h.click(".bible-passage-title-btn"); await h.waitFor(".ref-picker"); await h.sleep(500);
+  },
   admin: async (h) => { const ok = await openAdminConsole(h); h.assert(ok, "owner can open the Admin Console"); await h.sleep(600); },
 };
 
@@ -121,7 +138,7 @@ export default async function (h) {
   if (h.persona !== "owner") {
     h.section(`${h.persona}: no picker, planted skin ignored, ${device}`);
     const dumps = {};
-    for (const planted of ["none", "sticker", "midnight", "clarity"]) {
+    for (const planted of ["none", "sticker", "midnight", "clarity", "sage", "skyreader", "trailhead", "highlighter"]) {
       await h.evaluate((p) => { try { p === "none" ? localStorage.removeItem("app-skin") : localStorage.setItem("app-skin", p); } catch {} }, planted);
       await h.reload();
       await h.sleep(1800);
@@ -135,7 +152,7 @@ export default async function (h) {
       }
     }
     if (h.persona !== "signedout") {
-      const same = JSON.stringify(dumps.none) === JSON.stringify(dumps.sticker) && JSON.stringify(dumps.none) === JSON.stringify(dumps.midnight);
+      const same = Object.keys(dumps).every((k) => JSON.stringify(dumps.none) === JSON.stringify(dumps[k]));
       h.assert(same, "computed styles identical with and without a planted skin value");
       if (process.env.DUMP) writeFileSync(process.env.DUMP, JSON.stringify(dumps.none, null, 1));
       console.log("  screenshot:", await h.screenshot(`default-${h.persona}-${device}.png`));
@@ -153,7 +170,7 @@ export default async function (h) {
   h.assert((await h.count(".skin-picker")) === 1, "owner sees the skin picker");
   h.assert((await h.count(".release-view-switch")) === 1, "picker sits beside the Live/Test switch");
   const names = await h.evaluate(() => [...document.querySelectorAll(".skin-picker-option")].map((b) => b.innerText.trim()));
-  h.assert(JSON.stringify(names) === JSON.stringify(["Default", "Sticker Pop", "Clarity", "Midnight Signal"]), `options: ${names}`);
+  h.assert(JSON.stringify(names) === JSON.stringify(["Default", "Sticker Pop", "Clarity", "Midnight Signal", "Sage Study", "Sky Reader", "Trailhead", "Highlighter"]), `options: ${names}`);
   // real click path: pick Clarity in the UI, check it applies, then back to Default
   await h.click({ css: ".skin-picker-option", text: "Clarity" });
   await h.sleep(400);
@@ -189,6 +206,12 @@ export default async function (h) {
               .filter((r) => r.h < 44 || r.w < 44).slice(0, 6))
           : [];
         if (sc) h.assert(sc.ratio >= 4.5, `${skin}/reader scripture contrast ${sc.ratio}:1 (${sc.fg} on ${sc.bg}, ${sc.font})`);
+        if (device === "phone" && (skin === "skyreader" || skin === "trailhead")) {
+          const names = await h.evaluate(() => [...document.querySelectorAll(".mobile-tab, .app-header button, .bible-panel button, .bible-panel [role=button]")]
+            .filter((e) => e.getClientRects().length).map((e) => { const r = e.getBoundingClientRect(); return { c: e.className.toString().slice(0, 40), w: Math.round(r.width), h: Math.round(r.height) }; })
+            .filter((r) => (r.h < 44 || r.w < 44) && r.w > 0));
+          console.log(`  [${skin}/${screen}] controls under 44px:`, JSON.stringify(names.slice(0, 8)));
+        }
         h.assert(!m.horizontalScroll, `${skin}/${screen}: no horizontal page overflow`);
         const file = await h.screenshot(`${skin}-${screen}-${device}.png`);
         report.push({ skin, screen, device, theme: m.theme, bodyFont: m.bodyFont, scripture: sc, smallTargets: small.length, file });

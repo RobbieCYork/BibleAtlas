@@ -13,7 +13,7 @@
  *                     shape cannot come from a token.
  * Layer 3  MAP        a filter on the MapLibre canvas only (never the attribution control).
  *
- * Skin modes: Sticker Pop and Clarity are LIGHT, Midnight Signal is DARK. SkinController pins
+ * Skin modes: Sticker Pop, Clarity, Sage Study, Sky Reader, Trailhead and Highlighter are LIGHT, Midnight Signal is DARK. SkinController pins
  * <html data-theme> to match, so the app's existing light/dark rules agree with the palette.
  * `html:root[...]` is (0,2,1): it beats both `:root[data-theme]` and `:root:not([data-theme])`.
  *
@@ -25,6 +25,28 @@
  *             sage #356C56 on #FFF 6.1, on #F3F6F4 5.6, white on sage 6.1
  *   Midnight  text #E3E7F2 on panel #151B2E 13.8; headings #F5F7FB 15.9; muted #A3ADC7 7.6;
  *             violet #9B85FF on panel 5.9, dark ink on it 6.5; teal #2DD4BF on panel 9.2
+ *   Sage      (2026-11-14, computed from hex) text #1F2937 on #FFFFFF 14.7, on bg #F6F8F3 13.7, on sunken #ECEEE6 12.5;
+ *             muted #56604F on #F6F8F3 6.2, on #FFFFFF 6.6, on sunken 5.6; sage #3F6B57 on #FFFFFF 6.1,
+ *             on #F6F8F3 5.7, white on sage 6.1, sage on accent-bg #E6EFE8 5.0+; gold-deep text #8A5A14 on
+ *             #FFFFFF 5.9, on #F6F8F3 5.5; ink on gold #C58B3B 5.0 (white on gold would be 3.0, so gold
+ *             never carries white text and the raw gold is only ever a fill or an outline)
+ *   Sky       (2026-11-14, computed from hex) ink #0F2547 on #FFFFFF 15.3, on bg #E6F2FF 13.5, on verse
+ *             flash #FFE3C2 12.4; muted #3C5278 on #E6F2FF 6.9, on #FFFFFF 7.9; blue #1B58C9 on #FFFFFF 6.4,
+ *             on #E6F2FF 5.6, white on blue 6.4; link #17409E on #FFFFFF 9.4; ink on orange #FF8A1F 6.5
+ *             (white on orange is about 2.4, so orange only ever carries the dark ink)
+ *   Trailhead (2026-11-14, computed) ink #1D3527 on #FFFFFF 13.2, on bg #FFF6DA 12.2; muted #41594A on #FFF6DA
+ *             7.1, on #FFFFFF 7.6; green #25683F on #FFFFFF 6.7, on #FFF6DA 6.2, white on green 6.7; link
+ *             #1A4D2E on #FFFFFF 9.8, on highlight #FFF0B8 8.6; ink on sun #FFC83D 8.5, on sky #D7ECF7 10.8
+ *   Highlighter (2026-11-14, computed) ink #141A2E on #FFFFFF 17.3, on bg #F2F4FA 15.7; muted #4F5870 on
+ *             #F2F4FA 6.5, on #FFFFFF 7.1; indigo #3338C9 on #FFFFFF 8.2, on #F2F4FA 7.5, white on indigo 8.2,
+ *             on indigo-tint #E4E6FB 6.7; ink on highlighter #FFE45C 13.6 (indigo on it 6.5)
+ * Trailhead is kids-students/kids-a.html and Highlighter is kids-d.html (S-D). Their trail stones, tools
+ * row, quiz, progress ring and hint banners are concept-only and are NOT built; only the palette, type,
+ * shapes and sizes were taken.
+ * Hex values for Sage Study came from the palette printed on chatgpt-3.png (bg #F6F8F3, surface #FFFFFF,
+ * text #1F2937, accent #3F6B57, secondary #C58B3B); the muted, border, gold-deep and map-pin values are
+ * chosen here. Sky Reader is kids-students/kids-b.html (bg #E6F2FF, ink #0F2547, blue #1B58C9, orange
+ * #FF8A1F, muted #3C5278). The mockup's streak dots and audio card are concept-only and are NOT built.
  * Hex values for Midnight Signal were read by eye from chatgpt-1.png (bg #0B1020, surface #151B2E,
  * text #F5F7FB, accent #7C5CFF, secondary #2DD4BF); the accent used for TEXT and filled buttons is
  * lifted to #9B85FF because #7C5CFF itself is only 3.8:1 on the surface. #7C5CFF stays as the
@@ -202,6 +224,207 @@ html:root[data-skin="midnight"] {
   color-scheme: dark;
 }
 
+/* ---------- SAGE STUDY (light) ---------- */
+html:root[data-skin="sage"] {
+  --display: "Lora", "Iowan Old Style", Georgia, serif;
+  --sans: "DM Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --serif: "Lora", "Iowan Old Style", Georgia, serif;
+  --tracking-label: 0.05em;
+
+  --text: #1f2937;
+  --text-h: #162033;
+  --text-muted: #56604f;
+  --bg: #f6f8f3;
+  --panel-bg: #ffffff;
+  --reading-bg: #ffffff;
+  --surface-sunken: #eceee6;
+  --border: #e2e5da;
+  --border-strong: #bcc2ae;
+  --input-border: #8d9580;
+  --accent: #3f6b57;
+  --accent-hover: #2f5443;
+  --accent-bg: #e6efe8;
+  --accent-contrast: #ffffff;
+  --link: #3f6b57;
+  --danger: #a8402a;
+  --verse-flash-bg: rgba(197, 139, 59, 0.24);
+  --brand: #3f6b57;
+  --brand-tint: #3f6b57;
+  --note-red: #a8402a;
+  --note-gold: #8a5a14;
+  --note-green: #2f5a43;
+  --note-blue: #34647f;
+  --note-violet: #6d28d9;
+  --growth-series: #3f6b57;
+  --growth-series-hover: #2f5443;
+  --growth-grid: #e8ebe0;
+  --growth-axis: #bcc2ae;
+  --growth-boundary: #8d9580;
+  --pin-city: #3f6b57;
+  --pin-region: #6a9478;
+  --pin-water: #4f7f95;
+  --pin-terrain: #8a7a5c;
+  --pin-poi: #c58b3b;
+  --pin-selected: #a8402a;
+  --release-live: #2f6e4a;
+  --release-test: #8a5a14;
+  --release-test-bg: rgba(197, 139, 59, 0.18);
+  --sk-gold: #c58b3b;
+  --sk-gold-deep: #8a5a14;
+  color-scheme: light;
+}
+
+/* ---------- SKY READER (light) ---------- */
+html:root[data-skin="skyreader"] {
+  --display: "Baloo 2", "Avenir Next Rounded", "Nunito", system-ui, sans-serif;
+  --sans: "Baloo 2", "Avenir Next Rounded", "Nunito", system-ui, sans-serif;
+  --serif: "Atkinson Hyperlegible", "Verdana", system-ui, sans-serif;
+  --tracking-label: 0.02em;
+
+  --text: #0f2547;
+  --text-h: #0a1c3a;
+  --text-muted: #3c5278;
+  --bg: #e6f2ff;
+  --panel-bg: #ffffff;
+  --reading-bg: #ffffff;
+  --surface-sunken: #d6e8fb;
+  --border: #c0d5f1;
+  --border-strong: #7f9fd0;
+  --input-border: #5d7fb8;
+  --accent: #1b58c9;
+  --accent-hover: #1446a3;
+  --accent-bg: #dbe9fb;
+  --accent-contrast: #ffffff;
+  --link: #17409e;
+  --danger: #b3261e;
+  --verse-flash-bg: #ffe3c2;
+  --brand: #ff8a1f;
+  --brand-tint: #a8480a;
+  --note-red: #b3261e;
+  --note-gold: #8a5400;
+  --note-green: #0b6b50;
+  --note-blue: #1b58c9;
+  --note-violet: #6d28d9;
+  --growth-series: #1b58c9;
+  --growth-series-hover: #1446a3;
+  --growth-grid: #dbe7f6;
+  --growth-axis: #7f9fd0;
+  --growth-boundary: #5d7fb8;
+  --pin-city: #1b58c9;
+  --pin-region: #0f8a6a;
+  --pin-water: #2f8fd8;
+  --pin-terrain: #7a6a5a;
+  --pin-poi: #ff8a1f;
+  --pin-selected: #d1342a;
+  --release-live: #0b6b50;
+  --release-test: #a8480a;
+  --release-test-bg: rgba(255, 138, 31, 0.2);
+  --sk-orange: #ff8a1f;
+  --sk-navy: #0f2547;
+  color-scheme: light;
+}
+
+/* ---------- TRAILHEAD (light) ---------- */
+html:root[data-skin="trailhead"] {
+  --display: "Lexend", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --sans: "Lexend", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --serif: "Lexend", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --tracking-label: 0.02em;
+
+  --text: #1d3527;
+  --text-h: #14281c;
+  --text-muted: #41594a;
+  --bg: #fff6da;
+  --panel-bg: #ffffff;
+  --reading-bg: #ffffff;
+  --surface-sunken: #f7ebc4;
+  --border: #e6dbb0;
+  --border-strong: #a9b89a;
+  --input-border: #6f8a74;
+  --accent: #25683f;
+  --accent-hover: #1a4d2e;
+  --accent-bg: #e3f1e6;
+  --accent-contrast: #ffffff;
+  --link: #1a4d2e;
+  --danger: #b3261e;
+  --verse-flash-bg: #fff0b8;
+  --brand: #25683f;
+  --brand-tint: #1a4d2e;
+  --note-red: #b3261e;
+  --note-gold: #8a5400;
+  --note-green: #1a4d2e;
+  --note-blue: #1f5f8a;
+  --note-violet: #6d28d9;
+  --growth-series: #25683f;
+  --growth-series-hover: #1a4d2e;
+  --growth-grid: #efe5c0;
+  --growth-axis: #a9b89a;
+  --growth-boundary: #6f8a74;
+  --pin-city: #25683f;
+  --pin-region: #3f9a5f;
+  --pin-water: #2f8fc0;
+  --pin-terrain: #8a7a5c;
+  --pin-poi: #e0a000;
+  --pin-selected: #b3261e;
+  --release-live: #1a4d2e;
+  --release-test: #8a5400;
+  --release-test-bg: rgba(255, 200, 61, 0.3);
+  --sk-sun: #ffc83d;
+  --sk-sky: #d7ecf7;
+  --sk-ink: #1d3527;
+  color-scheme: light;
+}
+
+/* ---------- HIGHLIGHTER (light) ---------- */
+html:root[data-skin="highlighter"] {
+  --display: "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --sans: "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --serif: "Source Serif 4", "Iowan Old Style", Georgia, serif;
+  --tracking-label: 0.05em;
+
+  --text: #141a2e;
+  --text-h: #0c1124;
+  --text-muted: #4f5870;
+  --bg: #f2f4fa;
+  --panel-bg: #ffffff;
+  --reading-bg: #ffffff;
+  --surface-sunken: #e8ebf5;
+  --border: #dde1ef;
+  --border-strong: #a9b0cc;
+  --input-border: #7b86ad;
+  --accent: #3338c9;
+  --accent-hover: #2b30a8;
+  --accent-bg: #e4e6fb;
+  --accent-contrast: #ffffff;
+  --link: #2b30a8;
+  --danger: #b3261e;
+  --verse-flash-bg: #ffe45c;
+  --brand: #3338c9;
+  --brand-tint: #3338c9;
+  --note-red: #b3261e;
+  --note-gold: #7a5800;
+  --note-green: #1f6b4a;
+  --note-blue: #3338c9;
+  --note-violet: #6d28d9;
+  --growth-series: #3338c9;
+  --growth-series-hover: #2b30a8;
+  --growth-grid: #e4e7f2;
+  --growth-axis: #a9b0cc;
+  --growth-boundary: #7b86ad;
+  --pin-city: #3338c9;
+  --pin-region: #5b61e0;
+  --pin-water: #3b82c4;
+  --pin-terrain: #7b86ad;
+  --pin-poi: #e0b800;
+  --pin-selected: #b3261e;
+  --release-live: #1f6b4a;
+  --release-test: #7a5800;
+  --release-test-bg: rgba(255, 228, 92, 0.4);
+  --sk-hl: #ffe45c;
+  --sk-ink: #141a2e;
+  color-scheme: light;
+}
+
 /* Timeline lane pigments (TimelineView.css keeps its own palette keyed on data-theme; `html:root`
  * out-ranks `:root[data-theme="light"] .tl-root`). Each *-rgb triple must change with its colour. */
 html:root[data-skin="sticker"] .tl-root {
@@ -234,6 +457,46 @@ html:root[data-skin="midnight"] .tl-root {
   --tl-book-rgb: 182, 165, 255;
   --tl-on-cat: #0b1020;
 }
+html:root[data-skin="sage"] .tl-root {
+  --tl-biblical: #8a5a14; --tl-biblical-rgb: 138, 90, 20;
+  --tl-church: #34647f;   --tl-church-rgb: 52, 100, 127;
+  --tl-movement: #a8402a; --tl-movement-rgb: 168, 64, 42;
+  --tl-world: #56604f;    --tl-world-rgb: 86, 96, 79;
+  --tl-religion: #3f6b57; --tl-religion-rgb: 63, 107, 87;
+  --tl-life: #6b5a9a;     --tl-life-rgb: 107, 90, 154;
+  --tl-book-rgb: 107, 90, 154;
+  --tl-on-cat: #ffffff;
+}
+html:root[data-skin="skyreader"] .tl-root {
+  --tl-biblical: #a8480a; --tl-biblical-rgb: 168, 72, 10;
+  --tl-church: #1b58c9;   --tl-church-rgb: 27, 88, 201;
+  --tl-movement: #b3261e; --tl-movement-rgb: 179, 38, 30;
+  --tl-world: #3c5278;    --tl-world-rgb: 60, 82, 120;
+  --tl-religion: #0b6b50; --tl-religion-rgb: 11, 107, 80;
+  --tl-life: #6d28d9;     --tl-life-rgb: 109, 40, 217;
+  --tl-book-rgb: 109, 40, 217;
+  --tl-on-cat: #ffffff;
+}
+html:root[data-skin="trailhead"] .tl-root {
+  --tl-biblical: #8a5400; --tl-biblical-rgb: 138, 84, 0;
+  --tl-church: #1f5f8a;   --tl-church-rgb: 31, 95, 138;
+  --tl-movement: #b3261e; --tl-movement-rgb: 179, 38, 30;
+  --tl-world: #41594a;    --tl-world-rgb: 65, 89, 74;
+  --tl-religion: #25683f; --tl-religion-rgb: 37, 104, 63;
+  --tl-life: #6d28d9;     --tl-life-rgb: 109, 40, 217;
+  --tl-book-rgb: 109, 40, 217;
+  --tl-on-cat: #ffffff;
+}
+html:root[data-skin="highlighter"] .tl-root {
+  --tl-biblical: #7a5800; --tl-biblical-rgb: 122, 88, 0;
+  --tl-church: #3338c9;   --tl-church-rgb: 51, 56, 201;
+  --tl-movement: #b3261e; --tl-movement-rgb: 179, 38, 30;
+  --tl-world: #4f5870;    --tl-world-rgb: 79, 88, 112;
+  --tl-religion: #1f6b4a; --tl-religion-rgb: 31, 107, 74;
+  --tl-life: #6d28d9;     --tl-life-rgb: 109, 40, 217;
+  --tl-book-rgb: 109, 40, 217;
+  --tl-on-cat: #ffffff;
+}
 
 /* ============================================================================
  * LAYER 2 — COMPONENTS
@@ -245,6 +508,10 @@ html:root[data-skin="midnight"] .tl-root {
 html:root[data-skin="sticker"] { --sk-bw: 2.5px; --sk-r: 14px; --sk-r-lg: 22px; --sk-sh: 3px 3px 0 #15110e; --sk-sh-lg: 5px 5px 0 #15110e; }
 html:root[data-skin="clarity"] { --sk-bw: 1px;   --sk-r: 12px; --sk-r-lg: 16px; --sk-sh: 0 1px 3px rgba(20, 40, 30, 0.12); --sk-sh-lg: 0 4px 16px rgba(20, 40, 30, 0.1); }
 html:root[data-skin="midnight"] { --sk-bw: 1px;  --sk-r: 12px; --sk-r-lg: 18px; --sk-sh: none; --sk-sh-lg: 0 8px 28px rgba(0, 0, 0, 0.45); }
+html:root[data-skin="sage"] { --sk-bw: 1px; --sk-r: 14px; --sk-r-lg: 20px; --sk-sh: 0 1px 2px rgba(63, 80, 50, 0.1); --sk-sh-lg: 0 6px 22px rgba(63, 80, 50, 0.09); }
+html:root[data-skin="trailhead"] { --sk-bw: 2px; --sk-r: 18px; --sk-r-lg: 24px; --sk-sh: 0 2px 0 rgba(26, 77, 46, 0.18); --sk-sh-lg: 0 6px 18px rgba(26, 77, 46, 0.12); }
+html:root[data-skin="highlighter"] { --sk-bw: 1px; --sk-r: 10px; --sk-r-lg: 14px; --sk-sh: 0 1px 2px rgba(20, 26, 46, 0.1); --sk-sh-lg: 0 4px 14px rgba(20, 26, 46, 0.08); }
+html:root[data-skin="skyreader"] { --sk-bw: 2px; --sk-r: 16px; --sk-r-lg: 24px; --sk-sh: 0 2px 0 rgba(15, 37, 71, 0.16); --sk-sh-lg: 0 6px 18px rgba(27, 88, 201, 0.14); }
 
 /* --- Controls: header buttons, chips, map overlays --- */
 html[data-skin] .panel-menu-button,
@@ -351,6 +618,110 @@ html[data-skin="midnight"] .bible-passage-title-btn { background: transparent; b
 html[data-skin="midnight"] .bible-chapter-nav-small { background: transparent; border-color: #7c5cff; color: #b6a5ff; }
 html[data-skin="midnight"] .cluster-marker { background: #7c5cff; color: #ffffff; border: 2px solid rgba(255, 255, 255, 0.85); box-shadow: 0 0 0 4px rgba(124, 92, 255, 0.28), 0 4px 14px rgba(0, 0, 0, 0.5); }
 
+/* ---------------------------------------------------------------- SAGE STUDY
+ * Warmer and softer than Clarity: stone-toned surfaces, a gold secondary, Lora throughout the
+ * reading and heading faces, pill-shaped chips, dotted name links like the mockup. */
+html[data-skin="sage"] .app-header { background: var(--bg); border-bottom: 1px solid var(--border); }
+html[data-skin="sage"] .panel-menu-button,
+html[data-skin="sage"] .mobile-nav-menu-button { background: #ffffff; border-color: var(--border-strong); }
+html[data-skin="sage"] .app-logo-button .app-logo { border-radius: 12px; box-shadow: 0 0 0 1px var(--border-strong); }
+html[data-skin="sage"] .search-bar input { background: #ffffff; border-color: var(--border-strong); border-radius: 999px; }
+html[data-skin="sage"] .auth-avatar { background: var(--accent); color: #ffffff; font-weight: 700; }
+html[data-skin="sage"] .mobile-tab-bar { background: #ffffff; border-top: 1px solid var(--border); box-shadow: 0 -4px 18px rgba(63, 80, 50, 0.07); }
+html[data-skin="sage"] .mobile-tab { position: relative; }
+html[data-skin="sage"] .mobile-tab.active { color: var(--accent); font-weight: 600; }
+html[data-skin="sage"] .mobile-tab.active::after { content: ""; position: absolute; left: 30%; right: 30%; bottom: 3px; height: 3px; border-radius: 3px; background: var(--accent); }
+html[data-skin="sage"] .bible-verses { background: #ffffff; border-color: var(--border); }
+html[data-skin="sage"] .bible-verses p { line-height: 1.78; }
+html[data-skin="sage"] .bible-verse-num { color: var(--sk-gold-deep); }
+html[data-skin="sage"] .verse-location-link { color: var(--accent); text-decoration: underline dotted; text-decoration-thickness: 2px; text-underline-offset: 4px; }
+html[data-skin="sage"] .bible-translation-compact { background: #ffffff; border-color: var(--border-strong); border-radius: 12px; }
+html[data-skin="sage"] .bible-listen-chip { background: #ffffff; color: var(--accent); border-color: var(--border-strong); border-radius: 12px; }
+html[data-skin="sage"] .bible-passage-title-btn { background: #ffffff; border-color: var(--accent); border-radius: 999px; font-family: var(--serif); }
+html[data-skin="sage"] .bible-chapter-nav-small { background: #ffffff; border-color: var(--accent); color: var(--accent); border-radius: 50%; }
+html[data-skin="sage"] .cluster-marker { background: var(--sk-gold); color: #1f2937; border: 3px solid #ffffff; box-shadow: 0 3px 10px rgba(63, 80, 50, 0.3); }
+html[data-skin="sage"] .then-now-buttons button.active,
+html[data-skin="sage"] .admin-tab-active { background: var(--accent-bg); color: var(--accent); }
+html[data-skin="sage"] .verse-sheet { border-top: 3px solid var(--sk-gold); }
+
+/* ---------------------------------------------------------------- SKY READER
+ * Friendly, rounded, large. Scripture in Atkinson Hyperlegible at 21px / 1.75. Orange is a fill only
+ * and always carries the dark navy ink. Phone controls are raised to 44px. */
+html[data-skin="skyreader"] .app-header { background: var(--bg); border-bottom: 0; }
+html[data-skin="skyreader"] .panel-menu-button,
+html[data-skin="skyreader"] .mobile-nav-menu-button { background: #ffffff; border-color: var(--border); }
+html[data-skin="skyreader"] .search-bar input { background: #ffffff; border-color: #ffffff; border-radius: 999px; box-shadow: var(--sk-sh); font-family: var(--sans); font-weight: 600; }
+html[data-skin="skyreader"] .auth-avatar { background: var(--sk-orange); color: var(--sk-navy); font-weight: 800; border: 2px solid #ffffff; }
+html[data-skin="skyreader"] .mobile-tab-bar { background: #ffffff; border-top: 0; border-radius: 24px 24px 0 0; box-shadow: 0 -6px 20px rgba(27, 88, 201, 0.12); }
+html[data-skin="skyreader"] .mobile-tab { min-height: 48px; border-radius: 16px; margin: 4px 1px; padding-left: 0; padding-right: 0; }
+html[data-skin="skyreader"] .mobile-tab-label { font-size: calc(11px * var(--tsz, 1)); font-weight: 700; letter-spacing: -0.02em; }
+html[data-skin="skyreader"] .mobile-tab.active { background: var(--accent-bg); color: var(--accent); }
+html[data-skin="skyreader"] .bible-verses { background: #ffffff; border-color: #ffffff; padding: 20px 20px 22px; }
+html[data-skin="skyreader"] .bible-verses p { font-size: calc(21px * var(--tsz, 1)); line-height: 1.75; margin-bottom: 14px; max-width: 28em; }
+html[data-skin="skyreader"] .bible-verse-num { color: var(--accent); font-weight: 800; }
+html[data-skin="skyreader"] .bible-verses p.verse-flash { border-left: 5px solid var(--sk-orange); padding-left: 10px; }
+html[data-skin="skyreader"] .verse-location-link { color: var(--link); font-weight: 700; background: var(--accent-bg); border-radius: 10px; padding: 8px 6px; margin: -8px -2px; text-decoration: underline; text-decoration-color: var(--sk-orange); text-decoration-thickness: 3px; text-underline-offset: 5px; }
+html[data-skin="skyreader"] .bible-translation-compact { background: #ffffff; border-color: #ffffff; font-weight: 800; }
+html[data-skin="skyreader"] .bible-listen-chip { background: var(--sk-orange); color: var(--sk-navy); border-color: var(--sk-orange); font-weight: 800; }
+html[data-skin="skyreader"] .bible-passage-title-btn { background: var(--accent); color: #ffffff; border-color: var(--accent); border-radius: 999px; font-family: var(--sans); font-weight: 800; }
+html[data-skin="skyreader"] .bible-chapter-nav-small { background: #ffffff; border-color: #ffffff; color: var(--accent); border-radius: 50%; }
+html[data-skin="skyreader"] .cluster-marker { background: var(--sk-orange); color: var(--sk-navy); border: 3px solid var(--sk-navy); box-shadow: 0 3px 0 rgba(15, 37, 71, 0.3); min-width: 44px; min-height: 44px; }
+html[data-skin="skyreader"] .then-now-buttons button.active,
+html[data-skin="skyreader"] .admin-tab-active { background: var(--accent-bg); color: var(--accent); }
+html[data-skin="skyreader"] .verse-sheet { border-top: 0; border-radius: 24px 24px 0 0; }
+html[data-skin="skyreader"] button,
+html[data-skin="skyreader"] .skin-picker-option { font-family: var(--sans); }
+
+/* ---------------------------------------------------------------- TRAILHEAD
+ * Warm cream ground, forest green, sunny yellow. Lexend everywhere (designed for reading fluency),
+ * scripture at 22px / 1.78. Big friendly controls: 48px on a phone. Yellow carries only dark ink. */
+html[data-skin="trailhead"] .app-header { background: var(--bg); border-bottom: 0; }
+html[data-skin="trailhead"] .panel-menu-button,
+html[data-skin="trailhead"] .mobile-nav-menu-button { background: #ffffff; border-color: var(--border-strong); }
+html[data-skin="trailhead"] .search-bar input { background: #ffffff; border-color: var(--border-strong); border-radius: 999px; font-weight: 500; }
+html[data-skin="trailhead"] .auth-avatar { background: var(--sk-sun); color: var(--sk-ink); font-weight: 700; border: 2px solid #ffffff; }
+html[data-skin="trailhead"] .mobile-tab-bar { background: #ffffff; border-top: 0; border-radius: 24px 24px 0 0; box-shadow: 0 -6px 20px rgba(26, 77, 46, 0.12); }
+html[data-skin="trailhead"] .mobile-tab { min-height: 48px; border-radius: 16px; margin: 4px 1px; padding-left: 0; padding-right: 0; }
+html[data-skin="trailhead"] .mobile-tab-label { font-size: calc(10px * var(--tsz, 1)); font-weight: 600; letter-spacing: -0.03em; }
+html[data-skin="trailhead"] .mobile-tab.active { background: var(--accent-bg); color: var(--accent); }
+html[data-skin="trailhead"] .bible-verses { background: #ffffff; border-color: #ffffff; padding: 20px 20px 22px; }
+html[data-skin="trailhead"] .bible-verses p { font-size: calc(22px * var(--tsz, 1)); line-height: 1.78; margin-bottom: 14px; max-width: 28em; }
+html[data-skin="trailhead"] .bible-verse-num { color: var(--accent); font-weight: 700; }
+html[data-skin="trailhead"] .bible-verses p.verse-flash { border-left: 5px solid var(--sk-sun); padding-left: 10px; }
+html[data-skin="trailhead"] .verse-location-link { color: var(--link); font-weight: 600; background: #fff0b8; border-radius: 10px; padding: 8px 6px; margin: -8px -2px; text-decoration: underline; text-underline-offset: 4px; }
+html[data-skin="trailhead"] .bible-translation-compact { background: #ffffff; border-color: var(--border-strong); font-weight: 600; }
+html[data-skin="trailhead"] .bible-listen-chip { background: var(--sk-sun); color: var(--sk-ink); border-color: var(--sk-sun); font-weight: 700; }
+html[data-skin="trailhead"] .bible-passage-title-btn { background: var(--sk-sky); color: var(--sk-ink); border-color: var(--sk-sky); border-radius: 999px; font-weight: 700; }
+html[data-skin="trailhead"] .bible-chapter-nav-small { background: #ffffff; border-color: var(--border-strong); color: var(--accent); border-radius: 50%; }
+html[data-skin="trailhead"] .cluster-marker { background: var(--accent); color: #ffffff; border: 3px solid #ffffff; box-shadow: 0 3px 10px rgba(26, 77, 46, 0.4); min-width: 44px; min-height: 44px; }
+html[data-skin="trailhead"] .then-now-buttons button.active,
+html[data-skin="trailhead"] .admin-tab-active { background: var(--accent-bg); color: var(--accent); }
+html[data-skin="trailhead"] .verse-sheet { border-top: 0; border-radius: 24px 24px 0 0; }
+
+/* ---------------------------------------------------------------- HIGHLIGHTER
+ * Cool grey page, white cards, indigo accent; the yellow highlighter is the one warm note and only
+ * ever sits behind dark ink (verse flash, name links, the active tab/chip). Inter UI + Source Serif 4. */
+html[data-skin="highlighter"] .app-header { background: #ffffff; border-bottom: 1px solid var(--border); }
+html[data-skin="highlighter"] .panel-menu-button,
+html[data-skin="highlighter"] .mobile-nav-menu-button { background: var(--bg); border-color: var(--border); }
+html[data-skin="highlighter"] .search-bar input { background: var(--bg); border-color: var(--border); border-radius: 10px; }
+html[data-skin="highlighter"] .auth-avatar { background: var(--accent); color: #ffffff; font-weight: 700; }
+html[data-skin="highlighter"] .mobile-tab-bar { background: #ffffff; border-top: 1px solid var(--border); box-shadow: 0 -4px 16px rgba(20, 26, 46, 0.06); }
+html[data-skin="highlighter"] .mobile-tab { position: relative; }
+html[data-skin="highlighter"] .mobile-tab.active { color: var(--accent); font-weight: 700; }
+html[data-skin="highlighter"] .mobile-tab.active::after { content: ""; position: absolute; left: 22%; right: 22%; bottom: 4px; height: 6px; border-radius: 2px; background: var(--sk-hl); z-index: -1; }
+html[data-skin="highlighter"] .bible-verses { background: #ffffff; border-color: var(--border); }
+html[data-skin="highlighter"] .bible-verses p { font-size: calc(20.5px * var(--tsz, 1)); line-height: 1.72; }
+html[data-skin="highlighter"] .bible-verse-num { color: var(--accent); }
+html[data-skin="highlighter"] .verse-location-link { color: var(--link); font-weight: 600; background: linear-gradient(transparent 55%, var(--sk-hl) 55%); text-decoration: none; }
+html[data-skin="highlighter"] .bible-translation-compact { background: #ffffff; border-color: var(--border-strong); }
+html[data-skin="highlighter"] .bible-listen-chip { background: var(--accent); color: #ffffff; border-color: var(--accent); }
+html[data-skin="highlighter"] .bible-passage-title-btn { background: #ffffff; border-color: var(--accent); color: var(--accent); }
+html[data-skin="highlighter"] .bible-chapter-nav-small { background: #ffffff; border-color: var(--accent); color: var(--accent); }
+html[data-skin="highlighter"] .cluster-marker { background: var(--accent); color: #ffffff; border: 3px solid #ffffff; box-shadow: 0 3px 10px rgba(20, 26, 46, 0.3); }
+html[data-skin="highlighter"] .then-now-buttons button.active,
+html[data-skin="highlighter"] .admin-tab-active { background: var(--sk-hl); color: var(--sk-ink); }
+
 /* ============================================================================
  * LAYER 3 — MAP (canvas only; markers, controls and the attribution are DOM and are not filtered)
  * Satellite imagery is never filtered. The base style is MapLibre's "Illuminated" parchment atlas.
@@ -358,11 +729,20 @@ html[data-skin="midnight"] .cluster-marker { background: #7c5cff; color: #ffffff
 html[data-skin="sticker"] .map-container:not([data-map-mode="satellite"]) .maplibregl-canvas { filter: saturate(3.2) contrast(1.12) brightness(1.05); }
 html[data-skin="clarity"] .map-container:not([data-map-mode="satellite"]) .maplibregl-canvas { filter: saturate(0.6) hue-rotate(22deg) brightness(1.07) contrast(0.95); }
 html[data-skin="midnight"] .map-container:not([data-map-mode="satellite"]) .maplibregl-canvas { filter: grayscale(1) invert(0.9) sepia(0.7) hue-rotate(185deg) saturate(1.1) brightness(0.95) contrast(1.05); }
+html[data-skin="sage"] .map-container:not([data-map-mode="satellite"]) .maplibregl-canvas { filter: saturate(0.45) sepia(0.12) brightness(1.07) contrast(0.95); }
+html[data-skin="trailhead"] .map-container:not([data-map-mode="satellite"]) .maplibregl-canvas { filter: saturate(1.35) hue-rotate(8deg) brightness(1.06) contrast(1.02); }
+html[data-skin="highlighter"] .map-container:not([data-map-mode="satellite"]) .maplibregl-canvas { filter: saturate(0.4) hue-rotate(185deg) brightness(1.04) contrast(0.97); }
+html[data-skin="skyreader"] .map-container:not([data-map-mode="satellite"]) .maplibregl-canvas { filter: saturate(1.7) hue-rotate(-6deg) brightness(1.06) contrast(1.02); }
 
 /* Sticker pins get the sticker outline. */
 html[data-skin="sticker"] .map-pin .pin-body { stroke: #15110e; stroke-width: 2.5px; }
 html[data-skin="sticker"] .map-pin .pin-dot { fill: #15110e; }
 html[data-skin="midnight"] .map-pin .pin-dot { fill: #0b1020; }
+html[data-skin="sage"] .map-pin .pin-body { stroke: #ffffff; stroke-width: 1.5px; }
+html[data-skin="skyreader"] .map-pin .pin-body { stroke: #ffffff; stroke-width: 2px; }
+html[data-skin="skyreader"] .map-pin .pin-dot { fill: #0f2547; }
+html[data-skin="trailhead"] .map-pin .pin-body,
+html[data-skin="highlighter"] .map-pin .pin-body { stroke: #ffffff; stroke-width: 2px; }
 
 /* 44px touch targets on the header controls the skins restyle (defaults are 34-38px). Phone only:
  * the desktop header keeps its compact sizes. */
@@ -371,4 +751,31 @@ html[data-skin="midnight"] .map-pin .pin-dot { fill: #0b1020; }
   html[data-skin] .panel-menu-button { width: 44px; height: 44px; }
   html[data-skin] .auth-avatar { width: 44px; height: 44px; }
   html[data-skin] .search-bar input { min-height: 44px; }
+  /* Sky Reader and Trailhead: every control a child taps, at 44px or more. */
+  html[data-skin="skyreader"] .app-logo-button,
+  html[data-skin="trailhead"] .app-logo-button,
+  html[data-skin="skyreader"] .auth-trigger,
+  html[data-skin="trailhead"] .auth-trigger,
+  html[data-skin="skyreader"] .bible-plans-close,
+  html[data-skin="trailhead"] .bible-plans-close,
+  html[data-skin="skyreader"] .ref-picker-sort,
+  html[data-skin="trailhead"] .ref-picker-sort,
+  html[data-skin="skyreader"] .ref-picker-close,
+  html[data-skin="trailhead"] .ref-picker-close { min-height: 44px; min-width: 44px; display: inline-flex; align-items: center; justify-content: center; }
+  html[data-skin="skyreader"] .ref-picker-book,
+  html[data-skin="trailhead"] .ref-picker-book,
+  html[data-skin="skyreader"] .admin-tab,
+  html[data-skin="trailhead"] .admin-tab,
+  html[data-skin="skyreader"] .release-view-option,
+  html[data-skin="trailhead"] .release-view-option,
+  html[data-skin="skyreader"] .auth-back-link,
+  html[data-skin="trailhead"] .auth-back-link,
+  html[data-skin="skyreader"] .bible-translation-compact,
+  html[data-skin="trailhead"] .bible-translation-compact,
+  html[data-skin="skyreader"] .bible-listen-chip,
+  html[data-skin="trailhead"] .bible-listen-chip,
+  html[data-skin="skyreader"] .bible-passage-title-btn,
+  html[data-skin="trailhead"] .bible-passage-title-btn,
+  html[data-skin="skyreader"] .bible-chapter-nav-small,
+  html[data-skin="trailhead"] .bible-chapter-nav-small { min-height: 44px; min-width: 44px; }
 }

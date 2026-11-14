@@ -28,7 +28,7 @@ import { useFeatureAdmin } from "./features";
  * dark, the other two = light) and puts the reader's own choice back the moment the skin goes.
  * ========================================================================== */
 
-export type SkinId = "sticker" | "clarity" | "midnight";
+export type SkinId = "sticker" | "clarity" | "midnight" | "sage" | "skyreader" | "trailhead" | "highlighter";
 export type SkinChoice = SkinId | "default";
 
 export interface SkinDef {
@@ -66,12 +66,44 @@ export const SKINS: ReadonlyArray<SkinDef> = [
     fonts: "family=Inter:wght@400;500;600;700&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400",
     swatch: ["#0B1020", "#7C5CFF", "#2DD4BF"],
   },
+  {
+    id: "sage",
+    label: "Sage Study",
+    blurb: "Warm stone, sage green and gold. Light.",
+    mode: "light",
+    fonts: "family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700&family=Lora:ital,wght@0,400;0,500;0,600;1,400",
+    swatch: ["#F6F8F3", "#3F6B57", "#C58B3B"],
+  },
+  {
+    id: "skyreader",
+    label: "Sky Reader",
+    blurb: "Sky blue, navy and orange; big friendly type. Light.",
+    mode: "light",
+    fonts: "family=Baloo+2:wght@500;600;700;800&family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400",
+    swatch: ["#E6F2FF", "#1B58C9", "#FF8A1F"],
+  },
+  {
+    id: "trailhead",
+    label: "Trailhead",
+    blurb: "Sunny cream, forest green, big friendly controls. Light.",
+    mode: "light",
+    fonts: "family=Lexend:wght@400;500;600;700",
+    swatch: ["#FFF6DA", "#25683F", "#FFC83D"],
+  },
+  {
+    id: "highlighter",
+    label: "Highlighter",
+    blurb: "Cool grey, indigo, yellow highlighter. Light.",
+    mode: "light",
+    fonts: "family=Inter:wght@400;500;600;700&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400",
+    swatch: ["#F2F4FA", "#3338C9", "#FFE45C"],
+  },
 ];
 
 const STORAGE_KEY = "app-skin";
 
 function isSkinId(v: unknown): v is SkinId {
-  return v === "sticker" || v === "clarity" || v === "midnight";
+  return v === "sticker" || v === "clarity" || v === "midnight" || v === "sage" || v === "skyreader" || v === "trailhead" || v === "highlighter";
 }
 
 function readStored(): SkinChoice {
