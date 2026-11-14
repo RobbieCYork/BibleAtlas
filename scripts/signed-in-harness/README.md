@@ -118,6 +118,7 @@ Selectors live there so a rename is one edit.
 | `article-read-checkbox.mjs` | "Mark this article as read" (sql/041) on a topic, person, place, site, event and book intro: last thing in the article, tick upserts `{kind, article_id}` and shows the title check, survives a reload, untick deletes that row; table missing (404/42P01) draws nothing; signed out never asks |
 | `game-toggles-nesting.mjs` | the 7 per-game toggles nest under Games & Trivia in order, a Testing parent explains itself on Live children, one game in Testing reaches Game Center correctly for member and owner |
 | `profile-cards.mjs` | other people's profiles (Friends, Requests, friend profile page) come from `get_profile_cards` (sql/042), never `GET profiles?id=in.`; a pending requester with no name reads "A Capstone member"; a friend's hidden phone/birthday never render; with the rpc missing (PGRST202, migration unapplied) the app falls back to the old table read |
+| `skins.mjs` | owner-only visual skins (lib/skin.tsx, skins.css): picker beside the Live/Test switch for the owner only; each skin applied across reader, map, timeline, notes, article, social, games and admin with screenshots and a scripture-contrast check; member and signedout never get a skin even with one planted in localStorage, and their computed styles match a run against origin/main (`DUMP=`). Stubs bible-api.com with Mark 8:1-12 (WEB, public domain) from `examples/mark8-web.json` |
 | `network-closed.mjs` | self-test of the closed network |
 | `fixtures-override.mjs` | `--fixtures` |
 

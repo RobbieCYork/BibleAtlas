@@ -1,0 +1,374 @@
+/* ============================================================================
+ * Skins — OWNER-ONLY experiment (2026-11). Read lib/skin.tsx first.
+ *
+ * Every rule in this file is scoped under `html[data-skin="…"]`, an attribute that exists only
+ * while the owner has picked a skin (lib/skin.tsx: SkinController). With the attribute absent not
+ * one selector here matches, so the default look is exactly what App.css/index.css produce. The
+ * only unscoped rules are the picker's own `.skin-picker*` classes, which exist only in the owner's
+ * Admin Console.
+ *
+ * Layer 1  TOKENS     the app is already built on custom properties (index.css), so a skin is first
+ *                     of all a new value for each one. This carries ~90% of the reach.
+ * Layer 2  COMPONENTS radii, borders, shadows, nav treatment and the few places a fixed value or a
+ *                     shape cannot come from a token.
+ * Layer 3  MAP        a filter on the MapLibre canvas only (never the attribution control).
+ *
+ * Skin modes: Sticker Pop and Clarity are LIGHT, Midnight Signal is DARK. SkinController pins
+ * <html data-theme> to match, so the app's existing light/dark rules agree with the palette.
+ * `html:root[...]` is (0,2,1): it beats both `:root[data-theme]` and `:root:not([data-theme])`.
+ *
+ * Contrast (WCAG 2.x, computed from the hex values, not eyeballed):
+ *   Sticker   ink #15110E on #FFFFFF 18.8, on #FFF1CC 16.7; muted #4D4038 on #FFF1CC 8.9;
+ *             link/accent #2438E0 on #FFFFFF 7.7, on #FFF1CC 6.9 (white on it 7.7);
+ *             ink on tomato #FF6B3D 6.6, on sun #FFD43B 13.2, on mint #19C39A 8.3
+ *   Clarity   ink #1B2421 on #FFF 15.9, on #F3F6F4 14.6; muted #5C6B66 on #F3F6F4 5.2;
+ *             sage #356C56 on #FFF 6.1, on #F3F6F4 5.6, white on sage 6.1
+ *   Midnight  text #E3E7F2 on panel #151B2E 13.8; headings #F5F7FB 15.9; muted #A3ADC7 7.6;
+ *             violet #9B85FF on panel 5.9, dark ink on it 6.5; teal #2DD4BF on panel 9.2
+ * Hex values for Midnight Signal were read by eye from chatgpt-1.png (bg #0B1020, surface #151B2E,
+ * text #F5F7FB, accent #7C5CFF, secondary #2DD4BF); the accent used for TEXT and filled buttons is
+ * lifted to #9B85FF because #7C5CFF itself is only 3.8:1 on the surface. #7C5CFF stays as the
+ * decorative brand (logo tile, active-tab bar, focus ring).
+ * ========================================================================== */
+
+/* ---------- Skin picker (owner's Admin Console) ---------- */
+.skin-picker { display: flex; flex-direction: column; gap: 6px; margin-top: 10px; align-items: flex-start; }
+.skin-picker-label { font-size: 12px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-muted); }
+.skin-picker-options { display: flex; flex-wrap: wrap; gap: 6px; }
+.skin-picker-option {
+  display: inline-flex; align-items: center; gap: 8px; min-height: 44px; padding: 8px 14px;
+  border: 1px solid var(--border-strong); border-radius: 8px; background: transparent; color: var(--text); cursor: pointer;
+}
+.skin-picker-option.active { background: var(--accent-bg); color: var(--text-h); font-weight: 600; border-color: var(--accent); }
+.skin-picker-swatch { display: inline-flex; border-radius: 50%; overflow: hidden; width: 22px; height: 22px; border: 1px solid var(--border-strong); }
+.skin-picker-swatch > span { flex: 1; }
+.skin-picker-note { font-size: 12px; color: var(--text-muted); }
+
+/* ============================================================================
+ * LAYER 1 — TOKENS
+ * ========================================================================== */
+
+/* ---------- STICKER POP (light) ---------- */
+html:root[data-skin="sticker"] {
+  --display: "Bricolage Grotesque", "Avenir Next", system-ui, sans-serif;
+  --sans: "Bricolage Grotesque", "Avenir Next", system-ui, sans-serif;
+  --serif: "Fraunces", "Iowan Old Style", Georgia, serif;
+  --tracking-label: 0.06em;
+
+  --text: #15110e;
+  --text-h: #15110e;
+  --text-muted: #4d4038;
+  --bg: #fff1cc;
+  --panel-bg: #ffffff;
+  --reading-bg: #ffffff;
+  --surface-sunken: #ffe6a0;
+  --border: #15110e;
+  --border-strong: #15110e;
+  --input-border: #15110e;
+  --accent: #2438e0;
+  --accent-hover: #1a2bb8;
+  --accent-bg: rgba(36, 56, 224, 0.12);
+  --accent-contrast: #ffffff;
+  --link: #2438e0;
+  --danger: #c2260c;
+  --verse-flash-bg: #ffe87a;
+  --brand: #ff6b3d;
+  --brand-tint: #15110e;
+  --note-red: #c2260c;
+  --note-gold: #8a5e12;
+  --note-green: #0b6b50;
+  --note-blue: #2438e0;
+  --note-violet: #6d28d9;
+  --growth-series: #2438e0;
+  --growth-series-hover: #1a2bb8;
+  --growth-grid: #e8d9a8;
+  --growth-axis: #15110e;
+  --growth-boundary: #4d4038;
+  --pin-city: #ff6b3d;
+  --pin-region: #19c39a;
+  --pin-water: #2f4bff;
+  --pin-terrain: #ff9bd0;
+  --pin-poi: #ffd43b;
+  --pin-selected: #c2260c;
+  --release-live: #0b6b50;
+  --release-test: #b45309;
+  --release-test-bg: rgba(255, 107, 61, 0.2);
+  /* skin-only helpers used by the component layer */
+  --sk-sun: #ffd43b;
+  --sk-tomato: #ff6b3d;
+  --sk-mint: #19c39a;
+  --sk-pink: #ff9bd0;
+  --sk-line: 2.5px solid #15110e;
+  --sk-shadow: 3px 3px 0 #15110e;
+  --sk-radius: 14px;
+  color-scheme: light;
+}
+
+/* ---------- CLARITY (light) ---------- */
+html:root[data-skin="clarity"] {
+  --display: "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --sans: "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --serif: "Source Serif 4", "Iowan Old Style", Georgia, serif;
+  --tracking-label: 0.04em;
+
+  --text: #1b2421;
+  --text-h: #111916;
+  --text-muted: #5c6b66;
+  --bg: #f3f6f4;
+  --panel-bg: #ffffff;
+  --reading-bg: #ffffff;
+  --surface-sunken: #eaf0ed;
+  --border: #dbe3df;
+  --border-strong: #b3c2bb;
+  --input-border: #8fa39a;
+  --accent: #356c56;
+  --accent-hover: #285242;
+  --accent-bg: #dcebe3;
+  --accent-contrast: #ffffff;
+  --link: #2f6e91;
+  --danger: #b3402a;
+  --verse-flash-bg: #dcebe3;
+  --brand: #3e7b63;
+  --brand-tint: #356c56;
+  --note-red: #a83c24;
+  --note-gold: #8a5e12;
+  --note-green: #2f5a43;
+  --note-blue: #2f6e91;
+  --note-violet: #6d28d9;
+  --growth-series: #356c56;
+  --growth-series-hover: #285242;
+  --growth-grid: #e4eae7;
+  --growth-axis: #b3c2bb;
+  --growth-boundary: #8fa39a;
+  --pin-city: #356c56;
+  --pin-region: #3e9b7a;
+  --pin-water: #2f6e91;
+  --pin-terrain: #8a7a5c;
+  --pin-poi: #6d5bb8;
+  --pin-selected: #b3402a;
+  --release-live: #2f8a4f;
+  --release-test: #b45309;
+  --release-test-bg: rgba(217, 119, 6, 0.12);
+  --sk-radius: 12px;
+  color-scheme: light;
+}
+
+/* ---------- MIDNIGHT SIGNAL (dark) ---------- */
+html:root[data-skin="midnight"] {
+  --display: "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --sans: "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --serif: "Source Serif 4", "Iowan Old Style", Georgia, serif;
+  --tracking-label: 0.08em;
+
+  --text: #e3e7f2;
+  --text-h: #f5f7fb;
+  --text-muted: #a3adc7;
+  --bg: #0b1020;
+  --panel-bg: #151b2e;
+  --reading-bg: #151b2e;
+  --surface-sunken: #0a0e1b;
+  --border: #2a3352;
+  --border-strong: #46537c;
+  --input-border: #56648f;
+  --accent: #9b85ff;
+  --accent-hover: #b6a5ff;
+  --accent-bg: rgba(124, 92, 255, 0.2);
+  --accent-contrast: #0b1020;
+  --link: #2dd4bf;
+  --danger: #ff7a8a;
+  --verse-flash-bg: rgba(124, 92, 255, 0.34);
+  --brand: #7c5cff;
+  --brand-tint: #b6a5ff;
+  --note-red: #ff9aa6;
+  --note-gold: #f2c96a;
+  --note-green: #5eead4;
+  --note-blue: #8ab4ff;
+  --note-violet: #b6a5ff;
+  --growth-series: #9b85ff;
+  --growth-series-hover: #b6a5ff;
+  --growth-grid: #1f2742;
+  --growth-axis: #46537c;
+  --growth-boundary: #6f7a99;
+  --pin-city: #b6a5ff;
+  --pin-region: #2dd4bf;
+  --pin-water: #6aa8ff;
+  --pin-terrain: #a7b0c8;
+  --pin-poi: #2dd4bf;
+  --pin-selected: #ff7a8a;
+  --release-live: #5eead4;
+  --release-test: #f5b942;
+  --release-test-bg: rgba(245, 185, 66, 0.16);
+  --sk-radius: 14px;
+  color-scheme: dark;
+}
+
+/* Timeline lane pigments (TimelineView.css keeps its own palette keyed on data-theme; `html:root`
+ * out-ranks `:root[data-theme="light"] .tl-root`). Each *-rgb triple must change with its colour. */
+html:root[data-skin="sticker"] .tl-root {
+  --tl-biblical: #b54a00; --tl-biblical-rgb: 181, 74, 0;
+  --tl-church: #2438e0;   --tl-church-rgb: 36, 56, 224;
+  --tl-movement: #c2260c; --tl-movement-rgb: 194, 38, 12;
+  --tl-world: #4d4038;    --tl-world-rgb: 77, 64, 56;
+  --tl-religion: #0b6b50; --tl-religion-rgb: 11, 107, 80;
+  --tl-life: #8b1fa8;     --tl-life-rgb: 139, 31, 168;
+  --tl-book-rgb: 139, 31, 168;
+  --tl-on-cat: #ffffff;
+}
+html:root[data-skin="clarity"] .tl-root {
+  --tl-biblical: #8a5e12; --tl-biblical-rgb: 138, 94, 18;
+  --tl-church: #2f6e91;   --tl-church-rgb: 47, 110, 145;
+  --tl-movement: #b3402a; --tl-movement-rgb: 179, 64, 42;
+  --tl-world: #5c6b66;    --tl-world-rgb: 92, 107, 102;
+  --tl-religion: #356c56; --tl-religion-rgb: 53, 108, 86;
+  --tl-life: #6d5bb8;     --tl-life-rgb: 109, 91, 184;
+  --tl-book-rgb: 109, 91, 184;
+  --tl-on-cat: #ffffff;
+}
+html:root[data-skin="midnight"] .tl-root {
+  --tl-biblical: #f2c96a; --tl-biblical-rgb: 242, 201, 106;
+  --tl-church: #8ab4ff;   --tl-church-rgb: 138, 180, 255;
+  --tl-movement: #ff9aa6; --tl-movement-rgb: 255, 154, 166;
+  --tl-world: #a7b0c8;    --tl-world-rgb: 167, 176, 200;
+  --tl-religion: #5eead4; --tl-religion-rgb: 94, 234, 212;
+  --tl-life: #b6a5ff;     --tl-life-rgb: 182, 165, 255;
+  --tl-book-rgb: 182, 165, 255;
+  --tl-on-cat: #0b1020;
+}
+
+/* ============================================================================
+ * LAYER 2 — COMPONENTS
+ * Shared shapes first (driven by per-skin variables), then each skin's own flavour.
+ * Nothing here changes a control's box size; the 44px touch overlays (`::after`) the reader and map
+ * controls already carry are left alone.
+ * ========================================================================== */
+
+html:root[data-skin="sticker"] { --sk-bw: 2.5px; --sk-r: 14px; --sk-r-lg: 22px; --sk-sh: 3px 3px 0 #15110e; --sk-sh-lg: 5px 5px 0 #15110e; }
+html:root[data-skin="clarity"] { --sk-bw: 1px;   --sk-r: 12px; --sk-r-lg: 16px; --sk-sh: 0 1px 3px rgba(20, 40, 30, 0.12); --sk-sh-lg: 0 4px 16px rgba(20, 40, 30, 0.1); }
+html:root[data-skin="midnight"] { --sk-bw: 1px;  --sk-r: 12px; --sk-r-lg: 18px; --sk-sh: none; --sk-sh-lg: 0 8px 28px rgba(0, 0, 0, 0.45); }
+
+/* --- Controls: header buttons, chips, map overlays --- */
+html[data-skin] .panel-menu-button,
+html[data-skin] .mobile-nav-menu-button,
+html[data-skin] .bible-translation-compact,
+html[data-skin] .bible-listen-chip,
+html[data-skin] .then-now-buttons,
+html[data-skin] .release-view-switch {
+  border-width: var(--sk-bw);
+  border-radius: var(--sk-r);
+  box-shadow: var(--sk-sh);
+}
+html[data-skin] .then-now-buttons button { border-radius: 0; }
+html[data-skin] .then-now-toggle .then-now-buttons { box-shadow: none; border-width: 1.5px; }
+html[data-skin] .search-bar input { border-width: var(--sk-bw); border-radius: 999px; }
+html[data-skin] .bible-passage-title-btn { border-width: var(--sk-bw); font-weight: 700; }
+html[data-skin] .bible-chapter-nav-small { border-width: var(--sk-bw); }
+
+/* --- Cards and floating surfaces --- */
+html[data-skin] .bible-verses,
+html[data-skin] .layer-controls,
+html[data-skin] .then-now-toggle,
+html[data-skin] .release-row,
+html[data-skin] .articles-panel .articles-section-header,
+html[data-skin] .bible-plan-card {
+  border-width: var(--sk-bw);
+  border-radius: var(--sk-r-lg);
+  box-shadow: var(--sk-sh-lg);
+}
+html[data-skin] .bible-verses { padding: 18px 20px 20px; }
+/* scripture: the reading face, a touch larger leading, numerals in the UI face */
+html[data-skin] .bible-verses { font-family: var(--serif); line-height: 1.65; }
+html[data-skin] .bible-verse-num { font-family: var(--sans); font-weight: 700; }
+html[data-skin] .mobile-tab { font-family: var(--sans); }
+html[data-skin] .mobile-tab-label { font-weight: 600; font-size: calc(10.5px * var(--tsz, 1)); letter-spacing: -0.01em; }
+
+/* --- Map: aged-paper overlays off, canvas filtered per skin (below), attribution untouched --- */
+html[data-skin] .map-parchment-overlay { display: none; }
+html[data-skin] .maplibregl-ctrl-group { border-radius: var(--sk-r); overflow: hidden; }
+html[data-skin] .cluster-marker { font-family: var(--sans); font-weight: 700; }
+
+/* ---------------------------------------------------------------- STICKER POP */
+html[data-skin="sticker"] .app-header {
+  background: var(--sk-sun);
+  border-bottom: 3px solid #15110e;
+}
+html[data-skin="sticker"] .app-header h1,
+html[data-skin="sticker"] .brand-tagline { color: #15110e; }
+html[data-skin="sticker"] .panel-menu-button,
+html[data-skin="sticker"] .mobile-nav-menu-button { background: #ffffff; }
+html[data-skin="sticker"] .app-logo-button { transform: rotate(-6deg); }
+html[data-skin="sticker"] .app-logo-button .app-logo { border: 2.5px solid #15110e; border-radius: 12px; box-shadow: 2px 2px 0 #15110e; background: var(--sk-tomato); }
+html[data-skin="sticker"] .search-bar input { background: #ffffff; font-weight: 600; }
+html[data-skin="sticker"] .auth-avatar { background: #2438e0; color: #ffffff; border: 2.5px solid #15110e; font-weight: 800; }
+html[data-skin="sticker"] .mobile-tab-bar { background: #ffffff; border-top: 3px solid #15110e; padding-top: 4px; }
+html[data-skin="sticker"] .mobile-tab { color: #15110e; font-weight: 800; border: 2.5px solid transparent; border-radius: 16px; margin: 0 1px; padding-left: 0; padding-right: 0; }
+html[data-skin="sticker"] .mobile-tab-label { font-size: calc(10px * var(--tsz, 1)); font-weight: 700; letter-spacing: -0.01em; }
+html[data-skin="sticker"] .mobile-tab.active { background: var(--sk-sun); border-color: #15110e; box-shadow: 3px 3px 0 #15110e; color: #15110e; }
+html[data-skin="sticker"] .bible-verses { background: #ffffff; }
+html[data-skin="sticker"] .bible-verse-num { color: #15110e; background: var(--sk-sun); border: 2px solid #15110e; border-radius: 50%; display: inline-block; min-width: 1.5em; text-align: center; font-size: 0.7em; line-height: 1.35; vertical-align: 0.4em; margin-right: 6px; }
+html[data-skin="sticker"] .bible-translation-compact { background: var(--sk-mint); color: #15110e; font-weight: 800; }
+html[data-skin="sticker"] .bible-listen-chip { background: var(--sk-tomato); color: #15110e; border-color: #15110e; font-weight: 800; }
+html[data-skin="sticker"] .bible-passage-title-btn { background: #ffffff; border-color: #15110e; }
+html[data-skin="sticker"] .bible-chapter-nav-small { background: var(--sk-pink); border-color: #15110e; color: #15110e; }
+html[data-skin="sticker"] .cluster-marker { background: var(--sk-tomato); color: #15110e; border: 3px solid #15110e; box-shadow: 3px 3px 0 #15110e; }
+html[data-skin="sticker"] .then-now-buttons button.active,
+html[data-skin="sticker"] .admin-tab-active { background: var(--sk-sun); color: #15110e; }
+html[data-skin="sticker"] .panel-menu-dropdown,
+html[data-skin="sticker"] .auth-dropdown { border: 2.5px solid #15110e; border-radius: 16px; box-shadow: 4px 4px 0 #15110e; }
+
+/* ---------------------------------------------------------------- CLARITY */
+html[data-skin="clarity"] .app-header { background: #ffffff; border-bottom: 1px solid var(--border); box-shadow: 0 1px 0 rgba(20, 40, 30, 0.03); }
+html[data-skin="clarity"] .panel-menu-button,
+html[data-skin="clarity"] .mobile-nav-menu-button { background: #ffffff; border-color: var(--border); }
+html[data-skin="clarity"] .search-bar input { background: var(--bg); border-color: transparent; border-radius: 14px; }
+html[data-skin="clarity"] .mobile-tab-bar { background: #ffffff; border-top: 0; box-shadow: 0 -6px 24px rgba(20, 40, 30, 0.08); }
+html[data-skin="clarity"] .mobile-tab.active { color: var(--accent); font-weight: 600; }
+html[data-skin="clarity"] .bible-verses { background: #ffffff; border-color: var(--border); }
+html[data-skin="clarity"] .bible-verse-num { color: var(--accent); }
+html[data-skin="clarity"] .bible-translation-compact,
+html[data-skin="clarity"] .bible-listen-chip { background: #ffffff; border-color: var(--border); }
+html[data-skin="clarity"] .bible-listen-chip { background: var(--accent); color: var(--accent-contrast); border-color: var(--accent); box-shadow: 0 4px 12px rgba(53, 108, 86, 0.3); }
+html[data-skin="clarity"] .bible-passage-title-btn { background: #ffffff; border-color: var(--border-strong); }
+html[data-skin="clarity"] .bible-chapter-nav-small { background: #ffffff; border-color: var(--border-strong); }
+html[data-skin="clarity"] .cluster-marker { background: #ffffff; color: var(--accent); border: 3px solid var(--accent); box-shadow: 0 4px 14px rgba(20, 40, 30, 0.2); }
+
+/* ---------------------------------------------------------------- MIDNIGHT SIGNAL */
+html[data-skin="midnight"] body { background-image: radial-gradient(1200px 500px at 85% -10%, rgba(124, 92, 255, 0.16), transparent 60%), radial-gradient(900px 480px at -10% 110%, rgba(45, 212, 191, 0.08), transparent 60%); background-attachment: fixed; }
+html[data-skin="midnight"] .app-header { background: var(--bg); border-bottom: 1px solid var(--border); }
+html[data-skin="midnight"] .panel-menu-button,
+html[data-skin="midnight"] .mobile-nav-menu-button { background: var(--panel-bg); }
+html[data-skin="midnight"] .app-logo-button .app-logo { border-radius: 10px; box-shadow: 0 0 0 1px rgba(124, 92, 255, 0.5), 0 4px 16px rgba(124, 92, 255, 0.35); }
+html[data-skin="midnight"] .search-bar input { background: var(--panel-bg); border-radius: 14px; }
+html[data-skin="midnight"] .auth-avatar { background: #7c5cff; color: #ffffff; font-weight: 700; box-shadow: 0 0 0 2px rgba(182, 165, 255, 0.35); }
+html[data-skin="midnight"] .mobile-tab-bar { background: var(--panel-bg); border: 1px solid var(--border); border-radius: 20px; margin: 0 10px 8px; padding-bottom: 0; box-shadow: 0 8px 28px rgba(0, 0, 0, 0.45); }
+html[data-skin="midnight"] .mobile-tab { position: relative; }
+html[data-skin="midnight"] .mobile-tab.active { color: var(--accent); font-weight: 600; }
+html[data-skin="midnight"] .mobile-tab.active::after { content: ""; position: absolute; left: 24%; right: 24%; bottom: 4px; height: 3px; border-radius: 3px; background: #7c5cff; }
+html[data-skin="midnight"] .bible-verses { background: var(--panel-bg); border-color: var(--border); box-shadow: 0 8px 28px rgba(0, 0, 0, 0.35); }
+html[data-skin="midnight"] .bible-verse-num { color: #b6a5ff; }
+html[data-skin="midnight"] .bible-translation-compact,
+html[data-skin="midnight"] .bible-listen-chip { background: var(--panel-bg); border-color: var(--border-strong); }
+html[data-skin="midnight"] .bible-passage-title-btn { background: transparent; border-color: #7c5cff; border-width: 1.5px; }
+html[data-skin="midnight"] .bible-chapter-nav-small { background: transparent; border-color: #7c5cff; color: #b6a5ff; }
+html[data-skin="midnight"] .cluster-marker { background: #7c5cff; color: #ffffff; border: 2px solid rgba(255, 255, 255, 0.85); box-shadow: 0 0 0 4px rgba(124, 92, 255, 0.28), 0 4px 14px rgba(0, 0, 0, 0.5); }
+
+/* ============================================================================
+ * LAYER 3 — MAP (canvas only; markers, controls and the attribution are DOM and are not filtered)
+ * Satellite imagery is never filtered. The base style is MapLibre's "Illuminated" parchment atlas.
+ * ========================================================================== */
+html[data-skin="sticker"] .map-container:not([data-map-mode="satellite"]) .maplibregl-canvas { filter: saturate(3.2) contrast(1.12) brightness(1.05); }
+html[data-skin="clarity"] .map-container:not([data-map-mode="satellite"]) .maplibregl-canvas { filter: saturate(0.6) hue-rotate(22deg) brightness(1.07) contrast(0.95); }
+html[data-skin="midnight"] .map-container:not([data-map-mode="satellite"]) .maplibregl-canvas { filter: grayscale(1) invert(0.9) sepia(0.7) hue-rotate(185deg) saturate(1.1) brightness(0.95) contrast(1.05); }
+
+/* Sticker pins get the sticker outline. */
+html[data-skin="sticker"] .map-pin .pin-body { stroke: #15110e; stroke-width: 2.5px; }
+html[data-skin="sticker"] .map-pin .pin-dot { fill: #15110e; }
+html[data-skin="midnight"] .map-pin .pin-dot { fill: #0b1020; }
+
+/* 44px touch targets on the header controls the skins restyle (defaults are 34-38px). Phone only:
+ * the desktop header keeps its compact sizes. */
+@media (max-width: 768px) {
+  html[data-skin] .mobile-nav-menu-button,
+  html[data-skin] .panel-menu-button { width: 44px; height: 44px; }
+  html[data-skin] .auth-avatar { width: 44px; height: 44px; }
+  html[data-skin] .search-bar input { min-height: 44px; }
+}

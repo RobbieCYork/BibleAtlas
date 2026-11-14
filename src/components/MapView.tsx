@@ -960,7 +960,7 @@ export default function MapView({
 
   return (
     <>
-      <div ref={containerRef} className="map-container" />
+      <div ref={containerRef} className="map-container" data-map-mode={mapMode} />
       {/* Aged-paper pass over the finished canvas: fibrous grain multiplied into the vellum plus a
        * soft inset vignette, so the tiles read as one printed sheet instead of a live raster.
        * Styled inline (App.css belongs to the palette work) and pointer-events:none so every map
@@ -968,6 +968,7 @@ export default function MapView({
        * Hidden in Satellite mode, where a parchment wash over photography just looks like haze. */}
       {mapMode !== "satellite" && (
         <div
+          className="map-parchment-overlay"
           aria-hidden="true"
           style={{
             position: "absolute",
@@ -983,6 +984,7 @@ export default function MapView({
       )}
       {mapMode !== "satellite" && (
         <div
+          className="map-parchment-overlay"
           aria-hidden="true"
           style={{
             position: "absolute",

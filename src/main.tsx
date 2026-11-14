@@ -8,6 +8,9 @@ import { ThemeProvider } from './lib/theme.tsx'
 import { MobileTabsProvider } from './lib/mobileTabs.tsx'
 import { startUpdateChecks } from './lib/updateCheck'
 import { startFeatureRelease } from './lib/features'
+import { SkinController } from './lib/skin'
+// Owner-only skins. Must load AFTER App.css (imported via App above) so its overrides win ties.
+import './skins.css'
 
 // Applied synchronously, before the first paint, so a reader who chose "dark" doesn't see a flash
 // of the default light theme first — ThemeProvider's own effect (same localStorage key) takes over
@@ -24,6 +27,7 @@ createRoot(document.getElementById('root')!).render(
     <ThemeProvider>
       <TextSizeProvider>
         <MobileTabsProvider>
+          <SkinController />
           <App />
         </MobileTabsProvider>
       </TextSizeProvider>

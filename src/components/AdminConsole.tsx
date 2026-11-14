@@ -28,7 +28,7 @@ import {
 import GrowthPanel from "./GrowthPanel";
 import ModerationQueuePanel from "./ModerationQueuePanel";
 import Icon from "./Icon";
-import { FeatureStagesPanel, LiveTestSwitch } from "./FeatureRelease";
+import { FeatureStagesPanel, LiveTestSwitch, SkinPicker } from "./FeatureRelease";
 import { useFeatureAdmin } from "../lib/features";
 
 /** Every section loads on demand, so opening the console costs one small query (the overview) rather
@@ -207,6 +207,8 @@ export default function AdminConsole() {
       {/* Owner only (renders nothing otherwise). Kept above the tabs so the view can be switched
           from any section without hunting for it. */}
       <LiveTestSwitch />
+      {/* Owner only too. Visual skins are an experiment: see lib/skin.tsx. */}
+      <SkinPicker />
 
       <div className="admin-tabs" role="tablist" aria-label="Admin sections">
         {sectionKeys.map((key) => (
