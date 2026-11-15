@@ -672,6 +672,32 @@ html[data-skin="skyreader"] .verse-sheet { border-top: 0; border-radius: 24px 24
 html[data-skin="skyreader"] button,
 html[data-skin="skyreader"] .skin-picker-option { font-family: var(--sans); }
 
+/* ---- My Profile buttons and panel headings, every skin ------------------------------------------
+ * Robbie's phone (iOS Safari, Sky Reader): My Profile's plain buttons (Download Backup, Delete My
+ * Account...) carry no class and no styling of their own, so they are the browser's NATIVE button.
+ * A native button sizes itself from the font's `line-height: normal`, and Baloo 2 has very tall
+ * ascent/descent metrics: the label's line box outgrows the pill's content box and iOS pushes the
+ * label out of it, so the pill draws empty (or the label is cut off at the bottom). Likewise the
+ * shared panel heading (.bible-panel-header h3 - "Friends", "My Notes", "Articles") is a one-line
+ * `overflow: hidden` ellipsis box at line-height 1.2, which a tall-ascender face clips at the top.
+ *
+ * The fix takes the native control out of the equation instead of tuning around one font: unclassed
+ * buttons get an explicit appearance (flex-centred, real height, own border/fill from the skin's
+ * tokens), every button in the profile gets an explicit line-height, and the heading gets room above
+ * and below its text. Zero specificity (:where) so any button that has its own class or rule keeps it;
+ * all of it is gated on [data-skin], so the default look has no data-skin and is not touched. */
+:where(html[data-skin] .myprofile-body button) { line-height: 1.3; }
+:where(html[data-skin] .myprofile-body button:not([class])) {
+  -webkit-appearance: none; appearance: none;
+  display: inline-flex; align-items: center; justify-content: center; box-sizing: border-box;
+  min-height: 44px; padding: 8px 16px; overflow: visible;
+  font-family: var(--sans); font-size: calc(15px * var(--tsz, 1)); font-weight: 600;
+  color: var(--text); background: var(--surface-sunken); border: 1px solid var(--border-strong); border-radius: 12px;
+}
+:where(html[data-skin] .myprofile-body button:not([class]):disabled) { opacity: 0.55; }
+html[data-skin] .bible-panel-header h3,
+html[data-skin] .myprofile-title { line-height: 1.5; padding-block: 0.12em; }
+
 /* ---------------------------------------------------------------- TRAILHEAD
  * Warm cream ground, forest green, sunny yellow. Lexend everywhere (designed for reading fluency),
  * scripture at 22px / 1.78. Big friendly controls: 48px on a phone. Yellow carries only dark ink. */
