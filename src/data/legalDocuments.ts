@@ -304,7 +304,6 @@ export const PRIVACY_POLICY: LegalDocument = {
           "**Vercel** — hosts the app and website.",
           "**Resend** — delivers account emails (sign-up confirmation and password reset) from noreply@capstonebible.com.",
           "**Microsoft 365** — receives email you send to " + EMAIL + ".",
-          "**Google Fonts** — supplies the typefaces the app and website use; your browser downloads them from Google.",
           "**OpenFreeMap** and **Esri** — supply map tiles and satellite imagery for the map.",
           "**bible-api.com** — supplies Bible text. Your browser asks it for the passage you are reading.",
           "**bolls.life** — supplies Bible search. When you search the Bible text, the words you search for are sent to it.",
@@ -318,7 +317,7 @@ export const PRIVACY_POLICY: LegalDocument = {
     {
       heading: "8. Cookies and storage on your device",
       body: [
-        "Capstone Bible does not use advertising or tracking cookies. The app stores a few things in your browser's own storage so it works properly: your sign-in session, your preferences (theme, text size, which tabs and timeline lanes you show, sort orders, \"Remember me\"), a pending friend or group invitation while you sign up, the random visit identifier used for usage information (cleared when you close the tab), and — if you use the photo-to-text feature in sermon notes — the text-recognition model, which runs on your device rather than on a server.",
+        "Capstone Bible does not use advertising or tracking cookies. The app stores a few things in your browser's own storage so it works properly: your sign-in session, your preferences (theme, your chosen appearance (skin, kept only on your device), text size, which tabs and timeline lanes you show, sort orders, \"Remember me\"), a pending friend or group invitation while you sign up, the random visit identifier used for usage information (cleared when you close the tab), and — if you use the photo-to-text feature in sermon notes — the text-recognition model, which runs on your device rather than on a server.",
         "Clearing your browser's storage signs you out and resets these preferences.",
       ],
     },
