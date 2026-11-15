@@ -1,9 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import type { Session } from "@supabase/supabase-js";
-import { supabase, setRememberMe, type Profile } from "../lib/supabase";
-import { useTextSize } from "../lib/textSize";
-import { useTheme } from "../lib/theme";
-import { MIN_VISIBLE_TABS, MOBILE_TAB_META, MOBILE_TAB_ORDER, LOCKED_TAB, useMobileTabs } from "../lib/mobileTabs";
+import { supabase, setRememberMe } from "../lib/supabase";
+import AccountSettingsBody, { TextSizeControl, AppearanceControl, NavBarControl } from "./AccountSettings";
 import AdminConsole from "./AdminConsole";
 import ReportIssueSheet from "./ReportIssueSheet";
 import MyReportsSheet from "./MyReportsSheet";
@@ -50,185 +48,6 @@ interface AuthButtonProps {
 }
 
 type Mode = "login" | "signup" | "reset";
-
-/** Shared with both the logged-in and logged-out dropdown states — text size is a setting, not an
- * account action, so it lives in this menu but isn't gated on being signed in. */
-function TextSizeControl() {
-  const { scale, increase, decrease, canIncrease, canDecrease } = useTextSize();
-  return (
-    <div className="auth-settings-section">
-      <span className="auth-settings-label">Text Size</span>
-      <div className="auth-text-size">
-        <button type="button" onClick={decrease} disabled={!canDecrease} aria-label="Decrease text size">
-          A⁻
-        </button>
-        <span className="auth-text-size-value">{Math.round(scale * 100)}%</span>
-        <button type="button" onClick={increase} disabled={!canIncrease} aria-label="Increase text size">
-          A⁺
-        </button>
-      </div>
-    </div>
-  );
-}
-
-/** Shared with both the logged-in and logged-out dropdown states, same as TextSizeControl — the
- * app's appearance defaults to dark (see lib/theme.tsx) and is a plain local preference, not tied to
- * an account. */
-function AppearanceControl() {
-  const { theme, setTheme } = useTheme();
-  return (
-    <div className="auth-settings-section">
-      <span className="auth-settings-label">Appearance</span>
-      <div className="auth-appearance-toggle">
-        <button type="button" className={theme === "light" ? "active" : ""} onClick={() => setTheme("light")}>
-          <Icon name="sun" inline /> Light
-        </button>
-        <button type="button" className={theme === "dark" ? "active" : ""} onClick={() => setTheme("dark")}>
-          <Icon name="moon" inline /> Dark
-        </button>
-      </div>
-    </div>
-  );
-}
-
-/** Lets a reader choose which of the seven destinations the mobile bottom bar shows. Seven buttons
- * on a 375px phone is a crowded row, and not everyone uses all seven — so each can be switched off
- * and back on here, in the same account-menu Settings view as text size and appearance.
- *
- * CALLED "NAVIGATION BAR" TO THE READER, not "tab bar". The owner's word for it, and the accurate
- * one: it is how you get from one part of the app to another. "Tab bar" is a platform term for a
- * control most people have never had to name. The `mobileTabs`/`auth-tabbar-*` identifiers behind
- * it still say "tab" — they are load-bearing across App.tsx, MobileTabBar, MobileNavMenu and ~30
- * CSS rules, and renaming them buys nothing a reader can see.
- *
- * Mobile-only, matching the same 768px breakpoint App uses: desktop navigates via the hamburger
- * PanelMenu and the footer, neither of which this touches. Rendered only when the viewport is
- * actually narrow, so the control never appears as a dead setting on a desktop screen.
- *
- * Two guards, both surfaced rather than silent: Bible has no switch at all (it's the cold-start
- * landing tab and the fallback every other safety path points at), and once the bar is down to
- * MIN_VISIBLE_TABS the remaining switches are disabled with a line of copy saying why. */
-function NavBarControl() {
-  const { visible, canHide, setTabVisible, resetTabs, isDefault } = useMobileTabs();
-  const [isNarrow, setIsNarrow] = useState(() => window.matchMedia("(max-width: 768px)").matches);
-
-  useEffect(() => {
-    const mq = window.matchMedia("(max-width: 768px)");
-    const handleChange = (e: MediaQueryListEvent) => setIsNarrow(e.matches);
-    mq.addEventListener("change", handleChange);
-    return () => mq.removeEventListener("change", handleChange);
-  }, []);
-
-  if (!isNarrow) return null;
-
-  const atMinimum = MOBILE_TAB_ORDER.filter((k) => visible[k]).length <= MIN_VISIBLE_TABS;
-
-  return (
-    <div className="auth-settings-section auth-settings-section-stacked">
-      <span className="auth-settings-label">Navigation Bar</span>
-      <p className="auth-benefits auth-tabbar-note">
-        Choose which buttons appear in the bar at the bottom of the screen. Bible always stays, and at least{" "}
-        {MIN_VISIBLE_TABS} buttons are always shown.
-      </p>
-      <ul className="auth-tabbar-list">
-        {MOBILE_TAB_ORDER.map((key) => {
-          const on = visible[key];
-          const locked = key === LOCKED_TAB;
-          // A visible tab can only be switched off while above the minimum; a hidden one can always
-          // be switched back on.
-          const disabled = locked || (on && !canHide(key));
-          return (
-            <li key={key} className={`auth-tabbar-row${disabled ? " disabled" : ""}`}>
-              {/* `MOBILE_TAB_META[key].icon` is a NAME in the app's icon set ("bible", "map"), not
-                  a glyph — it stopped being an emoji when the bar moved to drawn icons. This row
-                  was the one consumer left rendering it as text, so every name showed up twice:
-                  "bible Bible", "map Map". It draws the icon now, like the bar and the hamburger
-                  menu already did. */}
-              <span className="auth-tabbar-name">
-                <span className="auth-tabbar-icon" aria-hidden="true">
-                  <Icon name={MOBILE_TAB_META[key].icon} />
-                </span>
-                {MOBILE_TAB_META[key].label}
-              </span>
-              {locked ? (
-                <span className="auth-tabbar-always">Always on</span>
-              ) : (
-                <label className="auth-tabbar-switch">
-                  <input
-                    type="checkbox"
-                    checked={on}
-                    disabled={disabled}
-                    onChange={(e) => setTabVisible(key, e.target.checked)}
-                    aria-label={`Show ${MOBILE_TAB_META[key].label} in the navigation bar`}
-                  />
-                  <span className="auth-tabbar-track" aria-hidden="true" />
-                </label>
-              )}
-            </li>
-          );
-        })}
-      </ul>
-      {atMinimum && (
-        <p className="auth-tabbar-limit" role="status">
-          That's the minimum of {MIN_VISIBLE_TABS} buttons — turn another one on before hiding any more.
-        </p>
-      )}
-      <button type="button" className="auth-tabbar-reset" onClick={resetTabs} disabled={isDefault}>
-        Reset to default
-      </button>
-    </div>
-  );
-}
-
-/** Lets an account choose how long a "mark chapter as read" checkmark sticks before it silently stops
- * counting — e.g. reset every year to re-read the Bible on an annual cycle without clearing old marks
- * by hand. Purely a query-time filter (see chapterReadCutoff) — switching back to Never instantly
- * un-hides everything, nothing was ever deleted. */
-function ReadingResetControl({ userId }: { userId: string }) {
-  const [reset, setReset] = useState<Profile["chapter_read_reset"]>("never");
-  const [loaded, setLoaded] = useState(false);
-  const [saving, setSaving] = useState(false);
-  const [saved, setSaved] = useState<string | null>(null);
-
-  useEffect(() => {
-    supabase
-      .from("profiles")
-      .select("chapter_read_reset")
-      .eq("id", userId)
-      .single()
-      .then(({ data }) => {
-        setReset((data as { chapter_read_reset: Profile["chapter_read_reset"] } | null)?.chapter_read_reset ?? "never");
-        setLoaded(true);
-      });
-  }, [userId]);
-
-  const handleChange = async (value: Profile["chapter_read_reset"]) => {
-    setReset(value);
-    setSaving(true);
-    setSaved(null);
-    const { error } = await supabase.from("profiles").update({ chapter_read_reset: value }).eq("id", userId);
-    setSaving(false);
-    setSaved(error ? "Couldn't save — try again." : "Saved!");
-  };
-
-  if (!loaded) return null;
-
-  return (
-    <div className="auth-settings-section auth-settings-section-stacked">
-      <span className="auth-settings-label">Reset "Read" Marks</span>
-      <p className="auth-benefits">
-        Automatically stop counting a chapter as read after this long — handy for reading through the Bible on a
-        yearly cycle.
-      </p>
-      <select value={reset} onChange={(e) => handleChange(e.target.value as Profile["chapter_read_reset"])} disabled={saving}>
-        <option value="never">Never</option>
-        <option value="monthly">1 month after reading</option>
-        <option value="yearly">1 year after reading</option>
-      </select>
-      {saved && <p className="auth-status">{saved}</p>}
-    </div>
-  );
-}
 
 type MenuView = "menu" | "settings" | "admin" | "report" | "myReports" | "reports" | "safety";
 
@@ -467,7 +286,10 @@ export default function AuthButton({
                 <Icon name="people" inline /> My Profile
               </button>
             )}
-            {canSeeReports && (
+            {/* Reports lives inside the Admin Console now (Reports tab, same unread badge). This row
+                remains ONLY for an advisor who is not an admin: they hold the reports tier but have no
+                Admin Console to find it in, and removing the row would strand them. */}
+            {canSeeReports && !isAdmin && (
               <button type="button" className="auth-menu-item" onClick={() => setMenuView("reports")}>
                 <Icon name="flag" inline /> Reports
                 {untriaged > 0 && <span className="panel-menu-item-badge">{untriaged}</span>}
@@ -476,11 +298,16 @@ export default function AuthButton({
             {isAdmin && (
               <button type="button" className="auth-menu-item" onClick={() => setMenuView("admin")}>
                 <Icon name="shield" inline /> Admin Console
+                {untriaged > 0 && <span className="panel-menu-item-badge">{untriaged}</span>}
               </button>
             )}
-            <button type="button" className="auth-menu-item" onClick={() => setMenuView("settings")}>
-              <Icon name="settings" inline /> Settings
-            </button>
+            {/* Settings and My Reports moved into My Profile. Guests have no profile page, so Settings
+                stays here for them (the Settings view below is theirs, and the logged-out dropdown's). */}
+            {session.user.is_anonymous && (
+              <button type="button" className="auth-menu-item" onClick={() => setMenuView("settings")}>
+                <Icon name="settings" inline /> Settings
+              </button>
+            )}
             {onOpenReadingPlans && (
               <button
                 type="button"
@@ -499,11 +326,6 @@ export default function AuthButton({
             <button type="button" className="auth-menu-item" onClick={() => setMenuView("report")}>
               <Icon name="flag" inline /> Report a Problem
             </button>
-            {!session.user.is_anonymous && (
-              <button type="button" className="auth-menu-item" onClick={() => setMenuView("myReports")}>
-                <Icon name="doc" inline /> My Reports
-              </button>
-            )}
             {/* App Store Review Guideline 1.2 asks for published contact information and a visible
                 account for how reporting and blocking work. This is where a reviewer — and a reader
                 who has just been harassed — is meant to find both, two taps from anywhere in the
@@ -545,7 +367,7 @@ export default function AuthButton({
                 Usage, engagement, and moderation for the whole site. Only accounts listed in <code>admin_users</code>{" "}
                 can load any of it — the database refuses the queries for everyone else, not just this menu.
               </p>
-              <AdminConsole />
+              <AdminConsole reports={reportsRole && canSeeReports ? { role: reportsRole, viewerId: session.user.id, untriaged } : undefined} />
             </div>
           </div>
         )}
@@ -580,22 +402,7 @@ export default function AuthButton({
             <button type="button" className="auth-back-link" onClick={() => setMenuView("menu")}>
               ← Back
             </button>
-            <TextSizeControl />
-            <AppearanceControl />
-            <NavBarControl />
-            {!session.user.is_anonymous && (
-              <>
-                <div className="auth-settings-divider" />
-                <ReadingResetControl userId={session.user.id} />
-              </>
-            )}
-            <div className="auth-settings-divider" />
-            {/* Static public pages, not app routes — a new tab keeps the reader's place in the app. */}
-            <p className="auth-legal-links">
-              <a href="/terms" target="_blank" rel="noopener noreferrer">Terms of Service</a>
-              <span aria-hidden="true"> · </span>
-              <a href="/privacy" target="_blank" rel="noopener noreferrer">Privacy Policy</a>
-            </p>
+            <AccountSettingsBody userId={session.user.is_anonymous ? null : session.user.id} />
           </div>
         )}
       </div>

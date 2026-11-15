@@ -27,6 +27,8 @@ import {
 } from "../lib/adminApi";
 import GrowthPanel from "./GrowthPanel";
 import ModerationQueuePanel from "./ModerationQueuePanel";
+import ReportsDashboard from "./ReportsDashboard";
+import type { Role } from "../lib/reportsApi";
 import Icon from "./Icon";
 import { FeatureStagesPanel, LiveTestSwitch } from "./FeatureRelease";
 import { useFeatureAdmin } from "../lib/features";
@@ -42,6 +44,7 @@ type AdminSection =
   | "content"
   | "moderation"
   | "safety"
+  | "reports"
   | "release";
 
 /** "Moderation" and "Safety" are deliberately two tabs, not one, because they answer two different
@@ -60,6 +63,8 @@ const SECTION_LABELS: Record<AdminSection, string> = {
   content: "Content",
   moderation: "Moderation",
   safety: "Safety",
+  // The reader-filed reports queue (sql/025) — what the account menu's top-level "Reports" row used to open.
+  reports: "Reports",
   // Testing / Live stages (sql/039). Owner only — the tab is not drawn for anyone else.
   release: "Features",
 };
@@ -100,10 +105,18 @@ function AnalyticsSinceNote({ since }: { since: string | null | undefined }) {
   );
 }
 
-export default function AdminConsole() {
+export interface AdminConsoleReports {
+  /** current_user_role() as resolved by the caller; the Reports tab is drawn only when this is given. */
+  role: Role;
+  viewerId: string;
+  /** Untriaged count, shown as a badge on the tab. */
+  untriaged: number;
+}
+
+export default function AdminConsole({ reports }: { reports?: AdminConsoleReports } = {}) {
   const [section, setSection] = useState<AdminSection>("overview");
   const { isOwner } = useFeatureAdmin();
-  const sectionKeys = (Object.keys(SECTION_LABELS) as AdminSection[]).filter((k) => k !== "release" || isOwner);
+  const sectionKeys = (Object.keys(SECTION_LABELS) as AdminSection[]).filter((k) => (k !== "release" || isOwner) && (k !== "reports" || !!reports));
   const [days, setDays] = useState<number>(30);
   const [error, setError] = useState<string | null>(null);
 
@@ -219,6 +232,9 @@ export default function AdminConsole() {
             onClick={() => setSection(key)}
           >
             {SECTION_LABELS[key]}
+            {key === "reports" && reports && reports.untriaged > 0 && (
+              <span className="panel-menu-item-badge">{reports.untriaged}</span>
+            )}
           </button>
         ))}
       </div>
@@ -607,6 +623,10 @@ export default function AdminConsole() {
           and it must be able to say "sql/028 hasn't been run" without this console knowing that is
           a thing that can happen. */}
       {section === "safety" && <ModerationQueuePanel />}
+
+      {section === "reports" && reports && (
+        <ReportsDashboard embedded role={reports.role} viewerId={reports.viewerId} />
+      )}
 
       {/* -------------------------------------------------------------- RELEASE */}
       {section === "release" && isOwner && <FeatureStagesPanel />}

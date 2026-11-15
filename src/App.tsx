@@ -1954,6 +1954,7 @@ function App() {
                   openVerse(reference);
                 }}
                 onOpenFriends={openFriendsFromProfile}
+                reportSurface={reportSurface}
               />
             )}
           </div>

@@ -34,7 +34,12 @@ interface ReportsDashboardProps {
    * database if this were somehow wrong. */
   role: Role;
   viewerId: string;
-  onClose: () => void;
+  /** Required for the full-screen sheet (its ← Back); unused when `embedded`. */
+  onClose?: () => void;
+  /** Rendered inline inside another page (the Admin Console's Reports tab) instead of as its own
+   * full-screen sheet: no fixed overlay, no head of its own — the host already has one. Everything
+   * else, including every gate, is the same component. */
+  embedded?: boolean;
 }
 
 const STATUS_ORDER: ReportStatus[] = [
@@ -592,7 +597,7 @@ function RolesTab({ role, viewerId }: { role: Role; viewerId: string }) {
  * The dashboard itself.
  * ======================================================================== */
 
-export default function ReportsDashboard({ role, viewerId, onClose }: ReportsDashboardProps) {
+export default function ReportsDashboard({ role, viewerId, onClose, embedded = false }: ReportsDashboardProps) {
   const [tab, setTab] = useState<Tab>("queue");
   const [rows, setRows] = useState<ReportListRow[] | null>(null);
   const [total, setTotal] = useState(0);
@@ -657,15 +662,17 @@ export default function ReportsDashboard({ role, viewerId, onClose }: ReportsDas
   const lastPage = Math.max(0, Math.ceil(total / PAGE_SIZE) - 1);
 
   return (
-    <div className="report-sheet" role="dialog" aria-label="Reports">
-      <div className="report-sheet-head">
-        <button type="button" className="auth-back-link" onClick={onClose}>
-          ← Back
-        </button>
-        <h3 className="report-sheet-title">Reports</h3>
-        <span className="report-role-tag">{ROLE_LABELS[role]}</span>
-      </div>
-      <div className="report-sheet-body">
+    <div className={embedded ? "report-embedded" : "report-sheet"} role={embedded ? "region" : "dialog"} aria-label="Reports">
+      {!embedded && (
+        <div className="report-sheet-head">
+          <button type="button" className="auth-back-link" onClick={onClose}>
+            ← Back
+          </button>
+          <h3 className="report-sheet-title">Reports</h3>
+          <span className="report-role-tag">{ROLE_LABELS[role]}</span>
+        </div>
+      )}
+      <div className={embedded ? "report-sheet-body report-sheet-body-embedded" : "report-sheet-body"}>
         {/* The Roles tab is offered to administrators as a read-only roster and to owners as the
             place they grant roles. Nobody below administrator can load list_user_roles() at all. */}
         {hasRoleAtLeast(role, "administrator") && (

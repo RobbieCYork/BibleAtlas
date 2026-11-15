@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from "react";
+import { createPortal } from "react-dom";
 import { supabase, formatJoinDate, type Profile } from "../lib/supabase";
 import ReadingProgressGrid from "./ReadingProgressGrid";
 import PostsFeed from "./PostsFeed";
@@ -19,6 +20,10 @@ import Icon, { type IconName } from "./Icon";
 import DeleteAccountControl from "./DeleteAccountControl";
 import { TestingMarker } from "./FeatureRelease";
 import SkinPicker from "./SkinPicker";
+import AccountSettingsBody from "./AccountSettings";
+import MyReportsSheet from "./MyReportsSheet";
+import ReportIssueSheet from "./ReportIssueSheet";
+import type { ReportSurface } from "../lib/reportContext";
 import { useFeature, SOCIAL_CONNECTIONS_ENABLED } from "../lib/features";
 
 /** A church website is typed without a scheme half the time ("mychurch.org") — treat that as shorthand
@@ -651,14 +656,24 @@ interface MyProfileViewProps {
   /** Opens the Friends panel to a specific list (Friends/Messages/Groups), closing My Profile first —
    * same "leave this full-screen mode to enter another surface" shape as onGoToVerse above. */
   onOpenFriends: (view: "friends" | "messages" | "groups") => void;
+  /** Where the reader was standing before opening My Profile — only needed so a report started from
+   * "My Reports" ("report something") carries context. Falls back to a generic surface. */
+  reportSurface?: ReportSurface;
 }
+
+const PROFILE_REPORT_SURFACE: ReportSurface = { route: "app", title: "Capstone Bible", target: null };
 
 /** Full-screen "My Profile" mode — same top-level takeover pattern as TimelineView (a boolean in App
  * renders this over the whole app-body, with its own header and Back button) instead of the small
  * anchored dropdown this used to be. Reachable from the desktop account menu's "My Profile" and the
  * mobile "More" sheet's entry of the same name; both now open this directly rather than popping the
  * account flyout to an internal "profile" view. */
-export default function MyProfileView({ userId, onDisplayNameSaved, onClose, onGoToVerse, onOpenFriends }: MyProfileViewProps) {
+export default function MyProfileView({ userId, onDisplayNameSaved, onClose, onGoToVerse, onOpenFriends, reportSurface }: MyProfileViewProps) {
+  // Settings and My Reports used to be rows in the account menu; they live here now. Settings is a
+  // view inside this page (header Back returns to the profile); My Reports and the report form are the
+  // same full-screen sheets the menu opens, drawn over this page.
+  const [view, setView] = useState<"profile" | "settings">("profile");
+  const [sheet, setSheet] = useState<null | "myReports" | "report">(null);
   const [postsTab, setPostsTab] = useState<"newsfeed" | "mine">("newsfeed");
   // Feature stages (lib/features.ts) — each hides its own entry point and nothing else.
   const postsFeature = useFeature("posts_newsfeed");
@@ -666,11 +681,19 @@ export default function MyProfileView({ userId, onDisplayNameSaved, onClose, onG
   return (
     <section className="myprofile-root" aria-label="My Profile">
       <header className="myprofile-header">
-        <BackButton onClick={onClose} ariaLabel="Close My Profile" />
-        <h2 className="myprofile-title">My Profile</h2>
+        {view === "settings" ? (
+          <BackButton onClick={() => setView("profile")} ariaLabel="Back to My Profile" />
+        ) : (
+          <BackButton onClick={onClose} ariaLabel="Close My Profile" />
+        )}
+        <h2 className="myprofile-title">{view === "settings" ? "Settings" : "My Profile"}</h2>
       </header>
       <div className="myprofile-body">
         <div className="myprofile-body-inner">
+          {view === "settings" ? (
+            <AccountSettingsBody userId={userId} />
+          ) : (
+          <>
           {SOCIAL_CONNECTIONS_ENABLED && (
             <>
             <div className="auth-settings-section auth-settings-section-stacked">
@@ -690,6 +713,15 @@ export default function MyProfileView({ userId, onDisplayNameSaved, onClose, onG
             </>
           )}
           <MyProfileControl userId={userId} onDisplayNameSaved={onDisplayNameSaved} onGoToVerse={onGoToVerse} />
+          <div className="auth-settings-divider" />
+          <div className="auth-settings-section auth-settings-section-stacked myprofile-link-rows">
+            <button type="button" className="myprofile-link-row" onClick={() => setView("settings")}>
+              <Icon name="settings" inline /> Settings
+            </button>
+            <button type="button" className="myprofile-link-row" onClick={() => setSheet("myReports")}>
+              <Icon name="doc" inline /> My Reports
+            </button>
+          </div>
           <div className="auth-settings-divider" />
           <SkinPicker />
           <div className="auth-settings-divider" />
@@ -738,8 +770,32 @@ export default function MyProfileView({ userId, onDisplayNameSaved, onClose, onG
               <DeleteAccountControl />
             </>
           )}
+          </>
+          )}
         </div>
       </div>
+      {/* Portaled out: these are the same position:fixed sheets the account menu draws, but there they sit
+          inside the app header (z-index 65), which is what keeps the header's own controls from being
+          drawn over their ← Back. Here they would sit under that header, so they go to <body> with
+          .report-portal lifting them above it. */}
+      {sheet &&
+        createPortal(
+          <div className="report-portal">
+            {sheet === "myReports" && (
+        <MyReportsSheet userId={userId} onClose={() => setSheet(null)} onReportSomething={() => setSheet("report")} />
+      )}
+            {sheet === "report" && (
+        <ReportIssueSheet
+          userId={userId}
+          isGuest={false}
+          surface={reportSurface ?? PROFILE_REPORT_SURFACE}
+          onClose={() => setSheet(null)}
+          onOpenMyReports={() => setSheet("myReports")}
+        />
+      )}
+          </div>,
+          document.body,
+        )}
     </section>
   );
 }

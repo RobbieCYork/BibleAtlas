@@ -12822,3 +12822,46 @@ img.sn-image,
   background: transparent;
   font-size: calc(16px * var(--tsz, 1));
 }
+
+/* --- Account menu tidy (2026-11-15): Reports inside the Admin Console, Settings / My Reports in My Profile --- */
+.report-embedded {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  color: var(--text);
+  text-align: left;
+}
+.report-sheet-body-embedded {
+  padding: 0;
+  overflow: visible;
+}
+.admin-tab .panel-menu-item-badge {
+  margin-left: 6px;
+  display: inline-block;
+  vertical-align: middle;
+}
+.myprofile-link-rows {
+  gap: 8px;
+}
+.myprofile-link-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  min-height: 44px;
+  padding: 10px 12px;
+  font-family: var(--sans);
+  font-size: calc(14px * var(--tsz, 1));
+  text-align: left;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--panel-bg);
+  color: var(--text);
+  cursor: pointer;
+}
+.myprofile-link-row:hover {
+  background: var(--accent-bg);
+}
+.report-portal .report-sheet {
+  z-index: 70;
+}
