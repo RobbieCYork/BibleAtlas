@@ -1,3 +1,4 @@
+import { useId, useState } from "react";
 import { SKINS, setSkin, useStoredSkin, type SkinChoice } from "../lib/skin";
 
 /** My Profile → Appearance. Pick a look for the app; it applies at once and is remembered on this
@@ -10,11 +11,27 @@ const OPTIONS: ReadonlyArray<{ id: SkinChoice; label: string; blurb: string; swa
 
 export default function SkinPicker() {
   const choice = useStoredSkin();
+  // Collapsed on every load; deliberately not persisted.
+  const [open, setOpen] = useState(false);
+  const panelId = useId();
+  const current = OPTIONS.find((o) => o.id === choice)?.label ?? "Default";
   return (
     <div className="auth-settings-section auth-settings-section-stacked">
-      <span className="auth-settings-label" id="skin-picker-heading">
-        Appearance
-      </span>
+      <button
+        type="button"
+        className="skin-toggle"
+        id="skin-picker-heading"
+        aria-expanded={open}
+        aria-controls={panelId}
+        onClick={() => setOpen((v) => !v)}
+      >
+        <span className="skin-toggle-title">Appearance</span>
+        {!open && <span className="skin-toggle-hint">{current}</span>}
+        <span className={`skin-toggle-chevron${open ? " skin-toggle-chevron-open" : ""}`} aria-hidden="true">
+          ▾
+        </span>
+      </button>
+      <div id={panelId} hidden={!open} className="skin-collapse">
       <div className="skin-picker" role="radiogroup" aria-labelledby="skin-picker-heading">
         {OPTIONS.map((o) => (
           <label key={o.id} className={`skin-card${choice === o.id ? " skin-card-selected" : ""}`}>
@@ -42,6 +59,7 @@ export default function SkinPicker() {
         ))}
       </div>
       <span className="skin-picker-note">Saved on this device only. Each skin sets its own light or dark look.</span>
+      </div>
     </div>
   );
 }
