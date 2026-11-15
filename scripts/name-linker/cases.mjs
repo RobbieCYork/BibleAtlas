@@ -5012,6 +5012,18 @@ export const CASES = [
     why: "Herodias is a different word and a different person (no record); the Herod key must not reach inside it." },
   { ref: "Romans 16:11", surface: "Herodion", expect: null, status: "guard",
     why: "Herodion, Paul's kinsman, is not a Herod; the key must not reach inside the word." },
+  { ref: "Revelation 2:13", surface: "Antipas", expect: null, status: "guard",
+    why: "Antipas of Pergamum, 'my faithful witness', martyred there: not Herod Antipas, no record. Was linking to herod-antipas. VERSE_NAME_OVERRIDES.antipas." },
+  { ref: "Revelation 2:13", surface: "Antipas", path: "panel", expect: null, status: "guard",
+    why: "Same man on the panel path (no verse): the 'my witness / my faithful' rule under antipas in NAME_CONTEXT_RULES." },
+  { ref: "Revelation 2:13", translation: "KJV",
+    text: "I know thy works, and where thou dwellest,\neven where Satan’s seat\nis: and thou holdest fast my name, and hast not denied my faith, even in those days wherein Antipas\nwas\n my faithful martyr, who was slain among you, where Satan dwelleth.",
+    surface: "Antipas", expect: null, status: "guard",
+    why: "KJV 'Antipas was my faithful martyr' — the martyr of Pergamum. Verbatim from bible-api.com." },
+  { ref: "Revelation 2:13", translation: "ASV",
+    text: "I know where thou dwellest, [even] where Satan`s throne is; and thou holdest fast my name, and didst not deny my faith, even in the days of Antipas my witness, my faithful one, who was killed among you, where Satan dwelleth.",
+    surface: "Antipas", expect: null, status: "guard",
+    why: "ASV 'Antipas my witness, my faithful one' — the martyr of Pergamum. Verbatim from bible-api.com." },
 
   // ── WHAT IS NOT HERE, AND WHY ───────────────────────────────────────────────────────────────
   // James 1:1 and Jude 1:1 both still resolve to Zebedee's son, which is wrong on anybody's

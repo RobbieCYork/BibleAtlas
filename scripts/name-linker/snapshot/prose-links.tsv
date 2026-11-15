@@ -5677,7 +5677,11 @@ topic.section|habakkuk-pesher|b921377ee6	805	Jesus	jesus-of-nazareth
 topic.section|habakkuk-pesher|b921377ee6	825	Paul	paul-of-tarsus
 topic.section|habakkuk-pesher|b921377ee6	89	Paul	paul-of-tarsus
 topic.section|herodian-dynasty|0ea78d2f71	0	Herod the Great	herod-the-great
+topic.section|herodian-dynasty|1761580665	134	Jesus	jesus-of-nazareth
+topic.section|herodian-dynasty|1761580665	232	Caesar	tiberius-caesar
+topic.section|herodian-dynasty|1761580665	406	Herod Antipas	herod-antipas
 topic.section|herodian-dynasty|1de0ceebfb	8	Philip the Tetrarch	philip-the-tetrarch
+topic.section|herodian-dynasty|1f4d4b64af	27	Herod the Great	herod-the-great
 topic.section|herodian-dynasty|20f67da77b	122	Herod Antipas	herod-antipas
 topic.section|herodian-dynasty|20f67da77b	150	John the Baptist	john-the-baptist
 topic.section|herodian-dynasty|20f67da77b	33	Herod the Great	herod-the-great
@@ -5698,9 +5702,6 @@ topic.section|herodian-dynasty|6a56d83eb9	327	Archelaus	herod-archelaus
 topic.section|herodian-dynasty|6a56d83eb9	341	Philip the Tetrarch	philip-the-tetrarch
 topic.section|herodian-dynasty|6a56d83eb9	70	Herod the Great	herod-the-great
 topic.section|herodian-dynasty|6a56d83eb9	89	Jesus	jesus-of-nazareth
-topic.section|herodian-dynasty|79f6236b27	134	Jesus	jesus-of-nazareth
-topic.section|herodian-dynasty|79f6236b27	232	Caesar	tiberius-caesar
-topic.section|herodian-dynasty|79f6236b27	406	Herod Antipas	herod-antipas
 topic.section|herodian-dynasty|7c4855cb29	100	Augustus	caesar-augustus
 topic.section|herodian-dynasty|7c4855cb29	8	Archelaus	herod-archelaus
 topic.section|herodian-dynasty|7ebf20807d	148	John the Baptist	john-the-baptist
@@ -5714,6 +5715,14 @@ topic.section|herodian-dynasty|b069a26690	135	James	james-son-of-zebedee
 topic.section|herodian-dynasty|b069a26690	157	John	john-the-apostle
 topic.section|herodian-dynasty|b069a26690	188	Peter	simon-peter
 topic.section|herodian-dynasty|b069a26690	28	Luke	luke-evangelist
+topic.section|herodian-dynasty|b9c391b36d	102	Antipas	herod-antipas
+topic.section|herodian-dynasty|b9c391b36d	125	Agrippa I	herod-agrippa-i
+topic.section|herodian-dynasty|b9c391b36d	257	Mark	john-mark
+topic.section|herodian-dynasty|b9c391b36d	281	Antipas	herod-antipas
+topic.section|herodian-dynasty|b9c391b36d	490	Herod the Great	herod-the-great
+topic.section|herodian-dynasty|b9c391b36d	520	Philip the Tetrarch	philip-the-tetrarch
+topic.section|herodian-dynasty|b9c391b36d	615	Philip the Tetrarch	philip-the-tetrarch
+topic.section|herodian-dynasty|b9c391b36d	91	Luke	luke-evangelist
 topic.section|herodian-dynasty|c80e069f53	0	Herod the Great	herod-the-great
 topic.section|herodian-dynasty|c80e069f53	170	Jesus	jesus-of-nazareth
 topic.section|herodian-dynasty|d01f1a073b	104	John the Baptist	john-the-baptist
@@ -5734,12 +5743,6 @@ topic.section|herodian-dynasty|d3789801e6	27	Herod the Great	herod-the-great
 topic.section|herodian-dynasty|d3789801e6	68	Jesus	jesus-of-nazareth
 topic.section|herodian-dynasty|eb77c662eb	110	Herod the Great	herod-the-great
 topic.section|herodian-dynasty|eb77c662eb	49	Paul	paul-of-tarsus
-topic.section|herodian-dynasty|ec3a018938	27	Herod the Great	herod-the-great
-topic.section|herodian-dynasty|efda996bae	102	Antipas	herod-antipas
-topic.section|herodian-dynasty|efda996bae	125	Agrippa I	herod-agrippa-i
-topic.section|herodian-dynasty|efda996bae	581	Mark	john-mark
-topic.section|herodian-dynasty|efda996bae	605	Antipas	herod-antipas
-topic.section|herodian-dynasty|efda996bae	91	Luke	luke-evangelist
 topic.section|hezekiah-bulla|52d97dbdce	102	Hezekiah	hezekiah
 topic.section|hezekiah-bulla|52d97dbdce	121	Ahaz	ahaz
 topic.section|hezekiah-bulla|52d97dbdce	417	Hezekiah	hezekiah

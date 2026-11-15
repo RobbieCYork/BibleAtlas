@@ -337,7 +337,8 @@ const VERSE_NAME_OVERRIDES: Record<string, Record<string, Record<string, string 
   // registered (as a matchName on the `herodian-dynasty` overview topic) and ends in DEFAULT_NO_LINK in
   // NAME_CONTEXT_RULES, so these verses are the ONLY places a bare "Herod" links: prose, panel verse
   // lists and any verse not listed here stay unlinked. Enumerated from all three corpora — the WEB,
-  // KJV and ASV carry "Herod" in the same 42 verses, except that the ASV reads "he" at Acts 12:20.
+  // KJV and ASV carry the word "Herod" in the same 41 verses (40 in the ASV, which reads "he" at Acts
+  // 12:20). 38 of them are listed below; the other 3 are covered by "Herod the tetrarch".
   // Verses whose only Herod is inside "Herod the tetrarch" (Matthew 14:1, Luke 9:7, Acts 13:1) are not
   // listed: that whole phrase is registered on herod-antipas and wins as the longer match.
   //   Herod the Great — Matthew 2 (the magi, the flight to Egypt, the Bethlehem killings, his death;
@@ -377,6 +378,13 @@ const VERSE_NAME_OVERRIDES: Record<string, Record<string, Record<string, string 
       [12, [1, 6, 11, 19, 20, 21], HEROD_AGRIPPA_I],
       [23, [35], HEROD_THE_GREAT],
     ]),
+  },
+  // "Antipas": registered on herod-antipas, and Revelation 2:13 is the only verse in all three
+  // translations that uses the bare name — and it is ANTIPAS OF PERGAMUM, "my faithful witness",
+  // martyred there. Not a Herod; no record; no link. The panel path (no verse) is covered by the
+  // "my witness / my faithful" rule under `antipas` in NAME_CONTEXT_RULES.
+  antipas: {
+    Revelation: { "2:13": null },
   },
   // "Jonah": the entry is the prophet, correct at 2 Kings 14:25 and throughout the book of Jonah,
   // and correct at every Gospel mention of "the sign of Jonah". Wrong at exactly five places, all
@@ -2641,6 +2649,10 @@ const NAME_CONTEXT_RULES: Record<string, NameContextRule[]> = {
   // reader path, verse by verse. Everywhere else — articles, panel verse lists, any unlisted verse —
   // it stays the plain text it was before the key was registered.
   herod: [DEFAULT_NO_LINK],
+  // Antipas of Pergamum (Revelation 2:13): "Antipas my witness, my faithful one" (WEB, ASV), "Antipas
+  // was my faithful martyr" (KJV). Reaches the panel path, which passes no verse; the reader path is
+  // also covered by VERSE_NAME_OVERRIDES.antipas.
+  antipas: [{ after: /^\s+(?:was\s+)?my\s+(?:witness|faithful)\b/, to: null }],
   john: [
     // ── A phrase pin, and it must stay ahead of the pattern rules below, which is why it is here
     // rather than appended. Willibald's eighth-century itinerary, quoted verbatim in

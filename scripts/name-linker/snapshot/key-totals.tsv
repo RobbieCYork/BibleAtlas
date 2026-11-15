@@ -736,11 +736,7 @@ person	anna	anna-the-prophetess	panel	1
 person	anna	anna-the-prophetess	reader	1
 person	anna	anna-the-prophetess	reader:asv	1
 person	anna	anna-the-prophetess	reader:kjv	1
-person	antipas	herod-antipas	panel	1
 person	antipas	herod-antipas	prose	11
-person	antipas	herod-antipas	reader	1
-person	antipas	herod-antipas	reader:asv	1
-person	antipas	herod-antipas	reader:kjv	1
 person	apollos	apollos	panel	10
 person	apollos	apollos	prose	3
 person	apollos	apollos	reader	10
@@ -1082,7 +1078,7 @@ person	herod agrippa i	herod-agrippa-i	prose	11
 person	herod agrippa ii	herod-agrippa-ii	prose	3
 person	herod antipas	herod-antipas	prose	23
 person	herod archelaus	herod-archelaus	prose	3
-person	herod the great	herod-the-great	prose	45
+person	herod the great	herod-the-great	prose	46
 person	herod the tetrarch	herod-antipas	panel	4
 person	herod the tetrarch	herod-antipas	prose	1
 person	herod the tetrarch	herod-antipas	reader	4
@@ -1566,7 +1562,7 @@ person	philip the evangelist	philip-the-evangelist	prose	4
 person	philip the evangelist	philip-the-evangelist	reader	1
 person	philip the evangelist	philip-the-evangelist	reader:asv	1
 person	philip the evangelist	philip-the-evangelist	reader:kjv	1
-person	philip the tetrarch	philip-the-tetrarch	prose	6
+person	philip the tetrarch	philip-the-tetrarch	prose	8
 person	phoebe	phoebe	panel	1
 person	phoebe	phoebe	prose	1
 person	phoebe	phoebe	reader	1
@@ -4708,7 +4704,7 @@ verse	mark 5:37	-	prose	1
 verse	mark 6	-	prose	2
 verse	mark 6:14	-	prose	1
 verse	mark 6:14-29	-	prose	2
-verse	mark 6:17	-	prose	2
+verse	mark 6:17	-	prose	3
 verse	mark 6:17-18	-	prose	2
 verse	mark 6:21-28	-	prose	1
 verse	mark 6:21-29	-	prose	1
@@ -4720,6 +4716,7 @@ verse	mark 7:1-23	-	prose	1
 verse	mark 7:3	-	prose	1
 verse	mark 7:3-5	-	prose	1
 verse	mark 7:8-13	-	prose	1
+verse	mark 8:15	-	prose	1
 verse	mark 8:22-26	-	prose	1
 verse	mark 8:29	-	prose	1
 verse	mark 8:31	-	prose	5
