@@ -12,6 +12,18 @@
  * This module has no imports on purpose: `scripts/seo/loadData.mjs` bundles it for the public-page
  * generator, exactly as it bundles the deletion notice.
  *
+ * SWITCHED-OFF FEATURES. Friends, groups and direct messages (SOCIAL_CONNECTIONS_ENABLED) and Reading
+ * Plans (READING_PLANS_ENABLED), both in `src/lib/features.ts`, are off as of 2026-11-15 with their
+ * code and stored data kept. The text below was edited to match: it says those features are off,
+ * keeps every statement about the data already stored, and drops only claims about things a user
+ * cannot do today. If either switch is flipped back on, revisit in the same commit:
+ *   - SOCIAL_FEATURES_OFF_SHORT and SOCIAL_FEATURES_OFF_DETAIL below, and the sentence closing
+ *     "Social activity" in Privacy §2 — delete them;
+ *   - Terms §5: put back the Report option on messages and profiles, blocking from a profile, and
+ *     the **Safety & Contact** screen in the account menu (if it returns with the switch);
+ *   - Privacy §8: a pending friend or group invitation is stored in the browser during sign-up;
+ *   - Privacy §2 "Usage information": "a reading plan was opened" is an example event again.
+ *
  * Markup: a string in `body` is a paragraph, an array of strings is a bulleted list. Inside either,
  * `[text](href)` is a link (href must start with `/`, `mailto:` or `https://`) and `**text**` is
  * bold. Nothing else is interpreted; everything else is escaped.
@@ -44,6 +56,13 @@ export interface LegalDocument {
 }
 
 const EMAIL = `[${LEGAL_CONTACT_EMAIL}](mailto:${LEGAL_CONTACT_EMAIL})`;
+
+// Friends, groups and messages are switched off (see the header). Said once here, used in Privacy §1
+// and §4, so the two cannot drift; delete both when SOCIAL_CONNECTIONS_ENABLED goes back on.
+const SOCIAL_FEATURES_OFF_SHORT =
+  "**Friends, groups and direct messages are switched off for now.** You cannot add friends, join a group or send a message in the app at the moment. Nothing that already existed was deleted; section 4 explains what that means.";
+const SOCIAL_FEATURES_OFF_DETAIL =
+  "**Friends, groups and direct messages are currently switched off.** While they are off, no one can send a friend request, create or join a group, or send a message in the app. Friendships, groups and messages from before they were switched off are still stored, and the rest of this section still describes who can see them. In particular, notes and posts you mark **Public** still go to the friends you were already connected with. Deleting your account deletes or keeps this information exactly as our [account-deletion page](/delete-account) sets out.";
 
 const OPERATOR_SENTENCE = LEGAL_ENTITY.name
   ? `Capstone Bible is operated by ${LEGAL_ENTITY.name}${LEGAL_ENTITY.mailingAddress ? `, ${LEGAL_ENTITY.mailingAddress}` : ""}.`
@@ -86,7 +105,7 @@ export const TERMS_OF_SERVICE: LegalDocument = {
     {
       heading: "3. What you post",
       body: [
-        "The Service lets you write and share things — notes, posts, photos and videos, comments, messages, group messages, profile details and more (\"your content\"). **You keep ownership of your content.**",
+        "Everything you write or share on the Service — notes, posts, photos and videos, comments, profile details, any messages or group messages you have sent, and more — is \"your content\". **You keep ownership of your content.**",
         "So that we can run the Service, you give us a worldwide, non-exclusive, royalty-free licence to store, host, copy, display and transmit your content, only as needed to operate and provide the Service and only to the people you have chosen to share it with (for example your friends or a group). This licence ends when your content is deleted, except for copies held for a limited time in routine backups and copies that other people have already received (for example a message you sent).",
         "You are responsible for your content. Only post content you have the right to share, and do not post anything that breaks the rules in section 4.",
       ],
@@ -116,7 +135,7 @@ export const TERMS_OF_SERVICE: LegalDocument = {
       heading: "5. Moderation, reporting and blocking",
       body: [
         "We do not review everything posted on the Service and we are not obliged to. But we may — without notice — remove or hide content, or limit, suspend or close an account, if we believe it breaks these Terms, puts anyone at risk, or exposes us or others to legal liability.",
-        "If you see something that breaks these Terms, report it with the Report option on the post, comment, note, message or profile, or use **Report a Problem** in the account menu. You can block another person at any time; blocking hides each of you from the other. The **Safety & Contact** screen in the account menu explains how reporting and blocking work. You can also write to " +
+        "If you see something that breaks these Terms, report it with the Report option on the post, note or comment, or use **Report a Problem** in the account menu. The same menu lets you block the person who wrote it; blocking hides each of you from the other. You can also write to " +
           EMAIL +
           ".",
         "If you report content, the people who review reports will see the report and a short excerpt of the content you reported, so they can decide what to do with it.",
@@ -235,6 +254,7 @@ export const PRIVACY_POLICY: LegalDocument = {
           "We collect what you give us to make the app work — your email address, display name, and the notes, posts, messages and other things you create — plus a small amount of usage information about which features are used.",
           "**We do not sell your personal information, we do not show ads, and we do not use advertising or third-party analytics trackers.**",
           "Your private notes, sermon notes, prayer list, highlights and tags are visible only to you in the app. Things you share go to the people you share them with: friends, a group, or the people in a game.",
+          SOCIAL_FEATURES_OFF_SHORT,
           "Your data is not end-to-end encrypted. The people who run Capstone Bible can technically access what is stored in its database, as described in section 5.",
           "You can download a copy of your study material and delete your account yourself, at any time, from My Profile.",
         ],
@@ -246,10 +266,10 @@ export const PRIVACY_POLICY: LegalDocument = {
         "**Account information.** Your email address and password when you sign up, and the display name you choose. Your password is handled by our authentication provider (Supabase) and stored only in hashed form — we never see it. We also keep the date your account was created and when you last signed in.",
         "**Profile information — all optional.** A profile photo, phone number, church and church website, favourite verse, bio, city, birthday, relationship status, hobbies, work experience, education, favourite music, TV shows, films and sports teams, and links to your social-media accounts.",
         "**Your Bible study.** Notes on passages (including the verses and text you quoted), highlights, tags, sermon notes (title, speaker, Scripture reference, your notes, and any photographs you add), prayer-list items and whether you have marked them answered, your reading position, the chapters you mark as read, your reading-plan progress, and how many seconds you spend reading each day.",
-        "**Social activity.** Friend requests and friendships; posts (text, photos, videos, and friends you tag); comments; direct messages to friends (including when they were read, and messages you pin); groups you create or join, join requests, and group messages; the people you block and the content you hide.",
+        "**Social activity.** Friend requests and friendships; posts (text, photos, videos, and friends you tag); comments; direct messages to friends (including when they were read, and messages you pin); groups you create or join, join requests, and group messages; the people you block and the content you hide. Friends, groups and messages are switched off in the app for now (see section 4); what was stored before then is kept.",
         "**Games.** The game rooms you host or join, your answers and scores, and your high scores (stored with your display name). In multiplayer games you can turn on your camera and microphone: see section 6.",
         "**Reports.** If you use Report a Problem, the report itself plus technical details to help us fix it: the page and screen you were on, any text you selected, the app version, your browser's user-agent string, your screen size and platform. If you report a person's content, the reason, any details you add, and a short excerpt (up to 1,000 characters) of the content you reported.",
-        "**Usage information.** The app records which features are used — for example that the app was opened, a panel was opened, a chapter was read, a note or post was created, a search was run (whether in places or in Scripture — never what you searched for), a game was played or a reading plan was opened. Each event is a name from a fixed list the app chose, sometimes with a fixed label such as which panel or game, and never anything you typed: no note, message or post text, no search words, no verse text. Events are grouped into a visit using a random identifier held in your browser tab, with the visit's start and last-active times, so we can see how long the app is used. When you are signed in, these records are linked to your account. Visits to the sign-in screen are recorded without an account.",
+        "**Usage information.** The app records which features are used — for example that the app was opened, a panel was opened, a chapter was read, a note or post was created, a search was run (whether in places or in Scripture — never what you searched for), or a game was played. Each event is a name from a fixed list the app chose, sometimes with a fixed label such as which panel or game, and never anything you typed: no note, message or post text, no search words, no verse text. Events are grouped into a visit using a random identifier held in your browser tab, with the visit's start and last-active times, so we can see how long the app is used. When you are signed in, these records are linked to your account. Visits to the sign-in screen are recorded without an account.",
         "**Technical information.** Like any website, the services that host the app automatically receive your IP address, browser and device type, and the time of each request, and keep them in their server logs.",
         "We do not collect payment information, precise location, or your contacts.",
       ],
@@ -270,6 +290,7 @@ export const PRIVACY_POLICY: LegalDocument = {
     {
       heading: "4. Who can see what",
       body: [
+        SOCIAL_FEATURES_OFF_DETAIL,
         "**Only you** (in the app): your private notes, sermon notes and their photographs, prayer list, highlights, tags, reading position, reading-plan progress, the people you have blocked, and posts you have not marked Public.",
         "**Your friends:** notes and posts you mark **Public** (despite the label, these go to your accepted friends, not to the whole internet), and comments on them; the chapters you have marked as read and your daily reading time; and social links you set to **My friends**.",
         "**Your profile details.** Your accepted friends see your display name, profile photo, email address, church and church website, favourite verse, bio and the date you joined, plus only those optional details (such as your phone number, city or birthday) whose privacy switch you have turned on. Someone with a pending friend request between you, sent by either of you, sees only your display name and profile photo. No one else can see your profile details — including someone whose friend request was declined — apart from your display name in games and on high-score boards, your display name and photo in name search if you turn it on, and the people described in section 5.",
@@ -317,7 +338,7 @@ export const PRIVACY_POLICY: LegalDocument = {
     {
       heading: "8. Cookies and storage on your device",
       body: [
-        "Capstone Bible does not use advertising or tracking cookies. The app stores a few things in your browser's own storage so it works properly: your sign-in session, your preferences (theme, your chosen appearance (skin, kept only on your device), text size, which tabs and timeline lanes you show, sort orders, \"Remember me\"), a pending friend or group invitation while you sign up, the random visit identifier used for usage information (cleared when you close the tab), and — if you use the photo-to-text feature in sermon notes — the text-recognition model, which runs on your device rather than on a server.",
+        "Capstone Bible does not use advertising or tracking cookies. The app stores a few things in your browser's own storage so it works properly: your sign-in session, your preferences (theme, your chosen appearance (skin, kept only on your device), text size, which tabs and timeline lanes you show, sort orders, \"Remember me\"), the random visit identifier used for usage information (cleared when you close the tab), and — if you use the photo-to-text feature in sermon notes — the text-recognition model, which runs on your device rather than on a server.",
         "Clearing your browser's storage signs you out and resets these preferences.",
       ],
     },
