@@ -62,6 +62,11 @@ import { supabase } from "./supabase";
  * ========================================================================== */
 export const SOCIAL_CONNECTIONS_ENABLED = false;
 
+/** Archaeology's row in the two hamburger menus (MobileNavMenu on a phone, PanelMenu's "Go to" group on
+ * desktop). Robbie, 2026-11-15: hide it. HIDE ONLY — the Archaeology screen, its data, `openArchaeology`
+ * in App.tsx and the Archaeology shelf inside Articles are all untouched and still reachable from
+ * Articles. Flip to true to put the menu row back. */
+export const ARCHAEOLOGY_MENU_ROW_VISIBLE = false;
 
 export type FeatureKey =
   | "prayer_list"

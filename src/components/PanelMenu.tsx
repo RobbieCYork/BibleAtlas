@@ -1,7 +1,7 @@
 import { Fragment, useEffect, useId, useRef, useState } from "react";
 import Icon, { type IconName } from "./Icon";
 import { TestingMarker } from "./FeatureRelease";
-import { useFeature, SOCIAL_CONNECTIONS_ENABLED, type FeatureVisibility } from "../lib/features";
+import { useFeature, SOCIAL_CONNECTIONS_ENABLED, ARCHAEOLOGY_MENU_ROW_VISIBLE, type FeatureVisibility } from "../lib/features";
 
 /** The panel slots the layout can show. There is deliberately no separate "details" slot: a single
  * article (a place/person/topic/POI/timeline event) is a *state* of the Articles panel, not a panel
@@ -174,7 +174,7 @@ export default function PanelMenu({
         ref={buttonRef}
         className="panel-menu-button"
         onClick={() => setOpen((o) => !o)}
-        aria-label="Menu — show or hide panels, or go to Timeline, Archaeology or Games"
+        aria-label="Menu — show or hide panels, or go to Timeline or Games"
         aria-expanded={open}
         aria-haspopup="menu"
         aria-controls={open ? menuId : undefined}
@@ -210,7 +210,7 @@ export default function PanelMenu({
           <div className="panel-menu-separator panel-menu-separator-strong" role="separator" />
           <div className="panel-menu-group" role="group" aria-label="Go to">
             <p className="panel-menu-heading">Go to</p>
-            {GO_TO_ROWS.filter(({ key }) => goToFeature[key].visible).map(({ key, label, icon, blurb }) => {
+            {GO_TO_ROWS.filter(({ key }) => (key !== "archaeology" || ARCHAEOLOGY_MENU_ROW_VISIBLE) && goToFeature[key].visible).map(({ key, label, icon, blurb }) => {
               const isCurrent = key === activeDestination;
               return (
                 <button

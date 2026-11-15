@@ -31,7 +31,10 @@ export const MOBILE_TAB_META: Record<MobileTabKey, { label: string; icon: IconNa
   timeline: { label: "Timeline", icon: "timeline" },
   notes: { label: "Notes", icon: "notes" },
   articles: { label: "Articles", icon: "articles" },
-  social: { label: "Social", icon: "social" },
+  // Labelled "My Profile": with Friends / Groups / Messages switched off (SOCIAL_CONNECTIONS_ENABLED in
+  // lib/features.ts) this destination is simply the reader's own profile. The key stays "social" — it is
+  // the stored identity in the saved tab-bar record, not copy.
+  social: { label: "My Profile", icon: "social" },
   games: { label: "Games", icon: "games" },
 };
 

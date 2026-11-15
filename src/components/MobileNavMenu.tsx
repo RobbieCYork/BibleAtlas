@@ -2,7 +2,7 @@ import { useEffect, useId, useRef, useState } from "react";
 import { MOBILE_TAB_ORDER, MOBILE_TAB_META, type MobileTabKey } from "../lib/mobileTabs";
 import Icon from "./Icon";
 import { TestingMarker } from "./FeatureRelease";
-import { useFeature, type FeatureVisibility } from "../lib/features";
+import { useFeature, ARCHAEOLOGY_MENU_ROW_VISIBLE, type FeatureVisibility } from "../lib/features";
 
 interface MobileNavMenuProps {
   /** Which of the seven destinations is on screen right now (App derives this in the same
@@ -30,7 +30,7 @@ interface MobileNavMenuProps {
 type Row = { kind: "tab"; key: MobileTabKey } | { kind: "archaeology" };
 
 const ROWS: Row[] = MOBILE_TAB_ORDER.flatMap<Row>((key) =>
-  key === "timeline" ? [{ kind: "tab", key }, { kind: "archaeology" }] : [{ kind: "tab", key }],
+  key === "timeline" && ARCHAEOLOGY_MENU_ROW_VISIBLE ? [{ kind: "tab", key }, { kind: "archaeology" }] : [{ kind: "tab", key }],
 );
 
 /** The mobile header's hamburger.
@@ -121,7 +121,7 @@ export default function MobileNavMenu({ current, onNavigate, onGoToArchaeology }
         type="button"
         ref={buttonRef}
         className="mobile-nav-menu-button"
-        aria-label="Menu — go to Bible, Map, Timeline, Archaeology, Notes, Articles, Social or Games"
+        aria-label="Menu — go to Bible, Map, Timeline, Notes, Articles, My Profile or Games"
         aria-expanded={open}
         aria-haspopup="menu"
         aria-controls={open ? menuId : undefined}

@@ -116,7 +116,7 @@ export default function MobileTabBar({
         type="button"
         className={`mobile-tab ${isActive ? "active" : ""}`}
         onClick={handleClick}
-        aria-label={key === "social" ? (SOCIAL_CONNECTIONS_ENABLED ? "Social — My Profile, Friends, Groups, and Messages" : "Social — My Profile") : undefined}
+        aria-label={key === "social" ? (SOCIAL_CONNECTIONS_ENABLED ? "My Profile — also Friends, Groups, and Messages" : "My Profile") : undefined}
         aria-current={isActive ? "page" : undefined}
       >
         <span className="mobile-tab-icon" aria-hidden="true">
