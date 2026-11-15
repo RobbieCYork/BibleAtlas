@@ -19,7 +19,7 @@ import BiblePanel from "./components/BiblePanel";
 import MyNotesPanel from "./components/MyNotesPanel";
 import ArticlesPanel from "./components/ArticlesPanel";
 import FriendsPanel from "./components/FriendsPanel";
-import { SOCIAL_CONNECTIONS_ENABLED } from "./lib/features";
+import { SOCIAL_CONNECTIONS_ENABLED, READING_PLANS_ENABLED } from "./lib/features";
 import ThenNowToggle, { type MapMode } from "./components/ThenNowToggle";
 import PanelMenu, { type PanelKey } from "./components/PanelMenu";
 import type { FriendsView } from "./components/ViewSwitcher";
@@ -1635,7 +1635,7 @@ function App() {
         <AuthButton
           session={session}
           openProfileNonce={openProfileNonce}
-          onOpenReadingPlans={openReadingPlans}
+          onOpenReadingPlans={READING_PLANS_ENABLED ? openReadingPlans : undefined}
           onOpenMyProfile={openMyProfile}
           profileVersion={profileVersion}
           reportSurface={reportSurface}
@@ -1682,7 +1682,7 @@ function App() {
             externalSearchQuery={bibleSearchQuery}
             externalSearchNonce={bibleSearchNonce}
             journalRequest={journalRequest}
-            openReadingPlansRequest={openReadingPlansNonce}
+            openReadingPlansRequest={READING_PLANS_ENABLED ? openReadingPlansNonce : undefined}
             openBookIntroRequest={openBookIntroRequest}
             onBookIntroBack={detailsHistory.length > 0 ? goBackInDetails : undefined}
             initializing={bibleInitializing}

@@ -5,6 +5,7 @@ import TagPicker from "./TagPicker";
 import ReferencePicker from "./ReferencePicker";
 import BookIntroView from "./BookIntroView";
 import ReadingPlansView from "./ReadingPlansView";
+import { READING_PLANS_ENABLED } from "../lib/features";
 import { BOOKS } from "../data/bibleBooks";
 import { shouldNavigate, suggestReference } from "../lib/bibleReference";
 import { fetchPassage } from "../lib/biblePassage";
@@ -401,6 +402,7 @@ export default function BiblePanel({
   // Reading-plan progress, refetched on login state changes. On login, any days checked off while
   // logged out are first merged into Supabase (best-effort) so they follow the account.
   useEffect(() => {
+    if (!READING_PLANS_ENABLED) return; // Reading Plans off: no progress fetch/merge, nothing to show.
     let cancelled = false;
     (async () => {
       if (userId) await mergeLocalPlanProgress(userId, READING_PLANS.map((p) => p.id));
@@ -439,6 +441,7 @@ export default function BiblePanel({
   };
 
   const openPlansView = (planId: string | null) => {
+    if (!READING_PLANS_ENABLED) return;
     track("plan.open", planId ? { plan: planId } : undefined);
     setOpenPlanId(planId);
     setShowPlans(true);
@@ -1741,6 +1744,7 @@ export default function BiblePanel({
             <p className="bible-welcome-text">
               Places and people in the text link to the interactive map and their full histories.
             </p>
+            {READING_PLANS_ENABLED && (
             <div className="bible-welcome-plans">
               <p className="bible-welcome-plans-title">Or follow a guided reading plan</p>
               {READING_PLANS.map((plan) => (
@@ -1755,11 +1759,12 @@ export default function BiblePanel({
                 </button>
               ))}
             </div>
+            )}
           </div>
         )
       )}
 
-      {showPlans && !searchResults && (
+      {READING_PLANS_ENABLED && showPlans && !searchResults && (
         <ReadingPlansView
           openPlanId={openPlanId}
           onOpenPlan={setOpenPlanId}

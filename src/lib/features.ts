@@ -68,6 +68,14 @@ export const SOCIAL_CONNECTIONS_ENABLED = false;
  * Articles. Flip to true to put the menu row back. */
 export const ARCHAEOLOGY_MENU_ROW_VISIBLE = false;
 
+/** Reading Plans. Robbie, 2026-11-15: "Get rid of reading plans." HIDE ONLY, same shape as the switches
+ * above: ReadingPlansView, data/readingPlans.ts, the progress helpers in lib/supabase.ts, the
+ * reading_plan_progress table and every stored row are untouched. While false: no Reading Plans row in
+ * the account menu, no "follow a guided reading plan" cards on the Bible welcome screen, the plans view
+ * cannot open (an external open request is ignored), and none of the plan progress fetch/merge network
+ * calls or plan.* analytics events run. Flip to true to bring it all back. */
+export const READING_PLANS_ENABLED = false;
+
 export type FeatureKey =
   | "prayer_list"
   | "sermon_notes"

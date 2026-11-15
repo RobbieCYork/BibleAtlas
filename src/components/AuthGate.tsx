@@ -222,7 +222,7 @@ export default function AuthGate() {
           </div>
           <p className="auth-gate-pitch">
             Read Scripture alongside the places, people and history behind it — an interactive map, a
-            timeline, articles, and games — then keep notes, highlights and reading plans that sync
+            timeline, articles, and games — then keep notes and highlights that sync
             everywhere you sign in.
           </p>
         </div>
