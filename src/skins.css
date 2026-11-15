@@ -78,12 +78,8 @@
 .skin-toggle-title { font-weight: 600; font-size: calc(14px * var(--tsz, 1)); }
 .skin-toggle-hint { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: calc(13px * var(--tsz, 1)); color: var(--text-muted); }
 .skin-toggle-hint::before { content: "\2014\00a0"; }
-.skin-toggle-title + .skin-toggle-chevron { margin-left: auto; }
-.skin-toggle-chevron { flex: 0 0 auto; width: 20px; text-align: center; color: var(--text-muted); transition: transform 0.15s ease; }
-.skin-toggle-chevron-open { transform: rotate(180deg); }
 .skin-collapse { display: flex; flex-direction: column; gap: 8px; }
 .skin-collapse[hidden] { display: none; }
-@media (prefers-reduced-motion: reduce) { .skin-toggle-chevron { transition: none; } }
 .skin-picker-note { font-size: calc(12px * var(--tsz, 1)); color: var(--text-muted); }
 
 /* ============================================================================

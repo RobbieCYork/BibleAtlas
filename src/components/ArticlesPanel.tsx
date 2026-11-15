@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useRef, useState } from "react";
+import Chevron from "./Chevron";
 import Icon, { type IconName } from "./Icon";
 import type { Location, Person, PointOfInterest, Topic, TimelineEvent } from "../data/types";
 
@@ -347,7 +348,7 @@ export default function ArticlesPanel({
                   <span className="articles-section-label">{section.label}</span>
                   <span className="articles-section-count">{total}</span>
                   <span className="articles-section-chevron" aria-hidden="true">
-                    {isOpen ? "▾" : "▸"}
+                    <Chevron open={isOpen} size={20} />
                   </span>
                 </button>
                 {isOpen &&

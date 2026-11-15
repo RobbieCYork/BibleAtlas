@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import Chevron from "./Chevron";
 import { supabase, chapterReadCutoff, chaptersReadThisMonth, type Profile } from "../lib/supabase";
 import { BOOKS } from "../data/bibleBooks";
 import Icon from "./Icon";
@@ -206,7 +207,8 @@ export default function ReadingProgressGrid({ userId, displayName, isOwn }: Read
         onClick={() => setBooksOpen((o) => !o)}
         aria-expanded={booksOpen}
       >
-        {booksOpen ? "▾ Hide" : "▸ Show"} book-by-book progress
+        {booksOpen ? "Hide" : "Show"} book-by-book progress
+        <Chevron open={booksOpen} />
       </button>
       {booksOpen && (
         <>

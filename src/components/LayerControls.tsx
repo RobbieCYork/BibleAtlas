@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from "react";
+import Chevron from "./Chevron";
 import type maplibregl from "maplibre-gl";
 
 interface LayerControlsProps {
@@ -217,7 +218,8 @@ export default function LayerControls({
             onClick={() => setLegendOpen((o) => !o)}
             aria-expanded={legendOpen}
           >
-            {legendOpen ? "▾" : "▸"} Legend
+            Legend
+            <Chevron open={legendOpen} />
           </button>
           {legendOpen && (
             <div className="map-legend">

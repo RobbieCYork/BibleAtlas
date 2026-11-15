@@ -1,4 +1,5 @@
 import { useId, useState } from "react";
+import Chevron from "./Chevron";
 import { SKINS, setSkin, useStoredSkin, type SkinChoice } from "../lib/skin";
 
 /** My Profile → Appearance. Pick a look for the app; it applies at once and is remembered on this
@@ -27,9 +28,7 @@ export default function SkinPicker() {
       >
         <span className="skin-toggle-title">Appearance</span>
         {!open && <span className="skin-toggle-hint">{current}</span>}
-        <span className={`skin-toggle-chevron${open ? " skin-toggle-chevron-open" : ""}`} aria-hidden="true">
-          ▾
-        </span>
+        <Chevron open={open} kind="menu" />
       </button>
       <div id={panelId} hidden={!open} className="skin-collapse">
       <div className="skin-picker" role="radiogroup" aria-labelledby="skin-picker-heading">

@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
+import Chevron from "./Chevron";
 import {
   fetchCategories,
   humanizeReportError,
@@ -309,7 +310,8 @@ export default function ReportIssueSheet({ userId, isGuest, surface, onClose, on
               aria-expanded={showCaptured}
               onClick={() => setShowCaptured((v) => !v)}
             >
-              {showCaptured ? "▾" : "▸"} What gets sent with this report
+              What gets sent with this report
+              <Chevron open={showCaptured} />
             </button>
             {showCaptured && (
               <div className="report-captured-list">

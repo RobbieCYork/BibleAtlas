@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from "react";
+import Chevron from "./Chevron";
 import { supabase, HIGHLIGHT_COLORS, type Highlight, type HighlightColor, type Note, type Tag, type VerseTag } from "../lib/supabase";
 import { BOOKS } from "../data/bibleBooks";
 import TagPicker from "./TagPicker";
@@ -442,7 +443,7 @@ export default function MyNotesPanel({
 
           <div className="my-notes-export no-print" ref={exportMenuRef}>
             <button type="button" className="my-notes-export-button" onClick={() => setExportMenuOpen((o) => !o)}>
-              Export ▾
+              Export <Chevron open={exportMenuOpen} kind="menu" size={18} className="chev-inline" />
             </button>
             {exportMenuOpen && (
               <div className="my-notes-export-dropdown">

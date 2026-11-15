@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from "react";
+import Chevron from "./Chevron";
 import { createPortal } from "react-dom";
 import { supabase, formatJoinDate, type Profile } from "../lib/supabase";
 import ReadingProgressGrid from "./ReadingProgressGrid";
@@ -375,7 +376,8 @@ function MyProfileControl({
             onClick={() => setAboutOpen((o) => !o)}
             aria-expanded={aboutOpen}
           >
-            {aboutOpen ? "▾ Hide" : "▸ Show"} About Me
+            {aboutOpen ? "Hide" : "Show"} About Me
+            <Chevron open={aboutOpen} />
           </button>
 
           {aboutOpen && (

@@ -1,4 +1,5 @@
 import { useState } from "react";
+import Chevron from "./Chevron";
 import type { SeasonalWalk } from "../data/seasonalWalks";
 import { formatWalkStopReference } from "../data/seasonalWalks";
 import Icon from "./Icon";
@@ -67,7 +68,8 @@ export default function SeasonalWalkPanel({ walk, stopIndex, onGoToStop, onClose
         onClick={() => setStopsOpen((o) => !o)}
         aria-expanded={stopsOpen}
       >
-        {stopsOpen ? "▾" : "▸"} All stops
+        All stops
+        <Chevron open={stopsOpen} />
       </button>
       {stopsOpen && (
         <ol className="walk-stop-list">

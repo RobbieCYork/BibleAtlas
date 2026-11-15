@@ -953,8 +953,10 @@ body.resizing-panels {
 
 .articles-section-chevron {
   color: var(--text-muted);
-  width: 14px;
-  text-align: center;
+  width: 20px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .articles-section-list {
@@ -12865,3 +12867,36 @@ img.sn-image,
 .report-portal .report-sheet {
   z-index: 70;
 }
+
+/* --- Disclosure chevron (Chevron.tsx) — the one arrow every expand/collapse control shares. ---
+ * Pinned to the right edge of its row, never shrunk, and rotated rather than swapped so the turn
+ * animates. `kind=row`: closed points right (-90deg), open points down. `kind=menu`: closed points
+ * down, open points up (180deg). */
+.chev {
+  flex: 0 0 auto;
+  margin-left: auto;
+  color: var(--text-h, currentColor);
+  transition: transform 0.18s ease;
+}
+.chev-row { transform: rotate(-90deg); }
+.chev-row.chev-open { transform: rotate(0deg); }
+.chev-menu.chev-open { transform: rotate(180deg); }
+@media (prefers-reduced-motion: reduce) { .chev { transition: none; } }
+
+/* Whole-row disclosure buttons: >=44px tall, label left, chevron right, the full width tappable. */
+.profile-view-toggle,
+.reading-progress-toggle,
+.legend-toggle,
+.report-captured-toggle {
+  min-height: 44px;
+  align-items: center;
+}
+.report-captured-toggle { display: flex; align-items: center; }
+.profile-view-toggle,
+.reading-progress-toggle,
+.legend-toggle { text-align: left; }
+.chev-inline { margin-left: 2px; vertical-align: -4px; }
+.my-notes-export-button { min-height: 44px; }
+.reading-progress-toggle,
+.profile-view-toggle,
+.legend-toggle { padding-top: 0; padding-bottom: 0; }
