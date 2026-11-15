@@ -45,7 +45,12 @@
 .auth-gate-content {
   position: relative;
   z-index: 2;
-  flex: 1;
+  /* `1 0 auto`, not `1`. `flex: 1` is a zero basis, and together with `min-height: 100%` below that
+     pinned this box to exactly the viewport height however tall its contents were. On a short
+     window the centred contents overflowed the box equally top and bottom, and the overflow above
+     the top edge is not scrollable, so the logo was cut off with no way to reach it. Basis `auto`
+     lets the box grow to its contents, so the gate scrolls instead. */
+  flex: 1 0 auto;
   display: flex;
   flex-direction: column;
   align-items: center;
