@@ -1,15 +1,15 @@
 /**
- * Visual skins (lib/skin.tsx, skins.css) — owner-only. Drives each skin across the main screens.
+ * Visual skins (lib/skin.tsx, skins.css) — a feature for every SIGNED-IN reader. Drives each skin across the main screens.
  *
  *   node scripts/signed-in-harness/run.mjs --persona owner --viewport 390x844 \
  *        --script scripts/signed-in-harness/examples/skins.mjs --out <dir>
  *
- * persona owner      : picker present in Admin Console; each skin applies (data-skin, fonts, tokens);
- *                      screenshots named <skin>-<screen>-<phone|desktop>.png in --out.
- * persona member /
- * persona signedout  : no picker; a skin value planted in localStorage is IGNORED (no data-skin).
- *                      Also dumps computed styles (DUMP=path.json) so a run against origin/main and a
- *                      run against this tree can be diffed: the default look must not move.
+ * persona member / owner / ... (signed in): My Profile -> Appearance holds the picker; each skin applies
+ *                      (data-skin, self-hosted fonts actually loaded, tokens), persists across a reload; screenshots
+ *                      named <skin>-<screen>-<phone|desktop>.png in --out.
+ * persona signedout   : always Default, even with a skin value planted in localStorage. With nothing chosen,
+ *                      DUMP=path.json writes computed styles so a run against origin/main and a run against this
+ *                      tree can be diffed: the default look must not move.
  *
  * Env: SKINS=default,sticker,clarity,midnight,sage,skyreader,trailhead,highlighter  SCREENS=reader,map,plans,library,dialog,...  DUMP=/path/out.json
  */
@@ -17,7 +17,7 @@ import { writeFileSync, readFileSync } from "node:fs";
 import { openAdminConsole, openArticle, MENU_BUTTON } from "../lib/app.mjs";
 
 const SKINS = (process.env.SKINS ?? "default,sticker,clarity,midnight,sage,skyreader,trailhead,highlighter").split(",");
-const SCREENS = (process.env.SCREENS ?? "reader,map,timeline,notes,article,social,games,admin,plans,library,dialog").split(",");
+const SCREENS = (process.env.SCREENS ?? "reader,map,timeline,notes,article,profile,games,admin,plans,library,dialog").split(",");
 const VERSES = JSON.parse(readFileSync(process.env.MARK8 ?? new URL("./mark8-web.json", import.meta.url), "utf8"));
 
 // bible-api.com is blocked in the harness; answer it in-page with Mark 8:1-12 (WEB, public domain).
@@ -52,13 +52,20 @@ async function goTo(h, label, tabLabel = label) {
   await h.sleep(1200);
 }
 
+/** Open My Profile on either layout (phone: More/menu entry; desktop: account menu). */
+async function openProfile(h) {
+  if (await isPhone(h)) { await h.click(MENU_BUTTON); await h.sleep(350); await h.click({ css: ".mobile-nav-menu-item", text: "My Profile" }); }
+  else { await h.click('[aria-label="Settings and account"]'); await h.sleep(300); await h.click({ css: ".auth-menu-item", text: "My Profile" }); }
+  await h.waitFor(".myprofile-root"); await h.sleep(600);
+}
+
 const SCREEN_FNS = {
   reader: async (h) => { if (await isPhone(h)) await h.click({ css: ".mobile-tab", text: "Bible" }); await h.sleep(900); },
   map: async (h) => { if (await isPhone(h)) await h.click({ css: ".mobile-tab", text: "Map" }); await h.sleep(1500); },
   timeline: async (h) => { await goTo(h, "Timeline"); await h.sleep(1500); },
   notes: async (h) => { await goTo(h, "Notes"); },
   article: async (h) => { await openArticle(h, "Demons"); await h.sleep(500); },
-  social: async (h) => { await goTo(h, "Social", "Social"); },
+  profile: async (h) => { await openProfile(h); await h.evaluate(() => document.querySelector(".skin-picker")?.scrollIntoView({ block: "center", behavior: "instant" })); await h.sleep(500); },
   games: async (h) => { await goTo(h, "Games"); },
   // Reading Plans: phone = More sheet is not a tab, so use the account menu entry the desktop uses (both layouts have it).
   plans: async (h) => {
@@ -129,63 +136,95 @@ async function scriptureContrast(h) {
   });
 }
 
+
+// Every visible text element's colour against its nearest opaque background (gradients/images skipped).
+// Returns the worst offenders (< 3:1), which is the "dark text on dark" class of bug.
+async function lowContrast(h) {
+  return h.evaluate(() => {
+    const parse = (c) => (c.match(/[\d.]+/g) ?? []).map(Number);
+    const lin = (v) => { v /= 255; return v <= 0.03928 ? v / 12.92 : ((v + 0.055) / 1.055) ** 2.4; };
+    const L = ([r, g, b]) => 0.2126 * lin(r) + 0.7152 * lin(g) + 0.0722 * lin(b);
+    const bgOf = (el) => { let acc = null; for (let e = el; e; e = e.parentElement) { const cs = getComputedStyle(e); if (cs.backgroundImage !== "none") return null; const c = parse(cs.backgroundColor); if (c.length >= 3 && (c[3] ?? 1) > 0.9) return c; } return [255, 255, 255]; };
+    const out = [];
+    const seen = new Set();
+    const w = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT);
+    for (let n = w.nextNode(); n; n = w.nextNode()) {
+      const t = (n.textContent ?? "").trim(); if (t.length < 2) continue;
+      const el = n.parentElement; if (!el || seen.has(el) || !el.getClientRects().length) continue; seen.add(el);
+      const cs = getComputedStyle(el); if (cs.visibility === "hidden" || parseFloat(cs.opacity) === 0) continue;
+      const r = el.getBoundingClientRect(); if (r.width < 2 || r.bottom < 0 || r.top > innerHeight) continue;
+      const bg = bgOf(el); if (!bg) continue;
+      const fg = parse(cs.color); if (fg.length < 3 || (fg[3] ?? 1) < 0.5) continue;
+      const a = L(fg), b = L(bg); const ratio = (Math.max(a, b) + 0.05) / (Math.min(a, b) + 0.05);
+      if (ratio < 3) out.push({ t: t.slice(0, 28), cls: el.className.toString().slice(0, 36), fg: cs.color, bg: `rgb(${bg.slice(0, 3)})`, r: +ratio.toFixed(2) });
+    }
+    return out.slice(0, 8);
+  });
+}
+
 export default async function (h) {
   const w = await h.evaluate(() => window.innerWidth);
   const device = w <= 768 ? "phone" : "desktop";
   await h.addInitScript(stub(VERSES));
 
-  // ---- non-owner personas: nothing to see, nothing applied -------------------------------------
-  if (h.persona !== "owner") {
-    h.section(`${h.persona}: no picker, planted skin ignored, ${device}`);
-    const dumps = {};
+  // ---- signed out: Default always, whatever is planted in localStorage ---------------------------
+  if (h.persona === "signedout") {
+    h.section(`signedout: planted skin ignored, ${device}`);
     for (const planted of ["none", "sticker", "midnight", "clarity", "sage", "skyreader", "trailhead", "highlighter"]) {
       await h.evaluate((p) => { try { p === "none" ? localStorage.removeItem("app-skin") : localStorage.setItem("app-skin", p); } catch {} }, planted);
       await h.reload();
       await h.sleep(1800);
       const attr = await h.evaluate(() => document.documentElement.getAttribute("data-skin"));
       const link = await h.evaluate(() => !!document.getElementById("skin-fonts"));
-      h.assert(attr === null, `${h.persona} with localStorage app-skin=${planted}: no data-skin attribute (got ${attr})`);
-      h.assert(!link, `${h.persona} with app-skin=${planted}: no skin font <link> injected`);
-      if (h.persona !== "signedout") {
-        h.assert((await h.count(".skin-picker")) === 0, `${h.persona}: no skin picker in the DOM`);
-        dumps[planted] = await dumpComputed(h);
-      }
+      h.assert(attr === null, `signedout with localStorage app-skin=${planted}: no data-skin attribute (got ${attr})`);
+      h.assert(!link, `signedout with app-skin=${planted}: no skin font <link> injected`);
     }
-    if (h.persona !== "signedout") {
-      const same = Object.keys(dumps).every((k) => JSON.stringify(dumps.none) === JSON.stringify(dumps[k]));
-      h.assert(same, "computed styles identical with and without a planted skin value");
-      if (process.env.DUMP) writeFileSync(process.env.DUMP, JSON.stringify(dumps.none, null, 1));
-      console.log("  screenshot:", await h.screenshot(`default-${h.persona}-${device}.png`));
-    } else {
-      if (process.env.DUMP) writeFileSync(process.env.DUMP, JSON.stringify({ signedOutAttr: await h.evaluate(() => [document.documentElement.getAttribute("data-skin"), document.documentElement.getAttribute("data-theme"), getComputedStyle(document.body).backgroundColor, getComputedStyle(document.body).fontFamily]) }, null, 1));
-      console.log("  screenshot:", await h.screenshot(`default-signedout-${device}.png`));
-    }
+    await h.evaluate(() => { try { localStorage.removeItem("app-skin"); } catch {} });
+    await h.reload(); await h.sleep(1500);
+    if (process.env.DUMP) writeFileSync(process.env.DUMP, JSON.stringify({ signedOutAttr: await h.evaluate(() => [document.documentElement.getAttribute("data-skin"), document.documentElement.getAttribute("data-theme"), getComputedStyle(document.body).backgroundColor, getComputedStyle(document.body).fontFamily]) }, null, 1));
+    console.log("  screenshot:", await h.screenshot(`default-signedout-${device}.png`));
     return;
   }
 
-  // ---- owner ------------------------------------------------------------------------------------
-  h.section(`owner: picker, ${device}`);
+  // ---- signed in, nothing chosen: Default, byte-compared with origin/main --------------------------
+  h.section(`${h.persona}: nothing chosen = Default, ${device}`);
+  await h.evaluate(() => { try { localStorage.removeItem("app-skin"); } catch {} });
+  await h.reload(); await h.sleep(1800);
+  h.assert((await h.evaluate(() => document.documentElement.getAttribute("data-skin"))) === null, `${h.persona} with nothing chosen: no data-skin`);
+  h.assert(!(await h.evaluate(() => !!document.getElementById("skin-fonts"))), `${h.persona} with nothing chosen: no skin stylesheet`);
+  if (process.env.DUMP) writeFileSync(process.env.DUMP, JSON.stringify(await dumpComputed(h), null, 1));
+  // an unknown stored value fails safe to Default
+  await h.evaluate(() => { try { localStorage.setItem("app-skin", "not-a-skin"); } catch {} });
   await h.reload(); await h.sleep(1500);
-  h.assert(await openAdminConsole(h), "owner opens Admin Console");
-  h.assert((await h.count(".skin-picker")) === 1, "owner sees the skin picker");
-  h.assert((await h.count(".release-view-switch")) === 1, "picker sits beside the Live/Test switch");
-  const names = await h.evaluate(() => [...document.querySelectorAll(".skin-picker-option")].map((b) => b.innerText.trim()));
-  h.assert(JSON.stringify(names) === JSON.stringify(["Default", "Sticker Pop", "Clarity", "Midnight Signal", "Sage Study", "Sky Reader", "Trailhead", "Highlighter"]), `options: ${names}`);
+  h.assert((await h.evaluate(() => document.documentElement.getAttribute("data-skin"))) === null, "unknown stored skin value fails safe to Default");
+  await h.evaluate(() => { try { localStorage.removeItem("app-skin"); } catch {} });
+
+  // ---- the picker, in My Profile ---------------------------------------------------------------
+  h.section(`${h.persona}: My Profile picker, ${device}`);
+  await h.reload(); await h.sleep(1500);
+  await openProfile(h);
+  h.assert((await h.count(".skin-picker")) === 1, "picker is on My Profile");
+  const opts = await h.evaluate(() => [...document.querySelectorAll(".skin-card")].map((l) => l.querySelector(".skin-card-name").innerText.trim()));
+  h.assert(JSON.stringify(opts) === JSON.stringify(["Default", "Sticker Pop", "Clarity", "Midnight Signal", "Sage Study", "Sky Reader", "Trailhead", "Highlighter"]), `options: ${opts}`);
+  const tiny = await h.evaluate(() => [...document.querySelectorAll(".skin-card")].map((e) => Math.round(e.getBoundingClientRect().height)).filter((x) => x < 44));
+  h.assert(tiny.length === 0, "every picker card is at least 44px tall");
   // real click path: pick Clarity in the UI, check it applies, then back to Default
-  await h.click({ css: ".skin-picker-option", text: "Clarity" });
-  await h.sleep(400);
+  await h.click({ css: ".skin-card", text: "Clarity" });
+  await h.sleep(500);
   h.assert((await h.evaluate(() => document.documentElement.getAttribute("data-skin"))) === "clarity", "clicking Clarity applies data-skin=clarity");
   h.assert((await h.evaluate(() => localStorage.getItem("app-skin"))) === "clarity", "choice persisted in localStorage");
-  await h.click({ css: ".skin-picker-option", text: "Default" });
+  await h.click({ css: ".skin-card", text: "Default" });
   await h.sleep(400);
   h.assert((await h.evaluate(() => document.documentElement.getAttribute("data-skin"))) === null, "Default removes data-skin");
   h.assert((await h.evaluate(() => localStorage.getItem("app-skin"))) === null, "Default clears the stored choice");
+  h.assert(!(await h.evaluate(() => !!document.getElementById("skin-fonts"))), "Default removes the skin stylesheet");
 
   const report = [];
   for (const skin of SKINS) {
-    h.section(`owner: skin=${skin}, ${device}`);
+    h.section(`${h.persona}: skin=${skin}, ${device}`);
     await h.evaluate((s) => { try { s === "default" ? localStorage.removeItem("app-skin") : localStorage.setItem("app-skin", s); } catch {} }, skin);
     for (const screen of SCREENS) {
+      if (screen === "admin" && h.persona !== "owner") continue;
       try {
         await h.reload();
         await h.sleep(1800);
@@ -198,10 +237,16 @@ export default async function (h) {
           bodyFont: getComputedStyle(document.body).fontFamily.split(",")[0],
           horizontalScroll: document.documentElement.scrollWidth > window.innerWidth + 1,
         }));
+        if (screen === "reader") {
+          const want = { default: "Archivo", sticker: "Bricolage Grotesque", clarity: "Inter", midnight: "Inter", highlighter: "Inter", sage: "DM Sans", skyreader: "Baloo 2", trailhead: "Lexend" }[skin];
+          const fonts = await h.evaluate(() => ({ loaded: [...document.fonts].filter((f) => f.status === "loaded").map((f) => f.family.replace(/"/g, "")), urls: performance.getEntriesByType("resource").map((r) => r.name).filter((n) => /\/fonts\//.test(n)).map((n) => n.split("/fonts/")[1]) }));
+          h.assert(fonts.loaded.includes(want), `${skin}: real self-hosted ${want} is loaded (loaded: ${[...new Set(fonts.loaded)].join(", ")})`);
+          console.log(`  [${skin}] font files fetched: ${fonts.urls.join(", ")}`);
+        }
         const sc = screen === "reader" ? await scriptureContrast(h) : null;
         // touch targets: smallest visible button/tab dimension on phone
         const small = device === "phone"
-          ? await h.evaluate(() => [...document.querySelectorAll(".mobile-tab, .app-header button, .bible-panel button, .admin-tab, .skin-picker-option")]
+          ? await h.evaluate(() => [...document.querySelectorAll(".mobile-tab, .app-header button, .bible-panel button, .admin-tab, .skin-card")]
               .filter((e) => e.getClientRects().length).map((e) => { const r = e.getBoundingClientRect(); return { c: e.className.toString().slice(0, 40), w: Math.round(r.width), h: Math.round(r.height) }; })
               .filter((r) => r.h < 44 || r.w < 44).slice(0, 6))
           : [];
@@ -213,6 +258,8 @@ export default async function (h) {
           console.log(`  [${skin}/${screen}] controls under 44px:`, JSON.stringify(names.slice(0, 8)));
         }
         h.assert(!m.horizontalScroll, `${skin}/${screen}: no horizontal page overflow`);
+        const low = await lowContrast(h);
+        if (low.length) console.log(`  [${skin}/${screen}] text under 3:1 -> ${JSON.stringify(low)}`);
         const file = await h.screenshot(`${skin}-${screen}-${device}.png`);
         report.push({ skin, screen, device, theme: m.theme, bodyFont: m.bodyFont, scripture: sc, smallTargets: small.length, file });
       } catch (e) {

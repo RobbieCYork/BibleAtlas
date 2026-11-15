@@ -1,7 +1,6 @@
 import { useState, type ReactNode } from "react";
 import { FEATURES, setFeatureStage, setTestView, useFeatureAdmin, type FeatureDef, type FeatureKey } from "../lib/features";
 import { formatWhen } from "../lib/adminApi";
-import { SKINS, setSkin, useStoredSkin, type SkinChoice } from "../lib/skin";
 
 /* ============================================================================
  * The owner's Testing / Live controls and the two signals that go with them.
@@ -64,45 +63,6 @@ export function LiveTestSwitch() {
       >
         <span className="release-dot release-dot-test" aria-hidden="true" /> Test view
       </button>
-    </div>
-  );
-}
-
-/** The owner-only visual skin picker, drawn beside the Live / Test switch. Renders nothing for anyone
- * else, and lib/skin.tsx independently refuses to apply a skin to a non-owner, so hiding it here is
- * not the only line of defence. The choice is stored in this browser only (no database). */
-export function SkinPicker() {
-  const { isOwner } = useFeatureAdmin();
-  const choice = useStoredSkin();
-  if (!isOwner) return null;
-  const options: ReadonlyArray<{ id: SkinChoice; label: string; swatch?: readonly string[] }> = [
-    { id: "default", label: "Default" },
-    ...SKINS.map((s) => ({ id: s.id as SkinChoice, label: s.label, swatch: s.swatch })),
-  ];
-  return (
-    <div className="skin-picker" role="group" aria-label="Visual skin (owner preview)">
-      <span className="skin-picker-label">Skin</span>
-      <div className="skin-picker-options">
-        {options.map((o) => (
-          <button
-            key={o.id}
-            type="button"
-            className={`skin-picker-option${choice === o.id ? " active" : ""}`}
-            aria-pressed={choice === o.id}
-            onClick={() => setSkin(o.id)}
-          >
-            {o.swatch && (
-              <span className="skin-picker-swatch" aria-hidden="true">
-                {o.swatch.map((c) => (
-                  <span key={c} style={{ background: c }} />
-                ))}
-              </span>
-            )}
-            {o.label}
-          </button>
-        ))}
-      </div>
-      <span className="skin-picker-note">Preview for the owner account only, saved in this browser.</span>
     </div>
   );
 }

@@ -1,8 +1,8 @@
 import { useEffect, useSyncExternalStore } from "react";
-import { useFeatureAdmin } from "./features";
+import { supabase } from "./supabase";
 
 /* ============================================================================
- * Visual skins — OWNER-ONLY EXPERIMENT (2026-11).
+ * Visual skins — a normal feature for every signed-in reader (2026-11).
  *
  * A skin is a set of CSS-variable and component overrides in skins.css, switched on by a
  * `data-skin` attribute on <html>. The default look has NO skin attribute, so it is byte-for-byte
@@ -10,22 +10,27 @@ import { useFeatureAdmin } from "./features";
  *
  * THE RULE
  * ----------------------------------------------------------------------------
- *     active skin = isOwner ? stored choice : null
+ *     active skin = signed in (a real account, not a guest) ? stored choice : null
  *
- * `useFeatureAdmin().isOwner` is the same owner check that gates the Testing/Live switch
- * (current_user_is_owner()). It FAILS CLOSED: until the check answers, and if it errors, the user is
- * not the owner, so nobody gets a skin by accident. localStorage only ever holds the owner's
- * *preference*; it is never read for anyone the server has not said is the owner, so a value planted
- * in a member's browser does nothing.
+ * Choosing happens in My Profile → Appearance (SkinPicker, components/SkinPicker.tsx). Signed-out
+ * visitors, guests and the sign-in gate are never skinned: they get the default look, whatever a
+ * previous visitor left in localStorage.
  *
- * No database column, no migration: the choice lives in this browser only.
- * Every localStorage access is try/catch'd; an unknown stored value reads as "default".
+ * Persistence is per device, in localStorage only. No database column, no migration. Every
+ * localStorage access is try/catch'd and an unknown stored value reads as "default" (fail safe).
+ *
+ * FONTS
+ * ----------------------------------------------------------------------------
+ * Skin fonts are SELF-HOSTED (public/fonts/skins.css + woff2, SIL OFL). Nothing is requested from
+ * Google. The stylesheet is injected only while a skin is active, and each family's files are only
+ * fetched by the browser when an element actually uses that family, so a reader on Default (or on
+ * one skin) downloads none of the other skins' fonts.
  *
  * THEME INTERPLAY
  * ----------------------------------------------------------------------------
  * The app already has light/dark (`data-theme`) and some rules key off it. A skin is one fixed
  * mode, so while it is active the controller pins `data-theme` to the skin's mode (Midnight =
- * dark, the other two = light) and puts the reader's own choice back the moment the skin goes.
+ * dark, the others light) and puts the reader's own choice back the moment the skin goes.
  * ========================================================================== */
 
 export type SkinId = "sticker" | "clarity" | "midnight" | "sage" | "skyreader" | "trailhead" | "highlighter";
@@ -36,8 +41,6 @@ export interface SkinDef {
   label: string;
   blurb: string;
   mode: "light" | "dark";
-  /** Google Fonts families the skin needs; loaded only while it is active. */
-  fonts: string;
   swatch: [string, string, string];
 }
 
@@ -47,7 +50,6 @@ export const SKINS: ReadonlyArray<SkinDef> = [
     label: "Sticker Pop",
     blurb: "Bold, playful, chunky outlines. Light.",
     mode: "light",
-    fonts: "family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;1,9..144,400",
     swatch: ["#FFD43B", "#FF6B3D", "#2F4BFF"],
   },
   {
@@ -55,7 +57,6 @@ export const SKINS: ReadonlyArray<SkinDef> = [
     label: "Clarity",
     blurb: "Clean, calm, sage accent. Light.",
     mode: "light",
-    fonts: "family=Inter:wght@400;500;600;700&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400",
     swatch: ["#FFFFFF", "#3E7B63", "#DCEBE3"],
   },
   {
@@ -63,7 +64,6 @@ export const SKINS: ReadonlyArray<SkinDef> = [
     label: "Midnight Signal",
     blurb: "Navy and charcoal, violet and teal. Dark.",
     mode: "dark",
-    fonts: "family=Inter:wght@400;500;600;700&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400",
     swatch: ["#0B1020", "#7C5CFF", "#2DD4BF"],
   },
   {
@@ -71,7 +71,6 @@ export const SKINS: ReadonlyArray<SkinDef> = [
     label: "Sage Study",
     blurb: "Warm stone, sage green and gold. Light.",
     mode: "light",
-    fonts: "family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700&family=Lora:ital,wght@0,400;0,500;0,600;1,400",
     swatch: ["#F6F8F3", "#3F6B57", "#C58B3B"],
   },
   {
@@ -79,7 +78,6 @@ export const SKINS: ReadonlyArray<SkinDef> = [
     label: "Sky Reader",
     blurb: "Sky blue, navy and orange; big friendly type. Light.",
     mode: "light",
-    fonts: "family=Baloo+2:wght@500;600;700;800&family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400",
     swatch: ["#E6F2FF", "#1B58C9", "#FF8A1F"],
   },
   {
@@ -87,7 +85,6 @@ export const SKINS: ReadonlyArray<SkinDef> = [
     label: "Trailhead",
     blurb: "Sunny cream, forest green, big friendly controls. Light.",
     mode: "light",
-    fonts: "family=Lexend:wght@400;500;600;700",
     swatch: ["#FFF6DA", "#25683F", "#FFC83D"],
   },
   {
@@ -95,7 +92,6 @@ export const SKINS: ReadonlyArray<SkinDef> = [
     label: "Highlighter",
     blurb: "Cool grey, indigo, yellow highlighter. Light.",
     mode: "light",
-    fonts: "family=Inter:wght@400;500;600;700&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400",
     swatch: ["#F2F4FA", "#3338C9", "#FFE45C"],
   },
 ];
@@ -136,16 +132,39 @@ export function setSkin(choice: SkinChoice) {
   listeners.forEach((l) => l());
 }
 
-/** The owner's saved choice. NOT the active skin — use useActiveSkin() for that. */
+/** The reader's saved choice. NOT the active skin — use useActiveSkin() for that. */
 export function useStoredSkin(): SkinChoice {
   return useSyncExternalStore(subscribe, () => stored, () => "default" as SkinChoice);
 }
 
-/** The skin actually in force: the stored choice for the owner, null for everybody else. */
+// Signed in as a real (non-guest) account. Starts false, so nothing is skinned until the session
+// has actually been read; the sign-in gate and signed-out visitors therefore always stay Default.
+let signedIn = false;
+const authListeners = new Set<() => void>();
+let authStarted = false;
+function startAuthWatch() {
+  if (authStarted) return;
+  authStarted = true;
+  supabase.auth.onAuthStateChange((_event, session) => {
+    const next = !!session && !session.user.is_anonymous;
+    if (next === signedIn) return;
+    signedIn = next;
+    authListeners.forEach((l) => l());
+  });
+}
+function subscribeAuth(l: () => void) {
+  startAuthWatch();
+  authListeners.add(l);
+  return () => {
+    authListeners.delete(l);
+  };
+}
+
+/** The skin actually in force: the stored choice for a signed-in reader, null for everybody else. */
 export function useActiveSkin(): SkinDef | null {
-  const { isOwner } = useFeatureAdmin();
+  const isSignedIn = useSyncExternalStore(subscribeAuth, () => signedIn, () => false);
   const choice = useStoredSkin();
-  if (!isOwner || choice === "default") return null;
+  if (!isSignedIn || choice === "default") return null;
   return SKINS.find((s) => s.id === choice) ?? null;
 }
 
@@ -183,7 +202,7 @@ export function SkinController() {
       link.rel = "stylesheet";
       document.head.appendChild(link);
     }
-    link.href = `https://fonts.googleapis.com/css2?${skin.fonts}&display=swap`;
+    link.href = "/fonts/skins.css";
 
     root.setAttribute("data-skin", skin.id);
     const pin = () => {

@@ -115,7 +115,7 @@ footer{border-top:1px solid var(--rule);margin-top:56px;padding-top:18px;font-si
 footer a{color:var(--muted)}
 `.trim();
 
-const FONTS = `<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;600&amp;family=Cormorant+Garamond:wght@500;600&amp;family=EB+Garamond:ital,wght@0,400;0,600;1,400&amp;display=swap">`;
+const FONTS = `<link rel="stylesheet" href="/fonts/base.css">`;
 
 const NAV = [
   ["/library", "Library"],

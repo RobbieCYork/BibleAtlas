@@ -1,11 +1,10 @@
 /* ============================================================================
- * Skins — OWNER-ONLY experiment (2026-11). Read lib/skin.tsx first.
+ * Skins — available to every signed-in reader (2026-11). Read lib/skin.tsx first.
  *
  * Every rule in this file is scoped under `html[data-skin="…"]`, an attribute that exists only
- * while the owner has picked a skin (lib/skin.tsx: SkinController). With the attribute absent not
+ * while a signed-in reader has picked a skin (lib/skin.tsx: SkinController). With the attribute absent not
  * one selector here matches, so the default look is exactly what App.css/index.css produce. The
- * only unscoped rules are the picker's own `.skin-picker*` classes, which exist only in the owner's
- * Admin Console.
+ * only unscoped rules are the picker's own `.skin-*` classes, which exist only in My Profile.
  *
  * Layer 1  TOKENS     the app is already built on custom properties (index.css), so a skin is first
  *                     of all a new value for each one. This carries ~90% of the reach.
@@ -53,18 +52,25 @@
  * decorative brand (logo tile, active-tab bar, focus ring).
  * ========================================================================== */
 
-/* ---------- Skin picker (owner's Admin Console) ---------- */
-.skin-picker { display: flex; flex-direction: column; gap: 6px; margin-top: 10px; align-items: flex-start; }
-.skin-picker-label { font-size: 12px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-muted); }
-.skin-picker-options { display: flex; flex-wrap: wrap; gap: 6px; }
-.skin-picker-option {
-  display: inline-flex; align-items: center; gap: 8px; min-height: 44px; padding: 8px 14px;
-  border: 1px solid var(--border-strong); border-radius: 8px; background: transparent; color: var(--text); cursor: pointer;
+/* ---------- Skin picker (My Profile → Appearance) ----------
+ * Unscoped on purpose: it must look right on Default and inside every skin, so it uses only the
+ * app's own tokens. Each card is a <label> around a native radio (kept in the accessibility tree,
+ * visually hidden), 56px tall, so the whole card is the touch target. */
+.skin-picker { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 8px; }
+.skin-card {
+  position: relative; display: flex; align-items: center; gap: 12px; min-height: 56px; padding: 8px 12px;
+  border: 1px solid var(--border-strong); border-radius: 10px; background: var(--panel-bg); color: var(--text); cursor: pointer;
 }
-.skin-picker-option.active { background: var(--accent-bg); color: var(--text-h); font-weight: 600; border-color: var(--accent); }
-.skin-picker-swatch { display: inline-flex; border-radius: 50%; overflow: hidden; width: 22px; height: 22px; border: 1px solid var(--border-strong); }
-.skin-picker-swatch > span { flex: 1; }
-.skin-picker-note { font-size: 12px; color: var(--text-muted); }
+.skin-card-selected { border-color: var(--accent); background: var(--accent-bg); box-shadow: inset 0 0 0 1px var(--accent); }
+.skin-card-input { position: absolute; inset: 0; width: 100%; height: 100%; margin: 0; opacity: 0; cursor: pointer; }
+.skin-card:has(.skin-card-input:focus-visible) { outline: 2px solid var(--accent); outline-offset: 2px; }
+.skin-card-swatch { display: inline-flex; flex: 0 0 auto; width: 40px; height: 40px; border-radius: 8px; overflow: hidden; border: 1px solid var(--border-strong); }
+.skin-card-swatch > span { flex: 1; }
+.skin-card-text { display: flex; flex-direction: column; min-width: 0; flex: 1; }
+.skin-card-name { font-weight: 600; color: var(--text-h); font-size: calc(14px * var(--tsz, 1)); }
+.skin-card-blurb { font-size: calc(12px * var(--tsz, 1)); color: var(--text-muted); line-height: 1.3; }
+.skin-card-check { flex: 0 0 auto; width: 20px; text-align: center; font-weight: 700; color: var(--accent); }
+.skin-picker-note { font-size: calc(12px * var(--tsz, 1)); color: var(--text-muted); }
 
 /* ============================================================================
  * LAYER 1 — TOKENS
@@ -670,7 +676,7 @@ html[data-skin="skyreader"] .then-now-buttons button.active,
 html[data-skin="skyreader"] .admin-tab-active { background: var(--accent-bg); color: var(--accent); }
 html[data-skin="skyreader"] .verse-sheet { border-top: 0; border-radius: 24px 24px 0 0; }
 html[data-skin="skyreader"] button,
-html[data-skin="skyreader"] .skin-picker-option { font-family: var(--sans); }
+html[data-skin="skyreader"] .skin-card { font-family: var(--sans); }
 
 /* ---- My Profile buttons and panel headings, every skin ------------------------------------------
  * Robbie's phone (iOS Safari, Sky Reader): My Profile's plain buttons (Download Backup, Delete My
@@ -805,3 +811,19 @@ html[data-skin="highlighter"] .map-pin .pin-body { stroke: #ffffff; stroke-width
   html[data-skin="skyreader"] .bible-chapter-nav-small,
   html[data-skin="trailhead"] .bible-chapter-nav-small { min-height: 44px; min-width: 44px; }
 }
+
+/* ---------- MIDNIGHT: hard-coded error reds in the games ----------
+ * Game.css / FillBlank.css / Memorization.css hard-code #c0392b, #db284e and #e53e3e as TEXT colours.
+ * On Midnight's navy panel (#151B2E) those are 3.1, 3.6 and 4.1:1. #FF8FA3 is 7.9:1 on the panel, 8.8:1 on
+ * the page (#0B1020). Light-theme and Default are untouched. (#16a34a success green is 5.1:1 and stays.) */
+html[data-skin="midnight"] .games-error,
+html[data-skin="midnight"] .game-lobby-kick,
+html[data-skin="midnight"] .game-difficulty-impossible,
+html[data-skin="midnight"] .game-difficulty-expert,
+html[data-skin="midnight"] .game-video-leave,
+html[data-skin="midnight"] .fillblank-timer-urgent,
+html[data-skin="midnight"] .fillblank-input-wrong,
+html[data-skin="midnight"] .fillblank-result-wrong,
+html[data-skin="midnight"] .memchallenge-input-wrong,
+html[data-skin="midnight"] .memchallenge-result-wrong { color: #ff8fa3; }
+html[data-skin="midnight"] .game-video-leave { border-color: #ff8fa3; }

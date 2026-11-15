@@ -18,6 +18,7 @@ import {
 import Icon, { type IconName } from "./Icon";
 import DeleteAccountControl from "./DeleteAccountControl";
 import { TestingMarker } from "./FeatureRelease";
+import SkinPicker from "./SkinPicker";
 import { useFeature, SOCIAL_CONNECTIONS_ENABLED } from "../lib/features";
 
 /** A church website is typed without a scheme half the time ("mychurch.org") — treat that as shorthand
@@ -689,6 +690,8 @@ export default function MyProfileView({ userId, onDisplayNameSaved, onClose, onG
             </>
           )}
           <MyProfileControl userId={userId} onDisplayNameSaved={onDisplayNameSaved} onGoToVerse={onGoToVerse} />
+          <div className="auth-settings-divider" />
+          <SkinPicker />
           <div className="auth-settings-divider" />
           <div className="auth-settings-section auth-settings-section-stacked">
             <span className="auth-settings-label">My Reading</span>
