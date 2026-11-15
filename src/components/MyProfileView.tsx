@@ -6,8 +6,6 @@ import Newsfeed from "./Newsfeed";
 import AvatarCropModal from "./AvatarCropModal";
 import LinkedVerseText from "./LinkedVerseText";
 import BackButton from "./BackButton";
-import AdminConsole from "./AdminConsole";
-import { useIsAdmin } from "../lib/adminApi";
 import { ProfileLinksEditor, ProfileLinksList, type LinkDrafts } from "./ProfileLinks";
 import {
   DEFAULT_LINK_VISIBILITY,
@@ -664,13 +662,6 @@ export default function MyProfileView({ userId, onDisplayNameSaved, onClose, onG
   // Feature stages (lib/features.ts) — each hides its own entry point and nothing else.
   const postsFeature = useFeature("posts_newsfeed");
   const deletionFeature = useFeature("account_deletion");
-  // Whether to DRAW the Admin Console section. Not the access control: every query the console makes
-  // is refused server-side for a non-admin (see sql/019 — each admin_* function raises before doing
-  // any work, and analytics_events' RLS grants SELECT to admins only). A client that flipped this
-  // boolean would get a console full of "not authorized". Shared with the account menu's entry
-  // (AuthButton) via useIsAdmin, so the two entry points can't drift apart.
-  const isAdmin = useIsAdmin(userId);
-  const [adminOpen, setAdminOpen] = useState(false);
   return (
     <section className="myprofile-root" aria-label="My Profile">
       <header className="myprofile-header">
@@ -734,22 +725,6 @@ export default function MyProfileView({ userId, onDisplayNameSaved, onClose, onG
           )}
           <div className="auth-settings-divider" />
           <DataExportControl userId={userId} />
-          {isAdmin && (
-            <>
-              <div className="auth-settings-divider" />
-              <div className="auth-settings-section auth-settings-section-stacked">
-                <span className="auth-settings-label">Admin Console</span>
-                <p className="auth-benefits">
-                  Usage, engagement, and moderation for the whole site. Only accounts listed in <code>admin_users</code>{" "}
-                  can load any of it — the database refuses the queries for everyone else, not just this button.
-                </p>
-                <button type="button" onClick={() => setAdminOpen((v) => !v)}>
-                  {adminOpen ? "Hide Admin Console" : "Open Admin Console"}
-                </button>
-                {adminOpen && <AdminConsole />}
-              </div>
-            </>
-          )}
           {deletionFeature.visible && (
             <>
               <div className="auth-settings-divider" />

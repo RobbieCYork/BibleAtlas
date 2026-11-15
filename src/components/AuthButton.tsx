@@ -264,8 +264,8 @@ export default function AuthButton({
 }: AuthButtonProps) {
   const [open, setOpen] = useState(false);
   const [menuView, setMenuView] = useState<MenuView>("menu");
-  // The second entry point to the Admin Console (My Profile has the first). Same gate, same hook,
-  // same component — nothing about access is decided here. useIsAdmin only answers "should this
+  // The entry point to the Admin Console (My Profile used to have a second; it was removed). Same
+  // gate, same hook, same component — nothing about access is decided here. useIsAdmin only answers "should this
   // menu draw the item?"; a non-admin who forced the item open would get a console of "not
   // authorized", because every admin_* function in sql/019 and sql/021 raises 42501 before doing any
   // work. Asked for every signed-in account, guests included, deliberately: the question is answered

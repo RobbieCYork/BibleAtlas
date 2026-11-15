@@ -9229,7 +9229,7 @@ a.profile-links-url {
 }
 
 /* ============================================================================
- * ADMIN CONSOLE (components/AdminConsole.tsx) — rendered inside My Profile, for
+ * ADMIN CONSOLE (components/AdminConsole.tsx) — opened from the account menu, for
  * admin accounts only.
  *
  * Every colour here is an existing token, so both themes come for free: the
