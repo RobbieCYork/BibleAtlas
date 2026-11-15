@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { SOCIAL_CONNECTIONS_ENABLED } from "../lib/features";
 import {
   supabase,
   displayFor,
@@ -480,7 +481,7 @@ export default function Newsfeed({ userId, onGoToVerse }: NewsfeedProps) {
 
       {items === null && <p className="comment-status">Loading newsfeed…</p>}
       {items !== null && items.length === 0 && (
-        <p className="comment-status">No public posts from friends yet — add friends to see their posts here.</p>
+        <p className="comment-status">{SOCIAL_CONNECTIONS_ENABLED ? "No public posts from friends yet — add friends to see their posts here." : "No public posts yet."}</p>
       )}
       {items !== null && items.length > 0 && (
         <div className="friend-posts">

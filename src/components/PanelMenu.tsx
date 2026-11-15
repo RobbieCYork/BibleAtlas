@@ -1,7 +1,7 @@
 import { Fragment, useEffect, useId, useRef, useState } from "react";
 import Icon, { type IconName } from "./Icon";
 import { TestingMarker } from "./FeatureRelease";
-import { useFeature, type FeatureVisibility } from "../lib/features";
+import { useFeature, SOCIAL_CONNECTIONS_ENABLED, type FeatureVisibility } from "../lib/features";
 
 /** The panel slots the layout can show. There is deliberately no separate "details" slot: a single
  * article (a place/person/topic/POI/timeline event) is a *state* of the Articles panel, not a panel
@@ -180,7 +180,7 @@ export default function PanelMenu({
         aria-controls={open ? menuId : undefined}
       >
         <Icon name="menu" />
-        {friendsBadgeCount > 0 && <span className="panel-menu-badge" aria-hidden="true" />}
+        {SOCIAL_CONNECTIONS_ENABLED && friendsBadgeCount > 0 && <span className="panel-menu-badge" aria-hidden="true" />}
       </button>
       {open && (
         <div className="panel-menu-dropdown" id={menuId}>
@@ -189,7 +189,7 @@ export default function PanelMenu({
             {PANEL_GROUPS.map((group, groupIndex) => (
               <Fragment key={groupIndex}>
                 {groupIndex > 0 && <div className="panel-menu-separator" role="separator" />}
-                {group.filter((key) => panelFeature(key)?.visible !== false).map((key) => (
+                {group.filter((key) => (key !== "friends" || SOCIAL_CONNECTIONS_ENABLED) && panelFeature(key)?.visible !== false).map((key) => (
                   <label key={key} className="panel-menu-item">
                     <input type="checkbox" checked={panels[key]} onChange={() => onToggle(key)} />
                     {PANEL_LABELS[key]}

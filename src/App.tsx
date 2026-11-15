@@ -19,6 +19,7 @@ import BiblePanel from "./components/BiblePanel";
 import MyNotesPanel from "./components/MyNotesPanel";
 import ArticlesPanel from "./components/ArticlesPanel";
 import FriendsPanel from "./components/FriendsPanel";
+import { SOCIAL_CONNECTIONS_ENABLED } from "./lib/features";
 import ThenNowToggle, { type MapMode } from "./components/ThenNowToggle";
 import PanelMenu, { type PanelKey } from "./components/PanelMenu";
 import type { FriendsView } from "./components/ViewSwitcher";
@@ -202,6 +203,9 @@ function App() {
   // Every write to `panels` must go through applyPanels to keep the mirror honest.
   const panelsRef = useRef(panels);
   const applyPanels = (next: Record<PanelKey, boolean>) => {
+    // The Social panel (Friends / Groups / Messages / Church) cannot be opened while
+    // SOCIAL_CONNECTIONS_ENABLED is off, by any path.
+    if (!SOCIAL_CONNECTIONS_ENABLED && next.friends) next = { ...next, friends: false };
     panelsRef.current = next;
     setPanels(next);
   };
@@ -211,6 +215,7 @@ function App() {
   const [lastAutoClosed, setLastAutoClosed] = useState<{ key: PanelKey; nonce: number } | null>(null);
 
   const openPanel = (key: PanelKey) => {
+    if (key === "friends" && !SOCIAL_CONNECTIONS_ENABLED) return;
     touchPanelOrder(key);
     const p = panelsRef.current;
     if (p[key]) return;
@@ -240,6 +245,7 @@ function App() {
     p.bible ? "bible" : p.notes ? "notes" : p.friends ? "friends" : p.articles ? "articles" : "map";
   // Mobile has exactly one active panel at a time, switched via the bottom tab bar.
   const setMobileActivePanel = (key: PanelKey) => {
+    if (key === "friends" && !SOCIAL_CONNECTIONS_ENABLED) return;
     // Mobile's counterpart to openPanel's tracking above — the tab bar swaps the
     // single active panel rather than going through openPanel, so it has to
     // report for itself. Guarded on an actual change so a tap on the tab you're
@@ -338,7 +344,8 @@ function App() {
   useEffect(() => {
     const inviterId = new URLSearchParams(window.location.search).get("invite");
     if (inviterId) {
-      localStorage.setItem("pending-invite-from", inviterId);
+      // Social connections off: the link is just a normal visit. Strip the param, remember nothing.
+      if (SOCIAL_CONNECTIONS_ENABLED) localStorage.setItem("pending-invite-from", inviterId);
       const url = new URL(window.location.href);
       url.searchParams.delete("invite");
       window.history.replaceState({}, "", url.pathname + url.search);
@@ -349,6 +356,7 @@ function App() {
   // the inviter rather than requiring the new user to manually look them up. Silently no-ops if
   // they're already connected (e.g. the invite link was opened more than once).
   useEffect(() => {
+    if (!SOCIAL_CONNECTIONS_ENABLED) return;
     if (!session || session.user.is_anonymous) return;
     const inviterId = localStorage.getItem("pending-invite-from");
     if (!inviterId || inviterId === session.user.id) {
@@ -370,7 +378,7 @@ function App() {
   useEffect(() => {
     const groupId = new URLSearchParams(window.location.search).get("joinGroup");
     if (groupId) {
-      localStorage.setItem("pending-join-group", groupId);
+      if (SOCIAL_CONNECTIONS_ENABLED) localStorage.setItem("pending-join-group", groupId);
       const url = new URL(window.location.href);
       url.searchParams.delete("joinGroup");
       window.history.replaceState({}, "", url.pathname + url.search);
@@ -378,6 +386,7 @@ function App() {
   }, []);
 
   useEffect(() => {
+    if (!SOCIAL_CONNECTIONS_ENABLED) return;
     if (!session || session.user.is_anonymous) return;
     const groupId = localStorage.getItem("pending-join-group");
     if (!groupId) return;
@@ -393,7 +402,7 @@ function App() {
   useEffect(() => {
     const churchId = new URLSearchParams(window.location.search).get("joinChurch");
     if (churchId) {
-      localStorage.setItem("pending-join-church", churchId);
+      if (SOCIAL_CONNECTIONS_ENABLED) localStorage.setItem("pending-join-church", churchId);
       const url = new URL(window.location.href);
       url.searchParams.delete("joinChurch");
       window.history.replaceState({}, "", url.pathname + url.search);
@@ -409,6 +418,7 @@ function App() {
   // call that cannot work. Someone who scans a QR code before the migration lands still joins when
   // it does.
   useEffect(() => {
+    if (!SOCIAL_CONNECTIONS_ENABLED) return;
     if (!session || session.user.is_anonymous) return;
     const churchId = localStorage.getItem("pending-join-church");
     if (!churchId) return;
@@ -441,7 +451,7 @@ function App() {
   // live via Realtime rather than polling, since friend_requests changes are rare.
   const [pendingFriendRequests, setPendingFriendRequests] = useState(0);
   useEffect(() => {
-    if (!session || session.user.is_anonymous) {
+    if (!SOCIAL_CONNECTIONS_ENABLED || !session || session.user.is_anonymous) {
       setPendingFriendRequests(0);
       return;
     }
@@ -469,7 +479,7 @@ function App() {
   // entry point's badge reflects only what it leads to).
   const [unreadMessages, setUnreadMessages] = useState(0);
   useEffect(() => {
-    if (!session || session.user.is_anonymous) {
+    if (!SOCIAL_CONNECTIONS_ENABLED || !session || session.user.is_anonymous) {
       setUnreadMessages(0);
       return;
     }
@@ -497,7 +507,7 @@ function App() {
   // an unread message and an incoming friend request both mean "something in Friends needs you."
   const [groupsBadgeCount, setGroupsBadgeCount] = useState(0);
   useEffect(() => {
-    if (!session || session.user.is_anonymous) {
+    if (!SOCIAL_CONNECTIONS_ENABLED || !session || session.user.is_anonymous) {
       setGroupsBadgeCount(0);
       return;
     }
@@ -1190,7 +1200,7 @@ function App() {
   const bibleHiddenOnMobile = isMobile && !panels.bible;
   const notesMounted = panels.notes || isMobile;
   const notesHiddenOnMobile = isMobile && !panels.notes;
-  const friendsMounted = panels.friends || isMobile;
+  const friendsMounted = SOCIAL_CONNECTIONS_ENABLED && (panels.friends || isMobile);
   const friendsHiddenOnMobile = isMobile && !panels.friends;
   const articlesMounted = panels.articles || isMobile;
   const articlesHiddenOnMobile = isMobile && !panels.articles;
@@ -1232,7 +1242,7 @@ function App() {
   const searchMode: "map" | "bible" | "notes" | "timeline" | "people" | null = showGame
     ? null
     : myProfileMode
-    ? "people"
+    ? (SOCIAL_CONNECTIONS_ENABLED ? "people" : null)
     : showTimeline
     ? "timeline"
     : isMobile
@@ -1491,7 +1501,7 @@ function App() {
   return (
     <TimelineLinkContext.Provider value={timelineLinkHandlers}>
     <div className="app-shell">
-      <NotificationToasts session={session} onOpenFriends={openFriendsFromProfile} />
+      {SOCIAL_CONNECTIONS_ENABLED && <NotificationToasts session={session} onOpenFriends={openFriendsFromProfile} />}
       {passwordRecovery && session && <ResetPasswordGate onDone={() => setPasswordRecovery(false)} />}
       {!passwordRecovery && needsDisplayName && session && (
         <DisplayNameGate userId={session.user.id} onSaved={() => setNeedsDisplayName(false)} />

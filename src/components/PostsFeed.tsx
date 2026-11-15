@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from "react";
+import { SOCIAL_CONNECTIONS_ENABLED } from "../lib/features";
 import { track } from "../lib/analytics";
 import {
   supabase,
@@ -490,6 +491,8 @@ function PostComposer({ userId, onPosted }: { userId: string; onPosted: () => vo
   }, [tagMenuOpen]);
 
   useEffect(() => {
+    // Social connections off: no friend list to tag from, so don't ask the database for one.
+    if (!SOCIAL_CONNECTIONS_ENABLED) return;
     const loadFriends = async () => {
       const { data: reqData } = await supabase
         .from("friend_requests")

@@ -9,7 +9,7 @@ import { fetchProfileLinks, type ProfileLink } from "../lib/profileLinks";
 import ModerationMenu from "./ModerationMenu";
 import Icon from "./Icon";
 import { TestingMarker } from "./FeatureRelease";
-import { useFeature } from "../lib/features";
+import { useFeature, SOCIAL_CONNECTIONS_ENABLED } from "../lib/features";
 
 interface FriendProfileViewProps {
   friendId: string;
@@ -116,9 +116,11 @@ export default function FriendProfileView({ friendId, viewerId, onBack, onMessag
           )}
 
           <div className="friend-profile-actions">
-            <button type="button" className="friend-profile-message-button" onClick={onMessage}>
-              <Icon name="messages" inline /> Message
-            </button>
+            {SOCIAL_CONNECTIONS_ENABLED && (
+              <button type="button" className="friend-profile-message-button" onClick={onMessage}>
+                <Icon name="messages" inline /> Message
+              </button>
+            )}
             {/* Profile-level report and block, next to Message rather than buried in the feed
               * below: this is the screen a reader is on when they decide they want nothing more to
               * do with an account, and "report the person" is a different act from "report one of

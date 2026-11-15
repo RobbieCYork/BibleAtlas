@@ -2,7 +2,7 @@ import type { CSSProperties } from "react";
 import type { PanelKey } from "./PanelMenu";
 import Icon from "./Icon";
 import { MOBILE_TAB_META, useMobileTabs, type MobileTabKey } from "../lib/mobileTabs";
-import { useFeature, type FeatureVisibility } from "../lib/features";
+import { useFeature, SOCIAL_CONNECTIONS_ENABLED, type FeatureVisibility } from "../lib/features";
 
 type FriendsView = "friends" | "messages" | "groups";
 
@@ -81,7 +81,7 @@ export default function MobileTabBar({
     key === "timeline" ? timelineFeature : key === "games" ? gamesFeature : key === "articles" ? articlesFeature : null;
   const visibleTabs = chosenTabs.filter((key) => tabFeature(key)?.visible !== false);
   const isSocialActive = active === "friends" || myProfileActive;
-  const totalBadgeCount = friendsBadgeCount + messagesBadgeCount + groupsBadgeCount;
+  const totalBadgeCount = SOCIAL_CONNECTIONS_ENABLED ? friendsBadgeCount + messagesBadgeCount + groupsBadgeCount : 0;
 
   const renderTab = (key: MobileTabKey) => {
     const { label, icon } = MOBILE_TAB_META[key];
@@ -116,7 +116,7 @@ export default function MobileTabBar({
         type="button"
         className={`mobile-tab ${isActive ? "active" : ""}`}
         onClick={handleClick}
-        aria-label={key === "social" ? "Social — My Profile, Friends, Groups, and Messages" : undefined}
+        aria-label={key === "social" ? (SOCIAL_CONNECTIONS_ENABLED ? "Social — My Profile, Friends, Groups, and Messages" : "Social — My Profile") : undefined}
         aria-current={isActive ? "page" : undefined}
       >
         <span className="mobile-tab-icon" aria-hidden="true">

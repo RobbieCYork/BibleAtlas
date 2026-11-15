@@ -18,7 +18,7 @@ import {
 import Icon, { type IconName } from "./Icon";
 import DeleteAccountControl from "./DeleteAccountControl";
 import { TestingMarker } from "./FeatureRelease";
-import { useFeature } from "../lib/features";
+import { useFeature, SOCIAL_CONNECTIONS_ENABLED } from "../lib/features";
 
 /** A church website is typed without a scheme half the time ("mychurch.org") — treat that as shorthand
  * for https rather than rejecting it or linking to a relative path on this app's own domain. */
@@ -670,20 +670,24 @@ export default function MyProfileView({ userId, onDisplayNameSaved, onClose, onG
       </header>
       <div className="myprofile-body">
         <div className="myprofile-body-inner">
-          <div className="auth-settings-section auth-settings-section-stacked">
-            <div className="myprofile-social-links">
-              <button type="button" onClick={() => onOpenFriends("friends")}>
-                <Icon name="players" inline /> Friends
-              </button>
-              <button type="button" onClick={() => onOpenFriends("groups")}>
-                <Icon name="groups" inline /> Groups
-              </button>
-              <button type="button" onClick={() => onOpenFriends("messages")}>
-                <Icon name="messages" inline /> Messages
-              </button>
+          {SOCIAL_CONNECTIONS_ENABLED && (
+            <>
+            <div className="auth-settings-section auth-settings-section-stacked">
+              <div className="myprofile-social-links">
+                <button type="button" onClick={() => onOpenFriends("friends")}>
+                  <Icon name="players" inline /> Friends
+                </button>
+                <button type="button" onClick={() => onOpenFriends("groups")}>
+                  <Icon name="groups" inline /> Groups
+                </button>
+                <button type="button" onClick={() => onOpenFriends("messages")}>
+                  <Icon name="messages" inline /> Messages
+                </button>
+              </div>
             </div>
-          </div>
-          <div className="auth-settings-divider" />
+            <div className="auth-settings-divider" />
+            </>
+          )}
           <MyProfileControl userId={userId} onDisplayNameSaved={onDisplayNameSaved} onGoToVerse={onGoToVerse} />
           <div className="auth-settings-divider" />
           <div className="auth-settings-section auth-settings-section-stacked">

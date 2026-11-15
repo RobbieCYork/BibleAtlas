@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { SOCIAL_CONNECTIONS_ENABLED } from "../lib/features";
 import { supabase } from "../lib/supabase";
 
 interface DisplayNameGateProps {
@@ -78,8 +79,8 @@ export default function DisplayNameGate({ userId, onSaved }: DisplayNameGateProp
   return (
     <div className="display-name-gate-overlay">
       <div className="display-name-gate-card">
-        <h3>What should friends call you?</h3>
-        <p>Pick a display name — this is what shows up in Friends and Messages instead of your email.</p>
+        <h3>{SOCIAL_CONNECTIONS_ENABLED ? "What should friends call you?" : "What should we call you?"}</h3>
+        <p>Pick a display name — this is what shows up {SOCIAL_CONNECTIONS_ENABLED ? "in Friends and Messages" : "on your profile and posts"} instead of your email.</p>
         <form onSubmit={handleSubmit}>
           <input
             type="text"
