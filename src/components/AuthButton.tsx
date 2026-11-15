@@ -9,6 +9,7 @@ import ReportIssueSheet from "./ReportIssueSheet";
 import MyReportsSheet from "./MyReportsSheet";
 import ReportsDashboard from "./ReportsDashboard";
 import SafetySheet from "./SafetySheet";
+import { SOCIAL_CONNECTIONS_ENABLED } from "../lib/features";
 import { useIsAdmin } from "../lib/adminApi";
 import { fetchReportCounts, hasRoleAtLeast, useCurrentRole } from "../lib/reportsApi";
 import type { ReportSurface } from "../lib/reportContext";
@@ -508,9 +509,14 @@ export default function AuthButton({
                 who has just been harassed — is meant to find both, two taps from anywhere in the
                 app. It stays for guests too: the sheet reads fine without an account, and the
                 contact address is the part a guest is most likely to need. */}
-            <button type="button" className="auth-menu-item" onClick={() => setMenuView("safety")}>
-              <Icon name="shield" inline /> Safety &amp; Contact
-            </button>
+            {/* Robbie, 2026-11-15: no friends interacting, so no Safety & Contact page. Hidden behind
+                SOCIAL_CONNECTIONS_ENABLED (the sheet is mostly about blocking people and harassment);
+                flip that constant and this row and the sheet below return. */}
+            {SOCIAL_CONNECTIONS_ENABLED && (
+              <button type="button" className="auth-menu-item" onClick={() => setMenuView("safety")}>
+                <Icon name="shield" inline /> Safety &amp; Contact
+              </button>
+            )}
             <button type="button" className="auth-menu-item auth-signout" onClick={handleSignOut}>
               Log Out
             </button>
@@ -565,7 +571,7 @@ export default function AuthButton({
         {/* Gated on the resolved role, never on `reportsRole` being merely non-null: canSeeReports
             is false while the check is still in flight, so a slow network shows nothing privileged
             rather than a dashboard that then empties itself. */}
-        {open && menuView === "safety" && <SafetySheet onClose={() => setMenuView("menu")} />}
+        {open && SOCIAL_CONNECTIONS_ENABLED && menuView === "safety" && <SafetySheet onClose={() => setMenuView("menu")} />}
         {open && menuView === "reports" && canSeeReports && reportsRole && (
           <ReportsDashboard role={reportsRole} viewerId={session.user.id} onClose={() => setMenuView("menu")} />
         )}
