@@ -453,6 +453,92 @@ export const topics: Topic[] = [
     sources: [{ label: "Encyclopaedia Britannica: Achaemenid Dynasty", url: "https://www.britannica.com/topic/Achaemenian-dynasty" }],
   },
   {
+    // The family overview, and the disambiguation page for "Herod". The New Testament gives the bare
+    // name "Herod" to three different men, and the Bible reader sends each bare "Herod" to the right
+    // one verse by verse (VERSE_NAME_OVERRIDES.herod in lib/verseAnnotations.ts).
+    //   matchNames "Herod": registered HERE so the linker can see the bare word at all, but the
+    //     `herod` key in NAME_CONTEXT_RULES ends in DEFAULT_NO_LINK — a bare "Herod" links only where
+    //     the per-verse table names the man. It never links to this page by default.
+    //   matchNames "Herodians": the party of Matthew 22:16, Mark 3:6 and 12:13 is not a Herod, and
+    //     this page is the only one that explains them (see "The Herodians" below). Not in
+    //     alternateNames, because "Also called: Herodians" would tell the reader they are the family.
+    id: "herodian-dynasty",
+    name: "The Herods",
+    alternateNames: ["Herodian dynasty"],
+    matchNames: ["Herod", "Herodians"],
+    category: "people-group",
+    role: "Ruling Family",
+    summary:
+      "The family of Herod the Great, Rome's client rulers in and around Judea through the whole New Testament period. Several of them were called Herod, and the Gospels and Acts name at least three different men simply 'Herod' — so which Herod a verse means depends on where it falls.",
+    sections: [
+      {
+        heading: "One Name, Several Rulers",
+        paragraphs: [
+          "Herod the Great was the son of Antipater, an Idumean (Edomite) official whose family had adopted Judaism. In 40 BC the Roman Senate named Herod king of Judea, and he held the throne from 37 BC until his death in 4 BC. 'Herod' then became something close to a family name: his sons and grandsons ruled parts of his old kingdom for most of the next century, and several of them carried it.",
+          "The New Testament uses the bare name 'Herod' for three different men: Herod the Great at Jesus' birth, his son Herod Antipas during Jesus' ministry, and his grandson Herod Agrippa I in Acts 12. A fourth ruler of the family, Herod Agrippa II, is always called 'Agrippa' in Acts, never 'Herod'. Two more sons of Herod the Great, Archelaus and Philip the Tetrarch, appear by those names alone.",
+        ],
+      },
+      {
+        heading: "The Family Tree",
+        paragraphs: [
+          "Herod the Great — king of Judea, 37-4 BC. The Herod of Matthew 2 and Luke 1:5.",
+          "His son Archelaus (mother Malthace) — ruled Judea, Samaria and Idumea as ethnarch, 4 BC-AD 6, until Augustus deposed him. Named in Matthew 2:22.",
+          "His son Herod Antipas (also Malthace's son, so Archelaus's full brother) — tetrarch of Galilee and Perea, 4 BC-AD 39. The Herod of the Gospels from John the Baptist's ministry to Jesus' trial.",
+          "His son Philip the Tetrarch (mother Cleopatra of Jerusalem) — ruled the territories north-east of the Sea of Galilee, 4 BC-AD 33/34. Named in Luke 3:1, never called Herod.",
+          "His son by Mariamne II, whom Josephus calls Herod and the Gospels call Philip (Mark 6:17) — held no territory. He was the first husband of Herodias.",
+          "His grandson Herod Agrippa I (son of Aristobulus, Herod's son by the Hasmonean princess Mariamne I) — king, ruling all of his grandfather's kingdom by AD 41, died AD 44. The 'King Herod' of Acts 12.",
+          "Agrippa I's children: Herod Agrippa II, the 'King Agrippa' who heard Paul (Acts 25-26); Bernice, who came with him (Acts 25:13); and Drusilla, wife of the governor Felix (Acts 24:24).",
+          "Herodias — another grandchild of Herod the Great and sister of Agrippa I. She left her first husband (her uncle) to marry Herod Antipas, the marriage John the Baptist condemned (Mark 6:17-18).",
+        ],
+      },
+      {
+        heading: "Which Herod Is This?",
+        paragraphs: [
+          "Matthew 2 and Luke 1:5 are Herod the Great: the king at the time of Jesus' birth, whose death is what lets Joseph bring the family back from Egypt (Matthew 2:19). In Matthew 2:22 'his father, Herod' is the same man, named as the father of Archelaus.",
+          "Every Herod during the adult ministry of Jesus is Herod Antipas — the ruler who imprisoned and beheaded John the Baptist (Matthew 14; Mark 6), whose steward's wife Joanna supported Jesus (Luke 8:3), whom Jesus called 'that fox' (Luke 13:32), and to whom Pilate sent Jesus because he was from Antipas's Galilee (Luke 23:6-12). Matthew and Luke call him 'Herod the tetrarch'; Mark calls him 'King Herod' (Mark 6:14), and Matthew too calls him 'the king' in the same story (Matthew 14:9). Acts 4:27 and 13:1 look back to the same man.",
+          "Acts 12 is Herod Agrippa I. Luke calls him 'King Herod', and unlike his uncle he really did hold the title of king. He had the apostle James, the brother of John, put to death, imprisoned Peter, and died suddenly at Caesarea (Acts 12:1-23) — a death the Jewish historian Josephus also describes (Antiquities 19.8.2).",
+          "'Herod's palace' in Caesarea (Acts 23:35), where Paul was held, is a building rather than a ruler: the palace Herod the Great built in the city he founded, which the Roman governors later used as their residence.",
+        ],
+      },
+      {
+        heading: "The Herodians",
+        paragraphs: [
+          "The Herodians are not one of the Herods. They are a group the Gospels name three times, each time alongside the Pharisees and against Jesus: plotting after a Sabbath healing (Mark 3:6) and putting the question about paying taxes to Caesar (Matthew 22:16; Mark 12:13). The Gospels never explain who they were. Most interpreters take them to be supporters or officials of the Herodian house — in Galilee, of Herod Antipas — but whether they were an organized party is uncertain, and they are not described under this name in other ancient sources.",
+        ],
+      },
+      {
+        heading: "Other Perspectives",
+        paragraphs: [
+          "Evangelical scholars often point to how carefully the Gospels and Acts handle this family: Luke calls Antipas a tetrarch and Agrippa I a king, matching what Josephus says each one actually held. Critical scholars read some of the same evidence differently. The killing of Bethlehem's children (Matthew 2:16) is not mentioned by Josephus or any other ancient historian, and many critical scholars doubt it happened; others, evangelicals among them, answer that the death of a small number of children in one village would be easy for a historian of so violent a reign to pass over. Mark's 'King Herod' for Antipas is read by some as a loose or popular use of the title, by others as an inaccuracy.",
+          "Herod the Great's death is usually dated to 4 BC from Josephus. A minority of scholars, including some evangelicals, argue for 1 BC instead, which would move the date of Jesus' birth later as well.",
+          "Jewish tradition remembers Herod the Great with the same mixture of horror and admiration. The Babylonian Talmud (Bava Batra 3b-4a) tells of his killing of the sages, and also says that whoever has not seen Herod's building has never seen a beautiful building. The children killed at Bethlehem are honoured as the first martyrs for Christ as the Holy Innocents: in the Catholic Church and several Protestant churches on December 28, and in the Orthodox Church on December 29.",
+        ],
+      },
+    ],
+    verses: [
+      { reference: "Matthew 2:1-22", note: "Herod the Great, the magi and the flight to Egypt; Archelaus succeeds him" },
+      { reference: "Luke 3:1", note: "Antipas and Philip the Tetrarch among the rulers of the region" },
+      { reference: "Mark 6:14-29", note: "Herod Antipas and the death of John the Baptist" },
+      { reference: "Luke 23:6-12", note: "Pilate sends Jesus to Herod Antipas" },
+      { reference: "Acts 12:1-23", note: "Herod Agrippa I kills James, imprisons Peter, and dies" },
+      { reference: "Acts 25:13-26:32", note: "Paul before King Agrippa II and Bernice" },
+      { reference: "Mark 12:13-17", note: "The Pharisees and Herodians ask about taxes to Caesar" },
+    ],
+    sources: [
+      { label: "Encyclopaedia Britannica: Herodian dynasty", url: "https://www.britannica.com/topic/Herodian-dynasty" },
+      {
+        label: "Josephus, Antiquities of the Jews, Book 17",
+        url: "https://www.perseus.tufts.edu/hopper/text?doc=J.+AJ+17",
+        note: "primary source: Herod the Great's death and the division of his kingdom",
+      },
+      {
+        label: "Josephus, Antiquities of the Jews, Book 18",
+        url: "https://www.perseus.tufts.edu/hopper/text?doc=J.+AJ+18",
+        note: "primary source: Antipas, Philip, Herodias and the young Agrippa",
+      },
+    ],
+  },
+  {
     id: "romans",
     name: "Romans",
     alternateNames: ["Roman", "the Romans"],

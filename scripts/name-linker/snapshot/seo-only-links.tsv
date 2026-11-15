@@ -360,6 +360,7 @@ seo:person.summary	herod-agrippa-i	0	14	Herod the Great	person	herod-the-great
 seo:person.summary	herod-agrippa-i	0	55	James	person	james-son-of-zebedee
 seo:person.summary	herod-agrippa-i	0	73	Peter	person	simon-peter
 seo:person.summary	herod-agrippa-i	0	128	Jewish	topic	jews
+seo:person.summary	herod-agrippa-ii	0	22	Herodian dynasty	topic	herodian-dynasty
 seo:person.summary	herod-agrippa-ii	0	52	Paul	person	paul-of-tarsus
 seo:person.summary	herod-agrippa-ii	0	161	Paul	person	paul-of-tarsus
 seo:person.summary	herod-antipas	0	9	Herod the Great	person	herod-the-great
@@ -1594,6 +1595,9 @@ seo:topic.summary	greek-minor-prophets-scroll	0	114	Septuagint	topic	septuagint
 seo:topic.summary	greeks	0	78	Jewish	topic	jews
 seo:topic.summary	greeks	0	136	Paul	person	paul-of-tarsus
 seo:topic.summary	habakkuk-pesher	0	174	Qumran	poi	qumran
+seo:topic.summary	herodian-dynasty	0	14	Herod the Great	person	herod-the-great
+seo:topic.summary	herodian-dynasty	0	31	Rome	location	rome
+seo:topic.summary	herodian-dynasty	0	66	Judea	location	judea
 seo:topic.summary	hezekiah-bulla	0	63	Hezekiah	person	hezekiah
 seo:topic.summary	hezekiah-bulla	0	82	Ahaz	person	ahaz
 seo:topic.summary	holy-of-holies	0	42	Tabernacle	topic	tabernacle

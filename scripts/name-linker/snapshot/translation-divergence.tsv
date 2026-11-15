@@ -423,6 +423,7 @@ Acts 11:13	person	simon-peter	WEB=1:Simon, who is called Peter	KJV=2:Peter|Simon
 Acts 11:20	topic	greeks	WEB=1:Hellenists	KJV=0	ASV=1:Greeks
 Acts 11:25	person	barnabas	WEB=1:Barnabas	KJV=1:Barnabas	ASV=0
 Acts 12:13	person	simon-peter	WEB=1:Peter	KJV=1:Peter	ASV=0
+Acts 12:20	person	herod-agrippa-i	WEB=1:Herod	KJV=1:Herod	ASV=0
 Acts 12:4	topic	passover	WEB=1:the Passover	KJV=0	ASV=1:the Passover
 Acts 13:14	location	antioch-pisidia	WEB=1:Antioch of Pisidia	KJV=0	ASV=1:Antioch of Pisidia
 Acts 13:14	location	antioch-syria	WEB=0	KJV=1:Antioch	ASV=0

@@ -6862,12 +6862,21 @@ Matthew 1:21	55	Jesus	jesus-of-nazareth	jesus-of-nazareth
 Matthew 1:24	0	Joseph	joseph-husband-of-mary	joseph-son-of-jacob
 Matthew 1:25	90	Jesus	jesus-of-nazareth	jesus-of-nazareth
 Matthew 2:1	9	Jesus	jesus-of-nazareth	jesus-of-nazareth
+Matthew 2:1	66	Herod	herod-the-great	-
+Matthew 2:3	10	Herod	herod-the-great	-
+Matthew 2:7	5	Herod	herod-the-great	-
 Matthew 2:11	54	Mary	mary-mother-of-jesus	mary-mother-of-jesus
+Matthew 2:12	54	Herod	herod-the-great	-
 Matthew 2:13	69	Joseph	joseph-husband-of-mary	joseph-son-of-jacob
+Matthew 2:13	202	Herod	herod-the-great	-
+Matthew 2:15	33	Herod	herod-the-great	-
+Matthew 2:16	5	Herod	herod-the-great	-
 Matthew 2:17	30	Jeremiah	jeremiah	jeremiah
 Matthew 2:18	70	Rachel	rachel	rachel
+Matthew 2:19	9	Herod	herod-the-great	-
 Matthew 2:19	77	Joseph	joseph-husband-of-mary	joseph-son-of-jacob
 Matthew 2:22	23	Archelaus	herod-archelaus	herod-archelaus
+Matthew 2:22	85	Herod	herod-the-great	-
 Matthew 3:1	15	John the Baptizer	john-the-baptist	john-the-baptist
 Matthew 3:3	36	Isaiah	isaiah	isaiah
 Matthew 3:4	4	John	john-the-baptist	john-the-baptist
@@ -7002,9 +7011,12 @@ Matthew 13:57	31	Jesus	jesus-of-nazareth	jesus-of-nazareth
 Matthew 14:1	14	Herod the tetrarch	herod-antipas	herod-antipas
 Matthew 14:1	61	Jesus	jesus-of-nazareth	jesus-of-nazareth
 Matthew 14:2	35	John the Baptizer	john-the-baptist	john-the-baptist
+Matthew 14:3	4	Herod	herod-antipas	-
 Matthew 14:3	27	John	john-the-baptist	john-the-baptist
 Matthew 14:3	108	Philip	-	philip-the-apostle
 Matthew 14:4	4	John	john-the-baptist	john-the-baptist
+Matthew 14:6	9	Herod	herod-antipas	-
+Matthew 14:6	87	Herod	herod-antipas	-
 Matthew 14:8	80	John the Baptizer	john-the-baptist	john-the-baptist
 Matthew 14:10	25	John	john-the-baptist	john-the-baptist
 Matthew 14:12	77	Jesus	jesus-of-nazareth	jesus-of-nazareth
@@ -7297,13 +7309,20 @@ Mark 6:3	37	Mary	mary-mother-of-jesus	mary-mother-of-jesus
 Mark 6:3	58	James	james-brother-of-jesus	james-son-of-zebedee
 Mark 6:3	83	Simon	-	simon-peter
 Mark 6:4	0	Jesus	jesus-of-nazareth	jesus-of-nazareth
+Mark 6:14	5	Herod	herod-antipas	-
 Mark 6:14	68	John the Baptizer	john-the-baptist	john-the-baptist
 Mark 6:15	24	Elijah	elijah	elijah
+Mark 6:16	4	Herod	herod-antipas	-
 Mark 6:16	46	John	john-the-baptist	john-the-baptist
+Mark 6:17	4	Herod	herod-antipas	-
 Mark 6:17	44	John	john-the-baptist	john-the-baptist
 Mark 6:17	112	Philip	-	philip-the-apostle
 Mark 6:18	4	John	john-the-baptist	john-the-baptist
+Mark 6:18	17	Herod	herod-antipas	-
+Mark 6:20	4	Herod	herod-antipas	-
 Mark 6:20	17	John	john-the-baptist	john-the-baptist
+Mark 6:21	33	Herod	herod-antipas	-
+Mark 6:22	70	Herod	herod-antipas	-
 Mark 6:24	81	John the Baptizer	john-the-baptist	john-the-baptist
 Mark 6:25	104	John the Baptizer	john-the-baptist	john-the-baptist
 Mark 6:27	77	John	john-the-baptist	john-the-baptist
@@ -7313,6 +7332,7 @@ Mark 7:6	28	Isaiah	isaiah	isaiah
 Mark 7:10	4	Moses	moses	moses
 Mark 7:27	4	Jesus	jesus-of-nazareth	jesus-of-nazareth
 Mark 8:1	83	Jesus	jesus-of-nazareth	jesus-of-nazareth
+Mark 8:15	90	Herod	herod-antipas	-
 Mark 8:17	0	Jesus	jesus-of-nazareth	jesus-of-nazareth
 Mark 8:27	0	Jesus	jesus-of-nazareth	jesus-of-nazareth
 Mark 8:28	16	John the Baptizer	john-the-baptist	john-the-baptist
@@ -7479,6 +7499,7 @@ Mark 16:6	51	the Nazarene	jesus-of-nazareth	jesus-of-nazareth
 Mark 16:7	31	Peter	simon-peter	simon-peter
 Mark 16:9	79	Mary Magdalene	mary-magdalene	mary-magdalene
 Luke 1:3	134	Theophilus	theophilus	theophilus
+Luke 1:5	25	Herod	herod-the-great	-
 Luke 1:5	74	Zacharias	zechariah-father-of-john-baptist	zechariah-father-of-john-baptist
 Luke 1:5	155	Aaron	aaron	aaron
 Luke 1:5	179	Elizabeth	elizabeth-mother-of-john-baptist	elizabeth-mother-of-john-baptist
@@ -7547,6 +7568,7 @@ Luke 2:43	104	Joseph	joseph-husband-of-mary	joseph-son-of-jacob
 Luke 2:52	4	Jesus	jesus-of-nazareth	jesus-of-nazareth
 Luke 3:1	42	Tiberius Caesar	tiberius-caesar	tiberius-caesar
 Luke 3:1	59	Pontius Pilate	pontius-pilate	pontius-pilate
+Luke 3:1	103	Herod	herod-antipas	-
 Luke 3:1	152	Philip	philip-the-tetrarch	philip-the-apostle
 Luke 3:1	214	Lysanias	lysanias	lysanias
 Luke 3:2	36	Caiaphas	caiaphas	caiaphas
@@ -7559,6 +7581,7 @@ Luke 3:15	83	John	john-the-baptist	john-the-baptist
 Luke 3:16	0	John	john-the-baptist	john-the-baptist
 Luke 3:16	172	the Holy Spirit	holy-spirit	holy-spirit
 Luke 3:19	4	Herod the tetrarch	herod-antipas	herod-antipas
+Luke 3:19	114	Herod	herod-antipas	-
 Luke 3:20	45	John	john-the-baptist	john-the-baptist
 Luke 3:21	39	Jesus	jesus-of-nazareth	jesus-of-nazareth
 Luke 3:22	4	the Holy Spirit	holy-spirit	holy-spirit
@@ -7666,6 +7689,7 @@ Luke 7:43	0	Simon	simon-the-pharisee	simon-peter
 Luke 7:44	33	Simon	simon-the-pharisee	simon-peter
 Luke 8:2	71	Mary	mary-magdalene	mary-mother-of-jesus
 Luke 8:3	4	Joanna	joanna-follower-of-jesus	joanna-follower-of-jesus
+Luke 8:3	32	Herod	herod-antipas	-
 Luke 8:12	46	the devil	satan	satan
 Luke 8:27	5	Jesus	jesus-of-nazareth	jesus-of-nazareth
 Luke 8:28	12	Jesus	jesus-of-nazareth	jesus-of-nazareth
@@ -7688,6 +7712,7 @@ Luke 8:51	83	James	james-son-of-zebedee	james-son-of-zebedee
 Luke 9:7	4	Herod the tetrarch	herod-antipas	herod-antipas
 Luke 9:7	118	John	john-the-baptist	john-the-baptist
 Luke 9:8	17	Elijah	elijah	elijah
+Luke 9:9	0	Herod	herod-antipas	-
 Luke 9:9	13	John	john-the-baptist	john-the-baptist
 Luke 9:19	17	John the Baptizer	john-the-baptist	john-the-baptist
 Luke 9:19	54	Elijah	elijah	elijah
@@ -7758,6 +7783,7 @@ Luke 13:16	56	Satan	satan	satan
 Luke 13:28	58	Abraham	abraham	abraham
 Luke 13:28	67	Isaac	isaac	isaac
 Luke 13:28	74	Jacob	jacob	jacob
+Luke 13:31	89	Herod	herod-antipas	-
 Luke 14:3	0	Jesus	jesus-of-nazareth	jesus-of-nazareth
 Luke 16:16	36	John	john-the-baptist	john-the-baptist
 Luke 16:20	24	Lazarus	-	lazarus-of-bethany
@@ -7841,10 +7867,16 @@ Luke 23:2	103	Caesar	tiberius-caesar	tiberius-caesar
 Luke 23:3	0	Pilate	pontius-pilate	pontius-pilate
 Luke 23:4	0	Pilate	pontius-pilate	pontius-pilate
 Luke 23:6	9	Pilate	pontius-pilate	pontius-pilate
+Luke 23:7	33	Herod	herod-antipas	-
+Luke 23:7	70	Herod	herod-antipas	-
+Luke 23:8	9	Herod	herod-antipas	-
 Luke 23:8	19	Jesus	jesus-of-nazareth	jesus-of-nazareth
+Luke 23:11	0	Herod	herod-antipas	-
 Luke 23:11	113	Pilate	pontius-pilate	pontius-pilate
+Luke 23:12	0	Herod	herod-antipas	-
 Luke 23:12	10	Pilate	pontius-pilate	pontius-pilate
 Luke 23:13	0	Pilate	pontius-pilate	pontius-pilate
+Luke 23:15	12	Herod	herod-antipas	-
 Luke 23:18	76	Barabbas	barabbas	barabbas
 Luke 23:20	5	Pilate	pontius-pilate	pontius-pilate
 Luke 23:20	52	Jesus	jesus-of-nazareth	jesus-of-nazareth
@@ -8440,6 +8472,7 @@ Acts 4:19	4	Peter	simon-peter	simon-peter
 Acts 4:19	14	John	john-the-apostle	john-the-apostle
 Acts 4:25	34	David	david	david
 Acts 4:27	52	Jesus	jesus-of-nazareth	jesus-of-nazareth
+Acts 4:27	83	Herod	herod-antipas	-
 Acts 4:27	93	Pontius Pilate	pontius-pilate	pontius-pilate
 Acts 4:30	118	Jesus	jesus-of-nazareth	jesus-of-nazareth
 Acts 4:31	104	the Holy Spirit	holy-spirit	holy-spirit
@@ -8633,13 +8666,16 @@ Acts 11:25	40	Saul	paul-of-tarsus	saul-king-of-israel
 Acts 11:28	154	Claudius	claudius-caesar	claudius-caesar
 Acts 11:30	62	Barnabas	barnabas	barnabas
 Acts 11:30	75	Saul	paul-of-tarsus	saul-king-of-israel
+Acts 12:1	26	Herod	herod-agrippa-i	-
 Acts 12:2	10	James	james-son-of-zebedee	james-son-of-zebedee
 Acts 12:2	32	John	john-the-apostle	john-the-baptist
 Acts 12:3	60	Peter	simon-peter	simon-peter
 Acts 12:5	0	Peter	simon-peter	simon-peter
+Acts 12:6	20	Herod	herod-agrippa-i	-
 Acts 12:6	54	Peter	simon-peter	simon-peter
 Acts 12:7	88	Peter	simon-peter	simon-peter
 Acts 12:11	5	Peter	simon-peter	simon-peter
+Acts 12:11	132	Herod	herod-agrippa-i	-
 Acts 12:12	45	Mary	-	mary-mother-of-jesus
 Acts 12:12	65	John who was called Mark	john-mark	john-mark
 Acts 12:13	5	Peter	simon-peter	simon-peter
@@ -8649,6 +8685,9 @@ Acts 12:14	99	Peter	simon-peter	simon-peter
 Acts 12:16	4	Peter	simon-peter	simon-peter
 Acts 12:17	150	James	james-brother-of-jesus	james-son-of-zebedee
 Acts 12:18	95	Peter	simon-peter	simon-peter
+Acts 12:19	5	Herod	herod-agrippa-i	-
+Acts 12:20	4	Herod	herod-agrippa-i	-
+Acts 12:21	21	Herod	herod-agrippa-i	-
 Acts 12:25	0	Barnabas	barnabas	barnabas
 Acts 12:25	13	Saul	paul-of-tarsus	saul-king-of-israel
 Acts 12:25	102	John who was called Mark	john-mark	john-mark
@@ -8882,6 +8921,7 @@ Acts 23:24	91	Felix	antonius-felix	antonius-felix
 Acts 23:26	48	Felix	antonius-felix	antonius-felix
 Acts 23:31	49	Paul	paul-of-tarsus	paul-of-tarsus
 Acts 23:33	89	Paul	paul-of-tarsus	paul-of-tarsus
+Acts 23:35	88	Herod	herod-the-great	-
 Acts 24:1	34	Ananias	ananias-the-high-priest	ananias-and-sapphira
 Acts 24:1	138	Paul	paul-of-tarsus	paul-of-tarsus
 Acts 24:3	59	Felix	antonius-felix	antonius-felix

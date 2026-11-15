@@ -317,7 +317,67 @@ const BOOK_NAME_OVERRIDES: Record<string, Record<string, string>> = {
  *   principle as "Zadok" and "Eleazar" above. All three translations read "Joseph" at 1:23, so unlike
  *   4:36 it was wrong for every reader and its fix moves a WEB row. Nothing in either entry rules on
  *   the corpus-wide default for a bare "Joseph", which is open. */
+
+/** Expands `[chapter, [verses], id]` rows into VERSE_NAME_OVERRIDES' "chapter:verse" -> id shape. Every
+ * verse is still listed by number — nothing here matches a range — so a verse that is not written down
+ * gets no override, and for a DEFAULT_NO_LINK key that means no link rather than a guess. */
+function versesTo(rows: [chapter: number, verses: number[], id: string][]): Record<string, string> {
+  const out: Record<string, string> = {};
+  for (const [chapter, verses, id] of rows) for (const v of verses) out[`${chapter}:${v}`] = id;
+  return out;
+}
+
+const HEROD_THE_GREAT = "herod-the-great";
+const HEROD_ANTIPAS = "herod-antipas";
+const HEROD_AGRIPPA_I = "herod-agrippa-i";
+
 const VERSE_NAME_OVERRIDES: Record<string, Record<string, Record<string, string | null>>> = {
+  // "Herod": the New Testament gives the bare name to THREE different men, and every chapter that
+  // uses it means only one of them, so the table below is written chapter by chapter. The key is
+  // registered (as a matchName on the `herodian-dynasty` overview topic) and ends in DEFAULT_NO_LINK in
+  // NAME_CONTEXT_RULES, so these verses are the ONLY places a bare "Herod" links: prose, panel verse
+  // lists and any verse not listed here stay unlinked. Enumerated from all three corpora — the WEB,
+  // KJV and ASV carry "Herod" in the same 42 verses, except that the ASV reads "he" at Acts 12:20.
+  // Verses whose only Herod is inside "Herod the tetrarch" (Matthew 14:1, Luke 9:7, Acts 13:1) are not
+  // listed: that whole phrase is registered on herod-antipas and wins as the longer match.
+  //   Herod the Great — Matthew 2 (the magi, the flight to Egypt, the Bethlehem killings, his death;
+  //     2:22 "his father, Herod" is Archelaus's father) and Luke 1:5 ("Herod, the king of Judea", the
+  //     days of Zacharias, before Jesus' birth). Acts 23:35's "Herod's palace" is the palace he built
+  //     at Caesarea, later the Roman governors' residence — a building named for him, not his action.
+  //   Herod Antipas — every Herod of Jesus' adult ministry: John the Baptist's imprisonment and death
+  //     (Matthew 14; Mark 6, where Mark calls him "King Herod"), Mark 8:15's "yeast of Herod" (a minority
+  //     of manuscripts read "the Herodians" there; WEB/KJV/ASV all read "Herod", the ruler of Galilee
+  //     where the scene is set), Luke 3:1/3:19 "tetrarch of Galilee", Joanna's husband as his steward
+  //     (8:3), 9:9, "Herod wants to kill you" (13:31, answered "that fox" in 13:32), the trial before
+  //     him (23:7-15), and Acts 4:27, which looks back on that trial.
+  //   Herod Agrippa I — Acts 12: James killed, Peter imprisoned, the death at Caesarea that Josephus
+  //     also records (Antiquities 19.8.2).
+  // Agrippa II is never called "Herod" in the text (Acts 25-26 say "Agrippa"), and Philip the Tetrarch
+  // only "Philip"; neither needs a row. "Herodias", "Herodion" (Romans 16:11) and "Herodians" are
+  // different words and never match this key.
+  herod: {
+    Matthew: versesTo([
+      [2, [1, 3, 7, 12, 13, 15, 16, 19, 22], HEROD_THE_GREAT],
+      [14, [3, 6], HEROD_ANTIPAS],
+    ]),
+    Mark: versesTo([
+      [6, [14, 16, 17, 18, 20, 21, 22], HEROD_ANTIPAS],
+      [8, [15], HEROD_ANTIPAS],
+    ]),
+    Luke: versesTo([
+      [1, [5], HEROD_THE_GREAT],
+      [3, [1, 19], HEROD_ANTIPAS],
+      [8, [3], HEROD_ANTIPAS],
+      [9, [9], HEROD_ANTIPAS],
+      [13, [31], HEROD_ANTIPAS],
+      [23, [7, 8, 11, 12, 15], HEROD_ANTIPAS],
+    ]),
+    Acts: versesTo([
+      [4, [27], HEROD_ANTIPAS],
+      [12, [1, 6, 11, 19, 20, 21], HEROD_AGRIPPA_I],
+      [23, [35], HEROD_THE_GREAT],
+    ]),
+  },
   // "Jonah": the entry is the prophet, correct at 2 Kings 14:25 and throughout the book of Jonah,
   // and correct at every Gospel mention of "the sign of Jonah". Wrong at exactly five places, all
   // naming SIMON PETER'S FATHER — "Simon Bar Jonah" (Matthew 16:17) and "Simon, son of Jonah"
@@ -1188,6 +1248,8 @@ const OWNER_NAME_OVERRIDES: Record<string, Record<string, string | null>> = {
   //
   // Records where every remaining "John" is the same man, and that man is not the Baptist:
   john: {
+    // "The Herods" overview: one bare "John", in "the apostle James, the brother of John" (Acts 12:2).
+    "herodian-dynasty": "john-the-apostle",
     // The Apostle. Zebedee's sons, the inner three, "Peter and John" in Acts, the household Jesus
     // entrusted Mary to from the cross, the Ephesus traditions. None of these turns on who wrote
     // the Fourth Gospel — they are narrative or traditional identifications the app already makes
@@ -1686,6 +1748,7 @@ const OWNER_NAME_OVERRIDES: Record<string, Record<string, string | null>> = {
   // the husband rather than the patriarch. Those are the corpus-wide ruling, which is Robbie's and
   // is open, and they are deliberately left alone.
   joseph: {
+    "herodian-dynasty": "joseph-husband-of-mary", // 1: "lets Joseph bring the family back from Egypt" (Matthew 2:19)
     "teresa-of-avila": "joseph-husband-of-mary",
     "joseph-husband-of-mary": "joseph-husband-of-mary",
     "joseph-of-arimathea": "joseph-of-arimathea",
@@ -2020,6 +2083,10 @@ const OWNER_NAME_OVERRIDES: Record<string, Record<string, string | null>> = {
   // sentence, and every record below holds exactly one Philip. A record-keyed answer survives the
   // paragraph being rewritten; a pin does not.
   philip: {
+    // "The Herods" overview: its one bare "Philip" is Herodias's first husband, "his brother Philip" of
+    // Mark 6:17 — the son of Herod the Great whom Josephus calls Herod. No record; no link. (Philip the
+    // Tetrarch is written out in full on that page and matches as the longer name.)
+    "herodian-dynasty": null,
     // ── The Evangelist, 30 links. The reader path has had him right at all 15 of his verses since
     // VERSE_NAME_OVERRIDES above was written; only the article surface, which has no verse to look
     // at, sent him to the Apostle.
@@ -2568,6 +2635,12 @@ const BEN_PATRONYMIC_AFTER: NameContextRule = { after: /^\s+(?:ben|b\.)\s+\p{Lu}
 const BEN_PATRONYMIC_BEFORE: NameContextRule = { before: /(?:\bben|\sb\.)\s+$/, to: null };
 
 const NAME_CONTEXT_RULES: Record<string, NameContextRule[]> = {
+  // "Herod" is three different men in Scripture and more than that in our prose, and nothing in the
+  // words beside a bare "Herod" reliably says which. So it is a context-only key with no positive
+  // rules at all: it links ONLY through VERSE_NAME_OVERRIDES.herod (checked before this table), on the
+  // reader path, verse by verse. Everywhere else — articles, panel verse lists, any unlisted verse —
+  // it stays the plain text it was before the key was registered.
+  herod: [DEFAULT_NO_LINK],
   john: [
     // ── A phrase pin, and it must stay ahead of the pattern rules below, which is why it is here
     // rather than appended. Willibald's eighth-century itinerary, quoted verbatim in
