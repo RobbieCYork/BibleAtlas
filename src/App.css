@@ -12790,12 +12790,11 @@ img.sn-image,
   text-transform: uppercase;
   letter-spacing: 0.04em;
   color: var(--text-muted);
-  overflow-wrap: anywhere;
-  display: -webkit-box;
-  -webkit-box-orient: vertical;
-  -webkit-line-clamp: 2;
-  line-clamp: 2;
-  overflow: hidden;
+  /* Wraps in full, never clamped: the role line is real content ("A Real Valley Outside Jerusalem, and
+   * the New Testament's Word for Final Judgment") and a two-line clamp cut it off with an ellipsis on a
+   * phone. The header grid row grows with it; the side slots keep their own columns. */
+  overflow-wrap: break-word;
+  text-wrap: balance;
 }
 
 .back-btn--icon,
