@@ -12,12 +12,14 @@
     "validate:archaeology": "node scripts/archaeology-validate/run.mjs",
     "cap:sync": "npm run build && cap sync",
     "cap:assets": "capacitor-assets generate --iconBackgroundColor '#7c3aed' --splashBackgroundColor '#7c3aed'",
-    "verify:signed-in": "node scripts/signed-in-harness/run.mjs"
+    "verify:signed-in": "node scripts/signed-in-harness/run.mjs",
+    "test:store-app": "for f in scripts/store-app-tests/*.test.mjs; do node $f || exit 1; done"
   },
   "dependencies": {
     "@capacitor/app": "^8.1.2",
     "@capacitor/core": "^8.6.2",
     "@capacitor/keyboard": "^8.0.6",
+    "@capacitor/preferences": "^8.0.1",
     "@capacitor/status-bar": "^8.0.4",
     "@supabase/supabase-js": "^2.110.8",
     "dompurify": "^3.4.15",
