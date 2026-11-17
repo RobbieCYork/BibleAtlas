@@ -9,6 +9,7 @@ import { MobileTabsProvider } from './lib/mobileTabs.tsx'
 import { startUpdateChecks } from './lib/updateCheck'
 import { startFeatureRelease } from './lib/features'
 import { SkinController } from './lib/skin'
+import { initNativeApp } from './lib/nativeApp'
 // Skins (every signed-in reader). Must load AFTER App.css (imported via App above) so its overrides win ties.
 import './skins.css'
 
@@ -16,6 +17,8 @@ import './skins.css'
 // of the default light theme first — ThemeProvider's own effect (same localStorage key) takes over
 // from here once React mounts.
 document.documentElement.setAttribute('data-theme', localStorage.getItem('app-theme') === 'dark' ? 'dark' : 'light')
+
+void initNativeApp()
 
 startUpdateChecks()
 

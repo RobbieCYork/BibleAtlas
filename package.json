@@ -10,9 +10,15 @@
     "preview": "vite preview",
     "test:linker": "node scripts/name-linker/run.mjs && node scripts/name-linker/modern-names.mjs --check && node scripts/name-linker/self-name.mjs --check",
     "validate:archaeology": "node scripts/archaeology-validate/run.mjs",
+    "cap:sync": "npm run build && cap sync",
+    "cap:assets": "capacitor-assets generate --iconBackgroundColor '#7c3aed' --splashBackgroundColor '#7c3aed'",
     "verify:signed-in": "node scripts/signed-in-harness/run.mjs"
   },
   "dependencies": {
+    "@capacitor/app": "^8.1.2",
+    "@capacitor/core": "^8.6.2",
+    "@capacitor/keyboard": "^8.0.6",
+    "@capacitor/status-bar": "^8.0.4",
     "@supabase/supabase-js": "^2.110.8",
     "dompurify": "^3.4.15",
     "html2canvas": "^1.4.1",
@@ -24,6 +30,10 @@
     "tesseract.js": "^7.0.0"
   },
   "devDependencies": {
+    "@capacitor/android": "^8.6.2",
+    "@capacitor/assets": "^4.0.0",
+    "@capacitor/cli": "^8.6.2",
+    "@capacitor/ios": "^8.6.2",
     "@types/node": "^24.13.2",
     "@types/react": "^19.2.17",
     "@types/react-dom": "^19.2.3",
