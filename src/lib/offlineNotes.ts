@@ -21,7 +21,7 @@
 // The queue lives in Capacitor Preferences on native and localStorage in a browser (small JSON; it
 // cannot be rebuilt, so it is not kept in the evictable IndexedDB cache).
 import { Capacitor } from "@capacitor/core";
-import { cacheGet, cachePut, isNetworkError } from "./offlineCache";
+import { cacheDelPrefix, cacheGet, cachePut, isNetworkError } from "./offlineCache";
 import type { Note } from "./supabase";
 
 const QUEUE_KEY = "cb.offline.queue.v1";
@@ -261,3 +261,18 @@ export const cacheChapterNotes = (userId: string, book: string, chapter: number,
 export const recallChapterNotes = async (userId: string, book: string, chapter: number) => (await cacheGet<Note[]>(chapterKey(userId, book, chapter))) ?? null;
 export const cacheAllNotes = (userId: string, notes: Note[]) => cachePut(allKey(userId), notes);
 export const recallAllNotes = async (userId: string) => (await cacheGet<Note[]>(allKey(userId))) ?? null;
+
+/** Sign-out: forget the cached copies of notes so a shared device does not keep them. The unsynced
+ * queue is deliberately kept (it is unsent work, filed under the user id, and only that user's next
+ * sign-in will send it). */
+export const clearCachedNotes = () => cacheDelPrefix("notes:");
+
+/** Account deletion: nothing of the account may stay on the device, including unsent notes. */
+export async function clearAllOfflineData(): Promise<void> {
+  await cacheDelPrefix("notes:");
+  try {
+    await defaultQueueStore.save([]);
+  } catch {
+    /* ignore */
+  }
+}

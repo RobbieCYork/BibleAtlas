@@ -87,6 +87,17 @@ export async function cachePut(key: string, value: unknown): Promise<void> {
   }
 }
 
+/** Removes every cached entry whose key starts with `prefix`. */
+export async function cacheDelPrefix(prefix: string): Promise<void> {
+  try {
+    const b = getBackend();
+    if (!b) return;
+    for (const k of await b.keys()) if (k.startsWith(prefix)) await b.del(k);
+  } catch {
+    /* ignore */
+  }
+}
+
 export async function cacheDel(key: string): Promise<void> {
   try {
     await getBackend()?.del(key);

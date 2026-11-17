@@ -126,4 +126,12 @@ try { await pm.fetchPassage("Nowhere 9", "web"); } catch { notFound = true; }
 check("server 'not found' is still an error online", notFound);
 for (let i = 1; i <= 45; i++) await pm.rememberPassage("web", "Psalm " + i, { n: i });
 check("cache is capped (oldest evicted)", (await pm.recallPassage("web", "Psalm 1")) === undefined && (await pm.recallPassage("web", "Psalm 45")) !== undefined && pm.PASSAGE_CACHE_LIMIT === 40);
+await pm.rememberPassage("web", "John 1", { n: 1 });
+const nm = await load("scripts/store-app-tests/entries/notes-clear.ts");
+nm.setCacheBackendForTest(nm.createMemoryBackend());
+await nm.cacheAllNotes("u1", [{ id: "a" }]);
+await nm.cacheChapterNotes("u1", "John", 3, [{ id: "b" }]);
+await nm.cachePut("passage:web|John 1", { value: 1 });
+await nm.clearCachedNotes();
+check("sign-out clears cached notes but not Bible text", (await nm.recallAllNotes("u1")) === null && (await nm.recallChapterNotes("u1", "John", 3)) === null && (await nm.cacheGet("passage:web|John 1")) !== undefined);
 done();

@@ -41,7 +41,7 @@ export const DELETED_FOR_GOOD: DeletionNoticeLine[] = [
   {
     label: "Your Bible study",
     detail:
-      "Every note, highlight, verse tag, sermon note, reading position and reading-plan progress. Sermon-note photographs are deleted from storage, not merely unlinked.",
+      "Every note, highlight, verse tag, sermon note, prayer-list item, reading position and reading-plan progress. Sermon-note photographs are deleted from storage, not merely unlinked. Copies of your notes kept on a phone or tablet for offline use are cleared from that device when you delete the account there.",
   },
   {
     label: "Your posts and comments",

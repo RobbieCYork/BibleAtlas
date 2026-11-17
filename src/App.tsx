@@ -58,6 +58,7 @@ import Icon from "./components/Icon";
 import { TestViewStrip } from "./components/FeatureRelease";
 import { useFeature } from "./lib/features";
 import OfflineBanner from "./components/OfflineBanner";
+import { clearCachedNotes } from "./lib/offlineNotes";
 import { useOfflineSync } from "./lib/offlineSync";
 import "./App.css";
 
@@ -330,6 +331,8 @@ function App() {
       // is truthy). This clears the flag behind it: without it, logging back in during the same
       // page load would put the reader straight back on a reset screen they just left.
       if (event === "SIGNED_OUT") setPasswordRecovery(false);
+      // A shared phone must not keep the previous reader's cached notes.
+      if (event === "SIGNED_OUT") void clearCachedNotes();
     });
     return () => listener.subscription.unsubscribe();
   }, []);

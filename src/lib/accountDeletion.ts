@@ -11,6 +11,7 @@
  */
 
 import { supabase } from "./supabase";
+import { clearAllOfflineData } from "./offlineNotes";
 import { ACCOUNT_DELETION_CONFIRM_WORD } from "../data/accountDeletionNotice";
 
 /** Carries the server's own sentence where there is one — "this is the only owner account", say —
@@ -64,6 +65,9 @@ export async function deleteMyAccount(typedConfirmation: string): Promise<void> 
  * state the deleted account left behind — the app comes back at the sign-in gate with nothing.
  */
 export async function endSessionAfterDeletion(): Promise<void> {
+  // The account is gone, so nothing it wrote may stay on this device either: cached notes and any
+  // note that was still waiting to sync.
+  await clearAllOfflineData().catch(() => {});
   try {
     await supabase.auth.signOut({ scope: "local" });
   } catch {
