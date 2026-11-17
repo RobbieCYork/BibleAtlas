@@ -206,6 +206,8 @@ export default function AccountSettingsBody({ userId }: { userId: string | null 
         <a href="/terms" target="_blank" rel="noopener noreferrer">Terms of Service</a>
         <span aria-hidden="true"> · </span>
         <a href="/privacy" target="_blank" rel="noopener noreferrer">Privacy Policy</a>
+        <span aria-hidden="true"> · </span>
+        <a href="/support" target="_blank" rel="noopener noreferrer">Support</a>
       </p>
     </>
   );

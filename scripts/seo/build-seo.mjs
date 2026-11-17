@@ -35,6 +35,7 @@ import {
   hubPage,
   indexPage,
   legalPage,
+  supportPage,
   locationPage,
   makeLinkifier,
   personPage,
@@ -89,7 +90,7 @@ export async function generateSeo(outDir) {
     idsByLinkKind.get(linkKind)?.has(id) ? itemPath(itemByLinkKind.get(linkKind), id) : null;
   const linkify = makeLinkifier(data.computeLinkAnnotations, urlFor);
 
-  const urls = ["/", "/library", "/delete-account", "/terms", "/privacy"];
+  const urls = ["/", "/library", "/delete-account", "/terms", "/privacy", "/support"];
   let pages = 0;
 
   for (const kind of KINDS) {
@@ -130,6 +131,11 @@ export async function generateSeo(outDir) {
   write(outDir, fileForPath("/terms"), legalPage(legal.TERMS_OF_SERVICE, { path: "/terms", effectiveDate: legal.LEGAL_EFFECTIVE_DATE }));
   write(outDir, fileForPath("/privacy"), legalPage(legal.PRIVACY_POLICY, { path: "/privacy", effectiveDate: legal.LEGAL_EFFECTIVE_DATE }));
   pages += 2;
+
+  // The Support page: the "Support URL" required by App Store Connect and Play Console. Generated from
+  // src/data/supportPage.ts so the FAQ and the Terms / Privacy / deletion pages cannot drift apart.
+  write(outDir, fileForPath("/support"), supportPage(data.supportPage.SUPPORT_PAGE));
+  pages++;
 
   // One sitemap file: 880-odd URLs is far inside the 50,000-URL / 50 MB limit, so an index would be
   // a second thing to keep in step for no benefit. No <lastmod>, <priority> or <changefreq> — we

@@ -222,7 +222,7 @@ ${FONTS}
 ${crumbsHtml(trail)}
 ${body}
 <div class="cta"><p>Capstone Bible is a free interactive study app — a map of every place in this library, a zoomable timeline of biblical and church history, the Bible text with every name in it linked to its article and personal notes.</p><a class="btn" href="/">Open Capstone Bible</a></div>
-<footer><p>Part of the <a href="/library">Capstone Bible library</a> — <a href="/places">places</a>, <a href="/sites">sites</a>, <a href="/people">people</a>, <a href="/topics">topics</a> and the <a href="/events">timeline</a>. Articles are written from a Protestant evangelical position and name other traditions' views where they differ.</p><p>Contact: <a href="mailto:admin@capstonebible.com">admin@capstonebible.com</a></p><p><a href="/terms">Terms of Service</a> · <a href="/privacy">Privacy Policy</a> · <a href="/delete-account">Delete your account</a></p></footer>
+<footer><p>Part of the <a href="/library">Capstone Bible library</a> — <a href="/places">places</a>, <a href="/sites">sites</a>, <a href="/people">people</a>, <a href="/topics">topics</a> and the <a href="/events">timeline</a>. Articles are written from a Protestant evangelical position and name other traditions' views where they differ.</p><p>Contact: <a href="mailto:admin@capstonebible.com">admin@capstonebible.com</a></p><p><a href="/terms">Terms of Service</a> · <a href="/privacy">Privacy Policy</a> · <a href="/support">Support</a> · <a href="/delete-account">Delete your account</a></p></footer>
 </main>
 </body>
 </html>`;
@@ -1030,6 +1030,44 @@ export function legalPage(doc, { path, effectiveDate }) {
         "@context": "https://schema.org",
         "@type": "WebPage",
         name: `Capstone Bible ${doc.title}`,
+        url: absolute(path),
+        isPartOf: { "@type": "WebSite", name: SITE_NAME, url: ORIGIN },
+      },
+    ],
+    body,
+    current: path,
+    ogType: "website",
+  });
+}
+
+// ---------------------------------------------------------------- support
+/**
+ * The public Support page at /support — the "Support URL" both app stores ask for. Generated from
+ * src/data/supportPage.ts for the same reason as /terms and /privacy: its sentences are promises about
+ * how the app behaves, and AGENTS.md forbids hand-maintaining any part of the public site. Uses the
+ * same inline markup as the legal pages (`[text](href)` and `**bold**`).
+ */
+export function supportPage(doc) {
+  const path = "/support";
+  const trail = [{ name: doc.title, path }];
+  const block = (b) =>
+    Array.isArray(b) ? `<ul>${b.map((li) => `<li>${legalInline(li)}</li>`).join("")}</ul>` : p(legalInline(b));
+  const body = [
+    heading(`${doc.title}`, "Capstone Bible", ""),
+    ...doc.intro.map((t) => `<section>${p(legalInline(t))}</section>`),
+    ...doc.sections.map((s) => section(s.heading, s.body.map(block).join(""))),
+  ].join("");
+
+  return page({
+    title: `${doc.title} — Capstone Bible`,
+    description: clip(doc.description),
+    canonical: path,
+    trail,
+    jsonLd: [
+      {
+        "@context": "https://schema.org",
+        "@type": "ContactPage",
+        name: "Capstone Bible Support",
         url: absolute(path),
         isPartOf: { "@type": "WebSite", name: SITE_NAME, url: ORIGIN },
       },

@@ -490,7 +490,7 @@ export default function AuthGate() {
           Questions, or something to report? <a href="mailto:admin@capstonebible.com">admin@capstonebible.com</a>
         </p>
         <p className="auth-gate-contact">
-          <a href="/terms">Terms of Service</a> · <a href="/privacy">Privacy Policy</a>
+          <a href="/terms">Terms of Service</a> · <a href="/privacy">Privacy Policy</a> · <a href="/support">Support</a>
         </p>
 
         <SocialLinks className="auth-gate-social" />
