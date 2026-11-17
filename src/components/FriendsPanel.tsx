@@ -21,6 +21,7 @@ import ViewSwitcher, { type FriendsView } from "./ViewSwitcher";
 import BackButton from "./BackButton";
 import ModerationMenu from "./ModerationMenu";
 import Icon from "./Icon";
+import { nativeShareLink, webOrigin, webPathname } from "../lib/nativeShare";
 
 interface ConversationSummary {
   friendId: string;
@@ -298,7 +299,9 @@ export default function FriendsPanel({
 
   const handleCopyInviteLink = async () => {
     if (!userId) return;
-    const link = `${window.location.origin}${window.location.pathname}?invite=${userId}`;
+    const link = `${webOrigin()}${webPathname()}?invite=${userId}`;
+    // Native app: the system share sheet (a no-op "unavailable" in a browser, which copies as before).
+    if ((await nativeShareLink({ title: "Join me on Capstone Bible", text: "Join me on Capstone Bible", url: link })) !== "unavailable") return;
     try {
       await navigator.clipboard.writeText(link);
       setInviteStatus("Invite link copied — send it however you like (text, email, anything).");

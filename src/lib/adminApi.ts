@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { supabase } from "./supabase";
+import { webOrigin } from "./nativeShare";
 
 /* ============================================================================
  * The Admin Console's data layer.
@@ -228,7 +229,7 @@ export const deleteContent = (kind: "post" | "comment", id: string) =>
  * The UI says so rather than over-claiming.
  * -------------------------------------------------------------------------- */
 export async function sendPasswordReset(email: string): Promise<void> {
-  const { error } = await supabase.auth.resetPasswordForEmail(email, { redirectTo: window.location.origin });
+  const { error } = await supabase.auth.resetPasswordForEmail(email, { redirectTo: webOrigin() });
   if (error) throw new Error(error.message);
 }
 

@@ -10,6 +10,7 @@ import SermonNoteEditor, { type SermonEditorDraft } from "./SermonNoteEditor";
 import { noteBodyToHtml, sanitizeNoteHtml } from "../lib/richText";
 import { resolveNoteImages } from "../lib/noteImages";
 import { qrSvg } from "../lib/qrCode";
+import { nativeShareLink } from "../lib/nativeShare";
 import {
   CHURCH_ROLE_BLURBS,
   CHURCH_ROLE_LABELS,
@@ -341,6 +342,8 @@ export default function ChurchPanel({
   const handleCopyInvite = async () => {
     if (!activeChurchId) return;
     const link = churchInviteUrl(activeChurchId);
+    // Native app: the system share sheet (a no-op "unavailable" in a browser, which copies as before).
+    if ((await nativeShareLink({ title: "Join our church on Capstone Bible", url: link })) !== "unavailable") return;
     try {
       await navigator.clipboard.writeText(link);
       setInviteStatus("Invite link copied.");

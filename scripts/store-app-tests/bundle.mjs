@@ -22,6 +22,7 @@ export async function load(entryRel, extraAlias = {}) {
         "@capacitor/core": stub("core.mjs"),
         "@capacitor/preferences": stub("preferences.mjs"),
         "@capacitor/share": stub("share.mjs"),
+        "@capacitor/filesystem": stub("filesystem.mjs"),
         "@capacitor/haptics": stub("haptics.mjs"),
         "@capacitor/network": stub("network.mjs"),
         ...extraAlias,

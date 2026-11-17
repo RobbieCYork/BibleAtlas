@@ -1,0 +1,17 @@
+import { load, check, done } from "./bundle.mjs";
+const calls = [];
+globalThis.__shareCalls = calls;
+globalThis.window = { location: { origin: "http://localhost:5173", pathname: "/x" } };
+const m = await load("src/lib/nativeShare.ts");
+globalThis.__native = false;
+check("browser: webOrigin is window origin", m.webOrigin() === "http://localhost:5173" && m.webPathname() === "/x");
+check("browser: link share unavailable (caller falls through)", (await m.nativeShareLink({ url: "u" })) === "unavailable" && calls.length === 0);
+check("browser: image share unavailable", (await m.nativeShareImage(new Blob(["a"]), "a.png")) === "unavailable" && calls.length === 0);
+globalThis.__native = true;
+check("native: webOrigin is the public site", m.webOrigin() === "https://capstonebible.com" && m.webPathname() === "/");
+check("native: link share uses the sheet", (await m.nativeShareLink({ url: "https://capstonebible.com/?invite=1" })) === "shared" && calls[0].url.endsWith("invite=1"));
+calls.length = 0;
+check("native: image share writes a file then shares its uri", (await m.nativeShareImage(new Blob(["abc"]), "c.png")) === "shared" && calls[0].wrote === "c.png" && calls[1].files[0] === "file:///cache/c.png");
+globalThis.__shareThrow = "Share canceled";
+check("native: dismissed sheet reports cancelled", (await m.nativeShareLink({ url: "u" })) === "cancelled");
+done();

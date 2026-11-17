@@ -1,4 +1,5 @@
 import type { Location, Person, PointOfInterest } from "../data/types";
+import { nativeShareImage } from "./nativeShare";
 
 /**
  * Share-card content: what to render, not how — ShareCardModal takes one of these and lets the
@@ -78,6 +79,11 @@ export function shareFilename(title: string): string {
  * of surfacing an error.
  */
 export async function deliverCard(blob: Blob, filename: string): Promise<"shared" | "saved" | "cancelled"> {
+  // Native app: the system share sheet via @capacitor/share. In a browser this answers "unavailable"
+  // immediately and the Web Share / download path below runs exactly as before.
+  const native = await nativeShareImage(blob, filename);
+  if (native === "shared") return "shared";
+  if (native === "cancelled") return "cancelled";
   const file = new File([blob], filename, { type: "image/png" });
   if (typeof navigator.share === "function" && typeof navigator.canShare === "function" && navigator.canShare({ files: [file] })) {
     try {

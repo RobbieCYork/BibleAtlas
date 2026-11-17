@@ -17,6 +17,7 @@ import { useChurchesAvailable } from "../lib/churchApi";
 import BackButton from "./BackButton";
 import ModerationMenu from "./ModerationMenu";
 import Icon from "./Icon";
+import { nativeShareLink, webOrigin, webPathname } from "../lib/nativeShare";
 
 type Screen = "list" | "create" | "detail";
 type DetailTab = "chat" | "members";
@@ -336,7 +337,9 @@ export default function GroupsPanel({
 
   const handleCopyInviteLink = async () => {
     if (!activeGroupId) return;
-    const link = `${window.location.origin}${window.location.pathname}?joinGroup=${activeGroupId}`;
+    const link = `${webOrigin()}${webPathname()}?joinGroup=${activeGroupId}`;
+    // Native app: the system share sheet (a no-op "unavailable" in a browser, which copies as before).
+    if ((await nativeShareLink({ title: "Join my group on Capstone Bible", url: link })) !== "unavailable") return;
     try {
       await navigator.clipboard.writeText(link);
       setInviteStatus("Invite link copied — anyone who opens it can request to join (an admin still has to approve them).");

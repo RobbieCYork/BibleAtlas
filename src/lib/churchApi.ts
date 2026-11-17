@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { supabase } from "./supabase";
+import { webOrigin, webPathname } from "./nativeShare";
 
 /* ============================================================================
  * The client half of sql/033_churches.sql — Capstone for Churches, Stage 1.
@@ -619,5 +620,5 @@ export async function fetchForkedSermonIds(userId: string): Promise<Set<string>>
  * project; a query parameter is the whole of the deep-linking story and this
  * needed no routing work. */
 export function churchInviteUrl(churchId: string): string {
-  return `${window.location.origin}${window.location.pathname}?joinChurch=${churchId}`;
+  return `${webOrigin()}${webPathname()}?joinChurch=${churchId}`;
 }

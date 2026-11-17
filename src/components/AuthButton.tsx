@@ -13,6 +13,7 @@ import { fetchReportCounts, hasRoleAtLeast, useCurrentRole } from "../lib/report
 import type { ReportSurface } from "../lib/reportContext";
 import Icon from "./Icon";
 import SocialLinks from "./SocialLinks";
+import { webOrigin } from "../lib/nativeShare";
 
 interface AuthButtonProps {
   session: Session | null;
@@ -196,7 +197,7 @@ export default function AuthButton({
     try {
       if (mode === "reset") {
         const { error: err } = await supabase.auth.resetPasswordForEmail(email, {
-          redirectTo: window.location.origin,
+          redirectTo: webOrigin(),
         });
         if (err) throw err;
         setInfo("Check your email for a link to reset your password.");
@@ -225,7 +226,7 @@ export default function AuthButton({
         const { error: err } = await supabase.auth.signUp({
           email,
           password,
-          options: { emailRedirectTo: window.location.origin, data: { display_name: trimmedName } },
+          options: { emailRedirectTo: webOrigin(), data: { display_name: trimmedName } },
         });
         if (err) throw err;
         setInfo("Account created! Check your email to confirm, then log in.");

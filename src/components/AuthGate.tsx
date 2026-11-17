@@ -3,6 +3,7 @@ import { supabase, setRememberMe } from "../lib/supabase";
 import Icon from "./Icon";
 import SocialLinks from "./SocialLinks";
 import "./AuthGate.css";
+import { webOrigin } from "../lib/nativeShare";
 
 type Mode = "login" | "signup" | "reset";
 
@@ -155,7 +156,7 @@ export default function AuthGate() {
     try {
       if (mode === "reset") {
         const { error: err } = await supabase.auth.resetPasswordForEmail(email, {
-          redirectTo: window.location.origin,
+          redirectTo: webOrigin(),
         });
         if (err) throw err;
         setInfo("Check your email for a link to reset your password.");
@@ -186,7 +187,7 @@ export default function AuthGate() {
         const { data, error: err } = await supabase.auth.signUp({
           email,
           password,
-          options: { emailRedirectTo: window.location.origin, data: { display_name: trimmedName } },
+          options: { emailRedirectTo: webOrigin(), data: { display_name: trimmedName } },
         });
         if (err) throw err;
         // Supabase deliberately doesn't return an error for signing up with an email that's already
