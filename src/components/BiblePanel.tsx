@@ -26,6 +26,9 @@ import {
   type VerseTag,
   type Profile,
 } from "../lib/supabase";
+import { cacheChapterNotes, recallChapterNotes } from "../lib/offlineNotes";
+import { isNetworkError } from "../lib/offlineCache";
+import { offlineNotes, refreshPending, useOfflineSyncedTick } from "../lib/offlineSync";
 import { hapticSelect, hapticSuccess, hapticTap } from "../lib/haptics";
 import { getTextOffsetInRoot } from "../lib/domTextOffset";
 import { setActiveScripture } from "../lib/reportContext";
@@ -379,7 +382,16 @@ export default function BiblePanel({
       supabase.from("verse_tags").select("*").eq("user_id", userId).eq("book", book).eq("chapter", chapter),
     ]);
     setHighlights((hlRes.data as Highlight[] | null) ?? []);
-    setNotes((notesRes.data as Note[] | null) ?? []);
+    // Notes: fresh from the server when we can reach it (and remembered for offline), otherwise the
+    // last copy this device saw. Either way, anything typed offline and not yet synced is laid on top.
+    let chapterNotes: Note[];
+    if (!notesRes.error) {
+      chapterNotes = (notesRes.data as Note[] | null) ?? [];
+      void cacheChapterNotes(userId, book, chapter, chapterNotes);
+    } else {
+      chapterNotes = (isNetworkError(notesRes.error) ? await recallChapterNotes(userId, book, chapter) : null) ?? [];
+    }
+    setNotes(await offlineNotes.overlayPending(userId, chapterNotes, (a) => a.book === book && a.chapter === chapter));
     setVerseTags((verseTagsRes.data as VerseTag[] | null) ?? []);
   };
 
@@ -392,6 +404,13 @@ export default function BiblePanel({
     const { data } = await supabase.from("tags").select("*").eq("user_id", userId).order("name");
     setTags((data as Tag[] | null) ?? []);
   };
+
+  // After offline changes sync, re-read this chapter so the notes shown are the server's.
+  const offlineSyncedTick = useOfflineSyncedTick();
+  useEffect(() => {
+    if (offlineSyncedTick > 0 && currentBook && currentChapter !== null) fetchAnnotations(currentBook, currentChapter, translation);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [offlineSyncedTick]);
 
   // Re-fetch highlights/notes/tags for the current chapter when login state changes (e.g. after signing in).
   useEffect(() => {
@@ -1235,14 +1254,37 @@ export default function BiblePanel({
       })
       .select()
       .single();
-    if (noteError || !data) {
-      console.error("Failed to save note:", noteError?.message ?? "no rows inserted");
-      return;
+    let created: Note | null = (data as Note | null) ?? null;
+    let savedOffline = false;
+    if (noteError || !created) {
+      if (noteError && isNetworkError(noteError)) {
+        // No signal: keep the note on this device and send it when we are back online.
+        created = await offlineNotes.enqueueCreate(
+          userId,
+          {
+            book: currentBook,
+            chapter: currentChapter,
+            start_verse: editor.startVerse,
+            end_verse: editor.endVerse,
+            translation,
+            quoted_text: editor.quotedText || null,
+            quoted_start_offset: editor.startOffset,
+            quoted_end_offset: editor.endOffset,
+          },
+          text
+        );
+        savedOffline = true;
+        void refreshPending(userId);
+      } else {
+        console.error("Failed to save note:", noteError?.message ?? "no rows inserted");
+        return;
+      }
     }
-    setNotes((prev) => [...prev, data as Note]);
+    const createdNote = created;
+    setNotes((prev) => [...prev, createdNote]);
     hapticSuccess();
     onNotesChanged?.();
-    const saved = await writeHighlight(editor, editor.highlightColor, editor.highlightId);
+    const saved = savedOffline ? null : await writeHighlight(editor, editor.highlightColor, editor.highlightId);
     setNoteDraft("");
     setPopup({
       kind: "verse-actions",
@@ -1385,6 +1427,15 @@ export default function BiblePanel({
       .select()
       .single();
     setSavingNoteEdit(false);
+    if (updateError && isNetworkError(updateError) && userId) {
+      // No signal: keep the edit on this device; it syncs later and never overwrites a newer version.
+      const queued = await offlineNotes.enqueueEdit(userId, note, text);
+      void refreshPending(userId);
+      setNotes((prev) => prev.map((n) => (n.id === queued.id ? queued : n)));
+      hapticSuccess();
+      cancelNoteEdit();
+      return;
+    }
     if (updateError || !data) {
       setNoteEditError(
         updateError?.message ? `Couldn't save: ${updateError.message}` : "Couldn't save your changes. Your text is still here — try again."

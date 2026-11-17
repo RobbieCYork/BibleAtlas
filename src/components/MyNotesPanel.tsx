@@ -8,6 +8,9 @@ import PrayerListView from "./PrayerListView";
 import Icon from "./Icon";
 import { TestingMarker } from "./FeatureRelease";
 import { useFeature } from "../lib/features";
+import { cacheAllNotes, recallAllNotes } from "../lib/offlineNotes";
+import { isNetworkError } from "../lib/offlineCache";
+import { offlineNotes, refreshPending, useOfflineSyncedTick } from "../lib/offlineSync";
 
 type NotesTab = "verse" | "sermon" | "prayer";
 
@@ -136,17 +139,25 @@ export default function MyNotesPanel({
       supabase.from("verse_tags").select("*").eq("user_id", userId),
       supabase.from("highlights").select("*").eq("user_id", userId),
     ]);
-    setNotes((notesRes.data as Note[] | null) ?? []);
+    let allNotes: Note[];
+    if (!notesRes.error) {
+      allNotes = (notesRes.data as Note[] | null) ?? [];
+      void cacheAllNotes(userId, allNotes);
+    } else {
+      allNotes = (isNetworkError(notesRes.error) ? await recallAllNotes(userId) : null) ?? [];
+    }
+    setNotes(await offlineNotes.overlayPending(userId, allNotes));
     setTags((tagsRes.data as Tag[] | null) ?? []);
     setVerseTags((verseTagsRes.data as VerseTag[] | null) ?? []);
     setHighlights((highlightsRes.data as Highlight[] | null) ?? []);
     setLoading(false);
   };
 
+  const offlineSyncedTick = useOfflineSyncedTick();
   useEffect(() => {
     fetchAll();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [userId, refreshKey]);
+  }, [userId, refreshKey, offlineSyncedTick]);
 
   const tagsById = Object.fromEntries(tags.map((t) => [t.id, t]));
 
@@ -243,6 +254,14 @@ export default function MyNotesPanel({
       .select()
       .single();
     setSavingEdit(false);
+    if (error && isNetworkError(error) && userId) {
+      // No signal: keep the edit on this device; it syncs later and never overwrites a newer version.
+      const queued = await offlineNotes.enqueueEdit(userId, note, text);
+      void refreshPending(userId);
+      setNotes((prev) => prev.map((n) => (n.id === queued.id ? queued : n)));
+      cancelEdit();
+      return;
+    }
     if (error || !data) {
       setEditError(error?.message ? `Couldn't save: ${error.message}` : "Couldn't save your changes. Your text is still here — try again.");
       return;

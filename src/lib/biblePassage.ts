@@ -14,6 +14,8 @@
  * and this module has no business deciding for them.
  * ==========================================================================*/
 
+import { isNetworkError, recallPassage, rememberPassage } from "./offlineCache";
+
 /** One verse exactly as bible-api.com returns it. */
 export interface PassageVerse {
   book_name: string;
@@ -23,6 +25,8 @@ export interface PassageVerse {
 }
 
 export interface PassageResult {
+  /** True when the network was unreachable and this is the copy saved from an earlier read. */
+  offline?: boolean;
   /** The reference the API echoed back, e.g. "John 3:16-17". */
   reference: string;
   verses: PassageVerse[];
@@ -46,16 +50,32 @@ export const PASSAGE_TIMEOUT_MS = 8000;
  */
 export async function fetchPassage(reference: string, translationId: string, signal?: AbortSignal): Promise<PassageResult> {
   const url = `https://bible-api.com/${encodeURIComponent(reference)}?translation=${translationId}`;
-  const res = await fetch(url, signal ? { signal } : undefined);
-  const data = await res.json();
-  if (!res.ok || data.error || !Array.isArray(data.verses) || data.verses.length === 0) {
+  let data: any;
+  let ok: boolean;
+  try {
+    const res = await fetch(url, signal ? { signal } : undefined);
+    ok = res.ok;
+    data = await res.json();
+  } catch (err) {
+    // No signal: answer from the copy saved the last time this passage loaded, if there is one. Only
+    // for "could not reach the server" -- a caller that aborted on purpose, or a server that answered
+    // with garbage, still gets the error.
+    if (!(err instanceof DOMException && err.name === "AbortError") && isNetworkError(err)) {
+      const cached = await recallPassage<PassageResult>(translationId, reference);
+      if (cached) return { ...cached, offline: true };
+    }
+    throw err;
+  }
+  if (!ok || data.error || !Array.isArray(data.verses) || data.verses.length === 0) {
     throw new Error(typeof data?.error === "string" ? data.error : "Passage not found");
   }
-  return {
+  const result: PassageResult = {
     reference: typeof data.reference === "string" ? data.reference : reference,
     verses: data.verses as PassageVerse[],
     translationName: typeof data.translation_name === "string" ? data.translation_name : translationId.toUpperCase(),
   };
+  void rememberPassage(translationId, reference, result);
+  return result;
 }
 
 /** The reference as a human writes it: "John 3:16", "John 3:16-18". An end verse that is missing,

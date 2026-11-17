@@ -57,6 +57,8 @@ import SeasonalWalkPanel from "./components/SeasonalWalkPanel";
 import Icon from "./components/Icon";
 import { TestViewStrip } from "./components/FeatureRelease";
 import { useFeature } from "./lib/features";
+import OfflineBanner from "./components/OfflineBanner";
+import { useOfflineSync } from "./lib/offlineSync";
 import "./App.css";
 
 const MIN_PANEL_WIDTH = 240;
@@ -331,6 +333,9 @@ function App() {
     });
     return () => listener.subscription.unsubscribe();
   }, []);
+
+  // Offline notes: flushes anything queued while there was no signal (see lib/offlineNotes.ts).
+  useOfflineSync(session?.user.id ?? null);
 
   // Usage analytics: starts the session, the flush timer and the time-on-site heartbeat.
   // Everything it does is fire-and-forget and failure-silent — see src/lib/analytics.ts.
@@ -1501,6 +1506,7 @@ function App() {
   return (
     <TimelineLinkContext.Provider value={timelineLinkHandlers}>
     <div className="app-shell">
+      <OfflineBanner />
       {SOCIAL_CONNECTIONS_ENABLED && <NotificationToasts session={session} onOpenFriends={openFriendsFromProfile} />}
       {passwordRecovery && session && <ResetPasswordGate onDone={() => setPasswordRecovery(false)} />}
       {!passwordRecovery && needsDisplayName && session && (
