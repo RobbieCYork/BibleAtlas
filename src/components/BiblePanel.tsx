@@ -2092,6 +2092,9 @@ export default function BiblePanel({
         open={referencePickerOpen}
         currentBook={currentBook}
         currentChapter={showIntro ? null : currentChapter}
+        userId={userId}
+        chapterReadReset={chapterReadReset}
+        currentChapterRead={chapterMarkedRead}
         onClose={() => setReferencePickerOpen(false)}
         onPickIntro={handlePickIntro}
         onPickChapter={handlePickChapter}

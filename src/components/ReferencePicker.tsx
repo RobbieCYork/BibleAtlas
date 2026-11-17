@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { BOOKS } from "../data/bibleBooks";
+import { supabase, chapterReadCutoff, type Profile } from "../lib/supabase";
 
 const NT_START_INDEX = BOOKS.findIndex((b) => b.name === "Matthew");
 
@@ -27,6 +28,14 @@ interface ReferencePickerProps {
    * reader already is, so reopening the picker doesn't mean re-finding their place in 66 books. */
   currentBook: string | null;
   currentChapter: number | null;
+  /** The signed-in account, and its "forget reads after..." setting, so the chapter grid can show
+   * which chapters of the chosen book are already read. Same table, same cutoff as the reader's own
+   * "Mark chapter as read" checkbox. No user means no marks and no summary line. */
+  userId?: string | null;
+  chapterReadReset?: Profile["chapter_read_reset"];
+  /** Live state of the checkbox for the chapter on screen, which may be ahead of the database
+   * while its write is in flight. */
+  currentChapterRead?: boolean;
   onClose: () => void;
   onPickIntro: (book: string) => void;
   /** Loads the chapter. Resolves true once the passage is rendered behind the sheet, which is when
@@ -60,6 +69,9 @@ export default function ReferencePicker({
   open,
   currentBook,
   currentChapter,
+  userId,
+  chapterReadReset = "never",
+  currentChapterRead = false,
   onClose,
   onPickIntro,
   onPickChapter,
@@ -69,6 +81,9 @@ export default function ReferencePicker({
   const [loadingChapter, setLoadingChapter] = useState<number | null>(null);
   const [sortOrder, setSortOrder] = useState<SortOrder>(loadSortOrder);
   const bodyRef = useRef<HTMLDivElement | null>(null);
+  /** Chapters of `book` this account has read; null while loading or if the read failed (then no
+   * marks and no count are drawn - never a claim of "0 read" that was really a failure). */
+  const [readChapters, setReadChapters] = useState<Set<number> | null>(null);
 
   const alphabetical = sortOrder === "alphabetical";
 
@@ -118,6 +133,29 @@ export default function ReferencePicker({
     target?.scrollIntoView({ block: "center" });
   }, [open, step, sortOrder]);
 
+  // One select of this book's rows, the same query the reader and My Reading already make, only when
+  // the chapter grid is showing.
+  useEffect(() => {
+    setReadChapters(null);
+    if (!open || step !== "chapter" || !book || !userId) return;
+    let cancelled = false;
+    (async () => {
+      try {
+        let query = supabase.from("chapter_reads").select("chapter").eq("user_id", userId).eq("book", book);
+        const cutoff = chapterReadCutoff(chapterReadReset);
+        if (cutoff) query = query.gte("read_at", cutoff);
+        const { data, error } = await query;
+        if (cancelled || error) return;
+        setReadChapters(new Set((data as { chapter: number }[] | null ?? []).map((r) => r.chapter)));
+      } catch {
+        // Stay null: draw nothing rather than claim nothing is read.
+      }
+    })();
+    return () => {
+      cancelled = true;
+    };
+  }, [open, step, book, userId, chapterReadReset]);
+
   useEffect(() => {
     if (!open) return;
     const onKey = (e: KeyboardEvent) => {
@@ -140,6 +178,16 @@ export default function ReferencePicker({
     // put, so a dead fetch does not dismiss the sheet onto the passage he was trying to leave.
     if (ok) onClose();
   };
+
+  // The checkbox for the chapter on screen wins over the fetched row: it is what the reader just did.
+  const isRead = (n: number) => {
+    if (!readChapters) return false;
+    if (bookInfo && bookInfo.name === currentBook && n === currentChapter) return currentChapterRead;
+    return readChapters.has(n);
+  };
+  const readCount = bookInfo && readChapters
+    ? Array.from({ length: bookInfo.chapters }, (_, i) => i + 1).filter(isRead).length
+    : null;
 
   const title = step === "book" ? "Choose a book" : (book ?? "Choose a chapter");
 
@@ -220,9 +268,19 @@ export default function ReferencePicker({
               >
                 Introduction to {bookInfo.name}
               </button>
+              {/* Always rendered for a signed-in reader, with a fixed line height, so the grid does not
+               * jump when the count arrives. */}
+              {userId && (
+                <p className="ref-picker-progress" aria-live="polite">
+                  {readCount !== null && bookInfo
+                    ? `${readCount} of ${bookInfo.chapters} chapters read`
+                    : "\u00a0"}
+                </p>
+              )}
               <div className="ref-picker-grid">
                 {Array.from({ length: bookInfo.chapters }, (_, i) => i + 1).map((n) => {
                   const isCurrent = bookInfo.name === currentBook && n === currentChapter;
+                  const read = isRead(n);
                   return (
                     <button
                       key={n}
@@ -230,11 +288,19 @@ export default function ReferencePicker({
                       data-current={isCurrent ? "true" : undefined}
                       className={`ref-picker-cell${isCurrent ? " is-current" : ""}${
                         loadingChapter === n ? " is-loading" : ""
-                      }`}
+                      }${read ? " is-read" : ""}`}
+                      data-read={read ? "true" : undefined}
+                      aria-current={isCurrent ? "true" : undefined}
+                      aria-label={`Chapter ${n}${isCurrent ? ", current chapter" : ""}${read ? ", read" : ""}`}
                       disabled={loadingChapter !== null}
                       onClick={() => handleChapter(n)}
                     >
                       {n}
+                      {read && (
+                        <svg className="ref-picker-check" viewBox="0 0 12 12" aria-hidden="true" focusable="false">
+                          <path d="M2.6 6.4l2.3 2.3 4.5-4.9" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
+                        </svg>
+                      )}
                     </button>
                   );
                 })}
