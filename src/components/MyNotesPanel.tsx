@@ -11,6 +11,7 @@ import { useFeature } from "../lib/features";
 import { cacheAllNotes, recallAllNotes } from "../lib/offlineNotes";
 import { isNetworkError } from "../lib/offlineCache";
 import { offlineNotes, refreshPending, useOfflineSyncedTick } from "../lib/offlineSync";
+import { checkContent } from "../lib/contentFilter";
 
 type NotesTab = "verse" | "sermon" | "prayer";
 
@@ -274,6 +275,13 @@ export default function MyNotesPanel({
   /** Public notes show as a post on this account's profile and friends can comment on them. */
   const handleToggleNotePublic = async (note: Note) => {
     const nextPublic = !note.is_public;
+    if (nextPublic) {
+      const filtered = checkContent(note.note_text);
+      if (!filtered.ok) {
+        window.alert(filtered.message);
+        return;
+      }
+    }
     setNotes((prev) => prev.map((n) => (n.id === note.id ? { ...n, is_public: nextPublic } : n)));
     await supabase.from("notes").update({ is_public: nextPublic }).eq("id", note.id);
   };

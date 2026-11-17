@@ -1,0 +1,10 @@
+import { load, check, done } from "./bundle.mjs";
+const m = await load("src/lib/nativeApp.ts");
+const o = "capacitor://localhost";
+check("terms opens on the website", m.nativeLinkTarget("/terms", o) === "https://capstonebible.com/terms");
+check("support too", m.nativeLinkTarget("/support", o) === "https://capstonebible.com/support");
+check("in-app route stays in the app", m.nativeLinkTarget("/?invite=1", o) === null);
+check("external link goes to the browser", m.nativeLinkTarget("https://www.biblegateway.com/x", o) === "https://www.biblegateway.com/x");
+check("mailto handled", m.nativeLinkTarget("mailto:admin@capstonebible.com", o) === "mailto:admin@capstonebible.com");
+check("javascript: ignored", m.nativeLinkTarget("javascript:alert(1)", o) === null);
+done();

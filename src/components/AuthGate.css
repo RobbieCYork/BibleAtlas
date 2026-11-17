@@ -551,3 +551,9 @@
     margin-top: -16px;
   }
 }
+
+/* Sign-up terms tick-box on the full-page gate (colours suit the dark card). Required to create an account. */
+.auth-gate .auth-terms-check { color: #d6c7a8; }
+.auth-gate .auth-terms-check a { color: #e5b355; }
+:root[data-theme="light"] .auth-gate .auth-terms-check { color: #6e5f48; }
+:root[data-theme="light"] .auth-gate .auth-terms-check a { color: #8a5e12; }

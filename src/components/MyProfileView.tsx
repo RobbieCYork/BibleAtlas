@@ -26,6 +26,7 @@ import MyReportsSheet from "./MyReportsSheet";
 import ReportIssueSheet from "./ReportIssueSheet";
 import type { ReportSurface } from "../lib/reportContext";
 import { useFeature, SOCIAL_CONNECTIONS_ENABLED } from "../lib/features";
+import { checkContent } from "../lib/contentFilter";
 
 /** A church website is typed without a scheme half the time ("mychurch.org") — treat that as shorthand
  * for https rather than rejecting it or linking to a relative path on this app's own domain. */
@@ -260,6 +261,16 @@ function MyProfileControl({
     const trimmedName = draft.displayName.trim();
     if (!trimmedName) {
       setStatus("Display name can't be empty.");
+      return;
+    }
+    const nameCheck = checkContent(trimmedName, "name");
+    if (!nameCheck.ok) {
+      setStatus(nameCheck.message ?? null);
+      return;
+    }
+    const bioCheck = checkContent(draft.bio);
+    if (!bioCheck.ok) {
+      setStatus(bioCheck.message ?? null);
       return;
     }
     // Validate every link before touching the database, so one bad URL doesn't leave the profile

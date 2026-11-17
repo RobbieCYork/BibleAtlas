@@ -17,6 +17,7 @@ import {
 import InlineTextEditor from "./InlineTextEditor";
 import ModerationMenu from "./ModerationMenu";
 import { useHiddenContent } from "../lib/moderationApi";
+import { checkContent } from "../lib/contentFilter";
 
 interface PostsFeedProps {
   /** Whose public notes/posts to show. */
@@ -143,6 +144,11 @@ export default function PostsFeed({ userId, viewerId, isOwn }: PostsFeedProps) {
   const handleAddComment = async (item: FeedItem) => {
     const body = (commentDrafts[item.id] ?? "").trim();
     if (!body || !viewerId) return;
+    const filtered = checkContent(body);
+    if (!filtered.ok) {
+      setCommentErrors((e) => ({ ...e, [item.id]: filtered.message ?? "" }));
+      return;
+    }
     setCommentErrors((e) => ({ ...e, [item.id]: "" }));
     const { error } =
       item.kind === "note"
@@ -208,6 +214,11 @@ export default function PostsFeed({ userId, viewerId, isOwn }: PostsFeedProps) {
     const original = item.kind === "note" ? item.note.note_text : item.post.body;
     if (text === original) {
       cancelEdit();
+      return;
+    }
+    const filtered = checkContent(text);
+    if (!filtered.ok) {
+      setEditError(filtered.message ?? null);
       return;
     }
     setSavingEdit(true);
@@ -529,6 +540,11 @@ function PostComposer({ userId, onPosted }: { userId: string; onPosted: () => vo
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!canPost) return;
+    const filtered = checkContent(body);
+    if (!filtered.ok) {
+      setError(filtered.message ?? null);
+      return;
+    }
     setBusy(true);
     setError(null);
     try {

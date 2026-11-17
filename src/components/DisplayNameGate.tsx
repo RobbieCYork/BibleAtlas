@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { SOCIAL_CONNECTIONS_ENABLED } from "../lib/features";
 import { supabase } from "../lib/supabase";
+import { checkContent } from "../lib/contentFilter";
 
 interface DisplayNameGateProps {
   userId: string;
@@ -56,6 +57,11 @@ export default function DisplayNameGate({ userId, onSaved }: DisplayNameGateProp
     e.preventDefault();
     const trimmed = name.trim();
     if (!trimmed) return;
+    const filtered = checkContent(trimmed, "name");
+    if (!filtered.ok) {
+      setError(filtered.message ?? null);
+      return;
+    }
     setSaving(true);
     setError(null);
     const { error: err } = await supabase.from("profiles").update({ display_name: trimmed }).eq("id", userId);

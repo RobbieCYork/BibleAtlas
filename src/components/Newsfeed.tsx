@@ -17,6 +17,7 @@ import InlineTextEditor from "./InlineTextEditor";
 import ModerationMenu from "./ModerationMenu";
 import { useHiddenContent } from "../lib/moderationApi";
 import { getDailyVerse, formatDailyReference, getLocalDayKey } from "../data/dailyVerse";
+import { checkContent } from "../lib/contentFilter";
 
 interface NewsfeedProps {
   /** The signed-in account viewing its own Newsfeed tab — used both to find its friends and to post
@@ -114,6 +115,11 @@ export default function Newsfeed({ userId, onGoToVerse }: NewsfeedProps) {
   const postResponse = async () => {
     const text = responseDraft.trim();
     if (!text) return;
+    const filtered = checkContent(text);
+    if (!filtered.ok) {
+      setResponseError(filtered.message ?? null);
+      return;
+    }
     setResponseBusy(true);
     setResponseError(null);
     const { data, error } = await supabase
@@ -232,6 +238,11 @@ export default function Newsfeed({ userId, onGoToVerse }: NewsfeedProps) {
       cancelEdit();
       return;
     }
+    const filtered = checkContent(text);
+    if (!filtered.ok) {
+      setEditError(filtered.message ?? null);
+      return;
+    }
     setSavingEdit(true);
     setEditError(null);
     const updatedAt = new Date().toISOString();
@@ -341,6 +352,11 @@ export default function Newsfeed({ userId, onGoToVerse }: NewsfeedProps) {
   const handleAddComment = async (item: FeedItem) => {
     const body = (commentDrafts[item.id] ?? "").trim();
     if (!body) return;
+    const filtered = checkContent(body);
+    if (!filtered.ok) {
+      setCommentErrors((e) => ({ ...e, [item.id]: filtered.message ?? "" }));
+      return;
+    }
     setCommentErrors((e) => ({ ...e, [item.id]: "" }));
     const { error } =
       item.kind === "note"

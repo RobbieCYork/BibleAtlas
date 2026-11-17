@@ -18,6 +18,7 @@ import BackButton from "./BackButton";
 import ModerationMenu from "./ModerationMenu";
 import Icon from "./Icon";
 import { nativeShareLink, webOrigin, webPathname } from "../lib/nativeShare";
+import { checkContent } from "../lib/contentFilter";
 
 type Screen = "list" | "create" | "detail";
 type DetailTab = "chat" | "members";
@@ -228,6 +229,11 @@ export default function GroupsPanel({
   const handleSendGroupMessage = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!userId || !activeGroupId || !messageBody.trim()) return;
+    const filtered = checkContent(messageBody);
+    if (!filtered.ok) {
+      window.alert(filtered.message);
+      return;
+    }
     setSending(true);
     const { data, error } = await supabase
       .from("group_messages")
@@ -290,6 +296,11 @@ export default function GroupsPanel({
   const handleCreateGroup = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!newName.trim()) return;
+    const filtered = checkContent(`${newName} ${newDescription}`, "name");
+    if (!filtered.ok) {
+      setCreateError(filtered.message ?? null);
+      return;
+    }
     setCreating(true);
     setCreateError(null);
     const { data, error } = await supabase.rpc("create_group", {

@@ -2647,6 +2647,19 @@ a.profile-links-url {
   cursor: pointer;
 }
 
+.auth-terms-check {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  font-size: calc(12.5px * var(--tsz, 1));
+  line-height: 1.45;
+  color: var(--text-muted);
+  text-align: left;
+  cursor: pointer;
+}
+.auth-terms-check input { margin-top: 3px; flex: none; width: 16px; height: 16px; }
+.auth-terms-check a { color: inherit; text-decoration: underline; text-underline-offset: 2px; }
+
 .auth-form-extras {
   display: flex;
   align-items: center;

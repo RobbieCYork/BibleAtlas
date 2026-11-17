@@ -4,6 +4,7 @@ import Icon from "./Icon";
 import SocialLinks from "./SocialLinks";
 import "./AuthGate.css";
 import { webOrigin } from "../lib/nativeShare";
+import { checkContent } from "../lib/contentFilter";
 
 type Mode = "login" | "signup" | "reset";
 
@@ -57,6 +58,7 @@ export default function AuthGate() {
   const [showPassword, setShowPassword] = useState(false);
   const [displayName, setDisplayName] = useState("");
   const [rememberMe, setRememberMeChecked] = useState(true);
+  const [acceptedTerms, setAcceptedTerms] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [info, setInfo] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
@@ -170,6 +172,10 @@ export default function AuthGate() {
           throw err;
         }
       } else {
+        if (!acceptedTerms) {
+          setError("Please tick the box to agree to the Terms of Service and Privacy Policy.");
+          return;
+        }
         // Checked before the display-name lookup so the reader gets the cheapest failure first, and
         // before signUp so a password Supabase would reject anyway never costs a round trip.
         if (password.length < MIN_NEW_PASSWORD_LENGTH) {
@@ -177,6 +183,12 @@ export default function AuthGate() {
           return;
         }
         const trimmedName = displayName.trim();
+        const nameCheck = checkContent(trimmedName, "name");
+        if (!nameCheck.ok) {
+          setError(nameCheck.message ?? "Please choose a different name.");
+          setLoading(false);
+          return;
+        }
         const { data: available } = await supabase.rpc("is_display_name_available", { p_name: trimmedName });
         if (available === false) {
           setError("That display name is taken — try another.");
@@ -414,21 +426,21 @@ export default function AuthGate() {
                     </button>
                   </div>
                 )}
+                {/* A tick-box rather than notice text (Apple 1.2 / Google UGC: terms accepted before posting).
+                  * New tab so following a link does not throw away a half-filled form. */}
+                {mode === "signup" && (
+                  <label className="auth-terms-check">
+                    <input type="checkbox" checked={acceptedTerms} onChange={(e) => setAcceptedTerms(e.target.checked)} required />
+                    <span>
+                      I agree to the{" "}
+                      <a href="/terms" target="_blank" rel="noopener noreferrer">Terms of Service</a> and{" "}
+                      <a href="/privacy" target="_blank" rel="noopener noreferrer">Privacy Policy</a>, and I am at least 13 years old.
+                    </span>
+                  </label>
+                )}
                 <button type="submit" className="auth-gate-submit" disabled={loading}>
                   {loading ? "…" : mode === "login" ? "Log In" : mode === "signup" ? "Create Free Account" : "Send Reset Link"}
                 </button>
-                {/* The agreement notice, at the action it applies to. Sign-up only: a returning reader
-                  * agreed when they made the account. New tab, so following a link does not throw
-                  * away a half-filled form. No checkbox and no database column — the act of creating
-                  * the account is the agreement, and the text says so in plain words. */}
-                {mode === "signup" && (
-                  <p className="auth-gate-legal-notice">
-                    By creating an account, you agree to the{" "}
-                    <a href="/terms" target="_blank" rel="noopener noreferrer">Terms of Service</a> and{" "}
-                    <a href="/privacy" target="_blank" rel="noopener noreferrer">Privacy Policy</a>, and confirm you
-                    are at least 13 years old.
-                  </p>
-                )}
               </form>
               {error && (
                 <p className="auth-gate-status auth-gate-error" role="alert">

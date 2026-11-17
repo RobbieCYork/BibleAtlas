@@ -22,6 +22,7 @@ import BackButton from "./BackButton";
 import ModerationMenu from "./ModerationMenu";
 import Icon from "./Icon";
 import { nativeShareLink, webOrigin, webPathname } from "../lib/nativeShare";
+import { checkContent } from "../lib/contentFilter";
 
 interface ConversationSummary {
   friendId: string;
@@ -396,6 +397,11 @@ export default function FriendsPanel({
   const handleSendMessage = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!userId || !activeFriendId || !messageBody.trim()) return;
+    const filtered = checkContent(messageBody);
+    if (!filtered.ok) {
+      window.alert(filtered.message);
+      return;
+    }
     setSending(true);
     const { data, error } = await supabase
       .from("messages")
