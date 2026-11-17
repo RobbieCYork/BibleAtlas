@@ -385,3 +385,16 @@ deploy, look at what a crawler looks at — the raw bytes, no JavaScript:
 A page that renders correctly in a browser but comes back empty to `curl` is the
 failure this whole thing exists to prevent, and a browser will not show it to
 you.
+
+## Article text below the references list is Capstone Plus — read it through `usePaidContent`
+
+Since `sql/043` (branch `paid-content`), the fields listed in `src/lib/paidContentSpec.ts`
+`PAID_KEYS` — Reflect, life story, sections, history, archaeology, evidence, sources, further
+reading — are **not in the app bundle** of a `server`-mode build (`paid-content.config.json`). The
+five article panels get them from `usePaidContent(kind, record)`. Anything else that reads
+`person.lifeStory`, `topic.sections`, `location.history.founded`, `poi.sources`... gets an empty
+placeholder in that build, silently. Read free fields only outside the panels; if you need a count
+or a lead line, use `countsOf` / `placeLead` / `siteLead` from the spec. `src/data/*.ts` on disk is
+still the full source of truth, so the linker suite, the archaeology validator and the SEO generator
+are unaffected. After a server build, `node scripts/paid-content/check-bundle.mjs dist` must report
+`found … 0`.

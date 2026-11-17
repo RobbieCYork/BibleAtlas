@@ -70,6 +70,10 @@ export interface Location {
    * AND "James, the son of Alphaeus", because Matthew and Mark punctuate it differently. Putting
    * those in `alternateNames` would print both to the reader, one comma apart. */
   matchNames?: string[];
+  /** Optional 1-2 sentence FREE teaser shown above the cut for readers without Capstone Plus, on the
+   * public page and on the share card (see src/lib/paidContentSpec.ts). Places have no summary field,
+   * so until this is written the app falls back to the first notable fact. Plain prose, no markup. */
+  teaser?: string;
   category: LocationCategory;
   modernName?: string;
   /** [longitude, latitude] */
@@ -465,6 +469,10 @@ export interface PointOfInterest {
    * AND "James, the son of Alphaeus", because Matthew and Mark punctuate it differently. Putting
    * those in `alternateNames` would print both to the reader, one comma apart. */
   matchNames?: string[];
+  /** Optional 1-2 sentence FREE teaser shown above the cut for readers without Capstone Plus, on the
+   * public page and on the share card (see src/lib/paidContentSpec.ts). Until written, the app falls
+   * back to the first ~140 characters of `description`. Plain prose, no markup. */
+  teaser?: string;
   /** Short descriptive tag, e.g. "Fortress", "Ancient City", "Religious Site". */
   tag: string;
   modernName?: string;

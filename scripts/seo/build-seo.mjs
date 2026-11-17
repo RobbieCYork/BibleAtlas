@@ -28,6 +28,7 @@ import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { loadData, REPO_ROOT } from "./loadData.mjs";
+import { SEO_KEY_TO_KIND, WHAT_IS_BEHIND, loadDataAndSpec, readPaidConfig, teaserView } from "../paid-content/lib.mjs";
 import { KINDS, ORIGIN, absolute, fileForPath, indexPath, itemPath } from "./site.mjs";
 import {
   deleteAccountPage,
@@ -53,7 +54,7 @@ const RENDERERS = {
 /** The one-line blurb under each entry on an index page — the record's own words, never invented. */
 const DESCRIBERS = {
   locations: (r) => r.history?.notableFacts?.[0] ?? `${r.category}${r.modernName ? `, today ${r.modernName}` : ""}`,
-  pois: (r) => r.description,
+  pois: (r) => r.teaser ?? r.description,
   people: (r) => r.role,
   topics: (r) => r.summary,
   timelineEvents: (r) => `${r.dateLabel} — ${r.summary}`,
@@ -92,8 +93,16 @@ export async function generateSeo(outDir) {
   const urls = ["/", "/library", "/delete-account", "/terms", "/privacy"];
   let pages = 0;
 
+  // Capstone Plus (paid-content.config.json `seoRender`, env SEO_RENDER): 'full' renders every
+  // field as before; 'teaser' renders only the free half of each record — name, pronunciation,
+  // alternate names, lifespan, summary/lead, facts block, Bible references — plus a line saying what
+  // the full article holds. Same URLs, same sitemap either way: the pages stay, their bodies shrink.
+  const { seoRender } = readPaidConfig(REPO_ROOT);
+  const spec = seoRender === "teaser" ? (await loadDataAndSpec(REPO_ROOT)).spec : null;
+
   for (const kind of KINDS) {
-    const records = sets[kind.key];
+    const paidKind = SEO_KEY_TO_KIND[kind.key];
+    const records = spec ? sets[kind.key].map((r) => teaserView(spec, paidKind, r)) : sets[kind.key];
     const render = RENDERERS[kind.key];
     records.forEach((record, i) => {
       const p = itemPath(kind.item, record.id);
@@ -101,7 +110,12 @@ export async function generateSeo(outDir) {
       // a discovery's `findSiteId` pointing at the Location or POI it was dug out of — under the
       // same rule the linkifier already follows: it returns null for a record this run did not
       // emit, so a stale id renders as plain text instead of a dead link.
-      write(outDir, fileForPath(p), render(record, { linkify, urlFor, siblings: siblingsFor(records, i, kind.item) }));
+      const plus = spec ? WHAT_IS_BEHIND[paidKind] : undefined;
+      let html = render(record, { linkify, urlFor, plus, siblings: siblingsFor(records, i, kind.item) });
+      // A teaser page's Article node describes an article whose body is NOT free any more; saying
+      // "isAccessibleForFree": true would be false structured data (AGENTS.md: never fabricate it).
+      if (spec) html = html.replaceAll('"isAccessibleForFree":true', '"isAccessibleForFree":false');
+      write(outDir, fileForPath(p), html);
       urls.push(p);
       pages++;
     });

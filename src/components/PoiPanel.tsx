@@ -8,6 +8,9 @@ import ArticleHeader from "./ArticleHeader";
 import Icon from "./Icon";
 import { placeCardSpec, shareFilename } from "../lib/shareCard";
 import { ArticleReadCheck, ArticleReadToggle } from "./ArticleReadToggle";
+import PaidTeaser from "./PaidTeaser";
+import { retryPaidContent, usePaidContent } from "../lib/paidContent";
+import { countsOf, siteLead } from "../lib/paidContentSpec";
 
 interface PoiPanelProps {
   poi: PointOfInterest | null;
@@ -39,7 +42,11 @@ export default function PoiPanel({
   expand,
   style,
 }: PoiPanelProps) {
+  // Sites have no references list, so the cut is "the first lines of the description and down"
+  // (lib/paidContentSpec.ts). Called before the early return so the hook order never changes.
+  const paid = usePaidContent("site", poi);
   if (!poi) return null;
+  const body = paid.status === "ready" ? paid.body : null;
 
   return (
     <div className={`location-panel ${expand ? "panel-expand" : ""}`} style={expand ? undefined : style}>
@@ -65,11 +72,13 @@ export default function PoiPanel({
 
       <ProfileAudioPlayer kind="poi" id={poi.id} />
 
+      {body && body.description !== undefined && body.archaeology ? (
+      <>
       <div className="history-section">
         <div className="history-field">
           <p>
             <LinkedVerseText
-              text={poi.description}
+              text={body.description}
               onSelectLocation={onSelectLocation}
               onSelectPoi={onSelectPoi}
               onSelectPerson={onSelectPerson}
@@ -82,13 +91,13 @@ export default function PoiPanel({
       </div>
 
       {/* POIs carry no verse list to anchor a journal note to, so the card is prompt-only here. */}
-      {poi.reflectionPrompt && <ReflectionPrompt prompt={poi.reflectionPrompt} />}
+      {body.reflectionPrompt && <ReflectionPrompt prompt={body.reflectionPrompt} />}
 
       <div className="archaeology-section">
         <h4>Archaeology</h4>
         <p className="archaeology-note">
           <LinkedVerseText
-            text={poi.archaeology.note}
+            text={body.archaeology.note}
             onSelectLocation={onSelectLocation}
             onSelectPoi={onSelectPoi}
             onSelectPerson={onSelectPerson}
@@ -97,9 +106,9 @@ export default function PoiPanel({
             excludeId={poi.id}
           />
         </p>
-        {poi.archaeology.photos.length > 0 && (
+        {body.archaeology.photos.length > 0 && (
           <div className="archaeology-photos">
-            {poi.archaeology.photos.map((photo) => (
+            {body.archaeology.photos.map((photo) => (
               <a
                 key={photo.url}
                 href={photo.sourceUrl}
@@ -116,11 +125,11 @@ export default function PoiPanel({
         )}
       </div>
 
-      {poi.sources && poi.sources.length > 0 && (
+      {body.sources && body.sources.length > 0 && (
         <div className="sources-section">
           <h4>Sources</h4>
           <ul>
-            {poi.sources.map((s) => (
+            {body.sources.map((s) => (
               <li key={s.url}>
                 <a href={s.url} target="_blank" rel="noopener noreferrer">
                   {s.label}
@@ -132,6 +141,26 @@ export default function PoiPanel({
             ))}
           </ul>
         </div>
+      )}
+      </>
+      ) : (
+        <>
+          {/* The free lead: an authored teaser, else the description's first ~140 characters cut
+              exactly as the share card cuts them. Not shown while an entitled reader's text loads. */}
+          {paid.status !== "loading" && (
+            <div className="history-section">
+              <div className="history-field">
+                <p>{siteLead(poi)}</p>
+              </div>
+            </div>
+          )}
+          <PaidTeaser
+            kind="site"
+            state={paid.status === "ready" ? "unavailable" : paid.status}
+            counts={countsOf("site", poi)}
+            onRetry={() => retryPaidContent("site", poi.id)}
+          />
+        </>
       )}
       <ArticleReadToggle kind="site" id={poi.id} />
     </div>

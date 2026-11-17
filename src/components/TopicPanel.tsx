@@ -4,6 +4,9 @@ import LinkedVerseText from "./LinkedVerseText";
 import ReflectionPrompt from "./ReflectionPrompt";
 import ArticleHeader from "./ArticleHeader";
 import { ArticleReadCheck, ArticleReadToggle } from "./ArticleReadToggle";
+import PaidTeaser from "./PaidTeaser";
+import { retryPaidContent, usePaidContent } from "../lib/paidContent";
+import { countsOf } from "../lib/paidContentSpec";
 
 interface TopicPanelProps {
   topic: Topic | null;
@@ -105,7 +108,11 @@ export default function TopicPanel({
   expand,
   style,
 }: TopicPanelProps) {
+  // Everything below the Bible references list is Capstone Plus (lib/paidContentSpec.ts); the facts
+  // block above it stays free. Called before the early return so the hook order never changes.
+  const paid = usePaidContent("topic", topic);
   if (!topic) return null;
+  const body = paid.status === "ready" ? paid.body : null;
 
   // Pulled out of the JSX so the narrowing survives into the click handler — reading
   // `topic.discovery.findSiteId` inside a callback would need a non-null assertion, and an
@@ -162,16 +169,18 @@ export default function TopicPanel({
 
       <VerseList verses={topic.verses} onSelectVerse={onSelectVerse} />
 
-      {topic.reflectionPrompt && (
+      {body && body.sections ? (
+      <>
+      {body.reflectionPrompt && (
         <ReflectionPrompt
-          prompt={topic.reflectionPrompt}
+          prompt={body.reflectionPrompt}
           reference={topic.verses[0]?.reference}
           onJournal={onJournalPrompt}
         />
       )}
 
       <div className="history-section">
-        {topic.sections.map((section, si) => (
+        {body.sections.map((section, si) => (
           <div className="history-field" key={si}>
             <h4>{section.heading}</h4>
             {section.paragraphs.map((paragraph, pi) => (
@@ -191,11 +200,11 @@ export default function TopicPanel({
         ))}
       </div>
 
-      {topic.citations && topic.citations.length > 0 && (
+      {body.citations && body.citations.length > 0 && (
         <div className="sources-section">
           <h4>Sources</h4>
           <ul>
-            {topic.citations.map((c, i) => (
+            {body.citations.map((c, i) => (
               <li key={c.url ?? `${c.label}-${i}`}>
                 <span className="citation-tier">{TIER_LABELS[c.tier]}</span>{" "}
                 {/* A citation with no URL is still a citation: print-only scholarship is checkable,
@@ -226,11 +235,11 @@ export default function TopicPanel({
         </div>
       )}
 
-      {topic.sources && topic.sources.length > 0 && (
+      {body.sources && body.sources.length > 0 && (
         <div className="sources-section">
           <h4>Further Reading</h4>
           <ul>
-            {topic.sources.map((s) => (
+            {body.sources.map((s) => (
               <li key={s.url}>
                 <a href={s.url} target="_blank" rel="noopener noreferrer">
                   {s.label}
@@ -242,6 +251,15 @@ export default function TopicPanel({
             ))}
           </ul>
         </div>
+      )}
+      </>
+      ) : (
+        <PaidTeaser
+          kind="topic"
+          state={paid.status === "ready" ? "unavailable" : paid.status}
+          counts={countsOf("topic", topic)}
+          onRetry={() => retryPaidContent("topic", topic.id)}
+        />
       )}
       <ArticleReadToggle kind="topic" id={topic.id} />
     </div>

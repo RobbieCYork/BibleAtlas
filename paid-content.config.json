@@ -1,0 +1,5 @@
+{
+  "_readme": "Capstone Plus phase-1 switches. Read scripts/paid-content/README.md before changing either value. appSource: 'bundle' = full article text ships in the JS bundle and the panels render it locally exactly as before (no database needed); 'server' = the bundle carries only the free fields and the panels fetch the paid part from content_paid (sql/043 MUST be applied and seeded first). seoRender: 'full' = the public pre-rendered pages carry the whole article as today; 'teaser' = only the free fields + the Bible references list. Env vars PAID_CONTENT_SOURCE and SEO_RENDER override these for one build.",
+  "appSource": "bundle",
+  "seoRender": "full"
+}

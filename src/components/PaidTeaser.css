@@ -1,0 +1,135 @@
+/* PaidTeaser.tsx — the Capstone Plus cut in the five article panels. Tokens only (index.css), so
+ * every theme and every skin (skins.css) restyles it without a rule of its own. Sized for a 390px
+ * phone first: one column, wrapping chips, a full-width button. */
+
+.paid-teaser {
+  margin-top: 20px;
+  padding: 14px 14px 16px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: var(--accent-bg);
+  max-width: 100%;
+  box-sizing: border-box;
+  overflow-wrap: anywhere;
+}
+
+.paid-teaser h4 {
+  font-size: calc(12px * var(--tsz, 1));
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--accent);
+  margin: 0 0 6px;
+}
+
+.paid-teaser-text {
+  font-size: calc(14px * var(--tsz, 1));
+  color: var(--text);
+  margin: 0;
+}
+
+/* Drawn placeholder lines: shapes only, no text behind them. */
+.paid-teaser-ghost {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 14px;
+  opacity: 0.55;
+}
+
+.paid-teaser-line {
+  display: block;
+  height: 10px;
+  width: 100%;
+  border-radius: 5px;
+  background: var(--border);
+}
+
+.paid-teaser-line--short {
+  width: 62%;
+}
+
+.paid-teaser-counts {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  list-style: none;
+  padding: 0;
+  margin: 10px 0 0;
+}
+
+.paid-teaser-counts li {
+  font-size: calc(12px * var(--tsz, 1));
+  color: var(--text-muted);
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  padding: 2px 9px;
+  background: var(--panel-bg);
+}
+
+.paid-teaser-button {
+  display: block;
+  width: 100%;
+  min-height: 44px;
+  margin-top: 14px;
+  padding: 8px 14px;
+  font: inherit;
+  font-size: calc(14px * var(--tsz, 1));
+  font-weight: 600;
+  color: var(--accent-contrast);
+  background: var(--accent);
+  border: 1px solid var(--accent);
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.paid-teaser-button:hover {
+  background: var(--accent-hover);
+  border-color: var(--accent-hover);
+}
+
+.paid-teaser-button--quiet {
+  width: auto;
+  color: var(--accent);
+  background: transparent;
+}
+
+.paid-teaser-button--quiet:hover {
+  color: var(--accent-contrast);
+}
+
+.paid-teaser-soon {
+  margin: 12px 0 0;
+  font-size: calc(13px * var(--tsz, 1));
+  font-style: italic;
+  color: var(--text-muted);
+}
+
+.paid-teaser--loading {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  background: transparent;
+}
+
+.paid-teaser--loading .paid-teaser-line {
+  animation: paid-teaser-pulse 1.4s ease-in-out infinite;
+}
+
+@keyframes paid-teaser-pulse {
+  0%, 100% { opacity: 0.35; }
+  50% { opacity: 0.8; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .paid-teaser--loading .paid-teaser-line { animation: none; opacity: 0.5; }
+}
+
+.paid-teaser--message {
+  background: transparent;
+}
+
+.paid-teaser--message p {
+  margin: 0;
+  font-size: calc(14px * var(--tsz, 1));
+  color: var(--text-muted);
+}

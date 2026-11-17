@@ -3,6 +3,7 @@ import { locations } from "./locations";
 import { pois } from "./pois";
 import { timelineEvents } from "./timelineEvents";
 import { topics } from "./topics";
+import { countsOf } from "../lib/paidContentSpec";
 import { BOOKS } from "./bibleBooks";
 import type { LocationCategory, TimelineDateCertainty, Topic, VerseRef } from "./types";
 
@@ -290,7 +291,9 @@ function poiTagQuestions(): QuizQuestion[] {
     const { choices, correctIndex } = shuffleChoices(poi.tag, distractorTags, rand);
     // POIs are secondary/archaeological sites by design (lighter-weight than a full Location) — they
     // read as harder trivia regardless, split only by how well the site's history is sourced.
-    const difficulty: QuizDifficulty = poi.sources && poi.sources.length > 0 ? "difficult" : "impossible";
+    // countsOf, not poi.sources: sources are Capstone Plus and not in a server-mode bundle, but the
+    // count is (lib/paidContentSpec.ts), so the difficulty is the same in both builds.
+    const difficulty: QuizDifficulty = countsOf("site", poi).sources > 0 ? "difficult" : "impossible";
     out.push({
       id,
       category: "places",

@@ -9,6 +9,9 @@ import ArticleHeader from "./ArticleHeader";
 import Icon from "./Icon";
 import { placeCardSpec, shareFilename } from "../lib/shareCard";
 import { ArticleReadCheck, ArticleReadToggle } from "./ArticleReadToggle";
+import PaidTeaser from "./PaidTeaser";
+import { retryPaidContent, usePaidContent } from "../lib/paidContent";
+import { countsOf, placeLead } from "../lib/paidContentSpec";
 
 interface LocationPanelProps {
   location: Location | null;
@@ -55,6 +58,9 @@ export default function LocationPanel({
   expand,
   style,
 }: LocationPanelProps) {
+  // Everything below the Bible references list is Capstone Plus (lib/paidContentSpec.ts). Called
+  // before the early return so the hook order never changes.
+  const paid = usePaidContent("place", location);
   if (!location) {
     return (
       <div
@@ -66,7 +72,13 @@ export default function LocationPanel({
     );
   }
 
-  const { history, archaeology } = location;
+  const body = paid.status === "ready" ? paid.body : null;
+  const history = body?.history;
+  const archaeology = body?.archaeology;
+  // The free lead line: an authored `teaser` always shows; the fallback (first notable fact) only
+  // stands in when the paid part is not on screen, so an entitled reader sees exactly what they
+  // saw before teasers existed.
+  const lead = location.teaser ?? (body || paid.status === "loading" ? null : placeLead(location));
 
   return (
     <div className={`location-panel ${expand ? "panel-expand" : ""}`} style={expand ? undefined : style}>
@@ -93,13 +105,17 @@ export default function LocationPanel({
         View modern location on Google Maps ↗
       </a>
 
+      {lead && <p className="person-summary">{lead}</p>}
+
       <ProfileAudioPlayer kind="location" id={location.id} />
 
       <VerseList verses={location.verses} onSelectVerse={onSelectVerse} />
 
-      {location.reflectionPrompt && (
+      {body && history ? (
+      <>
+      {body.reflectionPrompt && (
         <ReflectionPrompt
-          prompt={location.reflectionPrompt}
+          prompt={body.reflectionPrompt}
           reference={location.verses[0]?.reference}
           onJournal={onJournalPrompt}
         />
@@ -222,11 +238,11 @@ export default function LocationPanel({
         </div>
       )}
 
-      {location.sources && location.sources.length > 0 && (
+      {body.sources && body.sources.length > 0 && (
         <div className="sources-section">
           <h4>Sources</h4>
           <ul>
-            {location.sources.map((s) => (
+            {body.sources.map((s) => (
               <li key={s.url}>
                 <a href={s.url} target="_blank" rel="noopener noreferrer">
                   {s.label}
@@ -238,6 +254,15 @@ export default function LocationPanel({
             ))}
           </ul>
         </div>
+      )}
+      </>
+      ) : (
+        <PaidTeaser
+          kind="place"
+          state={paid.status === "ready" ? "unavailable" : paid.status}
+          counts={countsOf("place", location)}
+          onRetry={() => retryPaidContent("place", location.id)}
+        />
       )}
       <ArticleReadToggle kind="place" id={location.id} />
     </div>

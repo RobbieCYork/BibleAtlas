@@ -327,6 +327,17 @@ const archaeologySection = (arch, name) => {
 
 const reflectSection = (prompt) => (prompt ? section("Reflect", p(`<em>${esc(prompt)}</em>`)) : "");
 
+/** Teaser pages only (build-seo.mjs, seoRender 'teaser'): where the full article would continue. In
+ * a 'full' render `ctx.plus` is undefined and this emits nothing, so those pages are unchanged. */
+const plusSection = (what) =>
+  what
+    ? section(
+        "The full article",
+        p(`${esc(what)} are part of Capstone Plus in the Capstone Bible app.`) +
+          `<p><a class="btn" href="/">Open Capstone Bible</a></p>`
+      )
+    : "";
+
 const moreSection = (label, siblings) =>
   siblings.length
     ? `<div class="more"><h2>More ${esc(label)}</h2><ul>${siblings
@@ -488,6 +499,7 @@ export function locationPage(loc, ctx) {
         .join(" · ")
     ),
     `<p class="lead">${esc(lead)}</p>`,
+    loc.teaser ? p(esc(loc.teaser)) : "",
     facts.length ? section("What is known", ul(facts.map((f) => ctx.linkify(f, loc.id)))) : "",
     section(
       "History",
@@ -505,6 +517,7 @@ export function locationPage(loc, ctx) {
     ),
     archaeologySection(loc.archaeology, loc.name),
     versesSection(loc.verses),
+    plusSection(ctx.plus),
     loc.modernMapUrl ? section("On a modern map", p(extLink(loc.modernMapUrl, `${loc.name} today`))) : "",
     sourcesSection(loc.sources),
     reflectSection(loc.reflectionPrompt),
@@ -553,6 +566,7 @@ export function poiPage(poi, ctx) {
     ),
     `<p class="lead">${ctx.linkify(poi.description, poi.id)}</p>`,
     archaeologySection(poi.archaeology, poi.name),
+    plusSection(ctx.plus),
     poi.modernMapUrl ? section("On a modern map", p(extLink(poi.modernMapUrl, `${poi.name} today`))) : "",
     sourcesSection(poi.sources),
     reflectSection(poi.reflectionPrompt),
@@ -648,6 +662,7 @@ export function personPage(person, ctx) {
         )
       : "",
     versesSection(person.verses),
+    plusSection(ctx.plus),
     sourcesSection(person.sources),
     reflectSection(person.reflectionPrompt),
     moreSection("people", ctx.siblings),
@@ -709,6 +724,7 @@ export function topicPage(topic, ctx) {
     m ? manuscriptFacts(m) : "",
     (topic.sections ?? []).map((s) => section(s.heading, paras(s.paragraphs, topic.id, ctx))).join(""),
     versesSection(topic.verses),
+    plusSection(ctx.plus),
     citationsSection(topic.citations),
     sourcesSection(topic.sources),
     reflectSection(topic.reflectionPrompt),
@@ -808,6 +824,7 @@ export function eventPage(ev, ctx) {
     ev.externalRefs?.length
       ? section("Other witnesses", ul(ev.externalRefs.map((r) => esc(r))))
       : "",
+    plusSection(ctx.plus),
     sourcesSection(ev.sources),
     moreSection("timeline entries", ctx.siblings),
   ].join("");

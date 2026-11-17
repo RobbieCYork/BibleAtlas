@@ -3,6 +3,9 @@ import { timelineEvents } from "../data/timelineEvents";
 import LinkedVerseText from "./LinkedVerseText";
 import ArticleHeader from "./ArticleHeader";
 import { ArticleReadCheck, ArticleReadToggle } from "./ArticleReadToggle";
+import PaidTeaser from "./PaidTeaser";
+import { retryPaidContent, usePaidContent } from "../lib/paidContent";
+import { countsOf } from "../lib/paidContentSpec";
 
 interface TimelineEventPanelProps {
   event: TimelineEvent | null;
@@ -72,15 +75,21 @@ export default function TimelineEventPanel({
   expand,
   style,
 }: TimelineEventPanelProps) {
+  // The article prose, dating notes, external witnesses and further reading are Capstone Plus
+  // (lib/paidContentSpec.ts); the summary, the "Events included" index and the Scripture references
+  // stay free. Called before the early return so the hook order never changes.
+  const paid = usePaidContent("event", event);
   if (!event) return null;
+  const body = paid.status === "ready" ? paid.body : null;
 
   const certaintyBadge = CERTAINTY_BADGES[event.dateCertainty];
   // Article paragraphs are blank-line separated (see TimelineEvent.article in types.ts).
-  const paragraphs = event.article
+  const paragraphs = (body?.article ?? "")
     .split(/\n\s*\n/)
     .map((p) => p.trim())
     .filter(Boolean);
-  const hasReferences = (event.scriptureRefs?.length ?? 0) > 0 || (event.externalRefs?.length ?? 0) > 0;
+  const externalRefs = body?.externalRefs ?? [];
+  const hasReferences = (event.scriptureRefs?.length ?? 0) > 0 || externalRefs.length > 0;
   // Empty for the overwhelming majority of events — only a spanning entry has members.
   const collapsedMembers = collapsedMembersOf(event.id);
   /** Shared by every LinkedVerseText below — the same auto-link mechanism the other detail panels
@@ -95,24 +104,8 @@ export default function TimelineEventPanel({
     excludeId: event.id,
   };
 
-  return (
-    <div className={`location-panel person-panel ${expand ? "panel-expand" : ""}`} style={expand ? undefined : style}>
-      <ArticleHeader title={event.title} subtitle={event.era} onBack={onBack} onClose={onClose} titleAdornment={<ArticleReadCheck kind="event" id={event.id} />} />
-      <p className="alt-names">
-        {event.dateLabel}
-        {certaintyBadge && <span className="person-tier-tag">{certaintyBadge}</span>}
-      </p>
-      <p className="person-summary">{event.summary}</p>
-
-      <div className="history-section">
-        <div className="history-field">
-          {paragraphs.map((paragraph, pi) => (
-            <p key={pi}>
-              <LinkedVerseText text={paragraph} {...linkHandlers} />
-            </p>
-          ))}
-        </div>
-
+  const membersBlock = (
+    <>
         {/* The index of everything this entry stands in for. Each row opens that event's own full
             article through the same onSelectTimelineEvent the auto-linked mentions in the prose
             above use, so the caller's existing back trail (goBackInDetails in the Details column,
@@ -137,12 +130,36 @@ export default function TimelineEventPanel({
             </ul>
           </div>
         )}
+    </>
+  );
 
-        {event.datingNotes && (
+  return (
+    <div className={`location-panel person-panel ${expand ? "panel-expand" : ""}`} style={expand ? undefined : style}>
+      <ArticleHeader title={event.title} subtitle={event.era} onBack={onBack} onClose={onClose} titleAdornment={<ArticleReadCheck kind="event" id={event.id} />} />
+      <p className="alt-names">
+        {event.dateLabel}
+        {certaintyBadge && <span className="person-tier-tag">{certaintyBadge}</span>}
+      </p>
+      <p className="person-summary">{event.summary}</p>
+
+      {body ? (
+      <>
+      <div className="history-section">
+        <div className="history-field">
+          {paragraphs.map((paragraph, pi) => (
+            <p key={pi}>
+              <LinkedVerseText text={paragraph} {...linkHandlers} />
+            </p>
+          ))}
+        </div>
+
+        {membersBlock}
+
+        {body.datingNotes && (
           <div className="history-field">
             <h4>Dating</h4>
             <p>
-              <LinkedVerseText text={event.datingNotes} {...linkHandlers} />
+              <LinkedVerseText text={body.datingNotes} {...linkHandlers} />
             </p>
           </div>
         )}
@@ -163,7 +180,7 @@ export default function TimelineEventPanel({
                 )}
               </li>
             ))}
-            {(event.externalRefs ?? []).map((ref) =>
+            {externalRefs.map((ref) =>
               /^https?:\/\//.test(ref) ? (
                 <li key={ref}>
                   <a href={ref} target="_blank" rel="noopener noreferrer">
@@ -181,11 +198,11 @@ export default function TimelineEventPanel({
       {/* Linkable further reading, kept below References so the bibliographic externalRefs above
           stay the primary "how we know this" list. Same markup/classes as the Further Reading
           section in PersonPanel and TopicPanel. */}
-      {event.sources && event.sources.length > 0 && (
+      {body.sources && body.sources.length > 0 && (
         <div className="sources-section">
           <h4>Further Reading</h4>
           <ul>
-            {event.sources.map((s) => (
+            {body.sources.map((s) => (
               <li key={s.url}>
                 <a href={s.url} target="_blank" rel="noopener noreferrer">
                   {s.label}
@@ -197,6 +214,36 @@ export default function TimelineEventPanel({
             ))}
           </ul>
         </div>
+      )}
+      </>
+      ) : (
+        <>
+          {collapsedMembers.length > 0 && <div className="history-section">{membersBlock}</div>}
+          {(event.scriptureRefs?.length ?? 0) > 0 && (
+            <div className="sources-section">
+              <h4>References</h4>
+              <ul>
+                {(event.scriptureRefs ?? []).map((ref) => (
+                  <li key={ref}>
+                    {onSelectVerse ? (
+                      <button type="button" className="verse-location-link" onClick={() => onSelectVerse(ref)}>
+                        {ref}
+                      </button>
+                    ) : (
+                      ref
+                    )}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
+          <PaidTeaser
+            kind="event"
+            state={paid.status === "ready" ? "unavailable" : paid.status}
+            counts={countsOf("event", event)}
+            onRetry={() => retryPaidContent("event", event.id)}
+          />
+        </>
       )}
       <ArticleReadToggle kind="event" id={event.id} />
     </div>

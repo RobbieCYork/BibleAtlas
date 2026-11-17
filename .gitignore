@@ -22,3 +22,6 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Capstone Plus seed: a build product of scripts/paid-content/split.mjs
+scripts/paid-content/out/

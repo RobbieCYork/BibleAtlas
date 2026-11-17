@@ -1,4 +1,5 @@
 import type { Location, Person, PointOfInterest } from "../data/types";
+import { placeLead, siteLead } from "./paidContentSpec";
 
 /**
  * Share-card content: what to render, not how — ShareCardModal takes one of these and lets the
@@ -41,12 +42,13 @@ const CATEGORY_LABELS: Record<Location["category"], string> = {
 
 /** Card content for a map place — full Location or lighter-weight PointOfInterest. */
 export function placeCardSpec(entry: Location | PointOfInterest): ShareCardSpec {
+  // placeLead / siteLead (lib/paidContentSpec.ts) are the FREE lead lines — the same text this card
+  // has always used, computed at build time when the paid fields are not in the bundle. A card is
+  // marketing: it must never need Capstone Plus.
   if ("category" in entry) {
-    const hook =
-      entry.history.notableFacts[0] ?? entry.history.founded ?? entry.history.industry ?? entry.modernName ?? "";
-    return { badge: CATEGORY_LABELS[entry.category], title: entry.name, body: excerpt(hook), glyph: "📍" };
+    return { badge: CATEGORY_LABELS[entry.category], title: entry.name, body: excerpt(placeLead(entry)), glyph: "📍" };
   }
-  return { badge: entry.tag, title: entry.name, body: excerpt(entry.description), glyph: "📌" };
+  return { badge: entry.tag, title: entry.name, body: excerpt(siteLead(entry)), glyph: "📌" };
 }
 
 /** Card content for a biblical person — role badge + the summary hook. */
