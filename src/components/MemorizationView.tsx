@@ -3,6 +3,7 @@ import { MEMORIZATION_VERSES, type MemorizationCategory, type MemorizationVerse 
 import BackButton from "./BackButton";
 import "./Memorization.css";
 import Icon from "./Icon";
+import { hapticAnswer } from "../lib/haptics";
 
 interface MemorizationViewProps {
   onBack: () => void;
@@ -149,6 +150,7 @@ export default function MemorizationView({ onBack }: MemorizationViewProps) {
     const correct = hiddenIndices.every((wi, k) => normalize(inputs[k] ?? "") === normalize(words[wi]));
     setChecked(true);
     setAllCorrect(correct);
+    hapticAnswer(correct);
     if (!correct) return;
 
     const isFinal = mode.stageIndex === stages.length - 1;

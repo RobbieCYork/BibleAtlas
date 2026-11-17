@@ -9,6 +9,7 @@ import {
 import BackButton from "./BackButton";
 import "./FillBlank.css";
 import Icon from "./Icon";
+import { hapticAnswer } from "../lib/haptics";
 
 interface FillBlankViewProps {
   onBack: () => void;
@@ -106,6 +107,7 @@ export default function FillBlankView({ onBack }: FillBlankViewProps) {
 
   const handleReveal = (submitted: boolean) => {
     const correct = submitted && isAllCorrect();
+    hapticAnswer(correct);
     setRoundCorrect(correct);
     setRevealed(true);
     if (correct) {

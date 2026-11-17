@@ -2,6 +2,7 @@ import { useEffect, useRef, useState, type ReactNode } from "react";
 import { getQuestionById } from "../data/gameQuestions";
 import { fetchAnswersForQuestion, checkAndAdvance, submitAnswer, type GameRoom, type GamePlayer, type GameBuzz } from "../lib/gameSupabase";
 import Icon from "./Icon";
+import { hapticAnswer } from "../lib/haptics";
 
 interface GameRoomPlayProps {
   room: GameRoom;
@@ -131,6 +132,7 @@ export default function GameRoomPlay({ room, players, userId, answersVersion, re
     setSubmitting(true);
     setMyChoice(choiceIndex);
     const correct = choiceIndex === question.correctIndex;
+    hapticAnswer(correct);
     const scoreBefore = players.find((p) => p.user_id === userId)?.score ?? 0;
     try {
       const result = await submitAnswer(room.id, index, choiceIndex, correct, question.points);

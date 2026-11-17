@@ -26,6 +26,7 @@ import {
   type VerseTag,
   type Profile,
 } from "../lib/supabase";
+import { hapticSelect, hapticSuccess, hapticTap } from "../lib/haptics";
 import { getTextOffsetInRoot } from "../lib/domTextOffset";
 import { setActiveScripture } from "../lib/reportContext";
 import {
@@ -981,6 +982,7 @@ export default function BiblePanel({
       if (!result) return;
       suppressSelectionClearRef.current = true;
       window.getSelection()?.removeAllRanges();
+      hapticSelect();
       setPopup({
         kind: "verse-actions",
         ...result,
@@ -1102,6 +1104,7 @@ export default function BiblePanel({
       return;
     }
     const saved = await writeHighlight(range, color, existing?.id);
+    if (saved) hapticTap();
     if (saved) setPopup((p) => (p?.kind === "verse-actions" ? { ...p, highlightId: saved.id } : p));
   };
 
@@ -1237,6 +1240,7 @@ export default function BiblePanel({
       return;
     }
     setNotes((prev) => [...prev, data as Note]);
+    hapticSuccess();
     onNotesChanged?.();
     const saved = await writeHighlight(editor, editor.highlightColor, editor.highlightId);
     setNoteDraft("");
@@ -1389,6 +1393,7 @@ export default function BiblePanel({
     }
     const saved = data as Note;
     setNotes((prev) => prev.map((n) => (n.id === saved.id ? saved : n)));
+    hapticSuccess();
     cancelNoteEdit();
     onNotesChanged?.();
   };

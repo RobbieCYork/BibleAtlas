@@ -11,6 +11,7 @@ import {
 import BackButton from "./BackButton";
 import "./Punchline.css";
 import Icon from "./Icon";
+import { hapticAnswer } from "../lib/haptics";
 
 interface PunchlineViewProps {
   onBack: () => void;
@@ -60,6 +61,7 @@ export default function PunchlineView({ onBack }: PunchlineViewProps) {
   const choose = (choice: number) => {
     if (picked !== null) return; // answers lock once revealed
     setPicked(choice);
+    hapticAnswer(choice === deck[index].correctIndex);
     if (choice === deck[index].correctIndex) {
       const nextStreak = streak + 1;
       setScore((s) => s + 1);

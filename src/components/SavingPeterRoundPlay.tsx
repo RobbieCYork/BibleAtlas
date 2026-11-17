@@ -9,6 +9,7 @@ import {
   type SavingPeterGuess,
 } from "../lib/savingPeterMultiplayer";
 import Icon from "./Icon";
+import { hapticAnswer } from "../lib/haptics";
 
 interface SavingPeterRoundPlayProps {
   room: SavingPeterRoom;
@@ -118,6 +119,7 @@ export default function SavingPeterRoundPlay({ room, players, userId, guessesVer
     if (!cleaned || locked) return;
     setSubmitting(true);
     const correct = cleaned === round.word;
+    hapticAnswer(correct);
     const scoreBefore = players.find((p) => p.user_id === userId)?.score ?? 0;
     try {
       const result = await submitSavingPeterGuess(room.id, index, cleaned, correct, round.points);

@@ -1,0 +1,15 @@
+import { load, check, done } from "./bundle.mjs";
+globalThis.__hap = [];
+const m = await load("src/lib/haptics.ts");
+const tick = () => new Promise((r) => setTimeout(r, 20));
+globalThis.__native = false;
+m.hapticSelect(); m.hapticTap(); m.hapticSuccess(); m.hapticError(); m.hapticAnswer(true);
+await tick();
+check("browser: nothing fires", globalThis.__hap.length === 0);
+globalThis.__native = true;
+m.hapticSelect(); await tick();
+m.hapticTap(); await tick();
+m.hapticAnswer(true); await tick();
+m.hapticAnswer(false); await tick();
+check("native: select/tap/right/wrong map to the right feedback", globalThis.__hap.join() === "impact:LIGHT,impact:MEDIUM,notify:SUCCESS,notify:ERROR");
+done();
