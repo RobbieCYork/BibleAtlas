@@ -25,6 +25,13 @@
  * ==========================================================================*/
 
 :root {
+  /* Device safe-area insets (notch / Dynamic Island / home indicator). 0 on desktop and Android.
+   * Full-screen fixed overlays pad themselves with these so their header and footer controls never
+   * sit under the iOS status bar or home indicator. Tests may override them with !important. */
+  --safe-top: env(safe-area-inset-top, 0px);
+  --safe-bottom: env(safe-area-inset-bottom, 0px);
+  --safe-left: env(safe-area-inset-left, 0px);
+  --safe-right: env(safe-area-inset-right, 0px);
   /* The text-size multiplier as seen by ordinary `font-size` declarations. Declared 1 HERE, and
    * re-declared as `var(--text-scale, 1)` on each scaled root (see "Global text size" in App.css),
    * so `font-size: calc(<n>px * var(--tsz, 1))` renders at its literal size everywhere the setting
