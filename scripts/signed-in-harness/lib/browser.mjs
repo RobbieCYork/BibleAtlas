@@ -80,7 +80,8 @@ export async function closeNetwork(tab, { previewOrigin, serve, allowHosts = [],
       if (host === FAKE_HOST) {
         ledger.fake++;
         const headers = Object.fromEntries(Object.entries(request.headers).map(([k, v]) => [k.toLowerCase(), v]));
-        const res = serve({ method: request.method, url: request.url, headers, body: request.postData });
+        // awaited: an Edge Function handler registered with backend.setFunction() may be async.
+        const res = await serve({ method: request.method, url: request.url, headers, body: request.postData });
         const cors = {
           "access-control-allow-origin": "*",
           "access-control-allow-methods": "GET,POST,PATCH,PUT,DELETE,HEAD,OPTIONS",

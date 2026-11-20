@@ -9609,6 +9609,67 @@ a.profile-links-url {
   gap: 8px;
 }
 
+/* "Add user" on the Users tab (AdminAddUser.tsx). Reuses .admin-confirm for the card itself. */
+.admin-add-user-bar {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.admin-add-user-open {
+  font-size: calc(13px * var(--tsz, 1));
+  padding: 6px 12px;
+}
+
+.admin-add-user-head {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--text-h);
+}
+
+.admin-add-user-form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  min-width: 0;
+}
+
+.admin-add-user-field {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+  font-size: calc(12px * var(--tsz, 1));
+  color: var(--text-muted);
+}
+
+.admin-add-user-field input,
+.admin-add-user-field textarea {
+  width: 100%;
+  min-width: 0;
+  box-sizing: border-box;
+  /* 16px keeps iOS Safari from zooming the page when the field takes focus. */
+  font-size: max(16px, calc(14px * var(--tsz, 1)));
+}
+
+.admin-add-user-field textarea {
+  resize: vertical;
+  font-family: inherit;
+}
+
+.admin-add-user-optional {
+  font-weight: normal;
+  opacity: 0.85;
+}
+
+.admin-add-user-success {
+  overflow-wrap: anywhere;
+}
+
+.admin-add-user .admin-confirm-actions {
+  flex-wrap: wrap;
+}
+
 .admin-action-status {
   font-size: calc(12px * var(--tsz, 1));
   line-height: 1.5;

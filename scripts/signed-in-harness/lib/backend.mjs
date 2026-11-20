@@ -225,6 +225,10 @@ export function createBackend({ persona, overrides = {} }) {
     return json(200, {});
   }
 
+  /** Edge Function handlers registered by a check script with setFunction(). Unregistered functions
+   * still answer `{}` and are listed as a gap. */
+  const functions = {};
+
   /** Entry point. `req` = { method, url, headers (lower-cased), body }. */
   function handle(req) {
     const u = new URL(req.url);
@@ -233,6 +237,11 @@ export function createBackend({ persona, overrides = {} }) {
     log.requests.push(rec);
     if (u.pathname.startsWith("/auth/v1/")) return handleAuth(req.method, u.pathname, u.searchParams, req.body);
     if (u.pathname.startsWith("/rest/v1/")) return handleRest(req.method, u.pathname, u.searchParams, req.headers, req.body);
+    const fnName = u.pathname.startsWith("/functions/v1/") ? u.pathname.slice("/functions/v1/".length) : null;
+    if (fnName && functions[fnName]) {
+      rec.how = "function";
+      return functions[fnName](req);
+    }
     log.gaps.push(`${req.method} ${u.pathname}`);
     return u.pathname.startsWith("/storage/v1/") ? json(404, { error: "not_found", message: "harness: no storage" }) : json(200, {});
   }
@@ -261,6 +270,9 @@ export function createBackend({ persona, overrides = {} }) {
     setTableError: (name, e) => { if (e) tableErrors[name] = e; else delete tableErrors[name]; },
     /** Replace or add an rpc handler at run time: setRpc("list_my_groups", () => [...]). */
     setRpc: (name, fn) => { rpcs[name] = typeof fn === "function" ? fn : () => fn; },
+    /** Answer /functions/v1/<name> with `fn(req)` -> { status, headers, body } (may be async). Lets a
+     * check run an Edge Function's real handler (see examples/admin-add-user.mjs) instead of `{}`. */
+    setFunction: (name, fn) => { functions[name] = fn; },
     featureKeys: FEATURE_KEYS,
   };
 }

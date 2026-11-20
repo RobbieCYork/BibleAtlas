@@ -25,6 +25,7 @@ import {
   type AdminOverview,
   type AdminUserRow,
 } from "../lib/adminApi";
+import AdminAddUser from "./AdminAddUser";
 import GrowthPanel from "./GrowthPanel";
 import ModerationQueuePanel from "./ModerationQueuePanel";
 import ReportsDashboard from "./ReportsDashboard";
@@ -315,6 +316,14 @@ export default function AdminConsole({ reports }: { reports?: AdminConsoleReport
       {/* ----------------------------------------------------------------- USERS */}
       {section === "users" && (
         <>
+          {/* Above the search box: an invitation, never a password (see AdminAddUser). On success the
+              list is re-searched for the new address so the row is right there. */}
+          <AdminAddUser
+            onAdded={(email) => {
+              setUserSearch(email);
+              void loadUsers(email);
+            }}
+          />
           <form
             className="admin-search-row"
             onSubmit={(e) => {

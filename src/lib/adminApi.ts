@@ -25,8 +25,10 @@ import { supabase } from "./supabase";
  * route is needed for anything the console currently does.
  *
  * The operations that genuinely still require service_role are deliberately not
- * built: deleting an account, changing someone's email, and confirming a user by
- * fiat. See ADMIN_ACTIONS_NOT_BUILT at the bottom of this file.
+ * built here: deleting an account, changing someone's email, and confirming a user
+ * by fiat. See ADMIN_ACTIONS_NOT_BUILT at the bottom of this file. The two that DO
+ * use it — deleting your own account, and inviting a new person — live in Edge
+ * Functions (supabase/functions/), where the key stays on Supabase's servers.
  * ========================================================================== */
 
 export interface AdminOverview {
@@ -230,6 +232,85 @@ export const deleteContent = (kind: "post" | "comment", id: string) =>
 export async function sendPasswordReset(email: string): Promise<void> {
   const { error } = await supabase.auth.resetPasswordForEmail(email, { redirectTo: window.location.origin });
   if (error) throw new Error(error.message);
+}
+
+/* ----------------------------------------------------------------------------
+ * ADD A USER BY HAND — an invitation, never a password.
+ *
+ * Calls the admin-add-user Edge Function (supabase/functions/admin-add-user),
+ * which holds the service_role key on Supabase's servers and is where every
+ * check that matters happens: the caller's token validated by Auth, is_admin()
+ * for that id, the input caps, a 20-per-hour limit per administrator, an audit
+ * row (sql/044) written before anything is sent. This file only sends the three
+ * fields. It does not — and cannot — choose where the invitation link points or
+ * set a password: neither is a field the function reads.
+ *
+ * The person receives Supabase's invitation email and chooses their own
+ * password from it. The limits below mirror the function's so a typo gets a
+ * sentence before a round trip; the function re-checks all of them.
+ * -------------------------------------------------------------------------- */
+export const ADD_USER_LIMITS = { email: 254, displayName: 50, note: 500 } as const;
+
+export interface AddUserInput {
+  email: string;
+  displayName: string;
+  note: string;
+}
+
+/** Client-side mirror of the function's validation. null when the input is acceptable. */
+export function addUserInputProblem(input: AddUserInput): string | null {
+  const email = input.email.trim();
+  if (!email) return "Enter an email address.";
+  if (email.length > ADD_USER_LIMITS.email) return `That email address is longer than ${ADD_USER_LIMITS.email} characters.`;
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) return "That doesn't look like an email address.";
+  const name = input.displayName.trim();
+  if (!name) return "Enter a display name.";
+  if ([...name].length > ADD_USER_LIMITS.displayName)
+    return `Display names can be at most ${ADD_USER_LIMITS.displayName} characters.`;
+  if ([...input.note.trim()].length > ADD_USER_LIMITS.note) return `The note can be at most ${ADD_USER_LIMITS.note} characters.`;
+  return null;
+}
+
+/** A refusal from the function, carrying its own sentence and, for a duplicate, `code: "exists"`. */
+export class AddUserError extends Error {
+  code: string | null;
+  constructor(message: string, code: string | null = null) {
+    super(message);
+    this.code = code;
+  }
+}
+
+/** Sends the invitation. Resolves with the address it went to; throws AddUserError otherwise, and a
+ * throw always means no invitation went out. */
+export async function addUserByInvite(input: AddUserInput): Promise<string> {
+  const problem = addUserInputProblem(input);
+  if (problem) throw new AddUserError(problem);
+  const { data, error } = await supabase.functions.invoke<{ invited?: boolean; email?: string; error?: string }>(
+    "admin-add-user",
+    { body: { email: input.email.trim(), displayName: input.displayName.trim(), note: input.note.trim() } }
+  );
+  if (error) {
+    const context = (error as { context?: unknown })?.context;
+    if (context instanceof Response) {
+      try {
+        const body = await context.clone().json();
+        if (body && typeof body.error === "string" && body.error.trim()) {
+          throw new AddUserError(body.error, typeof body.code === "string" ? body.code : null);
+        }
+      } catch (e) {
+        if (e instanceof AddUserError) throw e;
+        /* Not JSON — fall through. */
+      }
+    }
+    if ((error as { name?: string })?.name === "FunctionsFetchError") {
+      throw new AddUserError(
+        "Couldn't reach the add-user service, so nothing was sent. Check your connection — or the service may not be deployed yet."
+      );
+    }
+    throw new AddUserError("The invitation couldn't be sent. Nothing was created — try again.");
+  }
+  if (!data?.invited) throw new AddUserError(data?.error ?? "The invitation couldn't be sent. Nothing was created — try again.");
+  return data.email ?? input.email.trim().toLowerCase();
 }
 
 /** Admin capabilities that were considered and deliberately NOT built, because each one requires the

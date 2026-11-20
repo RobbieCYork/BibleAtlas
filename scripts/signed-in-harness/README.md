@@ -119,6 +119,7 @@ Selectors live there so a rename is one edit.
 | `game-toggles-nesting.mjs` | the 7 per-game toggles nest under Games & Trivia in order, a Testing parent explains itself on Live children, one game in Testing reaches Game Center correctly for member and owner |
 | `profile-cards.mjs` | other people's profiles (Friends, Requests, friend profile page) come from `get_profile_cards` (sql/042), never `GET profiles?id=in.`; a pending requester with no name reads "A Capstone member"; a friend's hidden phone/birthday never render; with the rpc missing (PGRST202, migration unapplied) the app falls back to the old table read |
 | `skins.mjs` | owner-only visual skins (lib/skin.tsx, skins.css): picker beside the Live/Test switch for the owner only; each skin applied across reader, map, timeline, notes, article, social, games and admin with screenshots and a scripture-contrast check; member and signedout never get a skin even with one planted in localStorage, and their computed styles match a run against origin/main (`DUMP=`). Stubs bible-api.com with Mark 8:1-12 (WEB, public domain) from `examples/mark8-web.json` |
+| `admin-add-user.mjs` | Admin Console → Users → Add user at 390px: button above the search box for administrator and owner; client validation sends nothing; the REAL `supabase/functions/admin-add-user/handler.ts` (stubbed deps, via `setFunction`) refuses a duplicate (409), sends one invite with the fixed `https://capstonebible.com` redirect, audits it, the row appears; 21st in an hour → 429; member has no button and a direct call with a member / no / forged token is 403 / 401 / 401; owner in Test view gets a simulated success with zero function requests; form fits in all 8 skins |
 | `network-closed.mjs` | self-test of the closed network |
 | `fixtures-override.mjs` | `--fixtures` |
 
@@ -147,7 +148,11 @@ containers and the marker overlay have shown stale pixels while the DOM was righ
   so the Bible panel shows "Couldn't load that passage" and the map has no tiles. Layout around them can
   be checked; their content cannot.
 - **Anything about production data.** The rows are made up.
-- **The Edge Functions** (delete-account, etc.): `/functions/v1/*` answers `{}`.
+- **The Edge Functions** (delete-account, etc.): `/functions/v1/*` answers `{}` unless a script registers a
+  handler with `h.backend.setFunction(name, async (req) => ({ status, headers, body }))`. That runs YOUR
+  handler, not the deployed function and not real Auth: `examples/admin-add-user.mjs` runs the real
+  `handler.ts` with stubbed dependencies, which proves the function's decision logic and the UI wiring,
+  not that Supabase's `inviteUserByEmail` or the deployed secrets behave.
 
 ## Hygiene
 

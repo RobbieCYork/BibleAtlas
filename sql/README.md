@@ -9,7 +9,7 @@ Last verified against production: **2026-10-24** (read-only catalog queries for 
 
 ---
 
-## The next free number is 043
+## The next free number is 045
 
 | Number | Status |
 |---|---|
@@ -23,7 +23,9 @@ Last verified against production: **2026-10-24** (read-only catalog queries for 
 | **040** | `040_feature_release_games.sql` — per-game stages (seven `game_*` rows, all Live), committed on branch `feature-release-games`, **not applied**. |
 | **041** | `041_article_reads.sql` — "Mark this article as read" (new owner-only `article_reads` table), committed on branch `article-read-checkbox`, **not applied**. |
 | **042** | `042_profiles_privacy.sql` — profiles owner-only + masked `get_profile_cards()`, friend_requests integrity, email/phone lookups closed to anon and guests. Committed, **APPLIED 2026-11-09** (after the app change went live). See below. |
-| **043** | Next genuinely free number. |
+| **043** | `043_paid_content.sql` — on the unmerged `paid-content` branch, **not on main, not applied**. Taken; do not reuse. |
+| **044** | `044_admin_user_invites.sql` — audit trail + per-admin rate limit for the Admin Console's "Add user" (the `admin-add-user` Edge Function refuses every call until this is applied). Committed on branch `admin-add-user`, **not applied**. |
+| **045** | Next genuinely free number. |
 
 ### Numbers that are TAKEN but MISSING from this directory
 
@@ -40,7 +42,7 @@ The full list present on `main`:
 
 ```
 001 002 003 004 005 007 008 009 010 011 012 013 014 015 016 017 018 019
-021 022 023 024 025 026 027 028 029 030 031 032 033 034 035 036 037 038 039 040 041 042
+021 022 023 024 025 026 027 028 029 030 031 032 033 034 035 036 037 038 039 040 041 042 044
 ```
 
 `000_baseline.sql` is **not** a migration. It is a photograph of the live schema, numbered `000`

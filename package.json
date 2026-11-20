@@ -8,6 +8,7 @@
     "build": "tsc -b && vite build",
     "lint": "oxlint",
     "preview": "vite preview",
+    "test:admin-add-user": "node --test supabase/functions/admin-add-user/handler.test.ts",
     "test:linker": "node scripts/name-linker/run.mjs && node scripts/name-linker/modern-names.mjs --check && node scripts/name-linker/self-name.mjs --check",
     "validate:archaeology": "node scripts/archaeology-validate/run.mjs",
     "verify:signed-in": "node scripts/signed-in-harness/run.mjs"

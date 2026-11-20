@@ -13,3 +13,9 @@ project_id = "capstone-bible"
 # Auth and takes the account id from that and nowhere else. This is the outer of the two doors, and
 # stating it here is what stops someone deploying with `--no-verify-jwt` and removing it by accident.
 verify_jwt = true
+
+[functions.admin-add-user]
+# Same reasoning as delete-account: the gateway's JWT check is the outer door only (the anon key
+# satisfies it). The function validates the caller's own token with Auth and then requires is_admin()
+# for that id before it reads the request body. Do not deploy with --no-verify-jwt.
+verify_jwt = true
