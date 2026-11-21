@@ -26,7 +26,11 @@ export interface GroupWording {
   participant: string;
   participants: string;
   workItem: string;
+  /** "Assignments" (both kinds today; one home if a church group ever calls them "Studies"). */
+  workItems: string;
   score: string;
+  /** Status once work is returned: "Graded" / "Reviewed" (church groups hide numbers by default). */
+  gradedLabel: string;
   gradebook: string;
   /** "Class ends" / "Group ends" */
   end: string;
@@ -51,7 +55,9 @@ const SCHOOL: GroupWording = {
   participant: "student",
   participants: "students",
   workItem: "Assignment",
+  workItems: "Assignments",
   score: "Grade",
+  gradedLabel: "Graded",
   gradebook: "Gradebook",
   end: "Class ends",
   choiceTitle: "School class",
@@ -71,7 +77,9 @@ const CHURCH: GroupWording = {
   participant: "member",
   participants: "members",
   workItem: "Assignment",
+  workItems: "Assignments",
   score: "Score",
+  gradedLabel: "Reviewed",
   gradebook: "Progress",
   end: "Group ends",
   choiceTitle: "Church group",

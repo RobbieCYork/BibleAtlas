@@ -12,69 +12,14 @@
  * Nothing here grants access or touches a price. The seat count is stored on the class at signup and
  * the group-billing Edge Function reads it server-side; the client sends only a class id.
  */
-import { useEffect, useSyncExternalStore } from "react";
 import { supabase } from "./supabase";
-import { isNativeApp } from "./billing";
 import { GROUP_AGREEMENT_TEXT, GROUP_AGREEMENT_VERSION, groupAgreementSha256 } from "./groupAgreement";
 import type { GroupInterval, GroupKind } from "./groupWording";
 
-// ------------------------------------------------------------------------------- status store
-interface GroupsStatus {
-  loaded: boolean;
-  enabled: boolean;
-}
-const OFF: GroupsStatus = { loaded: true, enabled: false };
-let state: GroupsStatus = { loaded: false, enabled: false };
-let inflight: Promise<void> | null = null;
-let forUser: string | null | undefined;
-const listeners = new Set<() => void>();
-const notify = () => listeners.forEach((l) => l());
-const subscribe = (l: () => void) => {
-  listeners.add(l);
-  return () => listeners.delete(l);
-};
-
-export function refreshGroupsStatus(): Promise<void> {
-  if (inflight) return inflight;
-  inflight = (async () => {
-    try {
-      const { data: sess } = await supabase.auth.getSession();
-      const user = sess.session?.user ?? null;
-      forUser = user?.id ?? null;
-      if (!user || user.is_anonymous || isNativeApp()) {
-        state = OFF;
-        return;
-      }
-      const { data, error } = await supabase.rpc("groups_status");
-      state = !error && data && typeof data === "object" && (data as { groups_enabled?: unknown }).groups_enabled === true
-        ? { loaded: true, enabled: true }
-        : OFF;
-    } catch {
-      state = OFF;
-    } finally {
-      inflight = null;
-      notify();
-    }
-  })();
-  return inflight;
-}
-
-supabase.auth.onAuthStateChange((_event, session) => {
-  const uid = session?.user.id ?? null;
-  if (forUser !== undefined && uid !== forUser) {
-    state = { loaded: false, enabled: false };
-    notify();
-    void refreshGroupsStatus();
-  }
-});
-
-export function useGroupsEnabled(): boolean {
-  const snap = useSyncExternalStore(subscribe, () => state);
-  useEffect(() => {
-    if (!state.loaded && !inflight) void refreshGroupsStatus();
-  }, []);
-  return snap.loaded && snap.enabled && !isNativeApp();
-}
+// The status store lives in ./groupsStatus so the MAIN bundle (AuthButton) can ask whether to draw
+// the menu row without pulling this module — and the agreement text it carries — out of the lazy
+// Groups chunk. Re-exported for existing callers.
+export { refreshGroupsStatus, useGroupsEnabled } from "./groupsStatus";
 
 // ------------------------------------------------------------------------------- errors
 /** sql/047 raises "code: human sentence"; show the sentence. */

@@ -1,0 +1,439 @@
+/* Capstone Plus for Groups phase 4 (GroupAssignments.tsx). Lazy, with the rest of the Groups chunk.
+ * Theme tokens only (index.css), so skins and dark mode carry through. Mobile first: everything
+ * stacks at 390px; the gradebook table scrolls sideways inside its own box, never the page. */
+
+.groups-open-work {
+  margin-top: 10px;
+}
+
+.asg {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  min-width: 0;
+}
+
+.asg-tabs {
+  display: flex;
+  gap: 6px;
+  border-bottom: 1px solid var(--border);
+}
+
+.asg-tab {
+  font: inherit;
+  font-size: calc(14px * var(--tsz, 1));
+  font-weight: 600;
+  min-height: 44px;
+  padding: 8px 14px;
+  border: 1px solid transparent;
+  border-bottom: 0;
+  border-radius: 8px 8px 0 0;
+  background: transparent;
+  color: var(--text-muted);
+  cursor: pointer;
+}
+
+.asg-tab.is-on {
+  color: var(--text-h);
+  border-color: var(--border);
+  background: var(--panel-bg);
+  margin-bottom: -1px;
+}
+
+.asg-tab:focus-visible,
+.asg-item-main:focus-visible,
+.asg-cell-btn:focus-visible,
+.asg-reading-link:focus-visible,
+.asg-scroll:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+.asg-section {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  min-width: 0;
+}
+
+.asg-new {
+  align-self: flex-start;
+  width: auto;
+}
+
+.asg-list,
+.asg-answers,
+.asg-readings,
+.asg-matches,
+.asg-reading-links,
+.asg-log,
+.asg-opts-view {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.asg-item,
+.asg-q,
+.asg-answer,
+.asg-result {
+  border: 1px solid var(--border-strong, var(--border));
+  border-radius: 10px;
+  padding: 12px 14px;
+  margin-bottom: 10px;
+  background: var(--panel-bg, transparent);
+  box-shadow: 3px 3px 0 var(--border);
+  overflow-wrap: anywhere;
+  min-width: 0;
+}
+
+.asg-item-main {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 8px;
+  width: 100%;
+  padding: 0;
+  min-height: 32px;
+  border: 0;
+  background: none;
+  color: inherit;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
+.asg-item-title {
+  font-weight: 700;
+  font-size: calc(15px * var(--tsz, 1));
+  min-width: 0;
+}
+
+.asg-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  gap: 8px;
+  min-width: 0;
+}
+
+.asg-row .report-field {
+  min-width: 0;
+}
+
+.asg-grow {
+  flex: 1 1 180px;
+}
+
+.asg-inline.paid-teaser-button {
+  width: auto;
+  margin-top: 0;
+}
+
+.asg-actions {
+  margin-top: 12px;
+}
+
+.asg-danger {
+  color: var(--danger);
+}
+
+.asg-locked {
+  margin: 0;
+  padding: 8px 10px;
+  border: 1px dashed var(--border-strong, var(--border));
+  border-radius: 8px;
+  font-size: calc(13px * var(--tsz, 1));
+  background: var(--accent-bg, transparent);
+}
+
+.asg-details summary {
+  cursor: pointer;
+  font-size: calc(13px * var(--tsz, 1));
+  min-height: 32px;
+  display: flex;
+  align-items: center;
+}
+
+/* editor */
+.asg-q-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 8px;
+  margin-bottom: 6px;
+}
+
+.asg-q-tools {
+  display: flex;
+  gap: 4px;
+  flex: none;
+}
+
+.asg-q-tools .auth-back-link {
+  min-width: 32px;
+  min-height: 32px;
+  justify-content: center;
+}
+
+.asg-q .report-field + .report-field {
+  margin-top: 8px;
+}
+
+.asg-points input {
+  max-width: 96px;
+}
+
+.asg-options {
+  border: 0;
+  margin: 8px 0 0;
+  padding: 0;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.asg-option {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+}
+
+.asg-option input[type="text"] {
+  flex: 1 1 auto;
+  min-width: 0;
+  min-height: 40px;
+  font: inherit;
+  padding: 6px 10px;
+  border: 1px solid var(--input-border, var(--border));
+  border-radius: 8px;
+  background: var(--bg);
+  color: var(--text);
+  box-sizing: border-box;
+}
+
+.asg-option input[type="radio"],
+.asg-q-take input[type="radio"],
+.asg-options input[type="radio"] {
+  width: 20px;
+  height: 20px;
+  flex: none;
+  accent-color: var(--accent);
+}
+
+.asg-readings li,
+.asg-reading-links li {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 0;
+  min-width: 0;
+}
+
+.asg-readings li.is-missing {
+  opacity: 0.6;
+}
+
+.asg-reading-kind {
+  flex: none;
+  font-size: calc(11px * var(--tsz, 1));
+  letter-spacing: var(--tracking-label, 0.1em);
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+.asg-reading-link {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 6px;
+  min-height: 32px;
+  padding: 4px 0;
+  color: var(--link, var(--accent));
+}
+
+.asg-reading-add select {
+  min-height: 40px;
+}
+
+/* gradebook */
+.asg-scroll {
+  max-width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  border: 1px solid var(--border-strong, var(--border));
+  border-radius: 10px;
+  box-shadow: 3px 3px 0 var(--border);
+}
+
+.asg-grid {
+  border-collapse: collapse;
+  min-width: 100%;
+  font-size: calc(13px * var(--tsz, 1));
+}
+
+.asg-grid th,
+.asg-grid td {
+  padding: 6px 8px;
+  border-bottom: 1px solid var(--border);
+  text-align: left;
+  vertical-align: top;
+  white-space: nowrap;
+}
+
+.asg-grid thead th {
+  position: sticky;
+  top: 0;
+  background: var(--panel-bg);
+}
+
+.asg-grid tbody th,
+.asg-grid tfoot th {
+  position: sticky;
+  left: 0;
+  background: var(--panel-bg);
+  font-weight: 600;
+  max-width: 160px;
+  white-space: normal;
+  overflow-wrap: anywhere;
+  z-index: 1;
+}
+
+.asg-col-title {
+  display: block;
+  max-width: 140px;
+  white-space: normal;
+}
+
+.asg-grid tr.is-left th {
+  opacity: 0.7;
+}
+
+.asg-cell-btn {
+  font: inherit;
+  min-height: 36px;
+  min-width: 56px;
+  padding: 4px 8px;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  background: transparent;
+  color: var(--text);
+  cursor: pointer;
+}
+
+.asg-cell--tograde .asg-cell-btn {
+  border-color: var(--accent);
+  background: var(--accent-bg, transparent);
+  font-weight: 700;
+}
+
+.asg-cell--missing .groups-small {
+  color: var(--danger);
+  opacity: 1;
+}
+
+.asg-late {
+  color: var(--danger);
+  font-weight: 600;
+}
+
+.asg-total {
+  font-weight: 700;
+}
+
+.asg-export {
+  align-self: flex-start;
+}
+
+/* grading + taking */
+.asg-score {
+  margin: 0;
+  font-size: calc(20px * var(--tsz, 1));
+  font-weight: 700;
+  color: var(--text-h);
+}
+
+.asg-prompt {
+  margin: 0 0 6px;
+  font-size: calc(15px * var(--tsz, 1));
+  line-height: 1.45;
+  padding: 0;
+}
+
+.asg-q-take {
+  border: 0;
+  margin: 0;
+  padding: 0;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.asg-q-take .groups-check {
+  min-height: 36px;
+  align-items: center;
+}
+
+.asg-essay {
+  white-space: pre-wrap;
+  padding: 8px 10px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--reading-bg, transparent);
+  font-size: calc(14px * var(--tsz, 1));
+  line-height: 1.5;
+}
+
+.asg-opts-view li {
+  padding: 2px 0;
+}
+
+.asg-opts-view li.is-chosen {
+  font-weight: 700;
+}
+
+.asg-tag {
+  font-size: calc(11px * var(--tsz, 1));
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--text-muted);
+}
+
+.asg-tag--key {
+  color: var(--accent);
+}
+
+.is-key {
+  color: var(--text-h);
+}
+
+.asg-feedback,
+.asg-instructions {
+  margin: 0;
+  white-space: pre-wrap;
+  font-size: calc(14px * var(--tsz, 1));
+  line-height: 1.5;
+}
+
+.asg-q-result {
+  margin-top: 6px;
+}
+
+.asg-log li {
+  font-size: calc(12px * var(--tsz, 1));
+  padding: 3px 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.asg-status--graded {
+  color: var(--accent);
+  border-color: var(--accent);
+}
+
+.asg-status--missing,
+.asg-status--late {
+  color: var(--danger);
+  border-color: var(--danger);
+}

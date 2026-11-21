@@ -57,6 +57,7 @@ import SeasonalWalkPanel from "./components/SeasonalWalkPanel";
 import Icon from "./components/Icon";
 import { TestViewStrip } from "./components/FeatureRelease";
 import { useFeature } from "./lib/features";
+import { consumeDeepLinkParam, parseDeepLink, DEEP_LINK_EVENT, type DeepLink } from "./lib/deepLink";
 import "./App.css";
 
 const MIN_PANEL_WIDTH = 240;
@@ -1250,6 +1251,42 @@ function App() {
   // A password-recovery session is never anonymous, so it never trips this — ResetPasswordGate
   // below handles it on its own.
   const showAuthGate = authResolved && !exchangingRecoveryCode && (!session || session.user.is_anonymous);
+
+  // `?open=kind:ref` (lib/deepLink.ts): a link that opens the app at one spot (a passage, a place, a
+  // person, an article, a timeline event), and the same request raised from inside the app. Only
+  // for a real session (the gate comes first), read once, stripped from the address bar, and routed
+  // through the Study Collection handler. An id that is not in the data is ignored.
+  const openDeepLinkRef = useRef<(l: DeepLink) => void>(() => {});
+  openDeepLinkRef.current = (l: DeepLink) => {
+    closeGame();
+    closeMyProfile();
+    if (showTimeline) closeTimeline();
+    if (l.kind === "bible") {
+      setDetailsHistory([]);
+      openVerse(l.ref);
+      return;
+    }
+    const known =
+      l.kind === "place" ? locations.some((r) => r.id === l.ref)
+      : l.kind === "site" ? pois.some((r) => r.id === l.ref)
+      : l.kind === "person" ? people.some((r) => r.id === l.ref)
+      : l.kind === "topic" ? topics.some((r) => r.id === l.ref)
+      : timelineEvents.some((r) => r.id === l.ref);
+    if (known) handleOpenCollectionItem(l.kind, l.ref);
+  };
+  const deepLinkReady = authResolved && !!session && !session.user.is_anonymous;
+  useEffect(() => {
+    if (!deepLinkReady) return;
+    const pending = consumeDeepLinkParam();
+    if (pending) openDeepLinkRef.current(pending);
+    const onOpen = (e: Event) => {
+      const d = (e as CustomEvent<DeepLink>).detail;
+      const l = d ? parseDeepLink(`${d.kind}:${d.ref}`) : null;
+      if (l) openDeepLinkRef.current(l);
+    };
+    window.addEventListener(DEEP_LINK_EVENT, onOpen);
+    return () => window.removeEventListener(DEEP_LINK_EVENT, onOpen);
+  }, [deepLinkReady]);
   const searchMode: "map" | "bible" | "notes" | "timeline" | "people" | null = showGame
     ? null
     : myProfileMode

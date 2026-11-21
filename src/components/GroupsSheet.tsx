@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
 import "./Groups.css";
+import ClassWork from "./GroupAssignments";
 import {
   addGroupSeats,
   consumeGroupsReturn,
@@ -31,8 +32,10 @@ import {
  * lazy-loaded so none of it is in the main bundle. Every word that differs between a school class and
  * a church group comes from groupWording(kind).
  */
-export default function GroupsSheet({ onClose }: { onClose: () => void }) {
+export default function GroupsSheet({ onClose, onNavigate }: { onClose: () => void; onNavigate?: () => void }) {
   const [view, setView] = useState<"list" | "start">("list");
+  // A class opened for its assignments / gradebook (sql/048).
+  const [openClass, setOpenClass] = useState<MyClass | null>(null);
   const [classes, setClasses] = useState<MyClass[] | null>(null);
   const [notice, setNotice] = useState<string | null>(null);
 
@@ -50,10 +53,14 @@ export default function GroupsSheet({ onClose }: { onClose: () => void }) {
   return (
     <div className="report-sheet groups-sheet" role="dialog" aria-label="Classes and groups">
       <div className="report-sheet-head">
-        <button type="button" className="auth-back-link" onClick={view === "start" ? () => setView("list") : onClose}>
+        <button
+          type="button"
+          className="auth-back-link"
+          onClick={openClass ? () => (setOpenClass(null), void reload()) : view === "start" ? () => setView("list") : onClose}
+        >
           ← Back
         </button>
-        <h3 className="report-sheet-title">{view === "start" ? "Start a class or group" : "Classes & Groups"}</h3>
+        <h3 className="report-sheet-title">{openClass ? openClass.name : view === "start" ? "Start a class or group" : "Classes & Groups"}</h3>
       </div>
       <div className="report-sheet-body">
         {notice && (
@@ -61,8 +68,10 @@ export default function GroupsSheet({ onClose }: { onClose: () => void }) {
             {notice}
           </p>
         )}
-        {view === "list" ? (
-          <ClassList classes={classes} onStart={() => setView("start")} onChanged={reload} />
+        {openClass ? (
+          <ClassWork c={openClass} onNavigate={onNavigate ?? onClose} />
+        ) : view === "list" ? (
+          <ClassList classes={classes} onStart={() => setView("start")} onChanged={reload} onOpenClass={setOpenClass} />
         ) : (
           <StartGroupForm />
         )}
@@ -72,7 +81,17 @@ export default function GroupsSheet({ onClose }: { onClose: () => void }) {
 }
 
 // ------------------------------------------------------------------------------------- the list
-function ClassList({ classes, onStart, onChanged }: { classes: MyClass[] | null; onStart: () => void; onChanged: () => Promise<void> }) {
+function ClassList({
+  classes,
+  onStart,
+  onChanged,
+  onOpenClass,
+}: {
+  classes: MyClass[] | null;
+  onStart: () => void;
+  onChanged: () => Promise<void>;
+  onOpenClass: (c: MyClass) => void;
+}) {
   const [code, setCode] = useState("");
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -109,7 +128,7 @@ function ClassList({ classes, onStart, onChanged }: { classes: MyClass[] | null;
         <section className="groups-section" aria-label="Classes and groups you lead">
           <h4 className="groups-h">You lead</h4>
           {leading.map((c) => (
-            <StaffCard key={c.classId} c={c} onChanged={onChanged} />
+            <StaffCard key={c.classId} c={c} onChanged={onChanged} onOpen={() => onOpenClass(c)} />
           ))}
         </section>
       )}
@@ -118,7 +137,7 @@ function ClassList({ classes, onStart, onChanged }: { classes: MyClass[] | null;
         <section className="groups-section" aria-label="Classes and groups you are in">
           <h4 className="groups-h">You're in</h4>
           {inIt.map((c) => (
-            <MemberCard key={c.classId} c={c} onChanged={onChanged} />
+            <MemberCard key={c.classId} c={c} onChanged={onChanged} onOpen={() => onOpenClass(c)} />
           ))}
         </section>
       )}
@@ -169,7 +188,7 @@ function statusLabel(c: MyClass): string {
   return cap(c.status);
 }
 
-function StaffCard({ c, onChanged }: { c: MyClass; onChanged: () => Promise<void> }) {
+function StaffCard({ c, onChanged, onOpen }: { c: MyClass; onChanged: () => Promise<void>; onOpen: () => void }) {
   const w = groupWording(c.kind);
   const [roster, setRoster] = useState<RosterRow[] | null>(null);
   const [busy, setBusy] = useState(false);
@@ -243,6 +262,11 @@ function StaffCard({ c, onChanged }: { c: MyClass; onChanged: () => Promise<void
           {roster ? `Hide ${w.participants}` : `Show ${w.participants}`}
         </button>
       )}
+      {(c.status === "active" || c.status === "draft" || c.status === "ended") && (
+        <button type="button" className="paid-teaser-button groups-open-work" onClick={onOpen}>
+          {w.workItems} &amp; {w.gradebook.toLowerCase()}
+        </button>
+      )}
       {roster && (
         <ul className="groups-roster">
           {roster.length === 0 && <li className="groups-small">No {w.participants} yet.</li>}
@@ -263,7 +287,7 @@ function StaffCard({ c, onChanged }: { c: MyClass; onChanged: () => Promise<void
   );
 }
 
-function MemberCard({ c, onChanged }: { c: MyClass; onChanged: () => Promise<void> }) {
+function MemberCard({ c, onChanged, onOpen }: { c: MyClass; onChanged: () => Promise<void>; onOpen: () => void }) {
   const w = groupWording(c.kind);
   const [busy, setBusy] = useState(false);
   return (
@@ -277,6 +301,9 @@ function MemberCard({ c, onChanged }: { c: MyClass; onChanged: () => Promise<voi
         {c.leaderName ? ` · ${w.admin}: ${c.leaderName}` : ""}
       </p>
       <p className="groups-small">Capstone Plus is included while you're in this {w.unit}.</p>
+      <button type="button" className="paid-teaser-button groups-open-work" onClick={onOpen}>
+        {w.workItems}
+      </button>
       <button
         type="button"
         className="auth-back-link"
