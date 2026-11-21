@@ -159,7 +159,7 @@ function CollectionList({
   const visible = q ? collections.filter((c) => `${c.title} ${c.description ?? ""}`.toLowerCase().includes(q)) : collections;
 
   return (
-    <div className="study-screen">
+    <div className="study-screen" data-tier="plus">
       {!entitled && <StudyCollectionPlusPrompt />}
       {entitled &&
         (creating ? (
@@ -301,7 +301,7 @@ function CollectionDetail({
   const suggestion = verseInput.trim() ? canonicalVerseRef(verseInput) : null;
 
   return (
-    <div className="study-screen">
+    <div className="study-screen" data-tier="plus">
       <div className="study-detail-head">
         <BackButton onClick={onBack} label="Collections" />
       </div>

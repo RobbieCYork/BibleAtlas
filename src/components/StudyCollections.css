@@ -28,17 +28,6 @@
   background: var(--accent-bg);
 }
 
-.study-plus-chip {
-  font-size: calc(10px * var(--tsz, 1));
-  font-weight: 700;
-  letter-spacing: 0.04em;
-  text-transform: uppercase;
-  color: var(--accent-contrast);
-  background: var(--accent);
-  border-radius: 4px;
-  padding: 1px 5px;
-}
-
 .study-add-sheet {
   text-align: left;
   margin-top: 8px;

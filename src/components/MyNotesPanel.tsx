@@ -7,6 +7,7 @@ import SermonNotesView from "./SermonNotesView";
 import PrayerListView from "./PrayerListView";
 import StudyCollectionsView from "./StudyCollectionsView";
 import AddToCollection from "./AddToCollection";
+import PlusBadge from "./PlusBadge";
 import { useStudyCollections } from "../lib/studyCollections";
 import Icon from "./Icon";
 import { TestingMarker } from "./FeatureRelease";
@@ -404,6 +405,7 @@ export default function MyNotesPanel({
         {collectionsReady && (
           <button type="button" className={tab === "collections" ? "active" : ""} onClick={() => setTab("collections")}>
             Collections
+            <PlusBadge />
           </button>
         )}
       </div>

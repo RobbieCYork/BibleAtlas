@@ -82,7 +82,7 @@ export default function AddToCollection({ kind, refId, label, className }: AddTo
   };
 
   return (
-    <div className={`study-add no-print${className ? ` ${className}` : ""}`}>
+    <div className={`study-add no-print${className ? ` ${className}` : ""}`} data-tier="plus">
       <button
         type="button"
         className={`study-add-button${count > 0 ? " is-saved" : ""}`}
@@ -93,9 +93,6 @@ export default function AddToCollection({ kind, refId, label, className }: AddTo
       >
         <span aria-hidden="true">{count > 0 ? "★" : "☆"}</span>{" "}
         {count === 0 ? "Add to collection" : count === 1 ? "In 1 collection" : `In ${count} collections`}
-        <span className="study-plus-chip" aria-label="Capstone Plus">
-          Plus
-        </span>
       </button>
       {open && (
         <div className="study-add-sheet" id={sheetId} role="group" aria-label="Study collections">
