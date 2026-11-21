@@ -535,6 +535,19 @@ body.resizing-panels {
   filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.35));
 }
 
+/* Comfortable tap target: the visible pin is 28x36 / 18x18, but the clickable box is padded out to
+ * at least 44x44 with an invisible pseudo-element (clicks on it count as clicks on the pin). */
+.map-pin::before {
+  content: "";
+  position: absolute;
+  inset: -8px -8px 0 -8px;
+}
+.poi-pin::before {
+  content: "";
+  position: absolute;
+  inset: -13px;
+}
+
 /* The hover/active "pop" scale lives on the inner <svg>, not on .map-pin itself — MapLibre's
  * Marker._update() writes a fresh `translate(...)` transform straight onto .map-pin's inline
  * style on every 'move' event (i.e. every frame while panning/dragging). A `transition: transform`
@@ -674,6 +687,27 @@ body.resizing-panels {
   font-weight: 600;
   white-space: nowrap;
   box-shadow: 0 4px 14px rgba(0, 0, 0, 0.3);
+}
+
+/* The pill is a button that opens the place's article, same as the pin. min 44px tap target. */
+.map-name-popup .maplibregl-popup-content {
+  padding: 0;
+}
+.map-name-pill {
+  display: block;
+  min-height: 44px;
+  padding: 6px 16px;
+  border: 0;
+  border-radius: 100px;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  white-space: nowrap;
+  cursor: pointer;
+}
+.map-name-pill:focus-visible {
+  outline: 2px solid var(--accent-contrast);
+  outline-offset: -4px;
 }
 
 /* --- Layer controls --- */

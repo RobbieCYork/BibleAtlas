@@ -562,6 +562,21 @@ function createPoiElement(): HTMLDivElement {
   return el;
 }
 
+/** Pins are plain divs with a click listener; give them the button semantics and Enter/Space
+ * activation a keyboard or screen-reader user needs. Space/Enter re-dispatch a click so the pin's
+ * own listener (the single source of truth for "open this article") does the work. */
+function makeKeyboardActivatable(el: HTMLElement, name: string) {
+  el.setAttribute("role", "button");
+  el.setAttribute("tabindex", "0");
+  el.setAttribute("aria-label", `Open article: ${name}`);
+  el.addEventListener("keydown", (ev) => {
+    if (ev.key === "Enter" || ev.key === " ") {
+      ev.preventDefault();
+      el.click();
+    }
+  });
+}
+
 export default function MapView({
   locations,
   selectedId,
@@ -577,6 +592,10 @@ export default function MapView({
 }: MapViewProps) {
   const containerRef = useRef<HTMLDivElement | null>(null);
   const mapRef = useRef<maplibregl.Map | null>(null);
+  const selectRef = useRef(onSelect);
+  const selectPoiRef = useRef(onSelectPoi);
+  selectRef.current = onSelect;
+  selectPoiRef.current = onSelectPoi;
   const markersRef = useRef<Record<string, maplibregl.Marker>>({});
   const poiMarkersRef = useRef<Record<string, maplibregl.Marker>>({});
   const clusterMarkersRef = useRef<Record<string, maplibregl.Marker>>({});
@@ -756,6 +775,7 @@ export default function MapView({
       locations.forEach((loc) => {
         const el = createFlagElement(loc.category);
         el.title = loc.name;
+        makeKeyboardActivatable(el, loc.name);
         // Hidden until the cluster source reports it unclustered (updateClusterView).
         el.style.display = "none";
         el.addEventListener("click", () => onSelect(loc.id));
@@ -771,6 +791,7 @@ export default function MapView({
       pois.forEach((poi) => {
         const el = createPoiElement();
         el.title = poi.name;
+        makeKeyboardActivatable(el, poi.name);
         el.style.display = "none";
         el.addEventListener("click", () => onSelectPoi(poi.id));
 
@@ -937,6 +958,21 @@ export default function MapView({
     const target = loc ?? poi;
     if (!target) return;
 
+    // The pill is a second door to the same article as the pin: a real <button> (keyboard + aria),
+    // wired to the exact handler the pin's own click listener calls. Handlers come from refs so this
+    // effect does not re-run (and re-create the popup) on every parent render.
+    const pill = document.createElement("button");
+    pill.type = "button";
+    pill.className = "map-name-pill";
+    pill.textContent = target.name;
+    pill.setAttribute("aria-label", `Open article: ${target.name}`);
+    const targetId = target.id;
+    pill.addEventListener("click", (ev) => {
+      ev.stopPropagation();
+      if (loc) selectRef.current(targetId);
+      else selectPoiRef.current(targetId);
+    });
+
     namePopupRef.current = new maplibregl.Popup({
       closeButton: false,
       closeOnClick: false,
@@ -944,7 +980,7 @@ export default function MapView({
       className: "map-name-popup",
     })
       .setLngLat(target.coordinates)
-      .setText(target.name)
+      .setDOMContent(pill)
       .addTo(mapRef.current);
   }, [selectedId, selectedPoiId, locations, pois]);
 
