@@ -3,9 +3,7 @@ import type maplibregl from "maplibre-gl";
 import type { Session } from "@supabase/supabase-js";
 import MapView from "./components/MapView";
 import LayerControls from "./components/LayerControls";
-import SearchBar from "./components/SearchBar";
 import HeaderTextSearch from "./components/HeaderTextSearch";
-import { completionTail, suggestReference } from "./lib/bibleReference";
 import TimelineSearchBar from "./components/TimelineSearchBar";
 import LocationPanel from "./components/LocationPanel";
 import PoiPanel from "./components/PoiPanel";
@@ -30,7 +28,7 @@ import SocialLinks from "./components/SocialLinks";
 import MyProfileView from "./components/MyProfileView";
 import FriendProfileView from "./components/FriendProfileView";
 import PeopleSearchBar from "./components/PeopleSearchBar";
-import ArticleSearchBar from "./components/ArticleSearchBar";
+import UnifiedSearchBar from "./components/UnifiedSearchBar";
 import NotificationToasts from "./components/NotificationToasts";
 import GameView from "./components/GameView";
 import BackButton from "./components/BackButton";
@@ -55,7 +53,6 @@ import { topics } from "./data/topics";
 import { timelineEvents } from "./data/timelineEvents";
 import { formatWalkStopReference, getActiveSeasonalWalk, getWalkDismissKey } from "./data/seasonalWalks";
 import SeasonalWalkPanel from "./components/SeasonalWalkPanel";
-import Icon from "./components/Icon";
 import { TestViewStrip } from "./components/FeatureRelease";
 import { useFeature } from "./lib/features";
 import "./App.css";
@@ -114,18 +111,7 @@ function App() {
   // for why Bible needs a nonce: it hits an external API on Enter, not on every keystroke).
   const [bibleSearchQuery, setBibleSearchQuery] = useState("");
   const [bibleSearchNonce, setBibleSearchNonce] = useState(0);
-  // The reference the Bible box appears to be heading for, and the unwritten tail of it drawn in
-  // grey after the cursor. Derived, never stored — it is a function of the query and nothing else,
-  // so there is no second copy of the truth to keep in step. BiblePanel resolves the same query
-  // independently when the search is actually submitted; this exists only to show it coming.
-  const bibleSuggestion = suggestReference(bibleSearchQuery);
-  const bibleCompletion = completionTail(bibleSearchQuery, bibleSuggestion);
   const [notesSearchQuery, setNotesSearchQuery] = useState("");
-  // Explicit scope for the header's shared search box, for the one case where it's genuinely
-  // ambiguous: desktop with both the Bible and Map panels open at once. Always starts on
-  // "scripture" on a fresh load/app start (never persisted) — see the searchMode/toggle logic
-  // below for how this is kept in sync with the mobile tab bar instead of shown as a control there.
-  const [searchScope, setSearchScope] = useState<"scripture" | "places" | "articles">("scripture");
   const [isMobile, setIsMobile] = useState(() => window.matchMedia(MOBILE_QUERY).matches);
   // On mobile, exactly one panel is shown at a time (driven by the bottom tab bar) — default to
   // Bible. Desktop shows Bible+Map together by default.
@@ -1240,37 +1226,30 @@ function App() {
   // A password-recovery session is never anonymous, so it never trips this — ResetPasswordGate
   // below handles it on its own.
   const showAuthGate = authResolved && !exchangingRecoveryCode && (!session || session.user.is_anonymous);
-  const searchMode: "map" | "bible" | "articles" | "notes" | "timeline" | "people" | null = showGame
+  const searchMode: "all" | "notes" | "timeline" | "people" | null = showGame
     ? null
     : myProfileMode
     ? (SOCIAL_CONNECTIONS_ENABLED ? "people" : null)
     : showTimeline
     ? "timeline"
     : isMobile
-      ? activeMobilePanel === "map" || activeMobilePanel === "bible" || activeMobilePanel === "notes"
-        ? activeMobilePanel
-        : null
-      : panels.map && panels.bible
-        ? (searchScope === "places" ? "map" : searchScope === "articles" ? "articles" : "bible")
-        : panels.map
-          ? "map"
-          : panels.bible
-            ? "bible"
-            : panels.notes
-              ? "notes"
-              : null;
+      ? activeMobilePanel === "map" || activeMobilePanel === "bible"
+        ? "all"
+        : activeMobilePanel === "notes"
+          ? "notes"
+          : null
+      : panels.map || panels.bible
+        ? "all"
+        : panels.notes
+          ? "notes"
+          : null;
 
-  // Mobile shows exactly one panel at a time via the bottom tab bar, so there's no ambiguity to
-  // surface a toggle for there — instead, keep `searchScope` auto-aligned with whichever tab is
-  // active so it never silently disagrees with what's on screen (e.g. re-opening the app to the
-  // Map tab, or switching to it, should make Places the active scope, not leave Scripture stuck
-  // from a fresh load). Desktop never runs this, so `searchScope`'s initial "scripture" default —
-  // and any manual choice made once both panels are open — is left alone.
-  useEffect(() => {
-    if (!isMobile) return;
-    if (activeMobilePanel === "bible") setSearchScope("scripture");
-    else if (activeMobilePanel === "map") setSearchScope("places");
-  }, [isMobile, activeMobilePanel]);
+  // The unified search can be used from the Map tab/panel, so a Scripture result has to bring the
+  // Bible panel forward before it asks it to navigate.
+  const showBiblePanel = () => {
+    if (isMobile) setMobileActivePanel("bible");
+    else if (!panels.bible) openPanel("bible");
+  };
 
   const goHome = () => {
     if (isMobile) setMobileActivePanel("bible");
@@ -1541,101 +1520,35 @@ function App() {
           <h1>Capstone Bible</h1>
           <p className="brand-tagline">God&rsquo;s Word. Every day.</p>
         </div>
-        {(searchMode === "map" || searchMode === "bible" || searchMode === "articles") && (
+        {searchMode === "all" && (
           <div className="header-search-group">
-            {searchMode === "map" && (
-              <SearchBar
-                locations={locations}
-                onSelect={(id) => {
-                  track("search.run", { scope: "places" });
-                  focusLocationOnMap(id);
-                }}
-                selectedLocationName={selectedLocation?.name ?? null}
-              />
-            )}
-            {searchMode === "articles" && (
-              <ArticleSearchBar
-                locations={locations}
-                pois={pois}
-                people={people}
-                topics={topics}
-                timelineEvents={timelineEvents}
-                onSelect={(kind, id) => {
-                  track("search.run", { scope: "articles" });
-                  if (kind === "location") handleSelectFromMap(id);
-                  else if (kind === "poi") handleSelectPoiFromMap(id);
-                  else if (kind === "person") handleSelectPersonFromBible(id);
-                  else if (kind === "topic") handleSelectTopicFromBible(id);
-                  else handleSelectTimelineEventFromArticles(id);
-                }}
-              />
-            )}
-            {searchMode === "bible" && (
-              <HeaderTextSearch
-                placeholder="Search Scripture…"
-                icon="bible"
-                value={bibleSearchQuery}
-                onChange={setBibleSearchQuery}
-                completion={bibleCompletion}
-                // Accepting writes the whole reference into the box and submits it in the same
-                // commit. BiblePanel's effect keys off the nonce and reads the query from that same
-                // render, so it sees "Matthew 1" and not the "Matt" that was there a moment ago.
-                onAcceptCompletion={
-                  bibleCompletion
-                    ? () => {
-                        setBibleSearchQuery(bibleSuggestion!.text);
-                        track("search.run", { scope: "scripture" });
-                        setBibleSearchNonce((n) => n + 1);
-                      }
-                    : undefined
-                }
-                onSubmit={() => {
-                  // The scope, never the query. What someone searches Scripture for is
-                  // exactly the kind of thing this app has no business logging.
-                  track("search.run", { scope: "scripture" });
-                  setBibleSearchNonce((n) => n + 1);
-                }}
-              />
-            )}
-            {/* Only genuinely ambiguous when both panels are open at once (desktop) — that's the
-                only time the explicit scope toggle is worth the header space. Otherwise the active
-                panel already makes the scope obvious, exactly as before this toggle existed. Placed
-                after the search bar (rather than before it) so it reads as "search bar, then its
-                scope" left to right. */}
-            {panels.map && panels.bible && (
-              <div className="search-scope-toggle" role="group" aria-label="Search scope">
-                <button
-                  type="button"
-                  className={searchScope === "scripture" ? "active" : ""}
-                  aria-pressed={searchScope === "scripture"}
-                  title="Search Scripture"
-                  aria-label="Search Scripture"
-                  onClick={() => setSearchScope("scripture")}
-                >
-                  <Icon name="bible" />
-                </button>
-                <button
-                  type="button"
-                  className={searchScope === "places" ? "active" : ""}
-                  aria-pressed={searchScope === "places"}
-                  title="Search Places"
-                  aria-label="Search Places"
-                  onClick={() => setSearchScope("places")}
-                >
-                  <Icon name="map" />
-                </button>
-                <button
-                  type="button"
-                  className={searchScope === "articles" ? "active" : ""}
-                  aria-pressed={searchScope === "articles"}
-                  title="Search articles"
-                  aria-label="Search articles"
-                  onClick={() => setSearchScope("articles")}
-                >
-                  <Icon name="articles" />
-                </button>
-              </div>
-            )}
+            <UnifiedSearchBar
+              locations={locations}
+              pois={pois}
+              people={people}
+              topics={topics}
+              timelineEvents={timelineEvents}
+              onOpenRecord={(kind, id) => {
+                track("search.run", { scope: "all" });
+                if (kind === "location") handleSelectFromMap(id);
+                else if (kind === "poi") handleSelectPoiFromMap(id);
+                else if (kind === "person") handleSelectPersonFromBible(id);
+                else if (kind === "topic") handleSelectTopicFromBible(id);
+                else handleSelectTimelineEventFromArticles(id);
+              }}
+              onOpenScripture={(ref) => {
+                track("search.run", { scope: "scripture" });
+                showBiblePanel();
+                setBibleSearchQuery(ref);
+                setBibleSearchNonce((n) => n + 1);
+              }}
+              onSeeAllScripture={(q) => {
+                track("search.run", { scope: "scripture" });
+                showBiblePanel();
+                setBibleSearchQuery(q);
+                setBibleSearchNonce((n) => n + 1);
+              }}
+            />
           </div>
         )}
         {searchMode === "notes" && (
