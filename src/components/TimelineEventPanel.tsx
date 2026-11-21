@@ -3,6 +3,7 @@ import { timelineEvents } from "../data/timelineEvents";
 import LinkedVerseText from "./LinkedVerseText";
 import ArticleHeader from "./ArticleHeader";
 import { ArticleReadCheck, ArticleReadToggle } from "./ArticleReadToggle";
+import AddToCollection from "./AddToCollection";
 import PaidTeaser from "./PaidTeaser";
 import { retryPaidContent, usePaidContent } from "../lib/paidContent";
 import { countsOf } from "../lib/paidContentSpec";
@@ -245,6 +246,7 @@ export default function TimelineEventPanel({
           />
         </>
       )}
+      <AddToCollection kind="event" refId={event.id} label={event.title} />
       <ArticleReadToggle kind="event" id={event.id} />
     </div>
   );

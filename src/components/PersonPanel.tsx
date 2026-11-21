@@ -9,6 +9,7 @@ import ArticleHeader from "./ArticleHeader";
 import Icon from "./Icon";
 import { personCardSpec, shareFilename } from "../lib/shareCard";
 import { ArticleReadCheck, ArticleReadToggle } from "./ArticleReadToggle";
+import AddToCollection from "./AddToCollection";
 import PaidTeaser from "./PaidTeaser";
 import { retryPaidContent, usePaidContent } from "../lib/paidContent";
 import { countsOf } from "../lib/paidContentSpec";
@@ -294,6 +295,7 @@ export default function PersonPanel({
           onRetry={() => retryPaidContent("person", person.id)}
         />
       )}
+      <AddToCollection kind="person" refId={person.id} label={person.name} />
       <ArticleReadToggle kind="person" id={person.id} />
     </div>
   );

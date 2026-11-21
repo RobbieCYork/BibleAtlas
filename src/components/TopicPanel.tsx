@@ -4,6 +4,7 @@ import LinkedVerseText from "./LinkedVerseText";
 import ReflectionPrompt from "./ReflectionPrompt";
 import ArticleHeader from "./ArticleHeader";
 import { ArticleReadCheck, ArticleReadToggle } from "./ArticleReadToggle";
+import AddToCollection from "./AddToCollection";
 import PaidTeaser from "./PaidTeaser";
 import { retryPaidContent, usePaidContent } from "../lib/paidContent";
 import { countsOf } from "../lib/paidContentSpec";
@@ -261,6 +262,7 @@ export default function TopicPanel({
           onRetry={() => retryPaidContent("topic", topic.id)}
         />
       )}
+      <AddToCollection kind="topic" refId={topic.id} label={topic.name} />
       <ArticleReadToggle kind="topic" id={topic.id} />
     </div>
   );

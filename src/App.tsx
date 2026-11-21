@@ -801,6 +801,17 @@ function App() {
     else openArticlesForArticle();
   };
 
+  // A Study Collection row (My Notes -> Collections) opens the item on its own screen, as a fresh
+  // start like a Bible cross-link: no Back trail into the collection.
+  const handleOpenCollectionItem = (kind: "place" | "site" | "person" | "topic" | "event", id: string) => {
+    setDetailsHistory([]);
+    if (kind === "place") handleSelect(id);
+    else if (kind === "site") handleSelectPoi(id);
+    else if (kind === "person") handleSelectPerson(id);
+    else if (kind === "topic") handleSelectTopic(id);
+    else handleSelectTimelineEvent(id);
+  };
+
   // Shows a location on the map without opening the Details panel — used for the Bible text's
   // location links and the map search bar, where the reader wants to see *where* a place is first;
   // clicking the pin itself (handleSelectFromMap) is what opens the full write-up.
@@ -1741,6 +1752,7 @@ function App() {
             searchQuery={notesSearchQuery}
             openSermonNoteId={openSermonNoteId}
             onOpenedSermonNote={() => setOpenSermonNoteId(null)}
+            onOpenCollectionItem={handleOpenCollectionItem}
           />
         )}
         {friendsMounted && (

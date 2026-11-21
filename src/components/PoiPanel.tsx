@@ -8,6 +8,7 @@ import ArticleHeader from "./ArticleHeader";
 import Icon from "./Icon";
 import { placeCardSpec, shareFilename } from "../lib/shareCard";
 import { ArticleReadCheck, ArticleReadToggle } from "./ArticleReadToggle";
+import AddToCollection from "./AddToCollection";
 import PaidTeaser from "./PaidTeaser";
 import { retryPaidContent, usePaidContent } from "../lib/paidContent";
 import { countsOf, siteLead } from "../lib/paidContentSpec";
@@ -162,6 +163,7 @@ export default function PoiPanel({
           />
         </>
       )}
+      <AddToCollection kind="site" refId={poi.id} label={poi.name} />
       <ArticleReadToggle kind="site" id={poi.id} />
     </div>
   );

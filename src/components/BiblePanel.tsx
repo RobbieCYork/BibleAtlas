@@ -40,6 +40,7 @@ import ShareCardModal from "./ShareCardModal";
 import { track } from "../lib/analytics";
 import HighlightHandles from "./HighlightHandles";
 import Icon from "./Icon";
+import AddToCollection from "./AddToCollection";
 
 interface BiblePanelProps {
   reference: string | null;
@@ -2056,6 +2057,9 @@ export default function BiblePanel({
               <input type="checkbox" checked={chapterMarkedRead} onChange={handleToggleChapterRead} />
               Mark {passage.reference} as read
             </label>
+          )}
+          {userId && currentBook && currentChapter !== null && (
+            <AddToCollection kind="verse" refId={`${currentBook} ${currentChapter}`} label={`${currentBook} ${currentChapter}`} />
           )}
 
           <div className="bible-chapter-nav">

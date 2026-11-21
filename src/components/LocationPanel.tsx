@@ -9,6 +9,7 @@ import ArticleHeader from "./ArticleHeader";
 import Icon from "./Icon";
 import { placeCardSpec, shareFilename } from "../lib/shareCard";
 import { ArticleReadCheck, ArticleReadToggle } from "./ArticleReadToggle";
+import AddToCollection from "./AddToCollection";
 import PaidTeaser from "./PaidTeaser";
 import { retryPaidContent, usePaidContent } from "../lib/paidContent";
 import { countsOf, placeLead } from "../lib/paidContentSpec";
@@ -264,6 +265,7 @@ export default function LocationPanel({
           onRetry={() => retryPaidContent("place", location.id)}
         />
       )}
+      <AddToCollection kind="place" refId={location.id} label={location.name} />
       <ArticleReadToggle kind="place" id={location.id} />
     </div>
   );

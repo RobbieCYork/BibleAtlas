@@ -5,11 +5,14 @@ import { BOOKS } from "../data/bibleBooks";
 import TagPicker from "./TagPicker";
 import SermonNotesView from "./SermonNotesView";
 import PrayerListView from "./PrayerListView";
+import StudyCollectionsView from "./StudyCollectionsView";
+import AddToCollection from "./AddToCollection";
+import { useStudyCollections } from "../lib/studyCollections";
 import Icon from "./Icon";
 import { TestingMarker } from "./FeatureRelease";
 import { useFeature } from "../lib/features";
 
-type NotesTab = "verse" | "sermon" | "prayer";
+type NotesTab = "verse" | "sermon" | "prayer" | "collections";
 
 interface MyNotesPanelProps {
   userId: string | null | undefined;
@@ -26,6 +29,8 @@ interface MyNotesPanelProps {
    * there and dropping them on the verse-notes tab would be a dead end. */
   openSermonNoteId?: string | null;
   onOpenedSermonNote?: () => void;
+  /** Opens a Study Collection item (place, site, person, topic, event) on its own screen. */
+  onOpenCollectionItem?: (kind: "place" | "site" | "person" | "topic" | "event", refId: string) => void;
 }
 
 interface Entry {
@@ -75,14 +80,20 @@ export default function MyNotesPanel({
   searchQuery,
   openSermonNoteId,
   onOpenedSermonNote,
+  onOpenCollectionItem,
 }: MyNotesPanelProps) {
   const [selectedTab, setTab] = useState<NotesTab>("verse");
   // Feature stages (lib/features.ts). A tab whose feature is in Testing is not drawn, and if it was
   // the selected one the panel falls back to My Notes rather than rendering a tab that isn't there.
   const sermonFeature = useFeature("sermon_notes");
   const prayerFeature = useFeature("prayer_list");
+  // Study Collections (Capstone Plus, sql/046): the tab exists only once the reader's collections
+  // are known — never while the migration is unapplied (lib/studyCollections.ts "unavailable").
+  const collectionsReady = useStudyCollections().status === "ready";
   const tab: NotesTab =
-    (selectedTab === "sermon" && !sermonFeature.visible) || (selectedTab === "prayer" && !prayerFeature.visible)
+    (selectedTab === "sermon" && !sermonFeature.visible) ||
+    (selectedTab === "prayer" && !prayerFeature.visible) ||
+    (selectedTab === "collections" && !collectionsReady)
       ? "verse"
       : selectedTab;
 
@@ -390,6 +401,11 @@ export default function MyNotesPanel({
             <TestingMarker show={prayerFeature.inTesting} />
           </button>
         )}
+        {collectionsReady && (
+          <button type="button" className={tab === "collections" ? "active" : ""} onClick={() => setTab("collections")}>
+            Collections
+          </button>
+        )}
       </div>
 
       {tab === "sermon" && (
@@ -402,6 +418,10 @@ export default function MyNotesPanel({
       )}
 
       {tab === "prayer" && <PrayerListView userId={userId} searchQuery={searchQuery} />}
+
+      {tab === "collections" && (
+        <StudyCollectionsView searchQuery={searchQuery} onOpenItem={onOpenCollectionItem} onGoToVerse={onGoToVerse} />
+      )}
 
       {tab === "verse" && !userId && (
         <p className="bible-status no-print">Log in (or continue as guest) to write and see notes.</p>
@@ -604,6 +624,7 @@ export default function MyNotesPanel({
                         </div>
                       </div>
                     )}
+                    {e.note && <AddToCollection kind="note" refId={e.note.id} label={`your note on ${refLabel(e)}`} />}
                   </div>
                 ))}
               </div>

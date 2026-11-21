@@ -1,0 +1,373 @@
+/* Study Collections (Capstone Plus, sql/046): AddToCollection.tsx and StudyCollectionsView.tsx.
+ * Tokens only (index.css), so every theme and skin restyles it. Sized for a 390px phone first. */
+
+/* Centred, like the "Mark … as read" checkbox it sits beside; the sheet itself reads left-aligned. */
+.study-add {
+  margin-top: 10px;
+  max-width: 100%;
+  text-align: center;
+}
+
+.study-add-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 36px;
+  padding: 6px 12px;
+  font: inherit;
+  font-size: calc(13px * var(--tsz, 1));
+  color: var(--accent);
+  background: transparent;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  cursor: pointer;
+}
+
+.study-add-button:hover,
+.study-add-button.is-saved {
+  background: var(--accent-bg);
+}
+
+.study-plus-chip {
+  font-size: calc(10px * var(--tsz, 1));
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--accent-contrast);
+  background: var(--accent);
+  border-radius: 4px;
+  padding: 1px 5px;
+}
+
+.study-add-sheet {
+  text-align: left;
+  margin-top: 8px;
+  padding: 12px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: var(--panel-bg);
+  box-sizing: border-box;
+  max-width: 100%;
+}
+
+.study-add-sheet .paid-teaser {
+  margin-top: 0;
+}
+
+.study-add-list {
+  list-style: none;
+  margin: 0 0 10px;
+  padding: 0;
+  max-height: 240px;
+  overflow-y: auto;
+}
+
+.study-add-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 40px;
+  font-size: calc(14px * var(--tsz, 1));
+  color: var(--text);
+  cursor: pointer;
+}
+
+.study-add-row input {
+  width: 18px;
+  height: 18px;
+  flex: none;
+}
+
+.study-add-row-title {
+  overflow-wrap: anywhere;
+}
+
+.study-add-new {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.study-add-new input {
+  flex: 1 1 160px;
+  min-width: 0;
+  min-height: 38px;
+  padding: 6px 10px;
+  font: inherit;
+  font-size: calc(14px * var(--tsz, 1));
+  color: var(--text);
+  background: var(--surface-sunken);
+  border: 1px solid var(--input-border);
+  border-radius: 8px;
+}
+
+.study-add-new button,
+.study-form-actions button,
+.study-detail-actions button,
+.study-confirm button {
+  min-height: 38px;
+  padding: 6px 14px;
+  font: inherit;
+  font-size: calc(13px * var(--tsz, 1));
+  color: var(--text);
+  background: var(--surface-sunken);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.study-add-new button[type="submit"],
+.study-primary {
+  color: var(--accent-contrast) !important;
+  background: var(--accent) !important;
+  border-color: var(--accent) !important;
+  font-weight: 600;
+}
+
+.study-add-new button:disabled,
+.study-primary:disabled {
+  opacity: 0.5;
+  cursor: default;
+}
+
+.study-add-done {
+  display: block;
+  margin: 10px 0 0 auto;
+  padding: 6px 12px;
+  font: inherit;
+  font-size: calc(13px * var(--tsz, 1));
+  color: var(--accent);
+  background: transparent;
+  border: none;
+  cursor: pointer;
+}
+
+.study-error {
+  margin: 8px 0 0;
+  font-size: calc(13px * var(--tsz, 1));
+  color: var(--danger);
+}
+
+.study-empty,
+.study-readonly-note {
+  margin: 8px 0;
+  font-size: calc(13px * var(--tsz, 1));
+  color: var(--text-muted);
+}
+
+/* ---- Collections tab ---------------------------------------------------------------- */
+
+.study-screen {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.study-screen > .paid-teaser {
+  margin-top: 0;
+}
+
+.study-list,
+.study-items {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.study-list-row {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 2px;
+  width: 100%;
+  text-align: left;
+  padding: 10px 12px;
+  font: inherit;
+  color: var(--text);
+  background: var(--surface-sunken);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.study-list-row:hover {
+  background: var(--accent-bg);
+}
+
+.study-list-title {
+  font-weight: 600;
+  font-size: calc(14px * var(--tsz, 1));
+  overflow-wrap: anywhere;
+}
+
+.study-list-meta {
+  font-size: calc(12px * var(--tsz, 1));
+  color: var(--text-muted);
+}
+
+.study-list-desc {
+  font-size: calc(13px * var(--tsz, 1));
+  color: var(--text-muted);
+  overflow-wrap: anywhere;
+}
+
+.study-form {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 12px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: var(--panel-bg);
+}
+
+.study-form-field {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  font-size: calc(12px * var(--tsz, 1));
+  color: var(--text-muted);
+}
+
+.study-form-field input,
+.study-form-field textarea {
+  font: inherit;
+  font-size: calc(14px * var(--tsz, 1));
+  color: var(--text);
+  background: var(--surface-sunken);
+  border: 1px solid var(--input-border);
+  border-radius: 8px;
+  padding: 8px 10px;
+  box-sizing: border-box;
+  width: 100%;
+}
+
+.study-form-actions,
+.study-detail-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+}
+
+.study-detail-title h3 {
+  margin: 4px 0 2px;
+  font-size: calc(18px * var(--tsz, 1));
+  overflow-wrap: anywhere;
+}
+
+.study-detail-desc {
+  margin: 0 0 8px;
+  font-size: calc(14px * var(--tsz, 1));
+  color: var(--text-muted);
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+
+.study-danger-quiet {
+  color: var(--danger) !important;
+}
+
+.study-danger {
+  color: #fff !important;
+  background: var(--danger) !important;
+  border-color: var(--danger) !important;
+}
+
+.study-confirm {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+  font-size: calc(13px * var(--tsz, 1));
+}
+
+.study-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  padding: 8px 10px;
+  background: var(--surface-sunken);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+}
+
+.study-item.is-missing {
+  opacity: 0.7;
+}
+
+.study-item-body {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  flex: 1;
+  min-width: 0;
+}
+
+.study-kind {
+  font-size: calc(11px * var(--tsz, 1));
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--text-muted);
+}
+
+.study-item-name {
+  align-self: flex-start;
+  padding: 0;
+  font: inherit;
+  font-weight: 600;
+  font-size: calc(14px * var(--tsz, 1));
+  text-align: left;
+  color: var(--link);
+  background: none;
+  border: none;
+  cursor: pointer;
+  overflow-wrap: anywhere;
+}
+
+.study-item-name.is-static {
+  color: var(--text-muted);
+  cursor: default;
+}
+
+.study-item-detail {
+  font-size: calc(13px * var(--tsz, 1));
+  color: var(--text-muted);
+  overflow-wrap: anywhere;
+}
+
+.study-item-controls {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  flex: none;
+}
+
+.study-remove {
+  width: 32px;
+  height: 32px;
+  font-size: 18px;
+  line-height: 1;
+  color: var(--text-muted);
+  background: transparent;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.study-remove:hover {
+  color: var(--danger);
+}
+
+.study-add-verse {
+  margin-top: 4px;
+}
+
+.study-verse-hint {
+  flex-basis: 100%;
+  font-size: calc(12px * var(--tsz, 1));
+  color: var(--text-muted);
+}
