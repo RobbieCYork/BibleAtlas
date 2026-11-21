@@ -1,6 +1,9 @@
+import { useState } from "react";
 import "./PaidTeaser.css";
 import type { PaidCounts, PaidKind } from "../lib/paidContentSpec";
 import type { PaidState } from "../lib/paidContent";
+import { billingVisible, useBilling } from "../lib/billing";
+import { PlusPlanPicker } from "./CapstonePlus";
 
 /**
  * What an article panel shows at the cut (just below its Bible references list) whenever the paid
@@ -8,9 +11,11 @@ import type { PaidState } from "../lib/paidContent";
  * an entitled reader's text loads, and a plain message with Retry when it cannot load.
  *
  * Rules from the plan (paid-tier-plan.md section 1): never an empty panel, never a spinner that does
- * not resolve, never a broken section header — and never a dead button. Phase 1 has no billing, so
- * without an `onUpgrade` handler the teaser says Plus is coming instead of drawing an Upgrade button
- * that does nothing. The placeholder lines are drawn shapes with no text behind them.
+ * not resolve, never a broken section header — and never a dead button. Without an `onUpgrade`
+ * handler, the Upgrade button appears only when web billing is switched on (paid.billing_enabled,
+ * sql/045 — src/lib/billing.ts) and opens the Monthly / Yearly picker in place; otherwise the teaser
+ * says Plus is coming instead of drawing a button that does nothing. The placeholder lines are drawn
+ * shapes with no text behind them.
  */
 
 const WHAT_IS_BEHIND: Record<PaidKind, string> = {
@@ -38,11 +43,14 @@ interface PaidTeaserProps {
   state: Exclude<PaidState<PaidKind>["status"], "ready">;
   counts: PaidCounts;
   onRetry?: () => void;
-  /** Opens the purchase flow. Absent in phase 1 (no billing yet). */
+  /** Overrides the built-in purchase flow (e.g. a native store sheet). Usually absent. */
   onUpgrade?: () => void;
 }
 
 export default function PaidTeaser({ kind, state, counts, onRetry, onUpgrade }: PaidTeaserProps) {
+  const billing = useBilling();
+  const [choosing, setChoosing] = useState(false);
+  const webBilling = !onUpgrade && billingVisible(billing);
   if (state === "loading") {
     return (
       <div className="paid-teaser paid-teaser--loading" aria-busy="true" aria-label="Loading the full article">
@@ -91,6 +99,14 @@ export default function PaidTeaser({ kind, state, counts, onRetry, onUpgrade }: 
         <button type="button" className="paid-teaser-button" onClick={onUpgrade}>
           Upgrade to Plus
         </button>
+      ) : webBilling ? (
+        choosing ? (
+          <PlusPlanPicker />
+        ) : (
+          <button type="button" className="paid-teaser-button" onClick={() => setChoosing(true)}>
+            Upgrade to Plus
+          </button>
+        )
       ) : (
         <p className="paid-teaser-soon">Capstone Plus is coming soon.</p>
       )}

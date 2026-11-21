@@ -1,0 +1,81 @@
+/* CapstonePlus.tsx — plan picker, account-menu section, return notice. Tokens only (index.css), and
+ * the buttons reuse PaidTeaser.css's .paid-teaser-button so both places look the same. */
+
+.plus-plans-row {
+  display: flex;
+  gap: 8px;
+}
+
+.plus-plans-row .paid-teaser-button {
+  flex: 1 1 0;
+  min-width: 0;
+}
+
+.plus-plans-row .paid-teaser-button:disabled {
+  opacity: 0.6;
+  cursor: default;
+}
+
+.plus-plans--compact .paid-teaser-button {
+  margin-top: 10px;
+}
+
+.plus-note {
+  margin: 8px 0 0;
+  font-size: calc(12px * var(--tsz, 1));
+  color: var(--text-muted);
+}
+
+.plus-error {
+  margin: 8px 0 0;
+  font-size: calc(13px * var(--tsz, 1));
+  color: var(--danger);
+}
+
+.plus-account-title {
+  margin: 10px 0 4px;
+  font-size: calc(12px * var(--tsz, 1));
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--accent);
+}
+
+.plus-account-status {
+  margin: 0;
+  font-size: calc(14px * var(--tsz, 1));
+  color: var(--text);
+  overflow-wrap: anywhere;
+}
+
+.plus-return {
+  position: fixed;
+  left: 50%;
+  bottom: calc(24px + env(safe-area-inset-bottom, 0px));
+  transform: translateX(-50%);
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: max-content;
+  max-width: calc(100vw - 32px);
+  box-sizing: border-box;
+  padding: 10px 12px 10px 16px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: var(--panel-bg);
+  color: var(--text);
+  font-size: calc(14px * var(--tsz, 1));
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+}
+
+.plus-return-close {
+  flex: none;
+  min-width: 32px;
+  min-height: 32px;
+  border: none;
+  background: transparent;
+  color: var(--text-muted);
+  font-size: 20px;
+  line-height: 1;
+  cursor: pointer;
+}

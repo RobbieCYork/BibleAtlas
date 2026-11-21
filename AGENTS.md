@@ -398,3 +398,23 @@ or a lead line, use `countsOf` / `placeLead` / `siteLead` from the spec. `src/da
 still the full source of truth, so the linker suite, the archaeology validator and the SEO generator
 are unaffected. After a server build, `node scripts/paid-content/check-bundle.mjs dist` must report
 `found … 0`.
+
+## Stripe billing is three switches deep — and none of it grants access except the webhook
+
+`sql/045` + `supabase/functions/{create-checkout-session,stripe-webhook,create-portal-session}` +
+`src/lib/billing.ts` (branch `paid-payments`). The runbook is `supabase/functions/STRIPE-SETUP.md`.
+
+- **The only writer of a `stripe` entitlement is `stripe_apply_subscription_event()`, called by the
+  webhook with the service role.** It records the event id, the subscription and the derived
+  entitlement in one transaction. Never add a client write path, and never grant EXECUTE on the
+  `stripe_*` functions to `authenticated`: Supabase's default ACL grants every new function to
+  `anon` and `authenticated`, and the explicit revoke in 045 is what stops that (the local test
+  proves it fails without the revoke).
+- **No billing UI unless `billing_status()` says `billing_enabled`**, and the client fails closed on
+  any error. Never draw an Upgrade or Stripe link in a native (Capacitor) build — Apple 3.1.1.
+- **The price is server-side.** The client sends `plan: "monthly" | "annual"`; the function maps it to
+  `STRIPE_PRICE_*`. Never accept a price id, amount or return URL from the request (return origins
+  are allow-listed by `APP_URL` / `APP_RETURN_ORIGINS`).
+- Proof, three different questions: `node scripts/stripe/rls-test.mjs --local` (SQL rules),
+  `node --test supabase/functions/_shared/stripe.test.ts` (signature + idempotency logic),
+  `scripts/signed-in-harness/examples/billing.mjs` (UI). None of them is a build check.

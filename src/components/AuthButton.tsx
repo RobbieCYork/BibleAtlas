@@ -13,6 +13,8 @@ import { fetchReportCounts, hasRoleAtLeast, useCurrentRole } from "../lib/report
 import type { ReportSurface } from "../lib/reportContext";
 import Icon from "./Icon";
 import SocialLinks from "./SocialLinks";
+import { PlusAccountSection, PlusReturnNotice } from "./CapstonePlus";
+import { billingVisible, useBilling } from "../lib/billing";
 
 interface AuthButtonProps {
   session: Session | null;
@@ -49,7 +51,7 @@ interface AuthButtonProps {
 
 type Mode = "login" | "signup" | "reset";
 
-type MenuView = "menu" | "settings" | "admin" | "report" | "myReports" | "reports" | "safety";
+type MenuView = "menu" | "settings" | "admin" | "report" | "myReports" | "reports" | "safety" | "plus";
 
 /** Fallback for the one render where App hasn't told us where the reader is. A report filed against
  * it is still a valid report — it just says less. Never left blank: `route`/`page_title` are what a
@@ -92,6 +94,7 @@ export default function AuthButton({
   // by whether the database holds an admin_users row, and adding a second client-side rule about who
   // is even allowed to ask is exactly the kind of divergence this hook exists to prevent.
   const isAdmin = useIsAdmin(session?.user.id ?? null);
+  const billing = useBilling();
 
   // The reports tier gate. Separate from useIsAdmin above on purpose: that hook answers sql/019's
   // "is there an admin_users row", this one answers sql/025's four-tier current_user_role(), and an
@@ -243,9 +246,11 @@ export default function AuthButton({
   };
 
   if (session) {
+    const showPlus = billingVisible(billing);
     const label = session.user.is_anonymous ? "Guest" : savedDisplayName ?? session.user.email ?? "Account";
     return (
       <div className="auth-button" ref={containerRef}>
+        <PlusReturnNotice />
         <button
           type="button"
           className="auth-trigger"
@@ -284,6 +289,13 @@ export default function AuthButton({
                 }}
               >
                 <Icon name="people" inline /> My Profile
+              </button>
+            )}
+            {/* Capstone Plus (Stripe). Drawn only when paid.billing_enabled is on — see lib/billing.ts.
+                Guests get the row too: the view tells them to create an account to subscribe. */}
+            {showPlus && (
+              <button type="button" className="auth-menu-item" onClick={() => setMenuView("plus")}>
+                <Icon name="trophy" inline /> Capstone Plus
               </button>
             )}
             {/* Reports lives inside the Admin Console now (Reports tab, same unread badge). This row
@@ -396,6 +408,14 @@ export default function AuthButton({
         {open && SOCIAL_CONNECTIONS_ENABLED && menuView === "safety" && <SafetySheet onClose={() => setMenuView("menu")} />}
         {open && menuView === "reports" && canSeeReports && reportsRole && (
           <ReportsDashboard role={reportsRole} viewerId={session.user.id} onClose={() => setMenuView("menu")} />
+        )}
+        {open && menuView === "plus" && showPlus && (
+          <div className="auth-dropdown">
+            <button type="button" className="auth-back-link" onClick={() => setMenuView("menu")}>
+              ← Back
+            </button>
+            <PlusAccountSection />
+          </div>
         )}
         {open && menuView === "settings" && (
           <div className="auth-dropdown">

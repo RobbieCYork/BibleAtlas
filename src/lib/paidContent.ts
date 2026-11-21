@@ -261,6 +261,20 @@ export function retryPaidContent(kind: PaidKind, id: string) {
   request(kind, id);
 }
 
+/** Forget the entitlement answer and every article's state, and ask again. Called after a Stripe
+ * checkout or portal visit (billing.ts), when the answer may just have changed. A no-op in a
+ * 'bundle' build, which never asks. */
+export function refreshEntitlement() {
+  entitlementMemo = null;
+  if (states.size === 0) return;
+  const keys = [...states.keys()];
+  states.clear();
+  for (const key of keys) {
+    const i = key.indexOf(":");
+    request(key.slice(0, i) as PaidKind, key.slice(i + 1));
+  }
+}
+
 // A different account must never see the previous one's answers.
 if (PAID_CONTENT_SOURCE === "server") {
   let lastUser: string | null | undefined;
