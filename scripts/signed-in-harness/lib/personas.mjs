@@ -33,6 +33,8 @@ export const PERSONAS = {
   administrator: { id: id(3), email: "administrator@harness.invalid", name: "Harness Admin", role: "administrator", admin: true, anonymous: false },
   owner: { id: id(4), email: "owner@harness.invalid", name: "Harness Owner", role: "owner", admin: true, anonymous: false },
   guest: { id: id(5), email: null, name: null, role: null, admin: false, anonymous: true },
+  /** The Plus-preview demo account (a fake "Demo Member"; the build allow-lists this id, see run.mjs). */
+  demo: { id: id(6), email: "demo@harness.invalid", name: "Demo Member", role: null, admin: false, anonymous: false },
   signedout: null,
 };
 

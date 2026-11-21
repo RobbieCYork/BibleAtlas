@@ -195,7 +195,7 @@ export default function SermonNotesView({ userId, searchQuery, openNoteId, onOpe
         )
       : entries;
     return (
-      <div className="sermon-notes-list-screen">
+      <div className="sermon-notes-list-screen" data-tier="free">
         <button type="button" className="sermon-notes-new-button" onClick={openNew}>
           + New Sermon Note
         </button>

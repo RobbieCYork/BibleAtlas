@@ -373,7 +373,7 @@ export default function MyNotesPanel({
   };
 
   return (
-    <div className={`my-notes-panel ${expand ? "panel-expand" : ""} ${hidden ? "bible-panel-hidden" : ""}`} style={expand ? undefined : style}>
+    <div className={`my-notes-panel ${expand ? "panel-expand" : ""} ${hidden ? "bible-panel-hidden" : ""}`} style={expand ? undefined : style} data-tier="free">
       <div className="notes-tab-switcher no-print">
         <button type="button" className={tab === "verse" ? "active" : ""} onClick={() => setTab("verse")}>
           My Notes
@@ -441,7 +441,7 @@ export default function MyNotesPanel({
             </label>
           </div>
 
-          <div className="my-notes-export no-print" ref={exportMenuRef}>
+          <div className="my-notes-export no-print" ref={exportMenuRef} data-tier="plus">
             <button type="button" className="my-notes-export-button" onClick={() => setExportMenuOpen((o) => !o)}>
               Export <Chevron open={exportMenuOpen} kind="menu" size={18} className="chev-inline" />
             </button>

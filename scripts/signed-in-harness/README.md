@@ -158,3 +158,48 @@ containers and the marker overlay have shown stale pixels while the DOM was righ
   `lib/personas.mjs`.
 - Do not use `--dist` with a build made against the real Supabase URL. The closed network would still
   hold, but the page would be pointed at a host the fake does not answer.
+
+## Plus preview (what is Free, what is Plus)
+
+A visual overlay so the owner can see the Free/Plus split in a demo account. It changes no entitlement,
+billing or RLS behaviour. Code: `src/lib/plusPreview.ts`, `src/plusPreview.css`,
+`src/components/PlusPreviewLegend.tsx`, `src/components/PlusBadge.tsx`.
+
+**Convention.** Put `data-tier="plus"` or `data-tier="free"` on the element. With the preview ON (an attribute
+`data-plus-preview="on"` on `<html>`) a plus element gets a gold outline and a gold "PLUS" pill, a free one a quiet
+"FREE" tag. With it OFF nothing is drawn. `<PlusBadge />` is an inline chip for spots an outline cannot reach. The
+paid article body is wrapped in `<div className="plus-body" data-tier="plus">`, which is `display: contents` (no box)
+unless the preview is on.
+
+**Who gets it** (never in a native build, never otherwise, no network request, nothing in the free bundle but a little
+of CSS/JS): the owner (legend starts OFF, toggled and remembered in localStorage `plus-preview`); a demo account whose
+user id is in the build-time `VITE_PLUS_PREVIEW_USER_IDS` (starts ON); any build made with `VITE_PLUS_PREVIEW=1`.
+
+**View it locally** (fake "Demo Member", fake Supabase, 0 real requests):
+
+    HEADED=1 HOLD=1 node scripts/signed-in-harness/run.mjs --persona demo --viewport 1280x800 \
+      --script scripts/signed-in-harness/examples/plus-preview.mjs
+
+`--persona demo` allow-lists the demo id in the build (`PLUS_PREVIEW=flag` uses the global flag, `PLUS_PREVIEW=off`
+neither). Without `HEADED`/`HOLD` it runs the assertions and writes screenshots to `--out`.
+
+**A real demo account on production (not done; documented only).** (1) Robbie creates the account himself in the
+normal sign-up screen and types its own password. (2) Read its user id from the Admin Console or Supabase Auth. (3) Put
+the id in `VITE_PLUS_PREVIEW_USER_IDS` in the deploy environment and redeploy (or add a server-side allow-list rpc
+reading `app_settings` `paid.preview_enabled`, which needs a migration and Robbie's word). The owner account needs none
+of this: the legend just appears.
+
+### Tier hooks (from automation/manager/plus-split-proposal.md)
+
+| Feature | Tier | Tagged? | Where |
+|---|---|---|---|
+| Article body below references (5 article kinds) | PLUS | yes | `.plus-body` in Person/Location/Topic/Poi/TimelineEvent panels |
+| Bible references list | FREE | yes | `VerseList.tsx` |
+| Skins / Appearance | PLUS | yes | `SkinPicker.tsx` |
+| Bible in a Year (canonical, chronological) vs the other plans | PLUS / FREE | yes (plans are switched off by `READING_PLANS_ENABLED`) | `ReadingPlansView.tsx` card |
+| Notes: print / Word export | PLUS | yes (whole panel FREE) | `MyNotesPanel.tsx` |
+| Sermon-note photo + OCR | PLUS | yes (shows when a photo is chosen) | `NoteImageCapture.tsx` |
+| Map, Bible reader, timeline, notes, games, prayer list, sermon notes list | FREE | yes | MapView, BiblePanel, TimelineView, MyNotesPanel, GameCenter, PrayerListView, SermonNotesView |
+| Premium share-card backgrounds | PLUS | NOT yet: which backgrounds are premium is undecided | `ShareCardModal.tsx` / `data/shareBackgrounds.ts` |
+| Timeline lanes (maybe PLUS later), social, safety, Bible text, backup | FREE | not tagged (no visible Plus boundary) | n/a |
+| Offline article packs, study collections, filters, memorization packs | PLUS | feature not built | n/a |

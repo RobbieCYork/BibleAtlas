@@ -168,7 +168,7 @@ export default function NoteImageCapture({ file, userId, onInsertText, onInsertI
   };
 
   return (
-    <div className="note-image-panel no-print" role="group" aria-label="Add this photo to your note">
+    <div className="note-image-panel no-print" data-tier="plus" role="group" aria-label="Add this photo to your note">
       <div className="note-image-panel-head">
         {prepared ? (
           <img className="note-image-thumb" src={prepared.previewUrl} alt="" />

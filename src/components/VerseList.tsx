@@ -9,7 +9,7 @@ export default function VerseList({ verses, onSelectVerse }: VerseListProps) {
   if (verses.length === 0) return null;
 
   return (
-    <div className="verse-list">
+    <div className="verse-list" data-tier="free">
       <h4>Bible References ({verses.length})</h4>
       <ul>
         {verses.map((v) => (

@@ -112,7 +112,7 @@ export default function LocationPanel({
       <VerseList verses={location.verses} onSelectVerse={onSelectVerse} />
 
       {body && history ? (
-      <>
+      <div className="plus-body" data-tier="plus">
       {body.reflectionPrompt && (
         <ReflectionPrompt
           prompt={body.reflectionPrompt}
@@ -255,7 +255,7 @@ export default function LocationPanel({
           </ul>
         </div>
       )}
-      </>
+      </div>
       ) : (
         <PaidTeaser
           kind="place"

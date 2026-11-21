@@ -3,6 +3,10 @@
 interface ImportMetaEnv {
   readonly VITE_SUPABASE_URL: string;
   readonly VITE_SUPABASE_ANON_KEY: string;
+  /** Plus preview (lib/plusPreview.ts): "1" in a local/harness build; unset in production. */
+  readonly VITE_PLUS_PREVIEW?: string;
+  /** Comma list of demo-account user ids that may see Plus preview. */
+  readonly VITE_PLUS_PREVIEW_USER_IDS?: string;
 }
 
 interface ImportMeta {

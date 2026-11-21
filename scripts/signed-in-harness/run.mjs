@@ -4,7 +4,7 @@
  *
  *   node scripts/signed-in-harness/run.mjs --persona owner --viewport 375x667 --script my-checks.mjs
  *
- *   --persona   member | advisor | administrator | owner | guest | signedout   (default member)
+ *   --persona   member | advisor | administrator | owner | guest | demo | signedout   (default member)
  *   --viewport  WxH via Emulation.setDeviceMetricsOverride (default 1280x800)
  *   --theme     light | dark (default light)
  *   --script    a module whose default export is async (h) => {...}; omit for a smoke run
@@ -54,6 +54,15 @@ function realSupabaseHost() {
   } catch { return null; }
 }
 
+/** Plus preview (lib/plusPreview.ts): the demo persona's id is allow-listed in the build, so the preview is
+ * exercised through the same path a real demo account would use. PLUS_PREVIEW=flag builds with
+ * VITE_PLUS_PREVIEW=1 instead (everyone in that build); PLUS_PREVIEW=off builds with neither. */
+function plusPreviewEnv() {
+  const mode = process.env.PLUS_PREVIEW ?? "demo";
+  if (mode === "flag") return { VITE_PLUS_PREVIEW: "1" };
+  if (mode === "demo") return { VITE_PLUS_PREVIEW_USER_IDS: PERSONAS.demo.id };
+  return {};
+}
 const cleanups = [];
 let exitCode = 0;
 try {
@@ -67,7 +76,7 @@ try {
     const t0 = Date.now();
     const b = spawnSync(process.execPath, [join(ROOT, "node_modules/vite/bin/vite.js"), "build", "--outDir", dist, "--emptyOutDir"], {
       cwd: ROOT, encoding: "utf8",
-      env: { ...process.env, VITE_SUPABASE_URL: FAKE_URL, VITE_SUPABASE_ANON_KEY: FAKE_ANON_KEY },
+      env: { ...process.env, VITE_SUPABASE_URL: FAKE_URL, VITE_SUPABASE_ANON_KEY: FAKE_ANON_KEY, ...plusPreviewEnv() },
     });
     if (b.status !== 0) { console.error("\nvite build failed:\n" + (b.stdout + b.stderr).slice(-2000)); process.exit(1); }
     console.log(`${((Date.now() - t0) / 1000).toFixed(1)}s`);

@@ -81,7 +81,7 @@ export default function GameCenter({ onSelectGame }: GameCenterProps) {
   const stages = useFeatures(GAME_FEATURE_KEYS);
   const shown = GAMES.filter((g) => stages[g.feature].visible);
   return (
-    <div className="game-center">
+    <div className="game-center" data-tier="free">
       <div className="games-panel-intro">
         <h2>Game Center</h2>
         <p>Pick a game to play with friends.</p>

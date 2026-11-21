@@ -960,7 +960,7 @@ export default function MapView({
 
   return (
     <>
-      <div ref={containerRef} className="map-container" data-map-mode={mapMode} />
+      <div ref={containerRef} className="map-container" data-map-mode={mapMode} data-tier="free" />
       {/* Aged-paper pass over the finished canvas: fibrous grain multiplied into the vellum plus a
        * soft inset vignette, so the tiles read as one printed sheet instead of a live raster.
        * Styled inline (App.css belongs to the palette work) and pointer-events:none so every map

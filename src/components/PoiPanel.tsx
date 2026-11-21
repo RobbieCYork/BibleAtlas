@@ -73,7 +73,7 @@ export default function PoiPanel({
       <ProfileAudioPlayer kind="poi" id={poi.id} />
 
       {body && body.description !== undefined && body.archaeology ? (
-      <>
+      <div className="plus-body" data-tier="plus">
       <div className="history-section">
         <div className="history-field">
           <p>
@@ -142,7 +142,7 @@ export default function PoiPanel({
           </ul>
         </div>
       )}
-      </>
+      </div>
       ) : (
         <>
           {/* The free lead: an authored teaser, else the description's first ~140 characters cut

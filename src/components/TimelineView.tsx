@@ -1693,7 +1693,7 @@ export default function TimelineView({
   const hasLifespans = geom !== null && !geom.empty && geom.lifeH > 0;
 
   return (
-    <section className="tl-root" aria-label="Historical timeline">
+    <section className="tl-root" aria-label="Historical timeline" data-tier="free">
       <header className="tl-header">
         <BackButton onClick={onClose} ariaLabel="Close timeline" />
         <div className="tl-title-block">

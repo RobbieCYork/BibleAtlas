@@ -1622,6 +1622,7 @@ export default function BiblePanel({
     <div
       className={`bible-panel ${expand ? "panel-expand" : ""} ${hidden ? "bible-panel-hidden" : ""}`}
       style={expand ? undefined : style}
+      data-tier="free"
     >
       <div className="bible-panel-scroll" ref={scrollContainerRef}>
 

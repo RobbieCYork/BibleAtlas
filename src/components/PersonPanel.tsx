@@ -106,7 +106,7 @@ export default function PersonPanel({
           (see Person.quotes) — rendered as plain text, never as buttons into the Bible panel, since
           "Confessions, Book I" is not a reference that panel can resolve. */}
       {body && body.lifeStory ? (
-      <>
+      <div className="plus-body" data-tier="plus">
       {body.quotes && body.quotes.length > 0 && (
         <div className="verse-list quote-list">
           <h4>In Their Own Words ({body.quotes.length})</h4>
@@ -285,7 +285,7 @@ export default function PersonPanel({
           </ul>
         </div>
       )}
-      </>
+      </div>
       ) : (
         <PaidTeaser
           kind="person"

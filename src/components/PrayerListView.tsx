@@ -151,7 +151,7 @@ export default function PrayerListView({ userId, searchQuery }: PrayerListViewPr
     }
     const reorderable = !trimmedSearch;
     return (
-      <div className="prayer-list-screen">
+      <div className="prayer-list-screen" data-tier="free">
         <button type="button" className="prayer-list-new-button" onClick={openNew}>
           + New Prayer
         </button>

@@ -143,7 +143,7 @@ export default function TimelineEventPanel({
       <p className="person-summary">{event.summary}</p>
 
       {body ? (
-      <>
+      <div className="plus-body" data-tier="plus">
       <div className="history-section">
         <div className="history-field">
           {paragraphs.map((paragraph, pi) => (
@@ -215,7 +215,7 @@ export default function TimelineEventPanel({
           </ul>
         </div>
       )}
-      </>
+      </div>
       ) : (
         <>
           {collapsedMembers.length > 0 && <div className="history-section">{membersBlock}</div>}

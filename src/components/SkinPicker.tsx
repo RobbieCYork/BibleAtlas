@@ -17,7 +17,7 @@ export default function SkinPicker() {
   const panelId = useId();
   const current = OPTIONS.find((o) => o.id === choice)?.label ?? "Default";
   return (
-    <div className="auth-settings-section auth-settings-section-stacked">
+    <div className="auth-settings-section auth-settings-section-stacked" data-tier="plus">
       <button
         type="button"
         className="skin-toggle"

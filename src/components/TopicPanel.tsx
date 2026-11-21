@@ -170,7 +170,7 @@ export default function TopicPanel({
       <VerseList verses={topic.verses} onSelectVerse={onSelectVerse} />
 
       {body && body.sections ? (
-      <>
+      <div className="plus-body" data-tier="plus">
       {body.reflectionPrompt && (
         <ReflectionPrompt
           prompt={body.reflectionPrompt}
@@ -252,7 +252,7 @@ export default function TopicPanel({
           </ul>
         </div>
       )}
-      </>
+      </div>
       ) : (
         <PaidTeaser
           kind="topic"

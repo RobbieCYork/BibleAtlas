@@ -11,6 +11,8 @@ import { startFeatureRelease } from './lib/features'
 import { SkinController } from './lib/skin'
 // Skins (every signed-in reader). Must load AFTER App.css (imported via App above) so its overrides win ties.
 import './skins.css'
+import './plusPreview.css'
+import PlusPreviewLegend from './components/PlusPreviewLegend'
 
 // Applied synchronously, before the first paint, so a reader who chose "dark" doesn't see a flash
 // of the default light theme first — ThemeProvider's own effect (same localStorage key) takes over
@@ -29,6 +31,7 @@ createRoot(document.getElementById('root')!).render(
         <MobileTabsProvider>
           <SkinController />
           <App />
+          <PlusPreviewLegend />
         </MobileTabsProvider>
       </TextSizeProvider>
     </ThemeProvider>

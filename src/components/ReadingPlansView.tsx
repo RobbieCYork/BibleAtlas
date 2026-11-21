@@ -35,7 +35,7 @@ export default function ReadingPlansView({ openPlanId, onOpenPlan, progress, onS
           const doneCount = (progress[plan.id] ?? []).filter((d) => plan.days.some((day) => day.day === d)).length;
           const pct = Math.round((doneCount / plan.days.length) * 100);
           return (
-            <button key={plan.id} type="button" className="bible-plan-card" onClick={() => onOpenPlan(plan.id)}>
+            <button key={plan.id} type="button" className="bible-plan-card" data-tier={plan.id.startsWith("bible-in-a-year") ? "plus" : "free"} onClick={() => onOpenPlan(plan.id)}>
               <span className="bible-plan-card-title">{plan.title}</span>
               <span className="bible-plan-card-tagline">{plan.tagline}</span>
               <span className="bible-plan-progress-track" role="progressbar" aria-valuenow={doneCount} aria-valuemin={0} aria-valuemax={plan.days.length} aria-label={`${plan.title} progress`}>

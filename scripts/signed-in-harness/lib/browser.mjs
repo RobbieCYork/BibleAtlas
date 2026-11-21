@@ -22,7 +22,7 @@ export async function launchChrome() {
   if (!existsSync(CHROME)) throw new Error(`Google Chrome not found at ${CHROME}`);
   const profile = mkdtempSync(join(tmpdir(), "signed-in-harness-chrome."));
   const proc = spawn(CHROME, [
-    "--headless=new", "--use-gl=angle", "--use-angle=swiftshader", "--enable-unsafe-swiftshader", "--ignore-gpu-blocklist", "--no-first-run", "--no-default-browser-check",
+    ...(process.env.HEADED ? [] : ["--headless=new"]), "--use-gl=angle", "--use-angle=swiftshader", "--enable-unsafe-swiftshader", "--ignore-gpu-blocklist", "--no-first-run", "--no-default-browser-check",
     "--disable-background-timer-throttling", "--disable-renderer-backgrounding", "--disable-backgrounding-occluded-windows",
     "--host-resolver-rules=MAP * ~NOTFOUND , EXCLUDE 127.0.0.1",
     `--user-data-dir=${profile}`, "--remote-debugging-port=0", "about:blank",
