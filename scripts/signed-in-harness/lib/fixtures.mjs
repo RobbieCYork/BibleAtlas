@@ -1,7 +1,7 @@
 /** Default table contents. Keep these small and boring; checks that need more override per run. */
 export const FEATURE_KEYS = [
   "prayer_list", "sermon_notes", "posts_newsfeed", "timeline", "games_trivia", "library_articles", "account_deletion", "avatars",
-  "game_bible_trivia", "game_crossword", "game_saving_peter", "game_fill_blank", "game_memorization", "game_punchline", "game_chronology",
+  "game_bible_trivia", "game_saving_peter", "game_fill_blank", "game_memorization", "game_punchline", "game_chronology",
 ];
 
 export function defaultTables(me) {

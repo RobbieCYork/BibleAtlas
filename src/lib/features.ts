@@ -91,7 +91,6 @@ export type FeatureKey =
  * Children of `games_trivia`: see PARENT below and decide(). Added by sql/040. */
 export type GameFeatureKey =
   | "game_bible_trivia"
-  | "game_crossword"
   | "game_saving_peter"
   | "game_fill_blank"
   | "game_memorization"
@@ -128,7 +127,6 @@ export const FEATURES: ReadonlyArray<FeatureDef> = [
   { key: "avatars", label: "Profile photos", where: "Change Photo when editing My Profile. Existing photos still display." },
   // The individual games — children of games_trivia, in Game Center's own order.
   { key: "game_bible_trivia", label: "Bible Trivia", where: GAME_WHERE("Bible Trivia") + " Covers solo and multiplayer.", parent: "games_trivia" },
-  { key: "game_crossword", label: "Bible Crossword", where: GAME_WHERE("Bible Crossword"), parent: "games_trivia" },
   { key: "game_saving_peter", label: "Saving Peter", where: GAME_WHERE("Saving Peter") + " Covers solo and multiplayer.", parent: "games_trivia" },
   { key: "game_fill_blank", label: "Fill in the Blank", where: GAME_WHERE("Fill in the Blank"), parent: "games_trivia" },
   { key: "game_memorization", label: "Scripture Memorization Challenge", where: GAME_WHERE("Scripture Memorization Challenge"), parent: "games_trivia" },

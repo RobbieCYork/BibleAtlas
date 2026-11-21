@@ -77,7 +77,6 @@ const IN_PLAY_SELECTORS = [
   '.game-room-play',
   '.game-question-card',
   '.saving-peter-guess-form',
-  '.crossword-grid',
   '.fillblank-form',
   '.chronology-card-controls',
 ].join(',');

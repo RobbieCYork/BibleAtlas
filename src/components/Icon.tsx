@@ -90,9 +90,8 @@ export type IconName =
   | "poi"
   | "place"
   | "search"
-  // The seven games, one mark each — see the block comment above PATHS.trivia.
+  // The games, one mark each — see the block comment above PATHS.trivia.
   | "trivia"
-  | "crossword"
   | "savingPeter"
   | "fillBlank"
   | "memorization"
@@ -442,20 +441,6 @@ const PATHS = {
     </>
   ),
 
-  /* Bible Crossword: two word-bars crossing and sharing a cell, which is literally what a crossword
-     IS rather than a picture of one — and deliberately not the 3×3 grid of squares every product
-     uses. The cruciform silhouette is owned by nothing else here. Divider lines are kept to the
-     four either side of the centre; a first pass ruled every cell and went to mush at 15px.
-     Solid: the shared crossing cell, the letter two answers have in common. */
-  crossword: (
-    <>
-      <rect x="3.4" y="9.1" width="17.2" height="5.8" rx="1.4" />
-      <rect x="9.1" y="3.4" width="5.8" height="17.2" rx="1.4" />
-      <path d="M6.9 9.1v5.8M17.1 9.1v5.8M9.1 6.9h5.8M9.1 17.1h5.8" />
-      <rect x="10.2" y="10.2" width="3.6" height="3.6" rx="0.9" fill="currentColor" stroke="none" />
-    </>
-  ),
-
   /* Saving Peter: a figure standing on open water — Matthew 14 stated as a construction rather than
      narrated. No drowning cartoon and no gallows, both of which the game's hangman mechanic invites
      and neither of which is what the game is about. The solid figure over two ruled swells is the
@@ -539,7 +524,7 @@ const PATHS = {
      baseline. A cairn of stacked stones (Joshua 4) was drawn as the alternative and lost on the
      proof sheet — below 48px the stones merged into one solid trapezoid and read as a traffic cone.
      Games with three tiers rather than five use 1 / 3 / 5, so the spread still reads as low to high.
-     Shared by Crossword, Saving Peter, Chronology, Fill in the Blank and Guess the Punchline. */
+     Shared by Saving Peter, Chronology, Fill in the Blank and Guess the Punchline. */
   level1: (
     <>
       <path d="M3.2 20.6h17.6" />

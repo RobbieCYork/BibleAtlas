@@ -3,7 +3,6 @@ import type { Session } from "@supabase/supabase-js";
 import GameCenter, { GAMES } from "./GameCenter";
 import { useFeatures } from "../lib/features";
 import BibleTriviaView from "./BibleTriviaView";
-import CrosswordView from "./CrosswordView";
 import SavingPeterHub from "./SavingPeterHub";
 import FillBlankView from "./FillBlankView";
 import MemorizationView from "./MemorizationView";
@@ -26,7 +25,7 @@ const GAME_FEATURE_KEYS = GAMES.map((g) => g.feature);
 /** Full-screen "Games" takeover — same pattern as TimelineView/MyProfileView (a boolean in App.tsx
  * renders this over the whole app body; the map/Bible layout underneath stays mounted). A thin router:
  * GameCenter is the landing list; each selected game owns its own header/back-button/state entirely
- * (BibleTriviaView, CrosswordView) and hands back to GameCenter via onBack when done, rather than this
+ * (BibleTriviaView, FillBlankView) and hands back to GameCenter via onBack when done, rather than this
  * component needing to know anything about a given game's internals.
  *
  * Always starts at Game Center on mount (no persisted "resume where I left off") — App.tsx already
@@ -67,7 +66,6 @@ export default function GameView({ session, onClose, gameCenterNonce }: GameView
   if (activeGame && !activeVisible && !isMultiplayerGame) return null;
 
   if (activeGame === "bible-trivia") return <BibleTriviaView session={session} onBack={backToCenter} available={activeVisible} />;
-  if (activeGame === "crossword") return <CrosswordView onBack={backToCenter} />;
   if (activeGame === "saving-peter") return <SavingPeterHub session={session} onBack={backToCenter} available={activeVisible} />;
   if (activeGame === "fill-blank") return <FillBlankView onBack={backToCenter} />;
   if (activeGame === "memorization") return <MemorizationView onBack={backToCenter} />;

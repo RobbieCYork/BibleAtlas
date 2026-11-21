@@ -33,7 +33,7 @@ interface BibleTriviaViewProps {
 }
 
 /** The Bible Trivia game's own flow — extracted out of GameView so that component can stay a thin
- * router across multiple games (see CrosswordView for the other one). Owns which room the player is
+ * router across multiple games. Owns which room the player is
  * currently in and drives it through lobby -> active -> finished by watching game_rooms/game_players/
  * game_buzzes over one shared realtime channel (see subscribeToRoom). */
 export default function BibleTriviaView({ session, onBack, available }: BibleTriviaViewProps) {

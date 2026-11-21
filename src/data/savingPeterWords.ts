@@ -1,4 +1,26 @@
-import { CROSSWORD_LEVELS, type CrosswordLevel } from "./crosswordWords";
+import type { IconName } from "../components/Icon";
+export type SavingPeterLevel = "beginner" | "easy" | "intermediate" | "advanced" | "expert";
+
+export interface SavingPeterLevelDef {
+  key: SavingPeterLevel;
+  label: string;
+  description: string;
+  /** A name from components/Icon.tsx. These use the shared difficulty ladder (level1..level5),
+   * so a picker reads as a progression rather than as a list of unrelated pictures. */
+  icon: IconName;
+}
+
+/** Five difficulty tiers, Beginner (little kids just learning Bible stories) through Expert (Bible
+ * students and pastors). */
+export const SAVING_PETER_LEVELS: SavingPeterLevelDef[] = [
+  { key: "beginner", label: "Beginner", description: "For little ones just learning Bible stories.", icon: "level1" },
+  { key: "easy", label: "Easy", description: "Sunday school level — familiar people and places.", icon: "level2" },
+  { key: "intermediate", label: "Intermediate", description: "For a regular churchgoer — books, doctrine, deeper history.", icon: "level3" },
+  { key: "advanced", label: "Advanced", description: "Serious Bible study — theology and biblical languages.", icon: "level4" },
+  { key: "expert", label: "Expert", description: "Seminary-level — for Bible students and pastors.", icon: "level5" },
+];
+
+
 
 export interface SavingPeterWord {
   /** Letters only, uppercase. */
@@ -8,7 +30,7 @@ export interface SavingPeterWord {
 
 /** Points a correct guess is worth in multiplayer mode, by difficulty tier — the harder the word, the
  * more it's worth, same idea as Bible Trivia's per-question point values. */
-export const SAVING_PETER_LEVEL_POINTS: Record<CrosswordLevel, number> = {
+export const SAVING_PETER_LEVEL_POINTS: Record<SavingPeterLevel, number> = {
   beginner: 5,
   easy: 10,
   intermediate: 15,
@@ -18,7 +40,7 @@ export const SAVING_PETER_LEVEL_POINTS: Record<CrosswordLevel, number> = {
 
 export interface SavingPeterRoundEntry {
   id: string;
-  level: CrosswordLevel;
+  level: SavingPeterLevel;
   word: string;
   clue: string;
   points: number;
@@ -40,7 +62,7 @@ function shuffledWords<T>(items: T[]): T[] {
  * so every client resolves the actual content from this same local bundle, same trust model as Trivia. */
 export function buildSavingPeterRoundIds(count = 30): string[] {
   const pool: string[] = [];
-  for (const level of CROSSWORD_LEVELS.map((l) => l.key)) {
+  for (const level of SAVING_PETER_LEVELS.map((l) => l.key)) {
     for (const entry of SAVING_PETER_WORDS[level]) {
       pool.push(`${level}:${entry.word}`);
     }
@@ -55,21 +77,17 @@ export function buildSavingPeterRoundIds(count = 30): string[] {
 export function resolveSavingPeterRound(id: string): SavingPeterRoundEntry | null {
   const sep = id.indexOf(":");
   if (sep < 0) return null;
-  const level = id.slice(0, sep) as CrosswordLevel;
+  const level = id.slice(0, sep) as SavingPeterLevel;
   const word = id.slice(sep + 1);
   const entry = SAVING_PETER_WORDS[level]?.find((w) => w.word === word);
   if (!entry) return null;
   return { id, level, word: entry.word, clue: entry.clue, points: SAVING_PETER_LEVEL_POINTS[level] };
 }
 
-// Reused as-is (see CrosswordView's level picker) — "the same levels of difficulty as the Crossword"
-// means literally these five tiers, not a look-alike set defined twice.
-export { CROSSWORD_LEVELS as SAVING_PETER_LEVELS };
-export type { CrosswordLevel as SavingPeterLevel };
 
 /** One word bank per difficulty tier, big enough (25-30+ entries each) that the shuffled-bag draw in
  * SavingPeterView.tsx can go a full lap without repeating a word. */
-export const SAVING_PETER_WORDS: Record<CrosswordLevel, SavingPeterWord[]> = {
+export const SAVING_PETER_WORDS: Record<SavingPeterLevel, SavingPeterWord[]> = {
   beginner: [
     { word: "PETER", clue: "The disciple who walked on water, then doubted" },
     { word: "JESUS", clue: "Who said \"Come\" and caught Peter when he sank" },

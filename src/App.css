@@ -7574,7 +7574,7 @@ a.profile-links-url {
   /* Viewport units divided by the text scale. `zoom` scales ordinary lengths but does NOT divide
      viewport units, so inside this zoomed root a bare `100vw` renders as 100vw x the scale — at
      180% the panel's own cap would be nearly twice the screen. Same correction, and the same
-     reason, as the height caps in Crossword.css. The px terms are design spacing and do scale. */
+     reason, as the height caps elsewhere. The px terms are design spacing and do scale. */
   max-width: calc(100vw - 32px);
   max-height: calc(100dvh - 120px);
   overflow-y: auto;

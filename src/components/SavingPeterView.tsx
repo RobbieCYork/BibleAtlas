@@ -3,7 +3,7 @@ import type { Session } from "@supabase/supabase-js";
 import { supabase } from "../lib/supabase";
 import { SAVING_PETER_LEVELS, SAVING_PETER_WORDS, type SavingPeterLevel, type SavingPeterWord } from "../data/savingPeterWords";
 import BackButton from "./BackButton";
-import "./Crossword.css";
+import "./SavingPeterLevels.css";
 import Icon from "./Icon";
 
 function shuffled<T>(items: T[]): T[] {
@@ -38,7 +38,7 @@ interface SavingPeterViewProps {
 /** Hangman, themed around Matthew 14:22-33 — every wrong guess sinks Peter a little further into the
  * water instead of building a gallows; a full miss (this level's MAX_WRONG_BY_LEVEL allowance) means he goes under
  * entirely, guessing the word before that means Jesus catches his hand in time. Same five difficulty
- * tiers as the Crossword (see data/savingPeterWords.ts), picked the same way. */
+ * tiers across the games (see data/savingPeterWords.ts), picked the same way. */
 export default function SavingPeterView({ session, onBack }: SavingPeterViewProps) {
   const [level, setLevel] = useState<SavingPeterLevel | null>(null);
   const [entry, setEntry] = useState(() => SAVING_PETER_WORDS.beginner[0]);
@@ -144,14 +144,14 @@ export default function SavingPeterView({ session, onBack }: SavingPeterViewProp
         </h2>
         </header>
         <div className="game-body">
-          <div className="crossword-level-picker">
+          <div className="level-picker">
             <div className="games-panel-intro">
               <h2>Choose a difficulty</h2>
               <p>Beginner is for little ones just learning Bible stories; Expert is seminary-level — and allows only 3 wrong guesses instead of 6.</p>
             </div>
             <div className="game-center-list">
               {SAVING_PETER_LEVELS.map((l) => (
-                <button key={l.key} type="button" className="game-center-card crossword-level-card" onClick={() => startLevel(l.key)}>
+                <button key={l.key} type="button" className="game-center-card level-card" onClick={() => startLevel(l.key)}>
                   <span className="game-center-card-icon">
                     <Icon name={l.icon} />
                   </span>

@@ -25,13 +25,6 @@ export const GAMES: GameDef[] = [
     tagline: "Live multiplayer trivia with video chat — every player answers, first correct doubles.",
   },
   {
-    key: "crossword",
-    feature: "game_crossword",
-    icon: "crossword",
-    title: "Bible Crossword",
-    tagline: "Solo crossword puzzles from Beginner (little ones) to Expert (pastors & Bible students).",
-  },
-  {
     key: "saving-peter",
     feature: "game_saving_peter",
     icon: "savingPeter",
