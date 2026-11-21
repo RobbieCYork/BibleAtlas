@@ -149,8 +149,8 @@ const MUTATIONS = [
   },
   {
     name: "is_class_staff ignores the class id (cross-class access)",
-    find: "    select 1 from public.class_staff s where s.class_id = p_class_id and s.user_id = p_uid);",
-    replace: "    select 1 from public.class_staff s where s.user_id = p_uid);",
+    find: "    select 1 from public.class_staff s where s.class_id = p_class_id and s.user_id = auth.uid());",
+    replace: "    select 1 from public.class_staff s where s.user_id = auth.uid());",
   },
   {
     name: "the seat limit is not enforced on join",
@@ -206,6 +206,23 @@ const MUTATIONS = [
     name: "the 5-seat minimum is not enforced in the RPC (the table CHECK is the second wall)",
     find: "  if v_seats < 5 then",
     replace: "  if v_seats < 1 then",
+  },
+  // Part A of phase 3: the membership helpers are self-only (no caller-supplied user id).
+  {
+    name: "a two-argument is_class_member(class, uid) probe is back and granted to authenticated",
+    find: "\ncommit;\n",
+    replace:
+      "\ncreate function public.is_class_member(p_class_id uuid, p_uid uuid) returns boolean language sql stable security definer set search_path = public, pg_temp as $$ select exists (select 1 from public.class_members m where m.class_id = p_class_id and m.user_id = p_uid and m.seat_state = 'active') $$;\ngrant execute on function public.is_class_member(uuid, uuid) to authenticated;\ncommit;\n",
+  },
+  {
+    name: "is_class_member answers for anyone in the class, not just the caller",
+    find: "     where m.class_id = p_class_id and m.user_id = auth.uid() and m.seat_state = 'active');",
+    replace: "     where m.class_id = p_class_id and m.seat_state = 'active');",
+  },
+  {
+    name: "church_role_at_least answers about an account other than the caller",
+    find: "  if p_uid is null or p_church_id is null or p_uid is distinct from auth.uid() then",
+    replace: "  if p_uid is null or p_church_id is null then",
   },
 ];
 

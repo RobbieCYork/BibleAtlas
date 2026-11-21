@@ -218,7 +218,7 @@ const MUTATIONS = [
   },
   {
     name: "a removed student still opens the class's assignments",
-    find: "  if v_a.id is null or v_a.published_at is null or not public.is_class_member(v_a.class_id, v_uid) then\n    raise exception 'not_found' using errcode = '42501';\n  end if;\n  select * into v_c",
+    find: "  if v_a.id is null or v_a.published_at is null or not public.is_class_member(v_a.class_id) then\n    raise exception 'not_found' using errcode = '42501';\n  end if;\n  select * into v_c",
     replace: "  if v_a.id is null or v_a.published_at is null or not exists (select 1 from public.class_members m where m.class_id = v_a.class_id and m.user_id = v_uid) then\n    raise exception 'not_found' using errcode = '42501';\n  end if;\n  select * into v_c",
   },
   {

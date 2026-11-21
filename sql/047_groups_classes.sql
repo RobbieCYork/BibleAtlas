@@ -399,58 +399,104 @@ create table if not exists public.invite_suppressions (
 --    can ask about class_staff / class_members without recursing (42P17; the
 --    sql/003, sql/012 lesson). Pinned search_path. Every one takes the class
 --    id: there is no "is staff of anything" question here, on purpose.
+--
+--    SELF-ONLY. None of them takes a user id. Each answers about auth.uid()
+--    and nobody else. An earlier draft took (class_id, uid default auth.uid())
+--    and was EXECUTE-granted to authenticated — it has to be, because Postgres
+--    evaluates a policy's function calls as the QUERYING role — which let any
+--    signed-in user who knew two UUIDs ask "is this person in that class?".
+--    With no uid parameter the grant answers only "am I?", which the caller
+--    already knows. SECURITY DEFINER RPCs that need the question for the caller
+--    call the same one-argument form (auth.uid() is the request's, not the
+--    definer's). Nothing in this file, 048 or 049 asks it about anyone else;
+--    server-side code that must (e.g. the invite job) reads the tables
+--    directly as definer. sql/tests/047 proves the two-argument forms do not
+--    exist and that an outsider learns nothing.
 -- ============================================================================
-create or replace function public.is_class_staff(p_class_id uuid, p_uid uuid default auth.uid())
+create or replace function public.is_class_staff(p_class_id uuid)
 returns boolean
 language sql
 stable
 security definer
 set search_path = public, pg_temp
 as $$
-  select p_class_id is not null and p_uid is not null and exists (
-    select 1 from public.class_staff s where s.class_id = p_class_id and s.user_id = p_uid);
+  select p_class_id is not null and auth.uid() is not null and exists (
+    select 1 from public.class_staff s where s.class_id = p_class_id and s.user_id = auth.uid());
 $$;
 
-create or replace function public.is_class_owner(p_class_id uuid, p_uid uuid default auth.uid())
+create or replace function public.is_class_owner(p_class_id uuid)
 returns boolean
 language sql
 stable
 security definer
 set search_path = public, pg_temp
 as $$
-  select p_class_id is not null and p_uid is not null and exists (
-    select 1 from public.class_staff s where s.class_id = p_class_id and s.user_id = p_uid and s.role = 'owner');
+  select p_class_id is not null and auth.uid() is not null and exists (
+    select 1 from public.class_staff s where s.class_id = p_class_id and s.user_id = auth.uid() and s.role = 'owner');
 $$;
 
-create or replace function public.is_class_member(p_class_id uuid, p_uid uuid default auth.uid())
+create or replace function public.is_class_member(p_class_id uuid)
 returns boolean
 language sql
 stable
 security definer
 set search_path = public, pg_temp
 as $$
-  select p_class_id is not null and p_uid is not null and exists (
+  select p_class_id is not null and auth.uid() is not null and exists (
     select 1 from public.class_members m
-     where m.class_id = p_class_id and m.user_id = p_uid and m.seat_state = 'active');
+     where m.class_id = p_class_id and m.user_id = auth.uid() and m.seat_state = 'active');
 $$;
 
--- "May this account see this org's logo?" — org admins (033) and people in one
--- of the org's classes. Used by the storage policy only.
-create or replace function public.can_view_org_logo(p_org_id uuid, p_uid uuid default auth.uid())
+-- "May I see this org's logo?" — org admins (033) and people in one of the
+-- org's classes. Used by the storage policy only. Self-only, like the above.
+create or replace function public.can_view_org_logo(p_org_id uuid)
 returns boolean
 language sql
 stable
 security definer
 set search_path = public, pg_temp
 as $$
-  select p_org_id is not null and p_uid is not null and (
-    public.church_role_at_least(p_org_id, 'admin', p_uid)
+  select p_org_id is not null and auth.uid() is not null and (
+    public.church_role_at_least(p_org_id, 'admin')
     or exists (select 1 from public.classes c
                  join public.class_staff s on s.class_id = c.id
-                where c.org_id = p_org_id and s.user_id = p_uid)
+                where c.org_id = p_org_id and s.user_id = auth.uid())
     or exists (select 1 from public.classes c
                  join public.class_members m on m.class_id = c.id
-                where c.org_id = p_org_id and m.user_id = p_uid and m.seat_state = 'active'));
+                where c.org_id = p_org_id and m.user_id = auth.uid() and m.seat_state = 'active'));
+$$;
+
+-- ----------------------------------------------------------------------------
+-- 4b. FIX to sql/033's church_role_at_least(church, role, uid default
+-- auth.uid()): the same probe. It is EXECUTE-granted to authenticated (its
+-- policies need that), so any signed-in user could ask "is <uuid> an admin /
+-- member of <church>?". Every caller in 033, 047 and 048 asks about the caller;
+-- now a p_uid other than auth.uid() is answered FALSE. The signature is kept so
+-- 033's grants and every call site still resolve. NOTE: 033 applied ON ITS OWN
+-- still has the probe; this closes it only once 047 runs.
+-- ----------------------------------------------------------------------------
+create or replace function public.church_role_at_least(p_church_id uuid, p_role text, p_uid uuid default auth.uid())
+returns boolean
+language plpgsql
+stable
+security definer
+set search_path = public, pg_temp
+as $$
+declare
+  v_required integer := public.church_role_rank(p_role);
+  v_actual   integer;
+begin
+  if v_required is null then
+    raise exception 'unknown church role %', p_role using errcode = '22023';
+  end if;
+  if p_uid is null or p_church_id is null or p_uid is distinct from auth.uid() then
+    return false;
+  end if;
+  select public.church_role_rank(m.role) into v_actual
+    from public.church_members m
+   where m.church_id = p_church_id and m.user_id = p_uid;
+  return coalesce(v_actual, 0) >= v_required;
+end;
 $$;
 
 -- The switch as the app sees it: on for everyone, or on for the owner while
@@ -901,7 +947,7 @@ begin
     exception when others then
       raise exception 'bad_org: unknown organisation' using errcode = '22023';
     end;
-    if not public.church_role_at_least(v_org, 'admin', v_uid) then
+    if not public.church_role_at_least(v_org, 'admin') then
       raise exception 'not_org_admin: you are not an admin of that organisation' using errcode = '42501';
     end if;
     if not exists (select 1 from public.churches c
@@ -998,7 +1044,7 @@ begin
     insert into public.class_join_attempts (user_id, ok) values (v_uid, false);
     return jsonb_build_object('ok', false, 'error', 'ended');
   end if;
-  if public.is_class_staff(v_class.id, v_uid) then
+  if public.is_class_staff(v_class.id) then
     insert into public.class_join_attempts (user_id, ok) values (v_uid, true);
     return jsonb_build_object('ok', false, 'error', 'already_staff', 'class_id', v_class.id);
   end if;
@@ -1338,10 +1384,10 @@ create policy org_logos_delete on storage.objects
 -- 12. FUNCTION GRANTS — Postgres grants EXECUTE to PUBLIC by default, and
 --     Supabase's default ACL grants it to anon too. Revoke all, then grant.
 -- ============================================================================
-revoke all on function public.is_class_staff(uuid, uuid)       from public, anon, authenticated;
-revoke all on function public.is_class_owner(uuid, uuid)       from public, anon, authenticated;
-revoke all on function public.is_class_member(uuid, uuid)      from public, anon, authenticated;
-revoke all on function public.can_view_org_logo(uuid, uuid)    from public, anon, authenticated;
+revoke all on function public.is_class_staff(uuid)             from public, anon, authenticated;
+revoke all on function public.is_class_owner(uuid)             from public, anon, authenticated;
+revoke all on function public.is_class_member(uuid)            from public, anon, authenticated;
+revoke all on function public.can_view_org_logo(uuid)          from public, anon, authenticated;
 revoke all on function public.groups_enabled_for(uuid)         from public, anon, authenticated;
 revoke all on function public.class_end_ts(date, text)         from public, anon, authenticated;
 revoke all on function public.class_new_join_code()            from public, anon, authenticated;
@@ -1360,11 +1406,12 @@ revoke all on function public.group_sync_class(uuid)           from public, anon
 revoke all on function public.group_apply_subscription_event(text, text, timestamptz, boolean, uuid, uuid, text, jsonb)
   from public, anon, authenticated;
 
--- Referenced from policies (evaluated in the caller's session).
-grant execute on function public.is_class_staff(uuid, uuid)    to authenticated;
-grant execute on function public.is_class_owner(uuid, uuid)    to authenticated;
-grant execute on function public.is_class_member(uuid, uuid)   to authenticated;
-grant execute on function public.can_view_org_logo(uuid, uuid) to authenticated;
+-- Referenced from policies (evaluated in the caller's session, so the caller
+-- needs EXECUTE). Self-only: no user-id parameter, nothing to probe (§4).
+grant execute on function public.is_class_staff(uuid)          to authenticated;
+grant execute on function public.is_class_owner(uuid)          to authenticated;
+grant execute on function public.is_class_member(uuid)         to authenticated;
+grant execute on function public.can_view_org_logo(uuid)       to authenticated;
 grant execute on function public.org_logo_folder(text)         to authenticated;
 -- Client RPCs.
 grant execute on function public.groups_status()               to authenticated;

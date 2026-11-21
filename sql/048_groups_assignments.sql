@@ -541,7 +541,7 @@ begin
   exception when others then
     raise exception 'bad_request: bad id' using errcode = '22023';
   end;
-  if not public.is_class_staff(v_class, v_uid) then
+  if not public.is_class_staff(v_class) then
     raise exception 'not_class_staff: only this class''s teacher or leader can do that' using errcode = '42501';
   end if;
   if not public.class_is_editable(v_class) then
@@ -941,7 +941,7 @@ declare
   v_changed boolean := false;
 begin
   select * into v_s from public.assignment_submissions where id = p_submission_id for update;
-  if v_s.id is null or not public.is_class_staff(v_s.class_id, v_uid) then
+  if v_s.id is null or not public.is_class_staff(v_s.class_id) then
     raise exception 'not_class_staff: only this class''s teacher or leader can do that' using errcode = '42501';
   end if;
   if v_s.status = 'draft' then
@@ -1112,7 +1112,7 @@ declare
   v_uid uuid := auth.uid();
   v_vis boolean;
 begin
-  if public.is_class_staff(p_class_id, v_uid) then
+  if public.is_class_staff(p_class_id) then
     return jsonb_build_object('role', 'staff', 'assignments', coalesce((
       select jsonb_agg(jsonb_build_object(
                'id', a.id, 'title', a.title, 'due_at', a.due_at, 'published_at', a.published_at,
@@ -1126,7 +1126,7 @@ begin
              order by coalesce(a.due_at, a.created_at), a.created_at)
         from public.assignments a where a.class_id = p_class_id), '[]'::jsonb));
   end if;
-  if not public.is_class_member(p_class_id, v_uid) then
+  if not public.is_class_member(p_class_id) then
     raise exception 'not_found' using errcode = '42501';
   end if;
   select c.scores_visible into v_vis from public.classes c where c.id = p_class_id;
@@ -1168,7 +1168,7 @@ declare
   v_key boolean;
 begin
   select * into v_a from public.assignments where id = p_assignment_id;
-  if v_a.id is null or v_a.published_at is null or not public.is_class_member(v_a.class_id, v_uid) then
+  if v_a.id is null or v_a.published_at is null or not public.is_class_member(v_a.class_id) then
     raise exception 'not_found' using errcode = '42501';
   end if;
   select * into v_c from public.classes where id = v_a.class_id;
@@ -1225,7 +1225,7 @@ begin
     raise exception 'not_signed_in' using errcode = '42501';
   end if;
   select * into v_a from public.assignments where id = p_assignment_id;
-  if v_a.id is null or v_a.published_at is null or not public.is_class_member(v_a.class_id, v_uid) then
+  if v_a.id is null or v_a.published_at is null or not public.is_class_member(v_a.class_id) then
     raise exception 'not_found' using errcode = '42501';
   end if;
   if not public.class_is_open(v_a.class_id) then

@@ -113,7 +113,8 @@ begin
                            'remove_class_member(uuid, uuid)','my_classes()','class_roster(uuid)',
                            'group_sync_entitlement(uuid)','group_sync_class(uuid)',
                            'group_apply_subscription_event(text, text, timestamptz, boolean, uuid, uuid, text, jsonb)',
-                           'is_class_staff(uuid, uuid)','is_class_member(uuid, uuid)','class_new_join_code()'] loop
+                           'is_class_staff(uuid)','is_class_member(uuid)','is_class_owner(uuid)',
+                           'can_view_org_logo(uuid)','class_new_join_code()'] loop
     if has_function_privilege('anon', 'public.' || f, 'execute') then
       raise exception 'FAIL anon can execute %', f;
     end if;
@@ -462,6 +463,98 @@ begin
   end if;
   raise notice 'PASS member Plus expires at the period end, never past the class end';
 end $$;
+
+
+-- ------------------------------------------------ 8b. nobody can probe ANOTHER person's membership
+-- The role helpers are self-only. Catalog: no class/org helper that takes a
+-- user id exists, or (if one ever comes back) is executable by a client role.
+do $$
+declare
+  r record;
+begin
+  for r in
+    select p.oid::regprocedure::text as sig
+      from pg_proc p join pg_namespace n on n.oid = p.pronamespace
+     where n.nspname = 'public'
+       and p.proname in ('is_class_staff', 'is_class_owner', 'is_class_member', 'can_view_org_logo')
+       and p.pronargs <> 1
+  loop
+    raise exception 'FAIL a membership helper takes more than the class/org id: %', r.sig;
+  end loop;
+  for r in
+    select p.oid::regprocedure::text as sig
+      from pg_proc p join pg_namespace n on n.oid = p.pronamespace
+     where n.nspname = 'public'
+       and p.proname in ('is_class_staff', 'is_class_owner', 'is_class_member', 'can_view_org_logo')
+  loop
+    if has_function_privilege('anon', r.sig, 'execute') then
+      raise exception 'FAIL anon can execute %', r.sig;
+    end if;
+  end loop;
+  raise notice 'PASS membership helpers take no user id and anon cannot call them';
+end $$;
+
+-- Behaviour: the outsider O, knowing S1's id, the class id and the org id,
+-- learns nothing; S1 and teacher A get true about THEMSELVES only.
+select pg_temp.become('authenticated', '00000000-0000-4000-8000-000000000075');
+set local role authenticated;
+do $$
+declare
+  v_class uuid := (select v::uuid from t47 where k='classA');
+  v_org   uuid := (select v::uuid from t47 where k='orgA');
+  r text;
+begin
+  r := public.t047_try(format('select public.is_class_member(%L::uuid, %L::uuid)', v_class, '00000000-0000-4000-8000-000000000073'));
+  if r = 'ok' then raise exception 'FAIL an outsider can ask whether S1 is in class A'; end if;
+  r := public.t047_try(format('select public.is_class_staff(%L::uuid, %L::uuid)', v_class, '00000000-0000-4000-8000-000000000071'));
+  if r = 'ok' then raise exception 'FAIL an outsider can ask whether A teaches class A'; end if;
+  r := public.t047_try(format('select public.is_class_owner(%L::uuid, %L::uuid)', v_class, '00000000-0000-4000-8000-000000000071'));
+  if r = 'ok' then raise exception 'FAIL an outsider can ask whether A owns class A'; end if;
+  r := public.t047_try(format('select public.can_view_org_logo(%L::uuid, %L::uuid)', v_org, '00000000-0000-4000-8000-000000000073'));
+  if r = 'ok' then raise exception 'FAIL an outsider can ask whether S1 is linked to org A'; end if;
+  if public.church_role_at_least(v_org, 'admin', '00000000-0000-4000-8000-000000000071') then
+    raise exception 'FAIL church_role_at_least answers about another account';
+  end if;
+  if public.church_role_at_least(v_org, 'member', '00000000-0000-4000-8000-000000000073') then
+    raise exception 'FAIL church_role_at_least answers about another account (member)';
+  end if;
+  if public.is_class_member(v_class) or public.is_class_staff(v_class) or public.is_class_owner(v_class)
+     or public.can_view_org_logo(v_org) then
+    raise exception 'FAIL the outsider is reported as in the class';
+  end if;
+  raise notice 'PASS an outsider who knows the UUIDs cannot probe who is in a class or an org';
+end $$;
+reset role;
+
+select pg_temp.become('authenticated', '00000000-0000-4000-8000-000000000073');
+set local role authenticated;
+do $$
+declare
+  v_class uuid := (select v::uuid from t47 where k='classA');
+begin
+  if not public.is_class_member(v_class) then raise exception 'FAIL S1 is not a member of class A by the helper'; end if;
+  if public.is_class_staff(v_class) then raise exception 'FAIL S1 is reported as staff'; end if;
+  if not public.can_view_org_logo((select v::uuid from t47 where k='orgA')) then raise exception 'FAIL S1 cannot view its org logo'; end if;
+  if public.church_role_at_least((select v::uuid from t47 where k='orgA'), 'admin', '00000000-0000-4000-8000-000000000071') then
+    raise exception 'FAIL a student can ask whether the teacher is the org admin';
+  end if;
+end $$;
+reset role;
+
+select pg_temp.become('authenticated', '00000000-0000-4000-8000-000000000071');
+set local role authenticated;
+do $$
+declare
+  v_class uuid := (select v::uuid from t47 where k='classA');
+begin
+  if not (public.is_class_staff(v_class) and public.is_class_owner(v_class)) then raise exception 'FAIL A is not owner by the helper'; end if;
+  if public.is_class_member(v_class) then raise exception 'FAIL A is reported as a member'; end if;
+  if not public.church_role_at_least((select v::uuid from t47 where k='orgA'), 'admin') then
+    raise exception 'FAIL A is not admin of its own org by the 2-arg call';
+  end if;
+  raise notice 'PASS the helpers still answer correctly about the caller';
+end $$;
+reset role;
 
 
 -- ------------------------------------------------ 9. what a STUDENT can see
