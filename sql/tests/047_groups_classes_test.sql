@@ -671,7 +671,8 @@ begin
 end $$;
 reset role;
 
--- The app owner: classes + billing for support, never the roster.
+-- The app owner: classes + billing for support, never the roster TABLE (the
+-- audited one-class roster lookup is sql/050, proven by sql/tests/050).
 select pg_temp.become('authenticated', '00000000-0000-4000-8000-000000000076');
 set local role authenticated;
 do $$ begin

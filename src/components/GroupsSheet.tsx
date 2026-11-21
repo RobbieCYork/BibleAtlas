@@ -2,6 +2,7 @@ import { useCallback, useEffect, useMemo, useState } from "react";
 import "./Groups.css";
 import ClassWork from "./GroupAssignments";
 import { InvitePanel, JoinClassPanel } from "./GroupInvites";
+import { SupportAccessPanel } from "./GroupSupport";
 import { pendingJoinClass, type PendingJoin } from "../lib/groupsJoinParam";
 import {
   addGroupSeats,
@@ -269,10 +270,11 @@ function StaffCard({ c, onChanged, onOpen }: { c: MyClass; onChanged: () => Prom
       )}
       {c.status === "active" && (
         <button type="button" className="auth-back-link groups-invite-toggle" aria-expanded={inviting} onClick={() => setInviting(!inviting)}>
-          {inviting ? "Hide invites" : `Invite ${w.participants}`}
+          {inviting ? "Hide invites and settings" : `Invite ${w.participants} and settings`}
         </button>
       )}
       {inviting && c.status === "active" && <InvitePanel c={c} />}
+      {inviting && <SupportAccessPanel c={c} />}
       {(c.status === "active" || c.status === "draft" || c.status === "ended") && (
         <button type="button" className="paid-teaser-button groups-open-work" onClick={onOpen}>
           {w.workItems} &amp; {w.gradebook.toLowerCase()}

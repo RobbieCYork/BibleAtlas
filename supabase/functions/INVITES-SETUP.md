@@ -70,6 +70,16 @@ $$);
    invite your own second address, check the email, the link, unsubscribe, and a test bounce.
 6. **(Robbie)** Production: migrations, functions, cron, then the switches.
 
+## Support access (sql/050)
+
+The app owner can look up ONE class's roster from Admin Console → Class support (shown only to the
+owner while Groups is on): a reason is required and shown to the class's staff in "Support access log";
+30 lookups an hour; invite addresses masked; no answers, grades, essays or submissions. Grades (status
+and score grid only) need the class owner's "Grant support access" (24h from the app; 1-72h in SQL,
+revocable). DRAFT FOR COUNSEL line for Privacy and Terms (`src/lib/groupSupport.ts`): "Capstone staff
+may view class rosters to provide support; access is logged and visible to the class admin." Not
+published anywhere.
+
 ## Not built
 
 App-sent SMS (phase 8, never reminders). Re-verification of the "class is full" email when seats drop

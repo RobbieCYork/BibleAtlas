@@ -51,6 +51,12 @@ const NEEDLES = [
   "Text it from your phone",
   "a Bible study app with maps, a timeline and reading plans",
   "When were you born?",
+  // sql/050 support access
+  "owner_support_roster",
+  "owner_support_find_classes",
+  "class_support_log",
+  "grant_support_access",
+  "Support access log",
 ];
 // Every sentence of 40+ characters of the DRAFT agreement.
 const agreementSrc = fs.readFileSync(path.join(REPO_ROOT, "src/lib/groupAgreement.ts"), "utf8");

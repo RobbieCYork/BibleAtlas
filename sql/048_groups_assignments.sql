@@ -59,8 +59,9 @@
 --                       keys, the gradebook, every SUBMITTED submission. NOT a
 --                       student's unsubmitted draft (that is still theirs).
 --   app owner (025)     nothing here. Not staff, so every RPC refuses. Support
---                       access to student work would be a separate, audited
---                       RPC (plan §2) and is not built.
+--                       access is sql/050: the roster with a logged reason, and
+--                       the gradebook grid (no answers or essays) ONLY under a
+--                       time-limited grant the class owner gives.
 --
 -- EDIT RULES (no silent changing of graded work)
 -- ----------------------------------------------------------------------------

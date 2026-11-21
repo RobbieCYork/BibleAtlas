@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from "react";
+import { lazy, Suspense, useCallback, useEffect, useState } from "react";
 import {
   ADMIN_ACTIONS_NOT_BUILT,
   deleteContent,
@@ -32,6 +32,9 @@ import type { Role } from "../lib/reportsApi";
 import Icon from "./Icon";
 import { FeatureStagesPanel, LiveTestSwitch } from "./FeatureRelease";
 import { useFeatureAdmin } from "../lib/features";
+import { useGroupsEnabled } from "../lib/groupsStatus";
+// Lazy: the support tool (sql/050) stays out of the main bundle.
+const GroupSupportConsole = lazy(() => import("./GroupSupport"));
 
 /** Every section loads on demand, so opening the console costs one small query (the overview) rather
  * than eight. `AdminSection` is both the tab key and the loader key. */
@@ -45,7 +48,8 @@ type AdminSection =
   | "moderation"
   | "safety"
   | "reports"
-  | "release";
+  | "release"
+  | "support";
 
 /** "Moderation" and "Safety" are deliberately two tabs, not one, because they answer two different
  * questions. Moderation is a BROWSE — the most recent public posts and comments, whether or not
@@ -67,6 +71,8 @@ const SECTION_LABELS: Record<AdminSection, string> = {
   reports: "Reports",
   // Testing / Live stages (sql/039). Owner only — the tab is not drawn for anyone else.
   release: "Features",
+  // sql/050: audited one-class roster lookups. Owner only, and only while Groups is on.
+  support: "Class support",
 };
 
 const WINDOW_OPTIONS = [7, 30, 90] as const;
@@ -116,7 +122,10 @@ export interface AdminConsoleReports {
 export default function AdminConsole({ reports }: { reports?: AdminConsoleReports } = {}) {
   const [section, setSection] = useState<AdminSection>("overview");
   const { isOwner } = useFeatureAdmin();
-  const sectionKeys = (Object.keys(SECTION_LABELS) as AdminSection[]).filter((k) => (k !== "release" || isOwner) && (k !== "reports" || !!reports));
+  const groupsEnabled = useGroupsEnabled();
+  const sectionKeys = (Object.keys(SECTION_LABELS) as AdminSection[]).filter(
+    (k) => (k !== "release" || isOwner) && (k !== "reports" || !!reports) && (k !== "support" || (isOwner && groupsEnabled))
+  );
   const [days, setDays] = useState<number>(30);
   const [error, setError] = useState<string | null>(null);
 
@@ -630,6 +639,11 @@ export default function AdminConsole({ reports }: { reports?: AdminConsoleReport
 
       {/* -------------------------------------------------------------- RELEASE */}
       {section === "release" && isOwner && <FeatureStagesPanel />}
+      {section === "support" && isOwner && groupsEnabled && (
+        <Suspense fallback={<p className="admin-note">Loading…</p>}>
+          <GroupSupportConsole />
+        </Suspense>
+      )}
 
       {section === "moderation" && moderation && (
         <>

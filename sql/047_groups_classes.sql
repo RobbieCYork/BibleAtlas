@@ -64,7 +64,12 @@
 --                        agreements: the class OWNER only.
 --   app owner (025)      classes, class_billing, class_agreements for support
 --                        and billing disputes. NOT class_members, NOT invites:
---                        no blanket read of who is in a class (plan §2).
+--                        no blanket TABLE read of who is in a class (plan §2).
+--                        CHANGED 2026-11-21 (Robbie via Rev): the owner MAY see
+--                        one class's roster, with a required reason, rate
+--                        limited and always logged where the class staff see
+--                        it — sql/050 owner_support_roster(). Still no grant
+--                        or policy here.
 --   service role         the Stripe webhook's write path (and nothing else
 --                        writes class_billing or the 'group' entitlement).
 --
@@ -573,7 +578,8 @@ create policy class_staff_select on public.class_staff
   using (user_id = auth.uid() or public.is_class_staff(class_id));
 
 -- class_members: your OWN row; the class's staff see the roster. Never another
--- member's row, and NOT the app owner (no blanket read of who is in a class).
+-- member's row, and NOT the app owner (no blanket read of who is in a class;
+-- one class at a time, logged and visible to its staff: sql/050).
 drop policy if exists class_members_select on public.class_members;
 create policy class_members_select on public.class_members
   as permissive for select to authenticated
