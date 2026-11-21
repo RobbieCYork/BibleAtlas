@@ -41,6 +41,8 @@ import {
   poiPage,
   topicPage,
 } from "./render.mjs";
+import { GROUP_PATHS, generateGroupsPages } from "../groups-pages/build-groups.mjs";
+import { isPublished as groupsPublished } from "../groups-pages/config.mjs";
 
 const RENDERERS = {
   locations: locationPage,
@@ -130,6 +132,14 @@ export async function generateSeo(outDir) {
   write(outDir, fileForPath("/terms"), legalPage(legal.TERMS_OF_SERVICE, { path: "/terms", effectiveDate: legal.LEGAL_EFFECTIVE_DATE }));
   write(outDir, fileForPath("/privacy"), legalPage(legal.PRIVACY_POLICY, { path: "/privacy", effectiveDate: legal.LEGAL_EFFECTIVE_DATE }));
   pages += 2;
+
+  // Capstone Plus for Groups marketing pages (scripts/groups-pages/). Always emitted so a preview
+  // build can be reviewed, but they are `noindex` and OUT of the sitemap until Groups is live or
+  // Robbie sets PUBLISH — a sitemap that lists noindex URLs is a Search Console error, and nothing
+  // may be indexed before he approves. Not linked from any page of the library or the app.
+  const groups = generateGroupsPages(outDir);
+  pages += groups.pages;
+  if (groupsPublished()) urls.push(...GROUP_PATHS);
 
   // One sitemap file: 880-odd URLs is far inside the 50,000-URL / 50 MB limit, so an index would be
   // a second thing to keep in step for no benefit. No <lastmod>, <priority> or <changefreq> — we
