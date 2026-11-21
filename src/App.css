@@ -13079,3 +13079,14 @@ img.sn-image,
   color: inherit;
   text-decoration: underline;
 }
+
+/* Articles-mode search results: icon + title/type/snippet stack, keyboard-active row. */
+.search-results li.active { background: var(--accent-bg); }
+.article-search-results li { justify-content: flex-start; align-items: flex-start; gap: 10px; }
+.article-search-icon { flex-shrink: 0; font-size: calc(16px * var(--tsz, 1)); color: var(--text-muted); padding-top: 2px; }
+.article-search-text { display: flex; flex-direction: column; min-width: 0; gap: 1px; }
+.article-search-snippet { font-size: calc(12px * var(--tsz, 1)); color: var(--text-muted); line-height: 1.35; }
+.article-search-mark { background: var(--accent-bg); color: inherit; border-radius: 2px; padding: 0 1px; font-weight: 700; }
+@media (max-width: 768px) {
+  .search-scope-toggle button { min-width: 44px; min-height: 44px; }
+}

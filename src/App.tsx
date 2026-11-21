@@ -30,6 +30,7 @@ import SocialLinks from "./components/SocialLinks";
 import MyProfileView from "./components/MyProfileView";
 import FriendProfileView from "./components/FriendProfileView";
 import PeopleSearchBar from "./components/PeopleSearchBar";
+import ArticleSearchBar from "./components/ArticleSearchBar";
 import NotificationToasts from "./components/NotificationToasts";
 import GameView from "./components/GameView";
 import BackButton from "./components/BackButton";
@@ -124,7 +125,7 @@ function App() {
   // ambiguous: desktop with both the Bible and Map panels open at once. Always starts on
   // "scripture" on a fresh load/app start (never persisted) — see the searchMode/toggle logic
   // below for how this is kept in sync with the mobile tab bar instead of shown as a control there.
-  const [searchScope, setSearchScope] = useState<"scripture" | "places">("scripture");
+  const [searchScope, setSearchScope] = useState<"scripture" | "places" | "articles">("scripture");
   const [isMobile, setIsMobile] = useState(() => window.matchMedia(MOBILE_QUERY).matches);
   // On mobile, exactly one panel is shown at a time (driven by the bottom tab bar) — default to
   // Bible. Desktop shows Bible+Map together by default.
@@ -1239,7 +1240,7 @@ function App() {
   // A password-recovery session is never anonymous, so it never trips this — ResetPasswordGate
   // below handles it on its own.
   const showAuthGate = authResolved && !exchangingRecoveryCode && (!session || session.user.is_anonymous);
-  const searchMode: "map" | "bible" | "notes" | "timeline" | "people" | null = showGame
+  const searchMode: "map" | "bible" | "articles" | "notes" | "timeline" | "people" | null = showGame
     ? null
     : myProfileMode
     ? (SOCIAL_CONNECTIONS_ENABLED ? "people" : null)
@@ -1250,7 +1251,7 @@ function App() {
         ? activeMobilePanel
         : null
       : panels.map && panels.bible
-        ? (searchScope === "places" ? "map" : "bible")
+        ? (searchScope === "places" ? "map" : searchScope === "articles" ? "articles" : "bible")
         : panels.map
           ? "map"
           : panels.bible
@@ -1540,7 +1541,7 @@ function App() {
           <h1>Capstone Bible</h1>
           <p className="brand-tagline">God&rsquo;s Word. Every day.</p>
         </div>
-        {(searchMode === "map" || searchMode === "bible") && (
+        {(searchMode === "map" || searchMode === "bible" || searchMode === "articles") && (
           <div className="header-search-group">
             {searchMode === "map" && (
               <SearchBar
@@ -1550,6 +1551,23 @@ function App() {
                   focusLocationOnMap(id);
                 }}
                 selectedLocationName={selectedLocation?.name ?? null}
+              />
+            )}
+            {searchMode === "articles" && (
+              <ArticleSearchBar
+                locations={locations}
+                pois={pois}
+                people={people}
+                topics={topics}
+                timelineEvents={timelineEvents}
+                onSelect={(kind, id) => {
+                  track("search.run", { scope: "articles" });
+                  if (kind === "location") handleSelectFromMap(id);
+                  else if (kind === "poi") handleSelectPoiFromMap(id);
+                  else if (kind === "person") handleSelectPersonFromBible(id);
+                  else if (kind === "topic") handleSelectTopicFromBible(id);
+                  else handleSelectTimelineEventFromArticles(id);
+                }}
               />
             )}
             {searchMode === "bible" && (
@@ -1605,6 +1623,16 @@ function App() {
                   onClick={() => setSearchScope("places")}
                 >
                   <Icon name="map" />
+                </button>
+                <button
+                  type="button"
+                  className={searchScope === "articles" ? "active" : ""}
+                  aria-pressed={searchScope === "articles"}
+                  title="Search articles"
+                  aria-label="Search articles"
+                  onClick={() => setSearchScope("articles")}
+                >
+                  <Icon name="articles" />
                 </button>
               </div>
             )}
