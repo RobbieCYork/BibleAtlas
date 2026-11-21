@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { lazy, Suspense, useEffect, useRef, useState } from "react";
 import type { Session } from "@supabase/supabase-js";
 import { supabase, setRememberMe } from "../lib/supabase";
 import AccountSettingsBody, { TextSizeControl, AppearanceControl, NavBarControl } from "./AccountSettings";
@@ -15,6 +15,11 @@ import Icon from "./Icon";
 import SocialLinks from "./SocialLinks";
 import { PlusAccountSection, PlusReturnNotice } from "./CapstonePlus";
 import { billingVisible, useBilling } from "../lib/billing";
+import { useGroupsEnabled } from "../lib/groups";
+
+// Capstone Plus for Groups (sql/047). Lazy so none of it ships in the main bundle; drawn only when
+// groups_status() says paid.groups_enabled is on (ships OFF), never for guests or in a native build.
+const GroupsSheet = lazy(() => import("./GroupsSheet"));
 
 interface AuthButtonProps {
   session: Session | null;
@@ -51,7 +56,7 @@ interface AuthButtonProps {
 
 type Mode = "login" | "signup" | "reset";
 
-type MenuView = "menu" | "settings" | "admin" | "report" | "myReports" | "reports" | "safety" | "plus";
+type MenuView = "menu" | "settings" | "admin" | "report" | "myReports" | "reports" | "safety" | "plus" | "groups";
 
 /** Fallback for the one render where App hasn't told us where the reader is. A report filed against
  * it is still a valid report — it just says less. Never left blank: `route`/`page_title` are what a
@@ -95,6 +100,16 @@ export default function AuthButton({
   // is even allowed to ask is exactly the kind of divergence this hook exists to prevent.
   const isAdmin = useIsAdmin(session?.user.id ?? null);
   const billing = useBilling();
+  const groupsEnabled = useGroupsEnabled();
+
+  // Back from Stripe after a group checkout (?groups=success|cancel): open Classes & Groups, which
+  // reads and strips the parameter and says what happened.
+  useEffect(() => {
+    if (groupsEnabled && /[?&]groups=/.test(window.location.search)) {
+      setOpen(true);
+      setMenuView("groups");
+    }
+  }, [groupsEnabled]);
 
   // The reports tier gate. Separate from useIsAdmin above on purpose: that hook answers sql/019's
   // "is there an admin_users row", this one answers sql/025's four-tier current_user_role(), and an
@@ -298,6 +313,12 @@ export default function AuthButton({
                 <Icon name="trophy" inline /> Capstone Plus
               </button>
             )}
+            {/* Capstone Plus for Groups. Drawn only when groups_status() says it is on — see lib/groups.ts. */}
+            {groupsEnabled && !session.user.is_anonymous && (
+              <button type="button" className="auth-menu-item" onClick={() => setMenuView("groups")}>
+                <Icon name="people" inline /> Classes &amp; Groups
+              </button>
+            )}
             {/* Reports lives inside the Admin Console now (Reports tab, same unread badge). This row
                 remains ONLY for an advisor who is not an admin: they hold the reports tier but have no
                 Admin Console to find it in, and removing the row would strand them. */}
@@ -408,6 +429,11 @@ export default function AuthButton({
         {open && SOCIAL_CONNECTIONS_ENABLED && menuView === "safety" && <SafetySheet onClose={() => setMenuView("menu")} />}
         {open && menuView === "reports" && canSeeReports && reportsRole && (
           <ReportsDashboard role={reportsRole} viewerId={session.user.id} onClose={() => setMenuView("menu")} />
+        )}
+        {open && menuView === "groups" && groupsEnabled && !session.user.is_anonymous && (
+          <Suspense fallback={null}>
+            <GroupsSheet onClose={() => setMenuView("menu")} />
+          </Suspense>
         )}
         {open && menuView === "plus" && showPlus && (
           <div className="auth-dropdown">

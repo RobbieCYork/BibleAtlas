@@ -35,6 +35,12 @@ export const PERSONAS = {
   guest: { id: id(5), email: null, name: null, role: null, admin: false, anonymous: true },
   /** The Plus-preview demo account (a fake "Demo Member"; the build allow-lists this id, see run.mjs). */
   demo: { id: id(6), email: "demo@harness.invalid", name: "Demo Member", role: null, admin: false, anonymous: false },
+  /** Capstone Plus for Groups (sql/047, examples/groups.mjs): a class's teacher, one of its students, and a
+   * signed-in account in no class. Ordinary members as far as roles go; what differs is what the groups
+   * fixtures answer for each id. */
+  teacher: { id: id(7), email: "teacher@harness.invalid", name: "Harness Teacher", role: null, admin: false, anonymous: false },
+  student: { id: id(8), email: "student@harness.invalid", name: "Harness Student", role: null, admin: false, anonymous: false },
+  outsider: { id: id(9), email: "outsider@harness.invalid", name: "Harness Outsider", role: null, admin: false, anonymous: false },
   signedout: null,
 };
 

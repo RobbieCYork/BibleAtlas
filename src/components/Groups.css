@@ -1,0 +1,240 @@
+/* Capstone Plus for Groups (GroupsSheet.tsx). The sheet itself reuses .report-sheet / .report-field
+ * from App.css; only the parts that are new live here. */
+
+.groups-sheet .report-sheet-body {
+  max-width: 720px;
+  width: 100%;
+  margin: 0 auto;
+  box-sizing: border-box;
+}
+
+.groups-section {
+  margin-top: 18px;
+}
+
+.groups-h {
+  margin: 0 0 8px;
+  padding: 0;
+  font-size: calc(15px * var(--tsz, 1));
+  font-weight: 700;
+  color: var(--text);
+}
+
+.groups-small {
+  margin: 4px 0 0;
+  font-size: calc(13px * var(--tsz, 1));
+  line-height: 1.45;
+  color: var(--text-muted, var(--text));
+  opacity: 0.85;
+}
+
+.groups-notice {
+  margin-bottom: 12px;
+}
+
+.groups-card {
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 12px 14px;
+  margin-bottom: 10px;
+  background: var(--panel-bg, transparent);
+  overflow-wrap: anywhere;
+}
+
+.groups-card-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.groups-card-name {
+  font-size: calc(15px * var(--tsz, 1));
+  min-width: 0;
+}
+
+.groups-pill {
+  flex: none;
+  font-size: calc(11px * var(--tsz, 1));
+  font-weight: 600;
+  padding: 2px 8px;
+  border-radius: 999px;
+  border: 1px solid var(--border);
+}
+
+.groups-pill--active {
+  color: var(--accent);
+  border-color: var(--accent);
+}
+
+.groups-code {
+  font-weight: 700;
+  letter-spacing: 0.08em;
+}
+
+.groups-join-row,
+.groups-addseats {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  margin-top: 8px;
+}
+
+.groups-join-row input {
+  flex: 1 1 140px;
+  min-width: 0;
+  min-height: 44px;
+  font: inherit;
+  font-size: calc(16px * var(--tsz, 1));
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  padding: 6px 10px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--bg);
+  color: var(--text);
+  box-sizing: border-box;
+}
+
+.groups-join-row .paid-teaser-button,
+.groups-addseats .paid-teaser-button {
+  width: auto;
+  margin-top: 0;
+}
+
+.groups-addseats input {
+  width: 72px;
+  min-height: 36px;
+  font: inherit;
+  margin-left: 6px;
+}
+
+.groups-roster {
+  margin: 8px 0 0;
+  padding-left: 18px;
+  font-size: calc(14px * var(--tsz, 1));
+}
+
+.groups-roster-toggle {
+  margin-top: 8px;
+}
+
+.groups-start {
+  margin-top: 4px;
+}
+
+/* --- the Start form ------------------------------------------------------------------------- */
+
+.groups-form {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.groups-fieldset {
+  border: 0;
+  margin: 14px 0 0;
+  padding: 0;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.groups-choice {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 10px;
+}
+
+.groups-choice--inline {
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+}
+
+.groups-choice-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: 12px 14px 12px 38px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  cursor: pointer;
+  min-width: 0;
+}
+
+.groups-choice-card input {
+  position: absolute;
+  left: 12px;
+  top: 14px;
+  margin: 0;
+}
+
+.groups-choice-card.is-selected {
+  border-color: var(--accent);
+  background: var(--accent-bg, transparent);
+}
+
+.groups-choice-card.is-disabled {
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+.groups-row {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 10px;
+}
+
+.groups-row .report-field {
+  min-width: 0;
+}
+
+.groups-check {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  font-size: calc(14px * var(--tsz, 1));
+}
+
+.groups-logo-preview {
+  max-width: 96px;
+  max-height: 96px;
+  margin-top: 8px;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+}
+
+.groups-draft {
+  margin: 0;
+  padding: 6px 10px;
+  border: 1px dashed currentColor;
+  border-radius: 6px;
+  font-weight: 700;
+  font-size: calc(13px * var(--tsz, 1));
+}
+
+.groups-agreement {
+  margin: 0;
+  max-height: 240px;
+  overflow-y: auto;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  font: inherit;
+  font-size: calc(13px * var(--tsz, 1));
+  line-height: 1.5;
+  padding: 10px 12px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+}
+
+.groups-problems {
+  margin: 14px 0 0;
+  padding-left: 18px;
+  font-size: calc(13px * var(--tsz, 1));
+}
+
+.groups-submit {
+  margin-top: 14px;
+}

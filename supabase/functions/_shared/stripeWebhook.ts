@@ -15,6 +15,13 @@ import {
   type StripeEvent,
   type StripeSubscription,
 } from "./stripe.ts";
+import {
+  cancelAtUpdateNeeded,
+  groupClassIdOf,
+  normaliseGroupSubscription,
+  type GroupStripeSubscription,
+  type NormalisedGroupSubscription,
+} from "./groupBilling.ts";
 
 export interface WebhookDeps {
   retrieveSubscription(id: string): Promise<StripeSubscription>;
@@ -34,6 +41,23 @@ export interface WebhookDeps {
     sub: NormalisedSubscription;
   }): Promise<string>;
   record(args: { eventId: string; type: string; createdIso: string; livemode: boolean; outcome: string }): Promise<boolean>;
+  /**
+   * Capstone Plus for Groups (sql/047 group_apply_subscription_event). Optional so the individual
+   * tests need not wire it; a GROUP subscription arriving without it throws (500, Stripe retries)
+   * rather than being written into the individual `subscriptions` table.
+   */
+  applyGroup?(args: {
+    eventId: string;
+    type: string;
+    createdIso: string;
+    livemode: boolean;
+    classId: string;
+    payerUserId: string | null;
+    customerId: string;
+    sub: NormalisedGroupSubscription;
+  }): Promise<{ outcome: string; cancel_at_wanted?: number | null }>;
+  /** Sets the subscription to cancel at the class's end (Checkout cannot). */
+  setCancelAt?(subscriptionId: string, cancelAt: number): Promise<void>;
   log?(message: string, detail?: Record<string, unknown>): void;
 }
 
@@ -44,7 +68,9 @@ export type WebhookOutcome =
   | "stale"
   | "no_subscription"
   | "unmatched"
-  | "user_missing";
+  | "user_missing"
+  | "class_missing"
+  | "second_subscription";
 
 const HANDLED = new Set<string>(HANDLED_EVENTS);
 const FK_VIOLATION = "23503";
@@ -71,6 +97,12 @@ export async function handleStripeEvent(event: StripeEvent, deps: WebhookDeps): 
   }
 
   const raw = await deps.retrieveSubscription(subId);
+
+  // A group (class) subscription goes to sql/047, never into the individual `subscriptions` table —
+  // otherwise the teacher would show as a personal subscriber and be refused an individual checkout.
+  const classId = groupClassIdOf(raw);
+  if (classId) return handleGroupEvent(event, base, classId, raw as GroupStripeSubscription, deps);
+
   const sub = normaliseSubscription(raw);
 
   // Who is this? The stripe_customers mapping is authoritative: this server created the customer
@@ -105,4 +137,56 @@ export async function handleStripeEvent(event: StripeEvent, deps: WebhookDeps): 
     }
     throw err;
   }
+}
+
+const GROUP_OUTCOMES = new Set(["duplicate", "applied", "stale", "class_missing", "second_subscription"]);
+
+async function handleGroupEvent(
+  event: StripeEvent,
+  base: { eventId: string; type: string; createdIso: string; livemode: boolean },
+  classId: string,
+  raw: GroupStripeSubscription,
+  deps: WebhookDeps
+): Promise<WebhookOutcome> {
+  const log = deps.log ?? (() => {});
+  if (!deps.applyGroup) throw new Error("group subscription received but no group handler is wired");
+  const sub = normaliseGroupSubscription(raw);
+
+  // The payer is the owner who checked out. Informational in sql/047 (who pays is the customer); a
+  // payer whose account is gone is stored as null rather than failing the event.
+  const payer =
+    (await deps.findUserByCustomer(sub.customer)) ??
+    (event.type === "checkout.session.completed" ? validUser(event.data.object.client_reference_id) : null) ??
+    validUser(raw.metadata?.supabase_user_id);
+
+  let result: { outcome: string; cancel_at_wanted?: number | null };
+  try {
+    result = await deps.applyGroup({ ...base, classId, payerUserId: payer, customerId: sub.customer, sub });
+  } catch (err) {
+    if ((err as { code?: string } | null)?.code !== FK_VIOLATION || payer === null) throw err;
+    log("stripe-webhook: group payer account no longer exists; applying without it", { subscription: sub.id });
+    result = await deps.applyGroup({ ...base, classId, payerUserId: null, customerId: sub.customer, sub });
+  }
+  if (!GROUP_OUTCOMES.has(result.outcome)) throw new Error(`unexpected group apply result ${result.outcome}`);
+
+  if (result.outcome === "second_subscription") {
+    // Someone is paying twice for one class. Never silently: the owner must cancel one.
+    log("stripe-webhook: SECOND live subscription for a class, not applied — cancel one", { classId, subscription: sub.id });
+  }
+  if (result.outcome === "class_missing") {
+    log("stripe-webhook: group subscription for a class that does not exist", { classId, subscription: sub.id });
+  }
+
+  if (result.outcome === "applied" && deps.setCancelAt && cancelAtUpdateNeeded(sub, result.cancel_at_wanted)) {
+    try {
+      await deps.setCancelAt(sub.id, result.cancel_at_wanted as number);
+    } catch (err) {
+      // Not fatal to the event (already committed). The next subscription.updated retries it.
+      log("stripe-webhook: could not set cancel_at for a class end date", {
+        subscription: sub.id,
+        message: (err as Error)?.message,
+      });
+    }
+  }
+  return result.outcome as WebhookOutcome;
 }

@@ -28,3 +28,7 @@ verify_jwt = true
 # keyed with STRIPE_WEBHOOK_SECRET, is the authentication. Deploying with verify_jwt = true would
 # make every Stripe delivery fail with 401.
 verify_jwt = false
+
+# Capstone Plus for Groups (sql/047, branch groups-classes): admin-pays checkout and add-seats.
+[functions.group-billing]
+verify_jwt = true

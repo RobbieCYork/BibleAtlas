@@ -4,7 +4,7 @@
  *
  *   node scripts/signed-in-harness/run.mjs --persona owner --viewport 375x667 --script my-checks.mjs
  *
- *   --persona   member | advisor | administrator | owner | guest | demo | signedout   (default member)
+ *   --persona   member | advisor | administrator | owner | guest | demo | teacher | student | outsider | signedout   (default member)
  *   --viewport  WxH via Emulation.setDeviceMetricsOverride (default 1280x800)
  *   --theme     light | dark (default light)
  *   --script    a module whose default export is async (h) => {...}; omit for a smoke run
@@ -123,7 +123,7 @@ try {
     page.section("smoke run (no --script)");
     page.assert(await page.exists("#root > *"), "app mounted");
     const signedIn = await page.exists('[aria-label="Settings and account"]');
-    console.log(`  signed-in app shell (account menu) visible: ${signedIn}  [expected: ${["member", "advisor", "administrator", "owner"].includes(persona)}; guest and signedout land on the sign-in gate by design]`);
+    console.log(`  signed-in app shell (account menu) visible: ${signedIn}  [expected: ${["member", "advisor", "administrator", "owner", "demo", "teacher", "student", "outsider"].includes(persona)}; guest and signedout land on the sign-in gate by design]`);
     console.log("  body text:", JSON.stringify((await page.evaluate(() => document.body.innerText)).replace(/\s+/g, " ").slice(0, 160)));
     console.log("  screenshot:", await page.screenshot("smoke.png"));
   }

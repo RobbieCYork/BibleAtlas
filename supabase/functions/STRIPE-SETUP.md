@@ -106,6 +106,57 @@ endpoint can never grant real access and vice versa.
 - Prices are not shown in the app; Stripe Checkout shows the amount, tax and renewal terms.
 - No email receipts configuration (Stripe settings → Emails).
 
+## Groups: Capstone Plus for Groups, admin pays (branch `groups-classes`, sql/047)
+
+Built and unit-tested only. **Nothing deployed, no migration applied, no Stripe object exists.**
+Plan: `automation/manager/groups-feature-plan.md` sections 3 and 10 (phases 1-2).
+
+| Piece | Where |
+|---|---|
+| Database | `sql/047_groups_classes.sql` (needs 033, 043, 045 first). Proof: `node scripts/groups/rls-test.mjs --local` (and `--mutations`) |
+| Checkout + add seats | `supabase/functions/group-billing` (`verify_jwt = true`) |
+| Webhook | the existing `stripe-webhook`: a subscription whose metadata says `capstone_kind = group` goes to `group_apply_subscription_event()` instead of the individual path |
+| Shared logic + tests | `_shared/groupBilling.ts`, `node --test supabase/functions/_shared/groupBilling.test.ts` |
+| App | `src/lib/groups.ts`, `src/lib/groupWording.ts`, `src/lib/groupAgreement.ts` (DRAFT FOR COUNSEL), `src/components/GroupsSheet.tsx`; "Classes & Groups" row in the account menu |
+| UI proof | `scripts/signed-in-harness/examples/groups.mjs` (personas teacher / student / outsider) |
+
+**Stripe objects (test mode first):** product "Capstone Plus for Groups"; two **licensed per-seat** recurring
+prices, $3.25/month and $32.50/year (Robbie's decision; the app prints these as an estimate from
+`src/lib/groupWording.ts`, so change both together). No new webhook events: the five above cover it.
+
+**Secrets (names only; Robbie sets the values):**
+
+| Name | Value |
+|---|---|
+| `STRIPE_PRICE_GROUP_MONTHLY` | `price_…` of the $3.25/seat/month price |
+| `STRIPE_PRICE_GROUP_ANNUAL` | `price_…` of the $32.50/seat/year price |
+
+Everything else (`STRIPE_SECRET_KEY`, `APP_URL`, `APP_RETURN_ORIGINS`, `STRIPE_AUTOMATIC_TAX`,
+`STRIPE_ALLOW_LIVE`) is shared with individual Plus.
+
+**Switches:** `paid.groups_enabled` (false: no Classes & Groups UI for anyone and `group-billing` refuses
+everyone but the app owner) and `paid.groups_owner_preview` (true: the owner alone sees the UI, to rehearse
+in test mode).
+
+**How it works:** signup calls `create_group_class()` (class `draft`, agreement recorded) then
+`group-billing {action: "checkout", class_id}`; the function reads the seat count and interval from the class,
+not the request, and opens Checkout with a fixed quantity and no promotion codes. The webhook writes
+`class_billing`, activates the class, and derives a `group` entitlement for the owner (5+ seats) and every
+active member. A class with an end date gets `cancel_at` = end of that day (set by the webhook; Checkout
+cannot). `add_seats` raises the quantity with `create_prorations`. Deleting the owner's account cancels the
+subscription through the existing `delete-account` step (it lives on the owner's customer).
+
+**Rehearsal (needs Robbie's word for each migration):** apply 033, 043, 045, 047 to staging; set the two
+price secrets; deploy `group-billing` and the updated `stripe-webhook`; `paid.groups_owner_preview = true`;
+start a group as the owner, pay with `4242 4242 4242 4242`, check `class_billing`, the class is `active`, and
+`entitlements` has a `group` row; join from a second test account with the code; add seats; check the
+subscription's `cancel_at` in the Stripe dashboard equals the class end. **[UNVERIFIED]** `cancel_at` via
+`POST /v1/subscriptions/:id` and per-seat quantity proration are from Stripe's docs/memory, not yet exercised.
+
+**Not built (later phases):** invites and reminders (3), assignments (4), verification and badge (5),
+reviews (6), member-pays (7), SMS (8), lowering seats, changing the end date after checkout (Stripe
+`cancel_at` would need moving), invoicing/PO.
+
 ## Out of scope: the store apps
 
 Apple 3.1.1 requires in-app purchase for digital content unlocked inside the iOS app, and 3.1.3(b)

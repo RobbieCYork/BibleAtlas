@@ -9,7 +9,10 @@
 // FLOW: verify signature -> parse -> livemode must match the key's mode -> handleStripeEvent
 //   (../_shared/stripeWebhook.ts): re-fetch the subscription from Stripe, resolve the account, and
 //   call sql/045 stripe_apply_subscription_event(), which records the event id and writes the
-//   subscription + entitlement in ONE transaction.
+//   subscription + entitlement in ONE transaction. A Capstone Plus for Groups subscription
+//   (metadata capstone_kind = group) goes to sql/047 group_apply_subscription_event() instead, which
+//   writes class_billing and every member's 'group' entitlement the same way; if the class has an
+//   end date the subscription is then set to cancel_at the end of that day.
 // RESPONSES: 400 bad signature/body (Stripe will not fix it by retrying, but shows it in the
 //   dashboard); 200 for everything handled, ignored or duplicate; 500 on any failure, so Stripe
 //   retries (for up to 3 days) and nothing half-written is left behind.
@@ -109,6 +112,33 @@ Deno.serve(async (req: Request) => {
         });
         if (error) throw error;
         return data === true;
+      },
+      // Capstone Plus for Groups (sql/047). Routed here only when the subscription's metadata says
+      // capstone_kind = group (written by group-billing, never by a browser).
+      applyGroup: async (a) => {
+        const { data, error } = await admin.rpc("group_apply_subscription_event", {
+          p_event_id: a.eventId,
+          p_type: a.type,
+          p_created: a.createdIso,
+          p_livemode: a.livemode,
+          p_class_id: a.classId,
+          p_payer_user_id: a.payerUserId,
+          p_customer_id: a.customerId,
+          p_sub: a.sub,
+        });
+        if (error) throw error;
+        const r = (data ?? {}) as { outcome?: unknown; cancel_at_wanted?: unknown };
+        return {
+          outcome: String(r.outcome),
+          cancel_at_wanted: typeof r.cancel_at_wanted === "number" ? r.cancel_at_wanted : null,
+        };
+      },
+      setCancelAt: async (subscriptionId, cancelAt) => {
+        await stripe.post(
+          `/subscriptions/${encodeURIComponent(subscriptionId)}`,
+          { cancel_at: cancelAt, proration_behavior: "none" },
+          `group-cancel-at-${subscriptionId}-${cancelAt}`
+        );
       },
       log: (message, detail) => console.warn(message, detail ?? {}),
     });

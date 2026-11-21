@@ -50,6 +50,7 @@ the closure by trying to reach a real-looking Supabase host from inside the page
 | `administrator` | administrator | yes | false |
 | `owner` | owner | yes | true |
 | `guest` | null, anonymous session | no | false |
+| `teacher` / `student` / `outsider` | null | no | false |
 | `signedout` | no session | n/a | n/a |
 
 `guest` and `signedout` both land on the sign-in gate **on purpose**: the app requires a real account
@@ -121,6 +122,7 @@ Selectors live there so a rename is one edit.
 | `game-toggles-nesting.mjs` | the 7 per-game toggles nest under Games & Trivia in order, a Testing parent explains itself on Live children, one game in Testing reaches Game Center correctly for member and owner |
 | `profile-cards.mjs` | other people's profiles (Friends, Requests, friend profile page) come from `get_profile_cards` (sql/042), never `GET profiles?id=in.`; a pending requester with no name reads "A Capstone member"; a friend's hidden phone/birthday never render; with the rpc missing (PGRST202, migration unapplied) the app falls back to the old table read |
 | `skins.mjs` | owner-only visual skins (lib/skin.tsx, skins.css): picker beside the Live/Test switch for the owner only; each skin applied across reader, map, timeline, notes, article, social, games and admin with screenshots and a scripture-contrast check; member and signedout never get a skin even with one planted in localStorage, and their computed styles match a run against origin/main (`DUMP=`). Stubs bible-api.com with Mark 8:1-12 (WEB, public domain) from `examples/mark8-web.json` |
+| `groups.mjs` | Capstone Plus for Groups (sql/047), run as `--persona teacher` (switches to student and outsider itself): rpc missing or switch off draws no Classes & Groups row and makes no other groups call; teacher sees seats, code and roster; Start form wording swaps School/Class/Teacher/student for Church/Group/Leader/member, shows DRAFT FOR COUNSEL, refuses <5 seats and SVG logos, sends the agreement's browser-computed SHA-256 (equal to sql/047's seed) and no price, then `group-billing` gets only `{action, class_id, return_to}`; student sees no seats, code or roster and never calls `class_roster`; outsider sees nothing. Run at 390x844 and 1280x800 |
 | `network-closed.mjs` | self-test of the closed network |
 | `fixtures-override.mjs` | `--fixtures` |
 
