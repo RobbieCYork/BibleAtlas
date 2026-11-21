@@ -38,7 +38,26 @@ export interface BibleJoke {
   theme: JokeTheme;
   /** Shared by jokes whose punchlines are interchangeable; see the header note. */
   avoid?: string;
+  /**
+   * Grammatical slot. Wrong answers are drawn only from jokes in the SAME slot, so every option has
+   * the same shape (quote / "Name - clause" / "Where" phrase / past clause with he vs they / ...) and
+   * none can be eliminated by tense, person or form alone. A joke with no slot must carry `decoys`.
+   */
+  slot?: JokeSlot;
+  /** Hand-written wrong answers for a joke whose shape is too unusual to share a slot. Exactly three,
+   * written to match the real punchline's tense, person and form. Used at every difficulty. */
+  decoys?: [string, string, string];
 }
+
+export type JokeSlot =
+  | "name" // "Who...?" answered "Name - clause"
+  | "quote" // "What did X say?" answered with a quotation
+  | "why-he" // "Why...?" answered with a past clause, singular or neutral subject
+  | "why-they" // "Why...?" answered with a past clause, plural subject
+  | "why-present" // "Why...?" answered with a present-tense clause
+  | "place" // "Where...?" answered with a prepositional phrase
+  | "short-adj" // one-word adjective answers
+  | "short-noun"; // one- or two-word noun answers
 
 export const THEME_LABELS: Record<JokeTheme, string> = {
   noah: "Noah & the Ark",
@@ -51,122 +70,122 @@ export const THEME_LABELS: Record<JokeTheme, string> = {
 
 export const BIBLE_JOKES: BibleJoke[] = [
   // ------------------------------------------------------------------- Noah
-  { id: "noah-bees", theme: "noah", setup: "Where did Noah keep his bees?", punchline: "In the ark hives." },
-  { id: "noah-cheetahs", theme: "noah", setup: "Which animals did Noah trust the least?", punchline: "The cheetahs." },
-  { id: "noah-worms", theme: "noah", setup: "Why didn't Noah get much fishing done on the voyage?", punchline: "He only had two worms." },
-  { id: "noah-floodlight", theme: "noah", avoid: "noah-light", setup: "How did Noah light the ark at night?", punchline: "Flood lighting." },
-  { id: "noah-electrician", theme: "noah", avoid: "noah-light", setup: "Who was the first electrician in the Bible?", punchline: "Noah — he made the ark light." },
-  { id: "noah-cards", theme: "noah", setup: "Why couldn't anyone play cards on the ark?", punchline: "Noah was standing on the deck." },
-  { id: "noah-liquidation", theme: "noah", setup: "Who was the shrewdest investor in the Bible?", punchline: "Noah — he floated a company while the rest of the world was in liquidation." },
-  { id: "noah-elephant", theme: "noah", setup: "Which animal was the last one off the ark?", punchline: "The elephant. He was still packing his trunk." },
-  { id: "noah-giraffes", theme: "noah", setup: "How did the giraffes sleep on the ark?", punchline: "Neck and neck." },
-  { id: "noah-mosquitoes", theme: "noah", setup: "What is the one job everyone wishes Noah had skipped?", punchline: "Loading the two mosquitoes." },
-  { id: "noah-fowl", theme: "noah", setup: "Why did Noah have to scold the chickens?", punchline: "They kept using fowl language." },
-  { id: "noah-herd", theme: "noah", avoid: "noah-quote", setup: "What did Noah say when the animals finally settled down?", punchline: "\"Well, now I've herd everything.\"" },
-  { id: "noah-reviews", theme: "noah", setup: "Why did the ark get such poor reviews?", punchline: "Two of every animal, and one bathroom." },
-  { id: "noah-moses-trick", theme: "noah", setup: "How many animals did Moses take onto the ark?", punchline: "None. That was Noah's ark." },
-  { id: "noah-penguins", theme: "noah", setup: "Where did Noah put the penguins?", punchline: "In the ark-tic section." },
-  { id: "noah-jurassic", theme: "noah", avoid: "noah-quote", setup: "What did Noah say as the last of the really big ones came aboard?", punchline: "\"Welcome to Jurassic Ark.\"" },
-  { id: "noah-ham", theme: "noah", setup: "When is meat first mentioned in the Bible?", punchline: "When Noah took Ham onto the ark." },
+  { id: "noah-bees", theme: "noah", slot: "place", setup: "Where did Noah keep his bees?", punchline: "In the ark hives." },
+  { id: "noah-cheetahs", theme: "noah", setup: "Which animals did Noah trust the least?", punchline: "The cheetahs.", decoys: ["The hippos.", "The parrots.", "The camels."] },
+  { id: "noah-worms", theme: "noah", slot: "why-he", setup: "Why didn't Noah get much fishing done on the voyage?", punchline: "He only had two worms." },
+  { id: "noah-floodlight", theme: "noah", avoid: "noah-light", setup: "How did Noah light the ark at night?", punchline: "Flood lighting.", decoys: ["Candle lighting.", "Lantern lighting.", "Torch lighting."] },
+  { id: "noah-electrician", theme: "noah", slot: "name", avoid: "noah-light", setup: "Who was the first electrician in the Bible?", punchline: "Noah — he made the ark light." },
+  { id: "noah-cards", theme: "noah", slot: "why-he", setup: "Why couldn't anyone play cards on the ark?", punchline: "Noah was standing on the deck." },
+  { id: "noah-liquidation", theme: "noah", slot: "name", setup: "Who was the shrewdest investor in the Bible?", punchline: "Noah — he floated a company while the rest of the world was in liquidation." },
+  { id: "noah-elephant", theme: "noah", setup: "Which animal was the last one off the ark?", punchline: "The elephant. He was still packing his trunk.", decoys: ["The tortoise. He was still tying his sandals.", "The hippo. He was still finishing his lunch.", "The kangaroo. He was still looking for his keys."] },
+  { id: "noah-giraffes", theme: "noah", setup: "How did the giraffes sleep on the ark?", punchline: "Neck and neck.", decoys: ["Back to back.", "Side by side.", "Nose to tail."] },
+  { id: "noah-mosquitoes", theme: "noah", setup: "What is the one job everyone wishes Noah had skipped?", punchline: "Loading the two mosquitoes.", decoys: ["Feeding the two lions.", "Cleaning the two stalls.", "Brushing the two camels."] },
+  { id: "noah-fowl", theme: "noah", slot: "why-they", setup: "Why did Noah have to scold the chickens?", punchline: "They kept using fowl language." },
+  { id: "noah-herd", theme: "noah", slot: "quote", avoid: "noah-quote", setup: "What did Noah say when the animals finally settled down?", punchline: "\"Well, now I've herd everything.\"" },
+  { id: "noah-reviews", theme: "noah", setup: "Why did the ark get such poor reviews?", punchline: "Two of every animal, and one bathroom.", decoys: ["Seven decks of cargo, and one lantern.", "Plenty of passengers, and one menu.", "A full cargo hold, and no windows."] },
+  { id: "noah-moses-trick", theme: "noah", setup: "How many animals did Moses take onto the ark?", punchline: "None. That was Noah's ark.", decoys: ["Two of each, plus a spare.", "Every one he could find.", "Exactly forty, one for each year."] },
+  { id: "noah-penguins", theme: "noah", slot: "place", setup: "Where did Noah put the penguins?", punchline: "In the ark-tic section." },
+  { id: "noah-jurassic", theme: "noah", slot: "quote", avoid: "noah-quote", setup: "What did Noah say as the last of the really big ones came aboard?", punchline: "\"Welcome to Jurassic Ark.\"" },
+  { id: "noah-ham", theme: "noah", setup: "When is meat first mentioned in the Bible?", punchline: "When Noah took Ham onto the ark.", decoys: ["When Moses crossed the Red Sea.", "When Adam named the animals.", "When Cain left for Nod."] },
 
   // --------------------------------------------------------- Genesis / Eden
-  { id: "gen-adam-race", theme: "genesis", setup: "Who was the fastest runner in the Bible?", punchline: "Adam — he was first in the human race." },
-  { id: "gen-christmas-eve", theme: "genesis", setup: "What did Adam say on the night of December 24th?", punchline: "\"It's Christmas, Eve.\"" },
-  { id: "gen-pair-of-dice", theme: "genesis", setup: "Why could Adam and Eve never gamble again?", punchline: "Their pair of dice was taken away." },
-  { id: "gen-raised-cain", theme: "genesis", setup: "How do we know Adam and Eve were a noisy couple?", punchline: "They raised Cain." },
-  { id: "gen-house-and-home", theme: "genesis", setup: "What did Adam tell the children about why the family had moved?", punchline: "Their mother ate them out of house and home." },
-  { id: "gen-abel", theme: "genesis", setup: "How long did Cain dislike his brother?", punchline: "As long as he was Abel." },
-  { id: "gen-apple-byte", theme: "genesis", setup: "Who owned the first computer?", punchline: "Eve — she had an Apple, and Adam took a byte." },
-  { id: "gen-before-eve", theme: "genesis", setup: "What time of day was Adam created?", punchline: "A little before Eve." },
-  { id: "gen-first-surgery", theme: "genesis", setup: "Who had the first operation in the Bible?", punchline: "Adam — and it cost him a rib." },
-  { id: "gen-big-apple", theme: "genesis", setup: "Why did Eve want to move to New York?", punchline: "She had already fallen for the big apple." },
-  { id: "gen-cars", theme: "genesis", setup: "Where does the Bible mention cars?", punchline: "God drove Adam and Eve out of the garden." },
-  { id: "gen-knew-a-lot", theme: "genesis", avoid: "lot", setup: "Who was the best-connected man in Genesis?", punchline: "Abraham — he knew a Lot." },
-  { id: "gen-parking-lot", theme: "genesis", avoid: "lot", setup: "What do you call a Bible character who has just pulled up outside church?", punchline: "A parking Lot." },
-  { id: "gen-lots-wife", theme: "genesis", setup: "Why does nobody invite Lot's wife to dinner?", punchline: "She has had quite enough salt." },
-  { id: "gen-pair-on-ground", theme: "genesis", setup: "It wasn't the apple in the tree that caused all the trouble. What was it?", punchline: "The pair on the ground." },
-  { id: "gen-methuselah", theme: "genesis", setup: "Why was Methuselah always so tired?", punchline: "Nine hundred and sixty-nine birthdays." },
+  { id: "gen-adam-race", theme: "genesis", slot: "name", setup: "Who was the fastest runner in the Bible?", punchline: "Adam — he was first in the human race." },
+  { id: "gen-christmas-eve", theme: "genesis", slot: "quote", setup: "What did Adam say on the night of December 24th?", punchline: "\"It's Christmas, Eve.\"" },
+  { id: "gen-pair-of-dice", theme: "genesis", slot: "why-they", setup: "Why could Adam and Eve never gamble again?", punchline: "Their pair of dice was taken away." },
+  { id: "gen-raised-cain", theme: "genesis", setup: "How do we know Adam and Eve were a noisy couple?", punchline: "They raised Cain.", decoys: ["They argued with the serpent.", "They slammed the garden gate.", "They both talked at once."] },
+  { id: "gen-house-and-home", theme: "genesis", slot: "why-he", setup: "What did Adam tell the children about why the family had moved?", punchline: "Their mother ate them out of house and home." },
+  { id: "gen-abel", theme: "genesis", setup: "How long did Cain dislike his brother?", punchline: "As long as he was Abel.", decoys: ["As long as he was farming.", "As long as he was hungry.", "As long as he was angry."] },
+  { id: "gen-apple-byte", theme: "genesis", slot: "name", setup: "Who owned the first computer?", punchline: "Eve — she had an Apple, and Adam took a byte." },
+  { id: "gen-before-eve", theme: "genesis", setup: "What time of day was Adam created?", punchline: "A little before Eve.", decoys: ["A little after sunrise.", "A little before dinner.", "A little past midnight."] },
+  { id: "gen-first-surgery", theme: "genesis", slot: "name", setup: "Who had the first operation in the Bible?", punchline: "Adam — and it cost him a rib." },
+  { id: "gen-big-apple", theme: "genesis", setup: "Why did Eve want to move to New York?", punchline: "She had already fallen for the big apple.", decoys: ["She had heard the snakes were friendlier.", "She had already tried the other garden.", "She had grown tired of the figs."] },
+  { id: "gen-cars", theme: "genesis", setup: "Where does the Bible mention cars?", punchline: "God drove Adam and Eve out of the garden.", decoys: ["Moses led the Israelites out of Egypt.", "Noah built a boat on dry land.", "David sang to King Saul."] },
+  { id: "gen-knew-a-lot", theme: "genesis", avoid: "lot", setup: "Who was the best-connected man in Genesis?", punchline: "Abraham — he knew a Lot.", decoys: ["Moses — he knew everyone in Egypt.", "Joseph — he knew a dreamer in every court.", "David — he knew every shepherd in Judah."] },
+  { id: "gen-parking-lot", theme: "genesis", slot: "short-noun", avoid: "lot", setup: "What do you call a Bible character who has just pulled up outside church?", punchline: "A parking Lot." },
+  { id: "gen-lots-wife", theme: "genesis", setup: "Why does nobody invite Lot's wife to dinner?", punchline: "She has had quite enough salt.", decoys: ["She has had enough of the desert.", "She has had quite enough travel.", "She has had enough of his cooking."] },
+  { id: "gen-pair-on-ground", theme: "genesis", setup: "It wasn't the apple in the tree that caused all the trouble. What was it?", punchline: "The pair on the ground.", decoys: ["The snake in the grass.", "The leaf on the branch.", "The vine on the wall."] },
+  { id: "gen-methuselah", theme: "genesis", setup: "Why was Methuselah always so tired?", punchline: "Nine hundred and sixty-nine birthdays.", decoys: ["Three hundred and sixty-five early mornings.", "Six hundred noisy grandchildren.", "Eight hundred long walks."] },
 
   // --------------------------------------------------------- Moses & Egypt
-  { id: "mos-broke-ten", theme: "moses", setup: "Who was the first man to break all ten commandments at once?", punchline: "Moses — he dropped them." },
-  { id: "mos-tablets", theme: "moses", setup: "Where is medicine first mentioned in the Bible?", punchline: "When God gave Moses two tablets." },
-  { id: "mos-hebrews", theme: "moses", setup: "How does Moses make his coffee?", punchline: "Hebrews it." },
-  { id: "mos-aaron", theme: "moses", setup: "How do we know Moses wore a wig?", punchline: "Some days he was seen with Aaron, some days without." },
-  { id: "mos-directions", theme: "moses", setup: "Why did the Israelites wander the desert for forty years?", punchline: "The men would not stop and ask for directions." },
-  { id: "mos-parting-gift", theme: "moses", avoid: "red-sea", setup: "What did Moses hand out at the edge of the Red Sea?", punchline: "Parting gifts." },
-  { id: "mos-passage", theme: "moses", avoid: "red-sea", setup: "Why couldn't the Israelites cross the Red Sea any sooner?", punchline: "They hadn't found the right passage." },
-  { id: "mos-bank-jordan", theme: "moses", setup: "Where did the Israelites keep their savings?", punchline: "At the bank of the Jordan." },
-  { id: "mos-little-prophet", theme: "moses", setup: "Who was the shrewdest woman in Egypt?", punchline: "Pharaoh's daughter — she went to the bank of the Nile and drew out a little prophet." },
-  { id: "mos-mummy", theme: "moses", setup: "Why was the Egyptian girl so upset?", punchline: "Her daddy was a mummy." },
-  { id: "mos-tennis", theme: "moses", setup: "Where is the first tennis match in the Bible?", punchline: "When Joseph served in Pharaoh's court." },
-  { id: "mos-drive-thru", theme: "moses", setup: "Who opened the first drive-through?", punchline: "Moses. Two million customers, no waiting." },
-  { id: "mos-non-prophet", theme: "moses", setup: "Why was Moses turned down by the conservation society?", punchline: "It's a non-prophet organization." },
-  { id: "mos-de-nile", theme: "moses", setup: "Why wouldn't Pharaoh admit the plagues were a problem?", punchline: "He was in de Nile." },
-  { id: "mos-parting-hair", theme: "moses", setup: "How does Moses do his hair?", punchline: "With a parting." },
-  { id: "mos-big-inning", theme: "moses", setup: "Where does baseball first appear in the Bible?", punchline: "In the big inning." },
+  { id: "mos-broke-ten", theme: "moses", slot: "name", setup: "Who was the first man to break all ten commandments at once?", punchline: "Moses — he dropped them." },
+  { id: "mos-tablets", theme: "moses", setup: "Where is medicine first mentioned in the Bible?", punchline: "When God gave Moses two tablets.", decoys: ["When Jacob wrestled the angel.", "When Daniel visited the lions.", "When Joshua marched around Jericho."] },
+  { id: "mos-hebrews", theme: "moses", setup: "How does Moses make his coffee?", punchline: "Hebrews it.", decoys: ["He sips it slowly.", "He boils it twice.", "He drinks it black."] },
+  { id: "mos-aaron", theme: "moses", setup: "How do we know Moses wore a wig?", punchline: "Some days he was seen with Aaron, some days without.", decoys: ["His hair never moved in the desert wind.", "He kept it on even in the Red Sea.", "Nobody ever saw him comb it."] },
+  { id: "mos-directions", theme: "moses", slot: "why-they", setup: "Why did the Israelites wander the desert for forty years?", punchline: "The men would not stop and ask for directions." },
+  { id: "mos-parting-gift", theme: "moses", avoid: "red-sea", setup: "What did Moses hand out at the edge of the Red Sea?", punchline: "Parting gifts.", decoys: ["Travel maps.", "Sandal straps.", "Water skins."] },
+  { id: "mos-passage", theme: "moses", slot: "why-they", avoid: "red-sea", setup: "Why couldn't the Israelites cross the Red Sea any sooner?", punchline: "They hadn't found the right passage." },
+  { id: "mos-bank-jordan", theme: "moses", slot: "place", setup: "Where did the Israelites keep their savings?", punchline: "At the bank of the Jordan." },
+  { id: "mos-little-prophet", theme: "moses", setup: "Who was the shrewdest woman in Egypt?", punchline: "Pharaoh's daughter — she went to the bank of the Nile and drew out a little prophet.", decoys: ["Rebekah — she watered the camels and got the husband.", "Ruth — she gleaned the field and got the landowner.", "Esther — she made the king an offer he could not refuse."] },
+  { id: "mos-mummy", theme: "moses", setup: "Why was the Egyptian girl so upset?", punchline: "Her daddy was a mummy.", decoys: ["Her daddy was a sphinx.", "Her daddy was a pyramid.", "Her daddy was a scarab."] },
+  { id: "mos-tennis", theme: "moses", setup: "Where is the first tennis match in the Bible?", punchline: "When Joseph served in Pharaoh's court.", decoys: ["When Esther was crowned in Persia.", "When Daniel prayed three times a day.", "When Elijah met Ahab on Carmel."] },
+  { id: "mos-drive-thru", theme: "moses", slot: "name", setup: "Who opened the first drive-through?", punchline: "Moses. Two million customers, no waiting." },
+  { id: "mos-non-prophet", theme: "moses", slot: "why-present", setup: "Why was Moses turned down by the conservation society?", punchline: "It's a non-prophet organization." },
+  { id: "mos-de-nile", theme: "moses", slot: "why-he", setup: "Why wouldn't Pharaoh admit the plagues were a problem?", punchline: "He was in de Nile." },
+  { id: "mos-parting-hair", theme: "moses", setup: "How does Moses do his hair?", punchline: "With a parting.", decoys: ["With a bone comb.", "With a long braid.", "With a leather tie."] },
+  { id: "mos-big-inning", theme: "moses", slot: "place", setup: "Where does baseball first appear in the Bible?", punchline: "In the big inning." },
 
   // --------------------------------------------------- Old Testament cast
-  { id: "ot-samson-house", theme: "ot-people", setup: "Who was the greatest comedian in the Bible?", punchline: "Samson — he brought the house down." },
-  { id: "ot-delilah", theme: "ot-people", setup: "Why couldn't Samson keep a secret?", punchline: "Delilah kept getting it out of his hair." },
-  { id: "ot-babysitter", theme: "ot-people", setup: "Who was the best babysitter in the Bible?", punchline: "David — he rocked Goliath to sleep." },
-  { id: "ot-goliath-mind", theme: "ot-people", setup: "What did Goliath say after David's first shot?", punchline: "\"Nothing like that has ever entered my mind.\"" },
-  { id: "ot-harped", theme: "ot-people", setup: "Who was the Bible's most repetitive musician?", punchline: "David — he harped on everything." },
-  { id: "ot-solomon-temple", theme: "ot-people", setup: "Where was Solomon's temple?", punchline: "On the side of his head." },
-  { id: "ot-solomon-split", theme: "ot-people", setup: "What is the fastest way to lose an argument in Solomon's court?", punchline: "Agree to split the difference." },
-  { id: "ot-ruthless", theme: "ot-people", setup: "What kind of man was Boaz before he married Ruth?", punchline: "Ruthless." },
-  { id: "ot-jonah-mouth", theme: "ot-people", setup: "How did Jonah feel after three days inside the fish?", punchline: "Rather down in the mouth." },
-  { id: "ot-jonah-fishy", theme: "ot-people", setup: "What did Jonah's family say when he told them the story?", punchline: "\"That sounds fishy.\"" },
-  { id: "ot-jonah-stomach", theme: "ot-people", setup: "Why do fish avoid Jonah to this day?", punchline: "They find him hard to stomach." },
-  { id: "ot-daniel-sleep", theme: "ot-people", setup: "Who had the worst night's sleep in the Bible?", punchline: "Daniel — he shared a room with lions." },
-  { id: "ot-elijah-horsepower", theme: "ot-people", setup: "Which prophet had the most horsepower?", punchline: "Elijah — he left in a chariot of fire." },
-  { id: "ot-job-patient", theme: "ot-people", avoid: "job-patience", setup: "How do we know Job was a patient man?", punchline: "He sat through every one of his friends' speeches." },
-  { id: "ot-job-doctor", theme: "ot-people", avoid: "job-patience", setup: "Who was the best doctor in the Bible?", punchline: "Job — he had the most patients." },
-  { id: "ot-rebekah-lit", theme: "ot-people", setup: "Where does the Bible mention smoking?", punchline: "Rebekah lit off her camel." },
+  { id: "ot-samson-house", theme: "ot-people", slot: "name", setup: "Who was the greatest comedian in the Bible?", punchline: "Samson — he brought the house down." },
+  { id: "ot-delilah", theme: "ot-people", slot: "why-he", setup: "Why couldn't Samson keep a secret?", punchline: "Delilah kept getting it out of his hair." },
+  { id: "ot-babysitter", theme: "ot-people", slot: "name", setup: "Who was the best babysitter in the Bible?", punchline: "David — he rocked Goliath to sleep." },
+  { id: "ot-goliath-mind", theme: "ot-people", slot: "quote", setup: "What did Goliath say after David's first shot?", punchline: "\"Nothing like that has ever entered my mind.\"" },
+  { id: "ot-harped", theme: "ot-people", slot: "name", setup: "Who was the Bible's most repetitive musician?", punchline: "David — he harped on everything." },
+  { id: "ot-solomon-temple", theme: "ot-people", slot: "place", setup: "Where was Solomon's temple?", punchline: "On the side of his head." },
+  { id: "ot-solomon-split", theme: "ot-people", setup: "What is the fastest way to lose an argument in Solomon's court?", punchline: "Agree to split the difference.", decoys: ["Insult the royal advisors.", "Bring a large number of witnesses.", "Forget to bow."] },
+  { id: "ot-ruthless", theme: "ot-people", slot: "short-adj", setup: "What kind of man was Boaz before he married Ruth?", punchline: "Ruthless." },
+  { id: "ot-jonah-mouth", theme: "ot-people", setup: "How did Jonah feel after three days inside the fish?", punchline: "Rather down in the mouth.", decoys: ["Rather queasy.", "Rather damp and cranky.", "Rather glad of the daylight."] },
+  { id: "ot-jonah-fishy", theme: "ot-people", slot: "quote", setup: "What did Jonah's family say when he told them the story?", punchline: "\"That sounds fishy.\"" },
+  { id: "ot-jonah-stomach", theme: "ot-people", slot: "why-present", setup: "Why do fish avoid Jonah to this day?", punchline: "They find him hard to stomach." },
+  { id: "ot-daniel-sleep", theme: "ot-people", slot: "name", setup: "Who had the worst night's sleep in the Bible?", punchline: "Daniel — he shared a room with lions." },
+  { id: "ot-elijah-horsepower", theme: "ot-people", slot: "name", setup: "Which prophet had the most horsepower?", punchline: "Elijah — he left in a chariot of fire." },
+  { id: "ot-job-patient", theme: "ot-people", avoid: "job-patience", setup: "How do we know Job was a patient man?", punchline: "He sat through every one of his friends' speeches.", decoys: ["He never rushed a single meal.", "He waited calmly for every sheep to finish.", "He never complained about a delay."] },
+  { id: "ot-job-doctor", theme: "ot-people", slot: "name", avoid: "job-patience", setup: "Who was the best doctor in the Bible?", punchline: "Job — he had the most patients." },
+  { id: "ot-rebekah-lit", theme: "ot-people", setup: "Where does the Bible mention smoking?", punchline: "Rebekah lit off her camel.", decoys: ["Hagar sat down beside the well.", "Sarah laughed in the tent doorway.", "Ruth gleaned in the barley field."] },
 
   // -------------------------------------------------- Gospels & church age
-  { id: "nt-accord", theme: "nt", avoid: "accord", setup: "What kind of car do the apostles drive?", punchline: "A Honda — they were all in one Accord." },
-  { id: "nt-own-accord", theme: "nt", avoid: "accord", setup: "Why are there no Hondas anywhere in the Gospels?", punchline: "Jesus never spoke of his own Accord." },
-  { id: "nt-net-income", theme: "nt", setup: "How do we know Peter did well as a fisherman?", punchline: "Look at his net income." },
-  { id: "nt-sea-waved", theme: "nt", setup: "What did the sea say to the boat carrying Jesus?", punchline: "Nothing — it just waved." },
-  { id: "nt-grapeful", theme: "nt", setup: "What did the water say after the wedding at Cana?", punchline: "Nothing, but it looked very grape-ful." },
-  { id: "nt-fatted-calf", theme: "nt", setup: "What did the fatted calf say when the prodigal son came home?", punchline: "\"This is the worst day of my life.\"" },
-  { id: "nt-older-brother", theme: "nt", setup: "Which part of the prodigal son story do most people quietly relate to?", punchline: "The older brother, standing outside doing the math." },
-  { id: "nt-halo", theme: "nt", setup: "How do angels greet one another?", punchline: "\"Halo.\"" },
-  { id: "nt-wise-men-broke", theme: "nt", setup: "What do you call the wise men after they handed over the gold, frankincense and myrrh?", punchline: "Broke." },
-  { id: "nt-fear-not", theme: "nt", setup: "Why did the angel have to open with \"fear not\"?", punchline: "Because appearing over a field at midnight does not read as good news." },
-  { id: "nt-loaves-boy", theme: "nt", setup: "Why did the boy with five loaves and two fish look so nervous?", punchline: "Five thousand people had just been told dinner was on him." },
-  { id: "nt-zacchaeus", theme: "nt", setup: "What does Zacchaeus say at every concert he attends?", punchline: "\"I still can't see.\"" },
-  { id: "nt-peter-water", theme: "nt", setup: "How did Peter's walk on the water end?", punchline: "He got in over his head." },
-  { id: "nt-tax-collector", theme: "nt", setup: "Why did a tax collector make such a natural disciple?", punchline: "He was already used to being unpopular." },
-  { id: "nt-fishermen-wait", theme: "nt", setup: "Why did fishermen make good disciples?", punchline: "They already knew how to wait all day for something to happen." },
-  { id: "nt-donkey-proud", theme: "nt", setup: "Why was the donkey so pleased with himself on Palm Sunday?", punchline: "He assumed the crowd had come for him." },
-  { id: "nt-ninety-nine", theme: "nt", setup: "What did the shepherd say when he counted ninety-nine sheep?", punchline: "\"Ninety-nine percent. Most people would take that.\"" },
-  { id: "nt-first-meeting", theme: "nt", setup: "How would the disciples describe the very first church meeting?", punchline: "Long." },
+  { id: "nt-accord", theme: "nt", avoid: "accord", setup: "What kind of car do the apostles drive?", punchline: "A Honda — they were all in one Accord.", decoys: ["A Ford — they crossed every river together.", "A Jeep — they went anywhere together.", "A Volvo — they all rode in safety."] },
+  { id: "nt-own-accord", theme: "nt", avoid: "accord", setup: "Why are there no Hondas anywhere in the Gospels?", punchline: "Jesus never spoke of his own Accord.", decoys: ["Jesus never spoke of his own sandals.", "Jesus never spoke of his own horse.", "Jesus never spoke of his own chariot."] },
+  { id: "nt-net-income", theme: "nt", setup: "How do we know Peter did well as a fisherman?", punchline: "Look at his net income.", decoys: ["Look at his sandals.", "Look at his beard.", "Look at his walking stick."] },
+  { id: "nt-sea-waved", theme: "nt", setup: "What did the sea say to the boat carrying Jesus?", punchline: "Nothing — it just waved.", decoys: ["Nothing — it just rippled.", "Nothing — it just calmed down.", "Nothing — it just kept rolling."] },
+  { id: "nt-grapeful", theme: "nt", setup: "What did the water say after the wedding at Cana?", punchline: "Nothing, but it looked very grape-ful.", decoys: ["Nothing, but it looked very relieved.", "Nothing, but it looked very surprised.", "Nothing, but it looked very embarrassed."] },
+  { id: "nt-fatted-calf", theme: "nt", slot: "quote", setup: "What did the fatted calf say when the prodigal son came home?", punchline: "\"This is the worst day of my life.\"" },
+  { id: "nt-older-brother", theme: "nt", setup: "Which part of the prodigal son story do most people quietly relate to?", punchline: "The older brother, standing outside doing the math.", decoys: ["The younger son, standing in the pigpen counting coins.", "The father, standing at the gate watching the road.", "The fatted calf, standing in the pen looking nervous."] },
+  { id: "nt-halo", theme: "nt", setup: "How do angels greet one another?", punchline: "\"Halo.\"", decoys: ["\"Peace be with you.\"", "\"Good morning.\"", "\"Glory to God.\""] },
+  { id: "nt-wise-men-broke", theme: "nt", slot: "short-adj", setup: "What do you call the wise men after they handed over the gold, frankincense and myrrh?", punchline: "Broke." },
+  { id: "nt-fear-not", theme: "nt", setup: "Why did the angel have to open with \"fear not\"?", punchline: "Because appearing over a field at midnight does not read as good news.", decoys: ["Because the shepherds had already stopped listening.", "Because the angel had lost his script.", "Because nobody at midnight enjoys a loud noise."] },
+  { id: "nt-loaves-boy", theme: "nt", slot: "why-he", setup: "Why did the boy with five loaves and two fish look so nervous?", punchline: "Five thousand people had just been told dinner was on him." },
+  { id: "nt-zacchaeus", theme: "nt", slot: "quote", setup: "What does Zacchaeus say at every concert he attends?", punchline: "\"I still can't see.\"" },
+  { id: "nt-peter-water", theme: "nt", setup: "How did Peter's walk on the water end?", punchline: "He got in over his head.", decoys: ["He stopped to wave at the others.", "He turned around and walked back.", "He took off his sandals first."] },
+  { id: "nt-tax-collector", theme: "nt", slot: "why-he", setup: "Why did a tax collector make such a natural disciple?", punchline: "He was already used to being unpopular." },
+  { id: "nt-fishermen-wait", theme: "nt", slot: "why-they", setup: "Why did fishermen make good disciples?", punchline: "They already knew how to wait all day for something to happen." },
+  { id: "nt-donkey-proud", theme: "nt", slot: "why-he", setup: "Why was the donkey so pleased with himself on Palm Sunday?", punchline: "He assumed the crowd had come for him." },
+  { id: "nt-ninety-nine", theme: "nt", slot: "quote", setup: "What did the shepherd say when he counted ninety-nine sheep?", punchline: "\"Ninety-nine percent. Most people would take that.\"" },
+  { id: "nt-first-meeting", theme: "nt", slot: "short-adj", setup: "How would the disciples describe the very first church meeting?", punchline: "Long." },
 
   // ------------------------------------------------------- Sunday morning
-  { id: "ch-weekdays", theme: "church", setup: "Why is Sunday the strongest day of the week?", punchline: "All the others are weekdays." },
-  { id: "ch-lightbulb", theme: "church", setup: "How many church members does it take to change a light bulb?", punchline: "Change?" },
-  { id: "ch-bibledozer", theme: "church", setup: "What do you call someone who nods off in the middle of a chapter?", punchline: "A Bible-dozer." },
-  { id: "ch-hymns", theme: "church", setup: "Why is it \"amen\" and never \"awomen\"?", punchline: "Because we sing hymns, not hers." },
-  { id: "ch-rock-of-ages", theme: "church", setup: "What is the most requested hymn in the church nursery?", punchline: "\"Rock of Ages.\"" },
-  { id: "ch-potluck", theme: "church", setup: "Why is the church potluck a genuine test of faith?", punchline: "You have to believe in something you cannot identify." },
-  { id: "ch-in-conclusion", theme: "church", setup: "What is the least reliable phrase in any sermon?", punchline: "\"And in conclusion.\"" },
-  { id: "ch-committee", theme: "church", setup: "What is the difference between a large pizza and a church committee?", punchline: "A pizza can feed a family of four." },
-  { id: "ch-genealogies", theme: "church", setup: "Why does the Bible study go so quiet at the start of Matthew?", punchline: "Nobody wants to be the one asked to read the genealogy out loud." },
-  { id: "ch-ladder", theme: "church", setup: "Why did the man bring a ladder to church?", punchline: "He heard the service was uplifting." },
-  { id: "ch-holy-water", theme: "church", setup: "How do you make holy water?", punchline: "You boil the devil out of it." },
-  { id: "ch-charitea", theme: "church", setup: "What is a minister's favorite kind of tea?", punchline: "Chari-tea." },
-  { id: "ch-lent", theme: "church", setup: "What is the hardest part of Lent?", punchline: "Remembering what you gave up." },
-  { id: "ch-pageant-sheep", theme: "church", setup: "Why was the boy so glum after the Christmas pageant casting?", punchline: "Typecast as a sheep for the fourth year running." },
-  { id: "ch-back-row", theme: "church", setup: "Why does the back row fill up first every Sunday?", punchline: "It is the only pew with an exit strategy." },
-  { id: "ch-three-minutes", theme: "church", setup: "The visiting preacher asked the deacon what he should speak about. What did the deacon say?", punchline: "\"About three minutes.\"" },
-  { id: "ch-seven-days", theme: "church", setup: "Seven days without prayer makes one what?", punchline: "Weak." },
-  { id: "ch-satan-ruler", theme: "church", setup: "Give the devil an inch and he'll be what?", punchline: "A ruler." },
-  { id: "ch-kneemail", theme: "church", setup: "What's the most reliable way to get a message to God?", punchline: "Kneemail." },
-  { id: "ch-garden-sign", theme: "church", setup: "What did the sign in the church garden say?", punchline: "\"Lettuce be kind, squash gossip, turnip to church.\"" },
-  { id: "ch-cramming", theme: "church", setup: "What do you call it when a man of eighty suddenly starts reading his Bible every day?", punchline: "Cramming for finals." },
-  { id: "ch-ghostwriter", theme: "church", setup: "Why is there no \"about the author\" page in the Bible?", punchline: "It had a holy ghostwriter." },
-  { id: "ch-bird-of-pray", theme: "church", setup: "Why did the hawk settle on the church steeple?", punchline: "It's a bird of pray." },
+  { id: "ch-weekdays", theme: "church", slot: "why-present", setup: "Why is Sunday the strongest day of the week?", punchline: "All the others are weekdays." },
+  { id: "ch-lightbulb", theme: "church", setup: "How many church members does it take to change a light bulb?", punchline: "Change?", decoys: ["Bulb?", "Ladder?", "Light?"] },
+  { id: "ch-bibledozer", theme: "church", slot: "short-noun", setup: "What do you call someone who nods off in the middle of a chapter?", punchline: "A Bible-dozer." },
+  { id: "ch-hymns", theme: "church", setup: "Why is it \"amen\" and never \"awomen\"?", punchline: "Because we sing hymns, not hers.", decoys: ["Because we sing the verses, not the chorus.", "Because it is the first word, not the last.", "Because we say it in church, not at home."] },
+  { id: "ch-rock-of-ages", theme: "church", setup: "What is the most requested hymn in the church nursery?", punchline: "\"Rock of Ages.\"", decoys: ["\"Amazing Grace.\"", "\"Holy, Holy, Holy.\"", "\"Great Is Thy Faithfulness.\""] },
+  { id: "ch-potluck", theme: "church", slot: "why-present", setup: "Why is the church potluck a genuine test of faith?", punchline: "You have to believe in something you cannot identify." },
+  { id: "ch-in-conclusion", theme: "church", setup: "What is the least reliable phrase in any sermon?", punchline: "\"And in conclusion.\"", decoys: ["\"Let us pray.\"", "\"Turn in your Bibles.\"", "\"Please be seated.\""] },
+  { id: "ch-committee", theme: "church", setup: "What is the difference between a large pizza and a church committee?", punchline: "A pizza can feed a family of four.", decoys: ["A pizza gets delivered on time.", "A pizza can be split evenly.", "A pizza needs a lot of cheese."] },
+  { id: "ch-genealogies", theme: "church", slot: "why-present", setup: "Why does the Bible study go so quiet at the start of Matthew?", punchline: "Nobody wants to be the one asked to read the genealogy out loud." },
+  { id: "ch-ladder", theme: "church", slot: "why-he", setup: "Why did the man bring a ladder to church?", punchline: "He heard the service was uplifting." },
+  { id: "ch-holy-water", theme: "church", setup: "How do you make holy water?", punchline: "You boil the devil out of it.", decoys: ["You let it stand overnight.", "You strain it through a hymnal.", "You ask the choir to hum over it."] },
+  { id: "ch-charitea", theme: "church", slot: "short-noun", setup: "What is a minister's favorite kind of tea?", punchline: "Chari-tea." },
+  { id: "ch-lent", theme: "church", setup: "What is the hardest part of Lent?", punchline: "Remembering what you gave up.", decoys: ["Finding a good substitute for coffee.", "Staying away from the church bake sale.", "Counting the days until Easter."] },
+  { id: "ch-pageant-sheep", theme: "church", setup: "Why was the boy so glum after the Christmas pageant casting?", punchline: "Typecast as a sheep for the fourth year running.", decoys: ["Handed a stuffed lamb and no lines at all.", "Told to stand still behind the manger all night.", "Given a costume two sizes too big."] },
+  { id: "ch-back-row", theme: "church", slot: "why-present", setup: "Why does the back row fill up first every Sunday?", punchline: "It is the only pew with an exit strategy." },
+  { id: "ch-three-minutes", theme: "church", slot: "quote", setup: "The visiting preacher asked the deacon what he should speak about. What did the deacon say?", punchline: "\"About three minutes.\"" },
+  { id: "ch-seven-days", theme: "church", slot: "short-adj", setup: "Seven days without prayer makes one what?", punchline: "Weak." },
+  { id: "ch-satan-ruler", theme: "church", slot: "short-noun", setup: "Give the devil an inch and he'll be what?", punchline: "A ruler." },
+  { id: "ch-kneemail", theme: "church", slot: "short-noun", setup: "What's the most reliable way to get a message to God?", punchline: "Kneemail." },
+  { id: "ch-garden-sign", theme: "church", setup: "What did the sign in the church garden say?", punchline: "\"Lettuce be kind, squash gossip, turnip to church.\"", decoys: ["\"Plant kindly, water daily, bloom where you are.\"", "\"Please keep off the grass during the service.\"", "\"All visitors welcome, all weeds will be removed.\""] },
+  { id: "ch-cramming", theme: "church", setup: "What do you call it when a man of eighty suddenly starts reading his Bible every day?", punchline: "Cramming for finals.", decoys: ["Turning over a new leaf.", "Burning the midnight oil.", "Making up for lost time."] },
+  { id: "ch-ghostwriter", theme: "church", setup: "Why is there no \"about the author\" page in the Bible?", punchline: "It had a holy ghostwriter.", decoys: ["It had far too many authors to list.", "It had a famous editor.", "It had a very long committee."] },
+  { id: "ch-bird-of-pray", theme: "church", slot: "why-present", setup: "Why did the hawk settle on the church steeple?", punchline: "It's a bird of pray." },
 ];
 
 /* -------------------------------------------------------------------------------------------------
@@ -277,7 +296,17 @@ function compatible(a: BibleJoke, b: BibleJoke): boolean {
 export function buildRound(joke: BibleJoke, level: JokeLevelDef): JokeRound {
   const rand = mulberry32(hashSeed(`${joke.id}:${level.key}`));
 
-  const eligible = BIBLE_JOKES.filter((j) => compatible(joke, j));
+  // Same-slot only: the decoys must read as grammatical answers to THIS setup (same tense, person,
+  // number and form as the real punchline). A joke with hand-written decoys uses those instead.
+  const sameSlot = BIBLE_JOKES.filter((j) => compatible(joke, j) && joke.slot !== undefined && j.slot === joke.slot);
+  // Within a slot, prefer decoys of a similar length so none stands out by size alone.
+  const wordCount = (t: string) => t.trim().split(/\s+/).length;
+  const base = wordCount(joke.punchline);
+  const similar = sameSlot.filter((j) => {
+    const n = wordCount(j.punchline);
+    return n <= base * 2 + 1 && base <= n * 2 + 1;
+  });
+  const eligible = similar.length >= 3 ? similar : sameSlot;
   const scoped =
     level.distractors === "same"
       ? eligible.filter((j) => j.theme === joke.theme)
@@ -288,7 +317,7 @@ export function buildRound(joke: BibleJoke, level: JokeLevelDef): JokeRound {
   // pool rather than dealing a round with two options.
   const pool = scoped.length >= 3 ? scoped : [...scoped, ...eligible.filter((j) => !scoped.includes(j))];
 
-  const decoys = seededPick(pool, 3, rand).map((j) => j.punchline);
+  const decoys = joke.decoys ? [...joke.decoys] : seededPick(pool, 3, rand).map((j) => j.punchline);
   const entries = [{ text: joke.punchline, correct: true }, ...decoys.map((d) => ({ text: d, correct: false }))];
   for (let i = entries.length - 1; i > 0; i--) {
     const j = Math.floor(rand() * (i + 1));
