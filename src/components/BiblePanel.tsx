@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, type ReactNode } from "react";
 import VerseText from "./VerseText";
 import type { ClippedHighlight } from "./VerseText";
 import TagPicker from "./TagPicker";
@@ -108,6 +108,14 @@ interface PassageResult {
   reference: string;
   verses: VerseData[];
   translationName: string;
+}
+
+/** Wraps each occurrence of a searched word in <mark>. Plain-text split, never innerHTML. */
+function markMatches(text: string, query: string): ReactNode {
+  const words = query.split(/\s+/).filter((w) => w.length > 0);
+  if (words.length === 0) return text;
+  const re = new RegExp(`(${words.map((w) => w.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")).join("|")})`, "ig");
+  return text.split(re).map((part, i) => (i % 2 === 1 ? <mark key={i} className="search-hit-mark">{part}</mark> : part));
 }
 
 interface SearchHit {
@@ -291,6 +299,9 @@ export default function BiblePanel({
   const [referencePickerOpen, setReferencePickerOpen] = useState(false);
 
   const [searchResults, setSearchResults] = useState<SearchHit[] | null>(null);
+  // The words the current results were searched for, kept only so the match can be marked in each
+  // row. Set together with the results and never read for anything else.
+  const [searchedQuery, setSearchedQuery] = useState("");
   const [searching, setSearching] = useState(false);
   const [searchError, setSearchError] = useState<string | null>(null);
   const [pendingScrollVerse, setPendingScrollVerse] = useState<number | null>(null);
@@ -1544,6 +1555,7 @@ export default function BiblePanel({
       if (!res.ok) throw new Error("Search failed");
       const data: SearchHit[] = await res.json();
       setSearchResults(data.slice(0, MAX_SEARCH_RESULTS));
+      setSearchedQuery(q);
     } catch {
       setSearchError("Couldn't search right now — try again in a moment.");
       setSearchResults(null);
@@ -1691,22 +1703,31 @@ export default function BiblePanel({
       {searchResults && (
         <div className="bible-search-results">
           <div className="bible-search-results-header">
-            <span>{searchResults.length === 0 ? "No matches" : `${searchResults.length} result${searchResults.length === 1 ? "" : "s"}`}</span>
+            <span className="bible-search-results-count">
+              {searchResults.length === 0 ? "No matches" : `${searchResults.length} result${searchResults.length === 1 ? "" : "s"}`}
+            </span>
             <button type="button" className="bible-search-results-clear" onClick={() => setSearchResults(null)}>
               Clear
             </button>
           </div>
+          {searchResults.length === 0 && (
+            <p className="bible-search-results-empty">
+              Nothing in this translation matches. Try a single word, or another spelling.
+            </p>
+          )}
           <ul>
             {searchResults.map((hit) => {
               const bookName = BOOKS[hit.book - 1]?.name;
               if (!bookName) return null;
+              // Canonical order: 1-39 Old Testament, 40-43 the Gospels, 44-66 the rest of the New.
+              const section = hit.book <= 39 ? "ot" : hit.book <= 43 ? "gospel" : "nt";
               return (
                 <li key={`${hit.book}-${hit.chapter}-${hit.verse}`}>
                   <button type="button" onClick={() => handleSearchResultClick(hit)}>
-                    <span className="bible-search-result-ref">
+                    <span className={`bible-search-result-ref bible-search-result-ref-${section}`}>
                       {bookName} {hit.chapter}:{hit.verse}
                     </span>
-                    <span className="bible-search-result-text">{cleanSearchText(hit.text)}</span>
+                    <span className="bible-search-result-text">{markMatches(cleanSearchText(hit.text), searchedQuery)}</span>
                   </button>
                 </li>
               );

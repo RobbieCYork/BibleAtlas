@@ -3481,66 +3481,146 @@ a.profile-links-url {
 }
 
 .bible-search-results {
-  border: 1px solid var(--border);
-  border-radius: 8px;
+  border: var(--sk-bw, 1.5px) solid var(--border-strong);
+  border-radius: var(--sk-r-lg, 12px);
   margin-bottom: 12px;
   overflow: hidden;
+  background: var(--panel-bg);
+  box-shadow: var(--sk-sh-lg, 0 2px 8px rgba(0, 0, 0, 0.08));
 }
 
 .bible-search-results-header {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  gap: 8px;
   padding: 8px 10px;
-  background: var(--accent-bg);
+  background: var(--surface-sunken);
+  border-bottom: var(--sk-bw, 1.5px) solid var(--border-strong);
   font-size: calc(12px * var(--tsz, 1));
   color: var(--text-muted);
 }
 
-.bible-search-results-clear {
-  border: none;
-  background: none;
-  color: var(--accent);
+/* The count as a pill chip, the same chunky chip shape as the Options pill. */
+.bible-search-results-count {
+  display: inline-flex;
+  align-items: center;
+  padding: 3px 12px;
+  border: var(--sk-bw, 1.5px) solid var(--border-strong);
+  border-radius: 999px;
+  background: var(--panel-bg);
+  color: var(--text-h);
+  font-weight: 700;
   font-size: calc(12px * var(--tsz, 1));
-  font-weight: 500;
+}
+
+.bible-search-results-clear {
+  min-height: 32px;
+  border: var(--sk-bw, 1.5px) solid var(--border-strong);
+  border-radius: 999px;
+  background: var(--panel-bg);
+  color: var(--text-h);
+  font-size: calc(12px * var(--tsz, 1));
+  font-weight: 700;
   cursor: pointer;
-  padding: 2px 4px;
+  padding: 2px 14px;
+  box-shadow: var(--sk-sh, none);
+  transition: transform 0.1s, box-shadow 0.1s;
+}
+
+.bible-search-results-clear:hover {
+  background: var(--accent-bg);
+}
+
+.bible-search-results-clear:active {
+  transform: translate(2px, 2px);
+  box-shadow: none;
+}
+
+.bible-search-results-empty {
+  margin: 0;
+  padding: 18px 14px;
+  text-align: center;
+  color: var(--text-muted);
+  font-size: calc(13px * var(--tsz, 1));
 }
 
 .bible-search-results ul {
   list-style: none;
   margin: 0;
-  padding: 0;
-  max-height: 320px;
+  padding: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  max-height: 360px;
   overflow-y: auto;
 }
 
-.bible-search-results li + li {
-  border-top: 1px solid var(--border);
+.bible-search-results ul:empty {
+  display: none;
 }
 
+/* Each hit is a card: outlined, rounded, and it lifts on hover/focus with the shadow shift the
+   other chunky controls use. No border-top dividers any more. */
 .bible-search-results li button {
   display: block;
   width: 100%;
+  min-height: 44px;
   text-align: left;
-  padding: 9px 10px;
-  border: none;
-  background: none;
+  padding: 9px 12px;
+  border: var(--sk-bw, 1px) solid var(--border-strong);
+  border-radius: var(--sk-r, 10px);
+  background: var(--panel-bg);
   font: inherit;
   color: inherit;
   cursor: pointer;
+  box-shadow: var(--sk-sh, none);
+  transition: transform 0.1s, box-shadow 0.1s, background 0.1s;
 }
 
-.bible-search-results li button:hover {
+.bible-search-results li button:hover,
+.bible-search-results li button:focus-visible {
   background: var(--accent-bg);
+  transform: translate(-1px, -1px);
+}
+
+.bible-search-results li button:active {
+  transform: translate(2px, 2px);
+  box-shadow: none;
 }
 
 .bible-search-result-ref {
-  display: block;
-  font-size: calc(12px * var(--tsz, 1));
-  font-weight: 600;
-  color: var(--accent);
-  margin-bottom: 2px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 2px 10px 2px 8px;
+  margin-bottom: 4px;
+  border: var(--sk-bw, 1px) solid var(--border-strong);
+  border-radius: 999px;
+  background: var(--surface-sunken);
+  color: var(--text-h);
+  font-weight: 700;
+}
+
+.bible-search-result-ref::before {
+  content: "";
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--sk-sun, #d9a32b);
+  border: 1px solid var(--border-strong);
+}
+
+.bible-search-result-ref-gospel::before { background: var(--sk-tomato, #d9633b); }
+.bible-search-result-ref-nt::before { background: var(--sk-mint, #2f9e7f); }
+
+.search-hit-mark,
+.article-search-mark {
+  background: var(--sk-sun, #ffe9a8);
+  color: #15110e;
+  border-radius: 3px;
+  padding: 0 2px;
+  font-weight: inherit;
 }
 
 .bible-search-result-text {
@@ -13081,12 +13161,29 @@ img.sn-image,
 }
 
 /* Articles-mode search results: icon + title/type/snippet stack, keyboard-active row. */
-.search-results li.active { background: var(--accent-bg); }
 .article-search-results li { justify-content: flex-start; align-items: flex-start; gap: 10px; }
 .article-search-icon { flex-shrink: 0; font-size: calc(16px * var(--tsz, 1)); color: var(--text-muted); padding-top: 2px; }
 .article-search-text { display: flex; flex-direction: column; min-width: 0; gap: 1px; }
 .article-search-snippet { font-size: calc(12px * var(--tsz, 1)); color: var(--text-muted); line-height: 1.35; }
-.article-search-mark { background: var(--accent-bg); color: inherit; border-radius: 2px; padding: 0 1px; font-weight: 700; }
 @media (max-width: 768px) {
   .search-scope-toggle button { min-width: 44px; min-height: 44px; }
 }
+
+/* All three modes' dropdowns share the chunky outline + offset shadow. */
+.search-results {
+  border: var(--sk-bw, 1.5px) solid var(--border-strong);
+  border-radius: var(--sk-r-lg, 12px);
+  box-shadow: var(--sk-sh-lg, 0 8px 24px rgba(0, 0, 0, 0.12));
+}
+.search-results li { min-height: 44px; }
+.search-results li:hover, .search-results li.active { background: var(--surface-sunken); }
+.search-results li.search-results-empty { justify-content: center; text-align: center; }
+.search-result-category {
+  padding: 1px 9px;
+  border: 1px solid var(--border-strong);
+  border-radius: 999px;
+  background: var(--surface-sunken);
+  font-weight: 600;
+  white-space: nowrap;
+}
+.article-search-results .search-result-category { align-self: flex-start; }
