@@ -11,7 +11,8 @@ Pieces:
 | Checkout | `supabase/functions/create-checkout-session` |
 | Webhook | `supabase/functions/stripe-webhook` (`verify_jwt = false`, see `config.toml`) |
 | Portal | `supabase/functions/create-portal-session` |
-| Shared logic + unit tests | `supabase/functions/_shared/` — `node --test supabase/functions/_shared/stripe.test.ts` |
+| Shared logic + unit tests | `supabase/functions/_shared/` — `node --test supabase/functions/_shared/stripe.test.ts supabase/functions/_shared/stripeCancel.test.ts` |
+| Cancel on account deletion | `delete-account` step 3c → `_shared/stripeCancel.ts` |
 | App UI | `src/lib/billing.ts`, `src/components/CapstonePlus.tsx`, Upgrade in `PaidTeaser.tsx`, "Capstone Plus" row in `AuthButton.tsx` |
 | UI proof | `scripts/signed-in-harness/examples/billing.mjs` |
 
@@ -52,7 +53,7 @@ any of these in the repo, in `.env.local`, or in a report.
 
 | Name | Required | Value |
 |---|---|---|
-| `STRIPE_SECRET_KEY` | yes | `sk_test_…` (or a restricted `rk_test_…` key with write access to Customers, Checkout Sessions, Customer portal, and read access to Subscriptions) |
+| `STRIPE_SECRET_KEY` | yes | `sk_test_…` (or a restricted `rk_test_…` key with write access to Customers, Checkout Sessions, Customer portal **and Subscriptions** — `delete-account` cancels subscriptions with it, and a key that cannot will make every paying subscriber's account deletion fail closed). Set it on `delete-account` too: Supabase function secrets are project-wide, so one `supabase secrets set` covers all four functions |
 | `STRIPE_WEBHOOK_SECRET` | yes | `whsec_…` from the endpoint above |
 | `STRIPE_PRICE_MONTHLY` | yes | `price_…` |
 | `STRIPE_PRICE_ANNUAL` | yes | `price_…` |
@@ -72,13 +73,17 @@ endpoint can never grant real access and vice versa.
 
 1. Apply `sql/043` then `sql/045` to **staging**, run `sql/tests/045_stripe_billing_test.sql` there.
 2. **(Robbie)** Apply both to production. Nothing changes for users: billing is off and everyone has Plus.
-3. Set the test-mode secrets; deploy the three functions:
-   `supabase functions deploy create-checkout-session create-portal-session stripe-webhook`
-   (config.toml carries each one's `verify_jwt`).
+3. Set the test-mode secrets; deploy the three functions **and the updated `delete-account`**:
+   `supabase functions deploy create-checkout-session create-portal-session stripe-webhook delete-account`
+   (config.toml carries each one's `verify_jwt`). Deploying `delete-account` from this branch is
+   safe before 045 is applied: with no billing tables the cancel step is a no-op.
 4. Owner rehearsal on production in test mode: `paid.billing_owner_preview = true`, buy with card
    `4242 4242 4242 4242`, check `subscriptions` / `entitlements` rows appear, open Manage, cancel,
    check the stripe entitlement row is removed. Use `stripe trigger` / "Send test webhook" for the
-   failure paths. Turn the preview back off.
+   failure paths. Then, with a **separate throwaway test account** that has an active test
+   subscription, delete the account in the app and check in the Stripe dashboard that the
+   subscription is cancelled (not "cancels at period end") and the account is gone. Turn the preview
+   back off.
 5. **(Robbie)** Live keys + live webhook + `STRIPE_ALLOW_LIVE=true`; Terms/Privacy/Refund text
    updated (the privacy policy currently says no payment information is collected).
 6. **(Robbie)** Launch: `paid.billing_enabled = true`, and — separately, on the chosen founding-member
@@ -86,12 +91,18 @@ endpoint can never grant real access and vice versa.
 
 ## Known gaps before launch (not built here)
 
-- **Account deletion does not cancel a Stripe subscription.** `delete-account` removes the
-  account (and, by cascade, its `stripe_customers` / `subscriptions` / `entitlements` rows), but
-  Stripe would keep charging the card. Before `paid.billing_enabled` is turned on, `delete-account`
-  must cancel the customer's live subscriptions (or delete the Stripe customer) first, and the
-  deletion notice must mention it. The webhook already records later events for a deleted account
-  as `user_missing` instead of retrying forever.
+- **Account deletion and Stripe — built; the notice text is still open.** `delete-account` now
+  cancels every non-terminal subscription of the account's Stripe customer(s) IMMEDIATELY (Stripe
+  defaults: no proration refund) before it deletes anything, listing them from Stripe rather than
+  trusting the `subscriptions` table. If a cancel cannot be confirmed, nothing is deleted and the
+  person is told why. It is a no-op when 045 is not applied, when there is no Stripe customer, and
+  for test-mode customers when no test key is set; a **live-mode** customer with no live key fails
+  closed. It deliberately ignores `paid.billing_enabled` (billing can be switched off with
+  subscribers still on it). Rules and reasons: `_shared/stripeCancel.ts`. The webhook records the
+  resulting `customer.subscription.deleted` for a deleted account as `user_missing`.
+  **Still open:** the deletion notice (`src/data/accountDeletionNotice.ts`, which also generates
+  the public /delete-account page) does not yet say that a Capstone Plus subscription is cancelled
+  immediately with no refund of the unused period. Copy change; content lane, before launch.
 - Prices are not shown in the app; Stripe Checkout shows the amount, tax and renewal terms.
 - No email receipts configuration (Stripe settings → Emails).
 

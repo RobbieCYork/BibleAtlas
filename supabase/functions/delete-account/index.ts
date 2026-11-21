@@ -39,6 +39,8 @@
 // So any unexpected failure aborts BEFORE the account row is touched and reports what failed.
 
 import { createClient, type SupabaseClient } from "jsr:@supabase/supabase-js@2";
+import { stripeClient } from "../_shared/stripe.ts";
+import { cancelSubscriptionsForDeletion, type BillingRecords } from "../_shared/stripeCancel.ts";
 
 const UUID = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
 
@@ -99,6 +101,14 @@ const OWNED_ROWS: Array<{ table: string; column: string; mode?: "either"; second
   { table: "saving_peter_rooms", column: "host_id" },
   { table: "user_roles", column: "user_id" },
   { table: "admin_users", column: "user_id" },
+  // Capstone Plus (sql/043, sql/045). Every one of these is also ON DELETE CASCADE from auth.users;
+  // deleted explicitly for the same reason as the rest of this list. Safe only because step 3c has
+  // already cancelled any Stripe subscription — once stripe_customers is gone, nothing here knows
+  // which Stripe customer was this person's.
+  { table: "subscriptions", column: "user_id" },
+  { table: "stripe_customers", column: "user_id" },
+  { table: "entitlements", column: "user_id" },
+  { table: "entitlement_events", column: "user_id" },
   { table: "profiles", column: "id" },
 ];
 
@@ -119,6 +129,8 @@ const ANONYMISE: Array<{ table: string; column: string }> = [
   // same reason as the rest of this list.
   { table: "feature_release", column: "updated_by" },
   { table: "feature_release_log", column: "changed_by" },
+  // sql/043: the owner who granted or revoked a comp. No foreign key, so nothing would null it.
+  { table: "entitlement_events", column: "actor" },
   { table: "game_rooms", column: "winner_id" },
   { table: "saving_peter_rooms", column: "winner_id" },
 ];
@@ -297,6 +309,42 @@ Deno.serve(async (req: Request) => {
   const callerIsOwner = !roleRow.error && roleRow.data?.role === "owner";
   if (!stage.error && stage.data?.live === false && !callerIsOwner) {
     return json({ error: "Account deletion isn't available yet. Nothing was deleted." }, 403);
+  }
+
+  // ── 3c. Stop the billing (sql/045) ────────────────────────────────────────────────────────────
+  // Before anything is destroyed: a person deleted while Stripe still charges them has no account
+  // left to cancel from, and once stripe_customers is gone we no longer know which customer was
+  // theirs. So any live subscription is cancelled at once, and if that cannot be confirmed NOTHING is
+  // deleted. With nothing to cancel — 045 not applied, no Stripe customer, everything already over,
+  // no key and no live-mode customer — this is a no-op and deletion proceeds. Not gated on
+  // paid.billing_enabled: see _shared/stripeCancel.ts.
+  const billing = await cancelSubscriptionsForDeletion({
+    secretKey: Deno.env.get("STRIPE_SECRET_KEY"),
+    stripe: (key) => stripeClient(key),
+    log: (message, detail) => console.log(message, { uid, ...detail }),
+    loadRecords: async () => {
+      const customers = await admin.from("stripe_customers").select("customer_id, livemode").eq("user_id", uid);
+      const subscriptions = await admin
+        .from("subscriptions")
+        .select("id, customer_id, status, livemode")
+        .eq("user_id", uid);
+      const missing = (e: { code?: string } | null) => !!e && NOT_APPLICABLE.has(e.code ?? "");
+      if (missing(customers.error) && missing(subscriptions.error)) return "not_applicable";
+      for (const r of [customers, subscriptions]) {
+        if (r.error && !missing(r.error)) throw new Error(`${r.error.code ?? "?"}: ${r.error.message}`);
+      }
+      return {
+        customers: (customers.data ?? []) as BillingRecords["customers"],
+        subscriptions: (subscriptions.data ?? []) as BillingRecords["subscriptions"],
+      };
+    },
+  });
+  if (!billing.ok) {
+    console.error("delete-account: refused, Stripe subscription not confirmed cancelled", { uid, detail: billing.detail });
+    return json({ error: billing.reason }, 502);
+  }
+  if (billing.canceled.length > 0) {
+    console.log("delete-account: cancelled Stripe subscriptions", { uid, subscriptions: billing.canceled });
   }
 
   // ── 4. Everything except the account row itself ───────────────────────────────────────────────

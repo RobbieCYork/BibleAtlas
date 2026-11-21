@@ -284,8 +284,40 @@ set local role authenticated;
 do $$ begin
   if not public.has_entitlement('plus') then raise exception 'FAIL everyone_has_plus did not override'; end if;
   raise notice 'PASS everyone_has_plus still overrides';
-  raise notice 'ALL 045 CHECKS PASSED';
 end $$;
 reset role;
+
+-- Account deletion (sql/029 FK hygiene): every 043/045 table that references auth.users must let the
+-- account row go, by cascade, and must not take anyone else's rows with it. A NO ACTION key here
+-- would make delete-account fail at its very last step for anyone who ever had a subscription.
+-- The Stripe-side cancel is supabase/functions/_shared/stripeCancel.ts (unit-tested separately).
+do $$
+declare
+  v_other int;
+begin
+  if not exists (select 1 from public.stripe_customers where user_id = '00000000-0000-4000-8000-000000000011')
+     or not exists (select 1 from public.subscriptions where user_id = '00000000-0000-4000-8000-000000000011')
+     or not exists (select 1 from public.entitlement_events where user_id = '00000000-0000-4000-8000-000000000011') then
+    raise exception 'FAIL deletion check has no billing rows to delete (fixture changed?)';
+  end if;
+  select count(*) into v_other from public.entitlements where user_id <> '00000000-0000-4000-8000-000000000011';
+
+  delete from auth.users where id = '00000000-0000-4000-8000-000000000011';
+
+  if exists (select 1 from public.stripe_customers where user_id = '00000000-0000-4000-8000-000000000011')
+     or exists (select 1 from public.subscriptions where user_id = '00000000-0000-4000-8000-000000000011')
+     or exists (select 1 from public.entitlements where user_id = '00000000-0000-4000-8000-000000000011')
+     or exists (select 1 from public.entitlement_events where user_id = '00000000-0000-4000-8000-000000000011') then
+    raise exception 'FAIL billing rows survived account deletion';
+  end if;
+  if (select count(*) from public.entitlements) <> v_other then
+    raise exception 'FAIL account deletion removed another account''s entitlement';
+  end if;
+  if not exists (select 1 from public.stripe_events) then
+    raise exception 'FAIL the idempotency ledger was emptied by an account deletion';
+  end if;
+  raise notice 'PASS account deletion cascades through stripe_customers, subscriptions, entitlements';
+  raise notice 'ALL 045 CHECKS PASSED';
+end $$;
 
 rollback;

@@ -117,10 +117,12 @@ export class StripeApiError extends Error {
 export interface StripeClient {
   get<T>(path: string, query?: Record<string, unknown>): Promise<T>;
   post<T>(path: string, params: Record<string, unknown>, idempotencyKey?: string): Promise<T>;
+  /** HTTP DELETE — Stripe uses it for "cancel a subscription now" (DELETE /v1/subscriptions/:id). */
+  del<T>(path: string): Promise<T>;
 }
 
 export function stripeClient(secretKey: string, fetchImpl: typeof fetch = fetch): StripeClient {
-  const call = async <T>(method: "GET" | "POST", path: string, body?: string, idem?: string): Promise<T> => {
+  const call = async <T>(method: "GET" | "POST" | "DELETE", path: string, body?: string, idem?: string): Promise<T> => {
     const headers: Record<string, string> = {
       Authorization: `Bearer ${secretKey}`,
       "Stripe-Version": STRIPE_API_VERSION,
@@ -135,6 +137,7 @@ export function stripeClient(secretKey: string, fetchImpl: typeof fetch = fetch)
   return {
     get: (path, query) => call("GET", query ? `${path}?${formEncode(query)}` : path),
     post: (path, params, idem) => call("POST", path, formEncode(params), idem),
+    del: (path) => call("DELETE", path),
   };
 }
 

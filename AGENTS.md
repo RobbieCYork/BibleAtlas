@@ -415,6 +415,11 @@ are unaffected. After a server build, `node scripts/paid-content/check-bundle.mj
 - **The price is server-side.** The client sends `plan: "monthly" | "annual"`; the function maps it to
   `STRIPE_PRICE_*`. Never accept a price id, amount or return URL from the request (return origins
   are allow-listed by `APP_URL` / `APP_RETURN_ORIGINS`).
-- Proof, three different questions: `node scripts/stripe/rls-test.mjs --local` (SQL rules),
-  `node --test supabase/functions/_shared/stripe.test.ts` (signature + idempotency logic),
+- **Account deletion cancels Stripe first and fails closed.** `delete-account` step 3c calls
+  `_shared/stripeCancel.ts` before any row is touched. Never move it after the deletes (once
+  `stripe_customers` is gone nobody knows which customer to cancel), never turn its failure into a
+  warning, and never gate it on `paid.billing_enabled`.
+- Proof, three different questions: `node scripts/stripe/rls-test.mjs --local` (SQL rules, incl.
+  the account-deletion cascade), `node --test supabase/functions/_shared/stripe.test.ts
+  supabase/functions/_shared/stripeCancel.test.ts` (signature, idempotency, cancel-on-delete logic),
   `scripts/signed-in-harness/examples/billing.mjs` (UI). None of them is a build check.
