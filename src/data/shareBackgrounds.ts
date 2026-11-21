@@ -30,6 +30,15 @@ export interface ShareBackground {
   textColor: "light" | "dark";
   /** Where the image is calm enough to sit text. */
   safeArea: "top" | "bottom" | "center";
+  /** Provenance for photographs sourced from outside (CC0 / public domain). Attribution is not
+   * required by these licences; it is recorded so the licence can be re-checked later. */
+  credit?: {
+    photographer: string;
+    sourceUrl: string;
+    licence: string;
+    licenceUrl: string;
+    verified: string;
+  };
 }
 
 export const SHARE_BACKGROUNDS: ShareBackground[] = [
@@ -103,6 +112,24 @@ export const SHARE_BACKGROUNDS: ShareBackground[] = [
     // Long-exposure water in the lower half smooths to a pale, even sheet.
     textColor: "dark",
     safeArea: "bottom",
+  },
+  {
+    id: "haystack-rock-cannon-beach",
+    file: "/share-backgrounds/haystack-rock-cannon-beach.webp",
+    placeholder: "/share-backgrounds/haystack-rock-cannon-beach-tiny.webp",
+    title: "Haystack Rock, Cannon Beach",
+    category: "pacific-northwest",
+    // Moody dusk: the rock sits in the middle third, the tide-flat below it is a deep, even
+    // slate blue that light ink reads cleanly over.
+    textColor: "light",
+    safeArea: "bottom",
+    credit: {
+      photographer: "Justin Luebke",
+      sourceUrl: "https://commons.wikimedia.org/wiki/File:Morning_at_the_Canon_beach_(Unsplash).jpg",
+      licence: "CC0 1.0 (originally published on Unsplash, 2015, under its then-CC0 terms)",
+      licenceUrl: "https://creativecommons.org/publicdomain/zero/1.0/",
+      verified: "2026-11-21",
+    },
   },
   {
     id: "calming-the-storm",
