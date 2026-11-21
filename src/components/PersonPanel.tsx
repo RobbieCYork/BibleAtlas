@@ -7,6 +7,7 @@ import ProfileAudioPlayer from "./ProfileAudioPlayer";
 import PronunciationAudioButton from "./PronunciationAudioButton";
 import ArticleHeader from "./ArticleHeader";
 import Icon from "./Icon";
+import { personImages } from "../data/personImages";
 import { personCardSpec, shareFilename } from "../lib/shareCard";
 import { ArticleReadCheck, ArticleReadToggle } from "./ArticleReadToggle";
 
@@ -56,6 +57,7 @@ export default function PersonPanel({
 }: PersonPanelProps) {
   if (!person) return null;
 
+  const personImage = personImages[person.id];
   const lifespanBadge = person.lifespanCertainty ? LIFESPAN_CERTAINTY_BADGES[person.lifespanCertainty] : null;
   // `kind` is optional and absent means "biblical" — every person carried over from the original
   // Atlas dataset has no `kind` at all. Asking whether the figure IS biblical rather than which
@@ -90,6 +92,24 @@ export default function PersonPanel({
         <p className="alt-names">Also called: {person.alternateNames.join(", ")}</p>
       )}
       <p className="person-summary">{person.summary}</p>
+      {personImage && (
+        <figure className="person-figure">
+          <img
+            src={personImage.src}
+            alt={personImage.alt}
+            width={personImage.width}
+            height={personImage.height}
+            loading="lazy"
+            decoding="async"
+          />
+          <figcaption>
+            {personImage.caption}{" "}
+            <a href={personImage.sourceUrl} target="_blank" rel="noopener noreferrer">
+              {personImage.credit}
+            </a>
+          </figcaption>
+        </figure>
+      )}
 
       <ProfileAudioPlayer kind="person" id={person.id} />
 

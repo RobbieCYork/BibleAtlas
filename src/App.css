@@ -13008,3 +13008,28 @@ img.sn-image,
 .reading-progress-toggle,
 .profile-view-toggle,
 .legend-toggle { padding-top: 0; padding-bottom: 0; }
+
+/* --- Person portrait / artwork figure (PersonPanel) --- */
+.person-figure {
+  margin: 12px 0 4px;
+  max-width: 320px;
+}
+.person-figure img {
+  display: block;
+  width: auto;
+  max-width: 100%;
+  height: auto;
+  max-height: 380px;
+  border-radius: 8px;
+}
+.person-figure figcaption {
+  margin-top: 6px;
+  font-size: calc(11.5px * var(--tsz, 1));
+  line-height: 1.4;
+  color: var(--text-muted, var(--text));
+  opacity: 0.85;
+}
+.person-figure figcaption a {
+  color: inherit;
+  text-decoration: underline;
+}
