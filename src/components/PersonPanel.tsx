@@ -58,6 +58,34 @@ export default function PersonPanel({
   if (!person) return null;
 
   const personImage = personImages[person.id];
+  // width/height are the real pixel size of the self-hosted file. <= 1.15 reads as portrait/square.
+  const imageBeside = personImage ? personImage.width / personImage.height <= 1.15 : false;
+  const personFigure = personImage ? (
+    <figure
+      className={`person-figure ${imageBeside ? "person-figure--beside" : "person-figure--wide"}`}
+      style={
+        {
+          "--img-ratio": personImage.width / personImage.height,
+          "--img-native": `${personImage.width}px`,
+        } as React.CSSProperties
+      }
+    >
+      <img
+        src={personImage.src}
+        alt={personImage.alt}
+        width={personImage.width}
+        height={personImage.height}
+        loading="lazy"
+        decoding="async"
+      />
+      <figcaption>
+        {personImage.caption}{" "}
+        <a href={personImage.sourceUrl} target="_blank" rel="noopener noreferrer">
+          {personImage.credit}
+        </a>
+      </figcaption>
+    </figure>
+  ) : null;
   const lifespanBadge = person.lifespanCertainty ? LIFESPAN_CERTAINTY_BADGES[person.lifespanCertainty] : null;
   // `kind` is optional and absent means "biblical" — every person carried over from the original
   // Atlas dataset has no `kind` at all. Asking whether the figure IS biblical rather than which
@@ -91,25 +119,15 @@ export default function PersonPanel({
       {person.alternateNames && person.alternateNames.length > 0 && (
         <p className="alt-names">Also called: {person.alternateNames.join(", ")}</p>
       )}
-      <p className="person-summary">{person.summary}</p>
-      {personImage && (
-        <figure className="person-figure">
-          <img
-            src={personImage.src}
-            alt={personImage.alt}
-            width={personImage.width}
-            height={personImage.height}
-            loading="lazy"
-            decoding="async"
-          />
-          <figcaption>
-            {personImage.caption}{" "}
-            <a href={personImage.sourceUrl} target="_blank" rel="noopener noreferrer">
-              {personImage.credit}
-            </a>
-          </figcaption>
-        </figure>
-      )}
+      {/* The picture sits beside the summary when it is portrait/square (the summary wraps around
+          it, so a tall icon no longer leaves a dead strip) and below the summary when it is
+          landscape (a wide scene would crush the text column). Chosen from the image's own
+          dimensions, never per person. */}
+      <div className="person-lead">
+        {personImage && imageBeside && personFigure}
+        <p className="person-summary">{person.summary}</p>
+        {personImage && !imageBeside && personFigure}
+      </div>
 
       <ProfileAudioPlayer kind="person" id={person.id} />
 
