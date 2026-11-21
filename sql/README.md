@@ -9,7 +9,7 @@ Last verified against production: **2026-10-24** (read-only catalog queries for 
 
 ---
 
-## The next free number is 047
+## The next free number is 048
 
 | Number | Status |
 |---|---|
@@ -27,7 +27,8 @@ Last verified against production: **2026-10-24** (read-only catalog queries for 
 | **044** | `044_admin_user_invites.sql` — on main (branch `admin-add-user`), **not applied**. Taken; do not reuse. |
 | **045** | `045_stripe_billing.sql` — Capstone Plus web payments: `stripe_customers`, `subscriptions`, `stripe_events`, `billing_status()`, service-role-only webhook RPCs that derive the `stripe` row in `entitlements`; switches `paid.billing_enabled` and `paid.billing_owner_preview` (both ship false). Depends on 025 and 043. Committed on branch `paid-payments`, **not applied**. Proof: `sql/tests/045_stripe_billing_test.sql` (`node scripts/stripe/rls-test.mjs --local`); runbook: `supabase/functions/STRIPE-SETUP.md`. |
 | **046** | `046_study_collections.sql` — Capstone Plus Study Collections: owner-only `study_collections` and `study_collection_items` (kind, ref_id), insert/update gated by `has_entitlement('plus')`, read/delete own rows always, caps 100 collections / 500 items, cascade on user delete, `reorder_study_collection_items()`. Depends on 025 and 043 (not 045). Committed on branch `plus-study-collections`, **not applied**. Proof: `sql/tests/046_study_collections_test.sql` (`node scripts/study-collections/rls-test.mjs --local`). |
-| **047** | Next genuinely free number. |
+| **047** | `047_groups_classes.sql` — Capstone Plus for Groups, phases 1-2 (admin pays): `churches.kind` (church/school), `classes`, `class_staff`, `class_members`, `class_agreement_versions`, `class_agreements` (audit, no FK to auth.users), `class_billing`, `class_join_attempts`, `class_invites` + `invite_suppressions` (structure only), `entitlements.source` + `'group'`, private `org-logos` bucket, switches `paid.groups_enabled` / `paid.groups_owner_preview` (both ship false). Students see only their own row; staff only their own class; no client writes. ALSO FIXES two sql/033 bugs that made the account of anyone who registered a church (or is a church's last admin) undeletable. Depends on 025, 033, 043, 045. Committed on branch `groups-classes`, **not applied**. Proof: `sql/tests/047_groups_classes_test.sql` (`node scripts/groups/rls-test.mjs --local`, and `--mutations` breaks 17 rules one at a time and shows each is caught). |
+| **048** | Next genuinely free number. |
 
 ### Numbers that are TAKEN but MISSING from this directory
 
