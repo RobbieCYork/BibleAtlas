@@ -1283,6 +1283,18 @@ body.resizing-panels {
   margin-top: 2px;
 }
 
+/* A date/lifespan line followed by a certainty pill ("traditional date" etc.). Shared so every
+ * such pair gets the same gap: one row, pill drops to its own line with the same gap when narrow. */
+.date-with-pill {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px 10px;
+}
+.date-with-pill .person-tier-tag {
+  margin-top: 0;
+}
+
 .pronunciation {
   font-style: italic;
 }

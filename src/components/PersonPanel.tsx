@@ -83,8 +83,8 @@ export default function PersonPanel({
         </p>
       )}
       {person.lifespanLabel && (
-        <p className="alt-names">
-          {person.lifespanLabel}
+        <p className="alt-names date-with-pill">
+          <span>{person.lifespanLabel}</span>
           {lifespanBadge && <span className="person-tier-tag">{lifespanBadge}</span>}
         </p>
       )}

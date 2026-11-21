@@ -98,8 +98,8 @@ export default function TimelineEventPanel({
   return (
     <div className={`location-panel person-panel ${expand ? "panel-expand" : ""}`} style={expand ? undefined : style}>
       <ArticleHeader title={event.title} subtitle={event.era} onBack={onBack} onClose={onClose} titleAdornment={<ArticleReadCheck kind="event" id={event.id} />} />
-      <p className="alt-names">
-        {event.dateLabel}
+      <p className="alt-names date-with-pill">
+        <span>{event.dateLabel}</span>
         {certaintyBadge && <span className="person-tier-tag">{certaintyBadge}</span>}
       </p>
       <p className="person-summary">{event.summary}</p>
