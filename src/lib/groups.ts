@@ -210,9 +210,12 @@ export async function fetchMyClasses(): Promise<MyClass[]> {
   }));
 }
 
-const JOIN_ERRORS: Record<string, string> = {
+export const JOIN_ERRORS: Record<string, string> = {
+  age_required: "Please answer the age question to join.",
+  used: "That invite link has already been used. Ask your teacher or leader for the class code.",
+  expired: "That invite has expired. Ask your teacher or leader to invite you again, or for the class code.",
   not_found: "That code didn't match an open class or group. Check it with your teacher or leader.",
-  full: "This class or group is full. Your teacher or leader needs to add seats.",
+  full: "This class or group is full. Your teacher or leader needs to add seats before you can join.",
   ended: "That class or group has ended.",
   rate_limited: "Too many tries. Please wait an hour and try again.",
   too_many_classes: "You're already in 10 classes or groups.",
@@ -220,8 +223,11 @@ const JOIN_ERRORS: Record<string, string> = {
   guest_account: "Create a free account first.",
 };
 
-export async function joinClassByCode(code: string): Promise<{ classId: string; name: string }> {
-  const { data, error } = await supabase.rpc("join_class", { p_code: code });
+/** sql/049: the age bracket from the neutral birth month / year question is required (13+ only). */
+export type AgeBracket = "13_17" | "18_plus";
+
+export async function joinClassByCode(code: string, ageBracket: AgeBracket): Promise<{ classId: string; name: string }> {
+  const { data, error } = await supabase.rpc("join_class", { p_code: code, p_age_bracket: ageBracket });
   if (error) throw new Error("Could not join. Please try again.");
   const d = (data ?? {}) as { ok?: boolean; error?: string; class_id?: string; name?: string };
   if (!d.ok) throw new Error(JOIN_ERRORS[d.error ?? ""] ?? "Could not join. Please try again.");

@@ -94,6 +94,36 @@ function installFakeGroups(h, created) {
   });
 }
 
+/** Sets a React-controlled <select> (native setter + change event). */
+const choose = (h, sel, value) =>
+  h.evaluate(
+    (sel, value) => {
+      const el = document.querySelector(sel);
+      if (!el) return false;
+      Object.getOwnPropertyDescriptor(HTMLSelectElement.prototype, "value").set.call(el, String(value));
+      el.dispatchEvent(new Event("change", { bubbles: true }));
+      return true;
+    },
+    sel,
+    value
+  );
+
+async function joinWithCode(h, code) {
+  await h.evaluate(() => {
+    const el = document.querySelector(".groups-join-row input");
+    Object.getOwnPropertyDescriptor(HTMLInputElement.prototype, "value").set.call(el, "");
+    el.dispatchEvent(new Event("input", { bubbles: true }));
+  });
+  await h.type(".groups-join-row input", code);
+  await h.click({ css: ".groups-join-row button", text: "Join" });
+  await h.waitFor(".groups-joinpanel");
+  await choose(h, 'select[aria-label="Birth month"]', "3");
+  await choose(h, 'select[aria-label="Birth year"]', "1990");
+  await h.sleep(150);
+  await h.click(".groups-join-confirm");
+  await h.sleep(500);
+}
+
 async function openMenu(h) {
   await h.click('[aria-label="Settings and account"]');
   await h.sleep(300);
@@ -300,19 +330,13 @@ export default async function (h) {
   await openGroups(h);
   const ot = await h.text(".groups-sheet");
   h.assert(!/You lead/.test(ot) && !/You're in/.test(ot), "outsider: no classes listed");
-  await h.type('.groups-join-row input', "zzzzzz");
-  await h.click({ css: ".groups-join-row button", text: "Join" });
-  await h.sleep(500);
-  h.assert(/didn't match an open class or group/.test((await h.text(".groups-join .plus-error")) ?? ""), "wrong code: readable error");
-  await h.evaluate(() => {
-    const el = document.querySelector(".groups-join-row input");
-    Object.getOwnPropertyDescriptor(HTMLInputElement.prototype, "value").set.call(el, "");
-    el.dispatchEvent(new Event("input", { bubbles: true }));
-  });
-  await h.type('.groups-join-row input', "K7M2QX");
-  await h.click({ css: ".groups-join-row button", text: "Join" });
-  await h.sleep(500);
-  h.assert(/is full/.test((await h.text(".groups-join .plus-error")) ?? ""), "full class: readable error");
+  // sql/049: typing a code opens the join panel, which asks the neutral age question first.
+  await joinWithCode(h, "zzzzzz");
+  h.assert(/didn't match an open class or group/.test((await h.text(".groups-joinpanel .plus-error")) ?? ""), "wrong code: readable error");
+  await h.click({ css: ".groups-joinpanel button", text: "Not now" });
+  await h.sleep(200);
+  await joinWithCode(h, "K7M2QX");
+  h.assert(/is full/.test((await h.text(".groups-joinpanel .plus-error")) ?? ""), "full class: readable error");
   h.assert(!h.requests.slice(mark).some((r) => r.path.startsWith("/rest/v1/rpc/class_roster")), "class_roster never called for an outsider");
   await h.screenshot(`groups-outsider-${await vwTag()}.png`);
 

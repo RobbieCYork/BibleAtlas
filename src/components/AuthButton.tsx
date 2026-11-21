@@ -16,6 +16,7 @@ import SocialLinks from "./SocialLinks";
 import { PlusAccountSection, PlusReturnNotice } from "./CapstonePlus";
 import { billingVisible, useBilling } from "../lib/billing";
 import { useGroupsEnabled } from "../lib/groupsStatus";
+import { pendingJoinClass } from "../lib/groupsJoinParam";
 
 // Capstone Plus for Groups (sql/047). Lazy so none of it ships in the main bundle; drawn only when
 // groups_status() says paid.groups_enabled is on (ships OFF), never for guests or in a native build.
@@ -105,7 +106,8 @@ export default function AuthButton({
   // Back from Stripe after a group checkout (?groups=success|cancel): open Classes & Groups, which
   // reads and strips the parameter and says what happened.
   useEffect(() => {
-    if (groupsEnabled && /[?&]groups=/.test(window.location.search)) {
+    // Also: an invite link (?joinClass=) caught at startup is waiting (lib/groupsJoinParam.ts).
+    if (groupsEnabled && (/[?&]groups=/.test(window.location.search) || pendingJoinClass())) {
       setOpen(true);
       setMenuView("groups");
     }

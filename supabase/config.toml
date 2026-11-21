@@ -32,3 +32,19 @@ verify_jwt = false
 # Capstone Plus for Groups (sql/047, branch groups-classes): admin-pays checkout and add-seats.
 [functions.group-billing]
 verify_jwt = true
+
+# Capstone Plus for Groups phase 3 (sql/049, branch groups-invites): invites. See functions/INVITES-SETUP.md.
+[functions.group-invite-mailer]
+# OFF on purpose: called by the database's pg_cron job, which has no user token. The x-cron-secret
+# header (INVITE_CRON_SECRET, compared in constant time) is the authentication.
+verify_jwt = false
+
+[functions.group-invite-unsubscribe]
+# OFF on purpose: CAN-SPAM opt-outs must work without logging in. The 64-hex token from the email
+# is the only credential, and the answer never says whether it was known.
+verify_jwt = false
+
+[functions.group-invite-email-events]
+# OFF on purpose: the email provider sends no Supabase token. The Svix signature
+# (RESEND_WEBHOOK_SECRET) over the raw body is the authentication.
+verify_jwt = false

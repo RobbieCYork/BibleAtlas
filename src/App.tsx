@@ -59,6 +59,7 @@ import { TestViewStrip } from "./components/FeatureRelease";
 import { useFeature } from "./lib/features";
 import { consumeDeepLinkParam, parseDeepLink, DEEP_LINK_EVENT, type DeepLink } from "./lib/deepLink";
 import "./App.css";
+import { stashJoinClassParam } from "./lib/groupsJoinParam";
 
 const MIN_PANEL_WIDTH = 240;
 const MAX_PANEL_WIDTH = 800;
@@ -395,6 +396,13 @@ function App() {
       localStorage.removeItem("pending-join-group");
     });
   }, [session]);
+
+  // Capstone Plus for Groups (sql/049): "?joinClass=<code or emailed token>". Stripped from the
+  // address bar at once and kept in localStorage through sign-up; Classes & Groups acts on it once the
+  // Groups switch is on for this account (AuthButton). See lib/groupsJoinParam.ts.
+  useEffect(() => {
+    stashJoinClassParam();
+  }, []);
 
   // A church's QR code and "Copy invite link" produce "?joinChurch=<church id>" — the same
   // convention as the two links above, and the reason Capstone for Churches needed no routing work

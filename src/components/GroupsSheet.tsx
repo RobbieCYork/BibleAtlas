@@ -1,13 +1,14 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
 import "./Groups.css";
 import ClassWork from "./GroupAssignments";
+import { InvitePanel, JoinClassPanel } from "./GroupInvites";
+import { pendingJoinClass, type PendingJoin } from "../lib/groupsJoinParam";
 import {
   addGroupSeats,
   consumeGroupsReturn,
   createGroupClass,
   fetchMyClasses,
   fetchRoster,
-  joinClassByCode,
   leaveClass,
   prepareLogo,
   startGroupCheckout,
@@ -38,6 +39,8 @@ export default function GroupsSheet({ onClose, onNavigate }: { onClose: () => vo
   const [openClass, setOpenClass] = useState<MyClass | null>(null);
   const [classes, setClasses] = useState<MyClass[] | null>(null);
   const [notice, setNotice] = useState<string | null>(null);
+  // An invite link or code waiting to be used (?joinClass=, or typed below): sql/049.
+  const [pending, setPending] = useState<PendingJoin | null>(() => pendingJoinClass());
 
   const reload = useCallback(async () => {
     setClasses(await fetchMyClasses());
@@ -68,10 +71,27 @@ export default function GroupsSheet({ onClose, onNavigate }: { onClose: () => vo
             {notice}
           </p>
         )}
+        {pending && !openClass && view === "list" && (
+          <JoinClassPanel
+            key={pending.value}
+            pending={pending}
+            onDone={(name) => {
+              setPending(null);
+              if (name) setNotice(`You joined ${name}. Capstone Plus is included while you're in it.`);
+              void reload();
+            }}
+          />
+        )}
         {openClass ? (
           <ClassWork c={openClass} onNavigate={onNavigate ?? onClose} />
         ) : view === "list" ? (
-          <ClassList classes={classes} onStart={() => setView("start")} onChanged={reload} onOpenClass={setOpenClass} />
+          <ClassList
+            classes={classes}
+            onStart={() => setView("start")}
+            onChanged={reload}
+            onOpenClass={setOpenClass}
+            onJoinCode={(code) => setPending({ kind: "code", value: code })}
+          />
         ) : (
           <StartGroupForm />
         )}
@@ -86,31 +106,21 @@ function ClassList({
   onStart,
   onChanged,
   onOpenClass,
+  onJoinCode,
 }: {
   classes: MyClass[] | null;
   onStart: () => void;
   onChanged: () => Promise<void>;
   onOpenClass: (c: MyClass) => void;
+  onJoinCode: (code: string) => void;
 }) {
   const [code, setCode] = useState("");
-  const [busy, setBusy] = useState(false);
-  const [error, setError] = useState<string | null>(null);
-  const [joined, setJoined] = useState<string | null>(null);
-
-  const join = async () => {
-    setBusy(true);
-    setError(null);
-    setJoined(null);
-    try {
-      const r = await joinClassByCode(code);
-      setJoined(`You joined ${r.name}. Capstone Plus is included while you're in it.`);
-      setCode("");
-      await onChanged();
-    } catch (e) {
-      setError((e as Error).message);
-    } finally {
-      setBusy(false);
-    }
+  const clean = code.toUpperCase().replace(/[^A-Z0-9]/g, "");
+  // The join itself (age question first, sql/049) happens in JoinClassPanel above the list.
+  const join = () => {
+    onJoinCode(clean);
+    setCode("");
+    window.scrollTo?.({ top: 0 });
   };
 
   const leading = (classes ?? []).filter((c) => c.role !== "member");
@@ -160,16 +170,10 @@ function ClassList({
             maxLength={8}
             onChange={(e) => setCode(e.target.value.toUpperCase())}
           />
-          <button type="button" className="paid-teaser-button" disabled={busy || code.replace(/[^A-Za-z0-9]/g, "").length !== 6} onClick={() => void join()}>
-            {busy ? "Joining…" : "Join"}
+          <button type="button" className="paid-teaser-button" disabled={clean.length !== 6} onClick={join}>
+            Join
           </button>
         </div>
-        {error && (
-          <p className="plus-error" role="alert">
-            {error}
-          </p>
-        )}
-        {joined && <p className="auth-status">{joined}</p>}
       </section>
 
       <section className="groups-section">
@@ -194,6 +198,7 @@ function StaffCard({ c, onChanged, onOpen }: { c: MyClass; onChanged: () => Prom
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [add, setAdd] = useState(5);
+  const [inviting, setInviting] = useState(false);
   const isOwner = c.role === "owner";
 
   const pay = async () => {
@@ -262,6 +267,12 @@ function StaffCard({ c, onChanged, onOpen }: { c: MyClass; onChanged: () => Prom
           {roster ? `Hide ${w.participants}` : `Show ${w.participants}`}
         </button>
       )}
+      {c.status === "active" && (
+        <button type="button" className="auth-back-link groups-invite-toggle" aria-expanded={inviting} onClick={() => setInviting(!inviting)}>
+          {inviting ? "Hide invites" : `Invite ${w.participants}`}
+        </button>
+      )}
+      {inviting && c.status === "active" && <InvitePanel c={c} />}
       {(c.status === "active" || c.status === "draft" || c.status === "ended") && (
         <button type="button" className="paid-teaser-button groups-open-work" onClick={onOpen}>
           {w.workItems} &amp; {w.gradebook.toLowerCase()}

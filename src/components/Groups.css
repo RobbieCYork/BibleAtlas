@@ -238,3 +238,113 @@
 .groups-submit {
   margin-top: 14px;
 }
+
+/* Phase 3: invites (GroupInvites.tsx). */
+.groups-invite-toggle {
+  display: block;
+  margin-top: 8px;
+}
+
+.groups-invites {
+  margin-top: 10px;
+  padding-top: 10px;
+  border-top: 1px solid var(--border);
+  min-width: 0;
+}
+
+.groups-invite-block + .groups-invite-block {
+  margin-top: 16px;
+}
+
+.groups-invites textarea,
+.groups-invites input[type="text"],
+.groups-joinpanel select {
+  width: 100%;
+  box-sizing: border-box;
+  max-width: 100%;
+}
+
+.groups-share-link {
+  display: block;
+  overflow-wrap: anywhere;
+  word-break: break-all;
+  padding: 6px 8px;
+}
+
+.groups-share-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 8px;
+}
+
+.groups-sms {
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+}
+
+.groups-preview-toggle {
+  display: block;
+  margin: 8px 0;
+}
+
+.groups-email-preview {
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 10px 12px;
+  margin-bottom: 10px;
+  min-width: 0;
+}
+
+.groups-email-text {
+  margin: 8px 0 0;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  font: inherit;
+  font-size: calc(13px * var(--tsz, 1));
+  line-height: 1.5;
+  max-height: 320px;
+  overflow-y: auto;
+}
+
+.groups-invite-send {
+  margin-top: 4px;
+}
+
+.groups-invite-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.groups-invite-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 4px 10px;
+  padding: 6px 0;
+  border-bottom: 1px solid var(--border);
+  min-width: 0;
+}
+
+.groups-invite-addr {
+  overflow-wrap: anywhere;
+  min-width: 0;
+  flex: 1 1 160px;
+}
+
+.groups-invite-actions {
+  display: flex;
+  gap: 10px;
+}
+
+.groups-joinpanel {
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 12px 14px;
+}
+
+.groups-age .groups-row .report-field {
+  flex: 1 1 120px;
+}

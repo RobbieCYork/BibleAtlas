@@ -39,6 +39,18 @@ const NEEDLES = [
   "Start a class or group",
   "Hand it in",
   "Export CSV",
+  // phase 3: invites (sql/049). "joinClass" and "pending-join-class" are deliberately NOT here: the
+  // main bundle must catch ?joinClass= before sign-up (src/lib/groupsJoinParam.ts).
+  "create_class_invites",
+  "class_invite_list",
+  "class_invite_preview",
+  "redeem_class_invite",
+  "revoke_class_invite",
+  "resend_class_invite",
+  "Invite by email",
+  "Text it from your phone",
+  "a Bible study app with maps, a timeline and reading plans",
+  "When were you born?",
 ];
 // Every sentence of 40+ characters of the DRAFT agreement.
 const agreementSrc = fs.readFileSync(path.join(REPO_ROOT, "src/lib/groupAgreement.ts"), "utf8");

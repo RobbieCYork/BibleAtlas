@@ -153,7 +153,9 @@ start a group as the owner, pay with `4242 4242 4242 4242`, check `class_billing
 subscription's `cancel_at` in the Stripe dashboard equals the class end. **[UNVERIFIED]** `cancel_at` via
 `POST /v1/subscriptions/:id` and per-seat quantity proration are from Stripe's docs/memory, not yet exercised.
 
-**Not built (later phases):** invites and reminders (3), assignments (4), verification and badge (5),
+**Invites and reminders (phase 3):** see `INVITES-SETUP.md` (branch `groups-invites`, sql/049).
+
+**Not built (later phases):** assignments (4), verification and badge (5),
 reviews (6), member-pays (7), SMS (8), lowering seats, changing the end date after checkout (Stripe
 `cancel_at` would need moving), invoicing/PO.
 
