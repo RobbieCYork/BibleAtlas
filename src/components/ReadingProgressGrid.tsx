@@ -245,19 +245,20 @@ export default function ReadingProgressGrid({ userId, displayName, isOwn }: Read
               return (
                 <div key={book.name} className="reading-progress-book">
                   <div className="reading-progress-book-header">
-                    <span className="reading-progress-book-name">{book.name}</span>
-                    {editing ? (
+                    <span className="reading-progress-book-title">
+                      <span className="reading-progress-book-name">{book.name}</span>
+                      <span className="reading-progress-book-count">
+                        {readInBook}/{book.chapters}
+                      </span>
+                    </span>
+                    {editing && (
                       <button
                         type="button"
                         className="reading-progress-book-all"
                         onClick={() => toggleBook(book.name, book.chapters)}
                       >
-                        {readInBook === book.chapters ? "Clear" : "All"} ({readInBook}/{book.chapters})
+                        {readInBook === book.chapters ? "Clear" : "All"}
                       </button>
-                    ) : (
-                      <span className="reading-progress-book-count">
-                        {readInBook}/{book.chapters}
-                      </span>
                     )}
                   </div>
                   <div className={`reading-progress-chapters${editing ? " reading-progress-chapters-editing" : ""}`}>

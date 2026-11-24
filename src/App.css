@@ -2079,18 +2079,30 @@ body.resizing-panels {
 
 .reading-progress-book-header {
   display: flex;
+  align-items: center;
   justify-content: space-between;
+  gap: 8px;
   font-size: calc(11px * var(--tsz, 1));
   margin-bottom: 3px;
+}
+
+.reading-progress-book-title {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 6px;
+  min-width: 0;
 }
 
 .reading-progress-book-name {
   font-weight: 600;
   color: var(--text-h);
+  white-space: nowrap;
 }
 
 .reading-progress-book-count {
   color: var(--text-muted);
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
 }
 
 .reading-progress-chapters {
