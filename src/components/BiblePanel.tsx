@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState, type ReactNode } from "react";
+import { useEffect, useLayoutEffect, useRef, useState, type ReactNode } from "react";
 import VerseText from "./VerseText";
 import type { ClippedHighlight } from "./VerseText";
 import TagPicker from "./TagPicker";
@@ -41,6 +41,14 @@ import { track } from "../lib/analytics";
 import HighlightHandles from "./HighlightHandles";
 import Icon from "./Icon";
 import { TRANSLATIONS, getStoredTranslation, useBibleTranslation } from "../lib/bibleTranslation";
+import HighlightColorSheet from "./HighlightColorSheet";
+import {
+  highlightHex,
+  highlightOpacity,
+  isCustomHighlight,
+  nearestNamedColor,
+  sameHighlightColor,
+} from "../lib/highlightColor";
 
 interface BiblePanelProps {
   reference: string | null;
@@ -159,21 +167,23 @@ interface VerseActionsPopup extends VerseRange {
   highlightId?: string;
 }
 
+type NoteEditorPopup = VerseRange & {
+  kind: "note-editor";
+  quotedText: string;
+  /** Writing a note always highlights the text it's about (owner's item 3) — this is the colour
+   * that highlight will get on save, seeded from any highlight already on the range and
+   * changeable from the swatches inside the composer. */
+  highlightColor: HighlightColor;
+  /** Existing highlight on this range, if any — re-coloured on save rather than duplicated. */
+  highlightId?: string;
+  /** Sheet to return to after Save/Cancel, so composing a note doesn't dead-end the sheet. */
+  returnTo?: VerseActionsPopup;
+};
+
 /** Everything the bottom action sheet can be showing at once. */
 type PopupState =
   | VerseActionsPopup
-  | (VerseRange & {
-      kind: "note-editor";
-      quotedText: string;
-      /** Writing a note always highlights the text it's about (owner's item 3) — this is the colour
-       * that highlight will get on save, seeded from any highlight already on the range and
-       * changeable from the swatches inside the composer. */
-      highlightColor: HighlightColor;
-      /** Existing highlight on this range, if any — re-coloured on save rather than duplicated. */
-      highlightId?: string;
-      /** Sheet to return to after Save/Cancel, so composing a note doesn't dead-end the sheet. */
-      returnTo?: VerseActionsPopup;
-    })
+  | NoteEditorPopup
   | { kind: "tag-picker"; startVerse: number; endVerse: number; returnTo?: VerseActionsPopup };
 
 /** bible-api.com's reference parser treats "<Book> 1" as verse 1 (not "chapter 1, every verse") for
@@ -335,6 +345,21 @@ export default function BiblePanel({
   const [verseTags, setVerseTags] = useState<VerseTag[]>([]);
   const [popup, setPopup] = useState<PopupState | null>(null);
   const [noteDraft, setNoteDraft] = useState("");
+  /** Draft of the always-open "Add a note..." box in the verse sheet (separate from `noteDraft`, which
+   * belongs to the full note editor). */
+  const [inlineNoteDraft, setInlineNoteDraft] = useState("");
+  const [savingInlineNote, setSavingInlineNote] = useState(false);
+  const inlineNoteRef = useRef<HTMLTextAreaElement>(null);
+  const sheetRef = useRef<HTMLDivElement>(null);
+  const actionsRowRef = useRef<HTMLDivElement>(null);
+  /** While the inline note box or the Colors sheet holds focus, the native text selection is gone (focus
+   * moved into a field) — this keeps the selection-collapsed listener from closing the sheet over it,
+   * and `holdPreview` draws our own preview mark over the range in the selection's place. */
+  const holdSheetRef = useRef(false);
+  const [holdPreview, setHoldPreview] = useState(false);
+  const [colorSheetOpen, setColorSheetOpen] = useState(false);
+  /** Icon-only Note/Tag/Share when the labelled row cannot fit on one line (narrow phone, big text). */
+  const [compactActions, setCompactActions] = useState(false);
   /** Inline editing of an already-saved note listed in the verse-action sheet — the saved row stays
    * untouched until the update succeeds, so Cancel just drops the draft and a failed save keeps
    * the reader's text on screen. Mirrors the same flow in MyNotesPanel. */
@@ -957,6 +982,7 @@ export default function BiblePanel({
         suppressSelectionClearRef.current = false;
         return;
       }
+      if (holdSheetRef.current) return;
       // Only a sheet opened *by* a selection closes with it — one opened by tapping an existing
       // highlight or a verse's note/tag indicator has no selection behind it to lose.
       setPopup((p) => (p?.kind === "verse-actions" && p.openedBySelection ? null : p));
@@ -978,6 +1004,8 @@ export default function BiblePanel({
       if ((e.target as HTMLElement | null)?.closest(".verse-sheet")) return;
       const result = readSelectionRange();
       if (!result) return;
+      holdSheetRef.current = false;
+      setHoldPreview(false);
       setPopup({ kind: "verse-actions", ...result, openedBySelection: true, highlightId: enclosingHighlightId(result) });
     };
     document.addEventListener("mouseup", handleMouseUp);
@@ -995,6 +1023,8 @@ export default function BiblePanel({
       if (!result) return;
       suppressSelectionClearRef.current = true;
       window.getSelection()?.removeAllRanges();
+      holdSheetRef.current = false;
+      setHoldPreview(false);
       setPopup({
         kind: "verse-actions",
         ...result,
@@ -1022,9 +1052,47 @@ export default function BiblePanel({
   const closePopup = () => {
     window.getSelection()?.removeAllRanges();
     setNoteDraft("");
+    setInlineNoteDraft("");
     setNewTagName("");
+    setColorSheetOpen(false);
+    holdSheetRef.current = false;
+    setHoldPreview(false);
     setPopup(null);
   };
+
+  /** Takes the sheet's range off the native selection and onto our own preview mark, because focus is
+   * about to move into a field (the inline note box or the Colors sheet) and a focused field collapses
+   * the native selection — which would otherwise close the sheet and un-mark the verse. */
+  const holdSelectionForSheet = () => {
+    holdSheetRef.current = true;
+    window.getSelection()?.removeAllRanges();
+    setHoldPreview(true);
+  };
+
+  // While the hold is on, a press anywhere outside the sheet (and the Colors sheet) dismisses a sheet
+  // that was opened by a selection — the job the collapsing selection normally does, which the hold
+  // has switched off.
+  useEffect(() => {
+    const onPointerDown = (e: PointerEvent) => {
+      if (!holdSheetRef.current) return;
+      const t = e.target as HTMLElement | null;
+      if (t?.closest(".verse-sheet, .hl-colors-backdrop, .share-modal-overlay")) return;
+      holdSheetRef.current = false;
+      setHoldPreview(false);
+      setPopup((p) => (p?.kind === "verse-actions" && p.openedBySelection ? null : p));
+    };
+    document.addEventListener("pointerdown", onPointerDown, true);
+    return () => document.removeEventListener("pointerdown", onPointerDown, true);
+  }, []);
+
+  // The hold only makes sense while a verse-actions sheet is up.
+  useEffect(() => {
+    if (popup?.kind !== "verse-actions") {
+      holdSheetRef.current = false;
+      setHoldPreview(false);
+      setColorSheetOpen(false);
+    }
+  }, [popup?.kind]);
 
   // Escape dismisses the sheet, the way anything modal-shaped is expected to on a keyboard. From the
   // note composer or the tag picker it mirrors their own Cancel/Done — back to the sheet they were
@@ -1058,44 +1126,54 @@ export default function BiblePanel({
     existingId?: string
   ): Promise<Highlight | null> => {
     if (!userId || !currentBook || currentChapter === null) return null;
+    // A custom colour is a "#rrggbb@NN" string in the same text column. If the database ever refuses
+    // it (a CHECK/enum added later, or an old schema), fall back to the nearest legacy name so the
+    // reader still gets a highlight rather than nothing.
+    const attempts: HighlightColor[] = isCustomHighlight(color) ? [color, nearestNamedColor(color)] : [color];
     if (existingId) {
-      const { data, error: updateError } = await supabase
-        .from("highlights")
-        .update({ color })
-        .eq("id", existingId)
-        .select()
-        .single();
-      if (updateError || !data) {
-        console.error("Failed to recolor highlight:", updateError?.message ?? "no rows updated");
-        return null;
+      for (const attempt of attempts) {
+        const { data, error: updateError } = await supabase
+          .from("highlights")
+          .update({ color: attempt })
+          .eq("id", existingId)
+          .select()
+          .single();
+        if (updateError || !data) {
+          console.error("Failed to recolor highlight:", updateError?.message ?? "no rows updated");
+          continue;
+        }
+        const updated = data as Highlight;
+        setHighlights((hs) => hs.map((h) => (h.id === updated.id ? updated : h)));
+        return updated;
       }
-      const updated = data as Highlight;
-      setHighlights((hs) => hs.map((h) => (h.id === updated.id ? updated : h)));
-      return updated;
-    }
-    track("highlight.create", { color });
-    const { data, error: hlError } = await supabase
-      .from("highlights")
-      .insert({
-        user_id: userId,
-        book: currentBook,
-        chapter: currentChapter,
-        start_verse: range.startVerse,
-        end_verse: range.endVerse,
-        translation,
-        start_offset: range.startOffset,
-        end_offset: range.endOffset,
-        color,
-      })
-      .select()
-      .single();
-    if (hlError || !data) {
-      console.error("Failed to create highlight:", hlError?.message ?? "no rows inserted");
       return null;
     }
-    const inserted = data as Highlight;
-    setHighlights((hs) => [...hs, inserted]);
-    return inserted;
+    track("highlight.create", { color: isCustomHighlight(color) ? "custom" : color });
+    for (const attempt of attempts) {
+      const { data, error: hlError } = await supabase
+        .from("highlights")
+        .insert({
+          user_id: userId,
+          book: currentBook,
+          chapter: currentChapter,
+          start_verse: range.startVerse,
+          end_verse: range.endVerse,
+          translation,
+          start_offset: range.startOffset,
+          end_offset: range.endOffset,
+          color: attempt,
+        })
+        .select()
+        .single();
+      if (hlError || !data) {
+        console.error("Failed to create highlight:", hlError?.message ?? "no rows inserted");
+        continue;
+      }
+      const inserted = data as Highlight;
+      setHighlights((hs) => [...hs, inserted]);
+      return inserted;
+    }
+    return null;
   };
 
   /** The single swatch control behind the owner's items 2 and 4: one tap applies, changes, or removes.
@@ -1111,12 +1189,28 @@ export default function BiblePanel({
       endOffset: popup.endOffset,
     };
     const existing = popup.highlightId ? highlights.find((h) => h.id === popup.highlightId) : undefined;
-    if (existing && existing.color === color) {
+    if (existing && sameHighlightColor(existing.color, color)) {
       await handleRemoveHighlight(existing.id);
       return;
     }
     const saved = await writeHighlight(range, color, existing?.id);
     if (saved) setPopup((p) => (p?.kind === "verse-actions" ? { ...p, highlightId: saved.id } : p));
+  };
+
+  /** "Highlight" in the Colors sheet: applies (or re-colours) the chosen custom colour on the sheet's
+   * range, then closes the Colors sheet. Unlike a swatch tap it never toggles the highlight off. */
+  const handleApplyCustomColor = async (color: string) => {
+    if (!popup || popup.kind !== "verse-actions" || !userId) return;
+    const range: VerseRange = {
+      startVerse: popup.startVerse,
+      startOffset: popup.startOffset,
+      endVerse: popup.endVerse,
+      endOffset: popup.endOffset,
+    };
+    const existing = popup.highlightId ? highlights.find((h) => h.id === popup.highlightId) : undefined;
+    const saved = await writeHighlight(range, color as HighlightColor, existing?.id);
+    if (saved) setPopup((p) => (p?.kind === "verse-actions" ? { ...p, highlightId: saved.id } : p));
+    setColorSheetOpen(false);
   };
 
   /** Removes one highlight and leaves the sheet open showing the (now unhighlighted) range, so the
@@ -1163,22 +1257,26 @@ export default function BiblePanel({
    * so Save/Cancel lands back on it (now listing the new note) rather than dismissing everything, and
    * seeds the auto-highlight colour from whatever is already on the range — so adding a note to
    * already-highlighted text keeps that colour instead of silently repainting it. */
-  const handleOpenNoteEditor = () => {
-    if (!popup || popup.kind !== "verse-actions") return;
-    const quotedText = buildQuotedText(popup.startVerse, popup.startOffset, popup.endVerse, popup.endOffset);
-    const existing = popup.highlightId ? highlights.find((h) => h.id === popup.highlightId) : undefined;
-    setNoteDraft("");
-    setPopup({
+  const buildNoteEditor = (from: VerseActionsPopup): NoteEditorPopup => {
+    const quotedText = buildQuotedText(from.startVerse, from.startOffset, from.endVerse, from.endOffset);
+    const existing = from.highlightId ? highlights.find((h) => h.id === from.highlightId) : undefined;
+    return {
       kind: "note-editor",
-      startVerse: popup.startVerse,
-      startOffset: popup.startOffset,
-      endVerse: popup.endVerse,
-      endOffset: popup.endOffset,
+      startVerse: from.startVerse,
+      startOffset: from.startOffset,
+      endVerse: from.endVerse,
+      endOffset: from.endOffset,
       quotedText,
       highlightColor: existing?.color ?? DEFAULT_NOTE_HIGHLIGHT_COLOR,
       highlightId: existing?.id,
-      returnTo: popup,
-    });
+      returnTo: from,
+    };
+  };
+
+  const handleOpenNoteEditor = () => {
+    if (!popup || popup.kind !== "verse-actions") return;
+    setNoteDraft("");
+    setPopup(buildNoteEditor(popup));
   };
 
   // A journal request arrives together with (or just before) the chapter load it triggered, so it's
@@ -1225,10 +1323,16 @@ export default function BiblePanel({
    * the reverse would leave a mark with nothing behind it. Lands back on the action sheet (now
    * listing the note, with its colour showing as active) instead of dismissing outright. */
   const handleSaveNote = async () => {
-    if (!popup || popup.kind !== "note-editor" || !userId || !currentBook || currentChapter === null) return;
-    const text = noteDraft.trim();
-    if (!text) return;
-    const editor = popup;
+    if (!popup || popup.kind !== "note-editor") return;
+    await persistNote(popup, noteDraft);
+  };
+
+  /** The one place a verse note is written — the full note editor's Save and the inline "Add a note..."
+   * box in the sheet both end here, so they can never drift apart. Returns whether the note saved. */
+  const persistNote = async (editor: NoteEditorPopup, rawText: string): Promise<boolean> => {
+    if (!userId || !currentBook || currentChapter === null) return false;
+    const text = rawText.trim();
+    if (!text) return false;
     track("note.create");
     const { data, error: noteError } = await supabase
       .from("notes")
@@ -1248,12 +1352,13 @@ export default function BiblePanel({
       .single();
     if (noteError || !data) {
       console.error("Failed to save note:", noteError?.message ?? "no rows inserted");
-      return;
+      return false;
     }
     setNotes((prev) => [...prev, data as Note]);
     onNotesChanged?.();
     const saved = await writeHighlight(editor, editor.highlightColor, editor.highlightId);
     setNoteDraft("");
+    setInlineNoteDraft("");
     setPopup({
       kind: "verse-actions",
       startVerse: editor.startVerse,
@@ -1264,7 +1369,93 @@ export default function BiblePanel({
       openedBySelection: false,
       highlightId: saved?.id ?? editor.highlightId,
     });
+    return true;
   };
+
+  /** Saves the inline "Add a note..." box: builds the same note-editor state the Note button would open
+   * (quoted text, colour already on the range or the default yellow, auto-highlight) and hands it to
+   * `persistNote`. The text stays in the box if the save fails. */
+  const handleSaveInlineNote = async () => {
+    if (!popup || popup.kind !== "verse-actions" || savingInlineNote) return;
+    if (!inlineNoteDraft.trim()) return;
+    setSavingInlineNote(true);
+    try {
+      await persistNote(buildNoteEditor(popup), inlineNoteDraft);
+    } finally {
+      setSavingInlineNote(false);
+    }
+  };
+
+  // Open on the note box: focus it the moment a sheet appears for a new range (not on every re-render
+  // of the same range, so applying a colour does not yank focus back).
+  const sheetRangeKey =
+    popup?.kind === "verse-actions" && userId
+      ? `${popup.startVerse}:${popup.startOffset}:${popup.endVerse}:${popup.endOffset}`
+      : null;
+  useEffect(() => {
+    if (!sheetRangeKey) return;
+    const el = inlineNoteRef.current;
+    if (!el) return;
+    holdSheetRef.current = true;
+    window.getSelection()?.removeAllRanges();
+    setHoldPreview(true);
+    el.focus({ preventScroll: true });
+  }, [sheetRangeKey]);
+
+  /** Keeps the selected verse and the sheet visible when the on-screen keyboard shrinks the visual
+   * viewport: scrolls the reading area so the first selected verse sits inside the part of the visual
+   * viewport that is above the sheet. */
+  const keepSelectionVisible = () => {
+    const sheet = sheetRef.current;
+    const scroller = scrollContainerRef.current;
+    if (!sheet || !scroller || popup?.kind !== "verse-actions") return;
+    const verseEl = textRefs.current[popup.startVerse];
+    if (!verseEl) return;
+    const vv = window.visualViewport;
+    const top = (vv?.offsetTop ?? 0) + 8;
+    const sheetTop = sheet.getBoundingClientRect().top;
+    const limit = Math.min(sheetTop, (vv ? vv.offsetTop + vv.height : window.innerHeight)) - 12;
+    const r = verseEl.getBoundingClientRect();
+    if (r.top < top) scroller.scrollTop -= top - r.top;
+    else if (r.bottom > limit) scroller.scrollTop += Math.min(r.bottom - limit, r.top - top);
+  };
+  useEffect(() => {
+    const vv = window.visualViewport;
+    if (!vv || !sheetRangeKey) return;
+    const onResize = () => {
+      if (document.activeElement === inlineNoteRef.current) keepSelectionVisible();
+    };
+    vv.addEventListener("resize", onResize);
+    return () => vv.removeEventListener("resize", onResize);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [sheetRangeKey]);
+
+  // One line, always: if the labelled Note/Tag/Share buttons do not fit on the row, drop to icon-only
+  // (their aria-labels stay). Re-measured when the row's width or the text size changes.
+  const compactMemoRef = useRef<{ width: number; font: string } | null>(null);
+  useLayoutEffect(() => {
+    const row = actionsRowRef.current;
+    if (!row) return;
+    const measure = () => {
+      const font = getComputedStyle(row).fontSize;
+      const width = row.clientWidth;
+      const memo = compactMemoRef.current;
+      if (compactActions) {
+        // Try labels again only if there is clearly more room than when they last overflowed.
+        if (memo && (memo.font !== font || width > memo.width + 40)) {
+          compactMemoRef.current = null;
+          setCompactActions(false);
+        }
+      } else if (row.scrollWidth > row.clientWidth + 1) {
+        compactMemoRef.current = { width, font };
+        setCompactActions(true);
+      }
+    };
+    measure();
+    const ro = new ResizeObserver(measure);
+    ro.observe(row);
+    return () => ro.disconnect();
+  });
 
   /** The highlight whose drag handles should currently be shown — whichever one the open sheet is
    * pointing at, whether it was tapped or applied from the sheet itself. */
@@ -2019,7 +2210,7 @@ export default function BiblePanel({
                 return clip ? [{ highlight: h, startOffset: clip.start, endOffset: clip.end }] : [];
               });
               const previewRange =
-                popup?.kind === "verse-actions" && popup.viaTouch
+                popup?.kind === "verse-actions" && (popup.viaTouch || holdPreview)
                   ? clipRangeForVerse(popup.startVerse, popup.startOffset, popup.endVerse, popup.endOffset, v.verse, text.length)
                   : null;
               return (
@@ -2145,6 +2336,20 @@ export default function BiblePanel({
         />
       )}
 
+      {colorSheetOpen && popup?.kind === "verse-actions" && (
+        <HighlightColorSheet
+          initialHex={activeHighlight ? highlightHex(activeHighlight.color) : null}
+          initialOpacity={activeHighlight ? highlightOpacity(activeHighlight.color) : 100}
+          hasHighlight={!!activeHighlight}
+          onApply={handleApplyCustomColor}
+          onRemove={async () => {
+            if (activeHighlight) await handleRemoveHighlight(activeHighlight.id);
+            setColorSheetOpen(false);
+          }}
+          onClose={() => setColorSheetOpen(false)}
+        />
+      )}
+
       {handleRange && (
         <HighlightHandles
           start={{ verse: handleRange.startVerse, offset: handleRange.startOffset }}
@@ -2158,7 +2363,7 @@ export default function BiblePanel({
       )}
 
       {popup && (
-        <div className="verse-sheet">
+        <div className="verse-sheet" ref={sheetRef}>
           {/* The one unified verse-action sheet. Same contents no matter how it was opened, and every
               control reflects the current state of the range rather than offering a one-way action:
               the swatch already on the passage wears a ✕ that removes it, any other swatch changes it,
@@ -2175,55 +2380,132 @@ export default function BiblePanel({
                   <span aria-hidden="true">×</span>
                 </button>
               </div>
-              <div className="verse-sheet-actions">
+              <div className={`verse-sheet-actions${compactActions ? " is-compact" : ""}`} ref={actionsRowRef}>
                 {userId ? (
                   <>
-                    {HIGHLIGHT_COLORS.map((color) => {
-                      const isActive = activeHighlight?.color === color;
+                    {/* Yellow is the one quick swatch; every other colour (and the four older names) lives
+                        behind the rainbow button's Colors sheet. */}
+                    {(() => {
+                      const activeIsYellow = !!activeHighlight && sameHighlightColor(activeHighlight.color, "yellow");
                       return (
                         <button
-                          key={color}
                           type="button"
-                          className={`verse-popup-color verse-popup-color-${color}${isActive ? " is-active" : ""}`}
-                          aria-pressed={isActive}
-                          aria-label={isActive ? `Remove ${color} highlight` : `Highlight ${color}`}
-                          title={isActive ? `Remove ${color} highlight` : `Highlight ${color}`}
+                          className={`verse-popup-color verse-popup-color-yellow${activeIsYellow ? " is-active" : ""}`}
+                          aria-pressed={activeIsYellow}
+                          aria-label={activeIsYellow ? "Remove yellow highlight" : "Highlight yellow"}
+                          title={activeIsYellow ? "Remove yellow highlight" : "Highlight yellow"}
                           // Clicking a button naturally collapses the mouse-drag text selection on desktop
                           // (a real, user-driven selectionchange), which the effect above treats the same as
                           // tapping/clicking elsewhere and closes the sheet — preventDefault on mousedown
                           // stops the browser from collapsing the selection in the first place, so the sheet
                           // and its selection both survive the click and Note/Tag/Share can still follow.
                           onMouseDown={(e) => e.preventDefault()}
-                          onClick={() => handleApplyHighlightColor(color)}
+                          onClick={() => handleApplyHighlightColor("yellow")}
                         />
                       );
-                    })}
+                    })()}
+                    {(() => {
+                      const otherActive = !!activeHighlight && !sameHighlightColor(activeHighlight.color, "yellow");
+                      return (
+                        <button
+                          type="button"
+                          className={`verse-popup-color verse-popup-color-wheel${otherActive ? " is-active-wheel" : ""}`}
+                          style={otherActive ? ({ "--wheel-dot": highlightHex(activeHighlight!.color) } as React.CSSProperties) : undefined}
+                          aria-haspopup="dialog"
+                          aria-label={otherActive ? "More colors (current highlight is not yellow)" : "More colors"}
+                          title="More colors"
+                          onMouseDown={(e) => e.preventDefault()}
+                          onClick={() => {
+                            holdSelectionForSheet();
+                            setColorSheetOpen(true);
+                          }}
+                        />
+                      );
+                    })()}
                     <button
                       type="button"
                       className="verse-popup-note-btn"
+                      aria-label={rangeNotes.length > 0 ? "Add note" : "Note"}
                       onMouseDown={(e) => e.preventDefault()}
                       onClick={handleOpenNoteEditor}
                     >
-                      <Icon name="notes" inline /> {rangeNotes.length > 0 ? "Add note" : "Note"}
+                      <Icon name="notes" inline />
+                      <span className="verse-popup-btn-label"> Note</span>
                     </button>
                     <button
                       type="button"
                       className="verse-popup-tag-btn"
+                      aria-label="Tag"
                       onMouseDown={(e) => e.preventDefault()}
                       onClick={() =>
                         setPopup({ kind: "tag-picker", startVerse: popup.startVerse, endVerse: popup.endVerse, returnTo: popup })
                       }
                     >
-                      <Icon name="tag" inline /> Tag
+                      <Icon name="tag" inline />
+                      <span className="verse-popup-btn-label"> Tag</span>
                     </button>
                   </>
                 ) : (
                   <span className="verse-popup-signin-note">Log in to highlight or add notes</span>
                 )}
-                <button type="button" className="verse-popup-share-btn" onMouseDown={(e) => e.preventDefault()} onClick={handleShareVerseCard}>
-                  <Icon name="share" inline /> Share
+                <button
+                  type="button"
+                  className="verse-popup-share-btn"
+                  aria-label="Share"
+                  onMouseDown={(e) => e.preventDefault()}
+                  onClick={handleShareVerseCard}
+                >
+                  <Icon name="share" inline />
+                  <span className="verse-popup-btn-label"> Share</span>
                 </button>
               </div>
+
+              {userId && (
+                // Type a note without tapping Note first. Saves through the same persistNote() the full
+                // editor uses. Enter saves, Shift+Enter is a newline.
+                <form
+                  className="verse-popup-inline-note"
+                  onSubmit={(e) => {
+                    e.preventDefault();
+                    void handleSaveInlineNote();
+                  }}
+                >
+                  <textarea
+                    ref={inlineNoteRef}
+                    rows={1}
+                    value={inlineNoteDraft}
+                    maxLength={8000}
+                    placeholder="Add a note..."
+                    aria-label="Add a note to the selected verses"
+                    enterKeyHint="send"
+                    onChange={(e) => {
+                      setInlineNoteDraft(e.target.value);
+                      e.target.style.height = "auto";
+                      e.target.style.height = `${Math.min(e.target.scrollHeight, 96)}px`;
+                    }}
+                    onFocus={() => {
+                      holdSheetRef.current = true;
+                      setHoldPreview(true);
+                      // After the keyboard has had a moment to open and the viewport to settle.
+                      window.setTimeout(keepSelectionVisible, 300);
+                    }}
+                    onKeyDown={(e) => {
+                      if (e.key === "Enter" && !e.shiftKey && !e.nativeEvent.isComposing) {
+                        e.preventDefault();
+                        void handleSaveInlineNote();
+                      }
+                    }}
+                  />
+                  <button
+                    type="submit"
+                    className="verse-popup-inline-save"
+                    disabled={!inlineNoteDraft.trim() || savingInlineNote}
+                    onMouseDown={(e) => e.preventDefault()}
+                  >
+                    {savingInlineNote ? "Saving…" : "Save"}
+                  </button>
+                </form>
+              )}
 
               {rangeNotes.length > 0 && (
                 <div className="verse-popup-notes-list">

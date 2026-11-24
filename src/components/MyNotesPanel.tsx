@@ -1,3 +1,4 @@
+import { highlightPresentation, isCustomHighlight } from "../lib/highlightColor";
 import { useEffect, useRef, useState } from "react";
 import Chevron from "./Chevron";
 import { supabase, HIGHLIGHT_COLORS, type Highlight, type HighlightColor, type Note, type Tag, type VerseTag } from "../lib/supabase";
@@ -553,8 +554,8 @@ export default function MyNotesPanel({
                             />
                           ))}
                         {highlightsForEntry(e).map((h) => (
-                          <span key={h.id} className={`my-notes-highlight-chip my-notes-highlight-chip-${h.color}`}>
-                            <button type="button" aria-label={`Remove ${h.color} highlight`} onClick={() => handleRemoveEntryHighlight(h.id)}>
+                          <span key={h.id} className={`my-notes-highlight-chip ${highlightPresentation(h.color, "my-notes-highlight-chip").className}`} style={highlightPresentation(h.color).style}>
+                            <button type="button" aria-label={`Remove ${isCustomHighlight(h.color) ? "custom" : h.color} highlight`} onClick={() => handleRemoveEntryHighlight(h.id)}>
                               ×
                             </button>
                           </span>

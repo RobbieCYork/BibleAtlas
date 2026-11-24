@@ -1,3 +1,4 @@
+import { highlightPresentation } from "../lib/highlightColor";
 import { computeLinkAnnotations, type LinkAnnotation } from "../lib/verseAnnotations";
 import type { Highlight } from "../lib/supabase";
 import { useLinkChoice } from "./LinkChoicePopup";
@@ -106,10 +107,12 @@ export default function VerseText({
       {segments.map((seg, i) => {
         if (seg.highlight) {
           const h = seg.highlight;
+          const pres = highlightPresentation(h.color);
           return (
             <mark
               key={i}
-              className={`verse-highlight verse-highlight-${h.color}`}
+              className={`verse-highlight ${pres.className}`}
+              style={pres.style}
               onClick={(e) => {
                 e.stopPropagation();
                 onHighlightClick(h);

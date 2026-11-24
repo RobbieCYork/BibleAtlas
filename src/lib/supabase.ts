@@ -83,7 +83,12 @@ export interface ChapterRead {
 }
 
 export const HIGHLIGHT_COLORS = ["yellow", "green", "blue", "pink"] as const;
-export type HighlightColor = (typeof HIGHLIGHT_COLORS)[number];
+export type NamedHighlightColor = (typeof HIGHLIGHT_COLORS)[number];
+/** A reader-picked colour, stored in the same `highlights.color` text column as the four names:
+ * `#rrggbb@NN` (lowercase hex, NN = opacity percent 1-100), e.g. `#3a7bd5@60`. The column has no
+ * CHECK/enum, so no migration. Parse and validate ONLY through lib/highlightColor.ts. */
+export type CustomHighlightColor = `#${string}@${number}`;
+export type HighlightColor = NamedHighlightColor | CustomHighlightColor;
 
 /** start_verse === end_verse for a highlight entirely within one verse; a span across verses has
  * start_offset relative to start_verse's text and end_offset relative to end_verse's text — verses

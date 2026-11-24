@@ -13278,3 +13278,303 @@ img.sn-image,
   .unified-chips { flex-wrap: nowrap; overflow-x: auto; -webkit-overflow-scrolling: touch; padding-bottom: 10px; }
   .bible-search-results-clear { min-height: 44px; }
 }
+
+/* ============================================================================
+ * Verse sheet v2 (2026-11): one-line action row, rainbow "More colors" button, inline note box,
+ * custom highlight colours and the Colors sheet. Appended as a self-contained block that overrides
+ * the .verse-sheet-actions / .verse-popup-* rules above.
+ * ========================================================================== */
+
+/* ONE line, always. nowrap + tighter padding fits swatch, rainbow, Note, Tag, Share at 375px with the
+   close button parked in the corner; if the labelled buttons still do not fit (big text size, a very
+   narrow window) BiblePanel adds .is-compact, which drops the labels and leaves the icons. */
+.verse-sheet-actions {
+  flex-wrap: nowrap;
+  gap: 5px;
+  padding-right: 38px;
+}
+
+.verse-sheet-actions .verse-popup-note-btn,
+.verse-sheet-actions .verse-popup-tag-btn,
+.verse-sheet-actions .verse-popup-share-btn {
+  padding: 5px 8px;
+  display: inline-flex;
+  align-items: center;
+  white-space: pre;
+}
+
+.verse-sheet-actions.is-compact .verse-popup-btn-label {
+  display: none;
+}
+
+.verse-sheet-actions.is-compact .verse-popup-note-btn,
+.verse-sheet-actions.is-compact .verse-popup-tag-btn,
+.verse-sheet-actions.is-compact .verse-popup-share-btn {
+  min-width: 36px;
+  min-height: 32px;
+  justify-content: center;
+  padding: 5px 9px;
+}
+
+.verse-sheet-actions .verse-popup-signin-note {
+  white-space: normal;
+  flex: 1 1 0;
+  min-width: 0;
+}
+
+/* Rainbow "More colors" button: a colour-wheel ring with a centre dot (the dot shows the colour on the
+   range when it is not yellow). Pure CSS — no asset. */
+.verse-popup-color-wheel {
+  --wheel-dot: var(--text-muted);
+  background:
+    radial-gradient(circle at center, var(--wheel-dot) 0 3px, var(--panel-bg) 3.5px 7px, transparent 7.5px),
+    conic-gradient(#ff3b30, #ff9500, #ffcc00, #34c759, #00c7be, #007aff, #af52de, #ff2d55, #ff3b30);
+}
+
+.verse-popup-color-wheel.is-active-wheel {
+  box-shadow: 0 0 0 2px var(--accent);
+}
+
+.verse-popup-color:focus-visible,
+.verse-popup-inline-save:focus-visible,
+.hl-colors-dialog button:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+/* --- Custom highlight colours ------------------------------------------------------------------ */
+/* --hl-bg is rgba(), so the tint sits on whatever surface the active skin/theme paints. The ink is
+   chosen in lib/highlightColor.ts for the light and the dark reading surface; where the browser
+   supports relative colours it is re-derived from the REAL (skin-aware) surface under the tint. */
+.verse-highlight-custom {
+  background: var(--hl-bg);
+  color: var(--hl-ink-dark);
+}
+
+:root[data-theme="light"] .verse-highlight-custom {
+  color: var(--hl-ink-light);
+}
+
+@supports (color: oklch(from red l c h)) {
+  .verse-highlight-custom,
+  :root[data-theme="light"] .verse-highlight-custom {
+    color: oklch(from color-mix(in srgb, var(--hl-hex) var(--hl-pct), var(--reading-bg)) clamp(0.2, calc((0.62 - l) * 1000), 0.97) 0 0);
+  }
+}
+
+.my-notes-highlight-chip-custom button {
+  background: var(--hl-bg);
+  opacity: 1;
+}
+
+/* --- Inline "Add a note..." box ---------------------------------------------------------------- */
+.verse-popup-inline-note {
+  display: flex;
+  align-items: flex-end;
+  gap: 6px;
+  margin-top: 8px;
+}
+
+.verse-popup-inline-note textarea {
+  flex: 1 1 auto;
+  min-width: 0;
+  min-height: 38px;
+  max-height: 96px;
+  padding: 8px 10px;
+  border: 1px solid var(--input-border, var(--border));
+  border-radius: 8px;
+  font: inherit;
+  /* 16px floor: below it iOS zooms the page on focus. */
+  font-size: max(16px, calc(14px * var(--tsz, 1)));
+  line-height: 1.3;
+  background: var(--surface-sunken);
+  color: var(--text);
+  resize: none;
+  overflow-y: auto;
+}
+
+.verse-popup-inline-save {
+  flex-shrink: 0;
+  min-height: 38px;
+  padding: 0 14px;
+  border: 1px solid var(--accent);
+  border-radius: 8px;
+  background: var(--accent);
+  color: var(--accent-contrast);
+  font-size: calc(13px * var(--tsz, 1));
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.verse-popup-inline-save:disabled {
+  opacity: 0.5;
+  cursor: default;
+}
+
+/* --- Colors sheet ------------------------------------------------------------------------------ */
+.hl-colors-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 80;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.45);
+}
+
+.hl-colors-dialog {
+  width: min(440px, 100%);
+  max-height: 92%;
+  overflow-y: auto;
+  padding: 14px 16px calc(16px + env(safe-area-inset-bottom, 0px));
+  background: var(--panel-bg);
+  color: var(--text);
+  border: 1px solid var(--border);
+  border-radius: 16px 16px 0 0;
+  box-shadow: 0 -8px 28px rgba(0, 0, 0, 0.35);
+}
+
+@media (min-width: 600px) {
+  .hl-colors-backdrop {
+    align-items: center;
+  }
+  .hl-colors-dialog {
+    border-radius: 16px;
+  }
+}
+
+.hl-colors-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12px;
+}
+
+.hl-colors-head h2 {
+  margin: 0;
+  font-size: calc(17px * var(--tsz, 1));
+  color: var(--text-h);
+}
+
+.hl-colors-close {
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--border);
+  border-radius: 50%;
+  background: var(--surface-sunken);
+  color: var(--text-muted);
+  font-size: calc(20px * var(--tsz, 1));
+  line-height: 1;
+  cursor: pointer;
+}
+
+.hl-colors-grid {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: 3px;
+  padding: 3px;
+  border-radius: 10px;
+  background: var(--surface-sunken);
+}
+
+.hl-colors-swatch {
+  aspect-ratio: 1;
+  min-width: 0;
+  padding: 0;
+  border: 1px solid rgba(128, 128, 128, 0.35);
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.hl-colors-swatch.is-selected {
+  outline: 3px solid var(--accent);
+  outline-offset: 1px;
+  position: relative;
+  z-index: 1;
+}
+
+.hl-colors-opacity {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 14px;
+  font-size: calc(14px * var(--tsz, 1));
+}
+
+.hl-colors-opacity input[type="range"] {
+  flex: 1;
+  min-width: 0;
+  accent-color: var(--accent);
+}
+
+.hl-colors-opacity-value {
+  min-width: 3.2em;
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+.hl-colors-preview {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 14px;
+  padding: 10px 12px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: var(--reading-bg, var(--surface-sunken));
+}
+
+.hl-colors-preview p {
+  flex: 1;
+  margin: 0;
+  min-width: 0;
+  font-size: calc(14px * var(--tsz, 1));
+  line-height: 1.6;
+}
+
+.hl-colors-preview-chip {
+  flex-shrink: 0;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  border: 1px solid var(--border);
+}
+
+.hl-colors-preview-empty,
+.hl-colors-preview-hex {
+  color: var(--text-muted);
+  font-size: calc(12px * var(--tsz, 1));
+}
+
+.hl-colors-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+  margin-top: 14px;
+}
+
+.hl-colors-actions button {
+  min-height: 40px;
+  padding: 0 18px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: var(--surface-sunken);
+  color: var(--text);
+  font-size: calc(14px * var(--tsz, 1));
+  cursor: pointer;
+}
+
+.hl-colors-actions .hl-colors-confirm {
+  border-color: var(--accent);
+  background: var(--accent);
+  color: var(--accent-contrast);
+  font-weight: 600;
+}
+
+.hl-colors-actions .hl-colors-confirm:disabled {
+  opacity: 0.5;
+  cursor: default;
+}
