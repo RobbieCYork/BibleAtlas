@@ -40,6 +40,7 @@ import ShareCardModal from "./ShareCardModal";
 import { track } from "../lib/analytics";
 import HighlightHandles from "./HighlightHandles";
 import Icon from "./Icon";
+import { TRANSLATIONS, getStoredTranslation, useBibleTranslation } from "../lib/bibleTranslation";
 
 interface BiblePanelProps {
   reference: string | null;
@@ -197,11 +198,6 @@ const SINGLE_CHAPTER_BOOK_LAST_VERSE: Record<string, number> = {
  * by the OS and not by this 375px panel, so the row's width has no say in it — which is why the
  * old LABEL_SHORTENS_ABOVE threshold (the point at which "American Standard Version (ASV)" stopped
  * fitting the reader's own row) is gone rather than retuned. */
-const TRANSLATIONS = [
-  { id: "web", label: "World English Bible (WEB)", short: "WEB" },
-  { id: "kjv", label: "King James Version (KJV)", short: "KJV" },
-  { id: "asv", label: "American Standard Version (ASV)", short: "ASV" },
-];
 
 /* THE CONTROL ROW HAS NO TEXT-SIZE THRESHOLD ANY MORE, AND MUST NOT GROW ONE BACK.
  *
@@ -275,7 +271,11 @@ export default function BiblePanel({
   onBookIntroBack,
   initializing,
 }: BiblePanelProps) {
-  const [translation, setTranslation] = useState("web");
+  // The saved "Bible version" preference, shared with My Profile (lib/bibleTranslation).
+  const [translation, setTranslation] = useBibleTranslation();
+  /** The translation the on-screen chapter was last requested in — lets a change made elsewhere
+   * (My Profile) reload the open chapter without double-loading the chip's own change. */
+  const loadedTranslationRef = useRef(translation);
   const [passage, setPassage] = useState<PassageResult | null>(null);
   const [currentBook, setCurrentBook] = useState<string | null>(null);
   const [currentChapter, setCurrentChapter] = useState<number | null>(null);
@@ -803,6 +803,7 @@ export default function BiblePanel({
   /** Loads a whole chapter. Returns whether it succeeded, without touching `error` — callers decide how to surface a failure. */
   const loadChapter = async (book: string, chapter: number, translationId: string): Promise<boolean> => {
     if (chapter < 1) return false;
+    loadedTranslationRef.current = translationId;
     setLoading(true);
     try {
       const lastVerse = chapter === 1 ? SINGLE_CHAPTER_BOOK_LAST_VERSE[book] : undefined;
@@ -855,8 +856,10 @@ export default function BiblePanel({
       // restoreTranslation arrives once, asynchronously, when a saved position is fetched after
       // login — apply it for this load instead of whatever the (still-default) translation state is.
       const effectiveTranslation = restoreTranslation ?? translation;
-      if (restoreTranslation) setTranslation(restoreTranslation);
-      loadReference(reference, effectiveTranslation);
+      // An explicit saved Bible-version preference wins over the last-read position's translation.
+      const effective = getStoredTranslation() ?? effectiveTranslation;
+      if (restoreTranslation && getStoredTranslation() === null) setTranslation(restoreTranslation);
+      loadReference(reference, effective);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [reference, referenceNonce, restoreTranslation]);
@@ -1479,6 +1482,19 @@ export default function BiblePanel({
     }
     if (!isRangeTagged(popup.startVerse, popup.endVerse, tag.id)) await handleToggleVerseTag(tag.id);
   };
+
+  // The version was changed somewhere other than the chip (My Profile): reload the open chapter.
+  useEffect(() => {
+    if (translation === loadedTranslationRef.current) return;
+    if (currentBook && currentChapter !== null) {
+      loadChapter(currentBook, currentChapter, translation).then((ok) => {
+        if (!ok) setError("Couldn't load this passage in that translation.");
+      });
+    } else {
+      loadedTranslationRef.current = translation;
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [translation]);
 
   const handleTranslationChange = async (next: string) => {
     setTranslation(next);

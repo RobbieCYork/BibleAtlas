@@ -18,6 +18,7 @@ import {
   type ProfileLink,
 } from "../lib/profileLinks";
 import Icon, { type IconName } from "./Icon";
+import { TRANSLATIONS, useBibleTranslation } from "../lib/bibleTranslation";
 import DeleteAccountControl from "./DeleteAccountControl";
 import { TestingMarker } from "./FeatureRelease";
 import SkinPicker from "./SkinPicker";
@@ -646,6 +647,27 @@ function DataExportControl({ userId }: { userId: string }) {
   );
 }
 
+/** "Bible version" — the same saved preference as the reader's translation chip (lib/bibleTranslation),
+ * so changing it here changes what the Bible tab shows next, and vice versa. Stored on this device. */
+function BibleVersionSetting() {
+  const [translation, setTranslation] = useBibleTranslation();
+  return (
+    <div className="auth-settings-section auth-settings-section-stacked">
+      <label className="auth-settings-label" htmlFor="myprofile-bible-version">
+        Bible version
+      </label>
+      <p className="auth-benefits">The translation the Bible tab opens and reads in.</p>
+      <select id="myprofile-bible-version" value={translation} onChange={(e) => setTranslation(e.target.value)}>
+        {TRANSLATIONS.map((t) => (
+          <option key={t.id} value={t.id}>
+            {t.label}
+          </option>
+        ))}
+      </select>
+    </div>
+  );
+}
+
 interface MyProfileViewProps {
   userId: string;
   onDisplayNameSaved: (name: string) => void;
@@ -715,6 +737,8 @@ export default function MyProfileView({ userId, onDisplayNameSaved, onClose, onG
             </>
           )}
           <MyProfileControl userId={userId} onDisplayNameSaved={onDisplayNameSaved} onGoToVerse={onGoToVerse} />
+          <div className="auth-settings-divider" />
+          <BibleVersionSetting />
           <div className="auth-settings-divider" />
           <div className="auth-settings-section auth-settings-section-stacked myprofile-link-rows">
             <button type="button" className="myprofile-link-row" onClick={() => setView("settings")}>
