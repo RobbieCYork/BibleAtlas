@@ -4618,8 +4618,10 @@ a.profile-links-url {
      4/2 was chosen to be equivalent to the 8/6 it replaced, not merely close: the 2px difference is
      preserved, so (padTop - padBottom)/2 is unchanged and every icon and label sits at exactly the
      pixel it did before. The budget it buys: 56 - 6 - 2 (gap) - 16.5 (label line box) = 31.5px of
-     icon, against a 28px maximum, leaving the same 3.5px of slack the bar had at 20px. */
-  padding: 4px 4px 2px;
+     icon, against a 28px maximum, leaving the same 3.5px of slack the bar had at 20px.
+     The 1px sides are width, not height: with all seven buttons on a 375px screen each tab is
+     53.6px and "My Profile" is 49px, so 4px sides cut it to "My Pro...". */
+  padding: 4px 1px 2px;
   border: none;
   background: none;
   color: var(--text-muted);
@@ -9413,6 +9415,24 @@ a.profile-links-url {
 .auth-tabbar-switch input:focus-visible + .auth-tabbar-track {
   outline: 2px solid var(--accent);
   outline-offset: 2px;
+}
+
+/* Owner only: why a destination in Testing is missing (NavBarTestingNotice). */
+.auth-tabbar-testing {
+  display: flex;
+  flex-direction: column;
+  margin-top: 6px;
+  padding: 8px 10px;
+  border: 1px solid var(--release-test);
+  border-radius: 8px;
+  background: var(--release-test-bg);
+  color: var(--text-h);
+  font-size: calc(12px * var(--tsz, 1));
+  line-height: 1.4;
+}
+
+.auth-tabbar-testing p {
+  margin: 0;
 }
 
 .auth-tabbar-limit {

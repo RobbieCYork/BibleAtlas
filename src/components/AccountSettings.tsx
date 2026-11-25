@@ -3,7 +3,10 @@ import { supabase, CHAPTER_READ_RESET_EVENT, type Profile } from "../lib/supabas
 import { useTextSize } from "../lib/textSize";
 import { useTheme } from "../lib/theme";
 import { MIN_VISIBLE_TABS, MOBILE_TAB_META, MOBILE_TAB_ORDER, useMobileTabs, LOCKED_TAB } from "../lib/mobileTabs";
+import { useTabStages } from "../lib/tabFeatures";
 import Icon from "./Icon";
+import { TestingMarker } from "./FeatureRelease";
+import NavBarTestingNotice from "./NavBarTestingNotice";
 
 /** Shared with both the logged-in and logged-out dropdown states — text size is a setting, not an
  * account action, so it lives in this menu but isn't gated on being signed in. */
@@ -61,9 +64,16 @@ export function AppearanceControl() {
  *
  * Two guards, both surfaced rather than silent: Bible has no switch at all (it's the cold-start
  * landing tab and the fallback every other safety path points at), and once the bar is down to
- * MIN_VISIBLE_TABS the remaining switches are disabled with a line of copy saying why. */
+ * MIN_VISIBLE_TABS the remaining switches are disabled with a line of copy saying why. There is no
+ * maximum: all seven fit.
+ *
+ * A destination whose feature stage hides it from this viewer (lib/tabFeatures.ts) never gets a live
+ * switch, because it would change nothing on screen. Readers get no row at all; the owner gets the row
+ * marked "In Testing" and NavBarTestingNotice below the list. The minimum counts only the buttons that
+ * can actually be drawn. */
 export function NavBarControl() {
   const { visible, canHide, setTabVisible, resetTabs, isDefault } = useMobileTabs();
+  const { isOwner, stageOf, isAvailable, unavailable } = useTabStages();
   const [isNarrow, setIsNarrow] = useState(() => window.matchMedia("(max-width: 768px)").matches);
 
   useEffect(() => {
@@ -75,7 +85,8 @@ export function NavBarControl() {
 
   if (!isNarrow) return null;
 
-  const atMinimum = MOBILE_TAB_ORDER.filter((k) => visible[k]).length <= MIN_VISIBLE_TABS;
+  const atMinimum = MOBILE_TAB_ORDER.filter((k) => visible[k] && isAvailable(k)).length <= MIN_VISIBLE_TABS;
+  const rows = MOBILE_TAB_ORDER.filter((k) => isOwner || isAvailable(k));
 
   return (
     <div className="auth-settings-section auth-settings-section-stacked">
@@ -85,12 +96,13 @@ export function NavBarControl() {
         {MIN_VISIBLE_TABS} buttons are always shown.
       </p>
       <ul className="auth-tabbar-list">
-        {MOBILE_TAB_ORDER.map((key) => {
+        {rows.map((key) => {
           const on = visible[key];
+          const available = isAvailable(key);
           const locked = key === LOCKED_TAB;
           // A visible tab can only be switched off while above the minimum; a hidden one can always
           // be switched back on.
-          const disabled = locked || (on && !canHide(key));
+          const disabled = !available || locked || (on && (atMinimum || !canHide(key)));
           return (
             <li key={key} className={`auth-tabbar-row${disabled ? " disabled" : ""}`}>
               {/* `MOBILE_TAB_META[key].icon` is a NAME in the app's icon set ("bible", "map"), not
@@ -103,8 +115,11 @@ export function NavBarControl() {
                   <Icon name={MOBILE_TAB_META[key].icon} />
                 </span>
                 {MOBILE_TAB_META[key].label}
+                <TestingMarker show={!!stageOf(key)?.inTesting} />
               </span>
-              {locked ? (
+              {!available ? (
+                <span className="auth-tabbar-always">In Testing</span>
+              ) : locked ? (
                 <span className="auth-tabbar-always">Always on</span>
               ) : (
                 <label className="auth-tabbar-switch">
@@ -122,6 +137,7 @@ export function NavBarControl() {
           );
         })}
       </ul>
+      {isOwner && <NavBarTestingNotice tabs={unavailable} />}
       {atMinimum && (
         <p className="auth-tabbar-limit" role="status">
           That's the minimum of {MIN_VISIBLE_TABS} buttons — turn another one on before hiding any more.
