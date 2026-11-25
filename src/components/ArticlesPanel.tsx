@@ -1,9 +1,9 @@
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
+import ArticleCategoryPage, { ArticleRow, type ArticleEntry, type ArticleKind } from "./ArticleCategoryPage";
 import Chevron from "./Chevron";
 import Icon, { type IconName } from "./Icon";
+import { useKeptScroll } from "../hooks/useKeptScroll";
 import type { Location, Person, PointOfInterest, Topic, TimelineEvent } from "../data/types";
-
-type ArticleKind = "location" | "poi" | "person" | "topic" | "timelineEvent";
 
 /** The buckets the browsable records are partitioned into. NOT the same thing as what the app
  * opens: every one of the three topic-derived shelves opens a TopicPanel — they are one record
@@ -17,22 +17,14 @@ type ArticleKind = "location" | "poi" | "person" | "topic" | "timelineEvent";
  * reader's first impression of the whole section, and a worse app than the one we started with. */
 type ShelfKey = "location" | "poi" | "person" | "topic" | "discovery" | "manuscript" | "timelineEvent";
 
-/** The collapsible rows the panel actually shows. Usually one per shelf — but Archaeology is ONE
- * row holding two shelves, because there is now one Archaeology entry in the menu (PanelMenu's
+/** The category rows the panel actually shows, each opening its own page. Usually one per shelf —
+ * but Archaeology is ONE row holding two shelves, because there is now one Archaeology entry in the menu (PanelMenu's
  * "Go to" group, and MobileNavMenu's list) and a reader who follows it must not arrive at two
  * sibling rows and have to work out which of them the menu meant. One name in the menu, one row
- * here, with Discoveries and Manuscripts kept as labelled shelves INSIDE it — so the split that
+ * here, with Discoveries and Manuscripts kept as labelled shelves on its page — so the split that
  * stops a stele and a codex sharing an alphabetical list survives intact, and the reader is still
  * two taps from any record rather than three. */
 type SectionKey = "location" | "poi" | "person" | "topic" | "archaeology" | "timelineEvent";
-
-interface ArticleEntry {
-  kind: ArticleKind;
-  id: string;
-  name: string;
-  sublabel: string;
-  searchNames: string[];
-}
 
 interface ArticlesPanelProps {
   locations: Location[];
@@ -45,28 +37,30 @@ interface ArticlesPanelProps {
   onSelectPerson: (id: string) => void;
   onSelectTopic: (id: string) => void;
   onSelectTimelineEvent: (id: string) => void;
-  /** A section to expand and scroll to when the reader arrives from somewhere else — currently the
-   * Archaeology entry in both menus. Same one-shot request shape FriendsPanel already takes for its
+  /** A category page to open when the reader arrives from somewhere else — currently the Archaeology
+   * entry in both menus. Same one-shot request shape FriendsPanel already takes for its
    * Friends/Messages/Groups views (`openView`/`openViewNonce`): the nonce bumps on every tap, so
-   * picking the menu entry again while the panel is already open re-expands and re-scrolls rather
-   * than doing nothing. Undefined until the reader first uses one of those entry points, so a
-   * mounted panel never expands anything unprompted. */
+   * picking the menu entry again while the panel is already open starts that page afresh rather than
+   * doing nothing. Undefined until the reader uses one of those entry points, and again once the
+   * panel has acted on it (`onOpenedSection`), so that closing and reopening the panel later does not
+   * replay an old request. */
   openSection?: SectionKey;
   openSectionNonce?: number;
+  onOpenedSection?: () => void;
   expand?: boolean;
   style?: React.CSSProperties;
   hidden?: boolean;
 }
 
-/** One browsable group in the section list below the search bar — order here is the order groups
+/** One browsable category in the list below the search bar — order here is the order categories
  * render in, deliberately Places/POIs/People/Topics/Archaeology/Timeline (biggest map-facing
  * categories first), with Archaeology sitting immediately after Topics because that is what it is a
  * specialisation of.
  *
- * `shelves` is what a section partitions. A section with one shelf renders exactly as it always
- * has — no sub-heading, no extra nesting — so describing all six sections the same way costs the
- * other five nothing. An empty shelf renders no heading, and a section whose shelves are all empty
- * does not render at all (see below), so a section can be named here before there is anything in
+ * `shelves` is what a section partitions. A section with one shelf renders as a plain list — no
+ * sub-heading, no extra nesting — so describing all six sections the same way costs the other five
+ * nothing. An empty shelf renders no heading, and a section whose shelves are all empty does not
+ * render at all (see below), so a section can be named here before there is anything in
  * it. */
 const SECTIONS: {
   key: SectionKey;
@@ -126,53 +120,46 @@ export default function ArticlesPanel({
   onSelectTimelineEvent,
   openSection,
   openSectionNonce,
+  onOpenedSection,
   expand,
   style,
   hidden,
 }: ArticlesPanelProps) {
   const [query, setQuery] = useState("");
-  // Which browse sections are expanded — collapsed by default since People (237+) and Timeline
-  // Events (350+) are too long to dump on screen at once; a search takes over the whole panel
-  // instead of needing a section open, so this only matters for pure browsing.
-  const [openSections, setOpenSections] = useState<Set<SectionKey>>(new Set());
+  // The category page on screen, or null for the category list. `visit` keys the page, so each fresh
+  // arrival starts with an empty search at the top, while coming back from an article (which only
+  // hides this panel) keeps both.
+  const [page, setPage] = useState<{ key: SectionKey; visit: number } | null>(null);
   const sectionRefs = useRef<Partial<Record<SectionKey, HTMLButtonElement | null>>>({});
-  // See the two effects below — this exists only to put one render between expanding a section and
-  // scrolling to it.
-  const [pendingScroll, setPendingScroll] = useState<{ key: SectionKey; nonce: number } | null>(null);
+  // The category just left by Back, so focus can return to its row.
+  const returnFocusRef = useRef<SectionKey | null>(null);
+  // Where the category list (or the all-categories search results) was scrolled to. It outlives the
+  // element, which is not in the DOM while a category page is up.
+  const rootScrollTop = useRef(0);
+  const rootList = useKeptScroll<HTMLElement>(rootScrollTop, hidden, page);
 
-  const toggleSection = (key: SectionKey) => {
-    setOpenSections((prev) => {
-      const next = new Set(prev);
-      if (next.has(key)) next.delete(key);
-      else next.add(key);
-      return next;
-    });
+  const openPage = (key: SectionKey) => setPage((prev) => ({ key, visit: (prev?.visit ?? 0) + 1 }));
+  const closePage = () => {
+    returnFocusRef.current = page?.key ?? null;
+    setPage(null);
   };
 
-  // Arriving from a menu entry: clear whatever search text was left in the box (its results cover
-  // the whole panel, including the section the reader was just sent to), expand that section, and
-  // put its header at the top of the scroller.
+  useLayoutEffect(() => {
+    if (page || !returnFocusRef.current) return;
+    sectionRefs.current[returnFocusRef.current]?.focus({ preventScroll: true });
+    returnFocusRef.current = null;
+  }, [page]);
+
+  // Arriving from a menu entry: clear whatever search text was left in the box, and open that
+  // category's page.
   useEffect(() => {
     if (!openSection || openSectionNonce === undefined) return;
     setQuery("");
-    setOpenSections((prev) => (prev.has(openSection) ? prev : new Set(prev).add(openSection)));
-    setPendingScroll({ key: openSection, nonce: openSectionNonce });
+    openPage(openSection);
+    onOpenedSection?.();
+    // Keyed on the request alone: the callback is a fresh closure on every App render.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [openSection, openSectionNonce]);
-
-  // The scroll deliberately waits a render. Doing it in the effect above looks equivalent — the
-  // header only moves down, never up, when a section expands — and measurably is not: with
-  // everything collapsed the section list often does not overflow at all, so there is nothing to
-  // scroll yet and the call is a silent no-op. It is the expansion that creates the overflow. Both
-  // state updates above land in one commit, so by the time this runs the shelves are in the DOM.
-  //
-  // `behavior` is left at its instant default on purpose: an animated scroll is driven by animation
-  // frames, and a backgrounded tab produces none at all, so a smooth scroll there moves nothing (see
-  // AGENTS.md). The nonce is in the state so that re-picking the same section still re-scrolls.
-  useEffect(() => {
-    if (!pendingScroll) return;
-    sectionRefs.current[pendingScroll.key]?.scrollIntoView({ block: "start" });
-    setPendingScroll(null);
-  }, [pendingScroll]);
 
   // One flat, alphabetically-sorted list per browse shelf — built once per data change (never, in
   // practice, since these arrays are static imports) rather than per keystroke. The three
@@ -248,6 +235,7 @@ export default function ArticlesPanel({
     topic: onSelectTopic,
     timelineEvent: onSelectTimelineEvent,
   };
+  const selectEntry = (entry: ArticleEntry) => selectHandlers[entry.kind](entry.id);
 
   // Search results are flat, so a result's icon comes from its RECORD kind, not its browse shelf: a
   // discovery and a doctrine are both topics and both open the same panel, so both arrive under the
@@ -255,132 +243,109 @@ export default function ArticlesPanel({
   const iconFor = (kind: ArticleKind): IconName =>
     SECTIONS.flatMap((s) => s.shelves).find((shelf) => shelf.key === kind)?.icon ?? "articles";
 
-  const rowsFor = (entries: ArticleEntry[]) =>
-    entries.map((entry) => (
-      <li key={`${entry.kind}-${entry.id}`}>
-        <button
-          type="button"
-          className="articles-result-row"
-          onClick={() => selectHandlers[entry.kind](entry.id)}
-        >
-          <span className="articles-result-text">
-            <span className="articles-result-name">{entry.name}</span>
-            <span className="articles-result-sublabel">{entry.sublabel}</span>
-          </span>
-        </button>
-      </li>
-    ));
+  // Memoised so that an open category page is not re-indexed by every unrelated App render.
+  const sections = useMemo(
+    () =>
+      SECTIONS.map((section) => {
+        const shelves = section.shelves.map((shelf) => ({ ...shelf, entries: entriesByShelf[shelf.key] }));
+        return { ...section, shelves, total: shelves.reduce((n, shelf) => n + shelf.entries.length, 0) };
+      }),
+    [entriesByShelf],
+  );
+  const openedSection = page ? sections.find((s) => s.key === page.key) : undefined;
 
   return (
     <div
       className={`articles-panel ${expand ? "panel-expand" : ""} ${hidden ? "bible-panel-hidden" : ""}`}
       style={expand ? undefined : style}
     >
-      <h2 className="articles-title">Articles</h2>
-      <p className="articles-subtitle">Browse or search every place, person, and topic in the atlas.</p>
-      <div className="articles-search">
-        <span className="search-bar-icon" aria-hidden="true">
-          <Icon name="search" />
-        </span>
-        <input
-          type="text"
-          placeholder="Search places, people, topics…"
-          value={query}
-          onChange={(e) => setQuery(e.target.value)}
+      {page && openedSection ? (
+        <ArticleCategoryPage
+          key={`${page.key}-${page.visit}`}
+          label={openedSection.label}
+          shelves={openedSection.shelves}
+          hidden={hidden}
+          onBack={closePage}
+          onSelect={selectEntry}
         />
-        {query && (
-          <button
-            type="button"
-            className="articles-search-clear"
-            onClick={() => setQuery("")}
-            aria-label="Clear search"
-          >
-            ×
-          </button>
-        )}
-      </div>
-
-      {query.trim() !== "" ? (
-        <ul className="articles-results">
-          {searchResults.length > 0 ? (
-            searchResults.map((entry) => (
-              <li key={`${entry.kind}-${entry.id}`}>
-                <button type="button" className="articles-result-row" onClick={() => selectHandlers[entry.kind](entry.id)}>
-                  <span className="articles-result-icon" aria-hidden="true">
-                    <Icon name={iconFor(entry.kind)} />
-                  </span>
-                  <span className="articles-result-text">
-                    <span className="articles-result-name">{entry.name}</span>
-                    <span className="articles-result-sublabel">{entry.sublabel}</span>
-                  </span>
-                </button>
-              </li>
-            ))
-          ) : (
-            <li className="search-results-empty">No results found</li>
-          )}
-        </ul>
       ) : (
-        <div className="articles-sections">
-          {SECTIONS.map((section) => {
-            const shelves = section.shelves.map((shelf) => ({ ...shelf, entries: entriesByShelf[shelf.key] }));
-            const total = shelves.reduce((n, shelf) => n + shelf.entries.length, 0);
-            // A section with nothing in it is not rendered. Archaeology was declared here before any
-            // record carried either of its categories, so this is what kept the panel from growing an
-            // empty row before the content landed.
-            if (total === 0) return null;
-            const isOpen = openSections.has(section.key);
-            const multiShelf = shelves.length > 1;
-            return (
-              <div className="articles-section" key={section.key}>
-                <button
-                  type="button"
-                  ref={(el) => {
-                    sectionRefs.current[section.key] = el;
-                  }}
-                  className="articles-section-header"
-                  onClick={() => toggleSection(section.key)}
-                  aria-expanded={isOpen}
-                >
-                  <span className="articles-section-icon" aria-hidden="true">
-                    <Icon name={section.icon} />
-                  </span>
-                  <span className="articles-section-label">{section.label}</span>
-                  <span className="articles-section-count">{total}</span>
-                  <span className="articles-section-chevron" aria-hidden="true">
-                    <Chevron open={isOpen} size={20} />
-                  </span>
-                </button>
-                {isOpen &&
-                  (multiShelf ? (
-                    <div className="articles-section-list articles-section-shelves">
-                      {shelves.map((shelf) =>
-                        shelf.entries.length === 0 ? null : (
-                          <div className="articles-shelf" key={shelf.key}>
-                            <p className="articles-shelf-label" id={`${section.key}-${shelf.key}-shelf`}>
-                              <span className="articles-shelf-icon" aria-hidden="true">
-                                <Icon name={shelf.icon} />
-                              </span>
-                              <span className="articles-shelf-name">{shelf.label}</span>
-                              <span className="articles-section-count">{shelf.entries.length}</span>
-                            </p>
-                            <ul
-                              className="articles-results articles-shelf-list"
-                              aria-labelledby={`${section.key}-${shelf.key}-shelf`}
-                            >
-                              {rowsFor(shelf.entries)}
-                            </ul>
-                          </div>
-                        ),
-                      )}
-                    </div>
-                  ) : (
-                    <ul className="articles-results articles-section-list">{rowsFor(shelves[0].entries)}</ul>
-                  ))}
-              </div>
-            );
-          })}
-        </div>
+        <>
+          <h2 className="articles-title">Articles</h2>
+          <p className="articles-subtitle">Browse or search every place, person, and topic in the atlas.</p>
+          <div className="articles-search">
+            <span className="search-bar-icon" aria-hidden="true">
+              <Icon name="search" />
+            </span>
+            <input
+              type="text"
+              placeholder="Search places, people, topics…"
+              aria-label="Search all articles"
+              value={query}
+              onChange={(e) => {
+                rootScrollTop.current = 0;
+                setQuery(e.target.value);
+              }}
+            />
+            {query && (
+              <button
+                type="button"
+                className="articles-search-clear"
+                onClick={() => {
+                  rootScrollTop.current = 0;
+                  setQuery("");
+                }}
+                aria-label="Clear search"
+              >
+                ×
+              </button>
+            )}
+          </div>
+
+          {query.trim() !== "" ? (
+            <ul className="articles-results" ref={rootList.setRef} onScroll={rootList.onScroll}>
+              {searchResults.length > 0 ? (
+                searchResults.map((entry) => (
+                  <ArticleRow
+                    key={`${entry.kind}-${entry.id}`}
+                    entry={entry}
+                    icon={iconFor(entry.kind)}
+                    onSelect={selectEntry}
+                  />
+                ))
+              ) : (
+                <li className="search-results-empty">No results found</li>
+              )}
+            </ul>
+          ) : (
+            <div className="articles-sections" ref={rootList.setRef} onScroll={rootList.onScroll}>
+              {sections.map((section) =>
+                // A section with nothing in it is not rendered. Archaeology was declared here before
+                // any record carried either of its categories, so this is what kept the panel from
+                // growing an empty row before the content landed.
+                section.total === 0 ? null : (
+                  <button
+                    key={section.key}
+                    type="button"
+                    ref={(el) => {
+                      sectionRefs.current[section.key] = el;
+                    }}
+                    className="articles-section-header"
+                    onClick={() => openPage(section.key)}
+                  >
+                    <span className="articles-section-icon" aria-hidden="true">
+                      <Icon name={section.icon} />
+                    </span>
+                    <span className="articles-section-label">{section.label}</span>
+                    <span className="articles-section-count">{section.total}</span>
+                    <span className="articles-section-chevron" aria-hidden="true">
+                      <Chevron open={false} size={20} />
+                    </span>
+                  </button>
+                ),
+              )}
+            </div>
+          )}
+        </>
       )}
     </div>
   );

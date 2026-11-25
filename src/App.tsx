@@ -541,9 +541,9 @@ function App() {
     if (isMobile) setMobileActivePanel("bible");
     setOpenReadingPlansNonce((n) => (n ?? 0) + 1);
   };
-  // Lets the Archaeology entry in both menus send the Articles panel to its Archaeology section —
-  // same one-shot-request shape as openReadingPlansNonce above, and undefined until first used so a
-  // mounted panel never expands a section nobody asked for. See openArchaeology below.
+  // Lets the Archaeology entry in both menus send the Articles panel to its Archaeology page —
+  // same one-shot-request shape as openReadingPlansNonce above, and undefined whenever no request is
+  // waiting, so the panel never opens a page nobody asked for. See openArchaeology below.
   const [openArchaeologyNonce, setOpenArchaeologyNonce] = useState<number | undefined>(undefined);
   // Lets the Timeline's Books-of-the-Bible band jump straight to a book's Introduction (instead of
   // its chapter 1) — same one-shot-request shape as journalRequest, carrying which book since that
@@ -1306,7 +1306,7 @@ function App() {
    * destination, one route, no chance of the platforms drifting apart.
    *
    * Archaeology is a shelf inside the Articles panel rather than a takeover of its own, so this
-   * opens Articles and hands it a one-shot request to expand and scroll to that shelf. The three
+   * opens Articles and hands it a one-shot request to open the Archaeology page. The three
    * lines that matter and are easy to miss:
    *
    *  - The takeovers have to be left first, exactly as goToTakeover leaves them — they sit at the
@@ -1831,6 +1831,7 @@ function App() {
             onSelectTimelineEvent={handleSelectTimelineEventFromArticles}
             openSection="archaeology"
             openSectionNonce={openArchaeologyNonce}
+            onOpenedSection={() => setOpenArchaeologyNonce(undefined)}
             expand={sideExpand}
             style={{ width: articlesWidth }}
             hidden={articlesHiddenOnMobile || showArticle}
