@@ -9,7 +9,7 @@ export default async function (h) {
     console.log("  account menu:", JSON.stringify(acct));
     h.assert(acct.length >= 3, "account menu rendered");
     h.assert(!acct.some((i) => /Safety/i.test(i)), "no Safety & Contact row");
-    for (const want of ["Settings", "Report a Problem", "My Reports", "Log Out"]) h.assert(acct.some((i) => i.includes(want)), `still has ${want}`);
+    for (const want of ["Settings", "Report a Problem", "Log Out"]) h.assert(acct.some((i) => i.includes(want)), `still has ${want}`);
     h.assert(!(await h.evaluate(() => !!document.querySelector('[aria-label="Safety and contact"]'))), "no safety dialog");
   }
 }

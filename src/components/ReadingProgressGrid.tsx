@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import Chevron from "./Chevron";
-import { supabase, chapterReadCutoff, chaptersReadThisMonth, type Profile } from "../lib/supabase";
+import { supabase, chapterReadCutoff, chaptersReadThisMonth, CHAPTER_READ_RESET_EVENT, type Profile } from "../lib/supabase";
 import { BOOKS } from "../data/bibleBooks";
 import Icon from "./Icon";
 
@@ -24,8 +24,8 @@ const key = (book: string, chapter: number) => `${book}:${chapter}`;
  * "mark everything" edit is chunked rather than posted as one oversized body. */
 const UPSERT_CHUNK = 400;
 
-/** Every book in the canon, each chapter shown as a small cell lit up once read. Backs both the
- * Settings "My Reading" section and a friend's profile view — RLS on chapter_reads/reading_time_daily
+/** Every book in the canon, each chapter shown as a small cell lit up once read. Backs both My
+ * Profile's "My Reading" section and a friend's profile view — RLS on chapter_reads/reading_time_daily
  * (owner or an accepted friend) decides whether the caller can actually see the data either way.
  *
  * On your own profile the book-by-book breakdown can be switched into an edit mode that marks
@@ -44,6 +44,13 @@ export default function ReadingProgressGrid({ userId, displayName, isOwn }: Read
   const [draft, setDraft] = useState<Set<string> | null>(null);
   const [saving, setSaving] = useState(false);
   const [saveError, setSaveError] = useState<string | null>(null);
+
+  const [resetChanges, setResetChanges] = useState(0);
+  useEffect(() => {
+    const bump = () => setResetChanges((n) => n + 1);
+    window.addEventListener(CHAPTER_READ_RESET_EVENT, bump);
+    return () => window.removeEventListener(CHAPTER_READ_RESET_EVENT, bump);
+  }, []);
 
   useEffect(() => {
     let cancelled = false;
@@ -70,7 +77,7 @@ export default function ReadingProgressGrid({ userId, displayName, isOwn }: Read
     return () => {
       cancelled = true;
     };
-  }, [userId]);
+  }, [userId, resetChanges]);
 
   const startEdit = () => {
     if (!readSet) return;

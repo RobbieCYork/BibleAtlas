@@ -116,7 +116,7 @@ export default async function (h) {
 
     // ---- My Profile ----
     if (phone) { await openMenu(h); await h.click({ css: ".mobile-nav-menu-item", text: OFF ? "My Profile" : "Social" }); }
-    else { await h.click('[aria-label="Settings and account"]'); await h.sleep(300); await h.click({ css: ".auth-menu-item", text: "My Profile" }); }
+    else { await h.click('[aria-label="Settings and account"]'); await h.sleep(300); await h.click(".auth-identity-link"); }
     await h.waitFor(".myprofile-root"); await h.sleep(900);
     const body = await h.evaluate(() => document.querySelector(".myprofile-root").innerText);
     h.assert(!/Admin Console|admin_users|Open Admin/i.test(body), `${skin}: My Profile has no Admin Console block`);

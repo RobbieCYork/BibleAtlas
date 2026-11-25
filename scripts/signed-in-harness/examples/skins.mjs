@@ -52,10 +52,10 @@ async function goTo(h, label, tabLabel = label) {
   await h.sleep(1200);
 }
 
-/** Open My Profile on either layout (phone: More/menu entry; desktop: account menu). */
+/** Open My Profile on either layout (phone: header menu row; desktop: the account menu's identity header). */
 async function openProfile(h) {
   if (await isPhone(h)) { await h.click(MENU_BUTTON); await h.sleep(350); await h.click({ css: ".mobile-nav-menu-item", text: "My Profile" }); }
-  else { await h.click('[aria-label="Settings and account"]'); await h.sleep(300); await h.click({ css: ".auth-menu-item", text: "My Profile" }); }
+  else { await h.click('[aria-label="Settings and account"]'); await h.sleep(300); await h.click(".auth-identity-link"); }
   await h.waitFor(".myprofile-root"); await h.sleep(600);
 }
 

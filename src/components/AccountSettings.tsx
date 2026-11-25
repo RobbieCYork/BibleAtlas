@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { supabase, type Profile } from "../lib/supabase";
+import { supabase, CHAPTER_READ_RESET_EVENT, type Profile } from "../lib/supabase";
 import { useTextSize } from "../lib/textSize";
 import { useTheme } from "../lib/theme";
 import { MIN_VISIBLE_TABS, MOBILE_TAB_META, MOBILE_TAB_ORDER, useMobileTabs, LOCKED_TAB } from "../lib/mobileTabs";
@@ -163,6 +163,7 @@ export function ReadingResetControl({ userId }: { userId: string }) {
     const { error } = await supabase.from("profiles").update({ chapter_read_reset: value }).eq("id", userId);
     setSaving(false);
     setSaved(error ? "Couldn't save — try again." : "Saved!");
+    if (!error) window.dispatchEvent(new Event(CHAPTER_READ_RESET_EVENT));
   };
 
   if (!loaded) return null;
@@ -185,9 +186,9 @@ export function ReadingResetControl({ userId }: { userId: string }) {
 }
 
 /** The account Settings content — text size, appearance, navigation bar, read-mark reset, legal links.
- * One copy, rendered in two homes: My Profile's Settings view (every real account) and the account
- * menu's own Settings view (guests, who have no profile page). `userId` is null for a guest, who has
- * no reading marks to reset. */
+ * One copy, rendered in two homes: the full-screen SettingsView (every real account) and the account
+ * menu's own Settings view (guests). Both open from the account menu's Settings row. `userId` is null
+ * for a guest, who has no reading marks to reset. */
 export default function AccountSettingsBody({ userId }: { userId: string | null }) {
   return (
     <>

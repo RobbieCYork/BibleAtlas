@@ -2005,6 +2005,13 @@ body.resizing-panels {
   border-bottom: 1px solid var(--border);
 }
 
+/* A description that belongs to the control right under it: no rule between the two. */
+.auth-benefits-inline {
+  margin-bottom: 0;
+  padding-bottom: 0;
+  border-bottom: none;
+}
+
 .auth-settings-section {
   display: flex;
   align-items: center;
@@ -2803,6 +2810,49 @@ a.profile-links-url {
 .auth-identity .auth-current-user,
 .auth-identity .auth-guest-note {
   margin-bottom: 0;
+}
+
+/* Wider than the base dropdown so the header's chevron does not squeeze an email onto two lines. */
+.auth-dropdown-account {
+  width: 272px;
+}
+
+/* The identity block as a button: opens My Profile. Negative side margin lets the hover/focus fill
+   breathe without moving the avatar off the menu's text edge. */
+.auth-identity-link {
+  width: calc(100% + 12px);
+  gap: 8px;
+  min-height: 52px;
+  margin: -4px -6px 8px;
+  padding: 4px 6px;
+  border: 1px solid transparent;
+  border-radius: 8px;
+  background: transparent;
+  color: var(--text);
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
+.auth-identity-link:hover {
+  background: var(--accent-bg);
+  border-color: var(--border);
+}
+
+.auth-identity-link:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 0;
+}
+
+.auth-identity-text {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.auth-identity-link .auth-current-user,
+.auth-identity-link .auth-guest-note {
+  overflow-wrap: anywhere;
 }
 
 .auth-menu-item {
@@ -13045,7 +13095,7 @@ img.sn-image,
   font-size: calc(16px * var(--tsz, 1));
 }
 
-/* --- Account menu tidy (2026-11-15): Reports inside the Admin Console, Settings / My Reports in My Profile --- */
+/* --- Account menu tidy (2026-11-15): Reports inside the Admin Console, My Reports in My Profile --- */
 .report-embedded {
   display: flex;
   flex-direction: column;

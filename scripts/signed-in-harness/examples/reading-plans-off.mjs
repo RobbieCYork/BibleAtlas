@@ -24,10 +24,13 @@ export default async (h) => {
     h.assert(!(await h.exists(".bible-welcome-plans")), "no plan cards on Bible welcome");
     h.assert(await h.exists(".bible-welcome-choose") || (await h.count(".bible-panel, .bible-welcome")) > 0, "Bible panel still present");
     // My Profile
-    try { await h.click('[aria-label="Settings and account"]'); await h.sleep(300);
-      if (await h.exists({ css: ".auth-menu-item", text: "My Profile" })) { await h.click({ css: ".auth-menu-item", text: "My Profile" }); await h.sleep(700);
-        const pt = await h.evaluate(() => document.body.innerText); h.assert(!PLAN.test(pt), "My Profile mentions no plan"); await esc(h); }
-      else await esc(h);
+    try {
+      await h.reload(); await h.sleep(1500); // Escape does not close the account menu; a second click would only toggle it shut
+      // Phone: the header menu's "My Profile" row. Desktop: the account menu's identity header.
+      if ((await h.evaluate(() => window.innerWidth)) <= 768) { await h.click(MENU_BUTTON); await h.sleep(300); await h.click({ css: ".mobile-nav-menu-item", text: "My Profile" }); }
+      else { await h.click('[aria-label="Settings and account"]'); await h.sleep(300); await h.click(".auth-identity-link"); }
+      await h.waitFor(".myprofile-root"); await h.sleep(700);
+      const pt = await h.evaluate(() => document.body.innerText); h.assert(!PLAN.test(pt), "My Profile mentions no plan"); await esc(h);
     } catch (e) { h.assert(false, "profile step threw " + e.message); }
   }
   // deep links

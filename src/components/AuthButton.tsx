@@ -12,6 +12,7 @@ import { useIsAdmin } from "../lib/adminApi";
 import { fetchReportCounts, hasRoleAtLeast, useCurrentRole } from "../lib/reportsApi";
 import type { ReportSurface } from "../lib/reportContext";
 import Icon from "./Icon";
+import Chevron from "./Chevron";
 import SocialLinks from "./SocialLinks";
 
 interface AuthButtonProps {
@@ -25,9 +26,17 @@ interface AuthButtonProps {
    * the mobile "More" sheet's "Reading Plans" entry (see MobileTabBar/App/BiblePanel). Closes this
    * menu and hands off to the Bible panel, which isn't rendered inside this dropdown. */
   onOpenReadingPlans?: () => void;
-  /** Opens the full-screen My Profile view (see MyProfileView/App) — replaces the old in-menu
-   * "profile" flyout view. Closes this menu itself before handing off, same as onOpenReadingPlans. */
-  onOpenMyProfile?: () => void;
+  /** Opens the full-screen My Profile view (see MyProfileView/App). Used by the phone routes that arrive
+   * as openProfileNonce, and by the identity header when profileHeaderLink is set. Closes this menu
+   * itself before handing off, same as onOpenReadingPlans. */
+  onOpenMyProfile: () => void;
+  /** Desktop only: make the menu's identity header (avatar, name, email) the way into My Profile. There
+   * is no other desktop entry point, so do not turn this off there. A phone has the "My Profile" tab
+   * and header menu row, which is always listed, so its header stays plain. */
+  profileHeaderLink: boolean;
+  /** Opens the full-screen Settings view (see SettingsView/App) for a real account. Same hand-off as
+   * onOpenMyProfile. */
+  onOpenSettings: () => void;
   /** Bumped by App whenever MyProfileView saves a display-name change, so the fetch below (keyed on
    * session alone otherwise) refreshes the label shown on the trigger button/menu without needing a
    * full session change. */
@@ -79,6 +88,8 @@ export default function AuthButton({
   openProfileNonce,
   onOpenReadingPlans,
   onOpenMyProfile,
+  profileHeaderLink,
+  onOpenSettings,
   profileVersion,
   reportSurface,
 }: AuthButtonProps) {
@@ -130,7 +141,7 @@ export default function AuthButton({
     // A real account jumps straight to the full-screen My Profile view; guests have no profile page,
     // so they still get this menu's Settings view instead.
     if (session && !session.user.is_anonymous) {
-      onOpenMyProfile?.();
+      onOpenMyProfile();
       return;
     }
     setOpen(true);
@@ -244,6 +255,8 @@ export default function AuthButton({
 
   if (session) {
     const label = session.user.is_anonymous ? "Guest" : savedDisplayName ?? session.user.email ?? "Account";
+    // Guests have no profile page, so theirs is never a link.
+    const linkHeader = profileHeaderLink && !session.user.is_anonymous;
     return (
       <div className="auth-button" ref={containerRef}>
         <button
@@ -260,32 +273,59 @@ export default function AuthButton({
           </span>
         </button>
         {open && menuView === "menu" && (
-          <div className="auth-dropdown">
-            <div className="auth-identity">
-              <span className="auth-avatar auth-avatar-lg" aria-hidden="true">
-                {session.user.is_anonymous ? <Icon name="people" /> : label.charAt(0).toUpperCase()}
-              </span>
-              <div>
-                <p className="auth-current-user">{label}</p>
-                {!session.user.is_anonymous && session.user.email && savedDisplayName && (
-                  <p className="auth-guest-note">{session.user.email}</p>
-                )}
-                {session.user.is_anonymous && <p className="auth-guest-note">Browsing as a guest</p>}
-              </div>
-            </div>
-            <div className="auth-settings-divider" />
-            {!session.user.is_anonymous && onOpenMyProfile && (
+          <div className={`auth-dropdown${linkHeader ? " auth-dropdown-account" : ""}`}>
+            {linkHeader ? (
               <button
                 type="button"
-                className="auth-menu-item"
+                className="auth-identity auth-identity-link"
+                aria-label={`Open My Profile (${label})`}
                 onClick={() => {
                   setOpen(false);
                   onOpenMyProfile();
                 }}
               >
-                <Icon name="people" inline /> My Profile
+                <span className="auth-avatar auth-avatar-lg" aria-hidden="true">
+                  {label.charAt(0).toUpperCase()}
+                </span>
+                <span className="auth-identity-text">
+                  <span className="auth-current-user">{label}</span>
+                  {session.user.email && savedDisplayName && (
+                    <span className="auth-guest-note">{session.user.email}</span>
+                  )}
+                </span>
+                <Chevron open={false} size={18} />
               </button>
+            ) : (
+              <div className="auth-identity">
+                <span className="auth-avatar auth-avatar-lg" aria-hidden="true">
+                  {session.user.is_anonymous ? <Icon name="people" /> : label.charAt(0).toUpperCase()}
+                </span>
+                <div>
+                  <p className="auth-current-user">{label}</p>
+                  {!session.user.is_anonymous && session.user.email && savedDisplayName && (
+                    <p className="auth-guest-note">{session.user.email}</p>
+                  )}
+                  {session.user.is_anonymous && <p className="auth-guest-note">Browsing as a guest</p>}
+                </div>
+              </div>
             )}
+            <div className="auth-settings-divider" />
+            {/* Everyone signed in. A real account gets the full-screen Settings view; a guest gets the
+                same controls inside this dropdown. */}
+            <button
+              type="button"
+              className="auth-menu-item"
+              onClick={() => {
+                if (session.user.is_anonymous) {
+                  setMenuView("settings");
+                  return;
+                }
+                setOpen(false);
+                onOpenSettings();
+              }}
+            >
+              <Icon name="settings" inline /> Settings
+            </button>
             {/* Reports lives inside the Admin Console now (Reports tab, same unread badge). This row
                 remains ONLY for an advisor who is not an admin: they hold the reports tier but have no
                 Admin Console to find it in, and removing the row would strand them. */}
@@ -299,13 +339,6 @@ export default function AuthButton({
               <button type="button" className="auth-menu-item" onClick={() => setMenuView("admin")}>
                 <Icon name="shield" inline /> Admin Console
                 {untriaged > 0 && <span className="panel-menu-item-badge">{untriaged}</span>}
-              </button>
-            )}
-            {/* Settings and My Reports moved into My Profile. Guests have no profile page, so Settings
-                stays here for them (the Settings view below is theirs, and the logged-out dropdown's). */}
-            {session.user.is_anonymous && (
-              <button type="button" className="auth-menu-item" onClick={() => setMenuView("settings")}>
-                <Icon name="settings" inline /> Settings
               </button>
             )}
             {onOpenReadingPlans && (

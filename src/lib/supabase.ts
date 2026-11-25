@@ -375,6 +375,10 @@ export async function searchPeopleByName(query: string, viewerId: string): Promi
   return ((data as PersonMatch[] | null) ?? []).filter((r) => r.id !== viewerId);
 }
 
+/** Fired on `window` after the "Reset read marks" setting is saved. Settings draws over My Profile
+ * without unmounting it, so a mounted reading-progress grid has to be told to reload. */
+export const CHAPTER_READ_RESET_EVENT = "chapter-read-reset-changed";
+
 /** ISO timestamp before which a chapter_reads row no longer counts as "read", per an account's
  * chapter_read_reset setting — null means no cutoff (marks never expire). Purely a query-time filter;
  * nothing deletes the underlying row, so switching back to "Never" instantly un-hides old marks. */

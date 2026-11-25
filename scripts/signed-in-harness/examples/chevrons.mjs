@@ -8,7 +8,7 @@ const SKINS = { default: "Default", sticker: "Sticker Pop", midnight: "Midnight 
 const isPhone = (h) => h.evaluate(() => window.innerWidth <= 768);
 async function openProfile(h) {
   if (await isPhone(h)) { await h.click(MENU_BUTTON); await h.sleep(350); await h.click({ css: ".mobile-nav-menu-item", text: "My Profile" }); }
-  else { await h.click('[aria-label="Settings and account"]'); await h.sleep(300); await h.click({ css: ".auth-menu-item", text: "My Profile" }); }
+  else { await h.click('[aria-label="Settings and account"]'); await h.sleep(300); await h.click(".auth-identity-link"); }
   await h.waitFor(".myprofile-root"); await h.sleep(800);
 }
 const measure = (h, rowSel) => h.evaluate((sel) => {

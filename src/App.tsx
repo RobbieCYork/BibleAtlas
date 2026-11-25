@@ -26,6 +26,7 @@ import ResizeHandle from "./components/ResizeHandle";
 import AuthButton from "./components/AuthButton";
 import SocialLinks from "./components/SocialLinks";
 import MyProfileView from "./components/MyProfileView";
+import SettingsView from "./components/SettingsView";
 import FriendProfileView from "./components/FriendProfileView";
 import PeopleSearchBar from "./components/PeopleSearchBar";
 import UnifiedSearchBar from "./components/UnifiedSearchBar";
@@ -536,6 +537,7 @@ function App() {
   // same reasoning as openProfileNonce above.
   const [openReadingPlansNonce, setOpenReadingPlansNonce] = useState<number | undefined>(undefined);
   const openReadingPlans = () => {
+    setShowSettings(false);
     if (isMobile) setMobileActivePanel("bible");
     setOpenReadingPlansNonce((n) => (n ?? 0) + 1);
   };
@@ -561,14 +563,25 @@ function App() {
   // the reader's own profile. Kept here rather than inside MyProfileView because the search that
   // sets it lives in the app header, which MyProfileView doesn't own.
   const [viewedPersonId, setViewedPersonId] = useState<string | null>(null);
+  // Full-screen Settings (SettingsView), opened from the account menu. Unlike the takeovers it does not
+  // close what is under it, so its Back lands where the reader was. Any navigation elsewhere closes it,
+  // which is why closeMyProfile (called by every such route) and openMyProfile both clear it.
+  const [showSettings, setShowSettings] = useState(false);
+  const openSettings = () => setShowSettings(true);
+  const closeSettings = () => setShowSettings(false);
   const openMyProfile = () => {
     track("panel.open", { panel: "profile" });
+    closeSettings();
     setViewedPersonId(null);
     setShowMyProfile(true);
   };
-  const closeMyProfile = () => {
+  const leaveMyProfile = () => {
     setViewedPersonId(null);
     setShowMyProfile(false);
+  };
+  const closeMyProfile = () => {
+    closeSettings();
+    leaveMyProfile();
   };
   // Bumped whenever MyProfileView saves a display-name change, so AuthButton's own fetch (which only
   // otherwise re-runs on a session change) knows to refresh the label it shows.
@@ -586,7 +599,8 @@ function App() {
   const [gameCenterNonce, setGameCenterNonce] = useState(0);
   const openGame = () => {
     // See the matching comment in openTimeline below — same same-z-index takeover, same fix.
-    const wasAlreadyShowing = showGame;
+    // Games hidden under Settings is not "already showing": coming back to it should resume the game.
+    const wasAlreadyShowing = showGame && !showSettings;
     closeTimeline();
     closeMyProfile();
     if (!wasAlreadyShowing) track("panel.open", { panel: "games" });
@@ -1170,9 +1184,10 @@ function App() {
     if (visibleTabs[currentMobileTab] !== false) return;
     // The tab under the reader just disappeared. Leave every takeover and land on Bible — the one
     // tab that can never be hidden, so this is always a real destination and never a blank panel.
+    // Settings stays open: its Navigation Bar switches are what usually trigger this.
     closeTimeline();
     closeGame();
-    closeMyProfile();
+    leaveMyProfile();
     setMobileActivePanel("bible");
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [visibleTabs, isMobile]);
@@ -1226,7 +1241,7 @@ function App() {
   // A password-recovery session is never anonymous, so it never trips this — ResetPasswordGate
   // below handles it on its own.
   const showAuthGate = authResolved && !exchangingRecoveryCode && (!session || session.user.is_anonymous);
-  const searchMode: "all" | "notes" | "timeline" | "people" | null = showGame
+  const searchMode: "all" | "notes" | "timeline" | "people" | null = showGame || showSettings
     ? null
     : myProfileMode
     ? (SOCIAL_CONNECTIONS_ENABLED ? "people" : null)
@@ -1368,6 +1383,8 @@ function App() {
       return null;
     };
 
+    if (showSettings) return { route: "settings", title: "Settings", target: null };
+
     if (showGame) return { route: "games", title: "Games", target: null };
 
     if (myProfileMode) {
@@ -1440,6 +1457,7 @@ function App() {
         return { route: "articles", title: "Articles", target: null };
     }
   }, [
+    showSettings,
     showGame,
     myProfileMode,
     viewedPersonId,
@@ -1503,7 +1521,7 @@ function App() {
           onToggle={toggleMenuPanel}
           lastAutoClosed={lastAutoClosed}
           friendsBadgeCount={pendingFriendRequests + unreadMessages + groupsBadgeCount}
-          activeDestination={showTimeline ? "timeline" : showGame ? "games" : null}
+          activeDestination={showSettings ? null : showTimeline ? "timeline" : showGame ? "games" : null}
           onNavigate={goToTakeover}
           onLeaveDestination={leaveTakeover}
           onGoToArchaeology={openArchaeology}
@@ -1578,6 +1596,8 @@ function App() {
           openProfileNonce={openProfileNonce}
           onOpenReadingPlans={READING_PLANS_ENABLED ? openReadingPlans : undefined}
           onOpenMyProfile={openMyProfile}
+          profileHeaderLink={!isMobile}
+          onOpenSettings={openSettings}
           profileVersion={profileVersion}
           reportSurface={reportSurface}
         />
@@ -1924,6 +1944,12 @@ function App() {
                 </button>
               </div>
             )}
+          </div>
+        )}
+        {/* Settings — last, so it draws over whichever takeover is up (all share one z-index). */}
+        {showSettings && session && !session.user.is_anonymous && (
+          <div className="myprofile-mode">
+            <SettingsView userId={session.user.id} onClose={closeSettings} />
           </div>
         )}
       </div>
