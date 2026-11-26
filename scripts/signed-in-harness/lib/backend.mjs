@@ -56,6 +56,28 @@ export function createBackend({ persona, overrides = {} }) {
       (tables.feature_release_log ??= []).push(entry);
       return { feature: p_feature, live: !!p_live, updated_at: at };
     },
+    // sql/051. Re-implements the real function's rules — owner only (42501), the shape check (22023,
+    // deliberately shallow here: the real constraint is rehearsed in PGlite, not by this fake), the
+    // optimistic-concurrency check (40001 unless p_overwrite), a no-op when nothing changed, and one
+    // about_page_versions row per real save. RLS on the versions table is NOT modelled.
+    save_about_page: ({ p_content, p_expected_updated_at = null, p_overwrite = false }) => {
+      if (me?.role !== "owner") throw { status: 403, code: "42501", message: "not authorized" };
+      const c = p_content;
+      if (!c || typeof c.quote !== "string" || !Array.isArray(c.sections) || c.sections.length < 1)
+        throw { status: 400, code: "22023", message: "invalid about page content" };
+      const rows = (tables.about_page ??= []);
+      const row = rows.find((r) => r.id === 1);
+      if (!p_overwrite && (row?.updated_at ?? null) !== (p_expected_updated_at ?? null))
+        throw { status: 409, code: "40001", message: "the about page was saved somewhere else after you opened it" };
+      if (row && JSON.stringify(row.content) === JSON.stringify(c)) return row;
+      // Microseconds, like Postgres, so a client that round-trips the string through a JS Date is caught.
+      const at = new Date().toISOString().replace("Z", `${String(seq++ % 1000).padStart(3, "0")}+00:00`);
+      (tables.about_page_versions ??= []).push({ id: seq++, content: structuredClone(c), saved_by: me.id, saved_at: at });
+      log.audit.push({ about_page: "save", at, overwrite: !!p_overwrite });
+      if (row) Object.assign(row, { content: structuredClone(c), updated_at: at });
+      else rows.push({ id: 1, content: structuredClone(c), updated_at: at });
+      return rows.find((r) => r.id === 1);
+    },
     increment_reading_time: () => null,
     analytics_track: () => null,
     count_unread_group_messages: () => 0,
@@ -188,7 +210,7 @@ export function createBackend({ persona, overrides = {} }) {
       log.gaps.push(`RPC ${fn}`);
       return { status: 204, headers: {}, body: "" };
     }
-    rec.how = fn === "set_feature_stage" ? "stateful" : "fixture";
+    rec.how = fn === "set_feature_stage" || fn === "save_about_page" ? "stateful" : "fixture";
     try {
       const v = h(args);
       return v === undefined || v === null ? json(200, null) : json(200, v);

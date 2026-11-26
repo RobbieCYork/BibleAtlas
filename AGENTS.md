@@ -356,7 +356,18 @@ pages carry no script, no Supabase client and no session — they are documents
 sitting beside the app, not a branch inside it. `App.tsx` returns `<AuthGate />`
 before anything else and there is **no pathname check ahead of it**; the one
 thing pointing outward is a plain `<a href="/library">` under the sign-in card.
-Keep it that way. If a future page needs personal data — notes, highlights, tags,
+Keep it that way.
+
+**One page carries one script, on purpose: `/about`.** The owner can edit the About page from the
+Admin Console without a deploy (`sql/051`), so `/about` ships the built-in words as plain HTML — what a
+crawler and a no-JavaScript reader get, and the fallback for everyone — plus a few inline lines
+(`aboutLoaderScript` in `render.mjs`) that read the one public `about_page` row with the build's public
+anon key and swap the words in with `textContent`. No supabase-js, no session, no cookies, no storage,
+no `innerHTML`, nothing personal, and no script at all when the build has no Supabase config. That is
+the whole exception. Do not copy it to another page or widen what it reads without deciding to; the
+harness (`examples/about-page.mjs`) asserts `/about` has exactly one script.
+
+If a future page needs personal data — notes, highlights, tags,
 posts, groups, messages, profiles, admin — it does not belong in this generator,
 which reads `src/data/*.ts` and nothing else. Widening the public surface should
 require adding a data set to `KINDS` on purpose, and never be something a change

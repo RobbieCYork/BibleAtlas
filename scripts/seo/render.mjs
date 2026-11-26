@@ -932,21 +932,36 @@ export function hubPage(counts, total) {
 
 // ---------------------------------------------------------------- about
 /**
- * The public "About Capstone Bible" page at /about. The words are Robbie's and live in
+ * The public "About Capstone Bible" page at /about. The built-in words are Robbie's and live in
  * src/data/aboutPage.ts, which the app's own AboutView reads too. They are escaped and otherwise
- * untouched: no auto-linking, nothing added. "Back" is a plain link to the app because these pages
- * carry no script.
+ * untouched: no auto-linking, nothing added. "Back" is a plain link to the app.
+ *
+ * THE ONE PUBLIC PAGE THAT CARRIES A SCRIPT, AND WHY. The owner can change these words from the Admin
+ * Console without a deploy (sql/051, lib/aboutContent.ts), and this address has to show the saved
+ * text too. So the HTML below is the BUILT-IN text — what a crawler, a link preview and a reader
+ * without JavaScript get, and what everyone gets if anything below fails — and `aboutLoaderScript`
+ * then asks Supabase for the saved row and, only if one exists in the right shape, swaps the words.
+ *
+ * What that script is NOT, which is what AGENTS.md's "no script, no Supabase client, no session" rule
+ * protects: it is not supabase-js, it has no session, sends no cookies (credentials: "omit"), stores
+ * nothing, reads one row of one table that anon is granted SELECT on and that holds nothing but the
+ * page's words, and it draws them with textContent — never innerHTML — so the saved text cannot become
+ * markup. The anon key it carries is the same public key already in the app bundle. When the build has
+ * no Supabase config, no script is emitted at all and the page is exactly the static document it was.
  */
-export function aboutPage(about) {
+export function aboutPage(about, supabase = null) {
   const trail = [{ name: about.ABOUT_TITLE, path: "/about" }];
   const body = [
     `<p class="back"><a href="/">‹ Back to Capstone Bible</a></p>`,
     heading(about.ABOUT_TITLE, "", ""),
+    `<div id="about-words">`,
     `<blockquote class="pull">${esc(about.ABOUT_PULL_QUOTE)}</blockquote>`,
     ...about.ABOUT_SECTIONS.map((s) => {
       const inner = s.paragraphs.map((t) => p(esc(t))).join("");
       return s.heading ? section(s.heading, inner) : `<section>${inner}</section>`;
     }),
+    `</div>`,
+    aboutLoaderScript(supabase),
   ].join("");
 
   return page({
@@ -967,6 +982,28 @@ export function aboutPage(about) {
     current: "/about",
     ogType: "website",
   });
+}
+
+/** The inline loader for /about. See aboutPage() above. `ok` mirrors sql/051's
+ * about_page_content_ok() and lib/aboutContent.ts's aboutContentProblem(): a row in any other shape
+ * is ignored and the built-in text stays. Returns "" (no script) unless both values are present and
+ * the URL is https. */
+export function aboutLoaderScript(supabase) {
+  const url = supabase?.url;
+  const key = supabase?.anonKey;
+  if (typeof url !== "string" || typeof key !== "string" || !/^https:\/\/[^\s"'<>]+$/.test(url) || !key) return "";
+  const lit = (v) => JSON.stringify(v).replace(/</g, "\\u003c");
+  return `<script>(function(){var U=${lit(url.replace(/\/+$/, ""))},K=${lit(key)};if(!window.fetch)return;
+function str(v,max,blank){return typeof v==="string"&&v.length<=max&&(blank||v.trim().length>0)}
+function ok(c){if(!c||typeof c!=="object"||Array.isArray(c)||Object.keys(c).length!==2||!str(c.quote,1000,true)||!Array.isArray(c.sections)||c.sections.length<1||c.sections.length>40)return false;
+for(var i=0;i<c.sections.length;i++){var s=c.sections[i];if(!s||typeof s!=="object"||Object.keys(s).length!==2||!(s.heading===null||str(s.heading,200))||!Array.isArray(s.paragraphs)||s.paragraphs.length<1||s.paragraphs.length>100)return false;
+for(var j=0;j<s.paragraphs.length;j++)if(!str(s.paragraphs[j],10000))return false}return true}
+function el(tag,text,cls){var e=document.createElement(tag);e.textContent=text;if(cls)e.className=cls;return e}
+fetch(U+"/rest/v1/about_page?id=eq.1&select=content",{headers:{apikey:K,Authorization:"Bearer "+K,Accept:"application/json"},credentials:"omit",cache:"no-store"})
+.then(function(r){return r.ok?r.json():null}).then(function(rows){var c=rows&&rows[0]&&rows[0].content;var root=document.getElementById("about-words");if(!root||!ok(c))return;
+var f=document.createDocumentFragment();if(c.quote.trim())f.appendChild(el("blockquote",c.quote,"pull"));
+c.sections.forEach(function(s){var sec=document.createElement("section");if(s.heading)sec.appendChild(el("h2",s.heading));s.paragraphs.forEach(function(t){sec.appendChild(el("p",t))});f.appendChild(sec)});
+while(root.firstChild)root.removeChild(root.firstChild);root.appendChild(f);root.setAttribute("data-source","saved")}).catch(function(){})})();</script>`;
 }
 
 // ---------------------------------------------------------------- account deletion

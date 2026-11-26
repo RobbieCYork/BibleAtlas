@@ -9,7 +9,11 @@ Last verified against production: **2026-10-24** (read-only catalog queries for 
 
 ---
 
-## The next free number is 045
+## The next free number is 052
+
+(045-050 are claimed on the unmerged `groups-assignments` and `groups-invites` branches; 051 is the
+About page. Check every branch, not this table alone, before taking a number:
+`git for-each-ref --format='%(refname:short)' refs/heads refs/remotes | xargs -I{} git ls-tree --name-only {} sql/`.)
 
 | Number | Status |
 |---|---|
@@ -25,7 +29,9 @@ Last verified against production: **2026-10-24** (read-only catalog queries for 
 | **042** | `042_profiles_privacy.sql` — profiles owner-only + masked `get_profile_cards()`, friend_requests integrity, email/phone lookups closed to anon and guests. Committed, **APPLIED 2026-11-09** (after the app change went live). See below. |
 | **043** | `043_paid_content.sql` — on the unmerged `paid-content` branch, **not on main, not applied**. Taken; do not reuse. |
 | **044** | `044_admin_user_invites.sql` — audit trail + per-admin rate limit for the Admin Console's "Add user" (the `admin-add-user` Edge Function refuses every call until this is applied). Committed on branch `admin-add-user`, **not applied**. |
-| **045** | Next genuinely free number. |
+| **045-050** | Claimed on unmerged branches (`groups-assignments`: 045 stripe billing, 046 study collections, 047 groups classes, 048 groups assignments; `groups-invites`: 049 invites, 050 support access). Not on main. Do not reuse. |
+| **051** | `051_about_page.sql` — owner-editable About page (`about_page`, public read; `about_page_versions`, owner-only history; `save_about_page()`, owner only). Committed on branch `about-editor`, **not applied**. |
+| **052** | Next genuinely free number. |
 
 ### Numbers that are TAKEN but MISSING from this directory
 
@@ -76,6 +82,7 @@ Verified against the live database on 2026-09-11, and re-verified read-only on 2
 | 040 per-game release stages (seven `game_*` rows in `feature_release`) | **NOT APPLIED** | written and committed only; needs Robbie's explicit word. Insert-only: no function, policy or grant changes. Until it runs the app treats every game as Live (fails open) and the owner's Features tab says the per-game rows aren't stored yet. |
 | 041 article read marks (new `article_reads` table) | **NOT APPLIED** | written and committed only; needs Robbie's explicit word. One new owner-only table, revoke-to-zero then grant to `authenticated`; no functions. Until it runs the app draws no "Mark this article as read" checkbox and no title check (it detects the missing table and renders nothing). Rehearsed in PGlite 2026-10-29: idempotent, RLS isolates users, `anon` refused. |
 | 042 profiles privacy (owner-only `profiles`, `get_profile_cards`, `my_relation_to`, friend_requests integrity, lookups closed to anon) | **APPLIED** | Applied 2026-11-09 by capstone-infra on Robbie's explicit word (whole file, one transaction, COMMIT), after app commit 0378873 was live. Verified read-only afterwards: `profiles` SELECT policies are `profiles_select_own` + `profiles_block_filter` only; `get_profile_cards`, `my_relation_to`, `find_user_id_by_email`, `find_user_by_contact` are SECURITY DEFINER with `search_path` pinned and EXECUTE for authenticated only (anon and PUBLIC have none; anon REST calls refused 42501); `friend_requests_insert_pending_only` (restrictive) is live and `authenticated` UPDATE is limited to `responded_at,status`; anon REST GET `profiles` returns `[]`. |
+| 051 About page (`about_page`, `about_page_versions`, `save_about_page`, `about_page_content_ok`) | **NOT APPLIED** | written and committed only; needs Robbie's explicit word. Two new tables, revoke-to-zero then `select` back (anon+authenticated on `about_page`, authenticated on `about_page_versions` with an owner-only policy); one owner-only SECURITY DEFINER writer with pinned `search_path`, no user-id argument. Seeds nothing, so applying it changes nothing readers see. Until it runs, readers get the built-in text from `src/data/aboutPage.ts` and the editor says saving is off. Rehearsed in PGlite 2026-11-26 (`scripts/sql-rehearsal/051_about_page.mjs`, 42 checks): idempotent, grants exact, anon/member/administrator refused, validation, 40001 conflicts, rollback. |
 
 **Regenerate `000_baseline.sql` when a migration is APPLIED, not when one is committed.** A
 baseline regenerated off a commit would record a schema that does not exist.

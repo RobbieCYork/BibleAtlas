@@ -79,7 +79,13 @@ function siblingsFor(records, i, item, span = 8) {
   return out;
 }
 
-export async function generateSeo(outDir) {
+/**
+ * `supabase` ({ url, anonKey }) is only for /about's saved-text loader (render.mjs, aboutPage). It is
+ * optional: without it /about is emitted with the built-in text and no script, exactly as before.
+ * vite-plugin-seo.ts passes the build's own VITE_SUPABASE_URL / VITE_SUPABASE_ANON_KEY — the public
+ * values already in the app bundle.
+ */
+export async function generateSeo(outDir, { supabase = null } = {}) {
   const data = await loadData();
   const sets = Object.fromEntries(KINDS.map((k) => [k.key, data[k.key]]));
 
@@ -118,8 +124,9 @@ export async function generateSeo(outDir) {
   pages++;
 
   // About Capstone Bible, for readers without an account. The app shows the same words from the same
-  // module (src/data/aboutPage.ts) in AboutView. Linked from the sign-in card and every footer.
-  write(outDir, fileForPath("/about"), aboutPage(data.aboutContent));
+  // module (src/data/aboutPage.ts) in AboutView. Linked from the sign-in card and every footer. When
+  // the owner has saved new words (sql/051), the page's one small loader swaps them in — see aboutPage.
+  write(outDir, fileForPath("/about"), aboutPage(data.aboutContent, supabase));
   pages++;
 
   // Google Play rejects an app that has no account-deletion route reachable without installing it,
@@ -153,7 +160,10 @@ export async function generateSeo(outDir) {
 if (process.argv[1] && path.resolve(process.argv[1]) === path.resolve(fileURLToPath(import.meta.url))) {
   const outDir = path.resolve(process.argv[2] ?? path.join(REPO_ROOT, "dist"));
   const started = Date.now();
-  const result = await generateSeo(outDir);
+  const env = process.env;
+  const result = await generateSeo(outDir, {
+    supabase: env.VITE_SUPABASE_URL && env.VITE_SUPABASE_ANON_KEY ? { url: env.VITE_SUPABASE_URL, anonKey: env.VITE_SUPABASE_ANON_KEY } : null,
+  });
   console.log(
     `seo: ${result.pages} pages + sitemap.xml (${result.urls} urls) → ${outDir} in ${Date.now() - started}ms`
   );

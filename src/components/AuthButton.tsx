@@ -14,6 +14,7 @@ import type { ReportSurface } from "../lib/reportContext";
 import Icon from "./Icon";
 import Chevron from "./Chevron";
 import SocialLinks from "./SocialLinks";
+import { confirmDiscardUnsaved } from "../lib/unsavedChanges";
 
 interface AuthButtonProps {
   session: Session | null;
@@ -187,6 +188,8 @@ export default function AuthButton({
     if (!open) return;
     const handleClick = (e: MouseEvent) => {
       if (containerRef.current && !containerRef.current.contains(e.target as Node)) {
+        // The Admin Console's About page editor may be holding unsaved text.
+        if (!confirmDiscardUnsaved()) return;
         setOpen(false);
       }
     };
@@ -263,6 +266,7 @@ export default function AuthButton({
           type="button"
           className="auth-trigger"
           onClick={() => {
+            if (!confirmDiscardUnsaved()) return;
             setOpen((o) => !o);
             setMenuView("menu");
           }}
@@ -390,7 +394,7 @@ export default function AuthButton({
         {open && menuView === "admin" && isAdmin && (
           <div className="auth-admin-sheet" role="dialog" aria-label="Admin Console">
             <div className="auth-admin-sheet-head">
-              <button type="button" className="auth-back-link" onClick={() => setMenuView("menu")}>
+              <button type="button" className="auth-back-link" onClick={() => confirmDiscardUnsaved() && setMenuView("menu")}>
                 ← Back
               </button>
               <h3 className="auth-admin-sheet-title">Admin Console</h3>

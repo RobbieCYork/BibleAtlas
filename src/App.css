@@ -14046,3 +14046,244 @@ img.sn-image,
   overflow-y: auto;
   overscroll-behavior: contain;
 }
+
+/* --- Admin Console -> About page (AboutPageEditor.tsx). Owner only. Phone first: every control is a
+ * full-width row or wraps, fields are 16px+ so iOS does not zoom, nothing is wider than the sheet. --- */
+.admin-about {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  min-width: 0;
+}
+
+.admin-about-bar {
+  position: sticky;
+  top: 0;
+  z-index: 2;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 0;
+  /* The Admin Console sheet's own background, so the bar reads as part of the page while it sticks. */
+  background: var(--bg);
+  border-bottom: 1px solid var(--border);
+}
+
+.admin-about-mode,
+.admin-about-actions {
+  display: flex;
+  gap: 6px;
+}
+
+.admin-about-mode button {
+  min-height: 40px;
+  padding: 6px 14px;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  background: transparent;
+  color: var(--text-muted);
+  cursor: pointer;
+}
+
+.admin-about-mode button.active {
+  border-color: var(--accent);
+  color: var(--text-h);
+  font-weight: 600;
+}
+
+.admin-about-actions button {
+  min-height: 40px;
+}
+
+.admin-about-save:not(:disabled) {
+  border-color: var(--accent);
+  font-weight: 600;
+}
+
+.admin-about-actions button:disabled {
+  opacity: 0.5;
+  cursor: default;
+}
+
+.admin-about-state {
+  flex: 1 0 100%;
+  margin: 0;
+  font-size: calc(12px * var(--tsz, 1));
+  color: var(--text-muted);
+}
+
+.admin-about-dot {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  margin-right: 4px;
+  border-radius: 50%;
+  background: #f97316;
+  vertical-align: middle;
+}
+
+.admin-about-form {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  min-width: 0;
+}
+
+.admin-about-section {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  min-width: 0;
+  margin: 0;
+  padding: 10px 12px 12px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: var(--surface-sunken);
+}
+
+.admin-about-section legend {
+  padding: 0 4px;
+  font-family: var(--sans);
+  font-size: calc(11px * var(--tsz, 1));
+  letter-spacing: var(--tracking-label);
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+.admin-about-field {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  min-width: 0;
+}
+
+.admin-about-label {
+  font-size: calc(13px * var(--tsz, 1));
+  font-weight: 600;
+  color: var(--text-h);
+}
+
+.admin-about-hint {
+  font-size: calc(12px * var(--tsz, 1));
+  color: var(--text-muted);
+}
+
+.admin-about-field input,
+.admin-about-field textarea {
+  width: 100%;
+  min-width: 0;
+  box-sizing: border-box;
+  margin-top: 3px;
+  padding: 8px 10px;
+  border: 1px solid var(--border-strong);
+  border-radius: 8px;
+  background: var(--panel-bg);
+  color: var(--text);
+  font-family: var(--serif);
+  /* 16px keeps iOS Safari from zooming the page when the field takes focus. */
+  font-size: max(16px, calc(15px * var(--tsz, 1)));
+  line-height: 1.5;
+}
+
+.admin-about-field textarea {
+  resize: vertical;
+}
+
+.admin-about-section-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.admin-about-section-actions button,
+.admin-about-add {
+  min-height: 40px;
+}
+
+.admin-about-section-actions button:disabled,
+.admin-about-add:disabled {
+  opacity: 0.5;
+  cursor: default;
+}
+
+.admin-about-add {
+  align-self: flex-start;
+}
+
+.admin-about-preview {
+  padding: 4px 12px 8px;
+  border: 1px dashed var(--border-strong);
+  border-radius: 10px;
+  min-width: 0;
+  overflow-wrap: break-word;
+}
+
+.admin-about-preview .about-text {
+  font-size: calc(16px * var(--tsz, 1));
+}
+
+.admin-about-preview .about-quote {
+  font-size: calc(21px * var(--tsz, 1));
+}
+
+.admin-about-preview .about-text h3 {
+  font-size: calc(20px * var(--tsz, 1));
+}
+
+.admin-about-history summary {
+  cursor: pointer;
+  min-height: 32px;
+  font-size: calc(13px * var(--tsz, 1));
+  color: var(--text-h);
+}
+
+.admin-about-history[open] {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.admin-about-versions {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.admin-about-version {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 8px 10px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+}
+
+.admin-about-version-text {
+  display: flex;
+  flex: 1 1 200px;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.admin-about-version-when {
+  font-size: calc(13px * var(--tsz, 1));
+  font-weight: 600;
+  color: var(--text-h);
+}
+
+.admin-about-version-words {
+  font-size: calc(12px * var(--tsz, 1));
+  color: var(--text-muted);
+  overflow-wrap: anywhere;
+}
+
+.admin-about-version button {
+  min-height: 36px;
+}

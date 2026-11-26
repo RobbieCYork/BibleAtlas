@@ -18,6 +18,10 @@ export function defaultTables(me) {
     reading_progress: [],
     chapter_reads: [],
     article_reads: [],
+    // sql/051, applied with nothing saved yet: every reader gets the built-in About text. A check for
+    // "not applied" uses setTableError("about_page", { status: 404, code: "PGRST205" }).
+    about_page: [],
+    about_page_versions: [],
     notes: [], highlights: [], tags: [], verse_tags: [], posts: [], post_comments: [], note_comments: [],
     friend_requests: [], messages: [], groups: [], group_members: [], group_messages: [], group_join_requests: [],
     prayer_items: [], sermon_notes: [], reading_plan_progress: [], profile_links: [], content_hides: [],

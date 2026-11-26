@@ -25,6 +25,7 @@ import {
   type AdminOverview,
   type AdminUserRow,
 } from "../lib/adminApi";
+import AboutPageEditor from "./AboutPageEditor";
 import AdminAddUser from "./AdminAddUser";
 import GrowthPanel from "./GrowthPanel";
 import ModerationQueuePanel from "./ModerationQueuePanel";
@@ -33,6 +34,7 @@ import type { Role } from "../lib/reportsApi";
 import Icon from "./Icon";
 import { FeatureStagesPanel, LiveTestSwitch } from "./FeatureRelease";
 import { useFeatureAdmin } from "../lib/features";
+import { confirmDiscardUnsaved } from "../lib/unsavedChanges";
 
 /** Every section loads on demand, so opening the console costs one small query (the overview) rather
  * than eight. `AdminSection` is both the tab key and the loader key. */
@@ -46,7 +48,8 @@ type AdminSection =
   | "moderation"
   | "safety"
   | "reports"
-  | "release";
+  | "release"
+  | "about";
 
 /** "Moderation" and "Safety" are deliberately two tabs, not one, because they answer two different
  * questions. Moderation is a BROWSE — the most recent public posts and comments, whether or not
@@ -68,6 +71,9 @@ const SECTION_LABELS: Record<AdminSection, string> = {
   reports: "Reports",
   // Testing / Live stages (sql/039). Owner only — the tab is not drawn for anyone else.
   release: "Features",
+  // The words of About Capstone Bible (sql/051). Owner only, like Features — the other site-wide
+  // setting this console edits. save_about_page() refuses everyone else, administrators included.
+  about: "About page",
 };
 
 const WINDOW_OPTIONS = [7, 30, 90] as const;
@@ -117,7 +123,9 @@ export interface AdminConsoleReports {
 export default function AdminConsole({ reports }: { reports?: AdminConsoleReports } = {}) {
   const [section, setSection] = useState<AdminSection>("overview");
   const { isOwner } = useFeatureAdmin();
-  const sectionKeys = (Object.keys(SECTION_LABELS) as AdminSection[]).filter((k) => (k !== "release" || isOwner) && (k !== "reports" || !!reports));
+  const sectionKeys = (Object.keys(SECTION_LABELS) as AdminSection[]).filter(
+    (k) => ((k !== "release" && k !== "about") || isOwner) && (k !== "reports" || !!reports)
+  );
   const [days, setDays] = useState<number>(30);
   const [error, setError] = useState<string | null>(null);
 
@@ -230,7 +238,11 @@ export default function AdminConsole({ reports }: { reports?: AdminConsoleReport
             role="tab"
             aria-selected={section === key}
             className={`admin-tab${section === key ? " admin-tab-active" : ""}`}
-            onClick={() => setSection(key)}
+            onClick={() => {
+              // The About page editor may be holding unsaved text; switching tabs unmounts it.
+              if (key !== section && !confirmDiscardUnsaved()) return;
+              setSection(key);
+            }}
           >
             {SECTION_LABELS[key]}
             {key === "reports" && reports && reports.untriaged > 0 && (
@@ -639,6 +651,9 @@ export default function AdminConsole({ reports }: { reports?: AdminConsoleReport
 
       {/* -------------------------------------------------------------- RELEASE */}
       {section === "release" && isOwner && <FeatureStagesPanel />}
+
+      {/* ------------------------------------------------------------ ABOUT PAGE */}
+      {section === "about" && isOwner && <AboutPageEditor />}
 
       {section === "moderation" && moderation && (
         <>
