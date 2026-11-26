@@ -393,6 +393,106 @@
   font-weight: 600;
 }
 
+/* The round summary is a sentence or two: keep the mark beside the first line and let the text wrap
+ * in its own column, rather than dropping the whole sentence under the mark. */
+.games-topic-count.games-inline-icon {
+  flex-wrap: nowrap;
+  align-items: flex-start;
+}
+
+.games-topic-count > span {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.games-topic-count > svg {
+  margin-top: 0.15em !important; /* beats the shared inline-icon margin reset above */
+}
+
+/* Difficulty — native radios drawn as tiles, so arrow keys and screen readers work unchanged. */
+.games-difficulty {
+  border: none;
+  padding: 0;
+  margin: 6px 0 0;
+  min-width: 0; /* a fieldset defaults to min-content and would hang out of the card at large text sizes */
+}
+
+/* A legend is not a heading element, so it takes the h3 face by hand to match "Choose a topic". */
+.games-difficulty legend {
+  color: var(--text-h);
+  font-family: var(--display);
+  font-size: calc(15px * var(--tsz, 1));
+  font-weight: 600;
+  line-height: 1.2;
+  padding: 0;
+  margin-bottom: 10px;
+}
+
+.games-difficulty-options {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(104px, 1fr));
+  gap: 8px;
+}
+
+.games-difficulty-option {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+  min-height: 56px;
+  padding: 8px 6px;
+  text-align: center;
+  border: 1px solid var(--input-border);
+  border-radius: 8px;
+  background: var(--surface-sunken);
+  color: var(--text);
+  cursor: pointer;
+}
+
+/* Invisible but still the thing that is clicked, focused and announced. */
+.games-difficulty-option input {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  opacity: 0;
+  cursor: inherit;
+}
+
+.games-difficulty-name {
+  font-size: calc(14px * var(--tsz, 1));
+  font-weight: 600;
+  line-height: 1.2;
+}
+
+.games-difficulty-detail {
+  font-size: calc(12px * var(--tsz, 1));
+  color: var(--text-muted);
+}
+
+.games-difficulty-option.is-selected {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: var(--accent-contrast);
+}
+
+.games-difficulty-option.is-selected .games-difficulty-detail {
+  color: inherit;
+}
+
+.games-difficulty-option:has(input:focus-visible) {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+.games-difficulty-option.is-unavailable {
+  opacity: 0.45;
+  cursor: default;
+}
+
 /* --- Lobby (GameLobby) --- */
 
 .game-lobby {

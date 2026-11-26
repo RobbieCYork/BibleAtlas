@@ -13,7 +13,10 @@ interface GameResultsProps {
 export default function GameResults({ room, players, onPlayAgain }: GameResultsProps) {
   const [highScores, setHighScores] = useState<GameHighScore[] | null>(null);
   const ranked = [...players].sort((a, b) => b.score - a.score);
-  const winner = room.winner_id ? players.find((p) => p.user_id === room.winner_id) : ranked[0];
+  // A round that runs out of questions with the lead shared ends with no winner_id (check_and_advance,
+  // sql/005) — say so rather than naming whichever tied player happens to sort first.
+  const tied = !room.winner_id && ranked.length > 1 && ranked[0].score === ranked[1].score;
+  const winner = tied ? undefined : room.winner_id ? players.find((p) => p.user_id === room.winner_id) : ranked[0];
 
   useEffect(() => {
     fetchTopHighScores(5)
@@ -25,8 +28,9 @@ export default function GameResults({ room, players, onPlayAgain }: GameResultsP
     <div className="game-results">
       <div className="game-results-banner">
         <p className="game-results-trophy"><Icon name="trophy" /></p>
-        <h2>{winner ? `${winner.display_name} wins!` : "Game over"}</h2>
+        <h2>{winner ? `${winner.display_name} wins!` : tied ? "It's a tie!" : "Game over"}</h2>
         {winner && <p className="game-results-score">{winner.score} points</p>}
+        {tied && <p className="game-results-score">{ranked[0].score} points each</p>}
       </div>
 
       <div className="game-results-scores">

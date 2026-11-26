@@ -4,7 +4,7 @@ import { pois } from "./pois";
 import { timelineEvents } from "./timelineEvents";
 import { topics } from "./topics";
 import { BOOKS } from "./bibleBooks";
-import type { LocationCategory, TimelineDateCertainty, Topic, VerseRef } from "./types";
+import type { LocationCategory, TimelineDateCertainty, TimelineEvent, Topic, VerseRef } from "./types";
 
 export type QuizDifficulty = "easy" | "moderate" | "difficult" | "impossible";
 export type QuizCategory = "people" | "places" | "history" | "theology";
@@ -18,9 +18,13 @@ export interface QuizQuestion {
   id: string;
   category: QuizCategory;
   /** Which testament this question's subject belongs to — "both"/null for cross-testament doctrines
-   * or anything the testament heuristic below couldn't place. Drives the Old/New Testament topic
-   * filters (see TOPIC_PRESETS); a strict filter only matches "old"/"new" exactly. */
+   * and sites, and null for anything outside both (between the testaments, later church history, or a
+   * subject with no verse to place it by). Drives the Old/New Testament topic filters (see
+   * TOPIC_PRESETS); a strict filter only matches "old"/"new" exactly. */
   testament: QuizTestament;
+  /** True for a question about someone who is not in Scripture (Person.kind "church" or "world").
+   * Those stay in "All topics" but are left out of "People of the Bible". */
+  extraBiblical?: boolean;
   difficulty: QuizDifficulty;
   points: 1 | 3 | 5 | 10;
   prompt: string;
@@ -154,6 +158,50 @@ function testamentFromRefStrings(refs: string[] | undefined): QuizTestament {
   return testamentFromReference(refs[0]);
 }
 
+/** Which testament a timeline event actually falls in. An intertestamental event is in neither, and
+ * neither is anything after AD 100, even though such an entry may cite a verse that foreshadows or
+ * explains it (Daniel for Alexander, John 1 for the Council of Nicaea) — a citation is not the event
+ * being narrated there. Otherwise the first reference decides, then the sign of the year. */
+function testamentFromEvent(event: TimelineEvent): QuizTestament {
+  if (event.era === "Intertestamental Period" || event.startYear > 100) return null;
+  return testamentFromRefStrings(event.scriptureRefs) ?? (event.startYear < 0 ? "old" : "new");
+}
+
+/** Points of interest carry no verse list, so their testament is read from each site's own
+ * description in pois.ts: "old" or "new" when the Bible people or passages it names are all from
+ * that testament, "both" when it names both, and neither when it names none (a site known from
+ * Josephus or the Dead Sea Scrolls alone) or belongs to church history after the New Testament.
+ * Anything not listed here is "new" — a newly added Old Testament site must be listed. */
+const POI_TESTAMENT_EXCEPTIONS: Record<string, QuizTestament> = {
+  "beth-shean": "old",
+  bethel: "old",
+  shiloh: "old",
+  hebron: "old",
+  beersheba: "old",
+  "mount-sinai": "old",
+  jericho: "both",
+  megiddo: "both",
+  shechem: "both",
+  "city-of-david": "both",
+  masada: null,
+  qumran: null,
+  sepphoris: null,
+  "herod-winter-palace-jericho": null,
+  "tower-of-david": null,
+  "church-of-mary-ephesus": null,
+  "martyrdom-site-polycarp-smyrna": null,
+  "nicaea-council-site": null,
+  "chalcedon-council-site": null,
+  "catacombs-of-priscilla-rome": null,
+  "catacombs-of-callixtus-rome": null,
+  "megiddo-church": null,
+  "dura-europos-house-church": null,
+};
+
+function isExtraBiblical(person: (typeof people)[number]): boolean {
+  return person.kind !== undefined && person.kind !== "biblical";
+}
+
 function buildKeywords(...parts: (string | undefined)[]): string {
   return parts.filter(Boolean).join(" ").toLowerCase();
 }
@@ -179,6 +227,7 @@ function personRoleQuestions(): QuizQuestion[] {
       id,
       category: "people",
       testament: testamentFromVerses(person.verses),
+      extraBiblical: isExtraBiblical(person),
       difficulty,
       points: DIFFICULTY_POINTS[difficulty],
       prompt: `What was ${person.name}'s role?`,
@@ -209,6 +258,7 @@ function personSummaryQuestions(): QuizQuestion[] {
       id,
       category: "people",
       testament: testamentFromVerses(person.verses),
+      extraBiblical: isExtraBiblical(person),
       difficulty,
       points: DIFFICULTY_POINTS[difficulty],
       prompt: `Who does this describe: "${person.summary}"?`,
@@ -294,9 +344,7 @@ function poiTagQuestions(): QuizQuestion[] {
     out.push({
       id,
       category: "places",
-      // POIs carry no verse list to classify from — most are 1st-century/Roman-era sites tied to the
-      // Gospels or Acts, so "new" is a reasonable default rather than leaving every POI unfilterable.
-      testament: "new",
+      testament: Object.hasOwn(POI_TESTAMENT_EXCEPTIONS, poi.id) ? POI_TESTAMENT_EXCEPTIONS[poi.id] : "new",
       difficulty,
       points: DIFFICULTY_POINTS[difficulty],
       prompt: `What is ${poi.name}?`,
@@ -336,7 +384,7 @@ function timelineYearQuestions(): QuizQuestion[] {
     out.push({
       id,
       category: "history",
-      testament: testamentFromRefStrings(event.scriptureRefs) ?? (event.startYear < 0 ? "old" : "new"),
+      testament: testamentFromEvent(event),
       difficulty,
       points: DIFFICULTY_POINTS[difficulty],
       prompt: `About what year did "${event.title}" happen?`,
@@ -374,7 +422,7 @@ function timelineOrderQuestions(): QuizQuestion[] {
       const difficulty = CERTAINTY_TO_DIFFICULTY[worstCertainty];
       // Only meaningfully "old"/"new" if every event in the group agrees — a group can still straddle
       // both testaments (e.g. an era spanning Malachi into the Gospels).
-      const testaments = new Set(group.map((e) => testamentFromRefStrings(e.scriptureRefs) ?? (e.startYear < 0 ? "old" : "new")));
+      const testaments = new Set(group.map(testamentFromEvent));
       const testament: QuizTestament = testaments.size === 1 ? [...testaments][0] : "both";
       out.push({
         id,
@@ -1173,33 +1221,60 @@ export function getQuestionById(id: string): QuizQuestion | undefined {
 }
 
 // ------------------------------------------------------------------------------------------------
-// Topic selection — a handful of standard presets (filters over category/testament, both already on
-// every question) plus a free-text "custom" search over the same generated pool (see keywords above).
-// The custom search is a ranked local-keyword match against ~1,000 already-generated questions, NOT a
-// live AI call — genuinely open-ended "write me brand-new questions about X" would need a server-side
-// LLM call (an API key + per-question cost), which nothing in this app currently has; this covers a
-// lot of realistic asks ("Paul's missionary journeys", "kings of Israel", "miracles of Jesus") for free
-// since the underlying content already discusses them, but a very obscure or narrow phrase may come up
-// short — buildQuestionSequence pads any shortfall from the general pool so a game is never too short.
+// Topic and difficulty selection — a handful of standard topic presets (filters over
+// category/testament, both already on every question) plus a free-text "custom" search over the same
+// generated pool (see keywords above), crossed with a difficulty choice (every question carries one).
+// The custom search is a ranked local-keyword match against already-generated questions, NOT a live
+// AI call — genuinely open-ended "write me brand-new questions about X" would need a server-side LLM
+// call (an API key + per-question cost), which nothing in this app currently has.
+//
+// The rule for both choices: a round is only ever drawn from questions that match them. When fewer
+// match than a full game needs, the round is shorter — it is never padded with other topics or other
+// difficulties — and below MIN_ROUND_QUESTIONS the app does not offer to start it at all.
 // ------------------------------------------------------------------------------------------------
 
 export type QuizTopicPreset = "all" | "people" | "places" | "history" | "theology" | "old-testament" | "new-testament";
 
 export const TOPIC_PRESETS: { key: QuizTopicPreset; label: string; description: string }[] = [
-  { key: "all", label: "Mixed", description: "A balanced mix across every topic below." },
+  { key: "all", label: "All topics", description: "A mix drawn from every topic below, plus church history." },
   { key: "people", label: "People of the Bible", description: "Prophets, apostles, kings, and everyone in between." },
   { key: "places", label: "Locations of the Bible", description: "Cities, regions, and archaeological sites." },
-  { key: "history", label: "Biblical History", description: "When things happened, and in what order." },
+  { key: "history", label: "Biblical History", description: "Dates and order of events, plus archaeology and manuscripts." },
   { key: "theology", label: "Theology", description: "Doctrine, the creeds, and the language of the faith." },
   { key: "old-testament", label: "Old Testament", description: "Genesis through Malachi." },
   { key: "new-testament", label: "New Testament", description: "Matthew through Revelation." },
 ];
+
+/** "mixed" draws from all four levels. */
+export type QuizDifficultyChoice = QuizDifficulty | "mixed";
+
+export const DIFFICULTY_CHOICES: { key: QuizDifficultyChoice; label: string }[] = [
+  { key: "mixed", label: "Mixed" },
+  { key: "easy", label: "Easy" },
+  { key: "moderate", label: "Moderate" },
+  { key: "difficult", label: "Difficult" },
+  { key: "impossible", label: "Nearly Impossible" },
+];
+
+/** A full game's worth of questions. */
+export const ROUND_QUESTION_COUNT = 24;
+/** The fewest matching questions that still make a round worth starting. */
+export const MIN_ROUND_QUESTIONS = 5;
+
+export interface QuizSettings {
+  preset?: QuizTopicPreset;
+  /** When defined (even empty), the custom search is the topic and `preset` is ignored. */
+  customQuery?: string;
+  /** Omitted means "mixed". */
+  difficulty?: QuizDifficultyChoice;
+}
 
 function matchesPreset(question: QuizQuestion, preset: QuizTopicPreset): boolean {
   switch (preset) {
     case "all":
       return true;
     case "people":
+      return question.category === "people" && !question.extraBiblical;
     case "places":
     case "history":
     case "theology":
@@ -1211,76 +1286,80 @@ function matchesPreset(question: QuizQuestion, preset: QuizTopicPreset): boolean
   }
 }
 
-/** Ranks the pool by how many distinct query words appear in each question's keywords/prompt —
- * simple word-overlap scoring, no external calls. Returns only questions with at least one match,
- * best matches first. */
-export function searchQuestions(query: string): QuizQuestion[] {
-  const words = [...new Set(query.toLowerCase().split(/[^a-z0-9]+/).filter((w) => w.length >= 3))];
+const SEARCH_STOP_WORDS = new Set([
+  "about", "and", "are", "did", "for", "from", "her", "his", "how", "its", "that", "the", "their", "this",
+  "was", "were", "what", "when", "where", "which", "who", "with",
+]);
+
+/** How many distinct query words start a word in each question's keywords/prompt — simple overlap
+ * scoring, no external calls. Matching at the start of a word keeps "ark" from matching "Mark".
+ * Returns only questions with at least one match, best matches first. */
+function scoreSearch(query: string): { q: QuizQuestion; score: number }[] {
+  const words = [...new Set(query.toLowerCase().split(/[^a-z0-9]+/))].filter((w) => w.length >= 3 && !SEARCH_STOP_WORDS.has(w));
   if (words.length === 0) return [];
+  // No lookbehind: older iOS Safari throws on it. The words are [a-z0-9] only, so need no escaping.
+  const patterns = words.map((w) => new RegExp(`(^|[^a-z0-9])${w}`));
   const scored = ALL_QUESTIONS.map((q) => {
     const haystack = `${q.keywords} ${q.prompt.toLowerCase()}`;
-    const score = words.reduce((sum, w) => sum + (haystack.includes(w) ? 1 : 0), 0);
-    return { q, score };
+    return { q, score: patterns.reduce((sum, p) => sum + (p.test(haystack) ? 1 : 0), 0) };
   }).filter((s) => s.score > 0);
   scored.sort((a, b) => b.score - a.score);
-  return scored.map((s) => s.q);
+  return scored;
 }
 
-/** How many questions a preset or custom search would draw from — used by the create-game UI to show
- * "~340 available" (or "12 matched") before the host commits to a topic. */
-export function countAvailableQuestions(options: { preset?: QuizTopicPreset; customQuery?: string } = {}): number {
-  if (options.customQuery?.trim()) return searchQuestions(options.customQuery).length;
-  return ALL_QUESTIONS.filter((q) => matchesPreset(q, options.preset ?? "all")).length;
+/** Every question matching both choices. A custom search keeps its best-first order. */
+function matchingQuestions({ preset = "all", customQuery, difficulty = "mixed" }: QuizSettings): { q: QuizQuestion; score: number }[] {
+  const topicPool =
+    customQuery !== undefined ? scoreSearch(customQuery) : ALL_QUESTIONS.filter((q) => matchesPreset(q, preset)).map((q) => ({ q, score: 0 }));
+  return difficulty === "mixed" ? topicPool : topicPool.filter(({ q }) => q.difficulty === difficulty);
 }
 
-/** Picks a shuffled, difficulty-mixed sequence of question ids for a new room — roughly 40% easy /
- * 30% moderate / 20% difficult / 10% impossible, so a game has a real on-ramp instead of opening on
- * its hardest questions, while still reliably surfacing all four point values before 50 is reached.
- * The selection itself doesn't need to be deterministic (unlike each question's own content above) —
- * the host runs this once and the resulting id array is written straight into game_rooms.question_ids,
- * which every other client then just reads back.
- *
- * `preset`/`customQuery` narrow the candidate pool first (see matchesPreset/searchQuestions above); if
- * that narrowed pool can't fill every difficulty slot (a niche custom search, or a thin preset like
- * Theology), the remaining slots are padded from the *full* pool rather than shrinking the game. */
-export function buildQuestionSequence(count = 24, options: { preset?: QuizTopicPreset; customQuery?: string } = {}): string[] {
-  const primaryPool = options.customQuery?.trim()
-    ? searchQuestions(options.customQuery)
-    : ALL_QUESTIONS.filter((q) => matchesPreset(q, options.preset ?? "all"));
+/** How many questions a topic + difficulty choice would draw from — used by the create-game screen to
+ * show the count, and to withhold a combination too thin to play, before the host commits to it. */
+export function countAvailableQuestions(settings: QuizSettings = {}): number {
+  return matchingQuestions(settings).length;
+}
 
-  const pickMixed = (pool: QuizQuestion[], n: number): QuizQuestion[] => {
-    const byDifficulty: Record<QuizDifficulty, QuizQuestion[]> = { easy: [], moderate: [], difficult: [], impossible: [] };
-    for (const q of pool) byDifficulty[q.difficulty].push(q);
-    const targetCounts: Record<QuizDifficulty, number> = {
-      easy: Math.round(n * 0.4),
-      moderate: Math.round(n * 0.3),
-      difficult: Math.round(n * 0.2),
-      impossible: Math.max(1, n - Math.round(n * 0.4) - Math.round(n * 0.3) - Math.round(n * 0.2)),
-    };
-    const picked: QuizQuestion[] = [];
-    (Object.keys(targetCounts) as QuizDifficulty[]).forEach((difficulty) => {
-      const bucket = [...byDifficulty[difficulty]];
-      const take = Math.min(targetCounts[difficulty], bucket.length);
-      for (let i = 0; i < take; i++) {
-        const idx = Math.floor(Math.random() * bucket.length);
-        picked.push(bucket.splice(idx, 1)[0]);
-      }
-    });
-    return picked;
-  };
-
-  const picked = pickMixed(primaryPool, count);
-  if (picked.length < count) {
-    const pickedIds = new Set(picked.map((q) => q.id));
-    const fallbackPool = ALL_QUESTIONS.filter((q) => !pickedIds.has(q.id));
-    picked.push(...pickMixed(fallbackPool, count - picked.length));
-  }
-
-  // Shuffle the final order so difficulties (and, for a custom search, matched-vs-padded questions)
-  // interleave rather than arriving in one block.
-  for (let i = picked.length - 1; i > 0; i--) {
+function shuffled<T>(items: T[]): T[] {
+  const out = [...items];
+  for (let i = out.length - 1; i > 0; i--) {
     const j = Math.floor(Math.random() * (i + 1));
-    [picked[i], picked[j]] = [picked[j], picked[i]];
+    [out[i], out[j]] = [out[j], out[i]];
   }
-  return picked.map((q) => q.id);
+  return out;
+}
+
+/** Picks a shuffled sequence of question ids for a new room, every one of them matching the chosen
+ * topic and difficulty. Returns fewer than `count` when fewer match.
+ *
+ * For "mixed" difficulty the aim is roughly 40% easy / 30% moderate / 20% difficult / 10% nearly
+ * impossible, so a game has a real on-ramp instead of opening on its hardest questions; where the
+ * topic is thin at some level, the places left over are filled from the same topic's other levels.
+ *
+ * A custom search first narrows to its best-scoring matches — whole score bands, until there are
+ * enough for a round — so "miracles of Jesus" favours questions matching both words over either.
+ *
+ * The selection doesn't need to be deterministic (unlike each question's own content above) — the host
+ * runs this once and the resulting id array is written straight into game_rooms.question_ids, which
+ * every other client then just reads back. */
+export function buildQuestionSequence(count = ROUND_QUESTION_COUNT, settings: QuizSettings = {}): string[] {
+  const matches = matchingQuestions(settings);
+  const cutoff = matches.length > count ? matches[count - 1].score : -Infinity;
+  const pool = shuffled(matches.filter((m) => m.score >= cutoff).map((m) => m.q));
+
+  let picked: QuizQuestion[];
+  if ((settings.difficulty ?? "mixed") === "mixed") {
+    const easy = Math.round(count * 0.4);
+    const moderate = Math.round(count * 0.3);
+    const difficult = Math.round(count * 0.2);
+    const targets: Record<QuizDifficulty, number> = { easy, moderate, difficult, impossible: Math.max(1, count - easy - moderate - difficult) };
+    picked = (Object.keys(targets) as QuizDifficulty[]).flatMap((d) => pool.filter((q) => q.difficulty === d).slice(0, targets[d]));
+    const taken = new Set(picked.map((q) => q.id));
+    picked.push(...pool.filter((q) => !taken.has(q.id)).slice(0, count - picked.length));
+  } else {
+    picked = pool.slice(0, count);
+  }
+
+  // Shuffle the final order so difficulties interleave rather than arriving in one block.
+  return shuffled(picked).map((q) => q.id);
 }

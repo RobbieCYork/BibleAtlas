@@ -1,5 +1,5 @@
 import { supabase } from "./supabase";
-import { buildQuestionSequence, type QuizTopicPreset } from "../data/gameQuestions";
+import { buildQuestionSequence, MIN_ROUND_QUESTIONS, type QuizSettings } from "../data/gameQuestions";
 
 export type GameRoomStatus = "lobby" | "active" | "finished";
 
@@ -47,15 +47,16 @@ export interface GameHighScore {
  * just the server-side backstop). Not an error worth surfacing. */
 const UNIQUE_VIOLATION = "23505";
 
-/** Creates a room, picks its question sequence up front (see buildQuestionSequence — narrowed by
- * `preset` or `customQuery` if given), and seats the caller as host + first player — all atomically
- * inside the create_game_room() RPC. */
+/** Creates a room, picks its question sequence up front (see buildQuestionSequence — every question
+ * matches the topic and difficulty in `settings`), and seats the caller as host + first player — all
+ * atomically inside the create_game_room() RPC. */
 export async function createGameRoom(
   targetScore = 50,
   questionCount = 24,
-  topic: { preset?: QuizTopicPreset; customQuery?: string } = {}
+  settings: QuizSettings = {}
 ): Promise<GameRoom> {
-  const questionIds = buildQuestionSequence(questionCount, topic);
+  const questionIds = buildQuestionSequence(questionCount, settings);
+  if (questionIds.length < MIN_ROUND_QUESTIONS) throw new Error("Not enough questions match that topic and difficulty.");
   const { data, error } = await supabase.rpc("create_game_room", {
     p_target_score: targetScore,
     p_question_ids: questionIds,

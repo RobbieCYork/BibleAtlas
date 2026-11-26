@@ -1,21 +1,36 @@
 import { useEffect, useMemo, useState } from "react";
 import { createGameRoom, joinGameRoom, startGameRoom, fetchTopHighScores, type GameHighScore } from "../lib/gameSupabase";
-import { TOPIC_PRESETS, countAvailableQuestions, type QuizTopicPreset } from "../data/gameQuestions";
+import {
+  TOPIC_PRESETS,
+  DIFFICULTY_CHOICES,
+  DIFFICULTY_POINTS,
+  MIN_ROUND_QUESTIONS,
+  ROUND_QUESTION_COUNT,
+  countAvailableQuestions,
+  type QuizDifficultyChoice,
+  type QuizSettings,
+  type QuizTopicPreset,
+} from "../data/gameQuestions";
 import Icon from "./Icon";
 
 interface GamesPanelProps {
   onRoomReady: (roomId: string) => void;
 }
 
-const GAME_QUESTION_COUNT = 24;
+const TARGET_SCORE = 50;
 
-/** The Games entry screen — pick a topic, create a room (or join one by code), plus the standing Top
+const difficultyLabel = (key: QuizDifficultyChoice) => DIFFICULTY_CHOICES.find((d) => d.key === key)?.label ?? key;
+
+/** The Games entry screen — pick a topic and difficulty, create a room (or join one by code), plus the standing Top
  * 5 leaderboard. Mirrors the create/join split every other room-based flow in this app doesn't have
  * yet, so its error handling is local rather than following an existing panel's pattern one-for-one. */
 export default function GamesPanel({ onRoomReady }: GamesPanelProps) {
   const [preset, setPreset] = useState<QuizTopicPreset>("all");
   const [customMode, setCustomMode] = useState(false);
   const [customQuery, setCustomQuery] = useState("");
+  const [difficulty, setDifficulty] = useState<QuizDifficultyChoice>("mixed");
+  /** Set when switching topic forced the difficulty back to Mixed, so the change is never silent. */
+  const [difficultyNote, setDifficultyNote] = useState<string | null>(null);
   const [joinCode, setJoinCode] = useState("");
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -27,16 +42,67 @@ export default function GamesPanel({ onRoomReady }: GamesPanelProps) {
       .catch(() => setHighScores([]));
   }, []);
 
-  const topic = customMode ? { customQuery } : { preset };
-  // Cheap to recompute on every keystroke — it's an in-memory scan of ~1,000 questions, no network
-  // round trip — but useMemo keeps it from re-running on unrelated re-renders (e.g. the join-code field).
-  const availableCount = useMemo(() => countAvailableQuestions(topic), [customMode, preset, customQuery]); // eslint-disable-line react-hooks/exhaustive-deps
+  const topic: QuizSettings = customMode ? { customQuery } : { preset };
+  // How many questions each difficulty has for the current topic. Cheap to recompute — an in-memory
+  // scan of the question pool, no network round trip — but useMemo keeps it from re-running on
+  // unrelated re-renders (e.g. the join-code field).
+  const counts = useMemo(
+    () =>
+      Object.fromEntries(DIFFICULTY_CHOICES.map((d) => [d.key, countAvailableQuestions({ ...topic, difficulty: d.key })])) as Record<
+        QuizDifficultyChoice,
+        number
+      >,
+    [customMode, preset, customQuery] // eslint-disable-line react-hooks/exhaustive-deps
+  );
+  const settings: QuizSettings = { ...topic, difficulty };
+  const availableCount = counts[difficulty];
+  const canStart = availableCount >= MIN_ROUND_QUESTIONS;
+  const roundLength = Math.min(availableCount, ROUND_QUESTION_COUNT);
+  const needsCustomText = customMode && !customQuery.trim();
+
+  const selectTopic = (value: string) => {
+    setDifficultyNote(null);
+    if (value === "custom") {
+      setCustomMode(true);
+      return;
+    }
+    const next = value as QuizTopicPreset;
+    setCustomMode(false);
+    setPreset(next);
+    if (countAvailableQuestions({ preset: next, difficulty }) < MIN_ROUND_QUESTIONS) {
+      const label = TOPIC_PRESETS.find((p) => p.key === next)?.label ?? next;
+      setDifficultyNote(`${label} has no ${difficultyLabel(difficulty)} questions, so difficulty is back to Mixed.`);
+      setDifficulty("mixed");
+    }
+  };
+
+  /** One line saying what Play will actually serve — including when it will be a short round. */
+  const roundSummary = () => {
+    if (needsCustomText) return "Type a topic to see how many questions match.";
+    if (!canStart) {
+      const kind = difficulty === "mixed" ? "" : `${difficultyLabel(difficulty)} `;
+      const found =
+        availableCount === 0
+          ? `No ${kind}questions match`
+          : availableCount === 1
+            ? `Only 1 ${kind}question matches`
+            : `Only ${availableCount} ${kind}questions match`;
+      return `${found} — a game needs at least ${MIN_ROUND_QUESTIONS}. Try another topic or difficulty.`;
+    }
+    const length =
+      availableCount < ROUND_QUESTION_COUNT
+        ? `Short game: only ${availableCount} questions match, and you'll get all of them.`
+        : `${roundLength} questions, picked from ${availableCount} that match.`;
+    // Easy questions are worth 1 point, so even doubled, a full round of them tops out below the target.
+    const easyOnly = difficulty === "easy" ? ` Easy is worth 1 point, so the highest score after the last question wins.` : "";
+    return length + easyOnly;
+  };
 
   const handleCreate = async () => {
     setBusy(true);
     setError(null);
     try {
-      const room = await createGameRoom(50, GAME_QUESTION_COUNT, topic);
+      const room = await createGameRoom(TARGET_SCORE, ROUND_QUESTION_COUNT, settings);
       onRoomReady(room.id);
     } catch (err) {
       setError(err instanceof Error ? err.message : "Couldn't create a game — try again.");
@@ -52,7 +118,7 @@ export default function GamesPanel({ onRoomReady }: GamesPanelProps) {
     setBusy(true);
     setError(null);
     try {
-      const room = await createGameRoom(50, GAME_QUESTION_COUNT, topic);
+      const room = await createGameRoom(TARGET_SCORE, ROUND_QUESTION_COUNT, settings);
       await startGameRoom(room.id);
       onRoomReady(room.id);
     } catch (err) {
@@ -83,22 +149,19 @@ export default function GamesPanel({ onRoomReady }: GamesPanelProps) {
           <Icon name="trivia" />
           Bible Trivia
         </h2>
-        <p>Play solo or live with friends — every player answers, wrong answers cost you, first correct doubles. First to 50 wins.</p>
+        <p>
+          Play solo or live with friends — every player answers, wrong answers cost you, first correct doubles. First to {TARGET_SCORE} wins, or the
+          highest score when the questions run out.
+        </p>
       </div>
 
       <div className="games-panel-card games-topic-card">
-        <h3>Choose a topic</h3>
+        <h3 id="games-topic-heading">Choose a topic</h3>
         <select
           className="games-topic-select"
+          aria-labelledby="games-topic-heading"
           value={customMode ? "custom" : preset}
-          onChange={(e) => {
-            if (e.target.value === "custom") {
-              setCustomMode(true);
-            } else {
-              setCustomMode(false);
-              setPreset(e.target.value as QuizTopicPreset);
-            }
-          }}
+          onChange={(e) => selectTopic(e.target.value)}
           disabled={busy}
         >
           {TOPIC_PRESETS.map((p) => (
@@ -116,30 +179,60 @@ export default function GamesPanel({ onRoomReady }: GamesPanelProps) {
             <input
               type="text"
               className="games-topic-custom-input"
+              aria-label="Custom topic"
               placeholder="e.g. Paul's missionary journeys, kings of Israel, miracles of Jesus…"
               value={customQuery}
-              onChange={(e) => setCustomQuery(e.target.value)}
+              onChange={(e) => {
+                setDifficultyNote(null);
+                setCustomQuery(e.target.value);
+              }}
               disabled={busy}
             />
             <p className="games-topic-custom-note">
-              Searches this app's own library of {"~1,000"} generated questions for your focus — not a live AI call, so a very
-              narrow or unusual phrase may come up short (the rest of the game gets filled in from a general mix so it's
-              never too short to play).
+              Searches this app's own library of questions for your words — not a live AI call, so a very narrow or unusual phrase may
+              find only a few, or none.
             </p>
           </div>
         )}
-        <p className="games-topic-count games-inline-icon">
-          {customMode && customQuery.trim()
-            ? availableCount > 0
-              ? <>
-                  <Icon name="target" />
-                  {`${availableCount} question${availableCount === 1 ? "" : "s"} matched your topic`}
-                </>
-              : "No matches yet — the game will use a general mix instead"
-            : <>
-                <Icon name="target" />
-                {`${availableCount} questions available in this topic`}
-              </>}
+
+        <fieldset className="games-difficulty" disabled={busy}>
+          <legend>Choose a difficulty</legend>
+          <div className="games-difficulty-options">
+            {DIFFICULTY_CHOICES.map((d) => {
+              const selected = difficulty === d.key;
+              const unavailable = !needsCustomText && counts[d.key] < MIN_ROUND_QUESTIONS;
+              return (
+                <label key={d.key} className={`games-difficulty-option${selected ? " is-selected" : ""}${unavailable ? " is-unavailable" : ""}`}>
+                  <input
+                    type="radio"
+                    name="trivia-difficulty"
+                    value={d.key}
+                    checked={selected}
+                    disabled={unavailable}
+                    onChange={() => {
+                      setDifficultyNote(null);
+                      setDifficulty(d.key);
+                    }}
+                  />
+                  <span className="games-difficulty-name">{d.label}</span>
+                  <span className="games-difficulty-detail">
+                    {d.key === "mixed" ? "All levels" : `${DIFFICULTY_POINTS[d.key]} pt${DIFFICULTY_POINTS[d.key] === 1 ? "" : "s"}`}
+                    {!needsCustomText && ` · ${counts[d.key]}`}
+                  </span>
+                </label>
+              );
+            })}
+          </div>
+        </fieldset>
+
+        {difficultyNote && (
+          <p className="games-topic-description" role="status">
+            {difficultyNote}
+          </p>
+        )}
+        <p className="games-topic-count games-inline-icon" role="status">
+          <Icon name="target" />
+          <span>{roundSummary()}</span>
         </p>
       </div>
 
@@ -147,7 +240,7 @@ export default function GamesPanel({ onRoomReady }: GamesPanelProps) {
         <div className="games-panel-card">
           <h3>Play now</h3>
           <p>Solo practice, or start a room and share the code with others.</p>
-          <button type="button" className="games-primary-button" onClick={handlePlaySolo} disabled={busy}>
+          <button type="button" className="games-primary-button" onClick={handlePlaySolo} disabled={busy || !canStart}>
             {busy ? (
               "Starting…"
             ) : (
@@ -157,7 +250,7 @@ export default function GamesPanel({ onRoomReady }: GamesPanelProps) {
               </>
             )}
           </button>
-          <button type="button" className="games-secondary-button" onClick={handleCreate} disabled={busy}>
+          <button type="button" className="games-secondary-button" onClick={handleCreate} disabled={busy || !canStart}>
             {busy ? (
               "Creating…"
             ) : (
