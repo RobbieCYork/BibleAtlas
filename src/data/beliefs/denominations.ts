@@ -164,7 +164,7 @@ export const christianTraditions: BeliefRecord[] = [
         url: "https://www.pewresearch.org/religion/2017/11/08/orthodox-christianity-in-the-21st-century/",
       },
       verified: true,
-      note: "Pew's Orthodox category also counts the Oriental Orthodox churches, such as the Ethiopian and Coptic churches, which are not in communion with the Eastern Orthodox, so the Eastern Orthodox share is smaller. A newer worldwide estimate was not found.",
+      note: "Pew's Orthodox category also counts the Oriental Orthodox churches, such as the Ethiopian and Coptic churches, which are not in communion with the Eastern Orthodox; Pew puts them at roughly a fifth of its worldwide Orthodox total, so the Eastern Orthodox figure is smaller. A newer worldwide estimate was not found.",
     },
     distinctives: [
       "Orthodoxy is held together by shared faith and sacraments rather than by a single central government. Each autocephalous (self-governing) church has its own head, and the Ecumenical Patriarch of Constantinople holds a primacy of honour as first among equals, without authority to rule the other churches.",
@@ -190,7 +190,7 @@ export const christianTraditions: BeliefRecord[] = [
     ],
     relationships: [
       "The Oriental Orthodox churches (Coptic, Ethiopian, Armenian, Syriac and others) separated from the Eastern Orthodox after the Council of Chalcedon in 451. Modern theological dialogues between the two families have concluded that much of the difference over the person of Christ was one of terminology, though full communion has not been restored.",
-      "With Rome, the mutual excommunications of 1054 were lifted in 1965, and official dialogue continues; the papacy remains the central disagreement. With Protestants, Orthodox churches take part in ecumenical bodies such as the World Council of Churches, while a growing number of former evangelicals have joined Orthodox parishes in North America.",
+      "With Rome, the mutual excommunications of 1054 were lifted in 1965, and official dialogue continues; the papacy remains the central disagreement. With Protestants, Orthodox churches take part in ecumenical bodies such as the World Council of Churches, and some former evangelicals have joined Orthodox parishes in North America.",
     ],
     evangelicalView: {
       agreements: [
@@ -248,7 +248,7 @@ export const christianTraditions: BeliefRecord[] = [
         url: "https://anglicancommunion.org/wp-content/uploads/2026/02/Anglican-Communion-QA-2015.pdf",
       },
       verified: true,
-      note: "The Communion's website now gives a figure of about 90 million and 42 member churches, but that page could not be loaded to confirm it. Churches outside the Communion, such as the Anglican Church in North America, are not counted.",
+      note: "This is the latest figure the Communion has published in a document that could be checked; its own Q&A calls it a best estimate, built from figures each church measures differently. The number of member churches has grown since 2015. Churches outside the Communion, such as the Anglican Church in North America, are not counted.",
     },
     distinctives: [
       "Anglicanism is defined less by a single founding confession than by its prayer book. The Book of Common Prayer, first issued under Thomas Cranmer in 1549 and revised in 1552 and 1662, shaped worship and doctrine across the English-speaking world, and the principle that the church's belief is expressed in its prayer is often summarised in the Latin phrase lex orandi, lex credendi.",
@@ -294,7 +294,7 @@ export const christianTraditions: BeliefRecord[] = [
     sources: [
       { kind: "official", label: "Anglican Communion Q&A (2015)", url: "https://anglicancommunion.org/wp-content/uploads/2026/02/Anglican-Communion-QA-2015.pdf", note: "Anglican Communion Office" },
       { kind: "primary", label: "The Thirty-Nine Articles of Religion (Book of Common Prayer, 1863 printing)", url: "https://en.wikisource.org/wiki/Book_of_Common_Prayer_(1863)/Articles_of_Religion", note: "public-domain text on Wikisource" },
-      { kind: "reference", label: "Library of Congress, Today in History: the Act of Supremacy", url: "https://blogs.loc.gov/law/2017/07/today-in-history-extinguishing-the-popes-power-in-england/" },
+      { kind: "reference", label: "Library of Congress, In Custodia Legis: Today in History, Extinguishing the Pope's Power in England", url: "https://blogs.loc.gov/law/2017/07/today-in-history-extinguishing-the-popes-power-in-england/" },
       { kind: "official", label: "Anglican Communion, Member churches", url: "https://www.anglicancommunion.org/member-churches/", note: "could not be loaded on 2026-11-26" },
     ],
     verses: [{ reference: "John 17:21", note: "Christ's prayer that his followers be one" }],
@@ -322,15 +322,15 @@ export const christianTraditions: BeliefRecord[] = [
       place: "Philadelphia, Pennsylvania",
     },
     adherents: {
-      figure: "1,425,065",
-      counts: "total members reported in the parochial reports, including overseas dioceses; average in-person Sunday attendance was 407,001",
+      figure: "about 1.43 million",
+      counts: "total members reported in the parochial reports; average in-person Sunday attendance was about 407,000",
       year: "2025",
       source: {
         label: "General Convention Office, Parochial Report results",
         url: "https://generalconvention.org/parochial-report-results/",
       },
       verified: true,
-      note: "The report cautions that comparisons with earlier years are limited; membership was not collected for 2024.",
+      note: "Rounded figures as reported from the church's analysis of its 2025 parochial reports (The Christian Post, October 2026); the exact totals are in the General Convention Office's downloadable reports. The 2024 report did not include a total membership count.",
     },
     distinctives: [
       "Episcopal worship follows the Book of Common Prayer, in the current American edition of 1979, and most parishes celebrate the Holy Eucharist every Sunday. Its catechism and the historical documents bound into the prayer book, including the Thirty-Nine Articles, are the church's main statements of belief.",
@@ -404,10 +404,10 @@ export const christianTraditions: BeliefRecord[] = [
       year: "2023 (LWF statistics)",
       source: { label: "Lutheran World Federation, Member churches", url: "https://lutheranworld.org/member-churches" },
       verified: true,
-      note: "Not every Lutheran church belongs to the LWF. In the US, the Evangelical Lutheran Church in America reported 2,677,239 baptized members at the end of 2024 (ELCA statistics). The Lutheran Church-Missouri Synod is not an LWF member; its baptized membership is commonly given as about 1.7 million, a figure not confirmed against an LCMS page.",
+      note: "Not every Lutheran church belongs to the LWF. In the US, the Evangelical Lutheran Church in America reported 2,677,239 baptized members at the end of 2024 (ELCA statistics). The Lutheran Church-Missouri Synod is not an LWF member; no current membership total for it could be confirmed from an LCMS source, so none is given here.",
     },
     distinctives: [
-      "Lutheran identity is confessional. The Book of Concord (1580) gathers the three ecumenical creeds, the Augsburg Confession (1530) and its Apology, the Smalcald Articles, Luther's Small and Large Catechisms and the Formula of Concord. Confessional Lutherans subscribe to these because, not merely insofar as, they agree with Scripture.",
+      "Lutheran identity is confessional. The Book of Concord (1580) gathers the three ecumenical creeds, the Augsburg Confession (1530) and its Apology, the Smalcald Articles, the Treatise on the Power and Primacy of the Pope, Luther's Small and Large Catechisms and the Formula of Concord. Confessional Lutherans subscribe to these because, not merely insofar as, they agree with Scripture.",
       "Lutheran theology is organised around the distinction between law and gospel: the law shows sin and the need of a Saviour, and the gospel gives the forgiveness of sins freely in Christ. Lutherans also speak of the theology of the cross, God revealing himself in weakness and suffering rather than in glory.",
       "Lutherans hold a high view of the sacraments as means of grace. In baptism God gives forgiveness and new life, and in the Lord's Supper Christ's true body and blood are present in, with and under the bread and wine, for the forgiveness of sins. Lutherans reject both the Catholic doctrine of transubstantiation and the view that the Supper is only a memorial.",
     ],
@@ -415,7 +415,7 @@ export const christianTraditions: BeliefRecord[] = [
       { label: "God and Christ", statement: "The Trinity and the person of Christ as confessed in the Apostles', Nicene and Athanasian creeds." },
       { label: "Scripture", statement: "The prophetic and apostolic Scriptures are the only rule and norm by which all teachers and teachings are to be judged (Formula of Concord)." },
       { label: "Justification", statement: "Human beings cannot be justified before God by their own strength or works, but are freely justified for Christ's sake through faith (Augsburg Confession, Article IV). This is called the article on which the church stands or falls." },
-      { label: "Baptism", statement: "Baptism is necessary and is given to infants, through whom God works faith and new birth." },
+      { label: "Baptism", statement: "Baptism is necessary and is given to infants, in whom God works faith and new birth." },
       { label: "The Lord's Supper", statement: "The true body and blood of Christ are truly present and distributed to those who eat (Augsburg Confession, Article X)." },
       { label: "Vocation", statement: "Every Christian serves God in ordinary callings of family, work and citizenship, and all the baptised share the priesthood of believers." },
     ],
@@ -482,14 +482,14 @@ export const christianTraditions: BeliefRecord[] = [
     },
     adherents: {
       figure: "1,019,003 in the Presbyterian Church (U.S.A.); 400,751 in the Presbyterian Church in America",
-      counts: "members of the two largest US Presbyterian bodies (PC(USA) members; PCA total members, communicant and non-communicant)",
+      counts: "reported members of the two largest US Presbyterian bodies",
       year: "2025 (PC(USA)); 2024 (PCA)",
       source: {
         label: "Presbyterian News Service, PC(USA) still home to more than 1 million members (June 2026)",
         url: "https://pcusa.org/news-storytelling/news/2026/6/29/pcusa-still-home-more-1-million-members",
       },
       verified: true,
-      note: "PCA figure from byFaith, New statistics reveal PCA's growth in 2024. Worldwide, the World Communion of Reformed Churches reports about 100 million members in its 230-plus member churches, which include Reformed and Congregational as well as Presbyterian churches.",
+      note: "PCA figure from byFaith, New statistics reveal PCA's growth in 2024. No worldwide Presbyterian total was confirmed from a primary source.",
     },
     distinctives: [
       "Presbyterian government is by presbyters. Each congregation is led by a session, made up of its ruling elder members and its pastor (a teaching elder); congregations are joined in a presbytery, presbyteries in synods, and the whole church in a general assembly. Authority lies in these representative courts rather than in a bishop or in the single congregation.",
@@ -498,7 +498,7 @@ export const christianTraditions: BeliefRecord[] = [
     ],
     beliefs: [
       { label: "God and Christ", statement: "The Trinity and the person of Christ as confessed in the creeds and the Reformed confessions." },
-      { label: "Scripture", statement: "The Old and New Testaments are the Word of God, the only infallible rule of faith and life (Westminster Confession, chapter 1)." },
+      { label: "Scripture", statement: "The books of the Old and New Testaments are the Word of God, given by inspiration of God to be the rule of faith and life (Westminster Confession 1.2)." },
       { label: "Salvation", statement: "Salvation is by grace alone through faith alone in Christ alone; those whom God effectually calls he justifies, adopts, sanctifies and keeps to the end." },
       { label: "Sacraments", statement: "Two sacraments, baptism and the Lord's Supper. Infants of believers are baptised. In the Supper Christ is spiritually present and received by faith." },
       { label: "The church", statement: "Christ alone is head of the church, governing it through presbyters chosen by the people." },
@@ -568,7 +568,7 @@ export const christianTraditions: BeliefRecord[] = [
     adherents: {
       figure: "2,764,205",
       counts: "total members worldwide",
-      year: "2025 (reporting year October 2024 to September 2025)",
+      year: "2025 statistical year",
       source: { label: "Church of the Nazarene, General Secretary releases 2025 statistics", url: "https://nazarene.org/news/general-secretary-releases-2025-statistics/" },
       verified: true,
     },
@@ -632,7 +632,7 @@ export const christianTraditions: BeliefRecord[] = [
     group: "Baptist churches",
     role: "Cooperative fellowship of Baptist churches in the United States",
     summary:
-      "The largest Protestant body in the United States: a voluntary convention of autonomous Baptist churches that cooperate in missions, theological education and other ministries.",
+      "The largest Protestant denomination in the United States: a voluntary convention of autonomous Baptist churches that cooperate in missions, theological education and other ministries.",
     selfDescription:
       "The SBC describes itself not as a denomination with authority over churches but as a network of independent, autonomous Baptist churches that voluntarily cooperate to share the gospel around the world, united around the Baptist Faith and Message.",
     founding: {
@@ -735,7 +735,7 @@ export const christianTraditions: BeliefRecord[] = [
       year: "2025 (US); latest reported years elsewhere",
       source: { label: "UM News, Amid decline, US professions of faith rise (October 2026)", url: "https://www.umnews.org/en/news/amid-decline-us-professions-of-faith-rise" },
       verified: true,
-      note: "Down from an estimated 12.5 million in 2017, largely because of the disaffiliations of 2019-2023. Figures outside the US come from the latest available annual conference journals, so years vary.",
+      note: "Down from a high of an estimated 12.5 million in 2017, after thousands of congregations withdrew. Figures outside the US come from the latest available annual conference journals, so years vary, and the worldwide total may change as 2025 statistics are completed.",
     },
     distinctives: [
       "Methodism began as a disciplined renewal movement within the Church of England: small groups (classes and bands) meeting weekly for accountability, field preaching to people outside the churches, and hymns, many by Charles Wesley, that taught doctrine in song.",
@@ -772,7 +772,7 @@ export const christianTraditions: BeliefRecord[] = [
       ],
     },
     ownAnswer: [
-      "United Methodists who support the 2024 decisions answer that they read Scripture through the whole witness of Christ's love and through the experience of the church, and that the church's doctrinal standards on Christ and salvation are unchanged. They point to Wesley's own call to unity in essentials and charity where Christians disagree.",
+      "United Methodists who support the 2024 decisions answer that they read Scripture through the whole witness of Christ's love and through the experience of the church, and that the church's doctrinal standards on Christ and salvation are unchanged. They point to Wesley's sermon Catholic Spirit, which urged Christians to love one another across differences of opinion.",
     ],
     sources: [
       { kind: "official", label: "United Methodist Church, What we believe", url: "https://www.umc.org/en/what-we-believe" },
@@ -809,7 +809,7 @@ export const christianTraditions: BeliefRecord[] = [
       year: "2025",
       source: { label: "Assemblies of God media kit", url: "https://cdn1.acdn.io/sites/agorg/Press/Assemblies_of_God_Media_Kit.pdf" },
       verified: true,
-      note: "Adherents include children and regular attenders, not only members. The World Assemblies of God Fellowship's own site rounds the worldwide figure to 88 million in more than 451,000 churches.",
+      note: "Adherents include people of all ages who identify with an Assemblies of God church, not only members. The same media kit counts 451,512 churches worldwide and 12,651 in the United States.",
     },
     distinctives: [
       "The Assemblies of God teaches that all believers should seek the baptism in the Holy Spirit, a gift distinct from and following the new birth, which empowers them for witness and service (Acts 1:8). Its Statement of Fundamental Truths holds that the initial physical evidence of this baptism is speaking in other tongues as the Spirit gives utterance (Acts 2:4).",
@@ -885,8 +885,8 @@ export const christianTraditions: BeliefRecord[] = [
     },
     adherents: {
       figure: "about 1.42 million in about 11,900 congregations",
-      counts: "adherents in the United States, from 21st Century Christian's directory",
-      year: "latest directory figures, reported January 2025",
+      counts: "adherents and congregations in the United States, as reported by The Christian Chronicle (the congregation count compiled by 21st Century Christian)",
+      year: "latest figures, reported January 2025",
       source: { label: "The Christian Chronicle, Holy imagination: churches seek to reverse decline (2025)", url: "https://christianchronicle.org/holy-imagination-churches-seek-to-reverse-decline/" },
       verified: true,
       note: "There is no central membership roll, and the directory behind these figures was last printed in 2018. A January 2026 Christian Chronicle article reports a researcher's estimate of about 10,100 congregations and 850,000-950,000 regular attenders. No worldwide figure was confirmed from a primary source.",
@@ -908,7 +908,7 @@ export const christianTraditions: BeliefRecord[] = [
       "Sunday worship includes a cappella congregational singing, prayer, preaching, giving and the Lord's Supper. Bible classes for all ages are traditional. Congregations are often active in mission work and support Christian universities associated with the movement.",
     ],
     structure: [
-      "There is no headquarters, synod or convention. Each congregation is autonomous, led by a plurality of men serving as elder, also called shepherds, and served by deacons and preachers. Cooperation happens through lectureships, colleges, periodicals and congregations voluntarily supporting shared works.",
+      "There is no headquarters, synod or convention. Each congregation is autonomous, led by a plurality of men who serve as its overseers, also called shepherds, and served by deacons and preachers. Cooperation happens through lectureships, colleges, periodicals and congregations voluntarily supporting shared works.",
       "Within the fellowship there are subgroups, such as non-institutional congregations that do not fund orphanages or colleges from church treasuries, and congregations that use one cup for communion. The International Churches of Christ is a separate movement with its own history and leadership.",
     ],
     relationships: [
@@ -920,7 +920,7 @@ export const christianTraditions: BeliefRecord[] = [
       ],
       disagreements: [
         "Most evangelicals disagree with teaching that baptism is necessary for the forgiveness of sins, holding that forgiveness is received by faith and that baptism follows as its sign (Ephesians 2:8-9; Acts 10:44-48).",
-        "Most evangelicals also do not accept that the silence of the New Testament forbids instruments in worship, citing the Psalms' instruments as part of the worship God receives (Psalm 150).",
+        "Most evangelicals also do not accept that the silence of the New Testament forbids instruments in worship, citing the Psalms' instruments as part of the worship God receives (Psalms 150).",
       ],
       evangelicalsDiffer: [
         "Evangelicals themselves differ on how baptism relates to conversion, and some evangelical scholars note that the New Testament closely ties baptism to repentance and faith. Within Churches of Christ, too, views vary on how to regard sincere believers who were not immersed.",
@@ -974,7 +974,7 @@ export const christianTraditions: BeliefRecord[] = [
     },
     distinctives: [
       "Adventists keep the seventh day, from sunset Friday to sunset Saturday, as the Sabbath of the fourth commandment (Exodus 20:8-11), a memorial of creation and a sign of redemption. They hold that God's moral law remains binding on Christians, not as a means of salvation but as the fruit of it.",
-      "Adventists teach that Christ began a final phase of his ministry in the heavenly sanctuary in 1844, a pre-advent or investigative judgment, drawing on Daniel 8:14 and Hebrews 8-9.",
+      "Adventists teach that Christ began a final phase of his ministry in the heavenly sanctuary in 1844, a pre-advent or investigative judgment, drawing on Daniel 8:14 and on Hebrews 8:1-5 and Hebrews 9:11-28.",
       "They teach conditional immortality: the dead sleep unconscious until they are raised at Christ's return, and the final punishment of the wicked is destruction rather than eternal conscious torment.",
       "Health is part of discipleship. Adventists avoid alcohol, tobacco and the meats Leviticus calls unclean, and many are vegetarian; the church runs one of the largest Protestant health care and education systems in the world.",
     ],
@@ -1007,6 +1007,7 @@ export const christianTraditions: BeliefRecord[] = [
       ],
       evangelicalsDiffer: [
         "Evangelicals themselves differ on the Sabbath, from Sunday-sabbatarians in the Puritan tradition to those who see no day as binding, and on conditional immortality, which some respected evangelical theologians have held. These are disagreements within orthodoxy.",
+        "Evangelicals also differ on how to classify Adventism itself. Many have followed Walter Martin's conclusion that Adventists are fellow Christians; others, including some former Adventists, judge that the place given to Ellen G. White and the investigative judgment put the church outside evangelical orthodoxy.",
       ],
     },
     ownAnswer: [
@@ -1036,7 +1037,7 @@ export const christianTraditions: BeliefRecord[] = [
     group: "Independent evangelical churches",
     role: "Independent Protestant congregations with no denominational affiliation",
     summary:
-      "Protestant congregations, most of them evangelical, that belong to no denomination. Together they are now the largest Protestant grouping in the United States by congregations.",
+      "Protestant congregations, most of them evangelical, that belong to no denomination. Counted together, they are now the largest Protestant grouping in the United States by adherents, and second only to the Southern Baptist Convention by number of congregations.",
     selfDescription:
       "Non-denominational churches usually describe themselves simply as Bible-believing Christian churches, focused on Jesus and Scripture rather than on a denominational tradition, and free to govern themselves.",
     founding: {
@@ -1046,7 +1047,7 @@ export const christianTraditions: BeliefRecord[] = [
       date: "No single date; rapid growth from the 1970s",
     },
     adherents: {
-      figure: "21,098,641 adherents in 44,319 congregations",
+      figure: "21,095,641 adherents in 44,319 congregations",
       counts: "adherents of non-denominational Christian churches in the United States",
       year: "2020",
       source: { label: "U.S. Religion Census 2020, Appendix B: Non-denominational Christian Churches", url: "https://www.usreligioncensus.org/sites/default/files/2023-03/Appendix_B--Non-denominational_Christian_Churches.pdf" },

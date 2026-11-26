@@ -91,7 +91,7 @@ export const worldReligions: BeliefRecord[] = [
       {
         label: "Ethics and law",
         statement:
-          "Loving God is expressed by keeping his commandments. Rabbinic tradition counts 613 commandments in the Torah; the righteous of all nations are bound by the seven Noahide laws and have a share in the world to come.",
+          "Loving God is expressed by keeping his commandments. Rabbinic tradition counts 613 commandments in the Torah, binding on Jews; the rest of humanity is bound by the seven Noahide laws, and the righteous among the nations have a share in the world to come.",
       },
       {
         label: "The Messiah",
@@ -229,7 +229,7 @@ export const worldReligions: BeliefRecord[] = [
       },
       verified: true,
       note:
-        "Pew puts Muslims at 25.6% of the world's population in 2020, up from 1.7 billion in 2010, the fastest growth of any major group. Pew's earlier estimate of the Sunni-Shi'a balance is 87-90% Sunni and 10-13% Shi'a; it is based on expert judgement because few censuses ask, and Pew gives no margin of error for it.",
+        "Pew puts Muslims at 25.6% of the world's population in 2020, up from 1.7 billion in 2010, the fastest growth of any major group. Pew's earlier estimate of the Sunni-Shi'a balance is 87-90% Sunni and 10-13% Shi'a, given as a range because few censuses ask the question.",
     },
     distinctives: [
       "Islam's centre is the Qur'an, which Muslims hold to be the literal speech of God, revealed in Arabic and preserved without alteration. Because the revelation is tied to its Arabic words, Muslims regard a translation as an interpretation of the Qur'an rather than the Qur'an itself; the text is recited in Arabic in prayer worldwide.",
@@ -539,7 +539,7 @@ export const worldReligions: BeliefRecord[] = [
       },
       verified: true,
       note:
-        "Pew reports a 5% decline from 343 million in 2010. It cautions that the count excludes many people who take part in Buddhist practices without identifying as Buddhist — common in China, Japan and South Korea, where Buddhism mingles with folk religion and the word 'religion' itself suggests an organised faith — so the number of people touched by Buddhist practice is considerably larger.",
+        "Pew reports a 5% decline from 343 million in 2010. It cautions that its estimates do not reflect the full influence of Buddhism, because they leave out people who take part in Buddhist beliefs or practices without identifying as Buddhist.",
     },
     distinctives: [
       "Buddhism does not centre on a creator God. The Buddha set aside questions about the origin of the world as not leading to liberation and taught instead a diagnosis of the human condition and a path out of it. Many Buddhists honour gods and spirits, but as beings within the cycle of rebirth, not as the source of salvation.",
@@ -775,7 +775,7 @@ export const worldReligions: BeliefRecord[] = [
         kind: "primary",
         label: "Sri Granth: the Guru Granth Sahib online",
         url: "https://www.srigranth.org/",
-        note: "link only; no public-domain English translation exists",
+        note: "link only",
       },
       {
         kind: "data",
@@ -831,10 +831,10 @@ export const worldReligions: BeliefRecord[] = [
       place: "The state of Lu, eastern China",
     },
     adherents: {
-      figure: "No reliable count:",
+      figure: "No reliable count",
       counts:
-        "Confucianism has no membership or initiation to count, and very few people in China identify with it as a religion in surveys",
-      year: "survey data from 2018",
+        "nothing directly: Confucianism has no membership or initiation to count, and Pew makes no estimate of the number of Confucians",
+      year: "no estimate published",
       source: {
         label: "Pew Research Center, Confucianism, Taoism and Chinese folk religions (2023)",
         url: "https://www.pewresearch.org/religion/2023/08/30/confucianism-taoism-and-chinese-folk-religions/",
@@ -892,7 +892,7 @@ export const worldReligions: BeliefRecord[] = [
       "For most of its history Confucianism was practised through education: study of the Four Books (the Analects, the Mencius, the Great Learning and the Doctrine of the Mean) and the Five Classics, which formed the basis of China's imperial civil-service examinations until they were abolished in 1905.",
     ],
     structure: [
-      "Confucianism has no church, clergy or membership. Its institutions were historically the imperial state, the academies, the examination system, the family and the clan. Most East Asians who live by Confucian values also take part in Buddhist, Daoist, folk, Shinto or Christian practice, without any sense of contradiction.",
+      "Confucianism has no church, clergy or membership. Its institutions were historically the imperial state, the academies, the examination system, the family and the clan. Many East Asians who live by Confucian values also take part in Buddhist, Daoist, folk, Shinto or Christian practice, without any sense of contradiction.",
       "Its main phases are classical Confucianism (Confucius, Mencius, Xunzi); Han Confucianism, the state orthodoxy; Neo-Confucianism, including the school of Zhu Xi and the school of Wang Yangming; and twentieth-century New Confucianism. Korea's Joseon dynasty (1392-1910) was one of the most thoroughly Confucian states in history.",
     ],
     relationships: [
@@ -1066,7 +1066,7 @@ export const worldReligions: BeliefRecord[] = [
       ],
     },
     ownAnswer: [
-      "Latter-day Saints answer that they worship the Father in the name of Jesus Christ and rely wholly on his grace, and that the Book of Mormon teaches that salvation comes only through his merits. They hold that the Nicene Creed reflects Greek philosophy rather than the Bible, which shows the Father and Son as distinct (for example at Jesus's baptism), and that the Bible itself speaks of human beings as God's offspring (Acts 17:29).",
+      "Latter-day Saints answer that they worship the Father in the name of Jesus Christ and rely wholly on his grace, and that the Book of Mormon teaches that salvation comes only through his merits. They hold that the Nicene Creed reflects Hellenistic philosophy rather than the Bible, which shows the Father and Son as distinct (for example at Jesus's baptism), and that the Bible itself speaks of human beings as God's offspring (Acts 17:29).",
       "They answer too that the Bible nowhere says revelation has ceased, that a living church needs living prophets, and that the Book of Mormon is to be tested by prayer, as it invites (Moroni 10:4), rather than by outside argument alone. Many add that being told they are not Christian is painful to people who centre their lives on Christ.",
     ],
     sources: [
@@ -1097,8 +1097,8 @@ export const worldReligions: BeliefRecord[] = [
       },
       {
         kind: "official",
-        label: "Gospel Topics: Christians",
-        url: "https://www.churchofjesuschrist.org/study/manual/gospel-topics/christians?lang=eng",
+        label: "Gospel Topics essay: Are \"Mormons\" Christian?",
+        url: "https://www.churchofjesuschrist.org/study/manual/gospel-topics-essays/christians?lang=eng",
       },
       {
         kind: "official",
@@ -1139,7 +1139,7 @@ export const worldReligions: BeliefRecord[] = [
     group: "Movements from a Christian background",
     role: "Restorationist Bible movement that grew from the Bible Students of Charles Taze Russell",
     summary:
-      "Jehovah's Witnesses are a worldwide Christian movement that grew from a Bible study group around Charles Taze Russell near Pittsburgh in the 1870s. They are known for door-to-door and public preaching, for using the name Jehovah for God, and for teaching that God's Kingdom, ruled by Christ since 1914, will soon replace human governments. They report a peak of about 9.2 million active members.",
+      "Jehovah's Witnesses are a worldwide movement, which identifies as Christian, that grew from a Bible study group around Charles Taze Russell near Pittsburgh in the 1870s. They are known for door-to-door and public preaching, for using the name Jehovah for God, and for teaching that God's Kingdom, ruled by Christ since 1914, will soon replace human governments. They report a peak of about 9.2 million active members.",
     selfDescription:
       "Witnesses describe themselves as Christians who follow the teachings and example of Jesus and seek to practise the Christianity of the first century. They take their name from Isaiah 43:10 ('you are my witnesses'). They regard Jesus, not Charles Taze Russell, as the founder of their organisation, and say Russell was not the founder of a new religion.",
     classificationNote:
@@ -1168,7 +1168,7 @@ export const worldReligions: BeliefRecord[] = [
     },
     distinctives: [
       "Witnesses are best known for their preaching. Every Witness is a minister, and they go from house to house, set up literature carts in public places and offer free Bible studies, using publications produced by the Watch Tower Bible and Tract Society. They meet in Kingdom Halls, not churches, and have no paid clergy.",
-      "They hold that God's personal name is Jehovah and should be used, and they use their own translation, the New World Translation of the Holy Scriptures. They do not celebrate Christmas, Easter or birthdays, which they regard as having pagan origins or as unscriptural; the only religious observance they hold annually is the Memorial of Christ's death.",
+      "They hold that God's personal name is Jehovah and should be used, and they use their own translation, the New World Translation of the Holy Scriptures. They do not celebrate Christmas, Easter or birthdays, which they regard as having pagan origins or as unscriptural; the only religious anniversary they observe is the Memorial of Christ's death.",
       "They practise strict political neutrality — they do not vote for political parties or candidates, go to war or salute national flags (the subject of the 1943 US Supreme Court case West Virginia State Board of Education v. Barnette) — which has led to imprisonment in many countries, including in Nazi Germany, where Witnesses were sent to concentration camps. They refuse blood transfusions, on the basis of the biblical command to abstain from blood (Acts 15:28-29), while accepting medical alternatives.",
     ],
     beliefs: [
@@ -1200,7 +1200,7 @@ export const worldReligions: BeliefRecord[] = [
       {
         label: "God's Kingdom",
         statement:
-          "God's Kingdom is a real government in heaven with Jesus as King, which began ruling in 1914 and will soon replace human governments at Armageddon.",
+          "God's Kingdom is a real government in heaven with Jesus as King, which began ruling in 1914 and will soon replace human governments in the war of God the Almighty (Revelation 16:14-16).",
       },
       {
         label: "Heaven and earth",
@@ -1215,7 +1215,7 @@ export const worldReligions: BeliefRecord[] = [
     ],
     practices: [
       "Congregations meet twice a week in Kingdom Halls for Bible talks and study of The Watchtower, and Witnesses gather for regional conventions each year. Baptism is by full immersion for those who have studied and dedicated themselves to Jehovah. The Memorial of Christ's death is held once a year on the date of Passover; only those who believe they are of the 144,000 partake of the bread and wine.",
-      "Witnesses who commit serious sins and do not repent are removed from the congregation (formerly called disfellowshipping). The Witnesses' own literature says members stop keeping company with them (1 Corinthians 5:11), while treating them respectfully and welcoming them back on repentance; former members and others describe the practice as shunning, and governments and courts in some countries have examined it. Family members who are not removed continue family ties.",
+      "Witnesses who commit serious sins and do not repent are removed from the congregation (formerly called disfellowshipping). The Witnesses' own literature says members stop keeping company with them (1 Corinthians 5:11), while letting them attend meetings and welcoming them back on repentance, and that within a household marriage and normal family affection continue. Former members and others describe the practice as shunning, and it has been examined by governments and courts in several countries; in Belgium, a 2021 criminal conviction over it was overturned on appeal in 2022, and the Court of Cassation upheld the acquittal in 2023.",
     ],
     structure: [
       "Jehovah's Witnesses are directed by the Governing Body, a small group of anointed Witnesses at world headquarters in Warwick, New York, whom Witnesses regard as the 'faithful and discreet slave' of Matthew 24:45. Legal and publishing work is done through the Watch Tower Bible and Tract Society of Pennsylvania and related corporations. Branch offices oversee the work in each region, and each congregation is cared for by a body of unpaid overseers.",
@@ -1233,7 +1233,7 @@ export const worldReligions: BeliefRecord[] = [
         "Evangelicals agree with them that God's name and holiness matter, that Jesus's death was a ransom for many (Mark 10:45), and that Christ will return to judge and to renew creation.",
       ],
       disagreements: [
-        "Evangelicals believe Jesus is not a created being but the eternal Word who was with God and was God (John 1:1), who could say 'before Abraham came into existence, I AM' (John 8:58), and whom Thomas confessed as 'My Lord and my God' (John 20:28). They read 'the firstborn of all creation' (Colossians 1:15) as a title of pre-eminence, since the next verse says all things were created by him.",
+        "Evangelicals believe Jesus is not a created being but the eternal Word who was with God and was God (John 1:1), who could say 'before Abraham was, I am' (John 8:58), and whom Thomas confessed as 'My Lord and my God' (John 20:28). They read 'the firstborn of all creation' (Colossians 1:15) as a title of pre-eminence, since the next verse says all things were created by him.",
         "Evangelicals hold that the Holy Spirit is a person, into whose name, with the Father and the Son, believers are baptized (Matthew 28:19).",
         "Evangelicals hold that salvation is by grace through faith, not by works (Ephesians 2:8-9), that every believer is a child of God with a heavenly hope, and that no human governing body speaks for God with the authority of Scripture.",
       ],
@@ -1242,7 +1242,7 @@ export const worldReligions: BeliefRecord[] = [
       ],
     },
     ownAnswer: [
-      "Witnesses answer that the word Trinity is not in the Bible, that the doctrine was developed in the fourth century under Greek philosophical influence, and that Jesus himself said the Father is greater than he is (John 14:28). They translate John 1:1 as saying the Word 'was a god', a rendering most specialists in New Testament grammar reject but which Witnesses defend on grammatical grounds.",
+      "Witnesses answer that the word Trinity is not in the Bible, that the doctrine was developed in the fourth century under the influence of Platonic philosophy, and that Jesus himself said the Father is greater than he is (John 14:28). They translate John 1:1 as saying the Word 'was a god', a rendering most specialists in New Testament grammar reject but which Witnesses defend on grammatical grounds.",
       "They answer that they do put faith in Jesus's ransom, that works are the evidence of genuine faith (James 2:26), and that the Governing Body does not claim inspiration but serves as the channel through which the congregation receives spiritual food. They hold that faithful Christians in every age have been few, as Jesus said the road to life is narrow.",
     ],
     sources: [
@@ -1268,8 +1268,8 @@ export const worldReligions: BeliefRecord[] = [
       },
       {
         kind: "official",
-        label: "Jehovah's Witnesses, Do You Shun Former Members of Your Religion? (jw.org)",
-        url: "https://www.jw.org/en/jehovahs-witnesses/faq/shunning/",
+        label: "Jehovah's Witnesses, FAQ on those removed from the congregation (jw.org)",
+        url: "https://www.jw.org/en/jehovahs-witnesses/faq/removed-from-the-congregation/",
       },
       {
         kind: "official",
@@ -1328,7 +1328,7 @@ export const worldReligions: BeliefRecord[] = [
     adherents: {
       figure: "5%",
       counts:
-        "of US adults describe their religion as 'atheist' when asked their religious identity — a self-chosen label, not a direct measure of belief",
+        "US adults who describe their religion as 'atheist' when asked their religious identity — a self-chosen label, not a direct measure of belief",
       year: "2023-24 Religious Landscape Study",
       source: {
         label: "Pew Research Center, 2023-24 Religious Landscape Study: Religious identity (2025)",
@@ -1395,7 +1395,7 @@ export const worldReligions: BeliefRecord[] = [
         "Evangelicals agree that atheists can be people of real moral seriousness, and they credit the moral law atheists recognise to the God they believe has written it on every heart (Romans 2:14-15).",
       ],
       disagreements: [
-        "Evangelicals believe God's existence and power are clearly seen in what he has made (Romans 1:20; Psalm 19:1), and that the existence of the universe, its order, consciousness and the moral law point beyond nature.",
+        "Evangelicals believe God's existence and power are clearly seen in what he has made (Romans 1:20; Psalms 19:1), and that the existence of the universe, its order, consciousness and the moral law point beyond nature.",
         "Evangelicals rest Christianity on a historical claim open to examination: that Jesus rose bodily from the dead (1 Corinthians 15:3-8). They hold that God is known not only by argument but personally, in Christ.",
         "Evangelicals hold that without God, human dignity, moral obligation and ultimate meaning lack a secure foundation.",
       ],
@@ -1411,7 +1411,7 @@ export const worldReligions: BeliefRecord[] = [
       {
         kind: "official",
         label: "American Atheists, What Is Atheism?",
-        url: "https://www.atheists.org/activism/resources/about-atheism/",
+        url: "https://www.atheists.org/what-is-an-atheist/",
       },
       {
         kind: "official",
@@ -1425,8 +1425,8 @@ export const worldReligions: BeliefRecord[] = [
       },
       {
         kind: "data",
-        label: "Pew Research Center, 8 facts about atheists (updated 2024)",
-        url: "https://www.pewresearch.org/short-reads/2019/12/06/10-facts-about-atheists/",
+        label: "Pew Research Center, 8 facts about atheists (2024)",
+        url: "https://www.pewresearch.org/short-reads/2024/02/07/8-facts-about-atheists/",
       },
       {
         kind: "data",
@@ -1472,7 +1472,7 @@ export const worldReligions: BeliefRecord[] = [
     adherents: {
       figure: "6%",
       counts:
-        "of US adults describe their religion as 'agnostic' when asked their religious identity — a self-chosen label; many people uncertain about God call themselves 'nothing in particular', atheist, or members of a religion",
+        "US adults who describe their religion as 'agnostic' when asked their religious identity — a self-chosen label; many people uncertain about God call themselves 'nothing in particular', atheist, or members of a religion",
       year: "2023-24 Religious Landscape Study",
       source: {
         label: "Pew Research Center, 2023-24 Religious Landscape Study: Religious identity (2025)",
