@@ -825,7 +825,7 @@ export function beliefPage(topic, ctx) {
     ],
     [
       "Adherents",
-      `${esc(`${a.figure} ${a.counts} (${a.year}).`)} <span class="note">Source: ${extLink(a.source.url, a.source.label)}${
+      `${esc(`${a.figure} (${a.year})`)} <span class="note">Counts ${esc(a.counts)}. Source: ${extLink(a.source.url, a.source.label)}${
         a.verified ? "" : " · figure not yet verified"
       }${a.note ? `. ${esc(a.note)}` : ""}</span>`,
     ],

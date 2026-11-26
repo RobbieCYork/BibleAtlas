@@ -116,9 +116,9 @@ function BeliefFactsBlock({ b }: { b: BeliefRecord }) {
       <div className="artifact-fact">
         <span className="artifact-fact-label">Adherents</span>
         <span className="artifact-fact-value">
-          {a.figure} {a.counts} ({a.year}).{" "}
+          {a.figure} ({a.year})
           <span className="belief-fact-note">
-            Source:{" "}
+            {" "}Counts {a.counts}. Source:{" "}
             <a href={a.source.url} target="_blank" rel="noopener noreferrer">
               {a.source.label}
             </a>

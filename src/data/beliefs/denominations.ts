@@ -886,10 +886,10 @@ export const christianTraditions: BeliefRecord[] = [
     adherents: {
       figure: "about 1.42 million in about 11,900 congregations",
       counts: "adherents in the United States, from 21st Century Christian's directory",
-      year: "latest directory figures as reported in January 2025 (the directory was last printed in 2018)",
+      year: "latest directory figures, reported January 2025",
       source: { label: "The Christian Chronicle, Holy imagination: churches seek to reverse decline (2025)", url: "https://christianchronicle.org/holy-imagination-churches-seek-to-reverse-decline/" },
       verified: true,
-      note: "There is no central membership roll. A January 2026 Christian Chronicle article reports a researcher's estimate of about 10,100 congregations and 850,000-950,000 regular attenders. No worldwide figure was confirmed from a primary source.",
+      note: "There is no central membership roll, and the directory behind these figures was last printed in 2018. A January 2026 Christian Chronicle article reports a researcher's estimate of about 10,100 congregations and 850,000-950,000 regular attenders. No worldwide figure was confirmed from a primary source.",
     },
     distinctives: [
       "Congregations sing a cappella, without musical instruments, because instruments are not commanded in New Testament worship (Ephesians 5:19; Colossians 3:16). This, together with disagreement over missionary societies, was a main cause of the division from the Christian Church (Disciples of Christ).",

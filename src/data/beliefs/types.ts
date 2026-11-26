@@ -75,7 +75,8 @@ export interface BeliefFounding {
 export interface BeliefAdherents {
   /** The number as a reader should see it: "about 1.4 billion", "12.7 million (2024)". */
   figure: string;
-  /** What exactly is being counted: "baptized Catholics", "members on the rolls", "people who
+  /** What exactly is being counted, shown after the word "Counts": "baptized Catholics",
+   * "members on the rolls", "people who
    * self-identify as ...". Different bodies count different things; never compare across them
    * without saying so. */
   counts: string;
