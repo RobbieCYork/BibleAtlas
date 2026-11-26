@@ -127,6 +127,7 @@ const NAV = [
   ["/sites", "Sites"],
   ["/people", "People"],
   ["/topics", "Topics"],
+  ["/religions", "Religions"],
   ["/events", "Timeline"],
 ];
 
@@ -785,6 +786,92 @@ function topicJsonLd(topic) {
   return [{ ...article, about: { "@id": `${absolute(path)}#subject` } }, { "@id": `${absolute(path)}#subject`, ...about }];
 }
 
+// ---------------------------------------------------------------- religions and denominations
+const BELIEF_AREA_LABEL = {
+  "world-religion": "World Religions and Worldviews",
+  "christian-tradition": "Christian Traditions and Denominations",
+};
+
+const BELIEF_SOURCE_LABEL = {
+  official: "Official",
+  primary: "Primary text",
+  scholarly: "Scholarship",
+  data: "Survey / statistics",
+  reference: "Reference",
+  encyclopedic: "Encyclopedia",
+};
+
+/** A Religions and Denominations article. Built from the Topic-shaped record (so its sections are
+ * exactly the app's), with the structured BeliefRecord on `topic.belief` for the facts block, the
+ * classification notice and the typed source list. JSON-LD is a plain Article: schema.org has no
+ * type for "a religion", and none is invented. */
+export function beliefPage(topic, ctx) {
+  const b = topic.belief;
+  const a = b.adherents;
+  const description = clip(`${topic.name} — ${topic.summary}`);
+  const path = itemPath("religion", topic.id);
+  const trail = [
+    { name: "Library", path: "/library" },
+    { name: "Religions and Denominations", path: indexPath("religions") },
+    { name: topic.name, path },
+  ];
+  const facts = dl([
+    [b.founding.founderKind === "single" ? "Founder" : "Founders", esc(b.founding.founders)],
+    [
+      "Founded",
+      `${esc(b.founding.date)}${b.founding.place ? ` · ${esc(b.founding.place)}` : ""}${
+        b.founding.dateNote ? ` <span class="note">${esc(b.founding.dateNote)}</span>` : ""
+      }`,
+    ],
+    [
+      "Adherents",
+      `${esc(`${a.figure} (${a.year})`)} <span class="note">Counts ${esc(a.counts)}. Source: ${extLink(a.source.url, a.source.label)}${
+        a.verified ? "" : " · figure not yet verified"
+      }${a.note ? `. ${esc(a.note)}` : ""}</span>`,
+    ],
+    ["Group", esc(`${BELIEF_AREA_LABEL[b.area]} · ${b.group}`)],
+  ]);
+  const related = (b.relatedIds ?? [])
+    .map((id) => ({ href: ctx.urlFor("belief", id), name: ctx.nameFor?.("belief", id) }))
+    .filter((r) => r.href && r.name);
+  const body = [
+    heading(
+      topic.name,
+      topic.role,
+      topic.alternateNames?.length ? `Also called ${esc(topic.alternateNames.join(", "))}` : ""
+    ),
+    `<p class="lead">${ctx.linkify(topic.summary, topic.id)}</p>`,
+    b.classificationNote ? `<p class="note"><strong>About this classification.</strong> ${esc(b.classificationNote)}</p>` : "",
+    facts,
+    (topic.sections ?? []).map((s) => section(s.heading, paras(s.paragraphs, topic.id, ctx))).join(""),
+    versesSection(topic.verses),
+    section(
+      "Sources",
+      ul(
+        b.sources.map(
+          (s) =>
+            `<span class="cite-tier">${esc(BELIEF_SOURCE_LABEL[s.kind] ?? s.kind)}</span>${extLink(s.url, s.label)}${
+              s.note ? ` <span class="note">— ${esc(s.note)}</span>` : ""
+            }`
+        )
+      )
+    ),
+    related.length
+      ? section("Related articles", ul(related.map((r) => `<a href="${r.href}">${esc(r.name)}</a>`)))
+      : "",
+    moreSection("religions and denominations", ctx.siblings),
+  ].join("");
+  return page({
+    title: `${topic.name} — ${topic.role} | ${SITE_NAME}`,
+    description,
+    canonical: path,
+    trail,
+    jsonLd: [articleLd(`${topic.name}: ${topic.role}`, topic.summary, path)],
+    body,
+    current: "/religions",
+  });
+}
+
 export function eventPage(ev, ctx) {
   const cat = EVENT_CATEGORY_LABEL[ev.category] ?? ev.category;
   const description = clip(`${ev.title} (${ev.dateLabel}) — ${ev.summary}`);
@@ -889,6 +976,7 @@ export function hubPage(counts, total) {
     ["/sites", "Biblical Sites & Archaeology", counts.pois, "Excavated sites, fortresses, pools and tombs, with what has actually been recovered at each."],
     ["/people", "People", counts.people, "Biblical figures, church fathers, reformers, and the rulers of the surrounding world."],
     ["/topics", "Topics & Doctrines", counts.topics, "Practices, doctrines, people groups and concepts the text assumes you already know."],
+    ["/religions", "Religions and Denominations", counts.beliefTopics, "World religions, worldviews and the Christian traditions — founders, adherents, beliefs and practice, with an evangelical assessment and each one's own reply."],
     ["/events", "Bible & Church History Timeline", counts.timelineEvents, "Creation to the modern missions movement, with how firmly each date is established."],
   ];
   const body = [

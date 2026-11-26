@@ -74,6 +74,12 @@ export default function BibleTriviaView({ session, onBack, available }: BibleTri
     fetchPlayers(roomId).then(setPlayers).catch(() => {});
   };
 
+  /** The room check_and_advance() handed back. Never steps back to an earlier question. */
+  const applyAdvancedRoom = (next: GameRoom) => {
+    setRoom((prev) => (prev && prev.id === next.id && next.current_question_index >= prev.current_question_index ? next : prev));
+    refetchPlayers();
+  };
+
   useEffect(() => {
     if (!roomId) {
       setRoom(null);
@@ -192,7 +198,15 @@ export default function BibleTriviaView({ session, onBack, available }: BibleTri
             }
           />
         ) : room.status === "active" ? (
-          <GameRoomPlay room={room} players={players} userId={userId} answersVersion={answersVersion} renderVideoStrip={renderVideoStrip} />
+          <GameRoomPlay
+            room={room}
+            players={players}
+            userId={userId}
+            answersVersion={answersVersion}
+            onRoomAdvanced={applyAdvancedRoom}
+            onScored={refetchPlayers}
+            renderVideoStrip={renderVideoStrip}
+          />
         ) : (
           <>
             {!isSolo && <GameMediaBar media={webrtc} />}

@@ -63,6 +63,11 @@ const LINKED_TOPIC_CATEGORIES: Record<TopicCategory, boolean> = {
   // letters. Register the unambiguous long form or nothing.
   discovery: true,
   manuscript: true,
+  // Religions and Denominations. NEVER registered: "Nazarene" (Matthew 2:23), "Pentecost" (Acts 2),
+  // "catholic", "Baptist" and "Orthodox" all collide with Scripture or with ordinary prose. These
+  // records are also kept out of topics.ts entirely; this is the second lock on the same door.
+  "world-religion": false,
+  "christian-tradition": false,
 };
 
 /** Every location's (any category) primary + alternate name, every POI's name, and every person's

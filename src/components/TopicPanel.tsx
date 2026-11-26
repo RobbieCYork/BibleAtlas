@@ -1,4 +1,6 @@
 import type { Citation, DiscoveryFacts, ManuscriptFacts, Topic } from "../data/types";
+import type { BeliefRecord } from "../data/beliefs/types";
+import { AREA_LABELS, SOURCE_KIND_LABELS, beliefRecords } from "../data/beliefs";
 import VerseList from "./VerseList";
 import LinkedVerseText from "./LinkedVerseText";
 import ReflectionPrompt from "./ReflectionPrompt";
@@ -92,6 +94,49 @@ function FactsBlock({ rows }: { rows: [string, string][] }) {
   );
 }
 
+/** The facts block for a Religions and Denominations article: the same four rows in the same place on
+ * every one. Adherents carries its own source inline, because a number without who counted it and
+ * what they counted is not a fact a reader can use. */
+function BeliefFactsBlock({ b }: { b: BeliefRecord }) {
+  const a = b.adherents;
+  return (
+    <div className="artifact-facts">
+      <div className="artifact-fact">
+        <span className="artifact-fact-label">Founder{b.founding.founderKind === "single" ? "" : "s"}</span>
+        <span className="artifact-fact-value">{b.founding.founders}</span>
+      </div>
+      <div className="artifact-fact">
+        <span className="artifact-fact-label">Founded</span>
+        <span className="artifact-fact-value">
+          {b.founding.date}
+          {b.founding.place ? ` · ${b.founding.place}` : ""}
+          {b.founding.dateNote && <span className="belief-fact-note"> {b.founding.dateNote}</span>}
+        </span>
+      </div>
+      <div className="artifact-fact">
+        <span className="artifact-fact-label">Adherents</span>
+        <span className="artifact-fact-value">
+          {a.figure} ({a.year})
+          <span className="belief-fact-note">
+            {" "}Counts {a.counts}. Source:{" "}
+            <a href={a.source.url} target="_blank" rel="noopener noreferrer">
+              {a.source.label}
+            </a>
+            {a.verified ? "" : " · figure not yet verified"}
+            {a.note ? `. ${a.note}` : ""}
+          </span>
+        </span>
+      </div>
+      <div className="artifact-fact">
+        <span className="artifact-fact-label">Group</span>
+        <span className="artifact-fact-value">
+          {AREA_LABELS[b.area]} · {b.group}
+        </span>
+      </div>
+    </div>
+  );
+}
+
 export default function TopicPanel({
   topic,
   onBack,
@@ -111,6 +156,10 @@ export default function TopicPanel({
   // `topic.discovery.findSiteId` inside a callback would need a non-null assertion, and an
   // assertion is exactly the wrong tool for a field whose whole point is that it is optional.
   const d = topic.discovery;
+  const b = topic.belief;
+  const related = b?.relatedIds
+    ?.map((id) => beliefRecords.find((r) => r.id === id))
+    .filter((r): r is BeliefRecord => Boolean(r));
   const findSite =
     d?.findSiteId && d.findSiteKind ? { id: d.findSiteId, kind: d.findSiteKind, label: d.findSite } : null;
 
@@ -136,6 +185,13 @@ export default function TopicPanel({
       </div>
       )}
 
+      {b?.classificationNote && (
+        // Shown where the reader meets the filing, never buried further down (Robbie, 2026-09-09).
+        <div className="belief-classification" role="note">
+          <strong>About this classification.</strong> {b.classificationNote}
+        </div>
+      )}
+      {b && <BeliefFactsBlock b={b} />}
       {topic.discovery && <FactsBlock rows={discoveryRows(topic.discovery)} />}
       {topic.manuscript && <FactsBlock rows={manuscriptRows(topic.manuscript)} />}
 
@@ -190,6 +246,38 @@ export default function TopicPanel({
           </div>
         ))}
       </div>
+
+      {related && related.length > 0 && (
+        <div className="sources-section">
+          <h4>Related articles</h4>
+          <ul>
+            {related.map((r) => (
+              <li key={r.id}>
+                <button type="button" className="belief-related-link" onClick={() => onSelectTopic(r.id)}>
+                  {r.name}
+                </button>
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
+
+      {b && b.sources.length > 0 && (
+        <div className="sources-section">
+          <h4>Sources</h4>
+          <ul>
+            {b.sources.map((src) => (
+              <li key={src.url}>
+                <span className="citation-tier">{SOURCE_KIND_LABELS[src.kind]}</span>{" "}
+                <a href={src.url} target="_blank" rel="noopener noreferrer">
+                  {src.label}
+                </a>
+                {src.note && <span className="citation-detail"> — {src.note}</span>}
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
 
       {topic.citations && topic.citations.length > 0 && (
         <div className="sources-section">

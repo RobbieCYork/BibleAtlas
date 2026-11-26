@@ -53,13 +53,19 @@ import { startAnalytics, track, noteAuthChange } from "./lib/analytics";
 import { locations } from "./data/locations";
 import { pois } from "./data/pois";
 import { people } from "./data/people";
-import { topics } from "./data/topics";
+import { topics as baseTopics } from "./data/topics";
+import { beliefTopics } from "./data/beliefs";
 import { timelineEvents } from "./data/timelineEvents";
 import { formatWalkStopReference, getActiveSeasonalWalk, getWalkDismissKey } from "./data/seasonalWalks";
 import SeasonalWalkPanel from "./components/SeasonalWalkPanel";
 import { TestViewStrip } from "./components/FeatureRelease";
 import { useFeature } from "./lib/features";
 import "./App.css";
+
+/** The topics the app opens and lists: topics.ts plus the Religions and Denominations articles.
+ * Only the app sees this union. The name linker imports topics.ts directly, so the belief records
+ * never become link targets in Scripture or prose. */
+const topics = [...baseTopics, ...beliefTopics];
 
 const MIN_PANEL_WIDTH = 240;
 const MAX_PANEL_WIDTH = 800;

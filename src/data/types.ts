@@ -1,3 +1,5 @@
+import type { BeliefRecord } from "./beliefs/types";
+
 export type LocationCategory =
   | "city"
   | "region"
@@ -212,7 +214,11 @@ export type TopicCategory =
   | "people-group"
   | "concept"
   | "discovery"
-  | "manuscript";
+  | "manuscript"
+  /** Religions and Denominations section. Built from `BeliefRecord`s (src/data/beliefs/) by
+   * `beliefToTopic`, never written into topics.ts, and never registered with the auto-linker. */
+  | "world-religion"
+  | "christian-tradition";
 
 /** How a source backing an article should be weighed, so the reader can tell a museum's own object
  * page from a Wikipedia article at a glance instead of meeting six identical-looking links.
@@ -361,6 +367,9 @@ export interface Topic {
   discovery?: DiscoveryFacts;
   /** Present iff `category === "manuscript"`. */
   manuscript?: ManuscriptFacts;
+  /** Present iff the category is "world-religion" or "christian-tradition": the structured record
+   * the article was built from, for the facts block, the classification notice and cross-links. */
+  belief?: BeliefRecord;
   /** Tiered citations. Expected on every discovery/manuscript record and optional elsewhere —
    * which is a data rule, not a compiler one, because making it required would break all 58
    * topics that predate it. `sources` remains the general further-reading list. */
