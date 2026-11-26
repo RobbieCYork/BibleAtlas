@@ -4,6 +4,26 @@ import { pois } from "./pois";
 import { timelineEvents } from "./timelineEvents";
 import { topics } from "./topics";
 import { BOOKS } from "./bibleBooks";
+import {
+  HAS_DASH,
+  HAS_NUMBER,
+  LOCATION_FACT_WORDING,
+  ORDER_CHOICE_TITLES,
+  PERSON_ROLE_WORDING,
+  PERSON_SUMMARY_WORDING,
+  SITE_PROMPT_NAMES,
+  TOPIC_ROLE_WORDING,
+  TOPIC_SUMMARY_WORDING,
+  capitalised,
+  containsPhrase,
+  formatClues,
+  givesAway,
+  nameForms,
+  reword,
+  withoutBrackets,
+  withoutDates,
+  wordClues,
+} from "./triviaGiveaways";
 import type { LocationCategory, TimelineDateCertainty, TimelineEvent, Topic, VerseRef } from "./types";
 
 export type QuizDifficulty = "easy" | "moderate" | "difficult" | "impossible";
@@ -123,6 +143,24 @@ function replaceUnfit<T>(drawn: T[], pool: T[], isFit: (item: T) => boolean, id:
   if (spares.length < needed) return null;
   let next = 0;
   return drawn.map((item) => (isFit(item) ? item : spares[next++]));
+}
+
+/** Swaps wrong choices, in place, until every clue to the answer is carried by one of them too. A
+ * swap never undoes a clue already covered. Null when some clue cannot be covered. */
+function coverClues<T>(drawn: T[], pool: T[], clues: ((item: T) => boolean)[], isFit: (item: T) => boolean, id: string): T[] | null {
+  const out = [...drawn];
+  for (let c = 0; c < clues.length; c++) {
+    if (out.some(clues[c])) continue;
+    const covered = clues.filter((clue) => out.some(clue));
+    const spares = pool.filter((item) => !out.includes(item) && isFit(item) && clues[c](item));
+    const rand = mulberry32(hashSeed(`${id}:clue:${c}`));
+    const [spare] = seededPick(spares, 1, rand);
+    if (spare === undefined) return null;
+    const slot = out.findIndex((_, i) => covered.every((clue) => out.some((item, j) => clue(j === i ? spare : item))));
+    if (slot < 0) return null;
+    out[slot] = spare;
+  }
+  return out;
 }
 
 /** Descriptions carried by more than one record — a "which one does this describe?" question built on
@@ -263,8 +301,24 @@ function isSameOrBroaderRole(other: string, role: string): boolean {
   return full === broad || [" ", ",", ";"].some((separator) => full.startsWith(broad + separator));
 }
 
+/** A role as a choice shows it: no bracketed aside, and no word that names its holder. */
+function roleLabel(person: (typeof people)[number]): string {
+  return withoutBrackets(reword(person.role, PERSON_ROLE_WORDING[person.id]));
+}
+
+/** Every short form of every other person's name — "Mary" belongs to several people. */
+function isAnotherPersonsName(name: string, personId: string): boolean {
+  const wanted = name.toLowerCase();
+  return people.some(
+    (p) => p.id !== personId && [...nameForms(p.name), ...(p.alternateNames ?? [])].some((other) => other.toLowerCase() === wanted)
+  );
+}
+
 function personRoleQuestions(): QuizQuestion[] {
   const out: QuizQuestion[] = [];
+  const labels = new Map<string, string>();
+  for (const person of people) if (person.role && !labels.has(person.role)) labels.set(person.role, roleLabel(person));
+  const labelOf = (role: string) => labels.get(role) ?? role;
   for (const person of people) {
     if (!person.role) continue;
     const sameTier = people.filter((p) => p.tier === person.tier && p.id !== person.id && p.role && p.role !== person.role);
@@ -272,14 +326,20 @@ function personRoleQuestions(): QuizQuestion[] {
     if (distractorPool.length < 3) continue;
     const id = `person-role-${person.id}`;
     const rand = mulberry32(hashSeed(id));
+    const role = labelOf(person.role);
     const distractors = replaceUnfit(
       seededPick(distractorPool, 3, rand),
       distractorPool,
-      (role) => !isSameOrBroaderRole(role, person.role) && !PERSON_ALSO_ROLES[person.id]?.includes(role),
+      (other) => !isSameOrBroaderRole(labelOf(other), role) && !PERSON_ALSO_ROLES[person.id]?.includes(other),
       id
-    );
+    )?.map(labelOf);
     if (!distractors) continue;
-    const { choices, correctIndex } = shuffleChoices(person.role, distractors, rand);
+    // The fullest form of the name that neither gives the role away nor could mean somebody else.
+    const name = nameForms(person.name).find(
+      (form) => (form === person.name || !isAnotherPersonsName(form, person.id)) && !givesAway(form, role, distractors)
+    );
+    if (!name) continue;
+    const { choices, correctIndex } = shuffleChoices(role, distractors, rand);
     const difficulty: QuizDifficulty = person.tier === "major" ? "easy" : person.tier === "significant" ? "moderate" : "difficult";
     out.push({
       id,
@@ -288,7 +348,7 @@ function personRoleQuestions(): QuizQuestion[] {
       extraBiblical: isExtraBiblical(person),
       difficulty,
       points: DIFFICULTY_POINTS[difficulty],
-      prompt: `What was ${person.name}'s role?`,
+      prompt: `What was ${name}'s role?`,
       choices,
       correctIndex,
       entityId: person.id,
@@ -307,8 +367,26 @@ function personSummaryQuestions(): QuizQuestion[] {
     if (sameTier.length < 3) continue;
     const id = `person-summary-${person.id}`;
     const rand = mulberry32(hashSeed(id));
-    const distractors = seededPick(sameTier, 3, rand).map((p) => p.name);
-    const { choices, correctIndex } = shuffleChoices(person.name, distractors, rand);
+    const drawn = seededPick(sameTier, 3, rand);
+    const summary = reword(person.summary, PERSON_SUMMARY_WORDING[person.id]);
+    // The fullest form of the name that the description does not give away: "Publius" where it says
+    // Malta. A name written with a bracket also loses it when no other choice has one.
+    const named = nameForms(person.name).find(
+      (form) =>
+        !givesAway(
+          summary,
+          form,
+          drawn.map((p) => p.name)
+        ) &&
+        (!form.includes("(") || drawn.some((p) => p.name.includes("(")))
+    );
+    if (!named || (person.alternateNames ?? []).some((alternate) => containsPhrase(summary, alternate))) continue;
+    // A shortened name must not also be the short name of a wrong choice.
+    const others = replaceUnfit(drawn, sameTier, (p) => named === person.name || !nameForms(p.name).includes(named), id);
+    if (!others) continue;
+    const distractors = others.map((p) => p.name);
+    if (givesAway(summary, named, distractors)) continue;
+    const { choices, correctIndex } = shuffleChoices(named, distractors, rand);
     // "notable" figures with almost nothing recorded about them (see noExtraBiblicalRecordNote) make
     // for the hardest people questions — bumped a level past the plain tier mapping.
     const difficulty: QuizDifficulty =
@@ -320,7 +398,7 @@ function personSummaryQuestions(): QuizQuestion[] {
       extraBiblical: isExtraBiblical(person),
       difficulty,
       points: DIFFICULTY_POINTS[difficulty],
-      prompt: `Who does this describe: "${person.summary}"?`,
+      prompt: `Who does this describe: "${summary}"?`,
       choices,
       correctIndex,
       entityId: person.id,
@@ -371,11 +449,11 @@ function locationCategoryQuestions(): QuizQuestion[] {
       id
     );
     if (!distractorCategories) continue;
-    const { choices, correctIndex } = shuffleChoices(
-      LOCATION_CATEGORY_LABELS[location.category],
-      distractorCategories.map((c) => LOCATION_CATEGORY_LABELS[c]),
-      rand
-    );
+    const answer = LOCATION_CATEGORY_LABELS[location.category];
+    const distractors = distractorCategories.map((c) => LOCATION_CATEGORY_LABELS[c]);
+    // "Mount Sinai" and "Dead Sea" say what they are.
+    if (givesAway(location.name, answer, distractors) || (answer === "Mountain" && containsPhrase(location.name, "Mount"))) continue;
+    const { choices, correctIndex } = shuffleChoices(answer, distractors, rand);
     const difficulty = difficultyFromVerseCount(location.verses.length);
     out.push({
       id,
@@ -395,6 +473,7 @@ function locationCategoryQuestions(): QuizQuestion[] {
 
 /** Places that a location's first notable fact would also fit — a wider area around it. */
 const LOCATION_FACT_ALSO_FITS: Record<string, string[]> = {
+  "dead-sea": ["jordan-river"], // also a boundary of the land
   gadara: ["decapolis"], // Gadara was one of the Decapolis cities
 };
 
@@ -411,6 +490,8 @@ function locationFactQuestions(): QuizQuestion[] {
     const alsoFits = locations.filter((l) => LOCATION_FACT_ALSO_FITS[location.id]?.includes(l.id)).map((l) => l.name);
     const distractors = replaceUnfit(seededPick(otherNames, 3, rand), otherNames, (name) => !alsoFits.includes(name), id);
     if (!distractors) continue;
+    const description = reword(fact, LOCATION_FACT_WORDING[location.id]);
+    if (givesAway(description, location.name, distractors) || (location.alternateNames ?? []).some((a) => containsPhrase(description, a))) continue;
     const { choices, correctIndex } = shuffleChoices(location.name, distractors, rand);
     const difficulty = difficultyFromVerseCount(location.verses.length);
     out.push({
@@ -419,7 +500,7 @@ function locationFactQuestions(): QuizQuestion[] {
       testament: testamentFromVerses(location.verses),
       difficulty,
       points: DIFFICULTY_POINTS[difficulty],
-      prompt: `Which place does this describe? "${fact}"`,
+      prompt: `Which place does this describe? "${description}"`,
       choices,
       correctIndex,
       entityId: location.id,
@@ -551,7 +632,15 @@ function poiTagQuestions(): QuizQuestion[] {
     if (otherTags.length < 3) continue;
     const id = `poi-tag-${poi.id}`;
     const rand = mulberry32(hashSeed(id));
-    const distractorTags = replaceUnfit(seededPick(otherTags, 3, rand), otherTags, (tag) => !poiTagAlsoFits(poi, tag), id);
+    const isFit = (tag: string) => !poiTagAlsoFits(poi, tag);
+    const drawnTags = replaceUnfit(seededPick(otherTags, 3, rand), otherTags, isFit, id);
+    if (!drawnTags) continue;
+    // A site named for what it is ("Theatre of Miletus") needs a wrong choice with the same word,
+    // and gets no question when there is none.
+    const wanted = SITE_PROMPT_NAMES[poi.id] ?? poi.name;
+    const name = wordClues(wanted, poi.tag)?.length === 0 ? wanted : withoutBrackets(wanted);
+    const clues = wordClues(name, poi.tag);
+    const distractorTags = clues && coverClues(drawnTags, otherTags, clues, isFit, id);
     if (!distractorTags) continue;
     const { choices, correctIndex } = shuffleChoices(poi.tag, distractorTags, rand);
     // POIs are secondary/archaeological sites by design (lighter-weight than a full Location) — they
@@ -563,7 +652,7 @@ function poiTagQuestions(): QuizQuestion[] {
       testament: Object.hasOwn(POI_TESTAMENT_EXCEPTIONS, poi.id) ? POI_TESTAMENT_EXCEPTIONS[poi.id] : "new",
       difficulty,
       points: DIFFICULTY_POINTS[difficulty],
-      prompt: `What is ${poi.name}?`,
+      prompt: `What is ${name}?`,
       choices,
       correctIndex,
       entityId: poi.id,
@@ -632,7 +721,7 @@ function timelineYearQuestions(): QuizQuestion[] {
       testament: testamentFromEvent(event),
       difficulty,
       points: DIFFICULTY_POINTS[difficulty],
-      prompt: `About what year did "${event.title}" happen?`,
+      prompt: `About what year did "${withoutDates(event.title)}" happen?`,
       choices,
       correctIndex,
       entityId: event.id,
@@ -664,8 +753,10 @@ function timelineOrderQuestions(): QuizQuestion[] {
       const earliestEnd = earliest.endYear ?? earliest.startYear;
       const group = replaceUnfit(drawn, events, (e) => e === earliest || e.startYear > earliestEnd, id);
       if (!group) continue;
-      const distractors = group.filter((e) => e.id !== earliest.id).map((e) => e.title);
-      const { choices, correctIndex } = shuffleChoices(earliest.title, distractors, rand);
+      const choiceTitle = (e: TimelineEvent) => ORDER_CHOICE_TITLES[e.id] ?? withoutDates(e.title);
+      const distractors = group.filter((e) => e.id !== earliest.id).map(choiceTitle);
+      if (givesAway("early earliest", choiceTitle(earliest), distractors)) continue;
+      const { choices, correctIndex } = shuffleChoices(choiceTitle(earliest), distractors, rand);
       const worstCertainty = group.reduce(
         (worst, e) => (CERTAINTY_RANK[e.dateCertainty] > CERTAINTY_RANK[worst] ? e.dateCertainty : worst),
         "firm" as TimelineDateCertainty
@@ -729,6 +820,8 @@ function topicQuizCategory(topic: (typeof topics)[number]): QuizCategory {
 
 function theologyRoleQuestions(): QuizQuestion[] {
   const out: QuizQuestion[] = [];
+  const labels = new Map(topics.map((t) => [t.role, reword(t.role, TOPIC_ROLE_WORDING[t.id])]));
+  const labelOf = (role: string) => labels.get(role) ?? role;
   for (const topic of topics) {
     if (!topic.role) continue;
     const others = topics.filter((t) => t.id !== topic.id && t.role && t.role !== topic.role);
@@ -736,8 +829,20 @@ function theologyRoleQuestions(): QuizQuestion[] {
     if (distractorPool.length < 3) continue;
     const id = `theology-role-${topic.id}`;
     const rand = mulberry32(hashSeed(id));
-    const distractors = seededPick(distractorPool, 3, rand);
-    const { choices, correctIndex } = shuffleChoices(topic.role, distractors, rand);
+    const role = labelOf(topic.role);
+    const isFit = (other: string) => !isSameOrBroaderRole(labelOf(other), role);
+    const drawn = replaceUnfit(seededPick(distractorPool, 3, rand), distractorPool, isFit, id);
+    const clues = wordClues(topic.name, role);
+    if (!drawn || !clues) continue;
+    const distractors = coverClues(
+      drawn,
+      distractorPool,
+      [...clues, ...formatClues(role, [HAS_NUMBER, HAS_DASH])].map((clue) => (other: string) => clue(labelOf(other))),
+      isFit,
+      id
+    )?.map(labelOf);
+    if (!distractors) continue;
+    const { choices, correctIndex } = shuffleChoices(role, distractors, rand);
     out.push({
       id,
       category: topicQuizCategory(topic),
@@ -762,6 +867,12 @@ const TOPIC_PART_OF: Record<string, string> = {
   "papyrus-75": "bodmer-papyri",
 };
 
+/** Other topics a description would also fit once its giveaway word is gone. */
+const TOPIC_SUMMARY_ALSO_FITS: Record<string, string[]> = {
+  greeks: ["gentiles"],
+  "leningrad-codex": ["aleppo-codex"],
+};
+
 function theologySummaryQuestions(): QuizQuestion[] {
   const out: QuizQuestion[] = [];
   const shared = sharedTexts(topics.map((t) => t.summary));
@@ -772,16 +883,23 @@ function theologySummaryQuestions(): QuizQuestion[] {
     const id = `theology-summary-${topic.id}`;
     const rand = mulberry32(hashSeed(id));
     const collection = topics.find((t) => t.id === TOPIC_PART_OF[topic.id])?.name;
-    const distractors = replaceUnfit(seededPick(others, 3, rand), others, (name) => name !== collection, id);
+    const alsoFits = topics.filter((t) => TOPIC_SUMMARY_ALSO_FITS[topic.id]?.includes(t.id)).map((t) => t.name);
+    const isFit = (name: string) => name !== collection && !alsoFits.includes(name);
+    const drawn = replaceUnfit(seededPick(others, 3, rand), others, isFit, id);
+    const summary = reword(topic.summary, TOPIC_SUMMARY_WORDING[topic.id]);
+    const clues = wordClues(summary, topic.name);
+    if (!drawn || !clues || (topic.alternateNames ?? []).some((alternate) => containsPhrase(summary, alternate))) continue;
+    const distractors = coverClues(drawn, others, [...clues, ...formatClues(topic.name, [HAS_NUMBER])], isFit, id);
     if (!distractors) continue;
-    const { choices, correctIndex } = shuffleChoices(topic.name, distractors, rand);
+    // Some topic names are written in lower case ("scribes"), which would single them out.
+    const { choices, correctIndex } = shuffleChoices(capitalised(topic.name), distractors.map(capitalised), rand);
     out.push({
       id,
       category: topicQuizCategory(topic),
       testament: "both",
       difficulty: "difficult",
       points: DIFFICULTY_POINTS.difficult,
-      prompt: `Which topic does this describe: "${topic.summary}"?`,
+      prompt: `Which topic does this describe: "${summary}"?`,
       choices,
       correctIndex,
       entityId: topic.id,
@@ -907,11 +1025,11 @@ const DOCTRINE_QUESTIONS: DoctrineQuestionSeed[] = [
     slug: "creed-definition",
     difficulty: "easy",
     prompt: "The Apostles' Creed and the Nicene Creed are examples of what?",
-    answer: "Creeds — short summaries of Christian belief confessed by the church",
+    answer: "Short summaries of Christian belief confessed by the church",
     distractors: [
-      "Books of the New Testament",
-      "Letters written by the apostle Paul",
-      "Rules governing monastic communities",
+      "Collections of letters sent to the first churches",
+      "Orders of service for public worship and prayer",
+      "Rules for the daily life of monastic communities",
     ],
     keywords: "creed apostles nicene confession symbol of faith",
   },
@@ -940,7 +1058,7 @@ const DOCTRINE_QUESTIONS: DoctrineQuestionSeed[] = [
   {
     slug: "original-sin",
     difficulty: "moderate",
-    prompt: "Which term names the teaching that human beings come into the world already under a condition of sin traced to Adam?",
+    prompt: "Which term names the teaching that human beings are born already corrupted because of Adam's disobedience?",
     answer: "Original sin",
     distractors: ["Ritual impurity", "Apostasy", "Blasphemy"],
     keywords: "original sin adam fall hamartiology",
@@ -989,24 +1107,16 @@ const DOCTRINE_QUESTIONS: DoctrineQuestionSeed[] = [
     slug: "eschatology-definition",
     difficulty: "moderate",
     prompt: "\"Eschatology\" is the branch of theology that studies what?",
-    answer: "Last things — death, judgment, and the age to come",
-    distractors: ["The church", "The Holy Spirit", "The doctrine of salvation"],
+    answer: "Death, judgment, and the age to come",
+    distractors: ["The nature and mission of the church", "The person and ministry of the Holy Spirit", "How sinners are saved"],
     keywords: "eschatology last things end times judgment",
-  },
-  {
-    slug: "christology-definition",
-    difficulty: "moderate",
-    prompt: "\"Christology\" is the branch of theology that studies what?",
-    answer: "The person and work of Christ",
-    distractors: ["The end times", "The sacraments", "The angels"],
-    keywords: "christology jesus person work doctrine",
   },
   {
     slug: "ecclesiology-definition",
     difficulty: "moderate",
     prompt: "\"Ecclesiology\" is the branch of theology that studies what?",
-    answer: "The church — its nature, marks, and mission",
-    distractors: ["Scripture and its inspiration", "Sin and the fall", "Prophecy and fulfillment"],
+    answer: "The nature, marks, and mission of the church",
+    distractors: ["The inspiration and authority of Scripture", "The origin and effects of human sin", "The fulfillment of biblical prophecy"],
     keywords: "ecclesiology church doctrine body of christ",
   },
   {
@@ -1025,11 +1135,11 @@ const DOCTRINE_QUESTIONS: DoctrineQuestionSeed[] = [
     slug: "covenant-definition",
     difficulty: "moderate",
     prompt: "In biblical theology, a \"covenant\" is best described as what?",
-    answer: "A binding relationship, with promises and obligations, that God establishes with his people",
+    answer: "A binding relationship God makes with his people",
     distractors: [
-      "A tax paid for the upkeep of the temple",
+      "A yearly tax paid for the upkeep of the temple",
       "A Roman legal contract for the sale of land",
-      "A form of Hebrew poetry using parallel lines",
+      "A form of Hebrew poetry built on parallel lines",
     ],
     keywords: "covenant berith promise abraham sinai new covenant",
   },
@@ -1061,11 +1171,11 @@ const DOCTRINE_QUESTIONS: DoctrineQuestionSeed[] = [
     slug: "nicene-consubstantial",
     difficulty: "moderate",
     prompt: "The Nicene Creed confesses that the Son is what, in relation to the Father?",
-    answer: "Of one substance (consubstantial) with the Father",
+    answer: "Of one substance with the Father",
     distractors: [
-      "The first and highest of God's creatures",
-      "A human being adopted as Son at his baptism",
-      "One of three modes in which one person appears",
+      "The first and highest creature the Father made",
+      "A man the Father adopted as Son at his baptism",
+      "A mode in which the Father himself appears",
     ],
     keywords: "nicene creed homoousios consubstantial son father trinity",
   },
@@ -1171,7 +1281,7 @@ const DOCTRINE_QUESTIONS: DoctrineQuestionSeed[] = [
     slug: "aseity",
     difficulty: "difficult",
     prompt: "Which divine attribute is named by the term \"aseity\"?",
-    answer: "God's self-existence — that he depends on nothing outside himself",
+    answer: "God's independence of everything outside himself",
     distractors: [
       "God's presence at every point of creation",
       "God's changelessness across time",
@@ -1206,8 +1316,8 @@ const DOCTRINE_QUESTIONS: DoctrineQuestionSeed[] = [
   {
     slug: "modalism",
     difficulty: "difficult",
-    prompt: "Which Trinitarian error treats Father, Son, and Spirit as three modes or masks of a single person rather than three distinct persons?",
-    answer: "Modalism (Sabellianism)",
+    prompt: "Which Trinitarian error treats Father, Son, and Spirit as three guises or masks of a single person rather than three distinct persons?",
+    answer: "Modalism",
     distractors: ["Arianism", "Tritheism", "Subordinationism"],
     keywords: "modalism sabellianism patripassianism trinity heresy modes",
   },
@@ -1263,11 +1373,11 @@ const DOCTRINE_QUESTIONS: DoctrineQuestionSeed[] = [
     slug: "general-revelation",
     difficulty: "difficult",
     prompt: "\"General revelation\" refers to what?",
-    answer: "What can be known of God through creation and conscience, available to everyone",
+    answer: "What everyone can know of God through creation and conscience",
     distractors: [
-      "The public reading of Scripture in worship",
-      "The visions recorded in the book of Revelation",
-      "Prophecies given to named individuals",
+      "The public reading of Scripture when the church gathers",
+      "The visions John recorded in the last book of the Bible",
+      "Messages given by prophets to particular people and nations",
     ],
     keywords: "general revelation natural creation conscience romans 1 special",
   },
@@ -1301,7 +1411,7 @@ const DOCTRINE_QUESTIONS: DoctrineQuestionSeed[] = [
     prompt: "The phrase \"imago Dei\" refers to what?",
     answer: "Humanity's creation in the image of God",
     distractors: [
-      "The veneration of painted icons in worship",
+      "The veneration of painted images in worship",
       "The seal of the Spirit given at baptism",
       "The likeness of Christ displayed in the sacrament",
     ],
