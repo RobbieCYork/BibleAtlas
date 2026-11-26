@@ -42,10 +42,12 @@ import "./TimelineView.css";
  * outer viewport (.tl-canvas-viewport) scrolls vertically to reach anything below the fold — that's
  * the normal case, not an edge case reserved for checking many lanes at once.
  *
- * Interactions: vertical wheel/trackpad = zoom-to-cursor · horizontal trackpad
- * swipe = pan · drag (mouse or touch) = pan, with momentum on release · pinch =
- * zoom (touch) · +/−/Fit buttons · double-click = zoom in at point · cluster
- * badge click = animated zoom into that bucket's year range.
+ * Interactions: two-finger trackpad scroll / mouse wheel = move (vertical scrolls
+ * down the lanes, horizontal moves along time; Shift + wheel also moves along
+ * time) · pinch (trackpad or touch) and Ctrl/⌘ + wheel = zoom at the pointer ·
+ * drag (mouse or touch) = pan, with momentum on release · +/−/Fit buttons ·
+ * double-click = zoom in at point · cluster badge click = animated zoom into that
+ * bucket's year range. A plain scroll NEVER zooms.
  * ========================================================================== */
 
 /* ------------------------------------------------------------- data intake */
@@ -118,6 +120,15 @@ const MOMENTUM_MIN_VX = 0.05; // px/ms — below this, a released drag just stop
 const MOMENTUM_STOP_VX = 0.015; // px/ms — glide ends once decayed velocity drops below this
 const MOMENTUM_FRICTION = 0.0028; // per-ms exponential decay rate (~250ms velocity half-life)
 const MOMENTUM_MAX_VX = 3.5; // px/ms safety cap on captured fling speed
+
+/** Wheel zoom (trackpad pinch, or Ctrl/⌘ + wheel): zoom factor = exp(-delta * rate). 0.01 makes a
+ * trackpad pinch track the fingers about 1:1. The per-event cap is for mouse wheels, whose notches
+ * arrive as ~100 at a time and would otherwise nearly triple the zoom with one click. */
+const WHEEL_ZOOM_RATE = 0.01;
+const WHEEL_ZOOM_MAX_DELTA = 25;
+/** A scroll whose one axis is more than this many times the other is treated as purely that axis, so
+ * the small sideways wobble of a downward trackpad scroll doesn't drift the timeline through time. */
+const WHEEL_AXIS_LOCK_RATIO = 2;
 
 /** ---------------------------------------------------------------- lane registry
  *
@@ -454,9 +465,11 @@ export default function TimelineView({
 }: TimelineViewProps) {
   /* viewportRef: the outer, scrollable window (vertical scroll, whenever the checked lanes' fixed
    * generous heights add up to more than fits — the normal case) — this is what's measured for
-   * available layout height/width. canvasRef: the inner gesture surface (pointer/wheel handlers,
-   * horizontal-only pan/zoom) — its own height is set explicitly from `geom` below, and routinely
-   * grows past the viewport's height since lanes are no longer squeezed to fit inside it. */
+   * available layout height/width. canvasRef: the inner gesture surface (pointer handlers,
+   * horizontal-only pan/zoom; wheel and Safari pinch listen on rootRef) — its own height is set
+   * explicitly from `geom` below, and routinely grows past the viewport's height since lanes are no
+   * longer squeezed to fit inside it. */
+  const rootRef = useRef<HTMLElement | null>(null);
   const viewportRef = useRef<HTMLDivElement | null>(null);
   const canvasRef = useRef<HTMLDivElement | null>(null);
   const [size, setSize] = useState({ w: 0, h: 0 });
@@ -705,7 +718,7 @@ export default function TimelineView({
   const focusedEventIds = focusHighlightOn && focusInfo ? focusInfo.eventIds : null;
   const focusedLifeId = focusHighlightOn && focusInfo ? focusInfo.lifeId : null;
 
-  /* ----- gestures: drag-pan, wheel-zoom, pinch-zoom (rAF-batched) ----- */
+  /* ----- gestures: drag-pan, wheel scroll/zoom, pinch-zoom (rAF-batched) ----- */
 
   const gestureRef = useRef({
     pointers: new Map<number, { x: number; y: number }>(),
@@ -760,7 +773,7 @@ export default function TimelineView({
     if (pending.wheel !== 0) {
       const rect = canvasRef.current?.getBoundingClientRect();
       const cursorX = rect ? pending.wheelClientX - rect.left : sizeRef.current.w / 2;
-      const factor = Math.exp(-clamp(pending.wheel, -400, 400) * 0.0021);
+      const factor = Math.exp(-pending.wheel * WHEEL_ZOOM_RATE);
       const yearAtCursor = startYear + cursorX / pxPerYear;
       const next = clamp(
         pxPerYear * factor,
@@ -821,33 +834,134 @@ export default function TimelineView({
     [cancelMomentum, clampView],
   );
 
-  // Wheel must be a non-passive native listener so preventDefault sticks.
+  /* Wheel and Safari pinch. These must be non-passive native listeners so preventDefault sticks.
+   * They sit on the root rather than the canvas so that a pinch anywhere over the timeline (header
+   * included) zooms the timeline instead of the whole browser page.
+   *
+   *  - Ctrl or ⌘ held: zoom, centred on the pointer. Browsers report a trackpad pinch as a wheel
+   *    event with ctrlKey set, so this covers pinch too.
+   *  - Otherwise, over the lanes: move. Vertical scrolls .tl-canvas-viewport, horizontal pans
+   *    through time. Both are applied by hand, with the default always prevented: letting the browser
+   *    keep some events and not others lets a sideways swipe turn into back/forward navigation,
+   *    and can scroll twice when a gesture changes direction part-way. Trackpad momentum arrives as
+   *    ordinary wheel events, so it carries through.
+   *  - Otherwise, over the header: left alone, so the Eras dropdown still scrolls. */
   useEffect(() => {
-    const el = canvasRef.current;
-    if (!el) return;
+    const root = rootRef.current;
+    if (!root) return;
+    // Sub-pixel scroll distance not yet applied (scrollTop may round what it is given).
+    let scrollRemainder = 0;
+    // Set while a Safari gesture is zooming the timeline.
+    let safariPinch: null | { pxy: number; anchorYear: number; cursorX: number } = null;
+    let touchCount = 0;
+
+    // Pointer x within the canvas; the middle if the event carried no position.
+    const cursorXFor = (clientX: number) => {
+      const rect = canvasRef.current?.getBoundingClientRect();
+      return rect && Number.isFinite(clientX)
+        ? clamp(clientX - rect.left, 0, rect.width)
+        : sizeRef.current.w / 2;
+    };
+
     const onWheel = (e: WheelEvent) => {
+      const viewport = viewportRef.current;
+      if (!viewport) return;
+      const zooming = e.ctrlKey || e.metaKey;
+      if (!zooming && !viewport.contains(e.target as Node)) return;
       e.preventDefault();
+      // Safari's gesture events already own this pinch; don't zoom it twice.
+      if (zooming && safariPinch) return;
       cancelAnim();
       cancelMomentum();
-      const scale = e.deltaMode === 1 ? 33 : e.deltaMode === 2 ? 120 : 1;
-      const dx = e.deltaX * scale;
-      const dy = e.deltaY * scale;
-      // Trackpad pinch-to-zoom always carries ctrlKey/metaKey true in every browser.
-      // Otherwise, whichever axis dominates the gesture decides pan vs. zoom: a
-      // horizontal-dominant two-finger swipe pans, a vertical-dominant wheel/swipe zooms
-      // (matching plain mouse-wheel behavior, which only ever has a deltaY component).
-      const isZoomGesture = e.ctrlKey || e.metaKey || Math.abs(dy) >= Math.abs(dx);
-      if (isZoomGesture) {
-        pendingRef.current.wheel += dy;
-        pendingRef.current.wheelClientX = e.clientX;
-      } else {
-        pendingRef.current.panDx += dx;
+      // deltaMode: 0 = pixels, 1 = lines, 2 = pages.
+      const scale = e.deltaMode === 1 ? 33 : e.deltaMode === 2 ? viewport.clientHeight : 1;
+      let dx = e.deltaX * scale;
+      let dy = e.deltaY * scale;
+
+      if (zooming) {
+        pendingRef.current.wheel += clamp(dy, -WHEEL_ZOOM_MAX_DELTA, WHEEL_ZOOM_MAX_DELTA);
+        pendingRef.current.wheelClientX =
+          (canvasRef.current?.getBoundingClientRect().left ?? 0) + cursorXFor(e.clientX);
+        scheduleFlush();
+        return;
       }
-      scheduleFlush();
+
+      // Shift + wheel is the mouse user's sideways scroll. Some browsers swap the axes themselves.
+      if (e.shiftKey && dx === 0) {
+        dx = dy;
+        dy = 0;
+      }
+      if (Math.abs(dy) > Math.abs(dx) * WHEEL_AXIS_LOCK_RATIO) dx = 0;
+      else if (Math.abs(dx) > Math.abs(dy) * WHEEL_AXIS_LOCK_RATIO) dy = 0;
+
+      if (dy !== 0) {
+        setTooltip(null);
+        const want = viewport.scrollTop + dy + scrollRemainder;
+        viewport.scrollTop = want;
+        const rest = want - viewport.scrollTop;
+        // A large leftover means the top or bottom was reached; don't bank it.
+        scrollRemainder = Math.abs(rest) < 1 ? rest : 0;
+      }
+      if (dx !== 0) {
+        pendingRef.current.panDx += dx;
+        scheduleFlush();
+      }
     };
-    el.addEventListener("wheel", onWheel, { passive: false });
-    return () => el.removeEventListener("wheel", onWheel);
-  }, [cancelAnim, cancelMomentum, scheduleFlush]);
+
+    // GestureEvent is Safari-only and missing from the DOM typings.
+    type SafariGestureEvent = Event & { scale: number; clientX: number };
+
+    // On iPhone and iPad these also fire for a finger pinch, which the pointer handlers already
+    // zoom. There we only block the page zoom.
+    const onGestureStart = (event: Event) => {
+      event.preventDefault();
+      const e = event as SafariGestureEvent;
+      const v = viewRef.current;
+      if (!v || touchCount > 0 || gestureRef.current.pointers.size > 0) return;
+      cancelAnim();
+      cancelMomentum();
+      const cursorX = cursorXFor(e.clientX);
+      safariPinch = { pxy: v.pxPerYear, anchorYear: v.startYear + cursorX / v.pxPerYear, cursorX };
+    };
+    const onGestureChange = (event: Event) => {
+      event.preventDefault();
+      if (!safariPinch) return;
+      const { scale } = event as SafariGestureEvent;
+      const pxy = clamp(
+        safariPinch.pxy * scale,
+        Math.max(sizeRef.current.w, 1) / (maxYear - minYear),
+        MAX_PX_PER_YEAR,
+      );
+      setTooltip(null);
+      setView(clampView(pxy, safariPinch.anchorYear - safariPinch.cursorX / pxy));
+    };
+    const onGestureEnd = (event: Event) => {
+      event.preventDefault();
+      safariPinch = null;
+    };
+    const onTouchCount = (e: TouchEvent) => {
+      touchCount = e.touches.length;
+    };
+
+    const active = { passive: false };
+    const passive = { passive: true };
+    root.addEventListener("wheel", onWheel, active);
+    root.addEventListener("gesturestart", onGestureStart, active);
+    root.addEventListener("gesturechange", onGestureChange, active);
+    root.addEventListener("gestureend", onGestureEnd, active);
+    root.addEventListener("touchstart", onTouchCount, passive);
+    root.addEventListener("touchend", onTouchCount, passive);
+    root.addEventListener("touchcancel", onTouchCount, passive);
+    return () => {
+      root.removeEventListener("wheel", onWheel);
+      root.removeEventListener("gesturestart", onGestureStart);
+      root.removeEventListener("gesturechange", onGestureChange);
+      root.removeEventListener("gestureend", onGestureEnd);
+      root.removeEventListener("touchstart", onTouchCount);
+      root.removeEventListener("touchend", onTouchCount);
+      root.removeEventListener("touchcancel", onTouchCount);
+    };
+  }, [cancelAnim, cancelMomentum, scheduleFlush, clampView, minYear, maxYear]);
 
   const onPointerDown = useCallback(
     (e: React.PointerEvent<HTMLDivElement>) => {
@@ -1693,7 +1807,7 @@ export default function TimelineView({
   const hasLifespans = geom !== null && !geom.empty && geom.lifeH > 0;
 
   return (
-    <section className="tl-root" aria-label="Historical timeline">
+    <section ref={rootRef} className="tl-root" aria-label="Historical timeline">
       <header className="tl-header">
         <BackButton onClick={onClose} ariaLabel="Close timeline" />
         <div className="tl-title-block">
@@ -1724,6 +1838,7 @@ export default function TimelineView({
             className="tl-zoom-btn"
             onClick={() => zoomByFactor(1 / 1.6)}
             aria-label="Zoom out"
+            title="Zoom out (pinch, or Ctrl/⌘ + scroll)"
           >
             −
           </button>
@@ -1732,6 +1847,7 @@ export default function TimelineView({
             className="tl-zoom-btn"
             onClick={() => zoomByFactor(1.6)}
             aria-label="Zoom in"
+            title="Zoom in (pinch, or Ctrl/⌘ + scroll)"
           >
             +
           </button>
@@ -1757,7 +1873,7 @@ export default function TimelineView({
           className={`tl-canvas${dragging ? " tl-dragging" : ""}${geom && !geom.empty && geom.needsScroll ? " tl-canvas-scroll-y" : ""}`}
           style={{ height: geom && !geom.empty ? geom.totalH : "100%" }}
           role="application"
-          aria-label="Zoomable timeline — scroll to zoom, drag to pan, arrow keys to move"
+          aria-label="Zoomable timeline — scroll or drag to move, pinch or Ctrl/Command plus scroll to zoom, arrow keys to move"
           tabIndex={0}
           onPointerDown={onPointerDown}
           onPointerMove={onPointerMove}

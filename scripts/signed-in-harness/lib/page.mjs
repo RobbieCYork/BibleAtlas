@@ -69,6 +69,8 @@ export function createPage({ tab, backend, ledger, consoleErrors, outDir, meta }
      * bible-api.com. It cannot open the network: the request never leaves the page. */
     async addInitScript(source) { await tab.send("Page.addScriptToEvaluateOnNewDocument", { source }); },
     sleep,
+    /** Raw CDP command on the page's tab, for input the helpers don't cover (wheel, two fingers). */
+    cdp: (method, params = {}) => tab.send(method, params),
     /** Resolves when a matching, visible element exists. selector: CSS, "text=Exact text", or {css, text}. */
     async waitFor(selector, { timeout = 10000, visible = true } = {}) {
       const s = sel(selector);

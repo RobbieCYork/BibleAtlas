@@ -258,8 +258,9 @@
 /* Outer scrollable window. Vertical-only: horizontal overflow from the panning .tl-scroller
  * (a child of .tl-canvas below) is clipped here, while a lane stack taller than the viewport —
  * routinely true now that each visible lane gets its own fixed, generous height (see geom in
- * TimelineView.tsx) rather than being squeezed to fit — scrolls vertically via the native
- * scrollbar/touch, independent of the horizontal drag/zoom gestures .tl-canvas still owns. */
+ * TimelineView.tsx) rather than being squeezed to fit — scrolls vertically via the
+ * scrollbar, native touch, or the wheel handler in TimelineView.tsx (which prevents the default and
+ * sets scrollTop itself), independent of the horizontal drag/zoom gestures .tl-canvas still owns. */
 .tl-canvas-viewport {
   position: relative;
   flex: 1;
@@ -269,7 +270,7 @@
   overscroll-behavior: contain;
 }
 
-/* Inner gesture surface: pointer/wheel handlers for horizontal pan/zoom live here. Its height is
+/* Inner gesture surface: pointer handlers for horizontal pan/zoom live here. Its height is
  * set explicitly from `geom` in TimelineView.tsx as the sum of each checked lane's own fixed,
  * generous height — routinely taller than the viewport, which is what gives .tl-canvas-viewport
  * above something to scroll. */
