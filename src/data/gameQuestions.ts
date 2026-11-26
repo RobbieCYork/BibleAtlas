@@ -715,6 +715,12 @@ const TOPIC_QUIZ_CATEGORY: Record<Topic["category"], QuizCategory> = {
   // is a Record over the union, so adding one is a compile error until someone answers for it.
   discovery: "history",
   manuscript: "history",
+  // Religions and Denominations. Unreachable today: those records live in src/data/beliefs/ and
+  // never enter topics.ts, which is all this file reads. Answered anyway because the Record demands
+  // it; if they are ever quizzed, that is a decision (357efc4 deliberately dropped other-religion
+  // questions), not a fall-through.
+  "world-religion": "theology",
+  "christian-tradition": "theology",
 };
 
 function topicQuizCategory(topic: (typeof topics)[number]): QuizCategory {

@@ -41,6 +41,7 @@ import {
   personPage,
   poiPage,
   topicPage,
+  beliefPage,
 } from "./render.mjs";
 
 const RENDERERS = {
@@ -48,6 +49,7 @@ const RENDERERS = {
   pois: poiPage,
   people: personPage,
   topics: topicPage,
+  beliefTopics: beliefPage,
   timelineEvents: eventPage,
 };
 
@@ -57,6 +59,7 @@ const DESCRIBERS = {
   pois: (r) => r.description,
   people: (r) => r.role,
   topics: (r) => r.summary,
+  beliefTopics: (r) => `${r.role} — ${r.summary}`,
   timelineEvents: (r) => `${r.dateLabel} — ${r.summary}`,
 };
 
@@ -95,6 +98,12 @@ export async function generateSeo(outDir, { supabase = null } = {}) {
   const urlFor = (linkKind, id) =>
     idsByLinkKind.get(linkKind)?.has(id) ? itemPath(itemByLinkKind.get(linkKind), id) : null;
   const linkify = makeLinkifier(data.computeLinkAnnotations, urlFor);
+  // A record's display name by kind and id, for hand-written cross-references (`relatedIds` on the
+  // Religions and Denominations records) that need a label as well as a URL.
+  const namesByLinkKind = new Map(
+    KINDS.map((k) => [k.linkKind, new Map(sets[k.key].map((r) => [r.id, r.name ?? r.title]))])
+  );
+  const nameFor = (linkKind, id) => namesByLinkKind.get(linkKind)?.get(id) ?? null;
 
   const urls = ["/", "/library", "/about", "/delete-account", "/terms", "/privacy"];
   let pages = 0;
@@ -108,7 +117,7 @@ export async function generateSeo(outDir, { supabase = null } = {}) {
       // a discovery's `findSiteId` pointing at the Location or POI it was dug out of — under the
       // same rule the linkifier already follows: it returns null for a record this run did not
       // emit, so a stale id renders as plain text instead of a dead link.
-      write(outDir, fileForPath(p), render(record, { linkify, urlFor, siblings: siblingsFor(records, i, kind.item) }));
+      write(outDir, fileForPath(p), render(record, { linkify, urlFor, nameFor, siblings: siblingsFor(records, i, kind.item) }));
       urls.push(p);
       pages++;
     });

@@ -61,6 +61,20 @@ export const KINDS = [
     indexBlurb:
       "Practices, doctrines, people groups and concepts the biblical text assumes its reader already understands, explained in full.",
   },
+  // Religions and Denominations. Topic-shaped records built by `beliefToTopic`
+  // (src/data/beliefs/index.ts). `linkKind` is "belief", which the auto-linker never emits — these
+  // records are deliberately not link targets (Nazarene, Pentecost, catholic, Baptist) — so nothing
+  // in any other page's prose can point here, and `seoEmittedIds` in name-linker/corpus.mjs needs
+  // no entry for it.
+  {
+    key: "beliefTopics",
+    linkKind: "belief",
+    item: "religion",
+    index: "religions",
+    indexTitle: "Religions and Denominations",
+    indexBlurb:
+      "World religions and worldviews, and the main Christian traditions and denominations — founders, founding dates, current adherents, basic beliefs and practice, each with a Protestant evangelical assessment and the tradition's own reply.",
+  },
   {
     key: "timelineEvents",
     linkKind: "timeline",

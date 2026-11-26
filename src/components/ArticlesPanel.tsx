@@ -15,7 +15,16 @@ import type { Location, Person, PointOfInterest, Topic, TimelineEvent } from "..
  * Without this, adding archaeology to the app produces a single 200-plus-entry alphabetical Topics
  * list in which "Amarna Letters" sits between "Angels" and "Assyrians" — which would be the
  * reader's first impression of the whole section, and a worse app than the one we started with. */
-type ShelfKey = "location" | "poi" | "person" | "topic" | "discovery" | "manuscript" | "timelineEvent";
+type ShelfKey =
+  | "location"
+  | "poi"
+  | "person"
+  | "topic"
+  | "discovery"
+  | "manuscript"
+  | "worldReligion"
+  | "christianTradition"
+  | "timelineEvent";
 
 /** The category rows the panel actually shows, each opening its own page. Usually one per shelf —
  * but Archaeology is ONE row holding two shelves, because there is now one Archaeology entry in the menu (PanelMenu's
@@ -24,7 +33,7 @@ type ShelfKey = "location" | "poi" | "person" | "topic" | "discovery" | "manuscr
  * here, with Discoveries and Manuscripts kept as labelled shelves on its page — so the split that
  * stops a stele and a codex sharing an alphabetical list survives intact, and the reader is still
  * two taps from any record rather than three. */
-type SectionKey = "location" | "poi" | "person" | "topic" | "archaeology" | "timelineEvent";
+type SectionKey = "location" | "poi" | "person" | "topic" | "archaeology" | "beliefs" | "timelineEvent";
 
 interface ArticlesPanelProps {
   locations: Location[];
@@ -86,6 +95,18 @@ const SECTIONS: {
       { key: "manuscript", label: "Manuscripts", icon: "manuscript" },
     ],
   },
+  // Religions and Denominations: one row, two labelled shelves, on the Archaeology pattern. Its
+  // records are Topic-shaped (src/data/beliefs/index.ts) but are never in topics.ts, so they never
+  // reach the name auto-linker.
+  {
+    key: "beliefs",
+    label: "Religions and Denominations",
+    icon: "globe",
+    shelves: [
+      { key: "worldReligion", label: "World Religions and Worldviews", icon: "globe" },
+      { key: "christianTradition", label: "Christian Traditions and Denominations", icon: "church" },
+    ],
+  },
   {
     key: "timelineEvent",
     label: "Timeline Events",
@@ -105,6 +126,8 @@ const SHELF_FOR_TOPIC: Record<Topic["category"], ShelfKey> = {
   concept: "topic",
   discovery: "discovery",
   manuscript: "manuscript",
+  "world-religion": "worldReligion",
+  "christian-tradition": "christianTradition",
 };
 
 export default function ArticlesPanel({
@@ -207,6 +230,8 @@ export default function ArticlesPanel({
       topic: topicsIn("topic"),
       discovery: topicsIn("discovery"),
       manuscript: topicsIn("manuscript"),
+      worldReligion: topicsIn("worldReligion"),
+      christianTradition: topicsIn("christianTradition"),
       timelineEvent: timelineEvents
         .map((e) => ({
           kind: "timelineEvent" as const,
