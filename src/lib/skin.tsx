@@ -12,7 +12,7 @@ import { supabase } from "./supabase";
  * ----------------------------------------------------------------------------
  *     active skin = signed in (a real account, not a guest) ? stored choice : null
  *
- * Choosing happens in My Profile → Appearance (SkinPicker, components/SkinPicker.tsx). Signed-out
+ * Choosing happens in My Profile → Theme (SkinPicker, components/SkinPicker.tsx). Signed-out
  * visitors, guests and the sign-in gate are never skinned: they get the default look, whatever a
  * previous visitor left in localStorage.
  *

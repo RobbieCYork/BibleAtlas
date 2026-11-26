@@ -1,0 +1,183 @@
+/* Photographs behind the bare landing screens (WebP, about 40-200 KB each).
+ *
+ * TO SWAP A PICTURE: replace the file in src/assets/page-backgrounds/ keeping its name, or point a
+ * url() below at a new file. Each screen has a 3:2 "wide" copy and a 2:3 "phone" copy. The full-size
+ * originals are kept outside the repo, in automation/manager/page-backgrounds/.
+ *
+ * TO ADD A SCREEN: put data-page-bg="<name>" on the part of it that does not scroll, add a block under
+ * "Which picture goes where", and give any text that would sit straight on the picture an opaque
+ * panel (see "Text panels"). About is matched by its class, so AboutView.tsx needs no attribute.
+ *
+ * These are plain CSS backgrounds: a picture is fetched only when its screen is drawn, takes no room
+ * in the layout, does not move when the content scrolls, and if it fails to load (or the browser has
+ * no color-mix) the screen is simply its plain colour. */
+
+/* ---------- Which picture goes where ---------- */
+
+.myprofile-root.about-root {
+  --page-bg-wide: url("./assets/page-backgrounds/jerusalem-morning-wide.webp");
+  --page-bg-phone: url("./assets/page-backgrounds/jerusalem-morning-phone.webp");
+  --page-bg-at: right bottom;
+  --page-bg-phone-at: center top;
+}
+
+.game-root[data-page-bg="game-center"] {
+  --page-bg-wide: url("./assets/page-backgrounds/galilee-dawn-wide.webp");
+  --page-bg-phone: url("./assets/page-backgrounds/galilee-dawn-phone.webp");
+  --page-bg-at: right bottom;
+  --page-bg-phone-at: 60% bottom;
+}
+
+.game-root[data-page-bg="game-setup"] {
+  --page-bg-wide: url("./assets/page-backgrounds/judean-road-wide.webp");
+  --page-bg-phone: url("./assets/page-backgrounds/judean-road-phone.webp");
+  --page-bg-at: left bottom;
+  --page-bg-phone-at: center bottom;
+}
+
+.articles-panel[data-page-bg="articles"] {
+  --page-bg-wide: url("./assets/page-backgrounds/scroll-lamp-wide.webp");
+  --page-bg-phone: url("./assets/page-backgrounds/scroll-lamp-phone.webp");
+  --page-bg-at: right bottom;
+  --page-bg-phone-at: center bottom;
+  /* This panel's own ground is the panel colour, not the page colour. */
+  --page-bg-base: var(--panel-bg);
+}
+
+/* ---------- How it is drawn ---------- */
+
+/* The veil is the skin's own ground colour laid over the picture, so it sits quietly in every skin:
+ * a little heavier at the top, and much heavier all over in a dark theme. Readability does not rest
+ * on it; that is the job of the text panels. */
+:root {
+  --page-bg-veil-top: 32%;
+  --page-bg-veil-bottom: 4%;
+}
+
+:root[data-theme="dark"] {
+  --page-bg-veil-top: 64%;
+  --page-bg-veil-bottom: 46%;
+}
+
+.myprofile-root.about-root,
+.game-root[data-page-bg],
+.articles-panel[data-page-bg] {
+  background-image:
+    linear-gradient(
+      to bottom,
+      color-mix(in srgb, var(--page-bg-base, var(--bg)) var(--page-bg-veil-top), transparent),
+      color-mix(in srgb, var(--page-bg-base, var(--bg)) var(--page-bg-veil-bottom), transparent) 65%
+    ),
+    var(--page-bg-wide);
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center, var(--page-bg-at);
+}
+
+@media (max-width: 768px) and (orientation: portrait) {
+  .myprofile-root.about-root,
+  .game-root[data-page-bg],
+  .articles-panel[data-page-bg] {
+    background-image:
+      linear-gradient(
+        to bottom,
+        color-mix(in srgb, var(--page-bg-base, var(--bg)) var(--page-bg-veil-top), transparent),
+        color-mix(in srgb, var(--page-bg-base, var(--bg)) var(--page-bg-veil-bottom), transparent) 65%
+      ),
+      var(--page-bg-phone);
+    background-position: center, var(--page-bg-phone-at);
+  }
+}
+
+/* ---------- Text panels: no words sit straight on a picture ---------- */
+
+/* About: the whole article is one card; the picture shows around it. */
+.about-root .about-text {
+  box-sizing: border-box;
+  width: min(640px, 100%);
+  padding: 24px 40px 18px;
+  background: var(--panel-bg);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  /* At the largest text size a single long word can be wider than the card on a small phone. */
+  overflow-wrap: break-word;
+}
+
+@media (max-width: 768px) {
+  .about-root .myprofile-body {
+    padding: 16px 8px;
+  }
+
+  .about-root .about-text {
+    padding: 18px 12px 10px;
+  }
+
+  /* The card must not break the pull quote's longest word at the largest text sizes. The cap only
+   * bites there; at ordinary sizes the quote is far below it. */
+  .about-root .about-quote {
+    padding-left: 10px;
+    font-size: min(calc(25px * var(--tsz, 1)), 11vw);
+  }
+}
+
+/* On an upright phone the card starts a little way down, so the picture is seen before it is covered. */
+@media (max-width: 768px) and (orientation: portrait) {
+  .about-root .about-text {
+    margin-top: min(22vh, 190px);
+  }
+}
+
+.game-root[data-page-bg] .games-panel-intro,
+.game-root[data-page-bg] .games-high-scores-empty {
+  box-sizing: border-box;
+  width: 100%;
+  max-width: 640px;
+  padding: 14px 18px;
+  background: var(--panel-bg);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+}
+
+.game-root[data-page-bg="game-setup"] .games-panel-intro {
+  margin-bottom: 16px;
+}
+
+/* Saving Peter's solo/multiplayer choice has no picker box around it; line its cards up with the panel. */
+.game-root[data-page-bg] .game-body > .game-center-list {
+  width: 100%;
+  max-width: 640px;
+}
+
+.game-root[data-page-bg="game-setup"] .level-picker .games-panel-intro {
+  margin-bottom: 0;
+}
+
+.articles-panel[data-page-bg] .articles-title,
+.articles-panel[data-page-bg] .articles-subtitle {
+  background: var(--panel-bg);
+  border: 1px solid var(--border);
+  padding-left: 14px;
+  padding-right: 14px;
+}
+
+.articles-panel[data-page-bg] .articles-title {
+  margin: 0;
+  padding-top: 10px;
+  padding-bottom: 2px;
+  border-bottom: 0;
+  border-radius: 12px 12px 0 0;
+}
+
+.articles-panel[data-page-bg] .articles-subtitle {
+  margin-bottom: 12px;
+  padding-top: 4px;
+  padding-bottom: 12px;
+  border-top: 0;
+  border-radius: 0 0 12px 12px;
+}
+
+/* Search results are a long list; they get a solid ground of their own. */
+.articles-panel[data-page-bg] .articles-results {
+  background: var(--panel-bg);
+  border-radius: 12px;
+}

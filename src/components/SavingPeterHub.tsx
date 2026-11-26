@@ -30,7 +30,7 @@ export default function SavingPeterHub({ session, onBack, available }: SavingPet
   if (mode === "solo") return <SavingPeterView session={session} onBack={() => setMode("pick")} />;
 
   return (
-    <div className="game-root">
+    <div className="game-root" data-page-bg="game-setup">
       <header className="game-header">
         <BackButton onClick={onBack} ariaLabel="Back to Game Center" />
         <h2 className="games-inline-icon">

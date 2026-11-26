@@ -44,6 +44,10 @@ const BUCKETS: GrowthBucket[] = ["day", "week", "month"];
  *  listed here still renders, at the end — the list is a preference, not a gate. */
 const CATEGORY_ORDER = ["People", "Reading", "Study", "Social", "Feedback"];
 
+/** Metrics the catalogue still returns but the panel no longer shows. `report_votes` counted advisor
+ *  votes on reports; voting was removed (2026-11-26, sql/052), so the series is frozen history. */
+const HIDDEN_METRICS = new Set(["report_votes"]);
+
 const PERIOD_NOUN: Record<GrowthBucket, string> = { day: "day", week: "week", month: "month" };
 
 export default function GrowthPanel() {
@@ -78,6 +82,7 @@ export default function GrowthPanel() {
   const grouped = useMemo(() => {
     const byCat = new Map<string, GrowthMetric[]>();
     for (const m of data?.metrics ?? []) {
+      if (HIDDEN_METRICS.has(m.metric)) continue;
       if (!byCat.has(m.category)) byCat.set(m.category, []);
       byCat.get(m.category)!.push(m);
     }

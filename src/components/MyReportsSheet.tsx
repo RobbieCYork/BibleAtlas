@@ -1,7 +1,8 @@
 import { useCallback, useEffect, useState } from "react";
 import {
+  categoryLabelFor,
   deleteMyReport,
-  fetchCategories,
+  fetchAllCategories,
   fetchMyReports,
   formatAge,
   humanizeReportError,
@@ -111,7 +112,7 @@ export default function MyReportsSheet({ userId, onClose, onReportSomething }: M
   const load = useCallback(async () => {
     setError(null);
     try {
-      const [rows, cats] = await Promise.all([fetchMyReports(userId), fetchCategories().catch(() => [])]);
+      const [rows, cats] = await Promise.all([fetchMyReports(userId), fetchAllCategories().catch(() => [])]);
       setReports(rows);
       setCategories(cats);
     } catch (err) {
@@ -124,7 +125,9 @@ export default function MyReportsSheet({ userId, onClose, onReportSomething }: M
     void load();
   }, [load]);
 
-  const categoryLabel = (key: string) => categories.find((c) => c.key === key)?.label ?? key;
+  // All categories, retired ones included, so an old report keeps the name it was filed under.
+  const categoryLabel = (key: string) =>
+    categories.length === 0 ? key : categoryLabelFor(key, categories);
 
   const handleDelete = async (report: MyReportRow) => {
     if (!window.confirm(`Withdraw "${report.title}"? This can't be undone.`)) return;

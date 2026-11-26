@@ -71,7 +71,7 @@ export default function GameView({ session, onClose, gameCenterNonce }: GameView
   if (activeGame === "chronology") return <ChronologyView onBack={backToCenter} />;
 
   return (
-    <div className="game-root">
+    <div className="game-root" data-page-bg="game-center">
       <header className="game-header">
         <BackButton onClick={onClose} ariaLabel="Close Games" />
         <h2>Game Center</h2>

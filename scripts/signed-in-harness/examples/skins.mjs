@@ -4,7 +4,7 @@
  *   node scripts/signed-in-harness/run.mjs --persona owner --viewport 390x844 \
  *        --script scripts/signed-in-harness/examples/skins.mjs --out <dir>
  *
- * persona member / owner / ... (signed in): My Profile -> Appearance holds the picker; each skin applies
+ * persona member / owner / ... (signed in): My Profile -> Theme holds the picker; each skin applies
  *                      (data-skin, self-hosted fonts actually loaded, tokens), persists across a reload; screenshots
  *                      named <skin>-<screen>-<phone|desktop>.png in --out.
  * persona signedout   : always Default, even with a skin value planted in localStorage. With nothing chosen,
@@ -59,13 +59,20 @@ async function openProfile(h) {
   await h.waitFor(".myprofile-root"); await h.sleep(600);
 }
 
+/** Pick a theme in the My Profile select, firing the change event React listens for. */
+const chooseTheme = (h, value) => h.evaluate((v) => {
+  const s = document.querySelector("#myprofile-theme");
+  Object.getOwnPropertyDescriptor(HTMLSelectElement.prototype, "value").set.call(s, v);
+  s.dispatchEvent(new Event("change", { bubbles: true }));
+}, value);
+
 const SCREEN_FNS = {
   reader: async (h) => { if (await isPhone(h)) await h.click({ css: ".mobile-tab", text: "Bible" }); await h.sleep(900); },
   map: async (h) => { if (await isPhone(h)) await h.click({ css: ".mobile-tab", text: "Map" }); await h.sleep(1500); },
   timeline: async (h) => { await goTo(h, "Timeline"); await h.sleep(1500); },
   notes: async (h) => { await goTo(h, "Notes"); },
   article: async (h) => { await openArticle(h, "Demons"); await h.sleep(500); },
-  profile: async (h) => { await openProfile(h); await h.evaluate(() => document.querySelector(".skin-picker")?.scrollIntoView({ block: "center", behavior: "instant" })); await h.sleep(500); },
+  profile: async (h) => { await openProfile(h); await h.evaluate(() => document.querySelector("#myprofile-theme")?.scrollIntoView({ block: "center", behavior: "instant" })); await h.sleep(500); },
   games: async (h) => { await goTo(h, "Games"); },
   // Reading Plans: phone = More sheet is not a tab, so use the account menu entry the desktop uses (both layouts have it).
   plans: async (h) => {
@@ -203,17 +210,15 @@ export default async function (h) {
   h.section(`${h.persona}: My Profile picker, ${device}`);
   await h.reload(); await h.sleep(1500);
   await openProfile(h);
-  h.assert((await h.count(".skin-picker")) === 1, "picker is on My Profile");
-  const opts = await h.evaluate(() => [...document.querySelectorAll(".skin-card")].map((l) => l.querySelector(".skin-card-name").innerText.trim()));
+  h.assert((await h.count("#myprofile-theme")) === 1, "theme select is on My Profile");
+  const opts = await h.evaluate(() => [...document.querySelectorAll("#myprofile-theme option")].map((o) => o.textContent.trim()));
   h.assert(JSON.stringify(opts) === JSON.stringify(["Default", "Sticker Pop", "Clarity", "Midnight Signal", "Sage Study", "Sky Reader", "Trailhead", "Highlighter"]), `options: ${opts}`);
-  const tiny = await h.evaluate(() => [...document.querySelectorAll(".skin-card")].map((e) => Math.round(e.getBoundingClientRect().height)).filter((x) => x < 44));
-  h.assert(tiny.length === 0, "every picker card is at least 44px tall");
-  // real click path: pick Clarity in the UI, check it applies, then back to Default
-  await h.click({ css: ".skin-card", text: "Clarity" });
+  // through the UI's own change event: pick Clarity, check it applies, then back to Default
+  await chooseTheme(h, "clarity");
   await h.sleep(500);
-  h.assert((await h.evaluate(() => document.documentElement.getAttribute("data-skin"))) === "clarity", "clicking Clarity applies data-skin=clarity");
+  h.assert((await h.evaluate(() => document.documentElement.getAttribute("data-skin"))) === "clarity", "choosing Clarity applies data-skin=clarity");
   h.assert((await h.evaluate(() => localStorage.getItem("app-skin"))) === "clarity", "choice persisted in localStorage");
-  await h.click({ css: ".skin-card", text: "Default" });
+  await chooseTheme(h, "default");
   await h.sleep(400);
   h.assert((await h.evaluate(() => document.documentElement.getAttribute("data-skin"))) === null, "Default removes data-skin");
   h.assert((await h.evaluate(() => localStorage.getItem("app-skin"))) === null, "Default clears the stored choice");
@@ -246,7 +251,7 @@ export default async function (h) {
         const sc = screen === "reader" ? await scriptureContrast(h) : null;
         // touch targets: smallest visible button/tab dimension on phone
         const small = device === "phone"
-          ? await h.evaluate(() => [...document.querySelectorAll(".mobile-tab, .app-header button, .bible-panel button, .admin-tab, .skin-card")]
+          ? await h.evaluate(() => [...document.querySelectorAll(".mobile-tab, .app-header button, .bible-panel button, .admin-tab, #myprofile-theme")]
               .filter((e) => e.getClientRects().length).map((e) => { const r = e.getBoundingClientRect(); return { c: e.className.toString().slice(0, 40), w: Math.round(r.width), h: Math.round(r.height) }; })
               .filter((r) => r.h < 44 || r.w < 44).slice(0, 6))
           : [];
