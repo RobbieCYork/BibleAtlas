@@ -258,6 +258,8 @@ export default function ArticlesPanel({
     <div
       className={`articles-panel ${expand ? "panel-expand" : ""} ${hidden ? "bible-panel-hidden" : ""}`}
       style={expand ? undefined : style}
+      // The picture behind the Articles home (pageBackgrounds.css); category pages stay plain.
+      data-page-bg={page ? undefined : "articles"}
     >
       {page && openedSection ? (
         <ArticleCategoryPage

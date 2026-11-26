@@ -135,7 +135,7 @@ export default function SavingPeterView({ session, onBack }: SavingPeterViewProp
 
   if (!level) {
     return (
-      <div className="game-root">
+      <div className="game-root" data-page-bg="game-setup">
         <header className="game-header">
           <BackButton onClick={onBack} ariaLabel="Back to Game Center" />
           <h2 className="games-inline-icon">
