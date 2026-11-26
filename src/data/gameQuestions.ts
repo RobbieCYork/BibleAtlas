@@ -100,6 +100,44 @@ function textGivesAwayName(text: string, name: string): boolean {
   return text.toLowerCase().includes(firstToken.toLowerCase());
 }
 
+// ------------------------------------------------------------------------------------------------
+// One right answer — a question never offers a second choice that could also be defended as correct:
+// no tied or overlapping dates, no broader or near-synonym label, no description that fits two
+// records. Where the content cannot support that, the question is not built at all.
+//
+// A new generator, or a new entry in the content that two choices could describe, has to answer to
+// this rule. The per-record lists below each restate something the record itself says.
+// ------------------------------------------------------------------------------------------------
+
+/** Swaps out, in place, any drawn distractor that could also be right. A draw with nothing wrong with
+ * it is returned untouched, and replacements come from their own seeded stream, so the other choices
+ * and the correct answer keep their positions. Null when there are not enough fit replacements. */
+function replaceUnfit<T>(drawn: T[], pool: T[], isFit: (item: T) => boolean, id: string): T[] | null {
+  const needed = drawn.filter((item) => !isFit(item)).length;
+  if (needed === 0) return drawn;
+  const spares = seededPick(
+    pool.filter((item) => !drawn.includes(item) && isFit(item)),
+    needed,
+    mulberry32(hashSeed(`${id}:swap`))
+  );
+  if (spares.length < needed) return null;
+  let next = 0;
+  return drawn.map((item) => (isFit(item) ? item : spares[next++]));
+}
+
+/** Descriptions carried by more than one record — a "which one does this describe?" question built on
+ * one of them has several right answers, whichever of the records happen to be among its choices. */
+function sharedTexts(texts: (string | undefined)[]): Set<string> {
+  const seen = new Set<string>();
+  const shared = new Set<string>();
+  for (const text of texts) {
+    if (!text) continue;
+    if (seen.has(text)) shared.add(text);
+    seen.add(text);
+  }
+  return shared;
+}
+
 function formatYear(year: number): string {
   return year < 0 ? `${Math.abs(year)} BC` : `AD ${year}`;
 }
@@ -211,6 +249,20 @@ function buildKeywords(...parts: (string | undefined)[]): string {
 // "has the field this question type needs, and there are at least 3 distinct distractors available."
 // ------------------------------------------------------------------------------------------------
 
+/** Roles that are also true of a person whose own role is worded differently. */
+const PERSON_ALSO_ROLES: Record<string, string[]> = {
+  // Catholic tradition counts Peter as the first pope.
+  "simon-peter": ["Pope"],
+};
+
+/** True when `other` only restates `role`, or says it more broadly: "Apostle" for "Apostle who
+ * betrayed Jesus", "King of Judah" for "King of Judah (not to be confused with …)". */
+function isSameOrBroaderRole(other: string, role: string): boolean {
+  const bare = (r: string) => r.replace(/\s*\(.*?\)/g, "").trim().toLowerCase();
+  const [broad, full] = [bare(other), bare(role)];
+  return full === broad || [" ", ",", ";"].some((separator) => full.startsWith(broad + separator));
+}
+
 function personRoleQuestions(): QuizQuestion[] {
   const out: QuizQuestion[] = [];
   for (const person of people) {
@@ -220,7 +272,13 @@ function personRoleQuestions(): QuizQuestion[] {
     if (distractorPool.length < 3) continue;
     const id = `person-role-${person.id}`;
     const rand = mulberry32(hashSeed(id));
-    const distractors = seededPick(distractorPool, 3, rand);
+    const distractors = replaceUnfit(
+      seededPick(distractorPool, 3, rand),
+      distractorPool,
+      (role) => !isSameOrBroaderRole(role, person.role) && !PERSON_ALSO_ROLES[person.id]?.includes(role),
+      id
+    );
+    if (!distractors) continue;
     const { choices, correctIndex } = shuffleChoices(person.role, distractors, rand);
     const difficulty: QuizDifficulty = person.tier === "major" ? "easy" : person.tier === "significant" ? "moderate" : "difficult";
     out.push({
@@ -242,8 +300,9 @@ function personRoleQuestions(): QuizQuestion[] {
 
 function personSummaryQuestions(): QuizQuestion[] {
   const out: QuizQuestion[] = [];
+  const shared = sharedTexts(people.map((p) => p.summary));
   for (const person of people) {
-    if (!person.summary || textGivesAwayName(person.summary, person.name)) continue;
+    if (!person.summary || shared.has(person.summary) || textGivesAwayName(person.summary, person.name)) continue;
     const sameTier = people.filter((p) => p.tier === person.tier && p.id !== person.id);
     if (sameTier.length < 3) continue;
     const id = `person-summary-${person.id}`;
@@ -271,14 +330,47 @@ function personSummaryQuestions(): QuizQuestion[] {
   return out;
 }
 
+/** Region, province and nation overlap (Macedonia, Edom, Egypt), so when one of them is the answer
+ * the others are not offered, and neither is any of the three when the answer is an island. */
+const AREA_CATEGORIES: LocationCategory[] = ["region", "province", "nation"];
+
+/** Other kinds of place a location's own record also gives its name to. */
+const LOCATION_ALSO_CATEGORIES: Record<string, LocationCategory[]> = {
+  babylon: ["nation", "region"], // the city, and the empire named for it
+  dan: ["region"], // the city, and the tribe's territory
+  edom: ["mountain"], // also called Seir, as is its mountain
+  gennesaret: ["sea"], // the plain, and the "lake of Gennesaret" (Luke 5:1)
+  jezreel: ["region"], // the city, and the Jezreel Valley
+  samaria: ["city"], // the region, and its capital
+  sidon: ["region"], // "the region of Tyre and Sidon"
+  succoth: ["region"], // Egyptian Tjeku names a district as well as a town
+  tyre: ["region"],
+};
+
+/** Locations whose category cannot be asked about: Gadara is filed as a region (for "the region of
+ * the Gadarenes") while its record describes a city. */
+const LOCATION_CATEGORY_UNASKABLE = new Set(["gadara"]);
+
+function isAlsoCategory(location: (typeof locations)[number], other: LocationCategory): boolean {
+  const areasOverlap = AREA_CATEGORIES.includes(other) && (AREA_CATEGORIES.includes(location.category) || location.category === "island");
+  return areasOverlap || (LOCATION_ALSO_CATEGORIES[location.id]?.includes(other) ?? false);
+}
+
 function locationCategoryQuestions(): QuizQuestion[] {
   const out: QuizQuestion[] = [];
   for (const location of locations) {
+    if (LOCATION_CATEGORY_UNASKABLE.has(location.id)) continue;
     const otherCategories = [...new Set(locations.filter((l) => l.category !== location.category).map((l) => l.category))];
     if (otherCategories.length < 3) continue;
     const id = `location-category-${location.id}`;
     const rand = mulberry32(hashSeed(id));
-    const distractorCategories = seededPick(otherCategories, 3, rand);
+    const distractorCategories = replaceUnfit(
+      seededPick(otherCategories, 3, rand),
+      otherCategories,
+      (category) => !isAlsoCategory(location, category),
+      id
+    );
+    if (!distractorCategories) continue;
     const { choices, correctIndex } = shuffleChoices(
       LOCATION_CATEGORY_LABELS[location.category],
       distractorCategories.map((c) => LOCATION_CATEGORY_LABELS[c]),
@@ -301,16 +393,24 @@ function locationCategoryQuestions(): QuizQuestion[] {
   return out;
 }
 
+/** Places that a location's first notable fact would also fit — a wider area around it. */
+const LOCATION_FACT_ALSO_FITS: Record<string, string[]> = {
+  gadara: ["decapolis"], // Gadara was one of the Decapolis cities
+};
+
 function locationFactQuestions(): QuizQuestion[] {
   const out: QuizQuestion[] = [];
+  const shared = sharedTexts(locations.map((l) => l.history.notableFacts[0]));
   for (const location of locations) {
     const fact = location.history.notableFacts[0];
-    if (!fact || textGivesAwayName(fact, location.name)) continue;
+    if (!fact || shared.has(fact) || textGivesAwayName(fact, location.name)) continue;
     const otherNames = locations.filter((l) => l.id !== location.id).map((l) => l.name);
     if (otherNames.length < 3) continue;
     const id = `location-fact-${location.id}`;
     const rand = mulberry32(hashSeed(id));
-    const distractors = seededPick(otherNames, 3, rand);
+    const alsoFits = locations.filter((l) => LOCATION_FACT_ALSO_FITS[location.id]?.includes(l.id)).map((l) => l.name);
+    const distractors = replaceUnfit(seededPick(otherNames, 3, rand), otherNames, (name) => !alsoFits.includes(name), id);
+    if (!distractors) continue;
     const { choices, correctIndex } = shuffleChoices(location.name, distractors, rand);
     const difficulty = difficultyFromVerseCount(location.verses.length);
     out.push({
@@ -329,14 +429,130 @@ function locationFactQuestions(): QuizQuestion[] {
   return out;
 }
 
+/** Tags that say how a site is regarded rather than what it is. Nearly any site could carry one, so
+ * they are never offered as a wrong answer (each can still be the right one). */
+const POI_UNFIT_AS_DISTRACTOR = new Set([
+  "Ancient Site",
+  "Archaeological Site",
+  "Historical Site",
+  "Modern Pilgrimage Site",
+  "Monument",
+  "Narrative Site — General Region",
+  "Religious Site",
+  "Traditional Site",
+  "Traditional Site (Location Uncertain)",
+  "UNESCO World Heritage Site",
+]);
+
+/** Tags close enough in meaning that one site can fit several. Two tags from the same family are never
+ * offered in one question as the answer and a wrong answer. */
+const POI_TAG_FAMILIES = {
+  settlement: [
+    "Ancient City",
+    "Ancient Greek/Roman City",
+    "Ancient Port",
+    "Ancient Port City",
+    "Ancient Settlement",
+    "Ancient Town",
+    "Decapolis City",
+    "Fishing Village",
+    "Fortress City",
+    "Patriarchal Site",
+    "Roman City",
+    "Roman Port City",
+  ],
+  stronghold: ["Fortress", "Fortress City", "Palace", "Roman Garrison"],
+  temple: ["Ancient Temple", "Ancient Wonder / Temple Ruins", "Pagan Cult Site"],
+  church: ["Council Basilica", "Earliest Known Christian House-Church", "Early Christian Prayer Hall", "Rock-Cut Chapel"],
+  council: ["Council Basilica", "Ecumenical Council Site"],
+  road: ["Ancient Roman Road / Legendary Site", "Historic Street", "Waypoints on the Appian Way"],
+} satisfies Record<string, string[]>;
+
+type PoiTagFamily = keyof typeof POI_TAG_FAMILIES;
+
+/** What else a site is, going by its own description in pois.ts, beyond what its tag says. Entries are
+ * whole families or single tags. A new church, tomb or town site tagged only "Traditional Site" or
+ * similar belongs here. */
+const POI_ALSO_IS: Record<string, string[]> = (() => {
+  const also: Record<string, string[]> = {
+    "al-maghtas": ["settlement", "church"],
+    antipatris: ["settlement", "stronghold"],
+    "apollonia-macedonia": ["settlement"],
+    "areopagus-athens": ["Sacred Mountain"],
+    assos: ["stronghold"],
+    bethel: ["temple"], // Jeroboam's calf shrine
+    "caesarea-philippi": ["settlement"],
+    "chalcedon-council-site": ["settlement"],
+    "circus-of-nero-rome": ["Ancient Theatre", "Traditional Martyrdom Site"],
+    "ecce-homo-arch": ["road"],
+    "ein-karem": ["settlement"],
+    emmaus: ["settlement"],
+    "forum-of-appius-three-taverns": ["settlement"],
+    "garden-tomb": ["church", "Catacomb"],
+    golgotha: ["church", "Catacomb"],
+    kursi: ["settlement", "church"],
+    "mamertine-prison-rome": ["Traditional Martyrdom Site"],
+    "martyrdom-site-polycarp-smyrna": ["Ancient Theatre", "Traditional Martyrdom Site"],
+    megiddo: ["Sacred Mountain", "church"], // "Mount of Megiddo"; the Megiddo Church lies beside it
+    "mount-of-beatitudes": ["Sacred Mountain"],
+    "mount-precipice": ["Sacred Mountain"],
+    "nicaea-council-site": ["settlement", "council"],
+    shiloh: ["settlement", "temple"],
+    "tomb-of-lazarus-bethany": ["church", "Catacomb"],
+    "tomb-of-timothy-ephesus": ["Catacomb"],
+    "tomb-of-virgin-mary-kidron": ["church", "Catacomb"],
+    "western-wall": ["temple"],
+  };
+  const churchesAndChapels = [
+    "appian-way-quo-vadis-rome",
+    "bab-kisan-damascus",
+    "basilica-of-annunciation-nazareth",
+    "basilica-st-john",
+    "basilica-st-paul-outside-walls-rome",
+    "cave-church-st-peter-antioch",
+    "cave-of-apocalypse-patmos",
+    "chapel-of-ascension",
+    "church-of-pater-noster",
+    "dominus-flevit",
+    "dormition-abbey",
+    "house-of-ananias-damascus",
+    "house-of-virgin-mary-ephesus",
+    "marys-well-nazareth",
+    "milk-grotto-bethlehem",
+    "nazareth-synagogue-church",
+    "st-peter-gallicantu",
+    "tabgha",
+    "upper-room",
+    "wedding-church-cana",
+  ];
+  for (const id of churchesAndChapels) also[id] = ["church"];
+  return also;
+})();
+
+/** Sites whose tag does not describe them: Acrocorinth is tagged a city and is the citadel hill above
+ * Corinth. */
+const POI_TAG_UNASKABLE = new Set(["acrocorinth"]);
+
+function poiTagAlsoFits(poi: (typeof pois)[number], tag: string): boolean {
+  if (POI_UNFIT_AS_DISTRACTOR.has(tag)) return true;
+  const also = POI_ALSO_IS[poi.id] ?? [];
+  if (also.includes(tag)) return true;
+  return (Object.keys(POI_TAG_FAMILIES) as PoiTagFamily[]).some((family) => {
+    const members: string[] = POI_TAG_FAMILIES[family];
+    return members.includes(tag) && (members.includes(poi.tag) || also.includes(family));
+  });
+}
+
 function poiTagQuestions(): QuizQuestion[] {
   const out: QuizQuestion[] = [];
   for (const poi of pois) {
+    if (POI_TAG_UNASKABLE.has(poi.id)) continue;
     const otherTags = [...new Set(pois.filter((p) => p.tag !== poi.tag).map((p) => p.tag))];
     if (otherTags.length < 3) continue;
     const id = `poi-tag-${poi.id}`;
     const rand = mulberry32(hashSeed(id));
-    const distractorTags = seededPick(otherTags, 3, rand);
+    const distractorTags = replaceUnfit(seededPick(otherTags, 3, rand), otherTags, (tag) => !poiTagAlsoFits(poi, tag), id);
+    if (!distractorTags) continue;
     const { choices, correctIndex } = shuffleChoices(poi.tag, distractorTags, rand);
     // POIs are secondary/archaeological sites by design (lighter-weight than a full Location) — they
     // read as harder trivia regardless, split only by how well the site's history is sourced.
@@ -362,6 +578,39 @@ function poiTagQuestions(): QuizQuestion[] {
 // aren't meant to be quizzed on here.
 const biblicalTimelineEvents = timelineEvents.filter((e) => e.category === "biblical");
 
+/** Competing dates a timeline record states in its own dateLabel or datingNotes, as [earliest,
+ * latest] signed years. A wrong-answer year must not fall on or near one. */
+const EVENT_ALTERNATIVE_YEARS: Record<string, [number, number][]> = {
+  "bib-prim-enoch": [[-3317, -3017]], // the whole of his walk with God
+  "bib-exo-the-exodus": [[-1299, -1200]], // late date
+  "bib-exo-giving-of-the-law": [[-1299, -1200]],
+  "bib-exo-death-of-moses": [[-1299, -1200]],
+  "bib-cj-jordan-crossing": [[-1299, -1200]],
+  "bib-cj-fall-of-jericho": [[-1299, -1200]],
+  "bib-cj-achan-ai": [[-1299, -1200]],
+  "bib-cj-southern-campaign": [[-1299, -1200]],
+  "bib-cj-northern-campaign-hazor": [[-1299, -1200]],
+  "bib-cj-ruth": [[-1199, -1100]], // "c. 1100s BC"
+  "bib-er-ezras-return": [[-398, -398]], // under Artaxerxes II
+  "bib-er-malachis-ministry": [[-460, -440]],
+  "bib-it-septuagint-translation": [[-285, -246]], // reign of Ptolemy II
+  "bib-it-pharisees-sadducees-essenes-rise": [[-300, -201]],
+  "bib-dki-jonah-nineveh": [[-793, -753]], // reign of Jeroboam II
+  "bib-dkj-nahum-nineveh": [[-663, -612]],
+  "bib-dkj-obadiah-edom": [[-586, -586]],
+  "bib-dkj-joel-prophecy": [[-500, -401]], // postexilic date
+};
+/** How far a wrong-answer year has to be from every date the record gives. */
+const YEAR_CLEARANCE = 25;
+
+/** False for the year zero, which does not exist, and for any year inside or close to the event's
+ * span or one of its competing dates. */
+function isWrongYear(event: TimelineEvent, year: number): boolean {
+  if (year === 0) return false;
+  const dates: [number, number][] = [[event.startYear, event.endYear ?? event.startYear], ...(EVENT_ALTERNATIVE_YEARS[event.id] ?? [])];
+  return dates.every(([earliest, latest]) => year <= earliest - YEAR_CLEARANCE || year >= latest + YEAR_CLEARANCE);
+}
+
 function timelineYearQuestions(): QuizQuestion[] {
   const out: QuizQuestion[] = [];
   for (const event of biblicalTimelineEvents) {
@@ -369,16 +618,12 @@ function timelineYearQuestions(): QuizQuestion[] {
     const rand = mulberry32(hashSeed(id));
     const magnitude = Math.max(50, Math.round(Math.abs(event.startYear) * 0.05));
     const deltaCandidates = [magnitude, -magnitude, magnitude * 2, -magnitude * 2, magnitude * 4, -magnitude * 4];
-    const seen = new Set([formatYear(event.startYear)]);
-    const distractors: string[] = [];
-    for (const delta of seededPick(deltaCandidates, deltaCandidates.length, rand)) {
-      if (distractors.length >= 3) break;
-      const label = formatYear(event.startYear + delta);
-      if (seen.has(label)) continue;
-      seen.add(label);
-      distractors.push(label);
-    }
-    if (distractors.length < 3) continue;
+    // The first three in the seeded order, with any that could be defended swapped for a later one.
+    const years = [...new Set(seededPick(deltaCandidates, deltaCandidates.length, rand).map((delta) => event.startYear + delta))];
+    const spares = years.slice(3).filter((year) => isWrongYear(event, year));
+    const distractorYears = years.slice(0, 3).map((year) => (isWrongYear(event, year) ? year : spares.shift()));
+    if (distractorYears.length < 3 || !distractorYears.every((year) => year !== undefined)) continue;
+    const distractors = distractorYears.map(formatYear);
     const { choices, correctIndex } = shuffleChoices(formatYear(event.startYear), distractors, rand);
     const difficulty = CERTAINTY_TO_DIFFICULTY[event.dateCertainty];
     out.push({
@@ -411,8 +656,14 @@ function timelineOrderQuestions(): QuizQuestion[] {
     for (let chunk = 0; chunk < chunkCount; chunk++) {
       const id = `history-order-${eraSlug}-${chunk}`;
       const rand = mulberry32(hashSeed(id));
-      const group = seededPick(events, 4, rand);
-      const earliest = group.reduce((min, e) => (e.startYear < min.startYear ? e : min));
+      const drawn = seededPick(events, 4, rand);
+      const earliest = drawn.reduce((min, e) => (e.startYear < min.startYear ? e : min));
+      // "Earliest" has one answer only if it is over before any other choice begins. Events sharing
+      // its year, or starting while it is still going on, are swapped for later ones from the same
+      // era; when the era has too few, there is no question.
+      const earliestEnd = earliest.endYear ?? earliest.startYear;
+      const group = replaceUnfit(drawn, events, (e) => e === earliest || e.startYear > earliestEnd, id);
+      if (!group) continue;
       const distractors = group.filter((e) => e.id !== earliest.id).map((e) => e.title);
       const { choices, correctIndex } = shuffleChoices(earliest.title, distractors, rand);
       const worstCertainty = group.reduce(
@@ -498,15 +749,25 @@ function theologyRoleQuestions(): QuizQuestion[] {
   return out;
 }
 
+/** Collections that a single item's description would also fit. */
+const TOPIC_PART_OF: Record<string, string> = {
+  "papyrus-66": "bodmer-papyri",
+  "papyrus-72": "bodmer-papyri",
+  "papyrus-75": "bodmer-papyri",
+};
+
 function theologySummaryQuestions(): QuizQuestion[] {
   const out: QuizQuestion[] = [];
+  const shared = sharedTexts(topics.map((t) => t.summary));
   for (const topic of topics) {
-    if (!topic.summary || textGivesAwayName(topic.summary, topic.name)) continue;
+    if (!topic.summary || shared.has(topic.summary) || textGivesAwayName(topic.summary, topic.name)) continue;
     const others = topics.filter((t) => t.id !== topic.id).map((t) => t.name);
     if (others.length < 3) continue;
     const id = `theology-summary-${topic.id}`;
     const rand = mulberry32(hashSeed(id));
-    const distractors = seededPick(others, 3, rand);
+    const collection = topics.find((t) => t.id === TOPIC_PART_OF[topic.id])?.name;
+    const distractors = replaceUnfit(seededPick(others, 3, rand), others, (name) => name !== collection, id);
+    if (!distractors) continue;
     const { choices, correctIndex } = shuffleChoices(topic.name, distractors, rand);
     out.push({
       id,
