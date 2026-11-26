@@ -25,6 +25,7 @@ import MobileTabBar from "./components/MobileTabBar";
 import ResizeHandle from "./components/ResizeHandle";
 import AuthButton from "./components/AuthButton";
 import SocialLinks from "./components/SocialLinks";
+import HeaderReportButton from "./components/HeaderReportButton";
 import MyProfileView from "./components/MyProfileView";
 import SettingsView from "./components/SettingsView";
 import AboutView from "./components/AboutView";
@@ -1601,10 +1602,16 @@ function App() {
             before the account avatar. Same component and same SOCIAL_LINKS array as the signed-out
             front door (see SocialLinks/AuthGate) — a second placement was exactly what its
             `className` prop was built for, and neither the paths nor the hrefs are repeated here.
-            Desktop only, and rendered rather than merely hidden: the mobile header is already down
-            to logo + search + avatar (see the max-width:768px block in App.css), and the marks go
-            in the account menu there instead — see .auth-social in AuthButton. */}
+            Desktop only, and rendered rather than merely hidden: the mobile header is short of
+            room (see the max-width:768px block in App.css), so the marks go in the account menu
+            there instead — see .auth-social in AuthButton. */}
         {!isMobile && <SocialLinks className="header-social" />}
+        {/* Report a Problem, between the social marks and the avatar at every width. The account menu
+            keeps its own entry. Real accounts only; anyone else is on AuthGate and never sees this
+            header. */}
+        {session && !session.user.is_anonymous && (
+          <HeaderReportButton userId={session.user.id} surface={reportSurface} />
+        )}
         <AuthButton
           session={session}
           openProfileNonce={openProfileNonce}

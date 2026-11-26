@@ -183,6 +183,54 @@
   color: var(--text);
 }
 
+/* The Report a Problem flag (HeaderReportButton), between the social marks and the avatar. It also
+ * wears .social-links-item (opacity, radius, focus ring); these rules repeat the header marks' size
+ * and colour and reset the native button chrome. `margin-left:auto` is for the phone, where there is
+ * no social row ahead of it. Beside the marks it closes the 24px header gap to the 2px they keep
+ * between themselves, and the avatar keeps the 12px it had from the marks. */
+.app-header .header-report {
+  flex-shrink: 0;
+  margin-left: auto;
+  border: none;
+  background: none;
+  cursor: pointer;
+  color: var(--text-muted);
+  font-size: calc(16px * var(--tsz, 1));
+  padding: 6px;
+}
+
+.app-header .header-report:hover,
+.app-header .header-report:focus-visible {
+  color: var(--text);
+}
+
+.app-header .header-social + .header-report {
+  margin-left: -22px;
+}
+
+.app-header .header-report + .auth-button {
+  margin-left: -12px;
+}
+
+@media (max-width: 768px) {
+  /* 10px header gap here: pull the flag toward the avatar so it costs the search field less. */
+  .app-header .header-report + .auth-button {
+    margin-left: -4px;
+  }
+}
+
+/* Under 375px the flag cuts off the search placeholder ("Search anything..."), so it goes; the
+ * account menu still has Report a Problem. The avatar takes back its own push-right. */
+@media (max-width: 374px) {
+  .app-header .header-report {
+    display: none;
+  }
+
+  .app-header .header-report + .auth-button {
+    margin-left: auto;
+  }
+}
+
 /* The mobile copy, in the account dropdown (see AuthButton). Two selector classes deep so it beats
  * `.social-links { display: flex }` in SocialLinks.css regardless of which stylesheet loads first —
  * a one-class rule here would be a coin toss on import order. */
