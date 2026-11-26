@@ -1,5 +1,5 @@
 /**
- * Disclosure chevrons on My Profile (Appearance, About Me, book-by-book progress) are real, visible SVGs.
+ * Disclosure chevrons on My Profile (About Me, book-by-book progress) are real, visible SVGs.
  *   node scripts/signed-in-harness/run.mjs --persona member --viewport 390x844 --script scripts/signed-in-harness/examples/chevrons.mjs --out <dir>
  * Per skin: chevron >=20px, contrast vs the row's background >=3:1, row tap target >=44px, rotates on open, no horizontal overflow.
  */
@@ -25,7 +25,7 @@ const measure = (h, rowSel) => h.evaluate((sel) => {
     contrast: +((Math.max(L1, L2) + 0.05) / (Math.min(L1, L2) + 0.05)).toFixed(2), angle: Math.round(Math.atan2(m.b, m.a) * 180 / Math.PI), sw: svg.querySelector("path")?.closest("svg")?.getAttribute("stroke-width"),
     exp: row.getAttribute("aria-expanded"), overflow: document.documentElement.scrollWidth > innerWidth + 1 };
 }, rowSel);
-const ROWS = [[".skin-toggle", "menu", "Appearance"], [".profile-view-toggle", "row", "About Me"], [".reading-progress-toggle", "row", "book-by-book"]];
+const ROWS = [[".profile-view-toggle", "row", "About Me"], [".reading-progress-toggle", "row", "book-by-book"]];
 export default async function (h) {
   const dev = (await isPhone(h)) ? "phone" : "desktop";
   for (const [id, label] of Object.entries(SKINS)) {

@@ -52,36 +52,6 @@
  * decorative brand (logo tile, active-tab bar, focus ring).
  * ========================================================================== */
 
-/* ---------- Skin picker (My Profile → Appearance) ----------
- * Unscoped on purpose: it must look right on Default and inside every skin, so it uses only the
- * app's own tokens. Each card is a <label> around a native radio (kept in the accessibility tree,
- * visually hidden), 56px tall, so the whole card is the touch target. */
-.skin-picker { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 8px; }
-.skin-card {
-  position: relative; display: flex; align-items: center; gap: 12px; min-height: 56px; padding: 8px 12px;
-  border: 1px solid var(--border-strong); border-radius: 10px; background: var(--panel-bg); color: var(--text); cursor: pointer;
-}
-.skin-card-selected { border-color: var(--accent); background: var(--accent-bg); box-shadow: inset 0 0 0 1px var(--accent); }
-.skin-card-input { position: absolute; inset: 0; width: 100%; height: 100%; margin: 0; opacity: 0; cursor: pointer; }
-.skin-card:has(.skin-card-input:focus-visible) { outline: 2px solid var(--accent); outline-offset: 2px; }
-.skin-card-swatch { display: inline-flex; flex: 0 0 auto; width: 40px; height: 40px; border-radius: 8px; overflow: hidden; border: 1px solid var(--border-strong); }
-.skin-card-swatch > span { flex: 1; }
-.skin-card-text { display: flex; flex-direction: column; min-width: 0; flex: 1; }
-.skin-card-name { font-weight: 600; color: var(--text-h); font-size: calc(14px * var(--tsz, 1)); }
-.skin-card-blurb { font-size: calc(12px * var(--tsz, 1)); color: var(--text-muted); line-height: 1.3; }
-.skin-card-check { flex: 0 0 auto; width: 20px; text-align: center; font-weight: 700; color: var(--accent); }
-.skin-toggle {
-  display: flex; align-items: center; gap: 10px; width: 100%; min-height: 44px; padding: 8px 4px; margin: 0;
-  background: transparent; border: 0; color: var(--text-h); font: inherit; text-align: left; cursor: pointer;
-}
-.skin-toggle:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 6px; }
-.skin-toggle-title { font-weight: 600; font-size: calc(14px * var(--tsz, 1)); }
-.skin-toggle-hint { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: calc(13px * var(--tsz, 1)); color: var(--text-muted); }
-.skin-toggle-hint::before { content: "\2014\00a0"; }
-.skin-collapse { display: flex; flex-direction: column; gap: 8px; }
-.skin-collapse[hidden] { display: none; }
-.skin-picker-note { font-size: calc(12px * var(--tsz, 1)); color: var(--text-muted); }
-
 /* ============================================================================
  * LAYER 1 — TOKENS
  * ========================================================================== */
@@ -689,8 +659,7 @@ html[data-skin="skyreader"] .cluster-marker { background: var(--sk-orange); colo
 html[data-skin="skyreader"] .then-now-buttons button.active,
 html[data-skin="skyreader"] .admin-tab-active { background: var(--accent-bg); color: var(--accent); }
 html[data-skin="skyreader"] .verse-sheet { border-top: 0; border-radius: 24px 24px 0 0; }
-html[data-skin="skyreader"] button,
-html[data-skin="skyreader"] .skin-card { font-family: var(--sans); }
+html[data-skin="skyreader"] button { font-family: var(--sans); }
 
 /* ---- My Profile buttons and panel headings, every skin ------------------------------------------
  * Robbie's phone (iOS Safari, Sky Reader): My Profile's plain buttons (Download Backup, Delete My
