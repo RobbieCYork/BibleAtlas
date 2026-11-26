@@ -325,6 +325,32 @@ try {
     await A.h.click({ css: ".games-primary-button", text: "Start Game" });
     await B.h.waitFor(g.playing);
     assert((await showsVideo(B, A.name)) && (await hears(B)), "B plays the game, still seeing and hearing A");
+    if (g.title === "Bible Trivia") {
+      // Round over: the sticky Continue bar (GameRoomPlay) is up together with the switches and the message.
+      db[g.rooms][0][g.startedAt] = new Date(Date.now() - 20000).toISOString();
+      push(g.rooms);
+      await B.h.waitFor(".game-action-bar button:not(:disabled)");
+      for (const [w, h] of phone ? [[W, H], [375, 667]] : [[W, H]]) {
+        await B.h.cdp("Emulation.setDeviceMetricsOverride", { width: w, height: h, deviceScaleFactor: 1, mobile: phone });
+        await sleep(400);
+        const r = await B.h.evaluate(async () => {
+          const body = document.querySelector(".game-body");
+          const cont = () => document.querySelector(".game-action-bar button");
+          const buttons = () => [...document.querySelectorAll(".game-video-controls button")];
+          const onTop = (el) => { const r = el.getBoundingClientRect(); const t = document.elementFromPoint(r.left + r.width / 2, r.top + r.height / 2); return !!t && el.contains(t); };
+          const frame = () => new Promise((res) => setTimeout(res, 150));
+          body.scrollTop = 0; await frame();
+          const gap = Math.round(document.querySelector(".game-action-bar").getBoundingClientRect().top - Math.max(...buttons().map((t) => t.getBoundingClientRect().bottom)));
+          const atTop = buttons().length === 3 && buttons().every(onTop) && onTop(cont());
+          body.scrollTop = body.scrollHeight; await frame();
+          const atBottom = onTop(cont());
+          return { atTop, gap, atBottom, message: !!document.querySelector(".game-media-status").innerText.trim() };
+        });
+        assert(r.atTop && r.gap >= 0 && r.atBottom && r.message, `${w}x${h}: with the message showing, mic, camera, Leave and the sticky Continue are clickable and do not overlap ${JSON.stringify(r)}`);
+        await B.h.screenshot(`continue-bar-${w}x${h}.png`);
+      }
+      await B.h.cdp("Emulation.setDeviceMetricsOverride", { width: W, height: H, deviceScaleFactor: 1, mobile: phone });
+    }
     assert(await until(async () => (await status(B)) === "", 17000), "the message clears itself after a while");
   }
 
