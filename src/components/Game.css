@@ -737,6 +737,30 @@
 .game-question-reveal {
   font-weight: 600;
   text-align: center;
+  /* Clear of .game-action-bar when scrolled into view. */
+  scroll-margin-bottom: 84px;
+}
+
+/* Skip / Continue (Bible Trivia). The negative offset is .game-body's own padding: a sticky box is
+   held inside it, which would leave the question scrolling through a gap under the button. */
+.game-action-bar {
+  position: sticky;
+  bottom: -20px;
+  z-index: 2;
+  display: flex;
+  margin-top: -8px;
+  padding: 8px 0 12px;
+  background: var(--bg);
+}
+
+.game-action-button {
+  flex: 1;
+  min-height: 48px;
+  font-size: calc(15px * var(--tsz, 1));
+}
+
+.games-secondary-button.game-action-button {
+  background: var(--panel-bg);
 }
 
 /* --- Results (GameResults) --- */
