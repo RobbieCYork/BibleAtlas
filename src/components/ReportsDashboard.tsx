@@ -1,8 +1,9 @@
 import { useCallback, useEffect, useState } from "react";
 import {
   assignReport,
-  castVote,
-  fetchCategories,
+  categoryLabelFor,
+  countReports,
+  fetchAllCategories,
   fetchReportCounts,
   fetchReportDetail,
   fetchReportList,
@@ -10,6 +11,7 @@ import {
   formatAge,
   hasRoleAtLeast,
   humanizeReportError,
+  setReportCategory,
   setReportStatus,
   setUserRole,
   ROLE_LABELS,
@@ -26,7 +28,6 @@ import {
   type UserRoleRow,
 } from "../lib/reportsApi";
 import { fetchUsers, type AdminUserRow } from "../lib/adminApi";
-import Icon from "./Icon";
 
 interface ReportsDashboardProps {
   /** The role current_user_role() actually returned. Never widened here: every gate below asks
@@ -83,31 +84,31 @@ function Stat({ label, value }: { label: string; value: number | string }) {
 }
 
 /* ==========================================================================
- * Detail view — one report, its context, its votes, its history, and whatever
- * the viewer's tier lets them do about it.
+ * Detail view — one report, its context, its history, and whatever the
+ * viewer's tier lets them do about it. (sql/025's advisor voting was removed
+ * 2026-11-26; see the header of lib/reportsApi.ts.)
  * ======================================================================== */
 
 function ReportDetailView({
   reportId,
   role,
-  viewerId,
   categories,
   onBack,
   onChanged,
 }: {
   reportId: string;
   role: Role;
-  viewerId: string;
+  /** Every category, retired ones included — for the label and for the re-file picker. */
   categories: ReportCategory[];
   onBack: () => void;
-  /** Bumped after any write, so the queue behind this view reloads rather than showing the vote
-   * count and status the row had before it was touched. */
+  /** Bumped after any write, so the queue behind this view reloads rather than showing the status
+   * and category the row had before it was touched. */
   onChanged: () => void;
 }) {
   const [detail, setDetail] = useState<ReportDetail | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [busy, setBusy] = useState(false);
-  const [voteNote, setVoteNote] = useState("");
+  const [categoryChoice, setCategoryChoice] = useState("");
 
   const isAdmin = hasRoleAtLeast(role, "administrator");
 
@@ -126,12 +127,11 @@ function ReportDetailView({
       setStatusChoice(d.report.status);
       setResolutionNote(d.report.resolution_note ?? "");
       setDupChoice(d.report.duplicate_of);
-      const mine = d.votes.find((v) => v.voter_id === viewerId);
-      setVoteNote(mine?.note ?? "");
+      setCategoryChoice(d.report.category);
     } catch (err) {
       setError(humanizeReportError(err));
     }
-  }, [reportId, viewerId]);
+  }, [reportId]);
 
   useEffect(() => {
     void load();
@@ -190,8 +190,10 @@ function ReportDetailView({
   }
 
   const r = detail.report;
-  const myVote = detail.votes.find((v) => v.voter_id === viewerId)?.vote ?? null;
-  const categoryLabel = detail.category_label ?? categories.find((c) => c.key === r.category)?.label ?? r.category;
+  const categoryLabel = detail.category_label ?? categoryLabelFor(r.category, categories);
+  // Re-file targets: every active category, plus the report's current one even if it is retired, so
+  // the select can show where it sits now.
+  const refileOptions = categories.filter((c) => c.is_active || c.key === r.category);
 
   return (
     <div className="report-detail">
@@ -204,7 +206,7 @@ function ReportDetailView({
         <span className={`report-status report-status-${r.status}`}>{STATUS_LABELS[r.status]}</span>
       </div>
       <p className="report-card-meta">
-        {categoryLabel} · priority {r.priority_score.toFixed(1)} · filed {formatAge(r.created_at)}
+        {categoryLabel} · filed {formatAge(r.created_at)}
         {/* Null whenever reveal_reporter_to_advisors is off and the viewer is not an administrator.
             Says "hidden" rather than nothing, so an advisor can tell a setting from a data gap. */}
         {" · by "}
@@ -261,70 +263,39 @@ function ReportDetailView({
         </div>
       </div>
 
-      {/* --- Voting: every advisor and above, one vote each, changeable and retractable. --- */}
-      <p className="admin-block-heading">Your vote</p>
-      <div className="report-vote-box">
-        <div className="report-vote-buttons" role="group" aria-label="Vote on this report">
-          <button
-            type="button"
-            className={`report-vote-btn${myVote === 1 ? " active agree" : ""}`}
-            disabled={busy}
-            onClick={() => run(() => castVote(r.id, 1, voteNote))}
-          >
-            <Icon name="thumbsUp" inline /> Agree
-          </button>
-          <button
-            type="button"
-            className={`report-vote-btn${myVote === -1 ? " active disagree" : ""}`}
-            disabled={busy}
-            onClick={() => run(() => castVote(r.id, -1, voteNote))}
-          >
-            <Icon name="thumbsDown" inline /> Disagree
-          </button>
-          <button
-            type="button"
-            className="report-vote-btn"
-            disabled={busy || myVote === null}
-            onClick={() => run(() => castVote(r.id, 0, null))}
-          >
-            Retract
-          </button>
-        </div>
-        <textarea
-          className="report-vote-note"
-          value={voteNote}
-          onChange={(e) => setVoteNote(e.target.value.slice(0, 2000))}
-          rows={2}
-          placeholder="Why? (optional — saved with your vote when you press Agree or Disagree)"
-          maxLength={2000}
-        />
-      </div>
-
-      <p className="admin-block-heading">
-        Votes — {r.vote_agree} agree, {r.vote_disagree} disagree
-      </p>
-      {detail.votes.length === 0 ? (
-        <p className="admin-note">Nobody has voted on this yet.</p>
-      ) : (
-        <ul className="admin-rows">
-          {detail.votes.map((v) => (
-            <li key={v.voter_id} className="report-vote-row">
-              <span className={`report-vote-mark ${v.vote === 1 ? "agree" : "disagree"}`}>
-                {v.vote === 1 ? "Agree" : "Disagree"}
-              </span>
-              <span className="report-vote-who">
-                {v.voter_name ?? "Someone"} · {ROLE_LABELS[v.voter_role]} · {formatAge(v.updated_at)}
-              </span>
-              {v.note && <span className="report-vote-text">{v.note}</span>}
-            </li>
-          ))}
-        </ul>
-      )}
-
-      {/* --- Administrator-only from here down. Advisors see the report and vote; they do not move
-              it, assign it, or write on it. sql/025 refuses all three regardless. --- */}
+      {/* --- Administrator-only from here down. Advisors see the report; they do not move it,
+              re-file it, assign it, or write on it. The database refuses all four regardless. --- */}
       {isAdmin && (
         <>
+          <p className="admin-block-heading">Category</p>
+          <div className="report-admin-box">
+            <div className="report-dup-search">
+              <select
+                value={categoryChoice}
+                onChange={(e) => setCategoryChoice(e.target.value)}
+                aria-label="Category for this report"
+                disabled={busy}
+              >
+                {refileOptions.length === 0 && <option value={r.category}>{categoryLabel}</option>}
+                {refileOptions.map((c) => (
+                  <option key={c.key} value={c.key}>
+                    {c.label}
+                    {!c.is_active ? " (retired)" : ""}
+                  </option>
+                ))}
+              </select>
+              <button
+                type="button"
+                className="report-btn"
+                disabled={busy || !categoryChoice || categoryChoice === r.category}
+                onClick={() => run(() => setReportCategory(r.id, categoryChoice))}
+              >
+                Re-file
+              </button>
+            </div>
+            <p className="admin-note">Moves this report to another category. The reporter's own words are not changed.</p>
+          </div>
+
           <p className="admin-block-heading">Move this report</p>
           <div className="report-admin-box">
             <label className="report-field">
@@ -429,7 +400,7 @@ function ReportDetailView({
             <li key={i} className="report-history-row">
               {h.old_status ? `${STATUS_LABELS[h.old_status]} → ` : ""}
               {STATUS_LABELS[h.new_status]} · {h.actor_name ?? "someone"} · {formatAge(h.at)}
-              {h.note && <span className="report-vote-text">{h.note}</span>}
+              {h.note && <span className="report-history-note">{h.note}</span>}
             </li>
           ))}
         </ul>
@@ -611,8 +582,12 @@ export default function ReportsDashboard({ role, viewerId, onClose, embedded = f
   const [targetKind, setTargetKind] = useState<TargetKind | "">("");
   const [searchInput, setSearchInput] = useState("");
   const [search, setSearch] = useState("");
-  const [sort, setSort] = useState<"priority" | "newest" | "oldest">("priority");
+  const [sort, setSort] = useState<"newest" | "oldest">("newest");
   const [page, setPage] = useState(0);
+  /** Per-category totals for the CURRENT status / subject / search filters, so the numbers on the
+   * category tabs always agree with what the list under them shows. `null` until the first answer. */
+  const [categoryCounts, setCategoryCounts] = useState<Record<string, number> | null>(null);
+  const [countsTick, setCountsTick] = useState(0);
 
   const load = useCallback(async () => {
     setError(null);
@@ -642,17 +617,52 @@ export default function ReportsDashboard({ role, viewerId, onClose, embedded = f
     void fetchReportCounts()
       .then(setCounts)
       .catch(() => setCounts(null));
-    void fetchCategories()
+    void fetchAllCategories()
       .then(setCategories)
       .catch(() => setCategories([]));
   }, []);
+
+  // One small report_list() call per category (limit 1 — it repeats the total on every row). A
+  // handful of round trips on a staff-only screen, and it needs no new database function, so the
+  // counts work the same before and after sql/052.
+  useEffect(() => {
+    if (categories.length === 0) return;
+    let cancelled = false;
+    const base = { status: statuses, targetKind: targetKind || null, search };
+    void Promise.all(
+      categories.map((c) =>
+        countReports({ ...base, category: c.key })
+          .then((n) => [c.key, n] as const)
+          .catch(() => [c.key, -1] as const)
+      )
+    ).then((pairs) => {
+      if (cancelled) return;
+      setCategoryCounts(Object.fromEntries(pairs.filter(([, n]) => n >= 0)));
+    });
+    return () => {
+      cancelled = true;
+    };
+  }, [categories, statuses, targetKind, search, countsTick]);
 
   const reloadAll = useCallback(() => {
     void load();
     void fetchReportCounts()
       .then(setCounts)
       .catch(() => setCounts(null));
+    setCountsTick((t) => t + 1);
   }, [load]);
+
+  // Tabs: every active category (even at 0, so the list of places a report can be filed is always
+  // visible), plus any RETIRED category that still holds reports matching the filters — that is
+  // where old reports wait to be re-filed. Retired and empty is hidden.
+  const categoryTabs = categories.filter((c) => c.is_active || (categoryCounts?.[c.key] ?? 0) > 0);
+  const allCount = categoryCounts
+    ? Object.values(categoryCounts).reduce((a, b) => a + b, 0)
+    : null;
+  const selectCategory = (key: string) => {
+    setPage(0);
+    setCategory(key);
+  };
 
   const toggleStatus = (s: ReportStatus) => {
     setPage(0);
@@ -704,7 +714,6 @@ export default function ReportsDashboard({ role, viewerId, onClose, embedded = f
           <ReportDetailView
             reportId={openId}
             role={role}
-            viewerId={viewerId}
             categories={categories}
             onBack={() => setOpenId(null)}
             onChanged={reloadAll}
@@ -717,11 +726,40 @@ export default function ReportsDashboard({ role, viewerId, onClose, embedded = f
               <div className="admin-stat-grid">
                 <Stat label="Open" value={counts.open} />
                 <Stat label="Untriaged" value={counts.untriaged} />
-                <Stat label="You haven't voted" value={counts.unvoted_by_me} />
               </div>
             )}
 
             <div className="report-filters">
+              {/* Category tabs first: this is how the queue is sorted into piles. Each count follows
+                  the status chips, subject and search below, so a tab says how many you would see. */}
+              <div className="report-category-tabs" role="tablist" aria-label="Report categories">
+                <button
+                  type="button"
+                  role="tab"
+                  aria-selected={category === ""}
+                  className={`report-category-tab${category === "" ? " active" : ""}`}
+                  onClick={() => selectCategory("")}
+                >
+                  All
+                  {allCount !== null && <span className="report-category-count">{allCount}</span>}
+                </button>
+                {categoryTabs.map((c) => (
+                  <button
+                    key={c.key}
+                    type="button"
+                    role="tab"
+                    aria-selected={category === c.key}
+                    className={`report-category-tab${category === c.key ? " active" : ""}${c.is_active ? "" : " retired"}`}
+                    onClick={() => selectCategory(c.key)}
+                    title={c.is_active ? c.description ?? undefined : "Retired category — re-file these reports"}
+                  >
+                    {c.label}
+                    {!c.is_active && " (retired)"}
+                    {categoryCounts && <span className="report-category-count">{categoryCounts[c.key] ?? 0}</span>}
+                  </button>
+                ))}
+              </div>
+
               <div className="report-status-chips" role="group" aria-label="Filter by status">
                 {STATUS_ORDER.map((s) => (
                   <button
@@ -738,21 +776,6 @@ export default function ReportsDashboard({ role, viewerId, onClose, embedded = f
               </div>
 
               <div className="report-filter-row">
-                <select
-                  value={category}
-                  onChange={(e) => {
-                    setPage(0);
-                    setCategory(e.target.value);
-                  }}
-                  aria-label="Filter by category"
-                >
-                  <option value="">All categories</option>
-                  {categories.map((c) => (
-                    <option key={c.key} value={c.key}>
-                      {c.label}
-                    </option>
-                  ))}
-                </select>
                 <select
                   value={targetKind}
                   onChange={(e) => {
@@ -772,11 +795,10 @@ export default function ReportsDashboard({ role, viewerId, onClose, embedded = f
                   value={sort}
                   onChange={(e) => {
                     setPage(0);
-                    setSort(e.target.value as "priority" | "newest" | "oldest");
+                    setSort(e.target.value as "newest" | "oldest");
                   }}
                   aria-label="Sort"
                 >
-                  <option value="priority">Highest priority</option>
                   <option value="newest">Newest first</option>
                   <option value="oldest">Oldest first</option>
                 </select>
@@ -818,24 +840,19 @@ export default function ReportsDashboard({ role, viewerId, onClose, embedded = f
 
             {(rows ?? []).map((r) => (
               <button key={r.id} type="button" className="report-queue-row" onClick={() => setOpenId(r.id)}>
-                <span className="report-queue-score" title="Priority score">
-                  {r.priority_score.toFixed(1)}
-                </span>
                 <span className="report-queue-main">
                   <span className="report-queue-title">{r.title}</span>
                   <span className="report-card-meta">
-                    {r.category_label ?? r.category} · {formatAge(r.created_at)}
+                    {r.category_label ?? categoryLabelFor(r.category, categories)} · {formatAge(r.created_at)}
                     {r.reporter_name && ` · ${r.reporter_name}`}
                     {r.target_kind && ` · ${TARGET_KIND_LABELS[r.target_kind]}: ${r.target_label ?? r.target_id}`}
                   </span>
                 </span>
                 <span className="report-queue-side">
                   <span className={`report-status report-status-${r.status}`}>{STATUS_LABELS[r.status]}</span>
-                  <span className="report-queue-votes">
-                    <Icon name="thumbsUp" inline /> {r.vote_agree} <Icon name="thumbsDown" inline /> {r.vote_disagree}
-                    {r.my_vote === 1 && <em> · you agreed</em>}
-                    {r.my_vote === -1 && <em> · you disagreed</em>}
-                  </span>
+                  {r.reporter_severity && (
+                    <span className="report-queue-severity">{SEVERITY_LABELS[r.reporter_severity]}</span>
+                  )}
                 </span>
               </button>
             ))}

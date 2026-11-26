@@ -10841,7 +10841,6 @@ a.profile-links-url {
 .report-editor input,
 .report-editor select,
 .report-editor textarea,
-.report-vote-note,
 .report-filter-row select,
 .report-dup-search input,
 .report-admin-box select,
@@ -10861,7 +10860,6 @@ a.profile-links-url {
 
 .report-field textarea,
 .report-editor textarea,
-.report-vote-note,
 .report-admin-box textarea {
   resize: vertical;
   min-height: 80px;
@@ -10870,7 +10868,6 @@ a.profile-links-url {
 .report-field input:focus-visible,
 .report-field select:focus-visible,
 .report-field textarea:focus-visible,
-.report-vote-note:focus-visible,
 .report-dup-search input:focus-visible {
   outline: 2px solid var(--accent);
   outline-offset: 1px;
@@ -11134,6 +11131,67 @@ a.profile-links-url {
   gap: 6px;
 }
 
+/* Category tabs: the piles the queue is sorted into. They WRAP rather than
+ * scroll sideways — eleven tabs in a horizontal scroller hide most of the piles
+ * on a phone, and a wrapped row shows every count at once. */
+.report-category-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid var(--border);
+}
+
+.report-category-tab {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 36px;
+  padding: 6px 12px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--panel-bg);
+  color: var(--text);
+  font-family: var(--sans);
+  font-size: calc(13px * var(--tsz, 1));
+  text-align: left;
+  cursor: pointer;
+}
+
+.report-category-tab:hover {
+  background: var(--surface-sunken);
+}
+
+.report-category-tab.active {
+  border-color: var(--accent);
+  background: var(--accent-bg);
+  color: var(--text-h);
+  font-weight: 600;
+}
+
+.report-category-tab.retired {
+  border-style: dashed;
+  color: var(--text-muted);
+}
+
+.report-category-count {
+  min-width: 1.6em;
+  padding: 0 6px;
+  border-radius: 999px;
+  background: var(--surface-sunken);
+  color: var(--text-muted);
+  font-size: calc(11px * var(--tsz, 1));
+  font-weight: 600;
+  line-height: 1.7;
+  text-align: center;
+  font-variant-numeric: tabular-nums;
+}
+
+.report-category-tab.active .report-category-count {
+  background: var(--accent);
+  color: var(--panel-bg);
+}
+
 .report-chip {
   min-height: 32px;
   padding: 5px 11px;
@@ -11167,6 +11225,11 @@ a.profile-links-url {
   align-items: stretch;
 }
 
+.report-dup-search select {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
 .report-dup-search input {
   flex: 1 1 auto;
   min-width: 0;
@@ -11176,7 +11239,7 @@ a.profile-links-url {
   flex: 0 0 auto;
 }
 
-/* --- Dashboard: the ranked queue --- */
+/* --- Dashboard: the queue --- */
 
 .report-queue-row {
   display: flex;
@@ -11195,16 +11258,6 @@ a.profile-links-url {
 
 .report-queue-row:hover {
   background: var(--surface-sunken);
-}
-
-.report-queue-score {
-  flex: 0 0 auto;
-  min-width: 2.5em;
-  font-family: var(--display);
-  font-size: calc(20px * var(--tsz, 1));
-  line-height: 1.2;
-  color: var(--accent);
-  font-variant-numeric: tabular-nums;
 }
 
 /* min-width:0 is what stops a long title from forcing the row wider than the
@@ -11232,13 +11285,13 @@ a.profile-links-url {
   gap: 4px;
 }
 
-.report-queue-votes {
+.report-queue-severity {
   font-size: calc(12px * var(--tsz, 1));
   color: var(--text-muted);
   white-space: nowrap;
 }
 
-/* Below ~430px the vote column and the badge stop fitting beside the title, so
+/* Below ~430px the status column stops fitting beside the title, so
  * the row becomes two lines instead of squeezing the title to nothing. */
 @media (max-width: 430px) {
   .report-queue-row {
@@ -11262,7 +11315,6 @@ a.profile-links-url {
   gap: 10px;
 }
 
-.report-vote-box,
 .report-admin-box {
   display: flex;
   flex-direction: column;
@@ -11273,43 +11325,6 @@ a.profile-links-url {
   background: var(--panel-bg);
 }
 
-.report-vote-buttons {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-}
-
-.report-vote-btn {
-  flex: 1 1 auto;
-  min-height: 40px;
-  min-width: 96px;
-  padding: 8px 12px;
-  border: 1px solid var(--border);
-  border-radius: 8px;
-  background: var(--surface-sunken);
-  color: var(--text);
-  font-family: var(--sans);
-  font-size: calc(14px * var(--tsz, 1));
-  cursor: pointer;
-}
-
-.report-vote-btn:hover {
-  background: var(--accent-bg);
-}
-
-.report-vote-btn.active {
-  border-color: var(--accent);
-  background: var(--accent-bg);
-  color: var(--text-h);
-  font-weight: 600;
-}
-
-.report-vote-btn:disabled {
-  opacity: 0.55;
-  cursor: default;
-}
-
-.report-vote-row,
 .report-history-row {
   display: flex;
   flex-direction: column;
@@ -11324,26 +11339,7 @@ a.profile-links-url {
   overflow-wrap: anywhere;
 }
 
-.report-vote-mark {
-  font-family: var(--sans);
-  font-size: calc(10px * var(--tsz, 1));
-  letter-spacing: var(--tracking-label);
-  text-transform: uppercase;
-}
-
-.report-vote-mark.agree {
-  color: var(--accent);
-}
-
-.report-vote-mark.disagree {
-  color: var(--danger);
-}
-
-.report-vote-who {
-  color: var(--text-muted);
-}
-
-.report-vote-text {
+.report-history-note {
   color: var(--text);
   white-space: pre-wrap;
 }

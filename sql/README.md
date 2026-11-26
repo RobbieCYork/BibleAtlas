@@ -9,10 +9,10 @@ Last verified against production: **2026-10-24** (read-only catalog queries for 
 
 ---
 
-## The next free number is 052
+## The next free number is 053
 
 (045-050 are claimed on the unmerged `groups-assignments` and `groups-invites` branches; 051 is the
-About page. Check every branch, not this table alone, before taking a number:
+About page; 052 is report categories / voting off. Check every branch, not this table alone, before taking a number:
 `git for-each-ref --format='%(refname:short)' refs/heads refs/remotes | xargs -I{} git ls-tree --name-only {} sql/`.)
 
 | Number | Status |
@@ -31,7 +31,8 @@ About page. Check every branch, not this table alone, before taking a number:
 | **044** | `044_admin_user_invites.sql` — audit trail + per-admin rate limit for the Admin Console's "Add user" (the `admin-add-user` Edge Function refuses every call until this is applied). Committed on branch `admin-add-user`, **not applied**. |
 | **045-050** | Claimed on unmerged branches (`groups-assignments`: 045 stripe billing, 046 study collections, 047 groups classes, 048 groups assignments; `groups-invites`: 049 invites, 050 support access). Not on main. Do not reuse. |
 | **051** | `051_about_page.sql` — owner-editable About page (`about_page`, public read; `about_page_versions`, owner-only history; `save_about_page()`, owner only). Committed on main (895b341), **APPLIED 2026-11-26**. |
-| **052** | Next genuinely free number. |
+| **052** | `052_report_categories_no_voting.sql` — Report a Problem: area categories (reuses 5 keys, adds 5, retires `typo`), and advisor voting switched off (`report_vote()` revoked, `report_votes` write policies dropped; no rows or columns dropped). Committed on branch `report-categories`, **not applied**. Rehearsal: `scripts/sql-rehearsal/052_report_categories_no_voting.mjs`. |
+| **053** | Next genuinely free number. |
 
 ### Numbers that are TAKEN but MISSING from this directory
 

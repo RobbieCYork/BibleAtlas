@@ -5,6 +5,7 @@ import {
   humanizeReportError,
   submitReport,
   SEVERITY_LABELS,
+  suggestedCategoryForRoute,
   TARGET_KIND_LABELS,
   type ReportCategory,
   type Severity,
@@ -85,8 +86,12 @@ export default function ReportIssueSheet({ userId, isGuest, surface, onClose, on
       .then((rows) => {
         if (cancelled) return;
         setCategories(rows);
-        // Don't preselect a kind of problem on the reporter's behalf — an unchosen category is a
-        // question they have to answer, and it is the field that routes the report.
+        // Preselected only where the screen makes the area obvious (Bible reader, map, timeline,
+        // games, settings, an open article) and only if that category is on offer; otherwise the
+        // reporter must choose — it is required, and it is what files the report in the Admin
+        // Console. Never overwrites a choice they already made.
+        const suggested = suggestedCategoryForRoute(context.route, rows);
+        if (suggested) setCategory((current) => current || suggested);
       })
       .catch((err) => {
         if (!cancelled) setError(humanizeReportError(err));
@@ -94,7 +99,8 @@ export default function ReportIssueSheet({ userId, isGuest, surface, onClose, on
     return () => {
       cancelled = true;
     };
-  }, [isGuest]);
+    // context.route is fixed at mount (the context is captured once), so this still runs once.
+  }, [isGuest, context.route]);
 
   const selectedCategory = useMemo(
     () => (categories ?? []).find((c) => c.key === category) ?? null,
@@ -172,8 +178,8 @@ export default function ReportIssueSheet({ userId, isGuest, surface, onClose, on
         </div>
         <div className="report-sheet-body">
           <p className="report-intro">
-            Your report is in. It goes to the team's review queue, where advisors read it and vote
-            on how urgent it is. You can see where it's got to any time under <strong>My Reports</strong>,
+            Your report is in. It goes to the team's review queue, filed under the category you
+            chose. You can see where it's got to any time under <strong>My Reports</strong>,
             and you can still edit or delete it until someone picks it up.
           </p>
           <div className="report-actions">
@@ -239,7 +245,7 @@ export default function ReportIssueSheet({ userId, isGuest, surface, onClose, on
 
         <form className="report-form" onSubmit={handleSubmit}>
           <label className="report-field">
-            <span className="report-field-label">What kind of thing is it?</span>
+            <span className="report-field-label">Category</span>
             <select value={category} onChange={(e) => setCategory(e.target.value)} required disabled={!categories}>
               <option value="">{categories ? "Choose one…" : "Loading…"}</option>
               {(categories ?? []).map((c) => (
@@ -296,7 +302,7 @@ export default function ReportIssueSheet({ userId, isGuest, surface, onClose, on
               ))}
             </select>
             <span className="report-field-hint">
-              Your view, not a final answer — advisors vote on priority separately.
+              Your view helps the team decide what to look at first.
             </span>
           </label>
 
