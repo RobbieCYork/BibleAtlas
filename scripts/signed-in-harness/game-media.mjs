@@ -76,8 +76,8 @@ const players = [];
 const db = {};
 const push = (table) => { for (const p of players) p.backend.setTable(table, db[table] ?? []); rt.tableChanged(table); };
 const GAMES = [
-  { title: "Bible Trivia", rooms: "game_rooms", players: "game_players", answers: "game_buzzes", create: "create_game_room", join: "join_game_room", start: "start_game_room", leave: "leave_game_room", advance: "check_and_advance", ids: "question_ids", index: "current_question_index", startedAt: "current_question_started_at", createButton: "Create Multiplayer Game", playing: ".game-choice-button" },
-  { title: "Saving Peter", rooms: "saving_peter_rooms", players: "saving_peter_players", answers: "saving_peter_guesses", create: "create_saving_peter_room", join: "join_saving_peter_room", start: "start_saving_peter_room", leave: "leave_saving_peter_room", advance: "check_and_advance_saving_peter", ids: "round_ids", index: "current_round_index", startedAt: "current_round_started_at", createButton: "Create Room", playing: ".saving-peter-guess-input" },
+  { title: "Bible Trivia", rooms: "game_rooms", players: "game_players", answers: "game_buzzes", create: "create_game_room", join: "join_game_room", start: "start_game_room", leave: "leave_game_room", advance: "check_and_advance", ids: "question_ids", index: "current_question_index", startedAt: "current_question_started_at", playing: ".game-choice-button" },
+  { title: "Saving Peter", rooms: "saving_peter_rooms", players: "saving_peter_players", answers: "saving_peter_guesses", create: "create_saving_peter_room", join: "join_saving_peter_room", start: "start_saving_peter_room", leave: "leave_saving_peter_room", advance: "check_and_advance_saving_peter", ids: "round_ids", index: "current_round_index", startedAt: "current_round_started_at", playing: ".saving-peter-guess-input" },
 ];
 let roomSeq = 0;
 const rpcLog = [];
@@ -200,13 +200,52 @@ try {
     await p.h.screenshot(`${what.replace(/[^a-z0-9]+/gi, "-")}-${W}.png`);
   };
 
+  /** The round has run out, so Continue is stuck to the bottom: at the top and the bottom of the
+   * scroll, on a short phone too, it must not sit over a camera/mic switch or the unlock button, and
+   * each of those must still be the thing under its own centre. Nobody taps first: any tap would
+   * start the blocked sound and take the unlock button away. */
+  const barClear = async (p, what, sizes = [[W, H], ...(phone ? [[375, 667], [320, 568]] : [])]) => {
+    Object.assign(db.game_rooms[0], { current_question_started_at: new Date(Date.now() - 60000).toISOString() });
+    push("game_rooms");
+    await p.h.waitFor({ css: ".game-action-button", text: "Continue" });
+    assert(await p.h.exists(".game-audio-unlock"), `${what}: the sound button and Continue are on screen together`);
+    for (const [w, ht] of sizes) {
+      await p.tab.send("Emulation.setDeviceMetricsOverride", { width: w, height: ht, deviceScaleFactor: 1, mobile: phone });
+      await sleep(300);
+      const r = await p.h.evaluate(() => {
+        const body = document.querySelector(".game-body"), bar = () => document.querySelector(".game-action-bar").getBoundingClientRect();
+        const bad = [];
+        for (const el of body.querySelectorAll(".game-video-toggle, .game-audio-unlock, .game-action-button")) {
+          el.scrollIntoView({ block: "nearest", behavior: "instant" });
+          const b = el.getBoundingClientRect();
+          const hit = document.elementFromPoint(b.left + b.width / 2, b.top + b.height / 2);
+          if (!hit || !(el === hit || el.contains(hit))) bad.push(`covered ${el.className}`);
+        }
+        for (const top of [0, body.scrollHeight]) {
+          body.scrollTop = top;
+          const a = bar(), view = body.getBoundingClientRect();
+          if (a.bottom > view.bottom + 1 || a.top < view.top) bad.push(`bar off screen at ${top}`);
+          if (top === 0) for (const el of body.querySelectorAll(".game-video-controls, .game-media-status:not(:empty), .game-audio-unlock")) {
+            const b = el.getBoundingClientRect();
+            if (b.bottom > a.top + 1 && b.top < a.bottom - 1) bad.push(`overlap ${el.className}`);
+          }
+        }
+        return bad;
+      });
+      assert(r.length === 0, `${what} ${w}x${ht}: Continue bar clear of the camera/mic controls ${r.join(", ")}`);
+      await p.h.evaluate(() => (document.querySelector(".game-body").scrollTop = 0));
+      await p.h.screenshot(`continue-bar-${what}-${w}x${ht}.png`);
+    }
+    await p.tab.send("Emulation.setDeviceMetricsOverride", { width: W, height: H, deviceScaleFactor: 1, mobile: phone });
+  };
+
   const openGame = async (p, g) => {
     if (phone) await p.h.click({ css: ".mobile-tab", text: "Games" });
     else { await p.h.click(MENU_BUTTON); await p.h.click({ css: ".panel-menu-link", text: "Games" }); }
     await p.h.waitFor(".game-center-card, .game-root .back-btn");
     await p.h.click({ css: ".game-center-card", text: g.title });
-    if (g.title === "Saving Peter") await p.h.click({ css: ".game-center-card", text: "Multiplayer" });
   };
+  const create = async (p) => { await p.h.click({ css: ".game-entry-card", text: "Create multiplayer game" }); await p.h.click(".game-start-button"); };
   /** Both pages reloaded with the given in-page switches, rooms cleared. */
   const fresh = async (switches = {}) => {
     for (const p of players) {
@@ -218,8 +257,9 @@ try {
     }
     rpcLog.length = 0;
   };
-  const host = async (g) => { await openGame(A, g); await A.h.click({ css: ".games-panel-card button", text: g.createButton }); await A.h.waitFor(".game-lobby-code"); };
-  const joinRoom = async (g) => { await openGame(B, g); await B.h.type(".games-code-input", "ABC123"); await B.h.click({ css: ".games-primary-button", text: "Join Game" }); await B.h.waitFor(".game-lobby-code"); };
+  const host = async (g) => { await openGame(A, g); await create(A); await A.h.waitFor(".game-lobby-code"); };
+  const enterCode = async (p) => { await p.h.type(".games-code-input", "ABC123"); await p.h.click({ css: ".game-start-button", text: "Join game" }); await p.h.waitFor(".game-lobby-code"); };
+  const joinRoom = async (g) => { await openGame(B, g); await B.h.click({ css: ".game-entry-card", text: "Join multiplayer game" }); await enterCode(B); };
   const leave = (p) => p.h.click(".game-video-leave");
 
   for (const g of GAMES) {
@@ -371,7 +411,7 @@ try {
   assert((await showsAvatar(B, A.name)) && (await gum(A)).length === 0, "joiner sees the host's avatar; host never asked");
   await leave(B);
   assert(await until(async () => (await liveTracks(B)).length === 0 && (await audios(A)).length === 0), "joiner leaves: devices stop, host drops the connection");
-  await B.h.type(".games-code-input", "ABC123"); await B.h.click({ css: ".games-primary-button", text: "Join Game" }); await B.h.waitFor(".game-lobby-code");
+  await enterCode(B);
   await choose(B, "Camera and mic");
   assert((await showsVideo(A, B.name)) && (await grows(A, "audio")) && (await connected(B)), "same player rejoins straight away and reconnects");
   await toggle(B, "camera");
@@ -433,6 +473,16 @@ try {
   await B.h.waitFor(g.playing);
   assert((await hears(B)) && !(await B.h.exists(".game-audio-unlock")), "not asked again when the game starts");
 
+  section("Blocked sound button and the Continue bar during play");
+  await fresh({ B: { __blockAudio: "1" } });
+  await host(g); await choose(A, "Camera and mic");
+  await joinRoom(g);
+  await B.h.waitFor(".game-audio-unlock");
+  await A.h.click({ css: ".games-primary-button", text: "Start Game" });
+  await B.h.waitFor(g.playing);
+  await B.h.waitFor(".game-audio-unlock");
+  await barClear(B, "unlock");
+
   section("A newer build deployed while in the lobby");
   await fresh();
   await host(g);
@@ -443,11 +493,13 @@ try {
   section("Solo play never involves camera or mic");
   await fresh();
   await openGame(A, g);
-  await A.h.click({ css: ".games-primary-button", text: "Play Solo" });
+  await A.h.click({ css: ".game-entry-card", text: "Play solo" });
+  await A.h.click(".game-start-button");
   await A.h.waitFor(g.playing);
   assert(!(await A.h.exists(".game-media-choice")) && (await A.h.count(".game-video-toggle:not(.game-video-leave)")) === 0 && (await gum(A)).length === 0, "no card, no switches, no request");
   await leave(A);
-  await A.h.click({ css: ".games-secondary-button", text: g.createButton });
+  await A.h.click(".game-header .back-btn");
+  await create(A);
   await choose(A, "Camera and mic");
   assert(await until(async () => (await liveTracks(A)).length === 2), "alone in a lobby, media on");
   await A.h.click({ css: ".games-primary-button", text: "Start Solo Game" });

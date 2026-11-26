@@ -142,13 +142,14 @@
   margin-bottom: 16px;
 }
 
-/* Saving Peter's solo/multiplayer choice has no picker box around it; line its cards up with the panel. */
-.game-root[data-page-bg] .game-body > .game-center-list {
-  width: 100%;
-  max-width: 640px;
+.game-root[data-page-bg] .game-body > .games-error {
+  padding: 8px 14px;
+  background: var(--panel-bg);
+  border-radius: 8px;
 }
 
-.game-root[data-page-bg="game-setup"] .level-picker .games-panel-intro {
+.game-root[data-page-bg="game-setup"] .level-picker .games-panel-intro,
+.game-root[data-page-bg="game-setup"] .games-panel .games-panel-intro {
   margin-bottom: 0;
 }
 

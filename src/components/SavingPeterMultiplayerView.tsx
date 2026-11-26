@@ -22,10 +22,15 @@ import {
   type SavingPeterPlayer,
 } from "../lib/savingPeterMultiplayer";
 
-const ACTIVE_ROOM_KEY = "bible-atlas-active-saving-peter-room";
+/** The room this tab is seated in. SavingPeterHub reads it to go straight back there. */
+export const SAVING_PETER_ROOM_KEY = "bible-atlas-active-saving-peter-room";
 
 interface SavingPeterMultiplayerViewProps {
   session: Session;
+  /** Which step is behind a room: the create screen or the code entry. Null for a room being
+   * rejoined, which has neither. */
+  entry: "create" | "join" | null;
+  /** Returns to Saving Peter's first screen. */
   onBack: () => void;
   /** False when Saving Peter's stage hides it from this viewer — see BibleTriviaView's prop of the
    * same name. A room already joined carries on; with no room, this hands back instead of offering
@@ -36,9 +41,9 @@ interface SavingPeterMultiplayerViewProps {
 /** Saving Peter's multiplayer flow — up to 4 players, video chat, one shared word per round, only the
  * first correct guess scores. Mirrors BibleTriviaView.tsx's lobby -> active -> finished room lifecycle
  * one-for-one, just against the saving_peter_* tables/RPCs instead of game_*. */
-export default function SavingPeterMultiplayerView({ session, onBack, available }: SavingPeterMultiplayerViewProps) {
+export default function SavingPeterMultiplayerView({ session, entry, onBack, available }: SavingPeterMultiplayerViewProps) {
   const userId = session.user.id;
-  const [roomId, setRoomId] = useState<string | null>(() => sessionStorage.getItem(ACTIVE_ROOM_KEY));
+  const [roomId, setRoomId] = useState<string | null>(() => sessionStorage.getItem(SAVING_PETER_ROOM_KEY));
   const [room, setRoom] = useState<SavingPeterRoom | null>(null);
   const [players, setPlayers] = useState<SavingPeterPlayer[]>([]);
   const [guessesVersion, setGuessesVersion] = useState(0);
@@ -47,8 +52,8 @@ export default function SavingPeterMultiplayerView({ session, onBack, available 
 
   const setActiveRoom = (id: string | null) => {
     setRoomId(id);
-    if (id) sessionStorage.setItem(ACTIVE_ROOM_KEY, id);
-    else sessionStorage.removeItem(ACTIVE_ROOM_KEY);
+    if (id) sessionStorage.setItem(SAVING_PETER_ROOM_KEY, id);
+    else sessionStorage.removeItem(SAVING_PETER_ROOM_KEY);
   };
 
   const refetchRoom = () => {
@@ -88,9 +93,9 @@ export default function SavingPeterMultiplayerView({ session, onBack, available 
   }, [roomId]);
 
   useEffect(() => {
-    if (!available && !roomId) onBack();
+    if (!roomId && (!available || !entry)) onBack();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [available, roomId]);
+  }, [available, entry, roomId]);
 
   // Any lobby, or a game with someone else in it — see BibleTriviaView's note on the same line.
   const isSolo = !room || (room.status !== "lobby" && players.length <= 1);
@@ -120,9 +125,13 @@ export default function SavingPeterMultiplayerView({ session, onBack, available 
     if (leavingRoomId) await leaveSavingPeterRoom(leavingRoomId).catch(() => {});
   };
 
-  const handleBack = async () => {
-    if (roomId) await handleLeave();
-    onBack();
+  /** The header's Back, one level at a time: out of a room to the step it came from, and from that
+   * step to the first screen. */
+  const handleBack = () => {
+    // A room that failed to load is already showing the screen behind it, so Back also steps off it.
+    const roomOnScreen = !!roomId && !(loadError && !room && entry);
+    if (roomId) handleLeave();
+    if (!roomOnScreen) onBack();
   };
 
   const handleKick = async (targetUserId: string) => {
@@ -148,10 +157,13 @@ export default function SavingPeterMultiplayerView({ session, onBack, available 
       />
     ) : null;
 
+  const inRoom = !!(roomId && room);
+  const showEntry = !inRoom && available && !!entry && (!roomId || !!loadError);
+
   return (
-    <div className="game-root">
+    <div className="game-root" data-page-bg={showEntry ? "game-setup" : undefined}>
       <header className="game-header">
-        <BackButton onClick={handleBack} ariaLabel="Back to solo/multiplayer picker" />
+        <BackButton onClick={handleBack} ariaLabel="Back" />
         <h2 className="games-inline-icon">
           <Icon name="savingPeter" />
           Saving Peter — Multiplayer
@@ -161,7 +173,11 @@ export default function SavingPeterMultiplayerView({ session, onBack, available 
         {loadError && <p className="games-error">{loadError}</p>}
         {!isSolo && <GameRemoteAudio streams={webrtc.remoteStreams} />}
         {!roomId || !room ? (
-          available ? <SavingPeterMultiplayerPanel onRoomReady={setActiveRoom} /> : <p className="games-high-scores-empty">Loading…</p>
+          showEntry && entry ? (
+            <SavingPeterMultiplayerPanel entry={entry} onRoomReady={setActiveRoom} />
+          ) : loadError ? null : (
+            <p className="games-high-scores-empty">Loading…</p>
+          )
         ) : room.status === "lobby" ? (
           <GameLobby
             room={room}

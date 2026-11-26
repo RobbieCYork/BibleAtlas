@@ -1,6 +1,7 @@
 /**
- * The photographs behind the bare landing screens (src/pageBackgrounds.css): Game Center, the four
- * game setup screens, About and the Articles home.
+ * The photographs behind the bare landing screens (src/pageBackgrounds.css): Game Center, each game's
+ * first screen, the difficulty screens, the code entry, Saving Peter's create screen, About and the
+ * Articles home.
  *
  *   node scripts/signed-in-harness/run.mjs --persona member --viewport 390x844  --script scripts/signed-in-harness/examples/page-backgrounds.mjs
  *   node scripts/signed-in-harness/run.mjs --persona member --viewport 1280x800 --script scripts/signed-in-harness/examples/page-backgrounds.mjs
@@ -26,8 +27,15 @@ const SCREENS = {
   "articles": [".articles-panel", "scroll-lamp"],
   "setup-fill-blank": [".game-root", "judean-road"],
   "setup-chronology": [".game-root", "judean-road"],
-  "setup-peter-hub": [".game-root", "judean-road"],
   "setup-peter-level": [".game-root", "judean-road"],
+  "setup-peter-create": [".game-root", "judean-road"],
+  "join-trivia": [".game-root", "judean-road"],
+  "join-peter": [".game-root", "judean-road"],
+  "first-bible-trivia": [".game-root", "judean-road"],
+  "first-saving-peter": [".game-root", "judean-road"],
+  "first-fill-blank": [".game-root", "judean-road"],
+  "first-memorization": [".game-root", "judean-road"],
+  "first-chronology": [".game-root", "judean-road"],
 };
 
 export default async function (h) {
@@ -42,6 +50,8 @@ export default async function (h) {
     else { await h.click(MENU_BUTTON); await h.sleep(200); await h.click({ css: ".panel-menu-link", text: "Games" }); }
     await h.waitFor(".game-center-card");
   };
+  const firstScreen = async (title) => { await openGames(); await h.click({ css: ".game-center-card", text: title }); await h.waitFor(".game-entry-card"); };
+  const entry = async (title, choice, ready) => { await firstScreen(title); await h.click({ css: ".game-entry-card", text: choice }); await h.waitFor(ready); };
   const openers = {
     "game-center": openGames,
     "about": async () => { await h.click(MENU_BUTTON); await h.sleep(300); await h.click(phone ? ".mobile-nav-menu-about" : ".panel-menu-about"); await h.waitFor(".about-root"); },
@@ -50,10 +60,17 @@ export default async function (h) {
       else { await h.click(MENU_BUTTON); await h.sleep(200); await h.click({ css: ".panel-menu-item", text: "Articles" }); await esc(); }
       await h.waitFor(".articles-section-header");
     },
-    "setup-fill-blank": async () => { await openGames(); await h.click({ css: ".game-center-card", text: "Fill in the Blank" }); await h.waitFor(".fillblank-picker"); },
-    "setup-chronology": async () => { await openGames(); await h.click({ css: ".game-center-card", text: "Chronology" }); await h.waitFor(".chronology-picker"); },
-    "setup-peter-hub": async () => { await openGames(); await h.click({ css: ".game-center-card", text: "Saving Peter" }); await h.waitFor({ css: ".games-panel-intro h2", text: "Choose how to play" }); },
-    "setup-peter-level": async () => { await openers["setup-peter-hub"](); await h.click({ css: ".game-center-card", text: "Solo" }); await h.waitFor(".level-picker"); },
+    "setup-fill-blank": () => entry("Fill in the Blank", "Play solo", ".fillblank-picker"),
+    "setup-chronology": () => entry("Chronology", "Play solo", ".chronology-picker"),
+    "setup-peter-level": () => entry("Saving Peter", "Play solo", ".level-picker"),
+    "setup-peter-create": () => entry("Saving Peter", "Create multiplayer game", ".game-start-button"),
+    "join-trivia": () => entry("Bible Trivia", "Join multiplayer game", ".games-code-input"),
+    "join-peter": () => entry("Saving Peter", "Join multiplayer game", ".games-code-input"),
+    "first-bible-trivia": () => firstScreen("Bible Trivia"),
+    "first-saving-peter": () => firstScreen("Saving Peter"),
+    "first-fill-blank": () => firstScreen("Fill in the Blank"),
+    "first-memorization": () => firstScreen("Scripture Memorization Challenge"),
+    "first-chronology": () => firstScreen("Chronology"),
   };
 
   /** Every visible text under the screen: is there an opaque ground between it and the picture, and
@@ -104,10 +121,10 @@ export default async function (h) {
       const url = /url\("([^"]+)"\)/.exec(style)?.[1] ?? "";
       const loaded = await h.evaluate((u) => new Promise((res) => { const i = new Image(); i.onload = () => res(i.naturalWidth); i.onerror = () => res(0); i.src = u; }), url);
       h.assert(url.includes(`${picture}-${variant}-`) && loaded > 0, `${screen} ${tag}: ${url.split("/").pop() || style.slice(0, 80)} (${loaded}px wide)`);
-      h.assert(!early.some((n) => n.startsWith(`${picture}-`)) || screen.startsWith("setup-"), `${screen} ${tag}: picture not fetched before the screen was opened ${JSON.stringify(early)}`);
+      h.assert(!early.some((n) => n.startsWith(`${picture}-`)) || picture === "judean-road", `${screen} ${tag}: picture not fetched before the screen was opened ${JSON.stringify(early)}`);
       h.assert((await fetched()).every((n) => n.includes(`-${variant}-`)), `${screen} ${tag}: only ${variant} copies fetched ${JSON.stringify(await fetched())}`);
       const r = await readability(rootSel);
-      h.assert(r.count > 2 && !r.bare.length && !r.low.length, `${screen} ${tag}: ${r.count} texts, lowest contrast ${r.min} ${r.bare.length || r.low.length ? JSON.stringify(r) : ""}`);
+      h.assert(r.count >= 2 && !r.bare.length && !r.low.length, `${screen} ${tag}: ${r.count} texts, lowest contrast ${r.min} ${r.bare.length || r.low.length ? JSON.stringify(r) : ""}`);
       const sideways = await h.evaluate((sel) => {
         const root = document.querySelector(sel);
         const wide = [root, ...root.querySelectorAll("*")].filter((e) => { const b = e.getBoundingClientRect(); return b.width && (b.right > innerWidth + 0.5 || b.left < -0.5); });
@@ -184,10 +201,9 @@ export default async function (h) {
     await h.sleep(500);
     h.assert((await h.evaluate(() => getComputedStyle(document.querySelector(".articles-panel")).backgroundImage)) === "none", "an Articles category page has no picture");
 
-    for (const [name, open] of [["Memorization", "Scripture Memorization Challenge"], ["Bible Trivia", "Bible Trivia"]]) {
+    for (const [name, title, ready] of [["Memorization's verse list", "Scripture Memorization Challenge", ".memchallenge-picker"], ["Bible Trivia's topic screen", "Bible Trivia", ".games-topic-select"]]) {
       await h.reload(); await h.sleep(900);
-      await openGames();
-      await h.click({ css: ".game-center-card", text: open });
+      await entry(title, "Play solo", ready);
       await h.sleep(600);
       h.assert((await h.evaluate(() => getComputedStyle(document.querySelector(".game-root")).backgroundImage)) === "none", `${name} has no picture`);
     }

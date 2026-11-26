@@ -9,6 +9,7 @@ import {
 import BackButton from "./BackButton";
 import "./FillBlank.css";
 import Icon from "./Icon";
+import { GameEntryChoices, LevelSetup } from "./GameEntry";
 
 interface FillBlankViewProps {
   onBack: () => void;
@@ -29,14 +30,15 @@ function shuffled<T>(arr: T[]): T[] {
   return copy;
 }
 
-type Screen = "menu" | "playing" | "gameover";
+type Screen = "home" | "menu" | "playing" | "gameover";
 
 /** "Fill in the Blank" — a standout OT/NT verse is shown with one or more phrases blanked out; the
  * player types each missing phrase before time runs out. Three lives; a wrong or timed-out answer
  * costs one. Time budget and blank count both scale with difficulty (see fillBlankVerses.ts). */
 export default function FillBlankView({ onBack }: FillBlankViewProps) {
-  const [screen, setScreen] = useState<Screen>("menu");
+  const [screen, setScreen] = useState<Screen>("home");
   const [difficulty, setDifficulty] = useState<Difficulty | null>(null);
+  const [choice, setChoice] = useState<Difficulty>(DIFFICULTY_LEVELS[0].key);
   const [queue, setQueue] = useState<FillBlankVerse[]>([]);
   const [current, setCurrent] = useState<FillBlankVerse | null>(null);
   const [inputs, setInputs] = useState<string[]>([]);
@@ -143,39 +145,28 @@ export default function FillBlankView({ onBack }: FillBlankViewProps) {
     setCurrent(null);
   };
 
-  if (screen === "menu") {
+  if (screen === "home" || screen === "menu") {
     return (
       <div className="game-root" data-page-bg="game-setup">
         <header className="game-header">
-          <BackButton onClick={onBack} ariaLabel="Back to Game Center" />
+          <BackButton onClick={screen === "home" ? onBack : () => setScreen("home")} ariaLabel={screen === "home" ? "Back to Game Center" : "Back"} />
           <h2 className="games-inline-icon">
           <Icon name="fillBlank" />
           Fill in the Blank
         </h2>
         </header>
         <div className="game-body">
-          <div className="fillblank-picker">
-            <div className="games-panel-intro">
-              <h2>Choose a difficulty</h2>
-              <p>Standout verses from the Old and New Testaments — type the missing words before time runs out. Three lives.</p>
+          {screen === "home" ? (
+            <GameEntryChoices onSolo={() => setScreen("menu")} />
+          ) : (
+            <div className="fillblank-picker">
+              <div className="games-panel-intro">
+                <h2>Play solo</h2>
+                <p>Standout verses from the Old and New Testaments — type the missing words before time runs out. Three lives.</p>
+              </div>
+              <LevelSetup name="fill-blank-level" levels={DIFFICULTY_LEVELS} value={choice} onChange={setChoice} onStart={() => startGame(choice)} />
             </div>
-            <div className="game-center-list">
-              {DIFFICULTY_LEVELS.map((l) => (
-                <button key={l.key} type="button" className="game-center-card" onClick={() => startGame(l.key)}>
-                  <span className="game-center-card-icon">
-                    <Icon name={l.icon} />
-                  </span>
-                  <span className="game-center-card-body">
-                    <span className="game-center-card-title">{l.label}</span>
-                    <span className="game-center-card-tagline">{l.description}</span>
-                  </span>
-                  <span className="game-center-card-chevron" aria-hidden="true">
-                    ›
-                  </span>
-                </button>
-              ))}
-            </div>
-          </div>
+          )}
         </div>
       </div>
     );
@@ -185,7 +176,7 @@ export default function FillBlankView({ onBack }: FillBlankViewProps) {
     return (
       <div className="game-root">
         <header className="game-header">
-          <BackButton onClick={onBack} ariaLabel="Back to Game Center" />
+          <BackButton onClick={backToMenu} ariaLabel="Back to difficulty select" />
           <h2 className="games-inline-icon">
           <Icon name="fillBlank" />
           Fill in the Blank

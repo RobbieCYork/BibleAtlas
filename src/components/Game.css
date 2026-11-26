@@ -493,6 +493,75 @@
   cursor: default;
 }
 
+/* --- First screen and setup (GameEntry) --- */
+
+/* A direct child of .game-body, which centres its children: give the choices the usual column. */
+.game-body > .game-center-list {
+  width: 100%;
+  max-width: 640px;
+}
+
+.game-entry-card {
+  min-height: 72px;
+}
+
+.game-start-button {
+  min-height: 48px;
+}
+
+.game-level-setup {
+  gap: 16px;
+}
+
+.game-level-setup .games-difficulty {
+  margin: 0;
+}
+
+/* Five levels do not fit a phone, so Start stays at the foot of the screen while they scroll. */
+.game-level-setup .game-start-button {
+  position: sticky;
+  bottom: -8px;
+  z-index: 2;
+  box-shadow: 0 0 0 8px var(--panel-bg);
+}
+
+.game-level-option {
+  scroll-margin-bottom: 76px;
+}
+
+/* The radios are invisible but still the thing that is clicked, focused and announced. */
+.game-level-option {
+  position: relative;
+}
+
+.game-level-option input {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.game-level-option.is-selected {
+  border-color: var(--accent);
+  box-shadow: inset 0 0 0 2px var(--accent);
+}
+
+.game-level-option:has(input:focus-visible) {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+.game-level-check {
+  margin-left: auto;
+  width: 1em;
+  flex-shrink: 0;
+  color: var(--accent);
+  font-size: calc(20px * var(--tsz, 1));
+}
+
 /* --- Lobby (GameLobby) --- */
 
 .game-lobby {

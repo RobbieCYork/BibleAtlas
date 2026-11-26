@@ -1,33 +1,46 @@
 import { useEffect, useState } from "react";
 import type { Session } from "@supabase/supabase-js";
 import SavingPeterView from "./SavingPeterView";
-import SavingPeterMultiplayerView from "./SavingPeterMultiplayerView";
+import SavingPeterMultiplayerView, { SAVING_PETER_ROOM_KEY } from "./SavingPeterMultiplayerView";
 import BackButton from "./BackButton";
 import Icon from "./Icon";
+import { GameEntryChoices } from "./GameEntry";
 
 interface SavingPeterHubProps {
   session: Session;
   onBack: () => void;
   /** False when Saving Peter's stage hides it from this viewer (GameView decides, via useFeature).
-   * Solo and this choice screen hand straight back; multiplayer hands back once out of any room. */
+   * Solo and this first screen hand straight back; multiplayer hands back once out of any room. */
   available: boolean;
 }
 
-/** Saving Peter's own entry point — choose Solo (the original single-player hangman) or Multiplayer
- * (up to 4 players with video chat, race to answer). Mirrors GameView's own thin-router pattern one
- * level down, so GameView itself doesn't need to know Saving Peter has two modes. */
+/** "rejoin" is a room this tab was already seated in: straight back into it, with the first screen
+ * behind it once it is left. */
+type Screen = "home" | "solo" | "create" | "join" | "rejoin";
+
+/** Saving Peter's own entry point — play solo (the single-player hangman), or create or join a
+ * multiplayer game (up to 4 players with video chat, race to answer). Mirrors GameView's own
+ * thin-router pattern one level down, so GameView doesn't need to know Saving Peter has two modes. */
 export default function SavingPeterHub({ session, onBack, available }: SavingPeterHubProps) {
-  const [mode, setMode] = useState<"pick" | "solo" | "multiplayer">("pick");
+  const [screen, setScreen] = useState<Screen>(() => (sessionStorage.getItem(SAVING_PETER_ROOM_KEY) ? "rejoin" : "home"));
+  const multiplayer = screen === "create" || screen === "join" || screen === "rejoin";
 
   useEffect(() => {
-    if (!available && mode !== "multiplayer") onBack();
+    if (!available && !multiplayer) onBack();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [available, mode]);
+  }, [available, multiplayer]);
 
-  if (mode === "multiplayer")
-    return <SavingPeterMultiplayerView session={session} onBack={() => (available ? setMode("pick") : onBack())} available={available} />;
+  if (multiplayer)
+    return (
+      <SavingPeterMultiplayerView
+        session={session}
+        entry={screen === "rejoin" ? null : screen}
+        onBack={() => (available ? setScreen("home") : onBack())}
+        available={available}
+      />
+    );
   if (!available) return null;
-  if (mode === "solo") return <SavingPeterView session={session} onBack={() => setMode("pick")} />;
+  if (screen === "solo") return <SavingPeterView session={session} onBack={() => setScreen("home")} />;
 
   return (
     <div className="game-root" data-page-bg="game-setup">
@@ -39,36 +52,10 @@ export default function SavingPeterHub({ session, onBack, available }: SavingPet
         </h2>
       </header>
       <div className="game-body">
-        <div className="games-panel-intro">
-          <h2>Choose how to play</h2>
-          <p>Classic solo hangman, or race up to 3 friends with video chat to answer first.</p>
-        </div>
-        <div className="game-center-list">
-          <button type="button" className="game-center-card" onClick={() => setMode("solo")}>
-            <span className="game-center-card-icon" aria-hidden="true">
-              <Icon name="people" />
-            </span>
-            <span className="game-center-card-body">
-              <span className="game-center-card-title">Solo</span>
-              <span className="game-center-card-tagline">Guess letters before Peter goes under.</span>
-            </span>
-            <span className="game-center-card-chevron" aria-hidden="true">
-              ›
-            </span>
-          </button>
-          <button type="button" className="game-center-card" onClick={() => setMode("multiplayer")}>
-            <span className="game-center-card-icon" aria-hidden="true">
-              <Icon name="players" />
-            </span>
-            <span className="game-center-card-body">
-              <span className="game-center-card-title">Multiplayer (up to 4, video chat)</span>
-              <span className="game-center-card-tagline">Live video with friends — first correct guess scores, wrong guesses cost you. First to 50 wins.</span>
-            </span>
-            <span className="game-center-card-chevron" aria-hidden="true">
-              ›
-            </span>
-          </button>
-        </div>
+        <GameEntryChoices
+          onSolo={() => setScreen("solo")}
+          multiplayer={{ onCreate: () => setScreen("create"), onJoin: () => setScreen("join") }}
+        />
       </div>
     </div>
   );

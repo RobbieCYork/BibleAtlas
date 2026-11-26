@@ -11,6 +11,7 @@ import { GameMediaBar } from "./GameMediaControls";
 import BackButton from "./BackButton";
 import { useGameWebRTC } from "../hooks/useGameWebRTC";
 import Icon from "./Icon";
+import { GameEntryChoices } from "./GameEntry";
 import {
   fetchRoom,
   fetchPlayers,
@@ -26,8 +27,7 @@ const ACTIVE_ROOM_KEY = "bible-atlas-active-game-room";
 
 interface BibleTriviaViewProps {
   session: Session;
-  /** Returns to GameCenter — called directly from the entry screen's Back, or after leaving a room
-   * first if one's currently joined (see handleBack below). */
+  /** Returns to GameCenter — the first screen's Back (see handleBack below). */
   onBack: () => void;
   /** False when this game's stage hides it from this viewer (GameView decides, via useFeature).
    * A room already joined carries on; once there is no room, this view hands back to Game Center
@@ -41,6 +41,10 @@ interface BibleTriviaViewProps {
  * game_buzzes over one shared realtime channel (see subscribeToRoom). */
 export default function BibleTriviaView({ session, onBack, available }: BibleTriviaViewProps) {
   const userId = session.user.id;
+  // The first-screen choice this player took, or null on the first screen itself. It stays put while
+  // they are in a room, so leaving one lands on the step they came from; a room rejoined after a
+  // reload has no step behind it and leaves to the first screen.
+  const [entry, setEntry] = useState<"solo" | "create" | "join" | null>(null);
   const [roomId, setRoomId] = useState<string | null>(() => sessionStorage.getItem(ACTIVE_ROOM_KEY));
   const [room, setRoom] = useState<GameRoom | null>(null);
   const [players, setPlayers] = useState<GamePlayer[]>([]);
@@ -136,12 +140,15 @@ export default function BibleTriviaView({ session, onBack, available }: BibleTri
     if (leavingRoomId) await leaveGameRoom(leavingRoomId).catch(() => {});
   };
 
-  /** The header's "← Back" button — leaves any joined room first (so the player doesn't linger in
-   * the roster after their screen has already moved on to GameCenter), then always hands off to
-   * GameCenter via onBack. */
-  const handleBack = async () => {
-    if (roomId) await handleLeave();
-    onBack();
+  /** The header's Back, one level at a time: out of a room (leaving it, so the player doesn't linger
+   * in the roster) to the step it came from, then to the first screen, then to GameCenter. */
+  const handleBack = () => {
+    // A room that failed to load is already showing the screen behind it, so Back also steps off it.
+    const roomOnScreen = !!roomId && !(loadError && !room);
+    if (roomId) handleLeave();
+    if (roomOnScreen) return;
+    if (entry) setEntry(null);
+    else onBack();
   };
 
   const handleKick = async (targetUserId: string) => {
@@ -167,10 +174,15 @@ export default function BibleTriviaView({ session, onBack, available }: BibleTri
       />
     ) : null;
 
+  const inRoom = !!(roomId && room);
+  const showEntry = !inRoom && available && (!roomId || !!loadError);
+
   return (
-    <div className="game-root">
+    // The first screen and the code entry are bare enough for the photograph; the topic and
+    // difficulty screen and the room itself stay plain.
+    <div className="game-root" data-page-bg={showEntry && (!entry || entry === "join") ? "game-setup" : undefined}>
       <header className="game-header">
-        <BackButton onClick={handleBack} ariaLabel="Back to Game Center" />
+        <BackButton onClick={handleBack} ariaLabel={inRoom || entry ? "Back" : "Back to Game Center"} />
         <h2 className="games-inline-icon">
           <Icon name="trivia" />
           Bible Trivia
@@ -180,7 +192,16 @@ export default function BibleTriviaView({ session, onBack, available }: BibleTri
         {loadError && <p className="games-error">{loadError}</p>}
         {!isSolo && <GameRemoteAudio streams={webrtc.remoteStreams} />}
         {!roomId || !room ? (
-          available ? <GamesPanel onRoomReady={setActiveRoom} /> : <p className="games-high-scores-empty">Loading…</p>
+          !showEntry ? (
+            <p className="games-high-scores-empty">Loading…</p>
+          ) : entry ? (
+            <GamesPanel entry={entry} onRoomReady={setActiveRoom} />
+          ) : (
+            <GameEntryChoices
+              onSolo={() => setEntry("solo")}
+              multiplayer={{ onCreate: () => setEntry("create"), onJoin: () => setEntry("join") }}
+            />
+          )
         ) : room.status === "lobby" ? (
           <GameLobby
             room={room}

@@ -11,6 +11,7 @@ import {
 import BackButton from "./BackButton";
 import "./Chronology.css";
 import Icon from "./Icon";
+import { GameEntryChoices, LevelSetup } from "./GameEntry";
 
 interface ChronologyViewProps {
   onBack: () => void;
@@ -26,15 +27,16 @@ const CATEGORY_LABELS: Record<ChronologyCard["category"], string> = {
   religion: "World Religions",
 };
 
-type Screen = "menu" | "playing" | "gameover";
+type Screen = "home" | "menu" | "playing" | "gameover";
 
 /** Chronology — the player is dealt a handful of timeline events in scrambled order and puts them
  * back into the order they happened, earliest at the top. Reordering is done with ▲/▼ buttons
  * rather than drag-and-drop: dragging is awkward on touch, and this stays keyboard-reachable and
  * screen-reader-legible for free. Three lives; any round with a card out of place costs one. */
 export default function ChronologyView({ onBack }: ChronologyViewProps) {
-  const [screen, setScreen] = useState<Screen>("menu");
+  const [screen, setScreen] = useState<Screen>("home");
   const [level, setLevel] = useState<ChronologyLevelDef | null>(null);
+  const [choice, setChoice] = useState<ChronologyLevel>(CHRONOLOGY_LEVELS[0].key);
   const [cards, setCards] = useState<ChronologyCard[]>([]);
   const [checked, setChecked] = useState(false);
   const [lives, setLives] = useState(STARTING_LIVES);
@@ -95,42 +97,31 @@ export default function ChronologyView({ onBack }: ChronologyViewProps) {
     setChecked(false);
   };
 
-  if (screen === "menu") {
+  if (screen === "home" || screen === "menu") {
     return (
       <div className="game-root" data-page-bg="game-setup">
         <header className="game-header">
-          <BackButton onClick={onBack} ariaLabel="Back to Game Center" />
+          <BackButton onClick={screen === "home" ? onBack : () => setScreen("home")} ariaLabel={screen === "home" ? "Back to Game Center" : "Back"} />
           <h2 className="games-inline-icon">
           <Icon name="chronology" />
           Chronology
         </h2>
         </header>
         <div className="game-body">
-          <div className="chronology-picker">
-            <div className="games-panel-intro">
-              <h2>Choose a difficulty</h2>
-              <p>
-                Put the events back in the order they happened, earliest first. Higher levels deal more
-                cards, closer together in time. Three lives.
-              </p>
+          {screen === "home" ? (
+            <GameEntryChoices onSolo={() => setScreen("menu")} />
+          ) : (
+            <div className="chronology-picker">
+              <div className="games-panel-intro">
+                <h2>Play solo</h2>
+                <p>
+                  Put the events back in the order they happened, earliest first. Higher levels deal more
+                  cards, closer together in time. Three lives.
+                </p>
+              </div>
+              <LevelSetup name="chronology-level" levels={CHRONOLOGY_LEVELS} value={choice} onChange={setChoice} onStart={() => startGame(choice)} />
             </div>
-            <div className="game-center-list">
-              {CHRONOLOGY_LEVELS.map((l) => (
-                <button key={l.key} type="button" className="game-center-card" onClick={() => startGame(l.key)}>
-                  <span className="game-center-card-icon">
-                    <Icon name={l.icon} />
-                  </span>
-                  <span className="game-center-card-body">
-                    <span className="game-center-card-title">{l.label}</span>
-                    <span className="game-center-card-tagline">{l.description}</span>
-                  </span>
-                  <span className="game-center-card-chevron" aria-hidden="true">
-                    ›
-                  </span>
-                </button>
-              ))}
-            </div>
-          </div>
+          )}
         </div>
       </div>
     );
@@ -140,7 +131,7 @@ export default function ChronologyView({ onBack }: ChronologyViewProps) {
     return (
       <div className="game-root">
         <header className="game-header">
-          <BackButton onClick={onBack} ariaLabel="Back to Game Center" />
+          <BackButton onClick={backToMenu} ariaLabel="Back to difficulty select" />
           <h2 className="games-inline-icon">
           <Icon name="chronology" />
           Chronology

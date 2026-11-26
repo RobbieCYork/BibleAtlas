@@ -90,8 +90,9 @@ export default async function (h) {
   const startSolo = async () => {
     await h.evaluate(() => sessionStorage.removeItem("bible-atlas-active-game-room"));
     await openGames();
+    await h.click({ css: ".game-entry-card", text: "Play solo" });
     await h.waitFor(".games-difficulty");
-    await h.click({ css: ".games-primary-button", text: "Play Solo" });
+    await h.click(".game-start-button");
     await h.waitFor(".game-choice-button");
     await h.waitFor(".game-action-button");
   };
@@ -278,8 +279,8 @@ export default async function (h) {
   h.section("Two players");
   await h.evaluate(() => sessionStorage.removeItem("bible-atlas-active-game-room"));
   await openGames();
-  await h.waitFor(".games-difficulty");
-  await h.click({ css: ".games-secondary-button", text: "Create Multiplayer Game" });
+  await h.click({ css: ".game-entry-card", text: "Create multiplayer game" });
+  await h.click(".game-start-button");
   await h.waitFor(".game-lobby-code");
   h.backend.tables.game_players.push({ room_id: room().id, user_id: OTHER, display_name: "Second Player", score: 0, joined_at: new Date().toISOString() });
   await h.click({ css: ".games-primary-button", text: "Start" });

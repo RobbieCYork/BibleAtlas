@@ -3,6 +3,7 @@ import { MEMORIZATION_VERSES, type MemorizationCategory, type MemorizationVerse 
 import BackButton from "./BackButton";
 import "./Memorization.css";
 import Icon from "./Icon";
+import { GameEntryChoices } from "./GameEntry";
 
 interface MemorizationViewProps {
   onBack: () => void;
@@ -43,6 +44,7 @@ function buildStages(wordCount: number): number[] {
 }
 
 type Mode =
+  | { kind: "home" }
   | { kind: "picker" }
   | { kind: "ready"; verse: MemorizationVerse }
   | {
@@ -84,7 +86,7 @@ function saveMastered(refs: string[]) {
  * to localStorage; the review gate itself only fires within a play session. */
 export default function MemorizationView({ onBack }: MemorizationViewProps) {
   const [mastered, setMastered] = useState<string[]>(() => loadMastered());
-  const [mode, setMode] = useState<Mode>({ kind: "picker" });
+  const [mode, setMode] = useState<Mode>({ kind: "home" });
   const [inputs, setInputs] = useState<string[]>([]);
   const [checked, setChecked] = useState(false);
   const [allCorrect, setAllCorrect] = useState(false);
@@ -224,6 +226,24 @@ export default function MemorizationView({ onBack }: MemorizationViewProps) {
     backToPicker();
   };
 
+  // ---------- First screen ----------
+  if (mode.kind === "home") {
+    return (
+      <div className="game-root" data-page-bg="game-setup">
+        <header className="game-header">
+          <BackButton onClick={onBack} ariaLabel="Back to Game Center" />
+          <h2 className="games-inline-icon">
+          <Icon name="memorization" />
+          Scripture Memorization Challenge
+        </h2>
+        </header>
+        <div className="game-body">
+          <GameEntryChoices onSolo={() => setMode({ kind: "picker" })} />
+        </div>
+      </div>
+    );
+  }
+
   // ---------- Picker ----------
   if (mode.kind === "picker") {
     const remaining = MEMORIZATION_VERSES.length - mastered.length;
@@ -236,7 +256,7 @@ export default function MemorizationView({ onBack }: MemorizationViewProps) {
     return (
       <div className="game-root">
         <header className="game-header">
-          <BackButton onClick={onBack} ariaLabel="Back to Game Center" />
+          <BackButton onClick={() => setMode({ kind: "home" })} ariaLabel="Back" />
           <h2 className="games-inline-icon">
           <Icon name="memorization" />
           Scripture Memorization Challenge

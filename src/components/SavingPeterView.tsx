@@ -5,6 +5,7 @@ import { SAVING_PETER_LEVELS, SAVING_PETER_WORDS, type SavingPeterLevel, type Sa
 import BackButton from "./BackButton";
 import "./SavingPeterLevels.css";
 import Icon from "./Icon";
+import { LevelSetup } from "./GameEntry";
 
 function shuffled<T>(items: T[]): T[] {
   const copy = [...items];
@@ -41,6 +42,7 @@ interface SavingPeterViewProps {
  * tiers across the games (see data/savingPeterWords.ts), picked the same way. */
 export default function SavingPeterView({ session, onBack }: SavingPeterViewProps) {
   const [level, setLevel] = useState<SavingPeterLevel | null>(null);
+  const [choice, setChoice] = useState<SavingPeterLevel>("beginner");
   const [entry, setEntry] = useState(() => SAVING_PETER_WORDS.beginner[0]);
   const [guessed, setGuessed] = useState<Set<string>>(new Set());
 
@@ -137,7 +139,7 @@ export default function SavingPeterView({ session, onBack }: SavingPeterViewProp
     return (
       <div className="game-root" data-page-bg="game-setup">
         <header className="game-header">
-          <BackButton onClick={onBack} ariaLabel="Back to Game Center" />
+          <BackButton onClick={onBack} ariaLabel="Back" />
           <h2 className="games-inline-icon">
           <Icon name="savingPeter" />
           Saving Peter
@@ -146,25 +148,10 @@ export default function SavingPeterView({ session, onBack }: SavingPeterViewProp
         <div className="game-body">
           <div className="level-picker">
             <div className="games-panel-intro">
-              <h2>Choose a difficulty</h2>
-              <p>Beginner is for little ones just learning Bible stories; Expert is seminary-level — and allows only 3 wrong guesses instead of 6.</p>
+              <h2>Play solo</h2>
+              <p>Guess letters before Peter goes under. Beginner is for little ones just learning Bible stories; Expert is seminary-level — and allows only 3 wrong guesses instead of 6.</p>
             </div>
-            <div className="game-center-list">
-              {SAVING_PETER_LEVELS.map((l) => (
-                <button key={l.key} type="button" className="game-center-card level-card" onClick={() => startLevel(l.key)}>
-                  <span className="game-center-card-icon">
-                    <Icon name={l.icon} />
-                  </span>
-                  <span className="game-center-card-body">
-                    <span className="game-center-card-title">{l.label}</span>
-                    <span className="game-center-card-tagline">{l.description}</span>
-                  </span>
-                  <span className="game-center-card-chevron" aria-hidden="true">
-                    ›
-                  </span>
-                </button>
-              ))}
-            </div>
+            <LevelSetup name="saving-peter-level" levels={SAVING_PETER_LEVELS} value={choice} onChange={setChoice} onStart={() => startLevel(choice)} />
           </div>
         </div>
       </div>
@@ -174,7 +161,7 @@ export default function SavingPeterView({ session, onBack }: SavingPeterViewProp
   return (
     <div className="game-root">
       <header className="game-header">
-        <BackButton onClick={backToLevelPicker} ariaLabel="Back to level picker" />
+        <BackButton onClick={backToLevelPicker} ariaLabel="Back to difficulty select" />
         <h2 className="games-inline-icon">
           <Icon name="savingPeter" />
           Saving Peter
