@@ -128,6 +128,7 @@ Selectors live there so a rename is one edit.
 | `about-page.mjs` | About Capstone Bible at 390px and desktop: main-menu row, wording equal to `src/data/aboutPage.ts`, scrolling, Back over a panel and over Timeline, Report a Problem from the foot of the page, light, dark and every skin; signed out: the sign-in card link and the static `/about/` page |
 | `about-editor.mjs` | Admin Console → About page (sql/051) at 390px and desktop: owner-only tab (not administrator, member has no console); built-in text loaded; edit, preview, markup stays literal; unsaved guard on tab switch, Back and beforeunload, draft kept and restored; one `save_about_page` call and the saved text reaches the in-app About and `/about`; a save made elsewhere is caught (40001) and can be overwritten; undo via the original text and an earlier version; sections add/move/remove and validation; table missing (PGRST205) → editor says saving is off and readers get the built-in text; signed out: `/about`'s loader shows saved text, built-in when missing or malformed. The fake's `save_about_page` re-implements the rules; RLS is proven by `scripts/sql-rehearsal/051_about_page.mjs`, not here |
 | `report-categories.mjs` | Report a Problem with categories and no voting (sql/052) at 390px and desktop: required category, ten area categories, preselected from the screen; before sql/052 nothing is preselected and reports still submit; My Reports labels a retired category; Admin Console → Reports category tabs with counts that follow the status chips, a retired tab, re-file sends one PATCH; no vote or priority wording and no `report_vote` call for any persona. RLS proven by `scripts/sql-rehearsal/052_report_categories_no_voting.mjs` |
+| `../game-media.mjs` | run directly, not through `run.mjs`: TWO real Chromes with fake camera/mic devices over a real WebRTC connection, a shared fake database and `lib/fake-realtime.mjs`. Optional camera/mic in Bible Trivia and Saving Peter at `--viewport 390x844` and `1280x800`: choosing neither never calls getUserMedia, a player with no media sees and hears, off ends the track, real "permission denied", missing/busy device, unanswered prompt, blocked autoplay, reload and rejoin, solo play |
 | `network-closed.mjs` | self-test of the closed network |
 | `fixtures-override.mjs` | `--fixtures` |
 
@@ -150,8 +151,10 @@ containers and the marker overlay have shown stale pixels while the DOM was righ
   the fake returns the current persona (the member, from the signed-out screen) whatever you type, and
   `signInAnonymously` returns the guest.
 - **Storage and uploads.** Avatars, post media, sermon-note images: `/storage/v1/*` answers 404/empty.
-- **Realtime and multiplayer.** The websocket cannot connect (the host does not resolve). Chat,
-  badges that arrive live, and every multiplayer game room are not testable. Solo UI is.
+- **Realtime and multiplayer.** Under `run.mjs` the websocket cannot connect (the host does not
+  resolve): chat, badges that arrive live and multiplayer rooms are not testable there. Solo UI is.
+  `game-media.mjs` stands in a fake Realtime (`lib/fake-realtime.mjs`) for the game rooms only; it
+  proves the client, not Supabase Realtime.
 - **External content.** Bible text (bible-api.com), map tiles, web fonts and the OCR model are blocked,
   so the Bible panel shows "Couldn't load that passage" and the map has no tiles. Layout around them can
   be checked; their content cannot.

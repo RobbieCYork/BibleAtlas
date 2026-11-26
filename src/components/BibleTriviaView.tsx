@@ -5,6 +5,9 @@ import GameLobby from "./GameLobby";
 import GameRoomPlay from "./GameRoomPlay";
 import GameResults from "./GameResults";
 import GameVideoStrip from "./GameVideoStrip";
+import GameMediaChoice from "./GameMediaChoice";
+import GameRemoteAudio from "./GameRemoteAudio";
+import { GameMediaBar } from "./GameMediaControls";
 import BackButton from "./BackButton";
 import { useGameWebRTC } from "../hooks/useGameWebRTC";
 import Icon from "./Icon";
@@ -94,14 +97,13 @@ export default function BibleTriviaView({ session, onBack, available }: BibleTri
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [available, roomId]);
 
-  // Solo play has no one to video-chat with — <= 1 rather than === 1 so this also covers the moment
-  // right after a room's created, before its player list has loaded, avoiding a camera-permission
-  // flash for a solo game that would otherwise briefly look like it needed video for an instant.
-  const isSolo = players.length <= 1;
+  // Video chat belongs to a multiplayer room: any lobby (so players can choose before the start)
+  // and any game with someone else in it. A solo game never gets it. The status check covers the
+  // moment before a room's player list has loaded.
+  const isSolo = !room || (room.status !== "lobby" && players.length <= 1);
 
-  // Video chat spans the whole room lifetime (lobby through results) so players don't have to
-  // re-grant camera/mic permission when the game starts — only torn down once there's no active room.
-  // Passing null instead of roomId when solo means the hook never requests camera/mic access at all.
+  // Spans the whole room lifetime (lobby through results) so a choice made in the lobby carries into
+  // the game. Camera and mic are only ever requested when the player taps for them.
   const webrtc = useGameWebRTC(isSolo ? null : roomId, userId);
 
   const handleStart = async () => {
@@ -151,12 +153,7 @@ export default function BibleTriviaView({ session, onBack, available }: BibleTri
         players={players}
         userId={userId}
         hostId={room.host_id}
-        localStream={webrtc.localStream}
-        remoteStreams={webrtc.remoteStreams}
-        micOn={webrtc.micOn}
-        cameraOn={webrtc.cameraOn}
-        onToggleMic={webrtc.toggleMic}
-        onToggleCamera={webrtc.toggleCamera}
+        media={webrtc}
         onLeave={handleLeave}
         onKick={handleKick}
         round={round}
@@ -175,6 +172,7 @@ export default function BibleTriviaView({ session, onBack, available }: BibleTri
       </header>
       <div className="game-body">
         {loadError && <p className="games-error">{loadError}</p>}
+        {!isSolo && <GameRemoteAudio streams={webrtc.remoteStreams} />}
         {!roomId || !room ? (
           available ? <GamesPanel onRoomReady={setActiveRoom} /> : <p className="games-high-scores-empty">Loading…</p>
         ) : room.status === "lobby" ? (
@@ -186,12 +184,20 @@ export default function BibleTriviaView({ session, onBack, available }: BibleTri
             onLeave={handleLeave}
             onKick={handleKick}
             starting={starting}
-            videoStrip={renderVideoStrip()}
+            videoStrip={
+              <>
+                <GameMediaChoice media={webrtc} />
+                {renderVideoStrip()}
+              </>
+            }
           />
         ) : room.status === "active" ? (
           <GameRoomPlay room={room} players={players} userId={userId} answersVersion={answersVersion} renderVideoStrip={renderVideoStrip} />
         ) : (
-          <GameResults room={room} players={players} onPlayAgain={handleLeave} />
+          <>
+            {!isSolo && <GameMediaBar media={webrtc} />}
+            <GameResults room={room} players={players} onPlayAgain={handleLeave} />
+          </>
         )}
       </div>
     </div>

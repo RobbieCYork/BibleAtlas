@@ -18,13 +18,15 @@ import { FAKE_HOST } from "./personas.mjs";
 const CHROME = "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome";
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 
-export async function launchChrome() {
+/** `extraArgs` adds Chrome switches for one check (e.g. fake camera/mic devices). */
+export async function launchChrome({ extraArgs = [] } = {}) {
   if (!existsSync(CHROME)) throw new Error(`Google Chrome not found at ${CHROME}`);
   const profile = mkdtempSync(join(tmpdir(), "signed-in-harness-chrome."));
   const proc = spawn(CHROME, [
     "--headless=new", "--use-gl=angle", "--use-angle=swiftshader", "--enable-unsafe-swiftshader", "--ignore-gpu-blocklist", "--no-first-run", "--no-default-browser-check",
     "--disable-background-timer-throttling", "--disable-renderer-backgrounding", "--disable-backgrounding-occluded-windows",
     "--host-resolver-rules=MAP * ~NOTFOUND , EXCLUDE 127.0.0.1",
+    ...extraArgs,
     `--user-data-dir=${profile}`, "--remote-debugging-port=0", "about:blank",
   ], { stdio: "ignore" });
   const portFile = join(profile, "DevToolsActivePort");

@@ -969,6 +969,40 @@
   opacity: 0.55;
 }
 
+.game-media-status {
+  width: 100%;
+  max-width: 520px;
+  margin: 0 auto;
+  text-align: center;
+  color: var(--text-muted);
+  font-size: calc(13px * var(--tsz, 1));
+}
+
+.game-media-status:empty {
+  /* Kept in the page (not removed) so screen readers announce text when it arrives. */
+  margin-top: -8px;
+}
+
+.game-media-bar {
+  width: 100%;
+  max-width: 520px;
+  margin-bottom: 16px;
+}
+
+/* The lobby's camera/mic choice, shown before any browser permission prompt. */
+.game-media-choice {
+  text-align: center;
+}
+
+/* Sticks to the top of the game screen so it can't be scrolled out of reach. */
+.game-audio-unlock {
+  position: sticky;
+  top: 0;
+  z-index: 5;
+  flex-shrink: 0;
+  margin-bottom: 12px;
+}
+
 .game-video-leave {
   color: #db284e;
   border-color: #db284e;

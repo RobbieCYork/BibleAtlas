@@ -5,6 +5,9 @@ import GameLobby from "./GameLobby";
 import SavingPeterRoundPlay from "./SavingPeterRoundPlay";
 import SavingPeterMultiplayerResults from "./SavingPeterMultiplayerResults";
 import GameVideoStrip from "./GameVideoStrip";
+import GameMediaChoice from "./GameMediaChoice";
+import GameRemoteAudio from "./GameRemoteAudio";
+import { GameMediaBar } from "./GameMediaControls";
 import BackButton from "./BackButton";
 import { useGameWebRTC } from "../hooks/useGameWebRTC";
 import Icon from "./Icon";
@@ -89,7 +92,8 @@ export default function SavingPeterMultiplayerView({ session, onBack, available 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [available, roomId]);
 
-  const isSolo = players.length <= 1;
+  // Any lobby, or a game with someone else in it — see BibleTriviaView's note on the same line.
+  const isSolo = !room || (room.status !== "lobby" && players.length <= 1);
   const webrtc = useGameWebRTC(isSolo ? null : roomId, userId);
 
   const handleStart = async () => {
@@ -136,12 +140,7 @@ export default function SavingPeterMultiplayerView({ session, onBack, available 
         players={players}
         userId={userId}
         hostId={room.host_id}
-        localStream={webrtc.localStream}
-        remoteStreams={webrtc.remoteStreams}
-        micOn={webrtc.micOn}
-        cameraOn={webrtc.cameraOn}
-        onToggleMic={webrtc.toggleMic}
-        onToggleCamera={webrtc.toggleCamera}
+        media={webrtc}
         onLeave={handleLeave}
         onKick={handleKick}
         round={round}
@@ -160,6 +159,7 @@ export default function SavingPeterMultiplayerView({ session, onBack, available 
       </header>
       <div className="game-body">
         {loadError && <p className="games-error">{loadError}</p>}
+        {!isSolo && <GameRemoteAudio streams={webrtc.remoteStreams} />}
         {!roomId || !room ? (
           available ? <SavingPeterMultiplayerPanel onRoomReady={setActiveRoom} /> : <p className="games-high-scores-empty">Loading…</p>
         ) : room.status === "lobby" ? (
@@ -171,13 +171,21 @@ export default function SavingPeterMultiplayerView({ session, onBack, available 
             onLeave={handleLeave}
             onKick={handleKick}
             starting={starting}
-            videoStrip={renderVideoStrip()}
+            videoStrip={
+              <>
+                <GameMediaChoice media={webrtc} />
+                {renderVideoStrip()}
+              </>
+            }
             maxPlayers={4}
           />
         ) : room.status === "active" ? (
           <SavingPeterRoundPlay room={room} players={players} userId={userId} guessesVersion={guessesVersion} renderVideoStrip={renderVideoStrip} />
         ) : (
-          <SavingPeterMultiplayerResults room={room} players={players} onPlayAgain={handleLeave} />
+          <>
+            {!isSolo && <GameMediaBar media={webrtc} />}
+            <SavingPeterMultiplayerResults room={room} players={players} onPlayAgain={handleLeave} />
+          </>
         )}
       </div>
     </div>
