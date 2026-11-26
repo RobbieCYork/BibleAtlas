@@ -4,6 +4,8 @@ import { BOOKS } from "../data/bibleBooks";
 import { shouldNavigate, suggestReference } from "../lib/bibleReference";
 import Icon, { type IconName } from "./Icon";
 import type { IndexEntry, RecordKind, RecordSection } from "../lib/unifiedSearch";
+import { searchDownloaded } from "../lib/offline/text";
+import { getStoredTranslation } from "../lib/bibleTranslation";
 
 type UnifiedModule = typeof import("../lib/unifiedSearch");
 type SectionKey = "scripture" | RecordSection;
@@ -179,21 +181,27 @@ export default function UnifiedSearchBar({
     }
     const ctl = new AbortController();
     setScripture({ q: sq, status: "loading", hits: [] });
-    fetch(`https://bolls.life/find/WEB/?search=${encodeURIComponent(sq)}&match_case=false&match_whole=false`, {
-      signal: ctl.signal,
-    })
-      .then((r) => {
-        if (!r.ok) throw new Error("search failed");
-        return r.json() as Promise<ScriptureHit[]>;
-      })
-      .then((data) => {
-        const hits = data.filter((h) => BOOKS[h.book - 1]).slice(0, SCRIPTURE_CAP);
-        cache.current.set(sq.toLowerCase(), hits);
-        setScripture({ q: sq, status: "ok", hits });
-      })
-      .catch((e) => {
-        if (e?.name !== "AbortError") setScripture({ q: sq, status: "error", hits: [] });
+    const done = (found: ScriptureHit[]) => {
+      const hits = found.filter((h) => BOOKS[h.book - 1]).slice(0, SCRIPTURE_CAP);
+      cache.current.set(sq.toLowerCase(), hits);
+      setScripture({ q: sq, status: "ok", hits });
+    };
+    // A downloaded translation is searched on the device: the WEB when it is there, and with no
+    // connection whichever translation the reader reads in.
+    (async () => {
+      const local =
+        (await searchDownloaded("web", sq, SCRIPTURE_CAP).catch(() => null)) ??
+        (navigator.onLine ? null : await searchDownloaded(getStoredTranslation() ?? "web", sq, SCRIPTURE_CAP).catch(() => null));
+      if (ctl.signal.aborted) return;
+      if (local) return done(local);
+      const r = await fetch(`https://bolls.life/find/WEB/?search=${encodeURIComponent(sq)}&match_case=false&match_whole=false`, {
+        signal: ctl.signal,
       });
+      if (!r.ok) throw new Error("search failed");
+      done((await r.json()) as ScriptureHit[]);
+    })().catch((e) => {
+      if (e?.name !== "AbortError") setScripture({ q: sq, status: "error", hits: [] });
+    });
     return () => ctl.abort();
   }, [scriptureQuery, reference]);
 

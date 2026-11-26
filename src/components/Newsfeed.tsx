@@ -17,6 +17,7 @@ import InlineTextEditor from "./InlineTextEditor";
 import ModerationMenu from "./ModerationMenu";
 import { useHiddenContent } from "../lib/moderationApi";
 import { getDailyVerse, formatDailyReference, getLocalDayKey } from "../data/dailyVerse";
+import { fetchPassage, passageText } from "../lib/biblePassage";
 
 interface NewsfeedProps {
   /** The signed-in account viewing its own Newsfeed tab — used both to find its friends and to post
@@ -67,10 +68,9 @@ export default function Newsfeed({ userId, onGoToVerse }: NewsfeedProps) {
 
   useEffect(() => {
     let cancelled = false;
-    fetch(`https://bible-api.com/${encodeURIComponent(dailyVerseReference)}?translation=web`)
-      .then((res) => res.json())
-      .then((data) => {
-        if (!cancelled && data?.text) setDailyVerseText(data.text.trim());
+    fetchPassage(dailyVerseReference, "web")
+      .then((result) => {
+        if (!cancelled) setDailyVerseText(passageText(result));
       })
       .catch(() => {});
     return () => {

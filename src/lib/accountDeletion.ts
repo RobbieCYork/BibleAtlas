@@ -11,6 +11,7 @@
  */
 
 import { supabase } from "./supabase";
+import { clearReaderData } from "./offline/signOut";
 import { ACCOUNT_DELETION_CONFIRM_WORD } from "../data/accountDeletionNotice";
 
 /** Carries the server's own sentence where there is one — "this is the only owner account", say —
@@ -69,5 +70,7 @@ export async function endSessionAfterDeletion(): Promise<void> {
   } catch {
     /* Already gone. The reload below is what actually guarantees the signed-out state. */
   }
+  // Awaited here as well as on SIGNED_OUT: the reload must not cut off erasing the offline copy.
+  await clearReaderData();
   window.location.replace(`${window.location.origin}/`);
 }

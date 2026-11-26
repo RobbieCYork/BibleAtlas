@@ -40,7 +40,14 @@ import ShareCardModal from "./ShareCardModal";
 import { track } from "../lib/analytics";
 import HighlightHandles from "./HighlightHandles";
 import Icon from "./Icon";
-import { TRANSLATIONS, getStoredTranslation, useBibleTranslation } from "../lib/bibleTranslation";
+import { TRANSLATIONS, getStoredTranslation, translationFor, useBibleTranslation } from "../lib/bibleTranslation";
+import { PACKS } from "../lib/offline/catalog";
+import { useDownloadSummary } from "../lib/offline/bibles";
+import { useOnline } from "../lib/offline/useOnline";
+import { searchDownloaded } from "../lib/offline/text";
+import { saveChapter, savedChapter, savedTags, saveTags, type ChapterAnnotations } from "../lib/offline/annotations";
+import { saveLastPosition } from "../lib/offline/lastPosition";
+import { OfflineBiblesSheet } from "./OfflineBibles";
 import HighlightColorSheet from "./HighlightColorSheet";
 import {
   highlightHex,
@@ -117,7 +124,19 @@ interface PassageResult {
   reference: string;
   verses: VerseData[];
   translationName: string;
+  /** Which translation these words are, for the rights line under them. */
+  translationId: string;
 }
+
+/** The translation select's last entry, which opens the downloads window instead of choosing. */
+const OFFLINE_OPTION = "__offline__";
+
+const annotationKey = (userId: string, book: string, chapter: number, translationId: string) =>
+  JSON.stringify([userId, book, chapter, translationId]);
+
+const translationName = (id: string) => translationFor(id)?.name ?? id.toUpperCase();
+
+const offlineMessage = (id: string) => `You're offline, and the ${translationName(id)} isn't downloaded on this device.`;
 
 /** Wraps each occurrence of a searched word in <mark>. Plain-text split, never innerHTML. */
 function markMatches(text: string, query: string): ReactNode {
@@ -286,6 +305,12 @@ export default function BiblePanel({
   /** The translation the on-screen chapter was last requested in — lets a change made elsewhere
    * (My Profile) reload the open chapter without double-loading the chip's own change. */
   const loadedTranslationRef = useRef(translation);
+  const online = useOnline();
+  const downloads = useDownloadSummary();
+  const offlineOffered = PACKS.length > 0 || downloads.ids.length > 0;
+  const [offlineSheetOpen, setOfflineSheetOpen] = useState(false);
+  /** The chapter last asked for, so it can be opened in a downloaded translation instead. */
+  const wantedChapterRef = useRef<{ book: string; chapter: number } | null>(null);
   const [passage, setPassage] = useState<PassageResult | null>(null);
   const [currentBook, setCurrentBook] = useState<string | null>(null);
   const [currentChapter, setCurrentChapter] = useState<number | null>(null);
@@ -397,25 +422,55 @@ export default function BiblePanel({
       .then(({ error: saveError }) => {
         if (saveError) console.error("Failed to save reading progress:", saveError.message);
       });
+    saveLastPosition({ userId, book, chapter, translation: translationId });
+  };
+
+  /** Newest request wins: an answer for a chapter already left must not paint over this one. */
+  const annotationRequestRef = useRef(0);
+  /** Whose highlights and notes the state below holds... */
+  const annotationKeyRef = useRef("");
+  /** ...and the same key once the server has answered for it, which is what may be saved for offline. */
+  const confirmedKeyRef = useRef<string | null>(null);
+
+  const showAnnotations = (a: ChapterAnnotations) => {
+    setHighlights(a.highlights);
+    setNotes(a.notes);
+    setVerseTags(a.verseTags);
   };
 
   /** Loads this account's highlights (translation-specific — offsets only make sense for the exact
    * text they were made against), notes, and verse tags (both shown regardless of translation) for one chapter. */
   const fetchAnnotations = async (book: string, chapter: number, translationId: string) => {
-    if (!userId) {
-      setHighlights([]);
-      setNotes([]);
-      setVerseTags([]);
-      return;
+    const request = ++annotationRequestRef.current;
+    const key = userId ? annotationKey(userId, book, chapter, translationId) : "";
+    if (annotationKeyRef.current !== key || !userId) {
+      annotationKeyRef.current = key;
+      confirmedKeyRef.current = null;
+      showAnnotations({ highlights: [], notes: [], verseTags: [] });
     }
+    if (!userId) return;
+    // The copy saved on this device shows at once (and is all there is offline); the server's answer
+    // replaces it.
+    let answered = false;
+    void savedChapter(userId, book, chapter, translationId).then((saved) => {
+      if (saved && !answered && request === annotationRequestRef.current) showAnnotations(saved);
+    });
+    if (!navigator.onLine) return;
     const [hlRes, notesRes, verseTagsRes] = await Promise.all([
       supabase.from("highlights").select("*").eq("user_id", userId).eq("book", book).eq("chapter", chapter).eq("translation", translationId),
       supabase.from("notes").select("*").eq("user_id", userId).eq("book", book).eq("chapter", chapter),
       supabase.from("verse_tags").select("*").eq("user_id", userId).eq("book", book).eq("chapter", chapter),
     ]);
-    setHighlights((hlRes.data as Highlight[] | null) ?? []);
-    setNotes((notesRes.data as Note[] | null) ?? []);
-    setVerseTags((verseTagsRes.data as VerseTag[] | null) ?? []);
+    if (request !== annotationRequestRef.current) return;
+    // A failed read keeps what is shown rather than blanking the reader's marks.
+    if (hlRes.error || notesRes.error || verseTagsRes.error) return;
+    answered = true;
+    confirmedKeyRef.current = key;
+    showAnnotations({
+      highlights: (hlRes.data as Highlight[] | null) ?? [],
+      notes: (notesRes.data as Note[] | null) ?? [],
+      verseTags: (verseTagsRes.data as VerseTag[] | null) ?? [],
+    });
   };
 
   /** Loads this account's full custom-tag list — not chapter-scoped, so it's fetched once per login state. */
@@ -424,8 +479,17 @@ export default function BiblePanel({
       setTags([]);
       return;
     }
-    const { data } = await supabase.from("tags").select("*").eq("user_id", userId).order("name");
-    setTags((data as Tag[] | null) ?? []);
+    let answered = false;
+    void savedTags(userId).then((saved) => {
+      if (saved && !answered) setTags(saved);
+    });
+    if (!navigator.onLine) return;
+    const { data, error: tagsError } = await supabase.from("tags").select("*").eq("user_id", userId).order("name");
+    if (tagsError) return;
+    answered = true;
+    const rows = (data as Tag[] | null) ?? [];
+    setTags(rows);
+    saveTags(userId, rows);
   };
 
   // Re-fetch highlights/notes/tags for the current chapter when login state changes (e.g. after signing in).
@@ -434,6 +498,29 @@ export default function BiblePanel({
     if (currentBook && currentChapter !== null) fetchAnnotations(currentBook, currentChapter, translation);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userId]);
+
+  // Changes made here (a new highlight, a deleted note) go into the saved copy too.
+  useEffect(() => {
+    if (!userId || !currentBook || currentChapter === null) return;
+    if (confirmedKeyRef.current !== annotationKey(userId, currentBook, currentChapter, translation)) return;
+    saveChapter(userId, currentBook, currentChapter, translation, { highlights, notes, verseTags });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [highlights, notes, verseTags]);
+
+  // Back online: the server's copy replaces whatever was shown from the device.
+  const wasOnlineRef = useRef(online);
+  useEffect(() => {
+    const returned = online && !wasOnlineRef.current;
+    wasOnlineRef.current = online;
+    if (!returned) return;
+    fetchTags();
+    if (currentBook && currentChapter !== null) {
+      fetchAnnotations(currentBook, currentChapter, translation);
+      fetchChapterReadState(currentBook, currentChapter);
+    }
+    if (userId) fetchChaptersThisMonth(userId);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [online]);
 
   // Reading-plan progress, refetched on login state changes. On login, any days checked off while
   // logged out are first merged into Supabase (best-effort) so they follow the account.
@@ -520,7 +607,7 @@ export default function BiblePanel({
   /** Whether this exact chapter has already been marked read (and not yet aged past this account's
    * reset window), for the "Mark chapter as read" checkbox. */
   const fetchChapterReadState = async (book: string, chapter: number) => {
-    if (!userId) {
+    if (!userId || !navigator.onLine) {
       setChapterMarkedRead(false);
       return;
     }
@@ -725,6 +812,11 @@ export default function BiblePanel({
    * counts as "stop it" too: a reader who presses again while it spins wants out, not a queue. */
   const handleListenPress = () => {
     const el = audioElRef.current;
+    if (audioState === "idle" && !navigator.onLine) {
+      setAudioAsked(true);
+      setAudioError("Narration needs a connection.");
+      return;
+    }
     if (audioState !== "idle") {
       shouldAutoplayRef.current = false;
       continuingRef.current = false;
@@ -829,6 +921,7 @@ export default function BiblePanel({
   const loadChapter = async (book: string, chapter: number, translationId: string): Promise<boolean> => {
     if (chapter < 1) return false;
     loadedTranslationRef.current = translationId;
+    wantedChapterRef.current = { book, chapter };
     setLoading(true);
     try {
       const lastVerse = chapter === 1 ? SINGLE_CHAPTER_BOOK_LAST_VERSE[book] : undefined;
@@ -843,6 +936,7 @@ export default function BiblePanel({
         reference: lastVerse ? `${book} ${chapter}` : data.reference,
         verses: data.verses,
         translationName: data.translationName,
+        translationId,
       });
       setCurrentBook(book);
       setCurrentChapter(chapter);
@@ -870,7 +964,11 @@ export default function BiblePanel({
     const parsed = parseBookChapter(trimmed);
     const ok = parsed ? await loadChapter(parsed.book, parsed.chapter, translationId) : false;
     if (!ok) {
-      setError('Couldn\'t load that passage. Try a format like "John 3:16" or "Acts 18".');
+      setError(
+        !navigator.onLine && parsed
+          ? offlineMessage(translationId)
+          : 'Couldn\'t load that passage. Try a format like "John 3:16" or "Acts 18".'
+      );
     } else if (parsed?.verse) {
       setPendingScrollVerse(parsed.verse);
     }
@@ -1669,7 +1767,9 @@ export default function BiblePanel({
       const { data, error: tagError } = await supabase.from("tags").insert({ user_id: userId, name }).select().single();
       if (tagError || !data) return;
       tag = data as Tag;
-      setTags((prev) => [...prev, tag!].sort((a, b) => a.name.localeCompare(b.name)));
+      const withNew = [...tags, tag].sort((a, b) => a.name.localeCompare(b.name));
+      setTags(withNew);
+      saveTags(userId, withNew);
     }
     if (!isRangeTagged(popup.startVerse, popup.endVerse, tag.id)) await handleToggleVerseTag(tag.id);
   };
@@ -1679,7 +1779,7 @@ export default function BiblePanel({
     if (translation === loadedTranslationRef.current) return;
     if (currentBook && currentChapter !== null) {
       loadChapter(currentBook, currentChapter, translation).then((ok) => {
-        if (!ok) setError("Couldn't load this passage in that translation.");
+        if (!ok) setError(navigator.onLine ? "Couldn't load this passage in that translation." : offlineMessage(translation));
       });
     } else {
       loadedTranslationRef.current = translation;
@@ -1691,8 +1791,20 @@ export default function BiblePanel({
     setTranslation(next);
     if (currentBook && currentChapter !== null) {
       const ok = await loadChapter(currentBook, currentChapter, next);
-      if (!ok) setError("Couldn't load this passage in that translation.");
+      if (!ok) setError(navigator.onLine ? "Couldn't load this passage in that translation." : offlineMessage(next));
     }
+  };
+
+  /** Offline, with a passage that cannot be had in the chosen translation: open it in one that is on
+   * the device. */
+  const readDownloaded = async (id: string) => {
+    const wanted = wantedChapterRef.current;
+    setError(null);
+    // loadChapter first: it records the translation it is loading, so the saved-version effect above
+    // does not load the same chapter a second time.
+    const loaded = wanted ? loadChapter(wanted.book, wanted.chapter, id) : null;
+    setTranslation(id);
+    if (loaded && !(await loaded)) setError(offlineMessage(id));
   };
 
   /** The reference picker's chapter step. Setting currentBook synchronously (loadChapter sets it
@@ -1757,6 +1869,18 @@ export default function BiblePanel({
     setSearching(true);
     setSearchError(null);
     try {
+      // A downloaded translation is searched on the device, online or off.
+      const local = await searchDownloaded(translation, q, MAX_SEARCH_RESULTS).catch(() => null);
+      if (local) {
+        setSearchResults(local);
+        setSearchedQuery(q);
+        return;
+      }
+      if (!navigator.onLine) {
+        setSearchError(`You're offline. Searching needs a connection unless the ${translationName(translation)} is downloaded.`);
+        setSearchResults(null);
+        return;
+      }
       const url = `https://bolls.life/find/${translation.toUpperCase()}/?search=${encodeURIComponent(q)}&match_case=false&match_whole=false`;
       const res = await fetch(url);
       if (!res.ok) throw new Error("Search failed");
@@ -1784,6 +1908,10 @@ export default function BiblePanel({
     const bookName = BOOKS[hit.book - 1]?.name;
     if (!bookName) return;
     const ok = await loadChapter(bookName, hit.chapter, translation);
+    if (!ok && !navigator.onLine) {
+      setSearchResults(null);
+      setError(offlineMessage(translation));
+    }
     if (ok) {
       setPendingScrollVerse(hit.verse);
       setSearchResults(null);
@@ -1832,7 +1960,11 @@ export default function BiblePanel({
     const ok = await loadChapter(targetBook, targetChapter, translation);
     if (!ok) {
       setBoundaryMessage(
-        delta > 0 ? `Couldn't load the next chapter.` : `Couldn't load the previous chapter.`
+        !navigator.onLine
+          ? offlineMessage(translation)
+          : delta > 0
+            ? `Couldn't load the next chapter.`
+            : `Couldn't load the previous chapter.`
       );
     }
   };
@@ -1945,6 +2077,20 @@ export default function BiblePanel({
 
       {loading && <p className="bible-status">Loading…</p>}
       {error && <p className="bible-status bible-error">{error}</p>}
+      {error && !online && (
+        <div className="offline-switch">
+          {TRANSLATIONS.filter((t) => downloads.installed.includes(t.id)).map((t) => (
+            <button key={t.id} type="button" onClick={() => readDownloaded(t.id)}>
+              Read the downloaded {t.short}
+            </button>
+          ))}
+          {offlineOffered && (
+            <button type="button" onClick={() => setOfflineSheetOpen(true)}>
+              Offline downloads
+            </button>
+          )}
+        </div>
+      )}
 
       {/* Cold-start welcome — nothing else renders here until a book is picked, and a silently
           blank column reads as broken rather than waiting for input. Held back while `initializing`
@@ -2050,7 +2196,9 @@ export default function BiblePanel({
               <select
                 className="bible-translation-select bible-translation-compact-select"
                 value={translation}
-                onChange={(e) => handleTranslationChange(e.target.value)}
+                onChange={(e) =>
+                  e.target.value === OFFLINE_OPTION ? setOfflineSheetOpen(true) : handleTranslationChange(e.target.value)
+                }
                 /* The full name, so neither a screen reader nor a hover ever gets only the code. */
                 aria-label={`Translation: ${TRANSLATIONS.find((t) => t.id === translation)?.label ?? translation}`}
                 title={TRANSLATIONS.find((t) => t.id === translation)?.label}
@@ -2060,6 +2208,7 @@ export default function BiblePanel({
                     {t.label}
                   </option>
                 ))}
+                {offlineOffered && <option value={OFFLINE_OPTION}>Download for offline reading…</option>}
               </select>
             </span>
 
@@ -2183,6 +2332,14 @@ export default function BiblePanel({
               accessible name, and Icon marks itself aria-hidden when it has no title of its own.
               The compact form needed role="img" precisely because a mark and a digit did not say
               anything on their own. */}
+          {!online && (
+            <p className="bible-offline-line no-print" role="status">
+              {downloads.installed.includes(passage.translationId)
+                ? "Offline: reading the copy downloaded on this device."
+                : "You're offline."}
+            </p>
+          )}
+
           {chaptersThisMonth !== null && (
             <p className="bible-chapters-read no-print">
               <Icon name="bible" inline /> {chaptersThisMonth}{" "}
@@ -2280,8 +2437,8 @@ export default function BiblePanel({
 
           {userId && (
             <label className="bible-mark-read no-print">
-              <input type="checkbox" checked={chapterMarkedRead} onChange={handleToggleChapterRead} />
-              Mark {passage.reference} as read
+              <input type="checkbox" checked={chapterMarkedRead} onChange={handleToggleChapterRead} disabled={!online} />
+              Mark {passage.reference} as read{!online && " (needs a connection)"}
             </label>
           )}
 
@@ -2306,8 +2463,17 @@ export default function BiblePanel({
               text is public domain and eBible.org asks nothing for Henson's recording), but this is
               a paid product reading someone else's voice work aloud, so it stays. */}
           <p className="bible-translation-credit">
-            {passage.translationName}, Public Domain
+            {passage.translationName}, {translationFor(passage.translationId)?.credit ?? "Public Domain"}
             {audioEligible && ` · ${CHAPTER_AUDIO_CREDIT_SHORT}`}
+            {translationFor(passage.translationId)?.attribution && (
+              <>
+                {" · "}
+                {translationFor(passage.translationId)!.attribution!.text}{" "}
+                <a href={translationFor(passage.translationId)!.attribution!.url} target="_blank" rel="noopener noreferrer">
+                  berean.bible
+                </a>
+              </>
+            )}
           </p>
         </div>
       )}
@@ -2336,7 +2502,9 @@ export default function BiblePanel({
         />
       )}
 
-      {colorSheetOpen && popup?.kind === "verse-actions" && (
+      {offlineSheetOpen && <OfflineBiblesSheet onClose={() => setOfflineSheetOpen(false)} />}
+
+      {colorSheetOpen && online && popup?.kind === "verse-actions" && (
         <HighlightColorSheet
           initialHex={activeHighlight ? highlightHex(activeHighlight.color) : null}
           initialOpacity={activeHighlight ? highlightOpacity(activeHighlight.color) : 100}
@@ -2350,7 +2518,7 @@ export default function BiblePanel({
         />
       )}
 
-      {handleRange && (
+      {handleRange && online && (
         <HighlightHandles
           start={{ verse: handleRange.startVerse, offset: handleRange.startOffset }}
           end={{ verse: handleRange.endVerse, offset: handleRange.endOffset }}
@@ -2381,7 +2549,9 @@ export default function BiblePanel({
                 </button>
               </div>
               <div className={`verse-sheet-actions${compactActions ? " is-compact" : ""}`} ref={actionsRowRef}>
-                {userId ? (
+                {userId && !online ? (
+                  <span className="verse-popup-offline-note">Offline: highlighting, notes and tags need a connection.</span>
+                ) : userId ? (
                   <>
                     {/* Yellow is the one quick swatch; every other colour (and the four older names) lives
                         behind the rainbow button's Colors sheet. */}
@@ -2460,7 +2630,7 @@ export default function BiblePanel({
                 </button>
               </div>
 
-              {userId && (
+              {userId && online && (
                 // Type a note without tapping Note first. Saves through the same persistNote() the full
                 // editor uses. Enter saves, Shift+Enter is a newline.
                 <form
@@ -2536,6 +2706,7 @@ export default function BiblePanel({
                       ) : (
                         <div className="verse-popup-note-row">
                           <p>{n.note_text}</p>
+                          {online && (
                           <div className="verse-popup-note-item-actions">
                             <button type="button" onMouseDown={(e) => e.preventDefault()} onClick={() => startNoteEdit(n)}>
                               ✎ Edit
@@ -2552,6 +2723,7 @@ export default function BiblePanel({
                               ✕
                             </button>
                           </div>
+                          )}
                         </div>
                       )}
                     </div>
@@ -2590,23 +2762,25 @@ export default function BiblePanel({
                 <button type="button" onClick={() => (popup.returnTo ? setPopup(popup.returnTo) : closePopup())}>
                   Cancel
                 </button>
-                <button type="button" className="verse-popup-save" onClick={handleSaveNote} disabled={!noteDraft.trim()}>
+                <button type="button" className="verse-popup-save" onClick={handleSaveNote} disabled={!noteDraft.trim() || !online}>
                   Save
                 </button>
               </div>
+              {!online && <p className="verse-popup-offline-note" role="status">Offline: your text stays here and can be saved once you're connected.</p>}
             </div>
           )}
 
           {popup.kind === "tag-picker" && (
             <div className="verse-popup-tag-picker">
-              <TagPicker
+              {!online && <p className="verse-popup-offline-note">Offline: tags need a connection.</p>}
+              {online && <TagPicker
                 tags={tags}
                 isActive={(tagId) => isRangeTagged(popup.startVerse, popup.endVerse, tagId)}
                 onToggle={handleToggleVerseTag}
                 newTagName={newTagName}
                 onNewTagNameChange={setNewTagName}
                 onAddNewTag={handleAddNewTag}
-              />
+              />}
               <button
                 type="button"
                 className="verse-popup-close-full"

@@ -1,5 +1,5 @@
 import { useEffect, useSyncExternalStore } from "react";
-import { supabase } from "./supabase";
+import { supabase, storedSession } from "./supabase";
 
 /* ============================================================================
  * Visual skins — a normal feature for every signed-in reader (2026-11).
@@ -145,8 +145,10 @@ let authStarted = false;
 function startAuthWatch() {
   if (authStarted) return;
   authStarted = true;
-  supabase.auth.onAuthStateChange((_event, session) => {
-    const next = !!session && !session.user.is_anonymous;
+  supabase.auth.onAuthStateChange((event, session) => {
+    // No connection to renew an expired token is not a sign-out (see storedSession).
+    const current = session ?? (event === "SIGNED_OUT" ? null : storedSession());
+    const next = !!current && !current.user.is_anonymous;
     if (next === signedIn) return;
     signedIn = next;
     authListeners.forEach((l) => l());

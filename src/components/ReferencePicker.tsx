@@ -79,6 +79,8 @@ export default function ReferencePicker({
   const [step, setStep] = useState<Step>("book");
   const [book, setBook] = useState<string | null>(null);
   const [loadingChapter, setLoadingChapter] = useState<number | null>(null);
+  /** The last chapter tapped could not be opened because there is no connection. */
+  const [missingOffline, setMissingOffline] = useState(false);
   const [sortOrder, setSortOrder] = useState<SortOrder>(loadSortOrder);
   const bodyRef = useRef<HTMLDivElement | null>(null);
   /** Chapters of `book` this account has read; null while loading or if the read failed (then no
@@ -122,6 +124,7 @@ export default function ReferencePicker({
     setStep("book");
     setBook(latest.current.currentBook);
     setLoadingChapter(null);
+    setMissingOffline(false);
   }, [open]);
 
   // Bring the current book/chapter into view rather than making the reader scroll to Revelation.
@@ -172,8 +175,10 @@ export default function ReferencePicker({
   const handleChapter = async (n: number) => {
     if (!book) return;
     setLoadingChapter(n);
+    setMissingOffline(false);
     const ok = await onPickChapter(book, n);
     setLoadingChapter(null);
+    if (!ok && !navigator.onLine) setMissingOffline(true);
     // The chapter is the destination. Close on success and leave the reader on it; on failure stay
     // put, so a dead fetch does not dismiss the sheet onto the passage he was trying to leave.
     if (ok) onClose();
@@ -229,6 +234,11 @@ export default function ReferencePicker({
         </div>
 
         <div className="ref-picker-body" ref={bodyRef}>
+          {missingOffline && (
+            <p className="bible-status bible-error" role="alert">
+              You're offline, and this translation isn't downloaded on this device.
+            </p>
+          )}
           {step === "book" && (
             <ul className="ref-picker-books">
               {bookList.map((b, i) => (

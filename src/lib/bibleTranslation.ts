@@ -1,13 +1,50 @@
 import { useCallback, useSyncExternalStore } from "react";
+import { packFor } from "./offline/catalog";
 
-/** The translations the reader offers. The one list — the reader's chip and My Profile's "Bible
- * version" select both render from it, so a version added here shows up in both. Public-domain
- * only: no NIV/ESV. */
-export const TRANSLATIONS = [
-  { id: "web", label: "World English Bible (WEB)", short: "WEB" },
-  { id: "kjv", label: "King James Version (KJV)", short: "KJV" },
-  { id: "asv", label: "American Standard Version (ASV)", short: "ASV" },
+export interface Translation {
+  id: string;
+  label: string;
+  short: string;
+  /** The full name printed under a chapter and beside a download. */
+  name: string;
+  /** The rights line printed under a chapter, after `name`. */
+  credit: string;
+  /** Wording the publisher asks to be shown with the text, and where it points. */
+  attribution?: { text: string; url: string };
+  /** True when bible-api.com serves the very same text as our own file, so it can stand in when our
+   * file cannot be had. Where it is not, mixing the two would move highlights. */
+  sameTextOnBibleApi: boolean;
+  /** Offered only when this build ships the translation's file (see lib/offline/catalog). */
+  needsPack?: boolean;
+}
+
+const ALL: Translation[] = [
+  { id: "web", label: "World English Bible (WEB)", short: "WEB", name: "World English Bible", credit: "Public Domain", sameTextOnBibleApi: true },
+  { id: "kjv", label: "King James Version (KJV)", short: "KJV", name: "King James Version", credit: "Public Domain", sameTextOnBibleApi: true },
+  { id: "asv", label: "American Standard Version (ASV)", short: "ASV", name: "American Standard Version (1901)", credit: "Public Domain", sameTextOnBibleApi: true },
+  {
+    id: "bsb",
+    label: "Berean Standard Bible (BSB)",
+    short: "BSB",
+    name: "Berean Standard Bible",
+    credit: "Public Domain",
+    // Quoted from https://berean.bible/terms.htm ("appreciated but not required"). Do not reword.
+    attribution: {
+      text: "The Holy Bible, Berean Standard Bible, BSB is produced in cooperation with Bible Hub, Discovery Bible, OpenBible.com, and the Berean Bible Translation Committee. This text of God's Word has been dedicated to the public domain.",
+      url: "https://berean.bible",
+    },
+    sameTextOnBibleApi: false,
+    needsPack: true,
+  },
 ];
+
+/** The translations the reader offers. The one list — the reader's chip, My Profile's "Bible
+ * version" select and the offline downloads all render from it, so a version added here shows up in
+ * all of them. Public-domain only: no NIV/ESV. A licensed text would need its own storage and expiry
+ * rules before it could be listed here as downloadable. */
+export const TRANSLATIONS: Translation[] = ALL.filter((t) => !t.needsPack || !!packFor(t.id));
+
+export const translationFor = (id: string): Translation | undefined => TRANSLATIONS.find((t) => t.id === id);
 
 export const DEFAULT_TRANSLATION = "web";
 const STORAGE_KEY = "bible-translation";

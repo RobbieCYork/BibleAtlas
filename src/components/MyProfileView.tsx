@@ -19,6 +19,8 @@ import {
 } from "../lib/profileLinks";
 import Icon, { type IconName } from "./Icon";
 import { TRANSLATIONS, useBibleTranslation } from "../lib/bibleTranslation";
+import { fetchPassage, passageText } from "../lib/biblePassage";
+import OfflineBiblesSection from "./OfflineBibles";
 import DeleteAccountControl from "./DeleteAccountControl";
 import { TestingMarker } from "./FeatureRelease";
 import SkinPicker from "./SkinPicker";
@@ -218,10 +220,9 @@ function MyProfileControl({
     setFavoriteVerseText(null);
     if (!ref) return;
     let cancelled = false;
-    fetch(`https://bible-api.com/${encodeURIComponent(ref)}?translation=web`)
-      .then((res) => res.json())
-      .then((data) => {
-        if (!cancelled && data?.text) setFavoriteVerseText(data.text.trim());
+    fetchPassage(ref, "web")
+      .then((result) => {
+        if (!cancelled) setFavoriteVerseText(passageText(result));
       })
       .catch(() => {});
     return () => {
@@ -727,6 +728,7 @@ export default function MyProfileView({ userId, onDisplayNameSaved, onClose, onG
           <MyProfileControl userId={userId} onDisplayNameSaved={onDisplayNameSaved} onGoToVerse={onGoToVerse} />
           <div className="auth-settings-divider" />
           <BibleVersionSetting />
+          <OfflineBiblesSection />
           <div className="auth-settings-divider" />
           <SkinPicker />
           <div className="auth-settings-divider" />

@@ -1,0 +1,120 @@
+/* Offline Bible downloads (My Profile and the reader's own window) and the reader's offline lines. */
+
+.offline-sheet {
+  --tsz: var(--text-scale, 1);
+  max-width: 520px;
+}
+
+.offline-bible-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.offline-bible {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px 12px;
+  padding: 10px 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.offline-bible-info {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+  flex: 1 1 200px;
+}
+
+.offline-bible-name {
+  font-size: calc(14px * var(--tsz, 1));
+  font-weight: 600;
+  color: var(--text-h);
+}
+
+.offline-bible-status,
+.offline-bible-note,
+.offline-bible-confirm {
+  font-size: calc(12px * var(--tsz, 1));
+  line-height: 1.45;
+  color: var(--text-muted);
+}
+
+.offline-bible-note {
+  margin: 8px 0 0;
+}
+
+.offline-bible-progress {
+  width: 100%;
+  height: 8px;
+  accent-color: var(--accent);
+}
+
+.offline-bible-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  margin-left: auto;
+}
+
+.offline-bible-actions button,
+.offline-switch button {
+  min-height: 40px;
+  padding: 6px 14px;
+  border: 1px solid var(--border-strong);
+  border-radius: 8px;
+  background: transparent;
+  color: var(--text-h);
+  font-family: var(--sans);
+  font-size: calc(13px * var(--tsz, 1));
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.offline-bible-actions button.offline-bible-primary {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: var(--accent-contrast);
+}
+
+.offline-bible-actions button.offline-bible-danger {
+  border-color: var(--danger);
+  color: var(--danger);
+}
+
+.offline-bible-actions button:disabled {
+  opacity: 0.5;
+  cursor: default;
+}
+
+/* The reader's own lines. */
+.bible-offline-line {
+  margin: 0 0 8px;
+  text-align: center;
+  font-size: calc(12px * var(--tsz, 1));
+  color: var(--text-muted);
+}
+
+.offline-switch {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 8px 0 12px;
+}
+
+.verse-sheet-actions .verse-popup-offline-note {
+  flex: 1 1 0;
+  min-width: 0;
+  white-space: normal;
+  font-size: calc(12px * var(--tsz, 1));
+  line-height: 1.35;
+  color: var(--text-muted);
+}
+
+.bible-translation-credit a {
+  color: inherit;
+}

@@ -38,7 +38,11 @@ import BackButton from "./components/BackButton";
 import DisplayNameGate from "./components/DisplayNameGate";
 import ResetPasswordGate from "./components/ResetPasswordGate";
 import AuthGate from "./components/AuthGate";
-import { supabase, setRememberMe } from "./lib/supabase";
+import { supabase, setRememberMe, storedSession, isRememberMe } from "./lib/supabase";
+import { useDownloadSummary } from "./lib/offline/bibles";
+import { clearSavedAnnotations, syncAnnotations } from "./lib/offline/annotations";
+import { clearReaderData } from "./lib/offline/signOut";
+import { readLastPosition } from "./lib/offline/lastPosition";
 import { isChurchesAvailable, requestToJoinChurch } from "./lib/churchApi";
 import {
   clearRememberedSelection,
@@ -303,12 +307,31 @@ function App() {
         setExchangingRecoveryCode(false);
       });
     }
-    supabase.auth.getSession().then(({ data }) => {
-      setSession(data.session);
+    // Offline reading: a reader who is signed in on this device stays signed in with no connection
+    // (see storedSession). supabase-js can spend half a minute trying to renew an expired token
+    // before it answers, so the saved session is used straight away when the device is offline, and
+    // after a few seconds when the connection is merely not answering.
+    let answered = false;
+    const applySession = (next: Session | null) => {
+      setSession(next);
       setAuthResolved(true);
+    };
+    const saved = storedSession();
+    if (saved && !navigator.onLine) applySession(saved);
+    const slow = saved
+      ? window.setTimeout(() => {
+          const stillSaved = storedSession();
+          if (!answered && stillSaved) applySession(stillSaved);
+        }, 4000)
+      : undefined;
+    supabase.auth.getSession().then(({ data }) => {
+      answered = true;
+      window.clearTimeout(slow);
+      applySession(data.session ?? storedSession());
     });
     const { data: listener } = supabase.auth.onAuthStateChange((event, newSession) => {
-      setSession(newSession);
+      setSession(newSession ?? (event === "SIGNED_OUT" ? null : storedSession()));
+      if (event === "SIGNED_OUT") void clearReaderData();
       // Flush across the auth boundary so the events either side of a sign-in land with the
       // right attribution, and the session row picks up its user_id on the next touch.
       if (event === "SIGNED_IN" || event === "SIGNED_OUT") noteAuthChange();
@@ -319,8 +342,40 @@ function App() {
       // page load would put the reader straight back on a reset screen they just left.
       if (event === "SIGNED_OUT") setPasswordRecovery(false);
     });
-    return () => listener.subscription.unsubscribe();
+    return () => {
+      window.clearTimeout(slow);
+      listener.subscription.unsubscribe();
+    };
   }, []);
+
+  // With a Bible downloaded, keep a copy of this reader's highlights, notes and tags on the device so
+  // they show with no connection. With nothing downloaded, keep none.
+  const offlineBibles = useDownloadSummary();
+  const downloads = offlineBibles.ids.join();
+  const readerId = session && !session.user.is_anonymous ? session.user.id : null;
+  useEffect(() => {
+    if (!offlineBibles.ready || !offlineBibles.storageAvailable) return;
+    if (!downloads || !isRememberMe()) {
+      void clearSavedAnnotations();
+      return;
+    }
+    if (!readerId) return;
+    let last = 0;
+    const sync = () => {
+      last = Date.now();
+      void syncAnnotations(readerId);
+    };
+    const onReturn = () => {
+      if (document.visibilityState === "visible" && Date.now() - last > 15 * 60_000) sync();
+    };
+    sync();
+    window.addEventListener("online", sync);
+    document.addEventListener("visibilitychange", onReturn);
+    return () => {
+      window.removeEventListener("online", sync);
+      document.removeEventListener("visibilitychange", onReturn);
+    };
+  }, [readerId, downloads, offlineBibles.ready, offlineBibles.storageAvailable]);
 
   // Usage analytics: starts the session, the flush timer and the time-on-site heartbeat.
   // Everything it does is fire-and-forget and failure-silent — see src/lib/analytics.ts.
@@ -673,15 +728,29 @@ function App() {
     }
     if (restoredForUserId.current === session.user.id) return;
     restoredForUserId.current = session.user.id;
-    supabase
-      .from("reading_progress")
-      .select("book,chapter,translation")
-      .eq("user_id", session.user.id)
-      .maybeSingle()
-      .then(({ data }) => {
-        if (data) {
-          goToReference(`${data.book} ${data.chapter}`);
-          setRestoreTranslation(data.translation);
+    const userId = session.user.id;
+    // The position this device remembers stands in when the server cannot be asked (offline, or slow),
+    // and wins when it is the newer of the two: it was read here since the server last heard.
+    const local = readLastPosition(userId);
+    const server = navigator.onLine
+      ? Promise.race([
+          supabase
+            .from("reading_progress")
+            .select("book,chapter,translation,updated_at")
+            .eq("user_id", userId)
+            .maybeSingle()
+            .then(({ data }) => data),
+          new Promise<null>((resolve) => window.setTimeout(() => resolve(null), local ? 4000 : 20_000)),
+        ])
+      : Promise.resolve(null);
+    server
+      .catch(() => null)
+      .then((data) => {
+        const newer = data && (!local || Date.parse(data.updated_at) >= Date.parse(local.at) - 60_000);
+        const position = newer ? data : local;
+        if (position) {
+          goToReference(`${position.book} ${position.chapter}`);
+          setRestoreTranslation(position.translation);
           if (isMobile) setMobileActivePanel("bible");
           else openPanel("bible");
         }

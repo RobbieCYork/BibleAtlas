@@ -1,6 +1,6 @@
 /**
- * There's no service worker in this app, but it's installed as a standalone PWA on
- * phone home screens. iOS and Android keep that standalone web view's process alive
+ * The app is installed as a standalone PWA on phone home screens. (A service worker exists only on
+ * devices with a downloaded Bible, and it fetches the page from the network first — see /sw.js.) iOS and Android keep that standalone web view's process alive
  * across app switches rather than doing a fresh page load each time it's foregrounded,
  * so a new deployment can otherwise go unnoticed until the OS decides to relaunch the
  * process (sometimes not until a second relaunch).
@@ -163,9 +163,24 @@ function showBanner(): void {
  * Applying an update
  * ------------------------------------------------------------------ */
 
-function applyUpdate(): void {
+/** The build this tab already reloaded itself for. On a very slow connection the offline app copy
+ * (/sw.js) can answer a reload with the old page; reloading again and again would never end. */
+const RELOADED_FOR = 'cb:update-reloaded-for';
+
+function reloadedAlready(buildId: string): boolean {
+  try {
+    if (window.sessionStorage.getItem(RELOADED_FOR) === buildId) return true;
+    window.sessionStorage.setItem(RELOADED_FOR, buildId);
+  } catch {
+    /* storage blocked: reload as before */
+  }
+  return false;
+}
+
+function applyUpdate(buildId: string): void {
   if (!isReloadRisky()) {
-    window.location.reload();
+    if (reloadedAlready(buildId)) showBanner();
+    else window.location.reload();
     return;
   }
 
@@ -179,7 +194,7 @@ function applyUpdate(): void {
     if (Date.now() - lastInteractionAt < IDLE_BEFORE_DEFERRED_RELOAD_MS) return;
     window.clearInterval(riskTimer!);
     riskTimer = null;
-    window.location.reload();
+    if (!reloadedAlready(buildId)) window.location.reload();
   }, RISK_RECHECK_MS);
 }
 
@@ -201,7 +216,7 @@ async function checkForUpdate(): Promise<void> {
     if (buildId && buildId !== __BUILD_ID__) {
       updatePending = true;
       stopPolling();
-      applyUpdate();
+      applyUpdate(buildId);
     }
   } catch {
     // Offline or the request failed. Back off, and try again on the next tick or the

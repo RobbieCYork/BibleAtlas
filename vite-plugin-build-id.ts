@@ -5,7 +5,7 @@ import type { Plugin } from 'vite'
  * (the current timestamp). The app fetches this file (with cache disabled) whenever it
  * comes back into the foreground and reloads itself if the id has changed.
  *
- * This exists because the app has no service worker: when installed to a phone's home
+ * This exists because the app is not cached by a service worker in normal use: when installed to a phone's home
  * screen, iOS/Android keep the standalone WKWebView/WebView process alive across app
  * switches instead of doing a normal page load, so a new deployment doesn't reliably
  * show up until the OS decides to kill and relaunch the process (sometimes not until a

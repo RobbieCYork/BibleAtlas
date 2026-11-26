@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import type { Session } from "@supabase/supabase-js";
 import { supabase, setRememberMe } from "../lib/supabase";
+import { signOutOnThisDevice } from "../lib/offline/signOut";
 import AccountSettingsBody, { TextSizeControl, AppearanceControl, NavBarControl } from "./AccountSettings";
 import AdminConsole from "./AdminConsole";
 import ReportIssueSheet from "./ReportIssueSheet";
@@ -249,7 +250,7 @@ export default function AuthButton({
   };
 
   const handleSignOut = async () => {
-    await supabase.auth.signOut();
+    await signOutOnThisDevice();
     setOpen(false);
   };
 

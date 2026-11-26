@@ -62,7 +62,7 @@ export async function openTab(cdpPort) {
  * `serve(req)` answers fake-host requests. `allowHosts` are extra hosts to let through (rare; each
  * one is a hole, so the default is none).
  */
-export async function closeNetwork(tab, { previewOrigin, serve, allowHosts = [], forbiddenHosts = [] }) {
+export async function closeNetwork(tab, { previewOrigin, serve, allowHosts = [], forbiddenHosts = [], gate }) {
   const ledger = { app: 0, fake: 0, blocked: [], continuedExternal: 0, forbiddenAttempts: 0, websockets: [] };
   const previewHost = new URL(previewOrigin).host;
   await tab.send("Network.enable");
@@ -73,6 +73,8 @@ export async function closeNetwork(tab, { previewOrigin, serve, allowHosts = [],
     let host = "";
     try { host = new URL(request.url).host; } catch { /* data: etc. */ }
     try {
+      // A script's own say over a request (scripts/offline-harness: slow it down, or cut it off).
+      if (gate && (await gate(request)) === "fail") return await tab.send("Fetch.failRequest", { requestId, errorReason: "InternetDisconnected" });
       if (host === previewHost || request.url.startsWith("data:") || request.url.startsWith("blob:")) {
         ledger.app++;
         return await tab.send("Fetch.continueRequest", { requestId });

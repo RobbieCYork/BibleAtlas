@@ -8,6 +8,7 @@ import { ThemeProvider } from './lib/theme.tsx'
 import { MobileTabsProvider } from './lib/mobileTabs.tsx'
 import { startUpdateChecks } from './lib/updateCheck'
 import { startFeatureRelease } from './lib/features'
+import { initOfflineBibles } from './lib/offline/bibles'
 import { SkinController } from './lib/skin'
 // Skins (every signed-in reader). Must load AFTER App.css (imported via App above) so its overrides win ties.
 import './skins.css'
@@ -21,6 +22,10 @@ startUpdateChecks()
 
 // Testing / Live feature stages (sql/039). Loads once, fails open to Live — see lib/features.ts.
 startFeatureRelease()
+
+// Downloaded Bibles: read what is on this device, resume a download that was cut off, and keep the
+// offline copy of the app in step.
+void initOfflineBibles()
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>

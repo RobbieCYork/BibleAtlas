@@ -1,5 +1,6 @@
 /* ============================================================================
- * Fetching Scripture text — the one place the app asks bible-api.com for words.
+ * Fetching Scripture text — the one place the app gets the words of a passage: from the copy
+ * downloaded to this device, from our own file on the site, or from bible-api.com.
  *
  * This module exists because there are now two callers and there must not be two implementations.
  * BiblePanel loads a whole chapter for the reader; the sermon-notes "Insert Scripture" picker loads
@@ -13,6 +14,11 @@
  * it. The translation id is still a parameter, because the reader's panel offers KJV and ASV too
  * and this module has no business deciding for them.
  * ==========================================================================*/
+
+import { BOOKS } from "../data/bibleBooks";
+import { translationFor } from "./bibleTranslation";
+import { ownBook, parseVerseRef, type VerseRef } from "./offline/text";
+import type { BookFile } from "./offline/catalog";
 
 /** One verse exactly as bible-api.com returns it. */
 export interface PassageVerse {
@@ -37,6 +43,25 @@ export const DEFAULT_TRANSLATION = "web";
  * to, and the picker needs to say so and offer the reference on its own rather than sit there. */
 export const PASSAGE_TIMEOUT_MS = 8000;
 
+/** The verses a reference names, out of one of our own book files. */
+function fromBook(file: BookFile, ref: VerseRef, translationId: string): PassageResult {
+  const name = BOOKS[ref.book - 1].name;
+  const chapter = file.chapters[ref.chapter - 1] ?? [];
+  const start = ref.start;
+  const end = ref.end ?? ref.start;
+  const picked = start === undefined ? chapter : chapter.filter(([v]) => v >= start && v <= end!);
+  // As bible-api.com does: a range whose first verse is missing, or that runs past the end of the
+  // chapter, is not found rather than quietly shortened.
+  const last = chapter.length ? chapter[chapter.length - 1][0] : 0;
+  if (!picked.length || (end !== undefined && end > last)) throw new Error("Passage not found");
+  const suffix = start === undefined ? "" : `:${start}${end! > start ? `-${end}` : ""}`;
+  return {
+    reference: `${name} ${ref.chapter}${suffix}`,
+    verses: picked.map(([verse, text]) => ({ book_name: name, chapter: ref.chapter, verse, text })),
+    translationName: translationFor(translationId)?.name ?? translationId.toUpperCase(),
+  };
+}
+
 /**
  * Asks for a reference and returns its verses, or throws.
  *
@@ -45,6 +70,16 @@ export const PASSAGE_TIMEOUT_MS = 8000;
  * the bare reference) and an exception carries the API's own explanation along for them to use.
  */
 export async function fetchPassage(reference: string, translationId: string, signal?: AbortSignal): Promise<PassageResult> {
+  const ref = parseVerseRef(reference);
+  if (ref) {
+    let file: BookFile | null = null;
+    try {
+      file = await ownBook(translationId, ref.book, signal);
+    } catch (err) {
+      if (signal?.aborted || !translationFor(translationId)?.sameTextOnBibleApi) throw err;
+    }
+    if (file) return fromBook(file, ref, translationId);
+  }
   const url = `https://bible-api.com/${encodeURIComponent(reference)}?translation=${translationId}`;
   const res = await fetch(url, signal ? { signal } : undefined);
   const data = await res.json();
@@ -57,6 +92,13 @@ export async function fetchPassage(reference: string, translationId: string, sig
     translationName: typeof data.translation_name === "string" ? data.translation_name : translationId.toUpperCase(),
   };
 }
+
+/** A passage's words as bible-api.com's own `text` field gives them, ends trimmed. */
+export const passageText = (result: PassageResult) =>
+  result.verses
+    .map((v) => v.text)
+    .join(" ")
+    .trim();
 
 /** The reference as a human writes it: "John 3:16", "John 3:16-18". An end verse that is missing,
  * equal to the start, or (through a typo) before it collapses back to the single-verse form, so the

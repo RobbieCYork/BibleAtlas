@@ -1,4 +1,4 @@
-import { createClient } from "@supabase/supabase-js";
+import { createClient, type Session } from "@supabase/supabase-js";
 
 const REMEMBER_ME_KEY = "bible-atlas-remember-me";
 
@@ -7,6 +7,8 @@ const REMEMBER_ME_KEY = "bible-atlas-remember-me";
 function getRememberMe(): boolean {
   return localStorage.getItem(REMEMBER_ME_KEY) !== "false";
 }
+
+export const isRememberMe = () => getRememberMe();
 
 /** Call before signing in/up so the session that Supabase is about to write lands in the right place. */
 export function setRememberMe(remember: boolean) {
@@ -35,6 +37,34 @@ const SUPABASE_ANON_KEY = import.meta.env.VITE_SUPABASE_ANON_KEY;
 export const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY, {
   auth: { storage: rememberAwareStorage },
 });
+
+/** The key supabase-js stores the session under (its own default, derived from the project URL). */
+const authStorageKey = () => `sb-${new URL(SUPABASE_URL).hostname.split(".")[0]}-auth-token`;
+
+/**
+ * The signed-in session still saved on this device, or null.
+ *
+ * With no connection supabase-js cannot renew an access token that has expired, and reports "no
+ * session" — which would put the sign-in screen in front of a reader who is signed in and only
+ * wants to read. It keeps the saved session in that case and removes it when the session is really
+ * over (signed out, or the server refused to renew it). So: still saved means still signed in. This
+ * opens the app's screens only; every read and write on the server still needs a valid token.
+ */
+export function storedSession(): Session | null {
+  try {
+    const raw = rememberAwareStorage.getItem(authStorageKey());
+    const s = raw ? (JSON.parse(raw) as Session) : null;
+    return s?.access_token && s.refresh_token && s.user?.id && !s.user.is_anonymous ? s : null;
+  } catch {
+    return null;
+  }
+}
+
+/** Drops the saved session without asking the server — only for signing out with no connection (see
+ * lib/offline/signOut.ts). */
+export function removeStoredSession(): void {
+  rememberAwareStorage.removeItem(authStorageKey());
+}
 
 // Kept in sync with the current session so flushReadingTimeReliably (below) can fire synchronously
 // during page teardown, when there's no time to await supabase.auth.getSession().

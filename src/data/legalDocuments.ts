@@ -171,7 +171,7 @@ export const TERMS_OF_SERVICE: LegalDocument = {
     {
       heading: "8. Bible text, sources and other people's websites",
       body: [
-        "Bible text in the app is provided in translations that are in the public domain in the United States: the World English Bible (WEB), the King James Version (KJV) and the American Standard Version (ASV). Passages are retrieved from the free service bible-api.com, and Bible search results come from bolls.life. Chapter audio of the World English Bible is streamed from the Internet Archive.",
+        "Bible text in the app is provided in translations that are in the public domain in the United States: the World English Bible (WEB), the King James Version (KJV), the American Standard Version (ASV) and the Berean Standard Bible (BSB). Passages come from our own copies of these texts, with the free service bible-api.com as a stand-in for the WEB, KJV and ASV. You can download a translation to your device and read it without a connection. Bible search results come from bolls.life, or from the copy on your device for a translation you have downloaded. Chapter audio of the World English Bible is streamed from the Internet Archive.",
         "Historical source texts reproduced in the app come from public-domain editions, such as those published on Wikisource. Other works are cited and linked, not reproduced. Images are used under the licences stated by their owners, most of them from Wikimedia Commons, and are credited to their sources. Map data is © OpenStreetMap contributors (available under the Open Database License) and © OpenMapTiles, served by OpenFreeMap, with Natural Earth for low-zoom relief; satellite imagery is provided by Esri, Vantor, Earthstar Geographics and the GIS User Community.",
         "The Service links to many websites we do not control — museums, libraries, publishers, reference works and others. Those sites are their owners' responsibility, not ours, and their own terms and privacy policies apply when you visit them.",
       ],
@@ -326,8 +326,8 @@ export const PRIVACY_POLICY: LegalDocument = {
           "**Resend** — delivers account emails (sign-up confirmation and password reset) from noreply@capstonebible.com.",
           "**Microsoft 365** — receives email you send to " + EMAIL + ".",
           "**OpenFreeMap** and **Esri** — supply map tiles and satellite imagery for the map.",
-          "**bible-api.com** — supplies Bible text. Your browser asks it for the passage you are reading.",
-          "**bolls.life** — supplies Bible search. When you search the Bible text, the words you search for are sent to it.",
+          "**bible-api.com** — a stand-in source of Bible text. If our own copy of a passage can't be loaded, your browser asks it for that passage.",
+          "**bolls.life** — supplies Bible search. When you search a translation you haven't downloaded, the words you search for are sent to it.",
           "**Internet Archive** — streams chapter audio.",
           "**Wikimedia Commons** — supplies many of the images in articles and games.",
           "**Google** — a public Google server helps connect devices for multiplayer video (section 6).",
@@ -338,8 +338,8 @@ export const PRIVACY_POLICY: LegalDocument = {
     {
       heading: "8. Cookies and storage on your device",
       body: [
-        "Capstone Bible does not use advertising or tracking cookies. The app stores a few things in your browser's own storage so it works properly: your sign-in session, your preferences (theme, your chosen appearance (skin, kept only on your device), text size, which tabs and timeline lanes you show, sort orders, \"Remember me\"), the random visit identifier used for usage information (cleared when you close the tab), and — if you use the photo-to-text feature in sermon notes — the text-recognition model, which runs on your device rather than on a server.",
-        "Clearing your browser's storage signs you out and resets these preferences.",
+        "Capstone Bible does not use advertising or tracking cookies. The app stores a few things in your browser's own storage so it works properly: your sign-in session, your last reading position (erased when you log out), your preferences (theme, your chosen appearance (skin, kept only on your device), text size, which tabs and timeline lanes you show, sort orders, \"Remember me\"), the random visit identifier used for usage information (cleared when you close the tab), and — if you use the photo-to-text feature in sermon notes — the text-recognition model, which runs on your device rather than on a server. If you download a Bible translation to read offline, your device also stores that text and a copy of the app and, if you chose \"Remember me\", a copy of your highlights, notes and tags. The copy of your highlights, notes and tags is erased when you log out or delete your last download.",
+        "Clearing your browser's storage signs you out, resets these preferences and removes downloaded translations.",
       ],
     },
     {
