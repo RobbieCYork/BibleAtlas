@@ -102,6 +102,17 @@ export function createPage({ tab, backend, ledger, consoleErrors, outDir, meta }
         await tab.send("Input.dispatchMouseEvent", { type, x: pt.x, y: pt.y, button: "left", buttons: type === "mousePressed" ? 1 : 0, clickCount: 1 });
       await sleep(150);
     },
+    /** A real one-finger touch (CDP Input.dispatchTouchEvent) along viewport points [{x,y}, ...]:
+     * down on the first, move through the rest, lift. One point is a tap. */
+    async touch(points) {
+      await tab.send("Emulation.setTouchEmulationEnabled", { enabled: true, maxTouchPoints: 1 });
+      const send = (type, p) => tab.send("Input.dispatchTouchEvent", { type, touchPoints: p ? [{ x: p.x, y: p.y }] : [] });
+      await send("touchStart", points[0]);
+      for (const p of points.slice(1)) { await sleep(30); await send("touchMove", p); }
+      await sleep(30);
+      await send("touchEnd");
+      await sleep(250);
+    },
     /** Focus the first matching input and type into it (replaces existing text). */
     async type(selector, text) {
       const s = sel(selector);

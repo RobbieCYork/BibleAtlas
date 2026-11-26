@@ -13541,9 +13541,12 @@ img.sn-image,
 
 .hl-colors-dialog {
   width: min(440px, 100%);
-  max-height: 92%;
+  max-height: 96%;
   overflow-y: auto;
-  padding: 14px 16px calc(16px + env(safe-area-inset-bottom, 0px));
+  overflow-x: hidden;
+  /* Keeps a focused or scrolled-to control clear of the pinned action bar. */
+  scroll-padding-bottom: calc(64px + env(safe-area-inset-bottom, 0px));
+  padding: 10px 16px 0;
   background: var(--panel-bg);
   color: var(--text);
   border: 1px solid var(--border);
@@ -13561,31 +13564,276 @@ img.sn-image,
 }
 
 .hl-colors-head {
-  display: flex;
+  display: grid;
+  grid-template-columns: 40px minmax(0, 1fr) 40px;
   align-items: center;
-  justify-content: space-between;
-  margin-bottom: 12px;
+  margin-bottom: 8px;
 }
 
 .hl-colors-head h2 {
+  grid-column: 2;
   margin: 0;
+  text-align: center;
   font-size: calc(17px * var(--tsz, 1));
   color: var(--text-h);
 }
 
-.hl-colors-close {
-  width: 36px;
-  height: 36px;
+.hl-colors-iconbtn {
+  width: 40px;
+  height: 40px;
+  padding: 0;
   display: flex;
   align-items: center;
   justify-content: center;
   border: 1px solid var(--border);
   border-radius: 50%;
   background: var(--surface-sunken);
-  color: var(--text-muted);
+  color: var(--text);
   font-size: calc(20px * var(--tsz, 1));
   line-height: 1;
   cursor: pointer;
+}
+
+.hl-colors-close {
+  grid-column: 1;
+  grid-row: 1;
+}
+
+.hl-colors-eyedropper {
+  grid-column: 3;
+  grid-row: 1;
+}
+
+.hl-colors-backdrop.is-picking {
+  background: transparent;
+}
+
+.hl-colors-tabs {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 2px;
+  margin-bottom: 8px;
+  padding: 3px;
+  border-radius: 12px;
+  background: var(--surface-sunken);
+}
+
+.hl-colors-tabs button {
+  min-width: 0;
+  min-height: 38px;
+  padding: 2px;
+  overflow: hidden;
+  border: 1px solid transparent;
+  border-radius: 9px;
+  background: transparent;
+  color: var(--text);
+  /* Capped by the viewport so "Spectrum" still fits its third at the largest text sizes. */
+  font-size: min(calc(14px * var(--tsz, 1)), 5.2vw, 20px);
+  line-height: 1.3;
+  cursor: pointer;
+}
+
+.hl-colors-tabs button[aria-selected="true"] {
+  border-color: var(--border-strong);
+  background: var(--panel-bg);
+  color: var(--text-h);
+  font-weight: 700;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.18);
+}
+
+/* All three tabs are the Grid's height (9 rows of 12 across), so the sheet does not jump. */
+.hl-colors-panel {
+  min-height: calc((min(440px, 100vw) - 34px) * 0.75);
+}
+
+.hl-colors-spectrum {
+  position: relative;
+  height: calc((min(440px, 100vw) - 34px) * 0.75);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background:
+    linear-gradient(to bottom, #ffffff 0%, rgba(255, 255, 255, 0) 50%, rgba(0, 0, 0, 0) 50%, #000000 100%),
+    linear-gradient(to right, #ff0000, #ffff00, #00ff00, #00ffff, #0000ff, #ff00ff, #ff0000);
+  background-origin: border-box;
+  cursor: crosshair;
+  /* A drag picks colours; it must not scroll the sheet. */
+  touch-action: none;
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-touch-callout: none;
+}
+
+.hl-colors-spectrum:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+.hl-colors-spectrum-marker {
+  position: absolute;
+  width: 26px;
+  height: 26px;
+  border: 3px solid #ffffff;
+  border-radius: 50%;
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.65), 0 2px 6px rgba(0, 0, 0, 0.4);
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+}
+
+.hl-colors-sliders {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  font-size: calc(14px * var(--tsz, 1));
+}
+
+.hl-colors-channel {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+}
+
+.hl-colors-channel output {
+  grid-column: 2;
+  grid-row: 1;
+  font-variant-numeric: tabular-nums;
+}
+
+.hl-colors-channel input[type="range"] {
+  grid-column: 1 / -1;
+  width: 100%;
+  min-width: 0;
+  height: 40px;
+  margin: 0;
+  padding: 0;
+  border: none;
+  background: transparent;
+  appearance: none;
+  -webkit-appearance: none;
+  touch-action: none;
+  cursor: pointer;
+}
+
+.hl-colors-channel input[type="range"]::-webkit-slider-runnable-track {
+  height: 22px;
+  border: 1px solid var(--border-strong);
+  border-radius: 11px;
+  background: var(--hl-track);
+}
+
+.hl-colors-channel input[type="range"]::-webkit-slider-thumb {
+  appearance: none;
+  -webkit-appearance: none;
+  width: 30px;
+  height: 30px;
+  margin-top: -5px;
+  border: 3px solid #ffffff;
+  border-radius: 50%;
+  background: transparent;
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.65), inset 0 0 0 1px rgba(0, 0, 0, 0.45);
+}
+
+.hl-colors-channel input[type="range"]::-moz-range-track {
+  height: 22px;
+  border: 1px solid var(--border-strong);
+  border-radius: 11px;
+  background: var(--hl-track);
+}
+
+.hl-colors-channel input[type="range"]::-moz-range-thumb {
+  width: 24px;
+  height: 24px;
+  border: 3px solid #ffffff;
+  border-radius: 50%;
+  background: transparent;
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.65);
+}
+
+.hl-colors-hex {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 4px 10px;
+}
+
+.hl-colors-hex input {
+  width: 7.5em;
+  min-height: 40px;
+  padding: 0 10px;
+  border: 1px solid var(--input-border, var(--border));
+  border-radius: 8px;
+  background: var(--surface-sunken);
+  color: var(--text);
+  /* 16px floor: below it iOS zooms the page on focus. */
+  font-size: max(16px, calc(14px * var(--tsz, 1)));
+  font-variant-numeric: tabular-nums;
+  text-transform: uppercase;
+}
+
+.hl-colors-hex input[aria-invalid="true"] {
+  border-color: var(--danger);
+}
+
+.hl-colors-hex-error {
+  width: 100%;
+  margin: 0;
+  text-align: right;
+  color: var(--danger);
+  font-size: calc(12px * var(--tsz, 1));
+}
+
+.hl-colors-saved {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  margin-top: 10px;
+  padding-top: 10px;
+  border-top: 1px solid var(--border);
+}
+
+.hl-colors-saved-swatch,
+.hl-colors-save {
+  flex: 0 0 auto;
+  width: 40px;
+  height: 40px;
+  padding: 0;
+  border: 1px solid var(--border-strong);
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+/* The tint over a checkerboard, so a see-through swatch looks see-through. */
+.hl-colors-saved-swatch {
+  background:
+    linear-gradient(var(--hl-saved), var(--hl-saved)),
+    repeating-conic-gradient(#c4c4c4 0% 25%, #ffffff 0% 50%) 0 0 / 12px 12px;
+}
+
+.hl-colors-saved-swatch[aria-pressed="true"] {
+  outline: 3px solid var(--accent);
+  outline-offset: 1px;
+}
+
+.hl-colors-save {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: var(--surface-sunken);
+  color: var(--text);
+  font-size: calc(22px * var(--tsz, 1));
+  line-height: 1;
+}
+
+.hl-colors-save:disabled {
+  opacity: 0.45;
+  cursor: default;
+}
+
+.hl-colors-saved-hint {
+  color: var(--text-muted);
+  font-size: calc(12px * var(--tsz, 1));
 }
 
 .hl-colors-grid {
@@ -13617,7 +13865,7 @@ img.sn-image,
   display: flex;
   align-items: center;
   gap: 10px;
-  margin-top: 14px;
+  margin-top: 10px;
   font-size: calc(14px * var(--tsz, 1));
 }
 
@@ -13635,17 +13883,20 @@ img.sn-image,
 
 .hl-colors-preview {
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
   gap: 10px;
-  margin-top: 14px;
-  padding: 10px 12px;
+  margin-top: 10px;
+  padding: 7px 12px;
   border: 1px solid var(--border);
   border-radius: 10px;
   background: var(--reading-bg, var(--surface-sunken));
 }
 
 .hl-colors-preview p {
-  flex: 1;
+  display: grid;
+  /* At large text the code drops to its own line rather than squeezing the sample to one word wide. */
+  flex: 1 1 9em;
   margin: 0;
   min-width: 0;
   font-size: calc(14px * var(--tsz, 1));
@@ -13660,17 +13911,41 @@ img.sn-image,
   border: 1px solid var(--border);
 }
 
+.hl-colors-preview p > * {
+  grid-area: 1 / 1;
+  align-self: center;
+}
+
+.hl-colors-preview-hidden {
+  visibility: hidden;
+}
+
 .hl-colors-preview-empty,
 .hl-colors-preview-hex {
   color: var(--text-muted);
   font-size: calc(12px * var(--tsz, 1));
 }
 
+/* Fixed width, so the sample beside it never re-wraps as the code changes. */
+.hl-colors-preview-hex {
+  flex-shrink: 0;
+  margin-left: auto;
+  width: 15ch;
+  text-align: right;
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+}
+
+/* Pinned to the bottom of the sheet: on a short phone the picker scrolls, "Highlight" does not. */
 .hl-colors-actions {
+  position: sticky;
+  bottom: 0;
+  z-index: 2;
   display: flex;
   justify-content: flex-end;
   gap: 8px;
-  margin-top: 14px;
+  margin: 4px -16px 0;
+  padding: 6px 16px calc(12px + env(safe-area-inset-bottom, 0px));
+  background: var(--panel-bg);
 }
 
 .hl-colors-actions button {

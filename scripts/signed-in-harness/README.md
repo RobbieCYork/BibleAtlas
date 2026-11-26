@@ -91,6 +91,7 @@ h.persona h.viewport h.theme                 what this run is
 h.evaluate(fn | "expr", ...args)             run in the page, resolves a JSON value (fn is serialised; no closures)
 h.click(sel, {index})                        REAL mouse click at the element's centre (CDP Input events)
 h.type(sel, text)                            focus, select, insert text
+h.touch([{x,y}, ...])                        REAL one-finger touch: tap (one point) or drag, viewport coords
 h.waitFor(sel, {timeout, visible})           throws on timeout          h.exists(sel)  h.count(sel)
 h.text(sel)  h.rect(sel)                     visible text / getBoundingClientRect of the first match
 h.goto(path) h.reload() h.sleep(ms)

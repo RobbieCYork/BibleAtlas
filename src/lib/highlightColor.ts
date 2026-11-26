@@ -74,8 +74,23 @@ export function sameHighlightColor(a: string, b: string): boolean {
   return false;
 }
 
-function rgb(hex: string): [number, number, number] {
+export function hexToRgb(hex: string): [number, number, number] {
   return [parseInt(hex.slice(1, 3), 16), parseInt(hex.slice(3, 5), 16), parseInt(hex.slice(5, 7), 16)];
+}
+
+export function rgbToHex(r: number, g: number, b: number): string {
+  const to = (x: number) => Math.round(Math.min(255, Math.max(0, x))).toString(16).padStart(2, "0");
+  return `#${to(r)}${to(g)}${to(b)}`;
+}
+
+/** What a reader typed in the hex field, as "#rrggbb" — or null. The "#" is optional; the 3-digit
+ * shorthand is only accepted once they have finished typing (`allowShort`), because "abc" is also the
+ * first half of "abcdef". */
+export function parseHexInput(raw: string, allowShort = false): string | null {
+  const s = raw.trim().replace(/^#/, "");
+  if (/^[0-9a-fA-F]{6}$/.test(s)) return `#${s.toLowerCase()}`;
+  if (allowShort && /^[0-9a-fA-F]{3}$/.test(s)) return `#${[...s.toLowerCase()].map((c) => c + c).join("")}`;
+  return null;
 }
 
 function lin(c: number): number {
@@ -101,7 +116,7 @@ const SURFACE_DARK: [number, number, number] = [0x24, 0x1e, 0x16];
 
 function inkOver(hex: string, opacity: number, surface: [number, number, number]): string {
   const a = opacity / 100;
-  const [r, g, b] = rgb(hex);
+  const [r, g, b] = hexToRgb(hex);
   const blended: [number, number, number] = [
     r * a + surface[0] * (1 - a),
     g * a + surface[1] * (1 - a),
@@ -115,11 +130,11 @@ function inkOver(hex: string, opacity: number, surface: [number, number, number]
 export function nearestNamedColor(raw: string): NamedHighlightColor {
   const p = parseHighlightColor(raw);
   if (p.kind === "named") return p.name;
-  const [r, g, b] = rgb(p.hex);
+  const [r, g, b] = hexToRgb(p.hex);
   let best: NamedHighlightColor = "yellow";
   let bestD = Infinity;
   for (const name of HIGHLIGHT_COLORS) {
-    const [nr, ng, nb] = rgb(NAMED_HEX[name]);
+    const [nr, ng, nb] = hexToRgb(NAMED_HEX[name]);
     const d = (r - nr) ** 2 + (g - ng) ** 2 + (b - nb) ** 2;
     if (d < bestD) {
       bestD = d;
@@ -140,7 +155,7 @@ export interface HighlightPresentation {
 export function highlightPresentation(raw: string | null | undefined, base = "verse-highlight"): HighlightPresentation {
   const p = parseHighlightColor(raw);
   if (p.kind === "named") return { className: `${base}-${p.name}` };
-  const [r, g, b] = rgb(p.hex);
+  const [r, g, b] = hexToRgb(p.hex);
   const style = {
     "--hl-hex": p.hex,
     "--hl-pct": `${p.opacity}%`,
@@ -158,7 +173,7 @@ export const GRID_COLS = 12;
 export const HUE_NAMES = ["Red", "Orange", "Yellow", "Lime", "Green", "Spring green", "Cyan", "Azure", "Blue", "Violet", "Magenta", "Rose"];
 const LIGHTNESS_ROWS = [20, 29, 38, 47, 56, 65, 74, 83];
 
-function hslToHex(h: number, s: number, l: number): string {
+export function hslToHex(h: number, s: number, l: number): string {
   const sat = s / 100;
   const lig = l / 100;
   const k = (n: number) => (n + h / 30) % 12;
@@ -189,3 +204,27 @@ export const COLOR_GRID: GridSwatch[] = (() => {
   });
   return out;
 })();
+
+/* --- The Spectrum ---------------------------------------------------------------------------- */
+
+/** Where a colour sits on the Spectrum: x is hue (0..1 = 0..360 degrees), y is lightness, white at the
+ * top (0) through the pure hue to black at the bottom (1). The Spectrum only holds fully saturated
+ * colours and their tints/shades, so for anything muted this is the nearest spot, not an exact one. */
+export function spectrumPosition(hex: string): { x: number; y: number } {
+  const [r, g, b] = hexToRgb(hex).map((c) => c / 255);
+  const max = Math.max(r, g, b);
+  const min = Math.min(r, g, b);
+  const d = max - min;
+  let h = 0;
+  if (d > 0) {
+    if (max === r) h = ((g - b) / d + 6) % 6;
+    else if (max === g) h = (b - r) / d + 2;
+    else h = (r - g) / d + 4;
+  }
+  return { x: h / 6, y: 1 - (max + min) / 2 };
+}
+
+/** The colour at a Spectrum position (both 0..1). Matches the CSS gradients that paint it. */
+export function spectrumColor(x: number, y: number): string {
+  return hslToHex(x * 360, 100, (1 - y) * 100);
+}
