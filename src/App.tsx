@@ -27,6 +27,8 @@ import AuthButton from "./components/AuthButton";
 import SocialLinks from "./components/SocialLinks";
 import MyProfileView from "./components/MyProfileView";
 import SettingsView from "./components/SettingsView";
+import AboutView from "./components/AboutView";
+import { ABOUT_TITLE } from "./data/aboutPage";
 import FriendProfileView from "./components/FriendProfileView";
 import PeopleSearchBar from "./components/PeopleSearchBar";
 import UnifiedSearchBar from "./components/UnifiedSearchBar";
@@ -537,7 +539,7 @@ function App() {
   // same reasoning as openProfileNonce above.
   const [openReadingPlansNonce, setOpenReadingPlansNonce] = useState<number | undefined>(undefined);
   const openReadingPlans = () => {
-    setShowSettings(false);
+    closeOverlayPage();
     if (isMobile) setMobileActivePanel("bible");
     setOpenReadingPlansNonce((n) => (n ?? 0) + 1);
   };
@@ -563,15 +565,19 @@ function App() {
   // the reader's own profile. Kept here rather than inside MyProfileView because the search that
   // sets it lives in the app header, which MyProfileView doesn't own.
   const [viewedPersonId, setViewedPersonId] = useState<string | null>(null);
-  // Full-screen Settings (SettingsView), opened from the account menu. Unlike the takeovers it does not
-  // close what is under it, so its Back lands where the reader was. Any navigation elsewhere closes it,
-  // which is why closeMyProfile (called by every such route) and openMyProfile both clear it.
-  const [showSettings, setShowSettings] = useState(false);
-  const openSettings = () => setShowSettings(true);
-  const closeSettings = () => setShowSettings(false);
+  // Full-screen Settings (SettingsView, from the account menu) and About (AboutView, from the main
+  // menu). Unlike the takeovers they do not close what is under them, so Back lands where the reader
+  // was. One of the two at most. Any navigation elsewhere closes it, which is why closeMyProfile
+  // (called by every such route) and openMyProfile both clear it.
+  const [overlayPage, setOverlayPage] = useState<"settings" | "about" | null>(null);
+  const showSettings = overlayPage === "settings";
+  const showAbout = overlayPage === "about";
+  const openSettings = () => setOverlayPage("settings");
+  const openAbout = () => setOverlayPage("about");
+  const closeOverlayPage = () => setOverlayPage(null);
   const openMyProfile = () => {
     track("panel.open", { panel: "profile" });
-    closeSettings();
+    closeOverlayPage();
     setViewedPersonId(null);
     setShowMyProfile(true);
   };
@@ -580,7 +586,7 @@ function App() {
     setShowMyProfile(false);
   };
   const closeMyProfile = () => {
-    closeSettings();
+    closeOverlayPage();
     leaveMyProfile();
   };
   // Bumped whenever MyProfileView saves a display-name change, so AuthButton's own fetch (which only
@@ -599,8 +605,9 @@ function App() {
   const [gameCenterNonce, setGameCenterNonce] = useState(0);
   const openGame = () => {
     // See the matching comment in openTimeline below — same same-z-index takeover, same fix.
-    // Games hidden under Settings is not "already showing": coming back to it should resume the game.
-    const wasAlreadyShowing = showGame && !showSettings;
+    // Games hidden under Settings or About is not "already showing": coming back to it should resume
+    // the game.
+    const wasAlreadyShowing = showGame && !overlayPage;
     closeTimeline();
     closeMyProfile();
     if (!wasAlreadyShowing) track("panel.open", { panel: "games" });
@@ -1241,7 +1248,7 @@ function App() {
   // A password-recovery session is never anonymous, so it never trips this — ResetPasswordGate
   // below handles it on its own.
   const showAuthGate = authResolved && !exchangingRecoveryCode && (!session || session.user.is_anonymous);
-  const searchMode: "all" | "notes" | "timeline" | "people" | null = showGame || showSettings
+  const searchMode: "all" | "notes" | "timeline" | "people" | null = showGame || overlayPage
     ? null
     : myProfileMode
     ? (SOCIAL_CONNECTIONS_ENABLED ? "people" : null)
@@ -1385,6 +1392,8 @@ function App() {
 
     if (showSettings) return { route: "settings", title: "Settings", target: null };
 
+    if (showAbout) return { route: "about", title: ABOUT_TITLE, target: null };
+
     if (showGame) return { route: "games", title: "Games", target: null };
 
     if (myProfileMode) {
@@ -1458,6 +1467,7 @@ function App() {
     }
   }, [
     showSettings,
+    showAbout,
     showGame,
     myProfileMode,
     viewedPersonId,
@@ -1514,6 +1524,8 @@ function App() {
             current={currentMobileTab}
             onNavigate={goToMobileDestination}
             onGoToArchaeology={openArchaeology}
+            aboutOpen={showAbout}
+            onGoToAbout={openAbout}
           />
         )}
         <PanelMenu
@@ -1521,10 +1533,12 @@ function App() {
           onToggle={toggleMenuPanel}
           lastAutoClosed={lastAutoClosed}
           friendsBadgeCount={pendingFriendRequests + unreadMessages + groupsBadgeCount}
-          activeDestination={showSettings ? null : showTimeline ? "timeline" : showGame ? "games" : null}
+          activeDestination={overlayPage ? null : showTimeline ? "timeline" : showGame ? "games" : null}
           onNavigate={goToTakeover}
           onLeaveDestination={leaveTakeover}
           onGoToArchaeology={openArchaeology}
+          aboutOpen={showAbout}
+          onToggleAbout={showAbout ? closeOverlayPage : openAbout}
         />
         <button type="button" className="app-logo-button" onClick={goHome} aria-label="Go to Bible">
           <img src="/favicon.svg" className="app-logo" alt="" aria-hidden="true" />
@@ -1947,10 +1961,16 @@ function App() {
             )}
           </div>
         )}
-        {/* Settings — last, so it draws over whichever takeover is up (all share one z-index). */}
+        {/* Settings and About — last, so they draw over whichever takeover is up (all share one
+            z-index). */}
         {showSettings && session && !session.user.is_anonymous && (
           <div className="myprofile-mode">
-            <SettingsView userId={session.user.id} onClose={closeSettings} />
+            <SettingsView userId={session.user.id} onClose={closeOverlayPage} />
+          </div>
+        )}
+        {showAbout && session && !session.user.is_anonymous && (
+          <div className="myprofile-mode">
+            <AboutView userId={session.user.id} onClose={closeOverlayPage} reportSurface={reportSurface} />
           </div>
         )}
       </div>

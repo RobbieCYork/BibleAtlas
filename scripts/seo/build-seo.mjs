@@ -30,6 +30,7 @@ import { fileURLToPath } from "node:url";
 import { loadData, REPO_ROOT } from "./loadData.mjs";
 import { KINDS, ORIGIN, absolute, fileForPath, indexPath, itemPath } from "./site.mjs";
 import {
+  aboutPage,
   deleteAccountPage,
   eventPage,
   hubPage,
@@ -89,7 +90,7 @@ export async function generateSeo(outDir) {
     idsByLinkKind.get(linkKind)?.has(id) ? itemPath(itemByLinkKind.get(linkKind), id) : null;
   const linkify = makeLinkifier(data.computeLinkAnnotations, urlFor);
 
-  const urls = ["/", "/library", "/delete-account", "/terms", "/privacy"];
+  const urls = ["/", "/library", "/about", "/delete-account", "/terms", "/privacy"];
   let pages = 0;
 
   for (const kind of KINDS) {
@@ -114,6 +115,11 @@ export async function generateSeo(outDir) {
   const counts = Object.fromEntries(KINDS.map((k) => [k.key, sets[k.key].length]));
   const total = Object.values(counts).reduce((a, b) => a + b, 0);
   write(outDir, fileForPath("/library"), hubPage(counts, total));
+  pages++;
+
+  // About Capstone Bible, for readers without an account. The app shows the same words from the same
+  // module (src/data/aboutPage.ts) in AboutView. Linked from the sign-in card and every footer.
+  write(outDir, fileForPath("/about"), aboutPage(data.aboutContent));
   pages++;
 
   // Google Play rejects an app that has no account-deletion route reachable without installing it,

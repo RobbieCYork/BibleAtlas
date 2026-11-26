@@ -2,6 +2,7 @@ import { Fragment, useEffect, useId, useRef, useState } from "react";
 import Icon, { type IconName } from "./Icon";
 import { TestingMarker } from "./FeatureRelease";
 import { useFeature, SOCIAL_CONNECTIONS_ENABLED, ARCHAEOLOGY_MENU_ROW_VISIBLE, type FeatureVisibility } from "../lib/features";
+import { ABOUT_TITLE } from "../data/aboutPage";
 
 /** The panel slots the layout can show. There is deliberately no separate "details" slot: a single
  * article (a place/person/topic/POI/timeline event) is a *state* of the Articles panel, not a panel
@@ -32,6 +33,10 @@ interface PanelMenuProps {
   /** Go to Archaeology — the one "Go to" row that is not a takeover. App opens the Articles panel
    * and sends it to its Archaeology section; see `openArchaeology` there. */
   onGoToArchaeology?: () => void;
+  /** True while the About page is on screen. */
+  aboutOpen: boolean;
+  /** Open the About Capstone Bible page, or close it when it is already on screen. */
+  onToggleAbout: () => void;
 }
 
 const PANEL_LABELS: Record<PanelKey, string> = {
@@ -108,6 +113,8 @@ export default function PanelMenu({
   onNavigate,
   onLeaveDestination,
   onGoToArchaeology,
+  aboutOpen,
+  onToggleAbout,
 }: PanelMenuProps) {
   const [open, setOpen] = useState(false);
   // Swaps the caption to name the auto-closed panel for a few seconds, then falls back to the
@@ -165,6 +172,12 @@ export default function PanelMenu({
     if (key === "archaeology") onGoToArchaeology?.();
     else if (key === activeDestination) onLeaveDestination?.();
     else onNavigate?.(key);
+  };
+
+  const selectAbout = () => {
+    setOpen(false);
+    buttonRef.current?.focus();
+    onToggleAbout();
   };
 
   return (
@@ -238,6 +251,25 @@ export default function PanelMenu({
               );
             })}
           </div>
+          <div className="panel-menu-separator panel-menu-separator-strong" role="separator" />
+          <button
+            type="button"
+            className={`panel-menu-link panel-menu-about${aboutOpen ? " active" : ""}`}
+            aria-current={aboutOpen ? "page" : undefined}
+            aria-label={aboutOpen ? `${ABOUT_TITLE} — on screen now; return to panels` : undefined}
+            onClick={selectAbout}
+          >
+            <span className="panel-menu-link-icon">
+              <Icon name="info" />
+            </span>
+            <span className="panel-menu-link-text">
+              <span className="panel-menu-link-label">{ABOUT_TITLE}</span>
+              {aboutOpen && <span className="panel-menu-link-blurb">On screen — return to panels</span>}
+            </span>
+            <span className="panel-menu-link-go" aria-hidden="true">
+              {aboutOpen ? "✓" : "→"}
+            </span>
+          </button>
         </div>
       )}
     </div>

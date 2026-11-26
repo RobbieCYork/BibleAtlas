@@ -10013,6 +10013,17 @@ a.profile-links-url {
   color: var(--accent-contrast);
 }
 
+.mobile-nav-menu-separator {
+  height: 1px;
+  margin: 6px 4px;
+  background: var(--border);
+}
+
+/* The one row longer than a destination name: let the menu widen rather than wrap it. */
+.mobile-nav-menu-about {
+  white-space: nowrap;
+}
+
 .mobile-nav-menu-icon {
   font-size: calc(16px * var(--tsz, 1));
   line-height: 1;
@@ -12727,6 +12738,8 @@ img.sn-image,
 .auth-gate-contact a {
   color: var(--text-muted);
   text-decoration: underline;
+  /* A line of links breaks between them, never inside one. */
+  white-space: nowrap;
 }
 
 .auth-gate-contact a:hover {
@@ -13969,4 +13982,67 @@ img.sn-image,
 .hl-colors-actions .hl-colors-confirm:disabled {
   opacity: 0.5;
   cursor: default;
+}
+
+/* --- About Capstone Bible (AboutView.tsx) — long-form reading inside My Profile's frame, so it uses
+ * the reading serif and display face and follows the theme, the skin and the text-size setting. --- */
+.about-text {
+  font-family: var(--serif);
+  font-size: calc(18px * var(--tsz, 1));
+  line-height: 1.65;
+  text-align: left;
+}
+
+.about-text p {
+  margin: 0 0 1em;
+}
+
+.about-quote {
+  margin: 4px 0 28px;
+  padding: 4px 0 4px 18px;
+  border-left: 4px solid var(--accent);
+  color: var(--text-h);
+  font-family: var(--display);
+  font-size: calc(25px * var(--tsz, 1));
+  font-weight: 600;
+  line-height: 1.35;
+}
+
+.about-text h3 {
+  margin: 12px 0 14px;
+  padding-top: 20px;
+  border-top: 1px solid var(--border);
+  color: var(--text-h);
+  font-family: var(--display);
+  font-size: calc(24px * var(--tsz, 1));
+  font-weight: 600;
+  line-height: 1.35;
+}
+
+.about-report {
+  align-self: flex-start;
+  min-height: 44px;
+  margin: 8px 0 12px;
+  padding: 8px 16px;
+  border: 1px solid var(--border-strong);
+  border-radius: 10px;
+  background: var(--surface-sunken);
+  color: var(--text);
+  font-family: var(--sans);
+  font-size: calc(14px * var(--tsz, 1));
+  cursor: pointer;
+}
+
+.about-report:hover {
+  background: var(--accent-bg);
+  border-color: var(--accent);
+}
+
+/* Both header menus scroll rather than run off a short screen (a phone on its side, or large text),
+ * which would put the last rows out of reach. */
+.panel-menu-dropdown,
+.mobile-nav-menu-dropdown {
+  max-height: calc(var(--app-height, 100svh) - 96px - env(safe-area-inset-top, 0px));
+  overflow-y: auto;
+  overscroll-behavior: contain;
 }

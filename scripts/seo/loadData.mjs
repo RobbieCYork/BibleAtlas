@@ -28,6 +28,7 @@ export { timelineEvents } from ${JSON.stringify(path.join(REPO_ROOT, "src/data/t
 export { computeLinkAnnotations } from ${JSON.stringify(path.join(REPO_ROOT, "src/lib/verseAnnotations"))};
 export * as accountDeletionNotice from ${JSON.stringify(path.join(REPO_ROOT, "src/data/accountDeletionNotice"))};
 export * as legalDocuments from ${JSON.stringify(path.join(REPO_ROOT, "src/data/legalDocuments"))};
+export * as aboutContent from ${JSON.stringify(path.join(REPO_ROOT, "src/data/aboutPage"))};
 `;
 
 let cached = null;

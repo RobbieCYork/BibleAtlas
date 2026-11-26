@@ -3,6 +3,7 @@ import { MOBILE_TAB_ORDER, MOBILE_TAB_META, type MobileTabKey } from "../lib/mob
 import Icon from "./Icon";
 import { TestingMarker } from "./FeatureRelease";
 import { useFeature, ARCHAEOLOGY_MENU_ROW_VISIBLE, type FeatureVisibility } from "../lib/features";
+import { ABOUT_TITLE } from "../data/aboutPage";
 
 interface MobileNavMenuProps {
   /** Which of the seven destinations is on screen right now (App derives this in the same
@@ -14,6 +15,10 @@ interface MobileNavMenuProps {
   /** Go to Archaeology — the one row here that is not a bottom-bar destination. App opens the
    * Articles panel at its Archaeology section; see `openArchaeology` there. */
   onGoToArchaeology: () => void;
+  /** True while the About page is on screen: its row is then the current one, and no other is. */
+  aboutOpen: boolean;
+  /** Open the About Capstone Bible page, listed last under a rule. Not a bottom-bar destination. */
+  onGoToAbout: () => void;
 }
 
 /** What this menu lists, in order: the seven bottom-bar destinations, plus Archaeology inserted
@@ -51,7 +56,13 @@ const ROWS: Row[] = MOBILE_TAB_ORDER.flatMap<Row>((key) =>
  * tag for the hidden ones; it read as a debug string rather than as help, and the answer is one
  * glance at the bar itself, which is on screen directly below this menu the whole time it is open.
  */
-export default function MobileNavMenu({ current, onNavigate, onGoToArchaeology }: MobileNavMenuProps) {
+export default function MobileNavMenu({
+  current,
+  onNavigate,
+  onGoToArchaeology,
+  aboutOpen,
+  onGoToAbout,
+}: MobileNavMenuProps) {
   const [open, setOpen] = useState(false);
   const containerRef = useRef<HTMLDivElement | null>(null);
   const buttonRef = useRef<HTMLButtonElement | null>(null);
@@ -115,6 +126,12 @@ export default function MobileNavMenu({ current, onNavigate, onGoToArchaeology }
     onGoToArchaeology();
   };
 
+  const selectAbout = () => {
+    setOpen(false);
+    buttonRef.current?.focus();
+    onGoToAbout();
+  };
+
   return (
     <div className="mobile-nav-menu" ref={containerRef}>
       <button
@@ -161,7 +178,7 @@ export default function MobileNavMenu({ current, onNavigate, onGoToArchaeology }
             }
             const key = row.key;
             const { label, icon } = MOBILE_TAB_META[key];
-            const isCurrent = key === current;
+            const isCurrent = !aboutOpen && key === current;
             return (
               <button
                 key={key}
@@ -181,6 +198,19 @@ export default function MobileNavMenu({ current, onNavigate, onGoToArchaeology }
               </button>
             );
           })}
+          <div className="mobile-nav-menu-separator" role="separator" />
+          <button
+            type="button"
+            role="menuitem"
+            className={`mobile-nav-menu-item mobile-nav-menu-about${aboutOpen ? " active" : ""}`}
+            aria-current={aboutOpen ? "page" : undefined}
+            onClick={selectAbout}
+          >
+            <span className="mobile-nav-menu-icon" aria-hidden="true">
+              <Icon name="info" />
+            </span>
+            <span className="mobile-nav-menu-label">{ABOUT_TITLE}</span>
+          </button>
         </div>
       )}
     </div>

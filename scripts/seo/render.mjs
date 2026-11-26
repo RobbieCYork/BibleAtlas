@@ -111,6 +111,10 @@ figcaption{font-size:13.5px;color:var(--muted);margin-top:6px;font-family:Archiv
 .index-list a:hover{border-color:var(--accent)}
 .index-list b{display:block;font-weight:600;font-size:16px}
 .index-list span{display:block;color:var(--muted);font-size:13.5px;margin-top:2px}
+.back{margin:0 0 14px;font-family:Archivo,-apple-system,sans-serif;font-size:14px}
+.back a{display:inline-block;padding:7px 14px;border:1px solid var(--rule);border-radius:8px;color:var(--ink);text-decoration:none}
+.back a:hover{border-color:var(--accent)}
+blockquote.pull{margin:22px 0 28px;padding:4px 0 4px 20px;border-left:4px solid var(--accent);font-family:"Cormorant Garamond",Georgia,serif;font-size:clamp(23px,4.5vw,29px);font-weight:600;line-height:1.35}
 footer{border-top:1px solid var(--rule);margin-top:56px;padding-top:18px;font-size:13.5px;color:var(--muted)}
 footer a{color:var(--muted)}
 `.trim();
@@ -222,7 +226,7 @@ ${FONTS}
 ${crumbsHtml(trail)}
 ${body}
 <div class="cta"><p>Capstone Bible is a free interactive study app — a map of every place in this library, a zoomable timeline of biblical and church history, the Bible text with every name in it linked to its article and personal notes.</p><a class="btn" href="/">Open Capstone Bible</a></div>
-<footer><p>Part of the <a href="/library">Capstone Bible library</a> — <a href="/places">places</a>, <a href="/sites">sites</a>, <a href="/people">people</a>, <a href="/topics">topics</a> and the <a href="/events">timeline</a>. Articles are written from a Protestant evangelical position and name other traditions' views where they differ.</p><p>Contact: <a href="mailto:admin@capstonebible.com">admin@capstonebible.com</a></p><p><a href="/terms">Terms of Service</a> · <a href="/privacy">Privacy Policy</a> · <a href="/delete-account">Delete your account</a></p></footer>
+<footer><p>Part of the <a href="/library">Capstone Bible library</a> — <a href="/places">places</a>, <a href="/sites">sites</a>, <a href="/people">people</a>, <a href="/topics">topics</a> and the <a href="/events">timeline</a>. Articles are written from a Protestant evangelical position and name other traditions' views where they differ.</p><p>Contact: <a href="mailto:admin@capstonebible.com">admin@capstonebible.com</a></p><p><a href="/about">About Capstone Bible</a> · <a href="/terms">Terms of Service</a> · <a href="/privacy">Privacy Policy</a> · <a href="/delete-account">Delete your account</a></p></footer>
 </main>
 </body>
 </html>`;
@@ -922,6 +926,45 @@ export function hubPage(counts, total) {
     body,
     wide: true,
     current: "/library",
+    ogType: "website",
+  });
+}
+
+// ---------------------------------------------------------------- about
+/**
+ * The public "About Capstone Bible" page at /about. The words are Robbie's and live in
+ * src/data/aboutPage.ts, which the app's own AboutView reads too. They are escaped and otherwise
+ * untouched: no auto-linking, nothing added. "Back" is a plain link to the app because these pages
+ * carry no script.
+ */
+export function aboutPage(about) {
+  const trail = [{ name: about.ABOUT_TITLE, path: "/about" }];
+  const body = [
+    `<p class="back"><a href="/">‹ Back to Capstone Bible</a></p>`,
+    heading(about.ABOUT_TITLE, "", ""),
+    `<blockquote class="pull">${esc(about.ABOUT_PULL_QUOTE)}</blockquote>`,
+    ...about.ABOUT_SECTIONS.map((s) => {
+      const inner = s.paragraphs.map((t) => p(esc(t))).join("");
+      return s.heading ? section(s.heading, inner) : `<section>${inner}</section>`;
+    }),
+  ].join("");
+
+  return page({
+    title: about.ABOUT_TITLE,
+    description: clip(about.ABOUT_PULL_QUOTE),
+    canonical: "/about",
+    trail,
+    jsonLd: [
+      {
+        "@context": "https://schema.org",
+        "@type": "AboutPage",
+        name: about.ABOUT_TITLE,
+        url: absolute("/about"),
+        isPartOf: { "@type": "WebSite", name: SITE_NAME, url: ORIGIN },
+      },
+    ],
+    body,
+    current: "/about",
     ogType: "website",
   });
 }

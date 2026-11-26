@@ -58,7 +58,7 @@ import {
   Ban, Baseline, Bold, Briefcase, Cake, CalendarDays, Camera, Check, Clapperboard, Crown, Eye,
   EyeOff, FileText,
   Flag, Flame, Gem, Globe, GraduationCap, Headphones, HeartCrack, House,
-  Image as ImageIcon, Italic,
+  Image as ImageIcon, Info, Italic,
   Link as LinkIcon, List, ListIndentDecrease, ListIndentIncrease, ListOrdered, Lock,
   LogOut,
   Medal, Menu, Mic, MicOff, Moon, Music, Palette, Pause, Pin, Play, Plus, Printer, RotateCcw,
@@ -164,6 +164,7 @@ export type IconName =
   | "menu"
   | "check"
   | "flame"
+  | "info"
   // The Sermon Notes formatting toolbar. Lucide rather than drawn, on purpose: a formatting bar is
   // the one surface in this app that is NOT wayfinding. Its marks have to read as the same B / I /
   // U / bullets as every other editor on the reader's phone, and a house version of a convention
@@ -752,6 +753,7 @@ const LIBRARY = {
   menu: Menu,
   check: Check,
   flame: Flame,
+  info: Info,
   formatBold: Bold,
   formatItalic: Italic,
   formatUnderline: Underline,
