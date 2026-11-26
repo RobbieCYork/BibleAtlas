@@ -3,7 +3,7 @@
  *   node scripts/signed-in-harness/run.mjs --persona member --viewport 390x844 \
  *        --script scripts/signed-in-harness/examples/theme-dropdown.mjs --out <dir>
  * Run at 390x844 and 1280x800. Per theme: choosing it applies at once, is saved on this device and is
- * still selected after a reload. Also: Settings calls its light/dark control "Theme".
+ * still selected after a reload. Also: Settings calls its light/dark control "Light or dark".
  * It also PRINTS (does not assert) two layout facts: the gap under the phone's bottom bar, and the rule
  * between the "Back Up My Data" text and its button.
  */
@@ -93,7 +93,7 @@ export default async function (h) {
   await h.click('[aria-label="Settings and account"]'); await h.sleep(350);
   await h.click({ css: ".auth-menu-item", text: "Settings" }); await h.waitFor(".settings-root"); await h.sleep(500);
   const s = await h.evaluate(() => ({ labels: [...document.querySelectorAll(".settings-root .auth-settings-label")].map((e) => e.textContent.trim()), toggle: [...document.querySelectorAll(".settings-root .auth-appearance-toggle button")].map((b) => b.innerText.trim()), text: document.querySelector(".settings-root").innerText }));
-  h.assert(s.labels.includes("Theme") && !/appearance/i.test(s.text), `Settings says Theme, not Appearance (${s.labels.join(", ")})`);
+  h.assert(s.labels.includes("Light or dark") && !s.labels.includes("Theme") && !/appearance/i.test(s.text), `Settings says "Light or dark"; only My Profile says Theme (${s.labels.join(", ")})`);
   h.assert(JSON.stringify(s.toggle) === JSON.stringify(["Light", "Dark"]), `Light/Dark still there (${s.toggle})`);
   console.log("  shot:", await h.screenshot(`settings-${dev}.png`));
 }
