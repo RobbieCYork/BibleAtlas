@@ -27,9 +27,8 @@
  *   Terminals     round cap, round join, universally. A drawn line with soft ends is the closest
  *                 honest analogue at this size to a pen-drawn chart, and mixed terminals are the
  *                 fastest way to make a set look assembled from parts.
- *   Corners       radius 1.5–2 units on anything rectangular. Chamfers (straight cut corners) are
- *                 used where a mark should read as cut rather than drawn — see Games.
- *   Accent        EXACTLY ONE solid, filled element per icon (Games' three pips are one motif).
+ *   Corners       radius 1.5–2 units on anything rectangular.
+ *   Accent        EXACTLY ONE solid, filled element per icon.
  *                 This is the set's signature and the one idea worth stealing from a manuscript:
  *                 an otherwise plain drawn page carrying a single worked, filled mark. It is also
  *                 the most robust thing that can be put in a 20px icon — a filled shape survives
@@ -279,16 +278,15 @@ const PATHS = {
     </>
   ),
 
-  /* A die. Chamfered rather than rounded — cut corners read as an engraved plate or a cut stone
-     where a soft radius reads as a phone-game token, and it is the one place in the set where the
-     corner treatment is allowed to differ, because "cut" is the whole idea. Three solid pips on the
-     diagonal are the accent. */
+  /* A medal: two ribbon straps meeting in a V on a round medallion. The straps are left open and
+     spread the full width, which is what keeps it clear of the other round marks (People, Social,
+     Target) at 15px. Not the same drawing as `medal` below, which is Lucide's and marks the
+     first-correct bonus inside a game. Solid: the boss at the centre of the medallion. */
   games: (
     <>
-      <path d="M8.4 3.4h7.2l5 5v7.2l-5 5H8.4l-5-5V8.4Z" />
-      <circle cx="8.6" cy="8.6" r="1.3" fill="currentColor" stroke="none" />
-      <circle cx="12" cy="12" r="1.3" fill="currentColor" stroke="none" />
-      <circle cx="15.4" cy="15.4" r="1.3" fill="currentColor" stroke="none" />
+      <path d="M7.2 11 3.8 3.4h5.6L12 9l2.6-5.6h5.6L16.8 11" />
+      <circle cx="12" cy="15" r="6" />
+      <circle cx="12" cy="15" r="2.4" fill="currentColor" stroke="none" />
     </>
   ),
 
