@@ -94,7 +94,6 @@ export type GameFeatureKey =
   | "game_saving_peter"
   | "game_fill_blank"
   | "game_memorization"
-  | "game_punchline"
   | "game_chronology";
 
 /** Display order and copy for the owner's Features list. `where` names the entry points that the
@@ -130,7 +129,6 @@ export const FEATURES: ReadonlyArray<FeatureDef> = [
   { key: "game_saving_peter", label: "Saving Peter", where: GAME_WHERE("Saving Peter") + " Covers solo and multiplayer.", parent: "games_trivia" },
   { key: "game_fill_blank", label: "Fill in the Blank", where: GAME_WHERE("Fill in the Blank"), parent: "games_trivia" },
   { key: "game_memorization", label: "Scripture Memorization Challenge", where: GAME_WHERE("Scripture Memorization Challenge"), parent: "games_trivia" },
-  { key: "game_punchline", label: "Guess the Punchline", where: GAME_WHERE("Guess the Punchline"), parent: "games_trivia" },
   { key: "game_chronology", label: "Chronology", where: GAME_WHERE("Chronology"), parent: "games_trivia" },
 ];
 

@@ -94,7 +94,6 @@ export type IconName =
   | "savingPeter"
   | "fillBlank"
   | "memorization"
-  | "punchline"
   | "chronology"
   // The shared difficulty ladder. One construction in five steps, not five pictures.
   | "level1"
@@ -484,18 +483,6 @@ const PATHS = {
     </>
   ),
 
-  /* Guess the Punchline: the shape of a joke rather than a picture of laughter. Three setup rules
-     shortening as they go, then the punchline landing as one solid heavy bar — lighter, lighter,
-     lighter, BAM. A smiling face was the obvious mark and was rejected outright: this whole set
-     exists to retire emoji, and a smiley icon would simply be an emoji redrawn.
-     Solid: the punchline. */
-  punchline: (
-    <>
-      <path d="M4.6 5.2h14.8M4.6 9.2h12.2M4.6 13.2h9.4" />
-      <rect x="4.6" y="16.6" width="14.8" height="4.2" rx="2.1" fill="currentColor" stroke="none" />
-    </>
-  ),
-
   /* Chronology: two cards caught mid-sort, offset on the diagonal. The constraint here was purely
      one of silhouette — Timeline Events is tall and vertical and the hourglass is symmetrical, so
      chronology had to be a third thing, and a diagonal stagger is a shape neither of them can be
@@ -522,7 +509,7 @@ const PATHS = {
      baseline. A cairn of stacked stones (Joshua 4) was drawn as the alternative and lost on the
      proof sheet — below 48px the stones merged into one solid trapezoid and read as a traffic cone.
      Games with three tiers rather than five use 1 / 3 / 5, so the spread still reads as low to high.
-     Shared by Saving Peter, Chronology, Fill in the Blank and Guess the Punchline. */
+     Shared by Saving Peter, Chronology and Fill in the Blank. */
   level1: (
     <>
       <path d="M3.2 20.6h17.6" />

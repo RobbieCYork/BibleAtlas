@@ -16,7 +16,7 @@ import { rolldown } from "rolldown";
 import { MENU_BUTTON } from "../lib/app.mjs";
 
 const DATA = join(dirname(fileURLToPath(import.meta.url)), "../../../src/data");
-const TITLES = ["Bible Trivia", "Saving Peter", "Fill in the Blank", "Scripture Memorization Challenge", "Guess the Punchline", "Chronology"];
+const TITLES = ["Bible Trivia", "Saving Peter", "Fill in the Blank", "Scripture Memorization Challenge", "Chronology"];
 
 async function loadData(name) {
   const dir = mkdtempSync(join(tmpdir(), "games-data."));
@@ -56,7 +56,6 @@ export default async function (h) {
   const shot = (name) => h.screenshot(`${name}-${dev}.png`);
   const blank = await loadData("fillBlankVerses");
   const memo = await loadData("memorizationVerses");
-  const jokes = await loadData("bibleJokes");
   const peter = await loadData("savingPeterWords");
   const chrono = await loadData("chronologyRounds");
 
@@ -161,23 +160,6 @@ export default async function (h) {
     await h.sleep(1600);
   }
   h.assert(await h.exists({ css: ".memchallenge-picker p", text: "1 of" }), `verse mastered after ${rounds} rounds`);
-
-  h.section("Guess the Punchline");
-  for (const level of jokes.JOKE_LEVELS) {
-    await openGame("Guess the Punchline");
-    await h.click({ css: ".game-center-card", text: level.label });
-    await h.waitFor(".punchline-choice");
-    await sound(`punchline-${level.key}`);
-    await h.click(".punchline-choice");
-    h.assert(await h.exists(".punchline-verdict"), `${level.label}: picking an answer gives a verdict`);
-    let turns = 1;
-    while (turns < 200 && !(await h.exists(".punchline-gameover"))) {
-      if (await h.exists(".punchline-choice:not(:disabled)")) { await h.click(".punchline-choice:not(:disabled)"); turns++; }
-      else await h.click(".punchline-btn-primary");
-    }
-    h.assert(await h.exists(".punchline-gameover"), `${level.label}: reaches Game Over after ${turns} jokes`);
-  }
-  await sound("punchline-gameover");
 
   h.section("Chronology");
   for (const level of chrono.CHRONOLOGY_LEVELS) {

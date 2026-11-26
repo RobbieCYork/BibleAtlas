@@ -5,7 +5,7 @@
  */
 import { openAdminConsole, MENU_BUTTON } from "../lib/app.mjs";
 
-const GAMES = ["Bible Trivia", "Saving Peter", "Fill in the Blank", "Scripture Memorization Challenge", "Guess the Punchline", "Chronology"];
+const GAMES = ["Bible Trivia", "Saving Peter", "Fill in the Blank", "Scripture Memorization Challenge", "Chronology"];
 
 const featuresTab = async (h) => {
   await openAdminConsole(h);
@@ -42,17 +42,17 @@ export default async function (h) {
     };
   });
   h.assert(tree.top.length === 8 && !GAMES.some((g) => tree.top.includes(g)), `8 top-level features, no game among them (${tree.top.join(", ")})`);
-  h.assert(JSON.stringify(tree.kids.map((k) => k.label)) === JSON.stringify(GAMES), `Games & Trivia nests exactly the 6 games, in Game Center's order`);
+  h.assert(JSON.stringify(tree.kids.map((k) => k.label)) === JSON.stringify(GAMES), `Games & Trivia nests exactly the 5 games, in Game Center's order`);
   h.assert(tree.subAria === "Games & Trivia — individual stages", `sub-list is labelled "${tree.subAria}"`);
   h.assert(tree.kids.every((k) => k.child && k.x > tree.parentX && k.kidsOfKids === 0), "every game row is a .release-row-child, indented past its parent, with nothing nested below it");
-  h.assert(tree.totalRows === 14, `14 rows in all (8 + 6), none duplicated: ${tree.totalRows}`);
+  h.assert(tree.totalRows === 13, `13 rows in all (8 + 5), none duplicated: ${tree.totalRows}`);
 
   h.section("2. Parent Testing explains itself on Live children");
   await h.click('button[aria-label^="Games & Trivia: Live"]');
   await h.waitFor('button[aria-label^="Games & Trivia: Testing"]');
   const note = await h.text({ css: ".release-row-child .release-row-where", text: "Hidden from everyone but you anyway" });
   h.assert(/because Games & Trivia is in Testing/.test(note ?? ""), `children say: "${note}"`);
-  h.assert((await h.count({ css: ".release-row-child .release-stage-live" })) === 6, "all 6 games still read Live on their own");
+  h.assert((await h.count({ css: ".release-row-child .release-stage-live" })) === 5, "all 5 games still read Live on their own");
 
   h.section("3. A single game in Testing, parent Live: member vs owner");
   await h.click('button[aria-label^="Games & Trivia: Testing"]'); // back to Live
@@ -63,13 +63,13 @@ export default async function (h) {
 
   await h.asPersona("member");
   let cards = await gameCenter(h);
-  h.assert(cards.length === 5 && !cards.some((c) => c.title === "Chronology") && cards.every((c) => !c.marker), `member: Game Center shows 5 games, no Chronology, no markers (${cards.map((c) => c.title).join(", ")})`);
+  h.assert(cards.length === 4 && !cards.some((c) => c.title === "Chronology") && cards.every((c) => !c.marker), `member: Game Center shows 4 games, no Chronology, no markers (${cards.map((c) => c.title).join(", ")})`);
 
   await h.asPersona("owner");
   await h.evaluate(() => localStorage.setItem("feature-test-view-v1", "1"));
   await h.reload();
   cards = await gameCenter(h);
   const marked = cards.filter((c) => c.marker).map((c) => c.title);
-  h.assert(cards.length === 6 && marked.join() === "Chronology", `owner, Test view: all 6 shown, only Chronology marked (marked: ${marked.join() || "none"})`);
+  h.assert(cards.length === 5 && marked.join() === "Chronology", `owner, Test view: all 5 shown, only Chronology marked (marked: ${marked.join() || "none"})`);
   console.log("  screenshot (a hint, not evidence):", await h.screenshot("game-center-owner-test-view.png"));
 }

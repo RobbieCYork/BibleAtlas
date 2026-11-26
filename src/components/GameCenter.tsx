@@ -46,13 +46,6 @@ export const GAMES: GameDef[] = [
     tagline: "Pick a verse from 100 and learn it word by word — then recite everything you know before the next one.",
   },
   {
-    key: "punchline",
-    feature: "game_punchline",
-    icon: "punchline",
-    title: "Guess the Punchline",
-    tagline: "Over 100 clean Bible jokes — you get the setup, pick the punchline that really belongs to it.",
-  },
-  {
     key: "chronology",
     feature: "game_chronology",
     icon: "chronology",

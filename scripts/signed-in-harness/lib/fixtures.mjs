@@ -1,4 +1,6 @@
 /** Default table contents. Keep these small and boring; checks that need more override per run. */
+/** The feature_release rows production holds. game_punchline's game was removed from the app but its
+ * row (sql/040) is still in the database, so it stays here: the app must ignore it. */
 export const FEATURE_KEYS = [
   "prayer_list", "sermon_notes", "posts_newsfeed", "timeline", "games_trivia", "library_articles", "account_deletion", "avatars",
   "game_bible_trivia", "game_saving_peter", "game_fill_blank", "game_memorization", "game_punchline", "game_chronology",

@@ -120,7 +120,7 @@ export default async function (h) {
   await h.click(MENU_BUTTON);
   await h.click({ css: ".mobile-nav-menu-item", text: "Games" });
   await h.waitFor(".game-center-card");
-  h.assert((await h.count(".game-center-card")) === 6, "hamburger -> Game Center, 6 games");
+  h.assert((await h.count(".game-center-card")) === 5, "hamburger -> Game Center, 5 games");
   await h.click({ css: ".mobile-tab", text: "Bible" });
   await h.click({ css: ".mobile-tab", text: "Games" });
   await h.waitFor(".game-center-card");
