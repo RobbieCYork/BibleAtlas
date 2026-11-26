@@ -11,7 +11,7 @@
 export const ABOUT_TITLE = "About Capstone Bible";
 
 export const ABOUT_PULL_QUOTE =
-  "“My hope and prayer is to help the Bible become more understandable, tangible and usable for the average person. “";
+  "“My hope and prayer is to help the Bible become more understandable, tangible and usable for the average person.”";
 
 export interface AboutSection {
   /** null for the opening letter, which has no heading of its own. */
