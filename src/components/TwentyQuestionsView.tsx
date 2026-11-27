@@ -1,10 +1,12 @@
-import { useMemo, useState, type ReactNode } from "react";
+import { useEffect, useMemo, useRef, useState, type ReactNode } from "react";
 import { TQ_SETS, answerFor, type TQAnswer, type TQCategory, type TQEntry, type TQSet } from "../data/twentyQuestions";
 import { TQ_VERSES } from "../data/twentyQuestionsVerses";
 import type { OpenGameArticle } from "../lib/gameArticles";
 import BackButton from "./BackButton";
 import Icon, { type IconName } from "./Icon";
 import { GameEntryChoices } from "./GameEntry";
+import HowToPlay, { HowToPlayButton } from "./HowToPlay";
+import { useHowToPlay } from "../lib/howToPlay";
 import "./TwentyQuestions.css";
 
 interface TwentyQuestionsViewProps {
@@ -96,6 +98,7 @@ export default function TwentyQuestionsView({ onBack, onOpenArticle }: TwentyQue
   const [guessSearch, setGuessSearch] = useState("");
   const [guessPick, setGuessPick] = useState<string | null>(null);
   const [lastAnswer, setLastAnswer] = useState<string | null>(null);
+  const help = useHowToPlay("twenty-questions-howto-v1");
 
   const start = (c: Choice) => {
     const cat: TQCategory = c === "any" ? (["people", "places", "things"] as const)[Math.floor(Math.random() * 3)] : c;
@@ -154,13 +157,14 @@ export default function TwentyQuestionsView({ onBack, onOpenArticle }: TwentyQue
     setGame(g);
   };
 
-  const header = (onClick: () => void, ariaLabel: string) => (
-    <header className="game-header">
+  const header = (onClick: () => void, ariaLabel: string, playing = false) => (
+    <header className={`game-header${playing ? " how-header" : ""}`}>
       <BackButton onClick={onClick} ariaLabel={ariaLabel} />
       <h2 className="games-inline-icon">
         <Icon name="twentyQuestions" />
         20 Questions
       </h2>
+      {playing && !help.open && <HowToPlayButton onClick={help.show} />}
     </header>
   );
 
@@ -223,10 +227,23 @@ export default function TwentyQuestionsView({ onBack, onOpenArticle }: TwentyQue
     );
   }
 
+  const playHeader = header(() => setScreen("menu"), "Back to 20 Questions menu", true);
+
+  if (help.open) {
+    return (
+      <div className="game-root">
+        {playHeader}
+        <HowToPlay firstTime={help.firstTime} onClose={help.close}>
+          <TwentyQuestionsHelp />
+        </HowToPlay>
+      </div>
+    );
+  }
+
   return (
     <PlayScreen
       game={game}
-      header={header(() => setScreen("menu"), "Back to 20 Questions menu")}
+      header={playHeader}
       search={search}
       setSearch={setSearch}
       group={group}
@@ -278,6 +295,12 @@ function PlayScreen(p: PlayScreenProps) {
   const asked = new Set(game.turns.filter((t) => t.kind === "question").map((t) => t.id));
   const guessed = new Set(game.turns.filter((t) => t.kind === "guess").map((t) => t.id));
   const lastChance = game.status === "playing" && left <= 0;
+  // The guess card opens below the history; bring it, buttons included, into view.
+  const guessRef = useRef<HTMLElement>(null);
+  const guessCardOpen = game.status === "playing" && (p.guessing || lastChance);
+  useEffect(() => {
+    if (guessCardOpen) guessRef.current?.scrollIntoView({ block: "nearest" });
+  }, [guessCardOpen]);
   const norm = (s: string) => s.toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "");
 
   const available = useMemo(() => {
@@ -385,7 +408,7 @@ function PlayScreen(p: PlayScreenProps) {
 
         {history}
 
-        <section className="tq-guess" aria-labelledby="tq-guess-heading">
+        <section ref={guessRef} className="tq-guess" aria-labelledby="tq-guess-heading">
           {!p.guessing && !lastChance ? (
             <button type="button" className="games-primary-button tq-guess-open" onClick={() => p.setGuessing(true)}>
               <Icon name="target" inline /> Make a guess
@@ -472,6 +495,39 @@ function PlayScreen(p: PlayScreenProps) {
         )}
       </div>
     </div>
+  );
+}
+
+function TwentyQuestionsHelp() {
+  const samples: [TQAnswer, string][] = [
+    ["yes", "It is true of the secret."],
+    ["no", "It is not."],
+    ["unknown", "The Bible doesn't settle it."],
+  ];
+  return (
+    <>
+      <ul className="how-list">
+        <li>The app has picked a secret person, place or thing from the Bible.</li>
+        <li>
+          Tap a question in the list to ask it. You have {TQ_LIMIT}. Search and the category buttons narrow the list.
+        </li>
+        <li>
+          Think you know? Tap <strong>Make a guess</strong> and pick a name. A wrong guess costs one question.
+        </li>
+        <li>When all {TQ_LIMIT} are used, you get one last guess.</li>
+      </ul>
+      <p>For example, you ask "Is this person a woman?" and the answer is one of these:</p>
+      <ul className="how-marks">
+        {samples.map(([a, meaning]) => (
+          <li key={a}>
+            <span className={`tq-answer tq-answer-${a} tq-answer-sample`}>
+              <span aria-hidden="true">{ANSWER_ICON[a]}</span> {ANSWER_LABEL[a]}
+            </span>
+            <span>{meaning}</span>
+          </li>
+        ))}
+      </ul>
+    </>
   );
 }
 

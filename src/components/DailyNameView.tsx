@@ -21,6 +21,8 @@ import type { OpenGameArticle } from "../lib/gameArticles";
 import BackButton from "./BackButton";
 import Icon from "./Icon";
 import { GameEntryChoices } from "./GameEntry";
+import HowToPlay, { HowToPlayButton } from "./HowToPlay";
+import { useHowToPlay } from "../lib/howToPlay";
 import "./DailyName.css";
 
 interface DailyNameViewProps {
@@ -37,6 +39,27 @@ const NO_GUESSES: string[] = [];
 
 const MARK_WORDS: Record<LetterMark, string> = { right: "right spot", elsewhere: "in the name, wrong spot", absent: "not in the name" };
 const MARK_RANK: Record<LetterMark, number> = { absent: 0, elsewhere: 1, right: 2 };
+const ALL_MARKS: LetterMark[] = ["right", "elsewhere", "absent"];
+
+/** The shape of each mark in words, so the How to play panel never rests on colour. */
+const MARK_LOOK: Record<LetterMark, string> = {
+  right: "Solid tile, filled dot.",
+  elsewhere: "Dashed edge, half dot.",
+  absent: "Faded tile, empty ring.",
+};
+const MARK_MEANING: Record<LetterMark, [one: string, many: string]> = {
+  right: ["is in the right spot", "are in the right spots"],
+  elsewhere: ["is in the name, but in a different spot", "are in the name, but in different spots"],
+  absent: ["is not in the name", "are not in the name"],
+};
+
+/** Worked examples for How to play. Each shows all three marks, and the marks are worked out by the
+ * real rules. There are two so the example can never name the answer being played. */
+const EXAMPLES = [
+  { hidden: "ADAM", guess: "AMOS" },
+  { hidden: "SETH", guess: "SHEM" },
+];
+const titleCase = (w: string) => `${w[0]}${w.slice(1).toLowerCase()}`;
 
 /** A stored day keeps the word it was played against; its reveal details are looked up again here. */
 const ANSWER_BY_WORD = new Map(DAILY_NAME_ANSWERS.map((a) => [a.word, a]));
@@ -53,6 +76,7 @@ export default function DailyNameView({ onBack, onOpenArticle }: DailyNameViewPr
   const [message, setMessage] = useState<string | null>(null);
   const [shareNote, setShareNote] = useState<string | null>(null);
   const [shareFallback, setShareFallback] = useState<string | null>(null);
+  const help = useHowToPlay("daily-name-howto-v1");
 
   // A tab left open past midnight moves on to the new day's name the next time the screen is used.
   useEffect(() => {
@@ -104,11 +128,11 @@ export default function DailyNameView({ onBack, onOpenArticle }: DailyNameViewPr
   const submit = useCallback(() => {
     if (finished) return;
     if (typed.length < length) {
-      setMessage(`The name has ${length} letters.`);
+      setMessage(`Not enough letters: this name has ${length}.`);
       return;
     }
     if (!isAcceptedGuess(typed)) {
-      setMessage(`${typed[0]}${typed.slice(1).toLowerCase()} isn't in the list of Bible names.`);
+      setMessage(`${titleCase(typed)} isn't in the list of Bible names.`);
       return;
     }
     if (guesses.includes(typed)) {
@@ -133,9 +157,9 @@ export default function DailyNameView({ onBack, onOpenArticle }: DailyNameViewPr
     [finished, submit, length]
   );
 
-  // The physical keyboard, while a game is on screen.
+  // The physical keyboard, while the board is on screen.
   useEffect(() => {
-    if (screen !== "playing") return;
+    if (screen !== "playing" || help.open) return;
     const onKey = (e: KeyboardEvent) => {
       if (e.ctrlKey || e.metaKey || e.altKey) return;
       const target = e.target as HTMLElement | null;
@@ -150,7 +174,7 @@ export default function DailyNameView({ onBack, onOpenArticle }: DailyNameViewPr
     };
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
-  }, [screen, press]);
+  }, [screen, help.open, press]);
 
   const startDaily = () => {
     setMode("daily");
@@ -186,13 +210,14 @@ export default function DailyNameView({ onBack, onOpenArticle }: DailyNameViewPr
     }
   };
 
-  const header = (onClick: () => void, ariaLabel: string) => (
-    <header className="game-header">
+  const header = (onClick: () => void, ariaLabel: string, playing = false) => (
+    <header className={`game-header${playing ? " how-header" : ""}`}>
       <BackButton onClick={onClick} ariaLabel={ariaLabel} />
       <h2 className="games-inline-icon">
         <Icon name="dailyName" />
         Daily Name
       </h2>
+      {playing && !help.open && <HowToPlayButton onClick={help.show} />}
     </header>
   );
 
@@ -251,38 +276,69 @@ export default function DailyNameView({ onBack, onOpenArticle }: DailyNameViewPr
     return { letters: Array(length).fill(" ") as string[], marks: Array(length).fill(null) as (LetterMark | null)[] };
   });
 
+  const playHeader = header(() => setScreen("menu"), "Back to Daily Name menu", true);
+
+  if (help.open) {
+    return (
+      <div className="game-root">
+        {playHeader}
+        <HowToPlay firstTime={help.firstTime} onClose={help.close}>
+          <DailyNameHelp length={length} answer={answer.word} />
+        </HowToPlay>
+      </div>
+    );
+  }
+
+  // Under the board while the first guess is being typed: what to do next.
+  const toGo = length - typed.length;
+  const hint =
+    finished || guesses.length > 0
+      ? null
+      : typed.length === 0
+        ? `Type a ${length}-letter Bible name, then tap Enter.`
+        : toGo > 0
+          ? `${toGo} more ${toGo === 1 ? "letter" : "letters"}, then tap Enter.`
+          : "Now tap Enter to check it.";
+
   return (
     <div className="game-root">
-      {header(() => setScreen("menu"), "Back to Daily Name menu")}
-      <div className="game-body dn-body">
+      {playHeader}
+      {/* While a guess is still to be made the screen is sized to fit: the board gives up height so
+          the whole keyboard stays above the tab bar. The result scrolls as usual. */}
+      <div className={`game-body dn-body${finished ? "" : " dn-fit"}`}>
         <p className="dn-status">
           {mode === "daily" ? `Daily Name #${number}` : "Practice"} · {length} letters · guess {Math.min(guesses.length + (finished ? 0 : 1), MAX_GUESSES)} of {MAX_GUESSES}
         </p>
 
-        <div className="dn-board" role="grid" aria-label={`Guesses, ${length} letters each`} style={{ ["--dn-len" as string]: length }}>
-          {rows.map((row, r) => (
-            <div key={r} role="row" className="dn-row" aria-label={r < guesses.length ? `Guess ${r + 1}: ${guesses[r]}` : r === guesses.length && !finished ? "Current guess" : undefined}>
-              {row.letters.map((ch, c) => {
-                const mark = row.marks[c];
-                return (
-                  <span
-                    key={c}
-                    role="gridcell"
-                    className={`dn-tile${mark ? ` dn-${mark}` : ""}${ch.trim() && !mark ? " dn-typed" : ""}`}
-                    aria-label={ch.trim() ? `${ch}${mark ? `, ${MARK_WORDS[mark]}` : ""}` : "empty"}
-                  >
-                    <span className="dn-letter" aria-hidden="true">{ch.trim()}</span>
-                    {mark && <span className="dn-mark" aria-hidden="true" />}
-                  </span>
-                );
-              })}
-            </div>
-          ))}
+        <div className="dn-board-fit">
+          <div className="dn-board" role="grid" aria-label={`Guesses, ${length} letters each`} style={{ ["--dn-len" as string]: length }}>
+            {rows.map((row, r) => (
+              <div key={r} role="row" className="dn-row" aria-label={r < guesses.length ? `Guess ${r + 1}: ${guesses[r]}` : r === guesses.length && !finished ? "Current guess" : undefined}>
+                {row.letters.map((ch, c) => {
+                  const mark = row.marks[c];
+                  return (
+                    <span
+                      key={c}
+                      role="gridcell"
+                      className={`dn-tile${mark ? ` dn-${mark}` : ""}${ch.trim() && !mark ? " dn-typed" : ""}`}
+                      aria-label={ch.trim() ? `${ch}${mark ? `, ${MARK_WORDS[mark]}` : ""}` : "empty"}
+                    >
+                      <span className="dn-letter" aria-hidden="true">{ch.trim()}</span>
+                      {mark && <span className="dn-mark" aria-hidden="true" />}
+                    </span>
+                  );
+                })}
+              </div>
+            ))}
+          </div>
         </div>
 
-        <p className="dn-message" role="status" aria-live="polite">
-          {message}
-        </p>
+        <div className="dn-under">
+          <p className="dn-message" role="status" aria-live="polite">
+            {message}
+          </p>
+          {!message && hint && <p className="dn-hint">{hint}</p>}
+        </div>
 
         {finished ? (
           <div className="dn-result">
@@ -355,10 +411,57 @@ export default function DailyNameView({ onBack, onOpenArticle }: DailyNameViewPr
   );
 }
 
+function DailyNameHelp({ length, answer }: { length: number; answer: string }) {
+  const example = EXAMPLES.find((e) => e.hidden !== answer) ?? EXAMPLES[0];
+  const marks = markGuess(example.guess, example.hidden);
+  const letters = example.guess.split("");
+  return (
+    <>
+      <ul className="how-list">
+        <li>Guess the hidden Bible name, a person or a place, in {MAX_GUESSES} tries.</li>
+        <li>
+          Every guess must be a real Bible name with <strong>{length} letters</strong>.
+        </li>
+        <li>
+          Type it, then tap <strong>Enter</strong>.
+        </li>
+      </ul>
+      <p>
+        Say the hidden name is <strong>{titleCase(example.hidden)}</strong> and you guess{" "}
+        <strong>{titleCase(example.guess)}</strong>:
+      </p>
+      <div className="dn-row dn-example" role="img" aria-label={letters.map((l, i) => `${l}, ${MARK_WORDS[marks[i]]}`).join("; ")}>
+        {letters.map((l, i) => (
+          <span key={i} className={`dn-tile dn-${marks[i]}`} aria-hidden="true">
+            <span className="dn-letter">{l}</span>
+            <span className="dn-mark" />
+          </span>
+        ))}
+      </div>
+      <ul className="how-marks">
+        {ALL_MARKS.map((m) => {
+          const these = letters.filter((_, i) => marks[i] === m);
+          return (
+            <li key={m}>
+              <span className={`dn-tile dn-tile-sample dn-${m}`} aria-hidden="true">
+                <span className="dn-letter">{these[0]}</span>
+                <span className="dn-mark" />
+              </span>
+              <span>
+                <strong>{these.join(" and ")}</strong> {MARK_MEANING[m][these.length > 1 ? 1 : 0]}. <span className="dn-look">{MARK_LOOK[m]}</span>
+              </span>
+            </li>
+          );
+        })}
+      </ul>
+    </>
+  );
+}
+
 function Legend() {
   return (
     <ul className="dn-legend" aria-label="What the marks mean">
-      {(["right", "elsewhere", "absent"] as LetterMark[]).map((m) => (
+      {ALL_MARKS.map((m) => (
         <li key={m}>
           <span className={`dn-tile dn-tile-sample dn-${m}`} aria-hidden="true">
             <span className="dn-letter">A</span>

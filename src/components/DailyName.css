@@ -31,11 +31,18 @@
 
 /* ------------------------------------------------------------------ board */
 
+.dn-board-fit {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
 .dn-board {
   /* Tile size follows the word length so a nine-letter name still fits a 390px screen:
-     the 40px side gutter and the gaps come off first, then the rest is shared out. */
+     the 40px side gutter and the gaps come off first, then the rest is shared out. On the result
+     screen, a short window also holds the tiles back so the result shows under the board. */
   --dn-gap: 5px;
-  --dn-tile: min(54px, calc((100vw - 40px - (var(--dn-len) - 1) * var(--dn-gap)) / var(--dn-len)));
+  --dn-tile: min(54px, 6.5vh, calc((100vw - 40px - (var(--dn-len) - 1) * var(--dn-gap)) / var(--dn-len)));
   display: flex;
   flex-direction: column;
   gap: var(--dn-gap);
@@ -79,12 +86,27 @@
   box-sizing: border-box;
 }
 
-.dn-message {
+/* One slot under the board: a refused guess's reason, or the first-guess hint. */
+.dn-under {
   min-height: 1.4em;
-  margin: 0;
-  font-weight: 600;
-  color: var(--text-h);
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
   text-align: center;
+  font-size: min(calc(14px * var(--tsz, 1)), 19px);
+  line-height: 1.35;
+}
+
+.dn-message {
+  margin: 0;
+  font-weight: 700;
+  color: var(--text-h);
+}
+
+.dn-hint {
+  margin: 0;
+  color: var(--text);
 }
 
 /* --------------------------------------------------------------- keyboard */
@@ -116,7 +138,8 @@
   color: var(--text-h);
   font: inherit;
   font-weight: 700;
-  font-size: calc(15px * var(--tsz, 1));
+  /* Capped: past this a letter no longer fits a phone-width key. */
+  font-size: min(calc(15px * var(--tsz, 1)), 21px);
   cursor: pointer;
   padding: 0;
   touch-action: manipulation;
@@ -125,12 +148,115 @@
 .dn-key-wide {
   flex: 1.6 1 0;
   max-width: 72px;
-  font-size: calc(13px * var(--tsz, 1));
+  font-size: min(calc(13px * var(--tsz, 1)), 15px);
 }
 
 .dn-key:focus-visible {
   outline: 2px solid var(--accent);
   outline-offset: 2px;
+}
+
+/* ------------------------------------------------------------- fit screen
+ *
+ * While a guess is still to be made, everything shares the space between the game header and the
+ * tab bar: status, hint and keyboard take what they need, the board takes the rest and its tiles
+ * are sized from BOTH the width and the height left (container units, measured against these two
+ * boxes, so the header, a banner, safe-area insets and the browser's own bars are all already
+ * accounted for). Key height follows the same space, never under 40px. Browsers without container
+ * units keep the width-only sizes above and scroll. */
+
+.game-body.dn-fit {
+  container: dn-play / size;
+  gap: 6px;
+  padding: 6px 8px 8px;
+}
+
+.dn-fit > * {
+  flex-shrink: 0;
+}
+
+.dn-fit .dn-status {
+  font-size: min(calc(13px * var(--tsz, 1)), 18px);
+  line-height: 1.3;
+}
+
+/* Asks for six full-size rows and gives height back when there isn't room; 20px tiles at least. */
+.dn-fit > .dn-board-fit {
+  container-type: size;
+  flex: 0 1 349px;
+  min-height: 145px;
+  align-items: center;
+}
+
+@supports (height: 1cqh) {
+  .dn-fit .dn-board {
+    --dn-tile: min(54px, calc((100cqw - (var(--dn-len) - 1) * var(--dn-gap)) / var(--dn-len)), calc((100cqh - 5 * var(--dn-gap)) / 6));
+    margin: 0;
+  }
+
+  .dn-fit .dn-key {
+    height: clamp(40px, 9cqh, 52px);
+  }
+}
+
+@container dn-play (max-height: 440px) {
+  .dn-fit .dn-board {
+    --dn-gap: 4px;
+  }
+  .dn-fit .dn-keyboard {
+    gap: 5px;
+  }
+  /* Read out, not drawn: the hint already gives the length, and the board shows the guess count. */
+  .dn-fit .dn-status {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
+}
+
+/* The How to play button covers this on shorter screens. */
+@container dn-play (max-height: 620px) {
+  .dn-fit .dn-legend {
+    display: none;
+  }
+}
+
+/* Largest text on a small phone can still ask for more than there is. The page then scrolls, and
+ * the keyboard stays pinned in view. Not on very short (landscape) screens, where a pinned
+ * keyboard would cover the board. */
+@media (min-height: 520px) {
+  .dn-fit .dn-keyboard {
+    position: sticky;
+    bottom: -8px;
+    z-index: 1;
+    padding-bottom: 8px;
+    margin-bottom: -8px;
+    background: var(--bg);
+  }
+}
+
+/* ------------------------------------------------------------ how to play */
+
+.dn-example {
+  justify-content: flex-start;
+  --dn-gap: 5px;
+}
+
+.dn-example .dn-tile {
+  --dn-tile: 36px;
+}
+
+.dn-look {
+  color: var(--text-muted);
+}
+
+.how-marks .dn-tile-sample {
+  --dn-tile: 30px;
+  font-size: 15px;
+  flex-shrink: 0;
 }
 
 /* --------------------------------------------------------------- legend */

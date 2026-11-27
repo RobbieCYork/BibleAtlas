@@ -261,7 +261,8 @@
 }
 
 .tq-guess-list {
-  max-height: 260px;
+  /* Shorter on a short screen, so the Guess and Keep asking buttons stay above the tab bar. */
+  max-height: clamp(110px, calc(100dvh - 500px), 260px);
   overflow-y: auto;
   padding-right: 2px;
 }
@@ -290,6 +291,16 @@
   display: flex;
   flex-direction: column;
   gap: 8px;
+}
+
+/* ------------------------------------------------------------ how to play */
+
+/* The three answers line up their meanings. */
+.tq-answer-sample {
+  min-width: 7.2em;
+  box-sizing: border-box;
+  text-align: center;
+  font-size: min(calc(13px * var(--tsz, 1)), 18px);
 }
 
 /* ---------------------------------------------------------------- reveal */

@@ -2,7 +2,10 @@
  * Daily Name, played from the real built app: a daily WIN and a daily LOSS (storage cleared in
  * between), a practice win and a practice loss, the physical keyboard, guess rejection, letter
  * marks against the real rules, device stats, the spoiler-free share text, and the reveal's
- * article link. Run at both widths:
+ * article link. Also How to play (shown once before the first board, reopened by its button), the
+ * first-guess hint and the Enter messages, and — on a phone run — that the board and the whole
+ * keyboard fit above the tab bar for every name length at several phone sizes, with safe-area
+ * insets, the seasonal-walk banner, the owner's Test view strip and large text. Run at both widths:
  *   node scripts/signed-in-harness/run.mjs --persona member --viewport 390x844 --script scripts/signed-in-harness/examples/daily-name.mjs
  *   node scripts/signed-in-harness/run.mjs --persona member --viewport 1280x800 --script scripts/signed-in-harness/examples/daily-name.mjs
  * Answers come from the same modules the game reads (bundled with rolldown).
@@ -83,7 +86,7 @@ export default async function (h) {
   };
 
   h.section(`Entry (${dev}) — puzzle #${number}, ${answer.word.length} letters`);
-  await h.evaluate(() => localStorage.removeItem("daily-name-v1"));
+  await h.evaluate(() => { localStorage.removeItem("daily-name-v1"); localStorage.removeItem("daily-name-howto-v1"); });
   await openCenter();
   const cards = await h.evaluate(() => [...document.querySelectorAll(".game-center-card-title")].map((e) => e.childNodes[0].textContent.trim()));
   h.assert(cards.includes("Daily Name"), `Game Center lists Daily Name (${cards.join(", ")})`);
@@ -98,9 +101,55 @@ export default async function (h) {
   h.assert((await h.text({ css: ".game-entry-card", text: "Today's name" })).includes(`#${number}`), `menu offers today's name #${number}`);
   await sound("menu");
 
-  h.section("Daily — WIN");
+  h.section("How to play — first time, before the board");
   await h.click({ css: ".game-entry-card", text: "Today's name" });
+  await h.waitFor(".how-panel");
+  h.assert(!(await h.exists(".dn-board")) && !(await h.exists(".dn-keyboard")), "the panel comes before the board");
+  const helpText = await h.text(".how-panel");
+  h.assert(helpText.includes(`${answer.word.length} letters`) && /real Bible name/.test(helpText) && /Enter/.test(helpText) && /6 tries/.test(helpText), "it says: a real Bible name of this length, tap Enter, six tries");
+  const example = await h.evaluate(() => [...document.querySelectorAll(".dn-example .dn-tile")].map((t) => [t.textContent, (t.className.match(/dn-(right|elsewhere|absent)/) ?? [])[1]]));
+  const guessWord = example.map((e) => e[0]).join("");
+  const hidden = guessWord === "AMOS" ? "ADAM" : "SETH";
+  h.assert(JSON.stringify(example.map((e) => e[1])) === JSON.stringify(dn.markGuess(guessWord, hidden)) && new Set(example.map((e) => e[1])).size === 3, `worked example ${guessWord} against ${hidden} shows all three marks as the rules say`);
+  h.assert(dn.isAcceptedGuess(guessWord) && dn.isAcceptedGuess(hidden) && hidden !== answer.word, "both example names are accepted names and neither is today's answer");
+  const explained = await h.evaluate(() => [...document.querySelectorAll(".how-marks li")].map((li) => li.innerText.replace(/\s+/g, " ").trim()));
+  h.assert(explained.length === 3 && /right spot.*Solid tile/.test(explained[0]) && /different spot.*Dashed edge/.test(explained[1]) && /not in the name.*empty ring/.test(explained[2]), `each mark explained by meaning and shape: ${explained.join(" / ")}`);
+  const frames = await h.evaluate(() => ["right", "elsewhere"].map((m) => getComputedStyle(document.querySelector(`.how-marks .dn-${m}`)).borderStyle));
+  h.assert(JSON.stringify(frames) === JSON.stringify(["solid", "dashed"]), "the samples carry the board's real tile styling");
+  const startShown = await h.evaluate(() => { const b = document.querySelector(".how-close").getBoundingClientRect(); const tab = document.querySelector(".mobile-tab-bar")?.getBoundingClientRect(); return b.bottom <= (tab ? tab.top : innerHeight) + 0.5 && b.top > 0; });
+  h.assert(startShown && (await h.text(".how-close")) === "Start playing", "Start playing is on screen without scrolling");
+  await key("a");
+  await sound("how-to-play");
+  await h.click(".how-close");
   await h.waitFor(".dn-board");
+  h.assert(!(await h.evaluate(() => document.querySelector(".dn-board").textContent.trim())), "keys pressed over the panel type nothing");
+
+  h.section("Hint and messages");
+  const under = () => h.evaluate(() => ({ hint: document.querySelector(".dn-hint")?.textContent ?? null, message: document.querySelector(".dn-message").textContent }));
+  const n = answer.word.length;
+  h.assert((await under()).hint === `Type a ${n}-letter Bible name, then tap Enter.`, `empty board hint: "${(await under()).hint}"`);
+  await key("Enter");
+  await h.sleep(60);
+  h.assert((await under()).message === `Not enough letters: this name has ${n}.` && (await under()).hint === null, `Enter on nothing: "${(await under()).message}"`);
+  await key("q");
+  await h.sleep(60);
+  h.assert((await under()).hint === `${n - 1} more letters, then tap Enter.`, `after one letter: "${(await under()).hint}"`);
+  await h.click({ css: ".dn-key", text: "Enter" });
+  h.assert((await under()).message === `Not enough letters: this name has ${n}.`, "too few letters, on-screen Enter");
+  for (let i = 1; i < n; i++) await key("q");
+  await h.sleep(60);
+  h.assert((await under()).hint === "Now tap Enter to check it.", `row full: "${(await under()).hint}"`);
+  await sound("hint-full-row");
+  await h.click(".how-open");
+  await h.waitFor(".how-panel");
+  h.assert((await h.text(".how-close")) === "Back to the game", "How to play reopens it; the button returns to the game");
+  await key("Backspace");
+  await h.evaluate(() => window.dispatchEvent(new KeyboardEvent("keydown", { key: "Escape", bubbles: true })));
+  await h.waitFor(".dn-board");
+  h.assert((await h.evaluate(() => document.querySelector(".dn-row").textContent.length)) === n, "Escape closes it and the typed letters are still there");
+  for (let i = 0; i < n; i++) await key("Backspace");
+
+  h.section("Daily — WIN");
   h.assert((await h.count(".dn-row")) === 6 && (await h.count(".dn-row:first-child .dn-tile")) === answer.word.length, `6 rows of ${answer.word.length} tiles`);
   await sound("board-empty");
   // A word that is not a name is refused and costs nothing.
@@ -142,7 +191,7 @@ export default async function (h) {
   h.assert(/Solved/.test(await h.text({ css: ".game-entry-card", text: "Today's name" })), "after a reload the menu remembers today is solved");
   await h.click({ css: ".game-entry-card", text: "Today's name" });
   await h.waitFor(".dn-result");
-  h.assert(true, "re-opening today's game goes straight to the result");
+  h.assert(!(await h.exists(".how-panel")), "re-opening today's game goes straight to the result, no How to play again");
   await h.click({ css: ".dn-actions button", text: "Read about" });
   await h.sleep(500);
   h.assert(!(await h.exists(".game-mode")), "Read about … leaves Games mode");
@@ -187,4 +236,139 @@ export default async function (h) {
   await h.waitFor(".dn-stats");
   const after = await h.evaluate(() => [...document.querySelectorAll(".dn-stats-row dd")].map((d) => d.textContent));
   h.assert(JSON.stringify(after) === JSON.stringify(lost), `practice never touched the stats (${after.join(", ")})`);
+
+  if (phone) await fit(h, dn, data, key, keyWord);
+}
+
+/** Board and keyboard inside the space between the game header and the tab bar, nothing to scroll. */
+async function fit(h, dn, data, key, keyWord) {
+  // [name, width, height, safe-area top, safe-area bottom]
+  const SIZES = [
+    ["se", 375, 667, 0, 0],
+    ["se-standalone", 375, 667, 20, 0],
+    ["iphone-standalone", 390, 844, 47, 34],
+    ["iphone-safari", 390, 700, 0, 0],
+    ["iphone-short-insets", 390, 700, 47, 34],
+  ];
+  // The seasonal-walk banner only draws inside its season; a switchable fake date brings it up.
+  await h.addInitScript(`(()=>{ if (!sessionStorage.getItem('__dec')) return; const Real = Date; const shift = new Real(2026, 11, 5, 12).getTime() - Real.now();
+    window.Date = class extends Real { constructor(...a) { super(...(a.length ? a : [Real.now() + shift])); } static now() { return Real.now() + shift; } }; })()`);
+
+  const answers = data.DAILY_NAME_ANSWERS;
+  const measure = () =>
+    h.evaluate(() => {
+      const box = (el) => el.getBoundingClientRect();
+      const body = document.querySelector(".game-mode .game-body");
+      const b = box(body);
+      const tab = box(document.querySelector(".mobile-tab-bar"));
+      const keys = [...document.querySelectorAll(".dn-key")];
+      const kb = box(document.querySelector(".dn-keyboard"));
+      const tiles = [...document.querySelectorAll(".dn-board .dn-tile")];
+      const board = box(document.querySelector(".dn-board"));
+      const under = box(document.querySelector(".dn-under"));
+      const hidden = keys.filter((k) => { const r = box(k); const at = document.elementFromPoint(r.left + r.width / 2, r.bottom - 3); return r.top < b.top - 0.5 || r.bottom > Math.min(tab.top, b.bottom) + 0.5 || r.left < 0 || r.right > innerWidth || !k.contains(at); });
+      const cut = tiles.filter((t) => { const r = box(t); return r.top < b.top - 0.5 || r.bottom > under.top + 0.5 || r.left < 0 || r.right > innerWidth; });
+      return {
+        keys: keys.length,
+        enterAndDelete: keys.some((k) => k.textContent === "Enter") && keys.some((k) => k.getAttribute("aria-label") === "Delete letter"),
+        hidden: hidden.map((k) => k.textContent).join(""),
+        cut: cut.length,
+        tiles: tiles.length,
+        scroll: body.scrollHeight - body.clientHeight,
+        tile: Math.round(box(tiles[0]).width),
+        keyW: Math.floor(Math.min(...keys.map((k) => box(k).width))),
+        keyH: Math.floor(Math.min(...keys.map((k) => box(k).height))),
+        spare: Math.round(tab.top - kb.bottom),
+        overlap: Math.max(0, Math.round(board.bottom - under.top)),
+        banner: !!document.querySelector(".walk-banner"),
+        strip: !!document.querySelector(".release-test-strip"),
+      };
+    });
+
+  const open = async ([, w, hgt, top, bottom], { banner, scale, ownerTest }, length) => {
+    await h.cdp("Emulation.setSafeAreaInsetsOverride", { insets: { top, bottom } });
+    await h.evaluate((b, s, t) => {
+      localStorage.removeItem("daily-name-v1");
+      localStorage.setItem("daily-name-howto-v1", "1");
+      localStorage.setItem("app-text-scale", String(s));
+      if (b) sessionStorage.setItem("__dec", "1"); else sessionStorage.removeItem("__dec");
+      if (t) localStorage.setItem("feature-test-view-v1", "1");
+    }, !!banner, scale ?? 1, !!ownerTest);
+    await h.setViewport(w, hgt);
+    // Practice picks pool[floor(random * n)]: pin it to the first name of the wanted length.
+    const today = await h.evaluate(() => { const d = new Date(); const p = (x) => String(x).padStart(2, "0"); return `${d.getFullYear()}-${p(d.getMonth() + 1)}-${p(d.getDate())}`; });
+    const pool = answers.filter((a) => a.word !== dn.answerForPuzzle(dn.puzzleNumber(today)).word);
+    const i = pool.findIndex((a) => a.word.length === length);
+    await h.evaluate((x) => { Math.random = () => x; }, (i + 0.5) / pool.length);
+    await h.click({ css: ".mobile-tab", text: "Games" });
+    await h.click({ css: ".game-center-card", text: "Daily Name" });
+    await h.click({ css: ".game-entry-card", text: "Play solo" });
+    await h.click({ css: ".game-entry-card", text: "Practice" });
+    await h.waitFor(".dn-board");
+    await h.sleep(150);
+    return pool[i].word;
+  };
+
+  const fits = (m) => m.keys === 28 && m.enterAndDelete && !m.hidden && !m.cut && m.tiles > 0 && m.scroll <= 0 && !m.overlap && m.keyH >= 40 && m.keyW >= 28 && m.tile >= 20;
+  const line = (m) => `tile ${m.tile}px, keys ${m.keyW}x${m.keyH}, ${m.spare}px under the keyboard${fits(m) ? "" : " " + JSON.stringify(m)}`;
+
+  for (const banner of [false, true]) {
+    for (const size of SIZES) {
+      h.section(`Fit — ${size[0]} ${size[1]}x${size[2]} insets ${size[3]}/${size[4]}${banner ? " + seasonal walk banner" : ""}`);
+      for (const length of [4, 5, 6, 7, 8, 9]) {
+        const word = await open(size, { banner }, length);
+        const m = await measure();
+        h.assert(fits(m) && m.banner === banner && m.tiles === 6 * length, `${length} letters, empty: ${line(m)}`);
+        if (length === 5 || length === 9) {
+          // The worst case under the board: the longest refusal, then a board with guesses on it.
+          await keyWord("Z".repeat(length));
+          const refused = await measure();
+          h.assert(fits(refused), `${length} letters, refusal message showing: ${line(refused)}`);
+          await h.screenshot(`daily-name-fit-${size[0]}-${length}${banner ? "-banner" : ""}.png`);
+          for (let i = 0; i < length; i++) await key("Backspace");
+          const guesses = data.DAILY_NAME_GUESSES.split(" ").filter((w) => w.length === length && w !== word).slice(0, 5);
+          for (const w of guesses) await keyWord(w);
+          const full = await measure();
+          h.assert(fits(full), `${length} letters, five guesses made: ${line(full)}`);
+          await h.screenshot(`daily-name-fit-${size[0]}-${length}-played${banner ? "-banner" : ""}.png`);
+        }
+      }
+      // How to play on the same screen: its button pinned in view.
+      await h.click(".how-open");
+      await h.waitFor(".how-close");
+      const shown = await h.evaluate(() => { const b = document.querySelector(".how-close").getBoundingClientRect(); const body = document.querySelector(".how-body"); return { button: b.bottom <= document.querySelector(".mobile-tab-bar").getBoundingClientRect().top + 0.5, scroll: body.scrollHeight - body.clientHeight }; });
+      h.assert(shown.button, `How to play button in view (panel scrolls ${shown.scroll}px)`);
+      await h.screenshot(`daily-name-help-${size[0]}${banner ? "-banner" : ""}.png`);
+    }
+  }
+
+  // Large text: whatever else gives way, every key stays on screen above the tab bar.
+  for (const scale of [1.3, 1.45, 1.8]) {
+    for (const size of [SIZES[0], SIZES[2], SIZES[4]]) {
+      h.section(`Large text ${scale} — ${size[0]} + seasonal walk banner`);
+      for (const length of [5, 9]) {
+        await open(size, { scale, banner: true }, length);
+        const m = await measure();
+        h.assert(m.keys === 28 && !m.hidden && m.keyH >= 40, `${length} letters: whole keyboard in view; tile ${m.tile}px, page scrolls ${m.scroll}px`);
+        await h.screenshot(`daily-name-large-${scale}-${size[0]}-${length}.png`);
+        await keyWord("Z".repeat(length));
+        const r = await measure();
+        h.assert(!r.hidden, `${length} letters with a refusal showing: keyboard still in view (scrolls ${r.scroll}px)`);
+      }
+      const header = await h.evaluate(() => { const b = document.querySelector(".how-open").getBoundingClientRect(); return b.right <= innerWidth && b.width > 0; });
+      h.assert(header, "How to play button on screen");
+    }
+  }
+
+  // The owner in Test view also carries the orange strip under the header.
+  await h.evaluate(() => { localStorage.setItem("app-text-scale", "1"); });
+  await h.asPersona("owner");
+  for (const size of [SIZES[0], SIZES[4]]) {
+    h.section(`Owner in Test view — ${size[0]}`);
+    await open(size, { ownerTest: true }, 9);
+    const m = await measure();
+    h.assert(m.strip && m.keys === 28 && !m.hidden, `strip showing (${m.strip}); whole keyboard in view; tile ${m.tile}px, scrolls ${m.scroll}px`);
+    await h.screenshot(`daily-name-owner-${size[0]}.png`);
+  }
+  await h.cdp("Emulation.setSafeAreaInsetsOverride", { insets: {} });
 }

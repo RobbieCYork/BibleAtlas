@@ -2,7 +2,9 @@
  * 20 Questions, played from the real built app: a WIN in People, a LOSS in Places (all twenty
  * questions, then a wrong last guess), a win in Things after a wrong guess (which must cost one
  * question), Surprise me, the search and the category chips, answers checked against the data
- * module, the reveal's verse and article link, and the device record. Run at both widths:
+ * module, the reveal's verse and article link, and the device record. Also How to play (shown once
+ * before the first board, reopened by its button) and, on a phone run, that the main controls sit
+ * above the tab bar at several phone sizes with safe-area insets. Run at both widths:
  *   node scripts/signed-in-harness/run.mjs --persona member --viewport 390x844 --script scripts/signed-in-harness/examples/twenty-questions.mjs
  *   node scripts/signed-in-harness/run.mjs --persona member --viewport 1280x800 --script scripts/signed-in-harness/examples/twenty-questions.mjs
  * The secret is chosen with Math.random, which is pinned here so the answer is known.
@@ -88,7 +90,7 @@ export default async function (h) {
 
   // ---------------------------------------------------------------- People: WIN
   h.section(`People — win (${dev})`);
-  await h.evaluate(() => localStorage.removeItem("twenty-questions-v1"));
+  await h.evaluate(() => { localStorage.removeItem("twenty-questions-v1"); localStorage.removeItem("twenty-questions-howto-v1"); });
   await toMenu(0);
   const entry = await h.evaluate(() => [...document.querySelectorAll(".game-entry-card .game-center-card-title")].map((e) => e.textContent.trim()));
   h.assert(entry.length === 0, "category screen (Play solo already chosen)");
@@ -96,7 +98,19 @@ export default async function (h) {
   const cats = await h.evaluate(() => [...document.querySelectorAll(".game-level-option .game-center-card-title")].map((e) => e.textContent));
   h.assert(JSON.stringify(cats) === JSON.stringify(["People", "Places", "Things", "Surprise me"]), `categories: ${cats.join(", ")}`);
   await sound("menu");
-  await startCat("people");
+  await h.click('input[name="tq-category"][value="people"]');
+  await h.click(".game-start-button");
+  await h.waitFor(".how-panel");
+  h.assert(!(await h.exists(".tq-hud")), "first time: How to play comes before the board");
+  const helpText = await h.text(".how-panel");
+  h.assert(/secret person, place or thing/.test(helpText) && /Make a guess/.test(helpText) && /costs one question/.test(helpText) && /one last guess/.test(helpText), "it explains asking, guessing, the cost and the last guess");
+  const chips = await h.evaluate(() => [...document.querySelectorAll(".how-marks .tq-answer")].map((e) => e.textContent.trim()));
+  h.assert(JSON.stringify(chips) === JSON.stringify(["✓ Yes", "✕ No", "– Not stated"]), `answers shown with mark and word: ${chips.join(", ")}`);
+  const startShown = await h.evaluate(() => { const b = document.querySelector(".how-close").getBoundingClientRect(); const tab = document.querySelector(".mobile-tab-bar")?.getBoundingClientRect(); return b.top > 0 && b.bottom <= (tab ? tab.top : innerHeight) + 0.5; });
+  h.assert(startShown && (await h.text(".how-close")) === "Start playing", "Start playing is on screen without scrolling");
+  await sound("how-to-play");
+  await h.click(".how-close");
+  await h.waitFor(".tq-hud");
   const people = tq.TQ_SETS.people;
   const secret = people.entries[0]; // Math.random() = 0
   h.assert((await left()) === "20 of 20 questions left", `starts with 20 (${await left()})`);
@@ -125,6 +139,12 @@ export default async function (h) {
   const fam = await h.evaluate(() => [...document.querySelectorAll(".tq-question-group")].map((e) => e.textContent));
   h.assert(fam.length > 0 && fam.every((g) => g === "Family"), `Family chip shows only Family questions (${fam.length})`);
   await sound("people-asked");
+  await h.click(".how-open");
+  await h.waitFor(".how-panel");
+  h.assert((await h.text(".how-close")) === "Back to the game", "How to play reopens it mid-game");
+  await h.click(".how-close");
+  await h.waitFor(".tq-hud");
+  h.assert((await left()) === "15 of 20 questions left" && (await h.evaluate(() => document.querySelector(".tq-chip.is-selected").textContent)) === "Family", "the game is as it was left");
   await guess(secret.name);
   await h.waitFor(".tq-reveal");
   h.assert((await h.text(".tq-reveal h3")) === "Got it, with 5 of 20 questions used!", `win: "${await h.text(".tq-reveal h3")}"`);
@@ -142,6 +162,7 @@ export default async function (h) {
   const pSecret = places.entries[0];
   await toMenu(0);
   await startCat("places");
+  h.assert(!(await h.exists(".how-panel")), "How to play does not come back by itself");
   const twenty = places.questions.slice(0, 20);
   for (const q of twenty) await askText(q.text);
   const answers = await h.evaluate(() => [...document.querySelectorAll(".tq-turn .tq-answer")].map((e) => e.textContent.replace(/[✓✕–]/g, "").trim()));
@@ -189,4 +210,50 @@ export default async function (h) {
   const rows = await h.evaluate(() => [...document.querySelectorAll(".tq-stats-table tbody tr")].map((r) => [...r.children].map((c) => c.textContent)));
   h.assert(JSON.stringify(rows) === JSON.stringify([["People", "1", "1", "5"], ["Places", "0", "1", "—"], ["Things", "1", "1", "2"]]), `record: ${JSON.stringify(rows)}`);
   await sound("record");
+
+  if (phone) await fit();
+
+  /** The main controls above the tab bar: Make a guess and the question search on opening, and the
+   * guess card's buttons once it is open (early, after ten turns, and on the last chance). */
+  async function fit() {
+    const inView = (sels) => h.evaluate((list) => {
+      const body = document.querySelector(".game-mode .game-body").getBoundingClientRect();
+      const bottom = Math.min(body.bottom, document.querySelector(".mobile-tab-bar").getBoundingClientRect().top);
+      return list.filter((q) => { const el = document.querySelector(q); if (!el) return true; const r = el.getBoundingClientRect(); return r.top < body.top - 0.5 || r.bottom > bottom + 0.5; });
+    }, sels);
+    for (const [name, w, hgt, top, bottom] of [["se", 375, 667, 0, 0], ["se-standalone", 375, 667, 20, 0], ["iphone-standalone", 390, 844, 47, 34], ["iphone-safari", 390, 700, 0, 0], ["iphone-short-insets", 390, 700, 47, 34]]) {
+      h.section(`Fit — ${name} ${w}x${hgt} insets ${top}/${bottom}`);
+      await h.cdp("Emulation.setSafeAreaInsetsOverride", { insets: { top, bottom } });
+      await h.setViewport(w, hgt);
+      await toMenu(0);
+      await startCat("people");
+      let out = await inView([".tq-hud", ".tq-guess-open", ".tq-ask .tq-search"]);
+      h.assert(!out.length, `on opening: count, Make a guess and the question search in view ${out.join(" ")}`);
+      await h.screenshot(`twenty-questions-fit-${name}-start.png`);
+      await h.click(".tq-guess-open");
+      await h.sleep(200);
+      const buttons = [".tq-guess .tq-search", ".tq-guess-actions .games-primary-button", ".tq-guess-actions .games-secondary-button"];
+      out = await inView(buttons);
+      h.assert(!out.length, `guess card: search, Guess and Keep asking in view ${out.join(" ")}`);
+      await h.screenshot(`twenty-questions-fit-${name}-guess.png`);
+      await h.click(".tq-guess-actions .games-secondary-button");
+      for (const q of tq.TQ_SETS.people.questions.slice(0, 10)) await askText(q.text);
+      await h.click(".tq-guess-open");
+      await h.sleep(200);
+      out = await inView(buttons);
+      h.assert(!out.length, `after ten questions, opening the guess card brings its buttons into view ${out.join(" ")}`);
+      await h.click(".tq-guess-actions .games-secondary-button");
+      for (const q of tq.TQ_SETS.people.questions.slice(10, 20)) await askText(q.text);
+      await h.sleep(200);
+      out = await inView([".tq-guess .tq-search", ".tq-guess-actions .games-primary-button"]);
+      h.assert(!out.length, `last chance: search and Guess in view ${out.join(" ")}`);
+      await h.screenshot(`twenty-questions-fit-${name}-last.png`);
+      await h.click(".how-open");
+      await h.waitFor(".how-close");
+      out = await inView([".how-close"]);
+      h.assert(!out.length, "How to play button in view");
+      await h.screenshot(`twenty-questions-help-${name}.png`);
+    }
+    await h.cdp("Emulation.setSafeAreaInsetsOverride", { insets: {} });
+  }
 }
