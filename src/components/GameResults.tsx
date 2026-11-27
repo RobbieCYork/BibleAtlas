@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import { fetchTopHighScores, type GameRoom, type GamePlayer, type GameHighScore } from "../lib/gameSupabase";
 import Icon from "./Icon";
+import { ResultsScoreList, ResultsWinnerPictures } from "./GameResultsStandings";
+import { useFinalStandings } from "../hooks/useFinalStandings";
 
 interface GameResultsProps {
   room: GameRoom;
@@ -12,11 +14,7 @@ interface GameResultsProps {
  * this game's own result may have just landed a new entry on it via check_and_advance()). */
 export default function GameResults({ room, players, onPlayAgain }: GameResultsProps) {
   const [highScores, setHighScores] = useState<GameHighScore[] | null>(null);
-  const ranked = [...players].sort((a, b) => b.score - a.score);
-  // A round that runs out of questions with the lead shared ends with no winner_id (check_and_advance,
-  // sql/005) — say so rather than naming whichever tied player happens to sort first.
-  const tied = !room.winner_id && ranked.length > 1 && ranked[0].score === ranked[1].score;
-  const winner = tied ? undefined : room.winner_id ? players.find((p) => p.user_id === room.winner_id) : ranked[0];
+  const { ranked, multiplayer, tied, winner, winners, pictures } = useFinalStandings(players, room.winner_id);
 
   useEffect(() => {
     fetchTopHighScores(5)
@@ -27,23 +25,17 @@ export default function GameResults({ room, players, onPlayAgain }: GameResultsP
   return (
     <div className="game-results">
       <div className="game-results-banner">
-        <p className="game-results-trophy"><Icon name="trophy" /></p>
+        {multiplayer && winners.length > 0 ? (
+          <ResultsWinnerPictures winners={winners} pictures={pictures} />
+        ) : (
+          <p className="game-results-trophy"><Icon name="trophy" /></p>
+        )}
         <h2>{winner ? `${winner.display_name} wins!` : tied ? "It's a tie!" : "Game over"}</h2>
         {winner && <p className="game-results-score">{winner.score} points</p>}
         {tied && <p className="game-results-score">{ranked[0].score} points each</p>}
       </div>
 
-      <div className="game-results-scores">
-        <h3>Final Scores</h3>
-        <ol>
-          {ranked.map((p) => (
-            <li key={p.user_id} className={p.user_id === room.winner_id ? "game-results-winner-row" : ""}>
-              <span>{p.display_name}</span>
-              <span>{p.score}</span>
-            </li>
-          ))}
-        </ol>
-      </div>
+      <ResultsScoreList ranked={ranked} winners={winners} pictures={pictures} showPictures={multiplayer} />
 
       <div className="games-high-scores">
         <h3><Icon name="trophy" inline /> Top 5 High Scores</h3>

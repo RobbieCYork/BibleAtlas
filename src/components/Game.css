@@ -844,7 +844,9 @@
 }
 
 .game-results-banner {
+  max-width: 100%;
   text-align: center;
+  overflow-wrap: anywhere;
 }
 
 .game-results-trophy {
@@ -883,6 +885,76 @@
 .game-results-winner-row {
   color: var(--accent);
   font-weight: 700;
+}
+
+/* Winner pictures (multiplayer). The .game-results prefix outranks the skins' own .auth-avatar size. */
+.game-results-winners {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 16px;
+  margin-bottom: 10px;
+}
+
+.game-results-winner {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+}
+
+.game-results .auth-avatar.game-results-avatar-winner {
+  width: 112px;
+  height: 112px;
+  font-size: calc(44px * var(--tsz, 1));
+}
+
+.game-results .auth-avatar.game-results-avatar-tied {
+  width: 76px;
+  height: 76px;
+  font-size: calc(30px * var(--tsz, 1));
+}
+
+.game-results-badge {
+  position: absolute;
+  right: -8px;
+  bottom: -4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  border: 2px solid var(--accent);
+  background: var(--panel-bg);
+  font-size: 20px;
+}
+
+.game-results-winner-name {
+  max-width: 96px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: calc(13px * var(--tsz, 1));
+}
+
+.game-results-scores li .game-results-player {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.game-results-scores li:has(.game-results-player) {
+  align-items: center;
+}
+
+.game-results .auth-avatar.game-results-avatar-row {
+  width: 28px;
+  height: 28px;
+  font-size: calc(12px * var(--tsz, 1));
 }
 
 /* --- Video chat (GameVideoStrip) --- */
