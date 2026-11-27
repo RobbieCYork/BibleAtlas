@@ -175,7 +175,7 @@ export default async (h) => {
     h.assert(!opened, `${persona} has no Admin Console`);
   } else {
     h.assert(opened, "Admin Console opens");
-    await h.click({ css: '[aria-label="Admin sections"] [role=tab]', text: "Reports" });
+    await h.click({ css: '[aria-label="Admin sections"] [role=tab]', text: "Problem reports" });
     await h.waitFor(".report-category-tabs"); await h.sleep(900);
     const tabs = () => h.evaluate(() => [...document.querySelectorAll(".report-category-tab")].map((t) => t.innerText.replace(/\s+/g, " ").trim()));
     let t = await tabs();

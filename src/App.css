@@ -14365,3 +14365,182 @@ img.sn-image,
 .admin-about-version button {
   min-height: 36px;
 }
+
+/* ============================================================================
+ * USAGE REPORTS (UsageReportsPanel) and the Users tab's Registered accounts card.
+ * Graphs first: one card per metric, chart always drawn. One column on a phone,
+ * two once there is room for two ~420px charts side by side. Every colour is a
+ * theme token, so light and dark (and the skins) move with the theme.
+ * ========================================================================== */
+.usage-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  min-width: 0;
+}
+
+.usage-controls {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.usage-range-picker {
+  flex-wrap: wrap;
+}
+
+.usage-range-picker button {
+  min-height: 32px;
+}
+
+.usage-toggles {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 16px;
+}
+
+.usage-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 32px;
+  font-size: calc(12px * var(--tsz, 1));
+  color: var(--text);
+  cursor: pointer;
+}
+
+.usage-toggle-off {
+  color: var(--text-muted);
+  cursor: not-allowed;
+}
+
+.usage-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 12px;
+  transition: opacity 120ms ease;
+}
+
+@media (min-width: 960px) {
+  .usage-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+.usage-card {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  min-width: 0;
+  padding: 12px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: var(--surface-sunken);
+}
+
+.usage-card-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 4px 12px;
+}
+
+.usage-card-title {
+  margin: 0;
+  font-family: var(--sans);
+  font-size: calc(14px * var(--tsz, 1));
+  font-weight: 600;
+  color: var(--text-h);
+}
+
+.usage-headline {
+  margin: 0;
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+  color: var(--text-muted);
+  font-size: calc(12px * var(--tsz, 1));
+}
+
+.usage-headline strong {
+  font-family: var(--display);
+  font-size: calc(26px * var(--tsz, 1));
+  line-height: 1;
+  color: var(--text-h);
+  font-variant-numeric: tabular-nums;
+}
+
+.usage-definition {
+  margin: 0;
+  font-size: calc(12px * var(--tsz, 1));
+  line-height: 1.45;
+  color: var(--text);
+}
+
+.usage-gap {
+  padding: 8px 10px;
+  border: 1px dashed var(--border-strong);
+  border-radius: 8px;
+}
+
+.usage-not-recorded {
+  color: var(--text-muted);
+  font-style: italic;
+}
+
+.usage-breakdown {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding-top: 8px;
+  border-top: 1px solid var(--border);
+}
+
+.usage-breakdown-heading {
+  margin: 0;
+  font-family: var(--sans);
+  font-size: calc(12px * var(--tsz, 1));
+  font-weight: 600;
+  color: var(--text-h);
+}
+
+.usage-breakdown-heading span {
+  font-weight: 400;
+  color: var(--text-muted);
+}
+
+.usage-breakdown-label {
+  max-width: 55%;
+}
+
+.usage-more {
+  padding: 10px 12px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+}
+
+.usage-more > summary {
+  font-size: calc(13px * var(--tsz, 1));
+  color: var(--text);
+  cursor: pointer;
+}
+
+.usage-more[open] > summary {
+  margin-bottom: 12px;
+}
+
+.admin-registered-card {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 12px;
+  border: 1px solid var(--border-strong);
+  border-radius: 10px;
+  background: var(--panel-bg);
+}
+
+.admin-guest-explain {
+  font-size: calc(12px * var(--tsz, 1));
+  color: var(--text);
+}
