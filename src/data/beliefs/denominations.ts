@@ -35,15 +35,15 @@ export const christianTraditions: BeliefRecord[] = [
       place: "Jerusalem and Rome",
     },
     adherents: {
-      figure: "about 1.42 billion (1,422,144,000)",
-      counts: "baptized Catholics, about 17.8% of the world's population",
+      figure: "about 1.42 billion",
+      counts: "baptized Catholics",
       year: "2024",
       source: {
         label: "Agenzia Fides, Catholic Church Statistics, from the Church's Statistical Yearbook",
         url: "https://www.fides.org/en/news/78290-Catholic_Church_Statistics_2026",
       },
       verified: true,
-      note: "Counts people baptized as Catholics, not weekly attenders.",
+      note: "The exact figure is 1,422,144,000, about 17.8% of the world's population. It counts people baptized as Catholics, not weekly attenders.",
     },
     distinctives: [
       "The Catholic Church holds that Christ gave Peter a unique office among the apostles and that this office continues in the Bishop of Rome. The Pope, together with the college of bishops, exercises the Church's teaching office, the Magisterium. The First Vatican Council (1870) defined that the Pope teaches infallibly when he solemnly defines a doctrine of faith or morals for the whole Church; this is a narrow claim about formal definitions, not a claim that every papal statement is free from error.",
@@ -101,6 +101,8 @@ export const christianTraditions: BeliefRecord[] = [
       "The Catholic and Eastern Orthodox churches separated gradually, with 1054 as the conventional date. In 1965 Pope Paul VI and Patriarch Athenagoras I lifted the mutual excommunications of 1054, while stating that this did not end the differences between them.",
       "With Protestants, the Catholic Church has pursued formal dialogue since the Second Vatican Council. In 1999 the Catholic Church and the Lutheran World Federation signed the Joint Declaration on the Doctrine of Justification, which states a shared understanding of basic truths about justification and says the sixteenth-century condemnations do not apply to the teaching it sets out.",
     ],
+    evangelicalFraming:
+      "This article is written from a Protestant evangelical Christian position. Evangelicals and Catholics confess together the faith of the historic creeds — the Trinity, the incarnation, the atoning death and bodily resurrection of Christ — and on that faith Catholics are fellow confessors. The disagreements of the Reformation are nevertheless real and unresolved: evangelicals hold that Scripture alone is the final authority over the church and that sinners are justified by faith alone, and they do not accept the papacy's claims, the Mass as a sacrifice, the later Marian dogmas or purgatory. Catholic teaching is described first in the Church's own terms, and Catholics are given their reply at the end.",
     evangelicalView: {
       agreements: [
         "Evangelicals and Catholics confess together the Trinity, the full deity and humanity of Christ, his virgin birth, atoning death, bodily resurrection and return, and the inspiration of Scripture. These are the convictions of the historic creeds, and on them Catholics are fellow confessors of the faith.",
@@ -115,6 +117,7 @@ export const christianTraditions: BeliefRecord[] = [
         "Evangelicals differ on how to relate to Catholics. Some, as in the 1994 statement Evangelicals and Catholics Together, emphasise common witness on shared convictions; others hold that the disagreement over justification is so basic that such statements blur the gospel. Many evangelicals also distinguish official Catholic teaching from the personal faith of individual Catholics.",
       ],
     },
+    answeredBy: "Catholics",
     ownAnswer: [
       "Catholics answer that Scripture itself was received, collected and handed on by the Church, so that the Bible never stands apart from the community that carries it; sola Scriptura, they argue, is not itself taught in Scripture. They point to passages such as 2 Thessalonians 2:15 on holding to traditions taught by word or letter.",
       "On justification, Catholic teaching insists that salvation is entirely by grace and that the Church has never taught that anyone can earn it, citing Trent's own canons. Catholics read James 2:24 and Galatians 5:6 (faith working through love) as showing that the faith which justifies is never alone. They hold that the Mass does not repeat Calvary but makes the one sacrifice present, and that honour given to Mary always points to her Son.",
@@ -133,7 +136,7 @@ export const christianTraditions: BeliefRecord[] = [
   {
     id: "eastern-orthodoxy",
     name: "Eastern Orthodox Church",
-    alternateNames: ["Orthodox Church", "Eastern Orthodoxy", "Greek Orthodox", "Russian Orthodox"],
+    alternateNames: ["Orthodox Church", "Eastern Orthodoxy", "Orthodox Christianity"],
     area: "christian-tradition",
     group: "Catholic and Orthodox churches",
     role: "Communion of self-governing Orthodox churches",
@@ -152,13 +155,13 @@ export const christianTraditions: BeliefRecord[] = [
     adherents: {
       figure: "nearly 260 million",
       counts: "Orthodox Christians worldwide",
-      year: "2010 estimate (published 2017)",
+      year: "2010 estimate, published 2017",
       source: {
         label: "Pew Research Center, Orthodox Christianity in the 21st Century (2017)",
         url: "https://www.pewresearch.org/religion/2017/11/08/orthodox-christianity-in-the-21st-century/",
       },
       verified: true,
-      note: "Pew's Orthodox category also counts the Oriental Orthodox churches, such as the Ethiopian and Coptic churches, which are not in communion with the Eastern Orthodox; Pew puts them at roughly a fifth of its worldwide Orthodox total, so the Eastern Orthodox figure is smaller. A newer worldwide estimate was not found.",
+      note: "Pew's Orthodox category also counts the Oriental Orthodox churches, such as the Ethiopian and Coptic churches, which are not in communion with the Eastern Orthodox; Pew puts them at roughly a fifth of its worldwide Orthodox total, so the Eastern Orthodox figure is smaller. The Ethiopian Orthodox Tewahedo Church alone has an estimated 36 million members.",
     },
     distinctives: [
       "Orthodoxy is held together by shared faith and sacraments rather than by a single central government. Each autocephalous (self-governing) church has its own head, and the Ecumenical Patriarch of Constantinople holds a primacy of honour as first among equals, without authority to rule the other churches.",
@@ -186,6 +189,8 @@ export const christianTraditions: BeliefRecord[] = [
       "The Oriental Orthodox churches (Coptic, Ethiopian, Armenian, Syriac and others) separated from the Eastern Orthodox after the Council of Chalcedon in 451. Modern theological dialogues between the two families have concluded that much of the difference over the person of Christ was one of terminology, though full communion has not been restored.",
       "With Rome, the mutual excommunications of 1054 were lifted in 1965, and official dialogue continues; the papacy remains the central disagreement. With Protestants, Orthodox churches take part in ecumenical bodies such as the World Council of Churches, and some former evangelicals have joined Orthodox parishes in North America.",
     ],
+    evangelicalFraming:
+      "This article is written from a Protestant evangelical Christian position. Evangelicals share with the Orthodox the faith of the Nicene Creed and the early councils, and value the Orthodox stress on union with the living Christ. They differ on authority, holding Scripture alone to be the final rule over all tradition, on justification by faith alone, and on the veneration of icons and saints and the place of the sacraments in salvation. Orthodox teaching is described first in its own terms, and the Orthodox are given their reply at the end.",
     evangelicalView: {
       agreements: [
         "Evangelicals share with the Orthodox the faith of the Nicene Creed and the definitions of the early councils on the Trinity and the person of Christ, which evangelicals receive as faithful summaries of Scripture. The Orthodox insistence that salvation is union with the living Christ, and their reverence for Scripture in worship, are common ground.",
@@ -198,6 +203,7 @@ export const christianTraditions: BeliefRecord[] = [
         "Some evangelical theologians find the Orthodox language of union with Christ and participation in God close to biblical themes (2 Peter 1:4) and to the Reformers' own teaching on union with Christ; others judge that it obscures justification. Evangelicals also differ on whether icons are always forbidden by the second commandment or only when they are venerated.",
       ],
     },
+    answeredBy: "Orthodox Christians",
     ownAnswer: [
       "The Orthodox answer that Scripture was written, recognised and interpreted within the worshipping Church, and that setting Scripture against Tradition divides what the Holy Spirit has kept together. They point out that the canon of Scripture itself was settled by the Church's tradition.",
       "They would add that the legal framework of Western debates about justification is too narrow, not false so much as partial: the gospel is that God became man so that man might share the life of God. On icons, they answer that the incarnation changed the second commandment's situation, because the invisible God has made himself visible in Christ.",
@@ -215,7 +221,7 @@ export const christianTraditions: BeliefRecord[] = [
   {
     id: "anglicanism",
     name: "Anglicanism",
-    alternateNames: ["Anglican Communion", "Church of England", "Anglican Church"],
+    alternateNames: ["Anglican Communion", "Anglican Church", "Anglicans"],
     area: "christian-tradition",
     group: "Reformation churches",
     role: "Worldwide communion of churches descended from the Church of England",
@@ -234,14 +240,14 @@ export const christianTraditions: BeliefRecord[] = [
     },
     adherents: {
       figure: "around 85 million",
-      counts: "members of the churches of the Anglican Communion, partly estimated from attendance and measured differently by each church",
+      counts: "Anglicans in the churches of the Anglican Communion — a best estimate built from member churches' own figures, figures given to the World Council of Churches and the Atlas of Global Christianity",
       year: "2015",
       source: {
         label: "Anglican Communion Office, Anglican Communion Q&A (2015)",
         url: "https://anglicancommunion.org/wp-content/uploads/2026/02/Anglican-Communion-QA-2015.pdf",
       },
       verified: true,
-      note: "This is the latest figure the Communion has published in a document that could be checked; its own Q&A calls it a best estimate, built from figures each church measures differently. The number of member churches has grown since 2015. Churches outside the Communion, such as the Anglican Church in North America, are not counted.",
+      note: "This is the most recent worldwide figure in the Communion's own published Q&A, which calls it a best estimate. The number of member churches has grown since 2015. Churches outside the Communion, such as the Anglican Church in North America, are not counted.",
     },
     distinctives: [
       "Anglicanism is defined less by a single founding confession than by its prayer book. The Book of Common Prayer, first issued under Thomas Cranmer in 1549 and revised in 1552 and 1662, shaped worship and doctrine across the English-speaking world, and the principle that the church's belief is expressed in its prayer is often summarised in the Latin phrase lex orandi, lex credendi.",
@@ -268,6 +274,8 @@ export const christianTraditions: BeliefRecord[] = [
       "The Episcopal Church in the United States is the Communion's American province. Anglicans have entered full communion with several Lutheran churches, including the Porvoo agreement between British and Irish Anglican churches and Nordic and Baltic Lutheran churches.",
       "Methodism began as a renewal movement inside the Church of England under John Wesley and Charles Wesley, both Anglican priests.",
     ],
+    evangelicalFraming:
+      "This article is written from a Protestant evangelical Christian position. Anglicanism is, in its founding documents, a Reformation church: its Thirty-Nine Articles teach the supremacy of Scripture and justification by faith alone, and evangelicals have been part of it since the eighteenth-century revival. The evangelical questions concern the breadth that now lets some provinces depart from those Articles, especially on marriage and sexuality, and, for Baptists and others, infant baptism and the necessity of bishops. Anglicanism is described first in its own terms, and Anglicans are given their reply at the end.",
     evangelicalView: {
       agreements: [
         "The Thirty-Nine Articles are a Reformation confession, and on Scripture's supremacy and justification by faith alone they say what evangelicals say. Evangelical Anglicans, from the eighteenth-century revival to the present, have been among the most influential evangelical voices in the world, and the prayer book's language of sin, grace and assurance is widely loved by evangelicals of other churches.",
@@ -280,6 +288,7 @@ export const christianTraditions: BeliefRecord[] = [
         "Evangelicals differ on church government: Anglican evangelicals defend episcopacy as ancient and wise, while Presbyterians and Baptists hold other forms to be more biblical. Evangelicals also differ on whether faithful Anglicans should stay in provinces they believe are in error or join realigned bodies such as the Anglican Church in North America.",
       ],
     },
+    answeredBy: "Anglicans",
     ownAnswer: [
       "Anglicans answer that their breadth is deliberate: the church requires agreement on the creeds and the essentials found in Scripture, and allows freedom where Scripture is not plain. Many would say that patience within one communion is itself a biblical calling (John 17:21).",
       "On bishops and infant baptism, Anglicans point to the church's practice from the earliest centuries and to the household baptisms of Acts, and hold that a reformed church need not discard what is ancient unless Scripture forbids it.",
@@ -288,7 +297,7 @@ export const christianTraditions: BeliefRecord[] = [
       { kind: "official", label: "Anglican Communion Q&A (2015)", url: "https://anglicancommunion.org/wp-content/uploads/2026/02/Anglican-Communion-QA-2015.pdf", note: "Anglican Communion Office" },
       { kind: "primary", label: "The Thirty-Nine Articles of Religion (Book of Common Prayer, 1863 printing)", url: "https://en.wikisource.org/wiki/Book_of_Common_Prayer_(1863)/Articles_of_Religion", note: "public-domain text on Wikisource" },
       { kind: "reference", label: "Library of Congress, In Custodia Legis: Today in History, Extinguishing the Pope's Power in England", url: "https://blogs.loc.gov/law/2017/07/today-in-history-extinguishing-the-popes-power-in-england/" },
-      { kind: "official", label: "Anglican Communion, Member churches", url: "https://www.anglicancommunion.org/member-churches/", note: "could not be loaded on 2026-11-26" },
+      { kind: "official", label: "Anglican Communion, Member churches", url: "https://www.anglicancommunion.org/member-churches/" },
     ],
     relatedIds: ["episcopal-church", "united-methodist-church", "catholicism", "lutheranism"],
   },
@@ -318,11 +327,11 @@ export const christianTraditions: BeliefRecord[] = [
       counts: "total members reported in the parochial reports; average in-person Sunday attendance was about 407,000",
       year: "2025",
       source: {
-        label: "General Convention Office, Parochial Report results",
-        url: "https://generalconvention.org/parochial-report-results/",
+        label: "The Christian Post, Episcopal Church membership has dropped by nearly 350K since 2015",
+        url: "https://www.christianpost.com/news/episcopal-church-membership-dropped-by-nearly-350k-since-2015.html",
       },
       verified: true,
-      note: "Rounded figures as reported from the church's analysis of its 2025 parochial reports (The Christian Post, October 2026); the exact totals are in the General Convention Office's downloadable reports. The 2024 report did not include a total membership count.",
+      note: "Rounded figures (about 1.425 million members) as reported from the church's own analysis of its 2025 parochial reports; the General Convention Office publishes the detailed tables. The 2024 report did not include a total membership count.",
     },
     distinctives: [
       "Episcopal worship follows the Book of Common Prayer, in the current American edition of 1979, and most parishes celebrate the Holy Eucharist every Sunday. Its catechism and the historical documents bound into the prayer book, including the Thirty-Nine Articles, are the church's main statements of belief.",
@@ -345,6 +354,8 @@ export const christianTraditions: BeliefRecord[] = [
     relationships: [
       "The Episcopal Church is in full communion with the Evangelical Lutheran Church in America (since 2001) and with the Moravian Church in America. Theologically conservative Episcopalians who left the church formed the Anglican Church in North America in 2009, which the Episcopal Church does not recognise as an Anglican province and which is aligned with GAFCON.",
     ],
+    evangelicalFraming:
+      "This article is written from a Protestant evangelical Christian position. Evangelicals recognise the historic faith in the Episcopal Church's prayer book and creeds, and there are evangelical Episcopal clergy and congregations. Most evangelicals believe, however, that the church's decisions on marriage and sexuality depart from Scripture, and many are concerned that it tolerates teaching against the creeds it prays; evangelicals are divided among themselves on its ordination of women. The church is described first in its own terms, and Episcopalians are given their reply at the end.",
     evangelicalView: {
       agreements: [
         "The church's prayer book, with its creeds, its Scripture readings and its prayers of confession and thanksgiving, sets out the historic faith in words evangelicals recognise, and there are evangelical Episcopal clergy and congregations.",
@@ -357,6 +368,7 @@ export const christianTraditions: BeliefRecord[] = [
         "Evangelicals are divided on women's ordination: complementarians hold that the office of pastor or elder is for qualified men, while egalitarian evangelicals ordain women. Evangelicals also differ on whether conservatives should stay in the Episcopal Church to witness within it or leave.",
       ],
     },
+    answeredBy: "Episcopalians",
     ownAnswer: [
       "Episcopalians answer that their decisions came from long study of Scripture, tradition and reason, and from a conviction that the gospel's welcome extends to all baptised people. They read Galatians 3:28 and the church's growing understanding over time, as in its earlier reconsideration of slavery, as reasons for their course.",
       "They would also say that the church still prays the creeds every Sunday and that its unity rests on common prayer and sacraments rather than on agreement on every contested question.",
@@ -393,10 +405,10 @@ export const christianTraditions: BeliefRecord[] = [
     adherents: {
       figure: "over 78 million",
       counts: "members of the 153 churches in the Lutheran World Federation, in 99 countries",
-      year: "2023 (LWF statistics)",
+      year: "current LWF figure",
       source: { label: "Lutheran World Federation, Member churches", url: "https://lutheranworld.org/member-churches" },
       verified: true,
-      note: "Not every Lutheran church belongs to the LWF. In the US, the Evangelical Lutheran Church in America reported 2,677,239 baptized members at the end of 2024 (ELCA statistics). The Lutheran Church-Missouri Synod is not an LWF member; no current membership total for it could be confirmed from an LCMS source, so none is given here.",
+      note: "Not every Lutheran church belongs to the LWF. In the US, the Evangelical Lutheran Church in America reported 2,677,239 baptized members at the end of 2024 (ELCA statistics). The Lutheran Church-Missouri Synod and other confessional churches of the International Lutheran Council are not LWF members and are not in this total.",
     },
     distinctives: [
       "Lutheran identity is confessional. The Book of Concord (1580) gathers the three ecumenical creeds, the Augsburg Confession (1530) and its Apology, the Smalcald Articles, the Treatise on the Power and Primacy of the Pope, Luther's Small and Large Catechisms and the Formula of Concord. Confessional Lutherans subscribe to these because, not merely insofar as, they agree with Scripture.",
@@ -406,7 +418,7 @@ export const christianTraditions: BeliefRecord[] = [
     beliefs: [
       { label: "God and Christ", statement: "The Trinity and the person of Christ as confessed in the Apostles', Nicene and Athanasian creeds." },
       { label: "Scripture", statement: "The prophetic and apostolic Scriptures are the only rule and norm by which all teachers and teachings are to be judged (Formula of Concord)." },
-      { label: "Justification", statement: "Human beings cannot be justified before God by their own strength or works, but are freely justified for Christ's sake through faith (Augsburg Confession, Article IV). This is called the article on which the church stands or falls." },
+      { label: "Justification", statement: "Human beings cannot be justified before God by their own strength or works, but are freely justified for Christ's sake through faith (Augsburg Confession, Article IV). Lutherans have long called it the article on which the church stands or falls." },
       { label: "Baptism", statement: "Baptism is necessary and is given to infants, in whom God works faith and new birth." },
       { label: "The Lord's Supper", statement: "The true body and blood of Christ are truly present and distributed to those who eat (Augsburg Confession, Article X)." },
       { label: "Vocation", statement: "Every Christian serves God in ordinary callings of family, work and citizenship, and all the baptised share the priesthood of believers." },
@@ -423,6 +435,8 @@ export const christianTraditions: BeliefRecord[] = [
       "In 1999 the Lutheran World Federation and the Catholic Church signed the Joint Declaration on the Doctrine of Justification; the LCMS and other confessional Lutherans did not accept it. The ELCA is in full communion with the Episcopal Church, the Presbyterian Church (U.S.A.), the Reformed Church in America, the United Church of Christ, the Moravian Church and the United Methodist Church.",
       "Lutherans and the Reformed share the Reformation's teaching on grace but divided early over the Lord's Supper, as at the Marburg Colloquy between Martin Luther and Huldrych Zwingli in 1529.",
     ],
+    evangelicalFraming:
+      "This article is written from a Protestant evangelical Christian position. The Reformation began with Lutheranism, and evangelicals owe their teaching on justification by faith alone to Martin Luther. Evangelicals of other traditions differ from Lutherans on baptism and the Lord's Supper, and many share the concern of confessional Lutherans about the more liberal Lutheran bodies. Lutheran teaching is described first in its own terms, and Lutherans are given their reply at the end.",
     evangelicalView: {
       agreements: [
         "Evangelicals owe the recovery of justification by faith alone to Martin Luther, and the Augsburg Confession's article on justification states what evangelicals of every church believe. Confessional Lutherans share evangelicals' commitment to the authority of Scripture.",
@@ -435,6 +449,7 @@ export const christianTraditions: BeliefRecord[] = [
         "Within evangelicalism, Lutheran, Reformed and Baptist believers have never agreed on the sacraments, and some evangelicals consider confessional Lutherans part of the evangelical family while many Lutherans prefer not to use the American term evangelical of themselves.",
       ],
     },
+    answeredBy: "Lutherans",
     ownAnswer: [
       "Lutherans answer that their sacramental teaching is simply taking Christ's words at face value: This is my body (Matthew 26:26), and that baptism now saves you (1 Peter 3:21). They hold that the sacraments are not human works but the gospel itself, given in water, bread and wine, so that faith clings to God's promise rather than to its own sincerity.",
     ],
@@ -452,7 +467,7 @@ export const christianTraditions: BeliefRecord[] = [
   {
     id: "presbyterianism",
     name: "Presbyterianism",
-    alternateNames: ["Presbyterian Church", "Presbyterians", "Reformed churches"],
+    alternateNames: ["Presbyterian Church", "Presbyterians"],
     area: "christian-tradition",
     group: "Reformation churches",
     role: "Reformed Protestant tradition governed by elders",
@@ -470,13 +485,13 @@ export const christianTraditions: BeliefRecord[] = [
     adherents: {
       figure: "1,019,003 in the Presbyterian Church (U.S.A.); 400,751 in the Presbyterian Church in America",
       counts: "reported members of the two largest US Presbyterian bodies",
-      year: "2025 (PC(USA)); 2024 (PCA)",
+      year: "2025 for the PC(USA), 2024 for the PCA",
       source: {
         label: "Presbyterian News Service, PC(USA) still home to more than 1 million members (June 2026)",
         url: "https://pcusa.org/news-storytelling/news/2026/6/29/pcusa-still-home-more-1-million-members",
       },
       verified: true,
-      note: "PCA figure from byFaith, New statistics reveal PCA's growth in 2024. No worldwide Presbyterian total was confirmed from a primary source.",
+      note: "PCA figure from byFaith, New statistics reveal PCA's growth in 2024. These are US figures only; Presbyterian and Reformed churches elsewhere are counted separately and are not totalled here.",
     },
     distinctives: [
       "Presbyterian government is by presbyters. Each congregation is led by a session, made up of its ruling elder members and its pastor (a teaching elder); congregations are joined in a presbytery, presbyteries in synods, and the whole church in a general assembly. Authority lies in these representative courts rather than in a bishop or in the single congregation.",
@@ -502,6 +517,8 @@ export const christianTraditions: BeliefRecord[] = [
     relationships: [
       "Presbyterians are one branch of the wider Reformed family, which also includes the Dutch and continental Reformed churches and Congregationalists. The PC(USA) is in full communion with the ELCA and several other churches under the 1997 Formula of Agreement.",
     ],
+    evangelicalFraming:
+      "This article is written from a Protestant evangelical Christian position. Presbyterianism is one of the historic homes of evangelical theology, and its Westminster Standards have taught generations of evangelicals. Where evangelicals disagree among themselves — on predestination, infant baptism and church government — Presbyterians hold one side, and this article says so; separately, many evangelicals and conservative Presbyterians believe the largest US Presbyterian body has moved away from Scripture's authority. Presbyterian teaching is described first in its own terms, and Presbyterians are given their reply at the end.",
     evangelicalView: {
       agreements: [
         "The Westminster Standards are among the most thorough statements of Reformation teaching on Scripture and salvation ever written, and many evangelicals of other churches learned their theology from them. Conservative Presbyterian bodies such as the PCA are firmly within evangelicalism.",
@@ -514,6 +531,7 @@ export const christianTraditions: BeliefRecord[] = [
         "Calvinist and Arminian evangelicals have disagreed about predestination since the seventeenth century, and both positions are held by faithful evangelicals. Evangelicals also differ on church government and on the regulative principle of worship.",
       ],
     },
+    answeredBy: "Presbyterians",
     ownAnswer: [
       "Presbyterians answer that predestination is not a speculation but a comfort, the assurance that salvation rests wholly on God's grace (Ephesians 1:4-5; Romans 8:29-30). On infant baptism they argue that the New Testament keeps the Old Testament's pattern of including children in the covenant (Acts 2:39) and that household baptisms in Acts point the same way.",
     ],
@@ -578,6 +596,8 @@ export const christianTraditions: BeliefRecord[] = [
     relationships: [
       "Nazarenes belong to the Holiness movement that came out of nineteenth-century Methodism, alongside the Wesleyan Church, the Free Methodist Church and the Salvation Army. The church is a member of the National Association of Evangelicals in the United States.",
     ],
+    evangelicalFraming:
+      "This article is written from a Protestant evangelical Christian position. The denomination is itself an evangelical church, so the differences described here are disagreements within the evangelical family rather than across its boundary — chiefly the Wesleyan-Holiness teaching on entire sanctification as a second work of grace, and the Wesleyan view that a true believer can fall away. The church is described first in its own terms, and Nazarenes are given their reply at the end.",
     evangelicalView: {
       agreements: [
         "This denomination is an evangelical church. It confesses the Trinity, the authority of Scripture, salvation by grace through faith in Christ, and a call to holy living that all evangelicals share (Hebrews 12:14).",
@@ -589,6 +609,7 @@ export const christianTraditions: BeliefRecord[] = [
         "This is a disagreement within evangelicalism. Reformed evangelicals hold that true believers will persevere to the end, while Wesleyan evangelicals such as the Nazarenes hold that a believer can fall away; both cite Scripture, and both are evangelical positions.",
       ],
     },
+    answeredBy: "Nazarenes",
     ownAnswer: [
       "Nazarenes answer that Scripture commands and promises holiness (1 Thessalonians 5:23; Matthew 5:48), and that God would not command what his grace cannot accomplish. They stress that entire sanctification is about love, not about a claim never to sin, and that John Wesley taught the same.",
     ],
@@ -631,7 +652,7 @@ export const christianTraditions: BeliefRecord[] = [
         url: "https://thebaptistpaper.org/annual-church-profile-amid-falling-membership-in-sbc-baptisms-increase-for-5th-consecutive-year/",
       },
       verified: true,
-      note: "Reported from the SBC's Annual Church Profile; the Baptist Press page could not be loaded. Membership rolls are larger than weekly attendance.",
+      note: "Reported from the SBC's Annual Church Profile; membership fell by more than 3% from 2024. Membership rolls are larger than weekly attendance.",
     },
     distinctives: [
       "Baptists baptise only those who profess faith in Christ, and only by immersion, which they understand as the New Testament pattern and a picture of death, burial and resurrection with Christ (Romans 6:4). Baptism and the Lord's Supper are called ordinances, acts of obedience and remembrance, rather than sacraments that convey grace.",
@@ -659,6 +680,8 @@ export const christianTraditions: BeliefRecord[] = [
     relationships: [
       "Southern Baptists are part of the wider Baptist family, which includes the American Baptist Churches USA, the National Baptist Convention and other historically Black Baptist bodies, and Baptist unions around the world. The SBC withdrew from the Baptist World Alliance in 2004.",
     ],
+    evangelicalFraming:
+      "This article is written from a Protestant evangelical Christian position. The Southern Baptist Convention is at the centre of American evangelicalism, and its statement of faith states evangelical belief plainly. The questions other evangelicals raise with it are family disagreements: who should be baptised and how, the Lord's Supper, Calvinism, and the role of women in ministry. The convention is described first in its own terms, and Baptists are given their reply at the end.",
     evangelicalView: {
       agreements: [
         "The Southern Baptist Convention is at the centre of American evangelicalism. Its statement of faith on Scripture, the Trinity, Christ, salvation by grace through faith and the Great Commission is evangelical belief in its plainest form.",
@@ -670,6 +693,7 @@ export const christianTraditions: BeliefRecord[] = [
         "Within the SBC itself, Calvinist and non-Calvinist Baptists have debated the doctrines of grace for years, and the convention has debated the role of women in ministry. Evangelicals more broadly differ on whether women may serve as pastors, on the meaning and subjects of baptism, and on how closely churches should be involved in politics.",
       ],
     },
+    answeredBy: "Southern Baptists",
     ownAnswer: [
       "Baptists answer that the New Testament everywhere connects baptism with repentance and faith (Acts 2:38-41; Acts 8:36-38) and gives no clear command or example of infant baptism, so that believer's baptism is simply obedience to Scripture. They hold that a regenerate church membership is the New Testament's picture of the church.",
     ],
@@ -686,7 +710,7 @@ export const christianTraditions: BeliefRecord[] = [
   {
     id: "united-methodist-church",
     name: "United Methodist Church",
-    alternateNames: ["United Methodists", "UMC", "Methodism"],
+    alternateNames: ["United Methodists", "UMC"],
     area: "christian-tradition",
     group: "Methodist and Holiness churches",
     role: "Methodist denomination in the Wesleyan tradition",
@@ -705,7 +729,7 @@ export const christianTraditions: BeliefRecord[] = [
     adherents: {
       figure: "about 10.3 million worldwide, including about 3.8 million in the United States",
       counts: "professing members",
-      year: "2025 (US); latest reported years elsewhere",
+      year: "2025 in the US, latest reported years elsewhere",
       source: { label: "UM News, Amid decline, US professions of faith rise (October 2026)", url: "https://www.umnews.org/en/news/amid-decline-us-professions-of-faith-rise" },
       verified: true,
       note: "Down from a high of an estimated 12.5 million in 2017, after thousands of congregations withdrew. Figures outside the US come from the latest available annual conference journals, so years vary, and the worldwide total may change as 2025 statistics are completed.",
@@ -724,7 +748,7 @@ export const christianTraditions: BeliefRecord[] = [
       { label: "Social holiness", statement: "Faith is expressed in works of mercy and justice." },
     ],
     practices: [
-      "Worship ranges from liturgical services using the United Methodist Hymnal and Book of Worship to contemporary styles. Hymn singing is central. Many congregations run food pantries, disaster relief through the United Methodist Committee on Relief, schools and hospitals.",
+      "Worship ranges from liturgical services using the United Methodist Hymnal and Book of Worship to contemporary styles. Hymn singing is central. Many congregations run food pantries and support disaster relief through the United Methodist Committee on Relief, and Methodists founded many schools, colleges and hospitals.",
     ],
     structure: [
       "The church is connectional: congregations belong to districts and annual conferences, led by bishops who appoint pastors to churches. The General Conference, meeting every four years, is the only body that speaks for the whole church, and the Judicial Council rules on church law. The Book of Discipline sets out its doctrine and order.",
@@ -733,6 +757,8 @@ export const christianTraditions: BeliefRecord[] = [
     relationships: [
       "Other Methodist bodies include the African Methodist Episcopal Church, the African Methodist Episcopal Zion Church, the Christian Methodist Episcopal Church, the Free Methodist Church and the Global Methodist Church. The Holiness movement, including the Nazarenes, and through it much of Pentecostalism, grew out of Methodism.",
     ],
+    evangelicalFraming:
+      "This article is written from a Protestant evangelical Christian position. The Methodist revival is one of the founding streams of evangelicalism, and many United Methodists are evangelical. Most evangelicals believe, however, that the church's 2024 decisions on marriage and sexuality depart from Scripture, and that it has long tolerated teaching contrary to its own doctrinal standards; evangelicals are themselves divided on the Arminian, paedobaptist and egalitarian positions the church holds. The church is described first in its own terms, and United Methodists are given their reply at the end.",
     evangelicalView: {
       agreements: [
         "The Methodist revival is one of the founding streams of evangelicalism, and Wesleyan teaching on new birth, assurance and holy living has shaped evangelicals everywhere. Many United Methodist congregations and members are evangelical.",
@@ -744,6 +770,7 @@ export const christianTraditions: BeliefRecord[] = [
         "Evangelicals differ on Arminian and Calvinist accounts of grace, on infant baptism and on women's ordination, all of which the United Methodist Church holds in the Arminian, paedobaptist and egalitarian direction. Evangelical Methodists themselves divided over whether to stay or leave during the disaffiliation period.",
       ],
     },
+    answeredBy: "United Methodists",
     ownAnswer: [
       "United Methodists who support the 2024 decisions answer that they read Scripture through the whole witness of Christ's love and through the experience of the church, and that the church's doctrinal standards on Christ and salvation are unchanged. They point to Wesley's sermon Catholic Spirit, which urged Christians to love one another across differences of opinion.",
     ],
@@ -776,12 +803,12 @@ export const christianTraditions: BeliefRecord[] = [
       place: "Hot Springs, Arkansas",
     },
     adherents: {
-      figure: "88,866,189 worldwide, including 3,102,546 in the United States",
-      counts: "adherents in the Assemblies of God and the World Assemblies of God Fellowship",
+      figure: "88,866,189 worldwide, more than 3 million of them in the United States",
+      counts: "believers in the World Assemblies of God Fellowship and its affiliated partners, 174 national councils in 147 countries",
       year: "2025",
-      source: { label: "Assemblies of God media kit", url: "https://cdn1.acdn.io/sites/agorg/Press/Assemblies_of_God_Media_Kit.pdf" },
+      source: { label: "Influence magazine (Assemblies of God), Better Together (2025)", url: "https://influencemagazine.com/en/Practice/Better-Together-2025" },
       verified: true,
-      note: "Adherents include people of all ages who identify with an Assemblies of God church, not only members. The same media kit counts 451,512 churches worldwide and 12,651 in the United States.",
+      note: "Adherents include people of all ages who identify with an Assemblies of God church, not only members. The US figure is from Influence, Good News You Can Use (February 2026), which reports US adherents growing from 1.2 million in 1975 to more than 3 million.",
     },
     distinctives: [
       "The Assemblies of God teaches that all believers should seek the baptism in the Holy Spirit, a gift distinct from and following the new birth, which empowers them for witness and service (Acts 1:8). Its Statement of Fundamental Truths holds that the initial physical evidence of this baptism is speaking in other tongues as the Spirit gives utterance (Acts 2:4).",
@@ -807,6 +834,8 @@ export const christianTraditions: BeliefRecord[] = [
     relationships: [
       "The Assemblies of God belongs to the broad Pentecostal movement with churches such as the Church of God in Christ, the Church of God (Cleveland, Tennessee) and the International Church of the Foursquare Gospel. The charismatic renewal brought similar experiences into mainline, Catholic and non-denominational churches from the 1960s. The US fellowship is a member of the National Association of Evangelicals.",
     ],
+    evangelicalFraming:
+      "This article is written from a Protestant evangelical Christian position. The Assemblies of God is an evangelical fellowship, and one of the great missionary movements of the past century. The questions other evangelicals raise with it are ones on which evangelicals genuinely differ: whether baptism in the Holy Spirit is a distinct experience after conversion, whether speaking in tongues is its initial evidence, whether the spiritual gifts continue today, and how healing relates to the atonement. The fellowship is described first in its own terms, and Pentecostals are given their reply at the end.",
     evangelicalView: {
       agreements: [
         "The Assemblies of God is an evangelical fellowship. Its fundamental truths on Scripture, the Trinity, Christ and salvation by grace through faith are shared by all evangelicals, and its missionary zeal is one of the great evangelistic movements of the past century.",
@@ -818,11 +847,13 @@ export const christianTraditions: BeliefRecord[] = [
         "Evangelicals are divided between continuationists, who believe all the spiritual gifts continue today, and cessationists, who believe the sign gifts ceased with the apostolic age; many hold an open-but-cautious view between them. All three positions are held within evangelicalism.",
       ],
     },
+    answeredBy: "Assemblies of God Pentecostals",
     ownAnswer: [
       "Pentecostals answer that the pattern of Acts, in which believers who had already come to faith later received the Spirit with tongues (Acts 2:4; Acts 8:14-17; Acts 19:1-6), is meant for the whole church, and that the promise of the Spirit is for all whom the Lord calls (Acts 2:39). They point to the explosive growth of Pentecostal churches in the global South as fruit of the Spirit's power.",
     ],
     sources: [
-      { kind: "official", label: "Assemblies of God, Statement of Fundamental Truths", url: "https://ag.org/beliefs/statement-of-fundamental-truths", note: "could not be loaded on 2026-11-26" },
+      { kind: "official", label: "Assemblies of God, Statement of Fundamental Truths", url: "https://ag.org/beliefs/statement-of-fundamental-truths" },
+      { kind: "data", label: "Influence magazine, Good News You Can Use (2026)", url: "https://influencemagazine.com/en/Theory/Good-News-You-Can-Use" },
       { kind: "official", label: "Assemblies of God media kit", url: "https://cdn1.acdn.io/sites/agorg/Press/Assemblies_of_God_Media_Kit.pdf" },
       { kind: "official", label: "World Assemblies of God Fellowship", url: "https://worldagfellowship.org/" },
       { kind: "reference", label: "CALS Encyclopedia of Arkansas, Assemblies of God", url: "https://encyclopediaofarkansas.net/entries/assemblies-of-god-5121/" },
@@ -856,7 +887,7 @@ export const christianTraditions: BeliefRecord[] = [
       year: "latest figures, reported January 2025",
       source: { label: "The Christian Chronicle, Holy imagination: churches seek to reverse decline (2025)", url: "https://christianchronicle.org/holy-imagination-churches-seek-to-reverse-decline/" },
       verified: true,
-      note: "There is no central membership roll, and the directory behind these figures was last printed in 2018. A January 2026 Christian Chronicle article reports a researcher's estimate of about 10,100 congregations and 850,000-950,000 regular attenders. No worldwide figure was confirmed from a primary source.",
+      note: "There is no central membership roll, and the directory behind these figures was last printed in 2018. A January 2026 Christian Chronicle article reports a researcher's estimate of about 10,100 congregations and 850,000-950,000 regular attenders. These are US figures only.",
     },
     distinctives: [
       "Congregations sing a cappella, without musical instruments, because instruments are not commanded in New Testament worship (Ephesians 5:19; Colossians 3:16). This, together with disagreement over missionary societies, was a main cause of the division from the Christian Church (Disciples of Christ).",
@@ -881,6 +912,8 @@ export const christianTraditions: BeliefRecord[] = [
     relationships: [
       "Churches of Christ share their origin with the Christian Church (Disciples of Christ), a mainline denomination, and the independent Christian Churches and Churches of Christ, which use instruments. Many members are cautious about the label evangelical, though they share most evangelical convictions.",
     ],
+    evangelicalFraming:
+      "This article is written from a Protestant evangelical Christian position. Churches of Christ share most evangelical convictions — the authority of Scripture, the deity and resurrection of Christ, and a church shaped by the New Testament — though many members are cautious about the label evangelical. Most evangelicals differ from them on whether baptism is necessary for the forgiveness of sins and whether instruments may be used in worship. The churches are described first in their own terms, and their members are given their reply at the end.",
     evangelicalView: {
       agreements: [
         "Evangelicals share the Churches of Christ's devotion to Scripture as the supreme authority, their confession of Christ's deity and resurrection, their seriousness about baptism and the Lord's Supper, and their longing for a church shaped by the New Testament.",
@@ -893,6 +926,7 @@ export const christianTraditions: BeliefRecord[] = [
         "Evangelicals themselves differ on how baptism relates to conversion, and some evangelical scholars note that the New Testament closely ties baptism to repentance and faith. Within Churches of Christ, too, views vary on how to regard sincere believers who were not immersed.",
       ],
     },
+    answeredBy: "members of Churches of Christ",
     ownAnswer: [
       "Members answer that they do not add baptism to faith but obey the gospel as the apostles preached it: Peter's answer at Pentecost was repent and be baptised for the forgiveness of sins (Acts 2:38), and Paul was told to be baptised and wash away his sins (Acts 22:16). On instruments, they answer that New Testament worship tells Christians to sing, and that faithfulness means not adding what God has not asked.",
     ],
@@ -931,7 +965,7 @@ export const christianTraditions: BeliefRecord[] = [
       year: "end of 2025",
       source: { label: "Seventh-day Adventist Church, Adventist Atlas (Office of Archives, Statistics and Research)", url: "https://www.adventistatlas.org/" },
       verified: true,
-      note: "The same figure appears in the church's 2025 world statistics summary. Weekly attendance figures differ from membership.",
+      note: "The church also reported 1,287,461 baptisms during 2025. Weekly attendance figures differ from membership.",
     },
     distinctives: [
       "Adventists keep the seventh day, from sunset Friday to sunset Saturday, as the Sabbath of the fourth commandment (Exodus 20:8-11), a memorial of creation and a sign of redemption. They hold that God's moral law remains binding on Christians, not as a means of salvation but as the fruit of it.",
@@ -958,6 +992,8 @@ export const christianTraditions: BeliefRecord[] = [
     relationships: [
       "Adventists share their Millerite roots with smaller Adventist bodies such as the Advent Christian Church. In the 1950s conversations with evangelical leaders, including Walter Martin and Donald Grey Barnhouse, led to the book Questions on Doctrine (1957) and to Martin's conclusion that Adventists are fellow Christians, though he disagreed with several of their teachings.",
     ],
+    evangelicalFraming:
+      "This article is written from a Protestant evangelical Christian position. This app files Seventh-day Adventists among the Christian traditions because they confess the Trinity, the full deity of Christ and salvation by grace through faith in him. Most evangelicals differ from them on the seventh-day Sabbath, the investigative judgment and the authority given to Ellen G. White's writings, and evangelicals themselves differ on how to classify Adventism. The church is described first in its own terms, and Adventists are given their reply at the end.",
     evangelicalView: {
       agreements: [
         "Adventists confess the Trinity, the full deity of Christ, salvation by grace through faith in his atoning death and resurrection, the authority of Scripture and the visible return of Christ. They are, in the app's judgement and that of many evangelical scholars since the 1950s, Christians within historic orthodoxy, and the app files them among the Christian traditions.",
@@ -971,13 +1007,14 @@ export const christianTraditions: BeliefRecord[] = [
         "Evangelicals also differ on how to classify Adventism itself. Many have followed Walter Martin's conclusion that Adventists are fellow Christians; others, including some former Adventists, judge that the place given to Ellen G. White and the investigative judgment put the church outside evangelical orthodoxy.",
       ],
     },
+    answeredBy: "Adventists",
     ownAnswer: [
       "Adventists answer that the Sabbath was given at creation, before Israel existed (Genesis 2:2-3), stands within the Ten Commandments, and was kept by Jesus; no text transfers it to Sunday. They teach that Sabbath-keeping is rest in Christ's finished work, not a way of earning salvation. On Ellen G. White, they say that her writings are tested by Scripture and do not add to it, and that the gift of prophecy is promised to the church (Joel 2:28; Revelation 19:10).",
     ],
     sources: [
-      { kind: "official", label: "Seventh-day Adventist Church, 28 Fundamental Beliefs", url: "https://www.adventist.org/beliefs/", note: "could not be loaded on 2026-11-26" },
+      { kind: "official", label: "Seventh-day Adventist Church, 28 Fundamental Beliefs", url: "https://www.adventist.org/beliefs/" },
       { kind: "data", label: "Adventist Atlas (Office of Archives, Statistics and Research)", url: "https://www.adventistatlas.org/" },
-      { kind: "data", label: "Seventh-day Adventist World Church Statistics Summary 2025", url: "https://documents.adventistarchives.org/Statistics/Other/SDAWorldChurchStatsSummary2025.pdf", note: "could not be loaded on 2026-11-26" },
+      { kind: "data", label: "Seventh-day Adventist World Church Statistics Summary 2025", url: "https://documents.adventistarchives.org/Statistics/Other/SDAWorldChurchStatsSummary2025.pdf" },
       { kind: "reference", label: "Christianity Today, What Seventh-day Adventists Believe (1984)", url: "https://www.christianitytoday.com/1984/10/what-seventh-day-adventists-believe" },
     ],
     relatedIds: ["southern-baptist-convention"],
@@ -1030,6 +1067,8 @@ export const christianTraditions: BeliefRecord[] = [
     relationships: [
       "Non-denominational churches draw members from every denomination and are often shaped by Baptist, Pentecostal and charismatic, Reformed or Wesleyan influences, depending on their founders. Calvary Chapel and the Vineyard, both from Southern California, began as independent movements and have become families of churches in their own right.",
     ],
+    evangelicalFraming:
+      "This article is written from a Protestant evangelical Christian position. Most non-denominational churches are evangelical churches, and their focus on the gospel, on Scripture and on reaching people outside the church is evangelical conviction in practice. The questions evangelicals from confessional traditions raise concern accountability and doctrine: a congregation that answers to no wider body and holds no historic confession. These churches are described first in their own terms and given their reply at the end.",
     evangelicalView: {
       agreements: [
         "Most non-denominational churches are evangelical churches, and their focus on the gospel, on Scripture and on reaching people outside the church is evangelical conviction in practice.",
@@ -1041,6 +1080,7 @@ export const christianTraditions: BeliefRecord[] = [
         "Evangelicals differ on whether denominations are a help or a hindrance. Some see them as safeguards of doctrine and accountability; others see them as human structures that divide Christians and are not required by the New Testament.",
       ],
     },
+    answeredBy: "non-denominational churches",
     ownAnswer: [
       "Non-denominational churches answer that the New Testament knows local churches, each led by its own overseers, not denominations, and that freedom from denominational structures lets them focus on the gospel and adapt to their communities. Many point to their elder boards, networks and statements of faith as real accountability.",
     ],

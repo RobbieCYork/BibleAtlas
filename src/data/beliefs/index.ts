@@ -33,11 +33,13 @@ const section = (heading: string, paragraphs: string[] | undefined): TopicSectio
  * "topic"), unified search and the Articles page. The structured record rides along on `belief`
  * for the facts block and the classification notice.
  *
- * The section order is the template: description first, the app's own assessment second to last,
- * and the tradition's reply to it last, so the reply is always the final word.
+ * The section order is the template: the app's own evangelical framing first, so a reader knows
+ * from the start where the article stands; then the tradition described in its own terms; then the
+ * full evangelical assessment; and the tradition's reply to it last, so it is answered fairly.
  */
 export function beliefToTopic(b: BeliefRecord): Topic {
   const sections: TopicSection[] = [
+    ...section("From a Protestant evangelical perspective", [b.evangelicalFraming]),
     ...section("How it describes itself", [b.selfDescription]),
     ...section("What makes it distinctive", b.distinctives),
     ...section(
@@ -51,7 +53,7 @@ export function beliefToTopic(b: BeliefRecord): Topic {
     ...section("A Protestant evangelical view: where we agree", b.evangelicalView.agreements),
     ...section("A Protestant evangelical view: where we differ", b.evangelicalView.disagreements),
     ...section("Where evangelicals differ among themselves", b.evangelicalView.evangelicalsDiffer),
-    ...section(`How ${b.name.startsWith("The ") ? b.name.charAt(0).toLowerCase() + b.name.slice(1) : b.name} would answer`, b.ownAnswer),
+    ...section(`How ${b.answeredBy} would answer`, b.ownAnswer),
   ];
   return {
     id: b.id,

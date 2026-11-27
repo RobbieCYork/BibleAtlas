@@ -45,9 +45,9 @@ export const worldReligions: BeliefRecord[] = [
       place: "The land of Israel; later the Diaspora, above all Babylonia",
     },
     adherents: {
-      figure: "about 14.8 million",
+      figure: "nearly 15 million",
       counts:
-        "Jews by religion — self-identification in surveys and censuses outside Israel, and Israel's population register, which uses religious-legal criteria, inside it",
+        "Jews by religion: people identified as Jewish by religion in censuses and surveys, as Pew defines its count",
       year: "2020",
       source: {
         label: "Pew Research Center, Jewish population change, 2010-2020 (2025)",
@@ -55,7 +55,7 @@ export const worldReligions: BeliefRecord[] = [
       },
       verified: true,
       note:
-        "Who counts as Jewish is itself a question Jews answer differently — by religion, by descent, or by identity. The demographer Sergio DellaPergola, using a 'core Jewish population' that includes Jews who are not religious, estimated about 15.7 million on 1 January 2024, roughly 7.2 million of them in Israel and 6.3 million in the United States. Pew notes its own US figure is 5.7 million by religion but 7.5 million on a broader definition.",
+        "Who counts as Jewish is itself a question Jews answer differently — by religion, by descent, or by identity. The demographer Sergio DellaPergola, using a 'core Jewish population' that includes Jews who are not religious, estimated about 15.7 million on 1 January 2024, nearly half of them in Israel and about 6.3 million in the United States. Pew notes its own US figure is 5.7 million by religion but 7.5 million on a broader definition.",
     },
     distinctives: [
       "Judaism is not, for this app, one more comparison. It is the faith of the people to whom the Scriptures were first given, whose Bible the app reads on every screen, and from whom Jesus of Nazareth and all the apostles came (Romans 9:4-5). Christianity and rabbinic Judaism are two traditions that both claim the Hebrew Scriptures and went their separate ways in the first and second centuries; neither can be explained without the other.",
@@ -114,13 +114,15 @@ export const worldReligions: BeliefRecord[] = [
       "Ashkenazi, Sephardi and Mizrahi Jews are not denominations but communities of descent with their own customs and liturgies. Karaite Jews, a small community, accept the written Torah but not the rabbinic oral law.",
     ],
     relationships: [
-      "Christianity and Islam both trace themselves to Abraham and draw on Israel's Scriptures. Jewish-Christian relations carry a long and painful history: Christian anti-Judaism, expulsions, forced conversions and the antisemitism that culminated in the Holocaust. Since the Second World War most churches, Catholic and Protestant, have formally repudiated the charge that the Jewish people are collectively guilty of Jesus's death.",
+      "Christianity and Islam both trace themselves to Abraham and draw on Israel's Scriptures. Jewish-Christian relations carry a long and painful history: Christian anti-Judaism, expulsions, forced conversions and the antisemitism that culminated in the Holocaust. Since the Second World War the Catholic Church, in the Second Vatican Council's declaration Nostra Aetate (1965), and many Protestant churches have formally repudiated the charge that the Jewish people are collectively guilty of Jesus's death.",
       "Messianic Jews — Jewish people who believe Jesus is the Messiah and keep Jewish practice — regard themselves as Jews. The Jewish movements, and Israeli law for purposes of immigration, do not count them as practising Judaism. Their placement is genuinely contested and this article does not settle it.",
     ],
     viewOfJesus: [
       "Judaism does not regard Jesus as the Messiah, because, Jews say, the messianic age the prophets describe — exiles gathered, the Temple rebuilt, peace among nations — has not come. Nor does it accept that the Messiah would be divine, which Jews see as incompatible with the oneness of God.",
       "Jewish scholars widely recognise Jesus as a first-century Jewish teacher from Galilee, and many modern Jewish writers have studied him with sympathy as part of Jewish history. Judaism has no single official teaching about him.",
     ],
+    evangelicalFraming:
+      "This app is written from a Protestant evangelical Christian position, and it reads Judaism differently from every other article in this section. The Hebrew Scriptures Jews receive are the Christian Old Testament; Jesus and every one of the apostles were Jews; and Christians believe that the God of Israel has kept his promises to Israel in Jesus the Messiah. That conviction is the heart of the disagreement set out below, and it is held with respect and with sorrow for the church's long history of contempt toward Jews. Judaism is described first in terms Jews themselves would recognise, and Jews are given their own reply at the end.",
     evangelicalView: {
       agreements: [
         "Evangelicals and Jews confess the same God, the God of Abraham, Isaac and Jacob, and receive the same Hebrew Scriptures as the word of God. The Shema is Jesus's own first commandment (Mark 12:29-30).",
@@ -135,6 +137,7 @@ export const worldReligions: BeliefRecord[] = [
         "Evangelicals also differ on how, and whether, to support organised evangelism directed specifically at Jewish people, and on the relationship of Messianic congregations to the wider church.",
       ],
     },
+    answeredBy: "Jews",
     ownAnswer: [
       "Jews answer that the Messiah's task is to bring visible redemption to Israel and the world, and that a Messiah who leaves the world unredeemed has not done it. They read Isaiah 53, in line with much of the rabbinic tradition, as describing Israel, the suffering servant of the surrounding chapters, rather than an individual.",
       "Jews also answer that the Shema excludes any plurality in God, that the Torah was given to be kept and has not been abolished, and that Judaism has never taught that the righteous of other nations must become Jews to be saved. Many add that, after centuries of coerced conversion, Christian missionary efforts toward Jews are experienced as a threat to the survival of the people.",
@@ -228,7 +231,7 @@ export const worldReligions: BeliefRecord[] = [
       },
       verified: true,
       note:
-        "Pew puts Muslims at 25.6% of the world's population in 2020, up from 1.7 billion in 2010, the fastest growth of any major group. Pew's earlier estimate of the Sunni-Shi'a balance is 87-90% Sunni and 10-13% Shi'a, given as a range because few censuses ask the question.",
+        "Pew puts Muslims at about 26% of the world's population in 2020, up from 1.7 billion (24%) in 2010. Pew's earlier estimate of the Sunni-Shi'a balance is 87-90% Sunni and 10-13% Shi'a, given as a range because few censuses ask the question.",
     },
     distinctives: [
       "Islam's centre is the Qur'an, which Muslims hold to be the literal speech of God, revealed in Arabic and preserved without alteration. Because the revelation is tied to its Arabic words, Muslims regard a translation as an interpretation of the Qur'an rather than the Qur'an itself; the text is recited in Arabic in prayer worldwide.",
@@ -279,7 +282,7 @@ export const worldReligions: BeliefRecord[] = [
     structure: [
       "Islam has no single central authority. Religious authority rests with scholars (ulama) trained in the Qur'an, hadith and law, and with the schools of jurisprudence they belong to.",
       "Sunni Muslims, the large majority, recognise the first four caliphs as Muhammad's rightful successors and follow one of four schools of law — Hanafi, Maliki, Shafi'i and Hanbali. Shi'a Muslims hold that leadership belonged to Ali ibn Abi Talib, the Prophet's cousin and son-in-law, and to imams descended from him; the largest Shi'a branch is the Twelvers (Ithna Ashari), predominant in Iran and Iraq, and others include the Ismailis and the Zaydis. The Ibadis, predominant in Oman, are a third, smaller tradition. The split goes back to the succession after Muhammad's death in 632 and was sealed by the killing of Ali's son Husayn at Karbala in 680.",
-      "Sufism is the mystical tradition of Islam, found among both Sunnis and Shi'a and organised in orders. Salafism, a modern reform movement, calls Muslims back to the practice of the first generations. The Amman Message (2004-2005), endorsed by several hundred Muslim scholars, recognised eight schools of law across the Sunni, Shi'a and Ibadi traditions as valid. The Ahmadiyya movement, founded in nineteenth-century India, regards itself as Muslim; most Sunni and Shi'a authorities do not.",
+      "Sufism is the mystical tradition of Islam, found among both Sunnis and Shi'a and organised in orders. Salafism, a modern reform movement, calls Muslims back to the practice of the first generations. The Amman Message (2004-2005), agreed by some two hundred Muslim scholars meeting in Amman in 2005 and endorsed by many more since, recognised eight schools of law across the Sunni, Shi'a and Ibadi traditions as valid. The Ahmadiyya movement, founded in nineteenth-century India, regards itself as Muslim; most Sunni and Shi'a authorities do not.",
     ],
     relationships: [
       "The Qur'an calls Jews and Christians 'People of the Book', who received earlier revelation. Islam shares with them a lineage traced through Abraham, and many of the same prophets. Muslim tradition connects the Kaaba in Mecca with Abraham and his son Ishmael.",
@@ -289,6 +292,8 @@ export const worldReligions: BeliefRecord[] = [
       "Islam honours Jesus (Isa) as one of the greatest prophets and the Messiah, born of the virgin Mary (Qur'an 3:45-47; 19:16-34), a worker of miracles and a word and spirit from God (Qur'an 4:171). Mary is honoured above all women, and a sura of the Qur'an bears her name.",
       "Islam denies that Jesus is divine or the Son of God, and rejects the Trinity (Qur'an 4:171). The mainstream reading of Qur'an 4:157 is that Jesus was not killed or crucified but that it was made to appear so, and that God raised him to himself; many Muslims expect his return before the Last Day. (The Ahmadiyya hold instead that he survived crucifixion and died a natural death.)",
     ],
+    evangelicalFraming:
+      "This article is written from a Protestant evangelical Christian position. Evangelicals believe Islam is right to confess one Creator God who will judge the world, and right to honour Jesus and his mother Mary, but that it denies what is at the centre of the Christian faith: that Jesus is the eternal Son of God, that he died on the cross and rose from the dead, and that salvation is God's free gift through him. Islam's own teaching is set out first, as Muslims themselves would state it, and Muslims are given their reply at the end.",
     evangelicalView: {
       agreements: [
         "Evangelicals share with Muslims belief in one Creator God who speaks, who sent prophets, who will raise the dead and judge the world, and who calls human beings to worship, prayer, honesty and care for the poor.",
@@ -296,13 +301,14 @@ export const worldReligions: BeliefRecord[] = [
       ],
       disagreements: [
         "Evangelicals believe Jesus is not only a prophet but the eternal Son of God, God incarnate, and that the oneness of God is revealed in Father, Son and Holy Spirit rather than contradicted by them. Christians do not teach three gods, nor that God took a wife — readings of the Trinity that Muslims often reject and that Christians reject too.",
-        "Evangelicals hold that Jesus truly died on the cross and rose bodily on the third day. That event is attested by the earliest Christian sources and by non-Christian historians of the first and second centuries, and the gospel depends on it.",
+        "Evangelicals hold that Jesus truly died on the cross and rose bodily on the third day, and that the gospel depends on both. His death by crucifixion is recorded by the earliest Christian sources and also by non-Christian writers of the first and early second centuries, the Jewish historian Josephus and the Roman historian Tacitus.",
         "Evangelicals hold that salvation is a gift of grace received through faith in Christ, not secured by balancing deeds, and that the Bible is a reliable record of revelation rather than a corrupted one.",
       ],
       evangelicalsDiffer: [
         "Evangelicals differ on whether Christians and Muslims can be said to worship 'the same God' — some saying yes, referring to the one Creator, though understood very differently; others saying no, because the God of the Bible is known as Father, Son and Spirit. They also differ on the best approach to mission and dialogue among Muslims.",
       ],
     },
+    answeredBy: "Muslims",
     ownAnswer: [
       "Muslims answer that tawhid cannot admit a Son or a Trinity in any form, that the Qur'an corrects what earlier communities exaggerated about Jesus (Qur'an 4:171), and that honouring Jesus as a prophet is the highest honour a human being can receive. They point out that the word Trinity does not appear in the Bible.",
       "On the cross, Muslims answer that God would not allow his righteous prophet to be killed in disgrace, and that the Qur'an (4:157) states what happened. On salvation, they answer that God forgives whom he wills and needs no sacrifice to do so, that every person bears their own burden, and that God's mercy outweighs his wrath.",
@@ -378,7 +384,7 @@ export const worldReligions: BeliefRecord[] = [
       },
       verified: true,
       note:
-        "Pew puts Hindus at 14.9% of the world's population in 2020, a share that held steady over the decade. The great majority live in India, with large communities in Nepal, Bangladesh and the diaspora.",
+        "Pew reports that Hindus grew by about 12% between 2010 and 2020 and held a steady share of the world's population. The great majority live in India, with large communities in Nepal, Bangladesh and the diaspora.",
     },
     distinctives: [
       "Hinduism is less a single religion than a family of traditions. A Hindu may worship Vishnu, Shiva or the Goddess, or regard all deities as forms of one ultimate reality; may follow a guru or none; and may hold philosophical views ranging from strict non-dualism to devotion to a personal God. That breadth is not a defect in Hindu eyes but part of its genius: truth is one, the sages call it by many names, as a famous Rig Vedic line is usually summarised.",
@@ -441,6 +447,8 @@ export const worldReligions: BeliefRecord[] = [
     viewOfJesus: [
       "Hinduism has no official teaching about Jesus. Many Hindus revere him as a great teacher, a holy man or an incarnation of the divine among others, and some modern Hindu teachers have written of him with deep respect. What Hindu traditions generally do not accept is that he is the only incarnation of God or the only way to liberation.",
     ],
+    evangelicalFraming:
+      "This article is written from a Protestant evangelical Christian position. Evangelicals see in Hindu devotion a real longing for God and honour much in Hindu ethics, but believe that the one God is personal, distinct from the world he made and not one deity among many; that each person lives once; and that liberation is not reached by knowledge, devotion or works but given by grace through Jesus Christ, who is not one incarnation among many but the only one. Hindu belief is described first in terms Hindus would recognise, and Hindus are given their reply at the end.",
     evangelicalView: {
       agreements: [
         "Evangelicals share with Hindus the conviction that there is a spiritual reality beyond the material world, that human beings are moral beings answerable for their actions, and that devotion, prayer and self-discipline matter. Many evangelicals find in the bhakti traditions a longing for a personal God that Christianity also expresses.",
@@ -455,6 +463,7 @@ export const worldReligions: BeliefRecord[] = [
         "Evangelicals differ on how far Christians may use Hindu cultural forms — music, dress, festivals, yoga as exercise — and on contextual movements of Hindus who follow Jesus without joining a church.",
       ],
     },
+    answeredBy: "Hindus",
     ownAnswer: [
       "Hindus answer that truth is too great for one name or one path, that the claim of exclusive salvation is a form of spiritual pride, and that Hinduism can honour Jesus without making him the only way. Many say that a single life is too short for any soul to reach perfection, and that karma and rebirth are a more just account of human suffering.",
       "On the many deities, many Hindus answer that they worship one ultimate reality in many forms, and that images are aids to devotion, not the object of it. Many add that conversion campaigns in India have been experienced as an attack on their culture.",
@@ -472,7 +481,7 @@ export const worldReligions: BeliefRecord[] = [
         url: "https://en.wikisource.org/wiki/The_Hymns_of_the_Rigveda",
       },
       {
-        kind: "official",
+        kind: "reference",
         label: "Hindu American Foundation",
         url: "https://www.hinduamerican.org/",
         note: "Hindu advocacy and education organisation",
@@ -585,6 +594,8 @@ export const worldReligions: BeliefRecord[] = [
     viewOfJesus: [
       "Buddhism has no doctrine about Jesus. Buddhist teachers who have written about him have often admired him as a compassionate and wise teacher, and some have compared him to a bodhisattva. The Christian claims that he is the Son of God and the one saviour do not fit a tradition without a creator God.",
     ],
+    evangelicalFraming:
+      "This article is written from a Protestant evangelical Christian position. Evangelicals agree with the Buddha that craving lies near the root of human suffering, and honour the Buddhist call to compassion and self-discipline. They believe, though, that the deepest human problem is sin against a personal Creator God, that each person is a real self made and loved by God, and that release comes not by following a path in one's own strength but as a gift of grace through Jesus Christ. Buddhist teaching is described first in terms Buddhists would recognise, and Buddhists are given their reply at the end.",
     evangelicalView: {
       agreements: [
         "Evangelicals agree with Buddhists that human life as we live it is deeply marked by suffering, that craving and self-centredness lie near its root, and that ordinary pleasures and possessions cannot satisfy the heart.",
@@ -599,6 +610,7 @@ export const worldReligions: BeliefRecord[] = [
         "Evangelicals differ on whether mindfulness and meditation techniques drawn from Buddhism can be used by Christians, detached from their Buddhist purpose, or should be avoided.",
       ],
     },
+    answeredBy: "Buddhists",
     ownAnswer: [
       "Buddhists answer that the Buddha did not deny or affirm a creator because speculation about it does not end suffering, and that the path is to be tested in practice, not taken on faith. Many say that clinging to a permanent self, even an eternal one, is itself a form of the craving that causes suffering.",
       "On grace and effort, Buddhists of the Pure Land tradition answer that they too rely on the compassion of another rather than their own power. Others answer that liberation must be realised by each person, and that a teacher can show the way but cannot walk it for anyone.",
@@ -677,7 +689,7 @@ export const worldReligions: BeliefRecord[] = [
     distinctives: [
       "Sikhism's scripture is its Guru. The Guru Granth Sahib, compiled by Guru Arjan and completed by Guru Gobind Singh, gathers hymns of the Sikh Gurus together with hymns of Hindu and Muslim holy men whose teaching agreed with theirs. It is treated with the respect due to a living teacher — installed on a raised throne under a canopy, read with a whisk waved over it, and consulted for guidance.",
       "Sikhism rejects caste, ritualism and idol worship and teaches the equality of men and women. That is embodied in the langar, the free community kitchen of every gurdwara, where all sit together and eat the same food regardless of caste, class or religion.",
-      "Initiated Sikhs of the Khalsa keep the Five Ks: kesh (uncut hair, usually covered by a turban), kangha (a wooden comb), kara (a steel bracelet), kachera (a cotton undergarment) and kirpan (a ceremonial sword). The turban is a mark of Sikh identity, often mistaken in the West for something else.",
+      "Initiated Sikhs of the Khalsa keep the Five Ks: kesh (uncut hair, usually covered by a turban), kangha (a wooden comb), kara (a steel bracelet), kachera (a cotton undergarment) and kirpan (a ceremonial sword). The turban (dastar), worn to cover the uncut hair, is a visible mark of Sikh identity.",
     ],
     beliefs: [
       {
@@ -725,11 +737,13 @@ export const worldReligions: BeliefRecord[] = [
       "Most Sikhs are not formally divided into denominations, though some groups — such as Namdharis, Nirankaris and Udasis — differ from the mainstream Khalsa tradition, and are regarded by it as outside it to varying degrees. Many Sikhs are not initiated into the Khalsa but keep the faith; some do not keep uncut hair.",
     ],
     relationships: [
-      "Sikhism arose in a Punjab shaped by Hindu and Muslim devotional movements, and its scripture includes hymns by Hindu and Muslim saints. Sikhs nevertheless regard their faith as a new and independent revelation. Its history includes the martyrdom of Guru Arjan in 1606 and of Guru Tegh Bahadur in 1675 under the Mughal rulers, and violent episodes in the twentieth century, including the storming of the Golden Temple in 1984 and the anti-Sikh massacres that followed the assassination of Indira Gandhi that year.",
+      "Sikhism arose in a Punjab shaped by Hindu and Muslim devotional movements, and its scripture includes hymns by Hindu and Muslim saints. Sikhs nevertheless regard their faith as a new and independent revelation. Its history includes the martyrdom of Guru Arjan in 1606 and of Guru Tegh Bahadur in 1675 under the Mughal rulers, and violent episodes in the twentieth century, including the Indian Army's assault on the Golden Temple complex in June 1984 (Operation Blue Star) and the anti-Sikh massacres that followed the assassination of Indira Gandhi that year.",
     ],
     viewOfJesus: [
       "Sikhism has no doctrine concerning Jesus. Sikhs generally respect holy people of every faith and may honour Jesus as a holy man, but Sikh teaching that God is beyond birth and is not incarnated means they do not accept that he is God in human form.",
     ],
+    evangelicalFraming:
+      "This article is written from a Protestant evangelical Christian position. Evangelicals share the Sikh confession of one sovereign Creator, beyond idols and empty ritual, and admire the Sikh practice of equality, honest work and service. They believe, though, that God has become a human being in Jesus Christ, that the human problem is sin and not only ego, and that grace comes through Christ's death and resurrection. Sikh teaching is described first in terms Sikhs would recognise, and Sikhs are given their reply at the end.",
     evangelicalView: {
       agreements: [
         "Evangelicals share the Sikh belief in one sovereign Creator God who is not an idol and cannot be bound by ritual, and the conviction that God's grace — not birth, caste or ceremony — is what brings a person to him.",
@@ -740,6 +754,7 @@ export const worldReligions: BeliefRecord[] = [
         "Evangelicals hold that the human problem is sin against a holy God, not only ego, and that grace comes through Christ's atoning death and resurrection rather than through remembering the Name; and that each person lives once rather than passing through rebirth.",
       ],
     },
+    answeredBy: "Sikhs",
     ownAnswer: [
       "Sikhs answer that God, being beyond birth and death, does not take human form, and that the Gurus were enlightened teachers through whom God's word came, not God himself. They hold that grace is real and freely given, but that it is received through the Guru's word and the remembrance of the Name.",
       "Sikhs also answer that no one religion owns God, and that the Guru Granth Sahib's inclusion of Hindu and Muslim saints shows that truth may be found wherever God is truly remembered.",
@@ -880,6 +895,8 @@ export const worldReligions: BeliefRecord[] = [
     viewOfJesus: [
       "Confucianism has no teaching about Jesus. Chinese Christians and Confucian scholars have often compared his ethical teaching, especially the golden rule, with Confucius's, while noting that Confucianism makes no claim about a saviour or about a God who becomes human.",
     ],
+    evangelicalFraming:
+      "This article is written from a Protestant evangelical Christian position. Evangelicals honour Confucian teaching on the family, learning and integrity, and see in it a witness to the moral law God has placed in every conscience. They believe, though, that human beings cannot make themselves good by cultivation alone, and that Heaven is not an impersonal order but the living, personal God who has spoken in Jesus Christ. The Confucian tradition is described first in its own terms, and Confucians are given their reply at the end.",
     evangelicalView: {
       agreements: [
         "Evangelicals share Confucianism's high view of the family, of honouring father and mother, of education, diligence and personal integrity, and its conviction that rulers are morally accountable to a higher order. Confucius's negative form of the golden rule stands close to Jesus's positive form.",
@@ -893,6 +910,7 @@ export const worldReligions: BeliefRecord[] = [
         "Asian evangelical churches differ on ancestor rites: some hold that bowing before ancestral tablets and offering food is worship of the dead and must be given up; others hold that some forms are expressions of filial respect that a Christian may keep, and have developed Christian memorial services in their place.",
       ],
     },
+    answeredBy: "Confucians",
     ownAnswer: [
       "Confucians answer that the tradition is not a rival religion but a way of being human that leaves questions about gods and the afterlife open, and that many Confucians have also been Buddhists, Daoists or Christians. They regard ancestor rites as gratitude and remembrance, not as worship of gods.",
       "Confucians also answer that human beings have within them the seeds of goodness, as Mencius taught, and that moral education and good example, not a doctrine of sin, are what bring them to flower.",
@@ -1025,6 +1043,8 @@ export const worldReligions: BeliefRecord[] = [
     viewOfJesus: [
       "Jesus Christ is at the centre of Latter-day Saint faith: the firstborn spirit child of the Father, the Jehovah of the Old Testament, the Only Begotten Son in the flesh, who atoned for the sins of the world, rose from the dead and will return to reign. The Book of Mormon records his appearance to people in the Americas after his resurrection.",
     ],
+    evangelicalFraming:
+      "This article is written from a Protestant evangelical Christian position. Evangelicals respect the devotion of Latter-day Saints to Jesus Christ, to family and to service, and acknowledge that Latter-day Saints sincerely regard themselves as Christians. Evangelicals hold, however, that the Church's teaching on God — three separate beings, the Father with a body of flesh and bones, and human beings able to progress to become like him — together with its additional scriptures, departs from the faith of the Bible as the historic creeds summarise it. That is why this app files the Church with movements from a Christian background. Latter-day Saint teaching is described first in the Church's own terms, and Latter-day Saints are given their reply at the end.",
     evangelicalView: {
       agreements: [
         "Evangelicals share with Latter-day Saints a love of the Bible, faith in Jesus as Son of God and Savior, belief in his atoning death, bodily resurrection and return, and a commitment to prayer, family, moral seriousness and service. Many evangelicals have learned from Latter-day Saint care for the poor and devotion to family.",
@@ -1038,6 +1058,7 @@ export const worldReligions: BeliefRecord[] = [
         "Evangelicals differ on tone and approach: some engage Latter-day Saints chiefly through apologetics, others through long-term dialogue — such as the evangelical-Latter-day Saint conversations among scholars since the late 1990s — and they differ on how far joint action on moral and social causes is appropriate.",
       ],
     },
+    answeredBy: "Latter-day Saints",
     ownAnswer: [
       "Latter-day Saints answer that they worship the Father in the name of Jesus Christ and rely wholly on his grace, and that the Book of Mormon teaches that salvation comes only through his merits. They hold that the Nicene Creed reflects Hellenistic philosophy rather than the Bible, which shows the Father and Son as distinct (for example at Jesus's baptism), and that the Bible itself speaks of human beings as God's offspring (Acts 17:29).",
       "They answer too that the Bible nowhere says revelation has ceased, that a living church needs living prophets, and that the Book of Mormon is to be tested by prayer, as it invites (Moroni 10:4), rather than by outside argument alone. Many add that being told they are not Christian is painful to people who centre their lives on Christ.",
@@ -1101,7 +1122,7 @@ export const worldReligions: BeliefRecord[] = [
   {
     id: "jehovahs-witnesses",
     name: "Jehovah's Witnesses",
-    alternateNames: ["Watch Tower Society", "Bible Students"],
+    alternateNames: ["Witnesses", "Bible Students (the name before 1931)"],
     area: "world-religion",
     group: "Movements from a Christian background",
     role: "Restorationist Bible movement that grew from the Bible Students of Charles Taze Russell",
@@ -1194,6 +1215,8 @@ export const worldReligions: BeliefRecord[] = [
     viewOfJesus: [
       "Jesus is God's only-begotten Son, his first creation, through whom all other things were made; he lived as a perfect man, died as a ransom on a torture stake rather than a cross, was raised as a spirit, and now rules as King of God's Kingdom. Witnesses honour and obey him but worship Jehovah alone.",
     ],
+    evangelicalFraming:
+      "This article is written from a Protestant evangelical Christian position. Evangelicals admire the Witnesses' devotion to the Bible, their discipline and their courage under persecution. They hold, however, that the Witnesses' teaching that Jesus is a created being and that the holy spirit is not a person denies the deity of Christ and the Trinity that Scripture teaches, and that no governing body speaks for God with the authority of Scripture. That is why this app files the Witnesses with movements from a Christian background. Witness teaching is described first in their own terms, and Witnesses are given their reply at the end.",
     evangelicalView: {
       agreements: [
         "Evangelicals admire the Witnesses' devotion to the Bible, their personal witness, their moral discipline, their courage under persecution — including under the Nazis — and their insistence that faith shape the whole of life.",
@@ -1208,6 +1231,7 @@ export const worldReligions: BeliefRecord[] = [
         "Some evangelicals share the Witnesses' conditional view of the soul and their rejection of eternal conscious torment (annihilationism, or conditional immortality); most do not. Evangelicals who hold it do so while confessing the Trinity, which is the point of difference here.",
       ],
     },
+    answeredBy: "Jehovah's Witnesses",
     ownAnswer: [
       "Witnesses answer that the word Trinity is not in the Bible, that the doctrine was developed in the fourth century under the influence of Platonic philosophy, and that Jesus himself said the Father is greater than he is (John 14:28). They translate John 1:1 as saying the Word 'was a god', a rendering most specialists in New Testament grammar reject but which Witnesses defend on grammatical grounds.",
       "They answer that they do put faith in Jesus's ransom, that works are the evidence of genuine faith (James 2:26), and that the Governing Body does not claim inspiration but serves as the channel through which the congregation receives spiritual food. They hold that faithful Christians in every age have been few, as Jesus said the road to life is narrow.",
@@ -1296,7 +1320,7 @@ export const worldReligions: BeliefRecord[] = [
       },
       verified: true,
       note:
-        "Worldwide, Pew counts 1.9 billion 'religiously unaffiliated' people in 2020 (24.2% of the world), but that category combines atheists, agnostics and people who say their religion is 'nothing in particular', and Pew does not separate them; about two-thirds of the unaffiliated live in China. In the United States, 'nones' are 29% of adults, of whom atheists are 5 points. In a separate Pew survey in summer 2023, 77% of self-identified US atheists said they do not believe in God, a higher power or any spiritual force — so even the label is not a precise measure of belief.",
+        "Worldwide, Pew counts 1.9 billion 'religiously unaffiliated' people in 2020 (24% of the world), but that category combines atheists, agnostics and people who say their religion is 'nothing in particular', and Pew does not separate them; about two-thirds of the unaffiliated live in China. In the United States, 'nones' are 29% of adults, of whom atheists are 5 points. In a separate Pew survey in summer 2023, 77% of self-identified US atheists said they do not believe in God, a higher power or any spiritual force — so even the label is not a precise measure of belief.",
     },
     distinctives: [
       "Atheism is defined by what it does not hold. It makes no claim about the meaning of life, ethics or politics, and atheists hold a wide range of views on all of them. Philosophers commonly distinguish 'negative' or 'weak' atheism (simply not believing in God) from 'positive' or 'strong' atheism (believing that there is no God).",
@@ -1349,6 +1373,8 @@ export const worldReligions: BeliefRecord[] = [
     relationships: [
       "Agnosticism is related but distinct: an agnostic holds that God's existence cannot be known, or has not been, while an atheist does not believe in God. Many people are both — not believing, and not claiming to know.",
     ],
+    evangelicalFraming:
+      "This article is written from a Protestant evangelical Christian position. Evangelicals take atheism seriously as an answer to real questions, above all the problem of suffering, and agree that beliefs should be held for good reasons. They believe the reasons point the other way: that the existence and order of the universe, the moral law and the resurrection of Jesus point to the God who made the world and has made himself known in Christ. Atheism is described first as atheists themselves describe it, and atheists are given their reply at the end.",
     evangelicalView: {
       agreements: [
         "Evangelicals agree with atheists that beliefs should be held honestly and with good reason, that superstition, manipulation and religious hypocrisy deserve criticism, and that the suffering in the world is a real and serious question that must not be brushed aside.",
@@ -1363,6 +1389,7 @@ export const worldReligions: BeliefRecord[] = [
         "Evangelicals differ on method — classical apologists start from arguments for God's existence, evidentialists from the historical evidence for the resurrection, presuppositionalists from the claim that reason itself depends on God — and on how to relate faith and science, including evolution.",
       ],
     },
+    answeredBy: "atheists",
     ownAnswer: [
       "Atheists answer that the burden of proof lies with those who claim God exists, that the arguments for God do not succeed, and that natural explanations have steadily replaced supernatural ones. On the resurrection, they answer that extraordinary claims require extraordinary evidence, and that ancient testimony from believers cannot supply it.",
       "On morality and meaning, atheists answer that many good people live ethical, meaningful lives without God, that grounding morality in divine command makes it arbitrary, and that a good God would not leave so much suffering and so much doubt about his existence.",
@@ -1482,6 +1509,8 @@ export const worldReligions: BeliefRecord[] = [
     relationships: [
       "Agnosticism overlaps with atheism and with religious doubt. Many people move through agnosticism in either direction — toward faith or away from it — and the Christian tradition has its own long history of honest doubt and the search for God.",
     ],
+    evangelicalFraming:
+      "This article is written from a Protestant evangelical Christian position. Evangelicals respect the agnostic's honesty about what cannot be proved, and agree that God is not demonstrated like a theorem. They believe, though, that God has not left himself unknown: he has made himself known in creation, in Scripture and above all in Jesus Christ, and he is found by those who seek him. Agnosticism is described first as agnostics themselves describe it, and agnostics are given their reply at the end.",
     evangelicalView: {
       agreements: [
         "Evangelicals respect the agnostic's honesty about what they do not know, and agree that God is not proved like a theorem and that the human mind has real limits. Many Christians have passed through seasons of doubt.",
@@ -1495,6 +1524,7 @@ export const worldReligions: BeliefRecord[] = [
         "Evangelicals differ on how much weight to give rational argument in reaching agnostics, as against personal testimony, Christian community and the reading of Scripture.",
       ],
     },
+    answeredBy: "agnostics",
     ownAnswer: [
       "Agnostics answer that they have looked at the arguments and the claims of revelation and found them not decisive, that the many conflicting religions each claim to have the truth, and that admitting uncertainty is more honest than professing a faith one does not have.",
       "Many agnostics add that they would believe if they were given good reason, that a God who wanted to be known could make himself plain, and that a sincere search should not be treated as a moral failing.",

@@ -1181,6 +1181,16 @@ const OWNER_NAME_OVERRIDES: Record<string, Record<string, string | null>> = {
   // personal name on a first-century ossuary. Neither mention addresses God, so both are
   // suppressed here rather than linked. Added together with the barabbas record, 2026-10-16.
   abba: { barabbas: null },
+  // Religions and Denominations (src/data/beliefs), audited 2026-11-26. In the Judaism article
+  // "Jews"/"Jewish" means the Jewish people and community today, some forty times over; the `jews`
+  // topic is the New Testament's term ("Descendants of Judah; New Testament Term for Israel"), so
+  // every one of those links pointed a reader about modern Judaism at a first-century word study.
+  // In the Latter-day Saints article most "Jesus Christ"s sit inside a church's own name ("The
+  // Church of Jesus Christ of Latter-day Saints", "the Reorganized Church of Jesus Christ of Latter
+  // Day Saints"), where a link to the person page is wrong; the whole-record answer is no link.
+  jews: { judaism: null },
+  jewish: { judaism: null },
+  "jesus christ": { "latter-day-saints": null },
   // "David": the king is the only David with a record, and he is the right answer nearly everywhere.
   // One article names a different one. The Cairo Codex of the Prophets carries a dedication colophon
   // by David b. Yefet, an eleventh- or fifteenth-century Cairo dignitary, and B. Outhwaite's

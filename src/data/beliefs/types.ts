@@ -11,10 +11,14 @@
  * Editorial rules this shape exists to enforce (see automation/manager/beliefs-scope.md §1 and the
  * master prompt's editorial position):
  *
- *  - DESCRIPTION AND ASSESSMENT ARE SEPARATE FIELDS. Every field except `evangelicalView` describes
- *    the tradition in terms its own members would recognise, from its own official or primary
- *    sources. The app's Protestant evangelical assessment lives in `evangelicalView` and nowhere
- *    else, and `ownAnswer` gives the tradition its reply in the same article.
+ *  - EVERY ARTICLE IS WRITTEN FROM A PROTESTANT EVANGELICAL POSITION (Robbie, 2026-09-07 and
+ *    2026-11-26). The app's own voice frames the whole article: `evangelicalFraming` opens it and
+ *    `evangelicalView` sets out the agreements and disagreements in full. That is not licence to
+ *    editorialise inside the descriptive fields: `selfDescription`, `beliefs`, `practices` and the
+ *    rest report each tradition accurately, attributed to it, in terms its own members would
+ *    recognise and from its own official or primary sources. `ownAnswer` gives the tradition its
+ *    reply in the same article, and `evangelicalsDiffer` names real disagreements among
+ *    evangelicals rather than flattening them.
  *  - NEVER INVENT A FIGURE. `adherents.verified` is false whenever the number could not be
  *    confirmed against the cited source on the day it was written; the panel says so to the reader.
  *  - THE WORD "CULT" IS NOT USED, anywhere in this section.
@@ -144,7 +148,14 @@ export interface BeliefRecord {
   /** Optional, world religions mainly: how this tradition understands Jesus. */
   viewOfJesus?: string[];
   /**
-   * The ONLY assessment field. Written from a Protestant evangelical position, fairly and
+   * The app's own position on this tradition, stated in a short paragraph that opens the article
+   * ("From a Protestant evangelical perspective"): where evangelicals stand, what they honour, and
+   * the heart of the disagreement. Written in the app's voice, not attributed to the tradition. For
+   * a `noBibleLinks` record it cites no Bible passage.
+   */
+  evangelicalFraming: string;
+  /**
+   * The full assessment. Written from a Protestant evangelical position, fairly and
    * respectfully. `evangelicalsDiffer` names where evangelicals themselves disagree.
    */
   evangelicalView: {
@@ -154,6 +165,9 @@ export interface BeliefRecord {
   };
   /** How the tradition itself would answer the evangelical disagreements — paragraphs. */
   ownAnswer: string[];
+  /** Who gives that answer, as the heading names them: "How Catholics would answer", "How atheists
+   * would answer". People, not the -ism or the institution, so the heading reads as a sentence. */
+  answeredBy: string;
   /** Official and primary sources first. Minimum four, at least two official/primary. */
   sources: BeliefSource[];
   /** Optional Scripture references, shown as a "Bible References" block. Must be verified, not
