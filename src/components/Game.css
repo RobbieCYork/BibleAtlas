@@ -828,6 +828,19 @@
   font-size: calc(15px * var(--tsz, 1));
 }
 
+/* Seconds until the game moves on by itself, beside "Continue". */
+.game-action-countdown {
+  display: inline-block;
+  min-width: 22px;
+  margin-left: 8px;
+  padding: 0 6px;
+  border-radius: 11px;
+  border: 1.5px solid currentColor;
+  font-size: calc(13px * var(--tsz, 1));
+  line-height: 19px;
+  font-variant-numeric: tabular-nums;
+}
+
 .games-secondary-button.game-action-button {
   background: var(--panel-bg);
 }

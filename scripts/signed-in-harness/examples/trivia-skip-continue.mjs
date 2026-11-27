@@ -3,8 +3,11 @@
  *   node scripts/signed-in-harness/run.mjs --persona member --viewport 390x844 --script scripts/signed-in-harness/examples/trivia-skip-continue.mjs
  *   node scripts/signed-in-harness/run.mjs --persona member --viewport 375x667 --script scripts/signed-in-harness/examples/trivia-skip-continue.mjs
  *
- * One player: Skip before answering (scored as a wrong answer), Continue after, and the question waits
- * for it. Two players: no Skip, Continue only once the round is over. The room RPCs are fakes that
+ * One player: Skip before answering (scored as a wrong answer), Continue after. Two players: no Skip,
+ * Continue only once the round is over. Either way the revealed answer holds four seconds, counted
+ * down on the button, then the game moves on by itself; Continue moves sooner. The countdown stops
+ * while the page is hidden, and a wrong device clock doesn't shorten a question that arrives live.
+ * (trivia-hold.mjs checks the hold with two real browsers.) The room RPCs are fakes that
  * copy the rules of submit_answer() and check_and_advance() (sql/000_baseline.sql) and there is no
  * Realtime, so another player's answer is only seen when this client refetches. The real SQL is not
  * exercised here.
@@ -41,6 +44,7 @@ export default async function (h) {
   const question = () => q.getQuestionById(room().question_ids[room().current_question_index]);
   const calls = { submit: [], advance: [] };
   let refuseAdvance = 0; // refuse this many check_and_advance calls, as a server whose clock is behind would
+  let stampSkew = 0; // added to the next question's stamp: what a device whose clock is off by that much sees
 
   function submit(userId, a) {
     const r = room();
@@ -61,7 +65,7 @@ export default async function (h) {
     const next = a.p_question_index + 1;
     if (next >= r.question_ids.length) r.status = "finished";
     r.current_question_index = next;
-    r.current_question_started_at = new Date().toISOString();
+    r.current_question_started_at = new Date(Date.now() + stampSkew).toISOString();
     return { ...r };
   }
 
@@ -100,9 +104,12 @@ export default async function (h) {
 
   const screen = () =>
     h.evaluate(() => {
-      const buttons = [...document.querySelectorAll(".game-action-button")].map((b) => `${b.textContent.trim()}${b.disabled ? " (disabled)" : ""}`);
+      // The button's words; the countdown beside them is read on its own.
+      const buttons = [...document.querySelectorAll(".game-action-button")].map((b) => `${b.firstChild.textContent.trim()}${b.disabled ? " (disabled)" : ""}`);
       return {
         buttons: buttons.join(", "),
+        countdown: document.querySelector(".game-action-countdown")?.textContent ?? "",
+        timer: document.querySelector(".game-question-timer")?.textContent.trim() ?? "",
         index: document.querySelector(".game-question-index")?.textContent.trim(),
         reveal: document.querySelector(".game-question-reveal")?.textContent.trim() ?? "",
         right: [...document.querySelectorAll(".game-choice-correct")].map((e) => e.textContent.trim()),
@@ -148,6 +155,32 @@ export default async function (h) {
   };
   const press = (text) => h.click({ css: ".game-action-button", text });
   const settle = () => h.sleep(700); // past the double-tap window
+  /** Start noting, inside the page, when the answer appears, each countdown value, and when the next
+   * question (or the results) replaces it. */
+  const watch = () =>
+    h.evaluate(() => {
+      window.__w?.observer.disconnect();
+      const index = () => document.querySelector(".game-question-index")?.textContent.trim() ?? "";
+      const w = (window.__w = { from: index(), reveal: null, gone: null, counts: [] });
+      const look = () => {
+        const over = document.querySelector(".game-action-countdown");
+        if (w.reveal === null && over) w.reveal = performance.now();
+        if (over && w.counts.at(-1) !== over.textContent) w.counts.push(over.textContent);
+        if (w.gone === null && w.reveal !== null && (index() !== w.from || document.querySelector(".game-results"))) w.gone = performance.now();
+      };
+      w.observer = new MutationObserver(look);
+      w.observer.observe(document.body, { subtree: true, childList: true, characterData: true, attributes: true });
+      look();
+    });
+  /** Waits for the game to move on by itself and checks it held about four seconds. */
+  const heldFour = async (label) => {
+    await h.evaluate(async () => { for (let i = 0; i < 300 && window.__w.gone === null; i++) await new Promise((r) => setTimeout(r, 100)); });
+    const w = await h.evaluate(() => ({ held: window.__w.gone === null ? null : window.__w.gone - window.__w.reveal, counts: window.__w.counts.join(" ") }));
+    h.assert(w.held !== null && w.held >= 3950 && w.held < 5000, `${label}: moved on by itself after ${Math.round(w.held)}ms`);
+    h.assert(w.counts === "4 3 2 1", `${label}: the button counted ${w.counts}`);
+  };
+  const setHidden = (hidden) =>
+    h.evaluate((hidden) => { Object.defineProperty(document, "hidden", { configurable: true, get: () => hidden }); document.dispatchEvent(new Event("visibilitychange")); }, hidden);
 
   h.section(`One player (${dev})`);
   await startSolo();
@@ -169,9 +202,10 @@ export default async function (h) {
   await showing(".game-question-reveal", "the answer");
   await shot("solo-skipped");
   await reachable("skipped, Continue");
-  await h.sleep(2600);
   s = await screen();
-  h.assert(calls.advance.length === 0 && s.index.startsWith("Question 1 "), "the question waits: no advance after 2.6s");
+  h.assert(calls.advance.length === 0 && s.index.startsWith("Question 1 ") && /^[1-4]$/.test(s.countdown), `the answer is still up, counting down (${s.countdown})`);
+  await shot("solo-countdown");
+  await settle();
 
   let t0 = Date.now();
   await press("Continue");
@@ -206,19 +240,81 @@ export default async function (h) {
   s = await screen();
   h.assert(calls.advance.length === advances + 1 && calls.submit.length === submits + 1 && s.index.startsWith("Question 4 ") && s.buttons === "Skip", `double tap on Continue: one advance, the next question not skipped (${s.index})`);
 
+  h.section("The answer holds four seconds, then the game moves on");
+  await watch();
+  advances = calls.advance.length;
+  await h.click(".game-choice-button");
+  await heldFour("after answering");
+  h.assert(calls.advance.length === advances + 1 && room().current_question_index === 4, `one call, one question forward (index ${room().current_question_index})`);
+  await settle();
+  await watch();
+  await press("Skip");
+  await heldFour("after Skip");
+  h.assert(room().current_question_index === 5, "one question forward");
+  s = await screen();
+  h.assert(s.buttons === "Skip" && s.countdown === "", "the new question has no countdown");
+  await settle();
+  await watch();
+  advances = calls.advance.length;
+  h.assert(calls.submit.length > 0, "(running the full 15 seconds out)");
+  await h.sleep(13000);
+  await heldFour("after time runs out");
+  h.assert(calls.advance.length === advances + 1 && room().current_question_index === 6, "one call, one question forward");
+
+  h.section("A tap meant for Continue as the game moves on doesn't skip the next question");
+  await settle();
+  await press("Skip");
+  submits = calls.submit.length;
+  await h.waitFor({ css: ".game-question-index", text: "Question 8 " }, { timeout: 8000 });
+  await press("Skip");
+  await h.sleep(300);
+  h.assert(calls.submit.length === submits && (await screen()).buttons === "Skip", "ignored within 600ms of the new question");
+  await settle();
+  await press("Skip");
+  await h.waitFor(".game-question-reveal");
+  h.assert(calls.submit.length === submits + 1, "and works after that");
+
+  h.section("The countdown stops while the page is hidden");
+  advances = calls.advance.length;
+  await setHidden(true);
+  await h.sleep(5500);
+  s = await screen();
+  h.assert(calls.advance.length === advances && s.countdown === "" && s.index.startsWith("Question 8 "), "hidden for 5.5s: no advance");
+  await watch();
+  await setHidden(false);
+  await heldFour("once visible again");
+
+  h.section("A device clock that disagrees with the server");
+  for (const [skew, label] of [[-9000, "9s fast"], [9000, "9s slow"]]) {
+    await settle();
+    stampSkew = skew;
+    await press("Skip");
+    await h.waitFor({ css: ".game-action-button", text: "Continue" });
+    await settle();
+    const was = room().current_question_index;
+    await press("Continue");
+    await h.waitFor({ css: ".game-question-index", text: `Question ${was + 2} ` });
+    await h.sleep(300);
+    s = await screen();
+    h.assert(/1[45]s/.test(s.timer) && s.reveal === "", `clock ${label}: a question arriving live still gets its 15 seconds (${s.timer})`);
+  }
+  stampSkew = 0;
+
   h.section("Time runs out");
+  await settle();
   before = player().score;
   submits = calls.submit.length;
   advances = calls.advance.length;
   room().current_question_started_at = new Date(Date.now() - 20000).toISOString();
   await resume();
-  await h.sleep(1500);
+  await h.sleep(500);
   s = await screen();
-  h.assert(/Time's up/.test(s.reveal) && s.buttons === "Continue" && player().score === before && calls.advance.length === advances, `"${s.reveal}" — nothing scored, waits for Continue`);
+  const timedOut = room().current_question_index;
+  h.assert(/Time's up/.test(s.reveal) && s.buttons === "Continue" && player().score === before && calls.advance.length === advances, `rejoined after time ran out: "${s.reveal}" — nothing scored, counting ${s.countdown}`);
   await reachable("time up");
   await press("Continue");
-  await h.waitFor({ css: ".game-question-index", text: "Question 5 " });
-  h.assert(calls.submit.length === submits, "and moves on");
+  await h.waitFor({ css: ".game-question-index", text: `Question ${timedOut + 2} ` });
+  h.assert(calls.submit.length === submits, "Continue moves on sooner");
   await settle();
 
   h.section("The server refuses the first advance");
@@ -230,7 +326,7 @@ export default async function (h) {
   await press("Continue");
   await h.sleep(300);
   h.assert((await screen()).buttons === "Continue (disabled)", "Continue shows it is working");
-  await h.waitFor({ css: ".game-question-index", text: "Question 6 " }, { timeout: 8000 });
+  await h.waitFor({ css: ".game-question-index", text: `Question ${timedOut + 3} ` }, { timeout: 8000 });
   h.assert(calls.advance.length === advances + 3, "retried until accepted, one question forward");
 
   h.section("Resuming a skipped question, and the last question");
@@ -250,6 +346,14 @@ export default async function (h) {
   await press("Continue");
   await h.waitFor(".game-results-banner");
   h.assert(room().status === "finished", "Continue on the last question shows the results");
+  await startSolo();
+  room().current_question_index = room().question_ids.length - 1;
+  room().current_question_started_at = new Date().toISOString();
+  await resume();
+  await watch();
+  await press("Skip");
+  await heldFour("last question, before the results");
+  h.assert(room().status === "finished", "then the results");
 
   h.section("A question this build no longer has");
   await startSolo();
@@ -307,10 +411,10 @@ export default async function (h) {
   h.assert(s.buttons === "Continue", `everyone has answered: ${s.buttons}`);
   await reachable("two players, Continue");
   await shot("multi-continue");
-  await h.sleep(1200);
+  await h.sleep(4500);
   h.assert(calls.advance.length >= 1, "the automatic advance is still trying on its own");
   refuseAdvance = 0;
-  await h.waitFor({ css: ".game-question-index", text: "Question 2 " }, { timeout: 8000 });
+  await h.waitFor({ css: ".game-question-index", text: "Question 2 " }, { timeout: 12000 });
   await h.sleep(300);
   await none("next question");
 
@@ -330,7 +434,7 @@ export default async function (h) {
   await h.click(".game-choice-button");
   await h.waitFor({ css: ".game-question-index", text: "Question 3 " });
   const seen = await h.evaluate(() => window.__seen);
-  h.assert(seen !== null && seen < 800, `Continue appeared ${Math.round(seen)}ms after the last answer, ahead of the 900ms automatic advance`);
+  h.assert(seen !== null && seen < 800, `Continue appeared ${Math.round(seen)}ms after the last answer, and pressing it skips the four-second hold`);
   await h.sleep(2500);
   h.assert(room().current_question_index === 2 && calls.advance.length === advances + 1, `pressing it moved the room once (question index ${room().current_question_index}, ${calls.advance.length - advances} call)`);
 
@@ -348,13 +452,13 @@ export default async function (h) {
   await h.sleep(2500);
   h.assert(room().current_question_index === 3, "two players pressing together move the room one question");
 
-  // Nobody presses anything: the automatic advance carries on as before.
+  // Nobody presses anything: the room advances itself after the hold.
   now = question();
   submit(OTHER, { p_question_index: 3, p_answer_index: now.correctIndex, p_correct: true, p_points: now.points });
-  t0 = Date.now();
+  await watch();
   await h.click(".game-choice-button");
-  await h.waitFor({ css: ".game-question-index", text: "Question 5 " }, { timeout: 8000 });
-  h.assert(room().current_question_index === 4, `with no press the room advances itself (${Date.now() - t0}ms)`);
+  await heldFour("two players, no press");
+  h.assert(room().current_question_index === 4, "the room moved one question");
 
   // Time runs out with one player silent.
   refuseAdvance = 1000;

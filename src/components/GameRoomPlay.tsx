@@ -10,8 +10,8 @@ interface GameRoomPlayProps {
   /** Bumped by GameView every time a game_buzzes row changes for this room — the trigger to refetch
    * the current question's answers (answers aren't otherwise part of GameView's own state). */
   answersVersion: number;
-  /** The room as check_and_advance() returned it, so pressing Continue moves this screen on without
-   * waiting for the room's change to arrive over Realtime. */
+  /** The room as check_and_advance() returned it, so this screen moves on without waiting for the
+   * room's change to arrive over Realtime. */
   onRoomAdvanced: (room: GameRoom) => void;
   /** This player's own answer has been scored. */
   onScored: () => void;
@@ -24,10 +24,8 @@ interface GameRoomPlayProps {
 /** Server-side round window — see check_and_advance() in sql/005_everyone_answers.sql. Kept in sync
  * with that function's own `interval '15 seconds'` guard. */
 const ROUND_SECONDS = 15;
-// Short — just long enough to register "correct/wrong" before moving on, not a dramatic pause. Once
-// everyone's answered there's nothing left to wait for, so the question should change quickly rather
-// than sitting on the reveal.
-const REVEAL_DELAY_MS = 900;
+/** How long the revealed answer stays up before this device moves the game on by itself. */
+const REVEAL_HOLD_MS = 4_000;
 const ADVANCE_RETRY_MS = 2_000;
 /** Continue retries a refused advance this often, this many times, before offering itself again. The
  * usual refusal is a device clock slightly ahead of the server's 15 seconds. */
@@ -35,7 +33,8 @@ const CONTINUE_RETRY_MS = 1_000;
 const CONTINUE_ATTEMPTS = 15;
 /** A second press this soon after the last belongs to the same double tap. Without this, the second
  * tap on Skip would land on the Continue button that takes its place, and the second tap on Continue
- * on the next question's Skip. */
+ * on the next question's Skip. A new question counts as a press, so a tap aimed at Continue just as
+ * the game moves on by itself doesn't skip it. */
 const DOUBLE_TAP_MS = 600;
 /** The answer_index a skipped question is recorded with. It matches no choice, so to the server and
  * to every screen it is an ordinary wrong answer. */
@@ -54,9 +53,21 @@ interface Turn {
    * whether it actually won that race. */
   awarded: number | null;
   continuing: boolean;
+  /** When the game will move on by itself (this device's clock); null while it isn't counting. */
+  advanceAt: number | null;
 }
 
-const newTurn = (index: number): Turn => ({ index, answers: [], myChoice: null, submitting: false, awarded: null, continuing: false });
+const newTurn = (index: number): Turn => ({ index, answers: [], myChoice: null, submitting: false, awarded: null, continuing: false, advanceAt: null });
+
+function usePageVisible() {
+  const [visible, setVisible] = useState(() => !document.hidden);
+  useEffect(() => {
+    const onChange = () => setVisible(!document.hidden);
+    document.addEventListener("visibilitychange", onChange);
+    return () => document.removeEventListener("visibilitychange", onChange);
+  }, []);
+  return visible;
+}
 
 /** Live "everyone answers" gameplay for one question at a time. Every seated player gets one shot at
  * each question — submitAnswer() scores their own answer immediately (no separate reveal-then-resolve
@@ -64,19 +75,21 @@ const newTurn = (index: number): Turn => ({ index, answers: [], myChoice: null, 
  * elapses or everyone's answered, whichever's first — computed identically on every client from the
  * same room.current_question_started_at + answer count, no extra signaling needed.
  *
- * Moving on depends on how many are seated:
- * - one player: a Skip button until they answer, then Continue. The question stays up until they
- *   press it. Skip is recorded and scored as a wrong answer; running out of time still scores nothing.
- * - two or more: no Skip. Once the round is over every client shows Continue and also calls
- *   checkAndAdvance() on its own after a short pause. Whichever call arrives first moves the whole
- *   room; check_and_advance() ignores the rest. */
+ * Once the round is over the answer is revealed, and each client calls checkAndAdvance() on its own
+ * REVEAL_HOLD_MS after it showed that, or at once if its player presses Continue. Whichever call
+ * arrives first moves the whole room; check_and_advance() ignores the rest, because each call names
+ * the question it is ending.
+ *
+ * Alone, there is also a Skip button until the player answers. Skip is recorded and scored as a wrong
+ * answer; running out of time scores nothing. */
 export default function GameRoomPlay({ room, players, userId, answersVersion, onRoomAdvanced, onScored, renderVideoStrip }: GameRoomPlayProps) {
   const index = room.current_question_index;
   const question = getQuestionById(room.question_ids[index] ?? "");
   const [stored, setStored] = useState<Turn>(() => newTurn(index));
   const turn = stored.index === index ? stored : newTurn(index);
-  const { answers, myChoice, submitting, awarded, continuing } = turn;
+  const { answers, myChoice, submitting, awarded, continuing, advanceAt } = turn;
   const [now, setNow] = useState(() => Date.now());
+  const visible = usePageVisible();
 
   const promptRef = useRef<HTMLParagraphElement>(null);
   const revealRef = useRef<HTMLParagraphElement>(null);
@@ -84,16 +97,8 @@ export default function GameRoomPlay({ room, players, userId, answersVersion, on
   indexRef.current = index;
   const submittedIndexRef = useRef(-1);
   const lastPressRef = useRef(0);
-  const mountedRef = useRef(true);
   const onRoomAdvancedRef = useRef(onRoomAdvanced);
   onRoomAdvancedRef.current = onRoomAdvanced;
-
-  useEffect(() => {
-    mountedRef.current = true;
-    return () => {
-      mountedRef.current = false;
-    };
-  }, []);
 
   /** Changes the state of question `at`, and does nothing if the room has since moved on. */
   const update = (at: number, change: Partial<Turn>) => {
@@ -116,7 +121,25 @@ export default function GameRoomPlay({ room, players, userId, answersVersion, on
     return () => clearInterval(timer);
   }, []);
 
-  const startedAt = room.current_question_started_at ? new Date(room.current_question_started_at).getTime() : now;
+  // The server stamps when each question began; this device's clock may disagree with the server's.
+  // A question that arrives while the screen is up (or the opening one) was stamped moments ago, so
+  // the difference is measured then and the 15 seconds run on this clock. Otherwise a fast clock
+  // would reveal early and move the room on before the others had their time with the answer. A game
+  // rejoined partway keeps the server's stamp as it is.
+  const stamp = room.current_question_started_at ? new Date(room.current_question_started_at).getTime() : null;
+  const clockRef = useRef<{ index: number; offset: number } | null>(null);
+  if (stamp !== null && clockRef.current?.index !== index) {
+    const sinceStamp = Date.now() - stamp;
+    const justBegun = clockRef.current !== null || (index === 0 && Math.abs(sinceStamp) < ROUND_SECONDS * 1000);
+    clockRef.current = { index, offset: justBegun ? sinceStamp : 0 };
+  }
+  const startedAt = stamp !== null ? stamp + (clockRef.current?.offset ?? 0) : now;
+  // The quarter-second tick above can end a round late, which would come off another player's time with
+  // the answer. This one lands on the deadline.
+  useEffect(() => {
+    const timer = setTimeout(() => setNow(Date.now()), Math.max(0, startedAt + ROUND_SECONDS * 1000 - Date.now()) + 5);
+    return () => clearTimeout(timer);
+  }, [startedAt]);
   const elapsedMs = now - startedAt;
   const secondsLeft = Math.max(0, Math.ceil((ROUND_SECONDS * 1000 - elapsedMs) / 1000));
   const everyoneAnswered = players.length > 0 && answers.length >= players.length;
@@ -124,45 +147,56 @@ export default function GameRoomPlay({ room, players, userId, answersVersion, on
   // The same count the rest of this game calls solo (and that submit_answer() withholds the 2x bonus
   // on), except that an empty list means the players have not loaded yet.
   const solo = players.length === 1;
-  const advancesItself = players.length > 1;
 
   // The bar under the question takes up room, so on a small phone bring each new question, and then
   // its answer, into view. "nearest" leaves the page still when they are already showing.
+  const shownIndexRef = useRef(index);
   useEffect(() => {
     promptRef.current?.scrollIntoView({ block: "nearest" });
+    if (shownIndexRef.current !== index) {
+      shownIndexRef.current = index;
+      lastPressRef.current = Date.now();
+    }
   }, [index]);
   useEffect(() => {
     if (roundOver) revealRef.current?.scrollIntoView({ block: "nearest" });
   }, [roundOver, index]);
 
-  // With others at the table, once the round's over every client (independently, from the same shared
-  // state above) shows the reveal; after a short pause to let it land, one call to checkAndAdvance()
-  // moves the room on. This KEEPS RETRYING every couple seconds rather than trying once — a single
-  // failed call (server-clock skew against the RPC's own 15s guard, a backgrounded/throttled tab, a
-  // dropped request) used to permanently stall the room, since nothing else was allowed to try again
-  // for that question. Every seated player's client runs this same loop, so it's not reliant on any
-  // single "host" being present; checkAndAdvance() itself no-ops harmlessly once someone else's call
-  // has already landed, which is what actually stops the loop (via the index changing and this effect
-  // cleaning up), not any local success flag.
+  // Moving on. There is only ever one of these loops: a Continue press replaces the countdown with an
+  // immediate call. The countdown runs only while the page is on screen, so it is measured from when
+  // this player could see the answer, and starts over if they were away.
+  //
+  // Both kinds KEEP RETRYING. A single failed call (server-clock skew against the RPC's own 15s guard,
+  // a throttled tab, a dropped request) used to permanently stall the room. After CONTINUE_ATTEMPTS a
+  // press gives the button back and the countdown takes over again. Every seated player's client runs
+  // this, so it doesn't rely on a "host" being present; the loop stops when the index changes and this
+  // effect cleans up.
   useEffect(() => {
-    if (!roundOver || !advancesItself) return;
+    if (!roundOver || !(continuing || visible)) return;
     let cancelled = false;
     let timer: ReturnType<typeof setTimeout>;
+    let attemptsLeft = CONTINUE_ATTEMPTS;
     const attempt = () => {
       checkAndAdvance(room.id, index)
         .then((next) => {
           if (!cancelled) onRoomAdvancedRef.current(next);
         })
         .catch(() => {
-          if (!cancelled) timer = setTimeout(attempt, ADVANCE_RETRY_MS);
+          if (cancelled) return;
+          if (continuing && --attemptsLeft === 0) update(index, { continuing: false });
+          else timer = setTimeout(attempt, continuing ? CONTINUE_RETRY_MS : ADVANCE_RETRY_MS);
         });
     };
-    timer = setTimeout(attempt, REVEAL_DELAY_MS);
+    const hold = continuing ? 0 : REVEAL_HOLD_MS;
+    if (!continuing) update(index, { advanceAt: Date.now() + hold });
+    timer = setTimeout(attempt, hold);
     return () => {
       cancelled = true;
       clearTimeout(timer);
+      update(index, { advanceAt: null });
     };
-  }, [roundOver, advancesItself, room.id, index]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [roundOver, continuing, visible, room.id, index]);
 
   /** False for the second tap of a double tap on the buttons below the question. */
   const acceptPress = () => {
@@ -173,24 +207,22 @@ export default function GameRoomPlay({ room, players, userId, answersVersion, on
   };
 
   const handleContinue = () => {
-    if (!acceptPress() || continuing) return;
-    update(index, { continuing: true });
-    const attempt = (left: number) => {
-      if (!mountedRef.current || indexRef.current !== index) return;
-      checkAndAdvance(room.id, index)
-        .then((next) => onRoomAdvancedRef.current(next))
-        .catch(() => {
-          if (left > 1) setTimeout(() => attempt(left - 1), CONTINUE_RETRY_MS);
-          else update(index, { continuing: false });
-        });
-    };
-    attempt(CONTINUE_ATTEMPTS);
+    if (acceptPress() && !continuing) update(index, { continuing: true });
   };
+
+  // `now` ticks every quarter second, so it can lag the moment the countdown was set.
+  const countdown =
+    advanceAt !== null && !continuing ? Math.min(REVEAL_HOLD_MS / 1000, Math.ceil((advanceAt - now) / 1000)) : 0;
 
   const continueBar = (
     <div className="game-action-bar">
       <button type="button" className="games-primary-button game-action-button" onClick={handleContinue} disabled={!roundOver || continuing}>
         Continue
+        {countdown > 0 && (
+          <span className="game-action-countdown" aria-hidden="true">
+            {countdown}
+          </span>
+        )}
       </button>
     </div>
   );
