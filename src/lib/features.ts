@@ -98,7 +98,8 @@ export type GameFeatureKey =
   | "game_fill_blank"
   | "game_memorization"
   | "game_chronology"
-  | "game_daily_name";
+  | "game_daily_name"
+  | "game_twenty_questions";
 
 /** Display order and copy for the owner's Features list. `where` names the entry points that the
  * flag actually hides, so the owner knows what flipping it does — and what it does not. */
@@ -135,6 +136,7 @@ export const FEATURES: ReadonlyArray<FeatureDef> = [
   { key: "game_memorization", label: "Scripture Memorization Challenge", where: GAME_WHERE("Scripture Memorization Challenge"), parent: "games_trivia" },
   { key: "game_chronology", label: "Chronology", where: GAME_WHERE("Chronology"), parent: "games_trivia" },
   { key: "game_daily_name", label: "Daily Name", where: GAME_WHERE("Daily Name"), parent: "games_trivia" },
+  { key: "game_twenty_questions", label: "20 Questions", where: GAME_WHERE("20 Questions"), parent: "games_trivia" },
 ];
 
 /** child -> parent, built from FEATURES so there is one list to keep in step. */
@@ -307,7 +309,7 @@ export async function setFeatureStage(key: FeatureKey, live: boolean): Promise<v
       throw new Error("The feature-stage migration (sql/039) hasn't been applied to this database yet.");
     if (error.code === "22023" && /unknown feature/.test(error.message) && PARENT[key])
       throw new Error(
-        key === "game_daily_name"
+        key === "game_daily_name" || key === "game_twenty_questions"
           ? "This game's stage row (sql/053) hasn't been applied to this database yet."
           : "The per-game stages migration (sql/040) hasn't been applied to this database yet."
       );

@@ -13,6 +13,7 @@ import { formatWhen } from "../lib/adminApi";
 /** Which migration adds each per-game row, for the "not stored yet" note. */
 const MIGRATION_FOR: Partial<Record<FeatureKey, string>> = {
   game_daily_name: "sql/053",
+  game_twenty_questions: "sql/053",
 };
 
 /** The small orange dot drawn beside a Testing feature's own entry point. It only ever renders for

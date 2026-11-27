@@ -8,6 +8,7 @@ import FillBlankView from "./FillBlankView";
 import MemorizationView from "./MemorizationView";
 import ChronologyView from "./ChronologyView";
 import DailyNameView from "./DailyNameView";
+import TwentyQuestionsView from "./TwentyQuestionsView";
 import type { OpenGameArticle } from "../lib/gameArticles";
 import BackButton from "./BackButton";
 import "./Game.css";
@@ -74,6 +75,7 @@ export default function GameView({ session, onClose, gameCenterNonce, onOpenArti
   if (activeGame === "memorization") return <MemorizationView onBack={backToCenter} />;
   if (activeGame === "chronology") return <ChronologyView onBack={backToCenter} />;
   if (activeGame === "daily-name") return <DailyNameView onBack={backToCenter} onOpenArticle={onOpenArticle} />;
+  if (activeGame === "twenty-questions") return <TwentyQuestionsView onBack={backToCenter} onOpenArticle={onOpenArticle} />;
 
   return (
     <div className="game-root" data-page-bg="game-center">

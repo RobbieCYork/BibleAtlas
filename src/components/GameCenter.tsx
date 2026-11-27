@@ -59,6 +59,13 @@ export const GAMES: GameDef[] = [
     title: "Daily Name",
     tagline: "One hidden Bible name a day, the same for everyone — six guesses. Practice as much as you like.",
   },
+  {
+    key: "twenty-questions",
+    feature: "game_twenty_questions",
+    icon: "twentyQuestions",
+    title: "20 Questions",
+    tagline: "A secret person, place or thing from the Bible — find it in twenty yes-or-no questions.",
+  },
 ];
 
 interface GameCenterProps {

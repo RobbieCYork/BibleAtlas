@@ -5,7 +5,7 @@
  */
 import { openAdminConsole, MENU_BUTTON } from "../lib/app.mjs";
 
-const GAMES = ["Bible Trivia", "Saving Peter", "Fill in the Blank", "Scripture Memorization Challenge", "Chronology", "Daily Name"];
+const GAMES = ["Bible Trivia", "Saving Peter", "Fill in the Blank", "Scripture Memorization Challenge", "Chronology", "Daily Name", "20 Questions"];
 const N = GAMES.length;
 
 const featuresTab = async (h) => {
