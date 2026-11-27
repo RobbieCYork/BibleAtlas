@@ -1,5 +1,5 @@
 /**
- * My Profile -> Theme is a heading, a helper line and a native select, built like "Bible version".
+ * My Profile -> Theme is a heading and a native select, built like "Bible version". Neither has a helper line.
  *   node scripts/signed-in-harness/run.mjs --persona member --viewport 390x844 \
  *        --script scripts/signed-in-harness/examples/theme-dropdown.mjs --out <dir>
  * Run at 390x844 and 1280x800. Per theme: choosing it applies at once, is saved on this device and is
@@ -26,15 +26,16 @@ const applied = (h) => h.evaluate(() => ({ attr: document.documentElement.getAtt
 const compare = (h) => h.evaluate(() => {
   const read = (id) => {
     const s = document.getElementById(id); const sec = s?.parentElement; if (!sec) return null;
-    const label = sec.querySelector("label"), note = sec.querySelector("p");
+    const label = sec.querySelector("label");
     const look = (el, props) => props.map((p) => getComputedStyle(el).getPropertyValue(p)).join("|");
     const r = s.getBoundingClientRect();
     return {
       shape: [...sec.children].map((c) => `${c.tagName}.${c.className}`).join(" "),
       select: look(s, ["appearance", "font-family", "font-size", "font-weight", "color", "background-color", "border-top-width", "border-top-style", "border-top-color", "border-radius", "padding-top", "padding-left", "height"]),
       label: look(label, ["font-family", "font-size", "font-weight", "color"]),
-      note: look(note, ["font-family", "font-size", "color", "border-bottom-width", "margin-bottom"]),
-      x: Math.round(r.x), w: Math.round(r.width), h: Math.round(r.height), heading: label.textContent, helper: note.textContent,
+      gap: Math.round((r.top - label.getBoundingClientRect().bottom) * 10) / 10,
+      name: [...s.labels].map((l) => l.textContent.trim()).join(" "), paragraphs: sec.querySelectorAll("p").length,
+      x: Math.round(r.x), w: Math.round(r.width), h: Math.round(r.height), heading: label.textContent,
     };
   };
   return { bible: read("myprofile-bible-version"), theme: read("myprofile-theme"), overflow: document.documentElement.scrollWidth > innerWidth + 1 };
@@ -51,6 +52,7 @@ export default async function (h) {
   h.assert(JSON.stringify(options) === JSON.stringify(Object.entries(THEMES)), `options in order: ${options.map((o) => o[1]).join(", ")}`);
   const text = await h.evaluate(() => document.querySelector(".myprofile-root").innerText);
   h.assert(!/appearance/i.test(text), "My Profile no longer says Appearance");
+  h.assert(!/Bible tab opens and reads in|look of the app/i.test(text), "both helper lines are gone");
   h.assert((await h.count(".skin-picker, .skin-toggle, .skin-card")) === 0, "old collapsible row and cards are gone");
 
   for (const [id, label] of Object.entries(THEMES)) {
@@ -63,8 +65,11 @@ export default async function (h) {
     h.assert(a.attr === id && a.saved === id && a.value === id, `${label} still applied and selected after reload (${JSON.stringify(a)})`);
     await showSections(h); await h.sleep(500);
     const c = await compare(h);
-    h.assert(c.theme.heading.trim() === "Theme" && c.theme.helper.length > 0, `heading "${c.theme.heading.trim()}" + helper "${c.theme.helper}"`);
-    for (const k of ["shape", "select", "label", "note", "x"]) h.assert(c.theme[k] === c.bible[k], `${id}: Theme ${k} matches Bible version (${c.theme[k]}${c.theme[k] === c.bible[k] ? "" : ` vs ${c.bible[k]}`})`);
+    for (const [s, name] of [[c.bible, "Bible version"], [c.theme, "Theme"]]) {
+      h.assert(s.heading.trim() === name && s.name === name, `${name}: heading shown and names the select ("${s.name}")`);
+      h.assert(s.paragraphs === 0 && s.gap === 6, `${name}: no helper line, ${s.gap}px from heading to select`);
+    }
+    for (const k of ["shape", "select", "label", "gap", "x"]) h.assert(c.theme[k] === c.bible[k], `${id}: Theme ${k} matches Bible version (${c.theme[k]}${c.theme[k] === c.bible[k] ? "" : ` vs ${c.bible[k]}`})`);
     console.log(`  select sizes: bible ${c.bible.w}x${c.bible.h}, theme ${c.theme.w}x${c.theme.h}`);
     h.assert(!c.overflow, `${id}: no horizontal overflow`);
     console.log("  shot:", await h.screenshot(`theme-${id}-${dev}.png`));

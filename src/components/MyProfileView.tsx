@@ -655,7 +655,6 @@ function BibleVersionSetting() {
       <label className="auth-settings-label" htmlFor="myprofile-bible-version">
         Bible version
       </label>
-      <p className="auth-benefits auth-benefits-inline">The translation the Bible tab opens and reads in.</p>
       <select id="myprofile-bible-version" value={translation} onChange={(e) => setTranslation(e.target.value)}>
         {TRANSLATIONS.map((t) => (
           <option key={t.id} value={t.id}>

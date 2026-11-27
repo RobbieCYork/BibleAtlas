@@ -2140,13 +2140,6 @@ body.resizing-panels {
   border-bottom: 1px solid var(--border);
 }
 
-/* A description that belongs to the control right under it: no rule between the two. */
-.auth-benefits-inline {
-  margin-bottom: 0;
-  padding-bottom: 0;
-  border-bottom: none;
-}
-
 .auth-settings-section {
   display: flex;
   align-items: center;
