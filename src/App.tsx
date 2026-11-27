@@ -1031,7 +1031,7 @@ function App() {
     else if (prev.kind === "timelineEvent") handleSelectTimelineEvent(prev.id);
     else if (prev.kind === "timeline") {
       // Restore Timeline mode at the exact view it was left at, rather than wherever openTimeline()
-      // would otherwise land (the resumed/cold-start default) or the full-dataset Fit view.
+      // would otherwise land (the resumed view or the cold-start default).
       setSavedTimelineView(prev.view);
       openTimeline();
     } else handleSelectPerson(prev.id);

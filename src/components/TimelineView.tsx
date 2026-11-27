@@ -1,5 +1,5 @@
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import type { ReactNode } from "react";
+import { useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
+import type { CSSProperties, ReactNode } from "react";
 import { timelineEvents } from "../data/timelineEvents";
 import { bookWritingWindows } from "../data/bookWritingWindows";
 import type { BookWritingWindow } from "../data/bookWritingWindows";
@@ -36,18 +36,19 @@ import "./TimelineView.css";
  * Any of the lanes above the axis can be hidden via the "Lanes" button in the header
  * (TimelineLaneMenu) — the choice persists in localStorage. Hidden lanes are skipped entirely (no
  * clustering/label math computed for them — see the `geom`/`bookPack`/`lifePack`/`eventsLayer`
- * memos below). Each visible lane gets its own generous, FIXED height (see `geom` below) — lanes
- * are never stretched to exactly fill the viewport and never squeezed thinner to cram more lanes
- * above the fold. The lane stack's total height is just the sum of whatever's checked, and the
- * outer viewport (.tl-canvas-viewport) scrolls vertically to reach anything below the fold — that's
- * the normal case, not an edge case reserved for checking many lanes at once.
+ * memos below). Each visible lane is only as tall as the rows it is SHOWING in the years on screen
+ * (see `rowsNow` and `geom`): bands grow as soon as something scrolls into view and shrink shortly
+ * after the view comes to rest, and the scroll position is held on the band at the top of the
+ * window while they do. The outer viewport (.tl-canvas-viewport) scrolls vertically whenever the
+ * stack is taller than it is.
  *
  * Interactions: two-finger trackpad scroll / mouse wheel = move (vertical scrolls
  * down the lanes, horizontal moves along time; Shift + wheel also moves along
  * time) · pinch (trackpad or touch) and Ctrl/⌘ + wheel = zoom at the pointer ·
- * drag (mouse or touch) = pan, with momentum on release · +/−/Fit buttons ·
- * double-click = zoom in at point · cluster badge click = animated zoom into that
- * bucket's year range. A plain scroll NEVER zooms.
+ * drag (mouse or touch) = pan, with momentum on release · double-click or
+ * double-tap = zoom in at point · keyboard (canvas focused): arrows move, +/− zoom,
+ * 0 returns to the opening view · cluster badge click = animated zoom into that
+ * bucket's year range. A plain scroll NEVER zooms. There are no zoom buttons.
  * ========================================================================== */
 
 /* ------------------------------------------------------------- data intake */
@@ -96,15 +97,18 @@ function lifespanEnd(l: LifespanEntry): number {
 
 /* -------------------------------------------------------------- constants */
 
-const MAX_PX_PER_YEAR = 48;
+const MAX_PX_PER_YEAR = 120;
 const CLUSTER_BUCKET_PX = 24;
-const AXIS_H = 30;
-/** Cold-start default window (no prior view, and the caller passed no `initialView`): roughly
- * Christ's life through the apostolic era and Revelation. This is ONLY the very first view a fresh
- * mount opens to — the Fit/reset-view button and the "0" key both keep zooming out to the FULL
- * dataset range via fitView() below, unchanged. */
-const DEFAULT_VIEW_START_YEAR = -20;
-const DEFAULT_VIEW_END_YEAR = 100;
+const AXIS_H = 22;
+/** The working zoom: what a fresh timeline opens at, what a jump to an event lands at, and what the
+ * "0" key returns to. 40px per year puts the axis ticks FIVE years apart (see pickTickInterval) and
+ * shows about ten years on a phone, so few events overlap and few rows are needed. It is the same
+ * scale on every screen, so a wide window simply shows more years (about 32 at 1280px). */
+const DEFAULT_PX_PER_YEAR = 40;
+/** The year the opening view is centred on: about AD 26–36 on a phone, AD 15–47 on a desktop. */
+const DEFAULT_VIEW_CENTER_YEAR = 31;
+/** A jump to something spanning many years zooms out until that span takes 1/this of the width. */
+const FOCUS_SPAN_PADDING = 2.2;
 /** Gap (px) an item needs before a neighboring label is drawn — used for a marker's title on both
  * sides (it's centered under the dot), a book/lifespan bar's "outside" name on the one side it
  * extends past its own bar, and a range-bar's title on the one side it extends past the bar's own
@@ -112,6 +116,11 @@ const DEFAULT_VIEW_END_YEAR = 100;
  * .tl-book-bar-label-outside / .tl-life-label-outside / .tl-range-bar-label in TimelineView.css),
  * so this gap only has to comfortably clear that bounded width, not an arbitrarily long name. */
 const LABEL_GAP_PX = 120;
+
+/** Two touch taps this close together in time and space are a double-tap (zoom in there). */
+const TAP_MAX_MS = 350;
+const TAP_SLOP_PX = 10;
+const DOUBLE_TAP_RADIUS_PX = 40;
 
 /** Momentum/inertia panning tuning for pointer (mouse + touch) drag release.
  * Trackpad wheel-panning doesn't need this: the OS/browser already emits a
@@ -198,25 +207,26 @@ const SHOW_ERA_MENU = true;
 
 /* ------------------------------------------------------- lane visibility */
 
-/** Generous, FIXED per-lane heights (px). Each visible lane gets exactly this much room — it is
- * never stretched to fill the viewport and never squeezed to fit more lanes above the fold. The
- * event lanes (Biblical/World/Religion) carry the actual markers/clusters/range-bars people click
- * on, plus fanned-out same-year markers and cluster badges, so they get the most room. The books
- * band and lifespans lane are inherently less dense (translucent bars, no clustering) so they stay
- * proportionally slimmer, but still comfortable — never smooshed even with several overlapping rows.
- * EVENT_LANE_H is a flat constant (not divided across however many event lanes are checked): the
- * total stack height is just the sum of whatever's visible, and the outer viewport scrolls
- * vertically to reach anything below the fold. That's the normal case now, not an edge case. */
+/** Ceiling for an event lane in cluster-fallback mode (see MAX_EVENT_ROWS): the tallest the fan-out
+ * of same-year markers is allowed to make it. */
 const EVENT_LANE_H = 170;
+/** Floor for the same: one badge, or one marker with its title. */
+const CLUSTER_LANE_MIN_H = 30;
+/** What a band with nothing in the years on screen keeps below its name chip. */
+const EMPTY_LANE_H = 6;
 /** Per-row height for the Books-of-the-Bible band (a book bar's own row) and the padding added
  * above/below the row stack so top/bottom labels never crowd the lane's tint separator. */
 const BOOK_ROW_H = 20;
 const BOOK_ROW_PAD = 26;
 const MIN_BOOKS_H = 76;
-/** Per-row height for the Lifespans lane, same idea as the books band above. */
-const LIFE_ROW_H = 34;
-const LIFE_ROW_PAD = 26;
-const MIN_LIFE_H = 84;
+/** Per-row height for the Lifespans lane, the bar inside it (tall enough for the two-line label and
+ * to be tapped), and the padding around the row stack. */
+const LIFE_ROW_H = 28;
+const LIFE_BAR_H = 26;
+const LIFE_ROW_PAD = 4;
+/** How long the view must be still before bands give back rows that scrolled out of sight. Growing
+ * is immediate; only shrinking waits, so a drag doesn't make the stack breathe in and out. */
+const ROW_SETTLE_MS = 240;
 
 /** ------------------------------------------------- the lane label's own gutter
  *
@@ -238,22 +248,18 @@ const MIN_LIFE_H = 84;
  * the chip is `white-space: nowrap` and vertically centred inside that fixed height, its height is
  * independent of how long the lane's name is — the longest label reserves exactly as much as the
  * shortest. */
-const LANE_LABEL_TOP = 5;
-const LANE_LABEL_H = 22;
-/** Clear space between the bottom of the chip and the first thing drawn in the lane. Also absorbs
- * the few pixels a marker's title pill (centred on its dot, ~27px tall) reaches above the topmost
- * fan-out position in the cluster fallback path. */
-const LANE_LABEL_GAP = 8;
+const LANE_LABEL_TOP = 3;
+const LANE_LABEL_H = 18;
+/** Clear space between the bottom of the chip and the first thing drawn in the lane. */
+const LANE_LABEL_GAP = 3;
 /** The reserved band, top of lane -> first pixel content may occupy. */
 const LANE_LABEL_RESERVE = LANE_LABEL_TOP + LANE_LABEL_H + LANE_LABEL_GAP;
 
-/** Per-row height for the event lanes (Biblical/World/Religion) when they're packed into multiple
- * rows — same idea as BOOK_ROW_H/LIFE_ROW_H above, sized to comfortably hold a marker dot or
- * range-bar plus its own always-visible two-line title+year pill (see .tl-marker-title /
- * .tl-range-bar-label in TimelineView.css). */
-const EVENT_ROW_H = 27;
-const EVENT_ROW_PAD = 18;
-const MIN_EVENT_ROWS_H = 64;
+/** Per-row height for the event lanes (Biblical/World/Religion): a marker dot or range-bar plus its
+ * own always-visible two-line title+year pill, which is ~24px tall (see .tl-marker-title /
+ * .tl-range-bar-label in TimelineView.css) and is the thing people tap. */
+const EVENT_ROW_H = 26;
+const EVENT_ROW_PAD = 4;
 /** A point-event marker's required horizontal "reach" in px — its own dot plus its always-visible
  * inline label (bounded by max-width + ellipsis, same idiom as every other label in this file) —
  * used to convert to a year-space span for packRows, so two markers whose labels would actually
@@ -263,6 +269,14 @@ const EVENT_MARKER_RESERVE_PX = LABEL_GAP_PX + 20;
 /** A range-bar event's required reach past its own (real, pixel-accurate) end — just enough for its
  * trailing label, which is all the label needs since the bar itself already occupies real dimension. */
 const EVENT_RANGE_LABEL_RESERVE_PX = LABEL_GAP_PX;
+/** What a mark actually paints around its year position, used to decide whether its row is on screen:
+ * half a marker dot to the left; to the right, the title pill (7px margin + 132px max-width). An
+ * outside lifespan name is 5px + 130px. Keep in step with TimelineView.css. */
+const MARKER_HALF_PX = 7;
+const EVENT_LABEL_SPAN_PX = 139;
+const LIFE_OUTSIDE_LABEL_SPAN_PX = 135;
+/** A lifespan bar wider than this carries its name inside itself. */
+const LIFE_LABEL_INSIDE_PX = 72;
 /** Row-packing an event lane can, in principle, require an unbounded number of rows once you zoom
  * out far enough that huge swaths of years all compress into overlapping label reach — at that point
  * the lane would need to grow absurdly tall just to label every event individually. Beyond this many
@@ -411,7 +425,56 @@ function easeOutCubic(t: number): number {
   return 1 - Math.pow(1 - t, 3);
 }
 
+/* ------------------------------------------------------- visible rows */
+
+/** Which packed rows each band is showing, as a string ("bible-church:0,1,3;lifespans:0") so that it
+ * compares by value: panning only rebuilds the layout when a row enters or leaves the screen. */
+function encodeRows(rows: Map<string, Set<number>>): string {
+  return [...rows.keys()]
+    .sort()
+    .map((k) => `${k}:${[...(rows.get(k) as Set<number>)].sort((a, b) => a - b).join(",")}`)
+    .join(";");
+}
+
+function decodeRows(code: string): Map<string, Set<number>> {
+  const out = new Map<string, Set<number>>();
+  for (const part of code.split(";")) {
+    if (!part) continue;
+    const [key, list] = part.split(":");
+    out.set(key, new Set(list ? list.split(",").map(Number) : []));
+  }
+  return out;
+}
+
+/** Every row in either. Only bands present in `now` are kept. */
+function unionRows(held: string, now: string): string {
+  if (held === now || !held) return now;
+  const before = decodeRows(held);
+  const merged = decodeRows(now);
+  for (const [key, set] of merged) for (const r of before.get(key) ?? []) set.add(r);
+  return encodeRows(merged);
+}
+
+/** Where a packed row is drawn: the number of shown rows above it. Shown rows therefore close up with
+ * no holes between them, and a mark that is still off screen already sits where its row will open. */
+function rowSlot(shown: number[], row: number): number {
+  let n = 0;
+  while (n < shown.length && shown[n] < row) n++;
+  return n;
+}
+
 /* ------------------------------------------------------------------ types */
+
+/** One band and the axis row under it — what the scroll position is held against. */
+interface Section {
+  key: string;
+  top: number;
+  height: number;
+}
+
+type ClusterItem =
+  | { kind: "single"; x: number; e: TimelineEvent; yOff: number }
+  | { kind: "cluster"; x: number; events: TimelineEvent[]; lo: number; hi: number };
 
 export interface View {
   /** Zoom: horizontal pixels per year. */
@@ -423,6 +486,8 @@ export interface View {
 interface TooltipState {
   x: number;
   y: number;
+  /** Drawn under the pointer, for marks too close to the top of the window to have room above. */
+  below: boolean;
   title: string;
   sub?: string;
   badge?: string;
@@ -540,16 +605,12 @@ export default function TimelineView({
     return { pxPerYear: w / (maxYear - minYear), startYear: minYear };
   }, [minYear, maxYear]);
 
-  /** Cold-start default (no `initialView` prop and no prior view yet): roughly 20 BC – AD 100,
-   * covering Christ's life, the apostolic era, and Revelation — a far more useful landing point than
-   * fitView()'s full 4272 BC–AD 2207 sweep. Built the same way fitView() is (pxPerYear from the
-   * measured width, run through clampView so it can never fall outside the dataset's own bounds or
-   * MAX_PX_PER_YEAR), just for a fixed ~120-year window instead of the dataset's computed min/max.
-   * Fit/reset-view and the "0" key both keep calling fitView() above, unchanged. */
+  /** The working view: DEFAULT_PX_PER_YEAR around DEFAULT_VIEW_CENTER_YEAR. Used for the cold start
+   * (no `initialView` prop and no prior view yet) and for the "0" key. The whole dataset is still one
+   * choice away, as "The whole span" in the Eras menu (fitView above). */
   const defaultView = useCallback((): View => {
     const w = Math.max(sizeRef.current.w, 1);
-    const span = DEFAULT_VIEW_END_YEAR - DEFAULT_VIEW_START_YEAR;
-    return clampView(w / span, DEFAULT_VIEW_START_YEAR);
+    return clampView(DEFAULT_PX_PER_YEAR, DEFAULT_VIEW_CENTER_YEAR - w / (2 * DEFAULT_PX_PER_YEAR));
   }, [clampView]);
 
   /* ----- measure the canvas ----- */
@@ -586,7 +647,7 @@ export default function TimelineView({
     }
   }, [size.w, clampView]);
 
-  /* ----- animated transitions (buttons, cluster zoom, reset) ----- */
+  /* ----- animated transitions (zoom keys, cluster zoom, jumps, reset) ----- */
 
   const animRef = useRef<number>(0);
 
@@ -626,8 +687,8 @@ export default function TimelineView({
       const fromLog = Math.log(from.pxPerYear);
       const toLog = Math.log(clamped.pxPerYear);
       const t0 = performance.now();
-      // Eased eye-catching "fly-to" transition for button zoom, cluster-click zoom, and
-      // Fit/reset. 380ms sits in the natural range for this kind of UI motion — long
+      // Eased eye-catching "fly-to" transition for keyboard/double-tap zoom, cluster-click zoom,
+      // era jumps and reset. 380ms sits in the natural range for this kind of UI motion — long
       // enough to read as smooth, short enough not to feel sluggish.
       const DURATION = 380;
       const step = (now: number) => {
@@ -696,13 +757,16 @@ export default function TimelineView({
   useEffect(() => {
     if (!focusInfo || focusAppliedRef.current || !view || size.w <= 0) return;
     focusAppliedRef.current = true;
-    const span = Math.max(focusInfo.hi - focusInfo.lo, 24);
-    const pad = span * 0.6;
-    const lo = focusInfo.lo - pad;
-    const hi = focusInfo.hi + pad;
     const w = Math.max(size.w, 1);
-    const pxy = clamp(w / (hi - lo), w / (maxYear - minYear), MAX_PX_PER_YEAR);
-    animateTo({ pxPerYear: pxy, startYear: (lo + hi) / 2 - w / (2 * pxy) });
+    // A single event (or a short span) lands at the working zoom; something spanning many years
+    // (a lifetime, a person's whole story) zooms out far enough to show all of it.
+    const span = focusInfo.hi - focusInfo.lo;
+    const pxy = clamp(
+      Math.min(DEFAULT_PX_PER_YEAR, w / (span * FOCUS_SPAN_PADDING)),
+      w / (maxYear - minYear),
+      MAX_PX_PER_YEAR,
+    );
+    animateTo({ pxPerYear: pxy, startYear: (focusInfo.lo + focusInfo.hi) / 2 - w / (2 * pxy) });
     setFocusHighlightOn(true);
   }, [focusInfo, view, size.w, animateTo, maxYear, minYear]);
 
@@ -730,6 +794,10 @@ export default function TimelineView({
     // Rolling buffer of recent (time, x) samples for the active single-pointer drag,
     // used to compute release velocity for momentum panning. Trimmed to a short window.
     velSamples: [] as { t: number; x: number }[],
+    // Double-tap detection: the touch that might still be a tap, and the tap before it.
+    tap: null as null | { t: number; x: number; y: number },
+    lastTap: null as null | { t: number; x: number; y: number },
+    lastPointerType: "mouse",
   });
   const pendingRef = useRef({ dx: 0, panDx: 0, wheel: 0, wheelClientX: 0 });
   const rafRef = useRef(0);
@@ -963,6 +1031,20 @@ export default function TimelineView({
     };
   }, [cancelAnim, cancelMomentum, scheduleFlush, clampView, minYear, maxYear]);
 
+  /** Zoom in one step, keeping the year under `clientX` where it is (double-click, double-tap). */
+  const zoomInAt = useCallback(
+    (clientX: number) => {
+      const v = viewRef.current;
+      const rect = canvasRef.current?.getBoundingClientRect();
+      if (!v || !rect) return;
+      const cursorX = clientX - rect.left;
+      const yearAt = v.startYear + cursorX / v.pxPerYear;
+      const pxy = clamp(v.pxPerYear * 2.2, v.pxPerYear, MAX_PX_PER_YEAR);
+      animateTo({ pxPerYear: pxy, startYear: yearAt - cursorX / pxy });
+    },
+    [animateTo],
+  );
+
   const onPointerDown = useCallback(
     (e: React.PointerEvent<HTMLDivElement>) => {
       const g = gestureRef.current;
@@ -972,6 +1054,13 @@ export default function TimelineView({
       g.pointers.set(e.pointerId, { x: e.clientX, y: e.clientY });
       cancelAnim();
       cancelMomentum();
+      g.lastPointerType = e.pointerType;
+      // A tap on a mark opens it; only taps on open timeline count towards a double-tap.
+      g.tap =
+        e.pointerType === "touch" && g.pointers.size === 1 && !(e.target as Element).closest("button")
+          ? { t: performance.now(), x: e.clientX, y: e.clientY }
+          : null;
+      if (!g.tap) g.lastTap = null;
       if (g.pointers.size === 1) {
         g.lastX = e.clientX;
         g.moved = 0;
@@ -1004,6 +1093,10 @@ export default function TimelineView({
       const g = gestureRef.current;
       if (!g.pointers.has(e.pointerId)) return;
       g.pointers.set(e.pointerId, { x: e.clientX, y: e.clientY });
+      if (g.tap && Math.hypot(e.clientX - g.tap.x, e.clientY - g.tap.y) > TAP_SLOP_PX) {
+        g.tap = null;
+        g.lastTap = null;
+      }
       if (g.pinch) {
         g.moved += 2;
         scheduleFlush();
@@ -1058,9 +1151,24 @@ export default function TimelineView({
           }
         }
         g.velSamples = [];
+        const tap = g.tap;
+        g.tap = null;
+        const now = performance.now();
+        if (e.type !== "pointerup" || !tap || now - tap.t > TAP_MAX_MS) {
+          g.lastTap = null;
+        } else if (
+          g.lastTap &&
+          tap.t - g.lastTap.t < TAP_MAX_MS &&
+          Math.hypot(tap.x - g.lastTap.x, tap.y - g.lastTap.y) < DOUBLE_TAP_RADIUS_PX
+        ) {
+          g.lastTap = null;
+          zoomInAt(tap.x);
+        } else {
+          g.lastTap = { t: now, x: tap.x, y: tap.y };
+        }
       }
     },
-    [startMomentum],
+    [startMomentum, zoomInAt],
   );
 
   // A real drag must not fire the click handler of whatever marker it ended on.
@@ -1072,17 +1180,13 @@ export default function TimelineView({
     }
   }, []);
 
+  // Mouse only: touch double-taps are recognised in endPointer, because browsers disagree about
+  // whether a double-tap also arrives as `dblclick`.
   const onDoubleClick = useCallback(
     (e: React.MouseEvent<HTMLDivElement>) => {
-      const v = viewRef.current;
-      const rect = canvasRef.current?.getBoundingClientRect();
-      if (!v || !rect) return;
-      const cursorX = e.clientX - rect.left;
-      const yearAt = v.startYear + cursorX / v.pxPerYear;
-      const pxy = clamp(v.pxPerYear * 2.2, v.pxPerYear, MAX_PX_PER_YEAR);
-      animateTo({ pxPerYear: pxy, startYear: yearAt - cursorX / pxy });
+      if (gestureRef.current.lastPointerType !== "touch") zoomInAt(e.clientX);
     },
-    [animateTo],
+    [zoomInAt],
   );
 
   const onKeyDown = useCallback(
@@ -1104,17 +1208,17 @@ export default function TimelineView({
       } else if (e.key === "-" || e.key === "_") {
         zoomByFactor(1 / 1.5);
       } else if (e.key === "0") {
-        animateTo(fitView());
+        animateTo(defaultView());
       } else {
         return;
       }
       e.preventDefault();
       // eslint-disable-next-line react-hooks/exhaustive-deps
     },
-    [clampView, animateTo, fitView, cancelAnim, cancelMomentum],
+    [clampView, animateTo, defaultView, cancelAnim, cancelMomentum],
   );
 
-  /* ----- button zooms ----- */
+  /* ----- keyboard zoom, cluster zoom, era jumps ----- */
 
   function zoomByFactor(factor: number) {
     const v = viewRef.current;
@@ -1135,7 +1239,7 @@ export default function TimelineView({
       const pxy = clamp(
         Math.max(v.pxPerYear * 2.4, (w * 0.4) / span),
         v.pxPerYear * 1.2,
-        MAX_PX_PER_YEAR,
+        Math.max(DEFAULT_PX_PER_YEAR, v.pxPerYear * 1.2),
       );
       const center = (lo + hi) / 2;
       animateTo({ pxPerYear: pxy, startYear: center - w / (2 * pxy) });
@@ -1165,9 +1269,11 @@ export default function TimelineView({
     (e: React.MouseEvent, title: string, sub?: string, badge?: string) => {
       const rect = canvasRef.current?.getBoundingClientRect();
       if (!rect) return;
+      const windowTop = viewportRef.current?.getBoundingClientRect().top ?? rect.top;
       setTooltip({
         x: clamp(e.clientX - rect.left, 12, Math.max(rect.width - 12, 12)),
-        y: clamp(e.clientY - rect.top, 40, rect.height),
+        y: clamp(e.clientY - rect.top, 0, rect.height),
+        below: e.clientY - windowTop < 90,
         title,
         sub,
         badge,
@@ -1272,10 +1378,108 @@ export default function TimelineView({
     return map;
   }, [canvasEvents, visibleLanes, pxPerYear]);
 
+  /** What a lane in cluster-fallback mode draws, and how tall that needs to be. Fixed-pixel-bucket
+   * clustering, pan-invariant at a given zoom: same-year (or unsplittable) groups fan out into real
+   * markers, a splittable group becomes one numbered badge that zooms into it on click. */
+  const clusterPacks = useMemo(() => {
+    const map = new Map<string, { items: ClusterItem[]; contentH: number }>();
+    for (const lane of EVENT_LANES) {
+      if (!eventPacks.get(lane.key)?.useCluster) continue;
+      const laneEvents = canvasEvents
+        .filter((e) => lane.cats.includes(e.category))
+        .sort((a, b) => a.startYear - b.startYear);
+      const buckets = new Map<number, TimelineEvent[]>();
+      for (const e of laneEvents) {
+        const bx = Math.floor(((e.startYear - minYear) * pxPerYear) / CLUSTER_BUCKET_PX);
+        const list = buckets.get(bx);
+        if (list) list.push(e);
+        else buckets.set(bx, [e]);
+      }
+      const items: ClusterItem[] = [];
+      let maxOff = 0;
+      for (const group of buckets.values()) {
+        if (group.length === 1) {
+          const e = group[0];
+          items.push({ kind: "single", x: (e.startYear - minYear) * pxPerYear, e, yOff: 0 });
+          continue;
+        }
+        const lo = group[0].startYear;
+        const hi = group[group.length - 1].startYear;
+        // A cluster is only useful if zooming further could actually split it.
+        const splittable =
+          (hi - lo) * MAX_PX_PER_YEAR > CLUSTER_BUCKET_PX * 1.25 &&
+          pxPerYear < MAX_PX_PER_YEAR * 0.98;
+        if (splittable) {
+          items.push({
+            kind: "cluster",
+            x: ((lo + hi) / 2 - minYear) * pxPerYear,
+            events: group,
+            lo,
+            hi,
+          });
+        } else {
+          // Same-year (or unsplittable) events: fan out vertically as real markers.
+          group.forEach((e, i) => {
+            const yOff = (i - (group.length - 1) / 2) * 15;
+            maxOff = Math.max(maxOff, Math.abs(yOff));
+            items.push({ kind: "single", x: (e.startYear - minYear) * pxPerYear, e, yOff });
+          });
+        }
+      }
+      items.sort((a, b) => a.x - b.x);
+      const contentH = clamp(2 * maxOff + 28, CLUSTER_LANE_MIN_H, EVENT_LANE_H);
+      for (const it of items) {
+        if (it.kind === "single") it.yOff = clamp(it.yOff, -contentH / 2 + 10, contentH / 2 - 10);
+      }
+      map.set(lane.key, { items, contentH });
+    }
+    return map;
+  }, [eventPacks, canvasEvents, minYear, pxPerYear]);
+
+  /* ----- which rows are on screen ----- */
+
+  const rowsNow = useMemo(() => {
+    const rows = new Map<string, Set<number>>();
+    if (!view || size.w <= 0) return "";
+    const xOf = (year: number) => (year - view.startYear) * view.pxPerYear;
+    for (const [key, pack] of eventPacks) {
+      if (pack.useCluster) continue;
+      const set = new Set<number>();
+      for (const { item: e, row } of pack.placed) {
+        const x = xOf(e.startYear);
+        const hasRange = typeof e.endYear === "number" && e.endYear > e.startYear;
+        const left = hasRange ? x : x - MARKER_HALF_PX;
+        const right = hasRange
+          ? x + Math.max((e.endYear! - e.startYear) * view.pxPerYear, 12) + EVENT_LABEL_SPAN_PX
+          : x + MARKER_HALF_PX + EVENT_LABEL_SPAN_PX;
+        if (right > 0 && left < size.w) set.add(row);
+      }
+      rows.set(key, set);
+    }
+    if (visibleLanes.lifespans) {
+      const set = new Set<number>();
+      for (const { item: l, row } of lifePack.placed) {
+        const x = xOf(l.bornYear);
+        const barW = Math.max((lifespanEnd(l) - l.bornYear) * view.pxPerYear, 6);
+        const right = x + barW + (barW > LIFE_LABEL_INSIDE_PX ? 0 : LIFE_OUTSIDE_LABEL_SPAN_PX);
+        if (right > 0 && x < size.w) set.add(row);
+      }
+      rows.set("lifespans", set);
+    }
+    return encodeRows(rows);
+  }, [view, size.w, eventPacks, lifePack, visibleLanes.lifespans]);
+
+  // Rows seen since the view last came to rest. They stay open until it rests again.
+  const [heldRows, setHeldRows] = useState("");
+  const shownRows = unionRows(heldRows, rowsNow);
+  useEffect(() => {
+    setHeldRows((held) => unionRows(held, rowsNow));
+    const t = setTimeout(() => setHeldRows(rowsNow), ROW_SETTLE_MS);
+    return () => clearTimeout(t);
+  }, [view, rowsNow]);
+
   const geom = useMemo(() => {
-    const h = size.h;
-    if (h <= 0) return null;
-    const avail = h - AXIS_H;
+    if (size.h <= 0) return null;
 
     const showBooks = showBooksLane;
     const showLife = visibleLanes.lifespans && lifePack.rowCount > 0;
@@ -1284,63 +1488,55 @@ export default function TimelineView({
     const visibleCount = (showBooks ? 1 : 0) + (showLife ? 1 : 0) + nEvent;
 
     if (visibleCount === 0) {
-      return { empty: true as const, sectionBottoms: [] as number[], totalH: h, needsScroll: false };
+      return { empty: true as const, sections: [] as Section[], totalH: 0 };
     }
 
-    // Generous per-lane heights — each visible lane simply gets its own comfortable height, never
-    // stretched to exactly fill the viewport and never squeezed thinner to let more lanes fit above
-    // the fold. Books/lifespans grow with their own row count (more overlapping bars legitimately
-    // need more room); the event lanes now do the same via eventPacks above — a lane with more
-    // packed rows (denser overlapping events at the current zoom) simply gets a taller band, and a
-    // lane in cluster-fallback mode (see eventPacks) keeps the old flat EVENT_LANE_H, which was
-    // already tuned for a fixed-row fan-out of badges/markers. Total stack height is just the sum of
-    // what's visible (see contentH below); the outer .tl-canvas-viewport scrolls vertically whenever
-    // that sum exceeds the viewport, which is the normal case rather than something the layout tries
-    // to avoid.
-    // Every lane's height is its own content height PLUS the LANE_LABEL_RESERVE band its pinned
-    // name chip sits in (see the constant above). The layers below all start their row maths at
-    // LANE_LABEL_RESERVE, so the band stays empty at every zoom and every pan offset instead of
-    // being drawn over by the lane's first row.
+    // Each band is as tall as the rows it is showing (`shownRows`), plus the LANE_LABEL_RESERVE band
+    // its pinned name chip sits in (see the constant above). The layers below all start their row
+    // maths at LANE_LABEL_RESERVE, so the band stays empty at every zoom and every pan offset instead
+    // of being drawn over by the lane's first row.
+    const shown = decodeRows(shownRows);
+    const rowsFor = (key: string, rowCount: number) =>
+      [...(shown.get(key) ?? [])].filter((r) => r < rowCount).sort((a, b) => a - b);
+    const stackH = (n: number, rowH: number, pad: number) => (n > 0 ? n * rowH + pad : EMPTY_LANE_H);
+
     const bookRows = Math.max(bookPack.rowCount, 1);
     const booksH = showBooks
       ? LANE_LABEL_RESERVE + Math.max(bookRows * BOOK_ROW_H + BOOK_ROW_PAD, MIN_BOOKS_H)
       : 0;
-    const lifeRows = lifePack.rowCount;
-    const lifeH = showLife
-      ? LANE_LABEL_RESERVE + Math.max(lifeRows * LIFE_ROW_H + LIFE_ROW_PAD, MIN_LIFE_H)
-      : 0;
+    const lifeRows = rowsFor("lifespans", lifePack.rowCount);
+    const lifeH = showLife ? LANE_LABEL_RESERVE + stackH(lifeRows.length, LIFE_ROW_H, LIFE_ROW_PAD) : 0;
 
-    // The bottom edge of every visible section (Books, Lifespans, then each event lane, in stacking
-    // order) — a year-axis row gets repeated at each of these, not just the very last one, so
-    // scrolling to any section still shows its own date labels rather than only the bottommost lane's.
-    // Each section is followed by a genuine AXIS_H-tall gap (not just an overlay into the next
-    // section's own content) so the repeated date labels never sit on top of real event content —
-    // `cursor` advances past both the section's content AND that gap before the next section starts.
-    const sectionBottoms: number[] = [];
+    // A year-axis row is repeated under every band, so scrolling to any of them still shows its own
+    // date labels. Each is a genuine AXIS_H-tall gap, never an overlay on the next band's content.
+    const sections: Section[] = [];
     let cursor = 0;
+    const addSection = (key: string, height: number) => {
+      sections.push({ key, top: cursor, height: height + AXIS_H });
+      cursor += height + AXIS_H;
+    };
     let booksTop = 0;
     let lifeTop = 0;
     if (showBooks) {
       booksTop = cursor;
-      cursor += booksH;
-      sectionBottoms.push(cursor);
-      cursor += AXIS_H;
+      addSection("books", booksH);
     }
     const laneTop = new Map<string, number>();
     const laneHeights = new Map<string, number>();
+    const laneRows = new Map<string, number[]>();
 
     const placeEventLane = (lane: (typeof EVENT_LANES)[number]) => {
-      const pack = eventPacks.get(lane.key);
+      const pack = eventPacks.get(lane.key)!;
+      const rows = rowsFor(lane.key, pack.rowCount);
       const laneH =
         LANE_LABEL_RESERVE +
-        (pack && !pack.useCluster
-          ? Math.max(pack.rowCount * EVENT_ROW_H + EVENT_ROW_PAD, MIN_EVENT_ROWS_H)
-          : EVENT_LANE_H);
+        (pack.useCluster
+          ? (clusterPacks.get(lane.key)?.contentH ?? CLUSTER_LANE_MIN_H)
+          : stackH(rows.length, EVENT_ROW_H, EVENT_ROW_PAD));
       laneTop.set(lane.key, cursor);
       laneHeights.set(lane.key, laneH);
-      cursor += laneH;
-      sectionBottoms.push(cursor);
-      cursor += AXIS_H;
+      laneRows.set(lane.key, rows);
+      addSection(lane.key, laneH);
     };
 
     // Owner-specified stacking: the merged Biblical and Church History lane first, then Lifespans
@@ -1352,25 +1548,13 @@ export default function TimelineView({
 
     if (showLife) {
       lifeTop = cursor;
-      cursor += lifeH;
-      sectionBottoms.push(cursor);
-      cursor += AXIS_H;
+      addSection("lifespans", lifeH);
     }
 
     for (const lane of visibleEventLanes) {
       if (laneTop.has(lane.key)) continue;
       placeEventLane(lane);
     }
-    // `cursor` already includes one AXIS_H gap after the very last section (added in the loop above),
-    // so it IS the total height — no separate "+ AXIS_H" tacked on afterward like before.
-    const totalH = cursor;
-    const contentH = totalH - AXIS_H;
-
-    // Purely descriptive now (drives the touch-action CSS class below) — no longer a feasibility
-    // gate that changes how tall any lane is. With generous heights this will be true for most
-    // non-trivial lane selections, which matches Robbie's ask: scrolling below the fold is the
-    // expected default, not an edge case.
-    const needsScroll = contentH > avail;
 
     return {
       empty: false as const,
@@ -1378,13 +1562,74 @@ export default function TimelineView({
       booksH,
       lifeTop,
       lifeH,
+      lifeRows,
       laneTop,
       laneHeights,
-      sectionBottoms,
-      totalH,
-      needsScroll,
+      laneRows,
+      sections,
+      totalH: cursor,
     };
-  }, [size.h, bookPack.rowCount, lifePack.rowCount, visibleLanes, eventPacks]);
+  }, [size.h, showBooksLane, bookPack.rowCount, lifePack.rowCount, visibleLanes, eventPacks, clusterPacks, shownRows]);
+
+  /* ----- holding the scroll position while bands re-fit ----- */
+
+  const sectionsRef = useRef<Section[]>([]);
+  const totalHRef = useRef(0);
+
+  /** The canvas is as tall as the bands, except that it is never cut short underneath a scrolled
+   * window: that would make the browser clamp scrollTop and the view would leap. The spare room goes
+   * as soon as the reader scrolls back up (onViewportScroll). The height is set here, not through
+   * React, so that it changes only after the old scroll position has been read. */
+  const sizeCanvas = useCallback((scrollTop: number) => {
+    const vp = viewportRef.current;
+    const canvas = canvasRef.current;
+    if (!vp || !canvas) return;
+    const floor = scrollTop > 0 ? Math.ceil(scrollTop + vp.clientHeight) : 0;
+    const height = `${Math.max(totalHRef.current, floor)}px`;
+    if (canvas.style.height !== height) canvas.style.height = height;
+  }, []);
+
+  // Keep the band at the top of the window where it is when the bands above it change height.
+  useLayoutEffect(() => {
+    const vp = viewportRef.current;
+    const canvas = canvasRef.current;
+    if (!vp || !canvas || !geom) return;
+    const before = sectionsRef.current;
+    sectionsRef.current = geom.sections;
+    totalHRef.current = geom.totalH;
+    // Clamped: a rubber-band overscroll must not be mistaken for a real position.
+    const from = clamp(vp.scrollTop, 0, Math.max(vp.scrollHeight - vp.clientHeight, 0));
+    let to = from;
+    if (from > 0) {
+      const anchor = before.find((s) => s.top + s.height > from);
+      const same = anchor && geom.sections.find((s) => s.key === anchor.key);
+      to =
+        anchor && same
+          ? same.top + Math.min(from - anchor.top, same.height - 1)
+          : Math.min(from, Math.max(geom.totalH - vp.clientHeight, 0));
+    }
+    // When the scroll position has to move to stay on the same band, everything must move with it in
+    // the same frame, so that one change is not animated.
+    const jump = Math.abs(to - from) >= 1;
+    if (jump) canvas.classList.add("tl-no-anim");
+    sizeCanvas(to);
+    if (jump) {
+      vp.scrollTop = to;
+      void canvas.offsetHeight; // apply the new positions while transitions are off
+      canvas.classList.remove("tl-no-anim");
+    }
+  }, [geom, sizeCanvas]);
+
+  // Scrolling only ever gives spare room back. It never adds any: iOS reports positions past the end
+  // while it rubber-bands, and growing to meet them would let the blank space run on.
+  const onViewportScroll = useCallback(() => {
+    const vp = viewportRef.current;
+    const canvas = canvasRef.current;
+    if (!vp || !canvas) return;
+    if ((parseFloat(canvas.style.height) || 0) > Math.max(totalHRef.current, vp.scrollTop + vp.clientHeight)) {
+      sizeCanvas(vp.scrollTop);
+    }
+  }, [sizeCanvas]);
 
   /* ----- world-space layers, memoized per zoom level -----
    * Pan only changes translateX on the scroller — these element trees are
@@ -1463,10 +1708,7 @@ export default function TimelineView({
   const lifespansLayer = useMemo<ReactNode>(() => {
     if (!geom || geom.empty || geom.lifeH <= 0 || pxPerYear <= 0) return null;
     // Same reserved-label-band offset as the books band above.
-    const rowH =
-      (geom.lifeH - LANE_LABEL_RESERVE - LIFE_ROW_PAD) / Math.max(lifePack.rowCount, 1);
     const topPad = LANE_LABEL_RESERVE + LIFE_ROW_PAD / 2;
-    const barH = clamp(rowH - 3, 8, 22);
 
     // Group placements by row — packRows processes items pre-sorted by start year, so each
     // row's own subsequence is already in increasing x order — so label crowding can be judged
@@ -1485,13 +1727,14 @@ export default function TimelineView({
         const end = lifespanEnd(item);
         const x = (item.bornYear - minYear) * pxPerYear;
         const w = Math.max((end - item.bornYear) * pxPerYear, 6);
-        const y = geom.lifeTop + topPad + row * rowH + (rowH - barH) / 2;
+        const y =
+          geom.lifeTop + topPad + rowSlot(geom.lifeRows, row) * LIFE_ROW_H + (LIFE_ROW_H - LIFE_BAR_H) / 2;
         const label =
           item.lifespanLabel ??
           (typeof item.diedYear === "number"
             ? formatYearRange(item.bornYear, item.diedYear)
             : `b. ${formatYear(item.bornYear)}`);
-        const inside = w > 72;
+        const inside = w > LIFE_LABEL_INSIDE_PX;
 
         // Same label-gap guard the events lane uses: skip the name if a same-row neighbor
         // doesn't leave enough clear horizontal space on either side, so labels don't pile up
@@ -1503,14 +1746,28 @@ export default function TimelineView({
         const nextX =
           i < rowItems.length - 1 ? (rowItems[i + 1].item.bornYear - minYear) * pxPerYear : Infinity;
         const hasGap = x - prevX > LABEL_GAP_PX && nextX - x > LABEL_GAP_PX;
-        const showLabel = barH >= 10 && (inside || hasGap);
+        const showLabel = inside || hasGap;
+
+        // How far an inside name may run: to the next bar in the row, or as far as it likes.
+        const room = Number.isFinite(nextX) ? Math.max(nextX - x - 4, w) : w + 1000;
 
         nodes.push(
           <button
             key={item.id}
             type="button"
             className={`tl-life-bar${item.id === focusedLifeId ? " tl-focused" : ""}`}
-            style={{ left: x, top: y, width: w, height: barH }}
+            // --x, --w and --room let an inside name follow the screen's left edge (.tl-life-label).
+            style={
+              {
+                left: x,
+                top: y,
+                width: w,
+                height: LIFE_BAR_H,
+                "--x": x,
+                "--w": w,
+                "--room": room,
+              } as CSSProperties
+            }
             onClick={() => onSelectPerson(item.id)}
             onMouseEnter={(e) => showTip(e, item.name, label, item.lifespanCertainty)}
             onMouseLeave={hideTip}
@@ -1565,11 +1822,11 @@ export default function TimelineView({
         // clicking required to see what's on the timeline. Mirrors lifespansLayer's row math.
         // As with the books/lifespans lanes, the lane's reserved label band comes off the top
         // before rows are measured, so row 0's card never lands under the pinned lane chip.
-        const rowH = Math.max(laneH - LANE_LABEL_RESERVE - EVENT_ROW_PAD, 1) / pack.rowCount;
         const topPad = LANE_LABEL_RESERVE + EVENT_ROW_PAD / 2;
+        const shown = geom.laneRows.get(lane.key) ?? [];
         for (const { item: e, row } of pack.placed) {
           const x = (e.startYear - minYear) * pxPerYear;
-          const y = laneTop + topPad + row * rowH + rowH / 2;
+          const y = laneTop + topPad + rowSlot(shown, row) * EVENT_ROW_H + EVENT_ROW_H / 2;
           const hasRange = typeof e.endYear === "number" && e.endYear > e.startYear;
           const focused = focusedEventIds?.has(e.id) ? " tl-focused" : "";
 
@@ -1613,67 +1870,13 @@ export default function TimelineView({
 
       // Fallback path — only reached when packRows above determined that giving every event in
       // this lane its own row, at the current zoom, would need more than MAX_EVENT_ROWS rows (the
-      // "most extreme zoom-out" case). Same fixed-pixel-bucket clustering this lane always used,
-      // now reserved for that case instead of being the default: still fans out same-year/
-      // unsplittable groups into real markers, still zooms into a splittable cluster on click.
-      const laneEvents = canvasEvents
-        .filter((e) => lane.cats.includes(e.category))
-        .sort((a, b) => a.startYear - b.startYear);
-      // Cluster fallback: the fan-out is centred in, and clamped to, the lane's CONTENT box — the
-      // lane minus its reserved label band — so a badge or a fanned-out marker can never rise into
-      // the pinned lane chip either.
+      // "most extreme zoom-out" case). What to draw, and how tall, comes from `clusterPacks`.
+      // The fan-out is centred in the lane's CONTENT box — the lane minus its reserved label band —
+      // so a badge or a fanned-out marker can never rise into the pinned lane chip either.
       const contentTop = laneTop + LANE_LABEL_RESERVE;
       const contentH = Math.max(laneH - LANE_LABEL_RESERVE, 1);
       const centerY = contentTop + contentH / 2;
-
-      // Fixed-width pixel buckets in world space (pan-invariant at a given zoom).
-      const buckets = new Map<number, TimelineEvent[]>();
-      for (const e of laneEvents) {
-        const bx = Math.floor(((e.startYear - minYear) * pxPerYear) / CLUSTER_BUCKET_PX);
-        const list = buckets.get(bx);
-        if (list) list.push(e);
-        else buckets.set(bx, [e]);
-      }
-
-      type Renderable =
-        | { kind: "single"; x: number; e: TimelineEvent; yOff: number }
-        | { kind: "cluster"; x: number; events: TimelineEvent[]; lo: number; hi: number };
-      const items: Renderable[] = [];
-
-      for (const group of buckets.values()) {
-        if (group.length === 1) {
-          const e = group[0];
-          items.push({ kind: "single", x: (e.startYear - minYear) * pxPerYear, e, yOff: 0 });
-          continue;
-        }
-        const lo = group[0].startYear;
-        const hi = group[group.length - 1].startYear;
-        // A cluster is only useful if zooming further could actually split it.
-        const splittable =
-          (hi - lo) * MAX_PX_PER_YEAR > CLUSTER_BUCKET_PX * 1.25 &&
-          pxPerYear < MAX_PX_PER_YEAR * 0.98;
-        if (splittable) {
-          items.push({
-            kind: "cluster",
-            x: ((lo + hi) / 2 - minYear) * pxPerYear,
-            events: group,
-            lo,
-            hi,
-          });
-        } else {
-          // Same-year (or unsplittable) events: fan out vertically as real markers.
-          group.forEach((e, i) => {
-            items.push({
-              kind: "single",
-              x: (e.startYear - minYear) * pxPerYear,
-              e,
-              yOff: clamp((i - (group.length - 1) / 2) * 15, -contentH / 2 + 10, contentH / 2 - 10),
-            });
-          });
-        }
-      }
-
-      items.sort((a, b) => a.x - b.x);
+      const items = clusterPacks.get(lane.key)?.items ?? [];
 
       // Range-bar events get their own label-gap check — a bar's label sits just past its own
       // right edge (see .tl-range-bar-label CSS), so what matters is whether the very NEXT item
@@ -1683,7 +1886,7 @@ export default function TimelineView({
       // routinely ran into the very next cluster badge instead (confirmed visually — a bar's title
       // pill overlapping the next cluster's circle), so every item's own occupied left edge is
       // accounted for, not just other bars'.
-      const occupiedLeftEdge = (it: Renderable): number => {
+      const occupiedLeftEdge = (it: ClusterItem): number => {
         if (it.kind === "cluster") return it.x - 14; // ~28px badge, centered on it.x
         if (typeof it.e.endYear === "number" && it.e.endYear > it.e.startYear) return it.x; // bar's own start
         return it.x - 7; // marker dot, ~13px, centered on it.x
@@ -1775,10 +1978,9 @@ export default function TimelineView({
   }, [
     geom,
     pxPerYear,
-    canvasEvents,
     minYear,
     eventPacks,
-    visibleLanes,
+    clusterPacks,
     onSelectTimelineEvent,
     zoomToYearRange,
     showTip,
@@ -1811,11 +2013,8 @@ export default function TimelineView({
       <header className="tl-header">
         <BackButton onClick={onClose} ariaLabel="Close timeline" />
         <div className="tl-title-block">
-          {/* "Historical" is dropped below 720px (see .tl-title-long in TimelineView.css). Measured:
-              at 375px the full string wants 117px and the header can only give the title block ~94px
-              once the Eras button, the Lanes menu and −/+/Fit have taken their share, so it was
-              rendering as "Historical Time…" with the year readout beneath it clipped too. The short
-              form is 54px, fits whole, and matches the tab-bar label that got you here. */}
+          {/* "Historical" is dropped below 720px (see .tl-title-long in TimelineView.css): the short
+              form matches the tab-bar label that got you here and stays whole at large text sizes. */}
           <h2 className="tl-title">
             <span className="tl-title-long">Historical </span>Timeline
           </h2>
@@ -1826,54 +2025,26 @@ export default function TimelineView({
           )}
         </div>
         <div className="tl-header-spacer" />
-        <div className="tl-zoom-controls">
+        <div className="tl-header-controls">
           {/* See SHOW_ERA_MENU above — on again. Kept behind the flag (rather than unwrapped) so the
             * control can be taken back out with a one-line change if it is ever unwanted again. */}
           {SHOW_ERA_MENU && (
-            <TimelineEraMenu onJump={showYearRange} onFit={() => animateTo(fitView())} />
+            <TimelineEraMenu onJump={showYearRange} onShowAll={() => animateTo(fitView())} />
           )}
           <TimelineLaneMenu visible={visibleLanes} onToggle={toggleLane} />
-          <button
-            type="button"
-            className="tl-zoom-btn"
-            onClick={() => zoomByFactor(1 / 1.6)}
-            aria-label="Zoom out"
-            title="Zoom out (pinch, or Ctrl/⌘ + scroll)"
-          >
-            −
-          </button>
-          <button
-            type="button"
-            className="tl-zoom-btn"
-            onClick={() => zoomByFactor(1.6)}
-            aria-label="Zoom in"
-            title="Zoom in (pinch, or Ctrl/⌘ + scroll)"
-          >
-            +
-          </button>
-          <button
-            type="button"
-            className="tl-zoom-btn tl-zoom-reset"
-            onClick={() => animateTo(fitView())}
-            aria-label="Reset view to full timeline"
-          >
-            Fit
-          </button>
         </div>
       </header>
 
       {/* Outer scrollable window: vertical-only scroll (native scrollbar / touch), horizontal
-       * overflow stays clipped here so the lane stack's fixed, generous per-lane heights (see geom
-       * above) — routinely taller than the viewport now that lanes aren't squeezed to fit — don't
-       * widen the page. This is what's measured for available layout height/width — the inner
-       * .tl-canvas below is sized explicitly from `geom` and commonly grows past it. */}
-      <div ref={viewportRef} className="tl-canvas-viewport">
+       * overflow stays clipped here so a lane stack taller than the viewport scrolls without
+       * widening the page. This is what's measured for available layout height/width — the inner
+       * .tl-canvas below is at least as tall, and its height is set by sizeCanvas above. */}
+      <div ref={viewportRef} className="tl-canvas-viewport" onScroll={onViewportScroll}>
         <div
           ref={canvasRef}
-          className={`tl-canvas${dragging ? " tl-dragging" : ""}${geom && !geom.empty && geom.needsScroll ? " tl-canvas-scroll-y" : ""}`}
-          style={{ height: geom && !geom.empty ? geom.totalH : "100%" }}
+          className={`tl-canvas${dragging ? " tl-dragging" : ""}`}
           role="application"
-          aria-label="Zoomable timeline — scroll or drag to move, pinch or Ctrl/Command plus scroll to zoom, arrow keys to move"
+          aria-label="Zoomable timeline — scroll or drag to move; pinch, double-tap, Ctrl or Command plus scroll, or the plus and minus keys to zoom; arrow keys to move; 0 to reset"
           tabIndex={0}
           onPointerDown={onPointerDown}
           onPointerMove={onPointerMove}
@@ -1914,12 +2085,12 @@ export default function TimelineView({
 
               {/* Pinned lane name chips. */}
               {geom.booksH > 0 && (
-                <span className="tl-lane-label" style={{ top: geom.booksTop + 5 }}>
+                <span className="tl-lane-label" style={{ top: geom.booksTop + LANE_LABEL_TOP }}>
                   Books of the Bible
                 </span>
               )}
               {hasLifespans && (
-                <span className="tl-lane-label" style={{ top: geom.lifeTop + 5 }}>
+                <span className="tl-lane-label" style={{ top: geom.lifeTop + LANE_LABEL_TOP }}>
                   <span
                     className="tl-lane-label-dot"
                     style={{ background: "var(--tl-life)" }}
@@ -1936,7 +2107,7 @@ export default function TimelineView({
                 <span
                   key={lane.key}
                   className="tl-lane-label"
-                  style={{ top: (geom.laneTop.get(lane.key) as number) + 5 }}
+                  style={{ top: (geom.laneTop.get(lane.key) as number) + LANE_LABEL_TOP }}
                 >
                   <span
                     className={`tl-lane-label-dot tl-cat-${lane.markCat}`}
@@ -1950,7 +2121,15 @@ export default function TimelineView({
                * translate3d (vs. translateX) explicitly promotes this to its own compositor
                * layer, which keeps large numbers of absolutely-positioned children smooth
                * during momentum glides and trackpad panning. */}
-              <div className="tl-scroller" style={{ transform: `translate3d(${translateX}px, 0, 0)` }}>
+              <div
+                className="tl-scroller"
+                style={
+                  {
+                    transform: `translate3d(${translateX}px, 0, 0)`,
+                    "--tl-view-left": -translateX,
+                  } as CSSProperties
+                }
+              >
                 {ticks.map((y) => (
                   <div
                     key={`g${y}`}
@@ -1967,14 +2146,14 @@ export default function TimelineView({
                  * other section's dates a long scroll away. Each section is followed by its own
                  * dedicated AXIS_H-tall gap (see the geom useMemo above), so this never overlaps real
                  * event content the way an overlay-into-existing-space approach would. */}
-                {geom.sectionBottoms.map((boundary) => {
-                  const top = boundary;
+                {geom.sections.map((section) => {
+                  const top = section.top + section.height - AXIS_H;
                   return (
-                    <div key={`axis-${boundary}`}>
+                    <div key={`axis-${section.key}`}>
                       <div className="tl-axis-strip" style={{ top, height: AXIS_H }} />
                       {ticks.map((y) => (
                         <span
-                          key={`t${boundary}-${y}`}
+                          key={`t-${section.key}-${y}`}
                           className={`tl-axis-label${y === 0 ? " tl-axis-epoch" : ""}`}
                           style={{
                             left: (y - minYear) * view.pxPerYear,
@@ -1993,7 +2172,10 @@ export default function TimelineView({
               </div>
 
               {tooltip && (
-                <div className="tl-tooltip" style={{ left: tooltip.x, top: tooltip.y }}>
+                <div
+                  className={`tl-tooltip${tooltip.below ? " tl-tooltip-below" : ""}`}
+                  style={{ left: tooltip.x, top: tooltip.y }}
+                >
                   <div className="tl-tooltip-title">{tooltip.title}</div>
                   {tooltip.sub && <div className="tl-tooltip-sub">{tooltip.sub}</div>}
                   {tooltip.badge && <div className="tl-tooltip-badge">{tooltip.badge}</div>}

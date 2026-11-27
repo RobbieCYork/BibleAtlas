@@ -81,7 +81,13 @@
   min-height: 54px;
 }
 
-/* Timeline's header back button is the shared .back-btn (BackButton.tsx, styled in App.css). */
+/* Timeline's header back button is the shared .back-btn (BackButton.tsx, styled in App.css), sized
+ * here to match the two menu buttons at the other end of the row. */
+.tl-header .back-btn {
+  min-width: 36px;
+  min-height: 36px;
+  justify-content: center;
+}
 
 .tl-title-block {
   display: flex;
@@ -106,48 +112,17 @@
   flex: 1;
 }
 
-.tl-zoom-controls {
+.tl-header-controls {
   display: flex;
   align-items: center;
-  gap: 6px;
-}
-
-.tl-zoom-btn {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 32px;
-  height: 32px;
-  border: 1px solid var(--border);
-  background: var(--panel-bg);
-  color: var(--text-h);
-  border-radius: 8px;
-  font-size: calc(16px * var(--tsz, 1));
-  line-height: 1;
-  cursor: pointer;
-  transition: background 0.15s ease, border-color 0.15s ease;
-}
-
-.tl-zoom-btn.tl-zoom-reset {
-  width: auto;
-  padding: 0 10px;
-  font-size: calc(12px * var(--tsz, 1));
-}
-
-.tl-zoom-btn:hover {
-  background: var(--accent-bg);
-  border-color: var(--accent);
-}
-
-.tl-zoom-btn:active {
-  transform: translateY(1px);
+  gap: 8px;
 }
 
 /* ------------------------------------------------------------- lane menu */
 
 /* Persistent lane-visibility control, sitting with the zoom controls so it's reachable at all
  * times regardless of zoom/pan/scroll state — same dropdown-checklist idiom as the app's
- * PanelMenu (.panel-menu* in App.css), sized to match .tl-zoom-btn. */
+ * PanelMenu (.panel-menu* in App.css). */
 .tl-lane-menu {
   position: relative;
 }
@@ -155,9 +130,11 @@
 .tl-lane-menu-button {
   display: inline-flex;
   align-items: center;
+  justify-content: center;
   gap: 5px;
-  height: 32px;
-  padding: 0 9px;
+  min-width: 36px;
+  height: 36px;
+  padding: 0 10px;
   border: 1px solid var(--border);
   background: var(--panel-bg);
   color: var(--text-h);
@@ -256,11 +233,10 @@
 /* ---------------------------------------------------------------- canvas */
 
 /* Outer scrollable window. Vertical-only: horizontal overflow from the panning .tl-scroller
- * (a child of .tl-canvas below) is clipped here, while a lane stack taller than the viewport —
- * routinely true now that each visible lane gets its own fixed, generous height (see geom in
- * TimelineView.tsx) rather than being squeezed to fit — scrolls vertically via the
- * scrollbar, native touch, or the wheel handler in TimelineView.tsx (which prevents the default and
- * sets scrollTop itself), independent of the horizontal drag/zoom gestures .tl-canvas still owns. */
+ * (a child of .tl-canvas below) is clipped here, while a lane stack taller than the viewport scrolls
+ * vertically via the scrollbar, native touch, or the wheel handler in TimelineView.tsx (which
+ * prevents the default and sets scrollTop itself), independent of the horizontal drag/zoom gestures
+ * .tl-canvas still owns. */
 .tl-canvas-viewport {
   position: relative;
   flex: 1;
@@ -270,27 +246,32 @@
   overscroll-behavior: contain;
 }
 
-/* Inner gesture surface: pointer handlers for horizontal pan/zoom live here. Its height is
- * set explicitly from `geom` in TimelineView.tsx as the sum of each checked lane's own fixed,
- * generous height — routinely taller than the viewport, which is what gives .tl-canvas-viewport
- * above something to scroll. */
+/* Inner gesture surface: pointer handlers for horizontal pan/zoom live here. It always covers the
+ * whole window (so a drag below the last band still pans); TimelineView.tsx makes it taller when the
+ * bands need it. touch-action: pan-y leaves a one-finger vertical swipe to the browser's own scroll
+ * of .tl-canvas-viewport, while horizontal drags and two-finger pinches reach the JS handlers. */
 .tl-canvas {
   position: relative;
   width: 100%;
+  min-height: 100%;
+  overflow: clip;
   cursor: grab;
-  touch-action: none;
+  touch-action: pan-y;
   user-select: none;
   -webkit-user-select: none;
   outline: none;
 }
 
-/* When the lane stack exceeds the viewport (the normal case now — see needsScroll in
- * TimelineView.tsx), let a single-finger vertical swipe reach the browser's native vertical scroll
- * on .tl-canvas-viewport (touch-action permits only the "pan-y" native gesture) while a horizontal
- * drag — not a native action under pan-y — still reaches the JS pointer handlers for panning,
- * exactly as it does when touch-action is "none" for a lane stack that fits without scrolling. */
-.tl-canvas.tl-canvas-scroll-y {
-  touch-action: pan-y;
+/* Bands re-fit as the window moves: everything that moves up or down glides. Nothing transitions
+ * left or width — those change on every frame of a pan or zoom. */
+.tl-lane-underlay,
+.tl-lane-label,
+.tl-axis-strip,
+.tl-axis-label,
+.tl-gridline {
+  transition:
+    top 0.18s ease-out,
+    height 0.18s ease-out;
 }
 
 .tl-canvas.tl-dragging {
@@ -362,7 +343,7 @@
   left: 10px;
   z-index: 6;
   /* Must equal LANE_LABEL_H in TimelineView.tsx. */
-  height: 22px;
+  height: 18px;
   box-sizing: border-box;
   display: inline-flex;
   align-items: center;
@@ -373,7 +354,7 @@
   color: var(--text-muted);
   background: var(--panel-bg);
   border: 1px solid var(--tl-grid);
-  padding: 2px 7px;
+  padding: 0 7px;
   border-radius: 100px;
   pointer-events: none;
   backdrop-filter: blur(2px);
@@ -444,8 +425,7 @@
 
 .tl-axis-label {
   position: absolute;
-  top: 50%;
-  transform: translate(-50%, -50%);
+  transform: translateX(-50%);
   font-size: calc(11px * var(--tsz, 1));
   color: var(--text-muted);
   font-variant-numeric: tabular-nums;
@@ -559,7 +539,10 @@
   padding: 0;
   font: inherit;
   color: inherit;
-  transition: background 0.12s ease, box-shadow 0.12s ease;
+  transition:
+    background 0.12s ease,
+    box-shadow 0.12s ease,
+    top 0.18s ease-out;
 }
 
 .tl-life-bar:hover,
@@ -575,13 +558,30 @@
   gap: 0;
   font-size: calc(10px * var(--tsz, 1));
   font-weight: 600;
-  line-height: 1.3;
+  line-height: 1.2;
   color: var(--text-h);
   padding: 0 7px;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
   pointer-events: none;
+}
+
+/* A lifetime is usually far wider than the screen at the working zoom, so a name inside its bar
+ * follows the left edge of the screen while any of the bar is still showing, running on past the end
+ * of a nearly-gone bar as far as the next one in the row, and fading out with the last few pixels.
+ * All four numbers are unitless px from TimelineView.tsx (--tl-view-left on the scroller; --x, --w
+ * and --room on the bar); 100% is the label's own width. */
+.tl-life-label:not(.tl-life-label-outside) {
+  text-align: left;
+  transform: translateX(
+    clamp(
+      0px,
+      calc((var(--tl-view-left, 0) - var(--x, 0)) * 1px),
+      max(0px, calc(var(--room, 0) * 1px - 100% - 2px))
+    )
+  );
+  opacity: calc(var(--x, 0) + var(--w, 0) - var(--tl-view-left, 0) - 6);
 }
 
 /* Bounded the same way as .tl-book-bar-label-outside above — max-width + ellipsis gives this label
@@ -646,8 +646,23 @@
   cursor: pointer;
   padding: 0;
   transform: translate(-50%, -50%);
-  transition: transform 0.14s ease, box-shadow 0.14s ease;
+  transition:
+    transform 0.14s ease,
+    box-shadow 0.14s ease,
+    top 0.18s ease-out;
   z-index: 2;
+}
+
+/* A bigger target than the dot or bar itself: about a row high. */
+.tl-marker::before,
+.tl-range-bar::before {
+  content: "";
+  position: absolute;
+  inset: -8px;
+}
+
+.tl-range-bar::before {
+  inset: -9px 0;
 }
 
 .tl-marker:hover,
@@ -675,7 +690,11 @@
   padding: 0;
   border: none;
   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.22);
-  transition: transform 0.14s ease, box-shadow 0.14s ease, filter 0.14s ease;
+  transition:
+    transform 0.14s ease,
+    box-shadow 0.14s ease,
+    filter 0.14s ease,
+    top 0.18s ease-out;
   z-index: 2;
 }
 
@@ -720,8 +739,8 @@
   gap: 0;
   font-size: calc(10px * var(--tsz, 1));
   font-weight: 600;
-  line-height: 1.3;
-  padding: 1px 6px;
+  line-height: 1.2;
+  padding: 0 6px;
   color: var(--text-h);
   background: var(--panel-bg);
   border: 1px solid var(--tl-grid);
@@ -776,7 +795,9 @@
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
   cursor: zoom-in;
   transform: translate(-50%, -50%);
-  transition: transform 0.14s ease;
+  transition:
+    transform 0.14s ease,
+    top 0.18s ease-out;
   z-index: 3;
   font-variant-numeric: tabular-nums;
 }
@@ -821,6 +842,11 @@
   animation: tl-tip-in 0.12s ease;
 }
 
+.tl-tooltip.tl-tooltip-below {
+  transform: translate(-50%, 16px);
+  animation: none;
+}
+
 @keyframes tl-tip-in {
   from {
     opacity: 0;
@@ -860,19 +886,11 @@
 }
 
 @media (max-width: 720px) {
-  /* The header is a single non-wrapping row carrying six things at 375px: Back, the title block
-   * (title + year readout), the Eras jump menu, the Lanes menu, −, + and Fit. Measured at 375px
-   * before this block was tightened, the title block was left 79.6px against a 117px title and an
-   * 83px year readout — both ellipsized. The three reclamations below (a 6px row gap, a 4px gap
-   * between the zoom controls, and dropping "Historical" from the heading) give it 93.6px, which
-   * fits both whole with the row still one line and no horizontal page overflow. */
+  /* The header is a single non-wrapping row: Back, the title block (title + year readout), then the
+   * Eras jump menu and the Lanes menu at the right. */
   .tl-header {
     padding: 8px 10px;
-    gap: 6px;
-  }
-
-  .tl-zoom-controls {
-    gap: 4px;
+    gap: 8px;
   }
 
   /* See the note in TimelineView.tsx where this span is rendered — the heading reads "Timeline" on
@@ -919,9 +937,8 @@
     padding: 2px 6px;
   }
 
-  /* The era jump control is one more thing competing with the title for a 375px header,
-   * so on phones it drops to its arrow icon alone — 35px instead of 62.6px. This is the reason the
-   * control could come back at all (see SHOW_ERA_MENU in TimelineView.tsx); do not remove it. */
+  /* On phones the era jump control is its arrow icon alone, leaving the room to the title and year
+   * readout (see SHOW_ERA_MENU in TimelineView.tsx). */
   .tl-era-menu-button .tl-lane-menu-count {
     display: none;
   }
@@ -960,5 +977,17 @@
     box-shadow:
       0 0 0 6px color-mix(in srgb, var(--accent) 35%, transparent),
       0 0 22px 8px color-mix(in srgb, var(--accent) 22%, transparent);
+  }
+}
+
+/* The one re-fit that must not glide: the scroll position is moving with it in the same frame (see
+ * the layout effect in TimelineView.tsx). Last in the file so it beats every transition above. */
+.tl-canvas.tl-no-anim * {
+  transition: none !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tl-canvas * {
+    transition: none !important;
   }
 }

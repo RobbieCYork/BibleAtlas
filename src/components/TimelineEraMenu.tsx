@@ -46,11 +46,11 @@ export const TIMELINE_ERAS: { label: string; from: number; to: number }[] = [
 
 interface TimelineEraMenuProps {
   onJump: (from: number, to: number) => void;
-  /** Zooms all the way back out to the full span — the same action as the Fit button. */
-  onFit: () => void;
+  /** Zooms all the way out to the full span. */
+  onShowAll: () => void;
 }
 
-export default function TimelineEraMenu({ onJump, onFit }: TimelineEraMenuProps) {
+export default function TimelineEraMenu({ onJump, onShowAll }: TimelineEraMenuProps) {
   const [open, setOpen] = useState(false);
   const containerRef = useRef<HTMLDivElement | null>(null);
 
@@ -106,7 +106,7 @@ export default function TimelineEraMenu({ onJump, onFit }: TimelineEraMenuProps)
             type="button"
             className="tl-lane-menu-item tl-era-menu-item tl-era-menu-all"
             onClick={() => {
-              onFit();
+              onShowAll();
               setOpen(false);
             }}
           >
