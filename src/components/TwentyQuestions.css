@@ -262,7 +262,7 @@
 
 .tq-guess-list {
   /* Shorter on a short screen, so the Guess and Keep asking buttons stay above the tab bar. */
-  max-height: clamp(110px, calc(100dvh - 500px), 260px);
+  max-height: clamp(110px, calc(100dvh - 500px - env(safe-area-inset-top, 0px) - env(safe-area-inset-bottom, 0px)), 260px);
   overflow-y: auto;
   padding-right: 2px;
 }

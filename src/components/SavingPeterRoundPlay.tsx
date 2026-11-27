@@ -133,7 +133,7 @@ export default function SavingPeterRoundPlay({ room, players, userId, guessesVer
 
       <div className="saving-peter">
         <div className="saving-peter-scene">
-          <img className="saving-peter-figure" src={peterImage} alt="" style={{ transform: `translateY(${wrongCount * 11}px)` }} />
+          <img className="saving-peter-figure" src={peterImage} alt="" style={{ transform: `translateY(${wrongCount * 5.5}%)` }} />
           <div className="saving-peter-water" style={{ height: `${18 + wrongCount * 11}%` }} />
         </div>
       </div>

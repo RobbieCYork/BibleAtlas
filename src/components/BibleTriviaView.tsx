@@ -12,6 +12,7 @@ import BackButton from "./BackButton";
 import { useGameWebRTC } from "../hooks/useGameWebRTC";
 import Icon from "./Icon";
 import { GameEntryChoices } from "./GameEntry";
+import { useScrollTop } from "../lib/useScrollTop";
 import {
   fetchRoom,
   fetchPlayers,
@@ -51,6 +52,7 @@ export default function BibleTriviaView({ session, onBack, available }: BibleTri
   const [answersVersion, setAnswersVersion] = useState(0);
   const [starting, setStarting] = useState(false);
   const [loadError, setLoadError] = useState<string | null>(null);
+  const bodyRef = useScrollTop(`${entry} ${room?.id} ${room?.status}`);
 
   const setActiveRoom = (id: string | null) => {
     setRoomId(id);
@@ -188,7 +190,7 @@ export default function BibleTriviaView({ session, onBack, available }: BibleTri
           Bible Trivia
         </h2>
       </header>
-      <div className="game-body">
+      <div ref={bodyRef} className={`game-body${inRoom ? " game-in-room" : ""}`}>
         {loadError && <p className="games-error">{loadError}</p>}
         {!isSolo && <GameRemoteAudio streams={webrtc.remoteStreams} />}
         {!roomId || !room ? (

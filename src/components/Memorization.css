@@ -245,3 +245,27 @@
 .memchallenge-search {
   border-color: var(--input-border);
 }
+
+/* ------------------------------------------------------------------ phones */
+
+@media (max-width: 768px) {
+  .game-fit .memchallenge-ready {
+    margin-top: 4px;
+    gap: 8px;
+    width: 100%;
+  }
+
+  .game-fit .memchallenge-play {
+    gap: 8px;
+  }
+
+  .game-fit .memchallenge-fulltext {
+    font-size: calc(18px * var(--tsz, 1));
+    line-height: 1.55;
+  }
+
+  .game-fit .memchallenge-verse-text {
+    line-height: 1.7;
+    margin: 0;
+  }
+}

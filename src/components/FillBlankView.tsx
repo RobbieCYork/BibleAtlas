@@ -10,6 +10,7 @@ import BackButton from "./BackButton";
 import "./FillBlank.css";
 import Icon from "./Icon";
 import { GameEntryChoices, LevelSetup } from "./GameEntry";
+import { useScrollTop } from "../lib/useScrollTop";
 
 interface FillBlankViewProps {
   onBack: () => void;
@@ -48,6 +49,7 @@ export default function FillBlankView({ onBack }: FillBlankViewProps) {
   const [revealed, setRevealed] = useState(false);
   const [roundCorrect, setRoundCorrect] = useState<boolean | null>(null);
   const firstInputRef = useRef<HTMLInputElement | null>(null);
+  const playRef = useScrollTop(`${screen} ${current?.reference}`);
 
   const pool = useMemo(() => (difficulty ? FILL_BLANK_VERSES.filter((v) => v.difficulty === difficulty) : []), [difficulty]);
 
@@ -223,7 +225,7 @@ export default function FillBlankView({ onBack }: FillBlankViewProps) {
           Fill in the Blank
         </h2>
       </header>
-      <div className="game-body">
+      <div ref={playRef} className="game-body game-fit fillblank-play">
         <div className="fillblank-hud">
           <span className="fillblank-lives" aria-label={`${lives} lives remaining`}>
             {Array.from({ length: STARTING_LIVES }, (_, i) => (
@@ -276,22 +278,24 @@ export default function FillBlankView({ onBack }: FillBlankViewProps) {
             })}
           </p>
 
-          {!revealed ? (
-            <button type="submit" className="fillblank-btn-primary">
-              Check Answer
-            </button>
-          ) : (
-            <div className="fillblank-round-result">
-              <p className={roundCorrect ? "fillblank-result-correct" : "fillblank-result-wrong"}>
-                {roundCorrect ? <><Icon name="check" inline /> Correct!</> : timeLeft <= 0 ? <><Icon name="timer" inline /> Time's up!</> : <><Icon name="close" inline /> Not quite.</>}
-              </p>
-              {lives > 0 && (
-                <button type="button" className="fillblank-btn-primary" onClick={handleContinue}>
-                  Next Verse →
-                </button>
-              )}
-            </div>
-          )}
+          <div className="game-pin">
+            {!revealed ? (
+              <button type="submit" className="fillblank-btn-primary">
+                Check Answer
+              </button>
+            ) : (
+              <div className="fillblank-round-result">
+                <p className={roundCorrect ? "fillblank-result-correct" : "fillblank-result-wrong"}>
+                  {roundCorrect ? <><Icon name="check" inline /> Correct!</> : timeLeft <= 0 ? <><Icon name="timer" inline /> Time's up!</> : <><Icon name="close" inline /> Not quite.</>}
+                </p>
+                {lives > 0 && (
+                  <button type="button" className="fillblank-btn-primary" onClick={handleContinue}>
+                    Next Verse →
+                  </button>
+                )}
+              </div>
+            )}
+          </div>
         </form>
 
         <p className="fillblank-missing-count">

@@ -11,6 +11,7 @@ import { GameMediaBar } from "./GameMediaControls";
 import BackButton from "./BackButton";
 import { useGameWebRTC } from "../hooks/useGameWebRTC";
 import Icon from "./Icon";
+import { useScrollTop } from "../lib/useScrollTop";
 import {
   fetchSavingPeterRoom,
   fetchSavingPeterPlayers,
@@ -49,6 +50,7 @@ export default function SavingPeterMultiplayerView({ session, entry, onBack, ava
   const [guessesVersion, setGuessesVersion] = useState(0);
   const [starting, setStarting] = useState(false);
   const [loadError, setLoadError] = useState<string | null>(null);
+  const bodyRef = useScrollTop(`${room?.id} ${room?.status} ${room?.current_round_index}`);
 
   const setActiveRoom = (id: string | null) => {
     setRoomId(id);
@@ -169,7 +171,7 @@ export default function SavingPeterMultiplayerView({ session, entry, onBack, ava
           Saving Peter — Multiplayer
         </h2>
       </header>
-      <div className="game-body">
+      <div ref={bodyRef} className={`game-body${inRoom ? ` game-in-room${room.status === "active" ? " sp-round" : ""}` : ""}`}>
         {loadError && <p className="games-error">{loadError}</p>}
         {!isSolo && <GameRemoteAudio streams={webrtc.remoteStreams} />}
         {!roomId || !room ? (

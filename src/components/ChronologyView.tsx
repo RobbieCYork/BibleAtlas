@@ -12,6 +12,7 @@ import BackButton from "./BackButton";
 import "./Chronology.css";
 import Icon from "./Icon";
 import { GameEntryChoices, LevelSetup } from "./GameEntry";
+import { useScrollTop } from "../lib/useScrollTop";
 
 interface ChronologyViewProps {
   onBack: () => void;
@@ -43,6 +44,7 @@ export default function ChronologyView({ onBack }: ChronologyViewProps) {
   const [score, setScore] = useState(0);
   const [best, setBest] = useState(0);
   const [streak, setStreak] = useState(0);
+  const playRef = useScrollTop(`${screen} ${cards.map((c) => c.id).sort().join()}`);
 
   const startGame = (key: ChronologyLevel) => {
     const def = CHRONOLOGY_LEVELS.find((l) => l.key === key);
@@ -176,7 +178,7 @@ export default function ChronologyView({ onBack }: ChronologyViewProps) {
           Chronology
         </h2>
       </header>
-      <div className="game-body">
+      <div ref={playRef} className="game-body game-fit chrono-play">
         <div className="chronology-hud">
           <span className="chronology-lives" aria-label={`${lives} lives remaining`}>
             {Array.from({ length: STARTING_LIVES }, (_, i) => (
@@ -257,15 +259,17 @@ export default function ChronologyView({ onBack }: ChronologyViewProps) {
           </div>
         )}
 
-        {!checked ? (
-          <button type="button" className="chronology-btn-primary" onClick={checkOrder}>
-            Check Order
-          </button>
-        ) : (
-          <button type="button" className="chronology-btn-primary" onClick={nextRound}>
-            {lives <= 0 ? "See Results →" : "Next Round →"}
-          </button>
-        )}
+        <div className="game-pin">
+          {!checked ? (
+            <button type="button" className="chronology-btn-primary" onClick={checkOrder}>
+              Check Order
+            </button>
+          ) : (
+            <button type="button" className="chronology-btn-primary" onClick={nextRound}>
+              {lives <= 0 ? "See Results →" : "Next Round →"}
+            </button>
+          )}
+        </div>
       </div>
     </div>
   );

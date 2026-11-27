@@ -36,6 +36,8 @@ const CONTINUE_ATTEMPTS = 15;
  * on the next question's Skip. A new question counts as a press, so a tap aimed at Continue just as
  * the game moves on by itself doesn't skip it. */
 const DOUBLE_TAP_MS = 600;
+/** Choices no longer than this sit two to a row on a phone (Game.css). */
+const SHORT_CHOICE = 22;
 /** The answer_index a skipped question is recorded with. It matches no choice, so to the server and
  * to every screen it is an ordinary wrong answer. */
 const SKIPPED = -1;
@@ -285,7 +287,7 @@ export default function GameRoomPlay({ room, players, userId, answersVersion, on
           <span className="game-question-bonus-hint"><Icon name="medal" inline /> First correct = 2×</span>
         </div>
         <p ref={promptRef} className="game-question-prompt">{question.prompt}</p>
-        <div className="game-question-choices">
+        <div className={`game-question-choices${question.choices.every((c) => c.length <= SHORT_CHOICE) ? " is-short" : ""}`}>
           {question.choices.map((choice, i) => {
             const isCorrectChoice = i === question.correctIndex;
             const isMyChoice = i === myChoice;

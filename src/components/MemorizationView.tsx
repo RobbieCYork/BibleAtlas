@@ -4,6 +4,7 @@ import BackButton from "./BackButton";
 import "./Memorization.css";
 import Icon from "./Icon";
 import { GameEntryChoices } from "./GameEntry";
+import { useScrollTop } from "../lib/useScrollTop";
 
 interface MemorizationViewProps {
   onBack: () => void;
@@ -92,6 +93,7 @@ export default function MemorizationView({ onBack }: MemorizationViewProps) {
   const [allCorrect, setAllCorrect] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const firstInputRef = useRef<HTMLInputElement | null>(null);
+  const playRef = useScrollTop(`${mode.kind} ${"verse" in mode ? mode.verse.reference : ""}`);
 
   useEffect(() => saveMastered(mastered), [mastered]);
 
@@ -322,14 +324,16 @@ export default function MemorizationView({ onBack }: MemorizationViewProps) {
           Scripture Memorization Challenge
         </h2>
         </header>
-        <div className="game-body">
+        <div ref={playRef} className="game-body game-fit">
           <div className="memchallenge-ready">
             <p className="memchallenge-reference">{mode.verse.reference}</p>
             <p className="memchallenge-fulltext">{mode.verse.text}</p>
             <p className="memchallenge-ready-hint">Read it a few times. When you're ready, a couple of words will disappear — fill them back in from memory.</p>
-            <button type="button" className="memchallenge-btn-primary" onClick={() => beginStages(mode.verse, "review", false)}>
-              I'm Ready →
-            </button>
+            <div className="game-pin">
+              <button type="button" className="memchallenge-btn-primary" onClick={() => beginStages(mode.verse, "review", false)}>
+                I'm Ready →
+              </button>
+            </div>
           </div>
         </div>
       </div>
@@ -354,7 +358,7 @@ export default function MemorizationView({ onBack }: MemorizationViewProps) {
           Scripture Memorization Challenge
         </h2>
         </header>
-        <div className="game-body">
+        <div ref={playRef} className="game-body game-fit">
           <div className="memchallenge-play">
             {mode.isRelearn && <p className="memchallenge-relearn-banner">↻ Missed this one in review — relearning it from the start.</p>}
             <p className="memchallenge-reference">{mode.verse.reference}</p>
@@ -396,15 +400,17 @@ export default function MemorizationView({ onBack }: MemorizationViewProps) {
               })}
             </p>
 
-            {checked ? (
-              <p className={allCorrect ? "memchallenge-result-correct" : "memchallenge-result-wrong"}>
-                {allCorrect ? (isFinal ? <><Icon name="check" inline /> Verse mastered!</> : <><Icon name="check" inline /> Nice — a few more words next round.</>) : <><Icon name="close" inline /> Not quite — try again.</>}
-              </p>
-            ) : (
-              <button type="button" className="memchallenge-btn-primary" onClick={submitLearnStage}>
-                Check
-              </button>
-            )}
+            <div className="game-pin">
+              {checked ? (
+                <p className={allCorrect ? "memchallenge-result-correct" : "memchallenge-result-wrong"}>
+                  {allCorrect ? (isFinal ? <><Icon name="check" inline /> Verse mastered!</> : <><Icon name="check" inline /> Nice — a few more words next round.</>) : <><Icon name="close" inline /> Not quite — try again.</>}
+                </p>
+              ) : (
+                <button type="button" className="memchallenge-btn-primary" onClick={submitLearnStage}>
+                  Check
+                </button>
+              )}
+            </div>
           </div>
         </div>
       </div>
@@ -423,7 +429,7 @@ export default function MemorizationView({ onBack }: MemorizationViewProps) {
           Scripture Memorization Challenge
         </h2>
         </header>
-        <div className="game-body">
+        <div ref={playRef} className="game-body game-fit">
           <div className="memchallenge-play">
             <p className="memchallenge-review-banner">
               <Icon name="restart" inline /> Cumulative review — recite {mode.total - mode.queue.length + 1} of {mode.total} before your next new verse.
@@ -453,15 +459,17 @@ export default function MemorizationView({ onBack }: MemorizationViewProps) {
               })}
             </p>
 
-            {checked ? (
-              <p className={allCorrect ? "memchallenge-result-correct" : "memchallenge-result-wrong"}>
-                {allCorrect ? <><Icon name="check" inline /> Correct!</> : <><Icon name="close" inline /> Not quite — back to a few words missing for this one.</>}
-              </p>
-            ) : (
-              <button type="button" className="memchallenge-btn-primary" onClick={submitReview}>
-                Check
-              </button>
-            )}
+            <div className="game-pin">
+              {checked ? (
+                <p className={allCorrect ? "memchallenge-result-correct" : "memchallenge-result-wrong"}>
+                  {allCorrect ? <><Icon name="check" inline /> Correct!</> : <><Icon name="close" inline /> Not quite — back to a few words missing for this one.</>}
+                </p>
+              ) : (
+                <button type="button" className="memchallenge-btn-primary" onClick={submitReview}>
+                  Check
+                </button>
+              )}
+            </div>
           </div>
         </div>
       </div>

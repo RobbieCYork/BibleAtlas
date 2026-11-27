@@ -6,6 +6,7 @@ import BackButton from "./BackButton";
 import "./SavingPeterLevels.css";
 import Icon from "./Icon";
 import { LevelSetup } from "./GameEntry";
+import { useScrollTop } from "../lib/useScrollTop";
 
 function shuffled<T>(items: T[]): T[] {
   const copy = [...items];
@@ -45,6 +46,7 @@ export default function SavingPeterView({ session, onBack }: SavingPeterViewProp
   const [choice, setChoice] = useState<SavingPeterLevel>("beginner");
   const [entry, setEntry] = useState(() => SAVING_PETER_WORDS.beginner[0]);
   const [guessed, setGuessed] = useState<Set<string>>(new Set());
+  const playRef = useScrollTop(`${level} ${entry.word}`);
 
   // Best-effort — falls back to the account's email (or a generic "You") if the profile hasn't
   // loaded yet or has no display name, same fallback chain AuthButton's own label uses.
@@ -167,10 +169,10 @@ export default function SavingPeterView({ session, onBack }: SavingPeterViewProp
           Saving Peter
         </h2>
       </header>
-      <div className="game-body">
+      <div ref={playRef} className="game-body sp-play">
         <div className="saving-peter">
           <div className="saving-peter-scene">
-            <img className="saving-peter-figure" src={peterImage} alt="" style={{ transform: `translateY(${sinkProgress * 66}px)` }} />
+            <img className="saving-peter-figure" src={peterImage} alt="" style={{ transform: `translateY(${sinkProgress * 33}%)` }} />
             <div className="saving-peter-water" style={{ height: `${18 + sinkProgress * 66}%` }} />
           </div>
 
