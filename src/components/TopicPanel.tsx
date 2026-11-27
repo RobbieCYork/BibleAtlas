@@ -232,15 +232,19 @@ export default function TopicPanel({
             <h4>{section.heading}</h4>
             {section.paragraphs.map((paragraph, pi) => (
               <p key={pi}>
-                <LinkedVerseText
-                  text={paragraph}
-                  onSelectLocation={onSelectLocation}
-                  onSelectPoi={onSelectPoi}
-                  onSelectPerson={onSelectPerson}
-                  onSelectTopic={onSelectTopic}
-                  onSelectVerse={onSelectVerse}
-                  excludeId={topic.id}
-                />
+                {b?.noBibleLinks ? (
+                  paragraph
+                ) : (
+                  <LinkedVerseText
+                    text={paragraph}
+                    onSelectLocation={onSelectLocation}
+                    onSelectPoi={onSelectPoi}
+                    onSelectPerson={onSelectPerson}
+                    onSelectTopic={onSelectTopic}
+                    onSelectVerse={onSelectVerse}
+                    excludeId={topic.id}
+                  />
+                )}
               </p>
             ))}
           </div>

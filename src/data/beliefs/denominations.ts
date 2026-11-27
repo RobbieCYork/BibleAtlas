@@ -126,12 +126,6 @@ export const christianTraditions: BeliefRecord[] = [
       { kind: "official", label: "Second Vatican Council, Dogmatic Constitution Lumen Gentium", url: "https://www.vatican.va/archive/hist_councils/ii_vatican_council/documents/vat-ii_const_19641121_lumen-gentium_en.html" },
       { kind: "official", label: "Joint Declaration on the Doctrine of Justification (1999), Lutheran World Federation and Catholic Church", url: "https://lutheranworld.org/sites/default/files/2022-02/original_jddj_english.pdf" },
     ],
-    verses: [
-      { reference: "Matthew 16:18", note: "Peter and the rock, central to Catholic teaching on the papacy" },
-      { reference: "Romans 3:28", note: "justified by faith apart from works of the law" },
-      { reference: "James 2:24", note: "cited by Catholics on faith and works" },
-      { reference: "Hebrews 10:10-14", note: "Christ's once-for-all sacrifice" },
-    ],
     relatedIds: ["eastern-orthodoxy", "anglicanism", "lutheranism"],
   },
 
@@ -214,7 +208,6 @@ export const christianTraditions: BeliefRecord[] = [
       { kind: "data", label: "Pew Research Center, Orthodox Christianity in the 21st Century (2017)", url: "https://www.pewresearch.org/religion/2017/11/08/orthodox-christianity-in-the-21st-century/" },
       { kind: "reference", label: "Christian History Magazine, issue 54: Eastern Orthodoxy", url: "https://christianhistoryinstitute.org/magazine/issue/eastern-orthodoxy" },
     ],
-    verses: [{ reference: "2 Peter 1:4", note: "partakers of the divine nature, a key text for theosis" }],
     relatedIds: ["catholicism", "anglicanism"],
   },
 
@@ -297,7 +290,6 @@ export const christianTraditions: BeliefRecord[] = [
       { kind: "reference", label: "Library of Congress, In Custodia Legis: Today in History, Extinguishing the Pope's Power in England", url: "https://blogs.loc.gov/law/2017/07/today-in-history-extinguishing-the-popes-power-in-england/" },
       { kind: "official", label: "Anglican Communion, Member churches", url: "https://www.anglicancommunion.org/member-churches/", note: "could not be loaded on 2026-11-26" },
     ],
-    verses: [{ reference: "John 17:21", note: "Christ's prayer that his followers be one" }],
     relatedIds: ["episcopal-church", "united-methodist-church", "catholicism", "lutheranism"],
   },
 
@@ -453,11 +445,6 @@ export const christianTraditions: BeliefRecord[] = [
       { kind: "official", label: "Lutheran Church-Missouri Synod, Beliefs", url: "https://www.lcms.org/what-we-believe/beliefs" },
       { kind: "data", label: "ELCA, Summary of congregational statistics as of 12/31/2024", url: "https://elcamediaresources.blob.core.windows.net/cdn/wp-content/uploads/summary-of-congregational-statistics-as-of-12-31-24.pdf" },
     ],
-    verses: [
-      { reference: "Romans 3:28", note: "justified by faith apart from works of the law" },
-      { reference: "Matthew 26:26", note: "This is my body" },
-      { reference: "1 Peter 3:21", note: "baptism now saves you" },
-    ],
     relatedIds: ["catholicism", "presbyterianism", "anglicanism", "episcopal-church"],
   },
 
@@ -538,10 +525,6 @@ export const christianTraditions: BeliefRecord[] = [
       { kind: "data", label: "byFaith, New statistics reveal PCA's growth in 2024", url: "https://byfaithonline.com/new-statistics-reveal-pcas-growth-in-2024/" },
       { kind: "official", label: "PCA, History", url: "https://pcanet.org/history" },
     ],
-    verses: [
-      { reference: "Ephesians 1:4-5", note: "chosen before the foundation of the world" },
-      { reference: "Acts 2:39", note: "the promise is for you and for your children" },
-    ],
     relatedIds: ["lutheranism", "anglicanism", "southern-baptist-convention"],
   },
 
@@ -614,11 +597,6 @@ export const christianTraditions: BeliefRecord[] = [
       { kind: "official", label: "Church of the Nazarene, Historical Statement", url: "https://nazarene.org/historical-statement" },
       { kind: "official", label: "Church of the Nazarene, Our History", url: "https://nazarene.org/our-history/" },
       { kind: "data", label: "Church of the Nazarene, 2025 statistics", url: "https://nazarene.org/news/general-secretary-releases-2025-statistics/" },
-    ],
-    verses: [
-      { reference: "1 Thessalonians 5:23", note: "sanctify you completely" },
-      { reference: "Hebrews 12:14", note: "holiness without which no one will see the Lord" },
-      { reference: "1 John 1:8", note: "if we say we have no sin, we deceive ourselves" },
     ],
     relatedIds: ["united-methodist-church", "assemblies-of-god"],
   },
@@ -701,11 +679,6 @@ export const christianTraditions: BeliefRecord[] = [
       { kind: "data", label: "The Baptist Paper, Annual Church Profile 2025", url: "https://thebaptistpaper.org/annual-church-profile-amid-falling-membership-in-sbc-baptisms-increase-for-5th-consecutive-year/" },
       { kind: "reference", label: "Christian History Magazine, issue 126: Baptists in America", url: "https://christianhistoryinstitute.org/magazine/issue/baptists-in-america" },
     ],
-    verses: [
-      { reference: "Romans 6:4", note: "buried with him by baptism" },
-      { reference: "Ephesians 2:8-9", note: "by grace through faith" },
-      { reference: "Matthew 28:19-20", note: "the Great Commission" },
-    ],
     relatedIds: ["churches-of-christ", "non-denominational-churches", "presbyterianism"],
   },
 
@@ -780,7 +753,6 @@ export const christianTraditions: BeliefRecord[] = [
       { kind: "data", label: "UM News, Amid decline, US professions of faith rise", url: "https://www.umnews.org/en/news/amid-decline-us-professions-of-faith-rise" },
       { kind: "data", label: "UMData (General Council on Finance and Administration)", url: "https://www.umdata.org/" },
     ],
-    verses: [{ reference: "Matthew 22:37-39", note: "love God and neighbour, the heart of Wesleyan perfection" }],
     relatedIds: ["anglicanism", "church-of-the-nazarene", "assemblies-of-god"],
   },
 
@@ -854,11 +826,6 @@ export const christianTraditions: BeliefRecord[] = [
       { kind: "official", label: "Assemblies of God media kit", url: "https://cdn1.acdn.io/sites/agorg/Press/Assemblies_of_God_Media_Kit.pdf" },
       { kind: "official", label: "World Assemblies of God Fellowship", url: "https://worldagfellowship.org/" },
       { kind: "reference", label: "CALS Encyclopedia of Arkansas, Assemblies of God", url: "https://encyclopediaofarkansas.net/entries/assemblies-of-god-5121/" },
-    ],
-    verses: [
-      { reference: "Acts 1:8", note: "power when the Holy Spirit comes" },
-      { reference: "Acts 2:4", note: "speaking in other tongues at Pentecost" },
-      { reference: "1 Corinthians 12:13", note: "all baptised by one Spirit into one body" },
     ],
     relatedIds: ["united-methodist-church", "church-of-the-nazarene", "non-denominational-churches"],
   },
@@ -934,12 +901,6 @@ export const christianTraditions: BeliefRecord[] = [
       { kind: "data", label: "The Christian Chronicle, Holy imagination: churches seek to reverse decline", url: "https://christianchronicle.org/holy-imagination-churches-seek-to-reverse-decline/" },
       { kind: "data", label: "The Christian Chronicle, Why counting the sheep is so difficult (2026)", url: "https://christianchronicle.org/why-counting-the-sheep-is-so-difficult/" },
       { kind: "primary", label: "Last Will and Testament of the Springfield Presbytery (1804)", url: "https://en.wikisource.org/wiki/Last_Will_and_Testament_of_The_Springfield_Presbytery", note: "Barton W. Stone and colleagues; public-domain text on Wikisource" },
-    ],
-    verses: [
-      { reference: "Romans 16:16", note: "the churches of Christ greet you" },
-      { reference: "Acts 2:38", note: "repent and be baptised for the forgiveness of sins" },
-      { reference: "Acts 20:7", note: "on the first day of the week, to break bread" },
-      { reference: "Ephesians 5:19", note: "singing and making melody in your heart" },
     ],
     relatedIds: ["southern-baptist-convention", "non-denominational-churches"],
   },
@@ -1018,12 +979,6 @@ export const christianTraditions: BeliefRecord[] = [
       { kind: "data", label: "Adventist Atlas (Office of Archives, Statistics and Research)", url: "https://www.adventistatlas.org/" },
       { kind: "data", label: "Seventh-day Adventist World Church Statistics Summary 2025", url: "https://documents.adventistarchives.org/Statistics/Other/SDAWorldChurchStatsSummary2025.pdf", note: "could not be loaded on 2026-11-26" },
       { kind: "reference", label: "Christianity Today, What Seventh-day Adventists Believe (1984)", url: "https://www.christianitytoday.com/1984/10/what-seventh-day-adventists-believe" },
-    ],
-    verses: [
-      { reference: "Exodus 20:8-11", note: "the fourth commandment" },
-      { reference: "Revelation 14:6-12", note: "the three angels' messages" },
-      { reference: "Colossians 2:16-17", note: "cited by evangelicals on Sabbath observance" },
-      { reference: "Genesis 2:2-3", note: "God rested on the seventh day" },
     ],
     relatedIds: ["southern-baptist-convention"],
   },

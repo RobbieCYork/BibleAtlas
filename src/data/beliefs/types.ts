@@ -22,8 +22,8 @@
  *    names collide with Scripture ("Nazarene", "Pentecost", "catholic", "Baptist"), so nothing in
  *    here may be added to `topics` or to NAME_ENTRIES. Cross-links between articles go through
  *    `relatedIds`, written by hand.
- *  - Paragraph strings ARE run through the linker when rendered, so names of biblical people and
- *    places in them become links. Write full names ("Martin Luther", "John Wesley"); a bare
+ *  - Paragraph strings ARE run through the linker when rendered (unless `noBibleLinks` is set), so
+ *    names of biblical people and places in them become links. Write full names ("Martin Luther", "John Wesley"); a bare
  *    forename like "John" will link to the wrong John.
  */
 
@@ -104,6 +104,15 @@ export interface BeliefRecord {
   /** Shown to the reader as "Also called: ..." and used by search. */
   alternateNames?: string[];
   area: BeliefArea;
+  /**
+   * Show this article's prose with no auto-links at all (Robbie, 2026-11-26: "There are no biblical
+   * references to Buddhism!"). Set on the religions and worldviews that do not share Scripture —
+   * Islam, Hinduism, Buddhism, Sikhism, Confucianism, Atheism, Agnosticism — where a tappable name
+   * or verse reads as the Bible referring to that tradition. Those records also cite no Bible
+   * passage anywhere in their text and carry no `verses`. Honoured by TopicPanel and by
+   * `beliefPage` in scripts/seo/render.mjs.
+   */
+  noBibleLinks?: true;
   /** Sub-group inside the area, shown on the article: "Reformation churches", "Eastern Christianity",
    * "Movements from a Christian background", "Abrahamic religions", "Worldviews". */
   group: string;
@@ -147,7 +156,10 @@ export interface BeliefRecord {
   ownAnswer: string[];
   /** Official and primary sources first. Minimum four, at least two official/primary. */
   sources: BeliefSource[];
-  /** Optional Scripture references the article turns on. Must be verified, not recalled. */
+  /** Optional Scripture references, shown as a "Bible References" block. Must be verified, not
+   * recalled. ONLY JUDAISM carries one (Robbie, 2026-11-26): under any other record the heading
+   * reads as the Bible referring to that religion or church. A passage a doctrine turns on is cited
+   * in the sentence that states the doctrine instead. */
   verses?: VerseRef[];
   /** Ids of other BeliefRecords, for hand-written cross-links. */
   relatedIds?: string[];

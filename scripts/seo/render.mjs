@@ -808,6 +808,8 @@ const BELIEF_SOURCE_LABEL = {
 export function beliefPage(topic, ctx) {
   const b = topic.belief;
   const a = b.adherents;
+  // Same switch TopicPanel reads: no auto-links in an article on a tradition outside Scripture.
+  const prose = b.noBibleLinks ? { ...ctx, linkify: (text) => esc(String(text ?? "")) } : ctx;
   const description = clip(`${topic.name} — ${topic.summary}`);
   const path = itemPath("religion", topic.id);
   const trail = [
@@ -840,10 +842,10 @@ export function beliefPage(topic, ctx) {
       topic.role,
       topic.alternateNames?.length ? `Also called ${esc(topic.alternateNames.join(", "))}` : ""
     ),
-    `<p class="lead">${ctx.linkify(topic.summary, topic.id)}</p>`,
+    `<p class="lead">${prose.linkify(topic.summary, topic.id)}</p>`,
     b.classificationNote ? `<p class="note"><strong>About this classification.</strong> ${esc(b.classificationNote)}</p>` : "",
     facts,
-    (topic.sections ?? []).map((s) => section(s.heading, paras(s.paragraphs, topic.id, ctx))).join(""),
+    (topic.sections ?? []).map((s) => section(s.heading, paras(s.paragraphs, topic.id, prose))).join(""),
     versesSection(topic.verses),
     section(
       "Sources",

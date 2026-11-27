@@ -192,8 +192,6 @@ export const worldReligions: BeliefRecord[] = [
       { reference: "Deuteronomy 6:4", note: "The Shema" },
       { reference: "Romans 9:4-5" },
       { reference: "Romans 11:17-18" },
-      { reference: "John 1:1" },
-      { reference: "1 Corinthians 15:3-4" },
     ],
     relatedIds: ["islam"],
   },
@@ -204,6 +202,7 @@ export const worldReligions: BeliefRecord[] = [
     name: "Islam",
     alternateNames: ["Muslim faith"],
     area: "world-religion",
+    noBibleLinks: true,
     group: "Abrahamic religions",
     role: "Monotheistic religion based on the Qur'an and the example of Muhammad",
     summary:
@@ -296,9 +295,9 @@ export const worldReligions: BeliefRecord[] = [
         "Evangelicals welcome the honour Islam gives to Jesus — his virgin birth, his miracles, his title of Messiah — and to Mary, and recognise that a Muslim reader comes to the Gospels already revering Jesus.",
       ],
       disagreements: [
-        "Evangelicals believe Jesus is not only a prophet but the eternal Son of God, God incarnate (John 1:1, 14; John 20:28), and that the oneness of God is revealed in Father, Son and Holy Spirit rather than contradicted by them. Christians do not teach three gods, nor that God took a wife — readings of the Trinity that Muslims often reject and that Christians reject too.",
-        "Evangelicals hold that Jesus truly died on the cross and rose bodily on the third day (1 Corinthians 15:3-4). That event is attested by the earliest Christian sources and by non-Christian historians of the first and second centuries, and the gospel depends on it.",
-        "Evangelicals hold that salvation is a gift of grace received through faith in Christ, not secured by balancing deeds (Ephesians 2:8-9), and that the Bible is a reliable record of revelation rather than a corrupted one.",
+        "Evangelicals believe Jesus is not only a prophet but the eternal Son of God, God incarnate, and that the oneness of God is revealed in Father, Son and Holy Spirit rather than contradicted by them. Christians do not teach three gods, nor that God took a wife — readings of the Trinity that Muslims often reject and that Christians reject too.",
+        "Evangelicals hold that Jesus truly died on the cross and rose bodily on the third day. That event is attested by the earliest Christian sources and by non-Christian historians of the first and second centuries, and the gospel depends on it.",
+        "Evangelicals hold that salvation is a gift of grace received through faith in Christ, not secured by balancing deeds, and that the Bible is a reliable record of revelation rather than a corrupted one.",
       ],
       evangelicalsDiffer: [
         "Evangelicals differ on whether Christians and Muslims can be said to worship 'the same God' — some saying yes, referring to the one Creator, though understood very differently; others saying no, because the God of the Bible is known as Father, Son and Spirit. They also differ on the best approach to mission and dialogue among Muslims.",
@@ -344,12 +343,6 @@ export const worldReligions: BeliefRecord[] = [
         url: "https://www.britannica.com/topic/Islam",
       },
     ],
-    verses: [
-      { reference: "John 1:1" },
-      { reference: "John 20:28" },
-      { reference: "1 Corinthians 15:3-4" },
-      { reference: "Ephesians 2:8-9" },
-    ],
     relatedIds: ["judaism"],
   },
 
@@ -359,6 +352,7 @@ export const worldReligions: BeliefRecord[] = [
     name: "Hinduism",
     alternateNames: ["Sanatana Dharma", "Hindu dharma"],
     area: "world-religion",
+    noBibleLinks: true,
     group: "Religions from India",
     role: "Family of religious traditions originating in the Indian subcontinent",
     summary:
@@ -453,9 +447,9 @@ export const worldReligions: BeliefRecord[] = [
         "Evangelicals agree that compassion, non-violence toward the weak and reverence for life are goods, and Christians in India have long joined Hindu reformers in opposing caste discrimination.",
       ],
       disagreements: [
-        "Evangelicals believe in one personal Creator God, distinct from the world he made, and reject both the worship of many deities and the view that the self is ultimately identical with God (Isaiah 43:10).",
-        "Evangelicals hold that each person lives once and then faces judgement (Hebrews 9:27), rather than passing through many births, and that salvation is not attained by knowledge, devotion or works but received as grace through the death and resurrection of Christ (Ephesians 2:8-9).",
-        "Evangelicals hold that Jesus is not one incarnation among many but the unique and only Son of God, the one way to the Father (John 14:6).",
+        "Evangelicals believe in one personal Creator God, distinct from the world he made, and reject both the worship of many deities and the view that the self is ultimately identical with God.",
+        "Evangelicals hold that each person lives once and then faces judgement, rather than passing through many births, and that salvation is not attained by knowledge, devotion or works but received as grace through the death and resurrection of Christ.",
+        "Evangelicals hold that Jesus is not one incarnation among many but the unique and only Son of God, the one way to the Father.",
       ],
       evangelicalsDiffer: [
         "Evangelicals differ on how far Christians may use Hindu cultural forms — music, dress, festivals, yoga as exercise — and on contextual movements of Hindus who follow Jesus without joining a church.",
@@ -499,12 +493,6 @@ export const worldReligions: BeliefRecord[] = [
         url: "https://www.britannica.com/topic/Hinduism",
       },
     ],
-    verses: [
-      { reference: "Isaiah 43:10" },
-      { reference: "Hebrews 9:27" },
-      { reference: "John 14:6" },
-      { reference: "Ephesians 2:8-9" },
-    ],
     relatedIds: ["buddhism", "sikhism"],
   },
 
@@ -514,6 +502,7 @@ export const worldReligions: BeliefRecord[] = [
     name: "Buddhism",
     alternateNames: ["Buddha Dharma"],
     area: "world-religion",
+    noBibleLinks: true,
     group: "Religions from India",
     role: "Religious tradition founded on the teaching of the Buddha",
     summary:
@@ -598,13 +587,13 @@ export const worldReligions: BeliefRecord[] = [
     ],
     evangelicalView: {
       agreements: [
-        "Evangelicals agree with Buddhists that human life as we live it is deeply marked by suffering, that craving and self-centredness lie near its root, and that ordinary pleasures and possessions cannot satisfy the heart. Ecclesiastes says much the same.",
+        "Evangelicals agree with Buddhists that human life as we live it is deeply marked by suffering, that craving and self-centredness lie near its root, and that ordinary pleasures and possessions cannot satisfy the heart.",
         "Evangelicals honour the Buddhist call to compassion, self-discipline, truthfulness and non-violence, and Christians have their own traditions of contemplative prayer and stillness before God.",
       ],
       disagreements: [
-        "Evangelicals believe in a personal Creator God, the source of all being and goodness, who is known in Jesus Christ (Romans 1:20; Hebrews 1:1-2); the deepest problem is not ignorance or craving alone but sin against a holy God.",
+        "Evangelicals believe in a personal Creator God, the source of all being and goodness, who is known in Jesus Christ; the deepest problem is not ignorance or craving alone but sin against a holy God.",
         "Evangelicals hold that each human being is a real, created person made in God's image and loved by him, whose individual self is not dissolved but redeemed, raised and glorified.",
-        "Evangelicals hold that release from sin and death is not achieved by one's own effort along a path but received as grace through Christ's death and resurrection (Ephesians 2:8-9), and that each person lives once and then faces judgement (Hebrews 9:27).",
+        "Evangelicals hold that release from sin and death is not achieved by one's own effort along a path but received as grace through Christ's death and resurrection, and that each person lives once and then faces judgement.",
       ],
       evangelicalsDiffer: [
         "Evangelicals differ on whether mindfulness and meditation techniques drawn from Buddhism can be used by Christians, detached from their Buddhist purpose, or should be avoided.",
@@ -648,12 +637,6 @@ export const worldReligions: BeliefRecord[] = [
         url: "https://www.britannica.com/topic/Buddhism",
       },
     ],
-    verses: [
-      { reference: "Romans 1:20" },
-      { reference: "Hebrews 1:1-2" },
-      { reference: "Hebrews 9:27" },
-      { reference: "Ephesians 2:8-9" },
-    ],
     relatedIds: ["hinduism", "confucianism"],
   },
 
@@ -663,6 +646,7 @@ export const worldReligions: BeliefRecord[] = [
     name: "Sikhism",
     alternateNames: ["Sikhi", "Gurmat"],
     area: "world-religion",
+    noBibleLinks: true,
     group: "Religions from India",
     role: "Monotheistic religion founded by Guru Nanak in the Punjab",
     summary:
@@ -749,11 +733,11 @@ export const worldReligions: BeliefRecord[] = [
     evangelicalView: {
       agreements: [
         "Evangelicals share the Sikh belief in one sovereign Creator God who is not an idol and cannot be bound by ritual, and the conviction that God's grace — not birth, caste or ceremony — is what brings a person to him.",
-        "Evangelicals admire the Sikh commitment to honest work, generosity, the equality of all people and hospitality to strangers; the langar is a picture of the welcome the church is meant to give (James 2:1-4).",
+        "Evangelicals admire the Sikh commitment to honest work, generosity, the equality of all people and hospitality to strangers; the langar is a picture of the welcome the church is meant to give.",
       ],
       disagreements: [
-        "Evangelicals believe that God, without ceasing to be God, became a human being in Jesus Christ (John 1:14), and that he is revealed as Father, Son and Holy Spirit.",
-        "Evangelicals hold that the human problem is sin against a holy God, not only ego, and that grace comes through Christ's atoning death and resurrection rather than through remembering the Name (1 Corinthians 15:3-4); and that each person lives once rather than passing through rebirth (Hebrews 9:27).",
+        "Evangelicals believe that God, without ceasing to be God, became a human being in Jesus Christ, and that he is revealed as Father, Son and Holy Spirit.",
+        "Evangelicals hold that the human problem is sin against a holy God, not only ego, and that grace comes through Christ's atoning death and resurrection rather than through remembering the Name; and that each person lives once rather than passing through rebirth.",
       ],
     },
     ownAnswer: [
@@ -800,12 +784,6 @@ export const worldReligions: BeliefRecord[] = [
         url: "https://www.britannica.com/topic/Sikhism",
       },
     ],
-    verses: [
-      { reference: "John 1:14" },
-      { reference: "James 2:1-4" },
-      { reference: "1 Corinthians 15:3-4" },
-      { reference: "Hebrews 9:27" },
-    ],
     relatedIds: ["hinduism", "islam"],
   },
 
@@ -815,6 +793,7 @@ export const worldReligions: BeliefRecord[] = [
     name: "Confucianism",
     alternateNames: ["Ru tradition", "Rujia", "Rujiao"],
     area: "world-religion",
+    noBibleLinks: true,
     group: "East Asian traditions",
     role: "Ethical and religious tradition of China and East Asia rooted in the teaching of Confucius",
     summary:
@@ -903,11 +882,11 @@ export const worldReligions: BeliefRecord[] = [
     ],
     evangelicalView: {
       agreements: [
-        "Evangelicals share Confucianism's high view of the family, of honouring father and mother (Exodus 20:12), of education, diligence and personal integrity, and its conviction that rulers are morally accountable to a higher order. Confucius's negative form of the golden rule stands close to Jesus's positive form (Matthew 7:12).",
-        "Evangelicals recognise in the Confucian sense of Heaven and of conscience a witness to the moral order that God has written on human hearts (Romans 2:14-15).",
+        "Evangelicals share Confucianism's high view of the family, of honouring father and mother, of education, diligence and personal integrity, and its conviction that rulers are morally accountable to a higher order. Confucius's negative form of the golden rule stands close to Jesus's positive form.",
+        "Evangelicals recognise in the Confucian sense of Heaven and of conscience a witness to the moral order that God has written on human hearts.",
       ],
       disagreements: [
-        "Evangelicals believe human beings cannot become good through learning and self-cultivation alone, because the problem is sin against God, which only his grace in Christ can forgive and heal (Romans 3:23-24).",
+        "Evangelicals believe human beings cannot become good through learning and self-cultivation alone, because the problem is sin against God, which only his grace in Christ can forgive and heal.",
         "Evangelicals believe that Heaven is not an impersonal moral order but the living, personal God, who has spoken in Christ and who alone is to be worshipped.",
       ],
       evangelicalsDiffer: [
@@ -946,12 +925,6 @@ export const worldReligions: BeliefRecord[] = [
         label: "Encyclopaedia Britannica, Confucianism",
         url: "https://www.britannica.com/topic/Confucianism",
       },
-    ],
-    verses: [
-      { reference: "Exodus 20:12" },
-      { reference: "Matthew 7:12" },
-      { reference: "Romans 2:14-15" },
-      { reference: "Romans 3:23-24" },
     ],
     relatedIds: ["buddhism"],
   },
@@ -1121,12 +1094,6 @@ export const worldReligions: BeliefRecord[] = [
         url: "https://www.britannica.com/topic/Church-of-Jesus-Christ-of-Latter-day-Saints",
       },
     ],
-    verses: [
-      { reference: "Isaiah 43:10" },
-      { reference: "Matthew 16:18" },
-      { reference: "Acts 17:29" },
-      { reference: "Ephesians 2:8-9" },
-    ],
     relatedIds: ["jehovahs-witnesses"],
   },
 
@@ -1230,7 +1197,7 @@ export const worldReligions: BeliefRecord[] = [
     evangelicalView: {
       agreements: [
         "Evangelicals admire the Witnesses' devotion to the Bible, their personal witness, their moral discipline, their courage under persecution — including under the Nazis — and their insistence that faith shape the whole of life.",
-        "Evangelicals agree with them that God's name and holiness matter, that Jesus's death was a ransom for many (Mark 10:45), and that Christ will return to judge and to renew creation.",
+        "Evangelicals agree with them that God's name and holiness matter, that Jesus's death was a ransom for many, and that Christ will return to judge and to renew creation.",
       ],
       disagreements: [
         "Evangelicals believe Jesus is not a created being but the eternal Word who was with God and was God (John 1:1), who could say 'before Abraham was, I am' (John 8:58), and whom Thomas confessed as 'My Lord and my God' (John 20:28). They read 'the firstborn of all creation' (Colossians 1:15) as a title of pre-eminence, since the next verse says all things were created by him.",
@@ -1292,14 +1259,6 @@ export const worldReligions: BeliefRecord[] = [
         url: "https://www.britannica.com/topic/Jehovahs-Witnesses",
       },
     ],
-    verses: [
-      { reference: "Isaiah 43:10", note: "The source of the name" },
-      { reference: "John 1:1" },
-      { reference: "John 8:58" },
-      { reference: "John 20:28" },
-      { reference: "Colossians 1:15-17" },
-      { reference: "Matthew 28:19" },
-    ],
     relatedIds: ["latter-day-saints"],
   },
 
@@ -1309,6 +1268,7 @@ export const worldReligions: BeliefRecord[] = [
     name: "Atheism",
     alternateNames: ["Atheist", "Nonbelief"],
     area: "world-religion",
+    noBibleLinks: true,
     group: "Worldviews",
     role: "Worldview position: the absence of belief in God or gods",
     summary:
@@ -1316,7 +1276,7 @@ export const worldReligions: BeliefRecord[] = [
     selfDescription:
       "Atheist organisations describe atheism simply as lacking belief in gods — not, in their words, 'an affirmative belief that there are not gods', and not a religion or a belief system (American Atheists). Many atheists also hold a positive worldview, such as secular humanism, but atheism itself does not supply one.",
     classificationNote:
-      "Atheism is not a religion, and this app does not call it one. It appears in this section because readers meet it alongside the world's religions and ask what it holds, and because Christians are called to give an answer to anyone who asks (1 Peter 3:15).",
+      "Atheism is not a religion, and this app does not call it one. It appears in this section because readers meet it alongside the world's religions and ask what it holds.",
     founding: {
       founders:
         "No founder. Doubt or denial of the gods is found in the ancient world — in the materialist Carvaka school of India and among some Greek thinkers — and openly atheist books appear in modern Europe in the eighteenth century, such as Baron d'Holbach's System of Nature (1770). Modern atheism draws on the Enlightenment, on nineteenth-century critics of religion and on scientific naturalism.",
@@ -1391,12 +1351,12 @@ export const worldReligions: BeliefRecord[] = [
     ],
     evangelicalView: {
       agreements: [
-        "Evangelicals agree with atheists that beliefs should be held honestly and with good reason, that superstition, manipulation and religious hypocrisy deserve criticism, and that the suffering in the world is a real and serious question that must not be brushed aside. The Bible itself contains the protest of Job and the lament psalms.",
-        "Evangelicals agree that atheists can be people of real moral seriousness, and they credit the moral law atheists recognise to the God they believe has written it on every heart (Romans 2:14-15).",
+        "Evangelicals agree with atheists that beliefs should be held honestly and with good reason, that superstition, manipulation and religious hypocrisy deserve criticism, and that the suffering in the world is a real and serious question that must not be brushed aside.",
+        "Evangelicals agree that atheists can be people of real moral seriousness, and they credit the moral law atheists recognise to the God they believe has written it on every heart.",
       ],
       disagreements: [
-        "Evangelicals believe God's existence and power are clearly seen in what he has made (Romans 1:20; Psalms 19:1), and that the existence of the universe, its order, consciousness and the moral law point beyond nature.",
-        "Evangelicals rest Christianity on a historical claim open to examination: that Jesus rose bodily from the dead (1 Corinthians 15:3-8). They hold that God is known not only by argument but personally, in Christ.",
+        "Evangelicals believe God's existence and power are clearly seen in what he has made, and that the existence of the universe, its order, consciousness and the moral law point beyond nature.",
+        "Evangelicals rest Christianity on a historical claim open to examination: that Jesus rose bodily from the dead. They hold that God is known not only by argument but personally, in Christ.",
         "Evangelicals hold that without God, human dignity, moral obligation and ultimate meaning lack a secure foundation.",
       ],
       evangelicalsDiffer: [
@@ -1439,12 +1399,6 @@ export const worldReligions: BeliefRecord[] = [
         url: "https://plato.stanford.edu/entries/atheism-agnosticism/",
       },
     ],
-    verses: [
-      { reference: "Romans 1:20" },
-      { reference: "Psalms 19:1" },
-      { reference: "1 Corinthians 15:3-8" },
-      { reference: "1 Peter 3:15" },
-    ],
     relatedIds: ["agnosticism"],
   },
 
@@ -1454,6 +1408,7 @@ export const worldReligions: BeliefRecord[] = [
     name: "Agnosticism",
     alternateNames: ["Agnostic"],
     area: "world-religion",
+    noBibleLinks: true,
     group: "Worldviews",
     role: "Worldview position: that God's existence is unknown or unknowable",
     summary:
@@ -1529,12 +1484,12 @@ export const worldReligions: BeliefRecord[] = [
     ],
     evangelicalView: {
       agreements: [
-        "Evangelicals respect the agnostic's honesty about what they do not know, and agree that God is not proved like a theorem and that the human mind has real limits (Isaiah 55:8-9). Many Christians have passed through seasons of doubt, as Scripture's own laments and the father's cry 'help my unbelief' (Mark 9:24) show.",
+        "Evangelicals respect the agnostic's honesty about what they do not know, and agree that God is not proved like a theorem and that the human mind has real limits. Many Christians have passed through seasons of doubt.",
         "Evangelicals agree that the question matters and is worth pursuing with an open mind.",
       ],
       disagreements: [
-        "Evangelicals believe God has not left himself unknowable: he has made himself known in creation (Romans 1:20), in Scripture, and above all in Jesus Christ, who said that whoever has seen him has seen the Father (John 14:9).",
-        "Evangelicals hold that the question of God cannot stay suspended for ever, because it bears on how one lives and dies, and that God promises to be found by those who seek him with all their heart (Jeremiah 29:13). Paul told the Athenians, who had an altar to an unknown god, that God can be known (Acts 17:23).",
+        "Evangelicals believe God has not left himself unknowable: he has made himself known in creation, in Scripture, and above all in Jesus Christ.",
+        "Evangelicals hold that the question of God cannot stay suspended for ever, because it bears on how one lives and dies, and that God promises to be found by those who seek him with all their heart.",
       ],
       evangelicalsDiffer: [
         "Evangelicals differ on how much weight to give rational argument in reaching agnostics, as against personal testimony, Christian community and the reading of Scripture.",
@@ -1577,13 +1532,6 @@ export const worldReligions: BeliefRecord[] = [
         label: "Encyclopaedia Britannica, Agnosticism",
         url: "https://www.britannica.com/topic/agnosticism",
       },
-    ],
-    verses: [
-      { reference: "Mark 9:24" },
-      { reference: "Romans 1:20" },
-      { reference: "John 14:9" },
-      { reference: "Jeremiah 29:13" },
-      { reference: "Acts 17:23" },
     ],
     relatedIds: ["atheism"],
   },
