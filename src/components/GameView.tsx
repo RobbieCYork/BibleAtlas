@@ -7,6 +7,8 @@ import SavingPeterHub from "./SavingPeterHub";
 import FillBlankView from "./FillBlankView";
 import MemorizationView from "./MemorizationView";
 import ChronologyView from "./ChronologyView";
+import DailyNameView from "./DailyNameView";
+import type { OpenGameArticle } from "../lib/gameArticles";
 import BackButton from "./BackButton";
 import "./Game.css";
 
@@ -17,6 +19,8 @@ interface GameViewProps {
    * treated the same way re-tapping an already-active tab returns to that tab's root in many apps:
    * jump back to Game Center instead of silently doing nothing. */
   gameCenterNonce: number;
+  /** Leaves Games mode and opens an article — a reveal's "Read about …" link. */
+  onOpenArticle?: OpenGameArticle;
 }
 
 const GAME_FEATURE_KEYS = GAMES.map((g) => g.feature);
@@ -31,7 +35,7 @@ const GAME_FEATURE_KEYS = GAMES.map((g) => g.feature);
  * closes Games mode (unmounting this) the moment the reader taps any other nav tab, so the only way
  * back in is deliberately tapping Games again, and that should land on the list, not silently drop
  * them back into whatever they were playing before they navigated away. */
-export default function GameView({ session, onClose, gameCenterNonce }: GameViewProps) {
+export default function GameView({ session, onClose, gameCenterNonce, onOpenArticle }: GameViewProps) {
   const [activeGame, setActiveGame] = useState<string | null>(null);
 
   const selectGame = (key: string) => setActiveGame(key);
@@ -69,6 +73,7 @@ export default function GameView({ session, onClose, gameCenterNonce }: GameView
   if (activeGame === "fill-blank") return <FillBlankView onBack={backToCenter} />;
   if (activeGame === "memorization") return <MemorizationView onBack={backToCenter} />;
   if (activeGame === "chronology") return <ChronologyView onBack={backToCenter} />;
+  if (activeGame === "daily-name") return <DailyNameView onBack={backToCenter} onOpenArticle={onOpenArticle} />;
 
   return (
     <div className="game-root" data-page-bg="game-center">

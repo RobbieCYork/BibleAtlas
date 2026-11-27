@@ -35,6 +35,7 @@ import PeopleSearchBar from "./components/PeopleSearchBar";
 import UnifiedSearchBar from "./components/UnifiedSearchBar";
 import NotificationToasts from "./components/NotificationToasts";
 import GameView from "./components/GameView";
+import type { GameArticleTarget } from "./lib/gameArticles";
 import BackButton from "./components/BackButton";
 import DisplayNameGate from "./components/DisplayNameGate";
 import ResetPasswordGate from "./components/ResetPasswordGate";
@@ -870,6 +871,17 @@ function App() {
   const handleSelectTopicFromBible = (id: string, opts?: { preserveHistory?: boolean }) => {
     if (!opts?.preserveHistory) setDetailsHistory([]);
     handleSelectTopic(id);
+  };
+
+  // A game's reveal ("Read about Moses") — leave Games mode and open the article as a fresh starting
+  // point, the same way a search result does.
+  const openArticleFromGame = ({ kind, id }: GameArticleTarget) => {
+    closeGame();
+    setDetailsHistory([]);
+    if (kind === "person") handleSelectPerson(id);
+    else if (kind === "place") handleSelect(id);
+    else if (kind === "site") handleSelectPoi(id);
+    else handleSelectTopic(id);
   };
 
   // Map pins and search results are also fresh starting points, not a continuation of an in-panel
@@ -1955,7 +1967,7 @@ function App() {
         {showGame && (
           <div className="game-mode">
             {session ? (
-              <GameView session={session} onClose={closeGame} gameCenterNonce={gameCenterNonce} />
+              <GameView session={session} onClose={closeGame} gameCenterNonce={gameCenterNonce} onOpenArticle={openArticleFromGame} />
             ) : (
               <div className="game-signin-prompt">
                 <BackButton onClick={closeGame} ariaLabel="Close Games" />

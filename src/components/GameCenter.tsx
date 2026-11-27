@@ -52,6 +52,13 @@ export const GAMES: GameDef[] = [
     title: "Chronology",
     tagline: "Put events from the timeline back in the order they happened — Beginner to Expert.",
   },
+  {
+    key: "daily-name",
+    feature: "game_daily_name",
+    icon: "dailyName",
+    title: "Daily Name",
+    tagline: "One hidden Bible name a day, the same for everyone — six guesses. Practice as much as you like.",
+  },
 ];
 
 interface GameCenterProps {

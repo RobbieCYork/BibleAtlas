@@ -16,7 +16,7 @@ import { rolldown } from "rolldown";
 import { MENU_BUTTON } from "../lib/app.mjs";
 
 const DATA = join(dirname(fileURLToPath(import.meta.url)), "../../../src/data");
-const TITLES = ["Bible Trivia", "Saving Peter", "Fill in the Blank", "Scripture Memorization Challenge", "Chronology"];
+const TITLES = ["Bible Trivia", "Saving Peter", "Fill in the Blank", "Scripture Memorization Challenge", "Chronology", "Daily Name"];
 
 async function loadData(name) {
   const dir = mkdtempSync(join(tmpdir(), "games-data."));

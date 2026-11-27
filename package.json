@@ -11,6 +11,7 @@
     "test:admin-add-user": "node --test supabase/functions/admin-add-user/handler.test.ts",
     "test:linker": "node scripts/name-linker/run.mjs && node scripts/name-linker/modern-names.mjs --check && node scripts/name-linker/self-name.mjs --check",
     "validate:archaeology": "node scripts/archaeology-validate/run.mjs",
+    "validate:games": "node scripts/games-data/daily-name.mjs --check && node scripts/games-data/daily-name-rules.mjs",
     "verify:signed-in": "node scripts/signed-in-harness/run.mjs"
   },
   "dependencies": {

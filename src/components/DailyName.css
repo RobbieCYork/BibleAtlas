@@ -1,0 +1,340 @@
+/* --- Daily Name (DailyNameView.tsx) ---
+ *
+ * Feedback never rests on colour alone. Each mark has its own colour AND its own shape:
+ *   right spot      verdigris fill, solid frame, a solid dot in the corner
+ *   wrong spot      gold fill, DASHED frame, a half-filled dot in the corner
+ *   not in name     sunken well, no frame, a hollow ring in the corner, muted letter
+ * and every tile and key also carries the mark in its accessible name. The two fills are pigments
+ * already in the palette (index.css) and are the same in every theme and skin, so the contrast
+ * below holds everywhere: white on --verdigris #3e6b52 is 6.0:1; ink #1b1410 on --gold #c8912f is
+ * 7.2:1.
+ */
+
+.dn-setup {
+  width: 100%;
+  max-width: 480px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.dn-body {
+  gap: 10px;
+}
+
+.dn-status {
+  margin: 0;
+  font-size: calc(14px * var(--tsz, 1));
+  color: var(--text-muted);
+  text-align: center;
+}
+
+/* ------------------------------------------------------------------ board */
+
+.dn-board {
+  /* Tile size follows the word length so a nine-letter name still fits a 390px screen:
+     the 40px side gutter and the gaps come off first, then the rest is shared out. */
+  --dn-gap: 5px;
+  --dn-tile: min(54px, calc((100vw - 40px - (var(--dn-len) - 1) * var(--dn-gap)) / var(--dn-len)));
+  display: flex;
+  flex-direction: column;
+  gap: var(--dn-gap);
+  margin: 4px 0;
+}
+
+.dn-row {
+  display: flex;
+  gap: var(--dn-gap);
+  justify-content: center;
+}
+
+.dn-tile {
+  position: relative;
+  width: var(--dn-tile);
+  height: var(--dn-tile);
+  display: grid;
+  place-items: center;
+  border: 2px solid var(--border);
+  border-radius: 8px;
+  background: var(--panel-bg);
+  color: var(--text-h);
+  font-family: var(--sans);
+  font-weight: 700;
+  font-size: calc(var(--dn-tile) * 0.48);
+  text-transform: uppercase;
+  box-sizing: border-box;
+}
+
+.dn-typed {
+  border-color: var(--border-strong);
+}
+
+.dn-mark {
+  position: absolute;
+  top: 3px;
+  right: 3px;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  box-sizing: border-box;
+}
+
+.dn-message {
+  min-height: 1.4em;
+  margin: 0;
+  font-weight: 600;
+  color: var(--text-h);
+  text-align: center;
+}
+
+/* --------------------------------------------------------------- keyboard */
+
+.dn-keyboard {
+  width: 100%;
+  max-width: 520px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  user-select: none;
+}
+
+.dn-key-row {
+  display: flex;
+  gap: 5px;
+  justify-content: center;
+}
+
+.dn-key {
+  position: relative;
+  flex: 1 1 0;
+  min-width: 0;
+  max-width: 44px;
+  height: 52px;
+  border: 1px solid var(--border);
+  border-radius: 7px;
+  background: var(--panel-bg);
+  color: var(--text-h);
+  font: inherit;
+  font-weight: 700;
+  font-size: calc(15px * var(--tsz, 1));
+  cursor: pointer;
+  padding: 0;
+  touch-action: manipulation;
+}
+
+.dn-key-wide {
+  flex: 1.6 1 0;
+  max-width: 72px;
+  font-size: calc(13px * var(--tsz, 1));
+}
+
+.dn-key:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+/* --------------------------------------------------------------- legend */
+
+.dn-legend {
+  list-style: none;
+  margin: 8px 0 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 16px;
+  justify-content: center;
+  font-size: calc(13px * var(--tsz, 1));
+  color: var(--text-muted);
+}
+
+.dn-legend li {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.dn-tile-sample {
+  --dn-tile: 26px;
+  font-size: 13px;
+  border-radius: 5px;
+}
+.dn-tile-sample .dn-mark {
+  top: 1px;
+  right: 1px;
+  width: 5px;
+  height: 5px;
+}
+
+/* --------------------------------------------------------------- result */
+
+.dn-result {
+  width: 100%;
+  max-width: 520px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  text-align: center;
+}
+
+.dn-result h3 {
+  margin: 0;
+  font-size: calc(20px * var(--tsz, 1));
+  color: var(--text-h);
+}
+
+.dn-answer {
+  margin: 0;
+  font-size: calc(17px * var(--tsz, 1));
+}
+
+.dn-answer-kind {
+  color: var(--text-muted);
+  font-size: calc(14px * var(--tsz, 1));
+}
+
+.dn-verse {
+  margin: 0;
+  padding: 14px 16px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: var(--panel-bg);
+  text-align: left;
+}
+
+.dn-verse blockquote {
+  margin: 0;
+  font-family: var(--serif);
+  font-size: calc(16px * var(--tsz, 1));
+  line-height: 1.5;
+  color: var(--text);
+}
+
+.dn-verse figcaption {
+  margin-top: 6px;
+  font-size: calc(13px * var(--tsz, 1));
+  color: var(--text-muted);
+}
+
+.dn-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.dn-share-note,
+.dn-next {
+  margin: 0;
+  color: var(--text-muted);
+  font-size: calc(14px * var(--tsz, 1));
+}
+
+.dn-share-fallback {
+  margin: 0;
+  padding: 10px;
+  text-align: left;
+  white-space: pre-wrap;
+  user-select: all;
+  background: var(--surface-sunken);
+  border-radius: 8px;
+  font-size: 13px;
+}
+
+/* ---------------------------------------------------------------- stats */
+
+.dn-stats {
+  text-align: left;
+}
+
+.dn-stats h3 {
+  margin: 0;
+}
+
+.dn-stats-where {
+  font-weight: 400;
+  font-size: calc(13px * var(--tsz, 1));
+  color: var(--text-muted);
+}
+
+.dn-stats-row {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 8px;
+  margin: 0;
+  text-align: center;
+}
+
+.dn-stats-row dt {
+  font-size: calc(12px * var(--tsz, 1));
+  color: var(--text-muted);
+}
+
+.dn-stats-row dd {
+  margin: 0;
+  font-size: calc(22px * var(--tsz, 1));
+  font-weight: 700;
+  color: var(--text-h);
+}
+
+.dn-dist {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.dn-dist li {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: calc(13px * var(--tsz, 1));
+}
+
+.dn-dist-n {
+  width: 1em;
+  text-align: right;
+  color: var(--text-muted);
+}
+
+.dn-dist-bar {
+  min-width: 1.6em;
+  padding: 2px 6px;
+  border-radius: 4px;
+  background: var(--surface-sunken);
+  color: var(--text-h);
+  text-align: right;
+  box-sizing: border-box;
+}
+
+/* ------------------------------------------------------------------ marks
+   Last in the file on purpose: these override the plain tile AND the plain key (.dn-key sets its
+   own background and border above), at the same specificity, so source order decides. */
+
+.dn-right {
+  background: var(--verdigris);
+  border: 2px solid var(--verdigris);
+  color: #fff;
+}
+.dn-right .dn-mark {
+  background: currentColor;
+}
+
+.dn-elsewhere {
+  background: var(--gold);
+  border: 2px dashed #1b1410;
+  color: #1b1410;
+}
+.dn-elsewhere .dn-mark {
+  border: 1.5px solid currentColor;
+  background: linear-gradient(90deg, currentColor 50%, transparent 50%);
+}
+
+.dn-absent {
+  background: var(--surface-sunken);
+  border: 2px solid transparent;
+  color: var(--text-muted);
+}
+.dn-absent .dn-mark {
+  border: 1.5px solid currentColor;
+}

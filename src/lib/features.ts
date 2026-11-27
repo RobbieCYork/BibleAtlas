@@ -88,13 +88,17 @@ export type FeatureKey =
   | GameFeatureKey;
 
 /** One per game in Game Center (components/GameCenter.tsx's GAMES — each entry names its key).
- * Children of `games_trivia`: see PARENT below and decide(). Added by sql/040. */
+ * Children of `games_trivia`: see PARENT below and decide(). The first five rows are added by
+ * sql/040, the later ones by sql/053. Until a game's row exists it is
+ * treated as Live (see `present` below), so a new game ships visible to readers with no migration;
+ * the row is only what lets the owner move it to Testing. */
 export type GameFeatureKey =
   | "game_bible_trivia"
   | "game_saving_peter"
   | "game_fill_blank"
   | "game_memorization"
-  | "game_chronology";
+  | "game_chronology"
+  | "game_daily_name";
 
 /** Display order and copy for the owner's Features list. `where` names the entry points that the
  * flag actually hides, so the owner knows what flipping it does — and what it does not. */
@@ -130,6 +134,7 @@ export const FEATURES: ReadonlyArray<FeatureDef> = [
   { key: "game_fill_blank", label: "Fill in the Blank", where: GAME_WHERE("Fill in the Blank"), parent: "games_trivia" },
   { key: "game_memorization", label: "Scripture Memorization Challenge", where: GAME_WHERE("Scripture Memorization Challenge"), parent: "games_trivia" },
   { key: "game_chronology", label: "Chronology", where: GAME_WHERE("Chronology"), parent: "games_trivia" },
+  { key: "game_daily_name", label: "Daily Name", where: GAME_WHERE("Daily Name"), parent: "games_trivia" },
 ];
 
 /** child -> parent, built from FEATURES so there is one list to keep in step. */
@@ -301,7 +306,11 @@ export async function setFeatureStage(key: FeatureKey, live: boolean): Promise<v
     if (error.code === "PGRST202" || error.code === "42883")
       throw new Error("The feature-stage migration (sql/039) hasn't been applied to this database yet.");
     if (error.code === "22023" && /unknown feature/.test(error.message) && PARENT[key])
-      throw new Error("The per-game stages migration (sql/040) hasn't been applied to this database yet.");
+      throw new Error(
+        key === "game_daily_name"
+          ? "This game's stage row (sql/053) hasn't been applied to this database yet."
+          : "The per-game stages migration (sql/040) hasn't been applied to this database yet."
+      );
     throw new Error(error.message);
   }
   const row = data as { feature?: string; live?: boolean; updated_at?: string | null } | null;

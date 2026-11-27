@@ -10,6 +10,11 @@ import { formatWhen } from "../lib/adminApi";
  * only show the owner which view he is in and let him change the inputs.
  * ========================================================================== */
 
+/** Which migration adds each per-game row, for the "not stored yet" note. */
+const MIGRATION_FOR: Partial<Record<FeatureKey, string>> = {
+  game_daily_name: "sql/053",
+};
+
 /** The small orange dot drawn beside a Testing feature's own entry point. It only ever renders for
  * the owner in Test view — callers pass useFeature(key).inTesting, which is false for everyone
  * else — so a normal reader never sees one. Carries a title and screen-reader text, so the colour
@@ -130,7 +135,7 @@ export function FeatureStagesPanel() {
             <span className="release-row-where">Hidden from everyone but you anyway, because {parentDef?.label ?? "its section"} is in Testing.</span>
           )}
           {missingRow && (
-            <span className="release-row-where">Not stored yet — the per-game migration (sql/040) hasn't been applied, so this game follows {parentDef?.label ?? "its section"}.</span>
+            <span className="release-row-where">Not stored yet — its row in the per-game migration ({MIGRATION_FOR[key] ?? "sql/040"}) hasn't been applied, so this game follows {parentDef?.label ?? "its section"} and can't be switched on its own.</span>
           )}
           {updatedAt[key] && <span className="release-row-when">Changed {formatWhen(updatedAt[key])}</span>}
         </div>
