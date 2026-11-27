@@ -3126,7 +3126,8 @@ a.profile-links-url {
 .walk-panel,
 .display-name-gate-overlay,
 .auth-admin-sheet,
-.report-sheet {
+.report-sheet,
+.welcome-tour-card {
   --tsz: var(--text-scale, 1);
   font-size: calc(1em * var(--text-scale, 1));
 }

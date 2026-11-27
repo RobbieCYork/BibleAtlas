@@ -3,6 +3,7 @@ import Icon, { type IconName } from "./Icon";
 import { TestingMarker } from "./FeatureRelease";
 import { useFeature, SOCIAL_CONNECTIONS_ENABLED, ARCHAEOLOGY_MENU_ROW_VISIBLE, type FeatureVisibility } from "../lib/features";
 import { ABOUT_TITLE } from "../data/aboutPage";
+import { TOUR_ANCHORS } from "../data/welcomeTour";
 
 /** The panel slots the layout can show. There is deliberately no separate "details" slot: a single
  * article (a place/person/topic/POI/timeline event) is a *state* of the Articles panel, not a panel
@@ -37,6 +38,8 @@ interface PanelMenuProps {
   aboutOpen: boolean;
   /** Open the About Capstone Bible page, or close it when it is already on screen. */
   onToggleAbout: () => void;
+  /** Open the welcome tour (components/WelcomeTour.tsx) over whatever is on screen. */
+  onOpenTour: () => void;
 }
 
 const PANEL_LABELS: Record<PanelKey, string> = {
@@ -115,6 +118,7 @@ export default function PanelMenu({
   onGoToArchaeology,
   aboutOpen,
   onToggleAbout,
+  onOpenTour,
 }: PanelMenuProps) {
   const [open, setOpen] = useState(false);
   // Swaps the caption to name the auto-closed panel for a few seconds, then falls back to the
@@ -174,6 +178,12 @@ export default function PanelMenu({
     else onNavigate?.(key);
   };
 
+  const selectTour = () => {
+    setOpen(false);
+    buttonRef.current?.focus();
+    onOpenTour();
+  };
+
   const selectAbout = () => {
     setOpen(false);
     buttonRef.current?.focus();
@@ -185,6 +195,7 @@ export default function PanelMenu({
       <button
         type="button"
         ref={buttonRef}
+        data-tour={TOUR_ANCHORS.menu}
         className="panel-menu-button"
         onClick={() => setOpen((o) => !o)}
         aria-label="Menu — show or hide panels, or go to Timeline or Games"
@@ -203,7 +214,7 @@ export default function PanelMenu({
               <Fragment key={groupIndex}>
                 {groupIndex > 0 && <div className="panel-menu-separator" role="separator" />}
                 {group.filter((key) => (key !== "friends" || SOCIAL_CONNECTIONS_ENABLED) && panelFeature(key)?.visible !== false).map((key) => (
-                  <label key={key} className="panel-menu-item">
+                  <label key={key} data-menu={key} className="panel-menu-item">
                     <input type="checkbox" checked={panels[key]} onChange={() => onToggle(key)} />
                     {PANEL_LABELS[key]}
                     <TestingMarker show={!!panelFeature(key)?.inTesting} />
@@ -228,6 +239,7 @@ export default function PanelMenu({
               return (
                 <button
                   key={key}
+                  data-menu={key}
                   type="button"
                   className={`panel-menu-link${isCurrent ? " active" : ""}`}
                   aria-current={isCurrent ? "page" : undefined}
@@ -252,8 +264,20 @@ export default function PanelMenu({
             })}
           </div>
           <div className="panel-menu-separator panel-menu-separator-strong" role="separator" />
+          <button type="button" data-menu="tour" className="panel-menu-link panel-menu-tour" onClick={selectTour}>
+            <span className="panel-menu-link-icon">
+              <Icon name="play" />
+            </span>
+            <span className="panel-menu-link-text">
+              <span className="panel-menu-link-label">Welcome tour</span>
+            </span>
+            <span className="panel-menu-link-go" aria-hidden="true">
+              →
+            </span>
+          </button>
           <button
             type="button"
+            data-menu="about"
             className={`panel-menu-link panel-menu-about${aboutOpen ? " active" : ""}`}
             aria-current={aboutOpen ? "page" : undefined}
             aria-label={aboutOpen ? `${ABOUT_TITLE} — on screen now; return to panels` : undefined}

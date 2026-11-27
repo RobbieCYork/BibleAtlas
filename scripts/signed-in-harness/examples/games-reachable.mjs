@@ -15,7 +15,7 @@ const bar = (h) => h.evaluate(() => [...document.querySelectorAll(".mobile-tab .
 async function menu(h) {
   await h.click(MENU_BUTTON);
   await h.sleep(300);
-  const rows = await h.evaluate(() => [...document.querySelectorAll(".mobile-nav-menu-item:not(.mobile-nav-menu-about) .mobile-nav-menu-label")].map((e) => e.childNodes[0].textContent.trim()));
+  const rows = await h.evaluate(() => [...document.querySelectorAll(".mobile-nav-menu-item:not(.mobile-nav-menu-about):not(.mobile-nav-menu-tour) .mobile-nav-menu-label")].map((e) => e.childNodes[0].textContent.trim()));
   await h.evaluate(() => document.dispatchEvent(new KeyboardEvent("keydown", { key: "Escape", bubbles: true })));
   await h.sleep(150);
   return rows;

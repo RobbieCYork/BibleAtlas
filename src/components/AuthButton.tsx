@@ -15,6 +15,7 @@ import Icon from "./Icon";
 import Chevron from "./Chevron";
 import SocialLinks from "./SocialLinks";
 import { confirmDiscardUnsaved } from "../lib/unsavedChanges";
+import { TOUR_ANCHORS } from "../data/welcomeTour";
 
 interface AuthButtonProps {
   session: Session | null;
@@ -264,6 +265,7 @@ export default function AuthButton({
       <div className="auth-button" ref={containerRef}>
         <button
           type="button"
+          data-tour={TOUR_ANCHORS.account}
           className="auth-trigger"
           onClick={() => {
             if (!confirmDiscardUnsaved()) return;
@@ -281,6 +283,7 @@ export default function AuthButton({
             {linkHeader ? (
               <button
                 type="button"
+                data-menu="profile"
                 className="auth-identity auth-identity-link"
                 aria-label={`Open My Profile (${label})`}
                 onClick={() => {
@@ -318,6 +321,7 @@ export default function AuthButton({
                 same controls inside this dropdown. */}
             <button
               type="button"
+              data-menu="settings"
               className="auth-menu-item"
               onClick={() => {
                 if (session.user.is_anonymous) {
@@ -334,13 +338,13 @@ export default function AuthButton({
                 remains ONLY for an advisor who is not an admin: they hold the reports tier but have no
                 Admin Console to find it in, and removing the row would strand them. */}
             {canSeeReports && !isAdmin && (
-              <button type="button" className="auth-menu-item" onClick={() => setMenuView("reports")}>
+              <button type="button" data-menu="reports" className="auth-menu-item" onClick={() => setMenuView("reports")}>
                 <Icon name="flag" inline /> Reports
                 {untriaged > 0 && <span className="panel-menu-item-badge">{untriaged}</span>}
               </button>
             )}
             {isAdmin && (
-              <button type="button" className="auth-menu-item" onClick={() => setMenuView("admin")}>
+              <button type="button" data-menu="admin" className="auth-menu-item" onClick={() => setMenuView("admin")}>
                 <Icon name="shield" inline /> Admin Console
                 {untriaged > 0 && <span className="panel-menu-item-badge">{untriaged}</span>}
               </button>
@@ -348,6 +352,7 @@ export default function AuthButton({
             {onOpenReadingPlans && (
               <button
                 type="button"
+                data-menu="reading-plans"
                 className="auth-menu-item"
                 onClick={() => {
                   setOpen(false);
@@ -360,7 +365,7 @@ export default function AuthButton({
             {/* Everyone signed in, guests included — the guest branch of the sheet explains why
                 they can't file one, which is a better answer than an item that isn't there. */}
             <div className="auth-settings-divider" />
-            <button type="button" className="auth-menu-item" onClick={() => setMenuView("report")}>
+            <button type="button" data-menu="report" className="auth-menu-item" onClick={() => setMenuView("report")}>
               <Icon name="flag" inline /> Report a Problem
             </button>
             {/* App Store Review Guideline 1.2 asks for published contact information and a visible
@@ -372,11 +377,11 @@ export default function AuthButton({
                 SOCIAL_CONNECTIONS_ENABLED (the sheet is mostly about blocking people and harassment);
                 flip that constant and this row and the sheet below return. */}
             {SOCIAL_CONNECTIONS_ENABLED && (
-              <button type="button" className="auth-menu-item" onClick={() => setMenuView("safety")}>
+              <button type="button" data-menu="safety" className="auth-menu-item" onClick={() => setMenuView("safety")}>
                 <Icon name="shield" inline /> Safety &amp; Contact
               </button>
             )}
-            <button type="button" className="auth-menu-item auth-signout" onClick={handleSignOut}>
+            <button type="button" data-menu="sign-out" className="auth-menu-item auth-signout" onClick={handleSignOut}>
               Log Out
             </button>
             {/* The MOBILE home for Capstone Bible's own accounts. On desktop they sit in the header

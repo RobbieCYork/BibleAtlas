@@ -2,6 +2,7 @@ import type { CSSProperties } from "react";
 import type { PanelKey } from "./PanelMenu";
 import Icon from "./Icon";
 import { MOBILE_TAB_META, useMobileTabs, type MobileTabKey } from "../lib/mobileTabs";
+import { tabAnchor } from "../data/welcomeTour";
 import { useFeature, SOCIAL_CONNECTIONS_ENABLED, type FeatureVisibility } from "../lib/features";
 
 type FriendsView = "friends" | "messages" | "groups";
@@ -114,6 +115,8 @@ export default function MobileTabBar({
       <button
         key={key}
         type="button"
+        data-tour={tabAnchor(key)}
+        data-menu={key}
         className={`mobile-tab ${isActive ? "active" : ""}`}
         onClick={handleClick}
         aria-label={key === "social" ? (SOCIAL_CONNECTIONS_ENABLED ? "My Profile — also Friends, Groups, and Messages" : "My Profile") : undefined}

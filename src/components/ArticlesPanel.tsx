@@ -33,7 +33,7 @@ type ShelfKey =
  * here, with Discoveries and Manuscripts kept as labelled shelves on its page — so the split that
  * stops a stele and a codex sharing an alphabetical list survives intact, and the reader is still
  * two taps from any record rather than three. */
-type SectionKey = "location" | "poi" | "person" | "topic" | "archaeology" | "beliefs" | "timelineEvent";
+export type SectionKey = "location" | "poi" | "person" | "topic" | "archaeology" | "beliefs" | "timelineEvent";
 
 interface ArticlesPanelProps {
   locations: Location[];
@@ -71,7 +71,7 @@ interface ArticlesPanelProps {
  * nothing. An empty shelf renders no heading, and a section whose shelves are all empty does not
  * render at all (see below), so a section can be named here before there is anything in
  * it. */
-const SECTIONS: {
+export const SECTIONS: {
   key: SectionKey;
   label: string;
   icon: IconName;

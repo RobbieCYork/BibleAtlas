@@ -102,6 +102,25 @@ compile. Three commands, three different questions:
     npm run test:linker            # did any links move?
     npm run build                  # does it compile? exit 0, no exceptions
 
+## Change a feature, change the welcome tour in the same change
+
+**Any change that adds, removes, renames or moves a user-facing feature must update the welcome
+tour in that same change.** The tour ("Welcome to Capstone Bible") is shown to every new account and
+reopens from the main menu and Settings. Its steps and words are all in `src/data/welcomeTour.ts`.
+
+Three checks hold the line, and each sees something the others cannot:
+
+    npm run build                   # tsc: a new feature flag, code switch, menu destination, My Notes tab
+                                    # or Articles section needs a step or a written exclusion (coverage
+                                    # tables at the foot of welcomeTour.ts); vite also runs the next one
+    npm run validate:welcome-tour   # menu rows carry a covered data-menu key, highlight anchors and the
+                                    # on-screen wording each step quotes still exist
+    node scripts/signed-in-harness/run.mjs --viewport 390x844 --script scripts/signed-in-harness/examples/welcome-tour.mjs
+                                    # the running app, also at 1280x800; LOOKS=1 adds skins and text sizes
+
+Green checks do not mean the copy is right. A control that moved, or behaviour that changed under the
+same name, passes all three: read the step. Describe only what is live for ordinary readers.
+
 ## A verification worktree that shares `node_modules` shares `.tsbuildinfo` too
 
 Same class of lie as `--noEmit`, one level further out: the build *runs*, exits

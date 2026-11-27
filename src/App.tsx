@@ -60,7 +60,10 @@ import { timelineEvents } from "./data/timelineEvents";
 import { formatWalkStopReference, getActiveSeasonalWalk, getWalkDismissKey } from "./data/seasonalWalks";
 import SeasonalWalkPanel from "./components/SeasonalWalkPanel";
 import { TestViewStrip } from "./components/FeatureRelease";
-import { useFeature } from "./lib/features";
+import { useFeature, useFeatureAdmin } from "./lib/features";
+import WelcomeTour from "./components/WelcomeTour";
+import { useWelcomeTourFirstRun } from "./lib/welcomeTourSeen";
+import { TOUR_ANCHORS } from "./data/welcomeTour";
 import "./App.css";
 
 /** The topics the app opens and lists: topics.ts plus the Religions and Denominations articles.
@@ -646,6 +649,8 @@ function App() {
   // set one — checked once per session, not re-fetched after DisplayNameGate reports success (it
   // updates this state directly instead).
   const [needsDisplayName, setNeedsDisplayName] = useState(false);
+  /** The account that check has answered for, so nothing else opens over a prompt still on its way. */
+  const [displayNameCheckedFor, setDisplayNameCheckedFor] = useState<string | null>(null);
   useEffect(() => {
     if (!session || session.user.is_anonymous) {
       setNeedsDisplayName(false);
@@ -665,9 +670,30 @@ function App() {
         // behind a prompt they have already answered. maybeSingle() keeps the two apart: 0 rows is
         // data:null with error:null, a failed request has error set. On a failed request, leave the
         // app alone rather than blocking it on a guess.
-        if (error) return;
-        setNeedsDisplayName(!(data as { display_name: string | null } | null)?.display_name);
+        if (!error) setNeedsDisplayName(!(data as { display_name: string | null } | null)?.display_name);
+        setDisplayNameCheckedFor(session.user.id);
       });
+  }, [session]);
+
+  // --- Welcome tour -------------------------------------------------------------------------------
+  // Opens by itself once for a new account (lib/welcomeTourSeen.ts), and from the main menu or
+  // Settings at any time. It waits for the password and display-name prompts, so it never covers them.
+  const [tourOpen, setTourOpen] = useState(false);
+  const openTour = () => setTourOpen(true);
+  const { loaded: featureStagesLoaded } = useFeatureAdmin();
+  const tourReady =
+    authResolved &&
+    !exchangingRecoveryCode &&
+    !passwordRecovery &&
+    featureStagesLoaded &&
+    !needsDisplayName &&
+    !!session &&
+    !session.user.is_anonymous &&
+    displayNameCheckedFor === session.user.id;
+  useWelcomeTourFirstRun(tourReady ? session.user : null, openTour);
+  // Signing out closes it, so it cannot reappear for whoever signs in next.
+  useEffect(() => {
+    if (!session) setTourOpen(false);
   }, [session]);
 
   // Once per signed-in user, fetch their saved reading position and jump the Bible panel there.
@@ -1545,6 +1571,7 @@ function App() {
             onGoToArchaeology={openArchaeology}
             aboutOpen={showAbout}
             onGoToAbout={openAbout}
+            onOpenTour={openTour}
           />
         )}
         <PanelMenu
@@ -1558,6 +1585,7 @@ function App() {
           onGoToArchaeology={openArchaeology}
           aboutOpen={showAbout}
           onToggleAbout={showAbout ? closeOverlayPage : openAbout}
+          onOpenTour={openTour}
         />
         <button type="button" className="app-logo-button" onClick={goHome} aria-label="Go to Bible">
           <img src="/favicon.svg" className="app-logo" alt="" aria-hidden="true" />
@@ -1572,7 +1600,7 @@ function App() {
           <p className="brand-tagline">God&rsquo;s Word. Every day.</p>
         </div>
         {searchMode === "all" && (
-          <div className="header-search-group">
+          <div className="header-search-group" data-tour={TOUR_ANCHORS.search}>
             <UnifiedSearchBar
               locations={locations}
               pois={pois}
@@ -1646,7 +1674,7 @@ function App() {
       {/* Seasonal walk banner — a slim pill strip under the header (not a modal; see the walk state
           block above). Hidden while the walk view itself is open to avoid saying it twice. */}
       {activeWalk && !walkBannerDismissed && !walkOpen && (
-        <div className="walk-banner">
+        <div className="walk-banner" data-tour={TOUR_ANCHORS.walkBanner}>
           <button type="button" className="walk-banner-pill" onClick={openWalk}>
             {activeWalk.emoji} <strong>{activeWalk.title}</strong>
             <span className="walk-banner-tagline"> — {activeWalk.tagline.toLowerCase()}</span>
@@ -1698,7 +1726,7 @@ function App() {
           />
         )}
         {mapMounted && (
-          <div className={`map-area${mapHiddenOnMobile ? " map-area-hidden" : ""}`}>
+          <div className={`map-area${mapHiddenOnMobile ? " map-area-hidden" : ""}`} data-tour={TOUR_ANCHORS.map}>
             <MapView
               locations={locations}
               selectedId={selectedId}
@@ -1990,7 +2018,7 @@ function App() {
             z-index). */}
         {showSettings && session && !session.user.is_anonymous && (
           <div className="myprofile-mode">
-            <SettingsView userId={session.user.id} onClose={closeOverlayPage} />
+            <SettingsView userId={session.user.id} onClose={closeOverlayPage} onOpenTour={openTour} />
           </div>
         )}
         {showAbout && session && !session.user.is_anonymous && (
@@ -2039,6 +2067,13 @@ function App() {
             closeTimeline();
             closeGame();
           }}
+        />
+      )}
+      {tourOpen && (
+        <WelcomeTour
+          isMobile={isMobile}
+          walkTitle={activeWalk && !walkBannerDismissed && !walkOpen ? activeWalk.title : null}
+          onClose={() => setTourOpen(false)}
         />
       )}
     </div>

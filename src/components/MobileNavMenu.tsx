@@ -4,6 +4,7 @@ import Icon from "./Icon";
 import { TestingMarker } from "./FeatureRelease";
 import { useFeature, ARCHAEOLOGY_MENU_ROW_VISIBLE, type FeatureVisibility } from "../lib/features";
 import { ABOUT_TITLE } from "../data/aboutPage";
+import { TOUR_ANCHORS } from "../data/welcomeTour";
 
 interface MobileNavMenuProps {
   /** Which of the seven destinations is on screen right now (App derives this in the same
@@ -19,6 +20,8 @@ interface MobileNavMenuProps {
   aboutOpen: boolean;
   /** Open the About Capstone Bible page, listed last under a rule. Not a bottom-bar destination. */
   onGoToAbout: () => void;
+  /** Open the welcome tour (components/WelcomeTour.tsx) over whatever is on screen. */
+  onOpenTour: () => void;
 }
 
 /** What this menu lists, in order: the seven bottom-bar destinations, plus Archaeology inserted
@@ -62,6 +65,7 @@ export default function MobileNavMenu({
   onGoToArchaeology,
   aboutOpen,
   onGoToAbout,
+  onOpenTour,
 }: MobileNavMenuProps) {
   const [open, setOpen] = useState(false);
   const containerRef = useRef<HTMLDivElement | null>(null);
@@ -126,6 +130,12 @@ export default function MobileNavMenu({
     onGoToArchaeology();
   };
 
+  const selectTour = () => {
+    setOpen(false);
+    buttonRef.current?.focus();
+    onOpenTour();
+  };
+
   const selectAbout = () => {
     setOpen(false);
     buttonRef.current?.focus();
@@ -137,6 +147,7 @@ export default function MobileNavMenu({
       <button
         type="button"
         ref={buttonRef}
+        data-tour={TOUR_ANCHORS.menu}
         className="mobile-nav-menu-button"
         aria-label="Menu — go to Bible, Map, Timeline, Notes, Articles, My Profile or Games"
         aria-expanded={open}
@@ -161,6 +172,7 @@ export default function MobileNavMenu({
               return (
                 <button
                   key="archaeology"
+                  data-menu="archaeology"
                   type="button"
                   role="menuitem"
                   className="mobile-nav-menu-item"
@@ -182,6 +194,7 @@ export default function MobileNavMenu({
             return (
               <button
                 key={key}
+                data-menu={key}
                 type="button"
                 role="menuitem"
                 className={`mobile-nav-menu-item${isCurrent ? " active" : ""}`}
@@ -202,6 +215,19 @@ export default function MobileNavMenu({
           <button
             type="button"
             role="menuitem"
+            data-menu="tour"
+            className="mobile-nav-menu-item mobile-nav-menu-tour"
+            onClick={selectTour}
+          >
+            <span className="mobile-nav-menu-icon" aria-hidden="true">
+              <Icon name="play" />
+            </span>
+            <span className="mobile-nav-menu-label">Welcome tour</span>
+          </button>
+          <button
+            type="button"
+            role="menuitem"
+            data-menu="about"
             className={`mobile-nav-menu-item mobile-nav-menu-about${aboutOpen ? " active" : ""}`}
             aria-current={aboutOpen ? "page" : undefined}
             onClick={selectAbout}

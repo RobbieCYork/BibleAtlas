@@ -205,7 +205,14 @@ export function ReadingResetControl({ userId }: { userId: string }) {
  * One copy, rendered in two homes: the full-screen SettingsView (every real account) and the account
  * menu's own Settings view (guests). Both open from the account menu's Settings row. `userId` is null
  * for a guest, who has no reading marks to reset. */
-export default function AccountSettingsBody({ userId }: { userId: string | null }) {
+export default function AccountSettingsBody({
+  userId,
+  onOpenTour,
+}: {
+  userId: string | null;
+  /** Real accounts only (SettingsView): the row that reopens the welcome tour. */
+  onOpenTour?: () => void;
+}) {
   return (
     <>
       <TextSizeControl />
@@ -215,6 +222,16 @@ export default function AccountSettingsBody({ userId }: { userId: string | null 
         <>
           <div className="auth-settings-divider" />
           <ReadingResetControl userId={userId} />
+        </>
+      )}
+      {onOpenTour && (
+        <>
+          <div className="auth-settings-divider" />
+          <div className="auth-settings-section auth-settings-section-stacked myprofile-link-rows">
+            <button type="button" className="myprofile-link-row settings-tour-row" onClick={onOpenTour}>
+              <Icon name="play" inline /> Welcome tour
+            </button>
+          </div>
         </>
       )}
       <div className="auth-settings-divider" />

@@ -59,6 +59,10 @@ Switch mid-run against the *same* fake database with `await h.asPersona("member"
 flipped is still flipped for the member. It swaps the stored session and reloads, which is what a
 different account signing in looks like.
 
+**Accounts.** Every persona is an account from before the welcome tour, so the tour never opens over a
+check. `h.backend.setAccount({ createdAt, metadata, failUpdates })` then `await h.asPersona(h.persona)`
+makes a new one; `h.backend.log.authUpdates` records the app's writes to auth user metadata.
+
 ## The fake backend
 
 `lib/backend.mjs` answers `/auth/v1/*`, a small PostgREST at `/rest/v1/<table>`, and `/rest/v1/rpc/<fn>`.
@@ -133,6 +137,7 @@ Selectors live there so a rename is one edit.
 | `../winner-avatar.mjs` | run directly: TWO real Chromes, shared fake database and Realtime, at `--viewport 390x844` and `1280x800`: both multiplayer results screens with winner pictures seen by winner and loser, friends / pending / stranger / blocked, no picture and a picture that fails to load, ties (up to 8), the winner leaving, one player unchanged. `get_profile_cards` is a re-implementation of sql/042, not the real function |
 | `trivia-skip-continue.mjs` | Bible Trivia Skip and Continue at 390px, 375px and desktop: the revealed answer holds four seconds with a countdown on Continue and then moves on (after answering, Skip, time-up, the last question), Continue moves sooner, no double advance, countdown stops while hidden, wrong device clock, two players |
 | `../trivia-hold.mjs` | run directly: TWO real Chromes and fake Realtime: each player has the answer on screen a full four seconds (everyone answered, time-up, clocks 7s apart, final question), the room moves one question, Continue moves it at once. Real networks and the real SQL are not exercised |
+| `welcome-tour.mjs` | the welcome tour at 390px and desktop: a new account sees it once (account metadata and local mark), Skip, Escape, existing accounts untouched, failed write retried without repeating, display-name prompt and sign-in gate never covered, every step's layout, highlight and contrast, reopen from menu and Settings, stages off hide steps, every menu row / tab / section covered; `LOOKS=1` adds dark, all skins, text sizes and short screens |
 | `network-closed.mjs` | self-test of the closed network |
 | `fixtures-override.mjs` | `--fixtures` |
 

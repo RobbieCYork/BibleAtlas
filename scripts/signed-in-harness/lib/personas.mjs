@@ -36,8 +36,14 @@ export const PERSONAS = {
   signedout: null,
 };
 
-export function personaUser(p) {
+/** Every persona is an account from before the welcome tour (src/lib/welcomeTourSeen.ts), so it opens
+ * by itself only in a check that asks for a new one: backend.setAccount({ createdAt }). */
+export const EXISTING_ACCOUNT_CREATED_AT = "2026-10-01T00:00:00Z";
+
+/** `account`: this run's changes to the auth user, { createdAt, metadata }. */
+export function personaUser(p, account = {}) {
   const now = new Date().toISOString();
+  const createdAt = account.createdAt ?? EXISTING_ACCOUNT_CREATED_AT;
   return {
     id: p.id,
     aud: "authenticated",
@@ -46,16 +52,16 @@ export function personaUser(p) {
     email_confirmed_at: p.anonymous ? undefined : now,
     phone: "",
     app_metadata: { provider: p.anonymous ? "anonymous" : "email", providers: [p.anonymous ? "anonymous" : "email"] },
-    user_metadata: p.name ? { display_name: p.name } : {},
+    user_metadata: { ...(p.name ? { display_name: p.name } : {}), ...account.metadata },
     identities: [],
-    created_at: now,
+    created_at: createdAt,
     updated_at: now,
     is_anonymous: p.anonymous,
   };
 }
 
 /** A complete supabase-js session object for a persona; expires in ten years so it never refreshes. */
-export function personaSession(p) {
+export function personaSession(p, account) {
   const exp = Math.floor(Date.now() / 1000) + 10 * 365 * 24 * 3600;
   const access_token = fakeJwt({
     sub: p.id, aud: "authenticated", role: "authenticated", email: p.email ?? undefined,
@@ -67,6 +73,6 @@ export function personaSession(p) {
     token_type: "bearer",
     expires_in: exp - Math.floor(Date.now() / 1000),
     expires_at: exp,
-    user: personaUser(p),
+    user: personaUser(p, account),
   };
 }

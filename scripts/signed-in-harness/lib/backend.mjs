@@ -28,8 +28,12 @@ export function createBackend({ persona, overrides = {} }) {
   const tables = structuredClone(defaultTables(me));
   for (const [t, rows] of Object.entries(overrides.tables ?? {})) tables[t] = structuredClone(rows);
 
-  const log = { requests: [], gaps: [], writes: [], audit: [], preflights: 0 };
-  let session = me ? personaSession(me) : null;
+  const log = { requests: [], gaps: [], writes: [], audit: [], authUpdates: [], preflights: 0 };
+  /** persona id -> { createdAt, metadata, failUpdates }: this run's changes to that auth user. */
+  const accounts = {};
+  const account = (p) => (accounts[p.id] ??= { metadata: {} });
+  const newSession = (p) => personaSession(p, account(p));
+  let session = me ? newSession(me) : null;
   let seq = 1000;
   /** table -> {status, code, message}: every request to that table fails with this PostgREST error. */
   const tableErrors = {};
@@ -225,19 +229,27 @@ export function createBackend({ persona, overrides = {} }) {
     rec.how = "fixture";
     if (path === "/auth/v1/user") {
       if (!me) return err(401, "401", "no session");
-      return json(200, personaUser(me));
+      const mine = account(me);
+      if (method === "PUT") {
+        rec.how = "stateful";
+        const data = (bodyText ? JSON.parse(bodyText) : {}).data ?? {};
+        log.authUpdates.push({ data, ok: !mine.failUpdates });
+        if (mine.failUpdates) return err(500, "500", "harness: auth update refused");
+        Object.assign(mine.metadata, data);
+      }
+      return json(200, personaUser(me, mine));
     }
     if (path === "/auth/v1/token") {
       const grant = params.get("grant_type");
       if (grant === "refresh_token" || grant === "password") {
         const p = me ?? PERSONAS.member; // signing in from the signed-out screen becomes the member
-        session = personaSession(p);
+        session = newSession(p);
         return json(200, session);
       }
     }
     if (path === "/auth/v1/signup") {
       const guest = PERSONAS.guest;
-      session = personaSession(guest);
+      session = newSession(guest);
       return json(200, session);
     }
     if (path === "/auth/v1/logout") return { status: 204, headers: {}, body: "" };
@@ -279,12 +291,22 @@ export function createBackend({ persona, overrides = {} }) {
     setPersona(name) {
       me = name === "signedout" ? null : PERSONAS[name];
       if (me === undefined) throw new Error(`unknown persona ${name}`);
-      session = me ? personaSession(me) : null;
+      session = me ? newSession(me) : null;
       const fresh = defaultTables(me);
       tables.admin_users = fresh.admin_users;
       tables.profiles = fresh.profiles;
       return session;
     },
+    /** Change the current persona's auth account: { createdAt, metadata (replaces), failUpdates }.
+     * The browser sees it after h.asPersona(h.persona) issues the session again. */
+    setAccount: ({ createdAt, metadata, failUpdates } = {}) => {
+      const a = account(me);
+      if (createdAt !== undefined) a.createdAt = createdAt;
+      if (metadata !== undefined) a.metadata = { ...metadata };
+      if (failUpdates !== undefined) a.failUpdates = failUpdates;
+    },
+    /** The current persona's auth user metadata, as the fake holds it. */
+    get accountMetadata() { return me ? { ...account(me).metadata } : null; },
     /** Replace a table's rows at run time (from a check script). */
     setTable: (name, rows) => { tables[name] = structuredClone(rows); },
     /** Make every request to a table fail, e.g. setTableError("article_reads", {status: 404, code: "42P01"})

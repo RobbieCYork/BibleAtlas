@@ -4,6 +4,7 @@ import Icon from "./Icon";
 import ReportIssueSheet from "./ReportIssueSheet";
 import MyReportsSheet from "./MyReportsSheet";
 import type { ReportSurface } from "../lib/reportContext";
+import { TOUR_ANCHORS } from "../data/welcomeTour";
 
 interface HeaderReportButtonProps {
   userId: string;
@@ -25,6 +26,7 @@ export default function HeaderReportButton({ userId, surface }: HeaderReportButt
     <>
       <button
         type="button"
+        data-tour={TOUR_ANCHORS.report}
         className="social-links-item header-report"
         aria-label="Report a Problem"
         title="Report a Problem"

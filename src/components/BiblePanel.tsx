@@ -41,6 +41,7 @@ import { track } from "../lib/analytics";
 import HighlightHandles from "./HighlightHandles";
 import Icon from "./Icon";
 import { TRANSLATIONS, getStoredTranslation, useBibleTranslation } from "../lib/bibleTranslation";
+import { TOUR_ANCHORS } from "../data/welcomeTour";
 import HighlightColorSheet from "./HighlightColorSheet";
 import {
   highlightHex,
@@ -2028,7 +2029,7 @@ export default function BiblePanel({
               When the row runs out of width the chapter NAME gives — it wraps, to two lines and no
               further, and the type on the row grows sub-linearly with the reader's setting so that
               it can. The controls never drop to a line of their own. See .bible-passage-header. */}
-          <div className="bible-passage-header">
+          <div className="bible-passage-header" data-tour={TOUR_ANCHORS.bibleControls}>
             {/* A native <select> at opacity 0, laid over a chip we draw ourselves. The chip says
                 "WEB"; the list the select opens still says "World English Bible (WEB)", because the
                 OS draws that list at its own size and this 375px row has no say in it. A plain
@@ -2127,6 +2128,7 @@ export default function BiblePanel({
             {audioEligible && (
               <button
                 type="button"
+                data-tour={TOUR_ANCHORS.listen}
                 className={`bible-plans-chip bible-listen-chip${audioState === "idle" ? "" : " bible-plans-chip-active"}`}
                 onClick={handleListenPress}
                 aria-pressed={audioState !== "idle"}
