@@ -48,6 +48,16 @@ export default async function (h) {
   h.assert(tree.kids.every((k) => k.child && k.x > tree.parentX && k.kidsOfKids === 0), "every game row is a .release-row-child, indented past its parent, with nothing nested below it");
   h.assert(tree.totalRows === 8 + N, `${8 + N} rows in all (8 + ${N}), none duplicated: ${tree.totalRows}`);
 
+  // The two games added after sql/040 have no row in production until sql/053 is applied: they are
+  // treated as Live, and the tab says why they cannot be switched yet.
+  for (const g of ["Daily Name", "20 Questions"]) {
+    const where = await h.evaluate((name) => {
+      const li = [...document.querySelectorAll(".release-row-child")].find((r) => r.querySelector(".release-row-label").innerText.trim() === name);
+      return li ? li.innerText : null;
+    }, g);
+    h.assert(/Live/.test(where ?? "") && /Not stored yet.*sql\/053/s.test(where ?? ""), `${g}: Live, with the "Not stored yet (sql/053)" note`);
+  }
+
   h.section("2. Parent Testing explains itself on Live children");
   await h.click('button[aria-label^="Games & Trivia: Live"]');
   await h.waitFor('button[aria-label^="Games & Trivia: Testing"]');

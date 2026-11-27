@@ -9,7 +9,7 @@ Last verified against production: **2026-10-24** (read-only catalog queries for 
 
 ---
 
-## The next free number is 053
+## The next free number is 054
 
 (045-050 are claimed on the unmerged `groups-assignments` and `groups-invites` branches; 051 is the
 About page; 052 is report categories / voting off. Check every branch, not this table alone, before taking a number:
@@ -32,7 +32,8 @@ About page; 052 is report categories / voting off. Check every branch, not this 
 | **045-050** | Claimed on unmerged branches (`groups-assignments`: 045 stripe billing, 046 study collections, 047 groups classes, 048 groups assignments; `groups-invites`: 049 invites, 050 support access). Not on main. Do not reuse. |
 | **051** | `051_about_page.sql` — owner-editable About page (`about_page`, public read; `about_page_versions`, owner-only history; `save_about_page()`, owner only). Committed on main (895b341), **APPLIED 2026-11-26**. |
 | **052** | `052_report_categories_no_voting.sql` — Report a Problem: area categories (reuses 5 keys, adds 5, retires `typo`), and advisor voting switched off (`report_vote()` revoked, `report_votes` write policies dropped; no rows or columns dropped). Committed on branch `report-categories`, **not applied**. Rehearsal: `scripts/sql-rehearsal/052_report_categories_no_voting.mjs`. |
-| **053** | Next genuinely free number. |
+| **053** | `053_feature_release_new_games.sql` — feature_release rows for `game_daily_name` and `game_twenty_questions`, both Live. Committed on branch `new-games`, **not applied**. Not needed for readers to see the games (a missing row is treated as Live); needed only for the owner to switch either to Testing. |
+| **054** | Next genuinely free number. |
 
 ### Numbers that are TAKEN but MISSING from this directory
 
